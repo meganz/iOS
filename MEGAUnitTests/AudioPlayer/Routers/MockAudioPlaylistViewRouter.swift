@@ -1,6 +1,6 @@
 @testable import MEGA
 
-final class MockAudioPlaylistViewRouter: AudioPlaylistViewRouting {
+final class MockAudioPlaylistViewRouter: AudioPlaylistViewRouting, @unchecked Sendable {
     var dismiss_calledTimes = 0
     var navigateToDetail_calledTimes = 0
     var start_calledTimes = 0
