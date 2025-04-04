@@ -39,7 +39,7 @@ public struct NoteToSelfChatInfoView: View {
         VStack {
             Divider()
             HStack {
-                MEGAAssetsImageProvider.image(named: .noteToSelfBlue)
+                MEGAAssetsImageProvider.image(named: viewModel.isNoteToSelfChatAndEmpty ? .noteToSelfSmall : .noteToSelfBlue)
                     .resizable()
                     .frame(width: 40, height: 40)
                     .clipShape(Circle())

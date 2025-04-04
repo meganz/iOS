@@ -8,6 +8,7 @@ import MEGASDKRepo
 public final class NoteToSelfChatInfoViewModel: ObservableObject {
     private let router: any NoteToSelfChatInfoViewRouterProtocol
     private let chatRoomUseCase: any ChatRoomUseCaseProtocol
+    private let chatUseCase: any ChatUseCaseProtocol
     private var chatRoom: ChatRoomEntity
     
     @Published var isArchived: Bool
@@ -16,10 +17,12 @@ public final class NoteToSelfChatInfoViewModel: ObservableObject {
     public init(
         router: some NoteToSelfChatInfoViewRouterProtocol,
         chatRoomUseCase: some ChatRoomUseCaseProtocol,
+        chatUseCase: some ChatUseCaseProtocol,
         chatRoom: ChatRoomEntity
     ) {
         self.router = router
         self.chatRoomUseCase = chatRoomUseCase
+        self.chatUseCase = chatUseCase
         self.chatRoom = chatRoom
         self.isArchived = chatRoom.isArchived
     }
@@ -59,5 +62,10 @@ public final class NoteToSelfChatInfoViewModel: ObservableObject {
         } catch {
             MEGALogError("[NoteToSelf Info] Error archiving/unarchiving chat: \(error)")
         }
+    }
+    
+    var isNoteToSelfChatAndEmpty: Bool {
+        guard let chatListItem = chatUseCase.chatListItem(forChatId: chatRoom.chatId) else { return false }
+        return chatListItem.lastMessageId == .invalid
     }
 }
