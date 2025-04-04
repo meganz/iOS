@@ -748,36 +748,4 @@ extension AppDelegate {
     @objc func startCall(fromIntent intent: INStartCallIntent) {
         mainTBC?.mainTabBarViewModel.dispatch(.startCallIntent(intent))
     }
-
-    /// Locks the interface orientation of the app.
-    ///
-    /// - Parameters:
-    ///   - orientation: The desired `UIInterfaceOrientationMask` to lock the app to.
-    ///   - viewController: The view controller that should update its supported interface orientations (iOS 16+).
-    /// - Note: In iOS 16 and later, `setNeedsUpdateOfSupportedInterfaceOrientations()` is called
-    ///         on the provided `viewController` to ensure the system recognizes the change. If the device
-    ///         is already in the desired orientation, calling this method is generally unnecessary unless
-    ///         other UI elements need updating.
-    @objc func lockOrientation(
-        _ orientation: UIInterfaceOrientationMask,
-        in viewController: UIViewController?
-    ) {
-        orientationLock = orientation
-        if #available(iOS 16.0, *) {
-            viewController?.setNeedsUpdateOfSupportedInterfaceOrientations()
-        }
-    }
-
-    /// Resets the supported interface orientation to allow all orientations.
-    ///
-    /// - Parameter viewController: The view controller that should update its supported interface orientations (iOS 16+).
-    /// - Note: In iOS 16 and later, `setNeedsUpdateOfSupportedInterfaceOrientations()` is called
-    ///         on the provided `viewController` to ensure the system recognizes the change. If the device
-    ///         is already in the desired orientation, calling this method is generally unnecessary unless
-    ///         other UI elements need updating.
-    @objc func resetSupportedInterfaceOrientation(
-        in viewController: UIViewController?
-    ) {
-        lockOrientation(.all, in: viewController)
-    }
 }
