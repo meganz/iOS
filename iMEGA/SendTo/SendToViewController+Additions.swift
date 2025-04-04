@@ -57,4 +57,19 @@ extension SendToViewController {
             self.tableView.deselectRow(at: indexPath, animated: true)
         }
     }
+    
+    @objc func placeNoteToSelfChatAtTop() {
+        let index = usersAndGroupChatsMutableArray.indexOfObject(passingTest: { object, _, _ in
+            if let chatListItem = object as? MEGAChatListItem {
+                return chatListItem.isNoteToSelf
+            }
+            return false
+        })
+        
+        if index != NSNotFound && index != 0 {
+            let object = usersAndGroupChatsMutableArray.object(at: index)
+            usersAndGroupChatsMutableArray.removeObject(at: index)
+            usersAndGroupChatsMutableArray.insert(object, at: 0)
+        }
+    }
 }

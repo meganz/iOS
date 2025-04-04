@@ -34,7 +34,6 @@
 
 @property (nonatomic, strong) UISearchController *searchController;
 
-@property (nonatomic, strong) NSMutableArray *usersAndGroupChatsMutableArray;
 @property (nonatomic, strong) NSMutableArray *searchedUsersAndGroupChatsMutableArray;
 
 @property (nonatomic, strong) MEGAChatListItemList *chatListItemList;
@@ -151,6 +150,9 @@
                 }
             }
         }
+        if ([self isNoteToSelfAvailable]) {
+            [self.groupChatsMutableArray insertObject:[self noteToSelfChatListItem] atIndex:0];
+        }
     }
 }
 
@@ -172,6 +174,9 @@
     [self.usersAndGroupChatsMutableArray addObjectsFromArray:self.groupChatsMutableArray];
     [self.usersAndGroupChatsMutableArray addObjectsFromArray:self.visibleUsersMutableArray];
     self.usersAndGroupChatsMutableArray = [[self.usersAndGroupChatsMutableArray sortedArrayUsingComparator:[self comparatorToOrderUsersAndGroupChats]] mutableCopy];
+    if ([self isNoteToSelfAvailable]) {
+        [self placeNoteToSelfChatAtTop];
+    }
 }
 
 - (NSComparator)comparatorToOrderUsersAndGroupChats {

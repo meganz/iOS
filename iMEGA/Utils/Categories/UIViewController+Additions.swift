@@ -1,4 +1,5 @@
 import Foundation
+import MEGAAppPresentation
 
 extension UIViewController {
     
@@ -92,5 +93,17 @@ extension UIViewController {
     
     @objc func dismissView() {
         dismiss(animated: true, completion: nil)
+    }
+}
+
+// MARK: - Note to self helpers, used for contacts and send to view controllers
+extension UIViewController {
+    @objc func isNoteToSelfAvailable() -> Bool {
+        DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .noteToSelfChat)
+    }
+    
+    @objc func noteToSelfChatListItem() -> MEGAChatListItem? {
+        guard let noteToSelfChat = MEGAChatSdk.shared.chatRooms(by: .noteToSelf)?.chatRoom(at: 0) else { return nil }
+        return MEGAChatSdk.shared.chatListItem(forChatId: noteToSelfChat.chatId)
     }
 }
