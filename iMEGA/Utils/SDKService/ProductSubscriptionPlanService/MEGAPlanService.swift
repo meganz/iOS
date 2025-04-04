@@ -1,6 +1,6 @@
 import Foundation
+import MEGAAppSDKRepo
 import MEGAFoundation
-import MEGASDKRepo
 
 final class MEGAPlanCommand: NSObject {
 

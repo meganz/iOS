@@ -1,9 +1,9 @@
 import ChatRepo
 import Combine
+import MEGAAppSDKRepo
 import MEGADomain
 import MEGAL10n
 import MEGARepo
-import MEGASDKRepo
 
 @MainActor
 final class MeetingInfoRouter: NSObject, MeetingInfoRouting {

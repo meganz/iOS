@@ -3,8 +3,8 @@ import ContentLibraries
 import Foundation
 import MEGAAnalyticsiOS
 import MEGAAppPresentation
+import MEGAAppSDKRepo
 import MEGADomain
-import MEGASDKRepo
 import SwiftUI
 
 struct PhotoLibraryContentViewRouter: PhotoLibraryContentViewRouting {

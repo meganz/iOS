@@ -30,7 +30,7 @@
 @import ChatRepo;
 @import MEGAL10nObjc;
 @import MEGAUIKit;
-@import MEGASDKRepo;
+@import MEGAAppSDKRepo;
 
 @interface ContactsViewController () <UISearchBarDelegate, UISearchResultsUpdating, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, ItemListViewControllerDelegate, UISearchControllerDelegate, UIGestureRecognizerDelegate, MEGAChatDelegate, ContactLinkQRViewControllerDelegate, CNContactPickerDelegate, UIAdaptivePresentationControllerDelegate>
 

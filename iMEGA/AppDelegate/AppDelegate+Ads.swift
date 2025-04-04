@@ -1,7 +1,7 @@
 import Accounts
 import MEGAAppPresentation
+import MEGAAppSDKRepo
 import MEGADomain
-import MEGASDKRepo
 import SwiftUI
 
 extension AppDelegate {

@@ -1,6 +1,6 @@
+import MEGAAppSDKRepo
 import MEGADomain
 import MEGARepo
-import MEGASDKRepo
 
 @MainActor
 @objc protocol MyAvatarManagerProtocol {

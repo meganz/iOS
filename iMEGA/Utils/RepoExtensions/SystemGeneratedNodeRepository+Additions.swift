@@ -1,6 +1,6 @@
 import Foundation
+import MEGAAppSDKRepo
 import MEGADomain
-import MEGASDKRepo
 
 extension SystemGeneratedNodeRepository: @retroactive RepositoryProtocol {
     public static var newRepo: Self {

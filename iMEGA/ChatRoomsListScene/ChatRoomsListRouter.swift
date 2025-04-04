@@ -1,10 +1,10 @@
 import Chat
 import ChatRepo
+import MEGAAppSDKRepo
 import MEGADomain
 import MEGAL10n
 import MEGAPermissions
 import MEGARepo
-import MEGASDKRepo
 
 @MainActor
 final class ChatRoomsListRouter: ChatRoomsListRouting {

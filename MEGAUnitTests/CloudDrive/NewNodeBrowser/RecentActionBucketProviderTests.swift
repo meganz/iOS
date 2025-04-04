@@ -1,7 +1,7 @@
 @testable import MEGA
+import MEGAAppSDKRepoMock
 import MEGADomain
 import MEGADomainMock
-import MEGASDKRepoMock
 import Search
 import Testing
 

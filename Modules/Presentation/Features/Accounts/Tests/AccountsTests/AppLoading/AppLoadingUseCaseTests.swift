@@ -1,7 +1,7 @@
 @testable import Accounts
+import MEGAAppSDKRepo
 import MEGADomain
 import MEGADomainMock
-import MEGASDKRepo
 import MEGASwift
 import Testing
 

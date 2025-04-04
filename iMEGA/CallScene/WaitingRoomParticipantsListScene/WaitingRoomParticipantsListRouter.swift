@@ -1,7 +1,7 @@
 import ChatRepo
 import MEGAAppPresentation
+import MEGAAppSDKRepo
 import MEGADomain
-import MEGASDKRepo
 import SwiftUI
 
 final class WaitingRoomParticipantsListRouter: WaitingRoomParticipantsListRouting {

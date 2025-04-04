@@ -1,8 +1,8 @@
 import Foundation
 @testable import MEGA
+import MEGAAppSDKRepo
+import MEGAAppSDKRepoMock
 import MEGADomain
-import MEGASDKRepo
-import MEGASDKRepoMock
 
 final class MockPhotoBrowserDataProvider: PhotoBrowserDataProviderProtocol, @unchecked Sendable {
     

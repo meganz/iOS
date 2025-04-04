@@ -1,7 +1,7 @@
 import MEGAAppPresentation
+import MEGAAppSDKRepo
 import MEGADomain
 import MEGAFoundation
-import MEGASDKRepo
 
 @MainActor
 @objc final class BrowserViewModel: NSObject {

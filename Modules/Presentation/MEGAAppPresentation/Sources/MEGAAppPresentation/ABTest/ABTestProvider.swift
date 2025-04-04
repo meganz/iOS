@@ -1,5 +1,5 @@
+import MEGAAppSDKRepo
 import MEGADomain
-import MEGASDKRepo
 
 public protocol ABTestProviderProtocol: Sendable {
     func abTestVariant(for: ABTestFlagKey) async -> ABTestVariant

@@ -1,9 +1,9 @@
 import Combine
 @testable import MEGA
+import MEGAAppSDKRepoMock
 import MEGADomain
 import MEGADomainMock
 import MEGAL10n
-import MEGASDKRepoMock
 import XCTest
 
 @MainActor

@@ -1,10 +1,10 @@
 import ChatRepo
 import ContentLibraries
+import MEGAAppSDKRepo
 import MEGADesignToken
 import MEGADomain
 import MEGAL10n
 import MEGAPermissions
-import MEGASDKRepo
 import UIKit
 
 protocol AlbumToolbarProvider {

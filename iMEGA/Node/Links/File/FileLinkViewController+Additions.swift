@@ -1,6 +1,6 @@
 import Accounts
+import MEGAAppSDKRepo
 import MEGADomain
-import MEGASDKRepo
 import MEGASwift
 
 extension FileLinkViewController {

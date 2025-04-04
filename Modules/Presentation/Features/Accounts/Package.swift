@@ -25,7 +25,7 @@ let package = Package(
         .package(path: "../../../Localization/MEGAL10n"),
         .package(path: "../../MEGAAppPresentation"),
         .package(path: "../../../UI/MEGASwiftUI"),
-        .package(path: "../../Repository/MEGASDKRepo"),
+        .package(path: "../../Repository/MEGAAppSDKRepo"),
         .package(path: "../../../Infrastracture/MEGATest"),
         .package(path: "../../../MEGAAssets"),
         .package(path: "../MEGAUI"),
@@ -58,7 +58,7 @@ let package = Package(
                            "MEGATest",
                            .product(name: "MEGAAppPresentationMock", package: "MEGAAppPresentation"),
                            .product(name: "MEGADomainMock", package: "MEGADomain"),
-                           .product(name: "MEGASDKRepoMock", package: "MEGASDKRepo"),
+                           .product(name: "MEGAAppSDKRepoMock", package: "MEGAAppSDKRepo"),
                            .product(name: "GoogleMobileAds", package: "swift-package-manager-google-mobile-ads")],
             swiftSettings: settings
         )

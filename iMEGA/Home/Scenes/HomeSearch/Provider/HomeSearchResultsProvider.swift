@@ -1,10 +1,10 @@
 import AsyncAlgorithms
 import Combine
 import MEGAAppPresentation
+import MEGAAppSDKRepo
 import MEGADomain
 import MEGAL10n
 import MEGASdk
-import MEGASDKRepo
 import MEGASwift
 import Search
 

@@ -1,7 +1,7 @@
 import FileProvider
 import Foundation
+import MEGAAppSDKRepo
 import MEGAPickerFileProviderDomain
-import MEGASDKRepo
 
 public struct FileProviderItemMetadataRepository: FileProviderItemMetadataRepositoryProtocol {
     public static var newRepo: FileProviderItemMetadataRepository {

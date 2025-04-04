@@ -1,7 +1,7 @@
 import MEGAAppPresentation
+import MEGAAppSDKRepo
 import MEGADomain
 import MEGAL10n
-import MEGASDKRepo
 
 struct ShareVideoPlaylistLinkInitialSections {
     private let videoPlaylist: VideoPlaylistEntity

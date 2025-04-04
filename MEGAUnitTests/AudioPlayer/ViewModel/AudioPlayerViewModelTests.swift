@@ -2,10 +2,10 @@
 import MEGAAnalyticsiOS
 import MEGAAppPresentation
 import MEGAAppPresentationMock
+import MEGAAppSDKRepoMock
 import MEGADomain
 import MEGADomainMock
 import MEGAL10n
-import MEGASDKRepoMock
 import MEGATest
 import XCTest
 

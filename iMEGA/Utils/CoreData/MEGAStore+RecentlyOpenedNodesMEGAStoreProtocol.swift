@@ -1,7 +1,7 @@
 import CoreData
 import Foundation
+import MEGAAppSDKRepo
 import MEGADomain
-import MEGASDKRepo
 
 extension MEGAStore: RecentlyOpenedNodesMEGAStoreProtocol {
     

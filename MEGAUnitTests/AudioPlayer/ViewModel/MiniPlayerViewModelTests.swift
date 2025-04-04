@@ -1,8 +1,8 @@
 @testable import MEGA
+import MEGAAppSDKRepoMock
 import MEGADomain
 import MEGADomainMock
 import MEGAFoundation
-import MEGASDKRepoMock
 import XCTest
 
 final class MiniPlayerViewModelTests: XCTestCase {

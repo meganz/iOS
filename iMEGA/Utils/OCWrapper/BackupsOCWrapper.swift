@@ -1,5 +1,5 @@
+import MEGAAppSDKRepo
 import MEGADomain
-import MEGASDKRepo
 
 @objc class BackupsOCWrapper: NSObject {
     let backupsUseCase = BackupsUseCase(backupsRepository: BackupsRepository.newRepo, nodeRepository: NodeRepository.newRepo)

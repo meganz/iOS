@@ -1,7 +1,7 @@
 import Combine
 import Foundation
+import MEGAAppSDKRepo
 import MEGADomain
-import MEGASDKRepo
 import SwiftUI
 
 @MainActor

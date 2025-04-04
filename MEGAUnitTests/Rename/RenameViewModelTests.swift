@@ -1,8 +1,8 @@
 import DeviceCenter
 @testable import MEGA
+import MEGAAppSDKRepoMock
 import MEGADomainMock
 import MEGAL10n
-import MEGASDKRepoMock
 import XCTest
 
 class RenameViewModelTests: XCTestCase {

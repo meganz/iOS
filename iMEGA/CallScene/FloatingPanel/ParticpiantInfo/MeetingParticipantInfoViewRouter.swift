@@ -1,9 +1,9 @@
 import ChatRepo
 import MEGAAppPresentation
+import MEGAAppSDKRepo
 import MEGADomain
 import MEGAL10n
 import MEGARepo
-import MEGASDKRepo
 
 protocol MeetingParticipantInfoViewRouting: Routing {
     func showInfo(withEmail email: String?)

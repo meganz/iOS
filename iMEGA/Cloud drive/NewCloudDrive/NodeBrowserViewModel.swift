@@ -2,9 +2,9 @@ import Combine
 import Foundation
 import MEGAAnalyticsiOS
 import MEGAAppPresentation
+import MEGAAppSDKRepo
 import MEGADomain
 import MEGAL10n
-import MEGASDKRepo
 import Search
 import SwiftUI
 

@@ -1,6 +1,6 @@
+import MEGAAppSDKRepo
 import MEGADomain
 import MEGAL10n
-import MEGASDKRepo
 
 /// Factory mean to be used as a single point of creating CMConfigEntity inside new Cloud Drive (NodeBrowserView)
 /// Previous implementation is sprinkled throughout CloudDriveViewController extensions and impossible to refactor out with high confidence

@@ -1,9 +1,9 @@
 import Chat
 import ChatRepo
 import MEGAAppPresentation
+import MEGAAppSDKRepo
 import MEGADomain
 import MEGARepo
-import MEGASDKRepo
 
 protocol MeetingParticipantsLayoutRouting: AnyObject, Routing {
     func showRenameChatAlert()

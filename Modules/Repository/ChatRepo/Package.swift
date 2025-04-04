@@ -23,7 +23,7 @@ let package = Package(
         .package(path: "../../DataSource/MEGASdk"),
         .package(path: "../../DataSource/MEGAChatSdk"),
         .package(path: "../../Domain/MEGADomain"),
-        .package(path: "../../Repository/MEGASDKRepo"),
+        .package(path: "../../Repository/MEGAAppSDKRepo"),
         .package(path: "../../Infrastracture/MEGATest")
     ],
     targets: [
@@ -33,7 +33,7 @@ let package = Package(
                 "MEGADomain",
                 "MEGAChatSdk",
                 "MEGASdk",
-                "MEGASDKRepo"
+                "MEGAAppSDKRepo"
             ],
             cxxSettings: [
                 .define("ENABLE_CHAT")
@@ -52,7 +52,7 @@ let package = Package(
                 "ChatRepoMock",
                 "MEGATest",
                 .product(name: "MEGADomainMock", package: "MEGADomain"),
-                .product(name: "MEGASDKRepoMock", package: "MEGASDKRepo")
+                .product(name: "MEGAAppSDKRepoMock", package: "MEGAAppSDKRepo")
             ],
             swiftSettings: settings
         )

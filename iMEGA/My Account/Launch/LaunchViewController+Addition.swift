@@ -1,7 +1,7 @@
 import Accounts
+import MEGAAppSDKRepo
 import MEGADesignToken
 import MEGADomain
-import MEGASDKRepo
 import SwiftUI
 
 extension LaunchViewController {

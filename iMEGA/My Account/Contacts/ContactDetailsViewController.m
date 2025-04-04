@@ -26,7 +26,7 @@
 @import ChatRepo;
 @import MEGAL10nObjc;
 @import MEGAUIKit;
-@import MEGASDKRepo;
+@import MEGAAppSDKRepo;
 
 typedef NS_ENUM(NSUInteger, ContactDetailsSection) {
     ContactDetailsSectionDonotDisturb = 0,

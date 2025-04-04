@@ -1,11 +1,11 @@
 import Chat
 import ChatRepo
 import MEGAAppPresentation
+import MEGAAppSDKRepo
 import MEGADomain
 import MEGAL10n
 import MEGAPermissions
 import MEGARepo
-import MEGASDKRepo
 import PanModal
 import SwiftUI
 

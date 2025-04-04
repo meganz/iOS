@@ -1,5 +1,5 @@
+import MEGAAppSDKRepo
 import MEGADomain
-import MEGASDKRepo
 
 extension BrowserViewController {
     private func browserControllers(for nodes: [NodeEntity], currentTargetNodeHandle: HandleEntity?) -> [BrowserViewController] {

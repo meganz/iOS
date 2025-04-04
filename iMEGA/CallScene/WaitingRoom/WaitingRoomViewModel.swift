@@ -1,10 +1,10 @@
 import Combine
 import MEGAAnalyticsiOS
 import MEGAAppPresentation
+import MEGAAppSDKRepo
 import MEGADomain
 import MEGAL10n
 import MEGAPermissions
-import MEGASDKRepo
 
 protocol WaitingRoomViewRouting: Routing {
     func dismiss(completion: (() -> Void)?)

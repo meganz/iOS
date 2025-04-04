@@ -4,9 +4,9 @@ import Combine
 import Intents
 import MEGAAnalyticsiOS
 import MEGAAppPresentation
+import MEGAAppSDKRepo
 import MEGADomain
 import MEGAL10n
-import MEGASDKRepo
 
 @MainActor
 protocol MainTabBarCallsRouting: AnyObject {

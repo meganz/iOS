@@ -1,8 +1,8 @@
 import Accounts
+import MEGAAppSDKRepo
 import MEGADesignToken
 import MEGADomain
 import MEGAL10n
-import MEGASDKRepo
 import MEGASwift
 import UIKit
 

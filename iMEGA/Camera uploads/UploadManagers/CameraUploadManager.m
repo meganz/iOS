@@ -16,7 +16,7 @@
 #import "NSError+CameraUpload.h"
 #import "MEGA-Swift.h"
 @import FirebaseCrashlytics;
-@import MEGASDKRepo;
+@import MEGAAppSDKRepo;
 
 static const NSTimeInterval LoadMediaInfoTimeout = 60 * 15;
 

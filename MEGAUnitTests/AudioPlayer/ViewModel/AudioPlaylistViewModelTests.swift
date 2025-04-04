@@ -2,7 +2,7 @@
 import MEGAAnalyticsiOS
 import MEGAAppPresentation
 import MEGAAppPresentationMock
-import MEGASDKRepoMock
+import MEGAAppSDKRepoMock
 import XCTest
 
 final class AudioPlaylistViewModelTests: XCTestCase {

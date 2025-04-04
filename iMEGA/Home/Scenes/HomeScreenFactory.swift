@@ -2,12 +2,12 @@ import ChatRepo
 import Foundation
 import MEGAAnalyticsiOS
 import MEGAAppPresentation
+import MEGAAppSDKRepo
 import MEGADesignToken
 import MEGADomain
 import MEGAL10n
 import MEGAPermissions
 import MEGARepo
-import MEGASDKRepo
 import MEGASwift
 import MEGASwiftUI
 import MEGAUI

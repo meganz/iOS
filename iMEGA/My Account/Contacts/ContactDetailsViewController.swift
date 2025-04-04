@@ -1,10 +1,10 @@
 import ChatRepo
 import MEGAAppPresentation
+import MEGAAppSDKRepo
 import MEGAAssets
 import MEGADesignToken
 import MEGADomain
 import MEGAL10n
-import MEGASDKRepo
 import MEGAUI
 
 extension ContactDetailsViewController {

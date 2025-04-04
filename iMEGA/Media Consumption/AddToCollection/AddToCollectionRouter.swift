@@ -1,7 +1,7 @@
 import MEGAAppPresentation
+import MEGAAppSDKRepo
 import MEGADomain
 import MEGAPhotos
-import MEGASDKRepo
 import MEGASwiftUI
 import SwiftUI
 

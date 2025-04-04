@@ -1,7 +1,7 @@
 import ChatRepo
 import MEGAAppPresentation
+import MEGAAppSDKRepo
 import MEGADomain
-import MEGASDKRepo
 import UIKit
 
 protocol MediaDiscoveryRouting: Routing {

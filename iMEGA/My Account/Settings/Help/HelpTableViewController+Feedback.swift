@@ -1,5 +1,5 @@
+import MEGAAppSDKRepo
 import MEGADomain
-import MEGASDKRepo
 
 extension HelpTableViewController {
     @objc func createSendFeedbackViewModel() -> SendFeedbackViewModel {

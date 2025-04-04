@@ -1,9 +1,9 @@
 import ChatRepo
+import MEGAAppSDKRepo
 import MEGADesignToken
 import MEGADomain
 import MEGAL10n
 import MEGAPermissions
-import MEGASDKRepo
 import UIKit
 
 class ChatSharedItemsViewController: UIViewController {

@@ -1,8 +1,8 @@
 import ContentLibraries
 import MEGAAppPresentation
+import MEGAAppSDKRepo
 import MEGADomain
 import MEGASdk
-import MEGASDKRepo
 import SwiftUI
 import Video
 

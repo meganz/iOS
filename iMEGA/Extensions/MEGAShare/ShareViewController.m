@@ -25,7 +25,7 @@
 
 @import ChatRepo;
 @import Firebase;
-@import MEGASDKRepo;
+@import MEGAAppSDKRepo;
 @import MEGAL10nObjc;
 
 #define MNZ_ANIMATION_TIME 0.35

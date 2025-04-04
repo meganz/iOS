@@ -1,7 +1,7 @@
 @testable import MEGA
 import MEGAAppPresentationMock
+import MEGAAppSDKRepoMock
 import MEGADomainMock
-import MEGASDKRepoMock
 import XCTest
 
 final class NodeInfoViewControllerTests: XCTestCase {

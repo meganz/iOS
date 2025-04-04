@@ -1,7 +1,7 @@
 import Foundation
+import MEGAAppSDKRepo
 import MEGADomain
 import MEGAPermissions
-import MEGASDKRepo
 import MEGASwift
 
 protocol HomeRecentActionViewModelInputs: AnyObject {

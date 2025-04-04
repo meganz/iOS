@@ -1,8 +1,8 @@
 import ChatRepo
 import ChatRepoMock
+import MEGAAppSDKRepoMock
 import MEGAChatSdk
 import MEGADomain
-import MEGASDKRepoMock
 import MEGATest
 import XCTest
 

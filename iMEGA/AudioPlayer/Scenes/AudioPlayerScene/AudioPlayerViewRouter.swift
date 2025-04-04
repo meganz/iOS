@@ -2,8 +2,8 @@ import Accounts
 import Foundation
 import MEGAAnalyticsiOS
 import MEGAAppPresentation
+import MEGAAppSDKRepo
 import MEGADomain
-import MEGASDKRepo
 
 @MainActor
 final class AudioPlayerViewRouter: NSObject, AudioPlayerViewRouting {

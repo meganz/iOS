@@ -1,10 +1,10 @@
 import ChatRepo
 import Foundation
 import MEGAAppPresentation
+import MEGAAppSDKRepo
 import MEGADomain
 import MEGAPermissions
 import MEGARepo
-import MEGASDKRepo
 
 protocol MeetingCreatingViewRouting: Routing {
     func dismiss(completion: (() -> Void)?)

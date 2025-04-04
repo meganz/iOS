@@ -1,10 +1,10 @@
 import ChatRepo
 import MEGAAppPresentation
+import MEGAAppSDKRepo
 import MEGADomain
 import MEGAL10n
 import MEGAPermissions
 import MEGARepo
-import MEGASDKRepo
 
 final class WaitingRoomViewRouter: NSObject, WaitingRoomViewRouting {
     private let presenter: UIViewController?

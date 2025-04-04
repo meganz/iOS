@@ -1,7 +1,7 @@
 import MEGAAppPresentation
+import MEGAAppSDKRepo
 import MEGADomain
 import MEGAL10n
-import MEGASDKRepo
 import SwiftUI
 
 final class CallsSettingsViewRouter: Routing {

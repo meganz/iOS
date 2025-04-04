@@ -1,7 +1,7 @@
 import MEGAAnalyticsiOS
 import MEGAAppPresentation
+import MEGAAppSDKRepo
 import MEGADomain
-import MEGASDKRepo
 
 @MainActor
 protocol FilesExplorerViewControllerDelegate: AnyObject {

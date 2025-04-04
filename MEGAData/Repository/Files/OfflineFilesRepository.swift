@@ -1,6 +1,6 @@
 import Foundation
+import MEGAAppSDKRepo
 import MEGADomain
-import MEGASDKRepo
 
 final class OfflineFilesRepository: OfflineFilesRepositoryProtocol {
     static var newRepo: OfflineFilesRepository {

@@ -20,12 +20,12 @@ let package = Package(
     ],
     dependencies: [
         .package(path: "../../Domain/MEGAPickerFileProviderDomain"),
-        .package(path: "../MEGASDKRepo")
+        .package(path: "../MEGAAppSDKRepo")
     ],
     targets: [
         .target(
             name: "MEGAPickerFileProviderRepo",
-            dependencies: ["MEGAPickerFileProviderDomain", "MEGASDKRepo"],
+            dependencies: ["MEGAPickerFileProviderDomain", "MEGAAppSDKRepo"],
             swiftSettings: settings
         ),
         .testTarget(

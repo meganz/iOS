@@ -1,7 +1,7 @@
+import MEGAAppSDKRepo
 import MEGADomain
 import MEGAL10n
 import MEGARepo
-import MEGASDKRepo
 
 @objc final class SaveNodeUseCaseOCWrapper: NSObject, Sendable {
     private let saveNodeUseCase: any SaveNodeUseCaseProtocol

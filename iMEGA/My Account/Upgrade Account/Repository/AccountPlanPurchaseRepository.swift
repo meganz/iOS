@@ -1,7 +1,7 @@
 @preconcurrency import Combine
+import MEGAAppSDKRepo
 import MEGADomain
 import MEGASdk
-import MEGASDKRepo
 import MEGASwift
 
 final class AccountPlanPurchaseRepository: NSObject, AccountPlanPurchaseRepositoryProtocol, Sendable {

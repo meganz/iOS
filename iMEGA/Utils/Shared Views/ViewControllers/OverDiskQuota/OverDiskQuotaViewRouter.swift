@@ -1,6 +1,6 @@
 import MEGAAppPresentation
+import MEGAAppSDKRepo
 import MEGADomain
-import MEGASDKRepo
 
 protocol OverDiskQuotaViewRouting: Routing {
     func dismiss()

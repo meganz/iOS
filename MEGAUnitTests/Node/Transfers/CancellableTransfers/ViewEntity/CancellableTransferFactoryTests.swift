@@ -1,7 +1,7 @@
 @testable import MEGA
+import MEGAAppSDKRepo
+import MEGAAppSDKRepoMock
 import MEGADomain
-import MEGASDKRepo
-import MEGASDKRepoMock
 import XCTest
 
 final class CancellableTransferFactoryTests: XCTestCase {

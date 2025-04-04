@@ -1,9 +1,9 @@
 import MEGAAppPresentation
+import MEGAAppSDKRepo
 import MEGADesignToken
 import MEGADomain
 import MEGAFoundation
 import MEGAL10n
-import MEGASDKRepo
 import SwiftUI
 
 extension ContactsViewController {

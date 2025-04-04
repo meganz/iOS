@@ -1,8 +1,8 @@
 import ChatRepo
 import Foundation
+import MEGAAppSDKRepo
 import MEGADomain
 import MEGARepo
-import MEGASDKRepo
 import UIKit
 
 @MainActor

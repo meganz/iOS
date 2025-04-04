@@ -1,7 +1,7 @@
 @testable import MEGA
+import MEGAAppSDKRepo
 import MEGADomain
 import MEGADomainMock
-import MEGASDKRepo
 import XCTest
 
 class FileCacheRepositoryTests: XCTestCase {

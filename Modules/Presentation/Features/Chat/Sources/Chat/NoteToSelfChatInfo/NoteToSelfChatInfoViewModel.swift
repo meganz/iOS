@@ -1,8 +1,8 @@
 import Combine
 import MEGAAppPresentation
+import MEGAAppSDKRepo
 import MEGADomain
 import MEGAL10n
-import MEGASDKRepo
 
 @MainActor
 public final class NoteToSelfChatInfoViewModel: ObservableObject {

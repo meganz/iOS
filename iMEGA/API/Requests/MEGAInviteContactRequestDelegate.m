@@ -7,7 +7,7 @@
 #import "UIApplication+MNZCategory.h"
 
 @import MEGAL10nObjc;
-@import MEGASDKRepo;
+@import MEGAAppSDKRepo;
 
 @interface MEGAInviteContactRequestDelegate ()
 

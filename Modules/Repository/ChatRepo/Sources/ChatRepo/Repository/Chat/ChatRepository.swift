@@ -1,7 +1,7 @@
 @preconcurrency import Combine
+import MEGAAppSDKRepo
 import MEGAChatSdk
 import MEGADomain
-import MEGASDKRepo
 import MEGASwift
 
 public final class ChatRepository: ChatRepositoryProtocol {

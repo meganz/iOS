@@ -1,5 +1,5 @@
 @testable import MEGA
-import MEGASDKRepoMock
+import MEGAAppSDKRepoMock
 import XCTest
 
 final class MEGANode_FilePaths_Tests: XCTestCase {

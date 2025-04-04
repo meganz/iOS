@@ -7,7 +7,7 @@
 #import "MEGAStore.h"
 #import "MEGA-Swift.h"
 #import "NSString+MNZCategory.h"
-@import MEGASDKRepo;
+@import MEGAAppSDKRepo;
 
 @import MEGAL10nObjc;
 

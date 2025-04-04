@@ -1,8 +1,8 @@
 @testable import MEGA
 import MEGAAnalyticsiOS
 import MEGAAppPresentationMock
+import MEGAAppSDKRepoMock
 import MEGADomain
-import MEGASDKRepoMock
 import MEGATest
 import XCTest
 

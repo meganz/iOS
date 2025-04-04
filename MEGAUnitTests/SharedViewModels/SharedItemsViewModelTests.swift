@@ -6,7 +6,7 @@ import MEGADesignToken
 import MEGADomainMock
 import MEGAAppPresentation
 import MEGAAppPresentationMock
-import MEGASDKRepoMock
+import MEGAAppSDKRepoMock
 import MEGASwift
 import XCTest
 

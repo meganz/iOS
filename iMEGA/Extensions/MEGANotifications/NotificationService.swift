@@ -1,8 +1,8 @@
 import ChatRepo
 import Firebase
+import MEGAAppSDKRepo
 import MEGADomain
 import MEGAL10n
-import MEGASDKRepo
 import MEGASwift
 import SAMKeychain
 import UserNotifications

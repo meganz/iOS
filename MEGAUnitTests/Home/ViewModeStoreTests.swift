@@ -1,9 +1,9 @@
 @testable import MEGA
+import MEGAAppSDKRepo
+import MEGAAppSDKRepoMock
 import MEGADomain
 import MEGADomainMock
 import MEGASdk
-import MEGASDKRepo
-import MEGASDKRepoMock
 import XCTest
 
 fileprivate extension ViewModeLocation {

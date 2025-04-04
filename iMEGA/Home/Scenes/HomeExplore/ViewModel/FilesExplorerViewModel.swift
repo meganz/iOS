@@ -1,8 +1,8 @@
 import AsyncAlgorithms
 import MEGAAppPresentation
+import MEGAAppSDKRepo
 import MEGADomain
 import MEGAFoundation
-import MEGASDKRepo
 
 enum FilesExplorerAction: ActionType {
     case onViewReady

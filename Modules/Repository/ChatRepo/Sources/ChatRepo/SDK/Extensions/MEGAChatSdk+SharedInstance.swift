@@ -1,5 +1,5 @@
+import MEGAAppSDKRepo
 import MEGAChatSdk
-import MEGASDKRepo
 
 public extension MEGAChatSdk {
     static let sharedChatSdk: MEGAChatSdk = {

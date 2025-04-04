@@ -1,6 +1,6 @@
 import Foundation
+import MEGAAppSDKRepo
 import MEGAFoundation
-import MEGASDKRepo
 
 @objc final class OverDiskQuotaCommand: NSObject {
 

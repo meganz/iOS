@@ -1,6 +1,6 @@
 @testable import MEGA
+import MEGAAppSDKRepoMock
 import MEGADomain
-import MEGASDKRepoMock
 import Testing
 
 struct OfflineFilesRepositoryTestSuite {

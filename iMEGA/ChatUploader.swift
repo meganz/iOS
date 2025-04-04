@@ -1,5 +1,5 @@
 import ChatRepo
-import MEGASDKRepo
+import MEGAAppSDKRepo
 
 protocol ChatUploaderProtocol {
     func upload(image: UIImage, chatRoomId: UInt64)

@@ -1,6 +1,6 @@
 import Foundation
+import MEGAAppSDKRepo
 import MEGADomain
-import MEGASDKRepo
 
 /// This Extension is created to support Swift first code and migrated from old Objective-C mnz_updatedURLWithCurrentAddress.
 extension URL {

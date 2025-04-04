@@ -1,5 +1,5 @@
+import MEGAAppSDKRepo
 import MEGAL10n
-import MEGASDKRepo
 
 extension CameraUploadNodeAccess {
     #if MNZ_SHARE_EXTENSION

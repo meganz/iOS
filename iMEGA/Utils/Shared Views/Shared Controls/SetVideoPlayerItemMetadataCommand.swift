@@ -1,4 +1,4 @@
-import MEGASDKRepo
+import MEGAAppSDKRepo
 import MEGASwift
 
 @MainActor

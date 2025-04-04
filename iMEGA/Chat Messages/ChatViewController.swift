@@ -1,11 +1,11 @@
 import ChatRepo
 import Combine
 import KeyboardLayoutGuide
+import MEGAAppSDKRepo
 import MEGADesignToken
 import MEGADomain
 import MEGAL10n
 import MEGAPermissions
-import MEGASDKRepo
 import MEGAUI
 import MEGAUIKit
 import MessageKit

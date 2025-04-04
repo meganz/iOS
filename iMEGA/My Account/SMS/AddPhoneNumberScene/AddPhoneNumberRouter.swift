@@ -1,6 +1,6 @@
 import Foundation
+import MEGAAppSDKRepo
 import MEGADomain
-import MEGASDKRepo
 
 @objc final class AddPhoneNumberRouter: NSObject, AddPhoneNumberRouting {
     private weak var baseViewController: UIViewController?

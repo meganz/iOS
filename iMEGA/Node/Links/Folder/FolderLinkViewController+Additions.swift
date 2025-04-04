@@ -2,11 +2,11 @@ import Accounts
 import ChatRepo
 import Foundation
 import MEGAAppPresentation
+import MEGAAppSDKRepo
 import MEGADesignToken
 import MEGADomain
 import MEGAL10n
 import MEGAPermissions
-import MEGASDKRepo
 import MEGASwift
 
 extension FolderLinkViewController {

@@ -2,9 +2,9 @@ import Accounts
 import ChatRepo
 import Combine
 import MEGAAppPresentation
+import MEGAAppSDKRepo
 import MEGADesignToken
 import MEGADomain
-import MEGASDKRepo
 import MEGAUIKit
 
 let requestStatusProgressWindowManager = RequestStatusProgressWindowManager()

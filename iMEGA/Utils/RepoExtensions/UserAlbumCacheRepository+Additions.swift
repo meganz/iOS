@@ -1,5 +1,5 @@
+import MEGAAppSDKRepo
 import MEGADomain
-import MEGASDKRepo
 
 extension UserAlbumCacheRepository: @retroactive RepositoryProtocol {
     public static let newRepo: UserAlbumCacheRepository = {

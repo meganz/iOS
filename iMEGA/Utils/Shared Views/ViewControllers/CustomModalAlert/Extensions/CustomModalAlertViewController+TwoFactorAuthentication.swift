@@ -1,6 +1,6 @@
 import Foundation
+import MEGAAppSDKRepo
 import MEGAL10n
-import MEGASDKRepo
 
 extension CustomModalAlertViewController {
     @objc func configureForTwoFactorAuthentication(requestedByUser: Bool) {

@@ -17,7 +17,7 @@
 #import "UIImageView+MNZCategory.h"
 
 @import MEGAL10nObjc;
-@import MEGASDKRepo;
+@import MEGAAppSDKRepo;
 @import MEGAUIKit;
 
 @interface ContactLinkQRViewController () <AVCaptureMetadataOutputObjectsDelegate>
