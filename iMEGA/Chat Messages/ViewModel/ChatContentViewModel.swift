@@ -71,6 +71,7 @@ final class ChatContentViewModel: ViewModelType {
     private let networkMonitorUseCase: any NetworkMonitorUseCaseProtocol
     private let callController: any CallControllerProtocol
     private let callsManager: any CallsManagerProtocol
+    private let noteToSelfNewFeatureBadgeStore: any NoteToSelfNewFeatureBadgeStoring
 
     private let router: any ChatContentRouting
     private let permissionRouter: any PermissionAlertRouting
@@ -116,6 +117,7 @@ final class ChatContentViewModel: ViewModelType {
          handleUseCase: some MEGAHandleUseCaseProtocol,
          callController: some CallControllerProtocol,
          callsManager: some CallsManagerProtocol,
+         noteToSelfNewFeatureBadgeStore: some NoteToSelfNewFeatureBadgeStoring,
          featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider
     ) {
         self.chatRoom = chatRoom
@@ -135,6 +137,7 @@ final class ChatContentViewModel: ViewModelType {
         self.handleUseCase = handleUseCase
         self.callController = callController
         self.callsManager = callsManager
+        self.noteToSelfNewFeatureBadgeStore = noteToSelfNewFeatureBadgeStore
         self.featureFlagProvider = featureFlagProvider
         self.isConnectedToNetwork = networkMonitorUseCase.isConnected()
 
@@ -161,6 +164,7 @@ final class ChatContentViewModel: ViewModelType {
             onUpdateNavigationBarButtonItems()
         case .updateContent:
             updateContentIfNeeded()
+            saveNoteToSelfNewFeatureBadgeAsPresentedIfNeeded()
         case .updateChatRoom(let chatRoom):
             self.chatRoom = chatRoom
         case .inviteParticipants(let userHandles):
@@ -574,6 +578,17 @@ final class ChatContentViewModel: ViewModelType {
         Task { [weak self] in
             for await call in callUpdates {
                 self?.onCallUpdate(call)
+            }
+        }
+    }
+    
+    private func saveNoteToSelfNewFeatureBadgeAsPresentedIfNeeded() {
+        if chatRoom.isNoteToSelf {
+            Task {
+                let shouldShowNoteToSelfNewFeatureBadge = await noteToSelfNewFeatureBadgeStore.shouldShowNoteToSelfNewFeatureBadge()
+                if shouldShowNoteToSelfNewFeatureBadge {
+                    await noteToSelfNewFeatureBadgeStore.saveNoteToSelfNewFeatureBadgeAsPresented()
+                }
             }
         }
     }
