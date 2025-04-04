@@ -1,5 +1,5 @@
 import Foundation
-import MEGAAppPresentation
+import MEGAPresentation
 
 extension UIViewController {
     
