@@ -60,4 +60,12 @@ extension ContactTableViewCell {
         nameLabel.text = Strings.Localizable.addContactButton
         shareLabel.isHidden = true
     }
+    
+    @objc func configureNoteToSelfCell(_ noteToSelfChat: MEGAChatListItem) {
+        nameLabel.text = noteToSelfChat.chatTitle()
+        avatarImageView.image = noteToSelfChat.noteToSelfImage()
+        avatarImageView.contentMode = .center
+        shareLabel.isHidden = true
+        verifiedImageView.isHidden = true
+    }
 }
