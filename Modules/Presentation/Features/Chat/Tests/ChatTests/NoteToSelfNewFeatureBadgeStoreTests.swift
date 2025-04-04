@@ -41,4 +41,12 @@ struct NoteToSelfNewFeatureBadgeStoreTests {
         let shouldShow = await harness.sut.shouldShowNoteToSelfNewFeatureBadge()
         #expect(shouldShow == (presentedCount < NoteToSelfNewFeatureBadgeStore.Constants.noteToSelfNewFeatureBadgeMaxPresentedCount))
     }
+    
+    @Test("Set as presented Note to self new feature badge count - presented count should be max value")
+    func testSetNoteToSelfNewFeatureBadgeAsPresented_shouldNotBeShownAnymore() async {
+        let harness = await Harness.presentedTimes(count: 0)
+        await harness.sut.saveNoteToSelfNewFeatureBadgeAsPresented()
+        try? await #expect(harness.userAttributeUseCase.retrieveNoteToSelfNewFeatureBadgeAttribute()?.presentedCount == NoteToSelfNewFeatureBadgeStore.Constants.noteToSelfNewFeatureBadgeMaxPresentedCount)
+    }
+    
 }
