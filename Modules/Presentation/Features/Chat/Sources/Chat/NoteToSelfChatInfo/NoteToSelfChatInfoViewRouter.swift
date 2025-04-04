@@ -46,6 +46,7 @@ public final class NoteToSelfChatInfoViewRouter: NoteToSelfChatInfoViewRouterPro
         let viewModel = NoteToSelfChatInfoViewModel(
             router: self,
             chatRoomUseCase: ChatRoomUseCase(chatRoomRepo: ChatRoomRepository.newRepo),
+            chatUseCase: ChatUseCase(chatRepo: ChatRepository.newRepo),
             chatRoom: chatRoom
         )
         let hostingVC = UIHostingController(
