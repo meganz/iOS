@@ -72,6 +72,11 @@ public extension MEGAChatSdk {
             return aDate.compare(bDate) == ComparisonResult.orderedDescending
         }
         
+        // Remove note to self chat from recents by design
+        if let index = recentChats.firstIndex(where: { $0.isNoteToSelf }) {
+            recentChats.remove(at: index)
+        }
+        
         return [MEGAChatListItem](recentChats[0..<min(max, recentChats.count)])
     }
     

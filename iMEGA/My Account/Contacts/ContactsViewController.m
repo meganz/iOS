@@ -1356,6 +1356,12 @@
                     numberOfRows = self.recentsArray.count;
                 }
                 
+            } else  if (section == 2 && [self isNoteToSelfAvailable]) {
+                if (self.searchController.isActive && ![self.searchController.searchBar.text isEqual: @""]) {
+                    numberOfRows = [[self noteToSelfChatListItem].chatTitle containsString: self.searchController.searchBar.text] ? 1 : 0;
+                } else {
+                    numberOfRows = 1;
+                }
             } else {
                 numberOfRows = [self defaultNumberOfRows];
             }
@@ -1396,7 +1402,7 @@
             break;
             
         case ContactsModeChatStartConversation:
-            numberOfSections = 3;
+            numberOfSections = [self isNoteToSelfAvailable] ? 4 : 3;
             break;
             
         default: //ContactsModeShareFoldersWith, ContactsModeChatAddParticipant, ContactsModeChatAttachParticipant, ContactsModeChatCreateGroup and ContactsModeChatNamingGroup
@@ -1450,13 +1456,13 @@
         }
             
         case ContactsModeChatStartConversation: {
+            cell = [self dequeueOrInitCellWithIdentifier:@"contactCell" indexPath:indexPath];
             if (indexPath.section == 0) {
                 ContactTableViewCell *cell = [self dequeueOrInitCellWithIdentifier:@"ContactPermissionsNameTableViewCellID" indexPath:indexPath];
                 [cell configureCellForContactsModeChatStartConversation:self.startConversationOptions[indexPath.row].intValue];
                 
                 return cell;
             } if (indexPath.section == 1) {
-                ContactTableViewCell *cell = [self dequeueOrInitCellWithIdentifier:@"contactCell" indexPath:indexPath];
                 MEGAChatListItem *chatListItem = self.recentsArray[indexPath.row];
                 MEGAChatRoom *chatRoom = [MEGAChatSdk.shared chatRoomForChatId:chatListItem.chatId];
                 cell.nameLabel.text = chatListItem.chatTitle;
@@ -1466,29 +1472,23 @@
                     cell.avatarImageView.image = [UIImage imageForName:chatListItem.title.uppercaseString size:cell.avatarImageView.frame.size backgroundColor:[UIColor iconSecondaryColor] backgroundGradientColor:UIColor.mnz_grayDBDBDB textColor:UIColor.whiteTextColor font:[UIFont systemFontOfSize:(cell.avatarImageView.frame.size.width/2.0f)]];
                     cell.verifiedImageView.hidden = YES;
                 } else {
-                    if (chatRoom.isNoteToSelf) {
-                        [cell.avatarImageView setImage:chatListItem.noteToSelfImage];
-                        [cell.avatarImageView setContentMode:UIViewContentModeCenter];
-                        [cell.shareLabel setHidden:YES];
+                    uint64_t peerHandle = chatListItem.peerHandle;
+                    cell.nameLabel.text = [chatRoom userDisplayNameForUserHandle:peerHandle];
+                    MEGAChatStatus userStatus = [MEGAChatSdk.shared userOnlineStatus:peerHandle];
+                    cell.shareLabel.text = [NSString chatStatusString:userStatus];
+                    cell.onlineStatusView.backgroundColor =  [UIColor colorWithChatStatus: userStatus];
+                    [cell.avatarImageView mnz_setImageForUserHandle:peerHandle name:cell.nameLabel.text];
+                    NSString *peerEmail = [MEGAChatSdk.shared userEmailFromCacheByUserHandle:peerHandle];
+                    if (peerEmail) {
+                        MEGAUser *user = [MEGASdk.shared contactForEmail:peerEmail];
+                        cell.verifiedImageView.hidden = ![MEGASdk.shared areCredentialsVerifiedOfUser:user];
                     } else {
-                        uint64_t peerHandle = chatListItem.peerHandle;
-                        cell.nameLabel.text = [chatRoom userDisplayNameForUserHandle:peerHandle];
-                        MEGAChatStatus userStatus = [MEGAChatSdk.shared userOnlineStatus:peerHandle];
-                        cell.shareLabel.text = [NSString chatStatusString:userStatus];
-                        cell.onlineStatusView.backgroundColor =  [UIColor colorWithChatStatus: userStatus];
-                        [cell.avatarImageView mnz_setImageForUserHandle:peerHandle name:cell.nameLabel.text];
-                        NSString *peerEmail = [MEGAChatSdk.shared userEmailFromCacheByUserHandle:peerHandle];
-                        if (peerEmail) {
-                            MEGAUser *user = [MEGASdk.shared contactForEmail:peerEmail];
-                            cell.verifiedImageView.hidden = ![MEGASdk.shared areCredentialsVerifiedOfUser:user];
-                        } else {
-                            cell.verifiedImageView.hidden = YES;
-                        }
+                        cell.verifiedImageView.hidden = YES;
                     }
                 }
-                return cell;
+            } else if (indexPath.section == 2 && [self isNoteToSelfAvailable]) {
+                [cell configureNoteToSelfCell:[self noteToSelfChatListItem]];
             } else {
-                cell = [self dequeueOrInitCellWithIdentifier:@"contactCell" indexPath:indexPath];
                 user = [self getUserAndSetIndexPath:indexPath];
                 [cell configureDefaultCellForUser:user newUser:NO];
             }
@@ -1698,6 +1698,11 @@
                 [self dismissViewControllerAnimated:YES completion:^{
                     MEGAChatListItem *chatListItem = self.recentsArray[indexPath.row];
                     self.chatSelected(chatListItem.chatId);
+                }];
+            } else if (indexPath.section == 2 && [self isNoteToSelfAvailable]) {
+                [self dismissViewControllerAnimated:YES completion:^{
+                    MEGAChatListItem *noteToSelfChat = [self noteToSelfChatListItem];
+                    self.chatSelected(noteToSelfChat.chatId);
                 }];
             } else {
                 MEGAUser *user = [self userAtIndexPath:indexPath];

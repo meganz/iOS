@@ -22,6 +22,7 @@
 @property (nonatomic) SendMode sendMode;
 @property (nonatomic) void (^completion)(NSArray<NSNumber *> *chatIdNumbers, NSArray<MEGAChatMessage *> *sentMessages);
 @property (nonatomic) uint64_t sourceChatId;
+@property (nonatomic, strong) NSMutableArray *usersAndGroupChatsMutableArray;
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
