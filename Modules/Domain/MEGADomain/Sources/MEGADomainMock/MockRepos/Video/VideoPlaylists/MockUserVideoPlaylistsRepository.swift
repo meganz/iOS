@@ -22,24 +22,24 @@ public final class MockUserVideoPlaylistsRepository: UserVideoPlaylistsRepositor
     public let setsUpdatedAsyncSequence: AnyAsyncSequence<[SetEntity]>
     public let setElementsUpdatedAsyncSequence: AnyAsyncSequence<[SetElementEntity]>
     private let videoPlaylistsResult: [SetEntity]
-    private let addVideosToVideoPlaylistResult: Result<VideoPlaylistCreateSetElementsResultEntity, Error>
-    private let deleteVideosResult: Result<VideoPlaylistCreateSetElementsResultEntity, Error>
-    private let deleteVideoPlaylistResult: Result<VideoPlaylistEntity, Error>
+    private let addVideosToVideoPlaylistResult: Result<VideoPlaylistCreateSetElementsResultEntity, any Error>
+    private let deleteVideosResult: Result<VideoPlaylistCreateSetElementsResultEntity, any Error>
+    private let deleteVideoPlaylistResult: Result<VideoPlaylistEntity, any Error>
     private let videoPlaylistContentResult: [SetElementEntity]
-    private let createVideoPlaylistResult: Result<SetEntity, Error>
-    private let updateVideoPlaylistNameResult: Result<Void, Error>
+    private let createVideoPlaylistResult: Result<SetEntity, any Error>
+    private let updateVideoPlaylistNameResult: Result<Void, any Error>
     private let playlistContentUpdated: AnyAsyncSequence<[SetElementEntity]>
     
     public init(
         videoPlaylistsResult: [SetEntity] = [],
-        addVideosToVideoPlaylistResult: Result<VideoPlaylistCreateSetElementsResultEntity, Error> = .failure(GenericErrorEntity()),
-        deleteVideosResult: Result<VideoPlaylistCreateSetElementsResultEntity, Error> = .failure(GenericErrorEntity()),
-        deleteVideoPlaylistResult: Result<VideoPlaylistEntity, Error> = .failure(GenericErrorEntity()),
+        addVideosToVideoPlaylistResult: Result<VideoPlaylistCreateSetElementsResultEntity, any Error> = .failure(GenericErrorEntity()),
+        deleteVideosResult: Result<VideoPlaylistCreateSetElementsResultEntity, any Error> = .failure(GenericErrorEntity()),
+        deleteVideoPlaylistResult: Result<VideoPlaylistEntity, any Error> = .failure(GenericErrorEntity()),
         videoPlaylistContentResult: [SetElementEntity] = [],
-        createVideoPlaylistResult: Result<SetEntity, Error> = .failure(GenericErrorEntity()),
+        createVideoPlaylistResult: Result<SetEntity, any Error> = .failure(GenericErrorEntity()),
         setsUpdatedAsyncSequence: AnyAsyncSequence<[SetEntity]> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
         setElementsUpdatedAsyncSequence: AnyAsyncSequence<[SetElementEntity]> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
-        updateVideoPlaylistNameResult: Result<Void, Error> = .failure(GenericErrorEntity()),
+        updateVideoPlaylistNameResult: Result<Void, any Error> = .failure(GenericErrorEntity()),
         playlistContentUpdated: AnyAsyncSequence<[SetElementEntity]> = EmptyAsyncSequence<[SetElementEntity]>().eraseToAnyAsyncSequence()
 
     ) {

@@ -12,7 +12,7 @@ public actor MockPhotosRepositoryTaskManager: PhotosRepositoryTaskManagerProtoco
     private var _didMonitoringTaskStop = true
     
     public init(didMonitoringTaskStop: Bool = true,
-                loadPhotosResult: Result<[NodeEntity], Error> = .failure(GenericErrorEntity()),
+                loadPhotosResult: Result<[NodeEntity], any Error> = .failure(GenericErrorEntity()),
                 photosUpdatedAsyncSequence: AnyAsyncSequence<[NodeEntity]> = EmptyAsyncSequence<[NodeEntity]>().eraseToAnyAsyncSequence()) {
         _didMonitoringTaskStop = didMonitoringTaskStop
         self.loadPhotosResult = loadPhotosResult

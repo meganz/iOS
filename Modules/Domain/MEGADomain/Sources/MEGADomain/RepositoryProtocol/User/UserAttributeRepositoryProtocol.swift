@@ -11,7 +11,7 @@ public protocol UserAttributeRepositoryProtocol: Sendable {
     ///   - attribute: UserAttributeEntity location of where the value will be set in userAttribute
     ///   - key: String key of where the value will be stored in the dictionary, that is stored on the attribute
     ///   - object: Encodable object to be stored as a JSON string.
-    func mergeUserAttribute(_ attribute: UserAttributeEntity, key: String, object: Encodable) async throws
+    func mergeUserAttribute<T: Encodable>(_ attribute: UserAttributeEntity, key: String, object: T) async throws
     func updateUserAttribute(_ attribute: UserAttributeEntity, key: String, value: String) async throws
     
     ///  Fetches dictionary structure under the given attribute. If the attribute does not exist or was never set before, it will throw an error. If a optional value has been set previously it will return the value stored under the attribute.

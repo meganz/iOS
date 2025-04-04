@@ -166,15 +166,7 @@ final class RecentlyOpenedNodesUseCaseTests: XCTestCase {
             mediaDestination: MediaDestinationEntity(fingerprint: node.fingerprint ?? "", destination: 1, timescale: 1)
         )
         
-        var receivedError: Error?
-        do {
-            try sut.saveNode(recentlyOpenedNode: recentlyOpenedNodeEntity)
-            XCTFail("expect to throw error, but not throwing error instead.")
-        } catch {
-            receivedError = error
-        }
-        
-        XCTAssertNotNil(receivedError)
+        XCTAssertThrowsError(try sut.saveNode(recentlyOpenedNode: recentlyOpenedNodeEntity))
     }
     
     func testSaveNode_whenCalledSuccessfully_doesNotThrowError() throws {

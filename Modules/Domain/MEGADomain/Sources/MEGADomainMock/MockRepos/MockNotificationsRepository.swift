@@ -14,7 +14,7 @@ public struct MockNotificationsRepository: NotificationsRepositoryProtocol {
     }
     private let state: State
     private let enabledNotifications: [NotificationIDEntity]
-    private let notificationsResult: Result<[NotificationEntity], Error>
+    private let notificationsResult: Result<[NotificationEntity], any Error>
     private let unreadNotificationIDs: [NotificationIDEntity]
     
     public static var newRepo: MockNotificationsRepository {
@@ -24,7 +24,7 @@ public struct MockNotificationsRepository: NotificationsRepositoryProtocol {
     public init(
         lastReadNotification: NotificationIDEntity = 1,
         enabledNotifications: [NotificationIDEntity] = [1],
-        notificationsResult: Result<[NotificationEntity], Error> = .failure(GenericErrorEntity()),
+        notificationsResult: Result<[NotificationEntity], any Error> = .failure(GenericErrorEntity()),
         unreadNotificationIDs: [NotificationIDEntity] = [1]
     ) {
         state = State(lastReadNotification: lastReadNotification)

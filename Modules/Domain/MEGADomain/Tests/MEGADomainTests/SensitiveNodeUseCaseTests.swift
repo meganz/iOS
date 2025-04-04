@@ -54,7 +54,7 @@ final class SensitiveNodeUseCaseTests: XCTestCase {
     
     func testMonitorInheritedSensitivity_multipleSensitivityUpdates_shouldNotYieldDuplicates() async throws {
         let nodeToMonitor = NodeEntity(handle: 4)
-        var isInheritingSensitivityResults: [NodeEntity: Result<Bool, Error>] = [nodeToMonitor: .success(true)]
+        var isInheritingSensitivityResults: [NodeEntity: Result<Bool, any Error>] = [nodeToMonitor: .success(true)]
         let nodeUpdates = [NodeEntity(changeTypes: .sensitive, handle: 4, isFolder: true)]
         let (stream, continuation) = AsyncStream.makeStream(of: [NodeEntity].self)
 
@@ -150,8 +150,8 @@ final class SensitiveNodeUseCaseTests: XCTestCase {
         parentNode: NodeEntity? = nil,
         parents: [NodeEntity] = [],
         children: [NodeEntity] = [],
-        isInheritingSensitivityResult: Result<Bool, Error> = .failure(GenericErrorEntity()),
-        isInheritingSensitivityResults: [NodeEntity: Result<Bool, Error>] = [:],
+        isInheritingSensitivityResult: Result<Bool, any Error> = .failure(GenericErrorEntity()),
+        isInheritingSensitivityResults: [NodeEntity: Result<Bool, any Error>] = [:],
         nodeUpdates: AnyAsyncSequence<[NodeEntity]> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
         hasValidProOrUnexpiredBusinessAccount: Bool = false
     ) -> SensitiveNodeUseCase<MockNodeRepository, MockAccountUseCase> {
@@ -267,7 +267,7 @@ struct SensitiveNodeUseCaseSuite {
         }
         
         private static func makeSUT(
-            isInheritingSensitivityResult: Result<Bool, Error> = .failure(GenericErrorEntity()),
+            isInheritingSensitivityResult: Result<Bool, any Error> = .failure(GenericErrorEntity()),
             nodeUpdates: AnyAsyncSequence<[NodeEntity]> = EmptyAsyncSequence().eraseToAnyAsyncSequence()
         ) -> SensitiveNodeUseCase<MockNodeRepository, MockAccountUseCase> {
             SensitiveNodeUseCaseSuite.makeSUT(

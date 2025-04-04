@@ -2,10 +2,10 @@ public protocol NodeDescriptionUseCaseProtocol: Sendable {
     func update(description: String?, for node: NodeEntity) async throws -> NodeEntity
 }
 
-public struct NodeDescriptionUseCase: NodeDescriptionUseCaseProtocol {
-    private let repository: NodeDescriptionRepositoryProtocol
+public struct NodeDescriptionUseCase<T: NodeDescriptionRepositoryProtocol>: NodeDescriptionUseCaseProtocol {
+    private let repository: T
 
-    public init(repository: NodeDescriptionRepositoryProtocol) {
+    public init(repository: T) {
         self.repository = repository
     }
 

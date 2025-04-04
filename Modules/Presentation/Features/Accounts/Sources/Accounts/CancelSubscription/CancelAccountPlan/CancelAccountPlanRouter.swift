@@ -10,7 +10,7 @@ public protocol CancelAccountPlanRouting: Routing {
     func showAppleManageSubscriptions()
     func showAlert(_ result: CancelSubscriptionResult)
     
-    typealias CancelSubscriptionResult = Result<Date, Error>
+    typealias CancelSubscriptionResult = Result<Date, any Error>
 }
 
 extension CancelAccountPlanRouting {

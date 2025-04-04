@@ -2,7 +2,7 @@ import Foundation
 import MEGADomain
 import MEGASdk
 
-typealias ThumbnailRequestCompletion = (_ result: Result<URL, Error>) -> Void
+typealias ThumbnailRequestCompletion = (_ result: Result<URL, any Error>) -> Void
 
 final class ThumbnailRequestDelegate: NSObject, MEGARequestDelegate {
     private let completion: ThumbnailRequestCompletion

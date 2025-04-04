@@ -6,7 +6,7 @@ strings:
   inputs:
     - Resources/Base.lproj
   outputs:
-    - templateName: structured-swift5
+    - templatePath: structured-swift5-existential-any.stencil
       params:
         forceFileNameEnum: true
         publicAccess: true

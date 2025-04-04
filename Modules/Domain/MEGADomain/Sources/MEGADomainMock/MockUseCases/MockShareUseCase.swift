@@ -6,7 +6,7 @@ public final class MockShareUseCase: ShareUseCaseProtocol, @unchecked Sendable {
     private let sharedNodeHandles: [HandleEntity]
     private let areUserCredentialsVerified: Bool
     private let user: UserEntity?
-    private let createShareKeysError: Error?
+    private let createShareKeysError: (any Error)?
     private let containsSensitiveContent: [HandleEntity: Bool]
     private let isAnyCollectionShared: Bool
     
@@ -23,7 +23,7 @@ public final class MockShareUseCase: ShareUseCaseProtocol, @unchecked Sendable {
         sharedNodeHandles: [HandleEntity] = [],
         areUserCredentialsVerified: Bool = false,
         user: UserEntity? = nil,
-        createShareKeysError: Error? = nil,
+        createShareKeysError: (any Error)? = nil,
         containsSensitiveContent: [HandleEntity: Bool] = [:],
         isAnyCollectionShared: Bool = false
     ) {

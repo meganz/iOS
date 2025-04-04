@@ -2,11 +2,11 @@ import MEGADomain
 import MEGASwift
 
 public final class MockImportPublicAlbumUseCase: ImportPublicAlbumUseCaseProtocol, @unchecked Sendable {
-    private let importAlbumResult: Result<Void, Error>
+    private let importAlbumResult: Result<Void, any Error>
     
     @Atomic public var photosToImport: [NodeEntity]?
     
-    public init(importAlbumResult: Result<Void, Error> = .failure(GenericErrorEntity())) {
+    public init(importAlbumResult: Result<Void, any Error> = .failure(GenericErrorEntity())) {
         self.importAlbumResult = importAlbumResult
     }
     

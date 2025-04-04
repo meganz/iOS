@@ -1,7 +1,7 @@
 import MEGAAppPresentation
 
 struct ToolbarConfigurationFactory {
-    static func configuration(on displayMode: PhotosBrowserDisplayMode) -> ToolbarConfigurationStrategy {
+    static func configuration(on displayMode: PhotosBrowserDisplayMode) -> any ToolbarConfigurationStrategy {
         switch displayMode {
         case .cloudDrive:
             CloudDriveToolbarConfigurationStrategy()

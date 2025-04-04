@@ -131,7 +131,7 @@ final class ChatListItemCacheUseCaseTests: XCTestCase {
     
     private func makeChatListItemCacheUseCase(
         chatListItemCacheRepository: some ChatListItemCacheRepositoryProtocol = MockChatListItemCacheRepository.newRepo
-    ) -> ChatListItemCacheUseCaseProtocol {
+    ) -> some ChatListItemCacheUseCaseProtocol {
         ChatListItemCacheUseCase(repository: chatListItemCacheRepository)
     }
 }

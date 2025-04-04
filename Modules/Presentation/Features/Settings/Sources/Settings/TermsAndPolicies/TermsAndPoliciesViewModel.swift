@@ -7,7 +7,7 @@ import MEGADomain
 final public class TermsAndPoliciesViewModel: ObservableObject {
     private let accountUseCase: any AccountUseCaseProtocol
     private let remoteFeatureFlagUseCase: any RemoteFeatureFlagUseCaseProtocol
-    private let router: TermsAndPoliciesRouting
+    private let router: any TermsAndPoliciesRouting
     
     let privacyUrl = URL(string: "https://mega.io/privacy") ?? URL(fileURLWithPath: "")
     let termsUrl = URL(string: "https://mega.io/terms") ?? URL(fileURLWithPath: "")
@@ -15,8 +15,8 @@ final public class TermsAndPoliciesViewModel: ObservableObject {
     
     public init(
         accountUseCase: some AccountUseCaseProtocol,
-        remoteFeatureFlagUseCase: any RemoteFeatureFlagUseCaseProtocol = DIContainer.remoteFeatureFlagUseCase,
-        router: TermsAndPoliciesRouting
+        remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = DIContainer.remoteFeatureFlagUseCase,
+        router: some TermsAndPoliciesRouting
     ) {
         self.accountUseCase = accountUseCase
         self.remoteFeatureFlagUseCase = remoteFeatureFlagUseCase

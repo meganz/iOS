@@ -10,7 +10,7 @@ final class DeviceUseCaseTests: XCTestCase {
     private func makeSUT(
         currentDeviceName: String? = nil,
         deviceName: String? = nil,
-        renameError: Error? = nil
+        renameError: (any Error)? = nil
     ) -> (sut: DeviceUseCase<MockDeviceRepository>, repository: MockDeviceRepository) {
         let repository = MockDeviceRepository(
             currentDeviceName: currentDeviceName,

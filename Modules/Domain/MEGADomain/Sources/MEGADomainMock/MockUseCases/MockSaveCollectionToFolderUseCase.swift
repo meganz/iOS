@@ -1,9 +1,9 @@
 import MEGADomain
 
 public struct MockSaveCollectionToFolderUseCase: SaveCollectionToFolderUseCaseProtocol {
-    private let saveToFolderResult: Result<[NodeEntity], Error>
+    private let saveToFolderResult: Result<[NodeEntity], any Error>
     
-    public init(saveToFolderResult: Result<[NodeEntity], Error> = .failure(GenericErrorEntity())) {
+    public init(saveToFolderResult: Result<[NodeEntity], any Error> = .failure(GenericErrorEntity())) {
         self.saveToFolderResult = saveToFolderResult
     }
     

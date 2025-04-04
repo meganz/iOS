@@ -62,7 +62,7 @@ public final class MockFolderSdk: MEGASdk, @unchecked Sendable {
         return MockNodeList(nodes: children)
     }
     
-    public override func getDownloadUrl(_ node: MEGANode, singleUrl: Bool, delegate: MEGARequestDelegate) { }
+    public override func getDownloadUrl(_ node: MEGANode, singleUrl: Bool, delegate: any MEGARequestDelegate) { }
     
     public override func add(_ delegate: any MEGATransferDelegate) {
         transferDelegates.append(delegate)

@@ -8,7 +8,7 @@ public protocol MonitorAlbumsUseCaseProtocol: Sendable {
     /// The async sequence is infinite and will require cancellation.
     /// - Parameter excludeSensitives: A boolean value indicating whether to exclude sensitive photos from album covers. They will always be included in count.
     /// - Returns: An asynchronous sequence of results, where each result contains an array of `AlbumEntity` objects or an error.
-    func monitorSystemAlbums(excludeSensitives: Bool) async -> AnyAsyncSequence<Result<[AlbumEntity], Error>>
+    func monitorSystemAlbums(excludeSensitives: Bool) async -> AnyAsyncSequence<Result<[AlbumEntity], any Error>>
     
     /// Infinite `AnyAsyncSequence` returning user created albums
     ///
@@ -38,7 +38,7 @@ public struct MonitorAlbumsUseCase: MonitorAlbumsUseCaseProtocol {
         self.sensitiveNodeUseCase = sensitiveNodeUseCase
     }
     
-    public func monitorSystemAlbums(excludeSensitives: Bool) async -> AnyAsyncSequence<Result<[AlbumEntity], Error>> {
+    public func monitorSystemAlbums(excludeSensitives: Bool) async -> AnyAsyncSequence<Result<[AlbumEntity], any Error>> {
         await monitorPhotosUseCase.monitorPhotos(
             filterOptions: [.allLocations, .allMedia],
             excludeSensitive: excludeSensitives

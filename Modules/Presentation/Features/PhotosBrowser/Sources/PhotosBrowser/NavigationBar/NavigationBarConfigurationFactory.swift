@@ -1,7 +1,7 @@
 import MEGAAppPresentation
 
 struct NavigationBarConfigurationFactory {
-    static func configuration(on displayMode: PhotosBrowserDisplayMode) -> NavigationBarConfigurationStrategy {
+    static func configuration(on displayMode: PhotosBrowserDisplayMode) -> any NavigationBarConfigurationStrategy {
         switch displayMode {
         case .cloudDrive:
             CloudDriveNavigationBarConfigurationStrategy()

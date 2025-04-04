@@ -142,7 +142,7 @@ public struct NodeActionRepository: NodeActionRepositoryProtocol {
     }
 
     public func delete(node: NodeEntity) async throws {
-        try await withAsyncThrowingValue { (completion: @escaping (Result<Void, Error>) -> Void) in
+        try await withAsyncThrowingValue { (completion: @escaping (Result<Void, any Error>) -> Void) in
             guard
                 let node = sdk.node(forHandle: node.handle),
                 sdk.isNode(inRubbish: node)
@@ -240,7 +240,7 @@ public struct NodeActionRepository: NodeActionRepositoryProtocol {
     // MARK: - Private
     
     private func removeLink(for node: NodeEntity) async throws {
-        try await withAsyncThrowingValue { (completion: @escaping (Result<Void, Error>) -> Void) in
+        try await withAsyncThrowingValue { (completion: @escaping (Result<Void, any Error>) -> Void) in
             guard let megaNode = node.toMEGANode(in: sdk) else {
                 completion(.failure(RemoveLinkErrorEntity.generic))
                 return

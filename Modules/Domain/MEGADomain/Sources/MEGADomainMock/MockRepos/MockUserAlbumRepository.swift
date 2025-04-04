@@ -12,14 +12,14 @@ public struct MockUserAlbumRepository: UserAlbumRepositoryProtocol {
     public let setsUpdatedPublisher: AnyPublisher<[SetEntity], Never>
     public let setElementsUpdatedPublisher: AnyPublisher<[SetElementEntity], Never>
     private let albumElement: SetElementEntity?
-    private let createAlbumResult: Result<SetEntity, Error>
-    private let updateAlbumNameResult: Result<String, Error>
-    private let deleteAlbumResult: Result<HandleEntity, Error>?
-    private let addPhotosResult: Result<AlbumElementsResultEntity, Error>
-    private let updateAlbumElementNameResult: Result<String, Error>
-    private let updateAlbumElementOrderResult: Result<Int64, Error>
-    private let deleteAlbumElementsResult: Result<AlbumElementsResultEntity, Error>
-    private let updateAlbumCoverResult: Result<HandleEntity, Error>
+    private let createAlbumResult: Result<SetEntity, any Error>
+    private let updateAlbumNameResult: Result<String, any Error>
+    private let deleteAlbumResult: Result<HandleEntity, any Error>?
+    private let addPhotosResult: Result<AlbumElementsResultEntity, any Error>
+    private let updateAlbumElementNameResult: Result<String, any Error>
+    private let updateAlbumElementOrderResult: Result<Int64, any Error>
+    private let deleteAlbumElementsResult: Result<AlbumElementsResultEntity, any Error>
+    private let updateAlbumCoverResult: Result<HandleEntity, any Error>
     private let albumsUpdated: AnyAsyncSequence<[SetEntity]>
     private let albumContentUpdated: AnyAsyncSequence<[SetElementEntity]>
     
@@ -30,14 +30,14 @@ public struct MockUserAlbumRepository: UserAlbumRepositoryProtocol {
                 setsUpdatedPublisher: AnyPublisher<[SetEntity], Never> = Empty().eraseToAnyPublisher(),
                 setElementsUpdatedPublisher: AnyPublisher<[SetElementEntity], Never> = Empty().eraseToAnyPublisher(),
                 albumElement: SetElementEntity? = nil,
-                createAlbumResult: Result<SetEntity, Error> = .failure(GenericErrorEntity()),
-                updateAlbumNameResult: Result<String, Error> = .failure(GenericErrorEntity()),
-                deleteAlbumResult: Result<HandleEntity, Error>? = nil,
-                addPhotosResult: Result<AlbumElementsResultEntity, Error> = .failure(GenericErrorEntity()),
-                updateAlbumElementNameResult: Result<String, Error> = .failure(GenericErrorEntity()),
-                updateAlbumElementOrderResult: Result<Int64, Error> = .failure(GenericErrorEntity()),
-                deleteAlbumElementsResult: Result<AlbumElementsResultEntity, Error> = .failure(GenericErrorEntity()),
-                updateAlbumCoverResult: Result<HandleEntity, Error> = .failure(GenericErrorEntity()),
+                createAlbumResult: Result<SetEntity, any Error> = .failure(GenericErrorEntity()),
+                updateAlbumNameResult: Result<String, any Error> = .failure(GenericErrorEntity()),
+                deleteAlbumResult: Result<HandleEntity, any Error>? = nil,
+                addPhotosResult: Result<AlbumElementsResultEntity, any Error> = .failure(GenericErrorEntity()),
+                updateAlbumElementNameResult: Result<String, any Error> = .failure(GenericErrorEntity()),
+                updateAlbumElementOrderResult: Result<Int64, any Error> = .failure(GenericErrorEntity()),
+                deleteAlbumElementsResult: Result<AlbumElementsResultEntity, any Error> = .failure(GenericErrorEntity()),
+                updateAlbumCoverResult: Result<HandleEntity, any Error> = .failure(GenericErrorEntity()),
                 albumsUpdated: AnyAsyncSequence<[SetEntity]> = EmptyAsyncSequence<[SetEntity]>().eraseToAnyAsyncSequence(),
                 albumContentUpdated: AnyAsyncSequence<[SetElementEntity]> = EmptyAsyncSequence<[SetElementEntity]>().eraseToAnyAsyncSequence()
     ) {

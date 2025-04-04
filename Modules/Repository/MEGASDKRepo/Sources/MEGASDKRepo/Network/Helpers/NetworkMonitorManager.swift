@@ -3,8 +3,8 @@ import MEGASwift
 import Network
 
 public protocol NetworkMonitorManaging: Sendable {
-    var currentNetworkPath: NetworkPath { get }
-    var networkPathStream: AsyncStream<NetworkPath> { get }
+    var currentNetworkPath: any NetworkPath { get }
+    var networkPathStream: AsyncStream<any NetworkPath> { get }
 }
 
 private struct UpdateHandler: Hashable, Sendable {
@@ -30,11 +30,11 @@ public class NetworkMonitorManager: NetworkMonitorManaging, @unchecked Sendable 
     private let monitor: NWPathMonitor
     @Atomic private var updateHandlers = Set<UpdateHandler>()
 
-    public var currentNetworkPath: NetworkPath {
+    public var currentNetworkPath: any NetworkPath {
         monitor.currentPath
     }
     
-    public var networkPathStream: AsyncStream<NetworkPath> {
+    public var networkPathStream: AsyncStream<any NetworkPath> {
         AsyncStream { [weak self] continuation in
             guard let self else { return }
             let handler = UpdateHandler {

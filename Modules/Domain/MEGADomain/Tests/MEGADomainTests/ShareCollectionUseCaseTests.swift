@@ -17,7 +17,7 @@ class ShareCollectionUseCaseTests: XCTestCase {
         let secondAlbumPublicLink = "public_link_2"
         let firstUserAlbum = SetEntity(handle: 5, setType: .album)
         let secondUserAlbum = SetEntity(handle: 6, setType: .album)
-        let shareAlbumResults: [SetIdentifier: Result<String?, Error>] = [
+        let shareAlbumResults: [SetIdentifier: Result<String?, any Error>] = [
             firstUserAlbum.setIdentifier: .success(firstAlbumPublicLink),
             secondUserAlbum.setIdentifier: .success(secondAlbumPublicLink)]
         let repository = MockShareCollectionRepository(shareCollectionResults: shareAlbumResults)
@@ -33,7 +33,7 @@ class ShareCollectionUseCaseTests: XCTestCase {
         let firstAlbumPublicLink = "public_link"
         let firstUserAlbum = SetEntity(handle: 5, setType: .album)
         let secondUserAlbum = SetEntity(handle: 6, setType: .album)
-        let shareAlbumResults: [SetIdentifier: Result<String?, Error>] = [
+        let shareAlbumResults: [SetIdentifier: Result<String?, any Error>] = [
             firstUserAlbum.setIdentifier: .success(firstAlbumPublicLink),
             secondUserAlbum.setIdentifier: .failure(GenericErrorEntity())]
         let repository = MockShareCollectionRepository(shareCollectionResults: shareAlbumResults)

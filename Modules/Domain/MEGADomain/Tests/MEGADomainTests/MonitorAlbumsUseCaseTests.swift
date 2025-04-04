@@ -10,7 +10,7 @@ final class MonitorAlbumsUseCaseTests: XCTestCase {
             NodeEntity(name: "\($0).jpg", handle: $0, hasThumbnail: true, isFavourite: true,
                        modificationTime: try "2024-03-10T22:0\($0):04Z".date, mediaType: .image)
         }
-        let photosSequence = SingleItemAsyncSequence<Result<[NodeEntity], Error>>(item: .success(photos))
+        let photosSequence = SingleItemAsyncSequence<Result<[NodeEntity], any Error>>(item: .success(photos))
             .eraseToAnyAsyncSequence()
         let monitorPhotosUseCase = MockMonitorPhotosUseCase(
             monitorPhotosAsyncSequence: photosSequence)
@@ -32,7 +32,7 @@ final class MonitorAlbumsUseCaseTests: XCTestCase {
             NodeEntity(name: "\($0).gif", handle: $0, hasThumbnail: true,
                        modificationTime: try "2024-03-10T22:0\($0):04Z".date, mediaType: .image)
         }
-        let photosSequence = SingleItemAsyncSequence<Result<[NodeEntity], Error>>(item: .success(photos))
+        let photosSequence = SingleItemAsyncSequence<Result<[NodeEntity], any Error>>(item: .success(photos))
             .eraseToAnyAsyncSequence()
         let monitorPhotosUseCase = MockMonitorPhotosUseCase(
             monitorPhotosAsyncSequence: photosSequence)
@@ -66,7 +66,7 @@ final class MonitorAlbumsUseCaseTests: XCTestCase {
                        modificationTime: try "2024-02-01T20:01:04Z".date)
         ]
         
-        let photosSequence = SingleItemAsyncSequence<Result<[NodeEntity], Error>>(item: .success(photos))
+        let photosSequence = SingleItemAsyncSequence<Result<[NodeEntity], any Error>>(item: .success(photos))
             .eraseToAnyAsyncSequence()
         let monitorPhotosUseCase = MockMonitorPhotosUseCase(
             monitorPhotosAsyncSequence: photosSequence)
@@ -98,7 +98,7 @@ final class MonitorAlbumsUseCaseTests: XCTestCase {
             gifCover
         ]
         
-        let photosSequence = SingleItemAsyncSequence<Result<[NodeEntity], Error>>(item: .success(photos))
+        let photosSequence = SingleItemAsyncSequence<Result<[NodeEntity], any Error>>(item: .success(photos))
             .eraseToAnyAsyncSequence()
         let monitorPhotosUseCase = MockMonitorPhotosUseCase(
             monitorPhotosAsyncSequence: photosSequence)
@@ -122,7 +122,7 @@ final class MonitorAlbumsUseCaseTests: XCTestCase {
     }
     
     func testMonitorSystemAlbums_failedToRetriveAllPhotos_shouldReturnFailedResultType() async {
-        let photosSequence = SingleItemAsyncSequence<Result<[NodeEntity], Error>>(item: .failure(GenericErrorEntity()))
+        let photosSequence = SingleItemAsyncSequence<Result<[NodeEntity], any Error>>(item: .failure(GenericErrorEntity()))
             .eraseToAnyAsyncSequence()
         let monitorPhotosUseCase = MockMonitorPhotosUseCase(
             monitorPhotosAsyncSequence: photosSequence)
@@ -159,7 +159,7 @@ final class MonitorAlbumsUseCaseTests: XCTestCase {
             gifCover
         ]
         
-        let photosSequence = SingleItemAsyncSequence<Result<[NodeEntity], Error>>(item: .success(photos))
+        let photosSequence = SingleItemAsyncSequence<Result<[NodeEntity], any Error>>(item: .success(photos))
             .eraseToAnyAsyncSequence()
         let monitorPhotosUseCase = MockMonitorPhotosUseCase(
             monitorPhotosAsyncSequence: photosSequence)

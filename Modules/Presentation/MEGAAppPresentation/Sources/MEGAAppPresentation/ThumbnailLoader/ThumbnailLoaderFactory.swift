@@ -10,16 +10,16 @@ public enum ThumbnailLoaderFactory {
         case general
         /// Configuration used to create a SensitiveThumbnailLoader
         /// This variation will generate variations adhering to SensitiveImageContaining and ImageContainers
-        case sensitive(sensitiveNodeUseCase: SensitiveNodeUseCaseProtocol)
+        case sensitive(sensitiveNodeUseCase: any SensitiveNodeUseCaseProtocol)
         
         /// Configuration used to create a General Purpose ThumbnailLoader with fallback icon if failed to generate the icon
         /// This variation will generate URLImageContainers and ImageContainers
-        case generalWithFallBackIcon(nodeIconUseCase: NodeIconUsecaseProtocol)
+        case generalWithFallBackIcon(nodeIconUseCase: any NodeIconUsecaseProtocol)
         
         /// Configuration used to create a SensitiveThumbnailLoader with fallback icon if failed to generate the icon
         /// This variation will generate variations adhering to SensitiveImageContaining and ImageContainers
-        case sensitiveWithFallbackIcon(sensitiveNodeUseCase: SensitiveNodeUseCaseProtocol,
-                                       nodeIconUseCase: NodeIconUsecaseProtocol)
+        case sensitiveWithFallbackIcon(sensitiveNodeUseCase: any SensitiveNodeUseCaseProtocol,
+                                       nodeIconUseCase: any NodeIconUsecaseProtocol)
     }
     
     public static func makeThumbnailLoader(

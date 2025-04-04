@@ -17,7 +17,7 @@ public final class OnboardingUpgradeAccountViewModel: ObservableObject {
     private let accountUseCase: any AccountUseCaseProtocol
     private let tracker: any AnalyticsTracking
     private var subscriptions: Set<AnyCancellable> = []
-    private let router: OnboardingUpgradeAccountRouting
+    private let router: any OnboardingUpgradeAccountRouting
     private var proIIIPlanCardShownEventTracked: Bool = false
     let isAdsEnabled: Bool
     private let baseStorage: Int
@@ -51,7 +51,7 @@ public final class OnboardingUpgradeAccountViewModel: ObservableObject {
         isAdsEnabled: Bool,
         baseStorage: Int,
         viewProPlanAction: @escaping () -> Void,
-        router: OnboardingUpgradeAccountRouting
+        router: some OnboardingUpgradeAccountRouting
     ) {
         self.purchaseUseCase = purchaseUseCase
         self.accountUseCase = accountUseCase

@@ -380,7 +380,7 @@ final class BackupListViewModelTests: XCTestCase {
         selectedDevice: SelectedDevice,
         deviceCenterUseCase: MockDeviceCenterUseCase = MockDeviceCenterUseCase(),
         updateInterval: UInt64 = 1,
-        networkMonitorUseCase: NetworkMonitorUseCaseProtocol = MockNetworkMonitorUseCase()
+        networkMonitorUseCase: any NetworkMonitorUseCaseProtocol = MockNetworkMonitorUseCase()
     ) -> BackupListViewModel {
         
         let node = NodeEntity(handle: 1)

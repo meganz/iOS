@@ -32,7 +32,7 @@ final class AppDistributionRepositoryTests: XCTestCase {
     
     // MARK: - Helpers
     
-    private func makeSUT(result: Result<AppDistributionReleaseEntity?, Error>) -> AppDistributionRepository {
+    private func makeSUT(result: Result<AppDistributionReleaseEntity?, any Error>) -> AppDistributionRepository {
         let appUpdateChecker = MockAppUpdateChecker(result: result)
         let sut = AppDistributionRepository(appUpdateChecker: appUpdateChecker)
         return sut

@@ -37,7 +37,7 @@ final class PublicCollectionUseCaseTests: XCTestCase {
         let photoOneId = HandleEntity(15)
         let photoTwoId = HandleEntity(4)
         let photoNode = NodeEntity(handle: 2)
-        let photoResults: [HandleEntity: Result<NodeEntity, Error>] = [
+        let photoResults: [HandleEntity: Result<NodeEntity, any Error>] = [
             photoOneId: .success(photoNode),
             photoTwoId: .failure(SharedPhotoErrorEntity.photoNotFound)
         ]

@@ -211,7 +211,7 @@ extension AllVideosCollectionViewCoordinator: UICollectionViewDragDelegate, UICo
     
     // MARK: - UICollectionViewDragDelegate
     
-    func collectionView(_ collectionView: UICollectionView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
+    func collectionView(_ collectionView: UICollectionView, itemsForBeginning session: any UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
         guard let rowItem = dataSource?.itemIdentifier(for: indexPath) else { return [] }
         let itemProvider = NSItemProvider(object: rowItem.node.id.description as NSString)
         let dragItem = UIDragItem(itemProvider: itemProvider)
@@ -219,13 +219,13 @@ extension AllVideosCollectionViewCoordinator: UICollectionViewDragDelegate, UICo
         return [dragItem]
     }
     
-    func collectionView(_ collectionView: UICollectionView, itemsForAddingTo session: UIDragSession, at indexPath: IndexPath, point: CGPoint) -> [UIDragItem] {
+    func collectionView(_ collectionView: UICollectionView, itemsForAddingTo session: any UIDragSession, at indexPath: IndexPath, point: CGPoint) -> [UIDragItem] {
         self.collectionView(collectionView, itemsForBeginning: session, at: indexPath)
     }
     
     // MARK: - UICollectionViewDropDelegate
     
-    func collectionView(_ collectionView: UICollectionView, performDropWith coordinator: UICollectionViewDropCoordinator) {
+    func collectionView(_ collectionView: UICollectionView, performDropWith coordinator: any UICollectionViewDropCoordinator) {
         guard let destinationIndexPath = coordinator.destinationIndexPath else { return }
         
         if coordinator.proposal.operation == .move {
@@ -233,11 +233,11 @@ extension AllVideosCollectionViewCoordinator: UICollectionViewDragDelegate, UICo
         }
     }
     
-    func collectionView(_ collectionView: UICollectionView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UICollectionViewDropProposal {
+    func collectionView(_ collectionView: UICollectionView, dropSessionDidUpdate session: any UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UICollectionViewDropProposal {
         return UICollectionViewDropProposal(operation: .move, intent: .insertAtDestinationIndexPath)
     }
     
-    private func reorderItems(coordinator: UICollectionViewDropCoordinator, destinationIndexPath: IndexPath, collectionView: UICollectionView) {
+    private func reorderItems(coordinator: any UICollectionViewDropCoordinator, destinationIndexPath: IndexPath, collectionView: UICollectionView) {
         let items = coordinator.items
         guard let sourceIndexPath = items.first?.sourceIndexPath else { return }
         
@@ -277,7 +277,7 @@ extension AllVideosCollectionViewCoordinator: UICollectionViewDragDelegate, UICo
         }
     }
     
-    private func handleDrop(_ dragItem: UIDragItem, toItemAt indexPath: IndexPath, on coordinator: UICollectionViewDropCoordinator) {
+    private func handleDrop(_ dragItem: UIDragItem, toItemAt indexPath: IndexPath, on coordinator: any UICollectionViewDropCoordinator) {
         coordinator.drop(dragItem, toItemAt: indexPath)
     }
 }

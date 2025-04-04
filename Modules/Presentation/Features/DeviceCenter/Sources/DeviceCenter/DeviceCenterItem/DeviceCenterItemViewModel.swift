@@ -8,7 +8,7 @@ import SwiftUI
 public class DeviceCenterItemViewModel: ObservableObject, Identifiable {
     private let router: (any DeviceListRouting)?
     private let refreshDevicesPublisher: PassthroughSubject<Void, Never>?
-    private let deviceCenterUseCase: DeviceCenterUseCaseProtocol
+    private let deviceCenterUseCase: any DeviceCenterUseCaseProtocol
     private let nodeUseCase: any NodeUseCaseProtocol
     private let deviceCenterBridge: DeviceCenterBridge
     private let isCameraUploadsAvailable: Bool
@@ -53,8 +53,8 @@ public class DeviceCenterItemViewModel: ObservableObject, Identifiable {
     init(
         router: (any DeviceListRouting)? = nil,
         refreshDevicesPublisher: PassthroughSubject<Void, Never>? = nil,
-        deviceCenterUseCase: DeviceCenterUseCaseProtocol,
-        nodeUseCase: any NodeUseCaseProtocol,
+        deviceCenterUseCase: some DeviceCenterUseCaseProtocol,
+        nodeUseCase: some NodeUseCaseProtocol,
         deviceCenterBridge: DeviceCenterBridge,
         itemType: DeviceCenterItemType,
         sortedAvailableActions: [ContextAction.Category: [ContextAction]],

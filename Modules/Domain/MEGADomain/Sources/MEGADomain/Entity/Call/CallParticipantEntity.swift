@@ -144,7 +144,7 @@ public final class CallParticipantEntity: @unchecked Sendable {
     
     public var videoDataDelegate: (any CallParticipantVideoDelegate)? {
         get {
-            _videoDataDelegate.wrappedValue as? CallParticipantVideoDelegate
+            _videoDataDelegate.wrappedValue as? (any CallParticipantVideoDelegate)
         }
         
         set {
@@ -154,7 +154,7 @@ public final class CallParticipantEntity: @unchecked Sendable {
 
     public weak var speakerVideoDataDelegate: (any CallParticipantVideoDelegate)? {
         get {
-            _speakerVideoDataDelegate.wrappedValue as? CallParticipantVideoDelegate
+            _speakerVideoDataDelegate.wrappedValue as? (any CallParticipantVideoDelegate)
         }
         
         set {

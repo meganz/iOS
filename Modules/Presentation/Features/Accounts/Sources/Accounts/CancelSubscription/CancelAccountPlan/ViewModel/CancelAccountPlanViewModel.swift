@@ -9,8 +9,8 @@ public final class CancelAccountPlanViewModel: ObservableObject {
     let currentPlanName: String
     let currentPlanStorageUsed: String
     let freeAccountStorageLimit: Int
-    let featureListHelper: FeatureListHelperProtocol
-    let router: CancelAccountPlanRouting
+    let featureListHelper: any FeatureListHelperProtocol
+    let router: any CancelAccountPlanRouting
     private let achievementUseCase: any AchievementUseCaseProtocol
     private let accountUseCase: any AccountUseCaseProtocol
     private let currentSubscription: AccountSubscriptionEntity
@@ -24,13 +24,13 @@ public final class CancelAccountPlanViewModel: ObservableObject {
     
     init(
         currentSubscription: AccountSubscriptionEntity,
-        featureListHelper: FeatureListHelperProtocol,
+        featureListHelper: some FeatureListHelperProtocol,
         freeAccountStorageLimit: Int,
         achievementUseCase: some AchievementUseCaseProtocol,
         accountUseCase: some AccountUseCaseProtocol,
         tracker: some AnalyticsTracking,
         featureFlagProvider: some FeatureFlagProviderProtocol,
-        router: CancelAccountPlanRouting
+        router: some CancelAccountPlanRouting
     ) {
         self.currentSubscription = currentSubscription
         self.freeAccountStorageLimit = freeAccountStorageLimit

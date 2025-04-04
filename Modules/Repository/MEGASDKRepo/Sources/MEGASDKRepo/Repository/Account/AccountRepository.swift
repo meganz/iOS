@@ -18,7 +18,7 @@ public final class AccountRepository: NSObject, AccountRepositoryProtocol {
     }
     private let sdk: MEGASdk
     private let currentUserSource: CurrentUserSource
-    private let backupsRootFolderNodeAccess: NodeAccessProtocol
+    private let backupsRootFolderNodeAccess: any NodeAccessProtocol
     private let accountUpdatesProvider: any AccountUpdatesProviderProtocol
     
     private let fullStorageLimit = 1.0
@@ -27,7 +27,7 @@ public final class AccountRepository: NSObject, AccountRepositoryProtocol {
     public init(
         sdk: MEGASdk = MEGASdk.sharedSdk,
         currentUserSource: CurrentUserSource = .shared,
-        backupsRootFolderNodeAccess: NodeAccessProtocol,
+        backupsRootFolderNodeAccess: some NodeAccessProtocol,
         accountUpdatesProvider: some AccountUpdatesProviderProtocol
     ) {
         self.sdk = sdk

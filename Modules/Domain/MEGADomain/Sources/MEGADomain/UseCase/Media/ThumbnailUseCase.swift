@@ -31,7 +31,7 @@ public protocol ThumbnailUseCaseProtocol: Sendable {
     /// For example, it may publish this value flow: "thumbnail URL" -> "Preview URL"
     /// - Parameter node: The node entity for which the preview to be loaded
     /// - Returns: An AsyncSequence to publish preview URL, and it will publish any low quality thumbnail URL first if they are available
-    func requestPreview(for node: NodeEntity) -> AnyAsyncThrowingSequence<ThumbnailEntity, Error>
+    func requestPreview(for node: NodeEntity) -> AnyAsyncThrowingSequence<ThumbnailEntity, any Error>
         
     /// Find cached preview or original in thumbnail repository
     /// - Parameters:
@@ -65,9 +65,9 @@ public struct ThumbnailUseCase<T: ThumbnailRepositoryProtocol>: ThumbnailUseCase
                                          type: type)
     }
         
-    public func requestPreview(for node: NodeEntity) -> AnyAsyncThrowingSequence<ThumbnailEntity, Error> {
+    public func requestPreview(for node: NodeEntity) -> AnyAsyncThrowingSequence<ThumbnailEntity, any Error> {
         let (stream, continuation) = AsyncThrowingStream
-            .makeStream(of: ThumbnailEntity.self, throwing: Error.self, bufferingPolicy: .bufferingNewest(1))
+            .makeStream(of: ThumbnailEntity.self, throwing: (any Error).self, bufferingPolicy: .bufferingNewest(1))
         
         let task = Task {
             try await withThrowingTaskGroup(of: ThumbnailEntity.self) { group in

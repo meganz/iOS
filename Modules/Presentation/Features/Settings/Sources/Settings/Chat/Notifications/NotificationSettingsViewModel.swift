@@ -6,7 +6,7 @@ import MEGASDKRepo
 
 @MainActor
 public final class NotificationSettingsViewModel: ObservableObject {
-    private let notificationSettingsUseCase: NotificationSettingsUseCaseProtocol
+    private let notificationSettingsUseCase: any NotificationSettingsUseCaseProtocol
     
     var notificationSettings = NotificationSettingsEntity(
         globalChatsDndEnabled: false,
@@ -21,7 +21,7 @@ public final class NotificationSettingsViewModel: ObservableObject {
     let muteNotificationsPresets: [TimeValuePreset] = TimeValuePreset.muteNotificationOptions()
     
     public init(
-        notificationSettingsUseCase: NotificationSettingsUseCaseProtocol
+        notificationSettingsUseCase: some NotificationSettingsUseCaseProtocol
     ) {
         self.notificationSettingsUseCase = notificationSettingsUseCase
     }

@@ -55,9 +55,9 @@ public enum AdMob {
 public struct GoogleMobileAdsConsentManager: GoogleMobileAdsConsentManagerProtocol {
     public static let shared = GoogleMobileAdsConsentManager()
     
-    private let consentInformation: AdMobConsentInformationProtocol
-    private let consentFormType: AdMobConsentFormProtocol.Type
-    private let mobileAds: MobileAdsProtocol
+    private let consentInformation: any AdMobConsentInformationProtocol
+    private let consentFormType: any AdMobConsentFormProtocol.Type
+    private let mobileAds: any MobileAdsProtocol
 
     @Atomic public var isMobileAdsInitialized = false
     
@@ -70,9 +70,9 @@ public struct GoogleMobileAdsConsentManager: GoogleMobileAdsConsentManagerProtoc
     }
     
     public init(
-        consentInformation: AdMobConsentInformationProtocol = UMPConsentInformation.sharedInstance,
-        consentFormType: AdMobConsentFormProtocol.Type = UMPConsentForm.self,
-        mobileAds: MobileAdsProtocol = GADMobileAds.sharedInstance()
+        consentInformation: some AdMobConsentInformationProtocol = UMPConsentInformation.sharedInstance,
+        consentFormType: any AdMobConsentFormProtocol.Type = UMPConsentForm.self,
+        mobileAds: some MobileAdsProtocol = GADMobileAds.sharedInstance()
     ) {
         self.consentInformation = consentInformation
         self.consentFormType = consentFormType

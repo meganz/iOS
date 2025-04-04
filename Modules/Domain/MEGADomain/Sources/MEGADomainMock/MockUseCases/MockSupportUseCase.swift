@@ -1,7 +1,7 @@
 import MEGADomain
 
 public final class MockSupportUseCase: SupportUseCaseProtocol, @unchecked Sendable {
-    let createSupportTicketResult: Result<Void, Error>
+    let createSupportTicketResult: Result<Void, any Error>
     
     public var messages = [Message]()
     
@@ -9,7 +9,7 @@ public final class MockSupportUseCase: SupportUseCaseProtocol, @unchecked Sendab
         case createSupportTicket(message: String)
     }
 
-    public init(createSupportTicketResult: Result<Void, Error> = .failure(GenericErrorEntity())) {
+    public init(createSupportTicketResult: Result<Void, any Error> = .failure(GenericErrorEntity())) {
         self.createSupportTicketResult = createSupportTicketResult
     }
 

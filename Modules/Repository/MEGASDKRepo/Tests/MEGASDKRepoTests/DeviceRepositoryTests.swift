@@ -39,7 +39,7 @@ final class DeviceRepositoryTests: XCTestCase {
     }
 
     private func assertError(
-        _ error: Error,
+        _ error: any Error,
         equals expectedError: MockError,
         in file: StaticString = #filePath,
         line: UInt = #line

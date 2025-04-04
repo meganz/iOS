@@ -3,14 +3,14 @@ import MEGADomain
 public final class MockNodeActionRepository: NodeActionRepositoryProtocol, @unchecked Sendable {
     
     public static let newRepo = MockNodeActionRepository()
-    private let createFolderResult: Result<NodeEntity, Error>
-    private let setSensitiveResults: [HandleEntity: Result<NodeEntity, Error>]
+    private let createFolderResult: Result<NodeEntity, any Error>
+    private let setSensitiveResults: [HandleEntity: Result<NodeEntity, any Error>]
     
     public var createFolderName: String?
     public var sensitive: Bool?
     
-    public init(createFolderResult: Result<NodeEntity, Error> = .failure(GenericErrorEntity()),
-                setSensitiveResults: [HandleEntity: Result<NodeEntity, Error>] = [:]) {
+    public init(createFolderResult: Result<NodeEntity, any Error> = .failure(GenericErrorEntity()),
+                setSensitiveResults: [HandleEntity: Result<NodeEntity, any Error>] = [:]) {
         self.createFolderResult = createFolderResult
         self.setSensitiveResults = setSensitiveResults
     }

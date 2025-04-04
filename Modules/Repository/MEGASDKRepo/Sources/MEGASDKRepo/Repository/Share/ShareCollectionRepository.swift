@@ -71,7 +71,7 @@ public struct ShareCollectionRepository: ShareCollectionRepositoryProtocol {
                                                                             setElements: request.elementsInSet?.toSetElementsEntities() ?? [])
                     completion(.success(sharedCollectionEntity))
                 case .failure(let error):
-                    let errorEntity: Error
+                    let errorEntity: any Error
                     switch error.type {
                     case .apiENoent:
                         errorEntity = SharedCollectionErrorEntity.resourceNotFound

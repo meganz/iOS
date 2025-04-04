@@ -31,7 +31,7 @@ public actor PhotosRepositoryTaskManager: PhotosRepositoryTaskManagerProtocol {
     private let photoLocalSource: any PhotoLocalSourceProtocol
     private let photoCacheRepositoryMonitors: any PhotoCacheRepositoryMonitorsProtocol
     
-    private var searchAllPhotosTask: Task<[NodeEntity], Error>?
+    private var searchAllPhotosTask: Task<[NodeEntity], any Error>?
     private var monitorTasks: [MonitoringTaskIdentifier: Task<Void, Never>] = [:]
     
     public init(photoLocalSource: any PhotoLocalSourceProtocol,
@@ -51,7 +51,7 @@ public actor PhotosRepositoryTaskManager: PhotosRepositoryTaskManagerProtocol {
         if let searchAllPhotosTask {
             return try await searchAllPhotosTask.value
         }
-        let searchPhotosTask = Task<[NodeEntity], Error> {
+        let searchPhotosTask = Task<[NodeEntity], any Error> {
             return try await searchPhotosOperation()
         }
         self.searchAllPhotosTask = searchPhotosTask

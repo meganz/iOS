@@ -63,13 +63,13 @@ final class VisualMediaSearchResultsViewModelTests: XCTestCase {
         let visualMediaSearchHistoryUseCase = MockVisualMediaSearchHistoryUseCase(
             searchQueryHistoryEntries: [])
         let monitorAlbumsUseCase = MockMonitorAlbumsUseCase(
-            monitorSystemAlbumsSequence: SingleItemAsyncSequence<Result<[AlbumEntity], Error>>(
+            monitorSystemAlbumsSequence: SingleItemAsyncSequence<Result<[AlbumEntity], any Error>>(
                 item: .success([])).eraseToAnyAsyncSequence(),
             monitorUserAlbumsSequence: SingleItemAsyncSequence<[AlbumEntity]>(
                 item: []).eraseToAnyAsyncSequence()
         )
         let searchText = "fav"
-        let monitorPhotosUseCase = MockMonitorPhotosUseCase(monitorPhotosAsyncSequence: SingleItemAsyncSequence<Result<[NodeEntity], Error>>(
+        let monitorPhotosUseCase = MockMonitorPhotosUseCase(monitorPhotosAsyncSequence: SingleItemAsyncSequence<Result<[NodeEntity], any Error>>(
             item: .success([.init(name: "\(searchText) car", handle: 1, modificationTime: try "2024-11-12T08:00:00Z".date)])).eraseToAnyAsyncSequence())
         let sut = makeSUT(
             visualMediaSearchHistoryUseCase: visualMediaSearchHistoryUseCase,
@@ -107,7 +107,7 @@ final class VisualMediaSearchResultsViewModelTests: XCTestCase {
         let visualMediaSearchHistoryUseCase = MockVisualMediaSearchHistoryUseCase(
             searchQueryHistoryEntries: [])
         let monitorAlbumsUseCase = MockMonitorAlbumsUseCase(
-            monitorSystemAlbumsSequence: SingleItemAsyncSequence<Result<[AlbumEntity], Error>>(
+            monitorSystemAlbumsSequence: SingleItemAsyncSequence<Result<[AlbumEntity], any Error>>(
                 item: .success([systemAlbum])).eraseToAnyAsyncSequence(),
             monitorUserAlbumsSequence: SingleItemAsyncSequence(
                 item: [userAlbum]).eraseToAnyAsyncSequence()
@@ -118,7 +118,7 @@ final class VisualMediaSearchResultsViewModelTests: XCTestCase {
         let photo2 = NodeEntity(name: "\(searchText) bag", handle: 2, modificationTime: try "2024-11-12T08:00:00Z".date)
         let photo3 = NodeEntity(name: "\(searchText) game", handle: 3, modificationTime: try "2024-11-11T22:05:04Z".date)
         let photo4 = NodeEntity(name: "\(searchText) movie", handle: 4, modificationTime: try "2024-11-09T08:00:00Z".date)
-        let monitorPhotosUseCase = MockMonitorPhotosUseCase(monitorPhotosAsyncSequence: SingleItemAsyncSequence<Result<[NodeEntity], Error>>(
+        let monitorPhotosUseCase = MockMonitorPhotosUseCase(monitorPhotosAsyncSequence: SingleItemAsyncSequence<Result<[NodeEntity], any Error>>(
             item: .success([photo1, photo2, photo3, photo4])).eraseToAnyAsyncSequence())
         let sut = makeSUT(
             visualMediaSearchHistoryUseCase: visualMediaSearchHistoryUseCase,
@@ -340,12 +340,12 @@ struct VisualMediaSearchResultsViewModelTestsSuite {
             let visualMediaSearchHistoryUseCase = MockVisualMediaSearchHistoryUseCase(
                 searchQueryHistoryEntries: [])
             let monitorAlbumsUseCase = MockMonitorAlbumsUseCase(
-                monitorSystemAlbumsSequence: SingleItemAsyncSequence<Result<[AlbumEntity], Error>>(
+                monitorSystemAlbumsSequence: SingleItemAsyncSequence<Result<[AlbumEntity], any Error>>(
                     item: .success([])).eraseToAnyAsyncSequence(),
                 monitorUserAlbumsSequence: SingleItemAsyncSequence(
                     item: []).eraseToAnyAsyncSequence()
             )
-            let monitorPhotosUseCase = MockMonitorPhotosUseCase(monitorPhotosAsyncSequence: SingleItemAsyncSequence<Result<[NodeEntity], Error>>(
+            let monitorPhotosUseCase = MockMonitorPhotosUseCase(monitorPhotosAsyncSequence: SingleItemAsyncSequence<Result<[NodeEntity], any Error>>(
                 item: .success([])).eraseToAnyAsyncSequence())
             let sut = makeSUT(
                 visualMediaSearchHistoryUseCase: visualMediaSearchHistoryUseCase,

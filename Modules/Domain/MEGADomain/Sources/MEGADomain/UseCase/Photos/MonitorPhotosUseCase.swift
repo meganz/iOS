@@ -15,14 +15,14 @@ public protocol MonitorPhotosUseCaseProtocol: Sendable {
         filterOptions: PhotosFilterOptionsEntity,
         excludeSensitive: Bool,
         searchText: String?
-    ) async -> AnyAsyncSequence<Result<[NodeEntity], Error>>
+    ) async -> AnyAsyncSequence<Result<[NodeEntity], any Error>>
 }
 
 extension MonitorPhotosUseCaseProtocol {
     func monitorPhotos(
         filterOptions: PhotosFilterOptionsEntity,
         excludeSensitive: Bool
-    ) async -> AnyAsyncSequence<Result<[NodeEntity], Error>> {
+    ) async -> AnyAsyncSequence<Result<[NodeEntity], any Error>> {
         await monitorPhotos(
             filterOptions: filterOptions,
             excludeSensitive: excludeSensitive,
@@ -49,7 +49,7 @@ public struct MonitorPhotosUseCase: MonitorPhotosUseCaseProtocol {
         filterOptions: PhotosFilterOptionsEntity,
         excludeSensitive: Bool,
         searchText: String?
-    ) async -> AnyAsyncSequence<Result<[NodeEntity], Error>> {
+    ) async -> AnyAsyncSequence<Result<[NodeEntity], any Error>> {
         let filters = await makeNodeFilters(
             options: filterOptions, searchText: searchText)
         guard filters.isNotEmpty else {
@@ -64,7 +64,7 @@ public struct MonitorPhotosUseCase: MonitorPhotosUseCaseProtocol {
     private func monitorPhotos(
         nodeEntityFilter predicate: NodeEntityFilter? = nil,
         excludeSensitive: Bool
-    ) async -> AnyAsyncSequence<Result<[NodeEntity], Error>> {
+    ) async -> AnyAsyncSequence<Result<[NodeEntity], any Error>> {
         let monitorAll = await updatePhotos()
             .map {
                 await allPhotos(excludeSensitive: excludeSensitive)
@@ -131,7 +131,7 @@ public struct MonitorPhotosUseCase: MonitorPhotosUseCaseProtocol {
         return nil
     }
     
-    private func allPhotos(excludeSensitive: Bool) async -> Result<[NodeEntity], Error> {
+    private func allPhotos(excludeSensitive: Bool) async -> Result<[NodeEntity], any Error> {
         do {
             let photos = try await photosRepository.allPhotos(excludeSensitive: excludeSensitive)
             return .success(photos)

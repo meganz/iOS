@@ -72,7 +72,7 @@ extension CookieSettingsRepository {
         })
     }
     
-    private func handleCookieSettingsCompletion<T>(_ result: Result<T, CookieSettingsErrorEntity>, continuation: @escaping (Result<T, Error>) -> Void) {
+    private func handleCookieSettingsCompletion<T>(_ result: Result<T, CookieSettingsErrorEntity>, continuation: @escaping (Result<T, any Error>) -> Void) {
         switch result {
         case .success(let value):
             continuation(.success(value))

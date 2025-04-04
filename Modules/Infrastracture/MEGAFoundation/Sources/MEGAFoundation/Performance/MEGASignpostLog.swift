@@ -48,7 +48,7 @@ public struct MEGASignpostLog {
     }
      
     /// A signpost with customized format that marks the start of a time interval of interest in your code.
-    public func begin(name: StaticString = "Begin", format: StaticString, arguments: [CVarArg]) -> OSSignpostID {
+    public func begin(name: StaticString = "Begin", format: StaticString, arguments: [any CVarArg]) -> OSSignpostID {
         let id = signpostID()
          
         signpost(type: .begin, name: name, signpostID: id, format: format, args: arguments)
@@ -56,7 +56,7 @@ public struct MEGASignpostLog {
     }
      
     /// A signpost with customized format that marks the end of a time interval of interest in your code.
-    public func end(name: StaticString = "End", id: OSSignpostID, format: StaticString, arguments: [CVarArg]) {
+    public func end(name: StaticString = "End", id: OSSignpostID, format: StaticString, arguments: [any CVarArg]) {
         signpost(type: .end, name: name, signpostID: id, format: format, args: arguments)
     }
      
@@ -80,7 +80,7 @@ public struct MEGASignpostLog {
     ///   Depending on the number of arguments provided, it formats and logs the data accordingly.
     ///   If there are more than three arguments, an assertion failure is triggered,
     ///   and the data is logged with the first three arguments.
-    private func signpost(type: OSSignpostType, name: StaticString, signpostID: OSSignpostID, format: StaticString, args: [CVarArg]) {
+    private func signpost(type: OSSignpostType, name: StaticString, signpostID: OSSignpostID, format: StaticString, args: [any CVarArg]) {
         switch args.count {
         case 0:
             os_signpost(type, log: osLog, name: name, signpostID: signpostID)

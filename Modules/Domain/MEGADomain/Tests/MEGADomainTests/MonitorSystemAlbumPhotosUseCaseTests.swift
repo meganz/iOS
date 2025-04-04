@@ -20,7 +20,7 @@ final class MonitorSystemAlbumPhotosUseCaseTests: XCTestCase {
     }
     
     func testMonitorPhotos_favouriteAlbum_shouldReturnFavouritePhotosOnly() async throws {
-        let (stream, continuation) = AsyncStream.makeStream(of: Result<[NodeEntity], Error>.self)
+        let (stream, continuation) = AsyncStream.makeStream(of: Result<[NodeEntity], any Error>.self)
         
         for excludeSensitive in [true, false] {
             let monitorPhotosUseCase = MockMonitorPhotosUseCase(
@@ -60,7 +60,7 @@ final class MonitorSystemAlbumPhotosUseCaseTests: XCTestCase {
     }
     
     func testMonitorPhotos_rawAndGifAlbum_shouldFilterPhotosCorrectly() async throws {
-        let (stream, continuation) = AsyncStream.makeStream(of: Result<[NodeEntity], Error>.self)
+        let (stream, continuation) = AsyncStream.makeStream(of: Result<[NodeEntity], any Error>.self)
        
         let rawNode = NodeEntity(name: "test.raw", handle: 2, isMarkedSensitive: false)
         let sensitiveRawNode = NodeEntity(name: "test2.raw", handle: 3, isMarkedSensitive: true)
@@ -106,7 +106,7 @@ final class MonitorSystemAlbumPhotosUseCaseTests: XCTestCase {
             XCTAssertEqual(secondUpdate, expectedPhotos, "Invalid filtered photos update for type \(type)")
             let invocations = await monitorPhotosUseCase.invocations
             XCTAssertEqual(invocations, [
-                .monitorPhotos(filterOptions: [.allLocations, .allMedia], excludeSensitive: excludeSensitive),
+                .monitorPhotos(filterOptions: [.allLocations, .allMedia], excludeSensitive: excludeSensitive)
             ])
         }
         

@@ -5,9 +5,9 @@ import MEGASDKRepo
 
 public struct MockNodeAccess: NodeAccessProtocol {
     
-    private let result: Result<MEGANode, Error>
+    private let result: Result<MEGANode, any Error>
     
-    public init(result: Result<MEGANode, Error> = .failure(GenericErrorEntity())) {
+    public init(result: Result<MEGANode, any Error> = .failure(GenericErrorEntity())) {
         self.result = result
     }
     

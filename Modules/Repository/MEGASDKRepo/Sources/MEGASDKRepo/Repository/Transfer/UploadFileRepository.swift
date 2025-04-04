@@ -35,7 +35,7 @@ public struct UploadFileRepository: UploadFileRepositoryProtocol {
     }
     
     public func uploadSupportFile(_ url: URL) async throws -> AnyAsyncSequence<FileUploadEvent> {
-        let stream = AsyncThrowingStream<FileUploadEvent, Error> { continuation in
+        let stream = AsyncThrowingStream<FileUploadEvent, any Error> { continuation in
             let start: (TransferEntity) -> Void = { transferEntity in
                 continuation.yield(.start(transferEntity))
             }

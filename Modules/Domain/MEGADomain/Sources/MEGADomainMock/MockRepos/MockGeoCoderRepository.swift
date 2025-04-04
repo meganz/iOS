@@ -6,9 +6,9 @@ public struct MockGeoCoderRepository: GeoCoderRepositoryProtocol {
         .init()
     }
 
-    private let placeMark: Result<PlaceMarkEntity, Error>
+    private let placeMark: Result<PlaceMarkEntity, any Error>
     
-    public init(placeMark: Result<PlaceMarkEntity, Error> = .failure(GeoCoderErrorEntity.noPlaceMarkFound)) {
+    public init(placeMark: Result<PlaceMarkEntity, any Error> = .failure(GeoCoderErrorEntity.noPlaceMarkFound)) {
         self.placeMark = placeMark
     }
     

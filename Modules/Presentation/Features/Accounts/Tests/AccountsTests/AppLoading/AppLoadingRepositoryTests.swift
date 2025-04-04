@@ -9,7 +9,6 @@ struct AppLoadingRepositoryTests {
     @Test("Test new repo")
     func testNewRepo() {
         let repo = AppLoadingRepository.newRepo
-        #expect(repo != nil)
         #expect(repo.sdk == MEGASdk.sharedSdk)
     }
     

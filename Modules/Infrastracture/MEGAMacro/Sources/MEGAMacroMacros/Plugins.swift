@@ -5,7 +5,7 @@ import SwiftSyntaxMacros
 
 @main
 struct MEGAMacroPlugin: CompilerPlugin {
-    let providingMacros: [Macro.Type] = [
+    let providingMacros: [any Macro.Type] = [
         NewRepoMacro.self,
     ]
 }

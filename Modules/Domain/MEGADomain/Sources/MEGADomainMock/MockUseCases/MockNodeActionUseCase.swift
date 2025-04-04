@@ -1,12 +1,12 @@
 import MEGADomain
 
 public struct MockNodeActionUseCase: NodeActionUseCaseProtocol {
-    private let nodeResult: Result<Void, Error>
-    private let nodeEntityResult: Result<NodeEntity, Error>
+    private let nodeResult: Result<Void, any Error>
+    private let nodeEntityResult: Result<NodeEntity, any Error>
     private let hideUnhideResult: [HandleEntity: Result<NodeEntity, any Error>]
     
-    public init(nodeResult: Result<Void, Error> = .failure(GenericErrorEntity()),
-                nodeEntityResult: Result<NodeEntity, Error> = .failure(GenericErrorEntity()),
+    public init(nodeResult: Result<Void, any Error> = .failure(GenericErrorEntity()),
+                nodeEntityResult: Result<NodeEntity, any Error> = .failure(GenericErrorEntity()),
                 hideUnhideResult: [HandleEntity: Result<NodeEntity, any Error>] = [:]) {
         self.nodeResult = nodeResult
         self.nodeEntityResult = nodeEntityResult

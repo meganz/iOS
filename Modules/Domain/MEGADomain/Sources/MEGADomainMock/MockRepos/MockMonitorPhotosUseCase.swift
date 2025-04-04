@@ -15,9 +15,9 @@ public struct MockMonitorPhotosUseCase: MonitorPhotosUseCaseProtocol {
         }
     }
     private let state = State()
-    private let monitorPhotosAsyncSequence: AnyAsyncSequence<Result<[NodeEntity], Error>>
+    private let monitorPhotosAsyncSequence: AnyAsyncSequence<Result<[NodeEntity], any Error>>
     
-    public init(monitorPhotosAsyncSequence: AnyAsyncSequence<Result<[NodeEntity], Error>> = EmptyAsyncSequence<Result<[NodeEntity], Error>>().eraseToAnyAsyncSequence()) {
+    public init(monitorPhotosAsyncSequence: AnyAsyncSequence<Result<[NodeEntity], any Error>> = EmptyAsyncSequence<Result<[NodeEntity], any Error>>().eraseToAnyAsyncSequence()) {
         self.monitorPhotosAsyncSequence = monitorPhotosAsyncSequence
     }
     
@@ -25,7 +25,7 @@ public struct MockMonitorPhotosUseCase: MonitorPhotosUseCaseProtocol {
         filterOptions: PhotosFilterOptionsEntity,
         excludeSensitive: Bool,
         searchText: String?
-    ) async -> AnyAsyncSequence<Result<[NodeEntity], Error>> {
+    ) async -> AnyAsyncSequence<Result<[NodeEntity], any Error>> {
         await state.addInvocation(
             .monitorPhotos(filterOptions: filterOptions, excludeSensitive: excludeSensitive))
         

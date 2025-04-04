@@ -7,7 +7,7 @@ public final class MockAlbumModificationUseCase: AlbumModificationUseCaseProtoco
         case addPhotosToAlbum(id: HandleEntity, nodes: [NodeEntity])
     }
     private var resultEntity = AlbumElementsResultEntity(success: 0, failure: 0)
-    private let addPhotosResult: Result<AlbumElementsResultEntity, Error>
+    private let addPhotosResult: Result<AlbumElementsResultEntity, any Error>
     public private(set) var addedPhotosToAlbum: [NodeEntity]?
     public private(set) var deletedPhotos: [AlbumPhotoEntity]?
     public private(set) var deletedAlbumsIds: [HandleEntity]?
@@ -21,7 +21,7 @@ public final class MockAlbumModificationUseCase: AlbumModificationUseCaseProtoco
     
     public init(resultEntity: AlbumElementsResultEntity? = nil,
                 albums: [AlbumEntity] = [],
-                addPhotosResult: Result<AlbumElementsResultEntity, Error> = .failure(GenericErrorEntity())) {
+                addPhotosResult: Result<AlbumElementsResultEntity, any Error> = .failure(GenericErrorEntity())) {
         if let resultEntity = resultEntity {
             self.resultEntity = resultEntity
         }

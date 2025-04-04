@@ -3,12 +3,12 @@ import MEGASwift
 
 public final class MockPublicCollectionUseCase: PublicCollectionUseCaseProtocol, @unchecked Sendable {
 
-    private let publicAlbumResult: Result<SharedCollectionEntity, Error>
+    private let publicAlbumResult: Result<SharedCollectionEntity, any Error>
     private let nodes: [NodeEntity]
     
     @Atomic public var stopCollectionLinkPreviewCalled = 0
     
-    public init(publicAlbumResult: Result<SharedCollectionEntity, Error> = .failure(GenericErrorEntity()),
+    public init(publicAlbumResult: Result<SharedCollectionEntity, any Error> = .failure(GenericErrorEntity()),
                 nodes: [NodeEntity] = []) {
         self.publicAlbumResult = publicAlbumResult
         self.nodes = nodes

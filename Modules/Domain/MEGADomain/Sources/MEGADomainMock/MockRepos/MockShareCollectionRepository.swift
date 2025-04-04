@@ -3,20 +3,20 @@ import MEGASwift
 
 public final class MockShareCollectionRepository: ShareCollectionRepositoryProtocol, @unchecked Sendable {
     public static let newRepo = MockShareCollectionRepository()
-    private let shareCollectionResults: [SetIdentifier: Result<String?, Error>]
-    private let disableCollectionShareResult: Result<Void, Error>
-    private let publicCollectionContentsResult: Result<SharedCollectionEntity, Error>
-    private let publicNodeResults: [HandleEntity: Result<NodeEntity, Error>]
-    private let copyPublicNodesResult: Result<[NodeEntity], Error>
+    private let shareCollectionResults: [SetIdentifier: Result<String?, any Error>]
+    private let disableCollectionShareResult: Result<Void, any Error>
+    private let publicCollectionContentsResult: Result<SharedCollectionEntity, any Error>
+    private let publicNodeResults: [HandleEntity: Result<NodeEntity, any Error>]
+    private let copyPublicNodesResult: Result<[NodeEntity], any Error>
     
     @Atomic public var stopCollectionLinkPreviewCalled = 0
     
     public init(
-        shareCollectionResults: [SetIdentifier: Result<String?, Error>] = [:],
-        disableCollectionShareResult: Result<Void, Error> = .failure(GenericErrorEntity()),
-        publicCollectionContentsResult: Result<SharedCollectionEntity, Error> = .failure(GenericErrorEntity()),
-        publicNodeResults: [HandleEntity: Result<NodeEntity, Error>] = [:],
-        copyPublicNodesResult: Result<[NodeEntity], Error> = .failure(GenericErrorEntity())
+        shareCollectionResults: [SetIdentifier: Result<String?, any Error>] = [:],
+        disableCollectionShareResult: Result<Void, any Error> = .failure(GenericErrorEntity()),
+        publicCollectionContentsResult: Result<SharedCollectionEntity, any Error> = .failure(GenericErrorEntity()),
+        publicNodeResults: [HandleEntity: Result<NodeEntity, any Error>] = [:],
+        copyPublicNodesResult: Result<[NodeEntity], any Error> = .failure(GenericErrorEntity())
     ) {
         self.shareCollectionResults = shareCollectionResults
         self.disableCollectionShareResult = disableCollectionShareResult
