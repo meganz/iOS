@@ -126,7 +126,7 @@ final class AlbumContentUseCaseTests: XCTestCase {
         let nonSensitivePhotos = Set([
             AlbumPhotoEntity(photo: visibleNode, albumPhotoId: albumPhotoId2.id)
         ])
-        let isInheritingSensitivityResults: [HandleEntity: Result<Bool, Error>] = [
+        let isInheritingSensitivityResults: [HandleEntity: Result<Bool, any Error>] = [
             visibleNodeHandle: .success(false),
             inheritHiddenNodeHandle: .success(true)
         ]
@@ -246,7 +246,7 @@ final class AlbumContentUseCaseTests: XCTestCase {
         let hiddenInheritNode = NodeEntity(name: "hide_inherit.jpg", handle: inheritHiddenNodeHandle, isMarkedSensitive: false)
         let userAlbumRepo = MockUserAlbumRepository(albumElementIds: [albumId: [albumPhotoId1, albumPhotoId2, albumPhotoId3]])
         
-        let isInheritingSensitivityResults: [HandleEntity: Result<Bool, Error>] = [
+        let isInheritingSensitivityResults: [HandleEntity: Result<Bool, any Error>] = [
             visibleNodeHandle: .success(false),
             inheritHiddenNodeHandle: .success(true)
         ]

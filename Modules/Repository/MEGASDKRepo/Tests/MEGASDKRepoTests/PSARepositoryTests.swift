@@ -17,15 +17,12 @@ struct PSARepositoryTests {
     struct GetPSATestsAsync {
         
         @Test("Should return PSA entity when SDK call succeeds")
-        func getPSAReturnsEntityOnSuccess() async {
-            let sut = makeSUT(requestResult: .success(MockRequest(handle: 1)))
+        func getPSAReturnsEntityOnSuccess() async throws {
+            let requestNumber: Int64 = 999
+            let sut = makeSUT(requestResult: .success(MockRequest(handle: 1, number: requestNumber)))
             
-            do {
-                let psa = try await sut.getPSA()
-                #expect(psa != nil, "Expected a PSA entity when the SDK call succeeds")
-            } catch {
-                Issue.record("Expected success with a PSA entity, but got an error")
-            }
+            let psa = try await sut.getPSA()
+            #expect(psa.identifier == requestNumber)
         }
         
         @Test(

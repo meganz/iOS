@@ -31,7 +31,7 @@ public struct UserAttributeRepository: UserAttributeRepositoryProtocol {
         }
     }
     
-    public func mergeUserAttribute(_ attribute: UserAttributeEntity, key: String, object: Encodable) async throws {
+    public func mergeUserAttribute<T: Encodable>(_ attribute: UserAttributeEntity, key: String, object: T) async throws {
         let supportedModelDictionary = try object.convertToDictionary()
         let currentAppsPreference = try? await userAttribute(for: attribute)
         

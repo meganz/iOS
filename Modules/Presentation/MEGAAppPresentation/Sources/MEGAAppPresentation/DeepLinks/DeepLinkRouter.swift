@@ -48,7 +48,7 @@ public struct AppOpener {
 }
 
 public struct DeepLinkRouter: DeepLinkRoutable {
-    private let appNavigator: Routing?
+    private let appNavigator: (any Routing)?
     private let appOpener: AppOpener?
     
     /// Initializes the DeepLinkRouter with handlers for internal and external navigation.
@@ -56,7 +56,7 @@ public struct DeepLinkRouter: DeepLinkRoutable {
     ///   - appNavigator: Handles internal app navigation.
     ///   - appOpener: Handles external app navigation.
     public init(
-        appNavigator: Routing? = nil,
+        appNavigator: (any Routing)? = nil,
         appOpener: AppOpener? = nil
     ) {
         self.appNavigator = appNavigator

@@ -96,15 +96,8 @@ public final class CallLocalVideoRepository: NSObject, CallLocalVideoRepositoryP
         }
     }
     
-    public func selectCamera(withLocalizedName localizedName: String, completion: @escaping (Result<Void, Error>) -> Void) {
-        chatSdk.setChatVideoInDevices(localizedName, delegate: ChatRequestDelegate { result in
-            switch result {
-            case .success:
-                completion(.success)
-            case .failure:
-                completion(.failure(GenericErrorEntity()))
-            }
-        })
+    public func selectCamera(withLocalizedName localizedName: String) {
+        chatSdk.setChatVideoInDevices(localizedName)
     }
     
     public func openVideoDevice(completion: @escaping (Result<Void, CallErrorEntity>) -> Void) {

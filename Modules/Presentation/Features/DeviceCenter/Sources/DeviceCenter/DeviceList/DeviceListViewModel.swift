@@ -16,7 +16,7 @@ public final class DeviceListViewModel: ObservableObject {
     private let devicesUpdatePublisher: PassthroughSubject<[DeviceEntity], Never>
     private let updateInterval: UInt64
     private let currentDeviceUUID: String
-    private let backupStatusProvider: BackupStatusProviding
+    private let backupStatusProvider: any BackupStatusProviding
     private var cancellable: Set<AnyCancellable> = []
     private var searchTextPublisher = PassthroughSubject<String, Never>()
     private var searchCancellable: AnyCancellable?
@@ -183,7 +183,6 @@ public final class DeviceListViewModel: ObservableObject {
         }
     }
     
-    @MainActor
     func updateInternetConnectionStatus() {
         hasNetworkConnection = networkMonitorUseCase.isConnected()
         monitorNetworkChanges()
@@ -211,7 +210,6 @@ public final class DeviceListViewModel: ObservableObject {
         await deviceCenterUseCase.fetchUserDevices()
     }
     
-    @MainActor
     func arrangeDevices(_ devices: [DeviceEntity]) {
         currentDeviceId = deviceCenterUseCase.loadCurrentDeviceId()
         if let device = devices.first(where: { $0.id == currentDeviceId }),
@@ -220,14 +218,12 @@ public final class DeviceListViewModel: ObservableObject {
         } else {
             loadDefaultDevice()
         }
-        do {
-            otherDevices = try devices
-                .filter { $0.id != currentDeviceId }
-                .compactMap(loadDeviceViewModel)
-                .sorted { $0.name < $1.name }
-        } catch {
-            debugPrint("[Device Center] Error while arranging devices: \(error.localizedDescription)")
-        }
+        
+        otherDevices = devices
+            .filter { $0.id != currentDeviceId }
+            .compactMap { loadDeviceViewModel($0) }
+            .sorted { $0.name < $1.name }
+        
         hideLoadingPlaceholder()
     }
 }

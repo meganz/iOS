@@ -13,7 +13,7 @@ struct GetSMSUseCaseTests {
         callingCodes: ["+64"]
     )
     
-    private static func makeSUT(repo: MockSMSRepository, language: String = "en", deviceRegion: String = "NZ") -> GetSMSUseCaseProtocol {
+    private static func makeSUT(repo: MockSMSRepository, language: String = "en", deviceRegion: String = "NZ") -> some GetSMSUseCaseProtocol {
         GetSMSUseCase(
             repo: repo,
             l10n: MockL10nRepository(
@@ -23,12 +23,12 @@ struct GetSMSUseCaseTests {
         )
     }
     
-    private static func assertVerifiedPhoneNumber(sut: GetSMSUseCaseProtocol, expectedNumber: String?) {
+    private static func assertVerifiedPhoneNumber(sut: any GetSMSUseCaseProtocol, expectedNumber: String?) {
         #expect(sut.verifiedPhoneNumber() == expectedNumber, "Expected verified phone number to be \(expectedNumber ?? "nil") but got \(sut.verifiedPhoneNumber() ?? "nil")")
     }
     
     private static func assertRegionCallingCodes(
-        sut: GetSMSUseCaseProtocol,
+        sut: any GetSMSUseCaseProtocol,
         expectedCurrentRegion: RegionEntity?,
         expectedAllRegions: [RegionEntity]
     ) async {
@@ -43,7 +43,7 @@ struct GetSMSUseCaseTests {
     
     private static func assertErrorHandling(
         mockError: GetSMSErrorEntity,
-        sut: GetSMSUseCaseProtocol
+        sut: any GetSMSUseCaseProtocol
     ) async {
         do {
             _ = try await sut.getRegionCallingCodes()

@@ -9,7 +9,7 @@ public protocol MonitorAlbumPhotosUseCaseProtocol: Sendable {
     /// - Returns: An asynchronous sequence of results, where each result contains an array of `AlbumPhotoEntity` objects or an error.
     func monitorPhotos(
         for album: AlbumEntity
-    ) async -> AnyAsyncSequence<Result<[AlbumPhotoEntity], Error>>
+    ) async -> AnyAsyncSequence<Result<[AlbumPhotoEntity], any Error>>
 }
 
 public struct MonitorAlbumPhotosUseCase: MonitorAlbumPhotosUseCaseProtocol {

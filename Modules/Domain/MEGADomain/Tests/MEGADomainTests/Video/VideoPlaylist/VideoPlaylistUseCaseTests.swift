@@ -575,7 +575,7 @@ final class VideoPlaylistUseCaseTests: XCTestCase {
         filesSearchUseCase: MockFilesSearchUseCase = MockFilesSearchUseCase(searchResult: .failure(.generic)),
         userVideoPlaylistRepositoryResult: [SetEntity] = [],
         photoLibrarayUseCase: MockPhotoLibraryUseCase = MockPhotoLibraryUseCase(),
-        createVideoPlaylistResult: Result<SetEntity, Error> = .failure(GenericErrorEntity()),
+        createVideoPlaylistResult: Result<SetEntity, any Error> = .failure(GenericErrorEntity()),
         setsUpdatedAsyncSequence: AnyAsyncSequence<[SetEntity]> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
         setElementsUpdatedAsyncSequence: AnyAsyncSequence<[SetElementEntity]> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
         updateVideoPlaylistNameResult: Result<Void, any Error> = .failure(GenericErrorEntity())

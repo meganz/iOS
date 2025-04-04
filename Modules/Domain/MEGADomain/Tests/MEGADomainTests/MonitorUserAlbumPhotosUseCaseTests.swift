@@ -201,7 +201,7 @@ final class MonitorUserAlbumPhotosUseCaseTests: XCTestCase {
             AlbumPhotoIdEntity(albumId: albumId, albumPhotoId: albumSensitiveElementId, nodeId: sensitive.handle),
             AlbumPhotoIdEntity(albumId: albumId, albumPhotoId: albumInheritedElementId, nodeId: inheritedSensitive.handle)
         ]
-        let inheritedSensitivityResults: [HandleEntity: Result<Bool, Error>] = [
+        let inheritedSensitivityResults: [HandleEntity: Result<Bool, any Error>] = [
             normal.handle: .success(false),
             sensitive.handle: .success(true),
             inheritedSensitive.handle: .success(true)

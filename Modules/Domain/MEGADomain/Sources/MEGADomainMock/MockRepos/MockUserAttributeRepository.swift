@@ -32,7 +32,7 @@ public final class MockUserAttributeRepository: UserAttributeRepositoryProtocol,
         userAttributesContainer[attribute]
     }
     
-    public func mergeUserAttribute(_ attribute: UserAttributeEntity, key: String, object: any Encodable) async throws {
+    public func mergeUserAttribute<T: Encodable>(_ attribute: UserAttributeEntity, key: String, object: T) async throws {
         let jsonData = try jsonEncoder.encode(object)
         
         userAttributesContainer[attribute] = [key: String(decoding: jsonData, as: UTF8.self).base64Encoded ?? "Failed to encode to base64 string"]

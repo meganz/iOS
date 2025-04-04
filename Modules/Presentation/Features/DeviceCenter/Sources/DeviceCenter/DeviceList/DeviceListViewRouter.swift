@@ -23,7 +23,7 @@ public final class DeviceListViewRouter: NSObject, DeviceListRouting {
     private let cameraUploadsUseCase: any CameraUploadsUseCaseProtocol
     private let networkMonitorUseCase: any NetworkMonitorUseCaseProtocol
     private let notificationCenter: NotificationCenter
-    private let backupStatusProvider: BackupStatusProviding
+    private let backupStatusProvider: any BackupStatusProviding
     private let deviceIconProvider: any DeviceIconProviding
 
     public init(
@@ -35,7 +35,7 @@ public final class DeviceListViewRouter: NSObject, DeviceListRouting {
         networkMonitorUseCase: some NetworkMonitorUseCaseProtocol,
         notificationCenter: NotificationCenter,
         deviceCenterActions: [ContextAction],
-        deviceIconProvider: DeviceIconProviding = DeviceIconProvider(),
+        deviceIconProvider: some DeviceIconProviding = DeviceIconProvider(),
         backupStatusProvider: some BackupStatusProviding = BackupStatusProvider()
     ) {
         self.navigationController = navigationController

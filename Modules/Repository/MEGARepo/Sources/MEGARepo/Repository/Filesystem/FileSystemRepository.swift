@@ -87,7 +87,7 @@ public struct FileSystemRepository: FileSystemRepositoryProtocol {
     
     // MARK: - Private
     
-    private func removeItemAsync(at url: URL, completion: @Sendable @escaping (Result<Void, Error>) -> Void) {
+    private func removeItemAsync(at url: URL, completion: @Sendable @escaping (Result<Void, any Error>) -> Void) {
         queue.async {
             do {
                 try FileManager.default.removeItem(at: url)

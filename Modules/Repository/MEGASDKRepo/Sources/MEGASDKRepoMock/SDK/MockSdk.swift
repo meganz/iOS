@@ -404,24 +404,24 @@ public final class MockSdk: MEGASdk, @unchecked Sendable {
         processCopyNodeWithDelegate(delegate, node: node)
     }
     
-    public override func copy(_ node: MEGANode, newParent: MEGANode, newName: String, delegate: MEGARequestDelegate) {
+    public override func copy(_ node: MEGANode, newParent: MEGANode, newName: String, delegate: any MEGARequestDelegate) {
         copyNodeWithNewNameCallCount += 1
         processCopyNodeWithDelegate(delegate, node: node)
     }
     
-    private func processCopyNodeWithDelegate(_ delegate: MEGARequestDelegate, node: MEGANode) {
+    private func processCopyNodeWithDelegate(_ delegate: any MEGARequestDelegate, node: MEGANode) {
         let mockRequest = MockRequest(handle: copiedNodeHandles[node.handle] ?? .invalid)
         delegate.onRequestFinish?(self,
                                   request: mockRequest,
                                   error: MockError(errorType: megaSetError))
     }
     
-    public override func move(_ node: MEGANode, newParent: MEGANode, delegate: MEGARequestDelegate) {
+    public override func move(_ node: MEGANode, newParent: MEGANode, delegate: any MEGARequestDelegate) {
         moveNodeWithSameNameCallCount += 1
         processRequestResult(delegate: delegate)
     }
     
-    public override func move(_ node: MEGANode, newParent: MEGANode, newName: String, delegate: MEGARequestDelegate) {
+    public override func move(_ node: MEGANode, newParent: MEGANode, newName: String, delegate: any MEGARequestDelegate) {
         moveNodeWithNewNameCallCount += 1
         processRequestResult(delegate: delegate)
     }
@@ -684,11 +684,11 @@ public final class MockSdk: MEGASdk, @unchecked Sendable {
         processRequestResult(delegate: delegate)
     }
     
-    public override func getMiscFlags(with delegate: MEGARequestDelegate) {
+    public override func getMiscFlags(with delegate: any MEGARequestDelegate) {
         processRequestResult(delegate: delegate)
     }
     
-    public override func getSessionTransferURL(_ path: String, delegate: MEGARequestDelegate) {
+    public override func getSessionTransferURL(_ path: String, delegate: any MEGARequestDelegate) {
         processRequestResult(delegate: delegate)
     }
     
@@ -825,7 +825,7 @@ public final class MockSdk: MEGASdk, @unchecked Sendable {
     
     // MARK: - Hidden Nodes
     
-    public override func setNodeSensitive(_ node: MEGANode, sensitive: Bool, delegate: MEGARequestDelegate) {
+    public override func setNodeSensitive(_ node: MEGANode, sensitive: Bool, delegate: any MEGARequestDelegate) {
         isNodeSensitive = sensitive
         let mockRequest = MockRequest(handle: node.handle)
         delegate.onRequestFinish?(self, request: mockRequest, error: MockError(errorType: megaSetError))
@@ -833,7 +833,7 @@ public final class MockSdk: MEGASdk, @unchecked Sendable {
     
     // MARK: - Notifications
     
-    public override func getNotificationsWith(_ delegate: MEGARequestDelegate) {
+    public override func getNotificationsWith(_ delegate: any MEGARequestDelegate) {
         processRequestResult(delegate: delegate)
     }
     
@@ -841,16 +841,16 @@ public final class MockSdk: MEGASdk, @unchecked Sendable {
         _enabledNotificationIdList
     }
     
-    public override func getLastReadNotification(with delegate: MEGARequestDelegate) {
+    public override func getLastReadNotification(with delegate: any MEGARequestDelegate) {
         processRequestResult(delegate: delegate)
     }
     
-    public override func setLastReadNotificationWithNotificationId(_ notificationId: UInt32, delegate: MEGARequestDelegate) {
+    public override func setLastReadNotificationWithNotificationId(_ notificationId: UInt32, delegate: any MEGARequestDelegate) {
         _lastReadNotificationId = Int32(notificationId)
         processRequestResult(delegate: delegate)
     }
     // MARK: - Recent Actions
-    public override func getRecentActionsAsync(sinceDays days: Int, maxNodes: Int, excludeSensitives: Bool, delegate: MEGARequestDelegate) {
+    public override func getRecentActionsAsync(sinceDays days: Int, maxNodes: Int, excludeSensitives: Bool, delegate: any MEGARequestDelegate) {
         getRecentActionsAsyncCalled = true
         processRequestResult(delegate: delegate)
     }
@@ -874,7 +874,7 @@ public final class MockSdk: MEGASdk, @unchecked Sendable {
         _outgoingContactRequests
     }
   
-    public override func inviteContact(withEmail email: String, message: String?, action: MEGAInviteAction, delegate: MEGARequestDelegate) {
+    public override func inviteContact(withEmail email: String, message: String?, action: MEGAInviteAction, delegate: any MEGARequestDelegate) {
         processRequestResult(delegate: delegate)
     }
     

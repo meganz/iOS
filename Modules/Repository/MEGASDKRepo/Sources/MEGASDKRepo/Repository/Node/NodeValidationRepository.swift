@@ -4,9 +4,9 @@ import MEGASdk
 public struct NodeValidationRepository: NodeValidationRepositoryProtocol {
 
     private let sdk: MEGASdk
-    private let offlineStore: OfflineStoreBridgeProtocol
+    private let offlineStore: any OfflineStoreBridgeProtocol
     
-    public init(sdk: MEGASdk, offlineStore: OfflineStoreBridgeProtocol) {
+    public init(sdk: MEGASdk, offlineStore: some OfflineStoreBridgeProtocol) {
         self.sdk = sdk
         self.offlineStore = offlineStore
     }

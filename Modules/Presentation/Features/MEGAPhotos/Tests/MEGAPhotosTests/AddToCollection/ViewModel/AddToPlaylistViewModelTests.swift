@@ -196,7 +196,7 @@ struct AddToPlaylistViewModelTests {
             
             try await confirmation("isItemsNotEmpty match publisher", expectedCount: 3) { confirmation in
                 var cancellable: AnyCancellable?
-                try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, Error>) in
+                try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, any Error>) in
                     var expectations = [false, true, false]
                     cancellable = sut.isItemsNotEmptyPublisher
                         .sink(receiveCompletion: {

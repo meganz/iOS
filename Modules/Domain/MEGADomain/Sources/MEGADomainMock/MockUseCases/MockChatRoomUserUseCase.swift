@@ -2,24 +2,24 @@ import Foundation
 import MEGADomain
 
 public struct MockChatRoomUserUseCase: ChatRoomUserUseCaseProtocol {
-    private let userFullNamesResult: Result<[String], Error>
-    private let userDisplayNameForPeerResult: Result<String, Error>
+    private let userFullNamesResult: Result<[String], any Error>
+    private let userDisplayNameForPeerResult: Result<String, any Error>
     private let userDisplayNamesForPeersResult: Result<[(HandleEntity, String)], any Error>
     private let userNickNames: [HandleEntity: String]
     private let userEmails: [HandleEntity: String]
     private let contactEmail: String?
-    private let chatRoomUsersDescriptionResult: Result<String, Error>
-    private let userEmail: Result<String, Error>
+    private let chatRoomUsersDescriptionResult: Result<String, any Error>
+    private let userEmail: Result<String, any Error>
 
     public init(
-        userFullNamesResult: Result<[String], Error> = .failure(GenericErrorEntity()),
-        userDisplayNameForPeerResult: Result<String, Error> = .failure(GenericErrorEntity()),
-        userDisplayNamesForPeersResult: Result<[(HandleEntity, String)], Error> = .failure(GenericErrorEntity()),
+        userFullNamesResult: Result<[String], any Error> = .failure(GenericErrorEntity()),
+        userDisplayNameForPeerResult: Result<String, any Error> = .failure(GenericErrorEntity()),
+        userDisplayNamesForPeersResult: Result<[(HandleEntity, String)], any Error> = .failure(GenericErrorEntity()),
         userNickNames: [HandleEntity: String] = [:],
         userEmails: [HandleEntity: String] = [:],
         contactEmail: String? = nil,
-        chatRoomUsersDescriptionResult: Result<String, Error> = .failure(GenericErrorEntity()),
-        userEmail: Result<String, Error> = .failure(GenericErrorEntity())
+        chatRoomUsersDescriptionResult: Result<String, any Error> = .failure(GenericErrorEntity()),
+        userEmail: Result<String, any Error> = .failure(GenericErrorEntity())
     ) {
         self.userFullNamesResult = userFullNamesResult
         self.userDisplayNameForPeerResult = userDisplayNameForPeerResult

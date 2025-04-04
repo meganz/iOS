@@ -16,7 +16,7 @@ final class FavouriteNodesUseCaseTests: XCTestCase {
     func testAllFavouriteNodesSearchWithSensitiveFlag_returnsCorrectNodes() async throws {
         let sensitiveNode = NodeEntity(handle: 2)
 
-        let nodes: [NodeEntity: Result<Bool, Error>] = [
+        let nodes: [NodeEntity: Result<Bool, any Error>] = [
             .init(handle: 1): .success(false),
             sensitiveNode: .success(true),
             .init(handle: 3): .success(false)
@@ -44,7 +44,7 @@ final class FavouriteNodesUseCaseTests: XCTestCase {
         let sensitiveNode2 = NodeEntity(handle: 4)
         let expectedResult = NodeEntity(handle: 3)
         
-        let nodes: [NodeEntity: Result<Bool, Error>] = [
+        let nodes: [NodeEntity: Result<Bool, any Error>] = [
             sensitiveNode: .success(true),
             sensitiveNode2: .success(true),
             expectedResult: .success(false)
@@ -62,7 +62,7 @@ final class FavouriteNodesUseCaseTests: XCTestCase {
     
     func testAllFavouriteNodesSearch_whenExcludeSensitiveNodesTrue_returnsNoSensitveNodes() async throws {
         let sensitiveNode = NodeEntity(handle: 2)
-        let nodes: [NodeEntity: Result<Bool, Error>] = [
+        let nodes: [NodeEntity: Result<Bool, any Error>] = [
             .init(handle: 1): .success(false),
             sensitiveNode: .success(true),
             .init(handle: 3): .success(false)
@@ -83,7 +83,7 @@ final class FavouriteNodesUseCaseTests: XCTestCase {
     
     func testAllFavouriteNodesSearch_whenExcludeSensitiveNodesFalse_returnsAllNodesIncludingSensitive() async throws {
         let sensitiveNode = NodeEntity(handle: 2)
-        let nodes: [NodeEntity: Result<Bool, Error>] = [
+        let nodes: [NodeEntity: Result<Bool, any Error>] = [
             .init(handle: 1): .success(false),
             sensitiveNode: .success(true),
             .init(handle: 3): .success(false)

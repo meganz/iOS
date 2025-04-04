@@ -2,13 +2,13 @@ import SwiftUI
 
 @MainActor
 final class CancelSubscriptionStepsViewModel: ObservableObject {
-    private let cancelSubscriptionStepsHelper: CancelSubscriptionStepsHelperProtocol
+    private let cancelSubscriptionStepsHelper: any CancelSubscriptionStepsHelperProtocol
     @Published var shouldDismiss: Bool = false
     @Published var title: String = ""
     @Published var message: String = ""
     @Published var sections: [StepSection] = []
     
-    init(helper: CancelSubscriptionStepsHelperProtocol) {
+    init(helper: some CancelSubscriptionStepsHelperProtocol) {
         self.cancelSubscriptionStepsHelper = helper
     }
     

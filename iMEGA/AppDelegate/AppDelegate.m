@@ -1640,7 +1640,7 @@
 }
 
 - (void)onChatListItemUpdate:(MEGAChatSdk *)api item:(MEGAChatListItem *)item {
-    if (item.changes == 0 && self.chatLastKnownInitState == MEGAChatStatusOnline) {
+    if (item.changes == 0 && self.chatLastKnownInitState == MEGAChatInitOnlineSession) {
         MEGALogDebug(@"New chat room %@", [MEGASdk base64HandleForUserHandle:item.chatId]);
         [self copyDatabasesForExtensions];
         MEGALogDebug(@"Invalidate NSE cache");

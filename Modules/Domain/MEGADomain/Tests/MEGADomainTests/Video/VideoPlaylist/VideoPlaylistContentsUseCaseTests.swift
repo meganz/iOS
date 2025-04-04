@@ -519,19 +519,19 @@ struct VideoPlaylistContentsUseCaseTestSuite {
                   arguments: [
                     ([SetElementEntity.mp4Element, .sensitiveMp4Element],
                      [NodeEntity.mp4, .sensitiveMp4],
-                     [NodeEntity.mp4.handle: Result<Bool, Error>.success(false)],
+                     [NodeEntity.mp4.handle: Result<Bool, any Error>.success(false)],
                      [VideoPlaylistVideoEntity(video: .mp4, videoPlaylistVideoId: SetElementEntity.mp4Element.handle)]
                     ),
                     ([SetElementEntity.mp4Element, .sensitiveMp4Element],
                      [NodeEntity.mp4, .sensitiveMp4],
-                     [NodeEntity.mp4.handle: Result<Bool, Error>.success(true)],
+                     [NodeEntity.mp4.handle: Result<Bool, any Error>.success(true)],
                      []
                     )
                   ])
             func userPlaylistVideosExcludingSensitives(
                 videoPlaylistContents: [SetElementEntity],
                 videos: [NodeEntity],
-                isInheritingSensitivityResults: [HandleEntity: Result<Bool, Error>],
+                isInheritingSensitivityResults: [HandleEntity: Result<Bool, any Error>],
                 expectedPlaylistVideos: [VideoPlaylistVideoEntity]
             ) async {
                 let sut = UserVideoPlaylistVideos.makeSUT(
@@ -563,7 +563,7 @@ struct VideoPlaylistContentsUseCaseTestSuite {
             excludeSensitives: Bool = false,
             videoPlaylistContents: [SetElementEntity] = [],
             videos: [NodeEntity] = [],
-            isInheritingSensitivityResults: [HandleEntity: Result<Bool, Error>] = [:]
+            isInheritingSensitivityResults: [HandleEntity: Result<Bool, any Error>] = [:]
         ) -> VideoPlaylistContentsUseCase {
             let userVideoPlaylistRepository = MockUserVideoPlaylistsRepository(
                 videoPlaylistContentResult: videoPlaylistContents

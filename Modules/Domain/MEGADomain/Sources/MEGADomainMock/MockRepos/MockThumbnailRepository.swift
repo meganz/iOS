@@ -8,15 +8,15 @@ public struct MockThumbnailRepository: ThumbnailRepositoryProtocol {
     private let cachedThumbnailURL: URL
     private let cachedPreviewURL: URL
     private let cachedOriginalURL: URL
-    private let loadThumbnailResult: Result<URL, Error>
-    private let loadPreviewResult: Result<URL, Error>
+    private let loadThumbnailResult: Result<URL, any Error>
+    private let loadPreviewResult: Result<URL, any Error>
     
     public init(cachedThumbnailURLs: [(ThumbnailTypeEntity, URL?)] = [],
                 cachedThumbnailURL: URL = URL(string: "https://MEGA.NZ")!,
                 cachedPreviewURL: URL = URL(string: "https://MEGA.NZ")!,
                 cachedOriginalURL: URL = URL(string: "https://MEGA.NZ")!,
-                loadThumbnailResult: Result<URL, Error> = .failure(GenericErrorEntity()),
-                loadPreviewResult: Result<URL, Error> = .failure(GenericErrorEntity())) {
+                loadThumbnailResult: Result<URL, any Error> = .failure(GenericErrorEntity()),
+                loadPreviewResult: Result<URL, any Error> = .failure(GenericErrorEntity())) {
         self.cachedThumbnailURLs = cachedThumbnailURLs
         self.cachedThumbnailURL = cachedThumbnailURL
         self.cachedPreviewURL = cachedPreviewURL

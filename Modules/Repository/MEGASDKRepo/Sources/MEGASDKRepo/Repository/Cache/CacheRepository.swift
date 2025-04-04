@@ -21,15 +21,15 @@ public struct CacheRepository: CacheRepositoryProtocol {
         )
     }
     
-    private let directoryProvider: DirectoryProvidingProtocol
-    private let folderSizeCalculator: FolderSizeCalculatingProtocol
-    private let directoryCleaner: DirectoryCleaningProtocol
+    private let directoryProvider: any DirectoryProvidingProtocol
+    private let folderSizeCalculator: any FolderSizeCalculatingProtocol
+    private let directoryCleaner: any DirectoryCleaningProtocol
     private let sdk: MEGASdk
     
     public init(
-        directoryProvider: DirectoryProvidingProtocol,
-        folderSizeCalculator: FolderSizeCalculatingProtocol,
-        directoryCleaner: DirectoryCleaningProtocol,
+        directoryProvider: some DirectoryProvidingProtocol,
+        folderSizeCalculator: some FolderSizeCalculatingProtocol,
+        directoryCleaner: some DirectoryCleaningProtocol,
         sdk: MEGASdk
     ) {
         self.directoryProvider = directoryProvider

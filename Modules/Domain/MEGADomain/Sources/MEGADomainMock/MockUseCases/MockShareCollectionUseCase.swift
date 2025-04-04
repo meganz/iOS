@@ -2,15 +2,15 @@ import MEGADomain
 
 public struct MockShareCollectionUseCase: ShareCollectionUseCaseProtocol {
     
-    private let shareCollectionLinkResult: Result<String, Error>
+    private let shareCollectionLinkResult: Result<String, any Error>
     private let shareCollectionsLinks: [SetIdentifier: String]
-    private let removeSharedCollectionLinkResult: Result<Void, Error>
+    private let removeSharedCollectionLinkResult: Result<Void, any Error>
     private let successfullyRemoveSharedCollectionLinkIds: [SetIdentifier]
     private let doesCollectionsContainSensitiveElement: [HandleEntity: Bool]
     
-    public init(shareCollectionLinkResult: Result<String, Error> = .failure(GenericErrorEntity()),
+    public init(shareCollectionLinkResult: Result<String, any Error> = .failure(GenericErrorEntity()),
                 shareCollectionsLinks: [SetIdentifier: String] = [:],
-                removeSharedCollectionLinkResult: Result<Void, Error> = .failure(GenericErrorEntity()),
+                removeSharedCollectionLinkResult: Result<Void, any Error> = .failure(GenericErrorEntity()),
                 successfullyRemoveSharedCollectionLinkIds: [SetIdentifier] = [SetIdentifier](),
                 doesCollectionsContainSensitiveElement: [HandleEntity: Bool] = [:]) {
         self.shareCollectionLinkResult = shareCollectionLinkResult

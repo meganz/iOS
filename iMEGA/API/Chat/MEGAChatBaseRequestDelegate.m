@@ -10,13 +10,13 @@
         
     if (error.type) {
 #ifndef MNZ_NOTIFICATION_EXTENSION
-        if (request.type == MEGAChatRequestTypeChatLinkHandle && error.type == MEGAErrorTypeApiENoent) {
+        if (request.type == MEGAChatRequestTypeChatLinkHandle && error.type == MEGAChatErrorTypeNoEnt) {
             return;
         }
         if (request.type == MEGAChatRequestTypeGetPeerAttributes) {
             return;
         }
-        if (request.type == MEGAChatRequestTypeLoadPreview && (error.type == MEGAErrorTypeApiEExist || request.userHandle == MEGAInvalidHandle)) {
+        if (request.type == MEGAChatRequestTypeLoadPreview && (error.type == MegaChatErrorTypeExist || request.userHandle == MEGAInvalidHandle)) {
             return;
         }
         if ((request.type == MEGAChatRequestTypeAnswerChatCall || request.type == MEGAChatRequestTypeStartChatCall) && error.type == MEGAChatErrorTooMany) {

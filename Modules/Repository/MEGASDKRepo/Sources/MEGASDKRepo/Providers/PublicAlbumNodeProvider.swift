@@ -10,7 +10,7 @@ public protocol PublicAlbumNodeProviderProtocol: MEGANodeProviderProtocol {
     ///
     /// Task to retrieve the node will be created and stored into `PublicAlbumNodeCache` as `inProgress` untill its loaded.
     /// On load successful the `MEGANode` will be stored in cache as `ready` and returned. On failure the cached
-    ///  `inProgress(Task<MEGANode?, Error>)` entry will be removed.
+    ///  `inProgress(Task<MEGANode?, any Error>)` entry will be removed.
     ///
     /// - Parameter element: SetElementEntity to retrieve and cache node
     /// - Returns: MEGANode or nil if not found.
@@ -68,7 +68,7 @@ public final class PublicAlbumNodeProvider: PublicAlbumNodeProviderProtocol {
         return try? await publicPhotoNode(for: setElement)
     }
     
-    private func makePreviewElementNodeTask(elementId: HandleEntity) -> Task<MEGANode?, Error> {
+    private func makePreviewElementNodeTask(elementId: HandleEntity) -> Task<MEGANode?, any Error> {
         Task {
             try await withAsyncThrowingValue { completion in
                 sdk.previewElementNode(elementId, delegate: RequestDelegate { result in
@@ -76,7 +76,7 @@ public final class PublicAlbumNodeProvider: PublicAlbumNodeProviderProtocol {
                     case .success(let request):
                         completion(.success(request.publicNode))
                     case .failure(let error):
-                        let errorEntity: Error
+                        let errorEntity: any Error
                         switch error.type {
                         case .apiEArgs:
                             errorEntity = SharedPhotoErrorEntity.photoNotFound
@@ -95,7 +95,7 @@ public final class PublicAlbumNodeProvider: PublicAlbumNodeProviderProtocol {
 
 /// The state of the current MEGANode
 private enum PublicAlbumNodeCacheEntry {
-    case inProgress(Task<MEGANode?, Error>)
+    case inProgress(Task<MEGANode?, any Error>)
     case ready(MEGANode?)
 }
 

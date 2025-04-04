@@ -104,7 +104,7 @@ struct AddToAlbumsViewModelTests {
             let sut = AddToAlbumsViewModelTests.makeSUT()
             
             var cancellable: AnyCancellable?
-            try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, Error>) in
+            try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, any Error>) in
                 cancellable = sut.$showCreateAlbumAlert
                     .setFailureType(to: TestError.self)
                     .dropFirst()
@@ -199,7 +199,7 @@ struct AddToAlbumsViewModelTests {
                 .makeSUT(albumSelection: albumSelection)
             
             var cancellable: AnyCancellable?
-            try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, Error>) in
+            try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, any Error>) in
                 cancellable = sut.isAddButtonDisabled
                     .setFailureType(to: TestError.self)
                     .timeout(.milliseconds(500), scheduler: DispatchQueue.main, customError: {
@@ -228,7 +228,7 @@ struct AddToAlbumsViewModelTests {
             
             try await confirmation("isItemsNotEmpty match publisher", expectedCount: 3) { confirmation in
                 var cancellable: AnyCancellable?
-                try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, Error>) in
+                try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, any Error>) in
                     var expectations = [false, true, false]
                     cancellable = sut.isItemsNotEmptyPublisher
                         .sink(receiveCompletion: {

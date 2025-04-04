@@ -482,7 +482,7 @@ final class AdsSlotViewModelTests: XCTestCase {
         purchaseUseCase: some AccountPlanPurchaseUseCaseProtocol = MockAccountPlanPurchaseUseCase(),
         adsList: [String: String] = [:],
         isExternalAdsFlagEnabled: Bool = true,
-        adMobConsentManager: GoogleMobileAdsConsentManagerProtocol = MockGoogleMobileAdsConsentManager(),
+        adMobConsentManager: some GoogleMobileAdsConsentManagerProtocol = MockGoogleMobileAdsConsentManager(),
         appEnvironmentUseCase: some AppEnvironmentUseCaseProtocol = MockAppEnvironmentUseCase(),
         isNewAccount: Bool = false,
         accountDetailsResult: Result<AccountDetailsEntity, AccountDetailsErrorEntity> = .success(AccountDetailsEntity.build(proLevel: .free)),

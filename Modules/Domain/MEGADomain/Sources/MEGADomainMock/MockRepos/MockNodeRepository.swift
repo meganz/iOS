@@ -17,8 +17,8 @@ public final class MockNodeRepository: NodeRepositoryProtocol, @unchecked Sendab
     private let childNodes: [String: NodeEntity]
     @Atomic public var childrenNodes: [NodeEntity] = []
     private let parentNodes: [NodeEntity]
-    private let isInheritingSensitivityResult: Result<Bool, Error>
-    private let isInheritingSensitivityResults: [NodeEntity: Result<Bool, Error>]
+    private let isInheritingSensitivityResult: Result<Bool, any Error>
+    private let isInheritingSensitivityResults: [NodeEntity: Result<Bool, any Error>]
     private let isInRubbishBinNodes: [NodeEntity]
     
     public init(
@@ -32,8 +32,8 @@ public final class MockNodeRepository: NodeRepositoryProtocol, @unchecked Sendab
         childNodes: [String: NodeEntity] = [:],
         childrenNodes: [NodeEntity] = [],
         parentNodes: [NodeEntity] = [],
-        isInheritingSensitivityResult: Result<Bool, Error> = .failure(GenericErrorEntity()),
-        isInheritingSensitivityResults: [NodeEntity: Result<Bool, Error>] = [:],
+        isInheritingSensitivityResult: Result<Bool, any Error> = .failure(GenericErrorEntity()),
+        isInheritingSensitivityResults: [NodeEntity: Result<Bool, any Error>] = [:],
         nodeUpdates: AnyAsyncSequence<[NodeEntity]> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
         isInRubbishBinNodes: [NodeEntity] = []
     ) {

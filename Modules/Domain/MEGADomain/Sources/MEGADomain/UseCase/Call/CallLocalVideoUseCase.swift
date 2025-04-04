@@ -9,7 +9,7 @@ public protocol CallLocalVideoUseCaseProtocol: Sendable {
     func addLocalVideo(for chatId: HandleEntity, callbacksDelegate: some CallLocalVideoCallbacksUseCaseProtocol)
     func removeLocalVideo(for chatId: HandleEntity, callbacksDelegate: some CallLocalVideoCallbacksUseCaseProtocol)
     func videoDeviceSelected() -> String?
-    func selectCamera(withLocalizedName localizedName: String, completion: @escaping (Result<Void, any Error>) -> Void)
+    func selectCamera(withLocalizedName localizedName: String)
     func selectCamera(withLocalizedName localizedName: String) async throws
     func openVideoDevice(completion: @escaping (Result<Void, CallErrorEntity>) -> Void)
     func releaseVideoDevice(completion: @escaping (Result<Void, CallErrorEntity>) -> Void)
@@ -63,8 +63,8 @@ public final class CallLocalVideoUseCase<T: CallLocalVideoRepositoryProtocol>: N
         repository.videoDeviceSelected()
     }
     
-    public func selectCamera(withLocalizedName localizedName: String, completion: @escaping (Result<Void, any Error>) -> Void) {
-        repository.selectCamera(withLocalizedName: localizedName, completion: completion)
+    public func selectCamera(withLocalizedName localizedName: String) {
+        repository.selectCamera(withLocalizedName: localizedName)
     }
     
     public func selectCamera(withLocalizedName localizedName: String) async throws {

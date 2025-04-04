@@ -5,15 +5,15 @@ import MEGASwift
 public final class MockSensitiveNodeUseCase: SensitiveNodeUseCaseProtocol {
 
     private let _isAccessible: Bool
-    private let isInheritingSensitivityResult: Result<Bool, Error>
-    private let isInheritingSensitivityResults: [HandleEntity: Result<Bool, Error>]
+    private let isInheritingSensitivityResult: Result<Bool, any Error>
+    private let isInheritingSensitivityResults: [HandleEntity: Result<Bool, any Error>]
     private let monitorInheritedSensitivityForNode: AnyAsyncThrowingSequence<Bool, any Error>
     private let sensitivityChangesForNode: AnyAsyncSequence<Bool>
     private let _folderSensitivityChanged: AnyAsyncSequence<Void>
     
     public init(isAccessible: Bool = true,
-                isInheritingSensitivityResult: Result<Bool, Error> = .failure(GenericErrorEntity()),
-                isInheritingSensitivityResults: [HandleEntity: Result<Bool, Error>] = [:],
+                isInheritingSensitivityResult: Result<Bool, any Error> = .failure(GenericErrorEntity()),
+                isInheritingSensitivityResults: [HandleEntity: Result<Bool, any Error>] = [:],
                 monitorInheritedSensitivityForNode: AnyAsyncThrowingSequence<Bool, any Error> = EmptyAsyncSequence().eraseToAnyAsyncThrowingSequence(),
                 sensitivityChangesForNode: AnyAsyncSequence<Bool> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
                 folderSensitivityChanged: AnyAsyncSequence<Void> = EmptyAsyncSequence().eraseToAnyAsyncSequence()
@@ -71,7 +71,7 @@ public final class MockSensitiveNodeUseCase: SensitiveNodeUseCaseProtocol {
 
 // MARK: - Private Helpers
 extension MockSensitiveNodeUseCase {
-    private func isInheritingSensitivityResult(for node: NodeEntity) -> Result<Bool, Error> {
+    private func isInheritingSensitivityResult(for node: NodeEntity) -> Result<Bool, any Error> {
         isInheritingSensitivityResults[node.handle] ?? isInheritingSensitivityResult
     }
 }

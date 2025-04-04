@@ -28,7 +28,7 @@ final class VideoPlaylistContentViewModel: ObservableObject {
     let featureFlagProvider: any FeatureFlagProviderProtocol
     private let videoPlaylistThumbnailLoader: any VideoPlaylistThumbnailLoaderProtocol
     private let sortOrderPreferenceUseCase: any SortOrderPreferenceUseCaseProtocol
-    private weak var selectionDelegate: VideoPlaylistContentViewModelSelectionDelegate?
+    private weak var selectionDelegate: (any VideoPlaylistContentViewModelSelectionDelegate)?
     private(set) var renameVideoPlaylistAlertViewModel: TextFieldAlertViewModel
     private let videoPlaylistsUseCase: any VideoPlaylistUseCaseProtocol
     private let videoPlaylistModificationUseCase: any VideoPlaylistModificationUseCaseProtocol

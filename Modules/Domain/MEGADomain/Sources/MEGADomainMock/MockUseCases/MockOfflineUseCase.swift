@@ -10,7 +10,7 @@ public final class MockOfflineUseCase: OfflineUseCaseProtocol, @unchecked Sendab
     private(set) var removeAllOfflineFiles_calledTimes = 0
     private(set) var removeAllStoredFiles_calledTimes = 0
     
-    public var stubbedError: Error?
+    public var stubbedError: (any Error)?
     public var stubbedRelativePath: String
     
     public let nodeDownloadCompletionUpdates: AnyAsyncSequence<Void>
@@ -18,7 +18,7 @@ public final class MockOfflineUseCase: OfflineUseCaseProtocol, @unchecked Sendab
     public init(
         relativePathToDocumentsDirectory: String = "",
         stubbedRelativePath: String = "",
-        stubbedError: Error? = nil,
+        stubbedError: (any Error)? = nil,
         offlineSize: UInt64 = 0,
         nodeDownloadCompletionUpdates: AnyAsyncSequence<Void> = EmptyAsyncSequence().eraseToAnyAsyncSequence()
     ) {

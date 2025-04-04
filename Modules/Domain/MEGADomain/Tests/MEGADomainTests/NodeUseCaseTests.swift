@@ -237,8 +237,8 @@ final class NodeUseCaseTests: XCTestCase {
         parentNode: NodeEntity? = nil,
         parents: [NodeEntity] = [],
         children: [NodeEntity] = [],
-        isInheritingSensitivityResult: Result<Bool, Error> = .failure(GenericErrorEntity()),
-        isInheritingSensitivityResults: [NodeEntity: Result<Bool, Error>] = [:],
+        isInheritingSensitivityResult: Result<Bool, any Error> = .failure(GenericErrorEntity()),
+        isInheritingSensitivityResults: [NodeEntity: Result<Bool, any Error>] = [:],
         nodeUpdates: AnyAsyncSequence<[NodeEntity]> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
         folderLinkInfoRequestResult: Result<FolderLinkInfoEntity?, FolderInfoErrorEntity> = .failure(.notFound),
         fileLinkNode: NodeEntity? = nil

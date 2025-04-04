@@ -7,11 +7,11 @@ public actor MockPhotosRepository: PhotosRepositoryProtocol {
     
     private let photosUpdated: AnyAsyncSequence<[NodeEntity]>
     private let photos: [NodeEntity]
-    private var allPhotosCallOrderResult: [Result<[NodeEntity], Error>]
+    private var allPhotosCallOrderResult: [Result<[NodeEntity], any Error>]
     
     public init(photosUpdated: AnyAsyncSequence<[NodeEntity]> = EmptyAsyncSequence<[NodeEntity]>().eraseToAnyAsyncSequence(),
                 photos: [NodeEntity] = [],
-                allPhotosCallOrderResult: [Result<[NodeEntity], Error>] = []
+                allPhotosCallOrderResult: [Result<[NodeEntity], any Error>] = []
     ) {
         self.photosUpdated = photosUpdated
         self.photos = photos
@@ -42,7 +42,7 @@ public actor MockPhotosRepository: PhotosRepositoryProtocol {
     // MARK: Private
     
     private func nextResult(excludeSensitive: Bool) async throws -> [NodeEntity]? {
-        guard allPhotosCallOrderResult.isNotEmpty else  { return nil }
+        guard allPhotosCallOrderResult.isNotEmpty else { return nil }
         
         return try await withCheckedThrowingContinuation {
             let result = allPhotosCallOrderResult.removeFirst()

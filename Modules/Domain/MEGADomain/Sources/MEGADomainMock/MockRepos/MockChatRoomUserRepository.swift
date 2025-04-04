@@ -6,13 +6,13 @@ public struct MockChatRoomUserRepository: ChatRoomUserRepositoryProtocol {
         MockChatRoomUserRepository()
     }
     
-    private let userFullNameResult: Result<String, Error>
+    private let userFullNameResult: Result<String, any Error>
     private let contactEmail: String?
-    private let userEmailResult: Result<String, Error>
+    private let userEmailResult: Result<String, any Error>
 
-    public init(userFullNameResult: Result<String, Error> = .failure(GenericErrorEntity()),
+    public init(userFullNameResult: Result<String, any Error> = .failure(GenericErrorEntity()),
                 contactEmail: String? = nil,
-                userEmailResult: Result<String, Error> = .failure(GenericErrorEntity())) {
+                userEmailResult: Result<String, any Error> = .failure(GenericErrorEntity())) {
         self.userFullNameResult = userFullNameResult
         self.contactEmail = contactEmail
         self.userEmailResult = userEmailResult

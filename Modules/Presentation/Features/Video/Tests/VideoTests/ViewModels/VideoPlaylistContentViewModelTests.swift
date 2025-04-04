@@ -311,7 +311,7 @@ final class VideoPlaylistContentViewModelTests: XCTestCase {
             creationTime: Date(),
             modificationTime: Date()
         )
-        let addToVideoPlaylistResult: Result<VideoPlaylistElementsResultEntity, Error> = .success(VideoPlaylistElementsResultEntity(success: UInt(videosToAdd.count), failure: 0))
+        let addToVideoPlaylistResult: Result<VideoPlaylistElementsResultEntity, any Error> = .success(VideoPlaylistElementsResultEntity(success: UInt(videosToAdd.count), failure: 0))
         let (sut, _, _, _, _, _, _, _, _) = makeSUT(
             videoPlaylistEntity: videoPlaylistEntity,
             videoPlaylistModificationUseCase: .init(addToVideoPlaylistResult: addToVideoPlaylistResult)

@@ -240,7 +240,7 @@ final class CancelAccountPlanViewModelTests: XCTestCase {
     @MainActor
     private func performAnalyticsTest(
         action: (CancelAccountPlanViewModel) -> Void,
-        expectedEvent: EventIdentifier
+        expectedEvent: any EventIdentifier
     ) {
         let mockTracker = MockTracker()
         let (sut, _) = makeSUT(tracker: mockTracker)

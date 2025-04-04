@@ -75,7 +75,7 @@ public final class MockUploadFileUseCase: UploadFileUseCaseProtocol, @unchecked 
             throw TransferErrorEntity.generic
         }
         
-        let stream = AsyncThrowingStream<FileUploadEvent, Error> { continuation in
+        let stream = AsyncThrowingStream<FileUploadEvent, any Error> { continuation in
             Task {
                 continuation.yield(.start(transferEntity))
                 

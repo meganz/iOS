@@ -4,12 +4,12 @@ public struct MockDeviceRepository: DeviceRepositoryProtocol, Sendable {
     public static let newRepo = MockDeviceRepository()
     private let currentDeviceName: String?
     private let deviceName: String?
-    private let renameError: Error?
+    private let renameError: (any Error)?
     
     public init(
         currentDeviceName: String? = nil,
         deviceName: String? = nil,
-        renameError: Error? = nil
+        renameError: (any Error)? = nil
     ) {
         self.currentDeviceName = currentDeviceName
         self.deviceName = deviceName

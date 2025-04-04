@@ -6,9 +6,9 @@ public struct MockAppDistributionRepository: AppDistributionRepositoryProtocol {
         MockAppDistributionRepository(result: .failure(NSError()))
     }
     
-    private let result: Result<AppDistributionReleaseEntity?, Error>
+    private let result: Result<AppDistributionReleaseEntity?, any Error>
     
-    public init(result: Result<AppDistributionReleaseEntity?, Error>) {
+    public init(result: Result<AppDistributionReleaseEntity?, any Error>) {
         self.result = result
     }
     

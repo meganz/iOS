@@ -335,7 +335,7 @@ final class WaitingRoomViewModel: ObservableObject {
             guard let selectCameraLocalizedString = captureDeviceUseCase.wideAngleCameraLocalizedName(position: .front) else {
                 return
             }
-            localVideoUseCase.selectCamera(withLocalizedName: selectCameraLocalizedString) { _ in }
+            localVideoUseCase.selectCamera(withLocalizedName: selectCameraLocalizedString)
         }
     }
     

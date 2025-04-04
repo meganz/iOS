@@ -251,10 +251,10 @@ final class VideoPlaylistModificationUseCaseTests: XCTestCase {
     
     private func makeSUT(
         videoPlaylistsResult: [SetEntity] = [],
-        addVideosToVideoPlaylistResult: Result<VideoPlaylistCreateSetElementsResultEntity, Error> = .failure(GenericErrorEntity()),
-        deleteVideosResult: Result<VideoPlaylistCreateSetElementsResultEntity, Error> = .failure(GenericErrorEntity()),
+        addVideosToVideoPlaylistResult: Result<VideoPlaylistCreateSetElementsResultEntity, any Error> = .failure(GenericErrorEntity()),
+        deleteVideosResult: Result<VideoPlaylistCreateSetElementsResultEntity, any Error> = .failure(GenericErrorEntity()),
         deleteVideoPlaylistResult: Result<VideoPlaylistEntity, any Error> = .failure(GenericErrorEntity()),
-        updateVideoPlaylistNameResult: Result<Void, Error> = .failure(GenericErrorEntity())
+        updateVideoPlaylistNameResult: Result<Void, any Error> = .failure(GenericErrorEntity())
     ) -> (
         sut: VideoPlaylistModificationUseCase,
         userVideoPlaylistsRepository: MockUserVideoPlaylistsRepository

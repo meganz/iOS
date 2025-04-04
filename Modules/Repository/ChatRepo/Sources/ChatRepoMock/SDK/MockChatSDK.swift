@@ -45,13 +45,13 @@ public final class MockChatSDK: MEGAChatSdk, @unchecked Sendable {
         delegate.onChatRequestFinish?(self, request: request, error: MockChatError(chatErrorType: chatError))
     }
     
-    public override func autorejoinPublicChat(_ chatId: UInt64, publicHandle: UInt64, delegate: MEGAChatRequestDelegate) {
+    public override func autorejoinPublicChat(_ chatId: UInt64, publicHandle: UInt64, delegate: any MEGAChatRequestDelegate) {
         autorejoinPublicChatCalled += 1
         let request = MockChatRequest(chatHandle: chatId)
         delegate.onChatRequestFinish?(self, request: request, error: MockChatError(chatErrorType: chatError))
     }
     
-    public override func updateChatPermissions(_ chatId: UInt64, userHandle: UInt64, privilege: Int, delegate: MEGAChatRequestDelegate) {
+    public override func updateChatPermissions(_ chatId: UInt64, userHandle: UInt64, privilege: Int, delegate: any MEGAChatRequestDelegate) {
         let request = MockChatRequest(chatHandle: chatId, privilege: privilege)
         delegate.onChatRequestFinish?(self, request: request, error: MockChatError(chatErrorType: chatError))
     }
@@ -60,7 +60,7 @@ public final class MockChatSDK: MEGAChatSdk, @unchecked Sendable {
         hasChatOptionEnabled
     }
     
-    public override func add(_ delegate: MEGAChatCallDelegate, queueType: ListenerQueueType) {
+    public override func add(_ delegate: any MEGAChatCallDelegate, queueType: ListenerQueueType) {
         hasChatCallDelegate = true
         delegateQueueType = queueType
     }

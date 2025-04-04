@@ -336,7 +336,7 @@ final class MeetingCreatingViewModel: ViewModelType {
             guard let selectCameraLocalizedString = captureDeviceUseCase.wideAngleCameraLocalizedName(position: .front) else {
                 return
             }
-            localVideoUseCase.selectCamera(withLocalizedName: selectCameraLocalizedString) { _ in }
+            localVideoUseCase.selectCamera(withLocalizedName: selectCameraLocalizedString)
         }
     }
     
@@ -354,7 +354,7 @@ final class MeetingCreatingViewModel: ViewModelType {
               localVideoUseCase.videoDeviceSelected() != selectCameraLocalizedString else {
             return
         }
-        localVideoUseCase.selectCamera(withLocalizedName: selectCameraLocalizedString) { _ in }
+        localVideoUseCase.selectCamera(withLocalizedName: selectCameraLocalizedString)
     }
     
     private func disableLocalVideoIfNeeded() {

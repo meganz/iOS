@@ -296,7 +296,7 @@ final class OnboardingUpgradeAccountViewModelTests: XCTestCase {
     @MainActor
     private func makeSUT(
         planList: [PlanEntity] = [],
-        tracker: AnalyticsTracking = MockTracker(),
+        tracker: any AnalyticsTracking = MockTracker(),
         accountDetailsResult: Result<AccountDetailsEntity, AccountDetailsErrorEntity> = .failure(.generic),
         isAdsEnabled: Bool = false,
         baseStorage: Int = 20,

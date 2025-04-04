@@ -7,7 +7,7 @@ public final class MockCancelAccountPlanRouter: CancelAccountPlanRouting {
     public var showSuccessAlert_calledTimes = 0
     public var showFailureAlert_calledTimes = 0
     public var lastShownSuccessAlertExpirationDate: Date?
-    public var lastShownFailureAlertError: Error?
+    public var lastShownFailureAlertError: (any Error)?
 
     private let onSuccess: (_ expirationDate: Date) -> Void
     
