@@ -1126,6 +1126,7 @@
 		83B0B45D242CC1DB00468191 /* ChatSharedItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B0B45C242CC1DB00468191 /* ChatSharedItemTableViewCell.swift */; };
 		83B0B45F242CC21800468191 /* ChatSharedItemsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B0B45E242CC21800468191 /* ChatSharedItemsViewController.swift */; };
 		83B0B461242CC24E00468191 /* ChatSharedItems.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 83B0B460242CC24E00468191 /* ChatSharedItems.storyboard */; };
+		83B3BC962D9ED78B005C151B /* UIViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83DC30CD25F247CA00A82F30 /* UIViewController+Additions.swift */; };
 		83B4FC67292401A000364F04 /* MeetingInfoHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B4FC66292401A000364F04 /* MeetingInfoHeaderView.swift */; };
 		83B4FC69292402E100364F04 /* CustomModalAlertViewcontroller+EnableKeyRotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B4FC68292402E100364F04 /* CustomModalAlertViewcontroller+EnableKeyRotation.swift */; };
 		83B4FC6B292407A300364F04 /* KeyRotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B4FC6A292407A300364F04 /* KeyRotationView.swift */; };
@@ -15781,6 +15782,7 @@
 				5BEACE241FB473940010E02F /* UIImageView+MNZCategory.m in Sources */,
 				C489EBEA2B550A3700EE30D8 /* UILabel+CustomNavigationTitleLabel.swift in Sources */,
 				77F3C30321C12F800049A1BA /* UITextField+MNZCategory.m in Sources */,
+				83B3BC962D9ED78B005C151B /* UIViewController+Additions.swift in Sources */,
 				947C6CC82A5D92DE00CF929E /* UIViewController+BackBarButtonItem.swift in Sources */,
 				BFE54779231F0F29007FB8F6 /* UIViewController+MNZCategory.m in Sources */,
 				B6990181262F92A800176FFC /* UncaughtExceptionHandler.swift in Sources */,
