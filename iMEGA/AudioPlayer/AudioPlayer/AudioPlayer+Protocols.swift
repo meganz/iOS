@@ -1,6 +1,7 @@
 import AVFoundation
 import Foundation
 import MediaPlayer
+import MEGAAppPresentation
 import MEGADomain
 
 @objc protocol AudioPlayerProtocol: AnyObject {}
@@ -109,12 +110,6 @@ protocol AudioPlayerMetadataLoaderProtocol {
     func resetMiniPlayerContainer()
     func currentContainerHeight() -> CGFloat
     func containsMiniPlayerInstance() -> Bool
-}
-
-// MARK: - Audio Player Presenters
-@objc protocol AudioPlayerPresenterProtocol where Self: UIViewController {
-    func updateContentView(_ height: CGFloat)
-    func hasUpdatedContentView() -> Bool
 }
 
 final class ListenerManager<T: AudioPlayerProtocol> {
