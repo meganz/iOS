@@ -38,6 +38,7 @@ struct DeviceCenterItemView: View {
                     } else {
                         Image(viewModel.assets.statusAssets.iconName, bundle: .module)
                             .renderingMode(.template)
+                            .resizable()
                             .foregroundStyle(Color(viewModel.assets.statusAssets.color))
                             .frame(width: 12, height: 12)
                     }
