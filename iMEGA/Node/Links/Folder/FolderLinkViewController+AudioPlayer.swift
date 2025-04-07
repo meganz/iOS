@@ -1,4 +1,5 @@
 import Foundation
+import MEGAAppPresentation
 
 extension FolderLinkViewController: AudioMiniPlayerHandlerProtocol, AudioPlayerPresenterProtocol {
     func presentMiniPlayer(_ viewController: UIViewController) {
@@ -67,7 +68,7 @@ extension FolderLinkViewController: AudioMiniPlayerHandlerProtocol, AudioPlayerP
         }
     }
     
-    func updateContentView(_ height: CGFloat) {
+    public func updateContentView(_ height: CGFloat) {
         currentContentInsetHeight = height
         
         refreshContentInset()
@@ -81,7 +82,7 @@ extension FolderLinkViewController: AudioMiniPlayerHandlerProtocol, AudioPlayerP
         }
     }
     
-    func hasUpdatedContentView() -> Bool {
+    public func hasUpdatedContentView() -> Bool {
         currentContentInsetHeight != 0
     }
 }

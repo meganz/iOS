@@ -1,4 +1,5 @@
 @testable import MEGA
+import MEGAAppPresentation
 import MEGADomain
 
 final class MockAudioPlayerHandler: AudioPlayerHandlerProtocol {

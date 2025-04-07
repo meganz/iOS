@@ -1,3 +1,4 @@
+import MEGAAppPresentation
 import MEGADesignToken
 
 extension MainTabBarController: AudioMiniPlayerHandlerProtocol {

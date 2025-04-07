@@ -1,3 +1,4 @@
+import MEGAAppPresentation
 import MEGAL10n
 import MEGAPermissions
 
@@ -20,11 +21,11 @@ extension ArchivedChatRoomsViewController {
 }
 
 extension ArchivedChatRoomsViewController: AudioPlayerPresenterProtocol {
-    func updateContentView(_ height: CGFloat) {
+    public func updateContentView(_ height: CGFloat) {
         additionalSafeAreaInsets = .init(top: 0, left: 0, bottom: height, right: 0)
     }
     
-    func hasUpdatedContentView() -> Bool {
+    public func hasUpdatedContentView() -> Bool {
         additionalSafeAreaInsets.bottom != 0
     }
 }

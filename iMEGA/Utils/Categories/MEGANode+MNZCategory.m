@@ -34,6 +34,7 @@
 
 @import ChatRepo;
 @import MEGAL10nObjc;
+@import MEGAAppPresentation;
 @import MEGAAppSDKRepo;
 
 @implementation MEGANode (MNZCategory)

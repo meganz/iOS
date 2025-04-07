@@ -1,4 +1,5 @@
 import Combine
+import MEGAAppPresentation
 import MEGAChatSdk
 import MEGAL10n
 import MEGAUIKit
@@ -67,11 +68,11 @@ final class ChatRoomsListViewController: UIHostingController<ChatRoomsListView> 
 }
 
 extension ChatRoomsListViewController: AudioPlayerPresenterProtocol {
-    func updateContentView(_ height: CGFloat) {
+    public func updateContentView(_ height: CGFloat) {
         additionalSafeAreaInsets = .init(top: 0, left: 0, bottom: height, right: 0)
     }
     
-    func hasUpdatedContentView() -> Bool {
+    public func hasUpdatedContentView() -> Bool {
         additionalSafeAreaInsets.bottom != 0
     }
 }
