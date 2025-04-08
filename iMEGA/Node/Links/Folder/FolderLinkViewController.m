@@ -54,7 +54,6 @@
 
 @property (nonatomic, assign) ViewModePreferenceEntity viewModePreference;
 
-@property (nonatomic, strong) RequestDelegate* requestDelegate;
 @property (nonatomic, strong) GlobalDelegate* globalDelegate;
 
 @property (nonatomic, strong) UIActivityIndicatorView *activityIndicator;
@@ -151,7 +150,7 @@
     
     MEGASdk *sdkFolder = MEGASdk.sharedFolderLink;
     [sdkFolder addMEGAGlobalDelegate:self.globalDelegate];
-    [sdkFolder addMEGARequestDelegate:self.requestDelegate];
+    [sdkFolder addMEGARequestDelegate:self];
     
     if (!self.loginDone && self.isFolderRootNode) {
         [sdkFolder loginToFolderLink:self.publicLinkString];
@@ -169,7 +168,7 @@
     [self.viewModel onViewDisappear];
     
     [MEGASdk.sharedFolderLink removeMEGAGlobalDelegateAsync:self.globalDelegate];
-    [MEGASdk.sharedFolderLink removeMEGARequestDelegateAsync:self.requestDelegate];
+    [MEGASdk.sharedFolderLink removeMEGARequestDelegateAsync:self];
     
     [AudioPlayerManager.shared removeDelegate:self];
     [AudioPlayerManager.shared removeMiniPlayerHandler:self];
@@ -444,19 +443,6 @@
         }];
     }
     return _globalDelegate;
-}
-
-- (RequestDelegate *)requestDelegate {
-    if (_requestDelegate == nil) {
-        __weak __typeof__(self) weakSelf = self;
-        MEGASdk *sdkFolder = MEGASdk.sharedFolderLink;
-        _requestDelegate = [RequestDelegate.alloc initOnRequestStartHandler:^(MEGARequest * _Nonnull request) {
-            [weakSelf onRequestStart:sdkFolder request:request];
-        } completion:^(MEGARequest * _Nonnull request, MEGAError * _Nonnull error) {
-            [weakSelf onRequestFinish:sdkFolder request:request error:error];
-        }];
-    }
-    return _requestDelegate;
 }
 
 #pragma mark - Layout
