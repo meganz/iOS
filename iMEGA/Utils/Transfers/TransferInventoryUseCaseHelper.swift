@@ -2,9 +2,8 @@ import MEGAAppSDKRepo
 import MEGADomain
 import MEGARepo
 
-@objc final class TransferInventoryUseCaseHelper: NSObject {
+@objc final class TransferInventoryUseCaseHelper: NSObject, Sendable {
     private let transferInventoryUseCase = TransferInventoryUseCase(transferInventoryRepository: TransferInventoryRepository.newRepo, fileSystemRepository: FileSystemRepository.newRepo)
-    private let sharedFolderTransferInventoryUseCase = TransferInventoryUseCase(transferInventoryRepository: TransferInventoryRepository(sdk: MEGASdk.sharedFolderLink), fileSystemRepository: FileSystemRepository.newRepo)
     
     @objc func completedTransfers() -> [MEGATransfer] {
         if let list = MEGASdk.shared.completedTransfers as? [MEGATransfer] {
@@ -18,9 +17,25 @@ import MEGARepo
     
     @objc func transfers() -> [MEGATransfer] {
         let transfers = transferInventoryUseCase.transfers(filteringUserTransfers: true)
-        let sharedFolderTransfers = sharedFolderTransferInventoryUseCase.transfers(filteringUserTransfers: true)
         let megaTransfers = transfers.compactMap { MEGASdk.shared.transfer(byTag: $0.tag) }
-        let sharedFolderMegaTransfers = sharedFolderTransfers.compactMap { MEGASdk.sharedFolderLink.transfer(byTag: $0.tag) }
-        return megaTransfers + sharedFolderMegaTransfers
+        return megaTransfers
+    }
+    
+    func transfers() async -> [TransferEntity] {
+        let transfers = await transferInventoryUseCase.transfers(filteringUserTransfers: true)
+        return transfers
+    }
+    
+    @objc func queuedUploadTransfers() -> [String] {
+        let queueUploadTransfers = MEGAStore.shareInstance().fetchUploadTransfers()
+        return queueUploadTransfers?.compactMap { $0.localIdentifier } ?? []
+    }
+    
+    func completedTransfers(filteringUserTransfers: Bool) -> [TransferEntity] {
+        transferInventoryUseCase.completedTransfers(filteringUserTransfers: filteringUserTransfers)
+    }
+    
+    func documentsDirectory() -> URL {
+        transferInventoryUseCase.documentsDirectory()
     }
 }

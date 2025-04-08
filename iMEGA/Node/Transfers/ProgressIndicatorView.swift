@@ -8,14 +8,7 @@ import UIKit
 
 final class ProgressIndicatorView: UIView {
     private let throttler = Throttler(timeInterval: 1.0, dispatchQueue: .main)
-    private let transferInventoryUseCase = TransferInventoryUseCase(
-        transferInventoryRepository: TransferInventoryRepository.newRepo,
-        fileSystemRepository: FileSystemRepository.newRepo
-    )
-    private let sharedFolderTransferInventoryUseCase = TransferInventoryUseCase(
-        transferInventoryRepository: TransferInventoryRepository(sdk: MEGASdk.sharedFolderLink),
-        fileSystemRepository: FileSystemRepository.newRepo
-    )
+    private let transferInventoryUseCaseHelper = TransferInventoryUseCaseHelper()
     
     private var backgroundLayer: CAShapeLayer?
     private var progressBackgroundLayer: CAShapeLayer?
@@ -28,6 +21,7 @@ final class ProgressIndicatorView: UIView {
     
     private var transferStatus: Int?
     private var transfers = [TransferEntity]()
+    private var queuedUploadTransfers = [String]()
     private var transfersPaused: Bool {
         UserDefaults.standard.bool(forKey: "TransfersPaused")
     }
@@ -249,22 +243,23 @@ extension ProgressIndicatorView {
             return
         }
         transfers.removeAll()
-        transfers = await transferInventoryUseCase.transfers(filteringUserTransfers: true) +
-        sharedFolderTransferInventoryUseCase.transfers(filteringUserTransfers: true)
+        transfers = await transferInventoryUseCaseHelper.transfers()
+        queuedUploadTransfers.removeAll()
+        queuedUploadTransfers = transferInventoryUseCaseHelper.queuedUploadTransfers()
 
         try Task.checkCancellation()
         
-        if let failedTransfer = transferInventoryUseCase.completedTransfers(filteringUserTransfers: true)
+        if let failedTransfer = transferInventoryUseCaseHelper.completedTransfers(filteringUserTransfers: true)
             .first(where: { $0.state != .complete && $0.state != .cancelled }) {
             updateStateBadge(for: failedTransfer)
         } else {
             stateBadge.image = nil
         }
         
-        if transfers.isNotEmpty {
-            updateForActiveTransfers()
-        } else {
+        if transfers.isEmpty && queuedUploadTransfers.isEmpty {
             updateForCompletedTransfers()
+        } else {
+            updateForActiveTransfers()
         }
     }
     
@@ -290,7 +285,7 @@ extension ProgressIndicatorView {
         progressLayer?.strokeColor = greenProgressColor
         
         let hasDownloadTransfer = transfers.contains { $0.type == .download }
-        let hasUploadTransfer = transfers.contains { $0.type == .upload }
+        let hasUploadTransfer = transfers.contains { $0.type == .upload } || queuedUploadTransfers.isNotEmpty
         arrowImageView.image = hasDownloadTransfer ? transfersDownloadImage : transfersUploadImage
         
         if overquota {
@@ -302,7 +297,7 @@ extension ProgressIndicatorView {
     }
     
     private func updateForCompletedTransfers() {
-        let completedTransfers = transferInventoryUseCase.completedTransfers(filteringUserTransfers: true)
+        let completedTransfers = transferInventoryUseCaseHelper.completedTransfers(filteringUserTransfers: true)
         guard completedTransfers.isNotEmpty else {
             isHidden = true
             return
@@ -430,7 +425,7 @@ extension ProgressIndicatorView: MEGATransferDelegate {
             isSaveToPhotos = appData.contains(TransferMetaDataEntity.saveInPhotos.rawValue)
         }
         
-        guard transfer.path?.hasPrefix(transferInventoryUseCase.documentsDirectory().path) ?? false ||
+        guard transfer.path?.hasPrefix(transferInventoryUseCaseHelper.documentsDirectory().path) ?? false ||
                 transfer.type == .upload ||
                 isExportFile || isSaveToPhotos else {
             return
