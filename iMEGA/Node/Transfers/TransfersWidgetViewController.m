@@ -501,7 +501,7 @@ static TransfersWidgetViewController* instance = nil;
 - (void)getAllTransfers {
     self.transfers = [[NSMutableArray alloc] initWithArray:[self.transferInventoryUseCaseHelper transfers]];
     
-    [self getQueuedUploadTransfers];
+    self.queuedUploadTransfers = [NSMutableArray arrayWithArray:self.transferInventoryUseCaseHelper.queuedUploadTransfers];
 }
 
 - (void)sortTransfers {
@@ -514,17 +514,6 @@ static TransfersWidgetViewController* instance = nil;
             return [state1 compare:state2];
         }
     }];
-}
-
-- (void)getQueuedUploadTransfers {
-    NSArray *tempqueuedUploadTransfers = [[MEGAStore shareInstance] fetchUploadTransfers];
-    
-    NSMutableArray *queuedUploadTransfers = NSMutableArray.new;
-    for (MOUploadTransfer *uploadQueuedTransfer in tempqueuedUploadTransfers) {
-        [queuedUploadTransfers addObject:uploadQueuedTransfer.localIdentifier];
-    }
-    
-    self.queuedUploadTransfers = queuedUploadTransfers;
 }
 
 - (void)cleanTransfersList {
