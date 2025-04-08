@@ -10,6 +10,28 @@ import MEGAPermissions
 import MEGASwift
 
 extension FolderLinkViewController {
+    @objc func makeFolderLinkViewModel() -> FolderLinkViewModel {
+        let viewModel = FolderLinkViewModel(
+            folderLinkUseCase: FolderLinkUseCase(transferRepository: TransferRepository.newRepo, nodeRepository: NodeRepository.newRepo)
+        )
+        viewModel.onNodeDownloadTransferFinish = { [weak self] handleEntity in
+            guard let self, let node = isFromFolderLink(nodeHandle: handleEntity) else { return }
+            didDownloadTransferFinish(node)
+        }
+        
+        viewModel.onNodeUpdates = { [weak self] nodeEntities in
+            guard let self, let parentNodeEntity = parentNode?.toNodeEntity() else { return }
+            let shouldReloadUI = parentNodeEntity.shouldProcessOnNodeEntitiesUpdate(
+                withChildNodes: nodesArray.map({ $0.toNodeEntity() }),
+                updatedNodes: nodeEntities
+            )
+            if shouldReloadUI {
+                reloadUI()
+            }
+        }
+        return viewModel
+    }
+    
     @objc func containsMediaFiles() -> Bool {
         nodesArray.toNodeEntities().contains {
             $0.mediaType != nil
@@ -197,6 +219,10 @@ extension FolderLinkViewController {
     
     @objc func stopLoading() {
         activityIndicator.stopAnimating()
+    }
+    
+    private func isFromFolderLink(nodeHandle: HandleEntity) -> MEGANode? {
+        nodesArray.first { $0.handle == nodeHandle }
     }
 }
 
