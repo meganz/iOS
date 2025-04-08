@@ -128,8 +128,8 @@ final class ProgressIndicatorView: UIView {
         configureData()
     }
     
-    @objc func hideWidget() {
-        isWidgetForbidden = true
+    @objc func hideWidget(widgetFobidden: Bool = false) {
+        isWidgetForbidden = widgetFobidden
         isHidden = true
         configureDataTask = nil
     }
@@ -412,11 +412,13 @@ extension ProgressIndicatorView: MEGATransferDelegate {
             if overquota {
                 overquota = false
             }
-        }
-        throttler.start { [weak self] in
-            Task { @MainActor in
-                self?.configureData()
+            throttler.start { [weak self] in
+                Task { @MainActor in
+                    self?.configureData()
+                }
             }
+        } else {
+            updateForActiveTransfers()
         }
     }
     

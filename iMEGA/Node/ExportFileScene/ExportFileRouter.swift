@@ -76,7 +76,7 @@ final class ExportFileRouter: ExportFileViewRouting {
     }
     
     func hideProgressView() {
-        TransfersWidgetViewController.sharedTransfer().progressView?.hideWidget()
+        TransfersWidgetViewController.sharedTransfer().progressView?.hideWidget(widgetFobidden: true)
         TransfersWidgetViewController.sharedTransfer().resetToKeyWindow()
     }
 }

@@ -71,16 +71,6 @@ typedef NS_ENUM(NSUInteger, FileManagementTableSection) {
     [MEGASdk.shared removeMEGAGlobalDelegate:self];
 }
 
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-    [[TransfersWidgetViewController sharedTransferViewController].progressView showWidgetIfNeeded];
-}
-
-- (void)viewDidDisappear:(BOOL)animated {
-    [super viewDidDisappear:animated];
-    [TransfersWidgetViewController.sharedTransferViewController.progressView hideWidget];
-}
-
 - (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender {
     if ([identifier isEqual:@"showRubbishBinPage"] && [self isNewFileManagementSettingsEnabled]) {
         return NO;
