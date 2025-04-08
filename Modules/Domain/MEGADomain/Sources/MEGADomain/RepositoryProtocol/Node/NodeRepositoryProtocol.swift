@@ -5,6 +5,7 @@ public protocol NodeRepositoryProtocol: RepositoryProtocol, Sendable {
     ///
     /// - Returns: `AnyAsyncSequence` that will yield `[NodeEntity]` items until sequence terminated.
     var nodeUpdates: AnyAsyncSequence<[NodeEntity]> { get }
+    var folderLinkNodeUpdates: AnyAsyncSequence<[NodeEntity]> { get }
     func nodeForHandle(_ handle: HandleEntity) -> NodeEntity?
     func nodeFor(fileLink: FileLinkEntity) async throws -> NodeEntity
     func childNodeNamed(name: String, in parentHandle: HandleEntity) -> NodeEntity?

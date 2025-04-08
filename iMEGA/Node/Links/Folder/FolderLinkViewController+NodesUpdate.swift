@@ -1,9 +1,9 @@
+import MEGADomain
+
 extension FolderLinkViewController {
-    @objc func shouldProcessOnNodesUpdate(with nodeList: MEGANodeList, childNodes: [MEGANode], parentNode: MEGANode?) -> Bool {
+    func shouldProcessOnNodesUpdate(with nodeEntities: [NodeEntity], childNodes: [MEGANode], parentNode: MEGANode?) -> Bool {
         guard let parentNode = parentNode else { return false }
         
-        let nodesUpdatedArray = nodeList.toNodeArray()
-        
-        return parentNode.toNodeEntity().shouldProcessOnNodesUpdate(withChildNodes: childNodes, updatedNodes: nodesUpdatedArray)
+        return parentNode.toNodeEntity().shouldProcessOnNodeEntitiesUpdate(withChildNodes: childNodes.map { $0.toNodeEntity() }, updatedNodes: nodeEntities)
     }
 }

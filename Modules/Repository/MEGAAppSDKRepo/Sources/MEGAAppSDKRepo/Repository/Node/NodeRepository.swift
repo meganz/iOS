@@ -14,6 +14,10 @@ public struct NodeRepository: NodeRepositoryProtocol {
         nodeUpdatesProvider.nodeUpdates
     }
     
+    public var folderLinkNodeUpdates: AnyAsyncSequence<[NodeEntity]> {
+        MEGAUpdateHandlerManager.sharedFolderLink.nodeUpdates
+    }
+    
     private let sdk: MEGASdk
     private let sharedFolderSdk: MEGASdk
     private let nodeUpdatesProvider: any NodeUpdatesProviderProtocol

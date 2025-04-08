@@ -55,7 +55,6 @@
 @property (nonatomic, assign) ViewModePreferenceEntity viewModePreference;
 
 @property (nonatomic, strong) RequestDelegate* requestDelegate;
-@property (nonatomic, strong) GlobalDelegate* globalDelegate;
 
 @property (nonatomic, strong) UIActivityIndicatorView *activityIndicator;
 
@@ -152,7 +151,6 @@
     [self.viewModel onViewAppear];
     
     MEGASdk *sdkFolder = MEGASdk.sharedFolderLink;
-    [sdkFolder addMEGAGlobalDelegate:self.globalDelegate];
     [sdkFolder addMEGARequestDelegate:self.requestDelegate];
     
     if (!self.loginDone && self.isFolderRootNode) {
@@ -170,7 +168,6 @@
     
     [self.viewModel onViewDisappear];
     
-    [MEGASdk.sharedFolderLink removeMEGAGlobalDelegateAsync:self.globalDelegate];
     [MEGASdk.sharedFolderLink removeMEGARequestDelegateAsync:self.requestDelegate];
     
     [AudioPlayerManager.shared removeMiniPlayerHandler:self];
@@ -440,16 +437,6 @@
         [self.flCollectionView reloadData];
     }
     [CATransaction commit];
-}
-
-- (GlobalDelegate *)globalDelegate {
-    if (_globalDelegate == nil) {
-        __weak __typeof__(self) weakSelf = self;
-        _globalDelegate = [GlobalDelegate.alloc initOnNodesUpdateCompletion:^(MEGANodeList * _Nullable nodeList) {
-            [weakSelf onNodesUpdate:MEGASdk.sharedFolderLink nodeList:nodeList];
-        }];
-    }
-    return _globalDelegate;
 }
 
 - (RequestDelegate *)requestDelegate {
@@ -804,14 +791,6 @@
 - (void)buttonTouchUpInsideEmptyState {
     if (!MEGAReachabilityManager.isReachable && !MEGAReachabilityManager.sharedManager.isMobileDataEnabled) {
         [UIApplication.sharedApplication openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString] options:@{} completionHandler:nil];
-    }
-}
-
-#pragma mark - MEGAGlobalDelegate
-
-- (void)onNodesUpdate:(MEGASdk *)api nodeList:(MEGANodeList *)nodeList {
-    if ([self shouldProcessOnNodesUpdateWith:nodeList childNodes:self.nodesArray parentNode:self.parentNode]) {
-        [self reloadUI];
     }
 }
 

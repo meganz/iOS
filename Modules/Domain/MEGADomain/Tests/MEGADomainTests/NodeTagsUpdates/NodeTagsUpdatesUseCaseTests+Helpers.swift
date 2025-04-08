@@ -34,6 +34,10 @@ extension NodeTagsUpdatesUseCaseTests {
             self.nodeUpdatesContinuations.append(continuation)
             return nodeUpdatesStream.eraseToAnyAsyncSequence()
         }
+        
+        var folderLinkNodeUpdates: AnyAsyncSequence<[NodeEntity]> {
+            EmptyAsyncSequence().eraseToAnyAsyncSequence()
+        }
 
         func nodeForHandle(_ handle: HandleEntity) -> NodeEntity? { nil }
 
