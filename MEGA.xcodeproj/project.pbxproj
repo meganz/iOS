@@ -2295,8 +2295,6 @@
 		BFA1EEE62A4CF56000435A0F /* ScheduleMeetingUpdateViewConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA1EEE52A4CF56000435A0F /* ScheduleMeetingUpdateViewConfiguration.swift */; };
 		BFA1EEE82A4CF5A500435A0F /* ScheduleMeetingUpdateOccurrenceViewConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA1EEE72A4CF5A500435A0F /* ScheduleMeetingUpdateOccurrenceViewConfiguration.swift */; };
 		BFA1EEEA2A4CF69700435A0F /* ScheduleMeetingNewViewConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA1EEE92A4CF69700435A0F /* ScheduleMeetingNewViewConfiguration.swift */; };
-		BFA275E327ED315E00E15B92 /* SDAVAssetExportSession in Frameworks */ = {isa = PBXBuildFile; productRef = BFA275E227ED315E00E15B92 /* SDAVAssetExportSession */; };
-		BFA275E727ED317600E15B92 /* SDAVAssetExportSession in Frameworks */ = {isa = PBXBuildFile; productRef = BFA275E627ED317600E15B92 /* SDAVAssetExportSession */; };
 		BFA55257245F849F009FE3A6 /* AddToChatMenuPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA55256245F849F009FE3A6 /* AddToChatMenuPageViewController.swift */; };
 		BFA6CD5A263223B100791E02 /* MeetingFloatingPanelViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA6CD59263223B100791E02 /* MeetingFloatingPanelViewModelTests.swift */; };
 		BFAAF71F252E9E960053A9BF /* FilesExplorerListSourceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAAF71E252E9E960053A9BF /* FilesExplorerListSourceProtocol.swift */; };
@@ -5372,7 +5370,6 @@
 				BFD2ED4D281228B30018C05A /* PieChart in Frameworks */,
 				A8ECD8CB27F34BB0008D75B8 /* PinLayout in Frameworks */,
 				BF0CB9362803AEAE00C21F11 /* SAMKeychain in Frameworks */,
-				BFA275E327ED315E00E15B92 /* SDAVAssetExportSession in Frameworks */,
 				BF1164B027F68EC500E5C5A4 /* SDWebImageWebPCoder in Frameworks */,
 				945928F52AA23C1B0037694C /* Search in Frameworks */,
 				B67D44E12B605F7600738E04 /* SearchMock in Frameworks */,
@@ -5457,7 +5454,6 @@
 				B55F93E12D12B99400E2149B /* MEGAUIComponent in Frameworks */,
 				B65D17D12899E19600D5AD33 /* MEGAUIKit in Frameworks */,
 				BF0CB93E2803AF4A00C21F11 /* SAMKeychain in Frameworks */,
-				BFA275E727ED317600E15B92 /* SDAVAssetExportSession in Frameworks */,
 				BF1164B827F6908500E5C5A4 /* SDWebImageWebPCoder in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -13062,7 +13058,6 @@
 				BFD2ED4C281228B30018C05A /* PieChart */,
 				A8ECD8CA27F34BB0008D75B8 /* PinLayout */,
 				BF0CB9352803AEAE00C21F11 /* SAMKeychain */,
-				BFA275E227ED315E00E15B92 /* SDAVAssetExportSession */,
 				BF1164AF27F68EC500E5C5A4 /* SDWebImageWebPCoder */,
 				A8B51AE827F3565E0030F1EA /* WSTagsField */,
 				A812CB382A4B0FAD00F99382 /* MEGAChatSdk */,
@@ -13214,7 +13209,6 @@
 				B63995432898D03400EA88F1 /* MEGASwiftUI */,
 				B65D17D02899E19600D5AD33 /* MEGAUIKit */,
 				BF0CB93D2803AF4A00C21F11 /* SAMKeychain */,
-				BFA275E627ED317600E15B92 /* SDAVAssetExportSession */,
 				BF1164B727F6908500E5C5A4 /* SDWebImageWebPCoder */,
 				A812CB3C2A4B0FBE00F99382 /* MEGAChatSdk */,
 				A855D23D2A796634001D2168 /* ChatRepo */,
@@ -13441,7 +13435,6 @@
 				BFD2ED4B281228B30018C05A /* XCRemoteSwiftPackageReference "PieChart" */,
 				A8ECD8C927F34BB0008D75B8 /* XCRemoteSwiftPackageReference "PinLayout" */,
 				BF0CB9342803AEAE00C21F11 /* XCRemoteSwiftPackageReference "SAMKeychain" */,
-				BFA275E127ED313500E15B92 /* XCRemoteSwiftPackageReference "SDAVAssetExportSession" */,
 				BF1164AE27F68EC400E5C5A4 /* XCRemoteSwiftPackageReference "SDWebImageWebPCoder" */,
 				A8B51AE727F3565E0030F1EA /* XCRemoteSwiftPackageReference "WSTagsField" */,
 				A828E67F286B3112004CED9E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
@@ -17992,14 +17985,6 @@
 				minimumVersion = 0.1.0;
 			};
 		};
-		BFA275E127ED313500E15B92 /* XCRemoteSwiftPackageReference "SDAVAssetExportSession" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/meganz/SDAVAssetExportSession.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.0;
-			};
-		};
 		BFD2ED4B281228B30018C05A /* XCRemoteSwiftPackageReference "PieChart" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/meganz/PieChart.git";
@@ -18515,16 +18500,6 @@
 		BF67F7F92AB4172100AC127E /* LogRepo */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = LogRepo;
-		};
-		BFA275E227ED315E00E15B92 /* SDAVAssetExportSession */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = BFA275E127ED313500E15B92 /* XCRemoteSwiftPackageReference "SDAVAssetExportSession" */;
-			productName = SDAVAssetExportSession;
-		};
-		BFA275E627ED317600E15B92 /* SDAVAssetExportSession */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = BFA275E127ED313500E15B92 /* XCRemoteSwiftPackageReference "SDAVAssetExportSession" */;
-			productName = SDAVAssetExportSession;
 		};
 		BFD2ED4C281228B30018C05A /* PieChart */ = {
 			isa = XCSwiftPackageProductDependency;

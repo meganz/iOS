@@ -296,15 +296,6 @@
       }
     },
     {
-      "identity" : "sdavassetexportsession",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/meganz/SDAVAssetExportSession.git",
-      "state" : {
-        "revision" : "70b9f3b885ac8759752c893a4f98f212bcd46394",
-        "version" : "1.0.2"
-      }
-    },
-    {
       "identity" : "sdwebimage",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/SDWebImage/SDWebImage.git",
