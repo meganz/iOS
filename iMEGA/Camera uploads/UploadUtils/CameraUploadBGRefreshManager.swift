@@ -11,7 +11,7 @@ final class CameraUploadBGRefreshManager {
     let backgroundRefreshPerfomer = CameraUploadBackgroundRefreshPerformer()
     
     func register() {
-        BGTaskScheduler.shared.register(forTaskWithIdentifier: Constants.identifier, using: nil) { task in
+        BGTaskScheduler.shared.register(forTaskWithIdentifier: Constants.identifier, using: nil) { (task: BGTask) in
             guard let task = task as? BGAppRefreshTask else {
                 task.setTaskCompleted(success: false)
                 return

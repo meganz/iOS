@@ -20,6 +20,7 @@
 		0E2085742C7577880018CA18 /* HiddenFilesCloseOnboardingPrimaryButtonViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E2085732C7577880018CA18 /* HiddenFilesCloseOnboardingPrimaryButtonViewModelTests.swift */; };
 		0E2586F52C4DBF220076A4E4 /* Preview_SensitiveNodeUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E2586F42C4DBF220076A4E4 /* Preview_SensitiveNodeUseCase.swift */; };
 		0E261EAD2DA5EA1300858151 /* MEGAAuthentication in Frameworks */ = {isa = PBXBuildFile; productRef = 0E261EAC2DA5EA1300858151 /* MEGAAuthentication */; };
+		0E261EB42DA5FE1600858151 /* AppDelegate+Authentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E261EB22DA5FE0400858151 /* AppDelegate+Authentication.swift */; };
 		0E2FD9DD2A258C3B00FB75F1 /* GetCollectionsLinkViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E2FD9DC2A258C3B00FB75F1 /* GetCollectionsLinkViewModelTests.swift */; };
 		0E2FEAA82A7B44AC00D237C6 /* GetLinkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E2FEAA62A7B44AC00D237C6 /* GetLinkView.swift */; };
 		0E2FEAAA2A7B463700D237C6 /* GetLinkRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E2FEAA92A7B463600D237C6 /* GetLinkRouter.swift */; };
@@ -2667,6 +2668,7 @@
 		0E2085732C7577880018CA18 /* HiddenFilesCloseOnboardingPrimaryButtonViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HiddenFilesCloseOnboardingPrimaryButtonViewModelTests.swift; sourceTree = "<group>"; };
 		0E2586F42C4DBF220076A4E4 /* Preview_SensitiveNodeUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preview_SensitiveNodeUseCase.swift; sourceTree = "<group>"; };
 		0E261EAB2DA5E9BF00858151 /* MEGAAuthentication */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = MEGAAuthentication; path = Modules/MEGASharedRepo/MEGAAuthentication; sourceTree = SOURCE_ROOT; };
+		0E261EB22DA5FE0400858151 /* AppDelegate+Authentication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppDelegate+Authentication.swift"; sourceTree = "<group>"; };
 		0E2FD9DC2A258C3B00FB75F1 /* GetCollectionsLinkViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetCollectionsLinkViewModelTests.swift; sourceTree = "<group>"; };
 		0E2FEAA62A7B44AC00D237C6 /* GetLinkView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetLinkView.swift; sourceTree = "<group>"; };
 		0E2FEAA92A7B463600D237C6 /* GetLinkRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetLinkRouter.swift; sourceTree = "<group>"; };
@@ -11079,6 +11081,7 @@
 				B5E719B7290B716A0076FEA3 /* AppDelegate+Account.swift */,
 				BF69E5162374F3720031913D /* AppDelegate+Additions.swift */,
 				B511CE6D2AA745E800445877 /* AppDelegate+Ads.swift */,
+				0E261EB22DA5FE0400858151 /* AppDelegate+Authentication.swift */,
 				258BA6242CC9FE2400349CD2 /* AppDelegate+ModuleConfigs.swift */,
 				C403FA492BAD89C9007642AD /* AppDelegate+QuickUploadAction.swift */,
 				A5F63E6F2BE8808C00B7A3F0 /* AppDelegate+SaveNode.swift */,
@@ -13939,6 +13942,7 @@
 				B5E719B8290B716A0076FEA3 /* AppDelegate+Account.swift in Sources */,
 				BF69E5172374F3720031913D /* AppDelegate+Additions.swift in Sources */,
 				B511CE6E2AA745E800445877 /* AppDelegate+Ads.swift in Sources */,
+				0E261EB42DA5FE1600858151 /* AppDelegate+Authentication.swift in Sources */,
 				258BA6252CC9FE3C00349CD2 /* AppDelegate+ModuleConfigs.swift in Sources */,
 				C403FA4A2BAD89C9007642AD /* AppDelegate+QuickUploadAction.swift in Sources */,
 				A5F63E702BE8808C00B7A3F0 /* AppDelegate+SaveNode.swift in Sources */,

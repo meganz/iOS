@@ -12,6 +12,7 @@ public enum FeatureFlagKey: FeatureFlagName, CaseIterable, Sendable {
     case searchByNodeTags = "Search By Node Tags"
     case newSetting = "New Setting"
     case noteToSelfChat = "Note to Self Chat"
+    case loginRegisterAndOnboardingRevamp = "Use revamp contained in the MEGAAuthentication package"
 
     /// The keys that are ready for production release, but not yet removed from code.
     /// Discussion:
