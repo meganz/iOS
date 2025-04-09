@@ -3457,7 +3457,6 @@
 		6D0D7F6B2CF919CF00817D62 /* RubbishBinSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RubbishBinSettingView.swift; sourceTree = "<group>"; };
 		6D0D7F6D2CF91A1500817D62 /* RubbishBinSettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RubbishBinSettingViewModel.swift; sourceTree = "<group>"; };
 		6D1272B52B72E69800DAF37D /* PasswordStrengthIndicatorView+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PasswordStrengthIndicatorView+Additions.swift"; sourceTree = "<group>"; };
-		6D18B4D02B44C75600E4ABA8 /* MEGAMacro */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MEGAMacro; sourceTree = "<group>"; };
 		6D214A6A2CF6AF25003E88FC /* LegacyCallsSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegacyCallsSettingsView.swift; sourceTree = "<group>"; };
 		6D39A57829EF456D00348D1C /* ChatContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatContentViewModel.swift; sourceTree = "<group>"; };
 		6D5A19AF2A10D33E00FDD5B3 /* MyAccountHallViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyAccountHallViewModelTests.swift; sourceTree = "<group>"; };
@@ -11924,7 +11923,6 @@
 				6DE9E89A2D793BD40008C102 /* MEGABuildTools */,
 				6D004FE72D0A46220039ADF9 /* MEGAConnectivity */,
 				B6A01BAA289A618500B503FD /* MEGAFoundation */,
-				6D18B4D02B44C75600E4ABA8 /* MEGAMacro */,
 				9418DB272A4EE5E7002B0077 /* MEGAPermissions */,
 				0E04F43D2D96522A0048A692 /* MEGASwift */,
 				0ED1EBD02D9B90E00037B39F /* MEGATest */,

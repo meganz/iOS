@@ -1,9 +1,17 @@
 import MEGADomain
-import MEGAMacro
 import MEGASdk
 
-@newRepo(MEGASdk.sharedSdk)
 public struct ContactsRepository: ContactsRepositoryProtocol {
+    private let sdk: MEGASdk
+    
+    public static var newRepo: ContactsRepository {
+        ContactsRepository(sdk: MEGASdk.sharedSdk)
+    }
+    
+    public init(sdk: MEGASdk) {
+        self.sdk = sdk
+    }
+    
     public func contact(forUserHandle handle: HandleEntity) -> UserEntity? {
         visibleContacts().first(where: { $0.handle == handle })
     }
