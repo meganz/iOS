@@ -68,6 +68,11 @@ public final class BackupStatusProvider: BackupStatusProviding {
                 title: Strings.Localizable.Device.Center.Backup.UpToDate.Status.message,
                 color: TokenColors.Text.success,
                 iconName: BackUpStatusIconAssets.upToDate.rawValue
+            ),
+            .noCameraUploads: StatusAssets(
+                title: Strings.Localizable.Device.Center.Backup.NoCameraUploads.Status.message,
+                color: TokenColors.Text.warning,
+                iconName: BackUpStatusIconAssets.noCameraUploads.rawValue
             )
         ]
     }()
