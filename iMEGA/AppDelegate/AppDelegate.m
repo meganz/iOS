@@ -178,6 +178,8 @@
     [MEGASdk.shared setLanguageCode:languageCode];
     [MEGASdk.sharedFolderLink setLanguageCode:languageCode];
     
+    [self injectAuthenticationDependencies];
+    
     self.backgroundTaskMutableDictionary = [[NSMutableDictionary alloc] init];
     
     [[AppFirstLaunchSecurityChecker newChecker] performSecurityCheck];
@@ -246,7 +248,7 @@
         [CameraUploadManager enableAdvancedSettingsForUpgradingUserIfNeeded];
     } else {
         // Resume ephemeral account
-        self.window.rootViewController = [OnboardingViewController instantiateOnboardingWithType:OnboardingTypeDefault];
+        self.window.rootViewController = [self makeOnboardingViewController];
         NSString *sessionId = [SAMKeychain passwordForService:@"MEGA" account:@"sessionId"];
         if (sessionId && ![[[launchOptions objectForKey:@"UIApplicationLaunchOptionsURLKey"] absoluteString] containsString:@"confirm"]) {
             MEGACreateAccountRequestDelegate *createAccountRequestDelegate = [[MEGACreateAccountRequestDelegate alloc] initWithCompletion:^ (MEGAError *error) {
