@@ -19,6 +19,7 @@
 		0E12F2112BBFA8950087D853 /* AsyncAlgorithms in Frameworks */ = {isa = PBXBuildFile; productRef = 0E12F2102BBFA8950087D853 /* AsyncAlgorithms */; };
 		0E2085742C7577880018CA18 /* HiddenFilesCloseOnboardingPrimaryButtonViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E2085732C7577880018CA18 /* HiddenFilesCloseOnboardingPrimaryButtonViewModelTests.swift */; };
 		0E2586F52C4DBF220076A4E4 /* Preview_SensitiveNodeUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E2586F42C4DBF220076A4E4 /* Preview_SensitiveNodeUseCase.swift */; };
+		0E261EAD2DA5EA1300858151 /* MEGAAuthentication in Frameworks */ = {isa = PBXBuildFile; productRef = 0E261EAC2DA5EA1300858151 /* MEGAAuthentication */; };
 		0E2FD9DD2A258C3B00FB75F1 /* GetCollectionsLinkViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E2FD9DC2A258C3B00FB75F1 /* GetCollectionsLinkViewModelTests.swift */; };
 		0E2FEAA82A7B44AC00D237C6 /* GetLinkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E2FEAA62A7B44AC00D237C6 /* GetLinkView.swift */; };
 		0E2FEAAA2A7B463700D237C6 /* GetLinkRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E2FEAA92A7B463600D237C6 /* GetLinkRouter.swift */; };
@@ -104,7 +105,6 @@
 		0EE5AC202B1EB2C200BCDD88 /* DIContainer+CustomModalAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EE5AC1F2B1EB2C200BCDD88 /* DIContainer+CustomModalAlert.swift */; };
 		0EE5AC212B1EB2C200BCDD88 /* DIContainer+CustomModalAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EE5AC1F2B1EB2C200BCDD88 /* DIContainer+CustomModalAlert.swift */; };
 		0EE89C732BA8FAAF00956F1D /* NodeActionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EE89C722BA8FAAF00956F1D /* NodeActionTableViewCell.swift */; };
-		0EEF6A022D8B8F9D006FEADD /* Authentication in Frameworks */ = {isa = PBXBuildFile; productRef = 0EEF6A012D8B8F9D006FEADD /* Authentication */; };
 		122977DE27DA976F0048F381 /* MediaDiscoveryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122977DD27DA976F0048F381 /* MediaDiscoveryViewModel.swift */; };
 		12397E172820C3B100A30CCC /* PageTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12397E162820C3B100A30CCC /* PageTabView.swift */; };
 		12397E192820C3D100A30CCC /* PagerTabViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12397E182820C3D100A30CCC /* PagerTabViewModel.swift */; };
@@ -2666,6 +2666,7 @@
 		0E11AFA22D067935000A7E68 /* AddToCollectionRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToCollectionRouter.swift; sourceTree = "<group>"; };
 		0E2085732C7577880018CA18 /* HiddenFilesCloseOnboardingPrimaryButtonViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HiddenFilesCloseOnboardingPrimaryButtonViewModelTests.swift; sourceTree = "<group>"; };
 		0E2586F42C4DBF220076A4E4 /* Preview_SensitiveNodeUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preview_SensitiveNodeUseCase.swift; sourceTree = "<group>"; };
+		0E261EAB2DA5E9BF00858151 /* MEGAAuthentication */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = MEGAAuthentication; path = Modules/MEGASharedRepo/MEGAAuthentication; sourceTree = SOURCE_ROOT; };
 		0E2FD9DC2A258C3B00FB75F1 /* GetCollectionsLinkViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetCollectionsLinkViewModelTests.swift; sourceTree = "<group>"; };
 		0E2FEAA62A7B44AC00D237C6 /* GetLinkView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetLinkView.swift; sourceTree = "<group>"; };
 		0E2FEAA92A7B463600D237C6 /* GetLinkRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetLinkRouter.swift; sourceTree = "<group>"; };
@@ -2749,7 +2750,6 @@
 		0EE5AC1A2B1E9EE600BCDD88 /* CustomModalAlertViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomModalAlertViewModel.swift; sourceTree = "<group>"; };
 		0EE5AC1F2B1EB2C200BCDD88 /* DIContainer+CustomModalAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DIContainer+CustomModalAlert.swift"; sourceTree = "<group>"; };
 		0EE89C722BA8FAAF00956F1D /* NodeActionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeActionTableViewCell.swift; sourceTree = "<group>"; };
-		0EEF6A002D8B8F47006FEADD /* Authentication */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Authentication; sourceTree = "<group>"; };
 		122977DD27DA976F0048F381 /* MediaDiscoveryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaDiscoveryViewModel.swift; sourceTree = "<group>"; };
 		12397E162820C3B100A30CCC /* PageTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageTabView.swift; sourceTree = "<group>"; };
 		12397E182820C3D100A30CCC /* PagerTabViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagerTabViewModel.swift; sourceTree = "<group>"; };
@@ -5319,7 +5319,6 @@
 				B54B9BFE2D6426850025A25F /* AccountsMock in Frameworks */,
 				B5053BC52D111BE4003718E0 /* AppTrackingTransparency.framework in Frameworks */,
 				0E12F2112BBFA8950087D853 /* AsyncAlgorithms in Frameworks */,
-				0EEF6A022D8B8F9D006FEADD /* Authentication in Frameworks */,
 				9444FA8C2C94672B005C240B /* Chat in Frameworks */,
 				A85CF69D2A7180A90018FEF1 /* ChatRepo in Frameworks */,
 				99DB1D5A2AC64B34004A9CC3 /* ChatRepoMock in Frameworks */,
@@ -5345,6 +5344,7 @@
 				BFE772902D9B637A005B114E /* MEGAAppPresentationMock in Frameworks */,
 				BF2AFDA82D9F85C40075248C /* MEGAAppSDKRepo in Frameworks */,
 				BF2AFDAA2D9F85C40075248C /* MEGAAppSDKRepoMock in Frameworks */,
+				0E261EAD2DA5EA1300858151 /* MEGAAuthentication in Frameworks */,
 				A812CB392A4B0FAD00F99382 /* MEGAChatSdk in Frameworks */,
 				6D004FE92D0A46360039ADF9 /* MEGAConnectivity in Frameworks */,
 				9418A7A22ACF84210014C01C /* MEGADesignToken in Frameworks */,
@@ -10540,10 +10540,10 @@
 			isa = PBXGroup;
 			children = (
 				B56FD4D42AC2D42D00055006 /* Accounts */,
-				0EEF6A002D8B8F47006FEADD /* Authentication */,
 				9444FA8A2C946716005C240B /* Chat */,
 				BF9E55B62CF3D032005495D9 /* CloudDrive */,
 				94F568C12A56E7A6005CE9F2 /* DeviceCenter */,
+				0E261EAB2DA5E9BF00858151 /* MEGAAuthentication */,
 				0E119ACA2C7C3CAF0091BF06 /* MEGAPhotos */,
 				B5E378A22B8334DA000C1DAD /* Notifications */,
 				6D93A46D2C5CB24D00529098 /* PhotosBrowser */,
@@ -13087,11 +13087,11 @@
 				6D004FE82D0A46360039ADF9 /* MEGAConnectivity */,
 				B598F73A2D01E0B600B2B6EB /* MEGASwiftUIMock */,
 				B54B9BFD2D6426850025A25F /* AccountsMock */,
-				0EEF6A012D8B8F9D006FEADD /* Authentication */,
 				BFE7728D2D9B637A005B114E /* MEGAAppPresentation */,
 				BFE7728F2D9B637A005B114E /* MEGAAppPresentationMock */,
 				BF2AFDA72D9F85C40075248C /* MEGAAppSDKRepo */,
 				BF2AFDA92D9F85C40075248C /* MEGAAppSDKRepoMock */,
+				0E261EAC2DA5EA1300858151 /* MEGAAuthentication */,
 			);
 			productName = iMEGA;
 			productReference = 1373618A1A6664C300B740E8 /* MEGA.app */;
@@ -18005,9 +18005,9 @@
 			package = 0E12F20F2BBFA8950087D853 /* XCRemoteSwiftPackageReference "swift-async-algorithms" */;
 			productName = AsyncAlgorithms;
 		};
-		0EEF6A012D8B8F9D006FEADD /* Authentication */ = {
+		0E261EAC2DA5EA1300858151 /* MEGAAuthentication */ = {
 			isa = XCSwiftPackageProductDependency;
-			productName = Authentication;
+			productName = MEGAAuthentication;
 		};
 		1678D7F12A45487E00336C52 /* MEGATest */ = {
 			isa = XCSwiftPackageProductDependency;

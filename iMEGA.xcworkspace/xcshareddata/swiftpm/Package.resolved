@@ -41,8 +41,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/devicekit/DeviceKit.git",
       "state" : {
-        "revision" : "7ff5331960151aec74fb422e1d45f54ef6cc086d",
-        "version" : "5.5.0"
+        "revision" : "513b9d7e7a1bd46504a1009bbab943b75ce2f195",
+        "version" : "5.6.0"
       }
     },
     {
@@ -194,8 +194,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/623637646/libffi.git",
       "state" : {
-        "revision" : "bc1dac0c1b522539f21fc28fe1f7e07bb7c2fbd5",
-        "version" : "3.4.5"
+        "revision" : "ba435e5a3b38cf2eede5974d3e2bd3c737f066e1",
+        "version" : "3.4.7"
       }
     },
     {
@@ -399,8 +399,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/623637646/SwiftHook.git",
       "state" : {
-        "revision" : "474f80132a3a4e74b3f8a5b87b707d74de387769",
-        "version" : "3.5.2"
+        "revision" : "2a6199f90aa2c10cd01b92488639dd246caf277e",
+        "version" : "3.5.3"
       }
     },
     {
