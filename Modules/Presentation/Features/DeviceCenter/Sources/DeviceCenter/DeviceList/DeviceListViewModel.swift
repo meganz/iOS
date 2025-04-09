@@ -157,11 +157,19 @@ public final class DeviceListViewModel: ObservableObject {
     }
     
     func loadAssets(for device: DeviceEntity) -> ItemAssets? {
-        guard let displayStatus = device.backups?.toDeviceDisplayStatus(),
-              let statusAssets = backupStatusProvider.deviceDisplayAssets(for: displayStatus) else { return nil }
-        let userAgent = device.backups?.first?.userAgent
+        let displayStatus: DeviceDisplayStatusEntity? =
+            (device.id == currentDeviceUUID && (device.backups?.isEmpty ?? true))
+                ? .noCameraUploads // current device and on which it has never previously been activated in CU
+                : device.backups?.toDeviceDisplayStatus()
+                
+        guard let displayStatus,
+              let statusAssets = backupStatusProvider.deviceDisplayAssets(for: displayStatus) else {
+            return nil
+        }
+        
+        let isMobileDevice = device.isMobileDevice() || device.id == currentDeviceUUID
         return ItemAssets(
-            iconName: deviceIconProvider.iconName(for: userAgent, isMobile: device.isMobileDevice() || device.id == currentDeviceUUID),
+            iconName: deviceIconProvider.iconName(for: device.backups?.first?.userAgent, isMobile: isMobileDevice),
             statusAssets: statusAssets,
             defaultName: UIDevice.current.modelName
         )

@@ -11,4 +11,5 @@ public enum DeviceDisplayStatusEntity: Sendable {
     case attentionNeeded
     case updating
     case upToDate
+    case noCameraUploads
 }

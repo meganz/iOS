@@ -15,4 +15,5 @@ public enum BackupDisplayStatusEntity: Sendable {
     case paused
     case updating
     case upToDate
+    case noCameraUploads
 }
