@@ -34,6 +34,7 @@ public struct ActionSheetHeaderView: View {
                     if let subtitleIcon {
                         subtitleIcon
                             .renderingMode(.template)
+                            .resizable()
                             .foregroundStyle(Color(subtitleColor))
                             .frame(width: 12, height: 12)
                     }

@@ -45,7 +45,8 @@ struct BackupStatusProviderTestSuite {
         (DeviceDisplayStatusEntity.inactive, "inactive"),
         (.attentionNeeded, "attentionNeeded"),
         (.updating, "updating"),
-        (.upToDate, "upToDate")
+        (.upToDate, "upToDate"),
+        (.noCameraUploads, "noCameraUploads")
     ])
     func returnsExpectedDeviceDisplayAssetsForEntity(
         deviceDisplayStatusEntity: DeviceDisplayStatusEntity,
@@ -64,7 +65,8 @@ struct BackupStatusProviderTestSuite {
         DeviceDisplayStatusEntity.inactive,
         .attentionNeeded,
         .updating,
-        .upToDate
+        .upToDate,
+        .noCameraUploads
     ])
     func deviceDisplayAssetsDictionaryContainsStatus(deviceDisplayStatusEntity: DeviceDisplayStatusEntity) {
         let provider = BackupStatusProvider()

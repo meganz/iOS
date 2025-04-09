@@ -9,7 +9,7 @@ extension BackupEntity {
         case .offline, .blocked, .outOfQuota, .error, .backupStopped: .error
         case .updating, .scanning, .initialising: .updating
         case .upToDate: .upToDate
-        case .noCameraUploads: .inactive
+        case .noCameraUploads: .noCameraUploads
         default: nil
         }
     }
@@ -27,6 +27,7 @@ extension Array where Element == BackupEntity {
         case .error, .disabled, .paused: .attentionNeeded
         case .updating: .updating
         case .upToDate: .upToDate
+        case .noCameraUploads: .noCameraUploads
         }
     }
 }
@@ -40,6 +41,7 @@ extension BackupDisplayStatusEntity {
         case .paused: 3 // For all backups and sync except CU
         case .updating: 4
         case .upToDate: 5
+        case .noCameraUploads: 6 // Only for CU
         }
     }
 }
