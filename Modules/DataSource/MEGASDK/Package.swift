@@ -34,7 +34,7 @@ let package = Package(
                 "contrib",
                 "examples",
                 "src/android",
-                "src/fuse/common/client_adapter_with_sync.cpp",
+                "src/common/client_adapter_with_sync.cpp",
                 "src/fuse/common/database_builder.cpp",
                 "src/fuse/common/directory_inode.cpp",
                 "src/fuse/common/file_cache.cpp",
