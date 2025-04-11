@@ -8,10 +8,7 @@ public class RequestDelegate: NSObject, MEGARequestDelegate {
     let completion: MEGARequestCompletion
     let onRequestStartHandler: MEGARequestStartHandler?
     
-    private let successCodes: [MEGAErrorType]
-    
-    public init(successCodes: [MEGAErrorType] = [.apiOk], onRequestStartHandler: MEGARequestStartHandler? = nil, completion: @escaping MEGARequestCompletion) {
-        self.successCodes = successCodes
+    public init(onRequestStartHandler: MEGARequestStartHandler? = nil, completion: @escaping MEGARequestCompletion) {
         self.completion = completion
         self.onRequestStartHandler = onRequestStartHandler
         super.init()
@@ -45,7 +42,7 @@ public class RequestDelegate: NSObject, MEGARequestDelegate {
     }
     
     public func onRequestFinish(_ api: MEGASdk, request: MEGARequest, error: MEGAError) {
-        if successCodes.contains(error.type) {
+        if error.type == .apiOk {
             self.completion(.success(request))
         } else {
             self.completion(.failure(error))

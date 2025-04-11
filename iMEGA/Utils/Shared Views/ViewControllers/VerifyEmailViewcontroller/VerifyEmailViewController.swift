@@ -138,12 +138,17 @@ final class VerifyEmailViewController: UIViewController {
     @IBAction func tapResendButton(_ sender: Any) {
         if MEGAReachabilityManager.isReachableHUDIfNot() {
             SVProgressHUD.show()
-            let resendVerificationEmailDelegate = RequestDelegate(successCodes: [.apiOk, .apiEArgs]) { result in
+            let resendVerificationEmailDelegate = RequestDelegate() { result in
                 SVProgressHUD.dismiss()
-                if case .success = result {
+                switch result {
+                case .success:
                     self.hintLabel.isHidden = false
-                } else {
-                    SVProgressHUD.showError(withStatus: Strings.Localizable.EmailAlreadySent.pleaseWaitAFewMinutesBeforeTryingAgain)
+                case .failure(let error):
+                    if error.type == .apiEArgs {
+                        self.hintLabel.isHidden = false
+                    } else {
+                        SVProgressHUD.showError(withStatus: Strings.Localizable.EmailAlreadySent.pleaseWaitAFewMinutesBeforeTryingAgain)
+                    }
                 }
             }
             MEGASdk.shared.resendVerificationEmail(with: resendVerificationEmailDelegate)
