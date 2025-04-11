@@ -76,8 +76,8 @@ struct AppLoadingUseCaseTests {
             "Failure with error",
             arguments: zip(
                 [
-                    RequestResponseEntity(requestEntity: .init(type: .login), error: .init(type: .tryAgain, name: "", value: 1)),
-                    RequestResponseEntity(requestEntity: .init(type: .login), error: .init(type: .badArguments, name: "", value: 1))
+                    RequestResponseEntity(requestEntity: .init(type: .login), error: .init(type: .tryAgain)),
+                    RequestResponseEntity(requestEntity: .init(type: .login), error: .init(type: .badArguments))
                 ],
                 [false, true]
             )
@@ -99,9 +99,9 @@ struct AppLoadingUseCaseTests {
             "Request finish successfully",
             arguments: zip(
                 [
-                    RequestResponseEntity(requestEntity: .init(type: .login), error: .init(type: .ok, name: "", value: 1)),
-                    RequestResponseEntity(requestEntity: .init(type: .login), error: .init(type: .tryAgain, name: "", value: 1)),
-                    RequestResponseEntity(requestEntity: .init(type: .fetchNodes), error: .init(type: .ok, name: "", value: 1))
+                    RequestResponseEntity(requestEntity: .init(type: .login), error: .init(type: .ok)),
+                    RequestResponseEntity(requestEntity: .init(type: .login), error: .init(type: .tryAgain)),
+                    RequestResponseEntity(requestEntity: .init(type: .fetchNodes), error: .init(type: .ok))
                 ],
                 [false, false, true]
             )

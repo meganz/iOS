@@ -100,12 +100,14 @@ struct RecentNodesUseCaseTests {
             "Request finish updates",
             arguments: zip(
                 [
-                    RequestResponseEntity(requestEntity: .init(type: .fetchNodes), error: .init(type: .ok, name: "", value: 1)),
-                    RequestResponseEntity(requestEntity: .init(type: .login), error: .init(type: .ok, name: "", value: 1)),
-                    RequestResponseEntity(requestEntity: .init(type: .fetchNodes), error: .init(type: .badArguments, name: "", value: 1))
+                    RequestResponseEntity(requestEntity: .init(type: .fetchNodes), error: .init(type: .ok)),
+                    RequestResponseEntity(requestEntity: .init(type: .login), error: .init(type: .ok)),
+                    RequestResponseEntity(requestEntity: .init(type: .fetchNodes), error: .init(type: .badArguments))
                 ],
                 [true, false, false]
+                
             )
+            
         )
         func shouldYieldRecentActionBucketsUpdates(requestResponseEntity: RequestResponseEntity, shouldYieldUpdates: Bool) async throws {
             let requestStatesRepository = MockRequestStatesRepository(requestFinishUpdates: [requestResponseEntity].async.eraseToAnyAsyncSequence())

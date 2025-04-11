@@ -4,8 +4,10 @@ import MEGASdk
 extension MEGARequest {
     public func toRequestEntity() -> RequestEntity {
         RequestEntity(
+            nodeHandle: nodeHandle,
             type: type.toRequestTypeEntity(),
-            progress: progress()
+            progress: progress(),
+            flag: flag
         )
     }
 }

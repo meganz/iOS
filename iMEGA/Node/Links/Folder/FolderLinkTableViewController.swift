@@ -78,15 +78,7 @@ extension FolderLinkTableViewController {
             return folderLink.searchNodesArray ?? []
         }
         
-        if isFolderLinkInvalid {
-            return []
-        }
-        
         return folderLink.nodesArray
-    }
-    
-    var isFolderLinkInvalid: Bool {
-        folderLink.isFolderLinkNotValid
     }
     
     var isOnline: Bool {
@@ -118,7 +110,7 @@ extension FolderLinkTableViewController: UITableViewDataSource {
         if let node = getNode(at: indexPath) {
             config(cell, by: node, at: indexPath)
         } else {
-            CrashlyticsLogger.log("Node at \(indexPath) not found, nodes \(nodes.map { $0.handle }), is online \(isOnline), isSearching: \(isSearching), isFolderLinkInvalid: \(isFolderLinkInvalid) ")
+            CrashlyticsLogger.log("Node at \(indexPath) not found, nodes \(nodes.map { $0.handle }), is online \(isOnline), isSearching: \(isSearching)")
         }
         
         return cell
