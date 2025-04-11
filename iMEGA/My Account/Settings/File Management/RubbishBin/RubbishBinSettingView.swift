@@ -73,7 +73,7 @@ struct RubbishBinSettingView: View {
         .snackBar($viewModel.snackBar)
         .pageBackground()
         .task {
-            await viewModel.startRubbishBinSettingsUpdatesMonitoring()
+            await viewModel.getRubbishBinAutopurgePeriod()
         }
     }
     

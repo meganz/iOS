@@ -43,11 +43,12 @@ final class RubbishBinSettingViewModel: ObservableObject {
     
     // MARK: Monitor Settings Change
     
-    func startRubbishBinSettingsUpdatesMonitoring() async {
-        for await resultRequest in rubbishBinSettingsUseCase.onRubbishBinSettinghsRequestFinish {
-            try? Task.checkCancellation()
-            
-            handleRequestResult(resultRequest)
+    func getRubbishBinAutopurgePeriod() async {
+        do {
+            let rubbishBinSettingsEntity = try await rubbishBinSettingsUseCase.getRubbishBinAutopurgePeriod()
+            handleRubbishBinSettingEntity(rubbishBinSettingsEntity)
+        } catch {
+            CrashlyticsLogger.log(category: .general, "Get Rubbish Bin autopurge period failed.")
         }
     }
     
@@ -121,9 +122,7 @@ final class RubbishBinSettingViewModel: ObservableObject {
         snackBar = .init(message: message)
     }
     
-    private func handleRequestResult(_ result: Result<RubbishBinSettingsEntity, any Error>) {
-        guard case .success(let entity) = result else { return }
-        
+    private func handleRubbishBinSettingEntity(_ entity: RubbishBinSettingsEntity) {
         rubbishBinAutopurgePeriod = entity.rubbishBinAutopurgePeriod
         let autoPurgePeriod = AutoPurgePeriod(fromDays: Int(rubbishBinAutopurgePeriod))
         selectedAutoPurgePeriod = autoPurgePeriod

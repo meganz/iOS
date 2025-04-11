@@ -15,8 +15,7 @@ final class RubbishBinSettingViewRouter: Routing {
     func build() -> UIViewController {
         let accountUseCase = AccountUseCase(repository: AccountRepository.newRepo)
         let rubbishBinRepo = RubbishBinRepository.newRepo
-        let rubbishBinSettingsUpdatesProvider = RubbishBinSettingsUpdateProvider(isPaidAccount: accountUseCase.isPaidAccount, serverSideRubbishBinAutopurgeEnabled: rubbishBinRepo.serverSideRubbishBinAutopurgeEnabled())
-        let rubbishBinSettingRepo = RubbishBinSettingsRepository(rubbishBinSettingsUpdatesProvider: rubbishBinSettingsUpdatesProvider)
+        let rubbishBinSettingRepo = RubbishBinSettingsRepository(isPaidAccount: accountUseCase.isPaidAccount, serverSideRubbishBinAutopurgeEnabled: rubbishBinRepo.serverSideRubbishBinAutopurgeEnabled())
         let rubbishBinSettingsUseCase = RubbishBinSettingsUseCase(rubbishBinSettingsRepository: rubbishBinSettingRepo)
         let hostingVC = UIHostingController(rootView: RubbishBinSettingView(viewModel: RubbishBinSettingViewModel(accountUseCase: accountUseCase, rubbishBinSettingsUseCase: rubbishBinSettingsUseCase)))
         hostingVC.title = Strings.Localizable.Settings.FileManagement.RubbishBin.Navigation.title

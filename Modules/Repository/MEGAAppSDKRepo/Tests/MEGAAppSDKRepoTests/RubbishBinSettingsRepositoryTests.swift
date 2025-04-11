@@ -7,17 +7,16 @@ import Testing
 @Suite("RubbishBinSettingsRepositoryTests")
 struct RubbishBinSettingsRepositoryTests {
     
-    @Suite("Rubbish Bin Settings Update Succeed")
-    struct RequestFinishSuccessTests {
+    @Suite("Get rubbish bin auto purge period")
+    struct RubbishBinGetAutoPurgePeriodTests {
         
-        @Test("Successful call back only")
-        func onRequestFinishSuccess() async {
+        @Test("Get auto purge period")
+        func getRubbishBinAutopurgePeriod() async throws {
             let sut = makeSUT()
             
-            var iterator = sut.onRubbishBinSettinghsRequestFinish.makeAsyncIterator()
-            let result = await iterator.next()
+            let result = try await sut.getRubbishBinAutopurgePeriod()
             
-            #expect(throws: Never.self) { try result?.get() }
+            #expect(result.rubbishBinAutopurgePeriod == 90)
         }
     }
     
@@ -66,10 +65,15 @@ struct RubbishBinSettingsRepositoryTests {
         }
     }
     
-    private static func makeSUT(sdk: MockSdk = MockSdk()) -> RubbishBinSettingsRepository {
-        let succeedResult: Result<RubbishBinSettingsEntity, any Error> = .success(RubbishBinSettingsEntity(rubbishBinAutopurgePeriod: 7, rubbishBinCleaningSchedulerEnabled: true))
-        let mockProvider = MockRubbishBinSettingsUpdateProvider(onRubbishBinSettingsRequestFinish: SingleItemAsyncSequence(item: succeedResult).eraseToAnyAsyncSequence())
-        
-        return RubbishBinSettingsRepository(sdk: sdk, rubbishBinSettingsUpdatesProvider: mockProvider)
+    private static func makeSUT(
+        sdk: MockSdk = MockSdk(),
+        isPaidAccount: Bool = false,
+        serverSideRubbishBinAutopurgeEnabled: Bool = false
+    ) -> RubbishBinSettingsRepository {
+        RubbishBinSettingsRepository(
+            sdk: sdk,
+            isPaidAccount: isPaidAccount,
+            serverSideRubbishBinAutopurgeEnabled: serverSideRubbishBinAutopurgeEnabled
+        )
     }
 }
