@@ -12,24 +12,20 @@ import MEGASwift
 extension FolderLinkViewController {
     @objc func makeFolderLinkViewModel() -> FolderLinkViewModel {
         let viewModel = FolderLinkViewModel(
-            folderLinkUseCase: FolderLinkUseCase(transferRepository: TransferRepository.newRepo, nodeRepository: NodeRepository.newRepo)
+            folderLinkUseCase: FolderLinkUseCase(transferRepository: TransferRepository.newRepo, nodeRepository: NodeRepository.newRepo, requestStatesRepository: RequestStatesRepository.newRepo)
         )
-        viewModel.onNodeDownloadTransferFinish = { [weak self] handleEntity in
-            guard let self, let node = isFromFolderLink(nodeHandle: handleEntity) else { return }
-            didDownloadTransferFinish(node)
-        }
         
-        viewModel.onNodeUpdates = { [weak self] nodeEntities in
-            guard let self, let parentNodeEntity = parentNode?.toNodeEntity() else { return }
-            let shouldReloadUI = parentNodeEntity.shouldProcessOnNodeEntitiesUpdate(
-                withChildNodes: nodesArray.map({ $0.toNodeEntity() }),
-                updatedNodes: nodeEntities
-            )
-            if shouldReloadUI {
-                reloadUI()
-            }
-        }
+        viewModel.invokeCommand = { [weak self] in self?.executeCommand($0) }
+        
         return viewModel
+    }
+    
+    @objc func onViewAppear() {
+        viewModel.dispatch(.onViewAppear)
+    }
+    
+    @objc func onViewDisappear() {
+        viewModel.dispatch(.onViewDisappear)
     }
     
     @objc func containsMediaFiles() -> Bool {
@@ -232,5 +228,48 @@ extension FolderLinkViewController: AdsSlotViewControllerProtocol {
         SingleItemAsyncSequence(
             item: AdsSlotConfig(adsSlot: .sharedLink, displayAds: true)
         ).eraseToAnyAsyncSequence()
+    }
+}
+
+extension FolderLinkViewController: ViewType {
+    public func executeCommand(_ command: FolderLinkViewModel.Command) {
+        switch command {
+        case .nodeDownloadTransferFinish(let handleEntity):
+            guard let node = isFromFolderLink(nodeHandle: handleEntity) else { return }
+            didDownloadTransferFinish(node)
+        case .nodesUpdate(let nodeEntities):
+            guard
+                let parentNodeEntity = parentNode?.toNodeEntity(),
+                parentNodeEntity.shouldProcessOnNodeEntitiesUpdate(withChildNodes: nodesArray.map({ $0.toNodeEntity() }), updatedNodes: nodeEntities)
+            else { return }
+            reloadUI()
+        case .linkUnavailable(let linkUnavailableReason):
+            switch linkUnavailableReason {
+            case .downETD:
+                showUnavailableLinkViewWithError(.etdDown)
+            case .userETDSuspension:
+                showUnavailableLinkViewWithError(.userETDSuspension)
+            case .copyrightSuspension:
+                showUnavailableLinkViewWithError(.userCopyrightSuspension)
+            case .generic:
+                showUnavailableLinkViewWithError(.generic)
+            }
+        case .invalidDecryptionKey:
+            handleInvalidDecryptionKey()
+        case .decryptionKeyRequired:
+            showDecryptionAlert()
+        case .loginDone:
+            handleLoginDone()
+        case .fetchNodesDone(let validKey):
+            handleFetchNodesDone(validKey)
+        case .fetchNodesFailed:
+            handleFetchNodesFailed()
+        case .logoutDone:
+            handleLogout()
+        case .fileAttributeUpdate(let handleEntity):
+            handleFileAttributeUpdate(handleEntity)
+        case .fetchNodesStarted:
+            startLoading()
+        }
     }
 }

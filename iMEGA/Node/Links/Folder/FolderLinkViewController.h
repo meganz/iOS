@@ -1,4 +1,5 @@
 #import <UIKit/UIKit.h>
+#import "UnavailableLinkView.h"
 
 @class AudioPlayer;
 @class MiniPlayerViewRouter;
@@ -25,7 +26,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong, nullable) NSArray<MEGANode *> *searchNodesArray;
 @property (nonatomic, strong, nullable) NSMutableArray<MEGANode *> *selectedNodesArray;
 
-@property (nonatomic, getter=isFolderLinkNotValid) BOOL folderLinkNotValid;
 @property (nonatomic, getter=areAllNodesSelected) BOOL allNodesSelected;
 
 @property (nonatomic, strong, nullable) UIView *bottomView;
@@ -57,6 +57,14 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)didDownloadTransferFinish:(MEGANode *)node;
 - (nullable UIView *)customViewForEmptyDataSet:(UIScrollView *)scrollView;
 - (FolderLinkViewController *)folderLinkViewControllerFromNode:(MEGANode *)node;
+- (void)showUnavailableLinkViewWithError:(UnavailableLinkError)error;
+- (void)handleInvalidDecryptionKey;
+- (void)handleLoginDone;
+- (void)handleFetchNodesDone:(BOOL)validKey;
+- (void)handleLogout;
+- (void)handleFileAttributeUpdate:(uint64_t)nodeHandle;
+- (void)showDecryptionAlert;
+- (void)handleFetchNodesFailed;
 
 @end
 

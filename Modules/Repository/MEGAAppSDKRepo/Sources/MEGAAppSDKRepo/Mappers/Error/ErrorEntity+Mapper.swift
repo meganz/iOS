@@ -70,12 +70,47 @@ extension MEGAErrorType {
     }
 }
 
+extension MEGALinkErrorCode {
+    public var linkErrorEntity: LinkErrorEntity {
+        switch self {
+        case .unknown:
+                .unknown
+        case .undeleted:
+                .undeleted
+        case .undeletedDown:
+                .undeletedOrDown
+        case .downETD:
+                .downETD
+        @unknown default:
+            fatalError()
+        }
+    }
+}
+
+extension MEGAUserErrorCode {
+    public var userErrorEntity: UserErrorEntity {
+        switch self {
+        case .etdUnknown:
+                .unknown
+        case .copyrightSuspension:
+                .copyrightSuspension
+        case .etdSuspension:
+                .etdSuspension
+        @unknown default:
+            fatalError()
+        }
+    }
+}
+
 extension MEGAError {
     public func toErrorEntity() -> ErrorEntity {
         ErrorEntity(
-            type: self.type.toErrorTypeEntity(),
-            name: self.name,
-            value: self.value
+            type: type.toErrorTypeEntity(),
+            name: name,
+            value: value,
+            hasExtraInfo: hasExtraInfo,
+            linkError: linkStatus.linkErrorEntity,
+            userError: userStatus.userErrorEntity
         )
     }
 }

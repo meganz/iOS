@@ -32,7 +32,7 @@
 @import MEGAUIKit;
 @import MEGAAppSDKRepo;
 
-@interface FolderLinkViewController () <UISearchBarDelegate, UISearchResultsUpdating, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, MEGARequestDelegate, UISearchControllerDelegate>
+@interface FolderLinkViewController () <UISearchBarDelegate, UISearchResultsUpdating, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, UISearchControllerDelegate>
 
 @property (nonatomic, getter=isLoginDone) BOOL loginDone;
 @property (nonatomic, getter=isFetchNodesDone) BOOL fetchNodesDone;
@@ -146,10 +146,9 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    [self.viewModel onViewAppear];
+    [self onViewAppear];
     
     MEGASdk *sdkFolder = MEGASdk.sharedFolderLink;
-    [sdkFolder addMEGARequestDelegate:self];
     
     if (!self.loginDone && self.isFolderRootNode) {
         [sdkFolder loginToFolderLink:self.publicLinkString];
@@ -164,9 +163,7 @@
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     
-    [self.viewModel onViewDisappear];
-    
-    [MEGASdk.sharedFolderLink removeMEGARequestDelegateAsync:self];
+    [self onViewDisappear];
     
     [AudioPlayerManager.shared removeMiniPlayerHandler:self];
 
@@ -241,7 +238,7 @@
         self.navigationItem.titleView = nil;
         self.navigationItem.title = [self selectedCountTitle];
     } else {
-        if (self.parentNode.name && !self.isFolderLinkNotValid) {
+        if (self.parentNode.name) {
             self.titleViewSubtitle = LocalizedString(@"folderLink", @"");
             [self setNavigationTitleViewWithSubTitle:self.titleViewSubtitle];
         } else {
@@ -717,11 +714,7 @@
     NSString *text;
     if ([MEGAReachabilityManager isReachable]) {
         if (!self.isFetchNodesDone && self.isFolderRootNode) {
-            if (self.isFolderLinkNotValid) {
-                text = LocalizedString(@"linkNotValid", @"");
-            } else {
-                text = @"";
-            }
+            text = @"";
         } else {
             if (self.searchController.isActive) {
                 text = LocalizedString(@"noResults", @"");
@@ -748,9 +741,6 @@
 - (UIImage *)imageForEmptyState {
     if ([MEGAReachabilityManager isReachable]) {
         if (!self.isFetchNodesDone && self.isFolderRootNode) {
-            if (self.isFolderLinkNotValid) {
-                return [UIImage imageNamed:@"invalidFolderLink"];
-            }
             return nil;
         }
         
@@ -779,143 +769,69 @@
     }
 }
 
-#pragma mark - MEGARequestDelegate
-
-- (void)onRequestStart:(MEGASdk *)api request:(MEGARequest *)request {
-    switch ([request type]) {
-        case MEGARequestTypeLogin: {
-            self.folderLinkNotValid = NO;
-            break;
-        }
-            
-        case MEGARequestTypeFetchNodes: {
-            [self startLoading];
-            break;
-        }
-            
-        default:
-            break;
-    }
+- (void)handleLoginDone {
+    self.loginDone = YES;
+    self.fetchNodesDone = NO;
+    [MEGASdk.sharedFolderLink fetchNodes];
 }
 
-- (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
-    if (error.type) {
-        if (error.hasExtraInfo) {
-            if (error.linkStatus == MEGALinkErrorCodeDownETD) {
-                [self showUnavailableLinkViewWithError:UnavailableLinkErrorETDDown];
-            } else if (error.userStatus == MEGAUserErrorCodeETDSuspension) {
-                [self showUnavailableLinkViewWithError:UnavailableLinkErrorUserETDSuspension];
-            } else if (error.userStatus == MEGAUserErrorCodeCopyrightSuspension) {
-                [self showUnavailableLinkViewWithError:UnavailableLinkErrorUserCopyrightSuspension];
-            } else {
-                [self showUnavailableLinkViewWithError:UnavailableLinkErrorGeneric];
-            }
-        } else {
-            switch (error.type) {
-                case MEGAErrorTypeApiEArgs: {
-                    if (request.type == MEGARequestTypeLogin) {
-                        if (self.isValidatingDecryptionKey) { //If the user have written the key
-                            [self showDecryptionKeyNotValidAlert];
-                        } else {
-                            [self showUnavailableLinkViewWithError:UnavailableLinkErrorGeneric];
-                        }
-                    } else if (request.type == MEGARequestTypeFetchNodes) {
-                        [self showUnavailableLinkViewWithError:UnavailableLinkErrorGeneric];
-                    }
-                    break;
-                }
-
-                case MEGAErrorTypeApiENoent: {
-                    if (request && (request.type == MEGARequestTypeFetchNodes || request.type == MEGARequestTypeLogin)) {
-                        [self showUnavailableLinkViewWithError:UnavailableLinkErrorGeneric];
-                    }
-
-                    break;
-                }
-                    
-                case MEGAErrorTypeApiEIncomplete: {
-                    [self showDecryptionAlert];
-                    break;
-                }
-                    
-                default: {
-                    if (request.type == MEGARequestTypeLogin) {
-                        [self showUnavailableLinkViewWithError:UnavailableLinkErrorGeneric];
-                    } else if (request.type == MEGARequestTypeFetchNodes) {
-                        [api logout];
-                        [self showUnavailableLinkViewWithError:UnavailableLinkErrorGeneric];
-                    }
-                    break;
-                }
-            }
-        }
+- (void)handleFetchNodesDone:(BOOL)validKey {
+    if (!validKey) {
+        [MEGASdk.sharedFolderLink logout];
         
+        [self stopLoading];
+        
+        if (self.isValidatingDecryptionKey) { //Link without key, after entering a bad one
+            [self showDecryptionKeyNotValidAlert];
+        } else { //Link with invalid key
+            [self showUnavailableLinkViewWithError:UnavailableLinkErrorGeneric];
+        }
         return;
     }
     
-    switch (request.type) {
-        case MEGARequestTypeLogin: {
-            self.loginDone = YES;
-            self.fetchNodesDone = NO;
-            [api fetchNodes];
-            break;
-        }
-            
-        case MEGARequestTypeFetchNodes: {
-            
-            if (request.flag) { //Invalid key
-                [api logout];
-                
-                [self stopLoading];
-                
-                if (self.isValidatingDecryptionKey) { //Link without key, after entering a bad one
-                    [self showDecryptionKeyNotValidAlert];
-                } else { //Link with invalid key
-                    [self showUnavailableLinkViewWithError:UnavailableLinkErrorGeneric];
-                }
-                return;
-            }
-            
-            self.fetchNodesDone = YES;
-            
-            [self reloadUI];
+    self.fetchNodesDone = YES;
+    
+    [self reloadUI];
 
-            [self determineViewMode];
-            
-            [self configureContextMenuManager];
+    [self determineViewMode];
+    
+    [self configureContextMenuManager];
 
-            NSArray *componentsArray = [self.publicLinkString componentsSeparatedByString:@"!"];
-            if (componentsArray.count == 4) {
-                [self navigateToNodeWithBase64Handle:componentsArray.lastObject];
-            }
-            
-            if ([[NSUserDefaults standardUserDefaults] boolForKey:@"TransfersPaused"]) {
-                [api pauseTransfers:YES];
-            }
-            [self stopLoading];
-            break;
+    NSArray *componentsArray = [self.publicLinkString componentsSeparatedByString:@"!"];
+    if (componentsArray.count == 4) {
+        [self navigateToNodeWithBase64Handle:componentsArray.lastObject];
+    }
+    
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"TransfersPaused"]) {
+        [MEGASdk.sharedFolderLink pauseTransfers:YES];
+    }
+    [self stopLoading];
+}
+
+- (void)handleFetchNodesFailed {
+    [MEGASdk.sharedFolderLink logout];
+    [self showUnavailableLinkViewWithError:UnavailableLinkErrorGeneric];
+}
+
+- (void)handleLogout {
+    self.loginDone = NO;
+    self.fetchNodesDone = NO;
+}
+
+- (void)handleFileAttributeUpdate:(uint64_t)nodeHandle {
+    for (NodeTableViewCell *nodeTableViewCell in self.flTableView.tableView.visibleCells) {
+        if (nodeHandle == nodeTableViewCell.node.handle) {
+            MEGANode *node = [MEGASdk.sharedFolderLink nodeForHandle:nodeHandle];
+            [Helper setThumbnailForNode:node api:MEGASdk.sharedFolderLink cell:nodeTableViewCell];
         }
-            
-        case MEGARequestTypeLogout: {
-            self.loginDone = NO;
-            self.fetchNodesDone = NO;
-            [api removeMEGAGlobalDelegate:self];
-            [api removeMEGARequestDelegate:self];
-            break;
-        }
-            
-        case MEGARequestTypeGetAttrFile: {
-            for (NodeTableViewCell *nodeTableViewCell in self.flTableView.tableView.visibleCells) {
-                if (request.nodeHandle == nodeTableViewCell.node.handle) {
-                    MEGANode *node = [api nodeForHandle:request.nodeHandle];
-                    [Helper setThumbnailForNode:node api:api cell:nodeTableViewCell];
-                }
-            }
-            break;
-        }
-            
-        default:
-            break;
+    }
+}
+
+- (void)handleInvalidDecryptionKey {
+    if (self.isValidatingDecryptionKey) { //If the user have written the key
+        [self showDecryptionKeyNotValidAlert];
+    } else {
+        [self showUnavailableLinkViewWithError:UnavailableLinkErrorGeneric];
     }
 }
 

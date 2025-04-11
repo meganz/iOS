@@ -21,4 +21,12 @@ public struct RequestStatesRepository: RequestStatesRepositoryProtocol {
     public var requestFinishUpdates: AnyAsyncSequence<RequestResponseEntity> {
         MEGAUpdateHandlerManager.shared.requestFinishUpdates
     }
+    
+    public var folderLinkRequestStartUpdates: AnyAsyncSequence<RequestEntity> {
+        MEGAUpdateHandlerManager.sharedFolderLink.requestStartUpdates
+    }
+    
+    public var folderLinkRequestFinishUpdates: AnyAsyncSequence<RequestResponseEntity> {
+        MEGAUpdateHandlerManager.sharedFolderLink.requestFinishUpdates
+    }
 }

@@ -89,18 +89,40 @@ public enum ErrorTypeEntity: Error, CaseIterable {
     case overDiskQuotaPaywall
 }
 
+public enum LinkErrorEntity: Sendable {
+    case unknown
+    case undeleted
+    case undeletedOrDown
+    case downETD
+}
+
+public enum UserErrorEntity: Sendable {
+    case unknown
+    case copyrightSuspension
+    case etdSuspension
+}
+
 public struct ErrorEntity: Error, Equatable {
     public let type: ErrorTypeEntity
     public let name: String
     public let value: Int64
+    public let hasExtraInfo: Bool
+    public let linkError: LinkErrorEntity
+    public let userError: UserErrorEntity
     
     public init(
         type: ErrorTypeEntity,
-        name: String,
-        value: Int64
+        name: String = "",
+        value: Int64 = 0,
+        hasExtraInfo: Bool = false,
+        linkError: LinkErrorEntity = .unknown,
+        userError: UserErrorEntity = .unknown
     ) {
         self.type = type
         self.name = name
         self.value = value
+        self.hasExtraInfo = hasExtraInfo
+        self.linkError = linkError
+        self.userError = userError
     }
 }
