@@ -77,28 +77,18 @@ struct RubbishBinSettingViewModelTests {
             
             sut.updateAutoPurgeTask?.cancel()
         }
-    }
-    
-    @Suite("Monitor Rubbish Bin Settings Updates")
-    struct RubbishBinSettingUpdates {
         
-        @Test("Successful call back only")
+        @Test("Get rubbish bin autopurge period")
         @MainActor
-        func onRequestFinishSuccess() async {
-            let succeedResult: Result<RubbishBinSettingsEntity, any Error> = .success(RubbishBinSettingsEntity(rubbishBinAutopurgePeriod: 14, rubbishBinCleaningSchedulerEnabled: true))
-            let mockUseCase = MockRubbishBinSettingsUseCase(onRubbishBinSettinghsRequestFinish: SingleItemAsyncSequence(item: succeedResult).eraseToAnyAsyncSequence())
+        func getRubbishBinAutopurgePeriod() async {
+            let rubbishBinSettingsEntity: RubbishBinSettingsEntity = RubbishBinSettingsEntity(rubbishBinAutopurgePeriod: 14, rubbishBinCleaningSchedulerEnabled: true)
+            let mockUseCase = MockRubbishBinSettingsUseCase(rubbishBinSettingsEntity: rubbishBinSettingsEntity)
             
             let sut = makeSUT(rubbishBinSettingsUseCase: mockUseCase)
             
-            let task = Task {
-                await sut.startRubbishBinSettingsUpdatesMonitoring()
-            }
-            
-            await task.value
+            await sut.getRubbishBinAutopurgePeriod()
             
             #expect(sut.rubbishBinAutopurgePeriod == 14)
-            
-            task.cancel()
         }
     }
 }

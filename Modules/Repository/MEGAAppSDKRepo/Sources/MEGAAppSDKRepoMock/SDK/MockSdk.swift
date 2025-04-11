@@ -366,7 +366,7 @@ public final class MockSdk: MEGASdk, @unchecked Sendable {
     }
     
     public override func getRubbishBinAutopurgePeriod(with delegate: any MEGARequestDelegate) {
-        requestDelegates.append(delegate)
+        delegate.onRequestFinish?(self, request: MockRequest(handle: 1, number: 90), error: MockError())
     }
     
     public override func remove(_ delegate: any MEGARequestDelegate) {
