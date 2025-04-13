@@ -60,8 +60,8 @@ struct SlideShowDataSourceTests {
                 initialPhoto: NodeEntity(handle: 10),
                 thumbnailUrl: thumbnailUrl)
             
-            sut.loadSelectedPhotoPreview()
-                        
+            sut.loadSelectedPhotoPreview(completionHandler: nil)
+
             let item = try #require(sut.items.first, "First item could not be found")
             
             let result: SlideShowCellViewModel.ImageSource? = await item.value.$imageSource.values.compactMap { $0 }.first(where: { @Sendable _ in true })

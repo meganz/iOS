@@ -2469,6 +2469,9 @@
 		C46157B82538A48D00F3970D /* ActionSheetSwitchCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C46157B62538A48D00F3970D /* ActionSheetSwitchCell.xib */; };
 		C46157C12538A8EE00F3970D /* ActionSheetSwitchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46157B52538A48D00F3970D /* ActionSheetSwitchCell.swift */; };
 		C463CCD526A5E03C00577271 /* MEGAButtonLegacy.swift in Sources */ = {isa = PBXBuildFile; fileRef = C463CCD426A5E03C00577271 /* MEGAButtonLegacy.swift */; };
+		C464FDDE2D9CB74E00274FCD /* AnimatedCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = C464FDDD2D9CB74A00274FCD /* AnimatedCollectionViewLayout.swift */; };
+		C464FDE02D9CB77100274FCD /* CrossFadeAttributesAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C464FDDF2D9CB76F00274FCD /* CrossFadeAttributesAnimator.swift */; };
+		C464FDE22D9CB79F00274FCD /* LayoutAttributesAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C464FDE12D9CB79E00274FCD /* LayoutAttributesAnimator.swift */; };
 		C46527D426526BBA00371270 /* BannerContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46527D326526BBA00371270 /* BannerContainerViewController.swift */; };
 		C46527F126526C2300371270 /* BannerContainerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46527F026526C2300371270 /* BannerContainerViewModel.swift */; };
 		C46527FB26526C3100371270 /* BannerContainerViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46527FA26526C3100371270 /* BannerContainerViewRouter.swift */; };
@@ -5164,6 +5167,9 @@
 		C46157B52538A48D00F3970D /* ActionSheetSwitchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionSheetSwitchCell.swift; sourceTree = "<group>"; };
 		C46157B62538A48D00F3970D /* ActionSheetSwitchCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ActionSheetSwitchCell.xib; sourceTree = "<group>"; };
 		C463CCD426A5E03C00577271 /* MEGAButtonLegacy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGAButtonLegacy.swift; sourceTree = "<group>"; };
+		C464FDDD2D9CB74A00274FCD /* AnimatedCollectionViewLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatedCollectionViewLayout.swift; sourceTree = "<group>"; };
+		C464FDDF2D9CB76F00274FCD /* CrossFadeAttributesAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrossFadeAttributesAnimator.swift; sourceTree = "<group>"; };
+		C464FDE12D9CB79E00274FCD /* LayoutAttributesAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutAttributesAnimator.swift; sourceTree = "<group>"; };
 		C46527D326526BBA00371270 /* BannerContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerContainerViewController.swift; sourceTree = "<group>"; };
 		C46527F026526C2300371270 /* BannerContainerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerContainerViewModel.swift; sourceTree = "<group>"; };
 		C46527FA26526C3100371270 /* BannerContainerViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerContainerViewRouter.swift; sourceTree = "<group>"; };
@@ -6646,6 +6652,7 @@
 		32B0722728A4E082002BAE34 /* Slideshow Library */ = {
 			isa = PBXGroup;
 			children = (
+				C464FDDC2D9CB5A100274FCD /* AnimatedCollectionViewLayout */,
 				32B0722A28A4E0EC002BAE34 /* Data Model */,
 				9D7E600B28DA80E900055875 /* Options */,
 				328A913628A9DB330058C645 /* Views */,
@@ -12547,6 +12554,16 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
+		C464FDDC2D9CB5A100274FCD /* AnimatedCollectionViewLayout */ = {
+			isa = PBXGroup;
+			children = (
+				C464FDDD2D9CB74A00274FCD /* AnimatedCollectionViewLayout.swift */,
+				C464FDDF2D9CB76F00274FCD /* CrossFadeAttributesAnimator.swift */,
+				C464FDE12D9CB79E00274FCD /* LayoutAttributesAnimator.swift */,
+			);
+			path = AnimatedCollectionViewLayout;
+			sourceTree = "<group>";
+		};
 		C46527CD26526AEA00371270 /* Banner Container */ = {
 			isa = PBXGroup;
 			children = (
@@ -13939,6 +13956,7 @@
 				943649D82A4D81B0006CE8B8 /* AlertModel+DevicePermissions.swift in Sources */,
 				832DEFEA2AB46199004573D5 /* AllowNonHostToInviteTableViewCell.swift in Sources */,
 				94AF8A132CE4C4E6009B27A9 /* AnalyticsTracking+ShareLink.swift in Sources */,
+				C464FDDE2D9CB74E00274FCD /* AnimatedCollectionViewLayout.swift in Sources */,
 				B5E719B8290B716A0076FEA3 /* AppDelegate+Account.swift in Sources */,
 				BF69E5172374F3720031913D /* AppDelegate+Additions.swift in Sources */,
 				B511CE6E2AA745E800445877 /* AppDelegate+Ads.swift in Sources */,
@@ -14283,6 +14301,7 @@
 				1246682F275DBE0500C94335 /* CreateTextFileAlertViewController.swift in Sources */,
 				12466834275DBE0600C94335 /* CreateTextFileAlertViewModel.swift in Sources */,
 				1246682D275DBE0500C94335 /* CreateTextFileAlertViewRouter.swift in Sources */,
+				C464FDE02D9CB77100274FCD /* CrossFadeAttributesAnimator.swift in Sources */,
 				12466802275DB82000C94335 /* CustomModalAlertContactsRouter.swift in Sources */,
 				B5D8A0E02CAB9EA500DF63A5 /* CustomModalAlertCookieDialogRouter.swift in Sources */,
 				12466804275DB82000C94335 /* CustomModalAlertRouter.swift in Sources */,
@@ -14553,6 +14572,7 @@
 				5D1B240D24AF669D00ACE1C5 /* LabelStyleFactory.swift in Sources */,
 				99C0CE6D2C7BFEC100778F53 /* LaunchViewController+Addition.swift in Sources */,
 				E8C289FD1BF65B7800F7A034 /* LaunchViewController.m in Sources */,
+				C464FDE22D9CB79F00274FCD /* LayoutAttributesAnimator.swift in Sources */,
 				834D7DA02926699500634B66 /* LeaveChatButtonView.swift in Sources */,
 				6D214A6B2CF6AF2A003E88FC /* LegacyCallsSettingsView.swift in Sources */,
 				A873E85B26E2228400CBB174 /* LegacyFileVersioningViewModel.swift in Sources */,

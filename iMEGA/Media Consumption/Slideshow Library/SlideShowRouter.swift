@@ -46,10 +46,10 @@ struct SlideShowRouter: Routing {
     
     func build() -> UIViewController {
         let storyboard: UIStoryboard = UIStoryboard(name: "Slideshow", bundle: nil)
-        let slideShowVC = storyboard.instantiateInitialViewController() as! SlideShowViewController
-        let vm = configSlideShowViewModel()
-        slideShowVC.update(viewModel: vm)
-        return slideShowVC
+        let vc = storyboard.instantiateInitialViewController { coder in
+            SlideShowViewController(coder: coder, viewModel: configSlideShowViewModel())
+        }
+        return vc!
     }
     
     func start() {

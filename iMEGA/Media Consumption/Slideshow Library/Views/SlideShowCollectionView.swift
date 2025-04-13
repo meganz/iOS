@@ -1,7 +1,13 @@
 import UIKit
 
 final class SlideShowCollectionView: UICollectionView {
-    private var layout: SlideShowCollectionViewLayout?
+    private var layout: AnimatedCollectionViewLayout?
+    
+    override var bounds: CGRect {
+        didSet {
+            layout?.itemSize = bounds.size
+        }
+    }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -10,25 +16,16 @@ final class SlideShowCollectionView: UICollectionView {
         showsVerticalScrollIndicator = false
         isPagingEnabled = true
     
-        layout = SlideShowCollectionViewLayout()
+        layout = AnimatedCollectionViewLayout()
     }
     
     func updateLayout() {
         guard let layout = layout else { return }
+        layout.animator = CrossFadeAttributesAnimator()
         layout.scrollDirection = .horizontal
         layout.minimumLineSpacing = 0
         layout.minimumInteritemSpacing = 0
         layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         setCollectionViewLayout(layout, animated: false)
-    }
-    
-    func fadeCell(for indexPath: IndexPath) {
-        let screenHalf = self.bounds.height / 2 + self.bounds.height * CGFloat(indexPath.row)
-        let topPosition = self.contentOffset.y
-        guard let cell = self.cellForItem(at: indexPath) as? SlideShowCollectionViewCell,
-              topPosition >= 0 else { return }
-        let needOpacityToZeroChange = topPosition >= screenHalf
-        let opacity = needOpacityToZeroChange ? 0 : 1 - ((topPosition.truncatingRemainder(dividingBy: screenHalf)) / screenHalf)
-        cell.alpha = opacity
     }
 }

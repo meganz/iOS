@@ -162,13 +162,37 @@ struct SlideShowViewModelTestSuite {
     @Suite("onViewReady action")
     @MainActor
     struct OnViewReady {
+        @Test("on first photo loaded should invoke .selectedPhotoPreviewLoaded")
+        func firstPhotoLoaded() async throws {
+            let notificationCenter = NotificationCenter()
+            let dataSource = MockSlideShowDataSource(nodeEntities: [], thumbnailUseCase: MockThumbnailUseCase())
+            let sut = makeSUT(dataSource: dataSource, notificationCenter: notificationCenter)
+
+            try await confirmation { confirmation in
+                var invocations = [SlideShowViewModel.Command.showLoader, .hideLoader, .initialPhotoLoaded]
+                sut.invokeCommand = { command in
+                    #expect(command == invocations.removeFirst())
+                    if invocations.isEmpty {
+                        confirmation()
+                    }
+                }
+
+                sut.dispatch(.onViewReady)
+
+                try await Task.sleep(nanoseconds: 100_000_000)
+
+                dataSource.loadSelectedPhotoPreviewCompletionHandler?()
+                try await Task.sleep(nanoseconds: 100_000_000)
+            }
+        }
+
         @Test("on resign active notification should pause slide show and hide loader")
         func resignActiveNotification() async throws {
             let notificationCenter = NotificationCenter()
             let sut = makeSUT(notificationCenter: notificationCenter)
             
             try await confirmation { confirmation in
-                var invocations = [SlideShowViewModel.Command.pause, .hideLoader]
+                var invocations = [SlideShowViewModel.Command.showLoader, .pause, .hideLoader]
                 sut.invokeCommand = { command in
                     #expect(command == invocations.removeFirst())
                     if invocations.isEmpty {
@@ -190,11 +214,15 @@ struct SlideShowViewModelTestSuite {
         func didBecomeActiveNotification() async throws {
             let notificationCenter = NotificationCenter()
             let sut = makeSUT(notificationCenter: notificationCenter)
-            
+
             try await confirmation { confirmation in
+                var invocations = [SlideShowViewModel.Command.showLoader, .adjustHeightOfTopAndBottomViews]
                 sut.invokeCommand = { command in
-                    #expect(command == .adjustHeightOfTopAndBottomViews)
-                    confirmation()
+                    let expectedCommand = invocations.removeFirst()
+                    #expect(command == expectedCommand)
+                    if invocations.isEmpty {
+                        confirmation()
+                    }
                 }
                 
                 sut.dispatch(.onViewReady)
@@ -206,7 +234,24 @@ struct SlideShowViewModelTestSuite {
             }
         }
     }
-    
+
+    @MainActor
+    private static func makeSUT(
+        dataSource: MockSlideShowDataSource,
+        slideShowUseCase: some SlideShowUseCaseProtocol = MockSlideShowUseCase(),
+        accountUseCase: some AccountUseCaseProtocol = MockAccountUseCase(),
+        tracker: some AnalyticsTracking = MockTracker(),
+        notificationCenter: NotificationCenter = .default
+    ) -> SlideShowViewModel {
+        .init(
+            dataSource: dataSource,
+            slideShowUseCase: slideShowUseCase,
+            accountUseCase: accountUseCase,
+            tracker: tracker,
+            notificationCenter: notificationCenter
+        )
+    }
+
     @MainActor
     private static func makeSUT(
         nodeEntities: [NodeEntity] = [],

@@ -3,13 +3,13 @@ import MEGADesignToken
 import MEGAL10n
 import UIKit
 
-protocol SlideShowInteraction {
+protocol SlideShowInteraction: AnyObject {
     func pausePlaying()
 }
 
 final class SlideShowViewController: UIViewController, ViewType {
-    private var viewModel: SlideShowViewModel?
-    
+    private let viewModel: SlideShowViewModel
+
     @IBOutlet var collectionView: SlideShowCollectionView!
     @IBOutlet var navigationBar: UINavigationBar!
     @IBOutlet var bottomToolbar: UIToolbar!
@@ -25,32 +25,42 @@ final class SlideShowViewController: UIViewController, ViewType {
     private var backgroundColor: UIColor {
         UIColor.surface1Background()
     }
-    
+
+    init?(coder: NSCoder, viewModel: SlideShowViewModel) {
+        self.viewModel = viewModel
+        super.init(coder: coder)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("You must create this view controller with a viewModel.")
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = backgroundColor
         slideShowOptionButton.title = Strings.Localizable.Slideshow.PreferenceSetting.options
         collectionView.updateLayout()
-        
+
+        setupViewModel()
         adjustHeightOfTopAndBottomView()
         setVisibility(false)
         setNavigationAndToolbarColor()
         setupActivityIndicator()
-        guard viewModel != nil else {
-            showLoader()
-            return
-        }
-        if numberOfSlideShowContents() > 0 {
-            playSlideShow()
-        }
-        viewModel?.dispatch(.onViewReady)
+
+        viewModel.dispatch(.onViewReady)
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        viewModel?.dispatch(.viewDidAppear)
+        viewModel.dispatch(.viewDidAppear)
     }
-    
+
+    private func setupViewModel() {
+        viewModel.invokeCommand = { [weak self] command in
+            self?.executeCommand(command)
+        }
+    }
+
     private func setupActivityIndicator() {
         view.addSubview(activityIndicator)
         activityIndicator.translatesAutoresizingMaskIntoConstraints = false
@@ -71,18 +81,7 @@ final class SlideShowViewController: UIViewController, ViewType {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        viewModel?.dispatch(.onViewWillDisappear)
-    }
-    
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-        
-        DispatchQueue.main.async { [weak self] in
-            guard let self else { return }
-            collectionView.collectionViewLayout.invalidateLayout()
-            reload()
-            updateSlideInView()
-        }
+        viewModel.dispatch(.onViewWillDisappear)
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
@@ -117,41 +116,31 @@ final class SlideShowViewController: UIViewController, ViewType {
             bottomBarBackgroundViewHeightConstraint.constant = bottomHeight
         }
     }
-    
-    func update(viewModel: SlideShowViewModel) {
-        self.viewModel = viewModel
-        self.viewModel?.invokeCommand = { [weak self] command in
-            DispatchQueue.main.async { self?.executeCommand(command) }
-        }
-        
-        hideLoader()
-        if numberOfSlideShowContents() > 0 {
-            reload()
-            playSlideShow()
-        }
-    }
-    
+
+    @MainActor
     func executeCommand(_ command: SlideShowViewModel.Command) {
          switch command {
          case .adjustHeightOfTopAndBottomViews: adjustHeightOfTopAndBottomView()
          case .play: play()
          case .pause: pause()
-         case .initialPhotoLoaded:
-             guard let viewModel else {
-                 return
-             }
-             collectionView.scrollToItem(
-                at: IndexPath(row: viewModel.currentSlideIndex, section: 0),
-                at: .centeredHorizontally,
-                animated: false)
-             playSlideShow()
+         case .initialPhotoLoaded: handleInitialPhotoLoaded()
          case .hideLoader: hideLoader()
          case .resetTimer: resetTimer()
          case .restart: restart()
          case .showLoader: showLoader()
          }
     }
-    
+
+    private func handleInitialPhotoLoaded() {
+        // The 0.01 delay is needed for the collection view to layout its content properly before we can scroll
+        // to the photo at `viewModel.currentSlideIndex`. Without this delay, collectionView.scrollToItem(...)
+        // won't work correctly and flakily fault (aka scrolls to wrong position or does not scroll at all).
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) { [self] in
+            collectionView.scrollToItem(at: .init(item: viewModel.currentSlideIndex, section: 0), at: .centeredHorizontally, animated: false)
+            playSlideShow()
+        }
+    }
+
     private func setVisibility(_ visible: Bool) {
         navigationBar.alpha = visible ? 1 : 0
         bottomToolbar.alpha = visible ? 1 : 0
@@ -160,27 +149,23 @@ final class SlideShowViewController: UIViewController, ViewType {
     }
     
     private func play() {
-        guard let viewModel else { return }
         let cell = collectionView.visibleCells.first(where: { $0 is SlideShowCollectionViewCell }) as? SlideShowCollectionViewCell
         setVisibility(false)
-        
         CrashlyticsLogger.log("[SlideShow] play button tapped.")
         let numberOfSlideShowContents = numberOfSlideShowContents()
-        UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut) {
             self.collectionView.backgroundColor = .black000000
             self.view.backgroundColor = TokenColors.Background.page
             cell?.resetZoomScale()
-            if viewModel.currentSlideIndex >= numberOfSlideShowContents - 1 {
-                viewModel.currentSlideIndex = -1
+            if self.viewModel.currentSlideIndex >= numberOfSlideShowContents - 1 {
+                self.viewModel.currentSlideIndex = -1
                 self.changeImage()
             }
-        }
         resetTimer()
     }
     
     private func pause() {
         CrashlyticsLogger.log("[SlideShow] paused.")
-
+        hideLoader()
         setVisibility(true)
         UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut) {
             self.collectionView.backgroundColor = UIColor.systemBackground
@@ -194,11 +179,10 @@ final class SlideShowViewController: UIViewController, ViewType {
         collectionView.backgroundColor = UIColor.systemBackground
         slideShowTimer.invalidate()
         hideLoader()
-        viewModel?.dispatch(.finish)
+        viewModel.dispatch(.finish)
     }
-    
+
     private func resetTimer() {
-        guard let viewModel = viewModel else { return }
         CrashlyticsLogger.log("[SlideShow] Timer reset.")
         
         slideShowTimer.invalidate()
@@ -207,19 +191,41 @@ final class SlideShowViewController: UIViewController, ViewType {
     }
     
     private func restart() {
-        guard let viewModel = viewModel else { return }
         CrashlyticsLogger.log("[SlideShow] restarted.")
         hideLoader()
         reload()
         collectionView.scrollToItem(at: IndexPath(item: viewModel.currentSlideIndex, section: 0), at: .left, animated: false)
         play()
     }
-    
+
+    private func scrollToItem(index: Int, animate: Bool) {
+        guard animate else {
+            let indexPath = IndexPath(row: index, section: 0)
+            collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: false)
+            return
+        }
+        let duration = 1.0
+
+        let itemWidth = collectionView.bounds.size.width
+        let currentContentOffsetX = collectionView.contentOffset.x
+        let targetContentOffset = Double(index) * itemWidth
+        let distance = targetContentOffset - currentContentOffsetX
+
+        // Animate the movement
+        let steps = 60 // number of steps in animation
+        let delay = duration / Double(steps)
+        for i in 1..<steps {
+            DispatchQueue.main.asyncAfter(deadline: .now() + delay * Double(i)) {
+                let progress = Double(i) / Double(steps)
+                let xOffset: Double = distance * progress
+                self.collectionView.contentOffset = CGPoint(x: currentContentOffsetX + xOffset, y: 0)
+            }
+        }
+    }
+
     @objc private func changeImage() {
-        guard let viewModel = viewModel else { return }
-        
         let slideNumber = viewModel.currentSlideIndex + 1
-        
+
         if slideNumber < numberOfSlideShowContents() {
             CrashlyticsLogger.log("[SlideShow] current slide is changed from \(viewModel.currentSlideIndex) to \(slideNumber)")
             viewModel.currentSlideIndex = slideNumber
@@ -239,12 +245,10 @@ final class SlideShowViewController: UIViewController, ViewType {
     }
     
     private func updateSlideInView() {
-        guard let viewModel = viewModel else { return }
-        
-        let index = IndexPath(item: viewModel.currentSlideIndex, section: 0)
-        if collectionView.isValid(indexPath: index) {
-            collectionView.scrollToItem(at: index, at: .centeredHorizontally, animated: false)
-        }
+        // The reason we don't animate on 0 index items is because,
+        // when it loops back to the start, we don't get a scrolling through cells animation.
+        let animate = viewModel.currentSlideIndex != 0
+        scrollToItem(index: viewModel.currentSlideIndex, animate: animate)
     }
     
     @IBAction func dismissViewController() {
@@ -253,7 +257,6 @@ final class SlideShowViewController: UIViewController, ViewType {
     }
     
     @IBAction func slideShowOptionTapped(_ sender: Any) {
-        guard let viewModel else { return }
         SlideShowOptionRouter(
             presenter: self,
             preference: viewModel,
@@ -262,7 +265,7 @@ final class SlideShowViewController: UIViewController, ViewType {
     }
     
     @IBAction func playSlideShow() {
-        viewModel?.dispatch(.play)
+        viewModel.dispatch(.play)
     }
     
     private func reload() {
@@ -270,22 +273,10 @@ final class SlideShowViewController: UIViewController, ViewType {
     }
 }
 
-extension SlideShowViewController: UICollectionViewDelegate {
-    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        cell.alpha = 0
-        UIView.animate(withDuration: 0.8) {
-            cell.alpha = 1
-        }
-        
-        guard let cell = cell as? SlideShowCollectionViewCell else { return }
-        cell.resetZoomScale()
-    }
-}
-
 extension SlideShowViewController: UICollectionViewDataSource {
     
     private func numberOfSlideShowContents() -> Int {
-        viewModel?.numberOfSlideShowContents ?? 0
+        viewModel.numberOfSlideShowContents
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -294,8 +285,7 @@ extension SlideShowViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell: SlideShowCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "slideShowCell", for: indexPath) as! SlideShowCollectionViewCell
-        
-        guard let mediaEntity = viewModel?.mediaEntity(at: indexPath) else { return cell }
+        guard let mediaEntity = viewModel.mediaEntity(at: indexPath) else { return cell }
         cell.update(with: mediaEntity, andInteraction: self)
         return cell
     }
@@ -307,21 +297,20 @@ extension SlideShowViewController: UIScrollViewDelegate {
         let visiblePoint = CGPoint(x: visibleRect.midX, y: visibleRect.midY)
         let visibleIndexPath = collectionView.indexPathForItem(at: visiblePoint)
         
-        if let viewModel = viewModel, let visibleIndexPath = visibleIndexPath,
+        if let visibleIndexPath = visibleIndexPath,
             viewModel.currentSlideIndex != visibleIndexPath.row {
             CrashlyticsLogger.log("[SlideShow] scrollview interupption: - current slide is changed from \(viewModel.currentSlideIndex) to \(visibleIndexPath.row)")
             viewModel.currentSlideIndex = visibleIndexPath.row
         }
         
-        if viewModel?.playbackStatus == .playing {
-            viewModel?.dispatch(.resetTimer)
+        if viewModel.playbackStatus == .playing {
+            viewModel.dispatch(.resetTimer)
         }
     }
 }
 
 extension SlideShowViewController: SlideShowInteraction {
     func pausePlaying() {
-        viewModel?.dispatch(.pause)
-        hideLoader()
+        viewModel.dispatch(.pause)
     }
 }

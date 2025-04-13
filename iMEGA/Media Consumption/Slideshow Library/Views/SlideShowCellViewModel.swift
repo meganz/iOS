@@ -10,17 +10,16 @@ final class SlideShowCellViewModel: ObservableObject {
     private let node: NodeEntity
     private let loader: MediaEntityLoader
     private var loadThumbnailTask: Task<Void, Never>?
-        
+
     deinit {
         loadThumbnailTask?.cancel()
     }
-    
+
     init(node: NodeEntity,
-         loader: MediaEntityLoader) {
-        
+         loader: MediaEntityLoader
+    ) {
         self.node = node
         self.loader = loader
-        
         loadThumbnailTask = Task {
             imageSource = await loader.loadMediaEntity(forNode: node)
         }
