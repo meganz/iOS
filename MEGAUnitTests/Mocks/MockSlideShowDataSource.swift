@@ -6,9 +6,8 @@ final class MockSlideShowDataSource: SlideShowDataSourceProtocol {
     var count: Int { nodeEntities.count }
     
     var items: [Int: SlideShowCellViewModel] = [:]
-
+    var loadSelectedPhotoPreviewCompletionHandler: (() -> Void)?
     var nodeEntities: [NodeEntity]
-    var initialPhotoDownloadCallback: (() -> Void)?
     var thumbnailUseCase: any ThumbnailUseCaseProtocol
     
     init(
@@ -30,11 +29,11 @@ final class MockSlideShowDataSource: SlideShowDataSourceProtocol {
     func download(fromCurrentIndex index: Int) {
         
     }
-    
-    func loadSelectedPhotoPreview() {
-        
+
+    func loadSelectedPhotoPreview(completionHandler: (() -> Void)?) {
+        loadSelectedPhotoPreviewCompletionHandler = completionHandler
     }
-    
+
     func indexOfCurrentPhoto() -> Int {
         0
     }

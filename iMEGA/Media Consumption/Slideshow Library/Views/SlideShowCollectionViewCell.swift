@@ -5,7 +5,7 @@ final class SlideShowCollectionViewCell: UICollectionViewCell {
     
     let imageScrollView = ImageScrollView()
     
-    private var slideshowInteraction: (any SlideShowInteraction)?
+    private weak var slideshowInteraction: (any SlideShowInteraction)?
     private var viewModelSubject = PassthroughSubject<SlideShowCellViewModel, Never>()
     private var cancellables = Set<AnyCancellable>()
     
@@ -28,10 +28,9 @@ final class SlideShowCollectionViewCell: UICollectionViewCell {
         
         bindToViewModel()
     }
-    
+
     func update(with viewModel: SlideShowCellViewModel, andInteraction slideshowInteraction: some SlideShowInteraction) {
         self.slideshowInteraction = slideshowInteraction
-        imageScrollView.setup()
         viewModelSubject.send(viewModel)
     }
     

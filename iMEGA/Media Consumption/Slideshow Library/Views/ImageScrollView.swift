@@ -114,14 +114,6 @@ final class ImageScrollView: UIScrollView {
         return CGPoint.zero
     }
     
-    func setup() {
-        var topSuperView = superview
-        while topSuperView?.superview != nil {
-            topSuperView = topSuperView?.superview
-        }
-        topSuperView?.layoutIfNeeded()
-    }
-    
     func display(image: UIImage, gifImageFileUrl: URL? = nil) {
         if let zoomView = zoomView {
             zoomView.removeFromSuperview()

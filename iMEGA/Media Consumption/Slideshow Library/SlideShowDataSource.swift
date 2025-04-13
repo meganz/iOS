@@ -1,3 +1,4 @@
+import Combine
 import Foundation
 import MEGADomain
 import MEGASwift
@@ -7,7 +8,7 @@ protocol SlideShowDataSourceProtocol {
     var items: [Int: SlideShowCellViewModel] { get }
     var count: Int { get }
     func download(fromCurrentIndex index: Int)
-    func loadSelectedPhotoPreview()
+    func loadSelectedPhotoPreview(completionHandler: (() -> Void)?)
     func sortNodes(byOrder order: SlideShowPlayingOrderEntity)
     func indexOfCurrentPhoto() -> Int
 }
@@ -20,7 +21,8 @@ final class SlideShowDataSource: SlideShowDataSourceProtocol {
     private var currentPhoto: NodeEntity?
     private let loader: MediaEntityLoader
     private let advanceNumberOfPhotosToLoad: Int
-    
+    private var loadSelectionPhotoSubscription: AnyCancellable?
+
     init(
         currentPhoto: NodeEntity?,
         nodeEntities: [NodeEntity],
@@ -44,16 +46,25 @@ final class SlideShowDataSource: SlideShowDataSourceProtocol {
         }
         return nodeEntities.firstIndex(of: currentPhoto) ?? 0
     }
-        
-    func loadSelectedPhotoPreview() {
+
+    func loadSelectedPhotoPreview(completionHandler: (() -> Void)?) {
         guard let node = currentPhoto else {
             return
         }
-        
-        items[indexOfCurrentPhoto()] = cellViewModel(for: node)
-        
+
+        let cellVM = cellViewModel(for: node)
+        loadSelectionPhotoSubscription = cellVM.$imageSource
+            .filter { $0 != nil }
+            .sink { [weak self] _ in
+                guard let self else { return }
+                loadSelectionPhotoSubscription?.cancel()
+                loadSelectionPhotoSubscription = nil
+                completionHandler?()
+            }
+
+        items[indexOfCurrentPhoto()] = cellVM
     }
-    
+
     private func cellViewModel(for node: NodeEntity) -> SlideShowCellViewModel {
         .init(node: node, loader: loader)
     }
@@ -89,7 +100,7 @@ final class SlideShowDataSource: SlideShowDataSourceProtocol {
                   let node = nodeEntities[safe: photoPosition] else {
                 continue
             }
-            
+
             items[photoPosition] = cellViewModel(for: node)
         }
     }

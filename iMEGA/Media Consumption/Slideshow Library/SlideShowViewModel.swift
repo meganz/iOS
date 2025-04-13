@@ -40,7 +40,7 @@ final class SlideShowViewModel: ViewModelType {
     
     private var willResignActiveNotificationTask: Task<Void, Never>?
     private var didBecomeActiveNotificationNotificationTask: Task<Void, Never>?
-    
+
     var configuration: SlideShowConfigurationEntity
     
     var invokeCommand: ((Command) -> Void)?
@@ -72,7 +72,7 @@ final class SlideShowViewModel: ViewModelType {
         self.accountUseCase = accountUseCase
         self.tracker = tracker
         self.notificationCenter = notificationCenter
-        
+
         if let userHandle = accountUseCase.currentUserHandle {
             configuration = slideShowUseCase.loadConfiguration(forUser: userHandle)
         } else {
@@ -80,12 +80,7 @@ final class SlideShowViewModel: ViewModelType {
         }
         
         dataSource.sortNodes(byOrder: configuration.playingOrder)
-        
         self.currentSlideIndex = dataSource.indexOfCurrentPhoto()
-        
-        dataSource.loadSelectedPhotoPreview()
-        invokeCommand?(.initialPhotoLoaded)
-        dataSource.download(fromCurrentIndex: currentSlideIndex)
     }
     
     private func playOrPauseSlideShow() {
@@ -127,12 +122,23 @@ final class SlideShowViewModel: ViewModelType {
         case .onViewReady:
             subscribeToWillResignActiveNotificationNotification()
             subscribeToDidBecomeActiveNotificationNotification()
+            invokeCommand?(.showLoader)
+            loadPhotos()
         case .onViewWillDisappear:
             willResignActiveNotificationTask?.cancel()
             didBecomeActiveNotificationNotificationTask?.cancel()
         }
     }
-    
+
+    private func loadPhotos() {
+        dataSource.loadSelectedPhotoPreview { [weak self] in
+            guard let self else { return }
+            invokeCommand?(.hideLoader)
+            invokeCommand?(.initialPhotoLoaded)
+        }
+        dataSource.download(fromCurrentIndex: currentSlideIndex)
+    }
+
     private func sendScreenEvent() {
         tracker.trackAnalyticsEvent(with: SlideShowScreenEvent())
     }
