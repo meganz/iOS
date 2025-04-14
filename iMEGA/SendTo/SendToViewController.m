@@ -38,7 +38,6 @@
 
 @property (nonatomic, strong) MEGAChatListItemList *chatListItemList;
 @property (nonatomic, strong) NSMutableArray *recentsMutableArray;
-@property (nonatomic, strong) NSMutableArray *groupChatsMutableArray;
 @property (nonatomic, strong) NSMutableArray *searchedGroupChatsMutableArray;
 @property (nonatomic, strong) NSMutableArray *selectedGroupChatsMutableArray;
 
@@ -150,9 +149,7 @@
                 }
             }
         }
-        if ([self isNoteToSelfAvailable]) {
-            [self.groupChatsMutableArray insertObject:[self noteToSelfChatListItem] atIndex:0];
-        }
+        [self addNoteToSelfIfNeeded];
     }
 }
 
