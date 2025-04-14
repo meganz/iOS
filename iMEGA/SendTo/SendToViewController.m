@@ -398,10 +398,11 @@
     }
     
     [self.sendToChatActivityDelegate sendToViewController:self didFinishActivity:NO];
-    
-    if (self.sendMode == SendModeFileAndFolderLink) {
-        [self.navigationController popViewControllerAnimated:YES];
-    } else {
+
+    // SendToViewController is being shown by both with modal presentation and navigation push.
+    // When we cancel we'll try to pop first, if the popping succeeds it means that `self` was pushed to a navigation
+    // stack, otherwise we dismiss it.
+    if (![self.navigationController popViewControllerAnimated:YES]) {
         [self dismissViewControllerAnimated:YES completion:nil];
     }
 }
