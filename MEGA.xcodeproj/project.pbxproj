@@ -1228,6 +1228,7 @@
 		83FEA8B625C1B3990063A560 /* FolderLinkTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83FEA8B425C1B3980063A560 /* FolderLinkTableViewController.swift */; };
 		83FF502F247E86CD00EAC08B /* CustomModalAlertViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A819B33E1EAFA7E2004592F9 /* CustomModalAlertViewController.m */; };
 		940006D72D13494B00E246DA /* OfflineFilesRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 940006D62D13493B00E246DA /* OfflineFilesRepositoryTests.swift */; };
+		940196D72DAD1E0100181689 /* QRSettingsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 940196D62DAD1E0100181689 /* QRSettingsViewModelTests.swift */; };
 		9402EF4E2B70DBC5002F7714 /* CloudDriveBottomToolbarFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9402EF4D2B70DBC5002F7714 /* CloudDriveBottomToolbarFactoryTests.swift */; };
 		9402EF522B70DE69002F7714 /* ToolbarActionFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9402EF512B70DE69002F7714 /* ToolbarActionFactoryTests.swift */; };
 		940445B4298B044A00A5ECA1 /* APIEnvironmentRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 940445B3298B044A00A5ECA1 /* APIEnvironmentRepositoryTests.swift */; };
@@ -1323,6 +1324,7 @@
 		94485B5E29BA0E17006B919E /* SharedItemsViewController+Search.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94485B5D29BA0E17006B919E /* SharedItemsViewController+Search.swift */; };
 		9448661429AF55C300CE3228 /* LoginViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9448661329AF55C300CE3228 /* LoginViewController+Additions.swift */; };
 		9449D42C2BCDB72300C77972 /* RecentsTableViewHeaderFooterView+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9449D42B2BCDB72300C77972 /* RecentsTableViewHeaderFooterView+Additions.swift */; };
+		944A48BA2DA9A509004FC7D1 /* QRSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 944A48B92DA9A509004FC7D1 /* QRSettingsViewModel.swift */; };
 		944AD0B328EF651F00AB1E59 /* BackupsOCWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 944AD0B228EF651F00AB1E59 /* BackupsOCWrapper.swift */; };
 		944C3AD42D5A517400C6BFB9 /* AudioQueueLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 944C3AD32D5A516D00C6BFB9 /* AudioQueueLoader.swift */; };
 		945153A82C7E17F9004E6990 /* ChatRoomsEmptyViewStateFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945153A72C7E17F9004E6990 /* ChatRoomsEmptyViewStateFactoryTests.swift */; };
@@ -3921,6 +3923,7 @@
 		83FEA8B125C1B3970063A560 /* FolderLinkCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FolderLinkCollectionViewController.swift; sourceTree = "<group>"; };
 		83FEA8B425C1B3980063A560 /* FolderLinkTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FolderLinkTableViewController.swift; sourceTree = "<group>"; };
 		940006D62D13493B00E246DA /* OfflineFilesRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineFilesRepositoryTests.swift; sourceTree = "<group>"; };
+		940196D62DAD1E0100181689 /* QRSettingsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRSettingsViewModelTests.swift; sourceTree = "<group>"; };
 		9402EF4D2B70DBC5002F7714 /* CloudDriveBottomToolbarFactoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudDriveBottomToolbarFactoryTests.swift; sourceTree = "<group>"; };
 		9402EF512B70DE69002F7714 /* ToolbarActionFactoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolbarActionFactoryTests.swift; sourceTree = "<group>"; };
 		940445B3298B044A00A5ECA1 /* APIEnvironmentRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIEnvironmentRepositoryTests.swift; sourceTree = "<group>"; };
@@ -4015,6 +4018,7 @@
 		944917CC2A83C044006234D9 /* MEGAPickerFileProviderDomain */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MEGAPickerFileProviderDomain; sourceTree = "<group>"; };
 		944917CF2A83C159006234D9 /* MEGAPickerFileProviderRepo */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MEGAPickerFileProviderRepo; sourceTree = "<group>"; };
 		9449D42B2BCDB72300C77972 /* RecentsTableViewHeaderFooterView+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RecentsTableViewHeaderFooterView+Additions.swift"; sourceTree = "<group>"; };
+		944A48B92DA9A509004FC7D1 /* QRSettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRSettingsViewModel.swift; sourceTree = "<group>"; };
 		944AD0B228EF651F00AB1E59 /* BackupsOCWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupsOCWrapper.swift; sourceTree = "<group>"; };
 		944C3AD32D5A516D00C6BFB9 /* AudioQueueLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioQueueLoader.swift; sourceTree = "<group>"; };
 		945153A72C7E17F9004E6990 /* ChatRoomsEmptyViewStateFactoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomsEmptyViewStateFactoryTests.swift; sourceTree = "<group>"; };
@@ -9830,6 +9834,22 @@
 			path = MainTabBar;
 			sourceTree = "<group>";
 		};
+		940196D42DAD1DEA00181689 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				940196D52DAD1DF100181689 /* QR */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		940196D52DAD1DF100181689 /* QR */ = {
+			isa = PBXGroup;
+			children = (
+				940196D62DAD1E0100181689 /* QRSettingsViewModelTests.swift */,
+			);
+			path = QR;
+			sourceTree = "<group>";
+		};
 		9401D0832C7624910043F6AA /* LegacyChatEmptyView */ = {
 			isa = PBXGroup;
 			children = (
@@ -10947,6 +10967,7 @@
 		B5AF2F122CCA4DB80094CE20 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				944A48B92DA9A509004FC7D1 /* QRSettingsViewModel.swift */,
 				B5AF2F132CCA4E070094CE20 /* RecoveryKeyViewModel.swift */,
 				B57551792CCB6B7000E65123 /* RecoveryKeyViewRouter.swift */,
 			);
@@ -11894,6 +11915,7 @@
 			isa = PBXGroup;
 			children = (
 				9459229A2C3EA619004D6AEF /* Contacts */,
+				940196D42DAD1DEA00181689 /* Settings */,
 				946AC10A2CAFC19A0020442F /* UpgradeAccount */,
 				940CE3CA2C255EC60083068E /* Usage */,
 				B6D5482F283E2BA900D7302F /* AppFirstLaunchSecurityCheckerTests.swift */,
@@ -15078,6 +15100,7 @@
 				BFEF8CAF2887A10100F8F9F1 /* QASetttingsViewModel.swift in Sources */,
 				E7E114192B7BC6C1004BBB16 /* QRSettingsTableViewController+Additions.swift in Sources */,
 				777E922D203EE14B00266229 /* QRSettingsTableViewController.m in Sources */,
+				944A48BA2DA9A509004FC7D1 /* QRSettingsViewModel.swift in Sources */,
 				837ABEF825DC1834007CE19D /* QuickAccessWidgetFavouriteItem+CoreDataClass.swift in Sources */,
 				837ABEFA25DC1834007CE19D /* QuickAccessWidgetFavouriteItem+CoreDataProperties.swift in Sources */,
 				83E3460225B5C73E006F2AD6 /* QuickAccessWidgetManager.swift in Sources */,
@@ -16113,6 +16136,7 @@
 				BF6E8D2D25B636FB003A125A /* PSAViewModelTests.swift in Sources */,
 				247FC1BE2A4F1C3700CC8518 /* QASettingsRouterTests.swift in Sources */,
 				24A619DF2A52735600EBB863 /* QASettingsViewModelTests.swift in Sources */,
+				940196D72DAD1E0100181689 /* QRSettingsViewModelTests.swift in Sources */,
 				948176C52A93E9DC00E3A181 /* QuickAccessWidgetManagerTests.swift in Sources */,
 				9437CEC12CAFFE7F0051F947 /* QuickAccessWidgetViewModelTests.swift in Sources */,
 				C4B97D752B67820400EBA9E5 /* RandomNumberGeneratorTests.swift in Sources */,

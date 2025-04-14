@@ -1,4 +1,7 @@
+import MEGAAppSDKRepo
 import MEGADesignToken
+import MEGADomain
+import MEGAL10n
 import UIKit
 
 extension QRSettingsTableViewController {
@@ -15,5 +18,37 @@ extension QRSettingsTableViewController {
         forRowAt indexPath: IndexPath
     ) {
         cell.backgroundColor = TokenColors.Background.page
+    }
+    
+    @objc func makeViewModel() -> QRSettingsViewModel {
+        let viewModel = QRSettingsViewModel(
+            contactLinkVerificationUseCase: ContactLinkVerificationUseCase(
+                repository: ContactLinkVerificationRepository.newRepo
+            )
+        )
+        
+        viewModel.invokeCommand = { [weak self] in self?.executeCommand($0) }
+        return viewModel
+    }
+    
+    @objc func configureObservers() {
+        viewModel.dispatch(.onViewDidLoad)
+    }
+    
+    @objc func resetContactLink() {
+        viewModel.dispatch(.resetContactLink)
+    }
+    
+    @objc func updateAutoAcceptStatus(_ enabled: Bool) {
+        viewModel.dispatch(.autoAcceptDidChange(enabled))
+    }
+    
+    func executeCommand(_ command: QRSettingsViewModel.Command) {
+        switch command {
+        case .refreshAutoAccept(let isEnabled):
+            autoAcceptSwitch.isOn = isEnabled
+        case .contactLinkReset:
+            SVProgressHUD.showSuccess(withStatus: Strings.Localizable.resetQrCodeFooter)
+        }
     }
 }

@@ -24,15 +24,16 @@
     self.autoAcceptLabel.text = LocalizedString(@"autoAccept", @"Label for the setting that allow users to automatically add contacts when they scan his/her QR code. String as short as possible.");
     self.resetQRCodeLabel.text = LocalizedString(@"resetQrCode", @"Action to reset the current valid QR code of the user");
     self.closeBarButtonItem.title = LocalizedString(@"close", @"");
-    
-    self.getContactLinksOptionDelegate = [[MEGAGetAttrUserRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
-        self.autoAcceptSwitch.on = request.flag;
-    } error:^(MEGARequest *request, MEGAError *error) {
-        self.autoAcceptSwitch.on = error.type == MEGAErrorTypeApiENoent;
-    }];
-    [MEGASdk.shared getContactLinksOptionWithDelegate:self.getContactLinksOptionDelegate];
-    
+   
     [self setupColors];
+    [self configureObservers];
+}
+
+- (QRSettingsViewModel *)viewModel {
+    if (!_viewModel) {
+        _viewModel = [self makeViewModel];
+    }
+    return _viewModel;
 }
 
 #pragma mark - UITableViewDataSource
@@ -58,11 +59,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section==1 && indexPath.row == 0) {
-        MEGAContactLinkCreateRequestDelegate *delegate = [[MEGAContactLinkCreateRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
-            [SVProgressHUD showSuccessWithStatus:LocalizedString(@"resetQrCodeFooter", @"Footer that explains what would happen if the user resets his/her QR code")];
-        }];
-
-        [MEGASdk.shared contactLinkCreateRenew:YES delegate:delegate];
+        [self resetContactLink];
     }
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
@@ -76,11 +73,8 @@
 
 #pragma mark - IBActions
 
-- (IBAction)autoAcceptSwitchDidChange:(UISwitch *)sender {
-    MEGASetAttrUserRequestDelegate *delegate = [[MEGASetAttrUserRequestDelegate alloc] initWithCompletion:^() {
-        [MEGASdk.shared getContactLinksOptionWithDelegate:self.getContactLinksOptionDelegate];
-    }];
-    [MEGASdk.shared setContactLinksOptionDisable:sender.isOn delegate:delegate];
+- (IBAction)autoAcceptSwitchDidChange:(UISwitch *)sender {    
+    [self updateAutoAcceptStatus:sender.isOn];
 }
 
 - (IBAction)didTapCloseButton:(UIBarButtonItem *)sender {
