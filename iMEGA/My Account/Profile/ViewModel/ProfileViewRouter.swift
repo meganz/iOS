@@ -31,6 +31,7 @@ final class ProfileViewRouter: ProfileViewRouting {
         let viewModel = ProfileViewModel(
             accountUseCase: accountUseCase,
             achievementUseCase: AchievementUseCase(repo: AchievementRepository.newRepo),
+            transferUseCase: TransferUseCase(repo: TransferRepository.newRepo),
             tracker: DIContainer.tracker,
             router: self
         )

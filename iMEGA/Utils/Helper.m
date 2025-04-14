@@ -493,8 +493,7 @@
 #pragma mark - Logout
 
 + (void)logout {
-    [NSNotificationCenter.defaultCenter postNotificationName:MEGALogoutNotification object:self];    
-    [Helper cancelAllTransfers];
+    [NSNotificationCenter.defaultCenter postNotificationName:MEGALogoutNotification object:self];
     
     [self cleanAccount];
     
@@ -504,13 +503,6 @@
     [Helper resetUserData];
     
     [Helper deletePasscode];
-}
-
-+ (void)cancelAllTransfers {
-    [MEGASdk.shared cancelTransfersForDirection:0];
-    [MEGASdk.shared cancelTransfersForDirection:1];
-    
-    [MEGASdk.sharedFolderLink cancelTransfersForDirection:0];
 }
 
 + (void)clearEphemeralSession {

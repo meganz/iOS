@@ -145,6 +145,12 @@ import UIKit
             presentChangeViewController(changeType: changeType, isTwoFactorAuthenticationEnabled: isTwoFactorAuthenticationEnabled)
         case .refreshTableView:
             tableView.reloadData()
+        case .completeLogout:
+            guard let showPasswordReminderDelegate = MEGAShowPasswordReminderRequestDelegate(toLogout: true) else {
+                return
+            }
+            MEGASdk.shared.shouldShowPasswordReminderDialog(atLogout: true, delegate: showPasswordReminderDelegate)
+            offlineLogOutWarningDismissed = false
         }
     }
     
@@ -381,13 +387,6 @@ extension ProfileViewController: UITableViewDelegate {
             }
         case .logout:
             viewModel.dispatch(.didTapLogout)
-            if MEGAReachabilityManager.isReachableHUDIfNot() {
-                guard let showPasswordReminderDelegate = MEGAShowPasswordReminderRequestDelegate(toLogout: true) else {
-                    return
-                }
-                MEGASdk.shared.shouldShowPasswordReminderDialog(atLogout: true, delegate: showPasswordReminderDelegate)
-                offlineLogOutWarningDismissed = false
-            }
             
         case .cancelSubscription:
             viewModel.dispatch(.cancelSubscription)
