@@ -1,5 +1,4 @@
 import FlexLayout
-import Haptica
 import MEGADesignToken
 import PinLayout
 import UIKit
@@ -51,22 +50,21 @@ class ReactionContainerView: UIView {
                         return
                     }
                     let isEmojiSelected = emojiSelected(userhandles)
-                    let emojiButton = ReactionEmojiButton(count: Int(userhandles.size), emoji: emoji, emojiSelected: isEmojiSelected)
-                    emojiButton.addHaptic(.selection, forControlEvents: .touchDown)
+                    let reactionEmojiView = ReactionEmojiView(count: Int(userhandles.size), emoji: emoji, emojiSelected: isEmojiSelected)
                     
                     if let delegate = delegate {
-                        emojiButton.buttonPressed = { [weak self] emoji, _ in
+                        reactionEmojiView.buttonPressed = { [weak self] emoji, _ in
                             if isEmojiSelected {
                                 MEGAChatSdk.shared.deleteReaction(forChat: self?.chatMessage?.chatRoom.chatId ?? 0, messageId: megaMessage?.messageId ?? 0, reaction: emoji)
                             } else {
                                 MEGAChatSdk.shared.addReaction(forChat: self?.chatMessage?.chatRoom.chatId ?? 0, messageId: megaMessage?.messageId ?? 0, reaction: emoji)
                             }
                         }
-                        emojiButton.buttonLongPress = delegate.emojiLongPressed
+                        reactionEmojiView.buttonLongPress = delegate.emojiLongPressed
                     }
                     
-                    emojiButton.flex.margin(2).height(30).minWidth(52)
-                    flex.addItem(emojiButton)
+                    reactionEmojiView.flex.margin(2).height(30).minWidth(52)
+                    flex.addItem(reactionEmojiView)
                 }
                 
                 flex.addItem(addMoreView).width(44).margin(2).height(30)
