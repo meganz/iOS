@@ -72,4 +72,11 @@ extension SendToViewController {
             usersAndGroupChatsMutableArray.insert(object, at: 0)
         }
     }
+    
+    @objc func addNoteToSelfIfNeeded() {
+        if isNoteToSelfAvailable(),
+           let noteToSelfChat = noteToSelfChatListItem() {
+            groupChatsMutableArray.insert(noteToSelfChat, at: 0)
+        }
+    }
 }

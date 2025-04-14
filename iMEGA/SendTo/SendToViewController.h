@@ -23,6 +23,7 @@
 @property (nonatomic) void (^completion)(NSArray<NSNumber *> *chatIdNumbers, NSArray<MEGAChatMessage *> *sentMessages);
 @property (nonatomic) uint64_t sourceChatId;
 @property (nonatomic, strong) NSMutableArray *usersAndGroupChatsMutableArray;
+@property (nonatomic, strong) NSMutableArray *groupChatsMutableArray;
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
