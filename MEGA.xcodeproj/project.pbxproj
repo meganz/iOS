@@ -360,7 +360,7 @@
 		2F528CAE24739053006DE5C2 /* LoadingMessageReusableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2F528CAC24739053006DE5C2 /* LoadingMessageReusableView.xib */; };
 		2F528CBA2474C0CE006DE5C2 /* BasicAudioController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F528CB72474C0CE006DE5C2 /* BasicAudioController.swift */; };
 		2F53F84F2612B8860027A5EF /* NSURL+Deeplinking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F53F84E2612B8860027A5EF /* NSURL+Deeplinking.swift */; };
-		2F5D0B5F24AEE347000E2AA2 /* ReactionEmojiButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F5D0B5E24AEE347000E2AA2 /* ReactionEmojiButton.swift */; };
+		2F5D0B5F24AEE347000E2AA2 /* ReactionEmojiView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F5D0B5E24AEE347000E2AA2 /* ReactionEmojiView.swift */; };
 		2F5DD9A62522DFE4007027F3 /* ChatViewController+Docscan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F5DD9A52522DFE4007027F3 /* ChatViewController+Docscan.swift */; };
 		2F5EC89F24075BA30017F334 /* StorageFullModalAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F5EC89E24075BA30017F334 /* StorageFullModalAlertViewController.swift */; };
 		2F6F088D253E387600C5B5D7 /* Transfers.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2F6F0881253E387500C5B5D7 /* Transfers.storyboard */; };
@@ -2997,7 +2997,7 @@
 		2F528CAC24739053006DE5C2 /* LoadingMessageReusableView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoadingMessageReusableView.xib; sourceTree = "<group>"; };
 		2F528CB72474C0CE006DE5C2 /* BasicAudioController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasicAudioController.swift; sourceTree = "<group>"; };
 		2F53F84E2612B8860027A5EF /* NSURL+Deeplinking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSURL+Deeplinking.swift"; sourceTree = "<group>"; };
-		2F5D0B5E24AEE347000E2AA2 /* ReactionEmojiButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionEmojiButton.swift; sourceTree = "<group>"; };
+		2F5D0B5E24AEE347000E2AA2 /* ReactionEmojiView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionEmojiView.swift; sourceTree = "<group>"; };
 		2F5DD9A52522DFE4007027F3 /* ChatViewController+Docscan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatViewController+Docscan.swift"; sourceTree = "<group>"; };
 		2F5EC89E24075BA30017F334 /* StorageFullModalAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageFullModalAlertViewController.swift; sourceTree = "<group>"; };
 		2F6F0881253E387500C5B5D7 /* Transfers.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Transfers.storyboard; sourceTree = "<group>"; };
@@ -6464,7 +6464,7 @@
 				2F9E1E2924A5A8FE00F53FBD /* ReactionCollectionViewCell.swift */,
 				2F9E1E2A24A5A8FE00F53FBD /* ReactionCollectionViewCell.xib */,
 				2FC4A9D424ADA40900149F06 /* ReactionContainerView.swift */,
-				2F5D0B5E24AEE347000E2AA2 /* ReactionEmojiButton.swift */,
+				2F5D0B5E24AEE347000E2AA2 /* ReactionEmojiView.swift */,
 			);
 			path = ReactionView;
 			sourceTree = "<group>";
@@ -15093,7 +15093,7 @@
 				BFC933E524A45CD600BC2A75 /* ReactedUsersListPageViewController.swift in Sources */,
 				2F9E1E2B24A5A8FE00F53FBD /* ReactionCollectionViewCell.swift in Sources */,
 				2FC4A9D524ADA40900149F06 /* ReactionContainerView.swift in Sources */,
-				2F5D0B5F24AEE347000E2AA2 /* ReactionEmojiButton.swift in Sources */,
+				2F5D0B5F24AEE347000E2AA2 /* ReactionEmojiView.swift in Sources */,
 				2FBF393524BEACA600ED0931 /* ReactionPickerViewController.swift in Sources */,
 				5DD6B17024D6D51D00F14515 /* Reader.swift in Sources */,
 				94A21A092D49753D00D11905 /* RecentActionBucket.swift in Sources */,
