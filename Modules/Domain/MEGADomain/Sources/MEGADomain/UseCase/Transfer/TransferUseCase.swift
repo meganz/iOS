@@ -9,6 +9,8 @@ public protocol TransferUseCaseProtocol: Sendable {
         progressHandler: ((TransferEntity) -> Void)?
     ) async throws -> TransferEntity
     func uploadFile(at fileUrl: URL, to parent: NodeEntity, startHandler: ((TransferEntity) -> Void)?, progressHandler: ((TransferEntity) -> Void)?) async throws -> TransferEntity
+    func cancelDownloadTransfers() async throws
+    func cancelUploadTransfers() async throws
 }
 
 public struct TransferUseCase<T: TransferRepositoryProtocol>: TransferUseCaseProtocol {
@@ -37,5 +39,13 @@ public struct TransferUseCase<T: TransferRepositoryProtocol>: TransferUseCasePro
     
     public func uploadFile(at fileUrl: URL, to parent: NodeEntity, startHandler: ((TransferEntity) -> Void)? = nil, progressHandler: ((TransferEntity) -> Void)? = nil) async throws -> TransferEntity {
         try await repo.uploadFile(at: fileUrl, to: parent, startHandler: startHandler, progressHandler: progressHandler)
+    }
+    
+    public func cancelDownloadTransfers() async throws {
+        try await repo.cancelDownloadTransfers()
+    }
+    
+    public func cancelUploadTransfers() async throws {
+        try await repo.cancelUploadTransfers()
     }
 }

@@ -211,6 +211,24 @@ final class ProfileViewModelTests: XCTestCase {
         )
     }
     
+    @MainActor func testAction_didTapLogout_emitsCompleteLogoutCommand() async {
+        let (sut, _) = makeSUT()
+        
+        var capturedCommand: ProfileViewModel.Command?
+        
+        sut.invokeCommand = { command in
+            capturedCommand = command
+        }
+        
+        sut.dispatch(.didTapLogout)
+        
+        if let task = sut.cancelTransfersTask {
+            await task.value
+        }
+        
+        XCTAssertEqual(capturedCommand, .completeLogout, "Expected .completeLogout command after didTapLogout action")
+    }
+    
     @MainActor
     func testAction_cancelSubscription_shouldPresentCancelAccountPlan() async {
         let planType: AccountTypeEntity = [.proI, .proII, .proIII, .lite].randomElement() ?? .proI
@@ -411,6 +429,7 @@ final class ProfileViewModelTests: XCTestCase {
             ProfileViewModel(
                 accountUseCase: accountUseCase,
                 achievementUseCase: MockAchievementUseCase(),
+                transferUseCase: MockTransferUseCase(),
                 tracker: tracker,
                 router: router
             ),

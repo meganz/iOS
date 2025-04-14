@@ -75,4 +75,25 @@ public struct TransferRepository: TransferRepositoryProtocol {
             })
         }
     }
+    
+    private func cancelTransfers(for direction: Int, sdk: MEGASdk) async throws {
+        try await withAsyncThrowingValue { continuation in
+            sdk.cancelTransfers(forDirection: direction, delegate: RequestDelegate { result in
+                switch result {
+                case .success:
+                    continuation(.success)
+                case .failure(let error):
+                    continuation(.failure(error))
+                }
+            })
+        }
+    }
+    
+    public func cancelDownloadTransfers() async throws {
+        try await cancelTransfers(for: 0, sdk: sdk)
+    }
+    
+    public func cancelUploadTransfers() async throws {
+        try await cancelTransfers(for: 1, sdk: sdk)
+    }
 }

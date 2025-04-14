@@ -33,6 +33,7 @@ final class ProfileViewModel: ViewModelType {
     enum Command: CommandType, Equatable {
         case changeProfile(requestedChangeType: ChangeType, isTwoFactorAuthenticationEnabled: Bool)
         case refreshTableView
+        case completeLogout
     }
     
     struct SectionCellDataSource: Equatable {
@@ -52,10 +53,17 @@ final class ProfileViewModel: ViewModelType {
     
     var invokeCommand: ((Command) -> Void)?
     
+    var cancelTransfersTask: Task<Void, Never>? {
+        didSet {
+            oldValue?.cancel()
+        }
+    }
+    
     // Internal State
     private var featureFlagProvider: any FeatureFlagProviderProtocol
     private let accountUseCase: any AccountUseCaseProtocol
     private let achievementUseCase: any AchievementUseCaseProtocol
+    private let transferUseCase: any TransferUseCaseProtocol
     private let requestedChangeTypeValueSubject = CurrentValueSubject<ChangeType?, Never>(nil)
     private let twoFactorAuthStatusValueSubject = CurrentValueSubject<TwoFactorAuthStatus, Never>(.unknown)
     private let invalidateSectionsValueSubject = PassthroughSubject<Void, Never>()
@@ -66,16 +74,22 @@ final class ProfileViewModel: ViewModelType {
     init(
         accountUseCase: some AccountUseCaseProtocol,
         achievementUseCase: some AchievementUseCaseProtocol,
+        transferUseCase: any TransferUseCaseProtocol,
         featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider,
         tracker: some AnalyticsTracking,
         router: some ProfileViewRouting
     ) {
         self.accountUseCase = accountUseCase
         self.achievementUseCase = achievementUseCase
+        self.transferUseCase = transferUseCase
         self.featureFlagProvider = featureFlagProvider
         self.tracker = tracker
         self.router = router
         bindToSubscriptions()
+    }
+    
+    deinit {
+        cancelTransfersTask = nil
     }
     
     private func bindToSubscriptions() {
@@ -177,6 +191,13 @@ extension ProfileViewModel {
             router.showRecoveryKey(saveMasterKeyCompletion: refreshTableView)
         case .didTapLogout:
             tracker.trackAnalyticsEvent(with: LogoutButtonPressedEvent())
+            
+            guard MEGAReachabilityManager.isReachableHUDIfNot() else { return }
+            
+            cancelTransfersTask = Task {
+                await cancelTransfers()
+                invokeCommand?(.completeLogout)
+            }
         }
     }
     
@@ -249,6 +270,17 @@ extension ProfileViewModel {
     
     private func trackCancelSubscriptionButtonEvent() {
         tracker.trackAnalyticsEvent(with: CancelSubscriptionButtonPressedEvent())
+    }
+    
+    private func cancelTransfers() async {
+        do {
+            try await transferUseCase.cancelDownloadTransfers()
+            try await transferUseCase.cancelUploadTransfers()
+            
+            MEGAStore.shareInstance().removeAllUploadTransfers()
+        } catch {
+            MEGALogError("[CancelTransfers] Failed to cancel transfers: \(error)")
+        }
     }
 }
 
