@@ -1,4 +1,6 @@
 import Combine
+import MEGAAnalyticsiOS
+import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGADomain
 import MEGAL10n
@@ -25,6 +27,7 @@ final class ExistingTagsViewModel: ObservableObject {
     @Published var hasReachedMaxLimit: Bool
     @Published var snackBar: SnackBar?
 
+    // The set of tags that attachs to the node (aka: Tags that are saved in the db)
     private(set) var currentlyAttachedTags: Set<String>
 
     private var currentNodeTagsUpdatesContinuation: AsyncStream<Set<String>>.Continuation?
@@ -49,6 +52,7 @@ final class ExistingTagsViewModel: ObservableObject {
         .eraseToAnyAsyncSequence()
     }
 
+    // Set of tags that is are displayed as `selected` on the UI
     var currentNodeTags: Set<String> {
         selectedTags.union(newlyAddedTags)
     }
@@ -67,6 +71,7 @@ final class ExistingTagsViewModel: ObservableObject {
     }
 
     private let nodeTagsUseCase: any NodeTagsUseCaseProtocol
+    private let tracker: any AnalyticsTracking
 
     private var tagViewModelsChangeSubscription: AnyCancellable?
     private var subscriptions: Set<AnyCancellable> = []
@@ -89,7 +94,8 @@ final class ExistingTagsViewModel: ObservableObject {
     init(
         nodeEntity: NodeEntity,
         tagsViewModel: NodeTagsViewModel,
-        nodeTagsUseCase: some NodeTagsUseCaseProtocol
+        nodeTagsUseCase: some NodeTagsUseCaseProtocol,
+        tracker: some AnalyticsTracking = DIContainer.tracker
     ) {
         self.nodeEntity = nodeEntity
         self.currentlyAttachedTags = Set(nodeEntity.tags)
@@ -99,6 +105,7 @@ final class ExistingTagsViewModel: ObservableObject {
         self.selectedTags = selectedTags
         self.tagsSnapshot = tagViewModels.map(\.tag)
         self.nodeTagsUseCase = nodeTagsUseCase
+        self.tracker = tracker
         hasReachedMaxLimit = selectedTags.count >= tagSelectionLimit.maxTagsAllowed
         monitorTagViewModelsChanges()
     }
@@ -160,6 +167,7 @@ final class ExistingTagsViewModel: ObservableObject {
                 guard let self, let tagViewModel else { return }
 
                 if showSelectedTagsMaxLimitReachedToastIfNeeded(for: tag) {
+                    tracker.trackAnalyticsEvent(with: NodeInfoTagsLimitErrorDisplayedEvent())
                     return
                 }
 
@@ -180,11 +188,7 @@ final class ExistingTagsViewModel: ObservableObject {
         var tagViewModels = tagsViewModel.tagViewModels
         tagViewModels.removeAll(where: { $0.tag == tagViewModel.tag })
         tagsViewModel.updateTagsReorderedBySelection(tagViewModels)
-    }
-
-    private func removeDeselectedTagsFromSelectedTags(tagViewModel: NodeTagViewModel) {
-        selectedTags.remove(tagViewModel.tag)
-        toggleTagSelectionAndRearrange(tagViewModel: tagViewModel)
+        trackNodeTagRemoved()
     }
 
     private func toggleTagSelectionAndRearrange(tagViewModel: NodeTagViewModel) {
@@ -221,6 +225,7 @@ final class ExistingTagsViewModel: ObservableObject {
             selectedTags.insert(tag)
         } else {
             selectedTags.remove(tag)
+            trackNodeTagRemoved()
         }
     }
 
@@ -253,5 +258,13 @@ final class ExistingTagsViewModel: ObservableObject {
                 subscriptions.removeAll()
                 tagViewModels.forEach { observeToggles(for: $0) }
             }
+    }
+
+    private func trackNodeTagRemoved() {
+        tracker.trackAnalyticsEvent(with: NodeInfoTagsRemovedEvent())
+    }
+
+    private func trackNodeTagLimitError() {
+        tracker.trackAnalyticsEvent(with: NodeInfoTagsLimitErrorDisplayedEvent())
     }
 }

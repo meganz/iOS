@@ -1,4 +1,6 @@
 import Foundation
+import MEGAAnalyticsiOS
+import MEGAAppPresentation
 import MEGADomain
 import MEGAL10n
 
@@ -7,6 +9,7 @@ public final class NodeTagsCellControllerModel {
     private let accountUseCase: any AccountUseCaseProtocol
     private let nodeUseCase: any NodeUseCaseProtocol
     let node: NodeEntity
+    private let tracker: any AnalyticsTracking
     private(set) lazy var cellViewModel = NodeTagsCellViewModel(
         node: node,
         accountUseCase: accountUseCase,
@@ -25,10 +28,16 @@ public final class NodeTagsCellControllerModel {
     public init(
         node: NodeEntity,
         accountUseCase: some AccountUseCaseProtocol,
-        nodeUseCase: some NodeUseCaseProtocol
+        nodeUseCase: some NodeUseCaseProtocol,
+        tracker: some AnalyticsTracking = DIContainer.tracker
     ) {
         self.node = node
         self.accountUseCase = accountUseCase
         self.nodeUseCase = nodeUseCase
+        self.tracker = tracker
+    }
+
+    func trackNodeTagsEntered() {
+        tracker.trackAnalyticsEvent(with: NodeInfoTagsEnteredEvent())
     }
 }

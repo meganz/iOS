@@ -1,4 +1,6 @@
 import Combine
+import MEGAAnalyticsiOS
+import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGADomain
 import MEGASwift
@@ -25,6 +27,7 @@ final class ManageTagsViewModel: ObservableObject {
     @Published var shouldDismiss: Bool = false
     @Published var isCurrentlySavingTags: Bool = false
     private let nodeTagsUseCase: any NodeTagsUseCaseProtocol
+    private let tracker: any AnalyticsTracking
     private var nodeEntity: NodeEntity
     private var maxAllowedCharacterCount = 32
     private var subscriptions: Set<AnyCancellable> = []
@@ -47,7 +50,8 @@ final class ManageTagsViewModel: ObservableObject {
         navigationBarViewModel: ManageTagsViewNavigationBarViewModel,
         existingTagsViewModel: ExistingTagsViewModel,
         tagsUpdatesUseCase: some NodeTagsUpdatesUseCaseProtocol,
-        nodeTagsUseCase: some NodeTagsUseCaseProtocol
+        nodeTagsUseCase: some NodeTagsUseCaseProtocol,
+        tracker: some AnalyticsTracking = DIContainer.tracker
     ) {
         self.nodeEntity = nodeEntity
         self.navigationBarViewModel = navigationBarViewModel
@@ -55,6 +59,7 @@ final class ManageTagsViewModel: ObservableObject {
         self.nodeTagsUseCase = nodeTagsUseCase
         containsExistingTags = existingTagsViewModel.containsTags
         self.tagsUpdatesUseCase = tagsUpdatesUseCase
+        self.tracker = tracker
         monitorTagViewModelListUpdates()
         monitorCancelButtonTap()
         monitorDoneButtonTap()
@@ -85,6 +90,7 @@ final class ManageTagsViewModel: ObservableObject {
         existingTagsViewModel.addAndSelectNewTag(tagName)
         containsExistingTags = true
         tagName = ""
+        trackNodeTagAdded()
     }
 
     func onTagNameChanged(with updatedTagName: String) {
@@ -142,6 +148,7 @@ final class ManageTagsViewModel: ObservableObject {
             tagNameState = .invalid
         } else if updatedTagName.count > maxAllowedCharacterCount {
             tagNameState = .tooLong
+            trackTagLengthErrorDisplayed()
         } else {
             tagNameState = .valid
         }
@@ -237,5 +244,13 @@ final class ManageTagsViewModel: ObservableObject {
                 navigationBarViewModel.doneButtonDisabled = !hasChanges
             }
         }
+    }
+
+    private func trackNodeTagAdded() {
+        tracker.trackAnalyticsEvent(with: NodeInfoTagsAddedEvent())
+    }
+
+    private func trackTagLengthErrorDisplayed() {
+        tracker.trackAnalyticsEvent(with: NodeInfoTagsLengthErrorDisplayedEvent())
     }
 }

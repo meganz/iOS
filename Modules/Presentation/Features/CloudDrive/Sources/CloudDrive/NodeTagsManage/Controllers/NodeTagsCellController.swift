@@ -62,6 +62,7 @@ extension NodeTagsCellController: UITableViewDelegate {
 
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let controller, viewModel.hasTagsManagementPermission else { return }
+        viewModel.trackNodeTagsEntered()
         if viewModel.isExpiredBusinessOrProFlexiAccount {
             showFeatureUnavailabilityAlert()
         } else {
