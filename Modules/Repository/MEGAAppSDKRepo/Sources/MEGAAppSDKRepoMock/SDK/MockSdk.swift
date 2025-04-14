@@ -901,6 +901,18 @@ public final class MockSdk: MEGASdk, @unchecked Sendable {
         delegate.onRequestFinish?(self, request: mockRequest, error: MockError(errorType: megaSetError))
     }
     
+    public override func setContactLinksOptionDisable(_ disabled: Bool, delegate: any MEGARequestDelegate) {
+        processRequestResult(delegate: delegate)
+    }
+    
+    public override func getContactLinksOption(with delegate: any MEGARequestDelegate) {
+        processRequestResult(delegate: delegate)
+    }
+    
+    public override func contactLinkCreateRenew(_ renew: Bool, delegate: any MEGARequestDelegate) {
+        processRequestResult(delegate: delegate)
+    }
+    
     // MARK: - Folder link
     public override func getPublicLinkInformation(withFolderLink folderLink: String, delegate: any MEGARequestDelegate) {
         processRequestResult(delegate: delegate)
