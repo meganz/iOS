@@ -23,7 +23,9 @@ final class ChatRoomsListViewController: UIHostingController<ChatRoomsListView> 
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        assignBackButton()
+        navigationItem.backBarButtonItem = BackBarButtonItem(
+            menuTitle: Strings.Localizable.chat
+        )
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -34,36 +36,6 @@ final class ChatRoomsListViewController: UIHostingController<ChatRoomsListView> 
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         configureAdsVisibility()
-    }
-    
-    // this function should be called in only 2 places :
-    // 1. when view is created to have a default value
-    // 2. whenever unread count changes (this is triggered by MainTabBarController
-    // this should guarantee valid number shown in the back button and simplify the logic
-    func assignBackButton() {
-        let unreadChats = MEGAChatSdk.shared.unreadChats
-        updateBackBarButtonItem(withUnreadMessages: unreadChats)
-    }
-    
-    private func updateBackBarButtonItem(withUnreadMessages count: Int) {
-        guard count > 0 else {
-            clearBackBarButtonItem()
-            return
-        }
-        
-        let title = String(format: "%td", count)
-        assignBackButtonWith(title: title)
-    }
-    
-    private func assignBackButtonWith(title: String?) {
-        navigationItem.backBarButtonItem = BackBarButtonItem(
-            title: title,
-            menuTitle: Strings.Localizable.chat
-        )
-    }
-    
-    private func clearBackBarButtonItem() {
-        assignBackButtonWith(title: nil)
     }
 }
 
