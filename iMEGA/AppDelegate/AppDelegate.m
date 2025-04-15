@@ -537,6 +537,19 @@
     return _ratingRequestMonitor;
 }
 
+#pragma mark - Public
+
+- (void)setAccountFirstLogin {
+    isAccountFirstLogin = YES;
+    if (!self.isNewAccount) {
+        self.newAccount = (MEGALinkManager.urlType == URLTypeConfirmationLink);
+    }
+    if (MEGALinkManager.selectedOption != LinkOptionJoinChatLink) {
+        [MEGALinkManager resetLinkAndURLType];
+    }
+    [NSUserDefaults.standardUserDefaults setObject:[NSDate date] forKey:MEGAFirstLoginDate];
+}
+
 #pragma mark - Private
 
 - (void)beginBackgroundTaskWithName:(NSString *)name {
@@ -751,11 +764,11 @@
 }
 
 - (void)showOnboardingWithCompletion:(void (^)(void))completion {
-    if ([self.window.rootViewController isKindOfClass:[OnboardingViewController class]]) {
+    if ([self isOnboardingViewControllerAlreadyShown]) {
         return;
     }
     
-    OnboardingViewController *onboardingVC = [OnboardingViewController instantiateOnboardingWithType:OnboardingTypeDefault];
+    UIViewController *onboardingVC = [self makeOnboardingViewController];
     UIView *overlayView = [UIScreen.mainScreen snapshotViewAfterScreenUpdates:NO];
     [onboardingVC.view addSubview:overlayView];
     self.window.rootViewController = onboardingVC;
@@ -1431,27 +1444,21 @@
     
     switch ([request type]) {
         case MEGARequestTypeLogin: {
+            /// Block login request when using new onboarding. The `LoginUseCase` will set the session in the keychain.
+            /// This is to avoid a timing issue with the request delegates and duplicate SDK calls.
+            if ([self isRootViewNewOnboarding]) {
+                return;
+            }
             [api setAccountAuth:api.accountAuth];
-            [self postLoginNotification];
+            
             if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
                 isAccountFirstLogin = NO;
                 isFetchNodesDone = NO;
             } else {
-                isAccountFirstLogin = YES;
-                if (!self.isNewAccount) {
-                    self.newAccount = (MEGALinkManager.urlType == URLTypeConfirmationLink);
-                }
-                if (MEGALinkManager.selectedOption != LinkOptionJoinChatLink) {
-                    [MEGALinkManager resetLinkAndURLType];
-                }
-                [NSUserDefaults.standardUserDefaults setObject:[NSDate date] forKey:MEGAFirstLoginDate];
+                [self setAccountFirstLogin];
             }
-                        
-            [self initProviderDelegate];
-            [self registerForNotifications];
-            [MEGASdk.shared fetchNodes];
-            [QuickAccessWidgetManager reloadAllWidgetsContent];
-            [[MEGAPurchase sharedInstance] requestPricing];
+            
+            [self handlePostLoginSetup];
             break;
         }
             

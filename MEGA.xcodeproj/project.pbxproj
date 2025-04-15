@@ -97,6 +97,7 @@
 		0ECDCD4E2A1DDBA100FBEFE7 /* GetLinkCellViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ECDCD4D2A1DDBA100FBEFE7 /* GetLinkCellViewModelType.swift */; };
 		0ECDCD502A1DDEEA00FBEFE7 /* GetLinkSwitchCellViewConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ECDCD4F2A1DDEEA00FBEFE7 /* GetLinkSwitchCellViewConfiguration.swift */; };
 		0ECFECF72ACE0D5C00CBC420 /* AppearanceViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ECFECF52ACE0D5C00CBC420 /* AppearanceViewModelTests.swift */; };
+		0ED6BEF42DA8A5570084FD30 /* MEGAAuthenticationOrchestration in Frameworks */ = {isa = PBXBuildFile; productRef = 0ED6BEF32DA8A5570084FD30 /* MEGAAuthenticationOrchestration */; };
 		0EDE0DDB2A20587E0006A9F1 /* GetCollectionsLinkViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EDE0DDA2A20587E0006A9F1 /* GetCollectionsLinkViewModel.swift */; };
 		0EDE0DDD2A2058DE0006A9F1 /* ShareAlbumsLinkInitialSections.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EDE0DDC2A2058DE0006A9F1 /* ShareAlbumsLinkInitialSections.swift */; };
 		0EDF33382BC7371800EEF8F8 /* Preview_NodeUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EDF33372BC7371800EEF8F8 /* Preview_NodeUseCase.swift */; };
@@ -5356,6 +5357,7 @@
 				BF2AFDA82D9F85C40075248C /* MEGAAppSDKRepo in Frameworks */,
 				BF2AFDAA2D9F85C40075248C /* MEGAAppSDKRepoMock in Frameworks */,
 				0E261EAD2DA5EA1300858151 /* MEGAAuthentication in Frameworks */,
+				0ED6BEF42DA8A5570084FD30 /* MEGAAuthenticationOrchestration in Frameworks */,
 				A812CB392A4B0FAD00F99382 /* MEGAChatSdk in Frameworks */,
 				6D004FE92D0A46360039ADF9 /* MEGAConnectivity in Frameworks */,
 				9418A7A22ACF84210014C01C /* MEGADesignToken in Frameworks */,
@@ -13132,6 +13134,7 @@
 				BF2AFDA72D9F85C40075248C /* MEGAAppSDKRepo */,
 				BF2AFDA92D9F85C40075248C /* MEGAAppSDKRepoMock */,
 				0E261EAC2DA5EA1300858151 /* MEGAAuthentication */,
+				0ED6BEF32DA8A5570084FD30 /* MEGAAuthenticationOrchestration */,
 			);
 			productName = iMEGA;
 			productReference = 1373618A1A6664C300B740E8 /* MEGA.app */;
@@ -18054,6 +18057,10 @@
 		0E261EAC2DA5EA1300858151 /* MEGAAuthentication */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = MEGAAuthentication;
+		};
+		0ED6BEF32DA8A5570084FD30 /* MEGAAuthenticationOrchestration */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = MEGAAuthenticationOrchestration;
 		};
 		1678D7F12A45487E00336C52 /* MEGATest */ = {
 			isa = XCSwiftPackageProductDependency;
