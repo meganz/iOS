@@ -1,6 +1,7 @@
 import Accounts
 import MEGAAppPresentation
 import MEGAAuthentication
+import MEGAAuthenticationOrchestration
 import MEGAPermissions
 import MEGASwiftUI
 import SwiftUI
@@ -12,7 +13,15 @@ extension AppDelegate {
         MEGAAuthentication.DependencyInjection.sharedSdk = .shared
         MEGAAuthentication.DependencyInjection.keychainServiceName = "MEGA"
         MEGAAuthentication.DependencyInjection.keychainAccount = "sessionV3"
-        MEGAAuthentication.DependencyInjection.updateDuplicateSessionForLogin = true
+        
+        MEGAAuthentication.DependencyInjection.loginUseCase = LoginWithPostActionsUseCase(
+            loginUseCase: LoginUseCase(
+                fetchNodesEnabled: false,
+                shouldIncludeFastLoginTimeout: false,
+                updateDuplicateSession: true,
+                loginAPIRepository: MEGAAuthentication.DependencyInjection.loginAPIRepository,
+                loginStoreRepository: MEGAAuthentication.DependencyInjection.loginStoreRepository),
+            postLoginActions: [AppDelegatePostLoginAction(appDelegate: self)])
     }
     
     @objc func makeOnboardingViewController() -> UIViewController {
@@ -21,6 +30,10 @@ extension AppDelegate {
         } else {
             OnboardingViewController.instantiateOnboarding(with: .default)
         }
+    }
+    
+    @objc func isRootViewNewOnboarding() -> Bool {
+        window.rootViewController is UIHostingController<OnboardingView<LoadingSpinner>>
     }
     
     private func makeNewOnboardingViewController() -> UIViewController {
@@ -35,7 +48,6 @@ extension AppDelegate {
                     let shouldSetupPermissions = await permissionHandler.shouldSetupPermissions()
                     self?.showLoadingView(permissionsPending: shouldSetupPermissions)
                 }
-                
             }
         
         let view = OnboardingView(
@@ -85,5 +97,35 @@ extension AppDelegate {
         
         guard let window = UIApplication.shared.keyWindow else { return }
         window.rootViewController = viewController
+    }
+    
+    @objc func handlePostLoginSetup() {
+        postLoginNotification()
+        initProviderDelegate()
+        registerForNotifications()
+        
+        MEGASdk.shared.fetchNodes()
+        
+        QuickAccessWidgetManager.reloadAllWidgetsContent()
+        
+        MEGAPurchase.sharedInstance().requestPricing()
+    }
+    
+    @objc func isOnboardingViewControllerAlreadyShown() -> Bool {
+        if  DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .loginRegisterAndOnboardingRevamp) {
+            isRootViewNewOnboarding()
+        } else {
+            window.rootViewController is OnboardingViewController
+        }
+    }
+}
+
+private struct AppDelegatePostLoginAction: PostLoginAction {
+    let appDelegate: AppDelegate
+    
+    @MainActor
+    func handlePostLogin() async throws {
+        appDelegate.setAccountFirstLogin()
+        appDelegate.handlePostLoginSetup()
     }
 }
