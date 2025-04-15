@@ -139,12 +139,6 @@ extension MainTabBarController {
         psaViewModel.dispatch(.setPSAViewHidden(hide))
     }
     
-    @objc func updateUnreadChatsOnBackButton() {
-        if let chatVC = existingChatRoomsListViewController {
-            chatVC.assignBackButton()
-        }
-    }
-    
     func createMainTabBarViewModel() -> MainTabBarCallsViewModel {
         let router = MainTabBarCallsRouter(baseViewController: self)
         let mainTabBarCallsViewModel = MainTabBarCallsViewModel(

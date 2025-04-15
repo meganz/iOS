@@ -222,7 +222,6 @@
 - (void)onChatListItemUpdate:(MEGAChatSdk *)api item:(MEGAChatListItem *)item {
     if (item.changes == MEGAChatListItemChangeTypeUnreadCount) {
         [self debounce:@selector(setBadgeValueForChats) delay:0.1];
-        [self updateUnreadChatsOnBackButton];
     }
 }
 
