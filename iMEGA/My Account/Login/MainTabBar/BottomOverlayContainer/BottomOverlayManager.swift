@@ -108,12 +108,14 @@ struct BottomOverlayItem {
     let type: BottomSubViewType
     let view: UIView
     let priority: BottomOverlayViewPriority
-    let height: CGFloat
+    let height: CGFloat?
 }
 
 /// Defines the various subview types managed by `BottomOverlayManager`.
 /// - Note: Additional subview types should be added here.
-enum BottomSubViewType {
+enum BottomSubViewType: Equatable {
     /// A type representing the mini audio player.
     case audioPlayer
+    /// A type representing the PSA banner
+    case psa
 }

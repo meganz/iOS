@@ -4,9 +4,9 @@ import UIKit
 /// Conforming to this protocol indicates that the mini-player must be shown in the current view. If a view controller conforms the AudioPlayerPresenterProtocol,
 /// the mini-player will be displayed. Otherwise, even if other bottom overlay views are presented, the mini-player should remain hidden. This is useful in cases
 /// such as the Photos section, where the bottom overlay is used but the mini-player should no be shown
-@objc public protocol AudioPlayerPresenterProtocol: BottomOverlayPresenterProtocol where Self: UIViewController {}
+@objc public protocol AudioPlayerPresenterProtocol: BottomOverlayPresenterProtocol {}
 
-@objc public protocol BottomOverlayPresenterProtocol {
+@objc public protocol BottomOverlayPresenterProtocol where Self: UIViewController {
     /// Updates the content inset of the displayed screen.
     /// This method adjusts the bottom inset of the screen's content to ensure that it is not obscured by the views shown in the BottomOverlay.
     /// Use this function to apply a new inset height that compensates for any overlay elements.

@@ -1328,6 +1328,7 @@
 		944A48BA2DA9A509004FC7D1 /* QRSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 944A48B92DA9A509004FC7D1 /* QRSettingsViewModel.swift */; };
 		944AD0B328EF651F00AB1E59 /* BackupsOCWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 944AD0B228EF651F00AB1E59 /* BackupsOCWrapper.swift */; };
 		944C3AD42D5A517400C6BFB9 /* AudioQueueLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 944C3AD32D5A516D00C6BFB9 /* AudioQueueLoader.swift */; };
+		944EF8C72D96FCEE008D97C9 /* MainTabBarController+PSA.swift in Sources */ = {isa = PBXBuildFile; fileRef = 944EF8C62D96FCEE008D97C9 /* MainTabBarController+PSA.swift */; };
 		945153A82C7E17F9004E6990 /* ChatRoomsEmptyViewStateFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945153A72C7E17F9004E6990 /* ChatRoomsEmptyViewStateFactoryTests.swift */; };
 		9451F90A28229A11000ACE3B /* OfflineViewController+ContextMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9451F90928229A11000ACE3B /* OfflineViewController+ContextMenu.swift */; };
 		945339CD2A6014FA00363DAD /* FileLinkViewController+ContextMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945339CC2A6014FA00363DAD /* FileLinkViewController+ContextMenu.swift */; };
@@ -4022,6 +4023,7 @@
 		944A48B92DA9A509004FC7D1 /* QRSettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRSettingsViewModel.swift; sourceTree = "<group>"; };
 		944AD0B228EF651F00AB1E59 /* BackupsOCWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupsOCWrapper.swift; sourceTree = "<group>"; };
 		944C3AD32D5A516D00C6BFB9 /* AudioQueueLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioQueueLoader.swift; sourceTree = "<group>"; };
+		944EF8C62D96FCEE008D97C9 /* MainTabBarController+PSA.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainTabBarController+PSA.swift"; sourceTree = "<group>"; };
 		945153A72C7E17F9004E6990 /* ChatRoomsEmptyViewStateFactoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomsEmptyViewStateFactoryTests.swift; sourceTree = "<group>"; };
 		9451F90928229A11000ACE3B /* OfflineViewController+ContextMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OfflineViewController+ContextMenu.swift"; sourceTree = "<group>"; };
 		945339CC2A6014FA00363DAD /* FileLinkViewController+ContextMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FileLinkViewController+ContextMenu.swift"; sourceTree = "<group>"; };
@@ -6838,6 +6840,7 @@
 				B6D995F8222CA42000A98BEF /* MainTabBarController+CameraUpload.m */,
 				836A783328E34E5B00B6849F /* MainTabBarController+Chat.swift */,
 				12397E262820C68400A30CCC /* MainTabBarController+PhotoAlbum.swift */,
+				944EF8C62D96FCEE008D97C9 /* MainTabBarController+PSA.swift */,
 				B55C1B7029890C91006A0205 /* MainTabBarController+SharedItems.swift */,
 				4152267C1A692ECC00EC7BB6 /* MainTabBarController.h */,
 				4152267D1A692ECC00EC7BB6 /* MainTabBarController.m */,
@@ -14633,6 +14636,7 @@
 				B6D995F9222CA42000A98BEF /* MainTabBarController+CameraUpload.m in Sources */,
 				836A783428E34E5B00B6849F /* MainTabBarController+Chat.swift in Sources */,
 				12397E272820C68400A30CCC /* MainTabBarController+PhotoAlbum.swift in Sources */,
+				944EF8C72D96FCEE008D97C9 /* MainTabBarController+PSA.swift in Sources */,
 				B55C1B7129890C91006A0205 /* MainTabBarController+SharedItems.swift in Sources */,
 				415226951A692ECC00EC7BB6 /* MainTabBarController.m in Sources */,
 				B69AF66828A1E5190022B094 /* ManageChatHistoryTableViewController.swift in Sources */,
