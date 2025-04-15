@@ -93,6 +93,7 @@ import MEGADomain
             player?.close { [weak self] in
                 MEGALogDebug("[AudioPlayer] closing current player before assign new instance")
                 self?.player = nil
+                self?.player?.isCloseRequested = false
                 self?.configure(player: player, autoPlayEnabled: autoPlayEnabled, tracks: tracks)
             }
         } else {
@@ -352,13 +353,14 @@ import MEGADomain
         player?.close { [weak self] in
             self?.audioSessionUseCase.configureCallAudioSession()
             self?.clearMiniPlayerResources()
+            self?.player?.isCloseRequested = false
         }
+        
+        shouldRemovePlayerInstance = true
         
         miniPlayerHandlerListenerManager.notify { $0.closeMiniPlayer() }
         
         NotificationCenter.default.post(name: NSNotification.Name.MEGAAudioPlayerShouldUpdateContainer, object: nil)
-        
-        shouldRemovePlayerInstance = true
     }
     
     private func clearMiniPlayerResources() {
@@ -390,13 +392,17 @@ import MEGADomain
         if isHidden {
             presenter.updateContentView(0)
             
-            if shouldRemovePlayerInstance {
-                player = nil
-                shouldRemovePlayerInstance = false
-            }
+            cleanupPlayerInstance()
         } else {
             let height = miniPlayerHandlerListenerManager.listeners.last?.currentContainerHeight() ?? 0
             presenter.updateContentView(height)
+        }
+    }
+    
+    func cleanupPlayerInstance() {
+        if shouldRemovePlayerInstance {
+            player = nil
+            shouldRemovePlayerInstance = false
         }
     }
     
