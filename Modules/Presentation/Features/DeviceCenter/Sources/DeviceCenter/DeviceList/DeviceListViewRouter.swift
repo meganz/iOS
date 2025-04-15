@@ -72,7 +72,7 @@ public final class DeviceListViewRouter: NSObject, DeviceListRouting {
         )
         
         let deviceListView = DeviceListView(viewModel: deviceListViewModel)
-        let hostingController = UIHostingController(rootView: deviceListView)
+        let hostingController = AudioPlayerHostingController(rootView: deviceListView)
         baseViewController = hostingController
         baseViewController?.title = Strings.Localizable.Device.Center.title
         baseViewController?.navigationItem.backBarButtonItem = BackBarButtonItem(menuTitle: Strings.Localizable.Device.Center.title)

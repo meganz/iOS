@@ -67,7 +67,7 @@ public final class BackupListViewRouter: NSObject, BackupListRouting {
             deviceCenterActions: deviceCenterActions
         )
         let backupListView = BackupListView(viewModel: backupListViewModel)
-        let hostingController = UIHostingController(rootView: backupListView)
+        let hostingController = AudioPlayerHostingController(rootView: backupListView)
         baseViewController = hostingController
         updateTitle(selectedDevice.name)
         return hostingController
