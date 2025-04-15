@@ -88,6 +88,7 @@ extension MainTabBarController: AudioMiniPlayerHandlerProtocol {
     
     func closeMiniPlayer() {
         hideMiniPlayer()
+        AudioPlayerManager.shared.cleanupPlayerInstance()
         resetMiniPlayerContainer()
         shouldUpdateProgressViewLocation()
     }
