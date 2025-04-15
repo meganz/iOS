@@ -266,10 +266,7 @@ extension MainTabBarController: UITabBarControllerDelegate {
 // MARK: - MEGANavigationControllerDelegate
 extension MainTabBarController: MEGANavigationControllerDelegate {
     public func navigationController(_ navigationController: UINavigationController!, willShow viewController: UIViewController!, animated: Bool) {
-        updateMiniPlayerVisibility(for: viewController)
-        
-        guard let psaViewModel else { return }
-        hidePSAView(viewController.hidesBottomBarWhenPushed, psaViewModel: psaViewModel)
+        updateBottomContainerVisibility(for: viewController)
     }
 }
 
