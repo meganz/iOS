@@ -74,15 +74,16 @@ extension MEGALinkErrorCode {
     public var linkErrorEntity: LinkErrorEntity {
         switch self {
         case .unknown:
-                .unknown
+            return .unknown
         case .undeleted:
-                .undeleted
+            return .undeleted
         case .undeletedDown:
-                .undeletedOrDown
+            return .undeletedOrDown
         case .downETD:
-                .downETD
+            return .downETD
         @unknown default:
-            fatalError()
+            assertionFailure("Invalid case found \(self)")
+            return .unknown
         }
     }
 }
@@ -91,13 +92,14 @@ extension MEGAUserErrorCode {
     public var userErrorEntity: UserErrorEntity {
         switch self {
         case .etdUnknown:
-                .unknown
+            return .unknown
         case .copyrightSuspension:
-                .copyrightSuspension
+            return .copyrightSuspension
         case .etdSuspension:
-                .etdSuspension
+            return .etdSuspension
         @unknown default:
-            fatalError()
+            assertionFailure("Invalid case found \(self)")
+            return .unknown
         }
     }
 }
