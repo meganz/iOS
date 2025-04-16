@@ -1,4 +1,5 @@
 import Foundation
+import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGADesignToken
 import MEGADomain
@@ -225,6 +226,18 @@ extension TransfersWidgetViewController: TransferWidgetResponderProtocol {
     override open func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         CrashlyticsLogger.log(category: .transfersWidget, "Transfers widget did appear with navigation bar: \(String(describing: navigationController?.navigationBar))")
+    }
+}
+
+// MARK: - BottomOverlayPresenterProtocol
+
+extension TransfersWidgetViewController: BottomOverlayPresenterProtocol {
+    public func updateContentView(_ height: CGFloat) {
+        additionalSafeAreaInsets = .init(top: 0, left: 0, bottom: height, right: 0)
+    }
+    
+    public func hasUpdatedContentView() -> Bool {
+        additionalSafeAreaInsets.bottom != 0
     }
 }
 

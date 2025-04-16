@@ -1,3 +1,4 @@
+import MEGAAppPresentation
 import MEGAL10n
 
 extension AchievementsViewController {
@@ -18,5 +19,17 @@ extension AchievementsViewController {
             return Strings.Localizable.expired
         }
         return Strings.Localizable.Account.Achievement.Complete.ValidDays.subtitle(remainingDays)
+    }
+}
+
+// MARK: - BottomOverlayPresenterProtocol
+
+extension AchievementsViewController: BottomOverlayPresenterProtocol {
+    public func updateContentView(_ height: CGFloat) {
+        additionalSafeAreaInsets = .init(top: 0, left: 0, bottom: height, right: 0)
+    }
+    
+    public func hasUpdatedContentView() -> Bool {
+        additionalSafeAreaInsets.bottom != 0
     }
 }

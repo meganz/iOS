@@ -1,5 +1,6 @@
 import Accounts
 import Combine
+import MEGAAppPresentation
 import MEGADesignToken
 import MEGADomain
 import MEGAL10n
@@ -473,5 +474,17 @@ extension ProfileViewController: MEGARequestDelegate {
         default:
             break
         }
+    }
+}
+
+// MARK: - BottomOverlayPresenterProtocol
+
+extension ProfileViewController: BottomOverlayPresenterProtocol {
+    public func updateContentView(_ height: CGFloat) {
+        additionalSafeAreaInsets = .init(top: 0, left: 0, bottom: height, right: 0)
+    }
+    
+    public func hasUpdatedContentView() -> Bool {
+        additionalSafeAreaInsets.bottom != 0
     }
 }

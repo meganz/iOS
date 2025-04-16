@@ -1,3 +1,4 @@
+import MEGAAppPresentation
 import MEGADesignToken
 import MEGADomain
 import MEGAL10n
@@ -126,5 +127,17 @@ extension NotificationsTableViewController {
             guard UIApplication.shared.canOpenURL(url) else { return }
             UIApplication.shared.open(url)
         }
+    }
+}
+
+// MARK: - BottomOverlayPresenterProtocol
+
+extension NotificationsTableViewController: BottomOverlayPresenterProtocol {
+    public func updateContentView(_ height: CGFloat) {
+        additionalSafeAreaInsets = .init(top: 0, left: 0, bottom: height, right: 0)
+    }
+    
+    public func hasUpdatedContentView() -> Bool {
+        additionalSafeAreaInsets.bottom != 0
     }
 }
