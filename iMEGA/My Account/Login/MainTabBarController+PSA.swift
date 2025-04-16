@@ -49,7 +49,7 @@ extension MainTabBarController {
     func updatePSABannerVisibility(for viewController: UIViewController) -> Bool {
         let psaHidden = isPSABannerHidden()
         
-        if !viewController.hidesBottomBarWhenPushed, let presenter = viewController as? (any BottomOverlayPresenterProtocol) {
+        if let presenter = viewController as? (any BottomOverlayPresenterProtocol) {
             psaHidden ? showPSA() : refreshPresenterContentView(presenter)
             return true
         } else {

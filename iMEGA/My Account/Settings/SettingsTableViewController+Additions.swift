@@ -1,3 +1,4 @@
+import MEGAAppPresentation
 import MEGADesignToken
 import MEGAL10n
 
@@ -66,5 +67,16 @@ extension SettingsTableViewController: MEGARequestDelegate {
         default:
             return
         }
+    }
+}
+
+// MARK: - BottomOverlayPresenterProtocol
+extension SettingsTableViewController: BottomOverlayPresenterProtocol {
+    public func updateContentView(_ height: CGFloat) {
+        additionalSafeAreaInsets = .init(top: 0, left: 0, bottom: height, right: 0)
+    }
+    
+    public func hasUpdatedContentView() -> Bool {
+        additionalSafeAreaInsets.bottom != 0
     }
 }
