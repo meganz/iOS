@@ -12,9 +12,7 @@ struct QRSettingsViewModelTests {
     @MainActor private func makeSUT(
         contactLinksOptionResult: Result<Bool, any Error> = .success(true)
     ) -> (viewModel: QRSettingsViewModel, useCase: MockContactLinkVerificationUseCase, collector: CommandCollector) {
-        let useCase = MockContactLinkVerificationUseCase(
-            contactLinksOptionResult: contactLinksOptionResult
-        )
+        let useCase = MockContactLinkVerificationUseCase(contactLinksOptionResult: contactLinksOptionResult)
         let viewModel = QRSettingsViewModel(contactLinkVerificationUseCase: useCase)
         let collector = CommandCollector()
         viewModel.invokeCommand = { command in
@@ -28,7 +26,7 @@ struct QRSettingsViewModelTests {
         let (viewModel, _, collector) = makeSUT(contactLinksOptionResult: .success(true))
         viewModel.dispatch(.onViewDidLoad)
         
-        try await Task.sleep(nanoseconds: 100_000_000)
+        await viewModel.updateAutoAcceptTask?.value
         
         #expect(collector.commands.contains { command in
             if case .refreshAutoAccept(let enabled) = command, enabled == true { return true }
@@ -41,7 +39,7 @@ struct QRSettingsViewModelTests {
         let (viewModel, useCase, _) = makeSUT()
         viewModel.dispatch(.autoAcceptDidChange(false))
         
-        try await Task.sleep(nanoseconds: 50_000_000)
+        await viewModel.autoAcceptTask?.value
         
         #expect(useCase.updateContactLinksOption_calledTimes == 1)
     }
@@ -50,9 +48,9 @@ struct QRSettingsViewModelTests {
     @MainActor func testResetContactLinkSuccess() async throws {
         let (viewModel, useCase, collector) = makeSUT()
         viewModel.dispatch(.resetContactLink)
-        
-        try await Task.sleep(nanoseconds: 50_000_000)
-        
+       
+        await viewModel.resetContactLinkTask?.value
+       
         #expect(useCase.resetContactLink_calledTimes == 1)
         #expect(collector.commands.contains { command in
             if case .contactLinkReset = command { return true }
