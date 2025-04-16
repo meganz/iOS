@@ -4,7 +4,6 @@
 
 #import "Helper.h"
 #import "MEGANode+MNZCategory.h"
-#import "MEGAReachabilityManager.h"
 #import "NSString+MNZCategory.h"
 #import "NSURL+MNZCategory.h"
 #import "UIApplication+MNZCategory.h"
@@ -29,6 +28,7 @@ static const NSUInteger MIN_SECOND = 10; // Save only where the users were playi
     
     if (self) {
         self.viewModel = [self makeViewModel];
+        MEGALogInfo(@"[MEGAAVViewController] init with url: %@", fileUrl);
         self.fileUrl    = fileUrl;
         self.node       = nil;
         _isFolderLink   = NO;
@@ -48,6 +48,7 @@ static const NSUInteger MIN_SECOND = 10; // Save only where the users were playi
         self.node            = folderLink ? [MEGASdk.sharedFolderLink authorizeNode:node] : node;
         _isFolderLink        = folderLink;
         self.fileUrl         = [self streamingPathWithNode:node];
+        MEGALogInfo(@"[MEGAAVViewController] init with node %@, is folderLink: %d, fileUrl: %@, apiForStreaming: %@", self.node, folderLink, self.fileUrl, apiForStreaming);
         _hasPlayedOnceBefore = NO;
     }
         
@@ -232,9 +233,11 @@ static const NSUInteger MIN_SECOND = 10; // Save only where the users were playi
     NSString *fingerprint;
 
     if (self.node) {
+        MEGALogInfo(@"[MEGAAVViewController] Getting fileFingerprint from node %@", self.node);
         fingerprint = self.node.fingerprint;
     } else {
         fingerprint = [MEGASdk.shared fingerprintForFilePath:self.fileUrl.path];
+        MEGALogInfo(@"[MEGAAVViewController] Getting fileFingerprint from sdk with result %@", fingerprint);
     }
     
     return fingerprint;
