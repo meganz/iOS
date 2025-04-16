@@ -17,7 +17,22 @@ final class QRSettingsViewModel: NSObject, ViewModelType {
     
     private let contactLinkVerificationUseCase: any ContactLinkVerificationUseCaseProtocol
     
-    private var autoAdditionTask: Task<Void, Never>? {
+    private var autoAdditionEventsTask: Task<Void, Never>? {
+        didSet {
+            oldValue?.cancel()
+        }
+    }
+    private(set) var updateAutoAcceptTask: Task<Void, Never>? {
+        didSet {
+            oldValue?.cancel()
+        }
+    }
+    private(set) var autoAcceptTask: Task<Void, Never>? {
+        didSet {
+            oldValue?.cancel()
+        }
+    }
+    private(set) var resetContactLinkTask: Task<Void, Never>? {
         didSet {
             oldValue?.cancel()
         }
@@ -28,23 +43,25 @@ final class QRSettingsViewModel: NSObject, ViewModelType {
     }
     
     deinit {
-        autoAdditionTask?.cancel()
+        autoAdditionEventsTask?.cancel()
+        updateAutoAcceptTask?.cancel()
+        autoAcceptTask?.cancel()
+        resetContactLinkTask?.cancel()
     }
     
     func dispatch(_ action: QRSettingsKeyAction) {
         switch action {
         case .onViewDidLoad:
-            Task {
+            updateAutoAcceptTask = Task {
                 await updateAutoAcceptCurrentValue()
                 observeQRCodeContactAutoAdditionEvents()
             }
-            
         case .autoAcceptDidChange(let bool):
-            Task {
+            autoAcceptTask = Task {
                 await updateContactLinksOption(enabled: bool)
             }
         case .resetContactLink:
-            Task {
+            resetContactLinkTask = Task {
                 await resetContactLink()
             }
         }
@@ -68,7 +85,7 @@ final class QRSettingsViewModel: NSObject, ViewModelType {
     }
     
     func observeQRCodeContactAutoAdditionEvents() {
-        autoAdditionTask = Task { [weak self, contactLinkVerificationUseCase] in
+        autoAdditionEventsTask = Task { [weak self, contactLinkVerificationUseCase] in
             for await _ in contactLinkVerificationUseCase.qrCodeContactAutoAdditionEvents {
                 await self?.updateAutoAcceptCurrentValue()
             }
