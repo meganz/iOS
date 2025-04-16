@@ -161,10 +161,10 @@
     if ([MEGAReachabilityManager isReachable]) {
         NSString *currentAddress = self.currentAddress;
         if ([self.lastKnownAddress isEqualToString:currentAddress]) {
-            MEGALogDebug(@"IP didn't change (%@), retrying...", self.lastKnownAddress);
+            MEGALogDebug(@"[Reachability] IP didn't change (%@), retrying...", self.lastKnownAddress);
             [self retryPendingConnections];
         } else {
-            MEGALogDebug(@"IP has changed (%@ -> %@), reconnecting...", self.lastKnownAddress, currentAddress);
+            MEGALogDebug(@"[Reachability] IP has changed (%@ -> %@), reconnecting...", self.lastKnownAddress, currentAddress);
             [self reconnect];
             self.lastKnownAddress = currentAddress;
         }
@@ -177,7 +177,7 @@
 }
 
 - (void)reconnect {
-    MEGALogDebug(@"Reconnecting...");
+    MEGALogDebug(@"[Reachability] Reconnecting...");
     [MEGASdk.shared reconnect];
     [MEGASdk.sharedFolderLink reconnect];
     [MEGAChatSdk.shared reconnect];
@@ -196,17 +196,17 @@
     self.mobileDataState = state;
     switch (state) {
         case kCTCellularDataRestrictedStateUnknown:
-            MEGALogInfo(@"Access to Mobile Data is unknonwn");
+            MEGALogInfo(@"[Reachability] Access to Mobile Data is unknown");
             self.mobileDataEnabled = YES; //To avoid possible issues with devices that do not have 'Mobile Data', this value is YES when the state is unknown.
             break;
             
         case kCTCellularDataRestricted:
-            MEGALogInfo(@"Access to Mobile Data is restricted");
+            MEGALogInfo(@"[Reachability] Access to Mobile Data is restricted");
             self.mobileDataEnabled = NO;
             break;
             
         case kCTCellularDataNotRestricted:
-            MEGALogInfo(@"Access to Mobile Data is NOT restricted");
+            MEGALogInfo(@"[Reachability] Access to Mobile Data is NOT restricted");
             self.mobileDataEnabled = YES;
             break;
     }

@@ -14,7 +14,7 @@ extension MEGAAVViewController {
     @objc func makeViewModel() -> AVViewModel {
         AVViewModel()
     }
-    
+
     @objc func bindToSubscriptions(
         movieStalled: (() -> Void)?
     ) -> NSMutableSet {
@@ -63,17 +63,19 @@ extension MEGAAVViewController {
         
         return NSMutableSet(set: subscriptions)
     }
-    
+
     @objc func bindPlayerItemStatus(playerItem: AVPlayerItem) -> NSMutableSet {
         var subscriptions = Set<AnyCancellable>()
-        
+
         playerItem.publisher(for: \.status)
             .sink { [weak self] status in
                 guard let self else { return }
                 switch status {
                 case .readyToPlay: player?.play()
+                case .failed: logError(for: playerItem)
                 default: break
                 }
+
                 didChangePlayerItemStatus(status)
             }
             .store(in: &subscriptions)
@@ -213,15 +215,23 @@ extension MEGAAVViewController {
             UserDefaults.standard.set(true, forKey: "presentPasscodeLater")
         }
     }
-    
+
     private func checkNetworkChanges() {
+        MEGALogDebug(
+                    """
+                    [MEGAAVViewController] Network changed - : isReachableViaWWAN: \(String(describing: MEGAReachabilityManager.isReachableViaWWAN))
+                    isReachableViaWiFi: \(String(describing: MEGAReachabilityManager.isReachableViaWiFi))
+                    hasCellularConnection: \(String(describing: MEGAReachabilityManager.hasCellularConnection))
+                    """
+        )
+
         guard let apiForStreaming,
               MEGAReachabilityManager.isReachable(), let node, let fileUrl else { return }
-        
         let oldFileURL = fileUrl
         setFileUrl(apiForStreaming: apiForStreaming, node: node)
-        
+
         if oldFileURL != fileUrl {
+            MEGALogDebug("[MEGAAVViewController] fileUrl changed from \(oldFileURL) to \(fileUrl)")
             let currentTime = self.player?.currentTime()
             let newPlayerItem = AVPlayerItem(url: fileUrl)
             setPlayerItemMetadata(playerItem: newPlayerItem, node: node)
@@ -233,15 +243,23 @@ extension MEGAAVViewController {
     }
     
     private func setFileUrl(apiForStreaming: MEGASdk, node: MEGANode) {
+        MEGALogDebug("[MEGAAVViewController]: setFileUrl with node: \(node)")
         if apiForStreaming.httpServerIsLocalOnly() {
             guard let url = apiForStreaming.httpServerGetLocalLink(node) else { return }
+            MEGALogDebug("[MEGAAVViewController]: setFileUrl with apiForStreaming.httpServerIsLocalOnly result: \(url)")
             fileUrl = url
         } else {
             guard let url = apiForStreaming.httpServerGetLocalLink(node)?.updatedURLWithCurrentAddress() else { return }
+            MEGALogDebug("[MEGAAVViewController]: setFileUrl updatedURLWithCurrentAddress result: \(url)")
             fileUrl = url
         }
     }
-    
+
+    private func logError(for playerItem: AVPlayerItem) {
+        guard let error = playerItem.error else { return }
+        MEGALogError("[MEGAAVViewController] Could play media \(playerItem) because of error: \(error)")
+    }
+
     @objc func streamingPath(node: MEGANode) -> URL? {
         guard let apiForStreaming else { return nil }
         let streamingInfoRepository = StreamingInfoRepository(sdk: apiForStreaming)
