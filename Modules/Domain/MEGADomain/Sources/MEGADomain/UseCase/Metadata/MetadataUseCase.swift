@@ -1,8 +1,9 @@
 import Foundation
+import MEGASwift
 
 public protocol MetadataUseCaseProtocol: Sendable {
-    func coordinateInTheFile(at url: URL) async -> Coordinate?
-    func formatCoordinate(_ coordinate: Coordinate) -> String
+    func formattedCoordinate(forFileURL url: URL) async -> String?
+    func formattedCoordinate(forFilePath path: String) async -> String?
 }
 
 public final class MetadataUseCase: MetadataUseCaseProtocol {
@@ -20,7 +21,21 @@ public final class MetadataUseCase: MetadataUseCaseProtocol {
         self.fileExtensionRepository = fileExtensionRepository
     }
 
-    public func coordinateInTheFile(at url: URL) async -> Coordinate? {
+    public func formattedCoordinate(forFileURL url: URL) async -> String? {
+        guard let coordinate = await coordinateInTheFile(at: url) else { return nil }
+        return formatCoordinate(coordinate)
+    }
+    
+    public func formattedCoordinate(forFilePath path: String) async -> String? {
+        let url = if let url = URL(string: path), url.isFileURL {
+            url
+        } else {
+            URL(fileURLWithPath: path)
+        }
+        return await formattedCoordinate(forFileURL: url)
+    }
+    
+    private func coordinateInTheFile(at url: URL) async -> Coordinate? {
         guard fileSystemRepository.fileExists(at: url) else { return nil }
 
         if fileExtensionRepository.isImage(url: url) {
@@ -32,7 +47,7 @@ public final class MetadataUseCase: MetadataUseCaseProtocol {
         return nil
     }
 
-    public func formatCoordinate(_ coordinate: Coordinate) -> String {
+    private func formatCoordinate(_ coordinate: Coordinate) -> String {
         metadataRepository.formatCoordinate(coordinate)
     }
 }

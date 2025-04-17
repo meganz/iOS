@@ -3,6 +3,8 @@ import MEGADomainMock
 import XCTest
 
 final class MetadataUseCaseTests: XCTestCase {
+    private let sampleCoordinate = Coordinate(latitude: 100, longitude: 100)
+    
     func testCoordinateInTheFile_whenFileDoesNotExists_shouldReturnNil() async {
         await assert(url: sampleURL(), fileExists: false, coordinate: nil, fileType: .unknown)
     }
@@ -43,10 +45,14 @@ final class MetadataUseCaseTests: XCTestCase {
         await assert(
             url: sampleURL(),
             fileExists: true,
-            coordinate: Coordinate(latitude: 100, longitude: 100),
+            coordinate: sampleCoordinate,
+            formattedCoordinate: "valid_formattedCoordinate",
             fileType: .image,
             fileExtensionActions: [.isImage(sampleURL())],
-            metadataRepositoryActions: [.coordinateForImage(sampleURL())]
+            metadataRepositoryActions: [
+                .coordinateForImage(sampleURL()),
+                .formatCoordinate(sampleCoordinate)
+            ]
         )
     }
 
@@ -54,21 +60,15 @@ final class MetadataUseCaseTests: XCTestCase {
         await assert(
             url: sampleURL(),
             fileExists: true,
-            coordinate: Coordinate(latitude: 100, longitude: 100),
+            coordinate: sampleCoordinate,
+            formattedCoordinate: "valid_formattedCoordinate",
             fileType: .video,
             fileExtensionActions: [.isImage(sampleURL()), .isVideo(sampleURL())],
-            metadataRepositoryActions: [.coordinateForVideo(sampleURL())]
+            metadataRepositoryActions: [
+                .coordinateForVideo(sampleURL()),
+                .formatCoordinate(sampleCoordinate)
+            ]
         )
-    }
-
-    func testFormatCoordinate_whenInvoked_shouldMatchTheResult() {
-        let formattedString = "100&100"
-        let metadataRepository = MockMetadataRepository(formattedString: formattedString)
-        let sut = makeSUT(metadataRepository: metadataRepository)
-        let coordinate = Coordinate(latitude: 100, longitude: 100)
-        let result = sut.formatCoordinate(coordinate)
-        XCTAssertEqual(metadataRepository.actions, [.formatCoordinate(coordinate)])
-        XCTAssertEqual(result, formattedString)
     }
 
     // MARK: - Private methods.
@@ -91,13 +91,18 @@ final class MetadataUseCaseTests: XCTestCase {
         url: URL,
         fileExists: Bool,
         coordinate: Coordinate?,
+        formattedCoordinate: String? = nil,
         fileType: MockFileExtensionRepository.FileType,
         fileExtensionActions: [MockFileExtensionRepository.Action] = [],
         metadataRepositoryActions: [MockMetadataRepository.Action] = [],
         file: StaticString = #filePath,
         line: UInt = #line
     ) async {
-        let metadataRepository = MockMetadataRepository(coordinate: coordinate)
+        let metadataRepository = if let formattedCoordinate {
+            MockMetadataRepository(coordinate: coordinate, formattedString: formattedCoordinate)
+        } else {
+            MockMetadataRepository(coordinate: coordinate)
+        }
         let fileSystemRepository = MockFileSystemRepository(fileExists: fileExists)
         let fileExtensionRepository = MockFileExtensionRepository(fileType: fileType)
         let sut = makeSUT(
@@ -105,9 +110,10 @@ final class MetadataUseCaseTests: XCTestCase {
             fileSystemRepository: fileSystemRepository,
             fileExtensionRepository: fileExtensionRepository
         )
-        let result = await sut.coordinateInTheFile(at: url)
-        XCTAssertEqual(result, coordinate, file: file, line: line)
+        let result = await sut.formattedCoordinate(forFileURL: url)
+        XCTAssertEqual(result, formattedCoordinate, file: file, line: line)
         XCTAssertEqual(fileExtensionRepository.actions, fileExtensionActions, file: file, line: line)
+        XCTAssertEqual(metadataRepository.actions, metadataRepositoryActions, file: file, line: line)
         XCTAssertEqual(metadataRepository.actions, metadataRepositoryActions, file: file, line: line)
     }
 

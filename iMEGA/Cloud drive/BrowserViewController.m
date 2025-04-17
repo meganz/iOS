@@ -438,15 +438,6 @@
     }
 }
 
-- (CancellableTransfer *)transferToUpload {
-    if (self.localpath) {
-        NSString *appData = [[NSString new] mnz_appDataToSaveCoordinates:self.localpath.mnz_coordinatesOfPhotoOrVideo];
-        return [CancellableTransfer.alloc initWithHandle:MEGAInvalidHandle parentHandle:self.parentNode.handle fileLinkURL:nil localFileURL:[NSURL fileURLWithPath:self.localpath] name:nil appData:appData priority:NO isFile:YES type:CancellableTransferTypeUpload];
-    } else {
-        return nil;
-    }
-}
-
 #pragma mark - IBActions
 
 - (IBAction)moveNode:(UIBarButtonItem *)sender {
@@ -542,10 +533,7 @@
     if (self.browserAction == BrowserActionOpenIn) {
         if ([MEGAReachabilityManager isReachableHUDIfNot]) {
             [self dismissAndSelectNodesIfNeeded:NO completion:^{
-                CancellableTransfer *cancellableTransfer = [self transferToUpload];
-                if (cancellableTransfer) {
-                    [NameCollisionRouterOCWrapper.alloc.init uploadFiles:@[cancellableTransfer] presenter: UIApplication.mnz_visibleViewController type: CancellableTransferTypeUpload];
-                }
+                [self.viewModel uploadWithLocalPath:self.localpath parentHandle:self.parentNode.handle presenter:UIApplication.mnz_visibleViewController completionHandler:^{}];
             }];
         }
     } else if (self.browserAction == BrowserActionShareExtension

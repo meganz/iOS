@@ -11,6 +11,7 @@ import MEGAFoundation
     private let filesSearchUseCase: any FilesSearchUseCaseProtocol
     private let sdk: MEGASdk
     private var parentNode: MEGANode?
+    private var metadataUseCase: any MetadataUseCaseProtocol
     
     private var parentNodeHandle: MEGAHandle? {
         if let parentNode {
@@ -29,12 +30,14 @@ import MEGAFoundation
          isSelectVideos: Bool,
          sensitiveDisplayPreferenceUseCase: some SensitiveDisplayPreferenceUseCaseProtocol,
          filesSearchUseCase: some FilesSearchUseCaseProtocol,
+         metadataUseCase: some MetadataUseCaseProtocol,
          sdk: MEGASdk = .shared) {
         self.parentNode = parentNode
         self.isChildBrowser = isChildBrowser
         self.isSelectVideos = isSelectVideos
         self.sensitiveDisplayPreferenceUseCase = sensitiveDisplayPreferenceUseCase
         self.filesSearchUseCase = filesSearchUseCase
+        self.metadataUseCase = metadataUseCase
         self.sdk = sdk
     }
     
@@ -90,6 +93,38 @@ import MEGAFoundation
         } else {
             nodes
         }
+    }
+    
+    @objc func upload(localPath: String?, parentHandle: UInt64, presenter: UIViewController) async {
+        guard let localPath else { return }
+        let localFileURL = if let url = URL(string: localPath), url.isFileURL { url } else { URL(fileURLWithPath: localPath) }
+        let appData: String? = await metadataUseCase.formattedCoordinate(forFilePath: localPath)
+        let transfer = CancellableTransfer(
+            handle: .invalid,
+            parentHandle: parentHandle,
+            fileLinkURL: nil,
+            localFileURL: localFileURL,
+            name: nil,
+            appData: appData,
+            priority: false,
+            isFile: true,
+            type: .upload
+        )
+        
+        let collisionEntity = NameCollisionEntity(
+            parentHandle: transfer.parentHandle,
+            name: transfer.localFileURL?.lastPathComponent ?? "",
+            isFile: transfer.isFile,
+            fileUrl: transfer.localFileURL
+        )
+        
+        NameCollisionViewRouter(
+            presenter: presenter,
+            transfers: [transfer],
+            nodes: nil,
+            collisions: [collisionEntity],
+            collisionType: .upload
+        ).start()
     }
     
     private func filterForVideoAndFolders(nodeList: MEGANodeList) -> MEGANodeList {
