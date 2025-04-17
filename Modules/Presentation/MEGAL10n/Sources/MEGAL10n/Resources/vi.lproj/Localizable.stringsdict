@@ -2729,7 +2729,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>Mặc dù chúng tôi đã liên hệ với quý khách qua email vào ngày [date], không gian lưu trữ của quý khách vẫn đầy. Quý khách hiện có %d tệp tin chiếm [storageSpace] trong tài khoản của mình, nên tài khoản của quý khách đã bị khóa. Xin nâng cấp lên gói [plan] để tăng cường dung lượng. Nếu quý khách không thực hiện hành động sớm, dữ liệu của quý khách sẽ bị xóa. Nâng cấp ngay bây giờ để bảo vệ các tệp tin của mình. [A]Tìm hiểu thêm về giới hạn không gian lưu trữ[/A]. </string>
+        <string>Mặc dù chúng tôi đã liên hệ với quý khách qua email vào ngày [date], không gian lưu trữ của quý khách vẫn đầy. Quý khách hiện có %d tệp tin chiếm [storageSpace] trong Ổ Mây của mình, nên tài khoản của quý khách đã bị khóa. Xin nâng cấp lên gói [plan] để tăng cường lưu trữ và mở khóa tài khoản của mình. Nếu quý khách không thực hiện hành động sớm, dữ liệu của quý khách sẽ bị xóa. Nâng cấp ngay bây giờ để bảo vệ các tệp tin của mình. [A]Tìm hiểu thêm về giới hạn không gian lưu trữ[/A]. </string>
       </dict>
     </dict>
     <key>overDiskQuota.paywall.notFinalWarning.multipleEmailsSent.message</key>
@@ -2743,7 +2743,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>Mặc dù chúng tôi đã liên hệ với quý khách qua email nhiều lần, không gian lưu trữ của quý khách vẫn đầy. Quý khách hiện có %d tệp tin chiếm [storageSpace] trong tài khoản của mình, nên tài khoản của quý khách đã bị khóa. Xin nâng cấp lên gói [plan] để tăng cường dung lượng. Nếu quý khách không thực hiện hành động sớm, dữ liệu của quý khách sẽ bị xóa. Nâng cấp ngay bây giờ để bảo vệ các tệp tin của mình. [A]Tìm hiểu thêm về giới hạn không gian lưu trữ[/A]. </string>
+        <string>Mặc dù chúng tôi đã liên hệ với quý khách qua email nhiều lần, nhưng không gian lưu trữ của quý khách vẫn đầy. Quý khách hiện có %d tệp tin chiếm [storageSpace] trong Ổ Mây của mình, nên tài khoản của quý khách đã bị khóa. Xin nâng cấp lên gói [plan] để tăng cường lưu trữ và mở khóa tài khoản của mình. Nếu quý khách không thực hiện hành động sớm, dữ liệu của quý khách sẽ bị xóa. Nâng cấp ngay bây giờ để bảo vệ các tệp tin của mình. [A]Tìm hiểu thêm về giới hạn không gian lưu trữ[/A]. </string>
       </dict>
     </dict>
     <key>overDiskQuota.paywall.notFinalWarning.unknownTimesEmailWasSent.message</key>
@@ -2757,7 +2757,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>Mặc dù chúng tôi đã liên hệ với quý khách qua email, không gian lưu trữ của quý khách vẫn đầy. Quý khách hiện có %d tệp tin chiếm [storageSpace] trong tài khoản của mình, nên tài khoản của quý khách đã bị khóa. Xin nâng cấp lên gói [plan] để tăng cường dung lượng. Nếu quý khách không thực hiện hành động sớm, dữ liệu của quý khách sẽ bị xóa. Nâng cấp ngay bây giờ để bảo vệ các tệp tin của mình. [A]Tìm hiểu thêm về giới hạn không gian lưu trữ[/A]. </string>
+        <string>Mặc dù chúng tôi đã liên hệ với quý khách qua email từ trước, nhưng không gian lưu trữ của quý khách vẫn đầy. Quý khách hiện có %d tệp tin chiếm [storageSpace] trong Ổ Mây của mình, nên tài khoản của quý khách đã bị khóa. Xin nâng cấp lên gói [plan] để tăng cường lưu trữ và mở khóa tài khoản của mình. Nếu quý khách không thực hiện hành động sớm, dữ liệu của quý khách sẽ bị xóa. Nâng cấp ngay bây giờ để bảo vệ các tệp tin của mình. [A]Tìm hiểu thêm về giới hạn không gian lưu trữ[/A]. </string>
       </dict>
     </dict>
     <key>settings.fileManagement.fileVersioning.enabledState.fileVersions</key>
@@ -2800,20 +2800,6 @@
         <string>d</string>
         <key>other</key>
         <string>Đã thêm %d mục vào “[A]”</string>
-      </dict>
-    </dict>
-    <key>chat.message.forwardMessage</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@count@</string>
-      <key>count</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>other</key>
-        <string></string>
       </dict>
     </dict>
   </dict>

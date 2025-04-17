@@ -673,7 +673,7 @@
 /* Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin' */
 "rubbishBinLabel"="Cestino";
 /* Title of one of the Settings sections where you can configure 'Advanced' options */
-"advanced"="Avanzato";
+"advanced"="Avanzate";
 /* Title of one of the Settings sections where you can configure "Security Options" of your MEGA account */
 "securityOptions"="Opzioni di Sicurezza";
 /* Title of one of the Settings sections where you can see things 'About' the app */
@@ -867,7 +867,7 @@
 /* Text next to a switch that allows disabling the HTTP protocol for transfers */
 "dontUseHttp"="Non usare HTTP";
 /* Footer text that explains when disabling the HTTP protocol for transfers may be useful */
-"transfersSectionFooter"="Attiva questa opzione solo se i tuoi trasferimenti non partono. Nelle situazioni normali HTTP soddisfa i requisiti di sicurezza in quanto tutti i trasferimenti sono già criptati.";
+"transfersSectionFooter"="Attiva questa opzione solo se i trasferimenti non iniziano. In condizioni normali, HTTP è soddisfacente in quanto tutti i trasferimenti sono già crittografati.";
 /* Title of the dialog displayed the first time that a user want to download a image. Asks if wants to export image files to the photo album after download in future and informs that user can change this option afterwards - (String as short as possible). */
 "Download options"="Opzioni download";
 /* Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped */
@@ -1233,7 +1233,7 @@
 /* Title that refers to the status of the chat (Either Online or Offline) */
 "status"="Stato";
 /* Title used in settings that enables the generation of link previews in the chat */
-"richUrlPreviews"="Enable sent link previews";
+"richUrlPreviews"="Attiva le anteprime dei link che invii";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
 "richPreviewsFooter"="Generates a preview of the links you send in chat. Note that retrieving these previews isn’t protected by zero-knowledge encryption.";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
@@ -1243,7 +1243,7 @@
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for videos. */
 "Use Mobile Data for Videos"="Utilizza la connessione dati per i video";
 /* A header in the Chat settings. This changes the user's status to Away after some time of inactivity. */
-"autoAway"="Inattività automatica";
+"autoAway"="Inattivo automatico";
 /* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
 "autoAway.footerDescription"="Imposta lo stato come Assente dopo [X] di inattività.";
 /* Label title to enable/disable the feature of the chat status that mantains your chosen status even if you don't have connected devices */
@@ -1351,7 +1351,7 @@
 /*  */
 "done"="Fatto";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
-"enableRichUrlPreviews"="Enable sent link previews";
+"enableRichUrlPreviews"="Attiva le anteprime dei link che invii";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
 "alwaysAllow"="Permetti sempre";
 /* Text indicating to the user that some action will be postpone. E.g. used for 'rich previews' and management of disk storage. */
@@ -1361,7 +1361,7 @@
 /*  */
 "never"="Mai";
 /* After several times (right now set to 3) that the user may had decided to click \"Not now\" (for when being asked if he/she wants a URL preview to be generated for a link, posted in a chat room), we change the \"Not now\" button to \"Never\". If the user clicks it, we ask for one final time - to ensure he wants to not be asked for this anymore and tell him that he can do that in Settings. */
-"richPreviewsConfirmation"="We’ll stop asking if you want previews of your sent links. You can re-enable sent link previews in the settings. Do you want to proceed?";
+"richPreviewsConfirmation"="Smetteremo di chiederti se desideri visualizzare le anteprime dei link che invii. Puoi riattivare le anteprime dei link che invii nelle impostazioni. Vuoi procedere?";
 /* Once a preview is generated for a message which contains URLs, the user can remove it. Same button is also shown during loading of the preview - and would cancel the loading (text of the button is the same in both cases). */
 "removePreview"="Rimuovi anteprima";
 /*  */
@@ -1909,9 +1909,9 @@
 /* uploads over storage quota warning dialog title */
 "Your upload(s) cannot proceed because your account is full"="Il tuo upload non può procedere perché il tuo Cloud Drive è pieno";
 /* Footer text to explain the meaning of the functionaly 'Last seen' of your chat status. */
-"Allow your contacts to see the last time you were active on MEGA."="Permetti ai tuoi contatti di vedere l'ultima volta in cui sei stato attivo su MEGA";
+"Allow your contacts to see the last time you were active on MEGA."="Permetti ai tuoi contatti di vedere l'ultima volta in cui hai fatto l'accesso su MEGA";
 /* Text to inform the user the 'Last seen' time of a contact is a long time ago (>= 65535 minutes) */
-"Last seen a long time ago"="Ultima visita molto tempo fa";
+"Last seen a long time ago"="Ultimo accesso molto tempo fa";
 /*  */
 "Today"="Oggi";
 /*  */
@@ -2023,7 +2023,7 @@
 /* Error shown when a Business account user (sub-user or admin) tries to remove a contact which is part of the same Business account. Please, keep the placeholder, it will be replaced with the name or email of the account, for example: Jane Appleseed or ja@mega.nz */
 "You cannot remove %1$s as a contact because they are part of your Business account."="Non puoi rimuovere %1$s come contatto in quanto fa parte del tuo account Business.";
 /* Label indicating that the passcode (pin) view will be displayed if the application goes back to foreground after being x time in background. Examples: require passcode immediately, require passcode after 5 minutes. */
-"Require Passcode"="Richiedi passcode";
+"Require Passcode"="Timer del passcode";
 /* Label indicating that the enter passcode (pin) view will be displayed immediately if the application goes back to foreground after being in background. */
 "Immediately"="Immediatamente";
 /* Popup notification text on mouse-over of taken down file. */
@@ -2227,7 +2227,7 @@
 /* Section title inside of Settings - User Interface, where you can change the app's launch. */
 "Launch"="Apri";
 /* Section title inside of Settings - Appearance, where you can change the app's layout. */
-"Layout"="Layout";
+"Layout"="Aspetto";
 /* Section title inside of Settings - Appearance, where you can change the app's icon. */
 "App Icon"="Icona dell'app";
 /* Footer text to explain what you could do in the Settings - User Interface - Launch section. */
@@ -2487,9 +2487,9 @@
 /* Cookie settings dialog footer text for Advertising Cookies */
 "settings.cookies.advertisingCookies.footer"="Utilizzati dai nostri partner pubblicitari approvati per raccogliere dati riguardo le tue attività di navigazione su internet e per personalizzare le pubblicità che vedi nei nostri servizi e su altri siti. Non accettare questi cookie implicherà che vedrai ancora pubblicità ma che non saranno personalizzate.";
 /* Ad settings header title */
-"settings.ad.header.title"="Ad settings";
+"settings.ad.header.title"="Impostazioni degli annunci";
 /* Ad settings menu title for Ad personalisation */
-"settings.ad.adPersonalisation.title"="Ad personalisation";
+"settings.ad.adPersonalisation.title"="Personalizzazione degli annunci";
 /* Text shown when the creation of a version as a new file was successful */
 "Version created as a new file successfully."="La versione è stata ripristinata come nuovo file";
 /* Text shown for the action create new file */
@@ -3133,7 +3133,7 @@
 /* Title of the Settings section where you can configure calls options of your MEGA account */
 "settings.section.calls.title"="Chiamate";
 /* Title of the sound notifications choice for calls when users join or left a call */
-"settings.section.calls.soundNotifications.title"="Sono delle notifiche";
+"settings.section.calls.soundNotifications.title"="Suono delle notifiche";
 /* Description of the sound notifications choice for calls when users join or left a call */
 "settings.section.calls.soundNotifications.description"="Senti un suono quando un utente entra o esce da una chiamata.";
 /* Contacts selection screen: Alert title shown when all the contacts are already added to the chatRoom */
@@ -3381,7 +3381,7 @@
 /* Alert title shown for video with options to resume playing the video or start from the beginning */
 "video.alert.resumeVideo.title"="Riprendere il video?";
 /* Alert message shown for video with options to resume playing the video or start from the beginning. %1$s will be replaced by name of the video. %2$s will be replaced by video timestamp */
-"video.alert.resumeVideo.message"="“%1$s“ will resume from %2$s";
+"video.alert.resumeVideo.message"="“%1$s” will resume from %2$s";
 /* Alert button title that will resume playing the video */
 "video.alert.resumeVideo.button.resume"="Riprendi";
 /* Alert button title that will start playing the video from the beginning */
@@ -4343,7 +4343,7 @@
 /* Alert message presented when generating shared links for nodes that contains sensitive content */
 "getNodeLink.sensitive.alert.message.multi"="Uno o più di questi oggetti sono impostati come nascosti. Una volta condivisi gli oggetti nascosti, chiunque disponga del link sarà in grado di vederli. Gli oggetti saranno comunque nascosti nel tuo Cloud drive.";
 /* Title of the Show last seen option in the chat settings */
-"settings.calls.status.showLastSeen.title"="Mostra l’ultima visita";
+"settings.calls.status.showLastSeen.title"="Mostra l’ultimo accesso";
 /* Snack bar message shown when local user raises hand in the call */
 "chat.call.raise-hand.snack-bar.own-user-raised-hand"="Hai alzato la tua mano";
 /* Snack bar message shown when another participant raises hand in the call */
@@ -4543,7 +4543,7 @@
 /* Label title in chat media image quality for uploads */
 "settings.chat.mediaQuality.title"="Chat media quality";
 /* Title used in settings that enables the generation of link previews in the chat */
-"settings.chat.richUrlPreview.title"="Enable sent link previews";
+"settings.chat.richUrlPreview.title"="Attiva le anteprime dei link che invii";
 /* Title used in settings that enables the generation of link previews in the chat */
 "settings.chat.richUrlPreview.subtitle"="Generates a preview of the links you send in chat. Note that retrieving these previews isn’t protected by zero-knowledge encryption.";
 /* Title in chat status settings */
@@ -4551,9 +4551,9 @@
 /* Title section header in set status settings */
 "settings.chat.status.setStatus.statusSettings.title"="Impostazioni dello stato";
 /* Title in set status settings for show last seen */
-"settings.chat.status.setStatus.statusSettings.lastSeen.title"="Mostra l’ultima visita";
+"settings.chat.status.setStatus.statusSettings.lastSeen.title"="Mostra l’ultimo accesso";
 /* Subtitle in set status settings for show last seen */
-"settings.chat.status.setStatus.statusSettings.lastSeen.subtitle"="Allow contacts to see the last time you were active on MEGA";
+"settings.chat.status.setStatus.statusSettings.lastSeen.subtitle"="Permetti ai contatti di vedere l'ultima volta in cui hai fatto l'accesso su MEGA";
 /* Title in set status settings for auto away */
 "settings.chat.status.setStatus.statusSettings.autoAway.title"="Set status as Away";
 /* Subtitle in set status settings for auto away minutes. Placeholder will be replaced by 'X hour(s) Y minute(s)' */

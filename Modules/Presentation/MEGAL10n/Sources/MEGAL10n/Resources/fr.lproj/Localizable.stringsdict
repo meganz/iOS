@@ -3505,9 +3505,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Although we have contacted you by email on [date], your storage is still full. You have %d file taking up [storageSpace] in your drive, and your account has been locked. Upgrade to a [plan] plan to increase your storage. If you don’t take action soon, your data will be deleted. Upgrade now to protect your files. [A]Learn more about your storage limits[/A]. </string>
+        <string>Bien que nous vous ayons contacté par courriel au [date], votre espace de stockage est toujours plein. Vous avez %d fichier occupant [storageSpace] sur votre Disque nuagique, et votre compte a été verrouillé. Passez à un [plan] prévoyez d'augmenter votre espace de stockage et de déverrouiller votre compte. Si vous n'agissez pas rapidement, vos données seront supprimées. Effectuez une mise à niveau dès maintenant pour protéger votre fichier. [A]En apprendre davantage sur vos limites d'espace de stockage[/A]. </string>
+        <key>many</key>
+        <string>Bien que nous vous ayons contacté par courriel au [date], votre espace de stockage est toujours plein. Vous avez %d fichiers occupant [storageSpace] sur votre Disque nuagique, et votre compte a été verrouillé. Passez à un [plan] prévoyez d'augmenter votre espace de stockage et de déverrouiller votre compte. Si vous n'agissez pas rapidement, vos données seront supprimées. Effectuez une mise à niveau dès maintenant pour protéger vos fichiers. [A]En apprendre davantage sur vos limites d'espace de stockage[/A]. </string>
         <key>other</key>
-        <string>Although we have contacted you by email on [date], your storage is still full. You have %d files taking up [storageSpace] in your drive, and your account has been locked. Upgrade to a [plan] plan to increase your storage. If you don’t take action soon, your data will be deleted. Upgrade now to protect your files. [A]Learn more about your storage limits[/A]. </string>
+        <string>Bien que nous vous ayons contacté par courriel au [date], votre espace de stockage est toujours plein. Vous avez %d fichiers occupant [storageSpace] sur votre Disque nuagique, et votre compte a été verrouillé. Passez à un [plan] prévoyez d'augmenter votre espace de stockage et de déverrouiller votre compte. Si vous n'agissez pas rapidement, vos données seront supprimées. Effectuez une mise à niveau dès maintenant pour protéger vos fichiers. [A]En apprendre davantage sur vos limites d'espace de stockage[/A]. </string>
       </dict>
     </dict>
     <key>overDiskQuota.paywall.notFinalWarning.multipleEmailsSent.message</key>
@@ -3521,9 +3523,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Although we have contacted you multiple times by email, your storage is still full. You have %d file taking up [storageSpace] in your drive, and your account has been locked. Upgrade to a [plan] plan to increase your storage. If you don’t take action soon, your data will be deleted. Upgrade now to protect your files. [A]Learn more about your storage limits[/A]. </string>
+        <string>Bien que nous vous ayons contacté plusieurs fois par courriel, votre espace de stockage est toujours plein. Vous avez %d fichiers occupant [storageSpace] sur votre Disque nuagique, et votre compte a été verrouillé. Passez à un [plan] prévoyez d'augmenter votre espace de stockage et de déverrouiller votre compte. Si vous n'agissez pas rapidement, vos données seront supprimées. Effectuez une mise à niveau dès maintenant pour protéger votre fichier. [A]En apprendre davantage sur vos limites d'espace de stockage[/A]. </string>
+        <key>many</key>
+        <string>Bien que nous vous ayons contacté plusieurs fois par courriel, votre espace de stockage est toujours plein. Vous avez %d fichiers occupant [storageSpace] sur votre Disque nuagique, et votre compte a été verrouillé. Passez à un [plan] prévoyez d'augmenter votre espace de stockage et de déverrouiller votre compte. Si vous n'agissez pas rapidement, vos données seront supprimées. Effectuez une mise à niveau dès maintenant pour protéger vos fichiers. [A]En apprendre davantage sur vos limites d'espace de stockage[/A]. </string>
         <key>other</key>
-        <string>Although we have contacted you multiple times by email, your storage is still full. You have %d files taking up [storageSpace] in your drive, and your account has been locked. Upgrade to a [plan] plan to increase your storage. If you don’t take action soon, your data will be deleted. Upgrade now to protect your files. [A]Learn more about your storage limits[/A]. </string>
+        <string>Bien que nous vous ayons contacté plusieurs fois par courriel, votre espace de stockage est toujours plein. Vous avez %d fichiers occupant [storageSpace] sur votre Disque nuagique, et votre compte a été verrouillé. Passez à un [plan] prévoyez d'augmenter votre espace de stockage et de déverrouiller votre compte. Si vous n'agissez pas rapidement, vos données seront supprimées. Effectuez une mise à niveau dès maintenant pour protéger vos fichiers. [A]En apprendre davantage sur vos limites d'espace de stockage[/A]. </string>
       </dict>
     </dict>
     <key>overDiskQuota.paywall.notFinalWarning.unknownTimesEmailWasSent.message</key>
@@ -3537,9 +3541,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Although we have contacted you by email, your storage is still full. You have %d file taking up [storageSpace] in your drive, and your account has been locked. Upgrade to a [plan] plan to increase your storage. If you don’t take action soon, your data will be deleted. Upgrade now to protect your files. [A]Learn more about your storage limits[/A]. </string>
+        <string>Bien que nous vous ayons contacté par courriel, votre espace de stockage est toujours plein. Vous avez %d fichier occupant [storageSpace] sur votre Disque nuagique, et votre compte a été verrouillé. Passez à un [plan] prévoyez d'augmenter votre espace de stockage et de déverrouiller votre compte. Si vous n'agissez pas rapidement, vos données seront supprimées. Effectuez une mise à niveau dès maintenant pour protéger votre fichier. [A]En apprendre davantage sur vos limites d'espace de stockage[/A]. </string>
+        <key>many</key>
+        <string>Bien que nous vous ayons contacté par courriel, votre espace de stockage est toujours plein. Vous avez %d fichiers occupant [storageSpace] sur votre Disque nuagique, et votre compte a été verrouillé. Passez à un [plan] prévoyez d'augmenter votre espace de stockage et de déverrouiller votre compte. Si vous n'agissez pas rapidement, vos données seront supprimées. Effectuez une mise à niveau dès maintenant pour protéger vos fichiers. [A]En apprendre davantage sur vos limites d'espace de stockage[/A].</string>
         <key>other</key>
-        <string>Although we have contacted you by email, your storage is still full. You have %d file taking up [storageSpace] in your drive, and your account has been locked. Upgrade to a [plan] plan to increase your storage. If you don’t take action soon, your data will be deleted. Upgrade now to protect your files. [A]Learn more about your storage limits[/A].  </string>
+        <string>Bien que nous vous ayons contacté par courriel, votre espace de stockage est toujours plein. Vous avez %d fichiers occupant [storageSpace] sur votre Disque nuagique, et votre compte a été verrouillé. Passez à un [plan] prévoyez d'augmenter votre espace de stockage et de déverrouiller votre compte. Si vous n'agissez pas rapidement, vos données seront supprimées. Effectuez une mise à niveau dès maintenant pour protéger vos fichiers. [A]En apprendre davantage sur vos limites d'espace de stockage[/A].</string>
       </dict>
     </dict>
     <key>settings.fileManagement.fileVersioning.enabledState.fileVersions</key>
@@ -3594,24 +3600,6 @@
         <string>Ajouté %d éléments à «[A]»</string>
         <key>other</key>
         <string>Ajouté %d éléments à «[A]»</string>
-      </dict>
-    </dict>
-    <key>chat.message.forwardMessage</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@count@</string>
-      <key>count</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>one</key>
-        <string></string>
-        <key>many</key>
-        <string></string>
-        <key>other</key>
-        <string></string>
       </dict>
     </dict>
   </dict>

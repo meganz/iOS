@@ -3505,11 +3505,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Aunque te contactamos por correo electrónico el [date], tu almacenamiento sigue lleno. Tienes %d archivo que ocupa [storageSpace] en tu nube, y tu cuenta se ha bloqueado. Amplía a un plan [plan] para aumentar tu almacenamiento. Si no tomas medidas pronto, tus datos serán eliminados. Amplía ahora para proteger tus archivos. [A]Obtén más información sobre tus límites de almacenamiento[/A].</string>
+        <string>Aunque te contactamos por correo electrónico el [date], tu almacenamiento sigue lleno. Tienes %d archivo que ocupa [storageSpace] en tu Nube, y tu cuenta se ha bloqueado. Amplía a un plan [plan] para aumentar tu almacenamiento y desbloquear tu cuenta. Si no tomas medidas pronto, tus datos serán eliminados. Amplía ahora para proteger tus archivos. [A]Obtén más información sobre tus límites de almacenamiento[/A].</string>
         <key>many</key>
-        <string>Aunque te contactamos por correo electrónico el [date], tu almacenamiento sigue lleno. Tienes %d de archivos que ocupan [storageSpace] en tu nube, y tu cuenta se ha bloqueado. Amplía a un plan [plan] para aumentar tu almacenamiento. Si no tomas medidas pronto, tus datos serán eliminados. Amplía ahora para proteger tus archivos. [A]Obtén más información sobre tus límites de almacenamiento[/A].</string>
+        <string>Aunque te contactamos por correo electrónico el [date], tu almacenamiento sigue lleno. Tienes %d de archivos que ocupan [storageSpace] en tu Nube, y tu cuenta se ha bloqueado. Amplía a un plan [plan] para aumentar tu almacenamiento y desbloquear tu cuenta. Si no tomas medidas pronto, tus datos serán eliminados. Amplía ahora para proteger tus archivos. [A]Obtén más información sobre tus límites de almacenamiento[/A].</string>
         <key>other</key>
-        <string>Aunque te contactamos por correo electrónico el [date], tu almacenamiento sigue lleno. Tienes %d archivos que ocupan [storageSpace] en tu nube, y tu cuenta se ha bloqueado. Amplía a un plan [plan] para aumentar tu almacenamiento. Si no tomas medidas pronto, tus datos serán eliminados. Amplía ahora para proteger tus archivos. [A]Obtén más información sobre tus límites de almacenamiento[/A].</string>
+        <string>Aunque te contactamos por correo electrónico el [date], tu almacenamiento sigue lleno. Tienes %d archivos que ocupan [storageSpace] en tu Nube, y tu cuenta se ha bloqueado. Amplía a un plan [plan] para aumentar tu almacenamiento y desbloquear tu cuenta. Si no tomas medidas pronto, tus datos serán eliminados. Amplía ahora para proteger tus archivos. [A]Obtén más información sobre tus límites de almacenamiento[/A].</string>
       </dict>
     </dict>
     <key>overDiskQuota.paywall.notFinalWarning.multipleEmailsSent.message</key>
@@ -3523,11 +3523,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Aunque te contactamos por correo electrónico varias veces, tu almacenamiento sigue lleno. Tienes %d archivo que ocupa [storageSpace] en tu nube, y tu cuenta se ha bloqueado. Amplía a un plan [plan] para aumentar tu almacenamiento. Si no tomas medidas pronto, tus datos serán eliminados. Amplía ahora para proteger tus archivos. [A]Obtén más información sobre tus límites de almacenamiento[/A].</string>
+        <string>Aunque te contactamos varias veces por correo electrónico, tu almacenamiento sigue lleno. Tienes %d archivo que ocupa [storageSpace] en tu Nube, y tu cuenta se ha bloqueado. Amplía a un plan [plan] para aumentar tu almacenamiento y desbloquear tu cuenta. Si no tomas medidas pronto, tus datos serán eliminados. Amplía ahora para proteger tus archivos. [A]Obtén más información sobre tus límites de almacenamiento[/A].</string>
         <key>many</key>
-        <string>Aunque te contactamos por correo electrónico varias veces, tu almacenamiento sigue lleno. Tienes %d de archivos que ocupan [storageSpace] en tu nube, y tu cuenta se ha bloqueado. Amplía a un plan [plan] para aumentar tu almacenamiento. Si no tomas medidas pronto, tus datos serán eliminados. Amplía ahora para proteger tus archivos. [A]Obtén más información sobre tus límites de almacenamiento[/A].</string>
+        <string>Aunque te contactamos varias veces por correo electrónico, tu almacenamiento sigue lleno. Tienes %d de archivos que ocupan [storageSpace] en tu Nube, y tu cuenta se ha bloqueado. Amplía a un plan [plan] para aumentar tu almacenamiento y desbloquear tu cuenta. Si no tomas medidas pronto, tus datos serán eliminados. Amplía ahora para proteger tus archivos. [A]Obtén más información sobre tus límites de almacenamiento[/A].</string>
         <key>other</key>
-        <string>Aunque te contactamos por correo electrónico varias veces, tu almacenamiento sigue lleno. Tienes %d archivos que ocupan [storageSpace] en tu nube, y tu cuenta se ha bloqueado. Amplía a un plan [plan] para aumentar tu almacenamiento. Si no tomas medidas pronto, tus datos serán eliminados. Amplía ahora para proteger tus archivos. [A]Obtén más información sobre tus límites de almacenamiento[/A].</string>
+        <string>Aunque te contactamos varias veces por correo electrónico, tu almacenamiento sigue lleno. Tienes %d archivos que ocupan [storageSpace] en tu Nube, y tu cuenta se ha bloqueado. Amplía a un plan [plan] para aumentar tu almacenamiento y desbloquear tu cuenta. Si no tomas medidas pronto, tus datos serán eliminados. Amplía ahora para proteger tus archivos. [A]Obtén más información sobre tus límites de almacenamiento[/A].</string>
       </dict>
     </dict>
     <key>overDiskQuota.paywall.notFinalWarning.unknownTimesEmailWasSent.message</key>
@@ -3541,9 +3541,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Although we have contacted you by email, your storage is still full. You have %d file taking up [storageSpace] in your drive, and your account has been locked. Upgrade to a [plan] plan to increase your storage. If you don’t take action soon, your data will be deleted. Upgrade now to protect your files. [A]Learn more about your storage limits[/A]. </string>
+        <string>Aunque te contactamos por correo electrónico, tu almacenamiento sigue lleno. Tienes %d archivo que ocupa [storageSpace] en tu Nube, y tu cuenta se ha bloqueado. Amplía a un plan [plan] para aumentar tu almacenamiento y desbloquear tu cuenta. Si no tomas medidas pronto, tus datos serán eliminados. Amplía ahora para proteger tus archivos. [A]Obtén más información sobre tus límites de almacenamiento[/A].</string>
+        <key>many</key>
+        <string>Aunque te contactamos por correo electrónico, tu almacenamiento sigue lleno. Tienes %d de archivos que ocupan [storageSpace] en tu Nube, y tu cuenta se ha bloqueado. Amplía a un plan [plan] para aumentar tu almacenamiento y desbloquear tu cuenta. Si no tomas medidas pronto, tus datos serán eliminados. Amplía ahora para proteger tus archivos. [A]Obtén más información sobre tus límites de almacenamiento[/A].</string>
         <key>other</key>
-        <string>Although we have contacted you by email, your storage is still full. You have %d file taking up [storageSpace] in your drive, and your account has been locked. Upgrade to a [plan] plan to increase your storage. If you don’t take action soon, your data will be deleted. Upgrade now to protect your files. [A]Learn more about your storage limits[/A].  </string>
+        <string>Aunque te contactamos por correo electrónico, tu almacenamiento sigue lleno. Tienes %d archivos que ocupan [storageSpace] en tu Nube, y tu cuenta se ha bloqueado. Amplía a un plan [plan] para aumentar tu almacenamiento y desbloquear tu cuenta. Si no tomas medidas pronto, tus datos serán eliminados. Amplía ahora para proteger tus archivos. [A]Obtén más información sobre tus límites de almacenamiento[/A].</string>
       </dict>
     </dict>
     <key>settings.fileManagement.fileVersioning.enabledState.fileVersions</key>
@@ -3598,24 +3600,6 @@
         <string>Se han añadido %d de elementos a “[A]”</string>
         <key>other</key>
         <string>Se han añadido %d elementos a “[A]”</string>
-      </dict>
-    </dict>
-    <key>chat.message.forwardMessage</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@count@</string>
-      <key>count</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>one</key>
-        <string></string>
-        <key>many</key>
-        <string></string>
-        <key>other</key>
-        <string></string>
       </dict>
     </dict>
   </dict>

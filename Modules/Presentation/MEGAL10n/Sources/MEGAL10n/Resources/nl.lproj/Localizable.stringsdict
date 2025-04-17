@@ -3117,9 +3117,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Hoewel we per e-mail contact met u hebben opgenomen op [date], is uw opslag nog steeds vol. U heeft %d bestand die neemt [storageSpace] beslag op uw schijf en uw account is vergrendeld. Upgrade naar een [plan] abonnement om uw opslag uit te breiden. Als u niet snel actie onderneemt, worden uw gegevens verwijderd. Upgrade nu om uw bestanden te beschermen. [A]Meer informatie over uw opslaglimieten[/A]. </string>
+        <string>Hoewel we per e-mail contact met u hebben opgenomen op [date], is uw opslag is nog steeds vol. U heeft %d bestand die [storageSpace]beslag neemt op uw Cloud-schijf en uw account is vergrendeld. Upgrade naar een [plan] abonnement om uw opslag te vergroten en uw account te ontgrendelen. Als u niet snel actie onderneemt, worden uw gegevens verwijderd. Voer nu een upgrade uit om uw bestand te beschermen. [A]Meer informatie over uw opslaglimieten[/A]. </string>
         <key>other</key>
-        <string>Hoewel we per e-mail contact met u hebben opgenomen op [date], is uw nog steeds vol. U heeft %d bestanden die [storageSpace] in beslag nemen op uw schijf en uw account is vergrendeld. Upgrade naar een [plan] abonnement om uw opslag uit te breiden. Als u niet snel actie onderneemt, worden uw gegevens verwijderd. Upgrade nu om uw bestanden te beschermen. [A]Meer informatie over uw  opslaglimieten[/A]. </string>
+        <string>Hoewel we per e-mail contact met u hebben opgenomen op [date], is uw opslag is nog steeds vol. U heeft%d bestanden die[storageSpace]  in beslag nemen op uw Cloud-schijf en uw account is vergrendeld. Upgrade naar een [plan] abonnement om uw opslag te vergroten en uw account te ontgrendelen. Als u niet snel actie onderneemt, worden uw gegevens verwijderd. Upgrade nu om uw bestanden te beschermen. [A]Meer informatie over uw opslaglimieten[/A]. </string>
       </dict>
     </dict>
     <key>overDiskQuota.paywall.notFinalWarning.multipleEmailsSent.message</key>
@@ -3133,9 +3133,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Hoewel we meerdere keren per e-mail contact met u hebben opgenomen, is uw opslag nog steeds vol. U heeft%d bestand die [storageSpace] beslag neemt op uw schijf en uw account is vergrendeld. Upgrade naar een [plan] abonnement om uw opslag uit te breiden. Als u niet snel actie onderneemt, worden uw gegevens verwijderd. Upgrade nu om uw bestanden te beschermen. [A]Meer informatie over uw opslaglimieten[/A]. </string>
+        <string>Hoewel we meerdere keren per e-mail contact met u hebben opgenomen, is uw opslag nog steeds vol. U heeft %d bestand die[storageSpace] beslag neemt op uw Cloud-schijf en uw account is vergrendeld. Upgrade naar een [plan] abonnement om uw opslag te vergroten en uw account te ontgrendelen. Als u niet snel actie onderneemt, worden uw gegevens verwijderd. Upgrade nu om uw bestand te beschermen. [A]Meer informatie over uw opslaglimieten[/A]. </string>
         <key>other</key>
-        <string>Hoewel we meerdere keren per e-mail contact met u hebben opgenomen, is uw opslag nog steeds vol. U heeft %d bestanden die in [storageSpace] beslag nemen op uw schijf en uw account is vergrendeld. Upgrade naar een [plan] abonnement om uw opslag uit te breiden. Als u niet snel actie onderneemt, worden uw gegevens verwijderd. Upgrade nu om uw bestanden te beschermen. [A]Meer informatie over uw opslaglimieten[/A]. </string>
+        <string>Hoewel we meerdere keren per e-mail contact met u hebben opgenomen, is uw opslag nog steeds vol. U heeft %d bestanden die [storageSpace]  in beslag nemen op uw Cloud-schijf en uw account is vergrendeld. Upgrade naar een [plan] abonnement om uw opslag te vergroten en uw account te ontgrendelen. Als u niet snel actie onderneemt, worden uw gegevens verwijderd. Voer nu een upgrade uit om uw bestanden te beschermen. [A]Meer informatie over uw opslaglimieten[/A]. </string>
       </dict>
     </dict>
     <key>overDiskQuota.paywall.notFinalWarning.unknownTimesEmailWasSent.message</key>
@@ -3149,9 +3149,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Hoewel we per e-mail contact met je hebben opgenomen, is je opslag nog steeds vol. Je hebt %d bestand in beslag nemen [storageSpace] op uw schijf en uw account is vergrendeld. Upgrade naar een [plan] abonnement om je opslag uit te breiden. Als je niet snel actie onderneemt, worden je gegevens verwijderd. Upgrade nu om je bestanden te beschermen. [A]Meer informatie over je opslaglimieten[/A]. </string>
+        <string>Hoewel we per e-mail contact met je hebben opgenomen, is je opslag nog steeds vol. U heeft %dbestanden die [storageSpace]beslag innemen  op uw Cloud-schijf en uw account is vergrendeld. Upgrade naar een [plan] abonnement om uw opslag te vergroten en uw account te ontgrendelen. Als u niet snel actie onderneemt, worden uw gegevens verwijderd. Voer nu een upgrade uit om je bestand te beschermen. [A]Meer informatie over uw opslaglimieten[/A]. </string>
         <key>other</key>
-        <string>Hoewel we per e-mail contact met u hebben opgenomen, is uw opslag nog steeds vol. U heeft %d bestand die [storageSpace] beslag opneemt op uw schijf en uw account is vergrendeld. Upgrade naar een [plan] abonnement om uw opslag uit te breiden. Als u niet snel actie onderneemt, worden uw gegevens verwijderd. Upgrade nu om uw bestanden te beschermen. [A]Meer informatie over uw opslaglimieten[/A].  </string>
+        <string>Hoewel we per e-mail contact met je hebben opgenomen, is uw opslag nog steeds vol. U heeft %d bestanden die [storageSpace] in beslag nemen  op uw Cloud-schijf en uw account is vergrendeld. Upgrade naar een [plan] abonnement om uw opslag te vergroten en uw account te ontgrendelen. Als u niet snel actie onderneemt, worden uw gegevens verwijderd. Upgrade nu om uw bestanden te beschermen. [A]Meer informatie over uw opslaglimieten[/A].</string>
       </dict>
     </dict>
     <key>settings.fileManagement.fileVersioning.enabledState.fileVersions</key>
@@ -3200,22 +3200,6 @@
         <string>Toegevoegd naar “[A]” </string>
         <key>other</key>
         <string>%d items naar &quot;[A]” toegeoegd</string>
-      </dict>
-    </dict>
-    <key>chat.message.forwardMessage</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@count@</string>
-      <key>count</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>one</key>
-        <string></string>
-        <key>other</key>
-        <string></string>
       </dict>
     </dict>
   </dict>

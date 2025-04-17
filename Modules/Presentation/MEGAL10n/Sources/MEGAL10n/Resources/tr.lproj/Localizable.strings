@@ -207,7 +207,7 @@
 /*  */
 "folderLinkUnavailableText4"="The folder link has been disabled by the user.";
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
-"noInternetConnection"="No internet connection";
+"noInternetConnection"="İnternet bağlantısı yok";
 /* Title shown when a folder doesn't have any files */
 "emptyFolder"="Empty folder";
 /* Title shown when your Cloud Drive is empty, when you don't have any files. */
@@ -1587,7 +1587,7 @@
 /* Used as a message in the "Password reminder" dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data. */
 "testPasswordLogoutText"="You are about to log out, please test your password to ensure you remember it. If you lose your password, you will lose access to your MEGA data.";
 /* state previous to import a file */
-"loading"="Loading…";
+"loading"="Yükleniyor…";
 /*  */
 "next"="Next";
 /* Button title to allow the user ignore something */
@@ -1687,7 +1687,7 @@
 /* Footer text shown under the Camera setting to explain the option 'Save in Photos' */
 "Save a copy of the images and videos taken from the MEGA app in your device’s media library."="Save a copy of the images and videos taken from the MEGA App in your device’s media library.";
 /* Title of the Spotlight Search section */
-"Search"="Search";
+"Search"="Ara";
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
 "You hold the keys"="You hold the keys";
 /* Description shown in a page of the onboarding screens explaining the encryption paradigm */
@@ -3381,7 +3381,7 @@
 /* Alert title shown for video with options to resume playing the video or start from the beginning */
 "video.alert.resumeVideo.title"="Resume video?";
 /* Alert message shown for video with options to resume playing the video or start from the beginning. %1$s will be replaced by name of the video. %2$s will be replaced by video timestamp */
-"video.alert.resumeVideo.message"="“%1$s“ will resume from %2$s";
+"video.alert.resumeVideo.message"="“%1$s” will resume from %2$s";
 /* Alert button title that will resume playing the video */
 "video.alert.resumeVideo.button.resume"="Resume";
 /* Alert button title that will start playing the video from the beginning */

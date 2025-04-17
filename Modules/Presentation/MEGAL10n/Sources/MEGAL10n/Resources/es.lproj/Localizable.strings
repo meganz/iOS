@@ -179,7 +179,7 @@
 /* Message shown when a download starts */
 "downloadStarted"="Descarga iniciada";
 /* Title for the folder link view */
-"folderLink"="Enlace de la carpeta";
+"folderLink"="Enlace de carpeta";
 /* Title for the album/collection link view */
 "albumLink"="Enlace del álbum";
 /* Alert title for invalid album link */
@@ -2257,7 +2257,7 @@
 /* Title shown when there are no shared files */
 "No Shared Files"="No hay archivos compartidos";
 /* Error message shown when opening a folder link which doesn’t exist */
-"Folder link unavailable"="Enlace de la carpeta no disponible";
+"Folder link unavailable"="Enlace de carpeta no disponible";
 /* Error message shown when opening a file link which doesn’t exist */
 "File link unavailable"="Enlace del archivo no disponible";
 /* Header of block with all shared files in chat. */
@@ -4595,6 +4595,6 @@
 /* Title for note to self chat, used in the messages view but also in lists where note to self is diplayed */
 "chat.messages.noteToSelf.title"="Mis notas";
 /* Title for note to self chat messages view header, at the top the chat room */
-"chat.messages.noteToSelf.header.title"="Solo para tus ojos";
+"chat.messages.noteToSelf.header.title"="Guárdalo para ti";
 /* Description text for note to self chat messages view header, at the top of the chat room */
 "chat.messages.noteToSelf.header.description"="Un espacio privado para fotografías, información importante o grandes ideas. Siempre sincronizado y protegido con cifrado de conocimiento cero.";
