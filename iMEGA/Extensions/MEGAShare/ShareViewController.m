@@ -88,7 +88,7 @@
 #else
     [MEGASdk setLogLevel:MEGALogLevelFatal];
 #endif
-
+    
     self.sharedUserDefaults = [[NSUserDefaults alloc] initWithSuiteName:MEGAGroupIdentifier];
     if ([self.sharedUserDefaults boolForKey:@"logging"]) {
         NSFileManager *fileManager = [NSFileManager defaultManager];
@@ -478,7 +478,7 @@
                                                                      UTTypeVCard.identifier : @[NSData.class],
                                                                      UTTypePlainText.identifier : @[NSString.class],
                                                                      UTTypeData.identifier : @[NSURL.class]};
-
+    
     for (NSItemProvider *itemProvider in content.attachments) {
         BOOL unsupported = YES;
         
@@ -615,7 +615,7 @@
             case ShareAttachmentTypeFolder: {
                 NSURL *url = attachment.content;
                 [self uploadData:url withName:attachment.name toParentNode:parentNode isSourceMovable:NO isFile:NO];
-
+                
                 break;
             }
                 
@@ -726,22 +726,22 @@
     }
     NSURLSessionDownloadTask *downloadTask = [[NSURLSession sharedSession] downloadTaskWithURL:urlToDownload
                                                                              completionHandler:^(NSURL *location, NSURLResponse *response, NSError *error) {
-                                                                                 if (error) {
-                                                                                     MEGALogError(@"Share extension error downloading resource at %@: %@", urlToDownload, error);
-                                                                                     [self oneUnsupportedMore];
-                                                                                 } else {
-                                                                                     dispatch_async(dispatch_get_main_queue(), ^{
-                                                                                         [self uploadData:location withName:response.suggestedFilename toParentNode:parentNode isSourceMovable:YES isFile:YES];
-                                                                                     });
-                                                                                 }
-                                                                             }];
+        if (error) {
+            MEGALogError(@"Share extension error downloading resource at %@: %@", urlToDownload, error);
+            [self oneUnsupportedMore];
+        } else {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self uploadData:location withName:response.suggestedFilename toParentNode:parentNode isSourceMovable:YES isFile:YES];
+            });
+        }
+    }];
     [downloadTask resume];
 }
 
 - (void)uploadImage:(UIImage *)image withName:(NSString *)name toParentNode:(MEGANode *)parentNode isPNG:(BOOL)isPNG {
     NSString *storagePath = [self shareExtensionStorage];
     NSString *tempPath = [storagePath stringByAppendingPathComponent:name];
-
+    
     if (isPNG ? [UIImagePNGRepresentation(image) writeToFile:tempPath atomically:YES] : [UIImageJPEGRepresentation(image, 0.75) writeToFile:tempPath atomically:YES]) {
         [self smartUploadLocalPath:tempPath parent:parentNode isFile:YES];
     } else {
@@ -799,11 +799,17 @@
 }
 
 - (void)smartUploadLocalPath:(NSString *)localPath parent:(MEGANode *)parentNode isFile:(BOOL)isFile {
+    __weak __typeof__(self) weakSelf = self;
+    [self appDataForUploadFileWithLocalPath:localPath completionHandler:^(NSString * _Nullable appData) {
+        [weakSelf smartUploadLocalPath:localPath parent:parentNode isFile:isFile appData:appData];
+    }];
+}
+
+- (void)smartUploadLocalPath:(NSString *)localPath parent:(MEGANode *)parentNode isFile:(BOOL)isFile appData:(NSString *)appData {
     if (self.users || self.chats) {
-        NSString *appData = [[NSString new] mnz_appDataToSaveCoordinates:localPath.mnz_coordinatesOfPhotoOrVideo];
         [MEGASdk.shared startUploadForChatWithLocalPath:localPath parent:parentNode appData:appData isSourceTemporary:YES fileName:nil delegate:self];
     } else {
-        [self.transfers addObject:[CancellableTransfer.alloc initWithHandle:MEGAInvalidHandle parentHandle:parentNode.handle fileLinkURL:nil localFileURL:[NSURL fileURLWithPath:localPath] name:nil appData:[NSString.new mnz_appDataToSaveCoordinates:localPath.mnz_coordinatesOfPhotoOrVideo] priority:NO isFile:isFile type:CancellableTransferTypeUpload]];
+        [self.transfers addObject:[CancellableTransfer.alloc initWithHandle:MEGAInvalidHandle parentHandle:parentNode.handle fileLinkURL:nil localFileURL:[NSURL fileURLWithPath:localPath] name:nil appData:appData priority:NO isFile:isFile type:CancellableTransferTypeUpload]];
         [self onePendingLess];
     }
 }

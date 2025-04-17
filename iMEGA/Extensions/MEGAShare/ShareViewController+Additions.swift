@@ -1,4 +1,6 @@
 import MEGAAppPresentation
+import MEGADomain
+import MEGARepo
 import MEGAL10n
 
 extension ShareViewController {
@@ -14,5 +16,15 @@ extension ShareViewController {
             return Strings.Localizable.Share.Message.SendToChat.withOneFile(receiverCount)
                 .replacingOccurrences(of: "[A]", with: attachmentName)
         }
+    }
+    
+    @objc func appDataForUploadFile(localPath: String) async -> String? {
+        let metadataUseCase = MetadataUseCase(
+            metadataRepository: MetadataRepository(),
+            fileSystemRepository: FileSystemRepository.newRepo,
+            fileExtensionRepository: FileExtensionRepository()
+        )
+        
+        return await metadataUseCase.formattedCoordinate(forFilePath: localPath)
     }
 }
