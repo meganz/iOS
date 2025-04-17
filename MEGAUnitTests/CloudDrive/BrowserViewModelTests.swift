@@ -101,6 +101,7 @@ final class BrowserViewModelTests: XCTestCase {
         isSelectVideos: Bool = false,
         sensitiveDisplayPreferenceUseCase: some SensitiveDisplayPreferenceUseCaseProtocol = MockSensitiveDisplayPreferenceUseCase(),
         filesSearchUseCase: some FilesSearchUseCaseProtocol = MockFilesSearchUseCase(),
+        metadataUseCase: some MetadataUseCaseProtocol = MockMetadataUseCase(),
         sdk: MEGASdk = MockSdk(),
         file: StaticString = #filePath,
         line: UInt = #line
@@ -111,6 +112,7 @@ final class BrowserViewModelTests: XCTestCase {
             isSelectVideos: isSelectVideos,
             sensitiveDisplayPreferenceUseCase: sensitiveDisplayPreferenceUseCase,
             filesSearchUseCase: filesSearchUseCase,
+            metadataUseCase: metadataUseCase,
             sdk: sdk)
         trackForMemoryLeaks(on: sut, file: file, line: line)
         return sut

@@ -83,10 +83,7 @@ private final class DocumentPickerDelegate: NSObject, UIDocumentPickerDelegate {
                         fileURL = URL(fileURLWithPath: NSHomeDirectory().append(pathComponent: url.path))
                     }
                     
-                    var appData: String?
-                    if let coordinate = await self.metadataUseCase.coordinateInTheFile(at: fileURL) {
-                        appData = self.metadataUseCase.formatCoordinate(coordinate)
-                    }
+                    let appData = await self.metadataUseCase.formattedCoordinate(forFileURL: fileURL)
                     
                     return CancellableTransfer(
                         handle: .invalid,
@@ -108,16 +105,5 @@ private final class DocumentPickerDelegate: NSObject, UIDocumentPickerDelegate {
             }
             return transfers
         }
-    }
-}
-
-/// Need to move this to MEGARepo in the future when refactoring `fileExtensionGroup`
-private final class FileExtensionRepository: FileExtensionRepositoryProtocol {
-    func isImage(url: URL) -> Bool {
-        url.fileExtensionGroup.isImage
-    }
-    
-    func isVideo(url: URL) -> Bool {
-        url.fileExtensionGroup.isVideo
     }
 }
