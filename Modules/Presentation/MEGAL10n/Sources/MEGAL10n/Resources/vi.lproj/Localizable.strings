@@ -691,7 +691,7 @@
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Settings' */
 "general.cookieSettings"="Cài đặt cookie";
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie and Ad Settings' */
-"general.cookieAndAdSettings"="Cookie và cài đặt quảng cáo";
+"general.cookieAndAdSettings"="Cài đặt cookie và quảng cáo";
 /* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
 "termsOfServicesLabel"="Điều Khoản Dịch Vụ";
 /* Title of one of the Settings sections where you can see the MEGA's 'Data Protection Regulation' */
@@ -2733,9 +2733,9 @@
 /* Renewal date of the current PRO account, when the date is a date in the future other than today or tomorrow */
 "account.profile.renewal.future"="Tự gia hạn vào %@";
 /* Renewal date of the current PRO account, when the date is today */
-"account.profile.renewal.today"="Tự gia hạn vào Hôm Nay";
+"account.profile.renewal.today"="Tự gia hạn vào hôm nay";
 /* Renewal date of the current PRO account, when the date is tomorrow */
-"account.profile.renewal.tomorrow"="Tự gia hạn vào Ngày Mai";
+"account.profile.renewal.tomorrow"="Tự gia hạn vào ngày mai";
 /* Error text shown when trying to create or join a new meeting given that the user is already in another meeting */
 "meetings.new.anotherAlreadyExistsError"="Đang có một cuộc gọi đang giang dở. Xin chấm dứt cuộc gọi đó trước khi tham gia vào cuộc khác.";
 /* Button option when trying to join a new meeting given that the user is already in another meeting */
@@ -3985,7 +3985,7 @@
 /* Videos: videos filter option for all locations */
 "videos.tab.all.filter.location.option.allLocations"="Tất cả các vị trí";
 /* Videos: videos filter option for cloud drive */
-"videos.tab.all.filter.location.option.cloudDrive"="Ổ mây";
+"videos.tab.all.filter.location.option.cloudDrive"="Ổ Mây";
 /* Videos: videos filter option for Camera uploads */
 "videos.tab.all.filter.location.option.cameraUploads"="Đăng tải camêra";
 /* Videos: videos filter option for shared items */
@@ -4485,7 +4485,7 @@
 /* Section title that is shown over the existing tags in the Add tags screen */
 "cloudDrive.nodeInfo.nodeTags.addTags.ExistingTagsTitle"="Các thẻ hiện có";
 /* Section title for visual media photos section */
-"photos.searchResults.media.section.title"="Truyền thông";
+"photos.searchResults.media.section.title"="Đa phương tiện";
 /* Meetings: Warning banner show in various places about 100 participant limit */
 "meetings.warning.overParticipantLimit"="Chỉ có 100 người mới có thể tham gia cuộc gọi. Bất kỳ người tham gia nào thêm sẽ chỉ có thể gửi và nhận tin nhắn. Yêu cầu ban tổ chức nâng cấp lên Pro để loại bỏ hạn chế này.";
 /* Over Disk Quota paywall Upgrade button title */
@@ -4541,7 +4541,7 @@
 /* Title in chat notifications settings */
 "settings.chat.notifications.title"="Các thiết đặt thông báo";
 /* Label title in chat media image quality for uploads */
-"settings.chat.mediaQuality.title"="Chất lượng phương tiện trong chat";
+"settings.chat.mediaQuality.title"="Chất lượng phương tiện trong chat";
 /* Title used in settings that enables the generation of link previews in the chat */
 "settings.chat.richUrlPreview.title"="Bật xem trước đường liên kết đã gửi";
 /* Title used in settings that enables the generation of link previews in the chat */
@@ -4559,7 +4559,7 @@
 /* Subtitle in set status settings for auto away minutes. Placeholder will be replaced by 'X hour(s) Y minute(s)' */
 "settings.chat.status.setStatus.statusSettings.autoAway.subtitle"="%@ không có hoạt động";
 /* Title for toggle chat notifications */
-"settings.chat.notifications.chatNotifications"="Âm báo chát";
+"settings.chat.notifications.chatNotifications"="Âm báo từ chat";
 /* Title for mute chat notifications */
 "settings.chat.notifications.muteNotifications.title"="Tắt tiếng thông báo";
 /* Label title in chat media image quality for uploads */

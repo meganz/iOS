@@ -2729,7 +2729,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>[date]にメールでご連絡しましたが、ストレージはまだいっぱいです。ドライブ内に%d個のファイルをお持ちで、[storageSpace]占有しています。そのため、アカウントがロックされました。[plan]プランにアップグレードしていただくと、ストレージが増えます。すぐに対処されない場合、データが削除されてしまいます。ぜひ今すぐアップグレードして、お持ちのファイルを保護してください。[A]ストレージ制限について詳しくは、こちらをご覧ください[/A]。</string>
+        <string>[date]にメールでご連絡しましたが、ストレージはまだいっぱいです。クラウドドライブ内に%d個のファイルをお持ちで、[storageSpace]占有しています。そのため、アカウントがロックされました。[plan]プランにアップグレードしていただくと、ストレージが増えて、アカウントのロックが解除されます。すぐに対処されない場合、データが削除されてしまいます。ぜひ今すぐアップグレードして、お持ちのファイルを保護してください。[A]ストレージ制限について詳しくは、こちらをご覧ください[/A]。</string>
       </dict>
     </dict>
     <key>overDiskQuota.paywall.notFinalWarning.multipleEmailsSent.message</key>
@@ -2743,7 +2743,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>複数回メールでご連絡いたしましたが、ストレージはまだいっぱいです。ドライブ内に%d個のファイルをお持ちで、[storageSpace]占有しています。そのため、アカウントがロックされました。[plan]プランにアップグレードしていただくと、ストレージが増えます。すぐに対処されない場合、データが削除されてしまいます。ぜひ今すぐアップグレードして、お持ちのファイルを保護してください。[A]ストレージ制限について詳しくは、こちらをご覧ください[/A]。</string>
+        <string>メールで複数回ご連絡いたしましたが、ストレージはまだいっぱいです。クラウドドライブ内に%d個のファイルをお持ちで、[storageSpace]占有しています。そのため、アカウントがロックされました。[plan]プランにアップグレードしていただくと、ストレージが増えて、アカウントのロックが解除されます。すぐに対処されない場合、データが削除されてしまいます。ぜひ今すぐアップグレードして、お持ちのファイルを保護してください。[A]ストレージ制限について詳しくは、こちらをご覧ください[/A]。</string>
       </dict>
     </dict>
     <key>overDiskQuota.paywall.notFinalWarning.unknownTimesEmailWasSent.message</key>
@@ -2757,7 +2757,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>メールでご連絡いたしましたが、ストレージはまだいっぱいです。ドライブ内に%d個のファイルをお持ちで、[storageSpace]占有しています。そのため、アカウントがロックされました。[plan]プランにアップグレードしていただくと、ストレージが増えます。すぐに対処されない場合、データが削除されてしまいます。ぜひ今すぐアップグレードして、お持ちのファイルを保護してください。[A]ストレージ制限について詳しくは、こちらをご覧ください[/A]。</string>
+        <string>メールでご連絡いたしましたが、ストレージはまだいっぱいです。クラウドドライブ内に%d個のファイルをお持ちで、[storageSpace]占有しています。そのため、アカウントがロックされました。[plan]プランにアップグレードしていただくと、ストレージが増えて、アカウントのロックが解除されます。すぐに対処されない場合、データが削除されてしまいます。ぜひ今すぐアップグレードして、お持ちのファイルを保護してください。[A]ストレージ制限について詳しくは、こちらをご覧ください[/A]。</string>
       </dict>
     </dict>
     <key>settings.fileManagement.fileVersioning.enabledState.fileVersions</key>
@@ -2800,20 +2800,6 @@
         <string>d</string>
         <key>other</key>
         <string>%d項目を「[A]」に追加しました</string>
-      </dict>
-    </dict>
-    <key>chat.message.forwardMessage</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@count@</string>
-      <key>count</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>other</key>
-        <string></string>
       </dict>
     </dict>
   </dict>

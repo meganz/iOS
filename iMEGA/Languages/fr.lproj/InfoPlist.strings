@@ -9,7 +9,7 @@
 /* Write-only access to the user’s photo library description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
 "NSPhotoLibraryAddUsageDescription"="MEGA doit avoir accès à la photothèque de votre appareil pour y ajouter des photos et des vidéos";
 /* Face ID usage description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
-"NSFaceIDUsageDescription"="MEGA accède à Face ID pour vous permettre de déverrouiller facilement le code d’accès de l’appli si vous activez cette option.";
+"NSFaceIDUsageDescription"="MEGA accède à Face ID pour vous permettre de déverrouiller facilement l'application lorsque vous activez cette option.";
 /* Label for any 'Search' button, link, etc. - (String as short as possible). */
 "quickActionSearchString"="Recherche";
 /*  */

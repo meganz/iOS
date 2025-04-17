@@ -629,7 +629,7 @@
 /* Label shown when a contact request is pending */
 "pending"="În curs";
 /* Button title of the action that allows to leave a shared folder */
-"leaveFolder"="Leave folder";
+"leaveFolder"="Lăsați folderul";
 /* Alert message shown when the user tap on the leave share action for one inshare */
 "leaveShareAlertMessage"="Are you sure you want to leave this folder?";
 /* Alert message shown when the user tap on the leave share action selecting multiple inshares */
@@ -1233,9 +1233,9 @@
 /* Title that refers to the status of the chat (Either Online or Offline) */
 "status"="Stare";
 /* Title used in settings that enables the generation of link previews in the chat */
-"richUrlPreviews"="Enable sent link previews";
+"richUrlPreviews"="Activați previzualizările linkurilor trimise";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
-"richPreviewsFooter"="Generates a preview of the links you send in chat. Note that retrieving these previews isn’t protected by zero-knowledge encryption.";
+"richPreviewsFooter"="Generează o previzualizare a linkurilor pe care le trimiteți în chat. Rețineți că preluarea acestor previzualizări nu este protejată de criptarea tip zero cunoștințe.";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
 "voiceAndVideoCalls"="Apeluri vocale și video";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
@@ -1351,7 +1351,7 @@
 /*  */
 "done"="Terminat";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
-"enableRichUrlPreviews"="Enable sent link previews";
+"enableRichUrlPreviews"="Activați previzualizările linkurilor trimise";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
 "alwaysAllow"="Permite întotdeauna";
 /* Text indicating to the user that some action will be postpone. E.g. used for 'rich previews' and management of disk storage. */
@@ -1361,7 +1361,7 @@
 /*  */
 "never"="Niciodată";
 /* After several times (right now set to 3) that the user may had decided to click \"Not now\" (for when being asked if he/she wants a URL preview to be generated for a link, posted in a chat room), we change the \"Not now\" button to \"Never\". If the user clicks it, we ask for one final time - to ensure he wants to not be asked for this anymore and tell him that he can do that in Settings. */
-"richPreviewsConfirmation"="We’ll stop asking if you want previews of your sent links. You can re-enable sent link previews in the settings. Do you want to proceed?";
+"richPreviewsConfirmation"="Vom înceta să ne întrebăm dacă doriți previzualizări ale linkurilor trimise. Puteți reactiva previzualizările link-urilor trimise în setări. Doriți să continuați?";
 /* Once a preview is generated for a message which contains URLs, the user can remove it. Same button is also shown during loading of the preview - and would cancel the loading (text of the button is the same in both cases). */
 "removePreview"="Elimină previzualizarea";
 /*  */
@@ -3381,7 +3381,7 @@
 /* Alert title shown for video with options to resume playing the video or start from the beginning */
 "video.alert.resumeVideo.title"="Reiei videoclipul?";
 /* Alert message shown for video with options to resume playing the video or start from the beginning. %1$s will be replaced by name of the video. %2$s will be replaced by video timestamp */
-"video.alert.resumeVideo.message"="“%1$s“ will resume from %2$s";
+"video.alert.resumeVideo.message"="“%1$s” will resume from %2$s";
 /* Alert button title that will resume playing the video */
 "video.alert.resumeVideo.button.resume"="Reia";
 /* Alert button title that will start playing the video from the beginning */
@@ -3453,7 +3453,7 @@
 /* Device Center backup inactive status */
 "device.center.backup.inactive.status.message"="Inactiv";
 /* Device Center device attention needed status */
-"device.center.device.attentionNeeded.status.message"="Attention needed";
+"device.center.device.attentionNeeded.status.message"="Atenție necesară";
 /* Device Center backup error: Unknown issue */
 "device.center.backup.error.unknown"="Eroare necunoscută.";
 /* Device Center backup error: Filesystem not supported */
@@ -4543,9 +4543,9 @@
 /* Label title in chat media image quality for uploads */
 "settings.chat.mediaQuality.title"="Chat media quality";
 /* Title used in settings that enables the generation of link previews in the chat */
-"settings.chat.richUrlPreview.title"="Enable sent link previews";
+"settings.chat.richUrlPreview.title"="Activați previzualizările linkurilor trimise";
 /* Title used in settings that enables the generation of link previews in the chat */
-"settings.chat.richUrlPreview.subtitle"="Generates a preview of the links you send in chat. Note that retrieving these previews isn’t protected by zero-knowledge encryption.";
+"settings.chat.richUrlPreview.subtitle"="Generează o previzualizare a linkurilor pe care le trimiteți în chat. Rețineți că preluarea acestor previzualizări nu este protejată de criptarea tip zero cunoștințe.";
 /* Title in chat status settings */
 "settings.chat.status.setStatus.title"="Setează statusul";
 /* Title section header in set status settings */
@@ -4593,8 +4593,8 @@
 /* Hidden files and folders onboarding content item three message */
 "onboarding.hiddenFilesAndFolders.content.item.three.message"="Files and folders shared with contacts or with public links are still accessible and visible, even if hidden.";
 /* Title for note to self chat, used in the messages view but also in lists where note to self is diplayed */
-"chat.messages.noteToSelf.title"="Note to self";
+"chat.messages.noteToSelf.title"="Notă pentru sine";
 /* Title for note to self chat messages view header, at the top the chat room */
-"chat.messages.noteToSelf.header.title"="Keep it to yourself";
+"chat.messages.noteToSelf.header.title"="Păstrează-l pentru tine";
 /* Description text for note to self chat messages view header, at the top of the chat room */
-"chat.messages.noteToSelf.header.description"="A private space for pictures, important information, or big ideas. Always synced, and protected with zero-knowledge encryption.";
+"chat.messages.noteToSelf.header.description"="Un spațiu privat pentru imagini, informații importante sau idei mari. Întotdeauna sincronizat și protejat cu criptarea tip zero cunoștințe.";

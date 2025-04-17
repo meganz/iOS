@@ -3505,11 +3505,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Embora tenhamos entrado em contato com você por email em [date], o seu armazenamento ainda está cheio. Você tem %d arquivo ocupando [storageSpace] no seu drive, e por isso a sua conta foi bloqueada. Faça o upgrade ao plano [plan] plano para aumentar o seu armazenamento. Se você não fizer isso em breve, os seus dados serão deletados. Faça já um upgrade para proteger o seu arquivo. [A]Mais informações sobre os limites de armazenamento[/A].</string>
+        <string>Embora tenhamos entrado em contato com você por email em [date], o seu armazenamento ainda está cheio. Você tem %d arquivo ocupando [storageSpace] na sua Nuvem de arquivos, e por isso a sua conta foi bloqueada. Faça o upgrade ao plano [plan] para aumentar o seu armazenamento e desbloquear a sua conta. Se você não fizer isso em breve, os seus dados serão deletados. Faça já um upgrade para proteger os seus arquivos. [A]Mais informações sobre os limites de armazenamento[/A].</string>
         <key>many</key>
-        <string>Embora tenhamos entrado em contato com você por email em [date], o seu armazenamento ainda está cheio. Você tem %d de arquivos ocupando [storageSpace] no seu drive, e por isso a sua conta foi bloqueada. Faça o upgrade ao plano [plan] plano para aumentar o seu armazenamento. Se você não fizer isso em breve, os seus dados serão deletados. Faça já um upgrade para proteger os seus arquivos. [A]Mais informações sobre os limites de armazenamento[/A].</string>
+        <string>Embora tenhamos entrado em contato com você por email em [date], o seu armazenamento ainda está cheio. Você tem %d de arquivos ocupando [storageSpace] na sua Nuvem de arquivos, e por isso a sua conta foi bloqueada. Faça o upgrade ao plano [plan] para aumentar o seu armazenamento e desbloquear a sua conta. Se você não fizer isso em breve, os seus dados serão deletados. Faça já um upgrade para proteger os seus arquivos. [A]Mais informações sobre os limites de armazenamento[/A].</string>
         <key>other</key>
-        <string>Embora tenhamos entrado em contato com você por email em [date], o seu armazenamento ainda está cheio. Você tem %d arquivos ocupando [storageSpace] no seu drive, e por isso a sua conta foi bloqueada. Faça o upgrade ao plano [plan] plano para aumentar o seu armazenamento. Se você não fizer isso em breve, os seus dados serão deletados. Faça já um upgrade para proteger os seus arquivos. [A]Mais informações sobre os limites de armazenamento[/A].</string>
+        <string>Embora tenhamos entrado em contato com você por email em [date], o seu armazenamento ainda está cheio. Você tem %d arquivos ocupando [storageSpace] na sua Nuvem de arquivos, e por isso a sua conta foi bloqueada. Faça o upgrade ao plano [plan] para aumentar o seu armazenamento e desbloquear a sua conta. Se você não fizer isso em breve, os seus dados serão deletados. Faça já um upgrade para proteger os seus arquivos. [A]Mais informações sobre os limites de armazenamento[/A].</string>
       </dict>
     </dict>
     <key>overDiskQuota.paywall.notFinalWarning.multipleEmailsSent.message</key>
@@ -3523,11 +3523,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Embora tenhamos entrado em contato com você por email várias vezes, o seu armazenamento ainda está cheio. Você tem %d arquivo ocupando [storageSpace] no seu drive, e por isso a sua conta foi bloqueada. Faça o upgrade ao plano [plan] plano para aumentar o seu armazenamento. Se você não fizer isso em breve, os seus dados serão deletados. Faça já um upgrade para proteger o seu arquivo. [A]Mais informações sobre os limites de armazenamento[/A].</string>
+        <string>Embora tenhamos entrado em contato com você por email diversas vezes, o seu armazenamento ainda está cheio. Você tem %d arquivo ocupando [storageSpace] na sua Nuvem de arquivos, e por isso a sua conta foi bloqueada. Faça o upgrade ao plano [plan] para aumentar o seu armazenamento e desbloquear a sua conta. Se você não fizer isso em breve, os seus dados serão deletados. Faça já um upgrade para proteger os seus arquivos. [A]Mais informações sobre os limites de armazenamento[/A].</string>
         <key>many</key>
-        <string>Embora tenhamos entrado em contato com você por email várias vezes, o seu armazenamento ainda está cheio. Você tem %d de arquivos ocupando [storageSpace] no seu drive, e por isso a sua conta foi bloqueada. Faça o upgrade ao plano [plan] plano para aumentar o seu armazenamento. Se você não fizer isso em breve, os seus dados serão deletados. Faça já um upgrade para proteger os seus arquivos. [A]Mais informações sobre os limites de armazenamento[/A].</string>
+        <string>Embora tenhamos entrado em contato com você por email diversas vezes, o seu armazenamento ainda está cheio. Você tem %d de arquivos ocupando [storageSpace] na sua Nuvem de arquivos, e por isso a sua conta foi bloqueada. Faça o upgrade ao plano [plan] para aumentar o seu armazenamento e desbloquear a sua conta. Se você não fizer isso em breve, os seus dados serão deletados. Faça já um upgrade para proteger os seus arquivos. [A]Mais informações sobre os limites de armazenamento[/A].</string>
         <key>other</key>
-        <string>Embora tenhamos entrado em contato com você por email várias vezes, o seu armazenamento ainda está cheio. Você tem %d arquivos ocupando [storageSpace] no seu drive, e por isso a sua conta foi bloqueada. Faça o upgrade ao plano [plan] plano para aumentar o seu armazenamento. Se você não fizer isso em breve, os seus dados serão deletados. Faça já um upgrade para proteger os seus arquivos. [A]Mais informações sobre os limites de armazenamento[/A].</string>
+        <string>Embora tenhamos entrado em contato com você por email diversas vezes, o seu armazenamento ainda está cheio. Você tem %d arquivos ocupando [storageSpace] na sua Nuvem de arquivos, e por isso a sua conta foi bloqueada. Faça o upgrade ao plano [plan] para aumentar o seu armazenamento e desbloquear a sua conta. Se você não fizer isso em breve, os seus dados serão deletados. Faça já um upgrade para proteger os seus arquivos. [A]Mais informações sobre os limites de armazenamento[/A].</string>
       </dict>
     </dict>
     <key>overDiskQuota.paywall.notFinalWarning.unknownTimesEmailWasSent.message</key>
@@ -3541,11 +3541,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Embora tenhamos entrado em contato com você por email, o seu armazenamento ainda está cheio. Você tem %d arquivo ocupando [storageSpace] no seu drive, e por isso a sua conta foi bloqueada. Faça o upgrade ao plano [plan] plano para aumentar o seu armazenamento. Se você não fizer isso em breve, os seus dados serão deletados. Faça já um upgrade para proteger o seu arquivo. [A]Mais informações sobre os limites de armazenamento[/A].</string>
+        <string>Embora tenhamos entrado em contato com você por email, o seu armazenamento ainda está cheio. Você tem %d arquivo ocupando [storageSpace] na sua Nuvem de arquivos, e por isso a sua conta foi bloqueada. Faça o upgrade ao plano [plan] para aumentar o seu armazenamento e desbloquear a sua conta. Se você não fizer isso em breve, os seus dados serão deletados. Faça já um upgrade para proteger os seus arquivos. [A]Mais informações sobre os limites de armazenamento[/A].</string>
         <key>many</key>
-        <string>Embora tenhamos entrado em contato com você por email, o seu armazenamento ainda está cheio. Você tem %d de arquivos ocupando [storageSpace] no seu drive, e por isso a sua conta foi bloqueada. Faça o upgrade ao plano [plan] plano para aumentar o seu armazenamento. Se você não fizer isso em breve, os seus dados serão deletados. Faça já um upgrade para proteger os seus arquivos. [A]Mais informações sobre os limites de armazenamento[/A].</string>
+        <string>Embora tenhamos entrado em contato com você por email, o seu armazenamento ainda está cheio. Você tem %d de arquivos ocupando [storageSpace] na sua Nuvem de arquivos, e por isso a sua conta foi bloqueada. Faça o upgrade ao plano [plan] para aumentar o seu armazenamento e desbloquear a sua conta. Se você não fizer isso em breve, os seus dados serão deletados. Faça já um upgrade para proteger os seus arquivos. [A]Mais informações sobre os limites de armazenamento[/A].</string>
         <key>other</key>
-        <string>Embora tenhamos entrado em contato com você por email, o seu armazenamento ainda está cheio. Você tem %d arquivos ocupando [storageSpace] no seu drive, e por isso a sua conta foi bloqueada. Faça o upgrade ao plano [plan] plano para aumentar o seu armazenamento. Se você não fizer isso em breve, os seus dados serão deletados. Faça já um upgrade para proteger os seus arquivos. [A]Mais informações sobre os limites de armazenamento[/A].</string>
+        <string>Embora tenhamos entrado em contato com você por email, o seu armazenamento ainda está cheio. Você tem %d arquivos ocupando [storageSpace] na sua Nuvem de arquivos, e por isso a sua conta foi bloqueada. Faça o upgrade ao plano [plan] para aumentar o seu armazenamento e desbloquear a sua conta. Se você não fizer isso em breve, os seus dados serão deletados. Faça já um upgrade para proteger os seus arquivos. [A]Mais informações sobre os limites de armazenamento[/A].</string>
       </dict>
     </dict>
     <key>settings.fileManagement.fileVersioning.enabledState.fileVersions</key>
@@ -3600,24 +3600,6 @@
         <string>%d de itens foram adicionados a “[A]”</string>
         <key>other</key>
         <string>%d itens foram adicionados a “[A]”</string>
-      </dict>
-    </dict>
-    <key>chat.message.forwardMessage</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@count@</string>
-      <key>count</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>one</key>
-        <string></string>
-        <key>many</key>
-        <string></string>
-        <key>other</key>
-        <string></string>
       </dict>
     </dict>
   </dict>

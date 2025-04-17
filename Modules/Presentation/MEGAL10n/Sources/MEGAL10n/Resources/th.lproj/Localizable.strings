@@ -3381,7 +3381,7 @@
 /* Alert title shown for video with options to resume playing the video or start from the beginning */
 "video.alert.resumeVideo.title"="เล่นวิดีโอต่อจากก่อนหน้านี้หรือไม่";
 /* Alert message shown for video with options to resume playing the video or start from the beginning. %1$s will be replaced by name of the video. %2$s will be replaced by video timestamp */
-"video.alert.resumeVideo.message"="ไฟล์ “%1$s” จะเริ่มเล่นต่อตั้งแต่ %2$s เป็นต้นไป";
+"video.alert.resumeVideo.message"="“%1$s” will resume from %2$s";
 /* Alert button title that will resume playing the video */
 "video.alert.resumeVideo.button.resume"="ต่อ";
 /* Alert button title that will start playing the video from the beginning */

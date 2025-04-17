@@ -3893,9 +3893,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Although we have contacted you by email on [date], your storage is still full. You have %d file taking up [storageSpace] in your drive, and your account has been locked. Upgrade to a [plan] plan to increase your storage. If you don’t take action soon, your data will be deleted. Upgrade now to protect your files. [A]Learn more about your storage limits[/A]. </string>
+        <string>Chociaż skontaktowaliśmy się z Tobą przez email w dniu [date], Twoja pojemność jest nadal pełna. Masz %d plików zajmujących [storageSpace] w Twoim Dysku w chmurze, a Twoje konto zostało zablokowane. Zmień na plan [plan], aby zwiększyć swoją pojemność i odblokować konto. Jeśli nie podejmiesz działań wkrótce, Twoje dane zostaną usunięte. Zmień teraz, aby chronić swoje pliki. [A]Dowiedz się więcej o swoich limitach pojemności[/A]. </string>
+        <key>few</key>
+        <string>Chociaż skontaktowaliśmy się z Tobą przez email w dniu [date], Twoja pojemność jest nadal pełna. Masz %d plików zajmujących [storageSpace] w Twoim Dysku w chmurze, a Twoje konto zostało zablokowane. Zmień na plan [plan], aby zwiększyć swoją pojemność i odblokować konto. Jeśli nie podejmiesz działań wkrótce, Twoje dane zostaną usunięte. Zmień teraz, aby chronić swoje pliki. [A]Dowiedz się więcej o swoich limitach pojemności[/A]. </string>
+        <key>many</key>
+        <string>Chociaż skontaktowaliśmy się z Tobą przez email w dniu [date], Twoja pojemność jest nadal pełna. Masz %d plików zajmujących [storageSpace] w Twoim Dysku w chmurze, a Twoje konto zostało zablokowane. Zmień na plan [plan], aby zwiększyć swoją pojemność i odblokować konto. Jeśli nie podejmiesz działań wkrótce, Twoje dane zostaną usunięte. Zmień teraz, aby chronić swoje pliki. [A]Dowiedz się więcej o swoich limitach pojemności[/A]. </string>
         <key>other</key>
-        <string>Although we have contacted you by email on [date], your storage is still full. You have %d files taking up [storageSpace] in your drive, and your account has been locked. Upgrade to a [plan] plan to increase your storage. If you don’t take action soon, your data will be deleted. Upgrade now to protect your files. [A]Learn more about your storage limits[/A]. </string>
+        <string>Chociaż skontaktowaliśmy się z Tobą przez email w dniu [date], Twoja pojemność jest nadal pełna. Masz %d plików zajmujących [storageSpace] w Twoim Dysku w chmurze, a Twoje konto zostało zablokowane. Zmień na plan [plan], aby zwiększyć swoją pojemność i odblokować konto. Jeśli nie podejmiesz działań wkrótce, Twoje dane zostaną usunięte. Zmień teraz, aby chronić swoje pliki. [A]Dowiedz się więcej o swoich limitach pojemności[/A]. </string>
       </dict>
     </dict>
     <key>overDiskQuota.paywall.notFinalWarning.multipleEmailsSent.message</key>
@@ -3909,9 +3913,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Although we have contacted you multiple times by email, your storage is still full. You have %d file taking up [storageSpace] in your drive, and your account has been locked. Upgrade to a [plan] plan to increase your storage. If you don’t take action soon, your data will be deleted. Upgrade now to protect your files. [A]Learn more about your storage limits[/A]. </string>
+        <string>Chociaż skontaktowaliśmy się z Tobą przez email, Twoja pojemność jest nadal pełna. Masz %d plików zajmujących [storageSpace] w Twoim Dysku w chmurze, a Twoje konto zostało zablokowane. Zmień na plan [plan], aby zwiększyć swoją pojemność i odblokować konto. Jeśli nie podejmiesz działań wkrótce, Twoje dane zostaną usunięte. Zmień teraz, aby chronić swoje pliki. [A]Dowiedz się więcej o swoich limitach pojemności[/A].</string>
+        <key>few</key>
+        <string>Chociaż skontaktowaliśmy się z Tobą przez email, Twoja pojemność jest nadal pełna. Masz %d plików zajmujących [storageSpace] w Twoim Dysku w chmurze, a Twoje konto zostało zablokowane. Zmień na plan [plan], aby zwiększyć swoją pojemność i odblokować konto. Jeśli nie podejmiesz działań wkrótce, Twoje dane zostaną usunięte. Zmień teraz, aby chronić swoje pliki. [A]Dowiedz się więcej o swoich limitach pojemności[/A].</string>
+        <key>many</key>
+        <string>Chociaż skontaktowaliśmy się z Tobą przez email, Twoja pojemność jest nadal pełna. Masz %d plików zajmujących [storageSpace] w Twoim Dysku w chmurze, a Twoje konto zostało zablokowane. Zmień na plan [plan], aby zwiększyć swoją pojemność i odblokować konto. Jeśli nie podejmiesz działań wkrótce, Twoje dane zostaną usunięte. Zmień teraz, aby chronić swoje pliki. [A]Dowiedz się więcej o swoich limitach pojemności[/A].</string>
         <key>other</key>
-        <string>Although we have contacted you multiple times by email, your storage is still full. You have %d files taking up [storageSpace] in your drive, and your account has been locked. Upgrade to a [plan] plan to increase your storage. If you don’t take action soon, your data will be deleted. Upgrade now to protect your files. [A]Learn more about your storage limits[/A]. </string>
+        <string>Chociaż skontaktowaliśmy się z Tobą przez email, Twoja pojemność jest nadal pełna. Masz %d plików zajmujących [storageSpace] w Twoim Dysku w chmurze, a Twoje konto zostało zablokowane. Zmień na plan [plan], aby zwiększyć swoją pojemność i odblokować konto. Jeśli nie podejmiesz działań wkrótce, Twoje dane zostaną usunięte. Zmień teraz, aby chronić swoje pliki. [A]Dowiedz się więcej o swoich limitach pojemności[/A].</string>
       </dict>
     </dict>
     <key>overDiskQuota.paywall.notFinalWarning.unknownTimesEmailWasSent.message</key>
@@ -3925,9 +3933,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Although we have contacted you by email, your storage is still full. You have %d file taking up [storageSpace] in your drive, and your account has been locked. Upgrade to a [plan] plan to increase your storage. If you don’t take action soon, your data will be deleted. Upgrade now to protect your files. [A]Learn more about your storage limits[/A]. </string>
+        <string>Chociaż skontaktowaliśmy się z Tobą przez email, Twoja pojemność jest nadal pełna. Masz %d plików zajmujących [storageSpace] w Twoim Dysku w chmurze, a Twoje konto zostało zablokowane. Zmień na plan [plan], aby zwiększyć swoją pojemność i odblokować konto. Jeśli nie podejmiesz działań wkrótce, Twoje dane zostaną usunięte. Zmień teraz, aby chronić swoje pliki. [A]Dowiedz się więcej o swoich limitach pojemności[/A].</string>
+        <key>few</key>
+        <string>Chociaż skontaktowaliśmy się z Tobą przez email, Twoja pojemność jest nadal pełna. Masz %d plików zajmujących [storageSpace] w Twoim Dysku w chmurze, a Twoje konto zostało zablokowane. Zmień na plan [plan], aby zwiększyć swoją pojemność i odblokować konto. Jeśli nie podejmiesz działań wkrótce, Twoje dane zostaną usunięte. Zmień teraz, aby chronić swoje pliki. [A]Dowiedz się więcej o swoich limitach pojemności[/A].</string>
+        <key>many</key>
+        <string>Chociaż skontaktowaliśmy się z Tobą przez email, Twoja pojemność jest nadal pełna. Masz %d plików zajmujących [storageSpace] w Twoim Dysku w chmurze, a Twoje konto zostało zablokowane. Zmień na plan [plan], aby zwiększyć swoją pojemność i odblokować konto. Jeśli nie podejmiesz działań wkrótce, Twoje dane zostaną usunięte. Zmień teraz, aby chronić swoje pliki. [A]Dowiedz się więcej o swoich limitach pojemności[/A].</string>
         <key>other</key>
-        <string>Although we have contacted you by email, your storage is still full. You have %d file taking up [storageSpace] in your drive, and your account has been locked. Upgrade to a [plan] plan to increase your storage. If you don’t take action soon, your data will be deleted. Upgrade now to protect your files. [A]Learn more about your storage limits[/A].  </string>
+        <string>Chociaż skontaktowaliśmy się z Tobą przez email, Twoja pojemność jest nadal pełna. Masz %d plików zajmujących [storageSpace] w Twoim Dysku w chmurze, a Twoje konto zostało zablokowane. Zmień na plan [plan], aby zwiększyć swoją pojemność i odblokować konto. Jeśli nie podejmiesz działań wkrótce, Twoje dane zostaną usunięte. Zmień teraz, aby chronić swoje pliki. [A]Dowiedz się więcej o swoich limitach pojemności[/A].</string>
       </dict>
     </dict>
     <key>settings.fileManagement.fileVersioning.enabledState.fileVersions</key>
@@ -3988,26 +4000,6 @@
         <string>Dodano %d elementy do ”[A]”</string>
         <key>other</key>
         <string>Dodano %d elementy do ”[A]”</string>
-      </dict>
-    </dict>
-    <key>chat.message.forwardMessage</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@count@</string>
-      <key>count</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>one</key>
-        <string></string>
-        <key>few</key>
-        <string></string>
-        <key>many</key>
-        <string></string>
-        <key>other</key>
-        <string></string>
       </dict>
     </dict>
   </dict>
