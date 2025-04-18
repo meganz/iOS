@@ -177,7 +177,11 @@
         
         NSString *appData = [NSString new];
         
-        appData = [appData mnz_appDataToSaveCoordinates:[filePath mnz_coordinatesOfPhotoOrVideo]];
+        if (asset.location) {
+            NSString *coordinates = [NSString stringWithFormat:@"%f&%f", asset.location.coordinate.latitude, asset.location.coordinate.longitude];
+            appData = [appData mnz_appDataToSaveCoordinates:coordinates];
+        }
+        
         appData = [appData mnz_appDataToLocalIdentifier:transferRecordDTO.localIdentifier];
         
         if (![name isEqualToString:newName]) {
