@@ -2,6 +2,7 @@ import CoreServices
 import Foundation
 import MEGAAppPresentation
 import MEGADomain
+import MEGARepo
 import MEGAUI
 import VisionKit
 
@@ -75,14 +76,7 @@ final class FileUploadingRouter {
                         guard let presenter = self?.navigationController else {
                             return
                         }
-                        let transfers = urls.map {
-                            let coordinates = $0.path.mnz_coordinatesOfPhotoOrVideo()
-                            let appData = coordinates.map(NSString().mnz_appData(toSaveCoordinates:))
-                            return CancellableTransfer(handle: .invalid, parentHandle: parentNode.handle, localFileURL: $0, name: nil, appData: appData, priority: false, isFile: true, type: .upload)
-                        } as [CancellableTransfer]
-                        
-                        let collisionEntities = transfers.map { NameCollisionEntity(parentHandle: $0.parentHandle, name: $0.localFileURL?.lastPathComponent ?? "", isFile: $0.isFile, fileUrl: $0.localFileURL) }
-                        NameCollisionViewRouter(presenter: presenter, transfers: transfers, nodes: nil, collisions: collisionEntities, collisionType: .upload).start()
+                        self?.uploadImportedDocuments(at: urls, to: parentNode, presenter: presenter)
                     }
                 }
             }
@@ -100,6 +94,41 @@ final class FileUploadingRouter {
         documentPickerViewController.delegate = documentImportsDelegate
         navigationController?.present(documentPickerViewController, animated: true, completion: nil)
     }
+    
+    private func uploadImportedDocuments(at urls: [URL], to parentNode: MEGANode, presenter: UIViewController) {
+        Task { @MainActor in
+            let transfers = await self.buildTransfers(for: urls, parentHandle: parentNode.handle)
+            let collisionEntities = transfers.map { NameCollisionEntity(parentHandle: $0.parentHandle, name: $0.localFileURL?.lastPathComponent ?? "", isFile: $0.isFile, fileUrl: $0.localFileURL) }
+            NameCollisionViewRouter(presenter: presenter, transfers: transfers, nodes: nil, collisions: collisionEntities, collisionType: .upload).start()
+        }
+    }
+    
+    private func buildTransfers(for urls: [URL], parentHandle: HandleEntity) async -> [CancellableTransfer] {
+        let metadataUseCase = MetadataUseCase(
+            metadataRepository: MetadataRepository(),
+            fileSystemRepository: FileSystemRepository.newRepo,
+            fileExtensionRepository: FileExtensionRepository()
+        )
+        return await withTaskGroup(of: CancellableTransfer.self) { taskGroup in
+            taskGroup.addTasksUnlessCancelled(for: urls) { url in
+                let appData = await metadataUseCase.formattedCoordinate(forFileURL: url)
+                
+                return CancellableTransfer(
+                    handle: .invalid,
+                    parentHandle: parentHandle,
+                    fileLinkURL: nil,
+                    localFileURL: url,
+                    name: nil,
+                    appData: appData,
+                    priority: false,
+                    isFile: true,
+                    type: .upload
+                )
+            }
+            
+            return await taskGroup.reduce(into: []) { $0.append($1) }
+        }
+    }
 
     // MARK: - Display Camera Capture View Controller
 
@@ -114,19 +143,25 @@ final class FileUploadingRouter {
                         switch result {
                         case .failure: break
                         case .success(let filePath):
-                            let coordinates = filePath.mnz_coordinatesOfPhotoOrVideo()
-                            let appData = coordinates.map(NSString().mnz_appData(toSaveCoordinates:))
                             self.presentDestinationFolderBrowser { [weak self] parentNode in
                                 guard let presenter = self?.navigationController else {
                                     return
                                 }
-                                CancellableTransferRouter.init(presenter: presenter, transfers: [CancellableTransfer(handle: .invalid, parentHandle: parentNode.handle, localFileURL: URL(fileURLWithPath: filePath), name: nil, appData: appData, priority: false, isFile: true, type: .upload)], transferType: .upload).start()
+                                self?.uploadCapturedMedia(filePath: filePath, to: parentNode, presenter: presenter)
                             }
                         }
                     }
                 }
             }
             self.navigationController?.present(imagePickerController, animated: true, completion: nil)
+        }
+    }
+    
+    private func uploadCapturedMedia(filePath: String, to parentNode: MEGANode, presenter: UIViewController) {
+        Task { @MainActor in
+            let url = URL(fileURLWithPath: filePath)
+            let transfers = await buildTransfers(for: [url], parentHandle: parentNode.handle)
+            CancellableTransferRouter.init(presenter: presenter, transfers: transfers, transferType: .upload).start()
         }
     }
 
