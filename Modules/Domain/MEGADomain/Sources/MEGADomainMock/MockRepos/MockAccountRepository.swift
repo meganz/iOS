@@ -52,12 +52,13 @@ public final class MockAccountRepository: AccountRepositoryProtocol, @unchecked 
     private let unseenUserAlertsCount: UInt
     
     // MARK: - Account updates
-    public let onAccountRequestFinish: AnyAsyncSequence<Result<AccountRequestEntity, any Error>>
+    public let onRequestFinishUpdates: AnyAsyncSequence<RequestResponseEntity>
     public let onUserAlertsUpdates: AnyAsyncSequence<[UserAlertEntity]>
     public let onContactRequestsUpdates: AnyAsyncSequence<[ContactRequestEntity]>
-    public let onStorageStatusUpdates: AnyAsyncSequence<StorageStatusEntity>
+    public let onEventsUpdates: AnyAsyncSequence<EventEntity>
     public let monitorRefreshAccountPublisher: AnyPublisher<Bool, Never>
     public let _isMonitoringRefreshAccount: Bool
+    private(set) public var setAccountStorageStatusCalledCount: Int = 0
     
     // MARK: - Node Sizes
     public let rootStorage: Int64
@@ -116,10 +117,10 @@ public final class MockAccountRepository: AccountRepositoryProtocol, @unchecked 
         currentStorageStatus: StorageStatusEntity = .noStorageProblems,
         isUnlimitedStorageAccount: Bool = false,
         currentSubscription: AccountSubscriptionEntity? = nil,
-        onAccountRequestFinishUpdate: AnyAsyncSequence<Result<AccountRequestEntity, any Error>> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
+        onRequestFinishUpdates: AnyAsyncSequence<RequestResponseEntity> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
         onUserAlertsUpdates: AnyAsyncSequence<[UserAlertEntity]> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
         onContactRequestsUpdates: AnyAsyncSequence<[ContactRequestEntity]> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
-        onStorageStatusUpdates: AnyAsyncSequence<StorageStatusEntity> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
+        onEventsUpdates: AnyAsyncSequence<EventEntity> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
         monitorRefreshAccountPublisher: AnyPublisher<Bool, Never> = Empty().eraseToAnyPublisher(),
         isMonitoringRefreshAccount: Bool = false
     ) {
@@ -166,10 +167,10 @@ public final class MockAccountRepository: AccountRepositoryProtocol, @unchecked 
         self.backupStorage = backupStorage
         self.richLinkPreviewEnabled = richLinkPreviewEnabled
         self.notificationSettings = notificationSettings
-        self.onAccountRequestFinish = onAccountRequestFinishUpdate
+        self.onRequestFinishUpdates = onRequestFinishUpdates
         self.onUserAlertsUpdates = onUserAlertsUpdates
         self.onContactRequestsUpdates = onContactRequestsUpdates
-        self.onStorageStatusUpdates = onStorageStatusUpdates
+        self.onEventsUpdates = onEventsUpdates
         self.monitorRefreshAccountPublisher = monitorRefreshAccountPublisher
     }
     
@@ -364,5 +365,9 @@ public final class MockAccountRepository: AccountRepositoryProtocol, @unchecked 
     
     public func refreshAccountAndMonitorUpdate() async throws -> AccountDetailsEntity {
         try accountDetailsResult.get()
+    }
+    
+    public func setAccountStorageStatus(_ status: StorageStatusEntity) {
+        setAccountStorageStatusCalledCount += 1
     }
 }

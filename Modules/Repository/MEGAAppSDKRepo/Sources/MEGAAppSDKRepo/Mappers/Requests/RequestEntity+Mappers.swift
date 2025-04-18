@@ -7,7 +7,8 @@ extension MEGARequest {
             nodeHandle: nodeHandle,
             type: type.toRequestTypeEntity(),
             progress: progress(),
-            flag: flag
+            flag: flag,
+            accountRequest: self.toAccountRequestEntity()
         )
     }
 }

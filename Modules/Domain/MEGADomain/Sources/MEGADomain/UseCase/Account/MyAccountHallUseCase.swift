@@ -51,7 +51,15 @@ public struct MyAccountHallUseCase<T: AccountRepositoryProtocol>: MyAccountHallU
     }
     
     public var onAccountRequestFinish: AnyAsyncSequence<Result<AccountRequestEntity, any Error>> {
-        repository.onAccountRequestFinish
+        repository.onRequestFinishUpdates
+            .map { response in
+                guard response.error.type == .ok else {
+                    return .failure(response.error)
+                }
+                return response.requestEntity.accountRequest.map { .success($0) }
+                    ?? .failure(AccountErrorEntity.generic)
+            }
+            .eraseToAnyAsyncSequence()
     }
     
     public var onUserAlertsUpdates: AnyAsyncSequence<[UserAlertEntity]> {
