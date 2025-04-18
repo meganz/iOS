@@ -36,10 +36,10 @@ import UIKit
     }
 
     func openShareFolderDialog(forNodes nodes: [MEGANode]) {
-        Task {
+        Task { [weak self] in
             do {
-                _ = try await shareUseCase.createShareKeys(forNodes: nodes.toNodeEntities())
-                router.showShareFoldersContactView(withNodes: nodes)
+                _ = try await self?.shareUseCase.createShareKeys(forNodes: nodes.toNodeEntities())
+                self?.router.showShareFoldersContactView(withNodes: nodes)
             } catch {
                 SVProgressHUD.showError(withStatus: error.localizedDescription)
             }

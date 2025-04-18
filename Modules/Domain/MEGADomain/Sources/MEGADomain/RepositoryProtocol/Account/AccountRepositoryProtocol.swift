@@ -90,16 +90,17 @@ public protocol AccountRepositoryProtocol: Sendable, RepositoryProtocol {
     func upgradeSecurity() async throws -> Bool
     func getMiscFlags() async throws
     func sessionTransferURL(path: String) async throws -> URL
-
+    func setAccountStorageStatus(_ status: StorageStatusEntity)
+    
     // Account social and notifications
     func incomingContactsRequestsCount() -> Int
     func relevantUnseenUserAlertsCount() -> UInt
 
     // Account events and delegates
-    var onAccountRequestFinish: AnyAsyncSequence<Result<AccountRequestEntity, any Error>> { get }
+    var onRequestFinishUpdates: AnyAsyncSequence<RequestResponseEntity> { get }
     var onUserAlertsUpdates: AnyAsyncSequence<[UserAlertEntity]> { get }
     var onContactRequestsUpdates: AnyAsyncSequence<[ContactRequestEntity]> { get }
-    var onStorageStatusUpdates: AnyAsyncSequence<StorageStatusEntity> { get }
+    var onEventsUpdates: AnyAsyncSequence<EventEntity> { get }
     func multiFactorAuthCheck(email: String) async throws -> Bool
     
     // Node sizes

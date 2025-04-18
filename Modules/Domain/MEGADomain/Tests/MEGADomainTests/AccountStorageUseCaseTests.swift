@@ -37,13 +37,19 @@ final class AccountStorageUseCaseTests: XCTestCase {
     // MARK: - Storage Status Updates
     
     func testOnStorageStatusUpdates_whenStorageStatusIsUpdated_shouldEmitCorrectValues() async {
-        let expectedStatusUpdates: [StorageStatusEntity] = [.noStorageProblems, .almostFull, .full]
-        let (sut, _) = makeSUT(onStorageStatusUpdates: AsyncStream { continuation in
-            for status in expectedStatusUpdates {
-                continuation.yield(status)
-            }
-            continuation.finish()
-        }.eraseToAnyAsyncSequence())
+        let storageStates: [EventEntity.StorageState] = [.green, .orange, .red]
+        let events: [EventEntity] = storageStates.map { .init(type: .storage, storageState: $0, number: 0) }
+        let expectedStatusUpdates: [StorageStatusEntity] = events.compactMap { $0.storageStatus }
+
+        let mockRepo = MockAccountRepository(
+            onEventsUpdates: AsyncStream { continuation in
+                for status in events {
+                    continuation.yield(status)
+                }
+                continuation.finish()
+            }.eraseToAnyAsyncSequence()
+        )
+        let (sut, _) = makeSUT(mockRepository: mockRepo)
         
         var receivedStatusUpdates: [StorageStatusEntity] = []
         for await status in sut.onStorageStatusUpdates {
@@ -51,6 +57,7 @@ final class AccountStorageUseCaseTests: XCTestCase {
         }
         
         XCTAssertEqual(receivedStatusUpdates, expectedStatusUpdates)
+        XCTAssertEqual(mockRepo.setAccountStorageStatusCalledCount, expectedStatusUpdates.count)
     }
     
     // MARK: - Current Storage Status Tests
@@ -148,11 +155,11 @@ final class AccountStorageUseCaseTests: XCTestCase {
         storageUsed: Int64 = 0,
         storageMax: Int64 = 1000,
         shouldRefreshStorageStatus: Bool = false,
-        onStorageStatusUpdates: AnyAsyncSequence<StorageStatusEntity> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
         currentStorageStatus: StorageStatusEntity = .noStorageProblems,
         lastStorageBannerDismissedDate: Date? = nil,
         isUnlimitedStorageAccount: Bool = false,
-        currentDate: @Sendable @escaping () -> Date = { Date() }
+        currentDate: @Sendable @escaping () -> Date = { Date() },
+        mockRepository: MockAccountRepository? = nil
     ) -> (AccountStorageUseCase, MockPreferenceUseCase) {
         let accountRepository = MockAccountRepository(
             shouldRefreshStorageStatus: shouldRefreshStorageStatus,
@@ -161,8 +168,7 @@ final class AccountStorageUseCaseTests: XCTestCase {
                 storageMax: storageMax
             ),
             currentStorageStatus: currentStorageStatus,
-            isUnlimitedStorageAccount: isUnlimitedStorageAccount,
-            onStorageStatusUpdates: onStorageStatusUpdates
+            isUnlimitedStorageAccount: isUnlimitedStorageAccount
         )
         
         let mockPreferenceUseCase = MockPreferenceUseCase()
@@ -171,7 +177,7 @@ final class AccountStorageUseCaseTests: XCTestCase {
         }
         
         let sut = AccountStorageUseCase(
-            accountRepository: accountRepository,
+            accountRepository: mockRepository ?? accountRepository,
             preferenceUseCase: mockPreferenceUseCase,
             currentDate: currentDate
         )

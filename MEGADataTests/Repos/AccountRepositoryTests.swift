@@ -322,45 +322,6 @@ final class AccountRepositoryTests: XCTestCase {
         }
     }
     
-    func testOnAccountRequestFinish_successRequest_shouldYieldElement() async {
-        let (sut, _) = makeSUT(
-            accountRequestUpdate: .success(AccountRequestEntity(type: .accountDetails, file: nil, userAttribute: nil, email: nil))
-        )
-        var iterator = sut.onAccountRequestFinish.makeAsyncIterator()
-        
-        let result = await iterator.next()
-        await XCTAsyncAssertNoThrow(try result?.get())
-    }
-    
-    func testOnAccountRequestFinish_failedRequest_shouldYieldElement() async {
-        let (sut, _) = makeSUT(
-            accountRequestUpdate: .failure(MockError.failingError)
-        )
-        var iterator = sut.onAccountRequestFinish.makeAsyncIterator()
-        
-        let result = await iterator.next()
-        XCTAssertThrowsError(try result?.get())
-    }
-    
-    func testOnUserAlertsUpdates_onUpdate_shouldYieldElements() async {
-        let updates = [UserAlertEntity.random, UserAlertEntity.random]
-        let (sut, _) = makeSUT(userAlertsUpdates: updates)
-        var iterator = sut.onUserAlertsUpdates.makeAsyncIterator()
-        
-        let result = await iterator.next()
-        XCTAssertEqual(result, updates)
-    }
-    
-    func testOnContactRequestsUpdate_onUpdate_shouldYieldElements() async {
-        let updates = [ContactRequestEntity.random, ContactRequestEntity.random]
-        
-        let (sut, _) = makeSUT(contactRequestsUpdates: updates)
-        var iterator = sut.onContactRequestsUpdates.makeAsyncIterator()
-        
-        let result = await iterator.next()
-        XCTAssertEqual(result, updates)
-    }
-    
     func testGetMiscFlag_whenApiOk_shouldNotThrow() async {
         let (sut, _) = makeSUT(requestResult: .success(MockRequest(handle: 1)))
 
@@ -460,26 +421,6 @@ final class AccountRepositoryTests: XCTestCase {
         XCTAssertEqual(usedStorage, expectedSize)
     }
     
-    func testOnStorageStatusUpdates_whenReceivingUpdates_shouldEmitCorrectValues() async throws {
-        let expectedStatusUpdates: [StorageStatusEntity] = [.almostFull, .full, .pendingChange, .paywall]
-        let asyncStream = makeAsyncStream(for: expectedStatusUpdates)
-        let (sut, _) = makeSUT(onStorageStatusUpdates: asyncStream)
-        let expectation = XCTestExpectation(description: "Wait for all status updates")
-        var receivedStatusUpdates: [StorageStatusEntity] = []
-        
-        Task {
-            for await status in sut.onStorageStatusUpdates {
-                receivedStatusUpdates.append(status)
-                if receivedStatusUpdates.count == expectedStatusUpdates.count {
-                    expectation.fulfill()
-                }
-            }
-        }
-        
-        await fulfillment(of: [expectation], timeout: 1.0)
-        XCTAssertEqual(receivedStatusUpdates, expectedStatusUpdates)
-    }
-
     func testRefreshCurrentStorageState_whenFull_shouldReturnFull() async throws {
         try await assertRefreshStorageState(expectedState: .full)
     }
@@ -651,10 +592,6 @@ final class AccountRepositoryTests: XCTestCase {
         upgradeSecurityClosure: @escaping (MEGASdk, any MEGARequestDelegate) -> Void = { _, _ in },
         accountDetailsClosure: @escaping (MEGASdk, any MEGARequestDelegate) -> Void = { _, _ in },
         requestResult: MockSdkRequestResult = .failure(MockError.failingError),
-        accountRequestUpdate: Result<AccountRequestEntity, any Error> = .failure(MockError.failingError),
-        userAlertsUpdates: [UserAlertEntity] = [],
-        contactRequestsUpdates: [ContactRequestEntity] = [],
-        onStorageStatusUpdates: AnyAsyncSequence<StorageStatusEntity> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
         storageStatus: StorageStatusEntity? = nil,
         currentUserSource: CurrentUserSource? = nil
     ) -> (AccountRepository, MockSdk) {
@@ -698,19 +635,11 @@ final class AccountRepositoryTests: XCTestCase {
         if let storageStatus {
             currentUserSource.setStorageStatus(storageStatus)
         }
-        
-        let accountUpdatesProvider = MockAccountUpdatesProvider(
-            onAccountRequestFinish: SingleItemAsyncSequence(item: accountRequestUpdate).eraseToAnyAsyncSequence(),
-            onUserAlertsUpdates: SingleItemAsyncSequence(item: userAlertsUpdates).eraseToAnyAsyncSequence(),
-            onContactRequestsUpdates: SingleItemAsyncSequence(item: contactRequestsUpdates).eraseToAnyAsyncSequence(),
-            onStorageStatusUpdates: onStorageStatusUpdates
-        )
 
         return (AccountRepository(
             sdk: mockSdk,
             currentUserSource: currentUserSource,
-            backupsRootFolderNodeAccess: backupsRootNodeAccess,
-            accountUpdatesProvider: accountUpdatesProvider
+            backupsRootFolderNodeAccess: backupsRootNodeAccess
         ), mockSdk)
     }
     
@@ -734,15 +663,6 @@ final class AccountRepositoryTests: XCTestCase {
     
     private func randomAccountDetails() -> MockMEGAAccountDetails {
         MockMEGAAccountDetails(type: MEGAAccountType(rawValue: .random(in: 0...4)) ?? .free)
-    }
-    
-    private func makeAsyncStream(for updates: [StorageStatusEntity]) -> AnyAsyncSequence<StorageStatusEntity> {
-        AsyncStream { continuation in
-            for update in updates {
-                continuation.yield(update)
-            }
-            continuation.finish()
-        }.eraseToAnyAsyncSequence()
     }
     
     private func assertRefreshStorageState(
@@ -785,13 +705,12 @@ struct AccountRepositoryTestSuite {
     private static func makeSUT(
         sdk: MEGASdk = MockSdk(),
         currentUserSource: CurrentUserSource = .shared,
-        backupsRootFolderNodeAccess: some NodeAccessProtocol = MockNodeAccess(),
-        accountUpdatesProvider: some AccountUpdatesProviderProtocol = MockAccountUpdatesProvider()
+        backupsRootFolderNodeAccess: some NodeAccessProtocol = MockNodeAccess()
     ) -> AccountRepository {
         .init(
             sdk: sdk,
             currentUserSource: currentUserSource,
-            backupsRootFolderNodeAccess: backupsRootFolderNodeAccess,
-            accountUpdatesProvider: accountUpdatesProvider)
+            backupsRootFolderNodeAccess: backupsRootFolderNodeAccess
+        )
     }
 }

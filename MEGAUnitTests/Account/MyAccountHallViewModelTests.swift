@@ -369,7 +369,11 @@ final class MyAccountHallViewModelTests: XCTestCase {
     @MainActor
     func testAccountUpdatesMonitoring_onUserAlertsUpdates_shouldUpdateAlertCounts() {
         let (stream, continuation) = AsyncStream<[UserAlertEntity]>.makeStream()
-        let (sut, _) = makeSUT(onUserAlertsUpdates: stream.eraseToAnyAsyncSequence())
+        let expectedAlertCount = UInt.random(in: 6...10)
+        let (sut, _) = makeSUT(
+            onUserAlertsUpdates: stream.eraseToAnyAsyncSequence(),
+            unseenUserAlertsCount: expectedAlertCount
+        )
         
         let expectation = expectation(description: #function)
         var commands = [MyAccountHallViewModel.Command]()
@@ -384,20 +388,25 @@ final class MyAccountHallViewModelTests: XCTestCase {
             currentValue = UInt.random(in: 1...5)
         }
         
-        let alerts = generateRandomUserAlerts(count: Int.random(in: 6...10))
-        continuation.yield(alerts)
+        // The yielded value here is just a placeholder and doesn't represent all pending alerts.
+        // Once a new update is received, the actual total count will be fetched.
+        continuation.yield([UserAlertEntity.random])
         continuation.finish()
         
         wait(for: [expectation], timeout: 1)
         
-        XCTAssertEqual(sut.relevantUnseenUserAlertsCount, UInt(alerts.count))
+        XCTAssertEqual(sut.relevantUnseenUserAlertsCount, expectedAlertCount)
         XCTAssertEqual(commands, [.reloadCounts])
     }
     
     @MainActor
     func testAccountUpdatesMonitoring_onContactRequestsUpdates_shouldUpdateContactRequestCounts() {
         let (stream, continuation) = AsyncStream<[ContactRequestEntity]>.makeStream()
-        let (sut, _) = makeSUT(onContactRequestsUpdates: stream.eraseToAnyAsyncSequence())
+        let expectedRequestCount = Int.random(in: 6...10)
+        let (sut, _) = makeSUT(
+            onContactRequestsUpdates: stream.eraseToAnyAsyncSequence(),
+            contactRequestsCount: expectedRequestCount
+        )
         
         let expectation = expectation(description: #function)
         var commands = [MyAccountHallViewModel.Command]()
@@ -407,16 +416,17 @@ final class MyAccountHallViewModelTests: XCTestCase {
         }
         sut.dispatch(.viewWillAppear)
         
-        // Set lower contact request count
+        // Set current contact request count
         sut.incomingContactRequestsCount = Int.random(in: 1...5)
         
-        let requests = generateRandomContactRequests(count: Int.random(in: 6...10))
-        continuation.yield(requests)
+        // The yielded value here is just a placeholder and doesn't represent all pending requests.
+        // Once a new update is received, the actual total count will be fetched.
+        continuation.yield([ContactRequestEntity.random])
         continuation.finish()
         
         wait(for: [expectation], timeout: 1)
         
-        XCTAssertEqual(sut.incomingContactRequestsCount, requests.count)
+        XCTAssertEqual(sut.incomingContactRequestsCount, expectedRequestCount)
         XCTAssertEqual(commands, [.reloadCounts])
     }
 
@@ -856,9 +866,13 @@ final class MyAccountHallViewModelTests: XCTestCase {
         onContactRequestsUpdates: AnyAsyncSequence<[ContactRequestEntity]> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
         notificationCenter: NotificationCenter = NotificationCenter(),
         accountUseCase: ((any AccountUseCaseProtocol)?) = nil,
-        purchaseUseCase: some AccountPlanPurchaseUseCaseProtocol = MockAccountPlanPurchaseUseCase()
+        purchaseUseCase: some AccountPlanPurchaseUseCaseProtocol = MockAccountPlanPurchaseUseCase(),
+        contactRequestsCount: Int = 0,
+        unseenUserAlertsCount: UInt = 0
     ) -> (MyAccountHallViewModel, MockMyAccountHallRouter) {
         let myAccountHallUseCase = MockMyAccountHallUseCase(
+            contactRequestsCount: contactRequestsCount,
+            unseenUserAlertsCount: unseenUserAlertsCount,
             currentAccountDetails: currentAccountDetails ?? AccountDetailsEntity.random,
             isMasterBusinessAccount: isMasterBusinessAccount,
             isAchievementsEnabled: isAchievementsEnabled,

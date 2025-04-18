@@ -356,23 +356,22 @@ final class MyAccountHallViewModel: ViewModelType, ObservableObject {
         }
         
         onUserAlertsUpdatesTask = Task { [weak self, myAccountHallUseCase] in
-            for await userAlerts in myAccountHallUseCase.onUserAlertsUpdates {
+            for await _ in myAccountHallUseCase.onUserAlertsUpdates {
                 guard let self else { return }
                 try Task.checkCancellation()
-                
+                let userAlertsCount = await myAccountHallUseCase.relevantUnseenUserAlertsCount()
                 $relevantUnseenUserAlertsCount.mutate { currentValue in
-                    currentValue = UInt(userAlerts.count)
+                    currentValue = userAlertsCount
                 }
                 invokeCommand?(.reloadCounts)
             }
         }
 
         onContactRequestsUpdatesTask = Task { [weak self, myAccountHallUseCase] in
-            for await contactRequests in myAccountHallUseCase.onContactRequestsUpdates {
+            for await _ in myAccountHallUseCase.onContactRequestsUpdates {
                 guard let self else { return }
                 try Task.checkCancellation()
-                
-                incomingContactRequestsCount = contactRequests.count
+                incomingContactRequestsCount = await myAccountHallUseCase.incomingContactsRequestsCount()
                 invokeCommand?(.reloadCounts)
             }
         }

@@ -6,34 +6,22 @@ import MEGASwift
 
 public final class AccountRepository: NSObject, AccountRepositoryProtocol {
     public static var newRepo: AccountRepository {
-        AccountRepository(
-            backupsRootFolderNodeAccess: BackupRootNodeAccess.shared,
-            accountUpdatesProvider: AccountUpdatesProvider(
-                sdk: MEGASdk.sharedSdk,
-                areSOQBannersEnabled: {
-                    true
-                }
-            )
-        )
+        AccountRepository(backupsRootFolderNodeAccess: BackupRootNodeAccess.shared)
     }
     private let sdk: MEGASdk
     private let currentUserSource: CurrentUserSource
     private let backupsRootFolderNodeAccess: any NodeAccessProtocol
-    private let accountUpdatesProvider: any AccountUpdatesProviderProtocol
-    
     private let fullStorageLimit = 1.0
     private let almostFullStorageLimit = 0.9
     
     public init(
         sdk: MEGASdk = MEGASdk.sharedSdk,
         currentUserSource: CurrentUserSource = .shared,
-        backupsRootFolderNodeAccess: some NodeAccessProtocol,
-        accountUpdatesProvider: some AccountUpdatesProviderProtocol
+        backupsRootFolderNodeAccess: some NodeAccessProtocol
     ) {
         self.sdk = sdk
         self.currentUserSource = currentUserSource
         self.backupsRootFolderNodeAccess = backupsRootFolderNodeAccess
-        self.accountUpdatesProvider = accountUpdatesProvider
     }
 
     // MARK: - User authentication status and identifiers
@@ -284,6 +272,10 @@ public final class AccountRepository: NSObject, AccountRepositoryProtocol {
             })
         })
     }
+    
+    public func setAccountStorageStatus(_ status: StorageStatusEntity) {
+        currentUserSource.setStorageStatus(status)
+    }
 
     // MARK: - Account social and notifications
     public func incomingContactsRequestsCount() -> Int {
@@ -295,20 +287,20 @@ public final class AccountRepository: NSObject, AccountRepositoryProtocol {
     }
 
     // MARK: - Account events and delegates
-    public var onAccountRequestFinish: AnyAsyncSequence<Result<AccountRequestEntity, any Error>> {
-        accountUpdatesProvider.onAccountRequestFinish
+    public var onRequestFinishUpdates: AnyAsyncSequence<RequestResponseEntity> {
+        MEGAUpdateHandlerManager.shared.requestFinishUpdates
     }
     
     public var onUserAlertsUpdates: AnyAsyncSequence<[UserAlertEntity]> {
-        accountUpdatesProvider.onUserAlertsUpdates
+        MEGAUpdateHandlerManager.shared.userAlertUpdates
     }
     
     public var onContactRequestsUpdates: AnyAsyncSequence<[ContactRequestEntity]> {
-        accountUpdatesProvider.onContactRequestsUpdates
+        MEGAUpdateHandlerManager.shared.contactRequestUpdates
     }
     
-    public var onStorageStatusUpdates: AnyAsyncSequence<StorageStatusEntity> {
-        accountUpdatesProvider.onStorageStatusUpdates
+    public var onEventsUpdates: AnyAsyncSequence<EventEntity> {
+        MEGAUpdateHandlerManager.shared.eventUpdates
     }
     
     public func multiFactorAuthCheck(email: String) async throws -> Bool {

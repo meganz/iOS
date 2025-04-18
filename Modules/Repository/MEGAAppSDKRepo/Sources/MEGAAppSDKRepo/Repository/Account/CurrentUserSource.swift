@@ -132,14 +132,6 @@ public final class CurrentUserSource: @unchecked Sendable {
             .store(in: &subscriptions)
         
         notificationCenter
-            .publisher(for: .storageStatusDidChange)
-            .compactMap { $0.object as? StorageStatusEntity }
-            .sink { [weak self] storageStatus in
-                self?.setStorageStatus(storageStatus)
-            }
-            .store(in: &subscriptions)
-        
-        notificationCenter
             .publisher(for: .storageEventDidChange)
             .compactMap {
                 guard let eventNumber = ($0.userInfo?[NotificationUserInfoKey.storageEventState] as? UInt),

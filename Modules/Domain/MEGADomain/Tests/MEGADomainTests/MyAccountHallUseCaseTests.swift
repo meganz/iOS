@@ -66,7 +66,11 @@ final class MyAccountHallUseCaseTests: XCTestCase {
     
     func testOnAccountRequestFinish_successRequest_shouldReturnSuccessRequest() async {
         let sut = MyAccountHallUseCase(
-            repository: makeMockAccountRepository(accountRequestUpdate: .success(AccountRequestEntity(type: .accountDetails, file: nil, userAttribute: nil, email: nil)))
+            repository: makeMockAccountRepository(
+                requestFinishUpdate: RequestResponseEntity(
+                    requestEntity: RequestEntity(type: .accountDetails, accountRequest: AccountRequestEntity()),
+                    error: .init(type: .ok))
+            )
         )
         var iterator = sut.onAccountRequestFinish.makeAsyncIterator()
         
@@ -75,8 +79,11 @@ final class MyAccountHallUseCaseTests: XCTestCase {
     }
     
     func testOnAccountRequestFinish_failedRequest_shouldReturnFailedRequest() async {
+        let error = ErrorTypeEntity.allCases.filter { $0 != .ok }.randomElement() ?? .internalError
         let sut = MyAccountHallUseCase(
-            repository: makeMockAccountRepository(accountRequestUpdate: .failure(AccountDetailsErrorEntity.generic))
+            repository: makeMockAccountRepository(
+                requestFinishUpdate: RequestResponseEntity(error: .init(type: error))
+            )
         )
         var iterator = sut.onAccountRequestFinish.makeAsyncIterator()
         
@@ -108,13 +115,12 @@ final class MyAccountHallUseCaseTests: XCTestCase {
     
     // MARK: - Helper
     private func makeMockAccountRepository(
-        accountRequestUpdate: Result<AccountRequestEntity, any Error> = .failure(AccountErrorEntity.generic),
+        requestFinishUpdate: RequestResponseEntity = RequestResponseEntity(),
         userAlertsUpdates: [UserAlertEntity] = [],
         contactRequestsUpdates: [ContactRequestEntity] = []
     ) -> MockAccountRepository {
-
         MockAccountRepository(
-            onAccountRequestFinishUpdate: SingleItemAsyncSequence(item: accountRequestUpdate).eraseToAnyAsyncSequence(),
+            onRequestFinishUpdates: SingleItemAsyncSequence(item: requestFinishUpdate).eraseToAnyAsyncSequence(),
             onUserAlertsUpdates: SingleItemAsyncSequence(item: userAlertsUpdates).eraseToAnyAsyncSequence(),
             onContactRequestsUpdates: SingleItemAsyncSequence(item: contactRequestsUpdates).eraseToAnyAsyncSequence()
         )

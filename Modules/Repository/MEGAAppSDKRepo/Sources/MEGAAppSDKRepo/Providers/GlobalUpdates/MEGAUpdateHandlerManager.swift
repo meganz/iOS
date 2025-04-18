@@ -34,6 +34,16 @@ final class MEGAUpdateHandlerManager: NSObject, MEGADelegate, @unchecked Sendabl
         handlers.forEach { $0.onUsersUpdate?(users) }
     }
     
+    func onUserAlertsUpdate(_ api: MEGASdk, userAlertList: MEGAUserAlertList) {
+        let userAlerts = userAlertList.toUserAlertEntities()
+        handlers.forEach { $0.onUserAlertsUpdate?(userAlerts) }
+    }
+    
+    func onContactRequestsUpdate(_ api: MEGASdk, contactRequestList: MEGAContactRequestList) {
+        let contactRequests = contactRequestList.toContactRequestEntities()
+        handlers.forEach { $0.onContactRequestsUpdate?(contactRequests) }
+    }
+    
     func onEvent(_ api: MEGASdk, event: MEGAEvent) {
         handlers.forEach { $0.onEvent?(event.toEventEntity()) }
     }

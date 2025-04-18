@@ -23,6 +23,26 @@ extension MEGAUpdateHandlerManager {
         }.eraseToAnyAsyncSequence()
     }
     
+    var userAlertUpdates: AnyAsyncSequence<[UserAlertEntity]> {
+        AsyncStream { continuation in
+            let handler = MEGAUpdateHandler(onUserAlertsUpdate: { continuation.yield($0) })
+
+            add(handler: handler)
+            
+            continuation.onTermination = { [weak self] _ in self?.remove(handler: handler) }
+        }.eraseToAnyAsyncSequence()
+    }
+    
+    var contactRequestUpdates: AnyAsyncSequence<[ContactRequestEntity]> {
+        AsyncStream { continuation in
+            let handler = MEGAUpdateHandler(onContactRequestsUpdate: { continuation.yield($0) })
+            
+            add(handler: handler)
+            
+            continuation.onTermination = { [weak self] _ in self?.remove(handler: handler) }
+        }.eraseToAnyAsyncSequence()
+    }
+    
     var eventUpdates: AnyAsyncSequence<EventEntity> {
         AsyncStream { continuation in
             let handler = MEGAUpdateHandler(onEvent: { continuation.yield($0) })
@@ -31,6 +51,7 @@ extension MEGAUpdateHandlerManager {
             continuation.onTermination = { [weak self] _ in self?.remove(handler: handler) }
         }.eraseToAnyAsyncSequence()
     }
+    
     var requestStartUpdates: AnyAsyncSequence<RequestEntity> {
         AsyncStream { continuation in
             let handler = MEGAUpdateHandler(onRequestStart: { continuation.yield($0) })

@@ -127,7 +127,18 @@ public struct AccountStorageUseCase: AccountStorageUseCaseProtocol {
     }
     
     public var onStorageStatusUpdates: AnyAsyncSequence<StorageStatusEntity> {
-        accountRepository.onStorageStatusUpdates
+        accountRepository.onEventsUpdates
+            .compactMap { event in
+                guard event.isStorageCapacityEvent(),
+                      let storageStatus = event.storageStatus else {
+                    return nil
+                }
+                
+                // Save the new storage status on CurrentUserSource
+                accountRepository.setAccountStorageStatus(storageStatus)
+                return storageStatus
+            }
+            .eraseToAnyAsyncSequence()
     }
     
     public var currentStorageStatus: StorageStatusEntity {
