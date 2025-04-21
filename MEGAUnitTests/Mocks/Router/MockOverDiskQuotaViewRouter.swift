@@ -3,11 +3,15 @@
 final class MockOverDiskQuotaViewRouter: OverDiskQuotaViewRouting {
     private(set) var dismiss_calledTimes = 0
     private(set) var showUpgradePlanPage_calledTimes = 0
+    private let dismissAction: () -> Void
     
-    init() {}
+    init(dismissAction: @escaping () -> Void = {}) {
+        self.dismissAction = dismissAction
+    }
     
     func dismiss() {
         dismiss_calledTimes += 1
+        dismissAction()
     }
     
     func showUpgradePlanPage() {
