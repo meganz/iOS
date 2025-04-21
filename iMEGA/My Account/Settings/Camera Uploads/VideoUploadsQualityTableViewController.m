@@ -43,6 +43,13 @@
     cell.redCheckmarkImageView.hidden = NO;
 }
 
+- (VideoUploadsViewModel *)viewModel {
+    if (!_viewModel) {
+        _viewModel = [self makeViewModel];
+    }
+    return _viewModel;
+}
+
 #pragma mark - Private
 
 - (void)setupColors {
@@ -69,6 +76,8 @@
     SelectableTableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
     cell.redCheckmarkImageView.hidden = NO;
     self.currentIndexPath = indexPath;
+    
+    [self trackVideoQualityEvent:indexPath.row];
 }
 
 @end

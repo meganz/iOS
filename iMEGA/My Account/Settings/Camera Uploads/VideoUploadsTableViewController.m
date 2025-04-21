@@ -48,6 +48,13 @@ typedef NS_ENUM(NSUInteger, VideoUploadsSectionFormatRow) {
     [self configUI];
 }
 
+- (VideoUploadsViewModel *)viewModel {
+    if (!_viewModel) {
+        _viewModel = [self makeViewModel];
+    }
+    return _viewModel;
+}
+
 #pragma mark - Private
 
 - (void)configVideoFormatTexts {
@@ -109,6 +116,7 @@ typedef NS_ENUM(NSUInteger, VideoUploadsSectionFormatRow) {
 #pragma mark - UI Actions
 
 - (IBAction)uploadVideosSwitchValueChanged:(UISwitch *)sender {
+    [self trackVideoUploadsEvent: sender.isOn];
     if (sender.isOn) {
         [CameraUploadManager.shared enableVideoUpload];
     } else {
@@ -159,6 +167,8 @@ typedef NS_ENUM(NSUInteger, VideoUploadsSectionFormatRow) {
     
     if (indexPath.section == VideoUploadsSectionFormat) {
         CameraUploadManager.convertHEVCVideo = indexPath.row == VideoUploadsSectionFormatRowH264;
+        [self trackVideoCodecIsH264Enabled: indexPath.row == VideoUploadsSectionFormatRowH264];
+        
         [self configUI];
     }
 }

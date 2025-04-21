@@ -13,4 +13,16 @@ extension VideoUploadsTableViewController {
         videoQualityLabel?.textColor = UIColor.primaryTextColor()
         h264Label?.textColor = UIColor.primaryTextColor()
     }
+    
+    @objc func makeViewModel() -> VideoUploadsViewModel {
+        VideoUploadsViewModel()
+    }
+    
+    @objc func trackVideoUploadsEvent(_ enabled: Bool) {
+        viewModel.trackEvent(.videoUploads(enabled))
+    }
+    
+    @objc func trackVideoCodecIsH264Enabled(_ isH264Enabled: Bool) {
+        isH264Enabled ? viewModel.trackEvent(.videoCodec(.H264)) : viewModel.trackEvent(.videoCodec(.HEVC))
+    }
 }
