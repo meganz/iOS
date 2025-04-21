@@ -194,3 +194,4 @@
 #import "TestPasswordViewController.h"
 #import "ChangePasswordViewController.h"
 #import "InitialLaunchViewController.h"
+#import "VideoUploadsQualityTableViewController.h"

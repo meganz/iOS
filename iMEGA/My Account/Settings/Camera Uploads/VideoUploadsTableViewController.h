@@ -1,5 +1,7 @@
 #import <UIKit/UIKit.h>
 
+@class VideoUploadsViewModel;
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface VideoUploadsTableViewController : UITableViewController
@@ -8,6 +10,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UILabel *videoQualityLabel;
 @property (weak, nonatomic) IBOutlet UILabel *HEVCLabel;
 @property (weak, nonatomic) IBOutlet UILabel *H264Label;
+
+@property (strong, nonatomic) VideoUploadsViewModel *viewModel;
 
 @end
 

@@ -71,6 +71,13 @@
     [NSNotificationCenter.defaultCenter removeObserver:self];
 }
 
+- (CameraUploadsSettingsViewModel *)viewModel {
+    if (!_viewModel) {
+        _viewModel = [self makeViewModel];
+    }
+    return _viewModel;
+}
+
 #pragma mark - Private
 
 - (void)configImageFormatTexts {
@@ -215,6 +222,7 @@
 
 - (IBAction)enableCameraUploadsSwitchValueChanged:(UISwitch *)sender {
     MEGALogInfo(@"%@ camera uploads", sender.isOn ? @"Enable" : @"Disable");
+    [self trackCameraUploadsEvent: sender.isOn];
     if (sender.isOn) {
         if (MEGASdk.shared.businessStatus == BusinessStatusExpired) {
             [self showAccountExpiredAlert];
@@ -259,6 +267,7 @@
 
 - (IBAction)uploadVideosSwitchValueChanged:(UISwitch *)sender {
     MEGALogInfo(@"%@ uploads videos", sender.isOn ? @"Enable" : @"Disable");
+    [self trackVideoUploadsEvent: sender.isOn];
     if (sender.isOn) {
         [CameraUploadManager.shared enableVideoUpload];
     } else {
@@ -272,6 +281,8 @@
     MEGALogInfo(@"%@ mobile data", sender.isOn ? @"Enable" : @"Disable");
     CameraUploadManager.cellularUploadAllowed = sender.isOn;
     [self configUI];
+    
+    [self trackCameraUploadsMobileDataEvent: sender.isOn];
     
     if (CameraUploadManager.isCellularUploadAllowed) {
         [TransferSessionManager.shared invalidateAndCancelPhotoCellularDisallowedSession];
@@ -297,6 +308,7 @@
 
 - (IBAction)includeGPSTagsSwitchValueChanged:(UISwitch *)sender {
     CameraUploadManager.includeGPSTags = sender.on;
+    [self trackPhotosLocationTagsEvent: sender.on];
 }
 
 - (void)selectNode {
@@ -359,9 +371,11 @@
     
     UITableViewCell *selectedCell = self.tableSections[indexPath.section][indexPath.row];
     if (selectedCell == self.HEICCell) {
+        [self trackCameraUploadsFormatHEICSelectedEvent];
         CameraUploadManager.convertHEICPhoto = NO;
         [self configPhotoFormatUI];
     } else if (selectedCell == self.JPGCell) {
+        [self trackCameraUploadsFormatJPGSelectedEvent];
         CameraUploadManager.convertHEICPhoto = YES;
         [self configPhotoFormatUI];
     } else if (selectedCell == self.targetFolderCell) {
@@ -393,6 +407,7 @@
     [CameraUploadNodeAccess.shared setNode:node completion:^(MEGANode * _Nullable node, NSError * _Nullable error) {
         if (node) {
             [NSOperationQueue.mainQueue addOperationWithBlock:^{
+                [self trackMegaUploadFolderUpdatedEvent];
                 self.targetFolderLabel.text = node.name;
                 [self.tableView reloadData];
             }];

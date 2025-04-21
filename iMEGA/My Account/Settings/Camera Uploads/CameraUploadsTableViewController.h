@@ -1,5 +1,7 @@
 #import <UIKit/UIKit.h>
 
+@class CameraUploadsSettingsViewModel;
+
 @interface CameraUploadsTableViewController : UITableViewController
 
 @property (weak, nonatomic) IBOutlet UILabel *enableCameraUploadsLabel;
@@ -16,5 +18,7 @@
 
 @property (nonatomic) BOOL isPresentedModally;
 @property (copy) void (^cameraUploadSettingChanged)(void);
+
+@property (strong, nonatomic) CameraUploadsSettingsViewModel *viewModel;
 
 @end

@@ -49,6 +49,13 @@ typedef NS_ENUM(NSUInteger, AdvancedOptionSection) {
     [self setupColors];
 }
 
+- (CameraUploadsAdvancedOptionsViewModel *)viewModel {
+    if (!_viewModel) {
+        _viewModel = [self makeViewModel];
+    }
+    return _viewModel;
+}
+
 #pragma mark - Private
 
 - (void)setupColors {
@@ -63,26 +70,31 @@ typedef NS_ENUM(NSUInteger, AdvancedOptionSection) {
 - (IBAction)didChangeValueForLivePhotosSwitch:(UISwitch *)sender {
     CameraUploadManager.uploadVideosForLivePhotos = sender.isOn;
     [self configCameraUploadWhenValueChangedForSwitch:sender];
+    [self trackLivePhotoVideoUploadsEvent: sender.isOn];
 }
 
 - (IBAction)didChangeValueForBurstPhotosSwitch:(UISwitch *)sender {
     CameraUploadManager.uploadAllBurstPhotos = sender.isOn;
     [self configCameraUploadWhenValueChangedForSwitch:sender];
+    [self trackBurstPhotosUploadEvent: sender.isOn];
 }
 
 - (IBAction)didChangeValueForHiddenAssetsSwitch:(UISwitch *)sender {
     CameraUploadManager.uploadHiddenAlbum = sender.isOn;
     [self configCameraUploadWhenValueChangedForSwitch:sender];
+    [self trackHiddenAlbumUploadEvent: sender.isOn];
 }
 
 - (IBAction)didChangeValueForSharedAlbumsSwitch:(UISwitch *)sender {
     CameraUploadManager.uploadSharedAlbums = sender.isOn;
     [self configCameraUploadWhenValueChangedForSwitch:sender];
+    [self trackLivePhotoVideoUploadsEvent: sender.isOn];
 }
 
 - (IBAction)didChangeValueForSyncedAlbumsSwitch:(UISwitch *)sender {
     CameraUploadManager.uploadSyncedAlbums = sender.isOn;
     [self configCameraUploadWhenValueChangedForSwitch:sender];
+    [self trackITunesSyncedAlbumsUploadEvent: sender.isOn];
 }
 
 - (void)configCameraUploadWhenValueChangedForSwitch:(UISwitch *)sender {

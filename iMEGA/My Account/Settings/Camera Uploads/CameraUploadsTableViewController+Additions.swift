@@ -38,4 +38,36 @@ extension CameraUploadsTableViewController {
         advancedLabel.text = Strings.Localizable.advanced
         includeGPSTagsLabel.text = Strings.Localizable.includeLocationTags
     }
+    
+    @objc func makeViewModel() -> CameraUploadsSettingsViewModel {
+        CameraUploadsSettingsViewModel()
+    }
+    
+    @objc func trackCameraUploadsEvent(_ enabled: Bool) {
+        viewModel.trackEvent(.cameraUploads(enabled))
+    }
+    
+    @objc func trackVideoUploadsEvent(_ enabled: Bool) {
+        viewModel.trackEvent(.videoUploads(enabled))
+    }
+    
+    @objc func trackCameraUploadsFormatHEICSelectedEvent() {
+        viewModel.trackEvent(.cameraUploadsFormat(.HEIC))
+    }
+    
+    @objc func trackCameraUploadsFormatJPGSelectedEvent() {
+        viewModel.trackEvent(.cameraUploadsFormat(.JPG))
+    }
+    
+    @objc func trackMegaUploadFolderUpdatedEvent() {
+        viewModel.trackEvent(.megaUploadFolderUpdated)
+    }
+    
+    @objc func trackPhotosLocationTagsEvent(_ enabled: Bool) {
+        viewModel.trackEvent(.photosLocationTags(enabled))
+    }
+    
+    @objc func trackCameraUploadsMobileDataEvent(_ enabled: Bool) {
+        viewModel.trackEvent(.cameraUploadsMobileData(enabled))
+    }
 }
