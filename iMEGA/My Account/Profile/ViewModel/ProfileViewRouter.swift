@@ -32,6 +32,8 @@ final class ProfileViewRouter: ProfileViewRouting {
             accountUseCase: accountUseCase,
             achievementUseCase: AchievementUseCase(repo: AchievementRepository.newRepo),
             transferUseCase: TransferUseCase(repo: TransferRepository.newRepo),
+            networkMonitorUseCase: NetworkMonitorUseCase(repo: NetworkMonitorRepository.newRepo),
+            transferInventoryUseCaseHelper: TransferInventoryUseCaseHelper(),
             tracker: DIContainer.tracker,
             router: self
         )
