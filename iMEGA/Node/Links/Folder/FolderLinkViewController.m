@@ -148,16 +148,9 @@
     
     [self onViewAppear];
     
-    MEGASdk *sdkFolder = MEGASdk.sharedFolderLink;
-    
-    if (!self.loginDone && self.isFolderRootNode) {
-        [sdkFolder loginToFolderLink:self.publicLinkString];
-    }
-    
     self.navigationController.toolbarHidden = NO;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(internetConnectionChanged) name:kReachabilityChangedNotification object:nil];
-    [sdkFolder retryPendingConnections];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -172,6 +165,14 @@
 
 -(void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
+    
+    MEGASdk *sdkFolder = MEGASdk.sharedFolderLink;
+    
+    if (!self.loginDone && self.isFolderRootNode) {
+        [sdkFolder loginToFolderLink:self.publicLinkString];
+    }
+    
+    [sdkFolder retryPendingConnections];
     
     [AudioPlayerManager.shared updateMiniPlayerPresenter:self];
     [AudioPlayerManager.shared addMiniPlayerHandler:self];
