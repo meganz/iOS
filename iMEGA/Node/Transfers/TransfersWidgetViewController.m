@@ -866,7 +866,9 @@ static TransfersWidgetViewController* instance = nil;
             
         case MEGARequestTypeCancelTransfers: {
             [self reloadView];
-            [SVProgressHUD showImage:[UIImage imageNamed:@"hudMinus"] status:LocalizedString(@"transfersCancelled", @"")];
+            if([self hasActiveTransfers]) {
+                [SVProgressHUD showImage:[UIImage imageNamed:@"hudMinus"] status:LocalizedString(@"transfersCancelled", @"")];
+            }
             break;
         }
             
