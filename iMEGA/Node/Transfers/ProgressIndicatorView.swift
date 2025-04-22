@@ -238,7 +238,7 @@ extension ProgressIndicatorView {
     private func configureData() async throws {
         try Task.checkCancellation()
         
-        guard !self.isWidgetForbidden else {
+        guard !isWidgetForbidden else {
             isHidden = true
             return
         }
@@ -413,6 +413,10 @@ extension ProgressIndicatorView: MEGATransferDelegate {
                 }
             }
         } else {
+            guard !isWidgetForbidden else {
+                isHidden = true
+                return
+            }
             updateForActiveTransfers()
         }
     }
