@@ -18,10 +18,13 @@ extension MainTabBarController {
                 for: .psa,
                 hidden: true
             )
+            self?.removeSafeAreaCoverView()
         }
     }
     
     func showPSA() {
+        guard bottomOverlayManager?.contains(.psa) == true else { return }
+        
         tabBar.isHidden ? addSafeAreaCoverView() : removeSafeAreaCoverView()
         
         performAnimation { [weak self] in
@@ -35,6 +38,7 @@ extension MainTabBarController {
     func dismissPSA() {
         performAnimation { [weak self] in
             self?.removeSubviewFromOverlay(.psa)
+            self?.removeSafeAreaCoverView()
         }
     }
     
