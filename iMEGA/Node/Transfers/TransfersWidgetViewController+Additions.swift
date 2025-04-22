@@ -208,6 +208,11 @@ extension TransfersWidgetViewController: TransferWidgetResponderProtocol {
         return !(appData.contains(TransferMetaDataEntity.saveInPhotos.rawValue) || appData.contains(TransferMetaDataEntity.exportFile.rawValue))
     }
     
+    @objc
+    func makeTransferInventoryUseCaseHelper() -> TransferInventoryUseCaseHelper {
+        TransferInventoryUseCaseHelper()
+    }
+    
     // MARK: - NavigationBarButtons
     @objc func updateNavBarButtonAppearance() {
         CrashlyticsLogger.log(category: .transfersWidget, "Updating Navigation bar button appearance. Navigation bar info: \(String(describing: navigationController?.navigationBar))")

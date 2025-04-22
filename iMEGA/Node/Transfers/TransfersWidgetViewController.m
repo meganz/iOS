@@ -77,7 +77,7 @@ static TransfersWidgetViewController* instance = nil;
     self.title = LocalizedString(@"transfers", @"Transfers");
     self.queuedUploadTransfers = NSMutableArray.new;
     self.selectedTransfers = NSMutableArray.new;
-    self.transferInventoryUseCaseHelper = [[TransferInventoryUseCaseHelper alloc] init];
+    self.transferInventoryUseCaseHelper = [self makeTransferInventoryUseCaseHelper];
     
     self.tableView.emptyDataSetSource = self;
     self.tableView.emptyDataSetDelegate = self;

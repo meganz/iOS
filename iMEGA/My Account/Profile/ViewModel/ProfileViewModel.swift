@@ -64,6 +64,8 @@ final class ProfileViewModel: ViewModelType {
     private let accountUseCase: any AccountUseCaseProtocol
     private let achievementUseCase: any AchievementUseCaseProtocol
     private let transferUseCase: any TransferUseCaseProtocol
+    private let networkMonitorUseCase: any NetworkMonitorUseCaseProtocol
+    private let transferInventoryUseCaseHelper: TransferInventoryUseCaseHelper
     private let requestedChangeTypeValueSubject = CurrentValueSubject<ChangeType?, Never>(nil)
     private let twoFactorAuthStatusValueSubject = CurrentValueSubject<TwoFactorAuthStatus, Never>(.unknown)
     private let invalidateSectionsValueSubject = PassthroughSubject<Void, Never>()
@@ -74,7 +76,9 @@ final class ProfileViewModel: ViewModelType {
     init(
         accountUseCase: some AccountUseCaseProtocol,
         achievementUseCase: some AchievementUseCaseProtocol,
-        transferUseCase: any TransferUseCaseProtocol,
+        transferUseCase: some TransferUseCaseProtocol,
+        networkMonitorUseCase: some NetworkMonitorUseCaseProtocol,
+        transferInventoryUseCaseHelper: TransferInventoryUseCaseHelper,
         featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider,
         tracker: some AnalyticsTracking,
         router: some ProfileViewRouting
@@ -82,6 +86,8 @@ final class ProfileViewModel: ViewModelType {
         self.accountUseCase = accountUseCase
         self.achievementUseCase = achievementUseCase
         self.transferUseCase = transferUseCase
+        self.networkMonitorUseCase = networkMonitorUseCase
+        self.transferInventoryUseCaseHelper = transferInventoryUseCaseHelper
         self.featureFlagProvider = featureFlagProvider
         self.tracker = tracker
         self.router = router
@@ -192,7 +198,7 @@ extension ProfileViewModel {
         case .didTapLogout:
             tracker.trackAnalyticsEvent(with: LogoutButtonPressedEvent())
             
-            guard MEGAReachabilityManager.isReachableHUDIfNot() else { return }
+            guard networkMonitorUseCase.isConnected() else { return }
             
             cancelTransfersTask = Task {
                 await cancelTransfers()
@@ -277,7 +283,7 @@ extension ProfileViewModel {
             try await transferUseCase.cancelDownloadTransfers()
             try await transferUseCase.cancelUploadTransfers()
             
-            MEGAStore.shareInstance().removeAllUploadTransfers()
+            transferInventoryUseCaseHelper.removeAllUploadTransfers()
         } catch {
             MEGALogError("[CancelTransfers] Failed to cancel transfers: \(error)")
         }

@@ -212,7 +212,7 @@ final class ProfileViewModelTests: XCTestCase {
     }
     
     @MainActor func testAction_didTapLogout_emitsCompleteLogoutCommand() async {
-        let (sut, _) = makeSUT()
+        let (sut, _) = makeSUT(isConnected: true)
         
         var capturedCommand: ProfileViewModel.Command?
         
@@ -384,6 +384,38 @@ final class ProfileViewModelTests: XCTestCase {
         XCTAssertEqual(sut.proFlexiAccountStatus, .overdue, "Expected Pro Flexi account state to be overdue when the account is expired.")
     }
     
+    @MainActor
+    func testDidTapLogout_whenNetworkIsConnected_callsCancelTransfers() async {
+        let transferUseCase = MockTransferUseCase()
+        let (sut, _) = makeSUT(
+            isConnected: true,
+            transferUseCase: transferUseCase
+        )
+        
+        sut.dispatch(.didTapLogout)
+        
+        if let task = sut.cancelTransfersTask {
+            await task.value
+        }
+        
+        XCTAssertEqual(transferUseCase.cancelDownloadTransfers_calledTimes, 1, "Expected cancelDownloadTransfers to be called once when network is connected")
+        XCTAssertEqual(transferUseCase.cancelUploadTransfers_calledTimes, 1, "Expected cancelUploadTransfers to be called once when network is connected")
+    }
+    
+    @MainActor
+    func testDidTapLogout_whenNetworkIsNotConnected_doesNotCallCancelTransfers() async {
+        let transferUseCase = MockTransferUseCase()
+        let (sut, _) = makeSUT(
+            isConnected: false,
+            transferUseCase: transferUseCase
+        )
+        
+        sut.dispatch(.didTapLogout)
+        
+        XCTAssertEqual(transferUseCase.cancelDownloadTransfers_calledTimes, 0, "Expected cancelDownloadTransfers to not be called when network is not connected")
+        XCTAssertEqual(transferUseCase.cancelUploadTransfers_calledTimes, 0, "Expected cancelUploadTransfers to not be called when network is not connected")
+    }
+    
     // MARK: - Helpers
     
     @MainActor
@@ -402,6 +434,8 @@ final class ProfileViewModelTests: XCTestCase {
         hasActiveProFlexiAccount: Bool = false,
         tracker: some AnalyticsTracking = MockTracker(),
         hasBusinessAccountInGracePeriod: Bool = false,
+        isConnected: Bool = false,
+        transferUseCase: some TransferUseCaseProtocol = MockTransferUseCase(),
         file: StaticString = #filePath,
         line: UInt = #line
     ) -> (sut: ProfileViewModel, router: MockProfileViewRouter) {
@@ -424,12 +458,15 @@ final class ProfileViewModelTests: XCTestCase {
             hasActiveProFlexiAccount: hasActiveProFlexiAccount
         )
         let router = MockProfileViewRouter()
+        let mockNetworkMonitorUseCase = MockNetworkMonitorUseCase(connected: isConnected)
         
         return (
             ProfileViewModel(
                 accountUseCase: accountUseCase,
                 achievementUseCase: MockAchievementUseCase(),
-                transferUseCase: MockTransferUseCase(),
+                transferUseCase: transferUseCase,
+                networkMonitorUseCase: mockNetworkMonitorUseCase,
+                transferInventoryUseCaseHelper: TransferInventoryUseCaseHelper(),
                 tracker: tracker,
                 router: router
             ),
