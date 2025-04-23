@@ -17,6 +17,7 @@ extension AppDelegate {
         MEGAAuthentication.DependencyInjection.sharedSdk = .shared
         MEGAAuthentication.DependencyInjection.keychainServiceName = "MEGA"
         MEGAAuthentication.DependencyInjection.keychainAccount = "sessionV3"
+        MEGAAuthentication.DependencyInjection.snackbarDisplayer = VisibleViewControllerSnackBarDisplayer()
         
         MEGAAuthentication.DependencyInjection.loginUseCase = LoginWithPostActionsUseCase(
             loginUseCase: LoginUseCase(
@@ -178,5 +179,28 @@ private struct AnalyticsTrackerAdapter: MEGAAnalyticsTrackerProtocol {
     func trackAnalyticsEvent(with event: some MEGAAnalytics.AnalyticsEventEntityProtocol) {
         guard let identifer = event.identifier else { return }
         tracker.trackAnalyticsEvent(with: identifer)
+    }
+}
+
+private struct VisibleViewControllerSnackBarDisplayer: SnackbarDisplaying {
+    func display(_ snackbar: SnackbarEntity) {
+        Task { @MainActor in
+            UIApplication.mnz_visibleViewController()
+                .showSnackBar(snackBar: snackbar.toSnackbar())
+        }
+    }
+}
+
+private extension SnackbarEntity {
+    func toSnackbar() -> SnackBar {
+        let action: SnackBar.Action? = if let actionLabel,
+                                          let action {
+            .init(title: actionLabel, handler: action)
+        } else {
+            nil
+        }
+        return .init(
+            message: text,
+            action: action)
     }
 }
