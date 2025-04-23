@@ -1,4 +1,5 @@
 import Accounts
+import MEGAAnalytics
 import MEGAAppPresentation
 import MEGAAuthentication
 import MEGAAuthenticationOrchestration
@@ -9,7 +10,7 @@ import SwiftUI
 extension AppDelegate {
     @objc func injectAuthenticationDependencies() {
         guard DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .loginRegisterAndOnboardingRevamp) else { return }
-        
+
         MEGAAuthentication.DependencyInjection.sharedSdk = .shared
         MEGAAuthentication.DependencyInjection.keychainServiceName = "MEGA"
         MEGAAuthentication.DependencyInjection.keychainAccount = "sessionV3"
@@ -22,6 +23,8 @@ extension AppDelegate {
                 loginAPIRepository: MEGAAuthentication.DependencyInjection.loginAPIRepository,
                 loginStoreRepository: MEGAAuthentication.DependencyInjection.loginStoreRepository),
             postLoginActions: [AppDelegatePostLoginAction(appDelegate: self)])
+
+        MEGAAuthentication.DependencyInjection.analyticsTracker = AnalyticsTrackerAdapter()
     }
     
     @objc func makeOnboardingViewController() -> UIViewController {
@@ -127,5 +130,18 @@ private struct AppDelegatePostLoginAction: PostLoginAction {
     func handlePostLogin() async throws {
         appDelegate.setAccountFirstLogin()
         appDelegate.handlePostLoginSetup()
+    }
+}
+
+private struct AnalyticsTrackerAdapter: MEGAAnalyticsTrackerProtocol {
+    private let tracker: any MEGAAppPresentation.AnalyticsTracking
+
+    init(tracker: some MEGAAppPresentation.AnalyticsTracking = DIContainer.tracker) {
+        self.tracker = tracker
+    }
+
+    func trackAnalyticsEvent(with event: some MEGAAnalytics.AnalyticsEventEntityProtocol) {
+        guard let identifer = event.identifier else { return }
+        tracker.trackAnalyticsEvent(with: identifer)
     }
 }
