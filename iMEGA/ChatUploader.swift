@@ -1,8 +1,10 @@
 import ChatRepo
 import MEGAAppSDKRepo
+import MEGADomain
+import MEGARepo
 
 protocol ChatUploaderProtocol {
-    func upload(image: UIImage, chatRoomId: UInt64)
+    func upload(image: UIImage, chatRoomId: UInt64) async
     func upload(
         filepath: String,
         appData: String,
@@ -23,37 +25,53 @@ final class ChatUploader: NSObject, ChatUploaderProtocol {
 
     private override init() { super.init() }
     
+    private var metadataUseCase: some MetadataUseCaseProtocol {
+        MetadataUseCase(
+            metadataRepository: MetadataRepository(),
+            fileSystemRepository: FileSystemRepository.newRepo,
+            fileExtensionRepository: FileExtensionRepository()
+        )
+    }
+    
     @objc func setup() {
         isDatabaseCleanupTaskCompleted = false
         MEGASdk.shared.add(self)
     }
     
-    func upload(image: UIImage, chatRoomId: UInt64) {
-        MyChatFilesFolderNodeAccess.shared.loadNode { myChatFilesFolderNode, error in
-            guard let myChatFilesFolderNode = myChatFilesFolderNode else {
-                if let error = error {
-                    MEGALogWarning("Could not load MyChatFiles target folder due to error \(error.localizedDescription)")
-                }
+    func upload(image: UIImage, chatRoomId: UInt64) async {
+        do {
+            guard let myChatFilesFolderNode = try await MyChatFilesFolderNodeAccess.shared.loadNode() else {
+                MEGALogDebug("Could not load MyChatFiles target folder")
                 return
             }
-            if let data = image.jpegData(compressionQuality: CGFloat(0.7)) {
-                let fileName = "\(NSDate().mnz_formattedDefaultNameForMedia()).jpg"
-                let tempPath = (NSTemporaryDirectory() as NSString).appendingPathComponent(fileName)
-                do {
-                    try data.write(to: URL(fileURLWithPath: tempPath), options: .atomic)
-                    var appData = NSString().mnz_appData(toSaveCoordinates: tempPath.mnz_coordinatesOfPhotoOrVideo() ?? "")
-                    appData = ((appData) as NSString).mnz_appDataToAttach(toChatID: chatRoomId, asVoiceClip: false)
-                    ChatUploader.sharedInstance.upload(filepath: tempPath,
-                                                       appData: appData,
-                                                       chatRoomId: chatRoomId,
-                                                       parentNode: myChatFilesFolderNode,
-                                                       isSourceTemporary: false,
-                                                       delegate: MEGAStartUploadTransferDelegate(completion: nil))
-                    
-                } catch {
-                    MEGALogDebug("Could not write to file \(tempPath) with error \(error.localizedDescription)")
-                }
+            
+            guard let data = image.jpegData(compressionQuality: CGFloat(0.7)) else {
+                return
             }
+            
+            let fileName = "\(NSDate().mnz_formattedDefaultNameForMedia()).jpg"
+            let tempPath = (NSTemporaryDirectory() as NSString).appendingPathComponent(fileName)
+            do {
+                try data.write(to: URL(fileURLWithPath: tempPath), options: .atomic)
+                var appData = ""
+                appData = appData.mnz_appDataToAttach(toChatID: chatRoomId, asVoiceClip: false)
+                
+                if let formattedCoordinate = await metadataUseCase.formattedCoordinate(forFilePath: tempPath) {
+                    appData += formattedCoordinate
+                }
+                
+                ChatUploader.sharedInstance.upload(filepath: tempPath,
+                                                   appData: appData,
+                                                   chatRoomId: chatRoomId,
+                                                   parentNode: myChatFilesFolderNode,
+                                                   isSourceTemporary: false,
+                                                   delegate: MEGAStartUploadTransferDelegate(completion: nil))
+                
+            } catch {
+                MEGALogDebug("Could not write to file \(tempPath) with error \(error.localizedDescription)")
+            }
+        } catch {
+            MEGALogDebug("Could not load MyChatFiles target folder due to error \(error.localizedDescription)")
         }
     }
     

@@ -50,6 +50,8 @@ final class PasteImagePreviewViewModel: ViewModelType {
         guard let image = UIPasteboard.general.loadImage() else {
             return
         }
-        chatUploader.upload(image: image, chatRoomId: chatRoom.chatId)
+        Task {
+            await chatUploader.upload(image: image, chatRoomId: chatRoom.chatId)
+        }
     }
 }
