@@ -2,7 +2,8 @@ import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGADomain
 import MEGAL10n
- 
+import MEGARepo
+
 @MainActor
 final class DocScannerSaveSettingsViewModel: ViewModelType {
     var invokeCommand: ((Command) -> Void)?
@@ -39,14 +40,6 @@ final class DocScannerSaveSettingsViewModel: ViewModelType {
     enum Command: CommandType {
         case upload(transfers: [CancellableTransfer], collisionEntities: [NameCollisionEntity], collisionType: NameCollisionType)
     }
-    
-    /// This serial queue is used to to avoid app hangs which potentially happens in the scanned doc processing logic below
-    /// 1. `MyChatFilesFolderNodeAccess` is used. Its implementation uses Semaphore which is unsafe and is not recommended to use
-    /// in Swift Concurrency. So this serial queue is used to execute it and then bridge to Swift Concurrency using withCheckedContinuation.
-    /// 2. Paths, chats, users are synchornously looped through, these operation could be time consuming so we need to make it off main thread.
-    /// While using nonisolated is an option but it requires big refactor on the existing logic which makes this MR less focused, so put them inside this serial queue is prefered.
-    /// Further refactor / logic improvements would be in separate MRs
-    private let scannedDocsProcessingQueue = DispatchQueue(label: "com.mega.DocScannerSaveSettingsViewModel.scannedDocsProcessingQueue")
 
     struct keys {
         static let docScanExportFileTypeKey = "DocScanExportFileTypeKey"
@@ -63,32 +56,57 @@ final class DocScannerSaveSettingsViewModel: ViewModelType {
             upload(model: model)
         }
     }
-    
+}
+
+// MARK: - Upload
+extension DocScannerSaveSettingsViewModel {
     private func upload(model: Action.UploadModel) {
-        let paths = exportScannedDocs(docs: model.docs, currentFileName: model.currentFileName, originalFileName: model.originalFileName)
-        let transfers = paths.map {
-            CancellableTransfer(
-                handle: .invalid,
-                parentHandle: model.parentNodeHandle,
-                localFileURL: URL(fileURLWithPath: $0),
-                name: nil,
-                appData: NSString().mnz_appData(toSaveCoordinates: $0.mnz_coordinatesOfPhotoOrVideo() ?? ""),
-                priority: false,
-                isFile: true,
-                type: .upload
-            )
+        Task {
+            let paths = await exportScannedDocs(docs: model.docs, currentFileName: model.currentFileName, originalFileName: model.originalFileName)
+            let transfers = await buildTransfers(for: paths, parentNodeHandle: model.parentNodeHandle)
+            let collisionEntities = transfers.map {
+                NameCollisionEntity(
+                    parentHandle: $0.parentHandle,
+                    name: $0.localFileURL?.lastPathComponent ?? "",
+                    isFile: $0.isFile,
+                    fileUrl: $0.localFileURL
+                )
+            }
+            invokeCommand?(.upload(transfers: transfers, collisionEntities: collisionEntities, collisionType: .upload))
         }
-        let collisionEntities = transfers.map {
-            NameCollisionEntity(
-                parentHandle: $0.parentHandle,
-                name: $0.localFileURL?.lastPathComponent ?? "",
-                isFile: $0.isFile,
-                fileUrl: $0.localFileURL
-            )
-        }
-        invokeCommand?(.upload(transfers: transfers, collisionEntities: collisionEntities, collisionType: .upload))
     }
     
+    private func buildTransfers(for paths: [String], parentNodeHandle: HandleEntity) async -> [CancellableTransfer] {
+        let metadataUseCase = MetadataUseCase(
+            metadataRepository: MetadataRepository(),
+            fileSystemRepository: FileSystemRepository.newRepo,
+            fileExtensionRepository: FileExtensionRepository()
+        )
+        
+        return await withTaskGroup { taskGroup in
+            for path in paths {
+                taskGroup.addTask {
+                    let appData = await metadataUseCase.formattedCoordinate(forFilePath: path)
+                    return CancellableTransfer(
+                        handle: .invalid,
+                        parentHandle: parentNodeHandle,
+                        localFileURL: URL(fileURLWithPath: path),
+                        name: nil,
+                        appData: appData,
+                        priority: false,
+                        isFile: true,
+                        type: .upload
+                    )
+                }
+            }
+            
+            return await taskGroup.reduce(into: []) { $0.append($1) }
+        }
+    }
+}
+
+// MARK: - Send to chat room
+extension DocScannerSaveSettingsViewModel {
     private func sendScannedDocsToChatRoom(model: Action.SendToChatRoomModel) {
         Task {
             do {
@@ -102,6 +120,28 @@ final class DocScannerSaveSettingsViewModel: ViewModelType {
         }
     }
     
+    private func sendScannedDocsToChatRoom(model: Action.SendToChatRoomModel, parentNode: MEGANode) async {
+        let paths = await exportScannedDocs(docs: model.docs, currentFileName: model.currentFileName, originalFileName: model.originalFileName)
+        let pathsAndMetadata = await buildUploadMetadata(paths: paths, chatRoomId: model.chatRoomId)
+        await uploadScannedDocs(pathsAndMetadata: pathsAndMetadata, model: model, parentNode: parentNode)
+    }
+    
+    private func uploadScannedDocs(pathsAndMetadata: [(String, String)], model: Action.SendToChatRoomModel, parentNode: MEGANode) async {
+        pathsAndMetadata.forEach { (path, metadata) in
+            ChatUploader.sharedInstance.upload(
+                filepath: path,
+                appData: metadata,
+                chatRoomId: model.chatRoomId,
+                parentNode: parentNode,
+                isSourceTemporary: true,
+                delegate: MEGAStartUploadTransferDelegate(completion: nil)
+            )
+        }
+    }
+}
+    
+// MARK: - Send to chats and users
+extension DocScannerSaveSettingsViewModel {
     private func sendScannedDocsToChatsAndUsers(model: Action.SendToChatsAndUsersModel) {
         Task {
             do {
@@ -115,75 +155,34 @@ final class DocScannerSaveSettingsViewModel: ViewModelType {
             }
         }
     }
-}
-
-// MARK: - Privates
-extension DocScannerSaveSettingsViewModel {
-    private func sendScannedDocsToChatRoom(model: Action.SendToChatRoomModel, parentNode: MEGANode) async {
-        await withCheckedContinuation { continuation in
-            scannedDocsProcessingQueue.async { [weak self] in
-                guard let self else {
-                    continuation.resume()
-                    return
-                }
-                let paths = exportScannedDocs(docs: model.docs, currentFileName: model.currentFileName, originalFileName: model.originalFileName)
-                uploadScannedDocs(paths: paths, chatRoomId: model.chatRoomId, parentNode: parentNode)
-                continuation.resume()
-            }
-        }
-    }
     
     private func sendScannedDocsToChatsAndUsers(model: Action.SendToChatsAndUsersModel, parentNode: MEGANode) async {
-        await withCheckedContinuation { continuation in
-            scannedDocsProcessingQueue.async { [weak self] in
-                guard let self else {
-                    continuation.resume()
-                    return
-                }
-                
-                let paths = exportScannedDocs(docs: model.docs, currentFileName: model.currentFileName, originalFileName: model.originalFileName)
-                uploadScannedDocs(
-                    paths: paths,
-                    currentFileName: model.currentFileName,
-                    originalFileName: model.originalFileName,
-                    parentNode: parentNode,
-                    chats: model.chats,
-                    users: model.users,
-                    completion: model.completion
-                )
-                continuation.resume()
-            }
-        }
+        let paths = await exportScannedDocs(docs: model.docs, currentFileName: model.currentFileName, originalFileName: model.originalFileName)
+        let pathsAndMetadata = await buildUploadMetadata(paths: paths)
+        await uploadScannedDocs(
+            pathsAndMetadata: pathsAndMetadata,
+            currentFileName: model.currentFileName,
+            originalFileName: model.originalFileName,
+            parentNode: parentNode,
+            chats: model.chats,
+            users: model.users,
+            completion: model.completion
+        )
     }
     
-    private nonisolated func uploadScannedDocs(paths: [String], chatRoomId: HandleEntity, parentNode: MEGANode) {
-        paths.forEach { (path) in
-            var appData = NSString().mnz_appData(toSaveCoordinates: path.mnz_coordinatesOfPhotoOrVideo() ?? "")
-            appData = ((appData) as NSString).mnz_appDataToAttach(toChatID: chatRoomId, asVoiceClip: false)
-            ChatUploader.sharedInstance.upload(
-                filepath: path,
-                appData: appData,
-                chatRoomId: chatRoomId,
-                parentNode: parentNode,
-                isSourceTemporary: true,
-                delegate: MEGAStartUploadTransferDelegate(completion: nil)
-            )
-        }
-    }
-    
+    /// Although there is no await usage inside but `nonisolated async` needed to make it run on background thread from cooperative thread pool
     private nonisolated func uploadScannedDocs(
-        paths: [String],
+        pathsAndMetadata: [(String, String)],
         currentFileName: String?,
         originalFileName: String,
         parentNode: MEGANode,
         chats: [ChatListItemEntity],
         users: [UserEntity],
         completion: @Sendable @escaping (String) -> Void
-    ) {
+    ) async {
         var completionCounter = 0
-        paths.forEach { (path) in
-            let appData = NSString().mnz_appData(toSaveCoordinates: path.mnz_coordinatesOfPhotoOrVideo() ?? "")
-            let startUploadTransferDelegate = MEGAStartUploadTransferDelegate { (transfer) in
+        pathsAndMetadata.forEach { (path, metadata) in
+            let startUploadTransferDelegate = MEGAStartUploadTransferDelegate { transfer in
                 guard let nodeHandle = MEGASdk.shared.node(forHandle: transfer.nodeHandle)?.handle else { return }
                 
                 chats.forEach { chatRoom in
@@ -198,7 +197,7 @@ extension DocScannerSaveSettingsViewModel {
                         })
                     }
                 }
-                if completionCounter == paths.count - 1 {
+                if completionCounter == pathsAndMetadata.count - 1 {
                     let receiverCount = chats.count + users.count
                     let fileName = currentFileName ?? originalFileName
                     let message = Strings.Localizable.Share.Message.SendToChat.withOneFile(receiverCount).replacingOccurrences(of: "[A]", with: fileName)
@@ -206,15 +205,46 @@ extension DocScannerSaveSettingsViewModel {
                 }
                 completionCounter += 1
             }
-            MEGASdk.shared.startUploadForChat(withLocalPath: path, parent: parentNode, appData: appData, isSourceTemporary: true, fileName: nil, delegate: startUploadTransferDelegate)
+            MEGASdk.shared.startUploadForChat(withLocalPath: path, parent: parentNode, appData: metadata, isSourceTemporary: true, fileName: nil, delegate: startUploadTransferDelegate)
+        }
+    }
+}
+
+// MARK: - Utils
+extension DocScannerSaveSettingsViewModel {
+    private func buildUploadMetadata(paths: [String], chatRoomId: HandleEntity? = nil) async -> [(String, String)] {
+        let metadataUseCase = MetadataUseCase(
+            metadataRepository: MetadataRepository(),
+            fileSystemRepository: FileSystemRepository.newRepo,
+            fileExtensionRepository: FileExtensionRepository()
+        )
+        
+        return await withTaskGroup { taskGroup in
+            for path in paths {
+                taskGroup.addTask {
+                    var metadata = ""
+                    if let coordinate = await metadataUseCase.formattedCoordinate(forFilePath: path) {
+                        metadata += coordinate
+                    }
+                    
+                    if let chatRoomId {
+                        metadata = metadata.mnz_appDataToAttach(toChatID: chatRoomId, asVoiceClip: false)
+                    }
+                    
+                    return (path, metadata)
+                }
+            }
+            
+            return await taskGroup.reduce(into: []) { $0.append($1) }
         }
     }
     
+    /// Although there is no await usage inside but `nonisolated async` needed to make it run on background thread from cooperative thread pool
     private nonisolated func exportScannedDocs(
         docs: [UIImage]?,
         currentFileName: String?,
         originalFileName: String
-    ) -> [String] {
+    ) async -> [String] {
         guard let storedExportFileTypeKey = UserDefaults.standard.string(forKey: keys.docScanExportFileTypeKey) else {
             MEGALogDebug("No stored value found for docScanExportFileTypeKey")
             return []

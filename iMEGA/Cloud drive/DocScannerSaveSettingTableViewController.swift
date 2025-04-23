@@ -403,19 +403,17 @@ extension DocScannerSaveSettingTableViewController: DocScannerFileInfoTableCellD
 
 extension DocScannerSaveSettingTableViewController: BrowserViewControllerDelegate {
     func upload(toParentNode parentNode: MEGANode) {
-        dismiss(animated: true) { [weak self] in
-            guard let self else { return }
-            viewModel.dispatch(
-                .upload(
-                    .init(
-                        docs: docs,
-                        currentFileName: currentFileName,
-                        originalFileName: originalFileName,
-                        parentNodeHandle: parentNode.handle
-                    )
+        viewModel.dispatch(
+            .upload(
+                .init(
+                    docs: docs,
+                    currentFileName: currentFileName,
+                    originalFileName: originalFileName,
+                    parentNodeHandle: parentNode.handle
                 )
             )
-        }
+        )
+        dismiss(animated: true)
     }
 }
 
