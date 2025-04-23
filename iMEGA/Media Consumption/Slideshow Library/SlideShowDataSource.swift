@@ -13,6 +13,12 @@ protocol SlideShowDataSourceProtocol {
     func indexOfCurrentPhoto() -> Int
 }
 
+extension SlideShowDataSourceProtocol {
+    func loadSelectedPhotoPreview() {
+        loadSelectedPhotoPreview(completionHandler: nil)
+    }
+}
+
 final class SlideShowDataSource: SlideShowDataSourceProtocol {
     var items: [Int: SlideShowCellViewModel] = [:]
     var count: Int { nodeEntities.count }
