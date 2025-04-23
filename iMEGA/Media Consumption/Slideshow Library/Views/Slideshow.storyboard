@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23727" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina5_9" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23721"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -125,6 +125,121 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-7.2000000000000002" y="68.7192118226601"/>
+        </scene>
+        <!--Legacy Slide Show View Controller-->
+        <scene sceneID="VR0-Mf-ZZo">
+            <objects>
+                <viewController storyboardIdentifier="LegacySlideshow" modalPresentationStyle="fullScreen" id="g8w-a9-Ylj" customClass="LegacySlideShowViewController" customModule="MEGA" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="vz0-cP-oLz">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="sxh-Be-RYI" customClass="LegacySlideShowCollectionView" customModule="MEGA" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="7sy-CE-vf5">
+                                    <size key="itemSize" width="374" height="628"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="slideShowCell" id="9Gq-mc-IMH" customClass="LegacySlideShowCollectionViewCell" customModule="MEGA" customModuleProvider="target">
+                                        <rect key="frame" x="0.66666666666666663" y="0.0" width="374" height="667"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="RdF-Np-Pu5">
+                                            <rect key="frame" x="0.0" y="0.0" width="374" height="667"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </collectionViewCellContentView>
+                                        <size key="customSize" width="374" height="667"/>
+                                    </collectionViewCell>
+                                </cells>
+                                <connections>
+                                    <outlet property="dataSource" destination="g8w-a9-Ylj" id="nEw-Rh-A29"/>
+                                    <outlet property="delegate" destination="g8w-a9-Ylj" id="uQn-lq-NGB"/>
+                                </connections>
+                            </collectionView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZpY-bw-zQu">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="9BT-YA-Ctn"/>
+                                </constraints>
+                            </view>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Dqm-ny-nSe">
+                                <rect key="frame" x="0.0" y="44" width="375" height="44"/>
+                                <items>
+                                    <navigationItem title="Slideshow" id="qSt-cw-H5g">
+                                        <barButtonItem key="leftBarButtonItem" title="Close" id="EVF-2t-A94">
+                                            <connections>
+                                                <action selector="dismissViewController" destination="g8w-a9-Ylj" id="SV8-NZ-wBu"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Q22-OI-d0x">
+                                <rect key="frame" x="0.0" y="719" width="375" height="49"/>
+                                <items>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="dyz-8V-0a5"/>
+                                    <barButtonItem style="plain" systemItem="play" id="uxp-ku-MRm">
+                                        <color key="tintColor" name="515151"/>
+                                        <connections>
+                                            <action selector="playSlideShow" destination="g8w-a9-Ylj" id="uF3-8f-BlP"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="gYB-89-nGd"/>
+                                    <barButtonItem title="Item" id="MGg-oV-3s6">
+                                        <connections>
+                                            <action selector="slideShowOptionTapped:" destination="g8w-a9-Ylj" id="GEv-fj-EV8"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </items>
+                            </toolbar>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XXR-Ey-aMu">
+                                <rect key="frame" x="0.0" y="768" width="375" height="44"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="j79-UM-18E"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="45i-8z-Iwv"/>
+                        <constraints>
+                            <constraint firstItem="Dqm-ny-nSe" firstAttribute="top" secondItem="ZpY-bw-zQu" secondAttribute="bottom" id="4J5-VU-hKe"/>
+                            <constraint firstAttribute="trailing" secondItem="Q22-OI-d0x" secondAttribute="trailing" id="67j-HR-AaX"/>
+                            <constraint firstItem="XXR-Ey-aMu" firstAttribute="leading" secondItem="vz0-cP-oLz" secondAttribute="leading" id="APD-5p-iEQ"/>
+                            <constraint firstItem="sxh-Be-RYI" firstAttribute="leading" secondItem="vz0-cP-oLz" secondAttribute="leading" id="DP6-ha-33o"/>
+                            <constraint firstItem="sxh-Be-RYI" firstAttribute="trailing" secondItem="vz0-cP-oLz" secondAttribute="trailing" id="SLq-pg-5GF"/>
+                            <constraint firstItem="ZpY-bw-zQu" firstAttribute="top" secondItem="vz0-cP-oLz" secondAttribute="top" id="UN6-e8-WfQ"/>
+                            <constraint firstItem="Dqm-ny-nSe" firstAttribute="trailing" secondItem="vz0-cP-oLz" secondAttribute="trailing" id="YMB-or-Qh8"/>
+                            <constraint firstAttribute="trailing" secondItem="XXR-Ey-aMu" secondAttribute="trailing" id="ZT8-wV-CfH"/>
+                            <constraint firstAttribute="bottom" secondItem="sxh-Be-RYI" secondAttribute="bottom" id="bc0-ag-a2b"/>
+                            <constraint firstItem="XXR-Ey-aMu" firstAttribute="top" secondItem="Q22-OI-d0x" secondAttribute="bottom" id="eLi-xI-Gpy"/>
+                            <constraint firstItem="ZpY-bw-zQu" firstAttribute="leading" secondItem="vz0-cP-oLz" secondAttribute="leading" id="gh3-eZ-qjH"/>
+                            <constraint firstAttribute="bottom" secondItem="XXR-Ey-aMu" secondAttribute="bottom" id="guw-fI-Efh"/>
+                            <constraint firstItem="sxh-Be-RYI" firstAttribute="top" secondItem="vz0-cP-oLz" secondAttribute="top" id="iRF-wW-46v"/>
+                            <constraint firstItem="Dqm-ny-nSe" firstAttribute="leading" secondItem="vz0-cP-oLz" secondAttribute="leading" id="moO-CN-5Xi"/>
+                            <constraint firstAttribute="trailing" secondItem="ZpY-bw-zQu" secondAttribute="trailing" id="vdn-K3-wvd"/>
+                            <constraint firstItem="Q22-OI-d0x" firstAttribute="leading" secondItem="vz0-cP-oLz" secondAttribute="leading" id="yc0-fC-BvN"/>
+                        </constraints>
+                    </view>
+                    <toolbarItems/>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="bottomBarBackground" destination="XXR-Ey-aMu" id="hrh-sq-13X"/>
+                        <outlet property="bottomBarBackgroundViewHeightConstraint" destination="j79-UM-18E" id="XYw-87-nI1"/>
+                        <outlet property="bottomToolbar" destination="Q22-OI-d0x" id="9rO-X7-SCh"/>
+                        <outlet property="btnPlay" destination="uxp-ku-MRm" id="7RS-og-ubL"/>
+                        <outlet property="collectionView" destination="sxh-Be-RYI" id="VCl-bV-Mb6"/>
+                        <outlet property="navigationBar" destination="Dqm-ny-nSe" id="rvn-A2-dpe"/>
+                        <outlet property="slideShowOptionButton" destination="MGg-oV-3s6" id="6RS-nc-W3A"/>
+                        <outlet property="statusBarBackground" destination="ZpY-bw-zQu" id="DVv-tD-V2w"/>
+                        <outlet property="statusBarBackgroundViewHeightConstraint" destination="9BT-YA-Ctn" id="lr8-W9-oJR"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="zfo-NV-I4O" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="657" y="121"/>
         </scene>
     </scenes>
     <resources>
