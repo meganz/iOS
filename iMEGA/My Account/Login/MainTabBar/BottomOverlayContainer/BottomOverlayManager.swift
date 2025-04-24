@@ -57,6 +57,10 @@ final class BottomOverlayManager: NSObject {
             item.view.isHidden = hidden
         }
     }
+    
+    func allItemsHidden() -> Bool {
+        items.allSatisfy { $0.view.isHidden }
+    }
 }
 
 /// Used to define how a bottom overlay view is prioritized.

@@ -124,7 +124,7 @@ extension MainTabBarController {
     }
     
     func removeSafeAreaCoverView() {
-        guard safeAreaCoverView != nil, bottomOverlayManager?.sortedItems().count == 0 else { return }
+        guard safeAreaCoverView != nil, bottomOverlayManager?.sortedItems().count == 0 || bottomOverlayManager?.allItemsHidden() == true else { return }
         
         safeAreaCoverView?.removeFromSuperview()
         safeAreaCoverView = nil
