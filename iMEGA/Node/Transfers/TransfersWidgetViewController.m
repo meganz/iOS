@@ -43,7 +43,6 @@
 @property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *clearAllButton;
 
-@property (strong, nonatomic) TransferInventoryUseCaseHelper *transferInventoryUseCaseHelper;
 @property (strong, nonatomic) NSMutableArray<MEGATransfer *> *selectedTransfers;
 
 @property (nonatomic, getter=areTransfersPaused) BOOL transfersPaused;
@@ -499,9 +498,9 @@ static TransfersWidgetViewController* instance = nil;
 }
 
 - (void)getAllTransfers {
-    self.transfers = [[NSMutableArray alloc] initWithArray:[self.transferInventoryUseCaseHelper transfers]];
+    self.transfers = [[NSMutableArray alloc] initWithArray:[self fetchTransfers]];
     
-    self.queuedUploadTransfers = [NSMutableArray arrayWithArray:self.transferInventoryUseCaseHelper.queuedUploadTransfers];
+    self.queuedUploadTransfers = [NSMutableArray arrayWithArray:[self fetchQueuedUploadTransfers]];
 }
 
 - (void)sortTransfers {
@@ -881,13 +880,13 @@ static TransfersWidgetViewController* instance = nil;
 
 - (NSMutableArray *)transfers {
     if (!_transfers) {
-        _transfers = [[NSMutableArray alloc] initWithArray:[self.transferInventoryUseCaseHelper transfers]];
+        _transfers = [[NSMutableArray alloc] initWithArray:[self fetchTransfers]];
     }
     return _transfers;
 }
 
 - (NSMutableArray *)completedTransfers {
-    return [[NSMutableArray alloc] initWithArray:[self.transferInventoryUseCaseHelper completedTransfers]];
+    return [[NSMutableArray alloc] initWithArray:[self fetchCompletedTransfers]];
 }
 
 #pragma mark - MEGATransferDelegate

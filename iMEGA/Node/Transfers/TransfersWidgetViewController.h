@@ -1,6 +1,6 @@
 #import <UIKit/UIKit.h>
 
-@class ProgressIndicatorView, TransfersWidgetViewModel;
+@class ProgressIndicatorView, TransfersWidgetViewModel, TransferInventoryUseCaseHelper;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -20,6 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, nonnull) NSLayoutConstraint *progressViewTraillingConstraint;
 
 @property (strong, nonatomic) TransfersWidgetViewModel *viewModel;
+@property (strong, nonatomic) TransferInventoryUseCaseHelper *transferInventoryUseCaseHelper;
 
 + (instancetype)sharedTransferViewController;
 - (void)clearNode:(MEGANode *)node;

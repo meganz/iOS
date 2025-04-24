@@ -129,6 +129,26 @@ extension TransfersWidgetViewController: TransferWidgetResponderProtocol {
         viewModel.navigateToParentNode(node.toNodeEntity())
     }
     
+    @objc
+    func fetchTransfers() -> [MEGATransfer] {
+        transferInventoryUseCaseHelper
+            .transfers()
+            .toMEGATransfers(in: .shared)
+    }
+
+    @objc
+    func fetchCompletedTransfers() -> [MEGATransfer] {
+        transferInventoryUseCaseHelper
+            .completedTransfers()
+            .toMEGATransfers(in: .shared)
+    }
+    
+    @objc
+    func fetchQueuedUploadTransfers() -> [String] {
+        transferInventoryUseCaseHelper
+            .queuedUploadTransfers()
+    }
+    
     // MARK: - Private
     
     @objc
