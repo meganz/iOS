@@ -15,4 +15,8 @@ public final class MockMetadataUseCase: MetadataUseCaseProtocol {
     public func formattedCoordinate(forFilePath path: String) async -> String? {
         formattedCoordinate
     }
+    
+    public func formattedCoordinate(for coordinate: Coordinate) -> String {
+        formattedCoordinate ?? ""
+    }
 }

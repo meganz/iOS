@@ -4,6 +4,7 @@ import MEGASwift
 public protocol MetadataUseCaseProtocol: Sendable {
     func formattedCoordinate(forFileURL url: URL) async -> String?
     func formattedCoordinate(forFilePath path: String) async -> String?
+    func formattedCoordinate(for coordinate: Coordinate) -> String
 }
 
 public final class MetadataUseCase: MetadataUseCaseProtocol {
@@ -23,16 +24,20 @@ public final class MetadataUseCase: MetadataUseCaseProtocol {
 
     public func formattedCoordinate(forFileURL url: URL) async -> String? {
         guard let coordinate = await coordinateInTheFile(at: url) else { return nil }
-        return formatCoordinate(coordinate)
+        return formattedCoordinate(for: coordinate)
     }
     
     public func formattedCoordinate(forFilePath path: String) async -> String? {
-        let url = if let url = URL(string: path), url.isFileURL {
-            url
-        } else {
+        let url = if path.contains("/tmp/") {
             URL(fileURLWithPath: path)
+        } else {
+            URL(fileURLWithPath: NSHomeDirectory().append(pathComponent: path))
         }
         return await formattedCoordinate(forFileURL: url)
+    }
+    
+    public func formattedCoordinate(for coordinate: Coordinate) -> String {
+        metadataRepository.formatCoordinate(coordinate)
     }
     
     private func coordinateInTheFile(at url: URL) async -> Coordinate? {
@@ -45,9 +50,5 @@ public final class MetadataUseCase: MetadataUseCaseProtocol {
         }
 
         return nil
-    }
-
-    private func formatCoordinate(_ coordinate: Coordinate) -> String {
-        metadataRepository.formatCoordinate(coordinate)
     }
 }
