@@ -459,6 +459,39 @@ final class AudioPlayerViewModelTests: XCTestCase {
         )
     }
     
+    @MainActor
+    func testViewWillDisappear_whenUserInitiatedDismissalAndNetworkIsConnected_shouldInitMiniPlayer() {
+        let mockNetworkMonitor = MockNetworkMonitorUseCase(connected: true)
+        let (sut, _, router) = makeSUT(
+            configEntity: audioPlayerConfigEntity(
+                node: anyAudioNode,
+                relatedFiles: ["File1"]
+            ),
+            accountUseCase: MockAccountUseCase(isLoggedIn: true),
+            networkMonitorUseCase: mockNetworkMonitor
+        )
+        
+        sut.dispatch(.viewWillDisappear(reason: .userInitiatedDismissal))
+        
+        XCTAssertEqual(router.showMiniPlayer_calledTimes, 1)
+    }
+    
+    @MainActor
+    func testViewWillDisappear_whenUserInitiatedDismissalAndNetworkIsDisconnected_shouldInitMiniPlayerWithoutStoppingAudio() {
+        let mockNetworkMonitor = MockNetworkMonitorUseCase(connected: false)
+        let (sut, _, router) = makeSUT(
+            configEntity: audioPlayerConfigEntity(
+                node: anyAudioNode,
+                relatedFiles: ["File1"]
+            ),
+            networkMonitorUseCase: mockNetworkMonitor
+        )
+        
+        sut.dispatch(.viewWillDisappear(reason: .userInitiatedDismissal))
+        
+        XCTAssertEqual(router.showMiniPlayer_calledTimes, 1)
+    }
+    
     // MARK: - Helpers
     
     @MainActor
@@ -498,6 +531,7 @@ final class AudioPlayerViewModelTests: XCTestCase {
         streamingInfoUseCase: (any StreamingInfoUseCaseProtocol)? = nil,
         offlineInfoUseCase: (any OfflineFileInfoUseCaseProtocol)? = nil,
         accountUseCase: any AccountUseCaseProtocol = MockAccountUseCase(),
+        networkMonitorUseCase: any NetworkMonitorUseCaseProtocol = MockNetworkMonitorUseCase(),
         file: StaticString = #filePath,
         line: UInt = #line
     ) -> (sut: AudioPlayerViewModel, playbackContinuationUseCase: MockPlaybackContinuationUseCase, router: MockAudioPlayerViewRouter) {
@@ -513,6 +547,7 @@ final class AudioPlayerViewModelTests: XCTestCase {
             playbackContinuationUseCase: mockPlaybackContinuationUseCase,
             audioPlayerUseCase: mockAudioPlayerUseCase,
             accountUseCase: accountUseCase,
+            networkMonitorUseCase: networkMonitorUseCase,
             tracker: tracker
         )
         trackForMemoryLeaks(on: sut, timeoutNanoseconds: 1_000_000_000, file: file, line: line)
@@ -554,13 +589,14 @@ final class AudioPlayerViewModelTests: XCTestCase {
         )
     }
     
-    private func audioPlayerConfigEntity(node: MockNode, isFolderLink: Bool = false, fileLink: String? = nil) -> AudioPlayerConfigEntity {
+    private func audioPlayerConfigEntity(node: MockNode, isFolderLink: Bool = false, relatedFiles: [String]? = nil, fileLink: String? = nil) -> AudioPlayerConfigEntity {
         let playerHandler = MockAudioPlayerHandler()
         return AudioPlayerConfigEntity(
             node: node,
             isFolderLink: isFolderLink,
             fileLink: fileLink,
-            playerHandler: playerHandler
+            relatedFiles: relatedFiles,
+            playerHandler: playerHandler,
         )
     }
     
