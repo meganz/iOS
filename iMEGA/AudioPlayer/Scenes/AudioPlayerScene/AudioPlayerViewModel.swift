@@ -108,6 +108,7 @@ final class AudioPlayerViewModel: ViewModelType {
     private let playbackContinuationUseCase: any PlaybackContinuationUseCaseProtocol
     private let audioPlayerUseCase: any AudioPlayerUseCaseProtocol
     private let accountUseCase: any AccountUseCaseProtocol
+    private let networkMonitorUseCase: any NetworkMonitorUseCaseProtocol
     private let tracker: any AnalyticsTracking
     
     private let sdk: MEGASdk
@@ -157,6 +158,7 @@ final class AudioPlayerViewModel: ViewModelType {
          playbackContinuationUseCase: any PlaybackContinuationUseCaseProtocol,
          audioPlayerUseCase: some AudioPlayerUseCaseProtocol,
          accountUseCase: some AccountUseCaseProtocol,
+         networkMonitorUseCase: any NetworkMonitorUseCaseProtocol,
          sdk: MEGASdk = MEGASdk.shared,
          tracker: some AnalyticsTracking
     ) {
@@ -168,6 +170,7 @@ final class AudioPlayerViewModel: ViewModelType {
         self.playbackContinuationUseCase = playbackContinuationUseCase
         self.audioPlayerUseCase = audioPlayerUseCase
         self.accountUseCase = accountUseCase
+        self.networkMonitorUseCase = networkMonitorUseCase
         self.repeatItemsState = configEntity.playerHandler.currentRepeatMode()
         self.speedModeState = configEntity.playerHandler.currentSpeedMode()
         self.sdk = sdk
@@ -545,6 +548,10 @@ final class AudioPlayerViewModel: ViewModelType {
         case .viewWillDisappear(let reason):
             switch reason {
             case .userInitiatedDismissal:
+                guard networkMonitorUseCase.isConnected() else {
+                    initMiniPlayer()
+                    return
+                }
                 accountUseCase.isLoggedIn() ? initMiniPlayer() : requestStopAudioPlayerSession()
             case .systemPushedAnotherView:
                 break

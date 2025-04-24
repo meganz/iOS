@@ -125,6 +125,7 @@ final class AudioPlayerViewRouterNodeActionAdapterTests: XCTestCase {
                     playbackContinuationUseCase: MockPlaybackContinuationUseCase(),
                     audioPlayerUseCase: MockAudioPlayerUseCase(),
                     accountUseCase: MockAccountUseCase(),
+                    networkMonitorUseCase: MockNetworkMonitorUseCase(),
                     tracker: MockTracker()
                 )
             )

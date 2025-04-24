@@ -292,30 +292,31 @@ import MEGADomain
     
     @MainActor
     private func makeAudioPlayerViewController(configEntity: AudioPlayerConfigEntity, router: some AudioPlayerViewRouting) -> AudioPlayerViewController? {
-        guard let vc = UIStoryboard(name: "AudioPlayer", bundle: nil).instantiateViewController(identifier: "AudioPlayerViewControllerID", creator: { coder in
-            let makeViewModel: () -> AudioPlayerViewModel = {
-                if configEntity.playerType == .offline {
+        guard let vc = UIStoryboard(name: "AudioPlayer", bundle: nil).instantiateViewController(
+            identifier: "AudioPlayerViewControllerID",
+            creator: { coder in
+                let makeViewModel: () -> AudioPlayerViewModel = {
+                    let playbackContinuationUC = DIContainer.playbackContinuationUseCase
+                    let audioPlayerUC = AudioPlayerUseCase(repository: AudioPlayerRepository(sdk: .shared))
+                    let accountUC = AccountUseCase(repository: AccountRepository.newRepo)
+                    let networkMonitorUC = NetworkMonitorUseCase(repo: NetworkMonitorRepository.newRepo)
+                    let tracker = DIContainer.tracker
+                    let offlineInfoUC = (configEntity.playerType == .offline) ? OfflineFileInfoUseCase(offlineInfoRepository: OfflineInfoRepository()) : nil
+                    let nodeInfoUC = (configEntity.playerType != .offline) ? NodeInfoUseCase(nodeInfoRepository: NodeInfoRepository()) : nil
+                    let streamingInfoUC = (configEntity.playerType != .offline) ? StreamingInfoUseCase(streamingInfoRepository: StreamingInfoRepository()) : nil
+                    
                     return AudioPlayerViewModel(
                         configEntity: configEntity,
                         router: router,
-                        offlineInfoUseCase: OfflineFileInfoUseCase(offlineInfoRepository: OfflineInfoRepository()),
-                        playbackContinuationUseCase: DIContainer.playbackContinuationUseCase, 
-                        audioPlayerUseCase: AudioPlayerUseCase(repository: AudioPlayerRepository(sdk: .shared)),
-                        accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
-                        tracker: DIContainer.tracker
+                        nodeInfoUseCase: nodeInfoUC,
+                        streamingInfoUseCase: streamingInfoUC,
+                        offlineInfoUseCase: offlineInfoUC,
+                        playbackContinuationUseCase: playbackContinuationUC,
+                        audioPlayerUseCase: audioPlayerUC,
+                        accountUseCase: accountUC,
+                        networkMonitorUseCase: networkMonitorUC,
+                        tracker: tracker
                     )
-                } else {
-                    return AudioPlayerViewModel(
-                        configEntity: configEntity,
-                        router: router,
-                        nodeInfoUseCase: NodeInfoUseCase(nodeInfoRepository: NodeInfoRepository()),
-                        streamingInfoUseCase: StreamingInfoUseCase(streamingInfoRepository: StreamingInfoRepository()),
-                        playbackContinuationUseCase: DIContainer.playbackContinuationUseCase,
-                        audioPlayerUseCase: AudioPlayerUseCase(repository: AudioPlayerRepository(sdk: .shared)),
-                        accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
-                        tracker: DIContainer.tracker
-                    )
-                }
             }
             
             return AudioPlayerViewController(coder: coder, viewModel: makeViewModel())
