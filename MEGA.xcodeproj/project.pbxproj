@@ -1454,6 +1454,7 @@
 		94B09E702B84D0B6007D6B84 /* MockNodeInsertionRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B09E6E2B84D0B5007D6B84 /* MockNodeInsertionRouter.swift */; };
 		94B0C6CC2B9B3F1B00695970 /* MeetingFloatingPanelHeaderConfigFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B0C6CB2B9B3F1B00695970 /* MeetingFloatingPanelHeaderConfigFactory.swift */; };
 		94B0C6CE2B9B3F8800695970 /* MeetingFloatingPanelBannerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B0C6CD2B9B3F8800695970 /* MeetingFloatingPanelBannerFactory.swift */; };
+		94B1FC4E2DBA3AEC00348D4E /* TransferInventoryUseCaseHelperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B1FC4D2DBA3AEC00348D4E /* TransferInventoryUseCaseHelperTests.swift */; };
 		94B273EC2D3F01270029D78C /* RecentListHeaderViewModelFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B273EB2D3F01270029D78C /* RecentListHeaderViewModelFactory.swift */; };
 		94B4A0462B160DC10089FC94 /* SearchWithFilterOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B4A0452B160DC10089FC94 /* SearchWithFilterOperation.swift */; };
 		94B503A72C357E320064270D /* CallsCoordinatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B503A62C357E320064270D /* CallsCoordinatorTests.swift */; };
@@ -4158,6 +4159,7 @@
 		94B09E6E2B84D0B5007D6B84 /* MockNodeInsertionRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockNodeInsertionRouter.swift; sourceTree = "<group>"; };
 		94B0C6CB2B9B3F1B00695970 /* MeetingFloatingPanelHeaderConfigFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingFloatingPanelHeaderConfigFactory.swift; sourceTree = "<group>"; };
 		94B0C6CD2B9B3F8800695970 /* MeetingFloatingPanelBannerFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingFloatingPanelBannerFactory.swift; sourceTree = "<group>"; };
+		94B1FC4D2DBA3AEC00348D4E /* TransferInventoryUseCaseHelperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferInventoryUseCaseHelperTests.swift; sourceTree = "<group>"; };
 		94B273EB2D3F01270029D78C /* RecentListHeaderViewModelFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentListHeaderViewModelFactory.swift; sourceTree = "<group>"; };
 		94B4A0452B160DC10089FC94 /* SearchWithFilterOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchWithFilterOperation.swift; sourceTree = "<group>"; };
 		94B503A62C357E320064270D /* CallsCoordinatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallsCoordinatorTests.swift; sourceTree = "<group>"; };
@@ -9496,6 +9498,7 @@
 			isa = PBXGroup;
 			children = (
 				83B5E87827F6F8F50073C870 /* CancellableTransferViewModelTests.swift */,
+				94B1FC4D2DBA3AEC00348D4E /* TransferInventoryUseCaseHelperTests.swift */,
 				94D5DA9C2D15DC6D0031C2CD /* TransfersWidgetViewModelTests.swift */,
 			);
 			path = Transfers;
@@ -16265,6 +16268,7 @@
 				25CF5EBE2BDBB09E005608F7 /* ThumbnailViewerTableViewCellViewModelTests.swift in Sources */,
 				9402EF522B70DE69002F7714 /* ToolbarActionFactoryTests.swift in Sources */,
 				947755BE2A4C74ED00DAAEE5 /* ToolbarButtonsDisablerTests.swift in Sources */,
+				94B1FC4E2DBA3AEC00348D4E /* TransferInventoryUseCaseHelperTests.swift in Sources */,
 				94D5DA9D2D15DC760031C2CD /* TransfersWidgetViewModelTests.swift in Sources */,
 				A874D308263FF6C6000861DB /* TurnOnNotificationsViewModelTests.swift in Sources */,
 				B57496E92A45B4BC00292A27 /* UpgradeAccountPlanViewModel_createAccountPlanViewModelTests.swift in Sources */,
