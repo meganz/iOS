@@ -8,6 +8,7 @@ import MEGAAppSDKRepo
 import MEGADesignToken
 import MEGADomain
 import MEGAL10n
+import MEGARepo
 import MEGAUI
 import MessageKit
 import VisionKit
@@ -318,22 +319,66 @@ extension ChatViewController {
         }
     }
     
-    private nonisolated func uploadAsset(withFilePath filePath: String, parentNode: MEGANode, localIdentifier: String, chatRoomId: HandleEntity, delegate: MEGAStartUploadTransferDelegate) {
-        var appData: String?
+    private nonisolated func buildUploadAppData(filePath: String, chatRoomId: HandleEntity, localIdentifier: String) async -> String {
+        let metadataUseCase = MetadataUseCase(
+            metadataRepository: MetadataRepository(),
+            fileSystemRepository: FileSystemRepository.newRepo,
+            fileExtensionRepository: FileExtensionRepository()
+        )
         
-        if let cordinates = (filePath as NSString).mnz_coordinatesOfPhotoOrVideo() {
-            appData = NSString().mnz_appData(toSaveCoordinates: cordinates)
+        let formattedCoordinate = await metadataUseCase.formattedCoordinate(forFilePath: filePath)
+        
+        return buildUploadAppData(chatRoomId: chatRoomId, localIdentifier: localIdentifier, formatedCoordinate: formattedCoordinate)
+    }
+    
+    private nonisolated func buildAssetUploadAppData(asset: PHAsset, chatRoomId: HandleEntity) -> String {
+        let metadataUseCase = MetadataUseCase(
+            metadataRepository: MetadataRepository(),
+            fileSystemRepository: FileSystemRepository.newRepo,
+            fileExtensionRepository: FileExtensionRepository()
+        )
+        
+        let formattedCoordinate: String? = if let coordinate = asset.location?.coordinate {
+            metadataUseCase.formattedCoordinate(for: Coordinate(latitude: coordinate.latitude, longitude: coordinate.longitude))
+        } else {
+            nil
         }
-                                            
-        appData = ((appData ?? "") as NSString).mnz_appDataToAttach(toChatID: chatRoomId, asVoiceClip: false)
-        appData = ((appData ?? "") as NSString).mnz_appData(toLocalIdentifier: localIdentifier)
         
+        return buildUploadAppData(chatRoomId: chatRoomId, localIdentifier: nil, formatedCoordinate: formattedCoordinate)
+    }
+    
+    private nonisolated func buildUploadAppData(chatRoomId: HandleEntity, localIdentifier: String?, formatedCoordinate: String?) -> String {
+        var appData = ""
+        appData = appData.mnz_appDataToAttach(toChatID: chatRoomId, asVoiceClip: false)
+        if let localIdentifier {
+            appData = appData.mnz_appData(toLocalIdentifier: localIdentifier)
+        }
+        if let formatedCoordinate {
+            appData += formatedCoordinate
+        }
+        return appData
+    }
+    
+    private nonisolated func uploadAsset(asset: PHAsset, filePath: String, parentNode: MEGANode, chatRoomId: HandleEntity, delegate: MEGAStartUploadTransferDelegate) {
+        let appData = buildAssetUploadAppData(asset: asset, chatRoomId: chatRoomId)
         ChatUploader.sharedInstance.upload(filepath: filePath,
-                                           appData: appData ?? "",
+                                           appData: appData,
                                            chatRoomId: chatRoomId,
                                            parentNode: parentNode,
                                            isSourceTemporary: false,
                                            delegate: delegate)
+    }
+    
+    private nonisolated func uploadAsset(withFilePath filePath: String, parentNode: MEGANode, localIdentifier: String, chatRoomId: HandleEntity, delegate: MEGAStartUploadTransferDelegate) {
+        Task {
+            let appData = await buildUploadAppData(filePath: filePath, chatRoomId: chatRoomId, localIdentifier: localIdentifier)
+            ChatUploader.sharedInstance.upload(filepath: filePath,
+                                               appData: appData,
+                                               chatRoomId: chatRoomId,
+                                               parentNode: parentNode,
+                                               isSourceTemporary: false,
+                                               delegate: delegate)
+        }
     }
     
     private func uploadVideo(withFilePath path: String, parentNode: MEGANode) {
@@ -375,7 +420,7 @@ extension ChatViewController {
             guard let self, let filePaths else { return }
                                                 
             filePaths.enumerated().forEach { (index, filePath) in
-                self.uploadAsset(withFilePath: filePath, parentNode: parentNode, localIdentifier: assets[index].localIdentifier, chatRoomId: chatRoomId, delegate: delegate)
+                self.uploadAsset(asset: assets[index], filePath: filePath, parentNode: parentNode, chatRoomId: chatRoomId, delegate: delegate)
             }
             
         }, errors: { errors in
