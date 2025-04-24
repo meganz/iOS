@@ -51,7 +51,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSInteger)mnz_emojiCount;
 - (NSString *)mnz_initialForAvatar;
 
-- (NSString * _Nullable)mnz_coordinatesOfPhotoOrVideo;
 + (NSString *)mnz_base64FromBase64URLEncoding:(NSString *)base64URLEncondingString;
 
 - (NSString *)mnz_relativeLocalPath;
