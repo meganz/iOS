@@ -100,7 +100,7 @@ final class PhotoBrowserDataProvider_nodeEntity_Tests: XCTestCase {
         let removingNodeList = MockNodeList(nodes: [MockNode(handle: 10, changeType: .removed),
                                                     MockNode(handle: 9, changeType: .parent),
                                                     MockNode(handle: 8, changeType: .removed)])
-        _ = await sut.removePhotos(in: removingNodeList)
+        _ = sut.removePhotos(in: removingNodeList.toNodeEntities())
         XCTAssertEqual(sut.count, 0)
         let removedNode = await sut.photoNode(at: 0)
         XCTAssertEqual(removedNode, nil)
@@ -131,7 +131,7 @@ final class PhotoBrowserDataProvider_nodeEntity_Tests: XCTestCase {
                                                     MockNode(handle: 9, changeType: .publicLink),
                                                     MockNode(handle: 8, changeType: .favourite),
                                                     MockNode(handle: 7, changeType: .inShare)])
-        _ = await sut.removePhotos(in: removingNodeList)
+        _ = sut.removePhotos(in: removingNodeList.toNodeEntities())
         XCTAssertEqual(sut.count, 4)
         let postRemovalResult = await sut.currentPhoto()
         XCTAssertEqual(postRemovalResult, currentPhoto)
@@ -163,7 +163,7 @@ final class PhotoBrowserDataProvider_nodeEntity_Tests: XCTestCase {
                                                     MockNode(handle: 9, changeType: .parent),
                                                     MockNode(handle: 8, changeType: .name)])
         
-        _ = await sut.removePhotos(in: removingNodeList)
+        _ = sut.removePhotos(in: removingNodeList.toNodeEntities())
         XCTAssertEqual(sut.count, 2)
         let postRemovalResult = await sut.currentPhoto()
         XCTAssertEqual(postRemovalResult, NodeEntity(handle: 10).toMEGANode(in: sdk))
@@ -194,7 +194,7 @@ final class PhotoBrowserDataProvider_nodeEntity_Tests: XCTestCase {
         let removingNodeList = MockNodeList(nodes: [MockNode(handle: 10, changeType: .removed),
                                                     MockNode(handle: 9, changeType: .owner),
                                                     MockNode(handle: 8, changeType: .name)])
-        _ = await sut.removePhotos(in: removingNodeList)
+        _ = sut.removePhotos(in: removingNodeList.toNodeEntities())
         XCTAssertEqual(sut.count, 2)
         let postRemovalResult = await sut.currentPhoto()
         XCTAssertEqual(postRemovalResult, currentPhoto)
@@ -225,7 +225,7 @@ final class PhotoBrowserDataProvider_nodeEntity_Tests: XCTestCase {
                                                     MockNode(handle: 9, changeType: .name),
                                                     MockNode(handle: 8, changeType: .parent)])
         
-        _ = await sut.removePhotos(in: removingNodeList)
+        _ = sut.removePhotos(in: removingNodeList.toNodeEntities())
         
         XCTAssertEqual(sut.count, 2)
         let postRemovalResult = await sut.currentPhoto()
@@ -258,7 +258,7 @@ final class PhotoBrowserDataProvider_nodeEntity_Tests: XCTestCase {
         let removingNodeList = MockNodeList(nodes: [MockNode(handle: 10, changeType: .removed),
                                                     MockNode(handle: 9, changeType: .removed),
                                                     MockNode(handle: 8, changeType: .name)])
-        _ = await sut.removePhotos(in: removingNodeList)
+        _ = sut.removePhotos(in: removingNodeList.toNodeEntities())
         XCTAssertEqual(sut.count, 2)
         let postRemovalResult = await sut.currentPhoto()
         XCTAssertEqual(postRemovalResult, NodeEntity(handle: 11).toMEGANode(in: sdk))
@@ -291,7 +291,7 @@ final class PhotoBrowserDataProvider_nodeEntity_Tests: XCTestCase {
                                                     MockNode(handle: 9, changeType: .removed),
                                                     MockNode(handle: 8, changeType: .name)])
         
-        _ = await sut.removePhotos(in: removingNodeList)
+        _ = sut.removePhotos(in: removingNodeList.toNodeEntities())
         
         XCTAssertEqual(sut.count, 1)
         let postRemovalResult = await sut.currentPhoto()
@@ -325,7 +325,7 @@ final class PhotoBrowserDataProvider_nodeEntity_Tests: XCTestCase {
         let removingNodeList = MockNodeList(nodes: [MockNode(handle: 10, changeType: .name),
                                                     MockNode(handle: 9, changeType: .removed),
                                                     MockNode(handle: 7, changeType: .parent)])
-        _ = await sut.removePhotos(in: removingNodeList)
+        _ = sut.removePhotos(in: removingNodeList.toNodeEntities())
         XCTAssertEqual(sut.count, 3)
         let postRemovalResult = await sut.currentPhoto()
         XCTAssertEqual(postRemovalResult, NodeEntity(handle: 10).toMEGANode(in: sdk))
@@ -357,7 +357,7 @@ final class PhotoBrowserDataProvider_nodeEntity_Tests: XCTestCase {
         let removingNodeList = MockNodeList(nodes: [MockNode(handle: 10, changeType: .name),
                                                     MockNode(handle: 9, changeType: .parent),
                                                     MockNode(handle: 8, changeType: .parent)])
-        _ = await sut.removePhotos(in: removingNodeList)
+        _ = sut.removePhotos(in: removingNodeList.toNodeEntities())
         XCTAssertEqual(sut.count, 1)
         let postRemovalResult = await sut.currentPhoto()
         XCTAssertEqual(postRemovalResult, NodeEntity(handle: 10).toMEGANode(in: sdk))
@@ -388,7 +388,7 @@ final class PhotoBrowserDataProvider_nodeEntity_Tests: XCTestCase {
         let updateNodeList = MockNodeList(nodes: [MockNode(handle: 10, changeType: .removed),
                                                   MockNode(handle: 9, changeType: .name),
                                                   MockNode(handle: 8, changeType: .parent)])
-        sut.updatePhotos(in: updateNodeList)
+        sut.updatePhotos(in: updateNodeList.toNodeEntities())
         XCTAssertEqual(sut.count, 3)
         let postUpdateResult = await sut.currentPhoto()
         XCTAssertEqual(postUpdateResult, currentPhoto)
@@ -419,7 +419,7 @@ final class PhotoBrowserDataProvider_nodeEntity_Tests: XCTestCase {
         let updateNodeList = MockNodeList(nodes: [MockNode(handle: 10, name: "10-update", changeType: .attributes),
                                                   MockNode(handle: 9, name: "9-update", changeType: .name),
                                                   MockNode(handle: 8, name: "8-update", changeType: .publicLink)])
-        sut.updatePhotos(in: updateNodeList)
+        sut.updatePhotos(in: updateNodeList.toNodeEntities())
         sdk.setNodes(updateNodeList.toNodeArray())
         nodeProvider.set(nodes: updateNodeList.toNodeArray())
 

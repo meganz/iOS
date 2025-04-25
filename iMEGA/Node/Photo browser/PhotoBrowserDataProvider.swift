@@ -15,48 +15,11 @@ protocol PhotoBrowserDataProviderProtocol: Sendable {
 }
 
 final class PhotoBrowserDataProvider: NSObject, @unchecked Sendable, PhotoBrowserDataProviderProtocol {
-    private var nodeStore: ElementStore<MEGANode, UInt64>?
-    @Atomic private var megaNodes: [MEGANode]?
     @Atomic private var nodeEntities: [NodeEntity]?
     @Atomic @objc var currentIndex: Int = 0
 
     private let sdk: MEGASdk
     private let nodeProvider: any MEGANodeProviderProtocol
-    
-    @objc init(currentPhoto: MEGANode, allPhotos: [MEGANode], sdk: MEGASdk) {
-        self.sdk = sdk
-        self.nodeProvider = DefaultMEGANodeProvider(sdk: sdk)
-        super.init()
-
-        $megaNodes.mutate { $0 = allPhotos }
-        
-        nodeStore = .init(
-            currentIndex: allPhotos.firstIndex(of: currentPhoto),
-            elements: allPhotos,
-            elementsIdentifiedBy: \.handle
-        )
-        
-        if let index = allPhotos.firstIndex(of: currentPhoto) {
-            $currentIndex.mutate { $0 = index }
-        }
-    }
-    
-    @objc init(currentIndex: Int, allPhotos: [MEGANode], sdk: MEGASdk) {
-        self.sdk = sdk
-        self.nodeProvider = DefaultMEGANodeProvider(sdk: sdk)
-        super.init()
-
-        $megaNodes.mutate { $0 = allPhotos }
-
-        nodeStore = .init(
-            currentIndex: currentIndex,
-            elements: allPhotos,
-            elementsIdentifiedBy: \.handle
-        )
-        if allPhotos.indices ~= currentIndex {
-            $currentIndex.mutate { $0 = currentIndex }
-        }
-    }
     
     init(currentPhoto: NodeEntity, allPhotos: [NodeEntity], sdk: MEGASdk, nodeProvider: any MEGANodeProviderProtocol) {
         self.sdk = sdk
@@ -64,15 +27,10 @@ final class PhotoBrowserDataProvider: NSObject, @unchecked Sendable, PhotoBrowse
         super.init()
 
         $nodeEntities.mutate { $0 = allPhotos }
-        nodeStore = .init(elementsIdentifiedBy: \.handle)
         $currentIndex.mutate { $0 = allPhotos.firstIndex(of: currentPhoto) ?? 0 }
     }
     
     func photoNode(at index: Int) async -> MEGANode? {
-        if let nodes = megaNodes {
-            return nodes[safe: index]
-        }
-        
         guard let nodeEntity = nodeEntities?[safe: index] else {
             return nil
         }
@@ -81,19 +39,11 @@ final class PhotoBrowserDataProvider: NSObject, @unchecked Sendable, PhotoBrowse
     }
     
     @objc var count: Int {
-        if let nodes = megaNodes {
-            return nodes.count
-        } else {
-            return nodeEntities?.count ?? 0
-        }
+        return nodeEntities?.count ?? 0
     }
     
     @objc var currentPhoto: MEGANode? {
-        if let nodes = megaNodes {
-            return nodes[safe: $currentIndex.wrappedValue]
-        } else {
-            return nodeEntities?[safe: $currentIndex.wrappedValue]?.toMEGANode(in: sdk)
-        }
+        return nodeEntities?[safe: $currentIndex.wrappedValue]?.toMEGANode(in: sdk)
     }
     
     @objc func currentPhoto() async -> MEGANode? {
@@ -101,19 +51,11 @@ final class PhotoBrowserDataProvider: NSObject, @unchecked Sendable, PhotoBrowse
     }
     
     var currentPhotoNodeEntity: NodeEntity? {
-        if let nodes = megaNodes {
-            return nodes[safe: currentIndex]?.toNodeEntity()
-        } else {
-            return nodeEntities?[safe: $currentIndex.wrappedValue]
-        }
+        return nodeEntities?[safe: $currentIndex.wrappedValue]
     }
     
     var allPhotoEntities: [NodeEntity] {
-        if let nodeEntities = nodeEntities {
-            return nodeEntities
-        } else {
-            return megaNodes?.toNodeEntities() ?? []
-        }
+        return nodeEntities ?? []
     }
     
     func fetchOnlyPhotoEntities(mediaUseCase: MediaUseCase) -> [NodeEntity] {
@@ -122,15 +64,10 @@ final class PhotoBrowserDataProvider: NSObject, @unchecked Sendable, PhotoBrowse
     
     func convertToNodeEntities(from photos: [MEGANode]) {
         $nodeEntities.mutate { $0 = photos.toNodeEntities() }
-        $megaNodes.mutate { $0 = photos }
     }
     
     @objc var allPhotos: [MEGANode] {
-        if let nodes = megaNodes {
-            return nodes
-        } else {
-            return nodeEntities?.toMEGANodes(in: sdk) ?? []
-        }
+        return nodeEntities?.toMEGANodes(in: sdk) ?? []
     }
     
     @objc func shouldUpdateCurrentIndex(toIndex index: Int) -> Bool {
@@ -138,41 +75,18 @@ final class PhotoBrowserDataProvider: NSObject, @unchecked Sendable, PhotoBrowse
     }
     
     @objc func updatePhoto(by request: MEGARequest) {
-        if megaNodes != nil, let node = request.toMEGANode(in: sdk), let index = megaNodes?.firstIndex(of: node) {
-            $megaNodes.mutate { $0?[index] = node }
-        } else if let node = request.toNodeEntity(in: sdk), let index = nodeEntities?.firstIndex(of: node) {
+        if let node = request.toNodeEntity(in: sdk), let index = nodeEntities?.firstIndex(of: node) {
             $nodeEntities.mutate { $0?[index] = node }
         }
     }
-        
-    @MainActor
-    @objc func removePhotos(in nodeList: MEGANodeList?) async -> Int {
-        guard let nodeList else { return .zero }
-        if megaNodes != nil {
-            // just assigning the filtered value to mega nodes was overriding a correct value of name
-            // checking for count difference to decide if we need to update the array at all [IOS-7448]
-            // issue is generally caused that the same data is cached in three places
-            // and synchronising is very tricky to remember
-            await nodeStore?.updateCurrent(index: $currentIndex.wrappedValue)
-            let changedNodes = await nodeStore?.remove(nodeList.toNodeArray().removedChangeTypeNodes())
-            if self.megaNodes?.count != changedNodes?.count {
-                $megaNodes.mutate { $0 = changedNodes }
-            }
-            let currentIndex = await nodeStore?.currentIndex
-            $currentIndex.mutate { $0 = currentIndex ?? 0 }
-            return await nodeStore?.count ?? 0
-        } else {
-            removePhotosForNodeEntities(by: nodeList.toNodeEntities())
-            return self.count
-        }
+    
+    func removePhotos(in nodeEntities: [NodeEntity]) -> Int {
+        removePhotosForNodeEntities(by: nodeEntities)
+        return self.count
     }
     
-    @objc func updatePhotos(in nodeList: MEGANodeList) {
-        if megaNodes != nil {
-            updatePhotosForMEGANodes(by: nodeList)
-        } else {
-            updatePhotosForNodeEntities(by: nodeList)
-        }
+    func updatePhotos(in nodes: [NodeEntity]) {
+        updatePhotosForNodeEntities(by: nodes)
     }
     
     @objc func updateCurrentIndexTo(_ newIndex: Int) {
@@ -204,9 +118,7 @@ extension PhotoBrowserDataProvider {
     }
     
     private func isValid(index: Int) -> Bool {
-        if let nodes = megaNodes {
-            return nodes.indices ~= index
-        } else if let nodes = nodeEntities {
+        if let nodes = nodeEntities {
             return nodes.indices ~= index
         } else {
             return false
@@ -227,21 +139,9 @@ extension PhotoBrowserDataProvider {
         $currentIndex.mutate { $0 = max($0 - preCurrentIndexRemovedPhotoCount, 0) }
     }
     
-    private func updatePhotosForMEGANodes(by nodeList: MEGANodeList) {
-        let photosSet = Set(megaNodes ?? [])
-        var updatedSet = Set(nodeList.toNodeArray().nodes(for: [.attributes, .publicLink]))
-        updatedSet.formIntersection(photosSet)
-        
-        for photo in updatedSet {
-            if let index = megaNodes?.firstIndex(of: photo) {
-                $megaNodes.mutate { $0?[index] = photo }
-            }
-        }
-    }
-    
-    private func updatePhotosForNodeEntities(by nodeList: MEGANodeList) {
+    private func updatePhotosForNodeEntities(by nodes: [NodeEntity]) {
         let photosSet = Set(nodeEntities ?? [])
-        var updatedSet = Set(nodeList.toNodeEntities().nodes(for: [.attributes, .publicLink]))
+        var updatedSet = Set(nodes.nodes(for: [.attributes, .publicLink]))
         updatedSet.formIntersection(photosSet)
         
         for photo in updatedSet {

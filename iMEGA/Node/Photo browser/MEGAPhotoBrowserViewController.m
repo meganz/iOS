@@ -32,7 +32,7 @@ static const CGFloat GapBetweenPages = 10.0;
 static const long long MaxSizeToDownloadOriginal = 50 * 1024 * 1024; // 50 MB. Download original as long it's smaller than 50MB
 static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Don't request the preview and download the original if the photo is smaller than 1 MB
 
-@interface MEGAPhotoBrowserViewController () <UIScrollViewDelegate, UIViewControllerTransitioningDelegate, PieChartViewDelegate, PieChartViewDataSource, NodeActionViewControllerDelegate, NodeInfoViewControllerDelegate, MEGADelegate>
+@interface MEGAPhotoBrowserViewController () <UIScrollViewDelegate, UIViewControllerTransitioningDelegate, PieChartViewDelegate, PieChartViewDataSource, NodeActionViewControllerDelegate, NodeInfoViewControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 
@@ -68,7 +68,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
 @implementation MEGAPhotoBrowserViewController
 
 + (MEGAPhotoBrowserViewController *)photoBrowserWithMediaNodes:(NSMutableArray<MEGANode *> *)mediaNodesArray api:(MEGASdk *)api displayMode:(DisplayMode)displayMode isFromSharedItem:(BOOL)isFromSharedItem presentingNode:(MEGANode *)node {
-    PhotoBrowserDataProvider *provider = [[PhotoBrowserDataProvider alloc] initWithCurrentPhoto:node allPhotos:mediaNodesArray sdk:api];
+    PhotoBrowserDataProvider *provider = [self photoBrowserDataProviderWithCurrentPhoto:node mediaNodes:mediaNodesArray sdk:api];
     
     MEGAPhotoBrowserViewController *photoBrowser = [self photoBrowserWithProvider:provider api:api displayMode:displayMode isFromSharedItem:isFromSharedItem];
     [photoBrowser updateProviderNodeEntitiesWithNodes: mediaNodesArray];
@@ -76,8 +76,12 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
 }
 
 + (MEGAPhotoBrowserViewController *)photoBrowserWithMediaNodes:(NSMutableArray<MEGANode *> *)mediaNodesArray api:(MEGASdk *)api displayMode:(DisplayMode)displayMode isFromSharedItem:(BOOL)isFromSharedItem preferredIndex:(NSUInteger)preferredIndex {
-    PhotoBrowserDataProvider *provider  = [[PhotoBrowserDataProvider alloc] initWithCurrentIndex:preferredIndex allPhotos:mediaNodesArray sdk:api];
-    return [self photoBrowserWithProvider:provider api:api displayMode:displayMode isFromSharedItem:isFromSharedItem];
+    PhotoBrowserDataProvider *provider = [self photoBrowserDataProviderWithCurrentIndex:preferredIndex mediaNodes:mediaNodesArray sdk:api];
+    if (provider) {
+        return [self photoBrowserWithProvider:provider api:api displayMode:displayMode isFromSharedItem:isFromSharedItem];
+    } else {
+        return nil;
+    }
 }
 
 + (MEGAPhotoBrowserViewController *)photoBrowserWithProvider:(PhotoBrowserDataProvider *)provider api:(MEGASdk *)api displayMode:(DisplayMode)displayMode isFromSharedItem:(BOOL)isFromSharedItem {
@@ -95,7 +99,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self.viewModel onViewDidLoad];
+    [self onViewDidLoad];
     
     self.imageViewsZoomCache = [[NSCache<NSNumber *, NSNumber *> alloc] init];
 
@@ -174,7 +178,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    [MEGASdk.shared addMEGADelegate:self];
+    [self onViewWillAppear];
     if (self.displayMode != DisplayModeTransfers) {
         [TransfersWidgetViewController.sharedTransferViewController setProgressViewInKeyWindow];
         [TransfersWidgetViewController.sharedTransferViewController bringProgressToFrontKeyWindowIfNeeded];
@@ -248,7 +252,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    [MEGASdk.shared removeMEGADelegateAsync:self];
+    [self onViewWillDisappear];
 }
 
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
@@ -1244,12 +1248,6 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
             [node navigateToParentAndPresent];
         }];
     }
-}
-
-#pragma mark - MEGADelegate
-
-- (void)onNodesUpdate:(MEGASdk *)api nodeList:(MEGANodeList *)nodeList {
-    [self handleNodeUpdatesFromNodes:nodeList];
 }
 
 #pragma mark - Private methods.

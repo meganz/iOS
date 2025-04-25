@@ -249,6 +249,7 @@ extension ChatViewController: MessageCellDelegate, MessageLabelDelegate {
                 isFromSharedItem: false,
                 preferredIndex: UInt(foundIndex ?? 0)
             )
+            guard let photoBrowserVC else { return }
             photoBrowserVC.configureMediaAttachment(
                 inChatId: chatRoom.chatId,
                 messages: mediaMessagesArray)
