@@ -39,20 +39,29 @@ final class AudioPlayerItem: AVPlayerItem {
         super.init(asset: AVAsset(url: url), automaticallyLoadedAssetKeys: requiredAssetKeys)
     }
     
-    func loadMetadata() async throws {
+    nonisolated func loadMetadata() async throws {
         try Task.checkCancellation()
         
         let metadataItems = try await asset.load(.commonMetadata)
         
         try Task.checkCancellation()
         
-        let title = metadataItems.first(where: { $0.commonKey == .commonKeyTitle })?.value as? String
+        let title = try await metadataItems.first(where: { $0.commonKey == .commonKeyTitle })?.load(.value) as? String
+        let artist = try await metadataItems.first(where: { $0.commonKey == .commonKeyArtist })?.load(.value) as? String
+        let albumName = try await metadataItems.first(where: { $0.commonKey == .commonKeyAlbumName })?.load(.value) as? String
+        let artworkData = try await metadataItems.first(where: { $0.commonKey == .commonKeyArtwork })?.load(.value) as? Data
         
+        try Task.checkCancellation()
+        
+        await updateMetadata(title: title, artist: artist, albumName: albumName, artworkData: artworkData)
+    }
+    
+    private func updateMetadata(title: String?, artist: String?, albumName: String?, artworkData: Data?) async {
         if let title {
             self.name = title
         }
         
-        self.artist = if let artist = metadataItems.first(where: { $0.commonKey == .commonKeyArtist })?.value as? String {
+        self.artist = if let artist {
             artist
         } else if title != nil { // Only show unknown artist if the title can be determined
             Strings.Localizable.Media.Audio.Metadata.Missing.artist
@@ -60,11 +69,11 @@ final class AudioPlayerItem: AVPlayerItem {
             nil
         }
         
-        if let albumName = metadataItems.first(where: { $0.commonKey == .commonKeyAlbumName })?.value as? String {
+        if let albumName {
             self.album = albumName
         }
         
-        if let artworkData = metadataItems.first(where: { $0.commonKey == .commonKeyArtwork })?.value as? Data, let artworkImage = UIImage(data: artworkData) {
+        if let artworkData, let artworkImage = UIImage(data: artworkData) {
             self.artwork = artworkImage
         } else if nodeHasThumbnail {
             self.artwork = await loadThumbnail()

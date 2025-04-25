@@ -39,7 +39,7 @@ extension AudioPlayer {
         
         guard
             let firstArtwork = artworkMetadata.first,
-            let imageData = firstArtwork.dataValue,
+            let imageData = try? await firstArtwork.load(.dataValue),
             let image = UIImage(data: imageData) else {
             return
         }
