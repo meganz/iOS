@@ -105,6 +105,7 @@ final class NodeOpener {
             isFromSharedItem: isFromSharedItem ?? false,
             preferredIndex: UInt(truncatingIfNeeded: index)
         )
+        guard let photoBrowserForMediaNode else { return }
         navigationController?.present(photoBrowserForMediaNode, animated: true, completion: nil)
     }
     

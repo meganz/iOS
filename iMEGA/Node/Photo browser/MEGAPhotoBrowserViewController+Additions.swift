@@ -15,7 +15,9 @@ import UIKit
 
 extension MEGAPhotoBrowserViewController {
     @objc func makeViewModel() -> PhotoBrowserViewModel {
-        PhotoBrowserViewModel()
+        let viewModel = PhotoBrowserViewModel(photoBrowserUseCase: PhotoBrowserUseCase(nodeRepository: NodeRepository.newRepo))
+        viewModel.invokeCommand = { [weak self] in self?.executeCommand($0) }
+        return viewModel
     }
     
     @objc func createNodeInfoViewModel(withNode node: MEGANode) -> NodeInfoViewModel {
@@ -464,26 +466,7 @@ extension MEGAPhotoBrowserViewController {
 
 // MARK: - OnNodesUpdate
 extension MEGAPhotoBrowserViewController {
-    @objc func handleNodeUpdates(fromNodes nodeList: MEGANodeList?) {
-        guard let nodeList, shouldUpdateNodes(nodes: nodeList) else { return }
-        
-        Task { [weak self] in
-            guard let self else { return }
-            let remainingNodesToUpdateCount = await dataProvider.removePhotos(in: nodeList)
-            
-            if remainingNodesToUpdateCount == 0 {
-                dismiss(animated: true)
-            } else {
-                dataProvider.updatePhotos(in: nodeList)
-                if shouldReloadUI(nodes: nodeList) {
-                    reloadUI()
-                }
-            }
-        }
-    }
-    
-    private func shouldUpdateNodes(nodes: MEGANodeList) -> Bool {
-        let nodeEntities = nodes.toNodeEntities()
+    private func shouldUpdateNodes(_ nodeEntities: [NodeEntity]) -> Bool {
         guard nodeEntities.isNotEmpty else { return false }
         return nodeEntities.removedChangeTypeNodes().isNotEmpty ||
                 nodeEntities.hasModifiedAttributes() ||
@@ -494,10 +477,9 @@ extension MEGAPhotoBrowserViewController {
     /// Check if node updates require photos views to reload
     ///
     /// Node changes types containing anything other than `favourite`, `attributes` or `publicLink` will require reloading the image views again.
-    private func shouldReloadUI(nodes: MEGANodeList) -> Bool {
-        let nodeEntities = nodes.toNodeEntities()
-        guard nodeEntities.isNotEmpty else { return false }
-        return nodeEntities.contains {
+    private func shouldReloadUI(nodes: [NodeEntity]) -> Bool {
+        guard nodes.isNotEmpty else { return false }
+        return nodes.contains {
             $0.changeTypes.subtracting([.favourite, .attributes, .publicLink]).isNotEmpty
         }
     }
@@ -588,6 +570,17 @@ extension MEGAPhotoBrowserViewController {
             break
         }
     }
+    
+    @objc class func photoBrowserDataProvider(currentPhoto: MEGANode, mediaNodes: [MEGANode], sdk: MEGASdk) -> PhotoBrowserDataProvider {
+        PhotoBrowserDataProvider(currentPhoto: currentPhoto.toNodeEntity(), allPhotos: mediaNodes.toNodeEntities(), sdk: sdk, nodeProvider: DefaultMEGANodeProvider(sdk: sdk))
+    }
+    
+    @objc class func photoBrowserDataProvider(currentIndex: Int, mediaNodes: [MEGANode], sdk: MEGASdk) -> PhotoBrowserDataProvider? {
+        guard currentIndex < mediaNodes.count else {
+            return nil
+        }
+        return PhotoBrowserDataProvider(currentPhoto: mediaNodes[currentIndex].toNodeEntity(), allPhotos: mediaNodes.toNodeEntities(), sdk: sdk, nodeProvider: DefaultMEGANodeProvider(sdk: sdk))
+    }
 }
 
 // MARK: - Ads
@@ -602,5 +595,40 @@ extension MEGAPhotoBrowserViewController: AdsSlotViewControllerProtocol {
 extension MEGAPhotoBrowserViewController: SnackBarLayoutCustomizable {
     var additionalSnackBarBottomInset: CGFloat {
         toolbar?.bounds.height ?? 0
+    }
+}
+
+// MARK: - Displatch actions
+extension MEGAPhotoBrowserViewController {
+    @objc func onViewDidLoad() {
+        viewModel.dispatch(.onViewDidLoad)
+    }
+    
+    @objc func onViewWillAppear() {
+        viewModel.dispatch(.onViewWillAppear)
+    }
+    
+    @objc func onViewWillDisappear() {
+        viewModel.dispatch(.onViewWillDisappear)
+    }
+}
+
+// MARK: - Handle commands
+extension MEGAPhotoBrowserViewController: ViewType {
+    public func executeCommand(_ command: PhotoBrowserViewModel.Command) {
+        switch command {
+        case .nodesUpdate(let nodeEntities):
+            guard shouldUpdateNodes(nodeEntities) else { return }
+            let remainingNodesToUpdateCount = dataProvider.removePhotos(in: nodeEntities)
+            
+            if remainingNodesToUpdateCount == 0 {
+                dismiss(animated: true)
+            } else {
+                dataProvider.updatePhotos(in: nodeEntities)
+                if shouldReloadUI(nodes: nodeEntities) {
+                    reloadUI()
+                }
+            }
+        }
     }
 }
