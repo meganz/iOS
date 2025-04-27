@@ -1,9 +1,12 @@
 import Accounts
 import MEGAAnalytics
 import MEGAAppPresentation
+import MEGAAssets
 import MEGAAuthentication
 import MEGAAuthenticationOrchestration
+import MEGAL10n
 import MEGAPermissions
+import MEGAPresentation
 import MEGASwiftUI
 import SwiftUI
 
@@ -37,28 +40,6 @@ extension AppDelegate {
     
     @objc func isRootViewNewOnboarding() -> Bool {
         window.rootViewController is UIHostingController<OnboardingView<LoadingSpinner>>
-    }
-    
-    private func makeNewOnboardingViewController() -> UIViewController {
-        let viewModel = MEGAAuthentication.DependencyInjection.onboardingViewModel
-        routeToLoadingSubscription = viewModel.$route
-            .sink { [weak self] in
-                guard $0?.isLoggedIn == true else { return }
-                self?.routeToLoadingSubscription = nil
-                
-                Task { @MainActor in
-                    let permissionHandler = DevicePermissionsHandler.makeHandler()
-                    let shouldSetupPermissions = await permissionHandler.shouldSetupPermissions()
-                    self?.showLoadingView(permissionsPending: shouldSetupPermissions)
-                }
-            }
-        
-        let view = OnboardingView(
-            viewModel: viewModel,
-            onboardingCarouselContent: []) {
-                LoadingSpinner()
-            }
-        return  UIHostingController(rootView: view)
     }
     
     @MainActor
@@ -120,6 +101,60 @@ extension AppDelegate {
         } else {
             window.rootViewController is OnboardingViewController
         }
+    }
+    
+    // MARK: - Private Functions 
+    
+    private func makeNewOnboardingViewController() -> UIViewController {
+        let viewModel = MEGAAuthentication.DependencyInjection.onboardingViewModel
+        routeToLoadingSubscription = viewModel.$route
+            .receive(on: DispatchQueue.main)
+            .filter { $0?.isLoggedIn == true }
+            .prefix(1)
+            .sink { [weak self] _ in
+                self?.routeToLoadingSubscription = nil
+                
+                Task { @MainActor in
+                    let permissionHandler = DevicePermissionsHandler.makeHandler()
+                    let shouldSetupPermissions = await permissionHandler.shouldSetupPermissions()
+                    self?.showLoadingView(permissionsPending: shouldSetupPermissions)
+                }
+            }
+        
+        let view = OnboardingView(
+            viewModel: viewModel,
+            configuration: .init(
+                carousel: .init(
+                    displayMode: .largeImage,
+                    carouselContent: makeCarouselContent()),
+                buttonConfiguration: .init(loginTitle: Strings.Localizable.login))) {
+                LoadingSpinner()
+            }
+        return UIHostingController(rootView: view)
+    }
+    
+    private func makeCarouselContent() -> [OnboardingCarouselContent] {
+        [.init(
+            title: Strings.Localizable.Onboarding.UniqueSellingProposition.Carousel.Page.First.title,
+            subtitle: Strings.Localizable.Onboarding.UniqueSellingProposition.Carousel.Page.First.subtitle,
+            image: MEGAAssetsImageProvider.image(
+                named: .onboardingCarousel1)),
+         .init(
+            title: Strings.Localizable.Onboarding.UniqueSellingProposition.Carousel.Page.Second.title,
+            subtitle: Strings.Localizable.Onboarding.UniqueSellingProposition.Carousel.Page.Second.subtitle,
+            image: MEGAAssetsImageProvider.image(
+                named: .onboardingCarousel2)),
+         .init(
+            title: Strings.Localizable.Onboarding.UniqueSellingProposition.Carousel.Page.Third.title,
+            subtitle: Strings.Localizable.Onboarding.UniqueSellingProposition.Carousel.Page.Third.subtitle,
+            image: MEGAAssetsImageProvider.image(
+                named: .onboardingCarousel3)),
+         .init(
+            title: Strings.Localizable.Onboarding.UniqueSellingProposition.Carousel.Page.Fourth.title,
+            subtitle: Strings.Localizable.Onboarding.UniqueSellingProposition.Carousel.Page.Fourth.subtitle,
+            image: MEGAAssetsImageProvider.image(
+                named: .onboardingCarousel4))
+        ]
     }
 }
 

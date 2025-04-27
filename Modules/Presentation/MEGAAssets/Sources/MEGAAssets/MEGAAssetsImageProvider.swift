@@ -134,5 +134,9 @@ public enum MEGAAssetsImageName: String, CaseIterable, Sendable {
          archiveChat,
          sharedFilesInfo,
          manageChatHistory,
-         meetingLink
+         meetingLink,
+         onboardingCarousel1,
+         onboardingCarousel2,
+         onboardingCarousel3,
+         onboardingCarousel4
 }
