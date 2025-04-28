@@ -381,15 +381,11 @@ final class ChatContentViewModel: ViewModelType {
             return true
         }
         
-        guard chatUseCase.isCallInProgress(for: chatRoom.chatId) else {
-            return true
-        }
-        
         return switch chatRoom.chatType {
         case .oneToOne, .group:
-            false
+            !chatUseCase.isCallInProgress(for: chatRoom.chatId)
         case .meeting:
-            scheduledMeetings.isEmpty
+            scheduledMeetings.isEmpty && !chatUseCase.isCallInProgress(for: chatRoom.chatId)
         case .noteToSelf:
             true
         }
