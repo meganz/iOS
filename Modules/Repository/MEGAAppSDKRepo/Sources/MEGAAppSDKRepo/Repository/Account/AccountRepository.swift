@@ -276,6 +276,19 @@ public final class AccountRepository: NSObject, AccountRepositoryProtocol {
     public func setAccountStorageStatus(_ status: StorageStatusEntity) {
         currentUserSource.setStorageStatus(status)
     }
+    
+    public func loadUserData() async throws {
+        try await withAsyncThrowingValue { completion in
+            sdk.getUserData(with: RequestDelegate { result in
+                switch result {
+                case .success:
+                    completion(.success)
+                case .failure:
+                    completion(.failure(AccountErrorEntity.generic))
+                }
+            })
+        }
+    }
 
     // MARK: - Account social and notifications
     public func incomingContactsRequestsCount() -> Int {
@@ -287,6 +300,10 @@ public final class AccountRepository: NSObject, AccountRepositoryProtocol {
     }
 
     // MARK: - Account events and delegates
+    public var onAccountUpdates: AnyAsyncSequence<Void> {
+        MEGAUpdateHandlerManager.shared.accountUpdates
+    }
+
     public var onRequestFinishUpdates: AnyAsyncSequence<RequestResponseEntity> {
         MEGAUpdateHandlerManager.shared.requestFinishUpdates
     }

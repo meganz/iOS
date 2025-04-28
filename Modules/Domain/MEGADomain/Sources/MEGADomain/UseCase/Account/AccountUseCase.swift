@@ -1,5 +1,6 @@
 import Combine
 import Foundation
+import MEGASwift
 
 // MARK: - Use case protocol
 public protocol AccountUseCaseProtocol: Sendable {
@@ -85,6 +86,7 @@ public protocol AccountUseCaseProtocol: Sendable {
     func getMiscFlags() async throws
     func sessionTransferURL(path: String) async throws -> URL
     func multiFactorAuthCheck(email: String) async throws -> Bool
+    func loadUserData() async throws
     
     // Node sizes
     func rootStorageUsed() -> Int64
@@ -95,6 +97,9 @@ public protocol AccountUseCaseProtocol: Sendable {
     // RichLinksPreview management
     func isRichLinkPreviewEnabled() async -> Bool
     func enableRichLinkPreview(_ enabled: Bool)
+    
+    // Account events and delegates
+    var onAccountUpdates: AnyAsyncSequence<Void> { get }
 }
 
 extension AccountUseCaseProtocol {
@@ -295,6 +300,10 @@ public final class AccountUseCase<T: AccountRepositoryProtocol>: AccountUseCaseP
     public func multiFactorAuthCheck(email: String) async throws -> Bool {
         try await repository.multiFactorAuthCheck(email: email)
     }
+
+    public func loadUserData() async throws {
+        try await repository.loadUserData()
+    }
     
     // MARK: - Node sizes
     public func rootStorageUsed() -> Int64 {
@@ -338,4 +347,8 @@ public final class AccountUseCase<T: AccountRepositoryProtocol>: AccountUseCaseP
         repository.enableRichLinkPreview(enabled)
     }
 
+    // MARK: - Account events and delegates
+    public var onAccountUpdates: AnyAsyncSequence<Void> {
+        repository.onAccountUpdates
+    }
 }

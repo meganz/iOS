@@ -328,8 +328,7 @@ extension MEGALinkManager {
             presenter: visibleViewController,
             presentationStyle: presentationStyle,
             publicLink: publicLink,
-            isFolderLink: isFolderLink,
-            logger: { MEGALogDebug("\($0) - \(isFolderLink ? "Folder" : "File") link") }
+            isFolderLink: isFolderLink
         ).build(adsFreeViewProPlanAction: {
             let appDelegate = UIApplication.shared.delegate as? AppDelegate
             appDelegate?.showUpgradePlanPageFromAds()

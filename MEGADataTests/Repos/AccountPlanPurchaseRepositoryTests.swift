@@ -246,6 +246,25 @@ final class AccountPlanPurchaseRepositoryTests: XCTestCase {
         cancellable.cancel()
     }
     
+    func testSuccessSubmitReceipt_whenCalled_shouldEmitSubmitReceiptResultAndUpdateMonitorSubmitReceipt() {
+        let sut = makeSUT(purchase: MockMEGAPurchase(isSubmittingReceipt: false))
+        
+        let exp = expectation(description: "Should receive success submit receipt result")
+        sut.submitReceiptResultPublisher
+            .sink { result in
+                if case .failure = result {
+                    XCTFail("Expected success, but received failure: \(result)")
+                }
+                exp.fulfill()
+            }
+            .store(in: &subscriptions)
+        
+        sut.successSubmitReceipt()
+        
+        wait(for: [exp], timeout: 1)
+        XCTAssertEqual(sut.isSubmittingReceiptAfterPurchase, false)
+    }
+    
     // MARK: - Helper
     private func makeSUT(
         purchase: MockMEGAPurchase = MockMEGAPurchase(),
