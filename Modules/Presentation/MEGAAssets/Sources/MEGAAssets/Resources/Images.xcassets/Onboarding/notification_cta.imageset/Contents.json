@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "notification_cta.pdf",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

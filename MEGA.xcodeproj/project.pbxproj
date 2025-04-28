@@ -2552,11 +2552,13 @@
 		C4C6A49A27A4632600873165 /* MegaNode+Display.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C6A49527A4632600873165 /* MegaNode+Display.swift */; };
 		C4CBDD3F256EC00900835CF5 /* AudioPlayerItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4CBDD3E256EC00900835CF5 /* AudioPlayerItem.swift */; };
 		C4CBDD82256EDD1200835CF5 /* PlayerCurrentStateEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4CBDD81256EDD1200835CF5 /* PlayerCurrentStateEntity.swift */; };
+		C4CBF0012DBB835B00834EF9 /* PermissionOnboardingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4CBF0002DBB835400834EF9 /* PermissionOnboardingViewModel.swift */; };
 		C4D665B825B1F835002196E9 /* OfflineFileInfoUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D665B725B1F835002196E9 /* OfflineFileInfoUseCase.swift */; };
 		C4D665C425B1F84E002196E9 /* OfflineFileInfoRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D665C325B1F84E002196E9 /* OfflineFileInfoRepository.swift */; };
 		C4D6750F2BB2CAF1000A1F79 /* MockNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D6750E2BB2CAF1000A1F79 /* MockNavigationController.swift */; };
 		C4D675142BB2CF0F000A1F79 /* CloudDriveQuickUploadActionRouterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D675132BB2CF0F000A1F79 /* CloudDriveQuickUploadActionRouterTests.swift */; };
 		C4DAFB962BBE8C530028FC90 /* NewCloudDriveNodeSourceUpdatesListenerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4DAFB952BBE8C530028FC90 /* NewCloudDriveNodeSourceUpdatesListenerTests.swift */; };
+		C4DCB5CD2DBA06EE002D6FEF /* PermissionOnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4DCB5CC2DBA06C9002D6FEF /* PermissionOnboardingView.swift */; };
 		C4EB6DBB2B4BF68B007A94E3 /* AppExitHandlerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C4EB6DBA2B4BF68B007A94E3 /* AppExitHandlerManager.m */; };
 		C4EDB73826655229006A114F /* RoundedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EDB73726655229006A114F /* RoundedView.swift */; };
 		C4F06F6A2B690C4B005C1A3D /* MockUpgradeEncouragementShowTimeTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F06F692B690C4B005C1A3D /* MockUpgradeEncouragementShowTimeTracker.swift */; };
@@ -5261,11 +5263,13 @@
 		C4C6A49527A4632600873165 /* MegaNode+Display.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MegaNode+Display.swift"; sourceTree = "<group>"; };
 		C4CBDD3E256EC00900835CF5 /* AudioPlayerItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerItem.swift; sourceTree = "<group>"; };
 		C4CBDD81256EDD1200835CF5 /* PlayerCurrentStateEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerCurrentStateEntity.swift; sourceTree = "<group>"; };
+		C4CBF0002DBB835400834EF9 /* PermissionOnboardingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionOnboardingViewModel.swift; sourceTree = "<group>"; };
 		C4D665B725B1F835002196E9 /* OfflineFileInfoUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineFileInfoUseCase.swift; sourceTree = "<group>"; };
 		C4D665C325B1F84E002196E9 /* OfflineFileInfoRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineFileInfoRepository.swift; sourceTree = "<group>"; };
 		C4D6750E2BB2CAF1000A1F79 /* MockNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockNavigationController.swift; sourceTree = "<group>"; };
 		C4D675132BB2CF0F000A1F79 /* CloudDriveQuickUploadActionRouterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CloudDriveQuickUploadActionRouterTests.swift; sourceTree = "<group>"; };
 		C4DAFB952BBE8C530028FC90 /* NewCloudDriveNodeSourceUpdatesListenerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewCloudDriveNodeSourceUpdatesListenerTests.swift; sourceTree = "<group>"; };
+		C4DCB5CC2DBA06C9002D6FEF /* PermissionOnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionOnboardingView.swift; sourceTree = "<group>"; };
 		C4EB6DBA2B4BF68B007A94E3 /* AppExitHandlerManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppExitHandlerManager.m; sourceTree = "<group>"; };
 		C4EB6DBC2B4BF6B7007A94E3 /* AppExitHandlerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppExitHandlerManager.h; sourceTree = "<group>"; };
 		C4EDB73726655229006A114F /* RoundedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedView.swift; sourceTree = "<group>"; };
@@ -11203,6 +11207,7 @@
 			isa = PBXGroup;
 			children = (
 				BF0B5E092BB2C86700ADE274 /* NoInternetViewModifier */,
+				C4DCB5CB2DBA06C4002D6FEF /* Onboarding */,
 				25D840672A9EE0C30026D288 /* PermissionAlertViewModifier */,
 				94BD69942B4EB86200BF08D6 /* SearchBarUIHostingController */,
 				83A4DF452BAC563C0012FE25 /* SimpleDialog */,
@@ -12916,6 +12921,15 @@
 				C4DAFB952BBE8C530028FC90 /* NewCloudDriveNodeSourceUpdatesListenerTests.swift */,
 			);
 			path = NodeUpdates;
+			sourceTree = "<group>";
+		};
+		C4DCB5CB2DBA06C4002D6FEF /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				C4DCB5CC2DBA06C9002D6FEF /* PermissionOnboardingView.swift */,
+				C4CBF0002DBB835400834EF9 /* PermissionOnboardingViewModel.swift */,
+			);
+			path = Onboarding;
 			sourceTree = "<group>";
 		};
 		C4EB6DB72B4BF5FD007A94E3 /* AppExitHandler */ = {
@@ -15095,6 +15109,8 @@
 				9422B9F02A41A331007AA5D1 /* PermissionAlertRouting.swift in Sources */,
 				25D840692A9EE0E50026D288 /* PermissionAlertViewModifier.swift in Sources */,
 				9495DBB12A4086BF00FA22EE /* PermissionModalModel.swift in Sources */,
+				C4DCB5CD2DBA06EE002D6FEF /* PermissionOnboardingView.swift in Sources */,
+				C4CBF0012DBB835B00834EF9 /* PermissionOnboardingViewModel.swift in Sources */,
 				B6C9CB0D27FBC2220073BA1A /* PHAsset+CU.swift in Sources */,
 				B630CD502845AAD100A298EE /* PHAssetMediaSubtype+CU.swift in Sources */,
 				B630CD522845B79100A298EE /* PHAssetMediaType+Mapper.swift in Sources */,
