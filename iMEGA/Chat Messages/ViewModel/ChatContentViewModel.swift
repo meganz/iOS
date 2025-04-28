@@ -373,18 +373,26 @@ final class ChatContentViewModel: ViewModelType {
     }
     
     /// Determine if start or join call floating button should be hide based on several variables
-    /// 1. For group chats (group or meeting), if there is a call in progress and user is not participating, it should show the button with join string.
+    /// 1. For chats (individual, group or meeting), if there is a call in progress and user is not participating, it should show the button with join string.
     /// 2. Just for meetings chats with scheduled meetings, if there is not a call, it should show the button with start string.
     /// 3. All other scenarios, should be hidden: no network, while recording voice clips, chat is archived, chat is individual or user is no longer in the chat
     private func shouldHideStartOrJoinCallButton(scheduledMeetings: [ScheduledMeetingEntity]) -> Bool {
-        !isConnectedToNetwork
-        || isVoiceRecordingInProgress
-        || chatRoom.isArchived
-        || chatRoom.chatType == .oneToOne
-        || chatRoom.chatType == .noteToSelf
-        || (chatRoom.chatType == .meeting && !chatUseCase.isCallInProgress(for: chatRoom.chatId) && scheduledMeetings.isEmpty)
-        || (chatRoom.chatType == .group && !chatUseCase.isCallInProgress(for: chatRoom.chatId))
-        || !chatRoom.ownPrivilege.isUserInChat
+        guard isConnectedToNetwork && !chatRoom.isArchived && !isVoiceRecordingInProgress && chatRoom.ownPrivilege.isUserInChat else {
+            return true
+        }
+        
+        guard chatUseCase.isCallInProgress(for: chatRoom.chatId) else {
+            return true
+        }
+        
+        return switch chatRoom.chatType {
+        case .oneToOne, .group:
+            false
+        case .meeting:
+            scheduledMeetings.isEmpty
+        case .noteToSelf:
+            true
+        }
     }
     
     private func inviteParticipants(_ userHandles: [HandleEntity]) {
