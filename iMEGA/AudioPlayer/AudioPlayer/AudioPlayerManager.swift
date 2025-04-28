@@ -93,7 +93,6 @@ import MEGADomain
             player?.close { [weak self] in
                 MEGALogDebug("[AudioPlayer] closing current player before assign new instance")
                 self?.player = nil
-                self?.player?.isCloseRequested = false
                 self?.configure(player: player, autoPlayEnabled: autoPlayEnabled, tracks: tracks)
             }
         } else {
@@ -353,7 +352,6 @@ import MEGADomain
         player?.close { [weak self] in
             self?.audioSessionUseCase.configureCallAudioSession()
             self?.clearMiniPlayerResources()
-            self?.player?.isCloseRequested = false
         }
         
         shouldRemovePlayerInstance = true
