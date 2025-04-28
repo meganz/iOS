@@ -35,7 +35,8 @@ import("Fastfile_parse_warnings_and_errors")
       output_directory: options[:output_directory],
       ignore_file_path: ".xcovignore",
       derived_data_path: "derivedData",
-      json_report: true
+      json_report: true,
+      include_targets: "MEGA.app,MEGAAppPresentation,MEGAAppSDKRepo,MEGAAuthentication,Chat,ChatRepo,Accounts,CloudDrive,ContentLibraries,DeviceCenter,MEGASwift,Notifications,Settings,MEGAAnalytics,MEGAAnalyticsDomain,MEGAConnectivity,MEGADeepLinkHandling,MEGADomain,MEGAFoundation,MEGAInfrastructure,MEGAIntentDomain,MEGAL10n,MEGALogger,MEGAPermissions,MEGAPhotos,MEGAPickerFileProviderDomain,MEGASwiftUI,MEGAUI,MEGAUIComponent,MEGAUIKit,Notifications,PhotoBrowser,Search,Settings,Video"
     )
   end
 
