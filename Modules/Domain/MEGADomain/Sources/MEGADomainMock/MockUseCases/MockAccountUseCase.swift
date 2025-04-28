@@ -1,6 +1,7 @@
 import Combine
 import Foundation
 import MEGADomain
+import MEGASwift
 
 public class MockAccountUseCase: AccountUseCaseProtocol, @unchecked Sendable {
     private let totalNodesCountVariable: UInt64
@@ -46,9 +47,11 @@ public class MockAccountUseCase: AccountUseCaseProtocol, @unchecked Sendable {
     public private(set) var refreshAccountDetails_calledCount: Int = 0
     public private(set) var refreshAccountDetailsWithMonitoringUpdate_calledCount: Int = 0
     public private(set) var enableRichLinkPreview_calledCount: Int = 0
+    public private(set) var loadUserData_calledCount: Int = 0
     private var richLinkPreviewEnabled: Bool
     public let monitorRefreshAccountPublisher: AnyPublisher<Bool, Never>
     public let _isMonitoringRefreshAccount: Bool
+    public let onAccountUpdates: AnyAsyncSequence<Void>
     
     public init(
         currentUser: UserEntity? = UserEntity(handle: .invalid),
@@ -93,7 +96,8 @@ public class MockAccountUseCase: AccountUseCaseProtocol, @unchecked Sendable {
         hasExpiredProFlexiAccount: Bool = false,
         richLinkPreviewEnabled: Bool = false,
         monitorRefreshAccountPublisher: AnyPublisher<Bool, Never> = Empty().eraseToAnyPublisher(),
-        isMonitoringRefreshAccount: Bool = false
+        isMonitoringRefreshAccount: Bool = false,
+        onAccountUpdates: AnyAsyncSequence<Void> = EmptyAsyncSequence().eraseToAnyAsyncSequence()
     ) {
         _currentUser = currentUser
         _isGuest = isGuest
@@ -138,6 +142,7 @@ public class MockAccountUseCase: AccountUseCaseProtocol, @unchecked Sendable {
         self.richLinkPreviewEnabled = richLinkPreviewEnabled
         _isMonitoringRefreshAccount = isMonitoringRefreshAccount
         self.monitorRefreshAccountPublisher = monitorRefreshAccountPublisher
+        self.onAccountUpdates = onAccountUpdates
     }
     
     // MARK: - User authentication status and identifiers
@@ -352,5 +357,9 @@ public class MockAccountUseCase: AccountUseCaseProtocol, @unchecked Sendable {
     public func refreshAccountAndMonitorUpdate() async throws -> AccountDetailsEntity {
         refreshAccountDetailsWithMonitoringUpdate_calledCount += 1
         return try accountDetailsResult.get()
+    }
+    
+    public func loadUserData() async throws {
+        loadUserData_calledCount += 1
     }
 }

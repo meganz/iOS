@@ -48,6 +48,10 @@ final class MEGAUpdateHandlerManager: NSObject, MEGADelegate, @unchecked Sendabl
         handlers.forEach { $0.onEvent?(event.toEventEntity()) }
     }
     
+    func onAccountUpdate(_ api: MEGASdk) {
+        handlers.forEach { $0.onAccountUpdate?() }
+    }
+    
     // MARK: - Request events
     func onRequestStart(_ api: MEGASdk, request: MEGARequest) {
         handlers.forEach { $0.onRequestStart?(request.toRequestEntity()) }

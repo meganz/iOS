@@ -91,7 +91,8 @@ public protocol AccountRepositoryProtocol: Sendable, RepositoryProtocol {
     func getMiscFlags() async throws
     func sessionTransferURL(path: String) async throws -> URL
     func setAccountStorageStatus(_ status: StorageStatusEntity)
-    
+    func loadUserData() async throws
+
     // Account social and notifications
     func incomingContactsRequestsCount() -> Int
     func relevantUnseenUserAlertsCount() -> UInt
@@ -101,6 +102,7 @@ public protocol AccountRepositoryProtocol: Sendable, RepositoryProtocol {
     var onUserAlertsUpdates: AnyAsyncSequence<[UserAlertEntity]> { get }
     var onContactRequestsUpdates: AnyAsyncSequence<[ContactRequestEntity]> { get }
     var onEventsUpdates: AnyAsyncSequence<EventEntity> { get }
+    var onAccountUpdates: AnyAsyncSequence<Void> { get }
     func multiFactorAuthCheck(email: String) async throws -> Bool
     
     // Node sizes

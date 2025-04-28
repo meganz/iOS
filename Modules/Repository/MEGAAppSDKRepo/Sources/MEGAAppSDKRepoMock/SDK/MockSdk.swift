@@ -692,6 +692,10 @@ public final class MockSdk: MEGASdk, @unchecked Sendable {
         processRequestResult(delegate: delegate)
     }
     
+    public override func getUserData(with delegate: any MEGARequestDelegate) {
+        processRequestResult(delegate: delegate)
+    }
+    
     // MARK: - SMS
     
     public override func smsAllowedState() -> SMSState {

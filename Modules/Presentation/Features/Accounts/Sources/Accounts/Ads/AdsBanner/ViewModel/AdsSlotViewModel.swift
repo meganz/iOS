@@ -17,10 +17,12 @@ final public class AdsSlotViewModel: ObservableObject {
     private let accountUseCase: any AccountUseCaseProtocol
     public let purchaseUseCase: any AccountPlanPurchaseUseCaseProtocol
     private let tracker: any AnalyticsTracking
-    private(set) var logger: ((String) -> Void)?
     
     private(set) var adsSlotConfig: AdsSlotConfig?
     private(set) var monitorAdsSlotUpdatesTask: Task<Void, Never>?
+    private(set) var monitoringOnAccountUpdatesTask: Task<Void, Never>? {
+        didSet { oldValue?.cancel() }
+    }
     private var subscriptions = Set<AnyCancellable>()
     
     @Published var isExternalAdsEnabled: Bool?
@@ -53,8 +55,7 @@ final public class AdsSlotViewModel: ObservableObject {
         currentDate: @escaping @Sendable () -> Date = { Date() },
         notificationCenter: NotificationCenter = .default,
         publicNodeLink: String? = nil,
-        isFolderLink: Bool,
-        logger: ((String) -> Void)? = nil
+        isFolderLink: Bool
     ) {
         self.adsSlotUpdatesProvider = adsSlotUpdatesProvider
         self.adsUseCase = adsUseCase
@@ -71,7 +72,6 @@ final public class AdsSlotViewModel: ObservableObject {
         self.notificationCenter = notificationCenter
         self.publicNodeLink = publicNodeLink
         self.isFolderLink = isFolderLink
-        self.logger = logger
         
         $lastCloseAdsDate.useCase = preferenceUseCase
         registerDelegates()
@@ -91,21 +91,6 @@ final public class AdsSlotViewModel: ObservableObject {
     }
     
     func setupSubscriptions() {
-        notificationCenter
-            .publisher(for: .accountDidPurchasedPlan)
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] _ in
-                guard let self, isExternalAdsEnabled == true else { return }
-                
-                Task { @MainActor [weak self] in
-                    guard let self else { return }
-                    isExternalAdsEnabled = false
-                    showAdsFreeView = false
-                    displayAds = false
-                }
-            }
-            .store(in: &subscriptions)
-        
         purchaseUseCase.submitReceiptResultPublisher
             .debounce(for: .seconds(0.5), scheduler: DispatchQueue.main)
             .sink { [weak self] result in
@@ -141,7 +126,37 @@ final public class AdsSlotViewModel: ObservableObject {
             .store(in: &subscriptions)
     }
 
-    // MARK: Ads Flag
+    // MARK: - On Account Update
+    func startMonitoringOnAccountUpdates() {
+        // Handles disabling ads when the account is upgraded.
+        // Only supports transitions from ads enabled to disabled.
+        // Accounts reverted to free are not detected as `onAccountUpdates` doesn't emit in that case.
+        monitoringOnAccountUpdatesTask = Task { [weak self, accountUseCase] in
+            for await _ in accountUseCase.onAccountUpdates {
+                MEGALogInfo("[AdMob] Account update received")
+                // loadUserData will refresh the remote flags
+                try? await accountUseCase.loadUserData()
+                
+                let newIsAdsEnabled = self?.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .externalAds)
+                MEGALogInfo("[AdMob] Ads is enabled: \(String(describing: newIsAdsEnabled))")
+                
+                guard self?.isExternalAdsEnabled != newIsAdsEnabled else { return }
+                
+                if newIsAdsEnabled == false {
+                    self?.isExternalAdsEnabled = false
+                    self?.showAdsFreeView = false
+                    self?.updateAdsSlot(nil)
+                    MEGALogInfo("[AdMob] Ads is hidden")
+                }
+            }
+        }
+    }
+    
+    func stopMonitoringOnAccountUpdates() {
+        monitoringOnAccountUpdatesTask?.cancel()
+    }
+
+    // MARK: - Ads Flag
     
     /// Determines whether ads should be enabled based on user account status and public link queries.
     func determineAdsAvailability() async {
@@ -211,7 +226,7 @@ final public class AdsSlotViewModel: ObservableObject {
         monitorAdsSlotUpdatesTask?.cancel()
     }
     
-    func updateAdsSlot(_ newAdsSlotConfig: AdsSlotConfig? = nil) {
+    func updateAdsSlot(_ newAdsSlotConfig: AdsSlotConfig?) {
         if let isExternalAdsEnabled {
             guard isExternalAdsEnabled else {
                 adsSlotConfig = nil
@@ -237,12 +252,12 @@ final public class AdsSlotViewModel: ObservableObject {
     func bannerViewDidReceiveAdsUpdate(result: Result<Void, any Error>) {
         switch result {
         case .success:
-            logger?("[AdMob] Ads Banner did received ad")
+            MEGALogInfo("[AdMob] Ads Banner did received ad")
         
             // Show close button only when a user is logged in, otherwise, hide button
             showCloseButton = accountUseCase.isLoggedIn()
         case .failure(let error):
-            logger?("[AdMob] Ads Banner failed to receive ad with error \(error.localizedDescription)")
+            MEGALogError("[AdMob] Ads Banner failed to receive ad with error \(error.localizedDescription)")
         }
     }
     

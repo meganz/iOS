@@ -154,11 +154,11 @@ extension AccountPlanPurchaseRepository: MEGAPurchaseDelegate {
     
     func successSubmitReceipt() {
         submitReceiptResultSourcePublisher.send(.success)
+        currentUserSource.monitorSubmitReceiptAfterPurchaseSourcePublisher.send(purchase.isSubmittingReceipt)
     }
     
     func failedSubmitReceipt(_ errorCode: Int) {
         let error = AccountPlanErrorEntity(errorCode: errorCode, errorMessage: nil)
         submitReceiptResultSourcePublisher.send(.failure(error))
     }
-    
 }

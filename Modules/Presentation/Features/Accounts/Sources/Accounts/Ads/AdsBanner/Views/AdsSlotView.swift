@@ -58,9 +58,11 @@ public struct AdsSlotView<T: View>: View {
         .onAppear {
             viewModel.setupSubscriptions()
             viewModel.startMonitoringAdsSlotUpdates()
+            viewModel.startMonitoringOnAccountUpdates()
         }
         .onDisappear {
             viewModel.stopMonitoringAdsSlotUpdates()
+            viewModel.stopMonitoringOnAccountUpdates()
         }
         .ignoresSafeArea(.keyboard)
         .ignoresSafeArea(edges: shouldHideAds || !(viewModel.isExternalAdsEnabled ?? false) ? .all : [.top])

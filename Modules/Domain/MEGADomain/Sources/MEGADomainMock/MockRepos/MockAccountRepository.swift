@@ -45,6 +45,7 @@ public final class MockAccountRepository: AccountRepositoryProtocol, @unchecked 
     private let miscFlagsResult: Result<Void, AccountErrorEntity>
     private let sessionTransferURLResult: Result<URL, AccountErrorEntity>
     private let multiFactorAuthCheckResult: Result<Bool, AccountErrorEntity>
+    private let loadUserDataResult: Result<Void, AccountErrorEntity>
     private let isUpgradeSecuritySuccess: Bool
     
     // MARK: - Management of Contacts and Alerts
@@ -56,6 +57,7 @@ public final class MockAccountRepository: AccountRepositoryProtocol, @unchecked 
     public let onUserAlertsUpdates: AnyAsyncSequence<[UserAlertEntity]>
     public let onContactRequestsUpdates: AnyAsyncSequence<[ContactRequestEntity]>
     public let onEventsUpdates: AnyAsyncSequence<EventEntity>
+    public let onAccountUpdates: AnyAsyncSequence<Void>
     public let monitorRefreshAccountPublisher: AnyPublisher<Bool, Never>
     public let _isMonitoringRefreshAccount: Bool
     private(set) public var setAccountStorageStatusCalledCount: Int = 0
@@ -121,8 +123,10 @@ public final class MockAccountRepository: AccountRepositoryProtocol, @unchecked 
         onUserAlertsUpdates: AnyAsyncSequence<[UserAlertEntity]> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
         onContactRequestsUpdates: AnyAsyncSequence<[ContactRequestEntity]> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
         onEventsUpdates: AnyAsyncSequence<EventEntity> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
+        onAccountUpdates: AnyAsyncSequence<Void> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
         monitorRefreshAccountPublisher: AnyPublisher<Bool, Never> = Empty().eraseToAnyPublisher(),
-        isMonitoringRefreshAccount: Bool = false
+        isMonitoringRefreshAccount: Bool = false,
+        loadUserDataResult: Result<Void, AccountErrorEntity> = .failure(.generic)
     ) {
         self.currentUser = currentUser
         self.isGuest = isGuest
@@ -171,7 +175,9 @@ public final class MockAccountRepository: AccountRepositoryProtocol, @unchecked 
         self.onUserAlertsUpdates = onUserAlertsUpdates
         self.onContactRequestsUpdates = onContactRequestsUpdates
         self.onEventsUpdates = onEventsUpdates
+        self.onAccountUpdates = onAccountUpdates
         self.monitorRefreshAccountPublisher = monitorRefreshAccountPublisher
+        self.loadUserDataResult = loadUserDataResult
     }
     
     // MARK: - AccountRepositoryProtocol Implementation
@@ -369,5 +375,9 @@ public final class MockAccountRepository: AccountRepositoryProtocol, @unchecked 
     
     public func setAccountStorageStatus(_ status: StorageStatusEntity) {
         setAccountStorageStatusCalledCount += 1
+    }
+    
+    public func loadUserData() async throws {
+        try loadUserDataResult.get()
     }
 }

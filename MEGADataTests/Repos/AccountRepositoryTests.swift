@@ -566,6 +566,20 @@ final class AccountRepositoryTests: XCTestCase {
         cancellable.cancel()
     }
     
+    func testLoadUserData_whenRequestSuccess_shouldReturnSuccess() async {
+        let (sut, _) = makeSUT(requestResult: .success(MockRequest(handle: 1)))
+
+        await XCTAsyncAssertNoThrow(try await sut.loadUserData())
+    }
+    
+    func testLoadUserData_whenRequestFailed_shouldThrowError() async {
+        let (sut, _) = makeSUT(requestResult: .failure(MockError.failingError))
+
+        await XCTAsyncAssertThrowsError(try await sut.loadUserData()) { errorThrown in
+            XCTAssertEqual(errorThrown as? AccountErrorEntity, .generic)
+        }
+    }
+    
     // MARK: - Helpers
     
     private func makeSUT(

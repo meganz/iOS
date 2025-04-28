@@ -17,7 +17,6 @@ public struct AdsSlotRouter<T: View> {
     private let presentationStyle: UIModalPresentationStyle
     private let publicLink: String?
     private let isFolderLink: Bool
-    private let logger: ((String) -> Void)?
     
     public init(
         adsSlotViewController: some AdsSlotViewControllerProtocol,
@@ -28,8 +27,7 @@ public struct AdsSlotRouter<T: View> {
         presenter: UIViewController? = nil,
         presentationStyle: UIModalPresentationStyle = .automatic,
         publicLink: String? = nil,
-        isFolderLink: Bool = false,
-        logger: ((String) -> Void)? = nil
+        isFolderLink: Bool = false
     ) {
         self.adsSlotViewController = adsSlotViewController
         self.accountUseCase = accountUseCase
@@ -40,7 +38,6 @@ public struct AdsSlotRouter<T: View> {
         self.presentationStyle = presentationStyle
         self.publicLink = publicLink
         self.isFolderLink = isFolderLink
-        self.logger = logger
     }
     
     public func build(
@@ -57,8 +54,7 @@ public struct AdsSlotRouter<T: View> {
             onViewFirstAppeared: onViewFirstAppeared,
             adsFreeViewProPlanAction: adsFreeViewProPlanAction,
             publicNodeLink: publicLink,
-            isFolderLink: isFolderLink,
-            logger: logger
+            isFolderLink: isFolderLink
         )
         
         let adsSlotView = AdsSlotView(viewModel: viewModel, contentView: contentView)

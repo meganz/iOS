@@ -1,6 +1,7 @@
 import Combine
 import MEGADomain
 import MEGADomainMock
+import MEGASwift
 import MEGATest
 import XCTest
 
@@ -24,6 +25,7 @@ final class AccountUseCaseTests: XCTestCase {
         miscFlagsResult: Result<Void, AccountErrorEntity> = .failure(.generic),
         sessionTransferURLResult: Result<URL, AccountErrorEntity> = .failure(.generic),
         multiFactorAuthCheckResult: Result<Bool, AccountErrorEntity> = .failure(.generic),
+        loadUserDataResult: Result<Void, AccountErrorEntity> = .failure(.generic),
         isUpgradeSecuritySuccess: Bool = false,
         bandwidthOverquotaDelay: Int64 = 0,
         isExpiredAccount: Bool = false,
@@ -32,7 +34,8 @@ final class AccountUseCaseTests: XCTestCase {
         currentProPlan: AccountPlanEntity? = nil,
         currentSubscription: AccountSubscriptionEntity? = nil,
         isMonitoringRefreshAccount: Bool = false,
-        monitorRefreshAccountPublisher: AnyPublisher<Bool, Never> = Empty().eraseToAnyPublisher()
+        monitorRefreshAccountPublisher: AnyPublisher<Bool, Never> = Empty().eraseToAnyPublisher(),
+        onAccountUpdates: AnyAsyncSequence<Void> = EmptyAsyncSequence().eraseToAnyAsyncSequence()
     ) -> AccountUseCase<MockAccountRepository> {
         let repository = MockAccountRepository(
             currentUser: currentUser,
@@ -59,8 +62,10 @@ final class AccountUseCaseTests: XCTestCase {
             accountType: accountType,
             currentProPlan: currentProPlan,
             currentSubscription: currentSubscription,
+            onAccountUpdates: onAccountUpdates,
             monitorRefreshAccountPublisher: monitorRefreshAccountPublisher,
-            isMonitoringRefreshAccount: isMonitoringRefreshAccount
+            isMonitoringRefreshAccount: isMonitoringRefreshAccount,
+            loadUserDataResult: loadUserDataResult
         )
         return AccountUseCase(repository: repository)
     }
@@ -444,6 +449,42 @@ final class AccountUseCaseTests: XCTestCase {
         }
     }
     
+    func testLoadUserData_whenRequestSuccess_shouldReturnSuccess() async {
+        let sut = makeSUT(loadUserDataResult: .success)
+
+        await XCTAsyncAssertNoThrow(try await sut.loadUserData())
+    }
+    
+    func testLoadUserData_whenRequestFailed_shouldThrowError() async {
+        let sut = makeSUT(loadUserDataResult: .failure(.generic))
+
+        await XCTAsyncAssertThrowsError(try await sut.loadUserData()) { errorThrown in
+            XCTAssertEqual(errorThrown as? AccountErrorEntity, .generic)
+        }
+    }
+    
+    func testOnAccountUpdates_whenUpdated_shouldEmitUpdate() async {
+        let (stream, continuation) = AsyncStream<Void>.makeStream()
+        let sut = makeSUT(onAccountUpdates: stream.eraseToAnyAsyncSequence())
+        
+        let expectation = XCTestExpectation(description: "Should emit account update")
+        let task = Task {
+            var updatesReceived = 0
+            for await _ in sut.onAccountUpdates {
+                updatesReceived += 1
+                expectation.fulfill()
+            }
+
+            XCTAssertEqual(updatesReceived, 1)
+        }
+
+        continuation.yield(Void())
+        continuation.finish()
+        
+        await fulfillment(of: [expectation], timeout: 1)
+        task.cancel()
+    }
+
     // MARK: - Account Plan For Type
     
     func testAccountPlanForType_success_shouldReturnPlan() async throws {

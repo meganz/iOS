@@ -14,8 +14,7 @@ extension AppDelegate {
             adsSlotViewController: tabBar,
             accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
             purchaseUseCase: AccountPlanPurchaseUseCase(repository: AccountPlanPurchaseRepository.newRepo),
-            contentView: MainTabBarWrapper(mainTabBar: tabBar),
-            logger: { MEGALogDebug($0) }
+            contentView: MainTabBarWrapper(mainTabBar: tabBar)
         ).build(
             onViewFirstAppeared: onViewFirstAppeared,
             adsFreeViewProPlanAction: { [weak self] in

@@ -68,8 +68,7 @@ final class AudioPlayerViewRouter: NSObject, AudioPlayerViewRouting {
                     ),
                     contentView: AdsViewWrapper(viewController: audioPlayerViewController),
                     publicLink: configEntity.fileLink,
-                    isFolderLink: false,
-                    logger: { MEGALogDebug("\($0) - Audio link") }
+                    isFolderLink: false
                 ).build(adsFreeViewProPlanAction: {
                     let appDelegate = UIApplication.shared.delegate as? AppDelegate
                     appDelegate?.showUpgradePlanPageFromAds()
