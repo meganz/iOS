@@ -126,7 +126,6 @@ final class AudioPlayer: NSObject {
     
     deinit {
         MEGALogDebug("[AudioPlayer] destroying audio player instance")
-        if isCloseRequested { isCloseRequested = false }
         queuePlayer = nil
         onClosePlayerCompletion?()
     }
