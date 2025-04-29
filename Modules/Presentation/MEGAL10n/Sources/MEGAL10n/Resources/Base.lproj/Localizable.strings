@@ -4614,3 +4614,21 @@
 "onboarding.uniqueSellingProposition.carousel.page.fourth.title" = "Say it in private";
 /* Onboarding USP carousel fourth page subtitle */
 "onboarding.uniqueSellingProposition.carousel.page.fourth.subtitle" = "Chat with friends and family, share photos or sensitive information, video call and schedule meetings. Safety and privacy guaranteed.";
+/* Onboarding Notification CTA title */
+"onboarding.cta.notifications.title" = "Never miss an important update";
+/* Onboarding Notification CTA description */
+"onboarding.cta.notifications.explanation" = "Stay informed with real-time updates that matter to you. Get alerts for shared folder activity, security updates, and exclusive offers so you never miss anything important.\n\nYou can manage notification preferences at any time in your device settings.";
+/* Onboarding Notification CTA *Enable* button */
+"onboarding.cta.notifications.buttons.enable" = "Enable notifications";
+/* Onboarding Notification CTA *Skip* button */
+"onboarding.cta.notifications.buttons.skip" = "Skip for now";
+/* Onboarding Camera Backups CTA title */
+"onboarding.cta.cameraBackups.title" = "Keep your photos safe, always";
+/* Onboarding Camera Backups CTA description */
+"onboarding.cta.cameraBackups.explanation" = "Your memories matter.\n\nCamera uploads automatically backs up your photos and videos to your MEGA cloud drive, so you never have to worry about losing them.";
+/* Onboarding Camera Backups CTA note */
+"onboarding.cta.cameraBackups.note" = "Automatic camera uploads requires [B]Full Access[/B] to your device photo library";
+/* Onboarding Camera Backups CTA *Enable* button */
+"onboarding.cta.cameraBackups.buttons.enable" = "Enable camera uploads";
+/* Onboarding Camera Backups CTA *Skip* button */
+"onboarding.cta.cameraBackups.buttons.skip" = "Skip for now";

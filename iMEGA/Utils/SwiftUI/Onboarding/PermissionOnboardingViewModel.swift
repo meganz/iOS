@@ -1,4 +1,5 @@
 import MEGAInfrastructure
+import MEGAL10n
 import MEGAPresentation
 import SwiftUI
 
@@ -13,16 +14,11 @@ struct PermissionOnboardingViewModel {
 
     init() {
         image = .notificationCta
-        title = "Never miss an important update"
-        description =
-        """
-        Stay informed with real-time updates that matter to you. Get alerts for shared folder activity, security updates, and exclusive offers so you never miss anything important.
-
-        You can manage notification preferences at any time in your device settings.
-        """
-        note = "Automatic camera uploads requires **Full Access** to your device photo library"
-        primaryButtonTitle = "Enable Notifications"
-        secondaryButtonTitle = "Skip for now"
+        title = Strings.Localizable.Onboarding.Cta.CameraBackups.title
+        description = Strings.Localizable.Onboarding.Cta.CameraBackups.explanation
+        note = Strings.Localizable.Onboarding.Cta.CameraBackups.note
+        primaryButtonTitle = Strings.Localizable.Onboarding.Cta.CameraBackups.Buttons.enable
+        secondaryButtonTitle = Strings.Localizable.Onboarding.Cta.CameraBackups.Buttons.skip
     }
 
     func onPrimaryButtonTap() {
