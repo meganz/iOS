@@ -1,6 +1,7 @@
 import CoreServices
 import Foundation
 import MEGAAppPresentation
+import MEGAAppSDKRepo
 import MEGADomain
 import MEGARepo
 import MEGAUI
@@ -107,7 +108,8 @@ final class FileUploadingRouter {
         let metadataUseCase = MetadataUseCase(
             metadataRepository: MetadataRepository(),
             fileSystemRepository: FileSystemRepository.newRepo,
-            fileExtensionRepository: FileExtensionRepository()
+            fileExtensionRepository: FileExtensionRepository(),
+            nodeCoordinatesRepository: NodeCoordinatesRepository.newRepo
         )
         return await withTaskGroup(of: CancellableTransfer.self) { taskGroup in
             taskGroup.addTasksUnlessCancelled(for: urls) { url in

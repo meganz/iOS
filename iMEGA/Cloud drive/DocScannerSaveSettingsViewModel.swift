@@ -80,7 +80,8 @@ extension DocScannerSaveSettingsViewModel {
         let metadataUseCase = MetadataUseCase(
             metadataRepository: MetadataRepository(),
             fileSystemRepository: FileSystemRepository.newRepo,
-            fileExtensionRepository: FileExtensionRepository()
+            fileExtensionRepository: FileExtensionRepository(),
+            nodeCoordinatesRepository: NodeCoordinatesRepository.newRepo
         )
         
         return await withTaskGroup { taskGroup in
@@ -216,7 +217,8 @@ extension DocScannerSaveSettingsViewModel {
         let metadataUseCase = MetadataUseCase(
             metadataRepository: MetadataRepository(),
             fileSystemRepository: FileSystemRepository.newRepo,
-            fileExtensionRepository: FileExtensionRepository()
+            fileExtensionRepository: FileExtensionRepository(),
+            nodeCoordinatesRepository: NodeCoordinatesRepository.newRepo
         )
         
         return await withTaskGroup { taskGroup in

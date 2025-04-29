@@ -23,7 +23,7 @@ extension BrowserViewController {
                 contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(repo: UserAttributeRepository.newRepo),
                 hiddenNodesFeatureFlagEnabled: { DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes) }),
             filesSearchUseCase: FilesSearchUseCase(repo: FilesSearchRepository.newRepo, nodeRepository: NodeRepository.newRepo),
-            metadataUseCase: MetadataUseCase(metadataRepository: MetadataRepository(), fileSystemRepository: FileSystemRepository(fileManager: .default), fileExtensionRepository: FileExtensionRepository())
+            metadataUseCase: MetadataUseCase(metadataRepository: MetadataRepository(), fileSystemRepository: FileSystemRepository(fileManager: .default), fileExtensionRepository: FileExtensionRepository(), nodeCoordinatesRepository: NodeCoordinatesRepository.newRepo)
         )
     }
     

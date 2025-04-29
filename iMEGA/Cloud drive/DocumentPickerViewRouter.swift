@@ -1,3 +1,4 @@
+import MEGAAppSDKRepo
 import MEGADomain
 import MEGARepo
 import MEGASwift
@@ -21,7 +22,8 @@ final class DocumentPickerViewRouter {
         let metadataUseCase = MetadataUseCase(
             metadataRepository: MetadataRepository(),
             fileSystemRepository: FileSystemRepository(fileManager: .default),
-            fileExtensionRepository: FileExtensionRepository()
+            fileExtensionRepository: FileExtensionRepository(),
+            nodeCoordinatesRepository: NodeCoordinatesRepository.newRepo
         )
 
         let delegate = DocumentPickerDelegate(

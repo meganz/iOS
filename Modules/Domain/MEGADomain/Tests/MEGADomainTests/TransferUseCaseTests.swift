@@ -17,14 +17,15 @@ struct TransferUseCaseTestSuite {
         stubbedUploadTransfer: TransferEntity? = stubbedUpload,
         downloadError: (any Error)? = nil,
         uploadError: (any Error)? = nil
-    ) -> (TransferUseCase<MockTransferRepository>, MockTransferRepository) {
+    ) -> (TransferUseCase<MockTransferRepository, MockMetadataUseCase, MockNodeDataRepository>, MockTransferRepository) {
         let repo = MockTransferRepository(
             stubbedDownloadTransfer: stubbedDownloadTransfer,
             stubbedUploadTransfer: stubbedUploadTransfer,
             downloadError: downloadError,
             uploadError: uploadError
         )
-        return (TransferUseCase(repo: repo), repo)
+        let metadataUseCase = MockMetadataUseCase()
+        return (TransferUseCase(repo: repo, metadataUseCase: metadataUseCase, nodeDataRepository: MockNodeDataRepository()), repo)
     }
     
     @Suite("Download Tests")

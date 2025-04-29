@@ -78,12 +78,14 @@ final class MetadataUseCaseTests: XCTestCase {
     private func makeSUT(
         metadataRepository: some MetadataRepositoryProtocol = MockMetadataRepository(),
         fileSystemRepository: some FileSystemRepositoryProtocol = MockFileSystemRepository(),
-        fileExtensionRepository: some FileExtensionRepositoryProtocol = MockFileExtensionRepository()
+        fileExtensionRepository: some FileExtensionRepositoryProtocol = MockFileExtensionRepository(),
+        nodeCoordinatesRepository: some NodeCoordinatesRepositoryProtocol = MockNodeCoordinatesRepository.newRepo
     ) -> SUT {
         SUT(
             metadataRepository: metadataRepository,
             fileSystemRepository: fileSystemRepository,
-            fileExtensionRepository: fileExtensionRepository
+            fileExtensionRepository: fileExtensionRepository,
+            nodeCoordinatesRepository: nodeCoordinatesRepository
         )
     }
 
@@ -108,7 +110,8 @@ final class MetadataUseCaseTests: XCTestCase {
         let sut = makeSUT(
             metadataRepository: metadataRepository,
             fileSystemRepository: fileSystemRepository,
-            fileExtensionRepository: fileExtensionRepository
+            fileExtensionRepository: fileExtensionRepository,
+            nodeCoordinatesRepository: MockNodeCoordinatesRepository.newRepo
         )
         let result = await sut.formattedCoordinate(forFileURL: url)
         XCTAssertEqual(result, formattedCoordinate, file: file, line: line)

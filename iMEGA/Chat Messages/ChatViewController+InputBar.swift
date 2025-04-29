@@ -323,7 +323,8 @@ extension ChatViewController {
         let metadataUseCase = MetadataUseCase(
             metadataRepository: MetadataRepository(),
             fileSystemRepository: FileSystemRepository.newRepo,
-            fileExtensionRepository: FileExtensionRepository()
+            fileExtensionRepository: FileExtensionRepository(),
+            nodeCoordinatesRepository: NodeCoordinatesRepository.newRepo
         )
         
         let formattedCoordinate = await metadataUseCase.formattedCoordinate(forFilePath: filePath)
@@ -335,7 +336,8 @@ extension ChatViewController {
         let metadataUseCase = MetadataUseCase(
             metadataRepository: MetadataRepository(),
             fileSystemRepository: FileSystemRepository.newRepo,
-            fileExtensionRepository: FileExtensionRepository()
+            fileExtensionRepository: FileExtensionRepository(),
+            nodeCoordinatesRepository: NodeCoordinatesRepository.newRepo
         )
         
         let formattedCoordinate: String? = if let coordinate = asset.location?.coordinate {

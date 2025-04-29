@@ -3,17 +3,29 @@ import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGADomain
 import MEGAPickerFileProviderDomain
+import MEGARepo
 
 final class FileProviderExtension: NSFileProviderExtension {
     private var credentialUseCase = CredentialUseCase(repo: CredentialRepository.newRepo)
     private lazy var nodeActionUseCase = NodeActionUseCase(repo: NodeActionRepository.newRepo)
-    private lazy var transferUseCase = TransferUseCase(repo: TransferRepository.newRepo)
+    private lazy var transferUseCase = TransferUseCase(
+        repo: TransferRepository.newRepo,
+        metadataUseCase: metadataUseCase,
+        nodeDataRepository: NodeDataRepository.newRepo
+    )
     private lazy var nodeAttributeUseCase = NodeAttributeUseCase(repo: NodeAttributeRepository.newRepo)
     private var thumbnailUseCase = ThumbnailUseCase(repository: ThumbnailRepository.newRepo)
     private let fileProviderEnumeratorUseCase = FileProviderEnumeratorUseCase(
         filesSearchRepo: FilesSearchRepository.newRepo,
         nodeRepo: NodeRepository.newRepo,
         megaHandleRepo: MEGAHandleRepository.newRepo)
+    
+    private lazy var metadataUseCase = MetadataUseCase(
+        metadataRepository: MetadataRepository(),
+        fileSystemRepository: FileSystemRepository.newRepo,
+        fileExtensionRepository: FileExtensionRepository(),
+        nodeCoordinatesRepository: NodeCoordinatesRepository.newRepo
+    )
     
     override init() {
         super.init()
@@ -126,7 +138,7 @@ final class FileProviderExtension: NSFileProviderExtension {
         }
         
         Task { [transferUseCase] in
-            _ = try await transferUseCase.uploadFile(at: url, to: parentNode.toNodeEntity(), startHandler: {  _ in
+            let transferEntity = try await transferUseCase.uploadFile(at: url, to: parentNode.toNodeEntity(), startHandler: {  _ in
                 NSFileProviderManager.default.signalEnumerator(for: identifier) { error in
                     if let error {
                         MEGALogError("Error signaling item: \(error)")
@@ -144,6 +156,11 @@ final class FileProviderExtension: NSFileProviderExtension {
                 try await NSFileProviderManager.default.signalEnumerator(for: parentItemIdentifier)
             } catch {
                 MEGALogError("Error signaling item: \(error)")
+            }
+            if let longitude = node.longitude,
+               let latitude = node.latitude,
+               let megaNode = MEGASdk.shared.node(forHandle: transferEntity.nodeHandle) {
+                MEGASdk.shared.setUnshareableNodeCoordinates(megaNode, latitude: latitude, longitude: longitude)
             }
         }
     }
