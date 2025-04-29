@@ -21,8 +21,6 @@ struct AppLoadingView: View {
             VStack {
                 ProgressView(value: viewModel.progress, total: viewModel.totalProgress)
                     .tint(TokenColors.Button.brand.swiftUI)
-                    .scaleEffect(x: 1, y: (viewModel.progress != nil) ? 1.6 : 1)
-                    .frame(maxWidth: .infinity, alignment: .center)
                 
                 Text(viewModel.statusText)
                     .padding([.top], TokenSpacing._4)
