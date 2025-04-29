@@ -1,4 +1,5 @@
 @testable import MEGA
+import MEGAAppSDKRepoMock
 import MEGADomain
 import MEGADomainMock
 import Testing
@@ -76,25 +77,6 @@ struct TransferInventoryUseCaseHelperTests {
     
     @Suite("completedTransfers filtering")
     struct CompletedTransfers {
-        @Test("filters to uploads whose node is a file")
-        func filtersByTypeAndNode() {
-            let fileNode = NodeEntity(handle: 10, isFile: true)
-            let nonFileNode = NodeEntity(handle: 20, isFile: false)
-            
-            let keep = TransferEntity(type: .upload, path: nil, nodeHandle: 10, publicNode: nil, appData: nil)
-            let drop1 = TransferEntity(type: .upload, path: nil, nodeHandle: 20, publicNode: nil, appData: nil)
-            let drop2 = TransferEntity(type: .download, path: nil, nodeHandle: 30, publicNode: nil, appData: nil)
-            
-            let sut = makeSUT(
-                completed: [keep, drop1, drop2],
-                nodeMappings: [10: fileNode, 20: nonFileNode]
-            )
-            
-            let actual = sut.completedTransfers()
-            
-            #expect(areTransferEntitiesEqual(actual, [keep]))
-        }
-        
         @Test("forwards the filteringUserTransfers flag")
         func forwardsFilteringFlag() {
             let expected = TransferEntity(type: .download, path: nil, nodeHandle: 99, publicNode: nil, appData: nil)

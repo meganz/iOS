@@ -138,9 +138,7 @@ extension TransfersWidgetViewController: TransferWidgetResponderProtocol {
 
     @objc
     func fetchCompletedTransfers() -> [MEGATransfer] {
-        transferInventoryUseCaseHelper
-            .completedTransfers()
-            .toMEGATransfers(in: .shared)
+        transferInventoryUseCaseHelper.completedTransfers()
     }
     
     @objc
