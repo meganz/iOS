@@ -1,7 +1,8 @@
 import MEGAAppPresentation
+import MEGAAppSDKRepo
 import MEGADomain
-import MEGARepo
 import MEGAL10n
+import MEGARepo
 
 extension ShareViewController {
     
@@ -22,7 +23,8 @@ extension ShareViewController {
         let metadataUseCase = MetadataUseCase(
             metadataRepository: MetadataRepository(),
             fileSystemRepository: FileSystemRepository.newRepo,
-            fileExtensionRepository: FileExtensionRepository()
+            fileExtensionRepository: FileExtensionRepository(),
+            nodeCoordinatesRepository: NodeCoordinatesRepository.newRepo
         )
         
         return await metadataUseCase.formattedCoordinate(forFilePath: localPath)

@@ -5,21 +5,26 @@ public protocol MetadataUseCaseProtocol: Sendable {
     func formattedCoordinate(forFileURL url: URL) async -> String?
     func formattedCoordinate(forFilePath path: String) async -> String?
     func formattedCoordinate(for coordinate: Coordinate) -> String
+    func coordinateInTheFile(at url: URL) async -> Coordinate?
+    func setUnshareableNodeCoordinates(_ node: NodeEntity, latitude: Double, longitude: Double) async throws
 }
 
 public final class MetadataUseCase: MetadataUseCaseProtocol {
     private let metadataRepository: any MetadataRepositoryProtocol
     private let fileSystemRepository: any FileSystemRepositoryProtocol
     private let fileExtensionRepository: any FileExtensionRepositoryProtocol
+    private let nodeCoordinatesRepository: any NodeCoordinatesRepositoryProtocol
 
     public init(
         metadataRepository: some MetadataRepositoryProtocol,
         fileSystemRepository: some FileSystemRepositoryProtocol,
-        fileExtensionRepository: some FileExtensionRepositoryProtocol
+        fileExtensionRepository: some FileExtensionRepositoryProtocol,
+        nodeCoordinatesRepository: some NodeCoordinatesRepositoryProtocol
     ) {
         self.metadataRepository = metadataRepository
         self.fileSystemRepository = fileSystemRepository
         self.fileExtensionRepository = fileExtensionRepository
+        self.nodeCoordinatesRepository = nodeCoordinatesRepository
     }
 
     public func formattedCoordinate(forFileURL url: URL) async -> String? {
@@ -40,7 +45,7 @@ public final class MetadataUseCase: MetadataUseCaseProtocol {
         metadataRepository.formatCoordinate(coordinate)
     }
     
-    private func coordinateInTheFile(at url: URL) async -> Coordinate? {
+    public func coordinateInTheFile(at url: URL) async -> Coordinate? {
         guard fileSystemRepository.fileExists(at: url) else { return nil }
 
         if fileExtensionRepository.isImage(url: url) {
@@ -50,5 +55,9 @@ public final class MetadataUseCase: MetadataUseCaseProtocol {
         }
 
         return nil
+    }
+    
+    public func setUnshareableNodeCoordinates(_ node: NodeEntity, latitude: Double, longitude: Double) async throws {
+        try await nodeCoordinatesRepository.setUnshareableNodeCoordinates(node, latitude: latitude, longitude: longitude)
     }
 }

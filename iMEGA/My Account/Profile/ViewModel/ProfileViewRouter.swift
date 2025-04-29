@@ -2,6 +2,7 @@ import Accounts
 import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGADomain
+import MEGARepo
 
 protocol ProfileViewRouting: Routing {
     func showCancelAccountPlan(
@@ -31,7 +32,16 @@ final class ProfileViewRouter: ProfileViewRouting {
         let viewModel = ProfileViewModel(
             accountUseCase: accountUseCase,
             achievementUseCase: AchievementUseCase(repo: AchievementRepository.newRepo),
-            transferUseCase: TransferUseCase(repo: TransferRepository.newRepo),
+            transferUseCase: TransferUseCase(
+                repo: TransferRepository.newRepo,
+                metadataUseCase: MetadataUseCase(
+                    metadataRepository: MetadataRepository(),
+                    fileSystemRepository: FileSystemRepository.newRepo,
+                    fileExtensionRepository: FileExtensionRepository(),
+                    nodeCoordinatesRepository: NodeCoordinatesRepository.newRepo
+                ),
+                nodeDataRepository: NodeDataRepository.newRepo
+            ),
             networkMonitorUseCase: NetworkMonitorUseCase(repo: NetworkMonitorRepository.newRepo),
             transferInventoryUseCaseHelper: TransferInventoryUseCaseHelper(),
             tracker: DIContainer.tracker,
