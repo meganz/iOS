@@ -19,8 +19,6 @@ final class MiniPlayerViewRouter: NSObject, MiniPlayerViewRouting {
                 
         folderSDKLogoutRequired = configEntity.isFolderLink
         
-        let sdk = MEGASdk.shared
-        
         vc.viewModel = MiniPlayerViewModel(
             configEntity: configEntity,
             router: self,
@@ -28,8 +26,7 @@ final class MiniPlayerViewRouter: NSObject, MiniPlayerViewRouting {
             streamingInfoUseCase: StreamingInfoUseCase(streamingInfoRepository: StreamingInfoRepository()),
             offlineInfoUseCase: configEntity.relatedFiles != nil ? OfflineFileInfoUseCase(offlineInfoRepository: OfflineInfoRepository()) : nil,
             playbackContinuationUseCase: DIContainer.playbackContinuationUseCase,
-            audioPlayerUseCase: AudioPlayerUseCase(repository: AudioPlayerRepository(sdk: sdk)),
-            sdk: sdk
+            audioPlayerUseCase: AudioPlayerUseCase(repository: AudioPlayerRepository.newRepo)
         )
         
         return vc

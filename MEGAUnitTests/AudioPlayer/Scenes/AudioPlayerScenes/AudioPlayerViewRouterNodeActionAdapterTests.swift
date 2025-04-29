@@ -122,6 +122,9 @@ final class AudioPlayerViewRouterNodeActionAdapterTests: XCTestCase {
                 viewModel: AudioPlayerViewModel(
                     configEntity: configEntity,
                     router: MockAudioPlayerViewRouter(),
+                    nodeInfoUseCase: MockNodeInfoUseCase(),
+                    streamingInfoUseCase: MockStreamingInfoUseCase(),
+                    offlineInfoUseCase: OfflineFileInfoUseCase(),
                     playbackContinuationUseCase: MockPlaybackContinuationUseCase(),
                     audioPlayerUseCase: MockAudioPlayerUseCase(),
                     accountUseCase: MockAccountUseCase(),
