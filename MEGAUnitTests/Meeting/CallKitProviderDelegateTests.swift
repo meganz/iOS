@@ -122,7 +122,6 @@ struct CallKitProviderDelegateTests {
             harness.sut.provider(harness.cxProvider, perform: startAction)
             await harness.callCoordinator.startCallCalled.fulfillment(within: .seconds(5))
             await startAction.fulfillCalled.fulfillment(within: .seconds(5))
-            #expect(harness.callCoordinator.disablePassCodeIfNeeded_CalledTimes == 1)
         }
         @Test("Perform Start call action fails")
         func startCall_Fails() async {
@@ -132,7 +131,6 @@ struct CallKitProviderDelegateTests {
             harness.sut.provider(harness.cxProvider, perform: startAction)
             await harness.callCoordinator.startCallCalled.fulfillment(within: .seconds(5))
             await startAction.failCalled.fulfillment(within: .seconds(5))
-            #expect(harness.callCoordinator.disablePassCodeIfNeeded_CalledTimes == 0)
         }
     }
     
@@ -147,8 +145,6 @@ struct CallKitProviderDelegateTests {
             harness.sut.provider(harness.cxProvider, perform: answerAction)
             await harness.callCoordinator.answerCallCalled.fulfillment(within: .seconds(5))
             await answerAction.fulfillCalled.fulfillment(within: .seconds(5))
-            #expect(harness.callCoordinator.disablePassCodeIfNeeded_CalledTimes == 1)
-            
         }
         @Test("Performs answer call action, fails")
         func answerAction_fails() async {
@@ -158,7 +154,6 @@ struct CallKitProviderDelegateTests {
             harness.sut.provider(harness.cxProvider, perform: answerAction)
             await harness.callCoordinator.answerCallCalled.fulfillment(within: .seconds(5))
             await answerAction.failCalled.fulfillment(within: .seconds(5))
-            #expect(harness.callCoordinator.disablePassCodeIfNeeded_CalledTimes == 0)
         }
     }
     @Suite("End Call")
@@ -171,7 +166,6 @@ struct CallKitProviderDelegateTests {
             harness.sut.provider(harness.cxProvider, perform: endAction)
             await harness.callCoordinator.endCallCalled.fulfillment(within: .seconds(5))
             await endAction.fulfillCalled.fulfillment(within: .seconds(5))
-            #expect(harness.callCoordinator.disablePassCodeIfNeeded_CalledTimes == 0)
         }
         
         @Test("Perform end call action, fails")
@@ -182,7 +176,6 @@ struct CallKitProviderDelegateTests {
             harness.sut.provider(harness.cxProvider, perform: endAction)
             await harness.callCoordinator.endCallCalled.fulfillment(within: .seconds(5))
             await endAction.failCalled.fulfillment(within: .seconds(5))
-            #expect(harness.callCoordinator.disablePassCodeIfNeeded_CalledTimes == 0)
         }
     }
     @Suite("Mute call")
@@ -196,7 +189,6 @@ struct CallKitProviderDelegateTests {
             harness.sut.provider(harness.cxProvider, perform: muteAction)
             await harness.callCoordinator.muteCallCalled.fulfillment(within: .seconds(5))
             await muteAction.fulfillCalled.fulfillment(within: .seconds(5))
-            #expect(harness.callCoordinator.disablePassCodeIfNeeded_CalledTimes == 0)
         }
         @Test("Perform mute action fails")
         func muteCall_failed() async {
@@ -207,7 +199,6 @@ struct CallKitProviderDelegateTests {
             harness.sut.provider(harness.cxProvider, perform: muteAction)
             await harness.callCoordinator.muteCallCalled.fulfillment(within: .seconds(5))
             await muteAction.failCalled.fulfillment(within: .seconds(5))
-            #expect(harness.callCoordinator.disablePassCodeIfNeeded_CalledTimes == 0)
         }
     }
 }

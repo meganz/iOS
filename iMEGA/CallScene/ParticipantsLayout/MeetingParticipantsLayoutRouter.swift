@@ -66,6 +66,7 @@ final class MeetingParticipantsLayoutRouter: NSObject, MeetingParticipantsLayout
             callUpdateUseCase: CallUpdateUseCase(repository: CallUpdateRepository.newRepo),
             sessionUpdateUseCase: SessionUpdateUseCase(repository: SessionUpdateRepository.newRepo),
             chatRoomUpdateUseCase: ChatRoomUpdateUseCase(repository: ChatRoomUpdateRepository(chatRoomUpdateProvider: ChatRoomUpdateProvider(sdk: .sharedChatSdk, chatId: chatRoom.chatId))),
+            passcodeManager: PasscodeManager(),
             callController: CallControllerProvider().provideCallController(),
             timerSequence: TimerSequenceFactory(),
             chatRoom: chatRoom,

@@ -77,12 +77,6 @@ protocol CallsCoordinatorProtocol: AnyObject, Sendable {
     ///   - completion: A closure that will be executed when the report is complete, mandatory to avoid system crashes.
     func reportIncomingCall(in chatId: ChatIdEntity, completion: @escaping () -> Void)
     
-    /// Disables the passcode if it is enabled for properly manage calls.
-    ///
-    /// This function is responsible for ensuring that the authentication mechanisms does not interfere with
-    /// actions initiated by the `CallControllerProtocol`, while also complying with any additional requirements from the MEGA system.
-    func disablePassCodeIfNeeded()
-    
     /// Configures the WebRTC audio session when a call takes place.
     ///
     /// This function is responsible for setting up the necessary audio session infrastructure to handle and sync state between `WebRTC` and `iOS`
