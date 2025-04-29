@@ -32,7 +32,6 @@ extension FolderLinkViewController: AudioMiniPlayerHandlerProtocol, AudioPlayerP
     }
     
     func showMiniPlayer() {
-        AudioPlayerManager.shared.showMiniPlayer()
         adjustMiniPlayerDisplay(isHidden: false)
     }
     
@@ -65,7 +64,7 @@ extension FolderLinkViewController: AudioMiniPlayerHandlerProtocol, AudioPlayerP
     
     @objc func shouldShowMiniPlayer() {
         if AudioPlayerManager.shared.isPlayerAlive() {
-            showMiniPlayer()
+            AudioPlayerManager.shared.showMiniPlayer()
         }
     }
     
