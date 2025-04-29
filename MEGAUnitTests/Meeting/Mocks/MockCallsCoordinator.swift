@@ -9,7 +9,6 @@ final class MockCallsCoordinator: CallsCoordinatorProtocol, @unchecked Sendable 
     var endCall_CalledTimes = 0
     var muteCall_CalledTimes = 0
     var reportIncomingCall_CalledTimes = 0
-    var disablePassCodeIfNeeded_CalledTimes = 0
     var startCallResult_ToReturn = false
     var answerCallResult_ToReturn = false
     var endCallResult_ToReturn = false
@@ -52,10 +51,6 @@ final class MockCallsCoordinator: CallsCoordinatorProtocol, @unchecked Sendable 
     func reportIncomingCall(in chatId: ChatIdEntity, completion: @escaping () -> Void) {
         reportIncomingCall_CalledTimes += 1
         reportIncomingCallExpectationClosure?()
-    }
-    
-    func disablePassCodeIfNeeded() {
-        disablePassCodeIfNeeded_CalledTimes += 1
     }
     
     func configureWebRTCAudioSession() {

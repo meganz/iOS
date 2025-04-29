@@ -16,7 +16,6 @@ protocol CallsCoordinatorFactoryProtocol {
         captureDeviceUseCase: some CaptureDeviceUseCaseProtocol,
         audioSessionUseCase: some AudioSessionUseCaseProtocol,
         callsManager: some CallsManagerProtocol,
-        passcodeManager: some PasscodeManagerProtocol,
         uuidFactory: @escaping () -> UUID
     ) -> CallsCoordinator
 }
@@ -32,7 +31,6 @@ class CallsCoordinatorFactory: NSObject, CallsCoordinatorFactoryProtocol {
         captureDeviceUseCase: some CaptureDeviceUseCaseProtocol,
         audioSessionUseCase: some AudioSessionUseCaseProtocol,
         callsManager: some CallsManagerProtocol,
-        passcodeManager: some PasscodeManagerProtocol,
         uuidFactory: @escaping () -> UUID
     ) -> CallsCoordinator {
         CallsCoordinator(
@@ -45,7 +43,6 @@ class CallsCoordinatorFactory: NSObject, CallsCoordinatorFactoryProtocol {
             captureDeviceUseCase: captureDeviceUseCase,
             audioSessionUseCase: audioSessionUseCase,
             callsManager: callsManager,
-            passcodeManager: passcodeManager,
             uuidFactory: uuidFactory
         )
     }
@@ -64,17 +61,12 @@ class CallsCoordinatorFactory: NSObject, CallsCoordinatorFactoryProtocol {
     
     @Atomic private var providerDelegate: (any CallKitProviderDelegateProtocol)?
     
-    private let passcodeManager: any PasscodeManagerProtocol
-    
     private let uuidFactory: () -> UUID
     
     @Atomic private var callUpdateTask: Task<Void, Never>?
     @Atomic private var callSessionUpdateTask: Task<Void, Never>?
     
     var incomingCallForUnknownChat: IncomingCallForUnknownChat?
-
-    @PreferenceWrapper(key: .presentPasscodeLater, defaultValue: false, useCase: PreferenceUseCase.default)
-    var presentPasscodeLater: Bool
     
     private var logoutNotificationObserver: (any NSObjectProtocol)?
 
@@ -88,7 +80,6 @@ class CallsCoordinatorFactory: NSObject, CallsCoordinatorFactoryProtocol {
         captureDeviceUseCase: some CaptureDeviceUseCaseProtocol,
         audioSessionUseCase: some AudioSessionUseCaseProtocol,
         callsManager: some CallsManagerProtocol,
-        passcodeManager: some PasscodeManagerProtocol,
         uuidFactory: @escaping () -> UUID
     ) {
         self.callUseCase = callUseCase
@@ -100,7 +91,6 @@ class CallsCoordinatorFactory: NSObject, CallsCoordinatorFactoryProtocol {
         self.captureDeviceUseCase = captureDeviceUseCase
         self.audioSessionUseCase = audioSessionUseCase
         self.callsManager = callsManager
-        self.passcodeManager = passcodeManager
         self.uuidFactory = uuidFactory
         
         super.init()
@@ -527,14 +517,6 @@ extension CallsCoordinator: CallsCoordinatorProtocol {
             }
             completion()
         }
-    }
-    
-    func disablePassCodeIfNeeded() {
-        if passcodeManager.shouldPresentPasscodeViewLater() {
-            presentPasscodeLater = true
-            passcodeManager.closePasscodeView()
-        }
-        passcodeManager.disablePasscodeWhenApplicationEntersBackground()
     }
     
     // Callkit abnormal behaviour when trying to enable loudspeaker from the lock screen.

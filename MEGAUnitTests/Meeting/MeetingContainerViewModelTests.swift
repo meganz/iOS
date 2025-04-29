@@ -17,6 +17,7 @@ final class MeetingContainerViewModelTests: XCTestCase {
         let router = MockMeetingContainerRouter()
         let callController = MockCallController()
         let noUserJoinedUseCase = MockMeetingNoUserJoinedUseCase()
+        let passcodeManager = MockPasscodeManager()
         
         init(
             chatRoom: ChatRoomEntity = ChatRoomEntity(),
@@ -46,6 +47,7 @@ final class MeetingContainerViewModelTests: XCTestCase {
                 analyticsEventUseCase: analyticsEventUseCase,
                 megaHandleUseCase: megaHandleUseCase,
                 callController: callController,
+                passcodeManager: passcodeManager,
                 tracker: tracker
             )
         }
@@ -75,10 +77,11 @@ final class MeetingContainerViewModelTests: XCTestCase {
         XCTAssert(harness.callController.endCall_CalledTimes == 1)
     }
     
-    @MainActor func testAction_backButtonTap() {
+    @MainActor func testAction_backButtonTap_shouldDismissAndShowPasscodeIfNeeded() {
         let harness = Harness(chatRoom: .moderatorMeeting)
         test(viewModel: harness.sut, action: .tapOnBackButton, expectedCommands: [])
         XCTAssert(harness.router.dismiss_calledTimes == 1)
+        XCTAssert(harness.passcodeManager.showPassCodeIfNeeded_CalledTimes == 1)
     }
     
     @MainActor func testAction_ChangeMenuVisibility() {
@@ -328,6 +331,18 @@ final class MeetingContainerViewModelTests: XCTestCase {
         harness.callUpdateUseCase.sendCallUpdate(.tooManyParticipants)
         evaluate {
             harness.router.dismiss_calledTimes == 1
+        }
+    }
+    
+    @MainActor func testTerminatingUserParticipationUpdate_shouldDismissCallAndShowPasscodeIfNeeded() {
+        let harness = Harness(
+            callUseCase: MockCallUseCase(call: CallEntity(status: .inProgress, changeType: .status, numberOfParticipants: 1, participants: [100]))
+        )
+        
+        harness.callUpdateUseCase.sendCallUpdate(CallEntity(status: .terminatingUserParticipation, changeType: .status, numberOfParticipants: 1, participants: [100]))
+        evaluate {
+            harness.router.dismiss_calledTimes == 1 && 
+            harness.passcodeManager.showPassCodeIfNeeded_CalledTimes == 1
         }
     }
     

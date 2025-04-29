@@ -1,20 +1,14 @@
 @testable import MEGA
 
 final class MockPasscodeManager: PasscodeManagerProtocol {
-    var shouldPresentPasscodeViewLater_CalledTimes = 0
-    var closePasscodeView_CalledTimes = 0
-    var disablePasscodeWhenApplicationEntersBackground_CalledTimes = 0
-
-    func shouldPresentPasscodeViewLater() -> Bool {
-        shouldPresentPasscodeViewLater_CalledTimes += 1
-        return true
+    var disablePassCodeIfNeeded_CalledTimes = 0
+    var showPassCodeIfNeeded_CalledTimes = 0
+    
+    func disablePassCodeIfNeeded() {
+        disablePassCodeIfNeeded_CalledTimes += 1
     }
     
-    func closePasscodeView() {
-        closePasscodeView_CalledTimes += 1
-    }
-    
-    func disablePasscodeWhenApplicationEntersBackground() {
-        disablePasscodeWhenApplicationEntersBackground_CalledTimes += 1
+    func showPassCodeIfNeeded() {
+        showPassCodeIfNeeded_CalledTimes += 1
     }
 }

@@ -37,10 +37,7 @@ final class MEGACallController: CallControllerProtocol {
         MEGALogDebug("[MEGACallController]: Call started")
         callsManager.addCall(actionSync, withUUID: startCallUUID)
         Task { @MainActor in
-            let success = await callsCoordinator.startCall(actionSync)
-            if success {
-                callsCoordinator.disablePassCodeIfNeeded()
-            }
+            await callsCoordinator.startCall(actionSync)
         }
     }
     
@@ -51,10 +48,7 @@ final class MEGACallController: CallControllerProtocol {
         callsManager.addCall(CallActionSync(chatRoom: chatRoom, audioEnabled: true), withUUID: uuidForAnswerCall)
         guard let callActionSync = callsManager.call(forUUID: uuidForAnswerCall) else { return }
         Task { @MainActor in
-            let success = await callsCoordinator.answerCall(callActionSync)
-            if success {
-                callsCoordinator.disablePassCodeIfNeeded()
-            }
+            await callsCoordinator.answerCall(callActionSync)
         }
     }
     

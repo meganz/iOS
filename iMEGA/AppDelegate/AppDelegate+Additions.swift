@@ -725,7 +725,6 @@ extension AppDelegate {
             captureDeviceUseCase: CaptureDeviceUseCase(repo: CaptureDeviceRepository()),
             audioSessionUseCase: AudioSessionUseCase(audioSessionRepository: AudioSessionRepository.newRepo),
             callsManager: CallsManager.shared,
-            passcodeManager: PasscodeManager(),
             uuidFactory: { UUID() }
         )
         self.callsCoordinator = callsCoordinator

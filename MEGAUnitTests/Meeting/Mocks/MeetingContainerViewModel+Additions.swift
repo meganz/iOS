@@ -21,6 +21,7 @@ extension MeetingContainerViewModel {
         analyticsEventUseCase: some AnalyticsEventUseCaseProtocol =  MockAnalyticsEventUseCase(),
         megaHandleUseCase: some MEGAHandleUseCaseProtocol = MockMEGAHandleUseCase(),
         callController: some CallControllerProtocol = MockCallController(),
+        passcodeManager: some PasscodeManagerProtocol = MockPasscodeManager(),
         tracker: some AnalyticsTracking = MockTracker(),
         isTesting: Bool = true
     ) {
@@ -38,6 +39,7 @@ extension MeetingContainerViewModel {
             analyticsEventUseCase: analyticsEventUseCase,
             megaHandleUseCase: megaHandleUseCase,
             callController: callController,
+            passcodeManager: passcodeManager,
             tracker: tracker
         )
     }

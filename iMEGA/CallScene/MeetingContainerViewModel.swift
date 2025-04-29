@@ -79,6 +79,7 @@ final class MeetingContainerViewModel: ViewModelType {
     private let noUserJoinedUseCase: any MeetingNoUserJoinedUseCaseProtocol
     private let analyticsEventUseCase: any AnalyticsEventUseCaseProtocol
     private let megaHandleUseCase: any MEGAHandleUseCaseProtocol
+    private let passcodeManager: any PasscodeManagerProtocol
     private let callController: any CallControllerProtocol
     private let tracker: any AnalyticsTracking
     
@@ -110,6 +111,7 @@ final class MeetingContainerViewModel: ViewModelType {
         analyticsEventUseCase: some AnalyticsEventUseCaseProtocol,
         megaHandleUseCase: some MEGAHandleUseCaseProtocol,
         callController: some CallControllerProtocol,
+        passcodeManager: some PasscodeManagerProtocol,
         tracker: some AnalyticsTracking = DIContainer.tracker
     ) {
         self.router = router
@@ -125,6 +127,7 @@ final class MeetingContainerViewModel: ViewModelType {
         self.analyticsEventUseCase = analyticsEventUseCase
         self.megaHandleUseCase = megaHandleUseCase
         self.callController = callController
+        self.passcodeManager = passcodeManager
         self.tracker = tracker
         
         subscribeToSeeWaitingRoomListNotification()
@@ -163,7 +166,9 @@ final class MeetingContainerViewModel: ViewModelType {
         case .hangCall(let presenter, let sender):
             hangCall(presenter: presenter, sender: sender)
         case .tapOnBackButton:
-            router.dismiss(animated: true, completion: nil)
+            router.dismiss(animated: true) { [weak self] in
+                self?.passcodeManager.showPassCodeIfNeeded()
+            }
         case .changeMenuVisibility:
             router.toggleFloatingPanel(containerViewModel: self)
         case .showOptionsMenu(let presenter, let sender, let isMyselfModerator):
@@ -456,8 +461,9 @@ final class MeetingContainerViewModel: ViewModelType {
     private func manageCallTerminatedErrorIfNeeded(_ call: CallEntity) {
         switch call.termCodeType {
         case .tooManyParticipants:
-            hangAndDismissCall {
+            hangAndDismissCall { [weak self] in
                 SVProgressHUD.showError(withStatus: Strings.Localizable.Error.noMoreParticipantsAreAllowedInThisGroupCall)
+                self?.passcodeManager.showPassCodeIfNeeded()
             }
         case .protocolVersion:
             hangCall()
@@ -475,10 +481,16 @@ final class MeetingContainerViewModel: ViewModelType {
                 tracker.trackAnalyticsEvent(with: UpgradeToProToGetUnlimitedCallsDialogEvent())
                 router.showUpgradeToProDialog(accountDetails)
             } else {
-                hangAndDismissCall(completion: nil)
+                hangAndDismissCall { [weak self] in
+                    self?.passcodeManager.showPassCodeIfNeeded()
+                }
             }
         default:
-            router.dismiss(animated: true, completion: nil)
+            router.dismiss(animated: true) { [weak self] in
+                if call.status == .terminatingUserParticipation {
+                    self?.passcodeManager.showPassCodeIfNeeded()
+                }
+            }
         }
     }
     

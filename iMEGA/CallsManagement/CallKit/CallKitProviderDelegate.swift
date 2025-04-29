@@ -201,7 +201,6 @@ final class CallKitProviderDelegate: NSObject, CallKitProviderDelegateProtocol, 
     // MARK: - Private
     @MainActor private func manageActionSuccess(_ action: CXAction, success: Bool) {
         if success {
-            callsCoordinator?.disablePassCodeIfNeeded()
             action.fulfill()
         } else {
             action.fail()

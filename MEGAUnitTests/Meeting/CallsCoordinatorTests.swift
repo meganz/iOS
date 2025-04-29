@@ -38,7 +38,6 @@ final class CallsCoordinatorTests: XCTestCase {
                 captureDeviceUseCase: MockCaptureDeviceUseCase(),
                 audioSessionUseCase: audioSessionUseCase,
                 callsManager: callsManager,
-                passcodeManager: MockPasscodeManager(),
                 uuidFactory: { .testUUID }
             )
         }

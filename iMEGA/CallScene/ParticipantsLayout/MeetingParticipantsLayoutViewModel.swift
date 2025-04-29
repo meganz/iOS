@@ -186,7 +186,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     private let callUpdateUseCase: any CallUpdateUseCaseProtocol
     private let sessionUpdateUseCase: any SessionUpdateUseCaseProtocol
     private let chatRoomUpdateUseCase: any ChatRoomUpdateUseCaseProtocol
-    
+    private let passcodeManager: any PasscodeManagerProtocol
     private let callController: any CallControllerProtocol
     private let featureFlagProvider: any FeatureFlagProviderProtocol
     private let timerSequence: any TimerSequenceProtocol
@@ -241,6 +241,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         callUpdateUseCase: some CallUpdateUseCaseProtocol,
         sessionUpdateUseCase: some SessionUpdateUseCaseProtocol,
         chatRoomUpdateUseCase: some ChatRoomUpdateUseCaseProtocol,
+        passcodeManager: some PasscodeManagerProtocol,
         callController: some CallControllerProtocol,
         featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider,
         timerSequence: some TimerSequenceProtocol,
@@ -266,6 +267,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         self.callUpdateUseCase = callUpdateUseCase
         self.sessionUpdateUseCase = sessionUpdateUseCase
         self.chatRoomUpdateUseCase = chatRoomUpdateUseCase
+        self.passcodeManager = passcodeManager
         self.callController = callController
         self.featureFlagProvider = featureFlagProvider
         self.timerSequence = timerSequence
@@ -595,6 +597,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
             invokeCommand?(.configLocalUserView(position: isBackCameraSelected() ? .back : .front))
             invokeCommand?(.updateLocalRaisedHandHidden(call.raiseHandsList.notContains(chatUseCase.myUserHandle())))
             showCallWillEndNotificationIfNeeded()
+            passcodeManager.disablePassCodeIfNeeded()
         case .tapOnView(let onParticipantsView):
             if onParticipantsView && layoutMode == .speaker && !callParticipants.isEmpty {
                 return
