@@ -98,23 +98,30 @@ struct PermissionOnboardingView: View {
         }
     }
 
+    @ViewBuilder
     private var auxiliaryView: some View {
-        HStack(spacing: 0) {
-            Image(.info)
-                .foregroundColor(TokenColors.Support.info.swiftUI)
-                .frame(width: 20, height: 20)
-                .padding()
-            if let note = viewModel.note {
-                Text(.init(note)) // This `init` is needed for markdown to work.
-                    .font(.subheadline)
-                    .foregroundStyle(TokenColors.Text.primary.swiftUI)
+        if let note = viewModel.note {
+            HStack(spacing: 0) {
+                Image(.info)
+                    .renderingMode(.template)
+                    .foregroundColor(TokenColors.Support.info.swiftUI)
+                    .frame(width: 20, height: 20)
+                    .padding()
+                AttributedTextView(
+                    stringAttribute: .init(text: note.removeAllLocalizationTags(), font: .subheadline, foregroundColor: TokenColors.Text.primary.swiftUI),
+                    substringAttributeList: [
+                        .init(text: note.getLocalizationSubstring(tag: "B"),
+                              font: .subheadline.weight(.bold)
+                             )
+                    ]
+                )
                     .padding(.trailing, TokenSpacing._4)
             }
+            .padding(.vertical, TokenSpacing._4)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .background(TokenColors.Notifications.notificationInfo.swiftUI)
+            .clipShape(RoundedRectangle(cornerRadius: TokenRadius.medium))
         }
-        .padding(.vertical, TokenSpacing._4)
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .background(TokenColors.Notifications.notificationInfo.swiftUI)
-        .clipShape(RoundedRectangle(cornerRadius: TokenRadius.medium))
     }
 
     private var primaryButton: MEGAButton {
