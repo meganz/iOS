@@ -338,7 +338,7 @@ import MEGADomain
             
             miniPlayerVC = nil
             
-            showMiniPlayer()
+            miniPlayerRouter?.start()
         }
         
         guard (presenter as? any AudioPlayerPresenterProtocol) == nil else {
