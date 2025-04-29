@@ -42,7 +42,6 @@ final class MiniPlayerViewModel: ViewModelType {
     private let offlineInfoUseCase: (any OfflineFileInfoUseCaseProtocol)?
     private let playbackContinuationUseCase: any PlaybackContinuationUseCaseProtocol
     private let audioPlayerUseCase: any AudioPlayerUseCaseProtocol
-    private let sdk: MEGASdk
     
     private var subscriptions = Set<AnyCancellable>()
     
@@ -52,12 +51,11 @@ final class MiniPlayerViewModel: ViewModelType {
     // MARK: - Init
     init(configEntity: AudioPlayerConfigEntity,
          router: some MiniPlayerViewRouting,
-         nodeInfoUseCase: (any NodeInfoUseCaseProtocol)?,
-         streamingInfoUseCase: (any StreamingInfoUseCaseProtocol)?,
-         offlineInfoUseCase: (any OfflineFileInfoUseCaseProtocol)?,
-         playbackContinuationUseCase: any PlaybackContinuationUseCaseProtocol,
-         audioPlayerUseCase: some AudioPlayerUseCaseProtocol,
-         sdk: MEGASdk = .shared
+         nodeInfoUseCase: (some NodeInfoUseCaseProtocol)?,
+         streamingInfoUseCase: (some StreamingInfoUseCaseProtocol)?,
+         offlineInfoUseCase: (some OfflineFileInfoUseCaseProtocol)?,
+         playbackContinuationUseCase: some PlaybackContinuationUseCaseProtocol,
+         audioPlayerUseCase: some AudioPlayerUseCaseProtocol
     ) {
         self.configEntity = configEntity
         self.router = router
@@ -66,7 +64,6 @@ final class MiniPlayerViewModel: ViewModelType {
         self.offlineInfoUseCase = offlineInfoUseCase
         self.playbackContinuationUseCase = playbackContinuationUseCase
         self.audioPlayerUseCase = audioPlayerUseCase
-        self.sdk = sdk
         self.shouldInitializePlayer = configEntity.shouldResetPlayer
         
         self.setupUpdateItemSubscription()

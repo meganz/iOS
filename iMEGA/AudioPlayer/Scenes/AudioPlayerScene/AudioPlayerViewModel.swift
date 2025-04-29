@@ -111,7 +111,6 @@ final class AudioPlayerViewModel: ViewModelType {
     private let networkMonitorUseCase: any NetworkMonitorUseCaseProtocol
     private let tracker: any AnalyticsTracking
     
-    private let sdk: MEGASdk
     private var repeatItemsState: RepeatMode {
         didSet {
             invokeCommand?(.updateRepeat(status: repeatItemsState))
@@ -152,14 +151,13 @@ final class AudioPlayerViewModel: ViewModelType {
     // MARK: - Init
     init(configEntity: AudioPlayerConfigEntity,
          router: some AudioPlayerViewRouting,
-         nodeInfoUseCase: (any NodeInfoUseCaseProtocol)? = nil,
-         streamingInfoUseCase: (any StreamingInfoUseCaseProtocol)? = nil,
-         offlineInfoUseCase: (any OfflineFileInfoUseCaseProtocol)? = nil,
-         playbackContinuationUseCase: any PlaybackContinuationUseCaseProtocol,
+         nodeInfoUseCase: (some NodeInfoUseCaseProtocol)? = nil,
+         streamingInfoUseCase: (some StreamingInfoUseCaseProtocol)? = nil,
+         offlineInfoUseCase: (some OfflineFileInfoUseCaseProtocol)? = nil,
+         playbackContinuationUseCase: some PlaybackContinuationUseCaseProtocol,
          audioPlayerUseCase: some AudioPlayerUseCaseProtocol,
          accountUseCase: some AccountUseCaseProtocol,
-         networkMonitorUseCase: any NetworkMonitorUseCaseProtocol,
-         sdk: MEGASdk = MEGASdk.shared,
+         networkMonitorUseCase: some NetworkMonitorUseCaseProtocol,
          tracker: some AnalyticsTracking
     ) {
         self.configEntity = configEntity
@@ -173,7 +171,6 @@ final class AudioPlayerViewModel: ViewModelType {
         self.networkMonitorUseCase = networkMonitorUseCase
         self.repeatItemsState = configEntity.playerHandler.currentRepeatMode()
         self.speedModeState = configEntity.playerHandler.currentSpeedMode()
-        self.sdk = sdk
         self.tracker = tracker
         
         self.setupUpdateItemSubscription()

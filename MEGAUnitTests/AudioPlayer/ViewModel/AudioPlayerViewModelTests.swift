@@ -527,11 +527,11 @@ final class AudioPlayerViewModelTests: XCTestCase {
     private func makeSUT(
         configEntity: AudioPlayerConfigEntity,
         tracker: some AnalyticsTracking = MockTracker(),
-        nodeInfoUseCase: (any NodeInfoUseCaseProtocol)? = nil,
-        streamingInfoUseCase: (any StreamingInfoUseCaseProtocol)? = nil,
-        offlineInfoUseCase: (any OfflineFileInfoUseCaseProtocol)? = nil,
-        accountUseCase: any AccountUseCaseProtocol = MockAccountUseCase(),
-        networkMonitorUseCase: any NetworkMonitorUseCaseProtocol = MockNetworkMonitorUseCase(),
+        nodeInfoUseCase: (some NodeInfoUseCaseProtocol)? = MockNodeInfoUseCase(),
+        streamingInfoUseCase: (some StreamingInfoUseCaseProtocol)? = MockStreamingInfoUseCase(),
+        offlineInfoUseCase: (some OfflineFileInfoUseCaseProtocol)? = OfflineFileInfoUseCase(),
+        accountUseCase: some AccountUseCaseProtocol = MockAccountUseCase(),
+        networkMonitorUseCase: some NetworkMonitorUseCaseProtocol = MockNetworkMonitorUseCase(),
         file: StaticString = #filePath,
         line: UInt = #line
     ) -> (sut: AudioPlayerViewModel, playbackContinuationUseCase: MockPlaybackContinuationUseCase, router: MockAudioPlayerViewRouter) {
