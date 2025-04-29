@@ -440,11 +440,12 @@ import MEGADomain
             miniPlayerRouter?.start()
             return
         }
-        let currentMiniPlayerHandler = miniPlayerHandlerListenerManager.listeners.last
-        if currentMiniPlayerHandler?.containsMiniPlayerInstance() == true {
-            currentMiniPlayerHandler?.showMiniPlayer()
+        guard let currentMiniPlayerHandler = miniPlayerHandlerListenerManager.listeners.last else { return }
+        
+        if currentMiniPlayerHandler.containsMiniPlayerInstance() {
+            currentMiniPlayerHandler.showMiniPlayer()
         } else {
-            currentMiniPlayerHandler?.presentMiniPlayer(miniPlayerVC)
+            currentMiniPlayerHandler.presentMiniPlayer(miniPlayerVC)
         }
     }
     
