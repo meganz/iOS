@@ -107,12 +107,6 @@
     
     [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
         [self.tableView reloadEmptyDataSet];
-        if (self.searchController.isActive) {
-            float yCorrection = self.selectorView.hidden ? 0 : 44;
-            
-            self.searchController.view.frame = CGRectMake(0, self.view.safeAreaInsets.top + yCorrection, self.searchController.view.frame.size.width, self.searchController.view.frame.size.height);
-            self.searchController.searchBar.superview.frame = CGRectMake(0, 0, self.searchController.searchBar.superview.frame.size.width, self.searchController.searchBar.superview.frame.size.height);
-        }
     } completion:nil];
 }
 
@@ -410,7 +404,6 @@
     self.searchController.hidesNavigationBarDuringPresentation = NO;
     self.searchController.delegate = self;
     [self addSearchBar];
-    self.definesPresentationContext = YES;
 }
 
 - (MEGANode *)nodeAtIndexPath:(NSIndexPath *)indexPath {
@@ -780,13 +773,6 @@
 - (void)updateSearchResultsForSearchController:(UISearchController *)searchController {
     NSString *searchString = searchController.searchBar.text;
     [self updateSearchResultsWithSearchString:searchString];
-}
-
-#pragma mark - UISearchControllerDelegate
-
-- (void)didPresentSearchController:(UISearchController *)searchController {
-    float yPosition = self.selectorView.hidden ? 0 : self.selectorViewHeightConstraint.constant;
-    self.searchController.searchBar.superview.frame = CGRectMake(0, yPosition, self.searchController.searchBar.superview.frame.size.width, self.searchController.searchBar.superview.frame.size.height);
 }
 
 #pragma mark - UIAdaptivePresentationControllerDelegate
