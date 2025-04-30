@@ -90,7 +90,7 @@ import MEGADomain
         tracks: [AudioPlayerItem]
     ) {
         if self.player != nil {
-            player?.close { [weak self] in
+            self.player?.close { [weak self] in
                 MEGALogDebug("[AudioPlayer] closing current player before assign new instance")
                 self?.player = nil
                 self?.configure(player: player, autoPlayEnabled: autoPlayEnabled, tracks: tracks)
