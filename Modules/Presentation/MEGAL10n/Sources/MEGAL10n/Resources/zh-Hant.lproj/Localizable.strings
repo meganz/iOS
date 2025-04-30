@@ -2559,7 +2559,7 @@
 /* Title of Over Disk Quota dialog */
 "dialog.storage.odq.title"="請升級";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. @% is placeholder. */
-"dialog.storage.almostFull.detail"="您的雲端硬碟幾乎快滿了。立即升級至Pro帳戶並獲得高達%@ TB（%@ GB）的雲端儲存空間。";
+"dialog.storage.almostFull.detail"="Your Cloud drive is almost full. Upgrade now and get up to %@ TB of cloud storage space.";
 /* Over Disk Quota detail message informing the user that they've reached the full capacity of their accounts. */
 "dialog.storage.odq.detail"="您的雲端空間已滿。請升級至MEGA Pro方案以增加您的儲存空間並享有額外的好處。如果您仍然超出您的空間限制而且沒有升級至Pro方案或刪除一些資料，您的帳戶可能會被封鎖。請查看我們發送給您的電子郵件瞭解更多訊息。";
 /* Over Disk Quota paywall not final title. */
@@ -3381,7 +3381,7 @@
 /* Alert title shown for video with options to resume playing the video or start from the beginning */
 "video.alert.resumeVideo.title"="繼續播放？";
 /* Alert message shown for video with options to resume playing the video or start from the beginning. %1$s will be replaced by name of the video. %2$s will be replaced by video timestamp */
-"video.alert.resumeVideo.message"="“%1$s” will resume from %2$s";
+"video.alert.resumeVideo.message"="「%1$s」將從%2$s繼續播放";
 /* Alert button title that will resume playing the video */
 "video.alert.resumeVideo.button.resume"="恢復";
 /* Alert button title that will start playing the video from the beginning */
@@ -4587,7 +4587,7 @@
 /* Hidden files and folders onboarding content item two title */
 "onboarding.hiddenFilesAndFolders.content.item.two.title"="輕鬆控制可見性";
 /* Hidden files and folders onboarding content item two message */
-"onboarding.hiddenFilesAndFolders.content.item.two.message"="若要顯示隱藏檔案，請在應用程式設定中的「檔案管理-->使用者介面」下開啟「顯示隱藏項目」設定。";
+"onboarding.hiddenFilesAndFolders.content.item.two.message"="To show hidden files, turn on the “Show hidden items” setting under “File Management” -> “User interface” in your app settings.";
 /* Hidden files and folders onboarding content item three title */
 "onboarding.hiddenFilesAndFolders.content.item.three.title"="共享檔案保持可見狀態";
 /* Hidden files and folders onboarding content item three message */
@@ -4598,3 +4598,37 @@
 "chat.messages.noteToSelf.header.title"="自我保存的私隱";
 /* Description text for note to self chat messages view header, at the top of the chat room */
 "chat.messages.noteToSelf.header.description"="存放圖片、重要資訊或重要創意的私人空間。始終保持同步，並受到零知識加密的保護。";
+/* Onboarding USP carousel first page title */
+"onboarding.uniqueSellingProposition.carousel.page.first.title"="您握有金鑰";
+/* Onboarding USP carousel first page subtitle */
+"onboarding.uniqueSellingProposition.carousel.page.first.subtitle"="使用者控制的零知識加密意味著沒有人可以看到您的資料，除非您想讓他們看到，否則連我們也無法看到您的資料。";
+/* Onboarding USP carousel second page title */
+"onboarding.uniqueSellingProposition.carousel.page.second.title"="時時刻刻保持安全";
+/* Onboarding USP carousel second page subtitle */
+"onboarding.uniqueSellingProposition.carousel.page.second.subtitle"="透過自動相機上傳到MEGA雲端和充足的儲存空間，您永遠不會失去寶貴的回憶";
+/* Onboarding USP carousel third page title */
+"onboarding.uniqueSellingProposition.carousel.page.third.title"="您的資料與空間。";
+/* Onboarding USP carousel third page subtitle */
+"onboarding.uniqueSellingProposition.carousel.page.third.subtitle"="充足的儲存空間和簡單易用的傳輸、共享和檔案整理方式意味著您可以安全地使用MEGA進行任何選擇操作";
+/* Onboarding USP carousel fourth page title */
+"onboarding.uniqueSellingProposition.carousel.page.fourth.title"="具隱私的對談";
+/* Onboarding USP carousel fourth page subtitle */
+"onboarding.uniqueSellingProposition.carousel.page.fourth.subtitle"="與朋友和家人聊天，分享照片或敏感資訊，視訊通話，和安排會議。保證安全和隱私。";
+/* Onboarding Notification CTA title */
+"onboarding.cta.notifications.title"="不要錯過重要更新";
+/* Onboarding Notification CTA description */
+"onboarding.cta.notifications.explanation"="Stay informed with real-time updates that matter to you. Get alerts for shared folder activity, security updates, and exclusive offers, so you never miss anything important.\n\nYou can manage notification preferences at any time in the settings.";
+/* Onboarding Notification CTA *Enable* button */
+"onboarding.cta.notifications.buttons.enable"="啟用通知";
+/* Onboarding Notification CTA *Skip* button */
+"onboarding.cta.notifications.buttons.skip"="暫時跳過";
+/* Onboarding Camera Backups CTA title */
+"onboarding.cta.cameraBackups.title"="始終確保照片的安全";
+/* Onboarding Camera Backups CTA description */
+"onboarding.cta.cameraBackups.explanation"="Your memories matter\n\nCamera uploads automatically backs up your photos and videos to your MEGA Cloud drive, so you never have to worry about losing them";
+/* Onboarding Camera Backups CTA note */
+"onboarding.cta.cameraBackups.note"="Camera uploads requires [B]full access[/B] to your device’s photo library";
+/* Onboarding Camera Backups CTA *Enable* button */
+"onboarding.cta.cameraBackups.buttons.enable"="啟用相機上傳";
+/* Onboarding Camera Backups CTA *Skip* button */
+"onboarding.cta.cameraBackups.buttons.skip"="暫時跳過";

@@ -2728,10 +2728,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Although we have contacted you by email on [date], your storage is still full. You have %d file taking up [storageSpace] in your Cloud drive, and your account has been locked. Upgrade to a [plan] plan to increase your storage and unlock your account. If you don’t take action soon, your data will be deleted. Upgrade now to protect your file. [A]Learn more about your storage limits[/A]. </string>
         <key>other</key>
-        <string>Although we have contacted you by email on [date], your storage is still full. You have %d files taking up [storageSpace] in your Cloud drive, and your account has been locked. Upgrade to a [plan] plan to increase your storage and unlock your account. If you don’t take action soon, your data will be deleted. Upgrade now to protect your files. [A]Learn more about your storage limits[/A]. </string>
+        <string>แม้ว่าเราจะติดต่อคุณทางอีเมลเมื่อวันที่ [date] แล้วก็ตาม แต่พื้นที่เก็บข้อมูลของคุณยังคงเต็ม คุณมีไฟล์จำนวน %d ไฟล์ที่ใช้พื้นที่ [storageSpace] ในคลาวด์ไดรฟ์ของคุณ และบัญชีของคุณถูกล็อกแล้ว อัปเกรดเป็นแผน [plan] เพื่อเพิ่มพื้นที่เก็บข้อมูลและปลดล็อกบัญชีของคุณ หากคุณไม่ดำเนินการในเร็ว ๆ นี้ ข้อมูลของคุณจะถูกลบ อัปเกรดตอนนี้เพื่อปกป้องไฟล์ของคุณ [A]เรียนรู้เพิ่มเติมเกี่ยวกับขีดจำกัดพื้นที่เก็บข้อมูลของคุณ[/A]</string>
       </dict>
     </dict>
     <key>overDiskQuota.paywall.notFinalWarning.multipleEmailsSent.message</key>
@@ -2744,10 +2742,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Although we have contacted you multiple times by email, your storage is still full. You have %d file taking up [storageSpace] in your Cloud drive, and your account has been locked. Upgrade to a [plan] plan to increase your storage and unlock your account. If you don’t take action soon, your data will be deleted. Upgrade now to protect your file. [A]Learn more about your storage limits[/A]. </string>
         <key>other</key>
-        <string>Although we have contacted you multiple times by email, your storage is still full. You have %d files taking up [storageSpace] in your Cloud drive, and your account has been locked. Upgrade to a [plan] plan to increase your storage and unlock your account. If you don’t take action soon, your data will be deleted. Upgrade now to protect your files. [A]Learn more about your storage limits[/A]. </string>
+        <string>แม้ว่าเราจะติดต่อคุณทางอีเมลหลายครั้งแล้วก็ตาม แต่พื้นที่เก็บข้อมูลของคุณยังคงเต็ม คุณมีไฟล์จำนวน %d ไฟล์ที่ใช้พื้นที่ [storageSpace] ในคลาวด์ไดรฟ์ของคุณ และบัญชีของคุณถูกล็อกแล้ว อัปเกรดเป็นแผน [plan] เพื่อเพิ่มพื้นที่เก็บข้อมูลและปลดล็อกบัญชีของคุณ หากคุณไม่ดำเนินการในเร็ว ๆ นี้ ข้อมูลของคุณจะถูกลบ อัปเกรดตอนนี้เพื่อปกป้องไฟล์ของคุณ [A]เรียนรู้เพิ่มเติมเกี่ยวกับขีดจำกัดพื้นที่เก็บข้อมูลของคุณ[/A]</string>
       </dict>
     </dict>
     <key>overDiskQuota.paywall.notFinalWarning.unknownTimesEmailWasSent.message</key>
@@ -2760,10 +2756,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Although we have contacted you by email, your storage is still full. You have %d file taking up [storageSpace] in your Cloud drive, and your account has been locked. Upgrade to a [plan] plan to increase your storage and unlock your account. If you don’t take action soon, your data will be deleted. Upgrade now to protect your file. [A]Learn more about your storage limits[/A]. </string>
         <key>other</key>
-        <string>Although we have contacted you by email, your storage is still full. You have %d files taking up [storageSpace] in your Cloud drive, and your account has been locked. Upgrade to a [plan] plan to increase your storage and unlock your account. If you don’t take action soon, your data will be deleted. Upgrade now to protect your files. [A]Learn more about your storage limits[/A].</string>
+        <string>แม้ว่าเราจะติดต่อคุณทางอีเมลแล้วก็ตาม แต่พื้นที่เก็บข้อมูลของคุณยังคงเต็ม คุณมีไฟล์จำนวน %d ไฟล์ที่ใช้พื้นที่ [storageSpace] ในคลาวด์ไดรฟ์ของคุณ และบัญชีของคุณถูกล็อกแล้ว อัปเกรดเป็นแผน [plan] เพื่อเพิ่มพื้นที่เก็บข้อมูลและปลดล็อกบัญชีของคุณ หากคุณไม่ดำเนินการในเร็ว ๆ นี้ ข้อมูลของคุณจะถูกลบ อัปเกรดตอนนี้เพื่อปกป้องไฟล์ของคุณ [A]เรียนรู้เพิ่มเติมเกี่ยวกับขีดจำกัดพื้นที่เก็บข้อมูลของคุณ[/A]</string>
       </dict>
     </dict>
     <key>settings.fileManagement.fileVersioning.enabledState.fileVersions</key>

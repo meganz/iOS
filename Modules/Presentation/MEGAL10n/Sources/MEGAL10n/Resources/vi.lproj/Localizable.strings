@@ -283,7 +283,7 @@
 /* Title shown when the there is not any transfer, and the filter "Upload" option is selected */
 "transfersEmptyState_titleUpload"="Không có phiên tải lên";
 /* Title of the Cloud Drive section */
-"cloudDrive"="Ổ Mây";
+"cloudDrive"="Ổ Mây";
 /* Text shown when one file has been selected to be downloaded but it's on the queue to be downloaded, it's pending for download */
 "queued"="Đang chờ";
 /* A label to indicate a paused state for a transfer item (upload/download). */
@@ -321,7 +321,7 @@
 /* Menu option from the `Add` section that allows the user to share contact. */
 "Contact"="Tên liên lạc";
 /* Menu option from the `Add` section that allows the user to Start Group. */
-"Start Group"="Bắt đầu nhóm chát";
+"Start Group"="Bắt đầu nhóm";
 /* Menu option from the `Add` section that allows the user to share Location */
 "chat.map.location"="Định vị";
 /* Error message shown when enabling geolocation failed */
@@ -417,9 +417,9 @@
 /* Footer shown in the Share Extension telling that a file can be renamed if tapped */
 "tapFileToRename"="Chạm vào tệp để đổi tên";
 /* Title for a button to send a file to a chat */
-"general.sendToChat"="Gửi đến chát";
+"general.sendToChat"="Gửi đến chat";
 /* Column header of my contacts/chats at copy dialog */
-"My chats"="Các cuộc chát";
+"My chats"="Các cuộc chat";
 /* Title show when a file is being downloaded */
 "downloading"="Đang tải xuống";
 /* Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them. */
@@ -479,7 +479,7 @@
 /* Button title that skips the current action */
 "skipButton"="Bỏ qua";
 /* Text shown to explain what means 'Enable Camera Uploads'. The 'Cloud Drive' is the MEGA section, so please keep consistency */
-"Automatically backup your photos and videos to the Cloud Drive."="Tự động hóa sao lưu các hình ảnh và videos lên Ổ Mây của bạn.";
+"Automatically backup your photos and videos to the Cloud Drive."="Tự động hóa sao lưu các hình ảnh và videos lên Ổ Mây của bạn.";
 /* Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA */
 "enableCameraUploadsButton"="Bật Đăng Tải Camêra";
 /* Success message shown when Camera Uploads has been enabled */
@@ -553,7 +553,7 @@
 /* Filter UI media location option */
 "cameraUploads.timeline.filter.location.allLocations"="Tất cả các vị trí";
 /* Filter UI media location option */
-"cameraUploads.timeline.filter.location.cloudDrive"="Ổ mây";
+"cameraUploads.timeline.filter.location.cloudDrive"="Ổ Mây";
 /* Filter UI media location option */
 "cameraUploads.timeline.filter.location.cameraUploads"="Đăng tải camêra";
 /* Filter UI remember preferences option */
@@ -647,7 +647,7 @@
 /* Permissions given to the user you share your folder with */
 "readOnly"="Chỉ-được-xem";
 /* Permissions given to the user you share your folder with */
-"readAndWrite"="Xem và Sửa";
+"readAndWrite"="Xem và ghi";
 /* Permissions given to the user you share your folder with */
 "fullAccess"="Toàn quyền";
 /* Title of the Settings section */
@@ -1203,7 +1203,7 @@
 /* Shows the error when the limit of reactions per user is reached and the user tries to add one more. Keep the placeholder because is to show limit number in runtime. */
 "You have reached the maximum limit of %d reactions."="Bạn đã đạt giới hạn bày tỏ tối đa %d cảm xúc.";
 /* Chat section header */
-"chat"="Chát";
+"chat"="Chat";
 /* Empty Conversations section */
 "noConversations"="Không có cuộc trò chuyện nào";
 /* Empty Conversations description */
@@ -1227,7 +1227,7 @@
 /* A log message in the chat conversation to tell the reader that a participant [A] changed group chat name to [B]. Please keep the [A] and '[B]' placeholders, they will be replaced at runtime. For example: Alice changed group chat name to 'MEGA'. */
 "changedGroupChatNameTo"="[A] đã thay đổi tên nhóm chat thành “[B]”";
 /* Button label. Allows to add contacts in current chat conversation. */
-"addParticipant"="Thêm thành viên…";
+"addParticipant"="Thêm người tham gia…";
 /* Menu item to add participants to a chat */
 "addParticipants"="Thêm thành viên";
 /* Title that refers to the status of the chat (Either Online or Offline) */
@@ -1269,7 +1269,7 @@
 /* Button title */
 "verified"="Đã xác thực";
 /* A button title to delete the history of a chat. */
-"clearChatHistory"="Dọn lịch sử chát";
+"clearChatHistory"="Dọn lịch sử chat";
 /* A confirmation message for a user to confirm that they want to clear the history of a chat. */
 "clearTheFullMessageHistory"="Bạn có chắc muốn dọn toàn bộ lịch sử các tin nhắn của cuộc trò chuyện này không?";
 /* Message show when the history of a chat has been successfully deleted. */
@@ -1289,7 +1289,7 @@
 /* start a chat/conversation */
 "startConversation"="Bắt đầu cuộc trò chuyện";
 /* Label title for a group chat */
-"groupChat"="Nhóm chát";
+"groupChat"="Nhóm chat";
 /* The title of a menu button which allows users to rename a group chat. */
 "renameGroup"="Đổi tên nhóm";
 /* A button label. The button allows the user to leave the group conversation. */
@@ -1317,9 +1317,9 @@
 /* The Standard permission level in chat. With the standard permissions a participant can read and type messages in a chat. */
 "standard"="Thường";
 /* A button title which removes a participant from a chat. */
-"removeParticipant"="Loại bỏ thành viên";
+"removeParticipant"="Loại bỏ người tham gia";
 /* Title show above the name of the persons with whom you're chatting */
-"chattingWith"="Đang chát với";
+"chattingWith"="Đang chat với";
 /* Explanation when loading voice message error */
 "Couldn't load. [RED]Tap to retry[/RED]"="Không tải được. [RED]Chạm để thử lại[/RED]";
 /* Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server. */
@@ -1345,7 +1345,7 @@
 /* Button which allows to delete message in chat conversation. */
 "deleteMessage"="Xóa tin nhắn";
 /*  */
-"fromCloudDrive"="Lấy từ Ổ Mây";
+"fromCloudDrive"="Từ Ổ Mây";
 /* A button label. The button sends contact information to a user in the conversation. */
 "sendContact"="Gửi tên liên lạc";
 /*  */
@@ -1801,7 +1801,7 @@
 /* Shown as an error message when the user selects "create chat link", but haven't entered a title for the newly created room */
 "To create a chat link you must name the group."="Để tạo ra liên kết tới chát, đặt tên cho nhóm trước.";
 /* Label shown in a cell where you can enable a switch to get a chat link */
-"Chat Link"="Liên kết vào chát";
+"Chat Link"="Đường liên kết chat";
 /* Button text in public chat previews that allows the user to join the chat */
 "Join"="Tham gia";
 /* Text shown in a notification to let the user know that has joined a public chat room after login or account creation */
@@ -1821,7 +1821,7 @@
 /* Message show when a user cannot activate the video in a group call because the max number of videos has been reached */
 "Error. No more video are allowed in this group call."="Không thể bật video cho cuộc gọi này được vì quá mức số lượng thành viên tham gia cuộc gọi đang sử dụng video.";
 /* Error shown when trying to start a call in a group with more peers than allowed */
-"Unable to start a call because the participants limit was exceeded."="Không thể bắt đầu cuộc gọi do vượt quá số lượng thành viên.";
+"Unable to start a call because the participants limit was exceeded."="Không thể bắt đầu cuộc gọi do vượt quá số lượng người tham gia.";
 /* Label shown while joining a public chat */
 "Joining..."="Đang tham gia chat…";
 /* Label shown while leaving a public chat */
@@ -2073,7 +2073,7 @@
 /* Chat Notifications DND: Remaining time left if until tomorrow */
 "Notifications will be silenced until tomorrow, %@"="Tất cả các thông báo sẽ im lặng cho đến ngày mai, %@";
 /* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
-"Chat Notifications"="Âm báo chát";
+"Chat Notifications"="Thông báo chat";
 /* Chat settings: This text appears with the Do Not Disturb switch */
 "Do Not Disturb"="Không làm phiền";
 /* Chat Notifications DND: Option that does not deactivate DND automatically */
@@ -2559,7 +2559,7 @@
 /* Title of Over Disk Quota dialog */
 "dialog.storage.odq.title"="Xin nâng cấp";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. @% is placeholder. */
-"dialog.storage.almostFull.detail"="Ổ Mây sắp hết chỗ trống. Nâng cấp ngay lện hạng Pro để nhận thêm tới %@ TB (%@ GB) cho không gian lưu trữ.";
+"dialog.storage.almostFull.detail"="Your Cloud drive is almost full. Upgrade now and get up to %@ TB of cloud storage space.";
 /* Over Disk Quota detail message informing the user that they've reached the full capacity of their accounts. */
 "dialog.storage.odq.detail"="Không gian lưu trữ của Ổ Mây đã bị đầy. Xin nâng cấp lên một hạng Pro để mở rộng lưu trữ và tận hưởng thêm nhiều tính năng cao cấp. Tài khoản sẽ bị khóa sau một khoảng thời vượt quá không gian lưu trữ và không nâng cấp quá lâu. Xin kiểm tra hộp thư email và xem thư chúng tôi đã gửi để biết thêm chi tiết.";
 /* Over Disk Quota paywall not final title. */
@@ -2627,7 +2627,7 @@
 /* Shown when an invalid/inexisting/not-available-anymore meeting link is opened. */
 "meetings.alert.end"="Cuộc họp đã chấm dứt";
 /* Meeting ended Alert button -- View Meeting Chat history. */
-"meetings.alert.meetingchat"="Xem lịch sử chát";
+"meetings.alert.meetingchat"="Xem lịch sử chat";
 /* Shown description when an invalid/inexisting/not-available-anymore meeting link is opened. */
 "meetings.alert.end.description"="Cuộc họp mặt bạn đang muốn tham gia đã kết thúc. Bạn vẫn có thể xem các tin nhắn của của họp trong lịch sử chát.";
 /* Contacts selection screen header: Invite contacts to meetings */
@@ -2881,7 +2881,7 @@
 /* File extension: .rar. Commercial names should be stay on English */
 "general.filetype.rar"="Tệp nén RAR";
 /* File extension: .rtf. Commercial names should be stay on English */
-"general.filetype.rtf"="Văn bản đa dạng";
+"general.filetype.rtf"="Văn bản giàu tính chất";
 /* File extension: .rw2. Commercial names should be stay on English */
 "general.filetype.rw2"="Ảnh RAW của Panasonic";
 /* File extension: .sh. Is not a commercial name. "shell" is a common noun */
@@ -3111,7 +3111,7 @@
 /* Description for empty chats tab */
 "chat.chats.emptyState.description"="Chát an toàn và riêng tư, với bất kỳ ai và bất kỳ thiết bị, và an tâm sẽ không có ai có thể đọc tin nhắn của bạn, ngay cả MEGA.";
 /* Text button for empty chats tab */
-"chat.chats.emptyState.button.title"="Cuộc chát mới";
+"chat.chats.emptyState.button.title"="Cuộc chat mới";
 /* Title for chats section */
 "chat.title"="Chat";
 /* A log message in a chat to display that a participant's permission was changed to read-only and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the person who did it. Please keep [A] and [B], they will be replaced at runtime. Text between [S] and [/S] will have heavier font weight. For example: Alice Jones was changed to read-only by John Smith. */
@@ -3211,7 +3211,7 @@
 /* The button title that allows the user to leave a ad hoc meeting. */
 "meetings.info.leaveMeeting"="Rời khỏi cuộc meeting";
 /* Title for chat notifications option in meeting info */
-"meetings.info.chatNotifications"="Âm báo chát";
+"meetings.info.chatNotifications"="Thông báo chat";
 /* Title for shared files option in meeting info */
 "meetings.info.sharedFiles"="Tệp tin đã chia sẻ";
 /* Title for manage chat history option in meeting info */
@@ -3221,7 +3221,7 @@
 /* Description for enable encryption key rotation option in meeting info */
 "meetings.info.keyRotation.description"="Luân phiên chìa khóa mã có an toàn hơn một chút, nhưng không cho phép bạn tạo liên kết chát và ẩn đi các tin nhắn cũ khỏi những người mới tham gia.";
 /* Title for a button to send a file to a chat */
-"meetings.info.shareOptions.sendToChat"="Gửi đến chát";
+"meetings.info.shareOptions.sendToChat"="Gửi đến chat";
 /* Title for share chat link option in meeting info */
 "meetings.info.shareChatLink"="Chia sẻ liên kết chát";
 /* Button title to load more participants in meeting info view */
@@ -3523,9 +3523,9 @@
 /* Device Center backup error: Couldn't communicate with folder location */
 "device.center.backup.error.communicateWithFolderLocation"="Không thể giao tiếp với vị trí thư mục. Kiểm tra xem vị trí có thể truy cập được hay không và quyền đi tới vị trí thư mục đã được cấp phép.";
 /* Show in Cloud Drive section action title */
-"device.center.show.in.cloud.drive.action.title"="Hiện vị trí trong Ổ Mây";
+"device.center.show.in.cloud.drive.action.title"="Hiện chỗ chứa trong Ổ Mây";
 /* Show in Backups section action title */
-"device.center.show.in.backups.action.title"="Hiện trong Sao lưu dự phòng";
+"device.center.show.in.backups.action.title"="Hiện chỗ chứa trong Sao lưu";
 /* Device Center rename device action title */
 "device.center.rename.device.title"="Tên thiết bị";
 /* Device Center rename device action duplicated name message */
@@ -3725,7 +3725,7 @@
 /* Change SFU server alert change button. */
 "settings.about.sfu.changeAlert.changeButton"="Thay đổi";
 /* Back button menu item title visible when navigating back to 1:1 chat  . */
-"chat.backButton.oneToOne.menu"="Chát với %@";
+"chat.backButton.oneToOne.menu"="Chat với %@";
 /* Schedule meeting waiting room setting title */
 "meetings.scheduleMeeting.waitingRoom"="Phòng chờ";
 /* Schedule meeting waiting room setting description */
@@ -3925,7 +3925,7 @@
 /* Camera uploads banner enable state title */
 "cameraUploads.banner.enableState.title"="Bật Đăng Tải Camêra";
 /* Camera uploads banner enable state description */
-"cameraUploads.banner.enableState.description"="Tự động hóa sao lưu các hình ảnh và videos lên Ổ Mây của bạn.";
+"cameraUploads.banner.enableState.description"="Tự động hóa sao lưu các hình ảnh và videos lên Ổ Mây của bạn.";
 /* In app notification description for Shared Items when user left a shared folder. [A] will be replaced by the user's email who left. [B] will be replaced by shared folder name. */
 "inapp.notifications.sharedItems.userLeftTheSharedFolder.message"="Người dùng [A] đã rời khỏi thư mục chia sẻ: [B]";
 /* Shared Screen label in the main view when one user is sharing screen */
@@ -4373,7 +4373,7 @@
 /* Label to inform user about privacy of sharing a chat link */
 "call.shareOptions.title"="Bất kỳ ai có đường liên kết này đều có thể tham gia cuộc họp và xem tin nhắn của cuộc họp.";
 /* Title for a button to send a chat link to a chat */
-"call.shareOptions.sendToChat"="Gửi đến chát";
+"call.shareOptions.sendToChat"="Gửi đến chat";
 /* Title for a button to copy a chat link */
 "call.shareOptions.copy"="Sao chép";
 /* Title for a button to share a chat link */
@@ -4407,7 +4407,7 @@
 /* Toast message shown to the user when the node description update failed. */
 "cloudDrive.nodeInfo.nodeDescription.savedState.error"="Lỗi cập nhật mô tả, thử lại";
 /* New chat page title */
-"chat.newChat.title"="Cuộc chát mới";
+"chat.newChat.title"="Cuộc chat mới";
 /* Visual media search history section title */
 "photos.searchHistory.section.title"="Đã tìm kiếm gần đây";
 /* Title of the invite contact page */
@@ -4587,7 +4587,7 @@
 /* Hidden files and folders onboarding content item two title */
 "onboarding.hiddenFilesAndFolders.content.item.two.title"="Kiểm soát chế độ hiển thị dễ dàng";
 /* Hidden files and folders onboarding content item two message */
-"onboarding.hiddenFilesAndFolders.content.item.two.message"="Để hiển thị các tệp tin bị ẩn, hãy bật “Hiển thị các mục ẩn” trong “Quản lý tệp tin -> Giao diện người dùng” trong phần thiết đặt ứng dụng của bạn.";
+"onboarding.hiddenFilesAndFolders.content.item.two.message"="To show hidden files, turn on the “Show hidden items” setting under “File Management” -> “User interface” in your app settings.";
 /* Hidden files and folders onboarding content item three title */
 "onboarding.hiddenFilesAndFolders.content.item.three.title"="Các tệp tin đã chia sẻ vẫn được hiển thị";
 /* Hidden files and folders onboarding content item three message */
@@ -4598,3 +4598,37 @@
 "chat.messages.noteToSelf.header.title"="Giữ mọi thứ cho riêng mình";
 /* Description text for note to self chat messages view header, at the top of the chat room */
 "chat.messages.noteToSelf.header.description"="Một không gian riêng cho hình ảnh, thông tin quan trọng hoặc ý tưởng lớn. Sẽ luôn được đồng bộ hóa và được bảo vệ bằng mã hóa vô kiến thức.";
+/* Onboarding USP carousel first page title */
+"onboarding.uniqueSellingProposition.carousel.page.first.title"="Chính bạn là người giữ chìa khóa";
+/* Onboarding USP carousel first page subtitle */
+"onboarding.uniqueSellingProposition.carousel.page.first.subtitle"="User controlled, zero-knowledge encryption means no one can see your data unless you want them to - not even us!";
+/* Onboarding USP carousel second page title */
+"onboarding.uniqueSellingProposition.carousel.page.second.title"="Giữ mọi khoảnh[w]khắc được an[w]toàn";
+/* Onboarding USP carousel second page subtitle */
+"onboarding.uniqueSellingProposition.carousel.page.second.subtitle"="Với tính năng tự động đăng tải camêra lên Ổ Mây MEGA và không gian lưu trữ rộng rãi, bạn sẽ không bao giờ mất một kỷ niệm quý giá nào hết";
+/* Onboarding USP carousel third page title */
+"onboarding.uniqueSellingProposition.carousel.page.third.title"="Dữ[w]liệu chính[w]chủ. Không[w]gian riêng[w]tư.";
+/* Onboarding USP carousel third page subtitle */
+"onboarding.uniqueSellingProposition.carousel.page.third.subtitle"="Ample storage and easy ways to transfer, share, and organise your files means you can safely use MEGA for whatever you choose";
+/* Onboarding USP carousel fourth page title */
+"onboarding.uniqueSellingProposition.carousel.page.fourth.title"="Trò chuyện riêng tư";
+/* Onboarding USP carousel fourth page subtitle */
+"onboarding.uniqueSellingProposition.carousel.page.fourth.subtitle"="Chat with friends and family, share photos or sensitive information, video call, and schedule meetings. Safety and privacy guaranteed.";
+/* Onboarding Notification CTA title */
+"onboarding.cta.notifications.title"="Never miss an important update";
+/* Onboarding Notification CTA description */
+"onboarding.cta.notifications.explanation"="Stay informed with real-time updates that matter to you. Get alerts for shared folder activity, security updates, and exclusive offers, so you never miss anything important.\n\nYou can manage notification preferences at any time in the settings.";
+/* Onboarding Notification CTA *Enable* button */
+"onboarding.cta.notifications.buttons.enable"="Bật thông báo";
+/* Onboarding Notification CTA *Skip* button */
+"onboarding.cta.notifications.buttons.skip"="Skip for now";
+/* Onboarding Camera Backups CTA title */
+"onboarding.cta.cameraBackups.title"="Keep your photos safe, always";
+/* Onboarding Camera Backups CTA description */
+"onboarding.cta.cameraBackups.explanation"="Your memories matter\n\nCamera uploads automatically backs up your photos and videos to your MEGA Cloud drive, so you never have to worry about losing them";
+/* Onboarding Camera Backups CTA note */
+"onboarding.cta.cameraBackups.note"="Camera uploads requires [B]full access[/B] to your device’s photo library";
+/* Onboarding Camera Backups CTA *Enable* button */
+"onboarding.cta.cameraBackups.buttons.enable"="Bật Đăng Tải Camêra";
+/* Onboarding Camera Backups CTA *Skip* button */
+"onboarding.cta.cameraBackups.buttons.skip"="Skip for now";

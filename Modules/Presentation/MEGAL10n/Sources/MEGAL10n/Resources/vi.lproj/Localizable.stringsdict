@@ -2435,7 +2435,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d thành viên</string>
+        <string>%d người tham gia</string>
       </dict>
     </dict>
     <key>general.format.itemsSelected</key>
@@ -2547,7 +2547,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d thành viên</string>
+        <string>%d người tham gia</string>
       </dict>
     </dict>
     <key>chat.info.notifications.mutedUntilTime</key>

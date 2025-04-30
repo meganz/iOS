@@ -2559,7 +2559,7 @@
 /* Title of Over Disk Quota dialog */
 "dialog.storage.odq.title"="Please upgrade";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. @% is placeholder. */
-"dialog.storage.almostFull.detail"="Your Cloud drive is almost full. Upgrade now to a Pro account and get up to %@ TB (%@ GB) of cloud storage space.";
+"dialog.storage.almostFull.detail"="Your Cloud drive is almost full. Upgrade now and get up to %@ TB of cloud storage space.";
 /* Over Disk Quota detail message informing the user that they've reached the full capacity of their accounts. */
 "dialog.storage.odq.detail"="Your Cloud storage is full. Please upgrade to a MEGA Pro plan to increase your storage space and enjoy additional benefits. If you remain over your storage limit and do not upgrade or delete some data your account may get locked. Please see the emails we sent you for more information.";
 /* Over Disk Quota paywall not final title. */
@@ -4587,7 +4587,7 @@
 /* Hidden files and folders onboarding content item two title */
 "onboarding.hiddenFilesAndFolders.content.item.two.title"="Control visibility easily";
 /* Hidden files and folders onboarding content item two message */
-"onboarding.hiddenFilesAndFolders.content.item.two.message"="To show hidden files, turn on the “Show hidden items” setting under “File Management --> User interface” in your app settings.";
+"onboarding.hiddenFilesAndFolders.content.item.two.message"="To show hidden files, turn on the “Show hidden items” setting under “File Management” -> “User interface” in your app settings.";
 /* Hidden files and folders onboarding content item three title */
 "onboarding.hiddenFilesAndFolders.content.item.three.title"="Shared files stay visible";
 /* Hidden files and folders onboarding content item three message */
@@ -4599,36 +4599,36 @@
 /* Description text for note to self chat messages view header, at the top of the chat room */
 "chat.messages.noteToSelf.header.description"="A private space for pictures, important information, or big ideas. Always synced, and protected with zero-knowledge encryption.";
 /* Onboarding USP carousel first page title */
-"onboarding.uniqueSellingProposition.carousel.page.first.title" = "You hold the keys";
+"onboarding.uniqueSellingProposition.carousel.page.first.title"="You hold the keys";
 /* Onboarding USP carousel first page subtitle */
-"onboarding.uniqueSellingProposition.carousel.page.first.subtitle" = "User controlled, zero-knowledge encryption means no one can see your data unless you want them to - not even us!";
+"onboarding.uniqueSellingProposition.carousel.page.first.subtitle"="User controlled, zero-knowledge encryption means no one can see your data unless you want them to - not even us!";
 /* Onboarding USP carousel second page title */
-"onboarding.uniqueSellingProposition.carousel.page.second.title" = "Keep every moment safe";
+"onboarding.uniqueSellingProposition.carousel.page.second.title"="Keep every moment safe";
 /* Onboarding USP carousel second page subtitle */
-"onboarding.uniqueSellingProposition.carousel.page.second.subtitle" = "With automatic camera uploads to MEGA Cloud, and generous storage, you’ll never lose a precious memory";
+"onboarding.uniqueSellingProposition.carousel.page.second.subtitle"="With automatic camera uploads to MEGA Cloud, and generous storage, you’ll never lose a precious memory";
 /* Onboarding USP carousel third page title */
-"onboarding.uniqueSellingProposition.carousel.page.third.title" = "Your data. Your space.";
+"onboarding.uniqueSellingProposition.carousel.page.third.title"="Your data. Your space.";
 /* Onboarding USP carousel third page subtitle */
-"onboarding.uniqueSellingProposition.carousel.page.third.subtitle" = "Ample storage and easy ways to transfer, share, and organise your files means you can safely use MEGA for whatever you choose";
+"onboarding.uniqueSellingProposition.carousel.page.third.subtitle"="Ample storage and easy ways to transfer, share, and organise your files means you can safely use MEGA for whatever you choose";
 /* Onboarding USP carousel fourth page title */
-"onboarding.uniqueSellingProposition.carousel.page.fourth.title" = "Say it in private";
+"onboarding.uniqueSellingProposition.carousel.page.fourth.title"="Say it in private";
 /* Onboarding USP carousel fourth page subtitle */
-"onboarding.uniqueSellingProposition.carousel.page.fourth.subtitle" = "Chat with friends and family, share photos or sensitive information, video call and schedule meetings. Safety and privacy guaranteed.";
+"onboarding.uniqueSellingProposition.carousel.page.fourth.subtitle"="Chat with friends and family, share photos or sensitive information, video call, and schedule meetings. Safety and privacy guaranteed.";
 /* Onboarding Notification CTA title */
-"onboarding.cta.notifications.title" = "Never miss an important update";
+"onboarding.cta.notifications.title"="Never miss an important update";
 /* Onboarding Notification CTA description */
-"onboarding.cta.notifications.explanation" = "Stay informed with real-time updates that matter to you. Get alerts for shared folder activity, security updates, and exclusive offers so you never miss anything important.\n\nYou can manage notification preferences at any time in your device settings.";
+"onboarding.cta.notifications.explanation"="Stay informed with real-time updates that matter to you. Get alerts for shared folder activity, security updates, and exclusive offers, so you never miss anything important.\n\nYou can manage notification preferences at any time in the settings.";
 /* Onboarding Notification CTA *Enable* button */
-"onboarding.cta.notifications.buttons.enable" = "Enable notifications";
+"onboarding.cta.notifications.buttons.enable"="Enable notifications";
 /* Onboarding Notification CTA *Skip* button */
-"onboarding.cta.notifications.buttons.skip" = "Skip for now";
+"onboarding.cta.notifications.buttons.skip"="Skip for now";
 /* Onboarding Camera Backups CTA title */
-"onboarding.cta.cameraBackups.title" = "Keep your photos safe, always";
+"onboarding.cta.cameraBackups.title"="Keep your photos safe, always";
 /* Onboarding Camera Backups CTA description */
-"onboarding.cta.cameraBackups.explanation" = "Your memories matter.\n\nCamera uploads automatically backs up your photos and videos to your MEGA cloud drive, so you never have to worry about losing them.";
+"onboarding.cta.cameraBackups.explanation"="Your memories matter\n\nCamera uploads automatically backs up your photos and videos to your MEGA Cloud drive, so you never have to worry about losing them";
 /* Onboarding Camera Backups CTA note */
-"onboarding.cta.cameraBackups.note" = "Automatic camera uploads requires [B]Full Access[/B] to your device photo library";
+"onboarding.cta.cameraBackups.note"="Camera uploads requires [B]full access[/B] to your device’s photo library";
 /* Onboarding Camera Backups CTA *Enable* button */
-"onboarding.cta.cameraBackups.buttons.enable" = "Enable camera uploads";
+"onboarding.cta.cameraBackups.buttons.enable"="Enable Camera uploads";
 /* Onboarding Camera Backups CTA *Skip* button */
-"onboarding.cta.cameraBackups.buttons.skip" = "Skip for now";
+"onboarding.cta.cameraBackups.buttons.skip"="Skip for now";

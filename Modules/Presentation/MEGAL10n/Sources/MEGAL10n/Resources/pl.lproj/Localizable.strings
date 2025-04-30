@@ -2559,7 +2559,7 @@
 /* Title of Over Disk Quota dialog */
 "dialog.storage.odq.title"="Wymagana zmiana";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. @% is placeholder. */
-"dialog.storage.almostFull.detail"="Twój dysk w chmurze jest prawie pełny. Uaktualnij teraz do konta Pro i uzyskaj do %@ TB (%@ GB) przestrzeni dyskowej w chmurze.";
+"dialog.storage.almostFull.detail"="Your Cloud drive is almost full. Upgrade now and get up to %@ TB of cloud storage space.";
 /* Over Disk Quota detail message informing the user that they've reached the full capacity of their accounts. */
 "dialog.storage.odq.detail"="Twoja pamięć masowa w chmurze jest pełna. Proszę uaktualnić do planu MEGA Pro, aby zwiększyć przestrzeń dyskową i cieszyć się dodatkowymi korzyściami. Jeśli nadal przekraczasz limit pamięci masowej i nie dokonasz aktualizacji lub nie usuniesz niektórych danych, Twoje konto może zostać zablokowane. Więcej informacji znajdziesz w e-mailu, który do Ciebie wysłaliśmy.";
 /* Over Disk Quota paywall not final title. */
@@ -4587,7 +4587,7 @@
 /* Hidden files and folders onboarding content item two title */
 "onboarding.hiddenFilesAndFolders.content.item.two.title"="Łatwe sterowanie widocznością";
 /* Hidden files and folders onboarding content item two message */
-"onboarding.hiddenFilesAndFolders.content.item.two.message"="Aby wyświetlić ukryte pliki, włącz ustawienie „Pokaż ukryte elementy” w sekcji „Zarządzanie plikami -> Interfejs użytkownika” w ustawienia aplikacja.";
+"onboarding.hiddenFilesAndFolders.content.item.two.message"="To show hidden files, turn on the “Show hidden items” setting under “File Management” -> “User interface” in your app settings.";
 /* Hidden files and folders onboarding content item three title */
 "onboarding.hiddenFilesAndFolders.content.item.three.title"="Pliki udostępnione pozostają widoczne";
 /* Hidden files and folders onboarding content item three message */
@@ -4598,3 +4598,37 @@
 "chat.messages.noteToSelf.header.title"="Zachowaj to dla siebie";
 /* Description text for note to self chat messages view header, at the top of the chat room */
 "chat.messages.noteToSelf.header.description"="Prywatna przestrzeń na zdjęcia, ważne informacje lub duże pomysły. Zawsze synchronizowany i chroniony szyfrowanie z zerową wiedzą.";
+/* Onboarding USP carousel first page title */
+"onboarding.uniqueSellingProposition.carousel.page.first.title"="Ty przechowujesz klucze";
+/* Onboarding USP carousel first page subtitle */
+"onboarding.uniqueSellingProposition.carousel.page.first.subtitle"="Kontrolowane przez użytkownika, szyfrowanie z zerową wiedzą oznacza, że nikt nie może zobaczyć Twoich danych, chyba że chcesz, nawet my!";
+/* Onboarding USP carousel second page title */
+"onboarding.uniqueSellingProposition.carousel.page.second.title"="Dbaj o bezpieczeństwo każdej chwili";
+/* Onboarding USP carousel second page subtitle */
+"onboarding.uniqueSellingProposition.carousel.page.second.subtitle"="Dzięki automatycznemu przesyłanie z kamery do MEGA Cloud i dużej pojemność dyskowej nigdy nie stracisz cennej pamięci";
+/* Onboarding USP carousel third page title */
+"onboarding.uniqueSellingProposition.carousel.page.third.title"="Twoje dane. Twoja przestrzeń.";
+/* Onboarding USP carousel third page subtitle */
+"onboarding.uniqueSellingProposition.carousel.page.third.subtitle"="Duża pojemność miejsca i łatwe sposoby przesyłania, udostępniania i porządkowania plik sprawiają, że możesz bezpiecznie używać MEGA do dowolnego wyboru";
+/* Onboarding USP carousel fourth page title */
+"onboarding.uniqueSellingProposition.carousel.page.fourth.title"="Powiedz to prywatnie";
+/* Onboarding USP carousel fourth page subtitle */
+"onboarding.uniqueSellingProposition.carousel.page.fourth.subtitle"="Czatuj z przyjaciółmi i rodziną, udostępniaj zdjęcia lub poufne informacje, połączenie wideo i planuj spotkania. Bezpieczeństwo i prywatność gwarantowane.";
+/* Onboarding Notification CTA title */
+"onboarding.cta.notifications.title"="Nigdy nie przegap ważnej aktualizacji";
+/* Onboarding Notification CTA description */
+"onboarding.cta.notifications.explanation"="Stay informed with real-time updates that matter to you. Get alerts for shared folder activity, security updates, and exclusive offers, so you never miss anything important.\n\nYou can manage notification preferences at any time in the settings.";
+/* Onboarding Notification CTA *Enable* button */
+"onboarding.cta.notifications.buttons.enable"="Odblokuj powiadomienia";
+/* Onboarding Notification CTA *Skip* button */
+"onboarding.cta.notifications.buttons.skip"="Pomiń na razie";
+/* Onboarding Camera Backups CTA title */
+"onboarding.cta.cameraBackups.title"="Chroń swoje zdjęcia, zawsze";
+/* Onboarding Camera Backups CTA description */
+"onboarding.cta.cameraBackups.explanation"="Your memories matter\n\nCamera uploads automatically backs up your photos and videos to your MEGA Cloud drive, so you never have to worry about losing them";
+/* Onboarding Camera Backups CTA note */
+"onboarding.cta.cameraBackups.note"="Camera uploads requires [B]full access[/B] to your device’s photo library";
+/* Onboarding Camera Backups CTA *Enable* button */
+"onboarding.cta.cameraBackups.buttons.enable"="Włącz Przesyłanie z kamery";
+/* Onboarding Camera Backups CTA *Skip* button */
+"onboarding.cta.cameraBackups.buttons.skip"="Pomiń na razie";
