@@ -282,7 +282,7 @@ class MessageInputBar: UIView {
         }
         calculateEditViewHeight()
         editMessageLabel.text = editMessage.message.content
-        sendButton.setImage(UIImage(resource: .confirmEdit), for: .normal)
+        sendButton.setImage(UIImage(resource: .checkBoxSelectedSemantic), for: .normal)
         sendButton.isEnabled = !(editMessage.message.content?.isEmpty ?? true)
     }
     
