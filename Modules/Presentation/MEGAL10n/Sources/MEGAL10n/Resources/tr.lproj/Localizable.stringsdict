@@ -269,9 +269,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d hour</string>
+        <string>%d saat</string>
         <key>other</key>
-        <string>%d hours</string>
+        <string>%d saatler</string>
       </dict>
     </dict>
     <key>general.format.retentionPeriod.day</key>
@@ -685,9 +685,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d second</string>
+        <string>%d ikinci</string>
         <key>other</key>
-        <string>%d seconds</string>
+        <string>%d saniyeler</string>
       </dict>
     </dict>
     <key>call.duration.minute</key>
@@ -701,9 +701,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d minute</string>
+        <string>%d dakika</string>
         <key>other</key>
-        <string>%d minutes</string>
+        <string>%d dakikalar</string>
       </dict>
     </dict>
     <key>call.duration.hour</key>
@@ -717,9 +717,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d hour</string>
+        <string>%d saat</string>
         <key>other</key>
-        <string>%d hours</string>
+        <string>%d saatler</string>
       </dict>
     </dict>
     <key>call.duration.hourAndMinute.hour</key>
@@ -733,9 +733,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d hour</string>
+        <string>%d saat</string>
         <key>other</key>
-        <string>%d hours</string>
+        <string>%d saatler</string>
       </dict>
     </dict>
     <key>call.duration.hourAndMinute.minute</key>
@@ -765,9 +765,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d minute</string>
+        <string>%d dakika</string>
         <key>other</key>
-        <string>%d minutes</string>
+        <string>%d dakikalar</string>
       </dict>
     </dict>
     <key>dnd.duration.hour</key>
@@ -781,9 +781,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d hour</string>
+        <string>%d saat</string>
         <key>other</key>
-        <string>%d hours</string>
+        <string>%d saatler</string>
       </dict>
     </dict>
     <key>chat.status.duration.minute</key>
@@ -797,9 +797,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d minute</string>
+        <string>%d dakika</string>
         <key>other</key>
-        <string>%d minutes</string>
+        <string>%d dakikalar</string>
       </dict>
     </dict>
     <key>mybackups.share.folder.warning.message</key>
@@ -829,9 +829,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d hour</string>
+        <string>%d saat</string>
         <key>other</key>
-        <string>%d hours</string>
+        <string>%d saatler</string>
       </dict>
     </dict>
     <key>chat.autoAway.minute</key>
@@ -845,9 +845,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d minute</string>
+        <string>%d dakika</string>
         <key>other</key>
-        <string>%d minutes</string>
+        <string>%d dakikalar</string>
       </dict>
     </dict>
     <key>chat.autoAway.label.hour</key>

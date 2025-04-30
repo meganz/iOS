@@ -2559,7 +2559,7 @@
 /* Title of Over Disk Quota dialog */
 "dialog.storage.odq.title"="Harap Tingkatkan";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. @% is placeholder. */
-"dialog.storage.almostFull.detail"="Cloud Drive anda hampir penuh. Tingkatkan sekarang ke akun Pro dan dapatkan %@ TB (%@ GB) dari ruang penyimpanan cloud.";
+"dialog.storage.almostFull.detail"="Your Cloud drive is almost full. Upgrade now and get up to %@ TB of cloud storage space.";
 /* Over Disk Quota detail message informing the user that they've reached the full capacity of their accounts. */
 "dialog.storage.odq.detail"="Penyimpanan Cloud anda penuh. Harap tingkatkan ke paket MEGA Pro untuk menambah ruang penyimpanan anda dan nikmati manfaat tambahan. Jika anda tetap melebihi batas penyimpanan dan tidak meningkatkan atau menghapus beberapa data, akun anda mungkin terkunci. Silakan lihat email yang kami kirimkan kepada anda untuk informasi lebih lanjut.";
 /* Over Disk Quota paywall not final title. */
@@ -3381,7 +3381,7 @@
 /* Alert title shown for video with options to resume playing the video or start from the beginning */
 "video.alert.resumeVideo.title"="Lanjutkan video?";
 /* Alert message shown for video with options to resume playing the video or start from the beginning. %1$s will be replaced by name of the video. %2$s will be replaced by video timestamp */
-"video.alert.resumeVideo.message"="“%1$s” will resume from %2$s";
+"video.alert.resumeVideo.message"="”%1$s” akan dilanjutkan dari %2$s";
 /* Alert button title that will resume playing the video */
 "video.alert.resumeVideo.button.resume"="Lanjutkan";
 /* Alert button title that will start playing the video from the beginning */
@@ -4587,7 +4587,7 @@
 /* Hidden files and folders onboarding content item two title */
 "onboarding.hiddenFilesAndFolders.content.item.two.title"="Kontrol visibilitas dengan mudah";
 /* Hidden files and folders onboarding content item two message */
-"onboarding.hiddenFilesAndFolders.content.item.two.message"="Untuk menampilkan file tersembunyi, aktifkan pengaturan “Tampilkan item tersembunyi” di bawah “Manajemen File -> Antarmuka pengguna” di pengaturan aplikasi anda.";
+"onboarding.hiddenFilesAndFolders.content.item.two.message"="To show hidden files, turn on the “Show hidden items” setting under “File Management” -> “User interface” in your app settings.";
 /* Hidden files and folders onboarding content item three title */
 "onboarding.hiddenFilesAndFolders.content.item.three.title"="File yang dibagikan tetap terlihat";
 /* Hidden files and folders onboarding content item three message */
@@ -4598,3 +4598,37 @@
 "chat.messages.noteToSelf.header.title"="Simpan untuk dirimu sendiri";
 /* Description text for note to self chat messages view header, at the top of the chat room */
 "chat.messages.noteToSelf.header.description"="Ruang pribadi untuk gambar, informasi penting, atau ide-ide besar. Selalu disinkronkan, dan dilindungi dengan enkripsi zero-knowledge.";
+/* Onboarding USP carousel first page title */
+"onboarding.uniqueSellingProposition.carousel.page.first.title"="Anda memegang kunci";
+/* Onboarding USP carousel first page subtitle */
+"onboarding.uniqueSellingProposition.carousel.page.first.subtitle"="User controlled, zero-knowledge encryption means no one can see your data unless you want them to - not even us!";
+/* Onboarding USP carousel second page title */
+"onboarding.uniqueSellingProposition.carousel.page.second.title"="Keep every moment safe";
+/* Onboarding USP carousel second page subtitle */
+"onboarding.uniqueSellingProposition.carousel.page.second.subtitle"="With automatic camera uploads to MEGA Cloud, and generous storage, you’ll never lose a precious memory";
+/* Onboarding USP carousel third page title */
+"onboarding.uniqueSellingProposition.carousel.page.third.title"="Your data. Your space.";
+/* Onboarding USP carousel third page subtitle */
+"onboarding.uniqueSellingProposition.carousel.page.third.subtitle"="Ample storage and easy ways to transfer, share, and organise your files means you can safely use MEGA for whatever you choose";
+/* Onboarding USP carousel fourth page title */
+"onboarding.uniqueSellingProposition.carousel.page.fourth.title"="Katakan secara pribadi";
+/* Onboarding USP carousel fourth page subtitle */
+"onboarding.uniqueSellingProposition.carousel.page.fourth.subtitle"="Chat with friends and family, share photos or sensitive information, video call, and schedule meetings. Safety and privacy guaranteed.";
+/* Onboarding Notification CTA title */
+"onboarding.cta.notifications.title"="Never miss an important update";
+/* Onboarding Notification CTA description */
+"onboarding.cta.notifications.explanation"="Stay informed with real-time updates that matter to you. Get alerts for shared folder activity, security updates, and exclusive offers, so you never miss anything important.\n\nYou can manage notification preferences at any time in the settings.";
+/* Onboarding Notification CTA *Enable* button */
+"onboarding.cta.notifications.buttons.enable"="Aktifkan Notifikasi";
+/* Onboarding Notification CTA *Skip* button */
+"onboarding.cta.notifications.buttons.skip"="Skip for now";
+/* Onboarding Camera Backups CTA title */
+"onboarding.cta.cameraBackups.title"="Keep your photos safe, always";
+/* Onboarding Camera Backups CTA description */
+"onboarding.cta.cameraBackups.explanation"="Your memories matter\n\nCamera uploads automatically backs up your photos and videos to your MEGA Cloud drive, so you never have to worry about losing them";
+/* Onboarding Camera Backups CTA note */
+"onboarding.cta.cameraBackups.note"="Camera uploads requires [B]full access[/B] to your device’s photo library";
+/* Onboarding Camera Backups CTA *Enable* button */
+"onboarding.cta.cameraBackups.buttons.enable"="Aktifkan Unggahan kamera";
+/* Onboarding Camera Backups CTA *Skip* button */
+"onboarding.cta.cameraBackups.buttons.skip"="Skip for now";

@@ -2559,7 +2559,7 @@
 /* Title of Over Disk Quota dialog */
 "dialog.storage.odq.title"="Gelieve te upgraden";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. @% is placeholder. */
-"dialog.storage.almostFull.detail"="Uw Cloud Drive is bijna vol. Upgrade nu naar een Pro-account en krijg tot %@ TB (%@ GB) aan cloudopslagruimte.";
+"dialog.storage.almostFull.detail"="Your Cloud drive is almost full. Upgrade now and get up to %@ TB of cloud storage space.";
 /* Over Disk Quota detail message informing the user that they've reached the full capacity of their accounts. */
 "dialog.storage.odq.detail"="Uw cloud opslag is vol. Upgrade naar een MEGA Pro-abonnement om uw opslagruimte te vergroten en van extra voordelen te genieten. Als u uw opslaglimiet overschrijdt en bepaalde gegevens niet opwaardeert of verwijdert, kan uw account worden vergrendeld. Raadpleeg de e-mails die we u hebben gestuurd voor meer informatie.";
 /* Over Disk Quota paywall not final title. */
@@ -4587,7 +4587,7 @@
 /* Hidden files and folders onboarding content item two title */
 "onboarding.hiddenFilesAndFolders.content.item.two.title"="Controleer de zichtbaarheid eenvoudig";
 /* Hidden files and folders onboarding content item two message */
-"onboarding.hiddenFilesAndFolders.content.item.two.message"="Om verborgen bestanden weer te geven, zet u de instelling “Verborgen items weergeven” aan onder “Bestandsbeheer -> Gebruikersinterface” in uw applicatie-instellingen.";
+"onboarding.hiddenFilesAndFolders.content.item.two.message"="To show hidden files, turn on the “Show hidden items” setting under “File Management” -> “User interface” in your app settings.";
 /* Hidden files and folders onboarding content item three title */
 "onboarding.hiddenFilesAndFolders.content.item.three.title"="Gedeelde bestanden blijven zichtbaar";
 /* Hidden files and folders onboarding content item three message */
@@ -4598,3 +4598,37 @@
 "chat.messages.noteToSelf.header.title"="Hou het voor uzelf";
 /* Description text for note to self chat messages view header, at the top of the chat room */
 "chat.messages.noteToSelf.header.description"="Een privéruimte voor foto's, belangrijke informatie of grote ideeën. Altijd gesynchroniseerd en beveiligd met zero-knowledge codering.";
+/* Onboarding USP carousel first page title */
+"onboarding.uniqueSellingProposition.carousel.page.first.title"="U heeft de sleutels";
+/* Onboarding USP carousel first page subtitle */
+"onboarding.uniqueSellingProposition.carousel.page.first.subtitle"="Door de gebruiker beheerde zero-knowledge codering kan niemand uw gegevens zien, tenzij u dat wilt, zelfs wij niet!";
+/* Onboarding USP carousel second page title */
+"onboarding.uniqueSellingProposition.carousel.page.second.title"="Houd elk moment veilig";
+/* Onboarding USP carousel second page subtitle */
+"onboarding.uniqueSellingProposition.carousel.page.second.subtitle"="Met automatische camera-uploads naar MEGA Cloud en royale opslagruimte verlies u nooit een kostbare herinnering";
+/* Onboarding USP carousel third page title */
+"onboarding.uniqueSellingProposition.carousel.page.third.title"="Uw gegevens. Uw opslag.";
+/* Onboarding USP carousel third page subtitle */
+"onboarding.uniqueSellingProposition.carousel.page.third.subtitle"="Dankzij de ruime opslagruimte en eenvoudige manieren om uw bestanden over te dragen, te delen en te ordenen, kunt u MEGA veilig gebruiken voor wat u maar wilt";
+/* Onboarding USP carousel fourth page title */
+"onboarding.uniqueSellingProposition.carousel.page.fourth.title"="Zeg het privé";
+/* Onboarding USP carousel fourth page subtitle */
+"onboarding.uniqueSellingProposition.carousel.page.fourth.subtitle"="Chat met vrienden en familie, deel foto's of gevoelige informatie, videogesprekken en plan vergaderingen. Veiligheid en privacy gegarandeerd.";
+/* Onboarding Notification CTA title */
+"onboarding.cta.notifications.title"="Mis nooit meer een belangrijke update";
+/* Onboarding Notification CTA description */
+"onboarding.cta.notifications.explanation"="Stay informed with real-time updates that matter to you. Get alerts for shared folder activity, security updates, and exclusive offers, so you never miss anything important.\n\nYou can manage notification preferences at any time in the settings.";
+/* Onboarding Notification CTA *Enable* button */
+"onboarding.cta.notifications.buttons.enable"="Notificaties Inschakelen";
+/* Onboarding Notification CTA *Skip* button */
+"onboarding.cta.notifications.buttons.skip"="Voor nu overslaan";
+/* Onboarding Camera Backups CTA title */
+"onboarding.cta.cameraBackups.title"="Bewaar uw foto's altijd veilig";
+/* Onboarding Camera Backups CTA description */
+"onboarding.cta.cameraBackups.explanation"="Your memories matter\n\nCamera uploads automatically backs up your photos and videos to your MEGA Cloud drive, so you never have to worry about losing them";
+/* Onboarding Camera Backups CTA note */
+"onboarding.cta.cameraBackups.note"="Camera uploads requires [B]full access[/B] to your device’s photo library";
+/* Onboarding Camera Backups CTA *Enable* button */
+"onboarding.cta.cameraBackups.buttons.enable"="Camera uploads inschakelen";
+/* Onboarding Camera Backups CTA *Skip* button */
+"onboarding.cta.cameraBackups.buttons.skip"="Voor nu overslaan";

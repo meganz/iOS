@@ -2559,7 +2559,7 @@
 /* Title of Over Disk Quota dialog */
 "dialog.storage.odq.title"="アップグレードしてください";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. @% is placeholder. */
-"dialog.storage.almostFull.detail"="クラウドドライブがほぼいっぱいです。今すぐProアカウントにアップグレードすると、最大%@ TB (%@ GB)のクラウドストレージスペースが得られます。";
+"dialog.storage.almostFull.detail"="Your Cloud drive is almost full. Upgrade now and get up to %@ TB of cloud storage space.";
 /* Over Disk Quota detail message informing the user that they've reached the full capacity of their accounts. */
 "dialog.storage.odq.detail"="クラウドストレージがいっぱいです。MEGA Proプランにアップグレードしてストレージスペースを増やし、さらなる特典をお楽しみください。ストレージの上限を超えたまま、アップグレードやデータの一部削除を行われない場合、アカウントがロックされる場合がございます。詳しくは、お送りしたメールをご覧ください。";
 /* Over Disk Quota paywall not final title. */
@@ -4587,7 +4587,7 @@
 /* Hidden files and folders onboarding content item two title */
 "onboarding.hiddenFilesAndFolders.content.item.two.title"="表示/非表示を簡単に制御";
 /* Hidden files and folders onboarding content item two message */
-"onboarding.hiddenFilesAndFolders.content.item.two.message"="非表示ファイルを表示するには、アプリの設定で「ファイル管理（File Management） --> ユーザーインターフェース（User interface）」の「非表示項目を表示（Show hidden items）」をオンにします。";
+"onboarding.hiddenFilesAndFolders.content.item.two.message"="To show hidden files, turn on the “Show hidden items” setting under “File Management” -> “User interface” in your app settings.";
 /* Hidden files and folders onboarding content item three title */
 "onboarding.hiddenFilesAndFolders.content.item.three.title"="共有ファイルは表示されたまま";
 /* Hidden files and folders onboarding content item three message */
@@ -4598,3 +4598,37 @@
 "chat.messages.noteToSelf.header.title"="秘密にしておく";
 /* Description text for note to self chat messages view header, at the top of the chat room */
 "chat.messages.noteToSelf.header.description"="写真、重要な情報、大きなアイデア用のプライベートスペースです。常に同期され、ゼロナレッジ暗号化で保護されています。";
+/* Onboarding USP carousel first page title */
+"onboarding.uniqueSellingProposition.carousel.page.first.title"="あなたがキーを持っています";
+/* Onboarding USP carousel first page subtitle */
+"onboarding.uniqueSellingProposition.carousel.page.first.subtitle"="ユーザー制御のゼロ知識暗号化は、あなたが望まない限り、誰もあなたのデータを見ることができないことを意味します。お客様のデータは、当社でさえも見ることができません！";
+/* Onboarding USP carousel second page title */
+"onboarding.uniqueSellingProposition.carousel.page.second.title"="一瞬一瞬を安全に";
+/* Onboarding USP carousel second page subtitle */
+"onboarding.uniqueSellingProposition.carousel.page.second.subtitle"="MEGAクラウドへのカメラの自動アップロードと豊富なストレージで、大切な思い出を絶対に逃しません。";
+/* Onboarding USP carousel third page title */
+"onboarding.uniqueSellingProposition.carousel.page.third.title"="あなたのデータ、あなたのスペース。";
+/* Onboarding USP carousel third page subtitle */
+"onboarding.uniqueSellingProposition.carousel.page.third.subtitle"="十分なストレージがあり、ファイルの転送、共有、整理が簡単にできるため、MEGAをどんな用途にも安心してお使いいただけます。";
+/* Onboarding USP carousel fourth page title */
+"onboarding.uniqueSellingProposition.carousel.page.fourth.title"="プライベートで話す";
+/* Onboarding USP carousel fourth page subtitle */
+"onboarding.uniqueSellingProposition.carousel.page.fourth.subtitle"="ご友人やご家族とチャットしたり、写真や機密情報を共有したり、ビデオ通話やミーティングの予定を立てたり、いろいろとお楽しみください。その際に、安全性とプライバシーが保証されています。";
+/* Onboarding Notification CTA title */
+"onboarding.cta.notifications.title"="重要なアップデートを見逃さない";
+/* Onboarding Notification CTA description */
+"onboarding.cta.notifications.explanation"="Stay informed with real-time updates that matter to you. Get alerts for shared folder activity, security updates, and exclusive offers, so you never miss anything important.\n\nYou can manage notification preferences at any time in the settings.";
+/* Onboarding Notification CTA *Enable* button */
+"onboarding.cta.notifications.buttons.enable"="通知設定";
+/* Onboarding Notification CTA *Skip* button */
+"onboarding.cta.notifications.buttons.skip"="今はやめておく";
+/* Onboarding Camera Backups CTA title */
+"onboarding.cta.cameraBackups.title"="写真を常に安全に";
+/* Onboarding Camera Backups CTA description */
+"onboarding.cta.cameraBackups.explanation"="Your memories matter\n\nCamera uploads automatically backs up your photos and videos to your MEGA Cloud drive, so you never have to worry about losing them";
+/* Onboarding Camera Backups CTA note */
+"onboarding.cta.cameraBackups.note"="Camera uploads requires [B]full access[/B] to your device’s photo library";
+/* Onboarding Camera Backups CTA *Enable* button */
+"onboarding.cta.cameraBackups.buttons.enable"="カメラアップロードを有効にする";
+/* Onboarding Camera Backups CTA *Skip* button */
+"onboarding.cta.cameraBackups.buttons.skip"="今はやめておく";

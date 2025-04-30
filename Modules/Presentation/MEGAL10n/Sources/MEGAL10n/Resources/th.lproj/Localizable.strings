@@ -2559,7 +2559,7 @@
 /* Title of Over Disk Quota dialog */
 "dialog.storage.odq.title"="กรุณาอัปเกรด";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. @% is placeholder. */
-"dialog.storage.almostFull.detail"="คลาวด์ไดร์ฟของคุณใกล้จะเต็มแล้ว อัปเกรดตอนนี้เป็นบัญชี Pro และรับพื้นที่เก็บข้อมูลบนคลาวด์สูงสุด %@ TB (%@ GB)";
+"dialog.storage.almostFull.detail"="Your Cloud drive is almost full. Upgrade now and get up to %@ TB of cloud storage space.";
 /* Over Disk Quota detail message informing the user that they've reached the full capacity of their accounts. */
 "dialog.storage.odq.detail"="ที่เก็บข้อมูลบนคลาวด์ของคุณเต็มแล้ว กรุณาอัปเกรดเป็นแผน MEGA Pro เพื่อเพิ่มพื้นที่และรับสิทธิประโยชน์เพิ่มเติมอีกมากมาย หากคุณใช้พื้นที่เกินขีดจำกัดและไม่อัปเกรดหรือลบข้อมูลบางอย่างออก บัญชีของคุณอาจถูกล็อก กรุณาดูอีเมลที่เราส่งข้อมูลเพิ่มเติมถึงคุณ";
 /* Over Disk Quota paywall not final title. */
@@ -3381,7 +3381,7 @@
 /* Alert title shown for video with options to resume playing the video or start from the beginning */
 "video.alert.resumeVideo.title"="เล่นวิดีโอต่อจากก่อนหน้านี้หรือไม่";
 /* Alert message shown for video with options to resume playing the video or start from the beginning. %1$s will be replaced by name of the video. %2$s will be replaced by video timestamp */
-"video.alert.resumeVideo.message"="“%1$s” will resume from %2$s";
+"video.alert.resumeVideo.message"="ไฟล์ “%1$s” จะเริ่มเล่นต่อตั้งแต่ %2$s เป็นต้นไป";
 /* Alert button title that will resume playing the video */
 "video.alert.resumeVideo.button.resume"="ต่อ";
 /* Alert button title that will start playing the video from the beginning */
@@ -4587,7 +4587,7 @@
 /* Hidden files and folders onboarding content item two title */
 "onboarding.hiddenFilesAndFolders.content.item.two.title"="ควบคุมการมองเห็นได้ง่าย";
 /* Hidden files and folders onboarding content item two message */
-"onboarding.hiddenFilesAndFolders.content.item.two.message"="หากต้องการแสดงไฟล์ที่ซ่อนอยู่ ให้เปิดการตั้งค่า \"แสดงรายการที่ซ่อนอยู่\" ใน \"การจัดการไฟล์ -> หน้าจอผู้ใช้\" ในการตั้งค่าแอปของคุณ";
+"onboarding.hiddenFilesAndFolders.content.item.two.message"="To show hidden files, turn on the “Show hidden items” setting under “File Management” -> “User interface” in your app settings.";
 /* Hidden files and folders onboarding content item three title */
 "onboarding.hiddenFilesAndFolders.content.item.three.title"="ไฟล์ที่แชร์ยังคงมองเห็นได้";
 /* Hidden files and folders onboarding content item three message */
@@ -4598,3 +4598,37 @@
 "chat.messages.noteToSelf.header.title"="เก็บโน้ตไว้เป็นส่วนตัว";
 /* Description text for note to self chat messages view header, at the top of the chat room */
 "chat.messages.noteToSelf.header.description"="พื้นที่ส่วนตัวสำหรับรูปภาพ ข้อมูลสำคัญ หรือไอเดียดี ๆ ซิงค์อยู่เสมอ และปกป้องด้วยการเข้ารหัสด้วยวิธีซีโร่-นอว์เลจ";
+/* Onboarding USP carousel first page title */
+"onboarding.uniqueSellingProposition.carousel.page.first.title"="คุณคือผู้ถือกุญแจ";
+/* Onboarding USP carousel first page subtitle */
+"onboarding.uniqueSellingProposition.carousel.page.first.subtitle"="การเข้ารหัสด้วยวิธีซีโร่-นอว์เลจที่คุณควบคุมเอง หมายความว่าไม่มีใครเห็นข้อมูลของคุณได้ หากคุณไม่ต้องการให้เห็น ไม่เว้นแม้แต่เรา!";
+/* Onboarding USP carousel second page title */
+"onboarding.uniqueSellingProposition.carousel.page.second.title"="เก็บทุกช่วงเวลาให้ปลอดภัย";
+/* Onboarding USP carousel second page subtitle */
+"onboarding.uniqueSellingProposition.carousel.page.second.subtitle"="ด้วยการอัปโหลดรูปภาพจากกล้องไปยัง MEGA คลาวด์โดยอัตโนมัติ พร้อมพื้นที่จัดเก็บข้อมูลมากมาย คุณจะไม่สูญเสียความทรงจำอันมีค่าไป";
+/* Onboarding USP carousel third page title */
+"onboarding.uniqueSellingProposition.carousel.page.third.title"="ข้อมูลของคุณ พื้นที่ของคุณ";
+/* Onboarding USP carousel third page subtitle */
+"onboarding.uniqueSellingProposition.carousel.page.third.subtitle"="พื้นที่จัดเก็บข้อมูลที่เพียงพอ และวิธีที่ง่ายดายในการถ่ายโอน แชร์ และจัดระเบียบไฟล์ ทำให้คุณสามารถใช้ MEGA ได้อย่างปลอดภัยสำหรับทุกสิ่งที่คุณต้องการ";
+/* Onboarding USP carousel fourth page title */
+"onboarding.uniqueSellingProposition.carousel.page.fourth.title"="พูดคุยเป็นการส่วนตัว";
+/* Onboarding USP carousel fourth page subtitle */
+"onboarding.uniqueSellingProposition.carousel.page.fourth.subtitle"="แชทกับเพื่อนและครอบครัว แชร์รูปภาพหรือข้อมูลสำคัญ โทรวิดีโอ และนัดหมายได้อย่างปลอดภัยและเป็นส่วนตัว";
+/* Onboarding Notification CTA title */
+"onboarding.cta.notifications.title"="ไม่พลาดทุกการอัปเดตที่สำคัญ";
+/* Onboarding Notification CTA description */
+"onboarding.cta.notifications.explanation"="Stay informed with real-time updates that matter to you. Get alerts for shared folder activity, security updates, and exclusive offers, so you never miss anything important.\n\nYou can manage notification preferences at any time in the settings.";
+/* Onboarding Notification CTA *Enable* button */
+"onboarding.cta.notifications.buttons.enable"="เปิดใช้การแจ้งเตือน";
+/* Onboarding Notification CTA *Skip* button */
+"onboarding.cta.notifications.buttons.skip"="ข้ามไปก่อน";
+/* Onboarding Camera Backups CTA title */
+"onboarding.cta.cameraBackups.title"="เก็บภาพถ่ายของคุณให้ปลอดภัยเสมอ";
+/* Onboarding Camera Backups CTA description */
+"onboarding.cta.cameraBackups.explanation"="Your memories matter\n\nCamera uploads automatically backs up your photos and videos to your MEGA Cloud drive, so you never have to worry about losing them";
+/* Onboarding Camera Backups CTA note */
+"onboarding.cta.cameraBackups.note"="Camera uploads requires [B]full access[/B] to your device’s photo library";
+/* Onboarding Camera Backups CTA *Enable* button */
+"onboarding.cta.cameraBackups.buttons.enable"="เปิดใช้งานอัปโหลดกล้อง";
+/* Onboarding Camera Backups CTA *Skip* button */
+"onboarding.cta.cameraBackups.buttons.skip"="ข้ามไปก่อน";

@@ -40,11 +40,10 @@ extension CustomModalAlertViewController {
         // StorageGB can return 0 if there is no product or the given account type doesn't match on the product list.
         // Checking if it is greater than zero first to avoid negative TB storage.
         let maxTB = productStorage > 0 ? productStorage / 1024 : 0
-        
-        let maxStorage = String(format: "%ld", productStorage)
+
         let maxStorageTB = String(format: "%ld", maxTB)
         
-        let detailText = event.number == StorageState.orange.rawValue ? Strings.Localizable.Dialog.Storage.AlmostFull.detail(maxStorageTB, maxStorage) : Strings.Localizable.Dialog.Storage.Odq.detail
+        let detailText = event.number == StorageState.orange.rawValue ? Strings.Localizable.Dialog.Storage.AlmostFull.detail(maxStorageTB) : Strings.Localizable.Dialog.Storage.Odq.detail
         return detailText
     }
     

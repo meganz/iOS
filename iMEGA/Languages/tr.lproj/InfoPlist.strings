@@ -13,7 +13,7 @@
 /* Label for any 'Search' button, link, etc. - (String as short as possible). */
 "quickActionSearchString"="Ara";
 /*  */
-"quickActionUploadString"="Upload";
+"quickActionUploadString"="Yükleme";
 /* Title of the Offline section */
 "quickActionOfflineString"="Offline";
 /* Location Usage Description. In order to protect user's privacy, Apple requires a specific string explaining why location will be accessed. */

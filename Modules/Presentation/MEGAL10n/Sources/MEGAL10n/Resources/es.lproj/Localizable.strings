@@ -2559,7 +2559,7 @@
 /* Title of Over Disk Quota dialog */
 "dialog.storage.odq.title"="Amplía tu cuenta";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. @% is placeholder. */
-"dialog.storage.almostFull.detail"="Tu Nube está casi llena. Amplía tu cuenta a Pro y obtén hasta %@ TB (%@ GB) de espacio de almacenamiento en la nube.";
+"dialog.storage.almostFull.detail"="Your Cloud drive is almost full. Upgrade now and get up to %@ TB of cloud storage space.";
 /* Over Disk Quota detail message informing the user that they've reached the full capacity of their accounts. */
 "dialog.storage.odq.detail"="Tu Nube está llena. Amplía a un plan Pro para aumentar tu espacio de almacenamiento y disfrutar de otros beneficios adicionales. Si excedes tu límite de almacenamiento y no eliminas algunos datos o no amplías, tu cuenta será bloqueada. Consulta los correos electrónicos que te enviamos para obtener más información.";
 /* Over Disk Quota paywall not final title. */
@@ -4583,11 +4583,11 @@
 /* Hidden files and folders onboarding content item one title */
 "onboarding.hiddenFilesAndFolders.content.item.one.title"="Oculta archivos y carpetas";
 /* Hidden files and folders onboarding content item one message */
-"onboarding.hiddenFilesAndFolders.content.item.one.message"="Mantén privados y lejos de miradas indiscretas tus archivos sensibles en la nube. Por defecto, los archivos ocultos no aparecerán en tu nube, en la sección de Fotos ni en Recientes.";
+"onboarding.hiddenFilesAndFolders.content.item.one.message"="Mantén tus archivos sensibles en la nube de forma privada y lejos de miradas indiscretas. Por defecto, los archivos ocultos no aparecen en tu Nube, ni en las secciones de Fotos y Recientes.es.";
 /* Hidden files and folders onboarding content item two title */
 "onboarding.hiddenFilesAndFolders.content.item.two.title"="Controla la visibilidad fácilmente";
 /* Hidden files and folders onboarding content item two message */
-"onboarding.hiddenFilesAndFolders.content.item.two.message"="Para mostrar los archivos ocultos, activa la opción “Mostrar elementos ocultos” en “Gestión de archivos” -> “Interfaz de usuario” en los ajustes de la aplicación.";
+"onboarding.hiddenFilesAndFolders.content.item.two.message"="To show hidden files, turn on the “Show hidden items” setting under “File Management” -> “User interface” in your app settings.";
 /* Hidden files and folders onboarding content item three title */
 "onboarding.hiddenFilesAndFolders.content.item.three.title"="Los archivos compartidos permanecen visibles";
 /* Hidden files and folders onboarding content item three message */
@@ -4598,3 +4598,37 @@
 "chat.messages.noteToSelf.header.title"="Guárdalo para ti";
 /* Description text for note to self chat messages view header, at the top of the chat room */
 "chat.messages.noteToSelf.header.description"="Un espacio privado para fotografías, información importante o grandes ideas. Siempre sincronizado y protegido con cifrado de conocimiento cero.";
+/* Onboarding USP carousel first page title */
+"onboarding.uniqueSellingProposition.carousel.page.first.title"="Tú tienes las claves";
+/* Onboarding USP carousel first page subtitle */
+"onboarding.uniqueSellingProposition.carousel.page.first.subtitle"="El cifrado de conocimiento cero controlado por el usuario sirve para que nadie pueda ver tus datos a menos que tú lo permitas, ¡ni siquiera nosotros!";
+/* Onboarding USP carousel second page title */
+"onboarding.uniqueSellingProposition.carousel.page.second.title"="Mantén cada momento seguro";
+/* Onboarding USP carousel second page subtitle */
+"onboarding.uniqueSellingProposition.carousel.page.second.subtitle"="Con las subidas de la cámara automáticas a la nube de MEGA y un almacenamiento generoso, nunca perderás un valioso recuerdo";
+/* Onboarding USP carousel third page title */
+"onboarding.uniqueSellingProposition.carousel.page.third.title"="Tus datos. Tu espacio.";
+/* Onboarding USP carousel third page subtitle */
+"onboarding.uniqueSellingProposition.carousel.page.third.subtitle"="El amplio almacenamiento y las formas sencillas de transferir, compartir y organizar tus archivos hacen que puedas usar MEGA de forma segura para lo que quieras";
+/* Onboarding USP carousel fourth page title */
+"onboarding.uniqueSellingProposition.carousel.page.fourth.title"="Dilo en privado";
+/* Onboarding USP carousel fourth page subtitle */
+"onboarding.uniqueSellingProposition.carousel.page.fourth.subtitle"="Chatea con amigos y familiares, comparte fotos o información confidencial, haz videollamadas y programa reuniones. Seguridad y privacidad garantizadas.";
+/* Onboarding Notification CTA title */
+"onboarding.cta.notifications.title"="No te pierdas ninguna actualización importante";
+/* Onboarding Notification CTA description */
+"onboarding.cta.notifications.explanation"="Stay informed with real-time updates that matter to you. Get alerts for shared folder activity, security updates, and exclusive offers, so you never miss anything important.\n\nYou can manage notification preferences at any time in the settings.";
+/* Onboarding Notification CTA *Enable* button */
+"onboarding.cta.notifications.buttons.enable"="Activar Notificaciones";
+/* Onboarding Notification CTA *Skip* button */
+"onboarding.cta.notifications.buttons.skip"="Omitir por ahora";
+/* Onboarding Camera Backups CTA title */
+"onboarding.cta.cameraBackups.title"="Mantén tus fotos seguras, siempre";
+/* Onboarding Camera Backups CTA description */
+"onboarding.cta.cameraBackups.explanation"="Your memories matter\n\nCamera uploads automatically backs up your photos and videos to your MEGA Cloud drive, so you never have to worry about losing them";
+/* Onboarding Camera Backups CTA note */
+"onboarding.cta.cameraBackups.note"="Camera uploads requires [B]full access[/B] to your device’s photo library";
+/* Onboarding Camera Backups CTA *Enable* button */
+"onboarding.cta.cameraBackups.buttons.enable"="Activar las Subidas de la cámara";
+/* Onboarding Camera Backups CTA *Skip* button */
+"onboarding.cta.cameraBackups.buttons.skip"="Omitir por ahora";

@@ -2341,7 +2341,7 @@
 /* Text for options in Get Link View to separate the key from the link */
 "Send Decryption Key Separately"="Отправлять ключ дешифрования отдельно";
 /* Text for options in Get Link View to activate expiry date */
-"Expiry Date"="Срок годности";
+"Expiry Date"="Срок действия";
 /* Text for options in Get Link View to activate password protection */
 "Password Protection"="Защита паролем";
 /* Text for options in Get Link View to set password protection */
@@ -2559,7 +2559,7 @@
 /* Title of Over Disk Quota dialog */
 "dialog.storage.odq.title"="Пожалуйста, улучшите аккаунт";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. @% is placeholder. */
-"dialog.storage.almostFull.detail"="Ваш облачный диск почти заполнен. Улучшите аккаунт до Pro сейчас и получите до %@ ТБ (%@ ГБ) в облаке.";
+"dialog.storage.almostFull.detail"="Your Cloud drive is almost full. Upgrade now and get up to %@ TB of cloud storage space.";
 /* Over Disk Quota detail message informing the user that they've reached the full capacity of their accounts. */
 "dialog.storage.odq.detail"="Ваше облачное хранилище заполнено. Перейдите на подписку MEGA Pro, чтобы увеличить объём и воспользоваться дополнительными преимуществами. Если вы превысите лимит хранилища и не улучшите аккаунт, или не удалите некоторые данные, ваш аккаунт может быть заблокирован. Пожалуйста, просмотрите электронные письма, которые мы вам отправили, для получения дополнительной информации.";
 /* Over Disk Quota paywall not final title. */
@@ -3587,15 +3587,15 @@
 /* Create Schedule Meeting: Month custom option - header title for the calendar */
 "meetings.scheduleMeeting.create.monthly.calendar.headerTitle"="Определённое число месяца";
 /* Create Schedule Meeting: Month custom option - first week option text */
-"meetings.scheduleMeeting.create.monthly.weekNumber.first"="Перв.";
+"meetings.scheduleMeeting.create.monthly.weekNumber.first"="перв.";
 /* Create Schedule Meeting: Month custom option - second week option text */
-"meetings.scheduleMeeting.create.monthly.weekNumber.second"="Втор.";
+"meetings.scheduleMeeting.create.monthly.weekNumber.second"="втор.";
 /* Create Schedule Meeting: Month custom option - third week option text */
-"meetings.scheduleMeeting.create.monthly.weekNumber.third"="Трет.";
+"meetings.scheduleMeeting.create.monthly.weekNumber.third"="трет.";
 /* Create Schedule Meeting: Month custom option - fourth week option text */
-"meetings.scheduleMeeting.create.monthly.weekNumber.fourth"="Четвёрт.";
+"meetings.scheduleMeeting.create.monthly.weekNumber.fourth"="четвёрт.";
 /* Create Schedule Meeting: Month custom option - fifth week option text */
-"meetings.scheduleMeeting.create.monthly.weekNumber.fifth"="Пят.";
+"meetings.scheduleMeeting.create.monthly.weekNumber.fifth"="пят.";
 /* Create Schedule Meeting: Schedule meeting repeats all days in a week. This text is shown in the custom option selection screen */
 "meetings.scheduled.create.weekly.everyDay.footerNote"="Встреча будет проводиться каждый день.";
 /* Create Schedule Meeting: Schedule meeting repeats all days in a week. This text is shown in the main screen that shows all the options along with the selected recurrence option. */
@@ -4587,7 +4587,7 @@
 /* Hidden files and folders onboarding content item two title */
 "onboarding.hiddenFilesAndFolders.content.item.two.title"="Простое управление видимостью";
 /* Hidden files and folders onboarding content item two message */
-"onboarding.hiddenFilesAndFolders.content.item.two.message"="Чтобы показать скрытые файлы, включите настройку «Показывать скрытые элементы» в разделе «Управление файлами» -> «Пользовательский интерфейс» в настройках приложения.";
+"onboarding.hiddenFilesAndFolders.content.item.two.message"="To show hidden files, turn on the “Show hidden items” setting under “File Management” -> “User interface” in your app settings.";
 /* Hidden files and folders onboarding content item three title */
 "onboarding.hiddenFilesAndFolders.content.item.three.title"="Общие файлы остаются видимыми";
 /* Hidden files and folders onboarding content item three message */
@@ -4598,3 +4598,37 @@
 "chat.messages.noteToSelf.header.title"="Сохраните себе";
 /* Description text for note to self chat messages view header, at the top of the chat room */
 "chat.messages.noteToSelf.header.description"="Личное пространство для изображений, важной информации или больших идей. Всегда синхронизируется и защищено шифрованием с нулевым разглашением.";
+/* Onboarding USP carousel first page title */
+"onboarding.uniqueSellingProposition.carousel.page.first.title"="Ключи хранятся у вас";
+/* Onboarding USP carousel first page subtitle */
+"onboarding.uniqueSellingProposition.carousel.page.first.subtitle"="Управляемое пользователем шифрование с нулевым разглашением означает, что никто не сможет увидеть ваши данные, если вы этого не захотите, — даже мы!";
+/* Onboarding USP carousel second page title */
+"onboarding.uniqueSellingProposition.carousel.page.second.title"="Сохраняйте каждое мгновение";
+/* Onboarding USP carousel second page subtitle */
+"onboarding.uniqueSellingProposition.carousel.page.second.subtitle"="Благодаря автозагрузкам из камеры в MEGA Cloud и щедрому объёму хранения ни одно драгоценное воспоминание не потеряется.";
+/* Onboarding USP carousel third page title */
+"onboarding.uniqueSellingProposition.carousel.page.third.title"="Ваши данные. Ваше пространство.";
+/* Onboarding USP carousel third page subtitle */
+"onboarding.uniqueSellingProposition.carousel.page.third.subtitle"="Благодаря удобным способам передачи, обмена и организации файлов, а также щедрому объёму хранения вы можете с уверенностью использовать MEGA для любых задач.";
+/* Onboarding USP carousel fourth page title */
+"onboarding.uniqueSellingProposition.carousel.page.fourth.title"="Разговоры тет-а-тет";
+/* Onboarding USP carousel fourth page subtitle */
+"onboarding.uniqueSellingProposition.carousel.page.fourth.subtitle"="Общайтесь в чате с друзьями и семьёй, делитесь фотографиями или личной информацией, проводите видеозвонки и назначайте встречи. Безопасность и конфиденциальность гарантированы.";
+/* Onboarding Notification CTA title */
+"onboarding.cta.notifications.title"="Никогда не пропустите важное сообщение";
+/* Onboarding Notification CTA description */
+"onboarding.cta.notifications.explanation"="Stay informed with real-time updates that matter to you. Get alerts for shared folder activity, security updates, and exclusive offers, so you never miss anything important.\n\nYou can manage notification preferences at any time in the settings.";
+/* Onboarding Notification CTA *Enable* button */
+"onboarding.cta.notifications.buttons.enable"="Включить уведомления";
+/* Onboarding Notification CTA *Skip* button */
+"onboarding.cta.notifications.buttons.skip"="Пока пропустить";
+/* Onboarding Camera Backups CTA title */
+"onboarding.cta.cameraBackups.title"="Ваши фото всегда в безопасности";
+/* Onboarding Camera Backups CTA description */
+"onboarding.cta.cameraBackups.explanation"="Your memories matter\n\nCamera uploads automatically backs up your photos and videos to your MEGA Cloud drive, so you never have to worry about losing them";
+/* Onboarding Camera Backups CTA note */
+"onboarding.cta.cameraBackups.note"="Camera uploads requires [B]full access[/B] to your device’s photo library";
+/* Onboarding Camera Backups CTA *Enable* button */
+"onboarding.cta.cameraBackups.buttons.enable"="Включить Загрузки из камеры";
+/* Onboarding Camera Backups CTA *Skip* button */
+"onboarding.cta.cameraBackups.buttons.skip"="Пока пропустить";
