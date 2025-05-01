@@ -2117,6 +2117,17 @@
 		BF0CB9402803AF5500C21F11 /* SAMKeychain in Frameworks */ = {isa = PBXBuildFile; productRef = BF0CB93F2803AF5500C21F11 /* SAMKeychain */; };
 		BF0CB9422803AF6000C21F11 /* SAMKeychain in Frameworks */ = {isa = PBXBuildFile; productRef = BF0CB9412803AF6000C21F11 /* SAMKeychain */; };
 		BF0D5125298BD31500309563 /* ScheduleMeetingOccurrenceNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0D5124298BD31500309563 /* ScheduleMeetingOccurrenceNotification.swift */; };
+		BF0FE7512DB311D10083E23B /* SubscriptionPurchaseHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0FE7502DB311D10083E23B /* SubscriptionPurchaseHeaderView.swift */; };
+		BF0FE7582DB312150083E23B /* SubscriptionPurchaseFeatureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0FE7572DB312150083E23B /* SubscriptionPurchaseFeatureView.swift */; };
+		BF0FE75C2DB3129C0083E23B /* SubscriptionPurchaseFeaturesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0FE75B2DB3129C0083E23B /* SubscriptionPurchaseFeaturesView.swift */; };
+		BF0FE7612DB312FC0083E23B /* SubscriptionPurchaseBenefitsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0FE7602DB312FC0083E23B /* SubscriptionPurchaseBenefitsView.swift */; };
+		BF0FE7672DB315140083E23B /* SubscriptionPurchasePageContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0FE7662DB315140083E23B /* SubscriptionPurchasePageContentView.swift */; };
+		BF0FE76B2DB315B00083E23B /* SubscriptionPurchasePageHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0FE76A2DB315B00083E23B /* SubscriptionPurchasePageHeaderView.swift */; };
+		BF0FE7BE2DB85AD20083E23B /* SubscriptionPurchaseFreePlanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0FE7BD2DB85AD20083E23B /* SubscriptionPurchaseFreePlanView.swift */; };
+		BF0FE7DC2DB99FCE0083E23B /* SubscriptionPurchaseRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0FE7DB2DB99FCE0083E23B /* SubscriptionPurchaseRouter.swift */; };
+		BF0FE7E62DB9AB060083E23B /* SubscriptionPurchaseChipsSelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0FE7E52DB9AB060083E23B /* SubscriptionPurchaseChipsSelectorView.swift */; };
+		BF0FE7FC2DBED5B10083E23B /* SubscriptionPurchasePlanCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0FE7FB2DBED5B10083E23B /* SubscriptionPurchasePlanCardView.swift */; };
+		BF0FE7FF2DBED83B0083E23B /* SubscriptionPurchasePlanCardsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0FE7FE2DBED83B0083E23B /* SubscriptionPurchasePlanCardsView.swift */; };
 		BF1053C924971A5E009094C8 /* ChatNotificationMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1053C824971A5E009094C8 /* ChatNotificationMessage.swift */; };
 		BF1053DE2498663B009094C8 /* ChatUnreadMessagesLabelCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1053DC2498663B009094C8 /* ChatUnreadMessagesLabelCollectionCell.swift */; };
 		BF1053DF2498663B009094C8 /* ChatUnreadMessagesLabelCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF1053DD2498663B009094C8 /* ChatUnreadMessagesLabelCollectionCell.xib */; };
@@ -2307,6 +2318,7 @@
 		BFA1EEE62A4CF56000435A0F /* ScheduleMeetingUpdateViewConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA1EEE52A4CF56000435A0F /* ScheduleMeetingUpdateViewConfiguration.swift */; };
 		BFA1EEE82A4CF5A500435A0F /* ScheduleMeetingUpdateOccurrenceViewConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA1EEE72A4CF5A500435A0F /* ScheduleMeetingUpdateOccurrenceViewConfiguration.swift */; };
 		BFA1EEEA2A4CF69700435A0F /* ScheduleMeetingNewViewConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA1EEE92A4CF69700435A0F /* ScheduleMeetingNewViewConfiguration.swift */; };
+		BFA2A21B2DAC9E4F00E8673D /* SubscriptionPurchaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA2A21A2DAC9E4F00E8673D /* SubscriptionPurchaseView.swift */; };
 		BFA55257245F849F009FE3A6 /* AddToChatMenuPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA55256245F849F009FE3A6 /* AddToChatMenuPageViewController.swift */; };
 		BFA6CD5A263223B100791E02 /* MeetingFloatingPanelViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA6CD59263223B100791E02 /* MeetingFloatingPanelViewModelTests.swift */; };
 		BFAAF71F252E9E960053A9BF /* FilesExplorerListSourceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAAF71E252E9E960053A9BF /* FilesExplorerListSourceProtocol.swift */; };
@@ -2422,6 +2434,8 @@
 		BFFB134F2908EF3100A6B2CA /* ActiveCallViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFFB134E2908EF3100A6B2CA /* ActiveCallViewModelTests.swift */; };
 		BFFD20DE2BC68D41009885F0 /* DisplayMode+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFFD20DD2BC68D41009885F0 /* DisplayMode+Additions.swift */; };
 		BFFD20E72BC784AD009885F0 /* SearchResultMapperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFFD20E62BC784AD009885F0 /* SearchResultMapperTests.swift */; };
+		BFFE078E2DC03C2000DFBC69 /* SubscriptionPurchasePlansView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFFE078D2DC03C2000DFBC69 /* SubscriptionPurchasePlansView.swift */; };
+		BFFE079E2DC0465B00DFBC69 /* SubscriptionPurchaseBottomButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFFE079D2DC0465B00DFBC69 /* SubscriptionPurchaseBottomButtonView.swift */; };
 		BFFE2289292F2F4B0063CFF2 /* FutureMeetingSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFFE2288292F2F4B0063CFF2 /* FutureMeetingSection.swift */; };
 		BFFE228B292F8DB30063CFF2 /* MeetingsListHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFFE228A292F8DB30063CFF2 /* MeetingsListHeaderView.swift */; };
 		BFFE2293293488980063CFF2 /* FutureMeetingRoomViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFFE2292293488980063CFF2 /* FutureMeetingRoomViewModel.swift */; };
@@ -4888,6 +4902,17 @@
 		BF0BD6072C530748003E608A /* NodeDescriptionCellController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeDescriptionCellController.swift; sourceTree = "<group>"; };
 		BF0BD60C2C5307AD003E608A /* NodeDescriptionFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeDescriptionFooterView.swift; sourceTree = "<group>"; };
 		BF0D5124298BD31500309563 /* ScheduleMeetingOccurrenceNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingOccurrenceNotification.swift; sourceTree = "<group>"; };
+		BF0FE7502DB311D10083E23B /* SubscriptionPurchaseHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionPurchaseHeaderView.swift; sourceTree = "<group>"; };
+		BF0FE7572DB312150083E23B /* SubscriptionPurchaseFeatureView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionPurchaseFeatureView.swift; sourceTree = "<group>"; };
+		BF0FE75B2DB3129C0083E23B /* SubscriptionPurchaseFeaturesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionPurchaseFeaturesView.swift; sourceTree = "<group>"; };
+		BF0FE7602DB312FC0083E23B /* SubscriptionPurchaseBenefitsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionPurchaseBenefitsView.swift; sourceTree = "<group>"; };
+		BF0FE7662DB315140083E23B /* SubscriptionPurchasePageContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionPurchasePageContentView.swift; sourceTree = "<group>"; };
+		BF0FE76A2DB315B00083E23B /* SubscriptionPurchasePageHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionPurchasePageHeaderView.swift; sourceTree = "<group>"; };
+		BF0FE7BD2DB85AD20083E23B /* SubscriptionPurchaseFreePlanView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionPurchaseFreePlanView.swift; sourceTree = "<group>"; };
+		BF0FE7DB2DB99FCE0083E23B /* SubscriptionPurchaseRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionPurchaseRouter.swift; sourceTree = "<group>"; };
+		BF0FE7E52DB9AB060083E23B /* SubscriptionPurchaseChipsSelectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionPurchaseChipsSelectorView.swift; sourceTree = "<group>"; };
+		BF0FE7FB2DBED5B10083E23B /* SubscriptionPurchasePlanCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionPurchasePlanCardView.swift; sourceTree = "<group>"; };
+		BF0FE7FE2DBED83B0083E23B /* SubscriptionPurchasePlanCardsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionPurchasePlanCardsView.swift; sourceTree = "<group>"; };
 		BF1053C824971A5E009094C8 /* ChatNotificationMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatNotificationMessage.swift; sourceTree = "<group>"; };
 		BF1053DC2498663B009094C8 /* ChatUnreadMessagesLabelCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatUnreadMessagesLabelCollectionCell.swift; sourceTree = "<group>"; };
 		BF1053DD2498663B009094C8 /* ChatUnreadMessagesLabelCollectionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChatUnreadMessagesLabelCollectionCell.xib; sourceTree = "<group>"; };
@@ -5037,6 +5062,7 @@
 		BFA1EEE52A4CF56000435A0F /* ScheduleMeetingUpdateViewConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingUpdateViewConfiguration.swift; sourceTree = "<group>"; };
 		BFA1EEE72A4CF5A500435A0F /* ScheduleMeetingUpdateOccurrenceViewConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingUpdateOccurrenceViewConfiguration.swift; sourceTree = "<group>"; };
 		BFA1EEE92A4CF69700435A0F /* ScheduleMeetingNewViewConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingNewViewConfiguration.swift; sourceTree = "<group>"; };
+		BFA2A21A2DAC9E4F00E8673D /* SubscriptionPurchaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionPurchaseView.swift; sourceTree = "<group>"; };
 		BFA55256245F849F009FE3A6 /* AddToChatMenuPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToChatMenuPageViewController.swift; sourceTree = "<group>"; };
 		BFA6CD59263223B100791E02 /* MeetingFloatingPanelViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingFloatingPanelViewModelTests.swift; sourceTree = "<group>"; };
 		BFAAF71E252E9E960053A9BF /* FilesExplorerListSourceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilesExplorerListSourceProtocol.swift; sourceTree = "<group>"; };
@@ -5142,6 +5168,8 @@
 		BFFB134E2908EF3100A6B2CA /* ActiveCallViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActiveCallViewModelTests.swift; sourceTree = "<group>"; };
 		BFFD20DD2BC68D41009885F0 /* DisplayMode+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DisplayMode+Additions.swift"; sourceTree = "<group>"; };
 		BFFD20E62BC784AD009885F0 /* SearchResultMapperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultMapperTests.swift; sourceTree = "<group>"; };
+		BFFE078D2DC03C2000DFBC69 /* SubscriptionPurchasePlansView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionPurchasePlansView.swift; sourceTree = "<group>"; };
+		BFFE079D2DC0465B00DFBC69 /* SubscriptionPurchaseBottomButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionPurchaseBottomButtonView.swift; sourceTree = "<group>"; };
 		BFFE2288292F2F4B0063CFF2 /* FutureMeetingSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FutureMeetingSection.swift; sourceTree = "<group>"; };
 		BFFE228A292F8DB30063CFF2 /* MeetingsListHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingsListHeaderView.swift; sourceTree = "<group>"; };
 		BFFE2292293488980063CFF2 /* FutureMeetingRoomViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FutureMeetingRoomViewModel.swift; sourceTree = "<group>"; };
@@ -10986,6 +11014,7 @@
 		B59580A32A1478AE00E5FC1C /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				BFA2A2192DAC9E3400E8673D /* SubscriptionsScreen */,
 				B59580A42A1478C300E5FC1C /* Upgrade Plan View */,
 			);
 			path = Views;
@@ -12302,6 +12331,27 @@
 				BF943E9A23554181001C18E0 /* PushNotificationControl.swift */,
 			);
 			path = DND;
+			sourceTree = "<group>";
+		};
+		BFA2A2192DAC9E3400E8673D /* SubscriptionsScreen */ = {
+			isa = PBXGroup;
+			children = (
+				BF0FE7602DB312FC0083E23B /* SubscriptionPurchaseBenefitsView.swift */,
+				BFFE079D2DC0465B00DFBC69 /* SubscriptionPurchaseBottomButtonView.swift */,
+				BF0FE7E52DB9AB060083E23B /* SubscriptionPurchaseChipsSelectorView.swift */,
+				BF0FE75B2DB3129C0083E23B /* SubscriptionPurchaseFeaturesView.swift */,
+				BF0FE7572DB312150083E23B /* SubscriptionPurchaseFeatureView.swift */,
+				BF0FE7BD2DB85AD20083E23B /* SubscriptionPurchaseFreePlanView.swift */,
+				BF0FE7502DB311D10083E23B /* SubscriptionPurchaseHeaderView.swift */,
+				BF0FE7662DB315140083E23B /* SubscriptionPurchasePageContentView.swift */,
+				BF0FE76A2DB315B00083E23B /* SubscriptionPurchasePageHeaderView.swift */,
+				BF0FE7FE2DBED83B0083E23B /* SubscriptionPurchasePlanCardsView.swift */,
+				BF0FE7FB2DBED5B10083E23B /* SubscriptionPurchasePlanCardView.swift */,
+				BFFE078D2DC03C2000DFBC69 /* SubscriptionPurchasePlansView.swift */,
+				BF0FE7DB2DB99FCE0083E23B /* SubscriptionPurchaseRouter.swift */,
+				BFA2A21A2DAC9E4F00E8673D /* SubscriptionPurchaseView.swift */,
+			);
+			path = SubscriptionsScreen;
 			sourceTree = "<group>";
 		};
 		BFAC873525FEF1F3009CA3F6 /* AudioVideo */ = {
@@ -15421,6 +15471,20 @@
 				C450CFB725B83E5F005C707D /* StreamingInfoRepository.swift in Sources */,
 				C450CFC325B84350005C707D /* StreamingInfoUseCase.swift in Sources */,
 				5D79B51F249849580070FECD /* String+MarkedString.swift in Sources */,
+				BF0FE7612DB312FC0083E23B /* SubscriptionPurchaseBenefitsView.swift in Sources */,
+				BFFE079E2DC0465B00DFBC69 /* SubscriptionPurchaseBottomButtonView.swift in Sources */,
+				BF0FE7E62DB9AB060083E23B /* SubscriptionPurchaseChipsSelectorView.swift in Sources */,
+				BF0FE75C2DB3129C0083E23B /* SubscriptionPurchaseFeaturesView.swift in Sources */,
+				BF0FE7582DB312150083E23B /* SubscriptionPurchaseFeatureView.swift in Sources */,
+				BF0FE7BE2DB85AD20083E23B /* SubscriptionPurchaseFreePlanView.swift in Sources */,
+				BF0FE7512DB311D10083E23B /* SubscriptionPurchaseHeaderView.swift in Sources */,
+				BF0FE7672DB315140083E23B /* SubscriptionPurchasePageContentView.swift in Sources */,
+				BF0FE76B2DB315B00083E23B /* SubscriptionPurchasePageHeaderView.swift in Sources */,
+				BF0FE7FF2DBED83B0083E23B /* SubscriptionPurchasePlanCardsView.swift in Sources */,
+				BF0FE7FC2DBED5B10083E23B /* SubscriptionPurchasePlanCardView.swift in Sources */,
+				BFFE078E2DC03C2000DFBC69 /* SubscriptionPurchasePlansView.swift in Sources */,
+				BF0FE7DC2DB99FCE0083E23B /* SubscriptionPurchaseRouter.swift in Sources */,
+				BFA2A21B2DAC9E4F00E8673D /* SubscriptionPurchaseView.swift in Sources */,
 				B695B608264B43160050DF09 /* SVIndefiniteAnimatedView.m in Sources */,
 				B695B602264B43160050DF09 /* SVProgressAnimatedView.m in Sources */,
 				B695B605264B43160050DF09 /* SVProgressHUD.m in Sources */,
