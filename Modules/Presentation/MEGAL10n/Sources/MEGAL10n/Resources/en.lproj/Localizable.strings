@@ -4632,3 +4632,45 @@
 "onboarding.cta.cameraBackups.buttons.enable"="Enable Camera uploads";
 /* Onboarding Camera Backups CTA *Skip* button */
 "onboarding.cta.cameraBackups.buttons.skip"="Skip for now";
+/* String explaining the auto-renewal policy of the Pro subscription. */
+"subscriptionPurchase.autoRenewDescription"="Subscriptions are renewed automatically for successive subscription periods of the same duration and at the same price as the initial period chosen.\n\nYou can cancel your Pro plan anytime but no later than 24 hours before your next subscription payment is due. Learn how to manage your subscription in your settings.";
+/* Title shown for the free plan card */
+"subscriptionPurchase.freePlanCard.title"="Get started with our Free plan";
+/* Description shown for the free plan card */
+"subscriptionPurchase.freePlanCard.description"="We offers generous amount of storage and transfer quota at no charge, so you can try MEGA at no risk";
+/* First benefit shown for the free plan card */
+"subscriptionPurchase.freePlanCard.feature.one"="Free 20 GB of storage";
+/* Second benefit shown for the free plan card */
+"subscriptionPurchase.freePlanCard.feature.two"="Limited transfers";
+/* Button title for the free plan card */
+"subscriptionPurchase.freePlanCard.button.title"="Get started for free";
+/* Displays the amount of storage included in the subscription plan */
+"subscriptionPurchase.plan.storage"="%@ storage";
+/* Displays the amount of data transfer included in the subscription plan */
+"subscriptionPurchase.plan.transfer"="%@ transfer";
+/* Displays the total amount when billed yearly*/
+"subscriptionPurchase.plan.billedYearly"="%@ billed yearly";
+/* Button title to cancel the subscription purchase.*/
+"subscriptionPurchase.maybeLater"="Maybe later";
+/* Title for the features of pro plan in the subscription purchase screen.*/
+"subscriptionPurchase.featuresOfProPlan.title"="Additional benefits of Pro plans";
+/* Features of pro plan in the subscription purchase screen.*/
+"subscriptionPurchase.featuresOfProPlan.message"="• Password-protected links\n\n• Links with expiry dates\n\n• Transfer quota sharing\n\n• Rewind folders up to 180 days\n\n• Unlimited calls and meetings\n\n• Schedule rubbish bin clearing between 7 days and 10 years\n\n• Priority support";
+/* Title for the first subscription feature: generous storage capacity */
+"subscriptionPurchase.feature.one.title"="Generous storage";
+/* Description for the first subscription feature: details about available storage */
+"subscriptionPurchase.feature.one.description"="Store unlimited data up to 16 TB of storage";
+/* Title for the second subscription feature: transfer quota sharing */
+"subscriptionPurchase.feature.two.title"="Transfer sharing";
+/* Description for the second subscription feature: how shared users can use your quota */
+"subscriptionPurchase.feature.two.description"="People you share items with can use your quota to download and stream files";
+/* Title for the third subscription feature: MEGA VPN service */
+"subscriptionPurchase.feature.three.title"="MEGA VPN";
+/* Description for the third subscription feature: benefits of using the MEGA VPN */
+"subscriptionPurchase.feature.three.description"="Keep your online life safe, fast, and easy with our high-speed VPN";
+/* Title for the fourth subscription feature: MEGA Pass password manager */
+"subscriptionPurchase.feature.four.title"="MEGA Pass";
+/* Description for the fourth subscription feature: benefits of using MEGA Pass for password management */
+"subscriptionPurchase.feature.four.description"="Organise all your passwords and keep them safe with our password manager";
+/* Title for all the feature in subscription purchase view. */
+"subscriptionPurchase.feature.title"="You’ll get:";

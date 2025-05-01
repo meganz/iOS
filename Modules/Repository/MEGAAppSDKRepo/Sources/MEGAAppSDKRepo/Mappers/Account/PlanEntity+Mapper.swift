@@ -61,7 +61,11 @@ fileprivate extension PlanEntity {
         formattedPrice = numberFormatter.string(for: product.price) ?? ""
         currency = numberFormatter.currencyCode
         price = product.price.doubleValue
-        
+
+        formattedMonthlyPriceForYearlyPlan = subscriptionCycle == .yearly
+        ? numberFormatter.string(for: Int(ceil(price / 12.0)))
+        : nil
+
         storage = displayStringForGBValue(gbValue: storageLimit)
         transfer = displayStringForGBValue(gbValue: transferLimit)
     }

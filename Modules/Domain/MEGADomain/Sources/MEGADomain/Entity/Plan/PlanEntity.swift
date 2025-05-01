@@ -8,16 +8,33 @@ public struct PlanEntity: Sendable {
     public var transfer: String
     public var price: Double
     public var formattedPrice: String
-    
-    public init(productIdentifier: String = "",
-                type: AccountTypeEntity = .free,
-                name: String = "",
-                currency: String = "",
-                subscriptionCycle: SubscriptionCycleEntity = .none,
-                storage: String = "",
-                transfer: String = "",
-                price: Double = 0,
-                formattedPrice: String = "") {
+
+    /// A formatted string representing the equivalent monthly price for a yearly plan.
+    ///
+    /// This value is calculated by dividing the yearly price by 12 and formatting it for display.
+    /// It is not applicable to monthly plans. If the yearly price is unavailable or cannot be formatted,
+    /// the value will be `nil`.
+    ///
+    /// Example:
+    /// ```swift
+    /// let price = formattedMonthlyPriceForYearlyPlan // "$4.99"
+    /// ```
+    ///
+    /// - Note: This value is intended for display purposes only and is based on the yearly subscription price.
+    public var formattedMonthlyPriceForYearlyPlan: String?
+
+    public init(
+        productIdentifier: String = "",
+        type: AccountTypeEntity = .free,
+        name: String = "",
+        currency: String = "",
+        subscriptionCycle: SubscriptionCycleEntity = .none,
+        storage: String = "",
+        transfer: String = "",
+        price: Double = 0,
+        formattedPrice: String = "",
+        formattedMonthlyPriceForYearlyPlan: String? = nil
+    ) {
         self.productIdentifier = productIdentifier
         self.type = type
         self.name = name
@@ -27,6 +44,7 @@ public struct PlanEntity: Sendable {
         self.transfer = transfer
         self.price = price
         self.formattedPrice = formattedPrice
+        self.formattedMonthlyPriceForYearlyPlan = formattedMonthlyPriceForYearlyPlan
     }
 }
 
