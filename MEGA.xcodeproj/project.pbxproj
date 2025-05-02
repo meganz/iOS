@@ -2501,6 +2501,8 @@
 		C46527F126526C2300371270 /* BannerContainerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46527F026526C2300371270 /* BannerContainerViewModel.swift */; };
 		C46527FB26526C3100371270 /* BannerContainerViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46527FA26526C3100371270 /* BannerContainerViewRouter.swift */; };
 		C4652805265294C700371270 /* BannerContainer.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C4652804265294C700371270 /* BannerContainer.storyboard */; };
+		C465E9F42DC2E5C80016A6D3 /* PermissionOnboardingViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C465E9F32DC2E5B90016A6D3 /* PermissionOnboardingViewModelTests.swift */; };
+		C465EA072DC2F0610016A6D3 /* PermissionOnboardingRouterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C465EA052DC2F05B0016A6D3 /* PermissionOnboardingRouterTests.swift */; };
 		C467AD4A26A8150D00AFE4D2 /* MEGASegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = C467AD4926A8150D00AFE4D2 /* MEGASegmentedControl.swift */; };
 		C467AD5026A8656000AFE4D2 /* DynamicTypeComponentProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = C467AD4F26A8656000AFE4D2 /* DynamicTypeComponentProtocol.swift */; };
 		C46978572CAE8D0F007AF546 /* CloudDriveDownloadTransfersListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46978552CAE8D0F007AF546 /* CloudDriveDownloadTransfersListener.swift */; };
@@ -2573,6 +2575,7 @@
 		C4D675142BB2CF0F000A1F79 /* CloudDriveQuickUploadActionRouterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D675132BB2CF0F000A1F79 /* CloudDriveQuickUploadActionRouterTests.swift */; };
 		C4DAFB962BBE8C530028FC90 /* NewCloudDriveNodeSourceUpdatesListenerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4DAFB952BBE8C530028FC90 /* NewCloudDriveNodeSourceUpdatesListenerTests.swift */; };
 		C4DCB5CD2DBA06EE002D6FEF /* PermissionOnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4DCB5CC2DBA06C9002D6FEF /* PermissionOnboardingView.swift */; };
+		C4E0B1712DC087A800B45998 /* PermissionOnboardingRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E0B1702DC087A300B45998 /* PermissionOnboardingRouter.swift */; };
 		C4EB6DBB2B4BF68B007A94E3 /* AppExitHandlerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C4EB6DBA2B4BF68B007A94E3 /* AppExitHandlerManager.m */; };
 		C4EDB73826655229006A114F /* RoundedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EDB73726655229006A114F /* RoundedView.swift */; };
 		C4F06F6A2B690C4B005C1A3D /* MockUpgradeEncouragementShowTimeTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F06F692B690C4B005C1A3D /* MockUpgradeEncouragementShowTimeTracker.swift */; };
@@ -5229,6 +5232,8 @@
 		C46527F026526C2300371270 /* BannerContainerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerContainerViewModel.swift; sourceTree = "<group>"; };
 		C46527FA26526C3100371270 /* BannerContainerViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerContainerViewRouter.swift; sourceTree = "<group>"; };
 		C4652804265294C700371270 /* BannerContainer.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = BannerContainer.storyboard; sourceTree = "<group>"; };
+		C465E9F32DC2E5B90016A6D3 /* PermissionOnboardingViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionOnboardingViewModelTests.swift; sourceTree = "<group>"; };
+		C465EA052DC2F05B0016A6D3 /* PermissionOnboardingRouterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionOnboardingRouterTests.swift; sourceTree = "<group>"; };
 		C467AD4926A8150D00AFE4D2 /* MEGASegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGASegmentedControl.swift; sourceTree = "<group>"; };
 		C467AD4F26A8656000AFE4D2 /* DynamicTypeComponentProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicTypeComponentProtocol.swift; sourceTree = "<group>"; };
 		C46978552CAE8D0F007AF546 /* CloudDriveDownloadTransfersListener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudDriveDownloadTransfersListener.swift; sourceTree = "<group>"; };
@@ -5298,6 +5303,7 @@
 		C4D675132BB2CF0F000A1F79 /* CloudDriveQuickUploadActionRouterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CloudDriveQuickUploadActionRouterTests.swift; sourceTree = "<group>"; };
 		C4DAFB952BBE8C530028FC90 /* NewCloudDriveNodeSourceUpdatesListenerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewCloudDriveNodeSourceUpdatesListenerTests.swift; sourceTree = "<group>"; };
 		C4DCB5CC2DBA06C9002D6FEF /* PermissionOnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionOnboardingView.swift; sourceTree = "<group>"; };
+		C4E0B1702DC087A300B45998 /* PermissionOnboardingRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionOnboardingRouter.swift; sourceTree = "<group>"; };
 		C4EB6DBA2B4BF68B007A94E3 /* AppExitHandlerManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppExitHandlerManager.m; sourceTree = "<group>"; };
 		C4EB6DBC2B4BF6B7007A94E3 /* AppExitHandlerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppExitHandlerManager.h; sourceTree = "<group>"; };
 		C4EDB73726655229006A114F /* RoundedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedView.swift; sourceTree = "<group>"; };
@@ -11730,6 +11736,7 @@
 				837B9C0824781B1600D409B4 /* NodeActions */,
 				9471F6A82BA069AA00BA873B /* Notifications */,
 				12B1E58128751FAA00D23A58 /* PageStayTimeTracker */,
+				C465E9F22DC2E5B50016A6D3 /* PermissionOnboarding */,
 				9495818C2A43295F0071573B /* Permissions */,
 				32F03D54287D222800C518A4 /* Photos */,
 				B5000FC32A1E219400E06478 /* Plan */,
@@ -12720,6 +12727,15 @@
 			path = BannerContainerScene;
 			sourceTree = "<group>";
 		};
+		C465E9F22DC2E5B50016A6D3 /* PermissionOnboarding */ = {
+			isa = PBXGroup;
+			children = (
+				C465EA052DC2F05B0016A6D3 /* PermissionOnboardingRouterTests.swift */,
+				C465E9F32DC2E5B90016A6D3 /* PermissionOnboardingViewModelTests.swift */,
+			);
+			path = PermissionOnboarding;
+			sourceTree = "<group>";
+		};
 		C467AD4D26A8651400AFE4D2 /* DynamicType */ = {
 			isa = PBXGroup;
 			children = (
@@ -12976,6 +12992,7 @@
 		C4DCB5CB2DBA06C4002D6FEF /* Onboarding */ = {
 			isa = PBXGroup;
 			children = (
+				C4E0B1702DC087A300B45998 /* PermissionOnboardingRouter.swift */,
 				C4DCB5CC2DBA06C9002D6FEF /* PermissionOnboardingView.swift */,
 				C4CBF0002DBB835400834EF9 /* PermissionOnboardingViewModel.swift */,
 			);
@@ -15159,6 +15176,7 @@
 				9422B9F02A41A331007AA5D1 /* PermissionAlertRouting.swift in Sources */,
 				25D840692A9EE0E50026D288 /* PermissionAlertViewModifier.swift in Sources */,
 				9495DBB12A4086BF00FA22EE /* PermissionModalModel.swift in Sources */,
+				C4E0B1712DC087A800B45998 /* PermissionOnboardingRouter.swift in Sources */,
 				C4DCB5CD2DBA06EE002D6FEF /* PermissionOnboardingView.swift in Sources */,
 				C4CBF0012DBB835B00834EF9 /* PermissionOnboardingViewModel.swift in Sources */,
 				B6C9CB0D27FBC2220073BA1A /* PHAsset+CU.swift in Sources */,
@@ -16278,6 +16296,8 @@
 				94A1445E2C9DE47A00C34A98 /* PasteImagePreviewViewModelTests.swift in Sources */,
 				25D840712A9EE9330026D288 /* PermissionAlertModelTests.swift in Sources */,
 				946544862A4446D50038D8FC /* PermissionAlertRouterTests.swift in Sources */,
+				C465EA072DC2F0610016A6D3 /* PermissionOnboardingRouterTests.swift in Sources */,
+				C465E9F42DC2E5C80016A6D3 /* PermissionOnboardingViewModelTests.swift in Sources */,
 				160711652A5594AD00970A19 /* PhotoAlbumContainerViewModelTests.swift in Sources */,
 				B6A6E1A3287BD08D00179806 /* PhotoBrowserDataProvider_nodeEntity_Tests.swift in Sources */,
 				0E43E13D2B2F958E0079700A /* PhotoBrowserViewModelTests.swift in Sources */,

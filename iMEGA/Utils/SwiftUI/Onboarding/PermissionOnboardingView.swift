@@ -7,9 +7,11 @@ import SwiftUI
 struct PermissionOnboardingView: View {
     @Environment(\.verticalSizeClass) private var verticalSizeClass
 
-    let viewModel = PermissionOnboardingViewModel()
+    let viewModel: PermissionOnboardingViewModel
 
-    init() {}
+    init(viewModel: PermissionOnboardingViewModel) {
+        self.viewModel = viewModel
+    }
 
     var body: some View {
         content
@@ -128,7 +130,11 @@ struct PermissionOnboardingView: View {
         MEGAButton(
             viewModel.primaryButtonTitle,
             type: .primary,
-            action: viewModel.onPrimaryButtonTap
+            action: {
+                Task {
+                    await viewModel.onPrimaryButtonTap()
+                }
+            }
         )
     }
 
@@ -136,11 +142,11 @@ struct PermissionOnboardingView: View {
         MEGAButton(
             viewModel.secondaryButtonTitle,
             type: .textOnly,
-            action: viewModel.onSecondaryButtonTap
+            action: {
+                Task {
+                    await viewModel.onSecondaryButtonTap()
+                }
+            }
         )
     }
-}
-
-#Preview {
-    PermissionOnboardingView()
 }

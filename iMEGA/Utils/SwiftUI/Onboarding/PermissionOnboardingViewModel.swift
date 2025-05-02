@@ -1,9 +1,41 @@
-import MEGAInfrastructure
-import MEGAL10n
+import MEGAPermissions
 import MEGAPresentation
-import SwiftUI
 
-struct PermissionOnboardingViewModel {
+protocol PermissionOnboardingRequesting: Sendable {
+    func requestPermission() async
+}
+
+struct PermissionOnboardingRequester: PermissionOnboardingRequesting {
+    enum PermissionType {
+        case notifications
+        case photos
+    }
+    private let devicePermissionHandler: any DevicePermissionsHandling
+    private let permissionType: PermissionType
+    
+    init(
+        permissionType: PermissionType,
+        devicePermissionHandler: some DevicePermissionsHandling = DevicePermissionsHandler.makeHandler()
+    ) {
+        self.permissionType = permissionType
+        self.devicePermissionHandler = devicePermissionHandler
+    }
+
+    func requestPermission() async {
+        switch permissionType {
+        case .notifications:
+            _ = await devicePermissionHandler.requestNotificationsPermission()
+        case .photos:
+            _ = await devicePermissionHandler.requestPhotoLibraryAccessPermissions()
+        }
+    }
+}
+
+final class PermissionOnboardingViewModel: ViewModel<PermissionOnboardingViewModel.Route> {
+    enum Route {
+        case finished
+    }
+
     let image: ImageResource
     let title: String
     let description: String
@@ -12,20 +44,32 @@ struct PermissionOnboardingViewModel {
     let primaryButtonTitle: String
     let secondaryButtonTitle: String
 
-    init() {
-        image = .notificationCta
-        title = Strings.Localizable.Onboarding.Cta.CameraBackups.title
-        description = Strings.Localizable.Onboarding.Cta.CameraBackups.explanation
-        note = Strings.Localizable.Onboarding.Cta.CameraBackups.note
-        primaryButtonTitle = Strings.Localizable.Onboarding.Cta.CameraBackups.Buttons.enable
-        secondaryButtonTitle = Strings.Localizable.Onboarding.Cta.CameraBackups.Buttons.skip
+    private let permissionRequester: any PermissionOnboardingRequesting
+
+    init(
+        image: ImageResource,
+        title: String,
+        description: String,
+        note: String?,
+        primaryButtonTitle: String,
+        secondaryButtonTitle: String,
+        permissionRequester: some PermissionOnboardingRequesting
+    ) {
+        self.image = image
+        self.title = title
+        self.description = description
+        self.note = note
+        self.primaryButtonTitle = primaryButtonTitle
+        self.secondaryButtonTitle = secondaryButtonTitle
+        self.permissionRequester = permissionRequester
     }
 
-    func onPrimaryButtonTap() {
-        // Inject biz logic later
+    func onPrimaryButtonTap() async {
+        await permissionRequester.requestPermission()
+        routeTo(.finished)
     }
 
-    func onSecondaryButtonTap() {
-        // Inject biz logic later
+    func onSecondaryButtonTap() async {
+        routeTo(.finished)
     }
 }
