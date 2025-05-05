@@ -260,7 +260,7 @@ final class ContextMenuActionsTests: XCTestCase {
                                                 .setIsBackupsChild(true)
                                                 .build())
 
-        let excludedQuickActions: [QuickActionEntity] = [.manageLink, .removeLink, .manageFolder, .rename, .removeSharing, .leaveSharing, .sendToChat, .saveToPhotos, .hide, .unhide, .settings]
+        let excludedQuickActions: [QuickActionEntity] = [.manageLink, .removeLink, .manageFolder, .rename, .removeSharing, .leaveSharing, .sendToChat, .saveToPhotos, .hide, .unhide, .settings, .dispute]
         let excludedDisplayActions: [DisplayActionEntity] = [.mediaDiscovery, .clearRubbishBin, .filter, .sort, .filterActive, .newPlaylist]
         
         XCTAssertTrue(filterQuickActions(from: decomposeMenuIntoActions(menu: menuEntity)) == QuickActionEntity
@@ -296,7 +296,7 @@ final class ContextMenuActionsTests: XCTestCase {
                                                 .setIsAFolder(true)
                                                 .build())
 
-        let excludedQuickActions: [QuickActionEntity] = [.shareLink, .manageLink, .removeLink, .manageFolder, .removeSharing, .shareFolder, .rename, .leaveSharing, .sendToChat, .saveToPhotos, .hide, .unhide, .settings]
+        let excludedQuickActions: [QuickActionEntity] = [.shareLink, .manageLink, .removeLink, .manageFolder, .removeSharing, .shareFolder, .rename, .leaveSharing, .sendToChat, .saveToPhotos, .hide, .unhide, .settings, .dispute]
         let excludedDisplayActions: [DisplayActionEntity] = [.clearRubbishBin, .filter, .sort, .filterActive, .newPlaylist]
         
         XCTAssertTrue(filterQuickActions(from: decomposeMenuIntoActions(menu: menuEntity)) == QuickActionEntity
@@ -319,7 +319,7 @@ final class ContextMenuActionsTests: XCTestCase {
                                                 .setIsAFolder(true)
                                                 .build())
 
-        let excludedQuickActions: [QuickActionEntity] = [.shareLink, .manageLink, .removeLink, .manageFolder, .removeSharing, .shareFolder, .rename, .sendToChat, .saveToPhotos, .hide, .unhide, .settings]
+        let excludedQuickActions: [QuickActionEntity] = [.shareLink, .manageLink, .removeLink, .manageFolder, .removeSharing, .shareFolder, .rename, .sendToChat, .saveToPhotos, .hide, .unhide, .settings, .dispute]
         let excludedDisplayActions: [DisplayActionEntity] = [.clearRubbishBin, .filter, .sort, .filterActive, .newPlaylist]
         
         XCTAssertTrue(filterQuickActions(from: decomposeMenuIntoActions(menu: menuEntity)) == QuickActionEntity
@@ -344,7 +344,7 @@ final class ContextMenuActionsTests: XCTestCase {
                                                 .setIsAFolder(true)
                                                 .build())
 
-        let excludedQuickActions: [QuickActionEntity] = [.manageLink, .removeLink, .leaveSharing, .shareFolder, .sendToChat, .saveToPhotos, .hide, .unhide, .settings]
+        let excludedQuickActions: [QuickActionEntity] = [.manageLink, .removeLink, .leaveSharing, .shareFolder, .sendToChat, .saveToPhotos, .hide, .unhide, .settings, .dispute]
         let excludedDisplayActions: [DisplayActionEntity] = [.clearRubbishBin, .filter, .sort, .filterActive, .newPlaylist]
 
         XCTAssertTrue(filterQuickActions(from: decomposeMenuIntoActions(menu: menuEntity)) == QuickActionEntity
@@ -370,8 +370,31 @@ final class ContextMenuActionsTests: XCTestCase {
                                                 .setIsAFolder(true)
                                                 .build())
 
-        let excludedQuickActions: [QuickActionEntity] = [.shareLink, .leaveSharing, .shareFolder, .sendToChat, .saveToPhotos, .hide, .unhide, .settings]
+        let excludedQuickActions: [QuickActionEntity] = [.shareLink, .leaveSharing, .shareFolder, .sendToChat, .saveToPhotos, .hide, .unhide, .settings, .dispute]
         let excludedDisplayActions: [DisplayActionEntity] = [.clearRubbishBin, .filter, .sort, .filterActive, .newPlaylist]
+        
+        XCTAssertTrue(filterQuickActions(from: decomposeMenuIntoActions(menu: menuEntity)) == QuickActionEntity
+                                                                                                            .allCases
+                                                                                                            .filter { !excludedQuickActions.contains($0) })
+        
+        XCTAssertTrue(filterDisplayActions(from: decomposeMenuIntoActions(menu: menuEntity)) == DisplayActionEntity
+                                                                                                                .allCases
+                                                                                                                .filter { !excludedDisplayActions.contains($0) })
+                                                            
+        XCTAssertTrue(filterSortActions(from: decomposeMenuIntoActions(menu: menuEntity)) == SortOrderEntity
+                                                                                                        .allValid)
+    }
+    
+    func testQuickFolderActionMenu_givenTakenDownFolder_displaysCorrectActions() throws {
+        let menuEntity = try XCTUnwrap(ContextMenuBuilder()
+                                                .setType(.menu(type: .display))
+                                                .setAccessLevel(.owner)
+                                                .setIsAFolder(true)
+                                                .setIsTakenDown(true)
+                                                .build())
+
+        let excludedQuickActions: [QuickActionEntity] = [.download, .shareLink, .manageLink, .removeLink, .shareFolder, .manageFolder, .copy, .removeSharing, .leaveSharing, .sendToChat, .saveToPhotos, .hide, .unhide, .settings]
+        let excludedDisplayActions: [DisplayActionEntity] = [.clearRubbishBin, .filter, .sort, .filterActive, .newPlaylist, .mediaDiscovery]
         
         XCTAssertTrue(filterQuickActions(from: decomposeMenuIntoActions(menu: menuEntity)) == QuickActionEntity
                                                                                                             .allCases

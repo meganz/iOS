@@ -188,6 +188,10 @@ extension ContextMenuBuilder {
         CMActionEntity(type: .quickActions(actionType: .settings))
     }
     
+    var dispute: CMActionEntity {
+        CMActionEntity(type: .quickActions(actionType: .dispute))
+    }
+    
     // MARK: - Rubbish Bin Actions
     
     var restore: CMActionEntity {

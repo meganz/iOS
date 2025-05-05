@@ -40,7 +40,8 @@ import Foundation
 ///     - shouldJoiningMeeting: Indicated whether or not to join a meeting
 ///     - sharedLinkStatus: Indicates current status of shared link
 ///     - isArchivedChatsVisible: Show archived chats action if exists some chat archived
-///     - isHidden: Indicates if the current node is hidden 
+///     - isHidden: Indicates if the current node is hidden
+///     - isTakenDown: Indicates if the current node is taken down
 ///
 public struct CMConfigEntity: Sendable {
     public let menuType: CMElementTypeEntity
@@ -89,6 +90,7 @@ public struct CMConfigEntity: Sendable {
     public var isHidden: Bool?
     public var isCameraUploadsEnabled: Bool
     public var isPlaylistSharingFeatureFlagEnabled: Bool
+    public var isTakenDown: Bool
 
     public init(
         menuType: CMElementTypeEntity,
@@ -136,7 +138,8 @@ public struct CMConfigEntity: Sendable {
         isFilterActive: Bool = false,
         isHidden: Bool? = nil,
         isCameraUploadsEnabled: Bool = false,
-        isPlaylistSharingFeatureFlagEnabled: Bool = false
+        isPlaylistSharingFeatureFlagEnabled: Bool = false,
+        isTakenDown: Bool = false
     ) {
         self.menuType = menuType
         self.viewMode = viewMode
@@ -184,5 +187,6 @@ public struct CMConfigEntity: Sendable {
         self.isHidden = isHidden
         self.isCameraUploadsEnabled = isCameraUploadsEnabled
         self.isPlaylistSharingFeatureFlagEnabled = isPlaylistSharingFeatureFlagEnabled
+        self.isTakenDown = isTakenDown
     }
 }

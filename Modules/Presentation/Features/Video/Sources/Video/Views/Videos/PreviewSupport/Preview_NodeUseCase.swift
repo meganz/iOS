@@ -133,4 +133,8 @@ public final class Preview_NodeUseCase: NodeUseCaseProtocol {
         }
         .eraseToAnyAsyncThrowingSequence()
     }
+    
+    public func isFileTakenDown(_ nodeHandle: HandleEntity) async -> Bool {
+        false
+    }
 }

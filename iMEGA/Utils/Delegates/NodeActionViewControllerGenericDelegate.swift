@@ -172,6 +172,12 @@ class NodeActionViewControllerGenericDelegate: NodeActionViewControllerDelegate 
         
         case .addTo:
             addTo(mode: .collection, nodes: [node.toNodeEntity()])
+        case .disputeTakedown:
+            guard let url = NSURL(string: MEGADisputeURL) else {
+                return
+            }
+                
+            url.mnz_presentSafariViewController()
         default:
             break
         }

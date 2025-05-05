@@ -123,11 +123,9 @@ extension ContextMenuModel {
         case .unhide:
             return ContextMenuDataModel(identifier: "unhide", title: Strings.Localizable.General.MenuAction.Unhide.title, image: UIImage.eyeOn)
         case .settings:
-            return ContextMenuDataModel(
-                identifier: "settings",
-                title: Strings.Localizable.settingsTitle,
-                image: .iconSettings
-            )
+            return ContextMenuDataModel(identifier: "settings", title: Strings.Localizable.settingsTitle, image: .iconSettings)
+        case .dispute:
+            return ContextMenuDataModel(identifier: "dispute", title: Strings.Localizable.disputeTakedown, image: UIImage.disputeTakedown)
         }
     }
 

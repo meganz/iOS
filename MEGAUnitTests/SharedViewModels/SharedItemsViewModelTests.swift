@@ -1,12 +1,10 @@
 @testable import MEGA
-
-// swiftlint:disable sorted_imports
-import MEGADomain
-import MEGADesignToken
-import MEGADomainMock
 import MEGAAppPresentation
 import MEGAAppPresentationMock
 import MEGAAppSDKRepoMock
+import MEGADesignToken
+import MEGADomain
+import MEGADomainMock
 import MEGASwift
 import XCTest
 
@@ -196,11 +194,57 @@ final class SharedItemsViewModelTests: XCTestCase {
             XCTAssertEqual(sut.tagsForNode(MockNode(handle: 1, tags: tagsStringList), with: data.searchText), data.output)
         }
     }
+    
+    @MainActor
+    func testIsNodeTakenDown_nodeIsFolder_returnsFalse() async {
+        let folderNode = NodeEntity(
+            nodeType: .folder,
+            handle: 1,
+            isFolder: true,
+            isTakenDown: true
+        )
+        let stub = MockNodeUseCase(nodes: [1: folderNode])
+        let sut = makeSUT(nodeUseCase: stub)
+        let result = await sut.isFileTakenDown(folderNode.handle)
+        
+        XCTAssertFalse(result, "folders—even if marked ‘taken down’—should return false")
+    }
+
+    @MainActor
+    func testIsNodeTakenDown_fileNotTakenDown_returnsFalse() async {
+        let fileNode = NodeEntity(
+            nodeType: .file,
+            handle: 1,
+            isFile: true,
+            isTakenDown: false
+        )
+        let stub = MockNodeUseCase(nodes: [1: fileNode])
+        let sut = makeSUT(nodeUseCase: stub)
+        
+        let result = await sut.isFileTakenDown(fileNode.handle)
+        XCTAssertFalse(result, "files not taken down should return false")
+    }
+
+    @MainActor
+    func testIsNodeTakenDown_fileTakenDown_returnsTrue() async {
+        let fileNode = NodeEntity(
+            nodeType: .file,
+            handle: 1,
+            isFile: true,
+            isTakenDown: true
+        )
+        let stub = MockNodeUseCase(nodes: [1: fileNode])
+        let sut = makeSUT(nodeUseCase: stub)
+        
+        let result = await sut.isFileTakenDown(fileNode.handle)
+        XCTAssertTrue(result, "files not taken down should return false")
+    }
 
     @MainActor private func makeSUT(
         shareUseCase: some ShareUseCaseProtocol = MockShareUseCase(),
         mediaUseCase: some MediaUseCaseProtocol = MockMediaUseCase(),
         saveMediaToPhotosUseCase: some SaveMediaToPhotosUseCaseProtocol = MockSaveMediaToPhotosUseCase(),
+        nodeUseCase: some NodeUseCaseProtocol = MockNodeUseCase(),
         moveToRubbishBinViewModel: some MoveToRubbishBinViewModelProtocol = MockMoveToRubbishBinViewModel(),
         featureFlagProvider: MockFeatureFlagProvider = .init(list: [:]),
         file: StaticString = #file,
@@ -209,6 +253,7 @@ final class SharedItemsViewModelTests: XCTestCase {
         let sut = SharedItemsViewModel(
             shareUseCase: shareUseCase,
             mediaUseCase: mediaUseCase,
+            nodeUseCase: nodeUseCase,
             saveMediaToPhotosUseCase: saveMediaToPhotosUseCase,
             moveToRubbishBinViewModel: moveToRubbishBinViewModel,
             featureFlagProvider: featureFlagProvider
@@ -218,5 +263,3 @@ final class SharedItemsViewModelTests: XCTestCase {
     }
 
 }
-
-// swiftlint:enable sorted_imports

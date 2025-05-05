@@ -1,4 +1,5 @@
 import ChatRepo
+import Foundation
 import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGADesignToken
@@ -26,6 +27,10 @@ extension SharedItemsViewController {
                 fileSearchRepo: FilesSearchRepository.newRepo,
                 videoMediaUseCase: VideoMediaUseCase(
                     videoMediaRepository: VideoMediaRepository.newRepo)),
+            nodeUseCase: NodeUseCase(
+                nodeDataRepository: NodeDataRepository.newRepo,
+                nodeValidationRepository: NodeValidationRepository.newRepo,
+                nodeRepository: NodeRepository.newRepo),
             saveMediaToPhotosUseCase: SaveMediaToPhotosUseCase(
                 downloadFileRepository: DownloadFileRepository.newRepo,
                 fileCacheRepository: FileCacheRepository.newRepo,
@@ -532,6 +537,10 @@ extension SharedItemsViewController {
     @objc func updateMiniPlayerPresenter() {
         AudioPlayerManager.shared.updateMiniPlayerPresenter(self)
     }
+    
+    @objc func presentDisputeInSafari() {
+        NSURL(string: MEGADisputeURL)?.mnz_presentSafariViewController()
+    }
 }
 
 // MARK: - SharedItemsTableViewCellDelegate
@@ -583,5 +592,17 @@ extension SharedItemsViewController: AudioPlayerPresenterProtocol {
     
     public func hasUpdatedContentView() -> Bool {
         additionalSafeAreaInsets.bottom != 0
+    }
+}
+
+extension SharedItemsViewController {
+    @objc func shouldProcessTap(on node: HandleEntity) async -> Bool {
+        let takenDown = await viewModel.isFileTakenDown(node)
+        return !takenDown
+    }
+    
+    @objc func showTakenDownAlert() {
+        let alert = UIAlertController(model: AlertModelFactory.makeTakenDownModel())
+        navigationController?.present(alert, animated: true)
     }
 }

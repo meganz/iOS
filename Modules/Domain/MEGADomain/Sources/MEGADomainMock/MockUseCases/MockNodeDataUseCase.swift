@@ -19,6 +19,7 @@ public final class MockNodeDataUseCase: NodeUseCaseProtocol, @unchecked Sendable
     private let isNodeRestorable: Bool
     private let _rootNode: NodeEntity?
     private let nodeUpdateAsyncSequence: AnyAsyncSequence<[NodeEntity]>
+    private let isFileTakenDown: Bool
 
     public var labelStringToReturn: Atomic<String>
     public var isMultimediaFileNode_CalledTimes = 0
@@ -39,7 +40,8 @@ public final class MockNodeDataUseCase: NodeUseCaseProtocol, @unchecked Sendable
                 isNodeInRubbishBin: @escaping (HandleEntity) -> Bool = { _ in false },
                 isNodeRestorable: Bool = false,
                 rootNode: NodeEntity? = nil,
-                nodeUpdateAsyncSequence: AnyAsyncSequence<[NodeEntity]> = EmptyAsyncSequence().eraseToAnyAsyncSequence()
+                nodeUpdateAsyncSequence: AnyAsyncSequence<[NodeEntity]> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
+                isFileTakenDown: Bool = false,
     ) {
         self.nodeAccessLevelVariable = nodeAccessLevelVariable
         labelStringToReturn = Atomic(wrappedValue: labelString)
@@ -58,6 +60,7 @@ public final class MockNodeDataUseCase: NodeUseCaseProtocol, @unchecked Sendable
         self.isNodeRestorable = isNodeRestorable
         self._rootNode = rootNode
         self.nodeUpdateAsyncSequence = nodeUpdateAsyncSequence
+        self.isFileTakenDown = isFileTakenDown
     }
     
     public var nodeUpdates: AnyAsyncSequence<[NodeEntity]> {
@@ -154,5 +157,9 @@ public final class MockNodeDataUseCase: NodeUseCaseProtocol, @unchecked Sendable
 
     public func createFolder(with name: String, in parent: NodeEntity) async throws -> NodeEntity {
         try createFolderResult.get()
+    }
+    
+    public func isFileTakenDown(_ nodeHandle: HandleEntity) async -> Bool {
+        isFileTakenDown
     }
 }

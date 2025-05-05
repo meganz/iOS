@@ -1328,6 +1328,7 @@
 		9449D42C2BCDB72300C77972 /* RecentsTableViewHeaderFooterView+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9449D42B2BCDB72300C77972 /* RecentsTableViewHeaderFooterView+Additions.swift */; };
 		944A48BA2DA9A509004FC7D1 /* QRSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 944A48B92DA9A509004FC7D1 /* QRSettingsViewModel.swift */; };
 		944AD0B328EF651F00AB1E59 /* BackupsOCWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 944AD0B228EF651F00AB1E59 /* BackupsOCWrapper.swift */; };
+		944AEA9E2DC8E1BF00E76682 /* AlertModelFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 944AEA9D2DC8E1BF00E76682 /* AlertModelFactory.swift */; };
 		944C3AD42D5A517400C6BFB9 /* AudioQueueLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 944C3AD32D5A516D00C6BFB9 /* AudioQueueLoader.swift */; };
 		944EF8C72D96FCEE008D97C9 /* MainTabBarController+PSA.swift in Sources */ = {isa = PBXBuildFile; fileRef = 944EF8C62D96FCEE008D97C9 /* MainTabBarController+PSA.swift */; };
 		945153A82C7E17F9004E6990 /* ChatRoomsEmptyViewStateFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945153A72C7E17F9004E6990 /* ChatRoomsEmptyViewStateFactoryTests.swift */; };
@@ -4054,6 +4055,7 @@
 		9449D42B2BCDB72300C77972 /* RecentsTableViewHeaderFooterView+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RecentsTableViewHeaderFooterView+Additions.swift"; sourceTree = "<group>"; };
 		944A48B92DA9A509004FC7D1 /* QRSettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRSettingsViewModel.swift; sourceTree = "<group>"; };
 		944AD0B228EF651F00AB1E59 /* BackupsOCWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupsOCWrapper.swift; sourceTree = "<group>"; };
+		944AEA9D2DC8E1BF00E76682 /* AlertModelFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertModelFactory.swift; sourceTree = "<group>"; };
 		944C3AD32D5A516D00C6BFB9 /* AudioQueueLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioQueueLoader.swift; sourceTree = "<group>"; };
 		944EF8C62D96FCEE008D97C9 /* MainTabBarController+PSA.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainTabBarController+PSA.swift"; sourceTree = "<group>"; };
 		945153A72C7E17F9004E6990 /* ChatRoomsEmptyViewStateFactoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomsEmptyViewStateFactoryTests.swift; sourceTree = "<group>"; };
@@ -6967,6 +6969,7 @@
 		415226861A692ECC00EC7BB6 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				944AEA9B2DC8E1AB00E76682 /* Alerts */,
 				A8AA4F6D1ED4295800E7BA23 /* API */,
 				C4EB6DB72B4BF5FD007A94E3 /* AppExitHandler */,
 				940DB9122924D77F004E7349 /* AudioSession */,
@@ -10115,6 +10118,14 @@
 				94485B5A29B9FA74006B919E /* SharedItemsNodeSearcher.swift */,
 			);
 			path = SharedItems;
+			sourceTree = "<group>";
+		};
+		944AEA9B2DC8E1AB00E76682 /* Alerts */ = {
+			isa = PBXGroup;
+			children = (
+				944AEA9D2DC8E1BF00E76682 /* AlertModelFactory.swift */,
+			);
+			path = Alerts;
 			sourceTree = "<group>";
 		};
 		945339CF2A60150500363DAD /* Folder */ = {
@@ -14123,6 +14134,7 @@
 				32F9E684283490A40002132D /* AlbumToolbarProvider.swift in Sources */,
 				0EA150D729B810D2005C6486 /* AlbumType.swift in Sources */,
 				943649D82A4D81B0006CE8B8 /* AlertModel+DevicePermissions.swift in Sources */,
+				944AEA9E2DC8E1BF00E76682 /* AlertModelFactory.swift in Sources */,
 				832DEFEA2AB46199004573D5 /* AllowNonHostToInviteTableViewCell.swift in Sources */,
 				94AF8A132CE4C4E6009B27A9 /* AnalyticsTracking+ShareLink.swift in Sources */,
 				C464FDDE2D9CB74E00274FCD /* AnimatedCollectionViewLayout.swift in Sources */,
