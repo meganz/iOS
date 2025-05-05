@@ -26,6 +26,7 @@ final class AccountUseCaseTests: XCTestCase {
         sessionTransferURLResult: Result<URL, AccountErrorEntity> = .failure(.generic),
         multiFactorAuthCheckResult: Result<Bool, AccountErrorEntity> = .failure(.generic),
         loadUserDataResult: Result<Void, AccountErrorEntity> = .failure(.generic),
+        requestResult: Result<Void, AccountErrorEntity> = .failure(.generic),
         isUpgradeSecuritySuccess: Bool = false,
         bandwidthOverquotaDelay: Int64 = 0,
         isExpiredAccount: Bool = false,
@@ -65,7 +66,8 @@ final class AccountUseCaseTests: XCTestCase {
             onAccountUpdates: onAccountUpdates,
             monitorRefreshAccountPublisher: monitorRefreshAccountPublisher,
             isMonitoringRefreshAccount: isMonitoringRefreshAccount,
-            loadUserDataResult: loadUserDataResult
+            loadUserDataResult: loadUserDataResult,
+            requestResult: requestResult
         )
         return AccountUseCase(repository: repository)
     }
@@ -483,6 +485,25 @@ final class AccountUseCaseTests: XCTestCase {
         
         await fulfillment(of: [expectation], timeout: 1)
         task.cancel()
+    }
+    
+    func testCheckRecoveryKey_whenRequestSuccess_shouldReturnSuccess() async {
+        let sut = makeSUT(requestResult: .success)
+
+        await XCTAsyncAssertNoThrow(try await sut.checkRecoveryKey("RecoveryKey", link: "RecoveryLink"))
+    }
+    
+    func testCheckRecoveryKey_whenRequestFailed_shouldThrowError() async {
+        let errors: [AccountErrorEntity] = [.invalid, .generic]
+
+        for error in errors {
+            let sut = makeSUT(requestResult: .failure(error))
+            await XCTAsyncAssertThrowsError(
+                try await sut.checkRecoveryKey("RecoveryKey", link: "RecoveryLink")
+            ) { errorThrown in
+                XCTAssertEqual(errorThrown as? AccountErrorEntity, error)
+            }
+        }
     }
 
     // MARK: - Account Plan For Type

@@ -580,6 +580,36 @@ final class AccountRepositoryTests: XCTestCase {
         }
     }
     
+    func testCheckRecoveryKey_whenRequestSuccess_shouldReturnSuccess() async {
+        let (sut, _) = makeSUT(requestResult: .success(MockRequest(handle: 1)))
+
+        await XCTAsyncAssertNoThrow(try await sut.checkRecoveryKey("RecoveryKey", link: "RecoveryLink"))
+    }
+    
+    func testCheckRecoveryKey_whenRequestFailedWithAPIEkeyError_shouldThrowInvalidError() async {
+        await assertFailedCheckRecoveryKey(error: MockError(errorType: .apiEKey), expectedThrownError: .invalid)
+    }
+    
+    func testCheckRecoveryKey_whenRequestFailedWithOtherErrorThanAPIEkey_shouldThrowGenericError() async {
+        await assertFailedCheckRecoveryKey(
+            error: MockError(
+                errorType: MEGAErrorType.anyFailingErrorType(excluding: [.apiEKey])
+            ),
+            expectedThrownError: .generic
+        )
+    }
+    
+    private func assertFailedCheckRecoveryKey(
+        error: MockError,
+        expectedThrownError: AccountErrorEntity
+    ) async {
+        let (sut, _) = makeSUT(requestResult: .failure(error))
+
+        await XCTAsyncAssertThrowsError(try await sut.checkRecoveryKey("RecoveryKey", link: "RecoveryLink")) { errorThrown in
+            XCTAssertEqual(errorThrown as? AccountErrorEntity, expectedThrownError)
+        }
+    }
+    
     // MARK: - Helpers
     
     private func makeSUT(

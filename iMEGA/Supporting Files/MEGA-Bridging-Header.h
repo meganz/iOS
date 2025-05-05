@@ -195,3 +195,4 @@
 #import "ChangePasswordViewController.h"
 #import "InitialLaunchViewController.h"
 #import "VideoUploadsQualityTableViewController.h"
+#import "MEGAQueryRecoveryLinkRequestDelegate.h"
