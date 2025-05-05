@@ -29,6 +29,7 @@ public protocol NodeUseCaseProtocol: Sendable {
     func isRubbishBinRoot(node: NodeEntity) -> Bool
     func isRestorable(node: NodeEntity) -> Bool
     func createFolder(with name: String, in parent: NodeEntity) async throws -> NodeEntity
+    func isFileTakenDown(_ nodeHandle: HandleEntity) async -> Bool
 }
 
 // MARK: - Use case implementation -
@@ -139,5 +140,10 @@ public struct NodeUseCase<T: NodeDataRepositoryProtocol, U: NodeValidationReposi
 
     public func createFolder(with name: String, in parent: NodeEntity) async throws -> NodeEntity {
         try await nodeRepository.createFolder(with: name, in: parent)
+    }
+    
+    public func isFileTakenDown(_ nodeHandle: HandleEntity) async -> Bool {
+        guard let node = await nodeForHandle(nodeHandle) else { return false }
+        return node.isFile && node.isTakenDown
     }
 }

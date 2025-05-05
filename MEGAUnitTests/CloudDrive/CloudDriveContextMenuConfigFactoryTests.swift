@@ -61,7 +61,8 @@ final class CloudDriveContextMenuConfigFactoryTests: XCTestCase {
             sortOrder: sortOrder,
             displayMode: .backup,
             isFromViewInFolder: false, 
-            isHidden: nil
+            isHidden: nil,
+            isTakenDownFolder: false
         )
 
         let resultSortOrder = try XCTUnwrap(result?.sortType, file: file, line: line)
@@ -89,7 +90,8 @@ final class CloudDriveContextMenuConfigFactoryTests: XCTestCase {
             sortOrder: .none,
             displayMode: .cloudDrive,
             isFromViewInFolder: false,
-            isHidden: hidden
+            isHidden: hidden,
+            isTakenDownFolder: false
         )
 
         XCTAssertEqual(result?.isHidden, hidden, file: file, line: line)

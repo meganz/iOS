@@ -835,7 +835,7 @@ final class NodeActionBuilder {
     
     private func takedownNodeActions() -> [NodeAction] {
         [.infoAction(),
-         .disputeTakedownAction(),
+         displayMode == .rubbishBin ? .restoreAction() : .disputeTakedownAction(),
          .renameAction(),
          displayMode == .rubbishBin ? .removeAction() :
          .moveToRubbishBinAction()]

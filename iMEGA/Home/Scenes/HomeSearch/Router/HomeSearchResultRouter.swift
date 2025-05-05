@@ -81,14 +81,21 @@ final class HomeSearchResultRouter: NodeRouting {
     }
     
     func didTapNode(nodeHandle: HandleEntity, allNodeHandles: [HandleEntity]?, displayMode: DisplayMode?, isFromSharedItem: Bool, warningViewModel: WarningBannerViewModel? = nil) {
-        nodeOpener.openNode(
-            nodeHandle: nodeHandle,
-            allNodes: allNodeHandles,
-            config: .init(
-                displayMode: displayMode,
-                isFromSharedItem: isFromSharedItem,
-                warningViewModel: warningViewModel)
-        )
+        Task {
+            guard let node = await nodeUseCase.nodeForHandle(nodeHandle) else { return }
+            if node.isFile, node.isTakenDown {
+                showTakenDownAlert()
+            } else {
+                nodeOpener.openNode(
+                    nodeHandle: nodeHandle,
+                    allNodes: allNodeHandles,
+                    config: .init(
+                        displayMode: displayMode,
+                        isFromSharedItem: isFromSharedItem,
+                        warningViewModel: warningViewModel)
+                )
+            }
+        }
     }
     
     func didTapNode(nodeHandle: HandleEntity, allNodeHandles: [HandleEntity]?) {
@@ -97,5 +104,10 @@ final class HomeSearchResultRouter: NodeRouting {
     
     func didTapNode(nodeHandle: HandleEntity) {
         didTapNode(nodeHandle: nodeHandle, allNodeHandles: nil, displayMode: nil, isFromSharedItem: false)
+    }
+    
+    func showTakenDownAlert() {
+        let alert = UIAlertController(model: AlertModelFactory.makeTakenDownModel())
+        navigationController?.present(alert, animated: true)
     }
 }

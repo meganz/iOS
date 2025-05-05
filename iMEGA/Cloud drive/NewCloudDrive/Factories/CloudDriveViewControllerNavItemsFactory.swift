@@ -31,6 +31,14 @@ struct CloudDriveViewControllerNavItemsFactory {
         let hasMedia = CloudDriveViewControllerMediaCheckerMode
             .containsSomeMedia
             .makeVisualMediaPresenceChecker(nodeSource: nodeSource, nodeUseCase: nodeUseCase)()
+        
+        let isTakenDownFolderNode: () -> Bool = {
+            guard
+                case let .node(nodeProvider) = nodeSource,
+                let node = nodeProvider()
+            else { return false }
+            return node.isFolder && node.isTakenDown
+        }
 
         let menuConfig = contextMenuConfigFactory.contextMenuConfiguration(
             parentNode: parentNode,
@@ -46,7 +54,8 @@ struct CloudDriveViewControllerNavItemsFactory {
             sortOrder: sortOrder,
             displayMode: config.displayMode?.carriedOverDisplayMode ?? .cloudDrive,
             isFromViewInFolder: config.isFromViewInFolder == true,
-            isHidden: isHidden
+            isHidden: isHidden,
+            isTakenDownFolder: isTakenDownFolderNode()
         )
 
         guard let menuConfig else { return nil }

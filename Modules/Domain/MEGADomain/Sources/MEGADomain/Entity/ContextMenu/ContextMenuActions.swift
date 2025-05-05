@@ -46,7 +46,7 @@ public enum DisplayActionEntity: CaseIterable, Sendable {
 }
 
 public enum QuickActionEntity: CaseIterable, Sendable {
-    case info, download, shareLink, manageLink, removeLink, shareFolder, manageFolder, rename, copy, removeSharing, leaveSharing, sendToChat, saveToPhotos, hide, unhide, settings
+    case info, download, shareLink, manageLink, removeLink, shareFolder, manageFolder, dispute, rename, copy, removeSharing, leaveSharing, sendToChat, saveToPhotos, hide, unhide, settings
 }
 
 public enum RubbishBinActionEntity: CaseIterable, Sendable {

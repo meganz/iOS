@@ -12,6 +12,7 @@ import UIKit
     private let router = SharedItemsViewRouter()
     private let shareUseCase: any ShareUseCaseProtocol
     private let mediaUseCase: any MediaUseCaseProtocol
+    private let nodeUseCase: any NodeUseCaseProtocol
     private let saveMediaToPhotosUseCase: any SaveMediaToPhotosUseCaseProtocol
     private let moveToRubbishBinViewModel: any MoveToRubbishBinViewModelProtocol
     private let featureFlagProvider: any FeatureFlagProviderProtocol
@@ -20,12 +21,14 @@ import UIKit
     
     init(shareUseCase: some ShareUseCaseProtocol,
          mediaUseCase: some MediaUseCaseProtocol,
+         nodeUseCase: some NodeUseCaseProtocol,
          saveMediaToPhotosUseCase: some SaveMediaToPhotosUseCaseProtocol,
          moveToRubbishBinViewModel: some MoveToRubbishBinViewModelProtocol,
          featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider
     ) {
         self.shareUseCase = shareUseCase
         self.mediaUseCase = mediaUseCase
+        self.nodeUseCase = nodeUseCase
         self.saveMediaToPhotosUseCase = saveMediaToPhotosUseCase
         self.moveToRubbishBinViewModel = moveToRubbishBinViewModel
         self.featureFlagProvider = featureFlagProvider
@@ -97,5 +100,9 @@ import UIKit
                     normalFont: .preferredFont(style: .subheadline, weight: .medium)
                 )
         }
+    }
+    
+    func isFileTakenDown(_ nodeHandle: HandleEntity) async -> Bool {
+        await nodeUseCase.isFileTakenDown(nodeHandle)
     }
 }

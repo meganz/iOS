@@ -43,6 +43,7 @@ public final class ContextMenuBuilder {
     private var isHidden: Bool?
     private var isCameraUploadsEnabled: Bool = false
     private var isVideoPlaylistSharingFeatureFlagEnabled: Bool = false
+    private var isTakenDown: Bool = false
 
     public init() {}
     
@@ -266,6 +267,11 @@ public final class ContextMenuBuilder {
         return self
     }
     
+    public func setIsTakenDown(_ isTakenDown: Bool) -> ContextMenuBuilder {
+        self.isTakenDown = isTakenDown
+        return self
+    }
+    
     public func build() -> CMEntity? {
         /// It is only allowed to build menu type elements. The other elements refer to the actions that a menu contains, and that cannot be constructed if not inside a menu.
         if case let .menu(type) = menuType {
@@ -431,7 +437,11 @@ public final class ContextMenuBuilder {
         var displayActionsMenuChildren: [CMElement] = []
         
         if isAFolder && !isRubbishBinFolder && !isBackupsRootNode {
-            displayActionsMenuChildren.append(makeQuickActions())
+            if isTakenDown {
+                displayActionsMenuChildren.append(makeTakenDownFolderQuickActions())
+            } else {
+                displayActionsMenuChildren.append(makeQuickActions())
+            }
         }
         
         if isSharedItems || isAudiosExplorer {
@@ -495,6 +505,11 @@ public final class ContextMenuBuilder {
         
         return CMEntity(displayInline: true,
                         children: quickActions)
+    }
+    
+    private func makeTakenDownFolderQuickActions() -> CMEntity {
+        CMEntity(displayInline: true,
+                 children: [info, dispute, rename])
     }
 
     private func makeFolderLinkQuickActions() -> CMEntity {

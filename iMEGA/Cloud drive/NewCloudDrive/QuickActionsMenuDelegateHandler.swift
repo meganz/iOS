@@ -85,6 +85,8 @@ final class QuickActionsMenuDelegateHandler: QuickActionsMenuDelegate, RefreshMe
             hide([parentNode])
         case .unhide:
             unhide([parentNode])
+        case.dispute:
+            NSURL(string: MEGADisputeURL)?.mnz_presentSafariViewController()
         default:
             break
         }

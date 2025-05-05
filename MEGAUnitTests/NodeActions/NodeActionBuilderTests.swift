@@ -366,7 +366,7 @@ class NodeActionBuilderTests {
             .setDisplayMode(.rubbishBin)
             .setIsTakedown(true)
             .build()
-        #expect(isEqual(nodeActionTypes: [.info, .disputeTakedown, .rename, .remove]) == true)
+        #expect(isEqual(nodeActionTypes: [.info, .restore, .rename, .remove]) == true)
     }
     
     @Test

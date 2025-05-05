@@ -136,4 +136,9 @@ public final class MockNodeUseCase: NodeUseCaseProtocol, @unchecked Sendable {
     public func createFolder(with name: String, in parent: NodeEntity) async throws -> NodeEntity {
         throw GenericErrorEntity()
     }
+    
+    public func isFileTakenDown(_ nodeHandle: HandleEntity) async -> Bool {
+        guard let node = nodes[nodeHandle] else { return false }
+        return node.isFile && node.isTakenDown
+    }
 }

@@ -107,4 +107,8 @@ struct Preview_NodeUseCase: NodeUseCaseProtocol {
     func sensitivityChanges(for node: NodeEntity) -> AnyAsyncSequence<Bool> {
         EmptyAsyncSequence().eraseToAnyAsyncSequence()
     }
+    
+    func isFileTakenDown(_ nodeHandle: MEGADomain.HandleEntity) async -> Bool {
+        false
+    }
 }
