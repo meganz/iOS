@@ -76,7 +76,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
 }
 
 + (MEGAPhotoBrowserViewController *)photoBrowserWithMediaNodes:(NSMutableArray<MEGANode *> *)mediaNodesArray api:(MEGASdk *)api displayMode:(DisplayMode)displayMode isFromSharedItem:(BOOL)isFromSharedItem preferredIndex:(NSUInteger)preferredIndex {
-    PhotoBrowserDataProvider *provider = [self photoBrowserDataProviderWithCurrentIndex:preferredIndex mediaNodes:mediaNodesArray sdk:api];
+    PhotoBrowserDataProvider *provider = [self photoBrowserDataProviderWithCurrentIndex:preferredIndex mediaNodes:mediaNodesArray sdk:api displayMode:displayMode];
     if (provider) {
         return [self photoBrowserWithProvider:provider api:api displayMode:displayMode isFromSharedItem:isFromSharedItem];
     } else {

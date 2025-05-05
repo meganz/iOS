@@ -15,11 +15,36 @@ protocol PhotoBrowserDataProviderProtocol: Sendable {
 }
 
 final class PhotoBrowserDataProvider: NSObject, @unchecked Sendable, PhotoBrowserDataProviderProtocol {
+    @Atomic private var megaNodes: [MEGANode]?
     @Atomic private var nodeEntities: [NodeEntity]?
     @Atomic @objc var currentIndex: Int = 0
 
     private let sdk: MEGASdk
     private let nodeProvider: any MEGANodeProviderProtocol
+    
+    @objc init(currentPhoto: MEGANode, allPhotos: [MEGANode], sdk: MEGASdk) {
+        self.sdk = sdk
+        self.nodeProvider = DefaultMEGANodeProvider(sdk: sdk)
+        super.init()
+
+        $megaNodes.mutate { $0 = allPhotos }
+        
+        if let index = allPhotos.firstIndex(of: currentPhoto) {
+            $currentIndex.mutate { $0 = index }
+        }
+    }
+    
+    @objc init(currentIndex: Int, allPhotos: [MEGANode], sdk: MEGASdk) {
+        self.sdk = sdk
+        self.nodeProvider = DefaultMEGANodeProvider(sdk: sdk)
+        super.init()
+
+        $megaNodes.mutate { $0 = allPhotos }
+        
+        if allPhotos.indices ~= currentIndex {
+            $currentIndex.mutate { $0 = currentIndex }
+        }
+    }
     
     init(currentPhoto: NodeEntity, allPhotos: [NodeEntity], sdk: MEGASdk, nodeProvider: any MEGANodeProviderProtocol) {
         self.sdk = sdk
@@ -31,6 +56,10 @@ final class PhotoBrowserDataProvider: NSObject, @unchecked Sendable, PhotoBrowse
     }
     
     func photoNode(at index: Int) async -> MEGANode? {
+        if let nodes = megaNodes {
+            return nodes[safe: index]
+        }
+                
         guard let nodeEntity = nodeEntities?[safe: index] else {
             return nil
         }
@@ -39,11 +68,19 @@ final class PhotoBrowserDataProvider: NSObject, @unchecked Sendable, PhotoBrowse
     }
     
     @objc var count: Int {
-        return nodeEntities?.count ?? 0
+        if let nodes = megaNodes {
+            return nodes.count
+        } else {
+            return nodeEntities?.count ?? 0
+        }
     }
     
     @objc var currentPhoto: MEGANode? {
-        return nodeEntities?[safe: $currentIndex.wrappedValue]?.toMEGANode(in: sdk)
+        if let nodes = megaNodes {
+            return nodes[safe: $currentIndex.wrappedValue]
+        } else {
+            return nodeEntities?[safe: $currentIndex.wrappedValue]?.toMEGANode(in: sdk)
+        }
     }
     
     @objc func currentPhoto() async -> MEGANode? {
@@ -51,11 +88,19 @@ final class PhotoBrowserDataProvider: NSObject, @unchecked Sendable, PhotoBrowse
     }
     
     var currentPhotoNodeEntity: NodeEntity? {
-        return nodeEntities?[safe: $currentIndex.wrappedValue]
+        if let nodes = megaNodes {
+            return nodes[safe: currentIndex]?.toNodeEntity()
+        } else {
+            return nodeEntities?[safe: $currentIndex.wrappedValue]
+        }
     }
     
     var allPhotoEntities: [NodeEntity] {
-        return nodeEntities ?? []
+        if let nodeEntities = nodeEntities {
+            return nodeEntities
+        } else {
+            return megaNodes?.toNodeEntities() ?? []
+        }
     }
     
     func fetchOnlyPhotoEntities(mediaUseCase: MediaUseCase) -> [NodeEntity] {
@@ -64,10 +109,15 @@ final class PhotoBrowserDataProvider: NSObject, @unchecked Sendable, PhotoBrowse
     
     func convertToNodeEntities(from photos: [MEGANode]) {
         $nodeEntities.mutate { $0 = photos.toNodeEntities() }
+        $megaNodes.mutate { $0 = photos }
     }
     
     @objc var allPhotos: [MEGANode] {
-        return nodeEntities?.toMEGANodes(in: sdk) ?? []
+        if let nodes = megaNodes {
+            return nodes
+        } else {
+            return nodeEntities?.toMEGANodes(in: sdk) ?? []
+        }
     }
     
     @objc func shouldUpdateCurrentIndex(toIndex index: Int) -> Bool {
@@ -75,7 +125,9 @@ final class PhotoBrowserDataProvider: NSObject, @unchecked Sendable, PhotoBrowse
     }
     
     @objc func updatePhoto(by request: MEGARequest) {
-        if let node = request.toNodeEntity(in: sdk), let index = nodeEntities?.firstIndex(of: node) {
+        if megaNodes != nil, let node = request.toMEGANode(in: sdk), let index = megaNodes?.firstIndex(of: node) {
+            $megaNodes.mutate { $0?[index] = node }
+        } else if let node = request.toNodeEntity(in: sdk), let index = nodeEntities?.firstIndex(of: node) {
             $nodeEntities.mutate { $0?[index] = node }
         }
     }
@@ -118,7 +170,9 @@ extension PhotoBrowserDataProvider {
     }
     
     private func isValid(index: Int) -> Bool {
-        if let nodes = nodeEntities {
+        if let nodes = megaNodes {
+            return nodes.indices ~= index
+        } else if let nodes = nodeEntities {
             return nodes.indices ~= index
         } else {
             return false
