@@ -575,11 +575,15 @@ extension MEGAPhotoBrowserViewController {
         PhotoBrowserDataProvider(currentPhoto: currentPhoto.toNodeEntity(), allPhotos: mediaNodes.toNodeEntities(), sdk: sdk, nodeProvider: DefaultMEGANodeProvider(sdk: sdk))
     }
     
-    @objc class func photoBrowserDataProvider(currentIndex: Int, mediaNodes: [MEGANode], sdk: MEGASdk) -> PhotoBrowserDataProvider? {
+    @objc class func photoBrowserDataProvider(currentIndex: Int, mediaNodes: [MEGANode], sdk: MEGASdk, displayMode: DisplayMode) -> PhotoBrowserDataProvider? {
         guard currentIndex < mediaNodes.count else {
             return nil
         }
-        return PhotoBrowserDataProvider(currentPhoto: mediaNodes[currentIndex].toNodeEntity(), allPhotos: mediaNodes.toNodeEntities(), sdk: sdk, nodeProvider: DefaultMEGANodeProvider(sdk: sdk))
+        if displayMode == .chatAttachment {
+            return PhotoBrowserDataProvider(currentPhoto: mediaNodes[currentIndex], allPhotos: mediaNodes, sdk: sdk)
+        } else {
+            return PhotoBrowserDataProvider(currentPhoto: mediaNodes[currentIndex].toNodeEntity(), allPhotos: mediaNodes.toNodeEntities(), sdk: sdk, nodeProvider: DefaultMEGANodeProvider(sdk: sdk))
+        }
     }
 }
 
