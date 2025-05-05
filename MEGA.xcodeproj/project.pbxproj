@@ -1785,6 +1785,7 @@
 		B51C55C52824AA04004E3FA8 /* UsageViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51C55C42824AA04004E3FA8 /* UsageViewController+Additions.swift */; };
 		B51CFD3929A70976004D91AA /* CustomModalAlertViewController+SharedItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51CFD3829A70976004D91AA /* CustomModalAlertViewController+SharedItem.swift */; };
 		B51DD9CE28B5D34A0094A979 /* LiveTextImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51DD9CD28B5D34A0094A979 /* LiveTextImageView.swift */; };
+		B51E03272DC0CC4F0001E4AD /* MEGAQueryRecoveryLinkRequestDelegate+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51E03262DC0CC4F0001E4AD /* MEGAQueryRecoveryLinkRequestDelegate+Additions.swift */; };
 		B52021782A8BA5F8001B66C7 /* RubbishBinTableViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B52021772A8BA5F8001B66C7 /* RubbishBinTableViewController+Additions.swift */; };
 		B52B8C68297FE9A400981F47 /* RecentsViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B52B8C67297FE9A400981F47 /* RecentsViewController+Additions.swift */; };
 		B52CB2342A7FA78A00F9C56C /* OfflineViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B52CB2332A7FA78A00F9C56C /* OfflineViewModel.swift */; };
@@ -4521,6 +4522,7 @@
 		B51C55C42824AA04004E3FA8 /* UsageViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UsageViewController+Additions.swift"; sourceTree = "<group>"; };
 		B51CFD3829A70976004D91AA /* CustomModalAlertViewController+SharedItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CustomModalAlertViewController+SharedItem.swift"; sourceTree = "<group>"; };
 		B51DD9CD28B5D34A0094A979 /* LiveTextImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveTextImageView.swift; sourceTree = "<group>"; };
+		B51E03262DC0CC4F0001E4AD /* MEGAQueryRecoveryLinkRequestDelegate+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAQueryRecoveryLinkRequestDelegate+Additions.swift"; sourceTree = "<group>"; };
 		B52021772A8BA5F8001B66C7 /* RubbishBinTableViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RubbishBinTableViewController+Additions.swift"; sourceTree = "<group>"; };
 		B52B8C67297FE9A400981F47 /* RecentsViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RecentsViewController+Additions.swift"; sourceTree = "<group>"; };
 		B52CB2332A7FA78A00F9C56C /* OfflineViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineViewModel.swift; sourceTree = "<group>"; };
@@ -10837,6 +10839,7 @@
 				5B14A41320D10042005F8146 /* MEGAMultiFactorAuthCheckRequestDelegate.m */,
 				9437B93D1F55674F0058170D /* MEGAPasswordLinkRequestDelegate.h */,
 				9437B93E1F55674F0058170D /* MEGAPasswordLinkRequestDelegate.m */,
+				B51E03262DC0CC4F0001E4AD /* MEGAQueryRecoveryLinkRequestDelegate+Additions.swift */,
 				5B5E591120EA583900F00A74 /* MEGAQueryRecoveryLinkRequestDelegate.h */,
 				5B5E591220EA583900F00A74 /* MEGAQueryRecoveryLinkRequestDelegate.m */,
 				5B1AB4AD20E5407200FEDAF9 /* MEGAQuerySignupLinkRequestDelegate.h */,
@@ -14915,6 +14918,7 @@
 				A58902662C5B31C5001B0E3C /* MEGAPurchase+Sendable.swift in Sources */,
 				41D408101B8F240B0001F8BE /* MEGAPurchase.m in Sources */,
 				83747B1F20ADD16D00BC1AED /* MEGAQLPreviewController.m in Sources */,
+				B51E03272DC0CC4F0001E4AD /* MEGAQueryRecoveryLinkRequestDelegate+Additions.swift in Sources */,
 				5B5E591320EA583900F00A74 /* MEGAQueryRecoveryLinkRequestDelegate.m in Sources */,
 				5B1AB4AF20E5407300FEDAF9 /* MEGAQuerySignupLinkRequestDelegate.m in Sources */,
 				7271896027FF128B00B2DB08 /* MEGAReachabilityManager+Additions.swift in Sources */,

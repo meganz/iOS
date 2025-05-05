@@ -92,7 +92,8 @@ public protocol AccountRepositoryProtocol: Sendable, RepositoryProtocol {
     func sessionTransferURL(path: String) async throws -> URL
     func setAccountStorageStatus(_ status: StorageStatusEntity)
     func loadUserData() async throws
-
+    func checkRecoveryKey(_ recoveryKey: String, link: String) async throws
+    
     // Account social and notifications
     func incomingContactsRequestsCount() -> Int
     func relevantUnseenUserAlertsCount() -> UInt

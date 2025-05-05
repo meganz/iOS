@@ -362,4 +362,6 @@ public class MockAccountUseCase: AccountUseCaseProtocol, @unchecked Sendable {
     public func loadUserData() async throws {
         loadUserData_calledCount += 1
     }
+    
+    public func checkRecoveryKey(_ recoveryKey: String, link: String) async throws {}
 }

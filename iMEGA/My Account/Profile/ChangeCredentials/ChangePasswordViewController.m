@@ -549,7 +549,10 @@ typedef NS_ENUM(NSUInteger, TextFieldTag) {
                 
             case MEGAErrorTypeApiEKey: {
                 if (request.type == MEGARequestTypeConfirmRecoveryLink) {
-                    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:LocalizedString(@"invalidRecoveryKey", @"An alert title where the user provided the incorrect Recovery Key.")  message:nil preferredStyle:UIAlertControllerStyleAlert];
+                    UIAlertController *alertController = [UIAlertController
+                                                          alertControllerWithTitle:LocalizedString(@"recoveryKey.error.alert.title", @"An alert title where the user provided the incorrect Recovery Key.")
+                                                          message:LocalizedString(@"recoveryKey.error.alert.message.invalidKey", @"An alert title where the user provided the incorrect Recovery Key.")
+                                                          preferredStyle:UIAlertControllerStyleAlert];
                     [alertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"ok", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:LocalizedString(@"passwordReset", @"Headline of the password reset recovery procedure")  message:LocalizedString(@"pleaseEnterYourRecoveryKey", @"A message shown to explain that the user has to input (type or paste) their recovery key to continue with the reset password process.") preferredStyle:UIAlertControllerStyleAlert];
                         [alertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {

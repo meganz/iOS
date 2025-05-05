@@ -926,6 +926,10 @@
 "recoveryKey"="Recovery key";
 /* An alert title where the user provided the incorrect Recovery Key. */
 "invalidRecoveryKey"="Invalid Recovery key";
+/* Recovery key error alert title */
+"recoveryKey.error.alert.title"="Recovery key error";
+/* Recovery key error alert message when the user provided incorrect or invalid Recovery key */
+"recoveryKey.error.alert.message.invalidKey"="The recovery key you supplied is either invalid, or is not for this account. Check if you're using the correct key and try again.";
 /* Text of the alert after opening the recovery link to reset pass being logged. */
 "youRecoveryKeyIsGoingTo"="Your Recovery key is going to be used to reset your password. Please enter your new password.";
 /*  */

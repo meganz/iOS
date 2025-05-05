@@ -47,6 +47,7 @@ public final class MockAccountRepository: AccountRepositoryProtocol, @unchecked 
     private let multiFactorAuthCheckResult: Result<Bool, AccountErrorEntity>
     private let loadUserDataResult: Result<Void, AccountErrorEntity>
     private let isUpgradeSecuritySuccess: Bool
+    private let requestResult: Result<Void, AccountErrorEntity>
     
     // MARK: - Management of Contacts and Alerts
     private let contactsRequestsCount: Int
@@ -126,7 +127,8 @@ public final class MockAccountRepository: AccountRepositoryProtocol, @unchecked 
         onAccountUpdates: AnyAsyncSequence<Void> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
         monitorRefreshAccountPublisher: AnyPublisher<Bool, Never> = Empty().eraseToAnyPublisher(),
         isMonitoringRefreshAccount: Bool = false,
-        loadUserDataResult: Result<Void, AccountErrorEntity> = .failure(.generic)
+        loadUserDataResult: Result<Void, AccountErrorEntity> = .failure(.generic),
+        requestResult: Result<Void, AccountErrorEntity> = .failure(.generic)
     ) {
         self.currentUser = currentUser
         self.isGuest = isGuest
@@ -178,6 +180,7 @@ public final class MockAccountRepository: AccountRepositoryProtocol, @unchecked 
         self.onAccountUpdates = onAccountUpdates
         self.monitorRefreshAccountPublisher = monitorRefreshAccountPublisher
         self.loadUserDataResult = loadUserDataResult
+        self.requestResult = requestResult
     }
     
     // MARK: - AccountRepositoryProtocol Implementation
@@ -379,5 +382,9 @@ public final class MockAccountRepository: AccountRepositoryProtocol, @unchecked 
     
     public func loadUserData() async throws {
         try loadUserDataResult.get()
+    }
+
+    public func checkRecoveryKey(_ recoveryKey: String, link: String) async throws {
+        try requestResult.get()
     }
 }

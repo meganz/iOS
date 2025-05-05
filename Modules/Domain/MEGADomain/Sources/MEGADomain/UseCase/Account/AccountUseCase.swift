@@ -87,6 +87,7 @@ public protocol AccountUseCaseProtocol: Sendable {
     func sessionTransferURL(path: String) async throws -> URL
     func multiFactorAuthCheck(email: String) async throws -> Bool
     func loadUserData() async throws
+    func checkRecoveryKey(_ recoveryKey: String, link: String) async throws
     
     // Node sizes
     func rootStorageUsed() -> Int64
@@ -303,6 +304,10 @@ public final class AccountUseCase<T: AccountRepositoryProtocol>: AccountUseCaseP
 
     public func loadUserData() async throws {
         try await repository.loadUserData()
+    }
+    
+    public func checkRecoveryKey(_ recoveryKey: String, link: String) async throws {
+        try await repository.checkRecoveryKey(recoveryKey, link: link)
     }
     
     // MARK: - Node sizes

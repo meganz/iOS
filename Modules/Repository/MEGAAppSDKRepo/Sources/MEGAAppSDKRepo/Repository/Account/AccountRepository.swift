@@ -210,6 +210,24 @@ public final class AccountRepository: NSObject, AccountRepositoryProtocol {
     public func hasMultipleBilledProPlans() -> Bool {
         accountSubscriptions()?.filter { $0.accountType != .feature }.count ?? 0 > 1
     }
+    
+    public func checkRecoveryKey(_ recoveryKey: String, link: String) async throws {
+        try await withAsyncThrowingValue(in: { completion in
+            sdk.checkRecoveryKey(link, recoveryKey: recoveryKey, delegate: RequestDelegate { result in
+                switch result {
+                case .success:
+                    completion(.success)
+                case .failure(let error):
+                    switch error.type {
+                    case .apiEKey:
+                        completion(.failure(AccountErrorEntity.invalid))
+                    default:
+                        completion(.failure(AccountErrorEntity.generic))
+                    }
+                }
+            })
+        })
+    }
 
     // MARK: - Account operations
     public func contacts() -> [UserEntity] {

@@ -129,7 +129,16 @@
                 
                 UIAlertAction *okAlertAction = [UIAlertAction actionWithTitle:LocalizedString(@"ok", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
                     NSString *masterKey = masterKeyLoggedInAlertController.textFields.count ? masterKeyLoggedInAlertController.textFields.firstObject.text : MEGASdk.shared.masterKey;
-                    [self presentChangeViewType:ChangeTypeResetPassword email:MEGALinkManager.emailOfNewSignUpLink masterKey:masterKey link:request.link];
+                    [self checkRecoveryKey:masterKey
+                                      link:request.link
+                                completion:^(BOOL isValid) {
+                        if (isValid) {
+                            [self presentChangeViewType:ChangeTypeResetPassword
+                                                  email:MEGALinkManager.emailOfNewSignUpLink
+                                              masterKey:masterKey
+                                                   link:request.link];
+                        }
+                    }];
                     MEGALinkManager.emailOfNewSignUpLink = nil;
                 }];
                 okAlertAction.enabled = !masterKeyLoggedInAlertController.textFields.count;
