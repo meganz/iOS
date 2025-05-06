@@ -47,7 +47,7 @@ static NSString *emailOfNewSignUpLink;
 static NSMutableArray *nodesFromLinkMutableArray;
 static LinkOption selectedOption;
 static NSString *linkSavedString;
-
+static SendToChatWrapper *sendToChatWrapper;
 static NSString *nodeToPresentBase64Handle;
 
 static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
@@ -91,6 +91,14 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
 
 + (void)setEmailOfNewSignUpLink:(NSString * _Nullable)email {
     emailOfNewSignUpLink = email;
+}
+
++ (SendToChatWrapper *)sendToChatWrapper {
+    return sendToChatWrapper;
+}
+
++ (void)setSendToChatWrapper:(SendToChatWrapper *)wrapper {
+    sendToChatWrapper = wrapper;
 }
 
 #pragma mark - Utils to manage links when you are not logged
@@ -213,6 +221,10 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
             
             break;
         }
+            
+        case LinkOptionSendNodeLinkToChat:
+            [self sendNodeLinkToChatAfterLogin];
+            break;
             
         default:
             break;

@@ -39,6 +39,17 @@ extension MEGALinkManager: MEGALinkManagerProtocol {
         CancellableTransferRouter(presenter: UIApplication.mnz_visibleViewController(), transfers: transfers, transferType: .download, isFolderLink: true).start()
     }
     
+    @objc class func sendNodeLinkToChatAfterLogin() {
+        guard MEGALinkManager.selectedOption == .sendNodeLinkToChat else { return }
+        MEGALinkManager.selectedOption = .default
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            let sendToChatWrapper = SendToChatWrapper(link: MEGALinkManager.linkSavedString)
+            MEGALinkManager.sendToChatWrapper = sendToChatWrapper
+            sendToChatWrapper.showSendToChat(presenter: UIApplication.mnz_visibleViewController())
+        }
+    }
+    
     @objc class func openBrowser(by urlString: String) {
         guard let url = URL(string: urlString) else { return }
         

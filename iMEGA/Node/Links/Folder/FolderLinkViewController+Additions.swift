@@ -100,23 +100,32 @@ extension FolderLinkViewController {
     }
 
     func showSendToChat() {
-        guard let navigationController =
-                UIStoryboard(
-                    name: "Chat",
-                    bundle: nil
-                ).instantiateViewController(withIdentifier: "SendToNavigationControllerID") as? MEGANavigationController,
-              let sendToViewController = navigationController.viewControllers.first as? SendToViewController else {
-            return
+        if SAMKeychain.password(forService: "MEGA", account: "sessionV3") != nil {
+            guard let navigationController =
+                    UIStoryboard(
+                        name: "Chat",
+                        bundle: nil
+                    ).instantiateViewController(withIdentifier: "SendToNavigationControllerID") as? MEGANavigationController,
+                  let sendToViewController = navigationController.viewControllers.first as? SendToViewController else {
+                return
+            }
+            
+            sendToViewController.sendMode = .fileAndFolderLink
+            self.sendLinkDelegate = SendLinkToChatsDelegate(
+                link: linkEncryptedString ?? publicLinkString ?? "",
+                navigationController: navigationController
+            )
+            sendToViewController.sendToViewControllerDelegate = self.sendLinkDelegate
+            
+            self.navigationController?.pushViewController(sendToViewController, animated: true)
+            viewModel.dispatch(.trackSendToChatFolderLink)
+        } else {
+            MEGALinkManager.linkSavedString = linkEncryptedString ?? publicLinkString ?? ""
+            MEGALinkManager.selectedOption = .sendNodeLinkToChat
+
+            navigationController?.pushViewController(OnboardingViewController.instantiateOnboarding(with: .default), animated: true)
+            viewModel.dispatch(.trackSendToChatFolderLinkNoAccountLogged)
         }
-
-        sendToViewController.sendMode = .fileAndFolderLink
-        self.sendLinkDelegate = SendLinkToChatsDelegate(
-            link: linkEncryptedString ?? publicLinkString ?? "",
-            navigationController: navigationController
-        )
-        sendToViewController.sendToViewControllerDelegate = self.sendLinkDelegate
-
-        self.navigationController?.pushViewController(sendToViewController, animated: true)
     }
 
     func showShareLink(from sender: UIBarButtonItem) {

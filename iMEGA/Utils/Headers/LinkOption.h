@@ -5,5 +5,6 @@ typedef NS_ENUM (NSUInteger, LinkOption) {
     LinkOptionImportFolderOrNodes,
     LinkOptionDownloadFolderOrNodes,
     LinkOptionJoinChatLink,
+    LinkOptionSendNodeLinkToChat,
     LinkOptionTotal
 };

@@ -1,3 +1,4 @@
+import MEGAAnalyticsiOS
 import MEGAAppPresentation
 import MEGADomain
 
@@ -6,6 +7,8 @@ import MEGADomain
     public enum Action: ActionType {
         case onViewAppear
         case onViewDisappear
+        case trackSendToChatFolderLinkNoAccountLogged
+        case trackSendToChatFolderLink
     }
     
     public enum Command: CommandType {
@@ -29,10 +32,15 @@ import MEGADomain
             onViewAppear()
         case .onViewDisappear:
             onViewDisappear()
+        case .trackSendToChatFolderLink:
+            trackSendToChatFolderLinkEvent()
+        case .trackSendToChatFolderLinkNoAccountLogged:
+            trackSendToChatFolderLinkNoAccountLoggedEvent()
         }
     }
     
     private let folderLinkUseCase: any FolderLinkUseCaseProtocol
+    private let tracker: any AnalyticsTracking
 
     private var monitorCompletedDownloadTransferTask: Task<Void, Never>? {
         didSet {
@@ -58,8 +66,12 @@ import MEGADomain
         }
     }
     
-    init(folderLinkUseCase: some FolderLinkUseCaseProtocol) {
+    init(
+        folderLinkUseCase: some FolderLinkUseCaseProtocol,
+        tracker: some AnalyticsTracking = DIContainer.tracker
+    ) {
         self.folderLinkUseCase = folderLinkUseCase
+        self.tracker = tracker
     }
     
     private func onViewAppear() {
@@ -129,5 +141,13 @@ import MEGADomain
         monitorNodeUpdatesTask = nil
         monitorFetchNodesRequestStartUpdatesTask = nil
         monitorRequestFinishUpdatesTask = nil
+    }
+    
+    private func trackSendToChatFolderLinkNoAccountLoggedEvent() {
+        tracker.trackAnalyticsEvent(with: SendToChatFolderLinkNoAccountLoggedButtonPressedEvent())
+    }
+
+    private func trackSendToChatFolderLinkEvent() {
+        tracker.trackAnalyticsEvent(with: SendToChatFolderLinkButtonPressedEvent())
     }
 }
