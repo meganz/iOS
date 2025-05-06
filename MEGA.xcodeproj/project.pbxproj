@@ -977,6 +977,9 @@
 		835B1B90245AD23C00E41FBE /* Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 415226881A692ECC00EC7BB6 /* Helper.m */; };
 		835CE8492AA886B200861544 /* waitingRoomEvent.wav in Resources */ = {isa = PBXBuildFile; fileRef = 835CE8482AA886B200861544 /* waitingRoomEvent.wav */; };
 		835CE84E2AA88E9300861544 /* MainTabBarCallsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835CE84D2AA88E9300861544 /* MainTabBarCallsViewModelTests.swift */; };
+		835EBCBF2DC9FE4B00AD1E57 /* FileLinkViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835EBCBE2DC9FE4900AD1E57 /* FileLinkViewModel.swift */; };
+		835EBCD12DCA0B7C00AD1E57 /* FileLinkViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835EBCD02DCA0B7A00AD1E57 /* FileLinkViewModelTests.swift */; };
+		835EBCEC2DCA17EF00AD1E57 /* FolderLinkViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835EBCEB2DCA17E800AD1E57 /* FolderLinkViewModelTests.swift */; };
 		835EE371258120C200D8E3B8 /* QuickAccessWidgetEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835EE35F25811D8600D8E3B8 /* QuickAccessWidgetEntry.swift */; };
 		835F71222C4A5DDE000B359D /* AccountPlanEntity+Plans.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835F71212C4A5DDE000B359D /* AccountPlanEntity+Plans.swift */; };
 		8361359021074C5D002FA3CC /* MOUploadTransfer+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 8361358E21074C5D002FA3CC /* MOUploadTransfer+CoreDataClass.m */; };
@@ -3721,6 +3724,9 @@
 		835AD88A24AA46B700BB934C /* PhoneNumberViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneNumberViewController.swift; sourceTree = "<group>"; };
 		835CE8482AA886B200861544 /* waitingRoomEvent.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = waitingRoomEvent.wav; sourceTree = "<group>"; };
 		835CE84D2AA88E9300861544 /* MainTabBarCallsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarCallsViewModelTests.swift; sourceTree = "<group>"; };
+		835EBCBE2DC9FE4900AD1E57 /* FileLinkViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileLinkViewModel.swift; sourceTree = "<group>"; };
+		835EBCD02DCA0B7A00AD1E57 /* FileLinkViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileLinkViewModelTests.swift; sourceTree = "<group>"; };
+		835EBCEB2DCA17E800AD1E57 /* FolderLinkViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderLinkViewModelTests.swift; sourceTree = "<group>"; };
 		835EE35F25811D8600D8E3B8 /* QuickAccessWidgetEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickAccessWidgetEntry.swift; sourceTree = "<group>"; };
 		835F71212C4A5DDE000B359D /* AccountPlanEntity+Plans.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AccountPlanEntity+Plans.swift"; sourceTree = "<group>"; };
 		8361358C21074C5D002FA3CC /* MOUploadTransfer+CoreDataProperties.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MOUploadTransfer+CoreDataProperties.h"; sourceTree = "<group>"; };
@@ -6071,6 +6077,7 @@
 		243ABB492AB0420500FF4A56 /* Node */ = {
 			isa = PBXGroup;
 			children = (
+				835EBCCF2DCA0B7300AD1E57 /* Links */,
 				6D01A3C82C084F2800089BA8 /* NodeInfo */,
 				0E43E13B2B2F95740079700A /* PhotoBrowser */,
 				B5BA0E152CE1E73C00B01FC7 /* Repository */,
@@ -9068,6 +9075,15 @@
 			path = MainTabBar;
 			sourceTree = "<group>";
 		};
+		835EBCCF2DCA0B7300AD1E57 /* Links */ = {
+			isa = PBXGroup;
+			children = (
+				835EBCD02DCA0B7A00AD1E57 /* FileLinkViewModelTests.swift */,
+				835EBCEB2DCA17E800AD1E57 /* FolderLinkViewModelTests.swift */,
+			);
+			path = Links;
+			sourceTree = "<group>";
+		};
 		835EE35425811D4400D8E3B8 /* QuickAccess */ = {
 			isa = PBXGroup;
 			children = (
@@ -10158,6 +10174,7 @@
 				945339CC2A6014FA00363DAD /* FileLinkViewController+ContextMenu.swift */,
 				E85044C41A6D84620064B675 /* FileLinkViewController.h */,
 				E85044C51A6D84620064B675 /* FileLinkViewController.m */,
+				835EBCBE2DC9FE4900AD1E57 /* FileLinkViewModel.swift */,
 			);
 			path = File;
 			sourceTree = "<group>";
@@ -14617,6 +14634,7 @@
 				837B179928815F7400A4D01B /* FileLinkViewController+Additions.swift in Sources */,
 				945339CD2A6014FA00363DAD /* FileLinkViewController+ContextMenu.swift in Sources */,
 				E85044C61A6D84620064B675 /* FileLinkViewController.m in Sources */,
+				835EBCBF2DC9FE4B00AD1E57 /* FileLinkViewModel.swift in Sources */,
 				9D3563CE28B54E8B00CB3365 /* FileManagementSettingsViewRouter.swift in Sources */,
 				94AEFB8B2B64705B00FD8D5E /* FileManagementTableViewController+Additions.swift in Sources */,
 				5B00B6E8210745BF0076D5BB /* FileManagementTableViewController.m in Sources */,
@@ -16146,11 +16164,13 @@
 				B5E9D41528ACF8CE00504F1F /* FeatureFlagViewModelTests.swift in Sources */,
 				A8F6A9982A336BB2008528C6 /* FileAttributeGeneratorTests.swift in Sources */,
 				B6D0B36A283DF5B50020C64D /* FileCacheRepositoryTests.swift in Sources */,
+				835EBCD12DCA0B7C00AD1E57 /* FileLinkViewModelTests.swift in Sources */,
 				328FDCF32911FE2100E5990A /* FilesSearchRepositoryTests.swift in Sources */,
 				B67B18C625CAB7B60022D6C0 /* FileSystemImageCacheClient+Additions.swift in Sources */,
 				320262EE298C97EE0049688C /* FilterTypeEntityMappingTests.swift in Sources */,
 				534FFC752C1AA65E00A49D1F /* FilterTypeTests.swift in Sources */,
 				0E5F5E8D2C6C6E730037A99C /* FirstTimeOnboardingPrimaryButtonViewModelTests.swift in Sources */,
+				835EBCEC2DCA17EF00AD1E57 /* FolderLinkViewModelTests.swift in Sources */,
 				C4B97D812B67925C00EBA9E5 /* FuncCallRecorder.swift in Sources */,
 				BFD4E22B2935F73C0011392C /* FutureMeetingRoomViewModel+Additions.swift in Sources */,
 				BFD4E2292935F67A0011392C /* FutureMeetingRoomViewModelTests.swift in Sources */,

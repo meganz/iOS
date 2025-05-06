@@ -67,6 +67,7 @@
     
     [self setupColors];
     [self configureContextMenuManager];
+    [self configureViewModel];
 }
 
 - (void)viewWillAppear:(BOOL)animated {

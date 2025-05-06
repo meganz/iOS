@@ -5,6 +5,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@class SendToChatWrapper;
+
 @interface MEGALinkManager : NSObject
 
 #pragma mark - Utils to manage MEGA links
@@ -21,6 +23,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (class, nonatomic) LinkOption selectedOption;
 @property (class, nonatomic, readonly) NSMutableArray *nodesFromLinkMutableArray;
 @property (class, nonatomic) NSString *linkSavedString;
+@property (class, nonatomic, nullable) SendToChatWrapper *sendToChatWrapper;
 
 + (void)resetUtilsForLinksWithoutSession;
 

@@ -2,6 +2,7 @@
 
 @class ContextMenuManager;
 @class SendLinkToChatsDelegate;
+@class FileLinkViewModel;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -19,6 +20,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong, nullable) ContextMenuManager * contextMenuManager;
 @property (nonatomic) SendLinkToChatsDelegate *sendLinkDelegate;
 @property (nonatomic) BOOL decryptionAlertControllerHasBeenPresented;
+
+@property (nonatomic, strong) FileLinkViewModel *viewModel;
 
 - (void)importFromFiles;
 
