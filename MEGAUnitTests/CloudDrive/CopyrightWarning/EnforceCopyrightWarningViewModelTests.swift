@@ -3,6 +3,7 @@ import Combine
 import MEGADomain
 import MEGADomainMock
 import MEGAL10n
+import MEGAPreference
 import XCTest
 
 final class EnforceCopyrightWarningViewModelTests: XCTestCase {
@@ -21,7 +22,7 @@ final class EnforceCopyrightWarningViewModelTests: XCTestCase {
     
     @MainActor
     func testDetermineViewState_agreedBefore_shouldReturnAgreed() async {
-        let preferenceUseCase = MockPreferenceUseCase(dict: [.agreedCopywriteWarning: true])
+        let preferenceUseCase = MockPreferenceUseCase(dict: [PreferenceKeyEntity.agreedCopywriteWarning.rawValue: true])
         let copyrightUseCase = MockCopyrightUseCase(shouldAutoApprove: false)
         let sut = makeEnforceCopyrightWarningViewModel(preferenceUseCase: preferenceUseCase,
                                                        copyrightUseCase: copyrightUseCase)
@@ -40,7 +41,7 @@ final class EnforceCopyrightWarningViewModelTests: XCTestCase {
         
         await sut.determineViewState()
         
-        let isAgreed = try XCTUnwrap(preferenceUseCase.dict[.agreedCopywriteWarning] as? Bool)
+        let isAgreed = try XCTUnwrap(preferenceUseCase.dict[PreferenceKeyEntity.agreedCopywriteWarning.rawValue] as? Bool)
         XCTAssertTrue(isAgreed)
         XCTAssertEqual(sut.viewStatus, .agreed)
     }
@@ -62,7 +63,7 @@ final class EnforceCopyrightWarningViewModelTests: XCTestCase {
         sut.isTermsAgreed = true
         
         wait(for: [exp], timeout: 0.5)
-        let isAgreed = try XCTUnwrap(preferenceUseCase.dict[.agreedCopywriteWarning] as? Bool)
+        let isAgreed = try XCTUnwrap(preferenceUseCase.dict[PreferenceKeyEntity.agreedCopywriteWarning.rawValue] as? Bool)
         XCTAssertTrue(isAgreed)
     }
     

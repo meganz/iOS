@@ -2,6 +2,7 @@ import Foundation
 import LogRepo
 import MEGAAppSDKRepo
 import MEGADomain
+import MEGAPreference
 import MEGARepo
 import MEGASwift
 

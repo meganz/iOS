@@ -1,11 +1,12 @@
 import Foundation
+import MEGAPreference
 
 public protocol LogUseCaseProtocol {
     func shouldEnableLogs() -> Bool
 }
 
 public struct LogUseCase<T: PreferenceUseCaseProtocol, U: AppEnvironmentUseCaseProtocol>: LogUseCaseProtocol {
-    @PreferenceWrapper(key: .logging, defaultValue: false)
+    @PreferenceWrapper(key: PreferenceKeyEntity.logging, defaultValue: false)
     private var isLoggingEnabled: Bool
     private var appEnvironment: U
     

@@ -2,13 +2,14 @@ import Combine
 import Foundation
 import MEGAAppPresentation
 import MEGADomain
+import MEGAPreference
 import MEGARepo
 
 public class PhotoLibraryModeAllViewModel: PhotoLibraryModeViewModel<PhotoDateSection> {
     @Published var zoomState = PhotoLibraryZoomState()
     @Published private(set) var showEnableCameraUpload: Bool = false
 
-    @PreferenceWrapper(key: .isCameraUploadsEnabled, defaultValue: false)
+    @PreferenceWrapper(key: PreferenceKeyEntity.isCameraUploadsEnabled, defaultValue: false)
     private var isCameraUploadsEnabled: Bool
     private let invalidateCameraUploadEnabledSettingPassthroughSubject = PassthroughSubject<Void, Never>()
     

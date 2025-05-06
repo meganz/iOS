@@ -1,6 +1,7 @@
 import Foundation
+import MEGAPreference
 
-public enum PreferenceKeyEntity: String {
+public enum PreferenceKeyEntity: String, PreferenceKeyProtocol {
     case dontShowAgainAddPhoneNumber
     case backupHeartbeatRegistrationId
     case lastPSARequestTimestamp

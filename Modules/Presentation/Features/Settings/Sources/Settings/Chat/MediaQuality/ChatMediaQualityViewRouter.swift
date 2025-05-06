@@ -1,6 +1,7 @@
 import ChatRepo
 import MEGAAppPresentation
 import MEGADomain
+import MEGAPreference
 import MEGARepo
 import SwiftUI
 import UIKit
@@ -15,9 +16,7 @@ public final class ChatMediaQualityViewRouter: Routing {
     
     public func build() -> UIViewController {
         let viewModel = ChatMediaQualityViewModel(
-            defaultPreferenceUseCase: PreferenceUseCase(
-                repository: PreferenceRepository.newRepo
-            ),
+            defaultPreferenceUseCase: PreferenceUseCase.default,
             groupPreferenceUseCase: PreferenceUseCase(
                 repository: PreferenceRepository(userDefaults: UserDefaults(suiteName: "group.mega.ios")!)
             )

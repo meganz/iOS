@@ -1,5 +1,6 @@
 import MEGADomain
 import MEGAPermissions
+import MEGAPreference
 import SwiftUI
 
 @MainActor
@@ -7,7 +8,7 @@ final class CameraUploadStatusButtonViewModel: NSObject, ObservableObject {
     let imageViewModel: CameraUploadStatusImageViewModel
     
     private let idleWaitTimeNanoSeconds: UInt64
-    @PreferenceWrapper(key: .isCameraUploadsEnabled, defaultValue: false)
+    @PreferenceWrapper(key: PreferenceKeyEntity.isCameraUploadsEnabled, defaultValue: false)
     private var isCameraUploadsEnabled: Bool
     private var delayedStatusChangeTask: Task<Void, any Error>?
     
@@ -25,7 +26,7 @@ final class CameraUploadStatusButtonViewModel: NSObject, ObservableObject {
             devicePermissionHandler: devicePermissionHandler)
         
         imageViewModel = CameraUploadStatusImageViewModel(
-            status: preferenceUseCase[.isCameraUploadsEnabled] ?? false ? .checkPendingItemsToUpload : .turnedOff)
+            status: preferenceUseCase[PreferenceKeyEntity.isCameraUploadsEnabled.rawValue] ?? false ? .checkPendingItemsToUpload : .turnedOff)
         super.init()
         $isCameraUploadsEnabled.useCase = preferenceUseCase
     }

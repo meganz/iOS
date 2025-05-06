@@ -1,8 +1,18 @@
 import Foundation
 import MEGADomain
+import MEGAPreference
 import MEGASwift
 
 public final class MockPreferenceRepository: PreferenceRepositoryProtocol, @unchecked Sendable {
+    public subscript<T>(key: String) -> T? {
+        get {
+            userDefaults[key] as? T
+        }
+        set {
+            $userDefaults.mutate { $0[key] = newValue }
+        }
+    }
+    
     @Atomic public var userDefaults: [String: Any] = [:]
     
     public static var newRepo: MockPreferenceRepository {
@@ -10,15 +20,7 @@ public final class MockPreferenceRepository: PreferenceRepositoryProtocol, @unch
     }
     
     public init() {}
-    
-    public func value<T>(forKey key: String) -> T? {
-        userDefaults[key] as? T
-    }
-    
-    public func setValue<T>(value: T?, forKey key: String) {
-        $userDefaults.mutate { $0[key] = value }
-    }
-    
+       
     public var isEmpty: Bool {
         userDefaults.isEmpty
     }

@@ -1,4 +1,5 @@
 import Foundation
+import MEGAPreference
 
 public protocol AppFirstLaunchUseCaseProcotol {
     func isAppFirstLaunch() -> Bool
@@ -6,7 +7,7 @@ public protocol AppFirstLaunchUseCaseProcotol {
 }
 
 public struct AppFirstLaunchUseCase<T: PreferenceUseCaseProtocol>: AppFirstLaunchUseCaseProcotol {
-    @PreferenceWrapper(key: .firstRun, defaultValue: "")
+    @PreferenceWrapper(key: PreferenceKeyEntity.firstRun, defaultValue: "")
     private var firstRun: String
     
     public init(preferenceUserCase: T) {

@@ -1,4 +1,5 @@
 import Foundation
+import MEGAPreference
 
 public protocol NodeActionTargetUseCaseProtocol {
     func lastTargetNodeTreeArray(for action: BrowserActionEntity) async -> [NodeEntity]?
@@ -10,13 +11,13 @@ public struct NodeActionTargetUseCase<T: NodeRepositoryProtocol, U: PreferenceUs
     private let nodeRepo: T
     private let secondsInOneHour: TimeInterval = 3600
     
-    @PreferenceWrapper(key: .lastMoveActionTargetPath, defaultValue: nil)
+    @PreferenceWrapper(key: PreferenceKeyEntity.lastMoveActionTargetPath, defaultValue: nil)
     private var lastMoveActionTargetPath: HandleEntity?
-    @PreferenceWrapper(key: .lastMoveActionTargetDate, defaultValue: Date(timeIntervalSince1970: 0))
+    @PreferenceWrapper(key: PreferenceKeyEntity.lastMoveActionTargetDate, defaultValue: Date(timeIntervalSince1970: 0))
     private var lastMoveActionTargetDate: Date
-    @PreferenceWrapper(key: .lastCopyActionTargetPath, defaultValue: nil)
+    @PreferenceWrapper(key: PreferenceKeyEntity.lastCopyActionTargetPath, defaultValue: nil)
     private var lastCopyActionTargetPath: HandleEntity?
-    @PreferenceWrapper(key: .lastCopyActionTargetDate, defaultValue: Date(timeIntervalSince1970: 0))
+    @PreferenceWrapper(key: PreferenceKeyEntity.lastCopyActionTargetDate, defaultValue: Date(timeIntervalSince1970: 0))
     private var lastCopyActionTargetDate: Date
     
     public init(nodeRepo: T, preferenceUseCase: U) {

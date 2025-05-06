@@ -1,5 +1,6 @@
 import CoreServices
 import MEGADomain
+import MEGAPreference
 import Photos
 import UIKit
 import UniformTypeIdentifiers
@@ -9,7 +10,7 @@ final class UploadImagePickerViewController: UIImagePickerController {
     private var assetCreationRequestLocationManager: AssetCreationRequestLocationManager?
     var completion: ((Result<String, ImagePickingError>) -> Void)?
     
-    @PreferenceWrapper(key: .isSaveMediaCapturedToGalleryEnabled, defaultValue: false, useCase: PreferenceUseCase.default)
+    @PreferenceWrapper(key: PreferenceKeyEntity.isSaveMediaCapturedToGalleryEnabled, defaultValue: false, useCase: PreferenceUseCase.default)
     private var isSaveMediaCapturedToGalleryEnabled: Bool
     
     override func viewDidLoad() {

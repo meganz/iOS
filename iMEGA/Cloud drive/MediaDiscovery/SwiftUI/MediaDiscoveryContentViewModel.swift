@@ -4,6 +4,7 @@ import Foundation
 import MEGAAppPresentation
 import MEGADomain
 import MEGAFoundation
+import MEGAPreference
 import SwiftUI
 
 protocol MediaDiscoveryContentDelegate: AnyObject {
@@ -44,7 +45,7 @@ final class MediaDiscoveryContentViewModel: ObservableObject {
         set { photoLibraryContentViewModel.selection.editMode = newValue }
     }
     
-    @PreferenceWrapper(key: .autoMediaDiscoveryBannerDismissed, defaultValue: false)
+    @PreferenceWrapper(key: PreferenceKeyEntity.autoMediaDiscoveryBannerDismissed, defaultValue: false)
     var autoMediaDiscoveryBannerDismissed: Bool
     
     private let parentNodeProvider: () -> NodeEntity?
@@ -55,7 +56,7 @@ final class MediaDiscoveryContentViewModel: ObservableObject {
     private lazy var pageStayTimeTracker = PageStayTimeTracker()
     private var subscriptions = Set<AnyCancellable>()
     private weak var delegate: (any MediaDiscoveryContentDelegate)?
-    @PreferenceWrapper(key: .mediaDiscoveryShouldIncludeSubfolderMedia, defaultValue: true)
+    @PreferenceWrapper(key: PreferenceKeyEntity.mediaDiscoveryShouldIncludeSubfolderMedia, defaultValue: true)
     private var shouldIncludeSubfolderMedia: Bool
     
     init(contentMode: PhotoLibraryContentMode,

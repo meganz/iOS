@@ -4,6 +4,7 @@ import MEGAAppSDKRepo
 import MEGADomain
 import MEGAL10n
 import MEGAPermissions
+import MEGAPreference
 import MEGARepo
 
 @MainActor

@@ -5,6 +5,7 @@ import MEGAAppPresentationMock
 import MEGADomain
 import MEGADomainMock
 import MEGAL10n
+import MEGAPreference
 @testable import MEGATest
 import XCTest
 
@@ -332,7 +333,7 @@ final class ScheduleMeetingViewModelTests: XCTestCase {
     func testShowWaitingRoomWarningBanner_givenBannerDismissedBeforeAndWaitingRoomEnabledAndAllowNonHostsToAddParticipantsEnabled_shouldBeFalse() {
         let harness = Harness(
             viewConfiguration: MockScheduleMeetingViewConfiguration(waitingRoomEnabled: true, allowNonHostsToAddParticipantsEnabled: true),
-            preferenceUseCase: .init(dict: [.waitingRoomWarningBannerDismissed: true])
+            preferenceUseCase: .init(dict: [PreferenceKeyEntity.waitingRoomWarningBannerDismissed.rawValue: true])
         )
         
         XCTAssertFalse(harness.sut.showWaitingRoomWarningBanner)

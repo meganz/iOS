@@ -3,6 +3,7 @@
 import MEGAAppPresentationMock
 import MEGADomain
 import MEGADomainMock
+import MEGAPreference
 import MEGASwift
 import SwiftUI
 import XCTest
@@ -163,14 +164,14 @@ final class PhotoLibraryModeAllViewModelTests: XCTestCase {
     func testInvalidateCameraUploadEnabledSetting_whenIsCameraUploadsEnabledHasChanged_shouldTriggerShowEnableCameraUploadToEqualFalse() async {
         
         // Arrange
-        let mockPreferences = MockPreferenceUseCase(dict: [.isCameraUploadsEnabled: false])
+        let mockPreferences = MockPreferenceUseCase(dict: [PreferenceKeyEntity.isCameraUploadsEnabled.rawValue: false])
         let libraryViewModel = PhotoLibraryContentViewModel(library: PhotoLibrary())
         let sut = PhotoLibraryModeAllViewModel(
             libraryViewModel: libraryViewModel,
             preferenceUseCase: mockPreferences)
         
         // Act
-        mockPreferences.dict[.isCameraUploadsEnabled] = true
+        mockPreferences.dict[PreferenceKeyEntity.isCameraUploadsEnabled.rawValue] = true
         sut.invalidateCameraUploadEnabledSetting()
         
         let resultExpectation = expectation(description: "Expect showEnableCameraUpload to emit correct value")
@@ -190,7 +191,7 @@ final class PhotoLibraryModeAllViewModelTests: XCTestCase {
     func testInvalidateCameraUploadEnabledSetting_whenIsCameraUploadsEnabledHasNotChanged_shouldTriggerShowEnableCameraUploadToEqualTrue() async {
         
         // Arrange
-        let mockPreferences = MockPreferenceUseCase(dict: [.isCameraUploadsEnabled: false])
+        let mockPreferences = MockPreferenceUseCase(dict: [PreferenceKeyEntity.isCameraUploadsEnabled.rawValue: false])
         let libraryViewModel = PhotoLibraryContentViewModel(library: PhotoLibrary())
         let sut = PhotoLibraryModeAllViewModel(
             libraryViewModel: libraryViewModel,

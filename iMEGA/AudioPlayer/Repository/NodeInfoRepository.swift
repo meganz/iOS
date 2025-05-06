@@ -1,6 +1,7 @@
 import Foundation
 import MEGAAppSDKRepo
 import MEGADomain
+import MEGAPreference
 import MEGASwift
 
 protocol NodeInfoRepositoryProtocol: Sendable {
@@ -21,8 +22,8 @@ final class NodeInfoRepository: NodeInfoRepositoryProtocol {
     private let megaStore: MEGAStore
     private let streamingInfoRepository: any StreamingInfoRepositoryProtocol
     private let offlineFileInfoRepository: any OfflineInfoRepositoryProtocol
-    private let sortingPreference: PreferenceWrapper<SortingPreference> = PreferenceWrapper(key: .sortingPreference, defaultValue: .perFolder, useCase: PreferenceUseCase.default)
-    private let sortingType: PreferenceWrapper<MEGASortOrderType> = PreferenceWrapper(key: .sortingPreferenceType, defaultValue: .defaultAsc, useCase: PreferenceUseCase.default)
+    private let sortingPreference: PreferenceWrapper<SortingPreference, PreferenceKeyEntity> = PreferenceWrapper(key: .sortingPreference, defaultValue: .perFolder, useCase: PreferenceUseCase.default)
+    private let sortingType: PreferenceWrapper<MEGASortOrderType, PreferenceKeyEntity> = PreferenceWrapper(key: .sortingPreferenceType, defaultValue: .defaultAsc, useCase: PreferenceUseCase.default)
     
     init(
         sdk: MEGASdk = MEGASdk.shared,

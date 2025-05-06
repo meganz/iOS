@@ -3,6 +3,7 @@ import MEGAAppSDKRepo
 import MEGADomain
 import MEGAL10n
 import MEGAPermissions
+import MEGAPreference
 
 /// Place to store all node actions instead of injecting tens of closures directly into the factory
 /// It's  injected to CloudDriveFactory from the outside as it mostly needs

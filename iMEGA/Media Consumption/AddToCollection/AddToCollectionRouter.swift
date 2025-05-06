@@ -2,6 +2,7 @@ import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGADomain
 import MEGAPhotos
+import MEGAPreference
 import MEGASwiftUI
 import SwiftUI
 

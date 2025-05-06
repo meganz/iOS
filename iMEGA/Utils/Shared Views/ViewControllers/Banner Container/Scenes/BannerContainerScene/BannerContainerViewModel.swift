@@ -1,5 +1,6 @@
 import MEGAAppPresentation
 import MEGADomain
+import MEGAPreference
 
 enum BannerContainerViewAction: ActionType {
     case onViewWillAppear
@@ -22,13 +23,13 @@ final class BannerContainerViewModel: ViewModelType {
     private var message: String
     private var type: BannerType
     
-    @PreferenceWrapper(key: .offlineLogOutWarningDismissed, defaultValue: false)
+    @PreferenceWrapper(key: PreferenceKeyEntity.offlineLogOutWarningDismissed, defaultValue: false)
     private var offlineLogOutWarningDismissed: Bool
     
     init(
          message: String,
          type: BannerType,
-         preferenceUseCase: any PreferenceUseCaseProtocol = PreferenceUseCase.default
+         preferenceUseCase: some PreferenceUseCaseProtocol = PreferenceUseCase.default
     ) {
         self.message = message
         self.type = type

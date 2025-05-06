@@ -1,6 +1,7 @@
 import MEGADomain
 import MEGADomainMock
 import MEGASwift
+import MEGAPreference
 import MEGATest
 import Testing
 import XCTest
@@ -131,7 +132,7 @@ final class AccountStorageUseCaseTests: XCTestCase {
             currentTestDate
         })
         sut.updateLastStorageBannerDismissDate()
-        let updatedDate = try XCTUnwrap(preferenceUC.dict[.lastStorageBannerDismissedDate] as? Date)
+        let updatedDate = try XCTUnwrap(preferenceUC.dict[PreferenceKeyEntity.lastStorageBannerDismissedDate.rawValue] as? Date)
         
         XCTAssertNotNil(updatedDate, "Expected date to be updated, but it was nil.")
         XCTAssertEqual(updatedDate, currentTestDate, "Expected updated date to be equal to the current date.")
@@ -143,7 +144,7 @@ final class AccountStorageUseCaseTests: XCTestCase {
             currentTestDate
         })
         sut.updateLastStorageBannerDismissDate()
-        let updatedDate = try XCTUnwrap(preferenceUC.dict[.lastStorageBannerDismissedDate] as? Date)
+        let updatedDate = try XCTUnwrap(preferenceUC.dict[PreferenceKeyEntity.lastStorageBannerDismissedDate.rawValue] as? Date)
         
         XCTAssertNotNil(updatedDate, "Expected date to be updated, but it was nil.")
         XCTAssertEqual(updatedDate, currentTestDate, "Expected updated date to be equal to the current date.")
@@ -173,7 +174,7 @@ final class AccountStorageUseCaseTests: XCTestCase {
         
         let mockPreferenceUseCase = MockPreferenceUseCase()
         if let lastDismissedDate = lastStorageBannerDismissedDate {
-            mockPreferenceUseCase.dict[.lastStorageBannerDismissedDate] = lastDismissedDate
+            mockPreferenceUseCase.dict[PreferenceKeyEntity.lastStorageBannerDismissedDate.rawValue] = lastDismissedDate
         }
         
         let sut = AccountStorageUseCase(

@@ -1,6 +1,7 @@
 @testable import MEGA
 import MEGADomain
 import MEGADomainMock
+import MEGAPreference
 import XCTest
 
 final class AppearanceViewModelTests: XCTestCase {
@@ -13,7 +14,7 @@ final class AppearanceViewModelTests: XCTestCase {
     
     @MainActor
     func testAutoMediaDiscoverySetting_preferenceSet_shouldSetToValue() async {
-        let preferenceUseCase = MockPreferenceUseCase(dict: [.shouldDisplayMediaDiscoveryWhenMediaOnly: false])
+        let preferenceUseCase = MockPreferenceUseCase(dict: [PreferenceKeyEntity.shouldDisplayMediaDiscoveryWhenMediaOnly.rawValue: false])
         let sut = makeSUT(preferenceUseCase: preferenceUseCase)
         let result = await sut.fetchSettingValue(for: .autoMediaDiscoverySetting)
         XCTAssertFalse(result)
@@ -35,7 +36,7 @@ final class AppearanceViewModelTests: XCTestCase {
         
         sut.saveSetting(for: .autoMediaDiscoverySetting(false))
         
-        let changedPreference = try XCTUnwrap(preferenceUseCase.dict[.shouldDisplayMediaDiscoveryWhenMediaOnly] as? Bool)
+        let changedPreference = try XCTUnwrap(preferenceUseCase.dict[PreferenceKeyEntity.shouldDisplayMediaDiscoveryWhenMediaOnly.rawValue] as? Bool)
         XCTAssertFalse(changedPreference)
     }
     
@@ -48,7 +49,7 @@ final class AppearanceViewModelTests: XCTestCase {
     
     @MainActor
     func testMediaDiscoveryShouldIncludeSubfolderSetting_preferenceSet_shouldSetToValue() async {
-        let preferenceUseCase = MockPreferenceUseCase(dict: [.mediaDiscoveryShouldIncludeSubfolderMedia: false])
+        let preferenceUseCase = MockPreferenceUseCase(dict: [PreferenceKeyEntity.mediaDiscoveryShouldIncludeSubfolderMedia.rawValue: false])
         let sut = makeSUT(preferenceUseCase: preferenceUseCase)
         let result = await sut.fetchSettingValue(for: .mediaDiscoveryShouldIncludeSubfolderSetting)
 
@@ -61,7 +62,7 @@ final class AppearanceViewModelTests: XCTestCase {
         
         sut.saveSetting(for: .mediaDiscoveryShouldIncludeSubfolderSetting(false))
         
-        let changedPreference = try XCTUnwrap(preferenceUseCase.dict[.mediaDiscoveryShouldIncludeSubfolderMedia] as? Bool)
+        let changedPreference = try XCTUnwrap(preferenceUseCase.dict[PreferenceKeyEntity.mediaDiscoveryShouldIncludeSubfolderMedia.rawValue] as? Bool)
         XCTAssertFalse(changedPreference)
     }
     
@@ -159,14 +160,14 @@ final class AppearanceViewModelTests: XCTestCase {
         let preferenceUseCase = MockPreferenceUseCase(dict: [:])
         let sut = makeSUT(preferenceUseCase: preferenceUseCase)
         sut.saveSetting(for: .autoMediaDiscoverySetting(true))
-        XCTAssertTrue(preferenceUseCase[.shouldDisplayMediaDiscoveryWhenMediaOnly] ?? false)
+        XCTAssertTrue(preferenceUseCase[PreferenceKeyEntity.shouldDisplayMediaDiscoveryWhenMediaOnly.rawValue] ?? false)
     }
     
     func testSaveSetting_forMediaDiscoveryShouldIncludeSubfolderSetting_shouldSetSavedValue() {
         let preferenceUseCase = MockPreferenceUseCase(dict: [:])
         let sut = makeSUT(preferenceUseCase: preferenceUseCase)
         sut.saveSetting(for: .mediaDiscoveryShouldIncludeSubfolderSetting(true))
-        XCTAssertTrue(preferenceUseCase[.mediaDiscoveryShouldIncludeSubfolderMedia] ?? false)
+        XCTAssertTrue(preferenceUseCase[PreferenceKeyEntity.mediaDiscoveryShouldIncludeSubfolderMedia.rawValue] ?? false)
     }
     
     func testSaveSetting_forShowHiddenNodes_shouldSetSavedValue() async {

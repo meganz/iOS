@@ -1,4 +1,5 @@
 import Foundation
+import MEGAPreference
 
 public protocol MobileDataUseCaseProtocol {
     func isMobileDataForPreviewingEnabled() -> Bool
@@ -6,7 +7,7 @@ public protocol MobileDataUseCaseProtocol {
 }
 
 public struct MobileDataUseCase: MobileDataUseCaseProtocol {
-    @PreferenceWrapper(key: .useMobileDataForPreviewingOriginalPhoto, defaultValue: false)
+    @PreferenceWrapper(key: PreferenceKeyEntity.useMobileDataForPreviewingOriginalPhoto, defaultValue: false)
     private var mobileDataForPreviewingEnabled: Bool
     
     public init(preferenceUseCase: some PreferenceUseCaseProtocol) {

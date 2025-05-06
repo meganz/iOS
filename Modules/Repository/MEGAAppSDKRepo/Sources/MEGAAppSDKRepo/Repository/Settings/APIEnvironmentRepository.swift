@@ -1,4 +1,5 @@
 import MEGADomain
+import MEGAPreference
 import MEGARepo
 import MEGASdk
 
@@ -16,7 +17,7 @@ public struct APIEnvironmentRepository: APIEnvironmentRepositoryProtocol {
     private let folderSdk: MEGASdk
     private let credentialRepository: any CredentialRepositoryProtocol
     private let preferenceRepository: any PreferenceRepositoryProtocol
-    private var apiEnvironment: PreferenceWrapper<Int>
+    private var apiEnvironment: PreferenceWrapper<Int, PreferenceKeyEntity>
     
     private enum Constants {
         static let productionSDKUrl = "https://g.api.mega.co.nz/"
@@ -35,7 +36,7 @@ public struct APIEnvironmentRepository: APIEnvironmentRepositoryProtocol {
         self.folderSdk = folderSdk
         self.credentialRepository = credentialRepository
         self.preferenceRepository = preferenceRepository
-        self.apiEnvironment = PreferenceWrapper(key: .apiEnvironment, defaultValue: 0, useCase: PreferenceUseCase(repository: preferenceRepository))
+        self.apiEnvironment = PreferenceWrapper(key: PreferenceKeyEntity.apiEnvironment, defaultValue: 0, useCase: PreferenceUseCase(repository: preferenceRepository))
     }
     
     public mutating func changeAPIURL(_ environment: APIEnvironmentEntity, onUserSessionAvailable: () -> Void) {

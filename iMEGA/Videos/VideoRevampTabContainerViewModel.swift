@@ -2,6 +2,7 @@ import Combine
 import MEGAAppPresentation
 import MEGADomain
 import MEGAL10n
+import MEGAPreference
 import Video
 
 final class VideoRevampTabContainerViewModel: ViewModelType {

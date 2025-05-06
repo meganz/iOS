@@ -2,6 +2,7 @@ import Combine
 import MEGADesignToken
 import MEGADomain
 import MEGAL10n
+import MEGAPreference
 import SwiftUI
 import UIKit
 

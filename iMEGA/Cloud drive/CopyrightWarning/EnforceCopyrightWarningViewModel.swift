@@ -2,6 +2,7 @@ import Combine
 import Foundation
 import MEGADomain
 import MEGAL10n
+import MEGAPreference
 
 @MainActor
 final class EnforceCopyrightWarningViewModel: ObservableObject {
@@ -15,7 +16,7 @@ final class EnforceCopyrightWarningViewModel: ObservableObject {
     @Published var isTermsAgreed: Bool = false
     
     private let copyrightUseCase: any CopyrightUseCaseProtocol
-    @PreferenceWrapper(key: .agreedCopywriteWarning, defaultValue: false)
+    @PreferenceWrapper(key: PreferenceKeyEntity.agreedCopywriteWarning, defaultValue: false)
     private var agreedCopyrightWarning: Bool
     private var subscriptions = Set<AnyCancellable>()
     

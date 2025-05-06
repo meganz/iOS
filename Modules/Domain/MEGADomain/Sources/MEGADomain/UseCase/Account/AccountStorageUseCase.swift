@@ -1,5 +1,6 @@
 import Foundation
 import MEGASwift
+import MEGAPreference
 
 // MARK: - Use case protocol
 public protocol AccountStorageUseCaseProtocol: Sendable {
@@ -89,7 +90,7 @@ public struct AccountStorageUseCase: AccountStorageUseCaseProtocol {
     }
     private let currentDate: @Sendable () -> Date
     
-    @PreferenceWrapper(key: .lastStorageBannerDismissedDate, defaultValue: nil)
+    @PreferenceWrapper(key: PreferenceKeyEntity.lastStorageBannerDismissedDate, defaultValue: nil)
     private var lastStorageBannerDismissedDate: Date?
     
     public init(

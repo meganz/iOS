@@ -1,5 +1,6 @@
 import MEGAAppPresentation
 import MEGADomain
+import MEGAPreference
 import SwiftUI
 
 final class PhotoLibraryModeAllCollectionViewModel: PhotoLibraryModeAllViewModel {

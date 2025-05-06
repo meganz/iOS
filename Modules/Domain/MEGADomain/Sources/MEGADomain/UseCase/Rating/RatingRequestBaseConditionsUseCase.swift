@@ -1,10 +1,12 @@
+import MEGAPreference
+
 public protocol RatingRequestBaseConditionsUseCaseProtocol {
     func hasMetBaseConditions() -> Bool
     func saveLastRequestedAppVersion(_ appVersion: String)
 }
 
 public struct RatingRequestBaseConditionsUseCase<T: PreferenceUseCaseProtocol, U: AccountRepositoryProtocol>: RatingRequestBaseConditionsUseCaseProtocol {
-    @PreferenceWrapper(key: .lastRequestedVersionForRating, defaultValue: "")
+    @PreferenceWrapper(key: PreferenceKeyEntity.lastRequestedVersionForRating, defaultValue: "")
     private var lastRequestedVersion: String
     
     private let accountRepo: U

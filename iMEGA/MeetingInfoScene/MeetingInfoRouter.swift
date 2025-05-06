@@ -3,6 +3,7 @@ import Combine
 import MEGAAppSDKRepo
 import MEGADomain
 import MEGAL10n
+import MEGAPreference
 import MEGARepo
 
 @MainActor

@@ -2,6 +2,7 @@ import ChatRepo
 import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGADomain
+import MEGAPreference
 import MEGARepo
 
 @objc protocol TextFileEditable { }

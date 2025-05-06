@@ -2,6 +2,7 @@ import Foundation
 import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGADomain
+import MEGAPreference
 import MEGARepo
 
 struct AppearanceViewRouter: Routing {

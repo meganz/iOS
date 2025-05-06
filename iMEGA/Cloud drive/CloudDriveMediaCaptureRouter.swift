@@ -1,8 +1,9 @@
 import MEGADomain
 import MEGAPermissions
+import MEGAPreference
 
 struct CloudDriveMediaCaptureRouter {
-    @PreferenceWrapper(key: .isSaveMediaCapturedToGalleryEnabled, defaultValue: false, useCase: PreferenceUseCase.default)
+    @PreferenceWrapper(key: PreferenceKeyEntity.isSaveMediaCapturedToGalleryEnabled, defaultValue: false, useCase: PreferenceUseCase.default)
     private static var isSaveMediaCapturedToGalleryEnabled: Bool
 
     private let parentNode: NodeEntity

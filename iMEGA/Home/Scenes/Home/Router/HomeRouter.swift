@@ -1,6 +1,7 @@
 import CoreServices
 import MEGAAppSDKRepo
 import MEGADomain
+import MEGAPreference
 import UIKit
 
 @MainActor

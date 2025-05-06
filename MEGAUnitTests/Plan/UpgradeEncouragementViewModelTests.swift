@@ -4,6 +4,7 @@ import MEGAAppPresentationMock
 import MEGAAppSDKRepoMock
 import MEGADomain
 import MEGADomainMock
+import MEGAPreference
 import XCTest
 
 final class UpgradeEncouragementViewModelTests: XCTestCase {
@@ -77,7 +78,7 @@ final class UpgradeEncouragementViewModelTests: XCTestCase {
         // given
         let accountUseCase = MockAccountUseCase(accountCreationDate: Date().daysAgo(6), currentAccountDetails: MockMEGAAccountDetails.freeAccountDetailsEntity)
 
-        let preferenceUseCase = MockPreferenceUseCase(dict: [.lastEncourageUpgradeDate: Date().daysAgo(10)!])
+        let preferenceUseCase = MockPreferenceUseCase(dict: [PreferenceKeyEntity.lastEncourageUpgradeDate.rawValue: Date().daysAgo(10)!])
         randomNumberGenerator.generateRecorder.stubbedReturns = 20
         
         sut = makeSUT(accountUseCase: accountUseCase, preferenceUseCase: preferenceUseCase)
@@ -95,7 +96,7 @@ final class UpgradeEncouragementViewModelTests: XCTestCase {
         // given
         let accountUseCase = MockAccountUseCase(accountCreationDate: Date().daysAgo(5), currentAccountDetails: MockMEGAAccountDetails.freeAccountDetailsEntity)
 
-        let preferenceUseCase = MockPreferenceUseCase(dict: [.lastEncourageUpgradeDate: Date().daysAgo(4)!])
+        let preferenceUseCase = MockPreferenceUseCase(dict: [PreferenceKeyEntity.lastEncourageUpgradeDate.rawValue: Date().daysAgo(4)!])
         randomNumberGenerator.generateRecorder.stubbedReturns = 1
         
         sut = makeSUT(accountUseCase: accountUseCase, preferenceUseCase: preferenceUseCase)
@@ -123,7 +124,7 @@ final class UpgradeEncouragementViewModelTests: XCTestCase {
         
         // then
         XCTAssertTrue(randomNumberGenerator.generateRecorder.called)
-        XCTAssertNotNil(preferenceUseCase[.lastEncourageUpgradeDate])
+        XCTAssertNotNil(preferenceUseCase[PreferenceKeyEntity.lastEncourageUpgradeDate.rawValue])
         XCTAssertTrue(router.presentUpgradeTVCRecorder.called)
     }
     
@@ -134,7 +135,7 @@ final class UpgradeEncouragementViewModelTests: XCTestCase {
         
         randomNumberGenerator.generateRecorder.stubbedReturns = 1
 
-        let preferenceUseCase = MockPreferenceUseCase(dict: [.lastEncourageUpgradeDate: Date().daysAgo(10)!])
+        let preferenceUseCase = MockPreferenceUseCase(dict: [PreferenceKeyEntity.lastEncourageUpgradeDate.rawValue: Date().daysAgo(10)!])
         
         sut = makeSUT(accountUseCase: accountUseCase, preferenceUseCase: preferenceUseCase)
         

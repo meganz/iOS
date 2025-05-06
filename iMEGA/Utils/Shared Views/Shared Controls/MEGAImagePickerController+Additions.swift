@@ -1,7 +1,8 @@
 import MEGADomain
+import MEGAPreference
 
 extension MEGAImagePickerController {
-    @PreferenceWrapper(key: .isSaveMediaCapturedToGalleryEnabled, defaultValue: false, useCase: PreferenceUseCase.default)
+    @PreferenceWrapper(key: PreferenceKeyEntity.isSaveMediaCapturedToGalleryEnabled, defaultValue: false, useCase: PreferenceUseCase.default)
     private static var isSaveMediaCapturedToGalleryEnabled: Bool
     
     @objc func hasSetIsSaveMediaCapturedToGalleryEnabled() -> Bool {

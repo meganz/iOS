@@ -4,6 +4,7 @@ import MEGADomain
 import MEGADomainMock
 import MEGAPermissions
 import MEGAPermissionsMock
+import MEGAPreference
 import MEGASwift
 import SwiftUI
 import XCTest
@@ -15,7 +16,7 @@ final class CameraUploadStatusButtonViewModelTests: XCTestCase {
     func testInit_cameraUploadsEnabledState_shouldSetStatusToCorrectly() {
         [(cameraUploadEnabled: false, status: CameraUploadStatus.turnedOff),
          (cameraUploadEnabled: true, status: CameraUploadStatus.checkPendingItemsToUpload)].forEach {
-            let sut = makeSUT(preferenceUseCase: MockPreferenceUseCase(dict: [.isCameraUploadsEnabled: $0.cameraUploadEnabled]))
+            let sut = makeSUT(preferenceUseCase: MockPreferenceUseCase(dict: [PreferenceKeyEntity.isCameraUploadsEnabled.rawValue: $0.cameraUploadEnabled]))
             
             XCTAssertEqual(sut.imageViewModel.status, $0.status)
         }
@@ -28,7 +29,7 @@ final class CameraUploadStatusButtonViewModelTests: XCTestCase {
             .eraseToAnyAsyncSequence()
         let sut = makeSUT(idleWaitTimeNanoSeconds: 100_000,
                           monitorCameraUploadUseCase: MockMonitorCameraUploadUseCase(monitorUploadStats: uploadAsyncSequence),
-                          preferenceUseCase: MockPreferenceUseCase(dict: [.isCameraUploadsEnabled: true]))
+                          preferenceUseCase: MockPreferenceUseCase(dict: [PreferenceKeyEntity.isCameraUploadsEnabled.rawValue: true]))
         
         XCTAssertEqual(sut.imageViewModel.status, .checkPendingItemsToUpload)
         
@@ -53,7 +54,7 @@ final class CameraUploadStatusButtonViewModelTests: XCTestCase {
             .eraseToAnyAsyncSequence()
         let sut = makeSUT(idleWaitTimeNanoSeconds: 100_000,
                           monitorCameraUploadUseCase: MockMonitorCameraUploadUseCase(monitorUploadStats: uploadAsyncSequence),
-                          preferenceUseCase: MockPreferenceUseCase(dict: [.isCameraUploadsEnabled: true]),
+                          preferenceUseCase: MockPreferenceUseCase(dict: [PreferenceKeyEntity.isCameraUploadsEnabled.rawValue: true]),
                           devicePermissionHandler: MockDevicePermissionHandler(photoAuthorization: .limited, audioAuthorized: false, videoAuthorized: false))
         
         XCTAssertEqual(sut.imageViewModel.status, .checkPendingItemsToUpload)
@@ -78,7 +79,7 @@ final class CameraUploadStatusButtonViewModelTests: XCTestCase {
         let uploadAsyncSequence = SingleItemAsyncSequence<CameraUploadStatsEntity>(
             item: CameraUploadStatsEntity(progress: progress, pendingFilesCount: 5, pendingVideosCount: 0)).eraseToAnyAsyncSequence()
         let sut = makeSUT(monitorCameraUploadUseCase: MockMonitorCameraUploadUseCase(monitorUploadStats: uploadAsyncSequence),
-                          preferenceUseCase: MockPreferenceUseCase(dict: [.isCameraUploadsEnabled: true]))
+                          preferenceUseCase: MockPreferenceUseCase(dict: [PreferenceKeyEntity.isCameraUploadsEnabled.rawValue: true]))
         
         await sut.monitorCameraUpload()
         
@@ -91,7 +92,7 @@ final class CameraUploadStatusButtonViewModelTests: XCTestCase {
             item: CameraUploadStatsEntity(progress: 1.0, pendingFilesCount: 0, pendingVideosCount: 0)).eraseToAnyAsyncSequence()
         let sut = makeSUT(idleWaitTimeNanoSeconds: 100_000_000,
                           monitorCameraUploadUseCase: MockMonitorCameraUploadUseCase(monitorUploadStats: uploadAsyncSequence),
-                          preferenceUseCase: MockPreferenceUseCase(dict: [.isCameraUploadsEnabled: true]))
+                          preferenceUseCase: MockPreferenceUseCase(dict: [PreferenceKeyEntity.isCameraUploadsEnabled.rawValue: true]))
         
         XCTAssertEqual(sut.imageViewModel.status, .checkPendingItemsToUpload)
         
@@ -114,11 +115,11 @@ final class CameraUploadStatusButtonViewModelTests: XCTestCase {
         
     @MainActor
     func testOnMonitorCameraUpload_preferenceChanged_shouldUpdateImageStatus() async {
-        let preferenceUseCase = MockPreferenceUseCase(dict: [.isCameraUploadsEnabled: true])
+        let preferenceUseCase = MockPreferenceUseCase(dict: [PreferenceKeyEntity.isCameraUploadsEnabled.rawValue: true])
         let sut = makeSUT(preferenceUseCase: preferenceUseCase)
         XCTAssertEqual(sut.imageViewModel.status, .checkPendingItemsToUpload)
     
-        preferenceUseCase[.isCameraUploadsEnabled] = false
+        preferenceUseCase[PreferenceKeyEntity.isCameraUploadsEnabled.rawValue] = false
         
         await sut.monitorCameraUpload()
         

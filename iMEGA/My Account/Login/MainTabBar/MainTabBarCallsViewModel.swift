@@ -7,6 +7,7 @@ import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGADomain
 import MEGAL10n
+import MEGAPreference
 
 @MainActor
 protocol MainTabBarCallsRouting: AnyObject {
@@ -120,9 +121,9 @@ class MainTabBarCallsViewModel: ViewModelType {
     private var callCount = 0
     private var currentWaitingRoomUserHandles: [HandleEntity] = []
     
-    @PreferenceWrapper(key: .isCallUIVisible, defaultValue: false, useCase: PreferenceUseCase.default)
+    @PreferenceWrapper(key: PreferenceKeyEntity.isCallUIVisible, defaultValue: false, useCase: PreferenceUseCase.default)
     var isCallUIVisible: Bool
-    @PreferenceWrapper(key: .isWaitingRoomListVisible, defaultValue: false, useCase: PreferenceUseCase.default)
+    @PreferenceWrapper(key: PreferenceKeyEntity.isWaitingRoomListVisible, defaultValue: false, useCase: PreferenceUseCase.default)
     var isWaitingRoomListVisible: Bool
     
     private(set) var screenRecordingAlertShownForCall: Bool = false

@@ -69,7 +69,7 @@ class CallsCoordinatorFactory: NSObject, CallsCoordinatorFactoryProtocol {
     var incomingCallForUnknownChat: IncomingCallForUnknownChat?
     
     private var logoutNotificationObserver: (any NSObjectProtocol)?
-
+    
     init(
         callUseCase: some CallUseCaseProtocol,
         callUpdateUseCase: some CallUpdateUseCaseProtocol,
@@ -186,19 +186,26 @@ class CallsCoordinatorFactory: NSObject, CallsCoordinatorFactoryProtocol {
                     )
                 }
             } catch {
-                MEGALogError("[CallsCoordinator] monitorOnChatConnectionStateUpdate failed: \(error.localizedDescription)")
+                MEGALogError(
+                    "[CallsCoordinator] monitorOnChatConnectionStateUpdate failed: \(error.localizedDescription)"
+                )
             }
         }
     }
     
-    private func onChatConnectionStateUpdate(chatId: ChatIdEntity, connectionStatus: ChatConnectionStatus) {
+    private func onChatConnectionStateUpdate(
+        chatId: ChatIdEntity, connectionStatus: ChatConnectionStatus
+    ) {
         guard let incomingCallForUnknownChat,
               incomingCallForUnknownChat.chatId == chatId,
-              connectionStatus == .online else {
+              connectionStatus == .online
+        else {
             return
         }
         guard let chatRoom = chatRoomUseCase.chatRoom(forChatId: chatId) else {
-            MEGALogDebug("[CallsCoordinator] Report end call for incoming call in new chat room that could not be fetched")
+            MEGALogDebug(
+                "[CallsCoordinator] Report end call for incoming call in new chat room that could not be fetched"
+            )
             providerDelegate?.reportEndedCall(
                 with: incomingCallForUnknownChat.callUUID,
                 reason: .failed
@@ -210,10 +217,14 @@ class CallsCoordinatorFactory: NSObject, CallsCoordinatorFactoryProtocol {
             withUUID: incomingCallForUnknownChat.callUUID
         )
         updateCallTitle(chatId)
-        MEGALogDebug("[CallsCoordinator] Call in new chat room title updated after chat connection state changed to online")
+        MEGALogDebug(
+            "[CallsCoordinator] Call in new chat room title updated after chat connection state changed to online"
+        )
         
         if let answeredCompletion = incomingCallForUnknownChat.answeredCompletion {
-            MEGALogDebug("[CallsCoordinator] Call in new chat room answered after chat room connected to online")
+            MEGALogDebug(
+                "[CallsCoordinator] Call in new chat room answered after chat room connected to online"
+            )
             answeredCompletion()
         }
     }
@@ -223,28 +234,32 @@ class CallsCoordinatorFactory: NSObject, CallsCoordinatorFactoryProtocol {
         $callSessionUpdateTask.mutate { $0 = nil }
     }
     
-    private func reportCallStateIfNeeded(_ call: CallEntity, report: (any CallKitProviderDelegateProtocol, UUID) -> Void) {
+    private func reportCallStateIfNeeded(
+        _ call: CallEntity, report: (any CallKitProviderDelegateProtocol, UUID) -> Void
+    ) {
         // Report outgoing call connect status just happens for outgoing calls (isOwnClientCaller)
         // or when joining an active call (isJoiningActiveCall) that is not ringing
         guard let providerDelegate,
               let callUUID = uuidToReportCallConnectChanges(for: call),
-              (callsManager.call(forUUID: callUUID)?.isJoiningActiveCall ?? false) || call.isOwnClientCaller
+              (callsManager.call(forUUID: callUUID)?.isJoiningActiveCall ?? false)
+                || call.isOwnClientCaller
         else { return }
-
+        
         report(providerDelegate, callUUID)
     }
-
+    
     private func reportCallStartedConnectingIfNeeded(_ call: CallEntity) {
         reportCallStateIfNeeded(call) { $0.reportOutgoingCallStartedConnecting(with: $1) }
     }
-
+    
     private func reportCallConnectedIfNeeded(_ call: CallEntity) {
         reportCallStateIfNeeded(call) { $0.reportOutgoingCallConnected(with: $1) }
     }
     
     private func uuidToReportCallConnectChanges(for call: CallEntity) -> UUID? {
         guard let chatRoom = chatRoomUseCase.chatRoom(forChatId: call.chatId),
-              let callUUID = callsManager.callUUID(forChatRoom: chatRoom) else { return nil }
+              let callUUID = callsManager.callUUID(forChatRoom: chatRoom)
+        else { return nil }
         return callUUID
     }
     
@@ -252,7 +267,8 @@ class CallsCoordinatorFactory: NSObject, CallsCoordinatorFactoryProtocol {
         guard let providerDelegate,
               let chatRoom = chatRoomUseCase.chatRoom(forChatId: chatId),
               let chatTitle = chatRoom.title,
-              let callUUID = callsManager.callUUID(forChatRoom: chatRoom) else { return }
+              let callUUID = callsManager.callUUID(forChatRoom: chatRoom)
+        else { return }
         
         providerDelegate.updateCallTitle(chatTitle, for: callUUID)
     }
@@ -260,7 +276,8 @@ class CallsCoordinatorFactory: NSObject, CallsCoordinatorFactoryProtocol {
     private func updateVideoForCall(_ call: CallEntity) {
         guard let providerDelegate,
               let chatRoom = chatRoomUseCase.chatRoom(forChatId: call.chatId),
-              let callUUID = callsManager.callUUID(forChatRoom: chatRoom) else { return }
+              let callUUID = callsManager.callUUID(forChatRoom: chatRoom)
+        else { return }
         
         var video = call.hasLocalVideo
         
@@ -310,7 +327,9 @@ class CallsCoordinatorFactory: NSObject, CallsCoordinatorFactoryProtocol {
     private func checkIfIncomingCallHasBeenAlreadyAnsweredElsewhere(for chatId: ChatIdEntity) {
         if let call = callUseCase.call(for: chatId) {
             if call.participants.contains(where: { $0 == chatUseCase.myUserHandle() }) {
-                MEGALogDebug("[CallsCoordinator] Provider reported new incoming call in chat room that has been already answered by same user in other device, report end call to dismiss incoming call notification")
+                MEGALogDebug(
+                    "[CallsCoordinator] Provider reported new incoming call in chat room that has been already answered by same user in other device, report end call to dismiss incoming call notification"
+                )
                 reportEndCall(call)
             }
         }
@@ -331,7 +350,9 @@ class CallsCoordinatorFactory: NSObject, CallsCoordinatorFactoryProtocol {
         if call.status == .userNoPresent,
            call.callCompositionChange == .peerAdded,
            call.peeridCallCompositionChange == chatUseCase.myUserHandle() {
-            MEGALogDebug("[CallsCoordinator] Call update received while user is not participating in call and same user joined to the call in other device, report end call to dismiss incoming call notification")
+            MEGALogDebug(
+                "[CallsCoordinator] Call update received while user is not participating in call and same user joined to the call in other device, report end call to dismiss incoming call notification"
+            )
             reportEndCall(call)
         }
     }
@@ -363,7 +384,8 @@ class CallsCoordinatorFactory: NSObject, CallsCoordinatorFactoryProtocol {
         MEGALogDebug("[CallsCoordinator] Report end call \(call)")
         
         guard let chatRoom = chatRoomUseCase.chatRoom(forChatId: call.chatId),
-              let callUUID = callsManager.callUUID(forChatRoom: chatRoom) else { return }
+              let callUUID = callsManager.callUUID(forChatRoom: chatRoom)
+        else { return }
         
         var endCallReason: EndCallReason?
         switch call.termCodeType {
@@ -409,7 +431,8 @@ extension CallsCoordinator: CallsCoordinatorProtocol {
         do {
             let call = try await callForAction(callActionSync)
             if !callActionSync.isJoiningActiveCall {
-                noUserJoinedUseCase.start(timerDuration: 60*5, chatId: callActionSync.chatRoom.chatId)
+                noUserJoinedUseCase.start(
+                    timerDuration: 60 * 5, chatId: callActionSync.chatRoom.chatId)
             }
             if callActionSync.speakerEnabled {
                 audioSessionUseCase.enableLoudSpeaker(completion: nil)
@@ -419,7 +442,9 @@ extension CallsCoordinator: CallsCoordinatorProtocol {
             }
             return true
         } catch {
-            MEGALogError("[CallsCoordinator] Cannot start call in chat room \(callActionSync.chatRoom.chatId)")
+            MEGALogError(
+                "[CallsCoordinator] Cannot start call in chat room \(callActionSync.chatRoom.chatId)"
+            )
             return false
         }
     }
@@ -440,7 +465,9 @@ extension CallsCoordinator: CallsCoordinatorProtocol {
             }
             return true
         } catch {
-            MEGALogError("[CallsCoordinator] Cannot answer call in chat room \(callActionSync.chatRoom.chatId)")
+            MEGALogError(
+                "[CallsCoordinator] Cannot answer call in chat room \(callActionSync.chatRoom.chatId)"
+            )
             return false
         }
     }
@@ -482,7 +509,9 @@ extension CallsCoordinator: CallsCoordinatorProtocol {
     func reportIncomingCall(in chatId: ChatIdEntity, completion: @escaping () -> Void) {
         guard let providerDelegate else { return }
         guard userIsNotParticipatingInCall(inChat: chatId) else {
-            MEGALogDebug("[CallsCoordinator] Avoid reporting new incoming call as user is already participating in a call with the same chatId")
+            MEGALogDebug(
+                "[CallsCoordinator] Avoid reporting new incoming call as user is already participating in a call with the same chatId"
+            )
             /// According to Apple forums https://forums.developer.apple.com/forums/thread/117939
             /// While your app currently has an active call (ringing or answered), your app is not required to create additional calls for VoIP pushes received during this call. This is intended to be used to support advanced functionality like dynamic call priority, but it could also be used to cancel an incoming call.
             /// We use this functionality to avoid reporting new incoming call when user is already participating in a call in the same chat, what could happen due race conditions between joining a call and VoIP push.
@@ -493,7 +522,8 @@ extension CallsCoordinator: CallsCoordinatorProtocol {
         var title: String
         if let chatRoom = chatRoomUseCase.chatRoom(forChatId: chatId) {
             if let callInProgressUUID = callsManager.callUUID(forChatRoom: chatRoom) {
-                MEGALogDebug("[CallsCoordinator] Provider reported new incoming call that already exists")
+                MEGALogDebug(
+                    "[CallsCoordinator] Provider reported new incoming call that already exists")
                 incomingCallUUID = callInProgressUUID
             } else {
                 MEGALogDebug("[CallsCoordinator] Provider reported new incoming call")
@@ -505,16 +535,20 @@ extension CallsCoordinator: CallsCoordinatorProtocol {
             }
             title = chatRoom.title ?? "Unknown"
         } else {
-            MEGALogDebug("[CallsCoordinator] Provider reported new incoming call in chat room that does not exists, save and wait for chat connection")
+            MEGALogDebug(
+                "[CallsCoordinator] Provider reported new incoming call in chat room that does not exists, save and wait for chat connection"
+            )
             incomingCallUUID = uuidFactory()
             title = Strings.Localizable.connecting
-            incomingCallForUnknownChat = IncomingCallForUnknownChat(chatId: chatId, callUUID: incomingCallUUID)
+            incomingCallForUnknownChat = IncomingCallForUnknownChat(
+                chatId: chatId, callUUID: incomingCallUUID)
         }
         
         providerDelegate.reportNewIncomingCall(with: incomingCallUUID, title: title) { [weak self] succeeded in
             if succeeded {
                 self?.checkIfIncomingCallHasBeenAlreadyAnsweredElsewhere(for: chatId)
             }
+            
             completion()
         }
     }

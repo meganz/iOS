@@ -1,6 +1,7 @@
 import Foundation
 import MEGAAppSDKRepo
 import MEGADomain
+import MEGAPreference
 
 final class AppFirstLaunchSecurityChecker: NSObject {
     private let appFirstLaunchUseCase: any AppFirstLaunchUseCaseProcotol

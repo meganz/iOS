@@ -1,5 +1,6 @@
 import MEGAAppSDKRepo
 import MEGADomain
+import MEGAPreference
 
 extension BrowserViewController {
     private func browserControllers(for nodes: [NodeEntity], currentTargetNodeHandle: HandleEntity?) -> [BrowserViewController] {

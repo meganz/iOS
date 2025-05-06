@@ -6,6 +6,7 @@ import MEGAAssets
 import MEGADomain
 import MEGAL10n
 import MEGAPermissions
+import MEGAPreference
 import MEGARepo
 import MEGASwift
 import MEGAUIKit
@@ -810,7 +811,7 @@ struct CloudDriveViewControllerFactory {
                     return false
                 }
                 
-                return preferences[.shouldDisplayMediaDiscoveryWhenMediaOnly] ?? true
+                return preferences[PreferenceKeyEntity.shouldDisplayMediaDiscoveryWhenMediaOnly.rawValue] ?? true
             }
             
             return overriddenConfig

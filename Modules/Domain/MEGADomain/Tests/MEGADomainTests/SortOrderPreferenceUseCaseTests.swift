@@ -1,6 +1,7 @@
 import Combine
 import MEGADomain
 import MEGADomainMock
+import MEGAPreference
 import XCTest
 
 final class SortOrderPreferenceUseCaseTests: XCTestCase {
@@ -131,8 +132,8 @@ final class SortOrderPreferenceUseCaseTests: XCTestCase {
     func testSaveSortOrderForKeys_whenUsersSortingPreferenceEqualsSameForAll_shouldSaveInPreferencesOnly() {
         // Arrange
         let preferenceUseCase = MockPreferenceUseCase(dict: [
-            .sortingPreference: 1,
-            .sortingPreferenceType: Int?.none as Any
+            PreferenceKeyEntity.sortingPreference.rawValue: 1,
+            PreferenceKeyEntity.sortingPreferenceType.rawValue: Int?.none as Any
         ])
         
         let sortOrderPreferenceRepository = makeMockSortOrderPreferenceRepository(
@@ -150,7 +151,7 @@ final class SortOrderPreferenceUseCaseTests: XCTestCase {
         sut.save(sortOrder: savedValue, for: .cameraUploadExplorerFeed)
         
         // Arrange
-        XCTAssertEqual(preferenceUseCase.dict[.sortingPreferenceType] as? Int, 2)
+        XCTAssertEqual(preferenceUseCase.dict[PreferenceKeyEntity.sortingPreferenceType.rawValue] as? Int, 2)
         XCTAssertEqual(sortOrderPreferenceRepository.saveSortOrderForKey_calledCount, 0)
         XCTAssertEqual(sortOrderPreferenceRepository.keySortedEntity[.cameraUploadExplorerFeed], nil)
     }
@@ -158,8 +159,8 @@ final class SortOrderPreferenceUseCaseTests: XCTestCase {
     func testSaveSortOrderForKeys_whenUsersSortingPreferenceEqualsPerFolder_shouldSaveInSortOrderRepoOnly() {
         // Arrange
         let preferenceUseCase = MockPreferenceUseCase(dict: [
-            .sortingPreference: 1,
-            .sortingPreferenceType: Int?.none as Any
+            PreferenceKeyEntity.sortingPreference.rawValue: 1,
+            PreferenceKeyEntity.sortingPreferenceType.rawValue: Int?.none as Any
         ])
         
         let sortOrderPreferenceRepository = makeMockSortOrderPreferenceRepository(
@@ -177,7 +178,7 @@ final class SortOrderPreferenceUseCaseTests: XCTestCase {
         sut.save(sortOrder: savedValue, for: .cameraUploadExplorerFeed)
         
         // Arrange
-        XCTAssertEqual(preferenceUseCase.dict[.sortingPreferenceType] as? Int, nil)
+        XCTAssertEqual(preferenceUseCase.dict[PreferenceKeyEntity.sortingPreferenceType.rawValue] as? Int, nil)
         XCTAssertEqual(sortOrderPreferenceRepository.saveSortOrderForKey_calledCount, 1)
         XCTAssertEqual(sortOrderPreferenceRepository.keySortedEntity[.cameraUploadExplorerFeed], savedValue)
     }
@@ -187,8 +188,8 @@ final class SortOrderPreferenceUseCaseTests: XCTestCase {
     func testSaveSortOrderForNode_whenUsersSortingPreferenceEqualsSameForAll_shouldSaveInPreferencesOnly() {
         // Arrange
         let preferenceUseCase = MockPreferenceUseCase(dict: [
-            .sortingPreference: 1,
-            .sortingPreferenceType: Int?.none as Any
+            PreferenceKeyEntity.sortingPreference.rawValue: 1,
+            PreferenceKeyEntity.sortingPreferenceType.rawValue: Int?.none as Any
         ])
         
         let sortOrderPreferenceRepository = makeMockSortOrderPreferenceRepository(
@@ -205,7 +206,7 @@ final class SortOrderPreferenceUseCaseTests: XCTestCase {
         sut.save(sortOrder: savedValue, for: nodeEntity)
         
         // Arrange
-        XCTAssertEqual(preferenceUseCase.dict[.sortingPreferenceType] as? Int, 2)
+        XCTAssertEqual(preferenceUseCase.dict[PreferenceKeyEntity.sortingPreferenceType.rawValue] as? Int, 2)
         XCTAssertEqual(sortOrderPreferenceRepository.saveSortOrderForKey_calledCount, 0)
         XCTAssertEqual(sortOrderPreferenceRepository.nodeSortedEntity[nodeEntity], nil)
     }
@@ -213,8 +214,8 @@ final class SortOrderPreferenceUseCaseTests: XCTestCase {
     func testSaveSortOrderForNode_whenUsersSortingPreferenceEqualsPerFolder_shouldSaveInSortOrderRepoOnly() {
         // Arrange
         let preferenceUseCase = MockPreferenceUseCase(dict: [
-            .sortingPreference: 1,
-            .sortingPreferenceType: Int?.none as Any
+            PreferenceKeyEntity.sortingPreference.rawValue: 1,
+            PreferenceKeyEntity.sortingPreferenceType.rawValue: Int?.none as Any
         ])
         
         let sortOrderPreferenceRepository = makeMockSortOrderPreferenceRepository(
@@ -232,7 +233,7 @@ final class SortOrderPreferenceUseCaseTests: XCTestCase {
         sut.save(sortOrder: savedValue, for: nodeEntity)
         
         // Arrange
-        XCTAssertEqual(preferenceUseCase.dict[.sortingPreferenceType] as? Int, nil)
+        XCTAssertEqual(preferenceUseCase.dict[PreferenceKeyEntity.sortingPreferenceType.rawValue] as? Int, nil)
         XCTAssertEqual(sortOrderPreferenceRepository.saveSortOrderForKey_calledCount, 0)
         XCTAssertEqual(sortOrderPreferenceRepository.nodeSortedEntity[nodeEntity], savedValue)
     }
@@ -308,8 +309,8 @@ final class SortOrderPreferenceUseCaseTests: XCTestCase {
                 .reduce(into: [SortingPreferenceBasisEntity: Int](), { $0[$1.element] = $1.offset })
             
             let preferenceUseCase = MockPreferenceUseCase(dict: [
-                .sortingPreference: sortOrderPreferenceBasisCodes[sortingPreference] as Any,
-                .sortingPreferenceType: sortingPreferenceTypeRawValue as Any
+                PreferenceKeyEntity.sortingPreference.rawValue: sortOrderPreferenceBasisCodes[sortingPreference] as Any,
+                PreferenceKeyEntity.sortingPreferenceType.rawValue: sortingPreferenceTypeRawValue as Any
             ])
                         
             let sortOrderPreferenceRepository = makeMockSortOrderPreferenceRepository(

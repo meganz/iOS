@@ -5,6 +5,7 @@ import MEGAAssets
 import MEGADomain
 import MEGAFoundation
 import MEGAL10n
+import MEGAPreference
 import SwiftUI
 
 @MainActor
@@ -95,7 +96,7 @@ final class ScheduleMeetingViewModel: ObservableObject {
     @Published var participantHandleList: [HandleEntity] = []
     @Published var showLimitDurationView = false
 
-    @PreferenceWrapper(key: .waitingRoomWarningBannerDismissed, defaultValue: false)
+    @PreferenceWrapper(key: PreferenceKeyEntity.waitingRoomWarningBannerDismissed, defaultValue: false)
     var waitingRoomWarningBannerDismissed: Bool
     
     var monthlyRecurrenceFootnoteViewText: String? {

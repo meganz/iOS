@@ -2,6 +2,7 @@ import ContentLibraries
 import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGADomain
+import MEGAPreference
 import MEGASdk
 import SwiftUI
 import Video

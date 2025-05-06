@@ -26,7 +26,7 @@ let package = Package(
         .package(path: "../../../UI/MEGASwiftUI"),
         .package(path: "../../Repository/LogRepo"),
         .package(path: "../../../UI/MEGAUIComponent"),
-        .package(path: "../../../Infrastracture/MEGAConnectivity"),
+        .package(path: "../../../MEGASharedRepo/MEGAConnectivity"),
         .package(path: "../../../MEGAAssets")
     ],
     targets: [
