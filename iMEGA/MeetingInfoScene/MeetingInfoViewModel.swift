@@ -3,6 +3,7 @@ import Combine
 import MEGAAnalyticsiOS
 import MEGAAppPresentation
 import MEGADomain
+import MEGAPreference
 import SwiftUI
 
 @MainActor
@@ -50,7 +51,7 @@ final class MeetingInfoViewModel: ObservableObject {
         return !chatUseCase.isCallInProgress(for: chatRoom.chatId)
     }
     
-    @PreferenceWrapper(key: .waitingRoomWarningBannerDismissed, defaultValue: false, useCase: PreferenceUseCase.default)
+    @PreferenceWrapper(key: PreferenceKeyEntity.waitingRoomWarningBannerDismissed, defaultValue: false, useCase: PreferenceUseCase.default)
     var waitingRoomWarningBannerDismissed: Bool
 
     private var chatRoom: ChatRoomEntity?

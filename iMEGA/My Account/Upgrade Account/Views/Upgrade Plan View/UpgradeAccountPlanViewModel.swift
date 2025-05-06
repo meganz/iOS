@@ -6,6 +6,7 @@ import MEGAAppSDKRepo
 import MEGADesignToken
 import MEGADomain
 import MEGAL10n
+import MEGAPreference
 import MEGASdk
 import MEGASwift
 import MEGASwiftUI
@@ -60,7 +61,7 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
     private(set) var buyPlanTask: Task<Void, Never>?
     private(set) var cancelActivePlanAndBuyNewPlanTask: Task<Void, Never>?
     
-    @PreferenceWrapper(key: .lastCloseAdsButtonTappedDate, defaultValue: nil)
+    @PreferenceWrapper(key: PreferenceKeyEntity.lastCloseAdsButtonTappedDate, defaultValue: nil)
     private var lastCloseAdsDate: Date?
     
     init(
@@ -73,7 +74,7 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
         preferenceUseCase: some PreferenceUseCaseProtocol = PreferenceUseCase.default,
         tracker: some AnalyticsTracking = DIContainer.tracker,
         viewType: UpgradeAccountPlanViewType,
-        router: any UpgradeAccountPlanRouting
+        router: some UpgradeAccountPlanRouting
     ) {
         self.accountUseCase = accountUseCase
         self.purchaseUseCase = purchaseUseCase

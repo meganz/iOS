@@ -1,4 +1,5 @@
 import Foundation
+import MEGAPreference
 
 extension Notification.Name {
     public static let nodeSavedToOffline = Notification.Name("nz.mega.SaveNodeUseCase.nodeSavedToOffline")
@@ -28,9 +29,9 @@ public struct SaveNodeUseCase<U: OfflineFilesRepositoryProtocol, V: FileCacheRep
     private let saveMediaToPhotoFailureHandler: Z
     private let notificationCenter: NotificationCenter
     
-    @PreferenceWrapper(key: .savePhotoToGallery, defaultValue: false)
+    @PreferenceWrapper(key: PreferenceKeyEntity.savePhotoToGallery, defaultValue: false)
     private var savePhotoInGallery: Bool
-    @PreferenceWrapper(key: .saveVideoToGallery, defaultValue: false)
+    @PreferenceWrapper(key: PreferenceKeyEntity.saveVideoToGallery, defaultValue: false)
     private var saveVideoInGallery: Bool
     
     public init(offlineFilesRepository: U,

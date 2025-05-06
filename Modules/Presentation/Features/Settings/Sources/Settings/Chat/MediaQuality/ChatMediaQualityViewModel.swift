@@ -1,11 +1,12 @@
 import Foundation
 import MEGADomain
+import MEGAPreference
 
 @MainActor
 public final class ChatMediaQualityViewModel: ObservableObject {
-    @PreferenceWrapper(key: .chatImageQuality, defaultValue: 0)
+    @PreferenceWrapper(key: PreferenceKeyEntity.chatImageQuality, defaultValue: 0)
     private var chatImageQuality: Int
-    @PreferenceWrapper(key: .chatVideoQuality, defaultValue: 2)
+    @PreferenceWrapper(key: PreferenceKeyEntity.chatVideoQuality, defaultValue: 2)
     private var chatVideoQuality: Int
     
     @Published var isImageQualityBottomSheetPresented = false

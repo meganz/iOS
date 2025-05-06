@@ -1,5 +1,6 @@
 import Foundation
 import MEGASwift
+import MEGAPreference
 
 public protocol TransfersListenerUseCaseProtocol: Sendable {
     /// Async sequence of transfer objects
@@ -33,10 +34,10 @@ public struct TransfersListenerUseCase: TransfersListenerUseCaseProtocol {
     
     private var repo: any TransfersListenerRepositoryProtocol
     
-    @PreferenceWrapper(key: .queuedTransfersPaused, defaultValue: false)
+    @PreferenceWrapper(key: PreferenceKeyEntity.queuedTransfersPaused, defaultValue: false)
     private var queuedTransfersPaused: Bool
     
-    @PreferenceWrapper(key: .transfersPaused, defaultValue: false)
+    @PreferenceWrapper(key: PreferenceKeyEntity.transfersPaused, defaultValue: false)
     private var transfersPaused: Bool
     
     public init(

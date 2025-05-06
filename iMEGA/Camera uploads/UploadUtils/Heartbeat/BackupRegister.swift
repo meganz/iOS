@@ -3,6 +3,7 @@ import FirebaseCrashlytics
 import Foundation
 import MEGADomain
 import MEGAL10n
+import MEGAPreference
 
 extension Notification.Name {
     static let didChangeCameraUploadsFolderName = Notification.Name("didChangeCameraUploadsFolderName")
@@ -12,10 +13,10 @@ final class BackupRegister {
     private let sdk: MEGASdk
     private let cameraUploadsUseCase: any CameraUploadsUseCaseProtocol
     
-    @PreferenceWrapper(key: .backupHeartbeatRegistrationId, defaultValue: nil, useCase: PreferenceUseCase.default)
+    @PreferenceWrapper(key: PreferenceKeyEntity.backupHeartbeatRegistrationId, defaultValue: nil, useCase: PreferenceUseCase.default)
     var cachedBackupId: HandleEntity?
     
-    @PreferenceWrapper(key: .hasUpdatedBackupToFixExistingBackupNameStorageIssue, defaultValue: false, useCase: PreferenceUseCase.default)
+    @PreferenceWrapper(key: PreferenceKeyEntity.hasUpdatedBackupToFixExistingBackupNameStorageIssue, defaultValue: false, useCase: PreferenceUseCase.default)
     var hasUpdatedBackup: Bool
     
     init(

@@ -6,6 +6,7 @@ import MEGAAppPresentation
 import MEGADomain
 import MEGAL10n
 import MEGAPermissions
+import MEGAPreference
 
 enum MeetingFloatingPanelAction: ActionType {
     case onViewReady
@@ -104,9 +105,9 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
         }
     }
     
-    @PreferenceWrapper(key: .isCallUIVisible, defaultValue: false, useCase: PreferenceUseCase.default)
+    @PreferenceWrapper(key: PreferenceKeyEntity.isCallUIVisible, defaultValue: false, useCase: PreferenceUseCase.default)
     var isCallUIVisible: Bool
-    @PreferenceWrapper(key: .isWaitingRoomListVisible, defaultValue: false, useCase: PreferenceUseCase.default)
+    @PreferenceWrapper(key: PreferenceKeyEntity.isWaitingRoomListVisible, defaultValue: false, useCase: PreferenceUseCase.default)
     var isWaitingRoomListVisible: Bool
     
     private var selectWaitingRoomList: Bool

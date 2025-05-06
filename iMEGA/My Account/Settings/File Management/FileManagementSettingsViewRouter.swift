@@ -1,6 +1,7 @@
 import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGADomain
+import MEGAPreference
 import MEGARepo
 import Settings
 import SwiftUI

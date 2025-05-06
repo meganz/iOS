@@ -6,6 +6,7 @@ import MEGAAppPresentation
 import MEGAAppPresentationMock
 import MEGADomain
 import MEGADomainMock
+import MEGAPreference
 import XCTest
 
 final class UpgradeAccountPlanViewModelTests: XCTestCase {
@@ -866,7 +867,7 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
         let router = MockUpgradeAccountPlanRouter(isFromAds: isFromAds)
         let preferenceUseCase = MockPreferenceUseCase()
         if let lastCloseAdsDate {
-            preferenceUseCase.dict[.lastCloseAdsButtonTappedDate] = lastCloseAdsDate
+            preferenceUseCase.dict[PreferenceKeyEntity.lastCloseAdsButtonTappedDate.rawValue] = lastCloseAdsDate
         }
         let sut = UpgradeAccountPlanViewModel(
             accountDetails: accountDetails,

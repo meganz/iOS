@@ -6,6 +6,7 @@ import MEGAAppPresentation
 import MEGADomain
 import MEGAFoundation
 import MEGAL10n
+import MEGAPreference
 import MEGASwift
 import MEGASwiftUI
 
@@ -191,7 +192,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     private let featureFlagProvider: any FeatureFlagProviderProtocol
     private let timerSequence: any TimerSequenceProtocol
     
-    @PreferenceWrapper(key: .callsSoundNotification, defaultValue: true)
+    @PreferenceWrapper(key: PreferenceKeyEntity.callsSoundNotification, defaultValue: true)
     private var callsSoundNotificationPreference: Bool
     
     private var avatarChangeSubscription: AnyCancellable?

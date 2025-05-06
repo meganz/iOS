@@ -2,6 +2,7 @@ import Foundation
 import MEGAAppSDKRepo
 import MEGADomain
 import MEGAFoundation
+import MEGAPreference
 import StoreKit
 
 @objc final class RatingRequestMonitor: NSObject {

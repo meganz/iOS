@@ -1,5 +1,6 @@
 import MEGADomain
 import MEGAL10n
+import MEGAPreference
 
 protocol PasscodeManagerProtocol {
     /// Disables the passcode if it is enabled for properly manage calls.
@@ -15,7 +16,7 @@ protocol PasscodeManagerProtocol {
 }
 
 struct PasscodeManager: PasscodeManagerProtocol {
-    @PreferenceWrapper(key: .presentPasscodeLater, defaultValue: false, useCase: PreferenceUseCase.default)
+    @PreferenceWrapper(key: PreferenceKeyEntity.presentPasscodeLater, defaultValue: false, useCase: PreferenceUseCase.default)
     var presentPasscodeLater: Bool
     
     func disablePassCodeIfNeeded() {

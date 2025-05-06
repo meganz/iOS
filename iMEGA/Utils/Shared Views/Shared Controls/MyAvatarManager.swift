@@ -1,5 +1,6 @@
 import MEGAAppSDKRepo
 import MEGADomain
+import MEGAPreference
 import MEGARepo
 
 @MainActor

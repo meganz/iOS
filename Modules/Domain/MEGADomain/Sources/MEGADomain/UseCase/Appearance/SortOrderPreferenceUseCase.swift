@@ -1,5 +1,6 @@
 import Combine
 import Foundation
+import MEGAPreference
 
 /// Use case to manage sorting preferences for features and folders in the application
 public protocol SortOrderPreferenceUseCaseProtocol {
@@ -39,7 +40,7 @@ public protocol SortOrderPreferenceUseCaseProtocol {
 
 public struct SortOrderPreferenceUseCase<T: PreferenceUseCaseProtocol, U: SortOrderPreferenceRepositoryProtocol>: SortOrderPreferenceUseCaseProtocol {
         
-    @PreferenceWrapper(key: .sortingPreference, defaultValue: nil)
+    @PreferenceWrapper(key: PreferenceKeyEntity.sortingPreference, defaultValue: nil)
     private var userSortingAssignmentPreferenceRawType: Int?
     private var userSortingAssignmentPreference: SortingPreferenceBasisEntity {
         guard let userSortingAssignmentPreferenceRawType,
@@ -49,7 +50,7 @@ public struct SortOrderPreferenceUseCase<T: PreferenceUseCaseProtocol, U: SortOr
         return sortingPreferenceBasisEntity
     }
     
-    @PreferenceWrapper(key: .sortingPreferenceType, defaultValue: nil)
+    @PreferenceWrapper(key: PreferenceKeyEntity.sortingPreferenceType, defaultValue: nil)
     private var usersSortOrderPreferenceRawType: Int?
     private var usersSortOrderPreferenceType: SortOrderEntity {
         guard let usersSortOrderPreferenceRawType,

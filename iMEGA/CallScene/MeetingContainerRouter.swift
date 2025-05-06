@@ -7,6 +7,7 @@ import MEGAAppSDKRepo
 import MEGADomain
 import MEGAL10n
 import MEGAPermissions
+import MEGAPreference
 
 @MainActor
 protocol MeetingContainerRouting: AnyObject, Routing {
@@ -68,7 +69,7 @@ final class MeetingContainerRouter: MeetingContainerRouting {
     
     private var sendToChatWrapper: SendToChatWrapper?
     
-    @PreferenceWrapper(key: .isCallUIVisible, defaultValue: false, useCase: PreferenceUseCase.default)
+    @PreferenceWrapper(key: PreferenceKeyEntity.isCallUIVisible, defaultValue: false, useCase: PreferenceUseCase.default)
     var isCallUIVisible: Bool
     
     init(

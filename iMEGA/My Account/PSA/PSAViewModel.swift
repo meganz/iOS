@@ -1,5 +1,6 @@
 import MEGAAppPresentation
 import MEGADomain
+import MEGAPreference
 
 enum PSAViewAction: ActionType {
     case showPSAViewIfNeeded
@@ -16,7 +17,7 @@ final class PSAViewModel: NSObject, ViewModelType {
     private let useCase: any PSAUseCaseProtocol
     private var psaEntity: PSAEntity?
     
-    @PreferenceWrapper(key: .lastPSARequestTimestamp, defaultValue: -1.0)
+    @PreferenceWrapper(key: PreferenceKeyEntity.lastPSARequestTimestamp, defaultValue: -1.0)
     private var lastPSARequestTimestampPreference: TimeInterval
     
     private(set) var currentTask: Task<Void, Never>?

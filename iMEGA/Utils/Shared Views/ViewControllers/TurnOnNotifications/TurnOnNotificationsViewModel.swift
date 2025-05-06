@@ -2,6 +2,7 @@ import Foundation
 import MEGAAppPresentation
 import MEGADomain
 import MEGAL10n
+import MEGAPreference
 
 enum TurnOnNotificationsViewAction: ActionType {
     case onViewLoaded
@@ -22,10 +23,10 @@ final class TurnOnNotificationsViewModel: ViewModelType {
     // MARK: - Private properties
     private let router: any TurnOnNotificationsViewRouting
     
-    @PreferenceWrapper(key: .lastDateTurnOnNotificationsShowed, defaultValue: Date.init(timeIntervalSince1970: 0))
+    @PreferenceWrapper(key: PreferenceKeyEntity.lastDateTurnOnNotificationsShowed, defaultValue: Date.init(timeIntervalSince1970: 0))
     private var lastDateTurnOnNotificationsShowedPreference: Date
     
-    @PreferenceWrapper(key: .timesTurnOnNotificationsShowed, defaultValue: 0)
+    @PreferenceWrapper(key: PreferenceKeyEntity.timesTurnOnNotificationsShowed, defaultValue: 0)
     private var timesTurnOnNotificationsShowedPreference: Int
     
     private let accountUseCase: any AccountUseCaseProtocol

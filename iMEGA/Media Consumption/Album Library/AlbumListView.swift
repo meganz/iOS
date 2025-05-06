@@ -4,6 +4,7 @@ import MEGAAppSDKRepo
 import MEGADesignToken
 import MEGADomain
 import MEGAL10n
+import MEGAPreference
 import MEGASwiftUI
 import SwiftUI
 

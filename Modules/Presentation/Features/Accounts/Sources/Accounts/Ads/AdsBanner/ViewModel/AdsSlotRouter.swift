@@ -1,6 +1,7 @@
 import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGADomain
+import MEGAPreference
 import MEGARepo
 import MEGASwiftUI
 import SwiftUI
@@ -50,7 +51,7 @@ public struct AdsSlotRouter<T: View> {
             nodeUseCase: nodeUseCase,
             accountUseCase: accountUseCase,
             purchaseUseCase: purchaseUseCase,
-            preferenceUseCase: PreferenceUseCase(repository: PreferenceRepository.newRepo),
+            preferenceUseCase: PreferenceUseCase.default,
             onViewFirstAppeared: onViewFirstAppeared,
             adsFreeViewProPlanAction: adsFreeViewProPlanAction,
             publicNodeLink: publicLink,

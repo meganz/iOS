@@ -1,6 +1,7 @@
 import MEGADomain
 import MEGADomainMock
 import MEGAL10n
+import MEGAPreference
 @testable import Settings
 import XCTest
 
@@ -12,7 +13,7 @@ final class AboutViewModeTests: XCTestCase {
     private var aboutVM: AboutViewModel!
     
     private func configureViewModel(enableLogs: Bool) {
-        preferenceUC = MockPreferenceUseCase(dict: [.logging: enableLogs])
+        preferenceUC = MockPreferenceUseCase(dict: [PreferenceKeyEntity.logging.rawValue: enableLogs])
         apiEnvironmentUC = MockAPIEnvironmentUseCase()
         manageLogsUC = MockManageLogsUseCase()
         changeSfuServerUC = MockChangeSfuServerUseCase()

@@ -5,6 +5,7 @@ import MEGAAppPresentationMock
 import MEGAAppSDKRepoMock
 import MEGADomain
 import MEGADomainMock
+import MEGAPreference
 import XCTest
 
 class MediaDiscoveryContentViewModelTests: XCTestCase {
@@ -376,7 +377,7 @@ class MediaDiscoveryContentViewModelTests: XCTestCase {
             NodeEntity(handle: 1),
             NodeEntity(handle: 2)
         ]
-        let preferenceUseCase = MockPreferenceUseCase(dict: [.mediaDiscoveryShouldIncludeSubfolderMedia: false])
+        let preferenceUseCase = MockPreferenceUseCase(dict: [PreferenceKeyEntity.mediaDiscoveryShouldIncludeSubfolderMedia.rawValue: false])
         let mediaDiscoveryUseCase = MockMediaDiscoveryUseCase(nodes: loadedNodes)
         let sut = makeSUT(
             mediaDiscoveryUseCase: mediaDiscoveryUseCase,
@@ -429,7 +430,7 @@ class MediaDiscoveryContentViewModelTests: XCTestCase {
     
     @MainActor
     func testShowAutoMediaDiscoveryBanner_isNotAutomaticallyShownVisualMediaOnly_shouldNotShowBanner() {
-        let preferenceUseCase = MockPreferenceUseCase(dict: [.autoMediaDiscoveryBannerDismissed: false])
+        let preferenceUseCase = MockPreferenceUseCase(dict: [PreferenceKeyEntity.autoMediaDiscoveryBannerDismissed.rawValue: false])
         let sut = makeSUT(preferenceUseCase: preferenceUseCase)
         
         XCTAssertFalse(sut.showAutoMediaDiscoveryBanner)
@@ -437,7 +438,7 @@ class MediaDiscoveryContentViewModelTests: XCTestCase {
     
     @MainActor
     func testShowAutoMediaDiscoveryBanner_autoMediaDiscoveryBannerDismissedOff_shouldShowAutoMediaDiscoveryBanner() {
-        let preferenceUseCase = MockPreferenceUseCase(dict: [.autoMediaDiscoveryBannerDismissed: false])
+        let preferenceUseCase = MockPreferenceUseCase(dict: [PreferenceKeyEntity.autoMediaDiscoveryBannerDismissed.rawValue: false])
         let sut = makeSUT(isAutomaticallyShown: true,
                           preferenceUseCase: preferenceUseCase)
         
@@ -447,14 +448,14 @@ class MediaDiscoveryContentViewModelTests: XCTestCase {
     
     @MainActor
     func testAutoMediaDiscoveryBannerDismissed_onChange_shouldChangePreferenceUseCaseValue() throws {
-        let preferenceUseCase = MockPreferenceUseCase(dict: [.shouldDisplayMediaDiscoveryWhenMediaOnly: true,
-                                                             .autoMediaDiscoveryBannerDismissed: false])
+        let preferenceUseCase = MockPreferenceUseCase(dict: [PreferenceKeyEntity.shouldDisplayMediaDiscoveryWhenMediaOnly.rawValue: true,
+                                                             PreferenceKeyEntity.autoMediaDiscoveryBannerDismissed.rawValue: false])
         let sut = makeSUT(isAutomaticallyShown: true,
                           preferenceUseCase: preferenceUseCase)
         
         sut.autoMediaDiscoveryBannerDismissed = true
         
-        let changedPreference = try XCTUnwrap(preferenceUseCase.dict[.autoMediaDiscoveryBannerDismissed] as? Bool)
+        let changedPreference = try XCTUnwrap(preferenceUseCase.dict[PreferenceKeyEntity.autoMediaDiscoveryBannerDismissed.rawValue] as? Bool)
         XCTAssertTrue(changedPreference)
     }
 }

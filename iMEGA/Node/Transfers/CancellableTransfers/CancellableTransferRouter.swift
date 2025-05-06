@@ -2,6 +2,7 @@ import ChatRepo
 import Foundation
 import MEGAAppSDKRepo
 import MEGADomain
+import MEGAPreference
 import MEGARepo
 
 final class CancellableTransferRouter: NSObject, CancellableTransferRouting, TransferWidgetRouting {

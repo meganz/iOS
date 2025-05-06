@@ -2,6 +2,7 @@ import Combine
 import Foundation
 import MEGADomain
 import MEGAL10n
+import MEGAPreference
 import SwiftUI
 
 public final class AboutViewModel: ObservableObject {
@@ -27,7 +28,7 @@ public final class AboutViewModel: ObservableObject {
     private var manageLogsUseCase: any ManageLogsUseCaseProtocol
     private var changeSfuServerUseCase: any ChangeSfuServerUseCaseProtocol
 
-    @PreferenceWrapper(key: .logging, defaultValue: false)
+    @PreferenceWrapper(key: PreferenceKeyEntity.logging, defaultValue: false)
     private var isLoggingEnabled: Bool
     private let appBundle: Bundle
     private let systemVersion: String

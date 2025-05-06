@@ -3,6 +3,7 @@ import ContentLibraries
 import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGADomain
+import MEGAPreference
 import MEGASwiftUI
 import MEGAUIKit
 import SwiftUI

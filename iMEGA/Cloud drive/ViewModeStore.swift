@@ -1,4 +1,6 @@
 import MEGADomain
+import MEGAPreference
+
 @objc extension NSNotification {
     static let MEGAViewModePreferenceDidChange = Notification.Name.MEGAViewModePreferenceDidChange
 }
@@ -111,7 +113,7 @@ final class ViewModeStore: ViewModeStoring, ViewModeStoringObjC {
         }
     }
     
-    private let preferenceRepo: any PreferenceRepositoryProtocol
+    private var preferenceRepo: any PreferenceRepositoryProtocol
     private let megaStore: MEGAStore
     private let sdk: MEGASdk
     private let notificationCenter: NotificationCenter
@@ -130,17 +132,14 @@ final class ViewModeStore: ViewModeStoring, ViewModeStoringObjC {
     
     private var savedPreference: ViewModePreferenceEntity? {
         guard
-            let preference: Int = preferenceRepo.value(forKey: MEGAViewModePreference),
+            let preference: Int = preferenceRepo[MEGAViewModePreference],
             let preferenceFromSettings = ViewModePreferenceEntity(rawValue: preference)
         else { return nil }
         return preferenceFromSettings
     }
     
     private func savePreference(preference: ViewModePreferenceEntity) {
-        preferenceRepo.setValue(
-            value: preference.rawValue,
-            forKey: MEGAViewModePreference
-        ) 
+        preferenceRepo[MEGAViewModePreference] = preference.rawValue
     }
     
     func viewMode(for location: ViewModeLocation) -> ViewModePreferenceEntity {
@@ -166,8 +165,7 @@ final class ViewModeStore: ViewModeStoring, ViewModeStoringObjC {
             // we try to read it for the given location from Core Data
             if
                 preferenceFromSettings == .perFolder,
-                let viewMode = perLocation(for: location)
-            {
+                let viewMode = perLocation(for: location) {
                 return viewMode
             }
         }
@@ -193,12 +191,12 @@ final class ViewModeStore: ViewModeStoring, ViewModeStoringObjC {
         if
             let preference = megaStore.fetchCloudAppearancePreference(handle: node.handle),
             let savedViewMode = preference.viewMode,
-            let viewMode = ViewModePreferenceEntity(rawValue: savedViewMode.intValue)
-        {
+            let viewMode = ViewModePreferenceEntity(rawValue: savedViewMode.intValue) {
             
             if viewMode == .list || viewMode == .thumbnail {
                 return viewMode
             }
+            
             return .list
         }
         
@@ -212,8 +210,7 @@ final class ViewModeStore: ViewModeStoring, ViewModeStoringObjC {
         if
             let preference = megaStore.fetchOfflineAppearancePreference(path: location.path),
             let savedViewMode = preference.viewMode,
-            let viewMode = ViewModePreferenceEntity(rawValue: savedViewMode.intValue)
-        {
+            let viewMode = ViewModePreferenceEntity(rawValue: savedViewMode.intValue) {
             
             if viewMode == .list || viewMode == .thumbnail {
                 return viewMode
@@ -278,8 +275,7 @@ final class ViewModeStore: ViewModeStoring, ViewModeStoringObjC {
             // store view mode for each location in Core Data separately
             if
                 let preference = savedPreference,
-                preference == .perFolder
-            {
+                preference == .perFolder {
                 savePerLocation(viewMode, location: location)
             } else {
                 // if user in the settings had selected thumbnail or list,

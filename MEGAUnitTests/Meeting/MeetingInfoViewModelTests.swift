@@ -4,6 +4,7 @@ import MEGAAnalyticsiOS
 import MEGAAppPresentationMock
 import MEGADomain
 import MEGADomainMock
+import MEGAPreference
 import MEGATest
 import XCTest
 
@@ -25,7 +26,7 @@ final class MeetingInfoViewModelTests: XCTestCase {
     func testShowWaitingRoomWarningBanner_givenBannerDismissedBeforeAndModeratorAndWaitingRoomOnAndAllowNonHostToAddParticipantsOn_shouldBeFalse() {
         let chatRoom =  ChatRoomEntity(ownPrivilege: .moderator, isOpenInviteEnabled: true, isWaitingRoomEnabled: true)
         let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: chatRoom)
-        let preferenceUseCase = MockPreferenceUseCase(dict: [.waitingRoomWarningBannerDismissed: true])
+        let preferenceUseCase = MockPreferenceUseCase(dict: [PreferenceKeyEntity.waitingRoomWarningBannerDismissed.rawValue: true])
         let sut = MeetingInfoViewModel(chatRoomUseCase: chatRoomUseCase, preferenceUseCase: preferenceUseCase)
         
         evaluate(isInverted: true) {
@@ -104,7 +105,7 @@ final class MeetingInfoViewModelTests: XCTestCase {
     func testShowWaitingRoomWarningBanner_givenBannerDismissedBeforeAndModeratorAndWaitingRoomOffThenOnAndAllowNonHostToAddParticipantsOn_shouldBeFalseThenTrue() {
         let chatRoom =  ChatRoomEntity(ownPrivilege: .moderator, isOpenInviteEnabled: true, isWaitingRoomEnabled: false)
         let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: chatRoom, waitingRoomEnabled: true)
-        let preferenceUseCase = MockPreferenceUseCase(dict: [.waitingRoomWarningBannerDismissed: true])
+        let preferenceUseCase = MockPreferenceUseCase(dict: [PreferenceKeyEntity.waitingRoomWarningBannerDismissed.rawValue: true])
         let sut = MeetingInfoViewModel(chatRoomUseCase: chatRoomUseCase, preferenceUseCase: preferenceUseCase)
         
         evaluate(isInverted: true) {
@@ -122,7 +123,7 @@ final class MeetingInfoViewModelTests: XCTestCase {
     func testShowWaitingRoomWarningBanner_givenBannerDismissedBeforeAndModeratorAndWaitingRoomOnAndAllowNonHostToAddParticipantsOffThenOn_shouldBeFalseThenTrue() {
         let chatRoom =  ChatRoomEntity(ownPrivilege: .moderator, isOpenInviteEnabled: false, isWaitingRoomEnabled: true)
         let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: chatRoom, allowNonHostToAddParticipantsEnabled: true)
-        let preferenceUseCase = MockPreferenceUseCase(dict: [.waitingRoomWarningBannerDismissed: true])
+        let preferenceUseCase = MockPreferenceUseCase(dict: [PreferenceKeyEntity.waitingRoomWarningBannerDismissed.rawValue: true])
         let sut = MeetingInfoViewModel(chatRoomUseCase: chatRoomUseCase, preferenceUseCase: preferenceUseCase)
         
         evaluate(isInverted: true) {

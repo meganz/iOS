@@ -1,5 +1,6 @@
 import MEGADomain
 import MEGADomainMock
+import MEGAPreference
 import XCTest
 
 class DownloadNodeUseCaseTests: XCTestCase {

@@ -1,6 +1,7 @@
 @testable import MEGA
 import MEGADomain
 import MEGADomainMock
+import MEGAPreference
 import XCTest
 
 final class PSAViewModelTests: XCTestCase {
@@ -112,7 +113,7 @@ final class PSAViewModelTests: XCTestCase {
         let (viewModel, router, mockPreference) = makeSUT(psaResult: psaResult)
         
         if let timestamp = lastPSARequestTimestamp {
-            mockPreference.dict[PreferenceKeyEntity.lastPSARequestTimestamp] = timestamp
+            mockPreference.dict[PreferenceKeyEntity.lastPSARequestTimestamp.rawValue] = timestamp
         }
         
         await test(viewModel: viewModel, action: action, expectedCommands: expectedCommands)

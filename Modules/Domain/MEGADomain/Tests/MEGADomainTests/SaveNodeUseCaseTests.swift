@@ -1,6 +1,7 @@
 import Foundation
 import MEGADomain
 import MEGADomainMock
+import MEGAPreference
 import Testing
 
 struct SaveNodeUseCaseTests {

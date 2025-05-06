@@ -2,6 +2,7 @@ import Foundation
 import MEGAAppPresentation
 import MEGADomain
 import MEGAL10n
+import MEGAPreference
 
 enum AddPhoneNumberAction: ActionType {
     case onViewReady
@@ -27,7 +28,7 @@ final class AddPhoneNumberViewModel: ViewModelType {
     private let achievementUseCase: any AchievementUseCaseProtocol
     private let hideDontShowAgain: Bool
 
-    @PreferenceWrapper(key: .dontShowAgainAddPhoneNumber, defaultValue: false)
+    @PreferenceWrapper(key: PreferenceKeyEntity.dontShowAgainAddPhoneNumber, defaultValue: false)
     private var dontShowAddPhoneNumberPreference: Bool
 
     // MARK: - Internal properties

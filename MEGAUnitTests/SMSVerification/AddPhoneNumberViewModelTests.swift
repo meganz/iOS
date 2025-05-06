@@ -3,6 +3,7 @@ import MEGAAppPresentation
 import MEGADomain
 import MEGADomainMock
 import MEGAL10n
+import MEGAPreference
 import MEGASwift
 import XCTest
 
@@ -65,7 +66,7 @@ final class AddPhoneNumberViewModelTests: XCTestCase {
         let router = MockAddPhoneNumberRouter()
         
         let preference = MockPreferenceUseCase()
-        XCTAssertTrue(preference[.dontShowAgainAddPhoneNumber] == Optional<Bool>.none)
+        XCTAssertTrue(preference[PreferenceKeyEntity.dontShowAgainAddPhoneNumber.rawValue] == Optional<Bool>.none)
         
         let sut = AddPhoneNumberViewModel(router: router,
                                           achievementUseCase: MockAchievementUseCase(),
@@ -74,7 +75,7 @@ final class AddPhoneNumberViewModelTests: XCTestCase {
         
         test(viewModel: sut, action: .notShowAddPhoneNumberAgain, expectedCommands: [])
         XCTAssertEqual(router.dismiss_calledTimes, 1)
-        XCTAssertTrue(preference[.dontShowAgainAddPhoneNumber] == true)
+        XCTAssertTrue(preference[PreferenceKeyEntity.dontShowAgainAddPhoneNumber.rawValue] == true)
     }
 }
 

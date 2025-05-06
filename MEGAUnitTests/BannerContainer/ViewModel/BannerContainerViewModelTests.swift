@@ -1,6 +1,7 @@
 @testable import MEGA
 import MEGADomain
 import MEGADomainMock
+import MEGAPreference
 import XCTest
 
 final class BannerContainerViewModelTests: XCTestCase {
@@ -13,17 +14,17 @@ final class BannerContainerViewModelTests: XCTestCase {
     @MainActor func testAction_OnViewDidLoad_WarningDismissed() {
         let sut = makeSUT()
         
-        XCTAssertTrue(sut.preference[.offlineLogOutWarningDismissed] == Optional<Bool>.none)
+        XCTAssertTrue(sut.preference[PreferenceKeyEntity.offlineLogOutWarningDismissed.rawValue] == Optional<Bool>.none)
         test(viewModel: sut.viewModel, action: .onClose, expectedCommands: [.hideBanner(animated: true)])
         
-        XCTAssertTrue(sut.preference[.offlineLogOutWarningDismissed] == true)
+        XCTAssertTrue(sut.preference[PreferenceKeyEntity.offlineLogOutWarningDismissed.rawValue] == true)
         test(viewModel: sut.viewModel, action: .onViewDidLoad(UITraitCollection()), expectedCommands: [])
     }
     
     @MainActor func testAction_OnViewDidLoad_WarningNotDismissed() {
         let sut = makeSUT()
         
-        XCTAssertTrue(sut.preference[.offlineLogOutWarningDismissed] == Optional<Bool>.none)
+        XCTAssertTrue(sut.preference[PreferenceKeyEntity.offlineLogOutWarningDismissed.rawValue] == Optional<Bool>.none)
         test(viewModel: sut.viewModel,
              action: .onViewDidLoad(UITraitCollection()),
              expectedCommands: [.configureView(message: "Banner message example",
@@ -54,7 +55,7 @@ final class BannerContainerViewModelTests: XCTestCase {
     ) -> (viewModel: BannerContainerViewModel, preference: some PreferenceUseCaseProtocol) {
         let preferenceUseCase = MockPreferenceUseCase()
         if let offlineLogOutWarningDismissed {
-            preferenceUseCase.dict[.offlineLogOutWarningDismissed] = offlineLogOutWarningDismissed
+            preferenceUseCase.dict[PreferenceKeyEntity.offlineLogOutWarningDismissed.rawValue] = offlineLogOutWarningDismissed
         }
         
         return (BannerContainerViewModel(

@@ -1,5 +1,8 @@
 @testable import MEGA
+
+import MEGADomain
 import MEGADomainMock
+import MEGAPreference
 import Testing
 
 struct CallsSettingsViewModelTests {
@@ -7,7 +10,7 @@ struct CallsSettingsViewModelTests {
     
     @Test("Enable/Disable Sound Notifications of Legacy Calls Setting View", arguments: arguments)
     func updateSoundNotificationStatus(with status: Bool) {
-        let viewModel = CallsSettingsViewModel(preferenceUseCase: MockPreferenceUseCase(dict: [.callsSoundNotification: false]), analyticsEventUseCase: MockAnalyticsEventUseCase())
+        let viewModel = CallsSettingsViewModel(preferenceUseCase: MockPreferenceUseCase(dict: [PreferenceKeyEntity.callsSoundNotification.rawValue: false]), analyticsEventUseCase: MockAnalyticsEventUseCase())
         viewModel.callsSoundNotificationPreference = status
         
         #expect(viewModel.callsSoundNotificationPreference == status)
@@ -15,7 +18,7 @@ struct CallsSettingsViewModelTests {
     
     @Test("Enable/Disable Sound Notifications of New Calls Setting View", arguments: arguments)
     func updateSettingToggle(with status: Bool) {
-        let viewModel = CallsSettingsViewModel(preferenceUseCase: MockPreferenceUseCase(dict: [.callsSoundNotification: false]), analyticsEventUseCase: MockAnalyticsEventUseCase())
+        let viewModel = CallsSettingsViewModel(preferenceUseCase: MockPreferenceUseCase(dict: [PreferenceKeyEntity.callsSoundNotification.rawValue: false]), analyticsEventUseCase: MockAnalyticsEventUseCase())
         viewModel.toggle(status)
         
         #expect(viewModel.isEnabled == status)

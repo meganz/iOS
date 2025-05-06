@@ -1,5 +1,6 @@
 import MEGAAppSDKRepo
 import MEGADomain
+import MEGAPreference
 
 @MainActor
 final class UpgradeEncouragementViewModel {
@@ -8,7 +9,7 @@ final class UpgradeEncouragementViewModel {
         static let minDaysToEncourageToUpgrade = 3
     }
     
-    @PreferenceWrapper(key: .lastEncourageUpgradeDate, defaultValue: nil)
+    @PreferenceWrapper(key: PreferenceKeyEntity.lastEncourageUpgradeDate, defaultValue: nil)
     private var lastEncourageUpgradeDate: Date?
 
     private let showTimeTracker: any UpgradeEncouragementShowTimeTracking

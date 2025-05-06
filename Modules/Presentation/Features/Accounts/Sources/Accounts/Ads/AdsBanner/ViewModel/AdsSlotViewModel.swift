@@ -3,6 +3,7 @@ import MEGAAnalyticsiOS
 import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGADomain
+import MEGAPreference
 import MEGASwift
 import SwiftUI
 
@@ -35,7 +36,7 @@ final public class AdsSlotViewModel: ObservableObject {
     private let publicNodeLink: String?
     private let isFolderLink: Bool
     
-    @PreferenceWrapper(key: .lastCloseAdsButtonTappedDate, defaultValue: nil)
+    @PreferenceWrapper(key: PreferenceKeyEntity.lastCloseAdsButtonTappedDate, defaultValue: nil)
     private(set) var lastCloseAdsDate: Date?
     private let currentDate: @Sendable () -> Date
     

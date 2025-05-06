@@ -1,5 +1,6 @@
 import Foundation
 import MEGASwift
+import MEGAPreference
 
 public enum CameraUploadPausedReason: Sendable {
     case notPaused
@@ -26,7 +27,7 @@ public struct MonitorCameraUploadUseCase<S: CameraUploadsStatsRepositoryProtocol
     private let cameraUploadRepository: S
     private let networkMonitorUseCase: T
     
-    @PreferenceWrapper(key: .cameraUploadsCellularDataUsageAllowed, defaultValue: false)
+    @PreferenceWrapper(key: PreferenceKeyEntity.cameraUploadsCellularDataUsageAllowed, defaultValue: false)
     private var cameraUploadsUseCellularDataUsageAllowed: Bool
     
     public init(cameraUploadRepository: S, networkMonitorUseCase: T, preferenceUseCase: U) {

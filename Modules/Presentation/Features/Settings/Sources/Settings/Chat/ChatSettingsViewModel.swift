@@ -1,5 +1,6 @@
 import Combine
 import MEGADomain
+import MEGAPreference
 
 @MainActor
 public final class ChatSettingsViewModel: ObservableObject {
@@ -7,7 +8,7 @@ public final class ChatSettingsViewModel: ObservableObject {
     private let chatUseCase: any ChatUseCaseProtocol
     private let chatPresenceUseCase: any ChatPresenceUseCaseProtocol
 
-    @PreferenceWrapper(key: .richLinksPreviewEnabled, defaultValue: false)
+    @PreferenceWrapper(key: PreferenceKeyEntity.richLinksPreviewEnabled, defaultValue: false)
     var richLinksPreviewEnabled: Bool
     
     @Published var isRichLinkPreviewEnabled: Bool = false

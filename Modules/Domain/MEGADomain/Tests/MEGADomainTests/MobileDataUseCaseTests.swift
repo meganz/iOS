@@ -1,12 +1,13 @@
 import MEGADomain
 import MEGADomainMock
+import MEGAPreference
 import Testing
 
 @Suite("MobileDataUseCaseTests")
 struct MobileDataUseCaseTests {
     @Test("Should return correct value based on preference", arguments: [false, true])
     func isMobileDataForPreviewingEnabled(for preferenceValue: Bool) {
-        let sut = makeSUT(preferenceValues: [.useMobileDataForPreviewingOriginalPhoto: preferenceValue])
+        let sut = makeSUT(preferenceValues: [PreferenceKeyEntity.useMobileDataForPreviewingOriginalPhoto.rawValue: preferenceValue])
 
         #expect(
             sut.isMobileDataForPreviewingEnabled() == preferenceValue,
@@ -16,7 +17,7 @@ struct MobileDataUseCaseTests {
     
     @Test("Should update the preference value correctly", arguments: [true, false])
     func updateMobileDataForPreviewingEnabled(for newValue: Bool) {
-        let sut = makeSUT(preferenceValues: [.useMobileDataForPreviewingOriginalPhoto: !newValue])
+        let sut = makeSUT(preferenceValues: [PreferenceKeyEntity.useMobileDataForPreviewingOriginalPhoto.rawValue: !newValue])
         
         sut.updateMobileDataForPreviewingEnabled(newValue)
         
@@ -26,7 +27,7 @@ struct MobileDataUseCaseTests {
         )
     }
     
-    private func makeSUT(preferenceValues: [PreferenceKeyEntity: Bool]) -> MobileDataUseCase {
+    private func makeSUT(preferenceValues: [PreferenceKeyEntity.RawValue: Bool]) -> MobileDataUseCase {
         let preference = MockPreferenceUseCase(dict: preferenceValues)
         return MobileDataUseCase(preferenceUseCase: preference)
     }

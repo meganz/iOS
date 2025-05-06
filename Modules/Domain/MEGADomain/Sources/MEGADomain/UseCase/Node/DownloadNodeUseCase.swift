@@ -1,5 +1,6 @@
 import Foundation
 import MEGASwift
+import MEGAPreference
 
 public protocol DownloadNodeUseCaseProtocol: Sendable {
     func downloadFileToOffline(
@@ -43,9 +44,9 @@ public struct DownloadNodeUseCase<T: DownloadFileRepositoryProtocol, U: OfflineF
     private let chatNodeRepository: H
     private let downloadChatRepository: I
     
-    @PreferenceWrapper(key: .savePhotoToGallery, defaultValue: false)
+    @PreferenceWrapper(key: PreferenceKeyEntity.savePhotoToGallery, defaultValue: false)
     private var savePhotoInGallery: Bool
-    @PreferenceWrapper(key: .saveVideoToGallery, defaultValue: false)
+    @PreferenceWrapper(key: PreferenceKeyEntity.saveVideoToGallery, defaultValue: false)
     private var saveVideoInGallery: Bool
     
     public init(downloadFileRepository: T, offlineFilesRepository: U, fileSystemRepository: V, nodeRepository: W, nodeDataRepository: Y, fileCacheRepository: Z, mediaUseCase: M, preferenceRepository: P, offlineFileFetcherRepository: G, chatNodeRepository: H, downloadChatRepository: I) {

@@ -7,6 +7,7 @@ import MEGADomain
 import MEGAL10n
 import MEGAPermissions
 import MEGAPhotos
+import MEGAPreference
 import MEGARepo
 import MEGAUIKit
 import SwiftUI

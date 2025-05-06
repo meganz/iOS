@@ -5,6 +5,7 @@ import MEGAAppPresentation
 import MEGAAppPresentationMock
 import MEGADomain
 import MEGADomainMock
+import MEGAPreference
 import XCTest
 
 class MeetingParticipantsLayoutViewModelTests: XCTestCase {

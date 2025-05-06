@@ -1,5 +1,6 @@
 import MEGADomain
 import MEGADomainMock
+import MEGAPreference
 import XCTest
 
 final class MonitorCameraUploadUseCaseTests: XCTestCase {
@@ -20,7 +21,7 @@ final class MonitorCameraUploadUseCaseTests: XCTestCase {
     
     func testPossibleCameraUploadPausedReason_whenWiFiAndMobileDataOn_shouldReturnReasonNotPaused() {
         // Arrange
-        let preferenceUseCase = MockPreferenceUseCase(dict: [.cameraUploadsCellularDataUsageAllowed: true])
+        let preferenceUseCase = MockPreferenceUseCase(dict: [PreferenceKeyEntity.cameraUploadsCellularDataUsageAllowed.rawValue: true])
         let networkMonitorUseCase = MockNetworkMonitorUseCase(
             connected: true,
             connectedViaWiFi: true)
@@ -38,7 +39,7 @@ final class MonitorCameraUploadUseCaseTests: XCTestCase {
     
     func testPossibleCameraUploadPausedReason_whenWiFiOffAndMobileDataOnAndCellularDataUsageAllowedOff_shouldReturnReasonNoWifi() {
         // Arrange
-        let preferenceUseCase = MockPreferenceUseCase(dict: [.cameraUploadsCellularDataUsageAllowed: false])
+        let preferenceUseCase = MockPreferenceUseCase(dict: [PreferenceKeyEntity.cameraUploadsCellularDataUsageAllowed.rawValue: false])
         let networkMonitorUseCase = MockNetworkMonitorUseCase(
             connected: true,
             connectedViaWiFi: false)
@@ -56,7 +57,7 @@ final class MonitorCameraUploadUseCaseTests: XCTestCase {
     
     func testPossibleCameraUploadPausedReason_whenWiFiOffAndMobileDataOnAndCellularDataUsageAllowedOn_shouldReturnReasonNotPaused() {
         // Arrange
-        let preferenceUseCase = MockPreferenceUseCase(dict: [.cameraUploadsCellularDataUsageAllowed: true])
+        let preferenceUseCase = MockPreferenceUseCase(dict: [PreferenceKeyEntity.cameraUploadsCellularDataUsageAllowed.rawValue: true])
         let networkMonitorUseCase = MockNetworkMonitorUseCase(
             connected: true,
             connectedViaWiFi: false)
@@ -74,7 +75,7 @@ final class MonitorCameraUploadUseCaseTests: XCTestCase {
     
     func testPossibleCameraUploadPausedReason_whenWiFiOffAndMobileDataOffAndCellularDataUsageAllowedOn_shouldReturnReasonNoNetworkConnectivity() {
         // Arrange
-        let preferenceUseCase = MockPreferenceUseCase(dict: [.cameraUploadsCellularDataUsageAllowed: true])
+        let preferenceUseCase = MockPreferenceUseCase(dict: [PreferenceKeyEntity.cameraUploadsCellularDataUsageAllowed.rawValue: true])
         let networkMonitorUseCase = MockNetworkMonitorUseCase(
             connected: false,
             connectedViaWiFi: false)

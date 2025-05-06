@@ -3,6 +3,7 @@ import MEGAAppSDKRepo
 import MEGAAppSDKRepoMock
 import MEGADomain
 import MEGADomainMock
+import MEGAPreference
 import MEGASdk
 import XCTest
 
@@ -31,10 +32,7 @@ final class ViewModeStoreTests: XCTestCase {
         init(savedPreference: ViewModePreferenceEntity? = nil) {
             self.preferenceRepo = MockPreferenceRepository()
             if let savedPreference {
-                preferenceRepo.setValue(
-                    value: savedPreference.rawValue,
-                    forKey: MEGAViewModePreference
-                )
+                preferenceRepo[MEGAViewModePreference] = savedPreference.rawValue
             }
             sut = ViewModeStore(
                 preferenceRepo: preferenceRepo,

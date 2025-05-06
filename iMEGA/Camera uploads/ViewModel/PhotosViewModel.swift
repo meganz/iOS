@@ -5,6 +5,7 @@ import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGADomain
 import MEGAPermissions
+import MEGAPreference
 import MEGASwiftUI
 import SwiftUI
 
@@ -29,7 +30,7 @@ final class PhotosViewModel: NSObject {
     
     @Published private(set) var cameraUploadExplorerSortOrderType: SortOrderType = .newest
     
-    @PreferenceWrapper(key: .isCameraUploadsEnabled, defaultValue: false)
+    @PreferenceWrapper(key: PreferenceKeyEntity.isCameraUploadsEnabled, defaultValue: false)
     private(set) var isCameraUploadsEnabled: Bool
     
     private var filterOptions: PhotosFilterOptions = [.allMedia, .allLocations]

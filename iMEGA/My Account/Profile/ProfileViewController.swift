@@ -5,6 +5,7 @@ import MEGADesignToken
 import MEGADomain
 import MEGAL10n
 import MEGAPermissions
+import MEGAPreference
 import MEGASwiftUI
 import UIKit
 
@@ -22,9 +23,9 @@ import UIKit
     private var avatarExpandedPosition: CGFloat = 0.0
     private var avatarCollapsedPosition: CGFloat = 0.0
     
-    @PreferenceWrapper(key: .offlineLogOutWarningDismissed, defaultValue: false)
+    @PreferenceWrapper(key: PreferenceKeyEntity.offlineLogOutWarningDismissed, defaultValue: false)
     private var offlineLogOutWarningDismissed: Bool
-    @PreferenceWrapper(key: .isSaveMediaCapturedToGalleryEnabled, defaultValue: false, useCase: PreferenceUseCase.default)
+    @PreferenceWrapper(key: PreferenceKeyEntity.isSaveMediaCapturedToGalleryEnabled, defaultValue: false, useCase: PreferenceUseCase.default)
     private var isSaveMediaCapturedToGalleryEnabled: Bool
     
     private let permissionHandler: some DevicePermissionsHandling = DevicePermissionsHandler.makeHandler()

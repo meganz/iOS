@@ -2,10 +2,11 @@ import MEGAAppPresentation
 import MEGADesignToken
 import MEGADomain
 import MEGAL10n
+import MEGAPreference
 import UIKit
 
 extension AdvancedTableViewController {
-    @PreferenceWrapper(key: .isSaveMediaCapturedToGalleryEnabled, defaultValue: false, useCase: PreferenceUseCase.default)
+    @PreferenceWrapper(key: PreferenceKeyEntity.isSaveMediaCapturedToGalleryEnabled, defaultValue: false, useCase: PreferenceUseCase.default)
     private static var isSaveMediaCapturedToGalleryEnabled: Bool
     
     // MARK: - UITableViewDataSource

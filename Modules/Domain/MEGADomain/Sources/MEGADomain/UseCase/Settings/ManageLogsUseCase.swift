@@ -1,3 +1,5 @@
+import MEGAPreference
+
 public protocol ManageLogsUseCaseProtocol {
     func toggleLogs(with logMetadata: LogMetadataEntity)
 }
@@ -5,11 +7,11 @@ public protocol ManageLogsUseCaseProtocol {
 public struct ManageLogsUseCase: ManageLogsUseCaseProtocol {
     private var repository: any LogSettingRepositoryProtocol
     
-    @PreferenceWrapper(key: .logging, defaultValue: false)
+    @PreferenceWrapper(key: PreferenceKeyEntity.logging, defaultValue: false)
     private var isLoggingEnabled: Bool
     
-    public init(repository: any LogSettingRepositoryProtocol,
-                preferenceUseCase: any PreferenceUseCaseProtocol) {
+    public init(repository: some LogSettingRepositoryProtocol,
+                preferenceUseCase: some PreferenceUseCaseProtocol) {
         self.repository = repository
         $isLoggingEnabled.useCase = preferenceUseCase
     }

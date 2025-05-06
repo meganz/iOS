@@ -7,6 +7,7 @@ import MEGAAppPresentationMock
 @testable import MEGADomain
 import MEGADomainMock
 import MEGAPermissionsMock
+import MEGAPreference
 import XCTest
 
 final class PhotosViewModelTests: XCTestCase {
@@ -235,7 +236,7 @@ final class PhotosViewModelTests: XCTestCase {
     
     @MainActor
     func testEmptyScreenTypeToShow_cameraUploadsOn_shouldReturnNoMedia() {
-        let sut = makePhotosViewModel(preferenceUseCase: MockPreferenceUseCase(dict: [.isCameraUploadsEnabled: true]))
+        let sut = makePhotosViewModel(preferenceUseCase: MockPreferenceUseCase(dict: [PreferenceKeyEntity.isCameraUploadsEnabled.rawValue: true]))
         
         XCTAssertEqual(sut.emptyScreenTypeToShow(), .noMediaFound)
     }
@@ -255,7 +256,7 @@ final class PhotosViewModelTests: XCTestCase {
         ]
         
         for (index, value) in expectations.enumerated() {
-            let sut = makePhotosViewModel(preferenceUseCase: MockPreferenceUseCase(dict: [.isCameraUploadsEnabled: false]))
+            let sut = makePhotosViewModel(preferenceUseCase: MockPreferenceUseCase(dict: [PreferenceKeyEntity.isCameraUploadsEnabled.rawValue: false]))
             sut.updateFilter(filterType: value.filterType, filterLocation: value.filterLocation)
             
             XCTAssertEqual(sut.emptyScreenTypeToShow(), value.expectedViewType,
@@ -265,7 +266,7 @@ final class PhotosViewModelTests: XCTestCase {
     
     @MainActor
     func testEnableCameraUploadsBannerAction_cameraUploadsOn_shouldReturnNil() {
-        let sut = makePhotosViewModel(preferenceUseCase: MockPreferenceUseCase(dict: [.isCameraUploadsEnabled: true]))
+        let sut = makePhotosViewModel(preferenceUseCase: MockPreferenceUseCase(dict: [PreferenceKeyEntity.isCameraUploadsEnabled.rawValue: true]))
         
         XCTAssertNil(sut.enableCameraUploadsBannerAction())
     }
@@ -273,7 +274,7 @@ final class PhotosViewModelTests: XCTestCase {
     @MainActor
     func testEnableCameraUploadsBannerAction_cameraUploadsOffForFilterLocation_shouldReturnCorrectly() throws {
         let cameraUploadsSettingsViewRouter = MockCameraUploadsSettingsViewRouter()
-        let sut = makePhotosViewModel(preferenceUseCase: MockPreferenceUseCase(dict: [.isCameraUploadsEnabled: false]),
+        let sut = makePhotosViewModel(preferenceUseCase: MockPreferenceUseCase(dict: [PreferenceKeyEntity.isCameraUploadsEnabled.rawValue: false]),
                                       cameraUploadsSettingsViewRouter: cameraUploadsSettingsViewRouter)
         
         for (index, value) in [PhotosFilterOptions.allLocations, .cameraUploads].enumerated() {
@@ -292,7 +293,7 @@ final class PhotosViewModelTests: XCTestCase {
     @MainActor
     func testNavigateToCameraUploadSettings_called_shouldStartNavigation() {
         let cameraUploadsSettingsViewRouter = MockCameraUploadsSettingsViewRouter()
-        let sut = makePhotosViewModel(preferenceUseCase: MockPreferenceUseCase(dict: [.isCameraUploadsEnabled: false]),
+        let sut = makePhotosViewModel(preferenceUseCase: MockPreferenceUseCase(dict: [PreferenceKeyEntity.isCameraUploadsEnabled.rawValue: false]),
                                       cameraUploadsSettingsViewRouter: cameraUploadsSettingsViewRouter)
         
         sut.navigateToCameraUploadSettings()
@@ -304,7 +305,7 @@ final class PhotosViewModelTests: XCTestCase {
     func testCameraUploadStatusButtonTapped_whenCameraUploadesIsDisabled_shouldNavigateToCUSetting() {
         let cameraUploadsSettingsViewRouter = MockCameraUploadsSettingsViewRouter()
         let sut = makePhotosViewModel(
-            preferenceUseCase: MockPreferenceUseCase(dict: [.isCameraUploadsEnabled: false]),
+            preferenceUseCase: MockPreferenceUseCase(dict: [PreferenceKeyEntity.isCameraUploadsEnabled.rawValue: false]),
             cameraUploadsSettingsViewRouter: cameraUploadsSettingsViewRouter)
         
         sut.cameraUploadStatusButtonViewModel.onTappedHandler?()
@@ -317,7 +318,7 @@ final class PhotosViewModelTests: XCTestCase {
     func testCameraUploadStatusButtonTapped_whenCameraUploadesEnabled_shouldShowCUStatusBanner() {
         let cameraUploadsSettingsViewRouter = MockCameraUploadsSettingsViewRouter()
         let sut = makePhotosViewModel(
-            preferenceUseCase: MockPreferenceUseCase(dict: [.isCameraUploadsEnabled: true]),
+            preferenceUseCase: MockPreferenceUseCase(dict: [PreferenceKeyEntity.isCameraUploadsEnabled.rawValue: true]),
             cameraUploadsSettingsViewRouter: cameraUploadsSettingsViewRouter)
         
         sut.cameraUploadStatusButtonViewModel.onTappedHandler?()

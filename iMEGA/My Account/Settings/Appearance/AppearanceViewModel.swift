@@ -1,6 +1,7 @@
 import Foundation
 import MEGAAppPresentation
 import MEGADomain
+import MEGAPreference
 
 class AppearanceViewModel {
     
@@ -20,9 +21,9 @@ class AppearanceViewModel {
     
     let mediaDiscoveryHelpLink = URL(string: "https://help.mega.io/files-folders/view-move/media-discovery-view-gallery")
     
-    @PreferenceWrapper(key: .shouldDisplayMediaDiscoveryWhenMediaOnly, defaultValue: true)
+    @PreferenceWrapper(key: PreferenceKeyEntity.shouldDisplayMediaDiscoveryWhenMediaOnly, defaultValue: true)
     private var autoMediaDiscoverySetting: Bool
-    @PreferenceWrapper(key: .mediaDiscoveryShouldIncludeSubfolderMedia, defaultValue: true)
+    @PreferenceWrapper(key: PreferenceKeyEntity.mediaDiscoveryShouldIncludeSubfolderMedia, defaultValue: true)
     private var mediaDiscoveryShouldIncludeSubfolderSetting: Bool
     private let sensitiveNodeUseCase: any SensitiveNodeUseCaseProtocol
     private let contentConsumptionUserAttributeUseCase: any ContentConsumptionUserAttributeUseCaseProtocol

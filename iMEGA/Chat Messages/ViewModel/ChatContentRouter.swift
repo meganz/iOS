@@ -4,6 +4,7 @@ import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGADomain
 import MEGAPermissions
+import MEGAPreference
 import MEGARepo
 import MEGAUI
 

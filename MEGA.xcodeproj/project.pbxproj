@@ -767,6 +767,7 @@
 		6D6749442AF84C410023FAC0 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6D67493F2AF84C410023FAC0 /* Colors.xcassets */; };
 		6D797BA72C6117CC004D95F4 /* PhotosBrowser in Frameworks */ = {isa = PBXBuildFile; productRef = 6D797BA62C6117CC004D95F4 /* PhotosBrowser */; };
 		6D88207F2B1C0E6E00F0BE18 /* MEGADesignToken in Frameworks */ = {isa = PBXBuildFile; productRef = 6D88207E2B1C0E6E00F0BE18 /* MEGADesignToken */; };
+		6D8A01162DBEFCA100EA77ED /* MEGAPreference in Frameworks */ = {isa = PBXBuildFile; productRef = 6D8A01152DBEFCA100EA77ED /* MEGAPreference */; };
 		6D90A68F2B61FED200EA7DC2 /* CameraUploadAdvancedOptionsViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D90A68E2B61FED200EA7DC2 /* CameraUploadAdvancedOptionsViewController+Additions.swift */; };
 		6D98B0992C6318A600CF1558 /* PhotosBrowserViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D98B0982C6318A600CF1558 /* PhotosBrowserViewModelTests.swift */; };
 		6D9934B02C60DC67007BAC69 /* RecentsViewController+PhotosBrowser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D9934AF2C60DC67007BAC69 /* RecentsViewController+PhotosBrowser.swift */; };
@@ -3506,6 +3507,7 @@
 		6D60255E28F8934100FF9767 /* FolderLinkViewController+NodesUpdate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FolderLinkViewController+NodesUpdate.swift"; sourceTree = "<group>"; };
 		6D64B70C2A09BCB1002ECBD1 /* MyAccountHallViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyAccountHallViewModel.swift; sourceTree = "<group>"; };
 		6D67493F2AF84C410023FAC0 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Colors.xcassets; path = Modules/Presentation/MEGAAssets/Sources/MEGAAssets/Resources/Colors.xcassets; sourceTree = SOURCE_ROOT; };
+		6D8A01132DBEFC6900EA77ED /* MEGAPreference */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = MEGAPreference; path = Modules/MEGASharedRepo/MEGAPreference; sourceTree = SOURCE_ROOT; };
 		6D90A68E2B61FED200EA7DC2 /* CameraUploadAdvancedOptionsViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CameraUploadAdvancedOptionsViewController+Additions.swift"; sourceTree = "<group>"; };
 		6D93A46D2C5CB24D00529098 /* PhotosBrowser */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = PhotosBrowser; sourceTree = "<group>"; };
 		6D98B0982C6318A600CF1558 /* PhotosBrowserViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosBrowserViewModelTests.swift; sourceTree = "<group>"; };
@@ -5433,6 +5435,7 @@
 				BF6149542A9FF33300AB051A /* MEGAL10nObjc in Frameworks */,
 				9418DB292A4EE5FB002B0077 /* MEGAPermissions in Frameworks */,
 				0E119ACC2C7C3CBC0091BF06 /* MEGAPhotos in Frameworks */,
+				6D8A01162DBEFCA100EA77ED /* MEGAPreference in Frameworks */,
 				A891E8A529C1E09D0020072A /* MEGASdk in Frameworks */,
 				B63D34142898A9AB0059DE66 /* MEGASwift in Frameworks */,
 				B63995412898CF1000EA88F1 /* MEGASwiftUI in Frameworks */,
@@ -12062,6 +12065,7 @@
 				6D004FE72D0A46220039ADF9 /* MEGAConnectivity */,
 				B6A01BAA289A618500B503FD /* MEGAFoundation */,
 				9418DB272A4EE5E7002B0077 /* MEGAPermissions */,
+				6D8A01132DBEFC6900EA77ED /* MEGAPreference */,
 				0E04F43D2D96522A0048A692 /* MEGASwift */,
 				0ED1EBD02D9B90E00037B39F /* MEGATest */,
 			);
@@ -13290,6 +13294,7 @@
 				BF2AFDA92D9F85C40075248C /* MEGAAppSDKRepoMock */,
 				0E261EAC2DA5EA1300858151 /* MEGAAuthentication */,
 				0ED6BEF32DA8A5570084FD30 /* MEGAAuthenticationOrchestration */,
+				6D8A01152DBEFCA100EA77ED /* MEGAPreference */,
 			);
 			productName = iMEGA;
 			productReference = 1373618A1A6664C300B740E8 /* MEGA.app */;
@@ -18282,6 +18287,10 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 9418A7A02ACF84210014C01C /* XCRemoteSwiftPackageReference "MEGADesignToken" */;
 			productName = MEGADesignToken;
+		};
+		6D8A01152DBEFCA100EA77ED /* MEGAPreference */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = MEGAPreference;
 		};
 		6DFC67832CC87957000EA8BC /* MEGASwiftUI */ = {
 			isa = XCSwiftPackageProductDependency;

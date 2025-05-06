@@ -1,11 +1,12 @@
 import MEGAAppPresentation
 import MEGADomain
+import MEGAPreference
 import MEGAUIComponent
 
 final class CallsSettingsViewModel: ObservableObject {
     @Published private(set) var isEnabled: Bool?
     
-    @PreferenceWrapper(key: .callsSoundNotification, defaultValue: true)
+    @PreferenceWrapper(key: PreferenceKeyEntity.callsSoundNotification, defaultValue: true)
     var callsSoundNotificationPreference: Bool {
         didSet {
             if callsSoundNotificationPreference {

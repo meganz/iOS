@@ -7,6 +7,7 @@ import MEGAAppPresentationMock
 import MEGAAppSDKRepoMock
 import MEGADomain
 import MEGADomainMock
+import MEGAPreference
 import MEGASwift
 import MEGATest
 import XCTest
