@@ -1,4 +1,5 @@
 import Combine
+import MEGAAnalyticsiOS
 import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGADomain
@@ -10,7 +11,8 @@ public final class NoteToSelfChatInfoViewModel: ObservableObject {
     private let chatRoomUseCase: any ChatRoomUseCaseProtocol
     private let chatUseCase: any ChatUseCaseProtocol
     private var chatRoom: ChatRoomEntity
-    
+    private let tracker: any AnalyticsTracking
+
     @Published var isArchived: Bool
     @Published var showArchiveChatAlert: Bool = false
     
@@ -18,13 +20,15 @@ public final class NoteToSelfChatInfoViewModel: ObservableObject {
         router: some NoteToSelfChatInfoViewRouterProtocol,
         chatRoomUseCase: some ChatRoomUseCaseProtocol,
         chatUseCase: some ChatUseCaseProtocol,
-        chatRoom: ChatRoomEntity
+        chatRoom: ChatRoomEntity,
+        tracker: some AnalyticsTracking = DIContainer.tracker
     ) {
         self.router = router
         self.chatRoomUseCase = chatRoomUseCase
         self.chatUseCase = chatUseCase
         self.chatRoom = chatRoom
         self.isArchived = chatRoom.isArchived
+        self.tracker = tracker
     }
     
     func filesRowTapped() {
@@ -58,6 +62,7 @@ public final class NoteToSelfChatInfoViewModel: ObservableObject {
             self.chatRoom = chatRoom
             if chatRoom.isArchived {
                 router.navigateToChatsListAfterArchiveNoteToSelfChat()
+                tracker.trackAnalyticsEvent(with: ArchiveNoteToSelfButtonPressedEvent())
             }
         } catch {
             MEGALogError("[NoteToSelf Info] Error archiving/unarchiving chat: \(error)")

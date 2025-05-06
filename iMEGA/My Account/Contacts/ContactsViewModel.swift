@@ -153,6 +153,10 @@ import MEGAL10n
         tracker.trackAnalyticsEvent(with: GroupChatPressedEvent())
     }
     
+    @objc func trackCreateNoteToSelfChat() {
+        tracker.trackAnalyticsEvent(with: CreateNoteToSelfButtonPressedEvent())
+    }
+    
     @objc func didLoadView() {
         if contactsMode == .chatStartConversation {
             tracker.trackAnalyticsEvent(with: NewChatScreenEvent())

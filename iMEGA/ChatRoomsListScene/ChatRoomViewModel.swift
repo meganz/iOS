@@ -1,6 +1,7 @@
 import Chat
 import Combine
 import Foundation
+import MEGAAnalyticsiOS
 import MEGAAppPresentation
 import MEGADomain
 import MEGAL10n
@@ -32,6 +33,7 @@ final class ChatRoomViewModel: ObservableObject, Identifiable {
             callInProgressTimeMonitorTask?.cancel()
         }
     }
+    private let tracker: any AnalyticsTracking
     
     private(set) var description: String?
     private(set) var hybridDescription: ChatRoomHybridDescriptionViewState?
@@ -79,7 +81,8 @@ final class ChatRoomViewModel: ObservableObject, Identifiable {
         chatListItemDescription: ChatListItemDescriptionEntity? = nil,
         chatListItemAvatar: ChatListItemAvatarEntity? = nil,
         callInProgressTimeReporter: some CallInProgressTimeReporting = CallInProgressTimeReporter(),
-        remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = DIContainer.remoteFeatureFlagUseCase
+        remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = DIContainer.remoteFeatureFlagUseCase,
+        tracker: some AnalyticsTracking = DIContainer.tracker
     ) {
         self.chatListItem = chatListItem
         self.router = router
@@ -101,6 +104,7 @@ final class ChatRoomViewModel: ObservableObject, Identifiable {
         self.shouldShowUnreadCount = chatListItem.unreadCount != 0
         self.callInProgressTimeReporter = callInProgressTimeReporter
         self.remoteFeatureFlagUseCase = remoteFeatureFlagUseCase
+        self.tracker = tracker
         
         if chatListItem.unreadCount > 0 {
             self.unreadCountString = chatListItem.unreadCount > 99 ? "99+" : "\(chatListItem.unreadCount)"
@@ -199,6 +203,9 @@ final class ChatRoomViewModel: ObservableObject, Identifiable {
     }
     
     func showDetails() {
+        if chatListItem.isNoteToSelf {
+            tracker.trackAnalyticsEvent(with: OpenNoteToSelfButtonPressedEvent())
+        }
         if remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .externalAds) {
             // Adds a slight delay when navigating to Chat or Meeting details to ensure ads are fully hidden.
             // This prevents ads from briefly appearing in the details view before disappearing.
@@ -224,8 +231,7 @@ final class ChatRoomViewModel: ObservableObject, Identifiable {
         } infoAction: { [weak self] in
             self?.showChatRoomInfo()
         } archiveAction: { [weak self] in
-            guard let self, let chatRoom = self.chatRoomUseCase.chatRoom(forChatId: self.chatListItem.chatId) else { return }
-            self.chatRoomUseCase.archive(true, chatRoom: chatRoom)
+            self?.archiveChat()
         }
     }
     
@@ -239,6 +245,9 @@ final class ChatRoomViewModel: ObservableObject, Identifiable {
     
     func archiveChat() {
         guard let chatRoom = chatRoomUseCase.chatRoom(forChatId: chatListItem.chatId) else { return }
+        if chatRoom.isNoteToSelf {
+            tracker.trackAnalyticsEvent(with: ArchiveNoteToSelfButtonPressedEvent())
+        }
         chatRoomUseCase.archive(true, chatRoom: chatRoom)
     }
     
