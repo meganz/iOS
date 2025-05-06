@@ -51,7 +51,7 @@ typedef NS_ENUM(NSUInteger, ChatOptionType) {
 @property (strong, nonatomic) UIView *createNewChatEmptyView;
 @property (nonatomic) ContactsMode contactsMode;
 @property (nonatomic) ChatOptionType chatOptionType;
-@property (strong, nonatomic) ContactsViewModel*viewModel;
+@property (strong, nonatomic) ContactsViewModel *viewModel;
 
 @property (nonatomic) BOOL avoidPresentIncomingPendingContactRequests;
 

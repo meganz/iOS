@@ -1700,6 +1700,7 @@
                     self.chatSelected(chatListItem.chatId);
                 }];
             } else if (indexPath.section == 2 && [self isNoteToSelfAvailable]) {
+                [self.viewModel trackCreateNoteToSelfChat];
                 [self dismissViewControllerAnimated:YES completion:^{
                     MEGAChatListItem *noteToSelfChat = [self noteToSelfChatListItem];
                     self.chatSelected(noteToSelfChat.chatId);
