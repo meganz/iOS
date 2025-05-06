@@ -87,15 +87,40 @@ final class MiniPlayerViewController: UIViewController {
     }
     
     private func updateCurrent(item: AudioPlayerItem) {
-        guard let cell = collectionView.visibleCells.first as? MiniPlayerItemCollectionViewCell,
-              let indexPath = collectionView.indexPathsForVisibleItems.first,
-              cell.item == item else {
-            guard let index = miniPlayerSource?.tracks?.firstIndex(where: { $0?.node?.handle == item.node?.handle }) else { return }
-            miniPlayerSource?.tracks?[index] = item
-            collectionView.reloadItems(at: [IndexPath(row: index, section: 0)])
-            return
+        if reloadVisibleCellIfNeeded(for: item) { return }
+        guard let index = findTrackIndex(of: item) else { return }
+        miniPlayerSource?.tracks?[index] = item
+        reloadCell(at: index)
+    }
+
+    private func reloadVisibleCellIfNeeded(for item: AudioPlayerItem) -> Bool {
+        guard
+            let cell = collectionView.visibleCells.first as? MiniPlayerItemCollectionViewCell,
+            let path = collectionView.indexPathsForVisibleItems.first,
+            cell.item == item
+        else {
+            return false
         }
-        collectionView.reloadItems(at: [indexPath])
+
+        collectionView.reloadItems(at: [path])
+        return true
+    }
+
+    private func findTrackIndex(of item: AudioPlayerItem) -> Int? {
+        guard let tracks = miniPlayerSource?.tracks else { return nil }
+
+        return tracks.firstIndex { optionalTrack in
+            guard let track = optionalTrack else { return false }
+            if let handle = track.node?.handle, handle == item.node?.handle {
+                return true
+            }
+            return track.url == item.url
+        }
+    }
+
+    private func reloadCell(at index: Int) {
+        let path = IndexPath(row: index, section: 0)
+        collectionView.reloadItems(at: [path])
     }
     
     private func updateCurrent(thumbnail: UIImage?) {
