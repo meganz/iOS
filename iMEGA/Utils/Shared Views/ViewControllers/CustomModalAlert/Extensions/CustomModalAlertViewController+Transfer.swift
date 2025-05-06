@@ -64,10 +64,7 @@ extension CustomModalAlertViewController {
             firstCompletion = { [weak self] in
                 guard let self else { return }
                 dismiss(animated: true) {
-                    let loginNC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LoginNavigationControllerID")
-                    loginNC.modalPresentationStyle = .fullScreen
-                    
-                    UIApplication.mnz_presentingViewController().present(loginNC, animated: true)
+                    self.presentLogin()
                 }
             }
         }
@@ -206,5 +203,17 @@ extension CustomModalAlertViewController {
 
         details.append("\n\n\(usageText)")
         return details
+    }
+
+    private func presentLogin() {
+        if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .loginRegisterAndOnboardingRevamp) {
+            LoginViewRouter(presenter: UIApplication.mnz_presentingViewController())
+                .start()
+        } else {
+            let loginNC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LoginNavigationControllerID")
+            loginNC.modalPresentationStyle = .fullScreen
+            
+            UIApplication.mnz_presentingViewController().present(loginNC, animated: true)
+        }
     }
 }

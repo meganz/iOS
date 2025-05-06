@@ -6,7 +6,6 @@
 #import "MEGANavigationController.h"
 #import "MEGALinkManager.h"
 #import "NSString+MNZCategory.h"
-#import "LoginViewController.h"
 #import "TwoFactorAuthenticationViewController.h"
 #import "UIApplication+MNZCategory.h"
 #import "UITextField+MNZCategory.h"

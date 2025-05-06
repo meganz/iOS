@@ -120,10 +120,7 @@
     if (!self.hasSession) {
         NSString *session = [api dumpSession];
         [SAMKeychain setPassword:session forService:@"MEGA" account:@"sessionV3"];
-        DevicePermissionsHandlerObjC *handler = [[DevicePermissionsHandlerObjC alloc] init];
-        [handler shouldSetupPermissionsWithCompletion:^(BOOL shouldSetupPermissions) {
-            [self showLoadingViewWithPermissionsPending:shouldSetupPermissions];
-        }];
+        [self showLoadingView];
     }
 }
 
