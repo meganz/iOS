@@ -17,6 +17,9 @@
 		0E119ACC2C7C3CBC0091BF06 /* MEGAPhotos in Frameworks */ = {isa = PBXBuildFile; productRef = 0E119ACB2C7C3CBC0091BF06 /* MEGAPhotos */; };
 		0E11AFA32D067937000A7E68 /* AddToCollectionRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E11AFA22D067935000A7E68 /* AddToCollectionRouter.swift */; };
 		0E12F2112BBFA8950087D853 /* AsyncAlgorithms in Frameworks */ = {isa = PBXBuildFile; productRef = 0E12F2102BBFA8950087D853 /* AsyncAlgorithms */; };
+		0E17E6A42DC16F6E0090CC9F /* PermissionAppLaunchRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E17E6A32DC16F450090CC9F /* PermissionAppLaunchRouter.swift */; };
+		0E17E6E82DC1DE0A0090CC9F /* OnboardingUSPViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E17E6E72DC1DDF80090CC9F /* OnboardingUSPViewController.swift */; };
+		0E1F26782DC04C88002CB087 /* MEGAQuerySignupLinkRequestDelegate+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E1F26772DC04C88002CB087 /* MEGAQuerySignupLinkRequestDelegate+Additions.swift */; };
 		0E2085742C7577880018CA18 /* HiddenFilesCloseOnboardingPrimaryButtonViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E2085732C7577880018CA18 /* HiddenFilesCloseOnboardingPrimaryButtonViewModelTests.swift */; };
 		0E2586F52C4DBF220076A4E4 /* Preview_SensitiveNodeUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E2586F42C4DBF220076A4E4 /* Preview_SensitiveNodeUseCase.swift */; };
 		0E261EAD2DA5EA1300858151 /* MEGAAuthentication in Frameworks */ = {isa = PBXBuildFile; productRef = 0E261EAC2DA5EA1300858151 /* MEGAAuthentication */; };
@@ -63,10 +66,17 @@
 		0E5F5EB02C6EB9050037A99C /* Preview_AnalyticsTracking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E5F5EAF2C6EB9050037A99C /* Preview_AnalyticsTracking.swift */; };
 		0E639DA72CB7278A0069BFA2 /* Preview_SensitiveDisplayPreferenceUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E639DA62CB727880069BFA2 /* Preview_SensitiveDisplayPreferenceUseCase.swift */; };
 		0E6607C22C74231D00958FA6 /* DefaultNodeActionAccessoryDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E6607C12C74231D00958FA6 /* DefaultNodeActionAccessoryDelegate.swift */; };
+		0E69C0E92DC8313E00E473B7 /* CreateAccountRoutingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E69C0E82DC8313E00E473B7 /* CreateAccountRoutingViewModel.swift */; };
+		0E69C0F52DC8352400E473B7 /* CreateAccountRoutingViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E69C0F42DC8352400E473B7 /* CreateAccountRoutingViewModelTests.swift */; };
+		0E69C0FA2DC8441100E473B7 /* OnboardingRoutingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E69C0F92DC843FF00E473B7 /* OnboardingRoutingViewModel.swift */; };
+		0E69C1002DC8472500E473B7 /* OnboardingRoutingViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E69C0FF2DC8472500E473B7 /* OnboardingRoutingViewModelTests.swift */; };
 		0E72E1262A2841CE00C900F9 /* EnforceCopyrightWarningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E72E1252A2841CE00C900F9 /* EnforceCopyrightWarningView.swift */; };
 		0E72E1282A2841F600C900F9 /* EnforceCopyrightWarningViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E72E1272A2841F600C900F9 /* EnforceCopyrightWarningViewModel.swift */; };
 		0E72E12A2A285CDD00C900F9 /* EnforceCopyrightWarningViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E72E1292A285CDD00C900F9 /* EnforceCopyrightWarningViewModelTests.swift */; };
 		0E75681C2A37E7B9006A92B8 /* FolderLinkViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E75681B2A37E7B9006A92B8 /* FolderLinkViewController+Additions.swift */; };
+		0E80B3162DC47AB400582D55 /* LoginRoutingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E80B3132DC47AA400582D55 /* LoginRoutingViewModel.swift */; };
+		0E80B31D2DC4834100582D55 /* LoginRoutingViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E80B31C2DC4834100582D55 /* LoginRoutingViewModelTests.swift */; };
+		0E80B3212DC4884700582D55 /* MockLoginRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E80B3202DC4884600582D55 /* MockLoginRouter.swift */; };
 		0E81A8D52BC380C3003F281B /* Preview_MonitorAlbumsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E81A8D42BC380C3003F281B /* Preview_MonitorAlbumsUseCase.swift */; };
 		0E81A9A729B7E69D0004275D /* AlbumToolbarConfiguratorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E81A9A629B7E69D0004275D /* AlbumToolbarConfiguratorTests.swift */; };
 		0E826BDF2AF07FDE00501677 /* CameraUploadStatusButtonViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E826BDE2AF07FDE00501677 /* CameraUploadStatusButtonViewModelTests.swift */; };
@@ -94,6 +104,7 @@
 		0EBFFE192A29A39300FAB142 /* GetAlbumsLinksViewWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EBFFE182A29A39300FAB142 /* GetAlbumsLinksViewWrapper.swift */; };
 		0EC465162D87E10000EDA214 /* DefaultAnalyticsNodeActionListenerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EC465152D87E10000EDA214 /* DefaultAnalyticsNodeActionListenerTests.swift */; };
 		0EC5A64F2A3FF775003BE9BE /* MediaDiscoveryFolderLinkToolbarConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EC5A64E2A3FF775003BE9BE /* MediaDiscoveryFolderLinkToolbarConfigurator.swift */; };
+		0ECB216A2DC2E2C100534925 /* LoginViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ECB21692DC2E2C100534925 /* LoginViewRouter.swift */; };
 		0ECDCD4E2A1DDBA100FBEFE7 /* GetLinkCellViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ECDCD4D2A1DDBA100FBEFE7 /* GetLinkCellViewModelType.swift */; };
 		0ECDCD502A1DDEEA00FBEFE7 /* GetLinkSwitchCellViewConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ECDCD4F2A1DDEEA00FBEFE7 /* GetLinkSwitchCellViewConfiguration.swift */; };
 		0ECFECF72ACE0D5C00CBC420 /* AppearanceViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ECFECF52ACE0D5C00CBC420 /* AppearanceViewModelTests.swift */; };
@@ -2708,6 +2719,9 @@
 		0E10BD5F2A7231EE00AE2980 /* AlbumNameUseCase+AdditionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AlbumNameUseCase+AdditionsTests.swift"; sourceTree = "<group>"; };
 		0E119ACA2C7C3CAF0091BF06 /* MEGAPhotos */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MEGAPhotos; sourceTree = "<group>"; };
 		0E11AFA22D067935000A7E68 /* AddToCollectionRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToCollectionRouter.swift; sourceTree = "<group>"; };
+		0E17E6A32DC16F450090CC9F /* PermissionAppLaunchRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionAppLaunchRouter.swift; sourceTree = "<group>"; };
+		0E17E6E72DC1DDF80090CC9F /* OnboardingUSPViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingUSPViewController.swift; sourceTree = "<group>"; };
+		0E1F26772DC04C88002CB087 /* MEGAQuerySignupLinkRequestDelegate+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "MEGAQuerySignupLinkRequestDelegate+Additions.swift"; path = "API/Requests/MEGAQuerySignupLinkRequestDelegate+Additions.swift"; sourceTree = "<group>"; };
 		0E2085732C7577880018CA18 /* HiddenFilesCloseOnboardingPrimaryButtonViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HiddenFilesCloseOnboardingPrimaryButtonViewModelTests.swift; sourceTree = "<group>"; };
 		0E2586F42C4DBF220076A4E4 /* Preview_SensitiveNodeUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preview_SensitiveNodeUseCase.swift; sourceTree = "<group>"; };
 		0E261EAB2DA5E9BF00858151 /* MEGAAuthentication */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = MEGAAuthentication; path = Modules/MEGASharedRepo/MEGAAuthentication; sourceTree = SOURCE_ROOT; };
@@ -2754,10 +2768,17 @@
 		0E5F5EAF2C6EB9050037A99C /* Preview_AnalyticsTracking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preview_AnalyticsTracking.swift; sourceTree = "<group>"; };
 		0E639DA62CB727880069BFA2 /* Preview_SensitiveDisplayPreferenceUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preview_SensitiveDisplayPreferenceUseCase.swift; sourceTree = "<group>"; };
 		0E6607C12C74231D00958FA6 /* DefaultNodeActionAccessoryDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultNodeActionAccessoryDelegate.swift; sourceTree = "<group>"; };
+		0E69C0E82DC8313E00E473B7 /* CreateAccountRoutingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAccountRoutingViewModel.swift; sourceTree = "<group>"; };
+		0E69C0F42DC8352400E473B7 /* CreateAccountRoutingViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAccountRoutingViewModelTests.swift; sourceTree = "<group>"; };
+		0E69C0F92DC843FF00E473B7 /* OnboardingRoutingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingRoutingViewModel.swift; sourceTree = "<group>"; };
+		0E69C0FF2DC8472500E473B7 /* OnboardingRoutingViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingRoutingViewModelTests.swift; sourceTree = "<group>"; };
 		0E72E1252A2841CE00C900F9 /* EnforceCopyrightWarningView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnforceCopyrightWarningView.swift; sourceTree = "<group>"; };
 		0E72E1272A2841F600C900F9 /* EnforceCopyrightWarningViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnforceCopyrightWarningViewModel.swift; sourceTree = "<group>"; };
 		0E72E1292A285CDD00C900F9 /* EnforceCopyrightWarningViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnforceCopyrightWarningViewModelTests.swift; sourceTree = "<group>"; };
 		0E75681B2A37E7B9006A92B8 /* FolderLinkViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FolderLinkViewController+Additions.swift"; sourceTree = "<group>"; };
+		0E80B3132DC47AA400582D55 /* LoginRoutingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRoutingViewModel.swift; sourceTree = "<group>"; };
+		0E80B31C2DC4834100582D55 /* LoginRoutingViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRoutingViewModelTests.swift; sourceTree = "<group>"; };
+		0E80B3202DC4884600582D55 /* MockLoginRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockLoginRouter.swift; sourceTree = "<group>"; };
 		0E81A8D42BC380C3003F281B /* Preview_MonitorAlbumsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preview_MonitorAlbumsUseCase.swift; sourceTree = "<group>"; };
 		0E81A9A629B7E69D0004275D /* AlbumToolbarConfiguratorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumToolbarConfiguratorTests.swift; sourceTree = "<group>"; };
 		0E826BDE2AF07FDE00501677 /* CameraUploadStatusButtonViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraUploadStatusButtonViewModelTests.swift; sourceTree = "<group>"; };
@@ -2784,6 +2805,7 @@
 		0EBFFE182A29A39300FAB142 /* GetAlbumsLinksViewWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAlbumsLinksViewWrapper.swift; sourceTree = "<group>"; };
 		0EC465152D87E10000EDA214 /* DefaultAnalyticsNodeActionListenerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultAnalyticsNodeActionListenerTests.swift; sourceTree = "<group>"; };
 		0EC5A64E2A3FF775003BE9BE /* MediaDiscoveryFolderLinkToolbarConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaDiscoveryFolderLinkToolbarConfigurator.swift; sourceTree = "<group>"; };
+		0ECB21692DC2E2C100534925 /* LoginViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewRouter.swift; sourceTree = "<group>"; };
 		0ECDCD4D2A1DDBA100FBEFE7 /* GetLinkCellViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetLinkCellViewModelType.swift; sourceTree = "<group>"; };
 		0ECDCD4F2A1DDEEA00FBEFE7 /* GetLinkSwitchCellViewConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetLinkSwitchCellViewConfiguration.swift; sourceTree = "<group>"; };
 		0ECFECF52ACE0D5C00CBC420 /* AppearanceViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppearanceViewModelTests.swift; sourceTree = "<group>"; };
@@ -5711,6 +5733,15 @@
 			path = CopyrightWarning;
 			sourceTree = "<group>";
 		};
+		0E80B31A2DC4832600582D55 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				0E69C0F42DC8352400E473B7 /* CreateAccountRoutingViewModelTests.swift */,
+				0E80B31C2DC4834100582D55 /* LoginRoutingViewModelTests.swift */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
 		0E8EABB92C869F19001722F7 /* Mock */ = {
 			isa = PBXGroup;
 			children = (
@@ -5750,6 +5781,7 @@
 				B5914B812CFD7C9A00722518 /* OverDiskQuota */,
 				0EE5AC152B1E932F00BCDD88 /* CustomModalAlertViewModelTests.swift */,
 				250B11A32CBC840C00E2743E /* NodeActionViewModelTests.swift */,
+				0E69C0FF2DC8472500E473B7 /* OnboardingRoutingViewModelTests.swift */,
 				6D01A3D02C097E3200089BA8 /* SharedItemsViewModelTests.swift */,
 			);
 			path = SharedViewModels;
@@ -5959,6 +5991,7 @@
 			isa = PBXGroup;
 			children = (
 				12E23288286D49000099775D /* NodeActionViewModel.swift */,
+				0E69C0F92DC843FF00E473B7 /* OnboardingRoutingViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -6899,9 +6932,11 @@
 				B5C5E80027CCBA8C0021B27B /* ConfirmAccountViewcontroller+DeleteAccount.swift */,
 				E8D4B88B1A69429200A3B2E2 /* ConfirmAccountViewController.h */,
 				E8D4B88C1A69429200A3B2E2 /* ConfirmAccountViewController.m */,
+				0E69C0E82DC8313E00E473B7 /* CreateAccountRoutingViewModel.swift */,
 				B582966927C5EADF004DD7A5 /* CreateAccountViewController+Additions.swift */,
 				E8D4B88D1A69429200A3B2E2 /* CreateAccountViewController.h */,
 				E8D4B88E1A69429200A3B2E2 /* CreateAccountViewController.m */,
+				0E80B3132DC47AA400582D55 /* LoginRoutingViewModel.swift */,
 				9448661329AF55C300CE3228 /* LoginViewController+Additions.swift */,
 				415226791A692ECC00EC7BB6 /* LoginViewController.h */,
 				4152267A1A692ECC00EC7BB6 /* LoginViewController.m */,
@@ -8558,6 +8593,7 @@
 			children = (
 				7795677A21C81C5C002B6227 /* OnboardingView */,
 				7795677821C80D36002B6227 /* Onboarding.storyboard */,
+				0E17E6E72DC1DDF80090CC9F /* OnboardingUSPViewController.swift */,
 				94E8304929DAD18100869522 /* OnboardingViewController+Additions.swift */,
 				7795677521C80CDF002B6227 /* OnboardingViewController.h */,
 				7795677621C80CDF002B6227 /* OnboardingViewController.m */,
@@ -10327,6 +10363,7 @@
 				94E33C992C2EDB9A00754DCB /* MockCreateTextFileAlertViewRouter.swift */,
 				943DBBC82CB94C5400B8B14C /* MockExportFileViewRouter.swift */,
 				94BF69122CAFFA460052F1D5 /* MockHomeBannerRouter.swift */,
+				0E80B3202DC4884600582D55 /* MockLoginRouter.swift */,
 				949CC15C2B0FD5230047D581 /* MockMyAccountHallRouter.swift */,
 				947064732D3281CD00C89D7F /* MockNotificationsViewRouter.swift */,
 				B5316F972CFD80E10093EB93 /* MockOverDiskQuotaViewRouter.swift */,
@@ -10873,6 +10910,7 @@
 				B51E03262DC0CC4F0001E4AD /* MEGAQueryRecoveryLinkRequestDelegate+Additions.swift */,
 				5B5E591120EA583900F00A74 /* MEGAQueryRecoveryLinkRequestDelegate.h */,
 				5B5E591220EA583900F00A74 /* MEGAQueryRecoveryLinkRequestDelegate.m */,
+				0E1F26772DC04C88002CB087 /* MEGAQuerySignupLinkRequestDelegate+Additions.swift */,
 				5B1AB4AD20E5407200FEDAF9 /* MEGAQuerySignupLinkRequestDelegate.h */,
 				5B1AB4AE20E5407200FEDAF9 /* MEGAQuerySignupLinkRequestDelegate.m */,
 				5B0C55AC1EE9575E0058CBE1 /* MEGARemoveContactRequestDelegate.h */,
@@ -11134,6 +11172,8 @@
 			isa = PBXGroup;
 			children = (
 				9470003829B77BCF00827E04 /* ActionWarningViewRouter.swift */,
+				0ECB21692DC2E2C100534925 /* LoginViewRouter.swift */,
+				0E17E6A32DC16F450090CC9F /* PermissionAppLaunchRouter.swift */,
 				B5CC2AA42995F15200A966A0 /* SharedItemsViewRouter.swift */,
 			);
 			path = ViewRouters;
@@ -11762,6 +11802,7 @@
 				94227F6A2B6D47FF009D586F /* Info */,
 				B6AF22DD26097F200008FF72 /* Launching */,
 				837B17A128819CB900A4D01B /* Links */,
+				0E80B31A2DC4832600582D55 /* Login */,
 				835CE84C2AA88E7E00861544 /* MainTabBar */,
 				BFF0EE2E2630E34300FAEFF9 /* Meeting */,
 				5D52C744250C4EED00286A43 /* Mocks */,
@@ -14499,6 +14540,7 @@
 				5D1B240724AF619100ACE1C5 /* CornerStyleFactory.swift in Sources */,
 				B571B21C2A8CC3BC00B8F112 /* CountdownTimer.swift in Sources */,
 				C473097526FC93BB00DC9D55 /* CrashlyticsLogger.swift in Sources */,
+				0E69C0E92DC8313E00E473B7 /* CreateAccountRoutingViewModel.swift in Sources */,
 				B582966A27C5EADF004DD7A5 /* CreateAccountViewController+Additions.swift in Sources */,
 				E8D4B8921A69429200A3B2E2 /* CreateAccountViewController.m in Sources */,
 				BF67D7752B9EAC6000978846 /* CreateNewFolderAlertViewModel.swift in Sources */,
@@ -14800,8 +14842,10 @@
 				A8F1381F21D3F8B0003C7364 /* LocationSearchTableViewCell.m in Sources */,
 				A8F1381C21D3ABF2003C7364 /* LocationSearchTableViewController.m in Sources */,
 				A8812BAB27957BBC00F0D2DB /* LogFileCompressor.swift in Sources */,
+				0E80B3162DC47AB400582D55 /* LoginRoutingViewModel.swift in Sources */,
 				9448661429AF55C300CE3228 /* LoginViewController+Additions.swift in Sources */,
 				415226931A692ECC00EC7BB6 /* LoginViewController.m in Sources */,
+				0ECB216A2DC2E2C100534925 /* LoginViewRouter.swift in Sources */,
 				2F9F11162508A3E800896DFF /* LogManager.swift in Sources */,
 				A8C93C1222D718FD0030CE1B /* LogoutTableViewCell.swift in Sources */,
 				4156C80C1AD7E79A00F5E818 /* LTHKeychainUtils.m in Sources */,
@@ -14955,6 +14999,7 @@
 				83747B1F20ADD16D00BC1AED /* MEGAQLPreviewController.m in Sources */,
 				B51E03272DC0CC4F0001E4AD /* MEGAQueryRecoveryLinkRequestDelegate+Additions.swift in Sources */,
 				5B5E591320EA583900F00A74 /* MEGAQueryRecoveryLinkRequestDelegate.m in Sources */,
+				0E1F26782DC04C88002CB087 /* MEGAQuerySignupLinkRequestDelegate+Additions.swift in Sources */,
 				5B1AB4AF20E5407300FEDAF9 /* MEGAQuerySignupLinkRequestDelegate.m in Sources */,
 				7271896027FF128B00B2DB08 /* MEGAReachabilityManager+Additions.swift in Sources */,
 				4180727A1AA5BBA00078D950 /* MEGAReachabilityManager.m in Sources */,
@@ -15168,6 +15213,8 @@
 				9451F90A28229A11000ACE3B /* OfflineViewController+ContextMenu.swift in Sources */,
 				837A88C220B44AA8007B55D1 /* OfflineViewController.m in Sources */,
 				B52CB2342A7FA78A00F9C56C /* OfflineViewModel.swift in Sources */,
+				0E69C0FA2DC8441100E473B7 /* OnboardingRoutingViewModel.swift in Sources */,
+				0E17E6E82DC1DE0A0090CC9F /* OnboardingUSPViewController.swift in Sources */,
 				7795677D21C81C6E002B6227 /* OnboardingView.m in Sources */,
 				94E8304A29DAD18100869522 /* OnboardingViewController+Additions.swift in Sources */,
 				7795677721C80CDF002B6227 /* OnboardingViewController.m in Sources */,
@@ -15214,6 +15261,7 @@
 				9495DBB72A40870C00FA22EE /* PermissionAlertRouter.swift in Sources */,
 				9422B9F02A41A331007AA5D1 /* PermissionAlertRouting.swift in Sources */,
 				25D840692A9EE0E50026D288 /* PermissionAlertViewModifier.swift in Sources */,
+				0E17E6A42DC16F6E0090CC9F /* PermissionAppLaunchRouter.swift in Sources */,
 				9495DBB12A4086BF00FA22EE /* PermissionModalModel.swift in Sources */,
 				C4E0B1712DC087A800B45998 /* PermissionOnboardingRouter.swift in Sources */,
 				C4DCB5CD2DBA06EE002D6FEF /* PermissionOnboardingView.swift in Sources */,
@@ -16145,6 +16193,7 @@
 				3289848A2A288FF20049CD40 /* ContentConsumptionUserAttributeUseCaseAdditionsTests.swift in Sources */,
 				A81F9BB427EA023A00D47C0D /* CookieSettingsViewModelTests.swift in Sources */,
 				B5488B7A2A8DBFAD00A069DF /* CountdownTimerTests.swift in Sources */,
+				0E69C0F52DC8352400E473B7 /* CreateAccountRoutingViewModelTests.swift in Sources */,
 				BF67D77F2B9EE21800978846 /* CreateNewFolderAlertViewModelTests.swift in Sources */,
 				94E33C972C2EDB3200754DCB /* CreateTextFileAlertViewModelTests.swift in Sources */,
 				0EE5AC162B1E932F00BCDD88 /* CustomModalAlertViewModelTests.swift in Sources */,
@@ -16198,6 +16247,7 @@
 				94162AF82D54F7E2004153B4 /* InitialLaunchViewModelTests.swift in Sources */,
 				25CF5EC82BDBB613005608F7 /* ItemCollectionViewCellViewModelTests.swift in Sources */,
 				A81971E426FDBE82007DC7B1 /* LegacyFileVersioningViewModelTests.swift in Sources */,
+				0E80B31D2DC4834100582D55 /* LoginRoutingViewModelTests.swift in Sources */,
 				B54081172AD91471004392E8 /* MainTabBarAdsViewModelTests.swift in Sources */,
 				835CE84E2AA88E9300861544 /* MainTabBarCallsViewModelTests.swift in Sources */,
 				25C2F8EF2AB126E100F8930A /* MediaDiscoveryContentViewModelTests.swift in Sources */,
@@ -16250,6 +16300,7 @@
 				0E5F5E862C6C61280037A99C /* MockHideFilesAndFoldersRouter.swift in Sources */,
 				94BF69132CAFFA4F0052F1D5 /* MockHomeBannerRouter.swift in Sources */,
 				B514C5952C730F5000659719 /* MockLinkManager.swift in Sources */,
+				0E80B3212DC4884700582D55 /* MockLoginRouter.swift in Sources */,
 				945A90C82C3D611500E10BBF /* MockMeetingContainerRouter.swift in Sources */,
 				B5663EE029F8F3DB0080FFDA /* MockMEGAPurchase.swift in Sources */,
 				948A0E962C9ED7A7004DDF55 /* MockMegaStore.swift in Sources */,
@@ -16325,6 +16376,7 @@
 				C45A2E4A25D2F81800915A83 /* OfflineFileInfoUseCaseTests.swift in Sources */,
 				940006D72D13494B00E246DA /* OfflineFilesRepositoryTests.swift in Sources */,
 				530C52522C216B6E00DFF3FE /* OfflineViewModelTests.swift in Sources */,
+				0E69C1002DC8472500E473B7 /* OnboardingRoutingViewModelTests.swift in Sources */,
 				0E0CFFC62D6EBF7F00F90D9F /* OverDiskQuotaCheckerTests.swift in Sources */,
 				0E44671C2D77CC3400691ECA /* OverDiskQuotaNodeActionViewControllerDelegateTests.swift in Sources */,
 				B59FC7752CF98E7400D88580 /* OverDiskQuotaViewModelTests.swift in Sources */,

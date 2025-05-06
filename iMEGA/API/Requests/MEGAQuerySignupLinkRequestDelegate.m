@@ -4,7 +4,6 @@
 
 #import "Helper.h"
 #import "CreateAccountViewController.h"
-#import "LoginViewController.h"
 #import "MEGALinkManager.h"
 #import "MEGALoginRequestDelegate.h"
 #import "OnboardingViewController.h"
@@ -56,15 +55,7 @@
             } else {
                 UIAlertController *alertController = [UIAlertController alertControllerWithTitle:LocalizedString(@"accountAlreadyConfirmed", @"Message shown when the user clicks on a confirm account link that has already been used") message:nil preferredStyle:UIAlertControllerStyleAlert];
                 [alertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"ok", @"") style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-                    UIViewController *rootViewController = UIApplication.mnz_keyWindow.rootViewController;
-                    if ([rootViewController isKindOfClass:OnboardingViewController.class]) {
-                        UINavigationController *loginNC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"LoginNavigationControllerID"];
-                        LoginViewController *loginVC = loginNC.viewControllers.firstObject;
-                        loginVC.emailString = request.email;
-                        loginVC.modalPresentationStyle = UIModalPresentationFullScreen;
-                        
-                        [UIApplication.mnz_presentingViewController presentViewController:loginNC animated:YES completion:nil];
-                    }
+                    [self showLoginFromOnboardingWithEmail:request.email];
                 }]];
                 
                 if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionId"]) {

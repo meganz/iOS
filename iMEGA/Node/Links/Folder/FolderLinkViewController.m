@@ -23,7 +23,6 @@
 #import "NodeTableViewCell.h"
 #import "MainTabBarController.h"
 #import "OnboardingViewController.h"
-#import "LoginViewController.h"
 #import "LinkOption.h"
 #import "SendToViewController.h"
 #import "UnavailableLinkView.h"

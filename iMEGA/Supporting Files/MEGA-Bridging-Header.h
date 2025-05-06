@@ -45,6 +45,7 @@
 #import "MEGALocalNotificationManager.h"
 #import "MegaNodeActionType.h"
 #import "MEGALoginRequestDelegate.h"
+#import "MEGAQuerySignupLinkRequestDelegate.h"
 #import "MEGAPasswordLinkRequestDelegate.h"
 #import "MEGAPhotoBrowserViewController.h"
 #import "MEGAReachabilityManager.h"
@@ -111,7 +112,6 @@
 #import "GroupChatDetailsViewController.h"
 #import "ContactDetailsViewController.h"
 #import "ContactsViewController.h"
-#import "LoginViewController.h"
 #import "SelectableTableViewCell.h"
 #import "NSAttributedString+MNZCategory.h"
 #import <SDWebImage/SDWebImage.h>

@@ -1,14 +1,18 @@
 import ChatRepo
 import Combine
 import KeyboardLayoutGuide
+import MEGAAppPresentation
 import MEGAAppSDKRepo
+import MEGAAuthentication
 import MEGADesignToken
 import MEGADomain
 import MEGAL10n
 import MEGAPermissions
+import MEGASwiftUI
 import MEGAUI
 import MEGAUIKit
 import MessageKit
+import SwiftUI
 import UIKit
 
 class ChatViewController: MessagesViewController {
@@ -1173,17 +1177,19 @@ class ChatViewController: MessagesViewController {
     }
     
     @objc func dismissChatRoom() {
-        dismiss(animated: true) {
+        dismiss(animated: true) { [weak self] in
             if MEGAChatSdk.shared.initState() == .anonymous {
                 MEGAChatSdk.shared.logout()
                 
-                if MEGALinkManager.selectedOption == .joinChatLink, let onboardingVC = UIApplication.mnz_visibleViewController() as? OnboardingViewController {
+                if MEGALinkManager.selectedOption == .joinChatLink,
+                   self?.isOnboardingVisible() == true {
                     
-                    if let publicChatLink = self.publicChatLink {
+                    if let publicChatLink = self?.publicChatLink {
                         MEGALinkManager.linkURL = publicChatLink
                         MEGALinkManager.urlType = .publicChatLink
                     }
-                    onboardingVC.presentLoginViewController()
+                    
+                    self?.presentLogin()
                 }
             }
         }
@@ -1211,6 +1217,24 @@ class ChatViewController: MessagesViewController {
     deinit {
         removeObservers()
         closeChatRoom()
+    }
+    
+    private func isOnboardingVisible() -> Bool {
+        let visibleViewController = UIApplication.mnz_visibleViewController()
+        return if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .loginRegisterAndOnboardingRevamp) {
+            visibleViewController is OnboardingUSPViewController
+        } else {
+            visibleViewController is OnboardingViewController
+        }
+    }
+    
+    private func presentLogin() {
+        let visibleViewController = UIApplication.mnz_visibleViewController()
+        if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .loginRegisterAndOnboardingRevamp) {
+            (visibleViewController as? OnboardingUSPViewController)?.presentLoginView()
+        } else {
+            (visibleViewController as? OnboardingViewController)?.presentLoginViewController()
+        }
     }
 }
 
