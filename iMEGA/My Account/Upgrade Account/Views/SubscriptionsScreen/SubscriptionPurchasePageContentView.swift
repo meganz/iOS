@@ -9,7 +9,7 @@ struct SubscriptionPurchasePageContentView: View {
     let topOffsetThreshold: CGFloat
     @Binding var isAtTop: Bool
     @ObservedObject var viewModel: UpgradeAccountPlanViewModel
-    private let dismiss: () -> Void
+    private let getStartedButtonTapped: () -> Void
     private let isRegularHeight: Bool
 
     init(
@@ -17,13 +17,13 @@ struct SubscriptionPurchasePageContentView: View {
         isAtTop: Binding<Bool>,
         viewModel: UpgradeAccountPlanViewModel,
         isRegularHeight: Bool,
-        dismiss: @escaping () -> Void
+        getStartedButtonTapped: @escaping () -> Void
     ) {
         self._viewModel = ObservedObject(wrappedValue: viewModel)
         self._isAtTop = isAtTop
         self.topOffsetThreshold = topOffsetThreshold
         self.isRegularHeight = isRegularHeight
-        self.dismiss = dismiss
+        self.getStartedButtonTapped = getStartedButtonTapped
     }
 
     var body: some View {
@@ -52,7 +52,7 @@ struct SubscriptionPurchasePageContentView: View {
                     SubscriptionPurchaseFeaturesView()
                     SubscriptionPurchasePlansView(viewModel: viewModel)
                     SubscriptionPurchaseBenefitsView()
-                    SubscriptionPurchaseFreePlanView(getStartedButtonTapped: dismiss)
+                    SubscriptionPurchaseFreePlanView(getStartedButtonTapped: getStartedButtonTapped)
                     VStack(alignment: .leading, spacing: TokenSpacing._7) {
                         subscriptionDetails
                         restorePurchase

@@ -43,12 +43,12 @@ struct SubscriptionPurchaseView: View {
                     isAtTop: $hideHeaderBackground,
                     viewModel: viewModel,
                     isRegularHeight: true,
-                    dismiss: { viewModel.isDismiss = true }
+                    getStartedButtonTapped: { viewModel.getStartedButtonTapped() }
                 )
                 .disabled(viewModel.isLoading)
 
                 SubscriptionPurchasePageHeaderView(hideHeaderBackground: $hideHeaderBackground) {
-                    viewModel.isDismiss = true
+                    viewModel.mayBeLaterButtonTapped()
                 }
                 .transition(.opacity)
             }
@@ -90,7 +90,7 @@ struct SubscriptionPurchaseView: View {
                 isAtTop: $hideHeaderBackground,
                 viewModel: viewModel,
                 isRegularHeight: false,
-                dismiss: { viewModel.isDismiss = true }
+                getStartedButtonTapped: { viewModel.getStartedButtonTapped() }
             )
             .disabled(viewModel.isLoading)
             SubscriptionPurchaseBottomButtonView(viewModel: viewModel)
@@ -100,7 +100,7 @@ struct SubscriptionPurchaseView: View {
 
     private var compactHeightHeaderView: some View {
         SubscriptionPurchasePageHeaderView(hideHeaderBackground: $hideHeaderBackground) {
-            viewModel.isDismiss = true
+            viewModel.mayBeLaterButtonTapped()
         }
         .transition(.opacity)
     }
