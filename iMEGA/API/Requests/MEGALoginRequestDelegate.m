@@ -117,6 +117,9 @@
         return;
     }
     
+    [api setAccountAuth:api.accountAuth];
+    [self handlePostLoginSetupWithHasSession:self.hasSession];
+    
     if (!self.hasSession) {
         NSString *session = [api dumpSession];
         [SAMKeychain setPassword:session forService:@"MEGA" account:@"sessionV3"];

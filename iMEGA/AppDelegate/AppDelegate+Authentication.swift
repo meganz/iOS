@@ -26,6 +26,12 @@ extension AppDelegate {
                 loginStoreRepository: MEGAAuthentication.DependencyInjection.loginStoreRepository),
             postLoginActions: [AppDelegatePostLoginAction(appDelegate: self)])
         
+        MEGAAuthentication.DependencyInjection.createAccountUseCase = KeychainStoringCreateAccountUseCase(
+            createAccountUseCase: CreateAccountUseCase(
+                repository: CreateAccountRepository(
+                    sdk: MEGAAuthentication.DependencyInjection.sharedSdk)),
+            keychainRepository: MEGAAuthentication.DependencyInjection.keychainRepository)
+        
         MEGAAuthentication.DependencyInjection.analyticsTracker = AnalyticsTrackerAdapter()
     }
     
@@ -41,7 +47,8 @@ extension AppDelegate {
         window.rootViewController is UIHostingController<OnboardingView<LoadingSpinner>>
     }
     
-    @objc func handlePostLoginSetup() {
+    @objc func handlePostLoginSetup(isFirstLogin: Bool) {
+        setAccountFirstLogin(isFirstLogin)
         postLoginNotification()
         initProviderDelegate()
         registerForNotifications()
@@ -71,8 +78,7 @@ private struct AppDelegatePostLoginAction: PostLoginAction {
     
     @MainActor
     func handlePostLogin() async throws {
-        appDelegate.setAccountFirstLogin()
-        appDelegate.handlePostLoginSetup()
+        appDelegate.handlePostLoginSetup(isFirstLogin: true)
     }
 }
 
