@@ -848,7 +848,21 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
             shouldTrack: events
         )
     }
-    
+
+    @MainActor func testGetStartedButtonTapped() {
+        let harness = Harness()
+        XCTAssertFalse(harness.sut.isDismiss)
+        harness.testGetStartedButtonTapped()
+        XCTAssertTrue(harness.sut.isDismiss)
+    }
+
+    @MainActor func testMayBeLaterButtonTapped() {
+        let harness = Harness()
+        XCTAssertFalse(harness.sut.isDismiss)
+        harness.testMayBeLaterButtonTapped()
+        XCTAssertTrue(harness.sut.isDismiss)
+    }
+
     // MARK: - Helper
     @MainActor
     func makeSUT(
@@ -936,7 +950,25 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
                 with: [CancelUpgradeMyAccountEvent()]
             )
         }
-        
+
+        func testMayBeLaterButtonTapped() {
+            sut.mayBeLaterButtonTapped()
+
+            XCTestCase().assertTrackAnalyticsEventCalled(
+                trackedEventIdentifiers: tracker.trackedEventIdentifiers,
+                with: [MaybeLaterUpgradeAccountButtonPressedEvent()]
+            )
+        }
+
+        func testGetStartedButtonTapped() {
+            sut.getStartedButtonTapped()
+
+            XCTestCase().assertTrackAnalyticsEventCalled(
+                trackedEventIdentifiers: tracker.trackedEventIdentifiers,
+                with: [GetStartedForFreeUpgradePlanButtonPressedEvent()]
+            )
+        }
+
         func testViewOnLoad() {
             sut.onLoad()
             

@@ -300,6 +300,16 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
         tracker.trackAnalyticsEvent(with: UpgradeAccountPlanScreenEvent())
     }
 
+    func getStartedButtonTapped() {
+        tracker.trackAnalyticsEvent(with: GetStartedForFreeUpgradePlanButtonPressedEvent())
+        isDismiss = true
+    }
+
+    func mayBeLaterButtonTapped() {
+        tracker.trackAnalyticsEvent(with: MaybeLaterUpgradeAccountButtonPressedEvent())
+        isDismiss = true
+    }
+
     // MARK: - Private
     private func postAccountDidPurchasedPlanNotification() {
         NotificationCenter.default.post(name: .accountDidPurchasedPlan, object: nil)
