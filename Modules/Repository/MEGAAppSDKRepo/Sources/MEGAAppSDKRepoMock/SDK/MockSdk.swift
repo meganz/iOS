@@ -909,7 +909,7 @@ public final class MockSdk: MEGASdk, @unchecked Sendable {
         delegate.onRequestFinish?(self, request: mockRequest, error: MockError(errorType: megaSetError))
     }
     
-    public override func setContactLinksOptionDisable(_ disabled: Bool, delegate: any MEGARequestDelegate) {
+    public override func setContactLinksOption(_ enabled: Bool, delegate: any MEGARequestDelegate) {
         processRequestResult(delegate: delegate)
     }
     
