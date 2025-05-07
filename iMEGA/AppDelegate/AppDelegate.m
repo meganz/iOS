@@ -539,15 +539,20 @@
 
 #pragma mark - Public
 
-- (void)setAccountFirstLogin {
-    isAccountFirstLogin = YES;
-    if (!self.isNewAccount) {
-        self.newAccount = (MEGALinkManager.urlType == URLTypeConfirmationLink);
+- (void)setAccountFirstLogin:(BOOL)isFirstLogin {
+    if (isFirstLogin) {
+        isAccountFirstLogin = YES;
+        if (!self.isNewAccount) {
+            self.newAccount = (MEGALinkManager.urlType == URLTypeConfirmationLink);
+        }
+        if (MEGALinkManager.selectedOption != LinkOptionJoinChatLink) {
+            [MEGALinkManager resetLinkAndURLType];
+        }
+        [NSUserDefaults.standardUserDefaults setObject:[NSDate date] forKey:MEGAFirstLoginDate];
+    } else {
+        isAccountFirstLogin = NO;
+        isFetchNodesDone = NO;
     }
-    if (MEGALinkManager.selectedOption != LinkOptionJoinChatLink) {
-        [MEGALinkManager resetLinkAndURLType];
-    }
-    [NSUserDefaults.standardUserDefaults setObject:[NSDate date] forKey:MEGAFirstLoginDate];
 }
 
 #pragma mark - Private
@@ -1444,25 +1449,6 @@
     }
     
     switch ([request type]) {
-        case MEGARequestTypeLogin: {
-            /// Block login request when using new onboarding. The `LoginUseCase` will set the session in the keychain.
-            /// This is to avoid a timing issue with the request delegates and duplicate SDK calls.
-            if ([self isRootViewNewOnboarding]) {
-                return;
-            }
-            [api setAccountAuth:api.accountAuth];
-            
-            if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
-                isAccountFirstLogin = NO;
-                isFetchNodesDone = NO;
-            } else {
-                [self setAccountFirstLogin];
-            }
-            
-            [self handlePostLoginSetup];
-            break;
-        }
-            
         case MEGARequestTypeCreateAccount: {
             [self initProviderDelegate];
         }

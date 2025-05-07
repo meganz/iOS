@@ -29,7 +29,7 @@ typedef NS_ENUM(NSInteger, MEGANotificationType) {
 - (void)showOnboardingWithCompletion:(nullable void (^)(void))completion;
 - (void)presentAccountExpiredAlertIfNeeded;
 - (void)showLink:(NSURL *)url;
-- (void)setAccountFirstLogin;
+- (void)setAccountFirstLogin:(BOOL)isFirstLogin;
 
 @end
 
