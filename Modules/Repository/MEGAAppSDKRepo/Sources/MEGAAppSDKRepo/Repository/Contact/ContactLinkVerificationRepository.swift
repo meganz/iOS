@@ -37,7 +37,7 @@ public struct ContactLinkVerificationRepository: ContactLinkVerificationReposito
     
     public func updateContactLinksOption(enabled: Bool) async throws {
         try await withAsyncThrowingValue { completion in
-            sdk.setContactLinksOptionDisable(enabled, delegate: RequestDelegate { result in
+            sdk.setContactLinksOption(enabled, delegate: RequestDelegate { result in
                 switch result {
                 case .success:
                     completion(.success)
