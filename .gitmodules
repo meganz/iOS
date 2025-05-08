@@ -1,18 +1,23 @@
 [submodule "MEGASDK"]
 	path = Modules/DataSource/MEGASDK/Sources/MEGASDK
 	url = https://code.developers.mega.co.nz/sdk/sdk.git
-[submodule "iMEGA/Vendor/LTHPasscodeViewController"]
-	path = iMEGA/Vendor/LTHPasscodeViewController
-	url=https://github.com/meganz/LTHPasscodeViewController.git
-[submodule "iMEGA/Vendor/SVProgressHUD"]
-	path = iMEGA/Vendor/SVProgressHUD
-	url = https://github.com/SVProgressHUD/SVProgressHUD.git
+
 [submodule "Modules/DataSource/MEGAChatSDK/Sources/MEGAChatSDK"]
 	path = Modules/DataSource/MEGAChatSDK/Sources/MEGAChatSDK
 	url = https://code.developers.mega.co.nz/megachat/MEGAchat.git
+
+[submodule "iMEGA/Vendor/LTHPasscodeViewController"]
+	path = iMEGA/Vendor/LTHPasscodeViewController
+	url = https://github.com/meganz/LTHPasscodeViewController.git
+
+[submodule "iMEGA/Vendor/SVProgressHUD"]
+	path = iMEGA/Vendor/SVProgressHUD
+	url = https://github.com/meganz/SVProgressHUD.git
+
 [submodule "iosTransifex"]
 	path = iosTransifex
 	url = https://code.developers.mega.co.nz/mobile/ios/iosTransifex.git
+
 [submodule "Modules/MEGASharedRepo"]
 	path = Modules/MEGASharedRepo
 	url = https://code.developers.mega.co.nz/mobile/ios/MEGASharedRepo.git
