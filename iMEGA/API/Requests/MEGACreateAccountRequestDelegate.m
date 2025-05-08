@@ -32,6 +32,7 @@
         if (self.resumeCreateAccount) {
             MEGALoginRequestDelegate *loginRequestDelegate = [[MEGALoginRequestDelegate alloc] init];
             loginRequestDelegate.confirmAccountInOtherClient = YES;
+            loginRequestDelegate.isNewUserRegistration = YES;
             NSString *email = [SAMKeychain passwordForService:@"MEGA" account:@"email"];
             NSString *password = [SAMKeychain passwordForService:@"MEGA" account:@"password"];
             [api loginWithEmail:email password:password delegate:loginRequestDelegate];

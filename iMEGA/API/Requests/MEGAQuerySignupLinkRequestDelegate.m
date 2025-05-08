@@ -50,6 +50,7 @@
                 
                 MEGALoginRequestDelegate *loginRequestDelegate = [[MEGALoginRequestDelegate alloc] init];
                 loginRequestDelegate.confirmAccountInOtherClient = YES;
+                loginRequestDelegate.isNewUserRegistration = YES;
                 NSString *password = [SAMKeychain passwordForService:@"MEGA" account:@"password"];
                 [MEGASdk.shared loginWithEmail:request.email password:password delegate:loginRequestDelegate];
             } else {

@@ -193,6 +193,7 @@
 
         MEGALoginRequestDelegate *loginRequestDelegate = [[MEGALoginRequestDelegate alloc] init];
         loginRequestDelegate.confirmAccountInOtherClient = YES;
+        loginRequestDelegate.isNewUserRegistration = YES;
         [api loginWithEmail:self.email password:self.password delegate:loginRequestDelegate];
     }
 }
