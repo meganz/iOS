@@ -7,47 +7,60 @@ import SwiftUI
 final class SubscriptionPurchaseRouter: UpgradeAccountPlanRouting {
     private weak var baseViewController: UIViewController?
     private let accountUseCase: any AccountUseCaseProtocol
-    private let presenter: UIViewController
+    private let window: UIWindow
     private let accountDetails: AccountDetailsEntity
     private let viewType: UpgradeAccountPlanViewType = .onboarding
+    private let onDismiss: () -> Void
     var isFromAds: Bool { false }
 
-    init(presenter: UIViewController, currentAccountDetails: AccountDetailsEntity, accountUseCase: some AccountUseCaseProtocol) {
-        self.presenter = presenter
+    init(
+        window: UIWindow,
+        currentAccountDetails: AccountDetailsEntity,
+        accountUseCase: some AccountUseCaseProtocol,
+        onDismiss: @escaping () -> Void
+    ) {
+        self.window = window
         self.accountDetails = currentAccountDetails
         self.accountUseCase = accountUseCase
+        self.onDismiss = onDismiss
     }
 
-    static func showSubscriptionPurchaseView(presenter: UIViewController) {
-        let accountUseCase = AccountUseCase(repository: AccountRepository.newRepo)
-        guard let accountDetails = accountUseCase.currentAccountDetails else {
-            Task { @MainActor in
-                if let accountDetails = try? await accountUseCase.refreshCurrentAccountDetails() {
-                    showSubscriptionPurchaseView(
-                        presenter: presenter,
-                        accountUseCase: accountUseCase,
-                        accountDetails: accountDetails
-                    )
-                }
-            }
-            return
+    static func showSubscriptionPurchaseView(in window: UIWindow, onDismiss: @escaping () -> Void) {
+        Task {
+            let accountUseCase = AccountUseCase(repository: AccountRepository.newRepo)
+            let accountDetails = try await loadAccountDetails(using: accountUseCase)
+            await MEGAPurchase.sharedInstance().requestPricingAsync()
+
+            showSubscriptionPurchaseView(
+                window: window,
+                accountUseCase: accountUseCase,
+                accountDetails: accountDetails,
+                onDismiss: onDismiss
+            )
         }
-        showSubscriptionPurchaseView(
-            presenter: presenter,
-            accountUseCase: accountUseCase,
-            accountDetails: accountDetails
-        )
     }
 
+    private static func loadAccountDetails(
+        using useCase: AccountUseCase<AccountRepository>
+    ) async throws -> AccountDetailsEntity {
+        if let details = useCase.currentAccountDetails {
+            return details
+        }
+        return try await useCase.refreshCurrentAccountDetails()
+    }
+
+    @MainActor
     static func showSubscriptionPurchaseView(
-        presenter: UIViewController,
+        window: UIWindow,
         accountUseCase: some AccountUseCaseProtocol,
-        accountDetails: AccountDetailsEntity
+        accountDetails: AccountDetailsEntity,
+        onDismiss: @escaping () -> Void
     ) {
         let router = SubscriptionPurchaseRouter(
-            presenter: presenter,
+            window: window,
             currentAccountDetails: accountDetails,
-            accountUseCase: accountUseCase
+            accountUseCase: accountUseCase,
+            onDismiss: onDismiss
         )
         router.start()
     }
@@ -61,15 +74,14 @@ final class SubscriptionPurchaseRouter: UpgradeAccountPlanRouting {
             viewType: viewType,
             router: self
         )
-        let subscriptionView = SubscriptionPurchaseView(viewModel: viewModel)
+        let subscriptionView = SubscriptionPurchaseView(viewModel: viewModel, onDismiss: onDismiss)
         let hostingController = UIHostingController(rootView: subscriptionView)
-        hostingController.modalPresentationStyle = .fullScreen
         baseViewController = hostingController
         return hostingController
     }
 
     func start() {
-        presenter.present(build(), animated: true)
+        window.rootViewController = build()
     }
 
     func showTermsAndPolicies() {

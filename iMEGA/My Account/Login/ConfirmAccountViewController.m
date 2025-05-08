@@ -301,6 +301,7 @@
 
             if ([api isLoggedIn] <= 1) {
                 MEGALoginRequestDelegate *loginRequestDelegate = [[MEGALoginRequestDelegate alloc] init];
+                loginRequestDelegate.isNewUserRegistration = YES;
                 [api loginWithEmail:self.emailInputView.inputTextField.text password:self.passwordView.passwordTextField.text delegate:loginRequestDelegate];
 
                 [Helper clearEphemeralSession];

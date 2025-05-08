@@ -8,6 +8,7 @@ struct SubscriptionPurchaseView: View {
     @Environment(\.verticalSizeClass) var verticalSizeClass
     @State private var hideHeaderBackground = true
     private let compactContentLeadingPadding: CGFloat = 250
+    let onDismiss: () -> Void
 
     /// How far the scroll view can move from the top before it's no longer considered "at the top".
     ///
@@ -22,6 +23,7 @@ struct SubscriptionPurchaseView: View {
             .onChange(of: viewModel.isDismiss) { newValue in
                 if newValue {
                     dismiss()
+                    onDismiss()
                 }
             }
     }

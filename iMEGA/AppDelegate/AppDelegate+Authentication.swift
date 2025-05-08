@@ -10,8 +10,8 @@ import SwiftUI
 
 extension AppDelegate {
     @objc func injectAuthenticationDependencies() {
-        guard DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .loginRegisterAndOnboardingRevamp) else { return }
-        
+        guard isLoginRegisterAndOnboardingRevampFeatureEnabled else { return }
+
         MEGAAuthentication.DependencyInjection.sharedSdk = .shared
         MEGAAuthentication.DependencyInjection.keychainServiceName = "MEGA"
         MEGAAuthentication.DependencyInjection.keychainAccount = "sessionV3"
@@ -30,7 +30,7 @@ extension AppDelegate {
     }
     
     @objc func makeOnboardingViewController() -> UIViewController {
-        if  DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .loginRegisterAndOnboardingRevamp) {
+        if isLoginRegisterAndOnboardingRevampFeatureEnabled {
             OnboardingUSPViewController()
         } else {
             OnboardingViewController.instantiateOnboarding(with: .default)
@@ -54,11 +54,15 @@ extension AppDelegate {
     }
     
     @objc func isOnboardingViewControllerAlreadyShown() -> Bool {
-        if  DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .loginRegisterAndOnboardingRevamp) {
+        if  isLoginRegisterAndOnboardingRevampFeatureEnabled {
             isRootViewNewOnboarding()
         } else {
             window.rootViewController is OnboardingViewController
         }
+    }
+
+    @objc var isLoginRegisterAndOnboardingRevampFeatureEnabled: Bool {
+        DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .loginRegisterAndOnboardingRevamp)
     }
 }
 

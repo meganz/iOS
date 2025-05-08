@@ -189,7 +189,7 @@
     [MEGALinkManager resetLinkAndURLType];
     isFetchNodesDone = NO;
     _presentInviteContactVCLater = NO;
-    
+
     NSString *sessionV3 = [SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"];
     if (sessionV3) {
         NSUserDefaults *sharedUserDefaults = [NSUserDefaults.alloc initWithSuiteName:MEGAGroupIdentifier];
@@ -679,16 +679,17 @@
             if (![LTHPasscodeViewController doesPasscodeExist]) {
                 if (self->isAccountFirstLogin) {
                     self->isAccountFirstLogin = NO;
-                    if (self.isNewAccount) {
+                    if (self.isNewAccount && !self.isLoginRegisterAndOnboardingRevampFeatureEnabled) {
                         if (MEGAPurchase.sharedInstance.products.count > 0) {
                             [self showChooseAccountPlanTypeView];
                         } else {
                             [MEGAPurchase.sharedInstance.pricingsDelegateMutableArray addObject:self];
                             self.chooseAccountTypeLater = YES;
                         }
-                        self.newAccount = NO;
                     }
-            
+
+                    self.newAccount = NO;
+
                     [MEGALinkManager processSelectedOptionOnLink];
                     [self showCookieDialogIfNeeded];
 
@@ -1147,7 +1148,7 @@
         [self showUpgradeAccount];
     } else if (self.showChooseAccountTypeLater) {
         [self showChooseAccountPlanTypeView];
-        
+
         self.chooseAccountTypeLater = NO;
         [MEGAPurchase.sharedInstance.pricingsDelegateMutableArray removeObject:self];
     }
