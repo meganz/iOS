@@ -523,6 +523,9 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
             }
         case URLTypePwm:
             [MEGALinkManager openPWMApp];
+        case URLTypeSiteTransfer:
+            [MEGALinkManager openDefaultLink: url];
+            break;
         default:
             break;
     }

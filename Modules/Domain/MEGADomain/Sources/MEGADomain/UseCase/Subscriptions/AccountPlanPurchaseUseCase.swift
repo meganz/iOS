@@ -25,17 +25,22 @@ public protocol AccountPlanPurchaseUseCaseProtocol: Sendable {
 public struct AccountPlanPurchaseUseCase<T: AccountPlanPurchaseRepositoryProtocol>: AccountPlanPurchaseUseCaseProtocol, Sendable {
     
     private let repo: T
-    
-    public init(repository: T) {
+    private let useAPIPrice: @Sendable () async -> Bool
+
+    public init(
+        repository: T,
+        useAPIPrice: @Sendable @escaping () async -> Bool
+    ) {
         repo = repository
+        self.useAPIPrice = useAPIPrice
     }
     
     public func accountPlanProducts() async -> [PlanEntity] {
-        await repo.accountPlanProducts()
+        await repo.accountPlanProducts(useAPIPrice: await useAPIPrice())
     }
     
     public func lowestPlan() async -> PlanEntity {
-        let plans = await repo.accountPlanProducts()
+        let plans = await accountPlanProducts()
         return plans.sorted(by: { $0.price < $1.price }).first ?? PlanEntity()
     }
     

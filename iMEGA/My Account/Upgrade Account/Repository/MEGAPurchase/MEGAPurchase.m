@@ -328,6 +328,7 @@
     
     if (request.type == MEGARequestTypeGetPricing) {
         self.pricing = request.pricing;
+        self.currency = request.currency;
         [self requestProducts];
     } else if (request.type == MEGARequestTypeSubmitPurchaseReceipt) {
         [self setIsSubmittingReceipt:false];

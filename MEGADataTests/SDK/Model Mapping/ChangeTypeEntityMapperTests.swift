@@ -39,7 +39,7 @@ final class ChangeTypeEntityMapperTests: XCTestCase {
         ]
         
         for type in sut {
-            let entity = type.toChangeTypeEntity()
+            let entity: MEGADomain.UserEntity.ChangeTypeEntity = type.toChangeTypeEntity()
             switch type {
             case .auth:
                 XCTAssertEqual(entity, .authentication)

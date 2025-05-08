@@ -72,7 +72,8 @@ final class SubscriptionPurchaseRouter: UpgradeAccountPlanRouting {
             purchaseUseCase: AccountPlanPurchaseUseCase(repository: AccountPlanPurchaseRepository.newRepo),
             subscriptionsUseCase: SubscriptionsUseCase(repo: SubscriptionsRepository.newRepo),
             viewType: viewType,
-            router: self
+            router: self,
+            appVersion: AppMetaDataFactory(bundle: .main).make().currentAppVersion
         )
         let subscriptionView = SubscriptionPurchaseView(viewModel: viewModel, onDismiss: onDismiss)
         let hostingController = UIHostingController(rootView: subscriptionView)
