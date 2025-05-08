@@ -42,6 +42,7 @@ enum DeeplinkFragmentKey: String {
     case contact = "C!"
     case openChatSection = "fm/chat"
     case publicChat = "chat"
+    case sitetransfer = "sitetransfer"
 
     // https://mega.nz/# + Base64Handle
     case handle
@@ -116,7 +117,8 @@ extension NSURL {
             DeeplinkFragmentKey.recover.rawValue: .recoverLink,
             DeeplinkFragmentKey.contact.rawValue: .contactLink,
             DeeplinkFragmentKey.openChatSection.rawValue: .openChatSectionLink,
-            DeeplinkFragmentKey.publicChat.rawValue: .publicChatLink
+            DeeplinkFragmentKey.publicChat.rawValue: .publicChatLink,
+            DeeplinkFragmentKey.sitetransfer.rawValue: .siteTransfer
         ]
 
         if let match = fragmentKeyMap.first(where: { fragment.hasPrefix($0.key) }) {

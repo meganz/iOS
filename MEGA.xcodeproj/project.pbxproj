@@ -161,8 +161,13 @@
 		16009FA72BFB53E0002903FA /* TwoFactorAuthenticationViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16009FA62BFB53E0002903FA /* TwoFactorAuthenticationViewController+Additions.swift */; };
 		160711542A558DED00970A19 /* PagerTabViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 160711532A558DED00970A19 /* PagerTabViewModelTests.swift */; };
 		160711652A5594AD00970A19 /* PhotoAlbumContainerViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 160711642A5594AD00970A19 /* PhotoAlbumContainerViewModelTests.swift */; };
+		163ABD4C2DC4C9D2004B5D5A /* DIContainer+ExternalPurchase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 163ABD4A2DC4C9D2004B5D5A /* DIContainer+ExternalPurchase.swift */; };
 		1648E4AC2C5A10380056A66E /* LTHPasscodeViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1648E4AB2C5A10380056A66E /* LTHPasscodeViewController+Additions.swift */; };
 		1648E4AE2C5A10ED0056A66E /* LTHPasscodeViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1648E4AB2C5A10380056A66E /* LTHPasscodeViewController+Additions.swift */; };
+		165421D02DC4D5B0000A229C /* AccountPlanPurchaseUseCase+Init.swift in Sources */ = {isa = PBXBuildFile; fileRef = 165421CF2DC4D5A9000A229C /* AccountPlanPurchaseUseCase+Init.swift */; };
+		1654221B2DC8AA82000A229C /* MockExternalPurchaseUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1654221A2DC8AA7D000A229C /* MockExternalPurchaseUseCase.swift */; };
+		1654223C2DC8B498000A229C /* PlanEntity+ExternalPurchasePlan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1654223B2DC8B491000A229C /* PlanEntity+ExternalPurchasePlan.swift */; };
+		1654C7F02DC47F1D00DDB846 /* MEGAStoreKit in Frameworks */ = {isa = PBXBuildFile; productRef = 1654C7EF2DC47F1D00DDB846 /* MEGAStoreKit */; };
 		1678D7F22A45487E00336C52 /* MEGATest in Frameworks */ = {isa = PBXBuildFile; productRef = 1678D7F12A45487E00336C52 /* MEGATest */; };
 		240380542A30687500C06E61 /* ReportIssueMessageViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 240380532A30687500C06E61 /* ReportIssueMessageViewModelTests.swift */; };
 		240380562A306B8B00C06E61 /* ReportIssueMessageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 240380552A306B8B00C06E61 /* ReportIssueMessageViewModel.swift */; };
@@ -2828,7 +2833,12 @@
 		16009FA62BFB53E0002903FA /* TwoFactorAuthenticationViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TwoFactorAuthenticationViewController+Additions.swift"; sourceTree = "<group>"; };
 		160711532A558DED00970A19 /* PagerTabViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagerTabViewModelTests.swift; sourceTree = "<group>"; };
 		160711642A5594AD00970A19 /* PhotoAlbumContainerViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoAlbumContainerViewModelTests.swift; sourceTree = "<group>"; };
+		163ABD4A2DC4C9D2004B5D5A /* DIContainer+ExternalPurchase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DIContainer+ExternalPurchase.swift"; sourceTree = "<group>"; };
 		1648E4AB2C5A10380056A66E /* LTHPasscodeViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LTHPasscodeViewController+Additions.swift"; sourceTree = "<group>"; };
+		165421CF2DC4D5A9000A229C /* AccountPlanPurchaseUseCase+Init.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AccountPlanPurchaseUseCase+Init.swift"; sourceTree = "<group>"; };
+		1654221A2DC8AA7D000A229C /* MockExternalPurchaseUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockExternalPurchaseUseCase.swift; sourceTree = "<group>"; };
+		1654223B2DC8B491000A229C /* PlanEntity+ExternalPurchasePlan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PlanEntity+ExternalPurchasePlan.swift"; sourceTree = "<group>"; };
+		1654C7EE2DC47D8100DDB846 /* MEGAStoreKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = MEGAStoreKit; path = Modules/MEGASharedRepo/MEGAStoreKit; sourceTree = SOURCE_ROOT; };
 		167845462A172AAA00568FBE /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Platforms/iPhoneOS.platform/Developer/Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		16E14DD22A4ADE4700ED3AD5 /* MEGAAnalyticsDomain */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MEGAAnalyticsDomain; sourceTree = "<group>"; };
 		240380532A30687500C06E61 /* ReportIssueMessageViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportIssueMessageViewModelTests.swift; sourceTree = "<group>"; };
@@ -5397,6 +5407,7 @@
 				9418DB292A4EE5FB002B0077 /* MEGAPermissions in Frameworks */,
 				0E119ACC2C7C3CBC0091BF06 /* MEGAPhotos in Frameworks */,
 				A891E8A529C1E09D0020072A /* MEGASdk in Frameworks */,
+				1654C7F02DC47F1D00DDB846 /* MEGAStoreKit in Frameworks */,
 				B63D34142898A9AB0059DE66 /* MEGASwift in Frameworks */,
 				B63995412898CF1000EA88F1 /* MEGASwiftUI in Frameworks */,
 				B598F73B2D01E0B600B2B6EB /* MEGASwiftUIMock in Frameworks */,
@@ -5999,6 +6010,15 @@
 				BFC9685A278CDA080098C523 /* TestingAppDelegate.swift */,
 			);
 			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		163ABD4B2DC4C9D2004B5D5A /* Dependencies */ = {
+			isa = PBXGroup;
+			children = (
+				165421CF2DC4D5A9000A229C /* AccountPlanPurchaseUseCase+Init.swift */,
+				163ABD4A2DC4C9D2004B5D5A /* DIContainer+ExternalPurchase.swift */,
+			);
+			path = Dependencies;
 			sourceTree = "<group>";
 		};
 		240D80F92AB1A1CB00FBD2C4 /* Domain */ = {
@@ -10987,6 +11007,8 @@
 		B59580A32A1478AE00E5FC1C /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				163ABD4B2DC4C9D2004B5D5A /* Dependencies */,
+				BFA2A2192DAC9E3400E8673D /* SubscriptionsScreen */,
 				B59580A42A1478C300E5FC1C /* Upgrade Plan View */,
 			);
 			path = Views;
@@ -10996,6 +11018,7 @@
 			isa = PBXGroup;
 			children = (
 				B59580AB2A1478DC00E5FC1C /* Sections */,
+				1654223B2DC8B491000A229C /* PlanEntity+ExternalPurchasePlan.swift */,
 				B59580A52A1478D300E5FC1C /* UpgradeAccountPlanRouter.swift */,
 				B59580A72A1478D400E5FC1C /* UpgradeAccountPlanView.swift */,
 				B59580A62A1478D400E5FC1C /* UpgradeAccountPlanViewModel.swift */,
@@ -12013,6 +12036,7 @@
 				6D004FE72D0A46220039ADF9 /* MEGAConnectivity */,
 				B6A01BAA289A618500B503FD /* MEGAFoundation */,
 				9418DB272A4EE5E7002B0077 /* MEGAPermissions */,
+				1654C7EE2DC47D8100DDB846 /* MEGAStoreKit */,
 				0E04F43D2D96522A0048A692 /* MEGASwift */,
 				0ED1EBD02D9B90E00037B39F /* MEGATest */,
 			);
@@ -12837,6 +12861,7 @@
 		C4A016BB2B674DC100492185 /* Mocks */ = {
 			isa = PBXGroup;
 			children = (
+				1654221A2DC8AA7D000A229C /* MockExternalPurchaseUseCase.swift */,
 				C4A016BC2B674DE100492185 /* MockRandomNumberGenerator.swift */,
 				C4A016BF2B67630F00492185 /* MockUpgradeAccountRouter.swift */,
 				C4F06F692B690C4B005C1A3D /* MockUpgradeEncouragementShowTimeTracker.swift */,
@@ -13210,6 +13235,8 @@
 				BF2AFDA92D9F85C40075248C /* MEGAAppSDKRepoMock */,
 				0E261EAC2DA5EA1300858151 /* MEGAAuthentication */,
 				0ED6BEF32DA8A5570084FD30 /* MEGAAuthenticationOrchestration */,
+				6D8A01152DBEFCA100EA77ED /* MEGAPreference */,
+				1654C7EF2DC47F1D00DDB846 /* MEGAStoreKit */,
 			);
 			productName = iMEGA;
 			productReference = 1373618A1A6664C300B740E8 /* MEGA.app */;
@@ -13989,6 +14016,7 @@
 				41AC66481AB1D493003FE8DA /* AboutTableViewController.m in Sources */,
 				A8DE32CB22FC14CC006BAC7A /* AccountExpiredViewController.swift in Sources */,
 				B5EF0A7729F0EE2100B166B1 /* AccountPlanPurchaseRepository.swift in Sources */,
+				165421D02DC4D5B0000A229C /* AccountPlanPurchaseUseCase+Init.swift in Sources */,
 				94F2DD8029EFED3200718176 /* AchievementsDetailsViewController+Additions.swift in Sources */,
 				5B40AB321F7A512E0034C3B3 /* AchievementsDetailsViewController.m in Sources */,
 				5B48F8061F4C80F4001E3A29 /* AchievementsTableViewCell.m in Sources */,
@@ -14444,6 +14472,7 @@
 				5D31674524FC9A5F0032492F /* DevicePermissionDeniedError.swift in Sources */,
 				943649DB2A4D8292006CE8B8 /* DevicePermissionsHandlerObjC.swift in Sources */,
 				0EE5AC202B1EB2C200BCDD88 /* DIContainer+CustomModalAlert.swift in Sources */,
+				163ABD4C2DC4C9D2004B5D5A /* DIContainer+ExternalPurchase.swift in Sources */,
 				A5D527912CCF625E00CC9E46 /* DIContainer+FeatureFlagProvider.swift in Sources */,
 				6D00BD282B1E5D9600370AC7 /* DIContainer+Photos.swift in Sources */,
 				B6AF22C226097C310008FF72 /* DiskFullBlockingModel.swift in Sources */,
@@ -15146,6 +15175,7 @@
 				B6E6726B277D4E4B00158FA0 /* PhotoUpdatePublisher.swift in Sources */,
 				B658D3B8218F9357004C0D64 /* PhotoUploadOperation.m in Sources */,
 				5D79B52224986A4F0070FECD /* PlanAdviser.swift in Sources */,
+				1654223C2DC8B498000A229C /* PlanEntity+ExternalPurchasePlan.swift in Sources */,
 				C4CBDD82256EDD1200835CF5 /* PlayerCurrentStateEntity.swift in Sources */,
 				C450470125794A2800EE510E /* PlaylistHeaderFooterView.swift in Sources */,
 				C480AF422570F0F400898D48 /* PlaylistItemTableViewCell.swift in Sources */,
@@ -16125,6 +16155,7 @@
 				B569A2C52C6E03E4005A96AD /* MockEnterMeetingLinkRouter.swift in Sources */,
 				943DBBCC2CB94C7F00B8B14C /* MockExportFileUseCase.swift in Sources */,
 				943DBBC92CB94C5600B8B14C /* MockExportFileViewRouter.swift in Sources */,
+				1654221B2DC8AA82000A229C /* MockExternalPurchaseUseCase.swift in Sources */,
 				948B294A2CA1671D00428787 /* MockFileManager.swift in Sources */,
 				0E5F5E862C6C61280037A99C /* MockHideFilesAndFoldersRouter.swift in Sources */,
 				94BF69132CAFFA4F0052F1D5 /* MockHomeBannerRouter.swift in Sources */,
@@ -18151,6 +18182,10 @@
 		0ED6BEF32DA8A5570084FD30 /* MEGAAuthenticationOrchestration */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = MEGAAuthenticationOrchestration;
+		};
+		1654C7EF2DC47F1D00DDB846 /* MEGAStoreKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = MEGAStoreKit;
 		};
 		1678D7F12A45487E00336C52 /* MEGATest */ = {
 			isa = XCSwiftPackageProductDependency;

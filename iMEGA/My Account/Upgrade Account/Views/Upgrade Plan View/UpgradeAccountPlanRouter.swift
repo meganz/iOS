@@ -39,7 +39,8 @@ final class UpgradeAccountPlanRouter: NSObject, UpgradeAccountPlanRouting {
             purchaseUseCase: AccountPlanPurchaseUseCase(repository: AccountPlanPurchaseRepository.newRepo),
             subscriptionsUseCase: SubscriptionsUseCase(repo: SubscriptionsRepository.newRepo),
             viewType: viewType,
-            router: self
+            router: self,
+            appVersion: AppMetaDataFactory(bundle: .main).make().currentAppVersion
         )
         
         let accountsConfigs = AccountsConfig(onboardingViewAssets: AccountsConfig.OnboardingViewAssets(

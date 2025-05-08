@@ -6,11 +6,17 @@ import StoreKit
 extension SKProduct {
     public func toPlanEntity(
         storage: Int = 0,
-        transfer: Int = 0
+        transfer: Int = 0,
+        price: Double? = nil,
+        currencyCode: String? = nil
     ) -> PlanEntity {
-        PlanEntity(product: self,
-                          storageLimit: storage,
-                          transferLimit: transfer)
+        PlanEntity(
+            product: self,
+            storageLimit: storage,
+            transferLimit: transfer,
+            price: price,
+            currencyCode: currencyCode
+        )
     }
 }
 
@@ -42,9 +48,13 @@ fileprivate extension SubscriptionCycleEntity {
 
 // MARK: - PlanEntity
 fileprivate extension PlanEntity {
-    init(product: SKProduct,
-         storageLimit: Int,
-         transferLimit: Int) {
+    init(
+        product: SKProduct,
+        storageLimit: Int,
+        transferLimit: Int,
+        price: Double? = nil,
+        currencyCode: String? = nil
+    ) {
         self.init(productIdentifier: product.productIdentifier)
         
         let productIdentifier = product.productIdentifier
@@ -53,19 +63,25 @@ fileprivate extension PlanEntity {
         let planType = planType(productIdentifier: productIdentifier)
         name = MEGAAccountDetails.string(for: planType) ?? ""
         type = planType.toAccountTypeEntity()
-        
+
+        let actualPrice = price ?? product.price.doubleValue
+
         let numberFormatter = NumberFormatter()
         numberFormatter.numberStyle = .currency
-        numberFormatter.locale = product.priceLocale
+        if let currencyCode {
+            numberFormatter.currencyCode = currencyCode
+        } else {
+            numberFormatter.locale = product.priceLocale
+        }
+
+        formattedPrice = numberFormatter.string(for: actualPrice) ?? ""
         currency = numberFormatter.currencyCode
-        formattedPrice = numberFormatter.string(for: product.price) ?? ""
-        currency = numberFormatter.currencyCode
-        price = product.price.doubleValue
-        
+        self.price = actualPrice
+
         storage = displayStringForGBValue(gbValue: storageLimit)
         transfer = displayStringForGBValue(gbValue: transferLimit)
     }
-    
+
     private func planType(productIdentifier: String) -> MEGAAccountType {
         if productIdentifier.contains("pro1") {
             return .proI

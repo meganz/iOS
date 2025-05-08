@@ -40,5 +40,6 @@ typedef NS_ENUM (NSUInteger, URLType) {
     URLTypeUpgrade,
     URLTypeVpn,
     URLTypePwm,
-    URLTypeCameraUploadsSettings
+    URLTypeCameraUploadsSettings,
+    URLTypeSiteTransfer
 };

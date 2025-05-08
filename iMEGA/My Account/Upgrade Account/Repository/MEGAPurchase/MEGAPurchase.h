@@ -14,6 +14,7 @@
 @property (nonatomic, strong) NSMutableArray<id<MEGARestoreDelegate>> *restoreDelegateMutableArray;
 @property (nonatomic, strong) NSMutableArray<id<MEGAPurchasePricingDelegate>> *pricingsDelegateMutableArray;
 @property (nonatomic, strong) MEGAPricing *pricing;
+@property (nonatomic, strong) MEGACurrency *currency;
 @property (nonatomic, readonly, getter=isPurchasingPromotedPlan) BOOL purchasingPromotedPlan;
 @property (nonatomic, readonly, getter=isSubmittingReceipt) BOOL submittingReceipt;
 
