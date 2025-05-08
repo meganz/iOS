@@ -10,8 +10,7 @@ final class AudioPlayerViewRouterTests: XCTestCase {
     
     @MainActor
     func testBuild_whenNodeIsFolderLink_configCorrectDelegate() {
-        let audioPlayerViewController = MockViewController()
-        let (sut, _, _, _, _, _, _) = makeSUT(nodeOriginType: .folderLink, audioPlayerViewController: audioPlayerViewController)
+        let (sut, _, _, _, _) = makeSUT(nodeOriginType: .folderLink)
         
         _ = sut.build()
         
@@ -20,12 +19,9 @@ final class AudioPlayerViewRouterTests: XCTestCase {
     
     @MainActor
     func testBuild_whenNodeIsFileLink_configCorrectDelegate() {
-        let audioPlayerViewController = MockViewController()
-        
-        let (sut, _, _, _, _, _, _) = makeSUT(
+        let (sut, _, _, _, _) = makeSUT(
             nodeOriginType: .fileLink,
-            fileLink: anyFileLink(),
-            audioPlayerViewController: audioPlayerViewController
+            fileLink: anyFileLink()
         )
         
         _ = sut.build()
@@ -35,14 +31,12 @@ final class AudioPlayerViewRouterTests: XCTestCase {
     
     @MainActor
     func testBuild_whenNodeIsFromChat_configCorrectDelegate() {
-        let audioPlayerViewController = MockViewController()
         let expectedChatId = anyHandleEntity()
         let expectedMessageId = anyHandleEntity()
-        let (sut, _, _, _, _, _, _) = makeSUT(
+        let (sut, _, _, _, _) = makeSUT(
             nodeOriginType: .chat,
             messageId: expectedMessageId,
-            chatId: expectedChatId,
-            audioPlayerViewController: audioPlayerViewController
+            chatId: expectedChatId
         )
         
         _ = sut.build()
@@ -51,16 +45,30 @@ final class AudioPlayerViewRouterTests: XCTestCase {
     }
     
     @MainActor
+    func testBuild_whenNodeIsFileLink_returnsNavigationController() {
+        let fileLink = anyFileLink()
+        let (sut, _, _, _, _) = makeSUT(
+            nodeOriginType: .fileLink,
+            fileLink: fileLink
+        )
+        let vc = sut.build()
+        XCTAssertTrue(vc is MEGANavigationController)
+        let nav = vc as! MEGANavigationController
+        XCTAssertTrue(nav.viewControllers.first is AudioPlayerViewController)
+    }
+    
+    @MainActor
     func testStart_presentBuildedView() {
-        let (sut, presenter, _, _, _, _, _) = makeSUT()
+        let (sut, presenter, _, _, _) = makeSUT()
         
         sut.start()
         
         XCTAssertEqual(presenter.presentCallCount, 1)
     }
     
-    @MainActor func testShowMiniPlayer_withNode_showsMiniPlayer() {
-        let (sut, _, _, mockPlayerHandler, _, _, _) = makeSUT()
+    @MainActor
+    func testShowMiniPlayer_withNode_showsMiniPlayer() {
+        let (sut, _, _, mockPlayerHandler, _) = makeSUT()
         sut.start()
         
         sut.showMiniPlayer(node: MockNode(handle: 1), shouldReload: false)
@@ -68,8 +76,10 @@ final class AudioPlayerViewRouterTests: XCTestCase {
         XCTAssertEqual(mockPlayerHandler.initMiniPlayerCallCount, 1)
     }
     
-    @MainActor func testShowMiniPlayer_withouthNode_showsMiniPlayer() {
-        let (sut, _, _, mockPlayerHandler, _, _, _) = makeSUT()
+    @MainActor
+    func testShowMiniPlayer_withouthNode_showsMiniPlayer() {
+        let (sut, _, _, mockPlayerHandler, _) = makeSUT()
+        
         sut.start()
         
         sut.showMiniPlayer(node: nil, shouldReload: false)
@@ -77,48 +87,14 @@ final class AudioPlayerViewRouterTests: XCTestCase {
         XCTAssertEqual(mockPlayerHandler.initMiniPlayerCallCount, 1)
     }
     
-    @MainActor func testShowMiniPlayer_withFile_showsMiniPlayer() {
-        let (sut, _, _, mockPlayerHandler, _, _, _) = makeSUT()
+    @MainActor
+    func testShowMiniPlayer_withFile_showsMiniPlayer() {
+        let (sut, _, _, mockPlayerHandler, _) = makeSUT()
+        
         sut.start()
         
         sut.showMiniPlayer(file: "any-file", shouldReload: false)
-        
         XCTAssertEqual(mockPlayerHandler.initMiniPlayerCallCount, 1)
-    }
-    
-    @MainActor func testGoToPlaylist_whenCalled_startsPlaylistRouter() {
-        let (sut, _, _, _, audioPlaylistViewRouter, _, _) = makeSUT()
-        
-        sut.goToPlaylist()
-        
-        XCTAssertEqual(audioPlaylistViewRouter.start_calledTimes, 1)
-    }
-    
-    @MainActor func testDismiss_whenCalled_dismissView() {
-        let (sut, _, _, _, _, audioPlayerViewController, _) = makeSUT(audioPlayerViewController: MockViewController())
-        
-        sut.dismiss()
-        
-        XCTAssertEqual(audioPlayerViewController.dismissCallCount, 1)
-    }
-    
-    @MainActor func testShowAction_whenCalled_presentNodeActionView() {
-        let (sut, _, _, _, _, audioPlayerViewController, _) = makeSUT(audioPlayerViewController: MockViewController())
-        
-        sut.showAction(for: MockNode(handle: 1), sender: "any-sender")
-        
-        XCTAssertEqual(audioPlayerViewController.presentCallCount, 1)
-    }
-    
-    @MainActor func testHideActionSelected_shouldTrackEvent() {
-        let audioPlayerViewController = MockViewController()
-        let (sut, _, _, _, _, _, tracker) = makeSUT(audioPlayerViewController: audioPlayerViewController)
-        
-        _ = sut.build()
-        
-        sut.nodeActionViewControllerDelegate?.nodeAction(mockNodeActionViewController(), didSelect: .hide, for: MEGANode(), from: UIButton())
-        
-        assertTrackAnalyticsEventCalled(trackedEventIdentifiers: tracker.trackedEventIdentifiers, with: [AudioPlayerHideNodeMenuItemEvent()])
     }
     
     // MARK: - Helpers
@@ -129,13 +105,10 @@ final class AudioPlayerViewRouterTests: XCTestCase {
         messageId: HandleEntity? = nil,
         chatId: HandleEntity? = nil,
         relatedFiles: [String]? = nil,
-        audioPlayerViewController: MockViewController? = nil,
         file: StaticString = #filePath,
         line: UInt = #line
-    ) -> (sut: AudioPlayerViewRouter, presenter: MockViewController, configEntity: AudioPlayerConfigEntity, mockPlayerHandler: MockAudioPlayerHandler, audioPlaylistViewRouter: MockAudioPlaylistViewRouter, baseViewController: MockViewController, tracker: MockTracker) {
-        let audioPlayerViewController = audioPlayerViewController ?? MockViewController()
+    ) -> (sut: AudioPlayerViewRouter, presenter: MockViewController, configEntity: AudioPlayerConfigEntity, mockPlayerHandler: MockAudioPlayerHandler, tracker: MockTracker) {
         let currentContextViewController = MockViewController()
-        let audioPlaylistViewRouter = MockAudioPlaylistViewRouter()
         let tracker = MockTracker()
         let (configEntity, mockPlayerHandler) = audioPlayerConfigEntity(
             from: originType,
@@ -147,12 +120,10 @@ final class AudioPlayerViewRouterTests: XCTestCase {
         let sut = AudioPlayerViewRouter(
             configEntity: configEntity,
             presenter: currentContextViewController,
-            audioPlaylistViewRouter: audioPlaylistViewRouter,
             tracker: tracker
         )
-        sut.baseViewController = audioPlayerViewController
         trackForMemoryLeaks(on: sut, file: file, line: line)
-        return (sut, currentContextViewController, configEntity, mockPlayerHandler, audioPlaylistViewRouter, audioPlayerViewController, tracker)
+        return (sut, currentContextViewController, configEntity, mockPlayerHandler, tracker)
     }
     
     @MainActor
@@ -191,15 +162,11 @@ final class AudioPlayerViewRouterTests: XCTestCase {
     ) -> (configEntity: AudioPlayerConfigEntity, playerHandler: MockAudioPlayerHandler) {
         let node = MockNode(handle: .max)
         
-        switch originType {
-        case .folderLink:
-            return (AudioPlayerConfigEntity(node: node, isFolderLink: true, fileLink: nil, messageId: .invalid, chatId: .invalid, relatedFiles: relatedFiles, playerHandler: playerHandler), playerHandler)
-        case .fileLink:
-            return (AudioPlayerConfigEntity(node: node, isFolderLink: false, fileLink: fileLink, messageId: .invalid, chatId: .invalid, relatedFiles: relatedFiles, playerHandler: playerHandler), playerHandler)
-        case .chat:
-            return (AudioPlayerConfigEntity(node: node, isFolderLink: false, fileLink: nil, messageId: messageId, chatId: chatId, relatedFiles: relatedFiles, playerHandler: playerHandler), playerHandler)
-        case .unknown:
-            return (AudioPlayerConfigEntity(node: node, isFolderLink: false, fileLink: nil, messageId: .invalid, chatId: .invalid, relatedFiles: relatedFiles, playerHandler: playerHandler), playerHandler)
+        return switch originType {
+        case .folderLink: (AudioPlayerConfigEntity(node: node, isFolderLink: true, fileLink: nil, messageId: .invalid, chatId: .invalid, relatedFiles: relatedFiles, playerHandler: playerHandler), playerHandler)
+        case .fileLink: (AudioPlayerConfigEntity(node: node, isFolderLink: false, fileLink: fileLink, messageId: .invalid, chatId: .invalid, relatedFiles: relatedFiles, playerHandler: playerHandler), playerHandler)
+        case .chat: (AudioPlayerConfigEntity(node: node, isFolderLink: false, fileLink: nil, messageId: messageId, chatId: chatId, relatedFiles: relatedFiles, playerHandler: playerHandler), playerHandler)
+        case .unknown: (AudioPlayerConfigEntity(node: node, isFolderLink: false, fileLink: nil, messageId: .invalid, chatId: .invalid, relatedFiles: relatedFiles, playerHandler: playerHandler), playerHandler)
         }
     }
     

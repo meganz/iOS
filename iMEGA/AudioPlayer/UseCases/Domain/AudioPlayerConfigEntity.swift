@@ -26,9 +26,6 @@ final class AudioPlayerConfigEntity: @unchecked Sendable {
     // Offline Files
     let relatedFiles: [String]?
     
-    // Playlist
-    let parentNode: MEGANode?
-    
     // Playlist for All Nodes from Explorer entry point
     var allNodes: [MEGANode]? {
         get {
@@ -51,7 +48,6 @@ final class AudioPlayerConfigEntity: @unchecked Sendable {
         messageId: HandleEntity? = nil,
         chatId: HandleEntity? = nil,
         relatedFiles: [String]? = nil,
-        parentNode: MEGANode? = nil,
         allNodes: [MEGANode]? = nil,
         playerHandler: some AudioPlayerHandlerProtocol,
         shouldResetPlayer: Bool = false,
@@ -62,7 +58,6 @@ final class AudioPlayerConfigEntity: @unchecked Sendable {
         self.messageId = messageId
         self.chatId = chatId
         self.relatedFiles = relatedFiles?.filter(\.fileExtensionGroup.isAudio)
-        self.parentNode = parentNode
         self.playerHandler = playerHandler
         self.shouldResetPlayer = shouldResetPlayer
         self.isFromSharedItem = isFromSharedItem

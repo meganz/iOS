@@ -4,10 +4,13 @@ import MEGAAppPresentation
 final class AudioPlaylistViewRouter: NSObject, AudioPlaylistViewRouting {
     private weak var baseViewController: UIViewController?
     private weak var presenter: UIViewController?
-    private var configEntity: AudioPlayerConfigEntity
+    private let parentNodeName: String
     
-    init(configEntity: AudioPlayerConfigEntity, presenter: UIViewController) {
-        self.configEntity = configEntity
+    init(
+        parentNodeName: String,
+        presenter: UIViewController
+    ) {
+        self.parentNodeName = parentNodeName
         self.presenter = presenter
     }
     
@@ -15,7 +18,7 @@ final class AudioPlaylistViewRouter: NSObject, AudioPlaylistViewRouting {
         let vc = UIStoryboard(name: "AudioPlayer", bundle: nil).instantiateViewController(withIdentifier: "AudioPlaylistViewControllerID") as! AudioPlaylistViewController
 
         vc.viewModel = AudioPlaylistViewModel(
-            configEntity: configEntity,
+            title: parentNodeName,
             router: self,
             tracker: DIContainer.tracker
         )

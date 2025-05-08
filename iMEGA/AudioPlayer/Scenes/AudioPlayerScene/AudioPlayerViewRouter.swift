@@ -9,7 +9,6 @@ import MEGADomain
 final class AudioPlayerViewRouter: NSObject, AudioPlayerViewRouting {
     private let configEntity: AudioPlayerConfigEntity
     private let presenter: UIViewController
-    private let audioPlaylistViewRouter: any AudioPlaylistViewRouting
     private let tracker: any AnalyticsTracking
     
     private(set) var nodeActionViewControllerDelegate: NodeActionViewControllerGenericDelegate?
@@ -18,16 +17,63 @@ final class AudioPlayerViewRouter: NSObject, AudioPlayerViewRouting {
     
     weak var baseViewController: UIViewController?
     
-    init(configEntity: AudioPlayerConfigEntity, presenter: UIViewController, audioPlaylistViewRouter: some AudioPlaylistViewRouting, tracker: some AnalyticsTracking = DIContainer.tracker) {
+    init(
+        configEntity: AudioPlayerConfigEntity,
+        presenter: UIViewController,
+        tracker: some AnalyticsTracking = DIContainer.tracker
+    ) {
         self.configEntity = configEntity
         self.presenter = presenter
-        self.audioPlaylistViewRouter = audioPlaylistViewRouter
         self.tracker = tracker
         super.init()
     }
     
+    @MainActor
+    private func makeAudioPlayerViewController() -> AudioPlayerViewController? {
+        let storyboard = UIStoryboard(name: "AudioPlayer", bundle: nil)
+        guard let vc = storyboard.instantiateViewController(
+            identifier: "AudioPlayerViewControllerID",
+            creator: { coder in
+                let viewModel = self.makeAudioPlayerViewModel()
+                return AudioPlayerViewController(coder: coder, viewModel: viewModel)
+            }
+        ) as? AudioPlayerViewController else { return nil }
+        return vc
+    }
+
+    private func makeAudioPlayerViewModel() -> AudioPlayerViewModel {
+        let offlineInfoUC: OfflineFileInfoUseCase? = {
+            guard configEntity.playerType == .offline else { return nil }
+            return OfflineFileInfoUseCase(offlineInfoRepository: OfflineInfoRepository())
+        }()
+
+        let nodeInfoUC: NodeInfoUseCase? = {
+            guard configEntity.playerType != .offline else { return nil }
+            return NodeInfoUseCase(nodeInfoRepository: NodeInfoRepository())
+        }()
+
+        let streamingInfoUC: StreamingInfoUseCase? = {
+            guard configEntity.playerType != .offline else { return nil }
+            return StreamingInfoUseCase(streamingInfoRepository: StreamingInfoRepository())
+        }()
+
+        return AudioPlayerViewModel(
+            configEntity: configEntity,
+            router: self,
+            nodeInfoUseCase: nodeInfoUC,
+            streamingInfoUseCase: streamingInfoUC,
+            offlineInfoUseCase: offlineInfoUC,
+            playbackContinuationUseCase: DIContainer.playbackContinuationUseCase,
+            audioPlayerUseCase: AudioPlayerUseCase(repository: AudioPlayerRepository(sdk: .shared)),
+            accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
+            networkMonitorUseCase: NetworkMonitorUseCase(repo: NetworkMonitorRepository.newRepo),
+            tracker: DIContainer.tracker
+        )
+    }
+    
     func build() -> UIViewController {
-        guard let vc = baseViewController else { return UIViewController() }
+        guard let vc = makeAudioPlayerViewController() else { return UIViewController() }
+        baseViewController = vc
         
         switch configEntity.nodeOriginType {
         case .folderLink, .chat:
@@ -90,8 +136,12 @@ final class AudioPlayerViewRouter: NSObject, AudioPlayerViewRouting {
         baseViewController?.dismiss(animated: true, completion: completion)
     }
     
-    func goToPlaylist() {
-        audioPlaylistViewRouter.start()
+    func goToPlaylist(parentNodeName: String) {
+        guard let vc = baseViewController else { return }
+        AudioPlaylistViewRouter(
+            parentNodeName: parentNodeName,
+            presenter: vc
+        ).start()
     }
     
     func showMiniPlayer(node: MEGANode?, shouldReload: Bool) {

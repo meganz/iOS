@@ -31,33 +31,36 @@ final class AudioPlaylistViewModel: ViewModelType {
     }
     
     // MARK: - Private properties
-    private var configEntity: AudioPlayerConfigEntity
+    private let title: String
+    private let playerHandler: any AudioPlayerHandlerProtocol
     private let router: any AudioPlaylistViewRouting
+    private let tracker: any AnalyticsTracking
     private var selectedItems: [AudioPlayerItem]?
     private var isDataReloadingEnabled = true
     private var pendingItemsToBeUpdatedArray = [AudioPlayerItem]()
-    private let tracker: any AnalyticsTracking
     
     // MARK: - Internal properties
     var invokeCommand: ((Command) -> Void)?
     
     // MARK: - Init
     init(
-        configEntity: AudioPlayerConfigEntity,
+        title: String,
+        playerHandler: some AudioPlayerHandlerProtocol = AudioPlayerManager.shared,
         router: some AudioPlaylistViewRouting,
         tracker: some AnalyticsTracking
     ) {
-        self.configEntity = configEntity
+        self.title = title
+        self.playerHandler = playerHandler
         self.router = router
         self.tracker = tracker
     }
     
     // MARK: - Private functions
     private func initScreen() {
-        configEntity.playerHandler.addPlayer(listener: self)
-        guard !configEntity.playerHandler.isPlayerEmpty(), let currentItem = configEntity.playerHandler.playerCurrentItem() else { return }
-        invokeCommand?(.reloadTracks(currentItem: currentItem, queue: configEntity.playerHandler.playerQueueItems(), selectedIndexPaths: selectedIndexPaths()))
-        invokeCommand?(.title(title: configEntity.parentNode?.name ?? ""))
+        playerHandler.addPlayer(listener: self)
+        guard !playerHandler.isPlayerEmpty(), let currentItem = playerHandler.playerCurrentItem() else { return }
+        invokeCommand?(.reloadTracks(currentItem: currentItem, queue: playerHandler.playerQueueItems(), selectedIndexPaths: selectedIndexPaths()))
+        invokeCommand?(.title(title: title))
     }
 
     private func addSelected(_ item: AudioPlayerItem) {
@@ -80,16 +83,16 @@ final class AudioPlaylistViewModel: ViewModelType {
     private func removeAllSelectedItems() {
         guard let items = selectedItems else { return }
         
-        configEntity.playerHandler.delete(items: items)
+        playerHandler.delete(items: items)
         selectedItems?.removeAll()
         invokeCommand?(.deselectAll)
         invokeCommand?(.hideToolbar)
     }
     
     private func selectedIndexPaths() -> [IndexPath]? {
-        return Array(Set(configEntity.playerHandler.playerQueueItems() ?? [])
+        Array(Set(playerHandler.playerQueueItems() ?? [])
                         .intersection(Set(selectedItems ?? []))).compactMap {
-            if let ind = configEntity.playerHandler.playerQueueItems()?.firstIndex(of: $0) {
+            if let ind = playerHandler.playerQueueItems()?.firstIndex(of: $0) {
                 return IndexPath(row: ind, section: 1)
             }
             return nil
@@ -112,7 +115,7 @@ final class AudioPlaylistViewModel: ViewModelType {
             initScreen()
         case .move(let movedItem, let position, let direction):
             trackReorderItemsInPlaylist()
-            configEntity.playerHandler.move(item: movedItem, to: position, direction: direction)
+            playerHandler.move(item: movedItem, to: position, direction: direction)
         case .removeSelectedItems:
             trackRemoveTracksButtonTapped()
             removeAllSelectedItems()
@@ -127,7 +130,7 @@ final class AudioPlaylistViewModel: ViewModelType {
         case .dismiss:
             router.dismiss()
         case .onViewWillDisappear:
-            configEntity.playerHandler.removePlayer(listener: self)
+            playerHandler.removePlayer(listener: self)
         case .willDraggBegin:
             isDataReloadingEnabled = false
         case .didDraggEnd:
@@ -148,9 +151,9 @@ final class AudioPlaylistViewModel: ViewModelType {
 
 extension AudioPlaylistViewModel: AudioPlayerObserversProtocol {
     func audio(player: AVQueuePlayer, currentItem: AudioPlayerItem?, queue: [AudioPlayerItem]?) {
-        guard let currentItem = configEntity.playerHandler.playerCurrentItem() else { return }
+        guard let currentItem = playerHandler.playerCurrentItem() else { return }
         
-        invokeCommand?(.reloadTracks(currentItem: currentItem, queue: configEntity.playerHandler.playerQueueItems(), selectedIndexPaths: selectedIndexPaths()))
+        invokeCommand?(.reloadTracks(currentItem: currentItem, queue: playerHandler.playerQueueItems(), selectedIndexPaths: selectedIndexPaths()))
     }
 
     func audio(player: AVQueuePlayer, reload item: AudioPlayerItem?) {

@@ -48,7 +48,7 @@ enum AudioPlayerAction: ActionType {
 @MainActor
 protocol AudioPlayerViewRouting: Routing, Sendable {
     func dismiss(completion: @escaping () -> Void)
-    func goToPlaylist()
+    func goToPlaylist(parentNodeName: String)
     func showMiniPlayer(node: MEGANode?, shouldReload: Bool)
     func showMiniPlayer(file: String, shouldReload: Bool)
     func importNode(_ node: MEGANode)
@@ -509,8 +509,9 @@ final class AudioPlayerViewModel: ViewModelType {
             case .half: speedModeState = .normal
             }
         case .showPlaylist:
+            let parentNodeName = nodeInfoUseCase?.node(fromHandle: configEntity.node?.parentHandle ?? .invalid)?.name
             trackAccessingAudioPlayerPlaylist()
-            router.goToPlaylist()
+            router.goToPlaylist(parentNodeName: parentNodeName ?? "")
         case .`import`:
             if let node = configEntity.node {
                 router.importNode(node)

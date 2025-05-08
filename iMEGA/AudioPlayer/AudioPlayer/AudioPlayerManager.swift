@@ -270,60 +270,24 @@ import MEGADomain
     
     @MainActor
     func initFullScreenPlayer(node: MEGANode?, fileLink: String?, filePaths: [String]?, isFolderLink: Bool, presenter: UIViewController, messageId: HandleEntity, chatId: HandleEntity, isFromSharedItem: Bool, allNodes: [MEGANode]?) {
-        let configEntity = AudioPlayerConfigEntity(node: node, isFolderLink: isFolderLink, fileLink: fileLink, messageId: messageId, chatId: chatId, relatedFiles: filePaths, allNodes: allNodes, playerHandler: self, isFromSharedItem: isFromSharedItem)
-        
-        let playlistRouter = AudioPlaylistViewRouter(configEntity: AudioPlayerConfigEntity(parentNode: configEntity.node?.parent, playerHandler: configEntity.playerHandler, isFromSharedItem: isFromSharedItem), presenter: presenter)
+        let configEntity = AudioPlayerConfigEntity(
+            node: node,
+            isFolderLink: isFolderLink,
+            fileLink: fileLink,
+            messageId: messageId,
+            chatId: chatId,
+            relatedFiles: filePaths,
+            allNodes: allNodes,
+            playerHandler: self,
+            isFromSharedItem: isFromSharedItem
+        )
         
         let audioPlayerRouter = AudioPlayerViewRouter(
             configEntity: configEntity,
-            presenter: presenter,
-            audioPlaylistViewRouter: playlistRouter
+            presenter: presenter
         )
-        
-        guard let vc = makeAudioPlayerViewController(configEntity: configEntity, router: audioPlayerRouter) else { return }
-        audioPlayerRouter.baseViewController = vc
-        playlistRouter.setPresenter(audioPlayerRouter.baseViewController)
-        
         audioPlayerRouter.start()
-        
         fullScreenPlayerRouter = audioPlayerRouter
-    }
-    
-    @MainActor
-    private func makeAudioPlayerViewController(configEntity: AudioPlayerConfigEntity, router: some AudioPlayerViewRouting) -> AudioPlayerViewController? {
-        guard let vc = UIStoryboard(name: "AudioPlayer", bundle: nil).instantiateViewController(
-            identifier: "AudioPlayerViewControllerID",
-            creator: { coder in
-                let makeViewModel: () -> AudioPlayerViewModel = {
-                    let playbackContinuationUC = DIContainer.playbackContinuationUseCase
-                    let audioPlayerUC = AudioPlayerUseCase(repository: AudioPlayerRepository(sdk: .shared))
-                    let accountUC = AccountUseCase(repository: AccountRepository.newRepo)
-                    let networkMonitorUC = NetworkMonitorUseCase(repo: NetworkMonitorRepository.newRepo)
-                    let tracker = DIContainer.tracker
-                    let offlineInfoUC = (configEntity.playerType == .offline) ? OfflineFileInfoUseCase(offlineInfoRepository: OfflineInfoRepository()) : nil
-                    let nodeInfoUC = (configEntity.playerType != .offline) ? NodeInfoUseCase(nodeInfoRepository: NodeInfoRepository()) : nil
-                    let streamingInfoUC = (configEntity.playerType != .offline) ? StreamingInfoUseCase(streamingInfoRepository: StreamingInfoRepository()) : nil
-                    
-                    return AudioPlayerViewModel(
-                        configEntity: configEntity,
-                        router: router,
-                        nodeInfoUseCase: nodeInfoUC,
-                        streamingInfoUseCase: streamingInfoUC,
-                        offlineInfoUseCase: offlineInfoUC,
-                        playbackContinuationUseCase: playbackContinuationUC,
-                        audioPlayerUseCase: audioPlayerUC,
-                        accountUseCase: accountUC,
-                        networkMonitorUseCase: networkMonitorUC,
-                        tracker: tracker
-                    )
-            }
-            
-            return AudioPlayerViewController(coder: coder, viewModel: makeViewModel())
-        }) as? AudioPlayerViewController else {
-            return nil
-        }
-        
-        return vc
     }
     
     @MainActor

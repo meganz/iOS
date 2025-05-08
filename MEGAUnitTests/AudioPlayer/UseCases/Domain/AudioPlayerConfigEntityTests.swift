@@ -192,7 +192,6 @@ final class AudioPlayerConfigEntityTests: XCTestCase {
             messageId: messageId,
             chatId: chatId,
             relatedFiles: relatedFiles,
-            parentNode: parentNode,
             allNodes: allNodes,
             playerHandler: playerHandler,
             shouldResetPlayer: shouldResetPlayer
