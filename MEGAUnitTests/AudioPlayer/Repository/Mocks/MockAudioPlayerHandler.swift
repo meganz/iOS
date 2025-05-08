@@ -42,6 +42,7 @@ final class MockAudioPlayerHandler: AudioPlayerHandlerProtocol {
     var onRefreshCurrentItemStateCompletion: (() -> Void)?
     var onPlayerResumePlaybackCompletion: (() -> Void)?
     var mockPlayerCurrentItem: AudioPlayerItem = AudioPlayerItem.mockItem
+    var mockPlayerQueueItems: [AudioPlayerItem]?
     
     private var _isPlayerDefined = false
     
@@ -156,7 +157,7 @@ final class MockAudioPlayerHandler: AudioPlayerHandlerProtocol {
     
     func playerCurrentItem() -> AudioPlayerItem? { mockPlayerCurrentItem }
     func playerCurrentItemTime() -> TimeInterval { 0.0 }
-    func playerQueueItems() -> [AudioPlayerItem]? { nil }
+    func playerQueueItems() -> [AudioPlayerItem]? { mockPlayerQueueItems }
     func playerPlaylistItems() -> [AudioPlayerItem]? { nil}
     func initMiniPlayer(node: MEGANode?, fileLink: String?, filePaths: [String]?, isFolderLink: Bool, presenter: UIViewController, shouldReloadPlayerInfo: Bool, shouldResetPlayer: Bool, isFromSharedItem: Bool) {
         initMiniPlayerCallCount += 1

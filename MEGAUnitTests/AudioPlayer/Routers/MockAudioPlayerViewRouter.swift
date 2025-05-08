@@ -14,7 +14,7 @@ final class MockAudioPlayerViewRouter: AudioPlayerViewRouting {
         dismiss_calledTimes += 1
     }
     
-    func goToPlaylist() {
+    func goToPlaylist(parentNodeName: String) {
         goToPlaylist_calledTimes += 1
     }
     
