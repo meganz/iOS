@@ -5,10 +5,11 @@ import XCTest
 
 final class AccountPlanPurchaseUseCaseTests: XCTestCase {
     private var subscriptions = Set<AnyCancellable>()
-    
+
     // MARK: - Helpers
     private func makeSUT(
         plans: [PlanEntity] = [],
+        useAPIPrice: @Sendable @escaping () -> Bool = { false },
         successfulRestorePublisher: AnyPublisher<Void, Never> = Empty().eraseToAnyPublisher(),
         incompleteRestorePublisher: AnyPublisher<Void, Never> = Empty().eraseToAnyPublisher(),
         failedRestorePublisher: AnyPublisher<AccountPlanErrorEntity, Never> = Empty().eraseToAnyPublisher(),
@@ -27,7 +28,11 @@ final class AccountPlanPurchaseUseCaseTests: XCTestCase {
             monitorSubmitReceiptPublisher: monitorSubmitReceiptPublisher,
             isSubmittingReceiptAfterPurchase: isSubmittingReceiptAfterPurchase
         )
-        return (AccountPlanPurchaseUseCase(repository: mockRepo), mockRepo)
+
+        return (
+            AccountPlanPurchaseUseCase(repository: mockRepo, useAPIPrice: useAPIPrice),
+            mockRepo
+        )
     }
     
     private var monthlyPlans: [PlanEntity] {

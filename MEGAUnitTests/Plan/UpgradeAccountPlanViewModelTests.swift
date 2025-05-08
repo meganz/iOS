@@ -6,12 +6,19 @@ import MEGAAppPresentation
 import MEGAAppPresentationMock
 import MEGADomain
 import MEGADomainMock
+import MEGAStoreKit
 import XCTest
 
 final class UpgradeAccountPlanViewModelTests: XCTestCase {
+    private var mockAccountUseCase: MockAccountUseCase!
+
     private var subscriptions = Set<AnyCancellable>()
     private let storageMax = 20
-    
+
+    override func tearDown() async throws {
+        mockAccountUseCase = nil
+    }
+
     // MARK: - Init
     @MainActor
     func testInit_registerDelegates_shouldRegisterDelegates() async {
@@ -847,11 +854,41 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
             shouldTrack: events
         )
     }
-    
+
+    // MARK: - External Purchase
+
+    @MainActor
+    func testDidTapBuyPlan_shouldOpenExternalLink() async {
+        nonisolated(unsafe) var urlOpened = [URL]()
+        
+        let details = AccountDetailsEntity.build(proLevel: .free)
+        let planList: [PlanEntity] = [.proI_monthly, .proI_yearly, .proII_monthly, .proII_yearly]
+        let expectedURL = URL(string: "https://www.example.com")!
+        let (sut, _) = makeSUT(
+            externalPurchaseUseCase: MockExternalPurchaseUseCase(
+                shouldProvideExternalPurchase: true,
+                externalPurchaseLink: .success(expectedURL)
+            ),
+            accountDetails: details,
+            planList: planList,
+            canOpenURL: { _ in true },
+            openURL: { urlOpened.append($0) }
+        )
+        
+        await sut.setUpPlanTask?.value
+        sut.setSelectedPlan(.proI_monthly)
+        
+        sut.didTap(.buyPlan)
+        await sut.buyPlanTask?.value
+        
+        XCTAssertEqual(urlOpened, [expectedURL])
+    }
+
     // MARK: - Helper
     @MainActor
     func makeSUT(
         subscriptionsUseCase: some SubscriptionsUseCaseProtocol = MockSubscriptionsUseCase(requestResult: .failure(.generic)),
+        externalPurchaseUseCase: some ExternalPurchaseUseCaseProtocol = MockExternalPurchaseUseCase(),
         accountDetails: AccountDetailsEntity,
         accountDetailsResult: Result<AccountDetailsEntity, AccountDetailsErrorEntity> = .failure(.generic),
         planList: [PlanEntity] = [],
@@ -859,10 +896,13 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
         tracker: MockTracker = MockTracker(),
         viewType: UpgradeAccountPlanViewType = .upgrade,
         isFromAds: Bool = false,
-        lastCloseAdsDate: Date? = nil
+        lastCloseAdsDate: Date? = nil,
+        appVersion: String = "1.0.0",
+        canOpenURL: @Sendable @escaping (URL) async -> Bool = { _ in true },
+        openURL: @Sendable @escaping (URL) async -> Void = { _ in }
     ) -> (UpgradeAccountPlanViewModel, MockAccountPlanPurchaseUseCase) {
+        mockAccountUseCase = MockAccountUseCase(accountDetailsResult: accountDetailsResult)
         let mockPurchaseUseCase = MockAccountPlanPurchaseUseCase(accountPlanProducts: planList)
-        let mockAccountUseCase = MockAccountUseCase(accountDetailsResult: accountDetailsResult)
         let router = MockUpgradeAccountPlanRouter(isFromAds: isFromAds)
         let preferenceUseCase = MockPreferenceUseCase()
         if let lastCloseAdsDate {
@@ -875,9 +915,13 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
             subscriptionsUseCase: subscriptionsUseCase,
             remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.externalAds: isExternalAdsFlagEnabled]),
             preferenceUseCase: preferenceUseCase,
+            externalPurchaseUseCase: externalPurchaseUseCase,
             tracker: tracker,
             viewType: viewType,
-            router: router
+            router: router,
+            appVersion: appVersion,
+            canOpenURL: canOpenURL,
+            openURL: openURL
         )
         return (sut, mockPurchaseUseCase)
     }

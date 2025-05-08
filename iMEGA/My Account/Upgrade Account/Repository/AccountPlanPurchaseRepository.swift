@@ -83,7 +83,7 @@ final class AccountPlanPurchaseRepository: NSObject, AccountPlanPurchaseReposito
         purchase.purchaseProduct(productPlan)
     }
     
-    func accountPlanProducts() async -> [PlanEntity] {
+    func accountPlanProducts(useAPIPrice: Bool) async -> [PlanEntity] {
         guard let products = purchase.products as? [SKProduct] else { return [] }
 
         var accountPlans: [PlanEntity] = []
@@ -91,10 +91,12 @@ final class AccountPlanPurchaseRepository: NSObject, AccountPlanPurchaseReposito
             // We need to find out where the current product is listed in our `MEGAPricing instance because sometimes
             // there's a mismatch between the products listed in the SDK/API and those available in the Apple Store.
             // This discrepancy can occur when new products are added to the SDK/API but haven't been added to the Apple Store yet.
-            let productIndex = purchase.pricingProductIndex(for: product)
+            let index = Int(purchase.pricingProductIndex(for: product))
             let plan = product.toPlanEntity(
-                storage: storageGB(atProductIndex: Int(productIndex)),
-                transfer: transferGB(atProductIndex: Int(productIndex))
+                storage: storageGB(atProductIndex: index),
+                transfer: transferGB(atProductIndex: index),
+                price: useAPIPrice ? price(atProductIndex: index) : nil,
+                currencyCode: useAPIPrice ? purchase.currency.localCurrencyName : nil
             )
             accountPlans.append(plan)
         }
@@ -111,7 +113,14 @@ final class AccountPlanPurchaseRepository: NSObject, AccountPlanPurchaseReposito
         guard let pricing = purchase.pricing else { return 0 }
         return pricing.transferGB(atProductIndex: index)
     }
-    
+
+    private func price(atProductIndex index: Int) -> Double? {
+        guard let pricing = purchase.pricing else { return nil }
+
+        let localPriceInCents = Double(pricing.localPrice(atProductIndex: index))
+        return localPriceInCents / 100.0
+    }
+
     func startMonitoringSubmitReceiptAfterPurchase() {
         currentUserSource.monitorSubmitReceiptAfterPurchaseSourcePublisher.send(purchase.isSubmittingReceipt)
     }

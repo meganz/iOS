@@ -427,6 +427,7 @@ final class MyAccountHallViewModel: ViewModelType, ObservableObject {
             .sink { [weak self] isUpdating in
                 self?.isAccountUpdating = isUpdating
                 self?.reloadStorage()
+                Task { await self?.updateAccountDetails() }
             }
             .store(in: &subscriptions)
     }

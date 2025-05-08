@@ -5,4 +5,5 @@ public enum RemoteFeatureFlag: String, Sendable {
     case hiddenNodes = "hnir"
     case sdkUpdateHandlerManager = "iguhm"
     case noteToSelfChat = "n2s"
+    case appleExternalPurchase = "aep"
 }
