@@ -11,6 +11,7 @@ import SwiftUI
 struct UpgradeAccountPlanView: View {
     @StateObject var viewModel: UpgradeAccountPlanViewModel
     @Environment(\.presentationMode) private var presentationMode
+    @Environment(\.scenePhase) private var scenePhase
     var invokeDismiss: (() -> Void)?
     let accountConfigs: AccountsConfig
     
@@ -96,6 +97,11 @@ struct UpgradeAccountPlanView: View {
         .onChange(of: viewModel.isDismiss) { newValue in
             if newValue {
                 dismiss()
+            }
+        }
+        .onChange(of: scenePhase) { newPhase in
+            if case .active = newPhase {
+                Task { await viewModel.onReturnActive() }
             }
         }
         .alert(isPresented: $viewModel.isAlertPresented) {

@@ -42,7 +42,7 @@ public final class MockAccountPlanPurchaseRepository: AccountPlanPurchaseReposit
         _isSubmittingReceiptAfterPurchase = isSubmittingReceiptAfterPurchase
     }
     
-    public func accountPlanProducts() -> [PlanEntity] {
+    public func accountPlanProducts(useAPIPrice: Bool) -> [PlanEntity] {
         plans
     }
     

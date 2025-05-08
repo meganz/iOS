@@ -21,7 +21,7 @@ final class AccountPlanPurchaseRepositoryTests: XCTestCase {
         
         let mockPurchase = MockMEGAPurchase(productPlans: products)
         let sut = AccountPlanPurchaseRepository(purchase: mockPurchase, sdk: MockSdk())
-        let plans = await sut.accountPlanProducts()
+        let plans = await sut.accountPlanProducts(useAPIPrice: false)
         XCTAssertEqual(plans, expectedResult)
     }
     
@@ -37,10 +37,40 @@ final class AccountPlanPurchaseRepositoryTests: XCTestCase {
         
         let mockPurchase = MockMEGAPurchase(productPlans: products)
         let sut = AccountPlanPurchaseRepository(purchase: mockPurchase, sdk: MockSdk())
-        let plans = await sut.accountPlanProducts()
+        let plans = await sut.accountPlanProducts(useAPIPrice: false)
         XCTAssertEqual(plans, expectedResult)
     }
-    
+
+    func testAccountPlanProducts_usingAPIPrice_shouldReturnAPIPrice_andCurrencyCode() async {
+        let products = [
+            MockSKProduct(identifier: "pro1.oneYear", price: "1", priceLocale: Locale.current),
+            MockSKProduct(identifier: "pro2.oneYear", price: "1", priceLocale: Locale.current),
+            MockSKProduct(identifier: "pro3.oneYear", price: "1", priceLocale: Locale.current),
+            MockSKProduct(identifier: "lite.oneYear", price: "1", priceLocale: Locale.current)
+        ]
+        let expectedResult = [
+            PlanEntity(type: .proI, subscriptionCycle: .yearly, price: 1111.11),
+            PlanEntity(type: .proII, subscriptionCycle: .yearly, price: 2222.22),
+            PlanEntity(type: .proIII, subscriptionCycle: .yearly, price: 3333.33),
+            PlanEntity(type: .lite, subscriptionCycle: .yearly, price: 4444.44)
+        ]
+
+        let mockPurchase = MockMEGAPurchase(productPlans: products)
+        mockPurchase._pricing = MockMEGAPricing(
+            productList: [
+                MockPricingProduct(proLevel: .proI, localPrice: 111111),
+                MockPricingProduct(proLevel: .proII, localPrice: 222222),
+                MockPricingProduct(proLevel: .proIII, localPrice: 333333),
+                MockPricingProduct(proLevel: .lite, localPrice: 444444)
+            ]
+        )
+        mockPurchase._currency = MockMEGACurrency(localCurrencyName: "USD")
+        let sut = AccountPlanPurchaseRepository(purchase: mockPurchase, sdk: MockSdk())
+        let plans = await sut.accountPlanProducts(useAPIPrice: true)
+        XCTAssertEqual(plans, expectedResult)
+        XCTAssertTrue(plans.allSatisfy { $0.currency == "USD" })
+    }
+
     // MARK: Restore purchase
     func testRestorePurchase_addDelegate_delegateShouldExist() async {
         let mockPurchase = MockMEGAPurchase()

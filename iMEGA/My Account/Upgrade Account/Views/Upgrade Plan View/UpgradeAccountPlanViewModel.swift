@@ -8,6 +8,7 @@ import MEGADomain
 import MEGAL10n
 import MEGAPreference
 import MEGASdk
+import MEGAStoreKit
 import MEGASwift
 import MEGASwiftUI
 import SwiftUI
@@ -28,8 +29,14 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
     private let subscriptionsUseCase: any SubscriptionsUseCaseProtocol
     private let remoteFeatureFlagUseCase: any RemoteFeatureFlagUseCaseProtocol
     private let localFeatureFlagProvider: any FeatureFlagProviderProtocol
+    private let externalPurchaseUseCase: any ExternalPurchaseUseCaseProtocol
     private let tracker: any AnalyticsTracking
     private let router: any UpgradeAccountPlanRouting
+    private let appVersion: String
+
+    private let canOpenURL: @Sendable (URL) async -> Bool
+    private let openURL: @Sendable (URL) async -> Void
+
     private var planList: [PlanEntity] = []
     private var accountDetails: AccountDetailsEntity
     private(set) var viewType: UpgradeAccountPlanViewType
@@ -48,19 +55,21 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
     @Published private(set) var currentPlan: PlanEntity?
     private(set) var recommendedPlanType: AccountTypeEntity?
     var isShowBuyButton = false
-    
+
     @Published var selectedCycleTab: SubscriptionCycleEntity = .yearly {
         didSet { toggleBuyButton() }
     }
     @Published private(set) var selectedPlanType: AccountTypeEntity? {
         didSet { toggleBuyButton() }
     }
-    
+
     private(set) var registerDelegateTask: Task<Void, Never>?
     private(set) var setUpPlanTask: Task<Void, Never>?
+    private(set) var setExternalPurchaseTask: Task<Void, Never>?
     private(set) var buyPlanTask: Task<Void, Never>?
     private(set) var cancelActivePlanAndBuyNewPlanTask: Task<Void, Never>?
-    
+    private(set) var observeAccountUpdatesTask: Task<Void, Never>?
+
     @PreferenceWrapper(key: PreferenceKeyEntity.lastCloseAdsButtonTappedDate, defaultValue: nil)
     private var lastCloseAdsDate: Date?
     
@@ -72,9 +81,13 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
         remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = DIContainer.remoteFeatureFlagUseCase,
         localFeatureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider,
         preferenceUseCase: some PreferenceUseCaseProtocol = PreferenceUseCase.default,
+        externalPurchaseUseCase: some ExternalPurchaseUseCaseProtocol = DIContainer.externalPurchaseUseCase,
         tracker: some AnalyticsTracking = DIContainer.tracker,
         viewType: UpgradeAccountPlanViewType,
-        router: some UpgradeAccountPlanRouting
+        router: some UpgradeAccountPlanRouting,
+        appVersion: String,
+        canOpenURL: @Sendable @escaping (URL) async -> Bool = { UIApplication.shared.canOpenURL($0) },
+        openURL: @Sendable @escaping (URL) async -> Void = { UIApplication.shared.open($0) }
     ) {
         self.accountUseCase = accountUseCase
         self.purchaseUseCase = purchaseUseCase
@@ -82,9 +95,13 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
         self.accountDetails = accountDetails
         self.remoteFeatureFlagUseCase = remoteFeatureFlagUseCase
         self.localFeatureFlagProvider = localFeatureFlagProvider
+        self.externalPurchaseUseCase = externalPurchaseUseCase
         self.tracker = tracker
         self.viewType = viewType
         self.router = router
+        self.appVersion = appVersion
+        self.canOpenURL = canOpenURL
+        self.openURL = openURL
         isExternalAdsActive = remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .externalAds)
         $lastCloseAdsDate.useCase = preferenceUseCase
         registerDelegates()
@@ -100,10 +117,12 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
         setUpPlanTask?.cancel()
         buyPlanTask?.cancel()
         cancelActivePlanAndBuyNewPlanTask?.cancel()
+        observeAccountUpdatesTask?.cancel()
         registerDelegateTask = nil
         setUpPlanTask = nil
         buyPlanTask = nil
         cancelActivePlanAndBuyNewPlanTask = nil
+        observeAccountUpdatesTask = nil
     }
     
     // MARK: - Setup
@@ -149,15 +168,7 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
                 
                 switch result {
                 case .success:
-                    tracker.trackAnalyticsEvent(with: UpgradeAccountPurchaseSucceededEvent())
-                    postAccountDidPurchasedPlanNotification()
-                    
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
-                        guard let self else { return }
-                        purchaseUseCase.startMonitoringSubmitReceiptAfterPurchase()
-                        postDismissOnboardingProPlanDialog()
-                        isDismiss = true
-                    }
+                    onPurchasePlanSuccessful()
                 case .failure(let error):
                     tracker.trackAnalyticsEvent(with: UpgradeAccountPurchaseFailedEvent())
                     guard error.toPurchaseErrorStatus() != .paymentCancelled else { return }
@@ -166,7 +177,20 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
             }
             .store(in: &subscriptions)
     }
-    
+
+    private func onPurchasePlanSuccessful(purchasedExternally: Bool = false) {
+        tracker.trackAnalyticsEvent(with: UpgradeAccountPurchaseSucceededEvent())
+        postAccountDidPurchasedPlanNotification()
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
+            guard let self else { return }
+            purchaseUseCase.startMonitoringSubmitReceiptAfterPurchase()
+            postDismissOnboardingProPlanDialog()
+            isDismiss = true
+            observeAccountUpdatesTask?.cancel()
+        }
+    }
+
     private func setupPlans() {
         setUpPlanTask = Task {
             planList = await purchaseUseCase.accountPlanProducts()
@@ -182,7 +206,7 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
             setCurrentPlan(type: accountDetails.proLevel)
         }
     }
-    
+
     private func toggleBuyButton() {
         guard let currentSelectedPlan else {
             isShowBuyButton = false
@@ -310,6 +334,10 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
         isDismiss = true
     }
 
+    func onReturnActive() async {
+        await checkForAccountUpdates()
+    }
+
     // MARK: - Private
     private func postAccountDidPurchasedPlanNotification() {
         NotificationCenter.default.post(name: .accountDidPurchasedPlan, object: nil)
@@ -413,9 +441,16 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
             
             do {
                 try validateActiveSubscriptions()
-                
                 startLoading()
-                await purchaseUseCase.purchasePlan(currentSelectedPlan)
+
+                if let externalLink = await externalLink(for: currentSelectedPlan) {
+                    observeAccountUpdates()
+                    await openURL(externalLink)
+                    isLoading = false
+                } else {
+                    await purchaseUseCase.purchasePlan(currentSelectedPlan)
+                }
+
                 trackEventBuyPlan(currentSelectedPlan)
             } catch {
                 guard let error = error as? ActiveSubscriptionError else {
@@ -426,7 +461,52 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
             }
         }
     }
-    
+
+    private func observeAccountUpdates() {
+        observeAccountUpdatesTask?.cancel()
+        observeAccountUpdatesTask = Task { [weak self, accountUseCase] in
+            for await _ in accountUseCase.onAccountUpdates {
+                guard let self, !Task.isCancelled else { return }
+                guard await checkForAccountUpdates() == true else { continue }
+
+                return
+            }
+        }
+    }
+
+    @discardableResult
+    private func checkForAccountUpdates() async -> Bool {
+        guard
+            let currentSelectedPlan,
+            let accountDetailsEntity = try? await accountUseCase.refreshAccountAndMonitorUpdate(),
+            accountDetailsEntity.proLevel == currentSelectedPlan.type else {
+            return false
+        }
+
+        onPurchasePlanSuccessful(purchasedExternally: true)
+        return true
+    }
+
+    private func externalLink(for plan: PlanEntity) async -> URL? {
+        guard
+            await externalPurchaseUseCase.shouldProvideExternalPurchase(),
+            let externalPurchaseLink = try? await externalPurchaseUseCase.externalPurchaseLink(
+                path: plan.externalPurchasePath,
+                sourceApp: "iOS app Ver \(appVersion)",
+                months: {
+                    switch selectedCycleTab {
+                    case .monthly: 1
+                    case .yearly: 12
+                    default: nil
+                    }
+                }()
+            ),
+            await canOpenURL(externalPurchaseLink)
+        else { return nil }
+
+        return externalPurchaseLink
+    }
+
     func validateActiveSubscriptions() throws {
         guard accountDetails.proLevel != .free,
               accountDetails.subscriptionStatus == .valid,
