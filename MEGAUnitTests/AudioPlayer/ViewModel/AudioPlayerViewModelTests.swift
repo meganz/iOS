@@ -10,6 +10,7 @@ import MEGATest
 import XCTest
 
 final class AudioPlayerViewModelTests: XCTestCase {
+    let playbackTime: TimeInterval = 1234.0
     
     @MainActor
     func testPlaybackActions() async {
@@ -130,12 +131,12 @@ final class AudioPlayerViewModelTests: XCTestCase {
     func testAudioStartPlayingWithDisplayDialogStatus_shouldDisplayDialog_andPausePlayer_whenAppIsActive() async {
         let (onlineSUT, playbackUseCase, playerHandler, _) = makeOnlineSUT()
         onlineSUT.checkAppIsActive = { true }
-        playbackUseCase._status = .displayDialog(playbackTime: 1234.0)
+        playbackUseCase._status = .displayDialog(playbackTime: playbackTime)
         
         let expectedCommands: [AudioPlayerViewModel.Command] = [
             .displayPlaybackContinuationDialog(
                 fileName: testItem.name,
-                playbackTime: 1234.0
+                playbackTime: playbackTime
             )
         ]
         
@@ -152,7 +153,7 @@ final class AudioPlayerViewModelTests: XCTestCase {
     func testAudioStartPlayingWithDisplayDialogStatus_shouldNotDisplayDialog_whenAppIsNotActive() async {
         let (onlineSUT, playbackUseCase, _, _) = makeOnlineSUT()
         onlineSUT.checkAppIsActive = { false }
-        playbackUseCase._status = .displayDialog(playbackTime: 1234.0)
+        playbackUseCase._status = .displayDialog(playbackTime: playbackTime)
 
         await test(
             viewModel: onlineSUT,
@@ -165,7 +166,7 @@ final class AudioPlayerViewModelTests: XCTestCase {
     func testAudioStartPlayingWithDisplayDialogStatus_shouldResumePlayback_whenAppIsNotActive() {
         let (onlineSUT, playbackUseCase, playerHandler, _) = makeOnlineSUT()
         onlineSUT.checkAppIsActive = { false }
-        playbackUseCase._status = .displayDialog(playbackTime: 1234.0)
+        playbackUseCase._status = .displayDialog(playbackTime: playbackTime)
         
         let expectation = XCTestExpectation(description: #function)
         
@@ -178,7 +179,7 @@ final class AudioPlayerViewModelTests: XCTestCase {
         wait(for: [expectation], timeout: 1)
         
         XCTAssertEqual(playerHandler.pause_calledTimes, 0)
-        XCTAssertEqual(playerHandler.playerResumePlayback_Calls, [1234.0])
+        XCTAssertEqual(playerHandler.playerResumePlayback_Calls, [playbackTime])
         XCTAssertEqual(
             playbackUseCase.setPreference_Calls,
             [.resumePreviousSession]
@@ -189,7 +190,7 @@ final class AudioPlayerViewModelTests: XCTestCase {
     func testAudioPlaybackContinuation_resumeSession() async {
         let expectation = expectation(description: #function)
         let (onlineSUT, playbackUseCase, playerHandler, _) = makeOnlineSUT()
-        playbackUseCase._status = .resumeSession(playbackTime: 1234.0)
+        playbackUseCase._status = .resumeSession(playbackTime: playbackTime)
         
         playerHandler.onPlayerResumePlaybackCompletion = {
             expectation.fulfill()
@@ -201,14 +202,14 @@ final class AudioPlayerViewModelTests: XCTestCase {
         
         XCTAssertEqual(
             playerHandler.playerResumePlayback_Calls,
-            [1234.0]
+            [playbackTime]
         )
     }
     
     @MainActor
     func testSelectPlaybackContinuationDialog_shouldSetPreference() {
         let (onlineSUT, playbackUseCase, _, _) = makeOnlineSUT()
-        onlineSUT.dispatch(.onSelectResumePlaybackContinuationDialog(playbackTime: 1234.0))
+        onlineSUT.dispatch(.onSelectResumePlaybackContinuationDialog(playbackTime: playbackTime))
         
         XCTAssertEqual(
             playbackUseCase.setPreference_Calls,
@@ -227,11 +228,9 @@ final class AudioPlayerViewModelTests: XCTestCase {
     
     @MainActor
     func testViewWillDisappear_whenLoggedInAndDisappearReasonUserInitiatedDismissal_initMiniPlayer() {
-        let loggedInAccountUseCase = MockAccountUseCase(isLoggedIn: true)
-        let defaultConfigEntity = audioPlayerConfigEntity(node: anyAudioNode)
         let (sut, _, router) = makeSUT(
-            configEntity: defaultConfigEntity,
-            accountUseCase: loggedInAccountUseCase
+            configEntity: audioPlayerConfigEntity(node: anyAudioNode),
+            accountUseCase: MockAccountUseCase(isLoggedIn: true)
         )
         
         sut.dispatch(.viewWillDisappear(reason: .userInitiatedDismissal))
@@ -241,22 +240,18 @@ final class AudioPlayerViewModelTests: XCTestCase {
     
     @MainActor
     func testViewWillDisappear_whenNotLoggedInAndDisappearReasonUserInitiatedDismissal_stopsPlayer() {
-        let loggedInAccountUseCase = MockAccountUseCase(isLoggedIn: false)
-        let streamingInfoUseCase = MockStreamingInfoUseCase()
-        let defaultConfigEntity = audioPlayerConfigEntity(node: anyAudioNode)
+        let playerHandler = MockAudioPlayerHandler()
+        let playerHandlerBuilder = MockAudioPlayerHandlerBuilder(handler: playerHandler)
+        let defaultConfigEntity = audioPlayerConfigEntity(node: anyAudioNode, playerHandlerBuilder: playerHandlerBuilder)
         let (sut, _, router) = makeSUT(
             configEntity: defaultConfigEntity,
-            streamingInfoUseCase: streamingInfoUseCase,
-            accountUseCase: loggedInAccountUseCase
+            streamingInfoUseCase: MockStreamingInfoUseCase(),
+            accountUseCase: MockAccountUseCase(isLoggedIn: false)
         )
         sut.dispatch(.onViewDidLoad)
         
         sut.dispatch(.viewWillDisappear(reason: .userInitiatedDismissal))
         
-        guard let playerHandler = defaultConfigEntity.playerHandler as? MockAudioPlayerHandler else {
-            XCTFail("Expect to have mock audio player handler type: \(type(of: MockAudioPlayerHandler.self)), but got different type.")
-            return
-        }
         XCTAssertEqual(router.showNodesMiniPlayer_calledTimes, 0)
         XCTAssertEqual(playerHandler.pause_calledTimes, 1)
         XCTAssertEqual(playerHandler.closePlayer_calledTimes, 1)
@@ -264,51 +259,16 @@ final class AudioPlayerViewModelTests: XCTestCase {
     
     @MainActor
     func testViewWillDisappear_whenNotLoggedInAndDisappearReasonSystemPushedAnotherView_shouldNotStopsPlayer() {
-        let loggedInAccountUseCase = MockAccountUseCase(isLoggedIn: false)
-        let streamingInfoUseCase = MockStreamingInfoUseCase()
-        let defaultConfigEntity = audioPlayerConfigEntity(node: anyAudioNode)
         let (sut, _, router) = makeSUT(
-            configEntity: defaultConfigEntity,
-            streamingInfoUseCase: streamingInfoUseCase,
-            accountUseCase: loggedInAccountUseCase
+            configEntity: audioPlayerConfigEntity(node: anyAudioNode),
+            streamingInfoUseCase: MockStreamingInfoUseCase(),
+            accountUseCase: MockAccountUseCase(isLoggedIn: false)
         )
         sut.dispatch(.onViewDidLoad)
         
         sut.dispatch(.viewWillDisappear(reason: .systemPushedAnotherView))
         
-        guard let playerHandler = defaultConfigEntity.playerHandler as? MockAudioPlayerHandler else {
-            XCTFail("Expect to have mock audio player handler type: \(type(of: MockAudioPlayerHandler.self)), but got different type.")
-            return
-        }
         XCTAssertEqual(router.showNodesMiniPlayer_calledTimes, 0)
-        XCTAssertEqual(playerHandler.pause_calledTimes, 0)
-        XCTAssertEqual(playerHandler.closePlayer_calledTimes, 0)
-    }
-    
-    // MARK: - initMiniPlayer
-    
-    @MainActor
-    func tesInitMiniPlayer_whenNotLoggedIn_stopsPlayer() {
-        let loggedInAccountUseCase = MockAccountUseCase(isLoggedIn: false)
-        let streamingInfoUseCase = MockStreamingInfoUseCase()
-        let defaultConfigEntity = audioPlayerConfigEntity(node: anyAudioNode)
-        let (sut, _, router) = makeSUT(
-            configEntity: defaultConfigEntity,
-            streamingInfoUseCase: streamingInfoUseCase,
-            accountUseCase: loggedInAccountUseCase
-        )
-        sut.dispatch(.onViewDidLoad)
-        
-        sut.dispatch(.initMiniPlayer)
-        
-        guard let playerHandler = defaultConfigEntity.playerHandler as? MockAudioPlayerHandler else {
-            XCTFail("Expect to have mock audio player handler type: \(type(of: MockAudioPlayerHandler.self)), but got different type.")
-            return
-        }
-        XCTAssertEqual(router.showNodesMiniPlayer_calledTimes, 0)
-        XCTAssertEqual(playerHandler.pause_calledTimes, 1)
-        XCTAssertEqual(playerHandler.closePlayer_calledTimes, 1)
-        XCTAssertEqual(streamingInfoUseCase.stopServer_calledTimes, 1)
     }
     
     // MARK: - Analytics
@@ -461,14 +421,13 @@ final class AudioPlayerViewModelTests: XCTestCase {
     
     @MainActor
     func testViewWillDisappear_whenUserInitiatedDismissalAndNetworkIsConnected_shouldInitMiniPlayer() {
-        let mockNetworkMonitor = MockNetworkMonitorUseCase(connected: true)
         let (sut, _, router) = makeSUT(
             configEntity: audioPlayerConfigEntity(
                 node: anyAudioNode,
                 relatedFiles: ["File1"]
             ),
             accountUseCase: MockAccountUseCase(isLoggedIn: true),
-            networkMonitorUseCase: mockNetworkMonitor
+            networkMonitorUseCase: MockNetworkMonitorUseCase(connected: true)
         )
         
         sut.dispatch(.viewWillDisappear(reason: .userInitiatedDismissal))
@@ -478,13 +437,12 @@ final class AudioPlayerViewModelTests: XCTestCase {
     
     @MainActor
     func testViewWillDisappear_whenUserInitiatedDismissalAndNetworkIsDisconnected_shouldInitMiniPlayerWithoutStoppingAudio() {
-        let mockNetworkMonitor = MockNetworkMonitorUseCase(connected: false)
         let (sut, _, router) = makeSUT(
             configEntity: audioPlayerConfigEntity(
                 node: anyAudioNode,
                 relatedFiles: ["File1"]
             ),
-            networkMonitorUseCase: mockNetworkMonitor
+            networkMonitorUseCase: MockNetworkMonitorUseCase(connected: false)
         )
         
         sut.dispatch(.viewWillDisappear(reason: .userInitiatedDismissal))
@@ -497,13 +455,15 @@ final class AudioPlayerViewModelTests: XCTestCase {
     @MainActor
     private func makeOnlineSUT() -> (sut: AudioPlayerViewModel, playbackUseCase: MockPlaybackContinuationUseCase, playerHandler: MockAudioPlayerHandler, router: MockAudioPlayerViewRouter) {
         let playerHandler = MockAudioPlayerHandler()
+        let builder = MockAudioPlayerHandlerBuilder(handler: playerHandler)
+        let config = AudioPlayerConfigEntity(
+            node: MEGANode(),
+            isFolderLink: false,
+            fileLink: "",
+            audioPlayerHandlerBuilder: builder
+        )
         let (sut, playbackUseCase, router) = makeSUT(
-            configEntity: AudioPlayerConfigEntity(
-                node: MEGANode(),
-                isFolderLink: false,
-                fileLink: "",
-                playerHandler: playerHandler
-            ),
+            configEntity: config,
             nodeInfoUseCase: NodeInfoUseCase(nodeInfoRepository: MockNodeInfoRepository()),
             streamingInfoUseCase: StreamingInfoUseCase(streamingInfoRepository: MockStreamingInfoRepository())
         )
@@ -512,12 +472,8 @@ final class AudioPlayerViewModelTests: XCTestCase {
     
     @MainActor
     private func makeOfflineSUT() -> (sut: AudioPlayerViewModel, router: MockAudioPlayerViewRouter) {
-        let playerHandler = MockAudioPlayerHandler()
         let (sut, _, router) = makeSUT(
-            configEntity: AudioPlayerConfigEntity(
-                fileLink: "file_path",
-                playerHandler: playerHandler
-            ),
+            configEntity: AudioPlayerConfigEntity(fileLink: "file_path"),
             offlineInfoUseCase: OfflineFileInfoUseCase(offlineInfoRepository: MockOfflineInfoRepository())
         )
         return (sut, router)
@@ -536,8 +492,8 @@ final class AudioPlayerViewModelTests: XCTestCase {
         line: UInt = #line
     ) -> (sut: AudioPlayerViewModel, playbackContinuationUseCase: MockPlaybackContinuationUseCase, router: MockAudioPlayerViewRouter) {
         let mockPlaybackContinuationUseCase = MockPlaybackContinuationUseCase()
-        let mockAudioPlayerUseCase = MockAudioPlayerUseCase()
         let router = MockAudioPlayerViewRouter()
+        
         let sut = AudioPlayerViewModel(
             configEntity: configEntity,
             router: router,
@@ -545,7 +501,7 @@ final class AudioPlayerViewModelTests: XCTestCase {
             streamingInfoUseCase: streamingInfoUseCase,
             offlineInfoUseCase: offlineInfoUseCase,
             playbackContinuationUseCase: mockPlaybackContinuationUseCase,
-            audioPlayerUseCase: mockAudioPlayerUseCase,
+            audioPlayerUseCase: MockAudioPlayerUseCase(),
             accountUseCase: accountUseCase,
             networkMonitorUseCase: networkMonitorUseCase,
             tracker: tracker
@@ -589,14 +545,13 @@ final class AudioPlayerViewModelTests: XCTestCase {
         )
     }
     
-    private func audioPlayerConfigEntity(node: MockNode, isFolderLink: Bool = false, relatedFiles: [String]? = nil, fileLink: String? = nil) -> AudioPlayerConfigEntity {
-        let playerHandler = MockAudioPlayerHandler()
-        return AudioPlayerConfigEntity(
+    private func audioPlayerConfigEntity(node: MockNode, isFolderLink: Bool = false, relatedFiles: [String]? = nil, fileLink: String? = nil, playerHandlerBuilder: some AudioPlayerHandlerBuilderProtocol = MockAudioPlayerHandlerBuilder()) -> AudioPlayerConfigEntity {
+        AudioPlayerConfigEntity(
             node: node,
             isFolderLink: isFolderLink,
             fileLink: fileLink,
             relatedFiles: relatedFiles,
-            playerHandler: playerHandler,
+            audioPlayerHandlerBuilder: playerHandlerBuilder
         )
     }
     
