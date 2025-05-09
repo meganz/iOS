@@ -95,6 +95,45 @@ final class BrowserViewModelTests: XCTestCase {
         XCTAssertEqual(sdk.searchQueryParameters?.node, newParentNode)
     }
     
+    func testOnViewAppear_shouldMonitorNodeUpdates() async {
+        let nodeEntities = [
+            NodeEntity(handle: 1),
+            NodeEntity(handle: 2)
+        ]
+        let browserUseCase = MockBrowserUseCase(nodeUpdates: [nodeEntities].async.eraseToAnyAsyncSequence())
+        let sut = makeSUT(browserUseCase: browserUseCase)
+        
+        await test(viewModel: sut, action: .onViewAppear, expectedCommands: [.nodesUpdate(nodeEntities)])
+    }
+    
+    func testOnViewAppear_shouldMonitorCopyRequestStartUpdates() async {
+        let copyRequestStartUpdates = [()].async.eraseToAnyAsyncSequence()
+        let browserUseCase = MockBrowserUseCase(copyRequestStartUpdates: copyRequestStartUpdates)
+        let sut = makeSUT(browserUseCase: browserUseCase)
+        
+        await test(viewModel: sut, action: .onViewAppear, expectedCommands: [.copyRequestStartUpdate])
+    }
+    
+    func testOnViewAppear_shouldMonitorRequestFinishUpdates() async {
+        let requestEntity = RequestEntity(type: .copy)
+        let requestFinishUpdates = [requestEntity].async.eraseToAnyAsyncSequence()
+        let browserUseCase = MockBrowserUseCase(requestFinishUpdates: requestFinishUpdates)
+        let sut = makeSUT(browserUseCase: browserUseCase)
+        
+        await test(viewModel: sut, action: .onViewAppear, expectedCommands: [.requestFinishUpdates(requestEntity)])
+    }
+    
+    func testOnViewDisappear_shouldCancelMonitoringTasks() {
+        let sut = makeSUT()
+        
+        sut.dispatch(.onViewAppear)
+        sut.dispatch(.onViewDisappear)
+        
+        XCTAssertNil(sut.monitorNodeUpdatesTask)
+        XCTAssertNil(sut.monitorCopyRequestStartUpdates)
+        XCTAssertNil(sut.monitorRequestFinishUpdates)
+    }
+    
     func makeSUT(
         parentNode: MEGANode? = nil,
         isChildBrowser: Bool = false,
@@ -103,6 +142,7 @@ final class BrowserViewModelTests: XCTestCase {
         filesSearchUseCase: some FilesSearchUseCaseProtocol = MockFilesSearchUseCase(),
         metadataUseCase: some MetadataUseCaseProtocol = MockMetadataUseCase(),
         sdk: MEGASdk = MockSdk(),
+        browserUseCase: some BrowserUseCaseProtocol = MockBrowserUseCase(),
         file: StaticString = #filePath,
         line: UInt = #line
     ) -> BrowserViewModel {
@@ -113,7 +153,8 @@ final class BrowserViewModelTests: XCTestCase {
             sensitiveDisplayPreferenceUseCase: sensitiveDisplayPreferenceUseCase,
             filesSearchUseCase: filesSearchUseCase,
             metadataUseCase: metadataUseCase,
-            sdk: sdk)
+            sdk: sdk,
+            browserUseCase: browserUseCase)
         trackForMemoryLeaks(on: sut, file: file, line: line)
         return sut
     }

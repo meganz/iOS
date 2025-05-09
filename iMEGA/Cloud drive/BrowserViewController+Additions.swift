@@ -11,7 +11,7 @@ import SwiftUI
 extension BrowserViewController {
     
     @objc func makeViewModel() -> BrowserViewModel {
-        BrowserViewModel(
+        let viewModel = BrowserViewModel(
             parentNode: parentNode,
             isChildBrowser: isChildBrowser,
             isSelectVideos: browserAction == .selectVideo,
@@ -23,8 +23,22 @@ extension BrowserViewController {
                 contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(repo: UserAttributeRepository.newRepo),
                 hiddenNodesFeatureFlagEnabled: { DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes) }),
             filesSearchUseCase: FilesSearchUseCase(repo: FilesSearchRepository.newRepo, nodeRepository: NodeRepository.newRepo),
-            metadataUseCase: MetadataUseCase(metadataRepository: MetadataRepository(), fileSystemRepository: FileSystemRepository(fileManager: .default), fileExtensionRepository: FileExtensionRepository(), nodeCoordinatesRepository: NodeCoordinatesRepository.newRepo)
+            metadataUseCase: MetadataUseCase(metadataRepository: MetadataRepository(), fileSystemRepository: FileSystemRepository(fileManager: .default), fileExtensionRepository: FileExtensionRepository(), nodeCoordinatesRepository: NodeCoordinatesRepository.newRepo),
+            browserUseCase: BrowserUseCase(
+                requestStatesRepository: RequestStatesRepository.newRepo,
+                nodeRepository: NodeRepository.newRepo
+            )
         )
+        viewModel.invokeCommand = { [weak self] in self?.executeCommand($0) }
+        return viewModel
+    }
+    
+    @objc func onViewAppear() {
+        viewModel.dispatch(.onViewAppear)
+    }
+    
+    @objc func onViewDisappear() {
+        viewModel.dispatch(.onViewDisappear)
     }
     
     private
@@ -205,5 +219,58 @@ extension BrowserViewController {
         shimmerViewController.willMove(toParent: nil)
         shimmerViewController.view.removeFromSuperview()
         shimmerViewController.removeFromParent()
+    }
+}
+
+extension BrowserViewController: ViewType {
+    public func executeCommand(_ command: BrowserViewModel.Command) {
+        switch command {
+        case .nodesUpdate(let nodeEntities):
+            if isParentBrowser, let incomingButton, incomingButton.isSelected {
+                let isInShare = nodeEntities.contains { $0.isInShare }
+                if isInShare {
+                    reloadUI()
+                }
+            } else {
+                guard
+                    let parentNodeEntity = parentNode?.toNodeEntity(),
+                    parentNodeEntity.shouldProcessOnNodeEntitiesUpdate(withChildNodes: nodes?.toNodeEntities() ?? [], updatedNodes: nodeEntities)
+                else { return }
+                reloadUI()
+            }
+            
+        case .copyRequestStartUpdate:
+            SVProgressHUD.setDefaultMaskType(.clear)
+            if browserAction != .sendFromCloudDrive &&
+                browserAction != .selectFolder &&
+                browserAction != .selectVideo {
+                SVProgressHUD.show()
+            }
+            
+        case .requestFinishUpdates(let requestEntity):
+            if requestEntity.type == .copy {
+                remainingOperations -= 1
+                
+                if remainingOperations == 0 {
+                    SVProgressHUD.setDefaultMaskType(.none)
+                    if browserAction == .import || browserAction == .importFromFolderLink {
+                        if selectedNodesArray.count == 1 && selectedNodesArray.first?.isFile() ?? false {
+                            SVProgressHUD.showSuccess(withStatus: Strings.Localizable.fileImported)
+                        } else {
+                            SVProgressHUD.showSuccess(withStatus: Strings.Localizable.filesImported)
+                        }
+                    }
+                    dismissAndSelectNodesIfNeeded(false)
+                }
+            } else if requestEntity.type == .getAttrFile {
+                guard let tableView else { return }
+                for case let nodeTableViewCell as NodeTableViewCell in tableView.visibleCells {
+                    if requestEntity.nodeHandle == nodeTableViewCell.node.handle,
+                       let node = MEGASdk.shared.node(forHandle: requestEntity.nodeHandle) {
+                        Helper.setThumbnailFor(node, api: MEGASdk.shared, cell: nodeTableViewCell)
+                    }
+                }
+            }
+        }
     }
 }

@@ -4,7 +4,28 @@ import MEGADomain
 import MEGAFoundation
 
 @MainActor
-@objc final class BrowserViewModel: NSObject {
+@objc public final class BrowserViewModel: NSObject, ViewModelType {
+    public enum Action: ActionType {
+        case onViewAppear
+        case onViewDisappear
+    }
+
+    public enum Command: CommandType, Equatable {
+        case nodesUpdate([NodeEntity])
+        case copyRequestStartUpdate
+        case requestFinishUpdates(RequestEntity)
+    }
+    
+    public var invokeCommand: ((Command) -> Void)?
+    public func dispatch(_ action: Action) {
+        switch action {
+        case .onViewAppear:
+            onViewAppear()
+        case .onViewDisappear:
+            onViewDisappear()
+        }
+    }
+    
     private let isChildBrowser: Bool
     private let isSelectVideos: Bool
     private let sensitiveDisplayPreferenceUseCase: any SensitiveDisplayPreferenceUseCaseProtocol
@@ -12,6 +33,7 @@ import MEGAFoundation
     private let sdk: MEGASdk
     private var parentNode: MEGANode?
     private var metadataUseCase: any MetadataUseCaseProtocol
+    private let browserUseCase: any BrowserUseCaseProtocol
     
     private var parentNodeHandle: MEGAHandle? {
         if let parentNode {
@@ -25,13 +47,32 @@ import MEGAFoundation
     
     let searchDebouncer = Debouncer(delay: 0.5)
     
+    var monitorNodeUpdatesTask: Task<Void, Never>? {
+        didSet {
+            oldValue?.cancel()
+        }
+    }
+    
+    var monitorCopyRequestStartUpdates: Task<Void, Never>? {
+        didSet {
+            oldValue?.cancel()
+        }
+    }
+    
+    var monitorRequestFinishUpdates: Task<Void, Never>? {
+        didSet {
+            oldValue?.cancel()
+        }
+    }
+    
     init(parentNode: MEGANode?,
          isChildBrowser: Bool,
          isSelectVideos: Bool,
          sensitiveDisplayPreferenceUseCase: some SensitiveDisplayPreferenceUseCaseProtocol,
          filesSearchUseCase: some FilesSearchUseCaseProtocol,
          metadataUseCase: some MetadataUseCaseProtocol,
-         sdk: MEGASdk = .shared) {
+         sdk: MEGASdk = .shared,
+         browserUseCase: some BrowserUseCaseProtocol) {
         self.parentNode = parentNode
         self.isChildBrowser = isChildBrowser
         self.isSelectVideos = isSelectVideos
@@ -39,6 +80,36 @@ import MEGAFoundation
         self.filesSearchUseCase = filesSearchUseCase
         self.metadataUseCase = metadataUseCase
         self.sdk = sdk
+        self.browserUseCase = browserUseCase
+    }
+    
+    private func onViewAppear() {
+        monitorNodeUpdatesTask = Task { [weak self, browserUseCase] in
+            for await nodeEntities in browserUseCase.nodeUpdates {
+                guard !Task.isCancelled else { break }
+                self?.invokeCommand?(.nodesUpdate(nodeEntities))
+            }
+        }
+        
+        monitorCopyRequestStartUpdates = Task { [weak self, browserUseCase] in
+            for await _ in browserUseCase.copyRequestStartUpdates {
+                guard !Task.isCancelled else { break }
+                self?.invokeCommand?(.copyRequestStartUpdate)
+            }
+        }
+        
+        monitorRequestFinishUpdates = Task { [weak self, browserUseCase] in
+            for await requestEntity in browserUseCase.requestFinishUpdates {
+                guard !Task.isCancelled else { break }
+                self?.invokeCommand?(.requestFinishUpdates(requestEntity))
+            }
+        }
+    }
+    
+    private func onViewDisappear() {
+        monitorNodeUpdatesTask = nil
+        monitorCopyRequestStartUpdates = nil
+        monitorRequestFinishUpdates = nil
     }
     
     func updateParentNode(_ node: MEGANode?) {
