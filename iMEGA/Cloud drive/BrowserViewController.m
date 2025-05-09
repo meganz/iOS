@@ -26,11 +26,9 @@
 @import MEGAUIKit;
 @import MEGAAppSDKRepo;
 
-@interface BrowserViewController () <UISearchBarDelegate, UISearchResultsUpdating, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGADelegate, UISearchControllerDelegate, UIAdaptivePresentationControllerDelegate>
+@interface BrowserViewController () <UISearchBarDelegate, UISearchResultsUpdating, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, UISearchControllerDelegate, UIAdaptivePresentationControllerDelegate>
 
 @property (nonatomic, strong) MEGAShareList *shares;
-
-@property (nonatomic) NSUInteger remainingOperations;
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *selectorViewHeightConstraint;
 
@@ -75,10 +73,10 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    [self onViewAppear];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(internetConnectionChanged) name:kReachabilityChangedNotification object:nil];
     
-    [MEGASdk.shared addMEGADelegate:self];
     [[MEGAReachabilityManager sharedManager] retryPendingConnections];
     
     [self addSearchBar];
@@ -92,14 +90,13 @@
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
+    [self onViewDisappear];
     
     if (self.searchController.isActive) {
         self.searchController.active = NO;
     }
     
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kReachabilityChangedNotification object:nil];
-    
-    [MEGASdk.shared removeMEGADelegateAsync:self];
 }
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
@@ -872,91 +869,6 @@
 - (void)buttonTouchUpInsideEmptyState {
     if (!MEGAReachabilityManager.isReachable && !MEGAReachabilityManager.sharedManager.isMobileDataEnabled) {
         [self openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
-    }
-}
-
-#pragma mark - MEGARequestDelegate
-
-- (void)onRequestStart:(MEGASdk *)api request:(MEGARequest *)request {
-    switch ([request type]) {
-        case MEGARequestTypeCopy: {
-            [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
-            if (self.browserAction != BrowserActionSendFromCloudDrive && self.browserAction != BrowserActionSelectFolder && self.browserAction != BrowserActionSelectVideo) {
-
-                [SVProgressHUD show];
-            }
-            break;
-        }
-            
-        default:
-            break;
-    }
-}
-
-- (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
-    if ([error type]) {
-        if (request.type == MEGARequestTypeCopy) {
-            if (error.type == MEGAErrorTypeApiEOverQuota || error.type == MEGAErrorTypeApiEgoingOverquota) {
-                [SVProgressHUD dismiss];
-            } else {
-                [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
-                [SVProgressHUD showErrorWithStatus:LocalizedString(error.name, @"")];
-            }
-        }
-        return;
-    }
-    
-    switch ([request type]) {
-        case MEGARequestTypeCopy: {
-            self.remainingOperations--;
-            
-            if (self.remainingOperations == 0) {
-                [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
-                
-                if (self.browserAction == BrowserActionImport || self.browserAction == BrowserActionImportFromFolderLink) {
-                    if ((self.selectedNodesArray.count == 1) && [self.selectedNodesArray.firstObject isFile]) {
-                        [SVProgressHUD showSuccessWithStatus:LocalizedString(@"fileImported", @"Message shown when a file has been imported")];
-                    } else {
-                        [SVProgressHUD showSuccessWithStatus:LocalizedString(@"filesImported", @"Message shown when some files have been imported")];
-                    }
-                }
-                
-                [self dismissAndSelectNodesIfNeeded:NO completion:nil];
-            }
-            break;
-        }
-            
-        case MEGARequestTypeGetAttrFile: {
-            for (NodeTableViewCell *nodeTableViewCell in self.tableView.visibleCells) {
-                if (request.nodeHandle == nodeTableViewCell.node.handle) {
-                    MEGANode *node = [api nodeForHandle:request.nodeHandle];
-                    [Helper setThumbnailForNode:node api:api cell:nodeTableViewCell];
-                }
-            }
-            break;
-        }
-            
-        default:
-            break;
-    }
-}
-
-#pragma mark - MEGAGlobalDelegate
-
-- (void)onNodesUpdate:(MEGASdk *)api nodeList:(MEGANodeList *)nodeList {
-    BOOL shouldProcessOnNodesUpdate = NO;
-    if (self.cloudDriveButton.selected) {
-        shouldProcessOnNodesUpdate = [self shouldProcessOnNodesUpdateWith:nodeList childNodes:self.nodes.mnz_nodesArrayFromNodeList parentNode:self.parentNode];
-    } else if (self.incomingButton.selected) {
-        if (self.isParentBrowser) {
-            shouldProcessOnNodesUpdate = [nodeList mnz_shouldProcessOnNodesUpdateInSharedForNodes:self.nodes.mnz_nodesArrayFromNodeList itemSelected:0];
-        } else {
-            shouldProcessOnNodesUpdate = [self shouldProcessOnNodesUpdateWith:nodeList childNodes:self.nodes.mnz_nodesArrayFromNodeList parentNode:self.parentNode];
-        }
-    }
-    
-    if (shouldProcessOnNodesUpdate) {
-        [self reloadUI];
     }
 }
 

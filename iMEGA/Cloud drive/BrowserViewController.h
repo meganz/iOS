@@ -64,6 +64,8 @@ typedef NS_ENUM(NSUInteger, BrowserAction) {
 
 @property (nonatomic, strong, nullable) UIViewController *shimmerViewController;
 
+@property (nonatomic) NSUInteger remainingOperations;
+
 - (void)pushBrowserWithParentNode:(MEGANode *)parentNode;
 - (void)updatePromptTitle;
 - (void)attachNodes;
@@ -71,6 +73,7 @@ typedef NS_ENUM(NSUInteger, BrowserAction) {
 
 - (IBAction)cloudDriveTouchUpInside:(UIButton *)sender;
 - (IBAction)incomingTouchUpInside:(UIButton *)sender;
+- (void)dismissAndSelectNodesIfNeeded:(BOOL)selectNodes completion:(void (^ __nullable)(void))completion;
 
 @end
 
