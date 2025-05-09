@@ -4,7 +4,6 @@
 
 #import "Helper.h"
 #import "EmptyStateView.h"
-#import "MEGACreateFolderRequestDelegate.h"
 #import "MEGANodeList+MNZCategory.h"
 #import "MEGAReachabilityManager.h"
 #ifdef MNZ_SHARE_EXTENSION
@@ -495,7 +494,7 @@
             if (childrenNode.isFolder) {
                 [SVProgressHUD showErrorWithStatus:LocalizedString(@"There is already a folder with the same name", @"A tooltip message which is shown when a folder name is duplicated during renaming or creation.")];
             } else {
-                MEGACreateFolderRequestDelegate *createFolderRequestDelegate = [[MEGACreateFolderRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
+                RequestDelegate *createFolderRequestDelegate = [[RequestDelegate alloc] initWithCompletion:^(MEGARequest *request, MEGAError *error) {
                     MEGANode *newFolderNode = [MEGASdk.shared nodeForHandle:request.nodeHandle];
                     [strongSelf pushBrowserWithParentNode:newFolderNode];
                 }];

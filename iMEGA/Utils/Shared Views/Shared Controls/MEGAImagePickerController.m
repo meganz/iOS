@@ -6,7 +6,6 @@
 #import "SVProgressHUD.h"
 
 #import "Helper.h"
-#import "MEGACreateFolderRequestDelegate.h"
 #import "MEGASdk+MNZCategory.h"
 #import "NSDate+MNZCategory.h"
 #import "NSFileManager+MNZCategory.h"

@@ -115,7 +115,6 @@
 #import "SelectableTableViewCell.h"
 #import "NSAttributedString+MNZCategory.h"
 #import <SDWebImage/SDWebImage.h>
-#import "MEGACreateFolderRequestDelegate.h"
 #import "MEGAProcessAsset.h"
 #import "ShareLocationViewController.h"
 #import "ChatAttachedContactsViewController.h"
