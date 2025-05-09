@@ -25,14 +25,14 @@ This guide will help you build the MEGA iOS application using Xcode on macOS.
 
 ---
 
-### 🔧 Configuration Steps (for Public Users)
+### 🔧 Configuration Steps (Public Users)
 
 1. **Update `.gitmodules`**:
    - Update:
      - `Modules/DataSource/MEGAChatSDK/Sources/MEGAChatSDK` → `https://github.com/meganz/MEGAchat.git`
      - `SDK` → `https://github.com/meganz/SDK.git`
 
-2. **Remove deprecated submodules**:
+2. **Remove submodules**:
    - `iosTransifex`
    - `Modules/MEGASharedRepo`
 
