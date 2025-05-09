@@ -68,7 +68,7 @@ pipeline {
                     script {
                         envInjector.injectEnvs {
                             util.useGpg() {
-                                dir("scripts/CreateTagAndSyncFromMaster/") {
+                                dir("Modules/MEGASharedRepo/scripts/CreateTagAndSyncFromMaster/") {
                                      sh 'swift run CreateTagAndSyncFromMaster --transifex-authorization \"$TRANSIFIX_AUTHORIZATION_TOKEN\" --release-notes-resource-id \"$IOS_MEGA_CHANGELOG_RESOURCE_ID\" --gitlab-base-url \"$GITLAB_API_BASE_URL\" --gitlab-token \"$GITLAB_BEARER_TOKEN\" --project-id \"$MEGA_IOS_PROJECT_ID\" --branch \"$GIT_BRANCH\"'
                                 }
                             }
