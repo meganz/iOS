@@ -1606,6 +1606,7 @@
 		A50036882CD3273A0067734F /* DocScannerSaveSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A50036872CD3272F0067734F /* DocScannerSaveSettingsViewModel.swift */; };
 		A534E15D2B725E300067A0E1 /* MEGASdkCleanUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A534E15C2B725E300067A0E1 /* MEGASdkCleanUp.swift */; };
 		A534E15F2B7262380067A0E1 /* MEGASdkCleanUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A534E15C2B725E300067A0E1 /* MEGASdkCleanUp.swift */; };
+		A54C87312DC34C69002B3581 /* MEGATransfer+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 7720C5B4206A931E00F995D1 /* MEGATransfer+MNZCategory.m */; };
 		A559E16A2BE8C7C700374073 /* NSNotification+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A559E1692BE8C7C700374073 /* NSNotification+Additions.swift */; };
 		A56274E02C8A9D29004C1546 /* MockCallInProgressTimeReporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A56274DF2C8A9D29004C1546 /* MockCallInProgressTimeReporter.swift */; };
 		A56BBB9B2CB3ABF0006E0D0B /* MEGAStore+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F2ACCC29AD6E19004FC7A3 /* MEGAStore+Additions.swift */; };
@@ -16011,6 +16012,7 @@
 				5BE6898A2417CB3D00462134 /* MEGAStore+CloudAppearancePreference.swift in Sources */,
 				5B3740C7241FAA8500BA75EA /* MEGAStore+OfflineAppearancePreference.swift in Sources */,
 				9411355C1F01008400D33428 /* MEGAStore.m in Sources */,
+				A54C87312DC34C69002B3581 /* MEGATransfer+MNZCategory.m in Sources */,
 				BF5C36792491C917004DDA2F /* MEGAUser+Additions.swift in Sources */,
 				5BEACE2A1FB474060010E02F /* MEGAUser+MNZCategory.m in Sources */,
 				A85740C82032F6E80033034C /* MOChatDraft+CoreDataClass.m in Sources */,

@@ -2,7 +2,11 @@
 #import "Helper.h"
 #import "MEGANode+MNZCategory.h"
 #import "NSFileManager+MNZCategory.h"
+#ifdef MNZ_SHARE_EXTENSION
+#import "MEGAShare-Swift.h"
+#else
 #import "MEGA-Swift.h"
+#endif
 
 @implementation MEGATransfer (MNZCategory)
 
