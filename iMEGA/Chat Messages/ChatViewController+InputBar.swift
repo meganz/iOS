@@ -548,10 +548,10 @@ extension ChatViewController: ChatInputBarDelegate {
                                                isSourceTemporary: false,
                                                delegate: delegate)
         } else {
-            let requestDelegate: some MEGARequestDelegate = MEGACreateFolderRequestDelegate { request in
-                guard let request = request else {
-                    fatalError("request object should not be nil")
-                }
+            MEGASdk.shared.createFolder(withName: MEGAVoiceMessagesFolderName,
+                                                         parent: parentNode,
+                                        delegate: RequestDelegate { request, _ in
+                guard let request else { return }
                 
                 if let voiceMessagesNode = MEGASdk.shared.node(forHandle: request.nodeHandle) {
                     ChatUploader.sharedInstance.upload(filepath: path,
@@ -563,11 +563,7 @@ extension ChatViewController: ChatInputBarDelegate {
                 } else {
                     MEGALogDebug("Voice folder not created")
                 }
-            }
-            
-            MEGASdk.shared.createFolder(withName: MEGAVoiceMessagesFolderName,
-                                                         parent: parentNode,
-                                                         delegate: requestDelegate)
+            })
         }
     }
     

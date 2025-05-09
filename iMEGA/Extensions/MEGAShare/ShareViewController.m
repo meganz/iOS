@@ -10,7 +10,6 @@
 #import "Helper.h"
 #import "LaunchViewController.h"
 #import "MEGAChatAttachNodeRequestDelegate.h"
-#import "MEGACreateFolderRequestDelegate.h"
 #import "MEGALogger.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGARequestDelegate.h"

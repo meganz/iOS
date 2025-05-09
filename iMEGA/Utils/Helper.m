@@ -12,7 +12,6 @@
 #import "UIImageView+MNZCategory.h"
 
 #import "MEGACopyRequestDelegate.h"
-#import "MEGACreateFolderRequestDelegate.h"
 #import "MEGANode+MNZCategory.h"
 #import "MEGANodeList+MNZCategory.h"
 #import "MEGAProcessAsset.h"

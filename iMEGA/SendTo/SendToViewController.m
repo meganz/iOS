@@ -10,7 +10,6 @@
 #import "MEGAChatAttachNodeRequestDelegate.h"
 #import "MEGAChatAttachVoiceClipRequestDelegate.h"
 #import "MEGAChatMessage+MNZCategory.h"
-#import "MEGACreateFolderRequestDelegate.h"
 #import "MEGANodeList+MNZCategory.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGAUser+MNZCategory.h"
