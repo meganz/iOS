@@ -8,18 +8,14 @@ import XCTest
 
 final class AudioPlaylistViewModelTests: XCTestCase {
     private let playerHandler = MockAudioPlayerHandler()
-    private let tracker = MockTracker()
     private var anyAudioNode: MockNode {
         MockNode(handle: 1, name: "first-audio.mp3", nodeType: .file)
     }
     
     @MainActor
-    private func makeSUT(
-        router: (any AudioPlaylistViewRouting)? = nil,
-        tracker: (any AnalyticsTracking)? = nil
-    ) -> AudioPlaylistViewModel {
+    private func makeSUT(router: (any AudioPlaylistViewRouting)? = nil) -> (AudioPlaylistViewModel, MockTracker) {
         let router = router ?? MockAudioPlaylistViewRouter()
-        let tracker = tracker ?? MockTracker()
+        let tracker = MockTracker()
         let sut = AudioPlaylistViewModel(
             title: "",
             playerHandler: playerHandler,
@@ -27,14 +23,14 @@ final class AudioPlaylistViewModelTests: XCTestCase {
             tracker: tracker
         )
         trackForMemoryLeaks(on: sut, timeoutNanoseconds: 1_000_000_000)
-        return sut
+        return (sut, tracker)
     }
     
     @MainActor
     private func captureViewModelCommands(
         _ action: (AudioPlaylistViewModel, inout [AudioPlaylistViewModel.Command]) -> Void
     ) {
-        let sut = makeSUT()
+        let (sut, _) = makeSUT()
         var cmds: [AudioPlaylistViewModel.Command] = []
         sut.invokeCommand = { cmds.append($0) }
         action(sut, &cmds)
@@ -44,7 +40,7 @@ final class AudioPlaylistViewModelTests: XCTestCase {
     func testDispatch_onViewDidLoadThroughDidDraggEnd_executesExpectedAudioPlayerCommands() throws {
         let mockItem = AudioPlayerItem.mockItem
         playerHandler.mockPlayerCurrentItem = mockItem
-        let sut = makeSUT(tracker: tracker)
+        let (sut, _) = makeSUT()
         
         test(viewModel: sut, action: .onViewDidLoad, expectedCommands: [
             .reloadTracks(currentItem: mockItem, queue: nil, selectedIndexPaths: []),
@@ -75,14 +71,14 @@ final class AudioPlaylistViewModelTests: XCTestCase {
     @MainActor
     func testDispatch_onDismiss_invokesRouterDismiss() {
         let router = MockAudioPlaylistViewRouter()
-        let sut = makeSUT(router: router)
+        let (sut, _) = makeSUT(router: router)
         test(viewModel: sut, action: .dismiss, expectedCommands: [])
         XCTAssertEqual(router.dismiss_calledTimes, 1)
     }
     
     @MainActor
     func testDispatch_onMove_tracksReorderEvent() {
-        let sut = makeSUT(tracker: tracker)
+        let (sut, tracker) = makeSUT()
         let moved = AudioPlayerItem.mockItem
         sut.dispatch(.move(moved, IndexPath(row: 1, section: 0), .up))
         assertTrackAnalyticsEventCalled(
@@ -93,7 +89,7 @@ final class AudioPlaylistViewModelTests: XCTestCase {
     
     @MainActor
     func testDispatch_onRemoveSelectedItems_tracksRemoveTracksEvent() {
-        let sut = makeSUT(tracker: tracker)
+        let (sut, tracker) = makeSUT()
         sut.dispatch(.removeSelectedItems)
         assertTrackAnalyticsEventCalled(
             trackedEventIdentifiers: tracker.trackedEventIdentifiers,
@@ -106,7 +102,7 @@ final class AudioPlaylistViewModelTests: XCTestCase {
         let mockItem = AudioPlayerItem.mockItem
         playerHandler.mockPlayerQueueItems = [mockItem]
         playerHandler.mockPlayerCurrentItem = mockItem
-        let sut = makeSUT()
+        let (sut, _) = makeSUT()
         var cmds: [AudioPlaylistViewModel.Command] = []
         sut.invokeCommand = { cmds.append($0) }
         
@@ -124,7 +120,7 @@ final class AudioPlaylistViewModelTests: XCTestCase {
     
     @MainActor
     func testAudioObserver_reloadItemWithoutReordering_reloadsItems() {
-        let sut = makeSUT()
+        let (sut, _) = makeSUT()
         var cmds: [AudioPlaylistViewModel.Command] = []
         sut.invokeCommand = { cmds.append($0) }
         
@@ -143,7 +139,7 @@ final class AudioPlaylistViewModelTests: XCTestCase {
         )
         let expect = expectation(description: "Deferred reload should be delivered on didDraggEnd")
         
-        let sut = makeSUT()
+        let (sut, _) = makeSUT()
         var cmds: [AudioPlaylistViewModel.Command] = []
         sut.invokeCommand = { cmd in
             cmds.append(cmd)
@@ -172,7 +168,7 @@ final class AudioPlaylistViewModelTests: XCTestCase {
     
     @MainActor
     private func captureViewModelCommands(_ action: (AudioPlaylistViewModel) -> Void) -> [AudioPlaylistViewModel.Command] {
-        let sut = makeSUT()
+        let (sut, _) = makeSUT()
         var cmds: [AudioPlaylistViewModel.Command] = []
         sut.invokeCommand = { cmds.append($0) }
         action(sut)
@@ -196,7 +192,7 @@ final class AudioPlaylistViewModelTests: XCTestCase {
     
     @MainActor
     func testDispatch_onRemoveSelectedItems_clearsSelectionAndTracksEvent() {
-        let sut = makeSUT(tracker: tracker)
+        let (sut, tracker) = makeSUT()
         var cmds: [AudioPlaylistViewModel.Command] = []
         sut.invokeCommand = { cmds.append($0) }
         

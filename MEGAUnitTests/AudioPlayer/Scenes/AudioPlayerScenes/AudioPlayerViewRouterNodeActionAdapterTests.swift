@@ -90,20 +90,16 @@ final class AudioPlayerViewRouterNodeActionAdapterTests: XCTestCase {
         fileLink: String? = nil,
         messageId: HandleEntity? = nil,
         chatId: HandleEntity? = nil,
-        relatedFiles: [String]? = nil,
-        playerHandler: MockAudioPlayerHandler = MockAudioPlayerHandler()
+        relatedFiles: [String]? = nil
     ) -> AudioPlayerConfigEntity {
         let node = MockNode(handle: .max)
+        let builder = MockAudioPlayerHandlerBuilder()
         
-        switch originType {
-        case .folderLink:
-            return AudioPlayerConfigEntity(node: node, isFolderLink: true, fileLink: nil, messageId: .invalid, chatId: .invalid, relatedFiles: relatedFiles, playerHandler: playerHandler)
-        case .fileLink:
-            return AudioPlayerConfigEntity(node: node, isFolderLink: false, fileLink: fileLink, messageId: .invalid, chatId: .invalid, relatedFiles: relatedFiles, playerHandler: playerHandler)
-        case .chat:
-            return AudioPlayerConfigEntity(node: node, isFolderLink: false, fileLink: nil, messageId: messageId, chatId: chatId, relatedFiles: relatedFiles, playerHandler: playerHandler)
-        case .unknown:
-            return AudioPlayerConfigEntity(node: node, isFolderLink: false, fileLink: nil, messageId: .invalid, chatId: .invalid, relatedFiles: relatedFiles, playerHandler: playerHandler)
+        return switch originType {
+        case .folderLink: AudioPlayerConfigEntity(node: node, isFolderLink: true, fileLink: nil, messageId: .invalid, chatId: .invalid, relatedFiles: relatedFiles, audioPlayerHandlerBuilder:builder)
+        case .fileLink: AudioPlayerConfigEntity(node: node, isFolderLink: false, fileLink: fileLink, messageId: .invalid, chatId: .invalid, relatedFiles: relatedFiles, audioPlayerHandlerBuilder:builder)
+        case .chat: AudioPlayerConfigEntity(node: node, isFolderLink: false, fileLink: nil, messageId: messageId, chatId: chatId, relatedFiles: relatedFiles, audioPlayerHandlerBuilder:builder)
+        case .unknown: AudioPlayerConfigEntity(node: node, isFolderLink: false, fileLink: nil, messageId: .invalid, chatId: .invalid, relatedFiles: relatedFiles, audioPlayerHandlerBuilder:builder)
         }
     }
     
@@ -114,9 +110,7 @@ final class AudioPlayerViewRouterNodeActionAdapterTests: XCTestCase {
     ) -> MockAudioPlayerViewController {
         let storyboard = UIStoryboard(name: "AudioPlayer", bundle: nil)
         let viewController = storyboard.instantiateViewController(identifier: "AudioPlayerViewControllerID") { coder in
-            let configEntity = AudioPlayerConfigEntity(
-                playerHandler: MockAudioPlayerHandler()
-            )
+            let configEntity = AudioPlayerConfigEntity()
             return MockAudioPlayerViewController(
                 coder: coder,
                 viewModel: AudioPlayerViewModel(

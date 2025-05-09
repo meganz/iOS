@@ -278,7 +278,6 @@ import MEGADomain
             chatId: chatId,
             relatedFiles: filePaths,
             allNodes: allNodes,
-            playerHandler: self,
             isFromSharedItem: isFromSharedItem
         )
         
@@ -298,7 +297,7 @@ import MEGADomain
             guard player != nil else { return }
             
             let allNodes = currentPlayer()?.tracks.compactMap(\.node)
-            miniPlayerRouter = MiniPlayerViewRouter(configEntity: AudioPlayerConfigEntity(node: node, isFolderLink: isFolderLink, fileLink: fileLink, relatedFiles: filePaths, allNodes: allNodes, playerHandler: self, shouldResetPlayer: shouldResetPlayer, isFromSharedItem: isFromSharedItem), presenter: presenter)
+            miniPlayerRouter = MiniPlayerViewRouter(configEntity: AudioPlayerConfigEntity(node: node, isFolderLink: isFolderLink, fileLink: fileLink, relatedFiles: filePaths, allNodes: allNodes, shouldResetPlayer: shouldResetPlayer, isFromSharedItem: isFromSharedItem), presenter: presenter)
             
             miniPlayerVC = nil
             

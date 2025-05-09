@@ -7,7 +7,6 @@ import MEGATest
 import XCTest
 
 final class AudioPlayerViewRouterTests: XCTestCase {
-    
     @MainActor
     func testBuild_whenNodeIsFolderLink_configCorrectDelegate() {
         let (sut, _, _, _, _) = makeSUT(nodeOriginType: .folderLink)
@@ -157,16 +156,17 @@ final class AudioPlayerViewRouterTests: XCTestCase {
         fileLink: String? = nil,
         messageId: HandleEntity? = nil,
         chatId: HandleEntity? = nil,
-        relatedFiles: [String]? = nil,
-        playerHandler: MockAudioPlayerHandler = MockAudioPlayerHandler()
+        relatedFiles: [String]? = nil
     ) -> (configEntity: AudioPlayerConfigEntity, playerHandler: MockAudioPlayerHandler) {
+        let playerHandler = MockAudioPlayerHandler()
+        let builder = MockAudioPlayerHandlerBuilder(handler: playerHandler)
         let node = MockNode(handle: .max)
         
         return switch originType {
-        case .folderLink: (AudioPlayerConfigEntity(node: node, isFolderLink: true, fileLink: nil, messageId: .invalid, chatId: .invalid, relatedFiles: relatedFiles, playerHandler: playerHandler), playerHandler)
-        case .fileLink: (AudioPlayerConfigEntity(node: node, isFolderLink: false, fileLink: fileLink, messageId: .invalid, chatId: .invalid, relatedFiles: relatedFiles, playerHandler: playerHandler), playerHandler)
-        case .chat: (AudioPlayerConfigEntity(node: node, isFolderLink: false, fileLink: nil, messageId: messageId, chatId: chatId, relatedFiles: relatedFiles, playerHandler: playerHandler), playerHandler)
-        case .unknown: (AudioPlayerConfigEntity(node: node, isFolderLink: false, fileLink: nil, messageId: .invalid, chatId: .invalid, relatedFiles: relatedFiles, playerHandler: playerHandler), playerHandler)
+        case .folderLink: (AudioPlayerConfigEntity(node: node, isFolderLink: true, fileLink: nil, messageId: .invalid, chatId: .invalid, relatedFiles: relatedFiles, audioPlayerHandlerBuilder: builder), playerHandler)
+        case .fileLink: (AudioPlayerConfigEntity(node: node, isFolderLink: false, fileLink: fileLink, messageId: .invalid, chatId: .invalid, relatedFiles: relatedFiles, audioPlayerHandlerBuilder: builder), playerHandler)
+        case .chat: (AudioPlayerConfigEntity(node: node, isFolderLink: false, fileLink: nil, messageId: messageId, chatId: chatId, relatedFiles: relatedFiles, audioPlayerHandlerBuilder: builder), playerHandler)
+        case .unknown: (AudioPlayerConfigEntity(node: node, isFolderLink: false, fileLink: nil, messageId: .invalid, chatId: .invalid, relatedFiles: relatedFiles, audioPlayerHandlerBuilder: builder), playerHandler)
         }
     }
     

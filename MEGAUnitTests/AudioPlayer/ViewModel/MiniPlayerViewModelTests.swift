@@ -6,7 +6,6 @@ import MEGAFoundation
 import XCTest
 
 final class MiniPlayerViewModelTests: XCTestCase {
-    
     @MainActor
     func testAudioPlayerActions() async {
         let (viewModel, _, mockPlayerHandler, _, _, _) = makeSUT()
@@ -277,18 +276,18 @@ final class MiniPlayerViewModelTests: XCTestCase {
     ) {
         let mockRouter = MockMiniPlayerViewRouter(isFolderLinkPresenter: isRouterFolderLinkPresenter)
         let mockPlayerHandler = MockAudioPlayerHandler()
+        let mockPlayerHandlerBuilder = MockAudioPlayerHandlerBuilder(handler: mockPlayerHandler)
         let mockPlaybackContinuationUseCase = MockPlaybackContinuationUseCase()
         let mockNodeInfoUseCase = MockNodeInfoUseCase()
         let mockStreamingInfoUseCase = MockStreamingInfoUseCase()
         let mockAudioPlayerUseCase = MockAudioPlayerUseCase()
-        
         let sut = MiniPlayerViewModel(
             configEntity: audioPlayerConfigEntity(
                 node: node,
                 playerType: playerType,
-                mockPlayerHandler: mockPlayerHandler,
                 shouldInitializePlayer: shouldInitializePlayer,
-                relatedFileLinks: relatedFileLinks
+                relatedFileLinks: relatedFileLinks,
+                playerHandlerBuilder: mockPlayerHandlerBuilder
             ),
             router: mockRouter,
             nodeInfoUseCase: mockNodeInfoUseCase,
@@ -304,49 +303,36 @@ final class MiniPlayerViewModelTests: XCTestCase {
     private func audioPlayerConfigEntity(
         node: MockNode? = nil,
         playerType: PlayerType = .default,
-        mockPlayerHandler: MockAudioPlayerHandler,
         shouldInitializePlayer: Bool,
-        relatedFileLinks: [String]
+        relatedFileLinks: [String],
+        playerHandlerBuilder: some AudioPlayerHandlerBuilderProtocol
     ) -> AudioPlayerConfigEntity {
+        let isFolderLink = (playerType == .folderLink)
+        let fileLink: String?
+        let relatedFiles: [String]?
         
         switch playerType {
-        case .default:
-            return AudioPlayerConfigEntity(
-                node: node,
-                isFolderLink: false,
-                fileLink: nil,
-                relatedFiles: nil,
-                playerHandler: mockPlayerHandler,
-                shouldResetPlayer: shouldInitializePlayer
-            )
-        case .folderLink:
-            return AudioPlayerConfigEntity(
-                node: node,
-                isFolderLink: true,
-                fileLink: nil,
-                relatedFiles: nil,
-                playerHandler: mockPlayerHandler,
-                shouldResetPlayer: shouldInitializePlayer
-            )
         case .fileLink:
-            return AudioPlayerConfigEntity(
-                node: node,
-                isFolderLink: false,
-                fileLink: "any-file-link",
-                relatedFiles: nil,
-                playerHandler: mockPlayerHandler,
-                shouldResetPlayer: shouldInitializePlayer
-            )
+            fileLink = "any-file-link"
+            relatedFiles = nil
+            
         case .offline:
-            return AudioPlayerConfigEntity(
-                node: node,
-                isFolderLink: false,
-                fileLink: relatedFileLinks.first ?? nil,
-                relatedFiles: relatedFileLinks,
-                playerHandler: mockPlayerHandler,
-                shouldResetPlayer: shouldInitializePlayer
-            )
+            fileLink = relatedFileLinks.first
+            relatedFiles = relatedFileLinks
+            
+        default: // .default and .folderLink
+            fileLink = nil
+            relatedFiles = nil
         }
+        
+        return AudioPlayerConfigEntity(
+            node: node,
+            isFolderLink: isFolderLink,
+            fileLink: fileLink,
+            relatedFiles: relatedFiles,
+            shouldResetPlayer: shouldInitializePlayer,
+            audioPlayerHandlerBuilder: playerHandlerBuilder
+        )
     }
     
     private var testItem: AudioPlayerItem {
