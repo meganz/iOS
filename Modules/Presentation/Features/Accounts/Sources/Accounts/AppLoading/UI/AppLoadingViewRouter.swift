@@ -1,5 +1,6 @@
 import MEGAAppPresentation
 import MEGAAppSDKRepo
+import MEGADesignToken
 import MEGADomain
 import SwiftUI
 
@@ -22,6 +23,8 @@ public struct AppLoadingViewRouter: Routing {
             appLoadComplete: appLoadComplete
         )
         let view = AppLoadingView(viewModel: viewModel)
-        return UIHostingController(rootView: view)
+        let viewController = UIHostingController(rootView: view)
+        viewController.view.backgroundColor = TokenColors.Background.page
+        return viewController
     }
 }
