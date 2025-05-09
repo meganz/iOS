@@ -33,9 +33,10 @@ public final class MetadataUseCase: MetadataUseCaseProtocol {
     }
     
     public func formattedCoordinate(forFilePath path: String) async -> String? {
-        let url = if path.contains("/tmp/") {
-            URL(fileURLWithPath: path)
-        } else {
+        let absoluteURL = URL(fileURLWithPath: path)
+        let url = if fileSystemRepository.fileExists(at: absoluteURL) { // Check if path is absolute
+            absoluteURL
+        } else { // otherwise, fallback to relative to home directory.
             URL(fileURLWithPath: NSHomeDirectory().append(pathComponent: path))
         }
         return await formattedCoordinate(forFileURL: url)
