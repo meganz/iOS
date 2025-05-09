@@ -22,6 +22,7 @@
 #import "ShareAttachment.h"
 #import "ShareDestinationTableViewController.h"
 #import "MEGAProcessAsset.h"
+#import "MEGATransfer+MNZCategory.h"
 
 @import ChatRepo;
 @import Firebase;
@@ -157,12 +158,14 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [MEGASdk.shared addMEGARequestDelegate:self.logoutDelegate];
+    [MEGASdk.shared addMEGATransferDelegate:self];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     
     [MEGASdk.shared removeMEGARequestDelegateAsync:self];
+    [MEGASdk.shared removeMEGATransferDelegate:self];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
@@ -807,7 +810,7 @@
 
 - (void)smartUploadLocalPath:(NSString *)localPath parent:(MEGANode *)parentNode isFile:(BOOL)isFile appData:(NSString *)appData {
     if (self.users || self.chats) {
-        [MEGASdk.shared startUploadForChatWithLocalPath:localPath parent:parentNode appData:appData isSourceTemporary:YES fileName:nil delegate:self];
+        [MEGASdk.shared startUploadForChatWithLocalPath:localPath parent:parentNode appData:appData isSourceTemporary:YES fileName:nil];
     } else {
         [self.transfers addObject:[CancellableTransfer.alloc initWithHandle:MEGAInvalidHandle parentHandle:parentNode.handle fileLinkURL:nil localFileURL:[NSURL fileURLWithPath:localPath] name:nil appData:appData priority:NO isFile:isFile type:CancellableTransferTypeUpload]];
         [self onePendingLess];
@@ -984,6 +987,11 @@
         [self performAttachNodeHandle:transfer.nodeHandle];
     } else {
         [self onePendingLess];
+    }
+    
+    if ([transfer.appData containsString:@">setCoordinates="]) {
+        NSString *coordinates = [transfer.appData mnz_stringBetweenString:@">setCoordinates=" andString:@">"];
+        [transfer mnz_setCoordinates:coordinates];
     }
 }
 
