@@ -9,7 +9,6 @@ import LogRepo
 import MEGAAnalyticsiOS
 import MEGAAppPresentation
 import MEGAAppSDKRepo
-import MEGADesignToken
 import MEGADomain
 import MEGAL10n
 import MEGAPermissions
@@ -344,7 +343,6 @@ extension AppDelegate {
 extension AppDelegate {
     @objc func showLaunchViewController() {
         let viewController: UIViewController? = AppLoadingViewRouter().build()
-        viewController?.view.backgroundColor = TokenColors.Background.page
         UIView.transition(with: window, duration: 0.5,
                           options: [.transitionCrossDissolve, .allowAnimatedContent]) { [weak self] in
             self?.window.rootViewController = viewController
