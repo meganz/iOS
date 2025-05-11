@@ -17,14 +17,7 @@ extension AppDelegate {
         MEGAAuthentication.DependencyInjection.keychainAccount = "sessionV3"
         MEGAAuthentication.DependencyInjection.snackbarDisplayer = VisibleViewControllerSnackBarDisplayer()
         
-        MEGAAuthentication.DependencyInjection.loginUseCase = LoginWithPostActionsUseCase(
-            loginUseCase: LoginUseCase(
-                fetchNodesEnabled: false,
-                shouldIncludeFastLoginTimeout: false,
-                updateDuplicateSession: true,
-                loginAPIRepository: MEGAAuthentication.DependencyInjection.loginAPIRepository,
-                loginStoreRepository: MEGAAuthentication.DependencyInjection.loginStoreRepository),
-            postLoginActions: [AppDelegatePostLoginAction(appDelegate: self)])
+        MEGAAuthentication.DependencyInjection.loginUseCase = makeLoginUseCase()
         
         MEGAAuthentication.DependencyInjection.createAccountUseCase = KeychainStoringCreateAccountUseCase(
             createAccountUseCase: CreateAccountUseCase(
@@ -70,6 +63,56 @@ extension AppDelegate {
 
     @objc var isLoginRegisterAndOnboardingRevampFeatureEnabled: Bool {
         DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .loginRegisterAndOnboardingRevamp)
+    }
+    
+    private func makeLoginUseCase() -> some LoginUseCaseProtocol {
+        let loginUseCase = LoginUseCase(
+            fetchNodesEnabled: false,
+            shouldIncludeFastLoginTimeout: false,
+            updateDuplicateSession: true,
+            loginAPIRepository: MEGAAuthentication.DependencyInjection.loginAPIRepository,
+            loginStoreRepository: MEGAAuthentication.DependencyInjection.loginStoreRepository)
+        
+        let postLoginActionsUseCase = LoginWithPostActionsUseCase(
+            loginUseCase: loginUseCase,
+            postLoginActions: [AppDelegatePostLoginAction(appDelegate: self)])
+        
+        return LoginWithPreLoginActionsUseCase(
+            loginUseCase: postLoginActionsUseCase,
+            preLoginActions: [
+                UpdateChatSDKPreLoginAction(),
+                EnsureAudioPlayerStoppedPreLoginAction(
+                    streamingInfoUseCase: StreamingInfoUseCase())])
+    }
+}
+
+private struct UpdateChatSDKPreLoginAction: PreLoginAction {
+    private let chatSdk: MEGAChatSdk
+    
+    init(chatSdk: MEGAChatSdk = .shared) {
+        self.chatSdk = chatSdk
+    }
+    
+    func handle() async throws {
+        guard chatSdk.initState() != .waitingNewSession else { return }
+        guard chatSdk.initKarere(withSid: nil) != .waitingNewSession else { return }
+        
+        MEGALogError("Init Karere without session must return waiting for a new session")
+        chatSdk.logout()
+    }
+}
+
+private struct EnsureAudioPlayerStoppedPreLoginAction: PreLoginAction {
+    private let streamingInfoUseCase: any StreamingInfoUseCaseProtocol
+    
+    init(streamingInfoUseCase: some StreamingInfoUseCaseProtocol) {
+        self.streamingInfoUseCase = streamingInfoUseCase
+    }
+    
+    func handle() async throws {
+        guard AudioPlayerManager.shared.isPlayerAlive() else { return }
+        let streamingInfoUseCase = StreamingInfoUseCase()
+        streamingInfoUseCase.stopServer()
     }
 }
 
