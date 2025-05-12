@@ -2344,6 +2344,9 @@
 		BFA1EEEA2A4CF69700435A0F /* ScheduleMeetingNewViewConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA1EEE92A4CF69700435A0F /* ScheduleMeetingNewViewConfiguration.swift */; };
 		BFA2A21B2DAC9E4F00E8673D /* SubscriptionPurchaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA2A21A2DAC9E4F00E8673D /* SubscriptionPurchaseView.swift */; };
 		BFA55257245F849F009FE3A6 /* AddToChatMenuPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA55256245F849F009FE3A6 /* AddToChatMenuPageViewController.swift */; };
+		BFA6C8D52DD15F83002D0012 /* SubscriptionDetailsLoadingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA6C8D42DD15F83002D0012 /* SubscriptionDetailsLoadingViewModel.swift */; };
+		BFA6C8D92DD15F97002D0012 /* SubscriptionDetailsLoadingRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA6C8D82DD15F97002D0012 /* SubscriptionDetailsLoadingRouter.swift */; };
+		BFA6C8EB2DD16C9B002D0012 /* SubscriptionDetailsLoadingViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA6C8EA2DD16C98002D0012 /* SubscriptionDetailsLoadingViewModelTests.swift */; };
 		BFA6CD5A263223B100791E02 /* MeetingFloatingPanelViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA6CD59263223B100791E02 /* MeetingFloatingPanelViewModelTests.swift */; };
 		BFAAF71F252E9E960053A9BF /* FilesExplorerListSourceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAAF71E252E9E960053A9BF /* FilesExplorerListSourceProtocol.swift */; };
 		BFAD0F982A2978D2003F5F83 /* ScheduleMeetingCreationCustomOptionsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAD0F972A2978D2003F5F83 /* ScheduleMeetingCreationCustomOptionsRouter.swift */; };
@@ -2368,6 +2371,7 @@
 		BFAFB17F252AD1D9003ADFE3 /* DocAndAudioListSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAFB17E252AD1D9003ADFE3 /* DocAndAudioListSource.swift */; };
 		BFAFB1A0252C0A66003ADFE3 /* NodeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BFAFB19F252C0A66003ADFE3 /* NodeTableViewCell.xib */; };
 		BFB076572B8EE91D00FE6962 /* ContextMenuWithButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB076562B8EE91D00FE6962 /* ContextMenuWithButtonView.swift */; };
+		BFB349F62DD1962C0082F948 /* SubscriptionPurchaseViewCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB349F52DD1962C0082F948 /* SubscriptionPurchaseViewCoordinator.swift */; };
 		BFB463DD2432F2E900FB90B9 /* ChatRoomDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB463DC2432F2E900FB90B9 /* ChatRoomDelegate.swift */; };
 		BFB463E92433394500FB90B9 /* ChatMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB463E82433394500FB90B9 /* ChatMessage.swift */; };
 		BFB463EB2433FD6A00FB90B9 /* MegaDataFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB463EA2433FD6A00FB90B9 /* MegaDataFormatter.swift */; };
@@ -5114,6 +5118,9 @@
 		BFA1EEE92A4CF69700435A0F /* ScheduleMeetingNewViewConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingNewViewConfiguration.swift; sourceTree = "<group>"; };
 		BFA2A21A2DAC9E4F00E8673D /* SubscriptionPurchaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionPurchaseView.swift; sourceTree = "<group>"; };
 		BFA55256245F849F009FE3A6 /* AddToChatMenuPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToChatMenuPageViewController.swift; sourceTree = "<group>"; };
+		BFA6C8D42DD15F83002D0012 /* SubscriptionDetailsLoadingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionDetailsLoadingViewModel.swift; sourceTree = "<group>"; };
+		BFA6C8D82DD15F97002D0012 /* SubscriptionDetailsLoadingRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionDetailsLoadingRouter.swift; sourceTree = "<group>"; };
+		BFA6C8EA2DD16C98002D0012 /* SubscriptionDetailsLoadingViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionDetailsLoadingViewModelTests.swift; sourceTree = "<group>"; };
 		BFA6CD59263223B100791E02 /* MeetingFloatingPanelViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingFloatingPanelViewModelTests.swift; sourceTree = "<group>"; };
 		BFAAF71E252E9E960053A9BF /* FilesExplorerListSourceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilesExplorerListSourceProtocol.swift; sourceTree = "<group>"; };
 		BFAD0F972A2978D2003F5F83 /* ScheduleMeetingCreationCustomOptionsRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingCreationCustomOptionsRouter.swift; sourceTree = "<group>"; };
@@ -5138,6 +5145,7 @@
 		BFAFB17E252AD1D9003ADFE3 /* DocAndAudioListSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocAndAudioListSource.swift; sourceTree = "<group>"; };
 		BFAFB19F252C0A66003ADFE3 /* NodeTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NodeTableViewCell.xib; sourceTree = "<group>"; };
 		BFB076562B8EE91D00FE6962 /* ContextMenuWithButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextMenuWithButtonView.swift; sourceTree = "<group>"; };
+		BFB349F52DD1962C0082F948 /* SubscriptionPurchaseViewCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionPurchaseViewCoordinator.swift; sourceTree = "<group>"; };
 		BFB463DC2432F2E900FB90B9 /* ChatRoomDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomDelegate.swift; sourceTree = "<group>"; };
 		BFB463E82433394500FB90B9 /* ChatMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessage.swift; sourceTree = "<group>"; };
 		BFB463EA2433FD6A00FB90B9 /* MegaDataFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MegaDataFormatter.swift; sourceTree = "<group>"; };
@@ -12137,6 +12145,7 @@
 			children = (
 				9459229A2C3EA619004D6AEF /* Contacts */,
 				940196D42DAD1DEA00181689 /* Settings */,
+				BFA6C8E92DD16C85002D0012 /* SubscriptionScreen */,
 				946AC10A2CAFC19A0020442F /* UpgradeAccount */,
 				940CE3CA2C255EC60083068E /* Usage */,
 				B6D5482F283E2BA900D7302F /* AppFirstLaunchSecurityCheckerTests.swift */,
@@ -12474,6 +12483,8 @@
 		BFA2A2192DAC9E3400E8673D /* SubscriptionsScreen */ = {
 			isa = PBXGroup;
 			children = (
+				BFA6C8D82DD15F97002D0012 /* SubscriptionDetailsLoadingRouter.swift */,
+				BFA6C8D42DD15F83002D0012 /* SubscriptionDetailsLoadingViewModel.swift */,
 				BF0FE7602DB312FC0083E23B /* SubscriptionPurchaseBenefitsView.swift */,
 				BFFE079D2DC0465B00DFBC69 /* SubscriptionPurchaseBottomButtonView.swift */,
 				BF0FE7E52DB9AB060083E23B /* SubscriptionPurchaseChipsSelectorView.swift */,
@@ -12488,8 +12499,17 @@
 				BFFE078D2DC03C2000DFBC69 /* SubscriptionPurchasePlansView.swift */,
 				BF0FE7DB2DB99FCE0083E23B /* SubscriptionPurchaseRouter.swift */,
 				BFA2A21A2DAC9E4F00E8673D /* SubscriptionPurchaseView.swift */,
+				BFB349F52DD1962C0082F948 /* SubscriptionPurchaseViewCoordinator.swift */,
 			);
 			path = SubscriptionsScreen;
+			sourceTree = "<group>";
+		};
+		BFA6C8E92DD16C85002D0012 /* SubscriptionScreen */ = {
+			isa = PBXGroup;
+			children = (
+				BFA6C8EA2DD16C98002D0012 /* SubscriptionDetailsLoadingViewModelTests.swift */,
+			);
+			path = SubscriptionScreen;
 			sourceTree = "<group>";
 		};
 		BFAC873525FEF1F3009CA3F6 /* AudioVideo */ = {
@@ -15625,6 +15645,8 @@
 				C450CFB725B83E5F005C707D /* StreamingInfoRepository.swift in Sources */,
 				C450CFC325B84350005C707D /* StreamingInfoUseCase.swift in Sources */,
 				5D79B51F249849580070FECD /* String+MarkedString.swift in Sources */,
+				BFA6C8D92DD15F97002D0012 /* SubscriptionDetailsLoadingRouter.swift in Sources */,
+				BFA6C8D52DD15F83002D0012 /* SubscriptionDetailsLoadingViewModel.swift in Sources */,
 				BF0FE7612DB312FC0083E23B /* SubscriptionPurchaseBenefitsView.swift in Sources */,
 				BFFE079E2DC0465B00DFBC69 /* SubscriptionPurchaseBottomButtonView.swift in Sources */,
 				BF0FE7E62DB9AB060083E23B /* SubscriptionPurchaseChipsSelectorView.swift in Sources */,
@@ -15639,6 +15661,7 @@
 				BFFE078E2DC03C2000DFBC69 /* SubscriptionPurchasePlansView.swift in Sources */,
 				BF0FE7DC2DB99FCE0083E23B /* SubscriptionPurchaseRouter.swift in Sources */,
 				BFA2A21B2DAC9E4F00E8673D /* SubscriptionPurchaseView.swift in Sources */,
+				BFB349F62DD1962C0082F948 /* SubscriptionPurchaseViewCoordinator.swift in Sources */,
 				B695B608264B43160050DF09 /* SVIndefiniteAnimatedView.m in Sources */,
 				B695B602264B43160050DF09 /* SVProgressAnimatedView.m in Sources */,
 				B695B605264B43160050DF09 /* SVProgressHUD.m in Sources */,
@@ -16501,6 +16524,7 @@
 				BF0730DC2C98099C00DC5D11 /* StorageFullModalAlertViewModelTests.swift in Sources */,
 				2461E7042A8CC90600A8FFA6 /* StreamingInfoRepositoryTests.swift in Sources */,
 				C45A2E5425D2F82600915A83 /* StreamingInfoUseCaseTests.swift in Sources */,
+				BFA6C8EB2DD16C9B002D0012 /* SubscriptionDetailsLoadingViewModelTests.swift in Sources */,
 				C43EC4A32CDB01C400556C4C /* Task+Yield.swift in Sources */,
 				BFC9685B278CDA080098C523 /* TestingAppDelegate.swift in Sources */,
 				B52CE0DD2CD094DF0083889E /* TestPasswordViewModelTests.swift in Sources */,

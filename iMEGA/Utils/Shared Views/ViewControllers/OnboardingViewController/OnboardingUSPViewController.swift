@@ -1,6 +1,8 @@
 import Combine
+import MEGAAppSDKRepo
 import MEGAAssets
 import MEGAAuthentication
+import MEGADomain
 import MEGAL10n
 import MEGASwiftUI
 import SwiftUI
@@ -11,9 +13,19 @@ final class OnboardingUSPViewController: UIHostingController<OnboardingView<Load
     init(
         viewModel: OnboardingViewModel = MEGAAuthentication.DependencyInjection.onboardingViewModel
     ) {
-        self.viewModel = .init(
-            onboardingViewModel: viewModel,
-            permissionAppLaunchRouter: PermissionAppLaunchRouter())
+        self.viewModel = .init(onboardingViewModel: viewModel) { hasConfirmedAccount in
+            if hasConfirmedAccount {
+                guard let window = UIApplication.shared.keyWindow else { return }
+                let accountUseCase = AccountUseCase(repository: AccountRepository.newRepo)
+                let coordinator = SubscriptionPurchaseViewCoordinator(window: window, accountUseCase: accountUseCase) {
+                    fatalError()
+                }
+                coordinator.start()
+            } else {
+                PermissionAppLaunchRouter().setRootViewController()
+            }
+        }
+        
         super.init(rootView: OnboardingView(
             viewModel: self.viewModel.onboardingViewModel,
             configuration: .welcome,

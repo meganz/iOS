@@ -1,4 +1,6 @@
+import Accounts
 import Foundation
+import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGADomain
 import Settings
@@ -23,46 +25,6 @@ final class SubscriptionPurchaseRouter: UpgradeAccountPlanRouting {
         self.accountDetails = currentAccountDetails
         self.accountUseCase = accountUseCase
         self.onDismiss = onDismiss
-    }
-
-    static func showSubscriptionPurchaseView(in window: UIWindow, onDismiss: @escaping () -> Void) {
-        Task {
-            let accountUseCase = AccountUseCase(repository: AccountRepository.newRepo)
-            let accountDetails = try await loadAccountDetails(using: accountUseCase)
-            await MEGAPurchase.sharedInstance().requestPricingAsync()
-
-            showSubscriptionPurchaseView(
-                window: window,
-                accountUseCase: accountUseCase,
-                accountDetails: accountDetails,
-                onDismiss: onDismiss
-            )
-        }
-    }
-
-    private static func loadAccountDetails(
-        using useCase: AccountUseCase<AccountRepository>
-    ) async throws -> AccountDetailsEntity {
-        if let details = useCase.currentAccountDetails {
-            return details
-        }
-        return try await useCase.refreshCurrentAccountDetails()
-    }
-
-    @MainActor
-    static func showSubscriptionPurchaseView(
-        window: UIWindow,
-        accountUseCase: some AccountUseCaseProtocol,
-        accountDetails: AccountDetailsEntity,
-        onDismiss: @escaping () -> Void
-    ) {
-        let router = SubscriptionPurchaseRouter(
-            window: window,
-            currentAccountDetails: accountDetails,
-            accountUseCase: accountUseCase,
-            onDismiss: onDismiss
-        )
-        router.start()
     }
 
     func build() -> UIViewController {
