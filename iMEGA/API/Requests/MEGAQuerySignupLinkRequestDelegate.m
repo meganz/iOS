@@ -3,7 +3,6 @@
 #import "SVProgressHUD.h"
 
 #import "Helper.h"
-#import "CreateAccountViewController.h"
 #import "MEGALinkManager.h"
 #import "MEGALoginRequestDelegate.h"
 #import "OnboardingViewController.h"
@@ -75,18 +74,7 @@
             [MEGALinkManager presentConfirmViewWithURLType:URLTypeConfirmationLink link:MEGALinkManager.linkURL.absoluteString email:self.email];
         }
     } else if (self.urlType == URLTypeNewSignUpLink && MEGALinkManager.emailOfNewSignUpLink)  {
-        UIViewController *rootViewController = UIApplication.mnz_keyWindow.rootViewController;
-        if ([rootViewController isKindOfClass:OnboardingViewController.class]) {
-            UINavigationController *createNC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"CreateAccountNavigationControllerID"];
-            CreateAccountViewController *createAccountVC = createNC.viewControllers.firstObject;
-            createAccountVC.emailString = MEGALinkManager.emailOfNewSignUpLink;
-            createAccountVC.modalPresentationStyle = UIModalPresentationFullScreen;
-            
-            [UIApplication.mnz_presentingViewController presentViewController:createNC animated:YES completion:nil];
-            
-            MEGALinkManager.emailOfNewSignUpLink = nil;
-        }
-        
+        [self showRegistrationFromOnboarding];
         [MEGALinkManager resetLinkAndURLType];
     }
     

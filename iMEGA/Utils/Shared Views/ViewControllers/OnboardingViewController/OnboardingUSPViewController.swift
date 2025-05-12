@@ -41,6 +41,10 @@ final class OnboardingUSPViewController: UIHostingController<OnboardingView<Load
     func presentLoginView(email: String? = nil) {
         viewModel.presentLoginView(email: email)
     }
+    
+    func presentSignUpView(email: String? = nil) {
+        viewModel.presentSignUpView(email: email)
+    }
 }
 
 private extension OnboardingConfiguration {

@@ -1,3 +1,4 @@
+import MEGAAppPresentation
 import MEGAAuthentication
 import MEGASwiftUI
 import SwiftUI
@@ -23,5 +24,26 @@ extension MEGAQuerySignupLinkRequestDelegate {
             // Show onboarding since its expected based of previous checks
             (UIApplication.shared.delegate as? AppDelegate)?.showOnboarding(completion: nil)
         }
+    }
+    
+    @MainActor
+    @objc func showRegistrationFromOnboarding() {
+        guard let rootViewController = UIApplication.mnz_keyWindow()?.rootViewController else {
+            return
+        }
+        if rootViewController is OnboardingViewController {
+            guard let createNC = UIStoryboard(name: "Main", bundle: nil)
+                .instantiateViewController(withIdentifier: "CreateAccountNavigationControllerID") as? UINavigationController,
+                  let createVC = createNC.viewControllers.first as? CreateAccountViewController else { return }
+            createVC.emailString = MEGALinkManager.emailOfNewSignUpLink
+            createVC.modalPresentationStyle = .fullScreen
+            
+            UIApplication.mnz_presentingViewController().present(createNC, animated: true)
+        } else if let onboardingViewController = rootViewController as? OnboardingUSPViewController {
+            onboardingViewController.presentSignUpView(
+                email: MEGALinkManager.emailOfNewSignUpLink)
+        }
+        
+        MEGALinkManager.emailOfNewSignUpLink = nil
     }
 }
