@@ -34,6 +34,13 @@ final class OnboardingRoutingViewModel {
         
         onboardingViewModel.routeTo(.login(loginViewModel))
     }
+    
+    func presentSignUpView(email: String? = nil) {
+        let createAccountViewModel = MEGAAuthentication.DependencyInjection.createAccountViewModel
+        createAccountViewModel.email = email ?? ""
+        
+        onboardingViewModel.routeTo(.signUp(createAccountViewModel))
+    }
 
     private func setupSubscription() {
         setupAccountConfirmationSubscription()
