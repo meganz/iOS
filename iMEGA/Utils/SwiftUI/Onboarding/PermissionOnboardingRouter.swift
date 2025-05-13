@@ -10,47 +10,58 @@ final class PermissionOnboardingRouter {
         case notifications
         case cameraBackups
     }
-    private let presenter: UIViewController
+
     private let permissionsHandler: any DevicePermissionsHandling
 
-    private var task: Task<Void, Never>?
+    private var task: Task<Bool, Never>?
 
-    init(
-        presenter: UIViewController,
-        permissionsHandler: some DevicePermissionsHandling
-    ) {
-        self.presenter = presenter
+    init(permissionsHandler: some DevicePermissionsHandling) {
         self.permissionsHandler = permissionsHandler
     }
 
-    func start(permissionType: PermissionOnboardingType) async {
-        guard task == nil else { return }
-
+    /// Start the Permission Onboarding screen flow
+    /// - Parameters:
+    ///   - window: The window to show the flow on
+    ///   - permissionType:
+    /// - Returns:
+    ///  - nil: The flow isn't shown or it's shown but user chose to skipp
+    ///  - true: The flow is shown and permission is granted
+    ///  - false: The flow is shown and permission is not granted
+    ///
+    func start(
+        window: UIWindow,
+        permissionType: PermissionOnboardingType
+    ) async -> Bool? {
+        if let task {
+            return await task.value
+        }
         switch permissionType {
         case .notifications:
-            guard await permissionsHandler.shouldAskForNotificationPermission() else { return }
+            guard await permissionsHandler.shouldAskForNotificationPermission() else { return nil }
         case .cameraBackups:
-            guard permissionsHandler.shouldAskForPhotosPermissions else { return }
+            guard permissionsHandler.shouldAskForPhotosPermissions else { return nil }
         }
 
         let viewModel = buildViewModel(for: permissionType)
 
         let view = PermissionOnboardingView(viewModel: viewModel)
         let viewController = UIHostingController(rootView: view)
-        viewController.modalPresentationStyle = .overFullScreen
 
         task = Task {
-            for await _ in viewModel.$route.dropFirst().values {
-                presenter.dismiss(animated: true)
+            var result = false
+            for await route in viewModel.$route.dropFirst().values {
                 task?.cancel()
                 task = nil
+                if case .finished(let succeeded) = route {
+                    result = succeeded
+                }
                 break
             }
+            return result
         }
 
-        presenter.present(viewController, animated: true)
-
-        await task?.value
+        window.rootViewController = viewController
+        return await task?.value
     }
 
     private func buildViewModel(for onboardingType: PermissionOnboardingType) -> PermissionOnboardingViewModel {

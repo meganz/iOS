@@ -98,7 +98,7 @@ extension MainTabBarController {
         setBadgeValueForChats()
         configurePhoneImageBadge()
 
-        selectedViewController = defaultViewControllers[TabManager.getPreferenceTab().tabType.rawValue]
+        selectedViewController = defaultViewControllers[TabManager.selectedTab.tabType.rawValue]
 
         AppearanceManager.setupTabbar(tabBar)
     }

@@ -21,7 +21,7 @@ public final class MockDevicePermissionHandler: DevicePermissionsHandling, @unch
         requestMediaPermissionValuesToReturn[.video] = videoAuthorized
         self.requestPhotoLibraryAccessPermissionsGranted = requestPhotoLibraryAccessPermissionsGranted
     }
-    
+
     public func notificationPermissionStatus() async -> UNAuthorizationStatus {
         .denied
     }
@@ -35,9 +35,12 @@ public final class MockDevicePermissionHandler: DevicePermissionsHandling, @unch
         requestPermissionsMediaTypes.append(mediaType)
         return requestMediaPermissionValuesToReturn[mediaType]!
     }
-    
-    public func requestNotificationsPermission() async -> Bool { false }
-    
+
+    public var requestNotificationsPermissionToReturn: Bool = false
+    public func requestNotificationsPermission() async -> Bool {
+        requestNotificationsPermissionToReturn
+    }
+
     public var shouldAskForAudioPermissions: Bool = false
     
     public var shouldAskForVideoPermissions: Bool = false

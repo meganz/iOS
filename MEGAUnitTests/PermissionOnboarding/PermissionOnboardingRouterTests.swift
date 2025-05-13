@@ -70,25 +70,29 @@ struct PermissionOnboardingRouterTests {
 
     @MainActor
     @Test(
-        "when permission can be requested, should show PermissionOnboardingView with correct view model data",
-        arguments: [TestCase.notifications, .cameraBackups]
+        "when permission can be requested, should show PermissionOnboardingView with correct view model data and output",
+        arguments: [
+            (TestCase.notifications, true),
+            (.notifications, false),
+            (.cameraBackups, true),
+            (.cameraBackups, false)
+            ]
     )
-    func testShouldAskForPermissions(testCase: TestCase) async throws {
-        let presenter = MockViewController()
+    func testShouldAskForPermissions(testCase: TestCase, output: Bool) async throws {
+        let window = UIWindow()
         let handler = MockDevicePermissionHandler()
         handler[keyPath: testCase.PermissionHandlerKeyPath] = testCase.shouldAskPermission
         let sut = PermissionOnboardingRouter(
-            presenter: presenter,
             permissionsHandler: handler
         )
 
-        let startTask = Task.detached { await sut.start(permissionType: testCase.permissionType) }
+        let startTask = Task.detached {
+            await sut.start(window: window, permissionType: testCase.permissionType)
+        }
         try await Task.sleep(nanoseconds: 100_000_000)
 
-        #expect(presenter.presentCallCount == 1)
-
         let hosted = try #require(
-            presenter.presentedVC as? UIHostingController<PermissionOnboardingView>
+            window.rootViewController as? UIHostingController<PermissionOnboardingView>
         )
         let viewModel = hosted.rootView.viewModel
 
@@ -99,9 +103,8 @@ struct PermissionOnboardingRouterTests {
         #expect(viewModel.primaryButtonTitle == testCase.viewModelOutput.primaryButton)
         #expect(viewModel.secondaryButtonTitle == testCase.viewModelOutput.secondaryButton)
 
-        viewModel.routeTo(.finished)
-        await startTask.value
-        #expect(presenter.dismissCallCount == 1)
+        viewModel.routeTo(.finished(result: output))
+        #expect(await startTask.value == output)
     }
 
     @MainActor
@@ -110,21 +113,20 @@ struct PermissionOnboardingRouterTests {
         arguments: [TestCase.notifications, .cameraBackups]
     )
     func testShouldNotAskForPermissions(testCase: TestCase) async throws {
-        let presenter = MockViewController()
+        let window = UIWindow()
         let handler = MockDevicePermissionHandler()
         handler[keyPath: testCase.PermissionHandlerKeyPath] = false
         let sut = PermissionOnboardingRouter(
-            presenter: presenter,
             permissionsHandler: handler
         )
 
-        let startTask = Task.detached { await sut.start(permissionType: testCase.permissionType) }
+        let startTask = Task.detached {
+            await sut.start(window: window, permissionType: testCase.permissionType)
+        }
         try await Task.sleep(nanoseconds: 100_000_000)
 
-        #expect(presenter.presentCallCount == 0)
-        #expect(presenter.presentedVC == nil)
+        #expect(window.rootViewController == nil)
 
-        await startTask.value
-        #expect(presenter.dismissCallCount == 0)
+        #expect(await startTask.value == nil)
     }
 }

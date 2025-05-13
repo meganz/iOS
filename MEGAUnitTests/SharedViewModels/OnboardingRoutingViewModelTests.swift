@@ -14,7 +14,7 @@ struct OnboardingRoutingViewModelTests {
             $confirmAccount.mutate {
                 $0 = hasConfirmedAccount
             }
-            router.setRootViewController()
+            router.setRootViewController(shouldShowLoadingScreen: true)
         }
 
         try await Task.sleep(nanoseconds: 100_000_000)
@@ -74,10 +74,10 @@ struct OnboardingRoutingViewModelTests {
 
 private final class MockPermissionAppLaunchRouter: PermissionAppLaunchRouterProtocol {
     private(set) var setRootViewControllerCalled = 0
-    
+
     nonisolated init() {}
     
-    func setRootViewController() {
+    func setRootViewController(shouldShowLoadingScreen: Bool) {
         setRootViewControllerCalled += 1
     }
 }

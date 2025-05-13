@@ -2,7 +2,7 @@ import MEGAPermissions
 import MEGAPresentation
 
 protocol PermissionOnboardingRequesting: Sendable {
-    func requestPermission() async
+    func requestPermission() async -> Bool
 }
 
 struct PermissionOnboardingRequester: PermissionOnboardingRequesting {
@@ -21,19 +21,23 @@ struct PermissionOnboardingRequester: PermissionOnboardingRequesting {
         self.devicePermissionHandler = devicePermissionHandler
     }
 
-    func requestPermission() async {
-        switch permissionType {
+    func requestPermission() async -> Bool {
+        return switch permissionType {
         case .notifications:
-            _ = await devicePermissionHandler.requestNotificationsPermission()
+            await devicePermissionHandler.requestNotificationsPermission()
         case .photos:
-            _ = await devicePermissionHandler.requestPhotoLibraryAccessPermissions()
+            await devicePermissionHandler.requestPhotoLibraryAccessPermissions()
         }
     }
 }
 
 final class PermissionOnboardingViewModel: ViewModel<PermissionOnboardingViewModel.Route> {
-    enum Route {
-        case finished
+
+    enum Route: Equatable {
+        // When user choose to skip the screen
+        case skipped
+        // When user choose to request for permission and get a result - result is true if permission is granted.
+        case finished(result: Bool)
     }
 
     let image: ImageResource
@@ -65,11 +69,11 @@ final class PermissionOnboardingViewModel: ViewModel<PermissionOnboardingViewMod
     }
 
     func onPrimaryButtonTap() async {
-        await permissionRequester.requestPermission()
-        routeTo(.finished)
+        let result = await permissionRequester.requestPermission()
+        routeTo(.finished(result: result))
     }
 
     func onSecondaryButtonTap() async {
-        routeTo(.finished)
+        routeTo(.skipped)
     }
 }

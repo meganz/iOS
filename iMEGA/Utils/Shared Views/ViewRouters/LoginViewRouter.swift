@@ -51,6 +51,6 @@ final class LoginViewRouter: LoginRouterProtocol {
     }
     
     func showPermissionLoading() {
-        PermissionAppLaunchRouter().setRootViewController()
+        PermissionAppLaunchRouter().setRootViewController(shouldShowLoadingScreen: true)
     }
 }
