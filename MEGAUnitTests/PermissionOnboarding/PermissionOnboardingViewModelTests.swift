@@ -5,9 +5,10 @@ import Testing
 
 struct PermissionOnboardingViewModelTests {
 
-    @Test("On primary button tap should change route and call permissionRequester")
-    func primaryButtonTap() async {
-        let permissionRequester = MockPermissionOnboardingRequester()
+    @Test("On primary button tap should change route to .finished with correct result",
+    arguments: [true, false])
+    func primaryButtonTap(permissionGranted: Bool) async {
+        let permissionRequester = MockPermissionOnboardingRequester(requestPermissionValue: permissionGranted)
         let sut = PermissionOnboardingViewModel(
             image: .info,
             title: "title",
@@ -19,13 +20,12 @@ struct PermissionOnboardingViewModelTests {
         )
 
         await sut.onPrimaryButtonTap()
-        #expect(permissionRequester.requestPermissionCalls == 1)
-        #expect(sut.route == .finished)
+        #expect(sut.route == .finished(result: permissionGranted))
     }
 
-    @Test("On secondary button tap should change route")
+    @Test("On secondary button tap should change route to ,skipped")
     func secondaryButtonTap() async {
-        let permissionRequester = MockPermissionOnboardingRequester()
+        let permissionRequester = MockPermissionOnboardingRequester(requestPermissionValue: false)
         let sut = PermissionOnboardingViewModel(
             image: .info,
             title: "title",
@@ -37,14 +37,16 @@ struct PermissionOnboardingViewModelTests {
         )
 
         await sut.onSecondaryButtonTap()
-        #expect(permissionRequester.requestPermissionCalls == 0)
-        #expect(sut.route == .finished)
+        #expect(sut.route == .skipped)
     }
 }
 
 private final class MockPermissionOnboardingRequester: PermissionOnboardingRequesting, @unchecked Sendable {
-    var requestPermissionCalls = 0
-    func requestPermission() async {
-        requestPermissionCalls += 1
+    private let requestPermissionValue: Bool
+    init(requestPermissionValue: Bool) {
+        self.requestPermissionValue = requestPermissionValue
+    }
+    func requestPermission() async -> Bool {
+        requestPermissionValue
     }
 }
