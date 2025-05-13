@@ -15,7 +15,7 @@ final class OnboardingRoutingViewModel {
 
     init(
         onboardingViewModel: OnboardingViewModel = MEGAAuthentication.DependencyInjection.onboardingViewModel,
-        accountConfirmationUseCase: some AccountConfirmationUseCaseProtocol = MEGAAuthentication.DependencyInjection.accountConfirmationUseCase,
+        accountConfirmationUseCase: any AccountConfirmationUseCaseProtocol = MEGAAuthentication.DependencyInjection.accountConfirmationUseCase,
         onLoginSuccess: @escaping LoginSuccess
     ) {
         self.onboardingViewModel = onboardingViewModel

@@ -26,6 +26,8 @@ extension AppDelegate {
             keychainRepository: MEGAAuthentication.DependencyInjection.keychainRepository)
         
         MEGAAuthentication.DependencyInjection.analyticsTracker = AnalyticsTrackerAdapter()
+        
+        MEGAAuthentication.DependencyInjection.accountConfirmationUseCase = makeAccountConfirmationUseCase()
     }
     
     @objc func makeOnboardingViewController() -> UIViewController {
@@ -83,6 +85,14 @@ extension AppDelegate {
                 UpdateChatSDKPreLoginAction(),
                 EnsureAudioPlayerStoppedPreLoginAction(
                     streamingInfoUseCase: StreamingInfoUseCase())])
+    }
+    
+    private func makeAccountConfirmationUseCase() -> some AccountConfirmationUseCaseProtocol {
+        ClearKeychainAccountConfirmationUseCase(
+            accountConfirmationUseCase: AccountConfirmationUseCase(
+                repository: AccountConfirmationRepository(
+                    sdk: MEGAAuthentication.DependencyInjection.sharedSdk)),
+            keychainRepository: MEGAAuthentication.DependencyInjection.keychainRepository)
     }
 }
 
