@@ -94,31 +94,6 @@ struct SmallShortcutWidgetView: View {
     }
 }
 
-struct ShortcutView: View {
-    let shortcut: ShortcutDetail
-    
-    var body: some View {
-        HStack(alignment: .top) {
-            VStack(alignment: .leading) {
-                Image(shortcut.imageName)
-                    .resizable()
-                    .frame(width: 28, height: 28, alignment: .leading)
-                    .padding([.leading, .trailing], 8)
-                Text(shortcut.title)
-                    .font(.system(size: 12, weight: .semibold, design: .default))
-                    .foregroundColor(.white)
-                    .padding([.leading, .trailing], 8)
-                    .applyWidgetAccent()
-            }
-            Spacer()
-        }
-        .frame(maxHeight: .infinity)
-        .background(LinearGradient(gradient: Gradient(colors: [shortcut.topBackgroundColor, shortcut.bottomBackgroundColor]), startPoint: .top, endPoint: .bottom))
-        .cornerRadius(8)
-    }
-}
-
-@available(iOS 16.0, *)
 struct ShortcutView_iOS16: View {
     let shortcut: ShortcutDetail
     
@@ -190,11 +165,7 @@ struct MediumShortcutsWidgetView: View {
     
     @ViewBuilder
     private func buildShortcutView(shortcut: ShortcutDetail) -> some View {
-        if #available(iOS 16.0, *) {
-            ShortcutView_iOS16(shortcut: shortcut)
-        } else {
-            ShortcutView(shortcut: shortcut)
-        }
+        ShortcutView_iOS16(shortcut: shortcut)
     }
 }
 

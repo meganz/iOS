@@ -54,9 +54,7 @@ extension ContactsViewController {
     
     @objc
     func setNavigationItemStackedPlacement() {
-        if #available(iOS 16.0, *) {
-            navigationItem.preferredSearchBarPlacement = .stacked
-        }
+        navigationItem.preferredSearchBarPlacement = .stacked
     }
     
     @objc

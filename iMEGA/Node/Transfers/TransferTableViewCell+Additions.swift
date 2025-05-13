@@ -78,23 +78,10 @@ extension TransferTableViewCell {
     }
     
     private func extractLocalIdentifier(from input: String) -> String? {
-        if #available(iOS 16, *) {
-            let pattern = />localIdentifier=([^>]+)/
-            if let match = input.firstMatch(of: pattern) {
-                let localIdentifier = match.output.1
-                return String(localIdentifier)
-            }
-        } else {
-            let startPattern = ">localIdentifier="
-            if let startRange = input.range(of: startPattern) {
-                let identifierStartIndex = startRange.upperBound
-                let remainingString = input[identifierStartIndex...]
-                if let endRange = remainingString.range(of: ">") {
-                    return String(remainingString[..<endRange.lowerBound])
-                } else {
-                    return String(remainingString)
-                }
-            }
+        let pattern = />localIdentifier=([^>]+)/
+        if let match = input.firstMatch(of: pattern) {
+            let localIdentifier = match.output.1
+            return String(localIdentifier)
         }
         return nil
     }

@@ -132,25 +132,12 @@ private struct OnboardingNavigationBar<Content: View>: View {
     
     @ViewBuilder
     private func clearNavigationBarView() -> some View {
-        if #available(iOS 16.0, *) {
-            NavigationStackView {
-                content()
-                    .toolbar {
-                        dismissButton()
-                    }
-                    .toolbarBackground(.hidden, for: .navigationBar)
-            }
-        } else {
-            VStack(spacing: 0) {
-                NavigationBarView(leading: { EmptyView() },
-                                  trailing: { dismissButton() },
-                                  center: { EmptyView() },
-                                  backgroundColor: .clear)
-                .frame(maxHeight: 44)
-                
-                content()
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-            }
+        NavigationStackView {
+            content()
+                .toolbar {
+                    dismissButton()
+                }
+                .toolbarBackground(.hidden, for: .navigationBar)
         }
     }
     
