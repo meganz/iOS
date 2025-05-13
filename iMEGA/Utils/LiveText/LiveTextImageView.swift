@@ -1,6 +1,5 @@
 @preconcurrency import VisionKit
 
-@available(iOS 16.0, *)
 final class LiveTextImageView: SDAnimatedImageView {
     private lazy var interaction = {
         let interaction = ImageAnalysisInteraction()
@@ -58,8 +57,7 @@ final class LiveTextImageView: SDAnimatedImageView {
 // MARK: - UIImageView Live Text
 extension UIImageView {
     @objc func startImageLiveTextAnalysisIfNeeded() {
-        guard #available(iOS 16, *),
-              let liveTextImageView = self as? LiveTextImageView,
+        guard let liveTextImageView = self as? LiveTextImageView,
               liveTextImageView.isInteractionAnalysisEmpty() else {
             return
         }
@@ -67,8 +65,7 @@ extension UIImageView {
     }
     
     @objc func setImageLiveTextInterfaceHidden(_ isHidden: Bool, animated: Bool = true) {
-        guard #available(iOS 16, *),
-              let liveTextImageView = self as? LiveTextImageView,
+        guard let liveTextImageView = self as? LiveTextImageView,
               liveTextImageView.isInterfaceHidden() != isHidden else {
             return
         }
@@ -76,8 +73,7 @@ extension UIImageView {
     }
     
     @objc func setImageLiveTextSupplementaryInterfaceContentInsets(_ insets: UIEdgeInsets) {
-        guard #available(iOS 16, *),
-              let liveTextImageView = self as? LiveTextImageView else {
+        guard let liveTextImageView = self as? LiveTextImageView else {
             return
         }
         liveTextImageView.setSupplementaryInterfaceContentInsets(insets)

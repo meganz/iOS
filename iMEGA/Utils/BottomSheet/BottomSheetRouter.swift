@@ -14,16 +14,12 @@ final class BottomSheetRouter<Content>: Routing where Content: View {
     func build() -> UIViewController {
         let hostingController = UIHostingController(rootView: content)
         hostingController.modalPresentationStyle = .pageSheet
-        if #available(iOS 16.0, *) {
-            hostingController.sheetPresentationController?.detents = [
-                .custom { context in
-                    return context.maximumDetentValue * 0.5
-                }
-            ]
-            hostingController.sheetPresentationController?.detents = [.medium()]
-        } else {
-            hostingController.sheetPresentationController?.detents = [.medium()]
-        }
+        hostingController.sheetPresentationController?.detents = [
+            .custom { context in
+                return context.maximumDetentValue * 0.5
+            }
+        ]
+        hostingController.sheetPresentationController?.detents = [.medium()]
         hostingController.sheetPresentationController?.prefersGrabberVisible = false
         hostingController.view.backgroundColor = TokenColors.Background.page
         

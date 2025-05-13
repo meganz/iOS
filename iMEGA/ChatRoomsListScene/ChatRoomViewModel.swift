@@ -642,14 +642,7 @@ final class ChatRoomViewModel: ObservableObject, Identifiable {
     
     private func removeFormatters(fromString string: String) -> String {
         var formattedString = string
-        if #available(iOS 16.0, *) {
-            // swiftlint:disable opening_brace
-            formattedString.replace(/\[.{1, 2}\]/, with: "")
-            // swiftlint:enable opening_brace
-        } else {
-            formattedString = formattedString.replacingOccurrences(of: #"\[.{1,2}\]"#, with: "", options: .regularExpression)
-        }
-        
+        formattedString.replace(/\[.{1, 2}\]/, with: "")
         return formattedString
     }
     

@@ -195,3 +195,4 @@
 #import "InitialLaunchViewController.h"
 #import "VideoUploadsQualityTableViewController.h"
 #import "MEGAQueryRecoveryLinkRequestDelegate.h"
+#import "CopyableLabel.h"

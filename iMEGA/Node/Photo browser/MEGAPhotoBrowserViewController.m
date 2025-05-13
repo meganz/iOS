@@ -158,11 +158,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
             [self activateSlideShowButtonWithBarButtonItem:[self slideshowButton]];
             break;
         case DisplayModeTransfers:
-            if (@available(iOS 16.0, *)) {
-                self.customActionsButton.hidden = YES;
-            } else {
-                self.customActionsButton.enabled = NO;
-            }
+            self.customActionsButton.hidden = YES;
             break;
         default:
             break;

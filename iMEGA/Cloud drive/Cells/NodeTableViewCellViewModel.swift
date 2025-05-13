@@ -74,11 +74,7 @@ import MEGASwift
                 thumbnailEntity = try await thumbnailUseCase.loadThumbnail(for: node, type: .thumbnail)
             }
             
-            let imagePath = if #available(iOS 16.0, *) {
-                thumbnailEntity.url.path()
-            } else {
-                thumbnailEntity.url.path
-            }
+            let imagePath = thumbnailEntity.url.path()
             await setThumbnailImage(UIImage(contentsOfFile: imagePath))
         } catch {
             MEGALogError("[ItemCollectionViewCellViewModel] Error loading thumbnail: \(error)")

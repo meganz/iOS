@@ -3,7 +3,7 @@ import VisionKit
 extension MEGAPhotoBrowserViewController {
     
     @objc func imageView(frame: CGRect) -> UIImageView {
-        guard #available(iOS 16, *), ImageAnalyzer.isSupported else {
+        guard ImageAnalyzer.isSupported else {
             return SDAnimatedImageView(frame: frame)
         }
         return LiveTextImageView(frame: frame)
@@ -15,18 +15,18 @@ extension MEGAPhotoBrowserViewController {
     }
     
     @objc func configLiveTextInterface(from imageViewCache: NSCache<NSNumber, UIScrollView>) {
-        guard #available(iOS 16, *), let imageView = currentImageView(from: imageViewCache) else { return }
+        guard let imageView = currentImageView(from: imageViewCache) else { return }
         imageView.setImageLiveTextInterfaceHidden(true)
     }
     
     @objc func startLiveTextAnalysis(from imageViewCache: NSCache<NSNumber, UIScrollView>) {
-        guard #available(iOS 16, *), let imageView = currentImageView(from: imageViewCache) else { return }
+        guard let imageView = currentImageView(from: imageViewCache) else { return }
         imageView.setImageLiveTextInterfaceHidden(false)
         imageView.startImageLiveTextAnalysisIfNeeded()
     }
     
     @objc func configLiveTextLayout(from imageViewCache: NSCache<NSNumber, UIScrollView>, isInterfaceHidden: Bool, toolBarFrame: CGRect) {
-        guard #available(iOS 16, *), let imageView = currentImageView(from: imageViewCache) else { return }
+        guard let imageView = currentImageView(from: imageViewCache) else { return }
         
         let isImageAndToolBarOverlapped = imageView.frame.maxY >= toolBarFrame.minY
         var contentInset = UIEdgeInsets(top: 12, left: 12, bottom: 12, right: 12)
@@ -40,7 +40,7 @@ extension MEGAPhotoBrowserViewController {
     }
     
     @objc func startLiveTextAnalysis(for imageView: UIImageView, in index: Int) {
-        guard #available(iOS 16, *), index == dataProvider.currentIndex else { return }
+        guard index == dataProvider.currentIndex else { return }
         imageView.startImageLiveTextAnalysisIfNeeded()
     }
 }

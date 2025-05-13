@@ -570,7 +570,6 @@ struct ScheduledMeetingDateBuilder {
         }
     }
     
-    @available(iOS 16.0, *)
     private func boldTagRegex() -> some RegexComponent {
         Regex {
             "["
@@ -584,40 +583,21 @@ struct ScheduledMeetingDateBuilder {
     
     private func removeFormatters(fromString string: String) -> String {
         var formattedString = string
-        if #available(iOS 16.0, *) {
-            formattedString.replace(boldTagRegex(), with: "")
-        } else {
-            formattedString = formattedString.replacingOccurrences(of: #"\[.{1,2}\]"#, with: "", options: .regularExpression)
-        }
-        
+        formattedString.replace(boldTagRegex(), with: "")
         return formattedString
     }
     
     private func removeFirstFormatter(fromString string: String) -> String {
         var formattedString = string
-        if #available(iOS 16.0, *) {
-            formattedString.replace(boldTagRegex(), with: "", maxReplacements: 2)
-        } else {
-            if let range = formattedString.range(of: #"\[.{2}\]"#, options: [.regularExpression, .backwards]) {
-                formattedString = formattedString.replacingOccurrences(of: #"\[.{1,2}\]"#, with: "", options: .regularExpression, range: formattedString.startIndex..<range.upperBound)
-            }
-        }
-        
+        formattedString.replace(boldTagRegex(), with: "", maxReplacements: 2)
         return formattedString
     }
     
     private func removeLastFormatter(fromString string: String) -> String {
         var formattedString = string
-        if #available(iOS 16.0, *) {
-            formattedString.ranges(of: boldTagRegex()).suffix(2).reversed().forEach { range in
-                formattedString.replaceSubrange(range, with: "")
-            }
-        } else {
-            if let range = formattedString.range(of: #"\[.{2}\]"#, options: [.regularExpression, .backwards]) {
-                formattedString = formattedString.replacingOccurrences(of: #"\[.{1,2}\]"#, with: "", options: .regularExpression, range: range.upperBound..<formattedString.endIndex)
-            }
+        formattedString.ranges(of: boldTagRegex()).suffix(2).reversed().forEach { range in
+            formattedString.replaceSubrange(range, with: "")
         }
-        
         return formattedString
     }
     

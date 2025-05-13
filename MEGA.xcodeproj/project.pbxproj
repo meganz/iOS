@@ -1619,6 +1619,7 @@
 		A5BED9792B9AF72500C80698 /* MyChatFilesFolderNodeAccess+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5BED9772B9AF6D600C80698 /* MyChatFilesFolderNodeAccess+Additions.swift */; };
 		A5C0BD452BC3E68A006CF7D7 /* MoveToRubbishBinViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5C0BD442BC3E68A006CF7D7 /* MoveToRubbishBinViewModel.swift */; };
 		A5C0BD492BC3EB86006CF7D7 /* MockMoveToRubbishBinViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5C0BD482BC3EB86006CF7D7 /* MockMoveToRubbishBinViewModel.swift */; };
+		A5CB0B682DD31777004B6AB9 /* CopyableLabel+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5CB0B672DD31770004B6AB9 /* CopyableLabel+Additions.swift */; };
 		A5D527912CCF625E00CC9E46 /* DIContainer+FeatureFlagProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D527902CCF625000CC9E46 /* DIContainer+FeatureFlagProvider.swift */; };
 		A5EFB0532B9AE0DA0055E5FC /* CameraUploadNodeAccess+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5EFB0522B9AE0DA0055E5FC /* CameraUploadNodeAccess+Additions.swift */; };
 		A5F63E702BE8808C00B7A3F0 /* AppDelegate+SaveNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5F63E6F2BE8808C00B7A3F0 /* AppDelegate+SaveNode.swift */; };
@@ -4360,6 +4361,7 @@
 		A5BED9772B9AF6D600C80698 /* MyChatFilesFolderNodeAccess+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MyChatFilesFolderNodeAccess+Additions.swift"; sourceTree = "<group>"; };
 		A5C0BD442BC3E68A006CF7D7 /* MoveToRubbishBinViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoveToRubbishBinViewModel.swift; sourceTree = "<group>"; };
 		A5C0BD482BC3EB86006CF7D7 /* MockMoveToRubbishBinViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockMoveToRubbishBinViewModel.swift; sourceTree = "<group>"; };
+		A5CB0B672DD31770004B6AB9 /* CopyableLabel+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CopyableLabel+Additions.swift"; sourceTree = "<group>"; };
 		A5D527902CCF625000CC9E46 /* DIContainer+FeatureFlagProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DIContainer+FeatureFlagProvider.swift"; sourceTree = "<group>"; };
 		A5EFB0522B9AE0DA0055E5FC /* CameraUploadNodeAccess+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CameraUploadNodeAccess+Additions.swift"; sourceTree = "<group>"; };
 		A5F63E6F2BE8808C00B7A3F0 /* AppDelegate+SaveNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppDelegate+SaveNode.swift"; sourceTree = "<group>"; };
@@ -7764,6 +7766,7 @@
 				942FD9CC2B4832ED00F14E38 /* MyAvatarIconView */,
 				5D66F8C524E507900088E5FF /* BadgeButton.swift */,
 				942FD9C72B48165D00F14E38 /* BadgeButtonSwiftUIWrapper.swift */,
+				A5CB0B672DD31770004B6AB9 /* CopyableLabel+Additions.swift */,
 				A81E86CE225B3CF900950678 /* CopyableLabel.h */,
 				A81E86CF225B3CF900950678 /* CopyableLabel.m */,
 				C4F31EF825C1C50B00E15146 /* CustomTitleView.swift */,
@@ -14601,6 +14604,7 @@
 				5B366C4B2576846500FD3806 /* CookieSettingsRouter.swift in Sources */,
 				5B366C5925769BC800FD3806 /* CookieSettingsTableViewController.swift in Sources */,
 				5BB54FD7259BAF1C007DF40C /* CookieSettingsViewModel.swift in Sources */,
+				A5CB0B682DD31777004B6AB9 /* CopyableLabel+Additions.swift in Sources */,
 				A81E86D0225B3CF900950678 /* CopyableLabel.m in Sources */,
 				B6F8CDCB262821820074CBBF /* CoreDataErrorHandler.m in Sources */,
 				5D8DC6B1248CB0C40067A4F9 /* CornerStyle.swift in Sources */,
@@ -16893,6 +16897,7 @@
 				);
 				INFOPLIST_FILE = "iMEGA/Supporting Files/Info.plist";
 				INTENTS_CODEGEN_LANGUAGE = "Objective-C";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -16954,6 +16959,7 @@
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 				);
 				INFOPLIST_FILE = "iMEGA/Supporting Files/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -17009,6 +17015,7 @@
 				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = iMEGA/Extensions/MEGANotifications/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -17064,6 +17071,7 @@
 				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = iMEGA/Extensions/MEGANotifications/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -17111,6 +17119,7 @@
 				);
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "iMEGA/Extensions/MEGAWidget/Supporting Files/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -17164,6 +17173,7 @@
 				);
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "iMEGA/Extensions/MEGAWidget/Supporting Files/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -17208,6 +17218,7 @@
 				);
 				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
 				INFOPLIST_FILE = "iMEGA/Extensions/MEGAIntent/Supporting Files/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -17252,6 +17263,7 @@
 				);
 				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
 				INFOPLIST_FILE = "iMEGA/Extensions/MEGAIntent/Supporting Files/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -17299,6 +17311,7 @@
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 				);
 				INFOPLIST_FILE = "iMEGA/Extensions/MEGAShare/Supporting Files/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -17358,6 +17371,7 @@
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 				);
 				INFOPLIST_FILE = "iMEGA/Extensions/MEGAShare/Supporting Files/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -17398,7 +17412,7 @@
 				INFOPLIST_FILE = iMEGA/Extensions/MEGAPickerFileProvider/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = MEGA;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2023 MEGA. All rights reserved.";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -17445,7 +17459,7 @@
 				INFOPLIST_FILE = iMEGA/Extensions/MEGAPickerFileProvider/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = MEGA;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2023 MEGA. All rights reserved.";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -17488,7 +17502,7 @@
 				INFOPLIST_FILE = iMEGA/Extensions/MEGAPickerFileProvider/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = MEGA;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2023 MEGA. All rights reserved.";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -17528,7 +17542,7 @@
 				INFOPLIST_FILE = iMEGA/Extensions/MEGAPicker/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = MEGAPicker;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2023 MEGA. All rights reserved.";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -17567,7 +17581,7 @@
 				INFOPLIST_FILE = iMEGA/Extensions/MEGAPicker/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = MEGAPicker;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2023 MEGA. All rights reserved.";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -17605,7 +17619,7 @@
 				INFOPLIST_FILE = iMEGA/Extensions/MEGAPicker/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = MEGAPicker;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2023 MEGA. All rights reserved.";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -17832,6 +17846,7 @@
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 				);
 				INFOPLIST_FILE = "iMEGA/Supporting Files/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -17894,6 +17909,7 @@
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 				);
 				INFOPLIST_FILE = "iMEGA/Extensions/MEGAShare/Supporting Files/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -17943,6 +17959,7 @@
 				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = iMEGA/Extensions/MEGANotifications/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -18046,6 +18063,7 @@
 				);
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "iMEGA/Extensions/MEGAWidget/Supporting Files/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -18094,6 +18112,7 @@
 				);
 				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
 				INFOPLIST_FILE = "iMEGA/Extensions/MEGAIntent/Supporting Files/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
