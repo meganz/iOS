@@ -335,7 +335,7 @@
 /* Menu option from the `Add` section that allows you to create a 'New Folder' */
 "newFolder"="새 폴더";
 /* Menu option from the `Add` section that displays all media files under current folder */
-"cloudDrive.menu.mediaDiscovery.title"="미디어 발견";
+"cloudDrive.menu.mediaDiscovery.title"="갤러리 보기";
 /* Exit Text on Media Discovery Navigation Bar */
 "cloudDrive.mediaDiscovery.exit"="종료";
 /* Hint text shown on the create folder alert. */
@@ -926,6 +926,10 @@
 "recoveryKey"="복구 키";
 /* An alert title where the user provided the incorrect Recovery Key. */
 "invalidRecoveryKey"="잘못된 복구 키";
+/* Recovery key error alert title */
+"recoveryKey.error.alert.title"="Recovery key error";
+/* Recovery key error alert message when the user provided incorrect or invalid Recovery key */
+"recoveryKey.error.alert.message.invalidKey"="The recovery key you supplied is either invalid, or is not for this account. Check if you’re using the correct key and try again.";
 /* Text of the alert after opening the recovery link to reset pass being logged. */
 "youRecoveryKeyIsGoingTo"="복구 키는 암호를 재설정하는 데에 사용될 것입니다. 새 암호를 입력하세요.";
 /*  */
@@ -2203,17 +2207,17 @@
 /* Inside of Settings - Appearance, there is a view on which you can change the setting for showing hidden items in the app. This is the footer message body that appears under that option */
 "settings.userInterface.hiddenItems.footer"="모든 숨긴 항목은 보이게 되지만, “숨김” 상태를 나타내기 위해 흐리게 나타납니다.";
 /* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the label in the setting */
-"settings.userInterface.mediaDiscovery"="미디어 발견 보기";
+"settings.userInterface.mediaDiscovery"="갤러리 보기";
 /* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the header title that appears above */
-"settings.userInterface.mediaDiscovery.header"="미디어 발견";
+"settings.userInterface.mediaDiscovery.header"="갤러리 보기";
 /* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the footer message body that appears under that option */
-"settings.userInterface.mediaDiscovery.footer.body"="이미지와 동영상만 포함하고 있는 폴더는 기본적으로 미디어 발견 보기에서 열립니다.";
+"settings.userInterface.mediaDiscovery.footer.body"="Open folders with only images or videos in a visual grid. Browse media by thumbnails and filter by date.";
 /* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the footer message body link that appears under that option */
-"settings.userInterface.mediaDiscovery.footer.link"="미디어 발견에 대해 더 알아보기.";
+"settings.userInterface.mediaDiscovery.footer.link"="Learn more about gallery view";
 /* In Settings - User Interface, there is a setting that can determine if the app should also load sub folder media. This is the label in the setting */
-"settings.userInterface.mediaDiscoverySubFolder"="하위 폴더에서 미디어 찾기";
+"settings.userInterface.mediaDiscoverySubFolder"="Gallery view in subfolders";
 /* In Settings - User Interface, there is a setting that can determine if the app should also load sub folder media. This is the footer message body that appears under that option */
-"settings.userInterface.mediaDiscoverySubFolder.footer"="하위 폴더의 이미지와 동영상도 미디어 발견 보기에 포함합니다.";
+"settings.userInterface.mediaDiscoverySubFolder.footer"="Images and videos from subfolders will also be included in gallery view";
 /* In Settings - User Interface, there is an option that you can enable to hide the contents of the Recents section */
 "settings.userInterface.hideRecentActivity"="최근 활동 숨기기";
 /* In Settings - User Interface, there is an option that you can enable to hide the contents of the Recents section. This is the footer that appears under that option. */
@@ -3883,7 +3887,7 @@
 /* Error shown when moving folder to inside itself */
 "Error.nodeCopyOrMove.circularDependency"="목적지가 동일하기 때문에 이 폴더를 이동할 수 없습니다.";
 /* Auto media discovery banner title */
-"photos.mediaDiscovery.autoMediaDiscoveryBanner.title"="이 폴더가 이미지와 동영상만 담고 있으므로, 자동으로 미디어 발견 보기에서 열었습니다. 시각 콘텐츠를 더욱 몰입되는 레이아웃에서 즐길 수 있습니다. 이것을 설정에서 비활성화 할 수 있습니다.";
+"photos.mediaDiscovery.autoMediaDiscoveryBanner.title"="As this folder contains only images and videos, we’ve automatically opened it in gallery view. You can enjoy your visual content with a more immersive layout. You can disable this in Settings.";
 /* Upgrade account screen header title after user onboarding */
 "onboarding.upgradeAccount.header.title"="Pro 요금제로 더 받기";
 /* Upgrade account screen header subTitle after user onboarding. %@ will be replaced by the price of the lowest plan per month. */
@@ -4632,3 +4636,45 @@
 "onboarding.cta.cameraBackups.buttons.enable"="카메라 업로드 활성화";
 /* Onboarding Camera Backups CTA *Skip* button */
 "onboarding.cta.cameraBackups.buttons.skip"="Skip for now";
+/* String explaining the auto-renewal policy of the Pro subscription. */
+"subscriptionPurchase.autoRenewDescription"="Subscriptions are renewed automatically for successive subscription periods of the same duration and at the same price as the initial period chosen.\n\nYou can cancel your Pro plan anytime but no later than 24 hours before your next subscription payment is due. Learn how to manage your subscription in your settings.";
+/* Title shown for the free plan card */
+"subscriptionPurchase.freePlanCard.title"="무료 요금제로 시작하세요";
+/* Description shown for the free plan card */
+"subscriptionPurchase.freePlanCard.description"="We offer generous amount of storage and transfer quota at no charge, so you can try MEGA with no risk";
+/* First benefit shown for the free plan card */
+"subscriptionPurchase.freePlanCard.feature.one"="Free 20 GB of storage";
+/* Second benefit shown for the free plan card */
+"subscriptionPurchase.freePlanCard.feature.two"="Limited transfers";
+/* Button title for the free plan card */
+"subscriptionPurchase.freePlanCard.button.title"="무료로 시작하세요";
+/* Displays the amount of storage included in the subscription plan */
+"subscriptionPurchase.plan.storage"="%@ 저장소";
+/* Displays the amount of data transfer included in the subscription plan */
+"subscriptionPurchase.plan.transfer"="%@ 전송";
+/* Displays the total amount when billed yearly */
+"subscriptionPurchase.plan.billedYearly"="%@ billed yearly";
+/* Button title to cancel the subscription purchase. */
+"subscriptionPurchase.maybeLater"="나중에";
+/* Title for the features of pro plan in the subscription purchase screen. */
+"subscriptionPurchase.featuresOfProPlan.title"="Additional benefits of Pro plans";
+/* Features of pro plan in the subscription purchase screen. */
+"subscriptionPurchase.featuresOfProPlan.message"="• Password-protected links\n\n• Links with expiry dates\n\n• Transfer quota sharing\n\n• Rewind folders up to 180 days\n\n• Unlimited calls and meetings\n\n• Schedule rubbish bin clearing between 7 days and 10 years\n\n• Priority support";
+/* Title for the first subscription feature: generous storage capacity */
+"subscriptionPurchase.feature.one.title"="넉넉한 저장소";
+/* Description for the first subscription feature: details about available storage */
+"subscriptionPurchase.feature.one.description"="Store up to 16 TB of data";
+/* Title for the second subscription feature: transfer quota sharing */
+"subscriptionPurchase.feature.two.title"="전송 공유";
+/* Description for the second subscription feature: how shared users can use your quota */
+"subscriptionPurchase.feature.two.description"="People you share items with can use your transfer quota to download and stream files";
+/* Title for the third subscription feature: MEGA VPN service */
+"subscriptionPurchase.feature.three.title"="MEGA VPN";
+/* Description for the third subscription feature: benefits of using the MEGA VPN */
+"subscriptionPurchase.feature.three.description"="Keep your online life safe, fast, and easy with our high-speed VPN";
+/* Title for the fourth subscription feature: MEGA Pass password manager */
+"subscriptionPurchase.feature.four.title"="MEGA Pass";
+/* Description for the fourth subscription feature: benefits of using MEGA Pass for password management */
+"subscriptionPurchase.feature.four.description"="Organise all your passwords and keep them safe with our password manager";
+/* Title for all the feature in subscription purchase view. */
+"subscriptionPurchase.feature.title"="다음을 얻게 됩니다:";

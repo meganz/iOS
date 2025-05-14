@@ -335,7 +335,7 @@
 /* Menu option from the `Add` section that allows you to create a 'New Folder' */
 "newFolder"="新規フォルダ";
 /* Menu option from the `Add` section that displays all media files under current folder */
-"cloudDrive.menu.mediaDiscovery.title"="メディアディスカバリー";
+"cloudDrive.menu.mediaDiscovery.title"="ギャラリービュー";
 /* Exit Text on Media Discovery Navigation Bar */
 "cloudDrive.mediaDiscovery.exit"="終了";
 /* Hint text shown on the create folder alert. */
@@ -926,6 +926,10 @@
 "recoveryKey"="回復キー";
 /* An alert title where the user provided the incorrect Recovery Key. */
 "invalidRecoveryKey"="回復キーが無効です";
+/* Recovery key error alert title */
+"recoveryKey.error.alert.title"="回復キーエラー";
+/* Recovery key error alert message when the user provided incorrect or invalid Recovery key */
+"recoveryKey.error.alert.message.invalidKey"="入力された回復キーが無効か、このアカウント用ではありません。正しいキーを使用しているかどうかを確認し、もう一度やり直してください。";
 /* Text of the alert after opening the recovery link to reset pass being logged. */
 "youRecoveryKeyIsGoingTo"="あなたの回復キーは、パスワードのリセットに使用されます。あなたの新しいパスワードを入力してください。";
 /*  */
@@ -2203,17 +2207,17 @@
 /* Inside of Settings - Appearance, there is a view on which you can change the setting for showing hidden items in the app. This is the footer message body that appears under that option */
 "settings.userInterface.hiddenItems.footer"="非表示の項目はすべて表示されますが、「非表示」ステータスを示すためにぼかされます。";
 /* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the label in the setting */
-"settings.userInterface.mediaDiscovery"="メディア検出ビュー";
+"settings.userInterface.mediaDiscovery"="ギャラリービュー";
 /* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the header title that appears above */
-"settings.userInterface.mediaDiscovery.header"="メディアディスカバリー";
+"settings.userInterface.mediaDiscovery.header"="ギャラリービュー";
 /* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the footer message body that appears under that option */
-"settings.userInterface.mediaDiscovery.footer.body"="画像と動画のみを含むフォルダは、デフォルトでメディア検出ビューで開きます。";
+"settings.userInterface.mediaDiscovery.footer.body"="画像や動画だけのフォルダをビジュアルグリッドで開きます。サムネイルでメディアをブラウズし、日付でフィルタリングできます。";
 /* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the footer message body link that appears under that option */
-"settings.userInterface.mediaDiscovery.footer.link"="メディア ディスカバリーの詳細はこちらをご覧ください。";
+"settings.userInterface.mediaDiscovery.footer.link"="ギャラリービューの詳細";
 /* In Settings - User Interface, there is a setting that can determine if the app should also load sub folder media. This is the label in the setting */
-"settings.userInterface.mediaDiscoverySubFolder"="サブフォルダ内のメディア検出";
+"settings.userInterface.mediaDiscoverySubFolder"="サブフォルダ内のギャラリービュー";
 /* In Settings - User Interface, there is a setting that can determine if the app should also load sub folder media. This is the footer message body that appears under that option */
-"settings.userInterface.mediaDiscoverySubFolder.footer"="サブフォルダの画像と動画もメディア検出ビューに含まれます。";
+"settings.userInterface.mediaDiscoverySubFolder.footer"="サブフォルダの画像と動画もギャラリービューに含まれます。";
 /* In Settings - User Interface, there is an option that you can enable to hide the contents of the Recents section */
 "settings.userInterface.hideRecentActivity"="最近のアクティビティを非表示にする";
 /* In Settings - User Interface, there is an option that you can enable to hide the contents of the Recents section. This is the footer that appears under that option. */
@@ -2559,7 +2563,7 @@
 /* Title of Over Disk Quota dialog */
 "dialog.storage.odq.title"="アップグレードしてください";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. @% is placeholder. */
-"dialog.storage.almostFull.detail"="Your Cloud drive is almost full. Upgrade now and get up to %@ TB of cloud storage space.";
+"dialog.storage.almostFull.detail"="クラウドドライブはほぼいっぱいです。今すぐアップグレードして、最大%@ TBのクラウドストレージスペースを取得してください。";
 /* Over Disk Quota detail message informing the user that they've reached the full capacity of their accounts. */
 "dialog.storage.odq.detail"="クラウドストレージがいっぱいです。MEGA Proプランにアップグレードしてストレージスペースを増やし、さらなる特典をお楽しみください。ストレージの上限を超えたまま、アップグレードやデータの一部削除を行われない場合、アカウントがロックされる場合がございます。詳しくは、お送りしたメールをご覧ください。";
 /* Over Disk Quota paywall not final title. */
@@ -3883,7 +3887,7 @@
 /* Error shown when moving folder to inside itself */
 "Error.nodeCopyOrMove.circularDependency"="このフォルダは移動先が同じフォルダのため移動できません。";
 /* Auto media discovery banner title */
-"photos.mediaDiscovery.autoMediaDiscoveryBanner.title"="このフォルダには画像と動画のみが含まれているため、自動的にメディア検出ビューで開きます。また、より没入感のあるレイアウトでビジュアルコンテンツを楽しむことができます。これは「設定」で無効にできます。";
+"photos.mediaDiscovery.autoMediaDiscoveryBanner.title"="このフォルダには画像と動画のみが含まれているため、自動的にギャラリービューで開きます。また、より没入感のあるレイアウトでビジュアルコンテンツを楽しむことができます。これは「設定」で無効にできます。";
 /* Upgrade account screen header title after user onboarding */
 "onboarding.upgradeAccount.header.title"="Proプランでさらに充実";
 /* Upgrade account screen header subTitle after user onboarding. %@ will be replaced by the price of the lowest plan per month. */
@@ -4505,9 +4509,9 @@
 /* Add to collection button title to add items */
 "photos.addTo.button.title.add"="追加";
 /* Ad-free experience screen header title */
-"ads.adFree.header.title"="Want MEGA without the ads?";
+"ads.adFree.header.title"="広告なしのMEGAをご希望ですか？";
 /* Ad-free experience screen header subTitle */
-"ads.adFree.header.subTitle"="Upgrade to a Pro plan with plenty of storage and more. Our Pro plans start at just %@ a month.";
+"ads.adFree.header.subTitle"="大容量のストレージなどを備えたProプランにアップグレードしてお楽しみください。当社のProプランは月々わずか%@からご利用いただけます。";
 /* Ad-free experience screen content title about pro plan featuring as Generous Storage */
 "ads.adFree.content.generousStorage.title"="豊富なストレージ";
 /* Ad-free experience screen content message about pro plan featuring as Generous Storage */
@@ -4587,7 +4591,7 @@
 /* Hidden files and folders onboarding content item two title */
 "onboarding.hiddenFilesAndFolders.content.item.two.title"="表示/非表示を簡単に制御";
 /* Hidden files and folders onboarding content item two message */
-"onboarding.hiddenFilesAndFolders.content.item.two.message"="To show hidden files, turn on the “Show hidden items” setting under “File Management” -> “User interface” in your app settings.";
+"onboarding.hiddenFilesAndFolders.content.item.two.message"="非表示ファイルを表示するには、アプリの設定で「ファイル管理（File Management） -> ユーザーインターフェース（User interface）」の「非表示項目を表示（Show hidden items）」をオンにします。";
 /* Hidden files and folders onboarding content item three title */
 "onboarding.hiddenFilesAndFolders.content.item.three.title"="共有ファイルは表示されたまま";
 /* Hidden files and folders onboarding content item three message */
@@ -4617,7 +4621,7 @@
 /* Onboarding Notification CTA title */
 "onboarding.cta.notifications.title"="重要なアップデートを見逃さない";
 /* Onboarding Notification CTA description */
-"onboarding.cta.notifications.explanation"="Stay informed with real-time updates that matter to you. Get alerts for shared folder activity, security updates, and exclusive offers, so you never miss anything important.\n\nYou can manage notification preferences at any time in the settings.";
+"onboarding.cta.notifications.explanation"="あなたにとって重要な最新情報をリアルタイムでお届けします。共有フォルダのアクティビティ、セキュリティアップデート、限定キャンペーンのアラートを受け取ることで、重要な情報を見逃すことはありません。\n\n通知設定は、設定でいつでも管理できます。";
 /* Onboarding Notification CTA *Enable* button */
 "onboarding.cta.notifications.buttons.enable"="通知設定";
 /* Onboarding Notification CTA *Skip* button */
@@ -4625,10 +4629,52 @@
 /* Onboarding Camera Backups CTA title */
 "onboarding.cta.cameraBackups.title"="写真を常に安全に";
 /* Onboarding Camera Backups CTA description */
-"onboarding.cta.cameraBackups.explanation"="Your memories matter\n\nCamera uploads automatically backs up your photos and videos to your MEGA Cloud drive, so you never have to worry about losing them";
+"onboarding.cta.cameraBackups.explanation"="思い出を大切に。\n\nカメラアップロードは、写真や動画をMEGAクラウドドライブに自動的にバックアップするので、紛失の心配がありません。";
 /* Onboarding Camera Backups CTA note */
-"onboarding.cta.cameraBackups.note"="Camera uploads requires [B]full access[/B] to your device’s photo library";
+"onboarding.cta.cameraBackups.note"="カメラアップロードには、お使いのデバイスのフォトライブラリへの[B]フルアクセス[/B]が必要です。";
 /* Onboarding Camera Backups CTA *Enable* button */
 "onboarding.cta.cameraBackups.buttons.enable"="カメラアップロードを有効にする";
 /* Onboarding Camera Backups CTA *Skip* button */
 "onboarding.cta.cameraBackups.buttons.skip"="今はやめておく";
+/* String explaining the auto-renewal policy of the Pro subscription. */
+"subscriptionPurchase.autoRenewDescription"="サブスクリプションは、最初に選択された期間と同じ期間および同じ価格で、連続するサブスクリプション期間に対して自動的に更新されます。\n\nProプランはいつでもキャンセルできますが、次のサブスクリプションのお支払い期日の24時間前までにキャンセルしてください。サブスクリプションを管理する方法は設定でご欄ください。";
+/* Title shown for the free plan card */
+"subscriptionPurchase.freePlanCard.title"="当社の無料プランで始めましょう";
+/* Description shown for the free plan card */
+"subscriptionPurchase.freePlanCard.description"="当社は、豊富な無料ストレージと転送容量をご用意しております。そのため、リスクなしで、MEGAをお試しいただけます。";
+/* First benefit shown for the free plan card */
+"subscriptionPurchase.freePlanCard.feature.one"="20GBの無料ストレージ";
+/* Second benefit shown for the free plan card */
+"subscriptionPurchase.freePlanCard.feature.two"="転送制限あり";
+/* Button title for the free plan card */
+"subscriptionPurchase.freePlanCard.button.title"="無料で始めましょう";
+/* Displays the amount of storage included in the subscription plan */
+"subscriptionPurchase.plan.storage"="%@のストレージ";
+/* Displays the amount of data transfer included in the subscription plan */
+"subscriptionPurchase.plan.transfer"="%@の転送";
+/* Displays the total amount when billed yearly */
+"subscriptionPurchase.plan.billedYearly"="%@年払い";
+/* Button title to cancel the subscription purchase. */
+"subscriptionPurchase.maybeLater"="たぶん後で";
+/* Title for the features of pro plan in the subscription purchase screen. */
+"subscriptionPurchase.featuresOfProPlan.title"="Proプランの追加特典";
+/* Features of pro plan in the subscription purchase screen. */
+"subscriptionPurchase.featuresOfProPlan.message"="・パスワードで保護されたリンク\n\n・有効期限のあるリンク\n\n・転送容量の共有\n\n・最大180日間のフォルダの巻き戻し\n\n・無制限の通話とミーティング\n\n・7日間から10年間までのごみ箱のクリアスケジュール\n\n・優先サポート";
+/* Title for the first subscription feature: generous storage capacity */
+"subscriptionPurchase.feature.one.title"="豊富なストレージ";
+/* Description for the first subscription feature: details about available storage */
+"subscriptionPurchase.feature.one.description"="最大16TBのデータを保管";
+/* Title for the second subscription feature: transfer quota sharing */
+"subscriptionPurchase.feature.two.title"="転送共有";
+/* Description for the second subscription feature: how shared users can use your quota */
+"subscriptionPurchase.feature.two.description"="項目を共有するお相手は、ファイルのダウンロードやストリーミングにあなたの転送容量を使用できます。";
+/* Title for the third subscription feature: MEGA VPN service */
+"subscriptionPurchase.feature.three.title"="MEGA VPN";
+/* Description for the third subscription feature: benefits of using the MEGA VPN */
+"subscriptionPurchase.feature.three.description"="当社の高速VPNで、オンラインライフを安全、迅速、簡単に";
+/* Title for the fourth subscription feature: MEGA Pass password manager */
+"subscriptionPurchase.feature.four.title"="MEGAパス";
+/* Description for the fourth subscription feature: benefits of using MEGA Pass for password management */
+"subscriptionPurchase.feature.four.description"="当社のパスワードマネージャーで、すべてのパスワードを整理し、安全に管理できます。";
+/* Title for all the feature in subscription purchase view. */
+"subscriptionPurchase.feature.title"="以下をご利用いただけます：";

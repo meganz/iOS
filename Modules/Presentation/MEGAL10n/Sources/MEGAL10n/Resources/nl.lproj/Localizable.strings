@@ -335,7 +335,7 @@
 /* Menu option from the `Add` section that allows you to create a 'New Folder' */
 "newFolder"="Nieuwe Map";
 /* Menu option from the `Add` section that displays all media files under current folder */
-"cloudDrive.menu.mediaDiscovery.title"="Media Discovery";
+"cloudDrive.menu.mediaDiscovery.title"="Galerijweergave";
 /* Exit Text on Media Discovery Navigation Bar */
 "cloudDrive.mediaDiscovery.exit"="Sluiten";
 /* Hint text shown on the create folder alert. */
@@ -926,6 +926,10 @@
 "recoveryKey"="Herstelsleutel";
 /* An alert title where the user provided the incorrect Recovery Key. */
 "invalidRecoveryKey"="Ongeldige Herstelsleutel";
+/* Recovery key error alert title */
+"recoveryKey.error.alert.title"="Fout met de herstelsleutel";
+/* Recovery key error alert message when the user provided incorrect or invalid Recovery key */
+"recoveryKey.error.alert.message.invalidKey"="De door u opgegeven herstelsleutel is ongeldig of niet voor dit account. Controleer of u de juiste sleutel gebruikt en probeer het opnieuw.";
 /* Text of the alert after opening the recovery link to reset pass being logged. */
 "youRecoveryKeyIsGoingTo"="Uw Herstelsleutel wordt gebruikt om uw wachtwoord te resetten. Voer uw nieuwe wachtwoord in.";
 /*  */
@@ -2203,17 +2207,17 @@
 /* Inside of Settings - Appearance, there is a view on which you can change the setting for showing hidden items in the app. This is the footer message body that appears under that option */
 "settings.userInterface.hiddenItems.footer"="Alle verborgen items zijn zichtbaar, maar worden wazig weergegeven om hun “verborgen” status aan te geven.";
 /* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the label in the setting */
-"settings.userInterface.mediaDiscovery"="Media discovery weergave";
+"settings.userInterface.mediaDiscovery"="Galerijweergave";
 /* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the header title that appears above */
-"settings.userInterface.mediaDiscovery.header"="Media discovery";
+"settings.userInterface.mediaDiscovery.header"="Galerijweergave";
 /* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the footer message body that appears under that option */
-"settings.userInterface.mediaDiscovery.footer.body"="Mappen die alleen afbeeldingen en video's bevatten, worden standaard geopend in de mediaontdekkingsweergave.";
+"settings.userInterface.mediaDiscovery.footer.body"="Open mappen met alleen afbeeldingen of video's in een visueel raster. Bekijk media op miniaturen en filter op datum.";
 /* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the footer message body link that appears under that option */
-"settings.userInterface.mediaDiscovery.footer.link"="Leer meer over mediaontdekking.";
+"settings.userInterface.mediaDiscovery.footer.link"="Meer informatie over de gallerijweergave";
 /* In Settings - User Interface, there is a setting that can determine if the app should also load sub folder media. This is the label in the setting */
-"settings.userInterface.mediaDiscoverySubFolder"="Media ontdekking in submappen";
+"settings.userInterface.mediaDiscoverySubFolder"="Galerieweergave in submappen";
 /* In Settings - User Interface, there is a setting that can determine if the app should also load sub folder media. This is the footer message body that appears under that option */
-"settings.userInterface.mediaDiscoverySubFolder.footer"="Afbeeldingen en video's uit submappen worden ook opgenomen in de mediaontdekkingsweergave.";
+"settings.userInterface.mediaDiscoverySubFolder.footer"="Afbeeldingen en video's uit submappen worden ook opgenomen in de gallerijweergave";
 /* In Settings - User Interface, there is an option that you can enable to hide the contents of the Recents section */
 "settings.userInterface.hideRecentActivity"="Recente Activiteit Verbergen";
 /* In Settings - User Interface, there is an option that you can enable to hide the contents of the Recents section. This is the footer that appears under that option. */
@@ -2559,7 +2563,7 @@
 /* Title of Over Disk Quota dialog */
 "dialog.storage.odq.title"="Gelieve te upgraden";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. @% is placeholder. */
-"dialog.storage.almostFull.detail"="Your Cloud drive is almost full. Upgrade now and get up to %@ TB of cloud storage space.";
+"dialog.storage.almostFull.detail"="Uw Cloud-schijf is bijna vol. Upgrade nu en maak gebruik van %@ TB aan opslagruimte in de cloud.";
 /* Over Disk Quota detail message informing the user that they've reached the full capacity of their accounts. */
 "dialog.storage.odq.detail"="Uw cloud opslag is vol. Upgrade naar een MEGA Pro-abonnement om uw opslagruimte te vergroten en van extra voordelen te genieten. Als u uw opslaglimiet overschrijdt en bepaalde gegevens niet opwaardeert of verwijdert, kan uw account worden vergrendeld. Raadpleeg de e-mails die we u hebben gestuurd voor meer informatie.";
 /* Over Disk Quota paywall not final title. */
@@ -3883,7 +3887,7 @@
 /* Error shown when moving folder to inside itself */
 "Error.nodeCopyOrMove.circularDependency"="U kunt deze map niet verplaatsen omdat de bestemming dezelfde map is.";
 /* Auto media discovery banner title */
-"photos.mediaDiscovery.autoMediaDiscoveryBanner.title"="Omdat deze map alleen afbeeldingen en video's bevat, hebben we deze automatisch geopend in de media ontdekkingsweergave. U kunt genieten van uw visuele inhoud met een meer meeslepende lay-out. U kunt dit uitschakelen in Instellingen.";
+"photos.mediaDiscovery.autoMediaDiscoveryBanner.title"="Omdat deze map alleen afbeeldingen en video's bevat, hebben we deze automatisch geopend in de gallerijweergave. U kunt genieten van uw visuele inhoud met een meer meeslepende lay-out. U kunt dit uitschakelen in Instellingen.";
 /* Upgrade account screen header title after user onboarding */
 "onboarding.upgradeAccount.header.title"="Krijg meer met een Pro abonnement";
 /* Upgrade account screen header subTitle after user onboarding. %@ will be replaced by the price of the lowest plan per month. */
@@ -4505,9 +4509,9 @@
 /* Add to collection button title to add items */
 "photos.addTo.button.title.add"="Toevoegen";
 /* Ad-free experience screen header title */
-"ads.adFree.header.title"="Want MEGA without the ads?";
+"ads.adFree.header.title"="Wil je MEGA zonder advertenties?";
 /* Ad-free experience screen header subTitle */
-"ads.adFree.header.subTitle"="Upgrade to a Pro plan with plenty of storage and more. Our Pro plans start at just %@ a month.";
+"ads.adFree.header.subTitle"="Upgrade naar een Pro-abonnement met veel opslagruimte en meer. Onze Pro-abonnementen beginnen bij slechts %@ een maand.";
 /* Ad-free experience screen content title about pro plan featuring as Generous Storage */
 "ads.adFree.content.generousStorage.title"="Vrijgevige opslag";
 /* Ad-free experience screen content message about pro plan featuring as Generous Storage */
@@ -4587,7 +4591,7 @@
 /* Hidden files and folders onboarding content item two title */
 "onboarding.hiddenFilesAndFolders.content.item.two.title"="Controleer de zichtbaarheid eenvoudig";
 /* Hidden files and folders onboarding content item two message */
-"onboarding.hiddenFilesAndFolders.content.item.two.message"="To show hidden files, turn on the “Show hidden items” setting under “File Management” -> “User interface” in your app settings.";
+"onboarding.hiddenFilesAndFolders.content.item.two.message"="Om verborgen bestanden weer te geven, zet u de instelling “Verborgen items weergeven” aan onder “Bestandsbeheer” -> „\" Gebruikersinterface \"” in uw applicatie-instellingen.”";
 /* Hidden files and folders onboarding content item three title */
 "onboarding.hiddenFilesAndFolders.content.item.three.title"="Gedeelde bestanden blijven zichtbaar";
 /* Hidden files and folders onboarding content item three message */
@@ -4617,7 +4621,7 @@
 /* Onboarding Notification CTA title */
 "onboarding.cta.notifications.title"="Mis nooit meer een belangrijke update";
 /* Onboarding Notification CTA description */
-"onboarding.cta.notifications.explanation"="Stay informed with real-time updates that matter to you. Get alerts for shared folder activity, security updates, and exclusive offers, so you never miss anything important.\n\nYou can manage notification preferences at any time in the settings.";
+"onboarding.cta.notifications.explanation"="Blijf op de hoogte van realtime updates die belangrijk voor u zijn. Ontvang meldingen voor activiteiten in gedeelde mappen, beveiligingsupdates en exclusieve aanbiedingen, zodat u nooit iets belangrijks mist.\n\nU kunt de meldingsvoorkeuren op elk moment beheren in de instellingen.";
 /* Onboarding Notification CTA *Enable* button */
 "onboarding.cta.notifications.buttons.enable"="Notificaties Inschakelen";
 /* Onboarding Notification CTA *Skip* button */
@@ -4625,10 +4629,52 @@
 /* Onboarding Camera Backups CTA title */
 "onboarding.cta.cameraBackups.title"="Bewaar uw foto's altijd veilig";
 /* Onboarding Camera Backups CTA description */
-"onboarding.cta.cameraBackups.explanation"="Your memories matter\n\nCamera uploads automatically backs up your photos and videos to your MEGA Cloud drive, so you never have to worry about losing them";
+"onboarding.cta.cameraBackups.explanation"="Uw herinneringen zijn belangrijk\n\nBij het uploaden van de camera wordt automatisch een back-up gemaakt van uw foto's en video's naar uw MEGA Cloud-schijf, zodat u zich nooit zorgen hoeft te maken dat u ze kwijtraakt";
 /* Onboarding Camera Backups CTA note */
-"onboarding.cta.cameraBackups.note"="Camera uploads requires [B]full access[/B] to your device’s photo library";
+"onboarding.cta.cameraBackups.note"="Voor het uploaden van de camera is vereist [B]Volledige toegang[/B] naar de fotobibliotheek van uw apparaat";
 /* Onboarding Camera Backups CTA *Enable* button */
 "onboarding.cta.cameraBackups.buttons.enable"="Camera uploads inschakelen";
 /* Onboarding Camera Backups CTA *Skip* button */
 "onboarding.cta.cameraBackups.buttons.skip"="Voor nu overslaan";
+/* String explaining the auto-renewal policy of the Pro subscription. */
+"subscriptionPurchase.autoRenewDescription"="Abonnementen worden automatisch verlengd voor opeenvolgende abonnementsperioden van dezelfde duur en tegen dezelfde prijs als de gekozen initiële periode.\n\nU kunt uw Pro-abonnement op elk gewenst moment annuleren, maar niet later dan 24 uur voordat uw volgende abonnementsbetaling verschuldigd is. Lees in uw instellingen hoe u een abonnement kunt beheren.";
+/* Title shown for the free plan card */
+"subscriptionPurchase.freePlanCard.title"="Ga aan de slag met ons Gratis abonnement";
+/* Description shown for the free plan card */
+"subscriptionPurchase.freePlanCard.description"="We bieden een ruime hoeveelheid opslag en gratis overdrachtstegoed, zodat u MEGA zonder risico kunt proberen";
+/* First benefit shown for the free plan card */
+"subscriptionPurchase.freePlanCard.feature.one"="Gratis 20 GB aan opslagruimte";
+/* Second benefit shown for the free plan card */
+"subscriptionPurchase.freePlanCard.feature.two"="Beperkte overdrachten";
+/* Button title for the free plan card */
+"subscriptionPurchase.freePlanCard.button.title"="Ga Gratis aan de Slag";
+/* Displays the amount of storage included in the subscription plan */
+"subscriptionPurchase.plan.storage"="%@ Opslag";
+/* Displays the amount of data transfer included in the subscription plan */
+"subscriptionPurchase.plan.transfer"="%@ Overdracht";
+/* Displays the total amount when billed yearly */
+"subscriptionPurchase.plan.billedYearly"="%@ jaarlijks gefactureerd";
+/* Button title to cancel the subscription purchase. */
+"subscriptionPurchase.maybeLater"="Misschien later";
+/* Title for the features of pro plan in the subscription purchase screen. */
+"subscriptionPurchase.featuresOfProPlan.title"="Bijkomende voordelen van Pro-abonnementen";
+/* Features of pro plan in the subscription purchase screen. */
+"subscriptionPurchase.featuresOfProPlan.message"="• Met wachtwoord beveiligde links\n\n• Links met vervaldatums\n\n• Verdeling van overdrachtsoverdracht\n\n• Mappen terugspoelen tot 180 dagen\n\n• Onbeperkt bellen en vergaderen\n\n• Plan het opruimen van vuilnisbakken tussen 7 dagen en 10 jaar\n\n• Prioritaire ondersteuning";
+/* Title for the first subscription feature: generous storage capacity */
+"subscriptionPurchase.feature.one.title"="Vrijgevige opslag";
+/* Description for the first subscription feature: details about available storage */
+"subscriptionPurchase.feature.one.description"="Bewaar maximaal 16 TB aan gegevens";
+/* Title for the second subscription feature: transfer quota sharing */
+"subscriptionPurchase.feature.two.title"="Overdracht deling";
+/* Description for the second subscription feature: how shared users can use your quota */
+"subscriptionPurchase.feature.two.description"="Mensen met wie u items deelt, kunnen uw overdrachtstegoed gebruiken om bestanden te downloaden en te streamen";
+/* Title for the third subscription feature: MEGA VPN service */
+"subscriptionPurchase.feature.three.title"="MEGA VPN";
+/* Description for the third subscription feature: benefits of using the MEGA VPN */
+"subscriptionPurchase.feature.three.description"="Houd je online leven veilig, snel en gemakkelijk met onze snelle VPN";
+/* Title for the fourth subscription feature: MEGA Pass password manager */
+"subscriptionPurchase.feature.four.title"="MEGA Pass";
+/* Description for the fourth subscription feature: benefits of using MEGA Pass for password management */
+"subscriptionPurchase.feature.four.description"="Organiseer al uw wachtwoorden en houd ze veilig met onze wachtwoordbeheerder";
+/* Title for all the feature in subscription purchase view. */
+"subscriptionPurchase.feature.title"="U krijgt:";

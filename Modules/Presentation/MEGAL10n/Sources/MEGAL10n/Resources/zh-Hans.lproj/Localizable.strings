@@ -335,7 +335,7 @@
 /* Menu option from the `Add` section that allows you to create a 'New Folder' */
 "newFolder"="新建文件夹";
 /* Menu option from the `Add` section that displays all media files under current folder */
-"cloudDrive.menu.mediaDiscovery.title"="媒体发现";
+"cloudDrive.menu.mediaDiscovery.title"="图库视图";
 /* Exit Text on Media Discovery Navigation Bar */
 "cloudDrive.mediaDiscovery.exit"="离开";
 /* Hint text shown on the create folder alert. */
@@ -926,6 +926,10 @@
 "recoveryKey"="恢复密钥";
 /* An alert title where the user provided the incorrect Recovery Key. */
 "invalidRecoveryKey"="恢复密钥无效";
+/* Recovery key error alert title */
+"recoveryKey.error.alert.title"="Recovery key error";
+/* Recovery key error alert message when the user provided incorrect or invalid Recovery key */
+"recoveryKey.error.alert.message.invalidKey"="The recovery key you supplied is either invalid, or is not for this account. Check if you’re using the correct key and try again.";
 /* Text of the alert after opening the recovery link to reset pass being logged. */
 "youRecoveryKeyIsGoingTo"="您的恢复密钥将用于重置您的密码。请输入您的新密码。";
 /*  */
@@ -2203,17 +2207,17 @@
 /* Inside of Settings - Appearance, there is a view on which you can change the setting for showing hidden items in the app. This is the footer message body that appears under that option */
 "settings.userInterface.hiddenItems.footer"="所有隐藏的项目都将可见，但会模糊显示以表示其“隐藏”状态。";
 /* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the label in the setting */
-"settings.userInterface.mediaDiscovery"="媒体发现视图";
+"settings.userInterface.mediaDiscovery"="图库视图";
 /* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the header title that appears above */
-"settings.userInterface.mediaDiscovery.header"="媒体发现";
+"settings.userInterface.mediaDiscovery.header"="图库视图";
 /* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the footer message body that appears under that option */
-"settings.userInterface.mediaDiscovery.footer.body"="默认情况下，仅包含图像和视频的文件夹将在媒体发现视图中打开。";
+"settings.userInterface.mediaDiscovery.footer.body"="Open folders with only images or videos in a visual grid. Browse media by thumbnails and filter by date.";
 /* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the footer message body link that appears under that option */
-"settings.userInterface.mediaDiscovery.footer.link"="了解有关媒体发现的更多信息。";
+"settings.userInterface.mediaDiscovery.footer.link"="Learn more about gallery view";
 /* In Settings - User Interface, there is a setting that can determine if the app should also load sub folder media. This is the label in the setting */
-"settings.userInterface.mediaDiscoverySubFolder"="子文件夹中的媒体发现";
+"settings.userInterface.mediaDiscoverySubFolder"="Gallery view in subfolders";
 /* In Settings - User Interface, there is a setting that can determine if the app should also load sub folder media. This is the footer message body that appears under that option */
-"settings.userInterface.mediaDiscoverySubFolder.footer"="子文件夹中的图像和视频也将包含在媒体发现视图中。";
+"settings.userInterface.mediaDiscoverySubFolder.footer"="Images and videos from subfolders will also be included in gallery view";
 /* In Settings - User Interface, there is an option that you can enable to hide the contents of the Recents section */
 "settings.userInterface.hideRecentActivity"="隐藏近期动态";
 /* In Settings - User Interface, there is an option that you can enable to hide the contents of the Recents section. This is the footer that appears under that option. */
@@ -3883,7 +3887,7 @@
 /* Error shown when moving folder to inside itself */
 "Error.nodeCopyOrMove.circularDependency"="您无法移动此文件夹，因为目的地是同一个文件夹。";
 /* Auto media discovery banner title */
-"photos.mediaDiscovery.autoMediaDiscoveryBanner.title"="由于此文件夹仅包含图像和视频，我们已自动在媒体发现视图中将其打开。您可以通过更身临其境的布局欣赏您的视觉内容。您可以在设置中禁用此功能。";
+"photos.mediaDiscovery.autoMediaDiscoveryBanner.title"="As this folder contains only images and videos, we’ve automatically opened it in gallery view. You can enjoy your visual content with a more immersive layout. You can disable this in Settings.";
 /* Upgrade account screen header title after user onboarding */
 "onboarding.upgradeAccount.header.title"="通过Pro方案获得更多权益";
 /* Upgrade account screen header subTitle after user onboarding. %@ will be replaced by the price of the lowest plan per month. */
@@ -4632,3 +4636,45 @@
 "onboarding.cta.cameraBackups.buttons.enable"="启用相机上传";
 /* Onboarding Camera Backups CTA *Skip* button */
 "onboarding.cta.cameraBackups.buttons.skip"="Skip for now";
+/* String explaining the auto-renewal policy of the Pro subscription. */
+"subscriptionPurchase.autoRenewDescription"="Subscriptions are renewed automatically for successive subscription periods of the same duration and at the same price as the initial period chosen.\n\nYou can cancel your Pro plan anytime but no later than 24 hours before your next subscription payment is due. Learn how to manage your subscription in your settings.";
+/* Title shown for the free plan card */
+"subscriptionPurchase.freePlanCard.title"="从我们的免费方案开始吧";
+/* Description shown for the free plan card */
+"subscriptionPurchase.freePlanCard.description"="We offer generous amount of storage and transfer quota at no charge, so you can try MEGA with no risk";
+/* First benefit shown for the free plan card */
+"subscriptionPurchase.freePlanCard.feature.one"="Free 20 GB of storage";
+/* Second benefit shown for the free plan card */
+"subscriptionPurchase.freePlanCard.feature.two"="Limited transfers";
+/* Button title for the free plan card */
+"subscriptionPurchase.freePlanCard.button.title"="使用免费帐户";
+/* Displays the amount of storage included in the subscription plan */
+"subscriptionPurchase.plan.storage"="%@存储空间";
+/* Displays the amount of data transfer included in the subscription plan */
+"subscriptionPurchase.plan.transfer"="%@传输流量";
+/* Displays the total amount when billed yearly */
+"subscriptionPurchase.plan.billedYearly"="%@ billed yearly";
+/* Button title to cancel the subscription purchase. */
+"subscriptionPurchase.maybeLater"="稍后";
+/* Title for the features of pro plan in the subscription purchase screen. */
+"subscriptionPurchase.featuresOfProPlan.title"="Additional benefits of Pro plans";
+/* Features of pro plan in the subscription purchase screen. */
+"subscriptionPurchase.featuresOfProPlan.message"="• Password-protected links\n\n• Links with expiry dates\n\n• Transfer quota sharing\n\n• Rewind folders up to 180 days\n\n• Unlimited calls and meetings\n\n• Schedule rubbish bin clearing between 7 days and 10 years\n\n• Priority support";
+/* Title for the first subscription feature: generous storage capacity */
+"subscriptionPurchase.feature.one.title"="大容量存储空间";
+/* Description for the first subscription feature: details about available storage */
+"subscriptionPurchase.feature.one.description"="Store up to 16 TB of data";
+/* Title for the second subscription feature: transfer quota sharing */
+"subscriptionPurchase.feature.two.title"="传输流量共享";
+/* Description for the second subscription feature: how shared users can use your quota */
+"subscriptionPurchase.feature.two.description"="People you share items with can use your transfer quota to download and stream files";
+/* Title for the third subscription feature: MEGA VPN service */
+"subscriptionPurchase.feature.three.title"="MEGA VPN";
+/* Description for the third subscription feature: benefits of using the MEGA VPN */
+"subscriptionPurchase.feature.three.description"="Keep your online life safe, fast, and easy with our high-speed VPN";
+/* Title for the fourth subscription feature: MEGA Pass password manager */
+"subscriptionPurchase.feature.four.title"="MEGA Pass";
+/* Description for the fourth subscription feature: benefits of using MEGA Pass for password management */
+"subscriptionPurchase.feature.four.description"="Organise all your passwords and keep them safe with our password manager";
+/* Title for all the feature in subscription purchase view. */
+"subscriptionPurchase.feature.title"="您将获得：";

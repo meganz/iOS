@@ -3397,9 +3397,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d item unhidden</string>
+        <string>%d element neascuns</string>
+        <key>few</key>
+        <string>%d elemente neascunse</string>
         <key>other</key>
-        <string>%d items unhidden</string>
+        <string>%d elemente neascunse</string>
       </dict>
     </dict>
     <key>set.addTo.AddedToSet.snack.message</key>
@@ -3503,9 +3505,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Although we have contacted you by email on [date], your storage is still full. You have %d file taking up [storageSpace] in your Cloud drive, and your account has been locked. Upgrade to a [plan] plan to increase your storage and unlock your account. If you don’t take action soon, your data will be deleted. Upgrade now to protect your file. [A]Learn more about your storage limits[/A]. </string>
+        <string>Deși v-am contactat prin e-mail pe[date], spațiul dvs. de stocare este încă plin. Aveți %d fișier care ocupă [storageSpace] în unitatea dvs. Cloud, iar contul dvs. a fost blocat. Faceți upgrade la un abonament [plan] pentru a vă mări spațiul de stocare și a vă debloca contul. Dacă nu luați măsuri în curând, datele dvs. vor fi șterse. Faceți upgrade acum pentru a vă proteja fișierul.[A]Aflați mai multe despre limitele dvs. de stocare[/A].</string>
+        <key>few</key>
+        <string>Deși v-am contactat prin e-mail la [date], spațiul de stocare este încă plin. Tu ai %d fișiere preluând [storageSpace] în Unitatea cloud, iar contul dvs. a fost blocat. Treceți la a [plan] planificați să vă măriți spațiul de stocare și să vă deblocați contul. Dacă nu luați măsuri în curând, datele dvs. vor fi șterse. Actualizați acum pentru a vă proteja fișierele. [A]Aflați mai multe despre limitele de spațiu de stocare[/A]. </string>
         <key>other</key>
-        <string>Although we have contacted you by email on [date], your storage is still full. You have %d files taking up [storageSpace] in your Cloud drive, and your account has been locked. Upgrade to a [plan] plan to increase your storage and unlock your account. If you don’t take action soon, your data will be deleted. Upgrade now to protect your files. [A]Learn more about your storage limits[/A]. </string>
+        <string>Deși v-am contactat prin e-mail la [date], spațiul de stocare este încă plin. Tu ai %d fișiere preluând [storageSpace] în Unitatea cloud, iar contul dvs. a fost blocat. Treceți la a [plan] planificați să vă măriți spațiul de stocare și să vă deblocați contul. Dacă nu luați măsuri în curând, datele dvs. vor fi șterse. Actualizați acum pentru a vă proteja fișierele. [A]Aflați mai multe despre limitele de spațiu de stocare[/A]. </string>
       </dict>
     </dict>
     <key>overDiskQuota.paywall.notFinalWarning.multipleEmailsSent.message</key>
@@ -3519,9 +3523,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Although we have contacted you multiple times by email, your storage is still full. You have %d file taking up [storageSpace] in your Cloud drive, and your account has been locked. Upgrade to a [plan] plan to increase your storage and unlock your account. If you don’t take action soon, your data will be deleted. Upgrade now to protect your file. [A]Learn more about your storage limits[/A]. </string>
+        <string>Deși v-am contactat de mai multe ori prin e-mail, spațiul dvs. de stocare este încă plin. Aveți %d fișiere care ocupă [storageSpace] în unitatea dvs. Cloud, iar contul dvs. a fost blocat. Faceți upgrade la un abonament [plan] pentru a vă mări spațiul de stocare și a vă debloca contul. Dacă nu luați măsuri în curând, datele dvs. vor fi șterse. Faceți upgrade acum pentru a vă proteja fișierul. [A]Aflați mai multe despre limitele dvs. de stocare[/A].</string>
+        <key>few</key>
+        <string>Deși v-am contactat de mai multe ori prin e-mail, spațiul dvs. de stocare este încă plin. Aveți %d fișiere care ocupă [storageSpace] în unitatea dvs. Cloud, iar contul dvs. a fost blocat. Faceți upgrade la un abonament [plan] pentru a vă mări spațiul de stocare și a vă debloca contul. Dacă nu luați măsuri în curând, datele dvs. vor fi șterse. Faceți upgrade acum pentru a vă proteja fișierul. [A]Aflați mai multe despre limitele dvs. de stocare[/A].</string>
         <key>other</key>
-        <string>Although we have contacted you multiple times by email, your storage is still full. You have %d files taking up [storageSpace] in your Cloud drive, and your account has been locked. Upgrade to a [plan] plan to increase your storage and unlock your account. If you don’t take action soon, your data will be deleted. Upgrade now to protect your files. [A]Learn more about your storage limits[/A]. </string>
+        <string>Deși v-am contactat de mai multe ori prin e-mail, spațiul dvs. de stocare este încă plin. Aveți %d fișiere care ocupă [storageSpace] în unitatea dvs. Cloud, iar contul dvs. a fost blocat. Faceți upgrade la un abonament [plan] pentru a vă mări spațiul de stocare și a vă debloca contul. Dacă nu luați măsuri în curând, datele dvs. vor fi șterse. Faceți upgrade acum pentru a vă proteja fișierul. [A]Aflați mai multe despre limitele dvs. de stocare[/A].</string>
       </dict>
     </dict>
     <key>overDiskQuota.paywall.notFinalWarning.unknownTimesEmailWasSent.message</key>
@@ -3535,9 +3541,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Although we have contacted you by email, your storage is still full. You have %d file taking up [storageSpace] in your Cloud drive, and your account has been locked. Upgrade to a [plan] plan to increase your storage and unlock your account. If you don’t take action soon, your data will be deleted. Upgrade now to protect your file. [A]Learn more about your storage limits[/A]. </string>
+        <string>Deși v-am contactat prin e-mail, spațiul dvs. de stocare este încă plin. Aveți %d fișiere care ocupă [storageSpace] în unitatea dvs. Cloud, iar contul dvs. a fost blocat. Faceți upgrade la un abonament [plan] pentru a vă mări spațiul de stocare și a vă debloca contul. Dacă nu luați măsuri în curând, datele dvs. vor fi șterse. Faceți upgrade acum pentru a vă proteja fișierul. [A]Aflați mai multe despre limitele dvs. de stocare[/A].</string>
+        <key>few</key>
+        <string>Deși v-am contactat prin e-mail, spațiul dvs. de stocare este încă plin. Aveți %d fișiere care ocupă [storageSpace] în unitatea dvs. Cloud, iar contul dvs. a fost blocat. Faceți upgrade la un abonament [plan] pentru a vă mări spațiul de stocare și a vă debloca contul. Dacă nu luați măsuri în curând, datele dvs. vor fi șterse. Faceți upgrade acum pentru a vă proteja fișierul. [A]Aflați mai multe despre limitele dvs. de stocare[/A].</string>
         <key>other</key>
-        <string>Although we have contacted you by email, your storage is still full. You have %d files taking up [storageSpace] in your Cloud drive, and your account has been locked. Upgrade to a [plan] plan to increase your storage and unlock your account. If you don’t take action soon, your data will be deleted. Upgrade now to protect your files. [A]Learn more about your storage limits[/A].</string>
+        <string>Deși v-am contactat prin e-mail, spațiul dvs. de stocare este încă plin. Aveți %d fișiere care ocupă [storageSpace] în unitatea dvs. Cloud, iar contul dvs. a fost blocat. Faceți upgrade la un abonament [plan] pentru a vă mări spațiul de stocare și a vă debloca contul. Dacă nu luați măsuri în curând, datele dvs. vor fi șterse. Faceți upgrade acum pentru a vă proteja fișierul. [A]Aflați mai multe despre limitele dvs. de stocare[/A].</string>
       </dict>
     </dict>
     <key>settings.fileManagement.fileVersioning.enabledState.fileVersions</key>
