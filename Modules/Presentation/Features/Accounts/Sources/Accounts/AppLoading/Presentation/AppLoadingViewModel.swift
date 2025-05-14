@@ -29,6 +29,10 @@ public final class AppLoadingViewModel: ObservableObject {
         return nil
     }
     
+    var determinateProgress: Bool {
+        progress ?? 0 > 0
+    }
+    
     var statusText: String {
         switch status {
         case .initialized:
