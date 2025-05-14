@@ -17,7 +17,6 @@ static const NSUInteger MIN_SECOND = 10; // Save only where the users were playi
 @interface MEGAAVViewController () <AVPlayerViewControllerDelegate>
 
 @property (nonatomic, assign, getter=isViewDidAppearFirstTime) BOOL viewDidAppearFirstTime;
-@property (nonatomic, strong) NSMutableSet *subscriptions;
 
 @end
 
@@ -90,26 +89,22 @@ static const NSUInteger MIN_SECOND = 10; // Save only where the users were playi
                 mediaDestination = [[MEGAStore shareInstance] fetchMediaDestinationWithFingerprint:fingerprint];
             }
             if (mediaDestination.destination.longLongValue > 0 && mediaDestination.timescale.intValue > 0) {
-                if ([FileExtensionGroupOCWrapper verifyIsVideo:[self fileName]]) {
-                    NSString *infoVideoDestination = LocalizedString(@"video.alert.resumeVideo.message", @"Message to show the user info (video name and time) about the resume of the video");
-                    infoVideoDestination = [infoVideoDestination stringByReplacingOccurrencesOfString:@"%1$s" withString:[self fileName]];
-                    infoVideoDestination = [infoVideoDestination stringByReplacingOccurrencesOfString:@"%2$s" withString:[self timeForMediaDestination:mediaDestination]];
-                    UIAlertController *resumeOrRestartAlert = [UIAlertController alertControllerWithTitle:LocalizedString(@"video.alert.resumeVideo.title", @"Alert title shown for video with options to resume playing the video or start from the beginning") message:infoVideoDestination preferredStyle:UIAlertControllerStyleAlert];
-                    [resumeOrRestartAlert addAction:[UIAlertAction actionWithTitle:LocalizedString(@"video.alert.resumeVideo.button.restart", @"Alert button title that will start playing the video from the beginning") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                        [self seekToDestination:nil play:YES];
-                    }]];
-                    [resumeOrRestartAlert addAction:[UIAlertAction actionWithTitle:LocalizedString(@"video.alert.resumeVideo.button.resume", @"Alert button title that will resume playing the video") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                        [self seekToDestination:mediaDestination play:YES];
-                    }]];
-                    [self presentViewController:resumeOrRestartAlert animated:YES completion:nil];
-                } else {
-                    [self seekToDestination:mediaDestination play:NO];
-                }
+                NSString *infoVideoDestination = LocalizedString(@"video.alert.resumeVideo.message", @"Message to show the user info (video name and time) about the resume of the video");
+                infoVideoDestination = [infoVideoDestination stringByReplacingOccurrencesOfString:@"%1$s" withString:[self fileName]];
+                infoVideoDestination = [infoVideoDestination stringByReplacingOccurrencesOfString:@"%2$s" withString:[self timeForMediaDestination:mediaDestination]];
+                UIAlertController *resumeOrRestartAlert = [UIAlertController alertControllerWithTitle:LocalizedString(@"video.alert.resumeVideo.title", @"Alert title shown for video with options to resume playing the video or start from the beginning") message:infoVideoDestination preferredStyle:UIAlertControllerStyleAlert];
+                [resumeOrRestartAlert addAction:[UIAlertAction actionWithTitle:LocalizedString(@"video.alert.resumeVideo.button.restart", @"Alert button title that will start playing the video from the beginning") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                    [self seekToDestinationAndPlay:nil];
+                }]];
+                [resumeOrRestartAlert addAction:[UIAlertAction actionWithTitle:LocalizedString(@"video.alert.resumeVideo.button.resume", @"Alert button title that will resume playing the video") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                    [self seekToDestinationAndPlay:mediaDestination];
+                }]];
+                [self presentViewController:resumeOrRestartAlert animated:YES completion:nil];
             } else {
-                [self seekToDestination:nil play:YES];
+                [self seekToDestinationAndPlay:nil];
             }
         } else {
-            [self seekToDestination:nil play:YES];
+            [self seekToDestinationAndPlay:nil];
         }
     }
     
@@ -178,36 +173,6 @@ static const NSUInteger MIN_SECOND = 10; // Save only where the users were playi
 }
 
 #pragma mark - Private
-
-- (void)seekToDestination:(MOMediaDestination *)mediaDestination play:(BOOL)play {
-    if (!self.fileUrl) {
-        return;
-    }
-    
-    [self willStartPlayer];
-
-    AVAsset *asset = [AVAsset assetWithURL:self.fileUrl];
-    AVPlayerItem *playerItem = [AVPlayerItem playerItemWithAsset:asset];
-    [self setPlayerItemMetadataWithPlayerItem:playerItem node:self.node];
-    self.player = [AVPlayer playerWithPlayerItem:playerItem];
-    [self.subscriptions addObject:[self bindPlayerItemStatusWithPlayerItem:playerItem]];
-    
-    [self seekToMediaDestination:mediaDestination];
-    
-    if (play) {
-        [self.player play];
-    }
-    
-    [self.subscriptions addObject:[self bindPlayerTimeControlStatus]];
-}
-
-- (void)replayVideo {
-    if (self.player) {
-        [self.player seekToTime:kCMTimeZero];
-        [self.player play];
-        self.isEndPlaying = NO;
-    }
-}
 
 - (void)stopStreaming {
     if (self.node) {
