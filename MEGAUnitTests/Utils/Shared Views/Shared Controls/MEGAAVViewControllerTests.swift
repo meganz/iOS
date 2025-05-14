@@ -33,7 +33,7 @@ final class MEGAAVViewControllerTests: XCTestCase {
     func testWillStartPlayer_whenInvoked_startsLoading() throws {
         let sut = try makeSUT()
         
-        sut.willStartPlayer()
+        sut.startLoading()
         
         XCTAssertTrue(sut.activityIndicator.isAnimating, "Expect true, got false instead.")
     }

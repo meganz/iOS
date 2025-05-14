@@ -23,7 +23,6 @@
 
 #import "BrowserViewController.h"
 #import "MainTabBarController.h"
-#import "MEGAAVViewController.h"
 #import "MEGANavigationController.h"
 #import "MEGAPhotoBrowserViewController.h"
 #import "MEGAQLPreviewController.h"
