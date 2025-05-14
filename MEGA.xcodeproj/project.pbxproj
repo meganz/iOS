@@ -2491,6 +2491,7 @@
 		C450470B25794A7A00EE510E /* PlaylistHeaderFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C450470A25794A7A00EE510E /* PlaylistHeaderFooterView.xib */; };
 		C450CFB725B83E5F005C707D /* StreamingInfoRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = C450CFB625B83E5F005C707D /* StreamingInfoRepository.swift */; };
 		C450CFC325B84350005C707D /* StreamingInfoUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C450CFC225B84350005C707D /* StreamingInfoUseCase.swift */; };
+		C4510E642DD2F54D00B04F87 /* OnboardingPermissionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4510E632DD2F54900B04F87 /* OnboardingPermissionHandler.swift */; };
 		C451AB9625A4CDB700A5484B /* MainTabBarController+AudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C451AB9525A4CDB700A5484B /* MainTabBarController+AudioPlayer.swift */; };
 		C452B66425CD50260073B22C /* AudioPlayerPlaybackTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C452B66325CD50260073B22C /* AudioPlayerPlaybackTests.swift */; };
 		C45390CD256587BF0026F215 /* MEGASlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45390CC256587BF0026F215 /* MEGASlider.swift */; };
@@ -2616,6 +2617,7 @@
 		C4F638602BA97F7400D0B6B7 /* AdsDisplayViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F6385F2BA97F7400D0B6B7 /* AdsDisplayViewModelProtocol.swift */; };
 		C4F638722BAA81AE00D0B6B7 /* CloudDriveAdsSlotDisplayable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F638712BAA81AE00D0B6B7 /* CloudDriveAdsSlotDisplayable.swift */; };
 		C4F6387A2BAAA01A00D0B6B7 /* AdsVisibilityViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F638792BAAA01A00D0B6B7 /* AdsVisibilityViewModelTests.swift */; };
+		C4F74B052DD339CC00F6BA26 /* OnboardingPermissionHandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F74B042DD339C300F6BA26 /* OnboardingPermissionHandlerTests.swift */; };
 		E79B628B2B71223100F0C918 /* NotificationTableViewCell+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E79B628A2B71223100F0C918 /* NotificationTableViewCell+Additions.swift */; };
 		E79B62912B72671A00F0C918 /* OfflineTableViewViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E79B62902B72671A00F0C918 /* OfflineTableViewViewController+Additions.swift */; };
 		E7D794D12C352D0D005C46F0 /* MasterKeyViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D794D02C352D0D005C46F0 /* MasterKeyViewController+Additions.swift */; };
@@ -5253,6 +5255,7 @@
 		C450470A25794A7A00EE510E /* PlaylistHeaderFooterView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PlaylistHeaderFooterView.xib; sourceTree = "<group>"; };
 		C450CFB625B83E5F005C707D /* StreamingInfoRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamingInfoRepository.swift; sourceTree = "<group>"; };
 		C450CFC225B84350005C707D /* StreamingInfoUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamingInfoUseCase.swift; sourceTree = "<group>"; };
+		C4510E632DD2F54900B04F87 /* OnboardingPermissionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingPermissionHandler.swift; sourceTree = "<group>"; };
 		C451AB9525A4CDB700A5484B /* MainTabBarController+AudioPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainTabBarController+AudioPlayer.swift"; sourceTree = "<group>"; };
 		C452B66325CD50260073B22C /* AudioPlayerPlaybackTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerPlaybackTests.swift; sourceTree = "<group>"; };
 		C45390CC256587BF0026F215 /* MEGASlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGASlider.swift; sourceTree = "<group>"; };
@@ -5373,6 +5376,7 @@
 		C4F6385F2BA97F7400D0B6B7 /* AdsDisplayViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdsDisplayViewModelProtocol.swift; sourceTree = "<group>"; };
 		C4F638712BAA81AE00D0B6B7 /* CloudDriveAdsSlotDisplayable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudDriveAdsSlotDisplayable.swift; sourceTree = "<group>"; };
 		C4F638792BAAA01A00D0B6B7 /* AdsVisibilityViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdsVisibilityViewModelTests.swift; sourceTree = "<group>"; };
+		C4F74B042DD339C300F6BA26 /* OnboardingPermissionHandlerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingPermissionHandlerTests.swift; sourceTree = "<group>"; };
 		E79B628A2B71223100F0C918 /* NotificationTableViewCell+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NotificationTableViewCell+Additions.swift"; sourceTree = "<group>"; };
 		E79B62902B72671A00F0C918 /* OfflineTableViewViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OfflineTableViewViewController+Additions.swift"; sourceTree = "<group>"; };
 		E7D794D02C352D0D005C46F0 /* MasterKeyViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MasterKeyViewController+Additions.swift"; sourceTree = "<group>"; };
@@ -12872,6 +12876,7 @@
 		C465E9F22DC2E5B50016A6D3 /* PermissionOnboarding */ = {
 			isa = PBXGroup;
 			children = (
+				C4F74B042DD339C300F6BA26 /* OnboardingPermissionHandlerTests.swift */,
 				C465EA052DC2F05B0016A6D3 /* PermissionOnboardingRouterTests.swift */,
 				C465E9F32DC2E5B90016A6D3 /* PermissionOnboardingViewModelTests.swift */,
 			);
@@ -13135,6 +13140,7 @@
 		C4DCB5CB2DBA06C4002D6FEF /* Onboarding */ = {
 			isa = PBXGroup;
 			children = (
+				C4510E632DD2F54900B04F87 /* OnboardingPermissionHandler.swift */,
 				C4E0B1702DC087A300B45998 /* PermissionOnboardingRouter.swift */,
 				C4DCB5CC2DBA06C9002D6FEF /* PermissionOnboardingView.swift */,
 				C4CBF0002DBB835400834EF9 /* PermissionOnboardingViewModel.swift */,
@@ -15285,6 +15291,7 @@
 				9451F90A28229A11000ACE3B /* OfflineViewController+ContextMenu.swift in Sources */,
 				837A88C220B44AA8007B55D1 /* OfflineViewController.m in Sources */,
 				B52CB2342A7FA78A00F9C56C /* OfflineViewModel.swift in Sources */,
+				C4510E642DD2F54D00B04F87 /* OnboardingPermissionHandler.swift in Sources */,
 				0E69C0FA2DC8441100E473B7 /* OnboardingRoutingViewModel.swift in Sources */,
 				0E17E6E82DC1DE0A0090CC9F /* OnboardingUSPViewController.swift in Sources */,
 				7795677D21C81C6E002B6227 /* OnboardingView.m in Sources */,
@@ -16454,6 +16461,7 @@
 				C45A2E4A25D2F81800915A83 /* OfflineFileInfoUseCaseTests.swift in Sources */,
 				940006D72D13494B00E246DA /* OfflineFilesRepositoryTests.swift in Sources */,
 				530C52522C216B6E00DFF3FE /* OfflineViewModelTests.swift in Sources */,
+				C4F74B052DD339CC00F6BA26 /* OnboardingPermissionHandlerTests.swift in Sources */,
 				0E69C1002DC8472500E473B7 /* OnboardingRoutingViewModelTests.swift in Sources */,
 				0E0CFFC62D6EBF7F00F90D9F /* OverDiskQuotaCheckerTests.swift in Sources */,
 				0E44671C2D77CC3400691ECA /* OverDiskQuotaNodeActionViewControllerDelegateTests.swift in Sources */,

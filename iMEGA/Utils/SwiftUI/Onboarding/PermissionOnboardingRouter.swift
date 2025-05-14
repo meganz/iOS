@@ -74,7 +74,7 @@ final class PermissionOnboardingRouter {
                 note: nil,
                 primaryButtonTitle: Strings.Localizable.Onboarding.Cta.Notifications.Buttons.enable,
                 secondaryButtonTitle: Strings.Localizable.Onboarding.Cta.Notifications.Buttons.skip,
-                permissionRequester: PermissionOnboardingRequester(permissionType: .notifications)
+                permissionHandler: OnboardingPermissionHandler(permissionType: .notifications)
             )
         case .cameraBackups:
             PermissionOnboardingViewModel(
@@ -84,7 +84,7 @@ final class PermissionOnboardingRouter {
                 note: Strings.Localizable.Onboarding.Cta.CameraBackups.note,
                 primaryButtonTitle: Strings.Localizable.Onboarding.Cta.CameraBackups.Buttons.enable,
                 secondaryButtonTitle: Strings.Localizable.Onboarding.Cta.CameraBackups.Buttons.skip,
-                permissionRequester: PermissionOnboardingRequester(permissionType: .photos)
+                permissionHandler: OnboardingPermissionHandler(permissionType: .photos)
             )
         }
     }

@@ -1,35 +1,7 @@
+import MEGAAnalyticsiOS
+import MEGAAppPresentation
 import MEGAPermissions
 import MEGAPresentation
-
-protocol PermissionOnboardingRequesting: Sendable {
-    func requestPermission() async -> Bool
-}
-
-struct PermissionOnboardingRequester: PermissionOnboardingRequesting {
-    enum PermissionType {
-        case notifications
-        case photos
-    }
-    private let devicePermissionHandler: any DevicePermissionsHandling
-    private let permissionType: PermissionType
-    
-    init(
-        permissionType: PermissionType,
-        devicePermissionHandler: some DevicePermissionsHandling = DevicePermissionsHandler.makeHandler()
-    ) {
-        self.permissionType = permissionType
-        self.devicePermissionHandler = devicePermissionHandler
-    }
-
-    func requestPermission() async -> Bool {
-        return switch permissionType {
-        case .notifications:
-            await devicePermissionHandler.requestNotificationsPermission()
-        case .photos:
-            await devicePermissionHandler.requestPhotoLibraryAccessPermissions()
-        }
-    }
-}
 
 final class PermissionOnboardingViewModel: ViewModel<PermissionOnboardingViewModel.Route> {
 
@@ -48,7 +20,8 @@ final class PermissionOnboardingViewModel: ViewModel<PermissionOnboardingViewMod
     let primaryButtonTitle: String
     let secondaryButtonTitle: String
 
-    private let permissionRequester: any PermissionOnboardingRequesting
+    private let permissionHandler: any OnboardingPermissionHandling
+    private let tracker: any AnalyticsTracking
 
     init(
         image: ImageResource,
@@ -57,7 +30,8 @@ final class PermissionOnboardingViewModel: ViewModel<PermissionOnboardingViewMod
         note: String?,
         primaryButtonTitle: String,
         secondaryButtonTitle: String,
-        permissionRequester: some PermissionOnboardingRequesting
+        permissionHandler: some OnboardingPermissionHandling,
+        tracker: some AnalyticsTracking = DIContainer.tracker
     ) {
         self.image = image
         self.title = title
@@ -65,15 +39,24 @@ final class PermissionOnboardingViewModel: ViewModel<PermissionOnboardingViewMod
         self.note = note
         self.primaryButtonTitle = primaryButtonTitle
         self.secondaryButtonTitle = secondaryButtonTitle
-        self.permissionRequester = permissionRequester
+        self.permissionHandler = permissionHandler
+        self.tracker = tracker
+    }
+
+    func onAppear() async {
+        tracker.trackAnalyticsEvent(with: permissionHandler.screenViewEvent())
     }
 
     func onPrimaryButtonTap() async {
-        let result = await permissionRequester.requestPermission()
-        routeTo(.finished(result: result))
+        tracker.trackAnalyticsEvent(with: permissionHandler.enablePermissionAnalyticsEvent())
+        routeTo(.finished(result: await permissionHandler.requestPermission()))
+        if let event = await permissionHandler.permissionResultAnalyticsEvent() {
+            tracker.trackAnalyticsEvent(with: event)
+        }
     }
 
     func onSecondaryButtonTap() async {
+        tracker.trackAnalyticsEvent(with: permissionHandler.skipPermissionAnalyticsEvent())
         routeTo(.skipped)
     }
 }
