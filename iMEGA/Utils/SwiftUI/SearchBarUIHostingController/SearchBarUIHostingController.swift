@@ -103,19 +103,6 @@ class SearchBarUIHostingController<Content>: UIHostingController<Content>, Audio
         removeToolbar(animated: animated)
     }
     
-    deinit {
-        CrashlyticsLogger.log(category: .viewLifecycle, "SearchBarUIHostingController deinit - Before removeToolbar")
-        
-        wrapper?.onUpdateSearchBarVisibility = nil
-        selectionHandler?.onSelectionModeChange = nil
-        selectionHandler?.onSelectionChanged = nil
-        browseDelegate.endEditingMode = nil
-        
-        navigationItem.searchController = nil
-        
-        CrashlyticsLogger.log(category: .viewLifecycle, "SearchBarUIHostingController deinit.")
-    }
-    
     // MARK: - CancelSearch outside the controller
     func cancelActiveSearch() {
         wrapper?.cancelSearch()
