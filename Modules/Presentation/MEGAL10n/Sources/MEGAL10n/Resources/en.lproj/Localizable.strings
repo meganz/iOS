@@ -335,7 +335,7 @@
 /* Menu option from the `Add` section that allows you to create a 'New Folder' */
 "newFolder"="New folder";
 /* Menu option from the `Add` section that displays all media files under current folder */
-"cloudDrive.menu.mediaDiscovery.title"="Media discovery";
+"cloudDrive.menu.mediaDiscovery.title"="Gallery view";
 /* Exit Text on Media Discovery Navigation Bar */
 "cloudDrive.mediaDiscovery.exit"="Exit";
 /* Hint text shown on the create folder alert. */
@@ -929,7 +929,7 @@
 /* Recovery key error alert title */
 "recoveryKey.error.alert.title"="Recovery key error";
 /* Recovery key error alert message when the user provided incorrect or invalid Recovery key */
-"recoveryKey.error.alert.message.invalidKey"="The recovery key you supplied is either invalid, or is not for this account. Check if you're using the correct key and try again.";
+"recoveryKey.error.alert.message.invalidKey"="The recovery key you supplied is either invalid, or is not for this account. Check if you’re using the correct key and try again.";
 /* Text of the alert after opening the recovery link to reset pass being logged. */
 "youRecoveryKeyIsGoingTo"="Your Recovery key is going to be used to reset your password. Please enter your new password.";
 /*  */
@@ -2207,17 +2207,17 @@
 /* Inside of Settings - Appearance, there is a view on which you can change the setting for showing hidden items in the app. This is the footer message body that appears under that option */
 "settings.userInterface.hiddenItems.footer"="All hidden items will be visible, but blurred to indicate their “hidden” status.";
 /* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the label in the setting */
-"settings.userInterface.mediaDiscovery"="Media discovery view";
+"settings.userInterface.mediaDiscovery"="Gallery view";
 /* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the header title that appears above */
-"settings.userInterface.mediaDiscovery.header"="Media discovery";
+"settings.userInterface.mediaDiscovery.header"="Gallery view";
 /* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the footer message body that appears under that option */
-"settings.userInterface.mediaDiscovery.footer.body"="Folders that contain only images and videos will open in media discovery view by default.";
+"settings.userInterface.mediaDiscovery.footer.body"="Open folders with only images or videos in a visual grid. Browse media by thumbnails and filter by date.";
 /* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the footer message body link that appears under that option */
-"settings.userInterface.mediaDiscovery.footer.link"="Learn more about media discovery.";
+"settings.userInterface.mediaDiscovery.footer.link"="Learn more about gallery view";
 /* In Settings - User Interface, there is a setting that can determine if the app should also load sub folder media. This is the label in the setting */
-"settings.userInterface.mediaDiscoverySubFolder"="Media discovery in subfolders";
+"settings.userInterface.mediaDiscoverySubFolder"="Gallery view in subfolders";
 /* In Settings - User Interface, there is a setting that can determine if the app should also load sub folder media. This is the footer message body that appears under that option */
-"settings.userInterface.mediaDiscoverySubFolder.footer"="Images and videos from subfolders will also be included in media discovery view.";
+"settings.userInterface.mediaDiscoverySubFolder.footer"="Images and videos from subfolders will also be included in gallery view";
 /* In Settings - User Interface, there is an option that you can enable to hide the contents of the Recents section */
 "settings.userInterface.hideRecentActivity"="Hide recent activity";
 /* In Settings - User Interface, there is an option that you can enable to hide the contents of the Recents section. This is the footer that appears under that option. */
@@ -3887,7 +3887,7 @@
 /* Error shown when moving folder to inside itself */
 "Error.nodeCopyOrMove.circularDependency"="You can’t move this folder as the destination is the same folder.";
 /* Auto media discovery banner title */
-"photos.mediaDiscovery.autoMediaDiscoveryBanner.title"="As this folder contains only images and videos, we’ve automatically opened it in media discovery view. You can enjoy your visual content with a more immersive layout. You can disable this in Settings.";
+"photos.mediaDiscovery.autoMediaDiscoveryBanner.title"="As this folder contains only images and videos, we’ve automatically opened it in gallery view. You can enjoy your visual content with a more immersive layout. You can disable this in Settings.";
 /* Upgrade account screen header title after user onboarding */
 "onboarding.upgradeAccount.header.title"="Get more with a Pro plan";
 /* Upgrade account screen header subTitle after user onboarding. %@ will be replaced by the price of the lowest plan per month. */
@@ -4641,7 +4641,7 @@
 /* Title shown for the free plan card */
 "subscriptionPurchase.freePlanCard.title"="Get started with our Free plan";
 /* Description shown for the free plan card */
-"subscriptionPurchase.freePlanCard.description"="We offers generous amount of storage and transfer quota at no charge, so you can try MEGA at no risk";
+"subscriptionPurchase.freePlanCard.description"="We offer generous amount of storage and transfer quota at no charge, so you can try MEGA with no risk";
 /* First benefit shown for the free plan card */
 "subscriptionPurchase.freePlanCard.feature.one"="Free 20 GB of storage";
 /* Second benefit shown for the free plan card */
@@ -4652,28 +4652,28 @@
 "subscriptionPurchase.plan.storage"="%@ storage";
 /* Displays the amount of data transfer included in the subscription plan */
 "subscriptionPurchase.plan.transfer"="%@ transfer";
-/* Displays the total amount when billed yearly*/
+/* Displays the total amount when billed yearly */
 "subscriptionPurchase.plan.billedYearly"="%@ billed yearly";
-/* Button title to cancel the subscription purchase.*/
+/* Button title to cancel the subscription purchase. */
 "subscriptionPurchase.maybeLater"="Maybe later";
-/* Title for the features of pro plan in the subscription purchase screen.*/
+/* Title for the features of pro plan in the subscription purchase screen. */
 "subscriptionPurchase.featuresOfProPlan.title"="Additional benefits of Pro plans";
-/* Features of pro plan in the subscription purchase screen.*/
+/* Features of pro plan in the subscription purchase screen. */
 "subscriptionPurchase.featuresOfProPlan.message"="• Password-protected links\n\n• Links with expiry dates\n\n• Transfer quota sharing\n\n• Rewind folders up to 180 days\n\n• Unlimited calls and meetings\n\n• Schedule rubbish bin clearing between 7 days and 10 years\n\n• Priority support";
 /* Title for the first subscription feature: generous storage capacity */
 "subscriptionPurchase.feature.one.title"="Generous storage";
 /* Description for the first subscription feature: details about available storage */
-"subscriptionPurchase.feature.one.description"="Store unlimited data up to 16 TB of storage";
+"subscriptionPurchase.feature.one.description"="Store up to 16 TB of data";
 /* Title for the second subscription feature: transfer quota sharing */
 "subscriptionPurchase.feature.two.title"="Transfer sharing";
 /* Description for the second subscription feature: how shared users can use your quota */
-"subscriptionPurchase.feature.two.description"="People you share items with can use your quota to download and stream files";
+"subscriptionPurchase.feature.two.description"="People you share items with can use your transfer quota to download and stream files";
 /* Title for the third subscription feature: MEGA VPN service */
-"subscriptionPurchase.feature.three.title"="MEGA VPN";
+"subscriptionPurchase.feature.three.title"="MEGA VPN";
 /* Description for the third subscription feature: benefits of using the MEGA VPN */
 "subscriptionPurchase.feature.three.description"="Keep your online life safe, fast, and easy with our high-speed VPN";
 /* Title for the fourth subscription feature: MEGA Pass password manager */
-"subscriptionPurchase.feature.four.title"="MEGA Pass";
+"subscriptionPurchase.feature.four.title"="MEGA Pass";
 /* Description for the fourth subscription feature: benefits of using MEGA Pass for password management */
 "subscriptionPurchase.feature.four.description"="Organise all your passwords and keep them safe with our password manager";
 /* Title for all the feature in subscription purchase view. */

@@ -335,7 +335,7 @@
 /* Menu option from the `Add` section that allows you to create a 'New Folder' */
 "newFolder"="Folder nou";
 /* Menu option from the `Add` section that displays all media files under current folder */
-"cloudDrive.menu.mediaDiscovery.title"="Descoperire media";
+"cloudDrive.menu.mediaDiscovery.title"="Vizualizare galerie";
 /* Exit Text on Media Discovery Navigation Bar */
 "cloudDrive.mediaDiscovery.exit"="Ieși";
 /* Hint text shown on the create folder alert. */
@@ -631,9 +631,9 @@
 /* Button title of the action that allows to leave a shared folder */
 "leaveFolder"="Lăsați folderul";
 /* Alert message shown when the user tap on the leave share action for one inshare */
-"leaveShareAlertMessage"="Are you sure you want to leave this folder?";
+"leaveShareAlertMessage"="Sigur vreți să părăsiți acest folder?";
 /* Alert message shown when the user tap on the leave share action selecting multiple inshares */
-"leaveSharesAlertMessage"="Are you sure you want to leave these folders?";
+"leaveSharesAlertMessage"="Sigur vreți să părăsiți aceste folder?";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected */
 "general.share"="Partajează";
 /* Button title which, if tapped, will trigger the action to export something from MEGA with the objective of sharing it outside of the app */
@@ -691,7 +691,7 @@
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Settings' */
 "general.cookieSettings"="Setări privind cookie-urile";
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie and Ad Settings' */
-"general.cookieAndAdSettings"="Cookie and ad settings";
+"general.cookieAndAdSettings"="Setări cookie și anunțuri";
 /* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
 "termsOfServicesLabel"="Termenii de utilizare a serviciului";
 /* Title of one of the Settings sections where you can see the MEGA's 'Data Protection Regulation' */
@@ -926,6 +926,10 @@
 "recoveryKey"="Cheie de recuperare";
 /* An alert title where the user provided the incorrect Recovery Key. */
 "invalidRecoveryKey"="Cheie de recuperare nevalidă";
+/* Recovery key error alert title */
+"recoveryKey.error.alert.title"="Eroare cheie de recuperare";
+/* Recovery key error alert message when the user provided incorrect or invalid Recovery key */
+"recoveryKey.error.alert.message.invalidKey"="Cheia de recuperare pe care ați furnizat-o este fie nevalidă, fie nu este pentru acest cont. Verificați dacă folosiți cheia corectă și încercați din nou.";
 /* Text of the alert after opening the recovery link to reset pass being logged. */
 "youRecoveryKeyIsGoingTo"="Cheia de recuperare va fi folosită pentru a-ți reseta parola. Te rugăm să introduci noua parolă.";
 /*  */
@@ -2203,17 +2207,17 @@
 /* Inside of Settings - Appearance, there is a view on which you can change the setting for showing hidden items in the app. This is the footer message body that appears under that option */
 "settings.userInterface.hiddenItems.footer"="Toate elementele ascunse vor fi vizibile, dar neclare pentru a indica starea lor „ascunsă”.";
 /* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the label in the setting */
-"settings.userInterface.mediaDiscovery"="Vizualizare pentru descoperire media";
+"settings.userInterface.mediaDiscovery"="Vizualizare galerie";
 /* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the header title that appears above */
-"settings.userInterface.mediaDiscovery.header"="Descoperire media";
+"settings.userInterface.mediaDiscovery.header"="Vizualizare galerie";
 /* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the footer message body that appears under that option */
-"settings.userInterface.mediaDiscovery.footer.body"="Folderele care conțin doar imagini și videoclipuri se vor deschide implicit în modul de descoperire media.";
+"settings.userInterface.mediaDiscovery.footer.body"="Deschideți foldere cu numai imagini sau videoclipuri într-o grilă vizuală. Răsfoiți media după miniaturi și filtrați după dată.";
 /* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the footer message body link that appears under that option */
-"settings.userInterface.mediaDiscovery.footer.link"="Aflați mai multe despre descoperirea media.";
+"settings.userInterface.mediaDiscovery.footer.link"="Aflați mai multe despre vizualizarea galeriei";
 /* In Settings - User Interface, there is a setting that can determine if the app should also load sub folder media. This is the label in the setting */
-"settings.userInterface.mediaDiscoverySubFolder"="Descoperire media în subfoldere";
+"settings.userInterface.mediaDiscoverySubFolder"="Vizualizare galerie în subfoldere";
 /* In Settings - User Interface, there is a setting that can determine if the app should also load sub folder media. This is the footer message body that appears under that option */
-"settings.userInterface.mediaDiscoverySubFolder.footer"="Imaginile și videoclipurile din subfoldere vor fi, de asemenea, incluse î în modul de descoperire media";
+"settings.userInterface.mediaDiscoverySubFolder.footer"="Imaginile și videoclipurile din subfoldere vor fi, de asemenea, incluse în vizualizarea galeriei";
 /* In Settings - User Interface, there is an option that you can enable to hide the contents of the Recents section */
 "settings.userInterface.hideRecentActivity"="Ascunde activitatea recentă";
 /* In Settings - User Interface, there is an option that you can enable to hide the contents of the Recents section. This is the footer that appears under that option. */
@@ -2487,9 +2491,9 @@
 /* Cookie settings dialog footer text for Advertising Cookies */
 "settings.cookies.advertisingCookies.footer"="Utilizate de partenerii noștri de publicitate aprobați pentru a colecta date despre activitățile dvs. de navigare și pentru a personaliza anunțurile pe care le vedeți în serviciile noastre și pe alte site-uri web. Dacă nu acceptați aceste cookie-uri, veți vedea în continuare anunțuri, dar acestea nu vor fi personalizate.";
 /* Ad settings header title */
-"settings.ad.header.title"="Ad settings";
+"settings.ad.header.title"="Setări anunţuri";
 /* Ad settings menu title for Ad personalisation */
-"settings.ad.adPersonalisation.title"="Ad personalisation";
+"settings.ad.adPersonalisation.title"="Personalizarea anunțurilor";
 /* Text shown when the creation of a version as a new file was successful */
 "Version created as a new file successfully."="Versiunea a fost creată ca un fișier nou.";
 /* Text shown for the action create new file */
@@ -2559,7 +2563,7 @@
 /* Title of Over Disk Quota dialog */
 "dialog.storage.odq.title"="Te rugăm să faci upgrade";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. @% is placeholder. */
-"dialog.storage.almostFull.detail"="Your Cloud drive is almost full. Upgrade now and get up to %@ TB of cloud storage space.";
+"dialog.storage.almostFull.detail"="Unitatea ta în cloud este aproape plină. Actualizați acum și obțineți până la %@ TB de spațiu de stocare în cloud.";
 /* Over Disk Quota detail message informing the user that they've reached the full capacity of their accounts. */
 "dialog.storage.odq.detail"="Spațiul de stocare în cloud este plin. Vă rugăm să upgradati la un abonament MEGA Pro pentru a vă mări spațiul de stocare și pentru a vă bucura de beneficii suplimentare. Dacă rămâneți peste limita de stocare și nu upgradați sau ștergeți unele date, contul dvs. poate fi blocat. Vă rugăm să consultați e-mailurile pe care vi le-am trimis pentru mai multe informații.";
 /* Over Disk Quota paywall not final title. */
@@ -2733,9 +2737,9 @@
 /* Renewal date of the current PRO account, when the date is a date in the future other than today or tomorrow */
 "account.profile.renewal.future"="Se reînnoiește pe %@";
 /* Renewal date of the current PRO account, when the date is today */
-"account.profile.renewal.today"="Renews today";
+"account.profile.renewal.today"="Se reînnoiește astăzi";
 /* Renewal date of the current PRO account, when the date is tomorrow */
-"account.profile.renewal.tomorrow"="Renews tomorrow";
+"account.profile.renewal.tomorrow"="Se reînnoiește mâine";
 /* Error text shown when trying to create or join a new meeting given that the user is already in another meeting */
 "meetings.new.anotherAlreadyExistsError"="Un alt apel în curs. Te rugăm să închei apelul actual înainte de a efectua altul.";
 /* Button option when trying to join a new meeting given that the user is already in another meeting */
@@ -3381,7 +3385,7 @@
 /* Alert title shown for video with options to resume playing the video or start from the beginning */
 "video.alert.resumeVideo.title"="Reiei videoclipul?";
 /* Alert message shown for video with options to resume playing the video or start from the beginning. %1$s will be replaced by name of the video. %2$s will be replaced by video timestamp */
-"video.alert.resumeVideo.message"="“%1$s” will resume from %2$s";
+"video.alert.resumeVideo.message"="”%1$s” va relua de la %2$s";
 /* Alert button title that will resume playing the video */
 "video.alert.resumeVideo.button.resume"="Reia";
 /* Alert button title that will start playing the video from the beginning */
@@ -3883,7 +3887,7 @@
 /* Error shown when moving folder to inside itself */
 "Error.nodeCopyOrMove.circularDependency"="Nu puteți muta acest folder, deoarece destinația este același folder.";
 /* Auto media discovery banner title */
-"photos.mediaDiscovery.autoMediaDiscoveryBanner.title"="Deoarece acest folder conține doar imagini și videoclipuri, l-am deschis automat în vizualizarea de descoperire media. Vă puteți bucura de conținutul dvs. vizual cu un aspect mai captivant. Puteți dezactiva acest lucru în Setări.";
+"photos.mediaDiscovery.autoMediaDiscoveryBanner.title"="Deoarece acest folder conține doar imagini și videoclipuri, l-am deschis automat în vizualizarea galerie. Vă puteți bucura de conținutul dvs. vizual cu un aspect mai captivant. Puteți dezactiva acest lucru în Setări.";
 /* Upgrade account screen header title after user onboarding */
 "onboarding.upgradeAccount.header.title"="Obțineți mai mult cu un abonament Pro";
 /* Upgrade account screen header subTitle after user onboarding. %@ will be replaced by the price of the lowest plan per month. */
@@ -4505,9 +4509,9 @@
 /* Add to collection button title to add items */
 "photos.addTo.button.title.add"="Adăugați";
 /* Ad-free experience screen header title */
-"ads.adFree.header.title"="Want MEGA without the ads?";
+"ads.adFree.header.title"="Vrei MEGA fără reclame?";
 /* Ad-free experience screen header subTitle */
-"ads.adFree.header.subTitle"="Upgrade to a Pro plan with plenty of storage and more. Our Pro plans start at just %@ a month.";
+"ads.adFree.header.subTitle"="Treceți la un abonament Pro cu mult spațiu de stocare și multe altele. Abonamentele noastre Pro încep de la doar %@ o lună.";
 /* Ad-free experience screen content title about pro plan featuring as Generous Storage */
 "ads.adFree.content.generousStorage.title"="Spațiu de stocare generos";
 /* Ad-free experience screen content message about pro plan featuring as Generous Storage */
@@ -4539,9 +4543,9 @@
 /* Title in chat settings to open status view settings */
 "settings.chat.status.title"="Stare";
 /* Title in chat notifications settings */
-"settings.chat.notifications.title"="Notification settings";
+"settings.chat.notifications.title"="Setări notificări";
 /* Label title in chat media image quality for uploads */
-"settings.chat.mediaQuality.title"="Chat media quality";
+"settings.chat.mediaQuality.title"="Calitatea media de chat";
 /* Title used in settings that enables the generation of link previews in the chat */
 "settings.chat.richUrlPreview.title"="Activați previzualizările linkurilor trimise";
 /* Title used in settings that enables the generation of link previews in the chat */
@@ -4553,11 +4557,11 @@
 /* Title in set status settings for show last seen */
 "settings.chat.status.setStatus.statusSettings.lastSeen.title"="Afișează văzut(ă) ultima dată";
 /* Subtitle in set status settings for show last seen */
-"settings.chat.status.setStatus.statusSettings.lastSeen.subtitle"="Allow contacts to see the last time you were active on MEGA";
+"settings.chat.status.setStatus.statusSettings.lastSeen.subtitle"="Permiteți contactelor să vadă ultima dată când ați fost activ pe MEGA";
 /* Title in set status settings for auto away */
-"settings.chat.status.setStatus.statusSettings.autoAway.title"="Set status as Away";
+"settings.chat.status.setStatus.statusSettings.autoAway.title"="Setați starea ca Plecat";
 /* Subtitle in set status settings for auto away minutes. Placeholder will be replaced by 'X hour(s) Y minute(s)' */
-"settings.chat.status.setStatus.statusSettings.autoAway.subtitle"="%@ of inactivity";
+"settings.chat.status.setStatus.statusSettings.autoAway.subtitle"="%@ de inactivitate";
 /* Title for toggle chat notifications */
 "settings.chat.notifications.chatNotifications"="Notificări de chat";
 /* Title for mute chat notifications */
@@ -4565,11 +4569,11 @@
 /* Label title in chat media image quality for uploads */
 "settings.chat.mediaQuality.image.title"="Calitatea imaginilor";
 /* Description of Automatic Image Quality option */
-"settings.chat.mediaQuality.image.option.auto"="Send optimised images when on mobile data but original size images when on Wi-Fi";
+"settings.chat.mediaQuality.image.option.auto"="Trimite imagini optimizate când folosești datele mobile, însă imagini la dimensiunea originală când folosești Wi-Fi-ul";
 /* Description of Optimised Image Quality option */
-"settings.chat.mediaQuality.image.option.optimised"="Always send optimised images";
+"settings.chat.mediaQuality.image.option.optimised"="Trimite întotdeauna imagini optimizate";
 /* Description of High Image Quality option */
-"settings.chat.mediaQuality.image.option.original"="Always send original size images";
+"settings.chat.mediaQuality.image.option.original"="Trimite întotdeauna imagini la dimensiunea originală";
 /* Label title in chat media video quality for uploads */
 "settings.chat.mediaQuality.video.title"="Calitate video";
 /* Message displayed while the app is connecting to a MEGA server */
@@ -4579,19 +4583,19 @@
 /* After login, updating the file list, the file list should be processed before showing it to the user */
 "login.preparingFileList"="Se pregătește lista de fișiere";
 /* Hidden files and folders onboarding header title */
-"onboarding.hiddenFilesAndFolders.header.title"="New feature: Hidden files and folders";
+"onboarding.hiddenFilesAndFolders.header.title"="Noua funcție: Fișiere și foldere ascunse";
 /* Hidden files and folders onboarding content item one title */
-"onboarding.hiddenFilesAndFolders.content.item.one.title"="Hide files and folders";
+"onboarding.hiddenFilesAndFolders.content.item.one.title"="Ascundeți fișierele și folderele";
 /* Hidden files and folders onboarding content item one message */
-"onboarding.hiddenFilesAndFolders.content.item.one.message"="Easily keep sensitive files in your Cloud drive private and out of sight. By default, hidden files do not appear in your Cloud drive, Photos, and Recents section.";
+"onboarding.hiddenFilesAndFolders.content.item.one.message"="Păstrați cu ușurință fișierele sensibile din Unitatea cloud private și departe de vedere. În mod implicit, fișierele ascunse nu apar în Unitatea cloud, în secțiunea Fotografii și Recente.";
 /* Hidden files and folders onboarding content item two title */
-"onboarding.hiddenFilesAndFolders.content.item.two.title"="Control visibility easily";
+"onboarding.hiddenFilesAndFolders.content.item.two.title"="Controlați vizibilitatea cu ușurință";
 /* Hidden files and folders onboarding content item two message */
-"onboarding.hiddenFilesAndFolders.content.item.two.message"="To show hidden files, turn on the “Show hidden items” setting under “File Management” -> “User interface” in your app settings.";
+"onboarding.hiddenFilesAndFolders.content.item.two.message"="Pentru a afișa fișiere ascunse, activați setarea „Afișați elemente ascunse” sub „Gestionare fișiere” -> „Interfață utilizator” din setările aplicației.";
 /* Hidden files and folders onboarding content item three title */
-"onboarding.hiddenFilesAndFolders.content.item.three.title"="Shared files stay visible";
+"onboarding.hiddenFilesAndFolders.content.item.three.title"="Fișierele partajate rămân vizibile";
 /* Hidden files and folders onboarding content item three message */
-"onboarding.hiddenFilesAndFolders.content.item.three.message"="Files and folders shared with contacts or with public links are still accessible and visible, even if hidden.";
+"onboarding.hiddenFilesAndFolders.content.item.three.message"="Fișierele și folderele partajate cu contacte sau cu link-uri publice sunt în continuare accesibile și vizibile, chiar dacă sunt ascunse.";
 /* Title for note to self chat, used in the messages view but also in lists where note to self is diplayed */
 "chat.messages.noteToSelf.title"="Notă pentru sine";
 /* Title for note to self chat messages view header, at the top the chat room */
@@ -4601,34 +4605,76 @@
 /* Onboarding USP carousel first page title */
 "onboarding.uniqueSellingProposition.carousel.page.first.title"="Tu deții cheile";
 /* Onboarding USP carousel first page subtitle */
-"onboarding.uniqueSellingProposition.carousel.page.first.subtitle"="User controlled, zero-knowledge encryption means no one can see your data unless you want them to - not even us!";
+"onboarding.uniqueSellingProposition.carousel.page.first.subtitle"="Controlată de utilizator, criptarea tip zero cunoștințe înseamnă că nimeni nu vă poate vedea datele decât dacă doriți - nici măcar noi!";
 /* Onboarding USP carousel second page title */
-"onboarding.uniqueSellingProposition.carousel.page.second.title"="Keep every moment safe";
+"onboarding.uniqueSellingProposition.carousel.page.second.title"="Păstrați fiecare moment în siguranță";
 /* Onboarding USP carousel second page subtitle */
-"onboarding.uniqueSellingProposition.carousel.page.second.subtitle"="With automatic camera uploads to MEGA Cloud, and generous storage, you’ll never lose a precious memory";
+"onboarding.uniqueSellingProposition.carousel.page.second.subtitle"="Cu încărcări automate ale camerei în MEGA Cloud și spațiu de stocare generos, nu veți pierde niciodată o amintire prețioasă";
 /* Onboarding USP carousel third page title */
-"onboarding.uniqueSellingProposition.carousel.page.third.title"="Your data. Your space.";
+"onboarding.uniqueSellingProposition.carousel.page.third.title"="Datele dvs. Spațiul tău.";
 /* Onboarding USP carousel third page subtitle */
-"onboarding.uniqueSellingProposition.carousel.page.third.subtitle"="Ample storage and easy ways to transfer, share, and organise your files means you can safely use MEGA for whatever you choose";
+"onboarding.uniqueSellingProposition.carousel.page.third.subtitle"="Spațiul de stocare amplu și modalitățile ușoare de transfer, partajare și organizare a fișierelor înseamnă că puteți folosi MEGA în siguranță pentru orice alegeți";
 /* Onboarding USP carousel fourth page title */
 "onboarding.uniqueSellingProposition.carousel.page.fourth.title"="Spune-o în privat";
 /* Onboarding USP carousel fourth page subtitle */
-"onboarding.uniqueSellingProposition.carousel.page.fourth.subtitle"="Chat with friends and family, share photos or sensitive information, video call, and schedule meetings. Safety and privacy guaranteed.";
+"onboarding.uniqueSellingProposition.carousel.page.fourth.subtitle"="Discutați cu prietenii și familia, partajați fotografii sau informații sensibile, apelați video și programați întâlniri. Siguranța și confidențialitatea garantate.";
 /* Onboarding Notification CTA title */
-"onboarding.cta.notifications.title"="Never miss an important update";
+"onboarding.cta.notifications.title"="Nu ratați niciodată o actualizare importantă";
 /* Onboarding Notification CTA description */
-"onboarding.cta.notifications.explanation"="Stay informed with real-time updates that matter to you. Get alerts for shared folder activity, security updates, and exclusive offers, so you never miss anything important.\n\nYou can manage notification preferences at any time in the settings.";
+"onboarding.cta.notifications.explanation"="Rămâneți informat cu actualizările în timp real care contează pentru dvs. Obțineți alerte pentru activitatea folderelor partajate, actualizări de securitate și oferte exclusive, astfel încât să nu pierdeți niciodată nimic important.\n\nPuteți gestiona preferințele de notificare în orice moment în setări.";
 /* Onboarding Notification CTA *Enable* button */
 "onboarding.cta.notifications.buttons.enable"="Activează notificările";
 /* Onboarding Notification CTA *Skip* button */
-"onboarding.cta.notifications.buttons.skip"="Skip for now";
+"onboarding.cta.notifications.buttons.skip"="Sari deocamdată";
 /* Onboarding Camera Backups CTA title */
-"onboarding.cta.cameraBackups.title"="Keep your photos safe, always";
+"onboarding.cta.cameraBackups.title"="Păstrați-vă fotografiile în siguranță, întotdeauna";
 /* Onboarding Camera Backups CTA description */
-"onboarding.cta.cameraBackups.explanation"="Your memories matter\n\nCamera uploads automatically backs up your photos and videos to your MEGA Cloud drive, so you never have to worry about losing them";
+"onboarding.cta.cameraBackups.explanation"="Amintirile tale contează\n\nÎncărcările de cameră fac automat copii de rezervă ale fotografiilor și videoclipurilor dvs. pe Unitatea MEGA Cloud, astfel încât nu trebuie să vă faceți griji că le pierdeți";
 /* Onboarding Camera Backups CTA note */
-"onboarding.cta.cameraBackups.note"="Camera uploads requires [B]full access[/B] to your device’s photo library";
+"onboarding.cta.cameraBackups.note"="Este nevoie de încărcări de camere [B]acces complet[/B] în biblioteca foto a dispozitivului";
 /* Onboarding Camera Backups CTA *Enable* button */
 "onboarding.cta.cameraBackups.buttons.enable"="Activează Încărcări cameră";
 /* Onboarding Camera Backups CTA *Skip* button */
-"onboarding.cta.cameraBackups.buttons.skip"="Skip for now";
+"onboarding.cta.cameraBackups.buttons.skip"="Sari deocamdată";
+/* String explaining the auto-renewal policy of the Pro subscription. */
+"subscriptionPurchase.autoRenewDescription"="Abonamentele sunt reînnoite automat pentru perioade succesive de abonament cu aceeași durată și la același preț ca perioada inițială aleasă.\n\nVă puteți anula abonamentul Pro oricând, dar nu mai târziu de 24 de ore înainte de scadența următoarei plăți a abonamentului. Aflați cum să vă gestionați abonamentul în setări.";
+/* Title shown for the free plan card */
+"subscriptionPurchase.freePlanCard.title"="Începeți cu abonamentul nostru gratuit";
+/* Description shown for the free plan card */
+"subscriptionPurchase.freePlanCard.description"="Oferim o cantitate generoasă de spațiu de stocare și cotă de transfer fără taxare, astfel încât să puteți încerca MEGA fără riscuri";
+/* First benefit shown for the free plan card */
+"subscriptionPurchase.freePlanCard.feature.one"="20 GB de spațiu de stocare gratuit";
+/* Second benefit shown for the free plan card */
+"subscriptionPurchase.freePlanCard.feature.two"="Transferuri limitate";
+/* Button title for the free plan card */
+"subscriptionPurchase.freePlanCard.button.title"="Începe gratuit";
+/* Displays the amount of storage included in the subscription plan */
+"subscriptionPurchase.plan.storage"="%@ spațiu de stocare";
+/* Displays the amount of data transfer included in the subscription plan */
+"subscriptionPurchase.plan.transfer"="%@ transferuri";
+/* Displays the total amount when billed yearly */
+"subscriptionPurchase.plan.billedYearly"="%@ facturat anual";
+/* Button title to cancel the subscription purchase. */
+"subscriptionPurchase.maybeLater"="Poate mai târziu";
+/* Title for the features of pro plan in the subscription purchase screen. */
+"subscriptionPurchase.featuresOfProPlan.title"="Beneficii suplimentare ale abonamentelor Pro";
+/* Features of pro plan in the subscription purchase screen. */
+"subscriptionPurchase.featuresOfProPlan.message"="• Link-uri protejate prin parolă\n\n• Link-uri cu date de expirare\n\n• Împărțirea cotelor de transfer\n\n• Derularea înapoi a folderelor până la 180 de zile\n\n• Apeluri și întâlniri nelimitate\n\n• Programați curățarea coșului de gunoi între 7 zile și 10 ani\n\n• Asistență prioritară";
+/* Title for the first subscription feature: generous storage capacity */
+"subscriptionPurchase.feature.one.title"="Spațiu de stocare generos";
+/* Description for the first subscription feature: details about available storage */
+"subscriptionPurchase.feature.one.description"="Depozitați până la 16 TB de date";
+/* Title for the second subscription feature: transfer quota sharing */
+"subscriptionPurchase.feature.two.title"="Partajarea transferurilor";
+/* Description for the second subscription feature: how shared users can use your quota */
+"subscriptionPurchase.feature.two.description"="Persoanele cu care partajați articole pot folosi cota dvs. de transfer pentru a descărca și a transmite fișiere în flux continuu";
+/* Title for the third subscription feature: MEGA VPN service */
+"subscriptionPurchase.feature.three.title"="MEGA VPN";
+/* Description for the third subscription feature: benefits of using the MEGA VPN */
+"subscriptionPurchase.feature.three.description"="Păstrați-vă viața online sigură, rapidă și ușoară cu VPN-ul nostru de mare viteză";
+/* Title for the fourth subscription feature: MEGA Pass password manager */
+"subscriptionPurchase.feature.four.title"="MEGA Pass";
+/* Description for the fourth subscription feature: benefits of using MEGA Pass for password management */
+"subscriptionPurchase.feature.four.description"="Organizați-vă toate parolele și păstrați-le în siguranță cu managerul nostru de parole";
+/* Title for all the feature in subscription purchase view. */
+"subscriptionPurchase.feature.title"="Veți obține:";

@@ -335,7 +335,7 @@
 /* Menu option from the `Add` section that allows you to create a 'New Folder' */
 "newFolder"="新的資料夾";
 /* Menu option from the `Add` section that displays all media files under current folder */
-"cloudDrive.menu.mediaDiscovery.title"="媒體探索";
+"cloudDrive.menu.mediaDiscovery.title"="相片檢視";
 /* Exit Text on Media Discovery Navigation Bar */
 "cloudDrive.mediaDiscovery.exit"="離開";
 /* Hint text shown on the create folder alert. */
@@ -926,6 +926,10 @@
 "recoveryKey"="還原金鑰";
 /* An alert title where the user provided the incorrect Recovery Key. */
 "invalidRecoveryKey"="無效的還原金鑰";
+/* Recovery key error alert title */
+"recoveryKey.error.alert.title"="還原金鑰錯誤";
+/* Recovery key error alert message when the user provided incorrect or invalid Recovery key */
+"recoveryKey.error.alert.message.invalidKey"="您提供的還原金鑰無效，或不是此帳戶的。檢查您是否使用了正確的金鑰然後重試。";
 /* Text of the alert after opening the recovery link to reset pass being logged. */
 "youRecoveryKeyIsGoingTo"="還原金鑰將被用於重設您的密碼。請輸入您的新密碼。";
 /*  */
@@ -2203,17 +2207,17 @@
 /* Inside of Settings - Appearance, there is a view on which you can change the setting for showing hidden items in the app. This is the footer message body that appears under that option */
 "settings.userInterface.hiddenItems.footer"="可看到所有隱藏的項目，但會模糊顯示以表示其「隱藏」狀態。";
 /* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the label in the setting */
-"settings.userInterface.mediaDiscovery"="媒體探索檢視";
+"settings.userInterface.mediaDiscovery"="相片檢視";
 /* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the header title that appears above */
-"settings.userInterface.mediaDiscovery.header"="媒體探索";
+"settings.userInterface.mediaDiscovery.header"="相片檢視";
 /* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the footer message body that appears under that option */
-"settings.userInterface.mediaDiscovery.footer.body"="預設情況下，僅包含圖片和影片的資料夾將在媒體探索檢視中開啟。";
+"settings.userInterface.mediaDiscovery.footer.body"="以圖像檢視方式開啟僅包含圖片或影片的資料夾。以縮圖檢視方式瀏覽媒體，並按日期篩選。";
 /* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the footer message body link that appears under that option */
-"settings.userInterface.mediaDiscovery.footer.link"="瞭解更多關於媒體探索的資訊。";
+"settings.userInterface.mediaDiscovery.footer.link"="瞭解有關相簿檢視的更多資訊";
 /* In Settings - User Interface, there is a setting that can determine if the app should also load sub folder media. This is the label in the setting */
-"settings.userInterface.mediaDiscoverySubFolder"="子資料夾中的媒體探索";
+"settings.userInterface.mediaDiscoverySubFolder"="子資料夾中的相簿檢視";
 /* In Settings - User Interface, there is a setting that can determine if the app should also load sub folder media. This is the footer message body that appears under that option */
-"settings.userInterface.mediaDiscoverySubFolder.footer"="子資料夾中的影像和影片也將包含在媒體探索檢視中。";
+"settings.userInterface.mediaDiscoverySubFolder.footer"="子資料夾中的圖片和影片也將包含在相簿檢視中。";
 /* In Settings - User Interface, there is an option that you can enable to hide the contents of the Recents section */
 "settings.userInterface.hideRecentActivity"="隱藏近期活動";
 /* In Settings - User Interface, there is an option that you can enable to hide the contents of the Recents section. This is the footer that appears under that option. */
@@ -2559,7 +2563,7 @@
 /* Title of Over Disk Quota dialog */
 "dialog.storage.odq.title"="請升級";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. @% is placeholder. */
-"dialog.storage.almostFull.detail"="Your Cloud drive is almost full. Upgrade now and get up to %@ TB of cloud storage space.";
+"dialog.storage.almostFull.detail"="您的雲端硬碟幾乎已滿。立即升級，獲得高達%@ TB的雲端儲存空間。";
 /* Over Disk Quota detail message informing the user that they've reached the full capacity of their accounts. */
 "dialog.storage.odq.detail"="您的雲端空間已滿。請升級至MEGA Pro方案以增加您的儲存空間並享有額外的好處。如果您仍然超出您的空間限制而且沒有升級至Pro方案或刪除一些資料，您的帳戶可能會被封鎖。請查看我們發送給您的電子郵件瞭解更多訊息。";
 /* Over Disk Quota paywall not final title. */
@@ -3883,7 +3887,7 @@
 /* Error shown when moving folder to inside itself */
 "Error.nodeCopyOrMove.circularDependency"="您無法移動此資料夾，因為目的地是同一個資料夾。";
 /* Auto media discovery banner title */
-"photos.mediaDiscovery.autoMediaDiscoveryBanner.title"="由於此資料夾僅包含圖片和影片，我們已經自動在媒體探索檢視中開啟它。您可以透過更身臨其境的佈局享受您的視覺內容。您可以在設定中停用此功能。";
+"photos.mediaDiscovery.autoMediaDiscoveryBanner.title"="由於此資料夾僅包含圖片和影片，我們已經自動在相簿檢視中將其開啟。您可以透過更沉浸式的外觀享受您的影像內容。您可以在設定中停用此功能。";
 /* Upgrade account screen header title after user onboarding */
 "onboarding.upgradeAccount.header.title"="透過Pro方案獲得更多功能";
 /* Upgrade account screen header subTitle after user onboarding. %@ will be replaced by the price of the lowest plan per month. */
@@ -4505,9 +4509,9 @@
 /* Add to collection button title to add items */
 "photos.addTo.button.title.add"="新增";
 /* Ad-free experience screen header title */
-"ads.adFree.header.title"="Want MEGA without the ads?";
+"ads.adFree.header.title"="想要沒有廣告的MEGA嗎？";
 /* Ad-free experience screen header subTitle */
-"ads.adFree.header.subTitle"="Upgrade to a Pro plan with plenty of storage and more. Our Pro plans start at just %@ a month.";
+"ads.adFree.header.subTitle"="升級到具大量儲存空間及更多功能的Pro方案。我們的Pro方案每月只需%@起。";
 /* Ad-free experience screen content title about pro plan featuring as Generous Storage */
 "ads.adFree.content.generousStorage.title"="大容量空間";
 /* Ad-free experience screen content message about pro plan featuring as Generous Storage */
@@ -4587,7 +4591,7 @@
 /* Hidden files and folders onboarding content item two title */
 "onboarding.hiddenFilesAndFolders.content.item.two.title"="輕鬆控制可見性";
 /* Hidden files and folders onboarding content item two message */
-"onboarding.hiddenFilesAndFolders.content.item.two.message"="To show hidden files, turn on the “Show hidden items” setting under “File Management” -> “User interface” in your app settings.";
+"onboarding.hiddenFilesAndFolders.content.item.two.message"="若要顯示隱藏檔案，請在應用程式設定中的「檔案管理」->「使用者介面」下開啟「顯示隱藏項目」設定。";
 /* Hidden files and folders onboarding content item three title */
 "onboarding.hiddenFilesAndFolders.content.item.three.title"="共享檔案保持可見狀態";
 /* Hidden files and folders onboarding content item three message */
@@ -4617,7 +4621,7 @@
 /* Onboarding Notification CTA title */
 "onboarding.cta.notifications.title"="不要錯過重要更新";
 /* Onboarding Notification CTA description */
-"onboarding.cta.notifications.explanation"="Stay informed with real-time updates that matter to you. Get alerts for shared folder activity, security updates, and exclusive offers, so you never miss anything important.\n\nYou can manage notification preferences at any time in the settings.";
+"onboarding.cta.notifications.explanation"="隨時瞭解對您重要的即時更新資訊。取得共享資料夾活動、安全性更新和獨家優惠的通知，您就不會錯過任何重要的事情。\n\n您可以隨時在設定中管理通知偏好選項。";
 /* Onboarding Notification CTA *Enable* button */
 "onboarding.cta.notifications.buttons.enable"="啟用通知";
 /* Onboarding Notification CTA *Skip* button */
@@ -4625,10 +4629,52 @@
 /* Onboarding Camera Backups CTA title */
 "onboarding.cta.cameraBackups.title"="始終確保照片的安全";
 /* Onboarding Camera Backups CTA description */
-"onboarding.cta.cameraBackups.explanation"="Your memories matter\n\nCamera uploads automatically backs up your photos and videos to your MEGA Cloud drive, so you never have to worry about losing them";
+"onboarding.cta.cameraBackups.explanation"="您的回憶很重要\n\n相機上傳會自動將您的照片和影片備份到您的MEGA雲端硬碟，您永遠不必擔心遺失它們。";
 /* Onboarding Camera Backups CTA note */
-"onboarding.cta.cameraBackups.note"="Camera uploads requires [B]full access[/B] to your device’s photo library";
+"onboarding.cta.cameraBackups.note"="相機上傳需您裝置相簿的[B]完全存取[/B]權限";
 /* Onboarding Camera Backups CTA *Enable* button */
 "onboarding.cta.cameraBackups.buttons.enable"="啟用相機上傳";
 /* Onboarding Camera Backups CTA *Skip* button */
 "onboarding.cta.cameraBackups.buttons.skip"="暫時跳過";
+/* String explaining the auto-renewal policy of the Pro subscription. */
+"subscriptionPurchase.autoRenewDescription"="訂閱會自動續訂，續期期間和價格都與初始訂閱相同。\n\n您可以隨時取消您的Pro方案訂閱，但最晚必須在下一次訂閱付款生效前的24小時取消。瞭解如何在設定中管理您的訂閱。";
+/* Title shown for the free plan card */
+"subscriptionPurchase.freePlanCard.title"="從我們的免費方案開始吧";
+/* Description shown for the free plan card */
+"subscriptionPurchase.freePlanCard.description"="We offer generous amount of storage and transfer quota at no charge, so you can try MEGA with no risk";
+/* First benefit shown for the free plan card */
+"subscriptionPurchase.freePlanCard.feature.one"="免費20 GB的儲存空間";
+/* Second benefit shown for the free plan card */
+"subscriptionPurchase.freePlanCard.feature.two"="有限的傳輸";
+/* Button title for the free plan card */
+"subscriptionPurchase.freePlanCard.button.title"="從免費帳戶開始吧";
+/* Displays the amount of storage included in the subscription plan */
+"subscriptionPurchase.plan.storage"="%@儲存空間";
+/* Displays the amount of data transfer included in the subscription plan */
+"subscriptionPurchase.plan.transfer"="%@傳輸配額";
+/* Displays the total amount when billed yearly */
+"subscriptionPurchase.plan.billedYearly"="年繳%@";
+/* Button title to cancel the subscription purchase. */
+"subscriptionPurchase.maybeLater"="稍後";
+/* Title for the features of pro plan in the subscription purchase screen. */
+"subscriptionPurchase.featuresOfProPlan.title"="Pro方案的額外好處";
+/* Features of pro plan in the subscription purchase screen. */
+"subscriptionPurchase.featuresOfProPlan.message"="• 受密碼保護的連結\n\n• 共享連結到期日期設定\n\n• 傳輸配額共享\n\n• 最多可回溯180天的資料夾\n\n• 無限制通話和會議\n\n• 7天至10年垃圾筒清空排程設定\n\n• 優先客服";
+/* Title for the first subscription feature: generous storage capacity */
+"subscriptionPurchase.feature.one.title"="大容量空間";
+/* Description for the first subscription feature: details about available storage */
+"subscriptionPurchase.feature.one.description"="Store up to 16 TB of data";
+/* Title for the second subscription feature: transfer quota sharing */
+"subscriptionPurchase.feature.two.title"="傳輸流量共享";
+/* Description for the second subscription feature: how shared users can use your quota */
+"subscriptionPurchase.feature.two.description"="People you share items with can use your transfer quota to download and stream files";
+/* Title for the third subscription feature: MEGA VPN service */
+"subscriptionPurchase.feature.three.title"="MEGA VPN";
+/* Description for the third subscription feature: benefits of using the MEGA VPN */
+"subscriptionPurchase.feature.three.description"="使用我們的高速VPN，確保您的線上活動安全、快速和輕鬆";
+/* Title for the fourth subscription feature: MEGA Pass password manager */
+"subscriptionPurchase.feature.four.title"="MEGA Pass";
+/* Description for the fourth subscription feature: benefits of using MEGA Pass for password management */
+"subscriptionPurchase.feature.four.description"="使用我們的密碼管理器來管理您的所有密碼，確保它們的安全";
+/* Title for all the feature in subscription purchase view. */
+"subscriptionPurchase.feature.title"="您將獲得：";

@@ -335,7 +335,7 @@
 /* Menu option from the `Add` section that allows you to create a 'New Folder' */
 "newFolder"="Новая папка";
 /* Menu option from the `Add` section that displays all media files under current folder */
-"cloudDrive.menu.mediaDiscovery.title"="Обнаружение медиа";
+"cloudDrive.menu.mediaDiscovery.title"="Галерея";
 /* Exit Text on Media Discovery Navigation Bar */
 "cloudDrive.mediaDiscovery.exit"="Выход";
 /* Hint text shown on the create folder alert. */
@@ -926,6 +926,10 @@
 "recoveryKey"="Ключ восстановления";
 /* An alert title where the user provided the incorrect Recovery Key. */
 "invalidRecoveryKey"="Неверный ключ восстановления";
+/* Recovery key error alert title */
+"recoveryKey.error.alert.title"="Ошибка ключа восстановления";
+/* Recovery key error alert message when the user provided incorrect or invalid Recovery key */
+"recoveryKey.error.alert.message.invalidKey"="Предоставленный вами ключ восстановления недействителен или не относится к этому аккаунту. Проверьте, что ключ правильный, и попробуйте снова.";
 /* Text of the alert after opening the recovery link to reset pass being logged. */
 "youRecoveryKeyIsGoingTo"="Ключ восстановления будет использован для сброса пароля. Введите новый пароль.";
 /*  */
@@ -2203,17 +2207,17 @@
 /* Inside of Settings - Appearance, there is a view on which you can change the setting for showing hidden items in the app. This is the footer message body that appears under that option */
 "settings.userInterface.hiddenItems.footer"="Все скрытые элементы будут видны, но размыты, чтобы указать на их «скрытый» статус.";
 /* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the label in the setting */
-"settings.userInterface.mediaDiscovery"="Режим обнаружения медиа";
+"settings.userInterface.mediaDiscovery"="Галерея";
 /* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the header title that appears above */
-"settings.userInterface.mediaDiscovery.header"="Обнаружение медиа";
+"settings.userInterface.mediaDiscovery.header"="Галерея";
 /* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the footer message body that appears under that option */
-"settings.userInterface.mediaDiscovery.footer.body"="Папки, содержащие только изображения и видео, по умолчанию открываются в режиме обнаружения медиа.";
+"settings.userInterface.mediaDiscovery.footer.body"="Открывать папки только с изображениями или видео в режиме сетки. Просматривайте эскизы медиафайлов и фильтруйте их по дате.";
 /* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the footer message body link that appears under that option */
-"settings.userInterface.mediaDiscovery.footer.link"="Подробнее об обнаружении медиа";
+"settings.userInterface.mediaDiscovery.footer.link"="Подробнее о режиме галереи";
 /* In Settings - User Interface, there is a setting that can determine if the app should also load sub folder media. This is the label in the setting */
-"settings.userInterface.mediaDiscoverySubFolder"="Обнаружение медиа в подпапках";
+"settings.userInterface.mediaDiscoverySubFolder"="Режим галереи в подпапках";
 /* In Settings - User Interface, there is a setting that can determine if the app should also load sub folder media. This is the footer message body that appears under that option */
-"settings.userInterface.mediaDiscoverySubFolder.footer"="Изображения и видео из подпапок также будут включены в режим обнаружения медиа.";
+"settings.userInterface.mediaDiscoverySubFolder.footer"="Изображения и видео из подпапок также будут отображаться в галерее";
 /* In Settings - User Interface, there is an option that you can enable to hide the contents of the Recents section */
 "settings.userInterface.hideRecentActivity"="Скрыть недавние действия";
 /* In Settings - User Interface, there is an option that you can enable to hide the contents of the Recents section. This is the footer that appears under that option. */
@@ -2559,7 +2563,7 @@
 /* Title of Over Disk Quota dialog */
 "dialog.storage.odq.title"="Пожалуйста, улучшите аккаунт";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. @% is placeholder. */
-"dialog.storage.almostFull.detail"="Your Cloud drive is almost full. Upgrade now and get up to %@ TB of cloud storage space.";
+"dialog.storage.almostFull.detail"="Облачный диск почти заполнен. Улучшите аккаунт и получите до %@ ТБ в облаке.";
 /* Over Disk Quota detail message informing the user that they've reached the full capacity of their accounts. */
 "dialog.storage.odq.detail"="Ваше облачное хранилище заполнено. Перейдите на подписку MEGA Pro, чтобы увеличить объём и воспользоваться дополнительными преимуществами. Если вы превысите лимит хранилища и не улучшите аккаунт, или не удалите некоторые данные, ваш аккаунт может быть заблокирован. Пожалуйста, просмотрите электронные письма, которые мы вам отправили, для получения дополнительной информации.";
 /* Over Disk Quota paywall not final title. */
@@ -3883,7 +3887,7 @@
 /* Error shown when moving folder to inside itself */
 "Error.nodeCopyOrMove.circularDependency"="Невозможно переместить папку в саму себя.";
 /* Auto media discovery banner title */
-"photos.mediaDiscovery.autoMediaDiscoveryBanner.title"="Поскольку эта папка содержит только изображения и видео, мы автоматически открыли её в режиме обнаружения медиа. Наслаждайтесь более наглядным представлением содержимого. Это можно отключить в «Настройках».";
+"photos.mediaDiscovery.autoMediaDiscoveryBanner.title"="Поскольку эта папка содержит только изображения и видео, мы автоматически открыли её в режиме галереи. Наслаждайтесь более наглядным представлением содержимого. Это можно отключить в «Настройках».";
 /* Upgrade account screen header title after user onboarding */
 "onboarding.upgradeAccount.header.title"="Получите больше с планом Pro";
 /* Upgrade account screen header subTitle after user onboarding. %@ will be replaced by the price of the lowest plan per month. */
@@ -4505,9 +4509,9 @@
 /* Add to collection button title to add items */
 "photos.addTo.button.title.add"="Добавить";
 /* Ad-free experience screen header title */
-"ads.adFree.header.title"="Want MEGA without the ads?";
+"ads.adFree.header.title"="Хотите MEGA без рекламы?";
 /* Ad-free experience screen header subTitle */
-"ads.adFree.header.subTitle"="Upgrade to a Pro plan with plenty of storage and more. Our Pro plans start at just %@ a month.";
+"ads.adFree.header.subTitle"="Перейдите на план Pro с большим объёмом хранилища и другими возможностями. Планы Pro стоят от %@ в месяц.";
 /* Ad-free experience screen content title about pro plan featuring as Generous Storage */
 "ads.adFree.content.generousStorage.title"="Выгодный объём";
 /* Ad-free experience screen content message about pro plan featuring as Generous Storage */
@@ -4587,7 +4591,7 @@
 /* Hidden files and folders onboarding content item two title */
 "onboarding.hiddenFilesAndFolders.content.item.two.title"="Простое управление видимостью";
 /* Hidden files and folders onboarding content item two message */
-"onboarding.hiddenFilesAndFolders.content.item.two.message"="To show hidden files, turn on the “Show hidden items” setting under “File Management” -> “User interface” in your app settings.";
+"onboarding.hiddenFilesAndFolders.content.item.two.message"="Чтобы показать скрытые файлы, включите настройку «Показывать скрытые элементы» в разделе «Управление файлами» -> «Пользовательский интерфейс» в настройках приложения.";
 /* Hidden files and folders onboarding content item three title */
 "onboarding.hiddenFilesAndFolders.content.item.three.title"="Общие файлы остаются видимыми";
 /* Hidden files and folders onboarding content item three message */
@@ -4617,7 +4621,7 @@
 /* Onboarding Notification CTA title */
 "onboarding.cta.notifications.title"="Никогда не пропустите важное сообщение";
 /* Onboarding Notification CTA description */
-"onboarding.cta.notifications.explanation"="Stay informed with real-time updates that matter to you. Get alerts for shared folder activity, security updates, and exclusive offers, so you never miss anything important.\n\nYou can manage notification preferences at any time in the settings.";
+"onboarding.cta.notifications.explanation"="Будьте в курсе в режиме реального времени. Получайте оповещения об активности в общих папках, обновлениях безопасности и эксклюзивных предложениях, чтобы никогда не пропустить ничего важного.\n\nПараметры уведомлений можно изменить в любой момент в настройках.";
 /* Onboarding Notification CTA *Enable* button */
 "onboarding.cta.notifications.buttons.enable"="Включить уведомления";
 /* Onboarding Notification CTA *Skip* button */
@@ -4625,10 +4629,52 @@
 /* Onboarding Camera Backups CTA title */
 "onboarding.cta.cameraBackups.title"="Ваши фото всегда в безопасности";
 /* Onboarding Camera Backups CTA description */
-"onboarding.cta.cameraBackups.explanation"="Your memories matter\n\nCamera uploads automatically backs up your photos and videos to your MEGA Cloud drive, so you never have to worry about losing them";
+"onboarding.cta.cameraBackups.explanation"="Ваши воспоминания важны\n\nЗагрузки из камеры автоматически создают резервные копии фото и видео на Облачном диске MEGA, поэтому вы их никогда не потеряете.";
 /* Onboarding Camera Backups CTA note */
-"onboarding.cta.cameraBackups.note"="Camera uploads requires [B]full access[/B] to your device’s photo library";
+"onboarding.cta.cameraBackups.note"="Для загрузок из камеры требуется [B]полный доступ[/B] к галерее устройства";
 /* Onboarding Camera Backups CTA *Enable* button */
 "onboarding.cta.cameraBackups.buttons.enable"="Включить Загрузки из камеры";
 /* Onboarding Camera Backups CTA *Skip* button */
 "onboarding.cta.cameraBackups.buttons.skip"="Пока пропустить";
+/* String explaining the auto-renewal policy of the Pro subscription. */
+"subscriptionPurchase.autoRenewDescription"="Подписки продлеваются автоматически на последующие периоды той же продолжительности и по той же цене, что и первоначально выбранный период.\n\nВы можете отменить подписку Pro в любое время, но не позднее, чем за 24 часа до наступления срока следующей оплаты подписки. Узнайте, как управлять подпиской в настройках.";
+/* Title shown for the free plan card */
+"subscriptionPurchase.freePlanCard.title"="Начните с нашего бесплатного плана";
+/* Description shown for the free plan card */
+"subscriptionPurchase.freePlanCard.description"="Мы предлагаем щедрый объём хранилища и передачи данных бесплатно, чтобы вы могли попробовать MEGA без риска";
+/* First benefit shown for the free plan card */
+"subscriptionPurchase.freePlanCard.feature.one"="20 ГБ на диске бесплатно";
+/* Second benefit shown for the free plan card */
+"subscriptionPurchase.freePlanCard.feature.two"="Передачи с ограничениями";
+/* Button title for the free plan card */
+"subscriptionPurchase.freePlanCard.button.title"="Начать бесплатно";
+/* Displays the amount of storage included in the subscription plan */
+"subscriptionPurchase.plan.storage"="%@ на диске";
+/* Displays the amount of data transfer included in the subscription plan */
+"subscriptionPurchase.plan.transfer"="%@ передач";
+/* Displays the total amount when billed yearly */
+"subscriptionPurchase.plan.billedYearly"="Оплата %@ ежегодно";
+/* Button title to cancel the subscription purchase. */
+"subscriptionPurchase.maybeLater"="Может, позже";
+/* Title for the features of pro plan in the subscription purchase screen. */
+"subscriptionPurchase.featuresOfProPlan.title"="Дополнительные преимущества планов Pro";
+/* Features of pro plan in the subscription purchase screen. */
+"subscriptionPurchase.featuresOfProPlan.message"="• Защищённые паролем ссылки\n\n• Ссылки со сроками действия\n\n• Совместное использование квоты передачи данных\n\n• Перемотка папок на срок до 180 дней назад\n\n• Звонки и встречи без ограничений\n\n• Период очистки корзины от 7 дней до 10 лет\n\n• Приоритетная поддержка";
+/* Title for the first subscription feature: generous storage capacity */
+"subscriptionPurchase.feature.one.title"="Выгодный объём";
+/* Description for the first subscription feature: details about available storage */
+"subscriptionPurchase.feature.one.description"="Храните до 16 ТБ данных";
+/* Title for the second subscription feature: transfer quota sharing */
+"subscriptionPurchase.feature.two.title"="Обмен объёмами передач";
+/* Description for the second subscription feature: how shared users can use your quota */
+"subscriptionPurchase.feature.two.description"="Пользователи, с которыми вы делитесь элементами, могут использовать вашу квоту передачи данных для скачивания и трансляции файлов";
+/* Title for the third subscription feature: MEGA VPN service */
+"subscriptionPurchase.feature.three.title"="MEGA VPN";
+/* Description for the third subscription feature: benefits of using the MEGA VPN */
+"subscriptionPurchase.feature.three.description"="Наслаждайтесь безопасным, быстрым и удобным интернет-серфингом с нашим высокоскоростным VPN";
+/* Title for the fourth subscription feature: MEGA Pass password manager */
+"subscriptionPurchase.feature.four.title"="MEGA Pass";
+/* Description for the fourth subscription feature: benefits of using MEGA Pass for password management */
+"subscriptionPurchase.feature.four.description"="Организуйте хранение всех своих паролей в одном надёжном месте с помощью нашего менеджера паролей";
+/* Title for all the feature in subscription purchase view. */
+"subscriptionPurchase.feature.title"="Вы получите:";

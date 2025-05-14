@@ -335,7 +335,7 @@
 /* Menu option from the `Add` section that allows you to create a 'New Folder' */
 "newFolder"="Neuer Ordner";
 /* Menu option from the `Add` section that displays all media files under current folder */
-"cloudDrive.menu.mediaDiscovery.title"="Medienerkennung";
+"cloudDrive.menu.mediaDiscovery.title"="Galerieansicht";
 /* Exit Text on Media Discovery Navigation Bar */
 "cloudDrive.mediaDiscovery.exit"="Schließen";
 /* Hint text shown on the create folder alert. */
@@ -926,6 +926,10 @@
 "recoveryKey"="Rettungsschlüssel";
 /* An alert title where the user provided the incorrect Recovery Key. */
 "invalidRecoveryKey"="Ungültiger Rettungsschlüssel";
+/* Recovery key error alert title */
+"recoveryKey.error.alert.title"="Fehlerhafter Rettungsschlüssel";
+/* Recovery key error alert message when the user provided incorrect or invalid Recovery key */
+"recoveryKey.error.alert.message.invalidKey"="Der von Ihnen eingegebene Rettungsschlüssel ist entweder ungültig oder gehört nicht zu diesem Account. Überprüfen Sie, ob Sie den richtigen Schlüssel verwendet haben und versuchen Sie es erneut.";
 /* Text of the alert after opening the recovery link to reset pass being logged. */
 "youRecoveryKeyIsGoingTo"="Ihr Passwort wird unter Zuhilfenahme Ihres Rettungsschlüssels neu gesetzt. Bitte geben Sie das neue Passwort ein.";
 /*  */
@@ -2203,17 +2207,17 @@
 /* Inside of Settings - Appearance, there is a view on which you can change the setting for showing hidden items in the app. This is the footer message body that appears under that option */
 "settings.userInterface.hiddenItems.footer"="Alle verborgenen Elemente sind sichtbar, werden aber unscharf angezeigt, um auf ihren „verborgenen“ Status hinzuweisen.";
 /* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the label in the setting */
-"settings.userInterface.mediaDiscovery"="Medienerkennungsansicht";
+"settings.userInterface.mediaDiscovery"="Galerieansicht";
 /* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the header title that appears above */
-"settings.userInterface.mediaDiscovery.header"="Medienerkennung";
+"settings.userInterface.mediaDiscovery.header"="Galerieansicht";
 /* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the footer message body that appears under that option */
-"settings.userInterface.mediaDiscovery.footer.body"="Ordner, die nur Bilder und Videos enthalten, werden standardmäßig in der Medienerkennungsansicht geöffnet.";
+"settings.userInterface.mediaDiscovery.footer.body"="Ordner, die nur Bilder oder Videos enthalten, in einer Rasteransicht öffnen. Sie können Medien mithilfe von Miniaturbildern durchsuchen und nach Datum filtern.";
 /* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the footer message body link that appears under that option */
-"settings.userInterface.mediaDiscovery.footer.link"="Erfahren Sie mehr über die Medienerkennung.";
+"settings.userInterface.mediaDiscovery.footer.link"="Mehr zur Galerieansicht";
 /* In Settings - User Interface, there is a setting that can determine if the app should also load sub folder media. This is the label in the setting */
-"settings.userInterface.mediaDiscoverySubFolder"="Medienerkennung in Unterordnern";
+"settings.userInterface.mediaDiscoverySubFolder"="Galerieansicht in Unterordnern";
 /* In Settings - User Interface, there is a setting that can determine if the app should also load sub folder media. This is the footer message body that appears under that option */
-"settings.userInterface.mediaDiscoverySubFolder.footer"="Bilder und Videos in Unterordnern werden in der Medienerkennungsansicht ebenfalls angezeigt.";
+"settings.userInterface.mediaDiscoverySubFolder.footer"="In der Galerieansicht werden auch Bilder und Videos in Unterordnern angezeigt";
 /* In Settings - User Interface, there is an option that you can enable to hide the contents of the Recents section */
 "settings.userInterface.hideRecentActivity"="Letzte Aktivitäten ausblenden";
 /* In Settings - User Interface, there is an option that you can enable to hide the contents of the Recents section. This is the footer that appears under that option. */
@@ -2559,7 +2563,7 @@
 /* Title of Over Disk Quota dialog */
 "dialog.storage.odq.title"="Bitte Upgrade durchführen";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. @% is placeholder. */
-"dialog.storage.almostFull.detail"="Your Cloud drive is almost full. Upgrade now and get up to %@ TB of cloud storage space.";
+"dialog.storage.almostFull.detail"="Ihr Cloud Drive ist fast voll. Upgraden Sie jetzt und erhalten Sie bis zu %@ TB Speicherplatz in der Cloud.";
 /* Over Disk Quota detail message informing the user that they've reached the full capacity of their accounts. */
 "dialog.storage.odq.detail"="Ihr Cloudspeicher ist voll. Bitte wechseln Sie jetzt zu einem MEGA-Pro-Account, um mehr Speicherplatz und weitere Vorteile zu erhalten. Wenn Sie weiterhin Ihr Speicherlimit überschreiten, ohne ein Upgrade durchzuführen oder einige Daten in Ihrem Account zu löschen, wird Ihr Konto möglicherweise gesperrt. Weitere Informationen finden Sie in den E-Mails, die wir Ihnen gesendet haben.";
 /* Over Disk Quota paywall not final title. */
@@ -3883,7 +3887,7 @@
 /* Error shown when moving folder to inside itself */
 "Error.nodeCopyOrMove.circularDependency"="Sie können diesen Ordner nicht verschieben, da das Ziel derselbe Ordner ist.";
 /* Auto media discovery banner title */
-"photos.mediaDiscovery.autoMediaDiscoveryBanner.title"="Da dieser Ordner nur Bilder und Videos enthält, haben wir ihn automatisch in der Medienerkennungsansicht geöffnet. So können Sie Ihre visuellen Inhalte in einem ablenkungsfreien Layout genießen. Sie können dies in den Einstellungen deaktivieren.";
+"photos.mediaDiscovery.autoMediaDiscoveryBanner.title"="Da dieser Ordner nur Bilder und Videos enthält, haben wir ihn automatisch in der Galerieansicht geöffnet. So können Sie Ihre visuellen Inhalte in einem ablenkungsfreien Layout genießen. Sie können dies in den Einstellungen deaktivieren.";
 /* Upgrade account screen header title after user onboarding */
 "onboarding.upgradeAccount.header.title"="Mit einem Pro-Paket bekommen Sie mehr";
 /* Upgrade account screen header subTitle after user onboarding. %@ will be replaced by the price of the lowest plan per month. */
@@ -4505,9 +4509,9 @@
 /* Add to collection button title to add items */
 "photos.addTo.button.title.add"="Hinzufügen";
 /* Ad-free experience screen header title */
-"ads.adFree.header.title"="Want MEGA without the ads?";
+"ads.adFree.header.title"="Sie möchten MEGA ohne Werbung nutzen?";
 /* Ad-free experience screen header subTitle */
-"ads.adFree.header.subTitle"="Upgrade to a Pro plan with plenty of storage and more. Our Pro plans start at just %@ a month.";
+"ads.adFree.header.subTitle"="Upgraden Sie auf ein Pro-Paket mit viel Speicherplatz und mehr. Unsere Pro-Pakete beginnen bei nur %@ pro Monat.";
 /* Ad-free experience screen content title about pro plan featuring as Generous Storage */
 "ads.adFree.content.generousStorage.title"="Großzügiger Speicherplatz";
 /* Ad-free experience screen content message about pro plan featuring as Generous Storage */
@@ -4587,7 +4591,7 @@
 /* Hidden files and folders onboarding content item two title */
 "onboarding.hiddenFilesAndFolders.content.item.two.title"="Einfache Steuerung der Sichtbarkeit";
 /* Hidden files and folders onboarding content item two message */
-"onboarding.hiddenFilesAndFolders.content.item.two.message"="To show hidden files, turn on the “Show hidden items” setting under “File Management” -> “User interface” in your app settings.";
+"onboarding.hiddenFilesAndFolders.content.item.two.message"="Um verborgene Dateien anzuzeigen, aktivieren Sie in Ihren App-Einstellungen unter „Dateiverwaltung –> Bedienoberfläche“ den Eintrag „Verborgene Elemente anzeigen“.";
 /* Hidden files and folders onboarding content item three title */
 "onboarding.hiddenFilesAndFolders.content.item.three.title"="Freigegebene Dateien bleiben sichtbar";
 /* Hidden files and folders onboarding content item three message */
@@ -4613,11 +4617,11 @@
 /* Onboarding USP carousel fourth page title */
 "onboarding.uniqueSellingProposition.carousel.page.fourth.title"="Private und vertrauliche Gespräche";
 /* Onboarding USP carousel fourth page subtitle */
-"onboarding.uniqueSellingProposition.carousel.page.fourth.subtitle"="Chat with friends and family, share photos or sensitive information, video call, and schedule meetings. Safety and privacy guaranteed.";
+"onboarding.uniqueSellingProposition.carousel.page.fourth.subtitle"="Chatten Sie mit Freunden und Familienmitgliedern, tauschen Sie Fotos oder vertrauliche Informationen aus, führen Sie Videogespräche und planen Sie Meetings. Sicherheit und Datenschutz garantiert.";
 /* Onboarding Notification CTA title */
 "onboarding.cta.notifications.title"="Nie wieder wichtige Updates verpassen";
 /* Onboarding Notification CTA description */
-"onboarding.cta.notifications.explanation"="Stay informed with real-time updates that matter to you. Get alerts for shared folder activity, security updates, and exclusive offers, so you never miss anything important.\n\nYou can manage notification preferences at any time in the settings.";
+"onboarding.cta.notifications.explanation"="Echtzeit-Updates versorgen Sie mit wichtigen Informationen. Benachrichtigungen informieren Sie über Aktivitäten in gemeinsamen Ordnern, Sicherheitsupdates und exklusive Angebote – so verpassen Sie nie wieder etwas Wichtiges.\n\nSie können Ihre Benachrichtigungpräferenzen jederzeit in den Einstellungen verwalten.";
 /* Onboarding Notification CTA *Enable* button */
 "onboarding.cta.notifications.buttons.enable"="Benachrichtigungen";
 /* Onboarding Notification CTA *Skip* button */
@@ -4625,10 +4629,52 @@
 /* Onboarding Camera Backups CTA title */
 "onboarding.cta.cameraBackups.title"="Dauerhaft sichere Speicherung Ihrer Fotos";
 /* Onboarding Camera Backups CTA description */
-"onboarding.cta.cameraBackups.explanation"="Your memories matter\n\nCamera uploads automatically backs up your photos and videos to your MEGA Cloud drive, so you never have to worry about losing them";
+"onboarding.cta.cameraBackups.explanation"="Ihre Erinnerungen sind wichtig\n\nMit Kamera-Uploads sichern Sie Ihre Fotos und Videos automatisch in Ihrem MEGA-Cloudspeicher und müssen sich keine Gedanken mehr über Datenverluste machen";
 /* Onboarding Camera Backups CTA note */
-"onboarding.cta.cameraBackups.note"="Camera uploads requires [B]full access[/B] to your device’s photo library";
+"onboarding.cta.cameraBackups.note"="Für Kamera-Uploads müssen Sie [B]vollständigen Zugriff[/B] auf die Fotobibliothek Ihres Geräts gewähren";
 /* Onboarding Camera Backups CTA *Enable* button */
 "onboarding.cta.cameraBackups.buttons.enable"="Kamera-Uploads aktivieren";
 /* Onboarding Camera Backups CTA *Skip* button */
 "onboarding.cta.cameraBackups.buttons.skip"="Jetzt überspringen";
+/* String explaining the auto-renewal policy of the Pro subscription. */
+"subscriptionPurchase.autoRenewDescription"="Abonnements werden automatisch für den ursprünglich gewählten Abonnementzeitraum und zum gleichen Preis verlängert.\n\nSie können Ihr Pro-Paket jederzeit kündigen – spätestens 24 Stunden vor Fälligkeit Ihrer nächsten Abonnementzahlung. So können Sie Ihr Abonnement in Ihren Einstellungen verwalten.";
+/* Title shown for the free plan card */
+"subscriptionPurchase.freePlanCard.title"="Starten Sie mit unserem kostenlosen Paket";
+/* Description shown for the free plan card */
+"subscriptionPurchase.freePlanCard.description"="We offer generous amount of storage and transfer quota at no charge, so you can try MEGA with no risk";
+/* First benefit shown for the free plan card */
+"subscriptionPurchase.freePlanCard.feature.one"="20 GB Speicher kostenlos";
+/* Second benefit shown for the free plan card */
+"subscriptionPurchase.freePlanCard.feature.two"="Begrenzte Transfers";
+/* Button title for the free plan card */
+"subscriptionPurchase.freePlanCard.button.title"="Kostenlos starten";
+/* Displays the amount of storage included in the subscription plan */
+"subscriptionPurchase.plan.storage"="%@ Speicherplatz";
+/* Displays the amount of data transfer included in the subscription plan */
+"subscriptionPurchase.plan.transfer"="%@ Transfervolumen";
+/* Displays the total amount when billed yearly */
+"subscriptionPurchase.plan.billedYearly"="%@ jährlich";
+/* Button title to cancel the subscription purchase. */
+"subscriptionPurchase.maybeLater"="Vielleicht später";
+/* Title for the features of pro plan in the subscription purchase screen. */
+"subscriptionPurchase.featuresOfProPlan.title"="Zusatzvorteile der Pro-Pakete";
+/* Features of pro plan in the subscription purchase screen. */
+"subscriptionPurchase.featuresOfProPlan.message"="• Passwortgeschützte Links\n\n• Links mit Ablaufdatum\n\n• Teilen des Transfervolumens\n\n• Ordner mit Rewind auf einen früheren Stand zurückstellen (bis zu 180 Tage)\n\n• Unbegrenzte Anrufe und Meetings\n\n• Planmäßige Leerung des Papierkorbs – Intervall 7 Tage bis 10 Jahre\n\n• Priorisierter Support";
+/* Title for the first subscription feature: generous storage capacity */
+"subscriptionPurchase.feature.one.title"="Großzügiger Speicherplatz";
+/* Description for the first subscription feature: details about available storage */
+"subscriptionPurchase.feature.one.description"="Store up to 16 TB of data";
+/* Title for the second subscription feature: transfer quota sharing */
+"subscriptionPurchase.feature.two.title"="Transfervolumen teilen";
+/* Description for the second subscription feature: how shared users can use your quota */
+"subscriptionPurchase.feature.two.description"="People you share items with can use your transfer quota to download and stream files";
+/* Title for the third subscription feature: MEGA VPN service */
+"subscriptionPurchase.feature.three.title"="MEGA VPN";
+/* Description for the third subscription feature: benefits of using the MEGA VPN */
+"subscriptionPurchase.feature.three.description"="Sichere, schnelle und einfache Onlineaktivitäten mit unserem Highspeed-VPN";
+/* Title for the fourth subscription feature: MEGA Pass password manager */
+"subscriptionPurchase.feature.four.title"="MEGA Pass";
+/* Description for the fourth subscription feature: benefits of using MEGA Pass for password management */
+"subscriptionPurchase.feature.four.description"="Übersichtliche und sichere Speicherung aller Ihrer Passwörter in unserem Passwortmanager";
+/* Title for all the feature in subscription purchase view. */
+"subscriptionPurchase.feature.title"="Sie erhalten:";
