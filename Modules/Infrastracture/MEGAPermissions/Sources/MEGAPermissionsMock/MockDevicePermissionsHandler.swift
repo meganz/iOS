@@ -22,8 +22,9 @@ public final class MockDevicePermissionHandler: DevicePermissionsHandling, @unch
         self.requestPhotoLibraryAccessPermissionsGranted = requestPhotoLibraryAccessPermissionsGranted
     }
 
+    public var notificationPermissionStatusToReturn: UNAuthorizationStatus = .notDetermined
     public func notificationPermissionStatus() async -> UNAuthorizationStatus {
-        .denied
+        notificationPermissionStatusToReturn
     }
     
     public func requestPhotoLibraryAccessPermissions() async -> Bool { requestPhotoLibraryAccessPermissionsGranted }

@@ -15,6 +15,9 @@ struct PermissionOnboardingView: View {
 
     var body: some View {
         content
+            .task {
+                await viewModel.onAppear()
+            }
             .pageBackground()
             .ignoresSafeArea(.container, edges: .top)
             .navigationBarHidden(true)
