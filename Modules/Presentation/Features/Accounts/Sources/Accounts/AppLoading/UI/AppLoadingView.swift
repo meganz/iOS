@@ -23,8 +23,7 @@ struct AppLoadingView: View {
                     ProgressView(value: viewModel.progress, total: viewModel.totalProgress)
                         .tint(TokenColors.Button.brand.swiftUI)
                 } else {
-                    ProgressView()
-                        .tint(TokenColors.Button.brand.swiftUI)
+                    ProgressIndicator()
                 }
                 
                 Text(viewModel.statusText)
@@ -39,4 +38,14 @@ struct AppLoadingView: View {
             await viewModel.onViewAppear()
         }
     }
+}
+
+struct ProgressIndicator: UIViewRepresentable {
+    func makeUIView(context: Context) -> UIActivityIndicatorView {
+        let view = UIActivityIndicatorView(style: .medium)
+        view.startAnimating()
+        return view
+    }
+
+    func updateUIView(_ uiView: UIActivityIndicatorView, context: Context) { }
 }
