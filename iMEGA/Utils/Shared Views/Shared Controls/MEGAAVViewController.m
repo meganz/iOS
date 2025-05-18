@@ -50,6 +50,8 @@ static const NSUInteger MIN_SECOND = 10; // Save only where the users were playi
         self.fileUrl         = [self streamingPathWithNode:node];
         MEGALogInfo(@"[MEGAAVViewController] init with node %@, is folderLink: %d, fileUrl: %@, apiForStreaming: %@", self.node, folderLink, self.fileUrl, apiForStreaming);
         _hasPlayedOnceBefore = NO;
+        
+        _playerQueue = dispatch_queue_create("mega.ios.player.queue", NULL);
     }
         
     return self;
@@ -179,26 +181,66 @@ static const NSUInteger MIN_SECOND = 10; // Save only where the users were playi
 
 #pragma mark - Private
 
+/**
+ 从trace和图中可以看出，Hang的原因就是调用`seekToDestination`方法，从代码中很容易看出，这个方法是通过url加载音频或者视频，`seekToDestination`的下一个调用栈为 `[AVPlayerViewController setPlayer]`
+ 
+ ### Hang分析
+ ```Objective-C
+ AVAsset *asset = [AVAsset assetWithURL:self.fileUrl];
+ AVPlayerItem *playerItem = [AVPlayerItem playerItemWithAsset:asset];
+ ```
+ 这两行本身都是同步的，但是`fileUrl`如果指向的是一个很大的本地资源或者远程资源，就会导致这个同步方法阻塞线程，从堆栈信息看`seekToDestination` 是在 `viewDidAppear`之后调用的，没有特殊指定线程，则默认会在主线程调用，就会导致阻塞主线程，从而被系统判定为Hang
+ 
+ ### 解决方案
+ 1. 把`seekToDestination`给放到后台线程去执行，只在关键的调用转回主线程
+ 2. 使用 `AVURLAsset` 的异步加载，并通过 `status` 来判断是否能够播放
+ 
+ */
+
 - (void)seekToDestination:(MOMediaDestination *)mediaDestination play:(BOOL)play {
     if (!self.fileUrl) {
         return;
     }
     
     [self willStartPlayer];
+    
+    dispatch_async(_playerQueue, ^{
+        AVURLAsset *asset = [AVURLAsset assetWithURL:self.fileUrl];
+        [asset loadValuesAsynchronouslyForKeys:@[@"playable"] completionHandler:^{
+            
+            NSError *error;
+            AVKeyValueStatus status = [asset statusOfValueForKey:@"playable" error:&error];
+            
+            switch (status) {
+                case AVKeyValueStatusLoaded: {
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        AVPlayerItem *playerItem = [AVPlayerItem playerItemWithAsset:asset];
+                        [self setPlayerItemMetadataWithPlayerItem:playerItem node:self.node];
+                        self.player = [AVPlayer playerWithPlayerItem:playerItem];
+                        [self.subscriptions addObject:[self bindPlayerItemStatusWithPlayerItem:playerItem]];
+                        
+                        [self seekToMediaDestination:mediaDestination];
+                        
+                        if (play) {
+                            [self.player play];
+                        }
+                        
+                        [self.subscriptions addObject:[self bindPlayerTimeControlStatus]];
 
-    AVAsset *asset = [AVAsset assetWithURL:self.fileUrl];
-    AVPlayerItem *playerItem = [AVPlayerItem playerItemWithAsset:asset];
-    [self setPlayerItemMetadataWithPlayerItem:playerItem node:self.node];
-    self.player = [AVPlayer playerWithPlayerItem:playerItem];
-    [self.subscriptions addObject:[self bindPlayerItemStatusWithPlayerItem:playerItem]];
-    
-    [self seekToMediaDestination:mediaDestination];
-    
-    if (play) {
-        [self.player play];
-    }
-    
-    [self.subscriptions addObject:[self bindPlayerTimeControlStatus]];
+                    });
+                    break;
+
+                }
+                case AVKeyValueStatusFailed:
+                case AVKeyValueStatusCancelled:
+                    // 这里处理无法播放的情况
+                    break;
+                default:
+                    break;
+            }
+            
+        }];
+    });
 }
 
 - (void)replayVideo {
