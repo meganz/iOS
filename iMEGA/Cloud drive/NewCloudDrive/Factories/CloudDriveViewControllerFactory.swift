@@ -737,7 +737,6 @@ struct CloudDriveViewControllerFactory {
             contextMenuManager: contextMenuManager,
             contextMenuConfigFactory: contextMenuConfigFactory,
             nodeSensitivityChecker: nodeSensitivityChecker,
-            sortOrderPreferenceUseCase: sortOrderPreferenceUseCase,
             nodeUseCase: nodeUseCase
         )
 
@@ -1055,9 +1054,7 @@ struct CloudDriveViewControllerFactory {
         .init(
             contentMode: .mediaDiscovery,
             parentNodeProvider: parentNodeProvider,
-            // Sorting to be handled in [FM-1776]
-            // sortOrder: viewModel.sortOrder(for: .mediaDiscovery),
-            sortOrder: .nameAscending,
+            sortOrder: .newest, // For media discovery, we default the sort order to newest.
             isAutomaticallyShown: isShowingAutomatically,
             delegate: mediaContentDelegate,
             analyticsUseCase: mediaAnalyticsUseCase,
