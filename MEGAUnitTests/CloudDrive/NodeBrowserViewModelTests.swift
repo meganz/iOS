@@ -62,6 +62,7 @@ class NodeBrowserViewModelTests: XCTestCase {
         let cloudDriveViewModeMonitoringService: MockCloudDriveViewModeMonitoringService
         let nodeUseCase: MockNodeDataUseCase
         let tracker = MockTracker()
+        let mediaDiscoveryViewModel: MediaDiscoveryContentViewModel
 
         init(
             // this may appear strange but view mode is a "bigger" enum that has mediaDiscovery/list/thumbnail
@@ -99,6 +100,17 @@ class NodeBrowserViewModelTests: XCTestCase {
             self.cloudDriveViewModeMonitoringService = MockCloudDriveViewModeMonitoringService()
             self.nodeUseCase = MockNodeDataUseCase(nodes: [node])
 
+            mediaDiscoveryViewModel = .init(
+                contentMode: .library,
+                parentNodeProvider: { node },
+                sortOrder: .nameAscending,
+                isAutomaticallyShown: false,
+                delegate: MockMediaDiscoveryContentDelegate(),
+                analyticsUseCase: MockMediaDiscoveryAnalyticsUseCase(),
+                mediaDiscoveryUseCase: mediaDiscoveryUseCase,
+                sensitiveDisplayPreferenceUseCase: MockSensitiveDisplayPreferenceUseCase()
+            )
+
             sut = NodeBrowserViewModel(
                 viewMode: defaultViewMode,
                 searchResultsViewModel: .init(
@@ -120,16 +132,7 @@ class NodeBrowserViewModelTests: XCTestCase {
                     listHeaderViewModel: nil,
                     isSelectionEnabled: true
                 ),
-                mediaDiscoveryViewModel: .init(
-                    contentMode: .library,
-                    parentNodeProvider: { node },
-                    sortOrder: .nameAscending,
-                    isAutomaticallyShown: false,
-                    delegate: MockMediaDiscoveryContentDelegate(),
-                    analyticsUseCase: MockMediaDiscoveryAnalyticsUseCase(),
-                    mediaDiscoveryUseCase: mediaDiscoveryUseCase,
-                    sensitiveDisplayPreferenceUseCase: MockSensitiveDisplayPreferenceUseCase()
-                ),
+                mediaDiscoveryViewModel: mediaDiscoveryViewModel,
                 warningViewModel: nil,
                 temporaryWarningViewModel: tempWarningBannerViewModel,
                 upgradeEncouragementViewModel: nil,
@@ -400,7 +403,7 @@ class NodeBrowserViewModelTests: XCTestCase {
     }
     
     @MainActor
-    func testSortOrderChange() async {
+    func testSortOrderChange_forList() async {
         // given
         let harness = Harness(
             defaultViewMode: .list,
@@ -411,6 +414,23 @@ class NodeBrowserViewModelTests: XCTestCase {
         await wait(for: .defaultAsc, in: harness) // wait for the default value
         harness.sut.changeSortOrder(.favourite) // update sort order
         await wait(for: .favouriteAsc, in: harness) // wait for the updated value
+    }
+
+    @MainActor
+    func testSortOrderChange_forMediaDiscovery() async {
+        // given
+        for sortOrder in [SortOrderType.newest, SortOrderType.oldest] {
+            let harness = Harness(
+                defaultViewMode: .mediaDiscovery,
+                node: NodeEntity(handle: 100)
+            )
+
+            harness.sut.cloudDriveContextMenuFactory = self.makeContextMenuFactory(nodeUseCase: harness.nodeUseCase, isSensitive: true)
+            harness.sut.changeSortOrder(sortOrder) // change sort order
+            try? await Task.sleep(nanoseconds: 10_000_000)
+            XCTAssertEqual(harness.sut.sortOrder, .defaultAsc) // the actual sortOrder doesn't change with .mediaDiscovery view mode
+            XCTAssertEqual(harness.mediaDiscoveryViewModel.sortOrder, sortOrder)
+        }
     }
 
     @MainActor
@@ -765,7 +785,7 @@ class NodeBrowserViewModelTests: XCTestCase {
 
     @MainActor
     private func wait(for sortOrder: MEGADomain.SortOrderEntity, in harness: Harness) async {
-        let exp = expectation(description: "Wait for the view mode to update")
+        let exp = expectation(description: "Wait for the context menu sort order to update")
 
         let cancellable = harness.sut.$contextMenuViewFactory
             .map { $0?.makeNavItemsFactory().sortOrder }
@@ -818,7 +838,6 @@ class NodeBrowserViewModelTests: XCTestCase {
                 nodeUseCase: nodeUseCase
             ),
             nodeSensitivityChecker: MockNodeSensitivityChecker(isSensitive: isSensitive),
-            sortOrderPreferenceUseCase: MockSortOrderPreferenceUseCase(sortOrderEntity: .none),
             nodeUseCase: nodeUseCase
         )
     }

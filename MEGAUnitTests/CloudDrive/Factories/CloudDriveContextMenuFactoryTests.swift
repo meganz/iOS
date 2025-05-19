@@ -49,7 +49,6 @@ final class CloudDriveContextMenuFactoryTests: XCTestCase {
                 nodeUseCase: MockNodeDataUseCase()
             ),
             nodeSensitivityChecker: MockNodeSensitivityChecker(isSensitive: isSensitive),
-            sortOrderPreferenceUseCase: MockSortOrderPreferenceUseCase(sortOrderEntity: .none),
             nodeUseCase: MockNodeDataUseCase()
         )
     }

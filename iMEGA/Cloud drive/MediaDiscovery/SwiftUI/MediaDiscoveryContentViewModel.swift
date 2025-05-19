@@ -47,9 +47,10 @@ final class MediaDiscoveryContentViewModel: ObservableObject {
     
     @PreferenceWrapper(key: PreferenceKeyEntity.autoMediaDiscoveryBannerDismissed, defaultValue: false)
     var autoMediaDiscoveryBannerDismissed: Bool
-    
+
+    private(set) var sortOrder: SortOrderType
+
     private let parentNodeProvider: () -> NodeEntity?
-    private var sortOrder: SortOrderType
     private let analyticsUseCase: any MediaDiscoveryAnalyticsUseCaseProtocol
     private let mediaDiscoveryUseCase: any MediaDiscoveryUseCaseProtocol
     private let sensitiveDisplayPreferenceUseCase: any SensitiveDisplayPreferenceUseCaseProtocol

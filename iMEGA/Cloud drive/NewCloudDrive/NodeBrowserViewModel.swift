@@ -325,6 +325,14 @@ class NodeBrowserViewModel: ObservableObject {
 
     func updateContextMenu() async {
         guard let cloudDriveContextMenuFactory else { return }
+        let sortOrder: MEGADomain.SortOrderEntity = {
+            if let mediaDiscoveryViewModel = viewModeAwareMediaDiscoveryViewModel {
+                mediaDiscoveryViewModel.sortOrder.toSortOrderEntity()
+            } else {
+                self.sortOrder
+            }
+        }()
+
         for await updatedContextMenuViewFactory in cloudDriveContextMenuFactory.makeNodeBrowserContextMenuViewFactory(
             nodeSource: nodeSource,
             viewMode: viewMode,
@@ -488,8 +496,14 @@ class NodeBrowserViewModel: ObservableObject {
     }
 
     func changeSortOrder(_ sortOrder: SortOrderType) {
-        self.sortOrder = sortOrder.toSortOrderEntity()
-        searchResultsViewModel.changeSortOrder(sortOrder.toSearchSortOrderEntity())
+        if let mediaDiscoveryViewModel = viewModeAwareMediaDiscoveryViewModel {
+            Task {
+                await mediaDiscoveryViewModel.update(sortOrder: sortOrder)
+            }
+        } else {
+            self.sortOrder = sortOrder.toSortOrderEntity()
+            searchResultsViewModel.changeSortOrder(sortOrder.toSearchSortOrderEntity())
+        }
     }
 
     func selectAll() {

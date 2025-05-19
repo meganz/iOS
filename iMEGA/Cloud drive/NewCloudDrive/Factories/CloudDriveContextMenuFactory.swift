@@ -12,7 +12,6 @@ struct CloudDriveContextMenuFactory {
     private let contextMenuManager: ContextMenuManager
     private let contextMenuConfigFactory: CloudDriveContextMenuConfigFactory
     private let nodeSensitivityChecker: any NodeSensitivityChecking
-    private let sortOrderPreferenceUseCase: any SortOrderPreferenceUseCaseProtocol
     private let nodeUseCase: any NodeUseCaseProtocol
 
     init(
@@ -20,14 +19,12 @@ struct CloudDriveContextMenuFactory {
         contextMenuManager: ContextMenuManager,
         contextMenuConfigFactory: CloudDriveContextMenuConfigFactory,
         nodeSensitivityChecker: some NodeSensitivityChecking,
-        sortOrderPreferenceUseCase: some SortOrderPreferenceUseCaseProtocol,
         nodeUseCase: some NodeUseCaseProtocol
     ) {
         self.config = config
         self.contextMenuManager = contextMenuManager
         self.contextMenuConfigFactory = contextMenuConfigFactory
         self.nodeSensitivityChecker = nodeSensitivityChecker
-        self.sortOrderPreferenceUseCase = sortOrderPreferenceUseCase
         self.nodeUseCase = nodeUseCase
     }
 
