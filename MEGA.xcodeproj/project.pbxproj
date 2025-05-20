@@ -723,7 +723,6 @@
 		5D9DE5B6254BE9E400FA69C8 /* MEGASearchBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D9DE5B5254BE9E300FA69C8 /* MEGASearchBarView.swift */; };
 		5D9DE5C4254BE9F600FA69C8 /* MEGASearchBarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5D9DE5C3254BE9F600FA69C8 /* MEGASearchBarView.xib */; };
 		5DA32DBA24EA27DC0075B613 /* HomeScreenFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DA32DB924EA27DC0075B613 /* HomeScreenFactory.swift */; };
-		5DA32DBE24EA92160075B613 /* SDKUserAlertsClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DA32DBD24EA92160075B613 /* SDKUserAlertsClient.swift */; };
 		5DA9759724B6C2AC00FBD045 /* ShadowStyleFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DA9759624B6C2AC00FBD045 /* ShadowStyleFactory.swift */; };
 		5DAB28F224875269004B5D5A /* OverDiskQuotaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DAB28F024875269004B5D5A /* OverDiskQuotaViewController.swift */; };
 		5DAB28F324875269004B5D5A /* OverDiskQuotaViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5DAB28F124875269004B5D5A /* OverDiskQuotaViewController.xib */; };
@@ -3498,7 +3497,6 @@
 		5D9DE5B5254BE9E300FA69C8 /* MEGASearchBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGASearchBarView.swift; sourceTree = "<group>"; };
 		5D9DE5C3254BE9F600FA69C8 /* MEGASearchBarView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MEGASearchBarView.xib; sourceTree = "<group>"; };
 		5DA32DB924EA27DC0075B613 /* HomeScreenFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreenFactory.swift; sourceTree = "<group>"; };
-		5DA32DBD24EA92160075B613 /* SDKUserAlertsClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SDKUserAlertsClient.swift; sourceTree = "<group>"; };
 		5DA9759624B6C2AC00FBD045 /* ShadowStyleFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShadowStyleFactory.swift; sourceTree = "<group>"; };
 		5DAB28F024875269004B5D5A /* OverDiskQuotaViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverDiskQuotaViewController.swift; sourceTree = "<group>"; };
 		5DAB28F124875269004B5D5A /* OverDiskQuotaViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OverDiskQuotaViewController.xib; sourceTree = "<group>"; };
@@ -8380,7 +8378,6 @@
 			isa = PBXGroup;
 			children = (
 				5D94D70D2513690700B103EC /* Node */,
-				5DA32DBD24EA92160075B613 /* SDKUserAlertsClient.swift */,
 			);
 			path = SDK;
 			sourceTree = "<group>";
@@ -15549,7 +15546,6 @@
 				83DBDDDE29D723D300CF433B /* ScheduleMeetingViewModel.swift in Sources */,
 				5D609290255BC2B6005FA3E4 /* SDKError.swift in Sources */,
 				5D94D702251368FB00B103EC /* SDKNodeClient.swift in Sources */,
-				5DA32DBE24EA92160075B613 /* SDKUserAlertsClient.swift in Sources */,
 				94BD69972B4EB88D00BF08D6 /* SearchBarUIHostingController.swift in Sources */,
 				940DE0272AB46245008C9DB5 /* SearchConfig+Home.swift in Sources */,
 				836B956F2063EADE003E279B /* SearchInPdfViewController.m in Sources */,

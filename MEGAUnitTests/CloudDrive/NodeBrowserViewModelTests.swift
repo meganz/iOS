@@ -14,14 +14,10 @@ import SwiftUI
 import XCTest
 
 struct MockMEGANotificationUseCaseProtocol: MEGANotificationUseCaseProtocol {
+    var userAlertsUpdates: AnyAsyncSequence<Void> { EmptyAsyncSequence().eraseToAnyAsyncSequence() }
+    var userContactRequestsUpdates: AnyAsyncSequence<Void> { EmptyAsyncSequence().eraseToAnyAsyncSequence() }
     func relevantAndNotSeenAlerts() -> [UserAlertEntity]? { nil }
-    
     func incomingContactRequest() -> [ContactRequestEntity] { [] }
-    
-    func observeUserAlerts(with callback: @escaping () -> Void) { }
-    
-    func observeUserContactRequests(with callback: @escaping () -> Void) { }
-    
     func unreadNotificationIDs() async -> [NotificationIDEntity] { [] }
 }
 

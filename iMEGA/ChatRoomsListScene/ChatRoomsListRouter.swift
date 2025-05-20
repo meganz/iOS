@@ -57,7 +57,7 @@ final class ChatRoomsListRouter: ChatRoomsListRouting {
     var myAvatarViewModel: MyAvatarViewModel {
         MyAvatarViewModel(
             megaNotificationUseCase: MEGANotificationUseCase(
-                userAlertsClient: .live,
+                userAlertsRepository: UserAlertsRepository.newRepo,
                 notificationsUseCase: NotificationsUseCase(repository: NotificationsRepository.newRepo)
             ), userImageUseCase: UserImageUseCase(
                 userImageRepo: UserImageRepository.newRepo,

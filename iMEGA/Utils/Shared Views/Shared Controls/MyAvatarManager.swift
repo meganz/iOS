@@ -36,7 +36,7 @@ import MEGARepo
     func setup() {
         myAvatarViewModel = MyAvatarViewModel(
             megaNotificationUseCase: MEGANotificationUseCase(
-                userAlertsClient: .live,
+                userAlertsRepository: UserAlertsRepository.newRepo,
                 notificationsUseCase: NotificationsUseCase(repository: NotificationsRepository.newRepo)
             ), userImageUseCase: UserImageUseCase(
                 userImageRepo: UserImageRepository.newRepo,

@@ -52,6 +52,16 @@ final class MyAvatarViewModel: NSObject {
     var incomingContactRequestCount: Int = 0
     
     var refreshUnreadNotificationCountTask: Task<Void, Never>?
+    var monitorUserAlertsUpdatesTask: Task<Void, Never>? {
+        didSet {
+            oldValue?.cancel()
+        }
+    }
+    var monitorUserContactRequestsTask: Task<Void, Never>? {
+        didSet {
+            oldValue?.cancel()
+        }
+    }
 
     // MARK: - Dependencies
 
@@ -121,12 +131,18 @@ extension MyAvatarViewModel {
 extension MyAvatarViewModel {
 
     private func observeUserAlertsAndContactRequests() {
-        megaNotificationUseCase.observeUserContactRequests { [weak self] in
-            self?.loadUserContactRequest()
+        monitorUserContactRequestsTask = Task { [weak self, megaNotificationUseCase] in
+            for await _ in megaNotificationUseCase.userContactRequestsUpdates {
+                guard !Task.isCancelled else { break }
+                self?.loadUserContactRequest()
+            }
         }
-
-        megaNotificationUseCase.observeUserAlerts { [weak self] in
-            self?.loadUserAlerts()
+        
+        monitorUserAlertsUpdatesTask = Task { [weak self, megaNotificationUseCase] in
+            for await _ in megaNotificationUseCase.userAlertsUpdates {
+                guard !Task.isCancelled else { break }
+                self?.loadUserAlerts()
+            }
         }
     }
 
