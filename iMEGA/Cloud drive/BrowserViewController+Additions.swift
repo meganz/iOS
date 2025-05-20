@@ -249,8 +249,9 @@ extension BrowserViewController: ViewType {
             
         case .requestFinishUpdates(let requestEntity):
             if requestEntity.type == .copy {
+                guard remainingOperations > 0 else { return }
                 remainingOperations -= 1
-                
+
                 if remainingOperations == 0 {
                     SVProgressHUD.setDefaultMaskType(.none)
                     if browserAction == .import || browserAction == .importFromFolderLink {
