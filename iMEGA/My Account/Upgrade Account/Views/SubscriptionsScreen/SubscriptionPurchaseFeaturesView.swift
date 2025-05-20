@@ -26,9 +26,9 @@ struct SubscriptionPurchaseFeaturesView: View {
             SubscriptionPurchaseFeatureView(
                 image: Image(.subscriptionFeatureTransfersPWM),
                 title: Strings.Localizable.SubscriptionPurchase.Feature.Four.title,
-                description: Strings.Localizable.SubscriptionPurchase.Feature.Four.description
+                description: Strings.Localizable.SubscriptionPurchase.Feature.Four.description,
             )
         }
-        .padding(.vertical, TokenSpacing._3)
+        .padding(.bottom, TokenSpacing._8)
     }
 }

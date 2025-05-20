@@ -17,7 +17,8 @@ struct SubscriptionPurchasePlanCardView: View {
                     Text(Strings.Localizable.UpgradeAccountPlan.Plan.Tag.recommended)
                         .font(.caption)
                         .foregroundStyle(TokenColors.Text.info.swiftUI)
-                        .padding(TokenSpacing._3)
+                        .padding(.vertical, TokenSpacing._1)
+                        .padding(.horizontal, TokenSpacing._3)
                         .background(TokenColors.Notifications.notificationInfo.swiftUI)
                         .cornerRadius(TokenRadius.small)
                 }

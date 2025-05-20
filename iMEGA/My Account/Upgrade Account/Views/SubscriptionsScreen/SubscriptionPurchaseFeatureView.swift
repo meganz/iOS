@@ -31,5 +31,6 @@ struct SubscriptionPurchaseFeatureView: View {
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(.vertical, TokenSpacing._2)
     }
 }

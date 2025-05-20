@@ -11,7 +11,8 @@ struct SubscriptionPurchaseBottomButtonView: View {
             VStack(spacing: 0) {
                 Divider()
                 PrimaryActionButtonView(
-                    title: Strings.Localizable.UpgradeAccountPlan.Button.BuyAccountPlan.title(viewModel.selectedPlanName)
+                    title: Strings.Localizable.UpgradeAccountPlan.Button.BuyAccountPlan.title(viewModel.selectedPlanName),
+                    font: .callout.bold()
                 ) {
                     viewModel.didTap(.buyPlan)
                 }

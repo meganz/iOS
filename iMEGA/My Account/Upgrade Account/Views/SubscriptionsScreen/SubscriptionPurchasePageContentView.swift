@@ -63,6 +63,7 @@ struct SubscriptionPurchasePageContentView: View {
                 .maxWidthForWideScreen()
             }
         }
+        .background(TokenColors.Background.page.swiftUI)
         .ignoresSafeArea(.all, edges: .top)
         .coordinateSpace(name: coordinateSpaceName)
         .onTopInsetChange { topInset = $0 }
