@@ -4,17 +4,19 @@ import SwiftUI
 
 public struct PrimaryActionButtonView: View {
     private let title: String
+    private let font: Font
     private let action: @MainActor () -> Void
     
-    public init(title: String, action: @escaping @MainActor () -> Void) {
+    public init(title: String, font: Font = .title3, action: @escaping @MainActor () -> Void) {
         self.title = title
         self.action = action
+        self.font = font
     }
     
     public var body: some View {
         Button(action: action) {
             PrimaryActionButtonViewText(title: title)
-            .font(.title3)
+            .font(font)
         }
     }
 }
