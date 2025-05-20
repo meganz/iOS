@@ -28,7 +28,7 @@ final class ChatUploader: NSObject, ChatUploaderProtocol {
     private var metadataUseCase: some MetadataUseCaseProtocol {
         MetadataUseCase(
             metadataRepository: MetadataRepository(),
-            fileSystemRepository: FileSystemRepository.newRepo,
+            fileSystemRepository: FileSystemRepository.sharedRepo,
             fileExtensionRepository: FileExtensionRepository(),
             nodeCoordinatesRepository: NodeCoordinatesRepository.newRepo
         )

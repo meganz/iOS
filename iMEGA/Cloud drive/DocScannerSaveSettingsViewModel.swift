@@ -79,7 +79,7 @@ extension DocScannerSaveSettingsViewModel {
     private func buildTransfers(for paths: [String], parentNodeHandle: HandleEntity) async -> [CancellableTransfer] {
         let metadataUseCase = MetadataUseCase(
             metadataRepository: MetadataRepository(),
-            fileSystemRepository: FileSystemRepository.newRepo,
+            fileSystemRepository: FileSystemRepository.sharedRepo,
             fileExtensionRepository: FileExtensionRepository(),
             nodeCoordinatesRepository: NodeCoordinatesRepository.newRepo
         )
@@ -216,7 +216,7 @@ extension DocScannerSaveSettingsViewModel {
     private func buildUploadMetadata(paths: [String], chatRoomId: HandleEntity? = nil) async -> [(String, String)] {
         let metadataUseCase = MetadataUseCase(
             metadataRepository: MetadataRepository(),
-            fileSystemRepository: FileSystemRepository.newRepo,
+            fileSystemRepository: FileSystemRepository.sharedRepo,
             fileExtensionRepository: FileExtensionRepository(),
             nodeCoordinatesRepository: NodeCoordinatesRepository.newRepo
         )

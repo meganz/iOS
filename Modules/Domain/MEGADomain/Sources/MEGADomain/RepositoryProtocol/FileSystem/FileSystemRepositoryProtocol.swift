@@ -1,6 +1,6 @@
 import Foundation
 
-public protocol FileSystemRepositoryProtocol: RepositoryProtocol, Sendable {
+public protocol FileSystemRepositoryProtocol: SharedRepositoryProtocol {
     /// Retrieves the URL of the documents directory in the user's domain.
     /// - Returns: A `URL` pointing to the documents directory.
     func documentsDirectory() -> URL

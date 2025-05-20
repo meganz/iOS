@@ -19,7 +19,7 @@ extension AppDelegate {
         if removedNodes.isNotEmpty {
             let nodesRemovedUseCase = NodesRemovedUseCase(
                 thumbnailRepository: ThumbnailRepository.newRepo,
-                fileRepository: FileSystemRepository.newRepo,
+                fileRepository: FileSystemRepository.sharedRepo,
                 removedNodes: removedNodes
             )
             Task {

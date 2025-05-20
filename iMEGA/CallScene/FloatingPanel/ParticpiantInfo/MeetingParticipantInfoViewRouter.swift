@@ -39,7 +39,7 @@ struct MeetingParticipantInfoViewRouter: MeetingParticipantInfoViewRouting {
             userImageRepo: UserImageRepository.newRepo,
             userStoreRepo: UserStoreRepository(store: MEGAStore.shareInstance()),
             thumbnailRepo: ThumbnailRepository.newRepo,
-            fileSystemRepo: FileSystemRepository.newRepo
+            fileSystemRepo: FileSystemRepository.sharedRepo
         )
         
         let chatRoomUseCase = ChatRoomUseCase(chatRoomRepo: ChatRoomRepository.newRepo)

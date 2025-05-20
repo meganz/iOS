@@ -20,7 +20,7 @@ import MEGARepo
             mediaUseCase: MediaUseCase(fileSearchRepo: FilesSearchRepository.newRepo),
             preferenceUseCase: PreferenceUseCase.default,
             transferInventoryRepository: TransferInventoryRepository.newRepo,
-            fileSystemRepository: FileSystemRepository.newRepo,
+            fileSystemRepository: FileSystemRepository.sharedRepo,
             saveMediaToPhotoFailureHandler: saveMediaToPhotoFailureHandler
         )
         super.init()
@@ -35,7 +35,7 @@ import MEGARepo
     
     private func handleSaveNode(_ savedToPhotos: Bool) async {
         let transferInventoryUseCase = TransferInventoryUseCase(
-            transferInventoryRepository: TransferInventoryRepository.newRepo, fileSystemRepository: FileSystemRepository.newRepo)
+            transferInventoryRepository: TransferInventoryRepository.newRepo, fileSystemRepository: FileSystemRepository.sharedRepo)
         let anyPendingSavePhotosTransfer = transferInventoryUseCase.saveToPhotosTransfers(filteringUserTransfer: true)?.isNotEmpty ?? false
         if savedToPhotos, !anyPendingSavePhotosTransfer {
             await SVProgressHUD.show(UIImage.saveToPhotos, status: Strings.Localizable.savedToPhotos)

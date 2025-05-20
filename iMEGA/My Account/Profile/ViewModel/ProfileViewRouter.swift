@@ -36,7 +36,7 @@ final class ProfileViewRouter: ProfileViewRouting {
                 repo: TransferRepository.newRepo,
                 metadataUseCase: MetadataUseCase(
                     metadataRepository: MetadataRepository(),
-                    fileSystemRepository: FileSystemRepository.newRepo,
+                    fileSystemRepository: FileSystemRepository.sharedRepo,
                     fileExtensionRepository: FileExtensionRepository(),
                     nodeCoordinatesRepository: NodeCoordinatesRepository.newRepo
                 ),

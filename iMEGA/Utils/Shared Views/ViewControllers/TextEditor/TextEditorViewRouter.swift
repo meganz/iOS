@@ -68,7 +68,7 @@ extension TextEditorViewRouter: TextEditorViewRouting {
     @objc func build() -> UIViewController {
         let sdk = MEGASdk.shared
         let nodeRepository = NodeRepository.newRepo
-        let fileSystemRepository = FileSystemRepository(fileManager: FileManager.default)
+        let fileSystemRepository = FileSystemRepository.sharedRepo
         let uploadUC = UploadFileUseCase(uploadFileRepository: UploadFileRepository(sdk: sdk), fileSystemRepository: fileSystemRepository, nodeRepository: nodeRepository, fileCacheRepository: FileCacheRepository.newRepo)
         let downloadUC = DownloadNodeUseCase(
             downloadFileRepository: DownloadFileRepository(sdk: sdk),

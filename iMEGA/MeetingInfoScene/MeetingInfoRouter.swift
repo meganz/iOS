@@ -31,7 +31,7 @@ final class MeetingInfoRouter: NSObject, MeetingInfoRouting {
             userImageRepo: UserImageRepository(sdk: MEGASdk.shared),
             userStoreRepo: UserStoreRepository(store: MEGAStore.shareInstance()),
             thumbnailRepo: ThumbnailRepository.newRepo,
-            fileSystemRepo: FileSystemRepository.newRepo
+            fileSystemRepo: FileSystemRepository.sharedRepo
         )
         
         let viewModel = MeetingInfoViewModel(

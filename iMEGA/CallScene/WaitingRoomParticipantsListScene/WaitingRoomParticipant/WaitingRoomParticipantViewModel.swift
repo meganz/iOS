@@ -44,7 +44,7 @@ final class WaitingRoomParticipantViewModel: ObservableObject, Identifiable {
                 userImageRepo: UserImageRepository.newRepo,
                 userStoreRepo: UserStoreRepository.newRepo,
                 thumbnailRepo: ThumbnailRepository.newRepo,
-                fileSystemRepo: FileSystemRepository.newRepo),
+                fileSystemRepo: FileSystemRepository.sharedRepo),
             chatUseCase: chatUseCase,
             accountUseCase: AccountUseCase(repository: AccountRepository.newRepo)
         )

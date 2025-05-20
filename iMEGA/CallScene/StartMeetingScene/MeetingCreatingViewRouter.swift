@@ -39,7 +39,7 @@ class MeetingCreatingViewRouter: NSObject, MeetingCreatingViewRouting {
             userImageRepo: UserImageRepository(sdk: .shared),
             userStoreRepo: UserStoreRepository(store: MEGAStore.shareInstance()),
             thumbnailRepo: ThumbnailRepository.newRepo,
-            fileSystemRepo: FileSystemRepository.newRepo
+            fileSystemRepo: FileSystemRepository.sharedRepo
         )
         
         let vm = MeetingCreatingViewModel(

@@ -53,7 +53,7 @@ extension ItemListViewController {
             userImageRepo: UserImageRepository.newRepo,
             userStoreRepo: UserStoreRepository.newRepo,
             thumbnailRepo: ThumbnailRepository.newRepo,
-            fileSystemRepo: FileSystemRepository.newRepo
+            fileSystemRepo: FileSystemRepository.sharedRepo
         )
         
         let name = item.name ?? ""

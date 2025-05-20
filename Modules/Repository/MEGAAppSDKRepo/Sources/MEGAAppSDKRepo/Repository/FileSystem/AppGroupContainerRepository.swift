@@ -5,7 +5,7 @@ import MEGARepo
 public struct AppGroupContainerRepository: AppGroupContainerRepositoryProtocol {
     public static var newRepo: AppGroupContainerRepository {
         AppGroupContainerRepository(fileManager: .default,
-                                    fileSystemRepository: FileSystemRepository.newRepo)
+                                    fileSystemRepository: FileSystemRepository.sharedRepo)
     }
     
     private let container: AppGroupContainer

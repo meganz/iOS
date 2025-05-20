@@ -55,7 +55,7 @@ final class HomeScreenFactory: NSObject {
                 userImageRepo: UserImageRepository.newRepo,
                 userStoreRepo: UserStoreRepository.newRepo,
                 thumbnailRepo: ThumbnailRepository.newRepo,
-                fileSystemRepo: FileSystemRepository.newRepo
+                fileSystemRepo: FileSystemRepository.sharedRepo
             ), megaHandleUseCase: MEGAHandleUseCase(repo: MEGAHandleRepository.newRepo)
         )
         
@@ -166,7 +166,7 @@ final class HomeScreenFactory: NSObject {
                         repo: TransfersListenerRepository.newRepo,
                         preferenceUseCase: PreferenceUseCase.default
                     ),
-                fileSystemRepo: FileSystemRepository.newRepo
+                fileSystemRepo: FileSystemRepository.sharedRepo
             ),
             NodesSavedToOfflineListener(notificationCenter: .default)
         ]

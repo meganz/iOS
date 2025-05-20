@@ -10,14 +10,14 @@ final class TransferInventoryUseCaseHelper: NSObject, Sendable {
     private let store: MEGAStore
 
     init(
-        transferInventoryUseCase: some TransferInventoryUseCaseProtocol = TransferInventoryUseCase(transferInventoryRepository: TransferInventoryRepository.newRepo, fileSystemRepository: FileSystemRepository.newRepo),
+        transferInventoryUseCase: some TransferInventoryUseCaseProtocol = TransferInventoryUseCase(transferInventoryRepository: TransferInventoryRepository.newRepo, fileSystemRepository: FileSystemRepository.sharedRepo),
         sdk: MEGASdk = MEGASdk.shared,
         nodeUseCase: some NodeUseCaseProtocol = NodeUseCase(
             nodeDataRepository: NodeDataRepository.newRepo,
             nodeValidationRepository: NodeValidationRepository.newRepo,
             nodeRepository: NodeRepository.newRepo
         ),
-        fileSystem: some FileSystemRepositoryProtocol = FileSystemRepository.newRepo,
+        fileSystem: some FileSystemRepositoryProtocol = FileSystemRepository.sharedRepo,
         store: MEGAStore = MEGAStore.shareInstance()
     ) {
         self.transferInventoryUseCase = transferInventoryUseCase
@@ -32,7 +32,7 @@ final class TransferInventoryUseCaseHelper: NSObject, Sendable {
         if let list = sdk.completedTransfers as? [MEGATransfer] {
             return list.filter {
                 let node = nodeUseCase.nodeForHandle($0.nodeHandle)?.toMEGANode(in: sdk) ?? $0.publicNode
-                return node?.isFile() ?? false && ($0.type == .upload || $0.path?.hasPrefix(FileSystemRepository.newRepo.documentsDirectory().path) ?? false || $0.appData?.contains(TransferMetaDataEntity.saveInPhotos.rawValue) ?? false || $0.appData?.contains(TransferMetaDataEntity.exportFile.rawValue) ?? false)
+                return node?.isFile() ?? false && ($0.type == .upload || $0.path?.hasPrefix(fileSystem.documentsDirectory().path) ?? false || $0.appData?.contains(TransferMetaDataEntity.saveInPhotos.rawValue) ?? false || $0.appData?.contains(TransferMetaDataEntity.exportFile.rawValue) ?? false)
             }
         }
         return []
