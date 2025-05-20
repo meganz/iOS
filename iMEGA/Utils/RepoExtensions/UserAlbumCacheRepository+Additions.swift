@@ -6,7 +6,7 @@ extension UserAlbumCacheRepository: @retroactive RepositoryProtocol {
         let userAlbumCache = UserAlbumCache.shared
         let userAlbumCacheRepositoryMonitors = UserAlbumCacheRepositoryMonitors(
             sdk: .sharedSdk,
-            setAndElementsUpdatesProvider: SetAndElementUpdatesProvider(sdk: .sharedSdk),
+            setAndElementsUpdatesProvider: SetAndElementUpdatesProvider(),
             userAlbumCache: userAlbumCache,
             cacheInvalidationTrigger: .init(
             logoutNotificationName: .accountDidLogout,

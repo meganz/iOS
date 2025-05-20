@@ -28,7 +28,7 @@ struct VideoRevampRouter: VideoRevampRouting {
         )
         let userVideoPlaylistsRepo = UserVideoPlaylistsRepository(
             sdk: sdk,
-            setAndElementsUpdatesProvider: SetAndElementUpdatesProvider(sdk: sdk)
+            setAndElementsUpdatesProvider: SetAndElementUpdatesProvider()
         )
         let sensitiveDisplayPreferenceUseCase = makeSensitiveDisplayPreferenceUseCase()
         let viewModel = VideoRevampTabContainerViewModel(

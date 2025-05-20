@@ -981,6 +981,16 @@ public final class MockSdk: MEGASdk, @unchecked Sendable {
         delegates.forEach { $0.onNodesUpdate?(self, nodeList: nodeList) }
     }
     
+    public func simulateOnSetUpdate(_ sets: [MEGASet]) {
+        globalDelegates.forEach { $0.onSetsUpdate?(self, sets: sets) }
+        delegates.forEach { $0.onSetsUpdate?(self, sets: sets) }
+    }
+    
+    public func simulateOnSetElementsUpdate(_ setElements: [MEGASetElement]) {
+        globalDelegates.forEach { $0.onSetElementsUpdate?(self, setElements: setElements) }
+        delegates.forEach { $0.onSetElementsUpdate?(self, setElements: setElements) }
+    }
+    
     public override func smsVerifiedPhoneNumber() -> String? {
         verifiedPhoneNumber
     }
