@@ -9,6 +9,8 @@ final class MEGAUpdateHandler: NSObject, Sendable {
     typealias ContactRequestsUpdateHandler = @Sendable ([ContactRequestEntity]) -> Void
     typealias EventHandler = @Sendable (EventEntity) -> Void
     typealias AccountUpdateHandler = @Sendable () -> Void
+    typealias SetsUpdateHandler = @Sendable ([SetEntity]) -> Void
+    typealias SetElementsUpdateHandler = @Sendable ([SetElementEntity]) -> Void
 
     typealias RequestStartHandler = @Sendable (RequestEntity) -> Void
     typealias RequestUpdateHandler = @Sendable (RequestEntity) -> Void
@@ -23,6 +25,8 @@ final class MEGAUpdateHandler: NSObject, Sendable {
     let onContactRequestsUpdate: ContactRequestsUpdateHandler?
     let onEvent: EventHandler?
     let onAccountUpdate: AccountUpdateHandler?
+    let onSetsUpdate: SetsUpdateHandler?
+    let onSetElementsUpdate: SetElementsUpdateHandler?
     
     let onRequestStart: RequestStartHandler?
     let onRequestUpdate: RequestUpdateHandler?
@@ -38,6 +42,8 @@ final class MEGAUpdateHandler: NSObject, Sendable {
         onContactRequestsUpdate: ContactRequestsUpdateHandler? = nil,
         onEvent: EventHandler? = nil,
         onAccountUpdate: AccountUpdateHandler? = nil,
+        onSetsUpdate: SetsUpdateHandler? = nil,
+        onSetElementsUpdate: SetElementsUpdateHandler? = nil,
         onRequestStart: RequestStartHandler? = nil,
         onRequestUpdate: RequestUpdateHandler? = nil,
         onRequestTemporaryError: RequestTemporaryErrorHandler? = nil,
@@ -50,6 +56,8 @@ final class MEGAUpdateHandler: NSObject, Sendable {
         self.onContactRequestsUpdate = onContactRequestsUpdate
         self.onEvent = onEvent
         self.onAccountUpdate = onAccountUpdate
+        self.onSetsUpdate = onSetsUpdate
+        self.onSetElementsUpdate = onSetElementsUpdate
         self.onRequestStart = onRequestStart
         self.onRequestUpdate = onRequestUpdate
         self.onRequestTemporaryError = onRequestTemporaryError

@@ -7,7 +7,7 @@ public struct UserVideoPlaylistsRepository: UserVideoPlaylistsRepositoryProtocol
     public static var newRepo: UserVideoPlaylistsRepository {
         UserVideoPlaylistsRepository(
             sdk: .sharedSdk,
-            setAndElementsUpdatesProvider: SetAndElementUpdatesProvider(sdk: .sharedSdk)
+            setAndElementsUpdatesProvider: SetAndElementUpdatesProvider()
         )
     }
     

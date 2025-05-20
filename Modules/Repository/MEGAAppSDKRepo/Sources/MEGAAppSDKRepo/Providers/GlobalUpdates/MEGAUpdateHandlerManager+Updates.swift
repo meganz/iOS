@@ -3,6 +3,8 @@ import MEGASdk
 import MEGASwift
 
 extension MEGAUpdateHandlerManager {
+    // MARK: - Global updates
+    
     var nodeUpdates: AnyAsyncSequence<[NodeEntity]> {
         AsyncStream { continuation in
             let handler = MEGAUpdateHandler(onNodesUpdate: { continuation.yield($0) })
@@ -26,7 +28,7 @@ extension MEGAUpdateHandlerManager {
     var userAlertUpdates: AnyAsyncSequence<[UserAlertEntity]> {
         AsyncStream { continuation in
             let handler = MEGAUpdateHandler(onUserAlertsUpdate: { continuation.yield($0) })
-
+            
             add(handler: handler)
             
             continuation.onTermination = { [weak self] _ in self?.remove(handler: handler) }
@@ -56,11 +58,31 @@ extension MEGAUpdateHandlerManager {
         AsyncStream { continuation in
             let handler = MEGAUpdateHandler(onAccountUpdate: { continuation.yield() })
             add(handler: handler)
+            
+            continuation.onTermination = { [weak self] _ in self?.remove(handler: handler) }
+        }.eraseToAnyAsyncSequence()
+    }
+    
+    var setsUpdates: AnyAsyncSequence<[SetEntity]> {
+        AsyncStream { continuation in
+            let handler = MEGAUpdateHandler(onSetsUpdate: { continuation.yield($0) })
+            add(handler: handler)
+
+            continuation.onTermination = { [weak self] _ in self?.remove(handler: handler) }
+        }.eraseToAnyAsyncSequence()
+    }
+    
+    var setElementsUpdates: AnyAsyncSequence<[SetElementEntity]> {
+        AsyncStream { continuation in
+            let handler = MEGAUpdateHandler(onSetElementsUpdate: { continuation.yield($0) })
+            add(handler: handler)
 
             continuation.onTermination = { [weak self] _ in self?.remove(handler: handler) }
         }.eraseToAnyAsyncSequence()
     }
 
+    // MARK: - Request updates
+    
     var requestStartUpdates: AnyAsyncSequence<RequestEntity> {
         AsyncStream { continuation in
             let handler = MEGAUpdateHandler(onRequestStart: { continuation.yield($0) })
@@ -104,6 +126,8 @@ extension MEGAUpdateHandlerManager {
         }
         .eraseToAnyAsyncSequence()
     }
+    
+    // MARK: - Transfer updates
     
     var transferFinishUpdates: AnyAsyncSequence<Result<TransferEntity, ErrorEntity>> {
         AsyncStream { continuation in

@@ -82,4 +82,41 @@ struct MEGAUpdateHandlerManagerTests {
         #expect(receivedNodes.map(\.handle) == [111])
         #expect(receivedUsers.map(\.handle) == [999])
     }
+    
+    @Test func onSetAndSetElementsUpdate_forwardsToCorrectHandler() async throws {
+        // given
+        let sdk = MockSdk()
+        let sut = MEGAUpdateHandlerManager(sdk: sdk)
+        let megaSets = [MockMEGASet(handle: 65)]
+        let megaSetElements = [MockMEGASetElement(handle: 54)]
+        
+        let setTask = Task {
+            var updatedSets: [SetEntity] = []
+            for await sets in sut.setsUpdates {
+                updatedSets.append(contentsOf: sets)
+            }
+            return updatedSets
+        }
+        
+        let setElements = Task {
+            var updatedSetElementS: [SetElementEntity] = []
+            for await setElements in sut.setElementsUpdates {
+                updatedSetElementS.append(contentsOf: setElements)
+            }
+            return updatedSetElementS
+        }
+        
+        try await Task.sleep(nanoseconds: 1_000_000_000)
+        
+        // when
+        sdk.simulateOnSetUpdate(megaSets)
+        sdk.simulateOnSetElementsUpdate(megaSetElements)
+        
+        setTask.cancel()
+        setElements.cancel()
+    
+        // then
+        #expect(await setTask.value == megaSets.toSetEntities())
+        #expect(await setElements.value == megaSetElements.toSetElementsEntities())
+    }
 }
