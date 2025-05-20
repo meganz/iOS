@@ -22,7 +22,7 @@ extension ShareViewController {
     @objc func appDataForUploadFile(localPath: String) async -> String? {
         let metadataUseCase = MetadataUseCase(
             metadataRepository: MetadataRepository(),
-            fileSystemRepository: FileSystemRepository.newRepo,
+            fileSystemRepository: FileSystemRepository.sharedRepo,
             fileExtensionRepository: FileExtensionRepository(),
             nodeCoordinatesRepository: NodeCoordinatesRepository.newRepo
         )

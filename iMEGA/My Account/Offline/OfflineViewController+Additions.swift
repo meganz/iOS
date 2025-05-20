@@ -8,7 +8,7 @@ extension OfflineViewController {
     @objc func createOfflineViewModel() -> OfflineViewModel {
         OfflineViewModel(
             offlineUseCase: OfflineUseCase(
-                fileSystemRepository: FileSystemRepository.newRepo,
+                fileSystemRepository: FileSystemRepository.sharedRepo,
                 offlineFilesRepository: OfflineFilesRepository.newRepo,
                 nodeTransferRepository: NodeTransferRepository.newRepo
             ),

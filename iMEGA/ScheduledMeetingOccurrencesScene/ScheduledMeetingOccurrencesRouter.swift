@@ -28,7 +28,7 @@ final class ScheduledMeetingOccurrencesRouter: ScheduledMeetingOccurrencesRoutin
             userImageRepo: UserImageRepository(sdk: .sharedSdk),
             userStoreRepo: UserStoreRepository(store: MEGAStore.shareInstance()),
             thumbnailRepo: ThumbnailRepository.newRepo,
-            fileSystemRepo: FileSystemRepository.newRepo
+            fileSystemRepo: FileSystemRepository.sharedRepo
         )
         
         var chatRoomAvatarViewModel: ChatRoomAvatarViewModel?

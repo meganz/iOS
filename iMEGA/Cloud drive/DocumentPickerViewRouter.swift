@@ -21,7 +21,7 @@ final class DocumentPickerViewRouter {
 
         let metadataUseCase = MetadataUseCase(
             metadataRepository: MetadataRepository(),
-            fileSystemRepository: FileSystemRepository(fileManager: .default),
+            fileSystemRepository: FileSystemRepository.sharedRepo,
             fileExtensionRepository: FileExtensionRepository(),
             nodeCoordinatesRepository: NodeCoordinatesRepository.newRepo
         )

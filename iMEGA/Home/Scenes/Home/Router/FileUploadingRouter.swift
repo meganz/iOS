@@ -107,7 +107,7 @@ final class FileUploadingRouter {
     private func buildTransfers(for urls: [URL], parentHandle: HandleEntity) async -> [CancellableTransfer] {
         let metadataUseCase = MetadataUseCase(
             metadataRepository: MetadataRepository(),
-            fileSystemRepository: FileSystemRepository.newRepo,
+            fileSystemRepository: FileSystemRepository.sharedRepo,
             fileExtensionRepository: FileExtensionRepository(),
             nodeCoordinatesRepository: NodeCoordinatesRepository.newRepo
         )

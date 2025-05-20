@@ -3,15 +3,13 @@ import MEGADomain
 import MEGASwift
 
 public struct FileSystemRepository: FileSystemRepositoryProtocol {
-    public static var newRepo: FileSystemRepository {
-        FileSystemRepository(fileManager: .default)
-    }
+    public static let sharedRepo = FileSystemRepository(fileManager: .default)
     
     private let fileManager: FileManager
     private let documentsDirectoryURL: URL
     private let queue = DispatchQueue(label: "nz.mega.MEGARepo.FileSystemRepository")
     
-    public init(fileManager: FileManager) {
+    init(fileManager: FileManager) {
         self.fileManager = fileManager
         let path = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0]
         self.documentsDirectoryURL = if let url = URL(string: path.lastPathComponent) { url } else { path }

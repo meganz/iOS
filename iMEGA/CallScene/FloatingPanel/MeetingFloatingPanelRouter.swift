@@ -139,7 +139,7 @@ final class MeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
             userImageRepo: UserImageRepository.newRepo,
             userStoreRepo: UserStoreRepository(store: MEGAStore.shareInstance()),
             thumbnailRepo: ThumbnailRepository.newRepo,
-            fileSystemRepo: FileSystemRepository.newRepo
+            fileSystemRepo: FileSystemRepository.sharedRepo
         )
         
         let vc = MeetingFloatingPanelViewController(

@@ -29,7 +29,7 @@ final class NameCollisionViewRouter: NameCollisionViewRouting {
         let viewModel = NameCollisionViewModel(
             router: self,
             thumbnailUseCase: ThumbnailUseCase(repository: ThumbnailRepository.newRepo),
-            nameCollisionUseCase: NameCollisionUseCase(nodeRepository: NodeRepository.newRepo, nodeActionsRepository: NodeActionsRepository.newRepo, nodeDataRepository: NodeDataRepository.newRepo, fileSystemRepository: FileSystemRepository.newRepo),
+            nameCollisionUseCase: NameCollisionUseCase(nodeRepository: NodeRepository.newRepo, nodeActionsRepository: NodeActionsRepository.newRepo, nodeDataRepository: NodeDataRepository.newRepo, fileSystemRepository: FileSystemRepository.sharedRepo),
             fileVersionsUseCase: FileVersionsUseCase(repo: FileVersionsRepository.newRepo),
             accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
             transfers: transfers,

@@ -51,7 +51,7 @@ final class CancellableTransferRouter: NSObject, CancellableTransferRouting, Tra
     func build() -> UIViewController {
         let sdk = MEGASdk.shared
         let nodeRepository = NodeRepository.newRepo
-        let fileSystemRepository = FileSystemRepository(fileManager: FileManager.default)
+        let fileSystemRepository = FileSystemRepository.sharedRepo
         
         let viewModel = CancellableTransferViewModel(
             router: self,

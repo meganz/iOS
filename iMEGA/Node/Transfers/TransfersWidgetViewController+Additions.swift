@@ -22,7 +22,7 @@ extension TransfersWidgetViewController: TransferWidgetResponderProtocol {
             ),
             transfersInventoryUseCase: TransferInventoryUseCase(
                 transferInventoryRepository: TransferInventoryRepository.newRepo,
-                fileSystemRepository: FileSystemRepository.newRepo
+                fileSystemRepository: FileSystemRepository.sharedRepo
             ),
             nodeUseCase: NodeUseCase(
                 nodeDataRepository: NodeDataRepository.newRepo,

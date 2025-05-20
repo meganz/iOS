@@ -39,7 +39,7 @@ final class ExportFileRouter: ExportFileViewRouting {
             offlineFilesRepository: OfflineFilesRepository.newRepo,
             fileCacheRepository: FileCacheRepository.newRepo,
             thumbnailRepository: ThumbnailRepository.newRepo,
-            fileSystemRepository: FileSystemRepository.newRepo,
+            fileSystemRepository: FileSystemRepository.sharedRepo,
             exportChatMessagesRepository: ExportChatMessagesRepository.newRepo,
             importNodeRepository: ImportNodeRepository.newRepo,
             megaHandleRepository: MEGAHandleRepository.newRepo,

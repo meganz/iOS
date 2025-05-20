@@ -322,7 +322,7 @@ extension ChatViewController {
     private nonisolated func buildUploadAppData(filePath: String, chatRoomId: HandleEntity, localIdentifier: String) async -> String {
         let metadataUseCase = MetadataUseCase(
             metadataRepository: MetadataRepository(),
-            fileSystemRepository: FileSystemRepository.newRepo,
+            fileSystemRepository: FileSystemRepository.sharedRepo,
             fileExtensionRepository: FileExtensionRepository(),
             nodeCoordinatesRepository: NodeCoordinatesRepository.newRepo
         )
@@ -335,7 +335,7 @@ extension ChatViewController {
     private nonisolated func buildAssetUploadAppData(asset: PHAsset, chatRoomId: HandleEntity) -> String {
         let metadataUseCase = MetadataUseCase(
             metadataRepository: MetadataRepository(),
-            fileSystemRepository: FileSystemRepository.newRepo,
+            fileSystemRepository: FileSystemRepository.sharedRepo,
             fileExtensionRepository: FileExtensionRepository(),
             nodeCoordinatesRepository: NodeCoordinatesRepository.newRepo
         )

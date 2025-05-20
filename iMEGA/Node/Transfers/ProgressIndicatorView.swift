@@ -113,7 +113,7 @@ final class ProgressIndicatorView: UIView {
     
     private func filterUserManualDownloads(_ transfers: [MEGATransfer]) -> [MEGATransfer] {
         transfers.filter {
-            $0.path?.hasPrefix(FileSystemRepository.newRepo.documentsDirectory().path) ?? false
+            $0.path?.hasPrefix(FileSystemRepository.sharedRepo.documentsDirectory().path) ?? false
         }
     }
     

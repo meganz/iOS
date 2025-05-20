@@ -22,7 +22,7 @@ final class FileProviderExtension: NSFileProviderExtension {
     
     private lazy var metadataUseCase = MetadataUseCase(
         metadataRepository: MetadataRepository(),
-        fileSystemRepository: FileSystemRepository.newRepo,
+        fileSystemRepository: FileSystemRepository.sharedRepo,
         fileExtensionRepository: FileExtensionRepository(),
         nodeCoordinatesRepository: NodeCoordinatesRepository.newRepo
     )

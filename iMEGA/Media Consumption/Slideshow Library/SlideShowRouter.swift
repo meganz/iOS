@@ -61,7 +61,7 @@ struct SlideShowRouter: Routing {
             nodeEntities: photos,
             thumbnailUseCase: dataProvider.makeThumbnailUseCase(),
             fileDownloadUseCase: FileDownloadUseCase(fileCacheRepository: FileCacheRepository.newRepo,
-                                                     fileSystemRepository: FileSystemRepository.newRepo,
+                                                     fileSystemRepository: FileSystemRepository.sharedRepo,
                                                      downloadFileRepository: DownloadFileRepository.newRepo),
             mediaUseCase: MediaUseCase(fileSearchRepo: FilesSearchRepository.newRepo),
             advanceNumberOfPhotosToLoad: 10

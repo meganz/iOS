@@ -3,7 +3,7 @@ import MEGADomain
 import MEGASwift
 
 public final class MockFileSystemRepository: FileSystemRepositoryProtocol, @unchecked Sendable {
-    public static let newRepo = MockFileSystemRepository()
+    public static let sharedRepo = MockFileSystemRepository()
     
     private let fileExists: Bool
     private let copiedNode: Bool

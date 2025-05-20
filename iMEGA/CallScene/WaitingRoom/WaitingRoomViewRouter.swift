@@ -39,7 +39,7 @@ final class WaitingRoomViewRouter: NSObject, WaitingRoomViewRouting {
             userImageRepo: UserImageRepository(sdk: .shared),
             userStoreRepo: UserStoreRepository(store: .shareInstance()),
             thumbnailRepo: ThumbnailRepository.newRepo,
-            fileSystemRepo: FileSystemRepository.newRepo
+            fileSystemRepo: FileSystemRepository.sharedRepo
         )
         
         let viewModel = WaitingRoomViewModel(

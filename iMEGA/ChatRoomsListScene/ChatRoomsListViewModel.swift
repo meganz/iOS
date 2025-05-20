@@ -697,7 +697,7 @@ final class ChatRoomsListViewModel: ObservableObject {
             userImageRepo: UserImageRepository(sdk: .shared),
             userStoreRepo: UserStoreRepository(store: MEGAStore.shareInstance()),
             thumbnailRepo: ThumbnailRepository.newRepo,
-            fileSystemRepo: FileSystemRepository.newRepo
+            fileSystemRepo: FileSystemRepository.sharedRepo
         )
         let chatListItemDescription = await chatListItemCacheUseCase.description(for: chatListItem)
         let chatListItemAvatar = await chatListItemCacheUseCase.avatar(for: chatListItem)
@@ -740,7 +740,7 @@ final class ChatRoomsListViewModel: ObservableObject {
             userImageRepo: UserImageRepository(sdk: .shared),
             userStoreRepo: UserStoreRepository(store: MEGAStore.shareInstance()),
             thumbnailRepo: ThumbnailRepository.newRepo,
-            fileSystemRepo: FileSystemRepository.newRepo
+            fileSystemRepo: FileSystemRepository.sharedRepo
         )
         
         let chatListItemAvatar = await chatListItemCacheUseCase.avatar(for: scheduledMeetingEntity)

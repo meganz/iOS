@@ -44,7 +44,7 @@ final class MeetingParticipantsLayoutRouter: NSObject, MeetingParticipantsLayout
             userImageRepo: UserImageRepository(sdk: .sharedSdk),
             userStoreRepo: UserStoreRepository(store: MEGAStore.shareInstance()),
             thumbnailRepo: ThumbnailRepository.newRepo,
-            fileSystemRepo: FileSystemRepository.newRepo
+            fileSystemRepo: FileSystemRepository.sharedRepo
         )
         let analyticsEventUseCase = AnalyticsEventUseCase(repository: AnalyticsRepository(sdk: .sharedSdk))
 
