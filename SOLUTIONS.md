@@ -2,6 +2,20 @@
 
 ## Solution For Question1
 
+### Root Cause
+
+The remove of toolbar is too early, it may be accessed during deinit 
+
+ ![1.1](./assets/1.1.png)
+
+### Solution
+
+Defer the time of the remove to the end of deinit
+
+![1.2](./assets/1.2.png)
+
+
+
 
 
 ## Solution For Question2
@@ -18,7 +32,7 @@ When we call the `seekToDestination` function, we may trigger AVPlayer.play mult
 
 Remove the extra call in the notification 
 
-
+![2.3](./assets/2.3.png)
 
 
 
