@@ -280,13 +280,13 @@
             [_outgoingSharesMutableArray addObject:share];
             
             MEGANode *node = [MEGASdk.shared nodeForHandle:share.nodeHandle];
-            
+
             if (![lastBase64Handle isEqualToString:node.base64Handle]) {
                 lastBase64Handle = node.base64Handle;
                 [_outgoingNodesMutableArray addObject:node];
             }
-            
-            if (!share.isVerified) {
+
+            if ([self isContactVerificationEnabled] && !share.isVerified) {
                 [self addToUnverifiedOutSharesWithShare:share node:node];
             }
         }
@@ -504,14 +504,12 @@
     [self setupLabelAndFavouriteForNode:node cell:cell];
     
     NSString *userName;
-    NSMutableArray *outSharesMutableArray = node.outShares;
-    outSharesCount = outSharesMutableArray.count;
+    NSArray *outshares = node.outShares;
+    outSharesCount = outshares.count;
     if (outSharesCount > 1) {
         userName = [NSString stringWithFormat:LocalizedString(@"sharedWithXContacts", @""), outSharesCount];
     } else {
-        MEGAUser *user = [MEGASdk.shared contactForEmail:[outSharesMutableArray.firstObject user]];
-        NSString *userDisplayName = user.mnz_displayName;
-        userName = (userDisplayName != nil) ? userDisplayName : user.email;
+        userName = [self userDisplayNameFor:[outshares.firstObject user]];
     }
     
     cell.permissionsButton.hidden = YES;

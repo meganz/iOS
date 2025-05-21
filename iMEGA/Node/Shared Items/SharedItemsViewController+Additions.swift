@@ -542,6 +542,13 @@ extension SharedItemsViewController {
     @objc func presentDisputeInSafari() {
         NSURL(string: MEGADisputeURL)?.mnz_presentSafariViewController()
     }
+
+    @objc func userDisplayName(for email: String?) -> String? {
+        if let user = MEGASdk.shared.contact(forEmail: email), let displayName = user.mnz_displayName {
+            return displayName
+        }
+        return email
+    }
 }
 
 // MARK: - SharedItemsTableViewCellDelegate
