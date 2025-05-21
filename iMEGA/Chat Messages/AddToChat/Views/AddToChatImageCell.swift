@@ -1,3 +1,4 @@
+import MEGAAssets
 import MEGADesignToken
 import MEGAL10n
 import UIKit
@@ -26,11 +27,11 @@ class AddToChatImageCell: UICollectionViewCell {
         didSet {
             if cellType == .media {
                 foregoundLabel.text = Strings.Localizable.send
-                let sendImage = UIImage(resource: .sendChatDisabled).withRenderingMode(.alwaysTemplate)
+                let sendImage = MEGAAssets.UIImage.sendChatDisabled.withRenderingMode(.alwaysTemplate)
                 foregroundImageView.image = sendImage
             } else {
                 foregoundLabel.text = Strings.Localizable.more
-                let moreImage = UIImage(resource: .moreGrid).withRenderingMode(.alwaysTemplate)
+                let moreImage = MEGAAssets.UIImage.moreGrid.withRenderingMode(.alwaysTemplate)
                 foregroundImageView.image = moreImage
                 selectionBackgroundView.isHidden = true
                 foregroundView.isHidden = false

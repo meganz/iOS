@@ -290,9 +290,9 @@
 - (UIImage *)imageForEmptyState {
     UIImage *image;
     if (RecentsPreferenceManager.showRecents) {
-        image = (MEGAReachabilityManager.isReachable) ? [UIImage imageNamed:@"recentsEmptyState"] : [UIImage imageNamed:@"noInternetEmptyState"];
+        image = (MEGAReachabilityManager.isReachable) ? [UIImage megaImageWithNamed:@"recentsEmptyState"] : [UIImage megaImageWithNamed:@"noInternetEmptyState"];
     } else {
-        image = [UIImage imageNamed:@"recentsEmptyState"];
+        image = [UIImage megaImageWithNamed:@"recentsEmptyState"];
     }
     
     return image;

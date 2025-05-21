@@ -1,3 +1,4 @@
+import MEGAAssets
 import MEGADesignToken
 import SwiftUI
 
@@ -27,7 +28,7 @@ struct SlideShowOptionCellView: View {
                         HStack {
                             Text(cellModel.detail)
                                 .font(.subheadline)
-                            Image(uiImage: UIImage.standardDisclosureIndicatorDesignToken)
+                            MEGAAssets.Image.standardDisclosureIndicatorDesignToken
                                 .scaledToFit()
                                 .frame(width: 12, height: 12)
                         }

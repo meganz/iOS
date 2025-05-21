@@ -2,6 +2,7 @@
 import MEGAAnalyticsiOS
 import MEGAAppPresentation
 import MEGAAppPresentationMock
+import MEGAAssets
 import Testing
 
 struct PermissionOnboardingViewModelTests {
@@ -50,7 +51,7 @@ struct PermissionOnboardingViewModelTests {
         tracker: MockTracker
     ) -> PermissionOnboardingViewModel {
         PermissionOnboardingViewModel(
-            image: .info,
+            image: MEGAAssets.Image.info,
             title: "title",
             description: "description",
             note: nil,

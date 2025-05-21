@@ -1,4 +1,5 @@
 @testable import MEGA
+import MEGAAssets
 import MEGADomainMock
 import XCTest
 
@@ -20,7 +21,7 @@ class UserAvatarHandlerTests: XCTestCase {
         
         let image = await sut.avatar(for: userHandle)
         
-        XCTAssertEqual(UIImage.iconContacts, image)
+        XCTAssertEqual(MEGAAssets.UIImage.iconContacts, image)
     }
     
     // MARK: - Private

@@ -1,3 +1,4 @@
+import MEGAAssets
 import MEGADomain
 
 // Those are actions with bar button items present in the toolbar
@@ -13,19 +14,19 @@ enum BottomToolbarAction {
     var image: UIImage {
         switch self {
         case .download:
-            UIImage(resource: .offline)
+            MEGAAssets.UIImage.offline
         case .shareLink:
-            UIImage(resource: .link)
+            MEGAAssets.UIImage.link
         case .move:
-            UIImage(resource: .move)
+            MEGAAssets.UIImage.move
         case .copy:
-            UIImage(resource: .copy)
+            MEGAAssets.UIImage.copy
         case .delete:
-            UIImage(resource: .rubbishBin)
+            MEGAAssets.UIImage.rubbishBin
         case .restore:
-            UIImage(resource: .restore)
+            MEGAAssets.UIImage.restore
         case .actions:
-            UIImage(resource: .moreNavigationBar)
+            MEGAAssets.UIImage.moreNavigationBar
         }
     }
 }

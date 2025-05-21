@@ -1,3 +1,4 @@
+import MEGAAssets
 import MEGADesignToken
 import SwiftUI
 
@@ -14,7 +15,7 @@ struct WaitingRoomUserAvatarView: View {
             .overlay(
                 Circle()
                     .stroke(
-                        Color(.whiteFFFFFF).opacity(0.3),
+                        MEGAAssets.Color.whiteFFFFFF.opacity(0.3),
                         lineWidth: 4
                     )
             )
@@ -25,5 +26,5 @@ struct WaitingRoomUserAvatarView: View {
 #Preview(traits: .sizeThatFitsLayout) {
     WaitingRoomUserAvatarView(avatar: Image(Color.red, CGSize(width: 100, height: 100)))
         .padding(20)
-        .background(Color(.black000000))
+        .background(MEGAAssets.Color.black000000)
 }

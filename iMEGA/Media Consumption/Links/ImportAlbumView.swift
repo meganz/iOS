@@ -1,4 +1,5 @@
 import ContentLibraries
+import MEGAAssets
 import MEGADesignToken
 import MEGAL10n
 import MEGASwiftUI
@@ -40,7 +41,7 @@ struct ImportAlbumView: View {
                         .snackBar($viewModel.snackBar)
                 } else {
                     ContentUnavailableView {
-                        Image(.noInternetEmptyState)
+                        MEGAAssets.Image.noInternetEmptyState
                     } description: {
                         Text(Strings.Localizable.noInternetConnection)
                             .font(.body)
@@ -63,7 +64,7 @@ struct ImportAlbumView: View {
         .onReceive(viewModel.$showNoInternetConnection.dropFirst()) {
             guard $0 else { return }
             SVProgressHUD.dismiss()
-            SVProgressHUD.show(UIImage.hudForbidden,
+            SVProgressHUD.show(MEGAAssets.UIImage.hudForbidden,
                                status: Strings.Localizable.noInternetConnection)
         }
     }
@@ -73,7 +74,7 @@ struct ImportAlbumView: View {
         ZStack {
             if viewModel.shouldShowEmptyAlbumView {
                 ContentUnavailableView {
-                    Image(.allPhotosEmptyState)
+                    MEGAAssets.Image.allPhotosEmptyState
                 } description: {
                     Text(Strings.Localizable.CameraUploads.Albums.Empty.title)
                         .font(.body)
@@ -117,7 +118,7 @@ struct ImportAlbumView: View {
             Button {
                 viewModel.selectAllPhotos()
             } label: {
-                Image(uiImage: UIImage.selectAllItems)
+                Image(uiImage: MEGAAssets.UIImage.selectAllItems)
             }
         } else {
             Button(Strings.Localizable.close) {
@@ -152,7 +153,7 @@ struct ImportAlbumView: View {
             Button {
                 viewModel.enablePhotoLibraryEditMode(true)
             } label: {
-                Image(uiImage: UIImage.selectAllItems)
+                Image(uiImage: MEGAAssets.UIImage.selectAllItems)
             }
             .opacity(viewModel.selectButtonOpacity)
             .disabled(viewModel.isAlbumEmpty)
@@ -183,7 +184,7 @@ struct ImportAlbumView: View {
     }
     
     private func importAlbumToolbarButton() -> some View {
-        ToolbarImageButton(image: UIImage.import,
+        ToolbarImageButton(image: MEGAAssets.UIImage.import,
                            isDisabled: viewModel.isToolbarButtonsDisabled,
                            action: {
             Task { await viewModel.importAlbum() }
@@ -203,7 +204,7 @@ struct ImportAlbumView: View {
     }
     
     private func saveToPhotosToolbarButton() -> some View {
-        ToolbarImageButton(image: UIImage.saveToPhotos,
+        ToolbarImageButton(image: MEGAAssets.UIImage.saveToPhotos,
                            isDisabled: viewModel.isToolbarButtonsDisabled,
                            action: {
             Task { await viewModel.saveToPhotos() }
@@ -213,7 +214,7 @@ struct ImportAlbumView: View {
     
     private func shareLinkButton() -> some View {
         ToolbarImageButton(
-            image: UIImage.link,
+            image: MEGAAssets.UIImage.link,
             isDisabled: viewModel.isShareLinkButtonDisabled,
             action: viewModel.shareLinkTapped)
         .share(isPresented: $viewModel.showShareLink, activityItems: [viewModel.publicLink])

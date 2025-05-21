@@ -1334,7 +1334,7 @@
             }
             
             if (request.paramType != MEGAErrorTypeApiESSL && request.flag) {
-                [SVProgressHUD showImage:[UIImage imageNamed:@"hudLogOut"] status:LocalizedString(@"loggingOut", @"String shown when you are logging out of your account.")];
+                [SVProgressHUD showImage:[UIImage megaImageWithNamed:@"hudLogOut"] status:LocalizedString(@"loggingOut", @"String shown when you are logging out of your account.")];
             }
             break;
         }

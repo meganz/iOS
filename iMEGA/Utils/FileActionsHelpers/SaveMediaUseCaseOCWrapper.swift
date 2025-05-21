@@ -1,5 +1,6 @@
 import ChatRepo
 import MEGAAppSDKRepo
+import MEGAAssets
 import MEGADomain
 import MEGAPermissions
 
@@ -18,7 +19,7 @@ import MEGAPermissions
                         if let errorEntity = error as? SaveMediaToPhotosErrorEntity, errorEntity != .cancelled {
                             await SVProgressHUD.dismiss()
                             SVProgressHUD.show(
-                                UIImage.saveToPhotos,
+                                MEGAAssets.UIImage.saveToPhotos,
                                 status: error.localizedDescription
                             )
                         }

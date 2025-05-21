@@ -1,5 +1,6 @@
 @testable import MEGA
 
+import MEGAAssets
 import MEGADomain
 import MEGADomainMock
 import MEGAL10n
@@ -23,16 +24,16 @@ final class TurnOnNotificationsViewModelTests: XCTestCase {
         let stepThree = Strings.Localizable.Dialog.TurnOnNotifications.Label.stepThree
         let stepFour = Strings.Localizable.Dialog.TurnOnNotifications.Label.stepFour
         
-        let expectedNotificationsModel = TurnOnNotificationsModel(headerImage: UIImage.groupChat,
+        let expectedNotificationsModel = TurnOnNotificationsModel(headerImage: MEGAAssets.UIImage.groupChat,
                                                                   title: title,
                                                                   description: description,
-                                                                  stepOneImage: UIImage.openSettings,
+                                                                  stepOneImage: MEGAAssets.UIImage.openSettings,
                                                                   stepOne: stepOne,
-                                                                  stepTwoImage: UIImage.tapNotifications,
+                                                                  stepTwoImage: MEGAAssets.UIImage.tapNotifications,
                                                                   stepTwo: stepTwo,
-                                                                  stepThreeImage: UIImage.tapMega,
+                                                                  stepThreeImage: MEGAAssets.UIImage.tapMega,
                                                                   stepThree: stepThree,
-                                                                  stepFourImage: UIImage.allowNotifications,
+                                                                  stepFourImage: MEGAAssets.UIImage.allowNotifications,
                                                                   stepFour: stepFour,
                                                                   openSettingsTitle: Strings.Localizable.Dialog.TurnOnNotifications.Button.primary,
                                                                   dismissTitle: Strings.Localizable.dismiss)

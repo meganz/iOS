@@ -1,3 +1,4 @@
+import MEGAAssets
 import MEGADesignToken
 import MEGAL10n
 import MEGASwiftUI
@@ -24,7 +25,7 @@ struct QuickAccessWidgetView: View {
     @ViewBuilder
     private func headerEntry() -> some View {
         if entry.value.status == .noSession {
-            Image(.megaLogoGrayscale)
+            MEGAAssets.Image.megaLogoGrayscale
                 .resizable()
                 .applyAccentedDesaturatedRenderingMode()
                 .frame(width: 31, height: 28, alignment: .leading)
@@ -43,11 +44,11 @@ struct QuickAccessWidgetView: View {
             if entry.value.items.isEmpty {
                 switch entry.link {
                 case SectionDetail.recents.link:
-                    emptyView(.recentsEmptyState, Strings.Localizable.noRecentActivity)
+                    emptyView(MEGAAssets.Image.recentsEmptyState, Strings.Localizable.noRecentActivity)
                 case SectionDetail.favourites.link:
-                    emptyView(.favouritesEmptyState, Strings.Localizable.noFavourites)
+                    emptyView(MEGAAssets.Image.favouritesEmptyState, Strings.Localizable.noFavourites)
                 default:
-                    emptyView(.offlineEmptyState, Strings.Localizable.offlineEmptyStateTitle)
+                    emptyView(MEGAAssets.Image.offlineEmptyState, Strings.Localizable.offlineEmptyStateTitle)
                 }
             } else {
                 GridView(items: entry.value.items)
@@ -67,10 +68,10 @@ struct QuickAccessWidgetView: View {
         }
     }
     
-    func emptyView(_ emptyImage: ImageResource, _ emptyDescription: String) -> some View {
+    func emptyView(_ emptyImage: Image, _ emptyDescription: String) -> some View {
         VStack {
             Spacer()
-            Image(emptyImage)
+            emptyImage
             Spacer()
             HStack {
                 Spacer()

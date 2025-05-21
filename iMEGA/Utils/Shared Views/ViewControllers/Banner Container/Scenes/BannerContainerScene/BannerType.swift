@@ -1,3 +1,4 @@
+import MEGAAssets
 import MEGADesignToken
 
 @objc enum BannerType: Int {
@@ -30,7 +31,7 @@ import MEGADesignToken
     var actionIcon: UIImage? {
         switch self {
         case .warning: 
-            let image = UIImage.closeCircle.withRenderingMode(.alwaysTemplate)
+            let image = MEGAAssets.UIImage.closeCircle.withRenderingMode(.alwaysTemplate)
             
             return image
         }

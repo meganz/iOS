@@ -1,3 +1,4 @@
+import MEGAAssets
 import MEGADomain
 import MEGAL10n
 
@@ -14,10 +15,10 @@ extension ChatStatusEntity {
     
     var uiColor: UIColor {
         switch self {
-        case .online: UIColor.chatStatusOnline
-        case .offline: UIColor.chatStatusOffline
-        case .away: UIColor.chatStatusAway
-        case .busy: UIColor.chatStatusBusy
+        case .online: MEGAAssets.UIColor.chatStatusOnline
+        case .offline: MEGAAssets.UIColor.chatStatusOffline
+        case .away: MEGAAssets.UIColor.chatStatusAway
+        case .busy: MEGAAssets.UIColor.chatStatusBusy
         default: .clear
         }
     }

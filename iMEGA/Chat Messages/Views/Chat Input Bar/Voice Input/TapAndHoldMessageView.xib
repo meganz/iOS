@@ -68,6 +68,7 @@
             <nil key="simulatedBottomBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
+                <outlet property="closeTipButton" destination="c6w-8a-ABD" id="HI7-SS-T8J"/>
                 <outlet property="label" destination="Z3I-g7-AYT" id="0QE-T2-Bq3"/>
                 <outletCollection property="gestureRecognizers" destination="8OW-a7-lpn" appends="YES" id="snZ-F0-T6x"/>
             </connections>

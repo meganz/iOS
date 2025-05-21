@@ -2,6 +2,7 @@ import Accounts
 import Foundation
 import MEGAAppPresentation
 import MEGAAppSDKRepo
+import MEGAAssets
 import MEGADesignToken
 import MEGADomain
 
@@ -83,11 +84,11 @@ final class UpgradeAccountRouter: UpgradeAccountRouting {
     ) {
         let accountsConfig = AccountsConfig(
             onboardingViewAssets: AccountsConfig.OnboardingViewAssets(
-                storageImage: .storage,
-                fileSharingImage: .fileSharing,
-                backupImage: .backup,
-                megaImage: .mega,
-                onboardingHeaderImage: .onboardingHeader,
+                storageImage: MEGAAssets.UIImage.storage,
+                fileSharingImage: MEGAAssets.UIImage.fileSharing,
+                backupImage: MEGAAssets.UIImage.backup,
+                megaImage: MEGAAssets.UIImage.mega,
+                onboardingHeaderImage: MEGAAssets.UIImage.onboardingHeader,
                 primaryTextColor: TokenColors.Text.primary.swiftUI,
                 primaryGrayTextColor: TokenColors.Text.primary.swiftUI,
                 secondaryTextColor: TokenColors.Text.secondary.swiftUI,

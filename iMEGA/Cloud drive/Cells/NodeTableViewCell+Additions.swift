@@ -1,5 +1,6 @@
 import MEGAAppPresentation
 import MEGAAppSDKRepo
+import MEGAAssets
 import MEGADesignToken
 import MEGADomain
 import MEGAL10n
@@ -219,7 +220,7 @@ extension NodeTableViewCell {
         labelView?.isHidden = node.label == .unknown
 
         if node.label != .unknown, let labelString = MEGANode.string(for: node.label)?.appending("Small") {
-            labelImageView?.image = UIImage(named: labelString)
+            labelImageView?.image = MEGAAssets.UIImage.image(named: labelString)
         }
         setAccessibilityLabelsForIcons(in: node)
     }

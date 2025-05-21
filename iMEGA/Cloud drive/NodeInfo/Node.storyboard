@@ -165,6 +165,7 @@
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
+                                    <outlet property="linkedImageView" destination="kbs-M2-sl4" id="erf-Vq-mGe"/>
                                     <outlet property="linkedView" destination="1Be-na-72z" id="wmS-q5-Ag1"/>
                                     <outlet property="nameLabel" destination="G1z-3B-x0A" id="BP9-GF-bKu"/>
                                     <outlet property="playIconImage" destination="qfF-XZ-It0" id="VCR-5q-8d1"/>
@@ -173,6 +174,7 @@
                                     <outlet property="shareButton" destination="XOf-30-gs7" id="hAK-HP-Da1"/>
                                     <outlet property="shareStackView" destination="6Ic-GV-WEz" id="mfY-S4-iZE"/>
                                     <outlet property="sizeLabel" destination="k1M-Zt-Ila" id="BNP-4S-SIK"/>
+                                    <outlet property="versionedImageView" destination="8bn-VG-SPc" id="xCF-cv-7Dz"/>
                                     <outlet property="versionedView" destination="0f6-rL-sHk" id="X3P-wb-6zw"/>
                                 </connections>
                             </tableViewCell>

@@ -1,4 +1,5 @@
 import MEGAAppPresentation
+import MEGAAssets
 import MEGADesignToken
 import MEGADomain
 import MEGAL10n
@@ -20,6 +21,7 @@ class ParticipantNotInCallTableViewCell: UITableViewCell, ViewType {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        avatarImageView.image = MEGAAssets.UIImage.image(named: "icon-contacts")
         callButton.setTitle(Strings.Localizable.Calls.Panel.ParticipantsNotInCall.Participant.call, for: .normal)
         callButton.setTitleColor(TokenColors.Link.primary, for: .normal)
     }

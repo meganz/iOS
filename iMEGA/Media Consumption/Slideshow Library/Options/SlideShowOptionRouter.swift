@@ -1,4 +1,5 @@
 import MEGAAppPresentation
+import MEGAAssets
 import MEGADomain
 import MEGAL10n
 import SwiftUI
@@ -66,15 +67,15 @@ extension SlideShowOptionRouter {
     @SlideShowOptionChildrenBuilder
     private func makeChildrenForSlideShowOrder(withConfiguration config: SlideShowConfigurationEntity) -> [SlideShowOptionDetailCellViewModel] {
         SlideShowOptionDetailCellViewModel(name: .orderShuffle,
-                                           image: UIImage.shuffleAudio,
+                                           image: MEGAAssets.UIImage.shuffleAudio,
                                            title: Strings.Localizable.Slideshow.PreferenceSetting.Order.shuffle,
                                            isSelected: config.playingOrder == .shuffled)
         SlideShowOptionDetailCellViewModel(name: .orderNewest,
-                                           image: UIImage.newest,
+                                           image: MEGAAssets.UIImage.newest,
                                            title: Strings.Localizable.newest,
                                            isSelected: config.playingOrder == .newest)
         SlideShowOptionDetailCellViewModel(name: .orderOldest,
-                                           image: UIImage.oldest,
+                                           image: MEGAAssets.UIImage.oldest,
                                            title: Strings.Localizable.oldest,
                                            isSelected: config.playingOrder == .oldest)
     }

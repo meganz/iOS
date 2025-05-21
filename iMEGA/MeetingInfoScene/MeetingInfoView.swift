@@ -46,7 +46,7 @@ struct MeetingInfoView: View {
                         )
                         
                         ToggleView(
-                            image: .allowNonHostToAddParticipant,
+                            image: MEGAAssets.Image.allowNonHostToAddParticipant,
                             text: Strings.Localizable.Meetings.AddContacts.AllowNonHost.message,
                             isOn: $viewModel.isAllowNonHostToAddParticipantsOn.onChange { enabled in
                                 Task {
@@ -57,7 +57,7 @@ struct MeetingInfoView: View {
                     }
                     
                     DisclosureView(
-                        image: MEGAAssetsImageProvider.image(named: .sharedFilesInfo),
+                        image: MEGAAssets.Image.sharedFilesInfo,
                         text: Strings.Localizable.Meetings.Info.sharedFiles) {
                             viewModel.sharedFilesViewTapped()
                         }
@@ -65,7 +65,7 @@ struct MeetingInfoView: View {
                     
                     if viewModel.isModerator {
                         DisclosureView(
-                            image: MEGAAssetsImageProvider.image(named: .manageChatHistory),
+                            image: MEGAAssets.Image.manageChatHistory,
                             text: Strings.Localizable.Meetings.Info.manageMeetingHistory) {
                                 viewModel.manageChatHistoryViewTapped()
                             }

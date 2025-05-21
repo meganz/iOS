@@ -1,4 +1,5 @@
 import MEGAAppPresentation
+import MEGAAssets
 import MEGADesignToken
 import MEGAL10n
 import MEGASwiftUI
@@ -9,7 +10,7 @@ struct WaitingRoomParticipantsListView: View {
     
     var body: some View {
         ZStack {
-            Color(.black2C2C2E).edgesIgnoringSafeArea([.all])
+            MEGAAssets.Color.black2C2C2E.edgesIgnoringSafeArea([.all])
             VStack(spacing: 0) {
                 headerView
                 searchBarView()
@@ -47,7 +48,7 @@ struct WaitingRoomParticipantsListView: View {
                     viewModel.closeTapped()
                 }
                 .padding(.trailing, 24)
-                .foregroundColor(.grayD1D1D1)
+                .foregroundColor(MEGAAssets.Color.grayD1D1D1)
                 .font(.body.bold())
             }
         }
@@ -72,9 +73,9 @@ struct WaitingRoomParticipantsListView: View {
             .font(.body.bold())
             .foregroundColor(TokenColors.Link.primary.swiftUI)
             .frame(width: 288, height: 50, alignment: .center)
-            .background(.gray363638)
+            .background(MEGAAssets.Color.gray363638)
             .cornerRadius(8)
-            .shadow(color: .black000000.opacity(0.15), radius: 2, x: 0, y: 1)
+            .shadow(color: MEGAAssets.Color.black000000.opacity(0.15), radius: 2, x: 0, y: 1)
         }
         .padding(EdgeInsets(top: 8, leading: 32, bottom: 42, trailing: 32))
     }

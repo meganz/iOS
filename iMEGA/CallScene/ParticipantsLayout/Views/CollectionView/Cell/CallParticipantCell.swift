@@ -1,3 +1,4 @@
+import MEGAAssets
 import MEGADesignToken
 import MEGADomain
 
@@ -7,12 +8,18 @@ class CallParticipantCell: UICollectionViewCell {
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var micImageView: UIImageView!
     @IBOutlet weak var raisedHandView: UIView!
+    @IBOutlet weak var raisedHandImageView: UIImageView!
     
     private(set) var participant: CallParticipantEntity? {
         willSet {
             videoImageView?.image = nil
             participant?.videoDataDelegate = nil
         }
+    }
+
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        configureImages()
     }
     
     func configure(for participant: CallParticipantEntity, in layoutMode: ParticipantsLayoutMode) {
@@ -74,7 +81,7 @@ class CallParticipantCell: UICollectionViewCell {
             micImageView.isHidden = true
         } else {
             micImageView.isHidden = false
-            micImageView.image = audioDetected ? .micActive : .micMuted
+            micImageView.image = audioDetected ? MEGAAssets.UIImage.micActive : MEGAAssets.UIImage.micMuted
         }
     }
     
@@ -84,14 +91,14 @@ class CallParticipantCell: UICollectionViewCell {
         isPinned: Bool
     ) {
         if audioDetected {
-            borderColor = UIColor.green00C29A
+            borderColor = MEGAAssets.UIColor.green00C29A
             borderWidth = 1
             micImageView.isHidden = false
-            micImageView.image = .micActive
+            micImageView.image = MEGAAssets.UIImage.micActive
         } else {
             updateMic(audioEnabled: audioEnabled, audioDetected: audioDetected)
             if isPinned {
-                borderColor = UIColor.whiteFFFFFF
+                borderColor = MEGAAssets.UIColor.whiteFFFFFF
                 borderWidth = 1
             } else {
                 borderWidth = 0
@@ -108,8 +115,12 @@ class CallParticipantCell: UICollectionViewCell {
         participant = nil
     }
     
-    func isParticipantPinnedInSpeakerLayout(participant: CallParticipantEntity, layoutMode: ParticipantsLayoutMode) ->  Bool {
+    func isParticipantPinnedInSpeakerLayout(participant: CallParticipantEntity, layoutMode: ParticipantsLayoutMode) -> Bool {
         participant.isSpeakerPinned && layoutMode == .speaker
+    }
+    
+    private func configureImages() {
+        raisedHandImageView.image = MEGAAssets.UIImage.image(named: "raisedHand")
     }
 }
 

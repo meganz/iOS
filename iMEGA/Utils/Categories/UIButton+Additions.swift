@@ -1,3 +1,4 @@
+import MEGAAssets
 import MEGADesignToken
 
 @objc enum MEGACustomButtonStyle: Int {
@@ -80,7 +81,7 @@ extension UIButton {
     
     @objc func mnz_setupDelete() {
         backgroundColor = TokenColors.Button.brand
-        setTitleColor(UIColor.whiteFFFFFF, for: UIControl.State.normal)
+        setTitleColor(MEGAAssets.UIColor.whiteFFFFFF, for: UIControl.State.normal)
         
         setupLayer()
     }
@@ -101,7 +102,7 @@ extension UIButton {
         layer.shadowOffset = CGSize(width: 0, height: 1)
         layer.shadowOpacity = 0.15
         layer.shadowRadius = 3
-        layer.shadowColor = UIColor.black000000.cgColor
+        layer.shadowColor = MEGAAssets.UIColor.black000000.cgColor
     }
     
     // MARK: - Private

@@ -154,10 +154,12 @@
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
                 <outlet property="audioWavesholderView" destination="i58-MY-iaE" id="xTu-U4-L9h"/>
+                <outlet property="cancelVoiceImageView" destination="R3s-Pm-vix" id="lxt-04-tRL"/>
                 <outlet property="recordTimeLabel" destination="d3i-7l-Laf" id="9SL-GI-TCu"/>
                 <outlet property="sendImageView" destination="Of5-V2-mBG" id="VgI-57-3BU"/>
                 <outlet property="sendView" destination="IFk-Da-Nor" id="g4S-NU-3WZ"/>
                 <outlet property="sendViewHorizontalConstraint" destination="01g-WJ-f8K" id="9jC-bv-Os6"/>
+                <outlet property="startRecordingImageView" destination="fOW-sC-tzc" id="6q0-MK-dGg"/>
                 <outlet property="startRecordingView" destination="UbP-gM-2sN" id="q7E-d3-Axu"/>
                 <outlet property="trashView" destination="ISs-56-MdU" id="Vm4-3G-0SM"/>
                 <outlet property="trashViewHorizontalConstraint" destination="efo-gU-cSZ" id="1RA-IV-MmZ"/>

@@ -1,5 +1,6 @@
 import Combine
 import MEGAAppPresentation
+import MEGAAssets
 import MEGADomain
 import MEGAL10n
 import MEGASwift
@@ -49,7 +50,7 @@ extension CommonParticipantViewModel {
         let avatarHandler = UserAvatarHandler(
             userImageUseCase: userImageUseCase,
             initials: name.initialForAvatar(),
-            avatarBackgroundColor: UIColor.colorFromHexString(avatarBackgroundHexColor) ?? .black000000
+            avatarBackgroundColor: UIColor.colorFromHexString(avatarBackgroundHexColor) ?? MEGAAssets.UIColor.black000000
         )
         
         return await avatarHandler.avatar(for: base64Handle)

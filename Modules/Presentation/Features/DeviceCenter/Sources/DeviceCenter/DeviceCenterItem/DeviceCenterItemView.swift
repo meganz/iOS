@@ -1,4 +1,5 @@
 import MEGAAppPresentation
+import MEGAAssets
 import MEGADesignToken
 import SwiftUI
 
@@ -16,7 +17,7 @@ struct DeviceCenterItemView: View {
     
     var body: some View {
         HStack {
-            Image(viewModel.assets.iconName, bundle: .module)
+            MEGAAssets.Image.image(named: viewModel.assets.iconName)
                 .scaledToFit()
                 .frame(width: 40, height: 40)
                 .padding(EdgeInsets(top: 10, leading: 12, bottom: 10, trailing: 8))
@@ -36,7 +37,7 @@ struct DeviceCenterItemView: View {
                             .background(Color(viewModel.assets.statusAssets.color))
                             .clipShape(Capsule())
                     } else {
-                        Image(viewModel.assets.statusAssets.iconName, bundle: .module)
+                        MEGAAssets.Image.image(named: viewModel.assets.statusAssets.iconName)
                             .renderingMode(.template)
                             .resizable()
                             .foregroundStyle(Color(viewModel.assets.statusAssets.color))
@@ -52,7 +53,7 @@ struct DeviceCenterItemView: View {
             Button {
                 viewModel.handleMainActionButtonPressed()
             } label: {
-                Image(viewModel.mainActionIconName)
+                MEGAAssets.Image.image(named: viewModel.mainActionIconName)
                     .renderingMode(.template)
                     .foregroundStyle(TokenColors.Icon.secondary.swiftUI)
                     .scaledToFit()

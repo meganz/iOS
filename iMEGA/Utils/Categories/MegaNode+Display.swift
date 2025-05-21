@@ -1,3 +1,4 @@
+import MEGAAssets
 import MEGADesignToken
 import MEGAL10n
 import MEGASwift
@@ -20,9 +21,8 @@ extension MEGANode {
         let name = NSMutableAttributedString(attributedString: highlightedName)
 
         let takedownImageAttachment = NSTextAttachment()
-        let takeDownImage = UIImage(named: "isTakedown")
         
-        takedownImageAttachment.image = takeDownImage?.withTintColorAsOriginal(TokenColors.Support.error)
+        takedownImageAttachment.image = MEGAAssets.UIImage.isTakedown.withTintColorAsOriginal(TokenColors.Support.error)
         let takedownImageString = NSAttributedString(attachment: takedownImageAttachment)
         
         name.append(takedownImageString)

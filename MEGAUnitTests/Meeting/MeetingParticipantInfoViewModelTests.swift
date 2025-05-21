@@ -1,4 +1,5 @@
 @testable import MEGA
+import MEGAAssets
 import MEGADomain
 import MEGADomainMock
 import MEGAL10n
@@ -25,7 +26,7 @@ final class MeetingParticipantInfoViewModelTests: XCTestCase {
                 ]),
                 .updateEmail(email: "test@email.com"),
                 .updateName(name: "Test"),
-                .updateAvatarImage(image: .iconContacts)
+                .updateAvatarImage(image: MEGAAssets.UIImage.iconContacts)
              ])
     }
     
@@ -47,7 +48,7 @@ final class MeetingParticipantInfoViewModelTests: XCTestCase {
                 ]),
                 .updateEmail(email: "test@email.com"),
                 .updateName(name: "Test"),
-                .updateAvatarImage(image: .iconContacts)
+                .updateAvatarImage(image: MEGAAssets.UIImage.iconContacts)
              ])
     }
     
@@ -70,7 +71,7 @@ final class MeetingParticipantInfoViewModelTests: XCTestCase {
                 ]),
                 .updateEmail(email: "test@email.com"),
                 .updateName(name: "Test"),
-                .updateAvatarImage(image: .iconContacts)
+                .updateAvatarImage(image: MEGAAssets.UIImage.iconContacts)
              ])
     }
     
@@ -91,7 +92,7 @@ final class MeetingParticipantInfoViewModelTests: XCTestCase {
                 ]),
                 .updateEmail(email: nil),
                 .updateName(name: "Test"),
-                .updateAvatarImage(image: .iconContacts)
+                .updateAvatarImage(image: MEGAAssets.UIImage.iconContacts)
              ])
     }
     
@@ -115,7 +116,7 @@ final class MeetingParticipantInfoViewModelTests: XCTestCase {
                 ]),
                 .updateEmail(email: "test@email.com"),
                 .updateName(name: "Test"),
-                .updateAvatarImage(image: UIImage.iconContacts)
+                .updateAvatarImage(image: MEGAAssets.UIImage.iconContacts)
              ])
     }
     
@@ -139,7 +140,7 @@ final class MeetingParticipantInfoViewModelTests: XCTestCase {
                 ]),
                 .updateEmail(email: "test@email.com"),
                 .updateName(name: "Test"),
-                .updateAvatarImage(image: .iconContacts)
+                .updateAvatarImage(image: MEGAAssets.UIImage.iconContacts)
              ])
     }
     
@@ -160,7 +161,7 @@ final class MeetingParticipantInfoViewModelTests: XCTestCase {
                 ]),
                 .updateEmail(email: nil),
                 .updateName(name: "Test"),
-                .updateAvatarImage(image: .iconContacts)
+                .updateAvatarImage(image: MEGAAssets.UIImage.iconContacts)
              ])
     }
     
@@ -250,7 +251,7 @@ final class MeetingParticipantInfoViewModelTests: XCTestCase {
                 ]),
                 .updateEmail(email: nil),
                 .updateName(name: "Test"),
-                .updateAvatarImage(image: .iconContacts)
+                .updateAvatarImage(image: MEGAAssets.UIImage.iconContacts)
              ]
         )
     }
@@ -298,56 +299,56 @@ final class MeetingParticipantInfoViewModelTests: XCTestCase {
     private func infoAction() -> ActionSheetAction {
         ActionSheetAction(title: Strings.Localizable.info,
                           detail: nil,
-                          image: .infoMeetings,
+                          image: MEGAAssets.UIImage.infoMeetings,
                           style: .default) {}
     }
     
     private func sendMessageAction() -> ActionSheetAction {
         ActionSheetAction(title: Strings.Localizable.sendMessage,
                           detail: nil,
-                          image: .sendMessageMeetings,
+                          image: MEGAAssets.UIImage.sendMessageMeetings,
                           style: .default) {}
     }
     
     private func makeModeratorAction() -> ActionSheetAction {
         ActionSheetAction(title: Strings.Localizable.Meetings.Participant.makeModerator,
                           detail: nil,
-                          image: .moderatorMeetings,
+                          image: MEGAAssets.UIImage.moderatorMeetings,
                           style: .default) {}
     }
     
     private func removeModeratorAction() -> ActionSheetAction {
         ActionSheetAction(title: Strings.Localizable.Meetings.Participant.removeModerator,
                           detail: nil,
-                          image: .removeModerator,
+                          image: MEGAAssets.UIImage.removeModerator,
                           style: .default) {}
     }
     
     private func addContactAction() -> ActionSheetAction {
         ActionSheetAction(title: Strings.Localizable.addContact,
                           detail: nil,
-                          image: .addContactMeetings,
+                          image: MEGAAssets.UIImage.addContactMeetings,
                           style: .default) {}
     }
     
     private func removeContactAction() -> ActionSheetAction {
         ActionSheetAction(title: Strings.Localizable.removeParticipant,
                           detail: nil,
-                          image: .delete,
+                          image: MEGAAssets.UIImage.delete,
                           style: .destructive) {}
     }
     
     private func displayInMainViewAction() -> ActionSheetAction {
         ActionSheetAction(title: Strings.Localizable.Meetings.DisplayInMainView.title,
                           detail: nil,
-                          image: .speakerView,
+                          image: MEGAAssets.UIImage.speakerView,
                           style: .default) {}
     }
     
     private func muteParticipantAction() -> ActionSheetAction {
         ActionSheetAction(title: Strings.Localizable.Calls.Panel.ParticipantsInCall.ParticipantContextMenu.Actions.mute,
                           detail: nil,
-                          image: UIImage(resource: .muteParticipant),
+                          image: MEGAAssets.UIImage.muteParticipant,
                           style: .default) { }
     }
 }

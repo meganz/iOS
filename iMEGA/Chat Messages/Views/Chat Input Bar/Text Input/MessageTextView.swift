@@ -1,3 +1,4 @@
+import MEGAAssets
 import MEGADesignToken
 import MEGAL10n
 
@@ -44,7 +45,7 @@ class MessageTextView: UITextView {
     private lazy var placeholderTextView: UITextView = {
         let textView = UITextView()
         textView.textColor = TokenColors.Text.placeholder
-        textView.backgroundColor = UIColor.black000000.withAlphaComponent(0)
+        textView.backgroundColor = MEGAAssets.UIColor.black000000.withAlphaComponent(0)
         textView.font = font
         textView.adjustsFontForContentSizeCategory = true
         textView.isUserInteractionEnabled = false

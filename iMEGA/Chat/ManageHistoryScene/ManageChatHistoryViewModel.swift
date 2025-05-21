@@ -1,5 +1,6 @@
 import Foundation
 import MEGAAppPresentation
+import MEGAAssets
 import MEGADomain
 import MEGAL10n
 
@@ -285,7 +286,7 @@ final class ManageChatHistoryViewModel: ViewModelType {
                     let message = isChatTypeMeeting
                         ? Strings.Localizable.Meetings.Info.ManageMeetingHistory.meetingHistoryHasBeenCleared
                         : Strings.Localizable.chatHistoryHasBeenCleared
-                    invokeCommand?(.showResult(.content(.clearChatHistory, message)))
+                    invokeCommand?(.showResult(.content(MEGAAssets.UIImage.clearChatHistory, message)))
                 } catch { 
                     invokeCommand?(.showResult(.error(Strings.Localizable.AnErrorHasOccurred.theChatHistoryHasNotBeenSuccessfullyCleared)))
                 }

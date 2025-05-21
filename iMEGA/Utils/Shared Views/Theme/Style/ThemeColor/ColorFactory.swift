@@ -1,4 +1,5 @@
 import Foundation
+import MEGAAssets
 import MEGADesignToken
 
 extension InterfaceStyle {
@@ -42,29 +43,29 @@ extension ColorFactory {
         switch style {
         case .bright: return TokenColors.Text.onColor
         case .dark: return TokenColors.Text.primary
-        case .clear: return UIColor.whiteFFFFFF00
-        case .warning: return UIColor.redFF3B30
+        case .clear: return MEGAAssets.UIColor.whiteFFFFFF00
+        case .warning: return MEGAAssets.UIColor.redFF3B30
         }
     }
     
     func gradient(_ style: MEGAColor.Gradient) -> UIColor {
         switch style {
         case .exploreImagesStart:
-            return UIColor.orangeF9B35F
+            return MEGAAssets.UIColor.orangeF9B35F
         case .exploreImagesEnd:
-            return UIColor.orangeE68F4D
+            return MEGAAssets.UIColor.orangeE68F4D
         case .exploreDocumentsStart:
-            return UIColor.blue02A2FF
+            return MEGAAssets.UIColor.blue02A2FF
         case .exploreDocumentsEnd:
-            return UIColor.blue0274CC
+            return MEGAAssets.UIColor.blue0274CC
         case .exploreAudioStart:
-            return UIColor.blue00ACBF
+            return MEGAAssets.UIColor.blue00ACBF
         case .exploreAudioEnd:
-            return UIColor.blue0095A6
+            return MEGAAssets.UIColor.blue0095A6
         case .exploreVideoStart:
-            return UIColor.redF288C2
+            return MEGAAssets.UIColor.redF288C2
         case .exploreVideoEnd:
-            return UIColor.redCA75D1
+            return MEGAAssets.UIColor.redCA75D1
         }
     }
 }

@@ -1,4 +1,5 @@
 import MEGAAppPresentation
+import MEGAAssets
 import MEGADesignToken
 import MEGAL10n
 import SwiftUI
@@ -54,6 +55,8 @@ class AppearanceTableViewController: UITableViewController {
     @IBOutlet weak var minimalIconButton: UIButton!
     @IBOutlet weak var minimalIconLabel: UILabel!
     
+    @IBOutlet weak var iconSelectorBackgroundImageView: UIImageView!
+
     private let viewModel: AppearanceViewModel
     
     init?(coder: NSCoder, viewModel: AppearanceViewModel) {
@@ -90,6 +93,8 @@ class AppearanceTableViewController: UITableViewController {
         dayIconLabel.textColor = TokenColors.Text.onColor
         nightIconLabel.textColor = TokenColors.Text.onColor
         minimalIconLabel.textColor = TokenColors.Text.onColor
+        
+        iconSelectorBackgroundImageView.image = MEGAAssets.UIImage.image(named: "iconSelectorBackground")
         
         Task { await loadSettings() }
         

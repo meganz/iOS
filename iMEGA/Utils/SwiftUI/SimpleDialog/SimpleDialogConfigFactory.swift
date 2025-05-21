@@ -1,4 +1,6 @@
+import MEGAAssets
 import MEGAL10n
+import SwiftUI
 
 struct SimpleDialogConfigFactory {
     static func upgradePlanDialog(
@@ -6,7 +8,7 @@ struct SimpleDialogConfigFactory {
         dismissAction: @escaping () -> Void
     ) -> SimpleDialogConfig {
         .init(
-            imageResource: .upgradeToProPlan,
+            image: MEGAAssets.Image.upgradeToProPlan,
             title: Strings.Localizable.Calls.FreePlanLimitWarning.UpgradeToProDialog.title,
             message: Strings.Localizable.Calls.FreePlanLimitWarning.UpgradeToProDialog.message,
             buttons: [
@@ -26,7 +28,7 @@ struct SimpleDialogConfigFactory {
         dismissAction: @escaping () -> Void
     ) -> SimpleDialogConfig {
         .init(
-            imageResource: .shareLink,
+            image: MEGAAssets.Image.shareLink,
             title: Strings.Localizable.Chat.Meetings.ShareLink.main,
             titleStyle: .large,
             message: Strings.Localizable.Chat.Meetings.ShareLink.description,

@@ -1,5 +1,6 @@
 @testable import MEGA
 import MEGAAppSDKRepoMock
+import MEGAAssets
 import MEGADomain
 import MEGADomainMock
 import Search
@@ -23,14 +24,14 @@ final class SearchResultMapperTests: XCTestCase {
                 return nodeHandle == 100 ?  true : false
             },
             expectedSwipeActionsCount: 1,
-            expectedSwipeActionImages: [Image(.restore)]
+            expectedSwipeActionImages: [MEGAAssets.Image.restore]
         )
     }
 
     func testSwipeActions_withNodeInCloudDrive_shouldReturnMultipleActions() {
         assertSwipeActions(
             expectedSwipeActionsCount: 3,
-            expectedSwipeActionImages: [Image(.rubbishBin), Image(.link), Image(.offline)]
+            expectedSwipeActionImages: [MEGAAssets.Image.rubbishBin, MEGAAssets.Image.link, MEGAAssets.Image.offline]
         )
     }
 
@@ -38,7 +39,7 @@ final class SearchResultMapperTests: XCTestCase {
         assertSwipeActions(
             displayMode: .backup,
             expectedSwipeActionsCount: 2,
-            expectedSwipeActionImages: [Image(.link), Image(.offline)]
+            expectedSwipeActionImages: [MEGAAssets.Image.link, MEGAAssets.Image.offline]
         )
     }
 

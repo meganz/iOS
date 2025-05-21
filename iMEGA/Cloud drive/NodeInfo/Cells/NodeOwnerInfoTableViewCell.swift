@@ -1,3 +1,4 @@
+import MEGAAssets
 import MEGAChatSdk
 import MEGADesignToken
 import MEGAL10n
@@ -14,6 +15,7 @@ class NodeOwnerInfoTableViewCell: UITableViewCell {
         super.awakeFromNib()
         
         setupColor()
+        contactVerifiedImageView.image = MEGAAssets.UIImage.image(named: "contactVerified")
     }
 
     private func setupColor() {

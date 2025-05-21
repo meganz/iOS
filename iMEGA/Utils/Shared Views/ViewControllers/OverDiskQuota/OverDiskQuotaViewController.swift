@@ -1,3 +1,4 @@
+import MEGAAssets
 import MEGADesignToken
 import MEGAFoundation
 import MEGAL10n
@@ -159,6 +160,8 @@ final class OverDiskQuotaViewController: UIViewController {
 
     @IBOutlet weak var warningView: OverDiskQuotaWarningView!
 
+    @IBOutlet private weak var storageFullImageView: UIImageView!
+    
     // MARK: - In / Out properties
 
     private var overDiskQuota: OverDiskQuotaInternal!
@@ -184,6 +187,9 @@ final class OverDiskQuotaViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        storageFullImageView.image = MEGAAssets.UIImage.image(named: "StorageFull")
+        
         setupTraitCollectionAwareView(with: traitCollection)
         
         viewModel?.dispatch(.onViewDidLoad)

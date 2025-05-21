@@ -2,6 +2,7 @@ import Accounts
 import ChatRepo
 import MEGAAppPresentation
 import MEGAAppSDKRepo
+import MEGAAssets
 import MEGADomain
 import MEGAL10n
 import Settings
@@ -44,7 +45,7 @@ class SettingViewRouter: Routing {
     }
     
     private func createCameraUploadCellViewModel() -> SettingCellViewModel {
-        let vm = SettingCellViewModel(image: UIImage.cameraUploadsSettings,
+        let vm = SettingCellViewModel(image: MEGAAssets.UIImage.cameraUploadsSettings,
                                       title: Strings.Localizable.General.cameraUploads,
                                       displayValue: CameraUploadManager.getCameraUploadStatus(), router: nil)
         let router = CameraUploadsSettingsViewRouter(presenter: presenter, closure: { [weak vm] in
@@ -61,55 +62,55 @@ extension SettingViewRouter {
         
         SettingSectionViewModel {
             createCameraUploadCellViewModel()
-            SettingCellViewModel(image: UIImage.chatSettings,
+            SettingCellViewModel(image: MEGAAssets.UIImage.chatSettings,
                                  title: Strings.Localizable.chat,
                                  router: ChatSettingsViewRouter(presenter: presenter))
             
-            SettingCellViewModel(image: UIImage.callsSettings,
+            SettingCellViewModel(image: MEGAAssets.UIImage.callsSettings,
                                  title: Strings.Localizable.Settings.Section.Calls.title,
                                  router: CallsSettingsViewRouter(presenter: presenter))
         }
         
         SettingSectionViewModel {
-            SettingCellViewModel(image: UIImage.securitySettings,
+            SettingCellViewModel(image: MEGAAssets.UIImage.securitySettings,
                                  title: Strings.Localizable.Settings.Section.security,
                                  router: SecuritySettingsViewRouter(presenter: presenter))
         }
         
         SettingSectionViewModel {
-            SettingCellViewModel(image: UIImage.userInterfaceSettings,
+            SettingCellViewModel(image: MEGAAssets.UIImage.userInterfaceSettings,
                                  title: Strings.Localizable.Settings.Section.userInterface,
                                  router: AppearanceViewRouter(presenter: presenter))
             
-            SettingCellViewModel(image: UIImage.fileManagementSettings,
+            SettingCellViewModel(image: MEGAAssets.UIImage.fileManagementSettings,
                                  title: Strings.Localizable.fileManagement,
                                  router: FileManagementSettingsViewRouter(navigationController: presenter))
             
-            SettingCellViewModel(image: UIImage.advancedSettings,
+            SettingCellViewModel(image: MEGAAssets.UIImage.advancedSettings,
                                  title: Strings.Localizable.advanced,
                                  router: AdvancedViewRouter(presenter: presenter))
         }
         
         SettingSectionViewModel {
-            SettingCellViewModel(image: UIImage.helpSettings,
+            SettingCellViewModel(image: MEGAAssets.UIImage.helpSettings,
                                  title: Strings.Localizable.help,
                                  router: HelpViewRouter(presenter: presenter))
         }
         
         SettingSectionViewModel {
-            SettingCellViewModel(image: UIImage.aboutSettings,
+            SettingCellViewModel(image: MEGAAssets.UIImage.aboutSettings,
                                  title: Strings.Localizable.about,
                                  router: AboutViewRouter(presenter: presenter,
                                                          appBundle: .main,
                                                          systemVersion: UIDevice.current.systemVersion,
                                                          deviceName: UIDevice.current.deviceName() ?? ""))
             
-            SettingCellViewModel(image: UIImage.termsAndPoliciesSettings,
+            SettingCellViewModel(image: MEGAAssets.UIImage.termsAndPoliciesSettings,
                                  title: Strings.Localizable.Settings.Section.termsAndPolicies,
                                  router: TermsAndPoliciesRouter(accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
                                                                 navigationController: presenter))
             
-            SettingCellViewModel(image: UIImage.cookieSettings,
+            SettingCellViewModel(image: MEGAAssets.UIImage.cookieSettings,
                                  title: cookieSettingsMenuTitle(),
                                  router: CookieSettingsRouter(presenter: presenter))
         }
@@ -123,7 +124,7 @@ extension SettingViewRouter {
         
 #if DEBUG || QA_CONFIG
         SettingSectionViewModel {
-            SettingCellViewModel(image: UIImage.iconSettings,
+            SettingCellViewModel(image: MEGAAssets.UIImage.iconSettings,
                                  title: "QA Settings",
                                  router: QASettingsRouter(presenter: presenter))
         }

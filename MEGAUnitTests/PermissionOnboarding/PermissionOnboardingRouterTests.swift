@@ -1,6 +1,7 @@
 @testable import MEGA
 import MEGAAppPresentation
 import MEGAAppPresentationMock
+import MEGAAssets
 import MEGAL10n
 import MEGAPermissionsMock
 import SwiftUI
@@ -28,7 +29,7 @@ struct PermissionOnboardingRouterTests {
 
     struct TestCase {
         struct ViewModelOutput {
-            let image: MEGA.ImageResource
+            let image: Image
             let title: String
             let description: String
             let note: String?
@@ -44,7 +45,7 @@ struct PermissionOnboardingRouterTests {
             PermissionHandlerKeyPath: \MockDevicePermissionHandler.shouldAskForNotificationPermissionsValueToReturn,
             shouldAskPermission: true,
             viewModelOutput: ViewModelOutput(
-                image: .notificationCta,
+                image: MEGAAssets.Image.notificationCta,
                 title: Strings.Localizable.Onboarding.Cta.Notifications.title,
                 description: Strings.Localizable.Onboarding.Cta.Notifications.explanation,
                 note: nil,
@@ -58,7 +59,7 @@ struct PermissionOnboardingRouterTests {
             PermissionHandlerKeyPath: \MockDevicePermissionHandler.shouldAskForPhotosPermissions,
             shouldAskPermission: true,
             viewModelOutput: ViewModelOutput(
-                image: .cameraBackupsCta,
+                image: MEGAAssets.Image.cameraBackupsCta,
                 title: Strings.Localizable.Onboarding.Cta.CameraBackups.title,
                 description: Strings.Localizable.Onboarding.Cta.CameraBackups.explanation,
                 note: Strings.Localizable.Onboarding.Cta.CameraBackups.note,

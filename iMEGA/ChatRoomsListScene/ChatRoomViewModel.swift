@@ -3,6 +3,7 @@ import Combine
 import Foundation
 import MEGAAnalyticsiOS
 import MEGAAppPresentation
+import MEGAAssets
 import MEGADomain
 import MEGAL10n
 import MEGAPermissions
@@ -184,17 +185,17 @@ final class ChatRoomViewModel: ObservableObject, Identifiable {
     }
     
     func chatStatusColor(forChatStatus chatStatus: ChatStatusEntity) -> UIColor? {
-        switch chatStatus {
+        return switch chatStatus {
         case .online:
-            return UIColor.chatStatusOnline
+            MEGAAssets.UIColor.chatStatusOnline
         case .offline:
-            return UIColor.chatStatusOffline
+            MEGAAssets.UIColor.chatStatusOffline
         case .away:
-            return UIColor.chatStatusAway
+            MEGAAssets.UIColor.chatStatusAway
         case .busy:
-            return UIColor.chatStatusBusy
+            MEGAAssets.UIColor.chatStatusBusy
         default:
-            return nil
+            nil
         }
     }
     
@@ -323,7 +324,7 @@ final class ChatRoomViewModel: ObservableObject, Identifiable {
             options.append(
                 ChatRoomContextMenuOption(
                     title: existsInProgressCallInChatRoom ? Strings.Localizable.Meetings.Scheduled.ContextMenu.joinMeeting : Strings.Localizable.Meetings.Scheduled.ContextMenu.startMeeting,
-                    image: existsInProgressCallInChatRoom ? .joinMeeting2 : .startMeeting2,
+                    image: existsInProgressCallInChatRoom ? MEGAAssets.Image.joinMeeting2 : MEGAAssets.Image.startMeeting2,
                     action: {
                         self.startOrJoinMeetingTapped()
                     }))
@@ -333,7 +334,7 @@ final class ChatRoomViewModel: ObservableObject, Identifiable {
             options.append(
                 ChatRoomContextMenuOption(
                     title: Strings.Localizable.markAsRead,
-                    image: .markUnreadMenu,
+                    image: MEGAAssets.Image.markUnreadMenu,
                     action: { [weak self] in
                         guard let self, let chatRoom = self.chatRoomUseCase.chatRoom(forChatId: self.chatListItem.chatId) else { return }
                         self.chatRoomUseCase.setMessageSeenForChat(
@@ -349,7 +350,7 @@ final class ChatRoomViewModel: ObservableObject, Identifiable {
             
             options += [ChatRoomContextMenuOption(
                 title: isDNDEnabled ? Strings.Localizable.unmute : Strings.Localizable.mute,
-                image: .mutedChat,
+                image: MEGAAssets.Image.mutedChat,
                 action: { [weak self] in
                     guard let self else { return }
                     self.toggleDND()
@@ -359,14 +360,14 @@ final class ChatRoomViewModel: ObservableObject, Identifiable {
         options += [
             ChatRoomContextMenuOption(
                 title: Strings.Localizable.info,
-                image: .info,
+                image: MEGAAssets.Image.info,
                 action: { [weak self] in
                     guard let self else { return }
                     self.showChatRoomInfo()
                 }),
             ChatRoomContextMenuOption(
                 title: Strings.Localizable.archiveChat,
-                image: .archiveChatMenu,
+                image: MEGAAssets.Image.archiveChatMenu,
                 action: { [weak self] in
                     guard let self else { return }
                     self.archiveChat()

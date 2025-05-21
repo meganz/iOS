@@ -1,3 +1,4 @@
+import MEGAAssets
 import MEGADesignToken
 import MEGAL10n
 import MEGAUIComponent
@@ -19,12 +20,12 @@ struct SubscriptionPurchaseFreePlanView: View {
             }
 
             SubscriptionPurchaseFeatureView(
-                image: Image(.subscriptionFeatureCloud),
+                image: MEGAAssets.Image.subscriptionFeatureCloud,
                 title: Strings.Localizable.SubscriptionPurchase.FreePlanCard.Feature.one
             )
 
             SubscriptionPurchaseFeatureView(
-                image: Image(.subscriptionFeatureTransfers),
+                image: MEGAAssets.Image.subscriptionFeatureTransfers,
                 title: Strings.Localizable.SubscriptionPurchase.FreePlanCard.Feature.two
             )
 

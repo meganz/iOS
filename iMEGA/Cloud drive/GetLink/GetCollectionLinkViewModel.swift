@@ -1,6 +1,7 @@
 import Foundation
 import MEGAAnalyticsiOS
 import MEGAAppPresentation
+import MEGAAssets
 import MEGADomain
 import MEGAL10n
 
@@ -253,14 +254,14 @@ final class GetCollectionLinkViewModel: GetLinkViewModelType {
             invokeCommand?(.addToPasteBoard(shareLink))
         }
         
-        invokeCommand?(.showHud(.custom(UIImage.copy,
+        invokeCommand?(.showHud(.custom(MEGAAssets.UIImage.copy,
                                         Strings.Localizable.SharedItems.GetLink.linkCopied(1))))
     }
     
     private func copyKeyToPasteBoard() {
         guard let shareLink else { return }
         invokeCommand?(.addToPasteBoard(key(shareLink)))
-        invokeCommand?(.showHud(.custom(UIImage.copy,
+        invokeCommand?(.showHud(.custom(MEGAAssets.UIImage.copy,
                                         Strings.Localizable.keyCopiedToClipboard)))
     }
     

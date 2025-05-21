@@ -232,6 +232,7 @@
                         <outlet property="avatarImageView" destination="lvo-6Q-0zI" id="Opc-RQ-9RH"/>
                         <outlet property="expandImageView" destination="Nbg-cl-Pdc" id="goJ-iU-FIH"/>
                         <outlet property="mutedImageView" destination="t5t-mb-xEL" id="F6C-z9-GD4"/>
+                        <outlet property="raiseHandImageView" destination="vYf-Ye-utA" id="ZW3-6m-5Cx"/>
                         <outlet property="raisedHandView" destination="FFY-No-0GJ" id="CF5-33-udc"/>
                         <outlet property="videoImageView" destination="1UJ-un-b31" id="C9L-0b-VgL"/>
                     </connections>

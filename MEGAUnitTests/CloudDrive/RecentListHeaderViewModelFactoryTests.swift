@@ -1,4 +1,5 @@
 @testable import MEGA
+import MEGAAssets
 import MEGADomain
 import MEGAL10n
 @testable import Search
@@ -68,7 +69,7 @@ struct RecentListHeaderViewModelFactoryTests {
                     .testBucket(isUpdate: true)
                 )
             )
-            #expect(result.icon == UIImage.versioned)
+            #expect(result.icon == MEGAAssets.UIImage.versioned)
         }
         
         @Test("Image is 'recentUpload'")
@@ -79,7 +80,7 @@ struct RecentListHeaderViewModelFactoryTests {
                     .testBucket(isUpdate: false)
                 )
             )
-            #expect(result.icon == UIImage.recentUpload)
+            #expect(result.icon == MEGAAssets.UIImage.recentUpload)
         }
     }
     

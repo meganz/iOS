@@ -1,5 +1,6 @@
 import Foundation
 import MEGAAppPresentation
+import MEGAAssets
 import MEGAL10n
 
 enum DiskFullBlockingAction: ActionType {
@@ -34,7 +35,7 @@ struct DiskFullBlockingViewModel: ViewModelType {
                                                       description: description,
                                                       highlightedText: storagePath,
                                                       manageDiskSpaceTitle: Strings.Localizable.close,
-                                                      headerImage: UIImage.blockingDiskFull)
+                                                      headerImage: MEGAAssets.UIImage.blockingDiskFull)
             invokeCommand?(.configView(blockingModel))
         case .manage:
             router.manageDiskSpace()

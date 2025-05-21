@@ -1,4 +1,5 @@
 import MEGAAppSDKRepo
+import MEGAAssets
 import MEGADesignToken
 import MEGADomain
 import MEGASwiftUI
@@ -56,7 +57,7 @@ final class PlaylistItemTableViewCell: UITableViewCell {
             }
             
         } else {
-            thumbnailImageView.image = UIImage(resource: .defaultArtwork)
+            thumbnailImageView.image = MEGAAssets.UIImage.defaultArtwork
         }
         
         thumbnailImageView.layer.cornerRadius = 8.0

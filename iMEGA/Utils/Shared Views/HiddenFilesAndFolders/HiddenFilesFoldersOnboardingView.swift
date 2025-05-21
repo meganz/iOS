@@ -1,3 +1,4 @@
+import MEGAAssets
 import MEGADesignToken
 import MEGAL10n
 import MEGASwiftUI
@@ -41,7 +42,7 @@ struct HiddenFilesFoldersOnboardingView<PrimaryButtonView: View>: View {
         VStack(spacing: 0) {
             Group {
                 VStack(spacing: TokenSpacing._5) {
-                    Image(.onboardingLock)
+                    MEGAAssets.Image.onboardingLock
                         .resizable()
                         .frame(width: 120, height: 120)
                         .padding(.top, TokenSpacing._5)
@@ -63,17 +64,17 @@ struct HiddenFilesFoldersOnboardingView<PrimaryButtonView: View>: View {
     private func descriptionItemViews() -> some View {
         VStack(alignment: .leading, spacing: TokenSpacing._5) {
             OnboardingItemView(
-                image: .eyeOffRegular,
+                image: MEGAAssets.Image.eyeOffRegular,
                 title: Strings.Localizable.Onboarding.HiddenFilesAndFolders.Content.Item.One.title,
                 description: Strings.Localizable.Onboarding.HiddenFilesAndFolders.Content.Item.One.message)
             
             OnboardingItemView(
-                image: .imagesRegular,
+                image: MEGAAssets.Image.imagesRegular,
                 title: Strings.Localizable.Onboarding.HiddenFilesAndFolders.Content.Item.Two.title,
                 description: Strings.Localizable.Onboarding.HiddenFilesAndFolders.Content.Item.Two.message)
             
             OnboardingItemView(
-                image: .eyeRegular,
+                image: MEGAAssets.Image.eyeRegular,
                 title: Strings.Localizable.Onboarding.HiddenFilesAndFolders.Content.Item.Three.title,
                 description: Strings.Localizable.Onboarding.HiddenFilesAndFolders.Content.Item.Three.message)
         }
@@ -157,13 +158,13 @@ private struct OnboardingNavigationBar<Content: View>: View {
 }
 
 private struct OnboardingItemView: View {
-    let image: ImageResource
+    let image: Image
     let title: String
     let description: String
     
     var body: some View {
         HStack(spacing: 0) {
-            Image(image)
+            image
                 .resizable()
                 .renderingMode(.template)
                 .foregroundStyle(TokenColors.Icon.accent.swiftUI)
@@ -212,13 +213,13 @@ private struct OnboardingItemView: View {
 }
 
 #Preview {
-    OnboardingItemView(image: .eyeOff,
+    OnboardingItemView(image: MEGAAssets.Image.eyeOff,
                        title: "Hide important files and folders",
                        description: "You can now hide individual files and folders. Hidden files or folders can only be found browsing you Cloud drive.")
 }
 
 #Preview {
-    OnboardingItemView(image: .eyeOff,
+    OnboardingItemView(image: MEGAAssets.Image.eyeOff,
                        title: "Hide important files and folders",
                        description: "You can now hide individual files and folders. Hidden files or folders can only be found browsing you Cloud drive.")
     .preferredColorScheme(.dark)

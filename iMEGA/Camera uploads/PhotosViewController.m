@@ -41,6 +41,7 @@
     [self updateAppearance];
     [self setupBarButtons];
     [self updateNavigationTitleBar];
+    [self configureImages];
 }
 
 - (void)setupBarButtons {
@@ -260,12 +261,12 @@
     UIImage *image = nil;
     if ([MEGAReachabilityManager isReachable]) {
         if (CameraUploadManager.isCameraUploadEnabled) {
-            image = [UIImage imageNamed:@"cameraEmptyState"];
+            image = [UIImage megaImageWithNamed:@"cameraEmptyState"];
         } else {
-            image = [UIImage imageNamed:@"cameraUploadsBoarding"];
+            image = [UIImage megaImageWithNamed:@"cameraUploadsBoarding"];
         }
     } else {
-        image = [UIImage imageNamed:@"noInternetEmptyState"];
+        image = [UIImage megaImageWithNamed:@"noInternetEmptyState"];
     }
     
     return image;

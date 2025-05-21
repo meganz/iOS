@@ -1,3 +1,4 @@
+import MEGAAssets
 import MEGADesignToken
 import MEGAL10n
 import MEGASwiftUI
@@ -41,7 +42,7 @@ struct EmptyMediaDiscoveryContentView: View {
             }, label: {
                 Text(Strings.Localizable.addFiles)
                     .font(.body.weight(.semibold))
-                    .foregroundColor(UIColor.whiteFFFFFF.swiftUI)
+                    .foregroundColor(MEGAAssets.UIColor.whiteFFFFFF.swiftUI)
                     .frame(width: 288, height: 50)
             })
             .background(TokenColors.Support.success.swiftUI)
@@ -65,9 +66,9 @@ private extension EmptyMediaDiscoveryContentMenuAction {
     var menuIcon: Image? {
         switch self {
         case .choosePhotoVideo:
-            return Image(.saveToPhotos)
+            return MEGAAssets.Image.saveToPhotos
         case .capturePhotoVideo:
-            return Image(.capture)
+            return MEGAAssets.Image.capture
         }
     }
 }
@@ -75,7 +76,7 @@ private extension EmptyMediaDiscoveryContentMenuAction {
 @available(iOS 17.0, *)
 #Preview(traits: .defaultLayout) {
     EmptyMediaDiscoveryContentView(
-        image: UIImage.folderEmptyState,
+        image: MEGAAssets.UIImage.folderEmptyState,
         title: Strings.Localizable.emptyFolder,
         menuActionHandler: { _ in })
 }

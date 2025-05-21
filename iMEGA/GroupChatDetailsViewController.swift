@@ -3,6 +3,7 @@ import Foundation
 import MEGAAnalyticsiOS
 import MEGAAppPresentation
 import MEGAAppSDKRepo
+import MEGAAssets
 import MEGADesignToken
 import MEGADomain
 import MEGAL10n
@@ -158,7 +159,7 @@ extension GroupChatDetailsViewController {
     
     @objc func configureAllowNonHostToAddParticipantsCell(_ cell: GroupChatDetailsViewTableViewCell) {
         cell.nameLabel.text = Strings.Localizable.Meetings.AddContacts.AllowNonHost.message
-        cell.leftImageView.image = UIImage.addContact
+        cell.leftImageView.image = MEGAAssets.UIImage.addContact
         cell.controlSwitch.isOn = chatRoom.isOpenInviteEnabled
         cell.delegate = self
     }
@@ -214,12 +215,12 @@ extension GroupChatDetailsViewController {
     @objc func configLeftImageForLeftGroup(for cell: GroupChatDetailsViewTableViewCell?) {
         guard let cell else { return }
         
-        cell.leftImageView.image = UIImage.leaveGroup.withRenderingMode(.alwaysTemplate)
+        cell.leftImageView.image = MEGAAssets.UIImage.leaveGroup.withRenderingMode(.alwaysTemplate)
         cell.leftImageView.tintColor = iconRedColor()
     }
     
     @objc func groupChatAddParticipantImage() -> UIImage {
-        UIImage.groupChatAddParticipant
+        MEGAAssets.UIImage.groupChatAddParticipant
     }
     
     @objc func setTableHeaderFooterViewBackgroundColor(

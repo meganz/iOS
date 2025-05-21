@@ -1,8 +1,7 @@
 #import "MEGARemoveContactRequestDelegate.h"
-
 #import "SVProgressHUD.h"
-
 #import "MEGAUser+MNZCategory.h"
+#import "MEGA-Swift.h"
 
 @import MEGAL10nObjc;
 
@@ -48,7 +47,7 @@
     
     [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
     NSString *message = [NSString stringWithFormat:LocalizedString(@"removedContact", @"Success message shown when the selected contact has been removed. 'Contact {Name of contact} removed'"), user.mnz_displayName];
-    [SVProgressHUD showImage:[UIImage imageNamed:@"hudMinus"] status:message];
+    [SVProgressHUD showImage:[UIImage megaImageWithNamed:@"hudMinus"] status:message];
     
     if (self.completion) {
         self.completion();

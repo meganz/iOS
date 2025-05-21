@@ -1,6 +1,8 @@
+import SwiftUI
+
 struct OccurrenceContextMenuOption: Identifiable, Hashable {
     let title: String
-    let image: ImageResource
+    let image: Image
     let action: (ScheduleMeetingOccurrence) -> Void
     
     var id: String {

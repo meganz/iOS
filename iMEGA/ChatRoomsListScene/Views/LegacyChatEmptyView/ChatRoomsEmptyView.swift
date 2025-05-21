@@ -25,7 +25,7 @@ struct ChatRoomsEmptyView: View {
                 Spacer()
                 
                 ChatRoomsEmptyCenterView(
-                    imageResource: emptyViewState.center.image,
+                    image: emptyViewState.center.image,
                     title: emptyViewState.center.title,
                     description: emptyViewState.center.description
                 )

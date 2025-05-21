@@ -2,6 +2,7 @@ import Combine
 import Foundation
 import MEGAAnalyticsiOS
 import MEGAAppPresentation
+import MEGAAssets
 import MEGADomain
 import MEGAPermissions
 
@@ -226,11 +227,11 @@ struct FileUploadingSourceItem {
     }
     var icon: UIImage {
         switch source {
-        case .photos: return UIImage.saveToPhotos
-        case .textFile: return UIImage.textfile
-        case .capture: return UIImage.capture
-        case .imports: return UIImage.import
-        case .documentScan: return UIImage.scanDocument
+        case .photos: return MEGAAssets.UIImage.saveToPhotos
+        case .textFile: return MEGAAssets.UIImage.textfile
+        case .capture: return MEGAAssets.UIImage.capture
+        case .imports: return MEGAAssets.UIImage.import
+        case .documentScan: return MEGAAssets.UIImage.scanDocument
         }
     }
 

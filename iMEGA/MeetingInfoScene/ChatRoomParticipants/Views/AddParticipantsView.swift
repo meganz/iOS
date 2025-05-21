@@ -1,3 +1,4 @@
+import MEGAAssets
 import MEGAL10n
 import MEGASwiftUI
 import SwiftUI
@@ -13,7 +14,7 @@ struct AddParticipantsView: View {
     
     var body: some View {
         HStack(spacing: Constants.spacing) {
-            Image(.inviteToChatDesignToken)
+            MEGAAssets.Image.inviteToChatDesignToken
                 .padding(Constants.padding)
                 .frame(width: Constants.imageSize.width, height: Constants.imageSize.height)
             VStack(alignment: .leading) {

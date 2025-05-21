@@ -1,3 +1,4 @@
+import MEGAAssets
 import MEGADesignToken
 import MEGAL10n
 
@@ -32,7 +33,7 @@ extension ChatRoomsTopRowViewState {
     ) -> Self {
         ChatRoomsTopRowViewState(
             id: "contacts",
-            image: UIImage.inviteToChatDesignToken,
+            image: MEGAAssets.UIImage.inviteToChatDesignToken,
             description: Strings.Localizable.inviteContactNow,
             hasDivider: false,
             action: action
@@ -45,7 +46,7 @@ extension ChatRoomsTopRowViewState {
     ) -> Self {
         ChatRoomsTopRowViewState(
             id: "archived",
-            image: UIImage(resource: .archiveChat),
+            image: MEGAAssets.UIImage.archiveChat,
             description: Strings.Localizable.archivedChats,
             rightDetail: "\(count)",
             hasDivider: true,

@@ -1,3 +1,4 @@
+import MEGAAssets
 import MEGADesignToken
 import MEGAL10n
 import UIKit
@@ -30,7 +31,7 @@ class ChatImageQualityTableViewController: UITableViewController {
         let cell = super.tableView(tableView, cellForRowAt: indexPath)
         let currentSeletedQuality = UserDefaults.standard.integer(forKey: "chatImageQuality")
         
-        let imageView = UIImageView(image: UIImage.turquoiseCheckmark)
+        let imageView = UIImageView(image: MEGAAssets.UIImage.turquoiseCheckmark)
         imageView.tintColor = TokenColors.Support.success
         
         cell.accessoryView = imageView

@@ -1,5 +1,6 @@
 import ChatRepo
 import CoreGraphics
+import MEGAAssets
 import MEGADesignToken
 import MEGADomain
 import MEGAFoundation
@@ -51,7 +52,14 @@ class ChatViewIntroductionHeaderView: MessageReusableView {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        configureImages()
         updateAppearance()
+    }
+    
+    private func configureImages() {
+        confidentialityImageView.image = MEGAAssets.UIImage.image(named: "lock_welcomeMessage")
+        authenticityImageView.image = MEGAAssets.UIImage.image(named: "checkmark_welcomeMessage")
+        noteToSelfImageView.image = MEGAAssets.UIImage.image(named: "noteToSelfSmall")
     }
     
     private func updateStatus() {

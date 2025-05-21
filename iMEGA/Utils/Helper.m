@@ -201,7 +201,7 @@
         }
         [[MEGAStore shareInstance] deleteUploadTransferWithLocalIdentifier:transferRecordDTO.localIdentifier];
     } error:^(NSError *error) {
-        [SVProgressHUD showImage:[UIImage imageNamed:@"hudError"] status:[NSString stringWithFormat:@"%@ %@ \r %@", LocalizedString(@"Transfer failed:", @""), asset.localIdentifier, error.localizedDescription]];
+        [SVProgressHUD showImage:[UIImage megaImageWithNamed:@"hudError"] status:[NSString stringWithFormat:@"%@ %@ \r %@", LocalizedString(@"Transfer failed:", @""), asset.localIdentifier, error.localizedDescription]];
         [[MEGAStore shareInstance] deleteUploadTransferWithLocalIdentifier:transferRecordDTO.localIdentifier];
         [Helper startPendingUploadTransferIfNeeded];
     }];

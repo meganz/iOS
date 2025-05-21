@@ -1,4 +1,5 @@
 import MEGAAppPresentation
+import MEGAAssets
 import MEGADesignToken
 import MEGAL10n
 import MEGASwiftUI
@@ -40,10 +41,10 @@ extension ShareDestinationTableViewController {
         switch ShareDestinationRow(rawValue: indexPath.row) {
         case .uploadToMega:
             cell.set(name: Strings.Localizable.uploadToMega,
-                     image: UIImage.upload)
+                     image: MEGAAssets.UIImage.upload)
         case .sendToChats:
             cell.set(name: Strings.Localizable.General.sendToChat,
-                     image: UIImage.sendToChat,
+                     image: MEGAAssets.UIImage.sendToChat,
                      isEnabled: isChatReady,
                      showActivityIndicator: !isChatReady)
         default: return cell

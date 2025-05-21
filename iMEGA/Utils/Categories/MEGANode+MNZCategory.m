@@ -260,39 +260,39 @@
 }
 
 - (void)mnz_labelActionSheetInViewController:(UIViewController *)viewController {
-    UIImageView *checkmarkImageView = [UIImageView.alloc initWithImage:[UIImage imageNamed:@"turquoise_checkmark"]];
+    UIImageView *checkmarkImageView = [UIImageView.alloc initWithImage:[UIImage megaImageWithNamed:@"turquoise_checkmark"]];
     
     NSMutableArray<ActionSheetAction *> *actions = NSMutableArray.new;
-    [actions addObject:[ActionSheetAction.alloc initWithTitle:LocalizedString(@"Red", @"A user can mark a folder or file with its own colour, in this case “Red”.") detail:nil accessoryView:(self.label == MEGANodeLabelRed ? checkmarkImageView : nil) image:[UIImage imageNamed:@"Red"] style:UIAlertActionStyleDefault actionHandler:^{
+    [actions addObject:[ActionSheetAction.alloc initWithTitle:LocalizedString(@"Red", @"A user can mark a folder or file with its own colour, in this case “Red”.") detail:nil accessoryView:(self.label == MEGANodeLabelRed ? checkmarkImageView : nil) image:[UIImage megaImageWithNamed:@"Red"] style:UIAlertActionStyleDefault actionHandler:^{
         if (self.label != MEGANodeLabelRed) [MEGASdk.shared setNodeLabel:self label:MEGANodeLabelRed];
     }]];
     
-    [actions addObject:[ActionSheetAction.alloc initWithTitle:LocalizedString(@"Orange", @"A user can mark a folder or file with its own colour, in this case “Orange”.") detail:nil accessoryView:(self.label == MEGANodeLabelOrange ? checkmarkImageView : nil) image:[UIImage imageNamed:@"Orange"] style:UIAlertActionStyleDefault actionHandler:^{
+    [actions addObject:[ActionSheetAction.alloc initWithTitle:LocalizedString(@"Orange", @"A user can mark a folder or file with its own colour, in this case “Orange”.") detail:nil accessoryView:(self.label == MEGANodeLabelOrange ? checkmarkImageView : nil) image:[UIImage megaImageWithNamed:@"Orange"] style:UIAlertActionStyleDefault actionHandler:^{
         if (self.label != MEGANodeLabelOrange) [MEGASdk.shared setNodeLabel:self label:MEGANodeLabelOrange];
     }]];
     
-    [actions addObject:[ActionSheetAction.alloc initWithTitle:LocalizedString(@"Yellow", @"A user can mark a folder or file with its own colour, in this case “Yellow”.") detail:nil accessoryView:(self.label == MEGANodeLabelYellow ? checkmarkImageView : nil) image:[UIImage imageNamed:@"Yellow"] style:UIAlertActionStyleDefault actionHandler:^{
+    [actions addObject:[ActionSheetAction.alloc initWithTitle:LocalizedString(@"Yellow", @"A user can mark a folder or file with its own colour, in this case “Yellow”.") detail:nil accessoryView:(self.label == MEGANodeLabelYellow ? checkmarkImageView : nil) image:[UIImage megaImageWithNamed:@"Yellow"] style:UIAlertActionStyleDefault actionHandler:^{
         if (self.label != MEGANodeLabelYellow) [MEGASdk.shared setNodeLabel:self label:MEGANodeLabelYellow];
     }]];
     
-    [actions addObject:[ActionSheetAction.alloc initWithTitle:LocalizedString(@"Green", @"A user can mark a folder or file with its own colour, in this case “Green”.") detail:nil accessoryView:(self.label == MEGANodeLabelGreen ? checkmarkImageView : nil) image:[UIImage imageNamed:@"Green"] style:UIAlertActionStyleDefault actionHandler:^{
+    [actions addObject:[ActionSheetAction.alloc initWithTitle:LocalizedString(@"Green", @"A user can mark a folder or file with its own colour, in this case “Green”.") detail:nil accessoryView:(self.label == MEGANodeLabelGreen ? checkmarkImageView : nil) image:[UIImage megaImageWithNamed:@"Green"] style:UIAlertActionStyleDefault actionHandler:^{
         if (self.label != MEGANodeLabelGreen) [MEGASdk.shared setNodeLabel:self label:MEGANodeLabelGreen];
     }]];
     
-    [actions addObject:[ActionSheetAction.alloc initWithTitle:LocalizedString(@"Blue", @"A user can mark a folder or file with its own colour, in this case “Blue”.") detail:nil accessoryView:(self.label == MEGANodeLabelBlue ? checkmarkImageView : nil) image:[UIImage imageNamed:@"Blue"] style:UIAlertActionStyleDefault actionHandler:^{
+    [actions addObject:[ActionSheetAction.alloc initWithTitle:LocalizedString(@"Blue", @"A user can mark a folder or file with its own colour, in this case “Blue”.") detail:nil accessoryView:(self.label == MEGANodeLabelBlue ? checkmarkImageView : nil) image:[UIImage megaImageWithNamed:@"Blue"] style:UIAlertActionStyleDefault actionHandler:^{
         if (self.label != MEGANodeLabelBlue) [MEGASdk.shared setNodeLabel:self label:MEGANodeLabelBlue];
     }]];
     
-    [actions addObject:[ActionSheetAction.alloc initWithTitle:LocalizedString(@"Purple", @"A user can mark a folder or file with its own colour, in this case “Purple”.") detail:nil accessoryView:(self.label == MEGANodeLabelPurple ? checkmarkImageView : nil) image:[UIImage imageNamed:@"Purple"] style:UIAlertActionStyleDefault actionHandler:^{
+    [actions addObject:[ActionSheetAction.alloc initWithTitle:LocalizedString(@"Purple", @"A user can mark a folder or file with its own colour, in this case “Purple”.") detail:nil accessoryView:(self.label == MEGANodeLabelPurple ? checkmarkImageView : nil) image:[UIImage megaImageWithNamed:@"Purple"] style:UIAlertActionStyleDefault actionHandler:^{
         if (self.label != MEGANodeLabelPurple) [MEGASdk.shared setNodeLabel:self label:MEGANodeLabelPurple];
     }]];
     
-    [actions addObject:[ActionSheetAction.alloc initWithTitle:LocalizedString(@"Grey", @"A user can mark a folder or file with its own colour, in this case “Grey”.") detail:nil accessoryView:(self.label == MEGANodeLabelGrey ? checkmarkImageView : nil) image:[UIImage imageNamed:@"Grey"] style:UIAlertActionStyleDefault actionHandler:^{
+    [actions addObject:[ActionSheetAction.alloc initWithTitle:LocalizedString(@"Grey", @"A user can mark a folder or file with its own colour, in this case “Grey”.") detail:nil accessoryView:(self.label == MEGANodeLabelGrey ? checkmarkImageView : nil) image:[UIImage megaImageWithNamed:@"Grey"] style:UIAlertActionStyleDefault actionHandler:^{
         if (self.label != MEGANodeLabelGrey) [MEGASdk.shared setNodeLabel:self label:MEGANodeLabelGrey];
     }]];
     
     if (self.label != MEGANodeLabelUnknown) {
-        [actions addObject:[ActionSheetAction.alloc initWithTitle:LocalizedString(@"Remove Label", @"Option shown on the action sheet where you can choose or change the color label of a file or folder. The 'Remove Label' only appears if you have previously selected a label") detail:nil image:[UIImage imageNamed:@"delete"] style:UIAlertActionStyleDestructive actionHandler:^{
+        [actions addObject:[ActionSheetAction.alloc initWithTitle:LocalizedString(@"Remove Label", @"Option shown on the action sheet where you can choose or change the color label of a file or folder. The 'Remove Label' only appears if you have previously selected a label") detail:nil image:[UIImage megaImageWithNamed:@"delete"] style:UIAlertActionStyleDestructive actionHandler:^{
             [MEGASdk.shared resetNodeLabel:self];
         }]];
     }

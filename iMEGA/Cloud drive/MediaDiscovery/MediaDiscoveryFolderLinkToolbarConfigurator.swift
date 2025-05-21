@@ -1,4 +1,5 @@
 import Foundation
+import MEGAAssets
 
 final class MediaDiscoveryFolderLinkToolbarConfigurator {
     typealias FolderLinkToolbarButtonAction = (UIBarButtonItem) -> Void
@@ -15,28 +16,28 @@ final class MediaDiscoveryFolderLinkToolbarConfigurator {
     )
     
     private lazy var importItem = UIBarButtonItem(
-        image: UIImage.import,
+        image: MEGAAssets.UIImage.import,
         style: .plain,
         target: self,
         action: #selector(buttonPressed(_:))
     )
     
     private lazy var downloadItem = UIBarButtonItem(
-        image: UIImage.offline,
+        image: MEGAAssets.UIImage.offline,
         style: .plain,
         target: self,
         action: #selector(buttonPressed(_:))
     )
     
     private lazy var saveToPhotosItem = UIBarButtonItem(
-        image: UIImage.saveToPhotos,
+        image: MEGAAssets.UIImage.saveToPhotos,
         style: .plain,
         target: self,
         action: #selector(buttonPressed(_:))
     )
     
     lazy var shareLinkItem = UIBarButtonItem(
-        image: UIImage.link,
+        image: MEGAAssets.UIImage.link,
         style: .plain,
         target: self,
         action: #selector(buttonPressed(_:))

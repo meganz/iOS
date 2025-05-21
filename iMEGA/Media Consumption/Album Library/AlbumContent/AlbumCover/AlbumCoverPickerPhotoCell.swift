@@ -1,5 +1,6 @@
 import ContentLibraries
 import MEGAAppPresentation
+import MEGAAssets
 import MEGADesignToken
 import MEGASwiftUI
 import SwiftUI
@@ -24,7 +25,7 @@ struct AlbumCoverPickerPhotoCell: View {
     @ViewBuilder
     private func image() -> some View {
         PhotoCellImage(container: viewModel.thumbnailContainer)
-            .overlay(Color.black000000.opacity(viewModel.isSelected ? 0.2 : 0.0))
+            .overlay(MEGAAssets.Color.black000000.opacity(viewModel.isSelected ? 0.2 : 0.0))
     }
 }
 

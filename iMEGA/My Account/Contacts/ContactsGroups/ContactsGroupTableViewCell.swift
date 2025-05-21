@@ -1,5 +1,6 @@
 import ChatRepo
 import MEGAAppSDKRepo
+import MEGAAssets
 import MEGADesignToken
 import MEGADomain
 import UIKit
@@ -44,6 +45,7 @@ class ContactsGroupTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         updateStyle()
+        keyRotationImage.image = MEGAAssets.UIImage.image(named: "privateChat")
     }
     
     override func prepareForReuse() {

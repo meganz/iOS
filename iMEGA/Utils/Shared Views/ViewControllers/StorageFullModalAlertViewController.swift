@@ -1,3 +1,4 @@
+import MEGAAssets
 import MEGAFoundation
 import MEGAL10n
 import MEGASwift
@@ -20,7 +21,7 @@ class StorageFullModalAlertViewController: CustomModalAlertViewController {
     }
     
     func configureView() {
-        image = UIImage.deviceStorageAlmostFull
+        image = MEGAAssets.UIImage.deviceStorageAlmostFull
         viewTitle = Strings.Localizable.deviceStorageAlmostFull
         detail = Strings.Localizable.MEGANeedsAMinimumOf
             .FreeUpSomeSpaceByDeletingAppsYouNoLongerUseOrLargeVideoFilesInYourGallery

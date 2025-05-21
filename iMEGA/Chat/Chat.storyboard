@@ -1283,6 +1283,7 @@
                     </view>
                     <connections>
                         <outlet property="imageView" destination="T9w-q6-r9Z" id="eBC-cy-tXk"/>
+                        <outlet property="locationButton" destination="PY4-jr-sF4" id="IAv-b4-86G"/>
                         <outlet property="mapOptionsView" destination="aqm-74-Pnd" id="dQy-Kx-eHp"/>
                         <outlet property="mapView" destination="Ftb-Jb-Hx3" id="KAp-mr-1b7"/>
                         <outlet property="sendLocationLabel" destination="Dpa-fh-Pet" id="G32-BN-4Kz"/>
@@ -1354,6 +1355,7 @@
                                 <color key="backgroundColor" systemColor="tableCellGroupedBackgroundColor"/>
                                 <connections>
                                     <outlet property="detailLabel" destination="Gar-TJ-8RK" id="RZk-97-6G9"/>
+                                    <outlet property="locationPinImageView" destination="DVb-4g-IK9" id="hMh-x8-SS4"/>
                                     <outlet property="titleLabel" destination="XXx-W5-s4E" id="zJx-xL-RV7"/>
                                 </connections>
                             </tableViewCell>

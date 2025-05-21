@@ -1,4 +1,5 @@
 @testable import MEGA
+import MEGAAssets
 import MEGADesignToken
 import SwiftUI
 import XCTest
@@ -6,19 +7,19 @@ import XCTest
 final class CameraUploadStatusImageViewModelTests: XCTestCase {
     
     func testStatusImageResource_onStatus_shouldReturnCorrectImageResource() {
-        let expectations: [(CameraUploadStatus, MEGA.ImageResource?)] = [
+        let expectations: [(CameraUploadStatus, Image?)] = [
             (.turnedOff, nil),
-            (.checkPendingItemsToUpload, .cuStatusUploadSync),
-            (.uploading(progress: 0.65), .cuStatusUploadInProgressCheckMark),
-            (.completed, .cuStatusUploadCompleteGreenCheckMark),
-            (.idle, .cuStatusUploadIdleCheckMark),
-            (.warning, .cuStatusUploadWarningCheckMark)
+            (.checkPendingItemsToUpload, MEGAAssets.Image.cuStatusUploadSync),
+            (.uploading(progress: 0.65), MEGAAssets.Image.cuStatusUploadInProgressCheckMark),
+            (.completed, MEGAAssets.Image.cuStatusUploadCompleteGreenCheckMark),
+            (.idle, MEGAAssets.Image.cuStatusUploadIdleCheckMark),
+            (.warning, MEGAAssets.Image.cuStatusUploadWarningCheckMark)
         ]
         
         expectations
             .forEach { status, expectedResult in
                 let sut = CameraUploadStatusImageViewModel(status: status)
-                XCTAssertEqual(sut.statusImageResource, expectedResult)
+                XCTAssertEqual(sut.statusImage, expectedResult)
             }
     }
     
@@ -76,19 +77,19 @@ final class CameraUploadStatusImageViewModelTests: XCTestCase {
     }
     
     func testBaseImageResource_onStatus_shouldReturnCorrectImageResource() {
-        let expectations: [(CameraUploadStatus, MEGA.ImageResource?)] = [
-            (.turnedOff, .cuStatusEnable),
-            (.checkPendingItemsToUpload, .cuStatusUpload),
-            (.uploading(progress: 0.65), .cuStatusUpload),
-            (.completed, .cuStatusUpload),
-            (.idle, .cuStatusUpload),
-            (.warning, .cuStatusUpload)
+        let expectations: [(CameraUploadStatus, Image?)] = [
+            (.turnedOff, MEGAAssets.Image.cuStatusEnable),
+            (.checkPendingItemsToUpload, MEGAAssets.Image.cuStatusUpload),
+            (.uploading(progress: 0.65), MEGAAssets.Image.cuStatusUpload),
+            (.completed, MEGAAssets.Image.cuStatusUpload),
+            (.idle, MEGAAssets.Image.cuStatusUpload),
+            (.warning, MEGAAssets.Image.cuStatusUpload)
         ]
         
         expectations
             .forEach { status, expectedResult in
                 let sut = CameraUploadStatusImageViewModel(status: status)
-                XCTAssertEqual(sut.baseImageResource, expectedResult)
+                XCTAssertEqual(sut.baseImage, expectedResult)
             }
     }
 }

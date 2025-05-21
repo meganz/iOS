@@ -1,10 +1,11 @@
 import Foundation
 import MEGAAppSDKRepo
+import MEGAAssets
 import MEGAL10n
 
 extension CustomModalAlertViewController {
     @objc func configureForTwoFactorAuthentication(requestedByUser: Bool) {
-        image = UIImage._2FASetup
+        image = MEGAAssets.UIImage._2FASetup
         viewTitle = Strings.Localizable.whyYouDoNeedTwoFactorAuthentication
         detail = Strings.Localizable.whyYouDoNeedTwoFactorAuthenticationDescription
         firstButtonTitle = Strings.Localizable.beginSetup

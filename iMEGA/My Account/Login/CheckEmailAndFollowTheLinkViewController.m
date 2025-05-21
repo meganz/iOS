@@ -46,6 +46,7 @@
     self.checkYourEmailLabel.text = LocalizedString(@"accountNotConfirmed", @"Text shown just after creating an account to remenber the user what to do to complete the account creation proccess");
     
     self.emailInputView.inputTextField.text = self.email;
+    self.emailInputView.iconImage = [UIImage megaImageWithNamed:@"mail"];
     
     self.misspelledLabel.text = LocalizedString(@"misspelledEmailAddress", @"A hint shown at the bottom of the Send Signup Link dialog to tell users they can edit the provided email.");
     [self.resendButton setTitle:LocalizedString(@"resend", @"A button to resend the email confirmation.") forState:UIControlStateNormal];
@@ -58,6 +59,8 @@
     self.emailInputView.inputTextField.delegate = self;
     self.emailInputView.inputTextField.keyboardType = UIKeyboardTypeEmailAddress;
     self.emailInputView.inputTextField.textContentType = UITextContentTypeUsername;
+    
+    self.mailImageView.image = [UIImage megaImageWithNamed:@"mailBig"];
 }
 
 - (void)viewWillAppear:(BOOL)animated {

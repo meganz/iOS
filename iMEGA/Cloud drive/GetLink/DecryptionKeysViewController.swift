@@ -1,3 +1,4 @@
+import MEGAAssets
 import MEGAL10n
 import UIKit
 
@@ -13,5 +14,6 @@ class DecryptionKeysViewController: UIViewController {
         titleLabel.text = Strings.Localizable.decryptionKey.localizedCapitalized
         descriptionLabel.text = Strings.Localizable.OurEndToEndEncryptionSystemRequiresAUniqueKeyAutomaticallyGeneratedForThisFile.aLinkWithThisKeyIsCreatedByDefaultButYouCanExportTheDecryptionKeySeparatelyForAnAddedLayerOfSecurity
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: Strings.Localizable.close, style: .done, target: self, action: #selector(dismissView))
+        imageView.image = MEGAAssets.UIImage.image(named: "decryptionKeyIllustration")
     }
 }

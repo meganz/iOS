@@ -1,3 +1,4 @@
+import MEGAAssets
 import MEGADesignToken
 import MEGAL10n
 import UIKit
@@ -11,7 +12,7 @@ class MeetingInviteParticipantTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         inviteLabel.text = Strings.Localizable.Meetings.Panel.inviteParticipants
-        inviteIcon.image = .inviteToChatDesignToken
+        inviteIcon.image = MEGAAssets.UIImage.inviteToChatDesignToken
         
         addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(viewTapped(_:))))
     }

@@ -12,6 +12,7 @@
     [super awakeFromNib];
     
     [self updateAppearance];
+    [self configureImages];
 }
 
 - (void)prepareForReuse {
@@ -61,6 +62,10 @@
 }
 
 #pragma mark - Private
+
+- (void)configureImages {
+    self.verifiedImageView.image = [UIImage megaImageWithNamed:@"contactVerified"];
+}
 
 - (IBAction)notificationSwitchValueChanged:(UISwitch *)sender {
     if ([self.delegate respondsToSelector:@selector(controlSwitchValueChanged:fromCell:)]) {

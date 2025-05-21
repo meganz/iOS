@@ -1,6 +1,7 @@
 import DeviceCenter
 import MEGAAppPresentation
 import MEGAAppSDKRepo
+import MEGAAssets
 import MEGADomain
 import MEGAL10n
 import MEGASwiftUI
@@ -125,7 +126,7 @@ final class MyAccountHallRouter: MyAccountHallRouting {
     ) {
         guard networkMonitorUseCase.isConnected() else {
             noInternetConnectionPresenter(
-                UIImage.hudForbidden,
+                MEGAAssets.UIImage.hudForbidden,
                 Strings.Localizable.noInternetConnection
             )
             return

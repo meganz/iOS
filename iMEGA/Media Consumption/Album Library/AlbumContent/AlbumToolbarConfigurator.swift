@@ -1,4 +1,5 @@
 import MEGAAppPresentation
+import MEGAAssets
 import MEGADesignToken
 import MEGADomain
 
@@ -11,7 +12,7 @@ final class AlbumToolbarConfigurator: ExplorerToolbarConfigurator {
     private let remoteFeatureFlagUseCase: any RemoteFeatureFlagUseCaseProtocol
     
     private var favouriteItemImage: UIImage {
-        albumType == .favourite ? UIImage.removeFavourite : UIImage.favourite
+        albumType == .favourite ? MEGAAssets.UIImage.removeFavourite : MEGAAssets.UIImage.favourite
     }
     
     var isHiddenNodesEnabled: Bool {
@@ -26,14 +27,14 @@ final class AlbumToolbarConfigurator: ExplorerToolbarConfigurator {
     )
     
     lazy var sendToChatItem = UIBarButtonItem(
-        image: UIImage.sendToChat,
+        image: MEGAAssets.UIImage.sendToChat,
         style: .plain,
         target: self,
         action: #selector(buttonPressed(_:))
     )
     
     lazy var removeToRubbishBinItem = UIBarButtonItem(
-        image: UIImage.rubbishBin,
+        image: MEGAAssets.UIImage.rubbishBin,
         style: .plain,
         target: self,
         action: #selector(buttonPressed(_:))

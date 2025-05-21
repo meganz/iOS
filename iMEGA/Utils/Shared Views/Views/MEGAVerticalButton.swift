@@ -1,3 +1,4 @@
+import MEGAAssets
 import MEGADesignToken
 
 final class MEGAVerticalButton: UIButton {
@@ -37,7 +38,7 @@ final class MEGAVerticalButton: UIButton {
         self.badgeView = badgeView
         
         let badgeLabel = UILabel()
-        badgeLabel.textColor = UIColor.whiteFFFFFF
+        badgeLabel.textColor = MEGAAssets.UIColor.whiteFFFFFF
         badgeLabel.font = UIFont.systemFont(ofSize: 11)
         badgeLabel.textAlignment = .center
         badgeLabel.translatesAutoresizingMaskIntoConstraints = false

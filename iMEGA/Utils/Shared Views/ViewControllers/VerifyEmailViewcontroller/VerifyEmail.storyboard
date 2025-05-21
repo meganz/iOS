@@ -228,6 +228,7 @@
                         <outlet property="topDescriptionLabel" destination="CBJ-Fw-i0r" id="Gad-VE-LjX"/>
                         <outlet property="topSeparatorView" destination="8tj-hW-0cs" id="nbg-DA-SjJ"/>
                         <outlet property="warningGradientView" destination="Orc-aD-are" id="TW2-DX-kND"/>
+                        <outlet property="warningImageView" destination="Gwx-2b-HDA" id="8RL-kE-00t"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oc2-To-TJb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

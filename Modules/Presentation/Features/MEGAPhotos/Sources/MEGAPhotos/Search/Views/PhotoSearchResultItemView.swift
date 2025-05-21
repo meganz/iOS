@@ -27,7 +27,7 @@ struct PhotoSearchResultItemView: View {
             Spacer()
             
             UIButtonWrapper(
-                image: MEGAAssetsImageProvider.image(named: .moreList)
+                image: MEGAAssets.UIImage.moreList
             ) { button in
                 viewModel.moreButtonPressed(button)
             }

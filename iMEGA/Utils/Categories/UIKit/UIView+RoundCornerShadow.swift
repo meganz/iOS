@@ -1,3 +1,4 @@
+import MEGAAssets
 import UIKit
 
 struct RoundCornerShadowConfiguration: Equatable {
@@ -14,7 +15,7 @@ struct RoundCornerShadowConfiguration: Equatable {
         let color: UIColor
     }
 
-    var backgroundColor = UIColor.whiteFFFFFF
+    var backgroundColor = MEGAAssets.UIColor.whiteFFFFFF
 
     let corner: Corner
     let shadow: Shadow

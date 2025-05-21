@@ -48,6 +48,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [self configureImages];
+    
     self.definesPresentationContext = YES;
     
     [self updateAppearance];
@@ -162,6 +164,22 @@
     }
     
     return _viewModel;
+}
+
+- (void)configureImages {
+    [self.incomingButton setImage:[UIImage megaImageWithNamed:@"incomingSegmentControler"] forState:UIControlStateNormal];
+    [self.outgoingButton setImage:[UIImage megaImageWithNamed:@"outgoingSegmentControler"] forState:UIControlStateNormal];
+    [self.linksButton setImage:[UIImage megaImageWithNamed:@"linksSegmentControler"] forState:UIControlStateNormal];
+
+    self.selectAllBarButtonItem.image = [UIImage megaImageWithNamed:@"selectAllItems"];
+    self.downloadBarButtonItem.image = [UIImage megaImageWithNamed:@"offline"];
+    self.carbonCopyBarButtonItem.image = [UIImage megaImageWithNamed:@"copy"];
+    self.leaveShareBarButtonItem.image = [UIImage megaImageWithNamed:@"leaveShare"];
+    self.shareLinkBarButtonItem.image = [UIImage megaImageWithNamed:@"link"];
+    self.removeLinkBarButtonItem.image = [UIImage megaImageWithNamed:@"removeLink"];
+    self.removeShareBarButtonItem.image = [UIImage megaImageWithNamed:@"removeShare"];
+    self.shareFolderBarButtonItem.image = [UIImage megaImageWithNamed:@"shareFolder"];
+    self.saveToPhotosBarButtonItem.image = [UIImage megaImageWithNamed:@"saveToPhotos"];
 }
 
 - (void)configSearchController {
@@ -534,7 +552,7 @@
     cell.labelView.hidden = (node.label == MEGANodeLabelUnknown);
     if (node.label != MEGANodeLabelUnknown) {
         NSString *labelString = [[MEGANode stringForNodeLabel:node.label] stringByAppendingString:@"Small"];
-        cell.labelImageView.image = [UIImage imageNamed:labelString];
+        cell.labelImageView.image = [UIImage megaImageWithNamed:labelString];
     }
 }
 
@@ -1067,7 +1085,7 @@
             [node mnz_leaveSharingInViewController:self completion:nil];
             [self endEditingMode];
         }];
-        shareAction.image = [[UIImage imageNamed:@"leaveShare"] imageWithTintColor:[self tintColorForImage]];
+        shareAction.image = [[UIImage megaImageWithNamed:@"leaveShare"] imageWithTintColor:[self tintColorForImage]];
         shareAction.backgroundColor = [self backgroundColorWhenTrailingSwipe];
         return [UISwipeActionsConfiguration configurationWithActions:@[shareAction]];
     } else if (self.outgoingButton.selected) {
@@ -1075,14 +1093,14 @@
             [node mnz_removeSharingWithCompletion:nil];
             [self endEditingMode];
         }];
-        shareAction.image = [[UIImage imageNamed:@"removeShare"] imageWithTintColor:[self tintColorForImage]];
+        shareAction.image = [[UIImage megaImageWithNamed:@"removeShare"] imageWithTintColor:[self tintColorForImage]];
         shareAction.backgroundColor = [self backgroundColorWhenTrailingSwipe];
         return [UISwipeActionsConfiguration configurationWithActions:@[shareAction]];
     } else if (self.linksButton.selected) {
         UIContextualAction *removeLinkAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:nil handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
             [self showRemoveLinkWarning:@[node]];
         }];
-        removeLinkAction.image = [[UIImage imageNamed:@"removeLink"] imageWithTintColor:[self tintColorForImage]];
+        removeLinkAction.image = [[UIImage megaImageWithNamed:@"removeLink"] imageWithTintColor:[self tintColorForImage]];
         removeLinkAction.backgroundColor = [self backgroundColorWhenTrailingSwipe];
         return [UISwipeActionsConfiguration configurationWithActions:@[removeLinkAction]];
     } else {

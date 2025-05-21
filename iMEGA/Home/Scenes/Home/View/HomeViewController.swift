@@ -1,5 +1,6 @@
 import MEGAAppPresentation
 import MEGAAppSDKRepo
+import MEGAAssets
 import MEGADesignToken
 import MEGADomain
 import MEGAL10n
@@ -376,7 +377,7 @@ final class HomeViewController: UIViewController, DisplayMenuDelegate {
     
     private func setupRightItems() {
         let startConversationItem = UIBarButtonItem(
-            image: UIImage.startChat,
+            image: MEGAAssets.UIImage.startChat,
             style: .plain,
             target: self,
             action: .didTapNewChat
@@ -384,7 +385,7 @@ final class HomeViewController: UIViewController, DisplayMenuDelegate {
         startConversationItem.accessibilityLabel = Strings.Localizable.startConversation
         self.startConversationItem = startConversationItem
         
-        startUploadBarButtonItem.image = UIImage.uploadFile
+        startUploadBarButtonItem.image = MEGAAssets.UIImage.uploadFile
         
         startUploadBarButtonItem.accessibilityLabel = Strings.Localizable.upload
 
@@ -441,10 +442,10 @@ final class HomeViewController: UIViewController, DisplayMenuDelegate {
         let backgroundColor: UIColor
         switch trait.theme {
         case .light:
-            backgroundColor = constraintToTopPosition.isActive ? UIColor.whiteFFFFFF : TokenColors.Background.surface1
+            backgroundColor = constraintToTopPosition.isActive ? MEGAAssets.UIColor.whiteFFFFFF : TokenColors.Background.surface1
             
         case .dark:
-            backgroundColor = constraintToTopPosition.isActive ? UIColor.black1C1C1E :TokenColors.Text.primary
+            backgroundColor = constraintToTopPosition.isActive ? MEGAAssets.UIColor.black1C1C1E : TokenColors.Text.primary
         }
         
         updateNavigationBarTitleColor(for: trait)
@@ -480,9 +481,9 @@ extension HomeViewController: SlidePanelAnimationControllerDelegate {
     private func navigationBarTransitionColors(for trait: UITraitCollection) -> (UIColor, UIColor) {
         switch trait.userInterfaceStyle {
         case .dark:
-            return (UIColor.black1C1C1E, TokenColors.Text.primary)
+            return (MEGAAssets.UIColor.black1C1C1E, TokenColors.Text.primary)
         default:
-            return (UIColor.whiteFFFFFF, TokenColors.Background.surface1)
+            return (MEGAAssets.UIColor.whiteFFFFFF, TokenColors.Background.surface1)
         }
     }
     

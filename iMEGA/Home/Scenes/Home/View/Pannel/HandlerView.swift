@@ -1,3 +1,4 @@
+import MEGAAssets
 import MEGADesignToken
 import MEGAUIKit
 import UIKit
@@ -59,9 +60,9 @@ final class HandlerView: UIView {
     
     private func themeColor(of trait: UITraitCollection) -> (UIColor, UIColor) {
         switch trait.userInterfaceStyle {
-        case .dark: return (TokenColors.Background.page, UIColor.whiteFFFFFF)
-        case .light: return (TokenColors.Background.page, UIColor.black1C1C1E)
-        default: return (TokenColors.Background.page, UIColor.black1C1C1E)
+        case .dark: return (TokenColors.Background.page, MEGAAssets.UIColor.whiteFFFFFF)
+        case .light: return (TokenColors.Background.page, MEGAAssets.UIColor.black1C1C1E)
+        default: return (TokenColors.Background.page, MEGAAssets.UIColor.black1C1C1E)
         }
     }
     

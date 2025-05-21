@@ -65,7 +65,7 @@ public struct ChatMediaQualityView: View {
                         title: imageMediaQuality.localisedName,
                         subtitle: imageMediaQuality.localisedDescription
                     )
-                    .trailingImage(icon: MEGAAssetsImageProvider.image(named: .check))
+                    .trailingImage(icon: MEGAAssets.Image.check)
                     .trailingImageHidden(viewModel.imageMediaQuality != imageMediaQuality)
                 })
             }
@@ -87,7 +87,7 @@ public struct ChatMediaQualityView: View {
                     MEGAList(
                         title: videoMediaQuality.localisedName
                     )
-                    .trailingImage(icon: MEGAAssetsImageProvider.image(named: .check))
+                    .trailingImage(icon: MEGAAssets.Image.check)
                     .trailingImageHidden(viewModel.videoMediaQuality != videoMediaQuality)
                 })
             }

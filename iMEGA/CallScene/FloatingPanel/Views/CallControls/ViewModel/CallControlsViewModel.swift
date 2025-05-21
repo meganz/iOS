@@ -2,6 +2,7 @@ import Chat
 import Combine
 import MEGAAnalyticsiOS
 import MEGAAppPresentation
+import MEGAAssets
 import MEGADomain
 import MEGAL10n
 import MEGAPermissions
@@ -161,7 +162,7 @@ final class CallControlsViewModel: CallControlsViewModelProtocol {
         .init(
             title: gallery ? Strings.Localizable.Chat.Call.ContextMenu.switchToMainView : Strings.Localizable.Chat.Call.ContextMenu.switchToGrid,
             detail: nil,
-            image: gallery ? UIImage(resource: .speakerView) : UIImage(resource: .galleryView),
+            image: gallery ? MEGAAssets.UIImage.speakerView : MEGAAssets.UIImage.galleryView,
             enabled: layoutSwitchingEnabled,
             syncIconAndTextColor: true,
             style: .default,
@@ -187,7 +188,7 @@ final class CallControlsViewModel: CallControlsViewModelProtocol {
         .init(
             title: raised ? Strings.Localizable.Chat.Call.ContextMenu.lowerHand : Strings.Localizable.Chat.Call.ContextMenu.raiseHand,
             detail: nil,
-            image: UIImage(resource: .callRaiseHand),
+            image: MEGAAssets.UIImage.callRaiseHand,
             syncIconAndTextColor: true,
             showNewFeatureBadge: showRaiseHandBadge,
             style: .default,

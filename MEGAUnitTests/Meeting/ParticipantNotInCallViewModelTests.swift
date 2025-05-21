@@ -1,4 +1,5 @@
 @testable import MEGA
+import MEGAAssets
 import MEGADomain
 import MEGADomainMock
 import XCTest
@@ -56,7 +57,7 @@ final class ParticipantNotInCallViewModelTests: XCTestCase {
                     chatRoomUseCase.userStatusEntity
                 ),
                 .updateName(name: "Test"),
-                .updateAvatarImage(image: UIImage.iconContacts)
+                .updateAvatarImage(image: MEGAAssets.UIImage.iconContacts)
              ])
     }
     

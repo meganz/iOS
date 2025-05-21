@@ -1,6 +1,7 @@
 import ChatRepo
 import Foundation
 import MEGAAppSDKRepo
+import MEGAAssets
 import MEGADomain
 import MEGAL10n
 
@@ -186,7 +187,7 @@ extension ChatViewController {
             } catch let error as SaveMediaToPhotosErrorEntity {
                 if error != .cancelled {
                     await SVProgressHUD.dismiss()
-                    SVProgressHUD.show(UIImage(resource: .saveToPhotos), status: Strings.Localizable.somethingWentWrong)
+                    SVProgressHUD.show(MEGAAssets.UIImage.saveToPhotos, status: Strings.Localizable.somethingWentWrong)
                 }
             }
         }

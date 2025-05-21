@@ -6,32 +6,32 @@ struct FileTypesTests {
     struct CallsFileTypeResourceForFileName {
         
         @Test("when given a supported file extension, it should return the correct asset", arguments: supportedExtensionArguments())
-        func supportedFileNameShouldReturnAssets(fileExtension: String, expected: MEGAAssetsImageName) {
+        func supportedFileNameShouldReturnAssets(fileExtension: String, expected: MEGAAssetsFileType) {
             let testFileName = "test.\(fileExtension)"
-            #expect(FileTypes.fileTypeResource(forFileName: testFileName) == expected)
+            #expect(MEGAAssetsFileType(withFileName: testFileName) == expected)
         }
         
         @Test("when given a unsupported file extension, it should default to filetypeGeneric asset", arguments: ["bkf", "ISO"])
         func unsupportedFileNameShouldReturnGenericAsset(unsupportedExtension: String) {
             let testFileName = "test.\(unsupportedExtension)"
-            #expect(FileTypes.fileTypeResource(forFileName: testFileName) == .filetypeGeneric)
+            #expect(MEGAAssetsFileType(withFileName: testFileName) == .filetypeGeneric)
         }
     }
     
     @Suite("calls fileTypeResource for file extensions")
     struct CallsFileTypeResourceForFileExtensions {
         @Test("when given a supported file extension, it should return the correct asset", arguments: supportedExtensionArguments())
-        func supportedFileExtensionShouldReturnAssets(fileExtension: String, expected: MEGAAssetsImageName) {
-            #expect(FileTypes.fileTypeResource(forFileExtension: fileExtension) == expected)
+        func supportedFileExtensionShouldReturnAssets(fileExtension: String, expected: MEGAAssetsFileType) {
+            #expect(MEGAAssetsFileType(withFileExtension: fileExtension) == expected)
         }
         
         @Test("when given a unsupported file extension, it should default to filetypeGeneric asset", arguments: ["bkf", "ISO"])
         func unsupportedFileExtensionShouldReturnGenericAsset(unsupportedExtension: String) {
-            #expect(FileTypes.fileTypeResource(forFileExtension: unsupportedExtension) == .filetypeGeneric)
+            #expect(MEGAAssetsFileType(withFileExtension: unsupportedExtension) == .filetypeGeneric)
         }
     }
     
-    static func supportedExtensionArguments() -> [(String, MEGAAssetsImageName)] {
+    static func supportedExtensionArguments() -> [(String, MEGAAssetsFileType)] {
         SupportedFileExtension.allCases.flatMap(\.expectedExtensionForAssetImageName)
     }
     
@@ -141,12 +141,12 @@ struct FileTypesTests {
             }
         }
         
-        var expectedExtensionForAssetImageName: [(String, MEGAAssetsImageName)] {
+        var expectedExtensionForAssetImageName: [(String, MEGAAssetsFileType)] {
             let imageName = expectedMEGAAssetsImageName
             return extensions.map { ($0, imageName) }
         }
         
-        var expectedMEGAAssetsImageName: MEGAAssetsImageName {
+        var expectedMEGAAssetsImageName: MEGAAssetsFileType {
             switch self {
             case .threeDimension:
                 .filetype3D

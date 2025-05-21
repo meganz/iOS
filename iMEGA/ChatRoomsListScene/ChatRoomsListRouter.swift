@@ -1,6 +1,7 @@
 import Chat
 import ChatRepo
 import MEGAAppSDKRepo
+import MEGAAssets
 import MEGADomain
 import MEGAL10n
 import MEGAPermissions
@@ -48,7 +49,7 @@ final class ChatRoomsListRouter: ChatRoomsListRouting {
             viewModel: viewModel
         )
         let navigation = MEGANavigationController(rootViewController: viewController)
-        navigation.tabBarItem = UITabBarItem(title: nil, image: UIImage(resource: .chatIcon), tag: 2)
+        navigation.tabBarItem = UITabBarItem(title: nil, image: MEGAAssets.UIImage.chatIcon, tag: 2)
         navigationController = navigation
         chatRoomsListViewController = viewController
         return navigation
@@ -182,7 +183,7 @@ final class ChatRoomsListRouter: ChatRoomsListRouting {
                 title: Strings.Localizable.markAsRead,
                 detail: nil,
                 accessoryView: nil,
-                image: UIImage(resource: .markUnreadMenu),
+                image: MEGAAssets.UIImage.markUnreadMenu,
                 style: .default) {
                     markAsReadAction()
                 }
@@ -192,7 +193,7 @@ final class ChatRoomsListRouter: ChatRoomsListRouting {
             title: dndEnabled ?  Strings.Localizable.unmute : Strings.Localizable.mute,
             detail: nil,
             accessoryView: nil,
-            image: UIImage(resource: .mutedChatMenu),
+            image: MEGAAssets.UIImage.mutedChatMenu,
             style: .default) {
                 dndAction()
             }
@@ -201,7 +202,7 @@ final class ChatRoomsListRouter: ChatRoomsListRouting {
             title: Strings.Localizable.info,
             detail: nil,
             accessoryView: nil,
-            image: UIImage(resource: .info),
+            image: MEGAAssets.UIImage.info,
             style: .default) {
                 infoAction()
             }
@@ -210,7 +211,7 @@ final class ChatRoomsListRouter: ChatRoomsListRouting {
             title: Strings.Localizable.archiveChat,
             detail: nil,
             accessoryView: nil,
-            image: UIImage(resource: .archiveChat),
+            image: MEGAAssets.UIImage.archiveChat,
             style: .default) {
                 archiveAction()
             }

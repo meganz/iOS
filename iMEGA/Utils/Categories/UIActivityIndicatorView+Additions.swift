@@ -1,3 +1,4 @@
+import MEGAAssets
 import MEGADesignToken
 
 extension UIActivityIndicatorView {
@@ -6,7 +7,7 @@ extension UIActivityIndicatorView {
         var activityIndicatorView: UIActivityIndicatorView
         
         activityIndicatorView = UIActivityIndicatorView.init(style: .medium)
-        activityIndicatorView.color = (activityIndicatorView.traitCollection.userInterfaceStyle == UIUserInterfaceStyle.dark) ? UIColor.whiteFFFFFF : TokenColors.Text.secondary
+        activityIndicatorView.color = (activityIndicatorView.traitCollection.userInterfaceStyle == UIUserInterfaceStyle.dark) ? MEGAAssets.UIColor.whiteFFFFFF : TokenColors.Text.secondary
         
         return activityIndicatorView
     }

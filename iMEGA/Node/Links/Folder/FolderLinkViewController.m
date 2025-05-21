@@ -82,6 +82,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [self configureImages];
+    
     self.currentContentInsetHeight = 0;
     
     self.searchController = [UISearchController customSearchControllerWithSearchResultsUpdaterDelegate:self searchBarDelegate:self];
@@ -112,7 +114,7 @@
     self.navigationItem.title = LocalizedString(@"folderLink", @"");
     
     self.moreBarButtonItem.title = nil;
-    self.moreBarButtonItem.image = [UIImage imageNamed:@"moreNavigationBar"];
+    self.moreBarButtonItem.image = [UIImage megaImageWithNamed:@"moreNavigationBar"];
 
     self.editBarButtonItem.title = LocalizedString(@"cancel", @"Button title to cancel something");
 
@@ -200,6 +202,14 @@
 }
 
 #pragma mark - Private
+
+- (void)configureImages {
+    self.selectAllBarButtonItem.image = [UIImage megaImageWithNamed:@"selectAllItems"];
+    self.moreBarButtonItem.image = [UIImage megaImageWithNamed:@"moreNavigationBar"];
+    self.importBarButtonItem.image = [UIImage megaImageWithNamed:@"import"];
+    self.downloadBarButtonItem.image = [UIImage megaImageWithNamed:@"offline"];
+    self.shareLinkBarButtonItem.image = [UIImage megaImageWithNamed:@"link"];
+}
 
 - (void)reloadUI {
     if (!self.parentNode) {
@@ -551,7 +561,7 @@
         self.moreBarButtonItem.title = nil;
         self.moreBarButtonItem.action = nil;
         self.moreBarButtonItem.target = nil;
-        self.moreBarButtonItem.image = [UIImage imageNamed:@"moreNavigationBar"];
+        self.moreBarButtonItem.image = [UIImage megaImageWithNamed:@"moreNavigationBar"];
         [self setMoreButton];
 
         [self setAllNodesSelected:NO];
@@ -745,12 +755,12 @@
         }
         
          if (self.searchController.isActive) {
-             return [UIImage imageNamed:@"searchEmptyState"];
+             return [UIImage megaImageWithNamed:@"searchEmptyState"];
          }
         
-        return [UIImage imageNamed:@"folderEmptyState"];
+        return [UIImage megaImageWithNamed:@"folderEmptyState"];
     } else {
-        return [UIImage imageNamed:@"noInternetEmptyState"];
+        return [UIImage megaImageWithNamed:@"noInternetEmptyState"];
     }
 }
 

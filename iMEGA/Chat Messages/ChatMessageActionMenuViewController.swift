@@ -1,4 +1,5 @@
 import Haptica
+import MEGAAssets
 import MEGADesignToken
 import MEGAL10n
 import UIKit
@@ -14,70 +15,70 @@ class ChatMessageActionMenuViewController: ActionSheetViewController {
     }
     
     var sender: UIView?
-    lazy var forwardAction = ActionSheetAction(title: Strings.Localizable.forward, detail: nil, image: UIImage(resource: .forwardToolbar), style: .default) {
+    lazy var forwardAction = ActionSheetAction(title: Strings.Localizable.forward, detail: nil, image: MEGAAssets.UIImage.forwardToolbar, style: .default) {
         guard let chatMessage = self.chatMessage else {
             return
         }
         self.chatViewController?.forwardMessage(chatMessage)
      }
     
-     lazy var editAction = ActionSheetAction(title: Strings.Localizable.edit, detail: nil, image: UIImage(resource: .rename), style: .default) {
+     lazy var editAction = ActionSheetAction(title: Strings.Localizable.edit, detail: nil, image: MEGAAssets.UIImage.rename, style: .default) {
         guard let chatMessage = self.chatMessage else {
             return
         }
         self.chatViewController?.editMessage(chatMessage)
     }
     
-    lazy var copyAction = ActionSheetAction(title: Strings.Localizable.copy, detail: nil, image: UIImage(resource: .copy), style: .default) {
+    lazy var copyAction = ActionSheetAction(title: Strings.Localizable.copy, detail: nil, image: MEGAAssets.UIImage.copy, style: .default) {
         guard let chatMessage = self.chatMessage else {
             return
         }
         self.chatViewController?.copyMessage(chatMessage)
     }
 
-    lazy var deleteAction = ActionSheetAction(title: Strings.Localizable.delete, detail: nil, image: UIImage(resource: .delete), style: .destructive) {
+    lazy var deleteAction = ActionSheetAction(title: Strings.Localizable.delete, detail: nil, image: MEGAAssets.UIImage.delete, style: .destructive) {
         guard let chatMessage = self.chatMessage else {
             return
         }
         self.chatViewController?.deleteMessage(chatMessage)
     }
     
-    lazy var saveForOfflineAction = ActionSheetAction(title: Strings.Localizable.General.downloadToOffline, detail: nil, image: UIImage(resource: .offline), style: .default) {
+    lazy var saveForOfflineAction = ActionSheetAction(title: Strings.Localizable.General.downloadToOffline, detail: nil, image: MEGAAssets.UIImage.offline, style: .default) {
         guard let chatMessage = self.chatMessage else {
             return
         }
         self.chatViewController?.downloadMessage([chatMessage])
     }
     
-    lazy var importAction = ActionSheetAction(title: Strings.Localizable.importToCloudDrive, detail: nil, image: UIImage(resource: .import), style: .default) {
+    lazy var importAction = ActionSheetAction(title: Strings.Localizable.importToCloudDrive, detail: nil, image: MEGAAssets.UIImage.import, style: .default) {
         guard let chatMessage = self.chatMessage else {
             return
         }
         self.chatViewController?.importMessage([chatMessage])
     }
     
-    lazy var addContactAction = ActionSheetAction(title: Strings.Localizable.addContact, detail: nil, image: UIImage(resource: .addContact), style: .default) {
+    lazy var addContactAction = ActionSheetAction(title: Strings.Localizable.addContact, detail: nil, image: MEGAAssets.UIImage.addContact, style: .default) {
         guard let chatMessage = self.chatMessage else {
             return
         }
         self.chatViewController?.addContactMessage(chatMessage)
     }
     
-    lazy var removeRichLinkAction = ActionSheetAction(title: Strings.Localizable.removePreview, detail: nil, image: UIImage(resource: .removeLink), style: .default) {
+    lazy var removeRichLinkAction = ActionSheetAction(title: Strings.Localizable.removePreview, detail: nil, image: MEGAAssets.UIImage.removeLink, style: .default) {
         guard let chatMessage = self.chatMessage else {
             return
         }
         self.chatViewController?.removeRichPreview(chatMessage)
     }
     
-    lazy var saveToPhotosAction = ActionSheetAction(title: Strings.Localizable.saveToPhotos, detail: nil, image: UIImage(resource: .saveToPhotos), style: .default) {
+    lazy var saveToPhotosAction = ActionSheetAction(title: Strings.Localizable.saveToPhotos, detail: nil, image: MEGAAssets.UIImage.saveToPhotos, style: .default) {
         guard let chatMessage = self.chatMessage else {
             return
         }
         self.chatViewController?.saveToPhotos([chatMessage])
     }
     
-    lazy var exportMessagesAction = ActionSheetAction(title: Strings.Localizable.General.export, detail: nil, image: UIImage(resource: .export), style: .default) {
+    lazy var exportMessagesAction = ActionSheetAction(title: Strings.Localizable.General.export, detail: nil, image: MEGAAssets.UIImage.export, style: .default) {
         guard let chatMessage = self.chatMessage, let presenter = self.chatViewController else {
             return
         }
@@ -85,7 +86,7 @@ class ChatMessageActionMenuViewController: ActionSheetViewController {
         ExportFileRouter.init(presenter: presenter, sender: self.sender).export(messages: [chatMessage.message.toChatMessageEntity()], chatId: chatMessage.chatRoom.chatId)
     }
     
-    lazy var selectAction = ActionSheetAction(title: Strings.Localizable.select, detail: nil, image: .selectItem, style: .default) {
+    lazy var selectAction = ActionSheetAction(title: Strings.Localizable.select, detail: nil, image: MEGAAssets.UIImage.selectItem, style: .default) {
         guard let chatMessage = self.chatMessage else {
             return
         }
@@ -295,10 +296,10 @@ class ChatMessageActionMenuViewController: ActionSheetViewController {
             if emoji != "" {
                 let attributedEmoji = NSAttributedString(string: emoji, attributes: [NSAttributedString.Key.font: UIFont(name: "Apple color emoji", size: 30) as Any])
                 emojiView.setAttributedTitle(attributedEmoji, for: .normal)
-                emojiView.backgroundColor = UIColor.whiteF2F2F2
+                emojiView.backgroundColor = MEGAAssets.UIColor.whiteF2F2F2
                 emojiView.addTarget(self, action: #selector(emojiPress(_:)), for: .touchUpInside)
             } else {
-                emojiView.setImage(UIImage(resource: .addReactionSmall), for: .normal)
+                emojiView.setImage(MEGAAssets.UIImage.addReactionSmall, for: .normal)
                 emojiView.backgroundColor = UIColor.surface1Background()
                 emojiView.imageView?.contentMode = .scaleAspectFit
                 emojiView.addTarget(self, action: #selector(addMorePress(_:)), for: .touchUpInside)

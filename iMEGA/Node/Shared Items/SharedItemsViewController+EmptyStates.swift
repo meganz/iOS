@@ -1,3 +1,4 @@
+import MEGAAssets
 import MEGAL10n
 
 extension SharedItemsViewController: DZNEmptyDataSetSource {
@@ -39,21 +40,21 @@ extension SharedItemsViewController: DZNEmptyDataSetSource {
         if MEGAReachabilityManager.isReachable() {
             if searchController.isActive {
                 if let text = searchController.searchBar.text, !text.isEmpty {
-                    return UIImage.searchEmptyState
+                    return MEGAAssets.UIImage.searchEmptyState
                 } else {
                     return nil
                 }
             } else {
                 if incomingButton?.isSelected ?? false {
-                    return UIImage.incomingEmptyState
+                    return MEGAAssets.UIImage.incomingEmptyState
                 } else if outgoingButton?.isSelected ?? false {
-                    return UIImage.outgoingEmptyState
+                    return MEGAAssets.UIImage.outgoingEmptyState
                 } else if linksButton?.isSelected ?? false {
-                    return UIImage.linksEmptyState
+                    return MEGAAssets.UIImage.linksEmptyState
                 }
             }
         } else {
-            return UIImage.noInternetEmptyState
+            return MEGAAssets.UIImage.noInternetEmptyState
         }
         
         return nil

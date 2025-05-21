@@ -38,7 +38,7 @@ struct AdsFreeView: View {
     
     private var headerView: some View {
         VStack(spacing: 10) {
-            Image(uiImage: MEGAAssetsImageProvider.image(named: "onboardingHeader"))
+            Image(uiImage: MEGAAssets.UIImage.image(named: "onboardingHeader"))
             
             Text(Strings.Localizable.Ads.AdFree.Header.title)
                 .font(.title3)
@@ -58,17 +58,17 @@ struct AdsFreeView: View {
         VStack(spacing: 30) {
             Group {
                 ProPlanFeatureView(
-                    image: MEGAAssetsImageProvider.image(named: "storage"),
+                    image: MEGAAssets.UIImage.image(named: "storage"),
                     title: Strings.Localizable.Ads.AdFree.Content.GenerousStorage.title,
                     message: Strings.Localizable.Ads.AdFree.Content.GenerousStorage.message(viewModel.lowestProPlan.storage)
                 )
                 ProPlanFeatureView(
-                    image: MEGAAssetsImageProvider.image(named: "pieChart"),
+                    image: MEGAAssets.UIImage.image(named: "pieChart"),
                     title: Strings.Localizable.Ads.AdFree.Content.TransferSharing.title,
                     message: Strings.Localizable.Ads.AdFree.Content.TransferSharing.message
                 )
                 ProPlanFeatureView(
-                    image: MEGAAssetsImageProvider.image(named: "securityLock"),
+                    image: MEGAAssets.UIImage.image(named: "securityLock"),
                     title: Strings.Localizable.Ads.AdFree.Content.AdditionalSecurity.title,
                     message: Strings.Localizable.Ads.AdFree.Content.AdditionalSecurity.message
                 )

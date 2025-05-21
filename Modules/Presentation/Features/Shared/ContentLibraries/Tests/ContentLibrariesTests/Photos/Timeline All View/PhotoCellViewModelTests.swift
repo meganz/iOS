@@ -46,7 +46,7 @@ final class PhotoCellViewModelTests: XCTestCase {
     
     @MainActor
     func testInit_defaultValue() {
-        let initialContainer = ImageContainer(image: MEGAAssetsImageProvider.fileTypeResource(forFileName: "0.jpg"), type: .placeholder)
+        let initialContainer = ImageContainer(image: MEGAAssets.Image.image(forFileName: "0.jpg"), type: .placeholder)
         let sut = makeSUT(photo: NodeEntity(name: "0.jpg", handle: 0),
                                      viewModel: allViewModel,
                           thumbnailLoader: MockThumbnailLoader(initialImage: initialContainer))
@@ -187,7 +187,7 @@ final class PhotoCellViewModelTests: XCTestCase {
     
     @MainActor
     func testLoadThumbnail_noThumbnails_showPlaceholder() async {
-        let placeholder = ImageContainer(image: MEGAAssetsImageProvider.image(named: .filetypeImages), type: .placeholder)
+        let placeholder = ImageContainer(image: MEGAAssets.Image.filetypeImages, type: .placeholder)
         let sut = makeSUT(
             photo: NodeEntity(name: "0.jpg", handle: 0),
             viewModel: allViewModel,
@@ -211,7 +211,7 @@ final class PhotoCellViewModelTests: XCTestCase {
     
     @MainActor
     func testLoadThumbnail_noCachedThumbnailAndNonSingleColumn_loadThumbnail() {
-        let placeholder = ImageContainer(image: MEGAAssetsImageProvider.image(named: .filetypeImages), type: .placeholder)
+        let placeholder = ImageContainer(image: MEGAAssets.Image.filetypeImages, type: .placeholder)
         let thumbnailContainer = ImageContainer(image: Image("folder"), type: .thumbnail)
         let loadImageAsyncSequence = SingleItemAsyncSequence<any ImageContaining>(item: thumbnailContainer)
             .eraseToAnyAsyncSequence()
@@ -248,7 +248,7 @@ final class PhotoCellViewModelTests: XCTestCase {
     
     @MainActor
     func testLoadThumbnail_noCachedThumbnailAndZoomInToSingleColumn_loadBothThumbnailAndPreview() {
-        let placeholder = ImageContainer(image: MEGAAssetsImageProvider.image(named: .filetypeImages), type: .placeholder)
+        let placeholder = ImageContainer(image: MEGAAssets.Image.filetypeImages, type: .placeholder)
         let remoteThumbnail = ImageContainer(image: Image("folder.fill"), type: .thumbnail)
         let previewContainer = ImageContainer(image: Image("folder"), type: .preview)
         

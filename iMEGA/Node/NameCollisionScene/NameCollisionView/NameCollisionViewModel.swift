@@ -55,7 +55,7 @@ final class NameCollisionViewModel: ObservableObject {
         self.collisions = collisions
         self.collisionType = collisionType
         self.isFolderLink = isFolderLink
-        self.duplicatedItem = DuplicatedItem(name: "", isFile: false, size: "", date: "", imagePlaceholder: MEGAAssetsImageProvider.image(named: .photoCardPlaceholder))
+        self.duplicatedItem = DuplicatedItem(name: "", isFile: false, size: "", date: "", imagePlaceholder: MEGAAssets.Image.photoCardPlaceholder)
         
         Task {
             do {
@@ -306,7 +306,7 @@ final class NameCollisionViewModel: ObservableObject {
             isFile: collision.isFile,
             size: nameCollisionUseCase.sizeForFile(at: url),
             date: nameCollisionUseCase.creationDateForFile(at: url),
-            imagePlaceholder: collision.isFile ? MEGAAssetsImageProvider.fileTypeResource(forFileName: collision.name) : MEGAAssetsImageProvider.image(named: .filetypeFolder),
+            imagePlaceholder: collision.isFile ? MEGAAssets.Image.image(forFileName: collision.name) : MEGAAssets.Image.filetypeFolder,
             collisionFileSize: nameCollisionUseCase.sizeForNode(handle: collisionNodeHandle),
             collisionFileDate: nameCollisionUseCase.creationDateForNode(handle: collisionNodeHandle),
             collisionNodeHandle: collisionNodeHandle)
@@ -323,7 +323,7 @@ final class NameCollisionViewModel: ObservableObject {
             isFile: collision.isFile,
             size: nameCollisionUseCase.sizeForNode(handle: nodeHandle),
             date: nameCollisionUseCase.creationDateForNode(handle: collisionNodeHandle),
-            imagePlaceholder: collision.isFile ? MEGAAssetsImageProvider.fileTypeResource(forFileName: collision.name) : MEGAAssetsImageProvider.image(named: .filetypeFolder),
+            imagePlaceholder: collision.isFile ? MEGAAssets.Image.image(forFileName: collision.name) : MEGAAssets.Image.filetypeFolder,
             collisionFileSize: nameCollisionUseCase.sizeForNode(handle: collisionNodeHandle),
             collisionFileDate: nameCollisionUseCase.creationDateForNode(handle: collisionNodeHandle),
             collisionNodeHandle: collisionNodeHandle)

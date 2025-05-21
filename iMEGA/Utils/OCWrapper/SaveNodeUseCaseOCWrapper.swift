@@ -1,4 +1,5 @@
 import MEGAAppSDKRepo
+import MEGAAssets
 import MEGADomain
 import MEGAL10n
 import MEGAPreference
@@ -38,7 +39,7 @@ import MEGARepo
             transferInventoryRepository: TransferInventoryRepository.newRepo, fileSystemRepository: FileSystemRepository.sharedRepo)
         let anyPendingSavePhotosTransfer = transferInventoryUseCase.saveToPhotosTransfers(filteringUserTransfer: true)?.isNotEmpty ?? false
         if savedToPhotos, !anyPendingSavePhotosTransfer {
-            await SVProgressHUD.show(UIImage.saveToPhotos, status: Strings.Localizable.savedToPhotos)
+            await SVProgressHUD.show(MEGAAssets.UIImage.saveToPhotos, status: Strings.Localizable.savedToPhotos)
         }
     }
 }

@@ -1,3 +1,4 @@
+import MEGAAssets
 import MEGADesignToken
 import MEGAL10n
 import MEGASwiftUI
@@ -49,7 +50,7 @@ struct NodeBrowserView: View {
         ToolbarItem(placement: .topBarLeading) {
             Button(
                 action: { viewModel.selectAll() },
-                label: { Image(.selectAllItems) }
+                label: { MEGAAssets.Image.selectAllItems }
             )
         }
 
@@ -68,7 +69,7 @@ struct NodeBrowserView: View {
         case .editing:
             Button(
                 action: { viewModel.selectAll() },
-                label: { Image(.selectAllItems) }
+                label: { MEGAAssets.Image.selectAllItems }
             )
         case .regular(let leftBarButton):
             switch leftBarButton {

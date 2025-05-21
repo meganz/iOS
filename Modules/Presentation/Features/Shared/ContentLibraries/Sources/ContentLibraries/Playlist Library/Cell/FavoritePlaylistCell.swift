@@ -133,14 +133,14 @@ struct ThumbnailLayerView: View {
     private var centerBackgroundImage: Image {
         switch videoPlaylistType {
         case .favourite:
-            MEGAAssetsImageProvider.image(named: .favouritePlaylistThumbnail)
+            MEGAAssets.Image.favouritePlaylistThumbnail
         case .user:
-            MEGAAssetsImageProvider.image(named: .rectangleVideoStack)
+            MEGAAssets.Image.rectangleVideoStack
         }
     }
     
     private func playlistIcon() -> some View {
-        MEGAAssetsImageProvider.image(named: .rectangleVideoStack)
+        MEGAAssets.Image.rectangleVideoStack
             .resizable()
             .foregroundStyle(TokenColors.Text.onColor.swiftUI)
             .frame(width: 16, height: 16)

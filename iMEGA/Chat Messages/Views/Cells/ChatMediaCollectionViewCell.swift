@@ -1,3 +1,4 @@
+import MEGAAssets
 import MEGADesignToken
 import MEGADomain
 import MessageKit
@@ -32,14 +33,14 @@ class ChatMediaCollectionViewCell: MessageContentCell, MEGATransferDelegate {
     }()
     
     open var downloadGifIcon: UIImageView = {
-        let downloadGifIcon = UIImageView(image: UIImage(resource: .downloadGif))
+        let downloadGifIcon = UIImageView(image: MEGAAssets.UIImage.downloadGif)
         downloadGifIcon.translatesAutoresizingMaskIntoConstraints = false
         downloadGifIcon.isHidden = true
         return downloadGifIcon
     }()
     
     open var playIconView: UIImageView = {
-        let playIconView = UIImageView(image: UIImage(resource: .playButton))
+        let playIconView = UIImageView(image: MEGAAssets.UIImage.playButton)
         playIconView.translatesAutoresizingMaskIntoConstraints = false
         playIconView.isHidden = true
         return playIconView
@@ -64,7 +65,7 @@ class ChatMediaCollectionViewCell: MessageContentCell, MEGATransferDelegate {
     open var durationLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.textColor = UIColor.whiteFFFFFF
+        label.textColor = MEGAAssets.UIColor.whiteFFFFFF
         label.font = UIFont.preferredFont(forTextStyle: .caption1)
         label.layer.shadowColor = TokenColors.Background.blur.cgColor
         label.layer.shadowOffset = CGSize(width: 0, height: 1)

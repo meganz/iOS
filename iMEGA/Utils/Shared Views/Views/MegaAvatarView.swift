@@ -1,5 +1,6 @@
 import ChatRepo
 import GKContactImage
+import MEGAAssets
 import MEGADesignToken
 import MEGADomain
 import UIKit
@@ -63,8 +64,8 @@ class MegaAvatarView: UIView {
             avatarImageView.image = UIImage.init(forName: chatRoom.title?.uppercased(),
                                                  size: avatarImageView.frame.size,
                                                  backgroundColor: TokenColors.Icon.secondary,
-                                                 backgroundGradientColor: UIColor.grayDBDBDB,
-                                                 textColor: UIColor.whiteFFFFFF,
+                                                 backgroundGradientColor: MEGAAssets.UIColor.grayDBDBDB,
+                                                 textColor: MEGAAssets.UIColor.whiteFFFFFF,
                                                  font: font)
             configure(mode: .single)
         } else {

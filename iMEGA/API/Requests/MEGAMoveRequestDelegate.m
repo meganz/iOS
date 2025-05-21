@@ -47,7 +47,7 @@
         [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
         
         NSString *message = [RemovalConfirmationMessageGenerator messageForRemovedFiles:self.numberOfFiles andFolders:self.numberOfFolders];
-        [SVProgressHUD showImage:[UIImage imageNamed:@"rubbishBin"] status:message];
+        [SVProgressHUD showImage:[UIImage megaImageWithNamed:@"rubbishBin"] status:message];
         
         if (self.completion) {
             self.completion();

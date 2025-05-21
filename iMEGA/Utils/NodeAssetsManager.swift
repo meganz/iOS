@@ -19,33 +19,33 @@ import MEGARepo
     func icon(for node: NodeEntity) -> UIImage {
         switch node.nodeType {
         case .file:
-            return image(for: node.name.pathExtension)
+            return image(for: node.name.pathExtension) ?? MEGAAssets.UIImage.filetypeGeneric
         case .folder:
             if MyChatFilesFolderNodeAccess.shared.isTargetNode(for: node) {
-                return UIImage.folderChat
+                return MEGAAssets.UIImage.folderChat
             }
             if CameraUploadNodeAccess.shared.isTargetNode(for: node) {
-                return UIImage.filetypeFolderCamera
+                return MEGAAssets.UIImage.filetypeFolderCamera
             }
             return commonFolderImage(for: node)
         case .incoming:
-            return node.isFolder ? commonFolderImage(for: node) : UIImage(resource: .filetypeGeneric)
+            return node.isFolder ? commonFolderImage(for: node) : MEGAAssets.UIImage.filetypeGeneric
         default:
-            return UIImage(resource: .filetypeGeneric)
+            return MEGAAssets.UIImage.filetypeGeneric
         }
     }
     
-    @objc func image(for extension: String) -> UIImage {
-        MEGAAssetsImageProvider.fileTypeResource(forFileExtension: `extension`)
+    @objc func image(for extension: String) -> UIImage? {
+        MEGAAssets.UIImage.image(forFileExtension: `extension`)
     }
             
     private func commonFolderImage(for node: NodeEntity) -> UIImage {
         if node.isInShare {
-            return UIImage.folderIncoming
+            return MEGAAssets.UIImage.folderIncoming
         } else if node.isOutShare {
-            return UIImage.folderOutgoing
+            return MEGAAssets.UIImage.folderOutgoing
         } else {
-            return UIImage(resource: .filetypeFolder)
+            return MEGAAssets.UIImage.filetypeFolder
         }
     }
 }

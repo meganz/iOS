@@ -57,6 +57,7 @@
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <connections>
+                <outlet property="disclosureImageView" destination="205-SW-d5n" id="chs-kF-Qsk"/>
                 <outlet property="seeAllLabel" destination="SgT-cK-cIf" id="Kgn-55-fki"/>
             </connections>
             <point key="canvasLocation" x="139" y="21"/>

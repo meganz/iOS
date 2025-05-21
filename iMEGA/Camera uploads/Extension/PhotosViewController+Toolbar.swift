@@ -1,3 +1,5 @@
+import MEGAAssets
+
 extension PhotosViewController {
     
     @objc func setToolbarActionsEnabled(in toolbar: UIToolbar?, isEnabled: Bool) {
@@ -26,15 +28,15 @@ extension PhotosViewController {
         }
         
         let toolBarItems = [
-            createBarButtonItem(.offline, #selector(downloadAction)),
+            createBarButtonItem(MEGAAssets.UIImage.offline, #selector(downloadAction)),
             flexibleItem,
-            createBarButtonItem(.link, #selector(shareLinkAction)),
+            createBarButtonItem(MEGAAssets.UIImage.link, #selector(shareLinkAction)),
             flexibleItem,
-            createBarButtonItem(.addTo, #selector(addToAction)),
+            createBarButtonItem(MEGAAssets.UIImage.addTo, #selector(addToAction)),
             flexibleItem,
-            createBarButtonItem(.rubbishBin, #selector(deleteAction)),
+            createBarButtonItem(MEGAAssets.UIImage.rubbishBin, #selector(deleteAction)),
             flexibleItem,
-            createBarButtonItem(.moreNavigationBar, #selector(moreAction))
+            createBarButtonItem(MEGAAssets.UIImage.moreNavigationBar, #selector(moreAction))
         ]
         
         toolbar.setItems(toolBarItems, animated: false)

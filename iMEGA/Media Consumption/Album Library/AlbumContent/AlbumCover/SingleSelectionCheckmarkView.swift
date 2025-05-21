@@ -1,3 +1,4 @@
+import MEGAAssets
 import MEGADesignToken
 import SwiftUI
 
@@ -9,7 +10,7 @@ struct SingleSelectionCheckmarkView: View {
     }
     
     private var backgroundView: some View {
-        markedSelected ? UIColor.whiteFFFFFF.swiftUI.mask(Circle()) : nil
+        markedSelected ? MEGAAssets.UIColor.whiteFFFFFF.swiftUI.mask(Circle()) : nil
     }
     
     var body: some View {

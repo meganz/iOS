@@ -1,3 +1,5 @@
+import MEGAAssets
+
 class ExplorerToolbarConfigurator {
     typealias ButtonAction = (UIBarButtonItem) -> Void
     let downloadAction: ButtonAction
@@ -14,49 +16,49 @@ class ExplorerToolbarConfigurator {
     )
     
     lazy var downloadItem = UIBarButtonItem(
-        image: UIImage.offline,
+        image: MEGAAssets.UIImage.offline,
         style: .plain,
         target: self,
         action: #selector(buttonPressed(_:))
     )
     
     lazy var shareLinkItem = UIBarButtonItem(
-        image: UIImage.link,
+        image: MEGAAssets.UIImage.link,
         style: .plain,
         target: self,
         action: #selector(buttonPressed(_:))
     )
     
     lazy var moveItem = UIBarButtonItem(
-        image: UIImage.move,
+        image: MEGAAssets.UIImage.move,
         style: .plain,
         target: self,
         action: #selector(buttonPressed(_:))
     )
     
     lazy var copyItem = UIBarButtonItem(
-        image: UIImage.copy,
+        image: MEGAAssets.UIImage.copy,
         style: .plain,
         target: self,
         action: #selector(buttonPressed(_:))
     )
     
     lazy var deleteItem = UIBarButtonItem(
-        image: UIImage.rubbishBin,
+        image: MEGAAssets.UIImage.rubbishBin,
         style: .plain,
         target: self,
         action: #selector(buttonPressed(_:))
     )
     
     lazy var exportItem = UIBarButtonItem(
-        image: UIImage.export,
+        image: MEGAAssets.UIImage.export,
         style: .plain,
         target: self,
         action: #selector(buttonPressed(_:))
     )
     
     lazy var moreItem = UIBarButtonItem(
-        image: UIImage.moreNavigationBar,
+        image: MEGAAssets.UIImage.moreNavigationBar,
         style: .plain,
         target: self,
         action: #selector(buttonPressed(_:))

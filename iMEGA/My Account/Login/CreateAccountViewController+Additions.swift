@@ -1,3 +1,4 @@
+import MEGAAssets
 import MEGADesignToken
 import MEGAL10n
 
@@ -26,8 +27,10 @@ extension CreateAccountViewController {
     }
     
     @objc func setUpCheckBoxButton() {
-        termsCheckboxButton.setImage(UIImage.checkBoxSelectedSemantic, for: .selected)
-        termsForLosingPasswordCheckboxButton.setImage(UIImage.checkBoxSelectedSemantic, for: .selected)
+        termsCheckboxButton.setImage(MEGAAssets.UIImage.checkBoxSelectedSemantic, for: .selected)
+        termsCheckboxButton.setImage(MEGAAssets.UIImage.checkBoxUnselected, for: .normal)
+        termsForLosingPasswordCheckboxButton.setImage(MEGAAssets.UIImage.checkBoxSelectedSemantic, for: .selected)
+        termsForLosingPasswordCheckboxButton.setImage(MEGAAssets.UIImage.checkBoxUnselected, for: .normal)
     }
     
     @objc func termPrimaryTextColor() -> UIColor {

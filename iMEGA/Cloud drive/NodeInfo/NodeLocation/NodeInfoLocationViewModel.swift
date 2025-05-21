@@ -1,4 +1,5 @@
 import CoreLocation
+import MEGAAssets
 import MEGADomain
 import MEGAL10n
 import MEGASwiftUI
@@ -52,7 +53,7 @@ final class NodeInfoLocationViewModel: ObservableObject {
     }
     
     private static func emptyState() -> ViewState {
-        .empty(icon: Image(uiImage: .info), 
+        .empty(icon: MEGAAssets.Image.info,
                label: Strings.Localizable.CloudDrive.Info.Node.noLocation)
     }
 }

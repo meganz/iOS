@@ -1,4 +1,5 @@
 import MEGAAppSDKRepo
+import MEGAAssets
 import MEGADesignToken
 import MEGADomain
 import MEGASdk
@@ -17,8 +18,9 @@ extension NodeCollectionViewCell {
         }
     }
     
-    open override func awakeFromNib() {
-        super.awakeFromNib()
+    /// Remove `awakeFromNib` from this extension and call `configureDurationLabel` in `awakeFromNib` in .m file instead
+    /// Reason: Having `awakeFromNib` in both .m file and swift extension resulting in only code in swift is executed,
+    @objc func configureDurationLabel() {
         durationLabel?.layer.cornerRadius = 4
         durationLabel?.layer.masksToBounds = true
     }
@@ -148,10 +150,10 @@ extension NodeCollectionViewCell {
     
     @objc func updateSelection() {
         if moreButton?.isHidden ?? false && self.isSelected {
-            selectImageView?.image = UIImage.checkBoxSelectedSemantic
+            selectImageView?.image = MEGAAssets.UIImage.checkBoxSelectedSemantic
             self.contentView.layer.borderColor = TokenColors.Support.success.cgColor
         } else {
-            selectImageView?.image = UIImage(resource: .checkBoxUnselected)
+            selectImageView?.image = MEGAAssets.UIImage.checkBoxUnselected
             self.contentView.layer.borderColor = TokenColors.Border.strong.cgColor
         }
     }

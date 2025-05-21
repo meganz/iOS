@@ -17,6 +17,7 @@
 @property (weak, nonatomic) IBOutlet UIView *mapOptionsView;
 @property (weak, nonatomic) IBOutlet UIView *sendLocationView;
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
+@property (weak, nonatomic) IBOutlet UIButton *locationButton;
 @property (weak, nonatomic) IBOutlet UILabel *sendLocationLabel;
 @property (weak, nonatomic) IBOutlet UILabel *subtitleLabel;
 
@@ -92,6 +93,8 @@
     
     [AppearanceManager forceSearchBarUpdate:self.searchController.searchBar 
        backgroundColorWhenDesignTokenEnable:[UIColor surface1Background]];
+    
+    [self configureImages];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -110,6 +113,11 @@
 }
 
 #pragma mark - Private
+
+- (void)configureImages {
+    [self.locationButton setImage:[UIImage megaImageWithNamed:@"location"] forState:UIControlStateNormal];
+    self.imageView.image = [UIImage megaImageWithNamed:@"sendThisLocation"];
+}
 
 - (void)updateAppearance {
     self.mapOptionsView.backgroundColor = self.sendLocationView.backgroundColor = UIColor.systemBackgroundColor;

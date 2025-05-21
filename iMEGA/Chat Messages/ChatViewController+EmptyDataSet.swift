@@ -1,3 +1,4 @@
+import MEGAAssets
 import UIKit
 
 extension ChatViewController: DZNEmptyDataSetSource {
@@ -5,7 +6,7 @@ extension ChatViewController: DZNEmptyDataSetSource {
     func customView(forEmptyDataSet scrollView: UIScrollView) -> UIView? {
 
         if chatRoomDelegate.loadingState {
-            return UIImageView(image: UIImage(resource: .chatroomLoading))
+            return UIImageView(image: MEGAAssets.UIImage.chatroomLoading)
         }
         
         return wrappedIntroductionView()

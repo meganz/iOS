@@ -58,6 +58,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [self configureImages];
+    
     if (self.node == nil && self.nodeHandle != MEGAInvalidHandle) {
         self.node = [MEGASdk.shared nodeForHandle:self.nodeHandle];
     }
@@ -139,6 +141,14 @@
 }
 
 #pragma mark - Private
+- (void)configureImages {
+    self.exportFileBarButtonItem.image = [UIImage megaImageWithNamed:@"export"];
+    self.importBarButtonItem.image = [UIImage megaImageWithNamed:@"import"];
+    self.downloadBarButtonItem.image = [UIImage megaImageWithNamed:@"offline"];
+    self.moreBarButtonItem.image = [UIImage megaImageWithNamed:@"moreNavigationBar"];
+    self.searchBarButtonItem.image = [UIImage megaImageWithNamed:@"search"];
+    self.thumbnailBarButtonItem.image = [UIImage megaImageWithNamed:@"thumbnailsThin"];
+}
 
 - (void)configureNavigation {
     [self setTitle:self.node.name];
@@ -294,10 +304,10 @@
             self.thumbnailsPopulated = YES;
         }
         self.collectionView.hidden = NO;
-        self.thumbnailBarButtonItem.image = [UIImage imageNamed:@"pageView"];
+        self.thumbnailBarButtonItem.image = [UIImage megaImageWithNamed:@"pageView"];
     } else {
         self.collectionView.hidden = YES;
-        self.thumbnailBarButtonItem.image = [UIImage imageNamed:@"thumbnailsThin"];
+        self.thumbnailBarButtonItem.image = [UIImage megaImageWithNamed:@"thumbnailsThin"];
     }
 }
 
@@ -625,7 +635,7 @@
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     [self.pdfView setScaleFactor:self.pdfView.scaleFactorForSizeToFit];
     [self.pdfView goToPage:[self.pdfView.document pageAtIndex:indexPath.item]];
-    self.thumbnailBarButtonItem.image = [UIImage imageNamed:@"thumbnailsThin"];
+    self.thumbnailBarButtonItem.image = [UIImage megaImageWithNamed:@"thumbnailsThin"];
     self.collectionView.hidden = YES;
 }
 
@@ -658,7 +668,7 @@
                     [self.thumbnailCache setObject:thumbnail forKey:cachedImageKey];
                 }
             } @catch (NSException *exception) {
-                imageView.image = [UIImage imageNamed:@"pdf"];
+                imageView.image = [UIImage megaImageWithNamed:@"pdf"];
                 MEGALogError(@"Exception during thumbnail caching: %@", exception);
             }
         }
@@ -670,7 +680,7 @@
 - (void)didSelectSearchResult:(PDFSelection *)result {
     if (!self.collectionView.hidden) {
         self.collectionView.hidden = YES;
-        self.thumbnailBarButtonItem.image = [UIImage imageNamed:@"thumbnailsThin"];
+        self.thumbnailBarButtonItem.image = [UIImage megaImageWithNamed:@"thumbnailsThin"];
     }
     result.color = UIColor.systemYellowColor;
     [self.pdfView setCurrentSelection:result];

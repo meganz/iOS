@@ -1,3 +1,4 @@
+import MEGAAssets
 import MEGAL10n
 import UIKit
 
@@ -33,6 +34,8 @@ class EncourageGuestUserToJoinMegaViewController: UIViewController {
             action: #selector(dismissVC(_:))
         )
         
+        configureImages()
+        
         createAccountButton.setTitle(Strings.Localizable.createAccount, for: .normal)
         createAccountButton.mnz_setupPrimary()
         
@@ -41,6 +44,10 @@ class EncourageGuestUserToJoinMegaViewController: UIViewController {
 
         paragraph2TitleLabel.text = Strings.Localizable.Meetings.JoinMega.Paragraph2.title
         paragraph2SubtitleLabel.text = Strings.Localizable.Meetings.JoinMega.Paragraph2.description
+    }
+    
+    private func configureImages() {
+        imageView.image = MEGAAssets.UIImage.image(named: "il_meeting")
     }
     
     @objc private func dismissVC(_ barButtonItem: UIBarButtonItem) {

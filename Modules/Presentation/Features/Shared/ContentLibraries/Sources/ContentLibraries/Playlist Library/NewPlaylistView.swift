@@ -39,7 +39,7 @@ public struct NewPlaylistView: View {
                     Circle()
                         .frame(width: 44, height: 44)
                     
-                    MEGAAssetsImageProvider.image(named: .navigationBarAdd)
+                    MEGAAssets.Image.navigationBarAdd
                         .renderingMode(.template)
                         .resizable()
                         .frame(width: 22, height: 22)

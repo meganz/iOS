@@ -1,6 +1,7 @@
 import ChatRepo
 import ContentLibraries
 import MEGAAppSDKRepo
+import MEGAAssets
 import MEGADesignToken
 import MEGADomain
 import MEGAL10n
@@ -198,7 +199,7 @@ extension AlbumContentViewController: AlbumToolbarProvider {
                     
                     await SVProgressHUD.dismiss()
                     SVProgressHUD.show(
-                        UIImage.saveToPhotos,
+                        MEGAAssets.UIImage.saveToPhotos,
                         status: error.localizedDescription
                     )
                 }

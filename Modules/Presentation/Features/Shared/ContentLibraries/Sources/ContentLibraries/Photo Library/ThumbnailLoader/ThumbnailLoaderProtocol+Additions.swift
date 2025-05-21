@@ -18,6 +18,6 @@ extension ThumbnailLoaderProtocol {
 
 fileprivate extension NodeEntity {
     var placeholderImage: Image {
-        MEGAAssetsImageProvider.fileTypeResource(forFileName: name)
+        MEGAAssets.Image.image(forFileName: name)
     }
 }

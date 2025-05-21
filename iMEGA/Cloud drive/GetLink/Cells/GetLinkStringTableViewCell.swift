@@ -1,5 +1,7 @@
+import MEGAAssets
 import MEGADesignToken
 import MEGAL10n
+import MEGAAssets
 import UIKit
 
 class GetLinkStringTableViewCell: UITableViewCell {
@@ -20,6 +22,7 @@ class GetLinkStringTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         nameLabel.textColor = TokenColors.Text.primary
+        rightImageView.image = MEGAAssets.UIImage.image(named: "link")
     }
     
     override func prepareForReuse() {
@@ -29,14 +32,14 @@ class GetLinkStringTableViewCell: UITableViewCell {
     
     func configureLinkCell(link: String) {
         nameLabel.text = link
-        leftImageView.image = UIImage.linkGetLink
+        leftImageView.image = MEGAAssets.UIImage.linkGetLink
         rightImageView.isHidden = true
         configureAccessibility(value: link)
     }
     
     func configureKeyCell(key: String) {
         nameLabel.text = key
-        leftImageView.image = UIImage.iconKeyOnly
+        leftImageView.image = MEGAAssets.UIImage.iconKeyOnly
         rightImageView.isHidden = true
         configureAccessibility(value: key)
     }

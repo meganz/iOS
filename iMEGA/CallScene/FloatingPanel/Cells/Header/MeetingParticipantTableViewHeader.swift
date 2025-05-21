@@ -1,3 +1,4 @@
+import MEGAAssets
 import MEGADesignToken
 import MEGAL10n
 import MEGAUI
@@ -49,7 +50,7 @@ final class MeetingParticipantTableViewHeader: UITableViewHeaderFooterView {
         overrideUserInterfaceStyle = .dark
         titleLabel = UILabel()
         actionButton = UIButton()
-        callAllIcon = UIImageView(image: UIImage.phoneCallAll)
+        callAllIcon = UIImageView(image: MEGAAssets.UIImage.phoneCallAll)
         
         callAllIcon.contentMode = .center
         closeButton = UIButton()

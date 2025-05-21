@@ -2,6 +2,7 @@
 import MEGAAnalyticsiOS
 import MEGAAppPresentationMock
 import MEGAAppSDKRepoMock
+import MEGAAssets
 import MEGADomain
 import MEGADomainMock
 import MEGAL10n
@@ -41,7 +42,7 @@ final class TextEditorViewModelTests: XCTestCase {
             if textEditorMode == .view {
                 navbarItemsModel = TextEditorNavbarItemsModel(
                     leftItem: NavbarItemModel(title: Strings.Localizable.close, image: nil),
-                    rightItem: NavbarItemModel(title: nil, image: UIImage.moreNavigationBar),
+                    rightItem: NavbarItemModel(title: nil, image: MEGAAssets.UIImage.moreNavigationBar),
                     textEditorMode: textEditorMode
                 )
             } else {
@@ -106,7 +107,7 @@ final class TextEditorViewModelTests: XCTestCase {
         
         let navbarItemsViewModel = TextEditorNavbarItemsModel(
             leftItem: NavbarItemModel(title: Strings.Localizable.close, image: nil),
-            rightItem: NavbarItemModel(title: nil, image: UIImage.moreNavigationBar),
+            rightItem: NavbarItemModel(title: nil, image: MEGAAssets.UIImage.moreNavigationBar),
             textEditorMode: .view
         )
         
@@ -294,7 +295,7 @@ final class TextEditorViewModelTests: XCTestCase {
         
         let navbarItemsModel = TextEditorNavbarItemsModel(
             leftItem: NavbarItemModel(title: Strings.Localizable.close, image: nil),
-            rightItem: NavbarItemModel(title: nil, image: UIImage.moreNavigationBar),
+            rightItem: NavbarItemModel(title: nil, image: MEGAAssets.UIImage.moreNavigationBar),
             textEditorMode: .view
         )
         
@@ -934,7 +935,7 @@ final class TextEditorViewModelTests: XCTestCase {
         
         let navbarItemsModel = TextEditorNavbarItemsModel(
             leftItem: NavbarItemModel(title: Strings.Localizable.close, image: nil),
-            rightItem: NavbarItemModel(title: nil, image: UIImage.moreNavigationBar),
+            rightItem: NavbarItemModel(title: nil, image: MEGAAssets.UIImage.moreNavigationBar),
             textEditorMode: .view
         )
         

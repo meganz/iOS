@@ -135,6 +135,8 @@
         self.navigationItem.rightBarButtonItem = cancelBarButtonItem;
     }
     
+    self.keyImageView.image = [UIImage megaImageWithNamed:@"keyIcon"];
+    
     self.titleLabel.text = LocalizedString(@"remindPasswordTitle", @"Title for Remind Password View, inviting user to test password");
     self.switchInfoLabel.text = LocalizedString(@"dontShowAgain", @"Text for don't show again Remind Password View option");
     [self.testPasswordButton setTitle:LocalizedString(@"testPassword", @"Label for test password button") forState:UIControlStateNormal];

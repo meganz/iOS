@@ -31,5 +31,5 @@ public struct ProPlanFeatureView: View {
 }
 
 #Preview {
-    ProPlanFeatureView(image: MEGAAssetsImageProvider.image(named: "storage"), title: "Title", message: "Message")
+    ProPlanFeatureView(image: MEGAAssets.UIImage.image(named: "storage"), title: "Title", message: "Message")
 }

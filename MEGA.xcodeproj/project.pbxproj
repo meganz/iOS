@@ -773,11 +773,6 @@
 		6D60255D28F8921800FF9767 /* BrowserViewController+NodesUpdate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D60255A28F8921800FF9767 /* BrowserViewController+NodesUpdate.swift */; };
 		6D60255F28F8934100FF9767 /* FolderLinkViewController+NodesUpdate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D60255E28F8934100FF9767 /* FolderLinkViewController+NodesUpdate.swift */; };
 		6D64B70D2A09BCB1002ECBD1 /* MyAccountHallViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D64B70C2A09BCB1002ECBD1 /* MyAccountHallViewModel.swift */; };
-		6D6749402AF84C410023FAC0 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6D67493F2AF84C410023FAC0 /* Colors.xcassets */; };
-		6D6749412AF84C410023FAC0 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6D67493F2AF84C410023FAC0 /* Colors.xcassets */; };
-		6D6749422AF84C410023FAC0 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6D67493F2AF84C410023FAC0 /* Colors.xcassets */; };
-		6D6749432AF84C410023FAC0 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6D67493F2AF84C410023FAC0 /* Colors.xcassets */; };
-		6D6749442AF84C410023FAC0 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6D67493F2AF84C410023FAC0 /* Colors.xcassets */; };
 		6D797BA72C6117CC004D95F4 /* PhotosBrowser in Frameworks */ = {isa = PBXBuildFile; productRef = 6D797BA62C6117CC004D95F4 /* PhotosBrowser */; };
 		6D88207F2B1C0E6E00F0BE18 /* MEGADesignToken in Frameworks */ = {isa = PBXBuildFile; productRef = 6D88207E2B1C0E6E00F0BE18 /* MEGADesignToken */; };
 		6D8A01162DBEFCA100EA77ED /* MEGAPreference in Frameworks */ = {isa = PBXBuildFile; productRef = 6D8A01152DBEFCA100EA77ED /* MEGAPreference */; };
@@ -788,11 +783,6 @@
 		6DB5951E2CF6B75300088947 /* CallsSettingsSoundNotificationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DB5951C2CF6B75300088947 /* CallsSettingsSoundNotificationsView.swift */; };
 		6DB772CE28836A8500B75A93 /* PhotosViewController+Empty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DB772CD28836A8500B75A93 /* PhotosViewController+Empty.swift */; };
 		6DC1FCA22BAD11B40013E9BD /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 6DC1FCA12BAD11B40013E9BD /* PrivacyInfo.xcprivacy */; };
-		6DD7B2362A776313007EBB20 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6DD7B2352A776313007EBB20 /* Images.xcassets */; };
-		6DD7B2372A776313007EBB20 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6DD7B2352A776313007EBB20 /* Images.xcassets */; };
-		6DD7B2382A776313007EBB20 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6DD7B2352A776313007EBB20 /* Images.xcassets */; };
-		6DD7B2392A776313007EBB20 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6DD7B2352A776313007EBB20 /* Images.xcassets */; };
-		6DD7B23A2A776313007EBB20 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6DD7B2352A776313007EBB20 /* Images.xcassets */; };
 		6DE5563629F61ED40015A950 /* ChatContentViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE5563529F61ED40015A950 /* ChatContentViewModelTests.swift */; };
 		6DEEA7B82C119596004641C9 /* MEGASDKErrorTypeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DEEA7B72C119596004641C9 /* MEGASDKErrorTypeTests.swift */; };
 		6DF356B22BAD36320099FCF1 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 6DC1FCA12BAD11B40013E9BD /* PrivacyInfo.xcprivacy */; };
@@ -1603,11 +1593,17 @@
 		9DAC1B632951589F00562475 /* NodeInfoRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DAC1B622951589E00562475 /* NodeInfoRepository.swift */; };
 		9DB88B63290D98BB008CB09E /* ImageScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DB88B62290D98BB008CB09E /* ImageScrollView.swift */; };
 		A50036882CD3273A0067734F /* DocScannerSaveSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A50036872CD3272F0067734F /* DocScannerSaveSettingsViewModel.swift */; };
+		A5171F732DC9FD8400A9419F /* UIImage+MEGAAssets.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5171F722DC9FD7700A9419F /* UIImage+MEGAAssets.swift */; };
+		A5171F792DC9FF6400A9419F /* UIImage+MEGAAssets.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5171F722DC9FD7700A9419F /* UIImage+MEGAAssets.swift */; };
 		A534E15D2B725E300067A0E1 /* MEGASdkCleanUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A534E15C2B725E300067A0E1 /* MEGASdkCleanUp.swift */; };
 		A534E15F2B7262380067A0E1 /* MEGASdkCleanUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A534E15C2B725E300067A0E1 /* MEGASdkCleanUp.swift */; };
 		A54C87312DC34C69002B3581 /* MEGATransfer+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 7720C5B4206A931E00F995D1 /* MEGATransfer+MNZCategory.m */; };
 		A559E16A2BE8C7C700374073 /* NSNotification+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A559E1692BE8C7C700374073 /* NSNotification+Additions.swift */; };
+		A55CDB452DCF2D9D00D14103 /* MEGAAssets in Frameworks */ = {isa = PBXBuildFile; productRef = A55CDB442DCF2D9D00D14103 /* MEGAAssets */; };
+		A55CDB462DCF2D9D00D14103 /* MEGAAssets in Embed Frameworks */ = {isa = PBXBuildFile; productRef = A55CDB442DCF2D9D00D14103 /* MEGAAssets */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		A56274E02C8A9D29004C1546 /* MockCallInProgressTimeReporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A56274DF2C8A9D29004C1546 /* MockCallInProgressTimeReporter.swift */; };
+		A5629FDE2DCC8F9F002C3A06 /* PrivacyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5629FDD2DCC8F9B002C3A06 /* PrivacyViewController.swift */; };
+		A5629FDF2DCC8F9F002C3A06 /* PrivacyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5629FDD2DCC8F9B002C3A06 /* PrivacyViewController.swift */; };
 		A56BBB9B2CB3ABF0006E0D0B /* MEGAStore+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F2ACCC29AD6E19004FC7A3 /* MEGAStore+Additions.swift */; };
 		A56F8A062C8EF64E005D00A9 /* UIViewController+SnackBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = A56F8A052C8EF64E005D00A9 /* UIViewController+SnackBar.swift */; };
 		A5731DA62D9547F100D96A89 /* RecentsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5731DA52D9547EC00D96A89 /* RecentsViewModel.swift */; };
@@ -1619,7 +1615,10 @@
 		A5C0BD452BC3E68A006CF7D7 /* MoveToRubbishBinViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5C0BD442BC3E68A006CF7D7 /* MoveToRubbishBinViewModel.swift */; };
 		A5C0BD492BC3EB86006CF7D7 /* MockMoveToRubbishBinViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5C0BD482BC3EB86006CF7D7 /* MockMoveToRubbishBinViewModel.swift */; };
 		A5CB0B682DD31777004B6AB9 /* CopyableLabel+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5CB0B672DD31770004B6AB9 /* CopyableLabel+Additions.swift */; };
+		A5C710022DCB458400B6DD03 /* PrimaryAppIcon.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A5C710012DCB458400B6DD03 /* PrimaryAppIcon.xcassets */; };
+		A5C710032DCB458400B6DD03 /* PrimaryAppIcon.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A5C710012DCB458400B6DD03 /* PrimaryAppIcon.xcassets */; };
 		A5D527912CCF625E00CC9E46 /* DIContainer+FeatureFlagProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D527902CCF625000CC9E46 /* DIContainer+FeatureFlagProvider.swift */; };
+		A5EEF3FF2DCCF56700CA3227 /* MEGAAssets in Frameworks */ = {isa = PBXBuildFile; productRef = A5EEF3FE2DCCF56700CA3227 /* MEGAAssets */; };
 		A5EFB0532B9AE0DA0055E5FC /* CameraUploadNodeAccess+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5EFB0522B9AE0DA0055E5FC /* CameraUploadNodeAccess+Additions.swift */; };
 		A5F63E702BE8808C00B7A3F0 /* AppDelegate+SaveNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5F63E6F2BE8808C00B7A3F0 /* AppDelegate+SaveNode.swift */; };
 		A802B1FA1FAB293700AC8BB0 /* MEGAChatBaseRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A802B1F91FAB293700AC8BB0 /* MEGAChatBaseRequestDelegate.m */; };
@@ -2720,6 +2719,37 @@
 			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		A55CDB472DCF2D9E00D14103 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				A55CDB462DCF2D9D00D14103 /* MEGAAssets in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A5A119C32DCB163A0066BAB8 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A5EEF4012DCCF56700CA3227 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
@@ -3546,7 +3576,6 @@
 		6D60255A28F8921800FF9767 /* BrowserViewController+NodesUpdate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BrowserViewController+NodesUpdate.swift"; sourceTree = "<group>"; };
 		6D60255E28F8934100FF9767 /* FolderLinkViewController+NodesUpdate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FolderLinkViewController+NodesUpdate.swift"; sourceTree = "<group>"; };
 		6D64B70C2A09BCB1002ECBD1 /* MyAccountHallViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyAccountHallViewModel.swift; sourceTree = "<group>"; };
-		6D67493F2AF84C410023FAC0 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Colors.xcassets; path = Modules/Presentation/MEGAAssets/Sources/MEGAAssets/Resources/Colors.xcassets; sourceTree = SOURCE_ROOT; };
 		6D8A01132DBEFC6900EA77ED /* MEGAPreference */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = MEGAPreference; path = Modules/MEGASharedRepo/MEGAPreference; sourceTree = SOURCE_ROOT; };
 		6D90A68E2B61FED200EA7DC2 /* CameraUploadAdvancedOptionsViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CameraUploadAdvancedOptionsViewController+Additions.swift"; sourceTree = "<group>"; };
 		6D93A46D2C5CB24D00529098 /* PhotosBrowser */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = PhotosBrowser; sourceTree = "<group>"; };
@@ -3557,7 +3586,6 @@
 		6DB772CD28836A8500B75A93 /* PhotosViewController+Empty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PhotosViewController+Empty.swift"; sourceTree = "<group>"; };
 		6DC1FCA12BAD11B40013E9BD /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		6DD7B2342A7761BD007EBB20 /* MEGAAssets */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MEGAAssets; sourceTree = "<group>"; };
-		6DD7B2352A776313007EBB20 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Modules/Presentation/MEGAAssets/Sources/MEGAAssets/Resources/Images.xcassets; sourceTree = SOURCE_ROOT; };
 		6DE5563529F61ED40015A950 /* ChatContentViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatContentViewModelTests.swift; sourceTree = "<group>"; };
 		6DE9E89A2D793BD40008C102 /* MEGABuildTools */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = MEGABuildTools; path = Modules/MEGASharedRepo/MEGABuildTools; sourceTree = SOURCE_ROOT; };
 		6DEEA7B72C119596004641C9 /* MEGASDKErrorTypeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGASDKErrorTypeTests.swift; sourceTree = "<group>"; };
@@ -4350,9 +4378,11 @@
 		9DAC1B622951589E00562475 /* NodeInfoRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NodeInfoRepository.swift; sourceTree = "<group>"; };
 		9DB88B62290D98BB008CB09E /* ImageScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageScrollView.swift; sourceTree = "<group>"; };
 		A50036872CD3272F0067734F /* DocScannerSaveSettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocScannerSaveSettingsViewModel.swift; sourceTree = "<group>"; };
+		A5171F722DC9FD7700A9419F /* UIImage+MEGAAssets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+MEGAAssets.swift"; sourceTree = "<group>"; };
 		A534E15C2B725E300067A0E1 /* MEGASdkCleanUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGASdkCleanUp.swift; sourceTree = "<group>"; };
 		A559E1692BE8C7C700374073 /* NSNotification+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSNotification+Additions.swift"; sourceTree = "<group>"; };
 		A56274DF2C8A9D29004C1546 /* MockCallInProgressTimeReporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockCallInProgressTimeReporter.swift; sourceTree = "<group>"; };
+		A5629FDD2DCC8F9B002C3A06 /* PrivacyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyViewController.swift; sourceTree = "<group>"; };
 		A56F8A052C8EF64E005D00A9 /* UIViewController+SnackBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+SnackBar.swift"; sourceTree = "<group>"; };
 		A5731DA52D9547EC00D96A89 /* RecentsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentsViewModel.swift; sourceTree = "<group>"; };
 		A58902652C5B31C5001B0E3C /* MEGAPurchase+Sendable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAPurchase+Sendable.swift"; sourceTree = "<group>"; };
@@ -4362,6 +4392,7 @@
 		A5C0BD442BC3E68A006CF7D7 /* MoveToRubbishBinViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoveToRubbishBinViewModel.swift; sourceTree = "<group>"; };
 		A5C0BD482BC3EB86006CF7D7 /* MockMoveToRubbishBinViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockMoveToRubbishBinViewModel.swift; sourceTree = "<group>"; };
 		A5CB0B672DD31770004B6AB9 /* CopyableLabel+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CopyableLabel+Additions.swift"; sourceTree = "<group>"; };
+		A5C710012DCB458400B6DD03 /* PrimaryAppIcon.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = PrimaryAppIcon.xcassets; sourceTree = "<group>"; };
 		A5D527902CCF625000CC9E46 /* DIContainer+FeatureFlagProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DIContainer+FeatureFlagProvider.swift"; sourceTree = "<group>"; };
 		A5EFB0522B9AE0DA0055E5FC /* CameraUploadNodeAccess+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CameraUploadNodeAccess+Additions.swift"; sourceTree = "<group>"; };
 		A5F63E6F2BE8808C00B7A3F0 /* AppDelegate+SaveNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppDelegate+SaveNode.swift"; sourceTree = "<group>"; };
@@ -5614,6 +5645,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A5EEF3FF2DCCF56700CA3227 /* MEGAAssets in Frameworks */,
 				BF61495E2A9FF36200AB051A /* MEGAL10n in Frameworks */,
 				BF6149602A9FF36200AB051A /* MEGAL10nObjc in Frameworks */,
 			);
@@ -5623,6 +5655,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A55CDB452DCF2D9D00D14103 /* MEGAAssets in Frameworks */,
 				A8DEA5082B9F157000E8806C /* MEGADomainMock in Frameworks */,
 				A83465262BAAF4F3009A4E40 /* MEGAPermissionsMock in Frameworks */,
 				1678D7F22A45487E00336C52 /* MEGATest in Frameworks */,
@@ -6081,8 +6114,6 @@
 				415226861A692ECC00EC7BB6 /* Utils */,
 				415226671A692EBD00EC7BB6 /* Vendor */,
 				244CEFBE2B2319B000147302 /* Videos */,
-				6D67493F2AF84C410023FAC0 /* Colors.xcassets */,
-				6DD7B2352A776313007EBB20 /* Images.xcassets */,
 			);
 			path = iMEGA;
 			sourceTree = "<group>";
@@ -6100,6 +6131,7 @@
 				A87FF3BF22F8111C00EFD95C /* MEGA-Bridging-Header.h */,
 				4122C0E71B27539F001CE833 /* MEGA-PrefixHeader.pch */,
 				5BF5387F23741DB70023F2E4 /* MEGA.entitlements */,
+				A5C710012DCB458400B6DD03 /* PrimaryAppIcon.xcassets */,
 				6DC1FCA12BAD11B40013E9BD /* PrivacyInfo.xcprivacy */,
 				BFC9685A278CDA080098C523 /* TestingAppDelegate.swift */,
 			);
@@ -7866,6 +7898,7 @@
 				5D31673E24FC97410032492F /* ErrorHandling */,
 				A559E1692BE8C7C700374073 /* NSNotification+Additions.swift */,
 				B65D17D6289A233C00D5AD33 /* UIImage+Doc.swift */,
+				A5171F722DC9FD7700A9419F /* UIImage+MEGAAssets.swift */,
 				B65D17D4289A226900D5AD33 /* UINavigationViewController+Additions.swift */,
 				A8A715C126307B0A00DDC8E2 /* UIPasteboard+WebP.swift */,
 				B65D17D2289A1A8600D5AD33 /* UIView+RoundCornerShadow.swift */,
@@ -13304,6 +13337,7 @@
 				99C0CE6C2C7BFEC100778F53 /* LaunchViewController+Addition.swift */,
 				E8C289FB1BF65B7800F7A034 /* LaunchViewController.h */,
 				E8C289FC1BF65B7800F7A034 /* LaunchViewController.m */,
+				A5629FDD2DCC8F9B002C3A06 /* PrivacyViewController.swift */,
 			);
 			path = Launch;
 			sourceTree = "<group>";
@@ -13348,6 +13382,7 @@
 				942254FF1EDC03150074C51A /* Embed Foundation Extensions */,
 				2FCB996A24CA8CA10040E825 /* Run Script: Automatically sets SDK and chat SDK commit hashes */,
 				B67FFF9329D530F500E830FA /* Run Script: Copy GoogleService-Info */,
+				A5A119C32DCB163A0066BAB8 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -13596,6 +13631,7 @@
 				A8399F56296C43F70062B6BC /* Frameworks */,
 				A8399F57296C43F70062B6BC /* Resources */,
 				B6D16A7A29DD04E300402828 /* Run Script: Copy GoogleService-Info */,
+				A5EEF4012DCCF56700CA3227 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -13605,6 +13641,7 @@
 			packageProductDependencies = (
 				BF61495D2A9FF36200AB051A /* MEGAL10n */,
 				BF61495F2A9FF36200AB051A /* MEGAL10nObjc */,
+				A5EEF3FE2DCCF56700CA3227 /* MEGAAssets */,
 			);
 			productName = MEGAPicker;
 			productReference = A8399F59296C43F80062B6BC /* MEGAPicker.appex */;
@@ -13617,6 +13654,7 @@
 				B6CED48722B8AC70009C4861 /* Sources */,
 				B6CED48822B8AC70009C4861 /* Frameworks */,
 				B6CED48922B8AC70009C4861 /* Resources */,
+				A55CDB472DCF2D9E00D14103 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -13629,6 +13667,7 @@
 				A8DEA5072B9F157000E8806C /* MEGADomainMock */,
 				A83465252BAAF4F3009A4E40 /* MEGAPermissionsMock */,
 				9490DE532CF4B49A00C0BAAD /* TestingExpectation */,
+				A55CDB442DCF2D9D00D14103 /* MEGAAssets */,
 			);
 			productName = MEGAUnitTests;
 			productReference = B6CED48B22B8AC70009C4861 /* MEGAUnitTests.xctest */;
@@ -13843,7 +13882,6 @@
 				BF1053DF2498663B009094C8 /* ChatUnreadMessagesLabelCollectionCell.xib in Resources */,
 				BFB463FC243456D900FB90B9 /* ChatViewIntroductionHeaderView.xib in Resources */,
 				4152268B1A692ECC00EC7BB6 /* Cloud.storyboard in Resources */,
-				6D6749402AF84C410023FAC0 /* Colors.xcassets in Resources */,
 				9422494428DB77B8009626E6 /* ContactLinkContentView.xib in Resources */,
 				5B9F2010243332D200F22FBA /* ContactLinkQR.storyboard in Resources */,
 				415226901A692ECC00EC7BB6 /* Contacts.storyboard in Resources */,
@@ -13873,7 +13911,6 @@
 				837EE205253DB8540083D927 /* GetLink.storyboard in Resources */,
 				A8F2629C1FA8F82F000B2768 /* hang_out.mp3 in Resources */,
 				BFAFAF0F2519595300C92887 /* HomeViewController.xib in Resources */,
-				6DD7B2362A776313007EBB20 /* Images.xcassets in Resources */,
 				A8F2629A1FA8F7C3000B2768 /* incoming_voice_video_call.mp3 in Resources */,
 				A8278D7F200E72A00040B076 /* incoming_voice_video_call_iOS9.mp3 in Resources */,
 				E803CB641D5336F100F81A36 /* InfoPlist.strings in Resources */,
@@ -13924,6 +13961,7 @@
 				41BADDAF1A8E28FD008408B3 /* Photos.storyboard in Resources */,
 				C450470B25794A7A00EE510E /* PlaylistHeaderFooterView.xib in Resources */,
 				2F85307324885FAB00064E83 /* PreviewersView.xib in Resources */,
+				A5C710022DCB458400B6DD03 /* PrimaryAppIcon.xcassets in Resources */,
 				6DF356B22BAD36320099FCF1 /* PrivacyInfo.xcprivacy in Resources */,
 				A8C93C1422D71C470030CE1B /* Profile.storyboard in Resources */,
 				2F6F0893253E387600C5B5D7 /* ProgressIndicatorView.xib in Resources */,
@@ -13961,8 +13999,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6D6749422AF84C410023FAC0 /* Colors.xcassets in Resources */,
-				6DD7B2382A776313007EBB20 /* Images.xcassets in Resources */,
 				6DF356B32BAD36330099FCF1 /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -13972,8 +14008,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				83422B28255984C300D46907 /* Assets.xcassets in Resources */,
-				6D6749442AF84C410023FAC0 /* Colors.xcassets in Resources */,
-				6DD7B23A2A776313007EBB20 /* Images.xcassets in Resources */,
 				6DF356B82BAD36370099FCF1 /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -13983,8 +14017,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				A882981E29F1668E00DEDE98 /* AppIntentVocabulary.plist in Resources */,
-				6D6749412AF84C410023FAC0 /* Colors.xcassets in Resources */,
-				6DD7B2372A776313007EBB20 /* Images.xcassets in Resources */,
 				6DC1FCA22BAD11B40013E9BD /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -13995,12 +14027,10 @@
 			files = (
 				7767C39F247BB723001166A8 /* Chat.storyboard in Resources */,
 				9411354F1F00FD1500D33428 /* Cloud.storyboard in Resources */,
-				6D6749432AF84C410023FAC0 /* Colors.xcassets in Resources */,
 				A836581C2102101C005E616F /* Contacts.storyboard in Resources */,
 				B6831C1525B65C7E0072827F /* CustomModalAlertViewController.xib in Resources */,
 				5B95DD94237C35610068DF97 /* EmptyStateView.xib in Resources */,
 				5B74365226D78CBE00EEF758 /* GenericHeaderFooterView.xib in Resources */,
-				6DD7B2392A776313007EBB20 /* Images.xcassets in Resources */,
 				5B45D2C2260A0FA600DDD076 /* ItemListViewController.storyboard in Resources */,
 				943F8B3D1EF2888000AFD89F /* Launch.storyboard in Resources */,
 				9411355B1F01006E00D33428 /* LTHPasscodeViewController.bundle in Resources */,
@@ -14033,6 +14063,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A5C710032DCB458400B6DD03 /* PrimaryAppIcon.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -15395,6 +15426,7 @@
 				2F85306F24885F9100064E83 /* PreviewersView.swift in Sources */,
 				B6B959442193A91E0064334D /* PreviewUploadOperation.m in Sources */,
 				5D1B23F124AF304000ACE1C5 /* PrimaryThemeButtonTextColorFactory.swift in Sources */,
+				A5629FDF2DCC8F9F002C3A06 /* PrivacyViewController.swift in Sources */,
 				B58723D42BAC2D2A00F55FAF /* ProductDetailTableViewCell+Additions.swift in Sources */,
 				41D14F711B8603AF0005A27A /* ProductDetailTableViewCell.m in Sources */,
 				C4709A9D26B05F52008FB0C8 /* ProductDetailViewController+Additions.swift in Sources */,
@@ -15738,6 +15770,7 @@
 				E879DFDA1D12A31D009B74FD /* UIDevice+MNZCategory.m in Sources */,
 				5B5B4FFF1E681BAC00DBEB3B /* UIFont+MNZCategory.m in Sources */,
 				B65D17D7289A233C00D5AD33 /* UIImage+Doc.swift in Sources */,
+				A5171F732DC9FD8400A9419F /* UIImage+MEGAAssets.swift in Sources */,
 				4115D6441E718B1F004BB0FF /* UIImage+MNZCategory.m in Sources */,
 				41E150041DB7CB1400383645 /* UIImageView+MNZCategory.m in Sources */,
 				C489EBE52B5503FD00EE30D8 /* UILabel+CustomNavigationTitleLabel.swift in Sources */,
@@ -16098,6 +16131,7 @@
 				B620C0662845BC37003CEEE7 /* PHAssetMediaSubtype+CU.swift in Sources */,
 				B620C0682845BC3B003CEEE7 /* PHAssetMediaType+Mapper.swift in Sources */,
 				B647DB8828A0A38500BD0202 /* PreferenceUseCase+Additions.swift in Sources */,
+				A5629FDE2DCC8F9F002C3A06 /* PrivacyViewController.swift in Sources */,
 				BF943E9C23554181001C18E0 /* PushNotificationControl.swift in Sources */,
 				7747B2DB208625B70011814E /* Reachability.m in Sources */,
 				A8F1D10C2A5ECBC2000DEB6F /* RemovalConfirmationMessageGenerator.swift in Sources */,
@@ -16135,6 +16169,7 @@
 				5BC3D062242A45BA0048123A /* UIColor+Additions.swift in Sources */,
 				943F8B281EF283D300AFD89F /* UIDevice+MNZCategory.m in Sources */,
 				94892CA11EFBF20800AEAC25 /* UIFont+MNZCategory.m in Sources */,
+				A5171F792DC9FF6400A9419F /* UIImage+MEGAAssets.swift in Sources */,
 				5B53F2922407BF160037FEBA /* UIImage+MNZCategory.m in Sources */,
 				5BEACE241FB473940010E02F /* UIImageView+MNZCategory.m in Sources */,
 				C489EBEA2B550A3700EE30D8 /* UILabel+CustomNavigationTitleLabel.swift in Sources */,
@@ -18532,6 +18567,14 @@
 		99DB1D592AC64B34004A9CC3 /* ChatRepoMock */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = ChatRepoMock;
+		};
+		A55CDB442DCF2D9D00D14103 /* MEGAAssets */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = MEGAAssets;
+		};
+		A5EEF3FE2DCCF56700CA3227 /* MEGAAssets */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = MEGAAssets;
 		};
 		A803C8FC2955DB790056C9F0 /* SAMKeychain */ = {
 			isa = XCSwiftPackageProductDependency;

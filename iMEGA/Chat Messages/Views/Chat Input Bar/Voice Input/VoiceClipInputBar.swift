@@ -1,3 +1,4 @@
+import MEGAAssets
 import MEGADesignToken
 import UIKit
 
@@ -15,6 +16,8 @@ class VoiceClipInputBar: UIView {
     @IBOutlet weak var trashView: UIView!
     @IBOutlet weak var sendView: UIView!
     @IBOutlet weak var sendImageView: UIImageView!
+    @IBOutlet weak var cancelVoiceImageView: UIImageView!
+    @IBOutlet weak var startRecordingImageView: UIImageView!
     
     @IBOutlet private weak var sendViewHorizontalConstraint: NSLayoutConstraint!
     @IBOutlet private weak var trashViewHorizontalConstraint: NSLayoutConstraint!
@@ -29,7 +32,9 @@ class VoiceClipInputBar: UIView {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        sendImageView.renderImage(withColor: UIColor.whiteFFFFFF)
+        configureImages()
+        
+        sendImageView.renderImage(withColor: MEGAAssets.UIColor.whiteFFFFFF)
         
         audioWavesView = AudioWavesView.instanceFromNib        
         audioWavesholderView.wrap(audioWavesView)
@@ -71,6 +76,12 @@ class VoiceClipInputBar: UIView {
     
     // MARK: - Private methods
     
+    private func configureImages() {
+        sendImageView.image = MEGAAssets.UIImage.image(named: "sendChatDisabled")
+        cancelVoiceImageView.image = MEGAAssets.UIImage.image(named: "cancelVoice")
+        startRecordingImageView.image = MEGAAssets.UIImage.image(named: "sendVoiceClipDefault-1")
+    }
+
     private func recordingUIUpdates() {
         trashViewHorizontalConstraint.constant = trashViewPaddingWhenRecording()
         sendViewHorizontalConstraint.constant = sendViewPaddingWhenRecording()

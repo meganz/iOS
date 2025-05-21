@@ -1,10 +1,11 @@
 import MEGAAppSDKRepo
+import MEGAAssets
 import MEGADomain
 import MEGAL10n
 
 extension CustomModalAlertViewController {
     func configureForUpgradeSecurity() {
-        image = UIImage.accountUpgradeSecurity
+        image = MEGAAssets.UIImage.accountUpgradeSecurity
         viewTitle = Strings.Localizable.Account.UpgradeSecurity.title
         detail = Strings.Localizable.Account.UpgradeSecurity.Message.upgrade
         

@@ -1,4 +1,5 @@
 import FlexLayout
+import MEGAAssets
 import MEGADesignToken
 import MEGAL10n
 import UIKit
@@ -6,7 +7,7 @@ import UIKit
 class RichPreviewDialogView: UIView {
     
     private let rootFlexContainer = UIView()
-    private let warmingImageView = UIImageView(image: UIImage(resource: .privacyWarningIco))
+    private let warmingImageView = UIImageView(image: MEGAAssets.UIImage.privacyWarningIco)
     lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.preferredFont(style: .subheadline, weight: .medium)

@@ -1,4 +1,5 @@
 import FirebaseCrashlytics
+import MEGAAssets
 import MEGADesignToken
 import MEGADomain
 import MEGAL10n
@@ -424,7 +425,7 @@ extension MeetingFloatingPanelViewController: PanModalPresentable {
     }
     
     var panModalBackgroundColor: UIColor {
-        .black000000.withAlphaComponent(0)
+        MEGAAssets.UIColor.black000000.withAlphaComponent(0)
     }
 
     var anchorModalToLongForm: Bool {

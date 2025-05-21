@@ -1,7 +1,9 @@
 import Combine
 import MEGAAppPresentation
+import MEGAAssets
 import MEGADomain
 import MEGAL10n
+import SwiftUI
 
 @MainActor
 protocol ScheduledMeetingOccurrencesRouting {
@@ -168,13 +170,13 @@ final class ScheduledMeetingOccurrencesViewModel: ObservableObject {
         
         let edit = OccurrenceContextMenuOption(
             title: Strings.Localizable.edit,
-            image: .edittext,
+            image: MEGAAssets.Image.edittext,
             action: editOccurrence
         )
         
         let cancelOccurrence = OccurrenceContextMenuOption(
             title: Strings.Localizable.Meetings.Scheduled.ContextMenu.cancel,
-            image: .rubbishBin,
+            image: MEGAAssets.Image.rubbishBin,
             action: cancelOccurrenceTapped
         )
         

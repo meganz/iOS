@@ -1,5 +1,6 @@
 import ContentLibraries
 import MEGAAppPresentation
+import MEGAAssets
 import MEGADesignToken
 import MEGADomain
 import MEGAL10n
@@ -17,13 +18,13 @@ final class AlbumContentViewController: UIViewController, ViewType {
     lazy var nodeAccessoryActionDelegate = DefaultNodeAccessoryActionDelegate()
     
     lazy var rightBarButtonItem = UIBarButtonItem(
-        image: UIImage.selectAllItems,
+        image: MEGAAssets.UIImage.selectAllItems,
         style: .plain,
         target: self,
         action: #selector(editButtonPressed(_:))
     )
     lazy var addToAlbumBarButtonItem = UIBarButtonItem(
-        image: UIImage.navigationbarAdd,
+        image: MEGAAssets.UIImage.navigationbarAdd,
         style: .plain,
         target: self,
         action: #selector(addToAlbumButtonPressed(_:))
@@ -187,7 +188,7 @@ final class AlbumContentViewController: UIViewController, ViewType {
     private func configureLeftBarButton() {
         if isEditing {
             let selectAllItemsBarButtonItem = UIBarButtonItem(
-                image: UIImage.selectAllItems,
+                image: MEGAAssets.UIImage.selectAllItems,
                 style: .plain,
                 target: self,
                 action: #selector(selectAllButtonPressed(_:))

@@ -1,10 +1,11 @@
 import ContentLibraries
+import MEGAAssets
 import MEGADesignToken
 import MEGASwiftUI
 import SwiftUI
 
 struct PhotoTimelineEmptyView: View {
-    let centerImageResource: ImageResource
+    let centerImage: Image
     let title: String
     let enableCameraUploadsAction: (() -> Void)?
     
@@ -15,7 +16,7 @@ struct PhotoTimelineEmptyView: View {
             }
             
             ContentUnavailableView {
-                Image(centerImageResource)
+                centerImage
                     .renderingMode(.template)
                     .foregroundStyle(TokenColors.Icon.secondary.swiftUI)
             } description: {
@@ -30,24 +31,24 @@ struct PhotoTimelineEmptyView: View {
 }
 
 #Preview("No enable camera uploads banner") {
-    PhotoTimelineEmptyView(centerImageResource: .cameraEmptyState,
+    PhotoTimelineEmptyView(centerImage: MEGAAssets.Image.cameraEmptyState,
                            title: "No media found",
                            enableCameraUploadsAction: nil)
 }
 
 #Preview("With camera uploads banner") {
-    PhotoTimelineEmptyView(centerImageResource: .cameraEmptyState,
+    PhotoTimelineEmptyView(centerImage: MEGAAssets.Image.cameraEmptyState,
                            title: "No media found") { }
 }
 
 #Preview("All photos empty") {
-    PhotoTimelineEmptyView(centerImageResource: .allPhotosEmptyState,
+    PhotoTimelineEmptyView(centerImage: MEGAAssets.Image.allPhotosEmptyState,
                            title: "No media found",
                            enableCameraUploadsAction: nil)
 }
 
 #Preview("All photos empty") {
-    PhotoTimelineEmptyView(centerImageResource: .videoEmptyState,
+    PhotoTimelineEmptyView(centerImage: MEGAAssets.Image.videoEmptyState,
                            title: "No media found",
                            enableCameraUploadsAction: nil)
 }

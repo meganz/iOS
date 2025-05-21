@@ -67,7 +67,7 @@
 
 - (void)setupFirstSectionLabelTextAndImage {
     NSTextAttachment *imageTextAttachment = [[NSTextAttachment alloc] init];
-    imageTextAttachment.image = [UIImage imageNamed:@"littleQuestionMark"];
+    imageTextAttachment.image = [UIImage megaImageWithNamed:@"littleQuestionMark"];
     imageTextAttachment.bounds = CGRectMake(0, 0, 12.0f, 12.0f);
     NSMutableAttributedString *mutableAttributedString = [[NSMutableAttributedString alloc] initWithString:[LocalizedString(@"scanOrCopyTheSeed", @"A message on the setup two-factor authentication page on the mobile web client.") stringByAppendingString:@" "]];
     [mutableAttributedString appendAttributedString:[NSAttributedString attributedStringWithAttachment:imageTextAttachment]];

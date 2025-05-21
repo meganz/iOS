@@ -1,3 +1,4 @@
+import MEGAAssets
 import MEGADomain
 import MEGAL10n
 import UIKit
@@ -19,7 +20,7 @@ import UIKit
         
         cell.controlSwitch?.isEnabled = isNotificationSettingsLoaded()
         cell.controlSwitch?.setOn(!isChatDNDEnabled(chatId: chatId), animated: false)
-        cell.iconImageView?.image = UIImage.chatNotifications
+        cell.iconImageView?.image = MEGAAssets.UIImage.chatNotifications
     }
     
     @objc func isChatDNDEnabled(chatId: ChatIdEntity) -> Bool {

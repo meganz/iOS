@@ -8,7 +8,7 @@ struct EmptySearchView: View {
     
     var body: some View {
         ContentUnavailableView {
-            Image(uiImage: MEGAAssetsImageProvider.image(named: .glassSearch))
+            Image(uiImage: MEGAAssets.UIImage.glassSearch)
         } description: {
             Text(description)
                 .font(.footnote)

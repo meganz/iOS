@@ -36,7 +36,7 @@ struct AddToAlbumsView: View {
     
     private var empty: some View {
         ContentUnavailableView(label: {
-            MEGAAssetsImageProvider.image(named: .playlist)
+            MEGAAssets.Image.playlist
         }, description: {
             Text(Strings.Localizable.Photos.AddToAlbum.Empty.message)
                 .font(.body)

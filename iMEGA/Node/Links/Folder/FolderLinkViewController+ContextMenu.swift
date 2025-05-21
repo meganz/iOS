@@ -1,4 +1,5 @@
 import MEGAAppSDKRepo
+import MEGAAssets
 import MEGADomain
 
 extension FolderLinkViewController: FolderLinkContextMenuDelegate {
@@ -37,7 +38,7 @@ extension FolderLinkViewController: FolderLinkContextMenuDelegate {
         if let contextMenuManager,
            let menuConfig = contextMenuConfiguration(),
            let updatedMenu = contextMenuManager.contextMenu(with: menuConfig) {
-            moreBarButtonItem = UIBarButtonItem(image: UIImage.moreNavigationBar,
+            moreBarButtonItem = UIBarButtonItem(image: MEGAAssets.UIImage.moreNavigationBar,
                                                    menu: updatedMenu)
             navigationItem.rightBarButtonItems = [moreBarButtonItem]
         }

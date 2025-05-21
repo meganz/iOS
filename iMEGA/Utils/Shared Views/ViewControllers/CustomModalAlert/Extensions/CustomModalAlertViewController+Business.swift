@@ -1,12 +1,13 @@
 import Accounts
 import Foundation
+import MEGAAssets
 import MEGAL10n
 import SwiftUI
 
 extension CustomModalAlertViewController {
     
     func configureForBusinessGracePeriod() {
-        image = UIImage.businessPaymentOverdue
+        image = MEGAAssets.UIImage.businessPaymentOverdue
         viewTitle = Strings.Localizable.somethingWentWrong
         detail = Strings.Localizable.ThereHasBeenAProblemWithYourLastPayment.pleaseAccessMEGAUsingADesktopBrowserForMoreInformation
         

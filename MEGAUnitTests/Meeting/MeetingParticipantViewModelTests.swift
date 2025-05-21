@@ -1,4 +1,5 @@
 @testable import MEGA
+import MEGAAssets
 import MEGADomain
 import MEGADomainMock
 import XCTest
@@ -23,7 +24,7 @@ final class MeetingParticipantViewModelTests: XCTestCase {
              expectedCommands: [
                 .configView(isModerator: true, isMicMuted: false, isVideoOn: false, shouldHideContextMenu: true, raisedHand: false),
                 .updateName(name: "Test (Me)"),
-                .updateAvatarImage(image: UIImage.iconContacts)
+                .updateAvatarImage(image: MEGAAssets.UIImage.iconContacts)
              ])
     }
     
@@ -45,7 +46,7 @@ final class MeetingParticipantViewModelTests: XCTestCase {
              expectedCommands: [
                 .configView(isModerator: true, isMicMuted: false, isVideoOn: false, shouldHideContextMenu: false, raisedHand: false),
                 .updateName(name: "Test"),
-                .updateAvatarImage(image: UIImage.iconContacts)
+                .updateAvatarImage(image: MEGAAssets.UIImage.iconContacts)
              ])
     }
     
@@ -67,7 +68,7 @@ final class MeetingParticipantViewModelTests: XCTestCase {
              expectedCommands: [
                 .configView(isModerator: false, isMicMuted: false, isVideoOn: false, shouldHideContextMenu: false, raisedHand: false),
                 .updateName(name: "Test"),
-                .updateAvatarImage(image: UIImage.iconContacts)
+                .updateAvatarImage(image: MEGAAssets.UIImage.iconContacts)
              ])
     }
     
@@ -89,7 +90,7 @@ final class MeetingParticipantViewModelTests: XCTestCase {
              expectedCommands: [
                 .configView(isModerator: false, isMicMuted: false, isVideoOn: false, shouldHideContextMenu: false, raisedHand: false),
                 .updateName(name: "Test"),
-                .updateAvatarImage(image: UIImage.iconContacts)
+                .updateAvatarImage(image: MEGAAssets.UIImage.iconContacts)
              ])
     }
     
@@ -111,7 +112,7 @@ final class MeetingParticipantViewModelTests: XCTestCase {
              expectedCommands: [
                 .configView(isModerator: true, isMicMuted: true, isVideoOn: false, shouldHideContextMenu: false, raisedHand: false),
                 .updateName(name: "Test"),
-                .updateAvatarImage(image: UIImage.iconContacts)
+                .updateAvatarImage(image: MEGAAssets.UIImage.iconContacts)
              ])
     }
     
@@ -133,7 +134,7 @@ final class MeetingParticipantViewModelTests: XCTestCase {
              expectedCommands: [
                 .configView(isModerator: true, isMicMuted: false, isVideoOn: true, shouldHideContextMenu: false, raisedHand: false),
                 .updateName(name: "Test"),
-                .updateAvatarImage(image: UIImage.iconContacts)
+                .updateAvatarImage(image: MEGAAssets.UIImage.iconContacts)
              ])
     }
     

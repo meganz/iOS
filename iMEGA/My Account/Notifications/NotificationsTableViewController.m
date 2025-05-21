@@ -532,9 +532,9 @@
 - (UIImage *)imageForEmptyState {
     UIImage *image;
     if ([MEGAReachabilityManager isReachable]) {
-        image = [UIImage imageNamed:@"notificationsEmptyState"];
+        image = [UIImage megaImageWithNamed:@"notificationsEmptyState"];
     } else {
-        image = [UIImage imageNamed:@"noInternetEmptyState"];
+        image = [UIImage megaImageWithNamed:@"noInternetEmptyState"];
     }
     return image;
 }

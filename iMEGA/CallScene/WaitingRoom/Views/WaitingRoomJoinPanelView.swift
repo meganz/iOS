@@ -1,3 +1,4 @@
+import MEGAAssets
 import MEGADesignToken
 import MEGAL10n
 import MEGASwiftUI
@@ -82,5 +83,5 @@ struct WaitingRoomJoinPanelView: View {
         .frame(height: 142)
     }
     .preferredColorScheme(.dark)
-    .background(Color(.black000000))
+    .background(MEGAAssets.Color.black000000)
 }

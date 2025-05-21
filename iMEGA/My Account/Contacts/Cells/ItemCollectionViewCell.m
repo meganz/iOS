@@ -11,4 +11,16 @@
 #endif
 
 @implementation ItemCollectionViewCell
+
+- (void)awakeFromNib {
+    [super awakeFromNib];
+    [self configureImages];
+}
+
+- (void)configureImages {
+    self.thumbnailPlayImageView.image = [UIImage megaImageWithNamed:@"video_list"];
+    [self.removeUserButton setImage:[UIImage megaImageWithNamed:@"remove_media"] forState:UIControlStateNormal];
+    self.contactVerifiedImageView.image = [UIImage megaImageWithNamed:@"contactVerified"];
+}
+
 @end

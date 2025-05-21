@@ -1,5 +1,6 @@
 import MEGAAppPresentation
 import MEGAAppSDKRepo
+import MEGAAssets
 import MEGADesignToken
 import MEGADomain
 import MEGAFoundation
@@ -66,7 +67,7 @@ import UIKit
         } catch {
             if let errorEntity = error as? SaveMediaToPhotosErrorEntity, errorEntity != .cancelled {
                 await SVProgressHUD.dismiss()
-                SVProgressHUD.show(UIImage.saveToPhotos, status: error.localizedDescription)
+                SVProgressHUD.show(MEGAAssets.UIImage.saveToPhotos, status: error.localizedDescription)
             }
         }
     }

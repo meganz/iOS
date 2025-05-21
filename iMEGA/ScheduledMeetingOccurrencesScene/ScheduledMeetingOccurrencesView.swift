@@ -1,3 +1,4 @@
+import MEGAAssets
 import MEGASwiftUI
 import SwiftUI
 
@@ -19,7 +20,7 @@ struct ScheduledMeetingOccurrencesView: View {
                             Button {
                                 contextMenuOption.action(occurrence)
                             } label: {
-                                HorizontalImageTextLabel(image: UIImage(resource: contextMenuOption.image), text: contextMenuOption.title)
+                                HorizontalImageTextLabel(image: contextMenuOption.image, text: contextMenuOption.title)
                             }
                         }
                     }

@@ -129,14 +129,13 @@ struct NodeThumbnailHomeUseCase: NodeThumbnailHomeUseCaseProtocol {
         _ nodeName: String,
         completion: @escaping (UIImage?) -> Void
     ) {
-        let fileTypeImageResource: UIImage = MEGAAssetsImageProvider.fileTypeResource(forFileExtension: nodeName.pathExtension)
-        completion(fileTypeImageResource)
+        completion(MEGAAssets.UIImage.image(forFileExtension: nodeName.pathExtension))
     }
 
     private func defaultFolderImage(forNode node: NodeEntity) -> UIImage? {
         guard node.isFolder else { return nil }
         if node.isInShare { return UIImage.mnz_incomingFolder() }
         if node.isOutShare { return UIImage.mnz_outgoingFolder() }
-        return UIImage(resource: .filetypeFolder)
+        return MEGAAssets.UIImage.filetypeFolder
     }
 }

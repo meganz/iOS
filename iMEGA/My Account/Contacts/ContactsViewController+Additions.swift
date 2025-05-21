@@ -1,5 +1,6 @@
 import MEGAAppPresentation
 import MEGAAppSDKRepo
+import MEGAAssets
 import MEGADesignToken
 import MEGADomain
 import MEGAFoundation
@@ -81,7 +82,7 @@ extension ContactsViewController {
         
         guard let hostingViewUIView else { return }
         
-        hostingViewUIView.backgroundColor = UIColor.yellowFED429
+        hostingViewUIView.backgroundColor = MEGAAssets.UIColor.yellowFED429
         
         contactsNotVerifiedView.isHidden = true
         contactsNotVerifiedView.addSubview(hostingViewUIView)
@@ -242,7 +243,7 @@ extension ContactsViewController {
                 $0.backgroundColor = TokenColors.Border.strong
             }
             
-            addGroupAvatarImageView.image = UIImage.groupAvatar
+            addGroupAvatarImageView.image = MEGAAssets.UIImage.groupAvatar
         default:
             break
         }

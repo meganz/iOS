@@ -1,4 +1,5 @@
 import Accounts
+import MEGAAssets
 import MEGAL10n
 import MEGASwiftUI
 
@@ -6,7 +7,7 @@ extension MyAccountHallViewController: UITableViewDataSource {
     // MARK: - Settings row setup data
     private func settingsSetupData() -> MyAccountHallCellData {
         MyAccountHallCellData(sectionText: Strings.Localizable.settingsTitle,
-                              icon: UIImage.iconSettings.imageFlippedForRightToLeftLayoutDirection(),
+                              icon: MEGAAssets.UIImage.iconSettings.imageFlippedForRightToLeftLayoutDirection(),
                               isPendingViewVisible: true)
     }
     
@@ -35,7 +36,7 @@ extension MyAccountHallViewController: UITableViewDataSource {
         
         return MyAccountHallCellData(sectionText: Strings.Localizable.storage,
                                      detailText: detailText,
-                                     icon: UIImage.iconStorage.imageFlippedForRightToLeftLayoutDirection(),
+                                     icon: MEGAAssets.UIImage.iconStorage.imageFlippedForRightToLeftLayoutDirection(),
                                      showLoadingIndicator: viewModel.isAccountUpdating)
     }
     
@@ -46,8 +47,8 @@ extension MyAccountHallViewController: UITableViewDataSource {
         }
         
         let menu = MyAccountHallCellData(sectionText: Strings.Localizable.Account.MyAccount.title,
-                                         icon: UIImage.myAccount.imageFlippedForRightToLeftLayoutDirection(),
-                                         disclosureIndicatorIcon: UIImage.standardDisclosureIndicator)
+                                         icon: MEGAAssets.UIImage.myAccount.imageFlippedForRightToLeftLayoutDirection(),
+                                         disclosureIndicatorIcon: MEGAAssets.UIImage.standardDisclosureIndicator)
         let cellView = MyAccountHallMenuView(menuDetails: menu)
         cell.host(cellView, parent: self)
         cell.selectionStyle = .none
@@ -65,7 +66,7 @@ extension MyAccountHallViewController: UITableViewDataSource {
             pendingText = String(describing: incomingContacts)
         }
         return MyAccountHallCellData(sectionText: Strings.Localizable.contactsTitle,
-                                     icon: UIImage.iconContacts.imageFlippedForRightToLeftLayoutDirection(),
+                                     icon: MEGAAssets.UIImage.iconContacts.imageFlippedForRightToLeftLayoutDirection(),
                                      isPendingViewVisible: isPendingViewVisible,
                                      pendingText: pendingText)
     }
@@ -89,7 +90,7 @@ extension MyAccountHallViewController: UITableViewDataSource {
         
         return MyAccountHallCellData(
             sectionText: Strings.Localizable.notifications,
-            icon: UIImage.iconNotifications.imageFlippedForRightToLeftLayoutDirection(),
+            icon: MEGAAssets.UIImage.iconNotifications.imageFlippedForRightToLeftLayoutDirection(),
             isPendingViewVisible: isPendingViewVisible,
             pendingText: pendingText,
             promoText: promoText
@@ -99,28 +100,28 @@ extension MyAccountHallViewController: UITableViewDataSource {
     // MARK: - Achievements row setup data
     private func achievementsSetupData() -> MyAccountHallCellData {
         MyAccountHallCellData(sectionText: Strings.Localizable.achievementsTitle,
-                              icon: UIImage.iconAchievements.imageFlippedForRightToLeftLayoutDirection(),
+                              icon: MEGAAssets.UIImage.iconAchievements.imageFlippedForRightToLeftLayoutDirection(),
                               isPendingViewVisible: true)
     }
     
     // MARK: - Transfers row setup data
     private func transfersSetupData() -> MyAccountHallCellData {
         MyAccountHallCellData(sectionText: Strings.Localizable.transfers,
-                              icon: UIImage.iconTransfers.imageFlippedForRightToLeftLayoutDirection(),
+                              icon: MEGAAssets.UIImage.iconTransfers.imageFlippedForRightToLeftLayoutDirection(),
                               isPendingViewVisible: true)
     }
     
     // MARK: - Device center row setup data
     private func makeDeviceCenterCellData() -> MyAccountHallCellData {
         MyAccountHallCellData(sectionText: Strings.Localizable.Device.Center.title,
-                              icon: UIImage.deviceCenter.imageFlippedForRightToLeftLayoutDirection(),
+                              icon: MEGAAssets.UIImage.deviceCenter.imageFlippedForRightToLeftLayoutDirection(),
                               isPendingViewVisible: true)
     }
     
     // MARK: - Offline row setup data
     private func offlineSetupData() -> MyAccountHallCellData {
         MyAccountHallCellData(sectionText: Strings.Localizable.offline,
-                              icon: UIImage.iconOffline.imageFlippedForRightToLeftLayoutDirection(),
+                              icon: MEGAAssets.UIImage.iconOffline.imageFlippedForRightToLeftLayoutDirection(),
                               isPendingViewVisible: true)
     }
     
@@ -129,7 +130,7 @@ extension MyAccountHallViewController: UITableViewDataSource {
         MyAccountHallCellData(
             sectionText: Strings.Localizable.rubbishBinLabel,
             detailText: viewModel.rubbishBinFormattedStorageUsed,
-            icon: UIImage.rubbishBin.imageFlippedForRightToLeftLayoutDirection(),
+            icon: MEGAAssets.UIImage.rubbishBin.imageFlippedForRightToLeftLayoutDirection(),
             isPendingViewVisible: true
         )
     }

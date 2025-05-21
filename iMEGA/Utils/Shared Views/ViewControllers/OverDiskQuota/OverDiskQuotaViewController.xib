@@ -14,6 +14,7 @@
                 <outlet property="contentScrollView" destination="qBf-ZQ-uPc" id="O9p-ip-V4q"/>
                 <outlet property="contentView" destination="JaV-Gi-51f" id="97h-8G-5ec"/>
                 <outlet property="dismissButton" destination="MCk-xj-VIQ" id="F3O-1a-bkU"/>
+                <outlet property="storageFullImageView" destination="Xrq-u4-x9U" id="0yE-e7-e1N"/>
                 <outlet property="storageFullLabel" destination="3fq-Va-4au" id="LCl-fZ-Te9"/>
                 <outlet property="titleLabel" destination="f9I-oL-lnn" id="PWo-td-hte"/>
                 <outlet property="upgradeButton" destination="agc-Ke-lvT" id="KpY-P8-arK"/>

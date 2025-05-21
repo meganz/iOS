@@ -1,4 +1,5 @@
 import ContentLibraries
+import MEGAAssets
 import MEGADesignToken
 import MEGADomain
 import MEGAL10n
@@ -13,7 +14,7 @@ final class MediaDiscoveryViewController: ExplorerBaseViewController {
     override var displayMode: DisplayMode { contentMode.displayMode }
     
     lazy var rightBarButtonItem = UIBarButtonItem(
-        image: UIImage.selectAllItems,
+        image: MEGAAssets.UIImage.selectAllItems,
         style: .plain,
         target: self,
         action: #selector(editButtonPressed(_:))
@@ -104,7 +105,7 @@ final class MediaDiscoveryViewController: ExplorerBaseViewController {
     private func configureLeftBarButton() {
         if isEditing {
             navigationItem.leftBarButtonItem = UIBarButtonItem(
-                image: UIImage.selectAllItems,
+                image: MEGAAssets.UIImage.selectAllItems,
                 style: .plain,
                 target: self,
                 action: #selector(selectAllButtonPressed(_:))
@@ -154,7 +155,7 @@ final class MediaDiscoveryViewController: ExplorerBaseViewController {
                 emptyView.removeFromSuperview()
             }
         case .showSaveToPhotosError(let error):
-            SVProgressHUD.show(UIImage.saveToPhotos,
+            SVProgressHUD.show(MEGAAssets.UIImage.saveToPhotos,
                                status: error)
         case .endEditingMode:
             endEditingMode()

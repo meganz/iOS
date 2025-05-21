@@ -2,6 +2,7 @@ import Combine
 @testable import MEGA
 import MEGAAnalyticsiOS
 import MEGAAppPresentationMock
+import MEGAAssets
 import MEGADomain
 import MEGADomainMock
 import MEGAL10n
@@ -528,7 +529,7 @@ final class WaitingRoomViewModelTests: XCTestCase {
         onAudioSessionRouteChangeSubject.send(.categoryChange)
         
         evaluate {
-            sut.speakerOnIcon == .callControlSpeakerEnabled
+            sut.speakerOnIcon == MEGAAssets.Image.callControlSpeakerEnabled
         }
     }
     
@@ -545,7 +546,7 @@ final class WaitingRoomViewModelTests: XCTestCase {
         onAudioSessionRouteChangeSubject.send(.categoryChange)
         
         evaluate {
-            sut.speakerOnIcon == .callControlSpeakerEnabled
+            sut.speakerOnIcon == MEGAAssets.Image.callControlSpeakerEnabled
         }
     }
     
@@ -562,7 +563,7 @@ final class WaitingRoomViewModelTests: XCTestCase {
         onAudioSessionRouteChangeSubject.send(.categoryChange)
         
         evaluate {
-            sut.speakerOnIcon == .speakerOnBluetooth
+            sut.speakerOnIcon == MEGAAssets.Image.speakerOnBluetooth
         }
     }
     
@@ -579,7 +580,7 @@ final class WaitingRoomViewModelTests: XCTestCase {
         onAudioSessionRouteChangeSubject.send(.categoryChange)
         
         evaluate {
-            sut.speakerOnIcon == .callControlSpeakerEnabled
+            sut.speakerOnIcon == MEGAAssets.Image.callControlSpeakerEnabled
         }
     }
     

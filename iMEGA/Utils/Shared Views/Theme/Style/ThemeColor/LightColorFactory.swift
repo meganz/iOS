@@ -1,4 +1,5 @@
 import Foundation
+import MEGAAssets
 import MEGADesignToken
 
 struct LightColorThemeFactory: ColorFactory {
@@ -18,10 +19,10 @@ struct LightColorThemeFactory: ColorFactory {
         case .primary, .secondary: return TokenColors.Background.page
         case .warning: return TokenColors.Notifications.notificationWarning
         case .enabled: return TokenColors.Support.success
-        case .disabled: return UIColor.gray999999
-        case .highlighted: return UIColor.green00A88680
+        case .disabled: return MEGAAssets.UIColor.gray999999
+        case .highlighted: return MEGAAssets.UIColor.green00A88680
             
-        case .searchTextField: return UIColor.whiteEFEFEF
+        case .searchTextField: return MEGAAssets.UIColor.whiteEFEFEF
         case .homeTopSide: return TokenColors.Background.page
         }
     }
@@ -35,7 +36,7 @@ struct LightColorThemeFactory: ColorFactory {
     
     func borderColor(_ style: MEGAColor.Border) -> UIColor {
         switch style {
-        case .primary: return UIColor.black00000015
+        case .primary: return MEGAAssets.UIColor.black00000015
         case .warning: return TokenColors.Notifications.notificationWarning
         }
     }

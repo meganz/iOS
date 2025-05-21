@@ -1,3 +1,4 @@
+import MEGAAssets
 import MEGAUIKit
 import UIKit
 
@@ -21,7 +22,7 @@ final class BannerCarouselCollectionViewCell: UICollectionViewCell {
         super.awakeFromNib()
         bannerView.layer.cornerRadius = 10
         bannerView.layer.masksToBounds = true
-
+        dismissButton.setImage(MEGAAssets.UIImage.image(named: "closeBanner"), for: .normal)
         dismissButton.addTarget(self, action: .didTapDismissButton, for: .touchUpInside)
     }
 

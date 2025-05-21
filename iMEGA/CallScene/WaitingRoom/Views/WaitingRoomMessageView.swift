@@ -1,3 +1,4 @@
+import MEGAAssets
 import MEGADesignToken
 import SwiftUI
 
@@ -18,5 +19,5 @@ struct WaitingRoomMessageView: View {
 #Preview {
     WaitingRoomMessageView(title: "Wait for host to let you in")
         .padding(20)
-        .background(Color(.black000000))
+        .background(MEGAAssets.Color.black000000)
 }

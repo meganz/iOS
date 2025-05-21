@@ -19,7 +19,7 @@ final class PhotoCardViewModelTests: XCTestCase {
     func testInit_defaultValue() throws {
         let sut = makeSUT()
         
-        XCTAssertTrue(sut.thumbnailContainer.isEqual(ImageContainer(image: MEGAAssetsImageProvider.image(named: .photoCardPlaceholder), type: .placeholder)))
+        XCTAssertTrue(sut.thumbnailContainer.isEqual(ImageContainer(image: MEGAAssets.Image.photoCardPlaceholder, type: .placeholder)))
     }
     
     @MainActor
@@ -50,7 +50,7 @@ final class PhotoCardViewModelTests: XCTestCase {
     
     @MainActor
     func testLoadThumbnail_placeholder_loadBothThumbnailAndPreview() async throws {
-        let initialContainer = ImageContainer(image: MEGAAssetsImageProvider.image(named: .photoCardPlaceholder), type: .placeholder)
+        let initialContainer = ImageContainer(image: MEGAAssets.Image.photoCardPlaceholder, type: .placeholder)
         let remoteThumbnail = ImageContainer(image: Image("folder.fill"), type: .thumbnail)
         let previewContainer = ImageContainer(image: Image("folder"), type: .preview)
         

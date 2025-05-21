@@ -1,6 +1,7 @@
 import ChatRepo
 import MEGAAppPresentation
 import MEGAAppSDKRepo
+import MEGAAssets
 import MEGADesignToken
 import MEGADomain
 import MEGAPermissions
@@ -14,7 +15,11 @@ extension PhotosViewController {
     var permissionRouter: some PermissionAlertRouting {
         PermissionAlertRouter.makeRouter(deviceHandler: permissionHandler)
     }
-        
+    
+    @objc func configureImages() {
+        selectAllBarButtonItem?.image = MEGAAssets.UIImage.image(named: "selectAllItems")
+    }
+    
     func handleDownloadAction(for nodes: [MEGANode]) {
 
         let transfers = nodes.map {
@@ -106,7 +111,7 @@ extension PhotosViewController {
                     
                     await SVProgressHUD.dismiss()
                     SVProgressHUD.show(
-                        UIImage(resource: .saveToPhotos),
+                        MEGAAssets.UIImage.saveToPhotos,
                         status: error.localizedDescription
                     )
                 }

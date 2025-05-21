@@ -205,6 +205,7 @@
                                         <color key="backgroundColor" systemColor="tableCellGroupedBackgroundColor"/>
                                         <connections>
                                             <outlet property="backupRecoveryKeyLabel" destination="pAb-5H-0vO" id="dbb-Pb-1Az"/>
+                                            <outlet property="fileTypeTextImageView" destination="mPB-Y5-7kt" id="0mV-cM-zWF"/>
                                             <outlet property="recoveryKeyContainerView" destination="i8M-7t-07d" id="fup-p7-dv0"/>
                                             <outlet property="recoveryKeyLabel" destination="yJV-4v-6ci" id="P3O-TU-ye6"/>
                                         </connections>
@@ -300,6 +301,7 @@
                         <outlet property="avatarBottomSeparatorView" destination="pYD-AD-9Vh" id="QnE-gd-YzA"/>
                         <outlet property="avatarImageView" destination="FV0-Hq-jeb" id="0xd-FY-fDr"/>
                         <outlet property="avatarViewHeightConstraint" destination="l8n-G8-FcZ" id="HCv-3A-5gC"/>
+                        <outlet property="backButton" destination="Ilc-jS-2LI" id="fz1-XO-4Ma"/>
                         <outlet property="emailLabel" destination="UnQ-hT-ZRE" id="1ct-LA-yEU"/>
                         <outlet property="gradientView" destination="ojO-za-vaL" id="aIj-vm-cln"/>
                         <outlet property="nameLabel" destination="iGX-E5-iQS" id="A9x-Yw-iWD"/>

@@ -1,3 +1,4 @@
+import MEGAAssets
 import MEGADesignToken
 import MEGAL10n
 import MEGASwiftUI
@@ -48,7 +49,7 @@ struct BackupListContentView: View {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     DeviceCenterMenu(
                         viewModel: viewModel,
-                        menuIconName: "moreList",
+                        menuIconImage: MEGAAssets.Image.moreList,
                         menuOptions: viewModel.availableActionsForCurrentDevice()
                     )
                 }
@@ -63,7 +64,7 @@ struct BackupListContentView: View {
         content
             .emptyState(
                 ContentUnavailableViewModel(
-                    image: Image("folderEmptyState"),
+                    image: MEGAAssets.Image.folderEmptyState,
                     title: Strings.Localizable.Device.Center.Current.Device.Empty.State.message,
                     font: .body,
                     titleTextColor: TokenColors.Text.primary.swiftUI,
@@ -84,7 +85,7 @@ struct BackupListContentView: View {
 struct DeviceCenterMenu: View {
     @ObservedObject var viewModel: BackupListViewModel
     var title: String = ""
-    let menuIconName: String
+    let menuIconImage: Image
     let menuOptions: [ContextAction]
 
     var body: some View {
@@ -101,12 +102,12 @@ struct DeviceCenterMenu: View {
                     Menu {
                         Picker(selection: $viewModel.sortIndexSelected, label: Text(option.title)) {
                             ForEach(Array(subActions.enumerated()), id: \.element) { index, option in
-                                Label(option.title, image: option.icon)
+                                Label(title: { Text(option.title) }, icon: { MEGAAssets.Image.image(named: option.icon) })
                                     .tag(index)
                             }
                         }
                     } label: {
-                        Label(option.title, image: option.icon)
+                        Label(title: { Text(option.title) }, icon: { MEGAAssets.Image.image(named: option.icon) })
                     }
                 } else {
                     Button {
@@ -114,19 +115,19 @@ struct DeviceCenterMenu: View {
                             await viewModel.executeDeviceAction(type: option.type)
                         }
                     } label: {
-                        Label(option.title, image: option.icon)
+                        Label(title: { Text(option.title) }, icon: { MEGAAssets.Image.image(named: option.icon) })
                     }
                 }
             }
         } label: {
             if title.isEmpty {
-                Image(menuIconName)
+                menuIconImage
                     .renderingMode(.template)
                     .foregroundStyle(TokenColors.Icon.secondary.swiftUI)
                     .scaledToFit()
                     .frame(width: 28, height: 28)
             } else {
-                Label(title, image: menuIconName)
+                Label(title: { Text(title) }, icon: { menuIconImage })
             }
         }
     }

@@ -9,7 +9,7 @@ struct VideoPlaylistEmptyView: View {
     
     var body: some View {
         VStack(spacing: 8) {
-            MEGAAssetsImageProvider.image(named: .rectangleVideoStackOutline)
+            MEGAAssets.Image.rectangleVideoStackOutline
                 .foregroundStyle(videoConfig.colorAssets.secondaryIconColor)
                 .frame(width: 120, height: 120)
             Text(Strings.Localizable.Videos.Tab.Playlist.Content.emptyState)

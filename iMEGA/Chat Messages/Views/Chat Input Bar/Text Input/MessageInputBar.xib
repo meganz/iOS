@@ -231,6 +231,7 @@
                 <outlet property="addButtonBottomConstraint" destination="fij-A4-njj" id="YRD-g2-uyp"/>
                 <outlet property="backgroundViewTrailingButtonConstraint" destination="OxB-4H-ddg" id="N85-NG-AkL"/>
                 <outlet property="backgroundViewTrailingTextViewConstraint" destination="q8V-yt-DgD" id="IAU-5w-26A"/>
+                <outlet property="clearEditButton" destination="39e-wu-39j" id="rTz-3M-5W3"/>
                 <outlet property="collapsedTextViewCoverView" destination="vXN-Gp-R34" id="wUf-Ru-xqw"/>
                 <outlet property="editMessageLabel" destination="TNa-lb-8TV" id="MN5-EU-Cxe"/>
                 <outlet property="editMessageTitleLabel" destination="Sr5-Fl-Hfv" id="7ez-sh-gdZ"/>

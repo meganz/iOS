@@ -1,3 +1,4 @@
+import MEGAAssets
 import MEGADesignToken
 import SwiftUI
 
@@ -35,29 +36,29 @@ final class CameraUploadStatusImageViewModel: ObservableObject {
         }
     }
     
-    var baseImageResource: ImageResource {
+    var baseImage: Image {
         switch status {
         case .turnedOff:
-            return .cuStatusEnable
+            return MEGAAssets.Image.cuStatusEnable
         default:
-            return .cuStatusUpload
+            return MEGAAssets.Image.cuStatusUpload
         }
     }
     
-    var statusImageResource: ImageResource? {
+    var statusImage: Image? {
         switch status {
         case .turnedOff:
             return nil
         case .checkPendingItemsToUpload:
-            return .cuStatusUploadSync
+            return MEGAAssets.Image.cuStatusUploadSync
         case .uploading:
-            return .cuStatusUploadInProgressCheckMark
+            return MEGAAssets.Image.cuStatusUploadInProgressCheckMark
         case .completed:
-            return .cuStatusUploadCompleteGreenCheckMark
+            return MEGAAssets.Image.cuStatusUploadCompleteGreenCheckMark
         case .idle:
-            return .cuStatusUploadIdleCheckMark
+            return MEGAAssets.Image.cuStatusUploadIdleCheckMark
         case .warning:
-            return .cuStatusUploadWarningCheckMark
+            return MEGAAssets.Image.cuStatusUploadWarningCheckMark
         }
     }
     

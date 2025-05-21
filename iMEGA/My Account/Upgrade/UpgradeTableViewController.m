@@ -75,6 +75,8 @@
     SKProduct *product = MEGAPurchase.sharedInstance.products.firstObject;
     self.numberFormatter.locale = product.priceLocale;
     
+    self.currentPlanDisclosureImageView.image = [UIImage megaImageWithNamed:@"standardDisclosureIndicator"];
+    
     NSString *navigationTitle = MEGASdk.shared.mnz_isProAccount ? LocalizedString(@"Manage Account", @"account management button title in business account’s landing page") : LocalizedString(@"upgradeAccount", @"Button title which triggers the action to upgrade your MEGA account level");
     self.title = (self.isChoosingTheAccountType) ? LocalizedString(@"chooseYourAccountType", @"") : navigationTitle;
     
@@ -302,23 +304,23 @@
     UIImage *proLevelImage;
     switch (proLevel) {
         case MEGAAccountTypeFree:
-            proLevelImage =  [UIImage imageNamed:@"list_crest_FREE"];
+            proLevelImage =  [UIImage megaImageWithNamed:@"list_crest_FREE"];
             break;
             
         case MEGAAccountTypeLite:
-            proLevelImage = [UIImage imageNamed:@"list_crest_LITE"];
+            proLevelImage = [UIImage megaImageWithNamed:@"list_crest_LITE"];
             break;
             
         case MEGAAccountTypeProI:
-            proLevelImage = [UIImage imageNamed:@"list_crest_PROI"];
+            proLevelImage = [UIImage megaImageWithNamed:@"list_crest_PROI"];
             break;
             
         case MEGAAccountTypeProII:
-            proLevelImage = [UIImage imageNamed:@"list_crest_PROII"];
+            proLevelImage = [UIImage megaImageWithNamed:@"list_crest_PROII"];
             break;
             
         case MEGAAccountTypeProIII:
-            proLevelImage = [UIImage imageNamed:@"list_crest_PROIII"];
+            proLevelImage = [UIImage megaImageWithNamed:@"list_crest_PROIII"];
             break;
             
         default:
@@ -444,7 +446,7 @@
         
         [self presentViewController:mailComposeVC animated:YES completion:nil];
     } else {
-        [SVProgressHUD showImage:[UIImage imageNamed:@"hudWarning"] status:LocalizedString(@"noEmailAccountConfigured", @"Text shown when you want to send feedback of the app and you don't have an email account set up on your device")];
+        [SVProgressHUD showImage:[UIImage megaImageWithNamed:@"hudWarning"] status:LocalizedString(@"noEmailAccountConfigured", @"Text shown when you want to send feedback of the app and you don't have an email account set up on your device")];
     }
 }
 

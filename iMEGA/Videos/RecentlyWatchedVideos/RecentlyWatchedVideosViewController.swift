@@ -2,6 +2,7 @@ import Combine
 import ContentLibraries
 import MEGAAppPresentation
 import MEGAAppSDKRepo
+import MEGAAssets
 import MEGADesignToken
 import MEGADomain
 import MEGAL10n
@@ -61,7 +62,7 @@ final class RecentlyWatchedVideosViewController: UIViewController {
     }
     
     private func setupBarButtonItem() {
-        let rubbishBinBarButtonItem = UIBarButtonItem(image: UIImage.rubbishBin, primaryAction: UIAction(action: onTapRubbishBinBarButtonItem))
+        let rubbishBinBarButtonItem = UIBarButtonItem(image: MEGAAssets.UIImage.rubbishBin, primaryAction: UIAction(action: onTapRubbishBinBarButtonItem))
         navigationItem.rightBarButtonItems = [ rubbishBinBarButtonItem ]
         
         sharedUIState.$isRubbishBinBarButtonItemEnabled

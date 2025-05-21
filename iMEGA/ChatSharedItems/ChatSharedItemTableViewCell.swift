@@ -1,4 +1,5 @@
 import MEGAAppSDKRepo
+import MEGAAssets
 import MEGADesignToken
 import MEGADomain
 import UIKit
@@ -11,6 +12,11 @@ class ChatSharedItemTableViewCell: UITableViewCell {
     @IBOutlet weak var infoLabel: UILabel!
     @IBOutlet weak var moreButton: UIButton!
 
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        moreButton.setImage(MEGAAssets.UIImage.moreList, for: .normal)
+    }
+    
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 

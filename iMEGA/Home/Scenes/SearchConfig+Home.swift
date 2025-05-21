@@ -1,4 +1,5 @@
 import MEGAAppPresentation
+import MEGAAssets
 import MEGADesignToken
 import MEGAL10n
 import MEGAUIKit
@@ -12,8 +13,8 @@ extension SearchConfig {
     ) -> SearchConfig {
         return .init(
             chipAssets: .init(
-                selectionIndicatorImage: UIImage.turquoiseCheckmark,
-                closeIcon: UIImage.miniplayerClose,
+                selectionIndicatorImage: MEGAAssets.UIImage.turquoiseCheckmark,
+                closeIcon: MEGAAssets.UIImage.miniplayerClose,
                 selectedForeground: TokenColors.Text.inverse.swiftUI,
                 selectedBackground: TokenColors.Components.selectionControl.swiftUI,
                 normalForeground: TokenColors.Text.primary.swiftUI,
@@ -33,55 +34,55 @@ extension SearchConfig {
                 switch chip.id {
                 case SearchChipEntity.docs.id:
                     return .init(
-                        image: Image(.noResultsDocuments),
+                        image: MEGAAssets.Image.noResultsDocuments,
                         title: Strings.Localizable.Home.Search.Empty.noDocuments,
                         titleTextColor: titleTextColor
                     )
                 case SearchChipEntity.audio.id:
                     return .init(
-                        image: Image(.noResultsAudio),
+                        image: MEGAAssets.Image.noResultsAudio,
                         title: Strings.Localizable.Home.Search.Empty.noAudio,
                         titleTextColor: titleTextColor
                     )
                 case SearchChipEntity.video.id:
                     return .init(
-                        image: Image(.noResultsVideo),
+                        image: MEGAAssets.Image.noResultsVideo,
                         title: Strings.Localizable.Home.Search.Empty.noVideos,
                         titleTextColor: titleTextColor
                     )
                 case SearchChipEntity.images.id:
                     return .init(
-                        image: Image(.noResultsImages),
+                        image: MEGAAssets.Image.noResultsImages,
                         title: Strings.Localizable.Home.Search.Empty.noImages,
                         titleTextColor: titleTextColor
                     )
                 case SearchChipEntity.folders.id:
                     return .init(
-                        image: Image(.noResultsFolders),
+                        image: MEGAAssets.Image.noResultsFolders,
                         title: Strings.Localizable.Home.Search.Empty.noFolders,
                         titleTextColor: titleTextColor
                     )
                 case SearchChipEntity.pdf.id:
                     return .init(
-                        image: Image(.noResultsDocuments),
+                        image: MEGAAssets.Image.noResultsDocuments,
                         title: Strings.Localizable.Home.Search.Empty.noPdfs,
                         titleTextColor: titleTextColor
                     )
                 case SearchChipEntity.presentation.id:
                     return .init(
-                        image: Image(.noResultsPresentations),
+                        image: MEGAAssets.Image.noResultsPresentations,
                         title: Strings.Localizable.Home.Search.Empty.noPresentations,
                         titleTextColor: titleTextColor
                     )
                 case SearchChipEntity.archives.id:
                     return .init(
-                        image: Image(.noResultsArchives),
+                        image: MEGAAssets.Image.noResultsArchives,
                         title: Strings.Localizable.Home.Search.Empty.noArchives,
                         titleTextColor: titleTextColor
                     )
                 case SearchChipEntity.spreadsheets.id:
                     return .init(
-                        image: Image(.noResultsDocuments),
+                        image: MEGAAssets.Image.noResultsDocuments,
                         title: Strings.Localizable.Home.Search.Empty.noSpreadsheets,
                         titleTextColor: titleTextColor
                     )
@@ -97,13 +98,13 @@ extension SearchConfig {
                 }
             },
             rowAssets: .init(
-                contextImage: UIImage.moreList.withTintColorAsOriginal(TokenColors.Icon.secondary),
-                itemSelected: UIImage.checkBoxSelectedSemantic,
-                itemUnselected: UIImage.checkBoxUnselected.withTintColorAsOriginal(TokenColors.Border.strong),
-                playImage: UIImage.videoList,
-                downloadedImage: UIImage.downloaded,
-                moreList: UIImage.moreList.withTintColorAsOriginal(TokenColors.Icon.secondary),
-                moreGrid: UIImage.moreGrid.withTintColorAsOriginal(TokenColors.Icon.secondary)
+                contextImage: MEGAAssets.UIImage.moreList.withTintColorAsOriginal(TokenColors.Icon.secondary),
+                itemSelected: MEGAAssets.UIImage.checkBoxSelectedSemantic,
+                itemUnselected: MEGAAssets.UIImage.checkBoxUnselected.withTintColorAsOriginal(TokenColors.Border.strong),
+                playImage: MEGAAssets.UIImage.videoList,
+                downloadedImage: MEGAAssets.UIImage.downloaded,
+                moreList: MEGAAssets.UIImage.moreList.withTintColorAsOriginal(TokenColors.Icon.secondary),
+                moreGrid: MEGAAssets.UIImage.moreGrid.withTintColorAsOriginal(TokenColors.Icon.secondary)
             ),
             colorAssets: .init(
                 unselectedBorderColor: TokenColors.Border.strong.swiftUI,
@@ -132,7 +133,7 @@ extension SearchConfig {
         with titleTextColor: Color
     ) -> SearchConfig.EmptyViewAssets {
         .init(
-            image: Image(.searchEmptyState),
+            image: MEGAAssets.Image.searchEmptyState,
             title: Strings.Localizable.Home.Search.Empty.noChipSelected,
             titleTextColor: titleTextColor
         )

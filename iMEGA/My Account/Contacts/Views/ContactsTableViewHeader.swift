@@ -1,4 +1,5 @@
 import Foundation
+import MEGAAssets
 import MEGADesignToken
 import MEGAL10n
 
@@ -43,8 +44,10 @@ class ContactsTableViewHeader: UIView {
         
         requestsSeparatorView.backgroundColor = TokenColors.Border.strong
         
-        requestsImageView.image = UIImage.contactRequests.imageFlippedForRightToLeftLayoutDirection()
-        groupsImageView.image = UIImage.contactGroups.imageFlippedForRightToLeftLayoutDirection()
+        requestsImageView.image = MEGAAssets.UIImage.contactRequests.imageFlippedForRightToLeftLayoutDirection()
+        groupsImageView.image = MEGAAssets.UIImage.contactGroups.imageFlippedForRightToLeftLayoutDirection()
+        disclosureIndicatorRequestImageView.image = MEGAAssets.UIImage.image(named: "standardDisclosureIndicator")
+        disclosureIndicatorGroupsImageView.image = MEGAAssets.UIImage.image(named: "standardDisclosureIndicator")
     }
     
     private func configDetailsLabel() {

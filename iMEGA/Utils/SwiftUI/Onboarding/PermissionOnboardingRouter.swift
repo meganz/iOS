@@ -1,4 +1,5 @@
 import Combine
+import MEGAAssets
 import MEGAL10n
 import MEGAPermissions
 import MEGAPresentation
@@ -68,7 +69,7 @@ final class PermissionOnboardingRouter {
         return switch onboardingType {
         case .notifications:
             PermissionOnboardingViewModel(
-                image: .notificationCta,
+                image: MEGAAssets.Image.notificationCta,
                 title: Strings.Localizable.Onboarding.Cta.Notifications.title,
                 description: Strings.Localizable.Onboarding.Cta.Notifications.explanation,
                 note: nil,
@@ -78,7 +79,7 @@ final class PermissionOnboardingRouter {
             )
         case .cameraBackups:
             PermissionOnboardingViewModel(
-                image: .cameraBackupsCta,
+                image: MEGAAssets.Image.cameraBackupsCta,
                 title: Strings.Localizable.Onboarding.Cta.CameraBackups.title,
                 description: Strings.Localizable.Onboarding.Cta.CameraBackups.explanation,
                 note: Strings.Localizable.Onboarding.Cta.CameraBackups.note,

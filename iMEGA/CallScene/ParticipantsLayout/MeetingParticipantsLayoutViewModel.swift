@@ -3,6 +3,7 @@ import Chat
 import Foundation
 import MEGAAnalyticsiOS
 import MEGAAppPresentation
+import MEGAAssets
 import MEGADomain
 import MEGAFoundation
 import MEGAL10n
@@ -492,7 +493,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         let avatarHandler = UserAvatarHandler(
             userImageUseCase: userImageUseCase,
             initials: name.initialForAvatar(),
-            avatarBackgroundColor: UIColor.colorFromHexString(avatarBackgroundHexColor) ?? UIColor.black000000
+            avatarBackgroundColor: UIColor.colorFromHexString(avatarBackgroundHexColor) ?? MEGAAssets.UIColor.black000000
         )
         
         Task { @MainActor in
@@ -1058,7 +1059,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
                     let avatarHandler = UserAvatarHandler(
                         userImageUseCase: userImageUseCase,
                         initials: name.initialForAvatar(),
-                        avatarBackgroundColor: UIColor.colorFromHexString(avatarBackgroundHexColor) ?? UIColor.black000000
+                        avatarBackgroundColor: UIColor.colorFromHexString(avatarBackgroundHexColor) ?? MEGAAssets.UIColor.black000000
                     )
                     let image = await avatarHandler.avatar(for: base64Handle)
                     updateAvatar(handle: handle, image: image)

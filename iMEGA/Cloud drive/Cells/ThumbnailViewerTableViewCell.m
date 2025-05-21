@@ -26,6 +26,13 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     [self setupColors];
+    [self configureImages];
+}
+
+- (void)configureImages {
+    self.thumbnailPlayImageView.image = [UIImage megaImageWithNamed:@"video_list"];
+    self.uploadOrVersionImageView.image = [UIImage megaImageWithNamed:@"recentUpload"];
+    self.indicatorImageView.image = [UIImage megaImageWithNamed:@"standardDisclosureIndicator"];
 }
 
 - (void)prepareForReuse {
@@ -40,7 +47,7 @@
 }
 
 - (void)configureForRecentAction:(MEGARecentActionBucket *)recentActionBucket {
-    self.thumbnailImageView.image = [UIImage imageNamed:@"multiplePhotos"];
+    self.thumbnailImageView.image = [UIImage megaImageWithNamed:@"multiplePhotos"];
     self.thumbnailImageView.accessibilityIgnoresInvertColors = YES;
     self.thumbnailPlayImageView.accessibilityIgnoresInvertColors = YES;
     
@@ -51,14 +58,14 @@
     NSString *imageName = @"standardDisclosureIndicator_designToken";
     
     if (recentActionBucket.mnz_isExpanded) {
-        self.indicatorImageView.image = [UIImage imageNamed:imageName].imageByRotateRight90;
+        self.indicatorImageView.image = [UIImage megaImageWithNamed:imageName].imageByRotateRight90;
         self.thumbnailViewerView.hidden = NO;
         self.thumbnailViewerCollectionView.dataSource = self;
         self.thumbnailViewerCollectionView.delegate = self;
         self.nodesArray = nodesArray;
         [self.thumbnailViewerCollectionView reloadData];
     } else {
-        self.indicatorImageView.image = [UIImage imageNamed:imageName];
+        self.indicatorImageView.image = [UIImage megaImageWithNamed:imageName];
         self.thumbnailViewerView.hidden = YES;
     }
     
@@ -99,24 +106,24 @@
             MEGANode *firstbornParentNode = [[MEGASdk.shared nodeForHandle:recentActionBucket.parentHandle] mnz_firstbornInShareOrOutShareParentNode];
             if (firstbornParentNode.isOutShare) {
                 self.incomingOrOutgoingView.hidden = NO;
-                self.incomingOrOutgoingImageView.image = [UIImage imageNamed:@"mini_folder_outgoing"];
+                self.incomingOrOutgoingImageView.image = [UIImage megaImageWithNamed:@"mini_folder_outgoing"];
             } else {
                 self.incomingOrOutgoingView.hidden = YES;
             }
         } else {
             self.addedByLabel.text = [NSString mnz_addedByInRecentActionBucket:recentActionBucket];
             self.incomingOrOutgoingView.hidden = NO;
-            self.incomingOrOutgoingImageView.image = [UIImage imageNamed:@"mini_folder_incoming"];
+            self.incomingOrOutgoingImageView.image = [UIImage megaImageWithNamed:@"mini_folder_incoming"];
         }
     } else {
         self.addedByLabel.text = [NSString mnz_addedByInRecentActionBucket:recentActionBucket];
         self.incomingOrOutgoingView.hidden = NO;
-        self.incomingOrOutgoingImageView.image = (shareType == MEGAShareTypeAccessOwner) ? [UIImage imageNamed:@"mini_folder_outgoing"] : [UIImage imageNamed:@"mini_folder_incoming"];
+        self.incomingOrOutgoingImageView.image = (shareType == MEGAShareTypeAccessOwner) ? [UIImage megaImageWithNamed:@"mini_folder_outgoing"] : [UIImage megaImageWithNamed:@"mini_folder_incoming"];
     }
     
     self.infoLabel.text = [NSString stringWithFormat:@"%@ ・", parentNode.name];
     
-    self.uploadOrVersionImageView.image = recentActionBucket.isUpdate ? [UIImage imageNamed:@"versioned"] : [UIImage imageNamed:@"recentUpload"];
+    self.uploadOrVersionImageView.image = recentActionBucket.isUpdate ? [UIImage megaImageWithNamed:@"versioned"] : [UIImage megaImageWithNamed:@"recentUpload"];
     
     self.timeLabel.text = recentActionBucket.timestamp.mnz_formattedHourAndMinutes;
     

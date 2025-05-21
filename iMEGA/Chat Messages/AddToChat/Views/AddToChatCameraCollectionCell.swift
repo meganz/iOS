@@ -1,3 +1,4 @@
+import MEGAAssets
 import MEGADesignToken
 import MEGAPermissions
 import UIKit
@@ -130,7 +131,7 @@ class AddToChatCameraCollectionCell: UICollectionViewCell {
     }
     
     private func updateCameraIconImageView() {
-        cameraIconImageView.image = (traitCollection.userInterfaceStyle == .dark) ? UIImage.cameraIconWhite : (permissionHandler.isVideoPermissionAuthorized ? UIImage.cameraIconWhite : UIImage.cameraIcon)
+        cameraIconImageView.image = (traitCollection.userInterfaceStyle == .dark) ? MEGAAssets.UIImage.cameraIconWhite : (permissionHandler.isVideoPermissionAuthorized ? MEGAAssets.UIImage.cameraIconWhite : MEGAAssets.UIImage.cameraIcon)
     }
     
     private func updateAppearance() {

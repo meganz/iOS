@@ -1,3 +1,4 @@
+import MEGAAssets
 import MEGADomain
 import MEGAL10n
 import MEGAPreference
@@ -60,11 +61,11 @@ import MEGAPreference
     
     @objc var icon: UIImage? {
         switch tabType {
-        case .cloudDrive: UIImage.cloudDriveIcon
-        case .cameraUploads: UIImage.cameraUploadsIcon
-        case .home: UIImage.home
-        case .chat: UIImage.chatIcon
-        case .sharedItems: UIImage.sharedItemsIcon
+        case .cloudDrive: MEGAAssets.UIImage.cloudDriveIcon
+        case .cameraUploads: MEGAAssets.UIImage.cameraUploadsIcon
+        case .home: MEGAAssets.UIImage.home
+        case .chat: MEGAAssets.UIImage.chatIcon
+        case .sharedItems: MEGAAssets.UIImage.sharedItemsIcon
         }
     }
     

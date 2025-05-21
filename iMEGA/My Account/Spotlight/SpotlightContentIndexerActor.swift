@@ -1,6 +1,7 @@
 import Foundation
 import MEGAAppPresentation
 import MEGAAppSDKRepo
+import MEGAAssets
 import MEGADomain
 
 actor SpotlightContentIndexerActor {
@@ -125,9 +126,9 @@ actor SpotlightContentIndexerActor {
     private func searchableItem(node: NodeEntity) -> SpotlightSearchableItemEntity {
         
         let content: (description: String?, thumbnailData: Data?) = if node.isFile {
-            (ByteCountFormatter.string(fromByteCount: Int64(node.size), countStyle: .file), UIImage.spotlightFile.pngData())
+            (ByteCountFormatter.string(fromByteCount: Int64(node.size), countStyle: .file), MEGAAssets.UIImage.spotlightFile.pngData())
         } else {
-            (nodeAttributeUseCase.pathFor(node: node), UIImage.spotlightFolder.pngData())
+            (nodeAttributeUseCase.pathFor(node: node), MEGAAssets.UIImage.spotlightFolder.pngData())
         }
         
         return SpotlightSearchableItemEntity(

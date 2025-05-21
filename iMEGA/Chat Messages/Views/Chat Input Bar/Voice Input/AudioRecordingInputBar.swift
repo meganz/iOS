@@ -1,3 +1,4 @@
+import MEGAAssets
 import MEGADesignToken
 import MEGAL10n
 import UIKit
@@ -42,11 +43,13 @@ class AudioRecordingInputBar: UIView {
         super.awakeFromNib()
         
         addGestureRecognizer(trashedTapGesture)
-                
+        
+        configureImages()
+        
         suggestionLabel.text = Strings.Localizable.dragLeftToCancelReleaseToSend
         audioWavesView = AudioWavesView.instanceFromNib
         audioWavesholderView.wrap(audioWavesView)
-        trashView.imageView.image = UIImage(resource: .rubbishBin).withTintColor(TokenColors.Icon.primary, renderingMode: .alwaysTemplate)
+        trashView.imageView.image = MEGAAssets.UIImage.rubbishBin.withTintColor(TokenColors.Icon.primary, renderingMode: .alwaysTemplate)
         updateAppearance()
 
         audioRecorder.updateHandler = {[weak self] timeString, level in
@@ -98,7 +101,7 @@ class AudioRecordingInputBar: UIView {
         locked = true
         let width = voiceView.bounds.width - trashView.bounds.width
         voiceView.finalRatio = width / voiceView.bounds.width
-        voiceView.imageView.image = UIImage(resource: .sendChatDisabled)
+        voiceView.imageView.image = MEGAAssets.UIImage.sendChatDisabled
         voiceView.selectionView.backgroundColor = TokenColors.Button.primary
         voiceView.imageView.renderImage(withColor: TokenColors.Icon.inverseAccent)
         
@@ -169,5 +172,11 @@ class AudioRecordingInputBar: UIView {
     private func updateAppearance() {
         suggestionLabel.textColor = TokenColors.Text.secondary
         audioWavesBackgroundView.backgroundColor = TokenColors.Background.surface1
+    }
+    
+    private func configureImages() {
+        lockView.imageView.image = MEGAAssets.UIImage.image(named: "lockRecording-1")
+        trashView.imageView.image = MEGAAssets.UIImage.image(named: "cancelVoice")
+        voiceView.imageView.image = MEGAAssets.UIImage.image(named: "sendVoiceClipDefault-1")
     }
 }

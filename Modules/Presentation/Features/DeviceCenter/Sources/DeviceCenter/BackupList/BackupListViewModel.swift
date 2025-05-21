@@ -1,5 +1,6 @@
 import Combine
 import MEGAAppSDKRepo
+import MEGAAssets
 import MEGADomain
 import MEGAL10n
 import SwiftUI
@@ -307,7 +308,7 @@ public final class BackupListViewModel: ObservableObject {
     private func makeDeviceInfoModel() async -> ResourceInfoModel {
         guard selectedDevice.backups.isNotEmpty else {
             return ResourceInfoModel(
-                icon: Image(selectedDevice.icon, bundle: .module),
+                icon: MEGAAssets.Image.image(named: selectedDevice.icon),
                 name: selectedDevice.name,
                 counter: ResourceCounter.emptyCounter
             )
@@ -316,7 +317,7 @@ public final class BackupListViewModel: ObservableObject {
         let folderInfo = await FolderInfoFactory(nodeUseCase: nodeUseCase).info(from: selectedDevice.backups)
         
         return ResourceInfoModel(
-            icon: Image(selectedDevice.icon, bundle: .module),
+            icon: MEGAAssets.Image.image(named: selectedDevice.icon),
             name: selectedDevice.name,
             counter: ResourceCounter(
                 files: folderInfo.files,

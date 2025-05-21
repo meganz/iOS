@@ -51,6 +51,7 @@
                     <connections>
                         <outlet property="cancelBarButtonItem" destination="G2I-Ru-CpP" id="sGY-CR-5Qa"/>
                         <outlet property="descriptionLabel" destination="R9X-dd-jgE" id="UTg-D3-aJQ"/>
+                        <outlet property="logoImageView" destination="e0A-S6-Pf8" id="GCY-fc-q6q"/>
                         <outlet property="openButton" destination="r2i-hd-Kg2" id="KJT-7k-Aw7"/>
                     </connections>
                 </viewController>

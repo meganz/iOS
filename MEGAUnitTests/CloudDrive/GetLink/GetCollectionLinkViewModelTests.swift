@@ -2,6 +2,7 @@
 import MEGAAnalyticsiOS
 import MEGAAppPresentation
 import MEGAAppPresentationMock
+import MEGAAssets
 import MEGADomain
 import MEGADomainMock
 import MEGAL10n
@@ -148,7 +149,7 @@ final class GetCollectionLinkViewModelTests: XCTestCase {
             
             let updatedCell = try XCTUnwrap(sut.cellViewModel(indexPath: updatedIndexPath) as? GetLinkStringCellViewModel)
             await test(viewModel: updatedCell, action: .onViewReady, expectedCommands: [
-                .configView(title: link, leftImage: UIImage.linkGetLink, isRightImageViewHidden: true)
+                .configView(title: link, leftImage: MEGAAssets.UIImage.linkGetLink, isRightImageViewHidden: true)
             ])
         }
     }
@@ -317,7 +318,7 @@ final class GetCollectionLinkViewModelTests: XCTestCase {
                  action: .copyLink,
                  expectedCommands: [
                     .addToPasteBoard(link),
-                    .showHud(.custom(UIImage.copy,
+                    .showHud(.custom(MEGAAssets.UIImage.copy,
                                      Strings.Localizable.SharedItems.GetLink.linkCopied(1)))
                  ],
                  expectationValidation: ==)
@@ -361,7 +362,7 @@ final class GetCollectionLinkViewModelTests: XCTestCase {
             test(viewModel: sut, action: .copyLink,
                  expectedCommands: [
                     .addToPasteBoard(linkOnly),
-                    .showHud(.custom(UIImage.copy,
+                    .showHud(.custom(MEGAAssets.UIImage.copy,
                                      Strings.Localizable.SharedItems.GetLink.linkCopied(1)))
                  ],
                  expectationValidation: ==)
@@ -403,7 +404,7 @@ final class GetCollectionLinkViewModelTests: XCTestCase {
             test(viewModel: sut, action: .copyKey,
                  expectedCommands: [
                     .addToPasteBoard(key),
-                    .showHud(.custom(UIImage.copy,
+                    .showHud(.custom(MEGAAssets.UIImage.copy,
                                      Strings.Localizable.keyCopiedToClipboard))
                  ], expectationValidation: ==)
         }

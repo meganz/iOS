@@ -42,6 +42,7 @@
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <connections>
                 <outlet property="emptyParticipantsListLabel" destination="7DP-KQ-uHk" id="gzO-65-dEO"/>
+                <outlet property="emptyStateImageView" destination="Ywf-hR-2Sh" id="5ci-Gc-t9C"/>
             </connections>
             <point key="canvasLocation" x="269.46564885496184" y="144.36619718309859"/>
         </tableViewCell>

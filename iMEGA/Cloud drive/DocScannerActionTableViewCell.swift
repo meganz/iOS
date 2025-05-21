@@ -1,3 +1,4 @@
+import MEGAAssets
 import MEGADesignToken
 import MEGAL10n
 import UIKit
@@ -26,11 +27,11 @@ class DocScannerActionTableViewCell: UITableViewCell {
     private func configure() {
         switch cellType {
         case .upload:
-            actionImageView.image = UIImage.upload
+            actionImageView.image = MEGAAssets.UIImage.upload
             actionLabel.text = Strings.Localizable.uploadToMega
         case .sendMessage:
             actionImageView.tintColor = TokenColors.Text.secondary
-            actionImageView.image = UIImage.sendToChat
+            actionImageView.image = MEGAAssets.UIImage.sendToChat
             actionLabel.text = Strings.Localizable.General.sendToChat
         }
     }

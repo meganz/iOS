@@ -1,3 +1,4 @@
+import MEGAAssets
 import MEGADesignToken
 import MEGAL10n
 
@@ -37,13 +38,13 @@ extension ContactTableViewCell {
         switch option {
         case .newGroupChat:
             nameLabel.text = Strings.Localizable.newGroupChat
-            avatarImageView.image = UIImage.groupChatToken
+            avatarImageView.image = MEGAAssets.UIImage.groupChatToken
         case .newMeeting:
             nameLabel.text = Strings.Localizable.Meetings.Create.newMeeting
-            avatarImageView.image =  UIImage.newMeetingToken
+            avatarImageView.image =  MEGAAssets.UIImage.newMeetingToken
         case .joinMeeting:
             nameLabel.text = Strings.Localizable.Meetings.Link.LoggedInUser.joinButtonText
-            avatarImageView.image = UIImage.joinMeetingToken
+            avatarImageView.image = MEGAAssets.UIImage.joinMeetingToken
         @unknown default: break
         }
         
@@ -56,7 +57,7 @@ extension ContactTableViewCell {
     
     @objc func prepareAddContactsCell() {
         permissionsImageView.isHidden = true
-        avatarImageView.image = UIImage.inviteContactShare
+        avatarImageView.image = MEGAAssets.UIImage.inviteContactShare
         nameLabel.text = Strings.Localizable.addContactButton
         shareLabel.isHidden = true
     }

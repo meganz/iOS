@@ -1,5 +1,6 @@
 import MEGAAppPresentation
 import MEGAAppSDKRepo
+import MEGAAssets
 import MEGADesignToken
 import MEGADomain
 import MEGAL10n
@@ -172,7 +173,7 @@ struct SearchResultMapper: Sendable {
                !nodeUseCase.isInRubbishBin(nodeHandle: node.restoreParentHandle) {
                 return [
                     SearchResultSwipeAction(
-                        image: Image(.restore),
+                        image: MEGAAssets.Image.restore,
                         backgroundColor: turquoiseBackgroundColor,
                         action: {
                             nodeActions.restoreFromRubbishBin([node])
@@ -183,7 +184,7 @@ struct SearchResultMapper: Sendable {
             }
         } else {
             let shareLinkSwipeAction = SearchResultSwipeAction(
-                image: Image(.link),
+                image: MEGAAssets.Image.link,
                 backgroundColor: TokenColors.Support.warning.swiftUI,
                 action: {
                     nodeActions.shareOrManageLink([node])
@@ -192,7 +193,7 @@ struct SearchResultMapper: Sendable {
             )
 
             let downloadSwipeAction = SearchResultSwipeAction(
-                image: Image(.offline),
+                image: MEGAAssets.Image.offline,
                 backgroundColor: turquoiseBackgroundColor,
                 action: {
                     nodeActions.nodeDownloader([node])
@@ -202,7 +203,7 @@ struct SearchResultMapper: Sendable {
 
             if viewDisplayMode != .backup {
                 let moveToRubbishBinSwipeAction = SearchResultSwipeAction(
-                    image: Image(.rubbishBin),
+                    image: MEGAAssets.Image.rubbishBin,
                     backgroundColor: TokenColors.Support.error.swiftUI,
                     action: {
                         nodeActions.moveToRubbishBin([node])

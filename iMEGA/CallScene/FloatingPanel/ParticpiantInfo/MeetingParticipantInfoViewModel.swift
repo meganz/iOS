@@ -1,4 +1,5 @@
 import MEGAAppPresentation
+import MEGAAssets
 import MEGADomain
 import MEGAL10n
 
@@ -131,7 +132,7 @@ final class MeetingParticipantInfoViewModel: ViewModelType {
         let avatarHandler = UserAvatarHandler(
             userImageUseCase: userImageUseCase,
             initials: name.initialForAvatar(),
-            avatarBackgroundColor: UIColor.colorFromHexString(avatarBackgroundHexColor) ?? .black000000
+            avatarBackgroundColor: UIColor.colorFromHexString(avatarBackgroundHexColor) ?? MEGAAssets.UIColor.black000000
         )
         
         Task { @MainActor in
@@ -155,7 +156,7 @@ final class MeetingParticipantInfoViewModel: ViewModelType {
     private func infoAction() -> ActionSheetAction {
         ActionSheetAction(title: Strings.Localizable.info,
                           detail: nil,
-                          image: UIImage(resource: .infoMeetings),
+                          image: MEGAAssets.UIImage.infoMeetings,
                           style: .default) { [weak self] in
             self?.dispatch(.showInfo)
         }
@@ -164,7 +165,7 @@ final class MeetingParticipantInfoViewModel: ViewModelType {
     private func sendMessageAction() -> ActionSheetAction {
         ActionSheetAction(title: Strings.Localizable.sendMessage,
                           detail: nil,
-                          image: UIImage(resource: .sendMessageMeetings),
+                          image: MEGAAssets.UIImage.sendMessageMeetings,
                           style: .default) { [weak self] in
             self?.dispatch(.sendMessage)
         }
@@ -173,7 +174,7 @@ final class MeetingParticipantInfoViewModel: ViewModelType {
     private func makeModeratorAction() -> ActionSheetAction {
         ActionSheetAction(title: Strings.Localizable.Meetings.Participant.makeModerator,
                           detail: nil,
-                          image: UIImage(resource: .moderatorMeetings),
+                          image: MEGAAssets.UIImage.moderatorMeetings,
                           style: .default) { [weak self] in
             self?.dispatch(.makeModerator)
         }
@@ -182,7 +183,7 @@ final class MeetingParticipantInfoViewModel: ViewModelType {
     private func removeModeratorAction() -> ActionSheetAction {
         ActionSheetAction(title: Strings.Localizable.Meetings.Participant.removeModerator,
                           detail: nil,
-                          image: UIImage(resource: .removeModerator),
+                          image: MEGAAssets.UIImage.removeModerator,
                           style: .default) { [weak self] in
             self?.dispatch(.removeModerator)
         }
@@ -191,7 +192,7 @@ final class MeetingParticipantInfoViewModel: ViewModelType {
     private func removeContactAction() -> ActionSheetAction {
         ActionSheetAction(title: Strings.Localizable.removeParticipant,
                           detail: nil,
-                          image: UIImage(resource: .delete),
+                          image: MEGAAssets.UIImage.delete,
                           style: .destructive) { [weak self] in
             self?.dispatch(.removeParticipant)
         }
@@ -200,7 +201,7 @@ final class MeetingParticipantInfoViewModel: ViewModelType {
     private func displayInMainViewAction() -> ActionSheetAction {
         ActionSheetAction(title: Strings.Localizable.Meetings.DisplayInMainView.title,
                           detail: nil,
-                          image: UIImage(resource: .speakerView),
+                          image: MEGAAssets.UIImage.speakerView,
                           style: .default) { [weak self] in
             self?.dispatch(.displayInMainView)
         }
@@ -209,7 +210,7 @@ final class MeetingParticipantInfoViewModel: ViewModelType {
     private func muteParticipantAction() -> ActionSheetAction {
         ActionSheetAction(title: Strings.Localizable.Calls.Panel.ParticipantsInCall.ParticipantContextMenu.Actions.mute,
                           detail: nil,
-                          image: UIImage(resource: .muteParticipant),
+                          image: MEGAAssets.UIImage.muteParticipant,
                           style: .default) { [weak self] in
             self?.dispatch(.muteParticipant)
         }

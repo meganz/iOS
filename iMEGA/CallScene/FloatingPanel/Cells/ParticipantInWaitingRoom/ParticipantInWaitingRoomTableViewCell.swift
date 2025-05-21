@@ -1,4 +1,5 @@
 import MEGAAppPresentation
+import MEGAAssets
 import MEGAL10n
 import UIKit
 
@@ -19,6 +20,12 @@ class ParticipantInWaitingRoomTableViewCell: UITableViewCell, ViewType {
     @IBOutlet private weak var avatarImageView: UIImageView!
     @IBOutlet private weak var nameLabel: UILabel!
     @IBOutlet private weak var admitButton: UIButton!
+    @IBOutlet private weak var denyButton: UIButton!
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        configureImages()
+    }
     
     @IBAction func admitButtonTapped(_ sender: UIButton) {
         viewModel?.dispatch(.admitButtonTapped)
@@ -36,5 +43,13 @@ class ParticipantInWaitingRoomTableViewCell: UITableViewCell, ViewType {
         case .updateName(let name):
             nameLabel.text = name
         }
+    }
+    
+    private func configureImages() {
+        avatarImageView.image = MEGAAssets.UIImage.image(named: "icon-contacts")
+        denyButton.setImage(MEGAAssets.UIImage.image(named: "waiting_room_deny"), for: .normal)
+        denyButton.setImage(MEGAAssets.UIImage.image(named: "userMutedMeetings"), for: .selected)
+        admitButton.setImage(MEGAAssets.UIImage.image(named: "waiting_room_admit"), for: .normal)
+        admitButton.setImage(MEGAAssets.UIImage.image(named: "videoOff"), for: .selected)
     }
 }

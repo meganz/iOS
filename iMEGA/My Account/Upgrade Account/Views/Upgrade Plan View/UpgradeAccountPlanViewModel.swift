@@ -3,6 +3,7 @@ import Combine
 import MEGAAnalyticsiOS
 import MEGAAppPresentation
 import MEGAAppSDKRepo
+import MEGAAssets
 import MEGADesignToken
 import MEGADomain
 import MEGAL10n
@@ -269,7 +270,7 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
         return TextWithLinkDetails(fullText: fullTextWithoutFormatters,
                                    tappableText: tappableText,
                                    linkString: "https://mega.nz/pro",
-                                   textColor: UIColor.upgradeAccountPrimaryText.swiftUI,
+                                   textColor: MEGAAssets.UIColor.upgradeAccountPrimaryText.swiftUI,
                                    linkColor: TokenColors.Support.success.swiftUI)
     }
     

@@ -1,4 +1,5 @@
 import Foundation
+import MEGAAssets
 import MEGAL10n
 
 class FolderLinkCollectionViewController: UIViewController {
@@ -206,7 +207,7 @@ extension FolderLinkCollectionViewController: UICollectionViewDelegate {
             }
         } actionProvider: { _ in
             let selectAction = UIAction(title: Strings.Localizable.select,
-                                        image: UIImage.selectItem) { _ in
+                                        image: MEGAAssets.UIImage.selectItem) { _ in
                 self.setCollectionViewEditing(true, animated: true)
                 self.collectionView?.delegate?.collectionView?(collectionView, didSelectItemAt: indexPath)
                 self.collectionView?.reloadData()

@@ -1,4 +1,5 @@
 import MEGAAppSDKRepo
+import MEGAAssets
 import MEGADesignToken
 import MEGADomain
 import MEGAL10n
@@ -17,6 +18,10 @@ extension NodeVersionsViewController {
     @objc func configureToolbarItems() {
         let flexibleItem = UIBarButtonItem(systemItem: .flexibleSpace)
         let isBackupNode = BackupsUseCase(backupsRepository: BackupsRepository.newRepo, nodeRepository: NodeRepository.newRepo).isBackupNode(node.toNodeEntity())
+        
+        downloadBarButtonItem.image = MEGAAssets.UIImage.image(named: "offline")
+        revertBarButtonItem.image = MEGAAssets.UIImage.image(named: "history")
+        removeBarButtonItem.image = MEGAAssets.UIImage.image(named: "delete")
         
         setToolbarItems(isBackupNode ? [downloadBarButtonItem, flexibleItem, removeBarButtonItem] : [downloadBarButtonItem, flexibleItem, revertBarButtonItem, flexibleItem, removeBarButtonItem], animated: true)
     }

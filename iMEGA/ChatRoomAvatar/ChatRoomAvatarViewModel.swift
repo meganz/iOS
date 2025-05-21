@@ -1,4 +1,5 @@
 import Combine
+import MEGAAssets
 import MEGADesignToken
 import MEGADomain
 import MEGAL10n
@@ -29,7 +30,7 @@ final class ChatRoomAvatarViewModel: ObservableObject {
     }
     var avatarType: AvatarType {
         if chatRoom.isNoteToSelf {
-            return chatListItem?.lastMessageId == .invalid ? .noteToSelf(.noteToSelfSmall) : .one(.noteToSelfBlue)
+            return chatListItem?.lastMessageId == .invalid ? .noteToSelf(MEGAAssets.UIImage.noteToSelfSmall) : .one(MEGAAssets.UIImage.noteToSelfBlue)
         } else if let primaryAvatarData = chatListItemAvatar.primaryAvatarData,
            let secondaryAvatarData = chatListItemAvatar.secondaryAvatarData,
            let primaryAvatar = UIImage(data: primaryAvatarData),
@@ -177,7 +178,7 @@ final class ChatRoomAvatarViewModel: ObservableObject {
         }
         
         let initials = chatTitle.initialForAvatar()
-        let avatarBackgroundColor = UIColor.colorFromHexString(avatarBackgroundHexColor) ?? UIColor.black000000
+        let avatarBackgroundColor = UIColor.colorFromHexString(avatarBackgroundHexColor) ?? MEGAAssets.UIColor.black000000
         
         return UIImage.drawImage(
             forInitials: initials,
@@ -194,8 +195,8 @@ final class ChatRoomAvatarViewModel: ObservableObject {
         return UIImage.drawImage(
             forInitials: initials,
             size: size,
-            backgroundColor: UIColor.chatAvatarBackground,
-            backgroundGradientColor: UIColor.grayDBDBDB,
+            backgroundColor: MEGAAssets.UIColor.chatAvatarBackground,
+            backgroundGradientColor: MEGAAssets.UIColor.grayDBDBDB,
             textColor: TokenColors.Text.onColor,
             font: UIFont.systemFont(ofSize: min(size.width, size.height)/2.0),
             isRightToLeftLanguage: isRightToLeftLanguage

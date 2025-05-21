@@ -1,4 +1,5 @@
 import MEGAAppPresentation
+import MEGAAssets
 import MEGADesignToken
 import MEGAL10n
 import UIKit
@@ -69,7 +70,7 @@ final class SlideShowViewController: UIViewController, ViewType {
     }
     
     private func showLoader() {
-        activityIndicator.color = UIColor.whiteFFFFFF
+        activityIndicator.color = MEGAAssets.UIColor.whiteFFFFFF
         view.bringSubviewToFront(activityIndicator)
         activityIndicator.startAnimating()
     }
@@ -153,7 +154,7 @@ final class SlideShowViewController: UIViewController, ViewType {
         setVisibility(false)
         CrashlyticsLogger.log("[SlideShow] play button tapped.")
         let numberOfSlideShowContents = numberOfSlideShowContents()
-            self.collectionView.backgroundColor = .black000000
+            self.collectionView.backgroundColor = MEGAAssets.UIColor.black000000
             self.view.backgroundColor = TokenColors.Background.page
             cell?.resetZoomScale()
             if self.viewModel.currentSlideIndex >= numberOfSlideShowContents - 1 {

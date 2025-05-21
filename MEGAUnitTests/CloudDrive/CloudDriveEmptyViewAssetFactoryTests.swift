@@ -1,6 +1,7 @@
 @testable import MEGA
 import MEGAAppPresentation
 import MEGAAppPresentationMock
+import MEGAAssets
 import MEGADesignToken
 import MEGADomain
 import MEGADomainMock
@@ -16,7 +17,7 @@ final class CloudDriveEmptyViewAssetFactoryTests: XCTestCase {
         let sut = makeSUT()
         let emptyAsset = sut.defaultAsset(for: .mockRecentActionBucketEmpty, config: .init())
         let expectedEmptyAsset = SearchConfig.EmptyViewAssets(
-            image: Image(.searchEmptyState),
+            image: MEGAAssets.Image.searchEmptyState,
             title: Strings.Localizable.Home.Search.Empty.noChipSelected,
             titleTextColor: TokenColors.Icon.secondary.swiftUI
         )
@@ -27,7 +28,7 @@ final class CloudDriveEmptyViewAssetFactoryTests: XCTestCase {
         assert(
             nodeEntity: nil,
             displayMode: .unknown,
-            expectedImage: Image(.folderEmptyState),
+            expectedImage: MEGAAssets.Image.folderEmptyState,
             expectedTitle: Strings.Localizable.emptyFolder
         )
     }
@@ -37,7 +38,7 @@ final class CloudDriveEmptyViewAssetFactoryTests: XCTestCase {
             nodeUseCase: MockNodeDataUseCase(nodeAccessLevelVariable: .read),
             nodeEntity: NodeEntity(nodeType: .root),
             displayMode: .cloudDrive,
-            expectedImage: Image(.cloudEmptyState),
+            expectedImage: MEGAAssets.Image.cloudEmptyState,
             expectedTitle: Strings.Localizable.cloudDriveEmptyStateTitle
         )
     }
@@ -60,7 +61,7 @@ final class CloudDriveEmptyViewAssetFactoryTests: XCTestCase {
             nodeUseCase: MockNodeDataUseCase(isARubbishBinRootNodeValue: true),
             nodeEntity: NodeEntity(nodeType: .rubbish),
             displayMode: .rubbishBin,
-            expectedImage: Image(.rubbishEmptyState),
+            expectedImage: MEGAAssets.Image.rubbishEmptyState,
             expectedTitle: Strings.Localizable.cloudDriveEmptyStateTitleRubbishBin
         )
     }
@@ -69,7 +70,7 @@ final class CloudDriveEmptyViewAssetFactoryTests: XCTestCase {
         assert(
             nodeEntity: NodeEntity(nodeType: .folder),
             displayMode: .cloudDrive,
-            expectedImage: Image(.folderEmptyState),
+            expectedImage: MEGAAssets.Image.folderEmptyState,
             expectedTitle: Strings.Localizable.emptyFolder
         )
     }
@@ -78,7 +79,7 @@ final class CloudDriveEmptyViewAssetFactoryTests: XCTestCase {
         assert(
             nodeEntity: NodeEntity(nodeType: .folder),
             displayMode: .rubbishBin,
-            expectedImage: Image(.folderEmptyState),
+            expectedImage: MEGAAssets.Image.folderEmptyState,
             expectedTitle: Strings.Localizable.emptyFolder
         )
     }
@@ -87,7 +88,7 @@ final class CloudDriveEmptyViewAssetFactoryTests: XCTestCase {
         assert(
             nodeEntity: NodeEntity(nodeType: .file),
             displayMode: .cloudDrive,
-            expectedImage: Image(.folderEmptyState),
+            expectedImage: MEGAAssets.Image.folderEmptyState,
             expectedTitle: Strings.Localizable.emptyFolder
         )
     }
@@ -96,7 +97,7 @@ final class CloudDriveEmptyViewAssetFactoryTests: XCTestCase {
         assert(
             nodeEntity: NodeEntity(nodeType: .folder),
             displayMode: .sharedItem,
-            expectedImage: Image(.folderEmptyState),
+            expectedImage: MEGAAssets.Image.folderEmptyState,
             expectedTitle: Strings.Localizable.emptyFolder
         )
     }
@@ -105,7 +106,7 @@ final class CloudDriveEmptyViewAssetFactoryTests: XCTestCase {
         assert(
             nodeEntity: NodeEntity(nodeType: .folder),
             displayMode: .backup,
-            expectedImage: Image(.folderEmptyState),
+            expectedImage: MEGAAssets.Image.folderEmptyState,
             expectedTitle: Strings.Localizable.emptyFolder
         )
     }
@@ -130,7 +131,7 @@ final class CloudDriveEmptyViewAssetFactoryTests: XCTestCase {
             nodeUseCase: MockNodeDataUseCase(nodeAccessLevelVariable: nodeAccessLevel),
             nodeEntity: NodeEntity(nodeType: .root),
             displayMode: .cloudDrive,
-            expectedImage: Image(.cloudEmptyState),
+            expectedImage: MEGAAssets.Image.cloudEmptyState,
             expectedTitle: Strings.Localizable.cloudDriveEmptyStateTitle,
             actions: [
                 .init(
@@ -138,16 +139,16 @@ final class CloudDriveEmptyViewAssetFactoryTests: XCTestCase {
                     titleTextColor: TokenColors.Text.inverseAccent.swiftUI,
                     backgroundColor: TokenColors.Support.success.swiftUI,
                     menu: [
-                        .init(title: Strings.Localizable.newTextFile, image: Image(.textfile), handler: {}),
-                        .init(title: Strings.Localizable.newFolder, image: Image(.newFolder), handler: {}),
-                        .init(title: Strings.Localizable.scanDocument, image: Image(.scanDocument), handler: {}),
+                        .init(title: Strings.Localizable.newTextFile, image: MEGAAssets.Image.textfile, handler: {}),
+                        .init(title: Strings.Localizable.newFolder, image: MEGAAssets.Image.newFolder, handler: {}),
+                        .init(title: Strings.Localizable.scanDocument, image: MEGAAssets.Image.scanDocument, handler: {}),
                         .init(
                             title: Strings.Localizable.CloudDrive.Upload.importFromFiles,
-                            image: Image(.import),
+                            image: MEGAAssets.Image.import,
                             handler: {}
                         ),
-                        .init(title: Strings.Localizable.capturePhotoVideo, image: Image(.capture), handler: {}),
-                        .init(title: Strings.Localizable.choosePhotoVideo, image: Image(.saveToPhotos), handler: {})
+                        .init(title: Strings.Localizable.capturePhotoVideo, image: MEGAAssets.Image.capture, handler: {}),
+                        .init(title: Strings.Localizable.choosePhotoVideo, image: MEGAAssets.Image.saveToPhotos, handler: {})
                     ]
                 )
             ],

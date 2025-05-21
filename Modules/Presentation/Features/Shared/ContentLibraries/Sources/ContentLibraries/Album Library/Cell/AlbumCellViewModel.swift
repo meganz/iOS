@@ -120,10 +120,10 @@ public final class AlbumCellViewModel: ObservableObject, Identifiable {
             thumbnailContainer = thumbnailLoader.initialImage(
                 for: coverNode,
                 type: .thumbnail,
-                placeholder: { MEGAAssetsImageProvider.image(named: .timeline) })
+                placeholder: { MEGAAssets.Image.timeline })
         } else {
             thumbnailContainer = ImageContainer(
-                image: MEGAAssetsImageProvider.image(named: .timeline),
+                image: MEGAAssets.Image.timeline,
                 type: .placeholder)
         }
         
@@ -233,7 +233,7 @@ public final class AlbumCellViewModel: ObservableObject, Identifiable {
             try? await thumbnailLoader.loadImage(for: albumCover, type: .thumbnail)
         } else {
             ImageContainer(
-                image: MEGAAssetsImageProvider.image(named: .timeline),
+                image: MEGAAssets.Image.timeline,
                 type: .placeholder)
         }
         guard let imageContainer,

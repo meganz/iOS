@@ -1,4 +1,5 @@
 import DeviceKit
+import MEGAAssets
 import MEGADesignToken
 import MEGAPresentation
 import MEGAUIComponent
@@ -80,7 +81,7 @@ struct PermissionOnboardingView: View {
     }
 
     private var mainImageView: some View {
-        Image(viewModel.image)
+        viewModel.image
             .resizable()
             .frame(width: 200, height: 200)
     }
@@ -107,7 +108,7 @@ struct PermissionOnboardingView: View {
     private var auxiliaryView: some View {
         if let note = viewModel.note {
             HStack(spacing: 0) {
-                Image(.info)
+                MEGAAssets.Image.info
                     .renderingMode(.template)
                     .foregroundColor(TokenColors.Support.info.swiftUI)
                     .frame(width: 20, height: 20)

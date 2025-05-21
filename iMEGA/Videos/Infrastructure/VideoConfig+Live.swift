@@ -1,3 +1,4 @@
+import MEGAAssets
 import MEGADesignToken
 import SwiftUI
 import Video
@@ -6,28 +7,28 @@ extension VideoConfig {
     
     static func live() -> VideoConfig { VideoConfig(
         videoListAssets: VideoConfig.VideoListAssets(
-            noResultVideoImage: UIImage.noResultsVideoV2,
-            checkmarkImage: UIImage.turquoiseCheckmark,
-            chipDownArrowImage: UIImage.filterChipDownArrow
+            noResultVideoImage: MEGAAssets.UIImage.noResultsVideoV2,
+            checkmarkImage: MEGAAssets.UIImage.turquoiseCheckmark,
+            chipDownArrowImage: MEGAAssets.UIImage.filterChipDownArrow
         ),
         rowAssets: VideoConfig.RowAssets(
-            favoriteImage: UIImage.favouriteThumbnail,
-            playImage: UIImage.blackPlayButton,
-            publicLinkImage: UIImage.linked,
-            moreImage: UIImage.moreList,
-            addPlaylistImage: UIImage.navigationbarAdd,
-            rectangleVideoStackPlaylistImage: UIImage.rectangleVideoStack,
-            favouritePlaylistThumbnailImage: UIImage.favouritePlaylistThumbnail,
-            grabberIconImage: UIImage.grabberIcon,
-            downloadedImage: UIImage.downloaded,
+            favoriteImage: MEGAAssets.UIImage.favouriteThumbnail,
+            playImage: MEGAAssets.UIImage.blackPlayButton,
+            publicLinkImage: MEGAAssets.UIImage.linked,
+            moreImage: MEGAAssets.UIImage.moreList,
+            addPlaylistImage: MEGAAssets.UIImage.navigationbarAdd,
+            rectangleVideoStackPlaylistImage: MEGAAssets.UIImage.rectangleVideoStack,
+            favouritePlaylistThumbnailImage: MEGAAssets.UIImage.favouritePlaylistThumbnail,
+            grabberIconImage: MEGAAssets.UIImage.grabberIcon,
+            downloadedImage: MEGAAssets.UIImage.downloaded,
             labelAssets: VideoConfig.RowAssets.LabelAssets(
-                redImage: UIImage.redSmall,
-                orangeImage: UIImage.orangeSmall,
-                yellowImage: UIImage.yellowSmall,
-                greenImage: UIImage.greenSmall,
-                blueImage: UIImage.blueSmall,
-                purpleImage: UIImage.purpleSmall,
-                greyImage: UIImage.greySmall
+                redImage: MEGAAssets.UIImage.redSmall,
+                orangeImage: MEGAAssets.UIImage.orangeSmall,
+                yellowImage: MEGAAssets.UIImage.yellowSmall,
+                greenImage: MEGAAssets.UIImage.greenSmall,
+                blueImage: MEGAAssets.UIImage.blueSmall,
+                purpleImage: MEGAAssets.UIImage.purpleSmall,
+                greyImage: MEGAAssets.UIImage.greySmall
             )
         ),
         colorAssets: VideoConfig.ColorAssets(
@@ -61,15 +62,15 @@ extension VideoConfig {
             highlightedTextColor: TokenColors.Notifications.notificationSuccess.swiftUI
         ),
         toolbarAssets: VideoConfig.ToolbarAssets(
-            offlineImage: UIImage.offline,
-            linkImage: UIImage.link,
-            saveToPhotosImage: UIImage.saveToPhotos,
-            sendToChatImage: UIImage.sendToChat,
-            moreListImage: UIImage.moreList
+            offlineImage: MEGAAssets.UIImage.offline,
+            linkImage: MEGAAssets.UIImage.link,
+            saveToPhotosImage: MEGAAssets.UIImage.saveToPhotos,
+            sendToChatImage: MEGAAssets.UIImage.sendToChat,
+            moreListImage: MEGAAssets.UIImage.moreList
         ),
         recentlyWatchedAssets: RecentlyWatchedAssets(
             emptyView: .init(
-                recentsEmptyStateImage: UIImage.recentlyWatchedVideosEmptyState
+                recentsEmptyStateImage: MEGAAssets.UIImage.recentlyWatchedVideosEmptyState
             )
         )
     )}

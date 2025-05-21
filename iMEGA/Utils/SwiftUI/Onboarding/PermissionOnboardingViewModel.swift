@@ -2,6 +2,7 @@ import MEGAAnalyticsiOS
 import MEGAAppPresentation
 import MEGAPermissions
 import MEGAPresentation
+import SwiftUI
 
 final class PermissionOnboardingViewModel: ViewModel<PermissionOnboardingViewModel.Route> {
 
@@ -12,7 +13,7 @@ final class PermissionOnboardingViewModel: ViewModel<PermissionOnboardingViewMod
         case finished(result: Bool)
     }
 
-    let image: ImageResource
+    let image: Image
     let title: String
     let description: String
     let note: String?
@@ -24,7 +25,7 @@ final class PermissionOnboardingViewModel: ViewModel<PermissionOnboardingViewMod
     private let tracker: any AnalyticsTracking
 
     init(
-        image: ImageResource,
+        image: Image,
         title: String,
         description: String,
         note: String?,

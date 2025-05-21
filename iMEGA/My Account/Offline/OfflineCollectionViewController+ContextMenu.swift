@@ -1,3 +1,4 @@
+import MEGAAssets
 import MEGAL10n
 import MEGASwift
 
@@ -17,7 +18,7 @@ extension OfflineCollectionViewController {
             }
         } actionProvider: { _ in
             let selectAction = UIAction(title: Strings.Localizable.select,
-                                        image: UIImage.selectItem) { _ in
+                                        image: MEGAAssets.UIImage.selectItem) { _ in
                 self.setCollectionViewEditing(true, animated: true)
                 self.collectionView?.delegate?.collectionView?(collectionView, didSelectItemAt: indexPath)
             }

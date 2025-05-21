@@ -26,7 +26,7 @@ final class PhotoSearchResultItemViewModel: ObservableObject, Identifiable {
     
     var thumbnailContainer: any ImageContaining {
         loadedThumbnailContainer ?? ImageContainer(
-            image: MEGAAssetsImageProvider.fileTypeResource(forFileName: photo.name),
+            image: MEGAAssets.Image.image(forFileName: photo.name),
             type: .placeholder)
     }
     

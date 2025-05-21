@@ -57,22 +57,22 @@ extension ContactDetailsViewController {
     }
     
     @objc func readWritePermissionsIcon() -> UIImage {
-        UIImage(resource: .readWritePermissions)
+        MEGAAssets.UIImage.readWritePermissions
             .withTintColor(TokenColors.Icon.primary, renderingMode: .alwaysOriginal)
     }
     
     @objc func moderatorIcon() -> UIImage {
-        UIImage(resource: .moderator)
+        MEGAAssets.UIImage.moderator
             .withTintColor(TokenColors.Icon.primary, renderingMode: .alwaysOriginal)
     }
     
     @objc func standardIcon() -> UIImage {
-        UIImage(resource: .standard)
+        MEGAAssets.UIImage.standard
             .withTintColor(TokenColors.Icon.primary, renderingMode: .alwaysOriginal)
     }
     
     @objc func readOnlyChatIcon() -> UIImage {
-        UIImage(resource: .readOnlyChat)
+        MEGAAssets.UIImage.readOnlyChat
             .withTintColor(TokenColors.Icon.primary, renderingMode: .alwaysOriginal)
     }
     
@@ -161,13 +161,13 @@ extension ContactDetailsViewController: PushNotificationControlProtocol {
         callButton.contentMode = .scaleAspectFit
         videoCallButton.contentMode = .scaleAspectFit
         
-        messageButton.setImage(UIImage.sendMessageRoundToken, for: .normal)
-        messageButton.setImage(UIImage.sendMessageRoundToken.applying(alpha: 0.5), for: .disabled)
+        messageButton.setImage(MEGAAssets.UIImage.sendMessageRoundToken, for: .normal)
+        messageButton.setImage(MEGAAssets.UIImage.sendMessageRoundToken.applying(alpha: 0.5), for: .disabled)
         
-        let call = MEGAAssetsImageProvider.image(named: "makeCallRound_token")
+        let call = MEGAAssets.UIImage.image(named: "makeCallRound_token")
         callButton.setImage(call, for: .normal)
-        callButton.setImage(UIImage.sendMessageRoundToken.applying(alpha: 0.5), for: .disabled)
-        let videoCall = MEGAAssetsImageProvider.image(named: "callVideoRound_token")
+        callButton.setImage(MEGAAssets.UIImage.sendMessageRoundToken.applying(alpha: 0.5), for: .disabled)
+        let videoCall = MEGAAssets.UIImage.image(named: "callVideoRound_token")
         videoCallButton.setImage(videoCall, for: .normal)
         videoCallButton.setImage(videoCall?.applying(alpha: 0.5), for: .disabled)
     }

@@ -1,4 +1,5 @@
 import Foundation
+import MEGAAssets
 import MEGADomain
 import MEGAL10n
 
@@ -61,7 +62,7 @@ struct ActionSheetFactory: ActionSheetFactoryProtocol {
             if currentLabelColor == .unknown {
                 return nil
             } else {
-                let checkMarkImageView = UIImageView.init(image: UIImage.turquoiseCheckmark)
+                let checkMarkImageView = UIImageView.init(image: MEGAAssets.UIImage.turquoiseCheckmark)
                 return ActionSheetAction(
                     title: labelColor.localizedTitle,
                     detail: nil,
@@ -93,21 +94,21 @@ private extension NodeLabelColor {
     var iconImage: UIImage {
         switch self {
         case .red:
-            return UIImage.red
+            return MEGAAssets.UIImage.red
         case .orange:
-            return UIImage.orange
+            return MEGAAssets.UIImage.orange
         case .yellow:
-            return UIImage.yellow
+            return MEGAAssets.UIImage.yellow
         case .green:
-            return UIImage.green
+            return MEGAAssets.UIImage.green
         case .blue:
-            return UIImage.blue
+            return MEGAAssets.UIImage.blue
         case .purple:
-            return UIImage.purple
+            return MEGAAssets.UIImage.purple
         case .grey:
-            return UIImage.grey
+            return MEGAAssets.UIImage.grey
         case .unknown:
-            return UIImage.delete
+            return MEGAAssets.UIImage.delete
         }
     }
 

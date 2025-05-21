@@ -10,5 +10,5 @@ struct NameCollisionAction: Identifiable {
     var date: String?
     var isFile: Bool
     var imageUrl: URL?
-    var imagePlaceholder: Image = MEGAAssetsImageProvider.image(named: .filetypeGeneric)
+    var imagePlaceholder: Image = MEGAAssets.Image.filetypeGeneric
 }

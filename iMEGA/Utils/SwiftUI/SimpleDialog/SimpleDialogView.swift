@@ -1,3 +1,4 @@
+import MEGAAssets
 import MEGADesignToken
 import SwiftUI
 
@@ -25,14 +26,14 @@ struct SimpleDialogConfig: Identifiable {
         var action: Action
     }
     init(
-        imageResource: ImageResource,
+        image: Image,
         title: String,
         titleStyle: TitleStyle = .small,
         message: String,
         buttons: [ButtonModel],
         dismissAction: @escaping () -> Void
     ) {
-        self.imageResource = imageResource
+        self.image = image
         self.title = title
         self.titleStyle = titleStyle
         self.message = message
@@ -47,7 +48,7 @@ struct SimpleDialogConfig: Identifiable {
     var id: String {
         title + message + buttons.map(\.id).joined(separator: ",")
     }
-    let imageResource: ImageResource
+    let image: Image
     let title: String
     let titleStyle: TitleStyle
     let message: String
@@ -74,7 +75,7 @@ struct SimpleDialogView: View {
     
     var body: some View {
         VStack(spacing: 20) {
-            Image(dialogConfig.imageResource)
+            dialogConfig.image
                 .resizable()
                 .frame(width: 90, height: 90)
             titleView
@@ -99,7 +100,7 @@ struct SimpleDialogView: View {
                 Button {
                     dialogConfig.dismissAction()
                 } label: {
-                    Image(.closeBanner)
+                    MEGAAssets.Image.closeBanner
                         .renderingMode(.template)
                         .resizable()
                         .frame(width: 24, height: 24)
@@ -200,7 +201,7 @@ struct DialogButtonWrapper: UIViewRepresentable {
 
  #Preview {
     let dialogConfig = SimpleDialogConfig(
-        imageResource: .upgradeToProPlan,
+        image: MEGAAssets.Image.upgradeToProPlan,
         title: "Dialog title",
         message: "Fancy dialog message",
         buttons: [

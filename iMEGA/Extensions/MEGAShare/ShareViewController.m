@@ -873,7 +873,7 @@
 }
 
 - (void)logout {
-    [SVProgressHUD showImage:[UIImage imageNamed:@"hudLogOut"] status:LocalizedString(@"loggingOut", @"String shown when you are logging out of your account.")];
+    [SVProgressHUD showImage:[UIImage megaImageWithNamed:@"hudLogOut"] status:LocalizedString(@"loggingOut", @"String shown when you are logging out of your account.")];
     [MEGASdk.shared logout];
 }
 
@@ -920,7 +920,7 @@
         case MEGARequestTypeLogout: {
       
             if (request.paramType != MEGAErrorTypeApiESSL) {
-                [SVProgressHUD showImage:[UIImage imageNamed:@"hudLogOut"] status:LocalizedString(@"loggingOut", @"String shown when you are logging out of your account.")];
+                [SVProgressHUD showImage:[UIImage megaImageWithNamed:@"hudLogOut"] status:LocalizedString(@"loggingOut", @"String shown when you are logging out of your account.")];
             }
             break;
         }

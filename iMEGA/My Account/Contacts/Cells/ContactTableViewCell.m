@@ -23,7 +23,9 @@
     [super awakeFromNib];
     
     self.avatarImageView.accessibilityIgnoresInvertColors = YES;
-    
+    [self.verifiedImageView setImage:[UIImage megaImageWithNamed:@"contactVerified"]];
+    [self.permissionsImageView setImage:[UIImage megaImageWithNamed:@"readPermissions"]];
+    [self.contactDetailsButton setImage:[UIImage megaImageWithNamed:@"info"] forState: UIControlStateNormal];
     [self setupColors];
 }
 
@@ -132,7 +134,7 @@
     } else if (indexPath.section == 1) {
         self.shareLabel.hidden = YES;
         self.permissionsImageView.hidden = NO;
-        self.permissionsImageView.image = [UIImage imageNamed:@"delete"];
+        self.permissionsImageView.image = [UIImage megaImageWithNamed:@"delete"];
         self.permissionsImageView.tintColor = [self removePendingShareIconColor];
     }
 }

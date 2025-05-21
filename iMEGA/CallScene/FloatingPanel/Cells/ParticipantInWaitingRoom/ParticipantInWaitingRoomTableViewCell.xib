@@ -89,6 +89,7 @@
             <connections>
                 <outlet property="admitButton" destination="Gh2-KO-WzT" id="y8v-X3-ajt"/>
                 <outlet property="avatarImageView" destination="9cB-FW-q71" id="H6H-zi-iFD"/>
+                <outlet property="denyButton" destination="MJk-G6-jiY" id="bKd-PR-ic1"/>
                 <outlet property="nameLabel" destination="yy5-cG-SSJ" id="hFd-OD-PYt"/>
             </connections>
             <point key="canvasLocation" x="131" y="-32"/>

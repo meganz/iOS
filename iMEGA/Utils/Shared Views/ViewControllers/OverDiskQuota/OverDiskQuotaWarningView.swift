@@ -1,10 +1,11 @@
+import MEGAAssets
 import UIKit
 
 final class OverDiskQuotaWarningView: UIView, NibOwnerLoadable {
 
     @IBOutlet private var titleLabel: UILabel!
-    
     @IBOutlet private var containerView: UIView!
+    @IBOutlet private var warningImageView: UIImageView!
 
     // MARK: - Initializer
 
@@ -39,6 +40,7 @@ final class OverDiskQuotaWarningView: UIView, NibOwnerLoadable {
         translatesAutoresizingMaskIntoConstraints = false
         loadNibContent()
         setupTraitCollectionAwareView(with: trait)
+        warningImageView.image = MEGAAssets.UIImage.image(named: "warning")
     }
 
     private func setupTraitCollectionAwareView(with trait: UITraitCollection) {

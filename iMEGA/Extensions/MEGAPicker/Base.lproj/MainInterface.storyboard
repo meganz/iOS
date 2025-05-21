@@ -80,6 +80,7 @@
                     </view>
                     <connections>
                         <outlet property="cancelBarButtonItem" destination="040-To-EsJ" id="UwH-gI-nWW"/>
+                        <outlet property="logoImageView" destination="ioa-Ax-uzw" id="WFT-zl-Y2K"/>
                         <outlet property="messageLabel" destination="lAl-Ey-XDZ" id="Jg6-kY-STZ"/>
                         <outlet property="titleLabel" destination="rgh-QI-X2F" id="cc3-uS-c2U"/>
                     </connections>

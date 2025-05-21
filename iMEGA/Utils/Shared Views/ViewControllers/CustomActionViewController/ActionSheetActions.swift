@@ -1,3 +1,4 @@
+import MEGAAssets
 import MEGADesignToken
 import MEGADomain
 import MEGAL10n
@@ -190,215 +191,225 @@ final class ContextActionSheetAction: BaseAction {
 
 extension NodeAction {
     class func exportFileAction(nodeCount: Int = 1) -> NodeAction {
-        NodeAction(title: Strings.Localizable.General.MenuAction.ExportFile.title(nodeCount), image: UIImage.export, type: .exportFile)
+        NodeAction(title: Strings.Localizable.General.MenuAction.ExportFile.title(nodeCount), image: MEGAAssets.UIImage.export, type: .exportFile)
     }
     
     class func shareFolderAction(nodeCount: Int = 1) -> NodeAction {
-        NodeAction(title: Strings.Localizable.General.MenuAction.ShareFolder.title(nodeCount), image: UIImage.shareFolder, type: .shareFolder)
+        NodeAction(title: Strings.Localizable.General.MenuAction.ShareFolder.title(nodeCount), image: MEGAAssets.UIImage.shareFolder, type: .shareFolder)
     }
     
     class func verifyContactAction(receiverDetail: String) -> NodeAction {
-        NodeAction(title: Strings.Localizable.General.MenuAction.VerifyContact.title(receiverDetail), image: UIImage.verifyContact, type: .verifyContact)
+        NodeAction(title: Strings.Localizable.General.MenuAction.VerifyContact.title(receiverDetail), image: MEGAAssets.UIImage.verifyContact, type: .verifyContact)
     }
     
     class func manageFolderAction() -> NodeAction {
-        NodeAction(title: Strings.Localizable.manageShare, image: UIImage.shareFolder, type: .manageShare)
+        NodeAction(title: Strings.Localizable.manageShare, image: MEGAAssets.UIImage.shareFolder, type: .manageShare)
     }
     
     class func downloadAction() -> NodeAction {
-        NodeAction(title: Strings.Localizable.General.downloadToOffline, image: UIImage.offline, type: .download)
+        NodeAction(title: Strings.Localizable.General.downloadToOffline, image: MEGAAssets.UIImage.offline, type: .download)
     }
     
     class func infoAction() -> NodeAction {
-        NodeAction(title: Strings.Localizable.info, image: UIImage.info, type: .info)
+        NodeAction(title: Strings.Localizable.info, image: MEGAAssets.UIImage.info, type: .info)
     }
     
     class func renameAction() -> NodeAction {
-        NodeAction(title: Strings.Localizable.rename, image: UIImage.rename, type: .rename)
+        NodeAction(title: Strings.Localizable.rename, image: MEGAAssets.UIImage.rename, type: .rename)
     }
     
     class func copyAction() -> NodeAction {
-        NodeAction(title: Strings.Localizable.copy, image: UIImage.copy, type: .copy)
+        NodeAction(title: Strings.Localizable.copy, image: MEGAAssets.UIImage.copy, type: .copy)
     }
     
     class func moveAction() -> NodeAction {
-        NodeAction(title: Strings.Localizable.move, image: UIImage.move, type: .move)
+        NodeAction(title: Strings.Localizable.move, image: MEGAAssets.UIImage.move, type: .move)
     }
     
     class func moveToRubbishBinAction() -> NodeAction {
-        NodeAction(title: Strings.Localizable.General.MenuAction.moveToRubbishBin, image: UIImage.rubbishBin, type: .moveToRubbishBin)
+        NodeAction(title: Strings.Localizable.General.MenuAction.moveToRubbishBin, image: MEGAAssets.UIImage.rubbishBin, type: .moveToRubbishBin)
     }
     
     class func removeVideoFromVideoPlaylistAction() -> NodeAction {
-        NodeAction(title: Strings.Localizable.Videos.Tab.Playlist.Content.removeFromPlaylist, image: UIImage.hudMinus, type: .removeVideoFromVideoPlaylist, syncIconAndTextColor: true)
+        NodeAction(title: Strings.Localizable.Videos.Tab.Playlist.Content.removeFromPlaylist, image: MEGAAssets.UIImage.hudMinus, type: .removeVideoFromVideoPlaylist, syncIconAndTextColor: true)
     }
     
     class func moveVideoInVideoPlaylistContentToRubbishBinAction() -> NodeAction {
-        NodeAction(title: Strings.Localizable.General.MenuAction.moveToRubbishBin, image: UIImage.rubbishBin, type: .moveVideoInVideoPlaylistContentToRubbishBin)
+        NodeAction(title: Strings.Localizable.General.MenuAction.moveToRubbishBin, image: MEGAAssets.UIImage.rubbishBin, type: .moveVideoInVideoPlaylistContentToRubbishBin)
     }
     
     class func removeAction() -> NodeAction {
-        NodeAction(title: Strings.Localizable.General.MenuAction.deletePermanently, image: UIImage.rubbishBin, type: .remove)
+        NodeAction(title: Strings.Localizable.General.MenuAction.deletePermanently, image: MEGAAssets.UIImage.rubbishBin, type: .remove)
     }
     
     class func leaveSharingAction() -> NodeAction {
-        NodeAction(title: Strings.Localizable.leaveFolder, image: UIImage.leaveShare, type: .leaveSharing)
+        NodeAction(title: Strings.Localizable.leaveFolder, image: MEGAAssets.UIImage.leaveShare, type: .leaveSharing)
     }
     
     class func shareLinkAction(nodeCount: Int = 1) -> NodeAction {
-        NodeAction(title: Strings.Localizable.General.MenuAction.ShareLink.title(nodeCount), image: UIImage.link, type: .shareLink)
+        NodeAction(title: Strings.Localizable.General.MenuAction.ShareLink.title(nodeCount), image: MEGAAssets.UIImage.link, type: .shareLink)
     }
     
     class func retryAction() -> NodeAction {
-        NodeAction(title: Strings.Localizable.retry, image: UIImage.link, type: .retry)
+        NodeAction(title: Strings.Localizable.retry, image: MEGAAssets.UIImage.link, type: .retry)
     }
     
     class func manageLinkAction(nodeCount: Int = 1) -> NodeAction {
-        NodeAction(title: Strings.Localizable.General.MenuAction.ManageLink.title(nodeCount), image: UIImage.link, type: .manageLink)
+        NodeAction(title: Strings.Localizable.General.MenuAction.ManageLink.title(nodeCount), image: MEGAAssets.UIImage.link, type: .manageLink)
     }
     
     class func removeLinkAction(nodeCount: Int = 1) -> NodeAction {
-        NodeAction(title: Strings.Localizable.General.MenuAction.RemoveLink.title(nodeCount), image: UIImage.removeLink, type: .removeLink)
+        NodeAction(title: Strings.Localizable.General.MenuAction.RemoveLink.title(nodeCount), image: MEGAAssets.UIImage.removeLink, type: .removeLink)
     }
     
     class func removeSharingAction() -> NodeAction {
-        NodeAction(title: Strings.Localizable.removeSharing, image: UIImage.removeShare, type: .removeSharing)
+        NodeAction(title: Strings.Localizable.removeSharing, image: MEGAAssets.UIImage.removeShare, type: .removeSharing)
     }
     
     class func viewInFolderAction() -> NodeAction {
-        NodeAction(title: Strings.Localizable.viewInFolder, image: UIImage.search, type: .viewInFolder)
+        NodeAction(title: Strings.Localizable.viewInFolder, image: MEGAAssets.UIImage.search, type: .viewInFolder)
     }
     
     class func clearAction() -> NodeAction {
-        let action = NodeAction(title: Strings.Localizable.clear, image: UIImage.cancelTransfers, type: .clear)
+        let action = NodeAction(title: Strings.Localizable.clear, image: MEGAAssets.UIImage.cancelTransfers, type: .clear)
         action.style = .destructive
         action.syncIconAndTextColor = true
         return action
     }
     
     class func importAction() -> NodeAction {
-        NodeAction(title: Strings.Localizable.importToCloudDrive, image: UIImage.import, type: .import)
+        NodeAction(title: Strings.Localizable.importToCloudDrive, image: MEGAAssets.UIImage.import, type: .import)
     }
     
     class func viewVersionsAction(versionCount: Int) -> NodeAction {
-        NodeAction(title: Strings.Localizable.versions, detail: String(versionCount), image: UIImage.versions, type: .viewVersions)
+        NodeAction(title: Strings.Localizable.versions, detail: String(versionCount), image: MEGAAssets.UIImage.versions, type: .viewVersions)
     }
     
     class func revertVersionAction() -> NodeAction {
-        NodeAction(title: Strings.Localizable.revert, image: UIImage.history, type: .revertVersion)
+        NodeAction(title: Strings.Localizable.revert, image: MEGAAssets.UIImage.history, type: .revertVersion)
     }
     
     class func removeVersionAction() -> NodeAction {
-        let nodeAction = NodeAction(title: Strings.Localizable.delete, image: UIImage.delete, type: .remove)
+        let nodeAction = NodeAction(title: Strings.Localizable.delete, image: MEGAAssets.UIImage.delete, type: .remove)
         nodeAction.style = .destructive
         return nodeAction
     }
     
     class func selectAction() -> NodeAction {
-        NodeAction(title: Strings.Localizable.select, image: UIImage(named: "select"), type: .select)
+        NodeAction(title: Strings.Localizable.select, image: MEGAAssets.UIImage.selectItem, type: .select)
     }
     
     class func restoreAction() -> NodeAction {
-        NodeAction(title: Strings.Localizable.restore, image: UIImage.restore, type: .restore)
+        NodeAction(title: Strings.Localizable.restore, image: MEGAAssets.UIImage.restore, type: .restore)
     }
     
     class func saveToPhotosAction() -> NodeAction {
-        NodeAction(title: Strings.Localizable.saveToPhotos, image: UIImage.saveToPhotos, type: .saveToPhotos)
+        NodeAction(title: Strings.Localizable.saveToPhotos, image: MEGAAssets.UIImage.saveToPhotos, type: .saveToPhotos)
     }
     
     class func sendToChatAction() -> NodeAction {
-        NodeAction(title: Strings.Localizable.General.sendToChat, image: UIImage.sendToChat, type: .sendToChat)
+        NodeAction(title: Strings.Localizable.General.sendToChat, image: MEGAAssets.UIImage.sendToChat, type: .sendToChat)
     }
     
     class func pdfPageViewAction() -> NodeAction {
-        NodeAction(title: Strings.Localizable.pageView, image: UIImage.pageView, type: .pdfPageView)
+        NodeAction(title: Strings.Localizable.pageView, image: MEGAAssets.UIImage.pageView, type: .pdfPageView)
     }
     
     class func pdfThumbnailViewAction() -> NodeAction {
-        NodeAction(title: Strings.Localizable.thumbnailView, image: UIImage(named: "thumbnailsThin"), type: .pdfThumbnailView)
+        NodeAction(title: Strings.Localizable.thumbnailView, image: MEGAAssets.UIImage.thumbnailsThin, type: .pdfThumbnailView)
     }
     
     class func textEditorAction() -> NodeAction {
-        NodeAction(title: Strings.Localizable.edit, image: UIImage.edittext, type: .editTextFile)
+        NodeAction(title: Strings.Localizable.edit, image: MEGAAssets.UIImage.edittext, type: .editTextFile)
     }
     
     class func forwardAction() -> NodeAction {
-        NodeAction(title: Strings.Localizable.forward, image: UIImage.forwardToolbar, type: .forward)
+        NodeAction(title: Strings.Localizable.forward, image: MEGAAssets.UIImage.forwardToolbar, type: .forward)
     }
     
     class func searchAction() -> NodeAction {
-        NodeAction(title: Strings.Localizable.search, image: UIImage.search, type: .search)
+        NodeAction(title: Strings.Localizable.search, image: MEGAAssets.UIImage.search, type: .search)
     }
     
     class func favouriteAction(isFavourite: Bool) -> NodeAction {
-        NodeAction(title: isFavourite ? Strings.Localizable.removeFavourite : Strings.Localizable.favourite, image: isFavourite ? UIImage.removeFavourite : UIImage.favourite, type: .favourite)
+        NodeAction(title: isFavourite ? Strings.Localizable.removeFavourite : Strings.Localizable.favourite, image: isFavourite ? MEGAAssets.UIImage.removeFavourite : MEGAAssets.UIImage.favourite, type: .favourite)
     }
     
     @MainActor
     class func labelAction(label: MEGANodeLabel) -> NodeAction {
         let labelString = MEGANode.string(for: label)
-        let detailText = Strings.localized(labelString!, comment: "")
-        let image = UIImage(named: labelString!)
         
-        return NodeAction(title: Strings.Localizable.CloudDrive.Sort.label, detail: (label != .unknown ? detailText : nil), accessoryView: (label != .unknown ? UIImageView(image: image) : UIImageView(image: UIImage.standardDisclosureIndicator)), image: UIImage.label, type: .label)
+        let detailText: String? = if let labelString {
+            Strings.localized(labelString, comment: "")
+        } else {
+            nil
+        }
+        
+        let image: UIImage? = if let labelString {
+            MEGAAssets.UIImage.image(named: labelString)
+        } else {
+            nil
+        }
+        
+        return NodeAction(title: Strings.Localizable.CloudDrive.Sort.label, detail: (label != .unknown ? detailText : nil), accessoryView: (label != .unknown ? UIImageView(image: image) : UIImageView(image: MEGAAssets.UIImage.standardDisclosureIndicator)), image: MEGAAssets.UIImage.label, type: .label)
     }
     
     class func listAction() -> NodeAction {
-        NodeAction(title: Strings.Localizable.listView, image: UIImage(named: "gridThin"), type: .list)
+        NodeAction(title: Strings.Localizable.listView, image: MEGAAssets.UIImage.gridThin, type: .list)
     }
     
     class func thumbnailAction() -> NodeAction {
-        NodeAction(title: Strings.Localizable.thumbnailView, image: UIImage(named: "thumbnailsThin"), type: .thumbnail)
+        NodeAction(title: Strings.Localizable.thumbnailView, image: MEGAAssets.UIImage.thumbnailsThin, type: .thumbnail)
     }
     
     class func sortAction() -> NodeAction {
-        NodeAction(title: Strings.Localizable.sortTitle, image: UIImage(named: "sort"), type: .sort)
+        NodeAction(title: Strings.Localizable.sortTitle, image: MEGAAssets.UIImage.sort, type: .sort)
     }
     
     class func disputeTakedownAction() -> NodeAction {
-        NodeAction(title: Strings.Localizable.disputeTakedown, image: UIImage.disputeTakedown, type: .disputeTakedown)
+        NodeAction(title: Strings.Localizable.disputeTakedown, image: MEGAAssets.UIImage.disputeTakedown, type: .disputeTakedown)
     }
     
     class func restoreBackupAction() -> NodeAction {
-        NodeAction(title: Strings.Localizable.restore, image: UIImage.restore, type: .restoreBackup)
+        NodeAction(title: Strings.Localizable.restore, image: MEGAAssets.UIImage.restore, type: .restoreBackup)
     }
     
     class func mediaDiscoveryAction() -> NodeAction {
         NodeAction(title: Strings.Localizable.CloudDrive.Menu.MediaDiscovery.title,
-                   image: UIImage.mediaDiscovery, type: .mediaDiscovery)
+                   image: MEGAAssets.UIImage.mediaDiscovery, type: .mediaDiscovery)
     }
     
     @MainActor
     class func hideAction(showProTag: Bool = false) -> NodeAction {
         let helpButton = {
             let accessoryButton = UIButton(frame: .init(x: 0, y: 0, width: 24, height: 24))
-            accessoryButton.setImage(.helpCircleThinMedium, for: .normal)
+            accessoryButton.setImage(MEGAAssets.UIImage.helpCircleThinMedium, for: .normal)
             return accessoryButton
         }
         return NodeAction(
             title: Strings.Localizable.General.MenuAction.Hide.title,
             accessoryView: showProTag ? nil : helpButton(),
-            image: UIImage.eyeOff,
+            image: MEGAAssets.UIImage.eyeOff,
             type: .hide,
             showProTag: showProTag)
     }
     
     class func unHideAction() -> NodeAction {
         NodeAction(title: Strings.Localizable.General.MenuAction.Unhide.title,
-                   image: UIImage.eyeOn, type: .unhide)
+                   image: MEGAAssets.UIImage.eyeOn, type: .unhide)
     }
     
     class func addToAction() -> NodeAction {
         NodeAction(
             title: Strings.Localizable.Set.addTo,
-            image: .addTo,
+            image: MEGAAssets.UIImage.addTo,
             type: .addTo)
     }
     
     class func addToAlbumAction() -> NodeAction {
         NodeAction(
             title: Strings.Localizable.Set.AddTo.album,
-            image: .addTo,
+            image: MEGAAssets.UIImage.addTo,
             type: .addToAlbum)
     }
 }

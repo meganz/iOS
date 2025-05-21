@@ -1,5 +1,6 @@
 import ChatRepo
 import MEGAAppSDKRepo
+import MEGAAssets
 import MEGADomain
 import MEGAL10n
 import MEGAPermissions
@@ -160,7 +161,7 @@ extension NodeActions {
                             
                             await SVProgressHUD.dismiss()
                             SVProgressHUD.show(
-                                UIImage(resource: .saveToPhotos),
+                                MEGAAssets.UIImage.saveToPhotos,
                                 status: error.localizedDescription
                             )
                         }

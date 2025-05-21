@@ -1,4 +1,5 @@
 import MEGAAppSDKRepo
+import MEGAAssets
 import MEGADesignToken
 import MEGADomain
 import MEGAL10n
@@ -29,14 +30,14 @@ extension PhotosViewController {
     }
     
     @objc func makeFilterActiveBarButton() -> UIBarButtonItem {
-        UIBarButtonItem(image: UIImage(resource: .filterActive).withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(onFilter))
+        UIBarButtonItem(image: MEGAAssets.UIImage.filterActive.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(onFilter))
     }
     
     @objc func makeContextMenuBarButton() -> UIBarButtonItem? {
         guard let config = contextMenuConfiguration(), let menu = contextMenuManager?.contextMenu(with: config) else { return nil }
         
         let button = UIBarButtonItem(
-            image: UIImage(resource: viewModel.isFilterActive ? .moreActionActiveNavigationBar : .moreNavigationBar),
+            image: viewModel.isFilterActive ? MEGAAssets.UIImage.moreActionActiveNavigationBar : MEGAAssets.UIImage.moreNavigationBar,
             menu: menu)
         
         button.tintColor = TokenColors.Icon.primary
@@ -79,7 +80,7 @@ extension PhotosViewController {
     }
     
     @objc func makeEditBarButton() -> UIBarButtonItem {
-        UIBarButtonItem(image: UIImage(resource: .selectAllItems), style: .plain, target: self, action: #selector(toggleEditing))
+        UIBarButtonItem(image: MEGAAssets.UIImage.selectAllItems, style: .plain, target: self, action: #selector(toggleEditing))
     }
     
     @objc func makeCameraUploadStatusBarButton() -> UIBarButtonItem {

@@ -1,4 +1,5 @@
 import MEGAAppSDKRepo
+import MEGAAssets
 import MEGADesignToken
 import MEGAL10n
 import UIKit
@@ -19,6 +20,8 @@ final class VerifyEmailViewController: UIViewController {
     @IBOutlet weak var resendButton: UIButton!
     @IBOutlet weak var logoutButton: UIButton!
 
+    @IBOutlet weak var warningImageView: UIImageView!
+    
     // MARK: Lifecyle
 
     override func viewDidLoad() {
@@ -46,9 +49,14 @@ final class VerifyEmailViewController: UIViewController {
     // MARK: Private
 
     private func configureUI() {
+        configureImages()
         localizeLabels()
         boldenText()
         updateAppearance()
+    }
+    
+    private func configureImages() {
+        warningImageView.image = MEGAAssets.UIImage.image(named: "warning")
     }
     
     private func updateAppearance() {
@@ -69,8 +77,8 @@ final class VerifyEmailViewController: UIViewController {
     private func addGradientBackground() {
         let gradient = CAGradientLayer()
         gradient.frame = warningGradientView.bounds
-        gradient.colors = [UIColor.verifyEmailFirstGradient.cgColor,
-                           UIColor.verifyEmailSecondGradient.cgColor]
+        gradient.colors = [MEGAAssets.UIColor.verifyEmailFirstGradient.cgColor,
+                           MEGAAssets.UIColor.verifyEmailSecondGradient.cgColor]
         gradient.locations = [0, 1]
         gradient.startPoint = CGPoint(x: 0.5, y: 0)
         gradient.endPoint = CGPoint(x: 0.5, y: 1)
@@ -94,7 +102,7 @@ final class VerifyEmailViewController: UIViewController {
     func showWhyIAmBlocked() {
         let customModal = CustomModalAlertViewController.init()
 
-        customModal.image = UIImage.lockedAccounts
+        customModal.image = MEGAAssets.UIImage.lockedAccounts
         customModal.viewTitle = Strings.Localizable.lockedAccounts
         customModal.detail = Strings.Localizable.itIsPossibleThatYouAreUsingTheSamePasswordForYourMEGAAccountAsForOtherServicesAndThatAtLeastOneOfTheseOtherServicesHasSufferedADataBreach + "\n\n" + Strings.Localizable.yourPasswordLeakedAndIsNowBeingUsedByBadActorsToLogIntoYourAccountsIncludingButNotLimitedToYourMEGAAccount
         customModal.dismissButtonTitle = Strings.Localizable.close
@@ -138,7 +146,7 @@ final class VerifyEmailViewController: UIViewController {
     @IBAction func tapResendButton(_ sender: Any) {
         if MEGAReachabilityManager.isReachableHUDIfNot() {
             SVProgressHUD.show()
-            let resendVerificationEmailDelegate = RequestDelegate() { result in
+            let resendVerificationEmailDelegate = RequestDelegate { result in
                 SVProgressHUD.dismiss()
                 switch result {
                 case .success:

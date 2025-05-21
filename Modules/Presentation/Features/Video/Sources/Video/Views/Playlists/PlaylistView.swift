@@ -1,4 +1,5 @@
 import ContentLibraries
+import MEGAAssets
 import MEGADesignToken
 import MEGADomain
 import MEGAL10n
@@ -140,8 +141,10 @@ struct PlaylistView: View {
         
         return items.map { contextAction in
             ActionSheetButton(
-                icon: contextAction.icon,
+                id: contextAction.id,
+                icon: MEGAAssets.Image.image(named: contextAction.icon),
                 title: contextAction.title,
+                disclosureIcon: MEGAAssets.Image.standardDisclosureIndicatorDesignToken,
                 action: { viewModel.didSelectActionSheetMenuAction(contextAction) }
             )
         }

@@ -8,6 +8,9 @@
 #import "NSURL+MNZCategory.h"
 
 @interface MasterKeyViewController ()
+
+@property (weak, nonatomic) IBOutlet UIImageView *keyIllustrationImageView;
+
 @end
 
 @implementation MasterKeyViewController
@@ -17,6 +20,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.keyIllustrationImageView.image = [UIImage megaImageWithNamed:@"key_illustration"];
     [self setupContent];
     [self setupColors];
     [self dispatchOnViewDidLoadAction];

@@ -1,4 +1,5 @@
 import Combine
+import MEGAAssets
 import MEGADesignToken
 import MEGADomain
 import MEGAL10n
@@ -101,7 +102,7 @@ final class UserAvatarViewModel: ObservableObject {
         }
         
         let initials = chatTitle.initialForAvatar()
-        let avatarBackgroundColor = UIColor.colorFromHexString(avatarBackgroundHexColor) ?? UIColor.black000000
+        let avatarBackgroundColor = UIColor.colorFromHexString(avatarBackgroundHexColor) ?? MEGAAssets.UIColor.black000000
         
         return await UIImage.drawImage(
             forInitials: initials,

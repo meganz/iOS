@@ -1,3 +1,4 @@
+import MEGAAssets
 import MEGADesignToken
 import MEGAL10n
 import MEGAUIComponent
@@ -70,7 +71,7 @@ struct SubscriptionPurchasePageContentView: View {
     }
 
     private var headerImage: some View {
-        Image(.subscriptionImageHeader)
+        MEGAAssets.Image.subscriptionImageHeader
             .resizable()
             .aspectRatio(contentMode: .fill)
             .frame(height: 164)

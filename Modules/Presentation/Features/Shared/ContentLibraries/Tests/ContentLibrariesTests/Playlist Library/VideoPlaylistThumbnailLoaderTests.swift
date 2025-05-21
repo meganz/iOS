@@ -133,7 +133,7 @@ final class VideoPlaylistThumbnailLoaderTests: XCTestCase {
     }
     
     private var fallbackImage: Image {
-        MEGAAssetsImageProvider.image(named: .videoPlaylistThumbnailFallback)
+        MEGAAssets.Image.videoPlaylistThumbnailFallback
     }
     
     private func anyImageURL() -> URL {

@@ -18,6 +18,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *inviteYourFriendsTitleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *inviteYourFriendsSubtitleLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *disclosureIndicatorImageView;
+@property (weak, nonatomic) IBOutlet UIImageView *inviteFriendsImageView;
 
 @property (weak, nonatomic) IBOutlet UIView *unlockedBonusesView;
 @property (weak, nonatomic) IBOutlet UIView *unlockedBonusesTopSeparatorView;
@@ -59,8 +60,9 @@
     self.inviteYourFriendsView.gestureRecognizers = @[tapGestureRecognizer];
     
     
-    self.disclosureIndicatorImageView.image = [UIImage imageNamed:@"standardDisclosureIndicator_designToken"];
+    self.disclosureIndicatorImageView.image = [UIImage megaImageWithNamed:@"standardDisclosureIndicator_designToken"];
     self.disclosureIndicatorImageView.image = self.disclosureIndicatorImageView.image.imageFlippedForRightToLeftLayoutDirection;
+    self.inviteFriendsImageView.image = [UIImage megaImageWithNamed:@"inviteFriends"];
     
     self.unlockedBonusesLabel.text = LocalizedString(@"unlockedBonuses", @"Header of block with achievements bonuses.");
     self.storageQuotaLabel.text = LocalizedString(@"storageQuota", @"A header/title of a section which contains information about used/available storage space on a user's cloud drive.");

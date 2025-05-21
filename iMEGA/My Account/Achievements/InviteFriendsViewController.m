@@ -21,6 +21,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *howItWorksFirstParagraphLabel;
 @property (weak, nonatomic) IBOutlet UILabel *howItWorksSecondParagraphLabel;
 @property (weak, nonatomic) IBOutlet UILabel *howItWorksThirdParagraphLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *inviteFriendsImageView;
 
 @end
 
@@ -41,6 +42,8 @@
     self.howItWorksFirstParagraphLabel.text = [LocalizedString(@"howItWorksMain", @"")  mnz_removeWebclientFormatters];
     self.howItWorksSecondParagraphLabel.text = LocalizedString(@"howItWorksSecondary", @"");
     self.howItWorksThirdParagraphLabel.text = LocalizedString(@"howItWorksTertiary", @"A message which is shown once someone has invited a friend as part of the achievements program.");
+    
+    self.inviteFriendsImageView.image = [UIImage megaImageWithNamed:@"inviteFriends"];
     
     [self setupColors];
 }

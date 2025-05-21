@@ -822,7 +822,7 @@ struct AlbumCellViewModelTestSuite {
             let sut = makeSUT(
                 album: .init(id: 8, type: .user))
             
-            #expect(sut.thumbnailContainer.isEqual(ImageContainer(image: MEGAAssetsImageProvider.image(named: .timeline), type: .placeholder)))
+            #expect(sut.thumbnailContainer.isEqual(ImageContainer(image: MEGAAssets.Image.timeline, type: .placeholder)))
         }
         
         @Test("when image container is placeholder it should return true",

@@ -2,6 +2,7 @@ import ChatRepo
 import MEGAAnalyticsiOS
 import MEGAAppPresentation
 import MEGAAppSDKRepo
+import MEGAAssets
 import MEGADesignToken
 import MEGADomain
 import MEGAPhotos
@@ -132,7 +133,7 @@ class ExplorerBaseViewController: UIViewController {
                 if let errorEntity = error as? SaveMediaToPhotosErrorEntity, errorEntity != .cancelled {
                     await SVProgressHUD.dismiss()
                     SVProgressHUD.show(
-                        UIImage.saveToPhotos,
+                        MEGAAssets.UIImage.saveToPhotos,
                         status: error.localizedDescription
                     )
                 }

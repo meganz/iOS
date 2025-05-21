@@ -2,6 +2,7 @@ import Accounts
 import Foundation
 import MEGAAppPresentation
 import MEGAAppSDKRepo
+import MEGAAssets
 import MEGADesignToken
 import MEGADomain
 import MEGAL10n
@@ -27,7 +28,7 @@ extension CustomModalAlertViewController {
         cookiePolicyURLString: String,
         router: CustomModalAlertCookieDialogRouter
     ) {
-        image = UIImage.cookie
+        image = MEGAAssets.UIImage.cookie
         viewTitle = Strings.Localizable.Dialog.Cookies.Title.manageCookies
         detailAttributedTextWithLink = detailTextAttributedString(detail: type.description, cookiePolicyURLString: cookiePolicyURLString)
         

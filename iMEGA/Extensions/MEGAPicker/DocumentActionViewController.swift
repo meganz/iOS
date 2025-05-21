@@ -1,4 +1,5 @@
 import FileProviderUI
+import MEGAAssets
 import MEGAL10n
 import UIKit
 
@@ -7,8 +8,10 @@ final class DocumentActionViewController: FPUIActionExtensionViewController {
     @IBOutlet weak var cancelBarButtonItem: UIBarButtonItem!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var messageLabel: UILabel!
+    @IBOutlet weak var logoImageView: UIImageView!
     
     override func viewDidLoad() {
+        logoImageView.image = MEGAAssets.UIImage.image(named: "splashScreenMEGALogo")
         cancelBarButtonItem?.title = Strings.Localizable.cancel
         titleLabel?.text = Strings.Localizable.pleaseLogInToYourAccount
         messageLabel?.text = Strings.Localizable.openMEGAAndSignInToContinue

@@ -1,4 +1,5 @@
 import MEGAAppPresentation
+import MEGAAssets
 import MEGADesignToken
 import MEGAL10n
 import UIKit
@@ -175,9 +176,11 @@ final class SMSVerificationViewController: UIViewController, ViewType {
         errorImageView.tintColor = TokenColors.Support.error
         errorMessageLabel.textColor = TokenColors.Text.error
         
-        disclosureIndicatorImageView.image = UIImage.standardDisclosureIndicatorDesignToken
-        countryFieldImageView.image = UIImage.verificationCountry.withRenderingMode(.alwaysTemplate)
-        phoneFieldImageView.image = UIImage.phoneNumber.withRenderingMode(.alwaysTemplate)
+        disclosureIndicatorImageView.image = MEGAAssets.UIImage.standardDisclosureIndicatorDesignToken
+        countryFieldImageView.image = MEGAAssets.UIImage.verificationCountry.withRenderingMode(.alwaysTemplate)
+        phoneFieldImageView.image = MEGAAssets.UIImage.phoneNumber.withRenderingMode(.alwaysTemplate)
+        errorImageView.image = MEGAAssets.UIImage.image(named: "delete")
+        headerImageView.image = MEGAAssets.UIImage.image(named: "verificationHeader")
         
         let iconTintColor = TokenColors.Icon.secondary
         countryFieldImageView.tintColor = iconTintColor

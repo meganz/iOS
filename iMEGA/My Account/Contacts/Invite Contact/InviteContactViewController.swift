@@ -1,5 +1,6 @@
 import ContactsUI
 import MEGAAppPresentation
+import MEGAAssets
 import MEGADesignToken
 import MEGADomain
 import MEGAL10n
@@ -79,7 +80,7 @@ class InviteContactViewController: UIViewController {
         mainView.backgroundColor = TokenColors.Background.page
         
         disclosureIndicatorImageViews.forEach {
-            $0.image = UIImage.standardDisclosureIndicatorDesignToken
+            $0.image = MEGAAssets.UIImage.standardDisclosureIndicatorDesignToken
         }
         
         separatorViews.forEach {
@@ -92,10 +93,10 @@ class InviteContactViewController: UIViewController {
         moreLabel.textColor = primaryTextColor
         addFromContactsLabel.textColor = MFMessageComposeViewController.canSendText() ? primaryTextColor : TokenColors.Text.secondary
         
-        addToContactImageView.image = UIImage.addFromContacts
-        enterEmailImageView.image = UIImage.enterUserEmail
-        scanQRImageView.image = UIImage.scanUserQRCode
-        moreImageView.image = UIImage.inviteContactMore
+        addToContactImageView.image = MEGAAssets.UIImage.addFromContacts
+        enterEmailImageView.image = MEGAAssets.UIImage.enterUserEmail
+        scanQRImageView.image = MEGAAssets.UIImage.scanUserQRCode
+        moreImageView.image = MEGAAssets.UIImage.inviteContactMore
     }
 
     private func presentComposeControllerForPhoneNumbers(_ phoneNumbers: [String]) {
@@ -133,7 +134,7 @@ class InviteContactViewController: UIViewController {
 
     @IBAction func moreButtonTapped(_ sender: Any) {
         guard let url = URL(string: userLink) else { return }
-        let metadataItemSource = ContactLinkPresentationItemSource(title: Strings.Localizable.Invite.ContactLink.Share.title, description: Strings.Localizable.Contact.Invite.message, icon: .megaShareContactLink, url: url)
+        let metadataItemSource = ContactLinkPresentationItemSource(title: Strings.Localizable.Invite.ContactLink.Share.title, description: Strings.Localizable.Contact.Invite.message, icon: MEGAAssets.UIImage.megaShareContactLink, url: url)
         let activity = UIActivityViewController(activityItems: [metadataItemSource], applicationActivities: [])
         activity.popoverPresentationController?.sourceView = moreLabel
         activity.popoverPresentationController?.sourceRect = moreLabel.frame

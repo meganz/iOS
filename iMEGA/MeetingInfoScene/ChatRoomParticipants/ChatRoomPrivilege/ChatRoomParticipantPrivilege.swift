@@ -1,4 +1,6 @@
+import MEGAAssets
 import MEGAL10n
+import SwiftUI
 
 enum ChatRoomParticipantPrivilege: String, CaseIterable {
     case unknown
@@ -18,14 +20,14 @@ enum ChatRoomParticipantPrivilege: String, CaseIterable {
         }
     }
     
-    var image: ImageResource {
+    var image: Image {
         switch self {
         case .unknown, .removed, .readOnly:
-            return .readOnlyChat
+            return MEGAAssets.Image.readOnlyChat
         case .standard:
-            return .standard
+            return MEGAAssets.Image.standard
         case .moderator:
-            return .moderator
+            return MEGAAssets.Image.moderator
         }
     }
 }

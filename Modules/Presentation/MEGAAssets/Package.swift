@@ -15,16 +15,22 @@ let package = Package(
     products: [
         .library(
             name: "MEGAAssets",
+            type: .dynamic,
             targets: ["MEGAAssets"])
     ],
     dependencies: [
         .package(path: "../../../Infrastructure/MEGASwift")
     ],
     targets: [
+        .binaryTarget(
+            name: "MEGAAssetsBundle",
+            path: "Frameworks/MEGAAssetsBundle.xcframework"
+        ),
         .target(
             name: "MEGAAssets",
             dependencies: [
-                "MEGASwift"
+                "MEGASwift",
+                "MEGAAssetsBundle"
             ],
             swiftSettings: settings),
         .testTarget(

@@ -794,6 +794,7 @@ Learn more about media discovery.</string>
                         <outlet property="hiddenItemsViewSwitch" destination="Kqv-dV-oOV" id="3XD-8j-OCj"/>
                         <outlet property="hideRecentActivityLabel" destination="SvD-t3-Q6b" id="9PN-2G-h7y"/>
                         <outlet property="hideRecentActivitySwitch" destination="RKX-2H-ckw" id="izs-Zd-i2G"/>
+                        <outlet property="iconSelectorBackgroundImageView" destination="Wqf-kY-jsU" id="CBX-Lg-026"/>
                         <outlet property="mediaDiscoverySubfolderLabel" destination="bdV-sx-htU" id="D8d-B9-5O4"/>
                         <outlet property="mediaDiscoverySubfolderSwitch" destination="MYF-l0-Zwg" id="xRx-xG-4b9"/>
                         <outlet property="mediaDiscoveryViewLabel" destination="BxQ-tt-5Z4" id="9Lh-k9-xYX"/>

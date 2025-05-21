@@ -1,3 +1,4 @@
+import MEGAAssets
 import MEGADesignToken
 import SwiftUI
 
@@ -27,21 +28,21 @@ struct CameraUploadStatusImageView: View {
                 progressView(progress: progress)
             }
             
-            Image(viewModel.baseImageResource)
+            viewModel.baseImage
                 .renderingMode(.template)
                 .resizable()
                 .frame(width: 21.5,
                        height: 21.5)
                 .foregroundColor(TokenColors.Icon.primary.swiftUI)
             
-            if let statusImageResource = viewModel.statusImageResource {
+            if let statusImage = viewModel.statusImage {
                 Group {
                     Circle()
-                        .fill(.navigationBg)
+                        .fill(MEGAAssets.Color.navigationBg)
                         .frame(width: 15.5,
                                height: 15.5)
                     
-                    statusImage(resource: statusImageResource)
+                    statusImageView(image: statusImage)
                         .animation(nil, value: shouldRotate)
                         .rotationEffect(.degrees(shouldRotate ? 360 : 0))
                         .animation(viewModel.shouldRotateStatusImage ? statusImageAnimation : .linear(duration: 0), value: shouldRotate)
@@ -65,8 +66,8 @@ struct CameraUploadStatusImageView: View {
     }
     
     @ViewBuilder
-    private func statusImage(resource: ImageResource) -> some View {
-        Image(resource)
+    private func statusImageView(image: Image) -> some View {
+        image
             .renderingMode(.template)
             .resizable()
             .frame(width: 12.5,

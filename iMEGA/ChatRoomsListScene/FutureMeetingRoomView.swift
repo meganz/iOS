@@ -1,3 +1,4 @@
+import MEGAAssets
 import MEGADesignToken
 import MEGAL10n
 import MEGASwiftUI
@@ -25,12 +26,12 @@ struct FutureMeetingRoomView: View {
                     Text(viewModel.title)
                         .font(.subheadline)
                     if viewModel.isRecurring {
-                        Image(.occurrences)
+                        MEGAAssets.Image.occurrences
                             .resizable()
                             .frame(width: 12, height: 12)
                     }
                     if viewModel.isMuted {
-                        Image(.mutedChat)
+                        MEGAAssets.Image.mutedChat
                     }
                 }
                 
@@ -88,7 +89,7 @@ struct FutureMeetingRoomView: View {
                         contextMenuOption.action()
                     } label: {
                         HStack(spacing: 0) {
-                            Image(contextMenuOption.image)
+                            contextMenuOption.image
                             Text(contextMenuOption.title)
                                 .fontWeight(.bold)
                                 .font(.title)
@@ -125,7 +126,7 @@ struct FutureMeetingRoomView: View {
     }
 
     private var inCallImage: some View {
-        Image(.makeCallRoundToken)
+        MEGAAssets.Image.makeCallRoundToken
             .resizable()
             .frame(width: 21, height: 21)
     }

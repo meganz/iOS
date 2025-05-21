@@ -4,6 +4,7 @@ import ContentLibraries
 import MEGAAnalyticsiOS
 import MEGAAppPresentation
 import MEGAAppPresentationMock
+import MEGAAssets
 import MEGADomain
 import MEGADomainMock
 import MEGAL10n
@@ -680,7 +681,7 @@ final class AlbumContentViewModelTests: XCTestCase {
         let message = Strings.Localizable.CameraUploads.Albums.removedItemFrom(Int(resultEntity.success))
             .replacingOccurrences(of: "[A]", with: "\(album.name)")
         test(viewModel: sut, action: .deletePhotos(nodesToRemove),
-             expectedCommands: [.showResultMessage(.custom(UIImage.hudMinus, message))],
+             expectedCommands: [.showResultMessage(.custom(MEGAAssets.UIImage.hudMinus, message))],
              timeout: 1.0, expectationValidation: ==)
         XCTAssertEqual(albumModificationUseCase.deletedPhotos, albumPhotos)
     }
@@ -769,7 +770,7 @@ final class AlbumContentViewModelTests: XCTestCase {
         
         test(viewModel: sut, action: .deleteAlbumActionTap, expectedCommands: [
             .dismissAlbum,
-            .showResultMessage(.custom(UIImage.hudMinus, message))
+            .showResultMessage(.custom(MEGAAssets.UIImage.hudMinus, message))
         ], timeout: 1.0, expectationValidation: ==)
         
         XCTAssertEqual(albumModificationUseCase.deletedAlbumsIds, [album.id])

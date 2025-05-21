@@ -1,3 +1,4 @@
+import MEGAAssets
 import SwiftUI
 
 struct ChatRoomAvatarView: View {
@@ -29,8 +30,8 @@ struct ChatRoomAvatarView: View {
                         Circle()
                             .stroke(
                                 colorScheme == .dark ?
-                                    Color(uiColor: .black000000) :
-                                    Color(uiColor: .whiteFFFFFF),
+                                    Color(uiColor: MEGAAssets.UIColor.black000000) :
+                                    Color(uiColor: MEGAAssets.UIColor.whiteFFFFFF),
                                 lineWidth: 1
                             )
                     )

@@ -115,6 +115,7 @@
                 <outlet property="avatarImageView" destination="FsE-o6-edj" id="qdk-My-vjn"/>
                 <outlet property="micImageView" destination="SYT-6T-OgV" id="POB-wL-Jtb"/>
                 <outlet property="nameLabel" destination="MyB-ef-dCd" id="yAX-Ra-S8p"/>
+                <outlet property="raisedHandImageView" destination="dep-jm-HPF" id="ERz-ph-rSN"/>
                 <outlet property="raisedHandView" destination="562-ft-Udn" id="hgC-kK-YIZ"/>
                 <outlet property="videoImageView" destination="VDk-hn-xkP" id="6Qo-rT-3Uv"/>
             </connections>
