@@ -98,10 +98,6 @@ class SearchBarUIHostingController<Content>: UIHostingController<Content>, Audio
         }
     }
     
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        removeToolbar(animated: animated)
-    }
     
     deinit {
         CrashlyticsLogger.log(category: .viewLifecycle, "SearchBarUIHostingController deinit - Before removeToolbar")
@@ -112,6 +108,7 @@ class SearchBarUIHostingController<Content>: UIHostingController<Content>, Audio
         browseDelegate.endEditingMode = nil
         
         navigationItem.searchController = nil
+        removeToolbar(animated: false)
         
         CrashlyticsLogger.log(category: .viewLifecycle, "SearchBarUIHostingController deinit.")
     }
