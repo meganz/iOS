@@ -4,14 +4,14 @@ import SwiftUI
 struct ChatRoomsEmptyCenterView: View {
     @Environment(\.verticalSizeClass) var verticalSizeClass
     
-    let imageResource: ImageResource
+    let image: Image
     let title: String
     let description: String?
     
     var body: some View {
         VStack {
             if verticalSizeClass != .compact {
-                Image(imageResource)
+                image
                     .resizable()
                     .scaledToFit()
                     .frame(width: 120, height: 120)

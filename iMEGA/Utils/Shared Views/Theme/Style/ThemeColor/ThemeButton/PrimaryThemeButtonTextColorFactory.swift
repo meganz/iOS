@@ -1,4 +1,5 @@
 import Foundation
+import MEGAAssets
 import MEGADesignToken
 
 extension LightColorThemeFactory {
@@ -8,15 +9,15 @@ extension LightColorThemeFactory {
     struct LightPrimaryThemeButtonTextColorFactory: ButtonColorFactory {
 
         func normalColor() -> UIColor {
-            UIColor.whiteFFFFFF
+            MEGAAssets.UIColor.whiteFFFFFF
         }
 
         func disabledColor() -> UIColor {
-            UIColor.gray999999
+            MEGAAssets.UIColor.gray999999
         }
 
         func highlightedColor() -> UIColor {
-            UIColor.whiteFFFFFF30
+            MEGAAssets.UIColor.whiteFFFFFF30
         }
     }
 
@@ -29,7 +30,7 @@ extension LightColorThemeFactory {
         }
 
         func disabledColor() -> UIColor {
-            UIColor.gray999999
+            MEGAAssets.UIColor.gray999999
         }
 
         func highlightedColor() -> UIColor {
@@ -45,15 +46,15 @@ extension DarkColorThemeFactory {
     struct DarkPrimaryThemeButtonTextColorFactory: ButtonColorFactory {
 
         func normalColor() -> UIColor {
-            UIColor.whiteFFFFFF
+            MEGAAssets.UIColor.whiteFFFFFF
         }
 
         func disabledColor() -> UIColor {
-            UIColor.gray999999
+            MEGAAssets.UIColor.gray999999
         }
 
         func highlightedColor() -> UIColor {
-            UIColor.whiteFFFFFF30
+            MEGAAssets.UIColor.whiteFFFFFF30
         }
     }
 
@@ -66,7 +67,7 @@ extension DarkColorThemeFactory {
         }
 
         func disabledColor() -> UIColor {
-            UIColor.gray999999
+            MEGAAssets.UIColor.gray999999
         }
 
         func highlightedColor() -> UIColor {

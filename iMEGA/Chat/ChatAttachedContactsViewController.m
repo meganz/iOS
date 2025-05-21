@@ -35,6 +35,7 @@
     [super viewDidLoad];
     
     [self setupAttachedContacts];
+    [self configureImages];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -54,6 +55,10 @@
 }
 
 #pragma mark - Private
+
+- (void)configureImages {
+    self.selectAllBarButtonItem.image = [UIImage megaImageWithNamed:@"selectAllItems"];
+}
 
 - (void)setupAttachedContacts {
     self.backBarButtonItem.image = self.backBarButtonItem.image.imageFlippedForRightToLeftLayoutDirection;

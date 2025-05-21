@@ -1,4 +1,5 @@
 import MEGAAppPresentation
+import MEGAAssets
 import MEGADesignToken
 import MEGAL10n
 import UIKit
@@ -22,22 +23,25 @@ class MeetingParticipantTableViewCell: UITableViewCell, ViewType {
         moderatorTextLabel.text = "  \(Strings.Localizable.Meetings.Participant.moderator)  "
         nameLabel.textColor = TokenColors.Text.primary
         micButton.setImage(
-            .userMicOn.withTintColor(TokenColors.Icon.secondary, renderingMode: .alwaysOriginal),
+            MEGAAssets.UIImage.userMicOn.withTintColor(TokenColors.Icon.secondary, renderingMode: .alwaysOriginal),
             for: .normal
         )
         micButton.setImage(
-            .userMutedMeetings.withTintColor(TokenColors.Icon.secondary, renderingMode: .alwaysOriginal),
+            MEGAAssets.UIImage.userMutedMeetings.withTintColor(TokenColors.Icon.secondary, renderingMode: .alwaysOriginal),
             for: .selected
         )
         videoButton.setImage(
-            .callSlots.withTintColor(TokenColors.Icon.secondary, renderingMode: .alwaysOriginal),
+            MEGAAssets.UIImage.callSlots.withTintColor(TokenColors.Icon.secondary, renderingMode: .alwaysOriginal),
             for: .normal
         )
         videoButton.setImage(
-            .videoOff.withTintColor(TokenColors.Icon.secondary, renderingMode: .alwaysOriginal),
+            MEGAAssets.UIImage.videoOff.withTintColor(TokenColors.Icon.secondary, renderingMode: .alwaysOriginal),
             for: .selected
         )
         contextMenuButton.tintColor = TokenColors.Icon.primary
+        contextMenuButton.setImage(MEGAAssets.UIImage.image(named: "moreList"), for: .normal)
+        avatarImageView.image = MEGAAssets.UIImage.image(named: "icon-contacts")
+        raisedHandImageView.image = MEGAAssets.UIImage.image(named: "raisedHand")
     }
     
     var viewModel: MeetingParticipantViewModel? {

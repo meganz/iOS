@@ -1,3 +1,4 @@
+import MEGAAssets
 import MEGAL10n
 
 final class SendToChatActivity: UIActivity, SendToChatActivityDelegate {
@@ -13,7 +14,7 @@ final class SendToChatActivity: UIActivity, SendToChatActivityDelegate {
     }
     
     override var activityImage: UIImage? {
-        UIImage(named: "activity_sendToChat")
+        MEGAAssets.UIImage.activitySendToChat
     }
     
     override func canPerform(withActivityItems activityItems: [Any]) -> Bool {

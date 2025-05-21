@@ -1,5 +1,6 @@
 import Foundation
 import MEGAAppPresentation
+import MEGAAssets
 
 enum GetLinkStringCellAction: ActionType {
     case onViewReady
@@ -35,12 +36,12 @@ final class GetLinkStringCellViewModel: ViewModelType, GetLinkCellViewModelType 
 
 extension GetLinkStringCellViewModel {
     convenience init(link: String) {
-        self.init(type: .link, title: link, leftImage: UIImage.linkGetLink,
+        self.init(type: .link, title: link, leftImage: MEGAAssets.UIImage.linkGetLink,
                   isRightImageViewHidden: true)
     }
     
     convenience init(key: String) {
-        self.init(type: .key, title: key, leftImage: UIImage.iconKeyOnly,
+        self.init(type: .key, title: key, leftImage: MEGAAssets.UIImage.iconKeyOnly,
                   isRightImageViewHidden: true)
     }
 }

@@ -59,6 +59,7 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
     UILongPressGestureRecognizer *longPressGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(logoPressedFiveSeconds:)];
     longPressGestureRecognizer.minimumPressDuration = 5.0f;
     self.logoImageView.gestureRecognizers = @[tapGestureRecognizer, longPressGestureRecognizer];
+    self.logoImageView.image = [UIImage megaImageWithNamed:@"megaThePrivacyCompanyLogo"];
     
     self.cancelBarButtonItem.title = LocalizedString(@"cancel", @"Button title to cancel something");
     
@@ -67,10 +68,12 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
     self.emailInputView.inputTextField.tag = EmailTextFieldTag;
     self.emailInputView.inputTextField.keyboardType = UIKeyboardTypeEmailAddress;
     self.emailInputView.inputTextField.textContentType = UITextContentTypeUsername;
+    self.emailInputView.iconImage = [UIImage megaImageWithNamed:@"mail"];
     
     self.passwordView.passwordTextField.delegate = self;
     self.passwordView.passwordTextField.tag = PasswordTextFieldTag;
     self.passwordView.passwordTextField.textContentType = UITextContentTypePassword;
+    self.passwordView.leftImage = [UIImage megaImageWithNamed:@"padlock"];
     
     [self.loginButton setTitle:LocalizedString(@"login", @"Login") forState:UIControlStateNormal];
 

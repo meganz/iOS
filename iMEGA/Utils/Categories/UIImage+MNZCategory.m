@@ -152,7 +152,7 @@
             [UIImageJPEGRepresentation(image, 1) writeToFile:avatarFilePath atomically:YES];
 #ifdef MNZ_SHARE_EXTENSION
         } else {
-            image = [UIImage imageNamed:@"contactGroups"];
+            image = [UIImage megaImageWithNamed:@"contactGroups"];
         }
 #endif
         
@@ -208,30 +208,30 @@
     switch (endCallReason) {
         case MEGAChatMessageEndCallReasonByModerator:
         case MEGAChatMessageEndCallReasonEnded:
-            endCallReasonImage = [UIImage imageNamed:@"callEnded"];
+            endCallReasonImage = [UIImage megaImageWithNamed:@"callEnded"];
             break;
             
         case MEGAChatMessageEndCallReasonRejected:
-            endCallReasonImage = [UIImage imageNamed:@"callRejected"];
+            endCallReasonImage = [UIImage megaImageWithNamed:@"callRejected"];
             break;
             
         case MEGAChatMessageEndCallReasonFailed:
-            endCallReasonImage = [UIImage imageNamed:@"callFailed"];
+            endCallReasonImage = [UIImage megaImageWithNamed:@"callFailed"];
             break;
             
         case MEGAChatMessageEndCallReasonCancelled:
             if (userHandle == MEGAChatSdk.shared.myUserHandle) {
-                endCallReasonImage = [UIImage imageNamed:@"callCancelled"];
+                endCallReasonImage = [UIImage megaImageWithNamed:@"callCancelled"];
             } else {
-                endCallReasonImage = [UIImage imageNamed:@"missedCall"];
+                endCallReasonImage = [UIImage megaImageWithNamed:@"missedCall"];
             }
             break;
             
         case MEGAChatMessageEndCallReasonNoAnswer:
             if (userHandle == MEGAChatSdk.shared.myUserHandle) {
-                endCallReasonImage = [UIImage imageNamed:@"callFailed"];
+                endCallReasonImage = [UIImage megaImageWithNamed:@"callFailed"];
             } else {
-                endCallReasonImage = [UIImage imageNamed:@"missedCall"];
+                endCallReasonImage = [UIImage megaImageWithNamed:@"missedCall"];
             }
             break;
             
@@ -246,7 +246,7 @@
 #pragma mark - Utils
 
 + (UIImage *)mnz_imageNamed:(NSString *)name scaledToSize:(CGSize)newSize {
-    UIImage *image = [UIImage imageNamed:name];
+    UIImage *image = [UIImage megaImageWithNamed:name];
     
     UIGraphicsBeginImageContextWithOptions(newSize, NO, 0.0);
     [image drawInRect:CGRectMake(0, 0, newSize.width, newSize.height)];
@@ -255,89 +255,88 @@
     return scaledImage;
 }
     
-#pragma mark - Extensions
-
+#pragma mark - Extensions - Oh my god
 + (UIImage *)mnz_genericImage {
-    return [UIImage imageNamed:@"generic"];
+    return [UIImage megaImageWithNamed:@"generic"];
 }
 
 + (UIImage *)mnz_folderImage {
-    return [UIImage imageNamed:@"filetype_folder"];
+    return [UIImage megaImageWithNamed:@"filetype_folder"];
 }
 
 + (UIImage *)mnz_incomingFolderImage {
-    return [UIImage imageNamed:@"folder_incoming"];
+    return [UIImage megaImageWithNamed:@"folder_incoming"];
 }
 
 + (UIImage *)mnz_outgoingFolderImage {
-    return [UIImage imageNamed:@"folder_outgoing"];
+    return [UIImage megaImageWithNamed:@"folder_outgoing"];
 }
 
 + (UIImage *)mnz_folderCameraUploadsImage {
-    return [UIImage imageNamed:@"folder_camera"];
+    return [UIImage megaImageWithNamed:@"folder_camera"];
 }
 
 + (UIImage *)mnz_folderMyChatFilesImage {
-    return [UIImage imageNamed:@"folder_chat"];
+    return [UIImage megaImageWithNamed:@"folder_chat"];
 }
 
 + (UIImage *)mnz_folderBackUpImage {
-    return [UIImage imageNamed:@"folder_sync"];
+    return [UIImage megaImageWithNamed:@"folder_sync"];
 }
 
 + (UIImage *)mnz_devicePCFolderBackUpImage {
-    return [UIImage imageNamed:@"pc"];
+    return [UIImage megaImageWithNamed:@"pc"];
 }
 
 + (UIImage *)mnz_rootFolderBackUpImage {
-    return [UIImage imageNamed:@"folder_backup"];
+    return [UIImage megaImageWithNamed:@"folder_backup"];
 }
 
 + (UIImage *)mnz_defaultPhotoImage {
-    return [UIImage imageNamed:@"image"];
+    return [UIImage megaImageWithNamed:@"image"];
 }
 
 + (UIImage *)mnz_downloadingOverquotaTransferImage {
-    return [UIImage imageNamed:@"downloadingOverquota"];
+    return [UIImage megaImageWithNamed:@"downloadingOverquota"];
 }
 
 + (UIImage *)mnz_uploadingOverquotaTransferImage {
-    return [UIImage imageNamed:@"uploadingOverquota"];
+    return [UIImage megaImageWithNamed:@"uploadingOverquota"];
 }
 
 + (UIImage *)mnz_downloadingTransferImage {
-    return [UIImage imageNamed:@"downloading"];
+    return [UIImage megaImageWithNamed:@"downloading"];
 }
 
 + (UIImage *)mnz_uploadingTransferImage {
-    return [UIImage imageNamed:@"uploading"];
+    return [UIImage megaImageWithNamed:@"uploading"];
 }
 
 + (UIImage *)mnz_downloadQueuedTransferImage {
-    return [UIImage imageNamed:@"downloadQueued"];
+    return [UIImage megaImageWithNamed:@"downloadQueued"];
 }
 
 + (UIImage *)mnz_uploadQueuedTransferImage {    
-    return [UIImage imageNamed:@"uploading"];
+    return [UIImage megaImageWithNamed:@"uploading"];
 }
 
 + (UIImage *)mnz_errorTransferImage {
-    return [UIImage imageNamed:@"downloadError"];
+    return [UIImage megaImageWithNamed:@"downloadError"];
 }
 
 + (UIImage * _Nullable)mnz_permissionsButtonImageForShareType:(MEGAShareType)shareType {
     UIImage *image;
     switch (shareType) {
         case MEGAShareTypeAccessRead:
-            image = [UIImage imageNamed:@"readPermissions"];
+            image = [UIImage megaImageWithNamed:@"readPermissions"];
             break;
             
         case MEGAShareTypeAccessReadWrite:
-            image =  [UIImage imageNamed:@"readWritePermissions"];
+            image =  [UIImage megaImageWithNamed:@"readWritePermissions"];
             break;
             
         case MEGAShareTypeAccessFull:
-            image = [UIImage imageNamed:@"fullAccessPermissions"];
+            image = [UIImage megaImageWithNamed:@"fullAccessPermissions"];
             break;
             
         default:

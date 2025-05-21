@@ -1,4 +1,5 @@
 import MEGAAppPresentation
+import MEGAAssets
 import MEGADesignToken
 import MEGAL10n
 import MEGASwiftUI
@@ -14,7 +15,7 @@ struct MyAccountHallPlanView: View {
     var body: some View {
         HStack {
             HStack {
-                Image(uiImage: .plan)
+                Image(uiImage: MEGAAssets.UIImage.plan)
                     .renderingMode(.template)
                     .foregroundStyle(TokenColors.Icon.primary.swiftUI)
                     .frame(width: 24, height: 24)

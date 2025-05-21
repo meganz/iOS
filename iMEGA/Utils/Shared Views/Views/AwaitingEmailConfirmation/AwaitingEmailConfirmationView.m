@@ -8,10 +8,15 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     
+    [self configureImages];
     [self setupColors];
 }
 
 #pragma mark - Private
+
+- (void)configureImages {
+    self.iconImageView.image = [UIImage megaImageWithNamed:@"mailBig"];
+}
 
 - (void)setupColors {
     self.backgroundColor = [UIColor pageBackgroundColor];

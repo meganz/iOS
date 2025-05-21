@@ -1,3 +1,4 @@
+import MEGAAssets
 import MEGADesignToken
 import SwiftUI
 import UIKit
@@ -24,7 +25,7 @@ struct SlideShowOptionDetailCellView: View {
                     .padding(.vertical, 13)
                 
                 Spacer()
-                Image(uiImage: UIImage.turquoiseCheckmark)
+                MEGAAssets.Image.turquoiseCheckmark
                     .renderingMode(.template)
                     .foregroundStyle(TokenColors.Support.success.swiftUI)
                     .scaledToFit()

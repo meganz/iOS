@@ -1,3 +1,4 @@
+import MEGAAssets
 import MEGADesignToken
 import MEGAL10n
 import MEGAUIKit
@@ -9,7 +10,7 @@ final class WaitingRoomViewController: UIViewController {
                                                                     target: self,
                                                                     action: #selector(leaveButtonItemTapped))
     
-    lazy var infoBarButtonItem: UIBarButtonItem = UIBarButtonItem(image: UIImage(resource: .infoMeetings),
+    lazy var infoBarButtonItem: UIBarButtonItem = UIBarButtonItem(image: MEGAAssets.UIImage.infoMeetings,
                                                                   style: .plain,
                                                                   target: self,
                                                                   action: #selector(infoButtonItemTapped))

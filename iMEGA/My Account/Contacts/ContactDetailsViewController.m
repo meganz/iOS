@@ -104,7 +104,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     self.chatRoom = [MEGAChatSdk.shared chatRoomByUser:self.userHandle];
     
     if (self.contactDetailsMode != ContactDetailsModeMeeting) {
-        [self.backButton setImage:self.backButton.imageView.image.imageFlippedForRightToLeftLayoutDirection forState:UIControlStateNormal];
+        [self.backButton setImage:[UIImage megaImageWithNamed:@"backArrow"].imageFlippedForRightToLeftLayoutDirection forState:UIControlStateNormal];
     } else {
         NSString *backButtonTitle = LocalizedString(@"close", @"");
         [self.backButton setImage:nil forState:UIControlStateNormal];
@@ -239,7 +239,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
 
 - (ContactTableViewCell *)cellForSharedItemsWithIndexPath:(NSIndexPath *)indexPath {
     ContactTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"ContactDetailsDefaultTypeID" forIndexPath:indexPath];
-    cell.avatarImageView.image = [UIImage imageNamed:@"sharedFiles"];
+    cell.avatarImageView.image = [UIImage megaImageWithNamed:@"sharedFiles"];
     cell.nameLabel.text = LocalizedString(@"Shared Files", @"Header of block with all shared files in chat.");
     cell.nameLabel.textColor = UIColor.primaryTextColor;;
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
@@ -249,7 +249,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
 
 - (ContactTableViewCell *)cellForNicknameWithIndexPath:(NSIndexPath *)indexPath {
     ContactTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"ContactDetailsDefaultTypeID" forIndexPath:indexPath];
-    cell.avatarImageView.image = [UIImage imageNamed:@"rename"];
+    cell.avatarImageView.image = [UIImage megaImageWithNamed:@"rename"];
     cell.nameLabel.text = self.userNickname.length == 0 ? LocalizedString(@"Set Nickname", @"Contact details screen: Set the alias(nickname) for a user") : LocalizedString(@"Edit Nickname", @"Contact details screen: Edit the alias(nickname) for a user");
     cell.nameLabel.textColor = UIColor.primaryTextColor;
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
@@ -259,7 +259,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
 
 - (ContactTableViewCell *)cellForVerifyCredentialsWithIndexPath:(NSIndexPath *)indexPath {
     ContactTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"ContactDetailsVerifyCredentialsTypeID" forIndexPath:indexPath];
-    cell.avatarImageView.image = [UIImage imageNamed:@"verifyCredentials"];
+    cell.avatarImageView.image = [UIImage megaImageWithNamed:@"verifyCredentials"];
     cell.nameLabel.text = LocalizedString(@"verifyCredentials", @"Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials.");
     cell.nameLabel.textColor = UIColor.primaryTextColor;
     cell.permissionsImageView.hidden = !self.areCredentialsVerified;
@@ -269,12 +269,12 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
 - (ContactTableViewCell *)cellForAddAndRemoveContactWithIndexPath:(NSIndexPath *)indexPath {
     ContactTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"ContactDetailsDefaultTypeID" forIndexPath:indexPath];
     if (self.user.visibility == MEGAUserVisibilityVisible) { //Remove Contact
-        cell.avatarImageView.image = [UIImage imageNamed:@"delete"];
+        cell.avatarImageView.image = [UIImage megaImageWithNamed:@"delete"];
         cell.avatarImageView.tintColor = [self redIconColor];
         cell.nameLabel.text = LocalizedString(@"removeUserTitle", @"Alert title shown when you want to remove one or more contacts");
         cell.nameLabel.textColor = [self redTextColor];
     } else { //Add contact
-        cell.avatarImageView.image = [UIImage imageNamed:@"navigationbar_add"];
+        cell.avatarImageView.image = [UIImage megaImageWithNamed:@"navigationbar_add"];
         cell.avatarImageView.tintColor = [UIColor mnz_secondaryTextColor];
         cell.nameLabel.text = LocalizedString(@"addContact", @"Alert title shown when you select to add a contact inserting his/her email");
     }
@@ -299,7 +299,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     cell.labelView.hidden = (node.label == MEGANodeLabelUnknown);
     if (node.label != MEGANodeLabelUnknown) {
         NSString *labelString = [[MEGANode stringForNodeLabel:node.label] stringByAppendingString:@"Small"];
-        cell.labelImageView.image = [UIImage imageNamed:labelString];
+        cell.labelImageView.image = [UIImage megaImageWithNamed:labelString];
     }
     
     return cell;
@@ -307,7 +307,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
 
 - (ContactTableViewCell *)cellForManageChatHistoryWithIndexPath:(NSIndexPath *)indexPath {
     ContactTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"ContactDetailsDefaultTypeID" forIndexPath:indexPath];
-    cell.avatarImageView.image = [UIImage imageNamed:@"clearChatHistory"];
+    cell.avatarImageView.image = [UIImage megaImageWithNamed:@"clearChatHistory"];
     cell.nameLabel.text = LocalizedString(@"Manage Chat History", @"Text related with the section where you can manage the chat history. There you can for example, clear the history or configure the retention setting.");
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     cell.userInteractionEnabled = cell.avatarImageView.userInteractionEnabled = cell.nameLabel.enabled = self.user.visibility == MEGAUserVisibilityVisible && MEGAReachabilityManager.isReachable && [MEGAChatSdk.shared chatConnectionState:self.chatRoom.chatId] == MEGAChatConnectionOnline;
@@ -317,7 +317,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
 
 - (ContactTableViewCell *)cellForArchiveChatWithIndexPath:(NSIndexPath *)indexPath {
     ContactTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"ContactDetailsDefaultTypeID" forIndexPath:indexPath];
-    cell.avatarImageView.image = self.chatRoom.isArchived ? [UIImage imageNamed:@"unArchiveChat"] : [UIImage imageNamed:@"archiveChat"];
+    cell.avatarImageView.image = self.chatRoom.isArchived ? [UIImage megaImageWithNamed:@"unArchiveChat"] : [UIImage megaImageWithNamed:@"archiveChat"];
     cell.avatarImageView.tintColor = [self primaryIconColor];
     cell.nameLabel.text = self.chatRoom.isArchived ? LocalizedString(@"unarchiveChat", @"The title of the dialog to unarchive an archived chat.") : LocalizedString(@"archiveChat", @"Title of button to archive chats.");
     cell.nameLabel.textColor = UIColor.primaryTextColor;
@@ -328,7 +328,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
 
 - (ContactTableViewCell *)cellForAddParticipantAsContactWithIndexPath:(NSIndexPath *)indexPath {
     ContactTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"ContactDetailsDefaultTypeID" forIndexPath:indexPath];
-    cell.avatarImageView.image = [UIImage imageNamed:@"navigationbar_add"];
+    cell.avatarImageView.image = [UIImage megaImageWithNamed:@"navigationbar_add"];
     cell.avatarImageView.tintColor = [UIColor mnz_secondaryTextColor];
     cell.nameLabel.text = LocalizedString(@"addContact", @"Alert title shown when you select to add a contact inserting his/her email");
     cell.userInteractionEnabled = cell.avatarImageView.userInteractionEnabled = cell.nameLabel.enabled = MEGAReachabilityManager.isReachable;
@@ -365,7 +365,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
 
 - (ContactTableViewCell *)cellForRemoveParticipantWithIndexPath:(NSIndexPath *)indexPath {
     ContactTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"ContactDetailsDefaultTypeID" forIndexPath:indexPath];
-    cell.avatarImageView.image = [UIImage imageNamed:@"delete"];
+    cell.avatarImageView.image = [UIImage megaImageWithNamed:@"delete"];
     cell.avatarImageView.tintColor = [self redIconColor];
     cell.nameLabel.text = LocalizedString(@"removeParticipant", @"A button title which removes a participant from a chat.");
     cell.nameLabel.textColor = [UIColor mnz_errorRed];
@@ -416,7 +416,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     __weak __typeof__(self) weakSelf = self;
     
     MEGAChatRoomPrivilege privilege = self.peerPrivilege;
-    UIImageView *checkmarkImageView = [UIImageView.alloc initWithImage:[UIImage imageNamed:@"turquoise_checkmark"]];
+    UIImageView *checkmarkImageView = [UIImageView.alloc initWithImage:[UIImage megaImageWithNamed:@"turquoise_checkmark"]];
 
     NSMutableArray<ActionSheetAction *> *actions = NSMutableArray.new;
     [actions addObject:[ActionSheetAction.alloc initWithTitle:LocalizedString(@"moderator", @"The Moderator permission level in chat. With moderator permissions a participant can manage the chat.") detail:nil accessoryView:privilege == MEGAChatRoomPrivilegeModerator ? checkmarkImageView : nil image:[self moderatorIcon] style:UIAlertActionStyleDefault actionHandler:^{

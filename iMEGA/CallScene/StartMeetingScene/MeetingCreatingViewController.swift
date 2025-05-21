@@ -1,3 +1,4 @@
+import MEGAAssets
 import MEGADesignToken
 import MEGADomain
 import MEGAL10n
@@ -9,10 +10,10 @@ class MeetingCreatingViewController: UIViewController, UITextFieldDelegate {
     private struct AvatarProperties {
         static let initials = "G"
         static let font = UIFont.preferredFont(forTextStyle: .title1).withWeight(.semibold)
-        static let textColor = UIColor.whiteFFFFFF
+        static let textColor = MEGAAssets.UIColor.whiteFFFFFF
         static let size = CGSize(width: 80, height: 80)
-        static let backgroundColor = UIColor.callAvatarBackground
-        static let backgroundGradientColor = UIColor.callAvatarBackgroundGradient
+        static let backgroundColor = MEGAAssets.UIColor.callAvatarBackground
+        static let backgroundGradientColor = MEGAAssets.UIColor.callAvatarBackgroundGradient
     }
     
     private struct Constants {
@@ -64,6 +65,7 @@ class MeetingCreatingViewController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        configureImages()
         registerForNotifications()
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(
@@ -83,6 +85,19 @@ class MeetingCreatingViewController: UIViewController, UITextFieldDelegate {
     }
     
     // MARK: - Private methods.
+    
+    private func configureImages() {
+        localUserView.mutedImage = MEGAAssets.UIImage.image(named: "micMuted")
+
+        enableDisableVideoButton.setImage(MEGAAssets.UIImage.image(named: "callControlCameraDisabled"), for: .normal)
+        enableDisableVideoButton.setImage(MEGAAssets.UIImage.image(named: "callControlCameraEnabled"), for: .selected)
+
+        muteUnmuteMicrophoneButton.setImage(MEGAAssets.UIImage.image(named: "callControlMicDisabled"), for: .normal)
+        muteUnmuteMicrophoneButton.setImage(MEGAAssets.UIImage.image(named: "callControlMicEnabled"), for: .selected)
+
+        speakerQuickActionView.icon = MEGAAssets.UIImage.image(named: "callControlSpeakerEnabled")
+    }
+
     private func registerForNotifications() {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)

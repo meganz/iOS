@@ -1,3 +1,4 @@
+import MEGAAssets
 import MEGADesignToken
 import MEGADomain
 import MEGAL10n
@@ -12,7 +13,7 @@ struct ChatRoomView: View {
             ChatRoomContentView()
                 .swipeActions {
                     ForEach(swipeActionLabels()) { label in
-                        if let image = UIImage(named: label.imageName)?
+                        if let image = MEGAAssets.UIImage.image(named: label.imageName)?
                             .withRenderingMode(.alwaysTemplate)
                             .withTintColor(TokenColors.Icon.onColor) {
                             Button {
@@ -116,7 +117,7 @@ private struct ChatRoomContentView: View {
                     Button {
                         contextMenuOption.action()
                     } label: {
-                        HorizontalImageTextLabel(image: UIImage(resource: contextMenuOption.image), text: contextMenuOption.title)
+                        HorizontalImageTextLabel(image: contextMenuOption.image, text: contextMenuOption.title)
                     }
                 }
             }
@@ -188,7 +189,7 @@ private struct ChatRoomContentDetailsView: View {
     }
     
     private var inCallImage: some View {
-        Image(.makeCallRoundToken)
+        MEGAAssets.Image.makeCallRoundToken
             .resizable()
             .frame(width: 21, height: 21)
     }
@@ -211,12 +212,12 @@ private struct ChatRoomContentTitleView: View {
             
             if viewModel.chatListItem.publicChat == false {
                 if !viewModel.chatListItem.isNoteToSelf {
-                    Image(.privateChat)
+                    MEGAAssets.Image.privateChat
                 }
             }
             
             if viewModel.isMuted {
-                Image(.mutedChat)
+                MEGAAssets.Image.mutedChat
             }
         }
     }

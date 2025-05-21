@@ -1,3 +1,4 @@
+import MEGAAssets
 import MEGADesignToken
 
 final class NodeActionTableViewCell: ActionSheetCell {
@@ -19,7 +20,7 @@ final class NodeActionTableViewCell: ActionSheetCell {
         let spaceAttachment = NSTextAttachment()
         spaceAttachment.bounds = CGRect(x: 0, y: 0, width: 8.0, height: 0)
         
-        let proLabelImage = NSTextAttachment(image: .proLabel)
+        let proLabelImage = NSTextAttachment(image: MEGAAssets.UIImage.proLabel)
         proLabelImage.bounds = CGRect(x: 0, y: 0, width: 23.5, height: 13)
         
         fullString.append(NSAttributedString(attachment: spaceAttachment))

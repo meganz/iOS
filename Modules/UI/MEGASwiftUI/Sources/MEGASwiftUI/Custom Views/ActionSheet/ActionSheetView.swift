@@ -51,7 +51,7 @@ public struct ActionSheetContentView<HeaderView: View>: View {
                 }
                 .background(TokenColors.Background.surface2.swiftUI)
                 
-                ForEach(actionButtons, id: \.self) { button in
+                ForEach(actionButtons, id: \.id) { button in
                     button
                 }
             }
@@ -64,7 +64,7 @@ public struct ActionSheetContentView<HeaderView: View>: View {
         VStack(spacing: 0) {
             Spacer()
                 .frame(height: 16)
-            ForEach(actionButtons, id: \.self) { button in
+            ForEach(actionButtons, id: \.id) { button in
                 button
             }
             Spacer()
@@ -74,34 +74,28 @@ public struct ActionSheetContentView<HeaderView: View>: View {
     }
 }
 
-public struct ActionSheetButton: View, Hashable {
+public struct ActionSheetButton: View {
     @Environment(\.presentationMode) var presentationMode
-    var icon: String
+    var id: UUID
+    var icon: Image
     var title: String
     var subtitle: String?
+    var disclosureIcon: Image
     var action: () -> Void
     
-    public init(icon: String, title: String, subtitle: String? = nil, action: @escaping () -> Void) {
+    public init(id: UUID, icon: Image, title: String, subtitle: String? = nil, disclosureIcon: Image, action: @escaping () -> Void) {
+        self.id = id
         self.icon = icon
         self.title = title
         self.subtitle = subtitle
         self.action = action
-    }
-    
-    nonisolated public static func == (lhs: ActionSheetButton, rhs: ActionSheetButton) -> Bool {
-        lhs.icon == rhs.icon && lhs.title == rhs.title && lhs.subtitle == rhs.subtitle
-    }
-    
-    nonisolated public func hash(into hasher: inout Hasher) {
-        hasher.combine(icon)
-        hasher.combine(title)
-        hasher.combine(subtitle)
+        self.disclosureIcon = disclosureIcon
     }
 
     public var body: some View {
         VStack(spacing: 0) {
             HStack {
-                Image(icon)
+                icon
                     .frame(width: 28, height: 28)
                     .padding(16)
                 
@@ -115,7 +109,7 @@ public struct ActionSheetButton: View, Hashable {
                         .font(.callout)
                         .foregroundStyle(TokenColors.Text.secondary.swiftUI)
                     
-                    Image("standardDisclosureIndicator")
+                    disclosureIcon
                         .padding([.trailing], 16)
                         .padding([.leading], 5)
                 }

@@ -1,5 +1,7 @@
+import Foundation
 
 public struct ContextAction: Hashable {
+    let id = UUID()
     let type: ContextAction.Category
     let title: String
     let subtitle: String?

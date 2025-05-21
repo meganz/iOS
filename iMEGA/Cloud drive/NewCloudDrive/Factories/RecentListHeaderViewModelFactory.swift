@@ -1,4 +1,5 @@
 import Foundation
+import MEGAAssets
 import MEGAL10n
 import Search
 
@@ -40,9 +41,9 @@ struct RecentListHeaderViewModelFactory: RecentListHeaderViewModelFactoryProtoco
         
         func icon(_ bucket: any RecentActionBucket) -> UIImage {
             if bucket.isUpdate {
-                UIImage.versioned
+                MEGAAssets.UIImage.versioned
             } else {
-                UIImage.recentUpload
+                MEGAAssets.UIImage.recentUpload
             }
         }
         

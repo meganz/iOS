@@ -1,6 +1,7 @@
 import Accounts
 import Combine
 import MEGAAppPresentation
+import MEGAAssets
 import MEGADesignToken
 import MEGADomain
 import MEGAL10n
@@ -14,6 +15,7 @@ import UIKit
     @IBOutlet weak var nameLabel: MEGALabel!
     @IBOutlet weak var emailLabel: UILabel!
     @IBOutlet weak var avatarImageView: UIImageView!
+    @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var gradientView: GradientView!
     @IBOutlet weak var avatarViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var avatarBottomSeparatorView: UIView!
@@ -53,6 +55,8 @@ import UIKit
         avatarExpandedPosition = view.frame.size.height * 0.5
         avatarCollapsedPosition = view.frame.size.height * 0.3
         avatarViewHeightConstraint.constant = avatarCollapsedPosition
+        
+        backButton.setImage(MEGAAssets.UIImage.backArrow, for: .normal)
         
         nameLabel.text = MEGASdk.currentUserHandle().map { MEGAUser.mnz_fullName($0.uint64Value) ?? "" }
         nameLabel.layer.shadowOffset = CGSize(width: 0, height: 1)

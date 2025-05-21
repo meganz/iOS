@@ -33,10 +33,10 @@ public class PhotoCardViewModel: ObservableObject {
             thumbnailLoader.initialImage(
                 for: photo,
                 type: .preview,
-                placeholder: { MEGAAssetsImageProvider.image(named: .photoCardPlaceholder) })
+                placeholder: { MEGAAssets.Image.photoCardPlaceholder })
         } else {
             ImageContainer(
-                image: MEGAAssetsImageProvider.image(named: .photoCardPlaceholder),
+                image: MEGAAssets.Image.photoCardPlaceholder,
                 type: .placeholder)
         }
     }

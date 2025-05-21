@@ -1,4 +1,5 @@
 import ContentLibraries
+import MEGAAssets
 import MEGADesignToken
 import MEGAL10n
 import SwiftUI
@@ -85,17 +86,17 @@ extension PhotosViewController {
     private func emptyView(for filter: PhotosEmptyScreenViewType) -> UIView {
         switch filter {
         case .noMediaFound:
-            let view = PhotoTimelineEmptyView(centerImageResource: .allPhotosEmptyState,
+            let view = PhotoTimelineEmptyView(centerImage: MEGAAssets.Image.allPhotosEmptyState,
                                               title: Strings.Localizable.CameraUploads.Timeline.AllMedia.Empty.title,
                                               enableCameraUploadsAction: viewModel.enableCameraUploadsBannerAction())
             return UIHostingController(rootView: view).view
         case .noImagesFound:
-            let view = PhotoTimelineEmptyView(centerImageResource: .allPhotosEmptyState,
+            let view = PhotoTimelineEmptyView(centerImage: MEGAAssets.Image.allPhotosEmptyState,
                                               title: Strings.Localizable.Home.Images.empty,
                                               enableCameraUploadsAction: viewModel.enableCameraUploadsBannerAction())
             return UIHostingController(rootView: view).view
         case .noVideosFound:
-            let view = PhotoTimelineEmptyView(centerImageResource: .videoEmptyState,
+            let view = PhotoTimelineEmptyView(centerImage: MEGAAssets.Image.videoEmptyState,
                                               title: Strings.Localizable.noVideosFound,
                                               enableCameraUploadsAction: viewModel.enableCameraUploadsBannerAction())
             return UIHostingController(rootView: view).view

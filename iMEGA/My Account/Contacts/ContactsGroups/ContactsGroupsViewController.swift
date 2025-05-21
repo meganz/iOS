@@ -1,4 +1,5 @@
 import ChatRepo
+import MEGAAssets
 import MEGADesignToken
 import MEGAL10n
 import MEGAUIKit
@@ -24,7 +25,7 @@ class ContactsGroupsViewController: UIViewController {
         title = Strings.Localizable.groups
         navigationItem.backBarButtonItem = BackBarButtonItem(menuTitle: Strings.Localizable.groups)
         newGroupChatLabel.text = Strings.Localizable.newGroupChat
-        newGroupChatImageView.image = UIImage.groupChatToken
+        newGroupChatImageView.image = MEGAAssets.UIImage.groupChatToken
         
         searchController = UISearchController.customSearchController(searchResultsUpdaterDelegate: self, searchBarDelegate: self)
         navigationItem.searchController = searchController
@@ -46,7 +47,7 @@ class ContactsGroupsViewController: UIViewController {
         newGroupChatView.backgroundColor = TokenColors.Background.page
         separatorView.backgroundColor = TokenColors.Border.strong
         tableView.separatorColor = TokenColors.Border.strong
-        disclosureIndicatorImageView.image =  UIImage(resource: .disclosure)
+        disclosureIndicatorImageView.image =  MEGAAssets.UIImage.disclosure
     }
 
     func fetchGroupChatsList() {
@@ -179,9 +180,9 @@ extension ContactsGroupsViewController: DZNEmptyDataSetSource {
     
     private func imageForEmptyDataSet() -> UIImage? {
         if self.searchController.isActive && self.searchController.searchBar.text?.isNotEmpty == true {
-            return UIImage.searchEmptyState
+            return MEGAAssets.UIImage.searchEmptyState
         } else {
-            return UIImage.chatEmptyState
+            return MEGAAssets.UIImage.chatEmptyState
         }
     }
     

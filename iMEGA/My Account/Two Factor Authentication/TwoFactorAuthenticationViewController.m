@@ -38,6 +38,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.invalidCodeImageView.image = [UIImage megaImageWithNamed:@"invalid_code"];
+    self.lostYourAuthenticatorDeviceImage.image = [UIImage megaImageWithNamed:@"littleQuestionMark"];
+    
     [self.navigationController setNavigationBarHidden:NO animated:YES];
     
     self.navigationItem.title = LocalizedString(@"twoFactorAuthentication", @"");

@@ -3,6 +3,7 @@ import ContentLibraries
 import Foundation
 import MEGAAnalyticsiOS
 import MEGAAppPresentation
+import MEGAAssets
 import MEGADomain
 import MEGAL10n
 import MEGASwiftUI
@@ -401,7 +402,7 @@ final class AlbumContentViewModel: ViewModelType {
             if result.success > 0 {
                 let message = Strings.Localizable.CameraUploads.Albums.removedItemFrom(Int(result.success))
                     .replacingOccurrences(of: "[A]", with: "\(albumName)")
-                invokeCommand?(.showResultMessage(.custom(UIImage.hudMinus, message)))
+                invokeCommand?(.showResultMessage(.custom(MEGAAssets.UIImage.hudMinus, message)))
             }
         } catch {
             MEGALogError("Error occurred when deleting photos for the album. \(error.localizedDescription)")
@@ -417,7 +418,7 @@ final class AlbumContentViewModel: ViewModelType {
                 let successMsg = Strings.Localizable.CameraUploads.Albums.deleteAlbumSuccess(1)
                     .replacingOccurrences(of: "[A]", with: albumName)
                 invokeCommand?(.dismissAlbum)
-                invokeCommand?(.showResultMessage(.custom(UIImage.hudMinus, successMsg)))
+                invokeCommand?(.showResultMessage(.custom(MEGAAssets.UIImage.hudMinus, successMsg)))
             } else {
                 MEGALogError("Error occurred when deleting the album id: \(album.id)")
             }

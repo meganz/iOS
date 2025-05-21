@@ -2,6 +2,7 @@
 import MEGAAnalyticsiOS
 import MEGAAppPresentation
 import MEGAAppPresentationMock
+import MEGAAssets
 import MEGADomain
 import MEGADomainMock
 import MEGAL10n
@@ -219,7 +220,7 @@ final class GetCollectionsLinkViewModelTests: XCTestCase {
             test(viewModel: sut, action: .copyLink,
                  expectedCommands: [
                     .addToPasteBoard(expectedLink),
-                    .showHud(.custom(UIImage.copy,
+                    .showHud(.custom(MEGAAssets.UIImage.copy,
                                      Strings.Localizable.SharedItems.GetLink.linkCopied(links.values.count)))
                  ], expectationValidation: ==)
         }
@@ -250,7 +251,7 @@ final class GetCollectionsLinkViewModelTests: XCTestCase {
             test(viewModel: sut, action: .didSelectRow(indexPath: linkIndexPath),
                  expectedCommands: [
                     .addToPasteBoard(expectedLink),
-                    .showHud(.custom(UIImage.copy,
+                    .showHud(.custom(MEGAAssets.UIImage.copy,
                                      Strings.Localizable.SharedItems.GetLink.linkCopied(1)))
                  ], expectationValidation: ==)
         }

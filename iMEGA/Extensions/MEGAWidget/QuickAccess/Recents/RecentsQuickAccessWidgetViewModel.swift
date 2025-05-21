@@ -59,7 +59,7 @@ final class RecentsQuickAccessWidgetViewModel: ViewModelType {
             name: item.name,
             url: URL(string: SectionDetail.recents.link)?
                 .appendingPathComponent(item.base64Handle),
-            image: Image(item.isUpdate ? .versioned : .recentUpload),
+            image: item.isUpdate ? MEGAAssets.Image.versioned : MEGAAssets.Image.recentUpload,
             description: recentStringTimestamp(item.timestamp)
         )
     }
@@ -75,9 +75,9 @@ final class RecentsQuickAccessWidgetViewModel: ViewModelType {
     
     private func imageForPatExtension(_ pathExtension: String) -> Image {
         if pathExtension != "" {
-            return MEGAAssetsImageProvider.fileTypeResource(forFileExtension: pathExtension)
+            return MEGAAssets.Image.image(forFileExtension: pathExtension)
         } else {
-            return Image(.filetypeFolder)
+            return MEGAAssets.Image.filetypeFolder
         }
     }
     

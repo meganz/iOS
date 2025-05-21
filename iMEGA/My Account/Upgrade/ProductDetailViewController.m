@@ -41,23 +41,23 @@
     NSString *title;
     switch (_megaAccountType) {
         case MEGAAccountTypeLite:
-            [_crestImageView setImage:[UIImage imageNamed:@"white_crest_LITE"]];
+            [_crestImageView setImage:[UIImage megaImageWithNamed:@"white_crest_LITE"]];
             title = LocalizedString(@"Pro Lite", @"");
             self.selectMembershiptLabel.textColor = proLevelColor;
             break;
             
         case MEGAAccountTypeProI:
-            [_crestImageView setImage:[UIImage imageNamed:@"white_crest_PROI"]];
+            [_crestImageView setImage:[UIImage megaImageWithNamed:@"white_crest_PROI"]];
             title = LocalizedString(@"Pro I", @"");
             break;
             
         case MEGAAccountTypeProII:
-            [_crestImageView setImage:[UIImage imageNamed:@"white_crest_PROII"]];
+            [_crestImageView setImage:[UIImage megaImageWithNamed:@"white_crest_PROII"]];
             title = LocalizedString(@"Pro II", @"");
             break;
             
         case MEGAAccountTypeProIII:
-            [_crestImageView setImage:[UIImage imageNamed:@"white_crest_PROIII"]];
+            [_crestImageView setImage:[UIImage megaImageWithNamed:@"white_crest_PROIII"]];
             title = LocalizedString(@"Pro III", @"");
             break;
             

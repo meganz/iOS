@@ -1,3 +1,4 @@
+import MEGAAssets
 import SwiftUI
 
 struct NodeBrowserContextMenuViewFactory {
@@ -6,13 +7,13 @@ struct NodeBrowserContextMenuViewFactory {
 
     func makeContextMenuWithButtonView() -> ContextMenuWithButtonView<Image>? {
         makeNavItemsFactory().contextMenu {
-            Image(uiImage: UIImage.moreNavigationBar)
+            Image(uiImage: MEGAAssets.UIImage.moreNavigationBar)
         }
     }
 
     func makeAddMenuWithButtonView() -> ContextMenuWithButtonView<Image>? {
         makeNavItemsFactory().addMenu {
-            Image(uiImage: UIImage.navigationbarAdd)
+            Image(uiImage: MEGAAssets.UIImage.navigationbarAdd)
         }
     }
 }

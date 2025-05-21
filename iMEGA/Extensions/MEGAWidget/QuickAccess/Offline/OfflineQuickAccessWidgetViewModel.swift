@@ -53,9 +53,9 @@ final class OfflineQuickAccessWidgetViewModel: ViewModelType {
     
     private func imageForPatExtension(_ pathExtension: String) -> Image {
         if pathExtension != "" {
-            return MEGAAssetsImageProvider.fileTypeResource(forFileExtension: pathExtension)
+            return MEGAAssets.Image.image(forFileExtension: pathExtension)
         } else {
-            return Image(.filetypeFolder)
+            return MEGAAssets.Image.filetypeFolder
         }
     }
     

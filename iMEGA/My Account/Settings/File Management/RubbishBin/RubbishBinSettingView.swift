@@ -1,3 +1,4 @@
+import MEGAAssets
 import MEGAConnectivity
 import MEGADesignToken
 import MEGADomain
@@ -129,7 +130,7 @@ struct RubbishBinSettingView: View {
             Spacer()
             
             if period == viewModel.selectedAutoPurgePeriod {
-                Image(.check)
+                MEGAAssets.Image.check
                     .foregroundStyle(TokenColors.Icon.secondary.swiftUI)
                     .frame(width: 32, height: 32, alignment: .center)
             }

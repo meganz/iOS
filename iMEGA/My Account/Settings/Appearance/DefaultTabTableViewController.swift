@@ -1,4 +1,5 @@
 import MEGAAppPresentation
+import MEGAAssets
 import MEGADesignToken
 import MEGAL10n
 import UIKit
@@ -30,7 +31,7 @@ final class DefaultTabTableViewController: UITableViewController {
             cell.textLabel?.font = UIFont.preferredFont(forTextStyle: .body)
             cell.textLabel?.textColor = UIColor.primaryTextColor()
         }
-        cell.accessoryView = UIImageView(image: UIImage.turquoiseCheckmark)
+        cell.accessoryView = UIImageView(image: MEGAAssets.UIImage.turquoiseCheckmark)
         cell.backgroundColor = TokenColors.Background.page
         cell.accessoryView?.isHidden = TabManager.getPreferenceTab().tabType.rawValue != indexPath.row
         

@@ -355,7 +355,7 @@
 
 - (UIImage *)imageForEmptyState {
     if (![MEGAReachabilityManager isReachable]) {
-        return [UIImage imageNamed:@"noInternetEmptyState"];
+        return [UIImage megaImageWithNamed:@"noInternetEmptyState"];
     }
     
     return nil;

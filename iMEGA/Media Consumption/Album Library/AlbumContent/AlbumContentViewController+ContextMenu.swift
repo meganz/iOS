@@ -1,4 +1,5 @@
 import MEGAAppSDKRepo
+import MEGAAssets
 import MEGADesignToken
 import MEGADomain
 import MEGAL10n
@@ -19,7 +20,7 @@ extension AlbumContentViewController {
         guard let contextMenuConfiguration,
               let menu = contextMenuManager?.contextMenu(with: contextMenuConfiguration) else { return nil }
         
-        let button = UIBarButtonItem(image: UIImage.moreNavigationBar, menu: menu)
+        let button = UIBarButtonItem(image: MEGAAssets.UIImage.moreNavigationBar, menu: menu)
         button.tintColor = TokenColors.Text.primary
         return button
     }

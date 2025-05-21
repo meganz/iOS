@@ -1,3 +1,5 @@
+import MEGAAssets
+
 final class AudioPlayerFileToolbarConfigurator {
     typealias ButtonAction = (UIBarButtonItem) -> Void
     let importAction: ButtonAction
@@ -11,21 +13,21 @@ final class AudioPlayerFileToolbarConfigurator {
     )
     
     lazy var importItem = UIBarButtonItem(
-        image: UIImage(resource: .import),
+        image: MEGAAssets.UIImage.import,
         style: .plain,
         target: self,
         action: #selector(buttonPressed(_:))
     )
     
     lazy var sendToContactItem = UIBarButtonItem(
-        image: UIImage(resource: .sendToChat),
+        image: MEGAAssets.UIImage.sendToChat,
         style: .plain,
         target: self,
         action: #selector(buttonPressed(_:))
     )
     
     lazy var shareItem = UIBarButtonItem(
-        image: UIImage(resource: .share),
+        image: MEGAAssets.UIImage.share,
         style: .plain,
         target: self,
         action: #selector(buttonPressed(_:))

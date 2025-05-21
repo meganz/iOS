@@ -1,3 +1,4 @@
+import MEGAAssets
 import MEGADesignToken
 import MEGAL10n
 import MEGASwiftUI
@@ -10,7 +11,7 @@ struct MeetingInfoWaitingRoomSettingView: View {
     var body: some View {
         VStack {
             ToggleView(
-                image: .enableWaitingRoom,
+                image: MEGAAssets.Image.enableWaitingRoom,
                 text: Strings.Localizable.Meetings.ScheduleMeeting.waitingRoom,
                 enabled: shouldAllowEditingWaitingRoom,
                 isOn: $isWaitingRoomOn)

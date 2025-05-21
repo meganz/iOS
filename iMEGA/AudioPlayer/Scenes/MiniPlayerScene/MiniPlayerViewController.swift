@@ -1,3 +1,4 @@
+import MEGAAssets
 import MEGADesignToken
 import UIKit
 
@@ -42,6 +43,8 @@ final class MiniPlayerViewController: UIViewController {
         }
         
         viewModel.dispatch(.onViewDidLoad)
+        
+        configureImages()
     }
     
     override func viewDidLayoutSubviews() {
@@ -54,16 +57,21 @@ final class MiniPlayerViewController: UIViewController {
     }
     
     // MARK: - Private functions
+    private func configureImages() {
+        playPauseButtonImageView.image = MEGAAssets.UIImage.image(named: "miniplayerPause")
+        closeButtonImage.image = MEGAAssets.UIImage.image(named: "miniplayerClose")
+    }
+    
     private func updatePlayback(_ percentage: Float, _ isPlaying: Bool) {
         progressBarView.setProgress(progress: CGFloat(percentage), animated: false)
         
-        playPauseButtonImageView.image = UIImage(resource: isPlaying ? .miniplayerPause : .miniplayerPlay).withTintColor(TokenColors.Icon.primary, renderingMode: .alwaysTemplate)
+        playPauseButtonImageView.image = (isPlaying ? MEGAAssets.UIImage.miniplayerPause : MEGAAssets.UIImage.miniplayerPlay).withTintColor(TokenColors.Icon.primary, renderingMode: .alwaysTemplate)
     }
     
     private func updatePlaybackTracks(_ currentItem: AudioPlayerItem, queue: [AudioPlayerItem]?, loopMode: Bool) {
         miniPlayerSource = MiniPlayerDataSource(currentTrack: currentItem, queue: queue, loopMode: loopMode)
         miniPlayerDelegate = MiniPlayerDelegate(delegate: self, loopMode: loopMode, itemsNumber: queue?.count ?? 0)
-        imageView.image = UIImage(resource: .defaultArtwork)
+        imageView.image = MEGAAssets.UIImage.defaultArtwork
         
         Task { @MainActor in
             collectionView.reloadData()
@@ -127,7 +135,7 @@ final class MiniPlayerViewController: UIViewController {
         if let thumbnailImage = thumbnail {
             imageView.image = thumbnailImage
         } else {
-            imageView.image = UIImage(resource: .defaultArtwork)
+            imageView.image = MEGAAssets.UIImage.defaultArtwork
         }
     }
     
@@ -168,7 +176,7 @@ final class MiniPlayerViewController: UIViewController {
         
         playPauseButtonImageView.tintColor = TokenColors.Icon.primary
         
-        closeButtonImage.image = UIImage.miniplayerClose
+        closeButtonImage.image = MEGAAssets.UIImage.miniplayerClose
             .withTintColor(TokenColors.Icon.primary, renderingMode: .alwaysTemplate)
         closeButtonImage.tintColor = TokenColors.Icon.primary
         

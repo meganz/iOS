@@ -2,6 +2,7 @@ import ChatRepo
 import Foundation
 import MEGAAppPresentation
 import MEGAAppSDKRepo
+import MEGAAssets
 import MEGADesignToken
 import MEGADomain
 import MEGAL10n
@@ -92,7 +93,7 @@ extension SharedItemsViewController {
         cell.nameLabel.textColor = nameTextColor
 
         cell.nodeHandle = node.handle
-        cell.permissionsButton.setImage(UIImage.warningPermission, for: .normal)
+        cell.permissionsButton.setImage(MEGAAssets.UIImage.warningPermission, for: .normal)
         cell.permissionsButton.isHidden = false
         
         if let user = userContactFromShareAtIndexPath(indexPath) {
@@ -123,10 +124,10 @@ extension SharedItemsViewController {
         cell.nameLabel.textColor = nameTextColor
 
         cell.delegate = self
-        cell.thumbnailImageView.image = UIImage.mnz_outgoingFolder()
+        cell.thumbnailImageView.image = MEGAAssets.UIImage.folderOutgoing
         cell.nodeHandle = node.handle
 
-        cell.permissionsButton.setImage(UIImage.warningPermission, for: .normal)
+        cell.permissionsButton.setImage(MEGAAssets.UIImage.warningPermission, for: .normal)
         cell.permissionsButton.isHidden = false
         
         cell.infoLabel.text = ""

@@ -1,6 +1,7 @@
 import Combine
 import Foundation
 import MEGAAppPresentation
+import MEGAAssets
 import MEGADesignToken
 import MEGADomain
 import MEGAL10n
@@ -43,13 +44,13 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
     private let viewModel: MeetingParticipantsLayoutViewModel
     private var titleView: CallTitleView
     lazy private var layoutModeBarButton = UIBarButtonItem(
-        image: UIImage(resource: .speakerView),
+        image: MEGAAssets.UIImage.speakerView,
         style: .plain,
         target: self,
         action: #selector(MeetingParticipantsLayoutViewController.didTapLayoutModeButton)
     )
     lazy private var optionsMenuButton = UIBarButtonItem(
-        image: UIImage(resource: .moreGrid),
+        image: MEGAAssets.UIImage.moreGrid,
         style: .plain,
         target: self,
         action: #selector(MeetingParticipantsLayoutViewController.didTapOptionsButton)
@@ -57,7 +58,7 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
     
     private func switchCameraModeBarButton(enabled: Bool) -> UIBarButtonItem {
         let item = UIBarButtonItem(
-            image: enabled ? UIImage(resource: .callControlSwitchCameraEnabled) : UIImage(resource: .callControlSwitchCameraDisabled),
+            image: enabled ? MEGAAssets.UIImage.callControlSwitchCameraEnabled : MEGAAssets.UIImage.callControlSwitchCameraDisabled,
             primaryAction: .init(handler: {[weak self] _ in
                 self?.viewModel.dispatch(.switchCamera)
             })
@@ -67,7 +68,7 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
     }
     
     lazy private var shareLinkButton = UIBarButtonItem(
-        image: UIImage(resource: .shareCallLink),
+        image: MEGAAssets.UIImage.shareCallLink,
         style: .plain,
         target: self,
         action: #selector(MeetingParticipantsLayoutViewController.shareLinkBarButtonTapped)
@@ -106,6 +107,8 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
         callCollectionView.overrideUserInterfaceStyle = .dark
         
         view.backgroundColor = TokenColors.Background.page
+        
+        configureImages()
         
         viewModel.invokeCommand = { [weak self] in
             self?.executeCommand($0)
@@ -372,8 +375,16 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
     
     // MARK: - Private
     
+    private func configureImages() {
+        speakerMicImageView.image = MEGAAssets.UIImage.image(named: "micMuted")
+        recordingImageView.image = MEGAAssets.UIImage.image(named: "Rec indicator big")
+        localUserView.expandImage = MEGAAssets.UIImage.image(named: "expandLocalVideo")
+        localUserView.mutedImage = MEGAAssets.UIImage.image(named: "micMuted")
+        localUserView.raiseHandImage = MEGAAssets.UIImage.image(named: "raisedHand")
+    }
+
     private func configureLayout(mode: ParticipantsLayoutMode, participantsCount: Int) {
-        layoutModeBarButton.image = mode == .speaker ? UIImage(resource: .galleryView) : UIImage(resource: .speakerView)
+        layoutModeBarButton.image = mode == .speaker ? MEGAAssets.UIImage.galleryView : MEGAAssets.UIImage.speakerView
         viewModel.dispatch(
             .orientationOrModeChange(
                 isIPhoneLandscape: isIPhoneLandscape,
@@ -408,7 +419,7 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
             speakerMicImageView.isHidden = true
         } else {
             speakerMicImageView.isHidden = false
-            speakerMicImageView.image = audioDetected ? .micActive : .micMuted
+            speakerMicImageView.image = audioDetected ? MEGAAssets.UIImage.micActive : MEGAAssets.UIImage.micMuted
         }
     }
     
@@ -496,7 +507,7 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
     ) {
         titleView.configure(title: title, subtitle: subtitle)
         if !(isUserAGuest ?? false) {
-            navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(resource: .backArrow), style: .plain, target: self, action: #selector(self.didTapBackButton))
+            navigationItem.leftBarButtonItem = UIBarButtonItem(image: MEGAAssets.UIImage.backArrow, style: .plain, target: self, action: #selector(self.didTapBackButton))
         }
     }
     

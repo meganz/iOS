@@ -17,6 +17,7 @@
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *addPhoneNumberActivityIndicator;
 @property (weak, nonatomic) IBOutlet UIImageView *qrCodeImageView;
 @property (weak, nonatomic) IBOutlet UIView *tableFooterContainerView;
+@property (weak, nonatomic) IBOutlet UIImageView *userManagementImageView;
 
 @end
 
@@ -28,7 +29,9 @@
     [super viewDidLoad];
     
     [self registerCustomCells];
-        
+    
+    [self configureImages];
+    
     self.avatarImageView.image = self.avatarImageView.image.imageFlippedForRightToLeftLayoutDirection;
     self.qrCodeImageView.image = self.qrCodeImageView.image.imageFlippedForRightToLeftLayoutDirection;
     self.addPhoneNumberImageView.image = self.addPhoneNumberImageView.image.imageFlippedForRightToLeftLayoutDirection;
@@ -87,6 +90,11 @@
 
 #pragma mark - Private
 
+- (void)configureImages {
+    self.addPhoneNumberImageView.image = [UIImage megaImageWithNamed:@"addPhoneNumberSmall"];
+    self.userManagementImageView.image = [UIImage megaImageWithNamed:@"userManagement"];
+}
+
 - (void)updateAppearance {
     self.view.backgroundColor = [UIColor pageBackgroundColor];
     
@@ -103,7 +111,7 @@
     self.nameLabel.textColor = primaryTextColor;
     self.addPhoneNumberTitle.textColor = primaryTextColor;
     self.addPhoneNumberDescription.textColor = primaryTextColor;
-    self.qrCodeImageView.image = [UIImage imageNamed:@"qrCode"].imageFlippedForRightToLeftLayoutDirection;
+    self.qrCodeImageView.image = [UIImage megaImageWithNamed:@"qrCode"].imageFlippedForRightToLeftLayoutDirection;
     
     if ([MEGASdk.shared isAccountType:MEGAAccountTypeBusiness] ||
         [MEGASdk.shared isAccountType:MEGAAccountTypeProFlexi]) {

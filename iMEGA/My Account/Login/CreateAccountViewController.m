@@ -77,6 +77,7 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
     self.firstNameInputView.inputTextField.delegate = self;
     self.firstNameInputView.inputTextField.tag = FirstNameTextFieldTag;
     self.firstNameInputView.bottomSeparatorView.hidden = YES;
+    self.firstNameInputView.iconImage = [UIImage megaImageWithNamed:@"name"];
     
     self.lastNameInputView.inputTextField.returnKeyType = UIReturnKeyNext;
     self.lastNameInputView.topLabel.textColor = [self.lastNameInputView normalLabelColor];
@@ -94,18 +95,21 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
         self.emailInputView.inputTextField.text = self.emailString;
     }
     self.emailInputView.inputTextField.textContentType = UITextContentTypeUsername;
+    self.emailInputView.iconImage = [UIImage megaImageWithNamed:@"mail"];
     
     self.passwordView.passwordTextField.returnKeyType = UIReturnKeyNext;
     self.passwordView.topLabel.textColor = [self.passwordView normalLabelColor];
     self.passwordView.passwordTextField.delegate = self;
     self.passwordView.passwordTextField.tag = PasswordTextFieldTag;
     self.passwordView.bottomSeparatorView.hidden = YES;
+    self.passwordView.leftImage = [UIImage megaImageWithNamed:@"icon-key-only"];
     
     self.retypePasswordView.passwordTextField.delegate = self;
     self.retypePasswordView.topLabel.textColor = [self.retypePasswordView normalLabelColor];
     self.retypePasswordView.passwordTextField.tag = RetypeTextFieldTag;
     self.passwordView.passwordTextField.textContentType = UITextContentTypeNewPassword;
     self.retypePasswordView.passwordTextField.textContentType = UITextContentTypePassword;
+    self.retypePasswordView.leftImage = [UIImage megaImageWithNamed:@"icon-link-w-key"];
     
     [self setUpCheckBoxButton];
     
@@ -187,7 +191,7 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
     
     if (!self.termsCheckboxButton.isSelected) {
         if (valid) {
-            [SVProgressHUD showImage:[UIImage imageNamed:@"hudWarning"] status:LocalizedString(@"termsCheckboxUnselected", @"Error text shown when you don't have selected the checkbox to agree with the Terms of Service")];
+            [SVProgressHUD showImage:[UIImage megaImageWithNamed:@"hudWarning"] status:LocalizedString(@"termsCheckboxUnselected", @"Error text shown when you don't have selected the checkbox to agree with the Terms of Service")];
         }
         
         valid = NO;
@@ -195,7 +199,7 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
     
     if (!self.termsForLosingPasswordCheckboxButton.isSelected) {
         if (valid) {
-            [SVProgressHUD showImage:[UIImage imageNamed:@"hudWarning"]
+            [SVProgressHUD showImage:[UIImage megaImageWithNamed:@"hudWarning"]
                               status:LocalizedString(@"termsForLosingPasswordCheckboxUnselected", @"")];
         }
         

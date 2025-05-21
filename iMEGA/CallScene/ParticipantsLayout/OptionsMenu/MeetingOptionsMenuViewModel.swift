@@ -1,4 +1,5 @@
 import MEGAAppPresentation
+import MEGAAssets
 import MEGADomain
 import MEGAL10n
 
@@ -70,7 +71,7 @@ struct MeetingOptionsMenuViewModel: ViewModelType {
                           Strings.Localizable.Meetings.Action.rename :
                             Strings.Localizable.renameGroup,
                           detail: nil,
-                          image: UIImage(resource: .rename),
+                          image: MEGAAssets.UIImage.rename,
                           style: .default) {
             dispatch(.renameAction)
         }
@@ -81,7 +82,7 @@ struct MeetingOptionsMenuViewModel: ViewModelType {
                           Strings.Localizable.Meetings.Action.shareLink :
                             Strings.Localizable.getChatLink,
                           detail: nil,
-                          image: UIImage(resource: .share),
+                          image: MEGAAssets.UIImage.share,
                           style: .default) {
             dispatch(.shareLinkAction)
         }

@@ -1,4 +1,5 @@
 import FlexLayout
+import MEGAAssets
 import MEGADesignToken
 import UIKit
 
@@ -25,7 +26,7 @@ class ChatBottomNewMessageIndicatorView: UIView {
         backgroundView.layer.cornerRadius = 22
         backgroundView.clipsToBounds = true
         backgroundView.backgroundColor = TokenColors.Icon.primary
-        let jumpToLatestImage = UIImage(resource: .jumpToLatest).withTintColor(TokenColors.Icon.inverseAccent, renderingMode: .alwaysOriginal)
+        let jumpToLatestImage = MEGAAssets.UIImage.jumpToLatest.withTintColor(TokenColors.Icon.inverseAccent, renderingMode: .alwaysOriginal)
         backgroundView.setImage(jumpToLatestImage, for: .normal)
         
         return backgroundView

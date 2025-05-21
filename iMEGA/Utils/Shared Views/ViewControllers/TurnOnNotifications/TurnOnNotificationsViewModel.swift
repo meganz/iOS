@@ -1,5 +1,6 @@
 import Foundation
 import MEGAAppPresentation
+import MEGAAssets
 import MEGADomain
 import MEGAL10n
 import MEGAPreference
@@ -68,16 +69,16 @@ final class TurnOnNotificationsViewModel: ViewModelType {
             let stepThree = Strings.Localizable.Dialog.TurnOnNotifications.Label.stepThree
             let stepFour = Strings.Localizable.Dialog.TurnOnNotifications.Label.stepFour
             
-            let notificationsModel = TurnOnNotificationsModel(headerImage: UIImage.groupChat,
+            let notificationsModel = TurnOnNotificationsModel(headerImage: MEGAAssets.UIImage.groupChat,
                                                               title: title,
                                                               description: description,
-                                                              stepOneImage: UIImage.openSettings,
+                                                              stepOneImage: MEGAAssets.UIImage.openSettings,
                                                               stepOne: stepOne,
-                                                              stepTwoImage: UIImage.tapNotifications,
+                                                              stepTwoImage: MEGAAssets.UIImage.tapNotifications,
                                                               stepTwo: stepTwo,
-                                                              stepThreeImage: UIImage.tapMega,
+                                                              stepThreeImage: MEGAAssets.UIImage.tapMega,
                                                               stepThree: stepThree,
-                                                              stepFourImage: UIImage.allowNotifications,
+                                                              stepFourImage: MEGAAssets.UIImage.allowNotifications,
                                                               stepFour: stepFour,
                                                               openSettingsTitle: Strings.Localizable.Dialog.TurnOnNotifications.Button.primary,
                                                               dismissTitle: Strings.Localizable.dismiss)

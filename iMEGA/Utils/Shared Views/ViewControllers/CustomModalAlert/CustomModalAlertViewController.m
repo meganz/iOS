@@ -109,6 +109,7 @@
         [self updateDetailAttributedTextWithLink:self.detailAttributedTextWithLink];
     }
     
+    [self.closeButton setImage:[UIImage megaImageWithNamed:@"upgradeSecurityClose"] forState:UIControlStateNormal];
     self.closeButton.hidden = !self.isShowCloseButton;
     [self updateAppearance];
 }

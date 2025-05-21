@@ -1,3 +1,4 @@
+import MEGAAssets
 import MEGADesignToken
 import MEGAL10n
 import SwiftUI
@@ -39,12 +40,12 @@ struct WaitingRoomParticipantView: View {
                     Button {
                         viewModel.denyTapped()
                     } label: {
-                        Image(.waitingRoomDeny)
+                        MEGAAssets.Image.waitingRoomDeny
                     }
                     Button {
                         viewModel.admitTapped()
                     } label: {
-                        Image(.waitingRoomAdmit)
+                        MEGAAssets.Image.waitingRoomAdmit
                     }
                     .opacity(viewModel.admitButtonDisabled ? 0.5 : 1.0)
                     .disabled(viewModel.admitButtonDisabled)

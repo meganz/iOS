@@ -1,3 +1,4 @@
+import MEGAAssets
 import MEGADesignToken
 import MEGADomain
 
@@ -147,18 +148,18 @@ extension FavouritesExplorerListSource {
         
         if !isNodeInRubbishBin(node) {
             let shareLinkAction = contextualAction(
-                withImageName: UIImage.link,
+                withImageName: MEGAAssets.UIImage.link,
                 backgroundColor: .systemOrange
             ) { [weak self] in
                 self?.shareLink(node: nodeCell.node)
             }
             let RubbishBinActionEntity = contextualAction(
-                withImageName: UIImage.rubbishBin,
+                withImageName: MEGAAssets.UIImage.rubbishBin,
                 backgroundColor: .systemRed
             ) { [weak self] in
                 self?.moveToRubbishBin(node: nodeCell.node)
             }
-            let downloadAction = contextualAction(withImageName: UIImage.offline, backgroundColor: TokenColors.Support.success) { [weak self] in
+            let downloadAction = contextualAction(withImageName: MEGAAssets.UIImage.offline, backgroundColor: TokenColors.Support.success) { [weak self] in
                 self?.download(node: node)
             }
             
@@ -210,7 +211,7 @@ extension FavouritesExplorerListSource {
         let action = UIContextualAction(style: .normal, title: nil) { _, _, _ in completion() }
         
         action.image = image
-        action.image = action.image?.withTintColor(UIColor.whiteFFFFFF)
+        action.image = action.image?.withTintColor(MEGAAssets.UIColor.whiteFFFFFF)
         
         action.backgroundColor = backgroundColor
         return action

@@ -1,4 +1,5 @@
 @testable import MEGA
+import MEGAAssets
 import MEGAL10n
 import XCTest
 
@@ -14,7 +15,7 @@ final class DiskFullBlockingViewModelTests: XCTestCase {
                                                   description: description,
                                                   highlightedText: storagePath,
                                                   manageDiskSpaceTitle: Strings.Localizable.close,
-                                                  headerImage: UIImage.blockingDiskFull)
+                                                          headerImage: MEGAAssets.UIImage.blockingDiskFull)
         test(viewModel: sut, action: .onViewLoaded, expectedCommands: [.configView(expectedBlockingModel)])
     }
     

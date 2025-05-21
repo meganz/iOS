@@ -1,3 +1,4 @@
+import MEGAAssets
 import MessageKit
 
 protocol MessagesEditCollectionOverlayViewDelegate: AnyObject {
@@ -11,9 +12,9 @@ class MessageEditCollectionOverlayView: MessageReusableView {
     var isActive = false {
         didSet {
             if isActive {
-                leftIconView.image = UIImage(resource: .checkBoxSelected)
+                leftIconView.image = MEGAAssets.UIImage.checkBoxSelected
             } else {
-                leftIconView.image = UIImage(resource: .checkBoxUnselected)
+                leftIconView.image = MEGAAssets.UIImage.checkBoxUnselected
             }
         }
     }
@@ -22,6 +23,8 @@ class MessageEditCollectionOverlayView: MessageReusableView {
     override func awakeFromNib() {
         super.awakeFromNib()
 
+        leftIconView.image = MEGAAssets.UIImage.checkBoxUnselected
+        
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(MessageEditCollectionOverlayView.onTapOverlayButton))
         isUserInteractionEnabled = true
         addGestureRecognizer(tapRecognizer)

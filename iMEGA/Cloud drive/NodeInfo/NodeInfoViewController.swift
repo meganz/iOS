@@ -1,5 +1,6 @@
 import CloudDrive
 import MEGAAppSDKRepo
+import MEGAAssets
 import MEGADesignToken
 import MEGADomain
 import MEGAL10n
@@ -327,7 +328,7 @@ final class NodeInfoViewController: UITableViewController {
     
     private func prepareShareFolderPermissionsAlertController(fromIndexPat indexPath: IndexPath) {
         let activeShare = cachedActiveShares[indexPath.row - 1].access
-        let checkmarkImageView = UIImageView(image: UIImage.turquoiseCheckmark)
+        let checkmarkImageView = UIImageView(image: MEGAAssets.UIImage.turquoiseCheckmark)
 
         guard let cell = tableView.cellForRow(at: indexPath) as? ContactTableViewCell else {
             return
@@ -340,18 +341,18 @@ final class NodeInfoViewController: UITableViewController {
         let isBackupNode = BackupsUseCase(backupsRepository: BackupsRepository.newRepo, nodeRepository: NodeRepository.newRepo).isBackupNode(node.toNodeEntity())
         
         if !isBackupNode {
-            actions.append(ActionSheetAction(title: Strings.Localizable.fullAccess, detail: nil, accessoryView: activeShare == .accessFull ? checkmarkImageView : nil, image: UIImage.fullAccessPermissions, style: .default) { [weak self] in
+            actions.append(ActionSheetAction(title: Strings.Localizable.fullAccess, detail: nil, accessoryView: activeShare == .accessFull ? checkmarkImageView : nil, image: MEGAAssets.UIImage.fullAccessPermissions, style: .default) { [weak self] in
                 self?.shareNode(withLevel: .accessFull, forUser: user, atIndexPath: indexPath)
             })
-            actions.append(ActionSheetAction(title: Strings.Localizable.readAndWrite, detail: nil, accessoryView: activeShare == .accessReadWrite ? checkmarkImageView : nil, image: UIImage.readWritePermissions, style: .default) { [weak self] in
+            actions.append(ActionSheetAction(title: Strings.Localizable.readAndWrite, detail: nil, accessoryView: activeShare == .accessReadWrite ? checkmarkImageView : nil, image: MEGAAssets.UIImage.readWritePermissions, style: .default) { [weak self] in
                 self?.shareNode(withLevel: .accessReadWrite, forUser: user, atIndexPath: indexPath)
             })
-            actions.append(ActionSheetAction(title: Strings.Localizable.readOnly, detail: nil, accessoryView: activeShare == .accessRead ? checkmarkImageView : nil, image: UIImage.readPermissions, style: .default) { [weak self] in
+            actions.append(ActionSheetAction(title: Strings.Localizable.readOnly, detail: nil, accessoryView: activeShare == .accessRead ? checkmarkImageView : nil, image: MEGAAssets.UIImage.readPermissions, style: .default) { [weak self] in
                 self?.shareNode(withLevel: .accessRead, forUser: user, atIndexPath: indexPath)
             })
         }
         
-        actions.append(ActionSheetAction(title: Strings.Localizable.remove, detail: nil, image: UIImage.delete, style: .destructive) { [weak self] in
+        actions.append(ActionSheetAction(title: Strings.Localizable.remove, detail: nil, image: MEGAAssets.UIImage.delete, style: .destructive) { [weak self] in
             self?.shareNode(withLevel: .accessUnknown, forUser: user, atIndexPath: indexPath)
         })
         
@@ -661,7 +662,7 @@ final class NodeInfoViewController: UITableViewController {
         
         cell.backgroundColor = TokenColors.Background.page
         cell.permissionsImageView.isHidden = true
-        cell.avatarImageView.image = UIImage.inviteContactShare
+        cell.avatarImageView.image = MEGAAssets.UIImage.inviteContactShare
         cell.nameLabel.text = Strings.Localizable.addContact
         cell.shareLabel.isHidden = true
         
@@ -707,7 +708,7 @@ final class NodeInfoViewController: UITableViewController {
         cell.nameLabel.text = cachedPendingShares[indexPath.row].user
         cell.shareLabel.isHidden = true
         cell.permissionsImageView.isHidden = false
-        cell.permissionsImageView.image = UIImage.delete
+        cell.permissionsImageView.image = MEGAAssets.UIImage.delete
         cell.permissionsImageView.tintColor = TokenColors.Support.error
         return cell
     }

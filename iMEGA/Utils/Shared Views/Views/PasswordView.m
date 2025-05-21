@@ -42,6 +42,8 @@
     self.customView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     self.passwordTextField.delegate = self;
     
+    [self configureSecureTextEntry];
+    
     UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleSingleTap:)];
     [self addGestureRecognizer:singleTap];
     [self updateAppearance];
@@ -49,11 +51,11 @@
 
 - (void)configureToggleSecureButton {
     if (self.passwordTextField.secureTextEntry) {
-        UIImage *image = [[UIImage imageNamed:@"showHidePassword"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+        UIImage *image = [[UIImage megaImageWithNamed:@"showHidePassword"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
         [self.toggleSecureButton setImage:image forState: UIControlStateNormal];
         [self setToggleSecureButtonTintColorWithIsActive:NO];
     } else {
-        UIImage *image = [[UIImage imageNamed:@"showHidePassword_active"] imageWithRenderingMode: UIImageRenderingModeAlwaysTemplate];
+        UIImage *image = [[UIImage megaImageWithNamed:@"showHidePassword_active"] imageWithRenderingMode: UIImageRenderingModeAlwaysTemplate];
         [self.toggleSecureButton setImage:image forState: UIControlStateNormal];
         [self setToggleSecureButtonTintColorWithIsActive:YES];
     }

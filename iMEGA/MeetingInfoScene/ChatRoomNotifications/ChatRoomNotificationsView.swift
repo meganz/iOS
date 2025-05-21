@@ -1,3 +1,4 @@
+import MEGAAssets
 import MEGADesignToken
 import MEGAL10n
 import MEGASwiftUI
@@ -9,7 +10,7 @@ struct ChatRoomNotificationsView: View {
     var body: some View {
         VStack {
             ToggleView(
-                image: .enableChatNotifications,
+                image: MEGAAssets.Image.enableChatNotifications,
                 text: Strings.Localizable.Meetings.Info.meetingNotifications,
                 isOn: $viewModel.isChatNotificationsOn)
             if !viewModel.isChatNotificationsOn {

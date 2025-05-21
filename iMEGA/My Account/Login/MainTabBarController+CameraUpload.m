@@ -4,6 +4,7 @@
 #import "CameraUploadsTableViewController.h"
 #import "UIApplication+MNZCategory.h"
 #import "MEGANavigationController.h"
+#import "MEGA-Swift.h"
 
 @import MEGAL10nObjc;
 
@@ -17,7 +18,7 @@
     }
     
     CustomModalAlertViewController *migrationVC = [[CustomModalAlertViewController alloc] init];
-    migrationVC.image = [UIImage imageNamed:@"cameraUploadsV2Migration"];
+    migrationVC.image = [UIImage megaImageWithNamed:@"cameraUploadsV2Migration"];
     migrationVC.viewTitle = LocalizedString(@"New Camera Upload!", @"");
     migrationVC.detail = LocalizedString(@"Now you can choose to convert the HEIF/HEVC photos and videos to the most compatible JPEG/H.264 formats.", @"");
     migrationVC.firstButtonTitle = LocalizedString(@"Use Most Compatible Formats", @"");

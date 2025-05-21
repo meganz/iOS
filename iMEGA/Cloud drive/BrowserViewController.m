@@ -641,7 +641,7 @@
     cell.linkView.hidden = !node.isExported;
     if (node.label != MEGANodeLabelUnknown) {
         NSString *labelString = [[MEGANode stringForNodeLabel:node.label] stringByAppendingString:@"Small"];
-        cell.labelImageView.image = [UIImage imageNamed:labelString];
+        cell.labelImageView.image = [UIImage megaImageWithNamed:labelString];
     }
     
     cell.node = node;
@@ -838,19 +838,19 @@
     if ([MEGAReachabilityManager isReachable]) {
         if (self.searchController.isActive) {
             if (self.searchController.searchBar.text.length > 0) {
-                return [UIImage imageNamed:@"searchEmptyState"];
+                return [UIImage megaImageWithNamed:@"searchEmptyState"];
             } else {
                 return nil;
             }
         } else {
             if (self.incomingButton.selected && self.isParentBrowser) {
-                image = [UIImage imageNamed:@"incomingEmptyState"];
+                image = [UIImage megaImageWithNamed:@"incomingEmptyState"];
             } else {
-                image = [UIImage imageNamed:@"folderEmptyState"];
+                image = [UIImage megaImageWithNamed:@"folderEmptyState"];
             }
         }
     } else {
-        image = [UIImage imageNamed:@"noInternetEmptyState"];
+        image = [UIImage megaImageWithNamed:@"noInternetEmptyState"];
     }
     
     return image;

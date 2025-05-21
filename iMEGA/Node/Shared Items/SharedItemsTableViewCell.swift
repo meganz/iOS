@@ -1,4 +1,5 @@
 import MEGAAppPresentation
+import MEGAAssets
 import MEGADesignToken
 import MEGASwiftUI
 import SwiftUI
@@ -36,6 +37,7 @@ final class SharedItemsTableViewCell: UITableViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
+        configureImages()
         updateAppearance()
     }
     
@@ -49,6 +51,15 @@ final class SharedItemsTableViewCell: UITableViewCell {
     }
     
     // Pragma mark: - Private
+    
+    private func configureImages() {
+        contactVerifiedImageView.image = MEGAAssets.UIImage.image(named: "contactVerified")
+        favouriteImageView.image = MEGAAssets.UIImage.image(named: "favouriteSmall")
+        permissionsButton.setImage(MEGAAssets.UIImage.image(named: "readPermissions"), for: .normal)
+        infoButton.setImage(MEGAAssets.UIImage.image(named: "moreList"), for: .normal)
+        infoButton.setImage(MEGAAssets.UIImage.image(named: "moreList"), for: .selected)
+        infoButton.setImage(MEGAAssets.UIImage.image(named: "moreList"), for: .highlighted)
+    }
     
     private func updateAppearance() {
         nameLabel.tintColor = isTakenDownNode ? TokenColors.Text.error : TokenColors.Text.primary
@@ -67,7 +78,7 @@ final class SharedItemsTableViewCell: UITableViewCell {
 
     @objc func configureNode(name: String, searchText: String?, isTakenDown: Bool) {
         let textColor = isTakenDown ? TokenColors.Text.error : TokenColors.Text.primary
-        let takeDownImage: UIImage? = isTakenDown ? UIImage.isTakedown.withTintColorAsOriginal(TokenColors.Support.error) : nil
+        let takeDownImage: UIImage? = isTakenDown ? MEGAAssets.UIImage.isTakedown.withTintColorAsOriginal(TokenColors.Support.error) : nil
 
         nameLabel.attributedText = name.highlightedStringWithKeyword(
             searchText,

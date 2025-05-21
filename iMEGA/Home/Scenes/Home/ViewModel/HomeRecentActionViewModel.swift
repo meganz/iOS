@@ -1,5 +1,6 @@
 import Foundation
 import MEGAAppSDKRepo
+import MEGAAssets
 import MEGADomain
 import MEGAPermissions
 import MEGASwift
@@ -68,7 +69,7 @@ final class HomeRecentActionViewModel:
                 await MainActor.run {
                     SVProgressHUD.dismiss()
                     SVProgressHUD.show(
-                        UIImage.saveToPhotos,
+                        MEGAAssets.UIImage.saveToPhotos,
                         status: error.localizedDescription
                     )
                 }

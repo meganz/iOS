@@ -784,10 +784,10 @@
     UIImage *image = nil;
     if (self.searchController.isActive) {
         if (self.searchController.searchBar.text.length) {
-            image = [UIImage imageNamed:@"searchEmptyState"];
+            image = [UIImage megaImageWithNamed:@"searchEmptyState"];
         }
     } else {
-        image = [UIImage imageNamed:@"contactsEmptyState"];
+        image = [UIImage megaImageWithNamed:@"contactsEmptyState"];
     }
     
     return image;

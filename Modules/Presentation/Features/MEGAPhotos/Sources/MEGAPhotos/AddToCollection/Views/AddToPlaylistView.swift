@@ -48,7 +48,7 @@ struct AddToPlaylistView: View {
     
     private var empty: some View {
         ContentUnavailableView(label: {
-            MEGAAssetsImageProvider.image(named: .glassPlaylist)
+            MEGAAssets.Image.glassPlaylist
                 .resizable()
                 .frame(width: 128, height: 128)
         }, description: {

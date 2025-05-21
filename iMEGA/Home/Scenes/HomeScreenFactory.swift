@@ -3,6 +3,7 @@ import Foundation
 import MEGAAnalyticsiOS
 import MEGAAppPresentation
 import MEGAAppSDKRepo
+import MEGAAssets
 import MEGADesignToken
 import MEGADomain
 import MEGAL10n
@@ -111,7 +112,7 @@ final class HomeScreenFactory: NSObject {
             )
         )
         
-        navigationController.tabBarItem = UITabBarItem(title: nil, image: UIImage.home, selectedImage: nil)
+        navigationController.tabBarItem = UITabBarItem(title: nil, image: MEGAAssets.UIImage.home, selectedImage: nil)
         
         let viewModeStore = newViewModeStore
         homeViewController.viewModeStore = viewModeStore
@@ -260,7 +261,7 @@ final class HomeScreenFactory: NSObject {
                 ),
                 defaultEmptyViewAsset: {
                     .init(
-                        image: Image(.searchEmptyState),
+                        image: MEGAAssets.Image.searchEmptyState,
                         title: Strings.Localizable.Home.Search.Empty.noChipSelected,
                         titleTextColor: TokenColors.Icon.secondary.swiftUI
                     )

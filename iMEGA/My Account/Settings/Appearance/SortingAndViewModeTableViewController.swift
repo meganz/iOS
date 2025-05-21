@@ -1,4 +1,5 @@
 import MEGAAppPresentation
+import MEGAAssets
 import MEGADesignToken
 import MEGADomain
 import MEGAL10n
@@ -219,24 +220,24 @@ class SortingAndViewModeTableViewController: UITableViewController {
             } else {
                 var actions = [ActionSheetAction]()
                 let sortType = Helper.sortType(for: nil)
-                let checkmarkImageView = UIImageView(image: UIImage.turquoiseCheckmark)
+                let checkmarkImageView = UIImageView(image: MEGAAssets.UIImage.turquoiseCheckmark)
     
-                actions.append(ActionSheetAction(title: Strings.Localizable.nameAscending, detail: nil, accessoryView: sortType == .defaultAsc ? checkmarkImageView : nil, image: UIImage.ascending, style: .default) {
+                actions.append(ActionSheetAction(title: Strings.Localizable.nameAscending, detail: nil, accessoryView: sortType == .defaultAsc ? checkmarkImageView : nil, image: MEGAAssets.UIImage.ascending, style: .default) {
                     Helper.save(.defaultAsc, for: nil)
                 })
-                actions.append(ActionSheetAction(title: Strings.Localizable.nameDescending, detail: nil, accessoryView: sortType == .defaultDesc ? checkmarkImageView : nil, image: UIImage.descending, style: .default) {
+                actions.append(ActionSheetAction(title: Strings.Localizable.nameDescending, detail: nil, accessoryView: sortType == .defaultDesc ? checkmarkImageView : nil, image: MEGAAssets.UIImage.descending, style: .default) {
                     Helper.save(.defaultDesc, for: nil)
                 })
-                actions.append(ActionSheetAction(title: Strings.Localizable.largest, detail: nil, accessoryView: sortType == .sizeDesc ? checkmarkImageView : nil, image: UIImage.largest, style: .default) {
+                actions.append(ActionSheetAction(title: Strings.Localizable.largest, detail: nil, accessoryView: sortType == .sizeDesc ? checkmarkImageView : nil, image: MEGAAssets.UIImage.largest, style: .default) {
                     Helper.save(.sizeDesc, for: nil)
                 })
-                actions.append(ActionSheetAction(title: Strings.Localizable.smallest, detail: nil, accessoryView: sortType == .sizeAsc ? checkmarkImageView : nil, image: UIImage.smallest, style: .default) {
+                actions.append(ActionSheetAction(title: Strings.Localizable.smallest, detail: nil, accessoryView: sortType == .sizeAsc ? checkmarkImageView : nil, image: MEGAAssets.UIImage.smallest, style: .default) {
                     Helper.save(.sizeAsc, for: nil)
                 })
-                actions.append(ActionSheetAction(title: Strings.Localizable.newest, detail: nil, accessoryView: sortType == .modificationDesc ? checkmarkImageView : nil, image: UIImage.newest, style: .default) {
+                actions.append(ActionSheetAction(title: Strings.Localizable.newest, detail: nil, accessoryView: sortType == .modificationDesc ? checkmarkImageView : nil, image: MEGAAssets.UIImage.newest, style: .default) {
                     Helper.save(.modificationDesc, for: nil)
                 })
-                actions.append(ActionSheetAction(title: Strings.Localizable.oldest, detail: nil, accessoryView: sortType == .modificationAsc ? checkmarkImageView : nil, image: UIImage.oldest, style: .default) {
+                actions.append(ActionSheetAction(title: Strings.Localizable.oldest, detail: nil, accessoryView: sortType == .modificationAsc ? checkmarkImageView : nil, image: MEGAAssets.UIImage.oldest, style: .default) {
                     Helper.save(.modificationAsc, for: nil)
                 })
                 

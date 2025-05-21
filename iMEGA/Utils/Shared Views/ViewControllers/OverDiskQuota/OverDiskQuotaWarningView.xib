@@ -11,6 +11,7 @@
             <connections>
                 <outlet property="containerView" destination="VXP-TM-imT" id="5fU-tu-oYE"/>
                 <outlet property="titleLabel" destination="W08-Hj-Nir" id="VT7-sb-hw5"/>
+                <outlet property="warningImageView" destination="oJU-ZV-wDr" id="Cqt-QJ-cs8"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>

@@ -31,7 +31,7 @@ public struct EnableCameraUploadsBannerButtonView: View {
     private func content() -> some View {
         VStack(spacing: 0) {
             HStack(alignment: .center, spacing: Constants.contentHorizontalSpacing) {
-                MEGAAssetsImageProvider.image(named: .enableCameraUploadsBannerIcon)
+                MEGAAssets.Image.enableCameraUploadsBannerIcon
                     .renderingMode(.template)
                     .foregroundColor(TokenColors.Icon.secondary.swiftUI)
                 
@@ -47,8 +47,7 @@ public struct EnableCameraUploadsBannerButtonView: View {
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
                 
-                MEGAAssetsImageProvider
-                    .image(named: .cuBannerChevronRevamp)
+                MEGAAssets.Image.cuBannerChevronRevamp
                     .renderingMode(.template)
                     .foregroundColor(TokenColors.Icon.secondary.swiftUI)
                     .frame(width: Constants.chevronFrameWidth,

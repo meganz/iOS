@@ -1,4 +1,5 @@
 import MEGAAppPresentation
+import MEGAAssets
 import MEGADesignToken
 import MEGAL10n
 import MEGASwiftUI
@@ -55,18 +56,18 @@ struct ChatRoomsListView: View {
                     Button {
                         viewModel.addChatButtonTapped()
                     } label: {
-                        Image(uiImage: UIImage.navigationbarAdd)
+                        Image(uiImage: MEGAAssets.UIImage.navigationbarAdd)
                     }
                     .disabled(!viewModel.isConnectedToNetwork)
                 case .meetings:
                     addMenuButton {
-                        Image(uiImage: UIImage.navigationbarAdd)
+                        Image(uiImage: MEGAAssets.UIImage.navigationbarAdd)
                     }
                     .disabled(!viewModel.isConnectedToNetwork)
                 }
                 
                 contextMenuButton {
-                    Image(uiImage: UIImage.moreNavigationBar)
+                    Image(uiImage: MEGAAssets.UIImage.moreNavigationBar)
                 }
             }
         }

@@ -1,3 +1,4 @@
+import MEGAAssets
 import MEGADesignToken
 import MEGADomain
 
@@ -127,18 +128,18 @@ extension DocAndAudioListSource {
         
         if !isNodeInRubbishBin(node) {
             let shareLinkAction = contextualAction(
-                withImage: UIImage.link,
+                withImage: MEGAAssets.UIImage.link,
                 backgroundColor: .systemOrange
             ) { [weak self] in
                 self?.shareLink(node: nodeCell.node)
             }
             let RubbishBinActionEntity = contextualAction(
-                withImage: UIImage.rubbishBin,
+                withImage: MEGAAssets.UIImage.rubbishBin,
                 backgroundColor: .systemRed
             ) { [weak self] in
                 self?.moveToRubbishBin(node: nodeCell.node)
             }
-            let downloadAction = contextualAction(withImage: UIImage.offline, backgroundColor: TokenColors.Support.success) { [weak self] in
+            let downloadAction = contextualAction(withImage: MEGAAssets.UIImage.offline, backgroundColor: TokenColors.Support.success) { [weak self] in
                 self?.download(node: node)
             }
             
@@ -193,7 +194,7 @@ extension DocAndAudioListSource {
         }
         
         action.image = image
-        action.image = action.image?.withTintColor(UIColor.whiteFFFFFF)
+        action.image = action.image?.withTintColor(MEGAAssets.UIColor.whiteFFFFFF)
         
         action.backgroundColor = backgroundColor
         return action

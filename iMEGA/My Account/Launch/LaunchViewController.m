@@ -35,6 +35,7 @@
     self.circularShapeLayer.lineWidth = 2.0f;
     self.circularShapeLayer.strokeStart = 0.0f;
     self.circularShapeLayer.strokeEnd = 0.0f;
+    self.logoImageView.image = [UIImage megaImageWithNamed:@"splashScreenMEGALogo"];
     [self.logoImageView.layer addSublayer:self.circularShapeLayer];
     
     [self addRequestStatusProgressView];

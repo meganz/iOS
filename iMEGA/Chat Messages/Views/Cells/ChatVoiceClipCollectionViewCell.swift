@@ -1,4 +1,5 @@
 import CoreGraphics
+import MEGAAssets
 import MEGADesignToken
 import MessageKit
 
@@ -20,7 +21,7 @@ class ChatVoiceClipCollectionViewCell: AudioMessageCell {
     weak var messagesCollectionView: MessagesCollectionView?
 
     open var waveView: UIImageView = {
-        let waveView = UIImageView(image: UIImage(resource: .waveform0000))
+        let waveView = UIImageView(image: MEGAAssets.UIImage.waveform0000)
         waveView.translatesAutoresizingMaskIntoConstraints = false
         waveView.animationDuration = 1
         waveView.frame = CGRect(origin: CGPoint(x: 0, y: 0), size: Dimensions.waveViewSize)
@@ -87,8 +88,8 @@ class ChatVoiceClipCollectionViewCell: AudioMessageCell {
         messageContainerView.addSubview(waveView)
         messageContainerView.addSubview(loadingIndicator)
         super.setupSubviews()
-        playButton.setImage(UIImage(resource: .playVoiceClip).withRenderingMode(.alwaysTemplate), for: .normal)
-        playButton.setImage(UIImage(resource: .pauseVoiceClip).withRenderingMode(.alwaysTemplate), for: .selected)
+        playButton.setImage(MEGAAssets.UIImage.playVoiceClip.withRenderingMode(.alwaysTemplate), for: .normal)
+        playButton.setImage(MEGAAssets.UIImage.pauseVoiceClip.withRenderingMode(.alwaysTemplate), for: .selected)
         progressView.isHidden = true
         durationLabel.textAlignment = .left
         durationLabel.font = .preferredFont(forTextStyle: .subheadline)
@@ -115,7 +116,7 @@ class ChatVoiceClipCollectionViewCell: AudioMessageCell {
         var imageData: [UIImage] = []
         for i in 0...59 {
             let name = "waveform_000\(i)"
-            guard let data = UIImage(named: name)?.withRenderingMode(.alwaysTemplate).withTintColor(textColor) else {
+            guard let data = MEGAAssets.UIImage.image(named: name)?.withRenderingMode(.alwaysTemplate).withTintColor(textColor) else {
                 return
             }
             imageData.append(data)
@@ -163,8 +164,8 @@ class ChatVoiceClipCollectionViewCell: AudioMessageCell {
         }
         
         let buttonColor = isFromCurrentSender(message: message) ? TokenColors.Icon.inverse : TokenColors.Icon.primary
-        let playButtonImage = UIImage(resource: .playVoiceClipButton).withTintColor(buttonColor, renderingMode: .alwaysTemplate)
-        let pauseButtonImage = UIImage(resource: .pauseVoiceClip).withTintColor(buttonColor, renderingMode: .alwaysTemplate)
+        let playButtonImage = MEGAAssets.UIImage.playVoiceClipButton.withTintColor(buttonColor, renderingMode: .alwaysTemplate)
+        let pauseButtonImage = MEGAAssets.UIImage.pauseVoiceClip.withTintColor(buttonColor, renderingMode: .alwaysTemplate)
         playButton.setImage(playButtonImage, for: .normal)
         playButton.setImage(pauseButtonImage, for: .selected)
     }

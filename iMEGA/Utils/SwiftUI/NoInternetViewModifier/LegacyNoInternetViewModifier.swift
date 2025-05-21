@@ -1,4 +1,5 @@
 import MEGAAppSDKRepo
+import MEGAAssets
 import MEGADesignToken
 import MEGADomain
 import MEGAL10n
@@ -30,7 +31,7 @@ struct LegacyNoInternetViewModifier: ViewModifier {
         ZStack {
             TokenColors.Background.page.swiftUI
             VStack {
-                Image(.noInternetEmptyState)
+                MEGAAssets.Image.noInternetEmptyState
                 Text(Strings.Localizable.noInternetConnection)
                     .font(.headline.weight(.regular))
                     .foregroundStyle(TokenColors.Text.primary.swiftUI)

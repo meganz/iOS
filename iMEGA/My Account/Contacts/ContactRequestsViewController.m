@@ -308,9 +308,9 @@ typedef NS_ENUM(NSInteger, Segment) {
 
 - (UIImage *)imageForEmptyState {
     if ([MEGAReachabilityManager isReachable]) {
-        return [UIImage imageNamed:@"contactsEmptyState"];
+        return [UIImage megaImageWithNamed:@"contactsEmptyState"];
     } else {
-        return [UIImage imageNamed:@"noInternetEmptyState"];
+        return [UIImage megaImageWithNamed:@"noInternetEmptyState"];
     }
 }
 

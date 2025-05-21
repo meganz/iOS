@@ -1,4 +1,5 @@
 import MEGAAppPresentation
+import MEGAAssets
 import MEGADesignToken
 import MEGAUIKit
 import UIKit
@@ -90,7 +91,7 @@ final class MEGASearchBarView: UIView, NibOwnerLoadable {
         }
 
         func initialise(searchField: UITextField) {
-            searchField.setLeftImage(UIImage.searchBarIconSemantic, tintColor: TokenColors.Text.placeholder)
+            searchField.setLeftImage(MEGAAssets.UIImage.searchBarIconSemantic, tintColor: TokenColors.Text.placeholder)
             searchField.attributedPlaceholder = NSAttributedString(
                 string: HomeLocalisation.searchYourFiles.rawValue,
                 attributes: [NSAttributedString.Key.foregroundColor: TokenColors.Text.placeholder]
@@ -103,7 +104,7 @@ final class MEGASearchBarView: UIView, NibOwnerLoadable {
         initialise(cancelButton: cancelButton)
         initialise(searchField: searchField)
         contextButton.isHidden = true
-        contextButton.setImage(UIImage.moreNavigationBar, for: .normal)
+        contextButton.setImage(MEGAAssets.UIImage.moreNavigationBar, for: .normal)
     }
 
     @objc private func didTapCancelButton() {

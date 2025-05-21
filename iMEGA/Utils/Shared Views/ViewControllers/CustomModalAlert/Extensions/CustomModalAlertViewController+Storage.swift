@@ -2,14 +2,15 @@ import Foundation
 import MEGAAnalyticsiOS
 import MEGAAppPresentation
 import MEGAAppSDKRepo
+import MEGAAssets
 import MEGADomain
 import MEGAL10n
 
 extension CustomModalAlertViewController {
     func configureForStorageEvent(_ event: MEGAEvent) {
         let storageStateImage = event.number == StorageState.orange.rawValue 
-        ? UIImage.storageAlmostFull
-        : UIImage.warningStorageFull
+        ? MEGAAssets.UIImage.storageAlmostFull
+        : MEGAAssets.UIImage.warningStorageFull
         
         let title = event.number == StorageState.orange.rawValue ? Strings.Localizable.upgradeAccount : Strings.Localizable.Dialog.Storage.Odq.title
         
@@ -51,8 +52,8 @@ extension CustomModalAlertViewController {
         var storageStateImage: UIImage?
         if let accountDetails = MEGASdk.shared.mnz_accountDetails {
             storageStateImage = accountDetails.storageMax > accountDetails.storageUsed
-            ? UIImage.storageAlmostFull
-            : UIImage.warningStorageFull
+            ? MEGAAssets.UIImage.storageAlmostFull
+            : MEGAAssets.UIImage.warningStorageFull
         }
         
         let title = Strings.Localizable.upgradeAccount
@@ -71,7 +72,7 @@ extension CustomModalAlertViewController {
         case .albumLink:
             title = Strings.Localizable.AlbumLink.ImportFailed.StorageQuotaWillExceed.Alert.title
             detailText = Strings.Localizable.AlbumLink.ImportFailed.StorageQuotaWillExceed.Alert.detail
-            storageStateImage = UIImage.warningStorageFull
+            storageStateImage = MEGAAssets.UIImage.warningStorageFull
             analyticsEvents = .init(dialogDisplayedEventIdentifier: DIContainer.albumImportStorageOverQuotaDialogEvent,
                                     fistButtonPressedEventIdentifier: DIContainer.albumsStorageOverQuotaUpgradeAccountButtonEvent)
         }

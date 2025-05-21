@@ -97,7 +97,7 @@ struct UserPlaylistCellContent: View {
             .gesture(isSelectionEnabled ? tap : nil)
             
             if !isSelectionEnabled {
-                MEGAAssetsImageProvider.image(named: .moreList)
+                MEGAAssets.Image.moreList
                     .foregroundStyle(TokenColors.Icon.secondary.swiftUI)
                     .onTapGesture(perform: onTappedMoreOptions)
             }

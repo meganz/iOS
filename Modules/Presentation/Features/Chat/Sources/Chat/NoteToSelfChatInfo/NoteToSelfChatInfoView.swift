@@ -39,7 +39,7 @@ public struct NoteToSelfChatInfoView: View {
         VStack {
             Divider()
             HStack {
-                MEGAAssetsImageProvider.image(named: viewModel.isNoteToSelfChatAndEmpty ? .noteToSelfSmall : .noteToSelfBlue)
+                noteToSelfImage
                     .resizable()
                     .frame(width: 40, height: 40)
                     .clipShape(Circle())
@@ -56,9 +56,17 @@ public struct NoteToSelfChatInfoView: View {
         }
     }
     
+    private var noteToSelfImage: Image {
+        if viewModel.isNoteToSelfChatAndEmpty {
+            MEGAAssets.Image.noteToSelfSmall
+        } else {
+            MEGAAssets.Image.noteToSelfBlue
+        }
+    }
+    
     private var sharedFilesView: some View {
         DisclosureView(
-            image: MEGAAssetsImageProvider.image(named: .sharedFiles),
+            image: MEGAAssets.Image.sharedFiles,
             text: Strings.Localizable.sharedFiles) {
                 viewModel.filesRowTapped()
             }
@@ -66,7 +74,7 @@ public struct NoteToSelfChatInfoView: View {
     
     private var manageChatHistoryView: some View {
         DisclosureView(
-            image: MEGAAssetsImageProvider.image(named: .clearChatHistory),
+            image: MEGAAssets.Image.clearChatHistory,
             text: Strings.Localizable.manageChatHistory) {
                 viewModel.manageChatHistoryTapped()
             }
@@ -76,7 +84,7 @@ public struct NoteToSelfChatInfoView: View {
         VStack {
             Divider()
             HStack {
-                MEGAAssetsImageProvider.image(named: viewModel.isArchived ? .unArchiveChat : .archiveChat)
+                archiveChatImage
                 Text(viewModel.isArchived ? Strings.Localizable.unarchiveChat : Strings.Localizable.archiveChat)
                     .font(.body)
                 Spacer()
@@ -87,6 +95,14 @@ public struct NoteToSelfChatInfoView: View {
         .contentShape(Rectangle())
         .onTapGesture {
             viewModel.archiveChatTapped()
+        }
+    }
+    
+    private var archiveChatImage: Image {
+        if viewModel.isArchived {
+            MEGAAssets.Image.unArchiveChat
+        } else {
+            MEGAAssets.Image.archiveChat
         }
     }
 }

@@ -1,6 +1,10 @@
 #import "MEGAShareRequestDelegate.h"
-
 #import "SVProgressHUD.h"
+#ifdef MNZ_SHARE_EXTENSION
+#import "MEGAShare-Swift.h"
+#else
+#import "MEGA-Swift.h"
+#endif
 @import MEGAL10nObjc;
 
 @interface MEGAShareRequestDelegate ()
@@ -61,16 +65,16 @@
         if (self.isChangingPermissions) {
             if (request.access == MEGANodeAccessLevelAccessUnknown) {
                 if (self.totalRequests > 1) {
-                    [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:LocalizedString(@"sharesRemoved", @"Message shown when some shares have been removed")];
+                    [SVProgressHUD showImage:[UIImage megaImageWithNamed:@"hudForbidden"] status:LocalizedString(@"sharesRemoved", @"Message shown when some shares have been removed")];
                 } else {
-                    [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:LocalizedString(@"shareRemoved", @"Message shown when a share have been removed")];
+                    [SVProgressHUD showImage:[UIImage megaImageWithNamed:@"hudForbidden"] status:LocalizedString(@"shareRemoved", @"Message shown when a share have been removed")];
                 }
             } else {
                 [SVProgressHUD showSuccessWithStatus:LocalizedString(@"permissionsChanged", @"Message shown when you have changed the permissions of a shared folder")];
             }
         } else {
             NSString *statusMessage = [NSString stringWithFormat:LocalizedString(@"general.menuAction.shareFolders.successMessage", @"Success message for sharing single or multiple folders."), self.totalRequests];
-            [SVProgressHUD showImage:[UIImage imageNamed:@"hudSharedFolder"] status:statusMessage];
+            [SVProgressHUD showImage:[UIImage megaImageWithNamed:@"hudSharedFolder"] status:statusMessage];
         }
         
         if (self.completion) {

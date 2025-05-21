@@ -228,7 +228,7 @@
     UIColor *textColor = [UIColor succeedTextColor];
     [self.confirmButton setTitleColor:textColor forState:UIControlStateNormal];
     
-    [self.confirmButton setImage:[UIImage imageNamed: @"green_tick"] forState:UIControlStateNormal];
+    [self.confirmButton setImage:[UIImage megaImageWithNamed: @"green_tick"] forState:UIControlStateNormal];
     [self.confirmButton setTitle:LocalizedString(@"passwordAccepted", @"Used as a message in the 'Password reminder' dialog that is shown when the user enters his password, clicks confirm and his password is correct.") forState:UIControlStateNormal];
     
     self.logoutButton.hidden = !self.isLoggingOut;

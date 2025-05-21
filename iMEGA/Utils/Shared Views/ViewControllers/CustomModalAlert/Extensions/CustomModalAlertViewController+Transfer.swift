@@ -1,6 +1,7 @@
 import MEGAAnalyticsiOS
 import MEGAAppPresentation
 import MEGAAppSDKRepo
+import MEGAAssets
 import MEGADesignToken
 import MEGADomain
 import MEGAL10n
@@ -109,9 +110,9 @@ extension CustomModalAlertViewController {
     private func transferDialogImage(for displayMode: TransferQuotaErrorMode) -> UIImage {
         switch displayMode {
         case .limitedDownload:
-            return UIImage.transferLimitedQuota
+            return MEGAAssets.UIImage.transferLimitedQuota
         case .downloadExceeded, .streamingExceeded:
-            return UIImage.transferExceededQuota
+            return MEGAAssets.UIImage.transferExceededQuota
         }
     }
     

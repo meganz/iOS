@@ -3,6 +3,7 @@ import FirebaseCrashlytics
 import MEGAAnalyticsiOS
 import MEGAAppPresentation
 import MEGAAppSDKRepo
+import MEGAAssets
 import MEGADesignToken
 import MEGADomain
 import MEGAL10n
@@ -43,7 +44,7 @@ extension MEGAPhotoBrowserViewController {
     }
     
     @objc func fullScreenBackgroundColor() -> UIColor {
-        UIColor.pageBgColorDark
+        MEGAAssets.UIColor.pageBgColorDark
     }
     
     @objc func freeUpSpace(
@@ -173,7 +174,7 @@ extension MEGAPhotoBrowserViewController {
                             if error != .cancelled {
                                 await SVProgressHUD.dismiss()
                                 SVProgressHUD.show(
-                                    .saveToPhotos,
+                                    MEGAAssets.UIImage.saveToPhotos,
                                     status: error.localizedDescription
                                 )
                             }
@@ -189,7 +190,7 @@ extension MEGAPhotoBrowserViewController {
                             if (error as? SaveMediaToPhotosErrorEntity) != .cancelled {
                                 await SVProgressHUD.dismiss()
                                 SVProgressHUD.show(
-                                    .saveToPhotos,
+                                    MEGAAssets.UIImage.saveToPhotos,
                                     status: error.localizedDescription
                                 )
                             }
@@ -207,7 +208,7 @@ extension MEGAPhotoBrowserViewController {
                         } catch let error as SaveMediaToPhotosErrorEntity where error != .cancelled {
                             await SVProgressHUD.dismiss()
                             SVProgressHUD.show(
-                                .saveToPhotos,
+                                MEGAAssets.UIImage.saveToPhotos,
                                 status: error.localizedDescription
                             )
                         } catch {

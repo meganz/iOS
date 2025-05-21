@@ -1,3 +1,4 @@
+import MEGAAssets
 import MEGAL10n
 import Search
 
@@ -39,7 +40,7 @@ extension ResultProperty {
     static var playIcon: Self {
         .init(
             id: NodePropertyId.playIcon.rawValue,
-            content: .icon(image: UIImage.videoList, scalable: false),
+            content: .icon(image: MEGAAssets.UIImage.videoList, scalable: false),
             vibrancyEnabled: false,
             placement: { mode in 
                 if mode == .thumbnail(.vertical) {
@@ -54,7 +55,7 @@ extension ResultProperty {
     static var downloaded: Self {
         .init(
             propertyId: .downloaded,
-            icon: UIImage.downloaded,
+            icon: MEGAAssets.UIImage.downloaded,
             vibrancyEnabled: false,
             placement: { mode in
                 switch mode {
@@ -71,7 +72,7 @@ extension ResultProperty {
     
     static var versioned: Self = .init(
         propertyId: .versioned,
-        icon: UIImage.versionedThumbnail,
+        icon: MEGAAssets.UIImage.versionedThumbnail,
         vibrancyEnabled: false,
         placement: { mode in
             switch mode {
@@ -87,7 +88,7 @@ extension ResultProperty {
     
     static var favorite: Self = .init(
         propertyId: .favorite,
-        icon: UIImage.favouriteThumbnail,
+        icon: MEGAAssets.UIImage.favouriteThumbnail,
         vibrancyEnabled: false,
         accessibilityLabel: Strings.Localizable.favourite,
         placement: { mode in
@@ -105,7 +106,7 @@ extension ResultProperty {
     static var linked: ResultProperty {
         .init(
             propertyId: .linked,
-            icon: UIImage.linkedThumbnail,
+            icon: MEGAAssets.UIImage.linkedThumbnail,
             vibrancyEnabled: false,
             accessibilityLabel: Strings.Localizable.shared,
             placement: { mode in
@@ -122,9 +123,10 @@ extension ResultProperty {
     }
     
     static func label(path: String, accessibilityLabel: String) -> ResultProperty {
-        .init(
+        let image = MEGAAssets.UIImage.image(named: path) ?? MEGAAssets.UIImage.red
+        return .init(
             id: NodePropertyId.label.rawValue,
-            content: .icon(image: UIImage(named: path)!, scalable: false),
+            content: .icon(image: image, scalable: false),
             vibrancyEnabled: false,
             accessibilityLabel: accessibilityLabel,
             placement: { _ in
@@ -135,7 +137,7 @@ extension ResultProperty {
     
     static let takenDown: Self = .init(
         propertyId: .takenDown,
-        icon: UIImage.isTakedown,
+        icon: MEGAAssets.UIImage.isTakedown,
         vibrancyEnabled: true, // this will make title of result stand out
         placement: { _ in
                 .prominent

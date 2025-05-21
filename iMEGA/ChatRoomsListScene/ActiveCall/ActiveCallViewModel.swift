@@ -1,4 +1,5 @@
 import Combine
+import MEGAAssets
 import MEGADomain
 import MEGAL10n
 
@@ -31,8 +32,8 @@ final class ActiveCallViewModel: ObservableObject {
         self.activeCallUseCase = activeCallUseCase
         self.chatRoomUseCase = chatRoomUseCase
         self.isReconnecting = call.status == .connecting
-        self.muted = call.hasLocalAudio ? nil : UIImage(resource: .userMutedBanner)
-        self.video = call.hasLocalVideo ? UIImage(resource: .callSlotsBanner) : nil
+        self.muted = call.hasLocalAudio ? nil : MEGAAssets.UIImage.userMutedBanner
+        self.video = call.hasLocalVideo ? MEGAAssets.UIImage.callSlotsBanner : nil
         
         initSubscriptions()
     }
@@ -43,8 +44,8 @@ final class ActiveCallViewModel: ObservableObject {
             .sink { [weak self] call in
                 guard let self else { return }
                 self.call = call
-                self.muted = call.hasLocalAudio ? nil : UIImage(resource: .userMutedBanner)
-                self.video = call.hasLocalVideo ? UIImage(resource: .callSlotsBanner) : nil
+                self.muted = call.hasLocalAudio ? nil : MEGAAssets.UIImage.userMutedBanner
+                self.video = call.hasLocalVideo ? MEGAAssets.UIImage.callSlotsBanner : nil
             }
             .store(in: &subscriptions)
         

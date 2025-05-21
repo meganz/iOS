@@ -5,11 +5,13 @@ import Foundation
 import MEGAAnalyticsiOS
 import MEGAAppPresentation
 import MEGAAppSDKRepo
+import MEGAAssets
 import MEGADomain
 import MEGAL10n
 import MEGAPermissions
 import MEGARepo
 import MEGASwiftUI
+import SwiftUI
 
 enum ChatViewMode {
     case chats
@@ -779,7 +781,7 @@ final class ChatRoomsListViewModel: ObservableObject {
     private func startMeetingMenu() -> MenuButtonModel.Menu {
         .init(
             name: Strings.Localizable.Meetings.StartConversation.ContextMenu.startMeeting,
-            image: .startMeeting,
+            image: MEGAAssets.Image.startMeeting,
             action: startMeeting
         )
     }
@@ -787,7 +789,7 @@ final class ChatRoomsListViewModel: ObservableObject {
     private func joinMeetingMenu() -> MenuButtonModel.Menu {
         .init(
             name: Strings.Localizable.Meetings.StartConversation.ContextMenu.joinMeeting,
-            image: .joinAMeeting,
+            image: MEGAAssets.Image.joinAMeeting,
             action: joinMeeting
         )
     }
@@ -795,7 +797,7 @@ final class ChatRoomsListViewModel: ObservableObject {
     private func scheduleMeetingMenu() -> MenuButtonModel.Menu {
         .init(
             name: Strings.Localizable.Meetings.StartConversation.ContextMenu.scheduleMeeting,
-            image: .scheduleMeeting,
+            image: MEGAAssets.Image.scheduleMeeting,
             action: scheduleMeeting
         )
     }

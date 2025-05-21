@@ -1,4 +1,5 @@
 import LinkPresentation
+import MEGAAssets
 
 final class ChatLinkPresentationItemSource: NSObject, UIActivityItemSource, Sendable {
     private let title: String
@@ -15,7 +16,7 @@ final class ChatLinkPresentationItemSource: NSObject, UIActivityItemSource, Send
     
     func activityViewControllerLinkMetadata(_ activityViewController: UIActivityViewController) -> LPLinkMetadata? {
         let linkMetaData = LPLinkMetadata()
-        linkMetaData.iconProvider = NSItemProvider(object: UIImage(resource: .megaShareContactLink))
+        linkMetaData.iconProvider = NSItemProvider(object: MEGAAssets.UIImage.megaShareContactLink)
         linkMetaData.title = title
         return linkMetaData
     }

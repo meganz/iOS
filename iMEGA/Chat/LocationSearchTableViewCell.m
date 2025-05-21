@@ -3,6 +3,11 @@
 
 @implementation LocationSearchTableViewCell
 
+- (void)awakeFromNib {
+    [super awakeFromNib];
+    [self configureImages];
+}
+
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
     [super traitCollectionDidChange:previousTraitCollection];
     
@@ -15,6 +20,10 @@
 
 - (void)updateAppearance {
     self.detailLabel.textColor = [UIColor mnz_secondaryTextColor];
+}
+
+- (void)configureImages {
+    self.locationPinImageView.image = [UIImage megaImageWithNamed:@"locationPin"];
 }
 
 @end

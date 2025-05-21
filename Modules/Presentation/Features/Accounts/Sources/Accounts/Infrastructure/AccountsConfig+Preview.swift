@@ -6,22 +6,22 @@ extension AccountsConfig {
     @MainActor
     static let preview: AccountsConfig = AccountsConfig(
         onboardingViewAssets: OnboardingViewAssets(
-            storageImage: MEGAAssetsImageProvider.image(named: "storage"),
-            fileSharingImage: MEGAAssetsImageProvider.image(named: "fileSharing"),
-            backupImage: MEGAAssetsImageProvider.image(named: "backup"),
-            megaImage: MEGAAssetsImageProvider.image(named: "mega"),
-            onboardingHeaderImage: MEGAAssetsImageProvider.image(named: "onboardingHeader"),
-            primaryTextColor: MEGAAssetsColorProvider.swiftUIColor(named: "upgrade_account_primaryText"),
-            primaryGrayTextColor: MEGAAssetsColorProvider.swiftUIColor(named: "upgrade_account_primaryGrayText"),
-            secondaryTextColor: MEGAAssetsColorProvider.swiftUIColor(named: "upgrade_account_secondaryText"),
-            subMessageBackgroundColor: MEGAAssetsColorProvider.swiftUIColor(named: "upgrade_account_subMessageBackground"),
-            headerForegroundSelectedColor: MEGAAssetsColorProvider.swiftUIColor(named: "turquoise"),
-            headerForegroundUnSelectedColor: MEGAAssetsColorProvider.swiftUIColor(named: "unselectedTint"),
-            headerBackgroundColor: MEGAAssetsColorProvider.swiftUIColor(named: "headerBackground"),
-            headerStrokeColor: MEGAAssetsColorProvider.swiftUIColor(named: "borderTint"),
-            backgroundColor: MEGAAssetsColorProvider.swiftUIColor(named: "bodyBackground"),
-            currentPlanTagColor: MEGAAssetsColorProvider.swiftUIColor(named: "currentPlan"),
-            recommendedPlanTagColor: MEGAAssetsColorProvider.swiftUIColor(named: "recommended")
+            storageImage: MEGAAssets.UIImage.image(named: "storage"),
+            fileSharingImage: MEGAAssets.UIImage.image(named: "fileSharing"),
+            backupImage: MEGAAssets.UIImage.image(named: "backup"),
+            megaImage: MEGAAssets.UIImage.image(named: "mega"),
+            onboardingHeaderImage: MEGAAssets.UIImage.image(named: "onboardingHeader"),
+            primaryTextColor: MEGAAssets.Color.color(named: "upgrade_account_primaryText"),
+            primaryGrayTextColor: MEGAAssets.Color.color(named: "upgrade_account_primaryGrayText"),
+            secondaryTextColor: MEGAAssets.Color.color(named: "upgrade_account_secondaryText"),
+            subMessageBackgroundColor: MEGAAssets.Color.color(named: "upgrade_account_subMessageBackground"),
+            headerForegroundSelectedColor: MEGAAssets.Color.color(named: "turquoise"),
+            headerForegroundUnSelectedColor: MEGAAssets.Color.color(named: "unselectedTint"),
+            headerBackgroundColor: MEGAAssets.Color.color(named: "headerBackground"),
+            headerStrokeColor: MEGAAssets.Color.color(named: "borderTint"),
+            backgroundColor: MEGAAssets.Color.color(named: "bodyBackground"),
+            currentPlanTagColor: MEGAAssets.Color.color(named: "currentPlan"),
+            recommendedPlanTagColor: MEGAAssets.Color.color(named: "recommended")
         )
     )
 }

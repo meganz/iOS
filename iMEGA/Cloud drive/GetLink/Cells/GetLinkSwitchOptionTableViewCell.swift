@@ -1,3 +1,4 @@
+import MEGAAssets
 import MEGADesignToken
 import MEGAL10n
 import UIKit
@@ -15,6 +16,7 @@ class GetLinkSwitchOptionTableViewCell: UITableViewCell {
         nameLabel.textColor = TokenColors.Text.primary
         activityIndicatorView.color = TokenColors.Icon.secondary
         selectorSwitch.tintColor = TokenColors.Support.success
+        proImageView.image = MEGAAssets.UIImage.image(named: "proLabel")
     }
     
     func configureDecryptKeySeparatedCell(isOn: Bool, enabled: Bool) {

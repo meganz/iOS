@@ -1,6 +1,7 @@
 @testable import MEGA
 import MEGAAppPresentationMock
 import MEGAAppSDKRepoMock
+import MEGAAssets
 import MEGADesignToken
 import MEGADomain
 import MEGADomainMock
@@ -901,7 +902,7 @@ final class HomeSearchResultsProviderTests: XCTestCase {
 
     private func searchEmptyStateAsset() -> SearchConfig.EmptyViewAssets {
         return .init(
-            image: Image(.searchEmptyState),
+            image: MEGAAssets.Image.searchEmptyState,
             title: Strings.Localizable.Home.Search.Empty.noChipSelected,
             titleTextColor: TokenColors.Icon.secondary.swiftUI
         )

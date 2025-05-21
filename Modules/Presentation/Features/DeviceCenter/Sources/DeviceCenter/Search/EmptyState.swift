@@ -1,3 +1,4 @@
+import MEGAAssets
 import SwiftUI
 
 struct DeviceCenterEmptyStateView: View {
@@ -10,7 +11,7 @@ struct DeviceCenterEmptyStateView: View {
         VStack {
             if verticalSizeClass != .compact,
                let image {
-               Image(image)
+                MEGAAssets.Image.image(named: image)
                     .resizable()
                     .scaledToFit()
                     .frame(width: 120, height: 120)

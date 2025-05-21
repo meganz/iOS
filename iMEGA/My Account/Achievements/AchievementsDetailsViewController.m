@@ -22,6 +22,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [self configureImages];
     [self setupTitleImage];
     [self setupView];
     [self setupColors];
@@ -35,24 +36,28 @@
 
 #pragma mark - Private
 
+- (void)configureImages {
+    self.checkImageView.image = [UIImage megaImageWithNamed:@"achievementsCheck"];
+}
+
 - (void)setupTitleImage {
     UIImage *achievementImage;
     switch (self.achievementClass) {
         case MEGAAchievementWelcome: {
             self.navigationItem.title = LocalizedString(@"account.achievement.registration.title", @"");
-            achievementImage = [UIImage imageNamed:@"achievementsRegistration"];
+            achievementImage = [UIImage megaImageWithNamed:@"achievementsRegistration"];
             break;
         }
             
         case MEGAAchievementDesktopInstall: {
             self.navigationItem.title = LocalizedString(@"account.achievement.desktopApp.title", @"");
-            achievementImage = [UIImage imageNamed:@"achievementsInstallMega"];
+            achievementImage = [UIImage megaImageWithNamed:@"achievementsInstallMega"];
             break;
         }
             
         case MEGAAchievementMobileInstall: {
             self.navigationItem.title = LocalizedString(@"account.achievement.mobileApp.title", @"");
-            achievementImage = [UIImage imageNamed:@"achievementsInstallMobile"];
+            achievementImage = [UIImage megaImageWithNamed:@"achievementsInstallMobile"];
             break;
         }
 

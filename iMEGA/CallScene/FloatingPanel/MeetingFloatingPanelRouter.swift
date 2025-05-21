@@ -2,6 +2,7 @@ import Chat
 import ChatRepo
 import MEGAAppPresentation
 import MEGAAppSDKRepo
+import MEGAAssets
 import MEGADomain
 import MEGAL10n
 import MEGAPermissions
@@ -280,7 +281,7 @@ final class MeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
         let navigationController = MEGANavigationController(rootViewController: inviteContactsViewController)
         
         let backBarButton = UIBarButtonItem(
-            image: UIImage(resource: .backArrow),
+            image: MEGAAssets.UIImage.backArrow,
             style: .plain,
             target: self,
             action: #selector(self.dismissInviteContactsScreen)

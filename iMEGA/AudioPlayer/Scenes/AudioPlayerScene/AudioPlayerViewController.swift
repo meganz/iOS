@@ -1,5 +1,6 @@
 import Accounts
 import MEGAAppSDKRepo
+import MEGAAssets
 import MEGADesignToken
 import MEGADomain
 import MEGAL10n
@@ -67,6 +68,8 @@ class AudioPlayerViewController: UIViewController, AudioPlayerViewControllerNode
         navigationController?.delegate = self
         
         configureActivityIndicatorViewColor()
+        
+        configureImages()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -100,6 +103,23 @@ class AudioPlayerViewController: UIViewController, AudioPlayerViewControllerNode
     
     // MARK: - Private functions
     
+    private func configureImages() {
+        imageView.image = UIImage(named: "defaultArtwork")
+
+        goBackwardButton.setImage(MEGAAssets.UIImage.image(named: "goBackward15"), for: .normal)
+        previousButton.setImage(MEGAAssets.UIImage.image(named: "backTrack"), for: .normal)
+        playPauseButton.setImage(MEGAAssets.UIImage.image(named: "play"), for: .normal)
+        nextButton.setImage(MEGAAssets.UIImage.image(named: "fastForward"), for: .normal)
+        goForwardButton.setImage(MEGAAssets.UIImage.image(named: "goForward15"), for: .normal)
+
+        shuffleButton.setImage(MEGAAssets.UIImage.image(named: "shuffleAudio"), for: .normal)
+        repeatButton.setImage(MEGAAssets.UIImage.image(named: "repeatAudio"), for: .normal)
+        playbackSpeedButton.setImage(MEGAAssets.UIImage.image(named: "normal"), for: .normal)
+        gotoplaylistButton.setImage(MEGAAssets.UIImage.image(named: "viewPlaylist"), for: .normal)
+
+        moreButton.setImage(MEGAAssets.UIImage.image(named: "moreNavigationBar"), for: .normal)
+    }
+    
     private func isSelectingSupportedNodeActionType(_ selectedNodeActionTypeEntity: NodeActionTypeEntity) -> Bool {
         selectedNodeActionTypeEntity == .import
         || selectedNodeActionTypeEntity == .download
@@ -121,7 +141,7 @@ class AudioPlayerViewController: UIViewController, AudioPlayerViewControllerNode
         timeSliderView.setValue(percentage, animated: false)
         
         playPauseButton.tintColor = TokenColors.Icon.primary
-        playPauseButton.setImage(UIImage(resource: isPlaying ? .pause : .play).withTintColor(TokenColors.Icon.primary, renderingMode: .alwaysTemplate), for: .normal)
+        playPauseButton.setImage((isPlaying ? MEGAAssets.UIImage.pause : MEGAAssets.UIImage.play).withTintColor(TokenColors.Icon.primary, renderingMode: .alwaysTemplate), for: .normal)
         
         if timeSliderView.value == 1.0 {
             timeSliderView.cancelTracking(with: nil)
@@ -139,7 +159,7 @@ class AudioPlayerViewController: UIViewController, AudioPlayerViewControllerNode
         if let thumbnailImage = thumbnail {
             imageView.image = thumbnailImage
         } else {
-            imageView.image = UIImage(resource: .defaultArtwork)
+            imageView.image = MEGAAssets.UIImage.defaultArtwork
         }
         
         if let nodeSize = nodeSize {
@@ -150,9 +170,9 @@ class AudioPlayerViewController: UIViewController, AudioPlayerViewControllerNode
     private func updateRepeat(_ status: RepeatMode) {
         switch status {
         case .none, .loop:
-            repeatButton.setImage(UIImage(resource: .repeatAudio), for: .normal)
+            repeatButton.setImage(MEGAAssets.UIImage.repeatAudio, for: .normal)
         case .repeatOne:
-            repeatButton.setImage(UIImage(resource: .repeatOneAudio), for: .normal)
+            repeatButton.setImage(MEGAAssets.UIImage.repeatOneAudio, for: .normal)
         }
         updateRepeatButtonAppearance(status: status)
     }
@@ -161,13 +181,13 @@ class AudioPlayerViewController: UIViewController, AudioPlayerViewControllerNode
         var image: UIImage?
         switch mode {
         case .normal:
-            image = UIImage(resource: .normal)
+            image = MEGAAssets.UIImage.normal
         case .oneAndAHalf:
-            image = UIImage(resource: .oneAndAHalf)
+            image = MEGAAssets.UIImage.oneAndAHalf
         case .double:
-            image = UIImage(resource: .double)
+            image = MEGAAssets.UIImage.double
         case .half:
-            image = UIImage(resource: .half)
+            image = MEGAAssets.UIImage.half
         }
         
         image?.withTintColor(TokenColors.Icon.primary, renderingMode: .alwaysTemplate)
@@ -191,7 +211,7 @@ class AudioPlayerViewController: UIViewController, AudioPlayerViewControllerNode
     
     private func updateShuffleButtonAppearance(status: Bool) {
         shuffleButton.tintColor = status ? TokenColors.Components.interactive : TokenColors.Icon.primary
-        shuffleButton.setImage(UIImage(resource: .shuffleAudio), for: .normal)
+        shuffleButton.setImage(MEGAAssets.UIImage.shuffleAudio, for: .normal)
     }
     
     private func refreshStateOfLoadingView(_ enabled: Bool) {
@@ -219,7 +239,7 @@ class AudioPlayerViewController: UIViewController, AudioPlayerViewControllerNode
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: Strings.Localizable.close, style: .done, target: self, action: #selector(closeButtonAction))
         
         let rightBarButtonItem = UIBarButtonItem(
-            image: UIImage(resource: .moreNavigationBar),
+            image: MEGAAssets.UIImage.moreNavigationBar,
             style: .plain,
             target: self,
             action: #selector(moreButtonAction(_:))

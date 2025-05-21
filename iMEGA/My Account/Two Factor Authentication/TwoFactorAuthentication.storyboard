@@ -657,8 +657,11 @@ Back up your recovery key.</string>
                     </view>
                     <navigationItem key="navigationItem" title="Two-Factor Authentication" id="aew-nU-W97"/>
                     <connections>
+                        <outlet property="_2FASetupImageView" destination="doM-ND-eYT" id="hkh-vn-2Cd"/>
+                        <outlet property="achievementsCheckImageView" destination="CVq-DV-DyN" id="nhV-gG-LOI"/>
                         <outlet property="closeButton" destination="lSy-RT-s5a" id="0He-Bw-iJe"/>
                         <outlet property="exportRecoveryButton" destination="2UG-fV-LZb" id="7on-GW-6hq"/>
+                        <outlet property="fileTypeTextImageView" destination="zEZ-8l-5mn" id="4ez-Kf-i1X"/>
                         <outlet property="firstLabel" destination="XRi-Uo-bUM" id="IYH-rg-Zft"/>
                         <outlet property="recoveryKeyTextField" destination="Xf6-Kr-ff4" id="jok-NC-uP8"/>
                         <outlet property="recoveryKeyView" destination="Qmf-eY-doL" id="p8h-c6-5ze"/>

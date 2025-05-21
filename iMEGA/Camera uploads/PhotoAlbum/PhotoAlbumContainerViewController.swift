@@ -2,6 +2,7 @@ import Combine
 import ContentLibraries
 import MEGAAppPresentation
 import MEGAAppSDKRepo
+import MEGAAssets
 import MEGADesignToken
 import MEGADomain
 import MEGAL10n
@@ -56,19 +57,19 @@ final class PhotoAlbumContainerViewController: UIViewController {
     private var visualMediaSearchResultsViewModel: VisualMediaSearchResultsViewModel?
     
     var leftBarButton: UIBarButtonItem?
-    lazy var shareLinkBarButton = UIBarButtonItem(image: UIImage(resource: .link),
+    lazy var shareLinkBarButton = UIBarButtonItem(image: MEGAAssets.UIImage.link,
                                                   style: .plain,
                                                   target: self,
                                                   action: #selector(shareLinksButtonPressed))
-    lazy var removeLinksBarButton = UIBarButtonItem(image: UIImage(resource: .removeLink),
+    lazy var removeLinksBarButton = UIBarButtonItem(image: MEGAAssets.UIImage.removeLink,
                                                     style: .plain,
                                                     target: self,
                                                     action: #selector(removeLinksButtonPressed))
-    lazy var deleteBarButton = UIBarButtonItem(image: UIImage(resource: .rubbishBin),
+    lazy var deleteBarButton = UIBarButtonItem(image: MEGAAssets.UIImage.rubbishBin,
                                                style: .plain,
                                                target: self,
                                                action: #selector(deleteAlbumButtonPressed))
-    lazy var selectBarButton = UIBarButtonItem(image: UIImage(resource: .selectAllItems).withRenderingMode(.alwaysTemplate).withTintColor(TokenColors.Icon.primary),
+    lazy var selectBarButton = UIBarButtonItem(image: MEGAAssets.UIImage.selectAllItems.withRenderingMode(.alwaysTemplate).withTintColor(TokenColors.Icon.primary),
                                                style: .plain,
                                                target: self,
                                                action: #selector(toggleEditing))

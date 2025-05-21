@@ -78,9 +78,13 @@
     self.emailInputView.inputTextField.enabled = NO;
     self.emailInputView.inputTextField.keyboardType = UIKeyboardTypeEmailAddress;
     self.emailInputView.inputTextField.textContentType = UITextContentTypeUsername;
+    self.emailInputView.iconImage = [UIImage megaImageWithNamed:@"mail"];
     
     self.passwordView.passwordTextField.delegate = self;
     self.passwordView.passwordTextField.textContentType = UITextContentTypePassword;
+    self.passwordView.leftImage = [UIImage megaImageWithNamed:@"padlock"];
+    
+    self.logoImageView.image = [UIImage megaImageWithNamed:@"megaThePrivacyCompanyLogo"];
     
     [self registerForKeyboardNotifications];
 }

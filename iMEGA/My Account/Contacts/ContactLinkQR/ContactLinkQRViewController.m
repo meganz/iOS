@@ -42,6 +42,9 @@
     
     self.hintLabel.text = LocalizedString(@"lineCodeWithCamera", @"Label that encourage the user to line the QR to scan with the camera");
     
+    [self.moreButton setImage:[UIImage megaImageWithNamed:@"moreNavigationBar"] forState:UIControlStateNormal];
+    [self.backButton setImage:[UIImage megaImageWithNamed:@"backArrow"] forState:UIControlStateNormal];
+    
     if (self.scanCode) {
         self.segmentedControl.selectedSegmentIndex = QRSectionScanCode;
         [self valueChangedAtSegmentedControl:self.segmentedControl];
@@ -310,7 +313,7 @@
             }
         }
         if (isInOutgoingContactRequest) {
-            inviteOrDismissModal.image = [UIImage imageNamed:@"contactInviteSent"];
+            inviteOrDismissModal.image = [UIImage megaImageWithNamed:@"contactInviteSent"];
             inviteOrDismissModal.viewTitle = LocalizedString(@"inviteSent", @"Title shown when the user sends a contact invitation");
             NSString *detailText = LocalizedString(@"dialog.inviteContact.outgoingContactRequest", @"Detail message shown when a contact has been invited. The [X] placeholder will be replaced on runtime for the email of the invited user");
             detailText = [detailText stringByReplacingOccurrencesOfString:@"[X]" withString:email];

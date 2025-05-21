@@ -1,3 +1,4 @@
+import MEGAAssets
 import MEGADesignToken
 import MEGASwiftUI
 import SwiftUI
@@ -28,7 +29,7 @@ struct KeyRotationView: View {
                     Spacer()
                     if isPublicChat {
                         Image(systemName: discolureIndicator)
-                            .foregroundColor(UIColor.gray8E8E93.swiftUI.opacity(Constants.disclosureOpacity))
+                            .foregroundColor(MEGAAssets.UIColor.gray8E8E93.swiftUI.opacity(Constants.disclosureOpacity))
                             .flipsForRightToLeftLayoutDirection(layoutDirection == .rightToLeft)
                     } else {                        Text(rightDetail)
                             .font(.footnote)

@@ -14,7 +14,7 @@ struct VisualMediaSearchHistoryView: View {
                 ForEach(searchedItems) { item in
                     VStack(alignment: .leading) {
                         HStack(alignment: .center, spacing: 10) {
-                            MEGAAssetsImageProvider.image(named: .clockMediumThin)
+                            MEGAAssets.Image.clockMediumThin
                                 .renderingMode(.template)
                                 .resizable()
                                 .frame(width: 24, height: 24)

@@ -68,6 +68,7 @@
             </userDefinedRuntimeAttributes>
             <connections>
                 <outlet property="previewersLabel" destination="fW8-pD-6g0" id="AaJ-6R-2Ec"/>
+                <outlet property="showHidePasswordImageView" destination="MCM-YK-4Ea" id="SvI-0s-Poj"/>
             </connections>
             <point key="canvasLocation" x="48.550724637681164" y="-544.41964285714278"/>
         </view>

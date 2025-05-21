@@ -1,3 +1,4 @@
+import MEGAAssets
 import MEGADesignToken
 import MEGAL10n
 import UIKit
@@ -58,7 +59,7 @@ class PasscodeTimeDurationTableViewController: UITableViewController {
         let timerDuration = LTHPasscodeViewController.timerDuration()
 
         if Int(timerDuration) == passcodeDurationInfoArray[indexPath.row].duration.rawValue {
-            cell.accessoryView = UIImageView.init(image: UIImage.turquoiseCheckmark)
+            cell.accessoryView = UIImageView.init(image: MEGAAssets.UIImage.turquoiseCheckmark)
         } else {
             cell.accessoryView = nil
         }

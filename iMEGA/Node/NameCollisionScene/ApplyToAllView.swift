@@ -1,3 +1,4 @@
+import MEGAAssets
 import MEGADesignToken
 import MEGASwiftUI
 import SwiftUI
@@ -32,10 +33,10 @@ struct ApplyToAllView: View {
     }
     
     private var selectedImage: UIImage {
-        UIImage.checkBoxSelectedSemantic
+        MEGAAssets.UIImage.checkBoxSelectedSemantic
     }
     
     private var unselectedImage: UIImage {
-        UIImage.checkBoxUnselected.withTintColorAsOriginal(TokenColors.Border.strong)
+        MEGAAssets.UIImage.checkBoxUnselected.withTintColorAsOriginal(TokenColors.Border.strong)
     }
 }

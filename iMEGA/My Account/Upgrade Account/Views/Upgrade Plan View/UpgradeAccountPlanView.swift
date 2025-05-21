@@ -1,6 +1,7 @@
 import Accounts
 import MEGAAppPresentation
 import MEGAAppSDKRepo
+import MEGAAssets
 import MEGADesignToken
 import MEGADomain
 import MEGAL10n
@@ -70,7 +71,7 @@ struct UpgradeAccountPlanView: View {
                             }
                             .padding(.vertical)
                             .frame(maxWidth: .infinity)
-                            .background(Color.backgroundRegularPrimaryElevated)
+                            .background(MEGAAssets.Color.backgroundRegularPrimaryElevated)
                         }
                     }
                     

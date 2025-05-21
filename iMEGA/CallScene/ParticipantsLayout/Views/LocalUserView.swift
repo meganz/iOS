@@ -14,7 +14,8 @@ class LocalUserView: UIView {
     @IBOutlet private weak var mutedImageView: UIImageView!
     @IBOutlet private weak var expandImageView: UIImageView!
     @IBOutlet private weak var raisedHandView: UIView!
-
+    @IBOutlet private weak var raiseHandImageView: UIImageView!
+    
     private enum Constants {
         static let fixedMargin: CGFloat = 16.0
         static let collapsedViewWidthAndHeight: CGFloat = 46.0
@@ -38,6 +39,24 @@ class LocalUserView: UIView {
     private var isVideoEnabled: Bool = false
     private var isCollapsed: Bool = false
 
+    var expandImage: UIImage? {
+        didSet {
+            expandImageView.image = expandImage
+        }
+    }
+    
+    var mutedImage: UIImage? {
+        didSet {
+            mutedImageView.image = mutedImage
+        }
+    }
+    
+    var raiseHandImage: UIImage? {
+        didSet {
+            raiseHandImageView.image = raiseHandImage
+        }
+    }
+    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard let touch = touches.first else {
             return

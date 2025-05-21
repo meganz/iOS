@@ -73,6 +73,8 @@ static TransfersWidgetViewController* instance = nil;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [self configureImages];
+    
     self.title = LocalizedString(@"transfers", @"Transfers");
     self.queuedUploadTransfers = NSMutableArray.new;
     self.selectedTransfers = NSMutableArray.new;
@@ -488,6 +490,12 @@ static TransfersWidgetViewController* instance = nil;
 
 #pragma mark - Private
 
+- (void)configureImages {
+    self.cancelBarButtonItem.image = [UIImage megaImageWithNamed:@"cancelTransfers"];
+    self.pauseBarButtonItem.image = [UIImage megaImageWithNamed:@"pauseTransfers"];
+    self.resumeBarButtonItem.image = [UIImage megaImageWithNamed:@"resumeTransfers"];
+}
+
 - (void)reloadView {
     [self getAllTransfers];
     [self updateSelector];
@@ -830,13 +838,13 @@ static TransfersWidgetViewController* instance = nil;
     switch (self.transfersSelected) {
         case TransfersWidgetSelectedAll:
             if (self.areTransfersPaused) {
-                image = [UIImage imageNamed:@"pausedTransfersEmptyState"];
+                image = [UIImage megaImageWithNamed:@"pausedTransfersEmptyState"];
             } else {
-                image = [UIImage imageNamed:@"transfersEmptyState"];
+                image = [UIImage megaImageWithNamed:@"transfersEmptyState"];
             }
             break;
         case TransfersWidgetSelectedCompleted:
-            image = [UIImage imageNamed:@"transfersEmptyState"];
+            image = [UIImage megaImageWithNamed:@"transfersEmptyState"];
             break;
     }
     return image;
@@ -866,7 +874,7 @@ static TransfersWidgetViewController* instance = nil;
         case MEGARequestTypeCancelTransfers: {
             [self reloadView];
             if([self hasActiveTransfers]) {
-                [SVProgressHUD showImage:[UIImage imageNamed:@"hudMinus"] status:LocalizedString(@"transfersCancelled", @"")];
+                [SVProgressHUD showImage:[UIImage megaImageWithNamed:@"hudMinus"] status:LocalizedString(@"transfersCancelled", @"")];
             }
             break;
         }
@@ -934,7 +942,7 @@ static TransfersWidgetViewController* instance = nil;
     }
     
     if (error.type == MEGAErrorTypeApiEIncomplete && [self shouldShowTransferCancelledMessageFor:transfer]) {
-        [SVProgressHUD showImage:[UIImage imageNamed:@"hudMinus"] status:LocalizedString(@"transferCancelled", @"")];
+        [SVProgressHUD showImage:[UIImage megaImageWithNamed:@"hudMinus"] status:LocalizedString(@"transferCancelled", @"")];
     }
     
     [self deleteUploadingTransfer:transfer];
@@ -955,7 +963,7 @@ static TransfersWidgetViewController* instance = nil;
 - (void)cancelQueuedUploadTransfer:(NSString *)localIdentifier {
     NSIndexPath *indexPath = [self indexPathForUploadTransferQueuedWithLocalIdentifier:localIdentifier];
     if (localIdentifier && indexPath) {
-        [SVProgressHUD showImage:[UIImage imageNamed:@"hudMinus"] status:LocalizedString(@"transferCancelled", @"")];
+        [SVProgressHUD showImage:[UIImage megaImageWithNamed:@"hudMinus"] status:LocalizedString(@"transferCancelled", @"")];
         
         [self.queuedUploadTransfers removeObjectAtIndex:indexPath.row];
         [[MEGAStore shareInstance] deleteUploadTransferWithLocalIdentifier:localIdentifier];

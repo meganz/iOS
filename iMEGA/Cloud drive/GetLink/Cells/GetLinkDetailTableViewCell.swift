@@ -1,3 +1,4 @@
+import MEGAAssets
 import MEGADesignToken
 import MEGAFoundation
 import MEGAL10n
@@ -16,6 +17,7 @@ class GetLinkDetailTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         activityIndicatorView.color = TokenColors.Icon.secondary
+        proImageView.image = MEGAAssets.UIImage.image(named: "proLabel")
     }
 
     lazy private var detailLabelSelectedTextColor: UIColor = {

@@ -101,6 +101,8 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
     [super viewDidLoad];
     [self onViewDidLoad];
     
+    [self configureImages];
+    
     self.imageViewsZoomCache = [[NSCache<NSNumber *, NSNumber *> alloc] init];
 
     self.modalPresentationCapturesStatusBarAppearance = YES;
@@ -123,9 +125,9 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
 
     switch (self.displayMode) {
         case DisplayModeFileLink:
-            self.leftToolbarItem.image = [UIImage imageNamed:@"import"];
-            self.rightToolbarItem.image = [UIImage imageNamed:@"share"];
-            self.centerToolbarItem.image = [UIImage imageNamed:@"saveToPhotos"];
+            self.leftToolbarItem.image = [UIImage megaImageWithNamed:@"import"];
+            self.rightToolbarItem.image = [UIImage megaImageWithNamed:@"share"];
+            self.centerToolbarItem.image = [UIImage megaImageWithNamed:@"saveToPhotos"];
             break;
             
         case DisplayModeCloudDrive:
@@ -363,6 +365,15 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
 
 #pragma mark - Private
 
+- (void)configureImages {
+    self.customActionsButton.image = [UIImage megaImageWithNamed:@"moreNavigationBar"];
+    self.leftToolbarItem.image = [UIImage megaImageWithNamed:@"thumbnailsThin"];
+    self.rightToolbarItem.image = [UIImage megaImageWithNamed:@"export"];
+    self.saveToolbarItem.image = [UIImage megaImageWithNamed:@"saveToPhotos"];
+    self.importToolbarItem.image = [UIImage megaImageWithNamed:@"import"];
+    self.forwardToolbarItem.image = [UIImage megaImageWithNamed:@"forwardToolbar"];
+}
+
 - (void)shareFileLink {
     NSString *link = self.encryptedLink ? self.encryptedLink : self.publicLink;
     NSArray *excludedActivityTypes = @[UIActivityTypePrint, UIActivityTypeAssignToContact, UIActivityTypeSaveToCameraRoll, UIActivityTypeAddToReadingList, UIActivityTypeAirDrop];
@@ -590,9 +601,9 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
     if ([FileExtensionGroupOCWrapper verifyIsVideo:node.name]) {
         UIButton *playButton = [[UIButton alloc] initWithFrame:CGRectMake((zoomableView.frame.size.width - self.playButtonSize) / 2, (zoomableView.frame.size.height - self.playButtonSize) / 2, self.playButtonSize, self.playButtonSize)];
         if (node.mnz_isPlayable) {
-            [playButton setImage:[UIImage imageNamed:@"blackPlayButton"] forState:UIControlStateNormal];
+            [playButton setImage:[UIImage megaImageWithNamed:@"blackPlayButton"] forState:UIControlStateNormal];
         } else {
-            [playButton setImage:[UIImage imageNamed:@"blackCrossedPlayButton"] forState:UIControlStateNormal];
+            [playButton setImage:[UIImage megaImageWithNamed:@"blackCrossedPlayButton"] forState:UIControlStateNormal];
         }
         playButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentFill;
         playButton.contentVerticalAlignment = UIControlContentVerticalAlignmentFill;
@@ -1267,7 +1278,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
     
     if ([FileExtensionGroupOCWrapper verifyIsVideo:node.name]) {
         UIImageView *imageview = [UIImageView.alloc initWithFrame:CGRectMake(0, 0, self.playButtonSize, self.playButtonSize)];
-        imageview.image = [UIImage imageNamed: node.mnz_isPlayable ? @"blackPlayButton" : @"blackCrossedPlayButton"];
+        imageview.image = [UIImage megaImageWithNamed: node.mnz_isPlayable ? @"blackPlayButton" : @"blackCrossedPlayButton"];
         
         return imageview;
     }

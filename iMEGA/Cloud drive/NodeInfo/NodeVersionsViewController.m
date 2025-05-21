@@ -36,7 +36,8 @@ MEGADelegate
     self.title = LocalizedString(@"versions", @"Title of section to display number of all historical versions of files.");
     self.editBarButtonItem.title = LocalizedString(@"select", @"Caption of a button to select files");
     self.closeBarButtonItem.title = LocalizedString(@"close", @"A button label.");
-
+    [self.selectAllBarButtonItem setImage:[UIImage megaImageWithNamed:@"selectAllItems"]];
+    
     [self configureToolbarItems];
     self.tableView.tableFooterView = [UIView.alloc initWithFrame:CGRectZero];
     [self.tableView registerNib:[UINib nibWithNibName:@"GenericHeaderFooterView" bundle:nil] forHeaderFooterViewReuseIdentifier:@"GenericHeaderFooterViewID"];
@@ -203,7 +204,7 @@ MEGADelegate
         UIContextualAction *removeAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:nil handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
             [self removeAction:nil];
         }];
-        removeAction.image = [[UIImage imageNamed:@"delete"] imageWithTintColor:[self swipeIconTintColor]];
+        removeAction.image = [[UIImage megaImageWithNamed:@"delete"] imageWithTintColor:[self swipeIconTintColor]];
         removeAction.backgroundColor = [self deleteSwipeBackgroundColor];
         [rightActions addObject:removeAction];
     }
@@ -213,7 +214,7 @@ MEGADelegate
             [self revertAction:nil];
         }];
         
-        revertAction.image = [[UIImage imageNamed:@"history"] imageWithTintColor:[self swipeIconTintColor]];
+        revertAction.image = [[UIImage megaImageWithNamed:@"history"] imageWithTintColor:[self swipeIconTintColor]];
         revertAction.backgroundColor = [self revertSwipeBackgroundColor];
         [rightActions addObject:revertAction];
     }
@@ -225,7 +226,7 @@ MEGADelegate
         }
         [self setEditing:NO animated:YES];
     }];
-    downloadAction.image = [[UIImage imageNamed:@"offline"] imageWithTintColor:[self swipeIconTintColor]];
+    downloadAction.image = [[UIImage megaImageWithNamed:@"offline"] imageWithTintColor:[self swipeIconTintColor]];
     downloadAction.backgroundColor = [self offlineSwipeBackgroundColor];
     [rightActions addObject:downloadAction];
     
@@ -450,7 +451,7 @@ MEGADelegate
                 [self presentViewController:alertController animated:YES completion:nil];
             }
         } else if (error.type == MEGAErrorTypeApiEIncomplete) {
-            [SVProgressHUD showImage:[UIImage imageNamed:@"hudMinus"] status:LocalizedString(@"transferCancelled", @"")];
+            [SVProgressHUD showImage:[UIImage megaImageWithNamed:@"hudMinus"] status:LocalizedString(@"transferCancelled", @"")];
             NSString *base64Handle = [MEGASdk base64HandleForHandle:transfer.nodeHandle];
             if ([self isNodeWithHandlePreviousVersion:base64Handle]) {
                 [self reloadUI];

@@ -143,7 +143,7 @@ public final class VideoPlaylistsCollectionViewCoordinator<ViewModel: VideoPlayl
             videoPlaylistThumbnailLoader: VideoPlaylistThumbnailLoader(
                 thumbnailLoader: representer.viewModel.thumbnailLoader,
                 fallbackImageContainer: ImageContainer(
-                    image: MEGAAssetsImageProvider.image(named: .videoPlaylistThumbnailFallback),
+                    image: MEGAAssets.Image.videoPlaylistThumbnailFallback,
                     type: .thumbnail
                 )
             ),

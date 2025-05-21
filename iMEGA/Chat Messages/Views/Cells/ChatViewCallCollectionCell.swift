@@ -1,3 +1,4 @@
+import MEGAAssets
 import MEGAL10n
 import MessageKit
 
@@ -75,7 +76,7 @@ class ChatViewCallCollectionCell: MessageContentCell {
                                              duration: NSNumber(value: chatMessage.message.duration),
                                              isGroup: chatMessage.chatRoom.isGroup)
         } else {
-            icon = UIImage(resource: .callWithXIncoming) 
+            icon = MEGAAssets.UIImage.callWithXIncoming
             reason = Strings.Localizable.callStarted
         }
         

@@ -1,4 +1,5 @@
 import FlexLayout
+import MEGAAssets
 import MEGADesignToken
 import PinLayout
 import UIKit
@@ -20,7 +21,7 @@ class ReactionContainerView: UIView {
     weak var delegate: (any ReactionEmojiViewDelegate)?
     open var addMoreView: UIButton = {
         let addMoreView = UIButton()
-        addMoreView.setImage(UIImage(resource: .addReactionSmall), for: .normal)
+        addMoreView.setImage(MEGAAssets.UIImage.addReactionSmall, for: .normal)
         addMoreView.imageView?.contentMode = .scaleAspectFit
         addMoreView.layer.borderColor = TokenColors.Border.strong.cgColor
         addMoreView.layer.borderWidth = 1

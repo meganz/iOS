@@ -1,3 +1,4 @@
+import MEGAAssets
 import MEGADesignToken
 import MEGAL10n
 import UIKit
@@ -23,7 +24,7 @@ class NodeInfoActionTableViewCell: UITableViewCell {
     }
     
     func configureLinkCell(forNode node: MEGANode) {
-        iconImageView.image = UIImage.link
+        iconImageView.image = MEGAAssets.UIImage.link
         if node.isExported() {
             titleLabel.text = Strings.Localizable.General.MenuAction.ManageLink.title(1)
         } else {
@@ -34,7 +35,7 @@ class NodeInfoActionTableViewCell: UITableViewCell {
     }
     
     func configureVersionsCell(forNode node: MEGANode) {
-        iconImageView.image = UIImage.versions
+        iconImageView.image = MEGAAssets.UIImage.versions
         titleLabel.text = Strings.Localizable.versions
         subtitleLabel.text = String(node.mnz_numberOfVersions() - 1)
         subtitleLabel.isHidden = false

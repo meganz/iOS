@@ -3,6 +3,7 @@ import ChatRepo
 import Combine
 import MEGAAppPresentation
 import MEGAAppSDKRepo
+import MEGAAssets
 import MEGADesignToken
 import MEGADomain
 import MEGAUIKit
@@ -73,6 +74,11 @@ extension MainTabBarController {
         else { return nil }
         (vc as? (any MyAvatarPresenterProtocol))?.configureMyAvatarManager()
         sharedItemsNavigationController.navigationDelegate = self
+        sharedItemsNavigationController.tabBarItem = UITabBarItem(
+            title: nil,
+            image: MEGAAssets.UIImage.sharedItemsIcon,
+            selectedImage: nil
+        )
         return sharedItemsNavigationController
     }
 

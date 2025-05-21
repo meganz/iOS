@@ -1,3 +1,4 @@
+import MEGAAssets
 import MEGADesignToken
 import MEGASwiftUI
 import SwiftUI
@@ -6,18 +7,18 @@ struct WaitingRoomControlsView: View {
     @Binding var isVideoEnabled: Bool
     @Binding var isMicrophoneMuted: Bool
     @Binding var isSpeakerEnabled: Bool
-    @Binding var speakerOnIcon: ImageResource
+    @Binding var speakerOnIcon: Image
     @Binding var isBluetoothAudioRouteAvailable: Bool
     
     var body: some View {
         HStack(spacing: 32) {
-            WaitingRoomControl(iconOff: .callControlCameraDisabled,
-                               iconOn: .callControlCameraEnabled,
+            WaitingRoomControl(iconOff: MEGAAssets.Image.callControlCameraDisabled,
+                               iconOn: MEGAAssets.Image.callControlCameraEnabled,
                                enabled: $isVideoEnabled)
-            WaitingRoomControl(iconOff: .callControlMicDisabled,
-                               iconOn: .callControlMicEnabled,
+            WaitingRoomControl(iconOff: MEGAAssets.Image.callControlMicDisabled,
+                               iconOn: MEGAAssets.Image.callControlMicEnabled,
                                enabled: $isMicrophoneMuted)
-            WaitingRoomControl(iconOff: .callControlSpeakerDisabled,
+            WaitingRoomControl(iconOff: MEGAAssets.Image.callControlSpeakerDisabled,
                                iconOn: speakerOnIcon,
                                enabled: $isSpeakerEnabled)
             .overlay(
@@ -30,21 +31,29 @@ struct WaitingRoomControlsView: View {
 }
 
 struct WaitingRoomControl: View {
-    let iconOff: ImageResource
-    let iconOn: ImageResource
+    let iconOff: Image
+    let iconOn: Image
     @Binding var enabled: Bool
     
     var body: some View {
         Button {
             enabled.toggle()
         } label: {
-            Image(enabled ? iconOn : iconOff)
-                .resizable()
+            iconView
                 .frame(width: 24, height: 24)
         }
         .frame(maxWidth: 56, maxHeight: 56, alignment: .center)
         .background(enabled ? TokenColors.Button.secondary.swiftUI : TokenColors.Button.primary.swiftUI)
         .clipShape(Circle())
+    }
+    
+    @ViewBuilder
+    private var iconView: some View {
+        if enabled {
+            iconOn.resizable()
+        } else {
+            iconOff.resizable()
+        }
     }
 }
 
@@ -53,7 +62,7 @@ struct WaitingRoomControl: View {
     WaitingRoomControlsView(isVideoEnabled: .constant(false),
                             isMicrophoneMuted: .constant(true),
                             isSpeakerEnabled: .constant(true),
-                            speakerOnIcon: .constant(.callControlSpeakerEnabled),
+                            speakerOnIcon: .constant(MEGAAssets.Image.callControlSpeakerEnabled),
                             isBluetoothAudioRouteAvailable: .constant(false))
-    .background(Color(.black000000))
+    .background(MEGAAssets.Color.black000000)
 }

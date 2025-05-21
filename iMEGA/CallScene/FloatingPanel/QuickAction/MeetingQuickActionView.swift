@@ -1,4 +1,5 @@
 import MediaPlayer
+import MEGAAssets
 import MEGADomain
 import UIKit
 
@@ -64,17 +65,17 @@ final class MeetingSpeakerQuickActionView: MeetingQuickActionView {
     func selectedAudioPortUpdated(_ selectedAudioPort: AudioPort, isBluetoothRouteAvailable: Bool) {
         switch selectedAudioPort {
         case .builtInReceiver:
-            iconImageView.image = UIImage(resource: .callControlSpeakerDisabled)
+            iconImageView.image = MEGAAssets.UIImage.callControlSpeakerDisabled
             isSelected = false
         case .builtInSpeaker, .headphones:
-            iconImageView.image = UIImage(resource: .callControlSpeakerEnabled)
+            iconImageView.image = MEGAAssets.UIImage.callControlSpeakerEnabled
             isSelected = true
         default:
             if isBluetoothRouteAvailable {
-                iconImageView.image = UIImage(resource: .audioSourceMeetingAction)
+                iconImageView.image = MEGAAssets.UIImage.audioSourceMeetingAction
                 isSelected = true
             } else {
-                iconImageView.image = UIImage(resource: .callControlSpeakerDisabled)
+                iconImageView.image = MEGAAssets.UIImage.callControlSpeakerDisabled
                 isSelected = false
             }
         }

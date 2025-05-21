@@ -1,6 +1,7 @@
 import Foundation
 import MEGAAnalyticsiOS
 import MEGAAppPresentation
+import MEGAAssets
 import MEGADomain
 import MEGAL10n
 
@@ -211,7 +212,7 @@ final class GetCollectionsLinkViewModel: GetLinkViewModelType {
         guard let albumLinks else { return }
         let joinedLinks = albumLinks.values.joined(separator: " ")
         invokeCommand?(.addToPasteBoard(joinedLinks))
-        invokeCommand?(.showHud(.custom(UIImage.copy,
+        invokeCommand?(.showHud(.custom(MEGAAssets.UIImage.copy,
                                         Strings.Localizable.SharedItems.GetLink.linkCopied(albumLinks.count))))
     }
     
@@ -222,7 +223,7 @@ final class GetCollectionsLinkViewModel: GetLinkViewModelType {
             return
         }
         invokeCommand?(.addToPasteBoard(link))
-        invokeCommand?(.showHud(.custom(UIImage.copy,
+        invokeCommand?(.showHud(.custom(MEGAAssets.UIImage.copy,
                                         Strings.Localizable.SharedItems.GetLink.linkCopied(1))))
     }
 }

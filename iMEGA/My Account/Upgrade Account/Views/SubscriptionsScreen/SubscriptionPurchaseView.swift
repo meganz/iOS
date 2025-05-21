@@ -1,3 +1,4 @@
+import MEGAAssets
 import MEGADesignToken
 import MEGAUIComponent
 import SwiftUI
@@ -72,7 +73,7 @@ struct SubscriptionPurchaseView: View {
             let leadingInset = proxy.safeAreaInsets.leading
 
             HStack(spacing: 0) {
-                Image(.subscriptionImageHeaderLandscape)
+                MEGAAssets.Image.subscriptionImageHeaderLandscape
                     .resizable()
                     .aspectRatio(contentMode: .fill)
                     .frame(width: compactContentLeadingPadding + leadingInset)

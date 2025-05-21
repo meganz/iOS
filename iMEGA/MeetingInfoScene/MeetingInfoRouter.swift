@@ -1,6 +1,7 @@
 import ChatRepo
 import Combine
 import MEGAAppSDKRepo
+import MEGAAssets
 import MEGADomain
 import MEGAL10n
 import MEGAPreference
@@ -96,7 +97,7 @@ final class MeetingInfoRouter: NSObject, MeetingInfoRouting {
     }
 
     func showLinkCopied() {
-        SVProgressHUD.show(UIImage(resource: .hudSuccess), status: Strings.Localizable.Meetings.Info.ShareOptions.ShareLink.linkCopied)
+        SVProgressHUD.show(MEGAAssets.UIImage.hudSuccess, status: Strings.Localizable.Meetings.Info.ShareOptions.ShareLink.linkCopied)
     }
     
     func showParticipantDetails(email: String, userHandle: HandleEntity, chatRoom: ChatRoomEntity, didUpdatePeerPermission: @escaping (ChatRoomParticipantPrivilege) -> Void) {
@@ -163,7 +164,7 @@ final class MeetingInfoRouter: NSObject, MeetingInfoRouting {
         let navigationController = MEGANavigationController(rootViewController: inviteContactsViewController)
         
         let backBarButton = UIBarButtonItem(
-            image: UIImage(resource: .backArrow),
+            image: MEGAAssets.UIImage.backArrow,
             style: .plain,
             target: self,
             action: #selector(self.dismissInviteContactsScreen)

@@ -4,6 +4,7 @@ import Combine
 import MEGAAnalyticsiOS
 import MEGAAppPresentation
 import MEGAAppSDKRepo
+import MEGAAssets
 import MEGADomain
 import MEGAL10n
 import MEGAPermissions
@@ -159,7 +160,7 @@ final class MeetingContainerRouter: MeetingContainerRouting {
             guard let self, CustomModalAlertViewController.isAlreadyPresented == false else { return }
             
             let customModalAlertViewController = CustomModalAlertViewController()
-            customModalAlertViewController.image = UIImage(resource: .chatLinkCreation)
+            customModalAlertViewController.image = MEGAAssets.UIImage.chatLinkCreation
             customModalAlertViewController.viewTitle = chatRoom.title
             customModalAlertViewController.firstButtonTitle = Strings.Localizable.close
             customModalAlertViewController.link = chatRoom.chatType == .meeting ? Strings.Localizable.Meetings.Sharelink.error : Strings.Localizable.noChatLinkAvailable
@@ -442,7 +443,7 @@ final class MeetingContainerRouter: MeetingContainerRouting {
     }
     
     func showLinkCopied() {
-        SVProgressHUD.show(UIImage(resource: .hudSuccess), status: Strings.Localizable.Meetings.Info.ShareOptions.ShareLink.linkCopied)
+        SVProgressHUD.show(MEGAAssets.UIImage.hudSuccess, status: Strings.Localizable.Meetings.Info.ShareOptions.ShareLink.linkCopied)
     }
     
     // MARK: - Private

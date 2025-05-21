@@ -35,6 +35,14 @@
     self.twoDaysAgo = [NSCalendar.currentCalendar dateByAddingUnit:NSCalendarUnitDay value:-2 toDate:NSDate.date options:0];
     
     [self updateAppearance];
+    
+    [self configureImages];
+}
+
+- (void)configureImages {
+    self.privateChatImageView.image = [UIImage megaImageWithNamed:@"privateChat"];
+    self.mutedChatImageView.image = [UIImage megaImageWithNamed:@"mutedChat"];
+    self.activeCallImageView.image = [UIImage megaImageWithNamed:@"onACall"];
 }
 
 - (void)prepareForReuse {
@@ -314,7 +322,7 @@
             
             NSMutableAttributedString *lastMessageMutableAttributedString = senderString ? [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@: ", senderString]].mutableCopy : [[NSAttributedString alloc] initWithString:@""].mutableCopy;
             NSString *voiceMessageImageName = self.chatListItem.unreadCount ? @"voiceMessage" : @"voiceMessageGrey";
-            NSAttributedString *microphoneImageAttributedString = [NSAttributedString mnz_attributedStringFromImage:[UIImage imageNamed:voiceMessageImageName] fontCapHeight:self.chatLastMessage.font.capHeight];
+            NSAttributedString *microphoneImageAttributedString = [NSAttributedString mnz_attributedStringFromImage:[UIImage megaImageWithNamed:voiceMessageImageName] fontCapHeight:self.chatLastMessage.font.capHeight];
             [lastMessageMutableAttributedString appendAttributedString:microphoneImageAttributedString];
             [lastMessageMutableAttributedString appendAttributedString:[[NSAttributedString alloc] initWithString:durationString]];
             
@@ -514,7 +522,7 @@
                 if (message.containsMeta.type == MEGAChatContainsMetaTypeGeolocation) {
                     NSMutableAttributedString *lastMessageMutableAttributedString = senderString ? [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@: ", senderString]].mutableCopy : [[NSAttributedString alloc] initWithString:@""].mutableCopy;
                     NSString *locationMessageImageName = self.chatListItem.unreadCount ? @"locationMessage" : @"locationMessageGrey";
-                    NSAttributedString *pinImageAttributedString = [NSAttributedString mnz_attributedStringFromImage:[UIImage imageNamed:locationMessageImageName] fontCapHeight:self.chatLastMessage.font.capHeight];
+                    NSAttributedString *pinImageAttributedString = [NSAttributedString mnz_attributedStringFromImage:[UIImage megaImageWithNamed:locationMessageImageName] fontCapHeight:self.chatLastMessage.font.capHeight];
                     [lastMessageMutableAttributedString appendAttributedString:pinImageAttributedString];
                     [lastMessageMutableAttributedString appendAttributedString:[[NSAttributedString alloc] initWithString:LocalizedString(@"Pinned Location", @"Text shown in location-type messages")]];
 

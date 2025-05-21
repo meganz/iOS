@@ -1,4 +1,5 @@
 import Foundation
+import MEGAAssets
 import MEGADesignToken
 import MEGADomain
 import MEGAL10n
@@ -215,7 +216,7 @@ extension FolderLinkTableViewController: UITableViewDelegate {
             }
         } actionProvider: { _ in
             let selectAction = UIAction(title: Strings.Localizable.select,
-                                        image: UIImage.selectItem) { _ in
+                                        image: MEGAAssets.UIImage.selectItem) { _ in
                 self.setTableViewEditing(true, animated: true)
                 self.tableView?.delegate?.tableView?(tableView, didSelectRowAt: indexPath)
                 self.tableView?.selectRow(at: indexPath, animated: true, scrollPosition: .none)

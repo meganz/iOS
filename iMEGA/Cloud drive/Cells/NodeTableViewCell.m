@@ -31,10 +31,24 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     
+    [self configureImages];
+    
     self.cancelButtonTrailingConstraint.constant =  ([[UIDevice currentDevice] iPadDevice] || [[UIDevice currentDevice] iPhonePlus]) ? 10 : 6;
     [self configureDescriptionLabel];
     [self configureMoreButtonUI];
     [self configureIconsImageColor];
+}
+
+- (void)configureImages {
+    [self.moreButton setImage:[UIImage megaImageWithNamed:@"moreList"] forState:UIControlStateNormal];
+    self.downloadedImageView.image = [UIImage megaImageWithNamed:@"downloaded"];
+    self.thumbnailPlayImageView.image = [UIImage megaImageWithNamed:@"video_list"];
+    self.versionedImageView.image = [UIImage megaImageWithNamed:@"versioned"];
+    self.favouriteImageView.image = [UIImage megaImageWithNamed:@"favouriteSmall"];
+    self.linkImageView.image = [UIImage megaImageWithNamed:@"linked"];
+    [self.incomingPermissionButton setImage:[UIImage megaImageWithNamed:@"readPermissions"] forState:UIControlStateNormal];
+    self.uploadOrVersionImageView.image = [UIImage megaImageWithNamed:@"recentUpload"];
+    self.disclosureIndicator.image = [UIImage megaImageWithNamed:@"standardDisclosureIndicator"];
 }
 
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated {
@@ -81,7 +95,7 @@
     self.thumbnailPlayImageView.accessibilityIgnoresInvertColors = YES;
     
     NSString *imageName = @"standardDisclosureIndicator_designToken";
-    self.disclosureIndicator.image = [UIImage imageNamed:imageName];
+    self.disclosureIndicator.image = [UIImage megaImageWithNamed:imageName];
     
     MEGAShareType shareType = [MEGASdk.shared accessLevelForNode:node];
     if ([recentActionBucket.userEmail isEqualToString:MEGASdk.currentUserEmail]) {
@@ -89,22 +103,22 @@
             MEGANode *firstbornParentNode = [[MEGASdk.shared nodeForHandle:recentActionBucket.parentHandle] mnz_firstbornInShareOrOutShareParentNode];
             if (firstbornParentNode.isOutShare) {
                 self.incomingOrOutgoingView.hidden = NO;
-                self.incomingOrOutgoingImageView.image = [UIImage imageNamed:@"mini_folder_outgoing"];
+                self.incomingOrOutgoingImageView.image = [UIImage megaImageWithNamed:@"mini_folder_outgoing"];
             } else {
                 self.incomingOrOutgoingView.hidden = YES;
             }
         } else {
             self.subtitleLabel.text = [NSString mnz_addedByInRecentActionBucket:recentActionBucket];
             self.incomingOrOutgoingImageView.hidden = NO;
-            self.incomingOrOutgoingImageView.image = [UIImage imageNamed:@"mini_folder_incoming"];
+            self.incomingOrOutgoingImageView.image = [UIImage megaImageWithNamed:@"mini_folder_incoming"];
         }
     } else {
         self.subtitleLabel.text = [NSString mnz_addedByInRecentActionBucket:recentActionBucket];
         self.incomingOrOutgoingImageView.hidden = NO;
-        self.incomingOrOutgoingImageView.image = (shareType == MEGAShareTypeAccessOwner) ? [UIImage imageNamed:@"mini_folder_outgoing"] : [UIImage imageNamed:@"mini_folder_incoming"];
+        self.incomingOrOutgoingImageView.image = (shareType == MEGAShareTypeAccessOwner) ? [UIImage megaImageWithNamed:@"mini_folder_outgoing"] : [UIImage megaImageWithNamed:@"mini_folder_incoming"];
     }
     
-    self.uploadOrVersionImageView.image = recentActionBucket.isUpdate ? [UIImage imageNamed:@"versioned"] : [UIImage imageNamed:@"recentUpload"];
+    self.uploadOrVersionImageView.image = recentActionBucket.isUpdate ? [UIImage megaImageWithNamed:@"versioned"] : [UIImage megaImageWithNamed:@"recentUpload"];
     
     self.timeLabel.text = recentActionBucket.timestamp.mnz_formattedHourAndMinutes;
     
@@ -145,7 +159,7 @@
                                                                       sdk:MEGASdk.shared
                                                     includeRootFolderName:shouldIncludeRootFolder
                                                           excludeFileName:YES];
-        self.versionedImageView.image = [UIImage imageNamed:self.node.isInShare ? @"pathInShares" : @"pathCloudDrive"];
+        self.versionedImageView.image = [UIImage megaImageWithNamed:self.node.isInShare ? @"pathInShares" : @"pathCloudDrive"];
         self.versionedImageView.hidden = NO;
     }
 }

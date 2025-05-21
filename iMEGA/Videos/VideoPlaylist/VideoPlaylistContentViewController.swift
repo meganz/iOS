@@ -2,6 +2,7 @@ import Combine
 import ContentLibraries
 import MEGAAppPresentation
 import MEGAAppSDKRepo
+import MEGAAssets
 import MEGADomain
 import MEGAL10n
 import MEGASwiftUI
@@ -28,7 +29,7 @@ final class VideoPlaylistContentViewController: UIViewController {
     
     private var snackBarContainer: UIView?
     
-    private let moreBarButtonItem: UIBarButtonItem = UIBarButtonItem(image: UIImage.moreNavigationBar, style: .plain, target: nil, action: nil)
+    private let moreBarButtonItem: UIBarButtonItem = UIBarButtonItem(image: MEGAAssets.UIImage.moreNavigationBar, style: .plain, target: nil, action: nil)
     
     private lazy var contextMenuManager = ContextMenuManager(
         displayMenuDelegate: self,
@@ -212,7 +213,7 @@ final class VideoPlaylistContentViewController: UIViewController {
             UIBarButtonItem.flexibleSpace(),
             UIBarButtonItem(image: videoConfig.toolbarAssets.saveToPhotosImage, style: .plain, target: self, action: #selector(saveToPhotosAction(_:))),
             UIBarButtonItem.flexibleSpace(),
-            UIBarButtonItem(image: UIImage.hudMinus, style: .plain, target: self, action: #selector(removeVideoFromPlaylistAction(_:))),
+            UIBarButtonItem(image: MEGAAssets.UIImage.hudMinus, style: .plain, target: self, action: #selector(removeVideoFromPlaylistAction(_:))),
             UIBarButtonItem.flexibleSpace(),
             UIBarButtonItem(image: videoConfig.toolbarAssets.moreListImage, style: .plain, target: self, action: #selector(moreAction(_:)))
         ]
@@ -348,7 +349,7 @@ final class VideoPlaylistContentViewController: UIViewController {
     }
     
     private lazy var selectAllBarButtonItem = {
-        UIBarButtonItem(image: UIImage.selectAllItems, style: .plain, target: self, action: #selector(selectAllBarButtonItemTapped))
+        UIBarButtonItem(image: MEGAAssets.UIImage.selectAllItems, style: .plain, target: self, action: #selector(selectAllBarButtonItemTapped))
     }()
     
     @objc private func selectAllBarButtonItemTapped() {

@@ -1,9 +1,10 @@
+import MEGAAssets
 import MEGADomain
 import MEGAL10n
 
 extension CustomModalAlertViewController {
     func configureForEnableKeyRotation(in chatId: ChatIdEntity) {
-        image = UIImage.lock
+        image = MEGAAssets.UIImage.lock
         viewTitle = Strings.Localizable.enableEncryptedKeyRotation
         detail = Strings.Localizable.keyRotationIsSlightlyMoreSecureButDoesNotAllowYouToCreateAChatLinkAndNewParticipantsWillNotSeePastMessages
         firstButtonTitle = Strings.Localizable.enable

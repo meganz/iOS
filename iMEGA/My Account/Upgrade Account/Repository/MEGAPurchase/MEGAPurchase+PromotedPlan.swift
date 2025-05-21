@@ -1,5 +1,6 @@
 import MEGAAppPresentation
 import MEGAAppSDKRepo
+import MEGAAssets
 import MEGADomain
 import MEGAL10n
 import MEGASwift
@@ -145,7 +146,7 @@ extension MEGAPurchase {
         case .alreadyPurchasedPlan:
             SVProgressHUD.showError(withStatus: Strings.Localizable.UpgradeAccountPlan.Selection.Message.alreadyHaveRecurringSubscriptionOfPlan)
         case .noLoggedInUser:
-            SVProgressHUD.setErrorImage(UIImage.hudError)
+            SVProgressHUD.setErrorImage(MEGAAssets.UIImage.hudError)
             SVProgressHUD.showError(withStatus: Strings.Localizable.pleaseLogInToYourAccount)
         case .proFlexiOrBusinessAccount:
             SVProgressHUD.showError(withStatus: Strings.Localizable.Account.Upgrade.NotAvailableWithCurrentPlan.message)

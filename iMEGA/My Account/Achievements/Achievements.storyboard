@@ -426,6 +426,7 @@
                     </view>
                     <connections>
                         <outlet property="disclosureIndicatorImageView" destination="n73-QM-XwA" id="XGG-k8-fmd"/>
+                        <outlet property="inviteFriendsImageView" destination="UNV-og-aZH" id="pdc-0x-81G"/>
                         <outlet property="inviteYourFriendsSubtitleLabel" destination="vB2-Bt-AED" id="Jhe-Py-2Gu"/>
                         <outlet property="inviteYourFriendsTitleLabel" destination="efp-r8-2Fx" id="50U-A0-rTo"/>
                         <outlet property="inviteYourFriendsView" destination="O9v-Qk-ues" id="kkr-PF-6qv"/>
@@ -776,6 +777,7 @@
                         <outlet property="howItWorksTopSeparatorView" destination="ExJ-in-Tk3" id="198-k8-bwX"/>
                         <outlet property="howItWorksView" destination="c4A-Mv-GAg" id="E3E-M2-mak"/>
                         <outlet property="inviteButton" destination="PwH-3o-Frw" id="Ypq-CF-xAw"/>
+                        <outlet property="inviteFriendsImageView" destination="fCt-rM-ghK" id="CkH-0R-AHq"/>
                         <outlet property="inviteYourFriendsSubtitleLabel" destination="qs1-Qd-9mY" id="cWA-kP-xV2"/>
                         <outlet property="inviteYourFriendsTitleLabel" destination="gaL-7e-CiB" id="GTo-Qk-44b"/>
                         <outlet property="inviteYourFriendsView" destination="1rd-Qm-t9S" id="2f8-IA-X9m"/>

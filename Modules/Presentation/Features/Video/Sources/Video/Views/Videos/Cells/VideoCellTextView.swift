@@ -29,8 +29,8 @@ struct VideoCellTitleText: View {
         videoConfig: .preview,
         title: "This a short text",
         searchText: nil,
-        labelImage: MEGAAssetsImageProvider.image(named: "RedSmall")!,
-        downloadedImage: MEGAAssetsImageProvider.image(named: "downloaded")!
+        labelImage: MEGAAssets.UIImage.image(named: "RedSmall")!,
+        downloadedImage: MEGAAssets.UIImage.image(named: "downloaded")!
     )
 }
 
@@ -39,8 +39,8 @@ struct VideoCellTitleText: View {
         videoConfig: .preview,
         title: "This is a long long long text that needs second line probabaly line probabaly",
         searchText: nil,
-        labelImage: MEGAAssetsImageProvider.image(named: "RedSmall")!,
-        downloadedImage: MEGAAssetsImageProvider.image(named: "downloaded")!
+        labelImage: MEGAAssets.UIImage.image(named: "RedSmall")!,
+        downloadedImage: MEGAAssets.UIImage.image(named: "downloaded")!
     )
 }
 
@@ -49,8 +49,8 @@ struct VideoCellTitleText: View {
         videoConfig: .preview,
         title: "This is a long long long text that needs second line probabaly line probabaly",
         searchText: nil,
-        labelImage: MEGAAssetsImageProvider.image(named: "RedSmall")!,
-        downloadedImage: MEGAAssetsImageProvider.image(named: "downloaded")!
+        labelImage: MEGAAssets.UIImage.image(named: "RedSmall")!,
+        downloadedImage: MEGAAssets.UIImage.image(named: "downloaded")!
     )
     .preferredColorScheme(.dark)
 }
@@ -60,7 +60,7 @@ struct VideoCellTitleText: View {
         videoConfig: .preview,
         title: "This is text with label image",
         searchText: nil,
-        labelImage: MEGAAssetsImageProvider.image(named: "RedSmall")!,
+        labelImage: MEGAAssets.UIImage.image(named: "RedSmall")!,
         downloadedImage: nil
     )
     .preferredColorScheme(.dark)
@@ -72,7 +72,7 @@ struct VideoCellTitleText: View {
         title: "This is text with downloaded image",
         searchText: nil,
         labelImage: nil,
-        downloadedImage: MEGAAssetsImageProvider.image(named: "downloaded")!
+        downloadedImage: MEGAAssets.UIImage.image(named: "downloaded")!
     )
     .preferredColorScheme(.dark)
 }

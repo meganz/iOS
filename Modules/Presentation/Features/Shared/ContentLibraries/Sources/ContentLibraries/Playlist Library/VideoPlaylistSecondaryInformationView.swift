@@ -52,7 +52,7 @@ public struct VideoPlaylistSecondaryInformationView: View {
             circleSeparatorImage
                 .opacity(isPublicLink ? 1 : 0)
             
-            MEGAAssetsImageProvider.image(named: .linked)
+            MEGAAssets.Image.linked
                 .foregroundStyle(isDisabled ? TokenColors.Text.disabled.swiftUI : TokenColors.Text.secondary.swiftUI)
                 .opacity(isPublicLink ? 1 : 0)
         }
@@ -64,7 +64,7 @@ public struct VideoPlaylistSecondaryInformationView: View {
             
             secondaryText(text: totalDuration)
             
-            MEGAAssetsImageProvider.image(named: .linked)
+            MEGAAssets.Image.linked
                 .foregroundStyle(isDisabled ? TokenColors.Text.disabled.swiftUI : TokenColors.Text.secondary.swiftUI)
                 .opacity(isPublicLink ? 1 : 0)
         }

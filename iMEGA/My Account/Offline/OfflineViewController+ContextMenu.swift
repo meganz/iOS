@@ -1,4 +1,5 @@
 import MEGAAppSDKRepo
+import MEGAAssets
 import MEGADomain
 import MEGAL10n
 
@@ -14,7 +15,7 @@ extension OfflineViewController: DisplayMenuDelegate {
     @objc func setNavigationBarButtons() {
         contextMenuManager = ContextMenuManager(displayMenuDelegate: self, createContextMenuUseCase: CreateContextMenuUseCase(repo: CreateContextMenuRepository.newRepo))
         
-        contextBarButtonItem = UIBarButtonItem(image: UIImage.moreNavigationBar,
+        contextBarButtonItem = UIBarButtonItem(image: MEGAAssets.UIImage.moreNavigationBar,
                                                menu: contextMenuManager?.contextMenu(with: contextMenuConfiguration()))
         
         contextBarButtonItem.accessibilityLabel = Strings.Localizable.more

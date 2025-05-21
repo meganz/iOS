@@ -1,3 +1,4 @@
+import MEGAAssets
 import MEGADomain
 import MEGAL10n
 
@@ -74,102 +75,106 @@ extension ContextMenuModel {
     private func dataForUploadAddAction(action: UploadAddActionEntity) -> ContextMenuDataModel {
         switch action {
         case .chooseFromPhotos:
-            return ContextMenuDataModel(identifier: "chooseFromPhotos", title: Strings.Localizable.choosePhotoVideo, image: UIImage.saveToPhotos)
+            return ContextMenuDataModel(identifier: "chooseFromPhotos", title: Strings.Localizable.choosePhotoVideo, image: MEGAAssets.UIImage.saveToPhotos)
         case .capture:
-            return ContextMenuDataModel(identifier: "capture", title: Strings.Localizable.capturePhotoVideo, image: UIImage.capture)
+            return ContextMenuDataModel(identifier: "capture", title: Strings.Localizable.capturePhotoVideo, image: MEGAAssets.UIImage.capture)
         case .importFrom:
-            return ContextMenuDataModel(identifier: "importFrom", title: Strings.Localizable.CloudDrive.Upload.importFromFiles, image: UIImage.import)
+            return ContextMenuDataModel(identifier: "importFrom", title: Strings.Localizable.CloudDrive.Upload.importFromFiles, image: MEGAAssets.UIImage.import)
         case .importFolderLink:
-            return ContextMenuDataModel(identifier: "importFrom", title: Strings.Localizable.importToCloudDrive, image: UIImage.import)
+            return ContextMenuDataModel(identifier: "importFrom", title: Strings.Localizable.importToCloudDrive, image: MEGAAssets.UIImage.import)
         case .scanDocument:
-            return ContextMenuDataModel(identifier: "scanDocument", title: Strings.Localizable.scanDocument, image: UIImage.scanDocument)
+            return ContextMenuDataModel(identifier: "scanDocument", title: Strings.Localizable.scanDocument, image: MEGAAssets.UIImage.scanDocument)
         case .newFolder:
-            return ContextMenuDataModel(identifier: "newFolder", title: Strings.Localizable.newFolder, image: UIImage.newFolder)
+            return ContextMenuDataModel(identifier: "newFolder", title: Strings.Localizable.newFolder, image: MEGAAssets.UIImage.newFolder)
         case .newTextFile:
-            return ContextMenuDataModel(identifier: "newTextFile", title: Strings.Localizable.newTextFile, image: UIImage.textfile)
+            return ContextMenuDataModel(identifier: "newTextFile", title: Strings.Localizable.newTextFile, image: MEGAAssets.UIImage.textfile)
         }
     }
 
     private func dataForQuickAction(action: QuickActionEntity) -> ContextMenuDataModel {
         switch action {
         case .info:
-            return ContextMenuDataModel(identifier: "info", title: Strings.Localizable.info, image: UIImage.info)
+            return ContextMenuDataModel(identifier: "info", title: Strings.Localizable.info, image: MEGAAssets.UIImage.info)
         case .download:
-            return ContextMenuDataModel(identifier: "download", title: Strings.Localizable.General.downloadToOffline, image: UIImage.offline)
+            return ContextMenuDataModel(identifier: "download", title: Strings.Localizable.General.downloadToOffline, image: MEGAAssets.UIImage.offline)
         case .shareLink:
-            return ContextMenuDataModel(identifier: "shareLink", title: Strings.Localizable.General.MenuAction.ShareLink.title(1), image: UIImage.link)
+            return ContextMenuDataModel(identifier: "shareLink", title: Strings.Localizable.General.MenuAction.ShareLink.title(1), image: MEGAAssets.UIImage.link)
         case .manageLink:
-            return ContextMenuDataModel(identifier: "manageLink", title: Strings.Localizable.General.MenuAction.ManageLink.title(1), image: UIImage.link)
+            return ContextMenuDataModel(identifier: "manageLink", title: Strings.Localizable.General.MenuAction.ManageLink.title(1), image: MEGAAssets.UIImage.link)
         case .removeLink:
-            return ContextMenuDataModel(identifier: "removeLink", title: Strings.Localizable.General.MenuAction.RemoveLink.title(1), image: UIImage.removeLink)
+            return ContextMenuDataModel(identifier: "removeLink", title: Strings.Localizable.General.MenuAction.RemoveLink.title(1), image: MEGAAssets.UIImage.removeLink)
         case .shareFolder:
-            return ContextMenuDataModel(identifier: "shareFolder", title: Strings.Localizable.General.MenuAction.ShareFolder.title(1), image: UIImage.shareFolder)
+            return ContextMenuDataModel(identifier: "shareFolder", title: Strings.Localizable.General.MenuAction.ShareFolder.title(1), image: MEGAAssets.UIImage.shareFolder)
         case .manageFolder:
-            return ContextMenuDataModel(identifier: "manageFolder", title: Strings.Localizable.manageShare, image: UIImage.shareFolder)
+            return ContextMenuDataModel(identifier: "manageFolder", title: Strings.Localizable.manageShare, image: MEGAAssets.UIImage.shareFolder)
         case .rename:
-            return ContextMenuDataModel(identifier: "rename", title: Strings.Localizable.rename, image: UIImage.rename)
+            return ContextMenuDataModel(identifier: "rename", title: Strings.Localizable.rename, image: MEGAAssets.UIImage.rename)
         case .copy:
-            return ContextMenuDataModel(identifier: "copy", title: Strings.Localizable.copy, image: UIImage.copy)
+            return ContextMenuDataModel(identifier: "copy", title: Strings.Localizable.copy, image: MEGAAssets.UIImage.copy)
         case .removeSharing:
-            return ContextMenuDataModel(identifier: "removeSharing", title: Strings.Localizable.removeSharing, image: UIImage.removeShare)
+            return ContextMenuDataModel(identifier: "removeSharing", title: Strings.Localizable.removeSharing, image: MEGAAssets.UIImage.removeShare)
         case .leaveSharing:
-            return ContextMenuDataModel(identifier: "leaveSharing", title: Strings.Localizable.leaveFolder, image: UIImage.leaveShare)
+            return ContextMenuDataModel(identifier: "leaveSharing", title: Strings.Localizable.leaveFolder, image: MEGAAssets.UIImage.leaveShare)
         case .sendToChat:
-            return ContextMenuDataModel(identifier: "sendToChat", title: Strings.Localizable.General.sendToChat, image: UIImage.sendToChat)
+            return ContextMenuDataModel(identifier: "sendToChat", title: Strings.Localizable.General.sendToChat, image: MEGAAssets.UIImage.sendToChat)
         case .saveToPhotos:
-            return ContextMenuDataModel(identifier: "saveToPhotos", title: Strings.Localizable.saveToPhotos, image: UIImage.saveToPhotos)
+            return ContextMenuDataModel(identifier: "saveToPhotos", title: Strings.Localizable.saveToPhotos, image: MEGAAssets.UIImage.saveToPhotos)
         case .hide:
-            return ContextMenuDataModel(identifier: "hide", title: Strings.Localizable.General.MenuAction.Hide.title, image: UIImage.eyeOff)
+            return ContextMenuDataModel(identifier: "hide", title: Strings.Localizable.General.MenuAction.Hide.title, image: MEGAAssets.UIImage.eyeOff)
         case .unhide:
-            return ContextMenuDataModel(identifier: "unhide", title: Strings.Localizable.General.MenuAction.Unhide.title, image: UIImage.eyeOn)
-        case .settings:
-            return ContextMenuDataModel(identifier: "settings", title: Strings.Localizable.settingsTitle, image: .iconSettings)
+            return ContextMenuDataModel(identifier: "unhide", title: Strings.Localizable.General.MenuAction.Unhide.title, image: MEGAAssets.UIImage.eyeOn)
         case .dispute:
-            return ContextMenuDataModel(identifier: "dispute", title: Strings.Localizable.disputeTakedown, image: UIImage.disputeTakedown)
+            return ContextMenuDataModel(identifier: "dispute", title: Strings.Localizable.disputeTakedown, image: MEGAAssets.UIImage.disputeTakedown)
+        case .settings:
+            return ContextMenuDataModel(
+                identifier: "settings",
+                title: Strings.Localizable.settingsTitle,
+                image: MEGAAssets.UIImage.iconSettings
+            )
         }
     }
 
     private func dataForDisplayAction(action: DisplayActionEntity) -> ContextMenuDataModel {
         switch action {
         case .select:
-            return ContextMenuDataModel(identifier: "select", title: Strings.Localizable.select, image: UIImage.selectItem)
+            return ContextMenuDataModel(identifier: "select", title: Strings.Localizable.select, image: MEGAAssets.UIImage.selectItem)
         case .mediaDiscovery:
-            return ContextMenuDataModel(identifier: "mediaDiscovery", title: Strings.Localizable.CloudDrive.Menu.MediaDiscovery.title, image: UIImage.mediaDiscovery)
+            return ContextMenuDataModel(identifier: "mediaDiscovery", title: Strings.Localizable.CloudDrive.Menu.MediaDiscovery.title, image: MEGAAssets.UIImage.mediaDiscovery)
         case .thumbnailView:
-            return ContextMenuDataModel(identifier: "thumbnailView", title: Strings.Localizable.thumbnailView, image: UIImage.thumbnailsThin)
+            return ContextMenuDataModel(identifier: "thumbnailView", title: Strings.Localizable.thumbnailView, image: MEGAAssets.UIImage.thumbnailsThin)
         case .listView:
-            return ContextMenuDataModel(identifier: "listView", title: Strings.Localizable.listView, image: UIImage.gridThin)
+            return ContextMenuDataModel(identifier: "listView", title: Strings.Localizable.listView, image: MEGAAssets.UIImage.gridThin)
         case .sort:
-            return ContextMenuDataModel(identifier: "sort", title: Strings.Localizable.sortTitle, subtitle: currentSortType, image: UIImage.sort)
+            return ContextMenuDataModel(identifier: "sort", title: Strings.Localizable.sortTitle, subtitle: currentSortType, image: MEGAAssets.UIImage.sort)
         case .clearRubbishBin:
-            return ContextMenuDataModel(identifier: "clearRubbishBin", title: Strings.Localizable.emptyRubbishBin, image: UIImage.rubbishBin)
+            return ContextMenuDataModel(identifier: "clearRubbishBin", title: Strings.Localizable.emptyRubbishBin, image: MEGAAssets.UIImage.rubbishBin)
         case .filter:
-            return ContextMenuDataModel(identifier: "filter", title: Strings.Localizable.filter, subtitle: currentFilterType, image: UIImage.filter)
+            return ContextMenuDataModel(identifier: "filter", title: Strings.Localizable.filter, subtitle: currentFilterType, image: MEGAAssets.UIImage.filter)
         case .filterActive:
-            return ContextMenuDataModel(identifier: "filterActive", title: Strings.Localizable.filter, subtitle: currentFilterType, image: UIImage.filterActive)
+            return ContextMenuDataModel(identifier: "filterActive", title: Strings.Localizable.filter, subtitle: currentFilterType, image: MEGAAssets.UIImage.filterActive)
         case .newPlaylist:
-            return ContextMenuDataModel(identifier: "newPlaylist", title: Strings.Localizable.Videos.Tab.Playlist.Content.newPlaylist, image: UIImage.navigationbarAdd)
+            return ContextMenuDataModel(identifier: "newPlaylist", title: Strings.Localizable.Videos.Tab.Playlist.Content.newPlaylist, image: MEGAAssets.UIImage.navigationbarAdd)
         }
     }
 
     private func dataForSortType(sortType: SortOrderEntity) -> ContextMenuDataModel? {
         switch sortType {
         case .defaultAsc:
-            return ContextMenuDataModel(identifier: "defaultAsc", title: Strings.Localizable.nameAscending, image: UIImage.ascending)
+            return ContextMenuDataModel(identifier: "defaultAsc", title: Strings.Localizable.nameAscending, image: MEGAAssets.UIImage.ascending)
         case .defaultDesc:
-            return ContextMenuDataModel(identifier: "defaultDesc", title: Strings.Localizable.nameDescending, image: UIImage.descending)
+            return ContextMenuDataModel(identifier: "defaultDesc", title: Strings.Localizable.nameDescending, image: MEGAAssets.UIImage.descending)
         case .sizeDesc:
-            return ContextMenuDataModel(identifier: "sizeDesc", title: Strings.Localizable.largest, image: UIImage.largest)
+            return ContextMenuDataModel(identifier: "sizeDesc", title: Strings.Localizable.largest, image: MEGAAssets.UIImage.largest)
         case .sizeAsc:
-            return ContextMenuDataModel(identifier: "sizeAsc", title: Strings.Localizable.smallest, image: UIImage.smallest)
+            return ContextMenuDataModel(identifier: "sizeAsc", title: Strings.Localizable.smallest, image: MEGAAssets.UIImage.smallest)
         case .modificationDesc:
-            return ContextMenuDataModel(identifier: "modificationDesc", title: Strings.Localizable.newest, image: UIImage.newest)
+            return ContextMenuDataModel(identifier: "modificationDesc", title: Strings.Localizable.newest, image: MEGAAssets.UIImage.newest)
         case .modificationAsc:
-            return ContextMenuDataModel(identifier: "modificationAsc", title: Strings.Localizable.oldest, image: UIImage.oldest)
+            return ContextMenuDataModel(identifier: "modificationAsc", title: Strings.Localizable.oldest, image: MEGAAssets.UIImage.oldest)
         case .labelAsc:
-            return ContextMenuDataModel(identifier: "labelAsc", title: Strings.Localizable.CloudDrive.Sort.label, image: UIImage.sortLabel)
+            return ContextMenuDataModel(identifier: "labelAsc", title: Strings.Localizable.CloudDrive.Sort.label, image: MEGAAssets.UIImage.sortLabel)
         case .favouriteAsc:
-            return ContextMenuDataModel(identifier: "favouriteAsc", title: Strings.Localizable.favourite, image: UIImage.sortFavourite)
+            return ContextMenuDataModel(identifier: "favouriteAsc", title: Strings.Localizable.favourite, image: MEGAAssets.UIImage.sortFavourite)
         default:
             return nil
         }
@@ -191,24 +196,24 @@ extension ContextMenuModel {
     private func dataForRubbishBinAction(action: RubbishBinActionEntity) -> ContextMenuDataModel {
         switch action {
         case .restore:
-            return ContextMenuDataModel(identifier: "restore", title: Strings.Localizable.restore, image: UIImage.restore)
+            return ContextMenuDataModel(identifier: "restore", title: Strings.Localizable.restore, image: MEGAAssets.UIImage.restore)
         case .info:
-            return ContextMenuDataModel(identifier: "info", title: Strings.Localizable.info, image: UIImage.info)
+            return ContextMenuDataModel(identifier: "info", title: Strings.Localizable.info, image: MEGAAssets.UIImage.info)
         case .versions:
-            return ContextMenuDataModel(identifier: "versions", title: Strings.Localizable.versions, image: UIImage.versions)
+            return ContextMenuDataModel(identifier: "versions", title: Strings.Localizable.versions, image: MEGAAssets.UIImage.versions)
         case .remove:
-            return ContextMenuDataModel(identifier: "remove", title: Strings.Localizable.remove, image: UIImage.rubbishBin)
+            return ContextMenuDataModel(identifier: "remove", title: Strings.Localizable.remove, image: MEGAAssets.UIImage.rubbishBin)
         }
     }
 
     private func dataForMeetingAction(action: MeetingActionEntity) -> ContextMenuDataModel {
         switch action {
         case .startMeeting:
-            return ContextMenuDataModel(identifier: "startMeeting", title: Strings.Localizable.Meetings.StartConversation.ContextMenu.startMeeting, image: UIImage.startMeeting)
+            return ContextMenuDataModel(identifier: "startMeeting", title: Strings.Localizable.Meetings.StartConversation.ContextMenu.startMeeting, image: MEGAAssets.UIImage.startMeeting)
         case .joinMeeting:
-            return ContextMenuDataModel(identifier: "joinMeeting", title: Strings.Localizable.Meetings.StartConversation.ContextMenu.joinMeeting, image: UIImage.joinAMeeting)
+            return ContextMenuDataModel(identifier: "joinMeeting", title: Strings.Localizable.Meetings.StartConversation.ContextMenu.joinMeeting, image: MEGAAssets.UIImage.joinAMeeting)
         case .scheduleMeeting:
-            return ContextMenuDataModel(identifier: "scheduleMeeting", title: Strings.Localizable.Meetings.StartConversation.ContextMenu.scheduleMeeting, image: UIImage.scheduleMeeting)
+            return ContextMenuDataModel(identifier: "scheduleMeeting", title: Strings.Localizable.Meetings.StartConversation.ContextMenu.scheduleMeeting, image: MEGAAssets.UIImage.scheduleMeeting)
         }
     }
 
@@ -246,7 +251,7 @@ extension ContextMenuModel {
             return ContextMenuDataModel(
                 identifier: "qrSettings",
                 title: Strings.Localizable.settingsTitle,
-                image: .iconSettings
+                image: MEGAAssets.UIImage.iconSettings
             )
         case .resetQR:
             return ContextMenuDataModel(identifier: "resetQR", title: Strings.Localizable.resetQrCode)
@@ -256,9 +261,9 @@ extension ContextMenuModel {
     private func dataForAlbumAction(action: AlbumActionEntity) -> ContextMenuDataModel {
         switch action {
         case .selectAlbumCover:
-            return ContextMenuDataModel(identifier: "selectAlbumCover", title: Strings.Localizable.CameraUploads.Albums.selectAlbumCover, image: UIImage.selectAlbumCover)
+            return ContextMenuDataModel(identifier: "selectAlbumCover", title: Strings.Localizable.CameraUploads.Albums.selectAlbumCover, image: MEGAAssets.UIImage.selectAlbumCover)
         case .delete:
-            return ContextMenuDataModel(identifier: "delete", title: Strings.Localizable.delete, image: UIImage.deleteAlbum)
+            return ContextMenuDataModel(identifier: "delete", title: Strings.Localizable.delete, image: MEGAAssets.UIImage.deleteAlbum)
         }
     }
     
@@ -268,13 +273,13 @@ extension ContextMenuModel {
             ContextMenuDataModel(
                 identifier: "addVideosToVideoPlaylist",
                 title: Strings.Localizable.Videos.Tab.Playlist.PlaylistContent.Menu.addVideos,
-                image: UIImage.navigationbarAdd
+                image: MEGAAssets.UIImage.navigationbarAdd
             )
         case .delete:
             ContextMenuDataModel(
                 identifier: "deleteVideoPlaylist",
                 title: Strings.Localizable.Videos.Tab.Playlist.PlaylistContent.Menu.deletePlaylist,
-                image: UIImage.deleteVideoPlaylist
+                image: MEGAAssets.UIImage.deleteVideoPlaylist
             )
         }
     }

@@ -1,3 +1,4 @@
+import MEGAAssets
 import MEGADesignToken
 import MEGAL10n
 import UIKit
@@ -39,7 +40,8 @@ class MessageInputBar: UIView {
     @IBOutlet weak var sendButton: UIButton!
     @IBOutlet weak var micButton: UIButton!
     @IBOutlet weak var expandCollapseButton: UIButton!
-    
+    @IBOutlet weak var clearEditButton: UIButton!
+
     @IBOutlet weak var typingIndicatorLabel: UILabel!
 
     @IBOutlet weak var editView: UIView!
@@ -102,6 +104,8 @@ class MessageInputBar: UIView {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        
+        configureImages()
         
         messageTextView.collapsedMaxHeightReachedAction = { [weak self] collapsedMaxHeightReached in
             guard let `self` = self, !self.expanded else {
@@ -266,6 +270,15 @@ class MessageInputBar: UIView {
     
     // MARK: - Private methods
     
+    private func configureImages() {
+        clearEditButton.setImage(MEGAAssets.UIImage.image(named: "clearEdit"), for: .normal)
+        expandCollapseButton.setImage(MEGAAssets.UIImage.image(named: "expand"), for: .normal)
+        micButton.setImage(MEGAAssets.UIImage.image(named: "sendVoiceClipDefault"), for: .normal)
+        sendButton.setImage(MEGAAssets.UIImage.image(named: "sendButton"), for: .normal)
+        sendButton.setImage(MEGAAssets.UIImage.image(named: "sendChatDisabled"), for: .disabled)
+        addButton.setImage(MEGAAssets.UIImage.image(named: "navigationbar_add"), for: .normal)
+    }
+    
     private func heightWhenExpanded(topConstraintValueWhenExpanded: CGFloat) -> CGFloat {
         let keyboard = messageTextView.isFirstResponder ? (keyboardHeight ?? 0.0) : 0.0
         let insetHeight = topConstraintValueWhenExpanded + messageTextViewBottomConstraintDefaultValue + keyboard + editViewHeightConstraint.constant
@@ -282,12 +295,12 @@ class MessageInputBar: UIView {
         }
         calculateEditViewHeight()
         editMessageLabel.text = editMessage.message.content
-        sendButton.setImage(UIImage(resource: .checkBoxSelectedSemantic), for: .normal)
+        sendButton.setImage(MEGAAssets.UIImage.checkBoxSelectedSemantic, for: .normal)
         sendButton.isEnabled = !(editMessage.message.content?.isEmpty ?? true)
     }
     
     private func setSendButtonColor() {
-        let image = UIImage(resource: .sendButton).withTintColor(TokenColors.Icon.primary, renderingMode: .alwaysOriginal)
+        let image = MEGAAssets.UIImage.sendButton.withTintColor(TokenColors.Icon.primary, renderingMode: .alwaysOriginal)
         sendButton.setImage(image, for: .normal)
     }
     
@@ -368,7 +381,7 @@ class MessageInputBar: UIView {
         
         calculateTopEditViewSpacing()
         messageTextViewBottomConstraint.constant = messageTextViewBottomConstraintDefaultValue
-        expandCollapseButton.setImage(UIImage(resource: .expand), for: .normal)
+        expandCollapseButton.setImage(MEGAAssets.UIImage.expand, for: .normal)
     }
     
     private func expandAnimationStart(completionHandler: ((Bool) -> Void)?) {
@@ -404,7 +417,7 @@ class MessageInputBar: UIView {
             calculateTopEditViewSpacing()
         }
         messageTextView.expandedHeight = expandedHeight
-        expandCollapseButton.setImage(UIImage(resource: .collapse), for: .normal)
+        expandCollapseButton.setImage(MEGAAssets.UIImage.collapse, for: .normal)
     }
     
     private func keyboardShowNotification() -> any NSObjectProtocol {

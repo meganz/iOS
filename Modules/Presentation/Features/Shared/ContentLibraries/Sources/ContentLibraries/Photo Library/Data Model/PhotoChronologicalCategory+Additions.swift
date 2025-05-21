@@ -5,6 +5,6 @@ import SwiftUI
 extension PhotoChronologicalCategory {
     var overlay: Image? {
         guard coverPhoto?.name.fileExtensionGroup.isVideo == true else { return nil }
-        return MEGAAssetsImageProvider.image(named: .videoList)
+        return MEGAAssets.Image.videoList
     }
 }

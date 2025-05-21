@@ -83,7 +83,7 @@
     
     if (![UIImagePickerController isSourceTypeAvailable:self.sourceType]) {
         if (self.sourceType == UIImagePickerControllerSourceTypeCamera) {
-            [SVProgressHUD showImage:[UIImage imageNamed:@"hudNoCamera"] status:LocalizedString(@"noCamera", @"Error message shown when there's no camera available on the device")];
+            [SVProgressHUD showImage:[UIImage megaImageWithNamed:@"hudNoCamera"] status:LocalizedString(@"noCamera", @"Error message shown when there's no camera available on the device")];
         }
         return;
     }

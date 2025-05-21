@@ -139,7 +139,7 @@ public class VideoRevampFactory {
             videoPlaylistThumbnailLoader: VideoPlaylistThumbnailLoader(
                 thumbnailLoader: thumbnailLoader,
                 fallbackImageContainer: ImageContainer(
-                    image: MEGAAssetsImageProvider.image(named: .videoPlaylistThumbnailFallback),
+                    image: MEGAAssets.Image.videoPlaylistThumbnailFallback,
                     type: .thumbnail
                 )
             ),

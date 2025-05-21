@@ -61,10 +61,10 @@
             </objects>
             <point key="canvasLocation" x="-110" y="-197"/>
         </scene>
-        <!--View Controller-->
+        <!--Privacy View Controller-->
         <scene sceneID="3cQ-tN-h1l">
             <objects>
-                <viewController storyboardIdentifier="PrivacyViewControllerID" id="CRT-0R-cG9" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PrivacyViewControllerID" id="CRT-0R-cG9" customClass="PrivacyViewController" customModule="MEGA" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="9fY-nQ-oIc"/>
                         <viewControllerLayoutGuide type="bottom" id="5vS-En-s3D"/>
@@ -96,6 +96,9 @@
                     </view>
                     <navigationItem key="navigationItem" id="p4L-K4-IwV"/>
                     <nil key="simulatedStatusBarMetrics"/>
+                    <connections>
+                        <outlet property="logoImageView" destination="ngD-mU-eHw" id="Rnp-h7-kit"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AG4-TT-5G0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

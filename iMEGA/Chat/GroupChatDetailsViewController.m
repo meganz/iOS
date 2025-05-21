@@ -273,7 +273,7 @@
     }
     
     CustomModalAlertViewController *customModalAlertVC = [[CustomModalAlertViewController alloc] init];
-    customModalAlertVC.image = [UIImage imageNamed:@"chatLinkCreation"];
+    customModalAlertVC.image = [UIImage megaImageWithNamed:@"chatLinkCreation"];
     customModalAlertVC.viewTitle = self.chatRoom.title;
     customModalAlertVC.firstButtonTitle = LocalizedString(@"close", @"A button label. The button allows the user to close the conversation.");
     customModalAlertVC.link = descriptionText;
@@ -287,7 +287,7 @@
 
 - (void)presentChatLinkOptionsWithLink:(NSString *)link {
     CustomModalAlertViewController *customModalAlertVC = [[CustomModalAlertViewController alloc] init];
-    customModalAlertVC.image = [UIImage imageNamed:@"chatLinkCreation"];
+    customModalAlertVC.image = [UIImage megaImageWithNamed:@"chatLinkCreation"];
     customModalAlertVC.viewTitle = self.chatRoom.title;
     customModalAlertVC.detail = self.chatRoom.isMeeting
         ? LocalizedString(@"meetings.info.shareMeetingLink.explainLink", @"Text explaining users how the meeting links work.")
@@ -366,22 +366,22 @@
         if (self.chatRoom.ownPrivilege == MEGAChatRoomPrivilegeModerator) {
             __weak __typeof__(self) weakSelf = self;
             
-            UIImageView *checkmarkImageView = [UIImageView.alloc initWithImage:[UIImage imageNamed:@"turquoise_checkmark"]];
+            UIImageView *checkmarkImageView = [UIImageView.alloc initWithImage:[UIImage megaImageWithNamed:@"turquoise_checkmark"]];
 
-            [actions addObject:[ActionSheetAction.alloc initWithTitle:LocalizedString(@"moderator", @"The Moderator permission level in chat. With moderator permissions a participant can manage the chat.") detail:nil accessoryView:privilege == MEGAChatRoomPrivilegeModerator ? checkmarkImageView : nil image:[UIImage imageNamed:@"moderator"] style:UIAlertActionStyleDefault actionHandler:^{
+            [actions addObject:[ActionSheetAction.alloc initWithTitle:LocalizedString(@"moderator", @"The Moderator permission level in chat. With moderator permissions a participant can manage the chat.") detail:nil accessoryView:privilege == MEGAChatRoomPrivilegeModerator ? checkmarkImageView : nil image:[UIImage megaImageWithNamed:@"moderator"] style:UIAlertActionStyleDefault actionHandler:^{
                 [MEGAChatSdk.shared updateChatPermissions:weakSelf.chatRoom.chatId userHandle:userHandle privilege:MEGAChatRoomPrivilegeModerator delegate:weakSelf];
             }]];
-            [actions addObject:[ActionSheetAction.alloc initWithTitle:LocalizedString(@"standard", @"The Standard permission level in chat. With the standard permissions a participant can read and type messages in a chat.") detail:nil accessoryView:privilege == MEGAChatRoomPrivilegeStandard ? checkmarkImageView : nil image:[UIImage imageNamed:@"standard"] style:UIAlertActionStyleDefault actionHandler:^{
+            [actions addObject:[ActionSheetAction.alloc initWithTitle:LocalizedString(@"standard", @"The Standard permission level in chat. With the standard permissions a participant can read and type messages in a chat.") detail:nil accessoryView:privilege == MEGAChatRoomPrivilegeStandard ? checkmarkImageView : nil image:[UIImage megaImageWithNamed:@"standard"] style:UIAlertActionStyleDefault actionHandler:^{
                 [MEGAChatSdk.shared updateChatPermissions:weakSelf.chatRoom.chatId userHandle:userHandle privilege:MEGAChatRoomPrivilegeStandard delegate:weakSelf];
             }]];
-            [actions addObject:[ActionSheetAction.alloc initWithTitle:LocalizedString(@"readOnly", @"Permissions given to the user you share your folder with") detail:nil accessoryView:privilege == MEGAChatRoomPrivilegeRo ? checkmarkImageView : nil image:[UIImage imageNamed:@"readOnly_chat"] style:UIAlertActionStyleDefault actionHandler:^{
+            [actions addObject:[ActionSheetAction.alloc initWithTitle:LocalizedString(@"readOnly", @"Permissions given to the user you share your folder with") detail:nil accessoryView:privilege == MEGAChatRoomPrivilegeRo ? checkmarkImageView : nil image:[UIImage megaImageWithNamed:@"readOnly_chat"] style:UIAlertActionStyleDefault actionHandler:^{
                 [MEGAChatSdk.shared updateChatPermissions:weakSelf.chatRoom.chatId userHandle:userHandle privilege:MEGAChatRoomPrivilegeRo delegate:weakSelf];
             }]];
             
             if (peerEmail) {
                 MEGAUser *user = [MEGASdk.shared contactForEmail:peerEmail];
                 if (!user || user.visibility != MEGAUserVisibilityVisible) {
-                    [actions addObject:[ActionSheetAction.alloc initWithTitle:LocalizedString(@"addContact", @"Alert title shown when you select to add a contact inserting his/her email") detail:nil image:[UIImage imageNamed:@"add"] style:UIAlertActionStyleDefault actionHandler:^{
+                    [actions addObject:[ActionSheetAction.alloc initWithTitle:LocalizedString(@"addContact", @"Alert title shown when you select to add a contact inserting his/her email") detail:nil image:[UIImage megaImageWithNamed:@"add"] style:UIAlertActionStyleDefault actionHandler:^{
                         if (MEGAReachabilityManager.isReachableHUDIfNot) {
                             MEGAInviteContactRequestDelegate *inviteContactRequestDelegate = [MEGAInviteContactRequestDelegate.alloc initWithNumberOfRequests:1];
                             [MEGASdk.shared inviteContactWithEmail:peerEmail message:@"" action:MEGAInviteActionAdd delegate:inviteContactRequestDelegate];
@@ -390,7 +390,7 @@
                 }
             
             }
-            [actions addObject:[ActionSheetAction.alloc initWithTitle:LocalizedString(@"removeParticipant", @"A button title which removes a participant from a chat.") detail:nil image:[UIImage imageNamed:@"delete"] style:UIAlertActionStyleDestructive actionHandler:^{
+            [actions addObject:[ActionSheetAction.alloc initWithTitle:LocalizedString(@"removeParticipant", @"A button title which removes a participant from a chat.") detail:nil image:[UIImage megaImageWithNamed:@"delete"] style:UIAlertActionStyleDestructive actionHandler:^{
                 [MEGAChatSdk.shared removeFromChat:self.chatRoom.chatId userHandle:userHandle delegate:weakSelf];
             }]];
         } else {
@@ -496,7 +496,7 @@
             break;
             
         case GroupChatDetailsSectionRenameGroup:
-            cell.leftImageView.image = [UIImage imageNamed:@"rename"];
+            cell.leftImageView.image = [UIImage megaImageWithNamed:@"rename"];
             cell.leftImageView.tintColor = [self iconPrimaryColor];
             cell.nameLabel.text = self.chatRoom.isMeeting
                 ? LocalizedString(@"meetings.info.renameMeeting", @"The title of a menu button which allows users to rename a meeting.")
@@ -504,13 +504,13 @@
             break;
             
         case GroupChatDetailsSectionSharedFiles:
-            cell.leftImageView.image = [UIImage imageNamed:@"sharedFiles"];
+            cell.leftImageView.image = [UIImage megaImageWithNamed:@"sharedFiles"];
             cell.nameLabel.text =  LocalizedString(@"Shared Files", @"Header of block with all shared files in chat.");
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             break;
             
         case GroupChatDetailsSectionGetChatLink:
-            cell.leftImageView.image = [UIImage imageNamed:@"link"];
+            cell.leftImageView.image = [UIImage megaImageWithNamed:@"link"];
             cell.nameLabel.text = self.chatRoom.isMeeting
                 ? LocalizedString(@"meetings.info.shareMeetingLink", @"Label in a cell where you can share the meeting link")
                 : LocalizedString(@"Get Chat Link", @"");
@@ -518,7 +518,7 @@
             break;
             
         case GroupChatDetailsSectionManageChatHistory:
-            cell.leftImageView.image = [UIImage imageNamed:@"clearChatHistory"];
+            cell.leftImageView.image = [UIImage megaImageWithNamed:@"clearChatHistory"];
             cell.nameLabel.text = self.chatRoom.isMeeting
                 ? LocalizedString(@"meetings.info.manageMeetingHistory", @"Text related with the section where you can manage the meeting history. There you can for example, clear the history or configure the retention setting.")
                 : LocalizedString(@"Manage Chat History", @"Text related with the section where you can manage the chat history. There you can for example, clear the history or configure the retention setting.");
@@ -526,7 +526,7 @@
             break;
             
         case GroupChatDetailsSectionArchiveChat:
-            cell.leftImageView.image = self.chatRoom.isArchived ? [UIImage imageNamed:@"unArchiveChat"] : [UIImage imageNamed:@"archiveChat"];
+            cell.leftImageView.image = self.chatRoom.isArchived ? [UIImage megaImageWithNamed:@"unArchiveChat"] : [UIImage megaImageWithNamed:@"archiveChat"];
             cell.leftImageView.tintColor = [self iconPrimaryColor];
             cell.nameLabel.text = self.chatRoom.isArchived ? LocalizedString(@"unarchiveChat", @"The title of the dialog to unarchive an archived chat.") : LocalizedString(@"archiveChat", @"Title of button to archive chats.");
             [cell setDestructive:NO];
@@ -545,7 +545,7 @@
         }
         
         case GroupChatDetailsSectionEndCallForAll:
-            cell.leftImageView.image = [UIImage imageNamed:@"endCall"];
+            cell.leftImageView.image = [UIImage megaImageWithNamed:@"endCall"];
             cell.leftImageView.tintColor = [self iconRedColor];
             cell.leftImageView.contentMode = UIViewContentModeScaleAspectFit;
             cell.nameLabel.text = LocalizedString(@"meetings.endCall.endForAllButtonTitle", @"Button title that ends the call for all the participants.");
@@ -568,7 +568,7 @@
             
         case GroupChatDetailsSectionObservers:
             cell = [self.tableView dequeueReusableCellWithIdentifier:@"GroupChatDetailsObserversTypeID" forIndexPath:indexPath];
-            cell.leftImageView.image = [UIImage imageNamed:@"chatObservers"];
+            cell.leftImageView.image = [UIImage megaImageWithNamed:@"chatObservers"];
             cell.emailLabel.text = LocalizedString(@"Observers", @"Users previewing a public chat");
             cell.rightLabel.text = [NSString stringWithFormat:@"%tu", self.chatRoom.previewersCount];
             break;
@@ -648,15 +648,15 @@
                     break;
                     
                 case MEGAChatRoomPrivilegeRo:
-                    permissionsImage = [UIImage imageNamed:@"readOnly_chat"];
+                    permissionsImage = [UIImage megaImageWithNamed:@"readOnly_chat"];
                     break;
                     
                 case MEGAChatRoomPrivilegeStandard:
-                    permissionsImage = [UIImage imageNamed:@"standard"];
+                    permissionsImage = [UIImage megaImageWithNamed:@"standard"];
                     break;
                     
                 case MEGAChatRoomPrivilegeModerator:
-                    permissionsImage = [UIImage imageNamed:@"moderator"];
+                    permissionsImage = [UIImage megaImageWithNamed:@"moderator"];
                     break;
             }
             [cell.permissionsButton setImage:permissionsImage forState:UIControlStateNormal];
@@ -921,7 +921,7 @@
                 
             case GroupChatDetailsSectionEncryptedKeyRotation: {
                 CustomModalAlertViewController *customModalAlertVC = [[CustomModalAlertViewController alloc] init];
-                customModalAlertVC.image = [UIImage imageNamed:@"lock"];
+                customModalAlertVC.image = [UIImage megaImageWithNamed:@"lock"];
                 customModalAlertVC.viewTitle = LocalizedString(@"Enable Encrypted Key Rotation", @"Title show in a cell where the users can enable the 'Encrypted Key Rotation'");
                 customModalAlertVC.detail = LocalizedString(@"Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages.", @"Footer text to explain what means 'Encrypted Key Rotation'");
                 customModalAlertVC.firstButtonTitle = LocalizedString(@"enable", @"");
@@ -1020,7 +1020,7 @@
             NSString *message = self.chatRoom.isMeeting
                 ? LocalizedString(@"meetings.info.manageMeetingHistory.meetingHistoryHasBeenCleared", @"Message show when the history of a meeting has been successfully deleted")
                 : LocalizedString(@"Chat History has Been Cleared", @"Message show when the history of a chat has been successfully deleted");
-            [SVProgressHUD showImage:[UIImage imageNamed:@"clearChatHistory"] status:message];
+            [SVProgressHUD showImage:[UIImage megaImageWithNamed:@"clearChatHistory"] status:message];
             break;
         }
             

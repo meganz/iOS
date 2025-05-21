@@ -3,6 +3,7 @@ import Foundation
 import MEGAAnalyticsiOS
 import MEGAAppPresentation
 import MEGAAppSDKRepo
+import MEGAAssets
 import MEGADesignToken
 import MEGADomain
 import MEGAL10n
@@ -109,7 +110,7 @@ extension MEGAAVViewController {
     
     @objc func configureActivityIndicator() {
         activityIndicator = UIActivityIndicatorView(style: .large)
-        activityIndicator.color = UIColor.whiteFFFFFF
+        activityIndicator.color = MEGAAssets.UIColor.whiteFFFFFF
         activityIndicator.hidesWhenStopped = true
         
         addLoadingViewAsVideoPlayerSubview(activityIndicator)

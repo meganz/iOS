@@ -1,5 +1,6 @@
 import MEGAAppPresentation
 import MEGAAppSDKRepo
+import MEGAAssets
 import MEGADomain
 import MEGAL10n
 import MEGAPermissions
@@ -82,7 +83,7 @@ class FilesExplorerContainerViewController: UIViewController, TextFileEditable {
     
     func showSelectAllBarButton() {
         navigationItem.leftBarButtonItem = UIBarButtonItem(
-            image: UIImage.selectAllItems,
+            image: MEGAAssets.UIImage.selectAllItems,
             style: .plain,
             target: self,
             action: #selector(selectAllButtonPressed(_:))
@@ -129,10 +130,10 @@ class FilesExplorerContainerViewController: UIViewController, TextFileEditable {
     }
     
     private func configureNavigationBarButtons() {
-        contextBarButtonItem.image = UIImage.moreList
+        contextBarButtonItem.image = MEGAAssets.UIImage.moreList
         
         if viewModel.getExplorerType() == .allDocs {
-            uploadAddBarButonItem.image = UIImage.navigationbarAdd
+            uploadAddBarButonItem.image = MEGAAssets.UIImage.navigationbarAdd
 
             navigationItem.rightBarButtonItems = [contextBarButtonItem, uploadAddBarButonItem]
         } else {

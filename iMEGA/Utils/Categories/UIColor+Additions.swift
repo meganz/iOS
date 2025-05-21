@@ -1,5 +1,6 @@
 import Foundation
 import MEGAAppPresentation
+import MEGAAssets
 import MEGADesignToken
 
 extension UIColor {
@@ -31,12 +32,12 @@ extension UIColor {
     ) -> UIColor {
         switch traitCollection.userInterfaceStyle {
         case .unspecified, .light:
-            return UIColor.whiteFFFFFF
+            return MEGAAssets.UIColor.whiteFFFFFF
         case .dark:
-            return UIColor.black2C2C2E
+            return MEGAAssets.UIColor.black2C2C2E
             
         @unknown default:
-            return UIColor.whiteFFFFFF
+            return MEGAAssets.UIColor.whiteFFFFFF
         }
     }
     
@@ -57,13 +58,13 @@ extension UIColor {
     ) -> UIColor {
         switch traitCollection.userInterfaceStyle {
         case .unspecified, .light:
-            return UIColor.proAccountRedProIII
+            return MEGAAssets.UIColor.proAccountRedProIII
             
         case .dark:
-            return UIColor.whiteFFFFFF
+            return MEGAAssets.UIColor.whiteFFFFFF
             
         @unknown default:
-            return UIColor.proAccountRedProIII
+            return MEGAAssets.UIColor.proAccountRedProIII
         }
     }
     
@@ -72,11 +73,11 @@ extension UIColor {
     ) -> UIColor {
         switch traitCollection.userInterfaceStyle {
         case .unspecified, .light:
-            return UIColor.whiteFFFFFF
+            return MEGAAssets.UIColor.whiteFFFFFF
         case .dark:
-            return  UIColor.black1C1C1E
+            return  MEGAAssets.UIColor.black1C1C1E
         @unknown default:
-            return UIColor.whiteFFFFFF
+            return MEGAAssets.UIColor.whiteFFFFFF
         }
     }
     
@@ -105,16 +106,16 @@ extension UIColor {
             proLevelColor = UIColor.systemGreen
             
         case MEGAAccountType.lite:
-            proLevelColor = .proAccountLITE
+            proLevelColor = MEGAAssets.UIColor.proAccountLITE
             
         case MEGAAccountType.proI:
-            proLevelColor = .proAccountRedProI
+            proLevelColor = MEGAAssets.UIColor.proAccountRedProI
             
         case MEGAAccountType.proII:
-            proLevelColor = .proAccountRedProII
+            proLevelColor = MEGAAssets.UIColor.proAccountRedProII
             
         case MEGAAccountType.proIII:
-            proLevelColor = .proAccountRedProIII
+            proLevelColor = MEGAAssets.UIColor.proAccountRedProIII
             
         default:
             proLevelColor = nil
@@ -132,7 +133,7 @@ extension UIColor {
             proLevelColor = UIColor.systemGreen
             
         case MEGAAccountType.lite:
-            proLevelColor = .proAccountLITE
+            proLevelColor = MEGAAssets.UIColor.proAccountLITE
             
         case MEGAAccountType.proI, MEGAAccountType.proII, MEGAAccountType.proIII:
             proLevelColor = UIColor.mnz_red()
@@ -182,7 +183,7 @@ extension UIColor {
     // MARK: Gray
     
     @objc class func mnz_grayDBDBDB() -> UIColor {
-        UIColor.grayDBDBDB
+        MEGAAssets.UIColor.grayDBDBDB
     }
     
     @objc class func iconSecondaryColor() -> UIColor {
@@ -197,13 +198,13 @@ extension UIColor {
     ) -> UIColor {
         switch traitCollection.userInterfaceStyle {
         case .unspecified, .light:
-            return UIColor.grayBBBBBB
+            return MEGAAssets.UIColor.grayBBBBBB
             
         case .dark:
-            return UIColor.grayE2E2E2
+            return MEGAAssets.UIColor.grayE2E2E2
             
         @unknown default:
-            return UIColor.whiteFFFFFF
+            return MEGAAssets.UIColor.whiteFFFFFF
         }
     }
     
@@ -220,7 +221,7 @@ extension UIColor {
     // MARK: White
     
     @objc class func mnz_whiteFFFFFF() -> UIColor {
-        UIColor.whiteFFFFFF
+        MEGAAssets.UIColor.whiteFFFFFF
     }
     
     // MARK: Text color

@@ -105,6 +105,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [self configureImages];
+    
     //White background for the view behind the table view
     self.tableView.backgroundView = UIView.alloc.init;
     
@@ -212,6 +214,11 @@
 
 
 #pragma mark - Private
+
+- (void)configureImages {
+    self.addBarButtonItem.image = [UIImage megaImageWithNamed:@"addContact"];
+    self.selectAllBarButtonItem.image = [UIImage megaImageWithNamed:@"selectAllItems"];
+}
 
 - (void)setupContacts {
     [self setupWarningHeader];
@@ -570,13 +577,13 @@
     __weak __typeof__(self) weakSelf = self;
     
     NSMutableArray<ActionSheetAction *> *actions = NSMutableArray.new;
-    [actions addObject:[ActionSheetAction.alloc initWithTitle:LocalizedString(@"fullAccess", @"Permissions given to the user you share your folder with") detail:nil image:[UIImage imageNamed:@"fullAccessPermissions"] style:UIAlertActionStyleDefault actionHandler:^{
+    [actions addObject:[ActionSheetAction.alloc initWithTitle:LocalizedString(@"fullAccess", @"Permissions given to the user you share your folder with") detail:nil image:[UIImage megaImageWithNamed:@"fullAccessPermissions"] style:UIAlertActionStyleDefault actionHandler:^{
         [weakSelf shareNodesWithLevel:MEGAShareTypeAccessFull];
     }]];
-    [actions addObject:[ActionSheetAction.alloc initWithTitle:LocalizedString(@"readAndWrite", @"Permissions given to the user you share your folder with") detail:nil image:[UIImage imageNamed:@"readWritePermissions"] style:UIAlertActionStyleDefault actionHandler:^{
+    [actions addObject:[ActionSheetAction.alloc initWithTitle:LocalizedString(@"readAndWrite", @"Permissions given to the user you share your folder with") detail:nil image:[UIImage megaImageWithNamed:@"readWritePermissions"] style:UIAlertActionStyleDefault actionHandler:^{
         [weakSelf shareNodesWithLevel:MEGAShareTypeAccessReadWrite];
     }]];
-    [actions addObject:[ActionSheetAction.alloc initWithTitle:LocalizedString(@"readOnly", @"Permissions given to the user you share your folder with") detail:nil image:[UIImage imageNamed:@"readPermissions"] style:UIAlertActionStyleDefault actionHandler:^{
+    [actions addObject:[ActionSheetAction.alloc initWithTitle:LocalizedString(@"readOnly", @"Permissions given to the user you share your folder with") detail:nil image:[UIImage megaImageWithNamed:@"readPermissions"] style:UIAlertActionStyleDefault actionHandler:^{
         [weakSelf shareNodesWithLevel:MEGAShareTypeAccessRead];
     }]];
     ActionSheetViewController *shareFolderActionSheet = [ActionSheetViewController.alloc initWithActions:actions headerTitle:LocalizedString(@"permissions", @"Title of the view that shows the kind of permissions (Read Only, Read & Write or Full Access) that you can give to a shared folder") dismissCompletion:nil sender:sender];
@@ -1894,15 +1901,15 @@
         }
         if (self.searchController.isActive) {
             if (self.searchController.searchBar.text.length > 0) {
-                return [UIImage imageNamed:@"searchEmptyState"];
+                return [UIImage megaImageWithNamed:@"searchEmptyState"];
             } else {
                 return nil;
             }
         } else {
-            return [UIImage imageNamed:@"contactsEmptyState"];
+            return [UIImage megaImageWithNamed:@"contactsEmptyState"];
         }
     } else {
-        return [UIImage imageNamed:@"noInternetEmptyState"];
+        return [UIImage megaImageWithNamed:@"noInternetEmptyState"];
     }
 }
 

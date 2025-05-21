@@ -1,3 +1,4 @@
+import MEGAAssets
 import MEGAL10n
 import MEGASwiftUI
 import SwiftUI
@@ -29,7 +30,7 @@ struct ListViewContainer<Content>: View where Content: View {
                     }
             } else {
                 ContentUnavailableView(label: {
-                    Image("noInternetEmptyState")
+                    MEGAAssets.Image.noInternetEmptyState
                 }, description: {
                     Text(Strings.Localizable.noInternetConnection)
                 })
@@ -44,18 +45,20 @@ struct ListViewContainer<Content>: View where Content: View {
         ActionSheetContentView(
             headerView:
                 ActionSheetHeaderView(
-                    headerIcon: Image(selectedItem.assets.iconName, bundle: .module),
+                    headerIcon: MEGAAssets.Image.image(named: selectedItem.assets.iconName),
                     title: selectedItem.name,
-                    subtitleIcon: Image(selectedItem.assets.statusAssets.iconName, bundle: .module),
+                    subtitleIcon: MEGAAssets.Image.image(named: selectedItem.assets.statusAssets.iconName),
                     subtitle: selectedItem.assets.statusAssets.title,
                     subtitleColor: selectedItem.assets.statusAssets.color
                 ),
             actionButtons: {
                 selectedItem.availableActions.compactMap { action in
                     ActionSheetButton(
-                        icon: action.icon,
+                        id: action.id,
+                        icon: MEGAAssets.Image.image(named: action.icon),
                         title: action.title,
                         subtitle: action.dynamicSubtitle?() ?? action.subtitle,
+                        disclosureIcon: MEGAAssets.Image.standardDisclosureIndicatorDesignToken,
                         action: {
                             Task {
                                 await selectedItem.executeAction(action.type)

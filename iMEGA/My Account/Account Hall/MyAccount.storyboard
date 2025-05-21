@@ -412,6 +412,7 @@
                         <outlet property="tableFooterLabel" destination="3a0-Df-3mq" id="gyK-EJ-eOU"/>
                         <outlet property="tableFooterView" destination="JUo-jI-gO6" id="4g1-J9-aYK"/>
                         <outlet property="tableView" destination="Yui-UF-WIL" id="dT7-Ok-gtJ"/>
+                        <outlet property="userManagementImageView" destination="cVm-9w-5M9" id="Wl5-EG-j2e"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="E84-JO-55A" userLabel="First Responder" sceneMemberID="firstResponder"/>

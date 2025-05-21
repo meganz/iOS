@@ -1,4 +1,5 @@
 import Foundation
+import MEGAAssets
 import MEGADomain
 import MEGAL10n
 
@@ -29,7 +30,7 @@ extension MEGAChatListItem {
     }
     
     @objc func noteToSelfImage() -> UIImage {
-        lastMessageId == .invalid ? .noteToSelfSmall : .noteToSelfBlue
+        lastMessageId == .invalid ? MEGAAssets.UIImage.noteToSelfSmall : MEGAAssets.UIImage.noteToSelfBlue
     }
     
     private func nickName(forHandle handle: HandleEntity?) -> String? {

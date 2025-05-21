@@ -1,4 +1,5 @@
 import MEGAAppSDKRepo
+import MEGAAssets
 import MEGADomain
 import MEGARepo
 import UIKit
@@ -78,11 +79,11 @@ final class ShareExtensionCancellableTransferRouter: NSObject, CancellableTransf
     func transferCompletedWithError(error: String, dismiss: Bool) {
         if dismiss {
             presenter?.dismiss(animated: true, completion: {
-                SVProgressHUD.show(UIImage.hudDownload, status: error)
+                SVProgressHUD.show(MEGAAssets.UIImage.hudDownload, status: error)
                 self.finishShareExtensionIfNeeded()
             })
         } else {
-            SVProgressHUD.show(UIImage.hudDownload, status: error)
+            SVProgressHUD.show(MEGAAssets.UIImage.hudDownload, status: error)
             self.finishShareExtensionIfNeeded()
         }
     }

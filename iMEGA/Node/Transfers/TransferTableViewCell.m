@@ -196,7 +196,7 @@
             
             self.infoLabel.textColor = [UIColor mnz_secondaryTextColor];
             self.infoLabel.text = LocalizedString(@"queued", @"Queued");
-            [self.pauseButton setImage:[UIImage imageNamed:@"pauseTransfers"] forState:UIControlStateNormal];
+            [self.pauseButton setImage:[UIImage megaImageWithNamed:@"pauseTransfers"] forState:UIControlStateNormal];
             self.pauseButton.hidden = self.cancelButton.hidden = NO;
             break;
         }
@@ -207,7 +207,7 @@
             [self setTransferStateIcon:defaultImage color:typeColor];
             [self.arrowImageView setNeedsDisplay];
             
-            [self.pauseButton setImage:[UIImage imageNamed:@"pauseTransfers"] forState:UIControlStateNormal];
+            [self.pauseButton setImage:[UIImage megaImageWithNamed:@"pauseTransfers"] forState:UIControlStateNormal];
             self.pauseButton.hidden = self.cancelButton.hidden = NO;
             if ([[NSUserDefaults standardUserDefaults] boolForKey:@"TransfersPaused"]) {
                 UIImage *queuedImage = (self.transfer.type == MEGATransferTypeDownload) ? UIImage.mnz_downloadQueuedTransferImage : UIImage.mnz_uploadQueuedTransferImage;
@@ -231,7 +231,7 @@
             NSMutableAttributedString *infoLabel = [self transferInfoAttributedString];
             [infoLabel appendAttributedString:status];
             self.infoLabel.attributedText = infoLabel;
-            [self.pauseButton setImage:[UIImage imageNamed:@"resumeTransfers"] forState:UIControlStateNormal];
+            [self.pauseButton setImage:[UIImage megaImageWithNamed:@"resumeTransfers"] forState:UIControlStateNormal];
             self.pauseButton.hidden = self.cancelButton.hidden = NO;
             break;
         }
@@ -315,7 +315,7 @@
             NSMutableAttributedString *infoLabel = [self transferInfoAttributedString];
             [infoLabel appendAttributedString:status];
             self.infoLabel.attributedText = infoLabel;
-            [self.pauseButton setImage:[UIImage imageNamed:@"pauseTransfers"] forState:UIControlStateNormal];
+            [self.pauseButton setImage:[UIImage megaImageWithNamed:@"pauseTransfers"] forState:UIControlStateNormal];
             self.pauseButton.hidden = self.cancelButton.hidden = NO;
             break;
         }

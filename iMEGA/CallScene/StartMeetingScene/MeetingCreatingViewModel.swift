@@ -1,6 +1,7 @@
 import Combine
 import MEGAAnalyticsiOS
 import MEGAAppPresentation
+import MEGAAssets
 import MEGADomain
 import MEGAL10n
 import MEGAPermissions
@@ -194,7 +195,7 @@ final class MeetingCreatingViewModel: ViewModelType {
             let avatarHandler = UserAvatarHandler(
                 userImageUseCase: userImageUseCase,
                 initials: meetingUseCase.username.initialForAvatar(),
-                avatarBackgroundColor: UIColor.colorFromHexString(avatarBackgroundHexColor) ?? UIColor.black000000
+                avatarBackgroundColor: UIColor.colorFromHexString(avatarBackgroundHexColor) ?? MEGAAssets.UIColor.black000000
             )
             
             Task { @MainActor in

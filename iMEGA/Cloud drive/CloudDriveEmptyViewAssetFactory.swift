@@ -1,4 +1,5 @@
 import MEGAAppPresentation
+import MEGAAssets
 import MEGADesignToken
 import MEGADomain
 import MEGAL10n
@@ -75,7 +76,7 @@ struct CloudDriveEmptyViewAssetFactory {
 
     private func defaultAssetForCloudDriveRootFolder(parentNode: NodeEntity) -> SearchConfig.EmptyViewAssets {
         .init(
-            image: Image(.cloudEmptyState),
+            image: MEGAAssets.Image.cloudEmptyState,
             title: Strings.Localizable.cloudDriveEmptyStateTitle,
             titleTextColor: titleTextColor,
             actions: makeDefaultActions(for: parentNode)
@@ -84,7 +85,7 @@ struct CloudDriveEmptyViewAssetFactory {
 
     private func defaultAssetForRubbishBinRootFolder() -> SearchConfig.EmptyViewAssets {
         .init(
-            image: Image(.rubbishEmptyState),
+            image: MEGAAssets.Image.rubbishEmptyState,
             title: Strings.Localizable.cloudDriveEmptyStateTitleRubbishBin,
             titleTextColor: titleTextColor
         )
@@ -92,7 +93,7 @@ struct CloudDriveEmptyViewAssetFactory {
 
     private func defaultAssetForRecentActionBucket() -> SearchConfig.EmptyViewAssets {
         .init(
-            image: Image(.searchEmptyState),
+            image: MEGAAssets.Image.searchEmptyState,
             title: Strings.Localizable.Home.Search.Empty.noChipSelected,
             titleTextColor: titleTextColor
         )
@@ -100,7 +101,7 @@ struct CloudDriveEmptyViewAssetFactory {
 
     private func defaultAssetForEmptyFolder(for parentNode: NodeEntity? = nil) -> SearchConfig.EmptyViewAssets {
         .init(
-            image: Image(.folderEmptyState),
+            image: MEGAAssets.Image.folderEmptyState,
             title: Strings.Localizable.emptyFolder,
             titleTextColor: titleTextColor,
             actions: makeDefaultActions(for: parentNode)
@@ -146,37 +147,37 @@ struct CloudDriveEmptyViewAssetFactory {
     }
 
     private func createTextFileMenuOption(for nodeEntity: NodeEntity) -> SearchConfig.EmptyViewAssets.MenuOption {
-        .init(title: Strings.Localizable.newTextFile, image: Image(.textfile)) {
+        .init(title: Strings.Localizable.newTextFile, image: MEGAAssets.Image.textfile) {
             perform(action: .newTextFile, for: nodeEntity)
         }
     }
 
     private func createNewFolderMenuOption(for nodeEntity: NodeEntity) -> SearchConfig.EmptyViewAssets.MenuOption {
-        .init(title: Strings.Localizable.newFolder, image: Image(.newFolder)) {
+        .init(title: Strings.Localizable.newFolder, image: MEGAAssets.Image.newFolder) {
             perform(action: .newFolder, for: nodeEntity)
         }
     }
 
     private func scanDocumentMenuOption(for nodeEntity: NodeEntity) -> SearchConfig.EmptyViewAssets.MenuOption {
-        .init(title: Strings.Localizable.scanDocument, image: Image(.scanDocument)) {
+        .init(title: Strings.Localizable.scanDocument, image: MEGAAssets.Image.scanDocument) {
             perform(action: .scanDocument, for: nodeEntity)
         }
     }
 
     private func importFromFilesMenuOption(for nodeEntity: NodeEntity) -> SearchConfig.EmptyViewAssets.MenuOption {
-        .init(title: Strings.Localizable.CloudDrive.Upload.importFromFiles, image: Image(.import)) {
+        .init(title: Strings.Localizable.CloudDrive.Upload.importFromFiles, image: MEGAAssets.Image.import) {
             perform(action: .importFrom, for: nodeEntity)
         }
     }
 
     private func capturePhotoVideoMenuOption(for nodeEntity: NodeEntity) -> SearchConfig.EmptyViewAssets.MenuOption {
-        .init(title: Strings.Localizable.capturePhotoVideo, image: Image(.capture)) {
+        .init(title: Strings.Localizable.capturePhotoVideo, image: MEGAAssets.Image.capture) {
             perform(action: .capture, for: nodeEntity)
         }
     }
 
     private func choosePhotoVideoMenuOption(for nodeEntity: NodeEntity) -> SearchConfig.EmptyViewAssets.MenuOption {
-        .init(title: Strings.Localizable.choosePhotoVideo, image: Image(.saveToPhotos)) {
+        .init(title: Strings.Localizable.choosePhotoVideo, image: MEGAAssets.Image.saveToPhotos) {
             perform(action: .chooseFromPhotos, for: nodeEntity)
         }
     }

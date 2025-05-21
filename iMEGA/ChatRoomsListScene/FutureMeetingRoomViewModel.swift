@@ -1,8 +1,10 @@
 import Combine
 import MEGAAnalyticsiOS
 import MEGAAppPresentation
+import MEGAAssets
 import MEGADomain
 import MEGAL10n
+import SwiftUI
 
 @MainActor
 final class FutureMeetingRoomViewModel: ObservableObject, Identifiable {
@@ -428,7 +430,7 @@ extension FutureMeetingRoomViewModel {
     private var startOrJoinMeetingContextMenuOption: ChatRoomContextMenuOption {
         ChatRoomContextMenuOption(
             title: existsInProgressCallInChatRoom ? Strings.Localizable.Meetings.Scheduled.ContextMenu.joinMeeting : Strings.Localizable.Meetings.Scheduled.ContextMenu.startMeeting,
-            image: existsInProgressCallInChatRoom ? .joinMeeting2 : .startMeeting2
+            image: existsInProgressCallInChatRoom ? MEGAAssets.Image.joinMeeting2 : MEGAAssets.Image.startMeeting2
         ) { [weak self] in
             guard let self else { return }
             startOrJoinMeetingTapped()
@@ -438,7 +440,7 @@ extension FutureMeetingRoomViewModel {
     private var editContextMenuOption: ChatRoomContextMenuOption {
         ChatRoomContextMenuOption(
             title: Strings.Localizable.edit,
-            image: .editMeeting
+            image: MEGAAssets.Image.editMeeting
         ) {
             self.tracker.trackAnalyticsEvent(with: ScheduledMeetingEditMenuItemEvent())
             self.router.edit(scheduledMeeting: self.scheduledMeeting)
@@ -448,7 +450,7 @@ extension FutureMeetingRoomViewModel {
     private var occurrenceContextMenuOption: ChatRoomContextMenuOption {
         return ChatRoomContextMenuOption(
             title: Strings.Localizable.Meetings.Scheduled.ContextMenu.occurrences,
-            image: .occurrences
+            image: MEGAAssets.Image.occurrences
         ) {
             self.showOccurrences()
         }
@@ -457,7 +459,7 @@ extension FutureMeetingRoomViewModel {
     private var cancelContextMenuOption: ChatRoomContextMenuOption {
         return ChatRoomContextMenuOption(
             title: Strings.Localizable.Meetings.Scheduled.ContextMenu.cancel,
-            image: .rubbishBin
+            image: MEGAAssets.Image.rubbishBin
         ) {
             self.tracker.trackAnalyticsEvent(with: ScheduledMeetingCancelMenuItemEvent())
             self.cancelMeeting()
@@ -468,7 +470,7 @@ extension FutureMeetingRoomViewModel {
         let isDNDEnabled = chatNotificationControl.isChatDNDEnabled(chatId: scheduledMeeting.chatId)
         return ChatRoomContextMenuOption(
             title: isDNDEnabled ? Strings.Localizable.unmute : Strings.Localizable.mute,
-            image: .mutedChat
+            image: MEGAAssets.Image.mutedChat
         ) { [weak self] in
             guard let self else { return }
             self.toggleDND()
@@ -478,7 +480,7 @@ extension FutureMeetingRoomViewModel {
     private var infoChatContextMenuOption: ChatRoomContextMenuOption {
         ChatRoomContextMenuOption(
             title: Strings.Localizable.info,
-            image: .info
+            image: MEGAAssets.Image.info
         ) { [weak self] in
             guard let self else { return }
             self.showChatRoomInfo()
@@ -488,7 +490,7 @@ extension FutureMeetingRoomViewModel {
     private var archiveChatContextMenuOption: ChatRoomContextMenuOption {
         ChatRoomContextMenuOption(
             title: Strings.Localizable.archiveChat,
-            image: .archiveChatMenu
+            image: MEGAAssets.Image.archiveChatMenu
         ) { [weak self] in
             guard let self else { return }
             archiveChatRoom(afterCancelMeeting: false)

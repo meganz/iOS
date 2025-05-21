@@ -1,4 +1,5 @@
 import CallKit
+import MEGAAssets
 
 struct DefaultCXProviderFactory {
     private var providerConfig: CXProviderConfiguration {
@@ -7,7 +8,7 @@ struct DefaultCXProviderFactory {
         providerConfig.maximumCallsPerCallGroup = 1
         providerConfig.maximumCallGroups = 1
         providerConfig.supportedHandleTypes = [.generic, .emailAddress]
-        providerConfig.iconTemplateImageData = UIImage.megaIconCall.pngData()
+        providerConfig.iconTemplateImageData = MEGAAssets.UIImage.megaIconCall.pngData()
         return providerConfig
     }
     func build() -> CXProvider {

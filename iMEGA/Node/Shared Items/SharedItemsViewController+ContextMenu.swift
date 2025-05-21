@@ -1,5 +1,6 @@
 import Foundation
 import MEGAAppSDKRepo
+import MEGAAssets
 import MEGADomain
 import MEGAL10n
 
@@ -16,7 +17,7 @@ extension SharedItemsViewController: DisplayMenuDelegate {
             }
         } actionProvider: { _ in
             let selectAction = UIAction(title: Strings.Localizable.select,
-                                        image: UIImage.selectItem) { _ in
+                                        image: MEGAAssets.UIImage.selectItem) { _ in
                 self.didTapSelect()
                 tableView.selectRow(at: indexPath, animated: true, scrollPosition: .none)
                 tableView.delegate?.tableView?(tableView, didSelectRowAt: indexPath)
@@ -49,7 +50,7 @@ extension SharedItemsViewController: DisplayMenuDelegate {
         } else {
             contextMenuManager = ContextMenuManager(displayMenuDelegate: self, createContextMenuUseCase: CreateContextMenuUseCase(repo: CreateContextMenuRepository.newRepo))
             
-            contextBarButtonItem = UIBarButtonItem(image: UIImage.moreNavigationBar,
+            contextBarButtonItem = UIBarButtonItem(image: MEGAAssets.UIImage.moreNavigationBar,
                                                    menu: contextMenuManager?.contextMenu(with: contextMenuConfiguration()))
             
             contextBarButtonItem.accessibilityLabel = Strings.Localizable.more

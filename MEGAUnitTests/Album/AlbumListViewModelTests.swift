@@ -4,6 +4,7 @@ import ContentLibraries
 import MEGAAnalyticsiOS
 import MEGAAppPresentation
 import MEGAAppPresentationMock
+import MEGAAssets
 import MEGADomain
 import MEGADomainMock
 import MEGAL10n
@@ -485,7 +486,7 @@ final class AlbumListViewModelTests: XCTestCase {
         
         let targetMsg = Strings.Localizable.CameraUploads.Albums.deleteAlbumSuccess(albums.count)
         
-        XCTAssertEqual(sut.albumHudMessage, AlbumHudMessage(message: targetMsg, icon: UIImage.hudMinus))
+        XCTAssertEqual(sut.albumHudMessage, AlbumHudMessage(message: targetMsg, icon: MEGAAssets.UIImage.hudMinus))
         XCTAssertFalse(photoAlbumContainerViewModel.editMode.isEditing)
     }
     
@@ -504,7 +505,7 @@ final class AlbumListViewModelTests: XCTestCase {
         
         let targetMsg = Strings.Localizable.CameraUploads.Albums.deleteAlbumSuccess(albums.count)
         
-        XCTAssertEqual(sut.albumHudMessage, AlbumHudMessage(message: targetMsg, icon: UIImage.hudMinus))
+        XCTAssertEqual(sut.albumHudMessage, AlbumHudMessage(message: targetMsg, icon: MEGAAssets.UIImage.hudMinus))
         XCTAssertFalse(photoAlbumContainerViewModel.editMode.isEditing)
     }
     
@@ -602,7 +603,7 @@ final class AlbumListViewModelTests: XCTestCase {
         
         let targetMsg = Strings.Localizable.CameraUploads.Albums.removeShareLinkSuccessMessage(albums.count)
         
-        XCTAssertEqual(sut.albumHudMessage, AlbumHudMessage(message: targetMsg, icon: UIImage.hudSuccess))
+        XCTAssertEqual(sut.albumHudMessage, AlbumHudMessage(message: targetMsg, icon: MEGAAssets.UIImage.hudSuccess))
         XCTAssertFalse(photoAlbumContainerViewModel.editMode.isEditing)
     }
     
@@ -623,7 +624,7 @@ final class AlbumListViewModelTests: XCTestCase {
         
         let targetMsg = Strings.Localizable.CameraUploads.Albums.removeShareLinkSuccessMessage(1)
         
-        XCTAssertEqual(sut.albumHudMessage, AlbumHudMessage(message: targetMsg, icon: UIImage.hudSuccess))
+        XCTAssertEqual(sut.albumHudMessage, AlbumHudMessage(message: targetMsg, icon: MEGAAssets.UIImage.hudSuccess))
         XCTAssertFalse(photoAlbumContainerViewModel.editMode.isEditing)
     }
     

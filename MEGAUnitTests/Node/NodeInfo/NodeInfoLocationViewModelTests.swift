@@ -1,4 +1,5 @@
 @testable import MEGA
+import MEGAAssets
 import MEGADomain
 import MEGADomainMock
 import MEGAL10n
@@ -13,7 +14,7 @@ final class NodeInfoLocationViewModelTests: XCTestCase {
         let (sut, _) = sut(node: .noLocation)
         XCTAssertEqual(
             sut.viewState,
-            .empty(icon: Image(uiImage: .info), label: Strings.Localizable.CloudDrive.Info.Node.noLocation))
+            .empty(icon: MEGAAssets.Image.info, label: Strings.Localizable.CloudDrive.Info.Node.noLocation))
     }
     
     func testInit_whenLocationIsNotNil_viewStateEqualLoading() {
@@ -28,13 +29,13 @@ final class NodeInfoLocationViewModelTests: XCTestCase {
         
         XCTAssertEqual(
             sut.viewState,
-            .empty(icon: Image(uiImage: .info), label: Strings.Localizable.CloudDrive.Info.Node.noLocation))
+            .empty(icon: MEGAAssets.Image.info, label: Strings.Localizable.CloudDrive.Info.Node.noLocation))
         
         await sut.onViewAppear()
         
         XCTAssertEqual(
             sut.viewState,
-            .empty(icon: Image(uiImage: .info), label: Strings.Localizable.CloudDrive.Info.Node.noLocation))
+            .empty(icon: MEGAAssets.Image.info, label: Strings.Localizable.CloudDrive.Info.Node.noLocation))
     }
     
     @MainActor

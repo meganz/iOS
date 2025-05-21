@@ -2,9 +2,11 @@ import Combine
 import MEGAAnalyticsiOS
 import MEGAAppPresentation
 import MEGAAppSDKRepo
+import MEGAAssets
 import MEGADomain
 import MEGAL10n
 import MEGAPermissions
+import SwiftUI
 
 protocol WaitingRoomViewRouting: Routing {
     func dismiss(completion: (() -> Void)?)
@@ -55,7 +57,7 @@ final class WaitingRoomViewModel: ObservableObject {
     @Published var isVideoEnabled = false
     @Published var isMicrophoneMuted = true
     @Published var isSpeakerEnabled = true
-    @Published var speakerOnIcon: ImageResource = .callControlSpeakerEnabled
+    @Published var speakerOnIcon: Image = MEGAAssets.Image.callControlSpeakerEnabled
     @Published var isBluetoothAudioRouteAvailable = false
     @Published var screenSize: CGSize = .zero {
         didSet {
@@ -323,10 +325,10 @@ final class WaitingRoomViewModel: ObservableObject {
             isSpeakerEnabled = false
         case .headphones, .builtInSpeaker:
             isSpeakerEnabled = true
-            speakerOnIcon = .callControlSpeakerEnabled
+            speakerOnIcon = MEGAAssets.Image.callControlSpeakerEnabled
         default:
             isSpeakerEnabled = isBluetoothAudioRouteAvailable
-            speakerOnIcon = isBluetoothAudioRouteAvailable ? .speakerOnBluetooth : .callControlSpeakerEnabled
+            speakerOnIcon = isBluetoothAudioRouteAvailable ? MEGAAssets.Image.speakerOnBluetooth : MEGAAssets.Image.callControlSpeakerEnabled
         }
     }
     
@@ -377,7 +379,7 @@ final class WaitingRoomViewModel: ObservableObject {
         let avatarHandler = UserAvatarHandler(
             userImageUseCase: userImageUseCase,
             initials: meetingUseCase.username.initialForAvatar(),
-            avatarBackgroundColor: UIColor.colorFromHexString(avatarBackgroundHexColor) ?? UIColor.black000000
+            avatarBackgroundColor: UIColor.colorFromHexString(avatarBackgroundHexColor) ?? MEGAAssets.UIColor.black000000
         )
         
         Task { @MainActor in

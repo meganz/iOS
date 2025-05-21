@@ -1,3 +1,4 @@
+import MEGAAssets
 import MEGADesignToken
 import MEGAL10n
 import UIKit
@@ -74,7 +75,7 @@ class RichPreviewContentView: UIView {
                 titleLabel.text = node?.name
                 descriptionLabel.text = String.memoryStyleString(fromByteCount: Int64(truncating: node?.size ?? 0))
                 linkLabel.text = "mega.nz"
-                iconImageView.image = UIImage(resource: .favicon)
+                iconImageView.image = MEGAAssets.UIImage.favicon
                 if let node = node {
                     imageView.mnz_setThumbnail(by: node)
                 }
@@ -82,15 +83,15 @@ class RichPreviewContentView: UIView {
                 titleLabel.text = message.richTitle
                 descriptionLabel.text = String(format: "%@\n%@", message.richString ?? "", String.memoryStyleString(fromByteCount: max(message.richNumber?.int64Value ?? 0, 0)))
                 linkLabel.text = "mega.nz"
-                iconImageView.image = UIImage(resource: .favicon)
+                iconImageView.image = MEGAAssets.UIImage.favicon
                 imageView.image = UIImage.mnz_folder()
                 
             case .publicChatLink:
                 titleLabel.text = message.richString
                 descriptionLabel.text = "\(message.richNumber?.int64Value ?? 0) \(Strings.Localizable.participants)"
                 linkLabel.text = "mega.nz"
-                iconImageView.image = UIImage(resource: .favicon)
-                imageView.image = UIImage(resource: .groupChat)
+                iconImageView.image = MEGAAssets.UIImage.favicon
+                imageView.image = MEGAAssets.UIImage.groupChat
                 
             default:
                 break

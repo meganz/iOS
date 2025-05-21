@@ -62,7 +62,7 @@ public struct NotificationSettingsView: View {
                     MEGAList(
                         title: preset.displayName
                     )
-                    .trailingImage(icon: MEGAAssetsImageProvider.image(named: .check))
+                    .trailingImage(icon: MEGAAssets.Image.check)
                     .trailingImageHidden(viewModel.currentMuteNotificationPreset != preset)
                 })
             }

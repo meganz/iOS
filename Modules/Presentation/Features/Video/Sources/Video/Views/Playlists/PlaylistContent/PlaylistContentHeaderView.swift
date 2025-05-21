@@ -84,9 +84,9 @@ struct PlaylistContentHeaderView: View {
     private var emptyThumbnailImage: Image {
         let image: Image = switch previewEntity.type {
         case .favourite:
-            MEGAAssetsImageProvider.image(named: .favouritePlaylistThumbnail)
+            MEGAAssets.Image.favouritePlaylistThumbnail
         case .user:
-            MEGAAssetsImageProvider.image(named: .rectangleVideoStack)
+            MEGAAssets.Image.rectangleVideoStack
         }
         return image.renderingMode(.template)
     }

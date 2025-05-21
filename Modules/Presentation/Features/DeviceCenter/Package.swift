@@ -28,6 +28,7 @@ let package = Package(
         .package(path: "../../../UI/MEGAUIKit"),
         .package(path: "../../../Infrastracture/MEGATest"),
         .package(path: "../../../Localization/MEGAL10n"),
+        .package(path: "../../../MEGAAssets"),
         .package(url: "https://github.com/meganz/MEGADesignToken", branch: "main")
     ],
     targets: [
@@ -39,10 +40,8 @@ let package = Package(
                 "MEGASwiftUI",
                 "MEGAL10n",
                 "MEGAUIKit",
-                "MEGADesignToken"
-            ],
-            resources: [
-                .process("Resources")
+                "MEGADesignToken",
+                "MEGAAssets"
             ],
             swiftSettings: settings
         ),

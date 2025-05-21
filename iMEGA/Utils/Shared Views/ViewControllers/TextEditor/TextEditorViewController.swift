@@ -1,4 +1,5 @@
 import MEGAAppPresentation
+import MEGAAssets
 import MEGADesignToken
 import MEGADomain
 import MEGAL10n
@@ -161,7 +162,7 @@ extension TextEditorViewController: ViewType {
                 action: #selector(closeTapped)
             )
             navigationItem.rightBarButtonItem = UIBarButtonItem(
-                image: navbarItemsModel.rightItem?.image ?? UIImage.moreNavigationBar,
+                image: navbarItemsModel.rightItem?.image ?? MEGAAssets.UIImage.moreNavigationBar,
                 style: .plain,
                 target: self,
                 action: #selector(moreTapped(button:))
@@ -324,7 +325,7 @@ extension TextEditorViewController: ViewType {
             )
         let downloadBarButtonItem =
             UIBarButtonItem(
-                image: UIImage.offline,
+                image: MEGAAssets.UIImage.offline,
                 style: .plain,
                 target: self,
                 action: #selector(downloadTapped)
@@ -334,7 +335,7 @@ extension TextEditorViewController: ViewType {
         if accessLevel != .read {
             let editBarButtonItem =
                 UIBarButtonItem(
-                    image: UIImage.edittext,
+                    image: MEGAAssets.UIImage.edittext,
                     style: .plain,
                     target: self,
                     action: #selector(editTapped)
@@ -346,7 +347,7 @@ extension TextEditorViewController: ViewType {
         if accessLevel == .owner {
             let exportFileBarButtonItem =
                 UIBarButtonItem(
-                    image: UIImage.export,
+                    image: MEGAAssets.UIImage.export,
                     style: .plain,
                     target: self,
                     action: #selector(exportFileTapped(button:))
@@ -355,7 +356,7 @@ extension TextEditorViewController: ViewType {
         } else {
             let importBarButtonItem =
                 UIBarButtonItem(
-                    image: UIImage.import,
+                    image: MEGAAssets.UIImage.import,
                     style: .plain,
                     target: self,
                     action: #selector(importTapped)

@@ -1,4 +1,5 @@
 import MEGAAppPresentation
+import MEGAAssets
 import MEGADesignToken
 
 @MainActor
@@ -82,8 +83,8 @@ class AppearanceManager: NSObject {
         SVProgressHUD.setBackgroundColor(TokenColors.Background.page)
         SVProgressHUD.setHapticsEnabled(true)
         
-        SVProgressHUD.setSuccessImage(UIImage.hudSuccess)
-        SVProgressHUD.setErrorImage(UIImage.hudError)
+        SVProgressHUD.setSuccessImage(MEGAAssets.UIImage.hudSuccess)
+        SVProgressHUD.setErrorImage(MEGAAssets.UIImage.hudError)
         SVProgressHUD.setMinimumDismissTimeInterval(2)
     }
     
@@ -190,7 +191,7 @@ class AppearanceManager: NSObject {
         navigationBarAppearance.shadowImage = nil
         navigationBarAppearance.shadowColor = nil
         
-        let backArrowImage = UIImage.backArrow
+        let backArrowImage = MEGAAssets.UIImage.backArrow
         navigationBarAppearance.setBackIndicatorImage(backArrowImage, transitionMaskImage: backArrowImage)
         
         let barButtonItemAppearance = UIBarButtonItemAppearance()
@@ -206,7 +207,7 @@ class AppearanceManager: NSObject {
     
     private class func setupActivityIndicatorAppearance(_ traitCollection: UITraitCollection) {
         UIActivityIndicatorView.appearance().style = .medium
-        UIActivityIndicatorView.appearance().color = (traitCollection.userInterfaceStyle == UIUserInterfaceStyle.dark) ? UIColor.whiteFFFFFF : TokenColors.Text.secondary
+        UIActivityIndicatorView.appearance().color = (traitCollection.userInterfaceStyle == UIUserInterfaceStyle.dark) ? MEGAAssets.UIColor.whiteFFFFFF : TokenColors.Text.secondary
     }
     
     private class func setupToolbar() {

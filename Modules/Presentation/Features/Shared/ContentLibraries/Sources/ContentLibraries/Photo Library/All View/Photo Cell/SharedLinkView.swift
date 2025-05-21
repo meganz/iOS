@@ -10,8 +10,7 @@ public struct SharedLinkView: View {
     }
     
     public var body: some View {
-        MEGAAssetsImageProvider
-            .image(named: .linksSegmentControler)
+        MEGAAssets.Image.linksSegmentControler
             .resizable()
             .aspectRatio(contentMode: .fill)
             .frame(width: 15, height: 15)

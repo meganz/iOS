@@ -2,6 +2,7 @@ import Combine
 import ContentLibraries
 import MEGAAppPresentation
 import MEGAAppSDKRepo
+import MEGAAssets
 import MEGADomain
 import MEGAPreference
 import MEGASwiftUI
@@ -15,16 +16,16 @@ final class VideoRevampTabContainerViewController: UIViewController {
     private var cancellables = Set<AnyCancellable>()
     
     private lazy var recentlyWatchedVideosBarButtonItem = {
-        UIBarButtonItem(image: UIImage.clockPlay, style: .plain, target: self, action: #selector(recentlyWatchedVideosButtonItemTapped))
+        UIBarButtonItem(image: MEGAAssets.UIImage.clockPlay, style: .plain, target: self, action: #selector(recentlyWatchedVideosButtonItemTapped))
     }()
-    private let moreBarButtonItem: UIBarButtonItem = UIBarButtonItem(image: UIImage.moreNavigationBar, style: .plain, target: nil, action: nil)
+    private let moreBarButtonItem: UIBarButtonItem = UIBarButtonItem(image: MEGAAssets.UIImage.moreNavigationBar, style: .plain, target: nil, action: nil)
     
     private lazy var cancelBarButtonItem = {
         UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancelBarButtonItemTapped))
     }()
     
     private lazy var selectAllBarButtonItem = {
-        UIBarButtonItem(image: UIImage.selectAllItems, style: .plain, target: self, action: #selector(selectAllBarButtonItemTapped))
+        UIBarButtonItem(image: MEGAAssets.UIImage.selectAllItems, style: .plain, target: self, action: #selector(selectAllBarButtonItemTapped))
     }()
     
     private var toolbar = UIToolbar()

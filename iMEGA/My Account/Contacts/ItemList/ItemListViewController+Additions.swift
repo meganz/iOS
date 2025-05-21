@@ -1,5 +1,6 @@
 import MEGAAppPresentation
 import MEGAAppSDKRepo
+import MEGAAssets
 import MEGAChatSdk
 import MEGADomain
 import MEGARepo
@@ -60,7 +61,7 @@ extension ItemListViewController {
         let avatarHandler = UserAvatarHandler(
             userImageUseCase: userImageUseCase,
             initials: name.initialForAvatar(),
-            avatarBackgroundColor: UIColor.colorFromHexString(avatarBackgroundHexColor) ?? UIColor.black000000
+            avatarBackgroundColor: UIColor.colorFromHexString(avatarBackgroundHexColor) ?? MEGAAssets.UIColor.black000000
         )
         
         return await avatarHandler.avatar(for: base64Handle)

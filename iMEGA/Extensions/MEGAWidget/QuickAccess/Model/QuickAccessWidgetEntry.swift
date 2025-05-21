@@ -1,3 +1,4 @@
+import MEGAAssets
 import SwiftUI
 import WidgetKit
 
@@ -13,6 +14,6 @@ struct QuickAccessWidgetEntry: TimelineEntry {
         QuickAccessWidgetEntry(date: Date(),
                                section: SectionDetail.defaultSection.title,
                                link: "mega://widget.quickaccess.reload",
-                               value: ([QuickAccessItemModel(thumbnail: Image(.filetypeGeneric), name: "File.txt", url: URL(fileURLWithPath: "mega://widget.quickaccess.reload"), image: nil, description: nil)], .connected))
+                               value: ([QuickAccessItemModel(thumbnail: MEGAAssets.Image.filetypeGeneric, name: "File.txt", url: URL(fileURLWithPath: "mega://widget.quickaccess.reload"), image: nil, description: nil)], .connected))
     }
 }

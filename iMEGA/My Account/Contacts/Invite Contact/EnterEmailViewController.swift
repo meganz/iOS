@@ -1,4 +1,5 @@
 import ContactsUI
+import MEGAAssets
 import MEGADesignToken
 import MEGADomain
 import MEGAL10n
@@ -101,6 +102,7 @@ class EnterEmailViewController: UIViewController {
         descriptionLabel.textColor = TokenColors.Text.primary
         tagsFieldView.backgroundColor = TokenColors.Background.page
         tagsFieldButton.tintColor = TokenColors.Button.primary
+        tagsFieldButton.setImage(MEGAAssets.UIImage.image(named: "inviteFriendsButton"), for: .normal)
         separatorView.backgroundColor = TokenColors.Border.strong
         
         customizeTagsField()

@@ -1,5 +1,6 @@
 import ChatRepo
 import MEGAAppSDKRepo
+import MEGAAssets
 import MEGADesignToken
 import MEGADomain
 import MEGAL10n
@@ -24,16 +25,16 @@ class ChatSharedItemsViewController: UIViewController {
     private lazy var selectBarButton: UIBarButtonItem = UIBarButtonItem(title: Strings.Localizable.select, style: .plain, target: self, action: #selector(selectTapped)
     )
     
-    private lazy var selectAllBarButton: UIBarButtonItem = UIBarButtonItem(image: UIImage.selectAllItems, style: .plain, target: self, action: #selector(selectAllTapped)
+    private lazy var selectAllBarButton: UIBarButtonItem = UIBarButtonItem(image: MEGAAssets.UIImage.selectAllItems, style: .plain, target: self, action: #selector(selectAllTapped)
     )
     
-    private lazy var forwardBarButton: UIBarButtonItem = UIBarButtonItem(image: UIImage.forwardToolbar, style: .plain, target: self, action: #selector(forwardTapped)
+    private lazy var forwardBarButton: UIBarButtonItem = UIBarButtonItem(image: MEGAAssets.UIImage.forwardToolbar, style: .plain, target: self, action: #selector(forwardTapped)
     )
     
-    private lazy var downloadBarButton: UIBarButtonItem = UIBarButtonItem(image: UIImage.offline, style: .plain, target: self, action: #selector(downloadTapped)
+    private lazy var downloadBarButton: UIBarButtonItem = UIBarButtonItem(image: MEGAAssets.UIImage.offline, style: .plain, target: self, action: #selector(downloadTapped)
     )
     
-    private lazy var importBarButton: UIBarButtonItem = UIBarButtonItem(image: UIImage.import, style: .plain, target: self, action: #selector(importTapped)
+    private lazy var importBarButton: UIBarButtonItem = UIBarButtonItem(image: MEGAAssets.UIImage.import, style: .plain, target: self, action: #selector(importTapped)
     )
     
     private lazy var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(style: .medium)
@@ -468,9 +469,9 @@ extension ChatSharedItemsViewController: DZNEmptyDataSetSource {
     
     func imageForEmptyState() -> UIImage {
         if MEGAReachabilityManager.isReachable() {
-            return UIImage.sharedFilesEmptyState
+            return MEGAAssets.UIImage.sharedFilesEmptyState
         } else {
-            return UIImage.noInternetEmptyState
+            return MEGAAssets.UIImage.noInternetEmptyState
         }
     }
 }
@@ -526,7 +527,7 @@ extension ChatSharedItemsViewController: NodeActionViewControllerDelegate {
             } catch let error as SaveMediaToPhotosErrorEntity {
                 if error != .cancelled {
                     await SVProgressHUD.dismiss()
-                    SVProgressHUD.show(UIImage(resource: .saveToPhotos), status: Strings.Localizable.somethingWentWrong)
+                    SVProgressHUD.show(MEGAAssets.UIImage.saveToPhotos, status: Strings.Localizable.somethingWentWrong)
                 }
             } catch {
                 MEGALogError("Save to photos chat node failed with \(error.localizedDescription)")

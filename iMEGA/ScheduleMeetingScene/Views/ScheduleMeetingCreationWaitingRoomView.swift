@@ -1,3 +1,4 @@
+import MEGAAssets
 import MEGADesignToken
 import MEGAL10n
 import SwiftUI
@@ -40,7 +41,7 @@ struct ScheduleMeetingCreationWaitingRoomView: View {
         var body: some View {
             VStack {
                 ScheduleMeetingCreationWaitingRoomView(waitingRoomEnabled: .constant(true), shouldAllowEditingWaitingRoom: true)
-                    .background(colorScheme == .dark ? UIColor.black000000.swiftUI :  UIColor.whiteF7F7F7.swiftUI)
+                    .background(colorScheme == .dark ? MEGAAssets.UIColor.black000000.swiftUI :  MEGAAssets.UIColor.whiteF7F7F7.swiftUI)
             }
         }
     }

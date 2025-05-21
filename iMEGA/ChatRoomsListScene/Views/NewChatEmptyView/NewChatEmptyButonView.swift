@@ -28,7 +28,7 @@ struct MenuCapableButton: View {
                     Label {
                         Text(menu.name)
                     } icon: {
-                        Image(menu.image)
+                        menu.image
                     }
                 }
             }

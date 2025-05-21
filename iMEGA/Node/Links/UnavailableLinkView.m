@@ -11,6 +11,8 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
 
+    self.imageView.image = [UIImage megaImageWithNamed:@"invalidFileLink"];
+    
     [self updateAppearance];
 }
 
@@ -63,12 +65,12 @@
 }
 
 - (void)configureHeaderInvalidFileLink {
-    self.imageView.image = [UIImage imageNamed:@"invalidFileLink"];
+    self.imageView.image = [UIImage megaImageWithNamed:@"invalidFileLink"];
     self.titleLabel.text = LocalizedString(@"File link unavailable", @"Error message shown when opening a file link which doesn’t exist");
 }
 
 - (void)configureHeaderInvalidFolderLink {
-    self.imageView.image = [UIImage imageNamed:@"invalidFolderLink"];
+    self.imageView.image = [UIImage megaImageWithNamed:@"invalidFolderLink"];
     self.titleLabel.text = LocalizedString(@"Folder link unavailable", @"Error message shown when opening a folder link which doesn’t exist");
 }
 
@@ -121,7 +123,7 @@
 }
 
 - (void)configureInvalidQueryLink {
-    self.imageView.image = [UIImage imageNamed:@"invalidFileLink"];
+    self.imageView.image = [UIImage megaImageWithNamed:@"invalidFileLink"];
     self.titleLabel.text = LocalizedString(@"linkNotValid", @"Message shown when the user clicks on an link that is not valid");
     self.descriptionLabel.text = @"";
     [self resetLabels];

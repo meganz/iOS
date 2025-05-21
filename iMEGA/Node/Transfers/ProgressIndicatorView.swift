@@ -1,4 +1,5 @@
 import MEGAAppSDKRepo
+import MEGAAssets
 import MEGADesignToken
 import MEGADomain
 import MEGAFoundation
@@ -15,7 +16,7 @@ final class ProgressIndicatorView: UIView {
     private var progressLayer: CAShapeLayer?
     
     private var arrowImageView: UIImageView = UIImageView(
-        image: UIImage.transfersDownload
+        image: MEGAAssets.UIImage.transfersDownload
     )
     private var stateBadge: UIImageView = UIImageView()
     
@@ -160,27 +161,27 @@ private extension ProgressIndicatorView {
     }
     
     var completedBadge: UIImage {
-        UIImage.completedBadgeDesignToken.withTintColor(TokenColors.Support.success)
+        MEGAAssets.UIImage.completedBadgeDesignToken.withTintColor(TokenColors.Support.success)
     }
     
     var errorBadge: UIImage {
-        UIImage.errorBadgeDesignToken.withTintColor(TokenColors.Support.error)
+        MEGAAssets.UIImage.errorBadgeDesignToken.withTintColor(TokenColors.Support.error)
     }
     
     var overquotaImage: UIImage {
-        UIImage.overquotaDesignToken.withTintColor(TokenColors.Support.warning)
+        MEGAAssets.UIImage.overquotaDesignToken.withTintColor(TokenColors.Support.warning)
     }
     
     var pauseImage: UIImage {
-        UIImage.pauseDesignToken.withTintColor(TokenColors.Icon.secondary)
+        MEGAAssets.UIImage.pauseDesignToken.withTintColor(TokenColors.Icon.secondary)
     }
     
     var transfersDownloadImage: UIImage {
-        UIImage.transfersDownloadDesignToken
+        MEGAAssets.UIImage.transfersDownloadDesignToken
     }
     
     var transfersUploadImage: UIImage {
-        UIImage.transfersUploadDesignToken
+        MEGAAssets.UIImage.transfersUploadDesignToken
     }
 }
 
@@ -345,7 +346,7 @@ private extension ProgressIndicatorView {
         shapeLayer.shadowRadius = 16
         shapeLayer.shadowOpacity = 0.2
         // No design token color available for the shadow
-        shapeLayer.shadowColor = UIColor.gray04040F.cgColor
+        shapeLayer.shadowColor = MEGAAssets.UIColor.gray04040F.cgColor
         shapeLayer.shadowOffset = CGSize(width: 0, height: 2)
         
         layer.addSublayer(shapeLayer)

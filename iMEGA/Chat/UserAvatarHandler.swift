@@ -1,3 +1,4 @@
+import MEGAAssets
 import MEGADesignToken
 import MEGADomain
 
@@ -40,12 +41,12 @@ struct UserAvatarHandler: UserAvatarHandling {
                     writeImage(image.jpegData(compressionQuality: 1.0), to: URL(fileURLWithPath: avatarPath))
                     return image
                 }
-                return UIImage.iconContacts
+                return MEGAAssets.UIImage.iconContacts
             }
             
             return image
         } catch {
-            return UIImage.iconContacts
+            return MEGAAssets.UIImage.iconContacts
         }
     }
     

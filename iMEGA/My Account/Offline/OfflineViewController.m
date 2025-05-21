@@ -61,6 +61,8 @@ static NSString *kisDirectory = @"kisDirectory";
 - (void)viewDidLoad {
     [super viewDidLoad];
 
+    [self configureImages];
+    
     [self determineViewMode];
     
     [self configureNavigationBar];
@@ -298,6 +300,12 @@ static NSString *kisDirectory = @"kisDirectory";
 }
 
 #pragma mark - Private
+
+- (void)configureImages {
+    self.activityBarButtonItem.image = [UIImage megaImageWithNamed:@"share"];
+    self.selectAllBarButtonItem.image = [UIImage megaImageWithNamed:@"selectAllItems"];
+    self.deleteBarButtonItem.image = [UIImage megaImageWithNamed:@"rubbishBin"];
+}
 
 - (void)reloadUI {
     dispatch_async(self.serialQueue, ^(void) {
@@ -834,7 +842,7 @@ static NSString *kisDirectory = @"kisDirectory";
     __weak __typeof__(self) weakSelf = self;
     
     NSMutableArray<ActionSheetAction *> *actions = NSMutableArray.new;
-    [actions addObject:[ActionSheetAction.alloc initWithTitle:LocalizedString(@"remove", @"Title for the action that allows to remove a file or folder") detail:nil image:[UIImage imageNamed:@"rubbishBin"] style:UIAlertActionStyleDefault actionHandler:^{
+    [actions addObject:[ActionSheetAction.alloc initWithTitle:LocalizedString(@"remove", @"Title for the action that allows to remove a file or folder") detail:nil image:[UIImage megaImageWithNamed:@"rubbishBin"] style:UIAlertActionStyleDefault actionHandler:^{
         [self showRemoveAlertWithConfirmAction:^{
             [self removeOfflineItems:@[[NSURL fileURLWithPath:itemPath]]];
         } andCancelAction:nil];
@@ -850,7 +858,7 @@ static NSString *kisDirectory = @"kisDirectory";
         title = [NSString stringWithFormat:exportFileFormat, 1];
     }
     if (fileExistsAtPath) {
-        [actions addObject:[ActionSheetAction.alloc initWithTitle:title detail:nil image:[UIImage imageNamed:@"export"] style:UIAlertActionStyleDefault actionHandler:^{
+        [actions addObject:[ActionSheetAction.alloc initWithTitle:title detail:nil image:[UIImage megaImageWithNamed:@"export"] style:UIAlertActionStyleDefault actionHandler:^{
             
             NSURL *itemPathURL = [NSURL fileURLWithPath:itemPath];
             
@@ -940,15 +948,15 @@ static NSString *kisDirectory = @"kisDirectory";
     UIImage *image;
     if (self.searchController.isActive) {
         if (self.searchController.searchBar.text.length > 0) {
-            image = [UIImage imageNamed:@"searchEmptyState"];
+            image = [UIImage megaImageWithNamed:@"searchEmptyState"];
         } else {
             image = nil;
         }
     } else {
         if (self.folderPathFromOffline) {
-            image = [UIImage imageNamed:@"folderEmptyState"];
+            image = [UIImage megaImageWithNamed:@"folderEmptyState"];
         } else {
-            image = [UIImage imageNamed:@"offlineEmptyState"];
+            image = [UIImage megaImageWithNamed:@"offlineEmptyState"];
         }
     }
     

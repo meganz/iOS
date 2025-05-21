@@ -10,7 +10,7 @@ struct NewChatRoomsEmptyCenterView: View {
     var body: some View {
         VStack(spacing: 24) {
             if verticalSizeClass != .compact {
-                Image(state.image)
+                state.image
                     .resizable()
                     .scaledToFit()
                     .frame(width: 120, height: 120)

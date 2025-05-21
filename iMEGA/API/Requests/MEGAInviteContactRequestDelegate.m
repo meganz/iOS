@@ -5,6 +5,7 @@
 #import "SVProgressHUD.h"
 #import "CustomModalAlertViewController.h"
 #import "UIApplication+MNZCategory.h"
+#import "MEGA-Swift.h"
 
 @import MEGAL10nObjc;
 @import MEGAAppSDKRepo;
@@ -108,7 +109,7 @@
         }
         
         CustomModalAlertViewController *customModalAlertVC = [[CustomModalAlertViewController alloc] init];
-        customModalAlertVC.image = [UIImage imageNamed:@"contactInviteSent"];
+        customModalAlertVC.image = [UIImage megaImageWithNamed:@"contactInviteSent"];
         customModalAlertVC.viewTitle = LocalizedString(@"inviteSent", @"Title shown when the user sends a contact invitation");
         customModalAlertVC.detail = detailText;
         customModalAlertVC.boldInDetail = request.email;

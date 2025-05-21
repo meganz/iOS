@@ -282,7 +282,7 @@ struct CloudDriveViewControllerFactory {
         navigationController.viewControllers = [vc]
         navigationController.tabBarItem = UITabBarItem(
             title: nil,
-            image: UIImage.cloudDriveIcon,
+            image: MEGAAssets.UIImage.cloudDriveIcon,
             selectedImage: nil
         )
         

@@ -125,7 +125,7 @@
             }
         } else {
             CustomModalAlertViewController *customModalAlertVC = [[CustomModalAlertViewController alloc] init];
-            customModalAlertVC.image = [UIImage imageNamed:@"retention_illustration"];
+            customModalAlertVC.image = [UIImage megaImageWithNamed:@"retention_illustration"];
             customModalAlertVC.viewTitle = [LocalizedString(@"Rubbish-Bin Cleaning Scheduler:", @"Title for the Rubbish-Bin Cleaning Scheduler feature") stringByReplacingOccurrencesOfString:@":" withString:@""];
             customModalAlertVC.detail = LocalizedString(@"To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan.", @"Description shown when you try to disable the feature Rubbish-Bin Cleaning Scheduler and you are a free user");
             customModalAlertVC.firstButtonTitle = LocalizedString(@"seePlans", @"Button title to see the available pro plans in MEGA");

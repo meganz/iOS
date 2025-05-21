@@ -3,6 +3,7 @@ import Combine
 import ContentLibraries
 import MEGAAnalyticsiOS
 import MEGAAppPresentation
+import MEGAAssets
 import MEGADomain
 import MEGAL10n
 import MEGASwift
@@ -229,7 +230,7 @@ final class AlbumListViewModel: NSObject, ObservableObject {
             hudMessage = Strings.Localizable.CameraUploads.Albums.deleteAlbumSuccess(albumIds.count)
         }
         photoAlbumContainerViewModel?.editMode = .inactive
-        albumHudMessage = AlbumHudMessage(message: hudMessage, icon: UIImage.hudMinus)
+        albumHudMessage = AlbumHudMessage(message: hudMessage, icon: MEGAAssets.UIImage.hudMinus)
     }
     
     private func onRemoveAlbumShareLinkSuccess(_ albumIds: [HandleEntity]) {
@@ -239,7 +240,7 @@ final class AlbumListViewModel: NSObject, ObservableObject {
         }
         
         let hudMessage = albumIds.count == 1 ? Strings.Localizable.CameraUploads.Albums.removeShareLinkSuccessMessage(1) : Strings.Localizable.CameraUploads.Albums.removeShareLinkSuccessMessage(albums.count)
-        albumHudMessage = AlbumHudMessage(message: hudMessage, icon: UIImage.hudSuccess)
+        albumHudMessage = AlbumHudMessage(message: hudMessage, icon: MEGAAssets.UIImage.hudSuccess)
         
         photoAlbumContainerViewModel?.editMode = .inactive
     }

@@ -1,6 +1,7 @@
 import ChatRepo
 import Foundation
 import MEGAAppSDKRepo
+import MEGAAssets
 import MEGADomain
 import MEGAPreference
 import MEGARepo
@@ -121,10 +122,10 @@ final class CancellableTransferRouter: NSObject, CancellableTransferRouting, Tra
     func transferCompletedWithError(error: String, dismiss: Bool) {
         if dismiss {
             presenter?.dismiss(animated: true, completion: {
-                SVProgressHUD.show(UIImage.hudDownload, status: error)
+                SVProgressHUD.show(MEGAAssets.UIImage.hudDownload, status: error)
             })
         } else {
-            SVProgressHUD.show(UIImage.hudDownload, status: error)
+            SVProgressHUD.show(MEGAAssets.UIImage.hudDownload, status: error)
         }
     }
     

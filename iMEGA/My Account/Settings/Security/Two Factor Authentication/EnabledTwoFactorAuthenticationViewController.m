@@ -18,6 +18,10 @@
 @property (weak, nonatomic) IBOutlet UIButton *exportRecoveryButton;
 @property (weak, nonatomic) IBOutlet UIButton *closeButton;
 
+@property (weak, nonatomic) IBOutlet UIImageView *_2FASetupImageView;
+@property (weak, nonatomic) IBOutlet UIImageView *achievementsCheckImageView;
+@property (weak, nonatomic) IBOutlet UIImageView *fileTypeTextImageView;
+
 @property (getter=isRecoveryKeyExported) BOOL recoveryKeyExported;
 
 @end
@@ -28,6 +32,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    [self configureImages];
     
     self.navigationItem.title = LocalizedString(@"twoFactorAuthentication", @"A title for the Two-Factor Authentication section on the My Account - Security page.");
     self.titleLabel.text = LocalizedString(@"twoFactorAuthenticationEnabled", @"A title on the mobile web client page showing that 2FA has been enabled successfully.");
@@ -44,6 +50,11 @@
 }
 
 #pragma mark - Private
+- (void)configureImages {
+    self._2FASetupImageView.image = [UIImage megaImageWithNamed:@"2FASetup"];
+    self.achievementsCheckImageView.image = [UIImage megaImageWithNamed:@"achievementsCheck"];
+    self.fileTypeTextImageView.image = [UIImage megaImageWithNamed:@"filetype_text"];
+}
 
 - (void)setupColors {
     self.view.backgroundColor = [UIColor pageBackgroundColor];

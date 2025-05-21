@@ -6,6 +6,8 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     
+    [self configureImages];
+    
     self.thumbnailImageView.accessibilityIgnoresInvertColors = YES;
     self.thumbnailPlayImageView.accessibilityIgnoresInvertColors = YES;
     
@@ -35,6 +37,13 @@
 }
 
 #pragma mark - Private
+
+- (void)configureImages {
+    self.thumbnailPlayImageView.image = [UIImage megaImageWithNamed:@"video_list"];
+    [self.moreButton setImage:[UIImage megaImageWithNamed:@"moreList"] forState:UIControlStateNormal];
+    [self.moreButton setImage:[UIImage megaImageWithNamed:@"moreList"] forState:UIControlStateSelected];
+    [self.moreButton setImage:[UIImage megaImageWithNamed:@"moreList"] forState:UIControlStateHighlighted];
+}
 
 - (void)updateAppearance {
     [self configureTokenColors];

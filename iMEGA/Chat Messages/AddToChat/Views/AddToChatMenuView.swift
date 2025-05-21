@@ -1,3 +1,4 @@
+import MEGAAssets
 import MEGADesignToken
 import MEGAL10n
 import UIKit
@@ -19,7 +20,7 @@ class AddToChatMenuView: UIView {
                 return
             }
             
-            imageView.image = UIImage(named: menu.imageKey)
+            imageView.image = MEGAAssets.UIImage.image(named: menu.imageKey)
             label.text = Strings.localized(menu.nameKey, comment: "")
             imageBackgroundView.isHidden = false
         }

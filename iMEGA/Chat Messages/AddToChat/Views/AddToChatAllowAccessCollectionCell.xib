@@ -41,6 +41,7 @@
             </constraints>
             <size key="customSize" width="502" height="136"/>
             <connections>
+                <outlet property="allowAccessImageView" destination="gdV-GQ-DlW" id="PHI-gW-ncl"/>
                 <outlet property="allowAccessTextLabel" destination="Hkv-G7-T5K" id="M7K-vA-JaV"/>
             </connections>
             <point key="canvasLocation" x="104.34782608695653" y="152.67857142857142"/>

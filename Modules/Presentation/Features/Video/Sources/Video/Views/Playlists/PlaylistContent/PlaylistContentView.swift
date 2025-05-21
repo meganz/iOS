@@ -193,7 +193,7 @@ struct PlaylistContentView: View {
     private func videoEmptyViewImage(for previewEntity: VideoPlaylistCellPreviewEntity) -> UIImage {
         switch previewEntity.type {
         case .favourite:
-            MEGAAssetsImageProvider.image(named: .favouritesEmptyState)
+            MEGAAssets.UIImage.favouritesEmptyState
         case .user:
             videoConfig.videoListAssets.noResultVideoImage
         }

@@ -1,3 +1,4 @@
+import MEGAAssets
 import MEGADesignToken
 import MEGADomain
 import MEGAL10n
@@ -13,11 +14,20 @@ class NodeInfoPreviewTableViewCell: UITableViewCell {
     @IBOutlet weak var versionedView: UIView!
     @IBOutlet weak var playIconImage: UIImageView!
     @IBOutlet weak var linkedView: UIView!
+    @IBOutlet weak var linkedImageView: UIImageView!
+    @IBOutlet weak var versionedImageView: UIImageView!
 
     override func awakeFromNib() {
         super.awakeFromNib()
         
         setupColors()
+        configureImages()
+    }
+    
+    private func configureImages() {
+        playIconImage.image = MEGAAssets.UIImage.image(named: "video_list")
+        linkedImageView.image = MEGAAssets.UIImage.image(named: "linked")
+        versionedImageView.image = MEGAAssets.UIImage.image(named: "versioned")
     }
     
     private func setupColors() {

@@ -1,3 +1,4 @@
+import MEGAAssets
 import MEGAL10n
 
 enum SortOrderType: String, CaseIterable {
@@ -56,23 +57,23 @@ enum SortOrderType: String, CaseIterable {
     var image: UIImage? {
         switch self {
         case .nameAscending:
-            return UIImage.ascending
+            return MEGAAssets.UIImage.ascending
         case .nameDescending:
-            return UIImage.descending
+            return MEGAAssets.UIImage.descending
         case .largest:
-            return UIImage.largest
+            return MEGAAssets.UIImage.largest
         case .smallest:
-            return UIImage.smallest
+            return MEGAAssets.UIImage.smallest
         case .newest:
-            return UIImage.newest
+            return MEGAAssets.UIImage.newest
         case .oldest:
-            return UIImage.oldest
+            return MEGAAssets.UIImage.oldest
         case .label:
-            return UIImage.sortLabel
+            return MEGAAssets.UIImage.sortLabel
         case .favourite:
-            return UIImage.sortFavourite
+            return MEGAAssets.UIImage.sortFavourite
         case .none:
-            return UIImage(named: "")
+            return nil
         }
     }
     

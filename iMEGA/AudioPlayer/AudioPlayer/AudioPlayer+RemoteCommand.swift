@@ -1,5 +1,6 @@
 @preconcurrency import AVFoundation
 import MediaPlayer
+import MEGAAssets
 
 extension AudioPlayer {
     func registerRemoteControls() {
@@ -47,7 +48,7 @@ extension AudioPlayer {
         if let artwork = item.artwork {
             return MPMediaItemArtwork(boundsSize: artwork.size) { _ in artwork }
         } else {
-            let defaultArtworkImage = UIImage(resource: .defaultArtwork)
+            let defaultArtworkImage = MEGAAssets.UIImage.defaultArtwork
             return MPMediaItemArtwork(boundsSize: defaultArtworkImage.size) { _ in defaultArtworkImage }
         }
     }

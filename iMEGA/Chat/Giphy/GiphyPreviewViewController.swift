@@ -1,3 +1,4 @@
+import MEGAAssets
 import MEGAL10n
 import UIKit
 
@@ -52,7 +53,7 @@ class GiphyPreviewViewController: UIViewController {
         ])
         
         previewImageView.sd_setImage(with: URL(string: giphy.webp))
-        previewImageView.backgroundColor = UIColor(patternImage: UIImage.giphyCellBackground)
+        previewImageView.backgroundColor = UIColor(patternImage: MEGAAssets.UIImage.giphyCellBackground)
     }
 }
 

@@ -167,7 +167,7 @@ struct CancellationSurveyView: View {
                     maxCharacterLimit: viewModel.maximumTextRequired,
                     minCharacterLimit: viewModel.minimumTextRequired,
                     isRequired: true,
-                    errorWarningIcon: MEGAAssetsImageProvider.image(named: "errorWarning"),
+                    errorWarningIcon: MEGAAssets.UIImage.image(named: "errorWarning"),
                     lessThanMinimumCharError: Strings.Localizable.Accounts.CancelSubscriptionSurvey.Error.minimumRequiredCharacterCount(viewModel.minimumTextRequired),
                     emptyFieldError: Strings.Localizable.Accounts.CancelSubscriptionSurvey.Error.enterDetails
                 )

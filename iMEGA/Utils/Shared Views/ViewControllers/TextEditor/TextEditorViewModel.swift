@@ -1,5 +1,6 @@
 import MEGAAnalyticsiOS
 import MEGAAppPresentation
+import MEGAAssets
 import MEGADomain
 import MEGAL10n
 
@@ -360,7 +361,7 @@ final class TextEditorViewModel: ViewModelType {
         case .view:
             return TextEditorNavbarItemsModel(
                 leftItem: NavbarItemModel(title: Strings.Localizable.close, image: nil),
-                rightItem: NavbarItemModel(title: nil, image: UIImage.moreNavigationBar),
+                rightItem: NavbarItemModel(title: nil, image: MEGAAssets.UIImage.moreNavigationBar),
                 textEditorMode: textEditorMode
             )
         case .edit,

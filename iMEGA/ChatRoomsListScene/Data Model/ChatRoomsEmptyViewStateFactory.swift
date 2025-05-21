@@ -1,3 +1,4 @@
+import MEGAAssets
 import MEGAL10n
 import SwiftUI
 
@@ -23,7 +24,7 @@ struct ChatRoomsEmptyViewStateFactory {
         .init(
             topRows: [],
             center: .init(
-                image: .searchEmptyState,
+                image: MEGAAssets.Image.searchEmptyState,
                 title: Strings.Localizable.noResults,
                 description: nil
             ),
@@ -76,7 +77,7 @@ struct ChatRoomsEmptyViewStateFactory {
         func center() -> ChatRoomsEmptyCenterViewState {
             
             .init(
-                image: .noInternetEmptyState,
+                image: MEGAAssets.Image.noInternetEmptyState,
                 title: isChatViewMode ?
                 Strings.Localizable.Chat.Chats.EmptyState.title :
                     Strings.Localizable.Chat.Meetings.EmptyState.title,
@@ -179,7 +180,7 @@ struct ChatRoomsEmptyViewStateFactory {
         switch chatViewMode {
         case .chats:
                 .init(
-                    image: .chatEmptyStateNew,
+                    image: MEGAAssets.Image.chatEmptyStateNew,
                     title: Strings.Localizable.Chat.Chats.EmptyState.V2.title,
                     titleBold: true,
                     description: Strings.Localizable.Chat.Chats.EmptyState.V2.description,
@@ -187,7 +188,7 @@ struct ChatRoomsEmptyViewStateFactory {
                 )
         case .meetings:
                 .init(
-                    image: .meetingsEmptyStateNew,
+                    image: MEGAAssets.Image.meetingsEmptyStateNew,
                     title: Strings.Localizable.Chat.Meetings.EmptyState.V2.title,
                     titleBold: true,
                     description: Strings.Localizable.Chat.Meetings.EmptyState.V2.description,
@@ -221,7 +222,7 @@ struct ChatRoomsEmptyViewStateFactory {
         .init(
             topRows: [],
             center: .init(
-                image: .newChatEmptyContacts,
+                image: MEGAAssets.Image.newChatEmptyContacts,
                 title: Strings.Localizable.Chat.Chats.EmptyState.V2.Button.Invite.title,
                 titleBold: true,
                 description: Strings.Localizable.Chat.NewChat.EmptyState.description,

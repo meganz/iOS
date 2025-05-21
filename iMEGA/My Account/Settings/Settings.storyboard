@@ -1020,6 +1020,7 @@
                     <connections>
                         <outlet property="carbonCopyMasterKeyButton" destination="ODS-fW-K0n" id="1Dp-cm-VSa"/>
                         <outlet property="illustrationView" destination="iif-ej-krY" id="TIm-7r-9Bq"/>
+                        <outlet property="keyIllustrationImageView" destination="zGq-Ok-dOC" id="rLx-O0-UCK"/>
                         <outlet property="saveMasterKey" destination="az8-Aw-mS9" id="ESL-jx-EVz"/>
                         <outlet property="whyDoINeedARecoveryKeyButton" destination="jTL-gV-SRV" id="AtX-zP-bma"/>
                     </connections>

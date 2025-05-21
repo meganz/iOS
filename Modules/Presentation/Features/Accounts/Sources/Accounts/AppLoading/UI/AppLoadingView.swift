@@ -13,7 +13,7 @@ struct AppLoadingView: View {
     var body: some View {
         VStack {
             Spacer()
-            MEGAAssetsImageProvider.image(named: .splashScreenMEGALogo)
+            MEGAAssets.Image.splashScreenMEGALogo
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .frame(width: 80, height: 80, alignment: .center)

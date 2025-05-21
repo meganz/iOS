@@ -1,3 +1,4 @@
+import MEGAAssets
 import MEGADesignToken
 import MEGADomain
 import MEGASwiftUI
@@ -57,7 +58,7 @@ struct ActionView: View {
                     }
                 }
                 Spacer()
-                Image(uiImage: UIImage.standardDisclosureIndicatorDesignToken)
+                MEGAAssets.Image.standardDisclosureIndicatorDesignToken
                     .resizable()
                     .frame(width: Constants.disclosureSize.width, height: Constants.disclosureSize.height)
             }

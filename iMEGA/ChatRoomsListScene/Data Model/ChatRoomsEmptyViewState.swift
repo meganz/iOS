@@ -15,7 +15,7 @@ struct ChatRoomsEmptyViewState {
 }
 
 struct ChatRoomsEmptyCenterViewState {
-    var image: ImageResource
+    var image: Image
     var title: String
     var titleBold: Bool = false
     var description: String?
@@ -42,7 +42,7 @@ struct MenuButtonModel: Identifiable {
     
     struct Menu: Identifiable {
         let name: String
-        let image: ImageResource
+        let image: Image
         let action: () -> Void
         
         var id: String {

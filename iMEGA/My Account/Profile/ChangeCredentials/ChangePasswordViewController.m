@@ -48,6 +48,7 @@ typedef NS_ENUM(NSUInteger, TextFieldTag) {
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [self configureImages];
     self.confirmButton = [[UIBarButtonItem alloc] initWithTitle:LocalizedString(@"save", @"save password or email associated to an account.") style:UIBarButtonItemStylePlain target:self action:@selector(confirmButtonTouchUpInside:)];
     self.navigationItem.rightBarButtonItem = self.confirmButton;
     
@@ -145,6 +146,13 @@ typedef NS_ENUM(NSUInteger, TextFieldTag) {
 }
 
 #pragma mark - Private
+
+- (void)configureImages {
+    self.currentEmailInputView.iconImage = [UIImage megaImageWithNamed:@"currentEmail"];
+    self.theNewEmailInputView.iconImage = [UIImage megaImageWithNamed:@"mail"];
+    self.theNewPasswordView.leftImage = [UIImage megaImageWithNamed:@"icon-key-only"];
+    self.confirmPasswordView.leftImage = [UIImage megaImageWithNamed:@"icon-link-w-key"];
+}
 
 - (void)setupColors {
     self.view.backgroundColor = [UIColor pageBackgroundColor];

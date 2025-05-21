@@ -1,4 +1,5 @@
 import Foundation
+import MEGAAssets
 import MEGAL10n
 import MEGASwift
 
@@ -7,6 +8,8 @@ class TapAndHoldMessageView: UIView {
     // MARK: - Properties
     
     @IBOutlet weak var label: UILabel!
+    @IBOutlet weak var closeTipButton: UIButton!
+    
     private var timer: Timer!
     
     // MARK: - Overriden method
@@ -14,6 +17,7 @@ class TapAndHoldMessageView: UIView {
     override func awakeFromNib() {
         super.awakeFromNib()
         setLabelText()
+        closeTipButton.setImage(MEGAAssets.UIImage.image(named: "closeTip"), for: .normal)
     }
     
     // MARK: - Actions
@@ -63,7 +67,7 @@ class TapAndHoldMessageView: UIView {
     }
     
     private func setLabelText() {
-        let voiceImageAttributedString = NSAttributedString.attributedString(fromImage: UIImage(resource: .voiceTip),
+        let voiceImageAttributedString = NSAttributedString.attributedString(fromImage: MEGAAssets.UIImage.voiceTip,
                                                                              fontCapHeight: label.font.capHeight)
         let separatorText = "%@"
         let tapAndHoldText = Strings.Localizable.tapAndHoldToRecordReleaseToSend(separatorText)

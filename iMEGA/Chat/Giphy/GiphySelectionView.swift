@@ -1,4 +1,5 @@
 import FlexLayout
+import MEGAAssets
 import MEGAL10n
 import PinLayout
 import UIKit
@@ -166,7 +167,7 @@ extension GiphySelectionView: CHTCollectionViewDelegateWaterfallLayout, UICollec
 
         // Add image to cell
         cell.image.sd_setImage(with: URL(string: gif.webp))
-        cell.image.backgroundColor = UIColor(patternImage: UIImage.giphyCellBackground)
+        cell.image.backgroundColor = UIColor(patternImage: MEGAAssets.UIImage.giphyCellBackground)
         return cell
     }
 
@@ -266,7 +267,7 @@ extension GiphySelectionView: DZNEmptyDataSetSource, DZNEmptyDataSetDelegate {
     }
     
     func image(forEmptyDataSet scrollView: UIScrollView) -> UIImage? {
-        UIImage.noGIF
+        MEGAAssets.UIImage.noGIF
     }
 
     func customView(forEmptyDataSet _: UIScrollView) -> UIView? {

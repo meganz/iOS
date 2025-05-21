@@ -6,7 +6,7 @@ struct ToggleView: View {
         static let viewHeight: CGFloat = 44
     }
     
-    let image: ImageResource?
+    let image: Image?
     let text: String
     var enabled: Bool = true
     @Binding var isOn: Bool
@@ -16,7 +16,7 @@ struct ToggleView: View {
             Divider()
             HStack {
                 if let image {
-                    Image(image)
+                    image
                         .opacity(enabled ? 1.0 : 0.3)
                 }
                 Toggle(isOn: $isOn) {

@@ -1,3 +1,4 @@
+import MEGAAssets
 import MEGADesignToken
 import MEGADomain
 import UIKit
@@ -47,7 +48,7 @@ class GetLinkInfoTableViewCell: UITableViewCell {
             guard let image = UIImage(contentsOfFile: imagePath) else { return }
             thumbnailImageView.image = image
         case .setPlaceholderThumbnail:
-            thumbnailImageView.image = UIImage.placeholder
+            thumbnailImageView.image = MEGAAssets.UIImage.placeholder
         case .setLabels(let title, let subtitle):
             nameLabel.text = title
             subtitleLabel.text = subtitle

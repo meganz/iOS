@@ -1,5 +1,6 @@
 import MEGAAppPresentation
 import MEGAAppSDKRepo
+import MEGAAssets
 import MEGADesignToken
 import MEGADomain
 import MEGAL10n
@@ -418,7 +419,7 @@ class NodeActionViewController: ActionSheetViewController {
                 downloadImageView.trailingAnchor.constraint(lessThanOrEqualTo: headerView!.safeAreaLayoutGuide.trailingAnchor, constant: -10)
             ])
             
-            downloadImageView.image = UIImage.downloaded
+            downloadImageView.image = MEGAAssets.UIImage.downloaded
         } else {
             subtitleLabel.trailingAnchor.constraint(equalTo: headerView!.trailingAnchor, constant: -8).isActive = true
         }

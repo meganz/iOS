@@ -1,10 +1,11 @@
+import MEGAAssets
 import MEGADesignToken
 import MessageKit
 
 extension ChatViewController: MessagesDisplayDelegate {
     
     private var containerViewBorderColor: CGColor {
-        UIColor.grayE4EBEA.withAlphaComponent(0).cgColor
+        MEGAAssets.UIColor.grayE4EBEA.withAlphaComponent(0).cgColor
     }
     
     func backgroundColor(for message: any MessageType,
@@ -108,9 +109,9 @@ extension ChatViewController: MessagesDisplayDelegate {
         button.isUserInteractionEnabled = false // respond to accessoryView tap through `MessageCellDelegate`
         accessoryView.clipsToBounds = true
         if let message = message as? ChatMessage, let transfer = message.transfer, transfer.state == .failed {
-            button.setImage(UIImage(resource: .triangle).imageFlippedForRightToLeftLayoutDirection(), for: .normal)
+            button.setImage(MEGAAssets.UIImage.triangle.imageFlippedForRightToLeftLayoutDirection(), for: .normal)
         } else {
-            let forwardImage = UIImage(resource: .forwardButton).imageFlippedForRightToLeftLayoutDirection()
+            let forwardImage = MEGAAssets.UIImage.forwardButton.imageFlippedForRightToLeftLayoutDirection()
             button.setImage(forwardImage, for: .normal)
         }
     }
@@ -161,8 +162,7 @@ extension ChatViewController: MessagesDisplayDelegate {
                 }.compactMap { cell in
                     if
                         let ip = messagesCollectionView.indexPath(for: cell),
-                        let pathsToReload = self.avatarIndexPathsForUserHandle[userHandle]
-                    {
+                        let pathsToReload = self.avatarIndexPathsForUserHandle[userHandle] {
                         return pathsToReload.contains(ip) ? ip : nil
                     }
                     return nil

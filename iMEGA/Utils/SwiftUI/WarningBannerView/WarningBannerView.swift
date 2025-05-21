@@ -1,3 +1,4 @@
+import MEGAAssets
 import MEGADesignToken
 import SwiftUI
 
@@ -24,8 +25,11 @@ struct WarningBannerView: View {
         Button {
             viewModel.onCloseButtonTapped()
         } label: {
-            Image(viewModel.applyNewDesign ? .closeBannerButton : .closeCircle)
-                .padding(10)
+            if viewModel.applyNewDesign {
+                MEGAAssets.Image.closeBannerButton.padding(10)
+            } else {
+                MEGAAssets.Image.closeCircle.padding(10)
+            }
         }
     }
     

@@ -64,23 +64,19 @@ private extension [OnboardingCarouselContent] {
         [.init(
             title: Strings.Localizable.Onboarding.UniqueSellingProposition.Carousel.Page.First.title,
             subtitle: Strings.Localizable.Onboarding.UniqueSellingProposition.Carousel.Page.First.subtitle,
-            image: MEGAAssetsImageProvider.image(
-                named: .onboardingCarousel1)),
+            image: MEGAAssets.Image.onboardingCarousel1),
          .init(
             title: Strings.Localizable.Onboarding.UniqueSellingProposition.Carousel.Page.Second.title,
             subtitle: Strings.Localizable.Onboarding.UniqueSellingProposition.Carousel.Page.Second.subtitle,
-            image: MEGAAssetsImageProvider.image(
-                named: .onboardingCarousel2)),
+            image: MEGAAssets.Image.onboardingCarousel2),
          .init(
             title: Strings.Localizable.Onboarding.UniqueSellingProposition.Carousel.Page.Third.title,
             subtitle: Strings.Localizable.Onboarding.UniqueSellingProposition.Carousel.Page.Third.subtitle,
-            image: MEGAAssetsImageProvider.image(
-                named: .onboardingCarousel3)),
+            image: MEGAAssets.Image.onboardingCarousel3),
          .init(
             title: Strings.Localizable.Onboarding.UniqueSellingProposition.Carousel.Page.Fourth.title,
             subtitle: Strings.Localizable.Onboarding.UniqueSellingProposition.Carousel.Page.Fourth.subtitle,
-            image: MEGAAssetsImageProvider.image(
-                named: .onboardingCarousel4))
+            image: MEGAAssets.Image.onboardingCarousel4)
         ]
     }
 }

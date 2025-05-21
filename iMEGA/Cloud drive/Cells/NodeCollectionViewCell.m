@@ -33,7 +33,9 @@ static NSString *kFileSize = @"kFileSize";
 - (void)awakeFromNib {
     [super awakeFromNib];
     
+    [self configureImages];
     [self setupTokenColors];
+    [self configureDurationLabel];
 }
 
 - (void)setSelected:(BOOL)selected {
@@ -63,7 +65,7 @@ static NSString *kFileSize = @"kFileSize";
     self.labelView.hidden = (node.label == MEGANodeLabelUnknown);
     if (node.label != MEGANodeLabelUnknown) {
         NSString *labelString = [[MEGANode stringForNodeLabel:node.label] stringByAppendingString:@"Small"];
-        self.labelImageView.image = [UIImage imageNamed:labelString];
+        self.labelImageView.image = [UIImage megaImageWithNamed:labelString];
     }
     
     BOOL favouriteIsHidden = !node.isFavourite;
@@ -205,6 +207,20 @@ static NSString *kFileSize = @"kFileSize";
 }
 
 #pragma mark: - Private
+
+- (void)configureImages {
+    self.favouriteImageView.image = [UIImage megaImageWithNamed:@"favouriteThumbnail"];
+    self.versionedImageView.image = [UIImage megaImageWithNamed:@"versionedThumbnail"];
+    self.linkImageView.image = [UIImage megaImageWithNamed:@"linkedThumbnail"];
+    self.downloadedImageView.image = [UIImage megaImageWithNamed:@"downloaded"];
+
+    [self.moreButton setImage:[UIImage megaImageWithNamed:@"moreGrid"] forState:UIControlStateNormal];
+    [self.moreButton setImage:[UIImage megaImageWithNamed:@"moreGrid"] forState:UIControlStateSelected];
+    [self.moreButton setImage:[UIImage megaImageWithNamed:@"moreGrid"] forState:UIControlStateHighlighted];
+
+    self.selectImageView.image = [UIImage megaImageWithNamed:@"checkBoxUnselected"];
+    self.videoIconView.image = [UIImage megaImageWithNamed:@"video_list"];
+}
 
 - (void)configureWithThumbnailFilePath:(NSString *)thumbnailFilePath {
     UIImage *thumbnailImage = [UIImage imageWithContentsOfFile:thumbnailFilePath];

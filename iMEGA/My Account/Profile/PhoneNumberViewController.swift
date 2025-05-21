@@ -1,4 +1,5 @@
 import MEGAAppSDKRepo
+import MEGAAssets
 import MEGADesignToken
 import MEGAL10n
 import PhoneNumberKit
@@ -62,7 +63,7 @@ class PhoneNumberViewController: UITableViewController {
         phoneNumberLabel.textColor = TokenColors.Text.primary
         modifyNumberLabel.textColor = TokenColors.Text.primary
         removeNumberLabel.textColor = TokenColors.Text.error
-        phoneNumberImageView.image = UIImage.phoneNumber.withRenderingMode(.alwaysTemplate)
+        phoneNumberImageView.image = MEGAAssets.UIImage.phoneNumber.withRenderingMode(.alwaysTemplate)
         phoneNumberImageView.tintColor = TokenColors.Icon.secondary
     }
     
