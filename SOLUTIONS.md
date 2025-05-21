@@ -6,6 +6,22 @@
 
 ## Solution For Question2
 
+### Root Cause
+
+When we call the `seekToDestination` function, we may trigger AVPlayer.play multiple times,which may cause the main thread hanged.
+
+ ![2.1](./assets/2.1.png)
+
+![2.2](./assets/2.2.png)
+
+### Solution
+
+Remove the extra call in the notification 
+
+
+
+
+
 
 
 ## Solution For Question3
