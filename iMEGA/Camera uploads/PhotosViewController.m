@@ -122,7 +122,6 @@
 }
 
 - (void)reloadPhotos {
-    [self updateNavigationTitleBar];
     [self setupNavigationBarButtons];
     dispatch_async(dispatch_get_main_queue(), ^{
         [self objcWrapper_updatePhotoLibrary];
@@ -166,6 +165,9 @@
     [self objcWrapper_enablePhotoLibraryEditMode:editing];
     
     if (editing) {
+        
+        [self objcWrapper_updateNavigationTitleWithSelectedPhotoCount:0];
+        
         UITabBar *tabBar = self.tabBarController.tabBar;
         if (tabBar == nil) {
             return;
