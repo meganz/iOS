@@ -71,7 +71,6 @@ extension MEGAAVViewController {
             .sink { [weak self] status in
                 guard let self else { return }
                 switch status {
-                case .readyToPlay: player?.play()
                 case .failed: logError(for: playerItem)
                 default: break
                 }
