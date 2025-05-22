@@ -10,4 +10,5 @@ public protocol PhotoLibraryContentViewRouting {
     func card(for photo: NodeEntity, viewModel: PhotoLibraryModeAllGridViewModel) -> PhotoCell
     func openPhotoBrowser(for photo: NodeEntity, allPhotos: [NodeEntity])
     func openCameraUploadSettings(viewModel: PhotoLibraryModeAllViewModel)
+    func showTakenDownNodeAlert()
 }

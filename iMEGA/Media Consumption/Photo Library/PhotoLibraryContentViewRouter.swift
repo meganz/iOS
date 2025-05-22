@@ -18,7 +18,7 @@ struct PhotoLibraryContentViewRouter: PhotoLibraryContentViewRouting {
     }
     
     func card(for photoByYear: PhotoByYear) -> PhotoYearCard {
-        return PhotoYearCard(
+        PhotoYearCard(
             viewModel: PhotoYearCardViewModel(
                 photoByYear: photoByYear,
                 thumbnailLoader: makeThumbnailLoader(),
@@ -29,7 +29,7 @@ struct PhotoLibraryContentViewRouter: PhotoLibraryContentViewRouting {
     }
     
     func card(for photoByMonth: PhotoByMonth) -> PhotoMonthCard {
-        return PhotoMonthCard(
+        PhotoMonthCard(
             viewModel: PhotoMonthCardViewModel(
                 photoByMonth: photoByMonth,
                 thumbnailLoader: makeThumbnailLoader(),
@@ -40,7 +40,7 @@ struct PhotoLibraryContentViewRouter: PhotoLibraryContentViewRouting {
     }
     
     func card(for photoByDay: PhotoByDay) -> PhotoDayCard {
-        return PhotoDayCard(
+        PhotoDayCard(
             viewModel: PhotoDayCardViewModel(
                 photoByDay: photoByDay,
                 thumbnailLoader: makeThumbnailLoader(),
@@ -51,7 +51,7 @@ struct PhotoLibraryContentViewRouter: PhotoLibraryContentViewRouting {
     }
     
     func card(for photo: NodeEntity, viewModel: PhotoLibraryModeAllGridViewModel) -> PhotoCell {
-        return PhotoCell(
+        PhotoCell(
             viewModel: PhotoCellViewModel(
                 photo: photo,
                 viewModel: viewModel,
@@ -65,11 +65,7 @@ struct PhotoLibraryContentViewRouter: PhotoLibraryContentViewRouting {
     func openPhotoBrowser(for photo: NodeEntity, allPhotos: [NodeEntity]) {
         tracker.trackAnalyticsEvent(with: DIContainer.singlePhotoSelectedEvent)
         
-        guard var topController = UIApplication.shared.keyWindow?.rootViewController else { return }
-        
-        while let presentedViewController = topController.presentedViewController {
-            topController = presentedViewController
-        }
+        guard let topController = topViewController() else { return }
         
         if topController.definesPresentationContext == false && topController.children.isEmpty { return }
         
@@ -91,6 +87,12 @@ struct PhotoLibraryContentViewRouter: PhotoLibraryContentViewRouting {
         .start()
     }
     
+    func showTakenDownNodeAlert() {
+        guard let topController = topViewController() else { return }
+        let alert = UIAlertController(model: AlertModelFactory.makeTakenDownModel())
+        topController.present(alert, animated: true)
+    }
+    
     private func makeThumbnailLoader() -> any ThumbnailLoaderProtocol {
         ThumbnailLoaderFactory.makeThumbnailLoader(mode: contentMode)
     }
@@ -106,6 +108,16 @@ struct PhotoLibraryContentViewRouter: PhotoLibraryContentViewRouting {
         SensitiveNodeUseCase(
             nodeRepository: NodeRepository.newRepo,
             accountUseCase: AccountUseCase(repository: AccountRepository.newRepo))
+    }
+    
+    private func topViewController() -> UIViewController? {
+        guard var topController = UIApplication.shared.keyWindow?.rootViewController else { return nil }
+        
+        while let presentedViewController = topController.presentedViewController {
+            topController = presentedViewController
+        }
+        
+        return topController
     }
 }
 
@@ -125,4 +137,3 @@ extension PhotoLibraryContentMode {
         }
     }
 }
-
