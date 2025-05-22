@@ -84,12 +84,10 @@ extension MainTabBarController {
         presenter.updateContentView(bottomOverlayContainer?.frame.height ?? 0)
     }
     
-    func performAnimation(_ animations: @escaping () -> Void) {
-        UIView.animate(withDuration: 0.2, animations: {
-            animations()
-        }, completion: { [weak self] _ in
-            self?.updatePresenterContentView()
-        })
+    func updateOverlayLayout(_ layoutWork: @escaping () -> Void) {
+        layoutWork()
+        view.layoutIfNeeded()
+        updatePresenterContentView()
     }
     
     func currentContainerHeight() -> CGFloat {

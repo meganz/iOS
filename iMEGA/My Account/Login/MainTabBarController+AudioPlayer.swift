@@ -17,7 +17,7 @@ extension MainTabBarController: AudioMiniPlayerHandlerProtocol {
     private func adjustMiniPlayerDisplay() {
         tabBar.isHidden ? addSafeAreaCoverView() : removeSafeAreaCoverView()
         
-        performAnimation { [weak self] in
+        updateOverlayLayout { [weak self] in
             self?.shouldUpdateProgressViewLocation()
             self?.bottomOverlayManager?.setItemVisibility(
                 for: .audioPlayer,
@@ -77,7 +77,7 @@ extension MainTabBarController: AudioMiniPlayerHandlerProtocol {
     }
     
     func hideMiniPlayer() {
-        performAnimation { [weak self] in
+        updateOverlayLayout { [weak self] in
             self?.bottomOverlayManager?.setItemVisibility(
                 for: .audioPlayer,
                 hidden: true
