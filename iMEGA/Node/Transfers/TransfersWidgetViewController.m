@@ -60,13 +60,13 @@ static TransfersWidgetViewController* instance = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         instance = [[UIStoryboard storyboardWithName:@"Transfers" bundle:nil] instantiateViewControllerWithIdentifier:@"TransfersWidgetViewControllerID"];
+        [instance configProgressIndicator];
     });
     return instance;
 }
 
 - (instancetype)initWithCoder:(NSCoder *)coder {
     self = [super initWithCoder:coder];
-    [self configProgressIndicator];
     return self;
 }
 
@@ -97,17 +97,17 @@ static TransfersWidgetViewController* instance = nil;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleCoreDataChangeNotification:) name:NSManagedObjectContextObjectsDidChangeNotification object:nil];
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didReceiveTransferOverQuotaNotification:) name:MEGATransferOverQuotaNotification object:nil];
     
-    [MEGASdk.shared addMEGATransferDelegate:self];
-    [MEGASdk.sharedFolderLink addMEGATransferDelegate:self];
-    [MEGASdk.shared addMEGARequestDelegate:self];
-    [[MEGAReachabilityManager sharedManager] retryPendingConnections];
-    [MEGASdk.sharedFolderLink retryPendingConnections];
-    
     [self handleTransferSelectionForTag:self.inProgressButton.tag];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    
+    [MEGASdk.shared addMEGATransferDelegate:self];
+    [MEGASdk.sharedFolderLink addMEGATransferDelegate:self];
+    [MEGASdk.shared addMEGARequestDelegate:self];
+    [[MEGAReachabilityManager sharedManager] retryPendingConnections];
+    [MEGASdk.sharedFolderLink retryPendingConnections];
     
     [CrashlyticsLogger logWithCategory:LogCategoryTransfersWidget
                                    msg:[NSString stringWithFormat: @"Transfers widget will appear. Navigation bar info: %@.", self.navigationController.navigationBar]
@@ -122,18 +122,25 @@ static TransfersWidgetViewController* instance = nil;
         self.transfersPaused = NO;
     }
     
-    self.progressView.hidden = YES;
+    [TransfersWidgetViewController sharedTransferViewController].progressView.hidden = YES;
     [self reloadView];
     
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
+    
+    [MEGASdk.shared removeMEGATransferDelegate:self];
+    [MEGASdk.sharedFolderLink removeMEGATransferDelegate:self];
+    [MEGASdk.shared removeMEGARequestDelegate:self];
+    [[MEGAReachabilityManager sharedManager] retryPendingConnections];
+    [MEGASdk.sharedFolderLink retryPendingConnections];
+    
     [CrashlyticsLogger logWithCategory:LogCategoryTransfersWidget
                                    msg:[NSString stringWithFormat: @"Transfers widget will disappear. Navigation bar info %@.", self.navigationController.navigationBar]
                                   file:@(__FILENAME__)
                               function:@(__FUNCTION__)];
-    [self.progressView showWidgetIfNeeded];
+    [[TransfersWidgetViewController sharedTransferViewController].progressView showWidgetIfNeeded];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
@@ -652,7 +659,7 @@ static TransfersWidgetViewController* instance = nil;
             [self.transfers removeObjectAtIndex:indexPath.row];
             [self.tableView reloadData];
             if (![self hasActiveTransfers]) {
-                [self.progressView configureData];
+                [[TransfersWidgetViewController sharedTransferViewController].progressView configureData];
                 self.toolbar.hidden = YES;
             }
         }
@@ -752,7 +759,7 @@ static TransfersWidgetViewController* instance = nil;
             [self switchEdit];
             
             if (![self hasActiveTransfers]) {
-                [self.progressView dismissWidget];
+                [[TransfersWidgetViewController sharedTransferViewController].progressView dismissWidget];
             }
             break;
         default:
