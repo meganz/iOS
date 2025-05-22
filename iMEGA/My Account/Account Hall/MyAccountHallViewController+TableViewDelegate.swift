@@ -37,7 +37,7 @@ extension MyAccountHallViewController: UITableViewDelegate {
             navigationController?.pushViewController(achievementsVC, animated: true)
             
         case MyAccountMegaSection.transfers.rawValue:
-            let transferVC = TransfersWidgetViewController.sharedTransfer()
+            let transferVC = UIStoryboard(name: "Transfers", bundle: nil).instantiateViewController(withIdentifier: "TransfersWidgetViewControllerID")
             transferVC.navigationItem.leftBarButtonItem = nil
             CrashlyticsLogger.log(category: .transfersWidget, "Showing transfers widget from MyAccountHall")
             navigationController?.pushViewController(transferVC, animated: true)

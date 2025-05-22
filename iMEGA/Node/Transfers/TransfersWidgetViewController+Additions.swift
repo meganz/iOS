@@ -92,7 +92,7 @@ extension TransfersWidgetViewController: TransferWidgetResponderProtocol {
     
     @objc
     func showWidgetIfNeeded() {
-        progressView?.showWidgetIfNeeded()
+        TransfersWidgetViewController.sharedTransfer().progressView?.showWidgetIfNeeded()
     }
     
     @objc
