@@ -184,7 +184,7 @@ extension AppDelegate {
 
             let verifyEmailVC = UIStoryboard(name: "VerifyEmail", bundle: nil).instantiateViewController(withIdentifier: "VerifyEmailViewControllerID")
             UIApplication.mnz_presentingViewController().present(verifyEmailVC, animated: true, completion: nil)
-        } else {
+        } else if !isRootViewNewOnboarding() { // Block for new onboarding since its handled in `LoginViewModel`
             var message: String
             
             switch suspensionType {

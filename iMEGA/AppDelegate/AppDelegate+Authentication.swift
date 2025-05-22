@@ -44,7 +44,7 @@ extension AppDelegate {
     }
     
     @objc func isRootViewNewOnboarding() -> Bool {
-        window.rootViewController is UIHostingController<OnboardingView<LoadingSpinner>>
+        window.rootViewController is OnboardingUSPViewController
     }
     
     @objc func handlePostLoginSetup(isFirstLogin: Bool) {
