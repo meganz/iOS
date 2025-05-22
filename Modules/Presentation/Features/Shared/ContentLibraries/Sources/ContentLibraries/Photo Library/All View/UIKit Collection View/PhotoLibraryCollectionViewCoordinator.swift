@@ -147,7 +147,11 @@ extension PhotoLibraryCollectionViewCoordinator: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let photo = photoLibraryDataSource.photo(at: indexPath) else { return }
         
-        router.openPhotoBrowser(for: photo, allPhotos: photoLibraryDataSource.allPhotos)
+        if photo.isTakenDown {
+            router.showTakenDownNodeAlert()
+        } else {
+            router.openPhotoBrowser(for: photo, allPhotos: photoLibraryDataSource.allPhotos)
+        }
     }
 }
 
