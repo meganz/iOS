@@ -183,7 +183,13 @@ extension PhotoBrowserDataProvider {
         let photosSet = Set(nodeEntities ?? [])
         let updatedSet = Set(nodeList.removedChangeTypeNodes())
         let removedPhotos = photosSet.intersection(updatedSet)
-        let preCurrentIndexPhotoSet = Set(nodeEntities?.prefix(through: $currentIndex.wrappedValue) ?? [])
+        
+        guard let count = nodeEntities?.count, count > 0  else {
+            return
+        }
+        
+        let safeIndex = min($currentIndex.wrappedValue, count - 1)
+        let preCurrentIndexPhotoSet = Set(nodeEntities?.prefix(through: safeIndex) ?? [])
 
         for photo in removedPhotos {
             $nodeEntities.mutate { $0?.remove(object: photo) }
