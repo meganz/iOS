@@ -3,6 +3,7 @@ import MEGAAnalytics
 import MEGAAppPresentation
 import MEGAAuthentication
 import MEGAAuthenticationOrchestration
+import MEGAInfrastructure
 import MEGAPermissions
 import MEGAPresentation
 import MEGASwiftUI
@@ -29,7 +30,11 @@ extension AppDelegate {
         
         MEGAAuthentication.DependencyInjection.accountConfirmationUseCase = makeAccountConfirmationUseCase()
     }
-    
+
+    @objc func injectInfrastructureDependencies() {
+        MEGAInfrastructure.DependencyInjection.sharedSdk = .shared
+    }
+
     @objc func makeOnboardingViewController() -> UIViewController {
         if isLoginRegisterAndOnboardingRevampFeatureEnabled {
             OnboardingUSPViewController()

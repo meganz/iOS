@@ -19,18 +19,19 @@ let package = Package(
         )
     ],
     dependencies: [
-        .package(path: "../../Domain/MEGADomain")
-        
+        .package(path: "../../Domain/MEGADomain"),
+        .package(path: "../../MEGASharedRepo/MEGASwift")
+
     ],
     targets: [
         .target(
             name: "MEGARepo",
-            dependencies: ["MEGADomain"],
+            dependencies: ["MEGADomain", "MEGASwift"],
             swiftSettings: settings
         ),
         .testTarget(
             name: "MEGARepoTests",
-            dependencies: ["MEGARepo"],
+            dependencies: ["MEGARepo", "MEGASwift"],
             resources: [.process("Resources")],
             swiftSettings: settings
         )

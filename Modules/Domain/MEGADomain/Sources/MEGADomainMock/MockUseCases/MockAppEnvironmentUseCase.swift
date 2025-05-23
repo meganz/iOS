@@ -1,4 +1,5 @@
 import MEGADomain
+import MEGAInfrastructure
 
 public final class MockAppEnvironmentUseCase: AppEnvironmentUseCaseProtocol, @unchecked Sendable {
     public var configuration: AppConfigurationEntity

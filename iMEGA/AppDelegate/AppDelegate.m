@@ -179,7 +179,8 @@
     [MEGASdk.sharedFolderLink setLanguageCode:languageCode];
     
     [self injectAuthenticationDependencies];
-    
+    [self injectInfrastructureDependencies];
+
     self.backgroundTaskMutableDictionary = [[NSMutableDictionary alloc] init];
     
     [[AppFirstLaunchSecurityChecker newChecker] performSecurityCheck];

@@ -1,4 +1,5 @@
 import MEGADomain
+import MEGAInfrastructure
 import MEGASwift
 
 public final class MockRemoteFeatureFlagRepository: RemoteFeatureFlagRepositoryProtocol, @unchecked Sendable {
@@ -13,9 +14,20 @@ public final class MockRemoteFeatureFlagRepository: RemoteFeatureFlagRepositoryP
     public init(valueToReturn: Int = 0) {
         self.valueToReturn = valueToReturn
     }
-    
-    public func remoteFeatureFlagValue(for flag: RemoteFeatureFlag) -> Int {
-        $receivedFlags.mutate { $0.append(flag) }
+
+    public func get(for key: String) async throws -> Int {
+        get(rawValue: key)
+    }
+
+    public func get(for key: String) -> Int {
+        get(rawValue: key)
+    }
+
+    private func get(rawValue: String) -> Int {
+        if let flag = RemoteFeatureFlag(rawValue: rawValue) {
+            $receivedFlags.mutate { $0.append(flag) }
+        }
+
         return valueToReturn
     }
 }

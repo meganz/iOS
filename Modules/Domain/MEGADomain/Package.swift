@@ -23,6 +23,7 @@ let package = Package(
     dependencies: [
         .package(path: "../../MEGASharedRepo/MEGASwift"),
         .package(path: "../../MEGASharedRepo/MEGAPreference"),
+        .package(path: "../../MEGASharedRepo/MEGAInfrastructure"),
         .package(path: "../../Infrastracture/MEGAFoundation"),
         .package(path: "../../Infrastracture/MEGATest"),
         .package(url: "https://github.com/apple/swift-async-algorithms", from: "1.0.0")
@@ -33,13 +34,15 @@ let package = Package(
             dependencies: ["MEGASwift",
                            "MEGAPreference",
                            "MEGAFoundation",
+                           "MEGAInfrastructure",
                            .product(name: "AsyncAlgorithms", package: "swift-async-algorithms")
             ],
             swiftSettings: settings),
         .target(
             name: "MEGADomainMock",
             dependencies: [
-                "MEGADomain"
+                "MEGADomain",
+                .product(name: "MEGAInfrastructure", package: "MEGAInfrastructure")
             ],
             swiftSettings: settings),
         .testTarget(

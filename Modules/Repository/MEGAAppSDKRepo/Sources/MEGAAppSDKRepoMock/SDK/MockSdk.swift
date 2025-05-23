@@ -1,5 +1,6 @@
 import MEGAAppSDKRepo
 import MEGASdk
+import MEGASDKRepo
 
 public typealias MockSdkRequestResult = Result<MEGARequest, MEGAError>
 

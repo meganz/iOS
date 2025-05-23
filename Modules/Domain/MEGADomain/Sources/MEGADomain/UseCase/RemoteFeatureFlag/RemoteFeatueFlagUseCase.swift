@@ -1,16 +1,19 @@
-public protocol RemoteFeatureFlagUseCaseProtocol: Sendable {
-    func isFeatureFlagEnabled(for flag: RemoteFeatureFlag) -> Bool
+import MEGAInfrastructure
+
+public typealias RemoteFeatureFlagUseCaseProtocol = MEGAInfrastructure.RemoteFeatureFlagUseCaseProtocol
+public typealias RemoteFeatureFlagUseCase = MEGAInfrastructure.RemoteFeatureFlagUseCase
+
+public extension RemoteFeatureFlagUseCaseProtocol {
+    func isFeatureFlagEnabled(for flag: RemoteFeatureFlag) -> Bool {
+        switch get(for: flag.rawValue) {
+        case .enabled: return true
+        default: return false
+        }
+    }
 }
 
-public struct RemoteFeatureFlagUseCase<T: RemoteFeatureFlagRepositoryProtocol>: RemoteFeatureFlagUseCaseProtocol {
-    
-    private let repository: T
-    
-    public init(repository: T) {
-        self.repository = repository
-    }
-    
-    public func isFeatureFlagEnabled(for flag: RemoteFeatureFlag) -> Bool {
-        repository.remoteFeatureFlagValue(for: flag) != 0
+public extension RemoteFeatureFlagUseCase {
+    init(repository: some RemoteFeatureFlagRepositoryProtocol) {
+        self.init(repo: repository)
     }
 }

@@ -24,6 +24,8 @@ let package = Package(
         .package(path: "../../Domain/MEGADomain"),
         .package(path: "../../Domain/MEGAAnalyticsDomain"),
         .package(path: "../../DataSource/MEGASdk"),
+        .package(path: "../../MEGASharedRepo/MEGAInfrastructure"),
+        .package(path: "../../MEGASharedRepo/MEGASDKRepo"),
         .package(path: "../../MEGASharedRepo/MEGATest"),
         .package(path: "../../MEGASharedRepo/MEGASwift"),
         .package(path: "../MEGARepo"),
@@ -40,6 +42,8 @@ let package = Package(
                 "SAMKeychain",
                 .product(name: "FirebaseCrashlytics", package: "firebase-ios-sdk"),
                 .product(name: "FirebaseAppDistribution-Beta", package: "firebase-ios-sdk"),
+                .product(name: "MEGAInfrastructure", package: "MEGAInfrastructure"),
+                .product(name: "MEGASDKRepo", package: "MEGASDKRepo"),
                 "MEGASwift",
                 "MEGARepo"
             ],
@@ -49,7 +53,10 @@ let package = Package(
             swiftSettings: settings),
         .target(
             name: "MEGAAppSDKRepoMock",
-            dependencies: ["MEGAAppSDKRepo"],
+            dependencies: [
+                "MEGAAppSDKRepo",
+                .product(name: "MEGASDKRepo", package: "MEGASDKRepo")
+            ],
             swiftSettings: settings
         ),
         .testTarget(
