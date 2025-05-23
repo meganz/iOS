@@ -34,6 +34,7 @@ final class MockAudioPlayerHandler: AudioPlayerHandlerProtocol {
     var refreshCurrentItemState_calledTimes = 0
     var autoPlay_calledTimes = 0
     var closePlayer_calledTimes = 0
+    var resettingAudioPlayer_calledTimes = 0
     var repeatMode = RepeatMode.none
     
     var onAutoPlayCompletion: (() -> Void)?
@@ -197,7 +198,9 @@ final class MockAudioPlayerHandler: AudioPlayerHandlerProtocol {
     
     @MainActor func dismissFullScreenPlayer() async {}
     
-    func resettingAudioPlayer(shouldResetPlayback: Bool) {}
+    func resettingAudioPlayer(shouldResetPlayback: Bool) {
+        resettingAudioPlayer_calledTimes += 1
+    }
 }
 
 extension MockAudioPlayerHandler {

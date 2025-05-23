@@ -45,7 +45,6 @@ extension FolderLinkViewController: AudioMiniPlayerHandlerProtocol, AudioPlayerP
     
     func closeMiniPlayer() {
         hideMiniPlayer()
-        AudioPlayerManager.shared.cleanupPlayerInstance()
         resetMiniPlayerContainer()
     }
     

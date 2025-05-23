@@ -4,8 +4,10 @@ import MEGAAppSDKRepo
 import MEGADomain
 import UIKit
 
+@MainActor
 final class MiniPlayerViewRouter: NSObject, MiniPlayerViewRouting {
     private weak var presenter: UIViewController?
+    private var baseViewController: UIViewController?
     private var configEntity: AudioPlayerConfigEntity
     private var folderSDKLogoutRequired: Bool = false
     
@@ -14,12 +16,30 @@ final class MiniPlayerViewRouter: NSObject, MiniPlayerViewRouting {
         self.presenter = presenter
     }
     
-    @objc func build() -> UIViewController {
-        let vc = UIStoryboard(name: "AudioPlayer", bundle: nil).instantiateViewController(withIdentifier: "MiniPlayerViewControllerID") as! MiniPlayerViewController
-                
+    deinit {
+        MEGALogDebug("[AudioPlayer] deallocating MiniPlayerViewRouter instance")
+    }
+    
+    func build() -> UIViewController {
+        let storyboard = UIStoryboard(name: "AudioPlayer", bundle: nil)
+        guard let vc = storyboard.instantiateViewController(
+            identifier: "MiniPlayerViewControllerID",
+            creator: { coder in
+                let viewModel = self.makeMiniPlayerViewModel()
+                return MiniPlayerViewController(coder: coder, viewModel: viewModel)
+            }
+        ) as? MiniPlayerViewController else {
+            return UIViewController()
+        }
+        
+        self.baseViewController = vc
+        return vc
+    }
+    
+    private func makeMiniPlayerViewModel() -> MiniPlayerViewModel {
         folderSDKLogoutRequired = configEntity.isFolderLink
         
-        vc.viewModel = MiniPlayerViewModel(
+        return MiniPlayerViewModel(
             configEntity: configEntity,
             router: self,
             nodeInfoUseCase: NodeInfoUseCase(nodeInfoRepository: NodeInfoRepository()),
@@ -28,11 +48,9 @@ final class MiniPlayerViewRouter: NSObject, MiniPlayerViewRouting {
             playbackContinuationUseCase: DIContainer.playbackContinuationUseCase,
             audioPlayerUseCase: AudioPlayerUseCase(repository: AudioPlayerRepository.newRepo)
         )
-        
-        return vc
     }
-
-    @objc func start() {
+    
+    func start() {
         configEntity.playerHandler.presentMiniPlayer(build())
     }
     
@@ -42,6 +60,10 @@ final class MiniPlayerViewRouter: NSObject, MiniPlayerViewRouting {
     
     func currentPresenter() -> UIViewController? {
         presenter
+    }
+    
+    func currentMiniPlayerView() -> UIViewController? {
+        baseViewController
     }
     
     func folderSDKLogout(required: Bool) {
@@ -54,6 +76,19 @@ final class MiniPlayerViewRouter: NSObject, MiniPlayerViewRouting {
     
     func isAFolderLinkPresenter() -> Bool {
         presenter?.isKind(of: FolderLinkViewController.self) ?? false
+    }
+    
+    func refresh(with newConfig: AudioPlayerConfigEntity) {
+        configEntity = newConfig
+        
+        guard let miniVC = baseViewController as? MiniPlayerViewController else {
+            start()
+            return
+        }
+        
+        miniVC.refreshPlayer(with: newConfig)
+        
+        AudioPlayerManager.shared.showMiniPlayer()
     }
     
     /// Returns the active presenter that is currently visible in the view hierarchy.

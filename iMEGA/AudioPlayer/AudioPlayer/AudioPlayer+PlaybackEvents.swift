@@ -44,8 +44,7 @@ extension AudioPlayer {
             )
             return
         }
-
-        notify(aboutShowingLoadingView)
+        
         Task { @MainActor in
             let isFinished = await currentItem.seek(to: time)
             refreshCurrentState(refresh: isFinished)

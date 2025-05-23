@@ -46,7 +46,7 @@ enum AudioPlayerAction: ActionType {
 }
 
 @MainActor
-protocol AudioPlayerViewRouting: Routing, Sendable {
+protocol AudioPlayerViewRouting: AnyObject, Routing, Sendable {
     func dismiss(completion: @escaping () -> Void)
     func goToPlaylist(parentNodeName: String)
     func showMiniPlayer(node: MEGANode?, shouldReload: Bool)
@@ -59,7 +59,9 @@ protocol AudioPlayerViewRouting: Routing, Sendable {
 
 extension AudioPlayerViewRouting {
     func dismiss() {
-        dismiss(completion: {})
+        dismiss(completion: {
+            AudioPlayerManager.shared.clearFullScreenPlayerResources()
+        })
     }
 }
 
@@ -101,7 +103,7 @@ final class AudioPlayerViewModel: ViewModelType {
     
     // MARK: - Private properties
     private let configEntity: AudioPlayerConfigEntity
-    private let router: any AudioPlayerViewRouting
+    private weak var router: (any AudioPlayerViewRouting)?
     private let nodeInfoUseCase: (any NodeInfoUseCaseProtocol)?
     private let streamingInfoUseCase: (any StreamingInfoUseCaseProtocol)?
     private let offlineInfoUseCase: (any OfflineFileInfoUseCaseProtocol)?
@@ -193,7 +195,7 @@ final class AudioPlayerViewModel: ViewModelType {
     }
     
     private func dismiss() {
-        router.dismiss()
+        router?.dismiss()
     }
     
     private nonisolated func preparePlayer() async {
@@ -224,7 +226,7 @@ final class AudioPlayerViewModel: ViewModelType {
         guard !configEntity.playerHandler.isPlayerEmpty(),
               let tracks = configEntity.playerHandler.currentPlayer()?.tracks,
               let currentTrack = configEntity.playerHandler.playerCurrentItem() else {
-            router.dismiss()
+            router?.dismiss()
             return
         }
         
@@ -438,11 +440,11 @@ final class AudioPlayerViewModel: ViewModelType {
     func dispatch(_ action: AudioPlayerAction) {
         switch action {
         case .onViewDidLoad:
-            Task.detached { [weak self] in
+            Task { [weak self] in
                 guard let self, let node = configEntity.node, let nodeInfoUseCase else { return }
                 let isTakenDown = try await nodeInfoUseCase.isTakenDown(node: node, isFolderLink: configEntity.isFolderLink)
                 if isTakenDown {
-                    await invoke(command: .showTermsOfServiceViolationAlert)
+                    invoke(command: .showTermsOfServiceViolationAlert)
                     return
                 }
                 
@@ -456,7 +458,7 @@ final class AudioPlayerViewModel: ViewModelType {
             if shouldInitializePlayer() {
                 trackInitializeAudioPlayer()
                 invokeCommand?(.showLoading(true))
-                Task.detached {
+                Task {
                     await self.preparePlayer()
                 }
             } else {
@@ -511,17 +513,17 @@ final class AudioPlayerViewModel: ViewModelType {
         case .showPlaylist:
             let parentNodeName = nodeInfoUseCase?.node(fromHandle: configEntity.node?.parentHandle ?? .invalid)?.name
             trackAccessingAudioPlayerPlaylist()
-            router.goToPlaylist(parentNodeName: parentNodeName ?? "")
+            router?.goToPlaylist(parentNodeName: parentNodeName ?? "")
         case .`import`:
             if let node = configEntity.node {
-                router.importNode(node)
+                router?.importNode(node)
             }
         case .sendToChat:
-            router.sendToChat()
+            router?.sendToChat()
         case .share(let sender):
-            router.share(sender: sender)
+            router?.share(sender: sender)
         case .dismiss:
-            router.dismiss()
+            router?.dismiss()
         case .refreshRepeatStatus:
             invokeCommand?(.updateRepeat(status: repeatItemsState))
         case .refreshShuffleStatus:
@@ -530,10 +532,10 @@ final class AudioPlayerViewModel: ViewModelType {
             guard let node = configEntity.playerHandler.playerCurrentItem()?.node else { return }
             guard let nodeUseCase = nodeInfoUseCase,
                   let latestNode = nodeUseCase.node(fromHandle: node.handle) else {
-                    self.router.showAction(for: node, sender: sender)
+                    self.router?.showAction(for: node, sender: sender)
                     return
                 }
-            router.showAction(for: latestNode, sender: sender)
+            router?.showAction(for: latestNode, sender: sender)
         case .onSelectResumePlaybackContinuationDialog(let playbackTime):
             configEntity.playerHandler.playerResumePlayback(from: playbackTime)
             playbackContinuationUseCase.setPreference(to: .resumePreviousSession)
@@ -542,7 +544,7 @@ final class AudioPlayerViewModel: ViewModelType {
             configEntity.playerHandler.playerPlay()
         case .onTermsOfServiceViolationAlertDismissAction:
             configEntity.playerHandler.closePlayer()
-            router.dismiss()
+            router?.dismiss()
         case .viewWillDisappear(let reason):
             switch reason {
             case .userInitiatedDismissal:
@@ -590,7 +592,6 @@ extension AudioPlayerViewModel: AudioPlayerObserversProtocol {
     
     nonisolated func audio(player: AVQueuePlayer, currentTime: Double, remainingTime: Double, percentageCompleted: Float, isPlaying: Bool) {
         Task { @MainActor in
-            if remainingTime > 0.0 { invokeCommand?(.showLoading(false)) }
             invokeCommand?(.reloadPlayerStatus(currentTime: currentTime.timeString, remainingTime: String(describing: "-\(remainingTime.timeString)"), percentage: percentageCompleted, isPlaying: isPlaying))
         }
     }
@@ -715,13 +716,13 @@ extension AudioPlayerViewModel: AudioPlayerObserversProtocol {
     private func initMiniPlayer() {
         switch configEntity.playerType {
         case .`default`:
-            router.showMiniPlayer(node: configEntity.playerHandler.playerCurrentItem()?.node, shouldReload: true)
+            router?.showMiniPlayer(node: configEntity.playerHandler.playerCurrentItem()?.node, shouldReload: true)
         case .folderLink:
-            router.showMiniPlayer(file: configEntity.playerHandler.playerCurrentItem()?.url.absoluteString ?? "", shouldReload: true)
+            router?.showMiniPlayer(file: configEntity.playerHandler.playerCurrentItem()?.url.absoluteString ?? "", shouldReload: true)
         case .fileLink:
-            router.showMiniPlayer(file: configEntity.fileLink ?? "", shouldReload: true)
+            router?.showMiniPlayer(file: configEntity.fileLink ?? "", shouldReload: true)
         case .offline:
-            router.showMiniPlayer(file: configEntity.playerHandler.playerCurrentItem()?.url.absoluteString ?? "", shouldReload: true)
+            router?.showMiniPlayer(file: configEntity.playerHandler.playerCurrentItem()?.url.absoluteString ?? "", shouldReload: true)
         }
     }
 }

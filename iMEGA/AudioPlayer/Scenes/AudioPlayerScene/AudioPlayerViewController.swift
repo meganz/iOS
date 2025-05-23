@@ -53,7 +53,7 @@ class AudioPlayerViewController: UIViewController, AudioPlayerViewControllerNode
     }
     
     required init?(coder: NSCoder) {
-        fatalError("You must create this view controller with a user.")
+        fatalError("init(coder:) has not been implemented")
     }
     
     // MARK: - View lifecycle
@@ -98,6 +98,7 @@ class AudioPlayerViewController: UIViewController, AudioPlayerViewControllerNode
     }
     
     deinit {
+        MEGALogDebug("[AudioPlayer] deallocating AudioPlayerViewController instance")
         removeDelegates()
     }
     

@@ -28,6 +28,10 @@ final class AudioPlayerViewRouter: NSObject, AudioPlayerViewRouting {
         super.init()
     }
     
+    deinit {
+        MEGALogDebug("[AudioPlayer] deallocating AudioPlayerViewRouter instance")
+    }
+    
     @MainActor
     private func makeAudioPlayerViewController() -> AudioPlayerViewController? {
         let storyboard = UIStoryboard(name: "AudioPlayer", bundle: nil)

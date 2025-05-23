@@ -30,7 +30,16 @@ final class MiniPlayerViewController: UIViewController {
     private var lastMovementIndexPath: IndexPath?
     
     // MARK: - Internal properties
-    var viewModel: MiniPlayerViewModel!
+    private(set) var viewModel: MiniPlayerViewModel
+    
+    init?(coder: NSCoder, viewModel: MiniPlayerViewModel) {
+        self.viewModel = viewModel
+        super.init(coder: coder)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     // MARK: - View lifecycle
     override func viewDidLoad() {
@@ -54,6 +63,10 @@ final class MiniPlayerViewController: UIViewController {
         progressBarView.setNeedsDisplay()
         
         viewModel.dispatch(.scrollToCurrentItem)
+    }
+    
+    deinit {
+        MEGALogDebug("[AudioPlayer] deallocating MiniPlayerViewController instance")
     }
     
     // MARK: - Private functions
@@ -181,6 +194,10 @@ final class MiniPlayerViewController: UIViewController {
         closeButtonImage.tintColor = TokenColors.Icon.primary
         
         activityIndicatorView.color = TokenColors.Icon.secondary
+    }
+    
+    func refreshPlayer(with config: AudioPlayerConfigEntity) {
+        viewModel.dispatch(.refresh(config))
     }
     
     // MARK: - UI actions

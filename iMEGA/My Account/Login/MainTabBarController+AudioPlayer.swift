@@ -54,14 +54,15 @@ extension MainTabBarController: AudioMiniPlayerHandlerProtocol {
     }
     
     func showMiniPlayer() {
-        if let navController = selectedViewController as? UINavigationController,
-           let lastController = navController.viewControllers.last,
-           lastController.conforms(to: (any AudioPlayerPresenterProtocol).self) {
-            bottomOverlayManager?.setItemVisibility(
-                for: .audioPlayer,
-                hidden: false
-            )
+        guard let navController = selectedViewController as? UINavigationController,
+              let lastController = navController.viewControllers.last,
+              lastController.conforms(to: (any AudioPlayerPresenterProtocol).self) else { return }
+        
+        if let bottomOverlayManager, bottomOverlayManager.contains(.audioPlayer) {
+            bottomOverlayManager.setItemVisibility(for: .audioPlayer, hidden: false)
             adjustMiniPlayerDisplay()
+        } else {
+            shouldShowMiniPlayer()
         }
     }
     
@@ -88,7 +89,6 @@ extension MainTabBarController: AudioMiniPlayerHandlerProtocol {
     
     func closeMiniPlayer() {
         hideMiniPlayer()
-        AudioPlayerManager.shared.cleanupPlayerInstance()
         resetMiniPlayerContainer()
         shouldUpdateProgressViewLocation()
     }
