@@ -49,6 +49,7 @@ public struct AdsSlotRouter<T: View> {
             adsSlotUpdatesProvider: AdsSlotUpdatesProvider(adsSlotViewController: adsSlotViewController),
             adsUseCase: AdsUseCase(repository: AdsRepository.newRepo),
             nodeUseCase: nodeUseCase,
+            appEnvironmentUseCase: AppEnvironmentUseCase.appShared,
             accountUseCase: accountUseCase,
             purchaseUseCase: purchaseUseCase,
             preferenceUseCase: PreferenceUseCase.default,

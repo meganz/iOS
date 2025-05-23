@@ -1,5 +1,6 @@
 import Foundation
 import MEGASdk
+import MEGASDKRepo
 
 public typealias MEGARequestCompletion = (_ result: Result<MEGARequest, MEGAError>) -> Void
 public typealias MEGARequestStartHandler = (MEGARequest) -> Void

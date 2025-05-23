@@ -1,18 +1,9 @@
-import MEGADomain
-import MEGASdk
+import MEGAInfrastructure
 
-public final class RemoteFeatureFlagRepository: RemoteFeatureFlagRepositoryProtocol {
+public typealias RemoteFeatureFlagRepository = MEGAInfrastructure.RemoteFeatureFlagRepository
+
+extension RemoteFeatureFlagRepository {
     public static var newRepo: RemoteFeatureFlagRepository {
-        RemoteFeatureFlagRepository(sdk: MEGASdk.sharedSdk)
-    }
-    
-    private let sdk: MEGASdk
-    
-    public init(sdk: MEGASdk) {
-        self.sdk = sdk
-    }
-    
-    public func remoteFeatureFlagValue(for flag: RemoteFeatureFlag) -> Int {
-        sdk.remoteFeatureFlagValue(flag.rawValue)
+        MEGAInfrastructure.DependencyInjection.remoteFeatureFlagRepositoryImpl
     }
 }

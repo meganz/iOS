@@ -46,7 +46,7 @@ final public class AdsSlotViewModel: ObservableObject {
         nodeUseCase: (any NodeUseCaseProtocol)? = nil,
         remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = DIContainer.remoteFeatureFlagUseCase,
         adMobConsentManager: some GoogleMobileAdsConsentManagerProtocol = GoogleMobileAdsConsentManager.shared,
-        appEnvironmentUseCase: some AppEnvironmentUseCaseProtocol = AppEnvironmentUseCase.shared,
+        appEnvironmentUseCase: some AppEnvironmentUseCaseProtocol,
         accountUseCase: some AccountUseCaseProtocol,
         purchaseUseCase: some AccountPlanPurchaseUseCaseProtocol,
         preferenceUseCase: some PreferenceUseCaseProtocol,
@@ -246,7 +246,7 @@ final public class AdsSlotViewModel: ObservableObject {
     
     /// In the future, AdMob will have multiple unit ids per adSlot
     public var adMob: AdMob {
-        appEnvironmentUseCase.configuration == .production ? AdMob.live : AdMob.test
+        appEnvironmentUseCase.configuration == AppConfigurationEntity.production ? AdMob.live : AdMob.test
     }
     
     // MARK: Close Ads button

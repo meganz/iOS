@@ -67,6 +67,15 @@ let package = Package(
             linkerSettings: [
                 // Frameworks
                 .linkedFramework("QuickLookThumbnailing"),
+                .linkedFramework("AVFoundation"),
+                .linkedFramework("CoreFoundation"),
+                .linkedFramework("CFNetwork"),
+                .linkedFramework("Security"),
+                .linkedFramework("CoreGraphics"),
+                .linkedFramework("ImageIO"),
+                .linkedFramework("UIKit"),
+                .linkedFramework("Foundation"),
+                .linkedFramework("UniformTypeIdentifiers"),
                 // Libraries
                 .linkedLibrary("resolv"),
                 .linkedLibrary("z"),
