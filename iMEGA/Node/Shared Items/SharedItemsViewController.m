@@ -373,34 +373,34 @@
     if (self.searchController.isActive) {
         if (self.linksButton.selected || indexPath.section == 1) {
             if (self.searchNodesArray.count > indexPath.row) {
-                return self.searchNodesArray[indexPath.row];
+                return [self.searchNodesArray objectOrNilAtIndex:indexPath.row];
             }
         }
         
         if (self.searchUnverifiedNodesArray.count > indexPath.row) {
-            return self.searchUnverifiedNodesArray[indexPath.row];
+            return [self.searchUnverifiedNodesArray objectOrNilAtIndex:indexPath.row];
             
         }
         return nil;
     } else {
         if (self.incomingButton.selected) {
             if (indexPath.section == 0) {
-                return self.incomingUnverifiedNodesMutableArray[indexPath.row];
+                return [self.incomingUnverifiedNodesMutableArray objectOrNilAtIndex:indexPath.row];
             }
-            return self.incomingNodesMutableArray[indexPath.row];
+            return [self.incomingNodesMutableArray objectOrNilAtIndex:indexPath.row];
         } else if (self.outgoingButton.selected) {
             if (indexPath.section == 0) {
                 if (0 <= indexPath.row && indexPath.row < self.outgoingUnverifiedNodesMutableArray.count) {
-                    return self.outgoingUnverifiedNodesMutableArray[indexPath.row];
+                    return [self.outgoingUnverifiedNodesMutableArray objectOrNilAtIndex:indexPath.row];
                 } else {
                     NSString *msg = [NSString stringWithFormat:@"%ld", self.outgoingUnverifiedNodesMutableArray.count];
                     [CrashlyticsLogger logWithCategory:LogCategorySharedItems msg:msg file:@(__FILE__) function:@(__FUNCTION__)];
                     return nil;
                 }
             }
-            return self.outgoingNodesMutableArray[indexPath.row];
+            return [self.outgoingNodesMutableArray objectOrNilAtIndex:indexPath.row];
         } else if (self.linksButton.selected) {
-            return self.publicLinksArray[indexPath.row];
+            return [self.publicLinksArray objectOrNilAtIndex:indexPath.row];
         } else {
             return nil;
         }
