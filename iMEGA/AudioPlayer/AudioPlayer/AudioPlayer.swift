@@ -126,8 +126,21 @@ final class AudioPlayer: NSObject {
     
     deinit {
         MEGALogDebug("[AudioPlayer] destroying audio player instance")
+        preloadMetadataTask?.cancel()
+        preloadMetadataTask = nil
+        queueLoader.reset()
+        endBackgroundTask()
+        unregister()
+        audioSeekFallbackObserver?.invalidate()
+        metadataQueueFinishAllOperationsObserver?.invalidate()
+        mediaPlayerNowPlayingInfoCenter.nowPlayingInfo = nil
+        observersListenerManager.listeners.removeAll()
+        queueLoader.delegate = nil
+        queuePlayer?.removeAllItems()
         queuePlayer = nil
         onClosePlayerCompletion?()
+        onClosePlayerCompletion = nil
+        tracks.removeAll()
     }
     
     @objc func close(_ completion: @escaping () -> Void) {
@@ -139,6 +152,8 @@ final class AudioPlayer: NSObject {
         unregister()
         
         preloadMetadataTask?.cancel()
+        preloadMetadataTask = nil
+        endBackgroundTask()
     }
     
     private func unregister() {

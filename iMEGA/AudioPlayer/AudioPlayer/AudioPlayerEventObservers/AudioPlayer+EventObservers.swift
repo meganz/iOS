@@ -9,7 +9,7 @@ extension AudioPlayer {
         audioQueueStallObserver = queuePlayer?.observe(\.timeControlStatus, options: .new, changeHandler: audio(player:didChangeTimeControlStatus:))
         audioQueueWaitingObserver = queuePlayer?.observe(\.reasonForWaitingToPlay, options: [.new, .old], changeHandler: audio(player:reasonForWaitingToPlay:))
         audioQueueBufferEmptyObserver = queuePlayer?.currentItem?.observe(\.isPlaybackBufferEmpty, options: [.new], changeHandler: audio(playerItem:isPlaybackBufferEmpty:))
-        audioQueueBufferAlmostThereObserver = queuePlayer?.currentItem?.observe(\.isPlaybackLikelyToKeepUp, options: [.new], changeHandler: audio(playerItem:isPlaybackLikelyToKeepUp:))
+        audioQueueBufferAlmostThereObserver = queuePlayer?.currentItem?.observe(\.isPlaybackLikelyToKeepUp, options: [.new], changeHandler: audio(playerItem:isPlaybackBufferLikelyToKeepUp:))
         audioQueueBufferFullObserver = queuePlayer?.currentItem?.observe(\.isPlaybackBufferFull, options: [.new], changeHandler: audio(playerItem:isPlaybackBufferFull:))
         audioQueueLoadedTimeRangesObserver = queuePlayer?.currentItem?.observe(\.loadedTimeRanges, options: .new, changeHandler: audio(playerItem:didLoadedTimeRanges:))
     }
@@ -26,6 +26,18 @@ extension AudioPlayer {
         audioQueueBufferFullObserver?.invalidate()
         audioQueueLoadedTimeRangesObserver?.invalidate()
         audioSeekFallbackObserver?.invalidate()
+        
+        audioQueueObserver = nil
+        audioQueueStatusObserver = nil
+        audioQueueNewItemObserver = nil
+        audioQueueRateObserver = nil
+        audioQueueWaitingObserver = nil 
+        audioQueueStallObserver = nil
+        audioQueueBufferEmptyObserver = nil
+        audioQueueBufferAlmostThereObserver = nil
+        audioQueueBufferFullObserver = nil
+        audioQueueLoadedTimeRangesObserver = nil
+        audioSeekFallbackObserver = nil
     }
     
     func registerAudioPlayerNotifications() {
@@ -90,7 +102,6 @@ extension AudioPlayer {
             }
             
         case .waitingToPlayAtSpecifiedRate:
-            isPaused = true
             invalidateTimer()
             notify(aboutShowingLoadingView)
             
@@ -185,19 +196,25 @@ extension AudioPlayer {
         }
     }
     
-    // listening for buffer is empty
+    /// Called when the playback buffer has emptied out (no more data to play).
+    /// Wraps up the current item and enters buffering state.
     func audio(playerItem: AVPlayerItem, isPlaybackBufferEmpty value: NSKeyValueObservedChange<Bool>) {
+        guard value.newValue == true else { return }
         onItemFinishedPlaying()
     }
-    
-    // listening for event that buffer is almost full
-    func audio(playerItem: AVPlayerItem, isPlaybackLikelyToKeepUp value: NSKeyValueObservedChange<Bool>) {
+
+    /// Called when the buffer has refilled enough to resume smooth playback.
+    /// Exits buffering state so UI and timers can restart.
+    func audio(playerItem: AVPlayerItem, isPlaybackBufferLikelyToKeepUp value: NSKeyValueObservedChange<Bool>) {
+        guard value.newValue == true else { return }
         notify(aboutAudioPlayerDidFinishBuffering)
     }
-    
-    // listening for event that buffer is full
+
+    /// Called when the buffer is completely full (all chunks loaded).
+    /// Hides any loading indicators now that playback won’t stall.
     func audio(playerItem: AVPlayerItem, isPlaybackBufferFull value: NSKeyValueObservedChange<Bool>) {
-        // Audio Player buffering is hidden...
+        guard value.newValue == true else { return }
+        notify(aboutHidingLoadingView)
     }
 
     @objc func audioPlayer(interruption notification: Notification) {

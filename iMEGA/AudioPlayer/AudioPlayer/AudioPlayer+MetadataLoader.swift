@@ -11,9 +11,7 @@ extension AudioPlayer {
     func preloadNextTracksMetadata() {
         let itemsToBePreloaded = tracks.filter { !$0.loadedMetadata }
         let completion: @Sendable (AudioPlayerItem) -> Void = { [weak self] item in
-            guard let self else { return }
-            if queuePlayer?.currentItem == item { notify([aboutCurrentItem, aboutCurrentThumbnail, aboutToReloadCurrentItem]) }
-            notifyAboutToReload(item: item)
+            self?.notifyMetadataLoaded(for: item)
         }
         
         preloadMetadataTask?.cancel()
@@ -27,6 +25,13 @@ extension AudioPlayer {
                 }
             }
         }
+    }
+    
+    private func notifyMetadataLoaded(for item: AudioPlayerItem) {
+        if queuePlayer?.currentItem == item {
+            notify([aboutCurrentItem, aboutCurrentThumbnail, aboutToReloadCurrentItem])
+        }
+        notifyAboutToReload(item: item)
     }
     
     @MainActor

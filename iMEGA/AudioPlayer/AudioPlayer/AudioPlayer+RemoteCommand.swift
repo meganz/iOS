@@ -20,6 +20,7 @@ extension AudioPlayer {
         mediaPlayerRemoteCommandCenter.togglePlayPauseCommand.removeTarget(self)
         mediaPlayerRemoteCommandCenter.seekForwardCommand.removeTarget(self)
         mediaPlayerRemoteCommandCenter.seekBackwardCommand.removeTarget(self)
+        mediaPlayerRemoteCommandCenter.changePlaybackPositionCommand.removeTarget(self)
     }
     
     func refreshNowPlayingInfo() {

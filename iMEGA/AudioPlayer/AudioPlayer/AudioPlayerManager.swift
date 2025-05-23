@@ -9,13 +9,11 @@ import MEGADomain
     private var player: AudioPlayer?
     private var fullScreenPlayerRouter: AudioPlayerViewRouter?
     private var miniPlayerRouter: MiniPlayerViewRouter?
-    private var miniPlayerVC: MiniPlayerViewController?
     private var miniPlayerHandlerListenerManager = ListenerManager<any AudioMiniPlayerHandlerProtocol>()
     private var nodeInfoUseCase: (any NodeInfoUseCaseProtocol)?
     private let playbackContinuationUseCase: any PlaybackContinuationUseCaseProtocol =
         DIContainer.playbackContinuationUseCase
     private let audioSessionUseCase = AudioSessionUseCase(audioSessionRepository: AudioSessionRepository(audioSession: AVAudioSession()))
-    private var shouldRemovePlayerInstance: Bool = false
     
     override private init() {
         super.init()
@@ -56,23 +54,18 @@ import MEGADomain
     
     func currentRepeatMode() -> RepeatMode {
         guard let player else { return .none }
-        
-        if player.isRepeatOneMode() {
-            return .repeatOne
-        } else if player.isRepeatAllMode() {
-            return .loop
-        } else {
-            return .none
-        }
+        if player.isRepeatOneMode() { return .repeatOne }
+        if player.isRepeatAllMode() { return .loop }
+        return .none
     }
     
     func currentSpeedMode() -> SpeedMode {
-        switch player?.rate {
-        case 0.5: return SpeedMode.half
-        case 1.0: return SpeedMode.normal
-        case 1.5: return SpeedMode.oneAndAHalf
-        case 2.0: return SpeedMode.double
-        default: return SpeedMode.normal
+        return switch player?.rate {
+        case 0.5: .half
+        case 1.0: .normal
+        case 1.5: .oneAndAHalf
+        case 2.0: .double
+        default: .normal
         }
     }
     
@@ -297,11 +290,14 @@ import MEGADomain
             guard player != nil else { return }
             
             let allNodes = currentPlayer()?.tracks.compactMap(\.node)
-            miniPlayerRouter = MiniPlayerViewRouter(configEntity: AudioPlayerConfigEntity(node: node, isFolderLink: isFolderLink, fileLink: fileLink, relatedFiles: filePaths, allNodes: allNodes, shouldResetPlayer: shouldResetPlayer, isFromSharedItem: isFromSharedItem), presenter: presenter)
+            let config = AudioPlayerConfigEntity(node: node, isFolderLink: isFolderLink, fileLink: fileLink, relatedFiles: filePaths, allNodes: allNodes, shouldResetPlayer: shouldResetPlayer, isFromSharedItem: isFromSharedItem)
             
-            miniPlayerVC = nil
-            
-            miniPlayerRouter?.start()
+            if miniPlayerRouter == nil {
+                miniPlayerRouter = MiniPlayerViewRouter(configEntity: config, presenter: presenter)
+                miniPlayerRouter?.start()
+            } else {
+                miniPlayerRouter?.refresh(with: config)
+            }
         }
         
         guard (presenter as? any AudioPlayerPresenterProtocol) == nil else {
@@ -317,17 +313,19 @@ import MEGADomain
             self?.audioSessionUseCase.configureCallAudioSession()
             self?.clearMiniPlayerResources()
         }
-        
-        shouldRemovePlayerInstance = true
-        
         miniPlayerHandlerListenerManager.notify { $0.closeMiniPlayer() }
         
         NotificationCenter.default.post(name: NSNotification.Name.MEGAAudioPlayerShouldUpdateContainer, object: nil)
+        
+        player = nil
     }
     
-    private func clearMiniPlayerResources() {
-        miniPlayerVC = nil
+    func clearMiniPlayerResources() {
         miniPlayerRouter = nil
+    }
+    
+    func clearFullScreenPlayerResources() {
+        fullScreenPlayerRouter = nil
     }
     
     @MainActor
@@ -353,18 +351,9 @@ import MEGADomain
     func refreshContentOffset(presenter: any AudioPlayerPresenterProtocol, isHidden: Bool) {
         if isHidden {
             presenter.updateContentView(0)
-            
-            cleanupPlayerInstance()
         } else {
             let height = miniPlayerHandlerListenerManager.listeners.last?.currentContainerHeight() ?? 0
             presenter.updateContentView(height)
-        }
-    }
-    
-    func cleanupPlayerInstance() {
-        if shouldRemovePlayerInstance {
-            player = nil
-            shouldRemovePlayerInstance = false
         }
     }
     
@@ -395,20 +384,18 @@ import MEGADomain
     }
     
     func presentMiniPlayer(_ viewController: UIViewController) {
-        miniPlayerVC = viewController as? MiniPlayerViewController
         miniPlayerHandlerListenerManager.listeners.last?.presentMiniPlayer(viewController)
     }
     
+    @MainActor
     func showMiniPlayer() {
-        guard let miniPlayerVC else {
-            miniPlayerRouter?.start()
-            return
-        }
-        guard let currentMiniPlayerHandler = miniPlayerHandlerListenerManager.listeners.last else { return }
+        guard let miniPlayerRouter,
+              let currentMiniPlayerHandler = miniPlayerHandlerListenerManager.listeners.last else { return }
         
         if currentMiniPlayerHandler.containsMiniPlayerInstance() {
             currentMiniPlayerHandler.showMiniPlayer()
         } else {
+            guard let miniPlayerVC = miniPlayerRouter.currentMiniPlayerView() else { return }
             currentMiniPlayerHandler.presentMiniPlayer(miniPlayerVC)
         }
     }
@@ -443,7 +430,7 @@ import MEGADomain
     
     @MainActor
     private func isFolderSDKLogoutRequired() -> Bool {
-        guard let miniPlayerRouter = miniPlayerRouter else { return false }
+        guard let miniPlayerRouter else { return false }
         return miniPlayerRouter.isFolderSDKLogoutRequired()
     }
     
