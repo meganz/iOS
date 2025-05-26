@@ -1520,6 +1520,7 @@
                 
                 [api setAccountAuth:nil];
             }
+            [[MEGASdk.shared completedTransfers] removeAllObjects];
             break;
         }
             
