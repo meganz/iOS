@@ -72,6 +72,28 @@ extension AppDelegate {
         DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .loginRegisterAndOnboardingRevamp)
     }
     
+    @objc func showConfirmEmailView() {
+        guard let name = SAMKeychain.password(forService: "MEGA", account: "name"),
+              let email = SAMKeychain.password(forService: "MEGA", account: "email"),
+              let password = SAMKeychain.password(forService: "MEGA", account: "password") else {
+            MEGALogError("Information from sessionId was not stored by MEGACreateAccountRequestDelegate")
+            return
+        }
+        if let onboardingViewController = window.rootViewController as? OnboardingUSPViewController {
+            onboardingViewController.presentConfirmEmail(
+                information: .init(
+                    name: name,
+                    email: email,
+                    password: password))
+        } else {
+            let checkEmailAndFollowTheLinkVC = UIStoryboard(name: "Main", bundle: nil)
+                .instantiateViewController(withIdentifier: "CheckEmailAndFollowTheLinkViewControllerID")
+            checkEmailAndFollowTheLinkVC.modalPresentationStyle = .fullScreen
+            
+            UIApplication.mnz_presentingViewController().present(checkEmailAndFollowTheLinkVC, animated: true)
+        }
+    }
+    
     private func makeLoginUseCase() -> some LoginUseCaseProtocol {
         let loginUseCase = LoginUseCase(
             fetchNodesEnabled: false,
