@@ -252,10 +252,9 @@
         self.window.rootViewController = [self makeOnboardingViewController];
         NSString *sessionId = [SAMKeychain passwordForService:@"MEGA" account:@"sessionId"];
         if (sessionId && ![[[launchOptions objectForKey:@"UIApplicationLaunchOptionsURLKey"] absoluteString] containsString:@"confirm"]) {
+            __weak typeof(self) weakSelf = self;
             MEGACreateAccountRequestDelegate *createAccountRequestDelegate = [[MEGACreateAccountRequestDelegate alloc] initWithCompletion:^ (MEGAError *error) {
-                CheckEmailAndFollowTheLinkViewController *checkEmailAndFollowTheLinkVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"CheckEmailAndFollowTheLinkViewControllerID"];
-                checkEmailAndFollowTheLinkVC.modalPresentationStyle = UIModalPresentationFullScreen;
-                [UIApplication.mnz_presentingViewController presentViewController:checkEmailAndFollowTheLinkVC animated:YES completion:nil];
+                [weakSelf showConfirmEmailView];
             }];
             createAccountRequestDelegate.resumeCreateAccount = YES;
             [MEGASdk.shared resumeCreateAccountWithSessionId:sessionId delegate:createAccountRequestDelegate];

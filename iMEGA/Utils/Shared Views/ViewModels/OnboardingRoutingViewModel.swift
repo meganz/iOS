@@ -41,6 +41,15 @@ final class OnboardingRoutingViewModel {
         
         onboardingViewModel.routeTo(.signUp(createAccountViewModel))
     }
+    
+    func presentConfirmEmail(information: NewAccountInformationEntity) {
+        let createAccountViewModel = MEGAAuthentication.DependencyInjection.createAccountViewModel
+        let createAccountEmailSentViewModel = MEGAAuthentication.DependencyInjection.emailConfirmationViewModel(
+            with: information)
+        createAccountViewModel.route = .emailConfirmation(createAccountEmailSentViewModel)
+        
+        onboardingViewModel.routeTo(.signUp(createAccountViewModel))
+    }
 
     private func setupSubscription() {
         setupAccountConfirmationSubscription()
