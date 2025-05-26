@@ -1,17 +1,10 @@
 #import "QRSettingsTableViewController.h"
 
-#import "SVProgressHUD.h"
-
-#import "MEGAContactLinkCreateRequestDelegate.h"
-#import "MEGAGetAttrUserRequestDelegate.h"
-#import "MEGASetAttrUserRequestDelegate.h"
 #import "MEGA-Swift.h"
 
 @import MEGAL10nObjc;
 
 @interface QRSettingsTableViewController ()
-
-@property (nonatomic) MEGAGetAttrUserRequestDelegate *getContactLinksOptionDelegate;
 
 @end
 
