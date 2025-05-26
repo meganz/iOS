@@ -862,7 +862,6 @@
 		77F1DBDC2056A9DF005D5F0E /* MEGAContactLinkCreateRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 77F1DBDB2056A9DF005D5F0E /* MEGAContactLinkCreateRequestDelegate.m */; };
 		77F1DBDF2056AA13005D5F0E /* MEGAContactLinkQueryRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 77F1DBDE2056AA13005D5F0E /* MEGAContactLinkQueryRequestDelegate.m */; };
 		77F1DBE22056B752005D5F0E /* MEGAGetAttrUserRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 77F1DBE12056B752005D5F0E /* MEGAGetAttrUserRequestDelegate.m */; };
-		77F1DBE52056B767005D5F0E /* MEGASetAttrUserRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 77F1DBE42056B767005D5F0E /* MEGASetAttrUserRequestDelegate.m */; };
 		77F3C30321C12F800049A1BA /* UITextField+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B0CD4292188D71100F97A2C /* UITextField+MNZCategory.m */; };
 		77F43DD92034637300AE4F42 /* UICollectionView+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 77F43DD82034637300AE4F42 /* UICollectionView+MNZCategory.m */; };
 		77F95CEF20E3B14D00F42D9C /* ShareDestinationTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77F95CEE20E3B14D00F42D9C /* ShareDestinationTableViewController.m */; };
@@ -3663,8 +3662,6 @@
 		77F1DBDE2056AA13005D5F0E /* MEGAContactLinkQueryRequestDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MEGAContactLinkQueryRequestDelegate.m; path = API/Requests/MEGAContactLinkQueryRequestDelegate.m; sourceTree = "<group>"; };
 		77F1DBE02056B752005D5F0E /* MEGAGetAttrUserRequestDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MEGAGetAttrUserRequestDelegate.h; path = API/Requests/MEGAGetAttrUserRequestDelegate.h; sourceTree = "<group>"; };
 		77F1DBE12056B752005D5F0E /* MEGAGetAttrUserRequestDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MEGAGetAttrUserRequestDelegate.m; path = API/Requests/MEGAGetAttrUserRequestDelegate.m; sourceTree = "<group>"; };
-		77F1DBE32056B767005D5F0E /* MEGASetAttrUserRequestDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MEGASetAttrUserRequestDelegate.h; path = API/Requests/MEGASetAttrUserRequestDelegate.h; sourceTree = "<group>"; };
-		77F1DBE42056B767005D5F0E /* MEGASetAttrUserRequestDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MEGASetAttrUserRequestDelegate.m; path = API/Requests/MEGASetAttrUserRequestDelegate.m; sourceTree = "<group>"; };
 		77F43DD72034637300AE4F42 /* UICollectionView+MNZCategory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UICollectionView+MNZCategory.h"; sourceTree = "<group>"; };
 		77F43DD82034637300AE4F42 /* UICollectionView+MNZCategory.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UICollectionView+MNZCategory.m"; sourceTree = "<group>"; };
 		77F63E7E24C0A95800DEEA66 /* JoinViewState.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JoinViewState.h; sourceTree = "<group>"; };
@@ -11021,8 +11018,6 @@
 				5B0C55AD1EE9575E0058CBE1 /* MEGARemoveContactRequestDelegate.m */,
 				5BFA346A1FAB4169005BFC4E /* MEGARemoveRequestDelegate.h */,
 				5BFA34691FAB4168005BFC4E /* MEGARemoveRequestDelegate.m */,
-				77F1DBE32056B767005D5F0E /* MEGASetAttrUserRequestDelegate.h */,
-				77F1DBE42056B767005D5F0E /* MEGASetAttrUserRequestDelegate.m */,
 				5B7B4CA01EE5AC1200DA6A8D /* MEGAShareRequestDelegate.h */,
 				5B7B4CA11EE5AC1200DA6A8D /* MEGAShareRequestDelegate.m */,
 				8364742620723DCC00AED3D2 /* MEGAShowPasswordReminderRequestDelegate.h */,
@@ -15136,7 +15131,6 @@
 				5D9DE5B6254BE9E400FA69C8 /* MEGASearchBarView.swift in Sources */,
 				C467AD4A26A8150D00AFE4D2 /* MEGASegmentedControl.swift in Sources */,
 				C45390D72565BB840026F215 /* MEGASelectedButton.swift in Sources */,
-				77F1DBE52056B767005D5F0E /* MEGASetAttrUserRequestDelegate.m in Sources */,
 				5B7B4CA31EE5AC1200DA6A8D /* MEGAShareRequestDelegate.m in Sources */,
 				8364742820723DCC00AED3D2 /* MEGAShowPasswordReminderRequestDelegate.m in Sources */,
 				C45390CD256587BF0026F215 /* MEGASlider.swift in Sources */,
