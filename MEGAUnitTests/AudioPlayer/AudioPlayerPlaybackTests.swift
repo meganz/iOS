@@ -7,8 +7,8 @@ final class AudioPlayerPlaybackTests: XCTestCase {
     var tracks: [AudioPlayerItem] = []
     
     override func setUpWithError() throws {
-        let file1URL = try XCTUnwrap(Bundle.main.url(forResource: "incoming_voice_video_call_iOS9", withExtension: "mp3"))
-        let file2URL = try XCTUnwrap(Bundle.main.url(forResource: "incoming_voice_video_call", withExtension: "mp3"))
+        let file1URL = try XCTUnwrap(Bundle.main.url(forResource: "audioClipSent", withExtension: "wav"))
+        let file2URL = try XCTUnwrap(Bundle.main.url(forResource: "outgoingTone", withExtension: "wav"))
         
         let track1 = AudioPlayerItem(name: "file 1", url: file1URL, node: nil)
         let track2 = AudioPlayerItem(name: "file 2", url: file2URL, node: nil)
