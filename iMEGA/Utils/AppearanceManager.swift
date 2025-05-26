@@ -5,33 +5,7 @@ import MEGADesignToken
 @MainActor
 class AppearanceManager: NSObject {
     
-#if MAIN_APP_TARGET
-    private static let shared = AppearanceManager()
-    private var pendingTraitCollection: UITraitCollection?
-    
-    private override init() {
-        super.init()
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(appDidBecomeActive),
-            name: UIApplication.didBecomeActiveNotification,
-            object: nil
-        )
-    }
-    
-    @objc private func appDidBecomeActive() {
-        guard let pendingTraitCollection else { return }
-        AppearanceManager.setupAppearance(pendingTraitCollection)
-    }
-#endif
-    
     @objc class func setupAppearance(_ traitCollection: UITraitCollection) {
-#if MAIN_APP_TARGET
-        guard UIApplication.shared.applicationState == .active else {
-            shared.pendingTraitCollection = traitCollection
-            return
-        }
-#endif
         setupNavigationBarAppearance()
         
         UISearchBar.appearance().isTranslucent = false
