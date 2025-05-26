@@ -183,15 +183,29 @@ extension AudioPlayer {
     }
     
     func audio(playerItem: AVPlayerItem, didLoadedTimeRanges value: NSKeyValueObservedChange<[NSValue]>) {
-        guard
-            let timeRanges = value.newValue as? [CMTimeRange],
-            let duration = timeRanges.first?.duration else {
+        guard playerItem.status == .readyToPlay else {
+            CrashlyticsLogger.log(category: .audioPlayer, "Player status is \(playerItem.status) – waiting for .readyToPlay.")
             return
         }
-                
-        let timeLoaded = Int(duration.value) / Int(duration.timescale)
+        
+        guard let newValue = value.newValue,
+              let timeRanges = newValue as? [CMTimeRange],
+              timeRanges.isNotEmpty,
+              let firstTimeRange = timeRanges.first else {
+            CrashlyticsLogger.log(category: .audioPlayer, "Observed change has no newValue or the ranges array is empty \(String(describing: value.newValue))")
+            return
+        }
+        let duration = firstTimeRange.duration.value
+        let timescale = firstTimeRange.duration.timescale
+        
+        guard duration > 0, timescale > 0 else {
+            CrashlyticsLogger.log(category: .audioPlayer, "Invalid duration. value=\(duration), timescale=\(timescale).")
+            return
+        }
+        
+        let timeLoaded = Int(duration) / Int(timescale)
 
-        if playerItem.status == .readyToPlay && timeLoaded > 0 {
+        if timeLoaded > 0 {
             notify([aboutCurrentState, aboutCurrentItem])
         }
     }
