@@ -1649,7 +1649,6 @@
 		A81F2C6A1F334FB2008600A5 /* MEGAProcessAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = A81AD7381F3099F800CA4059 /* MEGAProcessAsset.m */; };
 		A81F9BB427EA023A00D47C0D /* CookieSettingsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A81F9BB327EA023A00D47C0D /* CookieSettingsViewModelTests.swift */; };
 		A820DA3C1F0E5BDC00F1F832 /* MEGAGetThumbnailRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A820DA3B1F0E5BDC00F1F832 /* MEGAGetThumbnailRequestDelegate.m */; };
-		A8278D7F200E72A00040B076 /* incoming_voice_video_call_iOS9.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A8278D7E200E72A00040B076 /* incoming_voice_video_call_iOS9.mp3 */; };
 		A828E681286B3112004CED9E /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = A828E680286B3112004CED9E /* FirebaseCrashlytics */; };
 		A828E683286B3150004CED9E /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = A828E682286B3150004CED9E /* FirebaseCrashlytics */; };
 		A828E685286B317F004CED9E /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = A828E684286B317F004CED9E /* FirebaseCrashlytics */; };
@@ -1781,8 +1780,6 @@
 		A8F1D1092A5ECB23000DEB6F /* FileExtensionGroupOCWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27D1DA7A2A4328F4008571D7 /* FileExtensionGroupOCWrapper.swift */; };
 		A8F1D10B2A5ECBB2000DEB6F /* RemovalConfirmationMessageGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275682F82A4015280038E13A /* RemovalConfirmationMessageGenerator.swift */; };
 		A8F1D10C2A5ECBC2000DEB6F /* RemovalConfirmationMessageGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275682F82A4015280038E13A /* RemovalConfirmationMessageGenerator.swift */; };
-		A8F2629A1FA8F7C3000B2768 /* incoming_voice_video_call.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A8F262991FA8F7C2000B2768 /* incoming_voice_video_call.mp3 */; };
-		A8F2629C1FA8F82F000B2768 /* hang_out.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A8F2629B1FA8F82F000B2768 /* hang_out.mp3 */; };
 		A8F29E6F2D958279002774A7 /* MockNodeSensitivityChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8F29E6E2D958279002774A7 /* MockNodeSensitivityChecker.swift */; };
 		A8F5155827F6F24F00AEE4D6 /* ISEmojiView in Frameworks */ = {isa = PBXBuildFile; productRef = A8F5155727F6F24F00AEE4D6 /* ISEmojiView */; };
 		A8F5156B27F6F58300AEE4D6 /* FLEX in Frameworks */ = {isa = PBXBuildFile; productRef = A8F5156A27F6F58300AEE4D6 /* FLEX */; };
@@ -4430,7 +4427,6 @@
 		A827510F1E97AB6E007CD9E2 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		A82751111E97AB73007CD9E2 /* libresolv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libresolv.tbd; path = usr/lib/libresolv.tbd; sourceTree = SDKROOT; };
 		A82751131E97AB79007CD9E2 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
-		A8278D7E200E72A00040B076 /* incoming_voice_video_call_iOS9.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = incoming_voice_video_call_iOS9.mp3; sourceTree = "<group>"; };
 		A83428B22B7D2CF1002393FA /* SelectableTableViewCell+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SelectableTableViewCell+Additions.swift"; sourceTree = "<group>"; };
 		A834DD0B2BC0293B00A57058 /* View+WidgetBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+WidgetBackground.swift"; sourceTree = "<group>"; };
 		A837FDF72D42969D00795223 /* BrowserViewController+Search.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BrowserViewController+Search.swift"; sourceTree = "<group>"; };
@@ -4584,8 +4580,6 @@
 		A8F1381B21D3ABF2003C7364 /* LocationSearchTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = LocationSearchTableViewController.m; path = Chat/LocationSearchTableViewController.m; sourceTree = "<group>"; };
 		A8F1381D21D3F8AE003C7364 /* LocationSearchTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LocationSearchTableViewCell.h; path = Chat/LocationSearchTableViewCell.h; sourceTree = "<group>"; };
 		A8F1381E21D3F8AF003C7364 /* LocationSearchTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = LocationSearchTableViewCell.m; path = Chat/LocationSearchTableViewCell.m; sourceTree = "<group>"; };
-		A8F262991FA8F7C2000B2768 /* incoming_voice_video_call.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = incoming_voice_video_call.mp3; sourceTree = "<group>"; };
-		A8F2629B1FA8F82F000B2768 /* hang_out.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = hang_out.mp3; sourceTree = "<group>"; };
 		A8F29E6E2D958279002774A7 /* MockNodeSensitivityChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockNodeSensitivityChecker.swift; sourceTree = "<group>"; };
 		A8F515B027F7548A00AEE4D6 /* ShareViewController+OpenAppRequiredView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ShareViewController+OpenAppRequiredView.swift"; sourceTree = "<group>"; };
 		A8F5D6781ED58F940087DA40 /* CheckEmailAndFollowTheLinkViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckEmailAndFollowTheLinkViewController.h; sourceTree = "<group>"; };
@@ -11032,9 +11026,6 @@
 			children = (
 				83E2A0132D1AC137002B85A9 /* audioClipSent.wav */,
 				BF8B02EB28359EDD009AC794 /* callEnded.wav */,
-				A8F2629B1FA8F82F000B2768 /* hang_out.mp3 */,
-				A8F262991FA8F7C2000B2768 /* incoming_voice_video_call.mp3 */,
-				A8278D7E200E72A00040B076 /* incoming_voice_video_call_iOS9.mp3 */,
 				838B274A2BF21DC1005AD3F7 /* outgoingTone.wav */,
 				BF49DFA2282B230800DE3742 /* participantJoined.wav */,
 				BF49DFA6282B231300DE3742 /* participantLeft.wav */,
@@ -13918,10 +13909,7 @@
 				83D7265B23169067007B2E58 /* GenericHeaderFooterView.xib in Resources */,
 				2F147788244D2DF30069B264 /* GeoLocationView.xib in Resources */,
 				837EE205253DB8540083D927 /* GetLink.storyboard in Resources */,
-				A8F2629C1FA8F82F000B2768 /* hang_out.mp3 in Resources */,
 				BFAFAF0F2519595300C92887 /* HomeViewController.xib in Resources */,
-				A8F2629A1FA8F7C3000B2768 /* incoming_voice_video_call.mp3 in Resources */,
-				A8278D7F200E72A00040B076 /* incoming_voice_video_call_iOS9.mp3 in Resources */,
 				E803CB641D5336F100F81A36 /* InfoPlist.strings in Resources */,
 				777615B12175D88C00A7796D /* InputView.xib in Resources */,
 				5BA53FE92462B26000D168B9 /* InviteContact.storyboard in Resources */,

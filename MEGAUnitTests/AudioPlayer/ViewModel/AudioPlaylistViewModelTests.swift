@@ -62,7 +62,7 @@ final class AudioPlaylistViewModelTests: XCTestCase {
         XCTAssertEqual(playerHandler.removePlayerListener_calledTimes, 1)
         
         test(viewModel: sut, action: .willDraggBegin, expectedCommands: [])
-        let fileURL = try XCTUnwrap(Bundle.main.url(forResource: "incoming_voice_video_call_iOS9", withExtension: "mp3"))
+        let fileURL = try XCTUnwrap(Bundle.main.url(forResource: "audioClipSent", withExtension: "wav"))
         let track1 = AudioPlayerItem(name: "file 1", url: fileURL, node: nil)
         sut.audio(player: AVQueuePlayer(), reload: track1)
         test(viewModel: sut, action: .didDraggEnd, expectedCommands: [.reload(items: [track1])])
