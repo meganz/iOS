@@ -58,7 +58,7 @@ class AppearanceManager: NSObject {
         UICollectionView.appearance().backgroundColor = TokenColors.Background.page
         UIButton.appearance(whenContainedInInstancesOf: [UICollectionViewCell.self]).tintColor = UIColor.mnz_tertiaryGray(for: traitCollection)
         
-        self.setupActivityIndicatorAppearance(traitCollection)
+        self.setupActivityIndicatorAppearance()
         
         self.setupToolbar()
         
@@ -205,9 +205,8 @@ class AppearanceManager: NSObject {
         return navigationBarAppearance
     }
     
-    private class func setupActivityIndicatorAppearance(_ traitCollection: UITraitCollection) {
+    private class func setupActivityIndicatorAppearance() {
         UIActivityIndicatorView.appearance().style = .medium
-        UIActivityIndicatorView.appearance().color = (traitCollection.userInterfaceStyle == UIUserInterfaceStyle.dark) ? MEGAAssets.UIColor.whiteFFFFFF : TokenColors.Text.secondary
     }
     
     private class func setupToolbar() {
