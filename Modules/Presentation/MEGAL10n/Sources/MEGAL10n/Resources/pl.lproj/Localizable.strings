@@ -685,7 +685,7 @@
 /* Text shown when you want to send feedback of the app and you don't have an email account set up on your device */
 "noEmailAccountConfigured"="Nie ustawiono adresu e-mail na Twoim urządzeniu";
 /* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
-"privacyPolicyLabel"="Polityka prywatności i danych";
+"privacyPolicyLabel"="Polityka prywatności";
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Policy' */
 "general.cookiePolicy"="Polityka Cookie";
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Settings' */

@@ -685,7 +685,7 @@
 /* Text shown when you want to send feedback of the app and you don't have an email account set up on your device */
 "noEmailAccountConfigured"="Auf Ihrem Gerät ist kein E-Mail-Account eingerichtet";
 /* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
-"privacyPolicyLabel"="Datenschutzrichtlinien";
+"privacyPolicyLabel"="Datenschutzerklärung";
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Policy' */
 "general.cookiePolicy"="Cookie-Richtlinien";
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Settings' */
@@ -4641,7 +4641,7 @@
 /* Title shown for the free plan card */
 "subscriptionPurchase.freePlanCard.title"="Starten Sie mit unserem kostenlosen Paket";
 /* Description shown for the free plan card */
-"subscriptionPurchase.freePlanCard.description"="We offer generous amount of storage and transfer quota at no charge, so you can try MEGA with no risk";
+"subscriptionPurchase.freePlanCard.description"="Wir bieten Ihnen kostenlos ein großzügiges Speicher- und Transfervolumen, sodass Sie MEGA ohne Risiko testen können";
 /* First benefit shown for the free plan card */
 "subscriptionPurchase.freePlanCard.feature.one"="20 GB Speicher kostenlos";
 /* Second benefit shown for the free plan card */
@@ -4663,11 +4663,11 @@
 /* Title for the first subscription feature: generous storage capacity */
 "subscriptionPurchase.feature.one.title"="Großzügiger Speicherplatz";
 /* Description for the first subscription feature: details about available storage */
-"subscriptionPurchase.feature.one.description"="Store up to 16 TB of data";
+"subscriptionPurchase.feature.one.description"="Speichern Sie bis zu 16 TB an Daten";
 /* Title for the second subscription feature: transfer quota sharing */
 "subscriptionPurchase.feature.two.title"="Transfervolumen teilen";
 /* Description for the second subscription feature: how shared users can use your quota */
-"subscriptionPurchase.feature.two.description"="People you share items with can use your transfer quota to download and stream files";
+"subscriptionPurchase.feature.two.description"="Personen, für die Sie Inhalte freigeben, können Ihr Transferkontingent zum Herunterladen und Streamen von Dateien nutzen";
 /* Title for the third subscription feature: MEGA VPN service */
 "subscriptionPurchase.feature.three.title"="MEGA VPN";
 /* Description for the third subscription feature: benefits of using the MEGA VPN */

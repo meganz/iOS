@@ -3,13 +3,13 @@
 /* Button title to accept something */
 "ok"="TAMAM";
 /* Button title to clear something */
-"clear"="Temiz";
+"clear"="Temizle";
 /*  */
 "yes"="Evet";
 /*  */
 "no"="Hayır";
 /*  */
-"upload"="Yükleme";
+"upload"="Yükle";
 /*  */
 "error"="Hata";
 /* Caption of a button to edit the files that are selected */
@@ -21,7 +21,7 @@
 /* "Size" of the file or folder you are sharing */
 "size"="Boyut";
 /* Quality title, used in changing the export quality of scaned doc */
-"Quality"="KALİTE";
+"Quality"="Kalite";
 /*  */
 "folder"="Klasör";
 /* Error message shown when there's no camera available on the device */
@@ -685,7 +685,7 @@
 /* Text shown when you want to send feedback of the app and you don't have an email account set up on your device */
 "noEmailAccountConfigured"="Cihazınızda e-posta hesabı kurulmamış";
 /* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
-"privacyPolicyLabel"="Gizlilik ve Veri Politikası";
+"privacyPolicyLabel"="Gizlilik Politikası";
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Policy' */
 "general.cookiePolicy"="Çerez Politikası";
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Settings' */
@@ -1033,7 +1033,7 @@
 /* Text listed that includes the amount of storage that a user gets with a certain package. For example: '2 TB Storage'. */
 "account.storageQuota"="%@ depolama";
 /* Text listed that includes the amount of storage that a free user gets: '20GB+ Storage' */
-"account.storage.freePlan"="[B]%@ BÜYÜK BRİTANYA[/B] depolama";
+"account.storage.freePlan"="[B]%@ GB[/B] depolama";
 /* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
 "Transfer Quota"="Aktarma";
 /* Text listed that includes the amount of transfer quota a user gets per month with a certain package. For example: '8 TB Transfer'. */
@@ -4169,7 +4169,7 @@
 /* Price description for the free plan */
 "free.Plan.Price.description"="Ücretsiz";
 /* Storage limit capacity, where %d is the number of gigabytes that marks the storage limit */
-"storage.Limit.capacity"="%d BÜYÜK BRİTANYA";
+"storage.Limit.capacity"="%d GB";
 /* Limited transfer limit title */
 "account.transferQuota.freePlan.limited"="Sınırlı";
 /* Cancel account subscription title */

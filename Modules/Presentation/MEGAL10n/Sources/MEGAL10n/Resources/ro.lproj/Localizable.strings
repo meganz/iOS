@@ -685,7 +685,7 @@
 /* Text shown when you want to send feedback of the app and you don't have an email account set up on your device */
 "noEmailAccountConfigured"="Niciun cont de e-mail configurat pe dispozitiv";
 /* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
-"privacyPolicyLabel"="Politica privind confidențialitatea și datele";
+"privacyPolicyLabel"="Politica de confidențialitate";
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Policy' */
 "general.cookiePolicy"="Politica privind cookie-urile";
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Settings' */

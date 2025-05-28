@@ -679,23 +679,23 @@
 /* Title of one of the Settings sections where you can see things 'About' the app */
 "about"="Thông Tin";
 /* Title of one of the Settings sections where you can 'Send Feedback' to MEGA */
-"sendFeedbackLabel"="Gửi Phản Hồi";
+"sendFeedbackLabel"="Gửi phản hồi";
 /* Message body of the email that appears when the users tap on "Send feedback" */
 "pleaseWriteYourFeedback"="Xin điền lời phản hồi của bạn ở đây:";
 /* Text shown when you want to send feedback of the app and you don't have an email account set up on your device */
 "noEmailAccountConfigured"="Không có tài khoản email nào được thiết lập cho máy này";
 /* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
-"privacyPolicyLabel"="Chính Sách Dữ Liệu và Riêng Tư";
+"privacyPolicyLabel"="Chính Sách Quyền Riêng Tư";
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Policy' */
-"general.cookiePolicy"="Chính Sách Cookie";
+"general.cookiePolicy"="Chính Sách Cookie";
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Settings' */
 "general.cookieSettings"="Cài đặt cookie";
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie and Ad Settings' */
 "general.cookieAndAdSettings"="Cài đặt cookie và quảng cáo";
 /* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
-"termsOfServicesLabel"="Điều Khoản Dịch Vụ";
+"termsOfServicesLabel"="Điều Khoản Dịch Vụ";
 /* Title of one of the Settings sections where you can see the MEGA's 'Data Protection Regulation' */
-"dataProtectionRegulationLabel"="Quy Định Bảo Vệ Dữ Liệu";
+"dataProtectionRegulationLabel"="Quy định bảo vệ dữ liệu";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode Off" */
 "off"="Tắt";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode On" */
@@ -2463,7 +2463,7 @@
 /* Accessibility message when a message is cancelled in chat */
 "message sending cancelled"="đã hủy gửi đi tin nhắn";
 /* Cookie dialog title */
-"dialog.cookies.title.yourPrivacy"="Quản lý quyền riêng tư";
+"dialog.cookies.title.yourPrivacy"="Quyền riêng tư của bạn";
 /* Cookie dialog text. */
 "dialog.cookies.description"="Chúng tôi sử dụng cookies và các công nghệ tương tự chỉ nhằm mục đích cung cấp cho bạn các dịch vụ mà bạn yêu cầu từ MEGA hoặc để phân tích và thu thập dữ liệu hiệu suất. Chúng tôi không có sử dụng cookies để theo dõi quảng cáo hoặc chia sẻ bất kỳ thông tin cá nhân của bạn với bên thứ ba.";
 /* Cookie dialog title to manage cookies */
