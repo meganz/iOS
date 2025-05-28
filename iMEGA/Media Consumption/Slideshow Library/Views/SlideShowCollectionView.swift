@@ -2,13 +2,20 @@ import UIKit
 
 final class SlideShowCollectionView: UICollectionView {
     private var layout: AnimatedCollectionViewLayout?
-    
+    var boundsChangeHandler: (() -> Void)?
+
     override var bounds: CGRect {
         didSet {
-            layout?.itemSize = bounds.size
+            if oldValue.size != bounds.size {
+                // The 3 lines below are critical for collectionView to update its layout when orientation changes
+                layout?.itemSize = bounds.size
+                layout?.invalidateLayout()
+                reloadData()
+                boundsChangeHandler?()
+            }
         }
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         

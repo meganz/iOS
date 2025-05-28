@@ -41,7 +41,7 @@ final class SlideShowViewController: UIViewController, ViewType {
         view.backgroundColor = backgroundColor
         slideShowOptionButton.title = Strings.Localizable.Slideshow.PreferenceSetting.options
         collectionView.updateLayout()
-
+        setUpBoundsChangeHandler()
         setupViewModel()
         adjustHeightOfTopAndBottomView()
         setVisibility(false)
@@ -68,13 +68,13 @@ final class SlideShowViewController: UIViewController, ViewType {
         activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
     }
-    
+
     private func showLoader() {
         activityIndicator.color = MEGAAssets.UIColor.whiteFFFFFF
         view.bringSubviewToFront(activityIndicator)
         activityIndicator.startAnimating()
     }
-    
+
     private func hideLoader() {
         activityIndicator.stopAnimating()
         view.sendSubviewToBack(activityIndicator)
@@ -84,19 +84,17 @@ final class SlideShowViewController: UIViewController, ViewType {
         super.viewWillDisappear(animated)
         viewModel.dispatch(.onViewWillDisappear)
     }
-    
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         if traitCollection.verticalSizeClass != previousTraitCollection?.verticalSizeClass || traitCollection.horizontalSizeClass != previousTraitCollection?.horizontalSizeClass {
             adjustHeightOfTopAndBottomView()
         }
     }
-    
+
     override func viewWillTransition(to size: CGSize, with coordinator: any UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
-       
         CrashlyticsLogger.log("[SlideShow] Device orientation is landscape: \(UIDevice.current.orientation.isLandscape)")
     }
-    
+
     private func setNavigationAndToolbarColor() {
         bottomBarBackground.backgroundColor = TokenColors.Background.surface1
         statusBarBackground.backgroundColor = TokenColors.Background.surface1
@@ -153,17 +151,13 @@ final class SlideShowViewController: UIViewController, ViewType {
         let cell = collectionView.visibleCells.first(where: { $0 is SlideShowCollectionViewCell }) as? SlideShowCollectionViewCell
         setVisibility(false)
         CrashlyticsLogger.log("[SlideShow] play button tapped.")
-        let numberOfSlideShowContents = numberOfSlideShowContents()
-            self.collectionView.backgroundColor = MEGAAssets.UIColor.black000000
-            self.view.backgroundColor = TokenColors.Background.page
-            cell?.resetZoomScale()
-            if self.viewModel.currentSlideIndex >= numberOfSlideShowContents - 1 {
-                self.viewModel.currentSlideIndex = -1
-                self.changeImage()
-            }
+        let currentIndex = viewModel.currentSlideIndex
+        collectionView.scrollToItem(at: IndexPath(item: currentIndex, section: 0), at: .centeredHorizontally, animated: false)
+        self.collectionView.backgroundColor = .black
+        self.view.backgroundColor = TokenColors.Background.page
+        cell?.resetZoomScale()
         resetTimer()
     }
-    
     private func pause() {
         CrashlyticsLogger.log("[SlideShow] paused.")
         hideLoader()
@@ -175,7 +169,7 @@ final class SlideShowViewController: UIViewController, ViewType {
         slideShowTimer.invalidate()
         UIApplication.shared.isIdleTimerDisabled = false
     }
-    
+
     private func finish() {
         collectionView.backgroundColor = UIColor.systemBackground
         slideShowTimer.invalidate()
@@ -185,12 +179,11 @@ final class SlideShowViewController: UIViewController, ViewType {
 
     private func resetTimer() {
         CrashlyticsLogger.log("[SlideShow] Timer reset.")
-        
         slideShowTimer.invalidate()
         slideShowTimer = Timer.scheduledTimer(timeInterval: viewModel.timeIntervalForSlideInSeconds, target: self, selector: #selector(self.changeImage), userInfo: nil, repeats: true)
         UIApplication.shared.isIdleTimerDisabled = true
     }
-    
+
     private func restart() {
         CrashlyticsLogger.log("[SlideShow] restarted.")
         hideLoader()
@@ -206,22 +199,36 @@ final class SlideShowViewController: UIViewController, ViewType {
             return
         }
         let duration = 1.0
-
-        let itemWidth = collectionView.bounds.size.width
         let currentContentOffsetX = collectionView.contentOffset.x
-        let targetContentOffset = Double(index) * itemWidth
-        let distance = targetContentOffset - currentContentOffsetX
 
-        // Animate the movement
-        let steps = 60 // number of steps in animation
+        let steps = 60
         let delay = duration / Double(steps)
-        for i in 1..<steps {
-            DispatchQueue.main.asyncAfter(deadline: .now() + delay * Double(i)) {
-                let progress = Double(i) / Double(steps)
+        let currentVerticalSizeClass = traitCollection.verticalSizeClass
+        let currentHorizontalSizeClass = traitCollection.horizontalSizeClass
+
+        func animateTransition(to step: Int = 1, totalSteps: Int) {
+
+            guard step <= totalSteps else { return }
+            DispatchQueue.main.asyncAfter(deadline: .now() + delay) { [weak self] in
+                guard let self else { return }
+                if currentVerticalSizeClass != traitCollection.verticalSizeClass || currentHorizontalSizeClass != traitCollection.horizontalSizeClass {
+                    // When orientation changes, we stop the animation
+                    // The collectionView's boundsChangeHandler will take care of the orientation changes
+                    return
+                }
+
+                let itemWidth = self.collectionView.bounds.size.width
+                let targetContentOffset = Double(index) * itemWidth
+
+                let distance = targetContentOffset - currentContentOffsetX
+                let progress = Double(step) / Double(steps)
                 let xOffset: Double = distance * progress
                 self.collectionView.contentOffset = CGPoint(x: currentContentOffsetX + xOffset, y: 0)
+
+                animateTransition(to: step + 1, totalSteps: totalSteps)
             }
         }
+        animateTransition(totalSteps: steps)
     }
 
     @objc private func changeImage() {
@@ -244,7 +251,7 @@ final class SlideShowViewController: UIViewController, ViewType {
             showLoader()
         }
     }
-    
+
     private func updateSlideInView() {
         // The reason we don't animate on 0 index items is because,
         // when it loops back to the start, we don't get a scrolling through cells animation.
@@ -271,6 +278,36 @@ final class SlideShowViewController: UIViewController, ViewType {
     
     private func reload() {
         collectionView?.reloadData()
+    }
+
+    private func setUpBoundsChangeHandler() {
+        collectionView.boundsChangeHandler = { [weak self] in
+            guard let self else { return }
+            // After the bounds changes, we need to wait for the collection view to layout first before
+            // processing further, hence the 0.01 delay
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) { [weak self] in
+                guard let self else { return }
+                let wasPlaying = viewModel.playbackStatus == .playing
+                let currentIndex = viewModel.currentSlideIndex
+                let indexPath = IndexPath(item: currentIndex, section: 0)
+
+                self.collectionView.collectionViewLayout.invalidateLayout()
+                self.collectionView.layoutIfNeeded()
+
+                self.collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: false)
+                // For some unknown reasons `collectionView.scrollToItem()` won't work and contentOffset.x is zero,
+                // In that case we need to update collectionView.contentOffset explicitly
+                if collectionView.contentOffset.x == 0 {
+                    self.collectionView.contentOffset = CGPoint(x: collectionView.bounds.size.width * Double(currentIndex), y: 0)
+                }
+
+                DispatchQueue.main.async {
+                    if wasPlaying {
+                        self.play()
+                    }
+                }
+            }
+        }
     }
 }
 
