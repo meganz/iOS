@@ -19,7 +19,7 @@ import MEGAPreference
     @PreferenceWrapper(key: PreferenceKeyEntity.launchTabSuggested, defaultValue: false, useCase: PreferenceUseCase.default)
     private static var launchTabDialogAlreadySuggested: Bool
 
-    private static var designatedTab: Tab?
+    private(set) static var designatedTab: Tab?
 
     @objc static let avaliableTabs = TabType.allCases.count
 

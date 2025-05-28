@@ -48,4 +48,5 @@ public enum PreferenceKeyEntity: String, PreferenceKeyProtocol {
     case richLinksPreviewEnabled = "richLinks"
     case chatImageQuality = "chatImageQuality"
     case chatVideoQuality = "ChatVideoQuality"
+    case shouldShowCameraUploadsEnabledSnackbar
 }

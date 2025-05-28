@@ -127,6 +127,7 @@
     }
     [OverDiskQuotaService.sharedService invalidate];
     [self requestStopAudioPlayerSession];
+    [TabManager setDesignatedTabWithTab:nil];
 }
 
 - (void)configureUI {

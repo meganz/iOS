@@ -1,6 +1,8 @@
 import Combine
 import MEGAAppPresentation
 import MEGADomain
+import MEGAL10n
+import MEGAPreference
 import SwiftUI
 
 @MainActor
@@ -19,20 +21,27 @@ final class PhotoAlbumContainerViewModel: ObservableObject {
     @Published var showRemoveAlbumLinksAlert = false
     @Published private(set) var showToolbar = false
     @Published var disableSelectBarButton = false
-    
+    @PreferenceWrapper(key: PreferenceKeyEntity.shouldShowCameraUploadsEnabledSnackbar, defaultValue: false)
+    private var shouldShowCameraUploadsEnabledSnackbar: Bool
+
+    let showSnackBarSubject = PassthroughSubject<String, Never>()
+
     private let tracker: any AnalyticsTracking
     private let overDiskQuotaChecker: any OverDiskQuotaChecking
-    
+
     init(
         tracker: some AnalyticsTracking,
-        overDiskQuotaChecker: some OverDiskQuotaChecking
+        overDiskQuotaChecker: some OverDiskQuotaChecking,
+        preferenceUseCase: some PreferenceUseCaseProtocol = PreferenceUseCase.default
     ) {
         self.tracker = tracker
         self.overDiskQuotaChecker = overDiskQuotaChecker
+        $shouldShowCameraUploadsEnabledSnackbar.useCase = preferenceUseCase
     }
     
     func didAppear() {
         tracker.trackAnalyticsEvent(with: DIContainer.photoScreenEvent)
+        checkShouldShowCamerUploadsEnabledSnackBar()
     }
     
     func shareLinksTapped() {
@@ -49,5 +58,12 @@ final class PhotoAlbumContainerViewModel: ObservableObject {
     func deleteAlbumsTapped() {
         guard !overDiskQuotaChecker.showOverDiskQuotaIfNeeded() else { return }
         showDeleteAlbumAlert.toggle()
+    }
+
+    private func checkShouldShowCamerUploadsEnabledSnackBar() {
+        guard shouldShowCameraUploadsEnabledSnackbar else { return }
+        showSnackBarSubject.send(Strings.Localizable.cameraUploadsEnabled)
+        showSnackBarSubject.send(completion: .finished)
+        shouldShowCameraUploadsEnabledSnackbar = false
     }
 }

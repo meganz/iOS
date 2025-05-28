@@ -9,7 +9,6 @@ struct ImportAlbumView: View {
     private enum Constants {
         static let toolbarButtonVerticalPadding = 11.0
         static let toolbarButtonHorizontalPadding = 16.0
-        static let snackBarVerticalOffSet = 16.0
     }
     
     @Environment(\.presentationMode) private var presentationMode
