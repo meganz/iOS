@@ -223,11 +223,11 @@
 /* Option button Title shown on Slideshow Preference Setting */
 "slideshow.preferenceSetting.options"="選項";
 /* NavigationBar Title shown on Slideshow Preference Setting */
-"slideshow.preferenceSetting.slideshowOptions"="幻燈片選項";
+"slideshow.preferenceSetting.slideshowOptions"="投影片選項";
 /* Footer note for media in sub folders */
-"slideshow.preferenceSetting.mediaInSubFolders"="幻燈片播放包含子資料夾的圖片";
+"slideshow.preferenceSetting.mediaInSubFolders"="投影片播放包含子資料夾的圖片";
 /* NavigationBar Title shown on Slideshow Speed preference */
-"slideshow.preferenceSetting.speed"="幻燈片播放速度";
+"slideshow.preferenceSetting.speed"="投影片播放速度";
 /* Slideshow Speed preference slow */
 "slideshow.preferenceSetting.speed.slow"="慢（8秒）";
 /* Slideshow Speed preference normal */
@@ -235,7 +235,7 @@
 /* Slideshow Speed preference fast */
 "slideshow.preferenceSetting.speed.fast"="快（2秒）";
 /* NavigationBar Title shown on Slideshow Order preference */
-"slideshow.preferenceSetting.order"="幻燈片播放順序";
+"slideshow.preferenceSetting.order"="投影片播放順序";
 /* Slideshow Speed Order shuffle */
 "slideshow.preferenceSetting.order.shuffle"="隨機";
 /* Slideshow Preference Setting repeat */
@@ -685,7 +685,7 @@
 /* Text shown when you want to send feedback of the app and you don't have an email account set up on your device */
 "noEmailAccountConfigured"="您的裝置沒有設定電子郵件帳戶";
 /* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
-"privacyPolicyLabel"="隱私和資料政策";
+"privacyPolicyLabel"="私隱權政策";
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Policy' */
 "general.cookiePolicy"="Cookie政策";
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Settings' */

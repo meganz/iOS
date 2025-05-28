@@ -685,7 +685,7 @@
 /* Text shown when you want to send feedback of the app and you don't have an email account set up on your device */
 "noEmailAccountConfigured"="Não há uma conta de email configurada no seu dispositivo";
 /* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
-"privacyPolicyLabel"="Política de privacidade e de dados";
+"privacyPolicyLabel"="Política de privacidade";
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Policy' */
 "general.cookiePolicy"="Política de cookies";
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Settings' */
@@ -4653,7 +4653,7 @@
 /* Displays the amount of data transfer included in the subscription plan */
 "subscriptionPurchase.plan.transfer"="%@ de cota de transferência";
 /* Displays the total amount when billed yearly */
-"subscriptionPurchase.plan.billedYearly"="%@ pagamento anual";
+"subscriptionPurchase.plan.billedYearly"="Pagamento anual de %@";
 /* Button title to cancel the subscription purchase. */
 "subscriptionPurchase.maybeLater"="Talvez mais tarde";
 /* Title for the features of pro plan in the subscription purchase screen. */

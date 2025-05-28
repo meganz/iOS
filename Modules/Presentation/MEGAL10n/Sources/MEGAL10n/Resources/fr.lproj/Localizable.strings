@@ -685,7 +685,7 @@
 /* Text shown when you want to send feedback of the app and you don't have an email account set up on your device */
 "noEmailAccountConfigured"="Aucun compte courriel n’est défini sur votre appareil";
 /* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
-"privacyPolicyLabel"="Politique de protection des renseignements personnels et des données";
+"privacyPolicyLabel"="Politique de protection des renseignements personnels";
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Policy' */
 "general.cookiePolicy"="Politique d’utilisation des Témoins";
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Settings' */
@@ -927,9 +927,9 @@
 /* An alert title where the user provided the incorrect Recovery Key. */
 "invalidRecoveryKey"="La Clé de récupération est invalide";
 /* Recovery key error alert title */
-"recoveryKey.error.alert.title"="Recovery key error";
+"recoveryKey.error.alert.title"="Erreur de clé de récupération";
 /* Recovery key error alert message when the user provided incorrect or invalid Recovery key */
-"recoveryKey.error.alert.message.invalidKey"="The recovery key you supplied is either invalid, or is not for this account. Check if you’re using the correct key and try again.";
+"recoveryKey.error.alert.message.invalidKey"="La clé de récupération que vous avez fournie n'est pas valide ou n'est pas destinée à ce compte. Vérifiez si vous utilisez la bonne clé et réessayez.";
 /* Text of the alert after opening the recovery link to reset pass being logged. */
 "youRecoveryKeyIsGoingTo"="Votre Clé de récupération sera utilisée pour réinitialiser votre mot de passe. Saisissez votre nouveau mot de passe.";
 /*  */
@@ -2211,13 +2211,13 @@
 /* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the header title that appears above */
 "settings.userInterface.mediaDiscovery.header"="Vue de la galerie";
 /* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the footer message body that appears under that option */
-"settings.userInterface.mediaDiscovery.footer.body"="Open folders with only images or videos in a visual grid. Browse media by thumbnails and filter by date.";
+"settings.userInterface.mediaDiscovery.footer.body"="Ouvrez des dossiers contenant uniquement des images ou des vidéos dans une grille visuelle. Parcourez les médias par vignettes et filtrez par date.";
 /* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the footer message body link that appears under that option */
-"settings.userInterface.mediaDiscovery.footer.link"="Learn more about gallery view";
+"settings.userInterface.mediaDiscovery.footer.link"="En savoir plus sur la vue de galerie";
 /* In Settings - User Interface, there is a setting that can determine if the app should also load sub folder media. This is the label in the setting */
-"settings.userInterface.mediaDiscoverySubFolder"="Gallery view in subfolders";
+"settings.userInterface.mediaDiscoverySubFolder"="Vue de galerie dans les sous-dossiers";
 /* In Settings - User Interface, there is a setting that can determine if the app should also load sub folder media. This is the footer message body that appears under that option */
-"settings.userInterface.mediaDiscoverySubFolder.footer"="Images and videos from subfolders will also be included in gallery view";
+"settings.userInterface.mediaDiscoverySubFolder.footer"="Les images et les vidéos des sous-dossiers seront également incluses dans la vue de galerie";
 /* In Settings - User Interface, there is an option that you can enable to hide the contents of the Recents section */
 "settings.userInterface.hideRecentActivity"="Cacher l’activité récente";
 /* In Settings - User Interface, there is an option that you can enable to hide the contents of the Recents section. This is the footer that appears under that option. */
@@ -2563,7 +2563,7 @@
 /* Title of Over Disk Quota dialog */
 "dialog.storage.odq.title"="Veuillez surclasser votre compte";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. @% is placeholder. */
-"dialog.storage.almostFull.detail"="Your Cloud drive is almost full. Upgrade now and get up to %@ TB of cloud storage space.";
+"dialog.storage.almostFull.detail"="Votre disque Cloud est presque plein. Mettez-le à niveau maintenant et obtenez jusqu'à %@ To d'espace de stockage cloud.";
 /* Over Disk Quota detail message informing the user that they've reached the full capacity of their accounts. */
 "dialog.storage.odq.detail"="Votre espace de stockage nuagique est saturé. Veuillez passer à un abonnement MEGA Pro afin d’augmenter votre espace de stockage et de profiter d’avantages supplémentaires. Si vous restez par-delà votre limite de stockage et ne surclassez pas votre compte ni ne supprimez de données, votre compte pourrait être verrouillé. Pour plus de précisions, veuillez vous référer aux courriels que nous vous avons envoyés.";
 /* Over Disk Quota paywall not final title. */
@@ -3623,9 +3623,9 @@
 /* On Upgrade Account Plan screen. Displayed header title text for pro plan features */
 "upgradeAccountPlan.header.title.featuresOfProPlan"="Caractéristiques des abonnements Pro";
 /* On Upgrade Account Plan screen. Displayed text body for pro plan features */
-"upgradeAccountPlan.message.text.featuresOfProPlan"="• Liens protégés par mot de passe\n\n• Liens avec dates d'expiration\n\n• Partage du quota de transfert\n\n• Retour en arrière jusqu'à 90 jours pour les données supprimées avec Pro Lite et jusqu'à 180 jours avec Pro I, II, et III\n\n• Organisation d’appels et des réunions avec un nombre illimité de participants et sans restriction de temps\n\n• Confidentialité et protection des données personnelles en ligne avec notre RPV à haut débit\n\n• Programmation du nettoyage de la Corbeille entre 7 jours et 10 ans\n\n• Assistance prioritaire";
+"upgradeAccountPlan.message.text.featuresOfProPlan"="• Liens protégés par mot de passe\n\n• Liens avec dates d'expiration\n\n• Partage du quota de transfert\n\n• Retour en arrière jusqu'à 90 jours pour les données supprimées avec Pro Lite et jusqu'à 180 jours avec Pro I, II, et III\n\n• Organisation d’appels et des réunions avec un nombre illimité de participants et sans restriction de temps\n\n• Confidentialité et protection des données personnelles en ligne avec notre VPN à haut débit\n\n• Programmation du nettoyage de la Corbeille entre 7 jours et 10 ans\n\n• Assistance prioritaire";
 /* On Upgrade Account Plan screen. Displayed text body for pro plan features with ads */
-"upgradeAccountPlan.message.text.featuresOfProPlanWithAds"="• Liens protégés par mot de passe\n\n• Liens avec dates d’expiration\n\n• Partage du quota de transfert\n\n• Retour en arrière jusqu’à 90 jours pour les données supprimées avec Pro Lite et jusqu’à 180 jours avec Pro I, II, et III\n\n• Organisation d’appels et des réunions avec un nombre illimité de participants et sans restriction de temps\n\n• Confidentialité et protection des données personnelles en ligne avec notre RPV à haut débit\n\n• Programmation du nettoyage de la Corbeille entre 7 jours et 10 ans\n\n• Assistance prioritaire\n\n• Sans publicités";
+"upgradeAccountPlan.message.text.featuresOfProPlanWithAds"="• Liens protégés par mot de passe\n\n• Liens avec dates d’expiration\n\n• Partage du quota de transfert\n\n• Retour en arrière jusqu’à 90 jours pour les données supprimées avec Pro Lite et jusqu’à 180 jours avec Pro I, II, et III\n\n• Organisation d’appels et des réunions avec un nombre illimité de participants et sans restriction de temps\n\n• Confidentialité et protection des données personnelles en ligne avec notre VPN à haut débit\n\n• Programmation du nettoyage de la Corbeille entre 7 jours et 10 ans\n\n• Assistance prioritaire\n\n• Sans publicités";
 /* On Upgrade Account Plan screen. Displayed header title text for subscription details */
 "upgradeAccountPlan.header.title.subscriptionDetails"="Détails de l’abonnement";
 /* On Upgrade Account Plan screen. Displayed text body for subscription details */
@@ -3887,7 +3887,7 @@
 /* Error shown when moving folder to inside itself */
 "Error.nodeCopyOrMove.circularDependency"="Vous ne pouvez pas déplacer ce dossier, car la destination est le même dossier.";
 /* Auto media discovery banner title */
-"photos.mediaDiscovery.autoMediaDiscoveryBanner.title"="As this folder contains only images and videos, we’ve automatically opened it in gallery view. You can enjoy your visual content with a more immersive layout. You can disable this in Settings.";
+"photos.mediaDiscovery.autoMediaDiscoveryBanner.title"="Comme ce dossier ne contient que des images et des vidéos, nous l'avons automatiquement ouvert en vue de galerie. Vous pouvez ainsi profiter de votre contenu visuel avec une mise en page plus immersive. Vous pouvez désactiver cette fonction dans les Paramètres.";
 /* Upgrade account screen header title after user onboarding */
 "onboarding.upgradeAccount.header.title"="Obtenir davantage avec un abonnement Pro";
 /* Upgrade account screen header subTitle after user onboarding. %@ will be replaced by the price of the lowest plan per month. */
@@ -3909,7 +3909,7 @@
 /* Upgrade account screen content title about pro plan featuring the MEGA VPN */
 "onboarding.upgradeAccount.content.megaVPN.title"="MEGA VPN";
 /* Upgrade account screen content message about pro plan featuring the MEGA VPN */
-"onboarding.upgradeAccount.content.megaVPN.message"="Protégez votre vie privée en ligne grâce à notre RPV à haut débit";
+"onboarding.upgradeAccount.content.megaVPN.message"="Protéger votre vie privée en ligne grâce à notre VPN à haut débit";
 /* Upgrade account screen content title about pro plan featuring the calls and meetings */
 "onboarding.upgradeAccount.content.callsAndMeetings.title"="Appels et réunions sans restrictions";
 /* Upgrade account screen content message about pro plan featuring the calls and meetings */
@@ -4591,7 +4591,7 @@
 /* Hidden files and folders onboarding content item two title */
 "onboarding.hiddenFilesAndFolders.content.item.two.title"="Contrôler facilement la visibilité";
 /* Hidden files and folders onboarding content item two message */
-"onboarding.hiddenFilesAndFolders.content.item.two.message"="To show hidden files, turn on the “Show hidden items” setting under “File Management” -> “User interface” in your app settings.";
+"onboarding.hiddenFilesAndFolders.content.item.two.message"="Pour afficher les fichiers cachés, activez le paramètre « Afficher les éléments cachés » sous « Gestion des fichiers » -> « Interface utilisateur » dans les paramètres de votre application.";
 /* Hidden files and folders onboarding content item three title */
 "onboarding.hiddenFilesAndFolders.content.item.three.title"="Les fichiers partagés restent visibles";
 /* Hidden files and folders onboarding content item three message */
@@ -4605,47 +4605,47 @@
 /* Onboarding USP carousel first page title */
 "onboarding.uniqueSellingProposition.carousel.page.first.title"="Vous détenez les clés";
 /* Onboarding USP carousel first page subtitle */
-"onboarding.uniqueSellingProposition.carousel.page.first.subtitle"="User controlled, zero-knowledge encryption means no one can see your data unless you want them to - not even us!";
+"onboarding.uniqueSellingProposition.carousel.page.first.subtitle"="Le chiffrement à divulgation nulle de connaissance, contrôlé par l'utilisateur, signifie que personne ne peut voir vos données à moins que vous ne le souhaitiez, et nous non plus !";
 /* Onboarding USP carousel second page title */
-"onboarding.uniqueSellingProposition.carousel.page.second.title"="Keep every moment safe";
+"onboarding.uniqueSellingProposition.carousel.page.second.title"="Gardez chaque souvenir en sécurité";
 /* Onboarding USP carousel second page subtitle */
-"onboarding.uniqueSellingProposition.carousel.page.second.subtitle"="With automatic camera uploads to MEGA Cloud, and generous storage, you’ll never lose a precious memory";
+"onboarding.uniqueSellingProposition.carousel.page.second.subtitle"="Grâce aux téléversements automatiques de l'appareil photo sur MEGA Cloud et à un espace de stockage généreux, vous ne perdrez jamais vos précieux souvenirs.";
 /* Onboarding USP carousel third page title */
-"onboarding.uniqueSellingProposition.carousel.page.third.title"="Your data. Your space.";
+"onboarding.uniqueSellingProposition.carousel.page.third.title"="Vos données. Votre espace.";
 /* Onboarding USP carousel third page subtitle */
-"onboarding.uniqueSellingProposition.carousel.page.third.subtitle"="Ample storage and easy ways to transfer, share, and organise your files means you can safely use MEGA for whatever you choose";
+"onboarding.uniqueSellingProposition.carousel.page.third.subtitle"="Grâce à son grand espace de stockage et à sa facilité de transfert, de partage et d'organisation de vos fichiers, vous pouvez utiliser MEGA en toute sécurité pour tout ce que vous voulez.";
 /* Onboarding USP carousel fourth page title */
 "onboarding.uniqueSellingProposition.carousel.page.fourth.title"="Dites-le en privé";
 /* Onboarding USP carousel fourth page subtitle */
-"onboarding.uniqueSellingProposition.carousel.page.fourth.subtitle"="Chat with friends and family, share photos or sensitive information, video call, and schedule meetings. Safety and privacy guaranteed.";
+"onboarding.uniqueSellingProposition.carousel.page.fourth.subtitle"="Discutez avec vos amis et votre famille, partagez des photos ou des informations sensibles, faites des appels vidéo et planifiez des réunions. Sécurité et confidentialité garanties.";
 /* Onboarding Notification CTA title */
-"onboarding.cta.notifications.title"="Never miss an important update";
+"onboarding.cta.notifications.title"="Ne manquez jamais de mise à jour importante";
 /* Onboarding Notification CTA description */
-"onboarding.cta.notifications.explanation"="Stay informed with real-time updates that matter to you. Get alerts for shared folder activity, security updates, and exclusive offers, so you never miss anything important.\n\nYou can manage notification preferences at any time in the settings.";
+"onboarding.cta.notifications.explanation"="Restez informé des mises à jour qui vous concernent en temps réel. Recevez des alertes sur l'activité des dossiers partagés, les mises à jour de sécurité et les offres exclusives, afin de ne jamais manquer quoi que ce soit d'important.\n\nVous pouvez gérer les préférences de notification à tout moment dans les paramètres.";
 /* Onboarding Notification CTA *Enable* button */
 "onboarding.cta.notifications.buttons.enable"="Activer les notifications";
 /* Onboarding Notification CTA *Skip* button */
-"onboarding.cta.notifications.buttons.skip"="Skip for now";
+"onboarding.cta.notifications.buttons.skip"="Ignorer pour le moment";
 /* Onboarding Camera Backups CTA title */
-"onboarding.cta.cameraBackups.title"="Keep your photos safe, always";
+"onboarding.cta.cameraBackups.title"="Gardez vos photos en sécurité, en permanence";
 /* Onboarding Camera Backups CTA description */
-"onboarding.cta.cameraBackups.explanation"="Your memories matter\n\nCamera uploads automatically backs up your photos and videos to your MEGA Cloud drive, so you never have to worry about losing them";
+"onboarding.cta.cameraBackups.explanation"="Vos souvenirs sont importants\n\nLes téléversements de l'appareil photo sauvegardent automatiquement vos photos et vidéos sur votre disque MEGA Cloud, pour que vous n'ayez jamais à vous soucier de les perdre.";
 /* Onboarding Camera Backups CTA note */
-"onboarding.cta.cameraBackups.note"="Camera uploads requires [B]full access[/B] to your device’s photo library";
+"onboarding.cta.cameraBackups.note"="Les téléversements de l'appareil photo nécessitent un [B]accès complet[/B] à la galerie photos de votre appareil.";
 /* Onboarding Camera Backups CTA *Enable* button */
 "onboarding.cta.cameraBackups.buttons.enable"="Activer les Téléversements de l’appareil photo";
 /* Onboarding Camera Backups CTA *Skip* button */
-"onboarding.cta.cameraBackups.buttons.skip"="Skip for now";
+"onboarding.cta.cameraBackups.buttons.skip"="Ignorer pour le moment";
 /* String explaining the auto-renewal policy of the Pro subscription. */
-"subscriptionPurchase.autoRenewDescription"="Subscriptions are renewed automatically for successive subscription periods of the same duration and at the same price as the initial period chosen.\n\nYou can cancel your Pro plan anytime but no later than 24 hours before your next subscription payment is due. Learn how to manage your subscription in your settings.";
+"subscriptionPurchase.autoRenewDescription"="Les abonnements sont renouvelés automatiquement pour des périodes d'abonnement successives de même durée et au même prix que la période initiale choisie.\n\nVous pouvez résilier votre abonnement Pro à tout moment, mais au plus tard 24 heures avant la date d'échéance de votre prochain paiement d'abonnement. Apprenez à gérer votre abonnement dans vos paramètres.";
 /* Title shown for the free plan card */
 "subscriptionPurchase.freePlanCard.title"="Commencer avec notre abonnement gratuit";
 /* Description shown for the free plan card */
-"subscriptionPurchase.freePlanCard.description"="We offer generous amount of storage and transfer quota at no charge, so you can try MEGA with no risk";
+"subscriptionPurchase.freePlanCard.description"="Nous offrons un quota de stockage et de transfert généreux et gratuit, pour que vous puissiez essayer MEGA sans risque.";
 /* First benefit shown for the free plan card */
-"subscriptionPurchase.freePlanCard.feature.one"="Free 20 GB of storage";
+"subscriptionPurchase.freePlanCard.feature.one"="20 Go d'espace de stockage gratuit";
 /* Second benefit shown for the free plan card */
-"subscriptionPurchase.freePlanCard.feature.two"="Limited transfers";
+"subscriptionPurchase.freePlanCard.feature.two"="Transferts limités";
 /* Button title for the free plan card */
 "subscriptionPurchase.freePlanCard.button.title"="Commencer gratuitement";
 /* Displays the amount of storage included in the subscription plan */
@@ -4653,28 +4653,28 @@
 /* Displays the amount of data transfer included in the subscription plan */
 "subscriptionPurchase.plan.transfer"="%@ de transferts";
 /* Displays the total amount when billed yearly */
-"subscriptionPurchase.plan.billedYearly"="%@ billed yearly";
+"subscriptionPurchase.plan.billedYearly"="%@ facturés annuellement";
 /* Button title to cancel the subscription purchase. */
 "subscriptionPurchase.maybeLater"="Plus tard, peut-être";
 /* Title for the features of pro plan in the subscription purchase screen. */
-"subscriptionPurchase.featuresOfProPlan.title"="Additional benefits of Pro plans";
+"subscriptionPurchase.featuresOfProPlan.title"="Avantages supplémentaires des abonnements Pro";
 /* Features of pro plan in the subscription purchase screen. */
-"subscriptionPurchase.featuresOfProPlan.message"="• Password-protected links\n\n• Links with expiry dates\n\n• Transfer quota sharing\n\n• Rewind folders up to 180 days\n\n• Unlimited calls and meetings\n\n• Schedule rubbish bin clearing between 7 days and 10 years\n\n• Priority support";
+"subscriptionPurchase.featuresOfProPlan.message"="• Liens protégés par mot de passe\n\n• Liens avec dates d'expiration\n\n• Partage du quota de transfert\n\n• Retour en arrière des dossiers jusqu'à 180 jours\n\n• Appels et réunions illimités\n\n• Programmation du vidage de la corbeille entre 7 jours et 10 ans\n\n• Service d'assistance prioritaire";
 /* Title for the first subscription feature: generous storage capacity */
 "subscriptionPurchase.feature.one.title"="Espace de stockage généreux";
 /* Description for the first subscription feature: details about available storage */
-"subscriptionPurchase.feature.one.description"="Store up to 16 TB of data";
+"subscriptionPurchase.feature.one.description"="Stockez jusqu'à 16 To de données";
 /* Title for the second subscription feature: transfer quota sharing */
 "subscriptionPurchase.feature.two.title"="Partage des transferts";
 /* Description for the second subscription feature: how shared users can use your quota */
-"subscriptionPurchase.feature.two.description"="People you share items with can use your transfer quota to download and stream files";
+"subscriptionPurchase.feature.two.description"="Les personnes avec lesquelles vous partagez des éléments peuvent utiliser votre quota de transfert pour télécharger et transmettre des fichiers";
 /* Title for the third subscription feature: MEGA VPN service */
 "subscriptionPurchase.feature.three.title"="MEGA VPN";
 /* Description for the third subscription feature: benefits of using the MEGA VPN */
-"subscriptionPurchase.feature.three.description"="Keep your online life safe, fast, and easy with our high-speed VPN";
+"subscriptionPurchase.feature.three.description"="Gardez votre vie en ligne sécurisée, rapide et facile avec notre VPN à haute vitesse";
 /* Title for the fourth subscription feature: MEGA Pass password manager */
 "subscriptionPurchase.feature.four.title"="MEGA Pass";
 /* Description for the fourth subscription feature: benefits of using MEGA Pass for password management */
-"subscriptionPurchase.feature.four.description"="Organise all your passwords and keep them safe with our password manager";
+"subscriptionPurchase.feature.four.description"="Organisez tous vos mots de passe et gardez-les en sécurité grâce à notre gestionnaire de mots de passe";
 /* Title for all the feature in subscription purchase view. */
 "subscriptionPurchase.feature.title"="Vous obtiendrez :";

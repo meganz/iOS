@@ -685,7 +685,7 @@
 /* Text shown when you want to send feedback of the app and you don't have an email account set up on your device */
 "noEmailAccountConfigured"="장치에 이메일 계정이 설정되어있지 않습니다";
 /* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
-"privacyPolicyLabel"="개인정보 및 데이터 처리 방침";
+"privacyPolicyLabel"="개인정보 처리 방침";
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Policy' */
 "general.cookiePolicy"="쿠키 정책";
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Settings' */
@@ -927,9 +927,9 @@
 /* An alert title where the user provided the incorrect Recovery Key. */
 "invalidRecoveryKey"="잘못된 복구 키";
 /* Recovery key error alert title */
-"recoveryKey.error.alert.title"="Recovery key error";
+"recoveryKey.error.alert.title"="복구 키 오류";
 /* Recovery key error alert message when the user provided incorrect or invalid Recovery key */
-"recoveryKey.error.alert.message.invalidKey"="The recovery key you supplied is either invalid, or is not for this account. Check if you’re using the correct key and try again.";
+"recoveryKey.error.alert.message.invalidKey"="제공한 복구 키가 잘못 되었거나, 이 계정의 것이 아닙니다. 올바른 키를 이용했는지 확인하고 다시 시도하세요.";
 /* Text of the alert after opening the recovery link to reset pass being logged. */
 "youRecoveryKeyIsGoingTo"="복구 키는 암호를 재설정하는 데에 사용될 것입니다. 새 암호를 입력하세요.";
 /*  */
@@ -2211,13 +2211,13 @@
 /* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the header title that appears above */
 "settings.userInterface.mediaDiscovery.header"="갤러리 보기";
 /* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the footer message body that appears under that option */
-"settings.userInterface.mediaDiscovery.footer.body"="Open folders with only images or videos in a visual grid. Browse media by thumbnails and filter by date.";
+"settings.userInterface.mediaDiscovery.footer.body"="비주얼 그리드에서 이미지 또는 동영상만 있는 폴더를 엽니다. 썸네일로 미디어를 탐색하고 날짜로 필터합니다.";
 /* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the footer message body link that appears under that option */
-"settings.userInterface.mediaDiscovery.footer.link"="Learn more about gallery view";
+"settings.userInterface.mediaDiscovery.footer.link"="갤러리 보기에 대해 더 알아보기";
 /* In Settings - User Interface, there is a setting that can determine if the app should also load sub folder media. This is the label in the setting */
-"settings.userInterface.mediaDiscoverySubFolder"="Gallery view in subfolders";
+"settings.userInterface.mediaDiscoverySubFolder"="하위 폴더에서 갤러리 보기";
 /* In Settings - User Interface, there is a setting that can determine if the app should also load sub folder media. This is the footer message body that appears under that option */
-"settings.userInterface.mediaDiscoverySubFolder.footer"="Images and videos from subfolders will also be included in gallery view";
+"settings.userInterface.mediaDiscoverySubFolder.footer"="하위 폴더의 이미지와 동영상도 갤러리 보기에 포함합니다";
 /* In Settings - User Interface, there is an option that you can enable to hide the contents of the Recents section */
 "settings.userInterface.hideRecentActivity"="최근 활동 숨기기";
 /* In Settings - User Interface, there is an option that you can enable to hide the contents of the Recents section. This is the footer that appears under that option. */
@@ -2563,7 +2563,7 @@
 /* Title of Over Disk Quota dialog */
 "dialog.storage.odq.title"="업그레이드 하세요";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. @% is placeholder. */
-"dialog.storage.almostFull.detail"="Your Cloud drive is almost full. Upgrade now and get up to %@ TB of cloud storage space.";
+"dialog.storage.almostFull.detail"="클라우드 드라이브가 거의 가득 찼습니다. 지금 업그레이드 하고 최대 %@TB의 클라우드 저장 공간을 받으세요.";
 /* Over Disk Quota detail message informing the user that they've reached the full capacity of their accounts. */
 "dialog.storage.odq.detail"="클라우드 저장소가 가득 찼습니다. MEGA Pro 요금제로 업그레이드 하고 저장 공간을 늘리고 추가적인 혜택을 누리세요. 만약 업그레이드를 하지 않거나 일부 데이터를 삭제하지 않으면 당신의 계정이 잠길 수 있습니다. 자세한 정보는 당신께 보내드린 이메일을 참고하세요.";
 /* Over Disk Quota paywall not final title. */
@@ -3385,7 +3385,7 @@
 /* Alert title shown for video with options to resume playing the video or start from the beginning */
 "video.alert.resumeVideo.title"="이어서 볼까요?";
 /* Alert message shown for video with options to resume playing the video or start from the beginning. %1$s will be replaced by name of the video. %2$s will be replaced by video timestamp */
-"video.alert.resumeVideo.message"="“%1$s” will resume from %2$s";
+"video.alert.resumeVideo.message"="“%1$s”는/은 %2$s부터 이어집니다";
 /* Alert button title that will resume playing the video */
 "video.alert.resumeVideo.button.resume"="재개";
 /* Alert button title that will start playing the video from the beginning */
@@ -3887,7 +3887,7 @@
 /* Error shown when moving folder to inside itself */
 "Error.nodeCopyOrMove.circularDependency"="목적지가 동일하기 때문에 이 폴더를 이동할 수 없습니다.";
 /* Auto media discovery banner title */
-"photos.mediaDiscovery.autoMediaDiscoveryBanner.title"="As this folder contains only images and videos, we’ve automatically opened it in gallery view. You can enjoy your visual content with a more immersive layout. You can disable this in Settings.";
+"photos.mediaDiscovery.autoMediaDiscoveryBanner.title"="이 폴더가 이미지와 동영상만 담고 있으므로, 자동으로 갤러리 보기에서 열었습니다. 시각 콘텐츠를 더욱 몰입되는 레이아웃에서 즐길 수 있습니다. 이것을 설정에서 비활성화 할 수 있습니다.";
 /* Upgrade account screen header title after user onboarding */
 "onboarding.upgradeAccount.header.title"="Pro 요금제로 더 받기";
 /* Upgrade account screen header subTitle after user onboarding. %@ will be replaced by the price of the lowest plan per month. */
@@ -4509,9 +4509,9 @@
 /* Add to collection button title to add items */
 "photos.addTo.button.title.add"="추가";
 /* Ad-free experience screen header title */
-"ads.adFree.header.title"="Want MEGA without the ads?";
+"ads.adFree.header.title"="광고 없는 MEGA를 원하나요?";
 /* Ad-free experience screen header subTitle */
-"ads.adFree.header.subTitle"="Upgrade to a Pro plan with plenty of storage and more. Our Pro plans start at just %@ a month.";
+"ads.adFree.header.subTitle"="충분한 저장소와 그 이상이 있는 Pro 요금제로 업그레이드 하세요. 우리의 Pro 요금제는 단돈 월 %@입니다.";
 /* Ad-free experience screen content title about pro plan featuring as Generous Storage */
 "ads.adFree.content.generousStorage.title"="넉넉한 저장소";
 /* Ad-free experience screen content message about pro plan featuring as Generous Storage */
@@ -4591,7 +4591,7 @@
 /* Hidden files and folders onboarding content item two title */
 "onboarding.hiddenFilesAndFolders.content.item.two.title"="가시성을 쉽게 제어";
 /* Hidden files and folders onboarding content item two message */
-"onboarding.hiddenFilesAndFolders.content.item.two.message"="To show hidden files, turn on the “Show hidden items” setting under “File Management” -> “User interface” in your app settings.";
+"onboarding.hiddenFilesAndFolders.content.item.two.message"="숨겨진 파일을 나타내려면, 앱 설정의 “파일 관리” -> “이용자 인터페이스”에서 “숨겨진 항목 보기”를 켜세요.";
 /* Hidden files and folders onboarding content item three title */
 "onboarding.hiddenFilesAndFolders.content.item.three.title"="공유된 파일은 보이는 상태로 유지됩니다";
 /* Hidden files and folders onboarding content item three message */
@@ -4605,47 +4605,47 @@
 /* Onboarding USP carousel first page title */
 "onboarding.uniqueSellingProposition.carousel.page.first.title"="당신이 열쇠를 갖습니다";
 /* Onboarding USP carousel first page subtitle */
-"onboarding.uniqueSellingProposition.carousel.page.first.subtitle"="User controlled, zero-knowledge encryption means no one can see your data unless you want them to - not even us!";
+"onboarding.uniqueSellingProposition.carousel.page.first.subtitle"="이용자 제어, 영지식 암호화는 당신이 원하지 않는 그 누구도 당신의 데이터를 볼 수 없다는 것입니다 - 심지어 저희도요!";
 /* Onboarding USP carousel second page title */
-"onboarding.uniqueSellingProposition.carousel.page.second.title"="Keep every moment safe";
+"onboarding.uniqueSellingProposition.carousel.page.second.title"="모든 순간을 안전하게 보관";
 /* Onboarding USP carousel second page subtitle */
-"onboarding.uniqueSellingProposition.carousel.page.second.subtitle"="With automatic camera uploads to MEGA Cloud, and generous storage, you’ll never lose a precious memory";
+"onboarding.uniqueSellingProposition.carousel.page.second.subtitle"="MEGA Cloud 자동 카메라 업로드 기능과 넉넉한 용량으로 절대 소중한 추억을 잃지 않습니다.";
 /* Onboarding USP carousel third page title */
-"onboarding.uniqueSellingProposition.carousel.page.third.title"="Your data. Your space.";
+"onboarding.uniqueSellingProposition.carousel.page.third.title"="당신의 데이터. 당신의 공간.";
 /* Onboarding USP carousel third page subtitle */
-"onboarding.uniqueSellingProposition.carousel.page.third.subtitle"="Ample storage and easy ways to transfer, share, and organise your files means you can safely use MEGA for whatever you choose";
+"onboarding.uniqueSellingProposition.carousel.page.third.subtitle"="충분한 저장소와 간편한 파일 전송, 공유, 정리 방법을 통해 어떤 용도로든 MEGA를 안전하게 사용할 수 있습니다.";
 /* Onboarding USP carousel fourth page title */
 "onboarding.uniqueSellingProposition.carousel.page.fourth.title"="비공개로 말하기";
 /* Onboarding USP carousel fourth page subtitle */
-"onboarding.uniqueSellingProposition.carousel.page.fourth.subtitle"="Chat with friends and family, share photos or sensitive information, video call, and schedule meetings. Safety and privacy guaranteed.";
+"onboarding.uniqueSellingProposition.carousel.page.fourth.subtitle"="친구와 가족들과 대화하고, 사진이나 민감한 정보를 공유하고, 영상 통화를 하고, 회의를 예약하세요. 안전과 프라이버시가 보장됩니다.";
 /* Onboarding Notification CTA title */
-"onboarding.cta.notifications.title"="Never miss an important update";
+"onboarding.cta.notifications.title"="중요한 업데이트를 놓치지 마세요";
 /* Onboarding Notification CTA description */
-"onboarding.cta.notifications.explanation"="Stay informed with real-time updates that matter to you. Get alerts for shared folder activity, security updates, and exclusive offers, so you never miss anything important.\n\nYou can manage notification preferences at any time in the settings.";
+"onboarding.cta.notifications.explanation"="중요한 실시간 업데이트를 통해 최신 정보를 받아보세요. 공유 폴더 활동, 보안 업데이트, 독점 혜택 등에 대한 알림을 받아서, 중요한 것을 절대 놓치지 마세요.\n\n알림 설정은 언제든지 설정에서 관리할 수 있습니다.";
 /* Onboarding Notification CTA *Enable* button */
 "onboarding.cta.notifications.buttons.enable"="알림 활성화";
 /* Onboarding Notification CTA *Skip* button */
-"onboarding.cta.notifications.buttons.skip"="Skip for now";
+"onboarding.cta.notifications.buttons.skip"="지금은 건너뛰기";
 /* Onboarding Camera Backups CTA title */
-"onboarding.cta.cameraBackups.title"="Keep your photos safe, always";
+"onboarding.cta.cameraBackups.title"="항상, 사진을 안전하게 보관";
 /* Onboarding Camera Backups CTA description */
-"onboarding.cta.cameraBackups.explanation"="Your memories matter\n\nCamera uploads automatically backs up your photos and videos to your MEGA Cloud drive, so you never have to worry about losing them";
+"onboarding.cta.cameraBackups.explanation"="당신의 추억은 중요합니다.\n\n카메라 업로드가 당신의 사진과 동영상을 자동으로 MEGA 클라우드 드라이브로 백업하여, 당신은 추억을 잃을 걱정을 하지 않아도 됩니다";
 /* Onboarding Camera Backups CTA note */
-"onboarding.cta.cameraBackups.note"="Camera uploads requires [B]full access[/B] to your device’s photo library";
+"onboarding.cta.cameraBackups.note"="카메라 업로드는 장치의 사진 라이브러리에 대해 [B]전체 접근[/B]이 필요합니다";
 /* Onboarding Camera Backups CTA *Enable* button */
 "onboarding.cta.cameraBackups.buttons.enable"="카메라 업로드 활성화";
 /* Onboarding Camera Backups CTA *Skip* button */
-"onboarding.cta.cameraBackups.buttons.skip"="Skip for now";
+"onboarding.cta.cameraBackups.buttons.skip"="지금은 건너뛰기";
 /* String explaining the auto-renewal policy of the Pro subscription. */
-"subscriptionPurchase.autoRenewDescription"="Subscriptions are renewed automatically for successive subscription periods of the same duration and at the same price as the initial period chosen.\n\nYou can cancel your Pro plan anytime but no later than 24 hours before your next subscription payment is due. Learn how to manage your subscription in your settings.";
+"subscriptionPurchase.autoRenewDescription"="구독은 처음 선택한 기간과 같은 기간 그리고 같은 가격으로 연속적으로 자동 갱신됩니다.\n\nPro 요금제는 다음 구독 결제일 24시간 전까지 언제든 취소할 수 있습니다. 설정에서 구독을 관리하는 방법에 대해 더 알아보세요.";
 /* Title shown for the free plan card */
 "subscriptionPurchase.freePlanCard.title"="무료 요금제로 시작하세요";
 /* Description shown for the free plan card */
-"subscriptionPurchase.freePlanCard.description"="We offer generous amount of storage and transfer quota at no charge, so you can try MEGA with no risk";
+"subscriptionPurchase.freePlanCard.description"="우리는 요금 없이 넉넉한 양의 저장소와 전송 할당량을 제공하여, 위험 부담 없이 MEGA를 써볼 수 있습니다";
 /* First benefit shown for the free plan card */
-"subscriptionPurchase.freePlanCard.feature.one"="Free 20 GB of storage";
+"subscriptionPurchase.freePlanCard.feature.one"="무료 20GB 저장소";
 /* Second benefit shown for the free plan card */
-"subscriptionPurchase.freePlanCard.feature.two"="Limited transfers";
+"subscriptionPurchase.freePlanCard.feature.two"="제한된 전송";
 /* Button title for the free plan card */
 "subscriptionPurchase.freePlanCard.button.title"="무료로 시작하세요";
 /* Displays the amount of storage included in the subscription plan */
@@ -4653,28 +4653,28 @@
 /* Displays the amount of data transfer included in the subscription plan */
 "subscriptionPurchase.plan.transfer"="%@ 전송";
 /* Displays the total amount when billed yearly */
-"subscriptionPurchase.plan.billedYearly"="%@ billed yearly";
+"subscriptionPurchase.plan.billedYearly"="연간 %@ 결제";
 /* Button title to cancel the subscription purchase. */
 "subscriptionPurchase.maybeLater"="나중에";
 /* Title for the features of pro plan in the subscription purchase screen. */
-"subscriptionPurchase.featuresOfProPlan.title"="Additional benefits of Pro plans";
+"subscriptionPurchase.featuresOfProPlan.title"="Pro 요금제의 추가 혜택";
 /* Features of pro plan in the subscription purchase screen. */
-"subscriptionPurchase.featuresOfProPlan.message"="• Password-protected links\n\n• Links with expiry dates\n\n• Transfer quota sharing\n\n• Rewind folders up to 180 days\n\n• Unlimited calls and meetings\n\n• Schedule rubbish bin clearing between 7 days and 10 years\n\n• Priority support";
+"subscriptionPurchase.featuresOfProPlan.message"="• 암호로 보호된 링크\n\n• 만료일이 있는 링크\n\n• 전송 할당량 공유\n\n• 최대 180일의 폴더 되감기\n\n• 무제한 통화와 회의\n\n• 휴지통 비우기를 7일에서 10년 사이로 예약\n\n• 우선적인 지원";
 /* Title for the first subscription feature: generous storage capacity */
 "subscriptionPurchase.feature.one.title"="넉넉한 저장소";
 /* Description for the first subscription feature: details about available storage */
-"subscriptionPurchase.feature.one.description"="Store up to 16 TB of data";
+"subscriptionPurchase.feature.one.description"="최대 16TB의 데이터 저장";
 /* Title for the second subscription feature: transfer quota sharing */
 "subscriptionPurchase.feature.two.title"="전송 공유";
 /* Description for the second subscription feature: how shared users can use your quota */
-"subscriptionPurchase.feature.two.description"="People you share items with can use your transfer quota to download and stream files";
+"subscriptionPurchase.feature.two.description"="당신이 항목을 공유해준 사람들이 파일을 다운로드하고 스트림하기 위해 당신의 전송 할당량을 이용할 수 있습니다";
 /* Title for the third subscription feature: MEGA VPN service */
 "subscriptionPurchase.feature.three.title"="MEGA VPN";
 /* Description for the third subscription feature: benefits of using the MEGA VPN */
-"subscriptionPurchase.feature.three.description"="Keep your online life safe, fast, and easy with our high-speed VPN";
+"subscriptionPurchase.feature.three.description"="우리의 고속 VPN으로 당신의 온라인 생활을 안전하고, 빠르고, 쉽게 유지하세요";
 /* Title for the fourth subscription feature: MEGA Pass password manager */
 "subscriptionPurchase.feature.four.title"="MEGA Pass";
 /* Description for the fourth subscription feature: benefits of using MEGA Pass for password management */
-"subscriptionPurchase.feature.four.description"="Organise all your passwords and keep them safe with our password manager";
+"subscriptionPurchase.feature.four.description"="우리의 암호 관리자로 당신의 모든 암호를 정리하고 안전하게 지키세요";
 /* Title for all the feature in subscription purchase view. */
 "subscriptionPurchase.feature.title"="다음을 얻게 됩니다:";
