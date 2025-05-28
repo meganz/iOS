@@ -4,7 +4,6 @@
 
 #import "SVProgressHUD.h"
 
-#import "MEGAQLPreviewController.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGANavigationController.h"
 #import "BrowserViewController.h"
@@ -340,7 +339,7 @@
 
 - (void)openZipInQLViewController {
     NSString *filePath = self.nodeFilePath ? self.nodeFilePath : self.filePath;
-    MEGAQLPreviewController *previewController = [MEGAQLPreviewController.alloc initWithFilePath:filePath];
+    MEGAQLPreviewController *previewController = [MEGAQLPreviewController.alloc initWithArrayOfFiles:@[filePath]];
     [self dismissViewControllerAnimated:YES completion:^{
         [UIApplication.mnz_presentingViewController presentViewController:previewController animated:YES completion:nil];
     }];

@@ -14,7 +14,6 @@
 #import "MEGAReachabilityManager.h"
 #import "MEGAStore.h"
 #import "MEGA-Swift.h"
-#import "MEGAQLPreviewController.h"
 #import "NodeCollectionViewCell.h"
 #import "OfflineTableViewCell.h"
 #import "UIViewController+MNZCategory.h"

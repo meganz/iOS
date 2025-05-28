@@ -25,7 +25,6 @@
 #import "MainTabBarController.h"
 #import "MEGANavigationController.h"
 #import "MEGAPhotoBrowserViewController.h"
-#import "MEGAQLPreviewController.h"
 #import "OnboardingViewController.h"
 #import "PreviewDocumentViewController.h"
 #import "SharedItemsViewController.h"
@@ -175,7 +174,7 @@
             if (asset.playable) {
                 return [[AVPlayerManager shared] makePlayerControllerFor:path];
             } else {
-                MEGAQLPreviewController *previewController = [[MEGAQLPreviewController alloc] initWithFilePath:previewDocumentPath];
+                MEGAQLPreviewController *previewController = [[MEGAQLPreviewController alloc] initWithArrayOfFiles:@[previewDocumentPath]];
                 previewController.currentPreviewItemIndex = 0;
                 return previewController;
             }
