@@ -30,18 +30,32 @@ extension AudioPlayer {
     
     private func updateNowPlayingInfo() {
         guard let item = currentItem() else { return }
+        let asset = item.asset
+        let title = item.name
+        let artist = item.artist ?? ""
+        let elapsed = item.currentTime().seconds
+        let artwork = mediaItemPropertyArtwork(item)
+        let rate = NSNumber(value: isPaused ? 0.0 : 1.0)
         
-        Task { @MainActor in
-            guard let duration = try? await item.asset.load(.duration) else { return }
-            
-            mediaPlayerNowPlayingInfoCenter.nowPlayingInfo = [
-                MPMediaItemPropertyPlaybackDuration: duration.seconds,
-                MPMediaItemPropertyTitle: item.name,
-                MPMediaItemPropertyArtist: item.artist ?? "",
-                MPNowPlayingInfoPropertyPlaybackRate: NSNumber(value: isPaused ? 0.0 : 1.0),
-                MPMediaItemPropertyArtwork: mediaItemPropertyArtwork(item),
-                MPNowPlayingInfoPropertyElapsedPlaybackTime: item.currentTime().seconds
-            ]
+        Task { @MainActor [weak self] in
+            guard let self else { return }
+            do {
+                let duration = try await asset.load(.duration)
+                
+                mediaPlayerNowPlayingInfoCenter.nowPlayingInfo = [
+                    MPMediaItemPropertyPlaybackDuration: duration.seconds,
+                    MPMediaItemPropertyTitle: title,
+                    MPMediaItemPropertyArtist: artist,
+                    MPNowPlayingInfoPropertyPlaybackRate: rate,
+                    MPMediaItemPropertyArtwork: artwork,
+                    MPNowPlayingInfoPropertyElapsedPlaybackTime: elapsed
+                ]
+            } catch {
+                CrashlyticsLogger.log(
+                    category: .audioPlayer,
+                    "Failed to load duration for “\(title)”: \(error.localizedDescription)"
+                )
+            }
         }
     }
     
