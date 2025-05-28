@@ -55,7 +55,7 @@ final class PhotoAlbumContainerViewController: UIViewController {
     private var albumHostingController: UIViewController?
     private var visualMediaSearchResultsViewController: UIViewController?
     private var visualMediaSearchResultsViewModel: VisualMediaSearchResultsViewModel?
-    
+
     var leftBarButton: UIBarButtonItem?
     lazy var shareLinkBarButton = UIBarButtonItem(image: MEGAAssets.UIImage.link,
                                                   style: .plain,
@@ -88,7 +88,8 @@ final class PhotoAlbumContainerViewController: UIViewController {
         configureSearchBar()
         setUpPagerTabView()
         setUpPageViewController()
-        
+        observeShowSnackBar()
+
         view.backgroundColor = TokenColors.Background.page
     }
     
@@ -347,7 +348,15 @@ final class PhotoAlbumContainerViewController: UIViewController {
                 self?.selectBarButton.isEnabled = !$0
             }.store(in: &subscriptions)
     }
-    
+
+    private func observeShowSnackBar() {
+        viewModel.showSnackBarSubject
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in
+                self?.showSnackBar(message: $0)
+            }.store(in: &subscriptions)
+    }
+
     private func updatePageTabViewLayout() {
         guard let hostingController = pageTabHostingController else { return }
         
@@ -586,5 +595,11 @@ extension PhotoAlbumContainerViewController: BottomOverlayPresenterProtocol {
     
     public func hasUpdatedContentView() -> Bool {
         additionalSafeAreaInsets.bottom != 0
+    }
+}
+
+extension PhotoAlbumContainerViewController: SnackBarLayoutCustomizable {
+    var additionalSnackBarBottomInset: CGFloat {
+        return 40 // Need to display the snackbar on top of the PhotoLibraryPicker view
     }
 }

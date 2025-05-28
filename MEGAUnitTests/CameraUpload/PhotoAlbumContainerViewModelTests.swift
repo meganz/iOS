@@ -4,6 +4,8 @@ import MEGAAppPresentation
 import MEGAAppPresentationMock
 import MEGADomain
 import MEGADomainMock
+import MEGAL10n
+import MEGAPreference
 import MEGATest
 import Testing
 
@@ -24,8 +26,23 @@ struct PhotoAlbumContainerViewModelTests {
                 with: [PhotoScreenEvent()]
             )
         }
+
+        @Test(
+            "on appear should show snack bar accornding to preference",
+            arguments: [(false, [String]()), (true, [Strings.Localizable.cameraUploadsEnabled])]
+        )
+        func trackSnackbarShow(data: (input: Bool, output: [String])) {
+            let tracker = MockTracker()
+            let preferenceUseCase = MockPreferenceUseCase(dict: [
+                "shouldShowCameraUploadsEnabledSnackbar": data.input]
+            )
+            let sut = makeSUT(tracker: tracker, preferenceUseCase: preferenceUseCase)
+            let spy = sut.showSnackBarSubject.spy()
+            sut.didAppear()
+            #expect(spy.values == data.output)
+        }
     }
-    
+
     @Suite("Share link")
     @MainActor
     struct ShareLink {
@@ -111,10 +128,13 @@ struct PhotoAlbumContainerViewModelTests {
     @MainActor
     private static func makeSUT(
         tracker: some AnalyticsTracking = MockTracker(),
-        overDiskQuotaChecker: some OverDiskQuotaChecking = MockOverDiskQuotaChecker()
+        overDiskQuotaChecker: some OverDiskQuotaChecking = MockOverDiskQuotaChecker(),
+        preferenceUseCase: some PreferenceUseCaseProtocol = MockPreferenceUseCase()
     ) -> PhotoAlbumContainerViewModel {
         .init(
             tracker: tracker,
-            overDiskQuotaChecker: overDiskQuotaChecker)
+            overDiskQuotaChecker: overDiskQuotaChecker,
+            preferenceUseCase: preferenceUseCase
+        )
     }
 }

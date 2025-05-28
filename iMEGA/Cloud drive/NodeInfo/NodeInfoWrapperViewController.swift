@@ -10,7 +10,6 @@ import UIKit
 /// within its own view hierarchy and managing its presentation and dismissal logic.
 final class NodeInfoWrapperViewController: UIViewController {
     private let nodeInfoViewController: NodeInfoViewController
-    var snackBarContainer: UIView?
 
     init(with nodeInfoViewController: NodeInfoViewController) {
         self.nodeInfoViewController = nodeInfoViewController
