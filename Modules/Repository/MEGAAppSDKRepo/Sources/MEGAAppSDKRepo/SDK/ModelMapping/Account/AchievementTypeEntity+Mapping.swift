@@ -9,6 +9,8 @@ extension AchievementTypeEntity {
         case .desktopInstall: return 4
         case .mobileInstall: return 5
         case .addPhone: return 9
+        case .passFreeTrial: return 10
+        case .vpnFreeTrial: return 11
         }
     }
     

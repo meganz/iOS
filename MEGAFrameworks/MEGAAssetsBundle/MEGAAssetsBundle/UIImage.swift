@@ -368,4 +368,6 @@ public struct MEGAUIImageBundle {
     public static var filetypeUrl: UIImage { UIImage.filetypeUrl }
     public static var filetypeExperiencedesign: UIImage { UIImage.filetypeExperiencedesign }
     public static var filetypeFolderCamera: UIImage { UIImage.filetypeFolderCamera }
+    public static var achievementsFreeTrialVPN: UIImage { UIImage.achievementsFreeTrialVPN }
+    public static var achievementsFreeTrialPass: UIImage { UIImage.achievementsFreeTrialPass }
 }

@@ -23,6 +23,8 @@ final class AchievementsDetailsEntityMappingTests: XCTestCase {
             case .desktopInstall: XCTAssertEqual($0.storage, Int64(-1))
             case .mobileInstall: XCTAssertEqual($0.storage, Int64(-1))
             case .addPhone: XCTAssertEqual($0.storage, Int64(-1))
+            case .passFreeTrial: XCTAssertEqual($0.storage, Int64(-1))
+            case .vpnFreeTrial: XCTAssertEqual($0.storage, Int64(-1))
             }
         }
     }
@@ -36,6 +38,8 @@ final class AchievementsDetailsEntityMappingTests: XCTestCase {
             case .desktopInstall: XCTAssertEqual($0.transfer, Int64(-1))
             case .mobileInstall: XCTAssertEqual($0.transfer, Int64(-1))
             case .addPhone: XCTAssertEqual($0.transfer, Int64(-1))
+            case .passFreeTrial: XCTAssertEqual($0.transfer, Int64(-1))
+            case .vpnFreeTrial: XCTAssertEqual($0.transfer, Int64(-1))
             }
         }
     }
@@ -49,6 +53,8 @@ final class AchievementsDetailsEntityMappingTests: XCTestCase {
             case .desktopInstall: XCTAssertEqual($0.expire, -1)
             case .mobileInstall: XCTAssertEqual($0.expire, -1)
             case .addPhone: XCTAssertEqual($0.expire, -1)
+            case .passFreeTrial: XCTAssertEqual($0.expire, -1)
+            case .vpnFreeTrial: XCTAssertEqual($0.expire, -1)
             }
         }
     }

@@ -10,9 +10,6 @@
 @property (weak, nonatomic) IBOutlet UIImageView *checkImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *achievementImageView;
 
-@property (weak, nonatomic) IBOutlet UIView *howItWorksTopSeparatorView;
-@property (weak, nonatomic) IBOutlet UIView *howItWorksView;
-
 @end
 
 @implementation AchievementsDetailsViewController
@@ -61,19 +58,21 @@
             break;
         }
 
+        case MEGAAchievementVPNFreeTrial:
+            self.navigationItem.title = LocalizedString(@"account.achievement.vpnFreeTrial.title", @"");
+            achievementImage = [UIImage megaImageWithNamed:@"achievementsFreeTrialVPN"];
+            break;
+
+        case MEGAAchievementPassFreeTrial:
+            self.navigationItem.title = LocalizedString(@"account.achievement.passFreeTrial.title", @"");
+            achievementImage = [UIImage megaImageWithNamed:@"achievementsFreeTrialPass"];
+            break;
+
         default:
             break;
     }
     self.achievementImageView.image = achievementImage.imageFlippedForRightToLeftLayoutDirection;
     self.checkImageView.hidden = self.completedAchievementIndex == nil;
-}
-
-- (void)setupColors {
-    self.view.backgroundColor = [self defaultBackgroundColor];
-    self.subtitleView.backgroundColor = [self defaultBackgroundColor];
-    self.howItWorksTopSeparatorView.backgroundColor = [self separatorColor];
-    self.howItWorksView.backgroundColor = [self defaultBackgroundColor];
-    [self.addPhoneNumberButton mnz_setupPrimary];
 }
 
 @end
