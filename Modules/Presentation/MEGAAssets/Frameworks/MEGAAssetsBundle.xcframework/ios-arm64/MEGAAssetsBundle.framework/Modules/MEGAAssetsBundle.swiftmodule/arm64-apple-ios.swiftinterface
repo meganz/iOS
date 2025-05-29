@@ -1869,6 +1869,12 @@ public struct MEGAUIImageBundle {
   public static var filetypeFolderCamera: UIKit.UIImage {
     get
   }
+  public static var achievementsFreeTrialVPN: UIKit.UIImage {
+    get
+  }
+  public static var achievementsFreeTrialPass: UIKit.UIImage {
+    get
+  }
 }
 public struct MEGAColorBundle {
   public static var black000000: SwiftUICore.Color {

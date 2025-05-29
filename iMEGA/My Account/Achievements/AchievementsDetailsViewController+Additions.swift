@@ -1,6 +1,9 @@
+import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGADesignToken
 import MEGAL10n
+import MEGAUIComponent
+import SwiftUI
 
 extension AchievementsDetailsViewController {
     @objc func showAddPhoneNumber() {
@@ -35,6 +38,41 @@ extension AchievementsDetailsViewController {
         } else {
             setupIncompletedAchivementDetail()
         }
+        setupLabelsLayout()
+    }
+
+    private func setupLabelsLayout() {
+        howItWorksLabel?.textAlignment = .center
+        howItWorksExplanationLabel?.textAlignment = .center
+        setLineHeight(howItWorksExplanationLabel, lineHeight: 30)
+    }
+
+    private func setLineHeight(_ label: UILabel?, lineHeight: CGFloat) {
+        guard let label, let labelText = label.text else { return }
+
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.minimumLineHeight = lineHeight
+        paragraphStyle.maximumLineHeight = lineHeight
+        paragraphStyle.alignment = label.textAlignment
+
+        let attributedString = NSMutableAttributedString(string: labelText)
+        attributedString.addAttribute(.paragraphStyle, value: paragraphStyle, range: NSRange(location: 0, length: attributedString.length))
+
+        if let font = label.font {
+            attributedString.addAttribute(.font, value: font, range: NSRange(location: 0, length: attributedString.length))
+        }
+
+        label.attributedText = attributedString
+    }
+
+    @objc func setupColors() {
+        view.backgroundColor = defaultBackgroundColor
+        subtitleLabel?.textColor = TokenColors.Text.primary
+        howItWorksTopSeparatorView.backgroundColor = TokenColors.Border.strong
+        howItWorksView.backgroundColor = TokenColors.Background.surface1
+        howItWorksLabel?.textColor = TokenColors.Text.primary
+        howItWorksExplanationLabel?.textColor = TokenColors.Text.secondary
+        addPhoneNumberButton?.mnz_setupPrimary()
     }
 
     @objc func setupCompletedAchievementDetail(completedAchievementIndex: UInt) {
@@ -55,6 +93,10 @@ extension AchievementsDetailsViewController {
         case .addPhone:
             howItWorksCompletedExplanation = Strings.Localizable.Account.Achievement.PhoneNumber.Complete.Explaination.label(storageRewardString)
             updateAddPhoneNumberStatus(isHidden: true)
+        case .vpnFreeTrial:
+            howItWorksCompletedExplanation = Strings.Localizable.Account.Achievement.VpnFreeTrial.Complete.Explanation.label(storageRewardString)
+        case .passFreeTrial:
+            howItWorksCompletedExplanation = Strings.Localizable.Account.Achievement.PassFreeTrial.Complete.Explanation.label(storageRewardString)
         default:
             break
         }
@@ -82,6 +124,14 @@ extension AchievementsDetailsViewController {
         case .addPhone:
             updateAddPhoneNumberStatus(isHidden: false)
             howItWorksExplanation = Strings.Localizable.Account.Achievement.PhoneNumber.Incomplete.Explaination.label(storageString)
+        case .vpnFreeTrial:
+            subtitleLabel?.text = Strings.Localizable.Account.Achievement.VpnFreeTrial.Detail.Incomplete.label(storageString)
+            howItWorksExplanation = Strings.Localizable.Account.Achievement.VpnFreeTrial.Incomplete.Explanation.label
+            addInstallButton(title: Strings.Localizable.Account.Achievement.VpnFreeTrial.buttonText, action: MEGALinkManager.openVPNApp)
+        case .passFreeTrial:
+            subtitleLabel?.text = Strings.Localizable.Account.Achievement.PassFreeTrial.Detail.Incomplete.label(storageString)
+            howItWorksExplanation = Strings.Localizable.Account.Achievement.PassFreeTrial.Incomplete.Explanation.label
+            addInstallButton(title: Strings.Localizable.Account.Achievement.PassFreeTrial.buttonText, action: MEGALinkManager.openPWMApp)
         default:
             break
         }
@@ -94,32 +144,71 @@ extension AchievementsDetailsViewController {
               let awardExpirationDate = achievementsDetails.awardExpiration(at: completedAchievementIndex)
         else { return }
 
-        let daysUntilExpiration = Date().dayDistance(toFutureDate: awardExpirationDate, on: .autoupdatingCurrent) ?? 0
-
         var bonusExpiresIn = ""
 
-        if daysUntilExpiration == 0 {
-            bonusExpiresIn = Strings.Localizable.expired
-            subtitleLabel?.textColor = TokenColors.Text.warning
-            subtitleView?.layer.borderColor = TokenColors.Support.warning.cgColor
-        } else {
-            bonusExpiresIn = Strings.Localizable.Account.Achievement.Complete.ValidBonusExpiry.Detail.subtitle(daysUntilExpiration)
-            subtitleView?.layer.borderColor = TokenColors.Border.subtle.cgColor
+        switch achievementClass {
+        case .vpnFreeTrial:
+            bonusExpiresIn = Strings.Localizable.Account.Achievement.VpnFreeTrial.Detail.Complete.label(
+                storageString(achievementsDetails: achievementsDetails)
+            )
+            subtitleLabel?.textColor = TokenColors.Text.secondary
+            subtitleView?.backgroundColor = TokenColors.Background.surface1
+            subtitleView?.layer.borderColor = TokenColors.Border.strong.cgColor
+            addInstallButton(title: Strings.Localizable.Account.Achievement.VpnFreeTrial.buttonText, state: .disabled)
+        case .passFreeTrial:
+            bonusExpiresIn = Strings.Localizable.Account.Achievement.PassFreeTrial.Detail.Complete.label(
+                storageString(achievementsDetails: achievementsDetails)
+            )
+            subtitleLabel?.textColor = TokenColors.Text.secondary
+            subtitleView?.backgroundColor = TokenColors.Background.surface1
+            subtitleView?.layer.borderColor = TokenColors.Border.strong.cgColor
+            addInstallButton(title: Strings.Localizable.Account.Achievement.PassFreeTrial.buttonText, state: .disabled)
+        default:
+            let daysUntilExpiration = Date().dayDistance(toFutureDate: awardExpirationDate, on: .autoupdatingCurrent) ?? 0
+
+            if daysUntilExpiration == 0 {
+                bonusExpiresIn = Strings.Localizable.expired
+                subtitleLabel?.textColor = TokenColors.Text.warning
+                subtitleView?.layer.borderColor = TokenColors.Support.warning.cgColor
+            } else {
+                bonusExpiresIn = Strings.Localizable.Account.Achievement.Complete.ValidBonusExpiry.Detail.subtitle(daysUntilExpiration)
+                subtitleView?.layer.borderColor = TokenColors.Border.subtle.cgColor
+            }
         }
 
         subtitleLabel?.text = bonusExpiresIn
     }
 
+    private func storageString(achievementsDetails: MEGAAchievementsDetails) -> String {
+        String.memoryStyleString(fromByteCount: achievementsDetails.classStorage(
+            forClassId: Int(self.achievementClass.rawValue)
+        ))
+    }
+
+    // MARK: - VPN & PWM Free Trial
+
+    private func addInstallButton(title: String, state: MEGAButtonState = .default, action: (() -> Void)? = nil) {
+        let installButton = MEGAButton(title, state: state, action: action).padding(.bottom, 40)
+        let hostingController = UIHostingController(rootView: installButton)
+        let hostedView = hostingController.view!
+        hostedView.translatesAutoresizingMaskIntoConstraints = false
+        hostedView.backgroundColor = .clear
+        howItWorksView.addArrangedSubview(hostedView)
+        addChild(hostingController)
+        hostingController.didMove(toParent: self)
+
+        NSLayoutConstraint.activate([
+            hostedView.leadingAnchor.constraint(equalTo: howItWorksView.leadingAnchor, constant: 20),
+            hostedView.trailingAnchor.constraint(equalTo: howItWorksView.trailingAnchor, constant: -20)
+        ])
+    }
+
     // MARK: - Token Colors
-    
+
     @objc var defaultBackgroundColor: UIColor {
         TokenColors.Background.page
     }
 
-    @objc var separatorColor: UIColor {
-        TokenColors.Border.strong
-    }
-    
     private func updateAddPhoneNumberStatus(isHidden: Bool) {
         addPhoneNumberButton?.isHidden = isHidden
         scrollViewBottomSpacingConstraint?.isActive = !isHidden

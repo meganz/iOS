@@ -9,7 +9,9 @@ final class AchievementTypeEntityMappingTests: XCTestCase {
             .invite: Int64(3 * 2),
             .desktopInstall: Int64(4 * 2),
             .mobileInstall: Int64(5 * 2),
-            .addPhone: Int64(9 * 2)
+            .addPhone: Int64(9 * 2),
+            .passFreeTrial: Int64(10 * 2),
+            .vpnFreeTrial: Int64(11 * 2)
         ]
         AchievementTypeEntity.allCases.forEach {
             XCTAssertEqual($0.toAchievementDetails(classStorage: doubleThis).storage, expectedResults[$0])
@@ -23,7 +25,9 @@ final class AchievementTypeEntityMappingTests: XCTestCase {
             .invite: Int64(3 * 2),
             .desktopInstall: Int64(4 * 2),
             .mobileInstall: Int64(5 * 2),
-            .addPhone: Int64(9 * 2)
+            .addPhone: Int64(9 * 2),
+            .passFreeTrial: Int64(10 * 2),
+            .vpnFreeTrial: Int64(11 * 2)
         ]
         AchievementTypeEntity.allCases.forEach {
             XCTAssertEqual($0.toAchievementDetails(classTransfer: doubleThis).transfer, expectedResults[$0])
@@ -37,7 +41,9 @@ final class AchievementTypeEntityMappingTests: XCTestCase {
             .invite: 3 * 2,
             .desktopInstall: 4 * 2,
             .mobileInstall: 5 * 2,
-            .addPhone: 9 * 2
+            .addPhone: 9 * 2,
+            .passFreeTrial: 10 * 2,
+            .vpnFreeTrial: 11 * 2
         ]
         AchievementTypeEntity.allCases.forEach {
             XCTAssertEqual($0.toAchievementDetails(classExpire: doubleThis).expire, expectedResults[$0])
