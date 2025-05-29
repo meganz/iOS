@@ -105,7 +105,7 @@ class AudioPlayerViewController: UIViewController, AudioPlayerViewControllerNode
     // MARK: - Private functions
     
     private func configureImages() {
-        imageView.image = UIImage(named: "defaultArtwork")
+        imageView.image = MEGAAssets.UIImage.defaultArtwork
 
         goBackwardButton.setImage(MEGAAssets.UIImage.image(named: "goBackward15"), for: .normal)
         previousButton.setImage(MEGAAssets.UIImage.image(named: "backTrack"), for: .normal)
