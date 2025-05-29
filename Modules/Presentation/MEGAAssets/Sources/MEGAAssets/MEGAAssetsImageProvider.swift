@@ -585,5 +585,7 @@ extension MEGAAssets {
         public static var notificationDevicePermission: UIKit.UIImage { MEGAUIImageBundle.notificationDevicePermission }
         public static var glassSearch: UIKit.UIImage { MEGAUIImageBundle.glassSearch }
         public static var addContactMeetings: UIKit.UIImage { MEGAUIImageBundle.addContactMeetings }
+        public static var achievementsFreeTrialVPN: UIKit.UIImage { MEGAUIImageBundle.achievementsFreeTrialVPN }
+        public static var achievementsFreeTrialPass: UIKit.UIImage { MEGAUIImageBundle.achievementsFreeTrialPass }
     }
 }

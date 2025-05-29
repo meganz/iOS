@@ -196,10 +196,19 @@
     if (hasWelcomeBonuses) {
         [self.displayOrderMutableArray addObject:[NSNumber numberWithInt:MEGAAchievementWelcome]];
     }
-    [self.displayOrderMutableArray addObjectsFromArray:@[
-        [NSNumber numberWithInt:MEGAAchievementDesktopInstall],
-        [NSNumber numberWithInt:MEGAAchievementMobileInstall]
-    ]];
+
+    NSArray<NSNumber *> *potentialAchievements = @[
+        @(MEGAAchievementDesktopInstall),
+        @(MEGAAchievementMobileInstall),
+        @(MEGAAchievementVPNFreeTrial),
+        @(MEGAAchievementPassFreeTrial)
+    ];
+
+    for (NSNumber *achievement in potentialAchievements) {
+        if ([self.achievementsDetails isValidClass:achievement.integerValue]) {
+            [self.displayOrderMutableArray addObject:achievement];
+        }
+    }
 
     NSString *inviteStorageString = [NSString memoryStyleStringFromByteCount:[self.achievementsDetails classStorageForClassId:MEGAAchievementInvite]];
     self.inviteYourFriendsSubtitleLabel.text = [NSString stringWithFormat:LocalizedString(@"account.achievement.referral.subtitle", @""), inviteStorageString];
@@ -242,7 +251,17 @@
             cell.titleLabel.text = LocalizedString(@"account.achievement.mobileApp.title", @"");
             break;
         }
-            
+
+        case MEGAAchievementVPNFreeTrial: {
+            cell.titleLabel.text = LocalizedString(@"account.achievement.vpnFreeTrial.title", @"");
+            break;
+        }
+
+        case MEGAAchievementPassFreeTrial: {
+            cell.titleLabel.text = LocalizedString(@"account.achievement.passFreeTrial.title", @"");
+            break;
+        }
+
         default:
             break;
     }
@@ -255,9 +274,7 @@
         NSNumber *index = [self.achievementsIndexesMutableDictionary objectForKey:[NSNumber numberWithInteger:achievementClass]];
         if (index != nil) {
             [self setStorageQuotaRewardsForCell:cell forIndex:index.integerValue];
-            NSDate *awardExpirationdDate = [self.achievementsDetails awardExpirationAtIndex:index.unsignedIntegerValue];
-            cell.subtitleLabel.text = [self achievementSubtitleWithRemainingDays:awardExpirationdDate.daysUntil];
-            cell.subtitleLabel.textColor = (awardExpirationdDate.daysUntil <= 15) ? [UIColor mnz_errorRed] : [UIColor mnz_secondaryTextColor];
+            [self configureAchievementSubtitleForCell:cell withIndex:index.unsignedIntegerValue forAchievementClass:achievementClass];
         } else {
             NSString *storageString = [NSString memoryStyleStringFromByteCount:[self.achievementsDetails classStorageForClassId:achievementClass]];
             
@@ -266,8 +283,7 @@
             cell.storageQuotaRewardView.backgroundColor = [UIColor supportInfoColor];
             cell.storageQuotaRewardLabel.backgroundColor = [UIColor supportInfoColor];
             cell.storageQuotaRewardLabel.textColor = [UIColor whiteTextColor];
-            
-            cell.subtitleLabel.text = [NSString stringWithFormat:LocalizedString(@"account.achievement.incomplete.subtitle", @""), storageString];
+            cell.subtitleLabel.text = [self subtitleTextForIncompleteAchievementWithStorageString:storageString forAchievementClass:achievementClass];
             cell.subtitleLabel.textColor = [UIColor mnz_secondaryTextColor];
         }
     }
@@ -302,9 +318,42 @@
         if (error.type) {
             return;
         }
-        
+
         [self setupView: request.megaAchievementsDetails];
     }
+}
+
+#pragma mark - Private Methods
+
+- (void)configureAchievementSubtitleForCell:(AchievementsTableViewCell *)cell withIndex:(NSUInteger)index forAchievementClass:(MEGAAchievement)achievementClass {
+    switch (achievementClass) {
+        case MEGAAchievementVPNFreeTrial:
+        case MEGAAchievementPassFreeTrial:
+            cell.subtitleLabel.text = LocalizedString(@"account.achievement.complete.subtitle.permanent", @"");
+            cell.subtitleLabel.textColor = [UIColor mnz_secondaryTextColor];
+            break;
+        default: {
+            NSDate *expirationDate = [self.achievementsDetails awardExpirationAtIndex:index];
+            NSInteger daysRemaining = expirationDate.daysUntil;
+            cell.subtitleLabel.text = [self achievementSubtitleWithRemainingDays:daysRemaining];
+            cell.subtitleLabel.textColor = (daysRemaining <= 15) ? [UIColor mnz_errorRed] : [UIColor mnz_secondaryTextColor];
+            break;
+        }
+    }
+}
+
+- (NSString *)subtitleTextForIncompleteAchievementWithStorageString:(NSString *)storageString forAchievementClass:(MEGAAchievement)achievementClass {
+    NSString *key;
+    switch (achievementClass) {
+        case MEGAAchievementVPNFreeTrial:
+        case MEGAAchievementPassFreeTrial:
+            key = @"account.achievement.incomplete.subtitle.permanent";
+            break;
+        default:
+            key = @"account.achievement.incomplete.subtitle";
+            break;
+    }
+    return [NSString stringWithFormat:LocalizedString(key, @""), storageString];
 }
 
 @end
