@@ -6,19 +6,19 @@
 	<dict>
 		<key>Assets.car</key>
 		<data>
-		CA5p4FvP0x7Eqq3zq45uBANRfVw=
+		V/Z7UVZl8wexhfPPz90Q+jgotZU=
 		</data>
 		<key>Info.plist</key>
 		<data>
-		LMwWZVOmAptmVGrGxhnTFyZrhsg=
+		a+9k4ukHU75XiXnWi068UtwpqfE=
 		</data>
 		<key>Modules/MEGAAssetsBundle.swiftmodule/arm64-apple-ios.abi.json</key>
 		<data>
-		h8gxJfDb2R2uHzN8AZYHmcN+wKk=
+		VtO2jgsCDJEBaGR0zTqAxgExQA4=
 		</data>
 		<key>Modules/MEGAAssetsBundle.swiftmodule/arm64-apple-ios.private.swiftinterface</key>
 		<data>
-		bPnu2dQyeGNNq/C8savDZGOI3qs=
+		pwGeGT4HD6/BTsiYFKa8btiPZ14=
 		</data>
 		<key>Modules/MEGAAssetsBundle.swiftmodule/arm64-apple-ios.swiftdoc</key>
 		<data>
@@ -26,11 +26,11 @@
 		</data>
 		<key>Modules/MEGAAssetsBundle.swiftmodule/arm64-apple-ios.swiftinterface</key>
 		<data>
-		bPnu2dQyeGNNq/C8savDZGOI3qs=
+		pwGeGT4HD6/BTsiYFKa8btiPZ14=
 		</data>
 		<key>Modules/MEGAAssetsBundle.swiftmodule/arm64-apple-ios.swiftmodule</key>
 		<data>
-		axS1m8IwUWDdBe5gbJpayNALx5Q=
+		3T8v17AbQaH7hAY65GJvQeDwFkg=
 		</data>
 	</dict>
 	<key>files2</key>
@@ -39,21 +39,21 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			BuAwhQPSSZYbfCWAQjnE72d0NnySb3Pt/Bmm+xHZU5w=
+			+RgwVoajvrAGL5pbQPhsYKpoQr8yDwo8Jsl8GLUL1EM=
 			</data>
 		</dict>
 		<key>Modules/MEGAAssetsBundle.swiftmodule/arm64-apple-ios.abi.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			IJ9qzcLQOyUnsbTPyZXTj2W8rJMZd8bs186iocDLWTo=
+			ck+8EX2T7Zsmrd3j7azlhxG7zHcrgxfo8OMoBEdKTQk=
 			</data>
 		</dict>
 		<key>Modules/MEGAAssetsBundle.swiftmodule/arm64-apple-ios.private.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			GvFcAuh18hb5ziNxWLfCeUh3Pt7EF+UvYodbDMKTNCQ=
+			oYXPTcPa6ghFmrxJ0etJn3jdPOed8YIfHB2hUCkQRB0=
 			</data>
 		</dict>
 		<key>Modules/MEGAAssetsBundle.swiftmodule/arm64-apple-ios.swiftdoc</key>
@@ -67,14 +67,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			GvFcAuh18hb5ziNxWLfCeUh3Pt7EF+UvYodbDMKTNCQ=
+			oYXPTcPa6ghFmrxJ0etJn3jdPOed8YIfHB2hUCkQRB0=
 			</data>
 		</dict>
 		<key>Modules/MEGAAssetsBundle.swiftmodule/arm64-apple-ios.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			ARYrPds+FPwUSxFsShm9ppCOdkVpy2zATtchXoWoJ84=
+			ibt8xDyiAHmcVkpkE96zqMJDLJnhoKKlkmdCMhx/yWE=
 			</data>
 		</dict>
 	</dict>
