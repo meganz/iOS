@@ -1,3 +1,4 @@
+import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGADesignToken
 import MEGADomain
@@ -84,5 +85,26 @@ extension TransferTableViewCell {
             return String(localIdentifier)
         }
         return nil
+    }
+}
+
+extension TransferTableViewCell: ViewType {
+    public func executeCommand(_ command: TransferTableViewCellViewModel.Command) {
+        switch command {
+        case .updateThumbnail(let image):
+            iconImageView.image = image
+        }
+    }
+    
+    @objc func createViewModel() -> TransferTableViewCellViewModel {
+        let viewModel = TransferTableViewCellViewModel(thumbnailUseCase: ThumbnailUseCase(repository: ThumbnailRepository.newRepo))
+        viewModel.invokeCommand = { [weak self] in
+            self?.executeCommand($0)
+        }
+        return viewModel
+    }
+    
+    @objc func configureDownloadTransfer(_ transfer: MEGATransfer) {
+        viewModel.dispatch(.configureDownloadTransfer(transfer.toTransferEntity()))
     }
 }

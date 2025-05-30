@@ -264,11 +264,11 @@ extension MEGAAssets {
             UIKit.UIImage(named: named, in: Bundle.MEGAAssetsBundle, with: nil)
         }
         
-        public static func image(forFileExtension fileExtension: String) -> UIKit.UIImage? {
+        public static func image(forFileExtension fileExtension: String) -> UIKit.UIImage {
             MEGAAssets.UIImage.image(forAssetsFileType: MEGAAssetsFileType(withFileExtension: fileExtension))
         }
         
-        public static func image(forFileName fileName: String) -> UIKit.UIImage? {
+        public static func image(forFileName fileName: String) -> UIKit.UIImage {
             MEGAAssets.UIImage.image(forAssetsFileType: MEGAAssetsFileType(withFileName: fileName))
         }
         

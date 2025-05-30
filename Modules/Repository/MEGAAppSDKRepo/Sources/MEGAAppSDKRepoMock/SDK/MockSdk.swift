@@ -746,6 +746,11 @@ public final class MockSdk: MEGASdk, @unchecked Sendable {
         delegate.onRequestFinish?(self, request: mockRequest, error: MockError(errorType: megaSetError))
     }
     
+    public override func getThumbnailWithNodeHandle(_ nodeHandle: UInt64, destinationFilePath: String, delegate: any MEGARequestDelegate) {
+        let mockRequest = MockRequest(handle: nodeHandle, file: file)
+        delegate.onRequestFinish?(self, request: mockRequest, error: MockError(errorType: megaSetError))
+    }
+    
     public override func getPreviewNode(_ node: MEGANode, destinationFilePath: String, delegate: any MEGARequestDelegate) {
         let mockRequest = MockRequest(handle: node.handle, file: file)
         delegate.onRequestFinish?(self, request: mockRequest, error: MockError(errorType: megaSetError))

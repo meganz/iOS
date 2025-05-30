@@ -29,6 +29,13 @@
 
 #pragma mark - Public
 
+- (TransferTableViewCellViewModel *)viewModel {
+    if (!_viewModel) {
+        _viewModel = [self createViewModel];
+    }
+    return _viewModel;
+}
+
 - (void)configureCellForTransfer:(MEGATransfer *)transfer delegate:(id<TransferTableViewCellDelegate>)delegate {
     [self configureCellForTransfer:transfer overquota:false delegate:delegate];
 }
@@ -51,12 +58,7 @@
     self.progressView.progress = percentage;
     switch (transfer.type) {
         case MEGATransferTypeDownload: {
-            MEGANode *node = [MEGASdk.shared nodeForHandle:transfer.nodeHandle];
-            if (node) {
-                [self.iconImageView mnz_setThumbnailByNode:node];
-            } else {
-                [self.iconImageView setImage:[NodeAssetsManager.shared imageFor:transfer.fileName.pathExtension]];
-            }
+            [self configureDownloadTransfer:transfer];
             break;
         }
             

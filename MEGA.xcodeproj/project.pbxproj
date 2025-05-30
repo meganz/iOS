@@ -1605,6 +1605,7 @@
 		A5731DA62D9547F100D96A89 /* RecentsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5731DA52D9547EC00D96A89 /* RecentsViewModel.swift */; };
 		A58902662C5B31C5001B0E3C /* MEGAPurchase+Sendable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58902652C5B31C5001B0E3C /* MEGAPurchase+Sendable.swift */; };
 		A58BCE5B2B95646300CEC804 /* MEGAImagePickerController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58BCE5A2B95646200CEC804 /* MEGAImagePickerController+Additions.swift */; };
+		A5A462E42DE6EC2F005FD227 /* TransferTableViewCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5A462E32DE6EC24005FD227 /* TransferTableViewCellViewModel.swift */; };
 		A5B5073C2D9AC8FC00447859 /* FolderLinkViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B5073B2D9AC8F700447859 /* FolderLinkViewModel.swift */; };
 		A5BED9782B9AF6D600C80698 /* MyChatFilesFolderNodeAccess+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5BED9772B9AF6D600C80698 /* MyChatFilesFolderNodeAccess+Additions.swift */; };
 		A5BED9792B9AF72500C80698 /* MyChatFilesFolderNodeAccess+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5BED9772B9AF6D600C80698 /* MyChatFilesFolderNodeAccess+Additions.swift */; };
@@ -4376,6 +4377,7 @@
 		A5731DA52D9547EC00D96A89 /* RecentsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentsViewModel.swift; sourceTree = "<group>"; };
 		A58902652C5B31C5001B0E3C /* MEGAPurchase+Sendable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAPurchase+Sendable.swift"; sourceTree = "<group>"; };
 		A58BCE5A2B95646200CEC804 /* MEGAImagePickerController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAImagePickerController+Additions.swift"; sourceTree = "<group>"; };
+		A5A462E32DE6EC24005FD227 /* TransferTableViewCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferTableViewCellViewModel.swift; sourceTree = "<group>"; };
 		A5B5073B2D9AC8F700447859 /* FolderLinkViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderLinkViewModel.swift; sourceTree = "<group>"; };
 		A5BED9772B9AF6D600C80698 /* MyChatFilesFolderNodeAccess+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MyChatFilesFolderNodeAccess+Additions.swift"; sourceTree = "<group>"; };
 		A5C0BD442BC3E68A006CF7D7 /* MoveToRubbishBinViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoveToRubbishBinViewModel.swift; sourceTree = "<group>"; };
@@ -13288,6 +13290,7 @@
 				2F6F0885253E387500C5B5D7 /* TransferTableViewCell.h */,
 				2F6F0889253E387600C5B5D7 /* TransferTableViewCell.m */,
 				94614C7229104F6900503174 /* TransferTableViewCell.xib */,
+				A5A462E32DE6EC24005FD227 /* TransferTableViewCellViewModel.swift */,
 			);
 			path = Transfers;
 			sourceTree = "<group>";
@@ -15717,6 +15720,7 @@
 				94FCE01B2D15C327000C63A4 /* TransfersWidgetViewModel.swift in Sources */,
 				B5A5F0702B7A19F600B31ABD /* TransferTableViewCell+Additions.swift in Sources */,
 				2F6F0891253E387600C5B5D7 /* TransferTableViewCell.m in Sources */,
+				A5A462E42DE6EC2F005FD227 /* TransferTableViewCellViewModel.swift in Sources */,
 				A8A717042639BE7D00DDC8E2 /* TurnOnNotificationsModel.swift in Sources */,
 				A8A716D62639A6B400DDC8E2 /* TurnOnNotificationsViewController.swift in Sources */,
 				A8A716E02639A71800DDC8E2 /* TurnOnNotificationsViewModel.swift in Sources */,

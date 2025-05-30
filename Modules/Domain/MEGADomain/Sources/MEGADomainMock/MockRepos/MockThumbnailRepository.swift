@@ -31,6 +31,12 @@ public struct MockThumbnailRepository: ThumbnailRepositoryProtocol {
         }?.1
     }
     
+    public func cachedThumbnail(for nodeHandle: HandleEntity, type: ThumbnailTypeEntity) -> URL? {
+        cachedThumbnailURLs.first {
+            $0.0 == type
+        }?.1
+    }
+    
     public func generateCachingURL(for node: NodeEntity, type: ThumbnailTypeEntity) -> URL {
         switch type {
         case .thumbnail:
@@ -61,6 +67,15 @@ public struct MockThumbnailRepository: ThumbnailRepositoryProtocol {
             case .preview, .original:
                 continuation.resume(with: loadPreviewResult)
             }
+        }
+    }
+    
+    public func loadThumbnail(for nodeHandle: HandleEntity, type: ThumbnailTypeEntity) async throws -> URL {
+        switch type {
+        case .thumbnail:
+            try loadThumbnailResult.get()
+        case .preview, .original:
+            try loadPreviewResult.get()
         }
     }
     
