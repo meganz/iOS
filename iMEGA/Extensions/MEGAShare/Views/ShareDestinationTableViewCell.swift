@@ -20,7 +20,7 @@ class ShareDestinationTableViewCell: UITableViewCell {
         isUserInteractionEnabled = isEnabled
         
         if showActivityIndicator {
-            let activityIndicator = UIActivityIndicatorView.mnz_init()
+            let activityIndicator = UIActivityIndicatorView(style: .medium)
             activityIndicator.startAnimating()
             accessoryView = activityIndicator
             accessoryType = .none

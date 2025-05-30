@@ -1148,9 +1148,7 @@
 		83B804E92ABB3D97006B356F /* ParticipantsListTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B804E82ABB3D97006B356F /* ParticipantsListTab.swift */; };
 		83B841672051905E00E5AC69 /* MEGAGetThumbnailRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A820DA3B1F0E5BDC00F1F832 /* MEGAGetThumbnailRequestDelegate.m */; };
 		83B906BB249A29CA0088F15C /* UIButton+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B906B9249A29CA0088F15C /* UIButton+Additions.swift */; };
-		83B906BC249A29CA0088F15C /* UIActivityIndicatorView+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B906BA249A29CA0088F15C /* UIActivityIndicatorView+Additions.swift */; };
 		83B906BD249A29EB0088F15C /* UIButton+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B906B9249A29CA0088F15C /* UIButton+Additions.swift */; };
-		83B906BF249A29EF0088F15C /* UIActivityIndicatorView+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B906BA249A29CA0088F15C /* UIActivityIndicatorView+Additions.swift */; };
 		83BA006B2798709200498493 /* CancellableTransfer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83BA00692798703600498493 /* CancellableTransfer.swift */; };
 		83BD329825DD3D4000F8B91D /* FavouriteItemsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83BD329725DD3D4000F8B91D /* FavouriteItemsRepository.swift */; };
 		83BEB18B2BAC84EF003AA310 /* BottomSheetRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83BEB18A2BAC84EF003AA310 /* BottomSheetRouter.swift */; };
@@ -3944,7 +3942,6 @@
 		83B804E62ABB3D5D006B356F /* ParticipantsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipantsListView.swift; sourceTree = "<group>"; };
 		83B804E82ABB3D97006B356F /* ParticipantsListTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipantsListTab.swift; sourceTree = "<group>"; };
 		83B906B9249A29CA0088F15C /* UIButton+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIButton+Additions.swift"; sourceTree = "<group>"; };
-		83B906BA249A29CA0088F15C /* UIActivityIndicatorView+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIActivityIndicatorView+Additions.swift"; sourceTree = "<group>"; };
 		83BA00692798703600498493 /* CancellableTransfer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CancellableTransfer.swift; sourceTree = "<group>"; };
 		83BD329725DD3D4000F8B91D /* FavouriteItemsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouriteItemsRepository.swift; sourceTree = "<group>"; };
 		83BEB18A2BAC84EF003AA310 /* BottomSheetRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetRouter.swift; sourceTree = "<group>"; };
@@ -7360,7 +7357,6 @@
 				BF7D43BA253D0930003DF1DA /* Sequence+MEGANode.swift */,
 				BF7EBD25244E8B380015255F /* SIMD2+Additions.swift */,
 				BF943E9123554021001C18E0 /* TimeInterval+Additions.swift */,
-				83B906BA249A29CA0088F15C /* UIActivityIndicatorView+Additions.swift */,
 				8395FE3024E2C1FC00B1C952 /* UIAlertController+Additions.swift */,
 				5B9FBDFC26499B0C0014B7FD /* UIAlertController+InAppPurchase.swift */,
 				5B0343D825822867005307A6 /* UIApplication+Additions.swift */,
@@ -15753,7 +15749,6 @@
 				A8A716EA2639A8EC00DDC8E2 /* TurnOnNotificationsViewRouter.swift in Sources */,
 				16009FA72BFB53E0002903FA /* TwoFactorAuthenticationViewController+Additions.swift in Sources */,
 				5BF4B3B720AB081A00A6E6D7 /* TwoFactorAuthenticationViewController.m in Sources */,
-				83B906BC249A29CA0088F15C /* UIActivityIndicatorView+Additions.swift in Sources */,
 				8395FE3124E2C1FD00B1C952 /* UIAlertController+Additions.swift in Sources */,
 				9495DBB32A4086DD00FA22EE /* UIAlertController+AlertModel.swift in Sources */,
 				5B9FBDFD26499B0C0014B7FD /* UIAlertController+InAppPurchase.swift in Sources */,
@@ -16158,7 +16153,6 @@
 				BF943E9323554021001C18E0 /* TimeInterval+Additions.swift in Sources */,
 				BF22BFB7268ACFAE00460DB3 /* TransferRecordDTO.swift in Sources */,
 				83A4E47427F49AE000A429F4 /* TransferStage.swift in Sources */,
-				83B906BF249A29EF0088F15C /* UIActivityIndicatorView+Additions.swift in Sources */,
 				0D2E4BDE26241C8900F4804A /* UIAlertController+Additions.swift in Sources */,
 				B6F5EAB225CBC30C0038AC0B /* UIApplication+MNZCategory.m in Sources */,
 				B5430FCE2AB97629003F8C34 /* UIApplication+TabBar.swift in Sources */,
