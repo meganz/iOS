@@ -407,9 +407,9 @@ class NodeBrowserViewModelTests: XCTestCase {
         )
 
         harness.sut.cloudDriveContextMenuFactory = makeContextMenuFactory(nodeUseCase: harness.nodeUseCase, isSensitive: true)
-        await wait(for: .defaultAsc, in: harness) // wait for the default value
+        await waitForContextMenuSortOrderChange(.defaultAsc, in: harness) // wait for the default value
         harness.sut.changeSortOrder(.favourite) // update sort order
-        await wait(for: .favouriteAsc, in: harness) // wait for the updated value
+        await waitForContextMenuSortOrderChange(.favouriteAsc, in: harness) // wait for the updated value
     }
 
     @MainActor
@@ -426,6 +426,8 @@ class NodeBrowserViewModelTests: XCTestCase {
             try? await Task.sleep(nanoseconds: 10_000_000)
             XCTAssertEqual(harness.sut.sortOrder, .defaultAsc) // the actual sortOrder doesn't change with .mediaDiscovery view mode
             XCTAssertEqual(harness.mediaDiscoveryViewModel.sortOrder, sortOrder)
+
+            await waitForContextMenuSortOrderChange(sortOrder.toSortOrderEntity(), in: harness)
         }
     }
 
@@ -780,7 +782,7 @@ class NodeBrowserViewModelTests: XCTestCase {
     }
 
     @MainActor
-    private func wait(for sortOrder: MEGADomain.SortOrderEntity, in harness: Harness) async {
+    private func waitForContextMenuSortOrderChange(_ sortOrder: MEGADomain.SortOrderEntity, in harness: Harness) async {
         let exp = expectation(description: "Wait for the context menu sort order to update")
 
         let cancellable = harness.sut.$contextMenuViewFactory
