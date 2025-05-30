@@ -21,6 +21,21 @@ final class ThumbnailRepositoryTests: XCTestCase {
         XCTAssertEqual(result, imageURL)
     }
     
+    func testCachedThumbnailForNodeHandle_onNoFileCached_shouldReturnNil() {
+        let sut = makeThumbnailRepository()
+        XCTAssertNil(sut.cachedThumbnail(for: 1, type: .thumbnail))
+    }
+    
+    func testCachedThumbnailForNodeHandle_onFileCached_shouldReturnCorrectURL() throws {
+        let megaNode = MockNode(handle: 5, nodeBase64Handle: "node_5_base_64_thumbnail")
+        let node = megaNode.toNodeEntity()
+        let imageURL = try makeImageFile(forNode: node, type: .thumbnail)
+        let sdk = MockSdk(nodes: [megaNode])
+        let sut = makeThumbnailRepository(sdk: sdk)
+        let result = sut.cachedThumbnail(for: 5, type: .thumbnail)
+        XCTAssertEqual(result, imageURL)
+    }
+    
     func testLoadThumbnail_withCachedFile_shouldReturnCachedURL() async throws {
         let node = NodeEntity(handle: 5, base64Handle: "node_5_base_64_thumbnail")
         let imageURL = try makeImageFile(forNode: node, type: .thumbnail)
@@ -45,35 +60,6 @@ final class ThumbnailRepositoryTests: XCTestCase {
         let result = try await sut.loadThumbnail(for: node, type: .thumbnail)
         
         XCTAssertEqual(result, URL(string: thumbnailFilePath))
-    }
-    
-    func testLoadThumbnail_megaNodeCouldNotBeConverted_shouldThrowError() async {
-        let node = NodeEntity(handle: 4, base64Handle: "invalid")
-        let sut = makeThumbnailRepository()
-        
-        do {
-            _ = try await sut.loadThumbnail(for: node, type: .thumbnail)
-            XCTFail("Should have thrown error")
-        } catch let error as ThumbnailErrorEntity {
-            XCTAssertEqual(error, ThumbnailErrorEntity.nodeNotFound)
-        } catch {
-            XCTFail("Invalid error thrown")
-        }
-    }
-    
-    func testLoadThumbnail_nodeWithOutThumbnail_shouldThrowError() async {
-        let node = NodeEntity(handle: 4, base64Handle: "invalid")
-        let nodeProvider = MockMEGANodeProvider(node: MockNode(handle: node.handle))
-        let sut = makeThumbnailRepository(nodeProvider: nodeProvider)
-        
-        do {
-            _ = try await sut.loadThumbnail(for: node, type: .thumbnail)
-            XCTFail("Should have thrown error")
-        } catch let error as ThumbnailErrorEntity {
-            XCTAssertEqual(error, ThumbnailErrorEntity.noThumbnail(.thumbnail))
-        } catch {
-            XCTFail("Invalid error thrown")
-        }
     }
     
     func testLoadThumbnail_downloadOfThumbnailFailsApiENoent_shouldThrowNoThumbnailError() async {
@@ -195,11 +181,17 @@ final class ThumbnailRepositoryTests: XCTestCase {
     
     // MARK: Private
     
-    private func makeThumbnailRepository(sdk: MEGASdk = MockSdk(),
-                                         fileManager: FileManager = .default,
-                                         nodeProvider: any MEGANodeProviderProtocol = MockMEGANodeProvider()) -> ThumbnailRepository {
-        ThumbnailRepository(sdk: sdk,
-                            fileManager: fileManager, nodeProvider: nodeProvider)
+    private func makeThumbnailRepository(
+        sdk: MEGASdk = MockSdk(),
+        fileManager: FileManager = .default,
+        nodeProvider: any MEGANodeProviderProtocol = MockMEGANodeProvider()
+    ) -> ThumbnailRepository {
+        ThumbnailRepository(
+            sdk: sdk,
+            fileManager: fileManager,
+            nodeProvider: nodeProvider,
+            base64HandleProvider: { sdk.node(forHandle: $0)?.base64Handle }
+        )
     }
     
     private func makeImageFile(forNode node: NodeEntity, image: UIImage? = UIImage(systemName: "folder"), type: ThumbnailTypeEntity) throws -> URL {

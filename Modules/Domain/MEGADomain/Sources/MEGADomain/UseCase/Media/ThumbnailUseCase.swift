@@ -12,6 +12,8 @@ public protocol ThumbnailUseCaseProtocol: Sendable {
     /// - Returns: The cached URL if a thumbnail is cached, otherwise it returns nil
     func cachedThumbnail(for node: NodeEntity, type: ThumbnailTypeEntity) -> ThumbnailEntity?
     
+    func cachedThumbnail(for nodeHandle: HandleEntity, type: ThumbnailTypeEntity) -> ThumbnailEntity?
+    
     /// Generate caching URL for a thumbnail
     /// - Parameters:
     ///   - node: The node to be checked
@@ -27,6 +29,8 @@ public protocol ThumbnailUseCaseProtocol: Sendable {
     /// - Throws: `ThumbnailErrorEntity` or `GenericErrorEntity` error.
     func loadThumbnail(for node: NodeEntity, type: ThumbnailTypeEntity) async throws -> ThumbnailEntity
         
+    func loadThumbnail(for nodeHandle: HandleEntity, type: ThumbnailTypeEntity) async throws -> ThumbnailEntity
+    
     /// Request high quality preview of a node. It will publish values multiple times until the high quality preview URL is published.
     /// For example, it may publish this value flow: "thumbnail URL" -> "Preview URL"
     /// - Parameter node: The node entity for which the preview to be loaded
@@ -106,5 +110,21 @@ public struct ThumbnailUseCase<T: ThumbnailRepositoryProtocol>: ThumbnailUseCase
     
     public func cachedPreviewOrOriginalPath(for node: NodeEntity) -> String? {
         repository.cachedPreviewOrOriginalPath(for: node)
+    }
+    
+    public func loadThumbnail(for nodeHandle: HandleEntity, type: ThumbnailTypeEntity) async throws -> ThumbnailEntity {
+        try Task.checkCancellation()
+        return try await ThumbnailEntity(
+            url: repository.loadThumbnail(for: nodeHandle, type: type),
+            type: type
+        )
+    }
+    
+    public func cachedThumbnail(for nodeHandle: HandleEntity, type: ThumbnailTypeEntity) -> ThumbnailEntity? {
+        repository
+            .cachedThumbnail(for: nodeHandle, type: type)
+            .map {
+                ThumbnailEntity(url: $0, type: type)
+            }
     }
 }

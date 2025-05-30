@@ -27,18 +27,31 @@ public struct ThumbnailRepository: ThumbnailRepositoryProtocol {
     private let groupContainer: AppGroupContainer
     private let nodeProvider: any MEGANodeProviderProtocol
     private let appGroupCacheURL: URL
+    private let base64HandleProvider: @Sendable (HandleEntity) -> Base64HandleEntity?
     
-    public init(sdk: MEGASdk, fileManager: FileManager, nodeProvider: some MEGANodeProviderProtocol) {
+    public init(
+        sdk: MEGASdk,
+        fileManager: FileManager,
+        nodeProvider: some MEGANodeProviderProtocol,
+        base64HandleProvider: @Sendable @escaping (HandleEntity) -> Base64HandleEntity? = { MEGASdk.base64Handle(forHandle: $0) }
+    ) {
         self.sdk = sdk
         self.fileManager = fileManager
         self.nodeProvider = nodeProvider
         groupContainer = AppGroupContainer(fileManager: fileManager)
         appGroupCacheURL = groupContainer.url(for: .cache)
+        self.base64HandleProvider = base64HandleProvider
     }
         
     public func cachedThumbnail(for node: NodeEntity, type: ThumbnailTypeEntity) -> URL? {
-        let url = generateCachingURL(for: node.base64Handle, type: type)
-        return fileExists(at: url) ? url : nil
+        cachedThumbnail(for: node.base64Handle, type: type)
+    }
+    
+    public func cachedThumbnail(for nodeHandle: HandleEntity, type: ThumbnailTypeEntity) -> URL? {
+        guard let base64Handle = base64HandleProvider(nodeHandle) else {
+            return nil
+        }
+        return cachedThumbnail(for: base64Handle, type: type)
     }
     
     public func generateCachingURL(for node: NodeEntity, type: ThumbnailTypeEntity) -> URL {
@@ -46,12 +59,14 @@ public struct ThumbnailRepository: ThumbnailRepositoryProtocol {
     }
     
     public func loadThumbnail(for node: NodeEntity, type: ThumbnailTypeEntity) async throws -> URL {
-        let url = generateCachingURL(for: node, type: type)
-        if fileExists(at: url) {
-            return url
-        } else {
-            return try await downloadThumbnail(for: node, type: type, to: url)
+        try await loadThumbnail(for: node.handle, base64Handle: node.base64Handle, type: type)
+    }
+    
+    public func loadThumbnail(for nodeHandle: HandleEntity, type: ThumbnailTypeEntity) async throws -> URL {
+        guard let base64Handle = MEGASdk.base64Handle(forHandle: nodeHandle) else {
+            throw ThumbnailErrorEntity.noThumbnail(type)
         }
+        return try await loadThumbnail(for: nodeHandle, base64Handle: base64Handle, type: type)
     }
     
     public func generateCachingURL(for base64Handle: Base64HandleEntity, type: ThumbnailTypeEntity) -> URL {
@@ -87,27 +102,37 @@ public struct ThumbnailRepository: ThumbnailRepositoryProtocol {
 
 // MARK: - download thumbnail from remote -
 extension ThumbnailRepository {
-    private func downloadThumbnail(for node: NodeEntity,
+    private func cachedThumbnail(for base64Handle: Base64HandleEntity, type: ThumbnailTypeEntity) -> URL? {
+        let url = generateCachingURL(for: base64Handle, type: type)
+        return fileExists(at: url) ? url : nil
+    }
+    
+    private func loadThumbnail(for nodeHandle: HandleEntity, base64Handle: Base64HandleEntity, type: ThumbnailTypeEntity) async throws -> URL {
+        let url = generateCachingURL(for: base64Handle, type: type)
+        if fileExists(at: url) {
+            return url
+        } else {
+            return try await downloadThumbnail(for: nodeHandle, type: type, to: url)
+        }
+    }
+    
+    private func downloadThumbnail(for nodeHandle: HandleEntity,
                                    type: ThumbnailTypeEntity,
                                    to url: URL) async throws -> URL {
-        guard let node = await nodeProvider.node(for: node.handle) else {
-            throw ThumbnailErrorEntity.nodeNotFound
-        }
-        
         switch type {
         case .thumbnail:
-            return try await downloadThumbnail(for: node, to: url)
+            return try await downloadThumbnail(for: nodeHandle, to: url)
         case .preview, .original:
+            guard let node = await nodeProvider.node(for: nodeHandle) else {
+                throw ThumbnailErrorEntity.nodeNotFound
+            }
             return try await downloadPreview(for: node, to: url)
         }
     }
     
-    private func downloadThumbnail(for node: MEGANode, to url: URL) async throws -> URL {
-        guard node.hasThumbnail() else {
-            throw ThumbnailErrorEntity.noThumbnail(.thumbnail)
-        }
+    private func downloadThumbnail(for nodeHandle: HandleEntity, to url: URL) async throws -> URL {
         return try await withAsyncThrowingValue { completion in
-            sdk.getThumbnailNode(node, destinationFilePath: url.path, delegate: ThumbnailRequestDelegate { result in
+            sdk.getThumbnailWithNodeHandle(nodeHandle, destinationFilePath: url.path, delegate: ThumbnailRequestDelegate { result in
                 completion(result)
             })
         }

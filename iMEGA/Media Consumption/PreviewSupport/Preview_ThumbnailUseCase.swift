@@ -10,11 +10,19 @@ struct Preview_ThumbnailUseCase: ThumbnailUseCaseProtocol {
         nil
     }
     
+    func cachedThumbnail(for nodeHandle: HandleEntity, type: ThumbnailTypeEntity) -> ThumbnailEntity? {
+        nil
+    }
+    
     func generateCachingURL(for node: NodeEntity, type: ThumbnailTypeEntity) -> URL {
         URL(string: "any-url.com")!
     }
     
     func loadThumbnail(for node: NodeEntity, type: ThumbnailTypeEntity) async throws -> ThumbnailEntity {
+        nullThumbnailEntity
+    }
+    
+    func loadThumbnail(for nodeHandle: HandleEntity, type: ThumbnailTypeEntity) async throws -> ThumbnailEntity {
         nullThumbnailEntity
     }
     

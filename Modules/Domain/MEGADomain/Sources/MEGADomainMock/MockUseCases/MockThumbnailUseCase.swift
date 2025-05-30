@@ -30,6 +30,10 @@ public struct MockThumbnailUseCase: ThumbnailUseCaseProtocol {
         cachedThumbnails.first { $0.type == type }
     }
     
+    public func cachedThumbnail(for nodeHandle: HandleEntity, type: ThumbnailTypeEntity) -> ThumbnailEntity? {
+        cachedThumbnails.first { $0.type == type }
+    }
+    
     public func generateCachingURL(for node: NodeEntity, type: ThumbnailTypeEntity) -> URL {
         generatedCachingThumbnail.url
     }
@@ -38,17 +42,26 @@ public struct MockThumbnailUseCase: ThumbnailUseCaseProtocol {
         try await withCheckedThrowingContinuation { continuation in
             switch type {
             case .thumbnail:
-                continuation.resume(with: loadThumbnailResult(for: node))
+                continuation.resume(with: loadThumbnailResult(for: node.handle))
             case .preview, .original:
                 continuation.resume(with: loadPreviewResult)
             }
         }
     }
     
+    public func loadThumbnail(for nodeHandle: HandleEntity, type: ThumbnailTypeEntity) async throws -> ThumbnailEntity {
+        switch type {
+        case .thumbnail:
+            try loadThumbnailResult(for: nodeHandle).get()
+        case .preview, .original:
+            try loadPreviewResult.get()
+        }
+    }
+    
     public func requestPreview(for node: NodeEntity) -> AnyAsyncThrowingSequence<ThumbnailEntity, any Error> {
         let (stream, continuation) = AsyncThrowingStream.makeStream(of: ThumbnailEntity.self, throwing: (any Error).self, bufferingPolicy: .unbounded)
         
-        let loadThumbnailResult = loadThumbnailResult(for: node)
+        let loadThumbnailResult = loadThumbnailResult(for: node.handle)
         if case .success = loadThumbnailResult, case .success = loadPreviewResult {
             continuation.yield(with: loadThumbnailResult)
             continuation.yield(with: loadPreviewResult)
@@ -66,8 +79,8 @@ public struct MockThumbnailUseCase: ThumbnailUseCaseProtocol {
     }
     
     // MARK: Helper
-    private func loadThumbnailResult(for node: NodeEntity) -> Result<ThumbnailEntity, any Error> {
-        guard let result = loadThumbnailResults.first(where: { $0.key == node.handle })?.value else {
+    private func loadThumbnailResult(for nodeHandle: HandleEntity) -> Result<ThumbnailEntity, any Error> {
+        guard let result = loadThumbnailResults.first(where: { $0.key == nodeHandle })?.value else {
             return loadThumbnailResult
         }
         return result

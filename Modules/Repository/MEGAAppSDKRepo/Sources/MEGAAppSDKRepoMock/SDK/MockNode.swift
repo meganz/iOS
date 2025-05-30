@@ -6,6 +6,7 @@ public final class MockNode: MEGANode, @unchecked Sendable {
     private let nodeName: String
     private let nodeParentHandle: MEGAHandle
     private let nodeHandle: MEGAHandle
+    private let nodeBase64Handle: String?
     private let changeType: MEGANodeChangeType
     private var nodeModificationTime: Date?
     private let _hasThumbnail: Bool
@@ -24,6 +25,7 @@ public final class MockNode: MEGANode, @unchecked Sendable {
     private let _tags: MockMEGAStringList?
 
     public init(handle: MEGAHandle,
+                nodeBase64Handle: String? = nil,
                 name: String = "",
                 nodeType: MEGANodeType = .file,
                 parentHandle: MEGAHandle = .invalidHandle,
@@ -45,6 +47,7 @@ public final class MockNode: MEGANode, @unchecked Sendable {
                 isInShare: Bool = false
     ) {
         nodeHandle = handle
+        self.nodeBase64Handle = nodeBase64Handle
         nodeName = name
         self.nodeType = nodeType
         nodeParentHandle = parentHandle
@@ -101,7 +104,7 @@ public final class MockNode: MEGANode, @unchecked Sendable {
     
     public override func hasPreview() -> Bool { _hasPreview }
 
-    public override var base64Handle: String? { String(handle) }
+    public override var base64Handle: String? { nodeBase64Handle }
     
     public override func isTakenDown() -> Bool { _isTakenDown }
     

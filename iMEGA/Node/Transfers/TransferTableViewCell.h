@@ -1,7 +1,7 @@
 #import <UIKit/UIKit.h>
 #import <Photos/Photos.h>
 
-@class MEGATransfer, MOUploadTransfer;
+@class MEGATransfer, MOUploadTransfer, TransferTableViewCellViewModel;
 
 @protocol TransferTableViewCellDelegate
 
@@ -19,6 +19,8 @@
 @property (weak, nonatomic) IBOutlet UIImageView *arrowImageView;
 
 @property (weak, nonatomic) IBOutlet UIImageView *iconImageView;
+
+@property (nonatomic, strong) TransferTableViewCellViewModel *viewModel;
 
 - (void)configureCellForTransfer:(MEGATransfer *)transfer overquota:(BOOL)overquota delegate:(id<TransferTableViewCellDelegate>)delegate;
 - (void)configureCellForTransfer:(MEGATransfer *)transfer delegate:(id<TransferTableViewCellDelegate>)delegate;
