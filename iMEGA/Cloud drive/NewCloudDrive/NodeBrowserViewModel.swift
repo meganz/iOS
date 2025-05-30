@@ -499,6 +499,7 @@ class NodeBrowserViewModel: ObservableObject {
         if let mediaDiscoveryViewModel = viewModeAwareMediaDiscoveryViewModel {
             Task {
                 await mediaDiscoveryViewModel.update(sortOrder: sortOrder)
+                await updateContextMenu()
             }
         } else {
             self.sortOrder = sortOrder.toSortOrderEntity()
