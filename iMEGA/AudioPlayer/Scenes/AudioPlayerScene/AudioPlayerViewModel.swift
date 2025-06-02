@@ -199,7 +199,7 @@ final class AudioPlayerViewModel: ViewModelType {
     }
     
     private nonisolated func preparePlayer() async {
-        configEntity.playerHandler.addPlayer(listener: self)
+        configEntity.playerHandler.configurePlayer(listener: self)
         
         if configEntity.playerType == .offline {
             guard let offlineFilePaths = configEntity.relatedFiles else {
@@ -221,7 +221,7 @@ final class AudioPlayerViewModel: ViewModelType {
     }
     
     private func configurePlayer() {
-        configEntity.playerHandler.addPlayer(listener: self)
+        configEntity.playerHandler.configurePlayer(listener: self)
         
         guard !configEntity.playerHandler.isPlayerEmpty(),
               let tracks = configEntity.playerHandler.currentPlayer()?.tracks,
@@ -251,8 +251,8 @@ final class AudioPlayerViewModel: ViewModelType {
         
         if !(configEntity.playerHandler.isPlayerDefined()) {
             let audioPlayer = AudioPlayer()
-            audioPlayer.add(listener: self)
             configEntity.playerHandler.setCurrent(player: audioPlayer, autoPlayEnabled: !configEntity.isFileLink, tracks: mutableTracks)
+            configEntity.playerHandler.configurePlayer(listener: self)
         } else {
             if await shouldInitializePlayer() {
                 await cleanPlayerStateForReuse()
@@ -282,7 +282,7 @@ final class AudioPlayerViewModel: ViewModelType {
     
     private nonisolated func refreshPlayerListener() async {
         configEntity.playerHandler.currentPlayer()?.removeAllListeners()
-        configEntity.playerHandler.currentPlayer()?.add(listener: self)
+        configEntity.playerHandler.currentPlayer()?.configure(listener: self)
     }
     
     private nonisolated func shift(tracks: [AudioPlayerItem], startItem: AudioPlayerItem) async -> [AudioPlayerItem] {

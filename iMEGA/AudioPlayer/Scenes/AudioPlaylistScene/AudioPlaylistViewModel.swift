@@ -57,7 +57,7 @@ final class AudioPlaylistViewModel: ViewModelType {
     
     // MARK: - Private functions
     private func initScreen() {
-        playerHandler.addPlayer(listener: self)
+        playerHandler.configurePlayer(listener: self)
         guard !playerHandler.isPlayerEmpty(), let currentItem = playerHandler.playerCurrentItem() else { return }
         invokeCommand?(.reloadTracks(currentItem: currentItem, queue: playerHandler.playerQueueItems(), selectedIndexPaths: selectedIndexPaths()))
         invokeCommand?(.title(title: title))

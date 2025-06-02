@@ -31,7 +31,7 @@ extension AudioPlayer {
         audioQueueStatusObserver = nil
         audioQueueNewItemObserver = nil
         audioQueueRateObserver = nil
-        audioQueueWaitingObserver = nil 
+        audioQueueWaitingObserver = nil
         audioQueueStallObserver = nil
         audioQueueBufferEmptyObserver = nil
         audioQueueBufferAlmostThereObserver = nil
@@ -50,12 +50,20 @@ extension AudioPlayer {
     func unregisterAudioPlayerNotifications() {
         NotificationCenter.default.removeObserver(self)
     }
+    
+    private func updateLoadingView(isLoading: Bool) {
+        if isLoading {
+            notify(aboutShowingLoadingView)
+        } else {
+            notify(aboutHidingLoadingView)
+        }
+    }
 }
 
 // MARK: - Audio Player Observed Events Functions
 extension AudioPlayer {
     // Listening for current item change
-    func audio(player: AVQueuePlayer, didChangeItem value: NSKeyValueObservedChange<AVPlayerItem?>) {
+    func audio(player: AVQueuePlayer, didChangeItem change: NSKeyValueObservedChange<AVPlayerItem?>) {
         // Audio player media item changed...
         notify(aboutTheEndOfBlockingAction)
 
@@ -63,7 +71,7 @@ extension AudioPlayer {
             repeatLastItem()
         } else {
             notify([aboutCurrentItem, aboutCurrentItemAndQueue, aboutCurrentThumbnail, aboutUpdateCurrentIndexPath])
-            guard let oldValue = value.oldValue as? AudioPlayerItem else {
+            guard let oldValue = change.oldValue as? AudioPlayerItem else {
                 return
             }
             
@@ -89,12 +97,16 @@ extension AudioPlayer {
     }
     
     // Listening for event about the status of the playback
-    func audio(player: AVQueuePlayer, didChangeTimeControlStatus value: NSKeyValueObservedChange<AVQueuePlayer.TimeControlStatus>) {
+    func audio(player: AVQueuePlayer, didChangeTimeControlStatus change: NSKeyValueObservedChange<AVQueuePlayer.TimeControlStatus>) {
         switch player.timeControlStatus {
         case .paused:
             isPaused = true
             invalidateTimer()
-            notify([aboutCurrentItem, aboutCurrentState, aboutCurrentThumbnail, aboutHidingLoadingView])
+            notify([aboutCurrentItem, aboutCurrentState, aboutCurrentThumbnail])
+            
+            if !isAutoPlayEnabled {
+                updateLoadingView(isLoading: false)
+            }
             
             if let currentItem = player.currentItem as? AudioPlayerItem {
                 // Check if the new item is the same as the previously played item
@@ -103,7 +115,12 @@ extension AudioPlayer {
             
         case .waitingToPlayAtSpecifiedRate:
             invalidateTimer()
-            notify(aboutShowingLoadingView)
+            
+            /// Only show the loading indicator when AVPlayer is buffering
+            /// (i.e. waiting “to minimize stalls”), to avoid spinners for other wait reasons
+            if player.reasonForWaitingToPlay == .toMinimizeStalls || player.reasonForWaitingToPlay == .evaluatingBufferingRate {
+                updateLoadingView(isLoading: true)
+            }
             
         case .playing:
             isPaused = false
@@ -122,29 +139,15 @@ extension AudioPlayer {
         }
     }
 
-    // listening for change event when player stops playback
-    func audio(player: AVQueuePlayer, reasonForWaitingToPlay value: NSKeyValueObservedChange<AVQueuePlayer.WaitingReason?>) {
-        // To know the reason for waiting to play you can see it with: player.reasonForWaitingToPlay?.rawValue
-        
-        let controller = AudioPlayerEventObserversLoadingLogicController()
-        let shouldNotifyLoadingView = controller.shouldNotifyLoadingViewWhenReasonForWaitingToPlay(
-            reasonForWaitingToPlay: player.reasonForWaitingToPlay,
-            playerStatus: player.status,
-            playerTimeControlStatus: player.timeControlStatus,
-            isUserPreviouslyJustPlayedSameItem: isUserPreviouslyJustPlayedSameItem
-        )
-        shouldNotifyLoadingView ? notify(aboutShowingLoadingView) : notify(aboutHidingLoadingView)
-        
+    /// Listening for reasons the player is unable to start immediately
+    /// (e.g., buffering, ad interstitials, SharePlay sync). Here we only update the Now Playing metadata
+    func audio(player: AVQueuePlayer, reasonForWaitingToPlay change: NSKeyValueObservedChange<AVQueuePlayer.WaitingReason?>) {
         refreshNowPlayingInfo()
     }
     
-    // Listening for current item status change
-    func audio(playerItem: AVPlayerItem, didChangeCurrentItemStatus value: NSKeyValueObservedChange<AVPlayerItem.Status>) {
-        let controller = AudioPlayerEventObserversLoadingLogicController()
-        if let shouldNotifyLoadingView = controller.shouldNotifyLoadingViewWhenDidChangeCurrentItemStatus(playerItemStatus: playerItem.status) {
-            shouldNotifyLoadingView ? notify(aboutShowingLoadingView) : notify(aboutHidingLoadingView)
-        }
-        
+    /// Listening for changes in the current item's status
+    /// (e.g., .unknown → .readyToPlay or .failed). We update metadata and, if the player was in the middle of a forced reset, resume playback.
+    func audio(playerItem: AVPlayerItem, didChangeCurrentItemStatus change: NSKeyValueObservedChange<AVPlayerItem.Status>) {
         refreshNowPlayingInfo()
         
         if isAudioPlayerBeingReset {
@@ -154,9 +157,13 @@ extension AudioPlayer {
             }
             isAudioPlayerBeingReset = false
         }
+        
+        if change.newValue == .readyToPlay {
+            updateLoadingView(isLoading: false)
+        }
     }
     
-    func audio(player: AVQueuePlayer, didStartPlayingCurrentItem value: NSKeyValueObservedChange<AVPlayerItem?>) {
+    func audio(player: AVQueuePlayer, didStartPlayingCurrentItem change: NSKeyValueObservedChange<AVPlayerItem?>) {
         refreshNowPlayingInfo()
         
         let isRepeatAllEnabled = audioPlayerConfig[.loop] as? Bool ?? false
@@ -175,24 +182,21 @@ extension AudioPlayer {
         }
     }
     
-    func audio(player: AVQueuePlayer, didChangePlayerRate value: NSKeyValueObservedChange<Float>) {
+    func audio(player: AVQueuePlayer, didChangePlayerRate change: NSKeyValueObservedChange<Float>) {
         refreshNowPlayingInfo()
-        if value.newValue ?? 0.0 > 0 {
-            notify(aboutHidingLoadingView)
-        }
     }
     
-    func audio(playerItem: AVPlayerItem, didLoadedTimeRanges value: NSKeyValueObservedChange<[NSValue]>) {
+    func audio(playerItem: AVPlayerItem, didLoadedTimeRanges change: NSKeyValueObservedChange<[NSValue]>) {
         guard playerItem.status == .readyToPlay else {
             CrashlyticsLogger.log(category: .audioPlayer, "Player status is \(playerItem.status) – waiting for .readyToPlay.")
             return
         }
         
-        guard let newValue = value.newValue,
+        guard let newValue = change.newValue,
               let timeRanges = newValue as? [CMTimeRange],
               timeRanges.isNotEmpty,
               let firstTimeRange = timeRanges.first else {
-            CrashlyticsLogger.log(category: .audioPlayer, "Observed change has no newValue or the ranges array is empty \(String(describing: value.newValue))")
+            CrashlyticsLogger.log(category: .audioPlayer, "Observed change has no newValue or the ranges array is empty \(String(describing: change.newValue))")
             return
         }
         let duration = firstTimeRange.duration.value
@@ -212,30 +216,32 @@ extension AudioPlayer {
     
     /// Called when the playback buffer has emptied out (no more data to play).
     /// Wraps up the current item and enters buffering state.
-    func audio(playerItem: AVPlayerItem, isPlaybackBufferEmpty value: NSKeyValueObservedChange<Bool>) {
-        guard value.newValue == true else { return }
+    func audio(playerItem: AVPlayerItem, isPlaybackBufferEmpty change: NSKeyValueObservedChange<Bool>) {
+        guard change.newValue == true else { return }
+        updateLoadingView(isLoading: true)
         onItemFinishedPlaying()
     }
 
     /// Called when the buffer has refilled enough to resume smooth playback.
     /// Exits buffering state so UI and timers can restart.
-    func audio(playerItem: AVPlayerItem, isPlaybackBufferLikelyToKeepUp value: NSKeyValueObservedChange<Bool>) {
-        guard value.newValue == true else { return }
+    func audio(playerItem: AVPlayerItem, isPlaybackBufferLikelyToKeepUp change: NSKeyValueObservedChange<Bool>) {
+        guard change.newValue == true else { return }
+        updateLoadingView(isLoading: false)
         notify(aboutAudioPlayerDidFinishBuffering)
     }
 
     /// Called when the buffer is completely full (all chunks loaded).
     /// Hides any loading indicators now that playback won’t stall.
-    func audio(playerItem: AVPlayerItem, isPlaybackBufferFull value: NSKeyValueObservedChange<Bool>) {
-        guard value.newValue == true else { return }
-        notify(aboutHidingLoadingView)
+    func audio(playerItem: AVPlayerItem, isPlaybackBufferFull change: NSKeyValueObservedChange<Bool>) {
+        guard change.newValue == true else { return }
+        updateLoadingView(isLoading: false)
     }
 
     @objc func audioPlayer(interruption notification: Notification) {
         guard let userInfo = notification.userInfo,
-                let typeValue = userInfo[AVAudioSessionInterruptionTypeKey] as? UInt,
-                let type = AVAudioSession.InterruptionType(rawValue: typeValue) else {
-                    return
+              let typeValue = userInfo[AVAudioSessionInterruptionTypeKey] as? UInt,
+              let type = AVAudioSession.InterruptionType(rawValue: typeValue) else {
+            return
         }
         
         switch type {

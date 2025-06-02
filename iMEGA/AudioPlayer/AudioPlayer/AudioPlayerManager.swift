@@ -103,9 +103,9 @@ import MEGADomain
         self.player?.add(tracks: tracks)
     }
     
-    func addPlayer(listener: any AudioPlayerObserversProtocol) {
+    func configurePlayer(listener: any AudioPlayerObserversProtocol) {
         if !isPlayerListened(by: listener) {
-            player?.add(listener: listener)
+            player?.configure(listener: listener)
         }
     }
     

@@ -192,7 +192,7 @@ final class MiniPlayerViewModel: ViewModelType {
     }
     
     private func configurePlayer() {
-        configEntity.playerHandler.addPlayer(listener: self)
+        configEntity.playerHandler.configurePlayer(listener: self)
         
         guard !configEntity.playerHandler.isPlayerEmpty(), let currentItem = configEntity.playerHandler.playerCurrentItem() else {
             router?.dismiss()

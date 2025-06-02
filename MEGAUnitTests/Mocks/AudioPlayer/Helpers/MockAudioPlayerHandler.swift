@@ -66,7 +66,7 @@ final class MockAudioPlayerHandler: AudioPlayerHandlerProtocol {
         _isPlayerDefined = true
     }
     
-    func addPlayer(listener: any AudioPlayerObserversProtocol) {
+    func configurePlayer(listener: any AudioPlayerObserversProtocol) {
         addPlayerListener_calledTimes += 1
         onAddPlayerListenerCompletion?()
     }
