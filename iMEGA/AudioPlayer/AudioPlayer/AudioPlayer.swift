@@ -299,7 +299,15 @@ final class AudioPlayer: NSObject {
         return playerItems.filter { $0 != currentItem() }
     }
     
-    @objc func add(listener: any AudioPlayerObserversProtocol) {
+    @objc func configure(listener: any AudioPlayerObserversProtocol) {
+        add(listener: listener)
+        
+        if shouldShowLoadingView() {
+            notify(aboutShowingLoadingView)
+        }
+    }
+    
+    private func add(listener: any AudioPlayerObserversProtocol) {
         if observersListenerManager.listeners.notContains(where: { $0 === listener }) {
             observersListenerManager.add(listener)
         }
@@ -329,6 +337,18 @@ final class AudioPlayer: NSObject {
             updatedTrack.node = node
             return updatedTrack
         }
+    }
+    
+    /// Determines whether the loading view should be displayed based on the player’s current state. The loading view is shown in either of two scenarios:
+    /// 1. Buffering to minimize stalls: The player is actively buffering to prevent underruns.
+    /// 2. Awaiting initial playback: The player hasn’t yet attempted to load any media, so we show the loading UI before the very first playback attempt.
+    func shouldShowLoadingView() -> Bool {
+        let isBuffering = queuePlayer?.timeControlStatus == .waitingToPlayAtSpecifiedRate
+            && queuePlayer?.reasonForWaitingToPlay == .toMinimizeStalls
+
+        let isWaitingForInitialPlayback = queuePlayer?.status == .unknown /// status of the player is not yet known because it has not tried to load new media resources for playback.
+
+        return isBuffering || isWaitingForInitialPlayback
     }
 }
 
