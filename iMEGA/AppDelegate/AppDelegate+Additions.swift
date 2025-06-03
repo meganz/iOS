@@ -237,14 +237,21 @@ extension AppDelegate {
     }
     
     @objc func updateUserAttributes(
-        user: MEGAUser?,
-        email: String?,
-        attributeType: MEGAUserAttribute,
-        newValue: String
+        request: MEGARequest
     ) {
+        var user: MEGAUser?
+        if CurrentUserSource.shared.currentUserHandle == request.nodeHandle || request.email == nil {
+            user = CurrentUserSource.shared.currentUser
+        } else if let email = request.email, !email.isEmpty {
+            user = MEGASdk.shared.contact(forEmail: request.email)
+        }
+        guard let attributeType: MEGAUserAttribute = MEGAUserAttribute(rawValue: request.paramType),
+              let newValue = request.text else {
+            return
+        }
         UserAttributeHandler().handleUserAttribute(
             user: user?.toUserEntity(),
-            email: email,
+            email: request.email,
             attributeType: attributeType.toAttributeEntity(),
             newValue: newValue
         )

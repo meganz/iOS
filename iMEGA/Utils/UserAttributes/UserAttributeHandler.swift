@@ -1,6 +1,6 @@
 import MEGADomain
 
-struct UserAttributeHandler {
+struct UserAttributeHandler: Sendable {
     private let store: MEGAStore
     
     init(store: MEGAStore = MEGAStore.shareInstance()) {
