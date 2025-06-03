@@ -27,6 +27,8 @@ final class SlideShowViewController: UIViewController, ViewType {
         UIColor.surface1Background()
     }
 
+    override var prefersHomeIndicatorAutoHidden: Bool { true }
+
     init?(coder: NSCoder, viewModel: SlideShowViewModel) {
         self.viewModel = viewModel
         super.init(coder: coder)

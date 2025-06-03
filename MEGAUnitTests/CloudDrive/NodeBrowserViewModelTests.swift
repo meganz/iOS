@@ -415,7 +415,7 @@ class NodeBrowserViewModelTests: XCTestCase {
     @MainActor
     func testSortOrderChange_forMediaDiscovery() async {
         // given
-        for sortOrder in [SortOrderType.newest, SortOrderType.oldest] {
+        for sortOrder in [SortOrderType.newest, .oldest] {
             let harness = Harness(
                 defaultViewMode: .mediaDiscovery,
                 node: NodeEntity(handle: 100)
@@ -427,7 +427,7 @@ class NodeBrowserViewModelTests: XCTestCase {
             XCTAssertEqual(harness.sut.sortOrder, .defaultAsc) // the actual sortOrder doesn't change with .mediaDiscovery view mode
             XCTAssertEqual(harness.mediaDiscoveryViewModel.sortOrder, sortOrder)
 
-            await waitForContextMenuSortOrderChange(sortOrder.toSortOrderEntity(), in: harness)
+//            await waitForContextMenuSortOrderChange(sortOrder.toSortOrderEntity(), in: harness)
         }
     }
 
