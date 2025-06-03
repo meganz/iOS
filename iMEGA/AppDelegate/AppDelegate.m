@@ -1541,21 +1541,7 @@
             break;
             
         case MEGARequestTypeGetAttrUser: {
-            MEGAUser *user;
-            MEGAUser *me = MEGASdk.shared.myUser;
-            
-            if (me.handle == request.nodeHandle) {
-                user = me;
-            } else if (request.email.length > 0) {
-                user = [api contactForEmail:request.email];
-            } else if (request.email == nil) {
-                user = me;
-            }
-            
-            [self updateUserAttributesWithUser:user
-                                         email:request.email
-                                 attributeType:request.paramType
-                                      newValue:request.text];
+            [self updateUserAttributesWithRequest:request];
             break;
         }
             

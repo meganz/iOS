@@ -12,6 +12,7 @@ public final class CurrentUserSource: @unchecked Sendable {
     private var _currentUserHandle: Atomic<HandleEntity?>
     private var _currentUserEmail: Atomic<String?>
     private var _isLoggedIn: Atomic<Bool>
+    private var _myUser: Atomic<MEGAUser?>
     @Atomic private var _shouldRefreshAccountDetails: Bool = false
     @Atomic private var _accountDetails: AccountDetailsEntity?
     @Atomic private var _storageStatus: StorageStatusEntity?
@@ -43,6 +44,7 @@ public final class CurrentUserSource: @unchecked Sendable {
         _currentUserHandle = Atomic(wrappedValue: user?.handle)
         _currentUserEmail = Atomic(wrappedValue: user?.email)
         _isLoggedIn = Atomic(wrappedValue: sdk.isLoggedIn() > 0)
+        _myUser = Atomic(wrappedValue: user)
         
         registerAccountNotifications()
     }
@@ -79,6 +81,10 @@ public final class CurrentUserSource: @unchecked Sendable {
         }.value
     }
     
+    public var currentUser: MEGAUser? {
+        _myUser.wrappedValue
+    }
+    
     private func registerAccountNotifications() {
         notificationCenter
             .publisher(for: .accountDidLogin)
@@ -86,6 +92,7 @@ public final class CurrentUserSource: @unchecked Sendable {
                 guard let self else { return }
                 _currentUserHandle.mutate { $0 = self.sdk.myUser?.handle }
                 _isLoggedIn.mutate { $0 = true }
+                _myUser.mutate { $0 = self.sdk.myUser }
             }
             .store(in: &subscriptions)
         
@@ -100,6 +107,7 @@ public final class CurrentUserSource: @unchecked Sendable {
                 $_accountDetails.mutate { $0 = nil }
                 $_storageStatus.mutate { $0 = nil }
                 $_isPaywalled.mutate { $0 = false }
+                _myUser.mutate { $0 = nil }
             }
             .store(in: &subscriptions)
         
