@@ -23,6 +23,8 @@ final class LegacySlideShowViewController: UIViewController, ViewType {
         UIColor.surface1Background()
     }
 
+    override var prefersHomeIndicatorAutoHidden: Bool { true }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = backgroundColor
