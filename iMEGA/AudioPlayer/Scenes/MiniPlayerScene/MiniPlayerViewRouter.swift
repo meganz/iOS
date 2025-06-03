@@ -44,7 +44,7 @@ final class MiniPlayerViewRouter: NSObject, MiniPlayerViewRouting {
             router: self,
             nodeInfoUseCase: NodeInfoUseCase(nodeInfoRepository: NodeInfoRepository()),
             streamingInfoUseCase: StreamingInfoUseCase(streamingInfoRepository: StreamingInfoRepository()),
-            offlineInfoUseCase: configEntity.relatedFiles != nil ? OfflineFileInfoUseCase(offlineInfoRepository: OfflineInfoRepository()) : nil,
+            offlineInfoUseCase: OfflineFileInfoUseCase(offlineInfoRepository: OfflineInfoRepository()),
             playbackContinuationUseCase: DIContainer.playbackContinuationUseCase,
             audioPlayerUseCase: AudioPlayerUseCase(repository: AudioPlayerRepository.newRepo)
         )

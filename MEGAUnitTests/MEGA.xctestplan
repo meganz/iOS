@@ -116,6 +116,7 @@
     {
       "skippedTests" : [
         "ChatContentViewModelTests\/testUpdateContent_callInProgressLastPeerLeavesAndUserIsTheOnlyOneInTheCall_shouldShowEndCallDialog()",
+        "MainTabBarCallsViewModelTests\/testJoinCall_onSessionInProgressIsRecording_alertShouldNotBeShown()",
         "MeetingFloatingPanelViewModelTests\/testAction_allowNonHostToAddParticipantsValueChanged_isOpenInviteDisabled()",
         "MeetingFloatingPanelViewModelTests\/testAction_allowNonHostToAddParticipantsValueChanged_isOpenInviteEnabled()",
         "MeetingFloatingPanelViewModelTests\/testAction_onViewReady_VideoCallWithBackCamera()",

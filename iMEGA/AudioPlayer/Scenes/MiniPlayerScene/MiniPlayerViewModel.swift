@@ -38,9 +38,9 @@ final class MiniPlayerViewModel: ViewModelType {
     private var configEntity: AudioPlayerConfigEntity
     private var shouldInitializePlayer: Bool
     private weak var router: (any MiniPlayerViewRouting)?
-    private let nodeInfoUseCase: (any NodeInfoUseCaseProtocol)?
-    private let streamingInfoUseCase: (any StreamingInfoUseCaseProtocol)?
-    private let offlineInfoUseCase: (any OfflineFileInfoUseCaseProtocol)?
+    private let nodeInfoUseCase: any NodeInfoUseCaseProtocol
+    private let streamingInfoUseCase: any StreamingInfoUseCaseProtocol
+    private let offlineInfoUseCase: any OfflineFileInfoUseCaseProtocol
     private let playbackContinuationUseCase: any PlaybackContinuationUseCaseProtocol
     private let audioPlayerUseCase: any AudioPlayerUseCaseProtocol
     private var shouldRegisterDelegate: Bool = true
@@ -53,9 +53,9 @@ final class MiniPlayerViewModel: ViewModelType {
     // MARK: - Init
     init(configEntity: AudioPlayerConfigEntity,
          router: some MiniPlayerViewRouting,
-         nodeInfoUseCase: (some NodeInfoUseCaseProtocol)?,
-         streamingInfoUseCase: (some StreamingInfoUseCaseProtocol)?,
-         offlineInfoUseCase: (some OfflineFileInfoUseCaseProtocol)?,
+         nodeInfoUseCase: some NodeInfoUseCaseProtocol,
+         streamingInfoUseCase: some StreamingInfoUseCaseProtocol,
+         offlineInfoUseCase: some OfflineFileInfoUseCaseProtocol,
          playbackContinuationUseCase: some PlaybackContinuationUseCaseProtocol,
          audioPlayerUseCase: some AudioPlayerUseCaseProtocol
     ) {
@@ -104,13 +104,13 @@ final class MiniPlayerViewModel: ViewModelType {
     }
     
     private func isConfigNodeTakenDown() async throws -> Bool {
-        guard let node = configEntity.node, let nodeInfoUseCase else { return true }
+        guard let node = configEntity.node else { return true }
         return try await nodeInfoUseCase.isTakenDown(node: node, isFolderLink: configEntity.isFolderLink)
     }
     
     private func initializeMiniPlayer() {
         Task { [weak self] in
-            guard let self, configEntity.node != nil, nodeInfoUseCase != nil else { return }
+            guard let self, configEntity.node != nil else { return }
             let isTakenDown = try await isConfigNodeTakenDown()
             if isTakenDown {
                 closeMiniPlayer()
@@ -176,8 +176,8 @@ final class MiniPlayerViewModel: ViewModelType {
             return
         }
         
-        if !(streamingInfoUseCase?.isLocalHTTPProxyServerRunning() ?? true) {
-            streamingInfoUseCase?.startServer()
+        if !streamingInfoUseCase.isLocalHTTPProxyServerRunning() {
+            streamingInfoUseCase.startServer()
         }
         
         guard
@@ -205,17 +205,17 @@ final class MiniPlayerViewModel: ViewModelType {
     
     private nonisolated func initialize(with node: MEGANode) async {
         if await configEntity.isFileLink {
-            guard let track = streamingInfoUseCase?.info(from: node) else {
+            guard let track = streamingInfoUseCase.info(from: node) else {
                 await dismiss()
                 return
             }
             await initialize(tracks: [track], currentTrack: track)
         } else {
-            guard let children = await configEntity.isFolderLink ? nodeInfoUseCase?.folderChildrenInfo(fromParentHandle: node.parentHandle) :
-                                                nodeInfoUseCase?.childrenInfo(fromParentHandle: node.parentHandle),
+            guard let children = await configEntity.isFolderLink ? nodeInfoUseCase.folderChildrenInfo(fromParentHandle: node.parentHandle) :
+                                                nodeInfoUseCase.childrenInfo(fromParentHandle: node.parentHandle),
                   let currentTrack = await children.async.first(where: { await $0.node?.handle == node.handle }) else {
                 
-                guard let track = streamingInfoUseCase?.info(from: node) else {
+                guard let track = streamingInfoUseCase.info(from: node) else {
                     await dismiss()
                     return
                 }
@@ -230,7 +230,7 @@ final class MiniPlayerViewModel: ViewModelType {
     
     private nonisolated func initialize(with offlineFilePaths: [String]) async {
         guard
-            let files = offlineInfoUseCase?.info(from: offlineFilePaths),
+            let files = offlineInfoUseCase.info(from: offlineFilePaths),
             let currentFilePath = await configEntity.fileLink,
             let currentTrack = await files.async.first(where: { await $0.url.path == currentFilePath })
         else {
@@ -289,11 +289,11 @@ final class MiniPlayerViewModel: ViewModelType {
     private func closeMiniPlayer() {
         configEntity.playerHandler.removePlayer(listener: self)
         
-        streamingInfoUseCase?.stopServer()
+        streamingInfoUseCase.stopServer()
         if configEntity.isFolderLink,
             let router,
             !router.isAFolderLinkPresenter() {
-            nodeInfoUseCase?.folderLinkLogout()
+            nodeInfoUseCase.folderLinkLogout()
         }
         router?.dismiss()
         
@@ -407,7 +407,7 @@ extension MiniPlayerViewModel {
     }
     
     private func refreshItem(_ nodeHandle: HandleEntity) {
-        guard let node = nodeInfoUseCase?.node(fromHandle: nodeHandle) else { return }
+        guard let node = nodeInfoUseCase.node(fromHandle: nodeHandle) else { return }
         
         configEntity.playerHandler.currentPlayer()?.refreshTrack(with: node)
         refreshItemUI(nodeHandle: nodeHandle)
