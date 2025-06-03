@@ -185,7 +185,11 @@ final class AudioPlayerViewModel: ViewModelType {
                 return configEntity.fileLink != configEntity.playerHandler.playerCurrentItem()?.url.absoluteString
             }
             if configEntity.fileLink != nil {
-                return streamingInfoUseCase?.info(from: node)?.node != configEntity.playerHandler.playerCurrentItem()?.node
+                guard let item = streamingInfoUseCase?.info(from: node), let itemNode = item.node,
+                      let currentItem = configEntity.playerHandler.playerCurrentItem(), let currentItemNode = currentItem.node else {
+                    return true
+                }
+                return itemNode != currentItemNode
             } else {
                 return node.handle != configEntity.playerHandler.playerCurrentItem()?.node?.handle
             }
