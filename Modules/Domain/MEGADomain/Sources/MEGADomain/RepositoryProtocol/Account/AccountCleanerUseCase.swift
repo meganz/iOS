@@ -2,7 +2,7 @@ import Foundation
 
 public protocol AccountCleanerUseCaseProcotol {
     func cleanCredentialSessions()
-    func cleanAppGroupContainer()
+    func cleanAppGroupContainer() async
 }
 
 public struct AccountCleanerUseCase<C: CredentialRepositoryProtocol, G: AppGroupContainerRepositoryProtocol>: AccountCleanerUseCaseProcotol {
@@ -20,7 +20,7 @@ public struct AccountCleanerUseCase<C: CredentialRepositoryProtocol, G: AppGroup
         credentialRepo.clearEphemeralSession()
     }
     
-    public func cleanAppGroupContainer() {
-        groupContainerRepo.cleanContainer()
+    public func cleanAppGroupContainer() async {
+        await groupContainerRepo.cleanContainer()
     }
 }

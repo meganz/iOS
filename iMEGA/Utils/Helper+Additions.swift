@@ -15,12 +15,12 @@ extension Helper {
     static func cloudDriveABTestCacheKey() -> String {
         "ab_test_new_cloud_drive"
     }
-    @objc static func cleanAccount() {
+    @objc static func cleanAccount() async {
         let uc = AccountCleanerUseCase(credentialRepo: CredentialRepository.newRepo,
                                        groupContainerRepo: AppGroupContainerRepository.newRepo)
         
         uc.cleanCredentialSessions()
-        uc.cleanAppGroupContainer()
+        await uc.cleanAppGroupContainer()
         UserDefaults.standard.setValue(nil, forKey: cloudDriveABTestCacheKey())
     }
     

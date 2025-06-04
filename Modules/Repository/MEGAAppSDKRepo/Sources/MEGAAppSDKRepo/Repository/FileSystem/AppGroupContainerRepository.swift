@@ -18,10 +18,12 @@ public struct AppGroupContainerRepository: AppGroupContainerRepositoryProtocol {
         container = AppGroupContainer(fileManager: fileManager)
     }
     
-    public func cleanContainer() {
-        for directory in AppGroupContainer.Directory.allCases {
-            let url = container.url(for: directory)
-            try? fileSystemRepository.removeItem(at: url)
+    public func cleanContainer() async {
+        await withTaskGroup(of: Void.self) { group in
+            group.addTasksUnlessCancelled(for: AppGroupContainer.Directory.allCases) { directory in
+                let url = container.url(for: directory)
+                try? await fileSystemRepository.removeItem(at: url)
+            }
         }
     }
 }

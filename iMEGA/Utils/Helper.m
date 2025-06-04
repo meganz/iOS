@@ -498,7 +498,7 @@
 + (void)logout {
     [NSNotificationCenter.defaultCenter postNotificationName:MEGALogoutNotification object:self];
     
-    [self cleanAccount];
+    [Helper cleanAccountWithCompletionHandler:^{}];
     
     [Helper deleteUserData];
     [Helper deleteMasterKey];
