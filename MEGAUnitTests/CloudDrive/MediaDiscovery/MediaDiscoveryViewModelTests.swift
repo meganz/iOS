@@ -8,17 +8,17 @@ import XCTest
 final class MediaDiscoveryViewModelTests: XCTestCase {
     // MARK: - Action Command tests
     
-    @MainActor func testAction_onViewReady_withEmptyMediaFiles() throws {
+    @MainActor func testAction_onViewReady_withEmptyMediaFiles() async throws {
         let sut = makeMediaDiscoveryViewModel()
-        test(viewModel: sut, action: .onViewReady, expectedCommands: [.loadMedia(nodes: [])])
+        await test(viewModel: sut, action: .onViewReady, expectedCommands: [.loadMedia(nodes: [])])
     }
     
-    @MainActor func testAction_onViewReady_loadedNodesRequestLoadMedia() throws {
+    @MainActor func testAction_onViewReady_loadedNodesRequestLoadMedia() async throws {
         let expected = [NodeEntity(handle: 1)]
         let mediaDiscoveryUseCase = MockMediaDiscoveryUseCase(nodes: expected)
         let sut = makeMediaDiscoveryViewModel(mediaDiscoveryUseCase: mediaDiscoveryUseCase)
         
-        test(viewModel: sut, action: .onViewReady, expectedCommands: [.loadMedia(nodes: expected)])
+        await test(viewModel: sut, action: .onViewReady, expectedCommands: [.loadMedia(nodes: expected)])
     }
     
     @MainActor func testSendEvent_onMediaDiscoveryVisited_shouldReturnTrue() throws {
@@ -146,40 +146,25 @@ final class MediaDiscoveryViewModelTests: XCTestCase {
     // MARK: - Node updates tests
     
     @MainActor
-    func testSubscription_onNodesUpdate_shouldReload() throws {
+    func testMonitorNodeUpdates_onNodesUpdate_shouldReload() async throws {
         let expectedNodes = [NodeEntity(handle: 1)]
-        let nodeUpdatesPublisher = PassthroughSubject<[NodeEntity], Never>()
-        let mediaDiscoveryUseCase = MockMediaDiscoveryUseCase(nodeUpdates: AnyPublisher(nodeUpdatesPublisher), nodes: expectedNodes)
+        let mediaDiscoveryUseCase = MockMediaDiscoveryUseCase(
+            nodeUpdates: [expectedNodes].async.eraseToAnyAsyncSequence(),
+            nodes: expectedNodes
+        )
         let sut = makeMediaDiscoveryViewModel(mediaDiscoveryUseCase: mediaDiscoveryUseCase)
-        
-        var results = [[NodeEntity]]()
-        let loadMediaExpectation = expectation(description: "load and reload triggers")
-        loadMediaExpectation.expectedFulfillmentCount = 2
-        
-        sut.invokeCommand = { command in
-            switch command {
-            case .loadMedia(nodes: let nodes):
-                results.append(nodes)
-                loadMediaExpectation.fulfill()
-            default:
-                XCTFail("Invalid command")
-            }
-        }
-        sut.dispatch(.onViewReady)
-
-        nodeUpdatesPublisher.send([NodeEntity(handle: 2)])
-        
-        wait(for: [loadMediaExpectation], timeout: 2)
-        XCTAssertEqual(results.first, expectedNodes)
-        XCTAssertEqual(results.last, expectedNodes)
+    
+        await test(viewModel: sut, action: .onViewDidAppear, expectedCommands: [.loadMedia(nodes: expectedNodes)])
     }
     
     @MainActor
-    func testSubscription_onNodesUpdate_shouldDoNothingIfReloadIsNotRequired() throws {
+    func testMonitorNodeUpdates_onNodesUpdate_shouldDoNothingIfReloadIsNotRequired() async throws {
         let expectedNodes = [NodeEntity(handle: 1)]
-        let nodeUpdatesPublisher = PassthroughSubject<[NodeEntity], Never>()
-        let mediaDiscoveryUseCase = MockMediaDiscoveryUseCase(nodeUpdates: AnyPublisher(nodeUpdatesPublisher), nodes: expectedNodes,
-                                                              shouldReload: false)
+        let mediaDiscoveryUseCase = MockMediaDiscoveryUseCase(
+            nodeUpdates: [expectedNodes].async.eraseToAnyAsyncSequence(),
+            nodes: expectedNodes,
+            shouldReload: false
+        )
         let sut = makeMediaDiscoveryViewModel(mediaDiscoveryUseCase: mediaDiscoveryUseCase)
         
         let loadMediaExpectation = expectation(description: "should not trigger reload")
@@ -193,9 +178,10 @@ final class MediaDiscoveryViewModelTests: XCTestCase {
                 XCTFail("Invalid command")
             }
         }
-        nodeUpdatesPublisher.send([NodeEntity(handle: 2)])
         
-        wait(for: [loadMediaExpectation], timeout: 2)
+        sut.dispatch(.onViewDidAppear)
+        
+        await fulfillment(of: [loadMediaExpectation], timeout: 2)
     }
     
     // MARK: Private

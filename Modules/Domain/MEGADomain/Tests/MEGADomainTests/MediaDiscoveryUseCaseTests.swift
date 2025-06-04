@@ -1,11 +1,8 @@
-import Combine
 import MEGADomain
 import MEGADomainMock
 import XCTest
 
 final class MediaDiscoveryUseCaseTests: XCTestCase {
-    private var subscriptions = Set<AnyCancellable>()
-    
     func testLoadNodes_forParentNode_returnsCorrectNodes() async {
         let photoNodes = [NodeEntity(name: "0.jpg", handle: 1, isFile: true)]
         let videoNodes = [NodeEntity(name: "1.mp4", handle: 2, isFile: true)]
@@ -92,32 +89,26 @@ final class MediaDiscoveryUseCaseTests: XCTestCase {
         XCTAssertTrue(fileSearchRepo.searchRecursive ?? false)
     }
     
-    func testNodeUpdates_subscription_returnPublishedNodeUpdatesAndHandleDelegateCalls() {
-        let nodesUpdatePublisher =  PassthroughSubject<[NodeEntity], Never>()
-        let fileSearchRepo = MockFilesSearchRepository(nodesUpdatePublisher: nodesUpdatePublisher.eraseToAnyPublisher())
+    func testNodeUpdates_shouldYieldUpdates() async {
+        let nodeEntities = [
+            [NodeEntity(handle: 1)],
+            [NodeEntity(handle: 2), NodeEntity(handle: 3)]
+        ]
+        
+        let fileSearchRepo = MockFilesSearchRepository(nodeUpdates: nodeEntities.async.eraseToAnyAsyncSequence())
         let useCase = MediaDiscoveryUseCase(filesSearchRepository: fileSearchRepo, nodeUpdateRepository: MockNodeUpdateRepository.newRepo)
 
-        let expectaction = expectation(description: "Wait for publisher to complete")
-
-        var results = [[NodeEntity]]()
-        useCase.nodeUpdatesPublisher.sink(receiveCompletion: { _ in expectaction.fulfill() },
-                                 receiveValue: {
-            results.append($0)
-        }).store(in: &subscriptions)
-
-        useCase.nodeUpdatesPublisher.sink { _ in
-
-        }.store(in: &subscriptions)
-
-        XCTAssertTrue(fileSearchRepo.startMonitoringNodesUpdateCalled == 1)
-
-        let expectedNodes = [NodeEntity(handle: 0), NodeEntity(handle: 1)]
-        nodesUpdatePublisher.send(expectedNodes)
-        nodesUpdatePublisher.send(completion: .finished)
-
-        wait(for: [expectaction], timeout: 2)
-        XCTAssertEqual(results, [expectedNodes])
-        XCTAssertTrue(fileSearchRepo.stopMonitoringNodesUpdateCalled == 1)
+        let task = Task {
+            var results: [[NodeEntity]] = []
+            for await nodes in useCase.nodeUpdates {
+                results.append(nodes)
+            }
+            return results
+        }
+        
+        let results = await task.value
+        
+        XCTAssertEqual(results.flatMap { $0.map(\.handle) }, [1, 2, 3])
     }
     
     // MARK: Should reload

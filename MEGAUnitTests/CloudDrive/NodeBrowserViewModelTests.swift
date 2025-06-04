@@ -81,9 +81,8 @@ class NodeBrowserViewModelTests: XCTestCase {
             let expectedNodes = [
                 node
             ]
-            let nodeUpdatesPublisher = PassthroughSubject<[NodeEntity], Never>()
             let mediaDiscoveryUseCase = MockMediaDiscoveryUseCase(
-                nodeUpdates: AnyPublisher(nodeUpdatesPublisher),
+                nodeUpdates: [expectedNodes].async.eraseToAnyAsyncSequence(),
                 nodes: expectedNodes,
                 shouldReload: true
             )
