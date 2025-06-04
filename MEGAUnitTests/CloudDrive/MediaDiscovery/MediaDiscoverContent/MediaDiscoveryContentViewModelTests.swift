@@ -63,35 +63,36 @@ class MediaDiscoveryContentViewModelTests: XCTestCase {
     }
     
     @MainActor
-    func testSubscribeToNodeChanges_whenChangeOccursToNodes_shouldReloadPhotos() async {
+    func testMonitorNodeChanges_whenChangeOccursToNodes_shouldReloadPhotos() async {
         // Arrange
         let expectedNodes = [NodeEntity(name: "test.png", handle: 1)]
-        let nodeUpdatesPublisher = PassthroughSubject<[NodeEntity], Never>()
-        let mediaDiscoveryUseCase = MockMediaDiscoveryUseCase(nodeUpdates: AnyPublisher(nodeUpdatesPublisher), nodes: expectedNodes, shouldReload: true)
+        let mediaDiscoveryUseCase = MockMediaDiscoveryUseCase(
+            nodeUpdates: [expectedNodes].async.eraseToAnyAsyncSequence(),
+            nodes: expectedNodes,
+            shouldReload: true
+        )
         let sut = makeSUT(mediaDiscoveryUseCase: mediaDiscoveryUseCase)
         
         // Precondition
         sut.onViewAppear()
         
-        // Act
-        nodeUpdatesPublisher.send([NodeEntity(name: "test2.png", handle: 2)])
-        
         // Assert
-        let result = await sut.photoLibraryContentViewModel
-            .$library
-            .map(\.allPhotos)
-            .values
-            .first(where: { @Sendable in $0.count > 0 })
+        let sequence = sut.photoLibraryContentViewModel.$library.map(\.allPhotos).dropFirst().values
+        var iterator = sequence.makeAsyncIterator()
+        let result = await iterator.next()
         
         XCTAssertEqual(expectedNodes, result)
     }
     
     @MainActor
-    func testSubscribeToNodeChanges_whenNoDiffereneceInChangeOccursToUpdatedNodes_shouldNotReloadPhotos() {
+    func testMonitorNodeChanges_whenNoDiffereneceInChangeOccursToUpdatedNodes_shouldNotReloadPhotos() {
         // Arrange
         let expectedNodes = [NodeEntity(name: "test.png", handle: 1)]
-        let nodeUpdatesPublisher = PassthroughSubject<[NodeEntity], Never>()
-        let mediaDiscoveryUseCase = MockMediaDiscoveryUseCase(nodeUpdates: AnyPublisher(nodeUpdatesPublisher), nodes: expectedNodes, shouldReload: false)
+        let mediaDiscoveryUseCase = MockMediaDiscoveryUseCase(
+            nodeUpdates: [expectedNodes].async.eraseToAnyAsyncSequence(),
+            nodes: expectedNodes,
+            shouldReload: false
+        )
         let sut = makeSUT(mediaDiscoveryUseCase: mediaDiscoveryUseCase)
         
         // Act
@@ -106,8 +107,6 @@ class MediaDiscoveryContentViewModelTests: XCTestCase {
                 result = $0
                 exp.fulfill()
             })
-        
-        nodeUpdatesPublisher.send([NodeEntity(name: "test.png", handle: 1)])
         
         wait(for: [exp], timeout: 1)
         

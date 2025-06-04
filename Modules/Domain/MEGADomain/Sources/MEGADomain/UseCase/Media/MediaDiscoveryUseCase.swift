@@ -1,8 +1,8 @@
-@preconcurrency import Combine
 import Foundation
+import MEGASwift
 
 public protocol MediaDiscoveryUseCaseProtocol: Sendable {
-    var nodeUpdatesPublisher: AnyPublisher<[NodeEntity], Never> { get }
+    var nodeUpdates: AnyAsyncSequence<[NodeEntity]> { get }
     /// Fetch all nodes directly under the given parent node
     /// - Parameters:
     ///   - parent: Location of nodes to be fetched from.
@@ -20,21 +20,15 @@ public final class MediaDiscoveryUseCase<T: FilesSearchRepositoryProtocol,
     
     private let searchAllPhotosString = ""
     
-    public let nodeUpdatesPublisher: AnyPublisher<[NodeEntity], Never>
-    
     public init(filesSearchRepository: T, nodeUpdateRepository: U) {
         self.filesSearchRepository = filesSearchRepository
         self.nodeUpdateRepository = nodeUpdateRepository
-        
-        nodeUpdatesPublisher = filesSearchRepository
-            .nodeUpdatesPublisher
-            .handleEvents(receiveSubscription: { _ in filesSearchRepository.startMonitoringNodesUpdate(callback: nil) },
-                          receiveCompletion: { _ in filesSearchRepository.stopMonitoringNodesUpdate() },
-                          receiveCancel: { filesSearchRepository.stopMonitoringNodesUpdate() })
-            .share()
-            .eraseToAnyPublisher()
     }
 
+    public var nodeUpdates: AnyAsyncSequence<[NodeEntity]> {
+        filesSearchRepository.nodeUpdates
+    }
+    
     public func nodes(forParent parent: NodeEntity, recursive: Bool, excludeSensitive: Bool) async throws -> [NodeEntity] {
         try await [NodeFormatEntity.photo, .video]
             .async

@@ -1,8 +1,9 @@
-@preconcurrency import Combine
 import MEGADomain
+import MEGASwift
 
 public final class MockMediaDiscoveryUseCase: MediaDiscoveryUseCaseProtocol {
-    public let nodeUpdatesPublisher: AnyPublisher<[NodeEntity], Never>
+    public let nodeUpdates: AnyAsyncSequence<[NodeEntity]>
+    
     public let state = State()
 
     private let nodes: [NodeEntity]
@@ -19,11 +20,11 @@ public final class MockMediaDiscoveryUseCase: MediaDiscoveryUseCaseProtocol {
     }
     
     public init(
-        nodeUpdates: AnyPublisher<[NodeEntity], Never> = Empty().eraseToAnyPublisher(),
+        nodeUpdates: AnyAsyncSequence<[NodeEntity]> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
         nodes: [NodeEntity] = [],
         shouldReload: Bool = true
     ) {
-        self.nodeUpdatesPublisher = nodeUpdates
+        self.nodeUpdates = nodeUpdates
         self.nodes = nodes
         self.shouldReload = shouldReload
     }

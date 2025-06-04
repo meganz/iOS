@@ -1,10 +1,8 @@
-import Combine
+import MEGASwift
 
 public protocol FilesSearchRepositoryProtocol: RepositoryProtocol, Sendable {
-    var nodeUpdatesPublisher: AnyPublisher<[NodeEntity], Never> { get }
+    var nodeUpdates: AnyAsyncSequence<[NodeEntity]> { get }
     
-    func startMonitoringNodesUpdate(callback: (([NodeEntity]) -> Void)?)
-    func stopMonitoringNodesUpdate()
     func node(by id: HandleEntity) async -> NodeEntity?
     
     /// Search files and folders by name. It will return a list of nodes based on the criteria provided in the params.

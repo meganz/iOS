@@ -59,6 +59,7 @@ final class MediaDiscoveryContentViewModel: ObservableObject {
     private weak var delegate: (any MediaDiscoveryContentDelegate)?
     @PreferenceWrapper(key: PreferenceKeyEntity.mediaDiscoveryShouldIncludeSubfolderMedia, defaultValue: true)
     private var shouldIncludeSubfolderMedia: Bool
+    private var monitorNodeUpdatesTask: Task<Void, Never>?
     
     init(contentMode: PhotoLibraryContentMode,
          parentNodeProvider: @escaping () -> NodeEntity?,
@@ -87,7 +88,6 @@ final class MediaDiscoveryContentViewModel: ObservableObject {
         }
     }
     
-    @MainActor
     func loadPhotos() async {
         guard let parentNode = parentNodeProvider() else {
             viewState = .empty
@@ -112,7 +112,6 @@ final class MediaDiscoveryContentViewModel: ObservableObject {
         }
     }
         
-    @MainActor
     func update(sortOrder updatedSortOrder: SortOrderType) async {
         guard updatedSortOrder != sortOrder else {
             return
@@ -125,7 +124,7 @@ final class MediaDiscoveryContentViewModel: ObservableObject {
     
     func onViewAppear() {
         subscribeToSelectionChanges()
-        subscribeToNodeChanges()
+        startMonitoringNodeUpdates()
         startTracking()
         analyticsUseCase.sendPageVisitedStats()
     }
@@ -133,6 +132,7 @@ final class MediaDiscoveryContentViewModel: ObservableObject {
     func onViewDisappear() {
         // AnyCancellable are cancelled on dealloc so need to do it here
         subscriptions.removeAll()
+        stopMonitoringNodeUpdates()
         endTracking()
         sendPageStayStats()
     }
@@ -185,16 +185,17 @@ final class MediaDiscoveryContentViewModel: ObservableObject {
             .store(in: &subscriptions)
     }
     
-    private func subscribeToNodeChanges() {
-        
-        mediaDiscoveryUseCase
-            .nodeUpdatesPublisher
-            .debounce(for: .seconds(0.35), scheduler: DispatchQueue.global())
-            .sink { @Sendable [weak self] updatedNodes in
-                Task {
-                    await self?.handleNodeChanges(updatedNodes)
-                }
-            }.store(in: &subscriptions)
+    private func startMonitoringNodeUpdates() {
+        monitorNodeUpdatesTask = Task { [weak self, mediaDiscoveryUseCase] in
+            for await nodes in mediaDiscoveryUseCase.nodeUpdates.debounce(for: .seconds(0.35)) {
+                guard !Task.isCancelled else { break }
+                await self?.handleNodeChanges(nodes)
+            }
+        }
+    }
+    
+    private func stopMonitoringNodeUpdates() {
+        monitorNodeUpdatesTask?.cancel()
     }
     
     func handleNodeChanges(_ updatedNodes: [NodeEntity]) async {

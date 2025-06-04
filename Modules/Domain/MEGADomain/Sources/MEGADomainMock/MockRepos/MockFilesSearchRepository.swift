@@ -1,4 +1,3 @@
-import Combine
 import Foundation
 import MEGADomain
 import MEGASwift
@@ -16,11 +15,8 @@ final public class MockFilesSearchRepository: NSObject, FilesSearchRepositoryPro
     private let nodeListEntityForHandle: [HandleEntity: NodeListEntity]
     private let nodesForLocation: [FolderTargetEntity: [NodeEntity]]
     
-    public let nodeUpdatesPublisher: AnyPublisher<[NodeEntity], Never>
+    public let nodeUpdates: AnyAsyncSequence<[NodeEntity]>
     
-    @Atomic public var callback: (([NodeEntity]) -> Void)?
-    @Atomic public var startMonitoringNodesUpdateCalled = 0
-    @Atomic public var stopMonitoringNodesUpdateCalled = 0
     @Atomic public var searchString: String?
     @Atomic public var searchRecursive: Bool?
     @Atomic public var messages = [Message]()
@@ -36,24 +32,14 @@ final public class MockFilesSearchRepository: NSObject, FilesSearchRepositoryPro
                 nodesForHandle: [HandleEntity: [NodeEntity]] = [:],
                 nodeListEntityForHandle: [HandleEntity: NodeListEntity] = [:],
                 nodesForLocation: [FolderTargetEntity: [NodeEntity]] = [:],
-                nodesUpdatePublisher: AnyPublisher<[NodeEntity], Never> = Empty().eraseToAnyPublisher()
+                nodeUpdates: AnyAsyncSequence<[NodeEntity]> = EmptyAsyncSequence().eraseToAnyAsyncSequence()
     ) {
         self.photoNodes = photoNodes
         self.videoNodes = videoNodes
         self.nodesForHandle = nodesForHandle
         self.nodeListEntityForHandle = nodeListEntityForHandle
         self.nodesForLocation = nodesForLocation
-        self.nodeUpdatesPublisher = nodesUpdatePublisher
-    }
-    
-    public func startMonitoringNodesUpdate(callback: (([NodeEntity]) -> Void)?) {
-        self.$callback.mutate { $0 = callback }
-        $startMonitoringNodesUpdateCalled.mutate { $0 += 1 }
-    }
-    
-    public func stopMonitoringNodesUpdate() {
-        self.$callback.mutate { $0 = nil }
-        $stopMonitoringNodesUpdateCalled.mutate { $0 += 1 }
+        self.nodeUpdates = nodeUpdates
     }
 
     public func node(by id: HandleEntity) async -> NodeEntity? {

@@ -30,7 +30,8 @@ final class MediaDiscoveryViewModel: NSObject, ViewModelType, NodesUpdateProtoco
     private let saveMediaUseCase: any SaveMediaToPhotosUseCaseProtocol
     private let credentialUseCase: any CredentialUseCaseProtocol
     
-    private var loadingTask: Task<Void, Never>?
+    private var loadNodesTask: Task<Void, Never>?
+    private var monitorNodeUpdatesTask: Task<Void, Never>?
     private var subscriptions = Set<AnyCancellable>()
     var invokeCommand: ((Command) -> Void)?
     
@@ -53,7 +54,6 @@ final class MediaDiscoveryViewModel: NSObject, ViewModelType, NodesUpdateProtoco
         self.credentialUseCase = credentialUseCase
         
         super.init()
-        initSubscriptions()
     }
     
     // MARK: - Dispatch action
@@ -62,13 +62,15 @@ final class MediaDiscoveryViewModel: NSObject, ViewModelType, NodesUpdateProtoco
         switch action {
         case .onViewReady:
             sendPageVisitedStats()
-            loadNodes()
+            loadNodesTask = Task { await self.loadNodes() }
         case .onViewDidAppear:
+            startMonitoringNodeUpdates()
             startTracking()
         case .onViewWillDisAppear:
             endTracking()
             sendPageStayStats()
             cancelLoading()
+            stopMonitoringNodeUpdates()
         case .downloadSelectedPhotos(let photos):
             downloadSelectedPhotos(photos)
         case .saveToPhotos(let photos):
@@ -83,35 +85,41 @@ final class MediaDiscoveryViewModel: NSObject, ViewModelType, NodesUpdateProtoco
     
     // MARK: Private
     
-    private func initSubscriptions() {
-        mediaDiscoveryUseCase.nodeUpdatesPublisher
-            .debounce(for: .seconds(0.35), scheduler: DispatchQueue.global())
-            .sink { [weak self] updatedNodes in
-                guard let self else { return }
-                if self.mediaDiscoveryUseCase.shouldReload(parentNode: self.parentNode, loadedNodes: self.nodes, updatedNodes: updatedNodes) {
-                    self.loadNodes()
-                }
-            }.store(in: &subscriptions)
-    }
-    
-    private func loadNodes() {
-        loadingTask = Task { @MainActor in
-            do {
-                MEGALogDebug("[Search] load photos and videos in parent: \(parentNode.base64Handle), recursive: true, exclude sensitive: false")
-                nodes = try await mediaDiscoveryUseCase.nodes(
-                    forParent: parentNode,
-                    recursive: true,
-                    excludeSensitive: false)
-                MEGALogDebug("[Search] nodes loaded \(nodes.count)")
-                invokeCommand?(.loadMedia(nodes: nodes))
-            } catch {
-                MEGALogError("[Search] Error loading nodes: \(error.localizedDescription)")
+    private func startMonitoringNodeUpdates() {
+        monitorNodeUpdatesTask = Task { [weak self, mediaDiscoveryUseCase] in
+            for await nodes in mediaDiscoveryUseCase.nodeUpdates.debounce(for: .seconds(0.35)) {
+                guard !Task.isCancelled else { break }
+                await self?.handleNodeUpdates(nodes)
             }
         }
     }
     
+    private func stopMonitoringNodeUpdates() {
+        monitorNodeUpdatesTask?.cancel()
+    }
+    
+    private func handleNodeUpdates(_ updatedNodes: [NodeEntity]) async {
+        guard mediaDiscoveryUseCase.shouldReload(parentNode: parentNode, loadedNodes: nodes, updatedNodes: updatedNodes) else { return }
+        await loadNodes()
+    }
+    
+    private func loadNodes() async {
+        do {
+            MEGALogDebug("[Search] load photos and videos in parent: \(parentNode.base64Handle), recursive: true, exclude sensitive: false")
+            nodes = try await mediaDiscoveryUseCase.nodes(
+                forParent: parentNode,
+                recursive: true,
+                excludeSensitive: false)
+            MEGALogDebug("[Search] nodes loaded \(nodes.count)")
+            try Task.checkCancellation()
+            invokeCommand?(.loadMedia(nodes: nodes))
+        } catch {
+            MEGALogError("[Search] Error loading nodes: \(error.localizedDescription)")
+        }
+    }
+    
     private func cancelLoading() {
-        loadingTask?.cancel()
+        loadNodesTask?.cancel()
         subscriptions.removeAll()
     }
     
