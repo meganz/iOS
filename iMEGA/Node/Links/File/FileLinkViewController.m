@@ -207,6 +207,7 @@
     
     self.navigationBarLabel = [UILabel customNavigationBarLabelWithTitle:LocalizedString(@"fileLink", @"") subtitle:LocalizedString(@"Unavailable", @"Text used to show the user that some resource is not available") traitCollection:self.traitCollection];
     self.navigationItem.titleView = self.navigationBarLabel;
+    [self.navigationItem.titleView sizeToFit];
     UnavailableLinkView *unavailableLinkView = [[[NSBundle mainBundle] loadNibNamed:@"UnavailableLinkView" owner:self options: nil] firstObject];
     switch (error) {
         case UnavailableLinkErrorGeneric:
