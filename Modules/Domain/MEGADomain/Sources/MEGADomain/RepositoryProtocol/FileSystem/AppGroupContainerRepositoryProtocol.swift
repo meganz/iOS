@@ -1,5 +1,5 @@
 import Foundation
 
-public protocol AppGroupContainerRepositoryProtocol: RepositoryProtocol {
-    func cleanContainer()
+public protocol AppGroupContainerRepositoryProtocol: RepositoryProtocol, Sendable {
+    func cleanContainer() async
 }

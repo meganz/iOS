@@ -11,7 +11,6 @@ public enum FeatureFlagKey: FeatureFlagName, CaseIterable, Sendable {
     case multipleOptionsForCancellationSurvey = "Multiple Options for Cancellation Survey"
     case searchByNodeTags = "Search By Node Tags"
     case newSetting = "New Setting"
-    case noteToSelfChat = "Note to Self Chat"
     case loginRegisterAndOnboardingRevamp = "Use revamp contained in the MEGAAuthentication package"
     case crossfadeSlideShow = "Apply crossfade animation to slideshow"
 
