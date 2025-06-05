@@ -16,11 +16,11 @@
             <objects>
                 <viewController storyboardIdentifier="Slideshow" modalPresentationStyle="fullScreen" id="BYZ-38-t0r" customClass="SlideShowViewController" customModule="MEGA" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <rect key="frame" x="0.0" y="0.0" width="370" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="KtJ-lR-pKZ" customClass="SlideShowCollectionView" customModule="MEGA" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                                <rect key="frame" x="0.0" y="0.0" width="370" height="812"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="dbO-23-y5h">
                                     <size key="itemSize" width="374" height="628"/>
@@ -30,7 +30,7 @@
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="slideShowCell" id="Zf2-si-yhp" customClass="SlideShowCollectionViewCell" customModule="MEGA" customModuleProvider="target">
-                                        <rect key="frame" x="0.66666666666666663" y="0.0" width="374" height="667"/>
+                                        <rect key="frame" x="-2" y="0.0" width="374" height="667"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="xz5-Wh-u2j">
                                             <rect key="frame" x="0.0" y="0.0" width="374" height="667"/>
@@ -45,13 +45,13 @@
                                 </connections>
                             </collectionView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IKa-1F-tzk">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                <rect key="frame" x="0.0" y="0.0" width="370" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="woa-Mr-tlg"/>
                                 </constraints>
                             </view>
                             <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EkV-tA-Shi">
-                                <rect key="frame" x="0.0" y="44" width="375" height="44"/>
+                                <rect key="frame" x="0.0" y="44" width="370" height="44"/>
                                 <items>
                                     <navigationItem title="Slideshow" id="f4Y-5r-c9F">
                                         <barButtonItem key="leftBarButtonItem" title="Close" id="OoN-2i-7VI">
@@ -63,7 +63,7 @@
                                 </items>
                             </navigationBar>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zc2-pp-S4I">
-                                <rect key="frame" x="0.0" y="719" width="375" height="49"/>
+                                <rect key="frame" x="0.0" y="719" width="370" height="49"/>
                                 <items>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="ejn-es-2RO"/>
                                     <barButtonItem style="plain" systemItem="play" id="OF7-sI-b6y">
@@ -81,7 +81,7 @@
                                 </items>
                             </toolbar>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="is7-Vp-QJW">
-                                <rect key="frame" x="0.0" y="768" width="375" height="44"/>
+                                <rect key="frame" x="0.0" y="768" width="370" height="44"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="tTU-67-UA7"/>
@@ -110,6 +110,7 @@
                     </view>
                     <toolbarItems/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <size key="freeformSize" width="370" height="812"/>
                     <connections>
                         <outlet property="bottomBarBackground" destination="is7-Vp-QJW" id="8qH-JK-ROY"/>
                         <outlet property="bottomBarBackgroundViewHeightConstraint" destination="tTU-67-UA7" id="Tf6-vO-obI"/>
@@ -124,7 +125,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-7.2000000000000002" y="68.7192118226601"/>
+            <point key="canvasLocation" x="-124" y="70"/>
         </scene>
         <!--Legacy Slide Show View Controller-->
         <scene sceneID="VR0-Mf-ZZo">
