@@ -66,6 +66,7 @@ extension AchievementsDetailsViewController {
     }
 
     @objc func setupColors() {
+        scrollView.backgroundColor = TokenColors.Background.surface1
         view.backgroundColor = defaultBackgroundColor
         subtitleLabel?.textColor = TokenColors.Text.primary
         howItWorksTopSeparatorView.backgroundColor = TokenColors.Border.strong
@@ -211,7 +212,5 @@ extension AchievementsDetailsViewController {
 
     private func updateAddPhoneNumberStatus(isHidden: Bool) {
         addPhoneNumberButton?.isHidden = isHidden
-        scrollViewBottomSpacingConstraint?.isActive = !isHidden
-        scrollViewBottonConstraint?.isActive = isHidden
     }
 }
