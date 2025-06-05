@@ -118,6 +118,13 @@ final class SlideShowDataSource: SlideShowDataSourceProtocol {
             nodeEntities.sort { $0.modificationTime < $1.modificationTime }
         } else {
             nodeEntities.shuffle()
+            if let currentPhoto {
+                // When starting a slideshow in shuffled mode, we want the current photo
+                // to be located at the beginning of the slideshow so that all photos will
+                // be displayed.
+                let indexOfCurrentPhoto = nodeEntities.firstIndex(of: currentPhoto) ?? 0
+                nodeEntities.swapAt(0, indexOfCurrentPhoto)
+            }
         }
         
         resetDataIfRequired(basedOn: order)
