@@ -122,7 +122,22 @@ struct SlideShowDataSourceTests {
             #expect(sut.indexOfCurrentPhoto() == 0)
         }
     }
-    
+
+    @MainActor
+    @Suite("calls Sort nodes")
+    struct SortNodes {
+        @Test("When calling .sortNodes() with .shuffle mode, the selected photo should be located at the beginning of the list")
+        func sortNodeWithShuffled() async throws {
+            let thumbnailUrl = try Test.makeImageURL()
+            let sut = sut(
+                initialPhoto: NodeEntity(handle: 10),
+                thumbnailUrl: thumbnailUrl)
+
+            sut.sortNodes(byOrder: .shuffled)
+            #expect(sut.indexOfCurrentPhoto() == 0)
+        }
+    }
+
     nonisolated private static var nodeEntities: [NodeEntity] {
         (1...40)
             .map {
