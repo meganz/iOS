@@ -13,6 +13,7 @@ public enum FeatureFlagKey: FeatureFlagName, CaseIterable, Sendable {
     case newSetting = "New Setting"
     case loginRegisterAndOnboardingRevamp = "Use revamp contained in the MEGAAuthentication package"
     case crossfadeSlideShow = "Apply crossfade animation to slideshow"
+    case navigationRevamp = "Navigation Revamp"
 
     /// The keys that are ready for production release, but not yet removed from code.
     /// Discussion:
