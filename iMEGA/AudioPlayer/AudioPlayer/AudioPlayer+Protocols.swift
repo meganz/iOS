@@ -116,16 +116,12 @@ final class ListenerManager<T: AudioPlayerProtocol> {
     var listeners: [T] = []
     
     func add(_ listener: T) {
-        listeners
-            .filter { type(of: $0) == type(of: listener) }
-            .forEach { remove($0) }
-        
         guard !listeners.contains(where: { $0 === listener }) else { return }
         listeners.append(listener)
     }
     
-    func remove(_ listener: T) {
-        listeners = listeners.filter { $0 !== listener }
+    func removeAll(ofType listener: T) {
+        listeners = listeners.filter { type(of: $0) != type(of: listener) }
     }
     
     func notify(closure: (T) -> Void) {
