@@ -370,4 +370,9 @@ public struct MEGAUIImageBundle {
     public static var filetypeFolderCamera: UIImage { UIImage.filetypeFolderCamera }
     public static var achievementsFreeTrialVPN: UIImage { UIImage.achievementsFreeTrialVPN }
     public static var achievementsFreeTrialPass: UIImage { UIImage.achievementsFreeTrialPass }
+    public static var tabBarHome: UIImage { UIImage.tabBarHome }
+    public static var tabBarDrive: UIImage { UIImage.tabBarDrive }
+    public static var tabBarPhotos: UIImage { UIImage.tabBarPhotos }
+    public static var tabBarChat: UIImage { UIImage.tabBarChat }
+    public static var tabBarMenu: UIImage { UIImage.tabBarMenu }
 }

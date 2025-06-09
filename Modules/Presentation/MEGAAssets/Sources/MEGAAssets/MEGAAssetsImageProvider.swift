@@ -587,5 +587,10 @@ extension MEGAAssets {
         public static var addContactMeetings: UIKit.UIImage { MEGAUIImageBundle.addContactMeetings }
         public static var achievementsFreeTrialVPN: UIKit.UIImage { MEGAUIImageBundle.achievementsFreeTrialVPN }
         public static var achievementsFreeTrialPass: UIKit.UIImage { MEGAUIImageBundle.achievementsFreeTrialPass }
+        public static var tabBarHome: UIKit.UIImage { MEGAUIImageBundle.tabBarHome }
+        public static var tabBarDrive: UIKit.UIImage { MEGAUIImageBundle.tabBarDrive }
+        public static var tabBarPhotos: UIKit.UIImage { MEGAUIImageBundle.tabBarPhotos }
+        public static var tabBarChat: UIKit.UIImage { MEGAUIImageBundle.tabBarChat }
+        public static var tabBarMenu: UIKit.UIImage { MEGAUIImageBundle.tabBarMenu }
     }
 }
