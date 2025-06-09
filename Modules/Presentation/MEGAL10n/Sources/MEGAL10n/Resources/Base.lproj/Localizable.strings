@@ -4706,3 +4706,13 @@
 "subscriptionPurchase.feature.four.description"="Organise all your passwords and keep them safe with our password manager";
 /* Title for all the feature in subscription purchase view. */
 "subscriptionPurchase.feature.title"="You’ll get:";
+/* Title for the Home tab bar item */
+"tabbarTitle.home"="Home";
+/* Title for the Drive tab bar item */
+"tabbarTitle.drive"="Drive";
+/* Title for the Photo tab bar item */
+"tabbarTitle.photos"="Photos";
+/* Title for the Chat tab bar item */
+"tabbarTitle.chat"="Chat";
+/* Title for the Menu tab bar item */
+"tabbarTitle.menu"="Menu";
