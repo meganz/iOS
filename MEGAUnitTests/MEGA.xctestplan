@@ -123,7 +123,8 @@
         "MeetingFloatingPanelViewModelTests\/testAction_onViewReady_VideoCallWithFrontCamera()",
         "MeetingFloatingPanelViewModelTests\/testAction_onViewReady_isMyselfModerator_isGroupMeeting()",
         "MeetingFloatingPanelViewModelTests\/testAction_onViewReady_isMyselfParticipant_allowNonHostToAddParticipantsEnabled()",
-        "MeetingFloatingPanelViewModelTests\/testAction_onViewReady_isMyselfParticipant_isGroupMeeting()"
+        "MeetingFloatingPanelViewModelTests\/testAction_onViewReady_isMyselfParticipant_isGroupMeeting()",
+        "PSAViewModelTests\/testAction_shouldShowPSAView_genericErrorScenario()"
       ],
       "target" : {
         "containerPath" : "container:MEGA.xcodeproj",
