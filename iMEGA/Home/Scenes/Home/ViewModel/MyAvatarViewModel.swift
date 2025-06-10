@@ -1,6 +1,7 @@
 import Foundation
 import MEGAAppPresentation
 import MEGAAppSDKRepo
+import MEGAAssets
 import MEGADesignToken
 import MEGADomain
 import MEGARepo
@@ -31,7 +32,7 @@ protocol MyAvatarViewModelType {
 
     var outputs: any MyAvatarViewModelOutputs { get }
 
-    var notifyUpdate: ((any MyAvatarViewModelOutputs) -> Void)? { get set }
+    var notifyUpdate: (@MainActor (any MyAvatarViewModelOutputs) -> Void)? { get set }
 }
 
 @MainActor
@@ -39,11 +40,11 @@ final class MyAvatarViewModel: NSObject {
 
     // MARK: - MyAvatarViewModelType
 
-    var notifyUpdate: ((any MyAvatarViewModelOutputs) -> Void)?
+    var notifyUpdate: (@MainActor (any MyAvatarViewModelOutputs) -> Void)?
 
     // MARK: - View States
 
-    var avatarImage: UIImage = UIImage()
+    var avatarImage: UIImage = MEGAAssets.UIImage.iconContacts
 
     var userAlertCount: Int = 0
     
@@ -90,6 +91,9 @@ final class MyAvatarViewModel: NSObject {
 extension MyAvatarViewModel: MyAvatarViewModelInputs {
 
     func viewIsReady() {
+        loadUserAlerts()
+        loadUserContactRequest()
+        
         observeUserAlertsAndContactRequests()
         
         refreshUnreadNotificationCount()
@@ -206,21 +210,10 @@ extension MyAvatarViewModel: MyAvatarViewModelType {
 // MARK: - MyAvatarUpdatesObserver
 @MainActor
 protocol MyAvatarUpdatesObserver {
-    var notifyUpdate: ((any MyAvatarViewModelOutputs) -> Void)? { get set }
+    var notifyUpdate: (@MainActor (any MyAvatarViewModelOutputs) -> Void)? { get set }
 }
 
 @MainActor
 protocol MyAvatarObserver: MyAvatarViewModelInputs & MyAvatarUpdatesObserver {}
 
 extension MyAvatarViewModel: MyAvatarObserver {}
-
-final class MockMyAvatarUpdatesObserver: MyAvatarObserver {
-    var notifyUpdate: ((any MyAvatarViewModelOutputs) -> Void)?
-
-    init(notifyUpdate: ((any MyAvatarViewModelOutputs) -> Void)? = nil) {
-        self.notifyUpdate = notifyUpdate
-    }
-
-    func viewIsReady() {}
-    func viewIsAppearing() {}
-}
