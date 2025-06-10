@@ -1,9 +1,10 @@
 import Combine
+import MEGAAssets
 import SwiftUI
 
 @MainActor
 final class MyAvatarIconViewModel<AvatarObserver: MyAvatarObserver>: ObservableObject {
-    @Published var avatar: UIImage?
+    @Published var avatar: UIImage = MEGAAssets.UIImage.iconContacts
     @Published var text: String?
 
     private var avatarObserver: AvatarObserver
@@ -17,13 +18,8 @@ final class MyAvatarIconViewModel<AvatarObserver: MyAvatarObserver>: ObservableO
         self.onAvatarTapped = onAvatarTapped
 
         self.avatarObserver.notifyUpdate = { [weak self] output in
-            guard let self else { return }
-            let resizedImage = output.avatarImage
-
-            asyncOnMain {
-                self.avatar = resizedImage
-                self.text = output.notificationNumber
-            }
+            self?.avatar = output.avatarImage
+            self?.text = output.notificationNumber
         }
 
         avatarObserver.viewIsReady()

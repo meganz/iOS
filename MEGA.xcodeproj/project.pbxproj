@@ -1286,7 +1286,6 @@
 		942A64F829C395ED0017F439 /* BrowserViewController+TargetAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 942A64F629C390410017F439 /* BrowserViewController+TargetAction.swift */; };
 		942B306F2D498370007F5FC0 /* MockRecentActionBucket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 942B306E2D498370007F5FC0 /* MockRecentActionBucket.swift */; };
 		942F4FD81F500A8F001FC4AC /* MEGASdk+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 942F4FD71F500A8F001FC4AC /* MEGASdk+MNZCategory.m */; };
-		942FD9C82B48165D00F14E38 /* BadgeButtonSwiftUIWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 942FD9C72B48165D00F14E38 /* BadgeButtonSwiftUIWrapper.swift */; };
 		942FD9CE2B4832FF00F14E38 /* MyAvatarIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 942FD9CD2B4832FF00F14E38 /* MyAvatarIconView.swift */; };
 		942FD9D12B48330900F14E38 /* MyAvatarIconViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 942FD9D02B48330900F14E38 /* MyAvatarIconViewModel.swift */; };
 		94312E5029352329005F0F1C /* AudioSessionUseCase+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94312E4F29352329005F0F1C /* AudioSessionUseCase+Additions.swift */; };
@@ -4059,7 +4058,6 @@
 		942F4FD61F500A8F001FC4AC /* MEGASdk+MNZCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MEGASdk+MNZCategory.h"; sourceTree = "<group>"; };
 		942F4FD71F500A8F001FC4AC /* MEGASdk+MNZCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MEGASdk+MNZCategory.m"; sourceTree = "<group>"; };
 		942FD07A1EF3EEA000E99FB1 /* MEGAShare.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = MEGAShare.entitlements; path = iMEGA/Extensions/MEGAShare/MEGAShare.entitlements; sourceTree = SOURCE_ROOT; };
-		942FD9C72B48165D00F14E38 /* BadgeButtonSwiftUIWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeButtonSwiftUIWrapper.swift; sourceTree = "<group>"; };
 		942FD9CD2B4832FF00F14E38 /* MyAvatarIconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyAvatarIconView.swift; sourceTree = "<group>"; };
 		942FD9D02B48330900F14E38 /* MyAvatarIconViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyAvatarIconViewModel.swift; sourceTree = "<group>"; };
 		94312E4F29352329005F0F1C /* AudioSessionUseCase+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AudioSessionUseCase+Additions.swift"; sourceTree = "<group>"; };
@@ -7774,7 +7772,6 @@
 				5BE7BEE123745F9D00BBD23F /* EmptyState */,
 				942FD9CC2B4832ED00F14E38 /* MyAvatarIconView */,
 				5D66F8C524E507900088E5FF /* BadgeButton.swift */,
-				942FD9C72B48165D00F14E38 /* BadgeButtonSwiftUIWrapper.swift */,
 				A5CB0B672DD31770004B6AB9 /* CopyableLabel+Additions.swift */,
 				A81E86CE225B3CF900950678 /* CopyableLabel.h */,
 				A81E86CF225B3CF900950678 /* CopyableLabel.m */,
@@ -14361,7 +14358,6 @@
 				B6F0270225832F2C00D29CB6 /* BackupRegister.swift in Sources */,
 				944AD0B328EF651F00AB1E59 /* BackupsOCWrapper.swift in Sources */,
 				5D66F8C624E507900088E5FF /* BadgeButton.swift in Sources */,
-				942FD9C82B48165D00F14E38 /* BadgeButtonSwiftUIWrapper.swift in Sources */,
 				5DAC09DC24CFE20E001B6476 /* BannerCarouselCollectionViewCell.swift in Sources */,
 				C46527D426526BBA00371270 /* BannerContainerViewController.swift in Sources */,
 				C46527F126526C2300371270 /* BannerContainerViewModel.swift in Sources */,
