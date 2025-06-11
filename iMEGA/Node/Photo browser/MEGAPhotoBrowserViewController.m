@@ -667,6 +667,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
             [weakSelf setMaximumZoomScaleOnScrollableImageView:imageView node:node];
             [weakSelf resizeImageView:imageView];
         } completion:nil];
+        
         [weakSelf removeActivityIndicatorsFromView:imageView];
         [weakSelf startLiveTextAnalysisFor:imageView in:index];
     };
@@ -687,8 +688,8 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
             }
         } completion:nil];
         
-        [self removeActivityIndicatorsFromView:imageView];
-        [self startLiveTextAnalysisFor:imageView in:index];
+        [weakSelf removeActivityIndicatorsFromView:imageView];
+        [weakSelf startLiveTextAnalysisFor:imageView in:index];
     };
     
     void (^transferProgress)(MEGATransfer *transfer) = ^(MEGATransfer *transfer) {
