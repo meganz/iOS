@@ -178,9 +178,9 @@ extension AppDelegate {
 
             SMSVerificationViewRouter(verificationType: .unblockAccount, presenter: UIApplication.mnz_presentingViewController()).start()
         } else if suspensionType == .emailVerification {
-            if UIApplication.mnz_visibleViewController() is VerifyEmailViewController || UIApplication.mnz_visibleViewController() is SFSafariViewController {
-                return
-            }
+            guard !isLoginRegisterAndOnboardingRevampFeatureEnabled, // New login will show an alert to the user
+                  !(UIApplication.mnz_visibleViewController() is VerifyEmailViewController || UIApplication.mnz_visibleViewController() is SFSafariViewController)
+            else { return }
 
             let verifyEmailVC = UIStoryboard(name: "VerifyEmail", bundle: nil).instantiateViewController(withIdentifier: "VerifyEmailViewControllerID")
             UIApplication.mnz_presentingViewController().present(verifyEmailVC, animated: true, completion: nil)
