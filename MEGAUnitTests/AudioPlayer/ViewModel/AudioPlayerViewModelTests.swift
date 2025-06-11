@@ -450,6 +450,77 @@ final class AudioPlayerViewModelTests: XCTestCase {
         XCTAssertEqual(router.showMiniPlayer_calledTimes, 1)
     }
     
+    @MainActor
+    func testDispatchOnViewDidLoad_whenPlayerNotDefined_shouldCallSetCurrentOnlyOnce() async throws {
+        let handler = MockAudioPlayerHandler()
+        handler.mockPlayerCurrentItem = AudioPlayerItem.mockItem
+        let mockNode = MockNode(handle: 1)
+        let config  = audioPlayerConfigEntity(
+            node: mockNode,
+            allNodes: [mockNode],
+            playerHandlerBuilder: MockAudioPlayerHandlerBuilder(handler: handler)
+        )
+        let streamingInfoUseCase = MockStreamingInfoUseCase()
+        streamingInfoUseCase.completeInfoNode(with: AudioPlayerItem.mockItem)
+        let (sut, _, _) = makeSUT(
+            configEntity: config,
+            streamingInfoUseCase: streamingInfoUseCase
+        )
+        
+        sut.dispatch(.onViewDidLoad)
+        
+        try await Task.sleep(nanoseconds: 500_000_000)
+        
+        XCTAssertEqual(handler.addPlayer_calledTimes, 1)
+        XCTAssertEqual(handler.addPlayerTracks_calledTimes, 1)
+        XCTAssertEqual(handler.addPlayerListener_calledTimes, 0)
+    }
+    
+    @MainActor
+    func testDispatchOnViewDidLoad_existingPlayerWithStreamingNodes_shouldCallAddsListenerOnce() async throws {
+        let handler = MockAudioPlayerHandler(isPlayerDefined: true)
+        let mockNode = MockNode(handle: 1)
+        let mockTrack = AudioPlayerItem(name: "", url: URL(string: "www.url.com")!, node: mockNode)
+        handler.mockPlayerCurrentItem = mockTrack
+        let config  = audioPlayerConfigEntity(
+            node: mockNode,
+            allNodes: [mockNode],
+            playerHandlerBuilder: MockAudioPlayerHandlerBuilder(handler: handler)
+        )
+        let streamingInfoUseCase = MockStreamingInfoUseCase()
+        streamingInfoUseCase.completeInfoNode(with: mockTrack)
+        let (sut, _, _) = makeSUT(
+            configEntity: config,
+            streamingInfoUseCase: streamingInfoUseCase
+        )
+        
+        sut.dispatch(.onViewDidLoad)
+        
+        try await Task.sleep(nanoseconds: 500_000_000)
+        
+        XCTAssertEqual(handler.addPlayerListener_calledTimes, 1)
+    }
+    
+    @MainActor
+    func testDispatchOnViewDidLoad_existingPlayerWithOfflineFiles_shouldCallAddsListenerOnce() async throws {
+        let handler = MockAudioPlayerHandler(isPlayerDefined: true)
+        let mockNode = MockNode(handle: 1)
+        let mockTrack = AudioPlayerItem(name: "", url: URL(string: "offline_file")!, node: mockNode)
+        handler.mockPlayerCurrentItem = mockTrack
+        let config = AudioPlayerConfigEntity(
+            fileLink: "offline_file",
+            relatedFiles: ["path1"],
+            audioPlayerHandlerBuilder: MockAudioPlayerHandlerBuilder(handler: handler)
+        )
+        let (sut, _, _) = makeSUT(configEntity: config)
+        
+        sut.dispatch(.onViewDidLoad)
+        
+        try await Task.sleep(nanoseconds: 500_000_000)
+        
+        XCTAssertEqual(handler.addPlayerListener_calledTimes, 1)
+    }
+    
     // MARK: - Helpers
     
     @MainActor
@@ -545,12 +616,20 @@ final class AudioPlayerViewModelTests: XCTestCase {
         )
     }
     
-    private func audioPlayerConfigEntity(node: MockNode, isFolderLink: Bool = false, relatedFiles: [String]? = nil, fileLink: String? = nil, playerHandlerBuilder: some AudioPlayerHandlerBuilderProtocol = MockAudioPlayerHandlerBuilder()) -> AudioPlayerConfigEntity {
+    private func audioPlayerConfigEntity(
+        node: MockNode,
+        isFolderLink: Bool = false,
+        relatedFiles: [String]? = nil,
+        fileLink: String? = nil,
+        allNodes: [MEGANode]? = nil,
+        playerHandlerBuilder: some AudioPlayerHandlerBuilderProtocol = MockAudioPlayerHandlerBuilder()
+    ) -> AudioPlayerConfigEntity {
         AudioPlayerConfigEntity(
             node: node,
             isFolderLink: isFolderLink,
             fileLink: fileLink,
             relatedFiles: relatedFiles,
+            allNodes: allNodes,
             audioPlayerHandlerBuilder: playerHandlerBuilder
         )
     }

@@ -81,7 +81,7 @@ protocol AudioPlayerMetadataLoaderProtocol {
 
 // MARK: - Audio Player Configuration Functions
 @objc protocol AudioPlayerConfigurationProtocol: AnyObject {
-    func setCurrent(player: AudioPlayer?, autoPlayEnabled: Bool, tracks: [AudioPlayerItem])
+    func setCurrent(player: AudioPlayer?, autoPlayEnabled: Bool, tracks: [AudioPlayerItem], playerListener: any AudioPlayerObserversProtocol)
     func addPlayer(tracks: [AudioPlayerItem])
     func configurePlayer(listener: any AudioPlayerObserversProtocol)
     func removePlayer(listener: any AudioPlayerObserversProtocol)

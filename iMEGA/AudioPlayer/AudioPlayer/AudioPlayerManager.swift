@@ -80,26 +80,29 @@ import MEGADomain
     func setCurrent(
         player: AudioPlayer?,
         autoPlayEnabled: Bool,
-        tracks: [AudioPlayerItem]
+        tracks: [AudioPlayerItem],
+        playerListener: any AudioPlayerObserversProtocol
     ) {
         if self.player != nil {
             self.player?.close { [weak self] in
                 MEGALogDebug("[AudioPlayer] closing current player before assign new instance")
                 self?.player = nil
-                self?.configure(player: player, autoPlayEnabled: autoPlayEnabled, tracks: tracks)
+                self?.configure(player: player, autoPlayEnabled: autoPlayEnabled, tracks: tracks, playerListener: playerListener)
             }
         } else {
-            configure(player: player, autoPlayEnabled: autoPlayEnabled, tracks: tracks)
+            configure(player: player, autoPlayEnabled: autoPlayEnabled, tracks: tracks, playerListener: playerListener)
         }
     }
     
     private func configure(
         player: AudioPlayer?,
         autoPlayEnabled: Bool,
-        tracks: [AudioPlayerItem]
+        tracks: [AudioPlayerItem],
+        playerListener: any AudioPlayerObserversProtocol
     ) {
         self.player = player
         self.player?.isAutoPlayEnabled = autoPlayEnabled
+        configurePlayer(listener: playerListener)
         self.player?.add(tracks: tracks)
     }
     
