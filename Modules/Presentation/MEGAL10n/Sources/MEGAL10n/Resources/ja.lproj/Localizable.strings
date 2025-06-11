@@ -1058,8 +1058,36 @@
 "account.achievement.mobileApp.complete.explaination.label"="あなたはMEGAモバイルアプリのインストールに対して、%@のストレージスペースを受け取りました。";
 /* Explanation label shown on the achievements view for incomplete install MEGA mobile app achievement, %@ is a placeholder. */
 "account.achievement.mobileApp.incomplete.explaination.label"="MEGAモバイルアプリをインストールすると、無料のストレージスペース%@が得られます。これは365日間有効です。MEGAモバイルアプリは、iOSとAndroidに対応しています。";
+/* Cell title shown on the achievements view for Start MEGA VPN Free Trial */
+"account.achievement.vpnFreeTrial.title"="MEGA VPNの無料トライアルを開始";
+/* Detail label shown on the achievements details view for Start MEGA VPN Free Trial when its incomplete, %@ is placeholder for the storage amount */
+"account.achievement.vpnFreeTrial.detail.incomplete.label"="MEGA VPNの無料トライアルを開始すると、%@の無料ストレージが付与されます。無期限に有効です。";
+/* Detail label shown on the achievements details view for Start MEGA VPN Free Trial when its completed, %@ is placeholder for the storage amount */
+"account.achievement.vpnFreeTrial.detail.complete.label"="%@ボーナスが適用されました。無期限に有効です。";
+/* Explanation label shown on the achievements view for incomplete start MEGA VPN Free Trial achievement, %@ is a placeholder. */
+"account.achievement.vpnFreeTrial.incomplete.explanation.label"="MEGA VPNアプリをインストールし、MEGAアカウントでログインして無料トライアルを開始してください。無料トライアル開始後、ボーナスストレージが自動的に追加されます。";
+/* Explanation label shown on the achievements view for complete start MEGA VPN Free Trial achievement, %@ is a placeholder. */
+"account.achievement.vpnFreeTrial.complete.explanation.label"="%@のストレージスペースを受け取りました。これでMEGA VPNの無料トライアルを開始できます。";
+/* Text for the button to install MEGA VPN in the Start MEGA VPN Free Trial achievement */
+"account.achievement.vpnFreeTrial.buttonText"="MEGA VPNをインストール";
+/* Cell title shown on the achievements view for Start MEGA Pass Free Trial */
+"account.achievement.passFreeTrial.title"="MEGA Passの無料トライアルを開始";
+/* Detail label shown on the achievements details view for Start MEGA Pass Free Trial when its incomplete, %@ is placeholder for the storage amount */
+"account.achievement.passFreeTrial.detail.incomplete.label"="MEGA Passの無料トライアルを開始すると、%@の無料ストレージが付与されます。無期限に有効です。";
+/* Detail label shown on the achievements details view for Start MEGA Pass Free Trial when its completed, %@ is placeholder for the storage amount */
+"account.achievement.passFreeTrial.detail.complete.label"="%@ボーナスが適用されました。無期限に有効です。";
+/* Explanation label shown on the achievements view for incomplete start MEGA Pass Free Trial achievement, %@ is a placeholder. */
+"account.achievement.passFreeTrial.incomplete.explanation.label"="MEGA Passアプリをインストールし、MEGAアカウントでログインして無料トライアルを開始してください。無料トライアル開始後、ボーナスストレージが自動的に追加されます。";
+/* Explanation label shown on the achievements view for complete start MEGA Pass Free Trial achievement, %@ is a placeholder. */
+"account.achievement.passFreeTrial.complete.explanation.label"="%@のストレージスペースを受け取りました。これでMEGA Passの無料トライアルを開始できます。";
+/* Text for the button to install MEGA Pass in the Start MEGA Pass Free Trial achievement */
+"account.achievement.passFreeTrial.buttonText"="MEGA Passをインストール";
 /* Subtitle of the incomplete achievement, %@ is a placeholder. */
 "account.achievement.incomplete.subtitle"="%@ストレージ。365日有効。";
+/* Subtitle of the incomplete achievement with permanent bonus, %@ is a placeholder. */
+"account.achievement.incomplete.subtitle.permanent"="%@GBのストレージ。無期限に有効。";
+/* Subtitle of the complete achievement with permanent bonus */
+"account.achievement.complete.subtitle.permanent"="ボーナス適用";
 /* Add Phone Number title */
 "Add Phone Number"="電話番号を追加";
 /* Explanation Label shown on the achievements view for complete add phone number achievement, %@ is a placeholder. */
@@ -2115,7 +2143,7 @@
 /* Button title which, if tapped, will trigger the action of opening a folder containg this file */
 "View in Folder"="フォルダで表示";
 /* Error message shown when opening a link with an account that not corresponds to the link */
-"This link is not related to this account. Please log in with the correct account."="このリンクはこのアカウントとは関係ありません。正しいアカウントでログインしてください。";
+"This link is not related to this account. Please log in with the correct account."="別のMEGAアカウントにログインしています。ログアウトして、パスワードリセットリンクをもう一度開いてください。";
 /* Text emncouraging the user to add contacts in MEGA */
 "Invite contact now"="連絡先を今すぐ招待";
 /* Error message if user click next button without enter a valid phone number */
@@ -4678,3 +4706,15 @@
 "subscriptionPurchase.feature.four.description"="当社のパスワードマネージャーで、すべてのパスワードを整理し、安全に管理できます。";
 /* Title for all the feature in subscription purchase view. */
 "subscriptionPurchase.feature.title"="以下をご利用いただけます：";
+/* Title for the Home tab bar item */
+"tabbarTitle.home"="ホーム";
+/* Title for the Drive tab bar item */
+"tabbarTitle.drive"="ドライブ";
+/* Title for the Photo tab bar item */
+"tabbarTitle.photos"="写真";
+/* Title for the Chat tab bar item */
+"tabbarTitle.chat"="チャット";
+/* Title for the Menu tab bar item */
+"tabbarTitle.menu"="メニュー";
+/* Storage benefit shown for the free plan card */
+"subscriptionPurchase.freePlanCard.feature.storage"="%@ of storage";

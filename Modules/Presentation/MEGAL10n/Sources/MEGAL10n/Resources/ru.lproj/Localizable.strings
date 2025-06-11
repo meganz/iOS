@@ -1058,8 +1058,36 @@
 "account.achievement.mobileApp.complete.explaination.label"="Вы получили %@ на диске за установку мобильного приложения.";
 /* Explanation label shown on the achievements view for incomplete install MEGA mobile app achievement, %@ is a placeholder. */
 "account.achievement.mobileApp.incomplete.explaination.label"="Установив мобильное приложение MEGA, вы получите %@ бонусного места на диске на 365 дней. Мобильные приложения MEGA доступны для iOS и Android.";
+/* Cell title shown on the achievements view for Start MEGA VPN Free Trial */
+"account.achievement.vpnFreeTrial.title"="Активируйте бесплатную пробную версию MEGA VPN";
+/* Detail label shown on the achievements details view for Start MEGA VPN Free Trial when its incomplete, %@ is placeholder for the storage amount */
+"account.achievement.vpnFreeTrial.detail.incomplete.label"="%@ бесплатного хранилища при активации бесплатной пробной версии MEGA VPN. Действует постоянно.";
+/* Detail label shown on the achievements details view for Start MEGA VPN Free Trial when its completed, %@ is placeholder for the storage amount */
+"account.achievement.vpnFreeTrial.detail.complete.label"="Применён бонус %@. Действует постоянно.";
+/* Explanation label shown on the achievements view for incomplete start MEGA VPN Free Trial achievement, %@ is a placeholder. */
+"account.achievement.vpnFreeTrial.incomplete.explanation.label"="Установите приложение MEGA VPN, войдите в свой аккаунт MEGA и активируйте бесплатную пробную версию. Бонусное хранилище будет добавлено автоматически после активации бесплатной пробной версии.";
+/* Explanation label shown on the achievements view for complete start MEGA VPN Free Trial achievement, %@ is a placeholder. */
+"account.achievement.vpnFreeTrial.complete.explanation.label"="Вы получили %@ на диске за то, что активировали бесплатную пробную версию MEGA VPN";
+/* Text for the button to install MEGA VPN in the Start MEGA VPN Free Trial achievement */
+"account.achievement.vpnFreeTrial.buttonText"="Установите MEGA VPN";
+/* Cell title shown on the achievements view for Start MEGA Pass Free Trial */
+"account.achievement.passFreeTrial.title"="Активируйте бесплатную пробную версию MEGA Pass";
+/* Detail label shown on the achievements details view for Start MEGA Pass Free Trial when its incomplete, %@ is placeholder for the storage amount */
+"account.achievement.passFreeTrial.detail.incomplete.label"="%@ бесплатного хранилища при активации бесплатной пробной версии MEGA Pass. Действует постоянно.";
+/* Detail label shown on the achievements details view for Start MEGA Pass Free Trial when its completed, %@ is placeholder for the storage amount */
+"account.achievement.passFreeTrial.detail.complete.label"="Применён бонус %@. Действует постоянно.";
+/* Explanation label shown on the achievements view for incomplete start MEGA Pass Free Trial achievement, %@ is a placeholder. */
+"account.achievement.passFreeTrial.incomplete.explanation.label"="Установите приложение MEGA Pass, войдите в свой аккаунт MEGA и активируйте бесплатную пробную версию. Бонусное хранилище будет добавлено автоматически после активации бесплатной пробной версии.";
+/* Explanation label shown on the achievements view for complete start MEGA Pass Free Trial achievement, %@ is a placeholder. */
+"account.achievement.passFreeTrial.complete.explanation.label"="Вы получили %@ на диске за то, что активировали бесплатную пробную версию MEGA Pass";
+/* Text for the button to install MEGA Pass in the Start MEGA Pass Free Trial achievement */
+"account.achievement.passFreeTrial.buttonText"="Установите MEGA Pass";
 /* Subtitle of the incomplete achievement, %@ is a placeholder. */
 "account.achievement.incomplete.subtitle"="%@ на диске на 365 дней.";
+/* Subtitle of the incomplete achievement with permanent bonus, %@ is a placeholder. */
+"account.achievement.incomplete.subtitle.permanent"="%@ на диске. Действует постоянно.";
+/* Subtitle of the complete achievement with permanent bonus */
+"account.achievement.complete.subtitle.permanent"="Бонус применён";
 /* Add Phone Number title */
 "Add Phone Number"="Добавить телефонный номер";
 /* Explanation Label shown on the achievements view for complete add phone number achievement, %@ is a placeholder. */
@@ -2115,7 +2143,7 @@
 /* Button title which, if tapped, will trigger the action of opening a folder containg this file */
 "View in Folder"="Посмотреть в папке";
 /* Error message shown when opening a link with an account that not corresponds to the link */
-"This link is not related to this account. Please log in with the correct account."="Ссылка не связана с этим аккаунтом. Пожалуйста, войдите в правильный аккаунт.";
+"This link is not related to this account. Please log in with the correct account."="Вы вошли в другой аккаунт MEGA. Выйдите из системы и снова откройте ссылку сброса пароля.";
 /* Text emncouraging the user to add contacts in MEGA */
 "Invite contact now"="Пригласить контакты сейчас";
 /* Error message if user click next button without enter a valid phone number */
@@ -4678,3 +4706,15 @@
 "subscriptionPurchase.feature.four.description"="Организуйте хранение всех своих паролей в одном надёжном месте с помощью нашего менеджера паролей";
 /* Title for all the feature in subscription purchase view. */
 "subscriptionPurchase.feature.title"="Вы получите:";
+/* Title for the Home tab bar item */
+"tabbarTitle.home"="Домой";
+/* Title for the Drive tab bar item */
+"tabbarTitle.drive"="Диск";
+/* Title for the Photo tab bar item */
+"tabbarTitle.photos"="Фото";
+/* Title for the Chat tab bar item */
+"tabbarTitle.chat"="Чат";
+/* Title for the Menu tab bar item */
+"tabbarTitle.menu"="Меню";
+/* Storage benefit shown for the free plan card */
+"subscriptionPurchase.freePlanCard.feature.storage"="%@ of storage";

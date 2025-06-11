@@ -927,9 +927,9 @@
 /* An alert title where the user provided the incorrect Recovery Key. */
 "invalidRecoveryKey"="คีย์การกู้คืนไม่ถูกต้อง";
 /* Recovery key error alert title */
-"recoveryKey.error.alert.title"="Recovery key error";
+"recoveryKey.error.alert.title"="ข้อผิดพลาดเกี่ยวกับคีย์การกู้คืน";
 /* Recovery key error alert message when the user provided incorrect or invalid Recovery key */
-"recoveryKey.error.alert.message.invalidKey"="The recovery key you supplied is either invalid, or is not for this account. Check if you’re using the correct key and try again.";
+"recoveryKey.error.alert.message.invalidKey"="คีย์การกู้คืนไม่ถูกต้อง หรือไม่ใช่ของบัญชีนี้ กรุณาตรวจสอบว่าคุณใช้คีย์ที่ถูกต้อง แล้วลองอีกครั้ง";
 /* Text of the alert after opening the recovery link to reset pass being logged. */
 "youRecoveryKeyIsGoingTo"="คีย์การกู้คืนของคุณจะถูกใช้เพื่อรีเซ็ตรหัสผ่านของคุณ กรุณากรอกรหัสผ่านใหม่ของคุณ";
 /*  */
@@ -1058,8 +1058,36 @@
 "account.achievement.mobileApp.complete.explaination.label"="คุณได้รับพื้นที่เก็บข้อมูล %@ จากการติดตั้งแอป MEGA บนมือถือ";
 /* Explanation label shown on the achievements view for incomplete install MEGA mobile app achievement, %@ is a placeholder. */
 "account.achievement.mobileApp.incomplete.explaination.label"="เมื่อคุณติดตั้งแอป MEGA บนมือถือ คุณจะได้รับพื้นที่เก็บข้อมูลฟรี %@ มีอายุการใช้งาน 365 วัน แอป MEGA บนมือถือ สามารถใช้ได้ทั้ง iOS และ Android";
+/* Cell title shown on the achievements view for Start MEGA VPN Free Trial */
+"account.achievement.vpnFreeTrial.title"="เริ่มทดลองใช้ MEGA VPN ฟรี";
+/* Detail label shown on the achievements details view for Start MEGA VPN Free Trial when its incomplete, %@ is placeholder for the storage amount */
+"account.achievement.vpnFreeTrial.detail.incomplete.label"="รับพื้นที่เก็บข้อมูลฟรี %@ เมื่อคุณเริ่มทดลองใช้ MEGA VPN ฟรี ใช้งานได้ถาวร";
+/* Detail label shown on the achievements details view for Start MEGA VPN Free Trial when its completed, %@ is placeholder for the storage amount */
+"account.achievement.vpnFreeTrial.detail.complete.label"="ได้รับโบนัส %@ แล้ว ใช้งานได้ถาวร";
+/* Explanation label shown on the achievements view for incomplete start MEGA VPN Free Trial achievement, %@ is a placeholder. */
+"account.achievement.vpnFreeTrial.incomplete.explanation.label"="ติดตั้งแอป MEGA VPN เข้าสู่ระบบด้วยบัญชี MEGA ของคุณ แล้วเริ่มทดลองใช้ฟรี พื้นที่เก็บข้อมูลโบนัสของคุณจะถูกเพิ่มให้โดยอัตโนมัติหลังจากที่คุณเริ่มทดลองใช้ฟรี";
+/* Explanation label shown on the achievements view for complete start MEGA VPN Free Trial achievement, %@ is a placeholder. */
+"account.achievement.vpnFreeTrial.complete.explanation.label"="คุณได้รับพื้นที่เก็บข้อมูล %@ จากการเริ่มทดลองใช้ MEGA VPN ฟรี";
+/* Text for the button to install MEGA VPN in the Start MEGA VPN Free Trial achievement */
+"account.achievement.vpnFreeTrial.buttonText"="ติดตั้ง MEGA VPN";
+/* Cell title shown on the achievements view for Start MEGA Pass Free Trial */
+"account.achievement.passFreeTrial.title"="เริ่มทดลองใช้ MEGA Pass ฟรี";
+/* Detail label shown on the achievements details view for Start MEGA Pass Free Trial when its incomplete, %@ is placeholder for the storage amount */
+"account.achievement.passFreeTrial.detail.incomplete.label"="รับพื้นที่เก็บข้อมูลฟรี %@ เมื่อคุณเริ่มทดลองใช้ MEGA Pass ฟรี ใช้งานได้ถาวร";
+/* Detail label shown on the achievements details view for Start MEGA Pass Free Trial when its completed, %@ is placeholder for the storage amount */
+"account.achievement.passFreeTrial.detail.complete.label"="ได้รับโบนัส %@ แล้ว ใช้งานได้ถาวร";
+/* Explanation label shown on the achievements view for incomplete start MEGA Pass Free Trial achievement, %@ is a placeholder. */
+"account.achievement.passFreeTrial.incomplete.explanation.label"="ติดตั้งแอป MEGA Pass เข้าสู่ระบบด้วยบัญชี MEGA ของคุณ แล้วเริ่มทดลองใช้ฟรี พื้นที่เก็บข้อมูลโบนัสของคุณจะถูกเพิ่มให้โดยอัตโนมัติหลังจากที่คุณเริ่มทดลองใช้ฟรี";
+/* Explanation label shown on the achievements view for complete start MEGA Pass Free Trial achievement, %@ is a placeholder. */
+"account.achievement.passFreeTrial.complete.explanation.label"="คุณได้รับพื้นที่เก็บข้อมูล %@ จากการเริ่มทดลองใช้ MEGA Pass ฟรี";
+/* Text for the button to install MEGA Pass in the Start MEGA Pass Free Trial achievement */
+"account.achievement.passFreeTrial.buttonText"="ติดตั้ง MEGA Pass";
 /* Subtitle of the incomplete achievement, %@ is a placeholder. */
 "account.achievement.incomplete.subtitle"="พื้นที่เก็บข้อมูล %@ มีอายุใช้งาน 365 วัน";
+/* Subtitle of the incomplete achievement with permanent bonus, %@ is a placeholder. */
+"account.achievement.incomplete.subtitle.permanent"="พื้นที่เก็บข้อมูล %@ ใช้งานได้ถาวร";
+/* Subtitle of the complete achievement with permanent bonus */
+"account.achievement.complete.subtitle.permanent"="ใช้สิทธิ์โบนัสแล้ว";
 /* Add Phone Number title */
 "Add Phone Number"="เพิ่มหมายเลขโทรศัพท์";
 /* Explanation Label shown on the achievements view for complete add phone number achievement, %@ is a placeholder. */
@@ -2115,7 +2143,7 @@
 /* Button title which, if tapped, will trigger the action of opening a folder containg this file */
 "View in Folder"="ดูในโฟลเดอร์";
 /* Error message shown when opening a link with an account that not corresponds to the link */
-"This link is not related to this account. Please log in with the correct account."="ลิงก์นี้ไม่เกี่ยวข้องกับบัญชีนี้ กรุณาเข้าสู่ระบบด้วยบัญชีที่ถูกต้อง";
+"This link is not related to this account. Please log in with the correct account."="You’re logged in to a different MEGA account. Log out and open the password reset link again.";
 /* Text emncouraging the user to add contacts in MEGA */
 "Invite contact now"="เชิญผู้ติดต่อตอนนี้";
 /* Error message if user click next button without enter a valid phone number */
@@ -2211,13 +2239,13 @@
 /* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the header title that appears above */
 "settings.userInterface.mediaDiscovery.header"="มุมมองแกลเลอรี่";
 /* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the footer message body that appears under that option */
-"settings.userInterface.mediaDiscovery.footer.body"="Open folders with only images or videos in a visual grid. Browse media by thumbnails and filter by date.";
+"settings.userInterface.mediaDiscovery.footer.body"="เปิดโฟลเดอร์ที่มีเฉพาะรูปภาพหรือวิดีโอในรูปแบบตาราง ดูสื่อจากรูปขนาดย่อ และกรองตามวันที่";
 /* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the footer message body link that appears under that option */
-"settings.userInterface.mediaDiscovery.footer.link"="Learn more about gallery view";
+"settings.userInterface.mediaDiscovery.footer.link"="เรียนรู้เพิ่มเติมเกี่ยวกับมุมมองแกลเลอรี่";
 /* In Settings - User Interface, there is a setting that can determine if the app should also load sub folder media. This is the label in the setting */
-"settings.userInterface.mediaDiscoverySubFolder"="Gallery view in subfolders";
+"settings.userInterface.mediaDiscoverySubFolder"="มุมมองแกลเลอรี่ในโฟลเดอร์ย่อย";
 /* In Settings - User Interface, there is a setting that can determine if the app should also load sub folder media. This is the footer message body that appears under that option */
-"settings.userInterface.mediaDiscoverySubFolder.footer"="Images and videos from subfolders will also be included in gallery view";
+"settings.userInterface.mediaDiscoverySubFolder.footer"="รูปภาพและวิดีโอจากโฟลเดอร์ย่อยจะแสดงในมุมมองแกลเลอรี่ด้วย";
 /* In Settings - User Interface, there is an option that you can enable to hide the contents of the Recents section */
 "settings.userInterface.hideRecentActivity"="ซ่อนกิจกรรมล่าสุด";
 /* In Settings - User Interface, there is an option that you can enable to hide the contents of the Recents section. This is the footer that appears under that option. */
@@ -2563,7 +2591,7 @@
 /* Title of Over Disk Quota dialog */
 "dialog.storage.odq.title"="กรุณาอัปเกรด";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. @% is placeholder. */
-"dialog.storage.almostFull.detail"="Your Cloud drive is almost full. Upgrade now and get up to %@ TB of cloud storage space.";
+"dialog.storage.almostFull.detail"="คลาวด์ไดรฟ์ของคุณใกล้เต็มแล้ว อัปเกรดตอนนี้และรับพื้นที่จัดเก็บข้อมูลระบบคลาวด์ได้ถึง %@ TB";
 /* Over Disk Quota detail message informing the user that they've reached the full capacity of their accounts. */
 "dialog.storage.odq.detail"="ที่เก็บข้อมูลบนคลาวด์ของคุณเต็มแล้ว กรุณาอัปเกรดเป็นแผน MEGA Pro เพื่อเพิ่มพื้นที่และรับสิทธิประโยชน์เพิ่มเติมอีกมากมาย หากคุณใช้พื้นที่เกินขีดจำกัดและไม่อัปเกรดหรือลบข้อมูลบางอย่างออก บัญชีของคุณอาจถูกล็อก กรุณาดูอีเมลที่เราส่งข้อมูลเพิ่มเติมถึงคุณ";
 /* Over Disk Quota paywall not final title. */
@@ -3887,7 +3915,7 @@
 /* Error shown when moving folder to inside itself */
 "Error.nodeCopyOrMove.circularDependency"="คุณไม่สามารถย้ายโฟลเดอร์นี้ได้ เนื่องจากปลายทางเป็นโฟลเดอร์เดียวกัน";
 /* Auto media discovery banner title */
-"photos.mediaDiscovery.autoMediaDiscoveryBanner.title"="As this folder contains only images and videos, we’ve automatically opened it in gallery view. You can enjoy your visual content with a more immersive layout. You can disable this in Settings.";
+"photos.mediaDiscovery.autoMediaDiscoveryBanner.title"="เนื่องจากโฟลเดอร์นี้มีเพียงรูปภาพและวิดีโอ เราจึงเปิดในมุมมองแกลเลอรี่โดยอัตโนมัติ คุณจะเพลิดเพลินกับเนื้อหาสื่อที่ดูได้เต็มตามากขึ้น คุณปิดใช้งานฟังก์ชันนี้ได้ในการตั้งค่า";
 /* Upgrade account screen header title after user onboarding */
 "onboarding.upgradeAccount.header.title"="รับสิทธิประโยชน์เพิ่มเติมด้วยการอัปเกรดเป็นแผน Pro";
 /* Upgrade account screen header subTitle after user onboarding. %@ will be replaced by the price of the lowest plan per month. */
@@ -4509,9 +4537,9 @@
 /* Add to collection button title to add items */
 "photos.addTo.button.title.add"="เพิ่ม";
 /* Ad-free experience screen header title */
-"ads.adFree.header.title"="Want MEGA without the ads?";
+"ads.adFree.header.title"="สัมผัสประสบการณ์ MEGA แบบไร้โฆษณา";
 /* Ad-free experience screen header subTitle */
-"ads.adFree.header.subTitle"="Upgrade to a Pro plan with plenty of storage and more. Our Pro plans start at just %@ a month.";
+"ads.adFree.header.subTitle"="อัปเกรดเป็นแผน Pro เพื่อพื้นที่จัดเก็บที่มากขึ้นและสิทธิประโยชน์อีกมากมาย แผน Pro ของเราเริ่มต้นเพียงเดือนละ %@ ";
 /* Ad-free experience screen content title about pro plan featuring as Generous Storage */
 "ads.adFree.content.generousStorage.title"="พื้นที่เก็บข้อมูลจุได้ไม่อั้น";
 /* Ad-free experience screen content message about pro plan featuring as Generous Storage */
@@ -4591,7 +4619,7 @@
 /* Hidden files and folders onboarding content item two title */
 "onboarding.hiddenFilesAndFolders.content.item.two.title"="ควบคุมการมองเห็นได้ง่าย";
 /* Hidden files and folders onboarding content item two message */
-"onboarding.hiddenFilesAndFolders.content.item.two.message"="To show hidden files, turn on the “Show hidden items” setting under “File Management” -> “User interface” in your app settings.";
+"onboarding.hiddenFilesAndFolders.content.item.two.message"="หากต้องการแสดงไฟล์ที่ซ่อนอยู่ ให้เปิดการตั้งค่า “แสดงรายการที่ซ่อนอยู่” ใน “การจัดการไฟล์ -> หน้าจอผู้ใช้” ในการตั้งค่าแอปของคุณ";
 /* Hidden files and folders onboarding content item three title */
 "onboarding.hiddenFilesAndFolders.content.item.three.title"="ไฟล์ที่แชร์ยังคงมองเห็นได้";
 /* Hidden files and folders onboarding content item three message */
@@ -4621,7 +4649,7 @@
 /* Onboarding Notification CTA title */
 "onboarding.cta.notifications.title"="ไม่พลาดทุกการอัปเดตที่สำคัญ";
 /* Onboarding Notification CTA description */
-"onboarding.cta.notifications.explanation"="Stay informed with real-time updates that matter to you. Get alerts for shared folder activity, security updates, and exclusive offers, so you never miss anything important.\n\nYou can manage notification preferences at any time in the settings.";
+"onboarding.cta.notifications.explanation"="รับทราบข้อมูลด้วยการอัปเดตแบบเรียลไทม์ที่สำคัญสำหรับคุณ รับการแจ้งเตือนกิจกรรมในโฟลเดอร์ที่แชร์ การอัปเดตความปลอดภัย และข้อเสนอพิเศษ เพื่อให้คุณไม่พลาดทุกสิ่งสำคัญ \n\nคุณสามารถจัดการการตั้งค่าการแจ้งเตือนได้ตลอดเวลาในการตั้งค่าอุปกรณ์";
 /* Onboarding Notification CTA *Enable* button */
 "onboarding.cta.notifications.buttons.enable"="เปิดใช้การแจ้งเตือน";
 /* Onboarding Notification CTA *Skip* button */
@@ -4629,23 +4657,23 @@
 /* Onboarding Camera Backups CTA title */
 "onboarding.cta.cameraBackups.title"="เก็บภาพถ่ายของคุณให้ปลอดภัยเสมอ";
 /* Onboarding Camera Backups CTA description */
-"onboarding.cta.cameraBackups.explanation"="Your memories matter\n\nCamera uploads automatically backs up your photos and videos to your MEGA Cloud drive, so you never have to worry about losing them";
+"onboarding.cta.cameraBackups.explanation"="ความทรงจำของคุณมีค่า\n\nการอัปโหลดรูปภาพจะสำรองรูปภาพและวิดีโอของคุณไปยัง MEGA คลาวด์โดยอัตโนมัติ คุณจึงไม่ต้องกังวลว่าจะสูญหาย";
 /* Onboarding Camera Backups CTA note */
-"onboarding.cta.cameraBackups.note"="Camera uploads requires [B]full access[/B] to your device’s photo library";
+"onboarding.cta.cameraBackups.note"="การอัปโหลดรูปภาพต้อง[B]เข้าถึงคลังรูปภาพทั้งหมด[/B]ในอุปกรณ์ของคุณ";
 /* Onboarding Camera Backups CTA *Enable* button */
 "onboarding.cta.cameraBackups.buttons.enable"="เปิดใช้งานอัปโหลดกล้อง";
 /* Onboarding Camera Backups CTA *Skip* button */
 "onboarding.cta.cameraBackups.buttons.skip"="ข้ามไปก่อน";
 /* String explaining the auto-renewal policy of the Pro subscription. */
-"subscriptionPurchase.autoRenewDescription"="Subscriptions are renewed automatically for successive subscription periods of the same duration and at the same price as the initial period chosen.\n\nYou can cancel your Pro plan anytime but no later than 24 hours before your next subscription payment is due. Learn how to manage your subscription in your settings.";
+"subscriptionPurchase.autoRenewDescription"="การสมัครใช้งานจะต่ออายุโดยอัตโนมัติทุกครั้ง โดยจะใช้ระยะเวลาและราคาเท่ากับครั้งแรกที่สมัคร\n\nคุณสามารถยกเลิกแผน Pro ได้ทุกเมื่อ แต่ต้องไม่เกิน 24 ชั่วโมงก่อนถึงกำหนดชำระเงินครั้งถัดไป เรียนรู้วิธีจัดการการสมัครใช้งานได้ในตั้งค่าของคุณ";
 /* Title shown for the free plan card */
 "subscriptionPurchase.freePlanCard.title"="เริ่มต้นใช้งานแผนฟรีของเรา";
 /* Description shown for the free plan card */
-"subscriptionPurchase.freePlanCard.description"="We offer generous amount of storage and transfer quota at no charge, so you can try MEGA with no risk";
+"subscriptionPurchase.freePlanCard.description"="เรามีพื้นที่จัดเก็บและโควต้าการถ่ายโอนข้อมูลจำนวนมากให้คุณใช้ฟรี คุณจึงสามารถลองใช้ MEGA ได้โดยไม่มีความเสี่ยง";
 /* First benefit shown for the free plan card */
-"subscriptionPurchase.freePlanCard.feature.one"="Free 20 GB of storage";
+"subscriptionPurchase.freePlanCard.feature.one"="พื้นที่จัดเก็บฟรี 20 GB";
 /* Second benefit shown for the free plan card */
-"subscriptionPurchase.freePlanCard.feature.two"="Limited transfers";
+"subscriptionPurchase.freePlanCard.feature.two"="การถ่ายโอนข้อมูลจำกัด";
 /* Button title for the free plan card */
 "subscriptionPurchase.freePlanCard.button.title"="เริ่มต้นใช้งานฟรี";
 /* Displays the amount of storage included in the subscription plan */
@@ -4653,28 +4681,40 @@
 /* Displays the amount of data transfer included in the subscription plan */
 "subscriptionPurchase.plan.transfer"="ถ่ายโอนข้อมูล %@";
 /* Displays the total amount when billed yearly */
-"subscriptionPurchase.plan.billedYearly"="%@ billed yearly";
+"subscriptionPurchase.plan.billedYearly"="%@ ต่อปี";
 /* Button title to cancel the subscription purchase. */
 "subscriptionPurchase.maybeLater"="ไว้ทีหลัง";
 /* Title for the features of pro plan in the subscription purchase screen. */
-"subscriptionPurchase.featuresOfProPlan.title"="Additional benefits of Pro plans";
+"subscriptionPurchase.featuresOfProPlan.title"="ประโยชน์เพิ่มเติมของแผน Pro";
 /* Features of pro plan in the subscription purchase screen. */
-"subscriptionPurchase.featuresOfProPlan.message"="• Password-protected links\n\n• Links with expiry dates\n\n• Transfer quota sharing\n\n• Rewind folders up to 180 days\n\n• Unlimited calls and meetings\n\n• Schedule rubbish bin clearing between 7 days and 10 years\n\n• Priority support";
+"subscriptionPurchase.featuresOfProPlan.message"="• ตั้งค่าลิงก์แบบมีรหัสผ่านได้\n\n• กำหนดวันหมดอายุลิงก์ได้\n\n• แชร์โควต้าการถ่ายโอนได้\n\n• ย้อนกลับโฟลเดอร์ที่ลบไปแล้วได้สูงสุด 180 วัน\n\n• โทรและประชุมได้ไม่จำกัด\n\n• กำหนดเวลาล้างถังขยะได้ตั้งแต่ 7 วันถึง 10 ปี\n\n• การสนับสนุนแบบพิเศษ";
 /* Title for the first subscription feature: generous storage capacity */
 "subscriptionPurchase.feature.one.title"="พื้นที่เก็บข้อมูลจุได้ไม่อั้น";
 /* Description for the first subscription feature: details about available storage */
-"subscriptionPurchase.feature.one.description"="Store up to 16 TB of data";
+"subscriptionPurchase.feature.one.description"="จัดเก็บข้อมูลได้สูงสุด 16 TB";
 /* Title for the second subscription feature: transfer quota sharing */
 "subscriptionPurchase.feature.two.title"="แชร์การถ่ายโอนของคุณให้คนอื่นได้";
 /* Description for the second subscription feature: how shared users can use your quota */
-"subscriptionPurchase.feature.two.description"="People you share items with can use your transfer quota to download and stream files";
+"subscriptionPurchase.feature.two.description"="คนที่คุณแชร์รายการด้วยสามารถใช้โควต้าการถ่ายโอนของคุณเพื่อดาวน์โหลดและสตรีมไฟล์ได้";
 /* Title for the third subscription feature: MEGA VPN service */
 "subscriptionPurchase.feature.three.title"="MEGA VPN";
 /* Description for the third subscription feature: benefits of using the MEGA VPN */
-"subscriptionPurchase.feature.three.description"="Keep your online life safe, fast, and easy with our high-speed VPN";
+"subscriptionPurchase.feature.three.description"="รักษาชีวิตออนไลน์ของคุณให้ปลอดภัย รวดเร็ว และง่ายดายด้วย VPN ความเร็วสูงของเรา";
 /* Title for the fourth subscription feature: MEGA Pass password manager */
 "subscriptionPurchase.feature.four.title"="MEGA Pass";
 /* Description for the fourth subscription feature: benefits of using MEGA Pass for password management */
-"subscriptionPurchase.feature.four.description"="Organise all your passwords and keep them safe with our password manager";
+"subscriptionPurchase.feature.four.description"="จัดการรหัสผ่านทั้งหมดของคุณและเก็บไว้อย่างปลอดภัยด้วยตัวจัดการรหัสผ่านของเรา";
 /* Title for all the feature in subscription purchase view. */
 "subscriptionPurchase.feature.title"="คุณจะได้รับ:";
+/* Title for the Home tab bar item */
+"tabbarTitle.home"="หน้าแรก";
+/* Title for the Drive tab bar item */
+"tabbarTitle.drive"="ไดร์ฟ";
+/* Title for the Photo tab bar item */
+"tabbarTitle.photos"="รูปภาพ";
+/* Title for the Chat tab bar item */
+"tabbarTitle.chat"="แชท";
+/* Title for the Menu tab bar item */
+"tabbarTitle.menu"="เมนู";
+/* Storage benefit shown for the free plan card */
+"subscriptionPurchase.freePlanCard.feature.storage"="%@ of storage";

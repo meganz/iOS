@@ -1058,8 +1058,36 @@
 "account.achievement.mobileApp.complete.explaination.label"="Anda telah menerima %@ ruang penyimpanan untuk menginstal aplikasi seluler MEGA.";
 /* Explanation label shown on the achievements view for incomplete install MEGA mobile app achievement, %@ is a placeholder. */
 "account.achievement.mobileApp.incomplete.explaination.label"="Saat anda menginstal Aplikasi Seluler MEGA, anda mendapatkan %@ ruang penyimpanan gratis, berlaku selama 365 hari. Aplikasi Seluler MEGA tersedia untuk iOS dan Android.";
+/* Cell title shown on the achievements view for Start MEGA VPN Free Trial */
+"account.achievement.vpnFreeTrial.title"="Mulai uji coba gratis MEGA VPN";
+/* Detail label shown on the achievements details view for Start MEGA VPN Free Trial when its incomplete, %@ is placeholder for the storage amount */
+"account.achievement.vpnFreeTrial.detail.incomplete.label"="Dapatkan %@ penyimpanan gratis saat anda memulai uji coba gratis MEGA VPN. Berlaku secara permanen.";
+/* Detail label shown on the achievements details view for Start MEGA VPN Free Trial when its completed, %@ is placeholder for the storage amount */
+"account.achievement.vpnFreeTrial.detail.complete.label"="%@ bonus diterapkan. Berlaku secara permanen.";
+/* Explanation label shown on the achievements view for incomplete start MEGA VPN Free Trial achievement, %@ is a placeholder. */
+"account.achievement.vpnFreeTrial.incomplete.explanation.label"="Instal aplikasi MEGA VPN, masuk dengan akun MEGA anda, dan mulai uji coba gratis anda. Penyimpanan bonus anda ditambahkan secara otomatis setelah memulai uji coba gratis anda.";
+/* Explanation label shown on the achievements view for complete start MEGA VPN Free Trial achievement, %@ is a placeholder. */
+"account.achievement.vpnFreeTrial.complete.explanation.label"="Anda telah menerima %@ ruang penyimpanan untuk memulai uji coba gratis MEGA VPN";
+/* Text for the button to install MEGA VPN in the Start MEGA VPN Free Trial achievement */
+"account.achievement.vpnFreeTrial.buttonText"="Pasang MEGA VPN";
+/* Cell title shown on the achievements view for Start MEGA Pass Free Trial */
+"account.achievement.passFreeTrial.title"="Mulai uji coba gratis MEGA Pass ";
+/* Detail label shown on the achievements details view for Start MEGA Pass Free Trial when its incomplete, %@ is placeholder for the storage amount */
+"account.achievement.passFreeTrial.detail.incomplete.label"="Dapatkan %@ penyimpanan gratis saat anda memulai uji coba gratis MEGA Pass. Berlaku secara permanen.";
+/* Detail label shown on the achievements details view for Start MEGA Pass Free Trial when its completed, %@ is placeholder for the storage amount */
+"account.achievement.passFreeTrial.detail.complete.label"="%@ bonus diterapkan. Berlaku secara permanen.";
+/* Explanation label shown on the achievements view for incomplete start MEGA Pass Free Trial achievement, %@ is a placeholder. */
+"account.achievement.passFreeTrial.incomplete.explanation.label"="Instal aplikasi MEGA Pass, masuk dengan akun MEGA anda, dan mulai uji coba gratis anda. Penyimpanan bonus anda ditambahkan secara otomatis setelah memulai uji coba gratis anda.";
+/* Explanation label shown on the achievements view for complete start MEGA Pass Free Trial achievement, %@ is a placeholder. */
+"account.achievement.passFreeTrial.complete.explanation.label"="Anda telah menerima %@ ruang penyimpanan untuk memulai uji coba gratis MEGA Pass ";
+/* Text for the button to install MEGA Pass in the Start MEGA Pass Free Trial achievement */
+"account.achievement.passFreeTrial.buttonText"="Pasang MEGA Pass";
 /* Subtitle of the incomplete achievement, %@ is a placeholder. */
 "account.achievement.incomplete.subtitle"="%@penyimpanan. Berlaku selama 365 hari.";
+/* Subtitle of the incomplete achievement with permanent bonus, %@ is a placeholder. */
+"account.achievement.incomplete.subtitle.permanent"="%@ penyimpanan. Berlaku secara permanen.";
+/* Subtitle of the complete achievement with permanent bonus */
+"account.achievement.complete.subtitle.permanent"="Bonus diterapkan";
 /* Add Phone Number title */
 "Add Phone Number"="Tambahkan Nomor Telepon";
 /* Explanation Label shown on the achievements view for complete add phone number achievement, %@ is a placeholder. */
@@ -2115,7 +2143,7 @@
 /* Button title which, if tapped, will trigger the action of opening a folder containg this file */
 "View in Folder"="Lihat di folder";
 /* Error message shown when opening a link with an account that not corresponds to the link */
-"This link is not related to this account. Please log in with the correct account."="Link ini tidak terkait dengan akun ini. Silahkan masuk dengan akun yang benar.";
+"This link is not related to this account. Please log in with the correct account."="You’re logged in to a different MEGA account. Log out and open the password reset link again.";
 /* Text emncouraging the user to add contacts in MEGA */
 "Invite contact now"="Undang kontak sekarang";
 /* Error message if user click next button without enter a valid phone number */
@@ -4678,3 +4706,15 @@
 "subscriptionPurchase.feature.four.description"="Organise all your passwords and keep them safe with our password manager";
 /* Title for all the feature in subscription purchase view. */
 "subscriptionPurchase.feature.title"="Anda akan mendapatkan:";
+/* Title for the Home tab bar item */
+"tabbarTitle.home"="Beranda";
+/* Title for the Drive tab bar item */
+"tabbarTitle.drive"="Drive";
+/* Title for the Photo tab bar item */
+"tabbarTitle.photos"="Foto";
+/* Title for the Chat tab bar item */
+"tabbarTitle.chat"="Obrolan";
+/* Title for the Menu tab bar item */
+"tabbarTitle.menu"="Menu";
+/* Storage benefit shown for the free plan card */
+"subscriptionPurchase.freePlanCard.feature.storage"="%@ of storage";

@@ -1058,8 +1058,36 @@
 "account.achievement.mobileApp.complete.explaination.label"="لقد تلقيت %@ من مساحة تخزين لتثبيتك تطبيق ميغا للهاتف المحمول MEGA mobile.";
 /* Explanation label shown on the achievements view for incomplete install MEGA mobile app achievement, %@ is a placeholder. */
 "account.achievement.mobileApp.incomplete.explaination.label"="عند تثبيت تطبيق ميغا MEGA للهاتف المحمول، تحصل على %@ من مساحة التخزين المجانية صالحة لمدة 365 يومًا. تطبيق ميغا MEGA للهاتف المحمول متاح لنظامي التشغيل أي أو إس iOS و اندرويد Android.";
+/* Cell title shown on the achievements view for Start MEGA VPN Free Trial */
+"account.achievement.vpnFreeTrial.title"="ابدأ تشغيل الفترة التجريبية لميغا في بي إن MEGA VPN";
+/* Detail label shown on the achievements details view for Start MEGA VPN Free Trial when its incomplete, %@ is placeholder for the storage amount */
+"account.achievement.vpnFreeTrial.detail.incomplete.label"="%@ من مساحة التخزين المجاني عند بدء تشغيل الفترة التجريبية  المجانية لميغا في بي إن MEGA VPN. صالحة بشكل دائم.";
+/* Detail label shown on the achievements details view for Start MEGA VPN Free Trial when its completed, %@ is placeholder for the storage amount */
+"account.achievement.vpnFreeTrial.detail.complete.label"="%@ تم تطبيق المكافأة. صالح بشكل دائم.";
+/* Explanation label shown on the achievements view for incomplete start MEGA VPN Free Trial achievement, %@ is a placeholder. */
+"account.achievement.vpnFreeTrial.incomplete.explanation.label"="قم بتثبيت تطبيق ميغا في بي إن MEGA VPN، قم بتسجيل الدخول باستخدام حساب ميغا MEGA الخاص بك وابدأ الفترة التجريبية المجانية. تتم إضافة مساحة تخزين المكافأة تلقائيًا بعد بدء الفترة التجريبية المجانية.";
+/* Explanation label shown on the achievements view for complete start MEGA VPN Free Trial achievement, %@ is a placeholder. */
+"account.achievement.vpnFreeTrial.complete.explanation.label"="لقد استلمت %@ من مساحة التخزين لبدء تشغيل الفترة التجريبية المجانية من ميغا في بي إن MEGA VPN";
+/* Text for the button to install MEGA VPN in the Start MEGA VPN Free Trial achievement */
+"account.achievement.vpnFreeTrial.buttonText"="قم بتثبيت ميغا في بي إن MEGA VPN";
+/* Cell title shown on the achievements view for Start MEGA Pass Free Trial */
+"account.achievement.passFreeTrial.title"="ابدأ تشغيل الفترة التجريبية المجانية لميغا باس MEGA Pass";
+/* Detail label shown on the achievements details view for Start MEGA Pass Free Trial when its incomplete, %@ is placeholder for the storage amount */
+"account.achievement.passFreeTrial.detail.incomplete.label"="%@ من مساحة التخزين المجاني عند بدء تشغيل الفترة التجريبية  المجانية لميغا باس MEGA Pass. صالحة بشكل دائم.";
+/* Detail label shown on the achievements details view for Start MEGA Pass Free Trial when its completed, %@ is placeholder for the storage amount */
+"account.achievement.passFreeTrial.detail.complete.label"="%@ تم تطبيق المكافأة. صالح بشكل دائم.";
+/* Explanation label shown on the achievements view for incomplete start MEGA Pass Free Trial achievement, %@ is a placeholder. */
+"account.achievement.passFreeTrial.incomplete.explanation.label"="قم بتثبيت تطبيق ميغا باس MEGA Pass، قم بتسجيل الدخول باستخدام حساب ميغا MEGA الخاص بك وابدأ الفترة التجريبية المجانية. تتم إضافة مساحة تخزين المكافأة تلقائيًا بعد بدء الفترة التجريبية المجانية.";
+/* Explanation label shown on the achievements view for complete start MEGA Pass Free Trial achievement, %@ is a placeholder. */
+"account.achievement.passFreeTrial.complete.explanation.label"="لقد استلمت %@ من مساحة التخزين لبدء تشغيل الفترة التجريبية المجانية من ميغا باس MEGA Pass";
+/* Text for the button to install MEGA Pass in the Start MEGA Pass Free Trial achievement */
+"account.achievement.passFreeTrial.buttonText"="قم بتثبيت ميغا باس MEGA Pass";
 /* Subtitle of the incomplete achievement, %@ is a placeholder. */
 "account.achievement.incomplete.subtitle"="%@ من مساحة التخزين. صالحة لمدة 365 يوماً.";
+/* Subtitle of the incomplete achievement with permanent bonus, %@ is a placeholder. */
+"account.achievement.incomplete.subtitle.permanent"="%@ من مساحة التخزين. صالحة بشكل دائم.";
+/* Subtitle of the complete achievement with permanent bonus */
+"account.achievement.complete.subtitle.permanent"="تم تطبيق المكافأة";
 /* Add Phone Number title */
 "Add Phone Number"="أضف رقم هاتف";
 /* Explanation Label shown on the achievements view for complete add phone number achievement, %@ is a placeholder. */
@@ -2115,7 +2143,7 @@
 /* Button title which, if tapped, will trigger the action of opening a folder containg this file */
 "View in Folder"="عرض في المجلد";
 /* Error message shown when opening a link with an account that not corresponds to the link */
-"This link is not related to this account. Please log in with the correct account."="هذا الرابط لا يعود لهذا الحساب. يرجى تسجيل الدخول باستخدام الحساب الصحيح.";
+"This link is not related to this account. Please log in with the correct account."="You’re logged in to a different MEGA account. Log out and open the password reset link again.";
 /* Text emncouraging the user to add contacts in MEGA */
 "Invite contact now"="ادعو جهات الاتصال الآن";
 /* Error message if user click next button without enter a valid phone number */
@@ -4678,3 +4706,15 @@
 "subscriptionPurchase.feature.four.description"="Organise all your passwords and keep them safe with our password manager";
 /* Title for all the feature in subscription purchase view. */
 "subscriptionPurchase.feature.title"="ستحصل على:";
+/* Title for the Home tab bar item */
+"tabbarTitle.home"="الصفحة الرئيسية";
+/* Title for the Drive tab bar item */
+"tabbarTitle.drive"="السواقة";
+/* Title for the Photo tab bar item */
+"tabbarTitle.photos"="تطبيق الصور";
+/* Title for the Chat tab bar item */
+"tabbarTitle.chat"="المحادثة";
+/* Title for the Menu tab bar item */
+"tabbarTitle.menu"="القائمة";
+/* Storage benefit shown for the free plan card */
+"subscriptionPurchase.freePlanCard.feature.storage"="%@ of storage";
