@@ -5,6 +5,7 @@ import MEGAUIComponent
 import SwiftUI
 
 struct SubscriptionPurchaseFreePlanView: View {
+    let viewModel: SubscriptionPurchaseFreePlanViewModel
     let getStartedButtonTapped: () -> Void
 
     var body: some View {
@@ -21,7 +22,7 @@ struct SubscriptionPurchaseFreePlanView: View {
 
             SubscriptionPurchaseFeatureView(
                 image: MEGAAssets.Image.subscriptionFeatureCloud,
-                title: Strings.Localizable.SubscriptionPurchase.FreePlanCard.Feature.one
+                title: viewModel.storageTile
             )
 
             SubscriptionPurchaseFeatureView(

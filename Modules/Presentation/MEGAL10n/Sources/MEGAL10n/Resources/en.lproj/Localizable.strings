@@ -4716,3 +4716,5 @@
 "tabbarTitle.chat"="Chat";
 /* Title for the Menu tab bar item */
 "tabbarTitle.menu"="Menu";
+/* Storage benefit shown for the free plan card */
+"subscriptionPurchase.freePlanCard.feature.storage"="%@ of storage";

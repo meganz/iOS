@@ -274,6 +274,10 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
                                    linkColor: TokenColors.Support.success.swiftUI)
     }
     
+    var freePlanViewModel: SubscriptionPurchaseFreePlanViewModel {
+        .init(maxStorageSize: accountDetails.storageMax)
+    }
+    
     func createAccountPlanViewModel(_ plan: PlanEntity) -> AccountPlanViewModel {
         AccountPlanViewModel(
             plan: plan,
