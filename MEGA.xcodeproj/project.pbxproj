@@ -54,6 +54,7 @@
 		0E4467112D77B6D200691ECA /* OverDiskQuotaNodeActionViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E4467102D77B63000691ECA /* OverDiskQuotaNodeActionViewControllerDelegate.swift */; };
 		0E44671C2D77CC3400691ECA /* OverDiskQuotaNodeActionViewControllerDelegateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E44671B2D77CC3400691ECA /* OverDiskQuotaNodeActionViewControllerDelegateTests.swift */; };
 		0E45ACB429BEB72600541278 /* NodeEntityMapppingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E45ACB329BEB72600541278 /* NodeEntityMapppingTests.swift */; };
+		0E5164512DF9317C0076E6F1 /* SubscriptionPurchaseFreePlanViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E5164502DF9317C0076E6F1 /* SubscriptionPurchaseFreePlanViewModelTests.swift */; };
 		0E52388B2AF0499A00AC5727 /* CameraUploadStatusButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E52388A2AF0499A00AC5727 /* CameraUploadStatusButtonView.swift */; };
 		0E52388D2AF04DF600AC5727 /* CameraUploadStatusButtonViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E52388C2AF04DF600AC5727 /* CameraUploadStatusButtonViewModel.swift */; };
 		0E5F5E7C2C6C39130037A99C /* HiddenFilesOnboardingButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E5F5E7B2C6C39130037A99C /* HiddenFilesOnboardingButtonView.swift */; };
@@ -88,6 +89,7 @@
 		0E9301E02B044C1A000306D9 /* EnableCameraUploadsEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E9301DF2B044C1A000306D9 /* EnableCameraUploadsEmptyView.swift */; };
 		0E9301E22B044C62000306D9 /* PhotoTimelineEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E9301E12B044C62000306D9 /* PhotoTimelineEmptyView.swift */; };
 		0E96EAD32ACBC29600782D88 /* AutoMediaDiscoveryBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E96EAD22ACBC29600782D88 /* AutoMediaDiscoveryBannerView.swift */; };
+		0E9E6D072DF92B44005EA167 /* SubscriptionPurchaseFreePlanViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E9E6D062DF92B3D005EA167 /* SubscriptionPurchaseFreePlanViewModel.swift */; };
 		0E9F66CF2D7FD592001CE27B /* DefaultAnalyticsNodeActionListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E9F66CE2D7FD56A001CE27B /* DefaultAnalyticsNodeActionListener.swift */; };
 		0E9FA0A42C924C1D0098B9B4 /* AlbumContentPhotoLibraryDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E9FA0A32C924C1D0098B9B4 /* AlbumContentPhotoLibraryDataProvider.swift */; };
 		0EA150D729B810D2005C6486 /* AlbumType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EA150D629B810D2005C6486 /* AlbumType.swift */; };
@@ -2794,6 +2796,7 @@
 		0E4467102D77B63000691ECA /* OverDiskQuotaNodeActionViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverDiskQuotaNodeActionViewControllerDelegate.swift; sourceTree = "<group>"; };
 		0E44671B2D77CC3400691ECA /* OverDiskQuotaNodeActionViewControllerDelegateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverDiskQuotaNodeActionViewControllerDelegateTests.swift; sourceTree = "<group>"; };
 		0E45ACB329BEB72600541278 /* NodeEntityMapppingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeEntityMapppingTests.swift; sourceTree = "<group>"; };
+		0E5164502DF9317C0076E6F1 /* SubscriptionPurchaseFreePlanViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionPurchaseFreePlanViewModelTests.swift; sourceTree = "<group>"; };
 		0E52388A2AF0499A00AC5727 /* CameraUploadStatusButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraUploadStatusButtonView.swift; sourceTree = "<group>"; };
 		0E52388C2AF04DF600AC5727 /* CameraUploadStatusButtonViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraUploadStatusButtonViewModel.swift; sourceTree = "<group>"; };
 		0E5F5E7B2C6C39130037A99C /* HiddenFilesOnboardingButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HiddenFilesOnboardingButtonView.swift; sourceTree = "<group>"; };
@@ -2828,6 +2831,7 @@
 		0E9301DF2B044C1A000306D9 /* EnableCameraUploadsEmptyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnableCameraUploadsEmptyView.swift; sourceTree = "<group>"; };
 		0E9301E12B044C62000306D9 /* PhotoTimelineEmptyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoTimelineEmptyView.swift; sourceTree = "<group>"; };
 		0E96EAD22ACBC29600782D88 /* AutoMediaDiscoveryBannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoMediaDiscoveryBannerView.swift; sourceTree = "<group>"; };
+		0E9E6D062DF92B3D005EA167 /* SubscriptionPurchaseFreePlanViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionPurchaseFreePlanViewModel.swift; sourceTree = "<group>"; };
 		0E9F66CE2D7FD56A001CE27B /* DefaultAnalyticsNodeActionListener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultAnalyticsNodeActionListener.swift; sourceTree = "<group>"; };
 		0E9FA0A32C924C1D0098B9B4 /* AlbumContentPhotoLibraryDataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumContentPhotoLibraryDataProvider.swift; sourceTree = "<group>"; };
 		0EA150D629B810D2005C6486 /* AlbumType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumType.swift; sourceTree = "<group>"; };
@@ -12496,6 +12500,7 @@
 				BF0FE75B2DB3129C0083E23B /* SubscriptionPurchaseFeaturesView.swift */,
 				BF0FE7572DB312150083E23B /* SubscriptionPurchaseFeatureView.swift */,
 				BF0FE7BD2DB85AD20083E23B /* SubscriptionPurchaseFreePlanView.swift */,
+				0E9E6D062DF92B3D005EA167 /* SubscriptionPurchaseFreePlanViewModel.swift */,
 				BF0FE7502DB311D10083E23B /* SubscriptionPurchaseHeaderView.swift */,
 				BF0FE7662DB315140083E23B /* SubscriptionPurchasePageContentView.swift */,
 				BF0FE76A2DB315B00083E23B /* SubscriptionPurchasePageHeaderView.swift */,
@@ -12513,6 +12518,7 @@
 			isa = PBXGroup;
 			children = (
 				BFA6C8EA2DD16C98002D0012 /* SubscriptionDetailsLoadingViewModelTests.swift */,
+				0E5164502DF9317C0076E6F1 /* SubscriptionPurchaseFreePlanViewModelTests.swift */,
 			);
 			path = SubscriptionScreen;
 			sourceTree = "<group>";
@@ -15658,6 +15664,7 @@
 				BF0FE75C2DB3129C0083E23B /* SubscriptionPurchaseFeaturesView.swift in Sources */,
 				BF0FE7582DB312150083E23B /* SubscriptionPurchaseFeatureView.swift in Sources */,
 				BF0FE7BE2DB85AD20083E23B /* SubscriptionPurchaseFreePlanView.swift in Sources */,
+				0E9E6D072DF92B44005EA167 /* SubscriptionPurchaseFreePlanViewModel.swift in Sources */,
 				BF0FE7512DB311D10083E23B /* SubscriptionPurchaseHeaderView.swift in Sources */,
 				BF0FE7672DB315140083E23B /* SubscriptionPurchasePageContentView.swift in Sources */,
 				BF0FE76B2DB315B00083E23B /* SubscriptionPurchasePageHeaderView.swift in Sources */,
@@ -16532,6 +16539,7 @@
 				2461E7042A8CC90600A8FFA6 /* StreamingInfoRepositoryTests.swift in Sources */,
 				C45A2E5425D2F82600915A83 /* StreamingInfoUseCaseTests.swift in Sources */,
 				BFA6C8EB2DD16C9B002D0012 /* SubscriptionDetailsLoadingViewModelTests.swift in Sources */,
+				0E5164512DF9317C0076E6F1 /* SubscriptionPurchaseFreePlanViewModelTests.swift in Sources */,
 				C43EC4A32CDB01C400556C4C /* Task+Yield.swift in Sources */,
 				BFC9685B278CDA080098C523 /* TestingAppDelegate.swift in Sources */,
 				B52CE0DD2CD094DF0083889E /* TestPasswordViewModelTests.swift in Sources */,
