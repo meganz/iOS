@@ -45,9 +45,13 @@ final class MockAudioPlayerHandler: AudioPlayerHandlerProtocol {
     var mockPlayerCurrentItem: AudioPlayerItem = AudioPlayerItem.mockItem
     var mockPlayerQueueItems: [AudioPlayerItem]?
     
-    private var _isPlayerDefined = false
+    private var _isPlayerDefined: Bool
     
     private(set) var playerResumePlayback_Calls = [TimeInterval]()
+    
+    init(isPlayerDefined: Bool = false) {
+        _isPlayerDefined = isPlayerDefined
+    }
     
     func isPlayerDefined() -> Bool { _isPlayerDefined }
     func isPlayerEmpty() -> Bool { false }
@@ -59,7 +63,8 @@ final class MockAudioPlayerHandler: AudioPlayerHandlerProtocol {
     func setCurrent(
         player: AudioPlayer?,
         autoPlayEnabled: Bool,
-        tracks: [AudioPlayerItem]
+        tracks: [AudioPlayerItem],
+        playerListener: any AudioPlayerObserversProtocol
     ) {
         addPlayer_calledTimes += 1
         addPlayerTracks_calledTimes += 1
