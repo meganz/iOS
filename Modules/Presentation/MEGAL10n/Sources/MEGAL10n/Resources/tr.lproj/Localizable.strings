@@ -1058,8 +1058,36 @@
 "account.achievement.mobileApp.complete.explaination.label"="Aldınız %@ MEGA mobil uygulamasını yüklemek için depolama alanı.";
 /* Explanation label shown on the achievements view for incomplete install MEGA mobile app achievement, %@ is a placeholder. */
 "account.achievement.mobileApp.incomplete.explaination.label"="MEGA Mobil Uygulamasını yüklediğinizde alırsınız %@ 365 gün boyunca geçerli olan ücretsiz depolama alanı. MEGA Mobil Uygulaması iOS ve Android için kullanılabilir. ";
+/* Cell title shown on the achievements view for Start MEGA VPN Free Trial */
+"account.achievement.vpnFreeTrial.title"="MEGA VPN ücretsiz denemesini başlat";
+/* Detail label shown on the achievements details view for Start MEGA VPN Free Trial when its incomplete, %@ is placeholder for the storage amount */
+"account.achievement.vpnFreeTrial.detail.incomplete.label"="MEGA VPN ücretsiz deneme sürümünü başlattığınızda %@ ücretsiz depolama alanı kazanın. Kalıcı olarak geçerlidir.";
+/* Detail label shown on the achievements details view for Start MEGA VPN Free Trial when its completed, %@ is placeholder for the storage amount */
+"account.achievement.vpnFreeTrial.detail.complete.label"="%@ bonus uygulandı. Kalıcı olarak geçerlidir.";
+/* Explanation label shown on the achievements view for incomplete start MEGA VPN Free Trial achievement, %@ is a placeholder. */
+"account.achievement.vpnFreeTrial.incomplete.explanation.label"="MEGA VPN uygulamasını yükleyin, MEGA hesabınızla giriş yapın ve ücretsiz denemenizi başlatın. Bonus depolama alanınız ücretsiz denemenizi başlattıktan sonra otomatik olarak eklenir.";
+/* Explanation label shown on the achievements view for complete start MEGA VPN Free Trial achievement, %@ is a placeholder. */
+"account.achievement.vpnFreeTrial.complete.explanation.label"="MEGA VPN ücretsiz deneme sürümünü başlattığınız için %@ depolama alanı kazandınız.";
+/* Text for the button to install MEGA VPN in the Start MEGA VPN Free Trial achievement */
+"account.achievement.vpnFreeTrial.buttonText"="MEGA VPN'i yükle";
+/* Cell title shown on the achievements view for Start MEGA Pass Free Trial */
+"account.achievement.passFreeTrial.title"="MEGA Pass ücretsiz denemesini başlat";
+/* Detail label shown on the achievements details view for Start MEGA Pass Free Trial when its incomplete, %@ is placeholder for the storage amount */
+"account.achievement.passFreeTrial.detail.incomplete.label"="MEGA Pass ücretsiz deneme sürümünü başlattığınızda %@ ücretsiz depolama alanı kazanın. Kalıcı olarak geçerlidir.";
+/* Detail label shown on the achievements details view for Start MEGA Pass Free Trial when its completed, %@ is placeholder for the storage amount */
+"account.achievement.passFreeTrial.detail.complete.label"="%@ bonus uygulandı. Kalıcı olarak geçerlidir.";
+/* Explanation label shown on the achievements view for incomplete start MEGA Pass Free Trial achievement, %@ is a placeholder. */
+"account.achievement.passFreeTrial.incomplete.explanation.label"="MEGA Pass uygulamasını yükleyin, MEGA hesabınızla giriş yapın ve ücretsiz denemenizi başlatın. Bonus depolama alanınız ücretsiz denemenizi başlattıktan sonra otomatik olarak eklenir.";
+/* Explanation label shown on the achievements view for complete start MEGA Pass Free Trial achievement, %@ is a placeholder. */
+"account.achievement.passFreeTrial.complete.explanation.label"="MEGA Pass ücretsiz deneme sürümünü başlattığınız için %@ depolama alanı kazandınız.";
+/* Text for the button to install MEGA Pass in the Start MEGA Pass Free Trial achievement */
+"account.achievement.passFreeTrial.buttonText"="MEGA Pass'i yükle";
 /* Subtitle of the incomplete achievement, %@ is a placeholder. */
 "account.achievement.incomplete.subtitle"="%@ depolamanın. 365 gün boyunca geçerlidir.";
+/* Subtitle of the incomplete achievement with permanent bonus, %@ is a placeholder. */
+"account.achievement.incomplete.subtitle.permanent"="%@ depolama alanı. Süresiz geçerli.";
+/* Subtitle of the complete achievement with permanent bonus */
+"account.achievement.complete.subtitle.permanent"="Bonus uygulandı";
 /* Add Phone Number title */
 "Add Phone Number"="Telefon numarası ekle";
 /* Explanation Label shown on the achievements view for complete add phone number achievement, %@ is a placeholder. */
@@ -1109,7 +1137,7 @@
 /* Label for the ‘Renews on’ text into the my account page, indicating the renewal date of a subscription - (String as short as possible). */
 "Renews on"="Yenileniyor";
 /* Title of the Incoming Shares section. Here you can see the folders that your contacts have shared with you */
-"incomingShares"="Gelen hisseler";
+"incomingShares"="Gelen paylaşım";
 /* Button title which triggers the action to upgrade your MEGA account level */
 "upgradeAccount"="Hesabı yükselt";
 /* account management button title in business account’s landing page */
@@ -2115,7 +2143,7 @@
 /* Button title which, if tapped, will trigger the action of opening a folder containg this file */
 "View in Folder"="Klasörde görüntüle";
 /* Error message shown when opening a link with an account that not corresponds to the link */
-"This link is not related to this account. Please log in with the correct account."="Bu bağlantı bu hesapla ilgili değil. Lütfen doğru hesapla giriş yapın.";
+"This link is not related to this account. Please log in with the correct account."="Farklı bir MEGA hesabına giriş yapmış durumdasınız. Çıkış yapın ve şifre sıfırlama bağlantısını tekrar açın.";
 /* Text emncouraging the user to add contacts in MEGA */
 "Invite contact now"="Kişileri şimdi davet et";
 /* Error message if user click next button without enter a valid phone number */
@@ -3011,7 +3039,7 @@
 /* Description of Audio Player dialog for Playback Continuation */
 "media.audio.playbackContinuation.dialog.description"="”%@” şuradan devam edecek %@.";
 /* Resume option for Audio Player dialog for Playback Continuation */
-"media.audio.playbackContinuation.dialog.resume"="Devamını";
+"media.audio.playbackContinuation.dialog.resume"="Devam ettir";
 /* Restart option for Audio Player dialog for Playback Continuation */
 "media.audio.playbackContinuation.dialog.restart"="Yeniden başlat";
 /* Meetings: Notification message to be shown when one person joins the call. */
@@ -4678,3 +4706,15 @@
 "subscriptionPurchase.feature.four.description"="Şifre yöneticimizle tüm parolalarınızı düzenleyin ve güvende tutun";
 /* Title for all the feature in subscription purchase view. */
 "subscriptionPurchase.feature.title"="Elde edecekleriniz:";
+/* Title for the Home tab bar item */
+"tabbarTitle.home"="Ana sayfa";
+/* Title for the Drive tab bar item */
+"tabbarTitle.drive"="Depolama";
+/* Title for the Photo tab bar item */
+"tabbarTitle.photos"="Fotoğraflar";
+/* Title for the Chat tab bar item */
+"tabbarTitle.chat"="Sohbet";
+/* Title for the Menu tab bar item */
+"tabbarTitle.menu"="Menu";
+/* Storage benefit shown for the free plan card */
+"subscriptionPurchase.freePlanCard.feature.storage"="%@ of storage";

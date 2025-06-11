@@ -139,7 +139,7 @@
 /* Error text shown when you have not written the same password */
 "passwordsDoNotMatch"="Hai mật khẩu đã nhập không trùng khớp";
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
-"termsCheckboxUnselected"="Bạn phải chấp thuận Điều Khoản Dịch Vụ.";
+"termsCheckboxUnselected"="Bạn phải chấp thuận Điều Khoản Dịch Vụ.";
 /* This error is shown in the account creation page. User has to agree to the terms and conditions. If the user does not agree to the losing password results in data loss condition then this error is shown */
 "termsForLosingPasswordCheckboxUnselected"="Bạn cần phải đồng ý rằng là đã hiểu được rủi ro sẽ xáy ra khi mất mật khẩu";
 /* Error text shown when the users tries to create an account with an email already in use */
@@ -217,7 +217,7 @@
 /* Title shown when you make a search and there is 'No Results' */
 "noResults"="Không có kết quả";
 /* Title shown when your Rubbish Bin is empty. */
-"cloudDriveEmptyState_titleRubbishBin"="Thùng Rác Trống";
+"cloudDriveEmptyState_titleRubbishBin"="Thùng Rác trống";
 /* Slideshow Menu Option */
 "sharedItems.menu.slideshow.title"="Trình Chiếu";
 /* Option button Title shown on Slideshow Preference Setting */
@@ -799,7 +799,7 @@
 /* "Title header that refers to where do you do the action 'Empty Rubbish Bin' inside 'Settings' -> 'Advanced' section" */
 "onMEGA"="Trên mạng MEGA";
 /* Button text on the Rubbish Bin page. This button will empty all files and folders currently stored in the rubbish bin. */
-"emptyRubbishBin"="Dọn Thùng Rác";
+"emptyRubbishBin"="Dọn Thùng Rác";
 /* Alert title shown when you tap 'Empty Rubbish Bin' */
 "emptyRubbishBinAlertTitle"="Tất cả các mục trong Thùng Rác sẽ bị xóa.";
 /* Rubbish bin setting snack bar message' */
@@ -813,7 +813,7 @@
 /* Empty Rubbish Bin Warning Title */
 "settings.fileManagement.rubbishBin.clean.warning.title"="Dọn Thùng Rác?";
 /* Empty Rubbish Bin Cell Title */
-"settings.fileManagement.rubbishBin.clean.title"="Dọn Thùng Rác";
+"settings.fileManagement.rubbishBin.clean.title"="Dọn Thùng Rác";
 /* Rubbish Bin Settings Navigation Title */
 "settings.fileManagement.rubbishBin.navigation.title"="Thiết đặt Thùng Rác";
 /* Empty Rubbish Bin Warning Empty button */
@@ -831,7 +831,7 @@
 /* Option for managing file versioning settings */
 "settings.fileManagement.fileVersioning"="Nhật ký phiên bản tệp tin";
 /* Section header for settings related to device storage */
-"settings.fileManagement.header.onYourDevice"="Trong thiết bị của bạn";
+"settings.fileManagement.header.onYourDevice"="Trong thiết bị của bạn";
 /* Option to clear cached files stored on the device */
 "settings.fileManagement.clearCache"="Dọn bộ nhớ tạm";
 /* Confirmation message displayed after clearing cached files */
@@ -1058,8 +1058,36 @@
 "account.achievement.mobileApp.complete.explaination.label"="Bạn đã nhận được %@ không gian lưu trữ từ việc cài ứng dụng MEGA cho di động.";
 /* Explanation label shown on the achievements view for incomplete install MEGA mobile app achievement, %@ is a placeholder. */
 "account.achievement.mobileApp.incomplete.explaination.label"="Sau khi cài đặt ứng dụng MEGA cho Di Động, bạn sẽ nhận được thêm %@ vào không gian lưu trữ, hạn sử dụng là 365 ngày. App MEGA cho Di Động còn có cho iOS và Android.";
+/* Cell title shown on the achievements view for Start MEGA VPN Free Trial */
+"account.achievement.vpnFreeTrial.title"="Bắt đầu hạn dùng thử MEGA VPN miễn phí";
+/* Detail label shown on the achievements details view for Start MEGA VPN Free Trial when its incomplete, %@ is placeholder for the storage amount */
+"account.achievement.vpnFreeTrial.detail.incomplete.label"="Nhận lấy %@ không gian lưu trữ miễn phí khi bắt đầu hạn dùng thử MEGA VPN miễn phí. Có giá trị vĩnh viễn.";
+/* Detail label shown on the achievements details view for Start MEGA VPN Free Trial when its completed, %@ is placeholder for the storage amount */
+"account.achievement.vpnFreeTrial.detail.complete.label"="Phần thưởng %@ đã được áp dụng. Có giá trị vĩnh viễn.";
+/* Explanation label shown on the achievements view for incomplete start MEGA VPN Free Trial achievement, %@ is a placeholder. */
+"account.achievement.vpnFreeTrial.incomplete.explanation.label"="Cài ứng dụng MEGA VPN, đăng nhập bằng tài khoản MEGA của bạn và bắt đầu hạn dùng thử miễn phí. Phần thưởng không gian lưu trữ sẽ được thêm tự động sau khi hạn dùng thử bắt đầu.";
+/* Explanation label shown on the achievements view for complete start MEGA VPN Free Trial achievement, %@ is a placeholder. */
+"account.achievement.vpnFreeTrial.complete.explanation.label"="Bạn đã nhận được %@ cho không gian lưu trữ khi dùng thử MEGA VPN miễn phí";
+/* Text for the button to install MEGA VPN in the Start MEGA VPN Free Trial achievement */
+"account.achievement.vpnFreeTrial.buttonText"="Cài MEGA VPN";
+/* Cell title shown on the achievements view for Start MEGA Pass Free Trial */
+"account.achievement.passFreeTrial.title"="Bắt đầu hạn dùng thử MEGA Pass miễn phí";
+/* Detail label shown on the achievements details view for Start MEGA Pass Free Trial when its incomplete, %@ is placeholder for the storage amount */
+"account.achievement.passFreeTrial.detail.incomplete.label"="Nhận lấy %@ không gian lưu trữ miễn phí khi bắt đầu hạn dùng thử MEGA Pass miễn phí. Có giá trị vĩnh viễn.";
+/* Detail label shown on the achievements details view for Start MEGA Pass Free Trial when its completed, %@ is placeholder for the storage amount */
+"account.achievement.passFreeTrial.detail.complete.label"="Phần thưởng %@ đã được áp dụng. Có giá trị vĩnh viễn.";
+/* Explanation label shown on the achievements view for incomplete start MEGA Pass Free Trial achievement, %@ is a placeholder. */
+"account.achievement.passFreeTrial.incomplete.explanation.label"="Cài ứng dụng MEGA Pass, đăng nhập bằng tài khoản MEGA của bạn và bắt đầu hạn dùng thử miễn phí. Phần thưởng không gian lưu trữ sẽ được thêm tự động sau khi hạn dùng thử bắt đầu.";
+/* Explanation label shown on the achievements view for complete start MEGA Pass Free Trial achievement, %@ is a placeholder. */
+"account.achievement.passFreeTrial.complete.explanation.label"="Bạn đã nhận được %@ cho không gian lưu trữ khi dùng thử MEGA Pass miễn phí";
+/* Text for the button to install MEGA Pass in the Start MEGA Pass Free Trial achievement */
+"account.achievement.passFreeTrial.buttonText"="Cài MEGA Pass";
 /* Subtitle of the incomplete achievement, %@ is a placeholder. */
 "account.achievement.incomplete.subtitle"="%@ vào không gian lưu trữ. Hạn dùng là 365 ngày.";
+/* Subtitle of the incomplete achievement with permanent bonus, %@ is a placeholder. */
+"account.achievement.incomplete.subtitle.permanent"="%@ thêm cho lưu trữ. Có hiệu lực vĩnh viễn.";
+/* Subtitle of the complete achievement with permanent bonus */
+"account.achievement.complete.subtitle.permanent"="Phần thưởng đã được áp dụng";
 /* Add Phone Number title */
 "Add Phone Number"="Thêm Số Điện Thoại";
 /* Explanation Label shown on the achievements view for complete add phone number achievement, %@ is a placeholder. */
@@ -1651,7 +1679,7 @@
 /* Button title to start the setup of a feature. For example 'Begin Setup' for Two-Factor Authentication */
 "beginSetup"="Bắt đầu thiết lập";
 /* A message on the Verify Login page telling the user to enter their 2FA code. */
-"pleaseEnterTheSixDigitCode"="Nhập mã gồm 6 chữ số được tạo bởi ứng dụng lập xác thực của bạn.";
+"pleaseEnterTheSixDigitCode"="Hãy nhập một đoạn mã dài 6 chữ số lấy từ app lập xác thực.";
 /* Title of the dialog displayed to start setup the Two-Factor Authentication */
 "whyYouDoNeedTwoFactorAuthentication"="Tại sao bạn cần sử dụng xác thực 2 yếu tố?";
 /* Description for the ‘Two-Factor Authentication’ in the security settings section. */
@@ -1961,7 +1989,7 @@
 /* Text button for init a group chat */
 "New Group Chat"="Nhóm chat mới";
 /* Title for the recents section. */
-"Recents"="Sử Dụng Gần Đây";
+"Recents"="Gần Đây";
 /* Title show in Recents on the empty state when the recent activity is hidden */
 "recents.emptyState.activityHidden.title"="Hoạt động gần đây đã ẩn đi";
 /* Title of the button show in Recents on the empty state when the recent activity is hidden */
@@ -2019,7 +2047,7 @@
 /*  */
 "If you lose this Recovery key and forget your password, [B]all your files, folders and messages will be inaccessible, even by MEGA[/B]."="Bạn sẽ cần phải sử dụng Chìa Khóa Phục Hồi này khi quên mất mật khẩu của mình,[B]không thì toàn bộ tệp tin và thư mục của bạn sẽ không thể truy cập được, ngay cả MEGA cũng sẽ không giúp được[/B].";
 /*  */
-"Business"="Doanh Nghiệp";
+"Business"="Doanh Nghiệp";
 /*  */
 "Administrator"="Quản trị";
 /* Label to indicate the amount of transfer quota in several places. It is a ‘noun‘ and there is an screenshot with an use example - (String as short as possible). */
@@ -2031,9 +2059,9 @@
 /* Label indicating that the enter passcode (pin) view will be displayed immediately if the application goes back to foreground after being in background. */
 "Immediately"="Ngay lập tức";
 /* Popup notification text on mouse-over of taken down file. */
-"This file has been the subject of a takedown notice."="Tệp tin này đã bị yêu cầu từ cáo thị cần phải gỡ bỏ.";
+"This file has been the subject of a takedown notice."="Tệp tin này đã bị xóa từ một cáo thị yêu cầu gỡ bỏ.";
 /* Popup notification text on mouse-over taken down folder. */
-"This folder has been the subject of a takedown notice."="Thư mục này đã bị yêu cầu từ cáo thị cần phải gỡ bỏ.";
+"This folder has been the subject of a takedown notice."="Thư mục này đã bị xóa từ một cáo thị yêu cầu gỡ bỏ.";
 /* File Manager -> Context menu item for taken down file or folder, for dispute takedown. */
 "Dispute Takedown"="Phản đối yêu cầu gỡ bỏ";
 /* Label presented to Admins that full management of the business is only available in a desktop web browser */
@@ -2115,7 +2143,7 @@
 /* Button title which, if tapped, will trigger the action of opening a folder containg this file */
 "View in Folder"="Xem trong thư mục chứa";
 /* Error message shown when opening a link with an account that not corresponds to the link */
-"This link is not related to this account. Please log in with the correct account."="Đường liên kết này không thuộc sở hữu của tài khoản hiện tại. Xin đăng nhập vào tài khoản phù hợp.";
+"This link is not related to this account. Please log in with the correct account."="You’re logged in to a different MEGA account. Log out and open the password reset link again.";
 /* Text emncouraging the user to add contacts in MEGA */
 "Invite contact now"="Mời thêm tên liên lạc";
 /* Error message if user click next button without enter a valid phone number */
@@ -2513,11 +2541,11 @@
 /* Title for the QuickAccess widget */
 "Quick Access"="Truy cập nhanh";
 /* Text description for the QuickAccess widget */
-"Quickly access files on Recents, Favourites, or Offline section"="Truy cập nhanh vào tệp tin trong phần Gần Đây, Ưa Thích, và Lưu Ngoại Tuyến";
+"Quickly access files on Recents, Favourites, or Offline section"="Truy cập nhanh vào tệp tin trong phần Gần Đây, Ưa Thích, và Lưu Ngoại Tuyến";
 /* Text description for the Favourites QuickAccess widget */
 "Quickly access files on Favourites section"="Truy cập nhanh vào các tệp tin trong phần Ưa Thích";
 /* Text description for the Recents QuickAccess widget */
-"Quickly access files on Recents section"="Truy cập nhanh vào các tệp tin trong phần Sử Dụng Gần Đây";
+"Quickly access files on Recents section"="Truy cập nhanh vào các tệp tin trong phần Gần Đây";
 /* Text description for the Offline QuickAccess widget */
 "Quickly access files on Offline section"="Truy cập nhanh vào các tệp tin trong phần Lưu Ngoại Tuyến";
 /* Dialog title for the no enough device storage screen */
@@ -3387,9 +3415,9 @@
 /* Alert message shown for video with options to resume playing the video or start from the beginning. %1$s will be replaced by name of the video. %2$s will be replaced by video timestamp */
 "video.alert.resumeVideo.message"="“%1$s” sẽ tiếp tục phát tại %2$s";
 /* Alert button title that will resume playing the video */
-"video.alert.resumeVideo.button.resume"="Tiếp tục truyền";
+"video.alert.resumeVideo.button.resume"="Tiếp tục chỗ cũ";
 /* Alert button title that will start playing the video from the beginning */
-"video.alert.resumeVideo.button.restart"="Khởi động lại";
+"video.alert.resumeVideo.button.restart"="Phát từ đầu";
 /* Push notification message to be shown when the meeting is about to start now. */
 "meetings.scheduleMeeting.notification.meetingStartsNow.message"="Cuộc họp bắt đầu ngay bây giờ";
 /* Push notification message to be shown when the meeting is about to start in 15 min. */
@@ -3911,7 +3939,7 @@
 /* Upgrade account screen content message about pro plan featuring the MEGA VPN */
 "onboarding.upgradeAccount.content.megaVPN.message"="Giữ an ninh trực tuyến với VPN tốc độ cao của chúng tôi.";
 /* Upgrade account screen content title about pro plan featuring the calls and meetings */
-"onboarding.upgradeAccount.content.callsAndMeetings.title"="Cuộc gọi và cuộc họp không hạn chế";
+"onboarding.upgradeAccount.content.callsAndMeetings.title"="Cuộc gọi và cuộc họp không bị hạn chế";
 /* Upgrade account screen content message about pro plan featuring the calls and meetings */
 "onboarding.upgradeAccount.content.callsAndMeetings.message"="Nhắn tin, gọi video và họp hoàn toàn riêng tư với số lượng người tham gia không giới hạn.";
 /* Upgrade account screen content title about pro plan featuring the Additional security when sharing */
@@ -4157,7 +4185,7 @@
 /* Hidden files and folders onboarding content exclude from timeline title */
 "onboarding.hiddenFilesAndFolders.excludeTimeline.content.title"="Loại trừ khỏi Dòng thời gian";
 /* Hidden files and folders onboarding content exclude from timeline section message */
-"onboarding.hiddenFilesAndFolders.excludeTimeline.content.message"="Các mục đã ẩn đi chỉ có thể truy cập thông qua Ổ Mây và sẽ không xuất hiện trong Ảnh, Album hoặc Sử dụng gần đây của bạn.";
+"onboarding.hiddenFilesAndFolders.excludeTimeline.content.message"="Các mục đã ẩn đi chỉ có thể truy cập thông qua Ổ Mây và sẽ không xuất hiện trong Ảnh, Album hoặc hoạt dộng Gần Đây của bạn.";
 /* Hidden files and folders onboarding content out of sight title */
 "onboarding.hiddenFilesAndFolders.outOfSight.content.title"="Ra khỏi tầm nhìn";
 /* Hidden files and folders onboarding content out of sight message */
@@ -4587,11 +4615,11 @@
 /* Hidden files and folders onboarding content item one title */
 "onboarding.hiddenFilesAndFolders.content.item.one.title"="Ẩn đi tệp tin và thư mục";
 /* Hidden files and folders onboarding content item one message */
-"onboarding.hiddenFilesAndFolders.content.item.one.message"="Dễ dàng giữ các tệp tin nhạy cảm trong Ổ Mây của bạn ở chế độ riêng tư và ngoài tầm nhìn. Theo mặc định, các tệp tin ẩn đi không có xuất hiện trong phần Ổ Mây, Ảnh và Sử dụng gần đây của bạn.";
+"onboarding.hiddenFilesAndFolders.content.item.one.message"="Dễ dàng giữ các tệp tin nhạy cảm trong Ổ Mây của bạn ở chế độ riêng tư và ngoài tầm nhìn. Theo mặc định, các tệp tin ẩn đi không có xuất hiện trong phần Ổ Mây, Ảnh và hoạt động Gần Đây của bạn.";
 /* Hidden files and folders onboarding content item two title */
 "onboarding.hiddenFilesAndFolders.content.item.two.title"="Kiểm soát chế độ hiển thị dễ dàng";
 /* Hidden files and folders onboarding content item two message */
-"onboarding.hiddenFilesAndFolders.content.item.two.message"="To show hidden files, turn on the “Show hidden items” setting under “File Management” -> “User interface” in your app settings.";
+"onboarding.hiddenFilesAndFolders.content.item.two.message"="Để hiển thị các tệp tin bị ẩn, hãy bật “Hiển thị các mục ẩn” trong “Quản lý tệp tin” → “Giao diện người dùng” trong phần thiết đặt của ứng dụng.";
 /* Hidden files and folders onboarding content item three title */
 "onboarding.hiddenFilesAndFolders.content.item.three.title"="Các tệp tin đã chia sẻ vẫn được hiển thị";
 /* Hidden files and folders onboarding content item three message */
@@ -4673,8 +4701,20 @@
 /* Description for the third subscription feature: benefits of using the MEGA VPN */
 "subscriptionPurchase.feature.three.description"="Keep your online life safe, fast, and easy with our high-speed VPN";
 /* Title for the fourth subscription feature: MEGA Pass password manager */
-"subscriptionPurchase.feature.four.title"="MEGA Pass";
+"subscriptionPurchase.feature.four.title"="MEGA Pass";
 /* Description for the fourth subscription feature: benefits of using MEGA Pass for password management */
 "subscriptionPurchase.feature.four.description"="Organise all your passwords and keep them safe with our password manager";
 /* Title for all the feature in subscription purchase view. */
 "subscriptionPurchase.feature.title"="Bạn nhận được:";
+/* Title for the Home tab bar item */
+"tabbarTitle.home"="Trang chủ";
+/* Title for the Drive tab bar item */
+"tabbarTitle.drive"="Đĩa";
+/* Title for the Photo tab bar item */
+"tabbarTitle.photos"="Ảnh";
+/* Title for the Chat tab bar item */
+"tabbarTitle.chat"="Chat";
+/* Title for the Menu tab bar item */
+"tabbarTitle.menu"="Menu";
+/* Storage benefit shown for the free plan card */
+"subscriptionPurchase.freePlanCard.feature.storage"="%@ of storage";

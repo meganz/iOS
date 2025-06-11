@@ -1058,8 +1058,36 @@
 "account.achievement.mobileApp.complete.explaination.label"="Sie haben %@ Extraspeicherplatz für die Installation der MEGA-Mobil-App erhalten.";
 /* Explanation label shown on the achievements view for incomplete install MEGA mobile app achievement, %@ is a placeholder. */
 "account.achievement.mobileApp.incomplete.explaination.label"="Bei Installation der MEGA-Mobil-App erhalten Sie %@ kostenlosen Extraspeicherplatz, gültig für 365 Tage. Die MEGA-Mobil-App ist für iOS und Android verfügbar. ";
+/* Cell title shown on the achievements view for Start MEGA VPN Free Trial */
+"account.achievement.vpnFreeTrial.title"="Kostenlosen Test von MEGA VPN starten";
+/* Detail label shown on the achievements details view for Start MEGA VPN Free Trial when its incomplete, %@ is placeholder for the storage amount */
+"account.achievement.vpnFreeTrial.detail.incomplete.label"="Sie erhalten %@ kostenlosen Speicherplatz, wenn Sie einen kostenlosen Test von MEGA VPN starten. Dauerhaft gültig.";
+/* Detail label shown on the achievements details view for Start MEGA VPN Free Trial when its completed, %@ is placeholder for the storage amount */
+"account.achievement.vpnFreeTrial.detail.complete.label"="%@ Bonus erhalten. Dauerhaft gültig.";
+/* Explanation label shown on the achievements view for incomplete start MEGA VPN Free Trial achievement, %@ is a placeholder. */
+"account.achievement.vpnFreeTrial.incomplete.explanation.label"="Installieren Sie die MEGA-VPN-App, loggen Sie sich mit Ihrem MEGA-Account ein und starten Sie Ihren kostenlosen Test. Sie erhalten Ihren Speicherbonus automatisch, nachdem Sie den kostenlosen Test gestartet haben.";
+/* Explanation label shown on the achievements view for complete start MEGA VPN Free Trial achievement, %@ is a placeholder. */
+"account.achievement.vpnFreeTrial.complete.explanation.label"="Sie haben für den Start eines kostenlosen Tests von MEGA VPN %@ Speicher erhalten";
+/* Text for the button to install MEGA VPN in the Start MEGA VPN Free Trial achievement */
+"account.achievement.vpnFreeTrial.buttonText"="MEGA VPN installieren";
+/* Cell title shown on the achievements view for Start MEGA Pass Free Trial */
+"account.achievement.passFreeTrial.title"="Kostenlosen Test von MEGA Pass starten";
+/* Detail label shown on the achievements details view for Start MEGA Pass Free Trial when its incomplete, %@ is placeholder for the storage amount */
+"account.achievement.passFreeTrial.detail.incomplete.label"="Sie erhalten %@ kostenlosen Speicherplatz, wenn Sie einen kostenlosen Test von MEGA Pass starten. Dauerhaft gültig.";
+/* Detail label shown on the achievements details view for Start MEGA Pass Free Trial when its completed, %@ is placeholder for the storage amount */
+"account.achievement.passFreeTrial.detail.complete.label"="%@ Bonus erhalten. Dauerhaft gültig.";
+/* Explanation label shown on the achievements view for incomplete start MEGA Pass Free Trial achievement, %@ is a placeholder. */
+"account.achievement.passFreeTrial.incomplete.explanation.label"="Installieren Sie die MEGA-Pass-App, loggen Sie sich mit Ihrem MEGA-Account ein und starten Sie Ihren kostenlosen Test. Sie erhalten Ihren Speicherbonus automatisch, nachdem Sie den kostenlosen Test gestartet haben.";
+/* Explanation label shown on the achievements view for complete start MEGA Pass Free Trial achievement, %@ is a placeholder. */
+"account.achievement.passFreeTrial.complete.explanation.label"="Sie haben für den Start eines kostenlosen Tests von MEGA Pass %@ Speicher erhalten";
+/* Text for the button to install MEGA Pass in the Start MEGA Pass Free Trial achievement */
+"account.achievement.passFreeTrial.buttonText"="MEGA Pass installieren";
 /* Subtitle of the incomplete achievement, %@ is a placeholder. */
 "account.achievement.incomplete.subtitle"="%@ Speicherplatz, gültig für 365 Tage.";
+/* Subtitle of the incomplete achievement with permanent bonus, %@ is a placeholder. */
+"account.achievement.incomplete.subtitle.permanent"="%@ Speicher. Dauerhaft gültig.";
+/* Subtitle of the complete achievement with permanent bonus */
+"account.achievement.complete.subtitle.permanent"="Bonus erhalten";
 /* Add Phone Number title */
 "Add Phone Number"="Telefonnummer hinzufügen";
 /* Explanation Label shown on the achievements view for complete add phone number achievement, %@ is a placeholder. */
@@ -2115,7 +2143,7 @@
 /* Button title which, if tapped, will trigger the action of opening a folder containg this file */
 "View in Folder"="In Ordner ansehen";
 /* Error message shown when opening a link with an account that not corresponds to the link */
-"This link is not related to this account. Please log in with the correct account."="Der Link gehört nicht zu diesem Account. Bitte melden Sie sich mit dem korrekten Account an.";
+"This link is not related to this account. Please log in with the correct account."="Sie sind in einem anderen MEGA-Account eingeloggt. Loggen Sie sich aus und öffnen Sie den Link zum Zurücksetzen des Passworts erneut.";
 /* Text emncouraging the user to add contacts in MEGA */
 "Invite contact now"="Kontakte jetzt einladen";
 /* Error message if user click next button without enter a valid phone number */
@@ -4678,3 +4706,15 @@
 "subscriptionPurchase.feature.four.description"="Übersichtliche und sichere Speicherung aller Ihrer Passwörter in unserem Passwortmanager";
 /* Title for all the feature in subscription purchase view. */
 "subscriptionPurchase.feature.title"="Sie erhalten:";
+/* Title for the Home tab bar item */
+"tabbarTitle.home"="Startseite";
+/* Title for the Drive tab bar item */
+"tabbarTitle.drive"="Drive";
+/* Title for the Photo tab bar item */
+"tabbarTitle.photos"="Fotos";
+/* Title for the Chat tab bar item */
+"tabbarTitle.chat"="Chat";
+/* Title for the Menu tab bar item */
+"tabbarTitle.menu"="Menü";
+/* Storage benefit shown for the free plan card */
+"subscriptionPurchase.freePlanCard.feature.storage"="%@ of storage";

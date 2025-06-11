@@ -1058,8 +1058,36 @@
 "account.achievement.mobileApp.complete.explaination.label"="您已通过安装MEGA手机应用程序获得了%@存储空间。";
 /* Explanation label shown on the achievements view for incomplete install MEGA mobile app achievement, %@ is a placeholder. */
 "account.achievement.mobileApp.incomplete.explaination.label"="安装MEGA手机应用程序后，您会获得%@免费存储空间，有效期为365天。MEGA手机应用程序适用于iOS和Android平台。";
+/* Cell title shown on the achievements view for Start MEGA VPN Free Trial */
+"account.achievement.vpnFreeTrial.title"="开始MEGA VPN的免费试用";
+/* Detail label shown on the achievements details view for Start MEGA VPN Free Trial when its incomplete, %@ is placeholder for the storage amount */
+"account.achievement.vpnFreeTrial.detail.incomplete.label"="免费试用MEGA VPN您即可得到%@的免费存储空间。永久有效。";
+/* Detail label shown on the achievements details view for Start MEGA VPN Free Trial when its completed, %@ is placeholder for the storage amount */
+"account.achievement.vpnFreeTrial.detail.complete.label"="%@的奖励已生效。永久有效。";
+/* Explanation label shown on the achievements view for incomplete start MEGA VPN Free Trial achievement, %@ is a placeholder. */
+"account.achievement.vpnFreeTrial.incomplete.explanation.label"="安装MEGA VPN应用程序，使用您的MEGA帐户登录，然后开始免费试用。开启免费试用后，您的奖励存储空间将自动添加。";
+/* Explanation label shown on the achievements view for complete start MEGA VPN Free Trial achievement, %@ is a placeholder. */
+"account.achievement.vpnFreeTrial.complete.explanation.label"="您已开始MEGA VPN的免费试用，因此您获得了%@的存储空间。";
+/* Text for the button to install MEGA VPN in the Start MEGA VPN Free Trial achievement */
+"account.achievement.vpnFreeTrial.buttonText"="安装MEGA VPN";
+/* Cell title shown on the achievements view for Start MEGA Pass Free Trial */
+"account.achievement.passFreeTrial.title"="开始MEGA Pass的免费试用";
+/* Detail label shown on the achievements details view for Start MEGA Pass Free Trial when its incomplete, %@ is placeholder for the storage amount */
+"account.achievement.passFreeTrial.detail.incomplete.label"="免费试用MEGA Pass您即可得到%@的免费存储空间。永久有效。";
+/* Detail label shown on the achievements details view for Start MEGA Pass Free Trial when its completed, %@ is placeholder for the storage amount */
+"account.achievement.passFreeTrial.detail.complete.label"="%@的奖励已生效。永久有效。";
+/* Explanation label shown on the achievements view for incomplete start MEGA Pass Free Trial achievement, %@ is a placeholder. */
+"account.achievement.passFreeTrial.incomplete.explanation.label"="安装MEGA Pass应用程序，使用您的MEGA帐户登录，然后开始免费试用。开启免费试用后，您的奖励存储空间将自动添加。";
+/* Explanation label shown on the achievements view for complete start MEGA Pass Free Trial achievement, %@ is a placeholder. */
+"account.achievement.passFreeTrial.complete.explanation.label"="您已开始MEGA Pass的免费试用，因此您获得了%@的存储空间。";
+/* Text for the button to install MEGA Pass in the Start MEGA Pass Free Trial achievement */
+"account.achievement.passFreeTrial.buttonText"="安装MEGA Pass";
 /* Subtitle of the incomplete achievement, %@ is a placeholder. */
 "account.achievement.incomplete.subtitle"="%@存储空间。有效期为365天。";
+/* Subtitle of the incomplete achievement with permanent bonus, %@ is a placeholder. */
+"account.achievement.incomplete.subtitle.permanent"="%@存储空间。永久有效。";
+/* Subtitle of the complete achievement with permanent bonus */
+"account.achievement.complete.subtitle.permanent"="奖励已生效";
 /* Add Phone Number title */
 "Add Phone Number"="添加手机号";
 /* Explanation Label shown on the achievements view for complete add phone number achievement, %@ is a placeholder. */
@@ -2115,7 +2143,7 @@
 /* Button title which, if tapped, will trigger the action of opening a folder containg this file */
 "View in Folder"="在文件夹中查看";
 /* Error message shown when opening a link with an account that not corresponds to the link */
-"This link is not related to this account. Please log in with the correct account."="此链接未关联该帐户。请使用正确的MEGA帐户登录。";
+"This link is not related to this account. Please log in with the correct account."="You’re logged in to a different MEGA account. Log out and open the password reset link again.";
 /* Text emncouraging the user to add contacts in MEGA */
 "Invite contact now"="立即邀请联系人";
 /* Error message if user click next button without enter a valid phone number */
@@ -4678,3 +4706,15 @@
 "subscriptionPurchase.feature.four.description"="Organise all your passwords and keep them safe with our password manager";
 /* Title for all the feature in subscription purchase view. */
 "subscriptionPurchase.feature.title"="您将获得：";
+/* Title for the Home tab bar item */
+"tabbarTitle.home"="主页";
+/* Title for the Drive tab bar item */
+"tabbarTitle.drive"="云盘";
+/* Title for the Photo tab bar item */
+"tabbarTitle.photos"="照片";
+/* Title for the Chat tab bar item */
+"tabbarTitle.chat"="聊天";
+/* Title for the Menu tab bar item */
+"tabbarTitle.menu"="菜单";
+/* Storage benefit shown for the free plan card */
+"subscriptionPurchase.freePlanCard.feature.storage"="%@ of storage";

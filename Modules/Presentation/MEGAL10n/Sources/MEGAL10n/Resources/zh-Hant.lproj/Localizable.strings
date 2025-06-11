@@ -47,7 +47,7 @@
 /* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
 "decryptionKeyAlertMessage"="要存取此資料夾/檔案，您需要解密金鑰。如果您沒有金鑰，請聯絡此連結的建立者。";
 /* Alert message shown when you tap on a encrypted album/collection link that can't be opened because it doesn't include the key to see its contents */
-"decryptionKeyAlertMessageForAlbum"="要存取相簿，請輸入解密金鑰。如果您沒有金鑰，請聯繫共享連結給您的人。";
+"decryptionKeyAlertMessageForAlbum"="要存取相簿，請輸入解密金鑰。如果您沒有金鑰，請聯繫與您共享此連結的人。";
 /* Hint text to suggest that the user has to write the decryption key */
 "decryptionKey"="解密金鑰";
 /* Button title to try to decrypt the link */
@@ -1058,8 +1058,36 @@
 "account.achievement.mobileApp.complete.explaination.label"="您已經安裝MEGA手機應用程式而獲得%@儲存空間過了。";
 /* Explanation label shown on the achievements view for incomplete install MEGA mobile app achievement, %@ is a placeholder. */
 "account.achievement.mobileApp.incomplete.explaination.label"="當您安裝MEGA手機應用程式時，您可獲得%@的免費儲存空間，有效期為365天。 MEGA手機應用程式支援iOS與Android。";
+/* Cell title shown on the achievements view for Start MEGA VPN Free Trial */
+"account.achievement.vpnFreeTrial.title"="開始免費試用MEGA VPN";
+/* Detail label shown on the achievements details view for Start MEGA VPN Free Trial when its incomplete, %@ is placeholder for the storage amount */
+"account.achievement.vpnFreeTrial.detail.incomplete.label"="當您開免費試用始MEGA VPN時，即可獲得%@的免費儲存空間。永久有效。";
+/* Detail label shown on the achievements details view for Start MEGA VPN Free Trial when its completed, %@ is placeholder for the storage amount */
+"account.achievement.vpnFreeTrial.detail.complete.label"="%@的獎勵生效。永久有效。";
+/* Explanation label shown on the achievements view for incomplete start MEGA VPN Free Trial achievement, %@ is a placeholder. */
+"account.achievement.vpnFreeTrial.incomplete.explanation.label"="安裝MEGA VPN應用程式，使用您的MEGA帳戶登入，然後開始免費試用。開始免費試用後，您將獲得儲存空間自動增加的獎勵。";
+/* Explanation label shown on the achievements view for complete start MEGA VPN Free Trial achievement, %@ is a placeholder. */
+"account.achievement.vpnFreeTrial.complete.explanation.label"="您已經開始免費試用MEGA VPN而獲得%@儲存空間";
+/* Text for the button to install MEGA VPN in the Start MEGA VPN Free Trial achievement */
+"account.achievement.vpnFreeTrial.buttonText"="安裝MEGA VPN";
+/* Cell title shown on the achievements view for Start MEGA Pass Free Trial */
+"account.achievement.passFreeTrial.title"="開始免費試用MEGA Pass";
+/* Detail label shown on the achievements details view for Start MEGA Pass Free Trial when its incomplete, %@ is placeholder for the storage amount */
+"account.achievement.passFreeTrial.detail.incomplete.label"="當您開免費試用始MEGA VPass時，即可獲得%@的免費儲存空間。永久有效。";
+/* Detail label shown on the achievements details view for Start MEGA Pass Free Trial when its completed, %@ is placeholder for the storage amount */
+"account.achievement.passFreeTrial.detail.complete.label"="%@的獎勵生效。永久有效。";
+/* Explanation label shown on the achievements view for incomplete start MEGA Pass Free Trial achievement, %@ is a placeholder. */
+"account.achievement.passFreeTrial.incomplete.explanation.label"="安裝MEGA Pass應用程式，使用您的MEGA帳戶登入，然後開始免費試用。開始免費試用後，您將獲得儲存空間自動增加的獎勵。";
+/* Explanation label shown on the achievements view for complete start MEGA Pass Free Trial achievement, %@ is a placeholder. */
+"account.achievement.passFreeTrial.complete.explanation.label"="您已經開始免費試用MEGA Pass而獲得%@儲存空間";
+/* Text for the button to install MEGA Pass in the Start MEGA Pass Free Trial achievement */
+"account.achievement.passFreeTrial.buttonText"="安裝MEGA Pass";
 /* Subtitle of the incomplete achievement, %@ is a placeholder. */
 "account.achievement.incomplete.subtitle"="%@的儲存空間。有效期限365天。";
+/* Subtitle of the incomplete achievement with permanent bonus, %@ is a placeholder. */
+"account.achievement.incomplete.subtitle.permanent"="%@儲存空間。永久有效。";
+/* Subtitle of the complete achievement with permanent bonus */
+"account.achievement.complete.subtitle.permanent"="獎勵生效";
 /* Add Phone Number title */
 "Add Phone Number"="加入您的手機號碼";
 /* Explanation Label shown on the achievements view for complete add phone number achievement, %@ is a placeholder. */
@@ -2115,7 +2143,7 @@
 /* Button title which, if tapped, will trigger the action of opening a folder containg this file */
 "View in Folder"="在資料夾中檢視";
 /* Error message shown when opening a link with an account that not corresponds to the link */
-"This link is not related to this account. Please log in with the correct account."="此連結與此帳戶無關，請使用正確的帳戶登入。";
+"This link is not related to this account. Please log in with the correct account."="您已登入其它MEGA帳戶。請登出然後重新開啟密碼重設連結。";
 /* Text emncouraging the user to add contacts in MEGA */
 "Invite contact now"="立即邀請聯絡人";
 /* Error message if user click next button without enter a valid phone number */
@@ -3741,7 +3769,7 @@
 /* Album saved to cloud drive alert message */
 "albumLink.alert.message.albumSavedToCloudDrive"="「%@」已儲存到雲端硬碟";
 /* Album failed to save to cloud drive alert message */
-"albumLink.alert.message.albumFailedToSaveToCloudDrive"="「%@」無法儲存到雲端硬碟。請稍後再試。如果問題仍然存在，請聯繫共享連結給您的人。";
+"albumLink.alert.message.albumFailedToSaveToCloudDrive"="「%@」無法儲存到雲端硬碟。請稍後再試。如果問題仍然存在，請聯繫與您共享此連結的人。";
 /* Text displayed on banner we show when sharing folder with unverified contacts */
 "shareFolder.contactsNotVerified"="與您共享資訊的某些聯絡人尚未經過您的驗證。為了確保額外的安全性，我們建議您透過在聯絡人中點選您要驗證的聯絡人旁邊的ⓘ來驗證他們的憑證。";
 /* Title of the dialog for sharing a folder containing sensitive items */
@@ -4641,7 +4669,7 @@
 /* Title shown for the free plan card */
 "subscriptionPurchase.freePlanCard.title"="從我們的免費方案開始吧";
 /* Description shown for the free plan card */
-"subscriptionPurchase.freePlanCard.description"="We offer generous amount of storage and transfer quota at no charge, so you can try MEGA with no risk";
+"subscriptionPurchase.freePlanCard.description"="我們免費提供大量的儲存空間和傳輸配額，您可以放心地試用MEGA";
 /* First benefit shown for the free plan card */
 "subscriptionPurchase.freePlanCard.feature.one"="免費20 GB的儲存空間";
 /* Second benefit shown for the free plan card */
@@ -4663,11 +4691,11 @@
 /* Title for the first subscription feature: generous storage capacity */
 "subscriptionPurchase.feature.one.title"="大容量空間";
 /* Description for the first subscription feature: details about available storage */
-"subscriptionPurchase.feature.one.description"="Store up to 16 TB of data";
+"subscriptionPurchase.feature.one.description"="儲存高達16 TB的資料";
 /* Title for the second subscription feature: transfer quota sharing */
 "subscriptionPurchase.feature.two.title"="傳輸流量共享";
 /* Description for the second subscription feature: how shared users can use your quota */
-"subscriptionPurchase.feature.two.description"="People you share items with can use your transfer quota to download and stream files";
+"subscriptionPurchase.feature.two.description"="與您共享項目的人可以使用您的傳輸配額來下載和串流檔案";
 /* Title for the third subscription feature: MEGA VPN service */
 "subscriptionPurchase.feature.three.title"="MEGA VPN";
 /* Description for the third subscription feature: benefits of using the MEGA VPN */
@@ -4678,3 +4706,15 @@
 "subscriptionPurchase.feature.four.description"="使用我們的密碼管理器來管理您的所有密碼，確保它們的安全";
 /* Title for all the feature in subscription purchase view. */
 "subscriptionPurchase.feature.title"="您將獲得：";
+/* Title for the Home tab bar item */
+"tabbarTitle.home"="首頁";
+/* Title for the Drive tab bar item */
+"tabbarTitle.drive"="硬碟";
+/* Title for the Photo tab bar item */
+"tabbarTitle.photos"="照片";
+/* Title for the Chat tab bar item */
+"tabbarTitle.chat"="對話";
+/* Title for the Menu tab bar item */
+"tabbarTitle.menu"="選單";
+/* Storage benefit shown for the free plan card */
+"subscriptionPurchase.freePlanCard.feature.storage"="%@ of storage";

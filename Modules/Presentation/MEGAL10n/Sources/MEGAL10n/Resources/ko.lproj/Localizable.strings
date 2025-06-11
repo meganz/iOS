@@ -1058,8 +1058,36 @@
 "account.achievement.mobileApp.complete.explaination.label"="MEGA 모바일 앱을 설치하여 저장소 공간 %@를 받았습니다.";
 /* Explanation label shown on the achievements view for incomplete install MEGA mobile app achievement, %@ is a placeholder. */
 "account.achievement.mobileApp.incomplete.explaination.label"="MEGA 모바일 앱을 설치하면 365일간 이용 가능한 %@의 무료 저장 공간을 받게 됩니다. MEGA 모바일 앱은 iOS와 Android에서 이용 가능합니다.";
+/* Cell title shown on the achievements view for Start MEGA VPN Free Trial */
+"account.achievement.vpnFreeTrial.title"="MEGA VPN 무료 체험 시작";
+/* Detail label shown on the achievements details view for Start MEGA VPN Free Trial when its incomplete, %@ is placeholder for the storage amount */
+"account.achievement.vpnFreeTrial.detail.incomplete.label"="MEGA VPN 무료 체험을 시작하면 %@의 무료 저장소를 받습니다. 영구적으로 유효합니다.";
+/* Detail label shown on the achievements details view for Start MEGA VPN Free Trial when its completed, %@ is placeholder for the storage amount */
+"account.achievement.vpnFreeTrial.detail.complete.label"="%@ 보너스가 적용되었습니다. 영구적으로 유효합니다.";
+/* Explanation label shown on the achievements view for incomplete start MEGA VPN Free Trial achievement, %@ is a placeholder. */
+"account.achievement.vpnFreeTrial.incomplete.explanation.label"="MEGA VPN 앱을 설치하고, MEGA 계정으로 로그인한 다음, 무료 체험을 시작하세요. 보너스 저장소는 무료 체험을 시작한 이후 자동으로 추가됩니다.";
+/* Explanation label shown on the achievements view for complete start MEGA VPN Free Trial achievement, %@ is a placeholder. */
+"account.achievement.vpnFreeTrial.complete.explanation.label"="MEGA VPN 무료 체험을 시작하여 %@ 저장소 보너스를 받았습니다";
+/* Text for the button to install MEGA VPN in the Start MEGA VPN Free Trial achievement */
+"account.achievement.vpnFreeTrial.buttonText"="MEGA VPN 설치";
+/* Cell title shown on the achievements view for Start MEGA Pass Free Trial */
+"account.achievement.passFreeTrial.title"="MEGA Pass 무료 체험 시작";
+/* Detail label shown on the achievements details view for Start MEGA Pass Free Trial when its incomplete, %@ is placeholder for the storage amount */
+"account.achievement.passFreeTrial.detail.incomplete.label"="MEGA Pass 무료 체험을 시작하면 %@의 무료 저장소를 받습니다. 영구적으로 유효합니다.";
+/* Detail label shown on the achievements details view for Start MEGA Pass Free Trial when its completed, %@ is placeholder for the storage amount */
+"account.achievement.passFreeTrial.detail.complete.label"="%@ 보너스 적용됨. 영구적으로 유효합니다.";
+/* Explanation label shown on the achievements view for incomplete start MEGA Pass Free Trial achievement, %@ is a placeholder. */
+"account.achievement.passFreeTrial.incomplete.explanation.label"="MEGA Pass 앱을 설치하고, MEGA 계정으로 로그인한 다음, 무료 체험을 시작하세요. 보너스 저장소는 무료 체험을 시작한 이후 자동으로 추가됩니다.";
+/* Explanation label shown on the achievements view for complete start MEGA Pass Free Trial achievement, %@ is a placeholder. */
+"account.achievement.passFreeTrial.complete.explanation.label"="MEGA Pass 무료 체험을 시작하여 %@ 저장소 보너스를 받았습니다";
+/* Text for the button to install MEGA Pass in the Start MEGA Pass Free Trial achievement */
+"account.achievement.passFreeTrial.buttonText"="MEGA Pass 설치";
 /* Subtitle of the incomplete achievement, %@ is a placeholder. */
 "account.achievement.incomplete.subtitle"="%@의 저장소. 365일간 이용 가능";
+/* Subtitle of the incomplete achievement with permanent bonus, %@ is a placeholder. */
+"account.achievement.incomplete.subtitle.permanent"="%@의 저장소. 영구적으로 유효합니다.";
+/* Subtitle of the complete achievement with permanent bonus */
+"account.achievement.complete.subtitle.permanent"="보너스 적용됨";
 /* Add Phone Number title */
 "Add Phone Number"="전화번호 추가";
 /* Explanation Label shown on the achievements view for complete add phone number achievement, %@ is a placeholder. */
@@ -2115,7 +2143,7 @@
 /* Button title which, if tapped, will trigger the action of opening a folder containg this file */
 "View in Folder"="폴더에서 보기";
 /* Error message shown when opening a link with an account that not corresponds to the link */
-"This link is not related to this account. Please log in with the correct account."="이 링크는 이 계정과 연결되어 있지 않습니다. 올바른 계정으로 로그인 하세요.";
+"This link is not related to this account. Please log in with the correct account."="다른 MEGA 계정으로 로그인 하셨습니다. 로그아웃 하고 암호 재설정 링크를 다시 여세요.";
 /* Text emncouraging the user to add contacts in MEGA */
 "Invite contact now"="지금 연락처 초대";
 /* Error message if user click next button without enter a valid phone number */
@@ -4678,3 +4706,15 @@
 "subscriptionPurchase.feature.four.description"="우리의 암호 관리자로 당신의 모든 암호를 정리하고 안전하게 지키세요";
 /* Title for all the feature in subscription purchase view. */
 "subscriptionPurchase.feature.title"="다음을 얻게 됩니다:";
+/* Title for the Home tab bar item */
+"tabbarTitle.home"="홈";
+/* Title for the Drive tab bar item */
+"tabbarTitle.drive"="드라이브";
+/* Title for the Photo tab bar item */
+"tabbarTitle.photos"="사진";
+/* Title for the Chat tab bar item */
+"tabbarTitle.chat"="대화";
+/* Title for the Menu tab bar item */
+"tabbarTitle.menu"="메뉴";
+/* Storage benefit shown for the free plan card */
+"subscriptionPurchase.freePlanCard.feature.storage"="%@ of storage";

@@ -1058,8 +1058,36 @@
 "account.achievement.mobileApp.complete.explaination.label"="Ai primit %@ spațiu de stocare pentru instalarea Aplicației Mobile MEGA.";
 /* Explanation label shown on the achievements view for incomplete install MEGA mobile app achievement, %@ is a placeholder. */
 "account.achievement.mobileApp.incomplete.explaination.label"="Când instalați Aplicații Mobile MEGA, primiți %@ de spațiu de depozitare gratuit, valabil 365 de zile. Aplicații Mobile MEGA sunt disponibile pentru iOS și Android. ";
+/* Cell title shown on the achievements view for Start MEGA VPN Free Trial */
+"account.achievement.vpnFreeTrial.title"="Începeți perioada de probă gratuită MEGA VPN";
+/* Detail label shown on the achievements details view for Start MEGA VPN Free Trial when its incomplete, %@ is placeholder for the storage amount */
+"account.achievement.vpnFreeTrial.detail.incomplete.label"="Obțineți %@ spațiu de stocare gratuit când începeți o perioadă de probă gratuită MEGA VPN. Valabil permanent.";
+/* Detail label shown on the achievements details view for Start MEGA VPN Free Trial when its completed, %@ is placeholder for the storage amount */
+"account.achievement.vpnFreeTrial.detail.complete.label"="%@ bonus aplicat. Valabil permanent.";
+/* Explanation label shown on the achievements view for incomplete start MEGA VPN Free Trial achievement, %@ is a placeholder. */
+"account.achievement.vpnFreeTrial.incomplete.explanation.label"="Instalează aplicația MEGA VPN, conectează-te cu contul tău MEGA și începe perioada de probă gratuită. Spațiul de stocare bonus este adăugat automat după începerea perioadei de probă gratuite.";
+/* Explanation label shown on the achievements view for complete start MEGA VPN Free Trial achievement, %@ is a placeholder. */
+"account.achievement.vpnFreeTrial.complete.explanation.label"="Ați primit %@ spațiu de stocare pentru pornirea unui MEGA VPN de încercare gratuită";
+/* Text for the button to install MEGA VPN in the Start MEGA VPN Free Trial achievement */
+"account.achievement.vpnFreeTrial.buttonText"="Instalați MEGA VPN";
+/* Cell title shown on the achievements view for Start MEGA Pass Free Trial */
+"account.achievement.passFreeTrial.title"="Începeți perioada de probă gratuită MEGA Pass";
+/* Detail label shown on the achievements details view for Start MEGA Pass Free Trial when its incomplete, %@ is placeholder for the storage amount */
+"account.achievement.passFreeTrial.detail.incomplete.label"="Obțineți %@ spațiu de stocare gratuit când începeți o perioadă de probă gratuită MEGA Pass. Valabil permanent.";
+/* Detail label shown on the achievements details view for Start MEGA Pass Free Trial when its completed, %@ is placeholder for the storage amount */
+"account.achievement.passFreeTrial.detail.complete.label"="%@ bonus aplicat. Valabil permanent.";
+/* Explanation label shown on the achievements view for incomplete start MEGA Pass Free Trial achievement, %@ is a placeholder. */
+"account.achievement.passFreeTrial.incomplete.explanation.label"="Instalează aplicația MEGA Pass, conectează-te cu contul tău MEGA și începe perioada de probă gratuită. Spațiul de stocare bonus este adăugat automat după începerea perioadei de probă gratuite.";
+/* Explanation label shown on the achievements view for complete start MEGA Pass Free Trial achievement, %@ is a placeholder. */
+"account.achievement.passFreeTrial.complete.explanation.label"="Ați primit %@ spațiu de stocare pentru pornirea unui MEGA Pass de încercare gratuită";
+/* Text for the button to install MEGA Pass in the Start MEGA Pass Free Trial achievement */
+"account.achievement.passFreeTrial.buttonText"="Instalați MEGA Pass";
 /* Subtitle of the incomplete achievement, %@ is a placeholder. */
 "account.achievement.incomplete.subtitle"="%@ spațiu de stocare. Valabili timp de 365 de zile.";
+/* Subtitle of the incomplete achievement with permanent bonus, %@ is a placeholder. */
+"account.achievement.incomplete.subtitle.permanent"="%@ de spațiu de stocare. Valabil permanent.";
+/* Subtitle of the complete achievement with permanent bonus */
+"account.achievement.complete.subtitle.permanent"="Bonus aplicat";
 /* Add Phone Number title */
 "Add Phone Number"="Adaugă un număr de telefon";
 /* Explanation Label shown on the achievements view for complete add phone number achievement, %@ is a placeholder. */
@@ -2115,7 +2143,7 @@
 /* Button title which, if tapped, will trigger the action of opening a folder containg this file */
 "View in Folder"="Vezi în folder";
 /* Error message shown when opening a link with an account that not corresponds to the link */
-"This link is not related to this account. Please log in with the correct account."="Acest link nu are legătură cu acest cont. Te rugăm să te autentifici cu contul corect.";
+"This link is not related to this account. Please log in with the correct account."="You’re logged in to a different MEGA account. Log out and open the password reset link again.";
 /* Text emncouraging the user to add contacts in MEGA */
 "Invite contact now"="Invită contacte acum";
 /* Error message if user click next button without enter a valid phone number */
@@ -4678,3 +4706,15 @@
 "subscriptionPurchase.feature.four.description"="Organizați-vă toate parolele și păstrați-le în siguranță cu managerul nostru de parole";
 /* Title for all the feature in subscription purchase view. */
 "subscriptionPurchase.feature.title"="Veți obține:";
+/* Title for the Home tab bar item */
+"tabbarTitle.home"="Acasă";
+/* Title for the Drive tab bar item */
+"tabbarTitle.drive"="Unitate";
+/* Title for the Photo tab bar item */
+"tabbarTitle.photos"="Fotografii";
+/* Title for the Chat tab bar item */
+"tabbarTitle.chat"="Chat";
+/* Title for the Menu tab bar item */
+"tabbarTitle.menu"="Meniu";
+/* Storage benefit shown for the free plan card */
+"subscriptionPurchase.freePlanCard.feature.storage"="%@ of storage";

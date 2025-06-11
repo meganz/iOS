@@ -1058,8 +1058,36 @@
 "account.achievement.mobileApp.complete.explaination.label"="U heeft %@ opslagruimte ontvangen voor het installeren van de MEGA-mobiele applicatie.";
 /* Explanation label shown on the achievements view for incomplete install MEGA mobile app achievement, %@ is a placeholder. */
 "account.achievement.mobileApp.incomplete.explaination.label"="Wanneer u de MEGA mobiele applicatie installeert, krijgt u %@ gratis opslagruimte, 365 dagen geldig. De MEGA-Mobiele Applicatie is beschikbaar voor iOS en Android.";
+/* Cell title shown on the achievements view for Start MEGA VPN Free Trial */
+"account.achievement.vpnFreeTrial.title"="MEGA  VPN gratis proefversie starten";
+/* Detail label shown on the achievements details view for Start MEGA VPN Free Trial when its incomplete, %@ is placeholder for the storage amount */
+"account.achievement.vpnFreeTrial.detail.incomplete.label"="Krijg %@aan gratis opslag wanneer u een gratis MEGA VPN proefversie start. Permanent geldig.";
+/* Detail label shown on the achievements details view for Start MEGA VPN Free Trial when its completed, %@ is placeholder for the storage amount */
+"account.achievement.vpnFreeTrial.detail.complete.label"="%@ bonus toegepast. Permanent geldig.";
+/* Explanation label shown on the achievements view for incomplete start MEGA VPN Free Trial achievement, %@ is a placeholder. */
+"account.achievement.vpnFreeTrial.incomplete.explanation.label"="Installeer de MEGA VPN-applicatie, inloggen met uw MEGA-account en uw gratis proefperiode starten. Uw bonusopslag wordt automatisch toegevoegd na het starten van uw gratis proefperiode.";
+/* Explanation label shown on the achievements view for complete start MEGA VPN Free Trial achievement, %@ is a placeholder. */
+"account.achievement.vpnFreeTrial.complete.explanation.label"="U heeft %@ aan opslagruimte voor het starten van een MEGA VPN  proefversie ontvangen";
+/* Text for the button to install MEGA VPN in the Start MEGA VPN Free Trial achievement */
+"account.achievement.vpnFreeTrial.buttonText"="MEGA VPN installeren";
+/* Cell title shown on the achievements view for Start MEGA Pass Free Trial */
+"account.achievement.passFreeTrial.title"="Start de MEGA Pass gratis proefversie";
+/* Detail label shown on the achievements details view for Start MEGA Pass Free Trial when its incomplete, %@ is placeholder for the storage amount */
+"account.achievement.passFreeTrial.detail.incomplete.label"="Krijg %@ aan gratis opslag wanneer u een MEGA Pass proefversie start. Permanent geldig.";
+/* Detail label shown on the achievements details view for Start MEGA Pass Free Trial when its completed, %@ is placeholder for the storage amount */
+"account.achievement.passFreeTrial.detail.complete.label"="%@ bonus toegepast. Permanent geldig.";
+/* Explanation label shown on the achievements view for incomplete start MEGA Pass Free Trial achievement, %@ is a placeholder. */
+"account.achievement.passFreeTrial.incomplete.explanation.label"="Installeer de MEGA Pass-applicatie, inloggen met uw MEGA-account en start uw gratis proefperiode. Uw bonusopslag wordt automatisch toegevoegd na het starten van uw gratis proefperiode.";
+/* Explanation label shown on the achievements view for complete start MEGA Pass Free Trial achievement, %@ is a placeholder. */
+"account.achievement.passFreeTrial.complete.explanation.label"="U heeft %@ opslagruimte ontvangen voor het starten van een MEGA Pass gratis proefversie";
+/* Text for the button to install MEGA Pass in the Start MEGA Pass Free Trial achievement */
+"account.achievement.passFreeTrial.buttonText"="MEGA Pass installeren";
 /* Subtitle of the incomplete achievement, %@ is a placeholder. */
 "account.achievement.incomplete.subtitle"="%@ aan opslag. Geldig voor 365 dagen.";
+/* Subtitle of the incomplete achievement with permanent bonus, %@ is a placeholder. */
+"account.achievement.incomplete.subtitle.permanent"="%@ aan opslag. Permanent geldig.";
+/* Subtitle of the complete achievement with permanent bonus */
+"account.achievement.complete.subtitle.permanent"="Bonus toegepast";
 /* Add Phone Number title */
 "Add Phone Number"="Telefoonnummer Toevoegen";
 /* Explanation Label shown on the achievements view for complete add phone number achievement, %@ is a placeholder. */
@@ -2115,7 +2143,7 @@
 /* Button title which, if tapped, will trigger the action of opening a folder containg this file */
 "View in Folder"="Weergeven in map";
 /* Error message shown when opening a link with an account that not corresponds to the link */
-"This link is not related to this account. Please log in with the correct account."="Deze link is niet gerelateerd aan dit account. Log in met het juiste account.";
+"This link is not related to this account. Please log in with the correct account."="U bent ingelogd op een ander MEGA-account. Log uit en open de link voor het resetten van het wachtwoord opnieuw.";
 /* Text emncouraging the user to add contacts in MEGA */
 "Invite contact now"="Nodig nu contacten uit";
 /* Error message if user click next button without enter a valid phone number */
@@ -4678,3 +4706,15 @@
 "subscriptionPurchase.feature.four.description"="Organiseer al uw wachtwoorden en houd ze veilig met onze wachtwoordbeheerder";
 /* Title for all the feature in subscription purchase view. */
 "subscriptionPurchase.feature.title"="U krijgt:";
+/* Title for the Home tab bar item */
+"tabbarTitle.home"="Thuis";
+/* Title for the Drive tab bar item */
+"tabbarTitle.drive"="Schijf";
+/* Title for the Photo tab bar item */
+"tabbarTitle.photos"="Foto’s";
+/* Title for the Chat tab bar item */
+"tabbarTitle.chat"="Gesprek";
+/* Title for the Menu tab bar item */
+"tabbarTitle.menu"="Menu";
+/* Storage benefit shown for the free plan card */
+"subscriptionPurchase.freePlanCard.feature.storage"="%@ of storage";
