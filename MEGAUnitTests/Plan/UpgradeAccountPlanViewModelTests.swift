@@ -4,10 +4,13 @@ import Combine
 import MEGAAnalyticsiOS
 import MEGAAppPresentation
 import MEGAAppPresentationMock
+import MEGAAssets
 import MEGADomain
 import MEGADomainMock
+import MEGAL10n
 import MEGAPreference
 import MEGAStoreKit
+import MEGAUIComponent
 import XCTest
 
 final class UpgradeAccountPlanViewModelTests: XCTestCase {
@@ -451,7 +454,7 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
 
     // MARK: - Buy button
     @MainActor
-    func testIsShowBuyButton_freeAccount_shouldBeTrue() {
+    func testBuyButtons_freeAccount() async {
         let details = AccountDetailsEntity.build(proLevel: .free, subscriptionCycle: .none)
         let planList: [PlanEntity] = [.proII_monthly, .proII_yearly]
 
@@ -462,14 +465,65 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
             .sink { _ in
                 exp.fulfill()
             }.store(in: &subscriptions)
-        wait(for: [exp], timeout: 0.5)
+        await fulfillment(of: [exp], timeout: 0.5)
 
         sut.setSelectedPlan(.proII_yearly)
-        XCTAssertTrue(sut.isShowBuyButton)
+        await sut.updateBuyButtonsTask?.value
+
+        assertButtonsEqual(
+            lhs: sut.buyButtons,
+            rhs: [
+                MEGAButton(Strings.Localizable.UpgradeAccountPlan.Button.BuyAccountPlan.title(
+                    PlanEntity.proII_yearly.type.toAccountTypeDisplayName()
+                ))
+            ]
+        )
     }
 
     @MainActor
-    func testIsShowBuyButton_selectedPlanTypeOnMonthly_thenSwitchedToYearlyTab_shouldBeTrue() {
+    func testBuyButtons_freeAccount_whenShouldProvideExternalPurchase() async {
+        let details = AccountDetailsEntity.build(proLevel: .free, subscriptionCycle: .none)
+        let planList: [PlanEntity] = [.proII_monthly, .proII_yearly]
+
+        let exp = expectation(description: "Setting Current plan")
+        let (sut, _) = makeSUT(
+            externalPurchaseUseCase: MockExternalPurchaseUseCase(shouldProvideExternalPurchase: true),
+            accountDetails: details,
+            planList: planList
+        )
+        sut.$currentPlan
+            .dropFirst()
+            .sink { _ in
+                exp.fulfill()
+            }.store(in: &subscriptions)
+        await fulfillment(of: [exp], timeout: 0.5)
+
+        sut.setSelectedPlan(.proII_yearly)
+        await sut.updateBuyButtonsTask?.value
+
+        assertButtonsEqual(
+            lhs: sut.buyButtons,
+            rhs: [
+                MEGAButton(
+                    Strings.Localizable.UpgradeAccountPlan.Button.BuyAccountPlan.title(
+                        PlanEntity.proII_yearly.type.toAccountTypeDisplayName()
+                    ),
+                    icon: MEGAAssets.Image.externalLink,
+                    iconAlignment: .trailing
+                ),
+                MEGAButton(
+                    Strings.Localizable.UpgradeAccountPlan.Button.BuyInApp.title(
+                        PlanEntity.proII_yearly.appStoreFormattedPrice
+                    ),
+                    footer: Strings.Localizable.UpgradeAccountPlan.Button.BuyInApp.footer,
+                    type: .secondary
+                )
+            ]
+        )
+    }
+
+    @MainActor
+    func testBuyButtons_selectedPlanTypeOnMonthly_thenSwitchedToYearlyTab() async {
         let details = AccountDetailsEntity.build(proLevel: .proI, subscriptionCycle: .monthly)
         let planList: [PlanEntity] = [.proI_monthly, .proI_yearly, .proII_monthly, .proII_yearly]
 
@@ -480,15 +534,24 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
             .sink { _ in
                 exp.fulfill()
             }.store(in: &subscriptions)
-        wait(for: [exp], timeout: 0.5)
+        await fulfillment(of: [exp], timeout: 0.5)
 
         sut.setSelectedPlan(.proII_monthly)
         sut.selectedCycleTab = .yearly
-        XCTAssertTrue(sut.isShowBuyButton)
+        await sut.updateBuyButtonsTask?.value
+
+        assertButtonsEqual(
+            lhs: sut.buyButtons,
+            rhs: [
+                MEGAButton(Strings.Localizable.UpgradeAccountPlan.Button.BuyAccountPlan.title(
+                    PlanEntity.proII_yearly.type.toAccountTypeDisplayName()
+                ))
+            ]
+        )
     }
     
     @MainActor
-    func testIsShowBuyButton_selectedPlanTypeOnYearly_thenSwitchedToMonthlyTab_shouldBeTrue() {
+    func testBuyButtons_selectedPlanTypeOnYearly_thenSwitchedToMonthlyTab() async {
         let details = AccountDetailsEntity.build(proLevel: .proI, subscriptionCycle: .yearly)
         let planList: [PlanEntity] = [.proI_monthly, .proI_yearly, .proII_monthly, .proII_yearly]
 
@@ -499,15 +562,24 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
             .sink { _ in
                 exp.fulfill()
             }.store(in: &subscriptions)
-        wait(for: [exp], timeout: 0.5)
+        await fulfillment(of: [exp], timeout: 0.5)
 
         sut.setSelectedPlan(.proII_yearly)
         sut.selectedCycleTab = .monthly
-        XCTAssertTrue(sut.isShowBuyButton)
+        await sut.updateBuyButtonsTask?.value
+
+        assertButtonsEqual(
+            lhs: sut.buyButtons,
+            rhs: [
+                MEGAButton(Strings.Localizable.UpgradeAccountPlan.Button.BuyAccountPlan.title(
+                    PlanEntity.proII_yearly.type.toAccountTypeDisplayName()
+                ))
+            ]
+        )
     }
     
     @MainActor
-    func testIsShowBuyButtonWithRecurringPlanMonthly_selectSamePlanTypeOnYearlyTab_thenSwitchedToMonthlyTab_shouldToggleValue() async {
+    func testBuyButtonsWithRecurringPlanMonthly_selectSamePlanTypeOnYearlyTab_thenSwitchedToMonthlyTab() async {
         let details = AccountDetailsEntity.build(proLevel: .proI, subscriptionCycle: .monthly)
         let planList: [PlanEntity] = [.proI_monthly, .proI_yearly, .proII_monthly, .proII_yearly]
         let (sut, _) = makeSUT(accountDetails: details, planList: planList)
@@ -516,14 +588,24 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
         
         sut.selectedCycleTab = .yearly
         sut.setSelectedPlan(.proI_yearly)
-        XCTAssertTrue(sut.isShowBuyButton)
-        
+        await sut.updateBuyButtonsTask?.value
+
+        assertButtonsEqual(
+            lhs: sut.buyButtons,
+            rhs: [
+                MEGAButton(Strings.Localizable.UpgradeAccountPlan.Button.BuyAccountPlan.title(
+                    PlanEntity.proI_yearly.type.toAccountTypeDisplayName()
+                ))
+            ]
+        )
+
         sut.selectedCycleTab = .monthly
-        XCTAssertFalse(sut.isShowBuyButton)
+        await sut.updateBuyButtonsTask?.value
+        XCTAssertTrue(sut.buyButtons.isEmpty)
     }
     
     @MainActor
-    func testIsShowBuyButtonWithRecurringPlanYearly_selectSamePlanTypeOnMonthlyTab_thenSwitchedToYearlyTab_shouldToggleValue() async {
+    func testBuyButtonsWithRecurringPlanYearly_selectSamePlanTypeOnMonthlyTab_thenSwitchedToYearlyTab() async {
         let details = AccountDetailsEntity.build(proLevel: .proI, subscriptionCycle: .yearly)
         let planList: [PlanEntity] = [.proI_monthly, .proI_yearly, .proII_monthly, .proII_yearly]
         let (sut, _) = makeSUT(accountDetails: details, planList: planList)
@@ -532,10 +614,20 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
         
         sut.selectedCycleTab = .monthly
         sut.setSelectedPlan(.proI_monthly)
-        XCTAssertTrue(sut.isShowBuyButton)
-        
+        await sut.updateBuyButtonsTask?.value
+
+        assertButtonsEqual(
+            lhs: sut.buyButtons,
+            rhs: [
+                MEGAButton(Strings.Localizable.UpgradeAccountPlan.Button.BuyAccountPlan.title(
+                    PlanEntity.proI_monthly.type.toAccountTypeDisplayName()
+                ))
+            ]
+        )
+
         sut.selectedCycleTab = .yearly
-        XCTAssertFalse(sut.isShowBuyButton)
+        await sut.updateBuyButtonsTask?.value
+        XCTAssertTrue(sut.buyButtons.isEmpty)
     }
     
     // MARK: - Plan list
@@ -870,7 +962,6 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
         XCTAssertTrue(harness.sut.isDismiss)
     }
 
-
     // MARK: - External Purchase
 
     @MainActor
@@ -941,7 +1032,29 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
         )
         return (sut, mockPurchaseUseCase)
     }
-    
+
+    private func assertButtonsEqual(
+        lhs: [MEGAButton],
+        rhs: [MEGAButton]
+    ) {
+        XCTAssertEqual(lhs.count, rhs.count)
+        for (l, r) in zip(lhs, rhs) {
+            assertButtonEqual(lhs: l, rhs: r)
+        }
+    }
+
+    private func assertButtonEqual(
+        lhs: MEGAButton,
+        rhs: MEGAButton
+    ) {
+        XCTAssertEqual(lhs.title?.description, rhs.title?.description)
+        XCTAssertEqual(lhs.footer?.description, rhs.footer?.description)
+        XCTAssertEqual(lhs.icon, rhs.icon)
+        XCTAssertEqual(lhs.iconAlignment, rhs.iconAlignment)
+        XCTAssertEqual(lhs.type, rhs.type)
+        XCTAssertEqual(lhs.state, rhs.state)
+    }
+
     private var cancellableSubscriptionMethod: PaymentMethodEntity {
         let methods: [PaymentMethodEntity] = [.ECP, .sabadell, .stripe2]
         return methods.randomElement() ?? .ECP

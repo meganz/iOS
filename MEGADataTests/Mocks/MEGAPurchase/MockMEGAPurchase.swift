@@ -4,8 +4,8 @@ final class MockMEGAPurchase: MEGAPurchase, @unchecked Sendable {
     private(set) var restorePurchaseCalled = 0
     private(set) var purchasePlanCalled = 0
 
-    var _pricing: MEGAPricing?
-    var _currency: MEGACurrency?
+    var _pricing: MEGAPricing = MockMEGAPricing(productList: [])
+    var _currency: MEGACurrency = MockMEGACurrency()
 
     override init() {
         super.init()
@@ -35,12 +35,12 @@ final class MockMEGAPurchase: MEGAPurchase, @unchecked Sendable {
     }
 
     override var pricing: MEGAPricing! {
-        get { _pricing ?? super.pricing }
+        get { _pricing }
         set { _pricing = newValue }
     }
 
     override var currency: MEGACurrency! {
-        get { _currency ?? super.currency }
+        get { _currency }
         set { _currency = newValue }
     }
 
