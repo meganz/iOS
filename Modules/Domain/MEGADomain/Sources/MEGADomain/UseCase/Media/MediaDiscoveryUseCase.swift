@@ -61,26 +61,6 @@ public final class MediaDiscoveryUseCase<T: FilesSearchRepositoryProtocol,
     }
     
     public func shouldReload(parentNode: NodeEntity, loadedNodes: [NodeEntity], updatedNodes: [NodeEntity]) -> Bool {
-        guard updatedNodes.notContains(where: { $0.handle == parentNode.handle && $0.changeTypes.contains(.sensitive) }) else { return true }
-        guard nodeUpdateRepository.shouldProcessOnNodesUpdate(parentNode: parentNode, childNodes: loadedNodes, updatedNodes: updatedNodes) else { return false }
-        
-        return isAnyNodeMovedToTrash(nodes: loadedNodes, updatedNodes: updatedNodes) ||
-        updatedNodes.containsNewNode() ||
-        updatedNodes.hasModifiedAttributes() ||
-        updatedNodes.hasModifiedParent()
-    }
-    
-    // MARK: Private
-    
-    private func isAnyNodeMovedToTrash(nodes: [NodeEntity], updatedNodes: [NodeEntity]) -> Bool {
-        let existingNodes = Set(nodes.map { $0.handle })
-        return updatedNodes.contains { node in
-            if node.changeTypes.contains(.parent),
-               existingNodes.contains(node.handle),
-               node.nodeType == .rubbish {
-                return true
-            }
-            return false
-        }
+        nodeUpdateRepository.shouldProcessOnNodesUpdate(parentNode: parentNode, childNodes: loadedNodes, updatedNodes: updatedNodes)
     }
 }
