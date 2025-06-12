@@ -95,8 +95,9 @@ final class AccountPlanPurchaseRepository: NSObject, AccountPlanPurchaseReposito
             let plan = product.toPlanEntity(
                 storage: storageGB(atProductIndex: index),
                 transfer: transferGB(atProductIndex: index),
-                price: useAPIPrice ? price(atProductIndex: index) : nil,
-                currencyCode: useAPIPrice ? purchase.currency.localCurrencyName : nil
+                apiPrice: price(atProductIndex: index),
+                apiCurrencyCode: purchase.currency.localCurrencyName,
+                useAPIPrice: useAPIPrice
             )
             accountPlans.append(plan)
         }

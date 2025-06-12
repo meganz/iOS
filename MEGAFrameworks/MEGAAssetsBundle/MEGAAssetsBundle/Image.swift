@@ -192,4 +192,5 @@ public struct MEGAImageBundle {
     public static var paused: Image { Image(.paused) }
     public static var updating: Image { Image(.updating) }
     public static var upToDate: Image { Image(.upToDate) }
+    public static var externalLink: Image { Image(.externalLink) }
 }

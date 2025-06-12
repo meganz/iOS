@@ -7,15 +7,17 @@ extension SKProduct {
     public func toPlanEntity(
         storage: Int = 0,
         transfer: Int = 0,
-        price: Double? = nil,
-        currencyCode: String? = nil
+        apiPrice: Double? = nil,
+        apiCurrencyCode: String? = nil,
+        useAPIPrice: Bool = false
     ) -> PlanEntity {
         PlanEntity(
             product: self,
             storageLimit: storage,
             transferLimit: transfer,
-            price: price,
-            currencyCode: currencyCode
+            apiPrice: apiPrice,
+            apiCurrencyCode: apiCurrencyCode,
+            useAPIPrice: useAPIPrice
         )
     }
 }
@@ -52,38 +54,42 @@ fileprivate extension PlanEntity {
         product: SKProduct,
         storageLimit: Int,
         transferLimit: Int,
-        price: Double? = nil,
-        currencyCode: String? = nil
+        apiPrice: Double?,
+        apiCurrencyCode: String?,
+        useAPIPrice: Bool
     ) {
         self.init(productIdentifier: product.productIdentifier)
         
         let productIdentifier = product.productIdentifier
         subscriptionCycle = SubscriptionCycleEntity(productIdentifier: productIdentifier)
-        
+
         let planType = planType(productIdentifier: productIdentifier)
         name = MEGAAccountDetails.string(for: planType) ?? ""
         type = planType.toAccountTypeEntity()
 
-        let actualPrice = price ?? product.price.doubleValue
-
-        let numberFormatter = NumberFormatter()
-        numberFormatter.numberStyle = .currency
-        if let currencyCode {
-            numberFormatter.currencyCode = currencyCode
-        } else {
+        appStorePrice = product.price.doubleValue
+        appStoreFormattedPrice = {
+            let numberFormatter = NumberFormatter()
+            numberFormatter.numberStyle = .currency
             numberFormatter.locale = product.priceLocale
-        }
-
-        formattedPrice = numberFormatter.string(for: actualPrice) ?? ""
-        currency = numberFormatter.currencyCode
-        self.price = actualPrice
-
-        formattedMonthlyPriceForYearlyPlan = subscriptionCycle == .yearly
-        ? numberFormatter.string(for: Int(ceil(self.price / 12.0)))
-        : nil
+            return numberFormatter.string(for: product.price) ?? ""
+        }()
+        appStoreCurrency = product.priceLocale.currencyCode ?? ""
 
         storage = displayStringForGBValue(gbValue: storageLimit)
         transfer = displayStringForGBValue(gbValue: transferLimit)
+
+        guard useAPIPrice, let apiPrice, let apiCurrencyCode else { return }
+
+        self.useAPIPrice = useAPIPrice
+        self.apiPrice = apiPrice
+        apiFormattedPrice = {
+            let numberFormatter = NumberFormatter()
+            numberFormatter.numberStyle = .currency
+            numberFormatter.currencyCode = apiCurrencyCode
+            return numberFormatter.string(for: apiPrice)
+        }()
+        apiCurrency = apiCurrencyCode
     }
 
     private func planType(productIdentifier: String) -> MEGAAccountType {

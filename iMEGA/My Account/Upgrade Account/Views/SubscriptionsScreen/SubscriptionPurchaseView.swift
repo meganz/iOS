@@ -57,6 +57,7 @@ struct SubscriptionPurchaseView: View {
             }
 
             SubscriptionPurchaseBottomButtonView(viewModel: viewModel)
+                .background(TokenColors.Background.page.swiftUI)
         }
     }
 
@@ -97,6 +98,7 @@ struct SubscriptionPurchaseView: View {
             )
             .disabled(viewModel.isLoading)
             SubscriptionPurchaseBottomButtonView(viewModel: viewModel)
+                .background(TokenColors.Background.page.swiftUI)
         }
         .padding(.leading, compactContentLeadingPadding)
     }
