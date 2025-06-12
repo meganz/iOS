@@ -184,7 +184,7 @@ struct CloudDriveViewControllerFactory {
             ),
             mediaDiscoveryUseCase: MediaDiscoveryUseCase(
                 filesSearchRepository: FilesSearchRepository(sdk: sdk),
-                nodeUpdateRepository: NodeUpdateRepository(sdk: sdk)
+                nodeUpdateRepository: NodeUpdateRepository.newRepo
             ),
             homeScreenFactory: homeFactory,
             resultsMapper: SearchResultMapper(

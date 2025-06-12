@@ -34,7 +34,7 @@ protocol MediaDiscoveryRouting: Routing {
         let sdk = isFolderLink ? MEGASdk.sharedFolderLink : MEGASdk.shared
         let analyticsUseCase = MediaDiscoveryAnalyticsUseCase(repository: AnalyticsRepository.newRepo)
         let mediaDiscoveryUseCase = MediaDiscoveryUseCase(filesSearchRepository: FilesSearchRepository(sdk: sdk),
-                                                          nodeUpdateRepository: NodeUpdateRepository(sdk: sdk))
+                                                          nodeUpdateRepository: NodeUpdateRepository.newRepo)
         let downloadFileRepository = DownloadFileRepository(sdk: MEGASdk.shared,
                                                             sharedFolderSdk: isFolderLink ? MEGASdk.sharedFolderLink : nil)
         let saveMediaUseCase = SaveMediaToPhotosUseCase(downloadFileRepository: downloadFileRepository,
