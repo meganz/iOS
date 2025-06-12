@@ -47,7 +47,9 @@ struct PermissionAppLaunchRouter: PermissionAppLaunchRouterProtocol {
             _ = await router.start(window: window, permissionType: .notifications)
             let photosPermissionGranted = await router.start(window: window, permissionType: .cameraBackups)
             if photosPermissionGranted == true {
+                CameraUploadManager.configDefaultSettingsForCameraUploadV2()
                 CameraUploadManager.shared().enableCameraUpload()
+
                 let preference = PreferenceWrapper(key: PreferenceKeyEntity.shouldShowCameraUploadsEnabledSnackbar, defaultValue: false, useCase: PreferenceUseCase.default)
                 preference.wrappedValue = true
             }
