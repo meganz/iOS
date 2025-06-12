@@ -178,6 +178,7 @@
     [MEGASdk.shared setLanguageCode:languageCode];
     [MEGASdk.sharedFolderLink setLanguageCode:languageCode];
     
+    [self injectSDKRepoDependencies];
     [self injectAuthenticationDependencies];
     [self injectInfrastructureDependencies];
 

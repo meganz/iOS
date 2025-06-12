@@ -6,10 +6,15 @@ import MEGAAuthenticationOrchestration
 import MEGAInfrastructure
 import MEGAPermissions
 import MEGAPresentation
+import MEGASDKRepo
 import MEGASwiftUI
 import SwiftUI
 
 extension AppDelegate {
+    @objc func injectSDKRepoDependencies() {
+        MEGASDKRepo.DependencyInjection.sharedSdk = .shared
+    }
+    
     @objc func injectAuthenticationDependencies() {
         guard isLoginRegisterAndOnboardingRevampFeatureEnabled else { return }
 
