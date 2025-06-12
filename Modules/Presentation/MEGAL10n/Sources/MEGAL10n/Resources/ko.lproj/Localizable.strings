@@ -4717,4 +4717,4 @@
 /* Title for the Menu tab bar item */
 "tabbarTitle.menu"="메뉴";
 /* Storage benefit shown for the free plan card */
-"subscriptionPurchase.freePlanCard.feature.storage"="%@ of storage";
+"subscriptionPurchase.freePlanCard.feature.storage"="%@ 저장소";
