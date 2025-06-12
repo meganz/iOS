@@ -12,10 +12,11 @@ import MEGASdk
 import MEGAStoreKit
 import MEGASwift
 import MEGASwiftUI
+import MEGAUIComponent
 import SwiftUI
 
 enum UpgradeAccountPlanTarget {
-    case buyPlan, restorePlan, termsAndPolicies
+    case buyPlan, restorePlan, termsAndPolicies, buyExternally, buyInApp
 }
 
 enum UpgradeAccountPlanViewType {
@@ -54,8 +55,9 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
     @Published var isDismiss = false
     @Published var isLoading = false
     @Published private(set) var currentPlan: PlanEntity?
+    @Published var buyButtons: [MEGAButton] = []
+
     private(set) var recommendedPlanType: AccountTypeEntity?
-    var isShowBuyButton = false
 
     @Published var selectedCycleTab: SubscriptionCycleEntity = .yearly {
         didSet { toggleBuyButton() }
@@ -70,6 +72,7 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
     private(set) var buyPlanTask: Task<Void, Never>?
     private(set) var cancelActivePlanAndBuyNewPlanTask: Task<Void, Never>?
     private(set) var observeAccountUpdatesTask: Task<Void, Never>?
+    private(set) var updateBuyButtonsTask: Task<Void, Never>?
 
     @PreferenceWrapper(key: PreferenceKeyEntity.lastCloseAdsButtonTappedDate, defaultValue: nil)
     private var lastCloseAdsDate: Date?
@@ -210,12 +213,64 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
 
     private func toggleBuyButton() {
         guard let currentSelectedPlan else {
-            isShowBuyButton = false
+            hideBuyButtons()
             return
         }
-        isShowBuyButton = isSelectionEnabled(forPlan: currentSelectedPlan)
+
+        if isSelectionEnabled(forPlan: currentSelectedPlan) {
+            reloadBuyButtons(for: currentSelectedPlan)
+        } else {
+            hideBuyButtons()
+        }
     }
-    
+
+    private func hideBuyButtons() {
+        buyButtons = []
+    }
+
+    private func reloadBuyButtons(for plan: PlanEntity) {
+        updateBuyButtonsTask?.cancel()
+        updateBuyButtonsTask = Task {
+            buyButtons = await makeBuyButtons(selectedPlan: plan)
+        }
+    }
+
+    private func makeBuyButtons(selectedPlan: PlanEntity) async -> [MEGAButton] {
+        guard await externalPurchaseUseCase.shouldProvideExternalPurchase() else {
+            return [mainBuyButton]
+        }
+
+        return [buyExternallyButton, continueInAppButton(plan: selectedPlan)]
+    }
+
+    private var mainBuyButton: MEGAButton {
+        MEGAButton(Strings.Localizable.UpgradeAccountPlan.Button.BuyAccountPlan.title(
+            selectedPlanName
+        )) { [weak self] in
+            self?.didTap(.buyPlan)
+        }
+    }
+
+    private var buyExternallyButton: MEGAButton {
+        MEGAButton(
+            Strings.Localizable.UpgradeAccountPlan.Button.BuyAccountPlan.title(selectedPlanName),
+            icon: MEGAAssets.Image.externalLink,
+            iconAlignment: .trailing
+        ) { [weak self] in
+            self?.didTap(.buyExternally)
+        }
+    }
+
+    private func continueInAppButton(plan: PlanEntity) -> MEGAButton {
+        MEGAButton(
+            Strings.Localizable.UpgradeAccountPlan.Button.BuyInApp.title(plan.appStoreFormattedPrice),
+            footer: Strings.Localizable.UpgradeAccountPlan.Button.BuyInApp.footer,
+            type: .secondary
+        ) { [weak self] in
+            self?.didTap(.buyInApp)
+        }
+    }
+
     private func setDefaultPlanCycleTab() {
         selectedCycleTab = accountDetails.subscriptionCycle == .monthly ? .monthly : .yearly
     }
@@ -315,8 +370,10 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
             router.showTermsAndPolicies()
         case .restorePlan:
             restorePurchase()
-        case .buyPlan:
+        case .buyPlan, .buyExternally:
             buySelectedPlan()
+        case .buyInApp:
+            buyInApp()
         }
     }
     
@@ -436,8 +493,30 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
             break
         }
     }
-    
+
     private func buySelectedPlan() {
+        buySelectedPlan(purchaseLogic: { [weak self] currentSelectedPlan in
+            guard let self else { return }
+
+            if let externalLink = await externalLink(for: currentSelectedPlan) {
+                observeAccountUpdates()
+                await openURL(externalLink)
+                isLoading = false
+            } else {
+                await purchaseUseCase.purchasePlan(currentSelectedPlan)
+            }
+        })
+    }
+
+    private func buyInApp() {
+        buySelectedPlan(purchaseLogic: { [weak self] currentSelectedPlan in
+            guard let self else { return }
+
+            await purchaseUseCase.purchasePlan(currentSelectedPlan)
+        })
+    }
+
+    private func buySelectedPlan(purchaseLogic: @escaping (PlanEntity) async -> Void) {
         guard let currentSelectedPlan else { return }
         
         buyPlanTask = Task { [weak self] in
@@ -448,13 +527,7 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
                 try validateActiveSubscriptions()
                 startLoading()
 
-                if let externalLink = await externalLink(for: currentSelectedPlan) {
-                    observeAccountUpdates()
-                    await openURL(externalLink)
-                    isLoading = false
-                } else {
-                    await purchaseUseCase.purchasePlan(currentSelectedPlan)
-                }
+                await purchaseLogic(currentSelectedPlan)
 
                 trackEventBuyPlan(currentSelectedPlan)
             } catch {

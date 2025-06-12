@@ -37,7 +37,7 @@ struct UpgradeAccountPlanView: View {
     }
     
     private func planView() -> some View {
-        VStack(alignment: .leading) {
+        VStack(alignment: .leading, spacing: .zero) {
             cancelButton
             
             ScrollView {
@@ -62,17 +62,6 @@ struct UpgradeAccountPlanView: View {
                         UpgradeSectionFeatureOfProView(showAdFreeContent: viewModel.isExternalAdsActive)
                             .padding(.top, 15)
                         
-                    } footer: {
-                        if viewModel.isShowBuyButton {
-                            VStack {
-                                PrimaryActionButtonView(title: Strings.Localizable.UpgradeAccountPlan.Button.BuyAccountPlan.title(viewModel.selectedPlanName)) {
-                                    viewModel.didTap(.buyPlan)
-                                }
-                            }
-                            .padding(.vertical)
-                            .frame(maxWidth: .infinity)
-                            .background(MEGAAssets.Color.backgroundRegularPrimaryElevated)
-                        }
                     }
                     
                     UpgradeSectionSubscriptionView()
@@ -91,6 +80,8 @@ struct UpgradeAccountPlanView: View {
                 }
                 .padding()
             }
+
+            SubscriptionPurchaseBottomButtonView(viewModel: viewModel)
         }
         .frame(maxWidth: 768, alignment: .leading)
         .clipped()
