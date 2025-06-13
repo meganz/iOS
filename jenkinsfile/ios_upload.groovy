@@ -42,7 +42,11 @@ pipeline {
 
                 def parameters = parseParameters(env.gitlabTriggerPhrase)
                 if (parameters[0]) {
-                    statusNotifier.postMessage("announce_release", env.MEGA_IOS_PROJECT_ID, "good")
+                    if (parameters[1]) {
+                        statusNotifier.postMessage("announce_release --hotfix-build true", env.MEGA_IOS_PROJECT_ID, "good")
+                    } else {
+                        statusNotifier.postMessage("announce_release", env.MEGA_IOS_PROJECT_ID, "good")
+                    }
                 }
             }
         }
@@ -444,17 +448,33 @@ private def parseParameters(String fullCommand) {
             .required(false)
             .desc("Specify the next release version to be announced")
             .build()
+    Option hotfixBuild = Option
+            .builder("hfb")
+            .longOpt("hotfix-build")
+            .argName("Hotfix Build")
+            .hasArg()
+            .required(false)
+            .desc("Specify the next release version to be announced")
+            .build()
+            
     options.addOption(announceReleaseOption)
+    options.addOption(hotfixBuild)
 
     CommandLineParser commandLineParser = new DefaultParserWrapper()
     CommandLine commandLine = commandLineParser.parse(options, parameters)
 
     boolean shouldAnnounceRelease = false  // Default to false
+    boolean isHotfixBuild = false  // Default to false
 
     if (commandLine.hasOption("ar")) {
         shouldAnnounceRelease = Boolean.parseBoolean(commandLine.getOptionValue("ar"))
     }
 
+    if (commandLine.hasOption("hfb")) {
+        isHotfixBuild = Boolean.parseBoolean(commandLine.getOptionValue("hfb"))
+    }
+
     println("should announce release: $shouldAnnounceRelease")
-    return [shouldAnnounceRelease]
+    println("is hotfix build: $isHotfixBuild")
+    return [shouldAnnounceRelease, isHotfixBuild]
 }

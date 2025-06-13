@@ -34,6 +34,9 @@ struct App: AsyncParsableCommand {
     @Option(help: "TestFlight URL for the Mega app, excluding the build number")
     var testflightBaseUrl: String
 
+    @Option(help: "Indicates if the build is a hotfix build")
+    var isHotfixBuild: Bool
+
     func run() async throws {
         guard let jiraBaseURL = URL(string: jiraBaseURLString) else {
             throw AppError.invalidURL("Could not convert \(jiraBaseURLString) to URL")
@@ -43,24 +46,24 @@ struct App: AsyncParsableCommand {
         let versionFetcher = VersionFetcher()
         let currentReleaseVersion = try versionFetcher.fetchVersion()
         print("Current version: \(currentReleaseVersion)")
-        
-        print("Calculating the next version.")
-        let nextReleaseVersion: String
-        if let userProvidedVersion = self.nextReleaseVersion,
-           userProvidedVersion.components(separatedBy: ".").count >= 2 {
-            nextReleaseVersion = userProvidedVersion
-        } else {
-            nextReleaseVersion = try versionFetcher.nextVersion(from: currentReleaseVersion)
-        }
-        print("Next version: \(nextReleaseVersion)")
 
-        print("Creating release version iOS \(nextReleaseVersion) for all Main Application Jira projects")
-        try await createReleaseVersion(
-            version: nextReleaseVersion,
-            jiraBaseURL: jiraBaseURL,
-            jiraToken: jiraAuthorization,
-            jiraProjects: jiraProjects
-        )
+        var nextReleaseVersion: String = ""
+        if !isHotfixBuild {
+            print("Calculating the next version.")
+            nextReleaseVersion = try calculateNextReleaseVersion(
+                with: versionFetcher,
+                currentVersion: currentReleaseVersion
+            )
+            print("Next version: \(nextReleaseVersion)")
+
+            print("Creating release version iOS \(nextReleaseVersion) for all Main Application Jira projects")
+            try await createReleaseVersion(
+                version: nextReleaseVersion,
+                jiraBaseURL: jiraBaseURL,
+                jiraToken: jiraAuthorization,
+                jiraProjects: jiraProjects
+            )
+        }
 
         print("Fetching the SDK and Chat branch names")
         let sdkVersion = try tagOrBranchNameForSubmodule(with: Submodule.sdk.path)
@@ -91,18 +94,41 @@ struct App: AsyncParsableCommand {
                 jiraBaseURLString: jiraBaseURLString,
                 releaseNotes: releaseNotes,
                 token: slackAuthorization,
-                testflightBaseUrl: testflightBaseUrl
+                testflightBaseUrl: testflightBaseUrl,
+                isHotfixBuild: isHotfixBuild
             )
 
+        if !isHotfixBuild {
+            try await sendCodeFreezeReminder(currentVersion: currentReleaseVersion, nextVersion: nextReleaseVersion)
+        }
+
+        print("Finished successfully")
+    }
+
+    private func sendCodeFreezeReminder(currentVersion: String, nextVersion: String) async throws {
         print("Sending code freeze reminder message to Slack")
         try await SlackMessageSender
             .sendCodeFreezeReminderMessage(
                 codeFreezeSlackChannelIds: codeFreezeSlackChannelIds.components(separatedBy: ","),
-                version: currentReleaseVersion,
-                nextVersion: nextReleaseVersion,
+                version: currentVersion,
+                nextVersion: nextVersion,
                 token: slackAuthorization
             )
+    }
 
-        print("Finished successfully")
+    private func calculateNextReleaseVersion(
+        with versionFetcher: VersionFetcher,
+        currentVersion: String
+    ) throws -> String {
+        print("Calculating the next version.")
+        let nextReleaseVersion: String
+        if let userProvidedVersion = self.nextReleaseVersion,
+           userProvidedVersion.components(separatedBy: ".").count >= 2 {
+            nextReleaseVersion = userProvidedVersion
+        } else {
+            nextReleaseVersion = try versionFetcher.nextVersion(from: currentVersion)
+        }
+        print("Next version: \(nextReleaseVersion)")
+        return nextReleaseVersion
     }
 }

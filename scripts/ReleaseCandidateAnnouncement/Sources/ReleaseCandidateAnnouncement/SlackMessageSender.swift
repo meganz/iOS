@@ -12,7 +12,8 @@ struct SlackMessageSender {
         jiraBaseURLString: String,
         releaseNotes: String,
         token: String,
-        testflightBaseUrl: String
+        testflightBaseUrl: String,
+        isHotfixBuild: Bool
     ) async throws {
         var failedChannels: [String] = []
 
@@ -30,7 +31,8 @@ struct SlackMessageSender {
                             jiraBaseURLString: jiraBaseURLString,
                             releaseNotes: releaseNotes,
                             token: token,
-                            testflightBaseUrl: testflightBaseUrl
+                            testflightBaseUrl: testflightBaseUrl,
+                            isHotfixBuild: isHotfixBuild
                         )
                         return (channel, true)
                     } catch {
@@ -99,14 +101,49 @@ struct SlackMessageSender {
         jiraBaseURLString: String,
         releaseNotes: String,
         token: String,
-        testflightBaseUrl: String
+        testflightBaseUrl: String,
+        isHotfixBuild: Bool
     ) async throws {
         let jiraReleasePackageLink = jiraBaseURLString + "/issues/?jql=fixVersion%20%3D%20%22iOS%20\(version)%22"
         let testFlightLink = "\(testflightBaseUrl)\(buildNumber)"
 
+        let text = isHotfixBuild
+        ? hotfixReleaseNotes(
+            jiraReleasePackageLink: jiraReleasePackageLink,
+            testFlightLink: testFlightLink,
+            releaseNotes: releaseNotes,
+            version: version,
+            buildNumber: buildNumber,
+            sdkVersion: sdkVersion,
+            chatSDKVersion: chatSDKVersion
+        )
+        : normalReleaseNotes(
+            jiraReleasePackageLink: jiraReleasePackageLink,
+            testFlightLink: testFlightLink,
+            releaseNotes: releaseNotes,
+            version: version,
+            buildNumber: buildNumber,
+            sdkVersion: sdkVersion,
+            chatSDKVersion: chatSDKVersion
+        )
+
         let body = [
             "channel": channelId,
-            "text":
+            "text": text
+        ]
+
+        try await sendMessageToChannel(body: body, token: token)
+    }
+
+    private static func normalReleaseNotes(
+        jiraReleasePackageLink: String,
+        testFlightLink: String,
+        releaseNotes: String,
+        version: String,
+        buildNumber: String,
+        sdkVersion: SubmoduleReferenceType,
+        chatSDKVersion: SubmoduleReferenceType
+    ) -> String {
         """
         *🚀 New iOS Release Candidate Available!*
         *Version:* <\(testFlightLink)|\(version)(\(buildNumber))>
@@ -120,9 +157,32 @@ struct SlackMessageSender {
         \(releaseNotes)
         ```
         """
-        ]
+    }
 
-        try await sendMessageToChannel(body: body, token: token)
+    private static func hotfixReleaseNotes(
+        jiraReleasePackageLink: String,
+        testFlightLink: String,
+        releaseNotes: String,
+        version: String,
+        buildNumber: String,
+        sdkVersion: SubmoduleReferenceType,
+        chatSDKVersion: SubmoduleReferenceType
+    ) -> String {
+        """
+        *🔧 New iOS Hotfix Release Candidate Available!*
+        *Version:* <\(testFlightLink)|\(version)(\(buildNumber))>
+        • \(sdkVersion.description(type: "SDK"))
+        • \(chatSDKVersion.description(type: "Chat SDK"))
+        
+        🔗 <\(jiraReleasePackageLink)|View Jira Release Package>
+        
+        *📌 Release Notes:*
+        ```
+        \(releaseNotes)
+        ```
+        
+        More details on the hotfix build to follow in the thread 🧵:
+        """
     }
 
 
