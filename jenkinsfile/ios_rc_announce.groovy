@@ -63,7 +63,7 @@ pipeline {
         stage('Install Dependencies') {
             when { 
                 anyOf {
-                    environment name: 'gitlabTriggerPhrase', value: 'announce_release' 
+                    expression { return env.gitlabTriggerPhrase ==~ /^announce_release.*$/ }
                 }
             }
             steps {
@@ -85,7 +85,7 @@ pipeline {
         stage('Announce RC') {
             when { 
                 anyOf {
-                    environment name: 'gitlabTriggerPhrase', value: 'announce_release' 
+                    expression { return env.gitlabTriggerPhrase ==~ /^announce_release.*$/ }
                 }
             }
             steps {
@@ -94,9 +94,10 @@ pipeline {
                         envInjector.injectEnvs {
                             dir("scripts/ReleaseCandidateAnnouncement/") {
                                 def parameters = parseParameters(env.gitlabTriggerPhrase)
-                                env.NEXT_RELEASE_VERSION = parameters[0]
+                                env.IS_HOTFIX_BUILD = parameters[0]
+                                env.NEXT_RELEASE_VERSION = parameters[1]
 
-                                sh 'swift run ReleaseCandidateAnnouncement --transifex-authorization \"$TRANSIFIX_AUTHORIZATION_TOKEN\" --release-notes-resource-id \"$IOS_MEGA_CHANGELOG_RESOURCE_ID\" --jira-base-url-string \"$JIRA_BASE_URL\" --jira-authorization \"$JIRA_TOKEN\" --jira-projects \"$MEGA_IOS_JIRA_PROJECT_NAME_AND_ID_TABLE\" --slack-authorization \"$RELEASE_ANNOUNCEMENT_SLACK_TOKEN\" --code-freeze-slack-channel-ids \"$MOBILE_DEV_TEAM_SLACK_CHANNEL_ID\" --testflight-base-url \"$MEGA_IOS_TESTFLIGHT_BASE_URL\" --release-candidate-slack-channel-ids \"$IOS_RC_TEAM_SLACK_CHANNEL_IDS\" --next-release-version \"$NEXT_RELEASE_VERSION\"'
+                                sh 'swift run ReleaseCandidateAnnouncement --transifex-authorization \"$TRANSIFIX_AUTHORIZATION_TOKEN\" --release-notes-resource-id \"$IOS_MEGA_CHANGELOG_RESOURCE_ID\" --jira-base-url-string \"$JIRA_BASE_URL\" --jira-authorization \"$JIRA_TOKEN\" --jira-projects \"$MEGA_IOS_JIRA_PROJECT_NAME_AND_ID_TABLE\" --slack-authorization \"$RELEASE_ANNOUNCEMENT_SLACK_TOKEN\" --code-freeze-slack-channel-ids \"$MOBILE_DEV_TEAM_SLACK_CHANNEL_ID\" --testflight-base-url \"$MEGA_IOS_TESTFLIGHT_BASE_URL\" --release-candidate-slack-channel-ids \"$IOS_RC_TEAM_SLACK_CHANNEL_IDS\" --next-release-version \"$NEXT_RELEASE_VERSION\" --is-hotfix-build \"$IS_HOTFIX_BUILD\"'
                             }
                         }
                     }
@@ -137,16 +138,31 @@ private def parseParameters(String fullCommand) {
             .hasArg()
             .desc("Next release version which is to create in Jira")
             .build()
+    Option hotfixBuild = Option
+            .builder("hfb")
+            .longOpt("hotfix-build")
+            .argName("Hotfix Build")
+            .hasArg()
+            .required(false)
+            .desc("Specify the next release version to be announced")
+            .build()
+
     options.addOption(releaseVersionOption)
+    options.addOption(hotfixBuild)
 
     CommandLineParser commandLineParser = new DefaultParserWrapper()
     CommandLine commandLine = commandLineParser.parse(options, parameters)
 
     String nextReleaseVersion = commandLine.getOptionValue("nrv")
+    boolean isHotfixBuild = false  // Default to false
+
+    if (commandLine.hasOption("hfb")) {
+        isHotfixBuild = Boolean.parseBoolean(commandLine.getOptionValue("hfb"))
+    }
 
     println("nextReleaseVersion: $nextReleaseVersion")
+    println("Is Hotfix build: $isHotfixBuild")
 
-    return [nextReleaseVersion]
+    return [isHotfixBuild, nextReleaseVersion]
 }
-
 
