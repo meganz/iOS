@@ -1,6 +1,7 @@
 #import <UIKit/UIKit.h>
 
 @protocol MEGANavigationControllerDelegate <NSObject>
+@optional
 - (void)navigationController:(UINavigationController *)navigationController
       willShowViewController:(UIViewController *)viewController
                     animated:(BOOL)animated;
@@ -8,6 +9,10 @@
 - (void)navigationController:(UINavigationController *)navigationController
        didShowViewController:(UIViewController *)viewController
                     animated:(BOOL)animated;
+
+@optional
+- (void)navigationControllerDidDismiss:(UINavigationController *)navigationController;
+
 @end
 
 
