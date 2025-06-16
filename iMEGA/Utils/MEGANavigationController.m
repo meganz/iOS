@@ -61,7 +61,11 @@
 }
 
 - (void)dismissNavigationController {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self dismissViewControllerAnimated:YES completion:^{
+        if ([self.navigationDelegate respondsToSelector:@selector(navigationControllerDidDismiss:)]) {
+            [self.navigationDelegate navigationControllerDidDismiss:self];
+        }
+    }];
 }
 
 #pragma mark - UINavigationControllerDelegate
@@ -69,9 +73,11 @@
 - (void)navigationController:(UINavigationController *)navigationController
       willShowViewController:(UIViewController *)viewController
                     animated:(BOOL)animated {
-    [self.navigationDelegate navigationController:navigationController
-                           willShowViewController:viewController
-                                         animated:animated];
+    if ([self.navigationDelegate respondsToSelector:@selector(navigationController:willShowViewController:animated:)]) {
+        [self.navigationDelegate navigationController:navigationController
+                               willShowViewController:viewController
+                                             animated:animated];
+    }
 }
 
 - (void)navigationController:(UINavigationController *)navigationController
@@ -79,7 +85,7 @@
                     animated:(BOOL)animate {
     [self updateBackButtonMenu];
     self.interactivePopGestureRecognizer.enabled = ([self respondsToSelector:@selector(interactivePopGestureRecognizer)] && self.viewControllers.count > 1);
-    if ([self.navigationController respondsToSelector:@selector(navigationController:didShowViewController:animated:)]) {
+    if ([self.navigationDelegate respondsToSelector:@selector(navigationController:didShowViewController:animated:)]) {
         [self.navigationDelegate navigationController:navigationController
                                 didShowViewController:viewController
                                              animated:animate];

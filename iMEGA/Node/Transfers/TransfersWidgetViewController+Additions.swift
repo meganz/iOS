@@ -154,6 +154,7 @@ extension TransfersWidgetViewController: TransferWidgetResponderProtocol {
     private func tapProgressView() {
         let transferWidgetVC = TransfersWidgetViewController.sharedTransfer()
         let navigationController = MEGANavigationController(rootViewController: transferWidgetVC)
+        navigationController.navigationDelegate = self
         navigationController.addLeftDismissButton(withText: Strings.Localizable.close)
         CrashlyticsLogger.log(category: .transfersWidget, "Showing transfers widget from progress view")
         UIApplication.mnz_visibleViewController().present(navigationController, animated: true, completion: nil)
@@ -274,4 +275,12 @@ protocol TransferWidgetResponderProtocol: AnyObject {
     func updateProgressView(bottomConstant: CGFloat)
     
     func showWidgetIfNeeded()
+}
+
+extension TransfersWidgetViewController: MEGANavigationControllerDelegate {
+    public func navigationControllerDidDismiss(_ navigationController: UINavigationController!) {
+        if AudioPlayerManager.shared.isPlayerAlive() {
+            AudioPlayerManager.shared.showMiniPlayer()
+        }
+    }
 }
