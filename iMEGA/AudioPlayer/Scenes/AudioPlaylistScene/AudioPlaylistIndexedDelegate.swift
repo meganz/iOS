@@ -31,6 +31,7 @@ final class AudioPlaylistIndexedDelegate: NSObject, UITableViewDelegate, UITable
         cell.setSelected(true, animated: true)
         
         delegate?.didSelect(item: item)
+        refreshReorderHandles(in: tableView)
     }
     
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
@@ -42,6 +43,7 @@ final class AudioPlaylistIndexedDelegate: NSObject, UITableViewDelegate, UITable
         cell.setSelected(false, animated: true)
         
         delegate?.didDeselect(item: item)
+        refreshReorderHandles(in: tableView)
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -75,5 +77,17 @@ final class AudioPlaylistIndexedDelegate: NSObject, UITableViewDelegate, UITable
     
     func tableView(_ tableView: UITableView, itemsForBeginning session: any UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
         []
+    }
+    
+    /// Refreshes the visibility of the system reorder control (“≡”) on visible cells. By walking only the currently visible rows and toggling each cell’s
+    /// `showsReorderControl` flag based on whether any rows are selected, we avoid reloading the entire table.
+    private func refreshReorderHandles(in tableView: UITableView) {
+        let anySelected = (tableView.indexPathsForSelectedRows?.isNotEmpty ?? false)
+        
+        tableView.indexPathsForVisibleRows?.forEach { indexPath in
+            guard let cell = tableView.cellForRow(at: indexPath) else { return }
+            let isRowReorderable = indexPath.section != 0
+            cell.showsReorderControl = (isRowReorderable && !anySelected)
+        }
     }
 }

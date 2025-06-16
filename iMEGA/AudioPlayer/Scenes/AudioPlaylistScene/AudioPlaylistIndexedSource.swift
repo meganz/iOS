@@ -30,7 +30,8 @@ final class AudioPlaylistIndexedSource: NSObject, AudioPlaylistSource, UITableVi
     }
 
     func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        indexPath.section != 0
+        guard indexPath.section != 0 else { return false }
+        return tableView.indexPathsForSelectedRows?.isEmpty ?? true
     }
     
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
