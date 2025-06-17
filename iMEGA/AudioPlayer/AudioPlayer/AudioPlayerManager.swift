@@ -382,7 +382,7 @@ import MEGADomain
     }
     
     func removeMiniPlayerHandler(_ handler: any AudioMiniPlayerHandlerProtocol) {
-        miniPlayerHandlerListenerManager.removeAll(ofType: handler)
+        miniPlayerHandlerListenerManager.remove(handler)
         handler.resetMiniPlayerContainer()
     }
     
