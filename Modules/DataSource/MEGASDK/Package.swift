@@ -77,7 +77,6 @@ let package = Package(
                 .linkedFramework("Foundation"),
                 .linkedFramework("UniformTypeIdentifiers"),
                 // Libraries
-                .linkedLibrary("resolv"),
                 .linkedLibrary("z"),
                 .linkedLibrary("sqlite3"),
                 .linkedLibrary("icucore")
