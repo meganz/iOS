@@ -133,7 +133,10 @@
                     }
                     break;
                 }
-                    
+                   
+                case MEGAErrorTypeApiEExpired:
+                    [self showUnavailableLinkViewWithError:UnavailableLinkErrorGeneric];
+                    break;
                 case MEGAErrorTypeApiEBlocked:
                 case MEGAErrorTypeApiENoent:
                 case MEGAErrorTypeApiETooMany: {
