@@ -17,12 +17,10 @@ extension OfflineCollectionViewController {
                 return nil
             }
         } actionProvider: { _ in
-            let selectAction = UIAction(title: Strings.Localizable.select,
-                                        image: MEGAAssets.UIImage.selectItem) { _ in
-                self.setCollectionViewEditing(true, animated: true)
-                self.collectionView?.delegate?.collectionView?(collectionView, didSelectItemAt: indexPath)
-            }
-            return UIMenu(title: "", children: [selectAction])
+            UIMenu(
+                title: "",
+                children: [self.makeSelectAction(for: indexPath, in: collectionView)]
+            )
         }
 
         return contextMenuConfiguration
@@ -33,5 +31,27 @@ extension OfflineCollectionViewController {
         animator.addCompletion {
             self.navigationController?.pushViewController(offlineVC, animated: true)
         }
+    }
+    
+    private func makeSelectAction(
+        for indexPath: IndexPath,
+        in collectionView: UICollectionView
+    ) -> UIAction {
+        UIAction(
+            title: Strings.Localizable.select,
+            image: MEGAAssets.UIImage.selectItem
+        ) { [weak self] _ in
+            self?.performSelectAction(at: indexPath, in: collectionView)
+        }
+    }
+    
+    private func performSelectAction(
+        at indexPath: IndexPath,
+        in collectionView: UICollectionView
+    ) {
+        guard (collectionView.indexPathsForSelectedItems?.contains(indexPath) ?? false) == false else { return }
+        
+        setCollectionViewEditing(true, animated: true)
+        collectionView.delegate?.collectionView?(collectionView, didSelectItemAt: indexPath)
     }
 }
