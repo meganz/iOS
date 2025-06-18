@@ -20,13 +20,20 @@ public final class MediaDiscoveryUseCase<T: FilesSearchRepositoryProtocol,
     
     private let searchAllPhotosString = ""
     
-    public init(filesSearchRepository: T, nodeUpdateRepository: U) {
+    private let isFolderLink: Bool
+    
+    public init(filesSearchRepository: T, nodeUpdateRepository: U, isFolderLink: Bool = false) {
         self.filesSearchRepository = filesSearchRepository
         self.nodeUpdateRepository = nodeUpdateRepository
+        self.isFolderLink = isFolderLink
     }
 
     public var nodeUpdates: AnyAsyncSequence<[NodeEntity]> {
-        filesSearchRepository.nodeUpdates
+        if isFolderLink {
+            filesSearchRepository.folderLinkNodeUpdates
+        } else {
+            filesSearchRepository.nodeUpdates
+        }
     }
     
     public func nodes(forParent parent: NodeEntity, recursive: Bool, excludeSensitive: Bool) async throws -> [NodeEntity] {

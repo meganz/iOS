@@ -26,6 +26,10 @@ public final class FilesSearchRepository: NSObject, FilesSearchRepositoryProtoco
         MEGAUpdateHandlerManager.shared.nodeUpdates
     }
     
+    public var folderLinkNodeUpdates: AnyAsyncSequence<[NodeEntity]> {
+        MEGAUpdateHandlerManager.sharedFolderLink.nodeUpdates
+    }
+    
     public func search(filter: SearchFilterEntity, page: SearchPageEntity) async throws -> [NodeEntity] {
         let nodeList: NodeListEntity = try await search(with: filter, page: page)
         return nodeList.toNodeEntities()
