@@ -30,7 +30,7 @@ let package = Package(
         .package(path: "../../../MEGAAssets"),
         .package(path: "../MEGAUI"),
         .package(path: "../Settings"),
-        .package(url: "https://github.com/googleads/swift-package-manager-google-mobile-ads.git", from: "11.10.0")
+        .package(url: "https://github.com/googleads/swift-package-manager-google-mobile-ads.git", from: "12.6.0")
     ],
     targets: [
         .target(
