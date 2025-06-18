@@ -178,10 +178,12 @@ extension AppDelegate {
 
             SMSVerificationViewRouter(verificationType: .unblockAccount, presenter: UIApplication.mnz_presentingViewController()).start()
         } else if suspensionType == .emailVerification {
-            guard !isLoginRegisterAndOnboardingRevampFeatureEnabled, // New login will show an alert to the user
-                  !(UIApplication.mnz_visibleViewController() is VerifyEmailViewController || UIApplication.mnz_visibleViewController() is SFSafariViewController)
-            else { return }
-
+            guard !(isRootViewNewOnboarding() ||
+                    UIApplication.mnz_visibleViewController() is VerifyEmailViewController ||
+                    UIApplication.mnz_visibleViewController() is SFSafariViewController) else {
+                return
+            }
+            
             let verifyEmailVC = UIStoryboard(name: "VerifyEmail", bundle: nil).instantiateViewController(withIdentifier: "VerifyEmailViewControllerID")
             UIApplication.mnz_presentingViewController().present(verifyEmailVC, animated: true, completion: nil)
         } else if !isRootViewNewOnboarding() { // Block for new onboarding since its handled in `LoginViewModel`
