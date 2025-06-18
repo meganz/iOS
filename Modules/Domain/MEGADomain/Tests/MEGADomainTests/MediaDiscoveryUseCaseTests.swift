@@ -89,14 +89,22 @@ final class MediaDiscoveryUseCaseTests: XCTestCase {
         XCTAssertTrue(fileSearchRepo.searchRecursive ?? false)
     }
     
-    func testNodeUpdates_shouldYieldUpdates() async {
+    func testNodeUpdates_whenNotFolderLink_shouldYieldNodeUpdates() async {
         let nodeEntities = [
             [NodeEntity(handle: 1)],
             [NodeEntity(handle: 2), NodeEntity(handle: 3)]
         ]
         
-        let fileSearchRepo = MockFilesSearchRepository(nodeUpdates: nodeEntities.async.eraseToAnyAsyncSequence())
-        let useCase = MediaDiscoveryUseCase(filesSearchRepository: fileSearchRepo, nodeUpdateRepository: MockNodeUpdateRepository.newRepo)
+        let folderLinNodeEntities = [
+            [NodeEntity(handle: 4)],
+            [NodeEntity(handle: 5), NodeEntity(handle: 6)]
+        ]
+        
+        let fileSearchRepo = MockFilesSearchRepository(
+            nodeUpdates: nodeEntities.async.eraseToAnyAsyncSequence(),
+            folderLinkNodeUpdates: folderLinNodeEntities.async.eraseToAnyAsyncSequence()
+        )
+        let useCase = MediaDiscoveryUseCase(filesSearchRepository: fileSearchRepo, nodeUpdateRepository: MockNodeUpdateRepository.newRepo, isFolderLink: false)
 
         let task = Task {
             var results: [[NodeEntity]] = []
@@ -109,6 +117,36 @@ final class MediaDiscoveryUseCaseTests: XCTestCase {
         let results = await task.value
         
         XCTAssertEqual(results.flatMap { $0.map(\.handle) }, [1, 2, 3])
+    }
+    
+    func testNodeUpdates_whenFolderLink_shouldYieldFolderLinkNodeUpdates() async {
+        let nodeEntities = [
+            [NodeEntity(handle: 1)],
+            [NodeEntity(handle: 2), NodeEntity(handle: 3)]
+        ]
+        
+        let folderLinNodeEntities = [
+            [NodeEntity(handle: 4)],
+            [NodeEntity(handle: 5), NodeEntity(handle: 6)]
+        ]
+        
+        let fileSearchRepo = MockFilesSearchRepository(
+            nodeUpdates: nodeEntities.async.eraseToAnyAsyncSequence(),
+            folderLinkNodeUpdates: folderLinNodeEntities.async.eraseToAnyAsyncSequence()
+        )
+        let useCase = MediaDiscoveryUseCase(filesSearchRepository: fileSearchRepo, nodeUpdateRepository: MockNodeUpdateRepository.newRepo, isFolderLink: true)
+
+        let task = Task {
+            var results: [[NodeEntity]] = []
+            for await nodes in useCase.nodeUpdates {
+                results.append(nodes)
+            }
+            return results
+        }
+        
+        let results = await task.value
+        
+        XCTAssertEqual(results.flatMap { $0.map(\.handle) }, [4, 5, 6])
     }
     
     // MARK: Should reload
