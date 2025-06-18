@@ -10,7 +10,7 @@ import SwiftUI
 public struct AdsSlotView<T: View>: View {
     @Environment(\.verticalSizeClass) var verticalSizeClass
     @StateObject var viewModel: AdsSlotViewModel
-    private let adSize = GADAdSizeBanner
+    private let adSize = AdSizeBanner
     public let contentView: T
 
     public var body: some View {
