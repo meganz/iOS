@@ -2,6 +2,7 @@ import MEGASwift
 
 public protocol FilesSearchRepositoryProtocol: RepositoryProtocol, Sendable {
     var nodeUpdates: AnyAsyncSequence<[NodeEntity]> { get }
+    var folderLinkNodeUpdates: AnyAsyncSequence<[NodeEntity]> { get }
     
     func node(by id: HandleEntity) async -> NodeEntity?
     
