@@ -16,6 +16,7 @@ final public class MockFilesSearchRepository: NSObject, FilesSearchRepositoryPro
     private let nodesForLocation: [FolderTargetEntity: [NodeEntity]]
     
     public let nodeUpdates: AnyAsyncSequence<[NodeEntity]>
+    public let folderLinkNodeUpdates: AnyAsyncSequence<[NodeEntity]>
     
     @Atomic public var searchString: String?
     @Atomic public var searchRecursive: Bool?
@@ -32,7 +33,8 @@ final public class MockFilesSearchRepository: NSObject, FilesSearchRepositoryPro
                 nodesForHandle: [HandleEntity: [NodeEntity]] = [:],
                 nodeListEntityForHandle: [HandleEntity: NodeListEntity] = [:],
                 nodesForLocation: [FolderTargetEntity: [NodeEntity]] = [:],
-                nodeUpdates: AnyAsyncSequence<[NodeEntity]> = EmptyAsyncSequence().eraseToAnyAsyncSequence()
+                nodeUpdates: AnyAsyncSequence<[NodeEntity]> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
+                folderLinkNodeUpdates: AnyAsyncSequence<[NodeEntity]> = EmptyAsyncSequence().eraseToAnyAsyncSequence()
     ) {
         self.photoNodes = photoNodes
         self.videoNodes = videoNodes
@@ -40,6 +42,7 @@ final public class MockFilesSearchRepository: NSObject, FilesSearchRepositoryPro
         self.nodeListEntityForHandle = nodeListEntityForHandle
         self.nodesForLocation = nodesForLocation
         self.nodeUpdates = nodeUpdates
+        self.folderLinkNodeUpdates = folderLinkNodeUpdates
     }
 
     public func node(by id: HandleEntity) async -> NodeEntity? {
