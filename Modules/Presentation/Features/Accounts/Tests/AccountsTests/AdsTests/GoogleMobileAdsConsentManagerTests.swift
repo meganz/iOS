@@ -63,17 +63,17 @@ struct GoogleMobileAdsConsentManagerTests {
     @Suite("Ads privacy options")
     struct AdPrivacyOptionsTests {
         static let privacyOptionsRequiredStatusArguments = [
-            (status: UMPPrivacyOptionsRequirementStatus.required, expectedResult: true),
+            (status: PrivacyOptionsRequirementStatus.required, expectedResult: true),
             (status: .notRequired, expectedResult: false),
             (status: .unknown, expectedResult: false)
         ]
         
         @Test(
-            "IsPrivacyOptionsRequired should only be true if UMPPrivacyOptionsRequirementStatus is required",
+            "IsPrivacyOptionsRequired should only be true if PrivacyOptionsRequirementStatus is required",
             arguments: privacyOptionsRequiredStatusArguments
         )
         func isPrivacyOptionsRequired(
-            status: UMPPrivacyOptionsRequirementStatus,
+            status: PrivacyOptionsRequirementStatus,
             expectedResult: Bool
         ) {
             let sut = makeSUT(
@@ -83,11 +83,11 @@ struct GoogleMobileAdsConsentManagerTests {
         }
         
         @Test(
-            "Present privacy options form only when UMPPrivacyOptionsRequirementStatus is required",
+            "Present privacy options form only when PrivacyOptionsRequirementStatus is required",
             arguments: privacyOptionsRequiredStatusArguments
         )
         func presentPrivacyOptionsForm(
-            status: UMPPrivacyOptionsRequirementStatus,
+            status: PrivacyOptionsRequirementStatus,
             expectedResult: Bool
         ) async throws {
             let sut = makeSUT(

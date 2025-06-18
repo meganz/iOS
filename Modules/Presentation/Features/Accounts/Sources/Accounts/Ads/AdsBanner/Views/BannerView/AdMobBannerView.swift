@@ -3,11 +3,11 @@ import SwiftUI
 
 struct AdMobBannerView: UIViewRepresentable {
     private let adMob: AdMob
-    let adSize: GADAdSize
+    let adSize: AdSize
     private var bannerViewDidReceiveAdsUpdate: ((Result<Void, any Error>) -> Void)?
     
     init(
-        adSize: GADAdSize,
+        adSize: AdSize,
         adMob: AdMob,
         bannerViewDidReceiveAdsUpdate: ((Result<Void, any Error>) -> Void)?
     ) {
@@ -40,11 +40,11 @@ struct AdMobBannerView: UIViewRepresentable {
     }
     
     @MainActor
-    final class AdMobBannerCoordinator: NSObject, @preconcurrency GADBannerViewDelegate {
-        private(set) lazy var bannerView: GADBannerView = {
-            let banner = GADBannerView(adSize: parent.adSize)
+    final class AdMobBannerCoordinator: NSObject, BannerViewDelegate {
+        private(set) lazy var bannerView: BannerView = {
+            let banner = BannerView(adSize: parent.adSize)
             banner.adUnitID = parent.adMob.unitID
-            banner.load(GADRequest())
+            banner.load(Request())
             banner.delegate = self
             return banner
         }()
@@ -56,11 +56,11 @@ struct AdMobBannerView: UIViewRepresentable {
             super.init()
         }
         
-        func bannerViewDidReceiveAd(_ bannerView: GADBannerView) {
+        func bannerViewDidReceiveAd(_ bannerView: BannerView) {
             parent.bannerViewDidReceiveAdsUpdate?(.success)
         }
         
-        func bannerView(_ bannerView: GADBannerView, didFailToReceiveAdWithError error: any Error) {
+        func bannerView(_ bannerView: BannerView, didFailToReceiveAdWithError error: any Error) {
             parent.bannerViewDidReceiveAdsUpdate?(.failure(error))
         }
     }

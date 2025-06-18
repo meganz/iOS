@@ -13,9 +13,9 @@ public protocol GoogleMobileAdsConsentManagerProtocol: Sendable {
 
 public protocol AdMobConsentInformationProtocol: Sendable {
     var canRequestAds: Bool { get }
-    var privacyOptionsRequirementStatus: UMPPrivacyOptionsRequirementStatus { get }
+    var privacyOptionsRequirementStatus: PrivacyOptionsRequirementStatus { get }
     func requestConsentInfoUpdate(
-        with parameters: UMPRequestParameters?,
+        with parameters: RequestParameters?,
         completionHandler: @escaping UMPConsentInformationUpdateCompletionHandler
     )
 }
@@ -70,9 +70,9 @@ public struct GoogleMobileAdsConsentManager: GoogleMobileAdsConsentManagerProtoc
     }
     
     public init(
-        consentInformation: some AdMobConsentInformationProtocol = UMPConsentInformation.sharedInstance,
-        consentFormType: any AdMobConsentFormProtocol.Type = UMPConsentForm.self,
-        mobileAds: some MobileAdsProtocol = GADMobileAds.sharedInstance()
+        consentInformation: some AdMobConsentInformationProtocol = ConsentInformation.shared,
+        consentFormType: any AdMobConsentFormProtocol.Type = ConsentForm.self,
+        mobileAds: some MobileAdsProtocol = MobileAds.shared
     ) {
         self.consentInformation = consentInformation
         self.consentFormType = consentFormType
@@ -123,9 +123,9 @@ public struct GoogleMobileAdsConsentManager: GoogleMobileAdsConsentManagerProtoc
     @discardableResult
     private func requestConsentInfoUpdate() async throws -> Bool {
         try await withAsyncThrowingValue { completion in
-            let parameters = UMPRequestParameters()
-            parameters.tagForUnderAgeOfConsent = false
-            
+            let parameters = RequestParameters()
+            parameters.isTaggedForUnderAgeOfConsent = false
+
             consentInformation.requestConsentInfoUpdate(with: parameters) { requestConsentError in
                 if let requestConsentError {
                     completion(.failure(requestConsentError))
@@ -137,11 +137,11 @@ public struct GoogleMobileAdsConsentManager: GoogleMobileAdsConsentManagerProtoc
     }
 }
 
-extension UMPConsentInformation: @retroactive @unchecked Sendable {}
-extension UMPConsentInformation: AdMobConsentInformationProtocol {}
+extension ConsentInformation: @retroactive @unchecked Sendable {}
+extension ConsentInformation: AdMobConsentInformationProtocol {}
 
-extension UMPConsentForm: @retroactive @unchecked Sendable {}
-extension UMPConsentForm: AdMobConsentFormProtocol {}
+extension ConsentForm: @retroactive @unchecked Sendable {}
+extension ConsentForm: AdMobConsentFormProtocol {}
 
-extension GADMobileAds: @retroactive @unchecked Sendable {}
-extension GADMobileAds: MobileAdsProtocol {}
+extension MobileAds: @retroactive @unchecked Sendable {}
+extension MobileAds: MobileAdsProtocol {}
