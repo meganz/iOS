@@ -33,11 +33,11 @@ public final class MockGoogleMobileAdsConsentManager: GoogleMobileAdsConsentMana
 public final class MockAdMobConsentInformation: AdMobConsentInformationProtocol, @unchecked Sendable {
     public private(set) var canRequestAds: Bool
     public private(set) var didRequestConsentInfoUpdate = false
-    public private(set) var privacyOptionsRequirementStatus: UMPPrivacyOptionsRequirementStatus
+    public private(set) var privacyOptionsRequirementStatus: PrivacyOptionsRequirementStatus
     private let shouldThrowError: Bool
 
     public init(
-        privacyOptionsRequirementStatus: UMPPrivacyOptionsRequirementStatus = .unknown,
+        privacyOptionsRequirementStatus: PrivacyOptionsRequirementStatus = .unknown,
         canRequestAds: Bool = true,
         shouldThrowError: Bool = false
     ) {
@@ -46,7 +46,7 @@ public final class MockAdMobConsentInformation: AdMobConsentInformationProtocol,
         self.privacyOptionsRequirementStatus = privacyOptionsRequirementStatus
     }
     
-    public func requestConsentInfoUpdate(with parameters: UMPRequestParameters?, completionHandler: @escaping UMPConsentInformationUpdateCompletionHandler) {
+    public func requestConsentInfoUpdate(with parameters: RequestParameters?, completionHandler: @escaping UMPConsentInformationUpdateCompletionHandler) {
         didRequestConsentInfoUpdate = true
         if shouldThrowError {
             completionHandler(AdMobError.genericError)
