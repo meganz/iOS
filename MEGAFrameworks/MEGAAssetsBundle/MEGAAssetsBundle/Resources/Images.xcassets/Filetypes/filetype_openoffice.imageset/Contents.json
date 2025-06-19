@@ -1,18 +1,8 @@
 {
   "images" : [
     {
-      "idiom" : "universal",
-      "scale" : "1x"
-    },
-    {
-      "filename" : "openoffice@2x.png",
-      "idiom" : "universal",
-      "scale" : "2x"
-    },
-    {
-      "filename" : "openoffice@3x.png",
-      "idiom" : "universal",
-      "scale" : "3x"
+      "filename" : "filetype_openoffice.svg",
+      "idiom" : "universal"
     }
   ],
   "info" : {

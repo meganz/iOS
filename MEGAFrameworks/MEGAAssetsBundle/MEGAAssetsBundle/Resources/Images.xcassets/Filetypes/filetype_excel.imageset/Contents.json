@@ -1,18 +1,8 @@
 {
   "images" : [
     {
-      "idiom" : "universal",
-      "scale" : "1x"
-    },
-    {
-      "filename" : "excel@2x.png",
-      "idiom" : "universal",
-      "scale" : "2x"
-    },
-    {
-      "filename" : "excel@3x.png",
-      "idiom" : "universal",
-      "scale" : "3x"
+      "filename" : "filetype_excel.svg",
+      "idiom" : "universal"
     }
   ],
   "info" : {

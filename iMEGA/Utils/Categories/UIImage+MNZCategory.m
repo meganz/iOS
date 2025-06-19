@@ -265,11 +265,11 @@
 }
 
 + (UIImage *)mnz_incomingFolderImage {
-    return [UIImage megaImageWithNamed:@"folder_incoming"];
+    return [UIImage megaImageWithNamed:@"folder_users"];
 }
 
 + (UIImage *)mnz_outgoingFolderImage {
-    return [UIImage megaImageWithNamed:@"folder_outgoing"];
+    return [UIImage megaImageWithNamed:@"folder_users"];
 }
 
 + (UIImage *)mnz_folderCameraUploadsImage {

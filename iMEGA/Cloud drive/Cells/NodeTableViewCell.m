@@ -103,19 +103,19 @@
             MEGANode *firstbornParentNode = [[MEGASdk.shared nodeForHandle:recentActionBucket.parentHandle] mnz_firstbornInShareOrOutShareParentNode];
             if (firstbornParentNode.isOutShare) {
                 self.incomingOrOutgoingView.hidden = NO;
-                self.incomingOrOutgoingImageView.image = [UIImage megaImageWithNamed:@"mini_folder_outgoing"];
+                self.incomingOrOutgoingImageView.image = [UIImage megaImageWithNamed:@"folder_users"];
             } else {
                 self.incomingOrOutgoingView.hidden = YES;
             }
         } else {
             self.subtitleLabel.text = [NSString mnz_addedByInRecentActionBucket:recentActionBucket];
             self.incomingOrOutgoingImageView.hidden = NO;
-            self.incomingOrOutgoingImageView.image = [UIImage megaImageWithNamed:@"mini_folder_incoming"];
+            self.incomingOrOutgoingImageView.image = [UIImage megaImageWithNamed:@"folder_folder-incoming"];
         }
     } else {
         self.subtitleLabel.text = [NSString mnz_addedByInRecentActionBucket:recentActionBucket];
         self.incomingOrOutgoingImageView.hidden = NO;
-        self.incomingOrOutgoingImageView.image = (shareType == MEGAShareTypeAccessOwner) ? [UIImage megaImageWithNamed:@"mini_folder_outgoing"] : [UIImage megaImageWithNamed:@"mini_folder_incoming"];
+        self.incomingOrOutgoingImageView.image = (shareType == MEGAShareTypeAccessOwner) ? [UIImage megaImageWithNamed:@"folder_users"] : [UIImage megaImageWithNamed:@"folder_folder-incoming"];
     }
     
     self.uploadOrVersionImageView.image = recentActionBucket.isUpdate ? [UIImage megaImageWithNamed:@"versioned"] : [UIImage megaImageWithNamed:@"recentUpload"];

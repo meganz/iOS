@@ -65,7 +65,6 @@ struct FileTypesTests {
         case pages
         case pdf
         case premiere
-        case sketch
         case torrent
         case url
         case experienceDesign
@@ -130,8 +129,6 @@ struct FileTypesTests {
                 ["pdf"]
             case .premiere:
                 ["ppj", "prproj"]
-            case .sketch:
-                ["sketch"]
             case .torrent:
                 ["torrent"]
             case .url:
@@ -206,8 +203,6 @@ struct FileTypesTests {
                 .filetypePdf
             case .premiere:
                 .filetypePremiere
-            case .sketch:
-                .filetypeSketch
             case .torrent:
                 .filetypeTorrent
             case .url:

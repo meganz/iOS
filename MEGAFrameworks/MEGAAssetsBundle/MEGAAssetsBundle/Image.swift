@@ -103,8 +103,7 @@ public struct MEGAImageBundle {
     public static var videoPlaylistThumbnailFallback: Image { Image(.videoPlaylistThumbnailFallback) }
     public static var linked: Image { Image(.linked) }
     public static var linksSegmentControler: Image { Image(.linksSegmentControler) }
-    public static var folderIncoming: Image { Image(.folderIncoming) }
-    public static var folderOutgoing: Image { Image(.folderOutgoing) }
+    public static var folderUsers: Image { Image(.folderUsers) }
     public static var folderChat: Image { Image(.folderChat) }
     public static var placeholder: Image { Image(.placeholder) }
     public static var rectangleVideoStack: Image { Image(.rectangleVideoStack) }
@@ -166,7 +165,6 @@ public struct MEGAImageBundle {
     public static var filetypePages: Image { Image(.filetypePages) }
     public static var filetypePdf: Image { Image(.filetypePdf) }
     public static var filetypePremiere: Image { Image(.filetypePremiere) }
-    public static var filetypeSketch: Image { Image(.filetypeSketch) }
     public static var filetypeTorrent: Image { Image(.filetypeTorrent) }
     public static var filetypeUrl: Image { Image(.filetypeUrl) }
     public static var filetypeExperiencedesign: Image { Image(.filetypeExperiencedesign) }

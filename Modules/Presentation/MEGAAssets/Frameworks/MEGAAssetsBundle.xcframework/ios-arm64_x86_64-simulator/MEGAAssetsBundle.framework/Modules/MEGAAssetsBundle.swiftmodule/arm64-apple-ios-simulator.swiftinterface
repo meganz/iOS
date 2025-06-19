@@ -1,7 +1,7 @@
 // swift-interface-format-version: 1.0
-// swift-compiler-version: Apple Swift version 6.1 effective-5.10 (swiftlang-6.1.0.110.21 clang-1700.0.13.3)
+// swift-compiler-version: Apple Swift version 6.1.2 effective-5.10 (swiftlang-6.1.2.1.2 clang-1700.0.13.5)
 // swift-module-flags: -target arm64-apple-ios15.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -enable-experimental-feature DebugDescriptionMacro -enable-bare-slash-regex -module-name MEGAAssetsBundle
-// swift-module-flags-ignorable:  -interface-compiler-version 6.1
+// swift-module-flags-ignorable:  -interface-compiler-version 6.1.2
 import DeveloperToolsSupport
 import Foundation
 import Swift
@@ -10,6 +10,598 @@ import UIKit
 import _Concurrency
 import _StringProcessing
 import _SwiftConcurrencyShims
+public struct MEGAColorBundle {
+  public static var black000000: SwiftUICore.Color {
+    get
+  }
+  public static var whiteFFFFFF: SwiftUICore.Color {
+    get
+  }
+  public static var black2C2C2E: SwiftUICore.Color {
+    get
+  }
+  public static var gray363638: SwiftUICore.Color {
+    get
+  }
+  public static var grayD1D1D1: SwiftUICore.Color {
+    get
+  }
+  public static var navigationBg: SwiftUICore.Color {
+    get
+  }
+  public static var backgroundRegularPrimaryElevated: SwiftUICore.Color {
+    get
+  }
+}
+public struct MEGAImageBundle {
+  public static var megaLogoGrayscale: SwiftUICore.Image {
+    get
+  }
+  public static var recentsEmptyState: SwiftUICore.Image {
+    get
+  }
+  public static var favouritesEmptyState: SwiftUICore.Image {
+    get
+  }
+  public static var offlineEmptyState: SwiftUICore.Image {
+    get
+  }
+  public static var versioned: SwiftUICore.Image {
+    get
+  }
+  public static var recentUpload: SwiftUICore.Image {
+    get
+  }
+  public static var standardDisclosureIndicatorDesignToken: SwiftUICore.Image {
+    get
+  }
+  public static var restore: SwiftUICore.Image {
+    get
+  }
+  public static var link: SwiftUICore.Image {
+    get
+  }
+  public static var offline: SwiftUICore.Image {
+    get
+  }
+  public static var rubbishBin: SwiftUICore.Image {
+    get
+  }
+  public static var noResultsDocuments: SwiftUICore.Image {
+    get
+  }
+  public static var noResultsAudio: SwiftUICore.Image {
+    get
+  }
+  public static var noResultsVideo: SwiftUICore.Image {
+    get
+  }
+  public static var noResultsImages: SwiftUICore.Image {
+    get
+  }
+  public static var noResultsFolders: SwiftUICore.Image {
+    get
+  }
+  public static var noResultsPresentations: SwiftUICore.Image {
+    get
+  }
+  public static var noResultsArchives: SwiftUICore.Image {
+    get
+  }
+  public static var searchEmptyState: SwiftUICore.Image {
+    get
+  }
+  public static var turquoiseCheckmark: SwiftUICore.Image {
+    get
+  }
+  public static var closeBanner: SwiftUICore.Image {
+    get
+  }
+  public static var upgradeToProPlan: SwiftUICore.Image {
+    get
+  }
+  public static var allPhotosEmptyState: SwiftUICore.Image {
+    get
+  }
+  public static var videoEmptyState: SwiftUICore.Image {
+    get
+  }
+  public static var cameraEmptyState: SwiftUICore.Image {
+    get
+  }
+  public static var info: SwiftUICore.Image {
+    get
+  }
+  public static var notificationCta: SwiftUICore.Image {
+    get
+  }
+  public static var cameraBackupsCta: SwiftUICore.Image {
+    get
+  }
+  public static var callControlCameraDisabled: SwiftUICore.Image {
+    get
+  }
+  public static var callControlCameraEnabled: SwiftUICore.Image {
+    get
+  }
+  public static var callControlMicDisabled: SwiftUICore.Image {
+    get
+  }
+  public static var callControlMicEnabled: SwiftUICore.Image {
+    get
+  }
+  public static var callControlSpeakerEnabled: SwiftUICore.Image {
+    get
+  }
+  public static var callControlSpeakerDisabled: SwiftUICore.Image {
+    get
+  }
+  public static var saveToPhotos: SwiftUICore.Image {
+    get
+  }
+  public static var capture: SwiftUICore.Image {
+    get
+  }
+  public static var subscriptionFeatureCloud: SwiftUICore.Image {
+    get
+  }
+  public static var subscriptionFeatureTransfers: SwiftUICore.Image {
+    get
+  }
+  public static var subscriptionFeatureVPN: SwiftUICore.Image {
+    get
+  }
+  public static var subscriptionFeatureTransfersPWM: SwiftUICore.Image {
+    get
+  }
+  public static var subscriptionImageHeader: SwiftUICore.Image {
+    get
+  }
+  public static var subscriptionImageHeaderLandscape: SwiftUICore.Image {
+    get
+  }
+  public static var eyeOff: SwiftUICore.Image {
+    get
+  }
+  public static var eyeOffRegular: SwiftUICore.Image {
+    get
+  }
+  public static var imagesRegular: SwiftUICore.Image {
+    get
+  }
+  public static var eyeRegular: SwiftUICore.Image {
+    get
+  }
+  public static var onboardingLock: SwiftUICore.Image {
+    get
+  }
+  public static var occurrences: SwiftUICore.Image {
+    get
+  }
+  public static var makeCallRoundToken: SwiftUICore.Image {
+    get
+  }
+  public static var edittext: SwiftUICore.Image {
+    get
+  }
+  public static var mutedChat: SwiftUICore.Image {
+    get
+  }
+  public static var speakerOnBluetooth: SwiftUICore.Image {
+    get
+  }
+  public static var waitingRoomDeny: SwiftUICore.Image {
+    get
+  }
+  public static var waitingRoomAdmit: SwiftUICore.Image {
+    get
+  }
+  public static var closeBannerButton: SwiftUICore.Image {
+    get
+  }
+  public static var closeCircle: SwiftUICore.Image {
+    get
+  }
+  public static var shareLink: SwiftUICore.Image {
+    get
+  }
+  public static var joinMeeting2: SwiftUICore.Image {
+    get
+  }
+  public static var startMeeting2: SwiftUICore.Image {
+    get
+  }
+  public static var editMeeting: SwiftUICore.Image {
+    get
+  }
+  public static var archiveChatMenu: SwiftUICore.Image {
+    get
+  }
+  public static var noInternetEmptyState: SwiftUICore.Image {
+    get
+  }
+  public static var inviteToChatDesignToken: SwiftUICore.Image {
+    get
+  }
+  public static var check: SwiftUICore.Image {
+    get
+  }
+  public static var enableChatNotifications: SwiftUICore.Image {
+    get
+  }
+  public static var cuStatusUploadSync: SwiftUICore.Image {
+    get
+  }
+  public static var cuStatusUploadInProgressCheckMark: SwiftUICore.Image {
+    get
+  }
+  public static var cuStatusUploadCompleteGreenCheckMark: SwiftUICore.Image {
+    get
+  }
+  public static var cuStatusUploadIdleCheckMark: SwiftUICore.Image {
+    get
+  }
+  public static var cuStatusUploadWarningCheckMark: SwiftUICore.Image {
+    get
+  }
+  public static var cuStatusEnable: SwiftUICore.Image {
+    get
+  }
+  public static var cuStatusUpload: SwiftUICore.Image {
+    get
+  }
+  public static var selectAllItems: SwiftUICore.Image {
+    get
+  }
+  public static var enableCameraUploadsPhotoLibraryEmpty: SwiftUICore.Image {
+    get
+  }
+  public static var cloudEmptyState: SwiftUICore.Image {
+    get
+  }
+  public static var rubbishEmptyState: SwiftUICore.Image {
+    get
+  }
+  public static var folderEmptyState: SwiftUICore.Image {
+    get
+  }
+  public static var `import`: SwiftUICore.Image {
+    get
+  }
+  public static var textfile: SwiftUICore.Image {
+    get
+  }
+  public static var newFolder: SwiftUICore.Image {
+    get
+  }
+  public static var scanDocument: SwiftUICore.Image {
+    get
+  }
+  public static var chatEmptyStateNew: SwiftUICore.Image {
+    get
+  }
+  public static var meetingsEmptyStateNew: SwiftUICore.Image {
+    get
+  }
+  public static var newChatEmptyContacts: SwiftUICore.Image {
+    get
+  }
+  public static var readOnlyChat: SwiftUICore.Image {
+    get
+  }
+  public static var moderator: SwiftUICore.Image {
+    get
+  }
+  public static var standard: SwiftUICore.Image {
+    get
+  }
+  public static var startMeeting: SwiftUICore.Image {
+    get
+  }
+  public static var joinAMeeting: SwiftUICore.Image {
+    get
+  }
+  public static var scheduleMeeting: SwiftUICore.Image {
+    get
+  }
+  public static var privateChat: SwiftUICore.Image {
+    get
+  }
+  public static var markUnreadMenu: SwiftUICore.Image {
+    get
+  }
+  public static var allowNonHostToAddParticipant: SwiftUICore.Image {
+    get
+  }
+  public static var enableWaitingRoom: SwiftUICore.Image {
+    get
+  }
+  public static var callControlSwitchCameraEnabled: SwiftUICore.Image {
+    get
+  }
+  public static var callControlSwitchCameraDisabled: SwiftUICore.Image {
+    get
+  }
+  public static var callControlEndCall: SwiftUICore.Image {
+    get
+  }
+  public static var callContextMenu: SwiftUICore.Image {
+    get
+  }
+  public static var videoList: SwiftUICore.Image {
+    get
+  }
+  public static var videoPlaylistThumbnailFallback: SwiftUICore.Image {
+    get
+  }
+  public static var linked: SwiftUICore.Image {
+    get
+  }
+  public static var linksSegmentControler: SwiftUICore.Image {
+    get
+  }
+  public static var folderUsers: SwiftUICore.Image {
+    get
+  }
+  public static var folderChat: SwiftUICore.Image {
+    get
+  }
+  public static var placeholder: SwiftUICore.Image {
+    get
+  }
+  public static var rectangleVideoStack: SwiftUICore.Image {
+    get
+  }
+  public static var rectangleVideoStackOutline: SwiftUICore.Image {
+    get
+  }
+  public static var moreList: SwiftUICore.Image {
+    get
+  }
+  public static var playlist: SwiftUICore.Image {
+    get
+  }
+  public static var navigationBarAdd: SwiftUICore.Image {
+    get
+  }
+  public static var timeline: SwiftUICore.Image {
+    get
+  }
+  public static var clockMediumThin: SwiftUICore.Image {
+    get
+  }
+  public static var glassPlaylist: SwiftUICore.Image {
+    get
+  }
+  public static var splashScreenMEGALogo: SwiftUICore.Image {
+    get
+  }
+  public static var glassSearch: SwiftUICore.Image {
+    get
+  }
+  public static var noteToSelf: SwiftUICore.Image {
+    get
+  }
+  public static var noteToSelfSmall: SwiftUICore.Image {
+    get
+  }
+  public static var noteToSelfBlue: SwiftUICore.Image {
+    get
+  }
+  public static var sharedFiles: SwiftUICore.Image {
+    get
+  }
+  public static var clearChatHistory: SwiftUICore.Image {
+    get
+  }
+  public static var unArchiveChat: SwiftUICore.Image {
+    get
+  }
+  public static var archiveChat: SwiftUICore.Image {
+    get
+  }
+  public static var sharedFilesInfo: SwiftUICore.Image {
+    get
+  }
+  public static var manageChatHistory: SwiftUICore.Image {
+    get
+  }
+  public static var meetingLink: SwiftUICore.Image {
+    get
+  }
+  public static var onboardingCarousel1: SwiftUICore.Image {
+    get
+  }
+  public static var onboardingCarousel2: SwiftUICore.Image {
+    get
+  }
+  public static var onboardingCarousel3: SwiftUICore.Image {
+    get
+  }
+  public static var onboardingCarousel4: SwiftUICore.Image {
+    get
+  }
+  public static var photoCardPlaceholder: SwiftUICore.Image {
+    get
+  }
+  public static var enableCameraUploadsBannerIcon: SwiftUICore.Image {
+    get
+  }
+  public static var cuBannerChevronRevamp: SwiftUICore.Image {
+    get
+  }
+  public static var favouritePlaylistThumbnail: SwiftUICore.Image {
+    get
+  }
+  public static var addContactMeetings: SwiftUICore.Image {
+    get
+  }
+  public static var filetypeFolder: SwiftUICore.Image {
+    get
+  }
+  public static var filetype3D: SwiftUICore.Image {
+    get
+  }
+  public static var filetypeRaw: SwiftUICore.Image {
+    get
+  }
+  public static var filetypeVideo: SwiftUICore.Image {
+    get
+  }
+  public static var filetypeAudio: SwiftUICore.Image {
+    get
+  }
+  public static var filetypeCompressed: SwiftUICore.Image {
+    get
+  }
+  public static var filetypePhotoshop: SwiftUICore.Image {
+    get
+  }
+  public static var filetypeWebLang: SwiftUICore.Image {
+    get
+  }
+  public static var filetypeAfterEffects: SwiftUICore.Image {
+    get
+  }
+  public static var filetypeIllustrator: SwiftUICore.Image {
+    get
+  }
+  public static var filetypeText: SwiftUICore.Image {
+    get
+  }
+  public static var filetypeExecutable: SwiftUICore.Image {
+    get
+  }
+  public static var filetypeVector: SwiftUICore.Image {
+    get
+  }
+  public static var filetypeImages: SwiftUICore.Image {
+    get
+  }
+  public static var filetypeWebData: SwiftUICore.Image {
+    get
+  }
+  public static var filetypeWord: SwiftUICore.Image {
+    get
+  }
+  public static var filetypeCAD: SwiftUICore.Image {
+    get
+  }
+  public static var filetypeDmg: SwiftUICore.Image {
+    get
+  }
+  public static var filetypeFont: SwiftUICore.Image {
+    get
+  }
+  public static var filetypeSpreadsheet: SwiftUICore.Image {
+    get
+  }
+  public static var filetypeIndesign: SwiftUICore.Image {
+    get
+  }
+  public static var filetypePowerpoint: SwiftUICore.Image {
+    get
+  }
+  public static var filetypeKeynote: SwiftUICore.Image {
+    get
+  }
+  public static var filetypeNumbers: SwiftUICore.Image {
+    get
+  }
+  public static var filetypeGeneric: SwiftUICore.Image {
+    get
+  }
+  public static var filetypeOpenoffice: SwiftUICore.Image {
+    get
+  }
+  public static var filetypeExcel: SwiftUICore.Image {
+    get
+  }
+  public static var filetypePages: SwiftUICore.Image {
+    get
+  }
+  public static var filetypePdf: SwiftUICore.Image {
+    get
+  }
+  public static var filetypePremiere: SwiftUICore.Image {
+    get
+  }
+  public static var filetypeTorrent: SwiftUICore.Image {
+    get
+  }
+  public static var filetypeUrl: SwiftUICore.Image {
+    get
+  }
+  public static var filetypeExperiencedesign: SwiftUICore.Image {
+    get
+  }
+  public static var filetypeFolderCamera: SwiftUICore.Image {
+    get
+  }
+  public static var android: SwiftUICore.Image {
+    get
+  }
+  public static var drive: SwiftUICore.Image {
+    get
+  }
+  public static var ios: SwiftUICore.Image {
+    get
+  }
+  public static var mobile: SwiftUICore.Image {
+    get
+  }
+  public static var pc: SwiftUICore.Image {
+    get
+  }
+  public static var pcLinux: SwiftUICore.Image {
+    get
+  }
+  public static var pcMac: SwiftUICore.Image {
+    get
+  }
+  public static var pcWindows: SwiftUICore.Image {
+    get
+  }
+  public static var backupFolder: SwiftUICore.Image {
+    get
+  }
+  public static var cameraUploadsFolder: SwiftUICore.Image {
+    get
+  }
+  public static var syncFolder: SwiftUICore.Image {
+    get
+  }
+  public static var attentionNeeded: SwiftUICore.Image {
+    get
+  }
+  public static var disabled: SwiftUICore.Image {
+    get
+  }
+  public static var error: SwiftUICore.Image {
+    get
+  }
+  public static var inactive: SwiftUICore.Image {
+    get
+  }
+  public static var noCameraUploads: SwiftUICore.Image {
+    get
+  }
+  public static var outOfQuota: SwiftUICore.Image {
+    get
+  }
+  public static var paused: SwiftUICore.Image {
+    get
+  }
+  public static var updating: SwiftUICore.Image {
+    get
+  }
+  public static var upToDate: SwiftUICore.Image {
+    get
+  }
+  public static var externalLink: SwiftUICore.Image {
+    get
+  }
+}
 extension Foundation.Bundle {
   public static let MEGAAssetsBundle: Foundation.Bundle
 }
@@ -241,10 +833,7 @@ public struct MEGAUIImageBundle {
   public static var folderChat: UIKit.UIImage {
     get
   }
-  public static var folderIncoming: UIKit.UIImage {
-    get
-  }
-  public static var folderOutgoing: UIKit.UIImage {
+  public static var folderUsers: UIKit.UIImage {
     get
   }
   public static var export: UIKit.UIImage {
@@ -1282,9 +1871,6 @@ public struct MEGAUIImageBundle {
   public static var filetypePremiere: UIKit.UIImage {
     get
   }
-  public static var filetypeSketch: UIKit.UIImage {
-    get
-  }
   public static var filetypeTorrent: UIKit.UIImage {
     get
   }
@@ -1316,604 +1902,6 @@ public struct MEGAUIImageBundle {
     get
   }
   public static var tabBarMenu: UIKit.UIImage {
-    get
-  }
-}
-public struct MEGAColorBundle {
-  public static var black000000: SwiftUICore.Color {
-    get
-  }
-  public static var whiteFFFFFF: SwiftUICore.Color {
-    get
-  }
-  public static var black2C2C2E: SwiftUICore.Color {
-    get
-  }
-  public static var gray363638: SwiftUICore.Color {
-    get
-  }
-  public static var grayD1D1D1: SwiftUICore.Color {
-    get
-  }
-  public static var navigationBg: SwiftUICore.Color {
-    get
-  }
-  public static var backgroundRegularPrimaryElevated: SwiftUICore.Color {
-    get
-  }
-}
-public struct MEGAImageBundle {
-  public static var megaLogoGrayscale: SwiftUICore.Image {
-    get
-  }
-  public static var recentsEmptyState: SwiftUICore.Image {
-    get
-  }
-  public static var favouritesEmptyState: SwiftUICore.Image {
-    get
-  }
-  public static var offlineEmptyState: SwiftUICore.Image {
-    get
-  }
-  public static var versioned: SwiftUICore.Image {
-    get
-  }
-  public static var recentUpload: SwiftUICore.Image {
-    get
-  }
-  public static var standardDisclosureIndicatorDesignToken: SwiftUICore.Image {
-    get
-  }
-  public static var restore: SwiftUICore.Image {
-    get
-  }
-  public static var link: SwiftUICore.Image {
-    get
-  }
-  public static var offline: SwiftUICore.Image {
-    get
-  }
-  public static var rubbishBin: SwiftUICore.Image {
-    get
-  }
-  public static var noResultsDocuments: SwiftUICore.Image {
-    get
-  }
-  public static var noResultsAudio: SwiftUICore.Image {
-    get
-  }
-  public static var noResultsVideo: SwiftUICore.Image {
-    get
-  }
-  public static var noResultsImages: SwiftUICore.Image {
-    get
-  }
-  public static var noResultsFolders: SwiftUICore.Image {
-    get
-  }
-  public static var noResultsPresentations: SwiftUICore.Image {
-    get
-  }
-  public static var noResultsArchives: SwiftUICore.Image {
-    get
-  }
-  public static var searchEmptyState: SwiftUICore.Image {
-    get
-  }
-  public static var turquoiseCheckmark: SwiftUICore.Image {
-    get
-  }
-  public static var closeBanner: SwiftUICore.Image {
-    get
-  }
-  public static var upgradeToProPlan: SwiftUICore.Image {
-    get
-  }
-  public static var allPhotosEmptyState: SwiftUICore.Image {
-    get
-  }
-  public static var videoEmptyState: SwiftUICore.Image {
-    get
-  }
-  public static var cameraEmptyState: SwiftUICore.Image {
-    get
-  }
-  public static var info: SwiftUICore.Image {
-    get
-  }
-  public static var notificationCta: SwiftUICore.Image {
-    get
-  }
-  public static var cameraBackupsCta: SwiftUICore.Image {
-    get
-  }
-  public static var callControlCameraDisabled: SwiftUICore.Image {
-    get
-  }
-  public static var callControlCameraEnabled: SwiftUICore.Image {
-    get
-  }
-  public static var callControlMicDisabled: SwiftUICore.Image {
-    get
-  }
-  public static var callControlMicEnabled: SwiftUICore.Image {
-    get
-  }
-  public static var callControlSpeakerEnabled: SwiftUICore.Image {
-    get
-  }
-  public static var callControlSpeakerDisabled: SwiftUICore.Image {
-    get
-  }
-  public static var saveToPhotos: SwiftUICore.Image {
-    get
-  }
-  public static var capture: SwiftUICore.Image {
-    get
-  }
-  public static var subscriptionFeatureCloud: SwiftUICore.Image {
-    get
-  }
-  public static var subscriptionFeatureTransfers: SwiftUICore.Image {
-    get
-  }
-  public static var subscriptionFeatureVPN: SwiftUICore.Image {
-    get
-  }
-  public static var subscriptionFeatureTransfersPWM: SwiftUICore.Image {
-    get
-  }
-  public static var subscriptionImageHeader: SwiftUICore.Image {
-    get
-  }
-  public static var subscriptionImageHeaderLandscape: SwiftUICore.Image {
-    get
-  }
-  public static var eyeOff: SwiftUICore.Image {
-    get
-  }
-  public static var eyeOffRegular: SwiftUICore.Image {
-    get
-  }
-  public static var imagesRegular: SwiftUICore.Image {
-    get
-  }
-  public static var eyeRegular: SwiftUICore.Image {
-    get
-  }
-  public static var onboardingLock: SwiftUICore.Image {
-    get
-  }
-  public static var occurrences: SwiftUICore.Image {
-    get
-  }
-  public static var makeCallRoundToken: SwiftUICore.Image {
-    get
-  }
-  public static var edittext: SwiftUICore.Image {
-    get
-  }
-  public static var mutedChat: SwiftUICore.Image {
-    get
-  }
-  public static var speakerOnBluetooth: SwiftUICore.Image {
-    get
-  }
-  public static var waitingRoomDeny: SwiftUICore.Image {
-    get
-  }
-  public static var waitingRoomAdmit: SwiftUICore.Image {
-    get
-  }
-  public static var closeBannerButton: SwiftUICore.Image {
-    get
-  }
-  public static var closeCircle: SwiftUICore.Image {
-    get
-  }
-  public static var shareLink: SwiftUICore.Image {
-    get
-  }
-  public static var joinMeeting2: SwiftUICore.Image {
-    get
-  }
-  public static var startMeeting2: SwiftUICore.Image {
-    get
-  }
-  public static var editMeeting: SwiftUICore.Image {
-    get
-  }
-  public static var archiveChatMenu: SwiftUICore.Image {
-    get
-  }
-  public static var noInternetEmptyState: SwiftUICore.Image {
-    get
-  }
-  public static var inviteToChatDesignToken: SwiftUICore.Image {
-    get
-  }
-  public static var check: SwiftUICore.Image {
-    get
-  }
-  public static var enableChatNotifications: SwiftUICore.Image {
-    get
-  }
-  public static var cuStatusUploadSync: SwiftUICore.Image {
-    get
-  }
-  public static var cuStatusUploadInProgressCheckMark: SwiftUICore.Image {
-    get
-  }
-  public static var cuStatusUploadCompleteGreenCheckMark: SwiftUICore.Image {
-    get
-  }
-  public static var cuStatusUploadIdleCheckMark: SwiftUICore.Image {
-    get
-  }
-  public static var cuStatusUploadWarningCheckMark: SwiftUICore.Image {
-    get
-  }
-  public static var cuStatusEnable: SwiftUICore.Image {
-    get
-  }
-  public static var cuStatusUpload: SwiftUICore.Image {
-    get
-  }
-  public static var selectAllItems: SwiftUICore.Image {
-    get
-  }
-  public static var enableCameraUploadsPhotoLibraryEmpty: SwiftUICore.Image {
-    get
-  }
-  public static var cloudEmptyState: SwiftUICore.Image {
-    get
-  }
-  public static var rubbishEmptyState: SwiftUICore.Image {
-    get
-  }
-  public static var folderEmptyState: SwiftUICore.Image {
-    get
-  }
-  public static var `import`: SwiftUICore.Image {
-    get
-  }
-  public static var textfile: SwiftUICore.Image {
-    get
-  }
-  public static var newFolder: SwiftUICore.Image {
-    get
-  }
-  public static var scanDocument: SwiftUICore.Image {
-    get
-  }
-  public static var chatEmptyStateNew: SwiftUICore.Image {
-    get
-  }
-  public static var meetingsEmptyStateNew: SwiftUICore.Image {
-    get
-  }
-  public static var newChatEmptyContacts: SwiftUICore.Image {
-    get
-  }
-  public static var readOnlyChat: SwiftUICore.Image {
-    get
-  }
-  public static var moderator: SwiftUICore.Image {
-    get
-  }
-  public static var standard: SwiftUICore.Image {
-    get
-  }
-  public static var startMeeting: SwiftUICore.Image {
-    get
-  }
-  public static var joinAMeeting: SwiftUICore.Image {
-    get
-  }
-  public static var scheduleMeeting: SwiftUICore.Image {
-    get
-  }
-  public static var privateChat: SwiftUICore.Image {
-    get
-  }
-  public static var markUnreadMenu: SwiftUICore.Image {
-    get
-  }
-  public static var allowNonHostToAddParticipant: SwiftUICore.Image {
-    get
-  }
-  public static var enableWaitingRoom: SwiftUICore.Image {
-    get
-  }
-  public static var callControlSwitchCameraEnabled: SwiftUICore.Image {
-    get
-  }
-  public static var callControlSwitchCameraDisabled: SwiftUICore.Image {
-    get
-  }
-  public static var callControlEndCall: SwiftUICore.Image {
-    get
-  }
-  public static var callContextMenu: SwiftUICore.Image {
-    get
-  }
-  public static var videoList: SwiftUICore.Image {
-    get
-  }
-  public static var videoPlaylistThumbnailFallback: SwiftUICore.Image {
-    get
-  }
-  public static var linked: SwiftUICore.Image {
-    get
-  }
-  public static var linksSegmentControler: SwiftUICore.Image {
-    get
-  }
-  public static var folderIncoming: SwiftUICore.Image {
-    get
-  }
-  public static var folderOutgoing: SwiftUICore.Image {
-    get
-  }
-  public static var folderChat: SwiftUICore.Image {
-    get
-  }
-  public static var placeholder: SwiftUICore.Image {
-    get
-  }
-  public static var rectangleVideoStack: SwiftUICore.Image {
-    get
-  }
-  public static var rectangleVideoStackOutline: SwiftUICore.Image {
-    get
-  }
-  public static var moreList: SwiftUICore.Image {
-    get
-  }
-  public static var playlist: SwiftUICore.Image {
-    get
-  }
-  public static var navigationBarAdd: SwiftUICore.Image {
-    get
-  }
-  public static var timeline: SwiftUICore.Image {
-    get
-  }
-  public static var clockMediumThin: SwiftUICore.Image {
-    get
-  }
-  public static var glassPlaylist: SwiftUICore.Image {
-    get
-  }
-  public static var splashScreenMEGALogo: SwiftUICore.Image {
-    get
-  }
-  public static var glassSearch: SwiftUICore.Image {
-    get
-  }
-  public static var noteToSelf: SwiftUICore.Image {
-    get
-  }
-  public static var noteToSelfSmall: SwiftUICore.Image {
-    get
-  }
-  public static var noteToSelfBlue: SwiftUICore.Image {
-    get
-  }
-  public static var sharedFiles: SwiftUICore.Image {
-    get
-  }
-  public static var clearChatHistory: SwiftUICore.Image {
-    get
-  }
-  public static var unArchiveChat: SwiftUICore.Image {
-    get
-  }
-  public static var archiveChat: SwiftUICore.Image {
-    get
-  }
-  public static var sharedFilesInfo: SwiftUICore.Image {
-    get
-  }
-  public static var manageChatHistory: SwiftUICore.Image {
-    get
-  }
-  public static var meetingLink: SwiftUICore.Image {
-    get
-  }
-  public static var onboardingCarousel1: SwiftUICore.Image {
-    get
-  }
-  public static var onboardingCarousel2: SwiftUICore.Image {
-    get
-  }
-  public static var onboardingCarousel3: SwiftUICore.Image {
-    get
-  }
-  public static var onboardingCarousel4: SwiftUICore.Image {
-    get
-  }
-  public static var photoCardPlaceholder: SwiftUICore.Image {
-    get
-  }
-  public static var enableCameraUploadsBannerIcon: SwiftUICore.Image {
-    get
-  }
-  public static var cuBannerChevronRevamp: SwiftUICore.Image {
-    get
-  }
-  public static var favouritePlaylistThumbnail: SwiftUICore.Image {
-    get
-  }
-  public static var addContactMeetings: SwiftUICore.Image {
-    get
-  }
-  public static var filetypeFolder: SwiftUICore.Image {
-    get
-  }
-  public static var filetype3D: SwiftUICore.Image {
-    get
-  }
-  public static var filetypeRaw: SwiftUICore.Image {
-    get
-  }
-  public static var filetypeVideo: SwiftUICore.Image {
-    get
-  }
-  public static var filetypeAudio: SwiftUICore.Image {
-    get
-  }
-  public static var filetypeCompressed: SwiftUICore.Image {
-    get
-  }
-  public static var filetypePhotoshop: SwiftUICore.Image {
-    get
-  }
-  public static var filetypeWebLang: SwiftUICore.Image {
-    get
-  }
-  public static var filetypeAfterEffects: SwiftUICore.Image {
-    get
-  }
-  public static var filetypeIllustrator: SwiftUICore.Image {
-    get
-  }
-  public static var filetypeText: SwiftUICore.Image {
-    get
-  }
-  public static var filetypeExecutable: SwiftUICore.Image {
-    get
-  }
-  public static var filetypeVector: SwiftUICore.Image {
-    get
-  }
-  public static var filetypeImages: SwiftUICore.Image {
-    get
-  }
-  public static var filetypeWebData: SwiftUICore.Image {
-    get
-  }
-  public static var filetypeWord: SwiftUICore.Image {
-    get
-  }
-  public static var filetypeCAD: SwiftUICore.Image {
-    get
-  }
-  public static var filetypeDmg: SwiftUICore.Image {
-    get
-  }
-  public static var filetypeFont: SwiftUICore.Image {
-    get
-  }
-  public static var filetypeSpreadsheet: SwiftUICore.Image {
-    get
-  }
-  public static var filetypeIndesign: SwiftUICore.Image {
-    get
-  }
-  public static var filetypePowerpoint: SwiftUICore.Image {
-    get
-  }
-  public static var filetypeKeynote: SwiftUICore.Image {
-    get
-  }
-  public static var filetypeNumbers: SwiftUICore.Image {
-    get
-  }
-  public static var filetypeGeneric: SwiftUICore.Image {
-    get
-  }
-  public static var filetypeOpenoffice: SwiftUICore.Image {
-    get
-  }
-  public static var filetypeExcel: SwiftUICore.Image {
-    get
-  }
-  public static var filetypePages: SwiftUICore.Image {
-    get
-  }
-  public static var filetypePdf: SwiftUICore.Image {
-    get
-  }
-  public static var filetypePremiere: SwiftUICore.Image {
-    get
-  }
-  public static var filetypeSketch: SwiftUICore.Image {
-    get
-  }
-  public static var filetypeTorrent: SwiftUICore.Image {
-    get
-  }
-  public static var filetypeUrl: SwiftUICore.Image {
-    get
-  }
-  public static var filetypeExperiencedesign: SwiftUICore.Image {
-    get
-  }
-  public static var filetypeFolderCamera: SwiftUICore.Image {
-    get
-  }
-  public static var android: SwiftUICore.Image {
-    get
-  }
-  public static var drive: SwiftUICore.Image {
-    get
-  }
-  public static var ios: SwiftUICore.Image {
-    get
-  }
-  public static var mobile: SwiftUICore.Image {
-    get
-  }
-  public static var pc: SwiftUICore.Image {
-    get
-  }
-  public static var pcLinux: SwiftUICore.Image {
-    get
-  }
-  public static var pcMac: SwiftUICore.Image {
-    get
-  }
-  public static var pcWindows: SwiftUICore.Image {
-    get
-  }
-  public static var backupFolder: SwiftUICore.Image {
-    get
-  }
-  public static var cameraUploadsFolder: SwiftUICore.Image {
-    get
-  }
-  public static var syncFolder: SwiftUICore.Image {
-    get
-  }
-  public static var attentionNeeded: SwiftUICore.Image {
-    get
-  }
-  public static var disabled: SwiftUICore.Image {
-    get
-  }
-  public static var error: SwiftUICore.Image {
-    get
-  }
-  public static var inactive: SwiftUICore.Image {
-    get
-  }
-  public static var noCameraUploads: SwiftUICore.Image {
-    get
-  }
-  public static var outOfQuota: SwiftUICore.Image {
-    get
-  }
-  public static var paused: SwiftUICore.Image {
-    get
-  }
-  public static var updating: SwiftUICore.Image {
-    get
-  }
-  public static var upToDate: SwiftUICore.Image {
-    get
-  }
-  public static var externalLink: SwiftUICore.Image {
     get
   }
 }

@@ -1,18 +1,8 @@
 {
   "images" : [
     {
-      "idiom" : "universal",
-      "scale" : "1x"
-    },
-    {
-      "filename" : "spreadsheet@2x.png",
-      "idiom" : "universal",
-      "scale" : "2x"
-    },
-    {
-      "filename" : "spreadsheet@3x.png",
-      "idiom" : "universal",
-      "scale" : "3x"
+      "filename" : "filetype_spreadsheet.svg",
+      "idiom" : "universal"
     }
   ],
   "info" : {

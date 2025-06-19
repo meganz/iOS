@@ -186,7 +186,6 @@ private let fileTypeImageResources: [String: MEGAAssetsFileType] = [
     "ppj": .filetypePremiere,
     "prproj": .filetypePremiere,
     
-    "sketch": .filetypeSketch,
     "torrent": .filetypeTorrent,
     "url": .filetypeUrl,
     "xd": .filetypeExperiencedesign
@@ -223,7 +222,6 @@ enum MEGAAssetsFileType: CaseIterable, Sendable {
          filetypePages,
          filetypePdf,
          filetypePremiere,
-         filetypeSketch,
          filetypeTorrent,
          filetypeUrl,
          filetypeExperiencedesign,

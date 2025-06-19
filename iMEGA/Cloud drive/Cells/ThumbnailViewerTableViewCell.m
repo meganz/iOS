@@ -47,7 +47,7 @@
 }
 
 - (void)configureForRecentAction:(MEGARecentActionBucket *)recentActionBucket {
-    self.thumbnailImageView.image = [UIImage megaImageWithNamed:@"multiplePhotos"];
+    self.thumbnailImageView.image = [UIImage megaImageWithNamed:@"filetype_image-stack"];
     self.thumbnailImageView.accessibilityIgnoresInvertColors = YES;
     self.thumbnailPlayImageView.accessibilityIgnoresInvertColors = YES;
     
@@ -106,19 +106,19 @@
             MEGANode *firstbornParentNode = [[MEGASdk.shared nodeForHandle:recentActionBucket.parentHandle] mnz_firstbornInShareOrOutShareParentNode];
             if (firstbornParentNode.isOutShare) {
                 self.incomingOrOutgoingView.hidden = NO;
-                self.incomingOrOutgoingImageView.image = [UIImage megaImageWithNamed:@"mini_folder_outgoing"];
+                self.incomingOrOutgoingImageView.image = [UIImage megaImageWithNamed:@"folder_users"];
             } else {
                 self.incomingOrOutgoingView.hidden = YES;
             }
         } else {
             self.addedByLabel.text = [NSString mnz_addedByInRecentActionBucket:recentActionBucket];
             self.incomingOrOutgoingView.hidden = NO;
-            self.incomingOrOutgoingImageView.image = [UIImage megaImageWithNamed:@"mini_folder_incoming"];
+            self.incomingOrOutgoingImageView.image = [UIImage megaImageWithNamed:@"folder_folder-incoming"];
         }
     } else {
         self.addedByLabel.text = [NSString mnz_addedByInRecentActionBucket:recentActionBucket];
         self.incomingOrOutgoingView.hidden = NO;
-        self.incomingOrOutgoingImageView.image = (shareType == MEGAShareTypeAccessOwner) ? [UIImage megaImageWithNamed:@"mini_folder_outgoing"] : [UIImage megaImageWithNamed:@"mini_folder_incoming"];
+        self.incomingOrOutgoingImageView.image = (shareType == MEGAShareTypeAccessOwner) ? [UIImage megaImageWithNamed:@"folder_users"] : [UIImage megaImageWithNamed:@"folder_folder-incoming"];
     }
     
     self.infoLabel.text = [NSString stringWithFormat:@"%@ ・", parentNode.name];

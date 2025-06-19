@@ -1,18 +1,8 @@
 {
   "images" : [
     {
-      "idiom" : "universal",
-      "scale" : "1x"
-    },
-    {
-      "filename" : "executable@2x.png",
-      "idiom" : "universal",
-      "scale" : "2x"
-    },
-    {
-      "filename" : "executable@3x.png",
-      "idiom" : "universal",
-      "scale" : "3x"
+      "filename" : "filetype_executable.svg",
+      "idiom" : "universal"
     }
   ],
   "info" : {

@@ -41,9 +41,9 @@ import MEGARepo
             
     private func commonFolderImage(for node: NodeEntity) -> UIImage {
         if node.isInShare {
-            return MEGAAssets.UIImage.folderIncoming
+            return MEGAAssets.UIImage.folderUsers
         } else if node.isOutShare {
-            return MEGAAssets.UIImage.folderOutgoing
+            return MEGAAssets.UIImage.folderUsers
         } else {
             return MEGAAssets.UIImage.filetypeFolder
         }
