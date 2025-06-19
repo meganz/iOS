@@ -8,7 +8,8 @@ extension OfflineCollectionViewController {
                               itemPath: String) -> UIContextMenuConfiguration? {
         var isDirectory: ObjCBool = false
         FileManager.default.fileExists(atPath: itemPath, isDirectory: &isDirectory)
-        let contextMenuConfiguration = UIContextMenuConfiguration(identifier: nil) {
+        
+        return UIContextMenuConfiguration(identifier: nil) {
             if isDirectory.boolValue {
                 let offlineVC = self.storyboard?.instantiateViewController(withIdentifier: "OfflineViewControllerID") as? OfflineViewController
                 offlineVC?.folderPathFromOffline = self.offline.folderPath(fromOffline: itemPath, folder: itemPath.lastPathComponent)
@@ -22,8 +23,6 @@ extension OfflineCollectionViewController {
                 children: [self.makeSelectAction(for: indexPath, in: collectionView)]
             )
         }
-
-        return contextMenuConfiguration
     }
     
     @objc func willPerformPreviewActionForMenuWith(animator: any UIContextMenuInteractionCommitAnimating) {
