@@ -172,15 +172,14 @@ static NSString *kPath = @"kPath";
 }
 
 - (UIContextMenuConfiguration *)collectionView:(UICollectionView *)collectionView
-    contextMenuConfigurationForItemAtIndexPath:(NSIndexPath *)indexPath
+  contextMenuConfigurationForItemsAtIndexPaths:(NSArray<NSIndexPath *> *)indexPaths
                                          point:(CGPoint)point {
-    if (self.offline.flavor == AccountScreen) {
-        NSDictionary *item = [self getItemAtIndexPath:indexPath];
-        NSString *pathForItem = [[self.offline currentOfflinePath] stringByAppendingPathComponent:item[kFileName]];
-        return [self collectionView:collectionView contextMenuConfigurationForItemAt:indexPath itemPath:pathForItem];
-    } else {
-        return nil;
-    }
+    if (self.offline.flavor != AccountScreen || indexPaths.count == 0) return nil;
+    
+    NSIndexPath *indexPath = indexPaths.firstObject;
+    NSString *path = [[self.offline currentOfflinePath] stringByAppendingPathComponent:[self getItemAtIndexPath:indexPath][kFileName]];
+    
+    return [self collectionView:collectionView contextMenuConfigurationForItemAt:indexPath itemPath:path];
 }
 
 - (void)collectionView:(UICollectionView *)collectionView
