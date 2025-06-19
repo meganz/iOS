@@ -22,8 +22,6 @@ enum AudioPlayerAction: ActionType {
     case viewDidDisappear
     case initMiniPlayer
     case updateCurrentTime(percentage: Float)
-    case progressDragEventBegan
-    case progressDragEventEnded
     case onShuffle(active: Bool)
     case onPlayPause
     case onNext
@@ -470,10 +468,6 @@ final class AudioPlayerViewModel: ViewModelType {
             invokeCommand?(.updateSpeed(mode: speedModeState))
         case .updateCurrentTime(let percentage):
             configEntity.playerHandler.playerProgressCompleted(percentage: percentage)
-        case .progressDragEventBegan:
-            configEntity.playerHandler.playerProgressDragEventBegan()
-        case .progressDragEventEnded:
-            configEntity.playerHandler.playerProgressDragEventEnded()
         case .onShuffle(let active):
             if active {
                 trackShuffleIsEnabled()

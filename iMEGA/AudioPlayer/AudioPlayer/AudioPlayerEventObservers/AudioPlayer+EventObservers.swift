@@ -38,6 +38,8 @@ extension AudioPlayer {
         audioQueueBufferFullObserver = nil
         audioQueueLoadedTimeRangesObserver = nil
         audioSeekFallbackObserver = nil
+        
+        removeTimeObserver()
     }
     
     func registerAudioPlayerNotifications() {
@@ -101,7 +103,6 @@ extension AudioPlayer {
         switch player.timeControlStatus {
         case .paused:
             isPaused = true
-            invalidateTimer()
             notify([aboutCurrentItem, aboutCurrentState, aboutCurrentThumbnail])
             
             if !isAutoPlayEnabled {
@@ -114,8 +115,6 @@ extension AudioPlayer {
             }
             
         case .waitingToPlayAtSpecifiedRate:
-            invalidateTimer()
-            
             /// Only show the loading indicator when AVPlayer is buffering
             /// (i.e. waiting “to minimize stalls”), to avoid spinners for other wait reasons
             if player.reasonForWaitingToPlay == .toMinimizeStalls || player.reasonForWaitingToPlay == .evaluatingBufferingRate {
@@ -124,7 +123,6 @@ extension AudioPlayer {
             
         case .playing:
             isPaused = false
-            setTimer()
             notify([aboutCurrentItem, aboutCurrentState, aboutCurrentThumbnail, aboutHidingLoadingView])
             
             if let currentItem = player.currentItem as? AudioPlayerItem {
