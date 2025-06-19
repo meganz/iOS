@@ -4,7 +4,7 @@ import MEGADesignToken
 
 @MainActor
 class AppearanceManager: NSObject {
-    
+
     @objc class func setupAppearance(_ traitCollection: UITraitCollection) {
         setupNavigationBarAppearance()
         
@@ -105,31 +105,85 @@ class AppearanceManager: NSObject {
     }
     
     @objc class func setupTabbar(_ tabBar: UITabBar) {
+        if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .navigationRevamp) {
+            setupTabbarForRevampedAppearance(tabBar)
+        } else {
+            setupTabbarForLegacyAppearance(tabBar)
+        }
+    }
+
+    private class func setupTabbarForRevampedAppearance(_ tabBar: UITabBar) {
         let appearance = UITabBarAppearance()
         appearance.backgroundColor = .surface1Background()
-        
+
+        let normalColor = TokenColors.Text.secondary
+        let selectedColor = TokenColors.Button.brand
+
+        appearance.stackedLayoutAppearance.normal.iconColor = normalColor
+        appearance.stackedLayoutAppearance.normal.badgeBackgroundColor = .clear
+        appearance.stackedLayoutAppearance.normal.badgeTextAttributes = [.foregroundColor: TokenColors.Components.interactive]
+
+        appearance.stackedLayoutAppearance.normal.titleTextAttributes = [.foregroundColor: normalColor]
+
+        appearance.stackedLayoutAppearance.normal.titlePositionAdjustment = .init(horizontal: 0, vertical: -3)
+        appearance.stackedLayoutAppearance.selected.iconColor = selectedColor
+        appearance.stackedLayoutAppearance.selected.titleTextAttributes = [.foregroundColor: TokenColors.Button.brand]
+        appearance.stackedLayoutAppearance.selected.titlePositionAdjustment = .init(horizontal: 0, vertical: -3)
+
+        appearance.inlineLayoutAppearance.normal.iconColor = normalColor
+        appearance.inlineLayoutAppearance.normal.badgeBackgroundColor = .clear
+        appearance.inlineLayoutAppearance.normal.badgeTextAttributes = [.foregroundColor: TokenColors.Components.interactive]
+
+        appearance.inlineLayoutAppearance.normal.titleTextAttributes = [.foregroundColor: normalColor]
+        appearance.inlineLayoutAppearance.selected.iconColor = selectedColor
+        appearance.inlineLayoutAppearance.selected.titleTextAttributes = [.foregroundColor: selectedColor]
+
+        appearance.compactInlineLayoutAppearance.normal.iconColor = normalColor
+        appearance.compactInlineLayoutAppearance.normal.badgeBackgroundColor = .clear
+        appearance.compactInlineLayoutAppearance.normal.badgeTextAttributes = [.foregroundColor: TokenColors.Components.interactive]
+        appearance.compactInlineLayoutAppearance.normal.titleTextAttributes = [.foregroundColor: normalColor]
+        appearance.compactInlineLayoutAppearance.selected.iconColor = selectedColor
+        appearance.compactInlineLayoutAppearance.selected.titleTextAttributes = [.foregroundColor: selectedColor]
+
+        tabBar.standardAppearance = appearance
+        tabBar.scrollEdgeAppearance = appearance
+
+        tabBar.items?.forEach {
+            $0.imageInsets = .init(top: -3, left: 0, bottom: 3, right: 0)
+        }
+    }
+
+    private class func setupTabbarForLegacyAppearance(_ tabBar: UITabBar) {
+        let appearance = UITabBarAppearance()
+        appearance.backgroundColor = .surface1Background()
+
         appearance.stackedLayoutAppearance.normal.iconColor = TokenColors.Text.secondary
         appearance.stackedLayoutAppearance.normal.badgeBackgroundColor = .clear
         appearance.stackedLayoutAppearance.normal.badgeTextAttributes = [.foregroundColor: TokenColors.Components.interactive]
-        appearance.stackedLayoutAppearance.selected.iconColor = UIColor.mnz_red()
-        
+        appearance.stackedLayoutAppearance.selected.iconColor = TokenColors.Button.brand
+
         appearance.inlineLayoutAppearance.normal.iconColor = TokenColors.Text.secondary
         appearance.inlineLayoutAppearance.normal.badgeBackgroundColor = .clear
         appearance.inlineLayoutAppearance.normal.badgeTextAttributes = [.foregroundColor: TokenColors.Components.interactive]
-        appearance.inlineLayoutAppearance.selected.iconColor = UIColor.mnz_red()
-        
+        appearance.inlineLayoutAppearance.selected.iconColor = TokenColors.Button.brand
+
         appearance.compactInlineLayoutAppearance.normal.iconColor = TokenColors.Text.secondary
         appearance.compactInlineLayoutAppearance.normal.badgeBackgroundColor = .clear
         appearance.compactInlineLayoutAppearance.normal.badgeTextAttributes = [.foregroundColor: TokenColors.Components.interactive]
-        appearance.compactInlineLayoutAppearance.selected.iconColor = UIColor.mnz_red()
-        
+        appearance.compactInlineLayoutAppearance.selected.iconColor = TokenColors.Button.brand
+
         tabBar.standardAppearance = appearance
-        
-        if ProcessInfo.processInfo.operatingSystemVersion.majorVersion >= 15 {
-            tabBar.scrollEdgeAppearance = appearance
+        tabBar.scrollEdgeAppearance = appearance
+
+        tabBar.items?.forEach {
+            if tabBar.traitCollection.horizontalSizeClass == .regular {
+                $0.imageInsets = .init(top: 0, left: 0, bottom: 0, right: 0)
+            } else {
+                $0.imageInsets = .init(top: 6, left: 0, bottom: -6, right: 0)
+            }
         }
     }
-    
+
     /// This method and `forceResetNavigationBar` were introduced
     /// to fix the issue of navigation bar's transparency
     /// in `CNContactPickerViewController`
