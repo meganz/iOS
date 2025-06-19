@@ -49,7 +49,9 @@ final class AudioPlayer: NSObject {
     var preloadMetadataTask: Task<Void, Never>?
     
     // MARK: - Private properties
-    private var timer: Timer?
+    private var timeObserverToken: Any?
+    private let timeObserverInterval = CMTime(seconds: 0.5, preferredTimescale: CMTimeScale(NSEC_PER_SEC))
+    
     @Atomic private var taskId: UIBackgroundTaskIdentifier?
     private let debouncer = Debouncer(delay: 1.0, dispatchQueue: DispatchQueue.global(qos: .userInteractive))
     
@@ -157,7 +159,6 @@ final class AudioPlayer: NSObject {
     }
     
     private func unregister() {
-        invalidateTimer()
         unregisterAudioPlayerEvents()
         unregisterRemoteControls()
         unregisterAudioPlayerNotifications()
@@ -178,6 +179,18 @@ final class AudioPlayer: NSObject {
         
         register()
         configurePlayer()
+        
+        timeObserverToken = queuePlayer?
+            .addPeriodicTimeObserver(
+                forInterval: timeObserverInterval,
+                queue: .main
+            ) { [weak self] _ in
+                self?.timeObserverHandler()
+            }
+    }
+    
+    private func timeObserverHandler() {
+        notify(aboutCurrentState)
     }
     
     private func refreshPlayer(tracks: [AudioPlayerItem]) {
@@ -205,6 +218,12 @@ final class AudioPlayer: NSObject {
             self.configurePlayer()
             self.notify(self.aboutTheEndOfBlockingAction)
         }
+    }
+    
+    func removeTimeObserver() {
+        guard let timeObserverToken else { return }
+        queuePlayer?.removeTimeObserver(timeObserverToken)
+        self.timeObserverToken = nil
     }
     
     func onItemFinishedPlaying() {
@@ -349,29 +368,6 @@ final class AudioPlayer: NSObject {
         let isWaitingForInitialPlayback = queuePlayer?.status == .unknown /// status of the player is not yet known because it has not tried to load new media resources for playback.
 
         return isBuffering || isWaitingForInitialPlayback
-    }
-}
-
-// MARK: - Audio Player Time Functions
-extension AudioPlayer {
-    func setTimer() {
-        if timer != nil {
-            invalidateTimer()
-        }
-        
-        timer = Timer(timeInterval: 0.01, repeats: true) { [weak self] _ in
-            guard let `self` = self else { return }
-            self.notify(self.aboutCurrentState)
-        }
-        endBackgroundTask()
-        
-        guard let timer = timer else { return }
-        RunLoop.current.add(timer, forMode: .common)
-    }
-    
-    func invalidateTimer() {
-        timer?.invalidate()
-        timer = nil
     }
 }
 

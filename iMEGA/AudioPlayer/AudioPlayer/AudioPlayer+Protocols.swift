@@ -58,8 +58,6 @@ protocol AudioPlayerMetadataLoaderProtocol {
     func move(item: AudioPlayerItem, to position: IndexPath, direction: MovementDirection)
     func delete(items: [AudioPlayerItem])
     func playerProgressCompleted(percentage: Float)
-    func playerProgressDragEventBegan()
-    func playerProgressDragEventEnded()
     func playerShuffle(active: Bool)
     func goBackward()
     func playPrevious()

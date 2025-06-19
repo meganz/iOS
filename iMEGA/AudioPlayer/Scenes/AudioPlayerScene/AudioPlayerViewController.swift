@@ -147,7 +147,6 @@ class AudioPlayerViewController: UIViewController, AudioPlayerViewControllerNode
         if timeSliderView.value == 1.0 {
             timeSliderView.cancelTracking(with: nil)
             if pendingDragEvent {
-                viewModel.dispatch(.progressDragEventEnded)
                 pendingDragEvent = false
             }
         }
@@ -440,10 +439,8 @@ class AudioPlayerViewController: UIViewController, AudioPlayerViewControllerNode
         guard let touchEvent = event.allTouches?.first else { return }
         switch touchEvent.phase {
         case .began:
-            viewModel.dispatch(.progressDragEventBegan)
             pendingDragEvent = true
         case .ended:
-            viewModel.dispatch(.progressDragEventEnded)
             pendingDragEvent = false
         default: break
         }

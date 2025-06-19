@@ -370,14 +370,6 @@ extension AudioPlayer {
         setProgressCompleted(CMTimeGetSeconds(currentItem.duration) * Double(percentage))
     }
     
-    @objc func progressDragEventBegan() {
-        invalidateTimer()
-    }
-    
-    @objc func progressDragEventEnded() {
-        setTimer()
-    }
-    
     @objc func move(of movedItem: AudioPlayerItem, to position: IndexPath, direction: MovementDirection) {
         guard let queuePlayer = queuePlayer else { return }
         

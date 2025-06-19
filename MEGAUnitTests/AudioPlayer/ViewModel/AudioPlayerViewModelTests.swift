@@ -31,12 +31,6 @@ final class AudioPlayerViewModelTests: XCTestCase {
         await test(viewModel: onlineSUT, action: .updateCurrentTime(percentage: 0.2), expectedCommands: [])
         XCTAssertEqual(playerHandler.updateProgressCompleted_calledTimes, 1)
         
-        await test(viewModel: onlineSUT, action: .progressDragEventBegan, expectedCommands: [])
-        XCTAssertEqual(playerHandler.progressDragEventBeganCalledTimes, 1)
-        
-        await test(viewModel: onlineSUT, action: .progressDragEventEnded, expectedCommands: [])
-        XCTAssertEqual(playerHandler.progressDragEventEndedCalledTimes, 1)
-        
         await test(viewModel: onlineSUT, action: .onShuffle(active: true), expectedCommands: [])
         XCTAssertEqual(playerHandler.onShuffle_calledTimes, 1)
         
