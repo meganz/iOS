@@ -124,7 +124,7 @@ extension SharedItemsViewController {
         cell.nameLabel.textColor = nameTextColor
 
         cell.delegate = self
-        cell.thumbnailImageView.image = MEGAAssets.UIImage.folderOutgoing
+        cell.thumbnailImageView.image = MEGAAssets.UIImage.folderUsers
         cell.nodeHandle = node.handle
 
         cell.permissionsButton.setImage(MEGAAssets.UIImage.warningPermission, for: .normal)

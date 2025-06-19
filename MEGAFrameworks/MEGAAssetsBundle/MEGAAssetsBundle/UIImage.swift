@@ -16,8 +16,7 @@ public struct MEGAUIImageBundle {
     public static var upload: UIImage { UIImage.upload }
     public static var sendToChat: UIImage { UIImage.sendToChat }
     public static var folderChat: UIImage { UIImage.folderChat }
-    public static var folderIncoming: UIImage { UIImage.folderIncoming }
-    public static var folderOutgoing: UIImage { UIImage.folderOutgoing }
+    public static var folderUsers: UIImage { UIImage.folderUsers }
     public static var export: UIImage { UIImage.export }
     public static var shareFolder: UIImage { UIImage.shareFolder }
     public static var verifyContact: UIImage { UIImage.verifyContact }
@@ -363,7 +362,6 @@ public struct MEGAUIImageBundle {
     public static var filetypePages: UIImage { UIImage.filetypePages }
     public static var filetypePdf: UIImage { UIImage.filetypePdf }
     public static var filetypePremiere: UIImage { UIImage.filetypePremiere }
-    public static var filetypeSketch: UIImage { UIImage.filetypeSketch }
     public static var filetypeTorrent: UIImage { UIImage.filetypeTorrent }
     public static var filetypeUrl: UIImage { UIImage.filetypeUrl }
     public static var filetypeExperiencedesign: UIImage { UIImage.filetypeExperiencedesign }

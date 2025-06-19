@@ -36,7 +36,6 @@ extension MEGAAssets {
             case .filetypePages: MEGAImageBundle.filetypePages
             case .filetypePdf: MEGAImageBundle.filetypePdf
             case .filetypePremiere: MEGAImageBundle.filetypePremiere
-            case .filetypeSketch: MEGAImageBundle.filetypeSketch
             case .filetypeTorrent: MEGAImageBundle.filetypeTorrent
             case .filetypeUrl: MEGAImageBundle.filetypeUrl
             case .filetypeExperiencedesign: MEGAImageBundle.filetypeExperiencedesign
@@ -160,8 +159,7 @@ extension MEGAAssets {
         public static var videoPlaylistThumbnailFallback: SwiftUI.Image { MEGAImageBundle.videoPlaylistThumbnailFallback }
         public static var linked: SwiftUI.Image { MEGAImageBundle.linked }
         public static var linksSegmentControler: SwiftUI.Image { MEGAImageBundle.linksSegmentControler }
-        public static var folderIncoming: SwiftUI.Image { MEGAImageBundle.folderIncoming }
-        public static var folderOutgoing: SwiftUI.Image { MEGAImageBundle.folderOutgoing }
+        public static var folderUsers: SwiftUI.Image { MEGAImageBundle.folderUsers }
         public static var folderChat: SwiftUI.Image { MEGAImageBundle.folderChat }
         public static var placeholder: SwiftUI.Image { MEGAImageBundle.placeholder }
         public static var rectangleVideoStack: SwiftUI.Image { MEGAImageBundle.rectangleVideoStack }
@@ -253,7 +251,6 @@ extension MEGAAssets {
             case .filetypePages: MEGAUIImageBundle.filetypePages
             case .filetypePdf: MEGAUIImageBundle.filetypePdf
             case .filetypePremiere: MEGAUIImageBundle.filetypePremiere
-            case .filetypeSketch: MEGAUIImageBundle.filetypeSketch
             case .filetypeTorrent: MEGAUIImageBundle.filetypeTorrent
             case .filetypeUrl: MEGAUIImageBundle.filetypeUrl
             case .filetypeExperiencedesign: MEGAUIImageBundle.filetypeExperiencedesign
@@ -290,8 +287,7 @@ extension MEGAAssets {
         public static var folderChat: UIKit.UIImage { MEGAUIImageBundle.folderChat }
         public static var filetypeFolderCamera: UIKit.UIImage { MEGAUIImageBundle.filetypeFolderCamera }
         public static var filetypeGeneric: UIKit.UIImage { MEGAUIImageBundle.filetypeGeneric }
-        public static var folderIncoming: UIKit.UIImage { MEGAUIImageBundle.folderIncoming }
-        public static var folderOutgoing: UIKit.UIImage { MEGAUIImageBundle.folderOutgoing }
+        public static var folderUsers: UIKit.UIImage { MEGAUIImageBundle.folderUsers }
         public static var filetypeFolder: UIKit.UIImage { MEGAUIImageBundle.filetypeFolder }
         public static var export: UIKit.UIImage { MEGAUIImageBundle.export }
         public static var shareFolder: UIKit.UIImage { MEGAUIImageBundle.shareFolder }
