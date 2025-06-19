@@ -214,10 +214,13 @@ willPerformPreviewActionForMenuWithConfiguration:(UIContextMenuConfiguration *)c
 #pragma mark - Private
 
 - (BOOL)shouldSelectIndexPath:(NSIndexPath * _Nonnull)indexPath {
-    NSArray *filteredArray = [self.offline.selectedItems filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {
-        return (NSURL*)evaluatedObject == [[self getItemAtIndexPath:indexPath] objectForKey:kPath];
-    }]];
-    return [filteredArray count] != 0;
+    NSURL *itemURL = [self getItemAtIndexPath:indexPath][kPath];
+    for (NSURL *selectedURL in self.offline.selectedItems) {
+        if ([selectedURL isEqual:itemURL]) {
+            return YES;
+        }
+    }
+    return NO;
 }
 
 - (nullable NSDictionary *)getItemAtIndexPath:(NSIndexPath *)indexPath {
