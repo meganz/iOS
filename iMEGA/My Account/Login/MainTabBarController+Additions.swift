@@ -11,7 +11,12 @@ import MEGAUIKit
 let requestStatusProgressWindowManager = RequestStatusProgressWindowManager()
 
 extension MainTabBarController {
-    @objc func makeHomeViewController() -> UIViewController {
+
+    private var isNavigationRevampEnabled: Bool {
+        DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .navigationRevamp)
+    }
+
+    func makeHomeViewController() -> UIViewController {
         HomeScreenFactory().createHomeScreen(
             from: self,
             tracker: DIContainer.tracker
@@ -19,31 +24,21 @@ extension MainTabBarController {
     }
 
     @objc func loadTabViewControllers() {
-        defaultViewControllers = .init(capacity: 5)
+        let appTabs = TabManager.appTabs
 
-        if let cloudDriveVC = makeCloudDriveViewController() {
-            defaultViewControllers.add(cloudDriveVC)
-        }
-        if let photoAlbumVC = photoAlbumViewController() {
-            defaultViewControllers.add(photoAlbumVC)
-        }
-
-        defaultViewControllers.add(makeHomeViewController())
-        defaultViewControllers.add(chatViewController())
-
-        if let sharedItemsVC = sharedItemsViewController() {
-            defaultViewControllers.add(sharedItemsVC)
-        }
+        let viewControllers = appTabs.map {
+            $0.viewController(from: self)
+        }.compactMap { $0 }
 
         addTabDelegate()
         mainTabBarViewModel = createMainTabBarViewModel()
         mainTabBarAdsViewModel = MainTabBarAdsViewModel()
         configProgressView()
         showPSAViewIfNeeded()
-        updateUI()
+        updateUI(with: viewControllers)
     }
     
-    private func makeCloudDriveViewController() -> UIViewController? {
+    func makeCloudDriveViewController() -> UIViewController? {
         let config = NodeBrowserConfig(
             displayMode: .cloudDrive,
             showsAvatar: true,
@@ -68,7 +63,7 @@ extension MainTabBarController {
         showPSAViewIfNeeded(psaViewModel)
     }
 
-    @objc func sharedItemsViewController() -> UIViewController? {
+    func sharedItemsViewController() -> UIViewController? {
         guard let sharedItemsNavigationController = UIStoryboard(name: "SharedItems", bundle: nil).instantiateInitialViewController() as? MEGANavigationController,
               let vc = sharedItemsNavigationController.viewControllers.first
         else { return nil }
@@ -82,10 +77,9 @@ extension MainTabBarController {
         return sharedItemsNavigationController
     }
 
-    @objc func updateUI() {
-        guard let defaultViewControllers = defaultViewControllers as? [UIViewController] else { return }
+    private func updateUI(with defaultViewControllers: [UIViewController]) {
 
-        for i in  0...defaultViewControllers.count-1 {
+        for i in 0..<defaultViewControllers.count {
             guard let navigationController = defaultViewControllers[i] as? MEGANavigationController else { break }
             navigationController.navigationDelegate = self
 
@@ -93,7 +87,7 @@ extension MainTabBarController {
                 let tabBarItem = navigationController.tabBarItem,
                 let tabType = TabType(rawValue: i)
             else { break }
-            tabBarItem.title = nil
+
             reloadInsets(for: tabBarItem)
             tabBarItem.accessibilityLabel = Tab(tabType: tabType).title
         }
@@ -170,7 +164,7 @@ extension MainTabBarController {
         
         return mainTabBarCallsViewModel
     }
-    
+
     private func executeCommand(_ command: MainTabBarCallsViewModel.Command) {
         switch command {
         case .showActiveCallIcon:

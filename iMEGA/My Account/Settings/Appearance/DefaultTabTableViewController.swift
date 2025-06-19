@@ -25,7 +25,7 @@ final class DefaultTabTableViewController: UITableViewController {
         
         if let tabType = TabType(rawValue: indexPath.row) {
             let tab = Tab(tabType: tabType)
-            cell.imageView?.image = tab.icon?.withTintColor(TokenColors.Text.secondary)
+            cell.imageView?.image = tab.icon.withTintColor(TokenColors.Text.secondary)
             let title = tab.title
             cell.textLabel?.text = Strings.localized(title, comment: title)
             cell.textLabel?.font = UIFont.preferredFont(forTextStyle: .body)

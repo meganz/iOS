@@ -10,7 +10,7 @@ struct PhotoCellFavoriteBadge: ViewModifier {
             .overlay(favoriteOverlay, alignment: .topTrailing)
     }
     
-    @ViewBuilder private var favoriteOverlay: some View {
+    private var favoriteOverlay: some View {
         ZStack(alignment: .topTrailing) {
             Rectangle()
                 .fill(LinearGradient(gradient: Gradient(colors: [Color.black.opacity(0.3), Color.white.opacity(0.01)]), startPoint: .top, endPoint: .bottom))

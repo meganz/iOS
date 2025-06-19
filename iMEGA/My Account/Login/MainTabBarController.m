@@ -87,9 +87,6 @@
     }
     
     [self configurePhoneImageBadge];
-    for (UITabBarItem *tabBarItem in self.tabBar.items) {
-        [self reloadInsetsForTabBarItem:tabBarItem];
-    }
 }
 
 #pragma mark - Public
@@ -163,14 +160,6 @@
 }
 
 #pragma mark - Private
-
-- (void)reloadInsetsForTabBarItem:(UITabBarItem *)tabBarItem {
-    if (self.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassRegular) {
-        tabBarItem.imageInsets = UIEdgeInsetsMake(0, 0, 0, 0);
-    } else {
-        tabBarItem.imageInsets = UIEdgeInsetsMake(6, 0, -6, 0);
-    }
-}
 
 - (void)setBadgeValue:(NSString *)badgeValue tabPosition:(NSInteger)tabPosition {
     if (tabPosition < self.tabBar.items.count) {

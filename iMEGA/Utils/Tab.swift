@@ -1,7 +1,10 @@
+import MEGAAppPresentation
 import MEGAAssets
 import MEGADomain
+import MEGAFoundation
 import MEGAL10n
 import MEGAPreference
+import MEGASwift
 
 @objc enum TabType: Int, CaseIterable {
     case cloudDrive
@@ -9,6 +12,7 @@ import MEGAPreference
     case home
     case chat
     case sharedItems
+    case menu
 }
 
 @objc final class TabManager: NSObject {
@@ -50,32 +54,45 @@ import MEGAPreference
     @objc static func setLaunchTabDialogAlreadyAsSuggested() {
         launchTabDialogAlreadySuggested = true
     }
+
+    // List of tabs in the app's tab bar
+    @objc static var appTabs: [Tab] = {
+        if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .navigationRevamp) {
+            return [.init(tabType: .home), .init(tabType: .cloudDrive), .init(tabType: .cameraUploads), .init(tabType: .chat), .init(tabType: .menu)]
+        } else {
+            return [.init(tabType: .cloudDrive), .init(tabType: .cameraUploads), .init(tabType: .home), .init(tabType: .chat), .init(tabType: .sharedItems)]
+        }
+    }()
 }
 
 @objc final class Tab: NSObject {
     @objc let tabType: TabType
-    
+    let icon: UIImage
+    let title: String
+
+    // (mike): Use static tabs and take advantage of Equatable for the tabs
     @objc init(tabType: TabType) {
+        let isNavigationRevampEnabled = DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .navigationRevamp)
         self.tabType = tabType
-    }
-    
-    @objc var icon: UIImage? {
         switch tabType {
-        case .cloudDrive: MEGAAssets.UIImage.cloudDriveIcon
-        case .cameraUploads: MEGAAssets.UIImage.cameraUploadsIcon
-        case .home: MEGAAssets.UIImage.home
-        case .chat: MEGAAssets.UIImage.chatIcon
-        case .sharedItems: MEGAAssets.UIImage.sharedItemsIcon
-        }
-    }
-    
-    @objc var title: String {
-        switch tabType {
-        case .cloudDrive: Strings.Localizable.cloudDrive
-        case .cameraUploads: Strings.Localizable.General.cameraUploads
-        case .home: Strings.Localizable.home
-        case .chat: Strings.Localizable.chat
-        case .sharedItems: Strings.Localizable.sharedItems
+        case .cloudDrive:
+            icon = isNavigationRevampEnabled ? MEGAAssets.UIImage.tabBarDrive : MEGAAssets.UIImage.cloudDriveIcon
+            title = isNavigationRevampEnabled ? Strings.Localizable.TabbarTitle.drive : Strings.Localizable.cloudDrive
+        case .cameraUploads:
+            icon = isNavigationRevampEnabled ? MEGAAssets.UIImage.tabBarPhotos : MEGAAssets.UIImage.cameraUploadsIcon
+            title = isNavigationRevampEnabled ? Strings.Localizable.TabbarTitle.photos : Strings.Localizable.General.cameraUploads
+        case .home:
+            icon = isNavigationRevampEnabled ? MEGAAssets.UIImage.tabBarHome : MEGAAssets.UIImage.home
+            title = isNavigationRevampEnabled ? Strings.Localizable.TabbarTitle.home : Strings.Localizable.home
+        case .chat:
+            icon = isNavigationRevampEnabled ? MEGAAssets.UIImage.tabBarChat : MEGAAssets.UIImage.chatIcon
+            title = isNavigationRevampEnabled ? Strings.Localizable.TabbarTitle.chat : Strings.Localizable.chat
+        case .sharedItems: // Shared Items screen is only available in legacy tabbar, no need to check for isNavigationRevampEnabled
+            icon = MEGAAssets.UIImage.sharedItemsIcon
+            title = Strings.Localizable.sharedItems
+        case .menu: // Menu screen is only available in revamped tabbar, no need to check for isNavigationRevampEnabled
+            icon = MEGAAssets.UIImage.tabBarMenu
+            title = Strings.Localizable.TabbarTitle.menu
         }
     }
 }
