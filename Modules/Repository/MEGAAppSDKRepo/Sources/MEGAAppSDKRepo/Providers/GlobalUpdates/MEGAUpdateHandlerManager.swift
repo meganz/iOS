@@ -24,23 +24,25 @@ final class MEGAUpdateHandlerManager: NSObject, MEGADelegate, @unchecked Sendabl
     static let sharedFolderLink = MEGAUpdateHandlerManager(sdk: .sharedFolderLinkSdk)
     
     // MARK: - Global events
-    func onNodesUpdate(_ api: MEGASdk, nodeList: MEGANodeList) {
-        let nodeEntities = nodeList.toNodeEntities()
+    func onNodesUpdate(_ api: MEGASdk, nodeList: MEGANodeList?) {
+        guard let nodeEntities = nodeList?.toNodeEntities() else { return }
+
         handlers.forEach { $0.onNodesUpdate?(nodeEntities) }
     }
     
-    func onUsersUpdate(_ api: MEGASdk, userList: MEGAUserList) {
-        let users = userList.toUserEntities()
+    func onUsersUpdate(_ api: MEGASdk, userList: MEGAUserList?) {
+        guard let users = userList?.toUserEntities() else { return }
+
         handlers.forEach { $0.onUsersUpdate?(users) }
     }
     
-    func onUserAlertsUpdate(_ api: MEGASdk, userAlertList: MEGAUserAlertList) {
-        let userAlerts = userAlertList.toUserAlertEntities()
+    func onUserAlertsUpdate(_ api: MEGASdk, userAlertList: MEGAUserAlertList?) {
+        guard let userAlerts = userAlertList?.toUserAlertEntities() else { return }
         handlers.forEach { $0.onUserAlertsUpdate?(userAlerts) }
     }
     
-    func onContactRequestsUpdate(_ api: MEGASdk, contactRequestList: MEGAContactRequestList) {
-        let contactRequests = contactRequestList.toContactRequestEntities()
+    func onContactRequestsUpdate(_ api: MEGASdk, contactRequestList: MEGAContactRequestList?) {
+        guard let contactRequests = contactRequestList?.toContactRequestEntities() else { return }
         handlers.forEach { $0.onContactRequestsUpdate?(contactRequests) }
     }
     
@@ -52,13 +54,13 @@ final class MEGAUpdateHandlerManager: NSObject, MEGADelegate, @unchecked Sendabl
         handlers.forEach { $0.onAccountUpdate?() }
     }
     
-    func onSetsUpdate(_ api: MEGASdk, sets: [MEGASet]) {
-        let sets = sets.toSetEntities()
+    func onSetsUpdate(_ api: MEGASdk, sets: [MEGASet]?) {
+        guard let sets = sets?.toSetEntities() else { return }
         handlers.forEach { $0.onSetsUpdate?(sets) }
     }
     
-    func onSetElementsUpdate(_ api: MEGASdk, setElements: [MEGASetElement]) {
-        let setElements = setElements.toSetElementsEntities()
+    func onSetElementsUpdate(_ api: MEGASdk, setElements: [MEGASetElement]?) {
+        guard let setElements = setElements?.toSetElementsEntities() else { return }
         handlers.forEach { $0.onSetElementsUpdate?(setElements) }
     }
     

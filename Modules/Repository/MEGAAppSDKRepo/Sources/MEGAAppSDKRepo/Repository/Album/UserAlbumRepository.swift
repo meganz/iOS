@@ -215,13 +215,14 @@ final public class UserAlbumRepository: NSObject, UserAlbumRepositoryProtocol {
 }
 
 extension UserAlbumRepository: MEGAGlobalDelegate {
-    public func onSetsUpdate(_ api: MEGASdk, sets: [MEGASet]) {
-        let albumSets = sets.toSetEntities().filter { $0.setType == .album }
+    public func onSetsUpdate(_ api: MEGASdk, sets: [MEGASet]?) {
+        guard let albumSets = sets?.toSetEntities().filter({ $0.setType == .album }) else { return }
         guard albumSets.isNotEmpty else { return }
         setsUpdatedSourcePublisher.send(albumSets)
     }
     
-    public func onSetElementsUpdate(_ api: MEGASdk, setElements: [MEGASetElement]) {
-        setElementsUpdatedSourcePublisher.send(setElements.toSetElementsEntities())
+    public func onSetElementsUpdate(_ api: MEGASdk, setElements: [MEGASetElement]?) {
+        guard let setElements = setElements?.toSetElementsEntities() else { return }
+        setElementsUpdatedSourcePublisher.send(setElements)
     }
 }
