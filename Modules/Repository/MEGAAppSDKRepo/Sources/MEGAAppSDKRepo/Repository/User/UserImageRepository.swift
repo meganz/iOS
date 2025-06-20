@@ -76,7 +76,8 @@ private final class UserAvatarChangeSubscriber: NSObject, MEGAGlobalDelegate, Se
         sdk.add(self, queueType: .globalBackground)
     }
 
-    func onUsersUpdate(_ api: MEGASdk, userList: MEGAUserList) {
+    func onUsersUpdate(_ api: MEGASdk, userList: MEGAUserList?) {
+        guard let userList else { return }
         guard userList.size > 0 else { return }
         let users = (0..<userList.size)
             .compactMap(userList.user)
