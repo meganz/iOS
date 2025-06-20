@@ -26,8 +26,8 @@ public final class FavouriteNodesRepository: NSObject, FavouriteNodesRepositoryP
     }
     
     public func allFavouritesNodes(searchString: String?, limit: Int) async throws -> [NodeEntity] {
-        try await withAsyncThrowingValue{ completion in
-            allFavouriteNodes(searchString: searchString) { completion($0.mapError { $0 as any Error }) }
+        try await withAsyncThrowingValue { completion in
+            allFavouriteNodes(searchString: searchString, limit: limit) { completion($0.mapError { $0 as any Error }) }
         }
     }
         
@@ -53,8 +53,8 @@ public final class FavouriteNodesRepository: NSObject, FavouriteNodesRepositoryP
         })
     }
     
-    private func allFavouriteNodes(searchString: String?, completion: @escaping (Result<[NodeEntity], GetFavouriteNodesErrorEntity>) -> Void) {
-        getFavouriteNodes(limitCount: 0) { result in
+    private func allFavouriteNodes(searchString: String?, limit: Int, completion: @escaping (Result<[NodeEntity], GetFavouriteNodesErrorEntity>) -> Void) {
+        getFavouriteNodes(limitCount: limit) { result in
             switch result {
             case .success(let nodes):
                 var filteredNodes = nodes
