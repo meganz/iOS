@@ -43,7 +43,7 @@ public struct FavouriteNodesUseCase<T: FavouriteNodesRepositoryProtocol, U: Node
     
     private func allFavouriteNodes(searchString: String?, overrideExcludeSensitives: Bool?, limit: Int? = nil) async throws -> [NodeEntity] {
         
-        let nodes = try await repo.allFavouritesNodes(searchString: searchString, limit: 0)
+        let nodes = try await repo.allFavouritesNodes(searchString: searchString, limit: limit ?? 0)
         
         let excludedSensitiveNodes = if await shouldExcludeSensitive(override: overrideExcludeSensitives) {
             try await withThrowingTaskGroup(of: (Int, NodeEntity?).self, returning: [NodeEntity].self) { taskGroup in
