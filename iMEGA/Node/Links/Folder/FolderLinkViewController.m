@@ -178,6 +178,8 @@
     [AudioPlayerManager.shared updateMiniPlayerPresenter:self];
     [AudioPlayerManager.shared addMiniPlayerHandler:self];
     [self shouldShowMiniPlayer];
+    
+    [self reloadUI];
 }
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
