@@ -23,11 +23,17 @@ extension AudioPlayer {
     }
 
     func setProgressCompleted(_ position: TimeInterval) {
-        setProgressCompleted(position, completion: { })
+        isUpdatingProgress = true
+        setProgressCompleted(position, completion: { [weak self] in
+            self?.isUpdatingProgress = false
+        })
     }
     
     func setProgressCompleted(_ position: TimeInterval, completion: @escaping () -> Void) {
-        guard let queuePlayer = queuePlayer, let currentItem = queuePlayer.currentItem else { return }
+        guard let queuePlayer, let currentItem = queuePlayer.currentItem else {
+            completion()
+            return
+        }
         
         let time = CMTime(seconds: position, preferredTimescale: currentItem.duration.timescale)
         guard CMTIME_IS_VALID(time) else {
