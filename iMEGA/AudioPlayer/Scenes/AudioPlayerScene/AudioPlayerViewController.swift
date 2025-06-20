@@ -139,7 +139,8 @@ class AudioPlayerViewController: UIViewController, AudioPlayerViewControllerNode
     private func updatePlayerStatus(currentTime: String, remainingTime: String, percentage: Float, isPlaying: Bool) {
         currentTimeLabel.text = currentTime
         remainingTimeLabel.text = remainingTime
-        timeSliderView.setValue(percentage, animated: false)
+        
+        updateSliderValueIfNeeded(percentage)
         
         playPauseButton.tintColor = TokenColors.Icon.primary
         playPauseButton.setImage((isPlaying ? MEGAAssets.UIImage.pause : MEGAAssets.UIImage.play).withTintColor(TokenColors.Icon.primary, renderingMode: .alwaysTemplate), for: .normal)
@@ -150,6 +151,12 @@ class AudioPlayerViewController: UIViewController, AudioPlayerViewControllerNode
                 pendingDragEvent = false
             }
         }
+    }
+    
+    private func updateSliderValueIfNeeded(_ newValue: Float) {
+        guard !pendingDragEvent else { return }
+        
+        timeSliderView.setValue(newValue, animated: false)
     }
     
     private func updateCurrentItem(name: String, artist: String, thumbnail: UIImage?, nodeSize: String?) {
@@ -436,16 +443,13 @@ class AudioPlayerViewController: UIViewController, AudioPlayerViewControllerNode
     }
     
     @IBAction func timeSliderValueChangeAction(_ sender: Any, forEvent event: UIEvent) {
-        guard let touchEvent = event.allTouches?.first else { return }
-        switch touchEvent.phase {
-        case .began:
-            pendingDragEvent = true
-        case .ended:
-            pendingDragEvent = false
-        default: break
-        }
+        guard let phase = event.allTouches?.first?.phase,
+              phase == .began || phase == .ended else { return }
         
-        viewModel.dispatch(.updateCurrentTime(percentage: timeSliderView.value))
+        pendingDragEvent = (phase == .began)
+        if phase == .ended {
+            viewModel.dispatch(.updateCurrentTime(percentage: timeSliderView.value))
+        }
     }
     
     @IBAction func moreButtonPressed(_ sender: Any) {

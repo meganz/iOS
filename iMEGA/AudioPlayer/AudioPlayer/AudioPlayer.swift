@@ -40,6 +40,9 @@ final class AudioPlayer: NSObject {
     var needToBeResumedAfterInterruption = false
     var resettingPlayback = false
     var isAudioPlayerBeingReset = false
+    /// Set to `true` during a manual drag movement to prevent stale callbacks from the player (which may carry an outdated progress value) from overwriting
+    /// the slider’s thumb position. Once the pending programmatic update has been applied, this flag is reset to `false`.
+    var isUpdatingProgress = false
     
     var previouslyPlayedItem: AudioPlayerItem?
     var isUserPreviouslyJustPlayedSameItem = false
@@ -190,7 +193,9 @@ final class AudioPlayer: NSObject {
     }
     
     private func timeObserverHandler() {
-        notify(aboutCurrentState)
+        if !isUpdatingProgress {
+            notify(aboutCurrentState)
+        }
     }
     
     private func refreshPlayer(tracks: [AudioPlayerItem]) {
