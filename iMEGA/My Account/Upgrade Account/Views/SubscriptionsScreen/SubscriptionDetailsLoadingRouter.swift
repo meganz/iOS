@@ -8,24 +8,17 @@ protocol SubscriptionDetailsLoadingRouting {
 }
 
 struct SubscriptionDetailsLoadingRouter: SubscriptionDetailsLoadingRouting {
-    enum SubscriptionPurchaseLoadingError: Error {
-        case accountLoadingError
-    }
-
     let window: UIWindow
     let accountUseCase: any AccountUseCaseProtocol
-    let onDismiss: (Result<AccountDetailsEntity, SubscriptionPurchaseLoadingError>) -> Void
+    let onDismiss: (SubscriptionDetailsLoadingViewModel.Route) -> Void
 
     func start() {
         window.rootViewController = AppLoadingViewRouter {
             Task {
-                do {
-                    let viewModel = SubscriptionDetailsLoadingViewModel(accountUseCase: accountUseCase)
-                    let accountDetails = try await viewModel.load()
-                    onDismiss(.success(accountDetails))
-                } catch {
-                    onDismiss(.failure(.accountLoadingError))
-                }
+                let viewModel = SubscriptionDetailsLoadingViewModel(
+                    accountUseCase: accountUseCase)
+                let route = await viewModel.determineRoute()
+                onDismiss(route)
             }
 
         }.build()

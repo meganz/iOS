@@ -9,25 +9,50 @@ struct SubscriptionDetailsLoadingViewModelTests {
 
     @Test("verify account details when current account details are already available")
     @MainActor
-    func verifyAccountDetailsWhenCurrentAccountDetailsAreAlreadyAvailable() async throws {
+    func verifyAccountDetailsWhenCurrentAccountDetailsAreAlreadyAvailable() async {
         let currentDetails = MockMEGAAccountDetails(type: .free).toAccountDetailsEntity()
         let accountUseCase = MockAccountUseCase(currentAccountDetails: currentDetails)
-        try await assert(accountUseCase: accountUseCase, currentDetails: currentDetails)
+        await assert(accountUseCase: accountUseCase, currentDetails: currentDetails)
     }
 
     @Test("verify account details when current account details are fetched")
     @MainActor
-    func verifyAccountDetailsWhenAccountDetailsAreFetched() async throws {
+    func verifyAccountDetailsWhenAccountDetailsAreFetched() async {
         let currentDetails = MockMEGAAccountDetails(type: .free).toAccountDetailsEntity()
         let accountUseCase = MockAccountUseCase(accountDetailsResult: .success(currentDetails))
-        try await assert(accountUseCase: accountUseCase, refreshAccountDetails_calledCount: 1, currentDetails: currentDetails)
+        await assert(accountUseCase: accountUseCase, refreshAccountDetails_calledCount: 1, currentDetails: currentDetails)
+    }
+    
+    @Test("non free account should route to dismiss")
+    @MainActor
+    func nonFreeAccount() async {
+        let accountUseCase = MockAccountUseCase(
+            accountDetailsResult: .success(.build(proLevel: .proI)))
+        let viewModel = makeSUT(
+            accountUseCase: accountUseCase
+        )
+        
+        #expect(await viewModel.determineRoute() == .dismiss)
+    }
+    
+    @Test("dismiss if failed to retrieve account details")
+    @MainActor
+    func failedToRetrieveAccount() async {
+        let accountUseCase = MockAccountUseCase(
+            accountDetailsResult: .failure(AccountDetailsErrorEntity.generic))
+        let viewModel = makeSUT(
+            accountUseCase: accountUseCase
+        )
+        
+        #expect(await viewModel.determineRoute() == .dismiss)
     }
 
+    @MainActor
     private func assert(
         accountUseCase: MockAccountUseCase,
         refreshAccountDetails_calledCount: Int = 0,
         currentDetails: AccountDetailsEntity
-    ) async throws {
+    ) async {
         let purchase = MockMEGAPurchase()
 
         let viewModel = makeSUT(
@@ -36,7 +61,7 @@ struct SubscriptionDetailsLoadingViewModelTests {
         )
 
         let loadTask = Task {
-            return try await viewModel.load()
+            return await viewModel.determineRoute()
         }
 
         let pricingReadyTask = Task(priority: .low) {
@@ -46,11 +71,12 @@ struct SubscriptionDetailsLoadingViewModelTests {
         }
 
         _ = await pricingReadyTask.value
-        let details = try await loadTask.value
+        let details = await loadTask.value
         #expect(accountUseCase.refreshAccountDetails_calledCount == refreshAccountDetails_calledCount)
-        #expect(details == currentDetails)
+        #expect(details == .goPro(currentDetails))
     }
 
+    @MainActor
     private func makeSUT(
         accountUseCase: some AccountUseCaseProtocol = MockAccountUseCase(),
         purchase: MEGAPurchase = MockMEGAPurchase()

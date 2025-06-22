@@ -601,6 +601,9 @@ public struct MEGAImageBundle {
   public static var externalLink: SwiftUICore.Image {
     get
   }
+  public static var arrowLeftMediumOutline: SwiftUICore.Image {
+    get
+  }
 }
 extension Foundation.Bundle {
   public static let MEGAAssetsBundle: Foundation.Bundle

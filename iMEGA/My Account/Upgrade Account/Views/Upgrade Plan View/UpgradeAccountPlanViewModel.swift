@@ -19,8 +19,8 @@ enum UpgradeAccountPlanTarget {
     case buyPlan, restorePlan, termsAndPolicies, buyExternally, buyInApp
 }
 
-enum UpgradeAccountPlanViewType {
-    case onboarding, upgrade
+enum UpgradeAccountPlanViewType: Equatable {
+    case onboarding(isFreeAccountFirstLogin: Bool), upgrade
 }
 
 @MainActor
@@ -329,8 +329,14 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
                                    linkColor: TokenColors.Support.success.swiftUI)
     }
     
-    var freePlanViewModel: SubscriptionPurchaseFreePlanViewModel {
-        .init(maxStorageSize: accountDetails.storageMax)
+    var freePlanViewModel: SubscriptionPurchaseFreePlanViewModel? {
+        guard case .onboarding(let isFreeAccountFirstLogin) = viewType else {
+            return nil
+        }
+        return .init(
+            isExistingFreeAccount: isFreeAccountFirstLogin,
+            maxStorageSize: accountDetails.storageMax
+        )
     }
     
     func createAccountPlanViewModel(_ plan: PlanEntity) -> AccountPlanViewModel {

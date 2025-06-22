@@ -6,18 +6,20 @@ import SwiftUI
 
 struct SubscriptionPurchaseFreePlanView: View {
     let viewModel: SubscriptionPurchaseFreePlanViewModel
-    let getStartedButtonTapped: () -> Void
+    let freeButtonTapped: () -> Void
 
     var body: some View {
-        VStack(spacing: TokenSpacing._3) {
+        VStack(alignment: .leading, spacing: TokenSpacing._3) {
             VStack(alignment: .leading, spacing: TokenSpacing._3) {
-                Text(Strings.Localizable.SubscriptionPurchase.FreePlanCard.title)
+                Text(viewModel.cardTitle)
                     .font(.subheadline.bold())
                     .foregroundStyle(TokenColors.Text.primary.swiftUI)
-
-                Text(Strings.Localizable.SubscriptionPurchase.FreePlanCard.description)
-                    .font(.caption)
-                    .foregroundStyle(TokenColors.Text.secondary.swiftUI)
+                
+                if viewModel.showDescription {
+                    Text(Strings.Localizable.SubscriptionPurchase.FreePlanCard.description)
+                        .font(.caption)
+                        .foregroundStyle(TokenColors.Text.secondary.swiftUI)
+                }
             }
 
             SubscriptionPurchaseFeatureView(
@@ -31,9 +33,9 @@ struct SubscriptionPurchaseFreePlanView: View {
             )
 
             MEGAButton(
-                Strings.Localizable.SubscriptionPurchase.FreePlanCard.Button.title,
+                viewModel.primaryButtonTitle,
                 type: .secondary,
-                action: getStartedButtonTapped
+                action: freeButtonTapped
             )
             .padding(.vertical, 8)
         }

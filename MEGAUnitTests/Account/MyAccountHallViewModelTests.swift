@@ -470,9 +470,11 @@ final class MyAccountHallViewModelTests: XCTestCase {
     
     @MainActor
     func testDidTapUpgradeButton_shouldShowUpgradeView() {
-        let (sut, _) = makeSUT()
+        let (sut, router) = makeSUT()
         
         test(viewModel: sut, actions: [MyAccountHallAction.didTapUpgradeButton], expectedCommands: [])
+        
+        XCTAssertEqual(router.navigateToUpgradeAccount_calledTimes, 1)
     }
     
     @MainActor

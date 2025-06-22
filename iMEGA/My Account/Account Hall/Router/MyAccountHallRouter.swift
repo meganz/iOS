@@ -12,6 +12,7 @@ public protocol MyAccountHallRouting: Routing {
     func navigateToUsage()
     func navigateToSettings()
     func navigateToNotificationCentre()
+    func navigateToUpgradeAccount(accountDetails: AccountDetailsEntity)
     func didTapCameraUploadsAction(statusChanged: @escaping () -> Void)
     func didTapRenameAction(_ renameEntity: RenameActionEntity)
     func didTapInfoAction(_ infoModel: ResourceInfoModel)
@@ -228,6 +229,22 @@ final class MyAccountHallRouter: MyAccountHallRouting {
             ),
             imageLoader: ImageLoader()
         ).start()
+    }
+    
+    func navigateToUpgradeAccount(accountDetails: AccountDetailsEntity) {
+        if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .loginRegisterAndOnboardingRevamp) {
+            SubscriptionPurchaseRouter(
+                presenter: UIApplication.mnz_presentingViewController(),
+                currentAccountDetails: accountDetails,
+                viewType: .upgrade,
+                accountUseCase: accountUseCase)
+            .start()
+        } else {
+            UpgradeAccountPlanRouter(
+                presenter: UIApplication.mnz_presentingViewController(),
+                accountDetails: accountDetails
+            ).start()
+        }
     }
     
     func didTapCameraUploadsAction(

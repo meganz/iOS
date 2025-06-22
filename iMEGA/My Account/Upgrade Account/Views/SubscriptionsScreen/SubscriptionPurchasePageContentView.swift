@@ -53,9 +53,12 @@ struct SubscriptionPurchasePageContentView: View {
                     SubscriptionPurchaseFeaturesView()
                     SubscriptionPurchasePlansView(viewModel: viewModel)
                     SubscriptionPurchaseBenefitsView()
-                    SubscriptionPurchaseFreePlanView(
-                        viewModel: viewModel.freePlanViewModel,
-                        getStartedButtonTapped: getStartedButtonTapped)
+                    if let freePlanViewModel = viewModel.freePlanViewModel {
+                        SubscriptionPurchaseFreePlanView(
+                            viewModel: freePlanViewModel,
+                            freeButtonTapped: getStartedButtonTapped)
+                    }
+                    
                     VStack(alignment: .leading, spacing: TokenSpacing._7) {
                         subscriptionDetails
                         restorePurchase
