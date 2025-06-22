@@ -214,6 +214,7 @@ extension MEGAAssets {
         public static var updating: SwiftUI.Image { MEGAImageBundle.updating }
         public static var upToDate: SwiftUI.Image { MEGAImageBundle.upToDate }
         public static var externalLink: SwiftUI.Image { MEGAImageBundle.externalLink }
+        public static var arrowLeftMediumOutline: SwiftUI.Image { MEGAImageBundle.arrowLeftMediumOutline }
     }
 }
 

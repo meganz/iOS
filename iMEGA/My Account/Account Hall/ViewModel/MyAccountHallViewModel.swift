@@ -190,11 +190,7 @@ final class MyAccountHallViewModel: ViewModelType, ObservableObject {
     
     private func showUpgradeAccountPlanView() {
         guard let accountDetails else { return }
-        let upgradePlanRouter = UpgradeAccountPlanRouter(
-            presenter: UIApplication.mnz_presentingViewController(),
-            accountDetails: accountDetails
-        )
-        upgradePlanRouter.start()
+        router.navigateToUpgradeAccount(accountDetails: accountDetails)
     }
     
     // MARK: - Public

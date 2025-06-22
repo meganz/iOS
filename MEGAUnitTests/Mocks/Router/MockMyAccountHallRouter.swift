@@ -12,6 +12,7 @@ final class MockMyAccountHallRouter: MyAccountHallRouting {
     var navigateToUsage_calledTimes = 0
     var navigateToSettings_calledTimes = 0
     var navigateToNotificationCentre_calledTimes = 0
+    var navigateToUpgradeAccount_calledTimes = 0
     
     func navigateToDeviceCenter(deviceCenterBridge: DeviceCenterBridge, deviceCenterActions: [ContextAction]) {
         navigateToDeviceCenter_calledTimes += 1
@@ -47,5 +48,9 @@ final class MockMyAccountHallRouter: MyAccountHallRouting {
 
     func navigateToNotificationCentre() {
         navigateToNotificationCentre_calledTimes += 1
+    }
+    
+    func navigateToUpgradeAccount(accountDetails: AccountDetailsEntity) {
+        navigateToUpgradeAccount_calledTimes += 1
     }
 }

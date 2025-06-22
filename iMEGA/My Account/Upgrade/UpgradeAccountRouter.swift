@@ -113,7 +113,7 @@ final class UpgradeAccountRouter: UpgradeAccountRouting {
             isAdsEnabled: isAdsEnabled,
             baseStorage: baseStorage,
             viewProPlanAction: {
-                UpgradeAccountRouter().presentNewPlanPage(viewType: .onboarding)
+                UpgradeAccountRouter().presentNewPlanPage(viewType: .onboarding(isFreeAccountFirstLogin: false))
             }
         ).start()
     }

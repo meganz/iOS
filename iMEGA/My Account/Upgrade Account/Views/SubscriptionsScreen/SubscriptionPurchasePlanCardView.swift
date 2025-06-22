@@ -1,6 +1,7 @@
 import Accounts
 import MEGADesignToken
 import MEGAL10n
+import MEGAUIComponent
 import SwiftUI
 
 struct SubscriptionPurchasePlanCardView: View {
@@ -12,15 +13,15 @@ struct SubscriptionPurchasePlanCardView: View {
                 Text(viewModel.plan.name)
                     .font(.headline)
                     .foregroundStyle(TokenColors.Text.primary.swiftUI)
-
-                if viewModel.planTag == .recommended {
-                    Text(Strings.Localizable.UpgradeAccountPlan.Plan.Tag.recommended)
-                        .font(.caption)
-                        .foregroundStyle(TokenColors.Text.info.swiftUI)
-                        .padding(.vertical, TokenSpacing._1)
-                        .padding(.horizontal, TokenSpacing._3)
-                        .background(TokenColors.Notifications.notificationInfo.swiftUI)
-                        .cornerRadius(TokenRadius.small)
+                
+                if let planBadge = viewModel.planBadge {
+                    MEGABadge(
+                        text: planBadge.text,
+                        type: planBadge.type,
+                        size: .small,
+                        icon: nil
+                    )
+                    .cornerRadius(TokenRadius.small)
                 }
 
                 Spacer()
@@ -36,6 +37,7 @@ struct SubscriptionPurchasePlanCardView: View {
                             .frame(width: 12, height: 12)
                     }
                 }
+                .opacity(viewModel.isSelectionEnabled ? 1 : 0)
             }
             .padding(.bottom, TokenSpacing._3)
 

@@ -4722,3 +4722,7 @@
 "tabbarTitle.menu"="Menu";
 /* Storage benefit shown for the free plan card */
 "subscriptionPurchase.freePlanCard.feature.storage"="%@ storage";
+/* Title shown for the free plan card for upgrading */
+"subscriptionPurchase.freePlanCard.title.upgrade"="Continue with your free plan";
+/* Button title for the free plan card for upgrading */
+"subscriptionPurchase.freePlanCard.button.title.upgrade"="Continue with free plan";

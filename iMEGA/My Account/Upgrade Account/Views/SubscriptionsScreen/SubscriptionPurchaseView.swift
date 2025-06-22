@@ -50,10 +50,12 @@ struct SubscriptionPurchaseView: View {
                 )
                 .disabled(viewModel.isLoading)
 
-                SubscriptionPurchasePageHeaderView(hideHeaderBackground: $hideHeaderBackground) {
-                    viewModel.mayBeLaterButtonTapped()
-                }
-                .transition(.opacity)
+                SubscriptionPurchasePageHeaderView(
+                    hideHeaderBackground: $hideHeaderBackground,
+                    showBackButton: viewModel.viewType == .upgrade) {
+                        viewModel.mayBeLaterButtonTapped()
+                    }
+                    .transition(.opacity)
             }
 
             SubscriptionPurchaseBottomButtonView(viewModel: viewModel)
@@ -104,9 +106,11 @@ struct SubscriptionPurchaseView: View {
     }
 
     private var compactHeightHeaderView: some View {
-        SubscriptionPurchasePageHeaderView(hideHeaderBackground: $hideHeaderBackground) {
-            viewModel.mayBeLaterButtonTapped()
-        }
-        .transition(.opacity)
+        SubscriptionPurchasePageHeaderView(
+            hideHeaderBackground: $hideHeaderBackground,
+            showBackButton: viewModel.viewType == .upgrade) {
+                viewModel.mayBeLaterButtonTapped()
+            }
+            .transition(.opacity)
     }
 }

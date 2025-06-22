@@ -265,7 +265,7 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
         let (sut, _) = makeSUT(
             accountDetails: AccountDetailsEntity.build(proLevel: .free),
             planList: planList,
-            viewType: .onboarding
+            viewType: .onboarding(isFreeAccountFirstLogin: false)
         )
         
         await sut.setUpPlanTask?.value
@@ -280,7 +280,7 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
         let (sut, _) = makeSUT(
             accountDetails: AccountDetailsEntity.build(proLevel: .free),
             planList: planList,
-            viewType: .onboarding
+            viewType: .onboarding(isFreeAccountFirstLogin: false)
         )
         
         await sut.setUpPlanTask?.value
@@ -295,7 +295,7 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
         let (sut, _) = makeSUT(
             accountDetails: AccountDetailsEntity.build(proLevel: .free),
             planList: planList,
-            viewType: .onboarding
+            viewType: .onboarding(isFreeAccountFirstLogin: false)
         )
         
         await sut.setUpPlanTask?.value
@@ -310,7 +310,7 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
         let (sut, _) = makeSUT(
             accountDetails: AccountDetailsEntity.build(proLevel: .free),
             planList: planList,
-            viewType: .onboarding
+            viewType: .onboarding(isFreeAccountFirstLogin: false)
         )
         
         await sut.setUpPlanTask?.value
@@ -989,6 +989,21 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
         await sut.buyPlanTask?.value
         
         XCTAssertEqual(urlOpened, [expectedURL])
+    }
+    
+    // MARK: - Free plan view model
+    
+    @MainActor
+    func testFreePlanViewModel_viewType_shouldReturnCorrectInstance() {
+        let viewTypes = [UpgradeAccountPlanViewType.upgrade,
+                         .onboarding(isFreeAccountFirstLogin: true),
+                         .onboarding(isFreeAccountFirstLogin: false)]
+        for viewType in viewTypes {
+            let (sut, _) = makeSUT(
+                accountDetails: .build(proLevel: .proI),
+                viewType: viewType)
+            XCTAssertEqual(sut.freePlanViewModel != nil, viewType != .upgrade)
+        }
     }
 
     // MARK: - Helper
