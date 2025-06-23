@@ -115,10 +115,10 @@ final class AccountPlanPurchaseRepository: NSObject, AccountPlanPurchaseReposito
         return pricing.transferGB(atProductIndex: index)
     }
 
-    private func price(atProductIndex index: Int) -> Double? {
+    private func price(atProductIndex index: Int) -> Decimal? {
         guard let pricing = purchase.pricing else { return nil }
 
-        let localPriceInCents = Double(pricing.localPrice(atProductIndex: index))
+        let localPriceInCents = Decimal(pricing.localPrice(atProductIndex: index))
         return localPriceInCents / 100.0
     }
 

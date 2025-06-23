@@ -513,7 +513,7 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
                 ),
                 MEGAButton(
                     Strings.Localizable.UpgradeAccountPlan.Button.BuyInApp.title(
-                        PlanEntity.proII_yearly.appStoreFormattedPrice
+                        PlanEntity.proII_yearly.appStorePrice.formattedPrice
                     ),
                     footer: Strings.Localizable.UpgradeAccountPlan.Button.BuyInApp.footer,
                     type: .secondary
@@ -629,7 +629,43 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
         await sut.updateBuyButtonsTask?.value
         XCTAssertTrue(sut.buyButtons.isEmpty)
     }
-    
+
+    @MainActor
+    func testBuyButtons_whenAPIPriceIsNil_shouldNotProvideExternalPurchaseButton() async {
+        let details = AccountDetailsEntity.build(proLevel: .free, subscriptionCycle: .none)
+        let apiPriceZeroPlan = {
+            var plan = PlanEntity.proII_yearly
+            plan.apiPrice = nil
+            return plan
+        }()
+        let planList: [PlanEntity] = [.proII_monthly, apiPriceZeroPlan]
+
+        let exp = expectation(description: "Setting Current plan")
+        let (sut, _) = makeSUT(
+            externalPurchaseUseCase: MockExternalPurchaseUseCase(shouldProvideExternalPurchase: true),
+            accountDetails: details,
+            planList: planList
+        )
+        sut.$currentPlan
+            .dropFirst()
+            .sink { _ in
+                exp.fulfill()
+            }.store(in: &subscriptions)
+        await fulfillment(of: [exp], timeout: 0.5)
+
+        sut.setSelectedPlan(apiPriceZeroPlan)
+        await sut.updateBuyButtonsTask?.value
+
+        assertButtonsEqual(
+            lhs: sut.buyButtons,
+            rhs: [
+                MEGAButton(Strings.Localizable.UpgradeAccountPlan.Button.BuyAccountPlan.title(
+                    PlanEntity.proII_yearly.type.toAccountTypeDisplayName()
+                ))
+            ]
+        )
+    }
+
     // MARK: - Plan list
     @MainActor
     func testFilteredPlanList_monthly_shouldReturnMonthlyPlans() {
@@ -1004,6 +1040,37 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
                 viewType: viewType)
             XCTAssertEqual(sut.freePlanViewModel != nil, viewType != .upgrade)
         }
+    }
+
+    @MainActor
+    func testDidTapBuyPlan_whenAPIPriceNil_shouldNotOpenExternalLink() async {
+        nonisolated(unsafe) var urlOpened = [URL]()
+        let details = AccountDetailsEntity.build(proLevel: .free)
+        let apiPriceZeroPlan = {
+            var plan = PlanEntity.proI_yearly
+            plan.apiPrice = nil
+            return plan
+        }()
+        let planList: [PlanEntity] = [.proI_monthly, apiPriceZeroPlan, .proII_monthly, .proII_yearly]
+        let (sut, mockUseCase) = makeSUT(
+            externalPurchaseUseCase: MockExternalPurchaseUseCase(
+                shouldProvideExternalPurchase: true,
+                externalPurchaseLink: .success(.random)
+            ),
+            accountDetails: details,
+            planList: planList,
+            canOpenURL: { _ in true },
+            openURL: { urlOpened.append($0) }
+        )
+
+        await sut.setUpPlanTask?.value
+        sut.setSelectedPlan(apiPriceZeroPlan)
+
+        sut.didTap(.buyPlan)
+        await sut.buyPlanTask?.value
+
+        XCTAssertEqual(urlOpened, [])
+        XCTAssertTrue(mockUseCase.purchasePlanCalled == 1)
     }
 
     // MARK: - Helper

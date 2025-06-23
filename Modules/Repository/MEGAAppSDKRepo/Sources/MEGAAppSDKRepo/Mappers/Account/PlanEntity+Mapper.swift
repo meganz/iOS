@@ -7,7 +7,7 @@ extension SKProduct {
     public func toPlanEntity(
         storage: Int = 0,
         transfer: Int = 0,
-        apiPrice: Double? = nil,
+        apiPrice: Decimal? = nil,
         apiCurrencyCode: String? = nil,
         useAPIPrice: Bool = false
     ) -> PlanEntity {
@@ -54,7 +54,7 @@ fileprivate extension PlanEntity {
         product: SKProduct,
         storageLimit: Int,
         transferLimit: Int,
-        apiPrice: Double?,
+        apiPrice: Decimal?,
         apiCurrencyCode: String?,
         useAPIPrice: Bool
     ) {
@@ -67,29 +67,32 @@ fileprivate extension PlanEntity {
         name = MEGAAccountDetails.string(for: planType) ?? ""
         type = planType.toAccountTypeEntity()
 
-        appStorePrice = product.price.doubleValue
-        appStoreFormattedPrice = {
-            let numberFormatter = NumberFormatter()
-            numberFormatter.numberStyle = .currency
-            numberFormatter.locale = product.priceLocale
-            return numberFormatter.string(for: product.price) ?? ""
-        }()
-        appStoreCurrency = product.priceLocale.currencyCode ?? ""
+        appStorePrice = PlanPriceEntity(
+            price: product.price.decimalValue,
+            formattedPrice: {
+                let numberFormatter = NumberFormatter()
+                numberFormatter.numberStyle = .currency
+                numberFormatter.locale = product.priceLocale
+                return numberFormatter.string(for: product.price) ?? ""
+            }(),
+            currency: product.priceLocale.currencyCode ?? ""
+        )
 
         storage = displayStringForGBValue(gbValue: storageLimit)
         transfer = displayStringForGBValue(gbValue: transferLimit)
 
-        guard useAPIPrice, let apiPrice, let apiCurrencyCode else { return }
+        guard useAPIPrice, let apiPrice, apiPrice > 0, let apiCurrencyCode else { return }
 
-        self.useAPIPrice = useAPIPrice
-        self.apiPrice = apiPrice
-        apiFormattedPrice = {
-            let numberFormatter = NumberFormatter()
-            numberFormatter.numberStyle = .currency
-            numberFormatter.currencyCode = apiCurrencyCode
-            return numberFormatter.string(for: apiPrice)
-        }()
-        apiCurrency = apiCurrencyCode
+        self.apiPrice = PlanPriceEntity(
+            price: apiPrice,
+            formattedPrice: {
+                let numberFormatter = NumberFormatter()
+                numberFormatter.numberStyle = .currency
+                numberFormatter.currencyCode = apiCurrencyCode
+                return numberFormatter.string(for: apiPrice) ?? ""
+            }(),
+            currency: apiCurrencyCode
+        )
     }
 
     private func planType(productIdentifier: String) -> MEGAAccountType {
