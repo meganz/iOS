@@ -758,3 +758,10 @@ extension AppDelegate {
         mainTBC?.mainTabBarViewModel.dispatch(.startCallIntent(intent))
     }
 }
+
+// MARK: - Continue user activity Spotlight events
+extension AppDelegate {
+    @objc func openAppFromSpotlight() {
+        DIContainer.tracker.trackAnalyticsEvent(with: SpotlightNodeButtonPressedEvent())
+    }
+}
