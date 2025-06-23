@@ -430,6 +430,7 @@
     if ([MEGAReachabilityManager isReachable]) {
         if ([userActivity.activityType isEqualToString:CSSearchableItemActionType]) {
             MEGALinkManager.nodeToPresentBase64Handle = userActivity.userInfo[@"kCSSearchableItemActivityIdentifier"];
+            [self openAppFromSpotlight];
             if ([self isAdsMainTabBarRootView] && ![LTHPasscodeViewController doesPasscodeExist]) {
                 [MEGALinkManager presentNode];
             }
