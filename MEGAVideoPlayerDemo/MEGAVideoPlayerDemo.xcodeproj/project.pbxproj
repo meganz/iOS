@@ -1,0 +1,541 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		161D6A1F2E015F7800B3FD1F /* MEGAAuthentication in Frameworks */ = {isa = PBXBuildFile; productRef = 161D6A1E2E015F7800B3FD1F /* MEGAAuthentication */; };
+		161D6A432E01644700B3FD1F /* MEGADesignToken in Frameworks */ = {isa = PBXBuildFile; productRef = 161D6A422E01644700B3FD1F /* MEGADesignToken */; };
+		161D6A6D2E0172BC00B3FD1F /* DependencyInjection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 161D6A682E0172BC00B3FD1F /* DependencyInjection.swift */; };
+		161D6A6E2E0172BC00B3FD1F /* DependencyInjection+MEGAAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 161D6A692E0172BC00B3FD1F /* DependencyInjection+MEGAAuth.swift */; };
+		161D6A6F2E0172BC00B3FD1F /* DependencyInjection+MEGASDKRepo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 161D6A6A2E0172BC00B3FD1F /* DependencyInjection+MEGASDKRepo.swift */; };
+		161D6A702E0172BC00B3FD1F /* MEGASdk+SharedInstance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 161D6A6B2E0172BC00B3FD1F /* MEGASdk+SharedInstance.swift */; };
+		161D6A7D2E0172C300B3FD1F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 161D6A712E0172C300B3FD1F /* AppDelegate.swift */; };
+		161D6A7E2E0172C300B3FD1F /* PlayerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 161D6A722E0172C300B3FD1F /* PlayerApp.swift */; };
+		161D6A7F2E0172C300B3FD1F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 161D6A732E0172C300B3FD1F /* SceneDelegate.swift */; };
+		161D6A802E0172C300B3FD1F /* SecondarySceneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 161D6A772E0172C300B3FD1F /* SecondarySceneView.swift */; };
+		161D6A812E0172C300B3FD1F /* LaunchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 161D6A7B2E0172C300B3FD1F /* LaunchView.swift */; };
+		161D6A822E0172C300B3FD1F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 161D6A752E0172C300B3FD1F /* Assets.xcassets */; };
+		161D6A872E01738B00B3FD1F /* PlayerAppViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 161D6A862E01738900B3FD1F /* PlayerAppViewModel.swift */; };
+		161D6A892E01751D00B3FD1F /* DependencyInjection+MEGALogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 161D6A882E01751A00B3FD1F /* DependencyInjection+MEGALogger.swift */; };
+		161D6A8B2E01759B00B3FD1F /* DependencyInjection+MEGAInfrastructure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 161D6A8A2E01759B00B3FD1F /* DependencyInjection+MEGAInfrastructure.swift */; };
+		161D6A8E2E01780C00B3FD1F /* MEGAAccountManagement in Frameworks */ = {isa = PBXBuildFile; productRef = 161D6A8D2E01780C00B3FD1F /* MEGAAccountManagement */; };
+		161D6A902E0178F600B3FD1F /* DependencyInjection+MEGAAccountManagement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 161D6A8F2E0178F100B3FD1F /* DependencyInjection+MEGAAccountManagement.swift */; };
+		161D6A922E0179A800B3FD1F /* DependencyInjection+MEGAPresentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 161D6A912E01799E00B3FD1F /* DependencyInjection+MEGAPresentation.swift */; };
+		161D6A942E017C1600B3FD1F /* DependencyInjection+MEGAConnectivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 161D6A932E017C0D00B3FD1F /* DependencyInjection+MEGAConnectivity.swift */; };
+		161D6A972E0180D500B3FD1F /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 161D6A962E0180D300B3FD1F /* HomeView.swift */; };
+		161D6A992E0180DB00B3FD1F /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 161D6A982E0180D900B3FD1F /* HomeViewModel.swift */; };
+		16A021542E02616E00A932A1 /* LaunchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16A021532E02616B00A932A1 /* LaunchViewModel.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		161D69CF2E0156A500B3FD1F /* MEGAVideoPlayerDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MEGAVideoPlayerDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		161D69E52E01570A00B3FD1F /* MEGAAuthentication */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = MEGAAuthentication; path = ../Modules/MEGASharedRepo/MEGAAuthentication; sourceTree = SOURCE_ROOT; };
+		161D69EF2E01576100B3FD1F /* MEGASDK */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = MEGASDK; path = ../Modules/DataSource/MEGASDK; sourceTree = SOURCE_ROOT; };
+		161D6A682E0172BC00B3FD1F /* DependencyInjection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyInjection.swift; sourceTree = "<group>"; };
+		161D6A692E0172BC00B3FD1F /* DependencyInjection+MEGAAuth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DependencyInjection+MEGAAuth.swift"; sourceTree = "<group>"; };
+		161D6A6A2E0172BC00B3FD1F /* DependencyInjection+MEGASDKRepo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DependencyInjection+MEGASDKRepo.swift"; sourceTree = "<group>"; };
+		161D6A6B2E0172BC00B3FD1F /* MEGASdk+SharedInstance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGASdk+SharedInstance.swift"; sourceTree = "<group>"; };
+		161D6A712E0172C300B3FD1F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		161D6A722E0172C300B3FD1F /* PlayerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerApp.swift; sourceTree = "<group>"; };
+		161D6A732E0172C300B3FD1F /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		161D6A752E0172C300B3FD1F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		161D6A772E0172C300B3FD1F /* SecondarySceneView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondarySceneView.swift; sourceTree = "<group>"; };
+		161D6A7B2E0172C300B3FD1F /* LaunchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchView.swift; sourceTree = "<group>"; };
+		161D6A862E01738900B3FD1F /* PlayerAppViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerAppViewModel.swift; sourceTree = "<group>"; };
+		161D6A882E01751A00B3FD1F /* DependencyInjection+MEGALogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DependencyInjection+MEGALogger.swift"; sourceTree = "<group>"; };
+		161D6A8A2E01759B00B3FD1F /* DependencyInjection+MEGAInfrastructure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DependencyInjection+MEGAInfrastructure.swift"; sourceTree = "<group>"; };
+		161D6A8C2E0177F600B3FD1F /* MEGAAccountManagement */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = MEGAAccountManagement; path = ../Modules/MEGASharedRepo/MEGAAccountManagement; sourceTree = SOURCE_ROOT; };
+		161D6A8F2E0178F100B3FD1F /* DependencyInjection+MEGAAccountManagement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DependencyInjection+MEGAAccountManagement.swift"; sourceTree = "<group>"; };
+		161D6A912E01799E00B3FD1F /* DependencyInjection+MEGAPresentation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DependencyInjection+MEGAPresentation.swift"; sourceTree = "<group>"; };
+		161D6A932E017C0D00B3FD1F /* DependencyInjection+MEGAConnectivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DependencyInjection+MEGAConnectivity.swift"; sourceTree = "<group>"; };
+		161D6A962E0180D300B3FD1F /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		161D6A982E0180D900B3FD1F /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
+		16A021532E02616B00A932A1 /* LaunchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchViewModel.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		161D69CC2E0156A500B3FD1F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				161D6A8E2E01780C00B3FD1F /* MEGAAccountManagement in Frameworks */,
+				161D6A1F2E015F7800B3FD1F /* MEGAAuthentication in Frameworks */,
+				161D6A432E01644700B3FD1F /* MEGADesignToken in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		161D69C62E0156A500B3FD1F = {
+			isa = PBXGroup;
+			children = (
+				161D6A7C2E0172C300B3FD1F /* MEGAVideoPlayerDemo */,
+				161D69E42E0156EB00B3FD1F /* Submodules */,
+				161D6A1D2E015F7800B3FD1F /* Frameworks */,
+				161D69D02E0156A500B3FD1F /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		161D69D02E0156A500B3FD1F /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				161D69CF2E0156A500B3FD1F /* MEGAVideoPlayerDemo.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		161D69E42E0156EB00B3FD1F /* Submodules */ = {
+			isa = PBXGroup;
+			children = (
+				161D69E82E01573D00B3FD1F /* DataSource */,
+				161D6A6C2E0172BC00B3FD1F /* DependencyInjection */,
+				161D6A832E0172D400B3FD1F /* Helper */,
+				161D69E72E01573500B3FD1F /* SharedRepo */,
+			);
+			path = Submodules;
+			sourceTree = "<group>";
+		};
+		161D69E72E01573500B3FD1F /* SharedRepo */ = {
+			isa = PBXGroup;
+			children = (
+				161D6A8C2E0177F600B3FD1F /* MEGAAccountManagement */,
+				161D69E52E01570A00B3FD1F /* MEGAAuthentication */,
+			);
+			path = SharedRepo;
+			sourceTree = "<group>";
+		};
+		161D69E82E01573D00B3FD1F /* DataSource */ = {
+			isa = PBXGroup;
+			children = (
+				161D69EF2E01576100B3FD1F /* MEGASDK */,
+			);
+			path = DataSource;
+			sourceTree = "<group>";
+		};
+		161D6A1D2E015F7800B3FD1F /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		161D6A6C2E0172BC00B3FD1F /* DependencyInjection */ = {
+			isa = PBXGroup;
+			children = (
+				161D6A8F2E0178F100B3FD1F /* DependencyInjection+MEGAAccountManagement.swift */,
+				161D6A692E0172BC00B3FD1F /* DependencyInjection+MEGAAuth.swift */,
+				161D6A932E017C0D00B3FD1F /* DependencyInjection+MEGAConnectivity.swift */,
+				161D6A8A2E01759B00B3FD1F /* DependencyInjection+MEGAInfrastructure.swift */,
+				161D6A882E01751A00B3FD1F /* DependencyInjection+MEGALogger.swift */,
+				161D6A912E01799E00B3FD1F /* DependencyInjection+MEGAPresentation.swift */,
+				161D6A6A2E0172BC00B3FD1F /* DependencyInjection+MEGASDKRepo.swift */,
+				161D6A682E0172BC00B3FD1F /* DependencyInjection.swift */,
+				161D6A6B2E0172BC00B3FD1F /* MEGASdk+SharedInstance.swift */,
+			);
+			path = DependencyInjection;
+			sourceTree = "<group>";
+		};
+		161D6A742E0172C300B3FD1F /* App */ = {
+			isa = PBXGroup;
+			children = (
+				161D6A712E0172C300B3FD1F /* AppDelegate.swift */,
+				161D6A722E0172C300B3FD1F /* PlayerApp.swift */,
+				161D6A862E01738900B3FD1F /* PlayerAppViewModel.swift */,
+				161D6A732E0172C300B3FD1F /* SceneDelegate.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		161D6A762E0172C300B3FD1F /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				161D6A752E0172C300B3FD1F /* Assets.xcassets */,
+			);
+			path = Assets;
+			sourceTree = "<group>";
+		};
+		161D6A7C2E0172C300B3FD1F /* MEGAVideoPlayerDemo */ = {
+			isa = PBXGroup;
+			children = (
+				161D6A742E0172C300B3FD1F /* App */,
+				161D6A762E0172C300B3FD1F /* Assets */,
+				161D6A842E01736100B3FD1F /* Modules */,
+			);
+			path = MEGAVideoPlayerDemo;
+			sourceTree = "<group>";
+		};
+		161D6A832E0172D400B3FD1F /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				161D6A772E0172C300B3FD1F /* SecondarySceneView.swift */,
+			);
+			path = Helper;
+			sourceTree = "<group>";
+		};
+		161D6A842E01736100B3FD1F /* Modules */ = {
+			isa = PBXGroup;
+			children = (
+				161D6A952E0180CA00B3FD1F /* Home */,
+				161D6A852E01736800B3FD1F /* Launch */,
+			);
+			path = Modules;
+			sourceTree = "<group>";
+		};
+		161D6A852E01736800B3FD1F /* Launch */ = {
+			isa = PBXGroup;
+			children = (
+				161D6A7B2E0172C300B3FD1F /* LaunchView.swift */,
+				16A021532E02616B00A932A1 /* LaunchViewModel.swift */,
+			);
+			path = Launch;
+			sourceTree = "<group>";
+		};
+		161D6A952E0180CA00B3FD1F /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				161D6A962E0180D300B3FD1F /* HomeView.swift */,
+				161D6A982E0180D900B3FD1F /* HomeViewModel.swift */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		161D69CE2E0156A500B3FD1F /* MEGAVideoPlayerDemo */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 161D69DA2E0156A600B3FD1F /* Build configuration list for PBXNativeTarget "MEGAVideoPlayerDemo" */;
+			buildPhases = (
+				161D69CB2E0156A500B3FD1F /* Sources */,
+				161D69CC2E0156A500B3FD1F /* Frameworks */,
+				161D69CD2E0156A500B3FD1F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MEGAVideoPlayerDemo;
+			packageProductDependencies = (
+				161D6A1E2E015F7800B3FD1F /* MEGAAuthentication */,
+				161D6A422E01644700B3FD1F /* MEGADesignToken */,
+				161D6A8D2E01780C00B3FD1F /* MEGAAccountManagement */,
+			);
+			productName = MEGAVideoPlayerDemo;
+			productReference = 161D69CF2E0156A500B3FD1F /* MEGAVideoPlayerDemo.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		161D69C72E0156A500B3FD1F /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1630;
+				LastUpgradeCheck = 1630;
+				TargetAttributes = {
+					161D69CE2E0156A500B3FD1F = {
+						CreatedOnToolsVersion = 16.3;
+					};
+				};
+			};
+			buildConfigurationList = 161D69CA2E0156A500B3FD1F /* Build configuration list for PBXProject "MEGAVideoPlayerDemo" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 161D69C62E0156A500B3FD1F;
+			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				161D6A412E01644700B3FD1F /* XCRemoteSwiftPackageReference "MEGADesignToken" */,
+			);
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 161D69D02E0156A500B3FD1F /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				161D69CE2E0156A500B3FD1F /* MEGAVideoPlayerDemo */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		161D69CD2E0156A500B3FD1F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				161D6A822E0172C300B3FD1F /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		161D69CB2E0156A500B3FD1F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				161D6A7D2E0172C300B3FD1F /* AppDelegate.swift in Sources */,
+				161D6A902E0178F600B3FD1F /* DependencyInjection+MEGAAccountManagement.swift in Sources */,
+				161D6A6E2E0172BC00B3FD1F /* DependencyInjection+MEGAAuth.swift in Sources */,
+				161D6A942E017C1600B3FD1F /* DependencyInjection+MEGAConnectivity.swift in Sources */,
+				161D6A8B2E01759B00B3FD1F /* DependencyInjection+MEGAInfrastructure.swift in Sources */,
+				161D6A892E01751D00B3FD1F /* DependencyInjection+MEGALogger.swift in Sources */,
+				161D6A922E0179A800B3FD1F /* DependencyInjection+MEGAPresentation.swift in Sources */,
+				161D6A6F2E0172BC00B3FD1F /* DependencyInjection+MEGASDKRepo.swift in Sources */,
+				161D6A6D2E0172BC00B3FD1F /* DependencyInjection.swift in Sources */,
+				161D6A972E0180D500B3FD1F /* HomeView.swift in Sources */,
+				161D6A992E0180DB00B3FD1F /* HomeViewModel.swift in Sources */,
+				161D6A812E0172C300B3FD1F /* LaunchView.swift in Sources */,
+				16A021542E02616E00A932A1 /* LaunchViewModel.swift in Sources */,
+				161D6A702E0172BC00B3FD1F /* MEGASdk+SharedInstance.swift in Sources */,
+				161D6A7E2E0172C300B3FD1F /* PlayerApp.swift in Sources */,
+				161D6A872E01738B00B3FD1F /* PlayerAppViewModel.swift in Sources */,
+				161D6A7F2E0172C300B3FD1F /* SceneDelegate.swift in Sources */,
+				161D6A802E0172C300B3FD1F /* SecondarySceneView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		161D69D82E0156A600B3FD1F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 4KLKDTZ9B6;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.4;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		161D69D92E0156A600B3FD1F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = 4KLKDTZ9B6;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.4;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		161D69DB2E0156A600B3FD1F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 4KLKDTZ9B6;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "MEGA Player";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = nz.mega.MEGAVideoPlayerDemo;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		161D69DC2E0156A600B3FD1F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 4KLKDTZ9B6;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "MEGA Player";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = nz.mega.MEGAVideoPlayerDemo;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		161D69CA2E0156A500B3FD1F /* Build configuration list for PBXProject "MEGAVideoPlayerDemo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				161D69D82E0156A600B3FD1F /* Debug */,
+				161D69D92E0156A600B3FD1F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		161D69DA2E0156A600B3FD1F /* Build configuration list for PBXNativeTarget "MEGAVideoPlayerDemo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				161D69DB2E0156A600B3FD1F /* Debug */,
+				161D69DC2E0156A600B3FD1F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		161D6A412E01644700B3FD1F /* XCRemoteSwiftPackageReference "MEGADesignToken" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/meganz/MEGADesignToken.git";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		161D6A1E2E015F7800B3FD1F /* MEGAAuthentication */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = MEGAAuthentication;
+		};
+		161D6A422E01644700B3FD1F /* MEGADesignToken */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 161D6A412E01644700B3FD1F /* XCRemoteSwiftPackageReference "MEGADesignToken" */;
+			productName = MEGADesignToken;
+		};
+		161D6A8D2E01780C00B3FD1F /* MEGAAccountManagement */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = MEGAAccountManagement;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = 161D69C72E0156A500B3FD1F /* Project object */;
+}
