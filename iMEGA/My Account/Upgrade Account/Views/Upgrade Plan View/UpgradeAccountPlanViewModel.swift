@@ -236,7 +236,10 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
     }
 
     private func makeBuyButtons(selectedPlan: PlanEntity) async -> [MEGAButton] {
-        guard await externalPurchaseUseCase.shouldProvideExternalPurchase() else {
+        guard
+            selectedPlan.apiPrice != nil,
+            await externalPurchaseUseCase.shouldProvideExternalPurchase()
+        else {
             return [mainBuyButton]
         }
 
@@ -263,7 +266,7 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
 
     private func continueInAppButton(plan: PlanEntity) -> MEGAButton {
         MEGAButton(
-            Strings.Localizable.UpgradeAccountPlan.Button.BuyInApp.title(plan.appStoreFormattedPrice),
+            Strings.Localizable.UpgradeAccountPlan.Button.BuyInApp.title(plan.appStorePrice.formattedPrice),
             footer: Strings.Localizable.UpgradeAccountPlan.Button.BuyInApp.footer,
             type: .secondary
         ) { [weak self] in
@@ -573,6 +576,7 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
 
     private func externalLink(for plan: PlanEntity) async -> URL? {
         guard
+            plan.apiPrice != nil,
             await externalPurchaseUseCase.shouldProvideExternalPurchase(),
             let externalPurchaseLink = try? await externalPurchaseUseCase.externalPurchaseLink(
                 path: plan.externalPurchasePath,

@@ -8,63 +8,73 @@ public extension PlanEntity {
         type: .lite,
         name: "Pro lite",
         subscriptionCycle: .monthly,
-        price: 1,
-        formattedPrice: "$1"
+        apiPrice: .sample(1),
+        appStorePrice: .sample(1)
     )
 
     static var proLite_yearly = PlanEntity(
         type: .lite,
         name: "Pro lite",
         subscriptionCycle: .yearly,
-        price: 2,
-        formattedPrice: "$2"
+        apiPrice: .sample(2),
+        appStorePrice: .sample(2)
     )
 
     static var proI_monthly = PlanEntity(
         type: .proI,
         name: "Pro I",
         subscriptionCycle: .monthly,
-        price: 3,
-        formattedPrice: "$3"
+        apiPrice: .sample(3),
+        appStorePrice: .sample(3)
     )
 
     static var proI_yearly = PlanEntity(
         type: .proI,
         name: "Pro I",
         subscriptionCycle: .yearly,
-        price: 4,
-        formattedPrice: "$4"
+        apiPrice: .sample(4),
+        appStorePrice: .sample(4)
     )
 
     static var proII_monthly = PlanEntity(
         type: .proII,
         name: "Pro II",
         subscriptionCycle: .monthly,
-        price: 5,
-        formattedPrice: "$5"
+        apiPrice: .sample(5),
+        appStorePrice: .sample(5)
     )
 
     static var proII_yearly = PlanEntity(
         type: .proII,
         name: "Pro II",
         subscriptionCycle: .yearly,
-        price: 6,
-        formattedPrice: "$6"
+        apiPrice: .sample(6),
+        appStorePrice: .sample(6)
     )
 
     static var proIII_monthly = PlanEntity(
         type: .proIII,
         name: "Pro III",
         subscriptionCycle: .monthly,
-        price: 7,
-        formattedPrice: "$7"
+        apiPrice: .sample(7),
+        appStorePrice: .sample(7)
     )
 
     static var proIII_yearly = PlanEntity(
         type: .proIII,
         name: "Pro III",
         subscriptionCycle: .yearly,
-        price: 8,
-        formattedPrice: "$8"
+        apiPrice: .sample(8),
+        appStorePrice: .sample(8)
     )
+}
+
+extension PlanPriceEntity {
+    static func sample(_ price: Decimal) -> PlanPriceEntity {
+        PlanPriceEntity(
+            price: price,
+            formattedPrice: "$\(price)",
+            currency: "USD"
+        )
+    }
 }
