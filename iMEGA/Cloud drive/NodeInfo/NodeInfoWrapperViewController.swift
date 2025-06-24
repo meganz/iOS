@@ -76,14 +76,20 @@ final class NodeInfoWrapperViewController: UIViewController {
 
     private func configurePresentAndDismiss() {
         nodeInfoViewController.presentViewController = { [weak self] viewControllerToPresent in
-            guard let self else { return }
-            present(viewControllerToPresent, animated: true)
+            self?.present(viewControllerToPresent, animated: true)
         }
 
         nodeInfoViewController.dismissViewController = { [weak self] completion in
-            guard let self else { return }
-            dismiss(animated: true, completion: completion)
+            self?.dismissAllModals(completion: completion)
         }
+    }
+    
+    private func dismissAllModals(animated: Bool = true, completion: (() -> Void)? = nil) {
+        var presenter: UIViewController = self
+        while let parent = presenter.presentingViewController {
+            presenter = parent
+        }
+        presenter.dismiss(animated: animated, completion: completion)
     }
 
     private func configureShowSavedDescriptionState() {
