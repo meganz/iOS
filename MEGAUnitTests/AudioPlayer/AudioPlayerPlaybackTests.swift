@@ -1,178 +1,140 @@
-@testable import MEGA
+@testable @preconcurrency import MEGA
 import XCTest
 
 final class AudioPlayerPlaybackTests: XCTestCase {
-    
-    var audioPlayer = AudioPlayer()
-    var tracks: [AudioPlayerItem] = []
-    
-    override func setUpWithError() throws {
+    enum TestError: Error { case missingQueuePlayer }
+
+    // MARK: - Helpers
+
+    private func makePlayerAndTracks() async throws -> (AudioPlayer, [AudioPlayerItem]) {
+        let player = AudioPlayer()
         let file1URL = try XCTUnwrap(Bundle.main.url(forResource: "audioClipSent", withExtension: "wav"))
         let file2URL = try XCTUnwrap(Bundle.main.url(forResource: "outgoingTone", withExtension: "wav"))
-        
-        let track1 = AudioPlayerItem(name: "file 1", url: file1URL, node: nil)
-        let track2 = AudioPlayerItem(name: "file 2", url: file2URL, node: nil)
-        
-        tracks.append(contentsOf: [track1, track2])
-    }
-    
-    override func tearDown() {
-        super.tearDown()
-        tracks.removeAll()
-    }
-    
-    private func addTracks() {
-        audioPlayer.add(tracks: tracks)
-        audioPlayer.queuePlayer?.volume = 0.0
+        let tracks = await [
+            AudioPlayerItem(name: "file 1", url: file1URL, node: nil),
+            AudioPlayerItem(name: "file 2", url: file2URL, node: nil)
+        ]
+        player.add(tracks: tracks)
+        player.queuePlayer?.volume = 0.0
+        try? await Task.sleep(nanoseconds: 1_100_000_000)
+        return (player, tracks)
     }
 
-    func testAudioPlayerSetup() throws {
-        XCTAssertTrue(tracks.count > 0)
-        addTracks()
-        XCTAssertTrue(audioPlayer.tracks.count == tracks.count)
-        XCTAssertTrue(audioPlayer.isPlaying)
+    private func requireQueuePlayer(_ player: AudioPlayer) async throws -> AVQueuePlayer {
+        if let queue = player.queuePlayer { return queue }
+        XCTFail("Expected queuePlayer")
+        throw TestError.missingQueuePlayer
     }
-    
-    func testAudioPlayerPlayNext() throws {
-        let expect = expectation(description: "Play next item")
-        
-        XCTAssertTrue(tracks.count > 0)
-        addTracks()
-        XCTAssertNotNil(audioPlayer.currentIndex)
-        XCTAssertTrue(audioPlayer.currentIndex == 0)
-        
-        let nextItem = audioPlayer.tracks[(audioPlayer.currentIndex ?? 0) + 1]
-        
-        audioPlayer.playNext {
-            expect.fulfill()
-        }
-        
-        waitForExpectations(timeout: 0.5) { error in
-            XCTAssertNil(error)
-            XCTAssertNotNil(self.audioPlayer.currentItem)
-            XCTAssertTrue(nextItem == self.audioPlayer.currentItem())
-        }
-    }
-    
-    func testAudioPlayerPlayPrevious() throws {
-        let expect = expectation(description: "Play previous item")
-        
-        XCTAssertTrue(tracks.count > 0)
-        addTracks()
-        XCTAssertNotNil(audioPlayer.currentIndex)
-        XCTAssertTrue(audioPlayer.currentIndex == 0)
-        
-        let currentItem = try XCTUnwrap(audioPlayer.currentItem())
-        let nextItem = audioPlayer.tracks[(audioPlayer.currentIndex ?? 0) + 1]
-        
-        audioPlayer.playNext {
-            XCTAssertNotNil(self.audioPlayer.currentItem)
-            XCTAssertTrue(nextItem == self.audioPlayer.currentItem())
-            
-            self.audioPlayer.playPrevious {
-                XCTAssertNotNil(self.audioPlayer.currentItem)
-                XCTAssertTrue(currentItem == self.audioPlayer.currentItem())
-                expect.fulfill()
-            }
-        }
-        
-        waitForExpectations(timeout: 0.5) { error in
-            XCTAssertNil(error)
-        }
-    }
-    
-    func testAudioPlayerRewindForward() throws {
-        let expect = expectation(description: "Rewind forward")
-        
-        XCTAssertTrue(tracks.count > 0)
-        addTracks()
-        let queuePlayer = try XCTUnwrap(audioPlayer.queuePlayer)
-        let currentTime = queuePlayer.currentTime()
-        XCTAssertTrue(CMTIME_IS_VALID(currentTime))
-        
-        let observer = queuePlayer.observe(\.timeControlStatus, options: [.new, .old]) { (qPlayer, _) in
-            switch qPlayer.timeControlStatus {
-            case .playing:
-                self.audioPlayer.rewindForward(duration: CMTime(seconds: self.audioPlayer.defaultRewindInterval, preferredTimescale: qPlayer.currentTime().timescale)) { _ in
-                    XCTAssertTrue(currentTime.seconds < qPlayer.currentTime().seconds)
-                    expect.fulfill()
-                }
-            default:
-                break
-            }
-        }
 
-        waitForExpectations(timeout: 3.0) { error in
-            XCTAssertNil(error)
-            observer.invalidate()
-        }
-    }
-    
-    func testAudioPlayerRewindBackward() throws {
-        let expect = expectation(description: "Rewind backward")
-        
-        XCTAssertTrue(tracks.count > 0)
-        addTracks()
-        let queuePlayer = try XCTUnwrap(audioPlayer.queuePlayer)
-        let currentTime = queuePlayer.currentTime()
-        XCTAssertTrue(CMTIME_IS_VALID(currentTime))
-        
-        let observer = queuePlayer.observe(\.timeControlStatus, options: [.new, .old]) { (qPlayer, _) in
-            switch qPlayer.timeControlStatus {
-            case .playing:
-                self.audioPlayer.rewindBackward { _ in
-                    XCTAssertTrue(currentTime.seconds <= self.audioPlayer.defaultRewindInterval ?
-                                    qPlayer.currentTime().seconds == 0 :
-                                    currentTime.seconds > qPlayer.currentTime().seconds)
-                    expect.fulfill()
-                }
-            default:
-                break
+    private func performAsync(_ action: @Sendable @escaping (@escaping () -> Void) -> Void) async {
+        await withCheckedContinuation { (cont: CheckedContinuation<Void, Never>) in
+            action {
+                cont.resume()
             }
         }
-
-        waitForExpectations(timeout: 3.0) { error in
-            XCTAssertNil(error)
-            observer.invalidate()
+    }
+    
+    private func waitUntil(timeout: TimeInterval, predicate: @Sendable @escaping () -> Bool) async -> Bool {
+        let deadline = Date().addingTimeInterval(timeout)
+        while Date() < deadline {
+            if predicate() { return true }
+            try? await Task.sleep(nanoseconds: 100_000_000)
         }
+        return false
     }
     
-    func testAudioPlayerPause() {
-        XCTAssertTrue(tracks.count > 0)
-        addTracks()
-        audioPlayer.togglePlay()
-        XCTAssertTrue(audioPlayer.isPaused)
-        audioPlayer.togglePlay()
-        XCTAssertTrue(audioPlayer.isPlaying)
+    // MARK: - Tests
+
+    func testInitWithTracks_whenHavingTracks_shouldInitializeAndPlay() async throws {
+        let (player, tracks) = try await makePlayerAndTracks()
+        XCTAssertEqual(player.tracks.count, tracks.count)
+        XCTAssertTrue(player.isPlaying)
     }
-    
-    func testAudioPlayerDeleteItem() throws {
-        XCTAssertTrue(tracks.count > 0)
-        addTracks()
-        XCTAssertTrue(audioPlayer.tracks.count == tracks.count)
+
+    func testPlayNext_whenAtStart_shouldGoToNextItem() async throws {
+        let (player, tracks) = try await makePlayerAndTracks()
+        XCTAssertEqual(player.currentIndex, 0)
+        let nextItem = tracks[1]
+
+        await performAsync { completion in
+            player.playNext(completion)
+        }
+        XCTAssertEqual(player.currentItem(), nextItem)
+    }
+
+    func testPlayPrevious_afterNext_returnsToInitialItem() async throws {
+        let (player, tracks) = try await makePlayerAndTracks()
+        let initialItem = try XCTUnwrap(player.currentItem())
+        let nextItem = tracks[1]
+
+        await performAsync { completion in
+            player.playNext(completion)
+        }
+        XCTAssertEqual(player.currentItem(), nextItem)
+
+        await performAsync { completion in
+            player.playPrevious(completion)
+        }
+        XCTAssertEqual(player.currentItem(), initialItem)
+    }
+
+    func testRewind_whenDirectionForward_shouldAdvanceTime() async throws {
+        let (player, _) = try await makePlayerAndTracks()
+        let queue = try await requireQueuePlayer(player)
+        let before = queue.currentTime().seconds
+        
+        player.rewind(direction: .forward)
+        let success = await waitUntil(timeout: 3) {
+            queue.currentTime().seconds > before
+        }
+        XCTAssertTrue(success, "Expected playback time to advance after rewind forward")
+    }
+
+    func testRewind_whenDirectionBackward_shouldDecreaseTime() async throws {
+        let (player, _) = try await makePlayerAndTracks()
+        let queuePlayer = try await requireQueuePlayer(player)
+        let forwardTime = CMTime(seconds: 10, preferredTimescale: queuePlayer.currentTime().timescale)
+        await withCheckedContinuation { cont in
+            queuePlayer.seek(to: forwardTime) { _ in cont.resume() }
+        }
+        
+        player.rewind(direction: .backward)
+        try? await Task.sleep(nanoseconds: 100_000_000)
+        let newTime = queuePlayer.currentTime().seconds
+        XCTAssertTrue(newTime < 10)
+    }
+
+    func testTogglePlay_whenToggled_shouldPauseAndResume() async throws {
+        let (player, _) = try await makePlayerAndTracks()
+        player.togglePlay()
+        XCTAssertTrue(player.isPaused)
+        player.togglePlay()
+        XCTAssertTrue(player.isPlaying)
+    }
+
+    func testDeletePlaylist_whenDeleting_shouldRemoveSpecifiedItem() async throws {
+        let (player, tracks) = try await makePlayerAndTracks()
+        let original = player.tracks.count
         let lastTrack = try XCTUnwrap(tracks.last)
-        audioPlayer.deletePlaylist(items: [lastTrack])
-        XCTAssertTrue(audioPlayer.tracks.count == tracks.count - 1)
+        player.deletePlaylist(items: [lastTrack])
+        XCTAssertEqual(player.tracks.count, original - 1)
     }
-    
-    func testAudioPlayerInsertItemInPlaylist() throws {
-        XCTAssertTrue(tracks.count > 0)
-        let track = try XCTUnwrap(tracks.last)
-        tracks.removeLast()
-        addTracks()
-        let tracksNumber = audioPlayer.tracks.count
-        audioPlayer.insertInQueue(item: track, afterItem: nil)
-        XCTAssertTrue(audioPlayer.tracks.count == tracksNumber + 1)
+
+    func testInsertInQueue_whenInserting_shouldAddItemToPlaylist() async throws {
+        let (player, tracks) = try await makePlayerAndTracks()
+        let trackURL = try XCTUnwrap(Bundle.main.url(forResource: "audioClipSent", withExtension: "wav"))
+        let track = await AudioPlayerItem(name: "file 1", url: trackURL, node: nil)
+        player.insertInQueue(item: track, afterItem: nil)
+        XCTAssertEqual(player.tracks.count, tracks.count + 1)
     }
-    
-    func testAudioPlayerMoveItems() throws {
-        XCTAssertTrue(tracks.count > 0)
-        addTracks()
-        XCTAssertTrue(audioPlayer.tracks.count == tracks.count)
-        let track = try XCTUnwrap(tracks.first)
-        audioPlayer.move(of: track, to: IndexPath(row: audioPlayer.tracks.count - 1, section: 0), direction: .down)
-        let queuePlayer = try XCTUnwrap(audioPlayer.queuePlayer)
-        let playerTracks = try XCTUnwrap(queuePlayer.items() as? [AudioPlayerItem])
-        XCTAssertFalse(tracks.elementsEqual(playerTracks))
+
+    func testMove_whenMoving_shouldReorderPlaylistItems() async throws {
+        let (player, tracks) = try await makePlayerAndTracks()
+        let item = try XCTUnwrap(tracks.first)
+        player.move(of: item, to: IndexPath(row: player.tracks.count - 1, section: 0), direction: .down)
+
+        let queuePlayer = try await requireQueuePlayer(player)
+        let playlist = queuePlayer.items().compactMap { $0 as? AudioPlayerItem }
+        XCTAssertFalse(tracks.elementsEqual(playlist))
     }
 }

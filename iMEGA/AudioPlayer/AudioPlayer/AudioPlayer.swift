@@ -52,7 +52,7 @@ final class AudioPlayer: NSObject {
     var preloadMetadataTask: Task<Void, Never>?
     
     // MARK: - Private properties
-    private var timeObserverToken: Any?
+    private var timeObserver: AudioPlayerTimeObserver?
     private let timeObserverInterval = CMTime(seconds: 0.5, preferredTimescale: CMTimeScale(NSEC_PER_SEC))
     
     @Atomic private var taskId: UIBackgroundTaskIdentifier?
@@ -171,25 +171,16 @@ final class AudioPlayer: NSObject {
         registerAudioPlayerEvents()
         registerRemoteControls()
         registerAudioPlayerNotifications()
+        registerTimeObserver()
     }
     
     private func setupPlayer() {
         setAudioPlayerSession(active: true)
         
-        queuePlayer = AVQueuePlayer(items: tracks)
+        queuePlayer = AVQueuePlayer()
+        loadTracksIntoQueue(tracks)
         queuePlayer?.usesExternalPlaybackWhileExternalScreenIsActive = true
         queuePlayer?.volume = 1.0
-        
-        register()
-        configurePlayer()
-        
-        timeObserverToken = queuePlayer?
-            .addPeriodicTimeObserver(
-                forInterval: timeObserverInterval,
-                queue: .main
-            ) { [weak self] _ in
-                self?.timeObserverHandler()
-            }
     }
     
     private func timeObserverHandler() {
@@ -198,7 +189,7 @@ final class AudioPlayer: NSObject {
         }
     }
     
-    private func refreshPlayer(tracks: [AudioPlayerItem]) {
+    private func loadTracksIntoQueue(_ tracks: [AudioPlayerItem]) {
         notify(aboutTheBeginningOfBlockingAction)
         unregister()
         
@@ -225,10 +216,17 @@ final class AudioPlayer: NSObject {
         }
     }
     
+    func registerTimeObserver() {
+        timeObserver = AudioPlayerTimeObserver(
+            player: queuePlayer,
+            interval: timeObserverInterval
+        ) { [weak self] _ in
+            self?.timeObserverHandler()
+        }
+    }
+    
     func removeTimeObserver() {
-        guard let timeObserverToken else { return }
-        queuePlayer?.removeTimeObserver(timeObserverToken)
-        self.timeObserverToken = nil
+        timeObserver = nil
     }
     
     func onItemFinishedPlaying() {
@@ -299,7 +297,7 @@ final class AudioPlayer: NSObject {
         
         if queuePlayer != nil {
             queueLoader.reset()
-            refreshPlayer(tracks: self.tracks)
+            loadTracksIntoQueue(self.tracks)
             MEGALogDebug("[AudioPlayer] Refresh the current audio player")
         } else {
             setupPlayer()
