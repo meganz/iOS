@@ -927,9 +927,9 @@
 /* An alert title where the user provided the incorrect Recovery Key. */
 "invalidRecoveryKey"="مفتاح الاستعادة غير صالح";
 /* Recovery key error alert title */
-"recoveryKey.error.alert.title"="Recovery key error";
+"recoveryKey.error.alert.title"="خطأ مفتاح الاستعادة";
 /* Recovery key error alert message when the user provided incorrect or invalid Recovery key */
-"recoveryKey.error.alert.message.invalidKey"="The recovery key you supplied is either invalid, or is not for this account. Check if you’re using the correct key and try again.";
+"recoveryKey.error.alert.message.invalidKey"="مفتاح الاستعادة الذي أدخلته إما غير صالح أو ليس لهذا الحساب. تحقق مما إذا كنت تستخدم المفتاح الصحيح وحاول مرة أخرى.";
 /* Text of the alert after opening the recovery link to reset pass being logged. */
 "youRecoveryKeyIsGoingTo"="مفتاح الاستعادة الخاص بك سيستخدم لإعادة تعيين كلمة مرورك. الرجاء ادخال كلمة مرورك الجديدة.";
 /*  */
@@ -2143,7 +2143,7 @@
 /* Button title which, if tapped, will trigger the action of opening a folder containg this file */
 "View in Folder"="عرض في المجلد";
 /* Error message shown when opening a link with an account that not corresponds to the link */
-"This link is not related to this account. Please log in with the correct account."="You’re logged in to a different MEGA account. Log out and open the password reset link again.";
+"This link is not related to this account. Please log in with the correct account."="لقد قمت بتسجيل الدخول إلى حساب ميغا MEGA مختلف. قم بتسجيل الخروج وفتح رابط إعادة تعيين كلمة المرور مرة أخرى.";
 /* Text emncouraging the user to add contacts in MEGA */
 "Invite contact now"="ادعو جهات الاتصال الآن";
 /* Error message if user click next button without enter a valid phone number */
@@ -2239,13 +2239,13 @@
 /* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the header title that appears above */
 "settings.userInterface.mediaDiscovery.header"="عرض المعرض";
 /* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the footer message body that appears under that option */
-"settings.userInterface.mediaDiscovery.footer.body"="Open folders with only images or videos in a visual grid. Browse media by thumbnails and filter by date.";
+"settings.userInterface.mediaDiscovery.footer.body"="افتح المجلدات التي تحتوي على صور أو مقاطع فيديو فقط في شبكة مرئية. تصفح الوسائط حسب الصور المصغرة وقم بالفلترة حسب التاريخ.";
 /* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the footer message body link that appears under that option */
-"settings.userInterface.mediaDiscovery.footer.link"="Learn more about gallery view";
+"settings.userInterface.mediaDiscovery.footer.link"="اعرف المزيد حول عرض المعرض";
 /* In Settings - User Interface, there is a setting that can determine if the app should also load sub folder media. This is the label in the setting */
-"settings.userInterface.mediaDiscoverySubFolder"="Gallery view in subfolders";
+"settings.userInterface.mediaDiscoverySubFolder"="عرض المعرض في المجلدات الفرعية";
 /* In Settings - User Interface, there is a setting that can determine if the app should also load sub folder media. This is the footer message body that appears under that option */
-"settings.userInterface.mediaDiscoverySubFolder.footer"="Images and videos from subfolders will also be included in gallery view";
+"settings.userInterface.mediaDiscoverySubFolder.footer"="سيتم أيضًا تضمين الصور ومقاطع الفيديو من المجلدات الفرعية في عرض المعرض";
 /* In Settings - User Interface, there is an option that you can enable to hide the contents of the Recents section */
 "settings.userInterface.hideRecentActivity"="إخفاء التفاعل مؤخراً";
 /* In Settings - User Interface, there is an option that you can enable to hide the contents of the Recents section. This is the footer that appears under that option. */
@@ -2591,7 +2591,7 @@
 /* Title of Over Disk Quota dialog */
 "dialog.storage.odq.title"="الرجاء الترقية";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. @% is placeholder. */
-"dialog.storage.almostFull.detail"="Your Cloud drive is almost full. Upgrade now and get up to %@ TB of cloud storage space.";
+"dialog.storage.almostFull.detail"="السواقة السحابية الخاصة بك ممتلئة تقريبًا. قم بالترقية الآن واحصل على %@ تيرابايت من مساحة التخزين السحابية.";
 /* Over Disk Quota detail message informing the user that they've reached the full capacity of their accounts. */
 "dialog.storage.odq.detail"="سحابة التخزين الخاصة بك ممتلئة. يرجى الترقية إلى باقة ميغا برو MEGA Pro لزيادة مساحة التخزين لديك والتمتع بمزايا إضافية. إذا بقيت فوق حد التخزين الخاص بك ولم تقم بترقية أو حذف بعض البيانات، فقد يتم قفل حسابك. يرجى الاطلاع على رسائل البريد الإلكتروني التي أرسلناها لك للحصول على مزيد من المعلومات.";
 /* Over Disk Quota paywall not final title. */
@@ -3638,6 +3638,10 @@
 "upgradeAccountPlan.button.termsAndPolicies.title"="الشروط والسياسات";
 /* On Upgrade Account Plan screen. Button title to buy account plan. %@ will be the name of the selected plan */
 "upgradeAccountPlan.button.buyAccountPlan.title"="شراء %@";
+/* On Upgrade Account Plan screen. Button title to continue to buy account plan in-app when user could buy externally. %@ will be the higher price of the plan */
+"upgradeAccountPlan.button.buyInApp.title"="متابعة داخل التطبيق (%@)";
+/* On Upgrade Account Plan screen. Button footer text to continue to buy account plan in-app when user could buy externally. %@ will be the higher price of the plan */
+"upgradeAccountPlan.button.buyInApp.footer"="تُطبق رسوم المنصة عند الشراء من خلال التطبيق";
 /* On Upgrade Account Plan screen. Displayed header title text message */
 "upgradeAccountPlan.header.title.choosePlan"="اختر الباقة المناسبة لك";
 /* On Upgrade Account Plan screen. Displayed header title text with current plan. %@ will be the name of the current plan */
@@ -3915,7 +3919,7 @@
 /* Error shown when moving folder to inside itself */
 "Error.nodeCopyOrMove.circularDependency"="لا يمكنك نقل هذا المجلد لأن الوجهة هي نفس المجلد.";
 /* Auto media discovery banner title */
-"photos.mediaDiscovery.autoMediaDiscoveryBanner.title"="As this folder contains only images and videos, we’ve automatically opened it in gallery view. You can enjoy your visual content with a more immersive layout. You can disable this in Settings.";
+"photos.mediaDiscovery.autoMediaDiscoveryBanner.title"="نظرًا لأن هذا المجلد يحتوي فقط على الصور ومقاطع الفيديو فقد فتحناه تلقائيًا في عرض المعرض. يمكنك الاستمتاع بالمحتوى المرئي الخاص بك بتصميم أكثر شمولاً. يمكنك تعطيل هذا في الإعدادات.";
 /* Upgrade account screen header title after user onboarding */
 "onboarding.upgradeAccount.header.title"="احصل على المزيد مع باقة برو Pro";
 /* Upgrade account screen header subTitle after user onboarding. %@ will be replaced by the price of the lowest plan per month. */
@@ -4537,9 +4541,9 @@
 /* Add to collection button title to add items */
 "photos.addTo.button.title.add"="إضافة";
 /* Ad-free experience screen header title */
-"ads.adFree.header.title"="Want MEGA without the ads?";
+"ads.adFree.header.title"="هل تريد ميغا MEGA بدون إعلانات؟";
 /* Ad-free experience screen header subTitle */
-"ads.adFree.header.subTitle"="Upgrade to a Pro plan with plenty of storage and more. Our Pro plans start at just %@ a month.";
+"ads.adFree.header.subTitle"="قم بالترقية إلى باقة برو Pro مع الكثير من مساحة التخزين والمزيد. تبدأ باقات برو Pro الخاصة بنا من %@ شهرياً فقط.";
 /* Ad-free experience screen content title about pro plan featuring as Generous Storage */
 "ads.adFree.content.generousStorage.title"="مساحة تخزين سخية";
 /* Ad-free experience screen content message about pro plan featuring as Generous Storage */
@@ -4619,7 +4623,7 @@
 /* Hidden files and folders onboarding content item two title */
 "onboarding.hiddenFilesAndFolders.content.item.two.title"="التحكم في الرؤية بسهولة";
 /* Hidden files and folders onboarding content item two message */
-"onboarding.hiddenFilesAndFolders.content.item.two.message"="To show hidden files, turn on the “Show hidden items” setting under “File Management” -> “User interface” in your app settings.";
+"onboarding.hiddenFilesAndFolders.content.item.two.message"="لإظهار الملفات المخفية، قم بتشغيل إعداد «إظهار العناصر المخفية» ضمن «إدارة الملفات» -> «واجهة المستخدم» في إعدادات التطبيق.";
 /* Hidden files and folders onboarding content item three title */
 "onboarding.hiddenFilesAndFolders.content.item.three.title"="تظل الملفات المشاركة مرئية";
 /* Hidden files and folders onboarding content item three message */
@@ -4633,47 +4637,47 @@
 /* Onboarding USP carousel first page title */
 "onboarding.uniqueSellingProposition.carousel.page.first.title"="انت تحتفظ بالمفاتيح";
 /* Onboarding USP carousel first page subtitle */
-"onboarding.uniqueSellingProposition.carousel.page.first.subtitle"="User controlled, zero-knowledge encryption means no one can see your data unless you want them to - not even us!";
+"onboarding.uniqueSellingProposition.carousel.page.first.subtitle"="يعني تشفير المعرفة الصفرية المتحكم به من قبل المستخدم أنه لا يمكن لأي شخص رؤية بياناتك إلا إذا كنت ترغب في ذلك - ولا حتى نحن!";
 /* Onboarding USP carousel second page title */
-"onboarding.uniqueSellingProposition.carousel.page.second.title"="Keep every moment safe";
+"onboarding.uniqueSellingProposition.carousel.page.second.title"="حافظ على كل لحظة آمنة";
 /* Onboarding USP carousel second page subtitle */
-"onboarding.uniqueSellingProposition.carousel.page.second.subtitle"="With automatic camera uploads to MEGA Cloud, and generous storage, you’ll never lose a precious memory";
+"onboarding.uniqueSellingProposition.carousel.page.second.subtitle"="مع ترفيعات الكاميرا التلقائية إلى سحابة ميغا MEGA والتخزين السخي لن تفقد أبدًا ذكرى ثمينة";
 /* Onboarding USP carousel third page title */
-"onboarding.uniqueSellingProposition.carousel.page.third.title"="Your data. Your space.";
+"onboarding.uniqueSellingProposition.carousel.page.third.title"="البيانات الخاصة بك. المساحة الخاصة بك.";
 /* Onboarding USP carousel third page subtitle */
-"onboarding.uniqueSellingProposition.carousel.page.third.subtitle"="Ample storage and easy ways to transfer, share, and organise your files means you can safely use MEGA for whatever you choose";
+"onboarding.uniqueSellingProposition.carousel.page.third.subtitle"="مساحة تخزين واسعة وطرق سهلة لنقل ملفاتك ومشاركتها وتنظيمها تعني أنه يمكنك استخدام ميغا MEGA بأمان لأي شيء تختاره";
 /* Onboarding USP carousel fourth page title */
 "onboarding.uniqueSellingProposition.carousel.page.fourth.title"="قلها على انفراد";
 /* Onboarding USP carousel fourth page subtitle */
-"onboarding.uniqueSellingProposition.carousel.page.fourth.subtitle"="Chat with friends and family, share photos or sensitive information, video call, and schedule meetings. Safety and privacy guaranteed.";
+"onboarding.uniqueSellingProposition.carousel.page.fourth.subtitle"="يمكنك المحادثة مع الأصدقاء والعائلة ومشاركة الصور أو المعلومات الحساسة ومكالمات الفيديو وتحديد مواعيد الاجتماعات. الأمان والخصوصية مضمونان.";
 /* Onboarding Notification CTA title */
-"onboarding.cta.notifications.title"="Never miss an important update";
+"onboarding.cta.notifications.title"="لا تٌفوت أي تحديث مهم";
 /* Onboarding Notification CTA description */
-"onboarding.cta.notifications.explanation"="Stay informed with real-time updates that matter to you. Get alerts for shared folder activity, security updates, and exclusive offers, so you never miss anything important.\n\nYou can manage notification preferences at any time in the settings.";
+"onboarding.cta.notifications.explanation"="ابق على اطلاع بالتحديثات في الوقت الفعلي التي تهمك. احصل على تنبيهات لنشاط المجلد المشارك وتحديثات الأمان والعروض الحصرية حتى لا يفوتك أي شيء مهم.\n\nيمكنك إدارة تفضيلات الإشعارات في أي وقت في الإعدادات.";
 /* Onboarding Notification CTA *Enable* button */
 "onboarding.cta.notifications.buttons.enable"="تفعيل الإشعارات";
 /* Onboarding Notification CTA *Skip* button */
-"onboarding.cta.notifications.buttons.skip"="Skip for now";
+"onboarding.cta.notifications.buttons.skip"="تجاهل الآن";
 /* Onboarding Camera Backups CTA title */
-"onboarding.cta.cameraBackups.title"="Keep your photos safe, always";
+"onboarding.cta.cameraBackups.title"="حافظ على صورك آمنة دائمًا";
 /* Onboarding Camera Backups CTA description */
-"onboarding.cta.cameraBackups.explanation"="Your memories matter\n\nCamera uploads automatically backs up your photos and videos to your MEGA Cloud drive, so you never have to worry about losing them";
+"onboarding.cta.cameraBackups.explanation"="ذكرياتك مهمة\n\nتقوم ترفيعات الكاميرا تلقائيًا بعمل نسخة احتياطية من الصور ومقاطع الفيديو الخاصة بك على سواقة ميغا MEGA السحابية لذلك لا داعي للقلق بشأن فقدانها";
 /* Onboarding Camera Backups CTA note */
-"onboarding.cta.cameraBackups.note"="Camera uploads requires [B]full access[/B] to your device’s photo library";
+"onboarding.cta.cameraBackups.note"="تتطلب ترفيعات الكاميرا [B]إذن الوصول كامل[/B] إلى مكتبة الصور بجهازك";
 /* Onboarding Camera Backups CTA *Enable* button */
 "onboarding.cta.cameraBackups.buttons.enable"="تمكين ترفيعات الكاميرا";
 /* Onboarding Camera Backups CTA *Skip* button */
-"onboarding.cta.cameraBackups.buttons.skip"="Skip for now";
+"onboarding.cta.cameraBackups.buttons.skip"="تجاهل الآن";
 /* String explaining the auto-renewal policy of the Pro subscription. */
-"subscriptionPurchase.autoRenewDescription"="Subscriptions are renewed automatically for successive subscription periods of the same duration and at the same price as the initial period chosen.\n\nYou can cancel your Pro plan anytime but no later than 24 hours before your next subscription payment is due. Learn how to manage your subscription in your settings.";
+"subscriptionPurchase.autoRenewDescription"="يتم تجديد الاشتراكات تلقائيًا لفترات اشتراك متتالية من نفس المدة وبنفس سعر الفترة الأولية المختارة.\n\nيمكنك إلغاء باقة برو Pro الخاصة بك في أي وقت ولكن في موعد لا يتجاوز 24 ساعة قبل استحقاق دفعة الاشتراك التالية. تعرف على كيفية إدارة اشتراكك في إعداداتك.";
 /* Title shown for the free plan card */
-"subscriptionPurchase.freePlanCard.title"="Get started with our Free plan";
+"subscriptionPurchase.freePlanCard.title"="ابدأ مع باقتنا المجانية";
 /* Description shown for the free plan card */
-"subscriptionPurchase.freePlanCard.description"="We offer generous amount of storage and transfer quota at no charge, so you can try MEGA with no risk";
+"subscriptionPurchase.freePlanCard.description"="نحن نقدم قدرًا كبيرًا من مساحة التخزين وحجم تراسل المعطيات بدون أي رسوم لذا يمكنك تجربة ميغا MEGA دون أي مخاطرة";
 /* First benefit shown for the free plan card */
-"subscriptionPurchase.freePlanCard.feature.one"="Free 20 GB of storage";
+"subscriptionPurchase.freePlanCard.feature.one"="مساحة تخزين مجانية تبلغ 20 غيغابايت";
 /* Second benefit shown for the free plan card */
-"subscriptionPurchase.freePlanCard.feature.two"="Limited transfers";
+"subscriptionPurchase.freePlanCard.feature.two"="حجم تراسل معطيات محدود";
 /* Button title for the free plan card */
 "subscriptionPurchase.freePlanCard.button.title"="ابدأ مجاناً";
 /* Displays the amount of storage included in the subscription plan */
@@ -4681,29 +4685,29 @@
 /* Displays the amount of data transfer included in the subscription plan */
 "subscriptionPurchase.plan.transfer"="%@ تراسل المعطيات";
 /* Displays the total amount when billed yearly */
-"subscriptionPurchase.plan.billedYearly"="%@ billed yearly";
+"subscriptionPurchase.plan.billedYearly"="%@ تتم محاسبتها سنويًا";
 /* Button title to cancel the subscription purchase. */
 "subscriptionPurchase.maybeLater"="ربما في وقت لاحق";
 /* Title for the features of pro plan in the subscription purchase screen. */
-"subscriptionPurchase.featuresOfProPlan.title"="Additional benefits of Pro plans";
+"subscriptionPurchase.featuresOfProPlan.title"="مزايا إضافية لباقات برو Pro";
 /* Features of pro plan in the subscription purchase screen. */
-"subscriptionPurchase.featuresOfProPlan.message"="• Password-protected links\n\n• Links with expiry dates\n\n• Transfer quota sharing\n\n• Rewind folders up to 180 days\n\n• Unlimited calls and meetings\n\n• Schedule rubbish bin clearing between 7 days and 10 years\n\n• Priority support";
+"subscriptionPurchase.featuresOfProPlan.message"="• روابط محمية بكلمة مرور\n\n• روابط بتواريخ انتهاء الصلاحية\n\n• تراسل معطيات مشترك\n\n• إرجاع المجلدات حتى 180 يومًا\n\n• مكالمات واجتماعات غير محدودة\n\n• جدولة إفراغ سلة المحذوفات بين 7 أيام و 10 سنوات\n\n• أولوية الدعم";
 /* Title for the first subscription feature: generous storage capacity */
 "subscriptionPurchase.feature.one.title"="مساحة تخزين سخية";
 /* Description for the first subscription feature: details about available storage */
-"subscriptionPurchase.feature.one.description"="Store up to 16 TB of data";
+"subscriptionPurchase.feature.one.description"="يمكن تخزين ما يصل إلى 16 تيرابايت من البيانات";
 /* Title for the second subscription feature: transfer quota sharing */
 "subscriptionPurchase.feature.two.title"="تشارك تراسل المعطيات";
 /* Description for the second subscription feature: how shared users can use your quota */
-"subscriptionPurchase.feature.two.description"="People you share items with can use your transfer quota to download and stream files";
+"subscriptionPurchase.feature.two.description"="يمكن للأشخاص الذين تشارك العناصر معهم استخدام حجم تراسل المعطيات الخاصة بك لتنزيل الملفات وبثها";
 /* Title for the third subscription feature: MEGA VPN service */
 "subscriptionPurchase.feature.three.title"="ميغا في بي إن MEGA VPN";
 /* Description for the third subscription feature: benefits of using the MEGA VPN */
-"subscriptionPurchase.feature.three.description"="Keep your online life safe, fast, and easy with our high-speed VPN";
+"subscriptionPurchase.feature.three.description"="حافظ على حياتك على الإنترنت آمنة وسريعة وسهلة مع في بي إن VPN عالي السرعة الخاص بنا";
 /* Title for the fourth subscription feature: MEGA Pass password manager */
 "subscriptionPurchase.feature.four.title"="MEGA Pass";
 /* Description for the fourth subscription feature: benefits of using MEGA Pass for password management */
-"subscriptionPurchase.feature.four.description"="Organise all your passwords and keep them safe with our password manager";
+"subscriptionPurchase.feature.four.description"="قم بتنظيم جميع كلمات المرور الخاصة بك واحتفظ بها آمنة مع مدير كلمات المرور الخاص بنا";
 /* Title for all the feature in subscription purchase view. */
 "subscriptionPurchase.feature.title"="ستحصل على:";
 /* Title for the Home tab bar item */
@@ -4718,3 +4722,7 @@
 "tabbarTitle.menu"="القائمة";
 /* Storage benefit shown for the free plan card */
 "subscriptionPurchase.freePlanCard.feature.storage"="%@ مساحة تخزين";
+/* Title shown for the free plan card for upgrading */
+"subscriptionPurchase.freePlanCard.title.upgrade"="Continue with your free plan";
+/* Button title for the free plan card for upgrading */
+"subscriptionPurchase.freePlanCard.button.title.upgrade"="Continue with free plan";

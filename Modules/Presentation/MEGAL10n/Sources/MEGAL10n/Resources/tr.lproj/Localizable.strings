@@ -277,7 +277,7 @@
 /* Title shown when the transfers are paused */
 "transfersEmptyState_titlePaused"="Duraklatılan transferler";
 /* Title shown when the there is not any transfer and they are not paused */
-"transfersEmptyState_titleAll"="Transfer yok";
+"transfersEmptyState_titleAll"="Aktarım yok";
 /* Title shown when the there is not any transfer, and the filter "Download" option is selected */
 "transfersEmptyState_titleDownload"="İndirme yok";
 /* Title shown when the there is not any transfer, and the filter "Upload" option is selected */
@@ -915,7 +915,7 @@
 /* Success message shown when the password has been changed */
 "passwordChanged"="Şifreniz değiştirildi.";
 /* An option to reset the password. */
-"forgotPassword"="Şifremi unuttunuz?";
+"forgotPassword"="Şifrenizi mi unuttunuz?";
 /* Message shown during forgot your password process if the link to reset password has expired */
 "recoveryLinkHasExpired"="Bu kurtarma bağlantısının süresi doldu, lütfen tekrar deneyin.";
 /* Headline of the password reset recovery procedure */
@@ -1615,7 +1615,7 @@
 /* A dialog title to export the Recovery Key for the current user. */
 "exportRecoveryKey"="Dışa Aktar Kurtarma anahtarı";
 /* Title to confirm that you want to logout */
-"proceedToLogout"="Oturumu kapatmaya devam edin";
+"proceedToLogout"="Çıkış yapma işlemine devam edin";
 /* Used as a message in the "Password reminder" dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data. */
 "testPasswordLogoutText"="Oturumu kapatmak üzeresiniz, hatırladığınızdan emin olmak için lütfen şifrenizi test edin. Şifrenizi kaybederseniz MEGA verilerinize erişiminizi kaybedersiniz.";
 /* state previous to import a file */
@@ -3638,6 +3638,10 @@
 "upgradeAccountPlan.button.termsAndPolicies.title"="Şartlar ve politikalar";
 /* On Upgrade Account Plan screen. Button title to buy account plan. %@ will be the name of the selected plan */
 "upgradeAccountPlan.button.buyAccountPlan.title"="Satın al %@";
+/* On Upgrade Account Plan screen. Button title to continue to buy account plan in-app when user could buy externally. %@ will be the higher price of the plan */
+"upgradeAccountPlan.button.buyInApp.title"="Continue in-app (%@)";
+/* On Upgrade Account Plan screen. Button footer text to continue to buy account plan in-app when user could buy externally. %@ will be the higher price of the plan */
+"upgradeAccountPlan.button.buyInApp.footer"="Platform fees apply when purchasing through the app";
 /* On Upgrade Account Plan screen. Displayed header title text message */
 "upgradeAccountPlan.header.title.choosePlan"="Sizin için doğru planı seçin";
 /* On Upgrade Account Plan screen. Displayed header title text with current plan. %@ will be the name of the current plan */
@@ -4715,6 +4719,10 @@
 /* Title for the Chat tab bar item */
 "tabbarTitle.chat"="Sohbet";
 /* Title for the Menu tab bar item */
-"tabbarTitle.menu"="Menu";
+"tabbarTitle.menu"="Menü";
 /* Storage benefit shown for the free plan card */
 "subscriptionPurchase.freePlanCard.feature.storage"="%@ depolama";
+/* Title shown for the free plan card for upgrading */
+"subscriptionPurchase.freePlanCard.title.upgrade"="Ücretsiz planınızla devam edin";
+/* Button title for the free plan card for upgrading */
+"subscriptionPurchase.freePlanCard.button.title.upgrade"="Ücretsiz planla devam et";
