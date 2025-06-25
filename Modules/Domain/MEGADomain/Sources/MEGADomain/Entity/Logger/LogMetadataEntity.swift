@@ -1,4 +1,4 @@
-public struct LogMetadataEntity {
+public struct LogMetadataEntity: Sendable, Equatable {
     public let suiteName: String
     public let key: String
     public let version: String

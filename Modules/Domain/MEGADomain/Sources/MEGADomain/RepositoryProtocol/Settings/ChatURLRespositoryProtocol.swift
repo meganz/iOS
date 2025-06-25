@@ -1,3 +1,3 @@
-public protocol ChatURLRespositoryProtocol: RepositoryProtocol {
+public protocol ChatURLRespositoryProtocol: RepositoryProtocol, Sendable {
     func refreshUrls()
 }

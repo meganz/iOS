@@ -1,6 +1,6 @@
 import MEGAPreference
 
-public protocol ManageLogsUseCaseProtocol {
+public protocol ManageLogsUseCaseProtocol: Sendable {
     func toggleLogs(with logMetadata: LogMetadataEntity)
 }
 

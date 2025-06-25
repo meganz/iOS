@@ -1,10 +1,15 @@
 import Accounts
+import ChatRepo
+import LogRepo
 import MEGAAnalytics
 import MEGAAppPresentation
+import MEGAAppSDKRepo
 import MEGAAuthentication
 import MEGAAuthenticationOrchestration
+import MEGADomain
 import MEGAInfrastructure
 import MEGAPermissions
+import MEGAPreference
 import MEGAPresentation
 import MEGASDKRepo
 import MEGASwiftUI
@@ -34,6 +39,8 @@ extension AppDelegate {
         MEGAAuthentication.DependencyInjection.analyticsTracker = AnalyticsTrackerAdapter()
         
         MEGAAuthentication.DependencyInjection.accountConfirmationUseCase = makeAccountConfirmationUseCase()
+        
+        MEGAAuthentication.DependencyInjection.configureAuthEnvironmentUseCase = makeConfigureAuthEnvironmentUseCase()
     }
 
     @objc func injectInfrastructureDependencies() {
@@ -125,6 +132,37 @@ extension AppDelegate {
                 repository: AccountConfirmationRepository(
                     sdk: MEGAAuthentication.DependencyInjection.sharedSdk)),
             keychainRepository: MEGAAuthentication.DependencyInjection.keychainRepository)
+    }
+    
+    private func makeConfigureAuthEnvironmentUseCase() -> some ConfigureAuthEnvironmentUseCaseProtocol {
+        let preferenceUseCase = PreferenceUseCase(repository: PreferenceRepository.newRepo)
+        return ConfigureAuthEnvironmentUseCase(
+            logMetadataEntity: makeLogMetaDataEntity(),
+            preferenceUseCase: preferenceUseCase,
+            apiEnvironmentUseCase: APIEnvironmentUseCase(
+                apiEnvironmentRepository: APIEnvironmentRepository.newRepo,
+                chatURLRepository: ChatURLRepository.newRepo),
+            manageLogsUseCase: ManageLogsUseCase(
+                repository: LogSettingRepository.newRepo,
+                preferenceUseCase: preferenceUseCase)
+        )
+    }
+    
+    private func makeLogMetaDataEntity() -> LogMetadataEntity {
+        let appMetaData = AppMetaDataFactory(bundle: .main).make()
+        let deviceMetaData = DeviceMetaDataFactory(
+            bundle: .main,
+            locale: NSLocale.current as NSLocale).make()
+        
+        return LogMetadataEntity(
+            suiteName: MEGAGroupIdentifier,
+            key: PreferenceKeyEntity.logging.rawValue,
+            version: appMetaData.currentAppVersion,
+            systemVersion: UIDevice.current.systemVersion,
+            language: deviceMetaData.language,
+            deviceName: deviceMetaData.deviceName,
+            timezoneName: TimeZone.current.identifier,
+            extensionLogsFolder: MEGAExtensionLogsFolder)
     }
 }
 
