@@ -1,3 +1,3 @@
-public protocol LogSettingRepositoryProtocol: RepositoryProtocol {
+public protocol LogSettingRepositoryProtocol: RepositoryProtocol, Sendable {
     func toggleLogs(enable: Bool, with logMetadata: LogMetadataEntity)
 }

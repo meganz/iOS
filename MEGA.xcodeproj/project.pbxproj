@@ -92,6 +92,8 @@
 		0E9E6D072DF92B44005EA167 /* SubscriptionPurchaseFreePlanViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E9E6D062DF92B3D005EA167 /* SubscriptionPurchaseFreePlanViewModel.swift */; };
 		0E9F66CF2D7FD592001CE27B /* DefaultAnalyticsNodeActionListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E9F66CE2D7FD56A001CE27B /* DefaultAnalyticsNodeActionListener.swift */; };
 		0E9FA0A42C924C1D0098B9B4 /* AlbumContentPhotoLibraryDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E9FA0A32C924C1D0098B9B4 /* AlbumContentPhotoLibraryDataProvider.swift */; };
+		0E9FE35C2E0B6DAC0003AC0F /* ConfigureAuthEnvironmentUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E9FE35B2E0B6DA80003AC0F /* ConfigureAuthEnvironmentUseCase.swift */; };
+		0E9FE3642E0B71580003AC0F /* ConfigureAuthEnvironmentUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E9FE3632E0B71580003AC0F /* ConfigureAuthEnvironmentUseCaseTests.swift */; };
 		0EA150D729B810D2005C6486 /* AlbumType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EA150D629B810D2005C6486 /* AlbumType.swift */; };
 		0EAC3A7D2CE3023600E2CF17 /* PhotoSearchResultRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EAC3A7C2CE3023400E2CF17 /* PhotoSearchResultRouter.swift */; };
 		0EAF3FA12D67CF7B007D4E9C /* AppDelegateRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EAF3FA02D67CF73007D4E9C /* AppDelegateRouter.swift */; };
@@ -2836,6 +2838,8 @@
 		0E9E6D062DF92B3D005EA167 /* SubscriptionPurchaseFreePlanViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionPurchaseFreePlanViewModel.swift; sourceTree = "<group>"; };
 		0E9F66CE2D7FD56A001CE27B /* DefaultAnalyticsNodeActionListener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultAnalyticsNodeActionListener.swift; sourceTree = "<group>"; };
 		0E9FA0A32C924C1D0098B9B4 /* AlbumContentPhotoLibraryDataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumContentPhotoLibraryDataProvider.swift; sourceTree = "<group>"; };
+		0E9FE35B2E0B6DA80003AC0F /* ConfigureAuthEnvironmentUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigureAuthEnvironmentUseCase.swift; sourceTree = "<group>"; };
+		0E9FE3632E0B71580003AC0F /* ConfigureAuthEnvironmentUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigureAuthEnvironmentUseCaseTests.swift; sourceTree = "<group>"; };
 		0EA150D629B810D2005C6486 /* AlbumType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumType.swift; sourceTree = "<group>"; };
 		0EAC3A7C2CE3023400E2CF17 /* PhotoSearchResultRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoSearchResultRouter.swift; sourceTree = "<group>"; };
 		0EAF3FA02D67CF73007D4E9C /* AppDelegateRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegateRouter.swift; sourceTree = "<group>"; };
@@ -5805,6 +5809,31 @@
 				0E8EABBA2C869F66001722F7 /* MockAlbumRemoteFeatureFlagProvider.swift */,
 			);
 			path = Mock;
+			sourceTree = "<group>";
+		};
+		0E9FE3592E0B6D720003AC0F /* Authentication */ = {
+			isa = PBXGroup;
+			children = (
+				0E9FE35A2E0B6D890003AC0F /* UseCase */,
+				0E261EB22DA5FE0400858151 /* AppDelegate+Authentication.swift */,
+			);
+			path = Authentication;
+			sourceTree = "<group>";
+		};
+		0E9FE35A2E0B6D890003AC0F /* UseCase */ = {
+			isa = PBXGroup;
+			children = (
+				0E9FE35B2E0B6DA80003AC0F /* ConfigureAuthEnvironmentUseCase.swift */,
+			);
+			path = UseCase;
+			sourceTree = "<group>";
+		};
+		0E9FE3622E0B70C70003AC0F /* Authentication */ = {
+			isa = PBXGroup;
+			children = (
+				0E9FE3632E0B71580003AC0F /* ConfigureAuthEnvironmentUseCaseTests.swift */,
+			);
+			path = Authentication;
 			sourceTree = "<group>";
 		};
 		0EAF3FA52D67D5EF007D4E9C /* Mocks */ = {
@@ -11342,10 +11371,10 @@
 		B611E16F286165A700F360CF /* AppDelegate */ = {
 			isa = PBXGroup;
 			children = (
+				0E9FE3592E0B6D720003AC0F /* Authentication */,
 				B5E719B7290B716A0076FEA3 /* AppDelegate+Account.swift */,
 				BF69E5162374F3720031913D /* AppDelegate+Additions.swift */,
 				B511CE6D2AA745E800445877 /* AppDelegate+Ads.swift */,
-				0E261EB22DA5FE0400858151 /* AppDelegate+Authentication.swift */,
 				258BA6242CC9FE2400349CD2 /* AppDelegate+ModuleConfigs.swift */,
 				C403FA492BAD89C9007642AD /* AppDelegate+QuickUploadAction.swift */,
 				A5F63E6F2BE8808C00B7A3F0 /* AppDelegate+SaveNode.swift */,
@@ -13207,6 +13236,7 @@
 		E7EE7CCD2AC6DC9E00DBABCD /* AppDelegate */ = {
 			isa = PBXGroup;
 			children = (
+				0E9FE3622E0B70C70003AC0F /* Authentication */,
 				0EAF3FA52D67D5EF007D4E9C /* Mocks */,
 				E7EE7CCE2AC6DCDB00DBABCD /* AppDelegateTests.swift */,
 			);
@@ -14582,6 +14612,7 @@
 				A8A923A62861DFAC006F66C3 /* CompressingLogFileManager+additions.swift in Sources */,
 				A899F0E8278F3567001A2D43 /* CompressingLogFileManager.m in Sources */,
 				BF33EF902447E70200CD35AC /* CondensationView.swift in Sources */,
+				0E9FE35C2E0B6DAC0003AC0F /* ConfigureAuthEnvironmentUseCase.swift in Sources */,
 				B5C5E80127CCBA8C0021B27B /* ConfirmAccountViewcontroller+DeleteAccount.swift in Sources */,
 				E8D4B8911A69429200A3B2E2 /* ConfirmAccountViewController.m in Sources */,
 				E8CA8AB11DF17F7500C205DE /* ContactDetailsViewController.m in Sources */,
@@ -16279,6 +16310,7 @@
 				BFDAC17A2B835D320003BE4F /* CloudDriveViewControllerMediaCheckerModeTests.swift in Sources */,
 				BFDAC17E2B836BD30003BE4F /* CloudDriveViewControllerNavItemsFactoryTests.swift in Sources */,
 				BF6542432C1BBEFF006C252C /* CloudDriveViewModeMonitoringServiceTests.swift in Sources */,
+				0E9FE3642E0B71580003AC0F /* ConfigureAuthEnvironmentUseCaseTests.swift in Sources */,
 				9459229C2C3EA62B004D6AEF /* ContactsGroupCellViewModelTests.swift in Sources */,
 				94CBB2C42A8A578400C62F32 /* ContactsViewModelTests.swift in Sources */,
 				3289848A2A288FF20049CD40 /* ContentConsumptionUserAttributeUseCaseAdditionsTests.swift in Sources */,

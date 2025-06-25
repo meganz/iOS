@@ -1,4 +1,4 @@
-public protocol APIEnvironmentUseCaseProtocol {
+public protocol APIEnvironmentUseCaseProtocol: Sendable {
     mutating func changeAPIURL(_ environment: APIEnvironmentEntity)
 }
 
