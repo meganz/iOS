@@ -29,13 +29,15 @@ struct ChatRoomsListView: View {
             }
         }
         .toolbar {
-            ToolbarItem(placement: .topBarLeading) {
-                MyAvatarIconView(
-                    viewModel: .init(
-                        avatarObserver: viewModel.myAvatarViewModel,
-                        onAvatarTapped: { viewModel.openUserProfile() }
+            if viewModel.shouldShowAvatar {
+                ToolbarItem(placement: .topBarLeading) {
+                    MyAvatarIconView(
+                        viewModel: .init(
+                            avatarObserver: viewModel.myAvatarViewModel,
+                            onAvatarTapped: { viewModel.openUserProfile() }
+                        )
                     )
-                )
+                }
             }
             
             ToolbarItem(placement: .principal) {

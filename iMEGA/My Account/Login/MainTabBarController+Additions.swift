@@ -84,12 +84,11 @@ extension MainTabBarController {
             navigationController.navigationDelegate = self
 
             guard
-                let tabBarItem = navigationController.tabBarItem,
-                let tabType = TabType(rawValue: i)
+                let tabBarItem = navigationController.tabBarItem
             else { break }
 
             reloadInsets(for: tabBarItem)
-            tabBarItem.accessibilityLabel = Tab(tabType: tabType).title
+            tabBarItem.accessibilityLabel = tabBarItem.title
         }
         
         viewControllers = defaultViewControllers
@@ -98,7 +97,8 @@ extension MainTabBarController {
         setBadgeValueForChats()
         configurePhoneImageBadge()
 
-        selectedViewController = defaultViewControllers[TabManager.selectedTab.tabType.rawValue]
+        let selectedTabIndex = TabManager.indexOfTab(TabManager.selectedTab) ?? 0
+        selectedViewController = defaultViewControllers[selectedTabIndex]
 
         AppearanceManager.setupTabbar(tabBar)
     }

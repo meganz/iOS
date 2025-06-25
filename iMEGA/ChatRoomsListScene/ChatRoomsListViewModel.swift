@@ -40,7 +40,10 @@ final class ChatRoomsListViewModel: ObservableObject {
     private let tracker: any AnalyticsTracking
     private let chatViewType: ChatViewType
     private var networkMonitorTask: Task<Void, Never>?
-    
+    var shouldShowAvatar: Bool {
+        !DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .navigationRevamp)
+    }
+
     lazy var contextMenuManager = ContextMenuManager(
         chatMenuDelegate: self,
         meetingContextMenuDelegate: self,

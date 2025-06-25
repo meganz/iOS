@@ -26,6 +26,10 @@ final class HomeViewController: UIViewController, DisplayMenuDelegate {
 
     @objc var homeQuickActionSearch: Bool = false
 
+    private var isNavigationRevampEnabled: Bool {
+        DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .navigationRevamp)
+    }
+
     // MARK: - View Model
     
     var myAvatarViewModel: (any MyAvatarViewModelType)?
@@ -196,18 +200,21 @@ final class HomeViewController: UIViewController, DisplayMenuDelegate {
     }
 
     private func setupViewModelEventListening() {
-        myAvatarViewModel?.notifyUpdate = { [weak self] output in
-            guard let self else { return }
-            let resizedImage = output.avatarImage
+        if !isNavigationRevampEnabled {
+            myAvatarViewModel?.notifyUpdate = { [weak self] output in
+                guard let self else { return }
+                let resizedImage = output.avatarImage
 
-            asyncOnMain {
-                if let badgeButton = self.badgeButton {
-                    badgeButton.setBadgeText(output.notificationNumber)
-                    badgeButton.setAvatarImage(resizedImage)
+                asyncOnMain {
+                    if let badgeButton = self.badgeButton {
+                        badgeButton.setBadgeText(output.notificationNumber)
+                        badgeButton.setAvatarImage(resizedImage)
+                    }
                 }
             }
+            myAvatarViewModel?.inputs.viewIsReady()
         }
-        myAvatarViewModel?.inputs.viewIsReady()
+
 
         recentsViewModel?.notifyUpdate = { [weak self] recentsViewModel in
             if let error = recentsViewModel.error {
@@ -302,8 +309,10 @@ final class HomeViewController: UIViewController, DisplayMenuDelegate {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        myAvatarViewModel?.inputs.viewIsAppearing()
+
+        if !isNavigationRevampEnabled {
+            myAvatarViewModel?.inputs.viewIsAppearing()
+        }
     }
 
     override func viewDidDisappear(_ animated: Bool) {
@@ -365,16 +374,17 @@ final class HomeViewController: UIViewController, DisplayMenuDelegate {
     }
 
     private func setupLeftItems() {
-        
+        guard !isNavigationRevampEnabled else {
+            return
+        }
         let badgeButton = BadgeButton()
         self.badgeButton = badgeButton
         badgeButton.addTarget(self, action: .didTapAvatar, for: .touchUpInside)
-        
+
         let avatarButtonItem = UIBarButtonItem(customView: badgeButton)
         self.navigationItem.leftBarButtonItems = [avatarButtonItem]
-        
     }
-    
+
     private func setupRightItems() {
         let startConversationItem = UIBarButtonItem(
             image: MEGAAssets.UIImage.startChat,

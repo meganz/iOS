@@ -76,9 +76,6 @@ class NodeBrowserViewModel: ObservableObject {
     @Published var title = ""
     @Published var viewState: ViewState = .regular(leftBarButton: .back)
     @Published var editMode: EditMode = .inactive
-    var showAvatarIconInNavBar: Bool {
-        viewState == .regular(leftBarButton: .avatar)
-    }
     var isSelectionHidden = false
     private var subscriptions = Set<AnyCancellable>()
     let avatarViewModel: MyAvatarViewModel
@@ -386,7 +383,7 @@ class NodeBrowserViewModel: ObservableObject {
             if config.displayMode == .recents {
                 return .close
             }
-            return isBackButtonShown ? .back : .avatar
+            return isBackButtonShown || DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .navigationRevamp) ? .back : .avatar
         }()
 
         viewState = editing ? .editing : .regular(leftBarButton: leftBarButton)
