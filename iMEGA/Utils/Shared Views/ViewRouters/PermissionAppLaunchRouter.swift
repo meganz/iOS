@@ -53,7 +53,7 @@ struct PermissionAppLaunchRouter: PermissionAppLaunchRouterProtocol {
                 let preference = PreferenceWrapper(key: PreferenceKeyEntity.shouldShowCameraUploadsEnabledSnackbar, defaultValue: false, useCase: PreferenceUseCase.default)
                 preference.wrappedValue = true
             }
-            showMainApp(designatedTabType: (photosPermissionGranted == true) ? .cameraUploads : nil)
+            showMainApp(designatedTab: (photosPermissionGranted == true) ? .cameraUploads : nil)
         }
     }
 
@@ -84,10 +84,8 @@ struct PermissionAppLaunchRouter: PermissionAppLaunchRouterProtocol {
         }
     }
 
-    private func showMainApp(designatedTabType: TabType? = nil) {
-        if let designatedTabType {
-            TabManager.setDesignatedTab(tab: Tab(tabType: designatedTabType))
-        }
+    private func showMainApp(designatedTab: Tab? = nil) {
+        TabManager.setDesignatedTab(tab: designatedTab)
 
         guard let launchViewController = UIStoryboard(
             name: "Launch",

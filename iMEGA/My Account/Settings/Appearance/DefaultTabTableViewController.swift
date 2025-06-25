@@ -22,19 +22,23 @@ final class DefaultTabTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
       
         let cell = tableView.dequeueReusableCell(withIdentifier: UITableViewCell.reuseIdentifier, for: indexPath)
-        
-        if let tabType = TabType(rawValue: indexPath.row) {
-            let tab = Tab(tabType: tabType)
+        let index = indexPath.row
+
+        if let tab = TabManager.tabAtIndex(index) {
             cell.imageView?.image = tab.icon.withTintColor(TokenColors.Text.secondary)
             let title = tab.title
             cell.textLabel?.text = Strings.localized(title, comment: title)
             cell.textLabel?.font = UIFont.preferredFont(forTextStyle: .body)
             cell.textLabel?.textColor = UIColor.primaryTextColor()
         }
+
+        let preferenceTab = TabManager.getPreferenceTab()
+        let preferenceTabIndex = TabManager.indexOfTab(preferenceTab)
+
         cell.accessoryView = UIImageView(image: MEGAAssets.UIImage.turquoiseCheckmark)
         cell.backgroundColor = TokenColors.Background.page
-        cell.accessoryView?.isHidden = TabManager.getPreferenceTab().tabType.rawValue != indexPath.row
-        
+        cell.accessoryView?.isHidden = preferenceTabIndex != indexPath.row
+
         return cell
     }
 
@@ -42,9 +46,12 @@ final class DefaultTabTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        if let tabType = TabType(rawValue: indexPath.row) {
-            TabManager.setPreferenceTab(tab: Tab(tabType: tabType))
-            tableView.reloadData()
+        let index = indexPath.row
+        guard index < TabManager.appTabs.count else {
+            MEGALogError("[DefaultTabTableViewController] selected invalid index \(index)")
+            return
         }
+        TabManager.setPreferenceTab(index: index)
+        tableView.reloadData()
     }
 }
