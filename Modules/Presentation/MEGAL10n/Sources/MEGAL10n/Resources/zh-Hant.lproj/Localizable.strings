@@ -3638,6 +3638,10 @@
 "upgradeAccountPlan.button.termsAndPolicies.title"="條款和政策";
 /* On Upgrade Account Plan screen. Button title to buy account plan. %@ will be the name of the selected plan */
 "upgradeAccountPlan.button.buyAccountPlan.title"="購買%@";
+/* On Upgrade Account Plan screen. Button title to continue to buy account plan in-app when user could buy externally. %@ will be the higher price of the plan */
+"upgradeAccountPlan.button.buyInApp.title"="在應用程式中繼續（%@）";
+/* On Upgrade Account Plan screen. Button footer text to continue to buy account plan in-app when user could buy externally. %@ will be the higher price of the plan */
+"upgradeAccountPlan.button.buyInApp.footer"="透過應用程式購買時需支付平台費用";
 /* On Upgrade Account Plan screen. Displayed header title text message */
 "upgradeAccountPlan.header.title.choosePlan"="選擇適合您的方案";
 /* On Upgrade Account Plan screen. Displayed header title text with current plan. %@ will be the name of the current plan */
@@ -4718,3 +4722,7 @@
 "tabbarTitle.menu"="選單";
 /* Storage benefit shown for the free plan card */
 "subscriptionPurchase.freePlanCard.feature.storage"="%@儲存空間";
+/* Title shown for the free plan card for upgrading */
+"subscriptionPurchase.freePlanCard.title.upgrade"="繼續使用您的免費方案";
+/* Button title for the free plan card for upgrading */
+"subscriptionPurchase.freePlanCard.button.title.upgrade"="繼續使用免費方案";

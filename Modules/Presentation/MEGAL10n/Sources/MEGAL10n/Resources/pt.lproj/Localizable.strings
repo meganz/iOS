@@ -3638,6 +3638,10 @@
 "upgradeAccountPlan.button.termsAndPolicies.title"="Termos e políticas";
 /* On Upgrade Account Plan screen. Button title to buy account plan. %@ will be the name of the selected plan */
 "upgradeAccountPlan.button.buyAccountPlan.title"="Comprar o %@";
+/* On Upgrade Account Plan screen. Button title to continue to buy account plan in-app when user could buy externally. %@ will be the higher price of the plan */
+"upgradeAccountPlan.button.buyInApp.title"="Continuar no aplicativo (%@)";
+/* On Upgrade Account Plan screen. Button footer text to continue to buy account plan in-app when user could buy externally. %@ will be the higher price of the plan */
+"upgradeAccountPlan.button.buyInApp.footer"="As taxas da plataforma se aplicam ao comprar por meio do aplicativo";
 /* On Upgrade Account Plan screen. Displayed header title text message */
 "upgradeAccountPlan.header.title.choosePlan"="Escolha o plano ideal para você";
 /* On Upgrade Account Plan screen. Displayed header title text with current plan. %@ will be the name of the current plan */
@@ -4718,3 +4722,7 @@
 "tabbarTitle.menu"="Menu";
 /* Storage benefit shown for the free plan card */
 "subscriptionPurchase.freePlanCard.feature.storage"="%@ de espaço de armazenamento";
+/* Title shown for the free plan card for upgrading */
+"subscriptionPurchase.freePlanCard.title.upgrade"="Continuar com o seu plano gratuito";
+/* Button title for the free plan card for upgrading */
+"subscriptionPurchase.freePlanCard.button.title.upgrade"="Continuar com o plano gratuito";
