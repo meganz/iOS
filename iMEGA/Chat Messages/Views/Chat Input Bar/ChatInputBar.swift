@@ -475,6 +475,14 @@ extension ChatInputBar: UIGestureRecognizerDelegate {
 }
 
 extension ChatInputBar: MessageInputBarDelegate {
+    func messageInputBarDidExpand(_ messageInputBar: MessageInputBar) {
+        delegate?.messageInputBarDidExpand(messageInputBar)
+    }
+    
+    func messageInputBarDidCollapse(_ messageInputBar: MessageInputBar) {
+        delegate?.messageInputBarDidCollapse(messageInputBar)
+    }
+    
     func didPasteImage(_ image: UIImage) {
         delegate?.didPasteImage(image)
     }

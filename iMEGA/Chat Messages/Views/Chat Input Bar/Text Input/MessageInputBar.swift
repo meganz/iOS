@@ -11,6 +11,8 @@ protocol MessageInputBarDelegate: AnyObject {
     func textDidEndEditing()
     func clearEditMessage()
     func didPasteImage(_ image: UIImage)
+    func messageInputBarDidExpand(_ messageInputBar: MessageInputBar)
+    func messageInputBarDidCollapse(_ messageInputBar: MessageInputBar)
 }
 
 class MessageInputBar: UIView {
@@ -32,7 +34,7 @@ class MessageInputBar: UIView {
     
     @IBOutlet weak var backgroundViewTrailingTextViewConstraint: NSLayoutConstraint!
     @IBOutlet weak var backgroundViewTrailingButtonConstraint: NSLayoutConstraint!
-    
+
     @IBOutlet weak var rightButtonHolderView: UIView!
     @IBOutlet weak var rightButtonHolderViewWidthConstraint: NSLayoutConstraint!
     @IBOutlet weak var rightButtonHolderViewHeightConstraint: NSLayoutConstraint!
@@ -78,14 +80,16 @@ class MessageInputBar: UIView {
 
     private var expanded: Bool = false
     private var minTopPaddingWhenExpanded: CGFloat = 20.0
+    // Computes the expanded height of the messageTextView
     private var expandedHeight: CGFloat? {
         guard let editViewTopConstraintValueWhenExpanded = editViewTopConstraintValueWhenExpanded else {
             return nil
         }
-        
         let expandedHeight = heightWhenExpanded(topConstraintValueWhenExpanded: editViewTopConstraintValueWhenExpanded)
+
         let minHeightRequired = rightButtonHolderView.bounds.height + expandCollapseButton.bounds.height
-        return expandedHeight > minHeightRequired ? expandedHeight :  heightWhenExpanded(topConstraintValueWhenExpanded: minTopPaddingWhenExpanded)
+
+        return expandedHeight > minHeightRequired ? expandedHeight : heightWhenExpanded(topConstraintValueWhenExpanded: minTopPaddingWhenExpanded)
     }
 
     private var keyboardHeight: CGFloat?
@@ -104,9 +108,9 @@ class MessageInputBar: UIView {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        
+
         configureImages()
-        
+
         messageTextView.collapsedMaxHeightReachedAction = { [weak self] collapsedMaxHeightReached in
             guard let `self` = self, !self.expanded else {
                 return
@@ -152,6 +156,7 @@ class MessageInputBar: UIView {
             if editViewHeightConstraint.constant > 0 { calculateEditViewHeight() }
             calculateAddButtonBotomSpacing()
             calculateTopEditViewSpacing()
+            self.messageTextView.expandedHeight = self.expandedHeight
         }
     }
     
@@ -281,7 +286,10 @@ class MessageInputBar: UIView {
     
     private func heightWhenExpanded(topConstraintValueWhenExpanded: CGFloat) -> CGFloat {
         let keyboard = messageTextView.isFirstResponder ? (keyboardHeight ?? 0.0) : 0.0
-        let insetHeight = topConstraintValueWhenExpanded + messageTextViewBottomConstraintDefaultValue + keyboard + editViewHeightConstraint.constant
+        let insetHeight = topConstraintValueWhenExpanded
+        + keyboard
+        + editViewHeightConstraint.constant
+
         return UIScreen.main.bounds.height - insetHeight
     }
     
@@ -342,11 +350,14 @@ class MessageInputBar: UIView {
     }
     
     private func expand() {
+        delegate?.messageInputBarDidExpand(self)
         expandAnimationStart(completionHandler: expandAnimationComplete)
     }
     
     private func collapse(_ completionHandler: (() -> Void)? = nil) {
+        delegate?.messageInputBarDidCollapse(self)
         collapseAnimationStart { _ in
+
             self.collapseAnimationComplete()
             completionHandler?()
         }
@@ -385,6 +396,7 @@ class MessageInputBar: UIView {
     }
     
     private func expandAnimationStart(completionHandler: ((Bool) -> Void)?) {
+
         collapsedTextViewCoverView.isHidden = true
         messageTextViewCoverView.isHidden = true
         expandedTextViewCoverView.isHidden = false
@@ -419,37 +431,35 @@ class MessageInputBar: UIView {
         messageTextView.expandedHeight = expandedHeight
         expandCollapseButton.setImage(MEGAAssets.UIImage.collapse, for: .normal)
     }
-    
+
     private func keyboardShowNotification() -> any NSObjectProtocol {
         return NotificationCenter.default.addObserver(
             forName: UIResponder.keyboardDidShowNotification,
             object: nil,
             queue: .main
         ) { [weak self] notification in
-            guard let `self` = self else {
+            guard let self else {
                 return
             }
             
             guard let keyboardFrame = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue, self.messageTextView.isFirstResponder else {
                 return
             }
-            
+
             MEGALogDebug("[MessageInputBar] Keyboard did show notification triggered")
-            
-            let inputBarHeight: CGFloat = self.messageTextView.intrinsicContentSize.height
-                + self.messageTextViewBottomConstraint.constant
-                + self.editViewTopConstraint.constant
-                + self.editViewHeightConstraint.constant
-            self.keyboardHeight = keyboardFrame.size.height - inputBarHeight
-                        
-            if self.backgroundViewTrailingButtonConstraint.isActive,
-                let messageTextViewExpanadedHeight = self.messageTextView.expandedHeight,
+
+            self.keyboardHeight = keyboardFrame.size.height
+
+            // We only update messageTextView's height when the mic button is not visible
+            // (aka: when the textView is empty)
+            if self.micButton.isHidden,
+              let messageTextViewExpanadedHeight = self.messageTextView.expandedHeight,
                 messageTextViewExpanadedHeight != self.expandedHeight {
                 self.messageTextView.expandedHeight = self.expandedHeight
             }
         }
     }
-    
+
     private func keyboardHideNotification() -> any NSObjectProtocol {
         return NotificationCenter.default.addObserver(
             forName: UIResponder.keyboardDidHideNotification,
@@ -459,7 +469,9 @@ class MessageInputBar: UIView {
             guard let `self` = self else {
                 return
             }
-            
+
+            keyboardHeight = nil
+
             if self.expanded {
                 self.expanded = false
                 self.collapse()
