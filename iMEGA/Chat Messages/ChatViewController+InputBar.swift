@@ -129,7 +129,7 @@ extension ChatViewController {
     }
     
     // MARK: - Private methods.
-    internal func configureInputBarType() {
+    func configureInputBarType() {
         if isEditing {
             inputBarType = .custom(UIView(frame: .zero))
         } else if chatRoom.isPublicChat,
@@ -465,6 +465,14 @@ extension ChatViewController {
 }
 
 extension ChatViewController: ChatInputBarDelegate {
+    func messageInputBarDidExpand(_ messageInputBar: MessageInputBar) {
+        navigationController?.setNavigationBarHidden(true, animated: true)
+    }
+    
+    func messageInputBarDidCollapse(_ messageInputBar: MessageInputBar) {
+        navigationController?.setNavigationBarHidden(false, animated: true)
+    }
+    
     func didPasteImage(_ image: UIImage) {
         let router = PasteImagePreviewRouter(viewControllerToPresent: self, chatRoom: chatRoom)
         router.start()

@@ -3,8 +3,8 @@ import Combine
 import KeyboardLayoutGuide
 import MEGAAppPresentation
 import MEGAAppSDKRepo
-import MEGAAuthentication
 import MEGAAssets
+import MEGAAuthentication
 import MEGADesignToken
 import MEGADomain
 import MEGAL10n
@@ -331,10 +331,10 @@ class ChatViewController: MessagesViewController {
         navigationController?.setToolbarHidden(true, animated: true)
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name.MEGAPasscodeViewControllerWillClose, object: nil)
     }
-    
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
+
         reloadInputViews()
         
         if (presentingViewController != nil) && parent != nil && UIApplication.mnz_visibleViewController() == self {
