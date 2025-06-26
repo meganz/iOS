@@ -28,7 +28,10 @@
 		161D6A942E017C1600B3FD1F /* DependencyInjection+MEGAConnectivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 161D6A932E017C0D00B3FD1F /* DependencyInjection+MEGAConnectivity.swift */; };
 		161D6A972E0180D500B3FD1F /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 161D6A962E0180D300B3FD1F /* HomeView.swift */; };
 		161D6A992E0180DB00B3FD1F /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 161D6A982E0180D900B3FD1F /* HomeViewModel.swift */; };
+		164FF8FD2E0A6A7800CBC210 /* FetchVideoNodesUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164FF8FC2E0A6A6800CBC210 /* FetchVideoNodesUseCase.swift */; };
+		164FF9062E0A6EA000CBC210 /* MEGANodeList+Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164FF9052E0A6EA000CBC210 /* MEGANodeList+Array.swift */; };
 		16A021542E02616E00A932A1 /* LaunchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16A021532E02616B00A932A1 /* LaunchViewModel.swift */; };
+		16F0ABCA2E0A82B8008D980F /* MEGANode+Identifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16F0ABC92E0A82B4008D980F /* MEGANode+Identifiable.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -54,7 +57,10 @@
 		161D6A932E017C0D00B3FD1F /* DependencyInjection+MEGAConnectivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DependencyInjection+MEGAConnectivity.swift"; sourceTree = "<group>"; };
 		161D6A962E0180D300B3FD1F /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		161D6A982E0180D900B3FD1F /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
+		164FF8FC2E0A6A6800CBC210 /* FetchVideoNodesUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchVideoNodesUseCase.swift; sourceTree = "<group>"; };
+		164FF9052E0A6EA000CBC210 /* MEGANodeList+Array.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGANodeList+Array.swift"; sourceTree = "<group>"; };
 		16A021532E02616B00A932A1 /* LaunchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchViewModel.swift; sourceTree = "<group>"; };
+		16F0ABC92E0A82B4008D980F /* MEGANode+Identifiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGANode+Identifiable.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -198,10 +204,37 @@
 		161D6A952E0180CA00B3FD1F /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				164FF9042E0A6E9800CBC210 /* Helpers */,
+				164FF9002E0A6E3700CBC210 /* Presentation */,
+				164FF8FA2E0A6A5800CBC210 /* UseCases */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		164FF8FA2E0A6A5800CBC210 /* UseCases */ = {
+			isa = PBXGroup;
+			children = (
+				164FF8FC2E0A6A6800CBC210 /* FetchVideoNodesUseCase.swift */,
+			);
+			path = UseCases;
+			sourceTree = "<group>";
+		};
+		164FF9002E0A6E3700CBC210 /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
 				161D6A962E0180D300B3FD1F /* HomeView.swift */,
 				161D6A982E0180D900B3FD1F /* HomeViewModel.swift */,
 			);
-			path = Home;
+			path = Presentation;
+			sourceTree = "<group>";
+		};
+		164FF9042E0A6E9800CBC210 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				16F0ABC92E0A82B4008D980F /* MEGANode+Identifiable.swift */,
+				164FF9052E0A6EA000CBC210 /* MEGANodeList+Array.swift */,
+			);
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -291,10 +324,13 @@
 				161D6A922E0179A800B3FD1F /* DependencyInjection+MEGAPresentation.swift in Sources */,
 				161D6A6F2E0172BC00B3FD1F /* DependencyInjection+MEGASDKRepo.swift in Sources */,
 				161D6A6D2E0172BC00B3FD1F /* DependencyInjection.swift in Sources */,
+				164FF8FD2E0A6A7800CBC210 /* FetchVideoNodesUseCase.swift in Sources */,
 				161D6A972E0180D500B3FD1F /* HomeView.swift in Sources */,
 				161D6A992E0180DB00B3FD1F /* HomeViewModel.swift in Sources */,
 				161D6A812E0172C300B3FD1F /* LaunchView.swift in Sources */,
 				16A021542E02616E00A932A1 /* LaunchViewModel.swift in Sources */,
+				16F0ABCA2E0A82B8008D980F /* MEGANode+Identifiable.swift in Sources */,
+				164FF9062E0A6EA000CBC210 /* MEGANodeList+Array.swift in Sources */,
 				161D6A702E0172BC00B3FD1F /* MEGASdk+SharedInstance.swift in Sources */,
 				161D6A7E2E0172C300B3FD1F /* PlayerApp.swift in Sources */,
 				161D6A872E01738B00B3FD1F /* PlayerAppViewModel.swift in Sources */,
