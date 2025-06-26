@@ -6,4 +6,10 @@ enum DependencyInjection {
         composeAuthentication()
         composeAccountManagement()
     }
+
+    // MARK: - Private
+
+    static var fetchVideoNodesUseCase: some FetchVideoNodesUseCaseProtocol {
+        FetchVideoNodesUseCase(sdk: .sharedSdk)
+    }
 }
