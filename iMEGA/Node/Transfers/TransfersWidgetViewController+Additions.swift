@@ -153,6 +153,11 @@ extension TransfersWidgetViewController: TransferWidgetResponderProtocol {
     @objc
     private func tapProgressView() {
         let transferWidgetVC = TransfersWidgetViewController.sharedTransfer()
+        
+        if transferWidgetVC.presentingViewController != nil || transferWidgetVC.isBeingPresented {
+            return
+        }
+        
         let navigationController = MEGANavigationController(rootViewController: transferWidgetVC)
         navigationController.navigationDelegate = self
         navigationController.addLeftDismissButton(withText: Strings.Localizable.close)
