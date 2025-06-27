@@ -192,4 +192,24 @@ public struct MEGAImageBundle {
     public static var upToDate: Image { Image(.upToDate) }
     public static var externalLink: Image { Image(.externalLink) }
     public static var arrowLeftMediumOutline: Image { Image(.arrowLeftMediumThin) }
+    // MARK: - My Account Menu
+    public static var notificationsInMenu: Image { Image(.notificationsInMenu) }
+    public static var proLitePlanInMenu: Image { Image(.proLitePlanInMenu) }
+    public static var proOnePlanInMenu: Image { Image(.proOnePlanInMenu) }
+    public static var proTwoPlanInMenu: Image { Image(.proTwoPlanInMenu) }
+    public static var proThreePlanInMenu: Image { Image(.proThreePlanInMenu) }
+    public static var otherPlansInMenu: Image { Image(.otherPlansInMenu) }
+    public static var storageInMenu: Image { Image(.storageInMenu) }
+    public static var contactsInMenu: Image { Image(.contactsInMenu) }
+    public static var achievementsInMenu: Image { Image(.achievementsInMenu) }
+    public static var sharedItemsInMenu: Image { Image(.sharedItemsInMenu) }
+    public static var deviceCentreInMenu: Image { Image(.deviceCentreInMenu) }
+    public static var transfersInMenu: Image { Image(.transfersInMenu) }
+    public static var offlineFilesInMenu: Image { Image(.offlineFilesInMenu) }
+    public static var rubbishBinInMenu: Image { Image(.rubbishBinInMenu) }
+    public static var settingsInMenu: Image { Image(.settingsInMenu) }
+    public static var vpnAppInMenu: Image { Image(.vpnAppInMenu) }
+    public static var passAppInMenu: Image { Image(.passAppInMenu) }
+    public static var transferItAppInMenu: Image { Image(.transferItAppInMenu) }
+    public static var externalLinkInMenu: Image { Image(.externalLinkInMenu) }
 }

@@ -24,7 +24,7 @@ extension Tab {
             case .sharedItems:
                 return mainTabBarController.sharedItemsViewController()
             case .menu:
-                return menuViewController()
+                return AccountMenuViewRouter().build()
             default:
                 assertionFailure("Could not create view controller for tab: \(self.title)")
                 return nil
@@ -34,28 +34,5 @@ extension Tab {
         viewController?.tabBarItem.title = displayTitle
         viewController?.tabBarItem.image = icon
         return viewController
-    }
-
-    private func menuViewController() -> UIViewController {
-        let navigation = MEGANavigationController()
-
-        let router = MyAccountHallRouter(
-            myAccountHallUseCase: MyAccountHallUseCase(repository: AccountRepository.newRepo),
-            purchaseUseCase: AccountPlanPurchaseUseCase(repository: AccountPlanPurchaseRepository.newRepo),
-            accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
-            accountStorageUseCase: AccountStorageUseCase(
-                accountRepository: AccountRepository.newRepo,
-                preferenceUseCase: PreferenceUseCase.default
-            ),
-            shareUseCase: ShareUseCase(
-                shareRepository: ShareRepository.newRepo,
-                filesSearchRepository: FilesSearchRepository.newRepo,
-                nodeRepository: NodeRepository.newRepo),
-            networkMonitorUseCase: NetworkMonitorUseCase(repo: NetworkMonitorRepository.newRepo),
-            notificationsUseCase: NotificationsUseCase(repository: NotificationsRepository.newRepo),
-            navigationController: navigation
-        )
-
-        return router.build()
     }
 }

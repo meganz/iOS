@@ -215,6 +215,25 @@ extension MEGAAssets {
         public static var upToDate: SwiftUI.Image { MEGAImageBundle.upToDate }
         public static var externalLink: SwiftUI.Image { MEGAImageBundle.externalLink }
         public static var arrowLeftMediumOutline: SwiftUI.Image { MEGAImageBundle.arrowLeftMediumOutline }
+        public static var notificationsInMenu: SwiftUI.Image { MEGAImageBundle.notificationsInMenu }
+        public static var proLitePlanInMenu: SwiftUI.Image { MEGAImageBundle.proLitePlanInMenu }
+        public static var proOnePlanInMenu: SwiftUI.Image { MEGAImageBundle.proOnePlanInMenu }
+        public static var proTwoPlanInMenu: SwiftUI.Image { MEGAImageBundle.proTwoPlanInMenu }
+        public static var proThreePlanInMenu: SwiftUI.Image { MEGAImageBundle.proThreePlanInMenu }
+        public static var otherPlansInMenu: SwiftUI.Image { MEGAImageBundle.otherPlansInMenu }
+        public static var storageInMenu: SwiftUI.Image { MEGAImageBundle.storageInMenu }
+        public static var contactsInMenu: SwiftUI.Image { MEGAImageBundle.contactsInMenu }
+        public static var achievementsInMenu: SwiftUI.Image { MEGAImageBundle.achievementsInMenu }
+        public static var sharedItemsInMenu: SwiftUI.Image { MEGAImageBundle.sharedItemsInMenu }
+        public static var deviceCentreInMenu: SwiftUI.Image { MEGAImageBundle.deviceCentreInMenu }
+        public static var transfersInMenu: SwiftUI.Image { MEGAImageBundle.transfersInMenu }
+        public static var offlineFilesInMenu: SwiftUI.Image { MEGAImageBundle.offlineFilesInMenu }
+        public static var rubbishBinInMenu: SwiftUI.Image { MEGAImageBundle.rubbishBinInMenu }
+        public static var settingsInMenu: SwiftUI.Image { MEGAImageBundle.settingsInMenu }
+        public static var vpnAppInMenu: SwiftUI.Image { MEGAImageBundle.vpnAppInMenu }
+        public static var passAppInMenu: SwiftUI.Image { MEGAImageBundle.passAppInMenu }
+        public static var transferItAppInMenu: SwiftUI.Image { MEGAImageBundle.transferItAppInMenu }
+        public static var externalLinkInMenu: SwiftUI.Image { MEGAImageBundle.externalLinkInMenu }
     }
 }
 
