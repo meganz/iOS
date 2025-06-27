@@ -1,3 +1,4 @@
+import Foundation
 import MEGAAppPresentation
 import MEGAAssets
 import MEGADomain
@@ -15,9 +16,27 @@ import MEGASwift
 }
 
 @objc final class TabManager: NSObject {
-    // (mike): Try to use Tab instead of Int for storing default tab (IOS-10110)
-    @PreferenceWrapper(key: PreferenceKeyEntity.launchTab, defaultValue: TabType.home.rawValue, useCase: PreferenceUseCase.default)
-    private static var launchTabPreference: Int
+
+    /// Migrate the `launchTabPreference` from using `Int` to `Tab.TabType.RawValue`
+    static func migrateDefaultTabPreferenceIfNeeded() {
+        let legacyLaunchTabPreference: PreferenceWrapper<Int?, PreferenceKeyEntity> = PreferenceWrapper(
+            key: PreferenceKeyEntity.launchTab,
+            defaultValue: nil,
+            useCase: PreferenceUseCase.default
+        )
+
+        if let legacyLaunchTabIndex = legacyLaunchTabPreference.wrappedValue,
+           let legacyLaunchTab = legacyAppTabs[safe: legacyLaunchTabIndex] {
+            launchTabPreference = legacyLaunchTab.tabType.rawValue
+        }
+    }
+
+    private override init() {}
+    private static let isNavigationRevampEnabled = DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .navigationRevamp)
+
+    @PreferenceWrapper(key: PreferenceKeyEntity.launchTab, defaultValue: Tab.TabType.home.rawValue, useCase: PreferenceUseCase.default)
+    private static var launchTabPreference: Tab.TabType.RawValue
+
     @PreferenceWrapper(key: PreferenceKeyEntity.launchTabSelected, defaultValue: false, useCase: PreferenceUseCase.default)
     private static var launchTabSelected: Bool
     @PreferenceWrapper(key: PreferenceKeyEntity.launchTabSuggested, defaultValue: false, useCase: PreferenceUseCase.default)
@@ -25,90 +44,71 @@ import MEGASwift
 
     private(set) static var designatedTab: Tab?
 
-    @objc static let avaliableTabs = TabType.allCases.count
-
     @objc static func setDesignatedTab(tab: Tab?) {
         designatedTab = tab
     }
 
-    static func setPreferenceTab(index: Int) {
-        launchTabPreference = index
+    static func setPreferenceTab(_ tab: Tab) {
+        launchTabPreference = tab.tabType.rawValue
         launchTabSelected = true
     }
 
-    @objc static func getPreferenceTab() -> Tab {
-        appTabs[safe: launchTabPreference] ?? .home
+    static func getPreferenceTab() -> Tab {
+        appTabs.first(where: { $0.tabType.rawValue == launchTabPreference }) ?? .home
     }
     
-    @objc static func isLaunchTabSelected() -> Bool {
+    static func isLaunchTabSelected() -> Bool {
         launchTabSelected
     }
     
-    @objc static func isLaunchTabDialogAlreadySuggested() -> Bool {
+    static func isLaunchTabDialogAlreadySuggested() -> Bool {
         launchTabDialogAlreadySuggested
     }
     
-    @objc static func setLaunchTabDialogAlreadyAsSuggested() {
+    static func setLaunchTabDialogAlreadyAsSuggested() {
         launchTabDialogAlreadySuggested = true
     }
 
     // List of tabs in the app's tab bar
-    @objc static var appTabs: [Tab] = {
-        if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .navigationRevamp) {
-            return [.home, .cloudDrive, .cameraUploads, .chat, .menu]
-        } else {
-            return [.cloudDrive, .cameraUploads, .home, .chat, .sharedItems]
-        }
+    private static let legacyAppTabs: [Tab] = [.cloudDrive, .cameraUploads, .home, .chat, .sharedItems]
+    private static let revampedAppTabs: [Tab] = [.home, .cloudDrive, .cameraUploads, .chat, .menu]
+
+    static var appTabs: [Tab] = {
+        isNavigationRevampEnabled ? revampedAppTabs : legacyAppTabs
     }()
 }
 
 @objc final class Tab: NSObject {
-    let icon: UIImage
-    let title: String
-
-    private static var isNavigationRevampEnabled: Bool {
-        DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .navigationRevamp)
+    fileprivate enum TabType: String {
+        case cloudDrive
+        case cameraUploads
+        case home
+        case chat
+        case sharedItems
+        case menu
     }
 
-    static let cloudDrive = Tab(
-        icon: isNavigationRevampEnabled ? MEGAAssets.UIImage.tabBarDrive : MEGAAssets.UIImage.cloudDriveIcon,
-        title: isNavigationRevampEnabled ? Strings.Localizable.TabbarTitle.drive : Strings.Localizable.cloudDrive
-    )
+    let icon: UIImage
+    let title: String
+    fileprivate let tabType: TabType
 
-    static let cameraUploads = Tab(
-        icon: isNavigationRevampEnabled ? MEGAAssets.UIImage.tabBarPhotos : MEGAAssets.UIImage.cameraUploadsIcon,
-        title: isNavigationRevampEnabled ? Strings.Localizable.TabbarTitle.photos : Strings.Localizable.General.cameraUploads
-    )
+    static let cloudDrive = Tab(tabType: .cloudDrive)
+    static let cameraUploads = Tab(tabType: .cameraUploads)
+    static let home = Tab(tabType: .home)
+    static let chat = Tab(tabType: .chat)
+    static let sharedItems = Tab(tabType: .sharedItems)
+    static let menu = Tab(tabType: .menu)
 
-    static let home = Tab(
-        icon: isNavigationRevampEnabled ? MEGAAssets.UIImage.tabBarHome : MEGAAssets.UIImage.home,
-        title: isNavigationRevampEnabled ? Strings.Localizable.TabbarTitle.home : Strings.Localizable.home
-    )
-
-    static let chat = Tab(
-        icon: isNavigationRevampEnabled ? MEGAAssets.UIImage.tabBarChat : MEGAAssets.UIImage.chatIcon,
-        title: isNavigationRevampEnabled ? Strings.Localizable.TabbarTitle.chat : Strings.Localizable.chat
-    )
-
-    static let sharedItems = Tab(
-        icon: MEGAAssets.UIImage.sharedItemsIcon,
-        title: Strings.Localizable.sharedItems
-    )
-
-    static let menu = Tab(
-        icon: MEGAAssets.UIImage.tabBarMenu,
-        title: Strings.Localizable.TabbarTitle.menu
-    )
-
-    fileprivate init(icon: UIImage, title: String) {
-        self.icon = icon
-        self.title = title
+    fileprivate init(tabType: TabType) {
+        self.icon = tabType.icon
+        self.title = tabType.title
+        self.tabType = tabType
         super.init()
     }
 }
 
 extension TabManager {
-    @objc static var selectedTab: Tab {
+    static var selectedTab: Tab {
         Self.designatedTab ?? Self.getPreferenceTab()
     }
 
@@ -118,5 +118,31 @@ extension TabManager {
 
     static func indexOfTab(_ tab: Tab) -> Int? {
         appTabs.firstIndex(of: tab)
+    }
+}
+
+extension Tab.TabType {
+    fileprivate var icon: UIImage {
+        let isNavigationRevampEnabled = DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .navigationRevamp)
+        return switch self {
+        case.cloudDrive: isNavigationRevampEnabled ? MEGAAssets.UIImage.tabBarDrive : MEGAAssets.UIImage.cloudDriveIcon
+        case .cameraUploads: isNavigationRevampEnabled ? MEGAAssets.UIImage.tabBarPhotos : MEGAAssets.UIImage.cameraUploadsIcon
+        case .home: isNavigationRevampEnabled ? MEGAAssets.UIImage.tabBarHome : MEGAAssets.UIImage.home
+        case .chat: isNavigationRevampEnabled ? MEGAAssets.UIImage.tabBarChat : MEGAAssets.UIImage.chatIcon
+        case .sharedItems: MEGAAssets.UIImage.sharedItemsIcon
+        case .menu: MEGAAssets.UIImage.tabBarMenu
+        }
+    }
+
+    fileprivate var title: String {
+        let isNavigationRevampEnabled = DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .navigationRevamp)
+        return switch self {
+        case.cloudDrive: isNavigationRevampEnabled ? Strings.Localizable.TabbarTitle.drive : Strings.Localizable.cloudDrive
+        case .cameraUploads: isNavigationRevampEnabled ? Strings.Localizable.TabbarTitle.photos : Strings.Localizable.General.cameraUploads
+        case .home: isNavigationRevampEnabled ? Strings.Localizable.TabbarTitle.home : Strings.Localizable.home
+        case .chat: isNavigationRevampEnabled ? Strings.Localizable.TabbarTitle.chat : Strings.Localizable.chat
+        case .sharedItems: Strings.Localizable.sharedItems
+        case .menu: Strings.Localizable.TabbarTitle.menu
+        }
     }
 }

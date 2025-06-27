@@ -161,6 +161,7 @@
     
     [Helper restoreAPISetting];
     [self chatUploaderSetup];
+    [self setupTabManager];
     [MEGASdk.shared addMEGARequestDelegate:self];
     [MEGASdk.shared addMEGATransferDelegate:self];
     [MEGASdk.sharedFolderLink addMEGATransferDelegate:self];
