@@ -2256,6 +2256,7 @@
 		BF6149682A9FF38400AB051A /* MEGAL10nObjc in Frameworks */ = {isa = PBXBuildFile; productRef = BF6149672A9FF38400AB051A /* MEGAL10nObjc */; };
 		BF61496A2A9FF39500AB051A /* MEGAL10n in Frameworks */ = {isa = PBXBuildFile; productRef = BF6149692A9FF39500AB051A /* MEGAL10n */; };
 		BF61496C2A9FF39500AB051A /* MEGAL10nObjc in Frameworks */ = {isa = PBXBuildFile; productRef = BF61496B2A9FF39500AB051A /* MEGAL10nObjc */; };
+		BF62C76F2E1259560008B62D /* AccountMenuViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF62C76E2E1259560008B62D /* AccountMenuViewRouter.swift */; };
 		BF65423C2C1BA932006C252C /* CloudDriveViewModeMonitoringService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF65423B2C1BA932006C252C /* CloudDriveViewModeMonitoringService.swift */; };
 		BF6542432C1BBEFF006C252C /* CloudDriveViewModeMonitoringServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6542422C1BBEFF006C252C /* CloudDriveViewModeMonitoringServiceTests.swift */; };
 		BF66DFC82613E6AC00066F35 /* MeetingFloatingPanelRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF66DFC72613E6AC00066F35 /* MeetingFloatingPanelRouter.swift */; };
@@ -5067,6 +5068,7 @@
 		BF5F118B2C3E25A400C48DB4 /* NodeSensitivityCheckerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeSensitivityCheckerTests.swift; sourceTree = "<group>"; };
 		BF6029B62C5AEBD900AD1961 /* NodeDescriptionSeparatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeDescriptionSeparatorView.swift; sourceTree = "<group>"; };
 		BF61494F2A9FF30000AB051A /* MEGAL10n */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MEGAL10n; sourceTree = "<group>"; };
+		BF62C76E2E1259560008B62D /* AccountMenuViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountMenuViewRouter.swift; sourceTree = "<group>"; };
 		BF65423B2C1BA932006C252C /* CloudDriveViewModeMonitoringService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudDriveViewModeMonitoringService.swift; sourceTree = "<group>"; };
 		BF6542422C1BBEFF006C252C /* CloudDriveViewModeMonitoringServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudDriveViewModeMonitoringServiceTests.swift; sourceTree = "<group>"; };
 		BF66DFC72613E6AC00066F35 /* MeetingFloatingPanelRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingFloatingPanelRouter.swift; sourceTree = "<group>"; };
@@ -12392,6 +12394,14 @@
 			path = ExplorerContainerState;
 			sourceTree = "<group>";
 		};
+		BF62C76D2E1259430008B62D /* Menu */ = {
+			isa = PBXGroup;
+			children = (
+				BF62C76E2E1259560008B62D /* AccountMenuViewRouter.swift */,
+			);
+			path = Menu;
+			sourceTree = "<group>";
+		};
 		BF66DFDB2613E73E00066F35 /* FloatingPanel */ = {
 			isa = PBXGroup;
 			children = (
@@ -13295,6 +13305,7 @@
 				415226721A692ECC00EC7BB6 /* Contacts */,
 				E8C289F91BF65B2200F7A034 /* Launch */,
 				415226781A692ECC00EC7BB6 /* Login */,
+				BF62C76D2E1259430008B62D /* Menu */,
 				77597007219EB7FD00B31671 /* Notifications */,
 				4152267E1A692ECC00EC7BB6 /* Offline */,
 				A8C93C0A22D718030030CE1B /* Profile */,
@@ -14242,6 +14253,7 @@
 				BFE64BA2286C18D200F2B69F /* AboutTableViewController+Additions.swift in Sources */,
 				41AC66481AB1D493003FE8DA /* AboutTableViewController.m in Sources */,
 				A8DE32CB22FC14CC006BAC7A /* AccountExpiredViewController.swift in Sources */,
+				BF62C76F2E1259560008B62D /* AccountMenuViewRouter.swift in Sources */,
 				B5EF0A7729F0EE2100B166B1 /* AccountPlanPurchaseRepository.swift in Sources */,
 				165421D02DC4D5B0000A229C /* AccountPlanPurchaseUseCase+Init.swift in Sources */,
 				94F2DD8029EFED3200718176 /* AchievementsDetailsViewController+Additions.swift in Sources */,

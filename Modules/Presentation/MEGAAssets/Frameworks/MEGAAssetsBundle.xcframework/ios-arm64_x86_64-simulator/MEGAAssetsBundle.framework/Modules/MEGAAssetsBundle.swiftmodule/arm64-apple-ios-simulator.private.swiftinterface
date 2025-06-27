@@ -10,29 +10,6 @@ import UIKit
 import _Concurrency
 import _StringProcessing
 import _SwiftConcurrencyShims
-public struct MEGAColorBundle {
-  public static var black000000: SwiftUICore.Color {
-    get
-  }
-  public static var whiteFFFFFF: SwiftUICore.Color {
-    get
-  }
-  public static var black2C2C2E: SwiftUICore.Color {
-    get
-  }
-  public static var gray363638: SwiftUICore.Color {
-    get
-  }
-  public static var grayD1D1D1: SwiftUICore.Color {
-    get
-  }
-  public static var navigationBg: SwiftUICore.Color {
-    get
-  }
-  public static var backgroundRegularPrimaryElevated: SwiftUICore.Color {
-    get
-  }
-}
 public struct MEGAImageBundle {
   public static var megaLogoGrayscale: SwiftUICore.Image {
     get
@@ -602,6 +579,63 @@ public struct MEGAImageBundle {
     get
   }
   public static var arrowLeftMediumOutline: SwiftUICore.Image {
+    get
+  }
+  public static var notificationsInMenu: SwiftUICore.Image {
+    get
+  }
+  public static var proLitePlanInMenu: SwiftUICore.Image {
+    get
+  }
+  public static var proOnePlanInMenu: SwiftUICore.Image {
+    get
+  }
+  public static var proTwoPlanInMenu: SwiftUICore.Image {
+    get
+  }
+  public static var proThreePlanInMenu: SwiftUICore.Image {
+    get
+  }
+  public static var otherPlansInMenu: SwiftUICore.Image {
+    get
+  }
+  public static var storageInMenu: SwiftUICore.Image {
+    get
+  }
+  public static var contactsInMenu: SwiftUICore.Image {
+    get
+  }
+  public static var achievementsInMenu: SwiftUICore.Image {
+    get
+  }
+  public static var sharedItemsInMenu: SwiftUICore.Image {
+    get
+  }
+  public static var deviceCentreInMenu: SwiftUICore.Image {
+    get
+  }
+  public static var transfersInMenu: SwiftUICore.Image {
+    get
+  }
+  public static var offlineFilesInMenu: SwiftUICore.Image {
+    get
+  }
+  public static var rubbishBinInMenu: SwiftUICore.Image {
+    get
+  }
+  public static var settingsInMenu: SwiftUICore.Image {
+    get
+  }
+  public static var vpnAppInMenu: SwiftUICore.Image {
+    get
+  }
+  public static var passAppInMenu: SwiftUICore.Image {
+    get
+  }
+  public static var transferItAppInMenu: SwiftUICore.Image {
+    get
+  }
+  public static var externalLinkInMenu: SwiftUICore.Image {
     get
   }
 }
@@ -1905,6 +1939,29 @@ public struct MEGAUIImageBundle {
     get
   }
   public static var tabBarMenu: UIKit.UIImage {
+    get
+  }
+}
+public struct MEGAColorBundle {
+  public static var black000000: SwiftUICore.Color {
+    get
+  }
+  public static var whiteFFFFFF: SwiftUICore.Color {
+    get
+  }
+  public static var black2C2C2E: SwiftUICore.Color {
+    get
+  }
+  public static var gray363638: SwiftUICore.Color {
+    get
+  }
+  public static var grayD1D1D1: SwiftUICore.Color {
+    get
+  }
+  public static var navigationBg: SwiftUICore.Color {
+    get
+  }
+  public static var backgroundRegularPrimaryElevated: SwiftUICore.Color {
     get
   }
 }

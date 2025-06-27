@@ -10,7 +10,7 @@ private let settings: [SwiftSetting] = [
 let package = Package(
     name: "Accounts",
     platforms: [
-        .macOS(.v10_15), .iOS(.v15)
+        .macOS(.v10_15), .iOS(.v16)
     ],
     products: [
         .library(
@@ -30,6 +30,7 @@ let package = Package(
         .package(path: "../../../MEGAAssets"),
         .package(path: "../MEGAUI"),
         .package(path: "../Settings"),
+        .package(path: "../../../MEGASharedRepo/MEGAUIComponent"),
         .package(url: "https://github.com/googleads/swift-package-manager-google-mobile-ads.git", from: "12.6.0")
     ],
     targets: [
@@ -41,7 +42,8 @@ let package = Package(
                            "MEGASwiftUI",
                            "MEGAAssets",
                            "MEGAUI",
-                           "Settings"],
+                           "Settings",
+                           "MEGAUIComponent"],
             swiftSettings: settings
         ),
         .target(
