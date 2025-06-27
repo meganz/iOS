@@ -5,7 +5,11 @@ import MEGAL10n
 import UIKit
 
 final class DefaultTabTableViewController: UITableViewController {
-    
+
+    var availableTabs: [Tab] {
+        TabManager.appTabs.filter { $0 != .menu }
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         title = Strings.Localizable.defaultTab
@@ -16,7 +20,7 @@ final class DefaultTabTableViewController: UITableViewController {
     // MARK: - UITableViewDataSource
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return TabManager.avaliableTabs
+        return availableTabs.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -47,11 +51,11 @@ final class DefaultTabTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         let index = indexPath.row
-        guard index < TabManager.appTabs.count else {
+        guard let tab = TabManager.tabAtIndex(index) else {
             MEGALogError("[DefaultTabTableViewController] selected invalid index \(index)")
             return
         }
-        TabManager.setPreferenceTab(index: index)
+        TabManager.setPreferenceTab(tab)
         tableView.reloadData()
     }
 }

@@ -678,7 +678,11 @@ extension AppDelegate {
     @objc func chatUploaderSetup() {
         ChatUploader.sharedInstance.setup()
     }
-    
+
+    @objc func setupTabManager() {
+        TabManager.migrateDefaultTabPreferenceIfNeeded()
+    }
+
     // MARK: - Shared links
     @objc func showSharedLinkForNoLoggedInUser(_ url: URL) {
         Task {
