@@ -319,6 +319,32 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
         XCTAssertNil(sut.selectedPlanType)
     }
     
+    @MainActor
+    func testRecommendedPlan_viewTypeIsOnboardingRevampFeatureFlagOn_shouldSetCorrectPlan() async {
+        let testCase: [(currentPlan: AccountTypeEntity, recommendedPlan: AccountTypeEntity?, selectedPlanType: AccountTypeEntity?)] = [
+            (.free, .proI, .proI),
+            (.lite, .proI, .proI),
+            (.starter, .proI, .proI),
+            (.basic, .proI, .proI),
+            (.essential, .proI, .proI),
+            (.proI, .proII, .proII),
+            (.proII, .proIII, .proIII),
+            (.proIII, nil, nil)
+        ]
+        for (current, recommended, selectedPlanType) in testCase {
+            let (sut, _) = makeSUT(
+                accountDetails: AccountDetailsEntity.build(proLevel: current),
+                viewType: .onboarding(isFreeAccountFirstLogin: false),
+                isLoginRegisterAndOnboardingRevampFeatureEnabled: true
+            )
+            
+            await sut.setUpPlanTask?.value
+            
+            XCTAssertEqual(sut.recommendedPlanType, recommended)
+            XCTAssertEqual(sut.selectedPlanType, selectedPlanType)
+        }
+    }
+    
     // MARK: - Selected plan type
     @MainActor
     func testSelectedPlanTypeName_shouldMatchSelectedPlanName() {
@@ -1088,7 +1114,8 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
         lastCloseAdsDate: Date? = nil,
         appVersion: String = "1.0.0",
         canOpenURL: @Sendable @escaping (URL) async -> Bool = { _ in true },
-        openURL: @Sendable @escaping (URL) async -> Void = { _ in }
+        openURL: @Sendable @escaping (URL) async -> Void = { _ in },
+        isLoginRegisterAndOnboardingRevampFeatureEnabled: Bool = false
     ) -> (UpgradeAccountPlanViewModel, MockAccountPlanPurchaseUseCase) {
         mockAccountUseCase = MockAccountUseCase(accountDetailsResult: accountDetailsResult)
         let mockPurchaseUseCase = MockAccountPlanPurchaseUseCase(accountPlanProducts: planList)
@@ -1103,6 +1130,8 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
             purchaseUseCase: mockPurchaseUseCase,
             subscriptionsUseCase: subscriptionsUseCase,
             remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.externalAds: isExternalAdsFlagEnabled]),
+            localFeatureFlagProvider: MockFeatureFlagProvider(
+                list: [.loginRegisterAndOnboardingRevamp: isLoginRegisterAndOnboardingRevampFeatureEnabled]),
             preferenceUseCase: preferenceUseCase,
             externalPurchaseUseCase: externalPurchaseUseCase,
             tracker: tracker,
