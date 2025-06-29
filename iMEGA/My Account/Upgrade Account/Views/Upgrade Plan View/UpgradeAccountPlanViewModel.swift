@@ -199,7 +199,8 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
         setUpPlanTask = Task {
             planList = await purchaseUseCase.accountPlanProducts()
             
-            if viewType == .upgrade {
+            if localFeatureFlagProvider.isFeatureFlagEnabled(for: .loginRegisterAndOnboardingRevamp) ||
+                viewType == .upgrade {
                 setRecommendedPlan(basedOnPlan: accountDetails.proLevel)
             } else {
                 let lowestPlan = planList.sorted(by: { $0.price < $1.price }).first ?? PlanEntity()
