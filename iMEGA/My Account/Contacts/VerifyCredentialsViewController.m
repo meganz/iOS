@@ -5,7 +5,7 @@
 #import "MEGA-Swift.h"
 
 @import MEGAL10nObjc;
-@import MEGAAppSDKRepo;
+@import MEGASDKRepo;
 
 @interface VerifyCredentialsViewController ()
 

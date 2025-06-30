@@ -14,7 +14,7 @@
 
 @import MEGAL10nObjc;
 @import MEGAUIKit;
-@import MEGAAppSDKRepo;
+@import MEGASDKRepo;
 
 @interface RubbishBinTableViewController () <MEGARequestDelegate>
 

@@ -29,24 +29,24 @@ public struct RubbishBinSettingsRepository: RubbishBinSettingsRepositoryProtocol
     }
     
     public func cleanRubbishBin() async throws {
-        return try await withAsyncThrowingValue { completion in
-            sdk.cleanRubbishBin(with: RequestDelegate(completion: { _, error in
-                if let error {
-                    completion(.failure(error))
-                } else {
+        try await withAsyncThrowingVoidValue { completion in
+            sdk.cleanRubbishBin(with: RequestDelegate { _, error in
+                if error.type == .apiOk {
                     completion(.success(()))
+                } else {
+                    completion(.failure(error))
                 }
-            }))
+            })
         }
     }
     
     public func catchupWithSDK() async throws {
-        return try await withAsyncThrowingValue { completion in
+        try await withAsyncThrowingVoidValue { completion in
             sdk.catchup(with: RequestDelegate(completion: { _, error in
-                if let error {
-                    completion(.failure(error))
-                } else {
+                if error.type == .apiOk {
                     completion(.success(()))
+                } else {
+                    completion(.failure(error))
                 }
             }))
         }

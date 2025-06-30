@@ -7,7 +7,7 @@
 #import "TestPasswordViewController.h"
 
 @import MEGAL10nObjc;
-@import MEGAAppSDKRepo;
+@import MEGASDKRepo;
 
 @interface PasswordReminderViewController ()
 

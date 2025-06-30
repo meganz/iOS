@@ -8,6 +8,7 @@
 
 @import MEGAL10nObjc;
 @import MEGAUIKit;
+@import MEGASDKRepo;
 
 @interface TransferTableViewCell ()
 
