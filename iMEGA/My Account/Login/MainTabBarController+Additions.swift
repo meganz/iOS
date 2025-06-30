@@ -117,7 +117,8 @@ extension MainTabBarController {
 
     @objc func configurePhoneImageBadge() {
         if phoneBadgeImageView == nil {
-            phoneBadgeImageView = UIImageView(image: .init(named: "onACall"))
+            phoneBadgeImageView = UIImageView(image: MEGAAssets.UIImage.phoneCallAll)
+            phoneBadgeImageView?.tintColor = TokenColors.Indicator.green
             phoneBadgeImageView?.isHidden = true
             if let phoneBadgeImageView {
                 tabBar.addSubview(phoneBadgeImageView)

@@ -188,7 +188,7 @@
     CGRect frame = [self frameForTabInTabBar:self.tabBar withIndex: TabTypeChat];
     CGFloat originX = frame.origin.x + (frame.size.width-iconWidth) / 2 + iconWidth;
     
-    self.phoneBadgeImageView.frame = CGRectMake(originX-6, 6, 10, 10);
+    self.phoneBadgeImageView.frame = CGRectMake(originX - 10, 10, 15, 15);
 }
 
 - (CGRect)frameForTabInTabBar:(UITabBar*)tabBar withIndex:(NSUInteger)index {
