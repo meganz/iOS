@@ -26,7 +26,7 @@ class ChatViewController: MessagesViewController {
     @objc var chatId: ChatIdEntity {
         chatRoom.chatId // This is accessed from MEGALinkManager and MEGAChatNotificationDelegate
     }
-
+    
     @objc var publicChatLink: URL?
     @objc var publicChatWithLinkCreated: Bool = false
     let chatInputBar = ChatInputBar()
@@ -331,10 +331,10 @@ class ChatViewController: MessagesViewController {
         navigationController?.setToolbarHidden(true, animated: true)
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name.MEGAPasscodeViewControllerWillClose, object: nil)
     }
-
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-
+        
         reloadInputViews()
         
         if (presentingViewController != nil) && parent != nil && UIApplication.mnz_visibleViewController() == self {
@@ -417,7 +417,7 @@ class ChatViewController: MessagesViewController {
                 traitCollection.preferredContentSizeCategory != previousTraitCollection?.preferredContentSizeCategory else {
             return
         }
-
+        
         messagesCollectionView.reloadData()
         startOrJoinCallButton.backgroundColor = TokenColors.Background.inverse
         startOrJoinCallButton.setTitleColor(TokenColors.Text.inverseAccent, for: .normal)
@@ -778,7 +778,7 @@ class ChatViewController: MessagesViewController {
             forUserHandle: userHandle,
             name: message.sender.displayName,
             size: CGSize(width: 24, height: 24),
-            delegate: RequestDelegate(completion: { _ in
+            delegate: RequestDelegate(completion: { (_: Result<MEGARequest, MEGAError>) in
                 // `avatarLoaded` will reload all cells with avatars once fetch is finished
                 // to allow cells displayed with generated avatar to be reconfigured with the one that was fetched
                 MEGALogDebug("[AVATAR] loaded for \(userHandle)")
@@ -1249,7 +1249,7 @@ extension ChatViewController {
             // This is important to skip notifications from child modal controllers in iOS >= 13.0
             return
         }
-
+        
         guard let keyboardEndFrameInScreenCoords = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else {
             return
         }
@@ -1276,7 +1276,7 @@ extension ChatViewController {
             )
         }
     }
-
+    
     private func requiredScrollViewBottomInset(forKeyboardFrame keyboardFrame: CGRect) -> CGFloat {
         // we only need to adjust for the part of the keyboard that covers (i.e. intersects) our collection view;
         // see https://developer.apple.com/videos/play/wwdc2017/242/ for more details
@@ -1292,6 +1292,6 @@ extension ChatViewController {
     }
     
     private var automaticallyAddedBottomInset: CGFloat {
-       messagesCollectionView.adjustedContentInset.bottom - messagesCollectionView.contentInset.bottom
+        messagesCollectionView.adjustedContentInset.bottom - messagesCollectionView.contentInset.bottom
     }
 }

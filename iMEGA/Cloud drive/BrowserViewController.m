@@ -23,7 +23,7 @@
 @import DZNEmptyDataSet;
 @import MEGAL10nObjc;
 @import MEGAUIKit;
-@import MEGAAppSDKRepo;
+@import MEGASDKRepo;
 
 @interface BrowserViewController () <UISearchBarDelegate, UISearchResultsUpdating, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, UISearchControllerDelegate, UIAdaptivePresentationControllerDelegate>
 

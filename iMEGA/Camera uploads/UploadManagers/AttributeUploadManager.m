@@ -8,7 +8,7 @@
 #import "NSError+CameraUpload.h"
 #import "MEGA-Swift.h"
 
-@import MEGAAppSDKRepo;
+@import MEGASDKRepo;
 
 static NSString * const AttributesDirectoryName = @"Attributes";
 

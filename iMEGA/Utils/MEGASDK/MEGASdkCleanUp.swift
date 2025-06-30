@@ -6,15 +6,14 @@ import MEGASdk
 @objc class MEGASdkCleanUp: NSObject {
     @objc static func localLogout() {
         let semaphore = DispatchSemaphore(value: 0)
-        
-        let sdkDelegate = RequestDelegate { _ in
+        let sdkDelegate = RequestDelegate(completion: { (_: Result<MEGARequest, MEGAError>) in
             let chatSdkDelegate = ChatRequestDelegate { _, _ in
                 DispatchQueue.global(qos: .userInteractive).async {
                     semaphore.signal()
                 }
             }
             MEGAChatSdk.shared .localLogout(with: chatSdkDelegate)
-        }
+        })
         
         MEGASdk.shared.localLogout(with: sdkDelegate)
         

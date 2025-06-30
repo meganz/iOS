@@ -22,7 +22,6 @@
 #import "NSArray+MNZCategory.h"
 
 @import MEGAL10nObjc;
-@import MEGAAppSDKRepo;
 @import ChatRepo;
 
 @interface GroupChatDetailsViewController () <MEGAChatRequestDelegate, MEGAChatDelegate, MEGAGlobalDelegate, PushNotificationControlProtocol, UIScrollViewDelegate>
