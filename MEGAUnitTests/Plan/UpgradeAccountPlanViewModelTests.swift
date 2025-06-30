@@ -42,6 +42,12 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
         
         await sut.setUpPlanTask?.value
         XCTAssertEqual(sut.selectedCycleTab, .yearly)
+        XCTAssertEqual(sut.subscriptionPurchaseChipOptions.map(\.title),
+                       [Strings.Localizable.monthly, Strings.Localizable.yearly])
+        XCTAssertEqual(sut.selectedCycleTab, .yearly)
+        let expectedSelectedChip = sut.subscriptionPurchaseChipOptions.first(
+            where: { $0.title == Strings.Localizable.yearly })
+        XCTAssertEqual(sut.selectedSubscriptionPurchaseChip, expectedSelectedChip)
         XCTAssertEqual(sut.filteredPlanList, [.proI_yearly])
         XCTAssertEqual(sut.currentPlan?.type, .free)
         XCTAssertEqual(sut.recommendedPlanType, .proI)
@@ -55,6 +61,9 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
         
         await sut.setUpPlanTask?.value
         XCTAssertEqual(sut.selectedCycleTab, .monthly)
+        let expectedSelectedChip = sut.subscriptionPurchaseChipOptions.first(
+            where: { $0.title == Strings.Localizable.monthly })
+        XCTAssertEqual(sut.selectedSubscriptionPurchaseChip, expectedSelectedChip)
         XCTAssertEqual(sut.filteredPlanList, [.proI_monthly, .proII_monthly])
         XCTAssertEqual(sut.currentPlan?.type, .proI)
         XCTAssertEqual(sut.recommendedPlanType, .proII)
