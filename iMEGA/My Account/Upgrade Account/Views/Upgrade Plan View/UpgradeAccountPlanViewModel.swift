@@ -60,11 +60,16 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
     private(set) var recommendedPlanType: AccountTypeEntity?
 
     @Published var selectedCycleTab: SubscriptionCycleEntity = .yearly {
-        didSet { toggleBuyButton() }
+        didSet {
+            updateSelectedSubscriptionPurchaseChip()
+            toggleBuyButton()
+        }
     }
     @Published private(set) var selectedPlanType: AccountTypeEntity? {
         didSet { toggleBuyButton() }
     }
+    @Published private(set) var subscriptionPurchaseChipOptions: [SubscriptionPurchaseChipOption] = []
+    @Published var selectedSubscriptionPurchaseChip: SubscriptionPurchaseChipOption?
 
     private(set) var registerDelegateTask: Task<Void, Never>?
     private(set) var setUpPlanTask: Task<Void, Never>?
@@ -109,6 +114,7 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
         isExternalAdsActive = remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .externalAds)
         $lastCloseAdsDate.useCase = preferenceUseCase
         registerDelegates()
+        setupSubscriptionChips()
         setupPlans()
     }
     
@@ -192,6 +198,24 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
             postDismissOnboardingProPlanDialog()
             isDismiss = true
             observeAccountUpdatesTask?.cancel()
+        }
+    }
+    
+    private func setupSubscriptionChips() {
+        subscriptionPurchaseChipOptions =  [
+            .init(title: SubscriptionCycleEntity.monthly.subscriptionPurchaseChipTitle) { [weak self] in
+                self?.selectedCycleTab = .monthly },
+            .init(title: SubscriptionCycleEntity.yearly.subscriptionPurchaseChipTitle) { [weak self] in
+                self?.selectedCycleTab = .yearly
+            }
+        ]
+        updateSelectedSubscriptionPurchaseChip()
+    }
+    
+    private func updateSelectedSubscriptionPurchaseChip() {
+        guard selectedCycleTab != .none else { return }
+        selectedSubscriptionPurchaseChip = subscriptionPurchaseChipOptions.first {
+            $0.title == selectedCycleTab.subscriptionPurchaseChipTitle
         }
     }
 
@@ -670,6 +694,16 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
             accountDetails = try await accountUseCase.refreshCurrentAccountDetails()
         } catch {
             MEGALogError("Error loading account details. Error: \(error)")
+        }
+    }
+}
+
+private extension SubscriptionCycleEntity {
+    var subscriptionPurchaseChipTitle: String {
+        switch self {
+        case .monthly: Strings.Localizable.monthly
+        case .yearly: Strings.Localizable.yearly
+        default: ""
         }
     }
 }
