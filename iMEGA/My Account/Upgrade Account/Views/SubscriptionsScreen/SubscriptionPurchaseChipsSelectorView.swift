@@ -13,7 +13,7 @@ struct SubscriptionPurchaseChipOption: Identifiable, Equatable {
 
 struct SubscriptionPurchaseChipsSelectorView: View {
     let options: [SubscriptionPurchaseChipOption]
-    @Binding var selected: SubscriptionPurchaseChipOption
+    @Binding var selected: SubscriptionPurchaseChipOption?
 
     var body: some View {
         HStack(spacing: 12) {
