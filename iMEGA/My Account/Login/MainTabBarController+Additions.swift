@@ -97,8 +97,8 @@ extension MainTabBarController {
         setBadgeValueForChats()
         configurePhoneImageBadge()
 
-        let selectedTabIndex = TabManager.indexOfTab(TabManager.selectedTab) ?? 0
-        selectedViewController = defaultViewControllers[selectedTabIndex]
+        let selectedTabIndex = TabManager.indexOfTab(TabManager.selectedTab)
+        selectedIndex = selectedTabIndex
 
         AppearanceManager.setupTabbar(tabBar)
     }
