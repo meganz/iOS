@@ -27,6 +27,23 @@ struct SubscriptionPurchaseView: View {
                     onDismiss()
                 }
             }
+            .alert(isPresented: $viewModel.isAlertPresented) {
+                if let alertType = viewModel.alertType,
+                   let secondaryButtonTitle = alertType.secondaryButtonTitle {
+                    return Alert(
+                        title: Text(alertType.title),
+                        message: Text(alertType.message),
+                        primaryButton: .default(Text(alertType.primaryButtonTitle), action: alertType.primaryButtonAction),
+                        secondaryButton: .cancel(Text(secondaryButtonTitle))
+                    )
+                } else {
+                    return Alert(
+                        title: Text(viewModel.alertType?.title ?? ""),
+                        message: Text(viewModel.alertType?.message ?? ""),
+                        dismissButton: .default(Text(viewModel.alertType?.primaryButtonTitle ?? ""))
+                    )
+                }
+            }
     }
 
     @ViewBuilder
