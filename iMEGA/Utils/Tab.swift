@@ -22,7 +22,7 @@ import MEGASwift
         let legacyLaunchTabPreference: PreferenceWrapper<Int?, PreferenceKeyEntity> = PreferenceWrapper(
             key: PreferenceKeyEntity.launchTab,
             defaultValue: nil,
-            useCase: PreferenceUseCase.default
+            useCase: PreferenceUseCase.default 
         )
 
         if let legacyLaunchTabIndex = legacyLaunchTabPreference.wrappedValue,
@@ -116,8 +116,36 @@ extension TabManager {
         appTabs[safe: index]
     }
 
-    static func indexOfTab(_ tab: Tab) -> Int? {
-        appTabs.firstIndex(of: tab)
+    static func indexOfTab(_ tab: Tab) -> Int {
+        guard let index = appTabs.firstIndex(of: tab) else {
+            assertionFailure("TabManager should always have a home tab")
+            return 0
+        }
+        return index
+    }
+
+    @objc static func homeTabIndex() -> Int {
+        indexOfTab(.home)
+    }
+
+    @objc static func driveTabIndex() -> Int {
+        indexOfTab(.cloudDrive)
+    }
+
+    @objc static func photosTabIndex() -> Int {
+        indexOfTab(.cameraUploads)
+    }
+
+    @objc static func chatTabIndex() -> Int {
+        indexOfTab(.chat)
+    }
+
+    @objc static func sharedItemsTabIndex() -> Int {
+        indexOfTab(.sharedItems)
+    }
+
+    @objc static func menuTabIndex() -> Int {
+        indexOfTab(.menu)
     }
 }
 

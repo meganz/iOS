@@ -38,7 +38,7 @@
     [self updatePhoneImageBadgeFrame];
     [self.tabBar setNeedsLayout];
     [self.tabBar layoutIfNeeded];
-    [self.tabBar updateBadgeLayoutAt:TabTypeChat];
+    [self.tabBar updateBadgeLayoutAt:[TabManager chatTabIndex]];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -101,16 +101,18 @@
     if (![MEGASdk.shared isAchievementsEnabled]) {
         return;
     }
-    
-    self.selectedIndex = TabTypeHome;
-    MEGANavigationController *navigationController = [self.childViewControllers objectAtIndex:TabTypeHome];
+    NSInteger homeTabIndex = [TabManager homeTabIndex];
+
+    self.selectedIndex = homeTabIndex;
+    MEGANavigationController *navigationController = [self.childViewControllers objectAtIndex:homeTabIndex];
     id<HomeRouting> homeRouting = navigationController.viewControllers.firstObject;
     [homeRouting showAchievements];
 }
 
 - (void)showOfflineAndPresentFileWithHandle:(NSString * _Nullable )base64handle {
-    self.selectedIndex = TabTypeHome;
-    MEGANavigationController *navigationController = [self.childViewControllers objectAtIndex:TabTypeHome];
+    NSInteger homeTabIndex = [TabManager homeTabIndex];
+    self.selectedIndex = homeTabIndex;
+    MEGANavigationController *navigationController = [self.childViewControllers objectAtIndex:homeTabIndex];
     id<HomeRouting> homeRouting = navigationController.viewControllers.firstObject;
     if (base64handle) {
         [homeRouting showOfflineFile:base64handle];
@@ -120,8 +122,9 @@
 }
 
 - (void)showFavouritesNodeWithHandle:(NSString * _Nullable )base64handle {
-    self.selectedIndex = TabTypeHome;
-    MEGANavigationController *navigationController = [self.childViewControllers objectAtIndex:TabTypeHome];
+    NSInteger homeTabIndex = [TabManager homeTabIndex];
+    self.selectedIndex = homeTabIndex;
+    MEGANavigationController *navigationController = [self.childViewControllers objectAtIndex:homeTabIndex];
     id<HomeRouting> homeRouting = navigationController.viewControllers.firstObject;
     if (base64handle) {
         [homeRouting showFavouritesNode:base64handle];
@@ -131,8 +134,10 @@
 }
 
 - (void)showRecents {
-    self.selectedIndex = TabTypeHome;
-    MEGANavigationController *navigationController = [self.childViewControllers objectAtIndex:TabTypeHome];
+    NSInteger homeTabIndex = [TabManager homeTabIndex];
+    self.selectedIndex = homeTabIndex;
+    MEGANavigationController *navigationController = [self.childViewControllers objectAtIndex:homeTabIndex];
+
     id<HomeRouting> homeRouting = navigationController.viewControllers.firstObject;
     [homeRouting showRecents];
 }
@@ -183,11 +188,11 @@
 }
 
 - (void)updatePhoneImageBadgeFrame {
-    UITabBarItem *item = self.tabBar.items[TabTypeChat];
+    NSInteger chatTabIndex = [TabManager chatTabIndex];
+    UITabBarItem *item = self.tabBar.items[chatTabIndex];
     CGFloat iconWidth = item.image.size.width;
-    CGRect frame = [self frameForTabInTabBar:self.tabBar withIndex: TabTypeChat];
+    CGRect frame = [self frameForTabInTabBar:self.tabBar withIndex: chatTabIndex];
     CGFloat originX = frame.origin.x + (frame.size.width-iconWidth) / 2 + iconWidth;
-    
     self.phoneBadgeImageView.frame = CGRectMake(originX - 10, 10, 15, 15);
 }
 
