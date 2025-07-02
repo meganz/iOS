@@ -40,7 +40,7 @@ final class NodeInfoUseCase: NodeInfoUseCaseProtocol {
     
     func isTakenDown(node: MEGANode, isFolderLink: Bool) async throws -> Bool {
         guard isFolderLink else {
-            return node.isTakenDown()
+            return try await nodeInfoRepository.isNodeTakenDown(node: node)
         }
         return try await nodeInfoRepository.isFolderLinkNodeTakenDown(node: node)
     }

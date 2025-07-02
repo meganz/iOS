@@ -2,8 +2,12 @@
 import MEGADomain
 
 final class MockNodeInfoUseCase: NodeInfoUseCaseProtocol, @unchecked Sendable {
-    
+    private var isTakenDownNode: Bool
     private(set) var folderLinkLogout_callTimes = 0
+    
+    init(isTakenDownNode: Bool = false) {
+        self.isTakenDownNode = isTakenDownNode
+    }
     
     func node(fromHandle: MEGADomain.HandleEntity) -> MEGANode? {
         nil
@@ -22,6 +26,6 @@ final class MockNodeInfoUseCase: NodeInfoUseCaseProtocol, @unchecked Sendable {
     }
     
     func isTakenDown(node: MEGANode, isFolderLink: Bool) async throws -> Bool {
-        true
+        isTakenDownNode
     }
 }

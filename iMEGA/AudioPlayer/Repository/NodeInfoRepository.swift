@@ -14,6 +14,13 @@ protocol NodeInfoRepositoryProtocol: Sendable {
     /// - Parameter node: node to check
     /// - Returns: returns a either is take down or not
     func isFolderLinkNodeTakenDown(node: MEGANode) async throws -> Bool
+    /// Determines whether the given node has been taken down via API.
+    /// This covers both:
+    /// 1. Nodes owned by the current user.
+    /// 2. Nodes imported from file or folder‑links (which themselves may have been subsequently removed).
+    /// - Parameter node: node to check
+    /// - Returns: `true` if the node has been taken down; `false` otherwise.
+    func isNodeTakenDown(node: MEGANode) async throws -> Bool
 }
 
 final class NodeInfoRepository: NodeInfoRepositoryProtocol {
@@ -120,20 +127,29 @@ final class NodeInfoRepository: NodeInfoRepositoryProtocol {
         folderSDK.logout()
     }
     
-    func isFolderLinkNodeTakenDown(node: MEGANode) async throws -> Bool {
-        try await withAsyncThrowingValue { completion in
-            folderSDK.getDownloadUrl(node, singleUrl: true, delegate: RequestDelegate { result in
+    private func isNodeTakenDown(
+        node: MEGANode,
+        using sdk: MEGASdk
+    ) async throws -> Bool {
+        try await withCheckedThrowingContinuation { continuation in
+            sdk.getDownloadUrl(node, singleUrl: false, delegate: RequestDelegate { result in
                 switch result {
-                case .failure(let error):
-                    guard case .apiEBlocked = error.type else {
-                        completion(.failure(error))
-                        return
-                    }
-                    completion(.success(true))
                 case .success:
-                    completion(.success(false))
+                    continuation.resume(returning: false)
+                case .failure(let error) where error.type == .apiEBlocked:
+                    continuation.resume(returning: true)
+                case .failure(let error):
+                    continuation.resume(throwing: error)
                 }
             })
         }
+    }
+    
+    func isNodeTakenDown(node: MEGANode) async throws -> Bool {
+        try await isNodeTakenDown(node: node, using: sdk)
+    }
+
+    func isFolderLinkNodeTakenDown(node: MEGANode) async throws -> Bool {
+        try await isNodeTakenDown(node: node, using: folderSDK)
     }
 }
