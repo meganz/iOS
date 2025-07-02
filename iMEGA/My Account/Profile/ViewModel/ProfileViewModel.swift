@@ -72,7 +72,7 @@ final class ProfileViewModel: ViewModelType {
     private var subscriptions = Set<AnyCancellable>()
     private let router: any ProfileViewRouting
     private let tracker: any AnalyticsTracking
-    
+
     init(
         accountUseCase: some AccountUseCaseProtocol,
         achievementUseCase: some AchievementUseCaseProtocol,
@@ -101,7 +101,12 @@ final class ProfileViewModel: ViewModelType {
     private func bindToSubscriptions() {
         
         var sections: [ProfileSection] = shouldShowPlanSection ? [.profile, .security, .plan, .session] : [.profile, .security, .session]
-        
+
+        // Remove the logout out option if the revamp feature flag is enabled.
+        if featureFlagProvider.isFeatureFlagEnabled(for: .navigationRevamp) {
+            sections.removeLast()
+        }
+
         if shouldShowCancelSubscriptionSection {
             sections.append(.subscription)
         }

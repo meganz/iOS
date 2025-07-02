@@ -37,7 +37,29 @@ final class ProfileViewModelTests: XCTestCase {
         
         XCTAssertEqual(result, expectedSections)
     }
-    
+
+    @MainActor
+    func testAction_onViewDidLoad_withNavigationFeatureToggleOn() {
+        let isStandardProAccount = true
+        let isBilledProPlan = true
+        let isSubscriptionHidden = !(isStandardProAccount && isBilledProPlan)
+        let (sut, _) = makeSUT(
+            isStandardProAccount: isStandardProAccount,
+            isBilledProPlan: isBilledProPlan,
+            featureFlagProvider: MockFeatureFlagProvider(list: [.navigationRevamp: true])
+        )
+        let result = receivedSectionDataSource(
+            from: sut,
+            after: .onViewDidLoad
+        )
+        let expectedSections = ProfileViewModel.SectionCellDataSource(
+            sectionOrder: sectionsOrder(isSubscriptionHidden: isSubscriptionHidden, isNavigationRevampEnabled: true),
+            sectionRows: sectionRows(isSubscriptionHidden: isSubscriptionHidden, isNavigationRevampEnabled: true)
+        )
+
+        XCTAssertEqual(result, expectedSections)
+    }
+
     @MainActor
     func testAction_onViewDidLoad_shouldTrackAnalyticsEvent() {
         assertActionTracker(
@@ -436,6 +458,7 @@ final class ProfileViewModelTests: XCTestCase {
         hasBusinessAccountInGracePeriod: Bool = false,
         isConnected: Bool = false,
         transferUseCase: some TransferUseCaseProtocol = MockTransferUseCase(),
+        featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:]),
         file: StaticString = #filePath,
         line: UInt = #line
     ) -> (sut: ProfileViewModel, router: MockProfileViewRouter) {
@@ -467,6 +490,7 @@ final class ProfileViewModelTests: XCTestCase {
                 transferUseCase: transferUseCase,
                 networkMonitorUseCase: mockNetworkMonitorUseCase,
                 transferInventoryUseCaseHelper: TransferInventoryUseCaseHelper(),
+                featureFlagProvider: featureFlagProvider,
                 tracker: tracker,
                 router: router
             ),
@@ -531,10 +555,15 @@ final class ProfileViewModelTests: XCTestCase {
     
     private func sectionsOrder(
         isPlanHidden: Bool = true,
-        isSubscriptionHidden: Bool = true
+        isSubscriptionHidden: Bool = true,
+        isNavigationRevampEnabled: Bool = false
     ) -> [ProfileSection] {
         var sections: [ProfileSection] = isPlanHidden ? [.profile, .security, .session]: [.profile, .security, .plan, .session]
-        
+
+        if isNavigationRevampEnabled {
+            sections.removeLast()
+        }
+
         if !isSubscriptionHidden {
             sections.append(.subscription)
         }
@@ -547,7 +576,8 @@ final class ProfileViewModelTests: XCTestCase {
         isSubscriptionHidden: Bool = true,
         isSmsAllowed: Bool = false,
         isBusiness: Bool = false,
-        isMasterBusinessAccount: Bool = false
+        isMasterBusinessAccount: Bool = false,
+        isNavigationRevampEnabled: Bool = false,
     ) -> [ProfileSection: [ProfileSectionRow]] {
         let profileRows: [ProfileSectionRow] = isBusiness && !isMasterBusinessAccount ?
             [.changePhoto, .changePassword(isLoading: false)] :
@@ -569,7 +599,11 @@ final class ProfileViewModelTests: XCTestCase {
                 .session: [.logout]
             ]
         }
-        
+
+        if isNavigationRevampEnabled {
+            sections[.session] = nil
+        }
+
         if !isSubscriptionHidden {
             sections[.subscription] = [.cancelSubscription]
         }

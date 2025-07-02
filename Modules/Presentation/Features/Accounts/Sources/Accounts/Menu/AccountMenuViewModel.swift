@@ -1,4 +1,6 @@
 import Combine
+import MEGAAnalyticsiOS
+import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGAAssets
 import MEGADesignToken
@@ -7,6 +9,37 @@ import MEGAL10n
 import MEGASwift
 import MEGAUIKit
 import SwiftUI
+
+public enum MegaCompanionApp {
+    case vpn
+    case passwordManager
+    case transferIt
+
+    public var link: String {
+        switch self {
+        case .vpn: "https://vpn.mega.nz"
+        case .passwordManager: "https://pwm.mega.nz"
+        case .transferIt: "https://transfer.it"
+        }
+    }
+}
+
+@MainActor
+public protocol AccountMenuViewRouting {
+    func showNotifications()
+    func showAccount()
+    func upgradeAccount()
+    func showStorage()
+    func showContacts()
+    func showAchievements()
+    func showSharedItems()
+    func showDeviceCentre()
+    func showTransfers()
+    func showOfflineFiles()
+    func showRubbishBin()
+    func showSettings()
+    func openLink(for app: MegaCompanionApp)
+}
 
 @MainActor
 public final class AccountMenuViewModel: ObservableObject {
@@ -35,6 +68,8 @@ public final class AccountMenuViewModel: ObservableObject {
 
     @Published var isAtTop = true
 
+    private let router: any AccountMenuViewRouting
+    private let tracker: any AnalyticsTracking
     private let accountUseCase: any AccountUseCaseProtocol
     private let currentUserSource: CurrentUserSource
     private let userImageUseCase: any UserImageUseCaseProtocol
@@ -63,13 +98,13 @@ public final class AccountMenuViewModel: ObservableObject {
                     iconConfiguration: .init(icon: MEGAAssets.Image.contactsInMenu),
                     title: Strings.Localizable.contactsTitle,
                     subtitle: nil,
-                    rowType: .disclosure
+                    rowType: .disclosure { [weak self] in self?.router.showContacts() }
                 ),
                 .init(
                     iconConfiguration: .init(icon: MEGAAssets.Image.achievementsInMenu),
                     title: Strings.Localizable.achievementsTitle,
                     subtitle: nil,
-                    rowType: .disclosure
+                    rowType: .disclosure { [weak self] in self?.router.showAchievements() }
                 )
             ],
             .tools: [
@@ -77,32 +112,32 @@ public final class AccountMenuViewModel: ObservableObject {
                     iconConfiguration: .init(icon: MEGAAssets.Image.sharedItemsInMenu),
                     title: Strings.Localizable.sharedItems,
                     subtitle: nil,
-                    rowType: .disclosure
+                    rowType: .disclosure { [weak self] in self?.router.showSharedItems() }
                 ),
                 .init(
                     iconConfiguration: .init(icon: MEGAAssets.Image.deviceCentreInMenu),
                     title: Strings.Localizable.Device.Center.title,
                     subtitle: nil,
-                    rowType: .disclosure
+                    rowType: .disclosure { [weak self] in self?.router.showDeviceCentre() }
                 ),
                 .init(
                     iconConfiguration: .init(icon: MEGAAssets.Image.transfersInMenu),
                     title: Strings.Localizable.transfers,
                     subtitle: nil,
-                    rowType: .disclosure
+                    rowType: .disclosure { [weak self] in self?.router.showTransfers() }
                 ),
                 .init(
                     iconConfiguration: .init(icon: MEGAAssets.Image.offlineFilesInMenu),
                     title: Strings.Localizable.AccountMenu.offlineFiles,
                     subtitle: nil,
-                    rowType: .disclosure
+                    rowType: .disclosure { [weak self] in self?.router.showOfflineFiles() }
                 ),
                 rubbishBinMenuOption(accountUseCase: accountUseCase),
                 .init(
                     iconConfiguration: .init(icon: MEGAAssets.Image.settingsInMenu),
                     title: Strings.Localizable.settingsTitle,
                     subtitle: nil,
-                    rowType: .disclosure
+                    rowType: .disclosure { [weak self] in self?.router.showSettings() }
                 )
             ],
             .privacySuite: [
@@ -110,32 +145,36 @@ public final class AccountMenuViewModel: ObservableObject {
                     iconConfiguration: .init(icon: MEGAAssets.Image.vpnAppInMenu),
                     title: Strings.Localizable.AccountMenu.MegaVPN.buttonTitle,
                     subtitle: Strings.Localizable.AccountMenu.MegaVPN.buttonSubtitle,
-                    rowType: .externalLink
+                    rowType: .externalLink { [weak self] in self?.router.openLink(for: .vpn) }
                 ),
                 .init(
                     iconConfiguration: .init(icon: MEGAAssets.Image.passAppInMenu),
                     title: Strings.Localizable.AccountMenu.MegaPass.buttonTitle,
                     subtitle: Strings.Localizable.AccountMenu.MegaPass.buttonSubtitle,
-                    rowType: .externalLink
+                    rowType: .externalLink { [weak self] in self?.router.openLink(for: .passwordManager) }
                 ),
                 .init(
                     iconConfiguration: .init(icon: MEGAAssets.Image.transferItAppInMenu),
                     title: Strings.Localizable.AccountMenu.TransferIt.buttonTitle,
                     subtitle: Strings.Localizable.AccountMenu.TransferIt.buttonSubtitle,
-                    rowType: .externalLink
+                    rowType: .externalLink { [weak self] in self?.router.openLink(for: .transferIt) }
                 )
             ]
         ]
     }
 
     public init(
+        router: some AccountMenuViewRouting,
         currentUserSource: CurrentUserSource,
+        tracker: some AnalyticsTracking,
         accountUseCase: some AccountUseCaseProtocol,
         userImageUseCase: some UserImageUseCaseProtocol,
         megaHandleUseCase: some MEGAHandleUseCaseProtocol,
         fullNameHandler: @escaping (CurrentUserSource) -> String,
         avatarFetchHandler: @escaping (String, HandleEntity) async -> UIImage?
     ) {
+        self.router = router
+        self.tracker = tracker
         self.accountUseCase = accountUseCase
         self.currentUserSource = currentUserSource
         self.userImageUseCase = userImageUseCase
@@ -156,6 +195,21 @@ public final class AccountMenuViewModel: ObservableObject {
         async let avatarTask: () = fetchAvatarAndUpdateUI()
         async let detailsTask: () = fetchUpdatedAccountDetailsAndUpdateUI()
         _ = await (avatarTask, detailsTask)
+    }
+
+    func notificationButtonTapped() {
+        tracker.trackAnalyticsEvent(with: NotificationsEntryButtonPressedEvent())
+        router.showNotifications()
+    }
+
+    private func showAccount() {
+        tracker.trackAnalyticsEvent(with: MyAccountProfileNavigationItemEvent())
+        router.showAccount()
+    }
+
+    private func upgradeAccount() {
+        tracker.trackAnalyticsEvent(with: UpgradeMyAccountEvent())
+        router.upgradeAccount()
     }
 
     private func fetchAvatarAndUpdateUI() async {
@@ -193,7 +247,7 @@ public final class AccountMenuViewModel: ObservableObject {
             iconConfiguration: .init(icon: icon, style: iconStyle, backgroundColor: backgroundColor),
             title: fullName,
             subtitle: accountUseCase.myEmail ?? "",
-            rowType: .disclosure
+            rowType: .disclosure { [weak self] in self?.showAccount() }
         )
     }
 
@@ -242,12 +296,17 @@ public final class AccountMenuViewModel: ObservableObject {
 
     private func currentPlanMenuOption(accountDetails: AccountDetailsEntity?) -> AccountMenuOption {
         let icon = if let accountDetails { currentPlanIcon(accountDetails: accountDetails) } else { MEGAAssets.Image.otherPlansInMenu }
+        let rowType  = AccountMenuOption
+            .AccountMenuRowType
+            .withButton(title: Strings.Localizable.upgrade) { [weak self] in
+                self?.upgradeAccount()
+            }
 
         return .init(
             iconConfiguration: .init(icon: icon),
             title: Strings.Localizable.InAppPurchase.ProductDetail.Navigation.currentPlan,
             subtitle: accountDetails?.proLevel.toAccountTypeDisplayName() ?? "",
-            rowType: .withButton(title: Strings.Localizable.upgrade, action: { })
+            rowType: rowType
         )
     }
 
@@ -270,7 +329,7 @@ public final class AccountMenuViewModel: ObservableObject {
             iconConfiguration: .init(icon: MEGAAssets.Image.storageInMenu),
             title: Strings.Localizable.storage,
             subtitle: subtitle,
-            rowType: .disclosure
+            rowType: .disclosure { [weak self] in self?.router.showStorage() }
         )
     }
 
@@ -283,7 +342,7 @@ public final class AccountMenuViewModel: ObservableObject {
             iconConfiguration: .init(icon: MEGAAssets.Image.rubbishBinInMenu),
             title: Strings.Localizable.rubbishBinLabel,
             subtitle: rubbishBinUsage,
-            rowType: .disclosure
+            rowType: .disclosure { [weak self] in self?.router.showRubbishBin() }
         )
     }
 

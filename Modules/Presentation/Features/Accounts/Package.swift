@@ -31,7 +31,8 @@ let package = Package(
         .package(path: "../MEGAUI"),
         .package(path: "../Settings"),
         .package(path: "../../../MEGASharedRepo/MEGAUIComponent"),
-        .package(url: "https://github.com/googleads/swift-package-manager-google-mobile-ads.git", from: "12.6.0")
+        .package(url: "https://github.com/googleads/swift-package-manager-google-mobile-ads.git", from: "12.6.0"),
+        .package(url: "https://code.developers.mega.co.nz/mobile/kmm/mobile-analytics-ios.git", branch: "main")
     ],
     targets: [
         .target(
@@ -61,7 +62,8 @@ let package = Package(
                            .product(name: "MEGAAppPresentationMock", package: "MEGAAppPresentation"),
                            .product(name: "MEGADomainMock", package: "MEGADomain"),
                            .product(name: "MEGAAppSDKRepoMock", package: "MEGAAppSDKRepo"),
-                           .product(name: "GoogleMobileAds", package: "swift-package-manager-google-mobile-ads")],
+                           .product(name: "GoogleMobileAds", package: "swift-package-manager-google-mobile-ads"),
+                           .product(name: "MEGAAnalyticsiOS", package: "mobile-analytics-ios")],
             swiftSettings: settings
         )
     ],

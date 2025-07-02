@@ -15,7 +15,7 @@ public struct AccountMenuView: View {
         ZStack(alignment: .top) {
             contentView
             AccountMenuHeaderView(hideHeaderBackground: viewModel.isAtTop) {
-
+                viewModel.notificationButtonTapped()
             }
         }
         .toolbar(.hidden)
@@ -51,6 +51,10 @@ public struct AccountMenuView: View {
 
                         ForEach(items) { option in
                             MenuRowView(option: option)
+                                .onTapGesture {
+                                    guard case .disclosure(let action) = option.rowType else { return }
+                                    action()
+                                }
                         }
 
                         if section == .account {
@@ -210,6 +214,10 @@ private struct CollapsibleSectionView: View {
             if isExpanded {
                 ForEach(options) { option in
                     MenuRowView(option: option)
+                        .onTapGesture {
+                            guard case .externalLink(let action) = option.rowType else { return }
+                            action()
+                        }
                 }
             }
         }
