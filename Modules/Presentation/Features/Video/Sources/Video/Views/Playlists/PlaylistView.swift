@@ -220,12 +220,6 @@ struct PlaylistView: View {
         }
         .tint(videoConfig.colorAssets.addPlaylistButtonBackgroundColor)
         .frame(width: 44, height: 44)
-        .alert(Strings.Localizable.Videos.Tab.Playlist.Content.Alert.title, isPresented: $viewModel.shouldShowAddNewPlaylistAlert) {
-            TextField(Strings.Localizable.Videos.Tab.Playlist.Content.Alert.placeholder, text: $viewModel.playlistName)
-            Button(Strings.Localizable.Videos.Tab.Playlist.Content.Alert.Button.create) { }
-                .keyboardShortcut(.defaultAction)
-            Button(Strings.Localizable.cancel, role: .cancel) { }
-        }
     }
         
     private var listView: some View {
