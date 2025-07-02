@@ -3,8 +3,8 @@ import SwiftUI
 
 struct AccountMenuOption: Identifiable {
     enum AccountMenuRowType {
-        case disclosure
-        case externalLink
+        case disclosure(action: () -> Void)
+        case externalLink(action: () -> Void)
         case withButton(title: String, action: () -> Void)
     }
     
