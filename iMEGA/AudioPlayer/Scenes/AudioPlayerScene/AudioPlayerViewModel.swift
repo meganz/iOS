@@ -213,6 +213,11 @@ final class AudioPlayerViewModel: ViewModelType {
                 return
             }
             
+            if await isTakenDownNode(node) {
+                await invoke(command: .showTermsOfServiceViolationAlert)
+                return
+            }
+            
             if !(streamingInfoUseCase?.isLocalHTTPProxyServerRunning() ?? true) {
                 streamingInfoUseCase?.startServer()
             }
@@ -439,9 +444,8 @@ final class AudioPlayerViewModel: ViewModelType {
         switch action {
         case .onViewDidLoad:
             Task { [weak self] in
-                guard let self, let node = configEntity.node, let nodeInfoUseCase else { return }
-                let isTakenDown = try await nodeInfoUseCase.isTakenDown(node: node, isFolderLink: configEntity.isFolderLink)
-                if isTakenDown {
+                guard let self, let node = configEntity.node else { return }
+                if await isTakenDownNode(node) {
                     invoke(command: .showTermsOfServiceViolationAlert)
                     return
                 }
@@ -564,6 +568,20 @@ final class AudioPlayerViewModel: ViewModelType {
         }
         Task { [audioPlayerUseCase] in
             await audioPlayerUseCase.unregisterMEGADelegate()
+        }
+    }
+    
+    private func isTakenDownNode(_ node: MEGANode) async -> Bool {
+        guard let nodeInfoUseCase else {
+            return false
+        }
+        do {
+            return try await nodeInfoUseCase.isTakenDown(
+                node: node,
+                isFolderLink: configEntity.isFolderLink
+            )
+        } catch {
+            return false
         }
     }
 }

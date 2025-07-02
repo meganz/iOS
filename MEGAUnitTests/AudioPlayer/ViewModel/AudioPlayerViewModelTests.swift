@@ -529,7 +529,7 @@ final class AudioPlayerViewModelTests: XCTestCase {
         )
         let (sut, playbackUseCase, router) = makeSUT(
             configEntity: config,
-            nodeInfoUseCase: NodeInfoUseCase(nodeInfoRepository: MockNodeInfoRepository()),
+            nodeInfoUseCase: NodeInfoUseCase(nodeInfoRepository: MockNodeInfoRepository(violatesTermsOfServiceResult: .success(false))),
             streamingInfoUseCase: StreamingInfoUseCase(streamingInfoRepository: MockStreamingInfoRepository())
         )
         return (sut, playbackUseCase, playerHandler, router)
@@ -580,7 +580,7 @@ final class AudioPlayerViewModelTests: XCTestCase {
         let configEntity = audioPlayerConfigEntity(node: audioNode)
         let (sut, playbackUseCase, router) = makeSUT(
             configEntity: configEntity,
-            nodeInfoUseCase: NodeInfoUseCase(nodeInfoRepository: MockNodeInfoRepository()),
+            nodeInfoUseCase: NodeInfoUseCase(nodeInfoRepository: MockNodeInfoRepository(violatesTermsOfServiceResult: .success(false))),
             streamingInfoUseCase: StreamingInfoUseCase(streamingInfoRepository: MockStreamingInfoRepository())
         )
         sut.dispatch(.onViewDidLoad)

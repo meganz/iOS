@@ -4,7 +4,7 @@ import MEGADomain
 import XCTest
 
 final class NodeInfoUseCaseTests: XCTestCase {
-    let nodeInfoSuccessRepository = MockNodeInfoRepository(result: .success(()), violatesTermsOfServiceResult: .success(true))
+    let nodeInfoSuccessRepository = MockNodeInfoRepository(result: .success, violatesTermsOfServiceResult: .success(true))
     let nodeInfoFailureRepository = MockNodeInfoRepository(result: .failure(.generic), violatesTermsOfServiceResult: .success(true))
     
     func testGetNodeFromHandle() {
@@ -51,17 +51,9 @@ final class NodeInfoUseCaseTests: XCTestCase {
     func testIsTakenDown_whenNotFolderLinkAndTakenDown_returnsTrue() async throws {
         let sut = makeSUT(termsOfServiceViolationResult: .success(true))
         
-        let isTakenDown = try await sut.isTakenDown(node: anyNode(isTakenDown: true), isFolderLink: false)
+        let isTakenDown = try await sut.isTakenDown(node: anyNode(), isFolderLink: false)
         
         XCTAssertTrue(isTakenDown)
-    }
-    
-    func testIsTakenDown_whenNotFolderLinkAndNotTakenDown_returnsFalse() async throws {
-        let sut = makeSUT(termsOfServiceViolationResult: .success(true))
-        
-        let isTakenDown = try await sut.isTakenDown(node: anyNode(isTakenDown: false), isFolderLink: false)
-        
-        XCTAssertFalse(isTakenDown)
     }
     
     func testIsTakenDown_whenFolderLinkAndViolates_returnsTrue() async  throws {

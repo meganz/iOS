@@ -81,4 +81,10 @@ struct MockNodeInfoRepository: NodeInfoRepositoryProtocol {
             continuation.resume(with: violatesTermsOfServiceResult)
         }
     }
+    
+    func isNodeTakenDown(node: MEGANode) async throws -> Bool {
+        try await withCheckedThrowingContinuation { continuation in
+            continuation.resume(with: violatesTermsOfServiceResult)
+        }
+    }
 }

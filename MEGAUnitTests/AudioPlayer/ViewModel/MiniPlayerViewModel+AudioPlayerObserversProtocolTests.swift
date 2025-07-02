@@ -252,7 +252,7 @@ final class MiniPlayerViewModel_AudioPlayerObserversProtocolTests: XCTestCase {
                 audioPlayerHandlerBuilder: mockHandlerBuilder
             ),
             router: router,
-            nodeInfoUseCase: NodeInfoUseCase(nodeInfoRepository: MockNodeInfoRepository()),
+            nodeInfoUseCase: NodeInfoUseCase(nodeInfoRepository: MockNodeInfoRepository(violatesTermsOfServiceResult: .success(false))),
             streamingInfoUseCase: StreamingInfoUseCase(streamingInfoRepository: MockStreamingInfoRepository()),
             offlineInfoUseCase: OfflineFileInfoUseCase(offlineInfoRepository: MockOfflineInfoRepository()),
             playbackContinuationUseCase: playbackContinuationUseCase,
