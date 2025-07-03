@@ -1,10 +1,36 @@
 import MEGADesignToken
 import SwiftUI
 
+public struct ActionSheetButtonViewModel: Identifiable {
+    public var id: UUID
+    var icon: Image
+    var title: String
+    var subtitle: String?
+    var disclosureIcon: Image
+    var action: () -> Void
+    
+    public init(
+        id: UUID,
+        icon: Image,
+        title: String,
+        subtitle: String? = nil,
+        disclosureIcon: Image,
+        action: @escaping () -> Void
+    ) {
+        self.id = id
+        self.icon = icon
+        self.title = title
+        self.subtitle = subtitle
+        self.action = action
+        self.disclosureIcon = disclosureIcon
+    }
+}
+
 public struct ActionSheetContentView<HeaderView: View>: View {
     var style: Style = .default
-    var actionButtons: [ActionSheetButton]
+    var actionSheetButtonViewModels: [ActionSheetButtonViewModel]
     var headerView: HeaderView
+    var actionHandler: ((@escaping () -> Void) -> Void)?
     
     public enum Style {
         case `default`
@@ -18,11 +44,13 @@ public struct ActionSheetContentView<HeaderView: View>: View {
     public init(
         style: ActionSheetContentView.Style = .default,
         headerView: HeaderView,
-        actionButtons: [ActionSheetButton]
+        actionSheetButtonViewModels: [ActionSheetButtonViewModel],
+        actionHandler: ((@escaping () -> Void) -> Void)? = nil
     ) {
         self.style = style
         self.headerView = headerView
-        self.actionButtons = actionButtons
+        self.actionSheetButtonViewModels = actionSheetButtonViewModels
+        self.actionHandler = actionHandler
     }
 
     public var body: some View {
@@ -51,8 +79,10 @@ public struct ActionSheetContentView<HeaderView: View>: View {
                 }
                 .background(TokenColors.Background.surface2.swiftUI)
                 
-                ForEach(actionButtons, id: \.id) { button in
-                    button
+                ForEach(actionSheetButtonViewModels, id: \.id) {
+                    ActionSheetButton(
+                        viewModel: $0,
+                        actionHandler: actionHandler)
                 }
             }
             .padding([.bottom], 30)
@@ -64,8 +94,10 @@ public struct ActionSheetContentView<HeaderView: View>: View {
         VStack(spacing: 0) {
             Spacer()
                 .frame(height: 16)
-            ForEach(actionButtons, id: \.id) { button in
-                button
+            ForEach(actionSheetButtonViewModels, id: \.id) {
+                ActionSheetButton(
+                    viewModel: $0,
+                    actionHandler: actionHandler)
             }
             Spacer()
         }
@@ -75,41 +107,28 @@ public struct ActionSheetContentView<HeaderView: View>: View {
 }
 
 public struct ActionSheetButton: View {
-    @Environment(\.presentationMode) var presentationMode
-    var id: UUID
-    var icon: Image
-    var title: String
-    var subtitle: String?
-    var disclosureIcon: Image
-    var action: () -> Void
-    
-    public init(id: UUID, icon: Image, title: String, subtitle: String? = nil, disclosureIcon: Image, action: @escaping () -> Void) {
-        self.id = id
-        self.icon = icon
-        self.title = title
-        self.subtitle = subtitle
-        self.action = action
-        self.disclosureIcon = disclosureIcon
-    }
+    @Environment(\.dismiss) var dismiss
+    var viewModel: ActionSheetButtonViewModel
+    var actionHandler: ((@escaping () -> Void) -> Void)?
 
     public var body: some View {
         VStack(spacing: 0) {
             HStack {
-                icon
+                viewModel.icon
                     .frame(width: 28, height: 28)
                     .padding(16)
                 
-                Text(title)
+                Text(viewModel.title)
                     .font(.body)
                     .foregroundStyle(TokenColors.Text.primary.swiftUI)
                 
                 Spacer()
-                if let subtitle = subtitle {
+                if let subtitle = viewModel.subtitle {
                     Text(subtitle)
                         .font(.callout)
                         .foregroundStyle(TokenColors.Text.secondary.swiftUI)
                     
-                    disclosureIcon
+                    viewModel.disclosureIcon
                         .padding([.trailing], 16)
                         .padding([.leading], 5)
                 }
@@ -117,8 +136,12 @@ public struct ActionSheetButton: View {
             .frame(maxWidth: .infinity)
             .contentShape(Rectangle())
             .onTapGesture {
-                action()
-                presentationMode.wrappedValue.dismiss()
+                dismiss()
+                if let actionHandler {
+                    actionHandler(viewModel.action)
+                } else {
+                    viewModel.action()
+                }
             }
             Divider()
                 .padding([.leading], 60)
