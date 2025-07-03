@@ -22,17 +22,18 @@ let package = Package(
     ],
     dependencies: [
         .package(path: "../../../Domain/MEGADomain"),
-        .package(path: "../../../Localization/MEGAL10n"),
+        .package(path: "../../MEGAL10n"),
         .package(path: "../../MEGAAppPresentation"),
         .package(path: "../../../UI/MEGASwiftUI"),
-        .package(path: "../../Repository/MEGAAppSDKRepo"),
-        .package(path: "../../../Infrastracture/MEGATest"),
-        .package(path: "../../../MEGAAssets"),
-        .package(path: "../MEGAUI"),
+        .package(path: "../../../Repository/MEGAAppSDKRepo"),
+        .package(path: "../../../MEGASharedRepo/MEGATest"),
+        .package(path: "../../../Presentation/MEGAAssets"),
+        .package(path: "../../../UI/MEGAUI"),
         .package(path: "../Settings"),
         .package(path: "../../../MEGASharedRepo/MEGAUIComponent"),
         .package(url: "https://github.com/googleads/swift-package-manager-google-mobile-ads.git", from: "12.6.0"),
-        .package(url: "https://code.developers.mega.co.nz/mobile/kmm/mobile-analytics-ios.git", branch: "main")
+        .package(url: "https://code.developers.mega.co.nz/mobile/kmm/mobile-analytics-ios.git", branch: "main"),
+        .package(path: "../../../MEGASharedRepo/MEGASwift")
     ],
     targets: [
         .target(
@@ -59,6 +60,7 @@ let package = Package(
                            "MEGADomain",
                            "MEGAAppPresentation",
                            "MEGATest",
+                           "MEGASwift",
                            .product(name: "MEGAAppPresentationMock", package: "MEGAAppPresentation"),
                            .product(name: "MEGADomainMock", package: "MEGADomain"),
                            .product(name: "MEGAAppSDKRepoMock", package: "MEGAAppSDKRepo"),

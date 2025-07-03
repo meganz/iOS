@@ -73,7 +73,7 @@ public struct AccountMenuView: View {
                 }
 
                 Button {
-
+                    viewModel.logoutButtonTapped()
                 } label: {
                     Text(Strings.Localizable.AccountMenu.logout)
                         .font(.body.bold())

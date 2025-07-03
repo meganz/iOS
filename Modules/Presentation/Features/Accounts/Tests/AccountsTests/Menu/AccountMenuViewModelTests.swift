@@ -6,6 +6,8 @@ import MEGAAppSDKRepoMock
 import MEGADomain
 import MEGADomainMock
 import MEGAL10n
+import MEGAPreference
+import MEGASwift
 import Testing
 import UIKit
 
@@ -453,6 +455,29 @@ struct AccountMenuViewModelTess {
         #expect(router.openLink_lastApp == .transferIt)
     }
 
+    @Test(arguments: [
+        true,
+        false
+    ])
+    func testLogoutButtonTap(connected: Bool) async throws {
+        let networkUseCase = MockNetworkMonitorUseCase(connected: connected)
+        @Atomic var didCallLogoutHandler = false
+        let preferenceUseCase = MockPreferenceUseCase()
+        let sut = makeSUT(preferenceUseCase: preferenceUseCase, networkMonitorUseCase: networkUseCase, logoutHandler: {
+            $didCallLogoutHandler.mutate {
+                $0 = true
+            }
+        })
+        sut.logoutButtonTapped()
+        if connected {
+            try await waitUntil(!didCallLogoutHandler)
+            #expect(preferenceUseCase["offlineLogOutWarningDismissed"] == false)
+        } else {
+            try await Task.sleep(nanoseconds: 1_000_000_000)
+        }
+        #expect(didCallLogoutHandler == connected)
+    }
+
     private func makeSUT(
         router: some AccountMenuViewRouting = MockMenuViewRouter(),
         tracker: some AnalyticsTracking = MockTracker(),
@@ -460,7 +485,10 @@ struct AccountMenuViewModelTess {
             currentAccountDetails: MockMEGAAccountDetails(type: .free).toAccountDetailsEntity(),
             email: "test@test.com",
             rubbishBinStorage: 0
-        )
+        ),
+        preferenceUseCase: some PreferenceUseCaseProtocol = MockPreferenceUseCase(),
+        networkMonitorUseCase: some NetworkMonitorUseCaseProtocol = MockNetworkMonitorUseCase(),
+        logoutHandler: @escaping () async -> Void = {}
     ) -> AccountMenuViewModel {
         let currentUserSource = CurrentUserSource(sdk: MockSdk())
         return AccountMenuViewModel(
@@ -470,9 +498,23 @@ struct AccountMenuViewModelTess {
             accountUseCase: accountUseCase,
             userImageUseCase: MockUserImageUseCase(),
             megaHandleUseCase: MockMEGAHandleUseCase(),
+            networkMonitorUseCase: networkMonitorUseCase,
+            preferenceUseCase: preferenceUseCase,
             fullNameHandler: { _ in "" },
-            avatarFetchHandler: { _, _ in UIImage() }
+            avatarFetchHandler: { _, _ in UIImage() },
+            logoutHandler: logoutHandler
         )
+    }
+
+    private func waitUntil(
+        timeout: TimeInterval = 2.0,
+        _ condition: @Sendable @autoclosure @escaping () async -> Bool
+    ) async throws {
+        try await withTimeout(seconds: timeout) {
+            while await condition() {
+                try await Task.sleep(nanoseconds: 10_000_000) // 10ms
+            }
+        }
     }
 }
 

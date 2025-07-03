@@ -28,6 +28,8 @@ struct AccountMenuViewRouter: AccountMenuViewRouting {
             accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
             userImageUseCase: userImageUseCase,
             megaHandleUseCase: megaHandleUseCase,
+            networkMonitorUseCase: NetworkMonitorUseCase(repo: NetworkMonitorRepository.newRepo),
+            preferenceUseCase: PreferenceUseCase.default,
             fullNameHandler: { currentUserSource in
                 currentUserSource.currentUser?.mnz_fullName ?? ""
             },
@@ -46,7 +48,8 @@ struct AccountMenuViewRouter: AccountMenuViewRouting {
                 )
 
                 return await avatarHandler.avatar(for: base64Handle)
-            }
+            },
+            logoutHandler: logout
         )
         let hostingViewController = UIHostingController(
             rootView: AccountMenuView(viewModel: viewModel)
@@ -175,5 +178,35 @@ struct AccountMenuViewRouter: AccountMenuViewRouting {
                 externalLinkOpener.openExternalLink(with: url)
             }
         }
+    }
+
+    private func logout() async {
+        let transferUseCase = TransferUseCase(
+            repo: TransferRepository.newRepo,
+            metadataUseCase: MetadataUseCase(
+                metadataRepository: MetadataRepository(),
+                fileSystemRepository: FileSystemRepository.sharedRepo,
+                fileExtensionRepository: FileExtensionRepository(),
+                nodeCoordinatesRepository: NodeCoordinatesRepository.newRepo
+            ),
+            nodeDataRepository: NodeDataRepository.newRepo
+        )
+
+        let transferInventoryUseCaseHelper = TransferInventoryUseCaseHelper()
+
+        do {
+            try await transferUseCase.cancelDownloadTransfers()
+            try await transferUseCase.cancelUploadTransfers()
+
+            transferInventoryUseCaseHelper.removeAllUploadTransfers()
+        } catch {
+            MEGALogError("[CancelTransfers] Failed to cancel transfers: \(error)")
+        }
+
+        guard let showPasswordReminderDelegate = MEGAShowPasswordReminderRequestDelegate(toLogout: true) else {
+            return
+        }
+
+        MEGASdk.shared.shouldShowPasswordReminderDialog(atLogout: true, delegate: showPasswordReminderDelegate)
     }
 }
