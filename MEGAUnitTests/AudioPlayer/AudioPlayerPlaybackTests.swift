@@ -43,6 +43,25 @@ final class AudioPlayerPlaybackTests: XCTestCase {
         return false
     }
     
+    private func expectRate(_ value: Float, on queuePlayer: AVQueuePlayer, timeout: TimeInterval = 1.0) async {
+        let exp = XCTKVOExpectation(
+            keyPath: #keyPath(AVQueuePlayer.rate),
+            object: queuePlayer,
+            expectedValue: NSNumber(value: value)
+        )
+        await fulfillment(of: [exp], timeout: timeout)
+    }
+    
+    private func toggleAndExpect(
+        _ player: AudioPlayer,
+        queuePlayer: AVQueuePlayer,
+        expectedRate: Float,
+        timeout: TimeInterval = 1.0
+    ) async {
+        player.togglePlay()
+        await expectRate(expectedRate, on: queuePlayer, timeout: timeout)
+    }
+    
     // MARK: - Tests
 
     func testInitWithTracks_whenHavingTracks_shouldInitializeAndPlay() async throws {
@@ -103,15 +122,28 @@ final class AudioPlayerPlaybackTests: XCTestCase {
         let newTime = queuePlayer.currentTime().seconds
         XCTAssertTrue(newTime < 10)
     }
-
+    
     func testTogglePlay_whenToggled_shouldPauseAndResume() async throws {
         let (player, _) = try await makePlayerAndTracks()
-        player.togglePlay()
-        XCTAssertTrue(player.isPaused)
-        player.togglePlay()
-        XCTAssertTrue(player.isPlaying)
+        let queuePlayer = try await requireQueuePlayer(player)
+        
+        await expectRate(1.0, on: queuePlayer)
+        
+        await toggleAndExpect(
+            player,
+            queuePlayer: queuePlayer,
+            expectedRate: 0.0
+        )
+        XCTAssertTrue(player.isPaused, "Expected player to be paused after first toggle")
+        
+        await toggleAndExpect(
+            player,
+            queuePlayer: queuePlayer,
+            expectedRate: 1.0
+        )
+        XCTAssertTrue(player.isPlaying, "Expected player to be playing after second toggle")
     }
-
+    
     func testDeletePlaylist_whenDeleting_shouldRemoveSpecifiedItem() async throws {
         let (player, tracks) = try await makePlayerAndTracks()
         let original = player.tracks.count
