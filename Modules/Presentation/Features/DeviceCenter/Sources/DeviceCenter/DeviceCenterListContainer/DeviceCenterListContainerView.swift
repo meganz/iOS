@@ -51,9 +51,9 @@ struct ListViewContainer<Content>: View where Content: View {
                     subtitle: selectedItem.assets.statusAssets.title,
                     subtitleColor: selectedItem.assets.statusAssets.color
                 ),
-            actionButtons: {
+            actionSheetButtonViewModels: {
                 selectedItem.availableActions.compactMap { action in
-                    ActionSheetButton(
+                    ActionSheetButtonViewModel(
                         id: action.id,
                         icon: MEGAAssets.Image.image(named: action.icon),
                         title: action.title,

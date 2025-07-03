@@ -66,9 +66,9 @@ struct PlaylistView: View {
                 )
             }
         }
-        .sheet(isPresented: $viewModel.isSheetPresented) {
-            bottomView()
-        }
+        .sheet(isPresented: $viewModel.isSheetPresented,
+               actionSheetButtonViewModels: actionButtonViewModels(),
+               sheetHeight: presentationDetentsHeight)
         .sheet(item: $viewModel.selectedVideoPlaylistEntityForShareLink) { playlist in
             AnyView(router.showShareLink(videoPlaylist: playlist))
         }
@@ -86,41 +86,12 @@ struct PlaylistView: View {
         }
     }
     
-    @ViewBuilder
-    private func bottomView() -> some View {
-        if #available(iOS 16.4, *) {
-            iOS16SupportBottomSheetView()
-                .presentationCornerRadius(16)
-        } else if #available(iOS 16, *) {
-            iOS16SupportBottomSheetView()
-        } else {
-            bottomSheetView()
-        }
-    }
-    
-    @available(iOS 16.0, *)
-    private func iOS16SupportBottomSheetView() -> some View {
-        bottomSheetView()
-            .presentationDetents([ .height(presentationDetentsHeight) ])
-            .presentationDragIndicator(.hidden)
-    }
-    
-    private func bottomSheetView() -> some View {
-        ActionSheetContentView(
-            style: .plainIgnoreHeaderIgnoreScrolling,
-            headerView: EmptyView(),
-            actionButtons: {
-                actionButtons()
-            }()
-        )
-    }
-    
     private var presentationDetentsHeight: CGFloat {
         let sheetButtonsHeight: CGFloat = 60
-        return CGFloat(actionButtons().count) * sheetButtonsHeight
+        return CGFloat(actionButtonViewModels().count) * sheetButtonsHeight
     }
     
-    private func actionButtons() -> [ActionSheetButton] {
+    private func actionButtonViewModels() -> [ActionSheetButtonViewModel] {
         let items = [
             ContextAction(
                 type: .rename,
@@ -140,7 +111,7 @@ struct PlaylistView: View {
         ]
         
         return items.map { contextAction in
-            ActionSheetButton(
+            ActionSheetButtonViewModel(
                 id: contextAction.id,
                 icon: MEGAAssets.Image.image(named: contextAction.icon),
                 title: contextAction.title,
