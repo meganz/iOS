@@ -6,6 +6,7 @@ import MEGAAssets
 import MEGADesignToken
 import MEGADomain
 import MEGAL10n
+import MEGAPreference
 import MEGASwift
 import MEGAUIKit
 import SwiftUI
@@ -74,9 +75,20 @@ public final class AccountMenuViewModel: ObservableObject {
     private let currentUserSource: CurrentUserSource
     private let userImageUseCase: any UserImageUseCaseProtocol
     private let megaHandleUseCase: any MEGAHandleUseCaseProtocol
+    private let networkMonitorUseCase: any NetworkMonitorUseCaseProtocol
     private var monitorTask: Task<Void, Never>?
     private let fullNameHandler: (CurrentUserSource) -> String
     private let avatarFetchHandler: (String, HandleEntity) async -> UIImage?
+    private let logoutHandler: () async -> Void
+
+    @PreferenceWrapper(key: PreferenceKeyEntity.offlineLogOutWarningDismissed, defaultValue: false)
+    private var offlineLogOutWarningDismissed: Bool
+
+    private var cancelTransfersTask: Task<Void, Never>? {
+        didSet {
+            oldValue?.cancel()
+        }
+    }
 
     private var defaultAvatarBackgroundColor: Color {
         guard let handle = currentUserSource.currentUser?.handle else { return .clear }
@@ -170,8 +182,11 @@ public final class AccountMenuViewModel: ObservableObject {
         accountUseCase: some AccountUseCaseProtocol,
         userImageUseCase: some UserImageUseCaseProtocol,
         megaHandleUseCase: some MEGAHandleUseCaseProtocol,
+        networkMonitorUseCase: some NetworkMonitorUseCaseProtocol,
+        preferenceUseCase: some PreferenceUseCaseProtocol,
         fullNameHandler: @escaping (CurrentUserSource) -> String,
-        avatarFetchHandler: @escaping (String, HandleEntity) async -> UIImage?
+        avatarFetchHandler: @escaping (String, HandleEntity) async -> UIImage?,
+        logoutHandler: @escaping () async -> Void
     ) {
         self.router = router
         self.tracker = tracker
@@ -179,16 +194,20 @@ public final class AccountMenuViewModel: ObservableObject {
         self.currentUserSource = currentUserSource
         self.userImageUseCase = userImageUseCase
         self.megaHandleUseCase = megaHandleUseCase
+        self.networkMonitorUseCase = networkMonitorUseCase
         self.fullNameHandler = fullNameHandler
         self.avatarFetchHandler = avatarFetchHandler
+        self.logoutHandler = logoutHandler
 
         sections = sectionData
+        $offlineLogOutWarningDismissed.useCase = preferenceUseCase
         Task { await refreshAccountData() }
         monitorAccountRefresh()
     }
 
     deinit {
         monitorTask?.cancel()
+        cancelTransfersTask?.cancel()
     }
 
     func refreshAccountData() async {
@@ -200,6 +219,16 @@ public final class AccountMenuViewModel: ObservableObject {
     func notificationButtonTapped() {
         tracker.trackAnalyticsEvent(with: NotificationsEntryButtonPressedEvent())
         router.showNotifications()
+    }
+
+    func logoutButtonTapped() {
+        tracker.trackAnalyticsEvent(with: LogoutButtonPressedEvent())
+        guard networkMonitorUseCase.isConnected() else { return }
+
+        cancelTransfersTask = Task {
+            await logoutHandler()
+            offlineLogOutWarningDismissed = false
+        }
     }
 
     private func showAccount() {
