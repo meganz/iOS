@@ -239,8 +239,24 @@ final class HomeRouter: HomeRouterProtocol {
     // MARK: - Display Application Event
 
     private func presentAchievement() {
-        let achievementsVC = UIStoryboard(name: "Achievements", bundle: nil).instantiateViewController(withIdentifier: "AchievementsViewControllerID")
-        navigationController?.pushViewController(achievementsVC, animated: true)
+        guard let navigationController else {
+            return
+        }
+        
+        MyAccountHallRouter(
+            myAccountHallUseCase: MyAccountHallUseCase(repository: AccountRepository.newRepo),
+            purchaseUseCase: AccountPlanPurchaseUseCase(repository: AccountPlanPurchaseRepository.newRepo),
+            accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
+            accountStorageUseCase: AccountStorageUseCase(
+                accountRepository: AccountRepository.newRepo,
+                preferenceUseCase: PreferenceUseCase.default
+            ),
+            shareUseCase: makeShareUseCase(),
+            networkMonitorUseCase: NetworkMonitorUseCase(repo: NetworkMonitorRepository.newRepo),
+            notificationsUseCase: NotificationsUseCase(repository: NotificationsRepository.newRepo),
+            shouldOpenAchievements: true,
+            navigationController: navigationController
+        ).start()
     }
     
     private func makeShareUseCase() -> some ShareUseCaseProtocol {

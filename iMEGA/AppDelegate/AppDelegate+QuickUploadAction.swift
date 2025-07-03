@@ -6,7 +6,7 @@ extension AppDelegate {
     
     @objc func handleQuickUploadAction() {
         mainTBC?.selectedIndex = TabManager.driveTabIndex()
-        guard let navigationController = mainTBC?.children.first as? UINavigationController,
+        guard let navigationController = mainTBC?.selectedViewController as? UINavigationController,
                 let cdViewController = navigationController.viewControllers.first as? NewCloudDriveViewController else {
             assertionFailure("The first tabbar VC must be a NewCloudDriveViewController")
             return
