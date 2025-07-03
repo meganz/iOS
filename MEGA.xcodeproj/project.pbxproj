@@ -176,6 +176,7 @@
 		16009FA72BFB53E0002903FA /* TwoFactorAuthenticationViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16009FA62BFB53E0002903FA /* TwoFactorAuthenticationViewController+Additions.swift */; };
 		160711542A558DED00970A19 /* PagerTabViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 160711532A558DED00970A19 /* PagerTabViewModelTests.swift */; };
 		160711652A5594AD00970A19 /* PhotoAlbumContainerViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 160711642A5594AD00970A19 /* PhotoAlbumContainerViewModelTests.swift */; };
+		1627A1512DFFB25800ACD55D /* MEGAPurchase+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1627A1502DFFB24C00ACD55D /* MEGAPurchase+Extension.swift */; };
 		163ABD4C2DC4C9D2004B5D5A /* DIContainer+ExternalPurchase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 163ABD4A2DC4C9D2004B5D5A /* DIContainer+ExternalPurchase.swift */; };
 		1648E4AC2C5A10380056A66E /* LTHPasscodeViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1648E4AB2C5A10380056A66E /* LTHPasscodeViewController+Additions.swift */; };
 		1648E4AE2C5A10ED0056A66E /* LTHPasscodeViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1648E4AB2C5A10380056A66E /* LTHPasscodeViewController+Additions.swift */; };
@@ -186,6 +187,9 @@
 		1654C7F02DC47F1D00DDB846 /* MEGAStoreKit in Frameworks */ = {isa = PBXBuildFile; productRef = 1654C7EF2DC47F1D00DDB846 /* MEGAStoreKit */; };
 		1678D7F22A45487E00336C52 /* MEGATest in Frameworks */ = {isa = PBXBuildFile; productRef = 1678D7F12A45487E00336C52 /* MEGATest */; };
 		169ADFCE2DD5BAA500AB80F1 /* MEGAInfrastructure in Frameworks */ = {isa = PBXBuildFile; productRef = 169ADFCD2DD5BAA500AB80F1 /* MEGAInfrastructure */; };
+		16B10C412E01265E00A37A69 /* MEGAPurchase+CheckCancellation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16B10C402E0124FC00A37A69 /* MEGAPurchase+CheckCancellation.swift */; };
+		16CE1E0E2DFFF90800F2500E /* MEGAPurchase+SKPaymentTransactionObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16CE1E0D2DFFF90300F2500E /* MEGAPurchase+SKPaymentTransactionObserver.swift */; };
+		16CE1E172E000ADD00F2500E /* MEGAPurchase+SKProductsRequestDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16CE1E162E000ADB00F2500E /* MEGAPurchase+SKProductsRequestDelegate.swift */; };
 		16F95A2E2DDF129A00A14DDE /* DeviceKit in Frameworks */ = {isa = PBXBuildFile; productRef = 16F95A2D2DDF129A00A14DDE /* DeviceKit */; };
 		240380542A30687500C06E61 /* ReportIssueMessageViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 240380532A30687500C06E61 /* ReportIssueMessageViewModelTests.swift */; };
 		240380562A306B8B00C06E61 /* ReportIssueMessageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 240380552A306B8B00C06E61 /* ReportIssueMessageViewModel.swift */; };
@@ -2923,6 +2927,7 @@
 		1606E5842DDF188A000E1141 /* MEGASDKRepo */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = MEGASDKRepo; path = Modules/MEGASharedRepo/MEGASDKRepo; sourceTree = SOURCE_ROOT; };
 		160711532A558DED00970A19 /* PagerTabViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagerTabViewModelTests.swift; sourceTree = "<group>"; };
 		160711642A5594AD00970A19 /* PhotoAlbumContainerViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoAlbumContainerViewModelTests.swift; sourceTree = "<group>"; };
+		1627A1502DFFB24C00ACD55D /* MEGAPurchase+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAPurchase+Extension.swift"; sourceTree = "<group>"; };
 		163ABD4A2DC4C9D2004B5D5A /* DIContainer+ExternalPurchase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DIContainer+ExternalPurchase.swift"; sourceTree = "<group>"; };
 		1648E4AB2C5A10380056A66E /* LTHPasscodeViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LTHPasscodeViewController+Additions.swift"; sourceTree = "<group>"; };
 		165421CF2DC4D5A9000A229C /* AccountPlanPurchaseUseCase+Init.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AccountPlanPurchaseUseCase+Init.swift"; sourceTree = "<group>"; };
@@ -2931,6 +2936,9 @@
 		1654C7EE2DC47D8100DDB846 /* MEGAStoreKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = MEGAStoreKit; path = Modules/MEGASharedRepo/MEGAStoreKit; sourceTree = SOURCE_ROOT; };
 		167845462A172AAA00568FBE /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Platforms/iPhoneOS.platform/Developer/Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		169ADFCC2DD5BA7700AB80F1 /* MEGAInfrastructure */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = MEGAInfrastructure; path = Modules/MEGASharedRepo/MEGAInfrastructure; sourceTree = SOURCE_ROOT; };
+		16B10C402E0124FC00A37A69 /* MEGAPurchase+CheckCancellation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAPurchase+CheckCancellation.swift"; sourceTree = "<group>"; };
+		16CE1E0D2DFFF90300F2500E /* MEGAPurchase+SKPaymentTransactionObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAPurchase+SKPaymentTransactionObserver.swift"; sourceTree = "<group>"; };
+		16CE1E162E000ADB00F2500E /* MEGAPurchase+SKProductsRequestDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAPurchase+SKProductsRequestDelegate.swift"; sourceTree = "<group>"; };
 		16E14DD22A4ADE4700ED3AD5 /* MEGAAnalyticsDomain */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MEGAAnalyticsDomain; sourceTree = "<group>"; };
 		240380532A30687500C06E61 /* ReportIssueMessageViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportIssueMessageViewModelTests.swift; sourceTree = "<group>"; };
 		240380552A306B8B00C06E61 /* ReportIssueMessageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportIssueMessageViewModel.swift; sourceTree = "<group>"; };
@@ -11342,9 +11350,13 @@
 		B5EF0A7329F0EDF900B166B1 /* MEGAPurchase */ = {
 			isa = PBXGroup;
 			children = (
+				16B10C402E0124FC00A37A69 /* MEGAPurchase+CheckCancellation.swift */,
+				1627A1502DFFB24C00ACD55D /* MEGAPurchase+Extension.swift */,
 				BF0DB7812DCC0BBB00869BF4 /* MEGAPurchase+Pricing.swift */,
 				B53B02BD2A96135200550A69 /* MEGAPurchase+PromotedPlan.swift */,
 				A58902652C5B31C5001B0E3C /* MEGAPurchase+Sendable.swift */,
+				16CE1E0D2DFFF90300F2500E /* MEGAPurchase+SKPaymentTransactionObserver.swift */,
+				16CE1E162E000ADB00F2500E /* MEGAPurchase+SKProductsRequestDelegate.swift */,
 				41D4080E1B8F240B0001F8BE /* MEGAPurchase.h */,
 				41D4080F1B8F240B0001F8BE /* MEGAPurchase.m */,
 			);
@@ -15123,9 +15135,13 @@
 				8357ADE6246AED2700045137 /* MEGAPresentationManager.swift in Sources */,
 				A81AD7391F3099F800CA4059 /* MEGAProcessAsset.m in Sources */,
 				C460DA3B263ACD17000ED9E4 /* MEGAProgressBarView.swift in Sources */,
+				16B10C412E01265E00A37A69 /* MEGAPurchase+CheckCancellation.swift in Sources */,
+				1627A1512DFFB25800ACD55D /* MEGAPurchase+Extension.swift in Sources */,
 				BF0DB7822DCC0BBB00869BF4 /* MEGAPurchase+Pricing.swift in Sources */,
 				B53B02BE2A96135200550A69 /* MEGAPurchase+PromotedPlan.swift in Sources */,
 				A58902662C5B31C5001B0E3C /* MEGAPurchase+Sendable.swift in Sources */,
+				16CE1E0E2DFFF90800F2500E /* MEGAPurchase+SKPaymentTransactionObserver.swift in Sources */,
+				16CE1E172E000ADD00F2500E /* MEGAPurchase+SKProductsRequestDelegate.swift in Sources */,
 				41D408101B8F240B0001F8BE /* MEGAPurchase.m in Sources */,
 				A8F662322DE7048D00D70F4A /* MEGAQLPreviewController.swift in Sources */,
 				B51E03272DC0CC4F0001E4AD /* MEGAQueryRecoveryLinkRequestDelegate+Additions.swift in Sources */,
