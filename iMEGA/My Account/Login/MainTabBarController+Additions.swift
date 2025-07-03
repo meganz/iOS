@@ -173,15 +173,15 @@ extension MainTabBarController {
         case .hideActiveCallIcon:
             phoneBadgeImageView?.isHidden = true
         case .navigateToChatTab:
-            selectedIndex = TabType.chat.rawValue
+            selectedIndex = TabManager.chatTabIndex()
         }
     }
     
     private func trackEventForSelectedTabIndex() {
         switch selectedIndex {
-        case TabType.cloudDrive.rawValue:
+        case TabManager.driveTabIndex():
             mainTabBarViewModel.dispatch(.didTapCloudDriveTab)
-        case TabType.chat.rawValue:
+        case TabManager.chatTabIndex():
             mainTabBarViewModel.dispatch(.didTapChatRoomsTab)
         default: break
         }
@@ -206,7 +206,7 @@ extension MainTabBarController {
         tabBar.setBadge(
             value: badgeValue,
             color: TokenColors.Components.interactive,
-            at: TabType.chat.rawValue
+            at: TabManager.chatTabIndex()
         )
     }
     
@@ -216,13 +216,13 @@ extension MainTabBarController {
     }
     
     @objc func showScanDocument() {
-        let cloudDriveTabIndex = TabType.cloudDrive.rawValue
+        let cloudDriveTabIndex = TabManager.driveTabIndex()
         selectedIndex = cloudDriveTabIndex
         
-        guard let navigationController = children[safe: cloudDriveTabIndex] as? MEGANavigationController,
+        guard let navigationController = selectedViewController as? MEGANavigationController,
               let newCloudDriveViewController = navigationController.viewControllers.first as? NewCloudDriveViewController,
               let parentNode = newCloudDriveViewController.parentNode else {
-            assertionFailure("The first tabbar VC must be a NewCloudDriveViewController")
+            assertionFailure("Could not find NewCloudDriveViewController in tab bar at index: \(cloudDriveTabIndex)")
             return
         }
         
