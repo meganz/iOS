@@ -8,7 +8,7 @@
 @protocol MEGARestoreDelegate;
 @protocol MEGAPurchasePricingDelegate;
 
-@interface MEGAPurchase : NSObject <SKProductsRequestDelegate, SKPaymentTransactionObserver, MEGARequestDelegate>
+@interface MEGAPurchase : NSObject <MEGARequestDelegate>
 
 @property (nonatomic, strong) NSMutableArray<id<MEGAPurchaseDelegate>> *purchaseDelegateMutableArray;
 @property (nonatomic, strong) NSMutableArray<id<MEGARestoreDelegate>> *restoreDelegateMutableArray;
@@ -31,10 +31,21 @@
 - (void)setIsPurchasingPromotedPlan:(BOOL)isPurchasing;
 - (void)setIsSubmittingReceipt:(BOOL)isSubmittingReceipt;
 
+- (void)restoreDelegateOnSuccessRestore;
+- (void)restoreDelegateOnIncompleteRestore;
+- (void)restoreDelegateOnFailedRestore:(NSInteger)errorCode message:(NSString *)errorMessage;
+
+- (void)purchaseDelegateOnSuccessPurchase;
+- (void)purchaseDelegateOnFailedPurchase:(NSInteger)errorCode message:(NSString *)errorMessage;
+- (void)purchaseDelegateOnSuccessSubmitReceipt;
+- (void)purchaseDelegateOnFailedSubmitReceipt:(MEGAErrorType)errorType;
+
+- (void)pricingDelegateOnPricingReady;
+
 @end
 
 @interface MEGAPurchase(Collection)
-@property (nonatomic, readonly) NSArray *products;
+@property (nonatomic, strong) NSArray *products;
 @end
 
 @protocol MEGAPurchaseDelegate <NSObject>
