@@ -98,6 +98,7 @@
 }
 
 - (void)showAchievements {
+    // To be handled in [IOS-10231]
     if (![MEGASdk.shared isAchievementsEnabled]) {
         return;
     }
