@@ -516,9 +516,15 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
     }
 
     @MainActor
-    func testBuyButtons_freeAccount_whenShouldProvideExternalPurchase() async {
+    func testBuyButtons_freeAccount_whenShouldProvideExternalPurchase_withSameCurrency() async {
+        let plan = PlanEntity(
+            type: .proI,
+            subscriptionCycle: .yearly,
+            apiPrice: .sample(75, currency: "USD"),
+            appStorePrice: .sample(100, currency: "USD")
+        )
         let details = AccountDetailsEntity.build(proLevel: .free, subscriptionCycle: .none)
-        let planList: [PlanEntity] = [.proII_monthly, .proII_yearly]
+        let planList: [PlanEntity] = [.proI_monthly, plan]
 
         let exp = expectation(description: "Setting Current plan")
         let (sut, _) = makeSUT(
@@ -533,24 +539,54 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
             }.store(in: &subscriptions)
         await fulfillment(of: [exp], timeout: 0.5)
 
-        sut.setSelectedPlan(.proII_yearly)
+        sut.setSelectedPlan(plan)
         await sut.updateBuyButtonsTask?.value
 
         assertButtonsEqual(
             lhs: sut.buyButtons,
             rhs: [
+                MEGAButton(Strings.Localizable.UpgradeAccountPlan.Button.BuyAccountPlan.title("Pro I")),
                 MEGAButton(
-                    Strings.Localizable.UpgradeAccountPlan.Button.BuyAccountPlan.title(
-                        PlanEntity.proII_yearly.type.toAccountTypeDisplayName()
-                    ),
-                    icon: MEGAAssets.Image.externalLink,
-                    iconAlignment: .trailing
-                ),
+                    Strings.Localizable.UpgradeAccountPlan.Button.BuyViaWeb.save("25%"),
+                    type: .secondary
+                )
+            ]
+        )
+    }
+
+    @MainActor
+    func testBuyButtons_freeAccount_whenShouldProvideExternalPurchase_withDifferentCurrency() async {
+        let plan = PlanEntity(
+            type: .proII,
+            subscriptionCycle: .yearly,
+            apiPrice: .sample(100, currency: "EUR"),
+            appStorePrice: .sample(120, currency: "USD")
+        )
+        let details = AccountDetailsEntity.build(proLevel: .free, subscriptionCycle: .none)
+        let planList: [PlanEntity] = [.proII_monthly, plan]
+
+        let exp = expectation(description: "Setting Current plan")
+        let (sut, _) = makeSUT(
+            externalPurchaseUseCase: MockExternalPurchaseUseCase(shouldProvideExternalPurchase: true),
+            accountDetails: details,
+            planList: planList
+        )
+        sut.$currentPlan
+            .dropFirst()
+            .sink { _ in
+                exp.fulfill()
+            }.store(in: &subscriptions)
+        await fulfillment(of: [exp], timeout: 0.5)
+
+        sut.setSelectedPlan(plan)
+        await sut.updateBuyButtonsTask?.value
+
+        assertButtonsEqual(
+            lhs: sut.buyButtons,
+            rhs: [
+                MEGAButton(Strings.Localizable.UpgradeAccountPlan.Button.BuyAccountPlan.title("Pro II")),
                 MEGAButton(
-                    Strings.Localizable.UpgradeAccountPlan.Button.BuyInApp.title(
-                        PlanEntity.proII_yearly.appStorePrice.formattedPrice
-                    ),
-                    footer: Strings.Localizable.UpgradeAccountPlan.Button.BuyInApp.footer,
+                    Strings.Localizable.UpgradeAccountPlan.Button.BuyViaWeb.saveUpTo("15%"),
                     type: .secondary
                 )
             ]
