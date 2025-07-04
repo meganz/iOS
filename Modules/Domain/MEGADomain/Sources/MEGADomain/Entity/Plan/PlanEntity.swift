@@ -24,9 +24,9 @@ public struct PlanEntity: Sendable {
     public var apiPrice: PlanPriceEntity?
     public var appStorePrice: PlanPriceEntity
 
-    public var price: Decimal { apiPrice?.price ?? appStorePrice.price}
-    public var formattedPrice: String { apiPrice?.formattedPrice ?? appStorePrice.formattedPrice }
-    public var currency: String { apiPrice?.currency ?? appStorePrice.currency }
+    public var price: Decimal { appStorePrice.price }
+    public var formattedPrice: String { appStorePrice.formattedPrice }
+    public var currency: String { appStorePrice.currency }
 
     /// A formatted string representing the equivalent monthly price for a yearly plan.
     ///

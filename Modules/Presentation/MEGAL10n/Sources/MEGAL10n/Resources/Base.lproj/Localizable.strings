@@ -3638,10 +3638,10 @@
 "upgradeAccountPlan.button.termsAndPolicies.title"="Terms and policies";
 /* On Upgrade Account Plan screen. Button title to buy account plan. %@ will be the name of the selected plan */
 "upgradeAccountPlan.button.buyAccountPlan.title"="Buy %@";
-/* On Upgrade Account Plan screen. Button title to continue to buy account plan in-app when user could buy externally. %@ will be the higher price of the plan */
-"upgradeAccountPlan.button.buyInApp.title"="Continue in-app (%@)";
-/* On Upgrade Account Plan screen. Button footer text to continue to buy account plan in-app when user could buy externally. %@ will be the higher price of the plan */
-"upgradeAccountPlan.button.buyInApp.footer"="Platform fees apply when purchasing through the app";
+/* On Upgrade Account Plan screen. Button title to buy account plan via web. %@ will be total savings for the users in percent */
+"upgradeAccountPlan.button.buyViaWeb.save"="Buy via web (Save %@)";
+/* On Upgrade Account Plan screen. Button title to buy account plan via web. %@ will be potential total savings for the users in percent */
+"upgradeAccountPlan.button.buyViaWeb.saveUpTo"="Buy via web (Save up to %@)";
 /* On Upgrade Account Plan screen. Displayed header title text message */
 "upgradeAccountPlan.header.title.choosePlan"="Choose the right plan for you";
 /* On Upgrade Account Plan screen. Displayed header title text with current plan. %@ will be the name of the current plan */

@@ -261,14 +261,11 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
     }
 
     private func makeBuyButtons(selectedPlan: PlanEntity) async -> [MEGAButton] {
-        guard
-            selectedPlan.apiPrice != nil,
-            await externalPurchaseUseCase.shouldProvideExternalPurchase()
-        else {
+        guard let buyExternallyButton = await buyExternallyButton(for: selectedPlan) else {
             return [mainBuyButton]
         }
 
-        return [buyExternallyButton, continueInAppButton(plan: selectedPlan)]
+        return [mainBuyButton, buyExternallyButton]
     }
 
     private var mainBuyButton: MEGAButton {
@@ -279,23 +276,31 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
         }
     }
 
-    private var buyExternallyButton: MEGAButton {
-        MEGAButton(
-            Strings.Localizable.UpgradeAccountPlan.Button.BuyAccountPlan.title(selectedPlanName),
-            icon: MEGAAssets.Image.externalLink,
-            iconAlignment: .trailing
-        ) { [weak self] in
+    private func buyExternallyButton(for selectedPlan: PlanEntity) async -> MEGAButton? {
+        guard let buttonTitle = await buyExternallyButtonTitle(for: selectedPlan) else {
+            return nil
+        }
+
+        return MEGAButton(buttonTitle, type: .secondary) { [weak self] in
             self?.didTap(.buyExternally)
         }
     }
 
-    private func continueInAppButton(plan: PlanEntity) -> MEGAButton {
-        MEGAButton(
-            Strings.Localizable.UpgradeAccountPlan.Button.BuyInApp.title(plan.appStorePrice.formattedPrice),
-            footer: Strings.Localizable.UpgradeAccountPlan.Button.BuyInApp.footer,
-            type: .secondary
-        ) { [weak self] in
-            self?.didTap(.buyInApp)
+    private func buyExternallyButtonTitle(for selectedPlan: PlanEntity) async -> String? {
+        guard
+            let apiPrice = selectedPlan.apiPrice,
+            await externalPurchaseUseCase.shouldProvideExternalPurchase()
+        else {
+            return nil
+        }
+
+        let appStorePrice = selectedPlan.appStorePrice
+
+        if apiPrice.currency == appStorePrice.currency, apiPrice.price < appStorePrice.price {
+            let savingsInPercent: Decimal = ((appStorePrice.price - apiPrice.price) / appStorePrice.price)
+            return Strings.Localizable.UpgradeAccountPlan.Button.BuyViaWeb.save(savingsInPercent.formatted(.percent))
+        } else {
+            return Strings.Localizable.UpgradeAccountPlan.Button.BuyViaWeb.saveUpTo("15%")
         }
     }
 

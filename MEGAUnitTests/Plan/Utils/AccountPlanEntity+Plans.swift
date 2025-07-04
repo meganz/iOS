@@ -70,11 +70,14 @@ public extension PlanEntity {
 }
 
 extension PlanPriceEntity {
-    static func sample(_ price: Decimal) -> PlanPriceEntity {
+    static func sample(
+        _ price: Decimal,
+        currency: String = "USD"
+    ) -> PlanPriceEntity {
         PlanPriceEntity(
             price: price,
             formattedPrice: "$\(price)",
-            currency: "USD"
+            currency: currency
         )
     }
 }
