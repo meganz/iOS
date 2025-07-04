@@ -381,7 +381,7 @@
         if (targetNode) {
             MEGANode *tempNode = targetNode;
             NSMutableArray *nodesToPush = [NSMutableArray new];
-            while (tempNode.handle != self.parentNode.handle) {
+            while (tempNode && tempNode.handle != self.parentNode.handle) {
                 [nodesToPush insertObject:tempNode atIndex:0];
                 tempNode = [MEGASdk.sharedFolderLink nodeForHandle:tempNode.parentHandle];
             }
