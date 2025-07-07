@@ -2251,13 +2251,10 @@
 		BF61495A2A9FF35200AB051A /* MEGAL10n in Frameworks */ = {isa = PBXBuildFile; productRef = BF6149592A9FF35200AB051A /* MEGAL10n */; };
 		BF61495C2A9FF35200AB051A /* MEGAL10nObjc in Frameworks */ = {isa = PBXBuildFile; productRef = BF61495B2A9FF35200AB051A /* MEGAL10nObjc */; };
 		BF61495E2A9FF36200AB051A /* MEGAL10n in Frameworks */ = {isa = PBXBuildFile; productRef = BF61495D2A9FF36200AB051A /* MEGAL10n */; };
-		BF6149602A9FF36200AB051A /* MEGAL10nObjc in Frameworks */ = {isa = PBXBuildFile; productRef = BF61495F2A9FF36200AB051A /* MEGAL10nObjc */; };
 		BF6149622A9FF37000AB051A /* MEGAL10n in Frameworks */ = {isa = PBXBuildFile; productRef = BF6149612A9FF37000AB051A /* MEGAL10n */; };
-		BF6149642A9FF37000AB051A /* MEGAL10nObjc in Frameworks */ = {isa = PBXBuildFile; productRef = BF6149632A9FF37000AB051A /* MEGAL10nObjc */; };
 		BF6149662A9FF38400AB051A /* MEGAL10n in Frameworks */ = {isa = PBXBuildFile; productRef = BF6149652A9FF38400AB051A /* MEGAL10n */; };
 		BF6149682A9FF38400AB051A /* MEGAL10nObjc in Frameworks */ = {isa = PBXBuildFile; productRef = BF6149672A9FF38400AB051A /* MEGAL10nObjc */; };
 		BF61496A2A9FF39500AB051A /* MEGAL10n in Frameworks */ = {isa = PBXBuildFile; productRef = BF6149692A9FF39500AB051A /* MEGAL10n */; };
-		BF61496C2A9FF39500AB051A /* MEGAL10nObjc in Frameworks */ = {isa = PBXBuildFile; productRef = BF61496B2A9FF39500AB051A /* MEGAL10nObjc */; };
 		BF62C76F2E1259560008B62D /* AccountMenuViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF62C76E2E1259560008B62D /* AccountMenuViewRouter.swift */; };
 		BF62C7B32E14AEDA0008B62D /* AccountMenuViewRouter+DeviceCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF62C7B22E14AECE0008B62D /* AccountMenuViewRouter+DeviceCenter.swift */; };
 		BF65423C2C1BA932006C252C /* CloudDriveViewModeMonitoringService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF65423B2C1BA932006C252C /* CloudDriveViewModeMonitoringService.swift */; };
@@ -5583,7 +5580,6 @@
 				25455BEA2CCB8FE0008DE44E /* MEGAAssets in Frameworks */,
 				B610447428979EA200AAECF4 /* MEGADomain in Frameworks */,
 				BF61496A2A9FF39500AB051A /* MEGAL10n in Frameworks */,
-				BF61496C2A9FF39500AB051A /* MEGAL10nObjc in Frameworks */,
 				6DFC67842CC87957000EA8BC /* MEGASwiftUI in Frameworks */,
 				BF0CB9422803AF6000C21F11 /* SAMKeychain in Frameworks */,
 			);
@@ -5640,7 +5636,6 @@
 				BF2AFDAE2D9F85E60075248C /* MEGAAppSDKRepo in Frameworks */,
 				A8399FBB296DD5F10062B6BC /* MEGADomain in Frameworks */,
 				BF6149622A9FF37000AB051A /* MEGAL10n in Frameworks */,
-				BF6149642A9FF37000AB051A /* MEGAL10nObjc in Frameworks */,
 				94B6E8852A83F6410082D9B1 /* MEGAPickerFileProviderDomain in Frameworks */,
 				94B6E8882A83F8530082D9B1 /* MEGAPickerFileProviderRepo in Frameworks */,
 				A891E8AB29C1E0C40020072A /* MEGASdk in Frameworks */,
@@ -5654,7 +5649,6 @@
 			files = (
 				A5EEF3FF2DCCF56700CA3227 /* MEGAAssets in Frameworks */,
 				BF61495E2A9FF36200AB051A /* MEGAL10n in Frameworks */,
-				BF6149602A9FF36200AB051A /* MEGAL10nObjc in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -13544,7 +13538,6 @@
 				B610447328979EA200AAECF4 /* MEGADomain */,
 				BF0CB9412803AF6000C21F11 /* SAMKeychain */,
 				BF6149692A9FF39500AB051A /* MEGAL10n */,
-				BF61496B2A9FF39500AB051A /* MEGAL10nObjc */,
 				6DFC67832CC87957000EA8BC /* MEGASwiftUI */,
 				25455BE92CCB8FE0008DE44E /* MEGAAssets */,
 				BFE772A42D9B8A41005B114E /* MEGAAppPresentation */,
@@ -13642,7 +13635,6 @@
 				94B6E8842A83F6410082D9B1 /* MEGAPickerFileProviderDomain */,
 				94B6E8872A83F8530082D9B1 /* MEGAPickerFileProviderRepo */,
 				BF6149612A9FF37000AB051A /* MEGAL10n */,
-				BF6149632A9FF37000AB051A /* MEGAL10nObjc */,
 				BFE772A02D9B8A23005B114E /* MEGAAppPresentation */,
 				BF2AFDAD2D9F85E60075248C /* MEGAAppSDKRepo */,
 			);
@@ -13667,7 +13659,6 @@
 			name = MEGAPicker;
 			packageProductDependencies = (
 				BF61495D2A9FF36200AB051A /* MEGAL10n */,
-				BF61495F2A9FF36200AB051A /* MEGAL10nObjc */,
 				A5EEF3FE2DCCF56700CA3227 /* MEGAAssets */,
 			);
 			productName = MEGAPicker;
@@ -18978,17 +18969,9 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = MEGAL10n;
 		};
-		BF61495F2A9FF36200AB051A /* MEGAL10nObjc */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = MEGAL10nObjc;
-		};
 		BF6149612A9FF37000AB051A /* MEGAL10n */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = MEGAL10n;
-		};
-		BF6149632A9FF37000AB051A /* MEGAL10nObjc */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = MEGAL10nObjc;
 		};
 		BF6149652A9FF38400AB051A /* MEGAL10n */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -19001,10 +18984,6 @@
 		BF6149692A9FF39500AB051A /* MEGAL10n */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = MEGAL10n;
-		};
-		BF61496B2A9FF39500AB051A /* MEGAL10nObjc */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = MEGAL10nObjc;
 		};
 		BF67F7F72AB4171A00AC127E /* LogRepo */ = {
 			isa = XCSwiftPackageProductDependency;
