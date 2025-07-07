@@ -37,10 +37,6 @@
 
 @implementation MEGANode (MNZCategory)
 
-- (MEGANode *)parent {
-    return [MEGASdk.shared nodeForHandle:self.parentHandle];
-}
-
 - (void)navigateToParentAndPresent {
     if (!UIApplication.mainTabBarRootViewController) {
         return;
