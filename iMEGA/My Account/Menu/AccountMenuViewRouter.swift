@@ -10,8 +10,20 @@ import MEGASwiftUI
 import SwiftUI
 
 @MainActor
+public protocol SharedItemsPresenting {
+    func showSharedItems()
+}
+
+final class AccountMenuViewNavigationController: MEGANavigationController, SharedItemsPresenting {
+    var router: (any AccountMenuViewRouting)?
+    func showSharedItems() {
+        router?.showSharedItems()
+    }
+}
+
+@MainActor
 struct AccountMenuViewRouter: AccountMenuViewRouting {
-    let navigationController = MEGANavigationController()
+    let navigationController = AccountMenuViewNavigationController()
 
     func build() -> UIViewController {
         let userImageUseCase = UserImageUseCase(
@@ -51,11 +63,14 @@ struct AccountMenuViewRouter: AccountMenuViewRouting {
             },
             logoutHandler: logout
         )
+
         let hostingViewController = UIHostingController(
             rootView: AccountMenuView(viewModel: viewModel)
         )
 
         navigationController.viewControllers = [hostingViewController]
+        navigationController.router = self
+
         return navigationController
     }
 

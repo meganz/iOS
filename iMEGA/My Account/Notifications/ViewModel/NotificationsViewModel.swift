@@ -177,11 +177,11 @@ enum NotificationAction: ActionType {
         case .handleNodeNavigation(let handle):
             handleNodeNavigationTask?.cancel()
             handleNodeNavigationTask = Task { [weak self] in
-                guard let node = await self?.nodeUseCase.nodeForHandle(handle) else { return }
+                guard let self, let node = await nodeUseCase.nodeForHandle(handle) else { return }
                 if node.isTakenDown {
-                    await self?.handleTakenDownNode(node: node)
+                    await handleTakenDownNode(node: node)
                 } else {
-                    self?.presentNode(node: node)
+                    presentNode(node: node)
                 }
             }
         }
