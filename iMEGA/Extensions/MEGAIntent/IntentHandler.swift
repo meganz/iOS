@@ -1,10 +1,9 @@
 import Firebase
 import Intents
 import MEGAIntentDomain
-import MEGARepo
 
 final class IntentHandler: INExtension {
-    lazy var intentPersonUseCase = IntentPersonUseCase(repository: DeviceContactsRepository.newRepo)
+    lazy var intentPersonUseCase = IntentPersonUseCase()
 
     override init() {
         super.init()

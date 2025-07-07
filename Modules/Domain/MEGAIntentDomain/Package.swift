@@ -18,16 +18,16 @@ let package = Package(
             targets: ["MEGAIntentDomain"])
     ],
     dependencies: [
-        .package(path: "../../Domain/MEGADomain")
+        .package(path: "../../MEGASharedRepo/MEGASwift")
     ],
     targets: [
         .target(
             name: "MEGAIntentDomain",
-            dependencies: ["MEGADomain"],
+            dependencies: ["MEGASwift"],
             swiftSettings: settings),
         .testTarget(
             name: "MEGAIntentDomainTests",
-            dependencies: ["MEGADomain", "MEGAIntentDomain"],
+            dependencies: ["MEGAIntentDomain"],
             swiftSettings: settings)
     ],
     swiftLanguageModes: [.v6]

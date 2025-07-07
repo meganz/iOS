@@ -1,8 +1,6 @@
 import Contacts
 import Intents
-import MEGAAppSDKRepo
-import MEGADomain
-import MEGARepo
+import SAMKeychain
 
 extension IntentHandler: INStartCallIntentHandling {
     
@@ -18,13 +16,11 @@ extension IntentHandler: INStartCallIntentHandling {
     }
     
     func resolveContacts(for intent: INStartCallIntent) async -> [INStartCallContactResolutionResult] {
-        let credentialUseCase = CredentialUseCase(repo: CredentialRepository.newRepo)
-
-        guard credentialUseCase.hasSession() else {
+        guard SAMKeychain.password(forService: "MEGA", account: "sessionV3") != nil else {
             return [.unsupported(forReason: .invalidHandle)]
         }
         
-        if credentialUseCase.isPasscodeEnabled() {
+        if SAMKeychain.password(forService: "MEGA", account: "demoPasscode") != nil {
             return [.unsupported(forReason: .invalidHandle)]
         }
         
