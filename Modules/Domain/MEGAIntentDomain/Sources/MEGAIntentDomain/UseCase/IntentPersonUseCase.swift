@@ -1,20 +1,18 @@
 import Contacts
 import Intents
-import MEGADomain
+import MEGASwift
 
 protocol IntentPersonUseCaseProtocol {
     func personsInContacts(matching person: INPerson) -> [INPerson]
 }
 
 public struct IntentPersonUseCase: IntentPersonUseCaseProtocol {
-    private let repository: any DeviceContactsRepositoryProtocol
-
-    public init(repository: some DeviceContactsRepositoryProtocol) {
-        self.repository = repository
-    }
+    private let store = CNContactStore()
+    
+    public init() { }
 
     public func personsInContacts(matching person: INPerson) -> [INPerson] {
-        let contacts = repository.fetchContacts()
+        let contacts = fetchContacts()
         let personDisplayName = person.displayName.lowercased()
 
         let initialFilter = contacts.filter { contact in
@@ -33,6 +31,30 @@ public struct IntentPersonUseCase: IntentPersonUseCaseProtocol {
             .persons(withDisplayName: personDisplayName)
             .removeDuplicatesWhileKeepingTheOriginalOrder()
     }
+    
+    // MARK: - Private
+    
+    private func fetchContacts() -> [CNContact] {
+        var contacts: [CNContact] = []
+        
+        let keys: [any CNKeyDescriptor] = [
+            CNContactGivenNameKey as (any CNKeyDescriptor),
+            CNContactFamilyNameKey as (any CNKeyDescriptor),
+            CNContactEmailAddressesKey as (any CNKeyDescriptor)
+        ]
+        
+        let fetchRequest = CNContactFetchRequest(keysToFetch: keys)
+        
+        do {
+            try store.enumerateContacts(with: fetchRequest) { contact, _ in
+                contacts.append(contact)
+            }
+        } catch {
+            assertionFailure("[IntentPersonUseCase] Unable to fetch contacts")
+        }
+        
+        return contacts
+    }
 }
 
 private extension CNContact {
@@ -42,5 +64,23 @@ private extension CNContact {
 
     var lastName: String {
         familyName.lowercased()
+    }
+}
+
+private extension [CNContact] {
+    func persons(withDisplayName displayName: String) -> [INPerson] {
+        let persons = self.flatMap { contact -> [INPerson] in
+            let persons = contact.emailAddresses.compactMap {
+                let personHandle = INPersonHandle(value: $0.value as String, type: .emailAddress)
+                return INPerson(
+                    personHandle: personHandle,
+                    nameComponents: nil,
+                    displayName: displayName,
+                    image: nil, contactIdentifier: nil, customIdentifier: nil
+                )
+            }
+            return persons
+        }
+        return persons
     }
 }

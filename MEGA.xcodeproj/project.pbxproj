@@ -1528,7 +1528,6 @@
 		94FAFF1B2AFA6CA50056A177 /* Node+ResultProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94FAFF1A2AFA6CA50056A177 /* Node+ResultProperties.swift */; };
 		94FB1EAD2B302C030045276C /* RecentActionBucketProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94FB1EAC2B302C030045276C /* RecentActionBucketProvider.swift */; };
 		94FCE01B2D15C327000C63A4 /* TransfersWidgetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94FCE01A2D15C321000C63A4 /* TransfersWidgetViewModel.swift */; };
-		94FD8A8B2AA0C6F300CD1C8B /* MEGARepo in Frameworks */ = {isa = PBXBuildFile; productRef = 94FD8A8A2AA0C6F300CD1C8B /* MEGARepo */; };
 		990AC4ED2A4A77EC008E298F /* ChatRoomLinkViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990AC4EC2A4A77EC008E298F /* ChatRoomLinkViewModelTests.swift */; };
 		9911BA8B2A8B20C300B88F28 /* WaitingRoomViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9911BA8A2A8B20C300B88F28 /* WaitingRoomViewRouter.swift */; };
 		9911BA8E2A8B20CD00B88F28 /* WaitingRoomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9911BA8D2A8B20CD00B88F28 /* WaitingRoomViewController.swift */; };
@@ -1716,6 +1715,7 @@
 		A8851065292D251200E92A54 /* IntentHandler+StartCall.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8851064292D251200E92A54 /* IntentHandler+StartCall.swift */; };
 		A88671A02D43F11900C8AC9B /* SharedItemsNodeSearcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94485B5A29B9FA74006B919E /* SharedItemsNodeSearcher.swift */; };
 		A88790692D6CDED00000ADF0 /* MEGALoginRequestDelegate+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A88790682D6CDED00000ADF0 /* MEGALoginRequestDelegate+Additions.swift */; };
+		A88813482E1BD7BB0009917F /* MEGASwift in Frameworks */ = {isa = PBXBuildFile; productRef = A88813472E1BD7BB0009917F /* MEGASwift */; };
 		A889B2E727E20DB7002B4E7F /* UploadLogFileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A889B2E627E20DB7002B4E7F /* UploadLogFileView.swift */; };
 		A88E7FEB2549FD8A001B0A66 /* RecentsTableViewHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A88E7FE52549FD8A001B0A66 /* RecentsTableViewHeaderView.xib */; };
 		A88E7FEC2549FD8A001B0A66 /* RecentsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A88E7FE72549FD8A001B0A66 /* RecentsViewController.m */; };
@@ -2200,7 +2200,6 @@
 		BF2A7FFA29DE454300AAC203 /* CallInProgressTimeReporting.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2A7FF929DE454300AAC203 /* CallInProgressTimeReporting.swift */; };
 		BF2AFDA82D9F85C40075248C /* MEGAAppSDKRepo in Frameworks */ = {isa = PBXBuildFile; productRef = BF2AFDA72D9F85C40075248C /* MEGAAppSDKRepo */; };
 		BF2AFDAA2D9F85C40075248C /* MEGAAppSDKRepoMock in Frameworks */ = {isa = PBXBuildFile; productRef = BF2AFDA92D9F85C40075248C /* MEGAAppSDKRepoMock */; };
-		BF2AFDAC2D9F85D10075248C /* MEGAAppSDKRepo in Frameworks */ = {isa = PBXBuildFile; productRef = BF2AFDAB2D9F85D10075248C /* MEGAAppSDKRepo */; };
 		BF2AFDAE2D9F85E60075248C /* MEGAAppSDKRepo in Frameworks */ = {isa = PBXBuildFile; productRef = BF2AFDAD2D9F85E60075248C /* MEGAAppSDKRepo */; };
 		BF30471F2892048700A6988F /* MeetingFloatingPanelViewModel+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF30471E2892048700A6988F /* MeetingFloatingPanelViewModel+Additions.swift */; };
 		BF30AB9B24A05B7A00862853 /* MEGAChatMessage+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF30AB9A24A05B7A00862853 /* MEGAChatMessage+Additions.swift */; };
@@ -2249,7 +2248,6 @@
 		BF6149522A9FF33300AB051A /* MEGAL10n in Frameworks */ = {isa = PBXBuildFile; productRef = BF6149512A9FF33300AB051A /* MEGAL10n */; };
 		BF6149542A9FF33300AB051A /* MEGAL10nObjc in Frameworks */ = {isa = PBXBuildFile; productRef = BF6149532A9FF33300AB051A /* MEGAL10nObjc */; };
 		BF6149562A9FF34400AB051A /* MEGAL10n in Frameworks */ = {isa = PBXBuildFile; productRef = BF6149552A9FF34400AB051A /* MEGAL10n */; };
-		BF6149582A9FF34400AB051A /* MEGAL10nObjc in Frameworks */ = {isa = PBXBuildFile; productRef = BF6149572A9FF34400AB051A /* MEGAL10nObjc */; };
 		BF61495A2A9FF35200AB051A /* MEGAL10n in Frameworks */ = {isa = PBXBuildFile; productRef = BF6149592A9FF35200AB051A /* MEGAL10n */; };
 		BF61495C2A9FF35200AB051A /* MEGAL10nObjc in Frameworks */ = {isa = PBXBuildFile; productRef = BF61495B2A9FF35200AB051A /* MEGAL10nObjc */; };
 		BF61495E2A9FF36200AB051A /* MEGAL10n in Frameworks */ = {isa = PBXBuildFile; productRef = BF61495D2A9FF36200AB051A /* MEGAL10n */; };
@@ -2455,7 +2453,6 @@
 		BFE6E554255259FE00050DCA /* SortOrderType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE6E553255259FE00050DCA /* SortOrderType.swift */; };
 		BFE7728E2D9B637A005B114E /* MEGAAppPresentation in Frameworks */ = {isa = PBXBuildFile; productRef = BFE7728D2D9B637A005B114E /* MEGAAppPresentation */; };
 		BFE772902D9B637A005B114E /* MEGAAppPresentationMock in Frameworks */ = {isa = PBXBuildFile; productRef = BFE7728F2D9B637A005B114E /* MEGAAppPresentationMock */; };
-		BFE7729D2D9B8A0D005B114E /* MEGAAppPresentation in Frameworks */ = {isa = PBXBuildFile; productRef = BFE7729C2D9B8A0D005B114E /* MEGAAppPresentation */; };
 		BFE7729F2D9B8A17005B114E /* MEGAAppPresentation in Frameworks */ = {isa = PBXBuildFile; productRef = BFE7729E2D9B8A17005B114E /* MEGAAppPresentation */; };
 		BFE772A12D9B8A23005B114E /* MEGAAppPresentation in Frameworks */ = {isa = PBXBuildFile; productRef = BFE772A02D9B8A23005B114E /* MEGAAppPresentation */; };
 		BFE772A32D9B8A32005B114E /* MEGAAppPresentation in Frameworks */ = {isa = PBXBuildFile; productRef = BFE772A22D9B8A32005B114E /* MEGAAppPresentation */; };
@@ -5597,12 +5594,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				A828E683286B3150004CED9E /* FirebaseCrashlytics in Frameworks */,
-				BFE7729D2D9B8A0D005B114E /* MEGAAppPresentation in Frameworks */,
-				BF2AFDAC2D9F85D10075248C /* MEGAAppSDKRepo in Frameworks */,
 				940F41382A9FC40B00C2543F /* MEGAIntentDomain in Frameworks */,
 				BF6149562A9FF34400AB051A /* MEGAL10n in Frameworks */,
-				BF6149582A9FF34400AB051A /* MEGAL10nObjc in Frameworks */,
-				94FD8A8B2AA0C6F300CD1C8B /* MEGARepo in Frameworks */,
+				A88813482E1BD7BB0009917F /* MEGASwift in Frameworks */,
 				A803C8FD2955DB790056C9F0 /* SAMKeychain in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -13577,11 +13571,8 @@
 				A828E682286B3150004CED9E /* FirebaseCrashlytics */,
 				A803C8FC2955DB790056C9F0 /* SAMKeychain */,
 				940F41372A9FC40B00C2543F /* MEGAIntentDomain */,
-				94FD8A8A2AA0C6F300CD1C8B /* MEGARepo */,
 				BF6149552A9FF34400AB051A /* MEGAL10n */,
-				BF6149572A9FF34400AB051A /* MEGAL10nObjc */,
-				BFE7729C2D9B8A0D005B114E /* MEGAAppPresentation */,
-				BF2AFDAB2D9F85D10075248C /* MEGAAppSDKRepo */,
+				A88813472E1BD7BB0009917F /* MEGASwift */,
 			);
 			productName = MEGAIntent;
 			productReference = 831B490E256FED6F0086002B /* MEGAIntent.appex */;
@@ -18623,10 +18614,6 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = MEGAPickerFileProviderRepo;
 		};
-		94FD8A8A2AA0C6F300CD1C8B /* MEGARepo */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = MEGARepo;
-		};
 		99DB1D592AC64B34004A9CC3 /* ChatRepoMock */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = ChatRepoMock;
@@ -18709,6 +18696,10 @@
 		A87F09182CCFE65100A1B03C /* MEGAUIMock */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = MEGAUIMock;
+		};
+		A88813472E1BD7BB0009917F /* MEGASwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = MEGASwift;
 		};
 		A891E8A429C1E09D0020072A /* MEGASdk */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -18959,10 +18950,6 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = MEGAAppSDKRepoMock;
 		};
-		BF2AFDAB2D9F85D10075248C /* MEGAAppSDKRepo */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = MEGAAppSDKRepo;
-		};
 		BF2AFDAD2D9F85E60075248C /* MEGAAppSDKRepo */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = MEGAAppSDKRepo;
@@ -18978,10 +18965,6 @@
 		BF6149552A9FF34400AB051A /* MEGAL10n */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = MEGAL10n;
-		};
-		BF6149572A9FF34400AB051A /* MEGAL10nObjc */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = MEGAL10nObjc;
 		};
 		BF6149592A9FF35200AB051A /* MEGAL10n */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -19047,10 +19030,6 @@
 		BFE7728F2D9B637A005B114E /* MEGAAppPresentationMock */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = MEGAAppPresentationMock;
-		};
-		BFE7729C2D9B8A0D005B114E /* MEGAAppPresentation */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = MEGAAppPresentation;
 		};
 		BFE7729E2D9B8A17005B114E /* MEGAAppPresentation */ = {
 			isa = XCSwiftPackageProductDependency;
