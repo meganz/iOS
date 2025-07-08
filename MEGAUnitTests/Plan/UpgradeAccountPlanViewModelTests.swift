@@ -1143,6 +1143,24 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
         XCTAssertEqual(urlOpened, [])
         XCTAssertTrue(mockUseCase.purchasePlanCalled == 1)
     }
+    
+    @MainActor
+    func testAutoRenewDescription_linkIsCorrect() {
+        let (sut, _) = makeSUT(
+            accountDetails: .build(proLevel: .proI),
+            viewType: .upgrade)
+        
+        let fullText = Strings.Localizable.SubscriptionPurchase.autoRenewDescription
+        let tappableText = fullText.subString(from: "[L]", to: "[/L]") ?? ""
+        let fullTextWithoutFormatters = fullText
+            .replacingOccurrences(of: "[L]", with: "")
+            .replacingOccurrences(of: "[/L]", with: "")
+        
+        let description = sut.autoRenewDescription
+        XCTAssertEqual(description.fullText, fullTextWithoutFormatters)
+        XCTAssertEqual(description.tappableText, tappableText)
+        XCTAssertEqual(description.linkString, "https://support.apple.com/118428")
+    }
 
     // MARK: - Helper
     @MainActor

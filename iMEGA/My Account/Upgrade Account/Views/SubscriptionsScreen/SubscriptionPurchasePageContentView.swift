@@ -1,6 +1,7 @@
 import MEGAAssets
 import MEGADesignToken
 import MEGAL10n
+import MEGASwiftUI
 import MEGAUIComponent
 import SwiftUI
 
@@ -102,9 +103,9 @@ struct SubscriptionPurchasePageContentView: View {
     private var subscriptionDetails: some View {
         VStack(alignment: .leading, spacing: TokenSpacing._3) {
             Text(Strings.Localizable.UpgradeAccountPlan.Header.Title.subscriptionDetails)
-                .font(.footnote.bold())
+                .font(.subheadline.bold())
                 .foregroundStyle(TokenColors.Text.primary.swiftUI)
-            Text(Strings.Localizable.SubscriptionPurchase.autoRenewDescription)
+            TextWithLinkView(details: viewModel.autoRenewDescription)
                 .font(.caption)
                 .foregroundStyle(TokenColors.Text.secondary.swiftUI)
                 .tint(TokenColors.Link.primary.swiftUI)
