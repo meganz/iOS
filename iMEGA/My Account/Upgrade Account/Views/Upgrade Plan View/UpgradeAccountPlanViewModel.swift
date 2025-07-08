@@ -372,6 +372,19 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
         )
     }
     
+    var autoRenewDescription: TextWithLinkDetails {
+        let fullText = Strings.Localizable.SubscriptionPurchase.autoRenewDescription
+        let tappableText = fullText.subString(from: "[L]", to: "[/L]") ?? ""
+        let fullTextWithoutFormatters = fullText
+            .replacingOccurrences(of: "[L]", with: "")
+            .replacingOccurrences(of: "[/L]", with: "")
+        return TextWithLinkDetails(fullText: fullTextWithoutFormatters,
+                                   tappableText: tappableText,
+                                   linkString: "https://support.apple.com/118428",
+                                   textColor: TokenColors.Text.secondary.swiftUI,
+                                   linkColor: TokenColors.Link.primary.swiftUI)
+    }
+    
     func createAccountPlanViewModel(_ plan: PlanEntity) -> AccountPlanViewModel {
         AccountPlanViewModel(
             plan: plan,
