@@ -136,15 +136,12 @@ private struct NotificationsView: View {
     var body: some View {
         ZStack(alignment: .topTrailing) {
             MEGAAssets.Image.notificationsInMenu
-                .resizable()
-                .frame(width: 24, height: 24)
                 .foregroundStyle(TokenColors.Icon.primary.swiftUI)
-                .padding(.vertical, TokenSpacing._2)
 
             if notificationCount > 0 {
                 NotificationBadgeView(count: notificationCount)
-                    .alignmentGuide(.top) { d in d[.top] + 2 }
-                    .alignmentGuide(.trailing) { d in d[.trailing] - 2 }
+                    .alignmentGuide(.top) { d in d.height / 2 }
+                    .alignmentGuide(.trailing) { d in d.width / 2 }
             }
         }
         .onTapGesture {

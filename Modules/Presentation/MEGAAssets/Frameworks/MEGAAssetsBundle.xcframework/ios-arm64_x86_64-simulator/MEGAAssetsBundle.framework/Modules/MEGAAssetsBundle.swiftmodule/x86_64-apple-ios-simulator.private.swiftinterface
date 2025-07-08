@@ -10,6 +10,29 @@ import UIKit
 import _Concurrency
 import _StringProcessing
 import _SwiftConcurrencyShims
+public struct MEGAColorBundle {
+  public static var black000000: SwiftUICore.Color {
+    get
+  }
+  public static var whiteFFFFFF: SwiftUICore.Color {
+    get
+  }
+  public static var black2C2C2E: SwiftUICore.Color {
+    get
+  }
+  public static var gray363638: SwiftUICore.Color {
+    get
+  }
+  public static var grayD1D1D1: SwiftUICore.Color {
+    get
+  }
+  public static var navigationBg: SwiftUICore.Color {
+    get
+  }
+  public static var backgroundRegularPrimaryElevated: SwiftUICore.Color {
+    get
+  }
+}
 public struct MEGAImageBundle {
   public static var megaLogoGrayscale: SwiftUICore.Image {
     get
@@ -1939,29 +1962,6 @@ public struct MEGAUIImageBundle {
     get
   }
   public static var tabBarMenu: UIKit.UIImage {
-    get
-  }
-}
-public struct MEGAColorBundle {
-  public static var black000000: SwiftUICore.Color {
-    get
-  }
-  public static var whiteFFFFFF: SwiftUICore.Color {
-    get
-  }
-  public static var black2C2C2E: SwiftUICore.Color {
-    get
-  }
-  public static var gray363638: SwiftUICore.Color {
-    get
-  }
-  public static var grayD1D1D1: SwiftUICore.Color {
-    get
-  }
-  public static var navigationBg: SwiftUICore.Color {
-    get
-  }
-  public static var backgroundRegularPrimaryElevated: SwiftUICore.Color {
     get
   }
 }
