@@ -62,6 +62,8 @@ static NSString *kisDirectory = @"kisDirectory";
 
     [self configureImages];
     
+    self.currentContentInsetHeight = 0;
+    
     [self determineViewMode];
     
     [self configureNavigationBar];
@@ -780,6 +782,8 @@ static NSString *kisDirectory = @"kisDirectory";
     if ([AudioPlayerManager.shared isPlayerAlive]) {
         [AudioPlayerManager.shared playerHidden:editing presenter:self];
     }
+    
+    [self adjustSafeAreaBottomInset: editing ? self.toolbar.frame.size.height : self.currentContentInsetHeight];
 }
 
 - (void)updateNavigationBarTitle {

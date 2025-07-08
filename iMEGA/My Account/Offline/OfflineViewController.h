@@ -37,6 +37,8 @@ static NSString *notificationServiceExtensionLog = @"MEGAiOS.NSE.log";
 @property (nonatomic, strong) NSString *logsPath;
 @property (nonatomic, strong) OfflineViewModel *viewModel;
 
+@property (nonatomic, assign) CGFloat currentContentInsetHeight;
+
 @property (nonatomic, strong, nullable) OfflineTableViewViewController *offlineTableView;
 @property (nonatomic, strong, nullable) OfflineCollectionViewController *offlineCollectionView;
 

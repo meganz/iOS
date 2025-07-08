@@ -93,14 +93,20 @@ extension OfflineViewController {
             mainTabBarController.refreshBottomConstraint()
         }
     }
+    
+    @objc func adjustSafeAreaBottomInset(_ height: CGFloat) {
+        additionalSafeAreaInsets = .init(top: 0, left: 0, bottom: height, right: 0)
+    }
 }
 
 extension OfflineViewController: AudioPlayerPresenterProtocol {
     public func updateContentView(_ height: CGFloat) {
-        additionalSafeAreaInsets = .init(top: 0, left: 0, bottom: height, right: 0)
+        currentContentInsetHeight = height
+        
+        adjustSafeAreaBottomInset(currentContentInsetHeight)
     }
     
     public func hasUpdatedContentView() -> Bool {
-        additionalSafeAreaInsets.bottom != 0
+        currentContentInsetHeight != 0
     }
 }
