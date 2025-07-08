@@ -70,7 +70,6 @@ extension AppDelegate {
         QuickAccessWidgetManager.reloadAllWidgetsContent()
         
         MEGAPurchase.sharedInstance().requestPricing()
-        MEGAPurchase.sharedInstance().checkForCancellation()
     }
     
     @objc func isOnboardingViewControllerAlreadyShown() -> Bool {

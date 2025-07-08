@@ -673,7 +673,11 @@ extension AppDelegate {
     @objc func listenToStorePaymentTransactions() {
         SKPaymentQueue.default().add(MEGAPurchase.sharedInstance())
     }
-    
+
+    @objc func checkForSubscriptionCancellation() {
+        MEGAPurchase.sharedInstance().checkForCancellation()
+    }
+
     // MARK: - ChatUploader
     @objc func chatUploaderSetup() {
         ChatUploader.sharedInstance.setup()
