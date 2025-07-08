@@ -13,6 +13,337 @@
       },
       {
         "kind": "TypeDecl",
+        "name": "MEGAColorBundle",
+        "printedName": "MEGAColorBundle",
+        "children": [
+          {
+            "kind": "Var",
+            "name": "black000000",
+            "printedName": "black000000",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Color",
+                "printedName": "SwiftUI.Color",
+                "usr": "s:7SwiftUI5ColorV"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:16MEGAAssetsBundle09MEGAColorB0V11black0000007SwiftUI5ColorVvpZ",
+            "mangledName": "$s16MEGAAssetsBundle09MEGAColorB0V11black0000007SwiftUI5ColorVvpZ",
+            "moduleName": "MEGAAssetsBundle",
+            "static": true,
+            "declAttributes": [
+              "AccessControl"
+            ],
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Color",
+                    "printedName": "SwiftUI.Color",
+                    "usr": "s:7SwiftUI5ColorV"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:16MEGAAssetsBundle09MEGAColorB0V11black0000007SwiftUI5ColorVvgZ",
+                "mangledName": "$s16MEGAAssetsBundle09MEGAColorB0V11black0000007SwiftUI5ColorVvgZ",
+                "moduleName": "MEGAAssetsBundle",
+                "static": true,
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "whiteFFFFFF",
+            "printedName": "whiteFFFFFF",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Color",
+                "printedName": "SwiftUI.Color",
+                "usr": "s:7SwiftUI5ColorV"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:16MEGAAssetsBundle09MEGAColorB0V11whiteFFFFFF7SwiftUI5ColorVvpZ",
+            "mangledName": "$s16MEGAAssetsBundle09MEGAColorB0V11whiteFFFFFF7SwiftUI5ColorVvpZ",
+            "moduleName": "MEGAAssetsBundle",
+            "static": true,
+            "declAttributes": [
+              "AccessControl"
+            ],
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Color",
+                    "printedName": "SwiftUI.Color",
+                    "usr": "s:7SwiftUI5ColorV"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:16MEGAAssetsBundle09MEGAColorB0V11whiteFFFFFF7SwiftUI5ColorVvgZ",
+                "mangledName": "$s16MEGAAssetsBundle09MEGAColorB0V11whiteFFFFFF7SwiftUI5ColorVvgZ",
+                "moduleName": "MEGAAssetsBundle",
+                "static": true,
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "black2C2C2E",
+            "printedName": "black2C2C2E",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Color",
+                "printedName": "SwiftUI.Color",
+                "usr": "s:7SwiftUI5ColorV"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:16MEGAAssetsBundle09MEGAColorB0V08black2C2E1E7SwiftUI5ColorVvpZ",
+            "mangledName": "$s16MEGAAssetsBundle09MEGAColorB0V08black2C2E1E7SwiftUI5ColorVvpZ",
+            "moduleName": "MEGAAssetsBundle",
+            "static": true,
+            "declAttributes": [
+              "AccessControl"
+            ],
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Color",
+                    "printedName": "SwiftUI.Color",
+                    "usr": "s:7SwiftUI5ColorV"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:16MEGAAssetsBundle09MEGAColorB0V08black2C2E1E7SwiftUI5ColorVvgZ",
+                "mangledName": "$s16MEGAAssetsBundle09MEGAColorB0V08black2C2E1E7SwiftUI5ColorVvgZ",
+                "moduleName": "MEGAAssetsBundle",
+                "static": true,
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "gray363638",
+            "printedName": "gray363638",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Color",
+                "printedName": "SwiftUI.Color",
+                "usr": "s:7SwiftUI5ColorV"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:16MEGAAssetsBundle09MEGAColorB0V10gray3636387SwiftUI5ColorVvpZ",
+            "mangledName": "$s16MEGAAssetsBundle09MEGAColorB0V10gray3636387SwiftUI5ColorVvpZ",
+            "moduleName": "MEGAAssetsBundle",
+            "static": true,
+            "declAttributes": [
+              "AccessControl"
+            ],
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Color",
+                    "printedName": "SwiftUI.Color",
+                    "usr": "s:7SwiftUI5ColorV"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:16MEGAAssetsBundle09MEGAColorB0V10gray3636387SwiftUI5ColorVvgZ",
+                "mangledName": "$s16MEGAAssetsBundle09MEGAColorB0V10gray3636387SwiftUI5ColorVvgZ",
+                "moduleName": "MEGAAssetsBundle",
+                "static": true,
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "grayD1D1D1",
+            "printedName": "grayD1D1D1",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Color",
+                "printedName": "SwiftUI.Color",
+                "usr": "s:7SwiftUI5ColorV"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:16MEGAAssetsBundle09MEGAColorB0V06grayD1eE07SwiftUI5ColorVvpZ",
+            "mangledName": "$s16MEGAAssetsBundle09MEGAColorB0V06grayD1eE07SwiftUI5ColorVvpZ",
+            "moduleName": "MEGAAssetsBundle",
+            "static": true,
+            "declAttributes": [
+              "AccessControl"
+            ],
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Color",
+                    "printedName": "SwiftUI.Color",
+                    "usr": "s:7SwiftUI5ColorV"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:16MEGAAssetsBundle09MEGAColorB0V06grayD1eE07SwiftUI5ColorVvgZ",
+                "mangledName": "$s16MEGAAssetsBundle09MEGAColorB0V06grayD1eE07SwiftUI5ColorVvgZ",
+                "moduleName": "MEGAAssetsBundle",
+                "static": true,
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "navigationBg",
+            "printedName": "navigationBg",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Color",
+                "printedName": "SwiftUI.Color",
+                "usr": "s:7SwiftUI5ColorV"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:16MEGAAssetsBundle09MEGAColorB0V12navigationBg7SwiftUI5ColorVvpZ",
+            "mangledName": "$s16MEGAAssetsBundle09MEGAColorB0V12navigationBg7SwiftUI5ColorVvpZ",
+            "moduleName": "MEGAAssetsBundle",
+            "static": true,
+            "declAttributes": [
+              "AccessControl"
+            ],
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Color",
+                    "printedName": "SwiftUI.Color",
+                    "usr": "s:7SwiftUI5ColorV"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:16MEGAAssetsBundle09MEGAColorB0V12navigationBg7SwiftUI5ColorVvgZ",
+                "mangledName": "$s16MEGAAssetsBundle09MEGAColorB0V12navigationBg7SwiftUI5ColorVvgZ",
+                "moduleName": "MEGAAssetsBundle",
+                "static": true,
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "backgroundRegularPrimaryElevated",
+            "printedName": "backgroundRegularPrimaryElevated",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Color",
+                "printedName": "SwiftUI.Color",
+                "usr": "s:7SwiftUI5ColorV"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:16MEGAAssetsBundle09MEGAColorB0V32backgroundRegularPrimaryElevated7SwiftUI5ColorVvpZ",
+            "mangledName": "$s16MEGAAssetsBundle09MEGAColorB0V32backgroundRegularPrimaryElevated7SwiftUI5ColorVvpZ",
+            "moduleName": "MEGAAssetsBundle",
+            "static": true,
+            "declAttributes": [
+              "AccessControl"
+            ],
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Color",
+                    "printedName": "SwiftUI.Color",
+                    "usr": "s:7SwiftUI5ColorV"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:16MEGAAssetsBundle09MEGAColorB0V32backgroundRegularPrimaryElevated7SwiftUI5ColorVvgZ",
+                "mangledName": "$s16MEGAAssetsBundle09MEGAColorB0V32backgroundRegularPrimaryElevated7SwiftUI5ColorVvgZ",
+                "moduleName": "MEGAAssetsBundle",
+                "static": true,
+                "accessorKind": "get"
+              }
+            ]
+          }
+        ],
+        "declKind": "Struct",
+        "usr": "s:16MEGAAssetsBundle09MEGAColorB0V",
+        "mangledName": "$s16MEGAAssetsBundle09MEGAColorB0V",
+        "moduleName": "MEGAAssetsBundle",
+        "declAttributes": [
+          "AccessControl"
+        ],
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          }
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "SwiftUI",
+        "printedName": "SwiftUI",
+        "declKind": "Import",
+        "moduleName": "MEGAAssetsBundle"
+      },
+      {
+        "kind": "TypeDecl",
         "name": "MEGAImageBundle",
         "printedName": "MEGAImageBundle",
         "children": [
@@ -27032,337 +27363,6 @@
         "declKind": "Struct",
         "usr": "s:16MEGAAssetsBundle011MEGAUIImageB0V",
         "mangledName": "$s16MEGAAssetsBundle011MEGAUIImageB0V",
-        "moduleName": "MEGAAssetsBundle",
-        "declAttributes": [
-          "AccessControl"
-        ],
-        "conformances": [
-          {
-            "kind": "Conformance",
-            "name": "Copyable",
-            "printedName": "Copyable",
-            "usr": "s:s8CopyableP",
-            "mangledName": "$ss8CopyableP"
-          },
-          {
-            "kind": "Conformance",
-            "name": "Escapable",
-            "printedName": "Escapable",
-            "usr": "s:s9EscapableP",
-            "mangledName": "$ss9EscapableP"
-          }
-        ]
-      },
-      {
-        "kind": "Import",
-        "name": "SwiftUI",
-        "printedName": "SwiftUI",
-        "declKind": "Import",
-        "moduleName": "MEGAAssetsBundle"
-      },
-      {
-        "kind": "TypeDecl",
-        "name": "MEGAColorBundle",
-        "printedName": "MEGAColorBundle",
-        "children": [
-          {
-            "kind": "Var",
-            "name": "black000000",
-            "printedName": "black000000",
-            "children": [
-              {
-                "kind": "TypeNominal",
-                "name": "Color",
-                "printedName": "SwiftUI.Color",
-                "usr": "s:7SwiftUI5ColorV"
-              }
-            ],
-            "declKind": "Var",
-            "usr": "s:16MEGAAssetsBundle09MEGAColorB0V11black0000007SwiftUI5ColorVvpZ",
-            "mangledName": "$s16MEGAAssetsBundle09MEGAColorB0V11black0000007SwiftUI5ColorVvpZ",
-            "moduleName": "MEGAAssetsBundle",
-            "static": true,
-            "declAttributes": [
-              "AccessControl"
-            ],
-            "accessors": [
-              {
-                "kind": "Accessor",
-                "name": "Get",
-                "printedName": "Get()",
-                "children": [
-                  {
-                    "kind": "TypeNominal",
-                    "name": "Color",
-                    "printedName": "SwiftUI.Color",
-                    "usr": "s:7SwiftUI5ColorV"
-                  }
-                ],
-                "declKind": "Accessor",
-                "usr": "s:16MEGAAssetsBundle09MEGAColorB0V11black0000007SwiftUI5ColorVvgZ",
-                "mangledName": "$s16MEGAAssetsBundle09MEGAColorB0V11black0000007SwiftUI5ColorVvgZ",
-                "moduleName": "MEGAAssetsBundle",
-                "static": true,
-                "accessorKind": "get"
-              }
-            ]
-          },
-          {
-            "kind": "Var",
-            "name": "whiteFFFFFF",
-            "printedName": "whiteFFFFFF",
-            "children": [
-              {
-                "kind": "TypeNominal",
-                "name": "Color",
-                "printedName": "SwiftUI.Color",
-                "usr": "s:7SwiftUI5ColorV"
-              }
-            ],
-            "declKind": "Var",
-            "usr": "s:16MEGAAssetsBundle09MEGAColorB0V11whiteFFFFFF7SwiftUI5ColorVvpZ",
-            "mangledName": "$s16MEGAAssetsBundle09MEGAColorB0V11whiteFFFFFF7SwiftUI5ColorVvpZ",
-            "moduleName": "MEGAAssetsBundle",
-            "static": true,
-            "declAttributes": [
-              "AccessControl"
-            ],
-            "accessors": [
-              {
-                "kind": "Accessor",
-                "name": "Get",
-                "printedName": "Get()",
-                "children": [
-                  {
-                    "kind": "TypeNominal",
-                    "name": "Color",
-                    "printedName": "SwiftUI.Color",
-                    "usr": "s:7SwiftUI5ColorV"
-                  }
-                ],
-                "declKind": "Accessor",
-                "usr": "s:16MEGAAssetsBundle09MEGAColorB0V11whiteFFFFFF7SwiftUI5ColorVvgZ",
-                "mangledName": "$s16MEGAAssetsBundle09MEGAColorB0V11whiteFFFFFF7SwiftUI5ColorVvgZ",
-                "moduleName": "MEGAAssetsBundle",
-                "static": true,
-                "accessorKind": "get"
-              }
-            ]
-          },
-          {
-            "kind": "Var",
-            "name": "black2C2C2E",
-            "printedName": "black2C2C2E",
-            "children": [
-              {
-                "kind": "TypeNominal",
-                "name": "Color",
-                "printedName": "SwiftUI.Color",
-                "usr": "s:7SwiftUI5ColorV"
-              }
-            ],
-            "declKind": "Var",
-            "usr": "s:16MEGAAssetsBundle09MEGAColorB0V08black2C2E1E7SwiftUI5ColorVvpZ",
-            "mangledName": "$s16MEGAAssetsBundle09MEGAColorB0V08black2C2E1E7SwiftUI5ColorVvpZ",
-            "moduleName": "MEGAAssetsBundle",
-            "static": true,
-            "declAttributes": [
-              "AccessControl"
-            ],
-            "accessors": [
-              {
-                "kind": "Accessor",
-                "name": "Get",
-                "printedName": "Get()",
-                "children": [
-                  {
-                    "kind": "TypeNominal",
-                    "name": "Color",
-                    "printedName": "SwiftUI.Color",
-                    "usr": "s:7SwiftUI5ColorV"
-                  }
-                ],
-                "declKind": "Accessor",
-                "usr": "s:16MEGAAssetsBundle09MEGAColorB0V08black2C2E1E7SwiftUI5ColorVvgZ",
-                "mangledName": "$s16MEGAAssetsBundle09MEGAColorB0V08black2C2E1E7SwiftUI5ColorVvgZ",
-                "moduleName": "MEGAAssetsBundle",
-                "static": true,
-                "accessorKind": "get"
-              }
-            ]
-          },
-          {
-            "kind": "Var",
-            "name": "gray363638",
-            "printedName": "gray363638",
-            "children": [
-              {
-                "kind": "TypeNominal",
-                "name": "Color",
-                "printedName": "SwiftUI.Color",
-                "usr": "s:7SwiftUI5ColorV"
-              }
-            ],
-            "declKind": "Var",
-            "usr": "s:16MEGAAssetsBundle09MEGAColorB0V10gray3636387SwiftUI5ColorVvpZ",
-            "mangledName": "$s16MEGAAssetsBundle09MEGAColorB0V10gray3636387SwiftUI5ColorVvpZ",
-            "moduleName": "MEGAAssetsBundle",
-            "static": true,
-            "declAttributes": [
-              "AccessControl"
-            ],
-            "accessors": [
-              {
-                "kind": "Accessor",
-                "name": "Get",
-                "printedName": "Get()",
-                "children": [
-                  {
-                    "kind": "TypeNominal",
-                    "name": "Color",
-                    "printedName": "SwiftUI.Color",
-                    "usr": "s:7SwiftUI5ColorV"
-                  }
-                ],
-                "declKind": "Accessor",
-                "usr": "s:16MEGAAssetsBundle09MEGAColorB0V10gray3636387SwiftUI5ColorVvgZ",
-                "mangledName": "$s16MEGAAssetsBundle09MEGAColorB0V10gray3636387SwiftUI5ColorVvgZ",
-                "moduleName": "MEGAAssetsBundle",
-                "static": true,
-                "accessorKind": "get"
-              }
-            ]
-          },
-          {
-            "kind": "Var",
-            "name": "grayD1D1D1",
-            "printedName": "grayD1D1D1",
-            "children": [
-              {
-                "kind": "TypeNominal",
-                "name": "Color",
-                "printedName": "SwiftUI.Color",
-                "usr": "s:7SwiftUI5ColorV"
-              }
-            ],
-            "declKind": "Var",
-            "usr": "s:16MEGAAssetsBundle09MEGAColorB0V06grayD1eE07SwiftUI5ColorVvpZ",
-            "mangledName": "$s16MEGAAssetsBundle09MEGAColorB0V06grayD1eE07SwiftUI5ColorVvpZ",
-            "moduleName": "MEGAAssetsBundle",
-            "static": true,
-            "declAttributes": [
-              "AccessControl"
-            ],
-            "accessors": [
-              {
-                "kind": "Accessor",
-                "name": "Get",
-                "printedName": "Get()",
-                "children": [
-                  {
-                    "kind": "TypeNominal",
-                    "name": "Color",
-                    "printedName": "SwiftUI.Color",
-                    "usr": "s:7SwiftUI5ColorV"
-                  }
-                ],
-                "declKind": "Accessor",
-                "usr": "s:16MEGAAssetsBundle09MEGAColorB0V06grayD1eE07SwiftUI5ColorVvgZ",
-                "mangledName": "$s16MEGAAssetsBundle09MEGAColorB0V06grayD1eE07SwiftUI5ColorVvgZ",
-                "moduleName": "MEGAAssetsBundle",
-                "static": true,
-                "accessorKind": "get"
-              }
-            ]
-          },
-          {
-            "kind": "Var",
-            "name": "navigationBg",
-            "printedName": "navigationBg",
-            "children": [
-              {
-                "kind": "TypeNominal",
-                "name": "Color",
-                "printedName": "SwiftUI.Color",
-                "usr": "s:7SwiftUI5ColorV"
-              }
-            ],
-            "declKind": "Var",
-            "usr": "s:16MEGAAssetsBundle09MEGAColorB0V12navigationBg7SwiftUI5ColorVvpZ",
-            "mangledName": "$s16MEGAAssetsBundle09MEGAColorB0V12navigationBg7SwiftUI5ColorVvpZ",
-            "moduleName": "MEGAAssetsBundle",
-            "static": true,
-            "declAttributes": [
-              "AccessControl"
-            ],
-            "accessors": [
-              {
-                "kind": "Accessor",
-                "name": "Get",
-                "printedName": "Get()",
-                "children": [
-                  {
-                    "kind": "TypeNominal",
-                    "name": "Color",
-                    "printedName": "SwiftUI.Color",
-                    "usr": "s:7SwiftUI5ColorV"
-                  }
-                ],
-                "declKind": "Accessor",
-                "usr": "s:16MEGAAssetsBundle09MEGAColorB0V12navigationBg7SwiftUI5ColorVvgZ",
-                "mangledName": "$s16MEGAAssetsBundle09MEGAColorB0V12navigationBg7SwiftUI5ColorVvgZ",
-                "moduleName": "MEGAAssetsBundle",
-                "static": true,
-                "accessorKind": "get"
-              }
-            ]
-          },
-          {
-            "kind": "Var",
-            "name": "backgroundRegularPrimaryElevated",
-            "printedName": "backgroundRegularPrimaryElevated",
-            "children": [
-              {
-                "kind": "TypeNominal",
-                "name": "Color",
-                "printedName": "SwiftUI.Color",
-                "usr": "s:7SwiftUI5ColorV"
-              }
-            ],
-            "declKind": "Var",
-            "usr": "s:16MEGAAssetsBundle09MEGAColorB0V32backgroundRegularPrimaryElevated7SwiftUI5ColorVvpZ",
-            "mangledName": "$s16MEGAAssetsBundle09MEGAColorB0V32backgroundRegularPrimaryElevated7SwiftUI5ColorVvpZ",
-            "moduleName": "MEGAAssetsBundle",
-            "static": true,
-            "declAttributes": [
-              "AccessControl"
-            ],
-            "accessors": [
-              {
-                "kind": "Accessor",
-                "name": "Get",
-                "printedName": "Get()",
-                "children": [
-                  {
-                    "kind": "TypeNominal",
-                    "name": "Color",
-                    "printedName": "SwiftUI.Color",
-                    "usr": "s:7SwiftUI5ColorV"
-                  }
-                ],
-                "declKind": "Accessor",
-                "usr": "s:16MEGAAssetsBundle09MEGAColorB0V32backgroundRegularPrimaryElevated7SwiftUI5ColorVvgZ",
-                "mangledName": "$s16MEGAAssetsBundle09MEGAColorB0V32backgroundRegularPrimaryElevated7SwiftUI5ColorVvgZ",
-                "moduleName": "MEGAAssetsBundle",
-                "static": true,
-                "accessorKind": "get"
-              }
-            ]
-          }
-        ],
-        "declKind": "Struct",
-        "usr": "s:16MEGAAssetsBundle09MEGAColorB0V",
-        "mangledName": "$s16MEGAAssetsBundle09MEGAColorB0V",
         "moduleName": "MEGAAssetsBundle",
         "declAttributes": [
           "AccessControl"
