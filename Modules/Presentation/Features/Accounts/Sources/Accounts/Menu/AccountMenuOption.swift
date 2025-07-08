@@ -29,17 +29,20 @@ struct AccountMenuOption: Identifiable {
     let iconConfiguration: IconConfiguration
     let title: String
     let subtitle: String?
+    let notificationCount: Int?
     let rowType: AccountMenuRowType
 
     init(
         iconConfiguration: IconConfiguration,
         title: String,
-        subtitle: String?,
-        rowType: AccountMenuRowType
+        subtitle: String? = nil,
+        notificationCount: Int? = nil,
+        rowType: AccountMenuRowType,
     ) {
         self.iconConfiguration = iconConfiguration
         self.title = title
         self.subtitle = subtitle
+        self.notificationCount = notificationCount
         self.rowType = rowType
     }
 }

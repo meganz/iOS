@@ -12,7 +12,7 @@ import Testing
 import UIKit
 
 @MainActor
-struct AccountMenuViewModelTess {
+struct AccountMenuViewModelTests {
 
     @Test("Test init method")
     func testInit() {
@@ -476,6 +476,66 @@ struct AccountMenuViewModelTess {
             try await Task.sleep(nanoseconds: 1_000_000_000)
         }
         #expect(didCallLogoutHandler == connected)
+	}
+
+    @Test("Test app notifications count logic with valid number of app notifications")
+    func testAppNotificationsCount_withValidNumberOfNotifications() async throws {
+        let notificationUseCase = MockNotificationUseCase(unreadNotificationIDs: [100, 200, 300, 400, 500])
+        let accountUseCase = MockAccountUseCase(relevantUnseenUserAlertsCount: 15)
+        let sut = makeSUT(accountUseCase: accountUseCase, notificationsUseCase: notificationUseCase)
+        let condition = { sut.appNotificationsCount == 20 }()
+        try await waitUntil(condition)
+        #expect(sut.appNotificationsCount == 20)
+    }
+
+    @Test("Test app notifications count logic with no app notifications")
+    func testAppNotificationsCount_withNoAppNotifications() {
+        let notificationUseCase = MockNotificationUseCase(unreadNotificationIDs: [])
+        let accountUseCase = MockAccountUseCase(relevantUnseenUserAlertsCount: 0)
+        let sut = makeSUT(accountUseCase: accountUseCase, notificationsUseCase: notificationUseCase)
+        #expect(sut.appNotificationsCount == 0)
+    }
+
+    @Test("Test the shared items notifications count logic with valid number of notifications")
+    func testSharedItemsNotificationsCount_withValidNumberOfNotifications() async throws {
+        let sut = makeSUT(sharedItemsNotificationCountHandler: { 10 })
+        #expect(
+            sut
+                .sections[.tools]?[AccountMenuViewModel.Constants.ToolsSectionIndex.sharedItemsIndex]
+                .notificationCount == 10
+        )
+    }
+
+    @Test("Test the shared items notifications count logic with no notifications")
+    func testSharedItemsNotificationsCount_withNoNotifications() {
+        let sut = makeSUT(sharedItemsNotificationCountHandler: { 0 })
+        #expect(
+            sut
+                .sections[.tools]?[AccountMenuViewModel.Constants.ToolsSectionIndex.sharedItemsIndex]
+                .notificationCount == nil
+        )
+    }
+
+    @Test("Test the contacts notifications count logic with valid number of contact requests")
+    func testContactsNotificationCount_withValidContactRequests() {
+        let accountUseCase = MockAccountUseCase(incomingContactsRequestsCount: 30)
+        let sut = makeSUT(accountUseCase: accountUseCase)
+        #expect(
+            sut
+                .sections[.account]?[AccountMenuViewModel.Constants.AccountSectionIndex.contactsIndex]
+                .notificationCount == 30
+        )
+    }
+
+    @Test("Test the contacts notifications count logic with 0 contact requests")
+    func testContactsNotificationCount_withNoContactRequests() {
+        let accountUseCase = MockAccountUseCase(incomingContactsRequestsCount: 0)
+        let sut = makeSUT(accountUseCase: accountUseCase)
+        #expect(
+            sut
+                .sections[.account]?[AccountMenuViewModel.Constants.AccountSectionIndex.contactsIndex]
+                .notificationCount == nil
+        )
     }
 
     private func makeSUT(
@@ -488,7 +548,9 @@ struct AccountMenuViewModelTess {
         ),
         preferenceUseCase: some PreferenceUseCaseProtocol = MockPreferenceUseCase(),
         networkMonitorUseCase: some NetworkMonitorUseCaseProtocol = MockNetworkMonitorUseCase(),
-        logoutHandler: @escaping () async -> Void = {}
+        notificationsUseCase: some NotificationsUseCaseProtocol = MockNotificationUseCase(),
+        logoutHandler: @escaping () async -> Void = {},
+        sharedItemsNotificationCountHandler: @escaping () -> Int = { 0 }
     ) -> AccountMenuViewModel {
         let currentUserSource = CurrentUserSource(sdk: MockSdk())
         return AccountMenuViewModel(
@@ -500,9 +562,11 @@ struct AccountMenuViewModelTess {
             megaHandleUseCase: MockMEGAHandleUseCase(),
             networkMonitorUseCase: networkMonitorUseCase,
             preferenceUseCase: preferenceUseCase,
+            notificationsUseCase: notificationsUseCase,
             fullNameHandler: { _ in "" },
             avatarFetchHandler: { _, _ in UIImage() },
-            logoutHandler: logoutHandler
+            logoutHandler: logoutHandler,
+            sharedItemsNotificationCountHandler: sharedItemsNotificationCountHandler
         )
     }
 

@@ -56,17 +56,23 @@ public final class AccountMenuViewModel: ObservableObject {
         static let coordinateSpaceName = "Scroll"
 
         // Section Indexes for [.account]
-        static let accountDetailsIndex = 0
-        static let currentPlanIndex = 1
-        static let storageUsedIndex = 2
+        enum AccountSectionIndex {
+            static let accountDetailsIndex = 0
+            static let currentPlanIndex = 1
+            static let storageUsedIndex = 2
+            static let contactsIndex = 3
+        }
 
         // Section Index for [.tools]
-        static let rubbishBinIndex = 4
+        enum ToolsSectionIndex {
+            static let sharedItemsIndex = 0
+            static let rubbishBinIndex = 4
+        }
     }
 
     @Published var isPrivacySuiteExpanded = false
     @Published private(set) var sections: [AccountMenuSectionType: [AccountMenuOption]] = [:]
-
+    @Published var appNotificationsCount = 0
     @Published var isAtTop = true
 
     private let router: any AccountMenuViewRouting
@@ -80,6 +86,7 @@ public final class AccountMenuViewModel: ObservableObject {
     private let fullNameHandler: (CurrentUserSource) -> String
     private let avatarFetchHandler: (String, HandleEntity) async -> UIImage?
     private let logoutHandler: () async -> Void
+    private let sharedItemsNotificationCountHandler: () -> Int
 
     @PreferenceWrapper(key: PreferenceKeyEntity.offlineLogOutWarningDismissed, defaultValue: false)
     private var offlineLogOutWarningDismissed: Bool
@@ -106,49 +113,34 @@ public final class AccountMenuViewModel: ObservableObject {
                 ),
                 currentPlanMenuOption(accountDetails: accountUseCase.currentAccountDetails),
                 storageUsedMenuOption(accountDetails: accountUseCase.currentAccountDetails),
-                .init(
-                    iconConfiguration: .init(icon: MEGAAssets.Image.contactsInMenu),
-                    title: Strings.Localizable.contactsTitle,
-                    subtitle: nil,
-                    rowType: .disclosure { [weak self] in self?.router.showContacts() }
-                ),
+                contactsMenuOption(),
                 .init(
                     iconConfiguration: .init(icon: MEGAAssets.Image.achievementsInMenu),
                     title: Strings.Localizable.achievementsTitle,
-                    subtitle: nil,
                     rowType: .disclosure { [weak self] in self?.router.showAchievements() }
                 )
             ],
             .tools: [
-                .init(
-                    iconConfiguration: .init(icon: MEGAAssets.Image.sharedItemsInMenu),
-                    title: Strings.Localizable.sharedItems,
-                    subtitle: nil,
-                    rowType: .disclosure { [weak self] in self?.router.showSharedItems() }
-                ),
+                sharedItemsMenuOption(),
                 .init(
                     iconConfiguration: .init(icon: MEGAAssets.Image.deviceCentreInMenu),
                     title: Strings.Localizable.Device.Center.title,
-                    subtitle: nil,
                     rowType: .disclosure { [weak self] in self?.router.showDeviceCentre() }
                 ),
                 .init(
                     iconConfiguration: .init(icon: MEGAAssets.Image.transfersInMenu),
                     title: Strings.Localizable.transfers,
-                    subtitle: nil,
                     rowType: .disclosure { [weak self] in self?.router.showTransfers() }
                 ),
                 .init(
                     iconConfiguration: .init(icon: MEGAAssets.Image.offlineFilesInMenu),
                     title: Strings.Localizable.AccountMenu.offlineFiles,
-                    subtitle: nil,
                     rowType: .disclosure { [weak self] in self?.router.showOfflineFiles() }
                 ),
                 rubbishBinMenuOption(accountUseCase: accountUseCase),
                 .init(
                     iconConfiguration: .init(icon: MEGAAssets.Image.settingsInMenu),
                     title: Strings.Localizable.settingsTitle,
-                    subtitle: nil,
                     rowType: .disclosure { [weak self] in self?.router.showSettings() }
                 )
             ],
@@ -184,9 +176,11 @@ public final class AccountMenuViewModel: ObservableObject {
         megaHandleUseCase: some MEGAHandleUseCaseProtocol,
         networkMonitorUseCase: some NetworkMonitorUseCaseProtocol,
         preferenceUseCase: some PreferenceUseCaseProtocol,
+        notificationsUseCase: some NotificationsUseCaseProtocol,
         fullNameHandler: @escaping (CurrentUserSource) -> String,
         avatarFetchHandler: @escaping (String, HandleEntity) async -> UIImage?,
-        logoutHandler: @escaping () async -> Void
+        logoutHandler: @escaping () async -> Void,
+        sharedItemsNotificationCountHandler: @escaping () -> Int
     ) {
         self.router = router
         self.tracker = tracker
@@ -198,11 +192,15 @@ public final class AccountMenuViewModel: ObservableObject {
         self.fullNameHandler = fullNameHandler
         self.avatarFetchHandler = avatarFetchHandler
         self.logoutHandler = logoutHandler
+        self.sharedItemsNotificationCountHandler = sharedItemsNotificationCountHandler
 
         sections = sectionData
         $offlineLogOutWarningDismissed.useCase = preferenceUseCase
         Task { await refreshAccountData() }
         monitorAccountRefresh()
+        updateAppNotificationCount(notificationsUseCase: notificationsUseCase)
+        updateSharedItemsNotificationCount()
+        updateContactsRequestNotificationCount()
     }
 
     deinit {
@@ -257,7 +255,7 @@ public final class AccountMenuViewModel: ObservableObject {
         ) else { return }
 
         var updatedSections = sections
-        updatedSections[.account]?[Constants.accountDetailsIndex] = accountDetailsMenuOption(
+        updatedSections[.account]?[Constants.AccountSectionIndex.accountDetailsIndex] = accountDetailsMenuOption(
             fullName: fullName,
             icon: avatar,
             iconStyle: .rounded,
@@ -284,9 +282,11 @@ public final class AccountMenuViewModel: ObservableObject {
         do {
             let accountDetails = try await accountUseCase.refreshCurrentAccountDetails()
             var updatedSections = sections
-            updatedSections[.account]?[Constants.currentPlanIndex] = currentPlanMenuOption(accountDetails: accountDetails)
-            updatedSections[.account]?[Constants.storageUsedIndex] = storageUsedMenuOption(accountDetails: accountDetails)
-            updatedSections[.tools]?[Constants.rubbishBinIndex] = rubbishBinMenuOption(accountUseCase: accountUseCase)
+            updatedSections[.account]?[Constants.AccountSectionIndex.currentPlanIndex] = currentPlanMenuOption(accountDetails: accountDetails)
+            updatedSections[.account]?[Constants.AccountSectionIndex.storageUsedIndex] = storageUsedMenuOption(accountDetails: accountDetails)
+            updatedSections[.tools]?[Constants.ToolsSectionIndex.rubbishBinIndex] = rubbishBinMenuOption(
+                accountUseCase: accountUseCase
+            )
             sections = updatedSections
         } catch {
             MEGALogDebug("Error while fetching account details: \(error)")
@@ -362,6 +362,24 @@ public final class AccountMenuViewModel: ObservableObject {
         )
     }
 
+    private func contactsMenuOption(contactRequestsCount: Int? = nil) -> AccountMenuOption {
+        .init(
+            iconConfiguration: .init(icon: MEGAAssets.Image.contactsInMenu),
+            title: Strings.Localizable.contactsTitle,
+            notificationCount: contactRequestsCount,
+            rowType: .disclosure { [weak self] in self?.router.showContacts() }
+        )
+    }
+
+    private func sharedItemsMenuOption(notificationsCount: Int? = nil) -> AccountMenuOption {
+        .init(
+            iconConfiguration: .init(icon: MEGAAssets.Image.sharedItemsInMenu),
+            title: Strings.Localizable.sharedItems,
+            notificationCount: notificationsCount,
+            rowType: .disclosure { [weak self] in self?.router.showSharedItems() }
+        )
+    }
+
     private func rubbishBinMenuOption(accountUseCase: some AccountUseCaseProtocol) -> AccountMenuOption {
         let rubbishBinStorageUsed = accountUseCase.rubbishBinStorageUsed()
         let rubbishBinUsage = String
@@ -382,5 +400,26 @@ public final class AccountMenuViewModel: ObservableObject {
                 await self?.refreshAccountData()
             }
         }
+    }
+
+    private func updateAppNotificationCount(notificationsUseCase: some NotificationsUseCaseProtocol) {
+        Task { @MainActor in
+            let unreadNotificationsIdsCount = await notificationsUseCase.unreadNotificationIDs().count
+            appNotificationsCount = Int(accountUseCase.relevantUnseenUserAlertsCount()) + unreadNotificationsIdsCount
+        }
+    }
+
+    private func updateSharedItemsNotificationCount() {
+        let notificationsCount = sharedItemsNotificationCountHandler()
+        sections[.tools]?[Constants.ToolsSectionIndex.sharedItemsIndex] = sharedItemsMenuOption(
+            notificationsCount: notificationsCount > 0 ? notificationsCount : nil
+        )
+    }
+
+    private func updateContactsRequestNotificationCount() {
+        let contactRequestsCount = accountUseCase.incomingContactsRequestsCount()
+        sections[.account]?[Constants.AccountSectionIndex.contactsIndex] = contactsMenuOption(
+            contactRequestsCount: contactRequestsCount > 0 ? contactRequestsCount : nil
+        )
     }
 }
