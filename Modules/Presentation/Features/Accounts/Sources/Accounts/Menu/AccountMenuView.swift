@@ -1,6 +1,7 @@
 import MEGAAssets
 import MEGADesignToken
 import MEGAL10n
+import MEGASwift
 import MEGAUIComponent
 import SwiftUI
 
@@ -14,7 +15,10 @@ public struct AccountMenuView: View {
     public var body: some View {
         ZStack(alignment: .top) {
             contentView
-            AccountMenuHeaderView(hideHeaderBackground: viewModel.isAtTop) {
+            AccountMenuHeaderView(
+                hideHeaderBackground: viewModel.isAtTop,
+                notificationCount: viewModel.appNotificationsCount
+            ) {
                 viewModel.notificationButtonTapped()
             }
         }
@@ -94,6 +98,7 @@ public struct AccountMenuView: View {
 
 private struct AccountMenuHeaderView: View {
     let hideHeaderBackground: Bool
+    let notificationCount: Int
     let buttonTapped: () -> Void
 
     var body: some View {
@@ -108,15 +113,7 @@ private struct AccountMenuHeaderView: View {
     private var headerView: some View {
         HStack {
             Spacer()
-            Button {
-                buttonTapped()
-            } label: {
-                MEGAAssets.Image.notificationsInMenu
-                    .resizable()
-                    .frame(width: 24, height: 24)
-                    .foregroundStyle(TokenColors.Icon.primary.swiftUI)
-                    .padding(.vertical, TokenSpacing._2)
-            }
+            NotificationsView(notificationCount: notificationCount, buttonTapped: buttonTapped)
         }
         .frame(height: 52)
         .padding(.horizontal, TokenSpacing._5)
@@ -132,19 +129,86 @@ private struct AccountMenuHeaderView: View {
     }
 }
 
+private struct NotificationsView: View {
+    let notificationCount: Int
+    let buttonTapped: () -> Void
+
+    var body: some View {
+        ZStack(alignment: .topTrailing) {
+            MEGAAssets.Image.notificationsInMenu
+                .resizable()
+                .frame(width: 24, height: 24)
+                .foregroundStyle(TokenColors.Icon.primary.swiftUI)
+                .padding(.vertical, TokenSpacing._2)
+
+            if notificationCount > 0 {
+                NotificationBadgeView(count: notificationCount)
+                    .alignmentGuide(.top) { d in d[.top] + 2 }
+                    .alignmentGuide(.trailing) { d in d[.trailing] - 2 }
+            }
+        }
+        .onTapGesture {
+            buttonTapped()
+        }
+    }
+
+}
+
+private struct NotificationBadgeView: View {
+    let count: Int
+
+    var body: some View {
+        if count > 0 {
+            Text(count.badgeDisplayString)
+                .font(.caption2.bold())
+                .foregroundStyle(TokenColors.Text.onColor.swiftUI)
+                .padding(.horizontal, 5)
+                .padding(.vertical, 1)
+                .background(
+                    Capsule().fill(TokenColors.Components.interactive.swiftUI)
+                )
+        }
+    }
+}
+
 private struct MenuRowView: View {
     let option: AccountMenuOption
 
     var body: some View {
-        MEGAList(title: option.title, subtitle: option.subtitle)
-            .replaceLeadingView {
-                leadingView
-                    .foregroundStyle(option.iconConfiguration.backgroundColor)
-                    .frame(width: 32, height: 32)
+        MEGAList {
+            VStack {
+                contentView
+                    .multilineTextAlignment(.leading)
+                    .frame(maxWidth: .infinity, alignment: .leading)
             }
-            .replaceTrailingView {
-                trailingView
+            .padding(.vertical, TokenSpacing._3)
+            .frame(minHeight: 60)
+        } leadingView: {
+            leadingView
+                .foregroundStyle(option.iconConfiguration.backgroundColor)
+                .frame(width: 32, height: 32)
+        } trailingView: {
+            trailingView
+        }
+    }
+
+    @ViewBuilder
+    private var contentView: some View {
+        HStack(spacing: TokenSpacing._2) {
+            Text(option.title)
+                .font(.body)
+                .foregroundStyle(TokenColors.Text.primary.swiftUI)
+
+            if let notificationCount = option.notificationCount, notificationCount > 0 {
+                NotificationBadgeView(count: notificationCount)
             }
+        }
+
+        if let subtitle = option.subtitle {
+            Text(subtitle)
+                .font(.footnote)
+                .foregroundStyle(TokenColors.Text.secondary.swiftUI)
+        }
     }
 
     @ViewBuilder

@@ -42,6 +42,7 @@ struct AccountMenuViewRouter: AccountMenuViewRouting {
             megaHandleUseCase: megaHandleUseCase,
             networkMonitorUseCase: NetworkMonitorUseCase(repo: NetworkMonitorRepository.newRepo),
             preferenceUseCase: PreferenceUseCase.default,
+            notificationsUseCase: NotificationsUseCase(repository: NotificationsRepository.newRepo),
             fullNameHandler: { currentUserSource in
                 currentUserSource.currentUser?.mnz_fullName ?? ""
             },
@@ -61,7 +62,8 @@ struct AccountMenuViewRouter: AccountMenuViewRouting {
 
                 return await avatarHandler.avatar(for: base64Handle)
             },
-            logoutHandler: logout
+            logoutHandler: logout,
+            sharedItemsNotificationCountHandler: sharedItemsNotificationCountHandler
         )
 
         let hostingViewController = UIHostingController(
@@ -223,5 +225,16 @@ struct AccountMenuViewRouter: AccountMenuViewRouting {
         }
 
         MEGASdk.shared.shouldShowPasswordReminderDialog(atLogout: true, delegate: showPasswordReminderDelegate)
+    }
+
+    private func sharedItemsNotificationCountHandler() -> Int {
+        let unverifiedInShares = MEGASdk.shared.getUnverifiedInShares(.defaultAsc)
+        let unverifiedOutShares = MEGASdk.shared.isContactVerificationWarningEnabled ? MEGASdk.shared.outShares(.defaultAsc)
+            .toShareEntities()
+            .filter { share in
+                share.sharedUserEmail != nil && !share.isVerified
+            } : nil
+
+        return unverifiedInShares.size + (unverifiedOutShares?.count ?? 0)
     }
 }

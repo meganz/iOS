@@ -34,6 +34,8 @@ public class MockAccountUseCase: AccountUseCaseProtocol, @unchecked Sendable {
     private let smsState: SMSStateEntity
     private let _hasValidProOrUnexpiredBusinessAccount: Bool
     private let _hasBusinessAccountInGracePeriod: Bool
+    private let _incomingContactsRequestsCount: Int
+    private let _relevantUnseenUserAlertsCount: UInt
     private let _rootStorage: Int64
     private let _rubbishBinStorage: Int64
     private let _incomingSharesStorage: Int64
@@ -82,6 +84,8 @@ public class MockAccountUseCase: AccountUseCaseProtocol, @unchecked Sendable {
         multiFactorAuthCheckDelay: TimeInterval = 0,
         hasValidProOrUnexpiredBusinessAccount: Bool = false,
         hasBusinessAccountInGracePeriod: Bool = false,
+        incomingContactsRequestsCount: Int = 0,
+        relevantUnseenUserAlertsCount: UInt = 0,
         rootStorage: Int64 = 0,
         rubbishBinStorage: Int64 = 0,
         incomingSharesStorage: Int64 = 0,
@@ -128,6 +132,8 @@ public class MockAccountUseCase: AccountUseCaseProtocol, @unchecked Sendable {
         self.multiFactorAuthCheckResult = multiFactorAuthCheckResult
         self.multiFactorAuthCheckDelay = multiFactorAuthCheckDelay
         _hasValidProOrUnexpiredBusinessAccount = hasValidProOrUnexpiredBusinessAccount
+        _incomingContactsRequestsCount = incomingContactsRequestsCount
+        _relevantUnseenUserAlertsCount = relevantUnseenUserAlertsCount
         _rootStorage = rootStorage
         _rubbishBinStorage = rubbishBinStorage
         _incomingSharesStorage = incomingSharesStorage
@@ -303,7 +309,15 @@ public class MockAccountUseCase: AccountUseCaseProtocol, @unchecked Sendable {
         
         return multiFactorAuthCheckResult
     }
-    
+
+    public func incomingContactsRequestsCount() -> Int {
+        _incomingContactsRequestsCount
+    }
+
+    public func relevantUnseenUserAlertsCount() -> UInt {
+        _relevantUnseenUserAlertsCount
+    }
+
     public func rootStorageUsed() -> Int64 {
         _rootStorage
     }

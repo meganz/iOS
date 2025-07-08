@@ -19,6 +19,8 @@ final class AccountUseCaseTests: XCTestCase {
         isSmsAllowed: Bool = false,
         contacts: [UserEntity] = [],
         nodesCount: UInt64 = 0,
+        contactsRequestsCount: Int = 0,
+        unseenUserAlertsCount: UInt = 0,
         plans: [PlanEntity] = [],
         currentAccountDetails: AccountDetailsEntity? = nil,
         accountDetailsResult: Result<AccountDetailsEntity, AccountDetailsErrorEntity> = .failure(.generic),
@@ -53,6 +55,8 @@ final class AccountUseCaseTests: XCTestCase {
             isSmsAllowed: isSmsAllowed,
             contacts: contacts,
             nodesCount: nodesCount,
+            contactsRequestsCount: contactsRequestsCount,
+            unseenUserAlertsCount: unseenUserAlertsCount,
             currentAccountDetails: currentAccountDetails,
             accountDetailsResult: accountDetailsResult,
             miscFlagsResult: miscFlagsResult,
@@ -649,7 +653,17 @@ final class AccountUseCaseTests: XCTestCase {
             XCTAssertEqual(sut.proFlexiAccountStatus(), testCase.expectedStatus, "Expected status to be \(testCase.expectedStatus), but got a different result.")
         }
     }
-    
+
+    func testIncomingContactsRequestsCount_whenSet_shouldReturnTheExactValue() {
+        let sut = makeSUT(contactsRequestsCount: 10)
+        XCTAssertEqual(sut.incomingContactsRequestsCount(), 10)
+    }
+
+    func testRelevantUnseenUserAlertsCount_whenSet_shouldReturnTheExactValue() {
+        let sut = makeSUT(unseenUserAlertsCount: 20)
+        XCTAssertEqual(sut.relevantUnseenUserAlertsCount(), 20)
+    }
+
     private func accountTypeStatusTestCases(
         expectedAccountType: AccountTypeEntity,
         unexpectedAccountType: AccountTypeEntity
