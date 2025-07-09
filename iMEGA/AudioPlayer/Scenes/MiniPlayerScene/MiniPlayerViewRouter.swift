@@ -2,6 +2,7 @@ import Foundation
 import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGADomain
+import MEGAL10n
 import UIKit
 
 @MainActor
@@ -89,6 +90,22 @@ final class MiniPlayerViewRouter: NSObject, MiniPlayerViewRouting {
         miniVC.refreshPlayer(with: newConfig)
         
         AudioPlayerManager.shared.showMiniPlayer()
+    }
+    
+    func showTermsOfServiceViolationAlert() {
+        guard let baseViewController else { return }
+        
+        let alertController = UIAlertController(
+            title: Strings.Localizable.General.Alert.TermsOfServiceViolation.title,
+            message: Strings.Localizable.fileLinkUnavailableText2,
+            preferredStyle: .alert
+        )
+        alertController.addAction(UIAlertAction(title: Strings.Localizable.dismiss, style: .default, handler: { [weak self] _ in
+            self?.configEntity.playerHandler.closePlayer()
+            self?.dismiss()
+        }))
+        
+        baseViewController.present(alertController, animated: true)
     }
     
     /// Returns the active presenter that is currently visible in the view hierarchy.
