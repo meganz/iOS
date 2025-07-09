@@ -10,7 +10,6 @@
 
 @interface MEGAPurchase ()
 @property (nonatomic, strong) NSArray *iOSProductIdentifiers;
-@property (nonatomic, strong) NSMutableArray *products;
 @property (nonatomic, strong) SKProduct *pendingStoreProduct;
 @property (nonatomic, getter=isPurchasingPromotedPlan) BOOL purchasingPromotedPlan;
 @property (nonatomic, getter=isSubmittingReceipt) BOOL submittingReceipt;

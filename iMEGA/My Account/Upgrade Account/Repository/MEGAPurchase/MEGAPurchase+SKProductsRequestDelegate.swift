@@ -6,7 +6,7 @@ extension MEGAPurchase: SKProductsRequestDelegate {
         let sortedProducts = response.products.sorted { $0.productIdentifier < $1.productIdentifier }
         for product in sortedProducts {
             MEGALogDebug("[StoreKit] Product \(product.productIdentifier) received")
-            self.products.append(product)
+            self.products.add(product)
         }
 
         for productIdentifier in response.invalidProductIdentifiers {
