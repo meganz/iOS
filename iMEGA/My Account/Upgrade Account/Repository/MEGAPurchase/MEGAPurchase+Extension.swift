@@ -163,7 +163,7 @@ extension MEGAPurchase {
     }
 }
 
-fileprivate final class MEGAPurchaseRequestDelegate: NSObject, MEGARequestDelegate {
+private final class MEGAPurchaseRequestDelegate: NSObject, MEGARequestDelegate {
     private let onRequestStartHandler: ((MEGARequest) -> Void)?
     private let completion: ((Result<MEGARequest, MEGAError>) -> Void)?
 
@@ -188,4 +188,9 @@ fileprivate final class MEGAPurchaseRequestDelegate: NSObject, MEGARequestDelega
             completion?(.failure(error))
         }
     }
+}
+
+@objc extension NSMutableArray {
+    var isEmpty: Bool { count == 0 }
+    var isNotEmpty: Bool { !isEmpty }
 }
