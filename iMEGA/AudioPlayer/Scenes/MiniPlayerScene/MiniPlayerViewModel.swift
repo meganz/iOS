@@ -19,6 +19,7 @@ protocol MiniPlayerViewRouting: AnyObject, Routing {
     func dismiss()
     func showPlayer(node: MEGANode?, filePath: String?)
     func isAFolderLinkPresenter() -> Bool
+    func showTermsOfServiceViolationAlert()
 }
 
 @MainActor
@@ -113,7 +114,7 @@ final class MiniPlayerViewModel: ViewModelType {
             guard let self, configEntity.node != nil else { return }
             let isTakenDown = try await isConfigNodeTakenDown()
             if isTakenDown {
-                closeMiniPlayer()
+                router?.showTermsOfServiceViolationAlert()
                 return
             }
             

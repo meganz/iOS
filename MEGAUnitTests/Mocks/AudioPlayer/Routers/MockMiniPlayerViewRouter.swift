@@ -6,6 +6,7 @@ final class MockMiniPlayerViewRouter: MiniPlayerViewRouting {
     
     var dismiss_calledTimes = 0
     var showPlayer_calledTimes = 0
+    var showTermsOfServiceViolationAlert_calledTimes = 0
     
     var onDismissCompletion: DismissCompletion?
     
@@ -26,5 +27,9 @@ final class MockMiniPlayerViewRouter: MiniPlayerViewRouting {
     
     func isAFolderLinkPresenter() -> Bool {
         isFolderLinkPresenter
+    }
+    
+    func showTermsOfServiceViolationAlert() {
+        showTermsOfServiceViolationAlert_calledTimes += 1
     }
 }
