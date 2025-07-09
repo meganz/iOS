@@ -8,36 +8,27 @@ final class HomeViewModel: ObservableObject {
     @Published var path = NavigationPath()
     @Published var nodes: [MEGANode]?
 
-    private(set) var refreshNodeListTask: Task<Void, Never>? {
-        didSet { oldValue?.cancel() }
-    }
-
-    private(set) var monitorNodesUpdatesTask: Task<Void, Never>? {
-        didSet { oldValue?.cancel() }
+    var selectedPlayerOption: VideoPlayerOption {
+        get { selectPlayerUseCase.selectedPlayer }
+        set { selectPlayerUseCase.selectPlayer(newValue) }
     }
 
     private let fetchVideoNodesUseCase: any FetchVideoNodesUseCaseProtocol
-    private let nodesUpdatesStream: any NodesUpdatesStreamProtocol
     private let offboardingUseCase: any OffboardingUseCaseProtocol
+    private let selectPlayerUseCase: any SelectVideoPlayerUseCaseProtocol
 
     init(
         fetchVideoNodesUseCase: some FetchVideoNodesUseCaseProtocol,
-        nodesUpdatesStream: some NodesUpdatesStreamProtocol,
         offboardingUseCase: some OffboardingUseCaseProtocol,
+        selectPlayerUseCase: some SelectVideoPlayerUseCaseProtocol
     ) {
         self.fetchVideoNodesUseCase = fetchVideoNodesUseCase
-        self.nodesUpdatesStream = nodesUpdatesStream
         self.offboardingUseCase = offboardingUseCase
+        self.selectPlayerUseCase = selectPlayerUseCase
     }
 
     func viewWillAppear() async {
-        refreshNodeList()
-        monitorNodesUpdates()
-    }
-
-    func onDisappear() {
-        refreshNodeListTask = nil
-        monitorNodesUpdatesTask = nil
+        await streamNodes()
     }
 
     func didTapNode(_ node: MEGANode) {
@@ -48,20 +39,10 @@ final class HomeViewModel: ObservableObject {
         await offboardingUseCase.activeLogout()
     }
 
-    private func refreshNodeList() {
-        refreshNodeListTask = Task { [weak self, fetchVideoNodesUseCase] in
-            let megaNodeList = fetchVideoNodesUseCase.execute()
+    private func streamNodes() async {
+        for await videoNodes in fetchVideoNodesUseCase.stream() {
             guard !Task.isCancelled else { return }
-            self?.nodes = megaNodeList
-        }
-    }
-
-    private func monitorNodesUpdates() {
-        monitorNodesUpdatesTask = Task { [weak self, nodesUpdatesStream] in
-            for await updates in nodesUpdatesStream.onNodesUpdateStream where updates.toArray.isNotEmpty {
-                guard !Task.isCancelled else { return }
-                self?.refreshNodeList()
-            }
+            nodes = videoNodes
         }
     }
 }
@@ -70,8 +51,8 @@ extension HomeViewModel {
     static var liveValue: HomeViewModel {
         HomeViewModel(
             fetchVideoNodesUseCase: DependencyInjection.fetchVideoNodesUseCase,
-            nodesUpdatesStream: MEGAUpdateHandlerManager.shared,
-            offboardingUseCase: DependencyInjection.offboardingUseCase
+            offboardingUseCase: DependencyInjection.offboardingUseCase,
+            selectPlayerUseCase: DependencyInjection.selectVideoPlayerOptionUseCase
         )
     }
 }

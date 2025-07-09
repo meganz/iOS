@@ -1,18 +1,26 @@
 import MEGASdk
+import MEGASDKRepo
+import MEGASwift
 
 protocol FetchVideoNodesUseCaseProtocol {
-    func execute() -> [MEGANode]?
+    func execute() -> [MEGANode]
+    func stream() -> AnyAsyncSequence<[MEGANode]>
 }
 
 struct FetchVideoNodesUseCase: FetchVideoNodesUseCaseProtocol {
     private let sdk: MEGASdk
+    private let nodesUpdatesStream: any NodesUpdatesStreamProtocol
 
-    init(sdk: MEGASdk) {
+    init(
+        sdk: MEGASdk,
+        nodesUpdatesStream: some NodesUpdatesStreamProtocol
+    ) {
         self.sdk = sdk
+        self.nodesUpdatesStream = nodesUpdatesStream
     }
 
-    func execute() -> [MEGANode]? {
-        guard let handle = sdk.rootNode?.handle else { return nil }
+    func execute() -> [MEGANode] {
+        guard let handle = sdk.rootNode?.handle else { return [] }
 
         return filterForVideos(
             nodeList: sdk.search(
@@ -31,6 +39,15 @@ struct FetchVideoNodesUseCase: FetchVideoNodesUseCaseProtocol {
                 cancelToken: MEGACancelToken()
             )
         ).toArray
+    }
+
+    func stream() -> AnyAsyncSequence<[MEGANode]> {
+        nodesUpdatesStream
+            .onNodesUpdateStream
+            .filter { $0.toArray.isNotEmpty }
+            .map { _ in execute() }
+            .prepend(execute())
+            .eraseToAnyAsyncSequence()
     }
 
     private func filterForVideos(nodeList: MEGANodeList) -> MEGANodeList {

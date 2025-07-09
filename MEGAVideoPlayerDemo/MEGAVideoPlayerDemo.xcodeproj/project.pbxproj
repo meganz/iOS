@@ -28,8 +28,27 @@
 		161D6A942E017C1600B3FD1F /* DependencyInjection+MEGAConnectivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 161D6A932E017C0D00B3FD1F /* DependencyInjection+MEGAConnectivity.swift */; };
 		161D6A972E0180D500B3FD1F /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 161D6A962E0180D300B3FD1F /* HomeView.swift */; };
 		161D6A992E0180DB00B3FD1F /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 161D6A982E0180D900B3FD1F /* HomeViewModel.swift */; };
+		162D66892E1BA5FD00CB6F72 /* MEGAPlayerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 162D66882E1BA5F800CB6F72 /* MEGAPlayerViewModel.swift */; };
+		164AD5472E0BE09800302DCA /* PreviewAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 164AD5462E0BE09800302DCA /* PreviewAssets.xcassets */; };
+		164AD54A2E0C07B200302DCA /* PlayerOverlayViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164AD5492E0C07AF00302DCA /* PlayerOverlayViewModel.swift */; };
+		164E270F2E0AB118008BB794 /* VLCKit in Frameworks */ = {isa = PBXBuildFile; productRef = 164E270E2E0AB118008BB794 /* VLCKit */; };
 		164FF8FD2E0A6A7800CBC210 /* FetchVideoNodesUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164FF8FC2E0A6A6800CBC210 /* FetchVideoNodesUseCase.swift */; };
 		164FF9062E0A6EA000CBC210 /* MEGANodeList+Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164FF9052E0A6EA000CBC210 /* MEGANodeList+Array.swift */; };
+		165771E92E1CE058008B1143 /* PlayerLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 165771E82E1CE04E008B1143 /* PlayerLayer.swift */; };
+		165771EB2E1D170C008B1143 /* VideoPlayerOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 165771EA2E1D1707008B1143 /* VideoPlayerOption.swift */; };
+		165771F12E1D1761008B1143 /* SelectVideoPlayerUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 165771F02E1D175C008B1143 /* SelectVideoPlayerUseCase.swift */; };
+		165771F32E1D178D008B1143 /* VideoPlayerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 165771F22E1D1782008B1143 /* VideoPlayerFactory.swift */; };
+		166752EA2E0BDA3700478F4A /* MEGAAVPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166752E92E0BDA3200478F4A /* MEGAAVPlayer.swift */; };
+		168780592E0BB2F600C376CA /* MEGAVLCPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 168780582E0BB2F200C376CA /* MEGAVLCPlayer.swift */; };
+		1687805C2E0BB35700C376CA /* VideoPlayerViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1687805B2E0BB35700C376CA /* VideoPlayerViewModelProtocol.swift */; };
+		168780612E0BB6E300C376CA /* StreamingUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 168780602E0BB6DF00C376CA /* StreamingUseCase.swift */; };
+		168780652E0BC86D00C376CA /* PlayerOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 168780642E0BC86600C376CA /* PlayerOverlayView.swift */; };
+		1687806B2E0BCE8C00C376CA /* MEGAPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1687806A2E0BCE8700C376CA /* MEGAPlayerViewController.swift */; };
+		16953F1F2E1CCC4C00E3739D /* MEGABasePlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16953F1E2E1CCC4C00E3739D /* MEGABasePlayer.swift */; };
+		16953F252E1CCF3C00E3739D /* PlayableNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16953F242E1CCF3500E3739D /* PlayableNode.swift */; };
+		16953F272E1CCFB700E3739D /* StreamingRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16953F262E1CCFB400E3739D /* StreamingRepository.swift */; };
+		16953F292E1CD17F00E3739D /* StreamingRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16953F282E1CD17C00E3739D /* StreamingRepositoryProtocol.swift */; };
+		16953F2E2E1CD31300E3739D /* MEGANode+PlayableNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16953F2D2E1CD31300E3739D /* MEGANode+PlayableNode.swift */; };
 		16A021542E02616E00A932A1 /* LaunchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16A021532E02616B00A932A1 /* LaunchViewModel.swift */; };
 		16F0ABCA2E0A82B8008D980F /* MEGANode+Identifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16F0ABC92E0A82B4008D980F /* MEGANode+Identifiable.swift */; };
 /* End PBXBuildFile section */
@@ -57,8 +76,27 @@
 		161D6A932E017C0D00B3FD1F /* DependencyInjection+MEGAConnectivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DependencyInjection+MEGAConnectivity.swift"; sourceTree = "<group>"; };
 		161D6A962E0180D300B3FD1F /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		161D6A982E0180D900B3FD1F /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
+		162D66882E1BA5F800CB6F72 /* MEGAPlayerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGAPlayerViewModel.swift; sourceTree = "<group>"; };
+		164AD5462E0BE09800302DCA /* PreviewAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = PreviewAssets.xcassets; sourceTree = "<group>"; };
+		164AD5492E0C07AF00302DCA /* PlayerOverlayViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerOverlayViewModel.swift; sourceTree = "<group>"; };
 		164FF8FC2E0A6A6800CBC210 /* FetchVideoNodesUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchVideoNodesUseCase.swift; sourceTree = "<group>"; };
 		164FF9052E0A6EA000CBC210 /* MEGANodeList+Array.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGANodeList+Array.swift"; sourceTree = "<group>"; };
+		1651EBFC2E0AA85D00048699 /* VLCKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = VLCKit; sourceTree = "<group>"; };
+		165771E82E1CE04E008B1143 /* PlayerLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerLayer.swift; sourceTree = "<group>"; };
+		165771EA2E1D1707008B1143 /* VideoPlayerOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayerOption.swift; sourceTree = "<group>"; };
+		165771F02E1D175C008B1143 /* SelectVideoPlayerUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectVideoPlayerUseCase.swift; sourceTree = "<group>"; };
+		165771F22E1D1782008B1143 /* VideoPlayerFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayerFactory.swift; sourceTree = "<group>"; };
+		166752E92E0BDA3200478F4A /* MEGAAVPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGAAVPlayer.swift; sourceTree = "<group>"; };
+		168780582E0BB2F200C376CA /* MEGAVLCPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGAVLCPlayer.swift; sourceTree = "<group>"; };
+		1687805B2E0BB35700C376CA /* VideoPlayerViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayerViewModelProtocol.swift; sourceTree = "<group>"; };
+		168780602E0BB6DF00C376CA /* StreamingUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamingUseCase.swift; sourceTree = "<group>"; };
+		168780642E0BC86600C376CA /* PlayerOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerOverlayView.swift; sourceTree = "<group>"; };
+		1687806A2E0BCE8700C376CA /* MEGAPlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGAPlayerViewController.swift; sourceTree = "<group>"; };
+		16953F1E2E1CCC4C00E3739D /* MEGABasePlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGABasePlayer.swift; sourceTree = "<group>"; };
+		16953F242E1CCF3500E3739D /* PlayableNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayableNode.swift; sourceTree = "<group>"; };
+		16953F262E1CCFB400E3739D /* StreamingRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamingRepository.swift; sourceTree = "<group>"; };
+		16953F282E1CD17C00E3739D /* StreamingRepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamingRepositoryProtocol.swift; sourceTree = "<group>"; };
+		16953F2D2E1CD31300E3739D /* MEGANode+PlayableNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGANode+PlayableNode.swift"; sourceTree = "<group>"; };
 		16A021532E02616B00A932A1 /* LaunchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchViewModel.swift; sourceTree = "<group>"; };
 		16F0ABC92E0A82B4008D980F /* MEGANode+Identifiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGANode+Identifiable.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -71,6 +109,7 @@
 				161D6A8E2E01780C00B3FD1F /* MEGAAccountManagement in Frameworks */,
 				161D6A1F2E015F7800B3FD1F /* MEGAAuthentication in Frameworks */,
 				161D6A432E01644700B3FD1F /* MEGADesignToken in Frameworks */,
+				164E270F2E0AB118008BB794 /* VLCKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -82,6 +121,7 @@
 			children = (
 				161D6A7C2E0172C300B3FD1F /* MEGAVideoPlayerDemo */,
 				161D69E42E0156EB00B3FD1F /* Submodules */,
+				164AD5432E0BE04E00302DCA /* Support */,
 				161D6A1D2E015F7800B3FD1F /* Frameworks */,
 				161D69D02E0156A500B3FD1F /* Products */,
 			);
@@ -102,6 +142,7 @@
 				161D6A6C2E0172BC00B3FD1F /* DependencyInjection */,
 				161D6A832E0172D400B3FD1F /* Helper */,
 				161D69E72E01573500B3FD1F /* SharedRepo */,
+				1651EBFD2E0AA85D00048699 /* VLC */,
 			);
 			path = Submodules;
 			sourceTree = "<group>";
@@ -188,6 +229,9 @@
 			children = (
 				161D6A952E0180CA00B3FD1F /* Home */,
 				161D6A852E01736800B3FD1F /* Launch */,
+				168780632E0BC85D00C376CA /* Overlay */,
+				168780572E0BB2BC00C376CA /* Players */,
+				1687805E2E0BB6AC00C376CA /* Streaming */,
 			);
 			path = Modules;
 			sourceTree = "<group>";
@@ -204,19 +248,35 @@
 		161D6A952E0180CA00B3FD1F /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				164FF8FA2E0A6A5800CBC210 /* Domain */,
 				164FF9042E0A6E9800CBC210 /* Helpers */,
 				164FF9002E0A6E3700CBC210 /* Presentation */,
-				164FF8FA2E0A6A5800CBC210 /* UseCases */,
 			);
 			path = Home;
 			sourceTree = "<group>";
 		};
-		164FF8FA2E0A6A5800CBC210 /* UseCases */ = {
+		164AD5432E0BE04E00302DCA /* Support */ = {
+			isa = PBXGroup;
+			children = (
+				164AD5442E0BE05A00302DCA /* Preview */,
+			);
+			path = Support;
+			sourceTree = "<group>";
+		};
+		164AD5442E0BE05A00302DCA /* Preview */ = {
+			isa = PBXGroup;
+			children = (
+				164AD5462E0BE09800302DCA /* PreviewAssets.xcassets */,
+			);
+			path = Preview;
+			sourceTree = "<group>";
+		};
+		164FF8FA2E0A6A5800CBC210 /* Domain */ = {
 			isa = PBXGroup;
 			children = (
 				164FF8FC2E0A6A6800CBC210 /* FetchVideoNodesUseCase.swift */,
 			);
-			path = UseCases;
+			path = Domain;
 			sourceTree = "<group>";
 		};
 		164FF9002E0A6E3700CBC210 /* Presentation */ = {
@@ -235,6 +295,148 @@
 				164FF9052E0A6EA000CBC210 /* MEGANodeList+Array.swift */,
 			);
 			path = Helpers;
+			sourceTree = "<group>";
+		};
+		1651EBFD2E0AA85D00048699 /* VLC */ = {
+			isa = PBXGroup;
+			children = (
+				1651EBFC2E0AA85D00048699 /* VLCKit */,
+			);
+			path = VLC;
+			sourceTree = "<group>";
+		};
+		165771ED2E1D172F008B1143 /* Entities */ = {
+			isa = PBXGroup;
+			children = (
+				165771EA2E1D1707008B1143 /* VideoPlayerOption.swift */,
+			);
+			path = Entities;
+			sourceTree = "<group>";
+		};
+		165771EF2E1D1753008B1143 /* UseCases */ = {
+			isa = PBXGroup;
+			children = (
+				165771F02E1D175C008B1143 /* SelectVideoPlayerUseCase.swift */,
+			);
+			path = UseCases;
+			sourceTree = "<group>";
+		};
+		165771F42E1D1795008B1143 /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				1687806A2E0BCE8700C376CA /* MEGAPlayerViewController.swift */,
+				162D66882E1BA5F800CB6F72 /* MEGAPlayerViewModel.swift */,
+				165771F22E1D1782008B1143 /* VideoPlayerFactory.swift */,
+			);
+			path = Presentation;
+			sourceTree = "<group>";
+		};
+		166752E82E0BDA2900478F4A /* AVPlayer */ = {
+			isa = PBXGroup;
+			children = (
+				166752E92E0BDA3200478F4A /* MEGAAVPlayer.swift */,
+			);
+			path = AVPlayer;
+			sourceTree = "<group>";
+		};
+		168780542E0AB95F00C376CA /* MEGAVLC */ = {
+			isa = PBXGroup;
+			children = (
+				168780582E0BB2F200C376CA /* MEGAVLCPlayer.swift */,
+			);
+			path = MEGAVLC;
+			sourceTree = "<group>";
+		};
+		168780572E0BB2BC00C376CA /* Players */ = {
+			isa = PBXGroup;
+			children = (
+				1687805A2E0BB32600C376CA /* Domain */,
+				168780682E0BCE5900C376CA /* Implementations */,
+				165771F42E1D1795008B1143 /* Presentation */,
+			);
+			path = Players;
+			sourceTree = "<group>";
+		};
+		1687805A2E0BB32600C376CA /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+				165771ED2E1D172F008B1143 /* Entities */,
+				16953F232E1CCF2C00E3739D /* Protocols */,
+				165771EF2E1D1753008B1143 /* UseCases */,
+			);
+			path = Domain;
+			sourceTree = "<group>";
+		};
+		1687805E2E0BB6AC00C376CA /* Streaming */ = {
+			isa = PBXGroup;
+			children = (
+				16953F2A2E1CD2FE00E3739D /* Domain */,
+				16953F2B2E1CD30500E3739D /* Repository */,
+			);
+			path = Streaming;
+			sourceTree = "<group>";
+		};
+		168780632E0BC85D00C376CA /* Overlay */ = {
+			isa = PBXGroup;
+			children = (
+				168780642E0BC86600C376CA /* PlayerOverlayView.swift */,
+				164AD5492E0C07AF00302DCA /* PlayerOverlayViewModel.swift */,
+			);
+			path = Overlay;
+			sourceTree = "<group>";
+		};
+		168780682E0BCE5900C376CA /* Implementations */ = {
+			isa = PBXGroup;
+			children = (
+				166752E82E0BDA2900478F4A /* AVPlayer */,
+				16953F1D2E1CCC4500E3739D /* BasePlayer */,
+				168780542E0AB95F00C376CA /* MEGAVLC */,
+			);
+			path = Implementations;
+			sourceTree = "<group>";
+		};
+		16953F1D2E1CCC4500E3739D /* BasePlayer */ = {
+			isa = PBXGroup;
+			children = (
+				16953F1E2E1CCC4C00E3739D /* MEGABasePlayer.swift */,
+			);
+			path = BasePlayer;
+			sourceTree = "<group>";
+		};
+		16953F232E1CCF2C00E3739D /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				16953F242E1CCF3500E3739D /* PlayableNode.swift */,
+				165771E82E1CE04E008B1143 /* PlayerLayer.swift */,
+				1687805B2E0BB35700C376CA /* VideoPlayerViewModelProtocol.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
+		16953F2A2E1CD2FE00E3739D /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+				16953F282E1CD17C00E3739D /* StreamingRepositoryProtocol.swift */,
+				168780602E0BB6DF00C376CA /* StreamingUseCase.swift */,
+			);
+			path = Domain;
+			sourceTree = "<group>";
+		};
+		16953F2B2E1CD30500E3739D /* Repository */ = {
+			isa = PBXGroup;
+			children = (
+				16953F2C2E1CD30C00E3739D /* Extensions */,
+				16953F262E1CCFB400E3739D /* StreamingRepository.swift */,
+			);
+			path = Repository;
+			sourceTree = "<group>";
+		};
+		16953F2C2E1CD30C00E3739D /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				16953F2D2E1CD31300E3739D /* MEGANode+PlayableNode.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -257,6 +459,7 @@
 				161D6A1E2E015F7800B3FD1F /* MEGAAuthentication */,
 				161D6A422E01644700B3FD1F /* MEGADesignToken */,
 				161D6A8D2E01780C00B3FD1F /* MEGAAccountManagement */,
+				164E270E2E0AB118008BB794 /* VLCKit */,
 			);
 			productName = MEGAVideoPlayerDemo;
 			productReference = 161D69CF2E0156A500B3FD1F /* MEGAVideoPlayerDemo.app */;
@@ -305,6 +508,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				161D6A822E0172C300B3FD1F /* Assets.xcassets in Resources */,
+				164AD5472E0BE09800302DCA /* PreviewAssets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -329,13 +533,30 @@
 				161D6A992E0180DB00B3FD1F /* HomeViewModel.swift in Sources */,
 				161D6A812E0172C300B3FD1F /* LaunchView.swift in Sources */,
 				16A021542E02616E00A932A1 /* LaunchViewModel.swift in Sources */,
+				166752EA2E0BDA3700478F4A /* MEGAAVPlayer.swift in Sources */,
+				16953F1F2E1CCC4C00E3739D /* MEGABasePlayer.swift in Sources */,
 				16F0ABCA2E0A82B8008D980F /* MEGANode+Identifiable.swift in Sources */,
+				16953F2E2E1CD31300E3739D /* MEGANode+PlayableNode.swift in Sources */,
 				164FF9062E0A6EA000CBC210 /* MEGANodeList+Array.swift in Sources */,
+				1687806B2E0BCE8C00C376CA /* MEGAPlayerViewController.swift in Sources */,
+				162D66892E1BA5FD00CB6F72 /* MEGAPlayerViewModel.swift in Sources */,
 				161D6A702E0172BC00B3FD1F /* MEGASdk+SharedInstance.swift in Sources */,
+				168780592E0BB2F600C376CA /* MEGAVLCPlayer.swift in Sources */,
+				16953F252E1CCF3C00E3739D /* PlayableNode.swift in Sources */,
 				161D6A7E2E0172C300B3FD1F /* PlayerApp.swift in Sources */,
 				161D6A872E01738B00B3FD1F /* PlayerAppViewModel.swift in Sources */,
+				165771E92E1CE058008B1143 /* PlayerLayer.swift in Sources */,
+				168780652E0BC86D00C376CA /* PlayerOverlayView.swift in Sources */,
+				164AD54A2E0C07B200302DCA /* PlayerOverlayViewModel.swift in Sources */,
 				161D6A7F2E0172C300B3FD1F /* SceneDelegate.swift in Sources */,
 				161D6A802E0172C300B3FD1F /* SecondarySceneView.swift in Sources */,
+				165771F12E1D1761008B1143 /* SelectVideoPlayerUseCase.swift in Sources */,
+				16953F272E1CCFB700E3739D /* StreamingRepository.swift in Sources */,
+				16953F292E1CD17F00E3739D /* StreamingRepositoryProtocol.swift in Sources */,
+				168780612E0BB6E300C376CA /* StreamingUseCase.swift in Sources */,
+				165771F32E1D178D008B1143 /* VideoPlayerFactory.swift in Sources */,
+				165771EB2E1D170C008B1143 /* VideoPlayerOption.swift in Sources */,
+				1687805C2E0BB35700C376CA /* VideoPlayerViewModelProtocol.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -470,8 +691,14 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"$(SRCROOT)/Support/Preview\"";
 				DEVELOPMENT_TEAM = 4KLKDTZ9B6;
 				ENABLE_PREVIEWS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+					HAVE_LIBUV,
+				);
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = "MEGA Player";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -500,8 +727,10 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"$(SRCROOT)/Support/Preview\"";
 				DEVELOPMENT_TEAM = 4KLKDTZ9B6;
 				ENABLE_PREVIEWS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = HAVE_LIBUV;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = "MEGA Player";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -570,6 +799,10 @@
 		161D6A8D2E01780C00B3FD1F /* MEGAAccountManagement */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = MEGAAccountManagement;
+		};
+		164E270E2E0AB118008BB794 /* VLCKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = VLCKit;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
