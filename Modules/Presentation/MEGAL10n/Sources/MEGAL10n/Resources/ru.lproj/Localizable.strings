@@ -1267,7 +1267,7 @@
 /* Title used in settings that enables the generation of link previews in the chat */
 "richUrlPreviews"="Включить превью отправленных ссылок";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
-"richPreviewsFooter"="Создаёт превью ссылок, которые вы отправляете в чате. Обратите внимание, что получение этих превью не защищено шифрованием с нулевым разглашением.";
+"richPreviewsFooter"="Создаёт превью определённых ссылок, которые вы отправляете в чате, если они доступны. Обратите внимание, что получение этих превью не защищено шифрованием с нулевым разглашением.";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
 "voiceAndVideoCalls"="Голосовые и видеозвонки";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
@@ -4296,8 +4296,8 @@
 "accounts.cancelSubscriptionSteps.webClient.message"="Это связано с тем, что вы подписались на MEGA в браузере. Чтобы отменить подписку, выполните следующие шаги:";
 /* Cancellation Section Webclient on a computer title: On a computer */
 "accounts.cancelSubscriptionSteps.webClient.computer.title"="На компьютере";
-/* Cancellation step Webclient: First step using the computer - 1. Visit www.mega.nz in your web browser. */
-"accounts.cancelSubscriptionSteps.webClient.computer.step.one"="1. Откройте сайт www.mega.nz в веб-браузере.";
+/* Cancellation step Webclient: First step using the computer - 1. Visit https://mega.nz in your web browser. */
+"accounts.cancelSubscriptionSteps.webClient.computer.step.one"="1. Откройте https://mega.nz в веб-браузере.";
 /* Cancellation step Webclient: Second step using the computer - 2. Log in to your MEGA account. */
 "accounts.cancelSubscriptionSteps.webClient.computer.step.two"="2. Войдите в свой аккаунт MEGA.";
 /* Cancellation step Webclient: Third step using the computer - 3. Click the main menu. */
@@ -4310,8 +4310,8 @@
 "accounts.cancelSubscriptionSteps.webClient.computer.step.six"="6. Нажмите <b>«Отменить подписку»</b>.";
 /* Cancellation Section Webclient on mobile device title: On a mobile device */
 "accounts.cancelSubscriptionSteps.webClient.mobile.title"="На мобильном устройстве";
-/* Cancellation step Webclient: First step using the mobile device - 1. Visit www.mega.nz in your web browser. */
-"accounts.cancelSubscriptionSteps.webClient.mobile.step.one"="1. Откройте сайт www.mega.nz в веб-браузере.";
+/* Cancellation step Webclient: First step using the mobile device - 1. Visit https://mega.nz in your web browser. */
+"accounts.cancelSubscriptionSteps.webClient.mobile.step.one"="1. Откройте https://mega.nz в веб-браузере.";
 /* Cancellation step Webclient: Second step using the mobile device - 2. Log in to your MEGA account. */
 "accounts.cancelSubscriptionSteps.webClient.mobile.step.two"="2. Войдите в свой аккаунт MEGA.";
 /* Cancellation step Webclient: Third step using the mobile device - 3. Tap on your avatar. */
@@ -4581,7 +4581,7 @@
 /* Title used in settings that enables the generation of link previews in the chat */
 "settings.chat.richUrlPreview.title"="Включить превью отправленных ссылок";
 /* Title used in settings that enables the generation of link previews in the chat */
-"settings.chat.richUrlPreview.subtitle"="Создаёт превью ссылок, которые вы отправляете в чате. Обратите внимание, что получение этих превью не защищено шифрованием с нулевым разглашением.";
+"settings.chat.richUrlPreview.subtitle"="Создаёт превью определённых ссылок, которые вы отправляете в чате, если они доступны. Обратите внимание, что получение этих превью не защищено шифрованием с нулевым разглашением.";
 /* Title in chat status settings */
 "settings.chat.status.setStatus.title"="Установить статус";
 /* Title section header in set status settings */
@@ -4669,7 +4669,7 @@
 /* Onboarding Camera Backups CTA *Skip* button */
 "onboarding.cta.cameraBackups.buttons.skip"="Пока пропустить";
 /* String explaining the auto-renewal policy of the Pro subscription. */
-"subscriptionPurchase.autoRenewDescription"="Подписки продлеваются автоматически на последующие периоды той же продолжительности и по той же цене, что и первоначально выбранный период.\n\nВы можете отменить подписку Pro в любое время, но не позднее, чем за 24 часа до наступления срока следующей оплаты подписки. Узнайте, как управлять подпиской в настройках.";
+"subscriptionPurchase.autoRenewDescription"="Подписки продлеваются автоматически на последующие периоды той же продолжительности и по той же цене, что и первоначально выбранный период.\n\nВы можете отменить подписку Pro в любое время, но не позднее, чем за 24 часа до наступления срока следующей оплаты подписки. [L]Узнайте, как управлять подпиской в настройках.[/L]";
 /* Title shown for the free plan card */
 "subscriptionPurchase.freePlanCard.title"="Начните с нашего бесплатного плана";
 /* Description shown for the free plan card */
@@ -4691,7 +4691,7 @@
 /* Title for the features of pro plan in the subscription purchase screen. */
 "subscriptionPurchase.featuresOfProPlan.title"="Дополнительные преимущества планов Pro";
 /* Features of pro plan in the subscription purchase screen. */
-"subscriptionPurchase.featuresOfProPlan.message"="• Защищённые паролем ссылки\n\n• Ссылки со сроками действия\n\n• Совместное использование квоты передачи данных\n\n• Перемотка папок на срок до 180 дней назад\n\n• Звонки и встречи без ограничений\n\n• Период очистки корзины от 7 дней до 10 лет\n\n• Приоритетная поддержка";
+"subscriptionPurchase.featuresOfProPlan.message"="• Защищённые паролем ссылки\n\n• Ссылки со сроками действия\n\n• Перемотка папок с удалёнными данными на срок до 180 дней назад\n\n• Звонки и встречи без ограничений по времени и количеству участников\n\n• Период очистки корзины от 7 дней до 10 лет\n\n• Приоритетная поддержка";
 /* Title for the first subscription feature: generous storage capacity */
 "subscriptionPurchase.feature.one.title"="Выгодный объём";
 /* Description for the first subscription feature: details about available storage */
@@ -4699,11 +4699,11 @@
 /* Title for the second subscription feature: transfer quota sharing */
 "subscriptionPurchase.feature.two.title"="Обмен объёмами передач";
 /* Description for the second subscription feature: how shared users can use your quota */
-"subscriptionPurchase.feature.two.description"="Пользователи, с которыми вы делитесь элементами, могут использовать вашу квоту передачи данных для скачивания и трансляции файлов";
+"subscriptionPurchase.feature.two.description"="Пользователи, с которыми вы делитесь элементами, могут использовать вашу квоту для скачивания и трансляции файлов";
 /* Title for the third subscription feature: MEGA VPN service */
 "subscriptionPurchase.feature.three.title"="MEGA VPN";
 /* Description for the third subscription feature: benefits of using the MEGA VPN */
-"subscriptionPurchase.feature.three.description"="Наслаждайтесь безопасным, быстрым и удобным интернет-серфингом с нашим высокоскоростным VPN";
+"subscriptionPurchase.feature.three.description"="Обеспечьте безопасность в Интернете c нашим быстрым и удобным VPN";
 /* Title for the fourth subscription feature: MEGA Pass password manager */
 "subscriptionPurchase.feature.four.title"="MEGA Pass";
 /* Description for the fourth subscription feature: benefits of using MEGA Pass for password management */
@@ -4726,3 +4726,21 @@
 "subscriptionPurchase.freePlanCard.title.upgrade"="Продолжайте с бесплатным планом";
 /* Button title for the free plan card for upgrading */
 "subscriptionPurchase.freePlanCard.button.title.upgrade"="Продолжить";
+/* Button title for offline files in menu */
+"accountMenu.offlineFiles"="Локальные файлы";
+/* Button title for MEGA VPN in menu */
+"accountMenu.megaVPN.buttonTitle"="MEGA VPN";
+/* Button subtitle for MEGA VPN in menu */
+"accountMenu.megaVPN.buttonSubtitle"="Высокоскоростной VPN";
+/* Button title for MEGA Pass in menu */
+"accountMenu.megaPass.buttonTitle"="MEGA Pass";
+/* Button subtitle for MEGA Pass in menu */
+"accountMenu.megaPass.buttonSubtitle"="Безопасное хранение и автозаполнение паролей";
+/* Button title for MEGA transfer it in menu */
+"accountMenu.transferIt.buttonTitle"="Transfer.it";
+/* Button subtitle for MEGA transfer it in menu */
+"accountMenu.transferIt.buttonSubtitle"="Быстрая и безопасная передача файлов";
+/* Section title for the other MEGA apps in menu */
+"accountMenu.otherApps.sectionTitle"="Комплекс конфиденциальности MEGA";
+/* Button subtitle for log out in menu */
+"accountMenu.logout"="Выйти";

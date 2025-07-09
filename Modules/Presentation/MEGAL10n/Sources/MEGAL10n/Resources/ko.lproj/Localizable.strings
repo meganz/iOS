@@ -1095,7 +1095,7 @@
 /* Explanation Label shown on the achievements view for incomplete add phone number achievement, %@ is a placeholder. */
 "account.achievement.phoneNumber.incomplete.explaination.label"="휴대 전화 번호를 추가하면 365일간 이용 가능한 %@의 무료 저장 공간을 받게 됩니다.";
 /* Free storage description to encourage users to add phone number to their accounts */
-"Get free %@ when you add your phone number. This makes it easier for your contacts to find you on MEGA."="전화번호를 추가하고 %@을/를 무료로 받으세요. 이것은 당신의 지인들이 당신을 MEGA에서 찾기 더 쉽게 해줍니다.";
+"Get free %@ when you add your phone number. This makes it easier for your contacts to find you on MEGA."="전화번호를 추가하고 %@를 무료로 받으세요. 이것은 당신의 연락처들이 당신을 MEGA에서 찾기 더 쉽게 해줍니다.";
 /* Description to encourage users to add phone number to their accounts when there are not achievements */
 "Add your phone number to MEGA. This makes it easier for your contacts to find you on MEGA."="MEGA에 전화번호를 추가하세요. 이것은 당신의 지인들이 당신을 MEGA에서 더 쉽게 찾도록 해줍니다.";
 /* Description to unblock account by verifying phone number */
@@ -1267,7 +1267,7 @@
 /* Title used in settings that enables the generation of link previews in the chat */
 "richUrlPreviews"="보낸 링크 미리보기 활성화";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
-"richPreviewsFooter"="대화에 보낸 링크에 대한 미리보기를 생성합니다. 이러한 미리보기를 수신하는 것은 영지식 암호화의 보호를 받지 않는다는 점을 참고하세요.";
+"richPreviewsFooter"="대화에 보낸 특정 링크에 대한 미리보기를 가능할 때 생성합니다. 이러한 미리보기를 수신하는 것은 영지식 암호화의 보호를 받지 않는다는 점을 참고하세요.";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
 "voiceAndVideoCalls"="음성과 영상 통화";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
@@ -3639,9 +3639,9 @@
 /* On Upgrade Account Plan screen. Button title to buy account plan. %@ will be the name of the selected plan */
 "upgradeAccountPlan.button.buyAccountPlan.title"="%@ 구매";
 /* On Upgrade Account Plan screen. Button title to continue to buy account plan in-app when user could buy externally. %@ will be the higher price of the plan */
-"upgradeAccountPlan.button.buyInApp.title"="Continue in-app (%@)";
+"upgradeAccountPlan.button.buyInApp.title"="앱 안에서 계속하기 (%@)";
 /* On Upgrade Account Plan screen. Button footer text to continue to buy account plan in-app when user could buy externally. %@ will be the higher price of the plan */
-"upgradeAccountPlan.button.buyInApp.footer"="Platform fees apply when purchasing through the app";
+"upgradeAccountPlan.button.buyInApp.footer"="앱을 이용하여 결제할 때 플랫폼 수수료가 적용됩니다";
 /* On Upgrade Account Plan screen. Displayed header title text message */
 "upgradeAccountPlan.header.title.choosePlan"="당신에게 맞는 요금제를 선택하세요";
 /* On Upgrade Account Plan screen. Displayed header title text with current plan. %@ will be the name of the current plan */
@@ -4296,8 +4296,8 @@
 "accounts.cancelSubscriptionSteps.webClient.message"="당신이 웹 브라우저에서 MEGA를 구독하였기 때문입니다.\n구독을 취소 하려면, 다음을 해야 합니다:";
 /* Cancellation Section Webclient on a computer title: On a computer */
 "accounts.cancelSubscriptionSteps.webClient.computer.title"="컴퓨터에서";
-/* Cancellation step Webclient: First step using the computer - 1. Visit www.mega.nz in your web browser. */
-"accounts.cancelSubscriptionSteps.webClient.computer.step.one"="1. 웹 브라우저에서 www.mega.nz에 방문합니다.";
+/* Cancellation step Webclient: First step using the computer - 1. Visit https://mega.nz in your web browser. */
+"accounts.cancelSubscriptionSteps.webClient.computer.step.one"="1. Visit https://mega.nz in your web browser.";
 /* Cancellation step Webclient: Second step using the computer - 2. Log in to your MEGA account. */
 "accounts.cancelSubscriptionSteps.webClient.computer.step.two"="2. MEGA 계정에 로그인합니다.";
 /* Cancellation step Webclient: Third step using the computer - 3. Click the main menu. */
@@ -4310,8 +4310,8 @@
 "accounts.cancelSubscriptionSteps.webClient.computer.step.six"="6. <b>구독 취소</b>를 클릭합니다.";
 /* Cancellation Section Webclient on mobile device title: On a mobile device */
 "accounts.cancelSubscriptionSteps.webClient.mobile.title"="휴대 장치에서";
-/* Cancellation step Webclient: First step using the mobile device - 1. Visit www.mega.nz in your web browser. */
-"accounts.cancelSubscriptionSteps.webClient.mobile.step.one"="1. 웹 브라우저에서 www.mega.nz 에 방문합니다.";
+/* Cancellation step Webclient: First step using the mobile device - 1. Visit https://mega.nz in your web browser. */
+"accounts.cancelSubscriptionSteps.webClient.mobile.step.one"="1. Visit https://mega.nz in your web browser.";
 /* Cancellation step Webclient: Second step using the mobile device - 2. Log in to your MEGA account. */
 "accounts.cancelSubscriptionSteps.webClient.mobile.step.two"="2. MEGA 계정에 로그인합니다.";
 /* Cancellation step Webclient: Third step using the mobile device - 3. Tap on your avatar. */
@@ -4581,7 +4581,7 @@
 /* Title used in settings that enables the generation of link previews in the chat */
 "settings.chat.richUrlPreview.title"="보낸 링크 미리보기 활성화";
 /* Title used in settings that enables the generation of link previews in the chat */
-"settings.chat.richUrlPreview.subtitle"="대화에 보낸 링크에 대한 미리보기를 생성합니다. 이러한 미리보기를 수신하는 것은 영지식 암호화의 보호를 받지 않는다는 점을 참고하세요.";
+"settings.chat.richUrlPreview.subtitle"="대화에 보낸 특정 링크에 대한 미리보기를 가능할 때 생성합니다. 이러한 미리보기를 수신하는 것은 영지식 암호화의 보호를 받지 않는다는 점을 참고하세요.";
 /* Title in chat status settings */
 "settings.chat.status.setStatus.title"="상태 설정";
 /* Title section header in set status settings */
@@ -4669,7 +4669,7 @@
 /* Onboarding Camera Backups CTA *Skip* button */
 "onboarding.cta.cameraBackups.buttons.skip"="지금은 건너뛰기";
 /* String explaining the auto-renewal policy of the Pro subscription. */
-"subscriptionPurchase.autoRenewDescription"="구독은 처음 선택한 기간과 같은 기간 그리고 같은 가격으로 연속적으로 자동 갱신됩니다.\n\nPro 요금제는 다음 구독 결제일 24시간 전까지 언제든 취소할 수 있습니다. 설정에서 구독을 관리하는 방법에 대해 더 알아보세요.";
+"subscriptionPurchase.autoRenewDescription"="Subscriptions are renewed automatically for successive subscription periods of the same duration and at the same price as the initial period chosen.\n\nYou can cancel your Pro plan anytime but no later than 24 hours before your next subscription payment is due. [L]Learn how to manage your subscription in your settings[/L].";
 /* Title shown for the free plan card */
 "subscriptionPurchase.freePlanCard.title"="무료 요금제로 시작하세요";
 /* Description shown for the free plan card */
@@ -4691,7 +4691,7 @@
 /* Title for the features of pro plan in the subscription purchase screen. */
 "subscriptionPurchase.featuresOfProPlan.title"="Pro 요금제의 추가 혜택";
 /* Features of pro plan in the subscription purchase screen. */
-"subscriptionPurchase.featuresOfProPlan.message"="• 암호로 보호된 링크\n\n• 만료일이 있는 링크\n\n• 전송 할당량 공유\n\n• 최대 180일의 폴더 되감기\n\n• 무제한 통화와 회의\n\n• 휴지통 비우기를 7일에서 10년 사이로 예약\n\n• 우선적인 지원";
+"subscriptionPurchase.featuresOfProPlan.message"="• Password-protected links\n\n• Links with expiry dates\n\n• Rewind folders up to 180 days of deleted data\n\n• Host calls and meetings with unlimited participants and no time restrictions\n\n• Schedule rubbish bin clearing between 7 days and 10 years\n\n• Priority support";
 /* Title for the first subscription feature: generous storage capacity */
 "subscriptionPurchase.feature.one.title"="넉넉한 저장소";
 /* Description for the first subscription feature: details about available storage */
@@ -4699,11 +4699,11 @@
 /* Title for the second subscription feature: transfer quota sharing */
 "subscriptionPurchase.feature.two.title"="전송 공유";
 /* Description for the second subscription feature: how shared users can use your quota */
-"subscriptionPurchase.feature.two.description"="당신이 항목을 공유해준 사람들이 파일을 다운로드하고 스트림하기 위해 당신의 전송 할당량을 이용할 수 있습니다";
+"subscriptionPurchase.feature.two.description"="당신이 항목을 공유해준 사람들이 파일을 다운로드하고 스트림하기 위해 당신의 할당량을 이용할 수 있습니다";
 /* Title for the third subscription feature: MEGA VPN service */
 "subscriptionPurchase.feature.three.title"="MEGA VPN";
 /* Description for the third subscription feature: benefits of using the MEGA VPN */
-"subscriptionPurchase.feature.three.description"="우리의 고속 VPN으로 당신의 온라인 생활을 안전하고, 빠르고, 쉽게 유지하세요";
+"subscriptionPurchase.feature.three.description"="빠르고 이용하기 편리한 우리의 고속 VPN으로 온라인에서 안전하게 지내세요";
 /* Title for the fourth subscription feature: MEGA Pass password manager */
 "subscriptionPurchase.feature.four.title"="MEGA Pass";
 /* Description for the fourth subscription feature: benefits of using MEGA Pass for password management */
@@ -4726,3 +4726,21 @@
 "subscriptionPurchase.freePlanCard.title.upgrade"="무료 요금제로 계속";
 /* Button title for the free plan card for upgrading */
 "subscriptionPurchase.freePlanCard.button.title.upgrade"="무료 요금제로 계속";
+/* Button title for offline files in menu */
+"accountMenu.offlineFiles"="오프라인 파일";
+/* Button title for MEGA VPN in menu */
+"accountMenu.megaVPN.buttonTitle"="MEGA VPN";
+/* Button subtitle for MEGA VPN in menu */
+"accountMenu.megaVPN.buttonSubtitle"="고속 VPN";
+/* Button title for MEGA Pass in menu */
+"accountMenu.megaPass.buttonTitle"="MEGA Pass";
+/* Button subtitle for MEGA Pass in menu */
+"accountMenu.megaPass.buttonSubtitle"="암호를 안전하게 저장하고 자동 완성";
+/* Button title for MEGA transfer it in menu */
+"accountMenu.transferIt.buttonTitle"="Transfer.it";
+/* Button subtitle for MEGA transfer it in menu */
+"accountMenu.transferIt.buttonSubtitle"="빠르고, 안전한 파일 전송";
+/* Section title for the other MEGA apps in menu */
+"accountMenu.otherApps.sectionTitle"="MEGA 프라이버시 스위트";
+/* Button subtitle for log out in menu */
+"accountMenu.logout"="로그아웃";

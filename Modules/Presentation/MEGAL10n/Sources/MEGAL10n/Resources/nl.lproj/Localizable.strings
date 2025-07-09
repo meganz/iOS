@@ -1267,7 +1267,7 @@
 /* Title used in settings that enables the generation of link previews in the chat */
 "richUrlPreviews"="Voorvertoningen van verzonden links inschakelen";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
-"richPreviewsFooter"="Genereert een voorbeeld van de links die u in een gesprek verstuurt. Hou er rekening mee dat het ophalen van deze voorvertoningen niet beveiligd zijn met zero-knowledge codering.";
+"richPreviewsFooter"="Genereert voorvertoningen voor bepaalde links die je in een gesprek verstuurt, indien beschikbaar. Hou er rekening mee dat het ophalen van deze voorvertoningen niet beveiligd is met zero-knowledge codering.";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
 "voiceAndVideoCalls"="Spraak en video oproepen";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
@@ -4296,8 +4296,8 @@
 "accounts.cancelSubscriptionSteps.webClient.message"="Dit komt omdat u op MEGA heeft geabonneerd in uw webbrowser. Om uw abonnement op te zeggen, moet u:";
 /* Cancellation Section Webclient on a computer title: On a computer */
 "accounts.cancelSubscriptionSteps.webClient.computer.title"="Op een computer";
-/* Cancellation step Webclient: First step using the computer - 1. Visit www.mega.nz in your web browser. */
-"accounts.cancelSubscriptionSteps.webClient.computer.step.one"="1. Bezoek www.mega.nz in uw webbrowser.";
+/* Cancellation step Webclient: First step using the computer - 1. Visit https://mega.nz in your web browser. */
+"accounts.cancelSubscriptionSteps.webClient.computer.step.one"="1. U kunt https://mega.nz bezoeken in uw webbrowser.";
 /* Cancellation step Webclient: Second step using the computer - 2. Log in to your MEGA account. */
 "accounts.cancelSubscriptionSteps.webClient.computer.step.two"="2. Log in op uw MEGA-account.";
 /* Cancellation step Webclient: Third step using the computer - 3. Click the main menu. */
@@ -4310,8 +4310,8 @@
 "accounts.cancelSubscriptionSteps.webClient.computer.step.six"="6.Klik <b>Abonnement opzeggen</b>.";
 /* Cancellation Section Webclient on mobile device title: On a mobile device */
 "accounts.cancelSubscriptionSteps.webClient.mobile.title"="Op een mobiel apparaat";
-/* Cancellation step Webclient: First step using the mobile device - 1. Visit www.mega.nz in your web browser. */
-"accounts.cancelSubscriptionSteps.webClient.mobile.step.one"="1. Bezxoek www.mega.nz in uw webbrowser.";
+/* Cancellation step Webclient: First step using the mobile device - 1. Visit https://mega.nz in your web browser. */
+"accounts.cancelSubscriptionSteps.webClient.mobile.step.one"="1. U kunt https://mega.nz bezoeken in uw webbrowser.";
 /* Cancellation step Webclient: Second step using the mobile device - 2. Log in to your MEGA account. */
 "accounts.cancelSubscriptionSteps.webClient.mobile.step.two"="2. Log in op uw MEGA-account.";
 /* Cancellation step Webclient: Third step using the mobile device - 3. Tap on your avatar. */
@@ -4581,7 +4581,7 @@
 /* Title used in settings that enables the generation of link previews in the chat */
 "settings.chat.richUrlPreview.title"="Voorvertoningen van verzonden links inschakelen";
 /* Title used in settings that enables the generation of link previews in the chat */
-"settings.chat.richUrlPreview.subtitle"="Genereert een voorbeeld van de links die u in een gesprek verstuurt. Hou er rekening mee dat het ophalen van deze voorvertoningen niet beveiligd zijn met zero-knowledge codering.";
+"settings.chat.richUrlPreview.subtitle"="Genereert voorvertoningen voor bepaalde links die je in een gesprek verstuurt, indien beschikbaar. Hou er rekening mee dat het ophalen van deze voorvertoningen niet beveiligd is met zero-knowledge codering.";
 /* Title in chat status settings */
 "settings.chat.status.setStatus.title"="Status instellen";
 /* Title section header in set status settings */
@@ -4669,9 +4669,9 @@
 /* Onboarding Camera Backups CTA *Skip* button */
 "onboarding.cta.cameraBackups.buttons.skip"="Voor nu overslaan";
 /* String explaining the auto-renewal policy of the Pro subscription. */
-"subscriptionPurchase.autoRenewDescription"="Abonnementen worden automatisch verlengd voor opeenvolgende abonnementsperioden van dezelfde duur en tegen dezelfde prijs als de gekozen initiële periode.\n\nU kunt uw Pro-abonnement op elk gewenst moment annuleren, maar niet later dan 24 uur voordat uw volgende abonnementsbetaling verschuldigd is. Lees in uw instellingen hoe u een abonnement kunt beheren.";
+"subscriptionPurchase.autoRenewDescription"="Abonnementen worden automatisch verlengd voor opeenvolgende abonnementsperioden van dezelfde duur en tegen dezelfde prijs als de gekozen initiële periode.\n\nU kunt uw Pro-abonnement op elk gewenst moment annuleren, maar niet later dan 24 uur voordat uw volgende abonnementsbetaling verschuldigd is. [L]Ontdek hoe u uw abonnement kunt beheren in uw instellingen[/L].";
 /* Title shown for the free plan card */
-"subscriptionPurchase.freePlanCard.title"="Ga aan de slag met ons Gratis abonnement";
+"subscriptionPurchase.freePlanCard.title"="Ga aan de slag met ons gratis abonnement";
 /* Description shown for the free plan card */
 "subscriptionPurchase.freePlanCard.description"="We bieden een ruime hoeveelheid opslag en gratis overdrachtstegoed, zodat u MEGA zonder risico kunt proberen";
 /* First benefit shown for the free plan card */
@@ -4691,7 +4691,7 @@
 /* Title for the features of pro plan in the subscription purchase screen. */
 "subscriptionPurchase.featuresOfProPlan.title"="Bijkomende voordelen van Pro-abonnementen";
 /* Features of pro plan in the subscription purchase screen. */
-"subscriptionPurchase.featuresOfProPlan.message"="• Met wachtwoord beveiligde links\n\n• Links met vervaldatums\n\n• Verdeling van overdrachtsoverdracht\n\n• Mappen terugspoelen tot 180 dagen\n\n• Onbeperkt bellen en vergaderen\n\n• Plan het opruimen van vuilnisbakken tussen 7 dagen en 10 jaar\n\n• Prioritaire ondersteuning";
+"subscriptionPurchase.featuresOfProPlan.message"="• Met een wachtwoord beveiligde links\n\n• Links met vervaldatums\n\n• Terugspoelen van mappen tot 180 dagen aan verwijderde gegevens\n\n• Host gesprekken en vergaderingen met ongelimiteerde deelnemers en zonder tijdslimieten\n\n• Plan het opruimen van vuilnisbakken tussen 7 dagen en 10 jaar\n\n• Prioritaire ondersteuning";
 /* Title for the first subscription feature: generous storage capacity */
 "subscriptionPurchase.feature.one.title"="Vrijgevige opslag";
 /* Description for the first subscription feature: details about available storage */
@@ -4699,11 +4699,11 @@
 /* Title for the second subscription feature: transfer quota sharing */
 "subscriptionPurchase.feature.two.title"="Overdracht deling";
 /* Description for the second subscription feature: how shared users can use your quota */
-"subscriptionPurchase.feature.two.description"="Mensen met wie u items deelt, kunnen uw overdrachtstegoed gebruiken om bestanden te downloaden en te streamen";
+"subscriptionPurchase.feature.two.description"="Mensen met wie u items deelt, kunnen uw tegoed gebruiken om bestanden te downloaden en te streamen";
 /* Title for the third subscription feature: MEGA VPN service */
 "subscriptionPurchase.feature.three.title"="MEGA VPN";
 /* Description for the third subscription feature: benefits of using the MEGA VPN */
-"subscriptionPurchase.feature.three.description"="Houd je online leven veilig, snel en gemakkelijk met onze snelle VPN";
+"subscriptionPurchase.feature.three.description"="Blijf online veilig met onze snelle VPN die zowel snel als eenvoudig te gebruiken is";
 /* Title for the fourth subscription feature: MEGA Pass password manager */
 "subscriptionPurchase.feature.four.title"="MEGA Pass";
 /* Description for the fourth subscription feature: benefits of using MEGA Pass for password management */
@@ -4726,3 +4726,21 @@
 "subscriptionPurchase.freePlanCard.title.upgrade"="Ga verder met uw gratis abonnement";
 /* Button title for the free plan card for upgrading */
 "subscriptionPurchase.freePlanCard.button.title.upgrade"="Ga verder met een gratis abonnement";
+/* Button title for offline files in menu */
+"accountMenu.offlineFiles"="Offline bestanden";
+/* Button title for MEGA VPN in menu */
+"accountMenu.megaVPN.buttonTitle"="MEGA VPN";
+/* Button subtitle for MEGA VPN in menu */
+"accountMenu.megaVPN.buttonSubtitle"="VPN met hoge snelheid";
+/* Button title for MEGA Pass in menu */
+"accountMenu.megaPass.buttonTitle"="MEGA Pass";
+/* Button subtitle for MEGA Pass in menu */
+"accountMenu.megaPass.buttonSubtitle"="Sla uw wachtwoorden veilig op en vul ze automatisch in";
+/* Button title for MEGA transfer it in menu */
+"accountMenu.transferIt.buttonTitle"="Transfer.it";
+/* Button subtitle for MEGA transfer it in menu */
+"accountMenu.transferIt.buttonSubtitle"="Snelle, veilige bestandsoverdracht";
+/* Section title for the other MEGA apps in menu */
+"accountMenu.otherApps.sectionTitle"="MEGA-privacysuite";
+/* Button subtitle for log out in menu */
+"accountMenu.logout"="Uitloggen";

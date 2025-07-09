@@ -2519,7 +2519,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>Đã đính kèm %d tệp tin.</string>
+        <string>Đã đính kèm %d tệp tin</string>
       </dict>
     </dict>
     <key>contacts.invite.emailAddress.inviteNumberOfContacts</key>

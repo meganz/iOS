@@ -167,7 +167,7 @@
 /* Error message shown when you try to open something bigger than the free space in your device */
 "fileTooBigMessage_open"="Tệp tin bạn đang định mở lớn hơn không gian lưu trữ hiện có.";
 /* Error title shown when you open a file or folder link and it's no longer available */
-"linkUnavailable"="Đường liên kết không còn tồn tại";
+"linkUnavailable"="Đường liên kết không còn tồn tại";
 /*  */
 "fileLinkUnavailableText1"="Điều này xảy ra có thể do:";
 /* ToS refers to Terms of Service and AUP refers to Acceptable Use Policy. */
@@ -803,7 +803,7 @@
 /* Alert title shown when you tap 'Empty Rubbish Bin' */
 "emptyRubbishBinAlertTitle"="Tất cả các mục trong Thùng Rác sẽ bị xóa.";
 /* Rubbish bin setting snack bar message' */
-"settings.fileManagement.rubbishBin.snackbar.message"="Đã hoàn tất dọn sạch Thùng Rác";
+"settings.fileManagement.rubbishBin.snackbar.message"="Đã dọn Thùng Rác";
 /* Upgrade to paid account title */
 "settings.fileManagement.rubbishBin.upgrade.info.title"="Thùng Rác được tự động dọn sạch mỗi %d ngày. Nếu bạn muốn tắt tính năng tự động dọn Thùng Rác, hãy nâng cấp lên gói trả phí.";
 /* Rubbish bin auto purge title */
@@ -863,7 +863,7 @@
 /* File versioning alert button title to proceed disabling file versioning */
 "settings.fileManagement.fileVersioning.disableFileVersioning.alert.disableButton"="Tắt";
 /* File versioning footer message */
-"settings.fileManagement.fileVersioning.footer.title"="Tất cả các tệp tin đều được giữ nguyên. Chỉ có các nội dung ghi phiên bản lưu sẽ bị xoá.";
+"settings.fileManagement.fileVersioning.footer.title"="Tất cả các tệp tin đều được giữ nguyên. Chỉ có các bản ghi phiên bản của tệp tin sẽ bị xoá.";
 /* Text next to a switch that allows disabling the HTTP protocol for transfers */
 "dontUseHttp"="Không dùng HTTP";
 /* Footer text that explains when disabling the HTTP protocol for transfers may be useful */
@@ -929,7 +929,7 @@
 /* Recovery key error alert title */
 "recoveryKey.error.alert.title"="Chìa khóa phục hồi bị lỗi";
 /* Recovery key error alert message when the user provided incorrect or invalid Recovery key */
-"recoveryKey.error.alert.message.invalidKey"="The recovery key you supplied is either invalid, or is not for this account. Check if you’re using the correct key and try again.";
+"recoveryKey.error.alert.message.invalidKey"="Chìa khóa phục hồi bạn cung cấp không hợp lệ hoặc không hợp lệ cho tài khoản này. Kiểm tra xem bạn có đang sử dụng đúng chìa khóa không và thử lại.";
 /* Text of the alert after opening the recovery link to reset pass being logged. */
 "youRecoveryKeyIsGoingTo"="Chìa Khóa Phục Hồi này sẽ được dùng để đặt lại mật khẩu. Xin nhập mật khẩu mới bạn muốn dùng.";
 /*  */
@@ -1267,7 +1267,7 @@
 /* Title used in settings that enables the generation of link previews in the chat */
 "richUrlPreviews"="Bật xem trước đường liên kết đã gửi";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
-"richPreviewsFooter"="Tạo bản xem trước của các đường liên kết bạn gửi trong chat. Lưu ý rằng việc truy xuất các bản xem trước này không có được bảo vệ bởi mã hóa vô kiến thức.";
+"richPreviewsFooter"="Tạo bản xem trước của các đường liên kết bạn gửi trong chat lúc khả thi. Lưu ý rằng việc truy xuất các bản xem trước này không có được bảo vệ bởi mã hóa vô kiến thức.";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
 "voiceAndVideoCalls"="Gọi thoại và video";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
@@ -1433,7 +1433,7 @@
 /* Label in a button that allows to jump to the latest message */
 "newMessages"="Có tin nhắn mới";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
-"autorenewableDescription"="Các gói thuê bao sẽ được tự động gia hạn chu kỳ kế tiếp vào cùng thời gian và cùng mức giá như thời gian ban đầu khi gói được mua lần đầu tiên. Quý khách có thể tắt tự động gia hạn thuê bao MEGA Pro ít nhất trước 24 giờ trước thời điểm thanh toán đăng ký tiếp theo thông qua trang cài đặt tài khoản iTunes của quý khách. Để quản lý đăng ký, chỉ cần nhấp vào biểu tượng App Store trên điện thoại, đăng nhập với Apple ID của quý khách, ở dưới cùng của trang. Sau đó chạm vào Xem ID. Quý khách sẽ được đưa đến trang tài khoản, rồi di chuyển xuống đến mục Manage App Subscriptions. Từ đó, chọn vào thuê bao MEGA Pro của quý khách và xem ngày gia hạn dự kiến tiếp theo, chọn một gói thuê bao khác hoặc chuyển đổi chuyển đổi bật-tắt để ngắt việc tự động gia hạn thuê bao.";
+"autorenewableDescription"="Các gói mua đăng ký  sẽ được tự động gia hạn chu kỳ kế tiếp vào cùng thời gian và cùng mức giá như lúc ban đầu khi gói được mua lần đầu tiên. Khách hàng có thể tắt tự động gia hạn gói MEGA Pro ít nhất trước 24 giờ trước thời điểm thanh toán tiếp theo thông qua trang cài đặt tài khoản Apple của mình. Để quản lý gói đăng ký, chỉ cần chạm vào biểu tượng App Store trên thiết bị di động, đăng nhập với ID Apple của mình, ở dưới cùng của trang. Sau đó chạm vào Xem ID để được đưa đến trang tài khoản, rồi đi xuống đến phần Quản lý đăng ký ứng dụng. Từ đó, chọn vào gói MEGA Pro và xem ngày gia hạn dự kiến tiếp theo, chọn một gói khác hoặc chọn bật-tắt để ngắt việc tự động gia hạn gói đăng ký.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
 "openMEGAAndSignInToContinue"="Mở app MEGA và đăng nhập để tiếp tục";
 /* Label in login screen to inform about the chat initialization proccess */
@@ -2143,7 +2143,7 @@
 /* Button title which, if tapped, will trigger the action of opening a folder containg this file */
 "View in Folder"="Xem trong thư mục chứa";
 /* Error message shown when opening a link with an account that not corresponds to the link */
-"This link is not related to this account. Please log in with the correct account."="You’re logged in to a different MEGA account. Log out and open the password reset link again.";
+"This link is not related to this account. Please log in with the correct account."="Bạn hiện có đăng nhập vào một tài khoản MEGA khác. Hãy đăng xuất và mở lại đường liên kết để đặt lại mật khẩu.";
 /* Text emncouraging the user to add contacts in MEGA */
 "Invite contact now"="Mời thêm tên liên lạc";
 /* Error message if user click next button without enter a valid phone number */
@@ -2239,13 +2239,13 @@
 /* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the header title that appears above */
 "settings.userInterface.mediaDiscovery.header"="Xem kiểu triển lãm";
 /* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the footer message body that appears under that option */
-"settings.userInterface.mediaDiscovery.footer.body"="Open folders with only images or videos in a visual grid. Browse media by thumbnails and filter by date.";
+"settings.userInterface.mediaDiscovery.footer.body"="Mở thư mục chỉ có chứa hình ảnh hoặc video trong giao diện khuôn lưới trực quan. Duyệt phương tiện số ở dạng hình thu nhỏ và xếp lọc theo ngày.";
 /* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the footer message body link that appears under that option */
-"settings.userInterface.mediaDiscovery.footer.link"="Learn more about gallery view";
+"settings.userInterface.mediaDiscovery.footer.link"="Tìm hiểu thêm về chế độ xem kiểu triển lãm";
 /* In Settings - User Interface, there is a setting that can determine if the app should also load sub folder media. This is the label in the setting */
-"settings.userInterface.mediaDiscoverySubFolder"="Gallery view in subfolders";
+"settings.userInterface.mediaDiscoverySubFolder"="Xem kiểu triển lãm trong các thư mục con";
 /* In Settings - User Interface, there is a setting that can determine if the app should also load sub folder media. This is the footer message body that appears under that option */
-"settings.userInterface.mediaDiscoverySubFolder.footer"="Images and videos from subfolders will also be included in gallery view";
+"settings.userInterface.mediaDiscoverySubFolder.footer"="Hình ảnh và video từ bên trong các thư mục con sẽ được bao gồm trong xem kiểu triển lãm";
 /* In Settings - User Interface, there is an option that you can enable to hide the contents of the Recents section */
 "settings.userInterface.hideRecentActivity"="Ẩn hoạt động gần đây";
 /* In Settings - User Interface, there is an option that you can enable to hide the contents of the Recents section. This is the footer that appears under that option. */
@@ -2591,7 +2591,7 @@
 /* Title of Over Disk Quota dialog */
 "dialog.storage.odq.title"="Xin nâng cấp";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. @% is placeholder. */
-"dialog.storage.almostFull.detail"="Your Cloud drive is almost full. Upgrade now and get up to %@ TB of cloud storage space.";
+"dialog.storage.almostFull.detail"="Ổ Mây của bạn sắp đầy. Nâng cấp ngay và nhận thêm lên đến %@ TB không gian lưu trữ đám mây.";
 /* Over Disk Quota detail message informing the user that they've reached the full capacity of their accounts. */
 "dialog.storage.odq.detail"="Không gian lưu trữ của Ổ Mây đã bị đầy. Xin nâng cấp lên một hạng Pro để mở rộng lưu trữ và tận hưởng thêm nhiều tính năng cao cấp. Tài khoản sẽ bị khóa sau một khoảng thời vượt quá không gian lưu trữ và không nâng cấp quá lâu. Xin kiểm tra hộp thư email và xem thư chúng tôi đã gửi để biết thêm chi tiết.";
 /* Over Disk Quota paywall not final title. */
@@ -2759,7 +2759,7 @@
 /* Displayed when the user's Business account subscription is active. */
 "account.profile.accountStatus.active"="Hoạt động";
 /* Displayed when the user's Business account is in a grace period and requires payment to maintain service. */
-"account.profile.accountStatus.gracePeriod"="Yêu cầu giải quyết thanh toán";
+"account.profile.accountStatus.gracePeriod"="Yêu cầu thanh toán";
 /* Displayed when the user's ProFlexi or Business has expired due to non-payment. */
 "account.profile.accountStatus.expired"="Thánh toán bị quá hạn";
 /* Renewal date of the current PRO account, when the date is a date in the future other than today or tomorrow */
@@ -3397,7 +3397,7 @@
 /* Schedule meeting name error */
 "meetings.scheduleMeeting.meetingName.lenghtError"="Nhập được tới 30 ký tự";
 /* Schedule meeting description error */
-"meetings.scheduleMeeting.description.lenghtError"="Nhập được tới 3000 ký tự";
+"meetings.scheduleMeeting.description.lenghtError"="Nhập được tới 3 000 ký tự";
 /* Schedule meeting cancel button */
 "meetings.scheduleMeeting.cancel"="Hủy";
 /* Schedule meeting create button */
@@ -3615,9 +3615,9 @@
 /* Create Schedule Meeting: This text is used as a accessibility label for interval picker. */
 "meetings.scheduleMeeting.create.interval.picker.accessibilityLabel"="Chọn khoảng thời gian các tháng";
 /* Create Schedule Meeting: Month custom option - header title for choosing the week number and week day */
-"meetings.scheduleMeeting.create.monthly.weekNumberAndWeekDay.headerTitle"="Vào…";
+"meetings.scheduleMeeting.create.monthly.weekNumberAndWeekDay.headerTitle"="Vào tuần…";
 /* Create Schedule Meeting: Month custom option - header title for the calendar */
-"meetings.scheduleMeeting.create.monthly.calendar.headerTitle"="Mỗi";
+"meetings.scheduleMeeting.create.monthly.calendar.headerTitle"="Vào ngày";
 /* Create Schedule Meeting: Month custom option - first week option text */
 "meetings.scheduleMeeting.create.monthly.weekNumber.first"="đầu tiên";
 /* Create Schedule Meeting: Month custom option - second week option text */
@@ -3639,9 +3639,9 @@
 /* On Upgrade Account Plan screen. Button title to buy account plan. %@ will be the name of the selected plan */
 "upgradeAccountPlan.button.buyAccountPlan.title"="Mua %@";
 /* On Upgrade Account Plan screen. Button title to continue to buy account plan in-app when user could buy externally. %@ will be the higher price of the plan */
-"upgradeAccountPlan.button.buyInApp.title"="Continue in-app (%@)";
+"upgradeAccountPlan.button.buyInApp.title"="Mua trong app (%@)";
 /* On Upgrade Account Plan screen. Button footer text to continue to buy account plan in-app when user could buy externally. %@ will be the higher price of the plan */
-"upgradeAccountPlan.button.buyInApp.footer"="Platform fees apply when purchasing through the app";
+"upgradeAccountPlan.button.buyInApp.footer"="Phí nền tảng sẽ áp dụng khi mua hàng qua ứng dụng";
 /* On Upgrade Account Plan screen. Displayed header title text message */
 "upgradeAccountPlan.header.title.choosePlan"="Chọn gói phù hợp với bạn";
 /* On Upgrade Account Plan screen. Displayed header title text with current plan. %@ will be the name of the current plan */
@@ -3919,7 +3919,7 @@
 /* Error shown when moving folder to inside itself */
 "Error.nodeCopyOrMove.circularDependency"="Bạn không thể di chuyển thư mục này vì đích đến là cùng một thư mục.";
 /* Auto media discovery banner title */
-"photos.mediaDiscovery.autoMediaDiscoveryBanner.title"="As this folder contains only images and videos, we’ve automatically opened it in gallery view. You can enjoy your visual content with a more immersive layout. You can disable this in Settings.";
+"photos.mediaDiscovery.autoMediaDiscoveryBanner.title"="Bởi vì thư mục này chỉ có chứa hoàn toàn là hình ảnh và videos, chúng tôi đã tự động đặt Xem kiểu triển lãm. Giúp bạn trải nghiệm nội dung hình ảnh của mình với bố cục sống động hơn. Tính năng này có thể tắt đi trong Thiết Đặt.";
 /* Upgrade account screen header title after user onboarding */
 "onboarding.upgradeAccount.header.title"="Nhận được nhiều hơn với gói Pro";
 /* Upgrade account screen header subTitle after user onboarding. %@ will be replaced by the price of the lowest plan per month. */
@@ -4017,7 +4017,7 @@
 /* Videos: video content empty state */
 "videos.tab.all.content.emptyState"="Không có video nào";
 /* Videos: videos filter title for location */
-"videos.tab.all.filter.location.title.location"="Định vị";
+"videos.tab.all.filter.location.title.location"="Vị trí";
 /* Videos: videos filter option for all locations */
 "videos.tab.all.filter.location.option.allLocations"="Tất cả các vị trí";
 /* Videos: videos filter option for cloud drive */
@@ -4229,13 +4229,13 @@
 /* Call and meeting duration for free users */
 "callAndMeeting.duration.for.free.users"="Lên đến 1 tiếng";
 /* Call and meeting duration unlimited for pro users */
-"callAndMeeting.duration.unlimited.for.pro.users"="KHÔNG GIỚI HẠN";
+"callAndMeeting.duration.unlimited.for.pro.users"="Không giới hạn";
 /* Call and meeting participants title */
 "callAndMeeting.participants.title"="Người tham gia cuộc gọi và cuộc họp";
 /* Call and meeting participants for free users */
 "callAndMeeting.participants.for.free.users"="Lên đến 100 người";
 /* Call and meeting participants unlimited for pro users */
-"callAndMeeting.participants.unlimited.for.pro.users"="KHÔNG GIỚI HẠN";
+"callAndMeeting.participants.unlimited.for.pro.users"="Không giới hạn";
 /* Cancellation Subscription header warning title */
 "cancellation.subscription.header.title"="Bạn sẽ bỏ lỡ những tính năng này";
 /* Cancellation Subscription header warning message. %@ is the current storage used by the user */
@@ -4296,8 +4296,8 @@
 "accounts.cancelSubscriptionSteps.webClient.message"="Điều này là do bạn đã đăng ký gói MEGA trong trình duyệt web của mình. Để hủy gói đăng ký, bạn sẽ cần:";
 /* Cancellation Section Webclient on a computer title: On a computer */
 "accounts.cancelSubscriptionSteps.webClient.computer.title"="Trên máy tính";
-/* Cancellation step Webclient: First step using the computer - 1. Visit www.mega.nz in your web browser. */
-"accounts.cancelSubscriptionSteps.webClient.computer.step.one"="1. Truy cập www.mega.nz với trình duyệt web.";
+/* Cancellation step Webclient: First step using the computer - 1. Visit https://mega.nz in your web browser. */
+"accounts.cancelSubscriptionSteps.webClient.computer.step.one"="1. Truy cập https://mega.nz với trình duyệt web của bạn.";
 /* Cancellation step Webclient: Second step using the computer - 2. Log in to your MEGA account. */
 "accounts.cancelSubscriptionSteps.webClient.computer.step.two"="2. Đăng nhập vào tài khoản MEGA của bạn.";
 /* Cancellation step Webclient: Third step using the computer - 3. Click the main menu. */
@@ -4310,8 +4310,8 @@
 "accounts.cancelSubscriptionSteps.webClient.computer.step.six"="6. Click vào <b>Hủy đăng ký</b>.";
 /* Cancellation Section Webclient on mobile device title: On a mobile device */
 "accounts.cancelSubscriptionSteps.webClient.mobile.title"="Trên thiết bị di động";
-/* Cancellation step Webclient: First step using the mobile device - 1. Visit www.mega.nz in your web browser. */
-"accounts.cancelSubscriptionSteps.webClient.mobile.step.one"="1. Truy cập www.mega.nz với trình duyệt web.";
+/* Cancellation step Webclient: First step using the mobile device - 1. Visit https://mega.nz in your web browser. */
+"accounts.cancelSubscriptionSteps.webClient.mobile.step.one"="1. Truy cập https://mega.nz với trình duyệt web của bạn.";
 /* Cancellation step Webclient: Second step using the mobile device - 2. Log in to your MEGA account. */
 "accounts.cancelSubscriptionSteps.webClient.mobile.step.two"="2. Đăng nhập vào tài khoản MEGA của bạn.";
 /* Cancellation step Webclient: Third step using the mobile device - 3. Tap on your avatar. */
@@ -4581,9 +4581,9 @@
 /* Title used in settings that enables the generation of link previews in the chat */
 "settings.chat.richUrlPreview.title"="Bật xem trước đường liên kết đã gửi";
 /* Title used in settings that enables the generation of link previews in the chat */
-"settings.chat.richUrlPreview.subtitle"="Tạo bản xem trước của các đường liên kết bạn gửi trong chat. Lưu ý rằng việc truy xuất các bản xem trước này không có được bảo vệ bởi mã hóa vô kiến thức.";
+"settings.chat.richUrlPreview.subtitle"="Tạo bản xem trước của các đường liên kết bạn gửi trong chat lúc khả thi. Lưu ý rằng việc truy xuất các bản xem trước này không có được bảo vệ bởi mã hóa vô kiến thức.";
 /* Title in chat status settings */
-"settings.chat.status.setStatus.title"="Chọn trạng thái hoạt động online";
+"settings.chat.status.setStatus.title"="Đặt trạng thái";
 /* Title section header in set status settings */
 "settings.chat.status.setStatus.statusSettings.title"="Thiết đặt trạng thái";
 /* Title in set status settings for show last seen */
@@ -4635,79 +4635,79 @@
 /* Description text for note to self chat messages view header, at the top of the chat room */
 "chat.messages.noteToSelf.header.description"="Một không gian riêng cho hình ảnh, thông tin quan trọng hoặc ý tưởng lớn. Sẽ luôn được đồng bộ hóa và được bảo vệ bằng mã hóa vô kiến thức.";
 /* Onboarding USP carousel first page title */
-"onboarding.uniqueSellingProposition.carousel.page.first.title"="Chính bạn là người giữ chìa khóa";
+"onboarding.uniqueSellingProposition.carousel.page.first.title"="Chính bạn là người giữ chìa khóa";
 /* Onboarding USP carousel first page subtitle */
-"onboarding.uniqueSellingProposition.carousel.page.first.subtitle"="User controlled, zero-knowledge encryption means no one can see your data unless you want them to - not even us!";
+"onboarding.uniqueSellingProposition.carousel.page.first.subtitle"="Kiểm soát người dùng, mã hóa vô kiến thức có nghĩa là không ai có thể xem dữ liệu của bạn trừ khi bạn muốn chúng - ngay cả chúng tôi!";
 /* Onboarding USP carousel second page title */
-"onboarding.uniqueSellingProposition.carousel.page.second.title"="Giữ mọi khoảnh[w]khắc được an[w]toàn";
+"onboarding.uniqueSellingProposition.carousel.page.second.title"="Giữ mọi khoảnh khắc được an toàn";
 /* Onboarding USP carousel second page subtitle */
 "onboarding.uniqueSellingProposition.carousel.page.second.subtitle"="Với tính năng tự động đăng tải camêra lên Ổ Mây MEGA và không gian lưu trữ rộng rãi, bạn sẽ không bao giờ mất một kỷ niệm quý giá nào hết";
 /* Onboarding USP carousel third page title */
-"onboarding.uniqueSellingProposition.carousel.page.third.title"="Dữ[w]liệu chính[w]chủ. Không[w]gian riêng[w]tư.";
+"onboarding.uniqueSellingProposition.carousel.page.third.title"="Dữ liệu chính chủ. Không gian riêng tư.";
 /* Onboarding USP carousel third page subtitle */
-"onboarding.uniqueSellingProposition.carousel.page.third.subtitle"="Ample storage and easy ways to transfer, share, and organise your files means you can safely use MEGA for whatever you choose";
+"onboarding.uniqueSellingProposition.carousel.page.third.subtitle"="Dồi dào dung lượng lưu trữ và các cách dễ dàng để chuyển, chia sẻ và sắp xếp các tệp của bạn có nghĩa là bạn có thể sử dụng MEGA một cách an toàn cho bất cứ điều gì bạn chọn";
 /* Onboarding USP carousel fourth page title */
 "onboarding.uniqueSellingProposition.carousel.page.fourth.title"="Trò chuyện riêng tư";
 /* Onboarding USP carousel fourth page subtitle */
-"onboarding.uniqueSellingProposition.carousel.page.fourth.subtitle"="Chat with friends and family, share photos or sensitive information, video call, and schedule meetings. Safety and privacy guaranteed.";
+"onboarding.uniqueSellingProposition.carousel.page.fourth.subtitle"="Trò chuyện với bạn bè và gia đình, chia sẻ ảnh hoặc thông tin nhạy cảm, gọi video và lên lịch các cuộc họp. An toàn và quyền riêng tư được đảm bảo.";
 /* Onboarding Notification CTA title */
-"onboarding.cta.notifications.title"="Never miss an important update";
+"onboarding.cta.notifications.title"="Không bao giờ bỏ lỡ cập nhật quan trọng nào";
 /* Onboarding Notification CTA description */
-"onboarding.cta.notifications.explanation"="Stay informed with real-time updates that matter to you. Get alerts for shared folder activity, security updates, and exclusive offers, so you never miss anything important.\n\nYou can manage notification preferences at any time in the settings.";
+"onboarding.cta.notifications.explanation"="Luôn cập nhật thông tin cập nhật theo thời gian thực quan trọng với bạn. Nhận thông báo về hoạt động thư mục được chia sẻ, cập nhật bảo mật và ưu đãi độc quyền, để bạn không bao giờ bỏ lỡ bất cứ điều gì quan trọng.\n\nBạn có thể quản lý tùy chọn thông báo vào bất cứ lúc nào trong cài đặt.";
 /* Onboarding Notification CTA *Enable* button */
 "onboarding.cta.notifications.buttons.enable"="Bật thông báo";
 /* Onboarding Notification CTA *Skip* button */
 "onboarding.cta.notifications.buttons.skip"="Để lúc khác";
 /* Onboarding Camera Backups CTA title */
-"onboarding.cta.cameraBackups.title"="Keep your photos safe, always";
+"onboarding.cta.cameraBackups.title"="Luôn luôn giữ ảnh của bạn được an toàn";
 /* Onboarding Camera Backups CTA description */
-"onboarding.cta.cameraBackups.explanation"="Your memories matter\n\nCamera uploads automatically backs up your photos and videos to your MEGA Cloud drive, so you never have to worry about losing them";
+"onboarding.cta.cameraBackups.explanation"="Ký ức của bạn quan trọng\n\nẢnh đăng tải camêra tự động sao lưu ảnh và video của bạn vào ổ MEGA Cloud của bạn, vì vậy bạn không bao giờ phải lo lắng về việc mất chúng";
 /* Onboarding Camera Backups CTA note */
-"onboarding.cta.cameraBackups.note"="Camera uploads requires [B]full access[/B] to your device’s photo library";
+"onboarding.cta.cameraBackups.note"="Đăng tải camêra yêu cầu [B]toàn quyền truy cập[/B] vào thư viện ảnh của thiết bị";
 /* Onboarding Camera Backups CTA *Enable* button */
 "onboarding.cta.cameraBackups.buttons.enable"="Bật Đăng Tải Camêra";
 /* Onboarding Camera Backups CTA *Skip* button */
 "onboarding.cta.cameraBackups.buttons.skip"="Để lúc khác";
 /* String explaining the auto-renewal policy of the Pro subscription. */
-"subscriptionPurchase.autoRenewDescription"="Subscriptions are renewed automatically for successive subscription periods of the same duration and at the same price as the initial period chosen.\n\nYou can cancel your Pro plan anytime but no later than 24 hours before your next subscription payment is due. Learn how to manage your subscription in your settings.";
+"subscriptionPurchase.autoRenewDescription"="Đăng ký được gia hạn tự động cho các khoảng thời gian đăng ký liên tiếp có cùng thời hạn và với cùng giá với khoảng thời gian ban đầu được chọn.\n\nBạn có thể hủy gói Pro bất cứ lúc nào nhưng không muộn hơn 24 giờ trước khi thanh toán gói đăng ký tiếp theo của bạn đến hạn. [L]Tìm hiểu cách quản lý gói đăng ký của bạn trong thiết đặt[/L].";
 /* Title shown for the free plan card */
-"subscriptionPurchase.freePlanCard.title"="Khởi đầu với gói Miễn phí của chúng tôi";
+"subscriptionPurchase.freePlanCard.title"="Khởi đầu với gói miễn phí của chúng tôi";
 /* Description shown for the free plan card */
-"subscriptionPurchase.freePlanCard.description"="We offer generous amount of storage and transfer quota at no charge, so you can try MEGA with no risk";
+"subscriptionPurchase.freePlanCard.description"="Chúng tôi cung cấp lượng lớn dung lượng lưu trữ và băng thông truyền tải miễn phí, vì vậy bạn có thể thử MEGA mà không gặp rủi ro";
 /* First benefit shown for the free plan card */
-"subscriptionPurchase.freePlanCard.feature.one"="Free 20 GB of storage";
+"subscriptionPurchase.freePlanCard.feature.one"="20 GB không gian lưu trữ miễn phí";
 /* Second benefit shown for the free plan card */
-"subscriptionPurchase.freePlanCard.feature.two"="Limited transfers";
+"subscriptionPurchase.freePlanCard.feature.two"="Truyền tải có giới hạn";
 /* Button title for the free plan card */
 "subscriptionPurchase.freePlanCard.button.title"="Bắt đầu sử dụng miễn phí";
 /* Displays the amount of storage included in the subscription plan */
-"subscriptionPurchase.plan.storage"="%@ Lưu trữ";
+"subscriptionPurchase.plan.storage"="%@ lưu trữ";
 /* Displays the amount of data transfer included in the subscription plan */
-"subscriptionPurchase.plan.transfer"="%@ Truyền Tải";
+"subscriptionPurchase.plan.transfer"="%@ mức truyền tải";
 /* Displays the total amount when billed yearly */
 "subscriptionPurchase.plan.billedYearly"="%@ thu hằng năm";
 /* Button title to cancel the subscription purchase. */
 "subscriptionPurchase.maybeLater"="Có lẽ để sau";
 /* Title for the features of pro plan in the subscription purchase screen. */
-"subscriptionPurchase.featuresOfProPlan.title"="Additional benefits of Pro plans";
+"subscriptionPurchase.featuresOfProPlan.title"="Lợi ích bổ sung cho các gói Pro";
 /* Features of pro plan in the subscription purchase screen. */
-"subscriptionPurchase.featuresOfProPlan.message"="• Password-protected links\n\n• Links with expiry dates\n\n• Transfer quota sharing\n\n• Rewind folders up to 180 days\n\n• Unlimited calls and meetings\n\n• Schedule rubbish bin clearing between 7 days and 10 years\n\n• Priority support";
+"subscriptionPurchase.featuresOfProPlan.message"="• Các đường liên kết có lựa chọn bảo vệ bằng mật khẩu\n\n• Đặt ngày hết hạn cho đường liên kết\n\n• Tua lại thư mục lên đến 180 ngày từ lúc dữ liệu bị xóa\n\n• Tổ chức các cuộc gọi và cuộc họp với lượng người tham gia không giới hạn và không giới hạn thời gian\n\n• Lên lịch dọn thùng rác từ 7 ngày đến 10 năm\n\n• Hỗ trợ được ưu tiên";
 /* Title for the first subscription feature: generous storage capacity */
-"subscriptionPurchase.feature.one.title"="Không gian hào phóng";
+"subscriptionPurchase.feature.one.title"="Không gian hào phóng";
 /* Description for the first subscription feature: details about available storage */
-"subscriptionPurchase.feature.one.description"="Store up to 16 TB of data";
+"subscriptionPurchase.feature.one.description"="Lưu trữ lên đến 16 TB dữ liệu";
 /* Title for the second subscription feature: transfer quota sharing */
 "subscriptionPurchase.feature.two.title"="Chia sẻ lượng truyền tải";
 /* Description for the second subscription feature: how shared users can use your quota */
-"subscriptionPurchase.feature.two.description"="People you share items with can use your transfer quota to download and stream files";
+"subscriptionPurchase.feature.two.description"="Những người bạn chia sẻ có thể sử dụng hạn mức băng thông của bạn khi tải xuống và phát trực tuyến tệp tin";
 /* Title for the third subscription feature: MEGA VPN service */
 "subscriptionPurchase.feature.three.title"="MEGA VPN";
 /* Description for the third subscription feature: benefits of using the MEGA VPN */
-"subscriptionPurchase.feature.three.description"="Keep your online life safe, fast, and easy with our high-speed VPN";
+"subscriptionPurchase.feature.three.description"="Luôn an toàn trực tuyến với VPN tốc độ cao của chúng tôi vừa nhanh vừa đơn giản dễ sử dụng";
 /* Title for the fourth subscription feature: MEGA Pass password manager */
 "subscriptionPurchase.feature.four.title"="MEGA Pass";
 /* Description for the fourth subscription feature: benefits of using MEGA Pass for password management */
-"subscriptionPurchase.feature.four.description"="Organise all your passwords and keep them safe with our password manager";
+"subscriptionPurchase.feature.four.description"="Sắp xếp tất cả mật khẩu của bạn và giữ mọi thứ được an toàn với trình quản lý mật khẩu của chúng tôi";
 /* Title for all the feature in subscription purchase view. */
 "subscriptionPurchase.feature.title"="Bạn nhận được:";
 /* Title for the Home tab bar item */
@@ -4721,8 +4721,26 @@
 /* Title for the Menu tab bar item */
 "tabbarTitle.menu"="Menu";
 /* Storage benefit shown for the free plan card */
-"subscriptionPurchase.freePlanCard.feature.storage"="%@ Lưu trữ";
+"subscriptionPurchase.freePlanCard.feature.storage"="%@ lưu trữ";
 /* Title shown for the free plan card for upgrading */
-"subscriptionPurchase.freePlanCard.title.upgrade"="Continue with your free plan";
+"subscriptionPurchase.freePlanCard.title.upgrade"="Tiếp tục với gói miễn phí của bạn";
 /* Button title for the free plan card for upgrading */
-"subscriptionPurchase.freePlanCard.button.title.upgrade"="Continue with free plan";
+"subscriptionPurchase.freePlanCard.button.title.upgrade"="Tiếp tục với gói miễn phí";
+/* Button title for offline files in menu */
+"accountMenu.offlineFiles"="Các tệp lưu ngoại tuyến";
+/* Button title for MEGA VPN in menu */
+"accountMenu.megaVPN.buttonTitle"="MEGA VPN";
+/* Button subtitle for MEGA VPN in menu */
+"accountMenu.megaVPN.buttonSubtitle"="VPN tốc độ cao";
+/* Button title for MEGA Pass in menu */
+"accountMenu.megaPass.buttonTitle"="MEGA Pass";
+/* Button subtitle for MEGA Pass in menu */
+"accountMenu.megaPass.buttonSubtitle"="Lưu trữ an toàn và tự động điền mật khẩu cho bạn";
+/* Button title for MEGA transfer it in menu */
+"accountMenu.transferIt.buttonTitle"="Transfer.it";
+/* Button subtitle for MEGA transfer it in menu */
+"accountMenu.transferIt.buttonSubtitle"="Truyền tệp tin nhanh chóng, an toàn";
+/* Section title for the other MEGA apps in menu */
+"accountMenu.otherApps.sectionTitle"="Bộ trọn gói bảo mật MEGA";
+/* Button subtitle for log out in menu */
+"accountMenu.logout"="Đăng xuất";

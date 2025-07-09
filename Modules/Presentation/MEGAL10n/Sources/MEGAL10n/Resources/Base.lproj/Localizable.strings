@@ -1267,7 +1267,7 @@
 /* Title used in settings that enables the generation of link previews in the chat */
 "richUrlPreviews"="Enable sent link previews";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
-"richPreviewsFooter"="Generates a preview of the links you send in chat. Note that retrieving these previews isn’t protected by zero-knowledge encryption.";
+"richPreviewsFooter"="Generates previews for certain links you send in chat, when available. Note that retrieving these previews isn’t protected by zero-knowledge encryption.";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
 "voiceAndVideoCalls"="Voice and video calls";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
@@ -3642,6 +3642,10 @@
 "upgradeAccountPlan.button.buyViaWeb.save"="Buy via web (Save %@)";
 /* On Upgrade Account Plan screen. Button title to buy account plan via web. %@ will be potential total savings for the users in percent */
 "upgradeAccountPlan.button.buyViaWeb.saveUpTo"="Buy via web (Save up to %@)";
+/* On Upgrade Account Plan screen. Button title to continue to buy account plan in-app when user could buy externally. %@ will be the higher price of the plan */
+"upgradeAccountPlan.button.buyInApp.title"="Continue in-app (%@)";
+/* On Upgrade Account Plan screen. Button footer text to continue to buy account plan in-app when user could buy externally. %@ will be the higher price of the plan */
+"upgradeAccountPlan.button.buyInApp.footer"="Platform fees apply when purchasing through the app";
 /* On Upgrade Account Plan screen. Displayed header title text message */
 "upgradeAccountPlan.header.title.choosePlan"="Choose the right plan for you";
 /* On Upgrade Account Plan screen. Displayed header title text with current plan. %@ will be the name of the current plan */
@@ -4581,7 +4585,7 @@
 /* Title used in settings that enables the generation of link previews in the chat */
 "settings.chat.richUrlPreview.title"="Enable sent link previews";
 /* Title used in settings that enables the generation of link previews in the chat */
-"settings.chat.richUrlPreview.subtitle"="Generates a preview of the links you send in chat. Note that retrieving these previews isn’t protected by zero-knowledge encryption.";
+"settings.chat.richUrlPreview.subtitle"="Generates previews for certain links you send in chat, when available. Note that retrieving these previews isn’t protected by zero-knowledge encryption.";
 /* Title in chat status settings */
 "settings.chat.status.setStatus.title"="Set status";
 /* Title section header in set status settings */
@@ -4669,9 +4673,9 @@
 /* Onboarding Camera Backups CTA *Skip* button */
 "onboarding.cta.cameraBackups.buttons.skip"="Skip for now";
 /* String explaining the auto-renewal policy of the Pro subscription. */
-"subscriptionPurchase.autoRenewDescription"="Subscriptions are renewed automatically for successive subscription periods of the same duration and at the same price as the initial period chosen.\n\nYou can cancel your Pro plan anytime but no later than 24 hours before your next subscription payment is due. Learn how to manage your subscription in your settings.";
+"subscriptionPurchase.autoRenewDescription"="Subscriptions are renewed automatically for successive subscription periods of the same duration and at the same price as the initial period chosen.\n\nYou can cancel your Pro plan anytime but no later than 24 hours before your next subscription payment is due. [L]Learn how to manage your subscription in your settings[/L].";
 /* Title shown for the free plan card */
-"subscriptionPurchase.freePlanCard.title"="Get started with our Free plan";
+"subscriptionPurchase.freePlanCard.title"="Get started with our free plan";
 /* Description shown for the free plan card */
 "subscriptionPurchase.freePlanCard.description"="We offer generous amount of storage and transfer quota at no charge, so you can try MEGA with no risk";
 /* First benefit shown for the free plan card */
@@ -4691,7 +4695,7 @@
 /* Title for the features of pro plan in the subscription purchase screen. */
 "subscriptionPurchase.featuresOfProPlan.title"="Additional benefits of Pro plans";
 /* Features of pro plan in the subscription purchase screen. */
-"subscriptionPurchase.featuresOfProPlan.message"="• Password-protected links\n\n• Links with expiry dates\n\n• Transfer quota sharing\n\n• Rewind folders up to 180 days\n\n• Unlimited calls and meetings\n\n• Schedule rubbish bin clearing between 7 days and 10 years\n\n• Priority support";
+"subscriptionPurchase.featuresOfProPlan.message"="• Password-protected links\n\n• Links with expiry dates\n\n• Rewind folders up to 180 days of deleted data\n\n• Host calls and meetings with unlimited participants and no time restrictions\n\n• Schedule rubbish bin clearing between 7 days and 10 years\n\n• Priority support";
 /* Title for the first subscription feature: generous storage capacity */
 "subscriptionPurchase.feature.one.title"="Generous storage";
 /* Description for the first subscription feature: details about available storage */
@@ -4699,11 +4703,11 @@
 /* Title for the second subscription feature: transfer quota sharing */
 "subscriptionPurchase.feature.two.title"="Transfer sharing";
 /* Description for the second subscription feature: how shared users can use your quota */
-"subscriptionPurchase.feature.two.description"="People you share items with can use your transfer quota to download and stream files";
+"subscriptionPurchase.feature.two.description"="People you share items with can use your quota to download and stream files";
 /* Title for the third subscription feature: MEGA VPN service */
 "subscriptionPurchase.feature.three.title"="MEGA VPN";
 /* Description for the third subscription feature: benefits of using the MEGA VPN */
-"subscriptionPurchase.feature.three.description"="Keep your online life safe, fast, and easy with our high-speed VPN";
+"subscriptionPurchase.feature.three.description"="Stay safe online with our high-speed VPN that’s both fast and simple to use";
 /* Title for the fourth subscription feature: MEGA Pass password manager */
 "subscriptionPurchase.feature.four.title"="MEGA Pass";
 /* Description for the fourth subscription feature: benefits of using MEGA Pass for password management */
@@ -4729,18 +4733,18 @@
 /* Button title for offline files in menu */
 "accountMenu.offlineFiles"="Offline files";
 /* Button title for MEGA VPN in menu */
-"accountMenu.megaVPN.buttonTitle"="MEGA VPN";
+"accountMenu.megaVPN.buttonTitle"="MEGA VPN";
 /* Button subtitle for MEGA VPN in menu */
-"accountMenu.megaVPN.buttonSubtitle"="High speed VPN";
+"accountMenu.megaVPN.buttonSubtitle"="High-speed VPN";
 /* Button title for MEGA Pass in menu */
-"accountMenu.megaPass.buttonTitle"="MEGA Pass";
+"accountMenu.megaPass.buttonTitle"="MEGA Pass";
 /* Button subtitle for MEGA Pass in menu */
-"accountMenu.megaPass.buttonSubtitle"="All your passwords in one place";
+"accountMenu.megaPass.buttonSubtitle"="Securely store and autofill your passwords";
 /* Button title for MEGA transfer it in menu */
-"accountMenu.transferIt.buttonTitle"="transfer.it";
+"accountMenu.transferIt.buttonTitle"="Transfer.it";
 /* Button subtitle for MEGA transfer it in menu */
-"accountMenu.transferIt.buttonSubtitle"="Faster, larger, and more secure file transfers";
+"accountMenu.transferIt.buttonSubtitle"="Fast, secure file transfers";
 /* Section title for the other MEGA apps in menu */
 "accountMenu.otherApps.sectionTitle"="MEGA privacy suite";
 /* Button subtitle for log out in menu */
-"accountMenu.logout"="Log out";
+"accountMenu.logout"="Log out";
