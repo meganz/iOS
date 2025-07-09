@@ -60,6 +60,6 @@ extension NodeInfoRouter: NodeInfoViewControllerDelegate {
         _ nodeInfoViewController: NodeInfoViewController,
         presentParentNode node: MEGANode
     ) {
-        node.navigateToParentAndPresent()
+        node.newNavigateToParentAndPresent()
     }
 }

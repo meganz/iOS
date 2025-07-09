@@ -1,3 +1,4 @@
+import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGADomain
 
@@ -16,20 +17,32 @@ extension MEGANode {
         guard let vc else { return }
         navigationController.pushViewController(vc, animated: false)
     }
+    // the prefix `new` is for distinguishing with the old navigateToParentAndPresent()
+    // After Navigation Revamp is fully rolled out we'll remove the old method and rename the new one
+    @MainActor
+    @objc func newNavigateToParentAndPresent() {
+        if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .navigationRevamp) {
+            revampedNavigateToParentAndPresent()
+        } else {
+            navigateToParentAndPresent()
+        }
+    }
 
     @MainActor
-    @objc func navigateToParentAndPresentForNavigationRevamp() {
-        guard let mainTBC = UIApplication.mainTabBarRootViewController() as? MainTabBarController,
-        let navigationController = mainTBC.selectedViewController as? UINavigationController else {
-            return
-        }
+    private func revampedNavigateToParentAndPresent() {
+        guard let mainTBC = UIApplication.mainTabBarRootViewController() as? MainTabBarController else { return }
 
         if MEGASdk.shared.accessLevel(for: self) != .accessOwner {
             navigateToSharedItems(in: mainTBC)
         } else {
             mainTBC.selectedIndex = TabManager.driveTabIndex()
-            navigationController.popToRootViewController(animated: false)
         }
+
+        guard let navigationController = mainTBC.selectedViewController as? UINavigationController else {
+            return MEGALogDebug("Trying to navigate to parent of node \(String(describing: self.name)) but selectedViewController is not UINavigationController")
+        }
+
+        navigationController.popToRootViewController(animated: false)
 
         let parentTreeArray = mnz_parentTreeArray() as? [MEGANode] ?? []
         var backupsRootNode: MEGANode? = BackupRootNodeAccess.shared.isTargetNode(for: self) ? self : nil
@@ -51,7 +64,6 @@ extension MEGANode {
             )
         }
 
-        // Only `.folder` is properly handled in Navigation Revamp, the rest are to be addressed and thoroughly tested in [IOS-10134]
         switch type {
         case .folder, .rubbish:
             let displayMode: DisplayMode

@@ -406,7 +406,7 @@
         }
     }
 }
-
+// Note: This is only available for Outshare and Links
 - (void)showNodeInfo:(MEGANode *)node from:(UIButton *)sender {
     NSIndexPath *indexPath = [self indexPathFromSender:sender];
     if (indexPath == nil) {
@@ -1293,7 +1293,7 @@
 #pragma mark - NodeInfoViewControllerDelegate
 
 - (void)nodeInfoViewController:(NodeInfoViewController *)nodeInfoViewController presentParentNode:(MEGANode *)node {
-    [node navigateToParentAndPresent];
+    [node newNavigateToParentAndPresent];
 }
 
 #pragma mark - BrowserViewControllerDelegate, ContactsViewControllerDelegate

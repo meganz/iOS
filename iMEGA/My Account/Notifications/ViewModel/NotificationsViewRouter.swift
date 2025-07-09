@@ -176,10 +176,6 @@ struct NotificationsViewRouter: NotificationsViewRouting {
     }
     
     func navigateThroughNodeHierarchyAndPresent(_ node: NodeEntity) {
-        if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .navigationRevamp) {
-            node.toMEGANode(in: MEGASdk.shared)?.navigateToParentAndPresentForNavigationRevamp()
-        } else {
-            node.toMEGANode(in: MEGASdk.shared)?.navigateToParentAndPresent()
-        }
+        node.toMEGANode(in: MEGASdk.shared)?.newNavigateToParentAndPresent()
     }
 }
