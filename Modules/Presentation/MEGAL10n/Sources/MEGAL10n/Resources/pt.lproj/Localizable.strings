@@ -1267,7 +1267,7 @@
 /* Title used in settings that enables the generation of link previews in the chat */
 "richUrlPreviews"="Ativar a visualização dos links enviados";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
-"richPreviewsFooter"="Permite visualizar os links que você enviar nos chats. Tenha em mente que a obtenção destas visualizações não é protegida pela criptografia de conhecimento zero.";
+"richPreviewsFooter"="Permite visualizar alguns links que você envia nos chats. Tenha em mente que a obtenção destas visualizações não é protegida pela criptografia de conhecimento zero.";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
 "voiceAndVideoCalls"="Chamadas de voz e vídeo";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
@@ -4296,8 +4296,8 @@
 "accounts.cancelSubscriptionSteps.webClient.message"="Você assinou o MEGA usando um navegador. Para cancelar a sua assinatura, você precisa fazer o seguinte:";
 /* Cancellation Section Webclient on a computer title: On a computer */
 "accounts.cancelSubscriptionSteps.webClient.computer.title"="Usando um computador";
-/* Cancellation step Webclient: First step using the computer - 1. Visit www.mega.nz in your web browser. */
-"accounts.cancelSubscriptionSteps.webClient.computer.step.one"="1. Acesse www.mega.nz no navegador.";
+/* Cancellation step Webclient: First step using the computer - 1. Visit https://mega.nz in your web browser. */
+"accounts.cancelSubscriptionSteps.webClient.computer.step.one"="1. Acesse https://mega.nz usando um navegador.";
 /* Cancellation step Webclient: Second step using the computer - 2. Log in to your MEGA account. */
 "accounts.cancelSubscriptionSteps.webClient.computer.step.two"="2. Faça login na sua conta do MEGA.";
 /* Cancellation step Webclient: Third step using the computer - 3. Click the main menu. */
@@ -4310,8 +4310,8 @@
 "accounts.cancelSubscriptionSteps.webClient.computer.step.six"="6. Clique em <b>Cancelar assinatura</b>.";
 /* Cancellation Section Webclient on mobile device title: On a mobile device */
 "accounts.cancelSubscriptionSteps.webClient.mobile.title"="Usando um dispositivo móvel";
-/* Cancellation step Webclient: First step using the mobile device - 1. Visit www.mega.nz in your web browser. */
-"accounts.cancelSubscriptionSteps.webClient.mobile.step.one"="1. Acesse www.mega.nz no navegador.";
+/* Cancellation step Webclient: First step using the mobile device - 1. Visit https://mega.nz in your web browser. */
+"accounts.cancelSubscriptionSteps.webClient.mobile.step.one"="1. Acesse https://mega.nz usando um navegador.";
 /* Cancellation step Webclient: Second step using the mobile device - 2. Log in to your MEGA account. */
 "accounts.cancelSubscriptionSteps.webClient.mobile.step.two"="2. Faça login na sua conta do MEGA.";
 /* Cancellation step Webclient: Third step using the mobile device - 3. Tap on your avatar. */
@@ -4581,7 +4581,7 @@
 /* Title used in settings that enables the generation of link previews in the chat */
 "settings.chat.richUrlPreview.title"="Ativar a visualização dos links enviados";
 /* Title used in settings that enables the generation of link previews in the chat */
-"settings.chat.richUrlPreview.subtitle"="Permite visualizar os links que você enviar nos chats. Tenha em mente que a obtenção destas visualizações não é protegida pela criptografia de conhecimento zero.";
+"settings.chat.richUrlPreview.subtitle"="Permite visualizar alguns links que você envia nos chats. Tenha em mente que a obtenção destas visualizações não é protegida pela criptografia de conhecimento zero.";
 /* Title in chat status settings */
 "settings.chat.status.setStatus.title"="Definir status";
 /* Title section header in set status settings */
@@ -4669,7 +4669,7 @@
 /* Onboarding Camera Backups CTA *Skip* button */
 "onboarding.cta.cameraBackups.buttons.skip"="Agora não";
 /* String explaining the auto-renewal policy of the Pro subscription. */
-"subscriptionPurchase.autoRenewDescription"="As assinaturas serão renovadas automaticamente por períodos sucessivos com a mesma duração e pelo mesmo preço do período inicial. \n\nVocê pode cancelar a assinatura do seu plano Pro até 24 horas antes do próximo pagamento. Saiba como gerenciar a sua assinatura nas configurações.";
+"subscriptionPurchase.autoRenewDescription"="As assinaturas serão renovadas automaticamente por períodos sucessivos com a mesma duração e pelo mesmo preço do período inicial. \n\nVocê pode cancelar a assinatura do seu plano Pro até 24 horas antes do próximo pagamento. [L]Mais informações sobre como gerenciar a sua assinatura nas configurações.[/L] ";
 /* Title shown for the free plan card */
 "subscriptionPurchase.freePlanCard.title"="Começar usando o nosso plano gratuito";
 /* Description shown for the free plan card */
@@ -4691,7 +4691,7 @@
 /* Title for the features of pro plan in the subscription purchase screen. */
 "subscriptionPurchase.featuresOfProPlan.title"="Outras vantagens dos planos Pro";
 /* Features of pro plan in the subscription purchase screen. */
-"subscriptionPurchase.featuresOfProPlan.message"="• Links protegidos por senha\n\n• Links com data de validade\n\n• Compartilhamento de cota de transferência\n\n• Retroceder pastas em até 180 dias\n\n• Chamadas e reuniões ilimitadas\n\n• Agendamento de limpeza da lixeira entre 7 dias e 10 anos\n\n• Suporte prioritário";
+"subscriptionPurchase.featuresOfProPlan.message"="• Links protegidos por senha\n\n• Links com datas de validade\n\n• Retroceder pastas com até 180 dias de dados excluídos\n\n• Chamadas e reuniões com participantes ilimitados e sem restrições de tempo\n\n• Agendamento de limpeza da lixeira entre 7 dias e 10 anos\n\n• Suporte prioritário";
 /* Title for the first subscription feature: generous storage capacity */
 "subscriptionPurchase.feature.one.title"="Amplo espaço de armazenamento";
 /* Description for the first subscription feature: details about available storage */
@@ -4699,11 +4699,11 @@
 /* Title for the second subscription feature: transfer quota sharing */
 "subscriptionPurchase.feature.two.title"="Compartilhamento de transferência";
 /* Description for the second subscription feature: how shared users can use your quota */
-"subscriptionPurchase.feature.two.description"="As pessoas com as quais você compartilhar itens podem usar a sua cota de transferência para fazer download e streaming de arquivos.";
+"subscriptionPurchase.feature.two.description"="As pessoas com as quais você compartilhar itens podem usar a sua cota para fazer download e streaming de arquivos.";
 /* Title for the third subscription feature: MEGA VPN service */
 "subscriptionPurchase.feature.three.title"="MEGA VPN";
 /* Description for the third subscription feature: benefits of using the MEGA VPN */
-"subscriptionPurchase.feature.three.description"="Mantenha a sua vida online segura, rápida e fácil com nossa VPN de alta velocidade";
+"subscriptionPurchase.feature.three.description"="Fique seguro online com a nossa VPN de alta velocidade, que é rápida e simples de usar";
 /* Title for the fourth subscription feature: MEGA Pass password manager */
 "subscriptionPurchase.feature.four.title"="MEGA Pass";
 /* Description for the fourth subscription feature: benefits of using MEGA Pass for password management */
@@ -4726,3 +4726,21 @@
 "subscriptionPurchase.freePlanCard.title.upgrade"="Continuar com o seu plano gratuito";
 /* Button title for the free plan card for upgrading */
 "subscriptionPurchase.freePlanCard.button.title.upgrade"="Continuar com o plano gratuito";
+/* Button title for offline files in menu */
+"accountMenu.offlineFiles"="Arquivos offline";
+/* Button title for MEGA VPN in menu */
+"accountMenu.megaVPN.buttonTitle"="MEGA VPN";
+/* Button subtitle for MEGA VPN in menu */
+"accountMenu.megaVPN.buttonSubtitle"="VPN de alta velocidade";
+/* Button title for MEGA Pass in menu */
+"accountMenu.megaPass.buttonTitle"="MEGA Pass";
+/* Button subtitle for MEGA Pass in menu */
+"accountMenu.megaPass.buttonSubtitle"="Armazene e preencha automaticamente as suas senhas de forma segura";
+/* Button title for MEGA transfer it in menu */
+"accountMenu.transferIt.buttonTitle"="Transfer.it";
+/* Button subtitle for MEGA transfer it in menu */
+"accountMenu.transferIt.buttonSubtitle"="Transferências de arquivos rápidas e seguras";
+/* Section title for the other MEGA apps in menu */
+"accountMenu.otherApps.sectionTitle"="Ferramentas de privacidade do MEGA";
+/* Button subtitle for log out in menu */
+"accountMenu.logout"="Fazer logout";

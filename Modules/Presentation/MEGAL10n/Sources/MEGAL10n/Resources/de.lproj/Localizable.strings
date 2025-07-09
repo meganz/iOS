@@ -1267,7 +1267,7 @@
 /* Title used in settings that enables the generation of link previews in the chat */
 "richUrlPreviews"="Vorschau für gesendete Links aktivieren";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
-"richPreviewsFooter"="Erzeugt eine Vorschau für die Links, die Sie in Chats versenden. Beachten Sie, dass der Abruf dieser Vorschauen nicht durch Zero-Knowledge-Verschlüsselung geschützt erfolgt.";
+"richPreviewsFooter"="Erzeugt Vorschauen für bestimmte im Chat gesendete Links, sofern verfügbar. Beachten Sie, dass der Abruf dieser Vorschauen nicht durch Zero-Knowledge-Verschlüsselung geschützt erfolgt.";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
 "voiceAndVideoCalls"="Audio- und Videoanrufe";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
@@ -3639,9 +3639,9 @@
 /* On Upgrade Account Plan screen. Button title to buy account plan. %@ will be the name of the selected plan */
 "upgradeAccountPlan.button.buyAccountPlan.title"="%@ kaufen";
 /* On Upgrade Account Plan screen. Button title to continue to buy account plan in-app when user could buy externally. %@ will be the higher price of the plan */
-"upgradeAccountPlan.button.buyInApp.title"="Continue in-app (%@)";
+"upgradeAccountPlan.button.buyInApp.title"="In der App fortfahren (%@)";
 /* On Upgrade Account Plan screen. Button footer text to continue to buy account plan in-app when user could buy externally. %@ will be the higher price of the plan */
-"upgradeAccountPlan.button.buyInApp.footer"="Platform fees apply when purchasing through the app";
+"upgradeAccountPlan.button.buyInApp.footer"="Beim Kauf über die App fallen Plattformgebühren an";
 /* On Upgrade Account Plan screen. Displayed header title text message */
 "upgradeAccountPlan.header.title.choosePlan"="Wählen Sie das richtige Paket";
 /* On Upgrade Account Plan screen. Displayed header title text with current plan. %@ will be the name of the current plan */
@@ -4296,8 +4296,8 @@
 "accounts.cancelSubscriptionSteps.webClient.message"="Der Grund hierfür ist, dass Sie MEGA in Ihrem Webbrowser abonniert haben. Um Ihr Abonnement zu kündigen, gehen Sie wie folgt vor:";
 /* Cancellation Section Webclient on a computer title: On a computer */
 "accounts.cancelSubscriptionSteps.webClient.computer.title"="Auf einem Computer";
-/* Cancellation step Webclient: First step using the computer - 1. Visit www.mega.nz in your web browser. */
-"accounts.cancelSubscriptionSteps.webClient.computer.step.one"="1. Öffnen Sie www.mega.nz in Ihrem Webbrowser.";
+/* Cancellation step Webclient: First step using the computer - 1. Visit https://mega.nz in your web browser. */
+"accounts.cancelSubscriptionSteps.webClient.computer.step.one"="1. Visit https://mega.nz in your web browser.";
 /* Cancellation step Webclient: Second step using the computer - 2. Log in to your MEGA account. */
 "accounts.cancelSubscriptionSteps.webClient.computer.step.two"="2. Loggen Sie sich in Ihren MEGA-Account ein.";
 /* Cancellation step Webclient: Third step using the computer - 3. Click the main menu. */
@@ -4310,8 +4310,8 @@
 "accounts.cancelSubscriptionSteps.webClient.computer.step.six"="6. Klicken Sie auf <b>Abonnement kündigen</b>.";
 /* Cancellation Section Webclient on mobile device title: On a mobile device */
 "accounts.cancelSubscriptionSteps.webClient.mobile.title"="Auf einem Mobilgerät";
-/* Cancellation step Webclient: First step using the mobile device - 1. Visit www.mega.nz in your web browser. */
-"accounts.cancelSubscriptionSteps.webClient.mobile.step.one"="1. Öffnen Sie www.mega.nz in Ihrem Webbrowser.";
+/* Cancellation step Webclient: First step using the mobile device - 1. Visit https://mega.nz in your web browser. */
+"accounts.cancelSubscriptionSteps.webClient.mobile.step.one"="1. Visit https://mega.nz in your web browser.";
 /* Cancellation step Webclient: Second step using the mobile device - 2. Log in to your MEGA account. */
 "accounts.cancelSubscriptionSteps.webClient.mobile.step.two"="2. Loggen Sie sich in Ihren MEGA-Account ein.";
 /* Cancellation step Webclient: Third step using the mobile device - 3. Tap on your avatar. */
@@ -4581,7 +4581,7 @@
 /* Title used in settings that enables the generation of link previews in the chat */
 "settings.chat.richUrlPreview.title"="Vorschau für gesendete Links aktivieren";
 /* Title used in settings that enables the generation of link previews in the chat */
-"settings.chat.richUrlPreview.subtitle"="Erzeugt eine Vorschau für die Links, die Sie in Chats versenden. Beachten Sie, dass der Abruf dieser Vorschauen nicht durch Zero-Knowledge-Verschlüsselung geschützt erfolgt.";
+"settings.chat.richUrlPreview.subtitle"="Erzeugt Vorschauen für bestimmte im Chat gesendete Links, sofern verfügbar. Beachten Sie, dass der Abruf dieser Vorschauen nicht durch Zero-Knowledge-Verschlüsselung geschützt erfolgt.";
 /* Title in chat status settings */
 "settings.chat.status.setStatus.title"="Status setzen";
 /* Title section header in set status settings */
@@ -4669,7 +4669,7 @@
 /* Onboarding Camera Backups CTA *Skip* button */
 "onboarding.cta.cameraBackups.buttons.skip"="Jetzt überspringen";
 /* String explaining the auto-renewal policy of the Pro subscription. */
-"subscriptionPurchase.autoRenewDescription"="Abonnements werden automatisch für den ursprünglich gewählten Abonnementzeitraum und zum gleichen Preis verlängert.\n\nSie können Ihr Pro-Paket jederzeit kündigen – spätestens 24 Stunden vor Fälligkeit Ihrer nächsten Abonnementzahlung. So können Sie Ihr Abonnement in Ihren Einstellungen verwalten.";
+"subscriptionPurchase.autoRenewDescription"="Subscriptions are renewed automatically for successive subscription periods of the same duration and at the same price as the initial period chosen.\n\nYou can cancel your Pro plan anytime but no later than 24 hours before your next subscription payment is due. [L]Learn how to manage your subscription in your settings[/L].";
 /* Title shown for the free plan card */
 "subscriptionPurchase.freePlanCard.title"="Starten Sie mit unserem kostenlosen Paket";
 /* Description shown for the free plan card */
@@ -4691,7 +4691,7 @@
 /* Title for the features of pro plan in the subscription purchase screen. */
 "subscriptionPurchase.featuresOfProPlan.title"="Zusatzvorteile der Pro-Pakete";
 /* Features of pro plan in the subscription purchase screen. */
-"subscriptionPurchase.featuresOfProPlan.message"="• Passwortgeschützte Links\n\n• Links mit Ablaufdatum\n\n• Teilen des Transfervolumens\n\n• Ordner mit Rewind auf einen früheren Stand zurückstellen (bis zu 180 Tage)\n\n• Unbegrenzte Anrufe und Meetings\n\n• Planmäßige Leerung des Papierkorbs – Intervall 7 Tage bis 10 Jahre\n\n• Priorisierter Support";
+"subscriptionPurchase.featuresOfProPlan.message"="• Password-protected links\n\n• Links with expiry dates\n\n• Rewind folders up to 180 days of deleted data\n\n• Host calls and meetings with unlimited participants and no time restrictions\n\n• Schedule rubbish bin clearing between 7 days and 10 years\n\n• Priority support";
 /* Title for the first subscription feature: generous storage capacity */
 "subscriptionPurchase.feature.one.title"="Großzügiger Speicherplatz";
 /* Description for the first subscription feature: details about available storage */
@@ -4699,11 +4699,11 @@
 /* Title for the second subscription feature: transfer quota sharing */
 "subscriptionPurchase.feature.two.title"="Transfervolumen teilen";
 /* Description for the second subscription feature: how shared users can use your quota */
-"subscriptionPurchase.feature.two.description"="Personen, für die Sie Inhalte freigeben, können Ihr Transferkontingent zum Herunterladen und Streamen von Dateien nutzen";
+"subscriptionPurchase.feature.two.description"="Personen, für die Sie Objekte freigeben, können Ihr Kontingent zum Herunterladen und Streamen von Dateien nutzen";
 /* Title for the third subscription feature: MEGA VPN service */
 "subscriptionPurchase.feature.three.title"="MEGA VPN";
 /* Description for the third subscription feature: benefits of using the MEGA VPN */
-"subscriptionPurchase.feature.three.description"="Sichere, schnelle und einfache Onlineaktivitäten mit unserem Highspeed-VPN";
+"subscriptionPurchase.feature.three.description"="Schützen Sie sich im Internet mit unserem schnellen und einfach zu nutzenden VPN";
 /* Title for the fourth subscription feature: MEGA Pass password manager */
 "subscriptionPurchase.feature.four.title"="MEGA Pass";
 /* Description for the fourth subscription feature: benefits of using MEGA Pass for password management */
@@ -4726,3 +4726,21 @@
 "subscriptionPurchase.freePlanCard.title.upgrade"="Weiter mit Ihrem kostenlosen Paket";
 /* Button title for the free plan card for upgrading */
 "subscriptionPurchase.freePlanCard.button.title.upgrade"="Weiter mit dem kostenlosen Paket";
+/* Button title for offline files in menu */
+"accountMenu.offlineFiles"="Offline-Dateien";
+/* Button title for MEGA VPN in menu */
+"accountMenu.megaVPN.buttonTitle"="MEGA VPN";
+/* Button subtitle for MEGA VPN in menu */
+"accountMenu.megaVPN.buttonSubtitle"="High-speed VPN";
+/* Button title for MEGA Pass in menu */
+"accountMenu.megaPass.buttonTitle"="MEGA Pass";
+/* Button subtitle for MEGA Pass in menu */
+"accountMenu.megaPass.buttonSubtitle"="Securely store and autofill your passwords";
+/* Button title for MEGA transfer it in menu */
+"accountMenu.transferIt.buttonTitle"="Transfer.it";
+/* Button subtitle for MEGA transfer it in menu */
+"accountMenu.transferIt.buttonSubtitle"="Fast, secure file transfers";
+/* Section title for the other MEGA apps in menu */
+"accountMenu.otherApps.sectionTitle"="MEGA privacy suite";
+/* Button subtitle for log out in menu */
+"accountMenu.logout"="Ausloggen";

@@ -787,7 +787,7 @@
 /* Alert title shown when you have exported your MEGA Recovery Key */
 "masterKeyExported"="Kurtarma anahtarı dışa aktarıldı";
 /* Alert message shown to explain that the Recovery Key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
-"masterKeyExported_alertMessage"="Kurtarma anahtarı Çevrimdışı bölümüne MEGA-RECOVERYKEY.txt olarak dışa aktarıldı. Not: Oturumu kapatırsanız silinecektir, lütfen güvenli bir yerde saklayın.";
+"masterKeyExported_alertMessage"="Kurtarma anahtarı, Çevrim dışı bölümüne MEGA-KURTARMA-ANAHTARI.txt olarak aktarıldı. Not: Çıkış yaparsanız silinecektir, lütfen güvenli bir yere kaydedin.";
 /* Title header that refers to where do you do the actions 'Clear Offlines files' and 'Clear cache' inside 'Settings' -> 'Advanced' section" */
 "onYourDevice"="Cihazınızda";
 /* Section title where you can 'Clear Offline files' of your MEGA app */
@@ -1267,7 +1267,7 @@
 /* Title used in settings that enables the generation of link previews in the chat */
 "richUrlPreviews"="Gönderilen bağlantı önizlemelerini etkinleştir";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
-"richPreviewsFooter"="Sohbette gönderdiğiniz bağlantıların önizlemesini oluşturur. Bu önizlemelerin alınmasının sıfır bilgi şifrelemesi ile korunmadığını unutmayın.";
+"richPreviewsFooter"="Sohbet içinde gönderdiğiniz belirli bağlantılar için, mevcut olduğunda ön izlemeler oluşturur. Bu ön izlemelerin alınmasının sıfır bilgi şifrelemesi ile korunmadığını unutmayın.";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
 "voiceAndVideoCalls"="Sesli ve görüntülü aramalar";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
@@ -1631,7 +1631,7 @@
 /*  */
 "resume"="Devamını";
 /* Title to preview document */
-"previewContent"="İçeriği önizleme";
+"previewContent"="İçeriği ön izle";
 /* Title of the notification for a missed call */
 "missedCall"="Cevapsız arama";
 /* When an outgoing call of user A with user B had been rejected by user B */
@@ -2729,7 +2729,7 @@
 /* Header of a Use Mobile Data setting to load preview of images in hight resolution */
 "settings.fileManagement.useMobileData.header"="Yüksek çözünürlüklü görüntüleri önizleyin";
 /* Footer explaning how Use Mobile Data setting to load preview of images in hight resolution works */
-"settings.fileManagement.useMobileData.footer"="Önizleme sırasında yüksek çözünürlüklü görüntüler yüklemek için mobil verileri kullanın. Devre dışı bırakılırsa, yüksek çözünürlüklü görüntü yalnızca yakınlaştırdığınızda yüklenir.";
+"settings.fileManagement.useMobileData.footer"="Ön izleme sırasında yüksek çözünürlüklü görüntüler yüklemek için mobil verileri kullanın. Devre dışı bırakılırsa, yüksek çözünürlüklü görüntü yalnızca yakınlaştırdığınızda yüklenir.";
 /* Dialog title shown when a user tries to purchase a subscription while having a subscription activated from another platform. */
 "account.upgrade.alreadyHaveASubscription.title"="Zaten aktif bir aboneliğiniz var";
 /* Dialog message shown when a user tries to purchase a subscriptions while having a subscription activated from another platform. */
@@ -4296,8 +4296,8 @@
 "accounts.cancelSubscriptionSteps.webClient.message"="Bunun nedeni, web tarayıcınızda MEGA'ya abone olmanızdır. Aboneliğinizi iptal etmek için yapmanız gerekenler:";
 /* Cancellation Section Webclient on a computer title: On a computer */
 "accounts.cancelSubscriptionSteps.webClient.computer.title"="Bir bilgisayarda";
-/* Cancellation step Webclient: First step using the computer - 1. Visit www.mega.nz in your web browser. */
-"accounts.cancelSubscriptionSteps.webClient.computer.step.one"="1. Ziyaret www.mega.nz web tarayıcınızda.";
+/* Cancellation step Webclient: First step using the computer - 1. Visit https://mega.nz in your web browser. */
+"accounts.cancelSubscriptionSteps.webClient.computer.step.one"="1. Visit https://mega.nz in your web browser.";
 /* Cancellation step Webclient: Second step using the computer - 2. Log in to your MEGA account. */
 "accounts.cancelSubscriptionSteps.webClient.computer.step.two"="2. MEGA hesabınıza giriş yapın.";
 /* Cancellation step Webclient: Third step using the computer - 3. Click the main menu. */
@@ -4310,8 +4310,8 @@
 "accounts.cancelSubscriptionSteps.webClient.computer.step.six"="6. Tıklayın <b>Aboneliği iptal et</b>.";
 /* Cancellation Section Webclient on mobile device title: On a mobile device */
 "accounts.cancelSubscriptionSteps.webClient.mobile.title"="Mobil cihazda";
-/* Cancellation step Webclient: First step using the mobile device - 1. Visit www.mega.nz in your web browser. */
-"accounts.cancelSubscriptionSteps.webClient.mobile.step.one"="1. Ziyaret www.mega.nz web tarayıcınızda.";
+/* Cancellation step Webclient: First step using the mobile device - 1. Visit https://mega.nz in your web browser. */
+"accounts.cancelSubscriptionSteps.webClient.mobile.step.one"="1. Visit https://mega.nz in your web browser.";
 /* Cancellation step Webclient: Second step using the mobile device - 2. Log in to your MEGA account. */
 "accounts.cancelSubscriptionSteps.webClient.mobile.step.two"="2. MEGA hesabınıza giriş yapın.";
 /* Cancellation step Webclient: Third step using the mobile device - 3. Tap on your avatar. */
@@ -4581,7 +4581,7 @@
 /* Title used in settings that enables the generation of link previews in the chat */
 "settings.chat.richUrlPreview.title"="Gönderilen bağlantı önizlemelerini etkinleştir";
 /* Title used in settings that enables the generation of link previews in the chat */
-"settings.chat.richUrlPreview.subtitle"="Sohbette gönderdiğiniz bağlantıların önizlemesini oluşturur. Bu önizlemelerin alınmasının sıfır bilgi şifrelemesi ile korunmadığını unutmayın.";
+"settings.chat.richUrlPreview.subtitle"="Sohbet içinde gönderdiğiniz belirli bağlantılar için, mevcut olduğunda ön izlemeler oluşturur. Bu ön izlemelerin alınmasının sıfır bilgi şifrelemesi ile korunmadığını unutmayın.";
 /* Title in chat status settings */
 "settings.chat.status.setStatus.title"="Durumu ayarla";
 /* Title section header in set status settings */
@@ -4669,7 +4669,7 @@
 /* Onboarding Camera Backups CTA *Skip* button */
 "onboarding.cta.cameraBackups.buttons.skip"="Şimdilik atla";
 /* String explaining the auto-renewal policy of the Pro subscription. */
-"subscriptionPurchase.autoRenewDescription"="Abonelikler, seçilen ilk dönemle aynı süredeki ardışık abonelik dönemleri için otomatik olarak yenilenir.\n\nPro planınızı istediğiniz zaman, ancak bir sonraki abonelik ödemenizin vadesinden en geç 24 saat önce iptal edebilirsiniz. Ayarlarınızdan aboneliğinizi nasıl yöneteceğinizi öğrenin.";
+"subscriptionPurchase.autoRenewDescription"="Subscriptions are renewed automatically for successive subscription periods of the same duration and at the same price as the initial period chosen.\n\nYou can cancel your Pro plan anytime but no later than 24 hours before your next subscription payment is due. [L]Learn how to manage your subscription in your settings[/L].";
 /* Title shown for the free plan card */
 "subscriptionPurchase.freePlanCard.title"="Ücretsiz planımızı kullanmaya başlayın";
 /* Description shown for the free plan card */
@@ -4691,7 +4691,7 @@
 /* Title for the features of pro plan in the subscription purchase screen. */
 "subscriptionPurchase.featuresOfProPlan.title"="Pro planlarının ek avantajları";
 /* Features of pro plan in the subscription purchase screen. */
-"subscriptionPurchase.featuresOfProPlan.message"="• Parola korumalı bağlantılar\n\n• Son kullanma tarihlerine sahip bağlantılar\n\n• Transfer kota paylaşımı\n\n• Klasörleri 180 güne kadar geri sarın\n\n• Sınırsız çağrı ve toplantı\n\n• Çöp kutusu temizliğini 7 gün ile 10 yıl arasında planlayın\n\n• Öncelikli destek";
+"subscriptionPurchase.featuresOfProPlan.message"="• Password-protected links\n\n• Links with expiry dates\n\n• Rewind folders up to 180 days of deleted data\n\n• Host calls and meetings with unlimited participants and no time restrictions\n\n• Schedule rubbish bin clearing between 7 days and 10 years\n\n• Priority support";
 /* Title for the first subscription feature: generous storage capacity */
 "subscriptionPurchase.feature.one.title"="Cömert depolama";
 /* Description for the first subscription feature: details about available storage */
@@ -4699,11 +4699,11 @@
 /* Title for the second subscription feature: transfer quota sharing */
 "subscriptionPurchase.feature.two.title"="Aktarım paylaşımı";
 /* Description for the second subscription feature: how shared users can use your quota */
-"subscriptionPurchase.feature.two.description"="Öğeleri paylaştığınız kişiler, dosyaları indirmek ve yayınlamak için aktarım kotanızı kullanabilir";
+"subscriptionPurchase.feature.two.description"="Öğeleri paylaştığınız kişiler, dosyaları indirmek ve yayınlamak için kotanızı kullanabilir";
 /* Title for the third subscription feature: MEGA VPN service */
 "subscriptionPurchase.feature.three.title"="MEGA VPN";
 /* Description for the third subscription feature: benefits of using the MEGA VPN */
-"subscriptionPurchase.feature.three.description"="Yüksek hızlı VPN'imizle çevrimiçi hayatınızı güvenli, hızlı ve kolay tutun";
+"subscriptionPurchase.feature.three.description"="Hem hızlı hem de kullanımı basit olan yüksek hızlı VPN'imizle çevrim içi ortamda güvende kalın";
 /* Title for the fourth subscription feature: MEGA Pass password manager */
 "subscriptionPurchase.feature.four.title"="MEGA Geçiş";
 /* Description for the fourth subscription feature: benefits of using MEGA Pass for password management */
@@ -4726,3 +4726,21 @@
 "subscriptionPurchase.freePlanCard.title.upgrade"="Ücretsiz planınızla devam edin";
 /* Button title for the free plan card for upgrading */
 "subscriptionPurchase.freePlanCard.button.title.upgrade"="Ücretsiz planla devam et";
+/* Button title for offline files in menu */
+"accountMenu.offlineFiles"="Çevrim dışı dosyalar";
+/* Button title for MEGA VPN in menu */
+"accountMenu.megaVPN.buttonTitle"="MEGA VPN";
+/* Button subtitle for MEGA VPN in menu */
+"accountMenu.megaVPN.buttonSubtitle"="Yüksek hızlı VPN";
+/* Button title for MEGA Pass in menu */
+"accountMenu.megaPass.buttonTitle"="MEGA Pass";
+/* Button subtitle for MEGA Pass in menu */
+"accountMenu.megaPass.buttonSubtitle"="Şifrelerinizi güvenli bir şekilde saklayın ve otomatik olarak doldurun";
+/* Button title for MEGA transfer it in menu */
+"accountMenu.transferIt.buttonTitle"="Transfer.it";
+/* Button subtitle for MEGA transfer it in menu */
+"accountMenu.transferIt.buttonSubtitle"="Hızlı ve güvenli dosya transferleri";
+/* Section title for the other MEGA apps in menu */
+"accountMenu.otherApps.sectionTitle"="MEGA privacy suite";
+/* Button subtitle for log out in menu */
+"accountMenu.logout"="Çıkış yap";

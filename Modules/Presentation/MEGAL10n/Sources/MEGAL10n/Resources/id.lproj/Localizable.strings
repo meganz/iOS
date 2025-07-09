@@ -1267,7 +1267,7 @@
 /* Title used in settings that enables the generation of link previews in the chat */
 "richUrlPreviews"="Aktifkan pratinjau tautan terkirim";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
-"richPreviewsFooter"="Menghasilkan pratinjau tautan yang anda kirim dalam obrolan. Perhatikan bahwa mengambil pratinjau ini tidak dilindungi oleh enkripsi zero-knowledge.";
+"richPreviewsFooter"="Generates previews for certain links you send in chat, when available. Note that retrieving these previews isn’t protected by zero-knowledge encryption.";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
 "voiceAndVideoCalls"="Panggilan suara dan video";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
@@ -4296,8 +4296,8 @@
 "accounts.cancelSubscriptionSteps.webClient.message"="Ini karena anda berlangganan MEGA di browser web anda. Untuk membatalkan langganan anda, anda harus:";
 /* Cancellation Section Webclient on a computer title: On a computer */
 "accounts.cancelSubscriptionSteps.webClient.computer.title"="Di komputer";
-/* Cancellation step Webclient: First step using the computer - 1. Visit www.mega.nz in your web browser. */
-"accounts.cancelSubscriptionSteps.webClient.computer.step.one"="1. Kunjungi www.mega.nz di browser web anda.";
+/* Cancellation step Webclient: First step using the computer - 1. Visit https://mega.nz in your web browser. */
+"accounts.cancelSubscriptionSteps.webClient.computer.step.one"="1. Visit https://mega.nz in your web browser.";
 /* Cancellation step Webclient: Second step using the computer - 2. Log in to your MEGA account. */
 "accounts.cancelSubscriptionSteps.webClient.computer.step.two"="2. Masuk ke akun MEGA anda.";
 /* Cancellation step Webclient: Third step using the computer - 3. Click the main menu. */
@@ -4310,8 +4310,8 @@
 "accounts.cancelSubscriptionSteps.webClient.computer.step.six"="6. Klik <b>Batalkan langganan</b>.";
 /* Cancellation Section Webclient on mobile device title: On a mobile device */
 "accounts.cancelSubscriptionSteps.webClient.mobile.title"="Pada perangkat seluler";
-/* Cancellation step Webclient: First step using the mobile device - 1. Visit www.mega.nz in your web browser. */
-"accounts.cancelSubscriptionSteps.webClient.mobile.step.one"="1. Kunjungi www.mega.nz di browser web anda.";
+/* Cancellation step Webclient: First step using the mobile device - 1. Visit https://mega.nz in your web browser. */
+"accounts.cancelSubscriptionSteps.webClient.mobile.step.one"="1. Visit https://mega.nz in your web browser.";
 /* Cancellation step Webclient: Second step using the mobile device - 2. Log in to your MEGA account. */
 "accounts.cancelSubscriptionSteps.webClient.mobile.step.two"="2. Masuk ke akun MEGA anda.";
 /* Cancellation step Webclient: Third step using the mobile device - 3. Tap on your avatar. */
@@ -4581,7 +4581,7 @@
 /* Title used in settings that enables the generation of link previews in the chat */
 "settings.chat.richUrlPreview.title"="Aktifkan pratinjau tautan terkirim";
 /* Title used in settings that enables the generation of link previews in the chat */
-"settings.chat.richUrlPreview.subtitle"="Menghasilkan pratinjau tautan yang anda kirim dalam obrolan. Perhatikan bahwa mengambil pratinjau ini tidak dilindungi oleh enkripsi zero-knowledge.";
+"settings.chat.richUrlPreview.subtitle"="Generates previews for certain links you send in chat, when available. Note that retrieving these previews isn’t protected by zero-knowledge encryption.";
 /* Title in chat status settings */
 "settings.chat.status.setStatus.title"="Ganti status";
 /* Title section header in set status settings */
@@ -4669,9 +4669,9 @@
 /* Onboarding Camera Backups CTA *Skip* button */
 "onboarding.cta.cameraBackups.buttons.skip"="Skip for now";
 /* String explaining the auto-renewal policy of the Pro subscription. */
-"subscriptionPurchase.autoRenewDescription"="Subscriptions are renewed automatically for successive subscription periods of the same duration and at the same price as the initial period chosen.\n\nYou can cancel your Pro plan anytime but no later than 24 hours before your next subscription payment is due. Learn how to manage your subscription in your settings.";
+"subscriptionPurchase.autoRenewDescription"="Subscriptions are renewed automatically for successive subscription periods of the same duration and at the same price as the initial period chosen.\n\nYou can cancel your Pro plan anytime but no later than 24 hours before your next subscription payment is due. [L]Learn how to manage your subscription in your settings[/L].";
 /* Title shown for the free plan card */
-"subscriptionPurchase.freePlanCard.title"="Mulailah dengan paket Gratis kami";
+"subscriptionPurchase.freePlanCard.title"="Mulailah dengan paket gratis kami";
 /* Description shown for the free plan card */
 "subscriptionPurchase.freePlanCard.description"="We offer generous amount of storage and transfer quota at no charge, so you can try MEGA with no risk";
 /* First benefit shown for the free plan card */
@@ -4691,7 +4691,7 @@
 /* Title for the features of pro plan in the subscription purchase screen. */
 "subscriptionPurchase.featuresOfProPlan.title"="Additional benefits of Pro plans";
 /* Features of pro plan in the subscription purchase screen. */
-"subscriptionPurchase.featuresOfProPlan.message"="• Password-protected links\n\n• Links with expiry dates\n\n• Transfer quota sharing\n\n• Rewind folders up to 180 days\n\n• Unlimited calls and meetings\n\n• Schedule rubbish bin clearing between 7 days and 10 years\n\n• Priority support";
+"subscriptionPurchase.featuresOfProPlan.message"="• Password-protected links\n\n• Links with expiry dates\n\n• Rewind folders up to 180 days of deleted data\n\n• Host calls and meetings with unlimited participants and no time restrictions\n\n• Schedule rubbish bin clearing between 7 days and 10 years\n\n• Priority support";
 /* Title for the first subscription feature: generous storage capacity */
 "subscriptionPurchase.feature.one.title"="Penyimpanan murah hati";
 /* Description for the first subscription feature: details about available storage */
@@ -4699,11 +4699,11 @@
 /* Title for the second subscription feature: transfer quota sharing */
 "subscriptionPurchase.feature.two.title"="Berbagi transfer";
 /* Description for the second subscription feature: how shared users can use your quota */
-"subscriptionPurchase.feature.two.description"="People you share items with can use your transfer quota to download and stream files";
+"subscriptionPurchase.feature.two.description"="People you share items with can use your quota to download and stream files";
 /* Title for the third subscription feature: MEGA VPN service */
 "subscriptionPurchase.feature.three.title"="MEGA VPN";
 /* Description for the third subscription feature: benefits of using the MEGA VPN */
-"subscriptionPurchase.feature.three.description"="Keep your online life safe, fast, and easy with our high-speed VPN";
+"subscriptionPurchase.feature.three.description"="Stay safe online with our high-speed VPN that’s both fast and simple to use";
 /* Title for the fourth subscription feature: MEGA Pass password manager */
 "subscriptionPurchase.feature.four.title"="MEGA Pass";
 /* Description for the fourth subscription feature: benefits of using MEGA Pass for password management */
@@ -4726,3 +4726,21 @@
 "subscriptionPurchase.freePlanCard.title.upgrade"="Continue with your free plan";
 /* Button title for the free plan card for upgrading */
 "subscriptionPurchase.freePlanCard.button.title.upgrade"="Continue with free plan";
+/* Button title for offline files in menu */
+"accountMenu.offlineFiles"="Offline files";
+/* Button title for MEGA VPN in menu */
+"accountMenu.megaVPN.buttonTitle"="MEGA VPN";
+/* Button subtitle for MEGA VPN in menu */
+"accountMenu.megaVPN.buttonSubtitle"="High-speed VPN";
+/* Button title for MEGA Pass in menu */
+"accountMenu.megaPass.buttonTitle"="MEGA Pass";
+/* Button subtitle for MEGA Pass in menu */
+"accountMenu.megaPass.buttonSubtitle"="Securely store and autofill your passwords";
+/* Button title for MEGA transfer it in menu */
+"accountMenu.transferIt.buttonTitle"="Transfer.it";
+/* Button subtitle for MEGA transfer it in menu */
+"accountMenu.transferIt.buttonSubtitle"="Fast, secure file transfers";
+/* Section title for the other MEGA apps in menu */
+"accountMenu.otherApps.sectionTitle"="MEGA privacy suite";
+/* Button subtitle for log out in menu */
+"accountMenu.logout"="Keluar";

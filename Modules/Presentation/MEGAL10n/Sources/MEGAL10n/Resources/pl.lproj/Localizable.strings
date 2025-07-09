@@ -1267,7 +1267,7 @@
 /* Title used in settings that enables the generation of link previews in the chat */
 "richUrlPreviews"="Włącz podgląd wysłanych linków";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
-"richPreviewsFooter"="Generuje podgląd link wysyłanych na czatuj. Należy pamiętać, że pobieranie tych podglądów nie jest chronione szyfrowanie z zerową wiedzą.";
+"richPreviewsFooter"="Generuje podglądy dla niektórych linków wysyłanych na czacie, gdy są dostępne. Należy pamiętać, że pobieranie tych podglądów nie jest chronione szyfrowaniem z zerową wiedzą.";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
 "voiceAndVideoCalls"="Połączenia głosowe i wideo";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
@@ -4296,8 +4296,8 @@
 "accounts.cancelSubscriptionSteps.webClient.message"="Dzieje się tak, ponieważ subskrybowałeś MEGA w swojej przeglądarce internetowej. Aby anulować subskrypcja, musisz:";
 /* Cancellation Section Webclient on a computer title: On a computer */
 "accounts.cancelSubscriptionSteps.webClient.computer.title"="Na komputerze";
-/* Cancellation step Webclient: First step using the computer - 1. Visit www.mega.nz in your web browser. */
-"accounts.cancelSubscriptionSteps.webClient.computer.step.one"="1. Odwiedź www.mega.nz w przeglądarce internetowej.";
+/* Cancellation step Webclient: First step using the computer - 1. Visit https://mega.nz in your web browser. */
+"accounts.cancelSubscriptionSteps.webClient.computer.step.one"="1. Odwiedź https://mega.nz w swojej przeglądarce internetowej.";
 /* Cancellation step Webclient: Second step using the computer - 2. Log in to your MEGA account. */
 "accounts.cancelSubscriptionSteps.webClient.computer.step.two"="2. Zaloguj się na swoje konto MEGA.";
 /* Cancellation step Webclient: Third step using the computer - 3. Click the main menu. */
@@ -4310,8 +4310,8 @@
 "accounts.cancelSubscriptionSteps.webClient.computer.step.six"="6. Kliknij <b>Anuluj subskrypcję</b>.";
 /* Cancellation Section Webclient on mobile device title: On a mobile device */
 "accounts.cancelSubscriptionSteps.webClient.mobile.title"="Na urządzeniu mobilnym";
-/* Cancellation step Webclient: First step using the mobile device - 1. Visit www.mega.nz in your web browser. */
-"accounts.cancelSubscriptionSteps.webClient.mobile.step.one"="1. Odwiedź www.mega.nz w przeglądarce internetowej.";
+/* Cancellation step Webclient: First step using the mobile device - 1. Visit https://mega.nz in your web browser. */
+"accounts.cancelSubscriptionSteps.webClient.mobile.step.one"="1. Odwiedź https://mega.nz w swojej przeglądarce internetowej.";
 /* Cancellation step Webclient: Second step using the mobile device - 2. Log in to your MEGA account. */
 "accounts.cancelSubscriptionSteps.webClient.mobile.step.two"="2. Zaloguj się na swoje konto MEGA.";
 /* Cancellation step Webclient: Third step using the mobile device - 3. Tap on your avatar. */
@@ -4581,7 +4581,7 @@
 /* Title used in settings that enables the generation of link previews in the chat */
 "settings.chat.richUrlPreview.title"="Włącz podgląd wysłanych linków";
 /* Title used in settings that enables the generation of link previews in the chat */
-"settings.chat.richUrlPreview.subtitle"="Generuje podgląd link wysyłanych na czatuj. Należy pamiętać, że pobieranie tych podglądów nie jest chronione szyfrowanie z zerową wiedzą.";
+"settings.chat.richUrlPreview.subtitle"="Generuje podglądy dla niektórych linków wysyłanych na czacie, gdy są dostępne. Należy pamiętać, że pobieranie tych podglądów nie jest chronione szyfrowaniem z zerową wiedzą.";
 /* Title in chat status settings */
 "settings.chat.status.setStatus.title"="Ustaw status";
 /* Title section header in set status settings */
@@ -4669,9 +4669,9 @@
 /* Onboarding Camera Backups CTA *Skip* button */
 "onboarding.cta.cameraBackups.buttons.skip"="Pomiń na razie";
 /* String explaining the auto-renewal policy of the Pro subscription. */
-"subscriptionPurchase.autoRenewDescription"="Subskrypcje są odnawiane automatycznie na kolejne okresy subskrypcji o tej samej długości i w tej samej cenie, co wybrany początkowy okres.\n\nMożesz anulować swój plan Pro w dowolnym momencie, ale nie później niż 24 godziny przed terminem następnej płatności za subskrypcję. Dowiedz się, jak zarządzać swoją subskrypcją w ustawieniach.";
+"subscriptionPurchase.autoRenewDescription"="Subskrypcje są odnawiane automatycznie na kolejne okresy subskrypcji o tej samej długości i w tej samej cenie, co wybrany początkowy okres.\n\nMożesz anulować swój plan Pro w dowolnym momencie, ale nie później niż 24 godziny przed terminem następnej płatności za subskrypcję. [L]Dowiedz się, jak zarządzać swoją subskrypcją w ustawieniach[/L].";
 /* Title shown for the free plan card */
-"subscriptionPurchase.freePlanCard.title"="Zacznij od naszego bezpłatnego planu";
+"subscriptionPurchase.freePlanCard.title"="Zacznij od naszego darmowego planu";
 /* Description shown for the free plan card */
 "subscriptionPurchase.freePlanCard.description"="Oferujemy dużą pojemność i limit transferu bez opłat, abyś mógł wypróbować MEGA bez ryzyka";
 /* First benefit shown for the free plan card */
@@ -4691,7 +4691,7 @@
 /* Title for the features of pro plan in the subscription purchase screen. */
 "subscriptionPurchase.featuresOfProPlan.title"="Dodatkowe korzyści z plan Pro";
 /* Features of pro plan in the subscription purchase screen. */
-"subscriptionPurchase.featuresOfProPlan.message"="• Linki chronione hasłem\n\n• Linki z datą wygaśnięcia\n\n• Współdzielenie limitu transferu\n\n• Przywracanie katalogów do 180 dni\n\n• Nieograniczone połączenia i spotkania\n\n• Planowanie opróżniania kosza na śmieci od 7 dni do 10 lat\n\n• Priorytetowe wsparcie";
+"subscriptionPurchase.featuresOfProPlan.message"="• Linki chronione hasłem\n\n• Linki z datami wygasania\n\n• Przywracanie katalogów do 180 dni usuniętych danych\n\n• Prowadzenie rozmów i spotkań z nieograniczoną liczbą uczestników i bez ograniczeń czasowych\n\n• Planowanie opróżniania kosza na śmieci od 7 dni do 10 lat\n\n• Priorytetowe wsparcie";
 /* Title for the first subscription feature: generous storage capacity */
 "subscriptionPurchase.feature.one.title"="Pojemna pamięć";
 /* Description for the first subscription feature: details about available storage */
@@ -4699,11 +4699,11 @@
 /* Title for the second subscription feature: transfer quota sharing */
 "subscriptionPurchase.feature.two.title"="Współdzielenie transferu";
 /* Description for the second subscription feature: how shared users can use your quota */
-"subscriptionPurchase.feature.two.description"="Osoby, z którymi udostępniasz elementy, mogą korzystać z Twojego limitu transferu do pobierania i strumieniowego przesyłania plików";
+"subscriptionPurchase.feature.two.description"="Osoby, z którymi udostępniasz elementy, mogą korzystać z Twojego limitu na pobieranie i strumieniowanie plików";
 /* Title for the third subscription feature: MEGA VPN service */
 "subscriptionPurchase.feature.three.title"="MEGA VPN";
 /* Description for the third subscription feature: benefits of using the MEGA VPN */
-"subscriptionPurchase.feature.three.description"="Chroń swoje życie online, zapewniając bezpieczeństwo, szybkość i łatwość dzięki naszej szybkiej sieci VPN";
+"subscriptionPurchase.feature.three.description"="Pozostań bezpieczny w sieci dzięki naszej szybkiej i prostej w użyciu sieci VPN";
 /* Title for the fourth subscription feature: MEGA Pass password manager */
 "subscriptionPurchase.feature.four.title"="MEGA Pass";
 /* Description for the fourth subscription feature: benefits of using MEGA Pass for password management */
@@ -4726,3 +4726,21 @@
 "subscriptionPurchase.freePlanCard.title.upgrade"="Kontynuuj z darmowym planem";
 /* Button title for the free plan card for upgrading */
 "subscriptionPurchase.freePlanCard.button.title.upgrade"="Kontynuuj z darmowym planem";
+/* Button title for offline files in menu */
+"accountMenu.offlineFiles"="Offline pliki";
+/* Button title for MEGA VPN in menu */
+"accountMenu.megaVPN.buttonTitle"="MEGA VPN";
+/* Button subtitle for MEGA VPN in menu */
+"accountMenu.megaVPN.buttonSubtitle"="Szybki VPN";
+/* Button title for MEGA Pass in menu */
+"accountMenu.megaPass.buttonTitle"="MEGA Pass";
+/* Button subtitle for MEGA Pass in menu */
+"accountMenu.megaPass.buttonSubtitle"="Bezpiecznie przechowuj i automatycznie wypełniaj swoje hasło";
+/* Button title for MEGA transfer it in menu */
+"accountMenu.transferIt.buttonTitle"="Transfer.it";
+/* Button subtitle for MEGA transfer it in menu */
+"accountMenu.transferIt.buttonSubtitle"="Szybkie, bezpieczne transfery plików";
+/* Section title for the other MEGA apps in menu */
+"accountMenu.otherApps.sectionTitle"="MEGA pakiet prywatności";
+/* Button subtitle for log out in menu */
+"accountMenu.logout"="Wyloguj się";

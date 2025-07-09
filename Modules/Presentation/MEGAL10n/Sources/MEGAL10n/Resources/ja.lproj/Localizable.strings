@@ -1267,7 +1267,7 @@
 /* Title used in settings that enables the generation of link previews in the chat */
 "richUrlPreviews"="送信済みリンクのプレビューを有効にする";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
-"richPreviewsFooter"="チャットで送信したリンクのプレビューを生成します。これらのプレビューの取得は、ゼロ知識暗号化によって保護されていないことにご注意してください。";
+"richPreviewsFooter"="チャットで送信した特定のリンクのプレビューを生成します（利用可能な場合）。これらのプレビューの取得は、ゼロ知識暗号化によって保護されていないことに注意してください。";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
 "voiceAndVideoCalls"="音声通話とビデオ通話";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
@@ -4296,8 +4296,8 @@
 "accounts.cancelSubscriptionSteps.webClient.message"="これは、ブラウザ経由でMEGAのサブスクリプション契約をされたためです。サブスクリプションをキャンセルするには、次のことを行う必要があります：";
 /* Cancellation Section Webclient on a computer title: On a computer */
 "accounts.cancelSubscriptionSteps.webClient.computer.title"="コンピューターの場合";
-/* Cancellation step Webclient: First step using the computer - 1. Visit www.mega.nz in your web browser. */
-"accounts.cancelSubscriptionSteps.webClient.computer.step.one"="1. ウェブブラウザで www.mega.nz にアクセスする。";
+/* Cancellation step Webclient: First step using the computer - 1. Visit https://mega.nz in your web browser. */
+"accounts.cancelSubscriptionSteps.webClient.computer.step.one"="1. ウェブブラウザでhttps://mega.nzにアクセスする。";
 /* Cancellation step Webclient: Second step using the computer - 2. Log in to your MEGA account. */
 "accounts.cancelSubscriptionSteps.webClient.computer.step.two"="2. MEGAアカウントにログインする。";
 /* Cancellation step Webclient: Third step using the computer - 3. Click the main menu. */
@@ -4310,8 +4310,8 @@
 "accounts.cancelSubscriptionSteps.webClient.computer.step.six"="6.「<b>サブスクリプションをキャンセル</b>」をクリックする。";
 /* Cancellation Section Webclient on mobile device title: On a mobile device */
 "accounts.cancelSubscriptionSteps.webClient.mobile.title"="モバイルデバイスの場合";
-/* Cancellation step Webclient: First step using the mobile device - 1. Visit www.mega.nz in your web browser. */
-"accounts.cancelSubscriptionSteps.webClient.mobile.step.one"="1. ウェブブラウザで www.mega.nz にアクセスする。";
+/* Cancellation step Webclient: First step using the mobile device - 1. Visit https://mega.nz in your web browser. */
+"accounts.cancelSubscriptionSteps.webClient.mobile.step.one"="1. ウェブブラウザでhttps://mega.nzにアクセスする。";
 /* Cancellation step Webclient: Second step using the mobile device - 2. Log in to your MEGA account. */
 "accounts.cancelSubscriptionSteps.webClient.mobile.step.two"="2. MEGAアカウントにログインする。";
 /* Cancellation step Webclient: Third step using the mobile device - 3. Tap on your avatar. */
@@ -4581,7 +4581,7 @@
 /* Title used in settings that enables the generation of link previews in the chat */
 "settings.chat.richUrlPreview.title"="送信済みリンクのプレビューを有効にする";
 /* Title used in settings that enables the generation of link previews in the chat */
-"settings.chat.richUrlPreview.subtitle"="チャットで送信したリンクのプレビューを生成します。これらのプレビューの取得は、ゼロ知識暗号化によって保護されていないことにご注意してください。";
+"settings.chat.richUrlPreview.subtitle"="チャットで送信した特定のリンクのプレビューを生成します（利用可能な場合）。これらのプレビューの取得は、ゼロ知識暗号化によって保護されていないことに注意してください。";
 /* Title in chat status settings */
 "settings.chat.status.setStatus.title"="ステータスの設定";
 /* Title section header in set status settings */
@@ -4669,7 +4669,7 @@
 /* Onboarding Camera Backups CTA *Skip* button */
 "onboarding.cta.cameraBackups.buttons.skip"="今はやめておく";
 /* String explaining the auto-renewal policy of the Pro subscription. */
-"subscriptionPurchase.autoRenewDescription"="サブスクリプションは、最初に選択された期間と同じ期間および同じ価格で、連続するサブスクリプション期間に対して自動的に更新されます。\n\nProプランはいつでもキャンセルできますが、次のサブスクリプションのお支払い期日の24時間前までにキャンセルしてください。サブスクリプションを管理する方法は設定でご欄ください。";
+"subscriptionPurchase.autoRenewDescription"="サブスクリプションは、最初に選択された期間と同じ期間および同じ価格で、連続するサブスクリプション期間に対して自動的に更新されます。\n\nProプランはいつでもキャンセルできますが、次のサブスクリプションのお支払い期日の24時間前までにキャンセルしてください。[L]サブスクリプションを管理する方法は設定でご欄ください。[/L]";
 /* Title shown for the free plan card */
 "subscriptionPurchase.freePlanCard.title"="当社の無料プランで始めましょう";
 /* Description shown for the free plan card */
@@ -4691,7 +4691,7 @@
 /* Title for the features of pro plan in the subscription purchase screen. */
 "subscriptionPurchase.featuresOfProPlan.title"="Proプランの追加特典";
 /* Features of pro plan in the subscription purchase screen. */
-"subscriptionPurchase.featuresOfProPlan.message"="・パスワードで保護されたリンク\n\n・有効期限のあるリンク\n\n・転送容量の共有\n\n・最大180日間のフォルダの巻き戻し\n\n・無制限の通話とミーティング\n\n・7日間から10年間までのごみ箱のクリアスケジュール\n\n・優先サポート";
+"subscriptionPurchase.featuresOfProPlan.message"="・パスワードで保護されたリンク\n\n・有効期限付きリンク\n\n・削除されたデータの属するフォルダを最大180日巻き戻す\n\n・参加者数無制限、時間制限なしの通話やミーティングの開催\n\n・ゴミ箱のクリアを7日から10年の間でスケジュール設定\n\n・優先サポート";
 /* Title for the first subscription feature: generous storage capacity */
 "subscriptionPurchase.feature.one.title"="豊富なストレージ";
 /* Description for the first subscription feature: details about available storage */
@@ -4699,11 +4699,11 @@
 /* Title for the second subscription feature: transfer quota sharing */
 "subscriptionPurchase.feature.two.title"="転送共有";
 /* Description for the second subscription feature: how shared users can use your quota */
-"subscriptionPurchase.feature.two.description"="項目を共有するお相手は、ファイルのダウンロードやストリーミングにあなたの転送容量を使用できます。";
+"subscriptionPurchase.feature.two.description"="項目を共有するお相手は、ファイルのダウンロードやストリーミングにあなたの容量を使用できます。";
 /* Title for the third subscription feature: MEGA VPN service */
 "subscriptionPurchase.feature.three.title"="MEGA VPN";
 /* Description for the third subscription feature: benefits of using the MEGA VPN */
-"subscriptionPurchase.feature.three.description"="当社の高速VPNで、オンラインライフを安全、迅速、簡単に";
+"subscriptionPurchase.feature.three.description"="高速かつ簡単にご使用いただける当社の高速VPNなら、オンラインでの安全も常に確保できます。";
 /* Title for the fourth subscription feature: MEGA Pass password manager */
 "subscriptionPurchase.feature.four.title"="MEGAパス";
 /* Description for the fourth subscription feature: benefits of using MEGA Pass for password management */
@@ -4726,3 +4726,21 @@
 "subscriptionPurchase.freePlanCard.title.upgrade"="無料プランで続行";
 /* Button title for the free plan card for upgrading */
 "subscriptionPurchase.freePlanCard.button.title.upgrade"="無料プランで続行";
+/* Button title for offline files in menu */
+"accountMenu.offlineFiles"="オフラインファイル";
+/* Button title for MEGA VPN in menu */
+"accountMenu.megaVPN.buttonTitle"="MEGA VPN";
+/* Button subtitle for MEGA VPN in menu */
+"accountMenu.megaVPN.buttonSubtitle"="高速VPN";
+/* Button title for MEGA Pass in menu */
+"accountMenu.megaPass.buttonTitle"="MEGA Pass";
+/* Button subtitle for MEGA Pass in menu */
+"accountMenu.megaPass.buttonSubtitle"="パスワードを安全に保存し、自動入力します";
+/* Button title for MEGA transfer it in menu */
+"accountMenu.transferIt.buttonTitle"="Transfer.it";
+/* Button subtitle for MEGA transfer it in menu */
+"accountMenu.transferIt.buttonSubtitle"="高速で安全なファイル転送";
+/* Section title for the other MEGA apps in menu */
+"accountMenu.otherApps.sectionTitle"="MEGAプライバシースイート";
+/* Button subtitle for log out in menu */
+"accountMenu.logout"="ログアウト";
