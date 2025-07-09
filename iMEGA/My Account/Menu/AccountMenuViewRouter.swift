@@ -70,6 +70,8 @@ struct AccountMenuViewRouter: AccountMenuViewRouting {
             rootView: AccountMenuView(viewModel: viewModel)
         )
 
+        hostingViewController.navigationItem.backButtonTitle = ""
+
         navigationController.viewControllers = [hostingViewController]
         navigationController.router = self
 
