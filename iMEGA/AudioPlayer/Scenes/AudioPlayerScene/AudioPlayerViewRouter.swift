@@ -4,6 +4,7 @@ import MEGAAnalyticsiOS
 import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGADomain
+import MEGAL10n
 
 @MainActor
 final class AudioPlayerViewRouter: NSObject, AudioPlayerViewRouting {
@@ -188,6 +189,22 @@ final class AudioPlayerViewRouter: NSObject, AudioPlayerViewRouting {
         nodeActionViewController.accessoryActionDelegate = nodeAccessoryActionDelegate
         
         baseViewController?.present(nodeActionViewController, animated: true, completion: nil)
+    }
+    
+    func showTermsOfServiceViolationAlert() {
+        guard let baseViewController else { return }
+        
+        let alertController = UIAlertController(
+            title: Strings.Localizable.General.Alert.TermsOfServiceViolation.title,
+            message: Strings.Localizable.fileLinkUnavailableText2,
+            preferredStyle: .alert
+        )
+        alertController.addAction(UIAlertAction(title: Strings.Localizable.dismiss, style: .default, handler: { [weak self] _ in
+            self?.configEntity.playerHandler.closePlayer()
+            self?.dismiss()
+        }))
+        
+        baseViewController.present(alertController, animated: true)
     }
     
     private func isPlayingFromVersionView() -> Bool {

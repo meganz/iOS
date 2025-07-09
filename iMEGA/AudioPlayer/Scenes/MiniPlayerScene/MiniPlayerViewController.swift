@@ -1,5 +1,6 @@
 import MEGAAssets
 import MEGADesignToken
+import MEGAL10n
 import UIKit
 
 final class MiniPlayerViewController: UIViewController {
