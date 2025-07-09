@@ -40,7 +40,6 @@ enum AudioPlayerAction: ActionType {
     case showActionsforCurrentNode(sender: Any)
     case onSelectResumePlaybackContinuationDialog(playbackTime: TimeInterval)
     case onSelectRestartPlaybackContinuationDialog
-    case onTermsOfServiceViolationAlertDismissAction
 }
 
 @MainActor
@@ -53,6 +52,7 @@ protocol AudioPlayerViewRouting: AnyObject, Routing, Sendable {
     func share(sender: UIBarButtonItem?)
     func sendToChat()
     func showAction(for node: MEGANode, sender: Any)
+    func showTermsOfServiceViolationAlert()
 }
 
 extension AudioPlayerViewRouting {
@@ -96,7 +96,6 @@ final class AudioPlayerViewModel: ViewModelType {
         case goToPlaylistAction(enabled: Bool)
         case nextTrackAction(enabled: Bool)
         case displayPlaybackContinuationDialog(fileName: String, playbackTime: TimeInterval)
-        case showTermsOfServiceViolationAlert
     }
     
     // MARK: - Private properties
@@ -214,7 +213,7 @@ final class AudioPlayerViewModel: ViewModelType {
             }
             
             if await isTakenDownNode(node) {
-                await invoke(command: .showTermsOfServiceViolationAlert)
+                await router?.showTermsOfServiceViolationAlert()
                 return
             }
             
@@ -446,7 +445,7 @@ final class AudioPlayerViewModel: ViewModelType {
             Task { [weak self] in
                 guard let self, let node = configEntity.node else { return }
                 if await isTakenDownNode(node) {
-                    invoke(command: .showTermsOfServiceViolationAlert)
+                    router?.showTermsOfServiceViolationAlert()
                     return
                 }
                 
@@ -540,9 +539,6 @@ final class AudioPlayerViewModel: ViewModelType {
         case .onSelectRestartPlaybackContinuationDialog:
             playbackContinuationUseCase.setPreference(to: .restartFromBeginning)
             configEntity.playerHandler.playerPlay()
-        case .onTermsOfServiceViolationAlertDismissAction:
-            configEntity.playerHandler.closePlayer()
-            router?.dismiss()
         case .viewWillDisappear(let reason):
             switch reason {
             case .userInitiatedDismissal:

@@ -9,6 +9,7 @@ final class MockAudioPlayerViewRouter: AudioPlayerViewRouting {
     var share_calledTimes = 0
     var sendToContact_calledTimes = 0
     var showAction_calledTimes = 0
+    var showTermsOfServiceViolationAlert_calledTimes = 0
     
     func dismiss(completion: @escaping () -> Void) {
         dismiss_calledTimes += 1
@@ -40,5 +41,9 @@ final class MockAudioPlayerViewRouter: AudioPlayerViewRouting {
     
     func showAction(for node: MEGANode, sender: Any) {
         showAction_calledTimes += 1
+    }
+    
+    func showTermsOfServiceViolationAlert() {
+        showTermsOfServiceViolationAlert_calledTimes += 1
     }
 }
