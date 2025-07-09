@@ -28,13 +28,35 @@ struct HomeView: View {
                     ]
                 )
             }
-            .navigationTitle("Videos")
+            .navigationTitle("Videos (\(viewModel.selectedPlayerOption.rawValue))")
+            .navigationBarTitleDisplayMode(.inline)
             .navigationDestination(for: MEGANode.self) { node in
-                Text("\(node.name ?? "Unnamed")") // To be replaced with the revamped video player
+                MEGAPlayerView(node: node)
+                    .navigationTitle(viewModel.selectedPlayerOption.rawValue)
+            }
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Menu {
+                        ForEach(VideoPlayerOption.allCases) { option in
+                            Button {
+                                viewModel.selectedPlayerOption = option
+                            } label: {
+                                Label(option.rawValue, systemImage: viewModel.selectedPlayerOption == option ? "checkmark" : "")
+                            }
+                        }
+                    } label: {
+                        Text("Select Player")
+                    }
+                }
             }
         }
         .task { await viewModel.viewWillAppear() }
-        .onDisappear { viewModel.onDisappear() }
+    }
+}
+
+extension MEGAPlayerView {
+    init(node: MEGANode) {
+        self.init(viewModel: VideoPlayerFactory.liveValue.playerViewModel(for: node))
     }
 }
 
