@@ -13,6 +13,7 @@
 @property (nonatomic, strong) NSMutableArray<id<MEGAPurchaseDelegate>> *purchaseDelegateMutableArray;
 @property (nonatomic, strong) NSMutableArray<id<MEGARestoreDelegate>> *restoreDelegateMutableArray;
 @property (nonatomic, strong) NSMutableArray<id<MEGAPurchasePricingDelegate>> *pricingsDelegateMutableArray;
+@property (nonatomic, strong) NSMutableArray *products;
 @property (nonatomic, strong) MEGAPricing *pricing;
 @property (nonatomic, strong) MEGACurrency *currency;
 @property (nonatomic, readonly, getter=isPurchasingPromotedPlan) BOOL purchasingPromotedPlan;
@@ -42,10 +43,6 @@
 
 - (void)pricingDelegateOnPricingReady;
 
-@end
-
-@interface MEGAPurchase(Collection)
-@property (nonatomic, strong) NSArray *products;
 @end
 
 @protocol MEGAPurchaseDelegate <NSObject>
