@@ -497,45 +497,51 @@ struct AccountMenuViewModelTests {
     }
 
     @Test("Test the shared items notifications count logic with valid number of notifications")
-    func testSharedItemsNotificationsCount_withValidNumberOfNotifications() async throws {
+    func testSharedItemsNotificationsCount_withValidNumberOfNotifications() throws {
         let sut = makeSUT(sharedItemsNotificationCountHandler: { 10 })
-        #expect(
-            sut
-                .sections[.tools]?[AccountMenuViewModel.Constants.ToolsSectionIndex.sharedItemsIndex]
-                .notificationCount == 10
-        )
+        let index = try #require(sut.sections[.tools]?.firstIndex { $0.title == Strings.Localizable.sharedItems })
+        #expect(sut.sections[.tools]?[index].notificationCount == 10)
     }
 
     @Test("Test the shared items notifications count logic with no notifications")
-    func testSharedItemsNotificationsCount_withNoNotifications() {
+    func testSharedItemsNotificationsCount_withNoNotifications() throws {
         let sut = makeSUT(sharedItemsNotificationCountHandler: { 0 })
-        #expect(
-            sut
-                .sections[.tools]?[AccountMenuViewModel.Constants.ToolsSectionIndex.sharedItemsIndex]
-                .notificationCount == nil
-        )
+        let index = try #require(sut.sections[.tools]?.firstIndex { $0.title == Strings.Localizable.sharedItems })
+        #expect(sut.sections[.tools]?[index].notificationCount == nil)
     }
 
     @Test("Test the contacts notifications count logic with valid number of contact requests")
-    func testContactsNotificationCount_withValidContactRequests() {
+    func testContactsNotificationCount_withValidContactRequests() throws {
         let accountUseCase = MockAccountUseCase(incomingContactsRequestsCount: 30)
         let sut = makeSUT(accountUseCase: accountUseCase)
-        #expect(
-            sut
-                .sections[.account]?[AccountMenuViewModel.Constants.AccountSectionIndex.contactsIndex]
-                .notificationCount == 30
-        )
+        let index = try #require(sut.sections[.account]?.firstIndex { $0.title == Strings.Localizable.contactsTitle })
+        #expect(sut.sections[.account]?[index].notificationCount == 30)
     }
 
     @Test("Test the contacts notifications count logic with 0 contact requests")
-    func testContactsNotificationCount_withNoContactRequests() {
+    func testContactsNotificationCount_withNoContactRequests() throws {
         let accountUseCase = MockAccountUseCase(incomingContactsRequestsCount: 0)
         let sut = makeSUT(accountUseCase: accountUseCase)
-        #expect(
-            sut
-                .sections[.account]?[AccountMenuViewModel.Constants.AccountSectionIndex.contactsIndex]
-                .notificationCount == nil
+        let index = try #require(sut.sections[.account]?.firstIndex { $0.title == Strings.Localizable.contactsTitle })
+        #expect(sut.sections[.account]?[index].notificationCount == nil)
+    }
+
+    @Test("Test the upgrade plan menu option logic for business account")
+    func testUpgradePlanMenuOption_forBusinessAccount_shouldHideOption() {
+        let accountUseCase = MockAccountUseCase(
+            currentAccountDetails: MockMEGAAccountDetails(type: .business).toAccountDetailsEntity()
         )
+        let sut = makeSUT(accountUseCase: accountUseCase)
+        #expect(sut.sections[.account]?[1].title != Strings.Localizable.InAppPurchase.ProductDetail.Navigation.currentPlan)
+    }
+
+    @Test("Test the upgrade plan menu option logic for pro flexi account")
+    func testUpgradePlanMenuOption_forProFlexiAccount_shouldHideOption() {
+        let accountUseCase = MockAccountUseCase(
+            currentAccountDetails: MockMEGAAccountDetails(type: .proFlexi).toAccountDetailsEntity()
+        )
+        let sut = makeSUT(accountUseCase: accountUseCase)
+        #expect(sut.sections[.account]?[1].title != Strings.Localizable.InAppPurchase.ProductDetail.Navigation.currentPlan)
     }
 
     private func makeSUT(
