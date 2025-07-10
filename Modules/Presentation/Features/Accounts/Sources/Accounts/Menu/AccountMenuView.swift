@@ -54,11 +54,12 @@ public struct AccountMenuView: View {
                         }
 
                         ForEach(items) { option in
-                            MenuRowView(option: option)
-                                .onTapGesture {
-                                    guard case .disclosure(let action) = option.rowType else { return }
-                                    action()
-                                }
+                            Button {
+                                guard case .disclosure(let action) = option.rowType else { return }
+                                action()
+                            } label: {
+                                MenuRowView(option: option)
+                            }
                         }
 
                         if section == .account {

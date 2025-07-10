@@ -54,20 +54,6 @@ public final class AccountMenuViewModel: ObservableObject {
         static let topOffsetThreshold: CGFloat = 5
 
         static let coordinateSpaceName = "Scroll"
-
-        // Section Indexes for [.account]
-        enum AccountSectionIndex {
-            static let accountDetailsIndex = 0
-            static let currentPlanIndex = 1
-            static let storageUsedIndex = 2
-            static let contactsIndex = 3
-        }
-
-        // Section Index for [.tools]
-        enum ToolsSectionIndex {
-            static let sharedItemsIndex = 0
-            static let rubbishBinIndex = 4
-        }
     }
 
     @Published var isPrivacySuiteExpanded = false
@@ -100,6 +86,62 @@ public final class AccountMenuViewModel: ObservableObject {
     private var defaultAvatarBackgroundColor: Color {
         guard let handle = currentUserSource.currentUser?.handle else { return .clear }
         return defaultBackgroundColor(handle: handle) ?? .clear
+    }
+
+    private var shouldShowPlan: Bool {
+        !isBusinessAccount && !isProFlexiAccount
+    }
+
+    private var isBusinessAccount: Bool {
+        accountUseCase.currentAccountDetails?.proLevel == .business
+    }
+
+    private var isProFlexiAccount: Bool {
+        accountUseCase.currentAccountDetails?.proLevel == .proFlexi
+    }
+
+    private var accountDetailsMenuRowIndex: Int? {
+        sections[.account]?.firstIndex { $0.title == fullNameHandler(currentUserSource) }
+    }
+
+    private var currentPlanMenuRowTitle: String {
+        Strings.Localizable.InAppPurchase.ProductDetail.Navigation.currentPlan
+    }
+
+    private var currentPlanMenuRowIndex: Int? {
+        sections[.account]?.firstIndex { $0.title == currentPlanMenuRowTitle }
+    }
+
+    private var storageUsedMenuRowTitle: String {
+        Strings.Localizable.storage
+    }
+
+    private var storageUsedMenuRowIndex: Int? {
+        sections[.account]?.firstIndex { $0.title == storageUsedMenuRowTitle }
+    }
+
+    private var rubbishBinMenuRowTitle: String {
+        Strings.Localizable.rubbishBinLabel
+    }
+
+    private var rubbishBinMenuRowIndex: Int? {
+        sections[.tools]?.firstIndex { $0.title == rubbishBinMenuRowTitle }
+    }
+
+    private var contactsMenuRowTitle: String {
+        Strings.Localizable.contactsTitle
+    }
+
+    private var contactsMenuRowIndex: Int? {
+        sections[.account]?.firstIndex { $0.title == contactsMenuRowTitle }
+    }
+
+    private var sharedItemsMenuRowTitle: String {
+        Strings.Localizable.sharedItems
+    }
+
+    private var sharedItemsMenuRowIndex: Int? {
+        sections[.tools]?.firstIndex { $0.title == sharedItemsMenuRowTitle }
     }
 
     private var sectionData: [AccountMenuSectionType: [AccountMenuOption]] {
@@ -164,7 +206,9 @@ public final class AccountMenuViewModel: ObservableObject {
                     rowType: .externalLink { [weak self] in self?.router.openLink(for: .transferIt) }
                 )
             ]
-        ]
+        ].mapValues { options in
+            options.compactMap { $0 }
+        }
     }
 
     public init(
@@ -240,7 +284,7 @@ public final class AccountMenuViewModel: ObservableObject {
     }
 
     private func fetchAvatarAndUpdateUI() async {
-        guard let currentUser = currentUserSource.currentUser else {
+        guard let currentUser = currentUserSource.currentUser, let row = accountDetailsMenuRowIndex else {
             MEGALogError("Current user not found in currentUserSource")
             return
         }
@@ -255,7 +299,7 @@ public final class AccountMenuViewModel: ObservableObject {
         ) else { return }
 
         var updatedSections = sections
-        updatedSections[.account]?[Constants.AccountSectionIndex.accountDetailsIndex] = accountDetailsMenuOption(
+        updatedSections[.account]?[row] = accountDetailsMenuOption(
             fullName: fullName,
             icon: avatar,
             iconStyle: .rounded,
@@ -282,11 +326,35 @@ public final class AccountMenuViewModel: ObservableObject {
         do {
             let accountDetails = try await accountUseCase.refreshCurrentAccountDetails()
             var updatedSections = sections
-            updatedSections[.account]?[Constants.AccountSectionIndex.currentPlanIndex] = currentPlanMenuOption(accountDetails: accountDetails)
-            updatedSections[.account]?[Constants.AccountSectionIndex.storageUsedIndex] = storageUsedMenuOption(accountDetails: accountDetails)
-            updatedSections[.tools]?[Constants.ToolsSectionIndex.rubbishBinIndex] = rubbishBinMenuOption(
-                accountUseCase: accountUseCase
-            )
+
+            if let currentPlanMenuRowIndex, let menuOption = currentPlanMenuOption(accountDetails: accountDetails) {
+                updatedSections[.account]?[currentPlanMenuRowIndex] = menuOption
+            } else if shouldShowPlan {
+                assertionFailure("Current plan menu row index not found")
+            }
+
+            if let storageUsedMenuRowIndex {
+                updatedSections[.account]?[storageUsedMenuRowIndex] = storageUsedMenuOption(accountDetails: accountDetails)
+            } else {
+                assertionFailure("Storage used menu row index not found")
+            }
+
+            if let rubbishBinMenuRowIndex {
+                updatedSections[.tools]?[rubbishBinMenuRowIndex] = rubbishBinMenuOption(
+                    accountUseCase: accountUseCase
+                )
+            } else {
+                assertionFailure("rubbish bin menu row index not found")
+            }
+
+            if let currentPlanMenuRowIndex {
+                if let currentPlanMenuOption = currentPlanMenuOption(accountDetails: accountDetails) {
+                    updatedSections[.account]?[currentPlanMenuRowIndex] = currentPlanMenuOption
+                } else {
+                    updatedSections[.account]?.remove(at: currentPlanMenuRowIndex)
+                }
+            }
+
             sections = updatedSections
         } catch {
             MEGALogDebug("Error while fetching account details: \(error)")
@@ -323,7 +391,8 @@ public final class AccountMenuViewModel: ObservableObject {
         return Color(hex: backgroundColor)
     }
 
-    private func currentPlanMenuOption(accountDetails: AccountDetailsEntity?) -> AccountMenuOption {
+    private func currentPlanMenuOption(accountDetails: AccountDetailsEntity?) -> AccountMenuOption? {
+        guard shouldShowPlan else { return nil }
         let icon = if let accountDetails { currentPlanIcon(accountDetails: accountDetails) } else { MEGAAssets.Image.otherPlansInMenu }
         let rowType  = AccountMenuOption
             .AccountMenuRowType
@@ -333,7 +402,7 @@ public final class AccountMenuViewModel: ObservableObject {
 
         return .init(
             iconConfiguration: .init(icon: icon),
-            title: Strings.Localizable.InAppPurchase.ProductDetail.Navigation.currentPlan,
+            title: currentPlanMenuRowTitle,
             subtitle: accountDetails?.proLevel.toAccountTypeDisplayName() ?? "",
             rowType: rowType
         )
@@ -356,7 +425,7 @@ public final class AccountMenuViewModel: ObservableObject {
 
         return .init(
             iconConfiguration: .init(icon: MEGAAssets.Image.storageInMenu),
-            title: Strings.Localizable.storage,
+            title: storageUsedMenuRowTitle,
             subtitle: subtitle,
             rowType: .disclosure { [weak self] in self?.router.showStorage() }
         )
@@ -365,7 +434,7 @@ public final class AccountMenuViewModel: ObservableObject {
     private func contactsMenuOption(contactRequestsCount: Int? = nil) -> AccountMenuOption {
         .init(
             iconConfiguration: .init(icon: MEGAAssets.Image.contactsInMenu),
-            title: Strings.Localizable.contactsTitle,
+            title: contactsMenuRowTitle,
             notificationCount: contactRequestsCount,
             rowType: .disclosure { [weak self] in self?.router.showContacts() }
         )
@@ -374,7 +443,7 @@ public final class AccountMenuViewModel: ObservableObject {
     private func sharedItemsMenuOption(notificationsCount: Int? = nil) -> AccountMenuOption {
         .init(
             iconConfiguration: .init(icon: MEGAAssets.Image.sharedItemsInMenu),
-            title: Strings.Localizable.sharedItems,
+            title: sharedItemsMenuRowTitle,
             notificationCount: notificationsCount,
             rowType: .disclosure { [weak self] in self?.router.showSharedItems() }
         )
@@ -387,7 +456,7 @@ public final class AccountMenuViewModel: ObservableObject {
             .formattedByteCountString()
         return .init(
             iconConfiguration: .init(icon: MEGAAssets.Image.rubbishBinInMenu),
-            title: Strings.Localizable.rubbishBinLabel,
+            title: rubbishBinMenuRowTitle,
             subtitle: rubbishBinUsage,
             rowType: .disclosure { [weak self] in self?.router.showRubbishBin() }
         )
@@ -410,15 +479,25 @@ public final class AccountMenuViewModel: ObservableObject {
     }
 
     private func updateSharedItemsNotificationCount() {
+        guard let sharedItemsMenuRowIndex else {
+            assertionFailure("Shared items row not found in menu")
+            return
+        }
+
         let notificationsCount = sharedItemsNotificationCountHandler()
-        sections[.tools]?[Constants.ToolsSectionIndex.sharedItemsIndex] = sharedItemsMenuOption(
+        sections[.tools]?[sharedItemsMenuRowIndex] = sharedItemsMenuOption(
             notificationsCount: notificationsCount > 0 ? notificationsCount : nil
         )
     }
 
     private func updateContactsRequestNotificationCount() {
+        guard let contactsMenuRowIndex else {
+            assertionFailure("Contacts row not found in menu")
+            return
+        }
+
         let contactRequestsCount = accountUseCase.incomingContactsRequestsCount()
-        sections[.account]?[Constants.AccountSectionIndex.contactsIndex] = contactsMenuOption(
+        sections[.account]?[contactsMenuRowIndex] = contactsMenuOption(
             contactRequestsCount: contactRequestsCount > 0 ? contactRequestsCount : nil
         )
     }
