@@ -377,7 +377,7 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
             if ([Helper hasSession_alertIfNot]) {
                 if (UIApplication.mainTabBarRootViewController) {
                     MainTabBarController *mainTBC = (MainTabBarController *)UIApplication.mainTabBarRootViewController;
-                    mainTBC.selectedIndex = TabTypeChat;
+                    mainTBC.selectedIndex = [TabManager chatTabIndex];
                 }
             }
             break;
@@ -911,7 +911,7 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
     
     if (UIApplication.mainTabBarRootViewController) {
         MainTabBarController *mainTBC = (MainTabBarController *)UIApplication.mainTabBarRootViewController;
-        mainTBC.selectedIndex = TabTypeChat;
+        mainTBC.selectedIndex = [TabManager chatTabIndex];
         MeetingCreatingViewRouter *router = [[MeetingCreatingViewRouter alloc] initWithViewControllerToPresent:mainTBC
                                                                                                           type:type
                                                                                                           link:publicChatLink.absoluteString
@@ -949,8 +949,8 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
     
     if (UIApplication.mainTabBarRootViewController) {
         MainTabBarController *mainTBC = (MainTabBarController *)UIApplication.mainTabBarRootViewController;
-        mainTBC.selectedIndex = TabTypeChat;
-        
+        mainTBC.selectedIndex = [TabManager chatTabIndex];
+
         if (mainTBC.presentedViewController) {
             [mainTBC dismissViewControllerAnimated:YES completion:^{
                 [MEGALinkManager pushChat:chatRoom publicChatLink:publicChatLink tabBar:mainTBC];
