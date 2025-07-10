@@ -16,7 +16,7 @@ import MEGAUIComponent
 import SwiftUI
 
 enum UpgradeAccountPlanTarget {
-    case buyPlan, restorePlan, termsAndPolicies, buyExternally, buyInApp
+    case buyPlan, restorePlan, termsAndPolicies, buyExternally
 }
 
 enum UpgradeAccountPlanViewType: Equatable {
@@ -422,10 +422,10 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
             router.showTermsAndPolicies()
         case .restorePlan:
             restorePurchase()
-        case .buyPlan, .buyExternally:
+        case .buyPlan:
             buySelectedPlan()
-        case .buyInApp:
-            buyInApp()
+        case .buyExternally:
+            buyExternally()
         }
     }
     
@@ -550,6 +550,14 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
         buySelectedPlan(purchaseLogic: { [weak self] currentSelectedPlan in
             guard let self else { return }
 
+            await purchaseUseCase.purchasePlan(currentSelectedPlan)
+        })
+    }
+
+    private func buyExternally() {
+        buySelectedPlan(purchaseLogic: { [weak self] currentSelectedPlan in
+            guard let self else { return }
+
             if let externalLink = await externalLink(for: currentSelectedPlan) {
                 observeAccountUpdates()
                 await openURL(externalLink)
@@ -557,14 +565,6 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
             } else {
                 await purchaseUseCase.purchasePlan(currentSelectedPlan)
             }
-        })
-    }
-
-    private func buyInApp() {
-        buySelectedPlan(purchaseLogic: { [weak self] currentSelectedPlan in
-            guard let self else { return }
-
-            await purchaseUseCase.purchasePlan(currentSelectedPlan)
         })
     }
 
