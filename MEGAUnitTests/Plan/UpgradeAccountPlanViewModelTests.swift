@@ -1072,7 +1072,7 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
     // MARK: - External Purchase
 
     @MainActor
-    func testDidTapBuyPlan_shouldOpenExternalLink() async {
+    func testDidTapBuyExternally_shouldOpenExternalLink() async {
         nonisolated(unsafe) var urlOpened = [URL]()
         
         let details = AccountDetailsEntity.build(proLevel: .free)
@@ -1092,29 +1092,14 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
         await sut.setUpPlanTask?.value
         sut.setSelectedPlan(.proI_monthly)
         
-        sut.didTap(.buyPlan)
+        sut.didTap(.buyExternally)
         await sut.buyPlanTask?.value
         
         XCTAssertEqual(urlOpened, [expectedURL])
     }
-    
-    // MARK: - Free plan view model
-    
-    @MainActor
-    func testFreePlanViewModel_viewType_shouldReturnCorrectInstance() {
-        let viewTypes = [UpgradeAccountPlanViewType.upgrade,
-                         .onboarding(isFreeAccountFirstLogin: true),
-                         .onboarding(isFreeAccountFirstLogin: false)]
-        for viewType in viewTypes {
-            let (sut, _) = makeSUT(
-                accountDetails: .build(proLevel: .proI),
-                viewType: viewType)
-            XCTAssertEqual(sut.freePlanViewModel != nil, viewType != .upgrade)
-        }
-    }
 
     @MainActor
-    func testDidTapBuyPlan_whenAPIPriceNil_shouldNotOpenExternalLink() async {
+    func testDidTapBuyExternally_whenAPIPriceNil_shouldNotOpenExternalLink() async {
         nonisolated(unsafe) var urlOpened = [URL]()
         let details = AccountDetailsEntity.build(proLevel: .free)
         let apiPriceZeroPlan = {
@@ -1137,11 +1122,26 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
         await sut.setUpPlanTask?.value
         sut.setSelectedPlan(apiPriceZeroPlan)
 
-        sut.didTap(.buyPlan)
+        sut.didTap(.buyExternally)
         await sut.buyPlanTask?.value
 
         XCTAssertEqual(urlOpened, [])
         XCTAssertTrue(mockUseCase.purchasePlanCalled == 1)
+    }
+
+    // MARK: - Free plan view model
+    
+    @MainActor
+    func testFreePlanViewModel_viewType_shouldReturnCorrectInstance() {
+        let viewTypes = [UpgradeAccountPlanViewType.upgrade,
+                         .onboarding(isFreeAccountFirstLogin: true),
+                         .onboarding(isFreeAccountFirstLogin: false)]
+        for viewType in viewTypes {
+            let (sut, _) = makeSUT(
+                accountDetails: .build(proLevel: .proI),
+                viewType: viewType)
+            XCTAssertEqual(sut.freePlanViewModel != nil, viewType != .upgrade)
+        }
     }
     
     @MainActor
