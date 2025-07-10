@@ -1,3 +1,4 @@
+import MEGAAppPresentation
 import MEGADomain
 
 @MainActor
@@ -6,6 +7,10 @@ protocol NodeNavigationRouting: Sendable {
 }
 
 struct NodeNavigationRouter: NodeNavigationRouting {
+    private var isNavigationRevampEnabled: Bool {
+        DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .navigationRevamp)
+    }
+
     func navigateThroughNodeHierarchy(
         _ nodeHierarchy: [NodeEntity],
         isOwnNode: Bool,
@@ -16,7 +21,7 @@ struct NodeNavigationRouter: NodeNavigationRouting {
         }
         
         resetCurrentNavigationController()
-        
+
         selectTabController(in: mainTBC, isOwnNode: isOwnNode)
         
         guard
@@ -37,13 +42,25 @@ struct NodeNavigationRouter: NodeNavigationRouting {
     
     private func selectTabController(in mainTBC: MainTabBarController, isOwnNode: Bool) {
         if isOwnNode {
-            mainTBC.selectedIndex = TabType.cloudDrive.rawValue
+            mainTBC.selectedIndex = TabManager.driveTabIndex()
         } else {
-            mainTBC.selectedIndex = TabType.sharedItems.rawValue
-            selectSharedSegmentIfNeeded(in: mainTBC)
+            if isNavigationRevampEnabled {
+                mainTBC.selectedIndex = TabManager.menuTabIndex()
+                openSharedItemsFromMenu(in: mainTBC)
+            } else {
+                mainTBC.selectedIndex = TabManager.sharedItemsTabIndex()
+                selectSharedSegmentIfNeeded(in: mainTBC)
+            }
         }
     }
-    
+
+    private func openSharedItemsFromMenu(in mainTBC: MainTabBarController) {
+        guard let presenter = mainTBC.selectedViewController as? (any SharedItemsPresenting) else {
+            return assertionFailure("Trying to navigate to SharedItems screen but selected view controller is not of type SharedItemsPresenting")
+        }
+        presenter.showSharedItems()
+    }
+
     private func selectSharedSegmentIfNeeded(in mainTBC: MainTabBarController) {
         if let sharedNav = mainTBC.children[TabType.sharedItems.rawValue] as? UINavigationController,
            let sharedItemsVC = sharedNav.children.first as? SharedItemsViewController {
