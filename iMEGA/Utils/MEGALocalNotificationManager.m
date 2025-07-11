@@ -8,10 +8,8 @@
 #endif
 
 #import "MEGAStore.h"
-#import "NSString+MNZCategory.h"
 
 @import ChatRepo;
-@import MEGAL10nObjc;
 
 #ifdef MNZ_NOTIFICATION_EXTENSION
 #import "MEGANotifications-Swift.h"
@@ -164,11 +162,11 @@
                     }
                 } else {
                     MEGALogWarning(@"[Notification] Attachment message with nodelist with more than one node is not expected");
-                    body = [NSString stringWithFormat:LocalizedString(@"general.format.count.file", @"Subtitle shown on folders that gives you information about its file content count. e.g 1 file, 2 files"), nodeList.size];
+                    body = [self generalCountFiles:nodeList.size];
                 }
             } else {
                 MEGALogError(@"[Notification] Attachment message without nodelist");
-                body = LocalizedString(@"Not found", @"");
+                body = [self notFound];
             }
         }
             break;
@@ -178,7 +176,7 @@
             if (self.message.nodeList && self.message.nodeList.size == 1) {
                 MEGANode *node = [self.message.nodeList nodeAtIndex:0];
                 NSTimeInterval duration = node.duration > 0 ? node.duration : 0;
-                durationString = [NSString mnz_stringFromTimeInterval:duration];
+                durationString = [self stringFromTimeIntermval:duration];
             } else {
                 durationString = @"00:00";
             }
@@ -188,7 +186,7 @@
             
         case MEGAChatMessageTypeContainsMeta:
             if (self.message.containsMeta.type == MEGAChatContainsMetaTypeGeolocation) {
-                body = [NSString stringWithFormat:@"📍 %@", LocalizedString(@"Pinned Location", @"Text shown in location-type messages")];
+                body = [NSString stringWithFormat:@"📍 %@", [self pinnedLocation]];
             } else {
                 body = self.message.content;
             }
@@ -196,7 +194,7 @@
             
         case MEGAChatMessageTypeNormal:
             if (self.message.isEdited) {
-                body = [NSString stringWithFormat:@"%@ %@", self.message.content, LocalizedString(@"edited", @"")];
+                body = [NSString stringWithFormat:@"%@ %@", self.message.content, [self edited]];
             } else {
                 body = self.message.content;
             }
@@ -209,7 +207,7 @@
             [sharedUserDefaults setInteger:badgeCount + 1 forKey:MEGAApplicationIconBadgeNumber];
             UIApplication.sharedApplication.applicationIconBadgeNumber = badgeCount + 1;
 #endif
-            body = LocalizedString(@"missedCall", @"Title of the notification for a missed call");
+            body = [self missedCall];
             break;
         }
                     
