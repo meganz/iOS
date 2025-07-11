@@ -851,7 +851,6 @@
 		7795677F21C83130002B6227 /* OnboardingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7795677E21C83130002B6227 /* OnboardingView.xib */; };
 		77B3227F20A436D60037FA89 /* NSURL+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 77B3227E20A436D60037FA89 /* NSURL+MNZCategory.m */; };
 		77B3AE0F215D0588008E889A /* InitialLaunchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77B3AE0E215D0588008E889A /* InitialLaunchViewController.m */; };
-		77B9FEE723C604260002D0CD /* MEGAChatBaseRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A802B1F91FAB293700AC8BB0 /* MEGAChatBaseRequestDelegate.m */; };
 		77BE2FFB24084E9600514DB8 /* MEGAFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B695E57F23275A4E00D12B9E /* MEGAFunctions.swift */; };
 		77C2E07C24BCBB9C00B4894A /* ActionSheetActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 837B9BFA246D38E800D409B4 /* ActionSheetActions.swift */; };
 		77C2E07D24BCBC0100B4894A /* ActionSheetCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCE04A7241B019800EE7842 /* ActionSheetCell.swift */; };
@@ -1686,7 +1685,6 @@
 		A85740C52032F6B80033034C /* MOChatDraft+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = A85740C22032F6B80033034C /* MOChatDraft+CoreDataClass.m */; };
 		A85740C82032F6E80033034C /* MOChatDraft+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = A85740C22032F6B80033034C /* MOChatDraft+CoreDataClass.m */; };
 		A85740C92032F6E80033034C /* MOChatDraft+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = A85740C02032F6B70033034C /* MOChatDraft+CoreDataProperties.m */; };
-		A857F4FF2B45B05F001CA42C /* NSString+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 41BADDAC1A8E1659008408B3 /* NSString+MNZCategory.m */; };
 		A857F5002B45B2D0001CA42C /* NSDate+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BC25724220080FC0098E781 /* NSDate+MNZCategory.m */; };
 		A85B7AC42A14F5C7002B1D6A /* MEGAApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = A85B7AC32A14F5C7002B1D6A /* MEGAApplication.swift */; };
 		A85CF69D2A7180A90018FEF1 /* ChatRepo in Frameworks */ = {isa = PBXBuildFile; productRef = A85CF69C2A7180A90018FEF1 /* ChatRepo */; };
@@ -1738,6 +1736,8 @@
 		A8A717042639BE7D00DDC8E2 /* TurnOnNotificationsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8A717032639BE7D00DDC8E2 /* TurnOnNotificationsModel.swift */; };
 		A8A923A62861DFAC006F66C3 /* CompressingLogFileManager+additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8A923A52861DFAC006F66C3 /* CompressingLogFileManager+additions.swift */; };
 		A8AA4F7A1ED42B9E00E7BA23 /* MEGALoginRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A8AA4F781ED42B9E00E7BA23 /* MEGALoginRequestDelegate.m */; };
+		A8ABAD092E21075B00B3B767 /* MEGALocalNotificationManager+.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8ABAD072E21075500B3B767 /* MEGALocalNotificationManager+.swift */; };
+		A8ABAD0A2E21076600B3B767 /* MEGALocalNotificationManager+.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8ABAD072E21075500B3B767 /* MEGALocalNotificationManager+.swift */; };
 		A8B09DE929B0CBD600C922B9 /* PickerConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8B09DE829B0CBD600C922B9 /* PickerConstant.swift */; };
 		A8B09DEA29B0CBD600C922B9 /* PickerConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8B09DE829B0CBD600C922B9 /* PickerConstant.swift */; };
 		A8B315682ACAB49500173F3A /* OfflineTableViewCell+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8B315672ACAB49500173F3A /* OfflineTableViewCell+Additions.swift */; };
@@ -2249,7 +2249,6 @@
 		BF6149542A9FF33300AB051A /* MEGAL10nObjc in Frameworks */ = {isa = PBXBuildFile; productRef = BF6149532A9FF33300AB051A /* MEGAL10nObjc */; };
 		BF6149562A9FF34400AB051A /* MEGAL10n in Frameworks */ = {isa = PBXBuildFile; productRef = BF6149552A9FF34400AB051A /* MEGAL10n */; };
 		BF61495A2A9FF35200AB051A /* MEGAL10n in Frameworks */ = {isa = PBXBuildFile; productRef = BF6149592A9FF35200AB051A /* MEGAL10n */; };
-		BF61495C2A9FF35200AB051A /* MEGAL10nObjc in Frameworks */ = {isa = PBXBuildFile; productRef = BF61495B2A9FF35200AB051A /* MEGAL10nObjc */; };
 		BF61495E2A9FF36200AB051A /* MEGAL10n in Frameworks */ = {isa = PBXBuildFile; productRef = BF61495D2A9FF36200AB051A /* MEGAL10n */; };
 		BF6149622A9FF37000AB051A /* MEGAL10n in Frameworks */ = {isa = PBXBuildFile; productRef = BF6149612A9FF37000AB051A /* MEGAL10n */; };
 		BF6149662A9FF38400AB051A /* MEGAL10n in Frameworks */ = {isa = PBXBuildFile; productRef = BF6149652A9FF38400AB051A /* MEGAL10n */; };
@@ -4525,6 +4524,7 @@
 		A8A923A52861DFAC006F66C3 /* CompressingLogFileManager+additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CompressingLogFileManager+additions.swift"; sourceTree = "<group>"; };
 		A8AA4F771ED42B9E00E7BA23 /* MEGALoginRequestDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MEGALoginRequestDelegate.h; path = API/Requests/MEGALoginRequestDelegate.h; sourceTree = "<group>"; };
 		A8AA4F781ED42B9E00E7BA23 /* MEGALoginRequestDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MEGALoginRequestDelegate.m; path = API/Requests/MEGALoginRequestDelegate.m; sourceTree = "<group>"; };
+		A8ABAD072E21075500B3B767 /* MEGALocalNotificationManager+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGALocalNotificationManager+.swift"; sourceTree = "<group>"; };
 		A8B09DE829B0CBD600C922B9 /* PickerConstant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerConstant.swift; sourceTree = "<group>"; };
 		A8B0DD3A2D1D7A14009BC7FD /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		A8B0DD3B2D1D7A18009BC7FD /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -5564,7 +5564,6 @@
 				A86280BC291E8D510010D6E0 /* MEGADomain in Frameworks */,
 				B6A01BB4289A644D00B503FD /* MEGAFoundation in Frameworks */,
 				BF61495A2A9FF35200AB051A /* MEGAL10n in Frameworks */,
-				BF61495C2A9FF35200AB051A /* MEGAL10nObjc in Frameworks */,
 				A891E8A929C1E0B00020072A /* MEGASdk in Frameworks */,
 				B63D341C2898A9E90059DE66 /* MEGASwift in Frameworks */,
 				BF0CB9402803AF5500C21F11 /* SAMKeychain in Frameworks */,
@@ -7136,6 +7135,7 @@
 				415226881A692ECC00EC7BB6 /* Helper.m */,
 				B60DDC1421A7A7930097E4A3 /* MEGAConstants.h */,
 				B60DDC1521A7A7930097E4A3 /* MEGAConstants.m */,
+				A8ABAD072E21075500B3B767 /* MEGALocalNotificationManager+.swift */,
 				A8F0A1C5217898F600575C57 /* MEGALocalNotificationManager.h */,
 				A8F0A1C6217898F600575C57 /* MEGALocalNotificationManager.m */,
 				947C6CB42A5D40BE00CF929E /* MEGANavigationController+Additions.swift */,
@@ -13528,7 +13528,6 @@
 				A812CB3A2A4B0FB400F99382 /* MEGAChatSdk */,
 				BF29179C2A9D8DD800A59D12 /* ChatRepo */,
 				BF6149592A9FF35200AB051A /* MEGAL10n */,
-				BF61495B2A9FF35200AB051A /* MEGAL10nObjc */,
 				BFE7729E2D9B8A17005B114E /* MEGAAppPresentation */,
 			);
 			productName = MEGANotifications;
@@ -15102,6 +15101,7 @@
 				C4A5F0E8266E31DE001D783B /* MEGALabel.swift in Sources */,
 				837B17A0288184F900A4D01B /* MEGALinkManager+Additions.swift in Sources */,
 				5B20B00A20E61DDF00511C0F /* MEGALinkManager.m in Sources */,
+				A8ABAD092E21075B00B3B767 /* MEGALocalNotificationManager+.swift in Sources */,
 				A8F0A1C7217898F600575C57 /* MEGALocalNotificationManager.m in Sources */,
 				41A4204F1C4EA02C002E192E /* MEGALogger.m in Sources */,
 				A88790692D6CDED00000ADF0 /* MEGALoginRequestDelegate+Additions.swift in Sources */,
@@ -15912,12 +15912,12 @@
 				B6F8CE18262823250074CBBF /* CoreDataErrorHandler.m in Sources */,
 				A8F1D1082A5ECB15000DEB6F /* FileExtensionGroupOCWrapper.swift in Sources */,
 				774941E42410F3CD00FC5CB6 /* MEGACD.xcdatamodeld in Sources */,
-				77B9FEE723C604260002D0CD /* MEGAChatBaseRequestDelegate.m in Sources */,
 				772DE069244464BA0013EF52 /* MEGAChatRoom+Additions.swift in Sources */,
 				A84F4A9A298904860017ACB4 /* MEGAChatSdk+SharedInstanceWrapper.swift in Sources */,
 				7794AEE1231E5BC00039C1D2 /* MEGAConstants.m in Sources */,
 				774941DE2410EABC00FC5CB6 /* MEGACoreDataStack.m in Sources */,
 				77BE2FFB24084E9600514DB8 /* MEGAFunctions.swift in Sources */,
+				A8ABAD0A2E21076600B3B767 /* MEGALocalNotificationManager+.swift in Sources */,
 				772DE06A2444B30C0013EF52 /* MEGALocalNotificationManager.m in Sources */,
 				774941E62416552600FC5CB6 /* MEGALogger.m in Sources */,
 				A84F4A93298903600017ACB4 /* MEGASdk+SharedInstanceWrapper.swift in Sources */,
@@ -15940,7 +15940,6 @@
 				7794AED7231E4E0A0039C1D2 /* NotificationService.swift in Sources */,
 				A857F5002B45B2D0001CA42C /* NSDate+MNZCategory.m in Sources */,
 				77F0ED4323C4C750000E6B5B /* NSFileManager+MNZCategory.m in Sources */,
-				A857F4FF2B45B05F001CA42C /* NSString+MNZCategory.m in Sources */,
 				7794AF19231FDF3D0039C1D2 /* Reachability.m in Sources */,
 				BF121D672A09FF1700DA3633 /* ScheduleMeetingNotificationInfo.swift in Sources */,
 				BFCB32B72A023A7F0013409C /* ScheduleMeetingPushNotifications.swift in Sources */,
@@ -16863,7 +16862,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				GOOGLE_ADS_APPID = "ca-app-pub-2135147798858967~4110410713";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
-				MARKETING_VERSION = 16.19;
+				MARKETING_VERSION = 16.18;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = "";
@@ -16927,7 +16926,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				GOOGLE_ADS_APPID = "ca-app-pub-2135147798858967~4110410713";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
-				MARKETING_VERSION = 16.19;
+				MARKETING_VERSION = 16.18;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_CFLAGS = "-DNDEBUG";
 				OTHER_LDFLAGS = "-ObjC";
@@ -17877,7 +17876,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				GOOGLE_ADS_APPID = "ca-app-pub-2135147798858967~4110410713";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
-				MARKETING_VERSION = 16.19;
+				MARKETING_VERSION = 16.18;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_CFLAGS = "-DNDEBUG";
 				OTHER_LDFLAGS = "-ObjC";
@@ -18976,10 +18975,6 @@
 		BF6149592A9FF35200AB051A /* MEGAL10n */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = MEGAL10n;
-		};
-		BF61495B2A9FF35200AB051A /* MEGAL10nObjc */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = MEGAL10nObjc;
 		};
 		BF61495D2A9FF36200AB051A /* MEGAL10n */ = {
 			isa = XCSwiftPackageProductDependency;

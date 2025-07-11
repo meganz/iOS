@@ -80,13 +80,13 @@ extension MEGAChatRoom: @unchecked @retroactive Sendable {
         if me {
             var myNameOrEmail: String?
             if let myFullname = MEGAChatSdk.shared.myFullname {
-                if !myFullname.mnz_isEmpty() {
+                if myFullname.isNotEmptyOrWhitespace {
                     myNameOrEmail = myFullname
                 }
             }
             if myNameOrEmail == nil {
                 if let myEmail = MEGAChatSdk.shared.myEmail {
-                    if !myEmail.mnz_isEmpty() {
+                    if myEmail.isNotEmptyOrWhitespace {
                         myNameOrEmail = myEmail
                     }
                 }
@@ -108,7 +108,7 @@ extension MEGAChatRoom: @unchecked @retroactive Sendable {
         var namesAdded: UInt = 0
         for i in (0..<limit) {
             if let peerName = participantName(atIndex: i) {
-                participantsNames += participantsNames.mnz_isEmpty() ? peerName : ", \(peerName)"
+                participantsNames += participantsNames.isNotEmptyOrWhitespace ? ", \(peerName)" : peerName
                 namesAdded += 1
             } else {
                 handlesToLoad.append(peerHandle(at: i))
@@ -116,7 +116,7 @@ extension MEGAChatRoom: @unchecked @retroactive Sendable {
         }
         
         if me {
-            participantsNames += participantsNames.mnz_isEmpty() ? meString : ", \(meString)"
+            participantsNames += participantsNames.isNotEmptyOrWhitespace ? ", \(meString)" : meString
         }
         
         if peerCount > maxParticipantsNames {
@@ -124,10 +124,10 @@ extension MEGAChatRoom: @unchecked @retroactive Sendable {
             if !me && ownPrivilege.rawValue >= MEGAChatRoomPrivilege.ro.rawValue {
                 totalCount += 1
             }
-            if participantsNames.mnz_isEmpty() {
-                participantsNames = Strings.Localizable.Chat.Info.numberOfParticipants(Int(totalCount))
-            } else {
+            if participantsNames.isNotEmptyOrWhitespace {
                 participantsNames += " and \(totalCount - namesAdded) more"
+            } else {
+                participantsNames = Strings.Localizable.Chat.Info.numberOfParticipants(Int(totalCount))
             }
         }
         
@@ -142,27 +142,27 @@ extension MEGAChatRoom: @unchecked @retroactive Sendable {
         return participantName(forUserHandle: peerHandle(at: index))
     }
     
-    @objc func participantName(forUserHandle userHandle: UInt64) -> String? {
+    func participantName(forUserHandle userHandle: UInt64) -> String? {
         if let nickName = userNickname(forUserHandle: userHandle) {
-            if !nickName.mnz_isEmpty() {
+            if nickName.isNotEmptyOrWhitespace {
                 return nickName
             }
         }
         
         if let firstName = MEGAChatSdk.shared.userFirstnameFromCache(byUserHandle: userHandle) {
-            if !firstName.mnz_isEmpty() {
+            if firstName.isNotEmptyOrWhitespace {
                 return firstName
             }
         }
         
         if let lastName = MEGAChatSdk.shared.userLastnameFromCache(byUserHandle: userHandle) {
-            if !lastName.mnz_isEmpty() {
+            if lastName.isNotEmptyOrWhitespace {
                 return lastName
             }
         }
         
         if let email = MEGAChatSdk.shared.userEmailFromCache(byUserHandle: userHandle) {
-            if !email.mnz_isEmpty() {
+            if email.isNotEmptyOrWhitespace {
                 return email
             }
         }
