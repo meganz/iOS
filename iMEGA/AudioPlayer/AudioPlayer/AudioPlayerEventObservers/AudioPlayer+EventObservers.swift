@@ -159,6 +159,10 @@ extension AudioPlayer {
         if change.newValue == .readyToPlay {
             updateLoadingView(isLoading: false)
         }
+        
+        if queuePlayer?.status == .readyToPlay, !hasCompletedInitialConfiguration {
+            hasCompletedInitialConfiguration = true
+        }
     }
     
     func audio(player: AVQueuePlayer, didStartPlayingCurrentItem change: NSKeyValueObservedChange<AVPlayerItem?>) {
