@@ -125,22 +125,10 @@ class ExplorerBaseViewController: UIViewController {
               !selectedNodes.isEmpty else {
             return
         }
-        let saveMediaUseCase = SaveMediaToPhotosUseCase(downloadFileRepository: DownloadFileRepository(sdk: .shared), fileCacheRepository: FileCacheRepository.newRepo, nodeRepository: NodeRepository.newRepo, chatNodeRepository: ChatNodeRepository.newRepo, downloadChatRepository: DownloadChatRepository.newRepo)
-        Task { @MainActor in
-            do {
-                try await saveMediaUseCase.saveToPhotos(nodes: selectedNodes.toNodeEntities())
-            } catch {
-                if let errorEntity = error as? SaveMediaToPhotosErrorEntity, errorEntity != .cancelled {
-                    await SVProgressHUD.dismiss()
-                    SVProgressHUD.show(
-                        MEGAAssets.UIImage.saveToPhotos,
-                        status: error.localizedDescription
-                    )
-                }
+        SaveToPhotosCoordinator.SVProgressErrorOnly()
+            .saveToPhotos(nodes: selectedNodes.toNodeEntities()) { [weak self] in
+                self?.endEditingMode()
             }
-            
-            endEditingMode()
-        }
     }
     
     fileprivate func shareLinkBarButtonPressed(_ button: UIBarButtonItem) {

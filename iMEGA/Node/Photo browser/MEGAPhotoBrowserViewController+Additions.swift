@@ -155,72 +155,32 @@ extension MEGAPhotoBrowserViewController {
     
     @objc func saveToPhotos(node: MEGANode) {
         guard MEGAReachabilityManager.isReachableHUDIfNot() else { return }
-        
-        permissionHandler.photosPermissionWithCompletionHandler {[weak self] granted in
-            guard let self else { return }
-            if granted {
-                let saveMediaUseCase = dataProvider.makeSaveMediaToPhotosUseCase(for: displayMode)
-                                
-                switch self.displayMode {
-                case .chatAttachment, .chatSharedFiles:
-                    Task(priority: .userInitiated) {
-                        do {
-                            try await saveMediaUseCase.saveToPhotosChatNode(
-                                handle: node.handle,
-                                messageId: self.currentMessageId,
-                                chatId: self.chatId
-                            )
-                        } catch let error as SaveMediaToPhotosErrorEntity {
-                            if error != .cancelled {
-                                await SVProgressHUD.dismiss()
-                                SVProgressHUD.show(
-                                    MEGAAssets.UIImage.saveToPhotos,
-                                    status: error.localizedDescription
-                                )
-                            }
-                        }
-                    }
-                case .fileLink:
-                    guard let linkUrl = URL(string: self.publicLink) else { return }
-                    let fileLink = FileLinkEntity(linkURL: linkUrl)
-                    Task { @MainActor in
-                        do {
-                            try await saveMediaUseCase.saveToPhotos(fileLink: fileLink)
-                        } catch {
-                            if (error as? SaveMediaToPhotosErrorEntity) != .cancelled {
-                                await SVProgressHUD.dismiss()
-                                SVProgressHUD.show(
-                                    MEGAAssets.UIImage.saveToPhotos,
-                                    status: error.localizedDescription
-                                )
-                            }
-                        }
-                    }
-                    
-                default:
-                    Task { @MainActor in
-                        do {
-                            self.showSnackBar(snackBar: SnackBar(message: Strings.Localizable.General.SaveToPhotos.started(1)))
-                            try await saveMediaUseCase.saveToPhotos(nodes: [node.toNodeEntity()])
-                        } catch let error as SaveMediaToPhotosErrorEntity where error == .fileDownloadInProgress {
-                            // Checking: no need this dismiss
-                            self.showSnackBar(snackBar: SnackBar(message: error.localizedDescription))
-                        } catch let error as SaveMediaToPhotosErrorEntity where error != .cancelled {
-                            await SVProgressHUD.dismiss()
-                            SVProgressHUD.show(
-                                MEGAAssets.UIImage.saveToPhotos,
-                                status: error.localizedDescription
-                            )
-                        } catch {
-                            MEGALogError("[MEGAPhotoBrowserViewController] Error saving media nodes: \(error)")
-                        }
-                    }
-                }
-            } else {
-                PermissionAlertRouter
-                    .makeRouter(deviceHandler: permissionHandler)
-                    .alertPhotosPermission()
-            }
+        switch displayMode {
+        case .chatAttachment, .chatSharedFiles:
+            SaveToPhotosCoordinator(
+                messageDisplay: CustomProgressSVGErrorMessageDisplay(),
+                isFolderLink: false)
+            .saveToPhotosChatNode(
+                handle: node.handle,
+                messageId: self.currentMessageId,
+                chatId: self.chatId
+            )
+        case .fileLink:
+            guard let linkUrl = URL(string: self.publicLink) else { return }
+            let fileLink = FileLinkEntity(linkURL: linkUrl)
+            
+            SaveToPhotosCoordinator(
+                messageDisplay: CustomProgressSVGErrorMessageDisplay(),
+                isFolderLink: true)
+            .saveToPhotos(fileLink: fileLink)
+            
+        default:
+            SaveToPhotosCoordinator(
+                messageDisplay: MEGAPhotoBrowserErrorMessageDisplay(showSnackBar: { [weak self] message in
+                    self?.showSnackBar(snackBar: SnackBar(message: message))
+                }),
+                isFolderLink: false)
+            .saveToPhotos(nodes: [node.toNodeEntity()])
         }
     }
     
@@ -634,6 +594,30 @@ extension MEGAPhotoBrowserViewController: ViewType {
                     reloadUI()
                 }
             }
+        }
+    }
+}
+
+private struct MEGAPhotoBrowserErrorMessageDisplay: SaveToPhotosMessageDisplay {
+    private let showSnackBar: (String) -> Void
+    
+    init(showSnackBar: @escaping (String) -> Void) {
+        self.showSnackBar = showSnackBar
+    }
+    
+    func showProgress() {}
+    
+    func showError(_ error: any Error) {
+        guard let error = error as? SaveMediaToPhotosErrorEntity else { return }
+        
+        if error == .fileDownloadInProgress {
+           showSnackBar(error.localizedDescription)
+        } else if error != .cancelled {
+            SVProgressHUD.dismiss()
+            SVProgressHUD.show(
+                MEGAAssets.UIImage.saveToPhotos,
+                status: error.localizedDescription
+            )
         }
     }
 }

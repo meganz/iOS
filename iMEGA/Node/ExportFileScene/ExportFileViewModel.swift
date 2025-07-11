@@ -25,6 +25,7 @@ final class ExportFileViewModel: ViewModelType {
     private let router: any ExportFileViewRouting
     private let exportFileUseCase: any ExportFileUseCaseProtocol
     private let analyticsEventUseCase: any AnalyticsEventUseCaseProtocol
+    private let overDiskQuotaChecker: any OverDiskQuotaChecking
     private(set) var currentTask: Task<Void, Never>?
 
     // MARK: - Internal properties
@@ -34,15 +35,18 @@ final class ExportFileViewModel: ViewModelType {
     init(
         router: some ExportFileViewRouting,
         analyticsEventUseCase: any AnalyticsEventUseCaseProtocol,
-        exportFileUseCase: any ExportFileUseCaseProtocol
+        exportFileUseCase: any ExportFileUseCaseProtocol,
+        overDiskQuotaChecker: some OverDiskQuotaChecking
     ) {
         self.router = router
         self.analyticsEventUseCase = analyticsEventUseCase
         self.exportFileUseCase = exportFileUseCase
+        self.overDiskQuotaChecker = overDiskQuotaChecker
     }
     
     // MARK: - Dispatch action
     func dispatch(_ action: ExportFileAction) {
+        guard !overDiskQuotaChecker.showOverDiskQuotaIfNeeded() else { return }
         cancelCurrentTask()
         router.showProgressView()
         

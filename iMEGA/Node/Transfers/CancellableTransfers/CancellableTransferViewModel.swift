@@ -15,6 +15,7 @@ final class CancellableTransferViewModel: ViewModelType, Sendable {
     private let downloadNodeUseCase: any DownloadNodeUseCaseProtocol
     private let mediaUseCase: any MediaUseCaseProtocol
     private let analyticsEventUseCase: any AnalyticsEventUseCaseProtocol
+    private let overDiskQuotaChecker: any OverDiskQuotaChecking
 
     private let transfers: [CancellableTransfer]
     private let fileTransfers: [CancellableTransfer]
@@ -42,6 +43,7 @@ final class CancellableTransferViewModel: ViewModelType, Sendable {
          downloadNodeUseCase: any DownloadNodeUseCaseProtocol,
          mediaUseCase: any MediaUseCaseProtocol,
          analyticsEventUseCase: any AnalyticsEventUseCaseProtocol,
+         overDiskQuotaChecker: some OverDiskQuotaChecking,
          transfers: [CancellableTransfer],
          transferType: CancellableTransferType) {
         self.router = router
@@ -49,6 +51,7 @@ final class CancellableTransferViewModel: ViewModelType, Sendable {
         self.downloadNodeUseCase = downloadNodeUseCase
         self.mediaUseCase = mediaUseCase
         self.analyticsEventUseCase = analyticsEventUseCase
+        self.overDiskQuotaChecker = overDiskQuotaChecker
         self.transfers = transfers
         self.fileTransfers = transfers.filter { $0.isFile }
         self.folderTransfers = transfers.filter { !$0.isFile }
@@ -59,6 +62,7 @@ final class CancellableTransferViewModel: ViewModelType, Sendable {
     func dispatch(_ action: CancellableTransferViewAction) {
         switch action {
         case .onViewReady:
+            guard !overDiskQuotaChecker.showOverDiskQuotaIfNeeded() else { return }
             router.prepareTransfersWidget()
             switch transferType {
             case .upload:

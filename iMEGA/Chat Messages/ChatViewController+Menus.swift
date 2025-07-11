@@ -176,21 +176,13 @@ extension ChatViewController {
     }
     
     private func saveToPhotos(node: MEGANode, chatMessage: ChatMessage, chatRoom: ChatRoomEntity) {
-        let saveMediaUseCase = SaveMediaToPhotosUseCase(downloadFileRepository: DownloadFileRepository(sdk: .shared), fileCacheRepository: FileCacheRepository.newRepo, nodeRepository: NodeRepository.newRepo, chatNodeRepository: ChatNodeRepository.newRepo, downloadChatRepository: DownloadChatRepository.newRepo)
-        TransfersWidgetViewController.sharedTransfer().setProgressViewInKeyWindow()
-        TransfersWidgetViewController.sharedTransfer().progressView?.showWidgetIfNeeded()
-        TransfersWidgetViewController.sharedTransfer().bringProgressToFrontKeyWindowIfNeeded()
-        
-        Task(priority: .userInitiated) {
-            do {
-                try await saveMediaUseCase.saveToPhotosChatNode(handle: node.handle, messageId: chatMessage.message.messageId, chatId: chatRoom.chatId)
-            } catch let error as SaveMediaToPhotosErrorEntity {
-                if error != .cancelled {
-                    await SVProgressHUD.dismiss()
-                    SVProgressHUD.show(MEGAAssets.UIImage.saveToPhotos, status: Strings.Localizable.somethingWentWrong)
-                }
-            }
-        }
+        SaveToPhotosCoordinator
+            .customProgressSVGErrorMessageDisplay(configureProgress: {
+                TransfersWidgetViewController.sharedTransfer().setProgressViewInKeyWindow()
+                TransfersWidgetViewController.sharedTransfer().progressView?.showWidgetIfNeeded()
+                TransfersWidgetViewController.sharedTransfer().bringProgressToFrontKeyWindowIfNeeded()
+            })
+            .saveToPhotosChatNode(handle: node.handle, messageId: chatMessage.message.messageId, chatId: chatRoom.chatId)
     }
     
     func select(_ message: ChatMessage) {

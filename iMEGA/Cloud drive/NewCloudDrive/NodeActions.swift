@@ -133,39 +133,9 @@ extension NodeActions {
                 navigationController.present(localNavController, animated: true)
             },
             saveToPhotos: { nodes in
-                
-                let handler = DevicePermissionsHandler.makeHandler()
-                let permissionRouter = PermissionAlertRouter.makeRouter(deviceHandler: handler)
-                
-                handler.photosPermissionWithCompletionHandler { granted in
-                    guard granted else {
-                        permissionRouter.alertPhotosPermission()
-                        return
-                    }
-                    
-                    let saveMediaUseCase = SaveMediaToPhotosUseCase(
-                        downloadFileRepository: DownloadFileRepository(sdk: sdk),
-                        fileCacheRepository: FileCacheRepository.newRepo,
-                        nodeRepository: NodeRepository.newRepo,
-                        chatNodeRepository: ChatNodeRepository.newRepo,
-                        downloadChatRepository: DownloadChatRepository.newRepo
-                    )
-                    Task { @MainActor in
-                        do {
-                            try await saveMediaUseCase.saveToPhotos(nodes: nodes)
-                        } catch {
-                            guard let errorEntity = error as? SaveMediaToPhotosErrorEntity,
-                                  errorEntity != .cancelled  else {
-                                return
-                            }
-                            
-                            await SVProgressHUD.dismiss()
-                            SVProgressHUD.show(
-                                MEGAAssets.UIImage.saveToPhotos,
-                                status: error.localizedDescription
-                            )
-                        }
-                    }
+                Task { @MainActor in
+                    SaveToPhotosCoordinator.SVProgressErrorOnly()
+                        .saveToPhotos(nodes: nodes)
                 }
             },
             exportFiles: { nodes, sender in
