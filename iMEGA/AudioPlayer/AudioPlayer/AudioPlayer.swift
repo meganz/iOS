@@ -43,6 +43,8 @@ final class AudioPlayer: NSObject {
     /// Set to `true` during a manual drag movement to prevent stale callbacks from the player (which may carry an outdated progress value) from overwriting
     /// the slider’s thumb position. Once the pending programmatic update has been applied, this flag is reset to `false`.
     var isUpdatingProgress = false
+    /// Set to `true` once the player’s first item has transitioned to .readyToPlay
+    var hasCompletedInitialConfiguration = false
     
     var previouslyPlayedItem: AudioPlayerItem?
     var isUserPreviouslyJustPlayedSameItem = false
@@ -198,6 +200,7 @@ final class AudioPlayer: NSObject {
             
             self.tracks = tracks
             audioPlayerConfig = [.loop: false, .shuffle: false, .repeatOne: false]
+            hasCompletedInitialConfiguration = false
             pause()
             
             if let newFirst = tracks.first {
@@ -311,8 +314,14 @@ final class AudioPlayer: NSObject {
         self.tracks = tracks
     }
     
+    /// Returns the current audio player item.
+    /// - Note: During the player’s initial configuration there is no track yet assigned to `currentItem`. In this case, we treat the first entry in
+    ///   `tracks` as the current track, since it will become the player’s `currentItem` once configuration completes.
+    /// - Returns:
+    ///   - If `hasCompletedInitialConfiguration` is `true`, the item that `queuePlayer` is currently playing, or`nil` if there isn’t one.
+    ///   - Otherwise, the first element of `tracks`, or `nil` if `tracks` is empty (The latter case should not occur, as the audio player always starts with tracks.).
     @objc func currentItem() -> AudioPlayerItem? {
-        queuePlayer?.currentItem as? AudioPlayerItem
+        hasCompletedInitialConfiguration ? (queuePlayer?.currentItem as? AudioPlayerItem) : tracks.first
     }
     
     @objc func queueItems() -> [AudioPlayerItem]? {
