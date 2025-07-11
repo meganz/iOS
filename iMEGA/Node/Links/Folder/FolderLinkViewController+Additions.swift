@@ -139,41 +139,11 @@ extension FolderLinkViewController {
     }
 
     func saveToPhotos(nodes: [NodeEntity]) {
-        let saveMediaUseCase = SaveMediaToPhotosUseCase(
-            downloadFileRepository: DownloadFileRepository(
-                sdk: MEGASdk.shared,
-                sharedFolderSdk: MEGASdk.sharedFolderLinkSdk
-            ),
-            fileCacheRepository: FileCacheRepository.newRepo,
-            nodeRepository: NodeRepository.newRepo,
-            chatNodeRepository: ChatNodeRepository.newRepo,
-            downloadChatRepository: DownloadChatRepository.newRepo
-        )
-
-        let permissionHandler = DevicePermissionsHandler.makeHandler()
-
-        permissionHandler.photosPermissionWithCompletionHandler { granted in
-            if granted {
+        SaveToPhotosCoordinator
+            .customProgressSVGErrorMessageDisplay(configureProgress: {
                 TransfersWidgetViewController.sharedTransfer().bringProgressToFrontKeyWindowIfNeeded()
-                Task { @MainActor in
-                    do {
-                        try await saveMediaUseCase.saveToPhotos(nodes: nodes)
-                    } catch {
-                        if let errorEntity = error as? SaveMediaToPhotosErrorEntity, errorEntity != .cancelled {
-                            await SVProgressHUD.dismiss()
-                            SVProgressHUD.show(
-                                MEGAAssets.UIImage.saveToPhotos,
-                                status: error.localizedDescription
-                            )
-                        }
-                    }
-                }
-            } else {
-                PermissionAlertRouter
-                    .makeRouter(deviceHandler: permissionHandler)
-                    .alertPhotosPermission()
-            }
-        }
+            })
+            .saveToPhotos(nodes: nodes)
     }
     
     @objc func selectedCountTitle() -> String {

@@ -90,34 +90,10 @@ extension PhotosViewController {
     }
     
     private func handleSaveToPhotos(for nodes: [MEGANode]) {
-        permissionHandler.photosPermissionWithCompletionHandler { [weak self] granted in
-            guard let self else { return }
-            
-            guard granted else {
-                permissionRouter.alertPhotosPermission()
-                return
+        SaveToPhotosCoordinator.SVProgressErrorOnly()
+            .saveToPhotos(nodes: nodes.toNodeEntities()) { [weak self] in
+                self?.toggleEditing()
             }
-            
-            let saveMediaUseCase = SaveMediaToPhotosUseCase(downloadFileRepository: DownloadFileRepository(sdk: MEGASdk.sharedSdk),
-                                                            fileCacheRepository: FileCacheRepository.newRepo, nodeRepository: NodeRepository.newRepo, chatNodeRepository: ChatNodeRepository.newRepo, downloadChatRepository: DownloadChatRepository.newRepo)
-            Task { @MainActor in
-                do {
-                    try await saveMediaUseCase.saveToPhotos(nodes: nodes.toNodeEntities())
-                } catch {
-                    guard let errorEntity = error as? SaveMediaToPhotosErrorEntity,
-                          errorEntity != .cancelled  else {
-                        return
-                    }
-                    
-                    await SVProgressHUD.dismiss()
-                    SVProgressHUD.show(
-                        MEGAAssets.UIImage.saveToPhotos,
-                        status: error.localizedDescription
-                    )
-                }
-                self.toggleEditing()
-            }
-        }
     }
     
     private func hide(nodes: [NodeEntity]) {

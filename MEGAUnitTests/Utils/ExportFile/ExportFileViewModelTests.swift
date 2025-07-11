@@ -12,7 +12,7 @@ struct ExportFileViewModelTestSuite {
         action: ExportFileAction,
         expectedURLs: [URL]
     ) async {
-        let (sut, router, _, analyticsUseCase) = makeSUT(urls: expectedURLs)
+        let (sut, router, _, analyticsUseCase, _) = makeSUT(urls: expectedURLs)
         
         sut.dispatch(action)
         
@@ -26,7 +26,10 @@ struct ExportFileViewModelTestSuite {
     }
     
     @MainActor
-    private static func makeSUT(urls: [URL]) -> (ExportFileViewModel, MockExportFileViewRouter, MockExportFileUseCase, MockAnalyticsEventUseCase) {
+    private static func makeSUT(
+        urls: [URL] = [],
+        isPaywalled: Bool = false
+    ) -> (ExportFileViewModel, MockExportFileViewRouter, MockExportFileUseCase, MockAnalyticsEventUseCase, MockOverDiskQuotaChecker) {
         let router = MockExportFileViewRouter()
         let exportUseCase = MockExportFileUseCase(
             exportNodeResult: urls.first,
@@ -35,13 +38,15 @@ struct ExportFileViewModelTestSuite {
             exportNodeFromMessageResult: urls.first
         )
         let analyticsUseCase = MockAnalyticsEventUseCase()
+        let overDiskQuotaChecker = MockOverDiskQuotaChecker(isPaywalled: isPaywalled)
         let sut = ExportFileViewModel(
             router: router,
             analyticsEventUseCase: analyticsUseCase,
-            exportFileUseCase: exportUseCase
+            exportFileUseCase: exportUseCase,
+            overDiskQuotaChecker: overDiskQuotaChecker
         )
         
-        return (sut, router, exportUseCase, analyticsUseCase)
+        return (sut, router, exportUseCase, analyticsUseCase, overDiskQuotaChecker)
     }
     
     struct TestCaseData {
@@ -85,6 +90,25 @@ struct ExportFileViewModelTestSuite {
                 expectedURLs: testCase.urls
             )
         }
+        
+        @Test("Over disk quota reached should not do anything",
+              arguments: [
+                ExportFileAction.exportFileFromNode(NodeEntity()),
+                .exportFilesFromNodes([NodeEntity(), NodeEntity()]),
+                .exportFilesFromMessages([ChatMessageEntity()], HandleEntity(123)),
+                .exportFileFromMessageNode(MEGANode(), HandleEntity(123), HandleEntity(234))
+              ]
+        )
+        @MainActor
+        func overDiskQuota(action: ExportFileAction) async throws {
+            let (sut, router, _, _, _) = makeSUT(isPaywalled: true)
+            
+            sut.dispatch(action)
+            
+            try await Task.sleep(nanoseconds: 100_000_000)
+            
+            #expect(router.showProgressView_calledTimes == 0, "Expected progress view should not be shown for action: \(action).")
+        }
     }
     
     // MARK: - Cancel Task Tests
@@ -98,7 +122,7 @@ struct ExportFileViewModelTestSuite {
         ])
         @MainActor
         func cancelCurrentTaskShouldStopExport(action: ExportFileAction) async {
-            let (sut, router, exportUseCase, _) = makeSUT(urls: [URL(string: "mock://file1")!])
+            let (sut, router, exportUseCase, _, _) = makeSUT(urls: [URL(string: "mock://file1")!])
             
             sut.dispatch(action)
             sut.cancelCurrentTask()

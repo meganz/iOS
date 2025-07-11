@@ -53,6 +53,11 @@ final class CancellableTransferRouter: NSObject, CancellableTransferRouting, Tra
         let sdk = MEGASdk.shared
         let nodeRepository = NodeRepository.newRepo
         let fileSystemRepository = FileSystemRepository.sharedRepo
+        let overDiskQuotaChecker = OverDiskQuotaChecker(
+            accountStorageUseCase: AccountStorageUseCase(
+                accountRepository: AccountRepository.newRepo,
+                preferenceUseCase: PreferenceUseCase.default),
+            appDelegateRouter: AppDelegateRouter())
         
         let viewModel = CancellableTransferViewModel(
             router: self,
@@ -71,6 +76,7 @@ final class CancellableTransferRouter: NSObject, CancellableTransferRouting, Tra
                 downloadChatRepository: DownloadChatRepository.newRepo), 
             mediaUseCase: MediaUseCase(fileSearchRepo: FilesSearchRepository.newRepo),
             analyticsEventUseCase: AnalyticsEventUseCase(repository: AnalyticsRepository.newRepo),
+            overDiskQuotaChecker: overDiskQuotaChecker,
             transfers: transfers,
             transferType: transferType)
         

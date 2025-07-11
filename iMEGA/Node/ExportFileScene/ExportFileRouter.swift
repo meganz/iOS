@@ -2,6 +2,7 @@ import ChatRepo
 import Foundation
 import MEGAAppSDKRepo
 import MEGADomain
+import MEGAPreference
 import MEGARepo
 import UIKit
 
@@ -48,9 +49,17 @@ final class ExportFileRouter: ExportFileViewRouting {
             userStoreRepository: UserStoreRepository.newRepo
         )
         
-        return ExportFileViewModel(router: self,
-                                   analyticsEventUseCase: AnalyticsEventUseCase(repository: AnalyticsRepository.newRepo),
-                                   exportFileUseCase: exportFileUC)
+        let overDiskQuotaChecker = OverDiskQuotaChecker(
+            accountStorageUseCase: AccountStorageUseCase(
+                accountRepository: AccountRepository.newRepo,
+                preferenceUseCase: PreferenceUseCase.default),
+            appDelegateRouter: AppDelegateRouter())
+        
+        return ExportFileViewModel(
+            router: self,
+            analyticsEventUseCase: AnalyticsEventUseCase(repository: AnalyticsRepository.newRepo),
+            exportFileUseCase: exportFileUC,
+            overDiskQuotaChecker: overDiskQuotaChecker)
     }()
     
     // MARK: - ExportFileViewRouting -

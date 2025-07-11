@@ -164,47 +164,17 @@ extension AlbumContentViewController: AlbumToolbarProvider {
     func saveToPhotosButtonPressed(_ button: UIBarButtonItem) {
         guard let selectedNodes = selectedNodes(),
               !selectedNodes.isEmpty else {
-                  return
-              }
-        
-        endEditingMode()
-        
-        permissionHandler.photosPermissionWithCompletionHandler { [weak self] granted in
-            guard let self else { return }
-            
-            guard granted else {
-                permissionRouter.alertPhotosPermission()
-                return
-            }
-            
-            let saveMediaUseCase = SaveMediaToPhotosUseCase(downloadFileRepository: DownloadFileRepository(sdk: MEGASdk.shared),
-                                                            fileCacheRepository: FileCacheRepository.newRepo,
-                                                            nodeRepository: NodeRepository.newRepo,
-                                                            chatNodeRepository: ChatNodeRepository.newRepo, 
-                                                            downloadChatRepository: DownloadChatRepository.newRepo)
-            
-            TransfersWidgetViewController.sharedTransfer().setProgressViewInKeyWindow()
-            TransfersWidgetViewController.sharedTransfer().progressView?.showWidgetIfNeeded()
-            TransfersWidgetViewController.sharedTransfer().bringProgressToFrontKeyWindowIfNeeded()
-            
-            Task { @MainActor in
-                do {
-                    try await saveMediaUseCase.saveToPhotos(nodes: selectedNodes.toNodeEntities())
-                } catch {
-                    
-                    guard let errorEntity = error as? SaveMediaToPhotosErrorEntity,
-                          errorEntity != .cancelled else {
-                        return
-                    }
-                    
-                    await SVProgressHUD.dismiss()
-                    SVProgressHUD.show(
-                        MEGAAssets.UIImage.saveToPhotos,
-                        status: error.localizedDescription
-                    )
-                }
-            }
+            return
         }
+        
+        SaveToPhotosCoordinator
+            .customProgressSVGErrorMessageDisplay(configureProgress: {
+                TransfersWidgetViewController.sharedTransfer().setProgressViewInKeyWindow()
+                TransfersWidgetViewController.sharedTransfer().progressView?.showWidgetIfNeeded()
+                TransfersWidgetViewController.sharedTransfer().bringProgressToFrontKeyWindowIfNeeded()
+            })
+            .saveToPhotos(nodes: selectedNodes.toNodeEntities())
+        endEditingMode()
     }
     
     // MARK: - Private
