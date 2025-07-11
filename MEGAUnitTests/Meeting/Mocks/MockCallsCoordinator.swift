@@ -15,6 +15,8 @@ final class MockCallsCoordinator: CallsCoordinatorProtocol, @unchecked Sendable 
     var muteCallResult_ToReturn = false
     var configureWebRTCAudioSession_CalledTimes = 0
     var setupProviderDelegate_CalledTimes = 0
+    var didActivateCallAudioSession_CalledTimes = 0
+    var didDeactivateCallAudioSession_CalledTimes = 0
     var endCallCalled = Expectation()
     var muteCallCalled = Expectation()
     var answerCallCalled = Expectation()
@@ -59,5 +61,13 @@ final class MockCallsCoordinator: CallsCoordinatorProtocol, @unchecked Sendable 
     
     func setupProviderDelegate(_ provider: any CallKitProviderDelegateProtocol) {
         setupProviderDelegate_CalledTimes += 1
+    }
+    
+    func didActivateCallAudioSession() {
+        didActivateCallAudioSession_CalledTimes += 1
+    }
+    
+    func didDeactivateCallAudioSession() {
+        didDeactivateCallAudioSession_CalledTimes += 1
     }
 }

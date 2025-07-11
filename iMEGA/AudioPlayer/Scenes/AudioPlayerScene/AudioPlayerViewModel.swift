@@ -19,7 +19,7 @@ enum AudioPlayerAction: ActionType {
     
     case onViewDidLoad
     case viewWillDisappear(reason: ViewWillDisappearReason)
-    case viewDidDisappear
+    case removeDelegates
     case initMiniPlayer
     case updateCurrentTime(percentage: Float)
     case onShuffle(active: Bool)
@@ -550,7 +550,7 @@ final class AudioPlayerViewModel: ViewModelType {
             case .systemPushedAnotherView:
                 break
             }
-        case .viewDidDisappear:
+        case .removeDelegates:
             removeDelegates()
         case .initMiniPlayer:
             initMiniPlayer()

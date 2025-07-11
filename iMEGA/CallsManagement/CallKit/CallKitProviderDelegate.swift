@@ -190,6 +190,9 @@ final class CallKitProviderDelegate: NSObject, CallKitProviderDelegateProtocol, 
     
     func provider(_ provider: CXProvider, didActivate audioSession: AVAudioSession) {
         MEGALogDebug("[CallKit] Provider did activate audio session")
+        
+        callsCoordinator?.didActivateCallAudioSession()
+        
         Task { @MainActor in
             callsCoordinator?.configureWebRTCAudioSession()
         }
@@ -197,6 +200,8 @@ final class CallKitProviderDelegate: NSObject, CallKitProviderDelegateProtocol, 
     
     func provider(_ provider: CXProvider, didDeactivate audioSession: AVAudioSession) {
         MEGALogDebug("[CallKit] Provider did deactivate audio session")
+        
+        callsCoordinator?.didDeactivateCallAudioSession()
     }
     
     // MARK: - Private

@@ -94,4 +94,16 @@ protocol CallsCoordinatorProtocol: AnyObject, Sendable {
     /// This var is used to keep track of any pending or incomplete data associated with an
     /// incoming call, ensuring that the app remains aware of and can react to updates in this context.
     var incomingCallForUnknownChat: IncomingCallForUnknownChat? { get set }
+    
+    /// Called when the audio session for a call has been activated by the system.
+    ///
+    /// Use this callback to start or resume audio-related operations, such as unmuting the microphone
+    /// and starting audio rendering, once the system audio session is fully active.
+    func didActivateCallAudioSession()
+    
+    /// Called when the audio session for a call has been deactivated by the system.
+    ///
+    /// Use this callback to pause or stop audio-related operations, such as muting the microphone
+    /// and stopping audio rendering, and to clean up any audio resources before the session is fully released.
+    func didDeactivateCallAudioSession()
 }

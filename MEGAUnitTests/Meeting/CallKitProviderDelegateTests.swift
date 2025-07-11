@@ -67,7 +67,7 @@ struct CallKitProviderDelegateTests {
         }
     }
     class MockMutedAction: CXSetMutedCallAction {
-
+        
         var fulfillCalled: TestingExpectation.Expectation!
         override func fulfill() {
             fulfillCalled.fulfill()
@@ -199,6 +199,23 @@ struct CallKitProviderDelegateTests {
             harness.sut.provider(harness.cxProvider, perform: muteAction)
             await harness.callCoordinator.muteCallCalled.fulfillment(within: .seconds(5))
             await muteAction.failCalled.fulfillment(within: .seconds(5))
+        }
+    }
+    
+    @Suite("Audio Session")
+    struct AudioSessionTests {
+        @Test("Provider did activate audio session calls coordinator and configures WebRTC")
+        func providerDidActivate_callsCoordinator() async {
+            let harness = Harness()
+            harness.sut.provider(harness.cxProvider, didActivate: AVAudioSession.sharedInstance())
+            #expect(harness.callCoordinator.didActivateCallAudioSession_CalledTimes == 1)
+        }
+        
+        @Test("Provider did deactivate audio session calls coordinator")
+        func providerDidDeactivate_callsCoordinator() async {
+            let harness = Harness()
+            harness.sut.provider(harness.cxProvider, didDeactivate: AVAudioSession.sharedInstance())
+            #expect(harness.callCoordinator.didDeactivateCallAudioSession_CalledTimes == 1)
         }
     }
 }

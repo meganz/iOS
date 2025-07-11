@@ -58,7 +58,7 @@ final class AudioPlayerViewModelTests: XCTestCase {
         await test(viewModel: onlineSUT, action: .onRepeatPressed, expectedCommands: [.updateRepeat(status: .none)])
         XCTAssertEqual(playerHandler.onRepeatDisabled_calledTimes, 1)
         
-        await test(viewModel: onlineSUT, action: .viewDidDisappear, expectedCommands: [])
+        await test(viewModel: onlineSUT, action: .removeDelegates, expectedCommands: [])
         XCTAssertEqual(playerHandler.removePlayerListener_calledTimes, 1)
         
         await test(viewModel: onlineSUT, action: .onChangeSpeedModePressed, expectedCommands: [.updateSpeed(mode: .oneAndAHalf)])

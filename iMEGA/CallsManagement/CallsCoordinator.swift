@@ -70,6 +70,8 @@ class CallsCoordinatorFactory: NSObject, CallsCoordinatorFactoryProtocol {
     
     private var logoutNotificationObserver: (any NSObjectProtocol)?
     
+    @Atomic private var isCallAudioSessionActivated: Bool = false
+    
     init(
         callUseCase: some CallUseCaseProtocol,
         callUpdateUseCase: some CallUpdateUseCaseProtocol,
@@ -385,7 +387,13 @@ class CallsCoordinatorFactory: NSObject, CallsCoordinatorFactoryProtocol {
         
         guard let chatRoom = chatRoomUseCase.chatRoom(forChatId: call.chatId),
               let callUUID = callsManager.callUUID(forChatRoom: chatRoom)
-        else { return }
+        else {
+            guard isCallAudioSessionActivated else {
+                sendAudioPlayerInterruptDidEndNotificationIfNeeded()
+                return
+            }
+            return
+        }
         
         var endCallReason: EndCallReason?
         switch call.termCodeType {
@@ -406,7 +414,10 @@ class CallsCoordinatorFactory: NSObject, CallsCoordinatorFactoryProtocol {
         guard let providerDelegate, let endCallReason else { return }
         providerDelegate.reportEndedCall(with: callUUID, reason: endCallReason)
         
-        sendAudioPlayerInterruptDidEndNotificationIfNeeded()
+        guard isCallAudioSessionActivated else {
+            sendAudioPlayerInterruptDidEndNotificationIfNeeded()
+            return
+        }
     }
     
     private func logoutNotificationsObserver() -> any NSObjectProtocol {
@@ -571,6 +582,15 @@ extension CallsCoordinator: CallsCoordinatorProtocol {
         $providerDelegate.mutate {
             $0 = provider
         }
+    }
+    
+    func didActivateCallAudioSession() {
+        $isCallAudioSessionActivated.mutate { $0 = true }
+    }
+    
+    func didDeactivateCallAudioSession() {
+        $isCallAudioSessionActivated.mutate { $0 = false }
+        sendAudioPlayerInterruptDidEndNotificationIfNeeded()
     }
 }
 
