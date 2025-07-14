@@ -43,10 +43,6 @@ extension AppDelegate {
         MEGAAuthentication.DependencyInjection.configureAuthEnvironmentUseCase = makeConfigureAuthEnvironmentUseCase()
     }
 
-    @objc func injectInfrastructureDependencies() {
-        MEGAInfrastructure.DependencyInjection.sharedSdk = .shared
-    }
-
     @objc func makeOnboardingViewController() -> UIViewController {
         if isLoginRegisterAndOnboardingRevampFeatureEnabled {
             OnboardingUSPViewController()

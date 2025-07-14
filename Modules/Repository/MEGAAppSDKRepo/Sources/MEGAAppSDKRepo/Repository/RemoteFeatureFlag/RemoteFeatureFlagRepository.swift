@@ -1,9 +1,9 @@
-import MEGAInfrastructure
+import MEGASDKRepo
 
-public typealias RemoteFeatureFlagRepository = MEGAInfrastructure.RemoteFeatureFlagRepository
+public typealias RemoteFeatureFlagRepository = MEGASDKRepo.RemoteFeatureFlagRepository
 
 extension RemoteFeatureFlagRepository {
     public static var newRepo: RemoteFeatureFlagRepository {
-        MEGAInfrastructure.DependencyInjection.remoteFeatureFlagRepositoryImpl
+        MEGASDKRepo.DependencyInjection.remoteFeatureFlagRepository
     }
 }
