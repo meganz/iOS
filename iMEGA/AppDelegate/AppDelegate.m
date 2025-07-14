@@ -180,7 +180,6 @@
     
     [self injectSDKRepoDependencies];
     [self injectAuthenticationDependencies];
-    [self injectInfrastructureDependencies];
 
     self.backgroundTaskMutableDictionary = [[NSMutableDictionary alloc] init];
     
