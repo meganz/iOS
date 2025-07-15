@@ -2,10 +2,11 @@ extension MainTabBarController {
     @objc func updateSharedItemsTabBadgeIfNeeded(_ nodeList: MEGANodeList) {
         let nodes = nodeList.toNodeArray()
         guard nodes.shareChangeTypeNodes().isNotEmpty else { return }
-        setBadgeValueForSharedItems()
+        setBadgeValueForSharedItemsIfNeeded()
     }
     
-    @objc func setBadgeValueForSharedItems() {
+    @objc func setBadgeValueForSharedItemsIfNeeded() {
+        guard !isNavigationRevampEnabled else { return }
         let unverifiedInShares = MEGASdk.shared.getUnverifiedInShares(.defaultAsc)
         let unverifiedOutShares = MEGASdk.shared.isContactVerificationWarningEnabled ? MEGASdk.shared.outShares(.defaultAsc)
             .toShareEntities()

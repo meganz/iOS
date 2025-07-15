@@ -118,29 +118,30 @@ class AppearanceManager: NSObject {
 
         let normalColor = TokenColors.Text.secondary
         let selectedColor = TokenColors.Button.brand
+        let badgeBackgroundColor = TokenColors.Components.interactive
+        let badgeTextColor = TokenColors.Text.onColor
 
         appearance.stackedLayoutAppearance.normal.iconColor = normalColor
-        appearance.stackedLayoutAppearance.normal.badgeBackgroundColor = .clear
-        appearance.stackedLayoutAppearance.normal.badgeTextAttributes = [.foregroundColor: TokenColors.Components.interactive]
-
         appearance.stackedLayoutAppearance.normal.titleTextAttributes = [.foregroundColor: normalColor]
-
+        appearance.stackedLayoutAppearance.normal.badgeBackgroundColor = badgeBackgroundColor
+        appearance.stackedLayoutAppearance.normal.badgeTextAttributes = [.foregroundColor: badgeTextColor]
         appearance.stackedLayoutAppearance.normal.titlePositionAdjustment = .init(horizontal: 0, vertical: -3)
+
         appearance.stackedLayoutAppearance.selected.iconColor = selectedColor
         appearance.stackedLayoutAppearance.selected.titleTextAttributes = [.foregroundColor: TokenColors.Button.brand]
         appearance.stackedLayoutAppearance.selected.titlePositionAdjustment = .init(horizontal: 0, vertical: -3)
 
         appearance.inlineLayoutAppearance.normal.iconColor = normalColor
-        appearance.inlineLayoutAppearance.normal.badgeBackgroundColor = .clear
-        appearance.inlineLayoutAppearance.normal.badgeTextAttributes = [.foregroundColor: TokenColors.Components.interactive]
-
+        appearance.inlineLayoutAppearance.normal.badgeBackgroundColor = badgeBackgroundColor
+        appearance.inlineLayoutAppearance.normal.badgeTextAttributes = [.foregroundColor: badgeTextColor]
         appearance.inlineLayoutAppearance.normal.titleTextAttributes = [.foregroundColor: normalColor]
+
         appearance.inlineLayoutAppearance.selected.iconColor = selectedColor
         appearance.inlineLayoutAppearance.selected.titleTextAttributes = [.foregroundColor: selectedColor]
 
         appearance.compactInlineLayoutAppearance.normal.iconColor = normalColor
-        appearance.compactInlineLayoutAppearance.normal.badgeBackgroundColor = .clear
-        appearance.compactInlineLayoutAppearance.normal.badgeTextAttributes = [.foregroundColor: TokenColors.Components.interactive]
+        appearance.compactInlineLayoutAppearance.normal.badgeBackgroundColor = badgeBackgroundColor
+        appearance.compactInlineLayoutAppearance.normal.badgeTextAttributes = [.foregroundColor: badgeTextColor]
         appearance.compactInlineLayoutAppearance.normal.titleTextAttributes = [.foregroundColor: normalColor]
         appearance.compactInlineLayoutAppearance.selected.iconColor = selectedColor
         appearance.compactInlineLayoutAppearance.selected.titleTextAttributes = [.foregroundColor: selectedColor]
