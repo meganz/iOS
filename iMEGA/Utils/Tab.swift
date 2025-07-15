@@ -166,7 +166,7 @@ extension Tab.TabType {
         let isNavigationRevampEnabled = DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .navigationRevamp)
         return switch self {
         case.cloudDrive: isNavigationRevampEnabled ? Strings.Localizable.TabbarTitle.drive : Strings.Localizable.cloudDrive
-        case .cameraUploads: isNavigationRevampEnabled ? Strings.Localizable.TabbarTitle.photos : Strings.Localizable.General.cameraUploads
+        case .cameraUploads: Strings.Localizable.TabbarTitle.photos
         case .home: isNavigationRevampEnabled ? Strings.Localizable.TabbarTitle.home : Strings.Localizable.home
         case .chat: isNavigationRevampEnabled ? Strings.Localizable.TabbarTitle.chat : Strings.Localizable.chat
         case .sharedItems: Strings.Localizable.sharedItems
