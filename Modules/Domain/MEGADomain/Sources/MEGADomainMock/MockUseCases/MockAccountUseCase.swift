@@ -28,13 +28,13 @@ public class MockAccountUseCase: AccountUseCaseProtocol, @unchecked Sendable {
     private let _contacts: [UserEntity]
     private var _currentAccountDetails: AccountDetailsEntity?
     private let _isOverQuota: Bool
-    private let _email: String?
+    private var _email: String?
     private let _isMasterBusinessAccount: Bool
     private let _isAchievementsEnabled: Bool
     private let smsState: SMSStateEntity
     private let _hasValidProOrUnexpiredBusinessAccount: Bool
     private let _hasBusinessAccountInGracePeriod: Bool
-    private let _incomingContactsRequestsCount: Int
+    private var _incomingContactsRequestsCount: Int
     private let _relevantUnseenUserAlertsCount: UInt
     private let _rootStorage: Int64
     private let _rubbishBinStorage: Int64
@@ -54,7 +54,10 @@ public class MockAccountUseCase: AccountUseCaseProtocol, @unchecked Sendable {
     public let monitorRefreshAccountPublisher: AnyPublisher<Bool, Never>
     public let _isMonitoringRefreshAccount: Bool
     public let onAccountUpdates: AnyAsyncSequence<Void>
-    
+    public let onAccountRequestFinish: AnyAsyncSequence<Result<AccountRequestEntity, any Error>>
+    public let onContactRequestsUpdates: AnyAsyncSequence<[ContactRequestEntity]>
+    public let onUserAlertsUpdates: AnyAsyncSequence<[UserAlertEntity]>
+
     public init(
         currentUser: UserEntity? = UserEntity(handle: .invalid),
         isGuest: Bool = false,
@@ -101,7 +104,10 @@ public class MockAccountUseCase: AccountUseCaseProtocol, @unchecked Sendable {
         richLinkPreviewEnabled: Bool = false,
         monitorRefreshAccountPublisher: AnyPublisher<Bool, Never> = Empty().eraseToAnyPublisher(),
         isMonitoringRefreshAccount: Bool = false,
-        onAccountUpdates: AnyAsyncSequence<Void> = EmptyAsyncSequence().eraseToAnyAsyncSequence()
+        onAccountUpdates: AnyAsyncSequence<Void> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
+        onAccountRequestFinish: AnyAsyncSequence<Result<AccountRequestEntity, any Error>> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
+        onContactRequestsUpdates: AnyAsyncSequence<[ContactRequestEntity]> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
+        onUserAlertsUpdates: AnyAsyncSequence<[UserAlertEntity]> = EmptyAsyncSequence().eraseToAnyAsyncSequence()
     ) {
         _currentUser = currentUser
         _isGuest = isGuest
@@ -149,6 +155,9 @@ public class MockAccountUseCase: AccountUseCaseProtocol, @unchecked Sendable {
         _isMonitoringRefreshAccount = isMonitoringRefreshAccount
         self.monitorRefreshAccountPublisher = monitorRefreshAccountPublisher
         self.onAccountUpdates = onAccountUpdates
+        self.onAccountRequestFinish = onAccountRequestFinish
+        self.onContactRequestsUpdates = onContactRequestsUpdates
+        self.onUserAlertsUpdates = onUserAlertsUpdates
     }
     
     // MARK: - User authentication status and identifiers
@@ -171,7 +180,7 @@ public class MockAccountUseCase: AccountUseCaseProtocol, @unchecked Sendable {
     public var myEmail: String? {
         _email
     }
-    
+
     // MARK: - Account characteristics
     public var accountCreationDate: Date? {
         _accountCreationDate
@@ -378,4 +387,12 @@ public class MockAccountUseCase: AccountUseCaseProtocol, @unchecked Sendable {
     }
     
     public func checkRecoveryKey(_ recoveryKey: String, link: String) async throws {}
+
+    public func update(email: String) {
+        _email = email
+    }
+
+    public func update(incomingContactsRequestsCount: Int) {
+        _incomingContactsRequestsCount = incomingContactsRequestsCount
+    }
 }

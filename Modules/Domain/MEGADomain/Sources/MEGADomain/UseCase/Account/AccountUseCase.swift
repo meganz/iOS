@@ -91,6 +91,8 @@ public protocol AccountUseCaseProtocol: Sendable {
     func incomingContactsRequestsCount() -> Int
     func relevantUnseenUserAlertsCount() -> UInt
 
+    var onAccountRequestFinish: AnyAsyncSequence<Result<AccountRequestEntity, any Error>> { get }
+
     // Node sizes
     func rootStorageUsed() -> Int64
     func rubbishBinStorageUsed() -> Int64
@@ -103,6 +105,8 @@ public protocol AccountUseCaseProtocol: Sendable {
     
     // Account events and delegates
     var onAccountUpdates: AnyAsyncSequence<Void> { get }
+    var onContactRequestsUpdates: AnyAsyncSequence<[ContactRequestEntity]> { get }
+    var onUserAlertsUpdates: AnyAsyncSequence<[UserAlertEntity]> { get }
 }
 
 extension AccountUseCaseProtocol {
@@ -189,6 +193,18 @@ public final class AccountUseCase<T: AccountRepositoryProtocol>: AccountUseCaseP
     
     public func currentSubscription() -> AccountSubscriptionEntity? {
         repository.currentSubscription()
+    }
+
+    public var onAccountRequestFinish: AnyAsyncSequence<Result<AccountRequestEntity, any Error>> {
+        repository.onRequestFinishUpdates
+            .map { response in
+                guard response.error.type == .ok else {
+                    return .failure(response.error)
+                }
+                return response.requestEntity.accountRequest.map { .success($0) }
+                ?? .failure(AccountErrorEntity.generic)
+            }
+            .eraseToAnyAsyncSequence()
     }
 
     // MARK: - User and session management
@@ -365,5 +381,13 @@ public final class AccountUseCase<T: AccountRepositoryProtocol>: AccountUseCaseP
     // MARK: - Account events and delegates
     public var onAccountUpdates: AnyAsyncSequence<Void> {
         repository.onAccountUpdates
+    }
+
+    public var onContactRequestsUpdates: AnyAsyncSequence<[ContactRequestEntity]> {
+        repository.onContactRequestsUpdates
+    }
+
+    public var onUserAlertsUpdates: AnyAsyncSequence<[UserAlertEntity]> {
+        repository.onUserAlertsUpdates
     }
 }
