@@ -13,7 +13,6 @@ import UIKit
 
 @MainActor
 struct AccountMenuViewModelTests {
-
     @Test("Test init method")
     func testInit() {
         let sut = makeSUT()
@@ -23,173 +22,215 @@ struct AccountMenuViewModelTests {
     }
 
     @Test("Test for account row data")
-    func testAccountRowData() {
+    func testAccountRowData() throws {
         let accountUseCase = MockAccountUseCase(email: "email@test.com")
         let sut = makeSUT(accountUseCase: accountUseCase)
         let accountSection = sut.sections[.account]
-        let accountRowData = accountSection?.first
-        #expect(accountRowData?.title == "")
-        #expect(accountRowData?.subtitle == "email@test.com")
-        #expect(accountRowData?.rowType == .disclosure(action: {}))
-        #expect(accountRowData?.iconConfiguration.style == .rounded)
+        let accountRowData = try #require(
+            accountSection?[SUT.Constants.AccountSectionIndex.accountDetails.rawValue],
+            "Account section should contain account details"
+        )
+        #expect(accountRowData.title == "")
+        #expect(accountRowData.subtitle == "email@test.com")
+        #expect(accountRowData.rowType == .disclosure(action: {}))
+        #expect(accountRowData.iconConfiguration.style == .rounded)
     }
 
     @Test("Test for plan row data")
-    func testPlanRowData() {
+    func testPlanRowData() throws {
         let accountUseCase = MockAccountUseCase(currentAccountDetails: MockMEGAAccountDetails(type: .proI).toAccountDetailsEntity())
         let sut = makeSUT(accountUseCase: accountUseCase)
         let accountSection = sut.sections[.account]
-        let planRowData = accountSection?[1]
-        #expect(planRowData?.title == Strings.Localizable.InAppPurchase.ProductDetail.Navigation.currentPlan)
+        let planRowData = try #require(
+            accountSection?[SUT.Constants.AccountSectionIndex.currentPlan.rawValue],
+            "Account section should contain current plan"
+        )
+        #expect(planRowData.title == Strings.Localizable.InAppPurchase.ProductDetail.Navigation.currentPlan)
         #expect(
-            planRowData?.subtitle == MockMEGAAccountDetails(type: .proI)
+            planRowData.subtitle == MockMEGAAccountDetails(type: .proI)
                 .toAccountDetailsEntity()
                 .proLevel
                 .toAccountTypeDisplayName()
         )
-        #expect(planRowData?.rowType == .withButton(title: Strings.Localizable.upgrade, action: { }))
-        #expect(planRowData?.iconConfiguration.style == .normal)
+        #expect(planRowData.rowType == .withButton(title: Strings.Localizable.upgrade, action: { }))
+        #expect(planRowData.iconConfiguration.style == .normal)
     }
 
     @Test("Test for storage row data")
-    func testStorageRowData() {
+    func testStorageRowData() throws {
         let accountUseCase = MockAccountUseCase(
             currentAccountDetails: MockMEGAAccountDetails(storageUsed: 10, storageMax: 100, type: .proI)
                 .toAccountDetailsEntity()
         )
         let sut = makeSUT(accountUseCase: accountUseCase)
         let accountSection = sut.sections[.account]
-        let storageRowData = accountSection?[2]
-        #expect(storageRowData?.title == Strings.Localizable.storage)
-        #expect(storageRowData?.subtitle == "10 B / 100 B")
-        #expect(storageRowData?.rowType == .disclosure(action: {}))
-        #expect(storageRowData?.iconConfiguration.style == .normal)
+        let storageRowData = try #require(
+            accountSection?[SUT.Constants.AccountSectionIndex.storageUsed.rawValue],
+            "Account section should contain storage used"
+        )
+        #expect(storageRowData.title == Strings.Localizable.storage)
+        #expect(storageRowData.subtitle == "10 B / 100 B")
+        #expect(storageRowData.rowType == .disclosure(action: {}))
+        #expect(storageRowData.iconConfiguration.style == .normal)
     }
 
     @Test("Test contacts row data")
-    func testContactsRowData() {
+    func testContactsRowData() throws {
         let sut = makeSUT()
         let accountSection = sut.sections[.account]
-        let contactsRowData = accountSection?[3]
-        #expect(contactsRowData?.title == Strings.Localizable.contactsTitle)
-        #expect(contactsRowData?.subtitle == nil)
-        #expect(contactsRowData?.rowType == .disclosure(action: {}))
-        #expect(contactsRowData?.iconConfiguration.style == .normal)
+        let contactsRowData = try #require(
+            accountSection?[SUT.Constants.AccountSectionIndex.contacts.rawValue],
+            "Account section should contain contacts"
+        )
+        #expect(contactsRowData.title == Strings.Localizable.contactsTitle)
+        #expect(contactsRowData.subtitle == nil)
+        #expect(contactsRowData.rowType == .disclosure(action: {}))
+        #expect(contactsRowData.iconConfiguration.style == .normal)
     }
 
     @Test("Test achievements row data")
-    func testAchievementsRowData() {
+    func testAchievementsRowData() throws {
         let sut = makeSUT()
         let accountSection = sut.sections[.account]
-        let achievementsRowData = accountSection?[4]
-        #expect(achievementsRowData?.title == Strings.Localizable.achievementsTitle)
-        #expect(achievementsRowData?.subtitle == nil)
-        #expect(achievementsRowData?.rowType == .disclosure(action: {}))
-        #expect(achievementsRowData?.iconConfiguration.style == .normal)
+        let achievementsRowData = try #require(
+            accountSection?[SUT.Constants.AccountSectionIndex.achievements.rawValue],
+            "Account section should contain achievements"
+        )
+        #expect(achievementsRowData.title == Strings.Localizable.achievementsTitle)
+        #expect(achievementsRowData.subtitle == nil)
+        #expect(achievementsRowData.rowType == .disclosure(action: {}))
+        #expect(achievementsRowData.iconConfiguration.style == .normal)
     }
 
     @Test("Test shared items row data")
-    func testSharedItemsRowData() {
+    func testSharedItemsRowData() throws {
         let sut = makeSUT()
         let toolsSection = sut.sections[.tools]
-        let sharedItemsRowData = toolsSection?[0]
-        #expect(sharedItemsRowData?.title == Strings.Localizable.sharedItems)
-        #expect(sharedItemsRowData?.subtitle == nil)
-        #expect(sharedItemsRowData?.rowType == .disclosure(action: {}))
-        #expect(sharedItemsRowData?.iconConfiguration.style == .normal)
+        let sharedItemsRowData = try #require(
+            toolsSection?[SUT.Constants.ToolsSectionIndex.sharedItems.rawValue],
+            "Tools section should contain shared items"
+        )
+        #expect(sharedItemsRowData.title == Strings.Localizable.sharedItems)
+        #expect(sharedItemsRowData.subtitle == nil)
+        #expect(sharedItemsRowData.rowType == .disclosure(action: {}))
+        #expect(sharedItemsRowData.iconConfiguration.style == .normal)
     }
 
     @Test("Test device center row data")
-    func testDeviceCenterRowData() {
+    func testDeviceCenterRowData() throws {
         let sut = makeSUT()
         let toolsSection = sut.sections[.tools]
-        let deviceCenterRowData = toolsSection?[1]
-        #expect(deviceCenterRowData?.title == Strings.Localizable.Device.Center.title)
-        #expect(deviceCenterRowData?.subtitle == nil)
-        #expect(deviceCenterRowData?.rowType == .disclosure(action: {}))
-        #expect(deviceCenterRowData?.iconConfiguration.style == .normal)
+        let deviceCenterRowData = try #require(
+            toolsSection?[SUT.Constants.ToolsSectionIndex.deviceCentre.rawValue],
+            "Tools section should contain device center"
+        )
+        #expect(deviceCenterRowData.title == Strings.Localizable.Device.Center.title)
+        #expect(deviceCenterRowData.subtitle == nil)
+        #expect(deviceCenterRowData.rowType == .disclosure(action: {}))
+        #expect(deviceCenterRowData.iconConfiguration.style == .normal)
     }
 
     @Test("Test transfers row data")
-    func testTransfersRowData() {
+    func testTransfersRowData() throws {
         let sut = makeSUT()
         let toolsSection = sut.sections[.tools]
-        let transfersRowData = toolsSection?[2]
-        #expect(transfersRowData?.title == Strings.Localizable.transfers)
-        #expect(transfersRowData?.subtitle == nil)
-        #expect(transfersRowData?.rowType == .disclosure(action: {}))
-        #expect(transfersRowData?.iconConfiguration.style == .normal)
+        let transfersRowData = try #require(
+            toolsSection?[SUT.Constants.ToolsSectionIndex.transfers.rawValue],
+            "Tools section should contain transfers"
+        )
+        #expect(transfersRowData.title == Strings.Localizable.transfers)
+        #expect(transfersRowData.subtitle == nil)
+        #expect(transfersRowData.rowType == .disclosure(action: {}))
+        #expect(transfersRowData.iconConfiguration.style == .normal)
     }
 
     @Test("Test offline files row data")
-    func testOfflineFilesRowData() {
+    func testOfflineFilesRowData() throws {
         let sut = makeSUT()
         let toolsSection = sut.sections[.tools]
-        let offlineFilesRowData = toolsSection?[3]
-        #expect(offlineFilesRowData?.title == Strings.Localizable.AccountMenu.offlineFiles)
-        #expect(offlineFilesRowData?.subtitle == nil)
-        #expect(offlineFilesRowData?.rowType == .disclosure(action: {}))
-        #expect(offlineFilesRowData?.iconConfiguration.style == .normal)
+        let offlineFilesRowData = try #require(
+            toolsSection?[SUT.Constants.ToolsSectionIndex.offlineFiles.rawValue],
+            "Tools section should contain offline files"
+        )
+        #expect(offlineFilesRowData.title == Strings.Localizable.AccountMenu.offlineFiles)
+        #expect(offlineFilesRowData.subtitle == nil)
+        #expect(offlineFilesRowData.rowType == .disclosure(action: {}))
+        #expect(offlineFilesRowData.iconConfiguration.style == .normal)
     }
 
     @Test("Test rubbish bin row data")
-    func testRubbishBinRowData() {
+    func testRubbishBinRowData() throws {
         let accountUseCase = MockAccountUseCase(rubbishBinStorage: 200)
         let sut = makeSUT(accountUseCase: accountUseCase)
         let toolsSection = sut.sections[.tools]
-        let rubbishBinRowData = toolsSection?[4]
-        #expect(rubbishBinRowData?.title == Strings.Localizable.rubbishBinLabel)
-        #expect(rubbishBinRowData?.subtitle == "200 B")
-        #expect(rubbishBinRowData?.rowType == .disclosure(action: {}))
-        #expect(rubbishBinRowData?.iconConfiguration.style == .normal)
+        let rubbishBinRowData = try #require(
+            toolsSection?[SUT.Constants.ToolsSectionIndex.rubbishBin.rawValue],
+            "Tools section should contain rubbish bin"
+        )
+        #expect(rubbishBinRowData.title == Strings.Localizable.rubbishBinLabel)
+        #expect(rubbishBinRowData.subtitle == "200 B")
+        #expect(rubbishBinRowData.rowType == .disclosure(action: {}))
+        #expect(rubbishBinRowData.iconConfiguration.style == .normal)
     }
 
     @Test("Test settings row data")
-    func testSettingsRowData() {
+    func testSettingsRowData() throws {
         let sut = makeSUT()
         let toolsSection = sut.sections[.tools]
-        let settingsRowData = toolsSection?[5]
-        #expect(settingsRowData?.title == Strings.Localizable.settingsTitle)
-        #expect(settingsRowData?.subtitle == nil)
-        #expect(settingsRowData?.rowType == .disclosure(action: {}))
-        #expect(settingsRowData?.iconConfiguration.style == .normal)
+        let settingsRowData = try #require(
+            toolsSection?[SUT.Constants.ToolsSectionIndex.settings.rawValue],
+            "Tools section should contain settings"
+        )
+        #expect(settingsRowData.title == Strings.Localizable.settingsTitle)
+        #expect(settingsRowData.subtitle == nil)
+        #expect(settingsRowData.rowType == .disclosure(action: {}))
+        #expect(settingsRowData.iconConfiguration.style == .normal)
     }
 
     @Test("Test VPN app row data")
-    func testVPNAPPRowData() {
+    func testVPNAPPRowData() throws {
         let sut = makeSUT()
         let privacySuiteSection = sut.sections[.privacySuite]
-        let megaVPNAppRowData = privacySuiteSection?[0]
-        #expect(megaVPNAppRowData?.title == Strings.Localizable.AccountMenu.MegaVPN.buttonTitle)
-        #expect(megaVPNAppRowData?.subtitle == Strings.Localizable.AccountMenu.MegaVPN.buttonSubtitle)
-        #expect(megaVPNAppRowData?.rowType == .externalLink(action: {}))
-        #expect(megaVPNAppRowData?.iconConfiguration.style == .normal)
+        let megaVPNAppRowData =  try #require(
+            privacySuiteSection?[SUT.Constants.PrivacySuiteSectionIndex.vpnApp.rawValue],
+            "Privacy Suite section should contain vpn app",
+        )
+        #expect(megaVPNAppRowData.title == Strings.Localizable.AccountMenu.MegaVPN.buttonTitle)
+        #expect(megaVPNAppRowData.subtitle == Strings.Localizable.AccountMenu.MegaVPN.buttonSubtitle)
+        #expect(megaVPNAppRowData.rowType == .externalLink(action: {}))
+        #expect(megaVPNAppRowData.iconConfiguration.style == .normal)
     }
 
     @Test("Test Pass app row data")
-    func testPassAppRowData() {
+    func testPassAppRowData() throws {
         let sut = makeSUT()
         let privacySuiteSection = sut.sections[.privacySuite]
-        let passRowData = privacySuiteSection?[1]
-        #expect(passRowData?.title == Strings.Localizable.AccountMenu.MegaPass.buttonTitle)
-        #expect(passRowData?.subtitle == Strings.Localizable.AccountMenu.MegaPass.buttonSubtitle)
-        #expect(passRowData?.rowType == .externalLink(action: {}))
-        #expect(passRowData?.iconConfiguration.style == .normal)
+        let passRowData = try #require(
+            privacySuiteSection?[SUT.Constants.PrivacySuiteSectionIndex.pwmApp.rawValue],
+            "Privacy Suite section should contain pwm app"
+        )
+        #expect(passRowData.title == Strings.Localizable.AccountMenu.MegaPass.buttonTitle)
+        #expect(passRowData.subtitle == Strings.Localizable.AccountMenu.MegaPass.buttonSubtitle)
+        #expect(passRowData.rowType == .externalLink(action: {}))
+        #expect(passRowData.iconConfiguration.style == .normal)
     }
 
     @Test("Test transfer it app row data")
-    func testTransferAppRowData() {
+    func testTransferAppRowData() throws {
         let sut = makeSUT()
         let privacySuiteSection = sut.sections[.privacySuite]
-        let transferItAppRowData = privacySuiteSection?[2]
-        #expect(transferItAppRowData?.title == Strings.Localizable.AccountMenu.TransferIt.buttonTitle)
-        #expect(transferItAppRowData?.subtitle == Strings.Localizable.AccountMenu.TransferIt.buttonSubtitle)
-        #expect(transferItAppRowData?.rowType == .externalLink(action: {}))
-        #expect(transferItAppRowData?.iconConfiguration.style == .normal)
+        let transferItAppRowData = try #require(
+            privacySuiteSection?[SUT.Constants.PrivacySuiteSectionIndex.transferItApp.rawValue],
+            "Privacy Suite section should contain transfer.it app"
+        )
+        #expect(transferItAppRowData.title == Strings.Localizable.AccountMenu.TransferIt.buttonTitle)
+        #expect(transferItAppRowData.subtitle == Strings.Localizable.AccountMenu.TransferIt.buttonSubtitle)
+        #expect(transferItAppRowData.rowType == .externalLink(action: {}))
+        #expect(transferItAppRowData.iconConfiguration.style == .normal)
     }
 
     @Test("Test refresh account details")
-    func testRefreshAccountDetails() async {
+    func testRefreshAccountDetails() async throws {
         let accountUseCase = MockAccountUseCase(
             currentAccountDetails: MockMEGAAccountDetails(storageUsed: 10, storageMax: 100, type: .proI)
                 .toAccountDetailsEntity(),
@@ -198,20 +239,27 @@ struct AccountMenuViewModelTests {
         )
 
         let sut = makeSUT(accountUseCase: accountUseCase)
-        await sut.refreshAccountData()
+        await sut.updateUI()
 
         let accountSection = sut.sections[.account]
-        let planRowData = accountSection?[1]
+        let planRowData = try #require(
+            accountSection?[SUT.Constants.AccountSectionIndex.currentPlan.rawValue],
+            "Account section should contain current plan details"
+        )
+
         #expect(
-            planRowData?.subtitle == MockMEGAAccountDetails(type: .proII)
+            planRowData.subtitle == MockMEGAAccountDetails(type: .proII)
                 .toAccountDetailsEntity()
                 .proLevel
                 .toAccountTypeDisplayName()
         )
 
-        let storageRowData = accountSection?[2]
-        #expect(storageRowData?.title == Strings.Localizable.storage)
-        #expect(storageRowData?.subtitle == "20 B / 200 B")
+        let storageRowData = try #require(
+            accountSection?[SUT.Constants.AccountSectionIndex.storageUsed.rawValue],
+            "Account section should contain storage details"
+        )
+        #expect(storageRowData.title == Strings.Localizable.storage)
+        #expect(storageRowData.subtitle == "20 B / 200 B")
     }
 
     @Test("Test account details tap")
@@ -219,7 +267,10 @@ struct AccountMenuViewModelTests {
         let router = MockMenuViewRouter()
         let sut = makeSUT(router: router)
         let accountSection = try #require(sut.sections[.account], "Account section should exist")
-        let accountInfoRow = try #require(accountSection.first, "Account section should have at least one row")
+        let accountInfoRow = try #require(
+            accountSection[SUT.Constants.AccountSectionIndex.accountDetails.rawValue],
+            "Account section should have at least one row"
+        )
 
         guard case let .disclosure(action) = accountInfoRow.rowType else {
             Issue.record("Expected disclosure row type but got \(accountInfoRow.rowType)")
@@ -236,7 +287,10 @@ struct AccountMenuViewModelTests {
         let router = MockMenuViewRouter()
         let sut = makeSUT(router: router)
         let accountSection = try #require(sut.sections[.account], "Account section should exist")
-        let currentPlanRow = accountSection[1]
+        let currentPlanRow = try #require(
+            accountSection[SUT.Constants.AccountSectionIndex.currentPlan.rawValue],
+            "Account section should contain current plan details"
+        )
 
         guard case .withButton(_, let action) = currentPlanRow.rowType else {
             Issue.record("Expected button row type but got \(currentPlanRow.rowType)")
@@ -253,7 +307,10 @@ struct AccountMenuViewModelTests {
         let router = MockMenuViewRouter()
         let sut = makeSUT(router: router)
         let accountSection = try #require(sut.sections[.account], "Account section should exist")
-        let storageRow = accountSection[2]
+        let storageRow = try #require(
+            accountSection[SUT.Constants.AccountSectionIndex.storageUsed.rawValue],
+            "Account section should contain storage details"
+        )
 
         guard case .disclosure(let action) = storageRow.rowType else {
             Issue.record("Expected button row type but got \(storageRow.rowType)")
@@ -270,7 +327,10 @@ struct AccountMenuViewModelTests {
         let router = MockMenuViewRouter()
         let sut = makeSUT(router: router)
         let accountSection = try #require(sut.sections[.account], "Account section should exist")
-        let contactsRow = accountSection[3]
+        let contactsRow = try #require(
+            accountSection[SUT.Constants.AccountSectionIndex.contacts.rawValue],
+            "Account section should contain contacts"
+        )
 
         guard case .disclosure(let action) = contactsRow.rowType else {
             Issue.record("Expected disclosure row type but got \(contactsRow.rowType)")
@@ -287,7 +347,10 @@ struct AccountMenuViewModelTests {
         let router = MockMenuViewRouter()
         let sut = makeSUT(router: router)
         let accountSection = try #require(sut.sections[.account], "Account section should exist")
-        let achievementsRow = accountSection[4]
+        let achievementsRow = try #require(
+            accountSection[SUT.Constants.AccountSectionIndex.achievements.rawValue],
+            "Account section should contain achievements"
+        )
 
         guard case .disclosure(let action) = achievementsRow.rowType else {
             Issue.record("Expected disclosure row type but got \(achievementsRow.rowType)")
@@ -304,7 +367,10 @@ struct AccountMenuViewModelTests {
         let router = MockMenuViewRouter()
         let sut = makeSUT(router: router)
         let toolsSection = try #require(sut.sections[.tools], "Tools section should exist")
-        let sharedItemsRow = try #require(toolsSection.first, "Tools section should contain at least one row")
+        let sharedItemsRow = try #require(
+            toolsSection[SUT.Constants.ToolsSectionIndex.sharedItems.rawValue],
+            "Tools section should contain shared items"
+        )
 
         guard case .disclosure(let action) = sharedItemsRow.rowType else {
             Issue.record("Expected disclosure row type but got \(sharedItemsRow.rowType)")
@@ -321,7 +387,10 @@ struct AccountMenuViewModelTests {
         let router = MockMenuViewRouter()
         let sut = makeSUT(router: router)
         let toolsSection = try #require(sut.sections[.tools], "Tools section should exist")
-        let deviceCenterRow = toolsSection[1]
+        let deviceCenterRow = try #require(
+            toolsSection[SUT.Constants.ToolsSectionIndex.deviceCentre.rawValue],
+            "Tools section should contain device center"
+        )
 
         guard case .disclosure(let action) = deviceCenterRow.rowType else {
             Issue.record("Expected disclosure row type but got \(deviceCenterRow.rowType)")
@@ -338,7 +407,10 @@ struct AccountMenuViewModelTests {
         let router = MockMenuViewRouter()
         let sut = makeSUT(router: router)
         let toolsSection = try #require(sut.sections[.tools], "Tools section should exist")
-        let transfersRow = toolsSection[2]
+        let transfersRow = try #require(
+            toolsSection[SUT.Constants.ToolsSectionIndex.transfers.rawValue],
+            "Tools section should contain transfers"
+        )
 
         guard case .disclosure(let action) = transfersRow.rowType else {
             Issue.record("Expected disclosure row type but got \(transfersRow.rowType)")
@@ -355,7 +427,10 @@ struct AccountMenuViewModelTests {
         let router = MockMenuViewRouter()
         let sut = makeSUT(router: router)
         let toolsSection = try #require(sut.sections[.tools], "Tools section should exist")
-        let offlineFilesRow = toolsSection[3]
+        let offlineFilesRow = try #require(
+            toolsSection[SUT.Constants.ToolsSectionIndex.offlineFiles.rawValue],
+            "Tools section should contain offline files"
+        )
 
         guard case .disclosure(let action) = offlineFilesRow.rowType else {
             Issue.record("Expected disclosure row type but got \(offlineFilesRow.rowType)")
@@ -372,7 +447,10 @@ struct AccountMenuViewModelTests {
         let router = MockMenuViewRouter()
         let sut = makeSUT(router: router)
         let toolsSection = try #require(sut.sections[.tools], "Tools section should exist")
-        let rubbishBinRow = toolsSection[4]
+        let rubbishBinRow = try #require(
+            toolsSection[SUT.Constants.ToolsSectionIndex.rubbishBin.rawValue],
+            "Tools section should contain rubbish bin"
+        )
 
         guard case .disclosure(let action) = rubbishBinRow.rowType else {
             Issue.record("Expected disclosure row type but got \(rubbishBinRow.rowType)")
@@ -389,7 +467,10 @@ struct AccountMenuViewModelTests {
         let router = MockMenuViewRouter()
         let sut = makeSUT(router: router)
         let toolsSection = try #require(sut.sections[.tools], "Tools section should exist")
-        let settingsRow = try #require(toolsSection.last, "Tools section should contain at least one row")
+        let settingsRow = try #require(
+            toolsSection[SUT.Constants.ToolsSectionIndex.settings.rawValue],
+            "Tools section should contain settings"
+        )
 
         guard case .disclosure(let action) = settingsRow.rowType else {
             Issue.record("Expected disclosure row type but got \(settingsRow.rowType)")
@@ -406,7 +487,10 @@ struct AccountMenuViewModelTests {
         let router = MockMenuViewRouter()
         let sut = makeSUT(router: router)
         let privacySection = try #require(sut.sections[.privacySuite], "Privacy Suite section should exist")
-        let vpnRow = try #require(privacySection.first, "Privacy section should contain at least one row")
+        let vpnRow = try #require(
+            privacySection[SUT.Constants.PrivacySuiteSectionIndex.vpnApp.rawValue],
+            "Privacy section should contain at least one row"
+        )
 
         guard case .externalLink(let action) = vpnRow.rowType else {
             Issue.record("Expected external link row type but got \(vpnRow.rowType)")
@@ -424,7 +508,10 @@ struct AccountMenuViewModelTests {
         let router = MockMenuViewRouter()
         let sut = makeSUT(router: router)
         let privacySection = try #require(sut.sections[.privacySuite], "Privacy Suite section should exist")
-        let passRow = privacySection[1]
+        let passRow = try #require(
+            privacySection[SUT.Constants.PrivacySuiteSectionIndex.pwmApp.rawValue],
+            "Privacy section should contain at least one row"
+        )
 
         guard case .externalLink(let action) = passRow.rowType else {
             Issue.record("Expected external link row type but got \(passRow.rowType)")
@@ -442,7 +529,10 @@ struct AccountMenuViewModelTests {
         let router = MockMenuViewRouter()
         let sut = makeSUT(router: router)
         let privacySection = try #require(sut.sections[.privacySuite], "Privacy Suite section should exist")
-        let transferItRow = try #require(privacySection.last, "Privacy section should contain at least one row")
+        let transferItRow = try #require(
+            privacySection[SUT.Constants.PrivacySuiteSectionIndex.transferItApp.rawValue],
+            "Privacy section should contain at least one row"
+        )
 
         guard case .externalLink(let action) = transferItRow.rowType else {
             Issue.record("Expected external link row type but got \(transferItRow.rowType)")
@@ -483,8 +573,7 @@ struct AccountMenuViewModelTests {
         let notificationUseCase = MockNotificationUseCase(unreadNotificationIDs: [100, 200, 300, 400, 500])
         let accountUseCase = MockAccountUseCase(relevantUnseenUserAlertsCount: 15)
         let sut = makeSUT(accountUseCase: accountUseCase, notificationsUseCase: notificationUseCase)
-        let condition = { sut.appNotificationsCount == 20 }()
-        try await waitUntil(condition)
+        try await waitUntil(await MainActor.run { sut.appNotificationsCount != 20 })
         #expect(sut.appNotificationsCount == 20)
     }
 
@@ -499,31 +588,27 @@ struct AccountMenuViewModelTests {
     @Test("Test the shared items notifications count logic with valid number of notifications")
     func testSharedItemsNotificationsCount_withValidNumberOfNotifications() throws {
         let sut = makeSUT(sharedItemsNotificationCountHandler: { 10 })
-        let index = try #require(sut.sections[.tools]?.firstIndex { $0.title == Strings.Localizable.sharedItems })
-        #expect(sut.sections[.tools]?[index].notificationCount == 10)
+        #expect(sut.sections[.tools]?[SUT.Constants.ToolsSectionIndex.sharedItems.rawValue]?.notificationCount == 10)
     }
 
     @Test("Test the shared items notifications count logic with no notifications")
     func testSharedItemsNotificationsCount_withNoNotifications() throws {
         let sut = makeSUT(sharedItemsNotificationCountHandler: { 0 })
-        let index = try #require(sut.sections[.tools]?.firstIndex { $0.title == Strings.Localizable.sharedItems })
-        #expect(sut.sections[.tools]?[index].notificationCount == nil)
+        #expect(sut.sections[.tools]?[SUT.Constants.ToolsSectionIndex.sharedItems.rawValue]?.notificationCount == nil)
     }
 
     @Test("Test the contacts notifications count logic with valid number of contact requests")
     func testContactsNotificationCount_withValidContactRequests() throws {
         let accountUseCase = MockAccountUseCase(incomingContactsRequestsCount: 30)
         let sut = makeSUT(accountUseCase: accountUseCase)
-        let index = try #require(sut.sections[.account]?.firstIndex { $0.title == Strings.Localizable.contactsTitle })
-        #expect(sut.sections[.account]?[index].notificationCount == 30)
+        #expect(sut.sections[.account]?[SUT.Constants.AccountSectionIndex.contacts.rawValue]?.notificationCount == 30)
     }
 
     @Test("Test the contacts notifications count logic with 0 contact requests")
     func testContactsNotificationCount_withNoContactRequests() throws {
         let accountUseCase = MockAccountUseCase(incomingContactsRequestsCount: 0)
         let sut = makeSUT(accountUseCase: accountUseCase)
-        let index = try #require(sut.sections[.account]?.firstIndex { $0.title == Strings.Localizable.contactsTitle })
-        #expect(sut.sections[.account]?[index].notificationCount == nil)
+        #expect(sut.sections[.account]?[SUT.Constants.AccountSectionIndex.contacts.rawValue]?.notificationCount == nil)
     }
 
     @Test("Test the upgrade plan menu option logic for business account")
@@ -532,7 +617,11 @@ struct AccountMenuViewModelTests {
             currentAccountDetails: MockMEGAAccountDetails(type: .business).toAccountDetailsEntity()
         )
         let sut = makeSUT(accountUseCase: accountUseCase)
-        #expect(sut.sections[.account]?[1].title != Strings.Localizable.InAppPurchase.ProductDetail.Navigation.currentPlan)
+        #expect(
+            sut
+                .sections[.account]?[SUT.Constants.AccountSectionIndex.currentPlan.rawValue]?
+                .title != Strings.Localizable.InAppPurchase.ProductDetail.Navigation.currentPlan
+        )
     }
 
     @Test("Test the upgrade plan menu option logic for pro flexi account")
@@ -541,8 +630,122 @@ struct AccountMenuViewModelTests {
             currentAccountDetails: MockMEGAAccountDetails(type: .proFlexi).toAccountDetailsEntity()
         )
         let sut = makeSUT(accountUseCase: accountUseCase)
-        #expect(sut.sections[.account]?[1].title != Strings.Localizable.InAppPurchase.ProductDetail.Navigation.currentPlan)
+        #expect(
+            sut
+                .sections[.account]?[SUT.Constants.AccountSectionIndex.currentPlan.rawValue]?
+                .title != Strings.Localizable.InAppPurchase.ProductDetail.Navigation.currentPlan
+        )
     }
+
+    @Test("Test On AccountRequest Finish handler when account details changed")
+    func testOnAccountRequestFinish_whenAccountDetailsChanged() async throws {
+        let (stream, continuation) = AsyncStream<Result<AccountRequestEntity, any Error>>.makeStream()
+        let accountUseCase = MockAccountUseCase(
+            currentAccountDetails: MockMEGAAccountDetails(type: .free).toAccountDetailsEntity(),
+            onAccountRequestFinish: stream.eraseToAnyAsyncSequence()
+        )
+        var showUpdatedValue = false
+        let fullNameHandler: (CurrentUserSource) -> String = { _ in
+            if showUpdatedValue {
+                showUpdatedValue.toggle()
+                return "initialName"
+            } else {
+                return "updatedName"
+            }
+
+        }
+        let sut = makeSUT(accountUseCase: accountUseCase, fullNameHandler: fullNameHandler)
+        accountUseCase.update(email: "testEmail@test.com")
+        continuation.yield(.success(.init(type: .accountDetails)))
+        try await waitUntil(
+            await MainActor.run {
+                sut
+                    .sections[.account]?[SUT.Constants.AccountSectionIndex.accountDetails.rawValue]?
+                    .title != "updatedName"
+            }
+        )
+        #expect(
+            sut
+                .sections[.account]?[SUT.Constants.AccountSectionIndex.accountDetails.rawValue]?
+                .subtitle == "testEmail@test.com"
+        )
+        #expect(
+            sut.sections[.account]?[SUT.Constants.AccountSectionIndex.accountDetails.rawValue]?
+                .title == "updatedName"
+        )
+    }
+
+    @Test("Test On AccountRequest Finish handler when user attribute changed")
+    func testOnAccountRequestFinish_whenUserAttributeChanged() async throws {
+        let (stream, continuation) = AsyncStream<Result<AccountRequestEntity, any Error>>.makeStream()
+        let accountDetails = MockMEGAAccountDetails(type: .free).toAccountDetailsEntity()
+        let accountUseCase = MockAccountUseCase(
+            currentAccountDetails: accountDetails,
+            accountDetailsResult: .success(accountDetails),
+            onAccountRequestFinish: stream.eraseToAnyAsyncSequence()
+        )
+        var showUpdatedValue = false
+        let fullNameHandler: (CurrentUserSource) -> String = { _ in
+            if showUpdatedValue {
+                showUpdatedValue.toggle()
+                return "initialName"
+            } else {
+                return "updatedName"
+            }
+
+        }
+        let sut = makeSUT(accountUseCase: accountUseCase, fullNameHandler: fullNameHandler)
+        accountUseCase.update(email: "testEmail@test.com")
+        continuation.yield(.success(.init(type: .getAttrUser, userAttribute: .firstName)))
+        try await waitUntil(
+            await MainActor.run {
+                sut
+                    .sections[.account]?[SUT.Constants.AccountSectionIndex.accountDetails.rawValue]?
+                    .title != "updatedName"
+            }
+        )
+        #expect(
+            sut
+                .sections[.account]?[SUT.Constants.AccountSectionIndex.accountDetails.rawValue]?
+                .subtitle == "testEmail@test.com"
+        )
+        #expect(
+            sut
+                .sections[.account]?[SUT.Constants.AccountSectionIndex.accountDetails.rawValue]?
+                .title == "updatedName"
+        )
+    }
+
+    @Test("Test contacts request listener updates")
+    func testOnContactRequestsUpdates() async throws {
+        let (stream, continuation) = AsyncStream<[ContactRequestEntity]>.makeStream()
+        let accountUseCase = MockAccountUseCase(onContactRequestsUpdates: stream.eraseToAnyAsyncSequence())
+        let sut = makeSUT(accountUseCase: accountUseCase)
+        accountUseCase.update(incomingContactsRequestsCount: 10)
+        continuation.yield([ContactRequestEntity.random])
+        try await waitUntil(
+            await MainActor.run {
+                sut
+                    .sections[.account]?[SUT.Constants.AccountSectionIndex.contacts.rawValue]?.notificationCount != 10
+            }
+        )
+        #expect(
+            sut.sections[.account]?[SUT.Constants.AccountSectionIndex.contacts.rawValue]?.notificationCount == 10
+        )
+    }
+
+    @Test("Test on user alerts updates")
+    func testOnUserAlertsUpdates() async throws {
+        let (stream, continuation) = AsyncStream<[UserAlertEntity]>.makeStream()
+        let notificationUseCase = MockNotificationUseCase(unreadNotificationIDs: [10, 20])
+        let accountUseCase = MockAccountUseCase(relevantUnseenUserAlertsCount: 28, onUserAlertsUpdates: stream.eraseToAnyAsyncSequence())
+        let sut = makeSUT(accountUseCase: accountUseCase, notificationsUseCase: notificationUseCase)
+        continuation.yield([UserAlertEntity.random])
+        try await waitUntil(await MainActor.run { sut.appNotificationsCount != 30 })
+        #expect(sut.appNotificationsCount == 30)
+    }
+
+    private typealias SUT = AccountMenuViewModel
 
     private func makeSUT(
         router: some AccountMenuViewRouting = MockMenuViewRouter(),
@@ -556,8 +759,9 @@ struct AccountMenuViewModelTests {
         networkMonitorUseCase: some NetworkMonitorUseCaseProtocol = MockNetworkMonitorUseCase(),
         notificationsUseCase: some NotificationsUseCaseProtocol = MockNotificationUseCase(),
         logoutHandler: @escaping () async -> Void = {},
-        sharedItemsNotificationCountHandler: @escaping () -> Int = { 0 }
-    ) -> AccountMenuViewModel {
+        sharedItemsNotificationCountHandler: @escaping () -> Int = { 0 },
+        fullNameHandler: @escaping (CurrentUserSource) -> String = { _ in "" }
+    ) -> SUT {
         let currentUserSource = CurrentUserSource(sdk: MockSdk())
         return AccountMenuViewModel(
             router: router,
@@ -569,7 +773,7 @@ struct AccountMenuViewModelTests {
             networkMonitorUseCase: networkMonitorUseCase,
             preferenceUseCase: preferenceUseCase,
             notificationsUseCase: notificationsUseCase,
-            fullNameHandler: { _ in "" },
+            fullNameHandler: fullNameHandler,
             avatarFetchHandler: { _, _ in UIImage() },
             logoutHandler: logoutHandler,
             sharedItemsNotificationCountHandler: sharedItemsNotificationCountHandler

@@ -24,7 +24,7 @@ public struct AccountMenuView: View {
         }
         .toolbar(.hidden)
         .task {
-            await viewModel.refreshAccountData()
+            await viewModel.updateUI()
         }
     }
 
@@ -53,7 +53,7 @@ public struct AccountMenuView: View {
                                 .padding([.horizontal, .top], section == .account ? TokenSpacing._5 : TokenSpacing._4)
                         }
 
-                        ForEach(items) { option in
+                        ForEach(items.compactMap { $0 }) { option in
                             Button {
                                 guard case .disclosure(let action) = option.rowType else { return }
                                 action()
@@ -73,7 +73,7 @@ public struct AccountMenuView: View {
                     CollapsibleSectionView(
                         title: title,
                         isExpanded: $viewModel.isPrivacySuiteExpanded,
-                        options: privacyItems
+                        options: privacyItems.compactMap { $0 }
                     )
                 }
 
