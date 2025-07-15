@@ -12,7 +12,7 @@ let requestStatusProgressWindowManager = RequestStatusProgressWindowManager()
 
 extension MainTabBarController {
 
-    private var isNavigationRevampEnabled: Bool {
+    var isNavigationRevampEnabled: Bool {
         DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .navigationRevamp)
     }
 
@@ -86,14 +86,12 @@ extension MainTabBarController {
             guard
                 let tabBarItem = navigationController.tabBarItem
             else { break }
-
-            reloadInsets(for: tabBarItem)
             tabBarItem.accessibilityLabel = tabBarItem.title
         }
-        
+
         viewControllers = defaultViewControllers
 
-        setBadgeValueForSharedItems()
+        setBadgeValueForSharedItemsIfNeeded()
         setBadgeValueForChats()
         configurePhoneImageBadge()
 
@@ -105,14 +103,6 @@ extension MainTabBarController {
 
     @objc func configProgressView() {
         TransfersWidgetViewController.sharedTransfer().setProgressViewInKeyWindow()
-    }
-
-    @objc func reloadInsets(for tabBarItem: UITabBarItem) {
-        if traitCollection.horizontalSizeClass == .regular {
-            tabBarItem.imageInsets = .init(top: 0, left: 0, bottom: 0, right: 0)
-        } else {
-            tabBarItem.imageInsets = .init(top: 6, left: 0, bottom: -6, right: 0)
-        }
     }
 
     @objc func configurePhoneImageBadge() {
@@ -203,11 +193,17 @@ extension MainTabBarController {
         
         let unreadCountString = unreadChats > 99 ? "99+" : "\(unreadChats)"
         let badgeValue = unreadChats > 0 ? unreadCountString : nil
-        tabBar.setBadge(
-            value: badgeValue,
-            color: TokenColors.Components.interactive,
-            at: TabManager.chatTabIndex()
-        )
+
+        if isNavigationRevampEnabled {
+            let tabbarItem = tabBar.items?[TabManager.chatTabIndex()]
+            tabbarItem?.badgeValue = badgeValue
+        } else {
+            tabBar.setBadge(
+                value: badgeValue,
+                color: TokenColors.Components.interactive,
+                at: TabManager.chatTabIndex()
+            )
+        }
     }
     
     @objc func showUploadFile() {
