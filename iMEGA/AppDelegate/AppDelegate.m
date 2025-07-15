@@ -118,7 +118,10 @@
     [MEGASdk setLogToConsole:YES];
     
     [self enableLogsIfNeeded];
-    
+
+    [self injectSDKRepoDependencies];
+    [self injectAuthenticationDependencies];
+
     [self initialiseModules];
     
     [self enableRequestStatusMonitor];
@@ -177,9 +180,6 @@
     NSString *languageCode = NSBundle.mainBundle.preferredLocalizations.firstObject;
     [MEGASdk.shared setLanguageCode:languageCode];
     [MEGASdk.sharedFolderLink setLanguageCode:languageCode];
-    
-    [self injectSDKRepoDependencies];
-    [self injectAuthenticationDependencies];
 
     self.backgroundTaskMutableDictionary = [[NSMutableDictionary alloc] init];
     
