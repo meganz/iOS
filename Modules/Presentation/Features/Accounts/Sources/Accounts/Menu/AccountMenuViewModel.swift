@@ -18,8 +18,8 @@ public enum MegaCompanionApp {
 
     public var link: String {
         switch self {
-        case .vpn: "https://vpn.mega.nz"
-        case .passwordManager: "https://pwm.mega.nz"
+        case .vpn: "mega://vpn"
+        case .passwordManager: "mega://pwm"
         case .transferIt: "https://transfer.it"
         }
     }
