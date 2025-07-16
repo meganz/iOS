@@ -92,6 +92,7 @@ public final class AccountMenuViewModel: ObservableObject {
     @Published private(set) var sections: [AccountMenuSectionType: [AccountMenuOption?]] = [:]
     @Published var appNotificationsCount = 0
     @Published var isAtTop = true
+    @Published var isAccountUpdating: Bool = false
 
     private let router: any AccountMenuViewRouting
     private let tracker: any AnalyticsTracking
@@ -100,6 +101,7 @@ public final class AccountMenuViewModel: ObservableObject {
     private let userImageUseCase: any UserImageUseCaseProtocol
     private let megaHandleUseCase: any MEGAHandleUseCaseProtocol
     private let networkMonitorUseCase: any NetworkMonitorUseCaseProtocol
+    private let purchaseUseCase: any AccountPlanPurchaseUseCaseProtocol
     private var monitorTask: Task<Void, Never>?
     private let fullNameHandler: (CurrentUserSource) -> String
     private let avatarFetchHandler: (String, HandleEntity) async -> UIImage?
@@ -108,6 +110,7 @@ public final class AccountMenuViewModel: ObservableObject {
     private var onAccountRequestFinishUpdatesTask: Task<Void, any Error>?
     private var onContactRequestsUpdatesTask: Task<Void, any Error>?
     private var onUserAlertsUpdatesTask: Task<Void, any Error>?
+    private var monitorSubmitReceiptAfterPurchaseTask: Task<Void, Never>?
     private let notificationsUseCase: any NotificationsUseCaseProtocol
 
     @PreferenceWrapper(key: PreferenceKeyEntity.offlineLogOutWarningDismissed, defaultValue: false)
@@ -158,6 +161,7 @@ public final class AccountMenuViewModel: ObservableObject {
             accountDetails: accountUseCase.currentAccountDetails
         )
         accountSection[Constants.AccountSectionIndex.storageUsed.rawValue] = storageUsedMenuOption(
+            isAccountUpdating: isAccountUpdating,
             accountDetails: accountUseCase.currentAccountDetails
         )
         accountSection[Constants.AccountSectionIndex.contacts.rawValue] = contactsMenuOption()
@@ -208,19 +212,19 @@ public final class AccountMenuViewModel: ObservableObject {
         privacySuiteSection[Constants.PrivacySuiteSectionIndex.vpnApp.rawValue] = AccountMenuOption(
             iconConfiguration: .init(icon: MEGAAssets.Image.vpnAppInMenu),
             title: Strings.Localizable.AccountMenu.MegaVPN.buttonTitle,
-            subtitle: Strings.Localizable.AccountMenu.MegaVPN.buttonSubtitle,
+            subtitleState: .value(Strings.Localizable.AccountMenu.MegaVPN.buttonSubtitle),
             rowType: .externalLink { [weak self] in self?.router.openLink(for: .vpn) }
         )
         privacySuiteSection[Constants.PrivacySuiteSectionIndex.pwmApp.rawValue] = AccountMenuOption(
             iconConfiguration: .init(icon: MEGAAssets.Image.passAppInMenu),
             title: Strings.Localizable.AccountMenu.MegaPass.buttonTitle,
-            subtitle: Strings.Localizable.AccountMenu.MegaPass.buttonSubtitle,
+            subtitleState: .value(Strings.Localizable.AccountMenu.MegaPass.buttonSubtitle),
             rowType: .externalLink { [weak self] in self?.router.openLink(for: .passwordManager) }
         )
         privacySuiteSection[Constants.PrivacySuiteSectionIndex.transferItApp.rawValue] = AccountMenuOption(
             iconConfiguration: .init(icon: MEGAAssets.Image.transferItAppInMenu),
             title: Strings.Localizable.AccountMenu.TransferIt.buttonTitle,
-            subtitle: Strings.Localizable.AccountMenu.TransferIt.buttonSubtitle,
+            subtitleState: .value(Strings.Localizable.AccountMenu.TransferIt.buttonSubtitle),
             rowType: .externalLink { [weak self] in self?.router.openLink(for: .transferIt) }
         )
         return privacySuiteSection
@@ -236,6 +240,7 @@ public final class AccountMenuViewModel: ObservableObject {
         networkMonitorUseCase: some NetworkMonitorUseCaseProtocol,
         preferenceUseCase: some PreferenceUseCaseProtocol,
         notificationsUseCase: some NotificationsUseCaseProtocol,
+        purchaseUseCase: some AccountPlanPurchaseUseCaseProtocol,
         fullNameHandler: @escaping (CurrentUserSource) -> String,
         avatarFetchHandler: @escaping (String, HandleEntity) async -> UIImage?,
         logoutHandler: @escaping () async -> Void,
@@ -248,12 +253,14 @@ public final class AccountMenuViewModel: ObservableObject {
         self.userImageUseCase = userImageUseCase
         self.megaHandleUseCase = megaHandleUseCase
         self.networkMonitorUseCase = networkMonitorUseCase
+        self.purchaseUseCase = purchaseUseCase
         self.fullNameHandler = fullNameHandler
         self.avatarFetchHandler = avatarFetchHandler
         self.logoutHandler = logoutHandler
         self.sharedItemsNotificationCountHandler = sharedItemsNotificationCountHandler
         self.notificationsUseCase = notificationsUseCase
 
+        isAccountUpdating = accountUseCase.isMonitoringRefreshAccount || purchaseUseCase.isSubmittingReceiptAfterPurchase
         sections = sectionData
         $offlineLogOutWarningDismissed.useCase = preferenceUseCase
         Task { await updateUI() }
@@ -263,6 +270,7 @@ public final class AccountMenuViewModel: ObservableObject {
         listenToAccountRequestFinishUpdates()
         listenToContactsRequestsUpdates()
         listenToUserAlertsUpdates()
+        listenToSubmitReceiptAfterPurchase()
     }
 
     deinit {
@@ -270,6 +278,7 @@ public final class AccountMenuViewModel: ObservableObject {
         cancelTransfersTask?.cancel()
         onAccountRequestFinishUpdatesTask?.cancel()
         onContactRequestsUpdatesTask?.cancel()
+        monitorSubmitReceiptAfterPurchaseTask?.cancel()
     }
 
     func updateUI() async {
@@ -334,10 +343,16 @@ public final class AccountMenuViewModel: ObservableObject {
     }
 
     private func accountDetailsMenuOption(iconConfiguration: AccountMenuOption.IconConfiguration) -> AccountMenuOption {
-        .init(
+        let subtitleState: AccountMenuOption.TextLoadState = if let email = accountUseCase.myEmail {
+            .value(email)
+        } else {
+            .loading
+        }
+
+        return .init(
             iconConfiguration: iconConfiguration,
             title: fullNameHandler(currentUserSource),
-            subtitle: accountUseCase.myEmail ?? "",
+            subtitleState: subtitleState,
             rowType: .disclosure { [weak self] in self?.showAccount() }
         )
     }
@@ -365,6 +380,7 @@ public final class AccountMenuViewModel: ObservableObject {
         )
 
         updatedSections[.account]?[Constants.AccountSectionIndex.storageUsed.rawValue] = storageUsedMenuOption(
+            isAccountUpdating: isAccountUpdating,
             accountDetails: accountDetails
         )
 
@@ -414,10 +430,16 @@ public final class AccountMenuViewModel: ObservableObject {
                 self?.upgradeAccount()
             }
 
+        let subtitleState: AccountMenuOption.TextLoadState = if let proLevel = accountDetails?.proLevel.toAccountTypeDisplayName() {
+            .value(proLevel)
+        } else {
+            .loading
+        }
+
         return .init(
             iconConfiguration: .init(icon: icon),
             title: Strings.Localizable.InAppPurchase.ProductDetail.Navigation.currentPlan,
-            subtitle: accountDetails?.proLevel.toAccountTypeDisplayName() ?? "",
+            subtitleState: subtitleState,
             rowType: rowType
         )
     }
@@ -432,15 +454,24 @@ public final class AccountMenuViewModel: ObservableObject {
         }
     }
 
-    private func storageUsedMenuOption(accountDetails: AccountDetailsEntity?) -> AccountMenuOption {
-        let storageUsed = String.memoryStyleString(fromByteCount: accountDetails?.storageUsed ?? 0).formattedByteCountString()
-        let totalStorage = String.memoryStyleString(fromByteCount: accountDetails?.storageMax ?? 0).formattedByteCountString()
-        let subtitle = "\(storageUsed) / \(totalStorage)"
+    private func storageUsedMenuOption(isAccountUpdating: Bool, accountDetails: AccountDetailsEntity?) -> AccountMenuOption {
+        let subtitleState: AccountMenuOption.TextLoadState
+
+        if isAccountUpdating {
+            subtitleState = .loading
+        } else if let accountDetails {
+            let storageUsed = String.memoryStyleString(fromByteCount: accountDetails.storageUsed).formattedByteCountString()
+            let totalStorage = String.memoryStyleString(fromByteCount: accountDetails.storageMax).formattedByteCountString()
+            let subtitle = "\(storageUsed) / \(totalStorage)"
+            subtitleState = .value(subtitle)
+        } else {
+            subtitleState = nil
+        }
 
         return .init(
             iconConfiguration: .init(icon: MEGAAssets.Image.storageInMenu),
             title: Strings.Localizable.storage,
-            subtitle: subtitle,
+            subtitleState: subtitleState,
             rowType: .disclosure { [weak self] in self?.router.showStorage() }
         )
     }
@@ -471,7 +502,7 @@ public final class AccountMenuViewModel: ObservableObject {
         return .init(
             iconConfiguration: .init(icon: MEGAAssets.Image.rubbishBinInMenu),
             title: Strings.Localizable.rubbishBinLabel,
-            subtitle: rubbishBinUsage,
+            subtitleState: .value(rubbishBinUsage),
             rowType: .disclosure { [weak self] in self?.router.showRubbishBin() }
         )
     }
@@ -479,7 +510,8 @@ public final class AccountMenuViewModel: ObservableObject {
     private func monitorAccountRefresh() {
         /// Monitors the account refresh process, primarily used after a plan purchase.
         monitorTask = Task { [weak self, accountUseCase] in
-            for await _ in accountUseCase.monitorRefreshAccount.values {
+            for await isUpdating in accountUseCase.monitorRefreshAccount.values {
+                self?.isAccountUpdating = isUpdating
                 await self?.refreshAccountData()
             }
         }
@@ -554,6 +586,19 @@ public final class AccountMenuViewModel: ObservableObject {
                 guard let self else { return }
                 try Task.checkCancellation()
                 await updateAppNotificationCount()
+            }
+        }
+    }
+
+    private func listenToSubmitReceiptAfterPurchase() {
+        monitorSubmitReceiptAfterPurchaseTask = Task { @MainActor [weak self, purchaseUseCase] in
+            for await _ in purchaseUseCase.monitorSubmitReceiptAfterPurchase.values.removeDuplicates().filter({ $0 }) {
+                guard let self else { break }
+                isAccountUpdating = true
+                sections[.account]?[Constants.AccountSectionIndex.storageUsed.rawValue] = storageUsedMenuOption(
+                    isAccountUpdating: isAccountUpdating,
+                    accountDetails: accountUseCase.currentAccountDetails
+                )
             }
         }
     }

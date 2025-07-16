@@ -17,7 +17,8 @@ final public class MockAccountPlanPurchaseUseCase: AccountPlanPurchaseUseCasePro
     public var deRegisterRestoreDelegateCalled = 0
     public var registerPurchaseDelegateCalled = 0
     public var deRegisterPurchaseDelegateCalled = 0
-    
+    public var monitorSubmitReceiptPublisherCalled = 0
+
     private let _isSubmittingReceiptAfterPurchase: Bool
     public private(set) var startMonitoringSubmitReceiptAfterPurchaseCalled = 0
     public private(set) var endMonitoringPurchaseReceiptCalled = 0
@@ -72,7 +73,8 @@ final public class MockAccountPlanPurchaseUseCase: AccountPlanPurchaseUseCasePro
     }
 
     public var monitorSubmitReceiptAfterPurchase: AnyPublisher<Bool, Never> {
-        _monitorSubmitReceiptPublisher
+        monitorSubmitReceiptPublisherCalled += 1
+        return _monitorSubmitReceiptPublisher
     }
     
     public func purchasePlan(_ plan: PlanEntity) async {

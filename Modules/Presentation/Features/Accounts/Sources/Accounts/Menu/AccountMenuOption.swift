@@ -25,24 +25,36 @@ struct AccountMenuOption: Identifiable {
         }
     }
 
+    enum TextLoadState {
+        case none
+        case loading
+        case value(String)
+    }
+
     let id: UUID = UUID()
     let iconConfiguration: IconConfiguration
     let title: String
-    let subtitle: String?
+    let subtitleState: TextLoadState
     let notificationCount: Int?
     let rowType: AccountMenuRowType
 
     init(
         iconConfiguration: IconConfiguration,
         title: String,
-        subtitle: String? = nil,
+        subtitleState: TextLoadState = nil,
         notificationCount: Int? = nil,
         rowType: AccountMenuRowType,
     ) {
         self.iconConfiguration = iconConfiguration
         self.title = title
-        self.subtitle = subtitle
+        self.subtitleState = subtitleState
         self.notificationCount = notificationCount
         self.rowType = rowType
+    }
+}
+
+extension AccountMenuOption.TextLoadState: ExpressibleByNilLiteral {
+    init(nilLiteral: ()) {
+        self = .none
     }
 }
