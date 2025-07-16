@@ -43,6 +43,7 @@ struct AccountMenuViewRouter: AccountMenuViewRouting {
             networkMonitorUseCase: NetworkMonitorUseCase(repo: NetworkMonitorRepository.newRepo),
             preferenceUseCase: PreferenceUseCase.default,
             notificationsUseCase: NotificationsUseCase(repository: NotificationsRepository.newRepo),
+            purchaseUseCase: AccountPlanPurchaseUseCase(repository: AccountPlanPurchaseRepository.newRepo),
             fullNameHandler: { currentUserSource in
                 currentUserSource.currentUser?.mnz_fullName ?? ""
             },

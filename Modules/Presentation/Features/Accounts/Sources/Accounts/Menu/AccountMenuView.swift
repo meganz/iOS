@@ -202,7 +202,13 @@ private struct MenuRowView: View {
             }
         }
 
-        if let subtitle = option.subtitle {
+        switch option.subtitleState {
+        case .none:
+            EmptyView()
+        case .loading:
+            ProgressView()
+                .foregroundStyle(TokenColors.Icon.secondary.swiftUI)
+        case .value(let subtitle):
             Text(subtitle)
                 .font(.footnote)
                 .foregroundStyle(TokenColors.Text.secondary.swiftUI)

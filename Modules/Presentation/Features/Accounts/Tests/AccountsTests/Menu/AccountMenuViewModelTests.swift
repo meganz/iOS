@@ -1,4 +1,5 @@
 @testable import Accounts
+import Combine
 import MEGAAppPresentation
 import MEGAAppPresentationMock
 import MEGAAppSDKRepo
@@ -31,7 +32,7 @@ struct AccountMenuViewModelTests {
             "Account section should contain account details"
         )
         #expect(accountRowData.title == "")
-        #expect(accountRowData.subtitle == "email@test.com")
+        #expect(accountRowData.subtitleState == .value("email@test.com"))
         #expect(accountRowData.rowType == .disclosure(action: {}))
         #expect(accountRowData.iconConfiguration.style == .rounded)
     }
@@ -47,10 +48,12 @@ struct AccountMenuViewModelTests {
         )
         #expect(planRowData.title == Strings.Localizable.InAppPurchase.ProductDetail.Navigation.currentPlan)
         #expect(
-            planRowData.subtitle == MockMEGAAccountDetails(type: .proI)
-                .toAccountDetailsEntity()
-                .proLevel
-                .toAccountTypeDisplayName()
+            planRowData.subtitleState == .value(
+                MockMEGAAccountDetails(type: .proI)
+                    .toAccountDetailsEntity()
+                    .proLevel
+                    .toAccountTypeDisplayName()
+            )
         )
         #expect(planRowData.rowType == .withButton(title: Strings.Localizable.upgrade, action: { }))
         #expect(planRowData.iconConfiguration.style == .normal)
@@ -69,7 +72,7 @@ struct AccountMenuViewModelTests {
             "Account section should contain storage used"
         )
         #expect(storageRowData.title == Strings.Localizable.storage)
-        #expect(storageRowData.subtitle == "10 B / 100 B")
+        #expect(storageRowData.subtitleState == .value("10 B / 100 B"))
         #expect(storageRowData.rowType == .disclosure(action: {}))
         #expect(storageRowData.iconConfiguration.style == .normal)
     }
@@ -83,7 +86,7 @@ struct AccountMenuViewModelTests {
             "Account section should contain contacts"
         )
         #expect(contactsRowData.title == Strings.Localizable.contactsTitle)
-        #expect(contactsRowData.subtitle == nil)
+        #expect(contactsRowData.subtitleState == nil)
         #expect(contactsRowData.rowType == .disclosure(action: {}))
         #expect(contactsRowData.iconConfiguration.style == .normal)
     }
@@ -97,7 +100,7 @@ struct AccountMenuViewModelTests {
             "Account section should contain achievements"
         )
         #expect(achievementsRowData.title == Strings.Localizable.achievementsTitle)
-        #expect(achievementsRowData.subtitle == nil)
+        #expect(achievementsRowData.subtitleState == nil)
         #expect(achievementsRowData.rowType == .disclosure(action: {}))
         #expect(achievementsRowData.iconConfiguration.style == .normal)
     }
@@ -111,7 +114,7 @@ struct AccountMenuViewModelTests {
             "Tools section should contain shared items"
         )
         #expect(sharedItemsRowData.title == Strings.Localizable.sharedItems)
-        #expect(sharedItemsRowData.subtitle == nil)
+        #expect(sharedItemsRowData.subtitleState == nil)
         #expect(sharedItemsRowData.rowType == .disclosure(action: {}))
         #expect(sharedItemsRowData.iconConfiguration.style == .normal)
     }
@@ -125,7 +128,7 @@ struct AccountMenuViewModelTests {
             "Tools section should contain device center"
         )
         #expect(deviceCenterRowData.title == Strings.Localizable.Device.Center.title)
-        #expect(deviceCenterRowData.subtitle == nil)
+        #expect(deviceCenterRowData.subtitleState == nil)
         #expect(deviceCenterRowData.rowType == .disclosure(action: {}))
         #expect(deviceCenterRowData.iconConfiguration.style == .normal)
     }
@@ -139,7 +142,7 @@ struct AccountMenuViewModelTests {
             "Tools section should contain transfers"
         )
         #expect(transfersRowData.title == Strings.Localizable.transfers)
-        #expect(transfersRowData.subtitle == nil)
+        #expect(transfersRowData.subtitleState == nil)
         #expect(transfersRowData.rowType == .disclosure(action: {}))
         #expect(transfersRowData.iconConfiguration.style == .normal)
     }
@@ -153,7 +156,7 @@ struct AccountMenuViewModelTests {
             "Tools section should contain offline files"
         )
         #expect(offlineFilesRowData.title == Strings.Localizable.AccountMenu.offlineFiles)
-        #expect(offlineFilesRowData.subtitle == nil)
+        #expect(offlineFilesRowData.subtitleState == nil)
         #expect(offlineFilesRowData.rowType == .disclosure(action: {}))
         #expect(offlineFilesRowData.iconConfiguration.style == .normal)
     }
@@ -168,7 +171,7 @@ struct AccountMenuViewModelTests {
             "Tools section should contain rubbish bin"
         )
         #expect(rubbishBinRowData.title == Strings.Localizable.rubbishBinLabel)
-        #expect(rubbishBinRowData.subtitle == "200 B")
+        #expect(rubbishBinRowData.subtitleState == .value("200 B"))
         #expect(rubbishBinRowData.rowType == .disclosure(action: {}))
         #expect(rubbishBinRowData.iconConfiguration.style == .normal)
     }
@@ -182,7 +185,7 @@ struct AccountMenuViewModelTests {
             "Tools section should contain settings"
         )
         #expect(settingsRowData.title == Strings.Localizable.settingsTitle)
-        #expect(settingsRowData.subtitle == nil)
+        #expect(settingsRowData.subtitleState == nil)
         #expect(settingsRowData.rowType == .disclosure(action: {}))
         #expect(settingsRowData.iconConfiguration.style == .normal)
     }
@@ -196,7 +199,7 @@ struct AccountMenuViewModelTests {
             "Privacy Suite section should contain vpn app",
         )
         #expect(megaVPNAppRowData.title == Strings.Localizable.AccountMenu.MegaVPN.buttonTitle)
-        #expect(megaVPNAppRowData.subtitle == Strings.Localizable.AccountMenu.MegaVPN.buttonSubtitle)
+        #expect(megaVPNAppRowData.subtitleState == .value(Strings.Localizable.AccountMenu.MegaVPN.buttonSubtitle))
         #expect(megaVPNAppRowData.rowType == .externalLink(action: {}))
         #expect(megaVPNAppRowData.iconConfiguration.style == .normal)
     }
@@ -210,7 +213,7 @@ struct AccountMenuViewModelTests {
             "Privacy Suite section should contain pwm app"
         )
         #expect(passRowData.title == Strings.Localizable.AccountMenu.MegaPass.buttonTitle)
-        #expect(passRowData.subtitle == Strings.Localizable.AccountMenu.MegaPass.buttonSubtitle)
+        #expect(passRowData.subtitleState == .value(Strings.Localizable.AccountMenu.MegaPass.buttonSubtitle))
         #expect(passRowData.rowType == .externalLink(action: {}))
         #expect(passRowData.iconConfiguration.style == .normal)
     }
@@ -224,7 +227,7 @@ struct AccountMenuViewModelTests {
             "Privacy Suite section should contain transfer.it app"
         )
         #expect(transferItAppRowData.title == Strings.Localizable.AccountMenu.TransferIt.buttonTitle)
-        #expect(transferItAppRowData.subtitle == Strings.Localizable.AccountMenu.TransferIt.buttonSubtitle)
+        #expect(transferItAppRowData.subtitleState == .value(Strings.Localizable.AccountMenu.TransferIt.buttonSubtitle))
         #expect(transferItAppRowData.rowType == .externalLink(action: {}))
         #expect(transferItAppRowData.iconConfiguration.style == .normal)
     }
@@ -248,10 +251,12 @@ struct AccountMenuViewModelTests {
         )
 
         #expect(
-            planRowData.subtitle == MockMEGAAccountDetails(type: .proII)
-                .toAccountDetailsEntity()
-                .proLevel
-                .toAccountTypeDisplayName()
+            planRowData.subtitleState == .value(
+                MockMEGAAccountDetails(type: .proII)
+                    .toAccountDetailsEntity()
+                    .proLevel
+                    .toAccountTypeDisplayName()
+            )
         )
 
         let storageRowData = try #require(
@@ -259,7 +264,7 @@ struct AccountMenuViewModelTests {
             "Account section should contain storage details"
         )
         #expect(storageRowData.title == Strings.Localizable.storage)
-        #expect(storageRowData.subtitle == "20 B / 200 B")
+        #expect(storageRowData.subtitleState == .value("20 B / 200 B"))
     }
 
     @Test("Test account details tap")
@@ -667,7 +672,7 @@ struct AccountMenuViewModelTests {
         #expect(
             sut
                 .sections[.account]?[SUT.Constants.AccountSectionIndex.accountDetails.rawValue]?
-                .subtitle == "testEmail@test.com"
+                .subtitleState == .value("testEmail@test.com")
         )
         #expect(
             sut.sections[.account]?[SUT.Constants.AccountSectionIndex.accountDetails.rawValue]?
@@ -695,7 +700,6 @@ struct AccountMenuViewModelTests {
 
         }
         let sut = makeSUT(accountUseCase: accountUseCase, fullNameHandler: fullNameHandler)
-        accountUseCase.update(email: "testEmail@test.com")
         continuation.yield(.success(.init(type: .getAttrUser, userAttribute: .firstName)))
         try await waitUntil(
             await MainActor.run {
@@ -707,7 +711,7 @@ struct AccountMenuViewModelTests {
         #expect(
             sut
                 .sections[.account]?[SUT.Constants.AccountSectionIndex.accountDetails.rawValue]?
-                .subtitle == "testEmail@test.com"
+                .subtitleState == .loading
         )
         #expect(
             sut
@@ -745,6 +749,53 @@ struct AccountMenuViewModelTests {
         #expect(sut.appNotificationsCount == 30)
     }
 
+    @Test(arguments: [
+        (MockAccountUseCase(
+            currentAccountDetails: MockMEGAAccountDetails(
+                storageUsed: 10,
+                storageMax: 20,
+                type: .free
+            ).toAccountDetailsEntity()
+        ), AccountMenuOption.TextLoadState.value("10 B / 20 B")),
+        (MockAccountUseCase(currentAccountDetails: nil), nil)
+    ])
+    func testIsAccountUpdating(accountUseCase: MockAccountUseCase, initialState: AccountMenuOption.TextLoadState) async throws {
+        let monitorSubmitReceiptPublisher = PassthroughSubject<Bool, Never>()
+        let purchaseUseCase = MockAccountPlanPurchaseUseCase(
+            monitorSubmitReceiptPublisher: monitorSubmitReceiptPublisher.eraseToAnyPublisher()
+        )
+        let sut = makeSUT(accountUseCase: accountUseCase, purchaseUseCase: purchaseUseCase)
+        let accountSection = sut.sections[.account]
+
+        #expect(sut.isAccountUpdating == false)
+
+        let storageRowData = try #require(
+            accountSection?[SUT.Constants.AccountSectionIndex.storageUsed.rawValue],
+            "Account section should contain storage used"
+        )
+        #expect(storageRowData.subtitleState == initialState)
+
+        try await waitUntil(
+            await MainActor.run {
+                purchaseUseCase.monitorSubmitReceiptPublisherCalled == 0
+            }
+        )
+        monitorSubmitReceiptPublisher.send(true)
+        try await waitUntil(
+            await MainActor.run {
+                sut.isAccountUpdating == false
+            }
+        )
+        #expect(sut.isAccountUpdating)
+
+        let updatedAccountSection = sut.sections[.account]
+        let updatedStorageRowData = try #require(
+            updatedAccountSection?[SUT.Constants.AccountSectionIndex.storageUsed.rawValue],
+            "Account section should contain storage used"
+        )
+        #expect(updatedStorageRowData.subtitleState == .loading)
+    }
+
     private typealias SUT = AccountMenuViewModel
 
     private func makeSUT(
@@ -758,6 +809,7 @@ struct AccountMenuViewModelTests {
         preferenceUseCase: some PreferenceUseCaseProtocol = MockPreferenceUseCase(),
         networkMonitorUseCase: some NetworkMonitorUseCaseProtocol = MockNetworkMonitorUseCase(),
         notificationsUseCase: some NotificationsUseCaseProtocol = MockNotificationUseCase(),
+        purchaseUseCase: some AccountPlanPurchaseUseCaseProtocol = MockAccountPlanPurchaseUseCase(),
         logoutHandler: @escaping () async -> Void = {},
         sharedItemsNotificationCountHandler: @escaping () -> Int = { 0 },
         fullNameHandler: @escaping (CurrentUserSource) -> String = { _ in "" }
@@ -773,6 +825,7 @@ struct AccountMenuViewModelTests {
             networkMonitorUseCase: networkMonitorUseCase,
             preferenceUseCase: preferenceUseCase,
             notificationsUseCase: notificationsUseCase,
+            purchaseUseCase: purchaseUseCase,
             fullNameHandler: fullNameHandler,
             avatarFetchHandler: { _, _ in UIImage() },
             logoutHandler: logoutHandler,
@@ -859,5 +912,18 @@ private final class MockMenuViewRouter: AccountMenuViewRouting {
     func openLink(for app: Accounts.MegaCompanionApp) {
         openLink_calledTimes += 1
         openLink_lastApp = app
+    }
+}
+
+extension AccountMenuOption.TextLoadState: Equatable {
+    public static func == (lhs: AccountMenuOption.TextLoadState, rhs: AccountMenuOption.TextLoadState) -> Bool {
+        switch (lhs, rhs) {
+        case (.none, .none), (.loading, .loading):
+            return true
+        case let (.value(l), .value(r)):
+            return l == r
+        default:
+            return false
+        }
     }
 }
