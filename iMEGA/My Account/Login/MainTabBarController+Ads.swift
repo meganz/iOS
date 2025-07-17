@@ -3,6 +3,7 @@ import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGADomain
 import MEGASwift
+import SwiftUI
 
 extension MainTabBarController: AdsSlotViewControllerProtocol {
     public var adsSlotUpdates: AnyAsyncSequence<AdsSlotConfig?> {
@@ -11,17 +12,8 @@ extension MainTabBarController: AdsSlotViewControllerProtocol {
     
     func hideAds() {
         guard DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .externalAds) else { return }
-        let adsSlot: [Int: AdsSlotEntity] = [
-            TabType.cloudDrive.rawValue: .files,
-            TabType.cameraUploads.rawValue: .photos,
-            TabType.home.rawValue: .home,
-            TabType.chat.rawValue: .chat,
-            TabType.sharedItems.rawValue: .sharedItems
-        ]
-        
-        guard let currentAdsSlot = adsSlot[selectedIndex] else { return }
         mainTabBarAdsViewModel.sendNewAdsConfig(
-            AdsSlotConfig(adsSlot: currentAdsSlot, displayAds: false)
+            AdsSlotConfig(displayAds: false)
         )
     }
     
@@ -30,39 +22,42 @@ extension MainTabBarController: AdsSlotViewControllerProtocol {
     }
     
     private func currentAdsSlotConfig() -> AdsSlotConfig? {
-        switch selectedIndex {
-        case TabType.cloudDrive.rawValue:
+        // Mike: Navigation Revamp, SharedItems are not available, thus directly calling TabManager.sharedItemsTabIndex()
+        // will cause a assertionFailure() to trigger. Here I work around by combining isNavigationRevampEnabled with selectedIndex
+        // in the switch, when isNavigationRevampEnabled is `true`, the switch case will fall through and TabManager.sharedItemsTabIndex()
+        // won't be called, hence properly avoided the assertion assertionFailure().
+        switch (isNavigationRevampEnabled, selectedIndex) {
+        case (_, TabManager.driveTabIndex()):
             AdsSlotConfig(
-                adsSlot: .files,
                 displayAds: (mainTabBarTopViewController() as? any CloudDriveAdsSlotDisplayable)?.shouldDisplayAdsSlot ?? false
             )
-        case TabType.cameraUploads.rawValue:
+        case (_, TabManager.photosTabIndex()):
             AdsSlotConfig(
-                adsSlot: .photos,
                 displayAds: isVisibleController(type: PhotoAlbumContainerViewController.self)
             )
             
-        case TabType.home.rawValue:
+        case (_, TabManager.homeTabIndex()):
             AdsSlotConfig(
-                adsSlot: .home,
                 displayAds: isVisibleController(type: HomeViewController.self) ||
                 isVisibleController(type: FilesExplorerContainerViewController.self) ||
                 isVisibleController(type: VideoRevampTabContainerViewController.self)
             )
             
-        case TabType.chat.rawValue:
+        case (_, TabManager.chatTabIndex()):
             AdsSlotConfig(
-                adsSlot: .chat,
                 displayAds: isVisibleController(type: ChatRoomsListViewController.self)
             )
             
-        case TabType.sharedItems.rawValue:
+        case (false, TabManager.sharedItemsTabIndex()):
             AdsSlotConfig(
-                adsSlot: .sharedItems,
                 displayAds: isVisibleController(type: SharedItemsViewController.self) ||
                 isVisibleController(type: NewCloudDriveViewController.self)
             )
-            
+        case (true, TabManager.menuTabIndex()):
+            AdsSlotConfig(
+                displayAds: isVisibleController(type: UIHostingController<AccountMenuView>.self) ||
+                isVisibleController(type: NewCloudDriveViewController.self)
+            )
         default:
             nil
         }

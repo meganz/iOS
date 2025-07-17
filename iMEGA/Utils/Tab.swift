@@ -118,7 +118,7 @@ extension TabManager {
 
     static func indexOfTab(_ tab: Tab) -> Int {
         guard let index = appTabs.firstIndex(of: tab) else {
-            assertionFailure("TabManager should always have a home tab")
+            assertionFailure("TabManager should always have a \(tab.title) tab")
             return 0
         }
         return index
