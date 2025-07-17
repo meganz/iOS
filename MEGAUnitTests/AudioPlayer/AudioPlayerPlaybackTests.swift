@@ -148,7 +148,7 @@ final class AudioPlayerPlaybackTests: XCTestCase {
         let (player, tracks) = try await makePlayerAndTracks()
         let original = player.tracks.count
         let lastTrack = try XCTUnwrap(tracks.last)
-        player.deletePlaylist(items: [lastTrack])
+        await player.deletePlaylist(items: [lastTrack])
         XCTAssertEqual(player.tracks.count, original - 1)
     }
 

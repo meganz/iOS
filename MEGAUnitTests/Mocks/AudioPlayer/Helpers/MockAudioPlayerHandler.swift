@@ -86,7 +86,7 @@ final class MockAudioPlayerHandler: AudioPlayerHandlerProtocol {
         onMoveItem_calledTimes += 1
     }
     
-    func delete(items: [AudioPlayerItem]) {
+    func delete(items: [AudioPlayerItem]) async {
         onDeleteItems_calledTimes += 1
     }
     

@@ -77,6 +77,22 @@ final class AudioPlaylistViewModelTests: XCTestCase {
     }
     
     @MainActor
+    func testDispatch_onRemoveSelectedItems_invokesRouterShowSnackBar_async() async throws {
+        let router = MockAudioPlaylistViewRouter()
+        let (sut, _) = makeSUT(router: router)
+        
+        sut.dispatch(.didSelect(AudioPlayerItem.mockItem))
+        
+        try await Task.sleep(nanoseconds: 100_000_000)
+        
+        sut.dispatch(.removeSelectedItems)
+        
+        try await Task.sleep(nanoseconds: 100_000_000)
+        
+        XCTAssertEqual(router.showSnackBar_calledTimes, 1)
+    }
+    
+    @MainActor
     func testDispatch_onMove_tracksReorderEvent() {
         let (sut, tracker) = makeSUT()
         let moved = AudioPlayerItem.mockItem
@@ -191,7 +207,7 @@ final class AudioPlaylistViewModelTests: XCTestCase {
     }
     
     @MainActor
-    func testDispatch_onRemoveSelectedItems_clearsSelectionAndTracksEvent() {
+    func testDispatch_onRemoveSelectedItems_clearsSelectionAndTracksEvent() async throws {
         let (sut, tracker) = makeSUT()
         var cmds: [AudioPlaylistViewModel.Command] = []
         sut.invokeCommand = { cmds.append($0) }
@@ -203,6 +219,9 @@ final class AudioPlaylistViewModelTests: XCTestCase {
         cmds.removeAll()
         
         sut.dispatch(.removeSelectedItems)
+        
+        try await Task.sleep(nanoseconds: 200_000_000)
+        
         XCTAssertEqual(cmds, [.deselectAll, .hideToolbar])
         XCTAssertEqual(playerHandler.onDeleteItems_calledTimes, 1)
         assertTrackAnalyticsEventCalled(
