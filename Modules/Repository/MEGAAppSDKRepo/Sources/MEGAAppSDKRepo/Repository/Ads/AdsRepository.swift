@@ -12,23 +12,7 @@ public struct AdsRepository: AdsRepositoryProtocol {
     public init(sdk: MEGASdk) {
         self.sdk = sdk
     }
-    
-    public func fetchAds(adsFlag: AdsFlagEntity, adUnits: [AdsSlotEntity], publicHandle: HandleEntity) async throws -> [String: String] {
-        return try await withAsyncThrowingValue(in: { completion in
-            let flag = adsFlag.toAdsFlag()
-            let adsSlots = sdk.megaStringList(for: adUnits.map { $0.rawValue })
-            
-            sdk.fetchAds(flag, adUnits: adsSlots, publicHandle: publicHandle, delegate: RequestDelegate { result in
-                switch result {
-                case .success(let request):
-                    completion(.success(request.megaStringDictionary ?? [:]))
-                case .failure(let error):
-                    completion(.failure(error))
-                }
-            })
-        })
-    }
-    
+
     public func queryAds(adsFlag: AdsFlagEntity, publicHandle: HandleEntity) async throws -> Int {
         try await withAsyncThrowingValue(in: { completion in
             let flag = adsFlag.toAdsFlag()

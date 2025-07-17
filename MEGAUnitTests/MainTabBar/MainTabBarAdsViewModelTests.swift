@@ -7,8 +7,8 @@ struct MainTabBarAdsViewModelTests {
     func sendNewAdsConfig() async throws {
         let sut = MainTabBarAdsViewModel()
         let configs = [
-            AdsSlotConfig(adsSlot: .files, displayAds: true),
-            AdsSlotConfig(adsSlot: .home, displayAds: true),
+            AdsSlotConfig(displayAds: true),
+            AdsSlotConfig(displayAds: true),
             nil
         ]
         

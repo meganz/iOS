@@ -552,7 +552,7 @@ extension MEGAPhotoBrowserViewController {
 extension MEGAPhotoBrowserViewController: AdsSlotViewControllerProtocol {
     public var adsSlotUpdates: AnyAsyncSequence<AdsSlotConfig?> {
         SingleItemAsyncSequence(
-            item: AdsSlotConfig(adsSlot: .sharedLink, displayAds: true)
+            item: AdsSlotConfig(displayAds: true)
         ).eraseToAnyAsyncSequence()
     }
 }

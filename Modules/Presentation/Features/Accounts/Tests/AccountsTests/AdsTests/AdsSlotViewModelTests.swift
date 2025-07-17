@@ -273,12 +273,11 @@ final class AdsSlotViewModelTests: XCTestCase {
     }
     
     @MainActor func testUpdateAdsSlot_externalAdsEnabledAndReceivedSameAdsSlot_withDifferentDisplayAdsValue_shouldHaveLatestDisplayAds() async {
-        let randomAdSlot = randomAdsSlotConfig
-        let expectedConfig = AdsSlotConfig(adsSlot: randomAdSlot.adsSlot, displayAds: true)
+        let expectedConfig = AdsSlotConfig(displayAds: true)
         
         await assertUpdateAdsSlotShouldDisplayAds(
             adsSlots: [
-                AdsSlotConfig(adsSlot: randomAdSlot.adsSlot, displayAds: false),
+                AdsSlotConfig(displayAds: false),
                 expectedConfig
             ],
             expectedLatestAdsSlotConfig: expectedConfig
@@ -493,7 +492,6 @@ final class AdsSlotViewModelTests: XCTestCase {
     }
 
     private var randomAdsSlotConfig: AdsSlotConfig {
-        let adsSlot: AdsSlotEntity = [.files, .home, .photos, .sharedLink].randomElement() ?? .files
-        return AdsSlotConfig(adsSlot: adsSlot, displayAds: Bool.random())
+        return AdsSlotConfig(displayAds: Bool.random())
     }
 }

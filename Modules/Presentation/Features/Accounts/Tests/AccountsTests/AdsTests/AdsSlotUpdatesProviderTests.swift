@@ -30,8 +30,8 @@ struct AdsSlotUpdatesProviderTests {
         let sut = AdsSlotUpdatesProvider(adsSlotViewController: controller)
         
         let configs = [
-            AdsSlotConfig(adsSlot: .files, displayAds: true),
-            AdsSlotConfig(adsSlot: .home, displayAds: true),
+            AdsSlotConfig(displayAds: true),
+            AdsSlotConfig(displayAds: true),
             nil
         ]
         
