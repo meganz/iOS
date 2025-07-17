@@ -1,5 +1,6 @@
 import Foundation
 import MEGAAppPresentation
+import MEGASwiftUI
 
 final class AudioPlaylistViewRouter: NSObject, AudioPlaylistViewRouting {
     private weak var baseViewController: UIViewController?
@@ -38,5 +39,10 @@ final class AudioPlaylistViewRouter: NSObject, AudioPlaylistViewRouting {
     // MARK: - UI Actions
     func dismiss() {
         baseViewController?.dismiss(animated: true)
+    }
+    
+    func showSnackBar(message: String) {
+        guard let baseViewController else { return }
+        baseViewController.showSnackBar(snackBar: SnackBar(message: message))
     }
 }

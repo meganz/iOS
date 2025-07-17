@@ -56,7 +56,7 @@ protocol AudioPlayerMetadataLoaderProtocol {
 // MARK: - Audio Player Playback Functions
 @objc protocol AudioPlayerPlaybackProtocol: AnyObject {
     func move(item: AudioPlayerItem, to position: IndexPath, direction: MovementDirection)
-    func delete(items: [AudioPlayerItem])
+    func delete(items: [AudioPlayerItem]) async
     func playerProgressCompleted(percentage: Float)
     func playerShuffle(active: Bool)
     func goBackward()

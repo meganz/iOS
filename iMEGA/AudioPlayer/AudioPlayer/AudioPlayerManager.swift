@@ -132,8 +132,8 @@ import MEGADomain
         player?.move(of: item, to: position, direction: direction)
     }
     
-    func delete(items: [AudioPlayerItem]) {
-        player?.deletePlaylist(items: items)
+    func delete(items: [AudioPlayerItem]) async {
+        await player?.deletePlaylist(items: items)
     }
     
     func playerProgressCompleted(percentage: Float) {

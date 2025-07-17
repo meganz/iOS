@@ -1,6 +1,7 @@
 import Foundation
 import MEGAAnalyticsiOS
 import MEGAAppPresentation
+import MEGAL10n
 
 enum AudioPlaylistAction: ActionType {
     case onViewDidLoad
@@ -16,6 +17,7 @@ enum AudioPlaylistAction: ActionType {
 
 protocol AudioPlaylistViewRouting: Routing {
     func dismiss()
+    func showSnackBar(message: String)
 }
 
 final class AudioPlaylistViewModel: ViewModelType {
@@ -81,12 +83,21 @@ final class AudioPlaylistViewModel: ViewModelType {
     }
     
     private func removeAllSelectedItems() {
-        guard let items = selectedItems else { return }
+        guard let items = selectedItems, !items.isEmpty else { return }
         
-        playerHandler.delete(items: items)
-        selectedItems?.removeAll()
-        invokeCommand?(.deselectAll)
-        invokeCommand?(.hideToolbar)
+        let count = items.count
+        let baseMessage = Strings.Localizable.Audio.Playlist.RemoveTracks.Snack.message(count)
+        let finalMessage = count == 1
+            ? baseMessage.replacingOccurrences(of: "[A]", with: items.first?.name ?? "")
+            : baseMessage
+
+        Task { @MainActor in
+            await playerHandler.delete(items: items)
+            selectedItems?.removeAll()
+            invokeCommand?(.deselectAll)
+            invokeCommand?(.hideToolbar)
+            router.showSnackBar(message: finalMessage)
+        }
     }
     
     private func selectedIndexPaths() -> [IndexPath]? {

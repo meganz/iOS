@@ -2485,7 +2485,6 @@
 		C44D6DFF25701420003D1723 /* AudioPlaylistViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44D6DFE25701420003D1723 /* AudioPlaylistViewModel.swift */; };
 		C44FE40925B9DC0400EAF5F7 /* AudioPlayer+MetadataLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44FE40825B9DC0400EAF5F7 /* AudioPlayer+MetadataLoader.swift */; };
 		C450470125794A2800EE510E /* PlaylistHeaderFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C450470025794A2800EE510E /* PlaylistHeaderFooterView.swift */; };
-		C450470B25794A7A00EE510E /* PlaylistHeaderFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C450470A25794A7A00EE510E /* PlaylistHeaderFooterView.xib */; };
 		C450CFB725B83E5F005C707D /* StreamingInfoRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = C450CFB625B83E5F005C707D /* StreamingInfoRepository.swift */; };
 		C450CFC325B84350005C707D /* StreamingInfoUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C450CFC225B84350005C707D /* StreamingInfoUseCase.swift */; };
 		C4510E642DD2F54D00B04F87 /* OnboardingPermissionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4510E632DD2F54900B04F87 /* OnboardingPermissionHandler.swift */; };
@@ -5285,7 +5284,6 @@
 		C44D6DFE25701420003D1723 /* AudioPlaylistViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlaylistViewModel.swift; sourceTree = "<group>"; };
 		C44FE40825B9DC0400EAF5F7 /* AudioPlayer+MetadataLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AudioPlayer+MetadataLoader.swift"; sourceTree = "<group>"; };
 		C450470025794A2800EE510E /* PlaylistHeaderFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistHeaderFooterView.swift; sourceTree = "<group>"; };
-		C450470A25794A7A00EE510E /* PlaylistHeaderFooterView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PlaylistHeaderFooterView.xib; sourceTree = "<group>"; };
 		C450CFB625B83E5F005C707D /* StreamingInfoRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamingInfoRepository.swift; sourceTree = "<group>"; };
 		C450CFC225B84350005C707D /* StreamingInfoUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamingInfoUseCase.swift; sourceTree = "<group>"; };
 		C4510E632DD2F54900B04F87 /* OnboardingPermissionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingPermissionHandler.swift; sourceTree = "<group>"; };
@@ -13002,7 +13000,6 @@
 			isa = PBXGroup;
 			children = (
 				C450470025794A2800EE510E /* PlaylistHeaderFooterView.swift */,
-				C450470A25794A7A00EE510E /* PlaylistHeaderFooterView.xib */,
 				C480AF412570F0F400898D48 /* PlaylistItemTableViewCell.swift */,
 			);
 			path = Cells;
@@ -13991,7 +13988,6 @@
 				836AEDE22018AD0C00868FC7 /* PasswordView.xib in Resources */,
 				77D9A56E202355F800B48470 /* PhotoBrowser.storyboard in Resources */,
 				41BADDAF1A8E28FD008408B3 /* Photos.storyboard in Resources */,
-				C450470B25794A7A00EE510E /* PlaylistHeaderFooterView.xib in Resources */,
 				2F85307324885FAB00064E83 /* PreviewersView.xib in Resources */,
 				A5C710022DCB458400B6DD03 /* PrimaryAppIcon.xcassets in Resources */,
 				6DF356B22BAD36320099FCF1 /* PrivacyInfo.xcprivacy in Resources */,

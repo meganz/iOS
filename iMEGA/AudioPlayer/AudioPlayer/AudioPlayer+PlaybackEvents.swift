@@ -437,12 +437,12 @@ extension AudioPlayer {
         
         notify(aboutTheEndOfBlockingAction)
     }
-
-    @objc func deletePlaylist(items: [AudioPlayerItem]) {
-        guard let player = queuePlayer else { return }
+    
+    func deletePlaylist(items: [AudioPlayerItem]) async {
+        guard let queuePlayer else { return }
         
         let itemsToRemove = items.filter { $0 != currentItem() }
-        itemsToRemove.forEach(player.remove)
+        itemsToRemove.forEach(queuePlayer.remove)
         
         notify([aboutCurrentItemAndQueue])
         update(tracks: tracks.filter { !itemsToRemove.contains($0) })

@@ -3032,7 +3032,9 @@
 "meetings.displayInMainView.title"="Display in main view";
 /* Label indicating storage over quota */
 "transfer.storage.quotaExceeded"="Storage quota exceeded";
-/* Title of section Next on Audio Playlist */
+/* Header title displayed above the currently playing track in the audio player's playlist */
+"media.audio.playlist.section.nowPlaying.title"="Now Playing";
+/* Header title displayed above the upcoming tracks in the audio player's playlist */
 "media.audio.playlist.section.next.title"="Next";
 /* Title of Audio Player dialog for Playback Continuation */
 "media.audio.playbackContinuation.dialog.title"="Resume audio?";

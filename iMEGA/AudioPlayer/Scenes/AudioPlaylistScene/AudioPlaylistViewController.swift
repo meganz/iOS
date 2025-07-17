@@ -8,10 +8,11 @@ final class AudioPlaylistViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView! {
         didSet {
             tableView.tableFooterView = UIView()
-            tableView.register(UINib(nibName: "PlaylistHeaderFooterView", bundle: nil), forHeaderFooterViewReuseIdentifier: "PlaylistHeaderFooterView")
+            tableView.register(PlaylistHeaderFooterHostView.self, forHeaderFooterViewReuseIdentifier: "PlaylistHeaderFooterView")
             tableView.alwaysBounceVertical = false
             tableView.allowsMultipleSelectionDuringEditing = true
             tableView.setEditing(true, animated: true)
+            tableView.separatorStyle = .none
         }
     }
     @IBOutlet weak var toolbarBottomConstraint: NSLayoutConstraint!

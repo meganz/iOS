@@ -1,6 +1,5 @@
 import Foundation
 import MEGADesignToken
-import MEGAL10n
 
 protocol AudioPlaylistDelegate: AnyObject {
     func didSelect(item: AudioPlayerItem)
@@ -47,12 +46,11 @@ final class AudioPlaylistIndexedDelegate: NSObject, UITableViewDelegate, UITable
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        guard let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: "PlaylistHeaderFooterView") as? PlaylistHeaderFooterView else { return nil}
-        header.backgroundView = UIView()
-        header.backgroundView?.backgroundColor = TokenColors.Background.page
-        header.configure(title: section == 0 ? Strings.Localizable.playing : Strings.Localizable.Media.Audio.Playlist.Section.Next.title)
-
-        return header
+        guard let host = tableView.dequeueReusableHeaderFooterView(withIdentifier: "PlaylistHeaderFooterView") as? PlaylistHeaderFooterHostView else { return nil }
+        
+        host.configureHeader(for: section)
+        
+        return host
     }
     
     func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {

@@ -1,31 +1,37 @@
 import MEGADesignToken
-import UIKit
+import MEGAL10n
+import SwiftUI
 
-final class PlaylistHeaderFooterView: UITableViewHeaderFooterView {
+struct PlaylistHeaderFooterView: View {
+    let title: String
     
-    @IBOutlet weak var typeLabel: UILabel!
-    @IBOutlet weak var separatorView: UIView!
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
+    var body: some View {
+        VStack(spacing: 5) {
+            Text(title)
+                .font(.footnote)
+                .fontWeight(.medium)
+                .foregroundColor(TokenColors.Text.primary.swiftUI)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.horizontal, 16)
+            
+            Rectangle()
+                .fill(TokenColors.Border.strong.swiftUI)
+                .frame(height: 0.5)
+        }
+        .padding(.top, 10)
+        .background(TokenColors.Background.page.swiftUI)
+    }
+}
+
+final class PlaylistHeaderFooterHostView: UITableViewHeaderFooterView {
+    func configureHeader(for section: Int) {
+        let title = section == 0
+            ? Strings.Localizable.Media.Audio.Playlist.Section.NowPlaying.title
+            : Strings.Localizable.Media.Audio.Playlist.Section.Next.title
         
-        updateAppearance()
-    }
-    
-    override func prepareForReuse() {
-        super.prepareForReuse()
-        
-        updateAppearance()
-    }
-    
-    func configure(title: String) {
-        typeLabel.text = title
-    }
-    
-    // MARK: - Private functions
-    private func updateAppearance() {
-        typeLabel.textColor = TokenColors.Text.primary
-        contentView.backgroundColor = TokenColors.Background.page
-        separatorView.backgroundColor = TokenColors.Border.strong
+        contentConfiguration = UIHostingConfiguration {
+            PlaylistHeaderFooterView(title: title)
+        }
+        .margins(.all, 0)
     }
 }

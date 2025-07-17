@@ -11,6 +11,7 @@ final class PlaylistItemTableViewCell: UITableViewCell {
     @IBOutlet weak var thumbnailImageView: UIImageView!
     @IBOutlet weak var titleLabel: MEGALabel!
     @IBOutlet weak var artistLabel: UILabel!
+    @IBOutlet weak var separatorView: UIView!
     
     var item: AudioPlayerItem?
     
@@ -33,6 +34,10 @@ final class PlaylistItemTableViewCell: UITableViewCell {
         
         contentView.backgroundColor = TokenColors.Background.page
         contentView.superview?.backgroundColor = TokenColors.Background.page
+        
+        tintColor = TokenColors.Components.selectionControl
+        
+        separatorView.backgroundColor = TokenColors.Border.strong
     }
     
     private func configureThumbnail(_ item: AudioPlayerItem?) {
