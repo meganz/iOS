@@ -61,7 +61,7 @@ extension AudioPlayer {
     }
     
     func resetPlayerItems() {
-        guard let queuePlayer = queuePlayer,
+        guard let queuePlayer,
               queuePlayer.items().isEmpty,
               queuePlayer.currentItem == nil else { return }
             
@@ -69,7 +69,7 @@ extension AudioPlayer {
     }
     
     func resetPlaylist() {
-        guard let queuePlayer = queuePlayer else { return }
+        guard let queuePlayer else { return }
         tracks.forEach {
             queuePlayer.remove($0)
             queuePlayer.secureInsert($0, after: queuePlayer.items().last)
@@ -80,6 +80,8 @@ extension AudioPlayer {
         } else {
             pause()
         }
+        
+        notify(aboutCurrentItemAndQueue)
     }
     
     func resetAudioPlayerConfiguration() {
@@ -90,7 +92,7 @@ extension AudioPlayer {
         // Only in case, the loader has no more batches in progress or pending, we call `updateQueueWithLoopItems()` to add items
         // to the audio player, ensuring the audio playback can continue seamlessly.
         guard !queueLoader.hasPendingWork,
-              let queuePlayer = queuePlayer,
+              let queuePlayer,
               let loopAllowed = audioPlayerConfig[.loop] as? Bool, loopAllowed,
               let currentItem = currentItem(),
               let currentIndex = tracks.firstIndex(where: { $0 == currentItem }) else { return }
@@ -107,7 +109,7 @@ extension AudioPlayer {
     }
     
     func removeLoopItems() {
-        guard let queuePlayer = queuePlayer,
+        guard let queuePlayer,
               let loopAllowed = audioPlayerConfig[.loop] as? Bool, !loopAllowed,
               let currentItem = currentItem(),
               let currentIndex = tracks.firstIndex(where: { $0 == currentItem }) else { return }
@@ -124,7 +126,7 @@ extension AudioPlayer {
     }
 
     func repeatLastItem() {
-        guard let queuePlayer = queuePlayer else { return }
+        guard let queuePlayer else { return }
         
         // the current item is nil only when the audio player has played the last track of the playlist
         if currentItem() == nil {
@@ -170,7 +172,7 @@ extension AudioPlayer {
     }
     
     @objc func pause() {
-        guard let queuePlayer = queuePlayer else { return }
+        guard let queuePlayer else { return }
         storedRate = queuePlayer.rate
         queuePlayer.pause()
         isPaused = true
@@ -204,7 +206,7 @@ extension AudioPlayer {
     }
     
     @objc func playPrevious(_ completion: @escaping () -> Void) {
-        guard let queuePlayer = queuePlayer,
+        guard let queuePlayer,
               let currentIndex = tracks.firstIndex(where: {$0 == currentItem()}) else {
             completion()
             return
@@ -226,7 +228,7 @@ extension AudioPlayer {
     }
     
     @objc func play(item: AudioPlayerItem, completion: @escaping () -> Void) {
-        guard let queuePlayer = queuePlayer,
+        guard let queuePlayer,
               let index = tracks.firstIndex(where: {$0 == item}),
               let currentIndex = tracks.firstIndex(where: {$0 == currentItem()}) else {
             completion()
@@ -268,7 +270,7 @@ extension AudioPlayer {
     }
     
     func rewind(direction: RewindDirection) {
-        guard let queuePlayer = queuePlayer,
+        guard let queuePlayer,
               let currentItem = queuePlayer.currentItem,
               CMTIME_IS_VALID(currentItem.duration),
               currentItem.duration >= .zero else { return }
@@ -282,7 +284,7 @@ extension AudioPlayer {
     }
     
     func rewindBackward(completion: @escaping (Bool) -> Void) {
-        guard let queuePlayer = queuePlayer,
+        guard let queuePlayer,
               let currentItem = queuePlayer.currentItem,
               CMTIME_IS_VALID(queuePlayer.currentTime()) else {
             completion(false)
@@ -303,7 +305,7 @@ extension AudioPlayer {
     }
     
     func rewindForward(duration: CMTime, completion: @escaping (Bool) -> Void) {
-        guard let queuePlayer = queuePlayer,
+        guard let queuePlayer,
               let currentItem = queuePlayer.currentItem,
               CMTIME_IS_VALID(queuePlayer.currentTime()),
               CMTIME_IS_VALID(duration) else {
@@ -370,14 +372,14 @@ extension AudioPlayer {
     }
     
     @objc func setProgressCompleted(_ percentage: Float) {
-        guard let queuePlayer = queuePlayer,
+        guard let queuePlayer,
               let currentItem = queuePlayer.currentItem else { return }
         
         setProgressCompleted(CMTimeGetSeconds(currentItem.duration) * Double(percentage))
     }
     
     @objc func move(of movedItem: AudioPlayerItem, to position: IndexPath, direction: MovementDirection) {
-        guard let queuePlayer = queuePlayer else { return }
+        guard let queuePlayer else { return }
         
         notify(aboutTheBeginningOfBlockingAction)
         
@@ -409,7 +411,7 @@ extension AudioPlayer {
     }
     
     func shuffleQueue() {
-        guard let queuePlayer = queuePlayer,
+        guard let queuePlayer,
               let currentItem = currentItem() else { return }
         
         notify(aboutTheBeginningOfBlockingAction)
