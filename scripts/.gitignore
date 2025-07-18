@@ -1,0 +1,6 @@
+vcpkg/
+BUILD_ARM64_iOS/
+BUILD_ARM64_simulator/
+arm64-ios-mega/
+arm64-ios-simulator-mega/
+xcframework/
