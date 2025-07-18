@@ -3,9 +3,13 @@ import MEGAAppSDKRepo
 import MEGADomain
 import MEGAL10n
 import MEGARepo
+import MEGASDKRepo
 
 extension ShareViewController {
-    
+    @objc func injectSDKRepoDependencies() {
+        MEGASDKRepo.DependencyInjection.sharedSdk = .shared
+    }
+
     @objc func successSendToChatMessage(attachments: [ShareAttachment], receiverCount: Int) -> String {
         if attachments.count > 1 {
             let filesString = Strings.Localizable.General.Format.Count.file(attachments.count)

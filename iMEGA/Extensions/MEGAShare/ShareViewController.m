@@ -67,6 +67,7 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
+        [self injectSDKRepoDependencies];
         [AppEnvironmentConfigurator configAppEnvironment];
         [FIRApp configure];
         [UncaughtExceptionHandler registerHandler];
