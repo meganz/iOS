@@ -4,6 +4,12 @@ import SwiftUI
 
 @IBDesignable
 final class MEGAProgressBarView: UIView {
+    public var progressColor: UIColor = TokenColors.Components.interactive {
+        didSet {
+            progressLayer.backgroundColor = progressColor.cgColor
+        }
+    }
+    
     private let progressLayer = CALayer()
     private let bgMaskLayer = CAShapeLayer()
     private var progress: CGFloat = 0.0 {
@@ -57,18 +63,21 @@ extension CATransaction {
 struct MEGAProgressBarViewRepresenter: UIViewRepresentable {
     let progress: CGFloat
     let animated: Bool
+    let progressColor: UIColor
     
     func makeUIView(context: Context) -> MEGAProgressBarView {
-        let progressBarView = MEGAProgressBarView()
-        progressBarView.setProgress(progress: progress, animated: animated)
-        return progressBarView
+        let view = MEGAProgressBarView()
+        view.progressColor = progressColor
+        view.setProgress(progress: progress, animated: animated)
+        return view
     }
     
     func updateUIView(_ uiView: MEGAProgressBarView, context: Context) {
+        uiView.progressColor = progressColor
         uiView.setProgress(progress: progress, animated: animated)
     }
 }
 
 #Preview {
-    MEGAProgressBarViewRepresenter(progress: 0.5, animated: true)
+    MEGAProgressBarViewRepresenter(progress: 0.5, animated: true, progressColor: TokenColors.Components.interactive)
 }

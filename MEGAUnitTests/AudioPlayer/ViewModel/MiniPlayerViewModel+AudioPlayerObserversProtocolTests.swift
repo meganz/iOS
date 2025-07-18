@@ -37,42 +37,6 @@ final class MiniPlayerViewModel_AudioPlayerObserversProtocolTests: XCTestCase {
         )
     }
 
-    // MARK: - audioPlayerCurrentItemCurrentThumbnail
-    @MainActor
-    func testAudioPlayerCurrentItemCurrentThumbnail_whenCalled_reloadsNodeInfoThumbnailOnly() async {
-        let (sut, _, _) = makeSUT()
-        let thumb = testSpecificThumbnail()
-        await test(
-            viewModel: sut,
-            trigger: { sut.audio(player: anyQueuePlayer(), currentItem: nil, currentThumbnail: thumb) },
-            expectedCommands: [.reloadNodeInfo(thumbnail: thumb)]
-        )
-    }
-
-    // MARK: - audioPlayerNameArtistThumbnailUrl
-    @MainActor
-    func testAudioPlayerNameArtistThumbnailUrl_whenCalled_reloadsNodeInfoThumbnailOnly() async {
-        let (sut, _, _) = makeSUT()
-        let thumb = testSpecificThumbnail()
-        await test(
-            viewModel: sut,
-            trigger: { sut.audio(player: anyQueuePlayer(), name: anyString(), artist: anyString(), thumbnail: thumb, url: anyString()) },
-            expectedCommands: [.reloadNodeInfo(thumbnail: thumb)]
-        )
-    }
-
-    // MARK: - audioPlayerNameArtistThumbnail
-    @MainActor
-    func testAudioPlayerNameArtistThumbnail_whenCalled_reloadsNodeInfoThumbnailOnly() async {
-        let (sut, _, _) = makeSUT()
-        let thumb = testSpecificThumbnail()
-        await test(
-            viewModel: sut,
-            trigger: { sut.audio(player: anyQueuePlayer(), name: anyString(), artist: anyString(), thumbnail: thumb) },
-            expectedCommands: [.reloadNodeInfo(thumbnail: thumb)]
-        )
-    }
-
     // MARK: - audioPlayerCurrentItemIndexPath
     @MainActor
     func testAudioPlayerCurrentItemIndexPath_whenNils_doesNotChangeCurrentItemAtIndexPath() {
@@ -280,5 +244,4 @@ final class MiniPlayerViewModel_AudioPlayerObserversProtocolTests: XCTestCase {
     private func anyIndexPath() -> IndexPath { IndexPath(row: 0, section: 0) }
     private func anyQueuePlayer() -> AVQueuePlayer { AVQueuePlayer() }
     private func anyString() -> String { "any-string" }
-    private func testSpecificThumbnail() -> UIImage { UIImage(systemName: "person")! }
 }

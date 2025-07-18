@@ -15,6 +15,8 @@ import MEGADomain
         DIContainer.playbackContinuationUseCase
     private let audioSessionUseCase = AudioSessionUseCase(audioSessionRepository: AudioSessionRepository(audioSession: AVAudioSession()))
     
+    private let miniPlayerHeight: CGFloat = 56.0
+    
     override private init() {
         super.init()
         NotificationCenter.default.addObserver(self, selector: #selector(closePlayer), name: Notification.Name.MEGALogout, object: nil)
@@ -379,7 +381,7 @@ import MEGADomain
     }
     
     func presentMiniPlayer(_ viewController: UIViewController) {
-        miniPlayerHandlerListenerManager.listeners.last?.presentMiniPlayer(viewController)
+        miniPlayerHandlerListenerManager.listeners.last?.presentMiniPlayer(viewController, height: miniPlayerHeight)
     }
     
     @MainActor
@@ -391,7 +393,7 @@ import MEGADomain
             currentMiniPlayerHandler.showMiniPlayer()
         } else {
             guard let miniPlayerVC = miniPlayerRouter.currentMiniPlayerView() else { return }
-            currentMiniPlayerHandler.presentMiniPlayer(miniPlayerVC)
+            currentMiniPlayerHandler.presentMiniPlayer(miniPlayerVC, height: miniPlayerHeight)
         }
     }
     

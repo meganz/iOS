@@ -375,8 +375,6 @@ extension MiniPlayerViewModel.Command: @retroactive CustomStringConvertible {
             "Command.showLoading(\(isLoading))"
         case .initTracks(let currentItem, let queue, let loopMode):
             "MiniPlayerViewModel.Command.initTracks(currentItem: \(currentItem), queue: \(String(describing: queue)), loopMode: \(loopMode))"
-        case .reloadNodeInfo(let thumbnail):
-            "Command.reloadNodeInfo(thumbnail: \(thumbnail.map { "<\(String(describing: $0))>" } ?? "nil"))"
         case .reloadPlayerStatus(let percentage, let isPlaying):
             "Command.reloadPlayerStatus(\(percentage)-isPlaying:\(isPlaying)"
         case .change(let currentItem, let indexPath):

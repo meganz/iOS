@@ -5,19 +5,16 @@ import UIKit
 
 final class MiniPlayerViewController: UIViewController {
     @IBOutlet weak var progressBarView: MEGAProgressBarView!
-    @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var playPauseButtonImageView: UIImageView!
     @IBOutlet weak var closeButtonImageView: UIButton!
     @IBOutlet weak var closeButtonImage: UIImageView!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var stackView: UIStackView!
     @IBOutlet weak var separatorView: UIView!
-    @IBOutlet weak var separatorHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var activityIndicatorView: UIActivityIndicatorView!
-    @IBOutlet weak var containerViewLeadingConstraint: NSLayoutConstraint!
+    @IBOutlet weak var containerView: UIView!
     
     // MARK: - Private properties
-    private let containerViewDefaultMargin: CGFloat = 12.0
     private var miniPlayerSource: MiniPlayerDataSource? {
         didSet {
             collectionView.dataSource = miniPlayerSource
@@ -85,7 +82,6 @@ final class MiniPlayerViewController: UIViewController {
     private func updatePlaybackTracks(_ currentItem: AudioPlayerItem, queue: [AudioPlayerItem]?, loopMode: Bool) {
         miniPlayerSource = MiniPlayerDataSource(currentTrack: currentItem, queue: queue, loopMode: loopMode)
         miniPlayerDelegate = MiniPlayerDelegate(delegate: self, loopMode: loopMode, itemsNumber: queue?.count ?? 0)
-        imageView.image = MEGAAssets.UIImage.defaultArtwork
         
         Task { @MainActor in
             collectionView.reloadData()
@@ -145,14 +141,6 @@ final class MiniPlayerViewController: UIViewController {
         collectionView.reloadItems(at: [path])
     }
     
-    private func updateCurrent(thumbnail: UIImage?) {
-        if let thumbnailImage = thumbnail {
-            imageView.image = thumbnailImage
-        } else {
-            imageView.image = MEGAAssets.UIImage.defaultArtwork
-        }
-    }
-    
     private func userInteraction(enabled: Bool) {
         collectionView.isUserInteractionEnabled = enabled
     }
@@ -177,16 +165,12 @@ final class MiniPlayerViewController: UIViewController {
     
     // MARK: - UI configurations
     private func updateAppearance() {
-        view.backgroundColor = TokenColors.Background.surface1
+        containerView.backgroundColor = TokenColors.Background.surface1
         collectionView.backgroundColor = .clear
         progressBarView.backgroundColor = TokenColors.Background.surface2
-        imageView.layer.cornerRadius = 8.0
+        progressBarView.progressColor = TokenColors.Components.selectionControl
         
         separatorView.backgroundColor = TokenColors.Border.strong
-        separatorHeightConstraint.constant = 0.5
-        
-        containerViewLeadingConstraint.constant = UIDevice.current.orientation.isLandscape && UIDevice.current.iPhoneDevice ?
-        containerViewDefaultMargin + (UIApplication.shared.keyWindow?.safeAreaInsets.left ?? 0.0) : containerViewDefaultMargin
         
         playPauseButtonImageView.tintColor = TokenColors.Icon.primary
         
@@ -217,8 +201,6 @@ final class MiniPlayerViewController: UIViewController {
         switch command {
         case .reloadPlayerStatus(let percentage, let isPlaying):
             updatePlayback(percentage, isPlaying)
-        case .reloadNodeInfo(let thumbnail):
-            updateCurrent(thumbnail: thumbnail)
         case .reload(let currentItem):
             updateCurrent(item: currentItem)
         case .initTracks(let currentItem, let queue, let loopMode):

@@ -2,7 +2,7 @@ import Foundation
 import MEGAAppPresentation
 
 extension FolderLinkViewController: AudioMiniPlayerHandlerProtocol, AudioPlayerPresenterProtocol {
-    func presentMiniPlayer(_ viewController: UIViewController) {
+    func presentMiniPlayer(_ viewController: UIViewController, height: CGFloat) {
         guard let miniPlayerView = viewController.view else { return }
         
         bottomView?.removeFromSuperview()
@@ -12,7 +12,7 @@ extension FolderLinkViewController: AudioMiniPlayerHandlerProtocol, AudioPlayerP
         miniPlayerView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            miniPlayerView.heightAnchor.constraint(equalToConstant: 60.0),
+            miniPlayerView.heightAnchor.constraint(equalToConstant: height),
             miniPlayerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             miniPlayerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             miniPlayerView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
