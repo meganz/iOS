@@ -101,7 +101,11 @@ protocol AudioPlayerMetadataLoaderProtocol {
 
 // MARK: - Mini Audio Player Handlers Functions
 @objc protocol AudioMiniPlayerHandlerProtocol: AudioPlayerProtocol {
-    func presentMiniPlayer(_ viewController: UIViewController)
+    /// Presents the mini player view controller at the bottom of the screen.
+    /// - Parameters:
+    ///   - viewController: The view controller whose view will be used as the mini player UI.
+    ///   - height: The default height, in points, to assign to the mini player container.
+    func presentMiniPlayer(_ viewController: UIViewController, height: CGFloat)
     func showMiniPlayer()
     func hideMiniPlayer()
     func closeMiniPlayer()

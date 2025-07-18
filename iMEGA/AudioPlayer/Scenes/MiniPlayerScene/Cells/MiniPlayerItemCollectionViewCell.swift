@@ -22,7 +22,7 @@ final class MiniPlayerItemCollectionViewCell: UICollectionViewCell {
     private func configureViewsColor() {
         contentView.backgroundColor = .clear
         titleLabel.textColor = TokenColors.Text.primary
-        subtitleLabel.textColor = TokenColors.Text.primary
+        subtitleLabel.textColor = TokenColors.Text.secondary
     }
     
     // MARK: - Internal functions

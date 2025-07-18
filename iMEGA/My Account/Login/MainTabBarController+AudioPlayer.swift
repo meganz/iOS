@@ -7,14 +7,14 @@ extension MainTabBarController: AudioMiniPlayerHandlerProtocol {
         return controller
     }
     
-    func presentMiniPlayer(_ viewController: UIViewController) {
+    func presentMiniPlayer(_ viewController: UIViewController, height: CGFloat) {
         guard let miniPlayerView = viewController.view else { return }
         
         addSubviewToOverlay(
             miniPlayerView,
             type: .audioPlayer,
             priority: .high,
-            height: 60
+            height: height
         )
         
         adjustMiniPlayerDisplay()

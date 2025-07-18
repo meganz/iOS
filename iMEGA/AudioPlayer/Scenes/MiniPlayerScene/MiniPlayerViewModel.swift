@@ -25,7 +25,6 @@ protocol MiniPlayerViewRouting: AnyObject, Routing {
 @MainActor
 final class MiniPlayerViewModel: ViewModelType {
     enum Command: CommandType, Equatable, Sendable {
-        case reloadNodeInfo(thumbnail: UIImage?)
         case reloadPlayerStatus(percentage: Float, isPlaying: Bool)
         case initTracks(currentItem: AudioPlayerItem, queue: [AudioPlayerItem]?, loopMode: Bool)
         case change(currentItem: AudioPlayerItem, indexPath: IndexPath)
@@ -320,24 +319,6 @@ extension MiniPlayerViewModel: AudioPlayerObserversProtocol {
     nonisolated func audio(player: AVQueuePlayer, currentTime: Double, remainingTime: Double, percentageCompleted: Float, isPlaying: Bool) {
         Task { @MainActor in
             invokeCommand?(.reloadPlayerStatus(percentage: percentageCompleted, isPlaying: isPlaying))
-        }
-    }
-    
-    nonisolated func audio(player: AVQueuePlayer, currentItem: AudioPlayerItem?, currentThumbnail: UIImage?) {
-        Task { @MainActor in
-            invokeCommand?(.reloadNodeInfo(thumbnail: currentThumbnail))
-        }
-    }
-    
-    nonisolated func audio(player: AVQueuePlayer, name: String, artist: String, thumbnail: UIImage?, url: String) {
-        Task { @MainActor in
-            invokeCommand?(.reloadNodeInfo(thumbnail: thumbnail))
-        }
-    }
-    
-    nonisolated func audio(player: AVQueuePlayer, name: String, artist: String, thumbnail: UIImage?) {
-        Task { @MainActor in
-            invokeCommand?(.reloadNodeInfo(thumbnail: thumbnail))
         }
     }
     
