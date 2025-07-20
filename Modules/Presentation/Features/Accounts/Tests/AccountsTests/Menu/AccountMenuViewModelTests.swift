@@ -1,5 +1,6 @@
 @testable import Accounts
 import Combine
+import MEGAAnalyticsiOS
 import MEGAAppPresentation
 import MEGAAppPresentationMock
 import MEGAAppSDKRepo
@@ -14,6 +15,12 @@ import UIKit
 
 @MainActor
 struct AccountMenuViewModelTests {
+    struct TestEventTrackingData: @unchecked Sendable {
+        let section: AccountMenuSectionType
+        let row: Int
+        let expectedEventIdentifier: any EventIdentifier
+    }
+
     @Test("Test init method")
     func testInit() {
         let sut = makeSUT()
@@ -242,7 +249,7 @@ struct AccountMenuViewModelTests {
         )
 
         let sut = makeSUT(accountUseCase: accountUseCase)
-        await sut.updateUI()
+        await sut.onTask()
 
         let accountSection = sut.sections[.account]
         let planRowData = try #require(
@@ -794,6 +801,141 @@ struct AccountMenuViewModelTests {
             "Account section should contain storage used"
         )
         #expect(updatedStorageRowData.subtitleState == .loading)
+    }
+
+    @Test(
+        arguments: [
+            TestEventTrackingData(
+                section: .account,
+                row: SUT.Constants.AccountSectionIndex.accountDetails.rawValue,
+                expectedEventIdentifier: MyAccountProfileNavigationItemEvent()
+            ),
+            TestEventTrackingData(
+                section: .account,
+                row: SUT.Constants.AccountSectionIndex.storageUsed.rawValue,
+                expectedEventIdentifier: MyMenuStorageNavigationItemEvent()
+            ),
+            TestEventTrackingData(
+                section: .account,
+                row: SUT.Constants.AccountSectionIndex.contacts.rawValue,
+                expectedEventIdentifier: MyMenuContactsNavigationItemEvent()
+            ),
+            TestEventTrackingData(
+                section: .account,
+                row: SUT.Constants.AccountSectionIndex.achievements.rawValue,
+                expectedEventIdentifier: MyMenuAchievementsNavigationItemEvent()
+            ),
+            TestEventTrackingData(
+                section: .tools,
+                row: SUT.Constants.ToolsSectionIndex.sharedItems.rawValue,
+                expectedEventIdentifier: MyMenuSharedItemsNavigationItemEvent()
+            ),
+            TestEventTrackingData(
+                section: .tools,
+                row: SUT.Constants.ToolsSectionIndex.deviceCentre.rawValue,
+                expectedEventIdentifier: MyMenuDeviceCentreNavigationItemEvent()
+            ),
+            TestEventTrackingData(
+                section: .tools,
+                row: SUT.Constants.ToolsSectionIndex.transfers.rawValue,
+                expectedEventIdentifier: MyMenuTransfersNavigationItemEvent()
+            ),
+            TestEventTrackingData(
+                section: .tools,
+                row: SUT.Constants.ToolsSectionIndex.offlineFiles.rawValue,
+                expectedEventIdentifier: MyMenuOfflineFilesNavigationItemEvent()
+            ),
+            TestEventTrackingData(
+                section: .tools,
+                row: SUT.Constants.ToolsSectionIndex.rubbishBin.rawValue,
+                expectedEventIdentifier: MyMenuRubbishBinNavigationItemEvent()
+            ),
+            TestEventTrackingData(
+                section: .tools,
+                row: SUT.Constants.ToolsSectionIndex.settings.rawValue,
+                expectedEventIdentifier: MyMenuSettingsNavigationItemEvent()
+            )
+        ]
+    )
+    func testDisclosureButtonAnalyticsEvents(testcase: TestEventTrackingData) {
+        let tracker = MockTracker()
+        let sut = makeSUT(tracker: tracker)
+        let section = sut.sections[testcase.section]
+        if case .disclosure(let action) = section?[testcase.row]?.rowType {
+            action()
+            Test.assertTrackAnalyticsEventCalled(
+                trackedEventIdentifiers: tracker.trackedEventIdentifiers,
+                with: [testcase.expectedEventIdentifier]
+            )
+        }
+    }
+
+    func testUpgradeAnalyticsEvent(data: TestEventTrackingData) {
+        let tracker = MockTracker()
+        let sut = makeSUT(tracker: tracker)
+        let accountSection = sut.sections[.account]
+        if case .withButton(_, let action) = accountSection?[SUT.Constants.AccountSectionIndex.currentPlan.rawValue]?.rowType {
+            action()
+            Test.assertTrackAnalyticsEventCalled(
+                trackedEventIdentifiers: tracker.trackedEventIdentifiers,
+                with: [UpgradeMyAccountEvent()]
+            )
+        }
+    }
+
+    @Test(
+        arguments: [
+            TestEventTrackingData(
+                section: .privacySuite,
+                row: SUT.Constants.PrivacySuiteSectionIndex.vpnApp.rawValue,
+                expectedEventIdentifier: MyMenuMEGAVPNNavigationItemEvent()
+            ),
+            TestEventTrackingData(
+                section: .privacySuite,
+                row: SUT.Constants.PrivacySuiteSectionIndex.pwmApp.rawValue,
+                expectedEventIdentifier: MyMenuMEGAPassNavigationItemEvent()
+            ),
+            TestEventTrackingData(
+                section: .privacySuite,
+                row: SUT.Constants.PrivacySuiteSectionIndex.transferItApp.rawValue,
+                expectedEventIdentifier: MyMenuTransfersNavigationItemEvent()
+            )
+        ]
+    )
+    func testExternalLinksAnalyticsEvent(testcase: TestEventTrackingData) {
+        let tracker = MockTracker()
+        let sut = makeSUT(tracker: tracker)
+        let section = sut.sections[testcase.section]
+        if case .externalLink(let action) = section?[testcase.row]?.rowType {
+            action()
+            Test.assertTrackAnalyticsEventCalled(
+                trackedEventIdentifiers: tracker.trackedEventIdentifiers,
+                with: [testcase.expectedEventIdentifier]
+            )
+        }
+    }
+
+    @Test("Test for all read notification event when view appears")
+    func testForUnreadNotificationEvent() async {
+        let tracker = MockTracker()
+        let sut = makeSUT(tracker: tracker)
+        await sut.onTask()
+        Test.assertTrackAnalyticsEventCalled(
+            trackedEventIdentifiers: tracker.trackedEventIdentifiers,
+            with: [AccountNotificationCentreDisplayedWithNoUnreadNotificationsEvent()]
+        )
+    }
+
+    @Test("Test for unread notification event when view appears")
+    func testForReadNotificationEvent() async {
+        let tracker = MockTracker()
+        let notificationUseCase = MockNotificationUseCase(unreadNotificationIDs: [100, 200, 300, 400, 500])
+        let sut = makeSUT(tracker: tracker, notificationsUseCase: notificationUseCase)
+        await sut.onTask()
+        Test.assertTrackAnalyticsEventCalled(
+            trackedEventIdentifiers: tracker.trackedEventIdentifiers,
+            with: [AccountNotificationCentreDisplayedWithUnreadNotificationsEvent()]
+        )
     }
 
     private typealias SUT = AccountMenuViewModel

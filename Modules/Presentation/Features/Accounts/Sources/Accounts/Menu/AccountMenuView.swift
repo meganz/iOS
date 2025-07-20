@@ -23,9 +23,8 @@ public struct AccountMenuView: View {
             }
         }
         .toolbar(.hidden)
-        .task {
-            await viewModel.updateUI()
-        }
+        .onAppear { viewModel.trackOnScreenAppear() }
+        .task { await viewModel.onTask() }
     }
 
     private var contentView: some View {
