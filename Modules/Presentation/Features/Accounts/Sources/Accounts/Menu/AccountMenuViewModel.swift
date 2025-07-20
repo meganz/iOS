@@ -168,7 +168,7 @@ public final class AccountMenuViewModel: ObservableObject {
         accountSection[Constants.AccountSectionIndex.achievements.rawValue] = AccountMenuOption(
             iconConfiguration: .init(icon: MEGAAssets.Image.achievementsInMenu),
             title: Strings.Localizable.achievementsTitle,
-            rowType: .disclosure { [weak self] in self?.router.showAchievements() }
+            rowType: .disclosure { [weak self] in self?.showAchievements() }
         )
         return accountSection
     }
@@ -180,17 +180,17 @@ public final class AccountMenuViewModel: ObservableObject {
         toolsSection[Constants.ToolsSectionIndex.deviceCentre.rawValue] = AccountMenuOption(
             iconConfiguration: .init(icon: MEGAAssets.Image.deviceCentreInMenu),
             title: Strings.Localizable.Device.Center.title,
-            rowType: .disclosure { [weak self] in self?.router.showDeviceCentre() }
+            rowType: .disclosure { [weak self] in self?.showDeviceCentre() }
         )
         toolsSection[Constants.ToolsSectionIndex.transfers.rawValue] = AccountMenuOption(
             iconConfiguration: .init(icon: MEGAAssets.Image.transfersInMenu),
             title: Strings.Localizable.transfers,
-            rowType: .disclosure { [weak self] in self?.router.showTransfers() }
+            rowType: .disclosure { [weak self] in self?.showTransfers() }
         )
         toolsSection[Constants.ToolsSectionIndex.offlineFiles.rawValue] = AccountMenuOption(
             iconConfiguration: .init(icon: MEGAAssets.Image.offlineFilesInMenu),
             title: Strings.Localizable.AccountMenu.offlineFiles,
-            rowType: .disclosure { [weak self] in self?.router.showOfflineFiles() }
+            rowType: .disclosure { [weak self] in self?.showOfflineFiles() }
         )
         toolsSection[Constants.ToolsSectionIndex.rubbishBin.rawValue] = rubbishBinMenuOption(
             accountUseCase: accountUseCase
@@ -198,7 +198,7 @@ public final class AccountMenuViewModel: ObservableObject {
         toolsSection[Constants.ToolsSectionIndex.settings.rawValue] = AccountMenuOption(
             iconConfiguration: .init(icon: MEGAAssets.Image.settingsInMenu),
             title: Strings.Localizable.settingsTitle,
-            rowType: .disclosure { [weak self] in self?.router.showSettings() }
+            rowType: .disclosure { [weak self] in self?.showSettings() }
         )
         return toolsSection
     }
@@ -213,19 +213,19 @@ public final class AccountMenuViewModel: ObservableObject {
             iconConfiguration: .init(icon: MEGAAssets.Image.vpnAppInMenu),
             title: Strings.Localizable.AccountMenu.MegaVPN.buttonTitle,
             subtitleState: .value(Strings.Localizable.AccountMenu.MegaVPN.buttonSubtitle),
-            rowType: .externalLink { [weak self] in self?.router.openLink(for: .vpn) }
+            rowType: .externalLink { [weak self] in self?.openLink(for: .vpn) }
         )
         privacySuiteSection[Constants.PrivacySuiteSectionIndex.pwmApp.rawValue] = AccountMenuOption(
             iconConfiguration: .init(icon: MEGAAssets.Image.passAppInMenu),
             title: Strings.Localizable.AccountMenu.MegaPass.buttonTitle,
             subtitleState: .value(Strings.Localizable.AccountMenu.MegaPass.buttonSubtitle),
-            rowType: .externalLink { [weak self] in self?.router.openLink(for: .passwordManager) }
+            rowType: .externalLink { [weak self] in self?.openLink(for: .passwordManager) }
         )
         privacySuiteSection[Constants.PrivacySuiteSectionIndex.transferItApp.rawValue] = AccountMenuOption(
             iconConfiguration: .init(icon: MEGAAssets.Image.transferItAppInMenu),
             title: Strings.Localizable.AccountMenu.TransferIt.buttonTitle,
             subtitleState: .value(Strings.Localizable.AccountMenu.TransferIt.buttonSubtitle),
-            rowType: .externalLink { [weak self] in self?.router.openLink(for: .transferIt) }
+            rowType: .externalLink { [weak self] in self?.openLink(for: .transferIt) }
         )
         return privacySuiteSection
     }
@@ -281,15 +281,19 @@ public final class AccountMenuViewModel: ObservableObject {
         monitorSubmitReceiptAfterPurchaseTask?.cancel()
     }
 
-    func updateUI() async {
-        async let updateAppNotificationTask: () = updateAppNotificationCount()
-        async let refreshAccountDataTask: () = refreshAccountData()
-        _ = await (updateAppNotificationTask, refreshAccountDataTask)
-    }
-
     func notificationButtonTapped() {
         tracker.trackAnalyticsEvent(with: NotificationsEntryButtonPressedEvent())
         router.showNotifications()
+    }
+
+    func trackOnScreenAppear() {
+        tracker.trackAnalyticsEvent(with: MyMenuScreenEvent())
+    }
+
+    func onTask() async {
+        async let updateUITask: () = updateUI()
+        async let trackAccountNotificationEventTask: () = trackAccountNotificationEvent()
+        _ = await (updateUITask, trackAccountNotificationEventTask)
     }
 
     func logoutButtonTapped() {
@@ -300,6 +304,18 @@ public final class AccountMenuViewModel: ObservableObject {
             await logoutHandler()
             offlineLogOutWarningDismissed = false
         }
+    }
+
+    private func updateUI() async {
+        async let updateAppNotificationTask: () = updateAppNotificationCount()
+        async let refreshAccountDataTask: () = refreshAccountData()
+        _ = await (updateAppNotificationTask, refreshAccountDataTask)
+    }
+
+    private func trackAccountNotificationEvent() async {
+        await notificationsUseCase.unreadNotificationIDs().count > 0
+        ? trackNotificationCentreDisplayedWithUnreadNotificationsEvent()
+        : trackNotificationCentreDisplayedWithNoUnreadNotificationsEvent()
     }
 
     private func refreshAccountData() async {
@@ -472,7 +488,7 @@ public final class AccountMenuViewModel: ObservableObject {
             iconConfiguration: .init(icon: MEGAAssets.Image.storageInMenu),
             title: Strings.Localizable.storage,
             subtitleState: subtitleState,
-            rowType: .disclosure { [weak self] in self?.router.showStorage() }
+            rowType: .disclosure { [weak self] in self?.showStorage() }
         )
     }
 
@@ -481,7 +497,7 @@ public final class AccountMenuViewModel: ObservableObject {
             iconConfiguration: .init(icon: MEGAAssets.Image.contactsInMenu),
             title: Strings.Localizable.contactsTitle,
             notificationCount: contactRequestsCount,
-            rowType: .disclosure { [weak self] in self?.router.showContacts() }
+            rowType: .disclosure { [weak self] in self?.showContacts() }
         )
     }
 
@@ -490,7 +506,7 @@ public final class AccountMenuViewModel: ObservableObject {
             iconConfiguration: .init(icon: MEGAAssets.Image.sharedItemsInMenu),
             title: Strings.Localizable.sharedItems,
             notificationCount: notificationsCount,
-            rowType: .disclosure { [weak self] in self?.router.showSharedItems() }
+            rowType: .disclosure { [weak self] in self?.showSharedItems() }
         )
     }
 
@@ -503,7 +519,7 @@ public final class AccountMenuViewModel: ObservableObject {
             iconConfiguration: .init(icon: MEGAAssets.Image.rubbishBinInMenu),
             title: Strings.Localizable.rubbishBinLabel,
             subtitleState: .value(rubbishBinUsage),
-            rowType: .disclosure { [weak self] in self?.router.showRubbishBin() }
+            rowType: .disclosure { [weak self] in self?.showRubbishBin() }
         )
     }
 
@@ -601,5 +617,71 @@ public final class AccountMenuViewModel: ObservableObject {
                 )
             }
         }
+    }
+
+    private func trackNotificationCentreDisplayedWithNoUnreadNotificationsEvent() {
+        tracker.trackAnalyticsEvent(with: AccountNotificationCentreDisplayedWithNoUnreadNotificationsEvent())
+    }
+
+    private func trackNotificationCentreDisplayedWithUnreadNotificationsEvent() {
+        tracker.trackAnalyticsEvent(with: AccountNotificationCentreDisplayedWithUnreadNotificationsEvent())
+    }
+
+    private func showStorage() {
+        tracker.trackAnalyticsEvent(with: MyMenuStorageNavigationItemEvent())
+        router.showStorage()
+    }
+
+    private func showContacts() {
+        tracker.trackAnalyticsEvent(with: MyMenuContactsNavigationItemEvent())
+        router.showContacts()
+    }
+
+    private func showAchievements() {
+        tracker.trackAnalyticsEvent(with: MyMenuAchievementsNavigationItemEvent())
+        router.showAchievements()
+    }
+
+    private func showSharedItems() {
+        tracker.trackAnalyticsEvent(with: MyMenuSharedItemsNavigationItemEvent())
+        router.showSharedItems()
+    }
+
+    private func showDeviceCentre() {
+        tracker.trackAnalyticsEvent(with: MyMenuDeviceCentreNavigationItemEvent())
+        router.showDeviceCentre()
+    }
+
+    private func showTransfers() {
+        tracker.trackAnalyticsEvent(with: MyMenuTransfersNavigationItemEvent())
+        router.showTransfers()
+    }
+
+    private func showOfflineFiles() {
+        tracker.trackAnalyticsEvent(with: MyMenuOfflineFilesNavigationItemEvent())
+        router.showOfflineFiles()
+    }
+
+    private func showRubbishBin() {
+        tracker.trackAnalyticsEvent(with: MyMenuRubbishBinNavigationItemEvent())
+        router.showRubbishBin()
+    }
+
+    private func showSettings() {
+        tracker.trackAnalyticsEvent(with: MyMenuSettingsNavigationItemEvent())
+        router.showSettings()
+    }
+
+    private func openLink(for app: MegaCompanionApp) {
+        switch app {
+        case .vpn:
+            tracker.trackAnalyticsEvent(with: MyMenuMEGAVPNNavigationItemEvent())
+        case .passwordManager:
+            tracker.trackAnalyticsEvent(with: MyMenuMEGAPassNavigationItemEvent())
+        case .transferIt:
+            tracker.trackAnalyticsEvent(with: MyMenuTransfersNavigationItemEvent())
+        }
+
+        router.openLink(for: app)
     }
 }
