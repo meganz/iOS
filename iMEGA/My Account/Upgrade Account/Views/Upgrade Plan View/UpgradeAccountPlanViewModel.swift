@@ -25,6 +25,9 @@ enum UpgradeAccountPlanViewType: Equatable {
 
 @MainActor
 final class UpgradeAccountPlanViewModel: ObservableObject {
+    private enum Constants {
+        static let fallbackMaxStorageFromPlans = "16 TB"
+    }
     private var subscriptions = Set<AnyCancellable>()
     private let accountUseCase: any AccountUseCaseProtocol
     private let purchaseUseCase: any AccountPlanPurchaseUseCaseProtocol
@@ -70,6 +73,7 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
     }
     @Published private(set) var subscriptionPurchaseChipOptions: [SubscriptionPurchaseChipOption] = []
     @Published var selectedSubscriptionPurchaseChip: SubscriptionPurchaseChipOption?
+    @Published private(set) var maxStorageFromPlans = Constants.fallbackMaxStorageFromPlans
 
     private(set) var registerDelegateTask: Task<Void, Never>?
     private(set) var setUpPlanTask: Task<Void, Never>?
@@ -222,6 +226,7 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
     private func setupPlans() {
         setUpPlanTask = Task {
             planList = await purchaseUseCase.accountPlanProducts()
+            maxStorageFromPlans = planList.max(by: { $0.storageLimit < $1.storageLimit })?.storage ?? Constants.fallbackMaxStorageFromPlans
             
             if localFeatureFlagProvider.isFeatureFlagEnabled(for: .loginRegisterAndOnboardingRevamp) ||
                 viewType == .upgrade {

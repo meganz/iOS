@@ -78,6 +78,7 @@ fileprivate extension PlanEntity {
             currency: product.priceLocale.currencyCode ?? ""
         )
 
+        self.storageLimit = storageLimit
         storage = displayStringForGBValue(gbValue: storageLimit)
         transfer = displayStringForGBValue(gbValue: transferLimit)
 

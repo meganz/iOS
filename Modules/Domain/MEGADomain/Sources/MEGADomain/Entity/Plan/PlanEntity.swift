@@ -17,6 +17,7 @@ public struct PlanEntity: Sendable {
     public var type: AccountTypeEntity
     public var name: String
     public var subscriptionCycle: SubscriptionCycleEntity
+    public var storageLimit: Int
     public var storage: String
     public var transfer: String
 
@@ -61,6 +62,7 @@ public struct PlanEntity: Sendable {
         name: String = "",
         currency: String = "",
         subscriptionCycle: SubscriptionCycleEntity = .none,
+        storageLimit: Int = 0,
         storage: String = "",
         transfer: String = "",
         price: Decimal = 0,
@@ -70,6 +72,7 @@ public struct PlanEntity: Sendable {
         self.type = type
         self.name = name
         self.subscriptionCycle = subscriptionCycle
+        self.storageLimit =  storageLimit
         self.storage = storage
         self.transfer = transfer
         self.appStorePrice = PlanPriceEntity(
@@ -84,6 +87,7 @@ public struct PlanEntity: Sendable {
         type: AccountTypeEntity = .free,
         name: String = "",
         subscriptionCycle: SubscriptionCycleEntity = .none,
+        storageLimit: Int = 0,
         storage: String = "",
         transfer: String = "",
         apiPrice: PlanPriceEntity? = nil,
@@ -93,6 +97,7 @@ public struct PlanEntity: Sendable {
         self.type = type
         self.name = name
         self.subscriptionCycle = subscriptionCycle
+        self.storageLimit = storageLimit
         self.storage = storage
         self.transfer = transfer
         self.apiPrice = apiPrice

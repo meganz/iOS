@@ -51,6 +51,7 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
         XCTAssertEqual(sut.filteredPlanList, [.proI_yearly])
         XCTAssertEqual(sut.currentPlan?.type, .free)
         XCTAssertEqual(sut.recommendedPlanType, .proI)
+        XCTAssertEqual(sut.maxStorageFromPlans, PlanEntity.proI_yearly.storageLimit.toGBString())
     }
     
     @MainActor
@@ -67,6 +68,7 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
         XCTAssertEqual(sut.filteredPlanList, [.proI_monthly, .proII_monthly])
         XCTAssertEqual(sut.currentPlan?.type, .proI)
         XCTAssertEqual(sut.recommendedPlanType, .proII)
+        XCTAssertEqual(sut.maxStorageFromPlans, PlanEntity.proII_yearly.storageLimit.toGBString())
     }
     
     @MainActor

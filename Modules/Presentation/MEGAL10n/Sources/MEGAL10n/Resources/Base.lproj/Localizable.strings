@@ -4750,3 +4750,5 @@
 "accountMenu.otherApps.sectionTitle"="MEGA privacy suite";
 /* Button subtitle for log out in menu */
 "accountMenu.logout"="Log out";
+/* subscription purchase description for the storage capacity */
+"subscriptionPurchase.feature.storage.description"="Store up to %@ of data";

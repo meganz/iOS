@@ -51,7 +51,8 @@ struct SubscriptionPurchasePageContentView: View {
                 VStack(alignment: .leading, spacing: 0) {
                     titleView
                     subtitleView
-                    SubscriptionPurchaseFeaturesView()
+                    SubscriptionPurchaseFeaturesView(
+                        maxPlanStorage: viewModel.maxStorageFromPlans)
                     SubscriptionPurchasePlansView(viewModel: viewModel)
                     SubscriptionPurchaseBenefitsView()
                     if let freePlanViewModel = viewModel.freePlanViewModel {
