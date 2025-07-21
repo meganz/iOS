@@ -4,12 +4,14 @@ import MEGAL10n
 import SwiftUI
 
 struct SubscriptionPurchaseFeaturesView: View {
+    let maxPlanStorage: String
+    
     var body: some View {
         VStack(alignment: .leading) {
             SubscriptionPurchaseFeatureView(
                 image: MEGAAssets.Image.subscriptionFeatureCloud,
                 title: Strings.Localizable.SubscriptionPurchase.Feature.One.title,
-                description: Strings.Localizable.SubscriptionPurchase.Feature.One.description
+                description: Strings.Localizable.SubscriptionPurchase.Feature.Storage.description(maxPlanStorage)
             )
 
             SubscriptionPurchaseFeatureView(
