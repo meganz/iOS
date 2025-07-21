@@ -76,14 +76,13 @@ class AppearanceManager: NSObject {
         navigationBar.scrollEdgeAppearance?.titleTextAttributes = [.foregroundColor: UIColor.primaryTextColor()]
     }
     
-    @objc class func forceSearchBarUpdate(_ searchBar: UISearchBar,
-                                          backgroundColorWhenDesignTokenEnable: UIColor) {
+    @objc class func forceSearchBarUpdate(_ searchBar: UISearchBar) {
         // In order to set the color for `searchBar.searchTextField.backgroundColor`, we need to set `searchBar.searchTextField.borderStyle = .none` otherwise the correct will display incorrectly
         // and since `searchBar.searchTextField.borderStyle = .none` removes the default rounded corner, we need to re-set it.
         searchBar.searchTextField.borderStyle = .none
         searchBar.searchTextField.layer.cornerRadius = 10
         searchBar.tintColor = TokenColors.Text.placeholder
-        searchBar.backgroundColor = backgroundColorWhenDesignTokenEnable
+        searchBar.backgroundColor = TokenColors.Background.surface1
         searchBar.searchTextField.backgroundColor = TokenColors.Background.surface2
         searchBar.searchTextField.leftView?.tintColor = TokenColors.Text.placeholder
         searchBar.searchTextField.textColor = TokenColors.Text.primary

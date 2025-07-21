@@ -140,8 +140,7 @@
 
     [self updateAppearance];
     
-    [AppearanceManager forceSearchBarUpdate:self.searchController.searchBar 
-       backgroundColorWhenDesignTokenEnable:[UIColor surface1Background]];
+    [AppearanceManager forceSearchBarUpdate:self.searchController.searchBar];
 }
 
 - (void)viewWillAppear:(BOOL)animated {

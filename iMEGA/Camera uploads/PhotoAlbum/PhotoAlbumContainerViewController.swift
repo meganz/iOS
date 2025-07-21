@@ -572,8 +572,7 @@ extension PhotoAlbumContainerViewController {
     
     private func updateSearchBarAppearance(traitCollection: UITraitCollection) {
         AppearanceManager.forceSearchBarUpdate(
-            searchController.searchBar,
-            backgroundColorWhenDesignTokenEnable: UIColor.surface1Background())
+            searchController.searchBar)
     }
 }
 

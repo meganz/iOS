@@ -31,8 +31,7 @@
         self.navigationItem.rightBarButtonItem = cancel;
     }
     
-    [AppearanceManager forceSearchBarUpdate:self.searchBar 
-       backgroundColorWhenDesignTokenEnable:[UIColor surface1Background]];
+    [AppearanceManager forceSearchBarUpdate:self.searchBar];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -56,8 +55,7 @@
     [super traitCollectionDidChange:previousTraitCollection];
     
     if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-        [AppearanceManager forceSearchBarUpdate:self.searchBar 
-           backgroundColorWhenDesignTokenEnable:[UIColor surface1Background]];
+        [AppearanceManager forceSearchBarUpdate:self.searchBar];
     }
 }
 

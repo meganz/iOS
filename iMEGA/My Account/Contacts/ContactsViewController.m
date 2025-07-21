@@ -146,8 +146,7 @@
         self.tableView.sectionHeaderTopPadding = 0.0f;
     }
     
-    [AppearanceManager forceSearchBarUpdate:self.searchController.searchBar 
-       backgroundColorWhenDesignTokenEnable:[UIColor surface1Background]];
+    [AppearanceManager forceSearchBarUpdate:self.searchController.searchBar];
 }
 
 - (void)viewWillAppear:(BOOL)animated {

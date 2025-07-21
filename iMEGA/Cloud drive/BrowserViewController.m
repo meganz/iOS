@@ -112,8 +112,7 @@
     if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
         [AppearanceManager forceNavigationBarUpdate:self.navigationController.navigationBar];
         [AppearanceManager forceToolbarUpdate:self.navigationController.toolbar];
-        [AppearanceManager forceSearchBarUpdate:self.searchController.searchBar 
-           backgroundColorWhenDesignTokenEnable:[UIColor surface1Background]];
+        [AppearanceManager forceSearchBarUpdate:self.searchController.searchBar];
         
         [self updateAppearance];
 

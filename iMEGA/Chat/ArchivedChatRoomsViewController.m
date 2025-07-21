@@ -97,8 +97,7 @@
     
     if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
         [self updateAppearance];
-        [AppearanceManager forceSearchBarUpdate:self.searchController.searchBar
-           backgroundColorWhenDesignTokenEnable:[UIColor surface1Background]];
+        [AppearanceManager forceSearchBarUpdate:self.searchController.searchBar];
     }
 }
 
