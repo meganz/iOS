@@ -2427,6 +2427,7 @@
 		BFD6536025EDE8E500052DE8 /* MeetingParticipantInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD6535E25EDE8E500052DE8 /* MeetingParticipantInfoViewController.swift */; };
 		BFD6557525F59EC600052DE8 /* CircularView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD6557425F59EC600052DE8 /* CircularView.swift */; };
 		BFD6564F25F6D22300052DE8 /* MeetingQuickActionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD6564E25F6D22300052DE8 /* MeetingQuickActionView.swift */; };
+		BFD9A50F2E2DF27A001E4CF7 /* MainTabBarController+Achievements.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD9A50E2E2DF24E001E4CF7 /* MainTabBarController+Achievements.swift */; };
 		BFDAC1722B8356DA0003BE4F /* CloudDriveViewControllerNavItemsFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDAC1712B8356DA0003BE4F /* CloudDriveViewControllerNavItemsFactory.swift */; };
 		BFDAC17A2B835D320003BE4F /* CloudDriveViewControllerMediaCheckerModeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDAC1792B835D320003BE4F /* CloudDriveViewControllerMediaCheckerModeTests.swift */; };
 		BFDAC17E2B836BD30003BE4F /* CloudDriveViewControllerNavItemsFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDAC17D2B836BD30003BE4F /* CloudDriveViewControllerNavItemsFactoryTests.swift */; };
@@ -5235,6 +5236,7 @@
 		BFD6535E25EDE8E500052DE8 /* MeetingParticipantInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingParticipantInfoViewController.swift; sourceTree = "<group>"; };
 		BFD6557425F59EC600052DE8 /* CircularView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularView.swift; sourceTree = "<group>"; };
 		BFD6564E25F6D22300052DE8 /* MeetingQuickActionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingQuickActionView.swift; sourceTree = "<group>"; };
+		BFD9A50E2E2DF24E001E4CF7 /* MainTabBarController+Achievements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainTabBarController+Achievements.swift"; sourceTree = "<group>"; };
 		BFDAC1712B8356DA0003BE4F /* CloudDriveViewControllerNavItemsFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudDriveViewControllerNavItemsFactory.swift; sourceTree = "<group>"; };
 		BFDAC1792B835D320003BE4F /* CloudDriveViewControllerMediaCheckerModeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudDriveViewControllerMediaCheckerModeTests.swift; sourceTree = "<group>"; };
 		BFDAC17D2B836BD30003BE4F /* CloudDriveViewControllerNavItemsFactoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudDriveViewControllerNavItemsFactoryTests.swift; sourceTree = "<group>"; };
@@ -7013,6 +7015,7 @@
 				415226791A692ECC00EC7BB6 /* LoginViewController.h */,
 				4152267A1A692ECC00EC7BB6 /* LoginViewController.m */,
 				E8E1D2D41AFA860E00A9BD5B /* Main.storyboard */,
+				BFD9A50E2E2DF24E001E4CF7 /* MainTabBarController+Achievements.swift */,
 				948425D72A94EF020024FF1F /* MainTabBarController+Additions.swift */,
 				B544E5DA2AB4610C006EB65C /* MainTabBarController+Ads.swift */,
 				C451AB9525A4CDB700A5484B /* MainTabBarController+AudioPlayer.swift */,
@@ -14991,6 +14994,7 @@
 				B54081142AD8F5DF004392E8 /* MainTabBarAdsViewModel.swift in Sources */,
 				83F79CBB2AA7372C00D2DE64 /* MainTabBarCallsRouter.swift in Sources */,
 				83663F602AA63869000A1115 /* MainTabBarCallsViewModel.swift in Sources */,
+				BFD9A50F2E2DF27A001E4CF7 /* MainTabBarController+Achievements.swift in Sources */,
 				948425DB2A94F34F0024FF1F /* MainTabBarController+Additions.swift in Sources */,
 				B544E5DB2AB4610C006EB65C /* MainTabBarController+Ads.swift in Sources */,
 				C451AB9625A4CDB700A5484B /* MainTabBarController+AudioPlayer.swift in Sources */,

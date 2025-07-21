@@ -12,12 +12,17 @@ import SwiftUI
 @MainActor
 public protocol SharedItemsPresenting {
     func showSharedItems()
+    func showAchievements()
 }
 
 final class AccountMenuViewNavigationController: MEGANavigationController, SharedItemsPresenting {
     var router: (any AccountMenuViewRouting)?
     func showSharedItems() {
         router?.showSharedItems()
+    }
+
+    func showAchievements() {
+        router?.showAchievements()
     }
 }
 

@@ -98,16 +98,7 @@
 }
 
 - (void)showAchievements {
-    // To be handled in [IOS-10231]
-    if (![MEGASdk.shared isAchievementsEnabled]) {
-        return;
-    }
-    NSInteger homeTabIndex = [TabManager homeTabIndex];
-
-    self.selectedIndex = homeTabIndex;
-    MEGANavigationController *navigationController = [self.childViewControllers objectAtIndex:homeTabIndex];
-    id<HomeRouting> homeRouting = navigationController.viewControllers.firstObject;
-    [homeRouting showAchievements];
+    [self showAchievementsScreen];
 }
 
 - (void)showOfflineAndPresentFileWithHandle:(NSString * _Nullable )base64handle {
