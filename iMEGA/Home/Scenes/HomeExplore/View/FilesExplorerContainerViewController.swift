@@ -199,8 +199,7 @@ class FilesExplorerContainerViewController: UIViewController, TextFileEditable {
         if navigationItem.searchController == nil {
             navigationItem.searchController = searchController
         }
-        AppearanceManager.forceSearchBarUpdate(searchController.searchBar, 
-                                               backgroundColorWhenDesignTokenEnable: UIColor.surface1Background())
+        AppearanceManager.forceSearchBarUpdate(searchController.searchBar)
     }
 }
 
@@ -223,8 +222,7 @@ extension FilesExplorerContainerViewController: TraitEnvironmentAware {
     }
     
     func colorAppearanceDidChange(to currentTrait: UITraitCollection, from previousTrait: UITraitCollection?) {
-        AppearanceManager.forceSearchBarUpdate(searchController.searchBar,
-                                               backgroundColorWhenDesignTokenEnable: UIColor.surface1Background())
+        AppearanceManager.forceSearchBarUpdate(searchController.searchBar)
     }
 }
 
