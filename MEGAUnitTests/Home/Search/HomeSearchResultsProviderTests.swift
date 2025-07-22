@@ -948,7 +948,6 @@ extension NodeActions {
             saveToPhotos: { _ in },
             exportFiles: { _, _ in },
             browserAction: { _, _ in },
-            userProfileOpener: { _ in },
             removeLink: { _ in },
             removeSharing: { _ in },
             rename: { _, _ in },

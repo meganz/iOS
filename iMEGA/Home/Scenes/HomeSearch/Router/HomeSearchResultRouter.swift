@@ -2,6 +2,7 @@ import Foundation
 import MEGAAppSDKRepo
 import MEGADomain
 import MEGAL10n
+import MEGAPreference
 
 // This protocol was added to enable both new and legacy Cloud Drive screen use the same navigation mechanism
 // using NodeOpener to drill deeper into folders or files, and also use the same for context menu presentation
@@ -25,6 +26,12 @@ protocol NodeRouting {
     func didTapNode(nodeHandle: HandleEntity, allNodeHandles: [HandleEntity]?)
     
     func didTapNode(nodeHandle: HandleEntity)
+
+    /// Opens the user's profile screen.
+    ///
+    /// This method is called when the user taps their avatar (at the top left of the screen
+    /// or on the left side of the navigation bar).
+    func openUserProfile()
 }
 
 final class HomeSearchResultRouter: NodeRouting {
@@ -109,5 +116,29 @@ final class HomeSearchResultRouter: NodeRouting {
     func showTakenDownAlert() {
         let alert = UIAlertController(model: AlertModelFactory.makeTakenDownModel())
         navigationController?.present(alert, animated: true)
+    }
+
+    func openUserProfile() {
+        guard let navigationController else {
+            assertionFailure("Navigation controller not found")
+            return
+        }
+
+        MyAccountHallRouter(
+            myAccountHallUseCase: MyAccountHallUseCase(repository: AccountRepository.newRepo),
+            purchaseUseCase: AccountPlanPurchaseUseCase(repository: AccountPlanPurchaseRepository.newRepo),
+            accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
+            accountStorageUseCase: AccountStorageUseCase(
+                accountRepository: AccountRepository.newRepo,
+                preferenceUseCase: PreferenceUseCase.default
+            ),
+            shareUseCase: ShareUseCase(
+                shareRepository: ShareRepository.newRepo,
+                filesSearchRepository: FilesSearchRepository.newRepo,
+                nodeRepository: NodeRepository.newRepo),
+            networkMonitorUseCase: NetworkMonitorUseCase(repo: NetworkMonitorRepository.newRepo),
+            notificationsUseCase: NotificationsUseCase(repository: NotificationsRepository.newRepo),
+            navigationController: navigationController
+        ).start()
     }
 }
