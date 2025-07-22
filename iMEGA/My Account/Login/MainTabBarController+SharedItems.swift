@@ -1,4 +1,11 @@
+import MEGAAppSDKRepo
+
 extension MainTabBarController {
+    @objc func observeNodeUpdatesIfNeeded() {
+        guard !isNavigationRevampEnabled else { return }
+        MEGASdk.shared.add(self)
+    }
+
     @objc func updateSharedItemsTabBadgeIfNeeded(_ nodeList: MEGANodeList) {
         let nodes = nodeList.toNodeArray()
         guard nodes.shareChangeTypeNodes().isNotEmpty else { return }
@@ -15,9 +22,9 @@ extension MainTabBarController {
             } : nil
 
         guard unverifiedOutShares != nil || unverifiedInShares.size > 0 else {
-            setBadgeValue(nil, tabPosition: TabType.sharedItems.rawValue)
+            setBadgeValue(nil, tabPosition: TabManager.sharedItemsTabIndex())
             return
         }
-        setBadgeValue("⦁", tabPosition: TabType.sharedItems.rawValue)
+        setBadgeValue("⦁", tabPosition: TabManager.sharedItemsTabIndex())
     }
 }
