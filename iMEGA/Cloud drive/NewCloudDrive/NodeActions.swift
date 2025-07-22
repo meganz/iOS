@@ -22,7 +22,6 @@ struct NodeActions {
     var exportFiles: (_ nodes: [NodeEntity], _ sender: Any) -> Void
     // this is used to move or copy a node
     var browserAction: (_ action: BrowserActionEntity, _ nodes: [NodeEntity]) -> Void
-    var userProfileOpener: (UINavigationController) -> Void
     var removeLink: ([NodeEntity]) -> Void
     var removeSharing: (NodeEntity) -> Void
     
@@ -163,24 +162,6 @@ extension NodeActions {
                     assertionFailure("here only copy and move is supported")
                 }
                 navigationController.present(localNC, animated: true)
-            },
-            userProfileOpener: { navigationController in
-                MyAccountHallRouter(
-                    myAccountHallUseCase: MyAccountHallUseCase(repository: AccountRepository.newRepo),
-                    purchaseUseCase: AccountPlanPurchaseUseCase(repository: AccountPlanPurchaseRepository.newRepo), 
-                    accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
-                    accountStorageUseCase: AccountStorageUseCase(
-                        accountRepository: AccountRepository.newRepo,
-                        preferenceUseCase: PreferenceUseCase.default
-                    ),
-                    shareUseCase: ShareUseCase(
-                        shareRepository: ShareRepository.newRepo,
-                        filesSearchRepository: FilesSearchRepository.newRepo,
-                        nodeRepository: NodeRepository.newRepo),
-                    networkMonitorUseCase: NetworkMonitorUseCase(repo: NetworkMonitorRepository.newRepo),
-                    notificationsUseCase: NotificationsUseCase(repository: NotificationsRepository.newRepo),
-                    navigationController: navigationController
-                ).start()
             },
             removeLink: { nodes in
                 let router = ActionWarningViewRouter(
