@@ -1,6 +1,6 @@
-import MEGAAppSDKRepo
 import MEGADomain
 import MEGAL10n
+import MEGARepo
 import SwiftUI
 import WidgetKit
 

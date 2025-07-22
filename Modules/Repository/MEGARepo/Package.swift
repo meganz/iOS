@@ -10,7 +10,8 @@ let settings: [SwiftSetting] = [
 let package = Package(
     name: "MEGARepo",
     platforms: [
-        .macOS(.v10_15), .iOS(.v15)
+        .macOS(.v10_15),
+        .iOS(.v15)
     ],
     products: [
         .library(
@@ -20,13 +21,18 @@ let package = Package(
     ],
     dependencies: [
         .package(path: "../../Domain/MEGADomain"),
-        .package(path: "../../MEGASharedRepo/MEGASwift")
-
+        .package(path: "../../MEGASharedRepo/MEGASwift"),
+        .package(url: "https://github.com/meganz/SAMKeychain.git", from: "2.0.0")
+        
     ],
     targets: [
         .target(
             name: "MEGARepo",
-            dependencies: ["MEGADomain", "MEGASwift"],
+            dependencies: [
+                "MEGADomain",
+                "MEGASwift",
+                "SAMKeychain"
+            ],
             swiftSettings: settings
         ),
         .testTarget(

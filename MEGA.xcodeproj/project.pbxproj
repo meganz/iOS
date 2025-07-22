@@ -2453,7 +2453,6 @@
 		BFE7729F2D9B8A17005B114E /* MEGAAppPresentation in Frameworks */ = {isa = PBXBuildFile; productRef = BFE7729E2D9B8A17005B114E /* MEGAAppPresentation */; };
 		BFE772A12D9B8A23005B114E /* MEGAAppPresentation in Frameworks */ = {isa = PBXBuildFile; productRef = BFE772A02D9B8A23005B114E /* MEGAAppPresentation */; };
 		BFE772A32D9B8A32005B114E /* MEGAAppPresentation in Frameworks */ = {isa = PBXBuildFile; productRef = BFE772A22D9B8A32005B114E /* MEGAAppPresentation */; };
-		BFE772A52D9B8A41005B114E /* MEGAAppPresentation in Frameworks */ = {isa = PBXBuildFile; productRef = BFE772A42D9B8A41005B114E /* MEGAAppPresentation */; };
 		BFEF8CAD2887A0F400F8F9F1 /* QASettingsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFEF8CAC2887A0F400F8F9F1 /* QASettingsRouter.swift */; };
 		BFEF8CAF2887A10100F8F9F1 /* QASetttingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFEF8CAE2887A10100F8F9F1 /* QASetttingsViewModel.swift */; };
 		BFEF8CB12887A10B00F8F9F1 /* QASettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFEF8CB02887A10B00F8F9F1 /* QASettingsView.swift */; };
@@ -5577,7 +5576,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				A828E685286B317F004CED9E /* FirebaseCrashlytics in Frameworks */,
-				BFE772A52D9B8A41005B114E /* MEGAAppPresentation in Frameworks */,
 				25455BEA2CCB8FE0008DE44E /* MEGAAssets in Frameworks */,
 				B610447428979EA200AAECF4 /* MEGADomain in Frameworks */,
 				BF61496A2A9FF39500AB051A /* MEGAL10n in Frameworks */,
@@ -13574,7 +13572,6 @@
 				BF6149692A9FF39500AB051A /* MEGAL10n */,
 				6DFC67832CC87957000EA8BC /* MEGASwiftUI */,
 				25455BE92CCB8FE0008DE44E /* MEGAAssets */,
-				BFE772A42D9B8A41005B114E /* MEGAAppPresentation */,
 			);
 			productName = MEGAWidgetExtension;
 			productReference = 83199F1125556CD900344531 /* MEGAWidgetExtension.appex */;
@@ -19050,10 +19047,6 @@
 			productName = MEGAAppPresentation;
 		};
 		BFE772A22D9B8A32005B114E /* MEGAAppPresentation */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = MEGAAppPresentation;
-		};
-		BFE772A42D9B8A41005B114E /* MEGAAppPresentation */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = MEGAAppPresentation;
 		};
