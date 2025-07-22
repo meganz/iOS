@@ -1,5 +1,6 @@
 import MEGAAppSDKRepo
 import MEGADomain
+import MEGARepo
 
 final class DownloadLinkRouter: DownloadLinkRouterProtocol {
     private weak var baseViewController: UIViewController?

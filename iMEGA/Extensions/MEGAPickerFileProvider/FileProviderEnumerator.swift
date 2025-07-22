@@ -2,6 +2,7 @@
 import MEGAAppSDKRepo
 import MEGADomain
 import MEGAPickerFileProviderDomain
+import MEGARepo
 
 final class FileProviderEnumerator: NSObject, NSFileProviderEnumerator, Sendable {
     
