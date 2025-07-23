@@ -245,7 +245,6 @@ final class MiniPlayerViewModel: ViewModelType {
     private nonisolated func initialize(tracks: [AudioPlayerItem], currentTrack: AudioPlayerItem) async {
         let mutableTracks = await shift(tracks: tracks, startItem: currentTrack)
         await resetConfigurationIfNeeded(nextCurrentTrack: currentTrack)
-        await configEntity.playerHandler.autoPlay(enable: configEntity.playerType != .fileLink)
         await configEntity.playerHandler.addPlayer(tracks: mutableTracks)
         await configurePlayer()
     }

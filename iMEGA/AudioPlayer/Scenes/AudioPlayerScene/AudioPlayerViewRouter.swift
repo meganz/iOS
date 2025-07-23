@@ -100,7 +100,7 @@ final class AudioPlayerViewRouter: NSObject, AudioPlayerViewRouting {
             break
         }
         
-        return configEntity.nodeOriginType == .fileLink ? MEGANavigationController(rootViewController: vc) : vc
+        return vc
     }
     
     @objc func start() {
@@ -169,7 +169,7 @@ final class AudioPlayerViewRouter: NSObject, AudioPlayerViewRouting {
         fileLinkActionViewControllerDelegate?.sendToChat()
     }
     
-    func showAction(for node: MEGANode, sender: Any) {
+    func showAction(for node: MEGANode, isFileLink: Bool, sender: Any) {
         let displayMode: DisplayMode = node.mnz_isInRubbishBin() ? .rubbishBin : .cloudDrive
         let backupsUC = BackupsUseCase(backupsRepository: BackupsRepository.newRepo, nodeRepository: NodeRepository.newRepo)
         let isBackupNode = backupsUC.isBackupNode(node.toNodeEntity())
@@ -185,6 +185,7 @@ final class AudioPlayerViewRouter: NSObject, AudioPlayerViewRouting {
             isInVersionsView: isPlayingFromVersionView(),
             isBackupNode: isBackupNode,
             isFromSharedItem: configEntity.isFromSharedItem,
+            isAudioFileLink: isFileLink,
             sender: sender)
         nodeActionViewController.accessoryActionDelegate = nodeAccessoryActionDelegate
         

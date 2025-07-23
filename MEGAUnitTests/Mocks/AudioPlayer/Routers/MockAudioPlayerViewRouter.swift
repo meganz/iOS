@@ -39,7 +39,7 @@ final class MockAudioPlayerViewRouter: AudioPlayerViewRouting {
         sendToContact_calledTimes += 1
     }
     
-    func showAction(for node: MEGANode, sender: Any) {
+    func showAction(for node: MEGANode, isFileLink: Bool, sender: Any) {
         showAction_calledTimes += 1
     }
     

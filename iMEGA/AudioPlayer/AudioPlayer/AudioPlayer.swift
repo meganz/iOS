@@ -33,7 +33,6 @@ final class AudioPlayer: NSObject {
     let defaultRewindInterval: TimeInterval = 15.0
     var itemToRepeat: AudioPlayerItem?
     var onClosePlayerCompletion: (() -> Void)?
-    var isAutoPlayEnabled = true
     var isAudioPlayerInterrupted = false
     var isPaused = false
     var isCloseRequested = false
@@ -239,7 +238,7 @@ final class AudioPlayer: NSObject {
     }
     
     private func configurePlayer() {
-        isAutoPlayEnabled ? play() : pause()
+        play()
         
         preloadNextTracksMetadata()
     }

@@ -4,7 +4,8 @@ import UIKit
 
 final class MEGASlider: UISlider {
     @IBInspectable var thumbRadius: CGFloat = 10
-    @IBInspectable var hightlitedThumbRadius: CGFloat = 25
+    @IBInspectable var highlightedThumbRadius: CGFloat = 25
+    @IBInspectable var touchExpansion: CGFloat = 20
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -18,14 +19,22 @@ final class MEGASlider: UISlider {
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
+        configure()
     }
     
     private func configure() {
-        setMinimumTrackImage(customMinimumTrackImage(bgColor: TokenColors.Components.interactive), for: .normal)
-        maximumTrackTintColor = TokenColors.Background.surface2
+        setMinimumTrackImage(customMinimumTrackImage(bgColor: TokenColors.Components.selectionControl), for: .normal)
+        maximumTrackTintColor = TokenColors.Background.surface3
         
-        setThumbImage(thumbImage(bgColor: TokenColors.Components.interactive, radius: thumbRadius), for: .normal)
-        setThumbImage(thumbImage(bgColor: TokenColors.Components.interactive, radius: hightlitedThumbRadius), for: .highlighted)
+        setThumbImage(thumbImage(bgColor: TokenColors.Components.selectionControl, radius: thumbRadius), for: .normal)
+        setThumbImage(thumbImage(bgColor: TokenColors.Components.selectionControl, radius: highlightedThumbRadius), for: .highlighted)
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        if previousTraitCollection?.hasDifferentColorAppearance(comparedTo: traitCollection) == true {
+            configure()
+        }
     }
     
     /// Custom minimum track image slider background. We need this to render exactly same color as the `thumbImage(UIColor: CGFloat) -> UIImage`.  Setting the color of `minimumTrackTintColor` directly won't render the exactly same color as the `thumbImage(UIColor: CGFloat) -> UIImage`
@@ -54,11 +63,27 @@ final class MEGASlider: UISlider {
             thumb.layer.render(in: rendererContext.cgContext)
         }
     }
+    
+    /// Expand the tappable area around the thumb without changing its visual size.
+    /// We override hit-testing to detect touches within an inset area around the thumb frame,
+    /// making it easier to grab even when the thumb graphic is small.
+    override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
+        let thumbFrame = thumbRect(
+            forBounds: bounds,
+            trackRect: trackRect(forBounds: bounds),
+            value: value
+        )
+        let hitFrame = thumbFrame.insetBy(dx: -touchExpansion, dy: -touchExpansion)
+        if hitFrame.contains(point) {
+            return true
+        }
+        return super.point(inside: point, with: event)
+    }
 }
 
 private struct MEGASliderView: UIViewRepresentable {
     func makeUIView(context: Context) -> MEGASlider {
-        return MEGASlider(frame: .zero)
+        MEGASlider(frame: .zero)
     }
     
     func updateUIView(_ uiView: MEGASlider, context: Context) {

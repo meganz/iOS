@@ -39,7 +39,7 @@ protocol AudioPlayerMetadataLoaderProtocol {
     func isPlayerDefined() -> Bool
     func isPlayerEmpty() -> Bool
     func isShuffleEnabled() -> Bool
-    func autoPlay(enable: Bool)
+    func isSingleItemPlaylist() -> Bool
     func isPlayerPlaying() -> Bool
     func isPlayerPaused() -> Bool
     func isPlayerAlive() -> Bool
@@ -79,7 +79,7 @@ protocol AudioPlayerMetadataLoaderProtocol {
 
 // MARK: - Audio Player Configuration Functions
 @objc protocol AudioPlayerConfigurationProtocol: AnyObject {
-    func setCurrent(player: AudioPlayer?, autoPlayEnabled: Bool, tracks: [AudioPlayerItem], playerListener: any AudioPlayerObserversProtocol)
+    func setCurrent(player: AudioPlayer?, tracks: [AudioPlayerItem], playerListener: any AudioPlayerObserversProtocol)
     func addPlayer(tracks: [AudioPlayerItem])
     func configurePlayer(listener: any AudioPlayerObserversProtocol)
     func removePlayer(listener: any AudioPlayerObserversProtocol)

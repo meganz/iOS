@@ -105,10 +105,6 @@ extension AudioPlayer {
             isPaused = true
             notify([aboutCurrentItem, aboutCurrentState, aboutCurrentThumbnail])
             
-            if !isAutoPlayEnabled {
-                updateLoadingView(isLoading: false)
-            }
-            
             if let currentItem = player.currentItem as? AudioPlayerItem {
                 // Check if the new item is the same as the previously played item
                 isUserPreviouslyJustPlayedSameItem = (currentItem == previouslyPlayedItem)

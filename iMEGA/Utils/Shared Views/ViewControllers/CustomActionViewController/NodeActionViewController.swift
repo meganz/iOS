@@ -243,6 +243,26 @@ class NodeActionViewController: ActionSheetViewController {
                           isFromSharedItem: isFromSharedItem)
     }
     
+    @objc init(node: MEGANode, delegate: any NodeActionViewControllerDelegate, displayMode: DisplayMode, isInVersionsView: Bool, isBackupNode: Bool, isFromSharedItem: Bool = false, isAudioFileLink: Bool, sender: Any) {
+        self.nodes = [node]
+        self.displayMode = displayMode
+        self.delegate = delegate
+        self.sender = sender
+        
+        super.init(nibName: nil, bundle: nil)
+        
+        configurePresentationStyle(from: sender)
+        
+        self.setupActions(
+            node: node,
+            displayMode: displayMode,
+            isInVersionsView: isInVersionsView,
+            isBackupNode: isBackupNode,
+            isAudioFileLink: isAudioFileLink,
+            isFromSharedItem: isFromSharedItem
+        )
+    }
+    
     @objc init(node: MEGANode, delegate: any NodeActionViewControllerDelegate, displayMode: DisplayMode, viewMode: ViewModePreferenceEntity,
                isBackupNode: Bool, containsMediaFiles: Bool, sender: Any) {
         self.nodes = [node]
@@ -460,7 +480,7 @@ class NodeActionViewController: ActionSheetViewController {
         return numberOfFilesAndFoldersString
     }
     
-    private func setupActions(node: MEGANode, displayMode: DisplayMode, isIncoming: Bool = false, isInVersionsView: Bool = false, isBackupNode: Bool, sharedFolder: MEGAShare = MEGAShare(), shouldShowVerifyContact: Bool = false, isFromSharedItem: Bool = false, viewInFolder: Bool = false) {
+    private func setupActions(node: MEGANode, displayMode: DisplayMode, isIncoming: Bool = false, isInVersionsView: Bool = false, isBackupNode: Bool, isAudioFileLink: Bool = false, sharedFolder: MEGAShare = MEGAShare(), shouldShowVerifyContact: Bool = false, isFromSharedItem: Bool = false, viewInFolder: Bool = false) {
         loadActions = { [self] in
             let isImageOrVideoFile = node.name?.fileExtensionGroup.isVisualMedia == true
             let isMediaFile = node.isFile() && isImageOrVideoFile && node.mnz_isPlayable()
@@ -501,6 +521,7 @@ class NodeActionViewController: ActionSheetViewController {
                     from: displayMode,
                     isFromSharedItem: isFromSharedItem))
                 .setViewInFolder(viewInFolder)
+                .setIsAudioFileLink(isAudioFileLink)
                 .build()
             
             update(actions: actions, sender: self.sender)

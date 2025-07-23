@@ -13,7 +13,6 @@ class AudioPlayerViewController: UIViewController, AudioPlayerViewControllerNode
     @IBOutlet weak var dataStackView: UIStackView!
     @IBOutlet weak var titleLabel: MEGALabel!
     @IBOutlet weak var subtitleLabel: MEGALabel!
-    @IBOutlet weak var detailLabel: MEGALabel!
     @IBOutlet weak var currentTimeLabel: MEGALabel!
     @IBOutlet weak var remainingTimeLabel: MEGALabel!
     @IBOutlet weak var timeSliderView: MEGASlider! {
@@ -30,15 +29,12 @@ class AudioPlayerViewController: UIViewController, AudioPlayerViewControllerNode
     @IBOutlet weak var shuffleButton: MEGASelectedButton!
     @IBOutlet weak var repeatButton: MEGASelectedButton!
     @IBOutlet weak var bottomView: UIView!
-    @IBOutlet weak var toolbarView: UIView!
     @IBOutlet weak var closeButton: UIButton!
     @IBOutlet weak var moreButton: UIButton!
     @IBOutlet weak var gotoplaylistButton: UIButton!
     @IBOutlet weak var playbackSpeedButton: UIButton!
     @IBOutlet weak var activityIndicatorView: UIActivityIndicatorView!
-    @IBOutlet weak var separatorView: UIView!
     
-    private var toolbarConfigurator: AudioPlayerFileToolbarConfigurator?
     private var pendingDragEvent: Bool = false
     private var playerType: PlayerType = .default
     
@@ -65,7 +61,6 @@ class AudioPlayerViewController: UIViewController, AudioPlayerViewControllerNode
         }
         
         viewModel.dispatch(.onViewDidLoad)
-        navigationController?.delegate = self
         
         configureActivityIndicatorViewColor()
         
@@ -100,7 +95,9 @@ class AudioPlayerViewController: UIViewController, AudioPlayerViewControllerNode
     // MARK: - Private functions
     
     private func configureImages() {
-        imageView.image = MEGAAssets.UIImage.defaultArtwork
+        imageView.image = MEGAAssets.UIImage.image(named: "filetype_audio")
+        imageView.layer.cornerRadius = 16
+        imageView.clipsToBounds = true 
 
         goBackwardButton.setImage(MEGAAssets.UIImage.image(named: "goBackward15"), for: .normal)
         previousButton.setImage(MEGAAssets.UIImage.image(named: "backTrack"), for: .normal)
@@ -126,10 +123,6 @@ class AudioPlayerViewController: UIViewController, AudioPlayerViewControllerNode
     }
     
     private func removeDelegates() {
-        if navigationController?.delegate === self {
-            navigationController?.delegate = nil
-        }
-        
         viewModel.dispatch(.removeDelegates)
     }
     
@@ -160,14 +153,10 @@ class AudioPlayerViewController: UIViewController, AudioPlayerViewControllerNode
         titleLabel.text = name
         subtitleLabel.text = artist
         
-        if let thumbnailImage = thumbnail {
-            imageView.image = thumbnailImage
+        if let thumbnail {
+            imageView.image = thumbnail
         } else {
-            imageView.image = MEGAAssets.UIImage.defaultArtwork
-        }
-        
-        if let nodeSize = nodeSize {
-            detailLabel.text = nodeSize
+            imageView.image = MEGAAssets.UIImage.image(forFileName: name)
         }
     }
     
@@ -182,21 +171,15 @@ class AudioPlayerViewController: UIViewController, AudioPlayerViewControllerNode
     }
     
     private func updateSpeed(_ mode: SpeedMode) {
-        var image: UIImage?
-        switch mode {
-        case .normal:
-            image = MEGAAssets.UIImage.normal
-        case .oneAndAHalf:
-            image = MEGAAssets.UIImage.oneAndAHalf
-        case .double:
-            image = MEGAAssets.UIImage.double
-        case .half:
-            image = MEGAAssets.UIImage.half
+        let image: UIImage = switch mode {
+        case .normal: MEGAAssets.UIImage.normal.withRenderingMode(.alwaysTemplate)
+        case .oneAndAHalf: MEGAAssets.UIImage.oneAndAHalf.withRenderingMode(.alwaysTemplate)
+        case .double: MEGAAssets.UIImage.double.withRenderingMode(.alwaysTemplate)
+        case .half: MEGAAssets.UIImage.half.withRenderingMode(.alwaysTemplate)
         }
         
-        image?.withTintColor(TokenColors.Icon.primary, renderingMode: .alwaysTemplate)
-        
         playbackSpeedButton.setImage(image, for: .normal)
+        playbackSpeedButton.tintColor = mode == .normal ? TokenColors.Icon.primary : TokenColors.Components.interactive
     }
     
     private func updateShuffle(_ status: Bool) {
@@ -205,11 +188,9 @@ class AudioPlayerViewController: UIViewController, AudioPlayerViewControllerNode
     }
     
     private func updateRepeatButtonAppearance(status: RepeatMode) {
-        switch status {
-        case .none:
-            repeatButton.tintColor = TokenColors.Icon.primary
-        case .loop, .repeatOne:
-            repeatButton.tintColor = TokenColors.Components.interactive
+        repeatButton.tintColor = switch status {
+        case .none: TokenColors.Icon.primary
+        case .loop, .repeatOne: TokenColors.Components.interactive
         }
     }
     
@@ -239,35 +220,6 @@ class AudioPlayerViewController: UIViewController, AudioPlayerViewControllerNode
         subtitleLabel.isHidden = false
     }
     
-    private func configureNavigationBar(title: String, subtitle: String) {
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: Strings.Localizable.close, style: .done, target: self, action: #selector(closeButtonAction))
-        
-        let rightBarButtonItem = UIBarButtonItem(
-            image: MEGAAssets.UIImage.moreNavigationBar,
-            style: .plain,
-            target: self,
-            action: #selector(moreButtonAction(_:))
-        )
-        
-        rightBarButtonItem.tintColor = TokenColors.Icon.primary
-        navigationItem.rightBarButtonItem = rightBarButtonItem
-        
-        let titleView = CustomTitleView.instanceFromNib
-        titleView.titleLabel.text = title
-        titleView.subtitleLabel.text = subtitle
-        navigationItem.titleView = titleView
-    }
-    
-    private func configureToolbarButtons() {
-        if toolbarConfigurator == nil {
-            toolbarConfigurator = AudioPlayerFileToolbarConfigurator(
-                importAction: importBarButtonPressed,
-                sendToContactAction: sendToContactBarButtonPressed,
-                shareAction: shareBarButtonPressed
-            )
-        }
-    }
-    
     private func userInteraction(enabled: Bool) {
         timeSliderView.isUserInteractionEnabled = enabled
         goBackwardButton.isEnabled = enabled
@@ -275,53 +227,15 @@ class AudioPlayerViewController: UIViewController, AudioPlayerViewControllerNode
         playPauseButton.isEnabled = enabled
         nextButton.isEnabled = enabled
         goForwardButton.isEnabled = enabled
-        if playerType != .fileLink {
-            shuffleButton.isEnabled = enabled
-            repeatButton.isEnabled = enabled
-            gotoplaylistButton.isEnabled = enabled
-            playbackSpeedButton.isEnabled = enabled
-        }
-    }
-    
-    private func showToolbar() {
-        toolbarItems = toolbarConfigurator?.toolbarItems()
-        navigationController?.setToolbarHidden(false, animated: true)
-    }
-    
-    private func configureDefaultPlayer() {
-        compactPlayer(active: false)
-        defaultPlayerAppearance()
-        updateAppearance()
-    }
-    
-    private func configureFileLinkPlayer(title: String, subtitle: String) {
-        configureNavigationBar(title: title, subtitle: subtitle)
-        configureToolbarButtons()
-        showToolbar()
-        compactPlayer(active: true)
-        fileLinkPlayerAppearance()
-        updateAppearance()
-    }
-    
-    private func compactPlayer(active: Bool) {
-        detailLabel.isHidden = !active
-        shuffleButton.alpha = active ? 0.0 : 1.0
-        repeatButton.alpha = active ? 0.0 : 1.0
-        gotoplaylistButton.isHidden = active
-        shuffleButton.isUserInteractionEnabled = !active
-        repeatButton.isUserInteractionEnabled = !active
-        dataStackView.alignment = active ? .leading : .center
-        toolbarView.isHidden = active
-        navigationController?.isNavigationBarHidden = !active
+        shuffleButton.isEnabled = enabled
+        repeatButton.isEnabled = enabled
+        gotoplaylistButton.isEnabled = enabled
+        playbackSpeedButton.isEnabled = enabled
     }
     
     private func updateCloseButtonState() {
-        closeButton.isHidden = playerType == .fileLink
-        
-        if !closeButton.isHidden {
-            closeButton.setTitle(Strings.Localizable.close, for: .normal)
-            configureCloseButtonColor()
-        }
+        closeButton.setTitle(Strings.Localizable.close, for: .normal)
+        configureCloseButtonColor()
     }
     
     private func configureCloseButtonColor() {
@@ -329,15 +243,18 @@ class AudioPlayerViewController: UIViewController, AudioPlayerViewControllerNode
     }
     
     private func updateMoreButtonState() {
-        moreButton.isHidden = playerType == .fileLink || playerType == .offline
+        moreButton.isHidden = playerType == .offline
     }
     
     // MARK: - UI configurations
     private func updateAppearance() {
+        configureViewsColor()
+        viewModel.dispatch(.refreshRepeatStatus)
+        viewModel.dispatch(.refreshShuffleStatus)
+        
         updateCloseButtonState()
         updateMoreButtonState()
         style()
-        imageView.applyShadow(in: imageViewContainerView, alpha: 0.24, x: 0, y: 1.5, blur: 16, spread: 0)
         
         let playbackControlButtons = [ goBackwardButton, previousButton, playPauseButton, nextButton, goForwardButton ]
         let bottomViewButtons = [ shuffleButton, repeatButton, playbackSpeedButton, gotoplaylistButton ]
@@ -351,40 +268,14 @@ class AudioPlayerViewController: UIViewController, AudioPlayerViewControllerNode
             .forEach { [weak self] in self?.setForegroundColor(for: $0, color: TokenColors.Icon.primary) }
     }
     
-    private func fileLinkPlayerAppearance() {
-        configureViewsColor()
-    }
-    
-    private func defaultPlayerAppearance() {
-        configureViewsColor()
-        viewModel.dispatch(.refreshRepeatStatus)
-        viewModel.dispatch(.refreshShuffleStatus)
-    }
-    
     private func configureViewsColor() {
         configureBottomViewColor()
         configureViewBackgroundColor()
-        configureSeparatorViewColor()
         configureCloseButtonColor()
     }
     
     private func configureBottomViewColor() {
-        switch playerType {
-        case .default, .offline, .folderLink:
-            bottomView.backgroundColor = TokenColors.Background.page
-        case .fileLink:
-            bottomView.backgroundColor = TokenColors.Background.page
-        }
-    }
-    
-    private func configureSeparatorViewColor() {
-        switch playerType {
-        case .default, .offline, .folderLink:
-            separatorView.isHidden = true
-        case .fileLink:
-            separatorView.backgroundColor = TokenColors.Border.strong
-            separatorView.isHidden = false
-        }
+        bottomView.backgroundColor = TokenColors.Background.page
     }
     
     private func configureViewBackgroundColor() {
@@ -394,14 +285,11 @@ class AudioPlayerViewController: UIViewController, AudioPlayerViewControllerNode
     private func style() {
         titleLabel.textColor = TokenColors.Text.primary
         subtitleLabel.textColor = TokenColors.Text.secondary
-        detailLabel.textColor = TokenColors.Text.secondary
         currentTimeLabel.textColor = TokenColors.Text.secondary
         remainingTimeLabel.textColor = TokenColors.Text.secondary
         timeSliderView.tintColor = TokenColors.Background.surface2
         
         closeButton.titleLabel?.adjustsFontForContentSizeCategory = true
-        titleLabel.font = UIFont.systemFont(ofSize: 17, weight: .bold)
-        subtitleLabel.font = UIFont.systemFont(ofSize: 17, weight: .regular)
         configureViewsColor()
     }
     
@@ -527,13 +415,13 @@ class AudioPlayerViewController: UIViewController, AudioPlayerViewControllerNode
             updateShuffle(status)
         case .configureDefaultPlayer:
             playerType = .`default`
-            configureDefaultPlayer()
+            updateAppearance()
         case .configureOfflinePlayer:
             playerType = .offline
-            configureDefaultPlayer()
-        case .configureFileLinkPlayer(let title, let subtitle):
+            updateAppearance()
+        case .configureFileLinkPlayer:
             playerType = .fileLink
-            configureFileLinkPlayer(title: title, subtitle: subtitle)
+            updateAppearance()
         case .enableUserInteraction(let enabled):
             userInteraction(enabled: enabled)
         case .didPausePlayback, .didResumePlayback:
@@ -570,16 +458,5 @@ extension AudioPlayerViewController: AdsSlotViewControllerProtocol {
         SingleItemAsyncSequence(
             item: AdsSlotConfig(displayAds: true)
         ).eraseToAnyAsyncSequence()
-    }
-}
-
-// MARK: - UINavigationControllerDelegate
-
-extension AudioPlayerViewController: UINavigationControllerDelegate {
-    
-    func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
-        if viewController != self {
-            viewModel.dispatch(.initMiniPlayer)
-        }
     }
 }
