@@ -1,7 +1,7 @@
 // swift-interface-format-version: 1.0
-// swift-compiler-version: Apple Swift version 6.1.2 effective-5.10 (swiftlang-6.1.2.1.2 clang-1700.0.13.5)
+// swift-compiler-version: Apple Swift version 6.1 effective-5.10 (swiftlang-6.1.0.110.21 clang-1700.0.13.3)
 // swift-module-flags: -target arm64-apple-ios15.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -enable-experimental-feature DebugDescriptionMacro -enable-bare-slash-regex -module-name MEGAAssetsBundle
-// swift-module-flags-ignorable:  -interface-compiler-version 6.1.2
+// swift-module-flags-ignorable:  -interface-compiler-version 6.1
 import DeveloperToolsSupport
 import Foundation
 import Swift
@@ -1212,9 +1212,6 @@ public struct MEGAUIImageBundle {
     get
   }
   public static var spotlightFile: UIKit.UIImage {
-    get
-  }
-  public static var defaultArtwork: UIKit.UIImage {
     get
   }
   public static var filterActive: UIKit.UIImage {

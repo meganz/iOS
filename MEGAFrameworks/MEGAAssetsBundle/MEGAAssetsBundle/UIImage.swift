@@ -123,7 +123,6 @@ public struct MEGAUIImageBundle {
     public static var verificationCountry: UIImage { UIImage.verificationCountry }
     public static var phoneNumber: UIImage { UIImage.phoneNumber }
     public static var spotlightFile: UIImage { UIImage.spotlightFile }
-    public static var defaultArtwork: UIImage { UIImage.defaultArtwork }
     public static var filterActive: UIImage { UIImage.filterActive }
     public static var moreActionActiveNavigationBar: UIImage { UIImage.moreActionActiveNavigationBar }
     public static var allPhotosEmptyState: UIImage { UIImage.allPhotosEmptyState }

@@ -415,7 +415,6 @@ extension MEGAAssets {
         public static var verificationCountry: UIKit.UIImage { MEGAUIImageBundle.verificationCountry }
         public static var phoneNumber: UIKit.UIImage { MEGAUIImageBundle.phoneNumber }
         public static var spotlightFile: UIKit.UIImage { MEGAUIImageBundle.spotlightFile }
-        public static var defaultArtwork: UIKit.UIImage { MEGAUIImageBundle.defaultArtwork }
         public static var filterActive: UIKit.UIImage { MEGAUIImageBundle.filterActive }
         public static var moreActionActiveNavigationBar: UIKit.UIImage { MEGAUIImageBundle.moreActionActiveNavigationBar }
         public static var allPhotosEmptyState: UIKit.UIImage { MEGAUIImageBundle.allPhotosEmptyState }
