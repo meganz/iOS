@@ -518,10 +518,6 @@ struct CloudDriveViewControllerFactory {
             return backupsUseCase.isBackupNode(node)
         }
         
-        let toolbarActionCompleted: (BottomToolbarAction) -> Void = { _ in
-            // here we should disable edit mode I think
-        }
-        
         let parentNodeAccessType: () async -> NodeAccessTypeEntity = {
             guard
                 case let .node(nodeProvider) = nodeSource,
@@ -536,8 +532,7 @@ struct CloudDriveViewControllerFactory {
                     displayMode: overriddenConfig.displayMode ?? .cloudDrive,
                     isBackupNode: isBackupsNode(),
                     selectedNodes: nodes,
-                    isIncomingShareChildView: false,
-                    onActionCompleted: toolbarActionCompleted
+                    isIncomingShareChildView: false
                 )
         }
 

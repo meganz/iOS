@@ -101,8 +101,7 @@ final class CloudDriveBottomToolbarItemsFactoryTests: XCTestCase {
                     displayMode: displayMode,
                     isBackupNode: isBackupNode,
                     selectedNodes: selectedNodes,
-                    isIncomingShareChildView: false,
-                    onActionCompleted: { _ in }
+                    isIncomingShareChildView: false
                 ),
                 parent: parent,
                 browseDelegate: BrowserViewControllerDelegateHandler()
