@@ -220,22 +220,29 @@ class AudioPlayerViewController: UIViewController, AudioPlayerViewControllerNode
         subtitleLabel.isHidden = false
     }
     
-    private func userInteraction(enabled: Bool) {
+    private func userInteraction(enabled: Bool, isSingleTrackPlayer: Bool) {
         timeSliderView.isUserInteractionEnabled = enabled
         goBackwardButton.isEnabled = enabled
         previousButton.isEnabled = enabled
         playPauseButton.isEnabled = enabled
-        nextButton.isEnabled = enabled
         goForwardButton.isEnabled = enabled
-        shuffleButton.isEnabled = enabled
         repeatButton.isEnabled = enabled
-        gotoplaylistButton.isEnabled = enabled
         playbackSpeedButton.isEnabled = enabled
+        refreshMultiTrackControlsState(enabled: enabled && !isSingleTrackPlayer)
     }
     
     private func updateCloseButtonState() {
         closeButton.setTitle(Strings.Localizable.close, for: .normal)
         configureCloseButtonColor()
+    }
+    
+    private func refreshMultiTrackControlsState(enabled: Bool) {
+        nextButton.isEnabled = enabled
+        setForegroundColor(for: shuffleButton, color: enabled ? TokenColors.Icon.primary : TokenColors.Icon.disabled)
+        shuffleButton.isEnabled = enabled
+        setForegroundColor(for: gotoplaylistButton, color: enabled ? TokenColors.Icon.primary : TokenColors.Icon.disabled)
+        gotoplaylistButton.isEnabled = enabled
+        setForegroundColor(for: nextButton, color: enabled ? TokenColors.Icon.primary : TokenColors.Icon.disabled)
     }
     
     private func configureCloseButtonColor() {
@@ -422,19 +429,10 @@ class AudioPlayerViewController: UIViewController, AudioPlayerViewControllerNode
         case .configureFileLinkPlayer:
             playerType = .fileLink
             updateAppearance()
-        case .enableUserInteraction(let enabled):
-            userInteraction(enabled: enabled)
+        case .enableUserInteraction(let enabled, let isSingleTrackPlayer):
+            userInteraction(enabled: enabled, isSingleTrackPlayer: isSingleTrackPlayer)
         case .didPausePlayback, .didResumePlayback:
             setForegroundColor(for: playPauseButton, color: TokenColors.Icon.primary)
-        case .shuffleAction(let enabled):
-            shuffleButton.isEnabled = enabled
-            setForegroundColor(for: shuffleButton, color: enabled ? TokenColors.Icon.primary : TokenColors.Icon.disabled)
-        case .goToPlaylistAction(let enabled):
-            gotoplaylistButton.isEnabled = enabled
-            setForegroundColor(for: gotoplaylistButton, color: enabled ? TokenColors.Icon.primary : TokenColors.Icon.disabled)
-        case .nextTrackAction(let enabled):
-            nextButton.isEnabled = enabled
-            setForegroundColor(for: nextButton, color: enabled ? TokenColors.Icon.primary : TokenColors.Icon.disabled)
         case .displayPlaybackContinuationDialog(let fileName, let playbackTime):
             presentAudioPlaybackContinuation(fileName: fileName, playbackTime: playbackTime)
         }
