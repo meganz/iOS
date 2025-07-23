@@ -1,12 +1,21 @@
 import Foundation
 import Combine
 
-typealias VideoPlayerProtocol = PlaybackStateObservable & PlaybackControllable & NodeLoadable & VideoRenderable
+typealias VideoPlayerProtocol = PlaybackStateObservable
+    & PlaybackControllable
+    & NodeLoadable
+    & VideoRenderable
+    & PlaybackDebugMessageObservable
+    & PlayerOptionIdentifiable
 
 // MARK: - Protocols
 
 @MainActor
 protocol PlaybackStateObservable {
+    var state: PlaybackState { get }
+    var currentTime: Duration { get }
+    var duration: Duration { get }
+
     var statePublisher: AnyPublisher<PlaybackState, Never> { get }
     var currentTimePublisher: AnyPublisher<Duration, Never> { get }
     var durationPublisher: AnyPublisher<Duration, Never> { get }
@@ -33,13 +42,10 @@ protocol NodeLoadable {
     func loadNode(_ node: any PlayableNode)
 }
 
-// MARK: - Entities
+protocol PlaybackDebugMessageObservable {
+    var debugMessagePublisher: AnyPublisher<String, Never> { get }
+}
 
-enum PlaybackState {
-    case stopped
-    case playing
-    case paused
-    case buffering
-    case ended
-    case error
+protocol PlayerOptionIdentifiable {
+    var option: VideoPlayerOption { get }
 }

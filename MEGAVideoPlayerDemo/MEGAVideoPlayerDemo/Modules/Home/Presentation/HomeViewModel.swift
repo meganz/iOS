@@ -8,10 +8,7 @@ final class HomeViewModel: ObservableObject {
     @Published var path = NavigationPath()
     @Published var nodes: [MEGANode]?
 
-    var selectedPlayerOption: VideoPlayerOption {
-        get { selectPlayerUseCase.selectedPlayer }
-        set { selectPlayerUseCase.selectPlayer(newValue) }
-    }
+    @Published private(set) var selectedPlayerOption: VideoPlayerOption = .vlc
 
     private let fetchVideoNodesUseCase: any FetchVideoNodesUseCaseProtocol
     private let offboardingUseCase: any OffboardingUseCaseProtocol
@@ -32,11 +29,17 @@ final class HomeViewModel: ObservableObject {
     }
 
     func didTapNode(_ node: MEGANode) {
+        selectedPlayerOption = selectPlayerUseCase.selectedPlayer
         path.append(node)
     }
 
     func didTapLogout() async {
         await offboardingUseCase.activeLogout()
+    }
+
+    func didSelectPlayerOption(_ option: VideoPlayerOption) {
+        selectedPlayerOption = option
+        selectPlayerUseCase.selectPlayer(option)
     }
 
     private func streamNodes() async {

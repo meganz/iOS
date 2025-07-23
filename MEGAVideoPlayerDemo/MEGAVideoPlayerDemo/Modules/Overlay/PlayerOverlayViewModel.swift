@@ -80,6 +80,8 @@ extension PlayerOverlayViewModel {
     }
 
     private func string(from duration: Duration) -> String {
+        guard duration.components.seconds >= 0 else { return string(from: .seconds(0)) }
+
         let secondsInHour = 3600
         if duration.components.seconds > secondsInHour {
             return duration.formatted(

@@ -38,20 +38,33 @@
 		165771EB2E1D170C008B1143 /* VideoPlayerOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 165771EA2E1D1707008B1143 /* VideoPlayerOption.swift */; };
 		165771F12E1D1761008B1143 /* SelectVideoPlayerUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 165771F02E1D175C008B1143 /* SelectVideoPlayerUseCase.swift */; };
 		165771F32E1D178D008B1143 /* VideoPlayerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 165771F22E1D1782008B1143 /* VideoPlayerFactory.swift */; };
+		1661E6EA2E1F6E5E00076156 /* MEGALogPlaybackReporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1661E6E92E1F6E5B00076156 /* MEGALogPlaybackReporter.swift */; };
 		166752EA2E0BDA3700478F4A /* MEGAAVPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166752E92E0BDA3200478F4A /* MEGAAVPlayer.swift */; };
+		167B954C2E1E609700771295 /* PlaybackReporting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 167B954B2E1E608900771295 /* PlaybackReporting.swift */; };
 		168780592E0BB2F600C376CA /* MEGAVLCPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 168780582E0BB2F200C376CA /* MEGAVLCPlayer.swift */; };
-		1687805C2E0BB35700C376CA /* VideoPlayerViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1687805B2E0BB35700C376CA /* VideoPlayerViewModelProtocol.swift */; };
+		1687805C2E0BB35700C376CA /* VideoPlayerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1687805B2E0BB35700C376CA /* VideoPlayerProtocol.swift */; };
 		168780612E0BB6E300C376CA /* StreamingUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 168780602E0BB6DF00C376CA /* StreamingUseCase.swift */; };
 		168780652E0BC86D00C376CA /* PlayerOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 168780642E0BC86600C376CA /* PlayerOverlayView.swift */; };
 		1687806B2E0BCE8C00C376CA /* MEGAPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1687806A2E0BCE8700C376CA /* MEGAPlayerViewController.swift */; };
-		16953F1F2E1CCC4C00E3739D /* MEGABasePlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16953F1E2E1CCC4C00E3739D /* MEGABasePlayer.swift */; };
 		16953F252E1CCF3C00E3739D /* PlayableNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16953F242E1CCF3500E3739D /* PlayableNode.swift */; };
 		16953F272E1CCFB700E3739D /* StreamingRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16953F262E1CCFB400E3739D /* StreamingRepository.swift */; };
 		16953F292E1CD17F00E3739D /* StreamingRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16953F282E1CD17C00E3739D /* StreamingRepositoryProtocol.swift */; };
 		16953F2E2E1CD31300E3739D /* MEGANode+PlayableNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16953F2D2E1CD31300E3739D /* MEGANode+PlayableNode.swift */; };
 		16A021542E02616E00A932A1 /* LaunchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16A021532E02616B00A932A1 /* LaunchViewModel.swift */; };
+		16BFBD672E2E2DFD00150FD0 /* PlaybackState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16BFBD662E2E2DFC00150FD0 /* PlaybackState.swift */; };
+		16E04E582E2E245C00AAD10F /* MEGAPlaybackReportingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16E04E572E2E245400AAD10F /* MEGAPlaybackReportingManager.swift */; };
 		16F0ABCA2E0A82B8008D980F /* MEGANode+Identifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16F0ABC92E0A82B4008D980F /* MEGANode+Identifiable.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		16BB91E02E2DF6360091A976 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 161D69C72E0156A500B3FD1F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 161D69CE2E0156A500B3FD1F;
+			remoteInfo = MEGAVideoPlayerDemo;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		161D69CF2E0156A500B3FD1F /* MEGAVideoPlayerDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MEGAVideoPlayerDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -86,18 +99,22 @@
 		165771EA2E1D1707008B1143 /* VideoPlayerOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayerOption.swift; sourceTree = "<group>"; };
 		165771F02E1D175C008B1143 /* SelectVideoPlayerUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectVideoPlayerUseCase.swift; sourceTree = "<group>"; };
 		165771F22E1D1782008B1143 /* VideoPlayerFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayerFactory.swift; sourceTree = "<group>"; };
+		1661E6E92E1F6E5B00076156 /* MEGALogPlaybackReporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGALogPlaybackReporter.swift; sourceTree = "<group>"; };
 		166752E92E0BDA3200478F4A /* MEGAAVPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGAAVPlayer.swift; sourceTree = "<group>"; };
+		167B954B2E1E608900771295 /* PlaybackReporting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackReporting.swift; sourceTree = "<group>"; };
 		168780582E0BB2F200C376CA /* MEGAVLCPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGAVLCPlayer.swift; sourceTree = "<group>"; };
-		1687805B2E0BB35700C376CA /* VideoPlayerViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayerViewModelProtocol.swift; sourceTree = "<group>"; };
+		1687805B2E0BB35700C376CA /* VideoPlayerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayerProtocol.swift; sourceTree = "<group>"; };
 		168780602E0BB6DF00C376CA /* StreamingUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamingUseCase.swift; sourceTree = "<group>"; };
 		168780642E0BC86600C376CA /* PlayerOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerOverlayView.swift; sourceTree = "<group>"; };
 		1687806A2E0BCE8700C376CA /* MEGAPlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGAPlayerViewController.swift; sourceTree = "<group>"; };
-		16953F1E2E1CCC4C00E3739D /* MEGABasePlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGABasePlayer.swift; sourceTree = "<group>"; };
 		16953F242E1CCF3500E3739D /* PlayableNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayableNode.swift; sourceTree = "<group>"; };
 		16953F262E1CCFB400E3739D /* StreamingRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamingRepository.swift; sourceTree = "<group>"; };
 		16953F282E1CD17C00E3739D /* StreamingRepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamingRepositoryProtocol.swift; sourceTree = "<group>"; };
 		16953F2D2E1CD31300E3739D /* MEGANode+PlayableNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGANode+PlayableNode.swift"; sourceTree = "<group>"; };
 		16A021532E02616B00A932A1 /* LaunchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchViewModel.swift; sourceTree = "<group>"; };
+		16BB91DC2E2DF6360091A976 /* MEGAVideoPlayerDemoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MEGAVideoPlayerDemoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		16BFBD662E2E2DFC00150FD0 /* PlaybackState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackState.swift; sourceTree = "<group>"; };
+		16E04E572E2E245400AAD10F /* MEGAPlaybackReportingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGAPlaybackReportingManager.swift; sourceTree = "<group>"; };
 		16F0ABC92E0A82B4008D980F /* MEGANode+Identifiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGANode+Identifiable.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -110,6 +127,13 @@
 				161D6A1F2E015F7800B3FD1F /* MEGAAuthentication in Frameworks */,
 				161D6A432E01644700B3FD1F /* MEGADesignToken in Frameworks */,
 				164E270F2E0AB118008BB794 /* VLCKit in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		16BB91D92E2DF6360091A976 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -131,6 +155,7 @@
 			isa = PBXGroup;
 			children = (
 				161D69CF2E0156A500B3FD1F /* MEGAVideoPlayerDemo.app */,
+				16BB91DC2E2DF6360091A976 /* MEGAVideoPlayerDemoTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -231,6 +256,7 @@
 				161D6A852E01736800B3FD1F /* Launch */,
 				168780632E0BC85D00C376CA /* Overlay */,
 				168780572E0BB2BC00C376CA /* Players */,
+				167B95432E1E59DC00771295 /* Stats */,
 				1687805E2E0BB6AC00C376CA /* Streaming */,
 			);
 			path = Modules;
@@ -308,6 +334,7 @@
 		165771ED2E1D172F008B1143 /* Entities */ = {
 			isa = PBXGroup;
 			children = (
+				16BFBD662E2E2DFC00150FD0 /* PlaybackState.swift */,
 				165771EA2E1D1707008B1143 /* VideoPlayerOption.swift */,
 			);
 			path = Entities;
@@ -337,6 +364,16 @@
 				166752E92E0BDA3200478F4A /* MEGAAVPlayer.swift */,
 			);
 			path = AVPlayer;
+			sourceTree = "<group>";
+		};
+		167B95432E1E59DC00771295 /* Stats */ = {
+			isa = PBXGroup;
+			children = (
+				1661E6E92E1F6E5B00076156 /* MEGALogPlaybackReporter.swift */,
+				16E04E572E2E245400AAD10F /* MEGAPlaybackReportingManager.swift */,
+				167B954B2E1E608900771295 /* PlaybackReporting.swift */,
+			);
+			path = Stats;
 			sourceTree = "<group>";
 		};
 		168780542E0AB95F00C376CA /* MEGAVLC */ = {
@@ -389,18 +426,9 @@
 			isa = PBXGroup;
 			children = (
 				166752E82E0BDA2900478F4A /* AVPlayer */,
-				16953F1D2E1CCC4500E3739D /* BasePlayer */,
 				168780542E0AB95F00C376CA /* MEGAVLC */,
 			);
 			path = Implementations;
-			sourceTree = "<group>";
-		};
-		16953F1D2E1CCC4500E3739D /* BasePlayer */ = {
-			isa = PBXGroup;
-			children = (
-				16953F1E2E1CCC4C00E3739D /* MEGABasePlayer.swift */,
-			);
-			path = BasePlayer;
 			sourceTree = "<group>";
 		};
 		16953F232E1CCF2C00E3739D /* Protocols */ = {
@@ -408,7 +436,7 @@
 			children = (
 				16953F242E1CCF3500E3739D /* PlayableNode.swift */,
 				165771E82E1CE04E008B1143 /* PlayerLayer.swift */,
-				1687805B2E0BB35700C376CA /* VideoPlayerViewModelProtocol.swift */,
+				1687805B2E0BB35700C376CA /* VideoPlayerProtocol.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -465,6 +493,26 @@
 			productReference = 161D69CF2E0156A500B3FD1F /* MEGAVideoPlayerDemo.app */;
 			productType = "com.apple.product-type.application";
 		};
+		16BB91DB2E2DF6360091A976 /* MEGAVideoPlayerDemoTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 16BB91E22E2DF6360091A976 /* Build configuration list for PBXNativeTarget "MEGAVideoPlayerDemoTests" */;
+			buildPhases = (
+				16BB91D82E2DF6360091A976 /* Sources */,
+				16BB91D92E2DF6360091A976 /* Frameworks */,
+				16BB91DA2E2DF6360091A976 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				16BB91E12E2DF6360091A976 /* PBXTargetDependency */,
+			);
+			name = MEGAVideoPlayerDemoTests;
+			packageProductDependencies = (
+			);
+			productName = MEGAVideoPlayerDemoTests;
+			productReference = 16BB91DC2E2DF6360091A976 /* MEGAVideoPlayerDemoTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -477,6 +525,10 @@
 				TargetAttributes = {
 					161D69CE2E0156A500B3FD1F = {
 						CreatedOnToolsVersion = 16.3;
+					};
+					16BB91DB2E2DF6360091A976 = {
+						CreatedOnToolsVersion = 16.3;
+						TestTargetID = 161D69CE2E0156A500B3FD1F;
 					};
 				};
 			};
@@ -498,6 +550,7 @@
 			projectRoot = "";
 			targets = (
 				161D69CE2E0156A500B3FD1F /* MEGAVideoPlayerDemo */,
+				16BB91DB2E2DF6360091A976 /* MEGAVideoPlayerDemoTests */,
 			);
 		};
 /* End PBXProject section */
@@ -509,6 +562,13 @@
 			files = (
 				161D6A822E0172C300B3FD1F /* Assets.xcassets in Resources */,
 				164AD5472E0BE09800302DCA /* PreviewAssets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		16BB91DA2E2DF6360091A976 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -534,15 +594,18 @@
 				161D6A812E0172C300B3FD1F /* LaunchView.swift in Sources */,
 				16A021542E02616E00A932A1 /* LaunchViewModel.swift in Sources */,
 				166752EA2E0BDA3700478F4A /* MEGAAVPlayer.swift in Sources */,
-				16953F1F2E1CCC4C00E3739D /* MEGABasePlayer.swift in Sources */,
+				1661E6EA2E1F6E5E00076156 /* MEGALogPlaybackReporter.swift in Sources */,
 				16F0ABCA2E0A82B8008D980F /* MEGANode+Identifiable.swift in Sources */,
 				16953F2E2E1CD31300E3739D /* MEGANode+PlayableNode.swift in Sources */,
 				164FF9062E0A6EA000CBC210 /* MEGANodeList+Array.swift in Sources */,
+				16E04E582E2E245C00AAD10F /* MEGAPlaybackReportingManager.swift in Sources */,
 				1687806B2E0BCE8C00C376CA /* MEGAPlayerViewController.swift in Sources */,
 				162D66892E1BA5FD00CB6F72 /* MEGAPlayerViewModel.swift in Sources */,
 				161D6A702E0172BC00B3FD1F /* MEGASdk+SharedInstance.swift in Sources */,
 				168780592E0BB2F600C376CA /* MEGAVLCPlayer.swift in Sources */,
 				16953F252E1CCF3C00E3739D /* PlayableNode.swift in Sources */,
+				167B954C2E1E609700771295 /* PlaybackReporting.swift in Sources */,
+				16BFBD672E2E2DFD00150FD0 /* PlaybackState.swift in Sources */,
 				161D6A7E2E0172C300B3FD1F /* PlayerApp.swift in Sources */,
 				161D6A872E01738B00B3FD1F /* PlayerAppViewModel.swift in Sources */,
 				165771E92E1CE058008B1143 /* PlayerLayer.swift in Sources */,
@@ -556,11 +619,26 @@
 				168780612E0BB6E300C376CA /* StreamingUseCase.swift in Sources */,
 				165771F32E1D178D008B1143 /* VideoPlayerFactory.swift in Sources */,
 				165771EB2E1D170C008B1143 /* VideoPlayerOption.swift in Sources */,
-				1687805C2E0BB35700C376CA /* VideoPlayerViewModelProtocol.swift in Sources */,
+				1687805C2E0BB35700C376CA /* VideoPlayerProtocol.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		16BB91D82E2DF6360091A976 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		16BB91E12E2DF6360091A976 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 161D69CE2E0156A500B3FD1F /* MEGAVideoPlayerDemo */;
+			targetProxy = 16BB91E02E2DF6360091A976 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		161D69D82E0156A600B3FD1F /* Debug */ = {
@@ -692,7 +770,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"$(SRCROOT)/Support/Preview\"";
-				DEVELOPMENT_TEAM = 4KLKDTZ9B6;
+				DEVELOPMENT_TEAM = T9RH74Y7L9;
 				ENABLE_PREVIEWS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -728,7 +806,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"$(SRCROOT)/Support/Preview\"";
-				DEVELOPMENT_TEAM = 4KLKDTZ9B6;
+				DEVELOPMENT_TEAM = T9RH74Y7L9;
 				ENABLE_PREVIEWS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = HAVE_LIBUV;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -752,6 +830,44 @@
 			};
 			name = Release;
 		};
+		16BB91E32E2DF6360091A976 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = T9RH74Y7L9;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = nz.mega.MEGAVideoPlayerDemoTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MEGAVideoPlayerDemo.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/MEGAVideoPlayerDemo";
+			};
+			name = Debug;
+		};
+		16BB91E42E2DF6360091A976 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = T9RH74Y7L9;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = nz.mega.MEGAVideoPlayerDemoTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MEGAVideoPlayerDemo.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/MEGAVideoPlayerDemo";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -769,6 +885,15 @@
 			buildConfigurations = (
 				161D69DB2E0156A600B3FD1F /* Debug */,
 				161D69DC2E0156A600B3FD1F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		16BB91E22E2DF6360091A976 /* Build configuration list for PBXNativeTarget "MEGAVideoPlayerDemoTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				16BB91E32E2DF6360091A976 /* Debug */,
+				16BB91E42E2DF6360091A976 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

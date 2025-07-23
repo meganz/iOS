@@ -40,12 +40,8 @@ final class MEGAPlayerViewController: UIViewController {
     }
 
     private func setupOverlay() {
-        let overlayView = UIHostingConfiguration {
-            PlayerOverlayView(
-                viewModel: PlayerOverlayViewModel(
-                    player: self.viewModel.player
-                )
-            )
+        let overlayView = UIHostingConfiguration { [player = viewModel.player] in
+            PlayerOverlayView(viewModel: PlayerOverlayViewModel(player: player))
         }
         .margins(.all, 0)
         .makeContentView()
