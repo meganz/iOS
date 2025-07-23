@@ -1,7 +1,7 @@
 // swift-interface-format-version: 1.0
-// swift-compiler-version: Apple Swift version 6.1.2 effective-5.10 (swiftlang-6.1.2.1.2 clang-1700.0.13.5)
+// swift-compiler-version: Apple Swift version 6.1 effective-5.10 (swiftlang-6.1.0.110.21 clang-1700.0.13.3)
 // swift-module-flags: -target arm64-apple-ios15.0 -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -enable-experimental-feature DebugDescriptionMacro -enable-bare-slash-regex -module-name MEGAAssetsBundle
-// swift-module-flags-ignorable:  -interface-compiler-version 6.1.2
+// swift-module-flags-ignorable:  -interface-compiler-version 6.1
 import DeveloperToolsSupport
 import Foundation
 import Swift
@@ -10,1147 +10,6 @@ import UIKit
 import _Concurrency
 import _StringProcessing
 import _SwiftConcurrencyShims
-public struct MEGAUIImageBundle {
-  public static var chatNotifications: UIKit.UIImage {
-    get
-  }
-  public static var iconContacts: UIKit.UIImage {
-    get
-  }
-  public static var groupChatToken: UIKit.UIImage {
-    get
-  }
-  public static var newMeetingToken: UIKit.UIImage {
-    get
-  }
-  public static var joinMeetingToken: UIKit.UIImage {
-    get
-  }
-  public static var inviteContactShare: UIKit.UIImage {
-    get
-  }
-  public static var checkBoxSelectedSemantic: UIKit.UIImage {
-    get
-  }
-  public static var checkBoxUnselected: UIKit.UIImage {
-    get
-  }
-  public static var noteToSelfSmall: UIKit.UIImage {
-    get
-  }
-  public static var noteToSelfBlue: UIKit.UIImage {
-    get
-  }
-  public static var deviceStorageAlmostFull: UIKit.UIImage {
-    get
-  }
-  public static var hudDownload: UIKit.UIImage {
-    get
-  }
-  public static var upload: UIKit.UIImage {
-    get
-  }
-  public static var sendToChat: UIKit.UIImage {
-    get
-  }
-  public static var folderChat: UIKit.UIImage {
-    get
-  }
-  public static var folderUsers: UIKit.UIImage {
-    get
-  }
-  public static var export: UIKit.UIImage {
-    get
-  }
-  public static var shareFolder: UIKit.UIImage {
-    get
-  }
-  public static var verifyContact: UIKit.UIImage {
-    get
-  }
-  public static var offline: UIKit.UIImage {
-    get
-  }
-  public static var info: UIKit.UIImage {
-    get
-  }
-  public static var rename: UIKit.UIImage {
-    get
-  }
-  public static var copy: UIKit.UIImage {
-    get
-  }
-  public static var move: UIKit.UIImage {
-    get
-  }
-  public static var rubbishBin: UIKit.UIImage {
-    get
-  }
-  public static var hudMinus: UIKit.UIImage {
-    get
-  }
-  public static var leaveShare: UIKit.UIImage {
-    get
-  }
-  public static var link: UIKit.UIImage {
-    get
-  }
-  public static var removeLink: UIKit.UIImage {
-    get
-  }
-  public static var removeShare: UIKit.UIImage {
-    get
-  }
-  public static var search: UIKit.UIImage {
-    get
-  }
-  public static var cancelTransfers: UIKit.UIImage {
-    get
-  }
-  public static var `import`: UIKit.UIImage {
-    get
-  }
-  public static var versions: UIKit.UIImage {
-    get
-  }
-  public static var history: UIKit.UIImage {
-    get
-  }
-  public static var delete: UIKit.UIImage {
-    get
-  }
-  public static var selectItem: UIKit.UIImage {
-    get
-  }
-  public static var restore: UIKit.UIImage {
-    get
-  }
-  public static var saveToPhotos: UIKit.UIImage {
-    get
-  }
-  public static var pageView: UIKit.UIImage {
-    get
-  }
-  public static var thumbnailsThin: UIKit.UIImage {
-    get
-  }
-  public static var edittext: UIKit.UIImage {
-    get
-  }
-  public static var forwardToolbar: UIKit.UIImage {
-    get
-  }
-  public static var removeFavourite: UIKit.UIImage {
-    get
-  }
-  public static var favourite: UIKit.UIImage {
-    get
-  }
-  public static var label: UIKit.UIImage {
-    get
-  }
-  public static var gridThin: UIKit.UIImage {
-    get
-  }
-  public static var sort: UIKit.UIImage {
-    get
-  }
-  public static var disputeTakedown: UIKit.UIImage {
-    get
-  }
-  public static var mediaDiscovery: UIKit.UIImage {
-    get
-  }
-  public static var helpCircleThinMedium: UIKit.UIImage {
-    get
-  }
-  public static var eyeOff: UIKit.UIImage {
-    get
-  }
-  public static var eyeOn: UIKit.UIImage {
-    get
-  }
-  public static var addTo: UIKit.UIImage {
-    get
-  }
-  public static var standardDisclosureIndicator: UIKit.UIImage {
-    get
-  }
-  public static var hudSuccess: UIKit.UIImage {
-    get
-  }
-  public static var hudError: UIKit.UIImage {
-    get
-  }
-  public static var backArrow: UIKit.UIImage {
-    get
-  }
-  public static var moreNavigationBar: UIKit.UIImage {
-    get
-  }
-  public static var openSettings: UIKit.UIImage {
-    get
-  }
-  public static var tapNotifications: UIKit.UIImage {
-    get
-  }
-  public static var tapMega: UIKit.UIImage {
-    get
-  }
-  public static var allowNotifications: UIKit.UIImage {
-    get
-  }
-  public static var groupChat: UIKit.UIImage {
-    get
-  }
-  public static var turquoiseCheckmark: UIKit.UIImage {
-    get
-  }
-  public static var miniplayerClose: UIKit.UIImage {
-    get
-  }
-  public static var moreList: UIKit.UIImage {
-    get
-  }
-  public static var videoList: UIKit.UIImage {
-    get
-  }
-  public static var downloaded: UIKit.UIImage {
-    get
-  }
-  public static var moreGrid: UIKit.UIImage {
-    get
-  }
-  public static var shuffleAudio: UIKit.UIImage {
-    get
-  }
-  public static var newest: UIKit.UIImage {
-    get
-  }
-  public static var oldest: UIKit.UIImage {
-    get
-  }
-  public static var cameraUploadsSettings: UIKit.UIImage {
-    get
-  }
-  public static var chatSettings: UIKit.UIImage {
-    get
-  }
-  public static var callsSettings: UIKit.UIImage {
-    get
-  }
-  public static var securitySettings: UIKit.UIImage {
-    get
-  }
-  public static var userInterfaceSettings: UIKit.UIImage {
-    get
-  }
-  public static var fileManagementSettings: UIKit.UIImage {
-    get
-  }
-  public static var advancedSettings: UIKit.UIImage {
-    get
-  }
-  public static var helpSettings: UIKit.UIImage {
-    get
-  }
-  public static var aboutSettings: UIKit.UIImage {
-    get
-  }
-  public static var termsAndPoliciesSettings: UIKit.UIImage {
-    get
-  }
-  public static var cookieSettings: UIKit.UIImage {
-    get
-  }
-  public static var iconSettings: UIKit.UIImage {
-    get
-  }
-  public static var isTakedown: UIKit.UIImage {
-    get
-  }
-  public static var warningPermission: UIKit.UIImage {
-    get
-  }
-  public static var searchEmptyState: UIKit.UIImage {
-    get
-  }
-  public static var incomingEmptyState: UIKit.UIImage {
-    get
-  }
-  public static var outgoingEmptyState: UIKit.UIImage {
-    get
-  }
-  public static var linksEmptyState: UIKit.UIImage {
-    get
-  }
-  public static var noInternetEmptyState: UIKit.UIImage {
-    get
-  }
-  public static var lockedAccounts: UIKit.UIImage {
-    get
-  }
-  public static var noResultsVideoV2: UIKit.UIImage {
-    get
-  }
-  public static var filterChipDownArrow: UIKit.UIImage {
-    get
-  }
-  public static var favouriteThumbnail: UIKit.UIImage {
-    get
-  }
-  public static var blackPlayButton: UIKit.UIImage {
-    get
-  }
-  public static var linked: UIKit.UIImage {
-    get
-  }
-  public static var navigationbarAdd: UIKit.UIImage {
-    get
-  }
-  public static var rectangleVideoStack: UIKit.UIImage {
-    get
-  }
-  public static var favouritePlaylistThumbnail: UIKit.UIImage {
-    get
-  }
-  public static var grabberIcon: UIKit.UIImage {
-    get
-  }
-  public static var redSmall: UIKit.UIImage {
-    get
-  }
-  public static var orangeSmall: UIKit.UIImage {
-    get
-  }
-  public static var yellowSmall: UIKit.UIImage {
-    get
-  }
-  public static var greenSmall: UIKit.UIImage {
-    get
-  }
-  public static var blueSmall: UIKit.UIImage {
-    get
-  }
-  public static var purpleSmall: UIKit.UIImage {
-    get
-  }
-  public static var greySmall: UIKit.UIImage {
-    get
-  }
-  public static var recentlyWatchedVideosEmptyState: UIKit.UIImage {
-    get
-  }
-  public static var selectAllItems: UIKit.UIImage {
-    get
-  }
-  public static var clockPlay: UIKit.UIImage {
-    get
-  }
-  public static var ascending: UIKit.UIImage {
-    get
-  }
-  public static var descending: UIKit.UIImage {
-    get
-  }
-  public static var largest: UIKit.UIImage {
-    get
-  }
-  public static var smallest: UIKit.UIImage {
-    get
-  }
-  public static var sortLabel: UIKit.UIImage {
-    get
-  }
-  public static var sortFavourite: UIKit.UIImage {
-    get
-  }
-  public static var standardDisclosureIndicatorDesignToken: UIKit.UIImage {
-    get
-  }
-  public static var verificationCountry: UIKit.UIImage {
-    get
-  }
-  public static var phoneNumber: UIKit.UIImage {
-    get
-  }
-  public static var spotlightFile: UIKit.UIImage {
-    get
-  }
-  public static var defaultArtwork: UIKit.UIImage {
-    get
-  }
-  public static var filterActive: UIKit.UIImage {
-    get
-  }
-  public static var moreActionActiveNavigationBar: UIKit.UIImage {
-    get
-  }
-  public static var allPhotosEmptyState: UIKit.UIImage {
-    get
-  }
-  public static var cameraEmptyState: UIKit.UIImage {
-    get
-  }
-  public static var videoEmptyState: UIKit.UIImage {
-    get
-  }
-  public static var spotlightFolder: UIKit.UIImage {
-    get
-  }
-  public static var addReactionSmall: UIKit.UIImage {
-    get
-  }
-  public static var versioned: UIKit.UIImage {
-    get
-  }
-  public static var recentUpload: UIKit.UIImage {
-    get
-  }
-  public static var transfersDownload: UIKit.UIImage {
-    get
-  }
-  public static var completedBadgeDesignToken: UIKit.UIImage {
-    get
-  }
-  public static var errorBadgeDesignToken: UIKit.UIImage {
-    get
-  }
-  public static var overquotaDesignToken: UIKit.UIImage {
-    get
-  }
-  public static var pauseDesignToken: UIKit.UIImage {
-    get
-  }
-  public static var transfersDownloadDesignToken: UIKit.UIImage {
-    get
-  }
-  public static var transfersUploadDesignToken: UIKit.UIImage {
-    get
-  }
-  public static var fullAccessPermissions: UIKit.UIImage {
-    get
-  }
-  public static var readWritePermissions: UIKit.UIImage {
-    get
-  }
-  public static var readPermissions: UIKit.UIImage {
-    get
-  }
-  public static var contactRequestDeny: UIKit.UIImage {
-    get
-  }
-  public static var contactRequestAccept: UIKit.UIImage {
-    get
-  }
-  public static var disclosure: UIKit.UIImage {
-    get
-  }
-  public static var voiceTip: UIKit.UIImage {
-    get
-  }
-  public static var folderEmptyState: UIKit.UIImage {
-    get
-  }
-  public static var cloudDriveIcon: UIKit.UIImage {
-    get
-  }
-  public static var cameraUploadsIcon: UIKit.UIImage {
-    get
-  }
-  public static var miniplayerPause: UIKit.UIImage {
-    get
-  }
-  public static var miniplayerPlay: UIKit.UIImage {
-    get
-  }
-  public static var sendButton: UIKit.UIImage {
-    get
-  }
-  public static var expand: UIKit.UIImage {
-    get
-  }
-  public static var checkBoxSelected: UIKit.UIImage {
-    get
-  }
-  public static var home: UIKit.UIImage {
-    get
-  }
-  public static var chatIcon: UIKit.UIImage {
-    get
-  }
-  public static var sharedItemsIcon: UIKit.UIImage {
-    get
-  }
-  public static var collapse: UIKit.UIImage {
-    get
-  }
-  public static var textfile: UIKit.UIImage {
-    get
-  }
-  public static var capture: UIKit.UIImage {
-    get
-  }
-  public static var scanDocument: UIKit.UIImage {
-    get
-  }
-  public static var explorerCardFavourites: UIKit.UIImage {
-    get
-  }
-  public static var explorerCardDocs: UIKit.UIImage {
-    get
-  }
-  public static var explorerCardAudio: UIKit.UIImage {
-    get
-  }
-  public static var explorerCardVideoPlayBlue: UIKit.UIImage {
-    get
-  }
-  public static var explorerCardVideoFilmStripsBlue: UIKit.UIImage {
-    get
-  }
-  public static var infoMeetings: UIKit.UIImage {
-    get
-  }
-  public static var storage: UIKit.UIImage {
-    get
-  }
-  public static var fileSharing: UIKit.UIImage {
-    get
-  }
-  public static var backup: UIKit.UIImage {
-    get
-  }
-  public static var mega: UIKit.UIImage {
-    get
-  }
-  public static var onboardingHeader: UIKit.UIImage {
-    get
-  }
-  public static var blockingDiskFull: UIKit.UIImage {
-    get
-  }
-  public static var placeholder: UIKit.UIImage {
-    get
-  }
-  public static var linkGetLink: UIKit.UIImage {
-    get
-  }
-  public static var iconKeyOnly: UIKit.UIImage {
-    get
-  }
-  public static var addFromContacts: UIKit.UIImage {
-    get
-  }
-  public static var enterUserEmail: UIKit.UIImage {
-    get
-  }
-  public static var scanUserQRCode: UIKit.UIImage {
-    get
-  }
-  public static var inviteContactMore: UIKit.UIImage {
-    get
-  }
-  public static var megaShareContactLink: UIKit.UIImage {
-    get
-  }
-  public static var cameraIconWhite: UIKit.UIImage {
-    get
-  }
-  public static var cameraIcon: UIKit.UIImage {
-    get
-  }
-  public static var sendChatDisabled: UIKit.UIImage {
-    get
-  }
-  public static var userMutedBanner: UIKit.UIImage {
-    get
-  }
-  public static var callSlotsBanner: UIKit.UIImage {
-    get
-  }
-  public static var accountExpiredAdmin: UIKit.UIImage {
-    get
-  }
-  public static var accountExpiredUser: UIKit.UIImage {
-    get
-  }
-  public static var red: UIKit.UIImage {
-    get
-  }
-  public static var orange: UIKit.UIImage {
-    get
-  }
-  public static var yellow: UIKit.UIImage {
-    get
-  }
-  public static var green: UIKit.UIImage {
-    get
-  }
-  public static var blue: UIKit.UIImage {
-    get
-  }
-  public static var purple: UIKit.UIImage {
-    get
-  }
-  public static var grey: UIKit.UIImage {
-    get
-  }
-  public static var contactRequests: UIKit.UIImage {
-    get
-  }
-  public static var chatEmptyState: UIKit.UIImage {
-    get
-  }
-  public static var moderator: UIKit.UIImage {
-    get
-  }
-  public static var standard: UIKit.UIImage {
-    get
-  }
-  public static var readOnlyChat: UIKit.UIImage {
-    get
-  }
-  public static var sendMessageRoundToken: UIKit.UIImage {
-    get
-  }
-  public static var groupAvatar: UIKit.UIImage {
-    get
-  }
-  public static var newFolder: UIKit.UIImage {
-    get
-  }
-  public static var filter: UIKit.UIImage {
-    get
-  }
-  public static var startMeeting: UIKit.UIImage {
-    get
-  }
-  public static var joinAMeeting: UIKit.UIImage {
-    get
-  }
-  public static var scheduleMeeting: UIKit.UIImage {
-    get
-  }
-  public static var deleteVideoPlaylist: UIKit.UIImage {
-    get
-  }
-  public static var favicon: UIKit.UIImage {
-    get
-  }
-  public static var privacyWarningIco: UIKit.UIImage {
-    get
-  }
-  public static var clearChatHistory: UIKit.UIImage {
-    get
-  }
-  public static var searchBarIconSemantic: UIKit.UIImage {
-    get
-  }
-  public static var downloadGif: UIKit.UIImage {
-    get
-  }
-  public static var playButton: UIKit.UIImage {
-    get
-  }
-  public static var addContact: UIKit.UIImage {
-    get
-  }
-  public static var giphyCellBackground: UIKit.UIImage {
-    get
-  }
-  public static var noGIF: UIKit.UIImage {
-    get
-  }
-  public static var poweredByGIPHY: UIKit.UIImage {
-    get
-  }
-  public static var leaveGroup: UIKit.UIImage {
-    get
-  }
-  public static var groupChatAddParticipant: UIKit.UIImage {
-    get
-  }
-  public static var contactGroups: UIKit.UIImage {
-    get
-  }
-  public static var selectAlbumCover: UIKit.UIImage {
-    get
-  }
-  public static var deleteAlbum: UIKit.UIImage {
-    get
-  }
-  public static var versionedThumbnail: UIKit.UIImage {
-    get
-  }
-  public static var linkedThumbnail: UIKit.UIImage {
-    get
-  }
-  public static var proLabel: UIKit.UIImage {
-    get
-  }
-  public static var hudForbidden: UIKit.UIImage {
-    get
-  }
-  public static var plan: UIKit.UIImage {
-    get
-  }
-  public static var iconStorage: UIKit.UIImage {
-    get
-  }
-  public static var myAccount: UIKit.UIImage {
-    get
-  }
-  public static var iconNotifications: UIKit.UIImage {
-    get
-  }
-  public static var iconTransfers: UIKit.UIImage {
-    get
-  }
-  public static var iconAchievements: UIKit.UIImage {
-    get
-  }
-  public static var deviceCenter: UIKit.UIImage {
-    get
-  }
-  public static var iconOffline: UIKit.UIImage {
-    get
-  }
-  public static var businessPaymentOverdue: UIKit.UIImage {
-    get
-  }
-  public static var favouritesEmptyState: UIKit.UIImage {
-    get
-  }
-  public static var documentsEmptyState: UIKit.UIImage {
-    get
-  }
-  public static var audioEmptyState: UIKit.UIImage {
-    get
-  }
-  public static var waveform0000: UIKit.UIImage {
-    get
-  }
-  public static var playVoiceClip: UIKit.UIImage {
-    get
-  }
-  public static var pauseVoiceClip: UIKit.UIImage {
-    get
-  }
-  public static var playVoiceClipButton: UIKit.UIImage {
-    get
-  }
-  public static var closeCircle: UIKit.UIImage {
-    get
-  }
-  public static var inviteToChatDesignToken: UIKit.UIImage {
-    get
-  }
-  public static var archiveChat: UIKit.UIImage {
-    get
-  }
-  public static var markUnreadMenu: UIKit.UIImage {
-    get
-  }
-  public static var mutedChatMenu: UIKit.UIImage {
-    get
-  }
-  public static var callControlSpeakerDisabled: UIKit.UIImage {
-    get
-  }
-  public static var audioSourceMeetingAction: UIKit.UIImage {
-    get
-  }
-  public static var callControlSpeakerEnabled: UIKit.UIImage {
-    get
-  }
-  public static var chatLinkCreation: UIKit.UIImage {
-    get
-  }
-  public static var sharedFilesEmptyState: UIKit.UIImage {
-    get
-  }
-  public static var contactInviteSent: UIKit.UIImage {
-    get
-  }
-  public static var cookie: UIKit.UIImage {
-    get
-  }
-  public static var verifyPendingOutshareEmail: UIKit.UIImage {
-    get
-  }
-  public static var changeLaunchTab: UIKit.UIImage {
-    get
-  }
-  public static var storageAlmostFull: UIKit.UIImage {
-    get
-  }
-  public static var warningStorageFull: UIKit.UIImage {
-    get
-  }
-  public static var transferLimitedQuota: UIKit.UIImage {
-    get
-  }
-  public static var transferExceededQuota: UIKit.UIImage {
-    get
-  }
-  public static var _2FASetup: UIKit.UIImage {
-    get
-  }
-  public static var accountUpgradeSecurity: UIKit.UIImage {
-    get
-  }
-  public static var upgradePro: UIKit.UIImage {
-    get
-  }
-  public static var startChat: UIKit.UIImage {
-    get
-  }
-  public static var uploadFile: UIKit.UIImage {
-    get
-  }
-  public static var phoneCallAll: UIKit.UIImage {
-    get
-  }
-  public static var userMicOn: UIKit.UIImage {
-    get
-  }
-  public static var userMutedMeetings: UIKit.UIImage {
-    get
-  }
-  public static var callSlots: UIKit.UIImage {
-    get
-  }
-  public static var videoOff: UIKit.UIImage {
-    get
-  }
-  public static var sendMessageMeetings: UIKit.UIImage {
-    get
-  }
-  public static var moderatorMeetings: UIKit.UIImage {
-    get
-  }
-  public static var removeModerator: UIKit.UIImage {
-    get
-  }
-  public static var speakerView: UIKit.UIImage {
-    get
-  }
-  public static var muteParticipant: UIKit.UIImage {
-    get
-  }
-  public static var share: UIKit.UIImage {
-    get
-  }
-  public static var callControlSwitchCameraEnabled: UIKit.UIImage {
-    get
-  }
-  public static var callControlSwitchCameraDisabled: UIKit.UIImage {
-    get
-  }
-  public static var shareCallLink: UIKit.UIImage {
-    get
-  }
-  public static var galleryView: UIKit.UIImage {
-    get
-  }
-  public static var micActive: UIKit.UIImage {
-    get
-  }
-  public static var micMuted: UIKit.UIImage {
-    get
-  }
-  public static var jumpToLatest: UIKit.UIImage {
-    get
-  }
-  public static var audioCall: UIKit.UIImage {
-    get
-  }
-  public static var videoCall: UIKit.UIImage {
-    get
-  }
-  public static var megaIconCall: UIKit.UIImage {
-    get
-  }
-  public static var triangle: UIKit.UIImage {
-    get
-  }
-  public static var forwardButton: UIKit.UIImage {
-    get
-  }
-  public static var pause: UIKit.UIImage {
-    get
-  }
-  public static var play: UIKit.UIImage {
-    get
-  }
-  public static var repeatAudio: UIKit.UIImage {
-    get
-  }
-  public static var repeatOneAudio: UIKit.UIImage {
-    get
-  }
-  public static var normal: UIKit.UIImage {
-    get
-  }
-  public static var double: UIKit.UIImage {
-    get
-  }
-  public static var half: UIKit.UIImage {
-    get
-  }
-  public static var oneAndAHalf: UIKit.UIImage {
-    get
-  }
-  public static var lock: UIKit.UIImage {
-    get
-  }
-  public static var callRaiseHand: UIKit.UIImage {
-    get
-  }
-  public static var callWithXIncoming: UIKit.UIImage {
-    get
-  }
-  public static var chatroomLoading: UIKit.UIImage {
-    get
-  }
-  public static var locationMessage: UIKit.UIImage {
-    get
-  }
-  public static var locationMessageGrey: UIKit.UIImage {
-    get
-  }
-  public static var voiceMessage: UIKit.UIImage {
-    get
-  }
-  public static var voiceMessageGrey: UIKit.UIImage {
-    get
-  }
-  public static var activitySendToChat: UIKit.UIImage {
-    get
-  }
-  public static var notificationDevicePermission: UIKit.UIImage {
-    get
-  }
-  public static var glassSearch: UIKit.UIImage {
-    get
-  }
-  public static var videoPlaylistThumbnailFallback: UIKit.UIImage {
-    get
-  }
-  public static var linksSegmentControler: UIKit.UIImage {
-    get
-  }
-  public static var rectangleVideoStackOutline: UIKit.UIImage {
-    get
-  }
-  public static var playlist: UIKit.UIImage {
-    get
-  }
-  public static var navigationBarAdd: UIKit.UIImage {
-    get
-  }
-  public static var timeline: UIKit.UIImage {
-    get
-  }
-  public static var clockMediumThin: UIKit.UIImage {
-    get
-  }
-  public static var glassPlaylist: UIKit.UIImage {
-    get
-  }
-  public static var splashScreenMEGALogo: UIKit.UIImage {
-    get
-  }
-  public static var noteToSelf: UIKit.UIImage {
-    get
-  }
-  public static var sharedFiles: UIKit.UIImage {
-    get
-  }
-  public static var unArchiveChat: UIKit.UIImage {
-    get
-  }
-  public static var sharedFilesInfo: UIKit.UIImage {
-    get
-  }
-  public static var manageChatHistory: UIKit.UIImage {
-    get
-  }
-  public static var meetingLink: UIKit.UIImage {
-    get
-  }
-  public static var onboardingCarousel1: UIKit.UIImage {
-    get
-  }
-  public static var onboardingCarousel2: UIKit.UIImage {
-    get
-  }
-  public static var onboardingCarousel3: UIKit.UIImage {
-    get
-  }
-  public static var onboardingCarousel4: UIKit.UIImage {
-    get
-  }
-  public static var photoCardPlaceholder: UIKit.UIImage {
-    get
-  }
-  public static var enableCameraUploadsBannerIcon: UIKit.UIImage {
-    get
-  }
-  public static var cuBannerChevronRevamp: UIKit.UIImage {
-    get
-  }
-  public static var addContactMeetings: UIKit.UIImage {
-    get
-  }
-  public static var filetypeFolder: UIKit.UIImage {
-    get
-  }
-  public static var filetype3D: UIKit.UIImage {
-    get
-  }
-  public static var filetypeRaw: UIKit.UIImage {
-    get
-  }
-  public static var filetypeVideo: UIKit.UIImage {
-    get
-  }
-  public static var filetypeAudio: UIKit.UIImage {
-    get
-  }
-  public static var filetypeCompressed: UIKit.UIImage {
-    get
-  }
-  public static var filetypePhotoshop: UIKit.UIImage {
-    get
-  }
-  public static var filetypeWebLang: UIKit.UIImage {
-    get
-  }
-  public static var filetypeAfterEffects: UIKit.UIImage {
-    get
-  }
-  public static var filetypeIllustrator: UIKit.UIImage {
-    get
-  }
-  public static var filetypeText: UIKit.UIImage {
-    get
-  }
-  public static var filetypeExecutable: UIKit.UIImage {
-    get
-  }
-  public static var filetypeVector: UIKit.UIImage {
-    get
-  }
-  public static var filetypeImages: UIKit.UIImage {
-    get
-  }
-  public static var filetypeWebData: UIKit.UIImage {
-    get
-  }
-  public static var filetypeWord: UIKit.UIImage {
-    get
-  }
-  public static var filetypeCAD: UIKit.UIImage {
-    get
-  }
-  public static var filetypeDmg: UIKit.UIImage {
-    get
-  }
-  public static var filetypeFont: UIKit.UIImage {
-    get
-  }
-  public static var filetypeSpreadsheet: UIKit.UIImage {
-    get
-  }
-  public static var filetypeIndesign: UIKit.UIImage {
-    get
-  }
-  public static var filetypePowerpoint: UIKit.UIImage {
-    get
-  }
-  public static var filetypeKeynote: UIKit.UIImage {
-    get
-  }
-  public static var filetypeNumbers: UIKit.UIImage {
-    get
-  }
-  public static var filetypeGeneric: UIKit.UIImage {
-    get
-  }
-  public static var filetypeOpenoffice: UIKit.UIImage {
-    get
-  }
-  public static var filetypeExcel: UIKit.UIImage {
-    get
-  }
-  public static var filetypePages: UIKit.UIImage {
-    get
-  }
-  public static var filetypePdf: UIKit.UIImage {
-    get
-  }
-  public static var filetypePremiere: UIKit.UIImage {
-    get
-  }
-  public static var filetypeTorrent: UIKit.UIImage {
-    get
-  }
-  public static var filetypeUrl: UIKit.UIImage {
-    get
-  }
-  public static var filetypeExperiencedesign: UIKit.UIImage {
-    get
-  }
-  public static var filetypeFolderCamera: UIKit.UIImage {
-    get
-  }
-  public static var achievementsFreeTrialVPN: UIKit.UIImage {
-    get
-  }
-  public static var achievementsFreeTrialPass: UIKit.UIImage {
-    get
-  }
-  public static var tabBarHome: UIKit.UIImage {
-    get
-  }
-  public static var tabBarDrive: UIKit.UIImage {
-    get
-  }
-  public static var tabBarPhotos: UIKit.UIImage {
-    get
-  }
-  public static var tabBarChat: UIKit.UIImage {
-    get
-  }
-  public static var tabBarMenu: UIKit.UIImage {
-    get
-  }
-}
-public struct MEGAColorBundle {
-  public static var black000000: SwiftUICore.Color {
-    get
-  }
-  public static var whiteFFFFFF: SwiftUICore.Color {
-    get
-  }
-  public static var black2C2C2E: SwiftUICore.Color {
-    get
-  }
-  public static var gray363638: SwiftUICore.Color {
-    get
-  }
-  public static var grayD1D1D1: SwiftUICore.Color {
-    get
-  }
-  public static var navigationBg: SwiftUICore.Color {
-    get
-  }
-  public static var backgroundRegularPrimaryElevated: SwiftUICore.Color {
-    get
-  }
-}
 public struct MEGAImageBundle {
   public static var megaLogoGrayscale: SwiftUICore.Image {
     get
@@ -1962,6 +821,1144 @@ public struct MEGAUIColorBundle {
     get
   }
   public static var grayE4EBEA: UIKit.UIColor {
+    get
+  }
+}
+public struct MEGAUIImageBundle {
+  public static var chatNotifications: UIKit.UIImage {
+    get
+  }
+  public static var iconContacts: UIKit.UIImage {
+    get
+  }
+  public static var groupChatToken: UIKit.UIImage {
+    get
+  }
+  public static var newMeetingToken: UIKit.UIImage {
+    get
+  }
+  public static var joinMeetingToken: UIKit.UIImage {
+    get
+  }
+  public static var inviteContactShare: UIKit.UIImage {
+    get
+  }
+  public static var checkBoxSelectedSemantic: UIKit.UIImage {
+    get
+  }
+  public static var checkBoxUnselected: UIKit.UIImage {
+    get
+  }
+  public static var noteToSelfSmall: UIKit.UIImage {
+    get
+  }
+  public static var noteToSelfBlue: UIKit.UIImage {
+    get
+  }
+  public static var deviceStorageAlmostFull: UIKit.UIImage {
+    get
+  }
+  public static var hudDownload: UIKit.UIImage {
+    get
+  }
+  public static var upload: UIKit.UIImage {
+    get
+  }
+  public static var sendToChat: UIKit.UIImage {
+    get
+  }
+  public static var folderChat: UIKit.UIImage {
+    get
+  }
+  public static var folderUsers: UIKit.UIImage {
+    get
+  }
+  public static var export: UIKit.UIImage {
+    get
+  }
+  public static var shareFolder: UIKit.UIImage {
+    get
+  }
+  public static var verifyContact: UIKit.UIImage {
+    get
+  }
+  public static var offline: UIKit.UIImage {
+    get
+  }
+  public static var info: UIKit.UIImage {
+    get
+  }
+  public static var rename: UIKit.UIImage {
+    get
+  }
+  public static var copy: UIKit.UIImage {
+    get
+  }
+  public static var move: UIKit.UIImage {
+    get
+  }
+  public static var rubbishBin: UIKit.UIImage {
+    get
+  }
+  public static var hudMinus: UIKit.UIImage {
+    get
+  }
+  public static var leaveShare: UIKit.UIImage {
+    get
+  }
+  public static var link: UIKit.UIImage {
+    get
+  }
+  public static var removeLink: UIKit.UIImage {
+    get
+  }
+  public static var removeShare: UIKit.UIImage {
+    get
+  }
+  public static var search: UIKit.UIImage {
+    get
+  }
+  public static var cancelTransfers: UIKit.UIImage {
+    get
+  }
+  public static var `import`: UIKit.UIImage {
+    get
+  }
+  public static var versions: UIKit.UIImage {
+    get
+  }
+  public static var history: UIKit.UIImage {
+    get
+  }
+  public static var delete: UIKit.UIImage {
+    get
+  }
+  public static var selectItem: UIKit.UIImage {
+    get
+  }
+  public static var restore: UIKit.UIImage {
+    get
+  }
+  public static var saveToPhotos: UIKit.UIImage {
+    get
+  }
+  public static var pageView: UIKit.UIImage {
+    get
+  }
+  public static var thumbnailsThin: UIKit.UIImage {
+    get
+  }
+  public static var edittext: UIKit.UIImage {
+    get
+  }
+  public static var forwardToolbar: UIKit.UIImage {
+    get
+  }
+  public static var removeFavourite: UIKit.UIImage {
+    get
+  }
+  public static var favourite: UIKit.UIImage {
+    get
+  }
+  public static var label: UIKit.UIImage {
+    get
+  }
+  public static var gridThin: UIKit.UIImage {
+    get
+  }
+  public static var sort: UIKit.UIImage {
+    get
+  }
+  public static var disputeTakedown: UIKit.UIImage {
+    get
+  }
+  public static var mediaDiscovery: UIKit.UIImage {
+    get
+  }
+  public static var helpCircleThinMedium: UIKit.UIImage {
+    get
+  }
+  public static var eyeOff: UIKit.UIImage {
+    get
+  }
+  public static var eyeOn: UIKit.UIImage {
+    get
+  }
+  public static var addTo: UIKit.UIImage {
+    get
+  }
+  public static var standardDisclosureIndicator: UIKit.UIImage {
+    get
+  }
+  public static var hudSuccess: UIKit.UIImage {
+    get
+  }
+  public static var hudError: UIKit.UIImage {
+    get
+  }
+  public static var backArrow: UIKit.UIImage {
+    get
+  }
+  public static var moreNavigationBar: UIKit.UIImage {
+    get
+  }
+  public static var openSettings: UIKit.UIImage {
+    get
+  }
+  public static var tapNotifications: UIKit.UIImage {
+    get
+  }
+  public static var tapMega: UIKit.UIImage {
+    get
+  }
+  public static var allowNotifications: UIKit.UIImage {
+    get
+  }
+  public static var groupChat: UIKit.UIImage {
+    get
+  }
+  public static var turquoiseCheckmark: UIKit.UIImage {
+    get
+  }
+  public static var miniplayerClose: UIKit.UIImage {
+    get
+  }
+  public static var moreList: UIKit.UIImage {
+    get
+  }
+  public static var videoList: UIKit.UIImage {
+    get
+  }
+  public static var downloaded: UIKit.UIImage {
+    get
+  }
+  public static var moreGrid: UIKit.UIImage {
+    get
+  }
+  public static var shuffleAudio: UIKit.UIImage {
+    get
+  }
+  public static var newest: UIKit.UIImage {
+    get
+  }
+  public static var oldest: UIKit.UIImage {
+    get
+  }
+  public static var cameraUploadsSettings: UIKit.UIImage {
+    get
+  }
+  public static var chatSettings: UIKit.UIImage {
+    get
+  }
+  public static var callsSettings: UIKit.UIImage {
+    get
+  }
+  public static var securitySettings: UIKit.UIImage {
+    get
+  }
+  public static var userInterfaceSettings: UIKit.UIImage {
+    get
+  }
+  public static var fileManagementSettings: UIKit.UIImage {
+    get
+  }
+  public static var advancedSettings: UIKit.UIImage {
+    get
+  }
+  public static var helpSettings: UIKit.UIImage {
+    get
+  }
+  public static var aboutSettings: UIKit.UIImage {
+    get
+  }
+  public static var termsAndPoliciesSettings: UIKit.UIImage {
+    get
+  }
+  public static var cookieSettings: UIKit.UIImage {
+    get
+  }
+  public static var iconSettings: UIKit.UIImage {
+    get
+  }
+  public static var isTakedown: UIKit.UIImage {
+    get
+  }
+  public static var warningPermission: UIKit.UIImage {
+    get
+  }
+  public static var searchEmptyState: UIKit.UIImage {
+    get
+  }
+  public static var incomingEmptyState: UIKit.UIImage {
+    get
+  }
+  public static var outgoingEmptyState: UIKit.UIImage {
+    get
+  }
+  public static var linksEmptyState: UIKit.UIImage {
+    get
+  }
+  public static var noInternetEmptyState: UIKit.UIImage {
+    get
+  }
+  public static var lockedAccounts: UIKit.UIImage {
+    get
+  }
+  public static var noResultsVideoV2: UIKit.UIImage {
+    get
+  }
+  public static var filterChipDownArrow: UIKit.UIImage {
+    get
+  }
+  public static var favouriteThumbnail: UIKit.UIImage {
+    get
+  }
+  public static var blackPlayButton: UIKit.UIImage {
+    get
+  }
+  public static var linked: UIKit.UIImage {
+    get
+  }
+  public static var navigationbarAdd: UIKit.UIImage {
+    get
+  }
+  public static var rectangleVideoStack: UIKit.UIImage {
+    get
+  }
+  public static var favouritePlaylistThumbnail: UIKit.UIImage {
+    get
+  }
+  public static var grabberIcon: UIKit.UIImage {
+    get
+  }
+  public static var redSmall: UIKit.UIImage {
+    get
+  }
+  public static var orangeSmall: UIKit.UIImage {
+    get
+  }
+  public static var yellowSmall: UIKit.UIImage {
+    get
+  }
+  public static var greenSmall: UIKit.UIImage {
+    get
+  }
+  public static var blueSmall: UIKit.UIImage {
+    get
+  }
+  public static var purpleSmall: UIKit.UIImage {
+    get
+  }
+  public static var greySmall: UIKit.UIImage {
+    get
+  }
+  public static var recentlyWatchedVideosEmptyState: UIKit.UIImage {
+    get
+  }
+  public static var selectAllItems: UIKit.UIImage {
+    get
+  }
+  public static var clockPlay: UIKit.UIImage {
+    get
+  }
+  public static var ascending: UIKit.UIImage {
+    get
+  }
+  public static var descending: UIKit.UIImage {
+    get
+  }
+  public static var largest: UIKit.UIImage {
+    get
+  }
+  public static var smallest: UIKit.UIImage {
+    get
+  }
+  public static var sortLabel: UIKit.UIImage {
+    get
+  }
+  public static var sortFavourite: UIKit.UIImage {
+    get
+  }
+  public static var standardDisclosureIndicatorDesignToken: UIKit.UIImage {
+    get
+  }
+  public static var verificationCountry: UIKit.UIImage {
+    get
+  }
+  public static var phoneNumber: UIKit.UIImage {
+    get
+  }
+  public static var spotlightFile: UIKit.UIImage {
+    get
+  }
+  public static var filterActive: UIKit.UIImage {
+    get
+  }
+  public static var moreActionActiveNavigationBar: UIKit.UIImage {
+    get
+  }
+  public static var allPhotosEmptyState: UIKit.UIImage {
+    get
+  }
+  public static var cameraEmptyState: UIKit.UIImage {
+    get
+  }
+  public static var videoEmptyState: UIKit.UIImage {
+    get
+  }
+  public static var spotlightFolder: UIKit.UIImage {
+    get
+  }
+  public static var addReactionSmall: UIKit.UIImage {
+    get
+  }
+  public static var versioned: UIKit.UIImage {
+    get
+  }
+  public static var recentUpload: UIKit.UIImage {
+    get
+  }
+  public static var transfersDownload: UIKit.UIImage {
+    get
+  }
+  public static var completedBadgeDesignToken: UIKit.UIImage {
+    get
+  }
+  public static var errorBadgeDesignToken: UIKit.UIImage {
+    get
+  }
+  public static var overquotaDesignToken: UIKit.UIImage {
+    get
+  }
+  public static var pauseDesignToken: UIKit.UIImage {
+    get
+  }
+  public static var transfersDownloadDesignToken: UIKit.UIImage {
+    get
+  }
+  public static var transfersUploadDesignToken: UIKit.UIImage {
+    get
+  }
+  public static var fullAccessPermissions: UIKit.UIImage {
+    get
+  }
+  public static var readWritePermissions: UIKit.UIImage {
+    get
+  }
+  public static var readPermissions: UIKit.UIImage {
+    get
+  }
+  public static var contactRequestDeny: UIKit.UIImage {
+    get
+  }
+  public static var contactRequestAccept: UIKit.UIImage {
+    get
+  }
+  public static var disclosure: UIKit.UIImage {
+    get
+  }
+  public static var voiceTip: UIKit.UIImage {
+    get
+  }
+  public static var folderEmptyState: UIKit.UIImage {
+    get
+  }
+  public static var cloudDriveIcon: UIKit.UIImage {
+    get
+  }
+  public static var cameraUploadsIcon: UIKit.UIImage {
+    get
+  }
+  public static var miniplayerPause: UIKit.UIImage {
+    get
+  }
+  public static var miniplayerPlay: UIKit.UIImage {
+    get
+  }
+  public static var sendButton: UIKit.UIImage {
+    get
+  }
+  public static var expand: UIKit.UIImage {
+    get
+  }
+  public static var checkBoxSelected: UIKit.UIImage {
+    get
+  }
+  public static var home: UIKit.UIImage {
+    get
+  }
+  public static var chatIcon: UIKit.UIImage {
+    get
+  }
+  public static var sharedItemsIcon: UIKit.UIImage {
+    get
+  }
+  public static var collapse: UIKit.UIImage {
+    get
+  }
+  public static var textfile: UIKit.UIImage {
+    get
+  }
+  public static var capture: UIKit.UIImage {
+    get
+  }
+  public static var scanDocument: UIKit.UIImage {
+    get
+  }
+  public static var explorerCardFavourites: UIKit.UIImage {
+    get
+  }
+  public static var explorerCardDocs: UIKit.UIImage {
+    get
+  }
+  public static var explorerCardAudio: UIKit.UIImage {
+    get
+  }
+  public static var explorerCardVideoPlayBlue: UIKit.UIImage {
+    get
+  }
+  public static var explorerCardVideoFilmStripsBlue: UIKit.UIImage {
+    get
+  }
+  public static var infoMeetings: UIKit.UIImage {
+    get
+  }
+  public static var storage: UIKit.UIImage {
+    get
+  }
+  public static var fileSharing: UIKit.UIImage {
+    get
+  }
+  public static var backup: UIKit.UIImage {
+    get
+  }
+  public static var mega: UIKit.UIImage {
+    get
+  }
+  public static var onboardingHeader: UIKit.UIImage {
+    get
+  }
+  public static var blockingDiskFull: UIKit.UIImage {
+    get
+  }
+  public static var placeholder: UIKit.UIImage {
+    get
+  }
+  public static var linkGetLink: UIKit.UIImage {
+    get
+  }
+  public static var iconKeyOnly: UIKit.UIImage {
+    get
+  }
+  public static var addFromContacts: UIKit.UIImage {
+    get
+  }
+  public static var enterUserEmail: UIKit.UIImage {
+    get
+  }
+  public static var scanUserQRCode: UIKit.UIImage {
+    get
+  }
+  public static var inviteContactMore: UIKit.UIImage {
+    get
+  }
+  public static var megaShareContactLink: UIKit.UIImage {
+    get
+  }
+  public static var cameraIconWhite: UIKit.UIImage {
+    get
+  }
+  public static var cameraIcon: UIKit.UIImage {
+    get
+  }
+  public static var sendChatDisabled: UIKit.UIImage {
+    get
+  }
+  public static var userMutedBanner: UIKit.UIImage {
+    get
+  }
+  public static var callSlotsBanner: UIKit.UIImage {
+    get
+  }
+  public static var accountExpiredAdmin: UIKit.UIImage {
+    get
+  }
+  public static var accountExpiredUser: UIKit.UIImage {
+    get
+  }
+  public static var red: UIKit.UIImage {
+    get
+  }
+  public static var orange: UIKit.UIImage {
+    get
+  }
+  public static var yellow: UIKit.UIImage {
+    get
+  }
+  public static var green: UIKit.UIImage {
+    get
+  }
+  public static var blue: UIKit.UIImage {
+    get
+  }
+  public static var purple: UIKit.UIImage {
+    get
+  }
+  public static var grey: UIKit.UIImage {
+    get
+  }
+  public static var contactRequests: UIKit.UIImage {
+    get
+  }
+  public static var chatEmptyState: UIKit.UIImage {
+    get
+  }
+  public static var moderator: UIKit.UIImage {
+    get
+  }
+  public static var standard: UIKit.UIImage {
+    get
+  }
+  public static var readOnlyChat: UIKit.UIImage {
+    get
+  }
+  public static var sendMessageRoundToken: UIKit.UIImage {
+    get
+  }
+  public static var groupAvatar: UIKit.UIImage {
+    get
+  }
+  public static var newFolder: UIKit.UIImage {
+    get
+  }
+  public static var filter: UIKit.UIImage {
+    get
+  }
+  public static var startMeeting: UIKit.UIImage {
+    get
+  }
+  public static var joinAMeeting: UIKit.UIImage {
+    get
+  }
+  public static var scheduleMeeting: UIKit.UIImage {
+    get
+  }
+  public static var deleteVideoPlaylist: UIKit.UIImage {
+    get
+  }
+  public static var favicon: UIKit.UIImage {
+    get
+  }
+  public static var privacyWarningIco: UIKit.UIImage {
+    get
+  }
+  public static var clearChatHistory: UIKit.UIImage {
+    get
+  }
+  public static var searchBarIconSemantic: UIKit.UIImage {
+    get
+  }
+  public static var downloadGif: UIKit.UIImage {
+    get
+  }
+  public static var playButton: UIKit.UIImage {
+    get
+  }
+  public static var addContact: UIKit.UIImage {
+    get
+  }
+  public static var giphyCellBackground: UIKit.UIImage {
+    get
+  }
+  public static var noGIF: UIKit.UIImage {
+    get
+  }
+  public static var poweredByGIPHY: UIKit.UIImage {
+    get
+  }
+  public static var leaveGroup: UIKit.UIImage {
+    get
+  }
+  public static var groupChatAddParticipant: UIKit.UIImage {
+    get
+  }
+  public static var contactGroups: UIKit.UIImage {
+    get
+  }
+  public static var selectAlbumCover: UIKit.UIImage {
+    get
+  }
+  public static var deleteAlbum: UIKit.UIImage {
+    get
+  }
+  public static var versionedThumbnail: UIKit.UIImage {
+    get
+  }
+  public static var linkedThumbnail: UIKit.UIImage {
+    get
+  }
+  public static var proLabel: UIKit.UIImage {
+    get
+  }
+  public static var hudForbidden: UIKit.UIImage {
+    get
+  }
+  public static var plan: UIKit.UIImage {
+    get
+  }
+  public static var iconStorage: UIKit.UIImage {
+    get
+  }
+  public static var myAccount: UIKit.UIImage {
+    get
+  }
+  public static var iconNotifications: UIKit.UIImage {
+    get
+  }
+  public static var iconTransfers: UIKit.UIImage {
+    get
+  }
+  public static var iconAchievements: UIKit.UIImage {
+    get
+  }
+  public static var deviceCenter: UIKit.UIImage {
+    get
+  }
+  public static var iconOffline: UIKit.UIImage {
+    get
+  }
+  public static var businessPaymentOverdue: UIKit.UIImage {
+    get
+  }
+  public static var favouritesEmptyState: UIKit.UIImage {
+    get
+  }
+  public static var documentsEmptyState: UIKit.UIImage {
+    get
+  }
+  public static var audioEmptyState: UIKit.UIImage {
+    get
+  }
+  public static var waveform0000: UIKit.UIImage {
+    get
+  }
+  public static var playVoiceClip: UIKit.UIImage {
+    get
+  }
+  public static var pauseVoiceClip: UIKit.UIImage {
+    get
+  }
+  public static var playVoiceClipButton: UIKit.UIImage {
+    get
+  }
+  public static var closeCircle: UIKit.UIImage {
+    get
+  }
+  public static var inviteToChatDesignToken: UIKit.UIImage {
+    get
+  }
+  public static var archiveChat: UIKit.UIImage {
+    get
+  }
+  public static var markUnreadMenu: UIKit.UIImage {
+    get
+  }
+  public static var mutedChatMenu: UIKit.UIImage {
+    get
+  }
+  public static var callControlSpeakerDisabled: UIKit.UIImage {
+    get
+  }
+  public static var audioSourceMeetingAction: UIKit.UIImage {
+    get
+  }
+  public static var callControlSpeakerEnabled: UIKit.UIImage {
+    get
+  }
+  public static var chatLinkCreation: UIKit.UIImage {
+    get
+  }
+  public static var sharedFilesEmptyState: UIKit.UIImage {
+    get
+  }
+  public static var contactInviteSent: UIKit.UIImage {
+    get
+  }
+  public static var cookie: UIKit.UIImage {
+    get
+  }
+  public static var verifyPendingOutshareEmail: UIKit.UIImage {
+    get
+  }
+  public static var changeLaunchTab: UIKit.UIImage {
+    get
+  }
+  public static var storageAlmostFull: UIKit.UIImage {
+    get
+  }
+  public static var warningStorageFull: UIKit.UIImage {
+    get
+  }
+  public static var transferLimitedQuota: UIKit.UIImage {
+    get
+  }
+  public static var transferExceededQuota: UIKit.UIImage {
+    get
+  }
+  public static var _2FASetup: UIKit.UIImage {
+    get
+  }
+  public static var accountUpgradeSecurity: UIKit.UIImage {
+    get
+  }
+  public static var upgradePro: UIKit.UIImage {
+    get
+  }
+  public static var startChat: UIKit.UIImage {
+    get
+  }
+  public static var uploadFile: UIKit.UIImage {
+    get
+  }
+  public static var phoneCallAll: UIKit.UIImage {
+    get
+  }
+  public static var userMicOn: UIKit.UIImage {
+    get
+  }
+  public static var userMutedMeetings: UIKit.UIImage {
+    get
+  }
+  public static var callSlots: UIKit.UIImage {
+    get
+  }
+  public static var videoOff: UIKit.UIImage {
+    get
+  }
+  public static var sendMessageMeetings: UIKit.UIImage {
+    get
+  }
+  public static var moderatorMeetings: UIKit.UIImage {
+    get
+  }
+  public static var removeModerator: UIKit.UIImage {
+    get
+  }
+  public static var speakerView: UIKit.UIImage {
+    get
+  }
+  public static var muteParticipant: UIKit.UIImage {
+    get
+  }
+  public static var share: UIKit.UIImage {
+    get
+  }
+  public static var callControlSwitchCameraEnabled: UIKit.UIImage {
+    get
+  }
+  public static var callControlSwitchCameraDisabled: UIKit.UIImage {
+    get
+  }
+  public static var shareCallLink: UIKit.UIImage {
+    get
+  }
+  public static var galleryView: UIKit.UIImage {
+    get
+  }
+  public static var micActive: UIKit.UIImage {
+    get
+  }
+  public static var micMuted: UIKit.UIImage {
+    get
+  }
+  public static var jumpToLatest: UIKit.UIImage {
+    get
+  }
+  public static var audioCall: UIKit.UIImage {
+    get
+  }
+  public static var videoCall: UIKit.UIImage {
+    get
+  }
+  public static var megaIconCall: UIKit.UIImage {
+    get
+  }
+  public static var triangle: UIKit.UIImage {
+    get
+  }
+  public static var forwardButton: UIKit.UIImage {
+    get
+  }
+  public static var pause: UIKit.UIImage {
+    get
+  }
+  public static var play: UIKit.UIImage {
+    get
+  }
+  public static var repeatAudio: UIKit.UIImage {
+    get
+  }
+  public static var repeatOneAudio: UIKit.UIImage {
+    get
+  }
+  public static var normal: UIKit.UIImage {
+    get
+  }
+  public static var double: UIKit.UIImage {
+    get
+  }
+  public static var half: UIKit.UIImage {
+    get
+  }
+  public static var oneAndAHalf: UIKit.UIImage {
+    get
+  }
+  public static var lock: UIKit.UIImage {
+    get
+  }
+  public static var callRaiseHand: UIKit.UIImage {
+    get
+  }
+  public static var callWithXIncoming: UIKit.UIImage {
+    get
+  }
+  public static var chatroomLoading: UIKit.UIImage {
+    get
+  }
+  public static var locationMessage: UIKit.UIImage {
+    get
+  }
+  public static var locationMessageGrey: UIKit.UIImage {
+    get
+  }
+  public static var voiceMessage: UIKit.UIImage {
+    get
+  }
+  public static var voiceMessageGrey: UIKit.UIImage {
+    get
+  }
+  public static var activitySendToChat: UIKit.UIImage {
+    get
+  }
+  public static var notificationDevicePermission: UIKit.UIImage {
+    get
+  }
+  public static var glassSearch: UIKit.UIImage {
+    get
+  }
+  public static var videoPlaylistThumbnailFallback: UIKit.UIImage {
+    get
+  }
+  public static var linksSegmentControler: UIKit.UIImage {
+    get
+  }
+  public static var rectangleVideoStackOutline: UIKit.UIImage {
+    get
+  }
+  public static var playlist: UIKit.UIImage {
+    get
+  }
+  public static var navigationBarAdd: UIKit.UIImage {
+    get
+  }
+  public static var timeline: UIKit.UIImage {
+    get
+  }
+  public static var clockMediumThin: UIKit.UIImage {
+    get
+  }
+  public static var glassPlaylist: UIKit.UIImage {
+    get
+  }
+  public static var splashScreenMEGALogo: UIKit.UIImage {
+    get
+  }
+  public static var noteToSelf: UIKit.UIImage {
+    get
+  }
+  public static var sharedFiles: UIKit.UIImage {
+    get
+  }
+  public static var unArchiveChat: UIKit.UIImage {
+    get
+  }
+  public static var sharedFilesInfo: UIKit.UIImage {
+    get
+  }
+  public static var manageChatHistory: UIKit.UIImage {
+    get
+  }
+  public static var meetingLink: UIKit.UIImage {
+    get
+  }
+  public static var onboardingCarousel1: UIKit.UIImage {
+    get
+  }
+  public static var onboardingCarousel2: UIKit.UIImage {
+    get
+  }
+  public static var onboardingCarousel3: UIKit.UIImage {
+    get
+  }
+  public static var onboardingCarousel4: UIKit.UIImage {
+    get
+  }
+  public static var photoCardPlaceholder: UIKit.UIImage {
+    get
+  }
+  public static var enableCameraUploadsBannerIcon: UIKit.UIImage {
+    get
+  }
+  public static var cuBannerChevronRevamp: UIKit.UIImage {
+    get
+  }
+  public static var addContactMeetings: UIKit.UIImage {
+    get
+  }
+  public static var filetypeFolder: UIKit.UIImage {
+    get
+  }
+  public static var filetype3D: UIKit.UIImage {
+    get
+  }
+  public static var filetypeRaw: UIKit.UIImage {
+    get
+  }
+  public static var filetypeVideo: UIKit.UIImage {
+    get
+  }
+  public static var filetypeAudio: UIKit.UIImage {
+    get
+  }
+  public static var filetypeCompressed: UIKit.UIImage {
+    get
+  }
+  public static var filetypePhotoshop: UIKit.UIImage {
+    get
+  }
+  public static var filetypeWebLang: UIKit.UIImage {
+    get
+  }
+  public static var filetypeAfterEffects: UIKit.UIImage {
+    get
+  }
+  public static var filetypeIllustrator: UIKit.UIImage {
+    get
+  }
+  public static var filetypeText: UIKit.UIImage {
+    get
+  }
+  public static var filetypeExecutable: UIKit.UIImage {
+    get
+  }
+  public static var filetypeVector: UIKit.UIImage {
+    get
+  }
+  public static var filetypeImages: UIKit.UIImage {
+    get
+  }
+  public static var filetypeWebData: UIKit.UIImage {
+    get
+  }
+  public static var filetypeWord: UIKit.UIImage {
+    get
+  }
+  public static var filetypeCAD: UIKit.UIImage {
+    get
+  }
+  public static var filetypeDmg: UIKit.UIImage {
+    get
+  }
+  public static var filetypeFont: UIKit.UIImage {
+    get
+  }
+  public static var filetypeSpreadsheet: UIKit.UIImage {
+    get
+  }
+  public static var filetypeIndesign: UIKit.UIImage {
+    get
+  }
+  public static var filetypePowerpoint: UIKit.UIImage {
+    get
+  }
+  public static var filetypeKeynote: UIKit.UIImage {
+    get
+  }
+  public static var filetypeNumbers: UIKit.UIImage {
+    get
+  }
+  public static var filetypeGeneric: UIKit.UIImage {
+    get
+  }
+  public static var filetypeOpenoffice: UIKit.UIImage {
+    get
+  }
+  public static var filetypeExcel: UIKit.UIImage {
+    get
+  }
+  public static var filetypePages: UIKit.UIImage {
+    get
+  }
+  public static var filetypePdf: UIKit.UIImage {
+    get
+  }
+  public static var filetypePremiere: UIKit.UIImage {
+    get
+  }
+  public static var filetypeTorrent: UIKit.UIImage {
+    get
+  }
+  public static var filetypeUrl: UIKit.UIImage {
+    get
+  }
+  public static var filetypeExperiencedesign: UIKit.UIImage {
+    get
+  }
+  public static var filetypeFolderCamera: UIKit.UIImage {
+    get
+  }
+  public static var achievementsFreeTrialVPN: UIKit.UIImage {
+    get
+  }
+  public static var achievementsFreeTrialPass: UIKit.UIImage {
+    get
+  }
+  public static var tabBarHome: UIKit.UIImage {
+    get
+  }
+  public static var tabBarDrive: UIKit.UIImage {
+    get
+  }
+  public static var tabBarPhotos: UIKit.UIImage {
+    get
+  }
+  public static var tabBarChat: UIKit.UIImage {
+    get
+  }
+  public static var tabBarMenu: UIKit.UIImage {
+    get
+  }
+}
+public struct MEGAColorBundle {
+  public static var black000000: SwiftUICore.Color {
+    get
+  }
+  public static var whiteFFFFFF: SwiftUICore.Color {
+    get
+  }
+  public static var black2C2C2E: SwiftUICore.Color {
+    get
+  }
+  public static var gray363638: SwiftUICore.Color {
+    get
+  }
+  public static var grayD1D1D1: SwiftUICore.Color {
+    get
+  }
+  public static var navigationBg: SwiftUICore.Color {
+    get
+  }
+  public static var backgroundRegularPrimaryElevated: SwiftUICore.Color {
     get
   }
 }
