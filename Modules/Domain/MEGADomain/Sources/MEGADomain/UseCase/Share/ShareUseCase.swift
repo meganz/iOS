@@ -13,6 +13,9 @@ public protocol ShareUseCaseProtocol: Sendable {
     /// Check if user has any collection type (Set) that is exported within user's account
     /// - Returns: return `true` if user has collection type that is shared, return `false` if user does not have any shared collection.
     func isAnyCollectionShared() async -> Bool
+
+    func unverifiedInShares() async -> [ShareEntity]
+    func unverifiedOutShares() async -> [ShareEntity]
 }
 
 public struct ShareUseCase<T: ShareRepositoryProtocol, S: FilesSearchRepositoryProtocol, N: NodeRepositoryProtocol>: ShareUseCaseProtocol {
@@ -95,5 +98,12 @@ public struct ShareUseCase<T: ShareRepositoryProtocol, S: FilesSearchRepositoryP
     
     public func isAnyCollectionShared() async -> Bool {
         await shareRepository.isAnyCollectionShared()
+    }
+
+    public func unverifiedInShares() async -> [ShareEntity] {
+        await shareRepository.unverifiedInShares()
+    }
+    public func unverifiedOutShares() async -> [ShareEntity] {
+        await shareRepository.unverifiedOutShares()
     }
 }

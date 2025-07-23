@@ -10,19 +10,55 @@ import MEGASwiftUI
 import SwiftUI
 
 @MainActor
-public protocol SharedItemsPresenting {
+public protocol AccountMenuItemsNavigating {
     func showSharedItems()
     func showAchievements()
 }
 
-final class AccountMenuViewNavigationController: MEGANavigationController, SharedItemsPresenting {
+final class AccountMenuViewNavigationController: MEGANavigationController, AccountMenuItemsNavigating {
+    private let viewModel = AccountMenuNotificationsViewModel(
+        accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
+        sharedItemsUseCase: ShareUseCase(
+            shareRepository: ShareRepository.newRepo,
+            filesSearchRepository: FilesSearchRepository.newRepo,
+            nodeRepository: NodeRepository.newRepo),
+        notificationsUseCase: NotificationsUseCase(repository: NotificationsRepository.newRepo),
+        contactsUseCase: ContactsUseCase(repository: ContactsRepository.newRepo)
+    )
+
     var router: (any AccountMenuViewRouting)?
-    func showSharedItems() {
-        router?.showSharedItems()
+    private var notificationObservingTask: Task<Void, Never>?
+
+    init() {
+        super.init(nibName: nil, bundle: nil)
+        onInit()
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 
     func showAchievements() {
         router?.showAchievements()
+    }
+
+    func showSharedItems() {
+        router?.showSharedItems()
+    }
+
+    private func onInit() {
+        notificationObservingTask = Task { [viewModel] in
+            for await value in viewModel.notificationBadgeValue {
+                tabBarItem.badgeValue = value
+            }
+        }
+    }
+
+    deinit {
+        // Here we cancel notificationObservingTask in deinit instead of will/didDisappear because
+        // Account Menu is one of the app's tab bar view controller, the task should always be active
+        // until the VC is deallocated (e.g: user logs out).
+        notificationObservingTask?.cancel()
     }
 }
 

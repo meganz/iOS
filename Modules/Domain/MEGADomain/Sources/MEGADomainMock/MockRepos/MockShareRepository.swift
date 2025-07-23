@@ -3,6 +3,14 @@ import MEGADomain
 import MEGASwift
 
 final public class MockShareRepository: ShareRepositoryProtocol, @unchecked Sendable {
+    public func unverifiedInShares() async -> [MEGADomain.ShareEntity] {
+        []
+    }
+    
+    public func unverifiedOutShares() async -> [MEGADomain.ShareEntity] {
+        []
+    }
+    
     public static var newRepo: MockShareRepository {
         MockShareRepository()
     }
