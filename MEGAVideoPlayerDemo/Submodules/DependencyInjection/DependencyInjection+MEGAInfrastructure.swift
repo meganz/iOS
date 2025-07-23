@@ -2,10 +2,6 @@ import Foundation
 import MEGAInfrastructure
 
 extension DependencyInjection {
-    static func composeInfrastructure() {
-        MEGAInfrastructure.DependencyInjection.sharedSdk = .sharedSdk
-    }
-
     static var defaultCacheService: some CacheServiceProtocol {
         UserDefaultsCacheService(userDefaults: userDefaults)
     }

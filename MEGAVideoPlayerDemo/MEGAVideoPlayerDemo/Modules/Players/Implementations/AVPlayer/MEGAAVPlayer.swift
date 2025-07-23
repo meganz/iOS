@@ -1,23 +1,78 @@
 import AVFoundation
+import Combine
 
 @MainActor
-final class MEGAAVPlayer: MEGABasePlayer {
+final class MEGAAVPlayer {
     private let player = AVPlayer()
-    private var playerItemContext = 0
-    private var timeObserverToken: Any?
     private var playerLayer: AVPlayerLayer?
 
-    override init(streamingUseCase: some StreamingUseCaseProtocol) {
-        super.init(streamingUseCase: streamingUseCase)
-        setupObservers()
+    private var timeObserverToken: Any? {
+        willSet { timeObserverToken.map(player.removeTimeObserver) }
+    }
+
+    private let stateSubject: CurrentValueSubject<PlaybackState, Never> = .init(.opening)
+    private let currentTimeSubject: CurrentValueSubject<Duration, Never> = .init(.seconds(-1))
+    private let durationSubject: CurrentValueSubject<Duration, Never> = .init(.seconds(-1))
+
+    let statePublisher: AnyPublisher<PlaybackState, Never>
+    let currentTimePublisher: AnyPublisher<Duration, Never>
+    let durationPublisher: AnyPublisher<Duration, Never>
+
+    private nonisolated let debugMessageSubject = PassthroughSubject<String, Never>()
+
+    private var cancellables = Set<AnyCancellable>()
+
+    private let streamingUseCase: any StreamingUseCaseProtocol
+    private let notificationCenter: NotificationCenter
+
+    init(
+        streamingUseCase: some StreamingUseCaseProtocol,
+        notificationCenter: NotificationCenter
+    ) {
+        self.streamingUseCase = streamingUseCase
+        self.notificationCenter = notificationCenter
+        self.statePublisher = stateSubject.eraseToAnyPublisher()
+        self.currentTimePublisher = currentTimeSubject.eraseToAnyPublisher()
+        self.durationPublisher = durationSubject.eraseToAnyPublisher()
+
+        observePlayerTimeControlStatus()
+        observePlayerPeriodicTime()
+        observePlayerStatus()
     }
 
     deinit {
-        player.removeObserver(self, forKeyPath: "rate", context: &playerItemContext)
-        player.currentItem?.removeObserver(self, forKeyPath: "status", context: &playerItemContext)
-        if let token = timeObserverToken {
-            player.removeTimeObserver(token)
-        }
+        timeObserverToken.map(player.removeTimeObserver)
+    }
+}
+
+extension MEGAAVPlayer: PlayerOptionIdentifiable {
+    nonisolated var option: VideoPlayerOption { .avPlayer }
+}
+
+extension MEGAAVPlayer: PlaybackStateObservable {
+    var state: PlaybackState {
+        get { stateSubject.value }
+        set { stateSubject.send(newValue) }
+    }
+
+    var currentTime: Duration {
+        get { currentTimeSubject.value }
+        set { currentTimeSubject.send(newValue) }
+    }
+
+    var duration: Duration {
+        get { durationSubject.value }
+        set { durationSubject.send(newValue) }
+    }
+}
+
+extension MEGAAVPlayer: PlaybackDebugMessageObservable {
+    nonisolated var debugMessagePublisher: AnyPublisher<String, Never> {
+        debugMessageSubject.eraseToAnyPublisher()
+    }
+
+    func playbackDebugMessage(_ message: String) {
+        debugMessageSubject.send(message)
     }
 }
 
@@ -31,7 +86,6 @@ extension MEGAAVPlayer: PlaybackControllable {
     }
 
     func stop() {
-        player.pause()
         player.replaceCurrentItem(with: nil)
         streamingUseCase.stopStreaming()
     }
@@ -39,19 +93,20 @@ extension MEGAAVPlayer: PlaybackControllable {
     func jumpForward(by seconds: TimeInterval) {
         guard player.currentItem != nil else { return }
         let currentTime = player.currentTime()
-        let newTime = CMTimeGetSeconds(currentTime) + seconds
+        let newTime = currentTime.seconds + seconds
         seek(to: newTime)
     }
 
     func jumpBackward(by seconds: TimeInterval) {
         guard player.currentItem != nil else { return }
         let currentTime = player.currentTime()
-        let newTime = CMTimeGetSeconds(currentTime) - seconds
+        let newTime = currentTime.seconds - seconds
         seek(to: max(newTime, 0))
     }
 
     func seek(to time: TimeInterval) {
         let newTime = CMTime(seconds: time, preferredTimescale: 600)
+        guard newTime.isValid else { return }
         player.seek(to: newTime)
     }
 }
@@ -84,89 +139,149 @@ extension MEGAAVPlayer: NodeLoadable {
         let playerItem = AVPlayerItem(url: url)
         player.replaceCurrentItem(with: playerItem)
 
-        NotificationCenter.default.addObserver(
-            forName: .AVPlayerItemDidPlayToEndTime,
-            object: player.currentItem,
-            queue: .main
-        ) { [weak self] _ in
-            DispatchQueue.main.async {
-                self?.state = .ended
-            }
-        }
+        observe(for: playerItem)
+    }
 
-        player.currentItem?.addObserver(self, forKeyPath: "status", options: [.new, .initial], context: &playerItemContext)
-        observeTimeChanges()
+    private func observe(for playerItem: AVPlayerItem) {
+        observePlaybackBufferStatus(for: playerItem)
+        observeStatus(for: playerItem)
+        observeDidPlayToEndTime(for: playerItem)
+        observePlaybackStalledNotification(for: playerItem)
+    }
+
+    private func observePlaybackBufferStatus(for item: AVPlayerItem) {
+        item.publisher(for: \.isPlaybackBufferEmpty, options: [.new])
+            .filter { $0 }
+            .sink { [weak self] _ in self?.willStartBuffering() }
+            .store(in: &cancellables)
+
+        item.publisher(for: \.isPlaybackLikelyToKeepUp, options: [.new])
+            .filter { $0 }
+            .sink { [weak self] _ in self?.willFinishBuffering() }
+            .store(in: &cancellables)
+
+        item.publisher(for: \.isPlaybackBufferFull, options: [.new])
+            .filter { $0 }
+            .sink { [weak self] _ in self?.willFinishBuffering() }
+            .store(in: &cancellables)
+    }
+
+    private func willStartBuffering() {
+        state = .buffering
+    }
+
+    private func willFinishBuffering() {
+        let newStatus: PlaybackState? = {
+            switch player.timeControlStatus {
+            case .playing: return .playing
+            case .paused: return .paused
+            default: return nil
+            }
+        }()
+
+        if let newStatus {
+            state = newStatus
+        }
+    }
+
+    private func observeStatus(for item: AVPlayerItem) {
+        item.publisher(for: \.status, options: [.initial, .new])
+            .sink { [weak self] in self?.playbackDebugMessage("Player item status changed to \($0.rawValue)") }
+            .store(in: &cancellables)
+    }
+
+    private func observeDidPlayToEndTime(for item: AVPlayerItem) {
+        notificationCenter
+            .publisher(for: AVPlayerItem.didPlayToEndTimeNotification, object: item)
+            .sink { [weak self] _ in self?.state = .ended }
+            .store(in: &cancellables)
+    }
+
+    private func observePlaybackStalledNotification(for item: AVPlayerItem) {
+        notificationCenter
+            .publisher(for: AVPlayerItem.playbackStalledNotification, object: item)
+            .sink { [weak self] _ in self?.willStartBuffering() }
+            .store(in: &cancellables)
     }
 }
+
+extension MEGAAVPlayer {
+    private func observePlayerPeriodicTime() {
+        let interval = CMTime(seconds: 1.0, preferredTimescale: CMTimeScale(NSEC_PER_SEC))
+        timeObserverToken = player.addPeriodicTimeObserver(forInterval: interval, queue: .main) { [weak self] time in
+            Task { @MainActor in self?.timeChanged(time) }
+        }
+    }
+
+    private func timeChanged(_ newTime: CMTime) {
+        updateCurrentTime(newTime)
+        if let newDuration = player.currentItem?.duration {
+            updateDuration(newDuration)
+        }
+    }
+
+    private func updateCurrentTime(_ time: CMTime) {
+        guard time.isValid, !(time.seconds.isNaN || time.seconds.isInfinite) else {
+            playbackDebugMessage("Invalid time \(time)")
+            return
+        }
+
+        currentTime = .seconds(time.seconds)
+    }
+
+    private func updateDuration(_ duration: CMTime) {
+        guard duration.isValid, !(duration.seconds.isNaN || duration.seconds.isInfinite) else {
+            playbackDebugMessage("Invalid duration \(duration)")
+            return
+        }
+
+        self.duration = .seconds(duration.seconds)
+    }
+}
+
+extension MEGAAVPlayer {
+    private func observePlayerStatus() {
+        player.publisher(for: \.status, options: [.initial, .new])
+            .sink { [weak self] in self?.playbackDebugMessage("Player status changed to \($0.rawValue)") }
+            .store(in: &cancellables)
+    }
+}
+
+extension MEGAAVPlayer {
+    private func observePlayerTimeControlStatus() {
+        player.publisher(for: \.timeControlStatus, options: [.initial, .new])
+            .sink { [weak self] _ in self?.timeControlStatusUpdated() }
+            .store(in: &cancellables)
+    }
+
+    private func timeControlStatusUpdated() {
+        switch player.timeControlStatus {
+        case .playing:
+            state = .playing
+        case .paused where state != .ended:
+            state = .paused
+        case .waitingToPlayAtSpecifiedRate:
+            state = .buffering
+        default:
+            break
+        }
+    }
+}
+
 
 extension MEGAAVPlayer {
     static func liveValue(
         node: any PlayableNode
     ) -> MEGAAVPlayer {
-        let player = MEGAAVPlayer(streamingUseCase: DependencyInjection.streamingUseCase)
+        let player = MEGAAVPlayer.liveValue
         player.loadNode(node)
         return player
     }
 
     static var liveValue: MEGAAVPlayer {
-        MEGAAVPlayer(streamingUseCase: DependencyInjection.streamingUseCase)
-    }
-}
-
-extension MEGAAVPlayer {
-    private func observeTimeChanges() {
-        let interval = CMTime(seconds: 1.0, preferredTimescale: CMTimeScale(NSEC_PER_SEC))
-        timeObserverToken = player.addPeriodicTimeObserver(forInterval: interval, queue: .main) { [weak self] time in
-            guard let self else { return }
-
-            DispatchQueue.main.async {
-                self.currentTime = .seconds(CMTimeGetSeconds(time))
-                if let duration = self.player.currentItem?.duration {
-                    self.duration = .seconds(CMTimeGetSeconds(duration))
-                }
-            }
-        }
-    }
-
-    func setupObservers() {
-        player.addObserver(self, forKeyPath: "rate", options: [.new, .initial], context: &playerItemContext)
-    }
-
-    override func observeValue(
-        forKeyPath keyPath: String?,
-        of object: Any?,
-        change: [NSKeyValueChangeKey : Any]?,
-        context: UnsafeMutableRawPointer?
-    ) {
-        guard context == &playerItemContext else {
-            super.observeValue(forKeyPath: keyPath, of: object, change: change, context: context)
-            return
-        }
-
-        if keyPath == "rate" {
-            let newRate = player.rate
-            if player.currentItem == nil {
-                state = .stopped
-            } else if newRate == 0 {
-                state = .paused
-            } else {
-                state = .playing
-            }
-        }
-
-        if keyPath == "status" {
-            if let item = object as? AVPlayerItem {
-                switch item.status {
-                case .readyToPlay:
-                    state = .playing
-                case .failed:
-                    state = .error
-                case .unknown:
-                    state = .buffering
-                @unknown default:
-                    break
-                }
-            }
-        }
+        MEGAAVPlayer(
+            streamingUseCase: DependencyInjection.streamingUseCase,
+            notificationCenter: .default
+        )
     }
 }

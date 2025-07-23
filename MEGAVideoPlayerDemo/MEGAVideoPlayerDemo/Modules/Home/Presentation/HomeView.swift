@@ -39,7 +39,7 @@ struct HomeView: View {
                     Menu {
                         ForEach(VideoPlayerOption.allCases) { option in
                             Button {
-                                viewModel.selectedPlayerOption = option
+                                viewModel.didSelectPlayerOption(option)
                             } label: {
                                 Label(option.rawValue, systemImage: viewModel.selectedPlayerOption == option ? "checkmark" : "")
                             }

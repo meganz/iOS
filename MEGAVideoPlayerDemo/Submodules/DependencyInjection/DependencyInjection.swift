@@ -1,7 +1,6 @@
 enum DependencyInjection {
     static func compose() {
         composeSDKRepo()
-        composeInfrastructure()
         composeLogger()
         composeAuthentication()
         composeAccountManagement()
@@ -22,5 +21,9 @@ enum DependencyInjection {
 
     static var selectVideoPlayerOptionUseCase: some SelectVideoPlayerUseCaseProtocol {
         SelectVideoPlayerUseCase.shared
+    }
+
+    static var playbackReporter: some PlaybackReporting {
+        MEGALogPlaybackReporter()
     }
 }

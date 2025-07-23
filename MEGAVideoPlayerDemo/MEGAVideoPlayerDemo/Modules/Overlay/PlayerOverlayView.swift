@@ -29,7 +29,7 @@ extension PlayerOverlayView {
 
     @ViewBuilder var playPauseButton: some View {
         switch viewModel.state {
-        case .playing, .buffering:
+        case .playing, .buffering, .opening:
             pauseButton
         case .paused, .stopped, .error, .ended:
             playButton
@@ -133,6 +133,9 @@ private final class MockVideoPlayer: VideoPlayerProtocol {
     @Published var currentTime: Duration
     @Published var duration: Duration
 
+    let debugMessage: String
+    let option: VideoPlayerOption
+
     var statePublisher: AnyPublisher<PlaybackState, Never> {
         $state.eraseToAnyPublisher()
     }
@@ -145,14 +148,22 @@ private final class MockVideoPlayer: VideoPlayerProtocol {
         $duration.eraseToAnyPublisher()
     }
 
+    nonisolated var debugMessagePublisher: AnyPublisher<String, Never> {
+        Just(debugMessage).eraseToAnyPublisher()
+    }
+
     init(
+        option: VideoPlayerOption = .avPlayer,
         state: PlaybackState = .stopped,
         currentTime: Duration = .seconds(0),
-        duration: Duration = .seconds(0)
+        duration: Duration = .seconds(0),
+        debugMessage: String = ""
     ) {
+        self.option = option
         self.state = state
         self.currentTime = currentTime
         self.duration = duration
+        self.debugMessage = debugMessage
     }
 
     func play() {}

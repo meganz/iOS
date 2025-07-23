@@ -1,16 +1,64 @@
+import Combine
 import MobileVLCKit
 
 @MainActor
-final class MEGAVLCPlayer: MEGABasePlayer {
+final class MEGAVLCPlayer: NSObject {
+    private let player = VLCMediaPlayer()
     private var media: VLCMedia? {
         didSet { player.media = media }
     }
 
-    private let player = VLCMediaPlayer()
+    private let stateSubject: CurrentValueSubject<PlaybackState, Never> = .init(.opening)
+    private let currentTimeSubject: CurrentValueSubject<Duration, Never> = .init(.seconds(-1))
+    private let durationSubject: CurrentValueSubject<Duration, Never> = .init(.seconds(-1))
 
-    override init(streamingUseCase: some StreamingUseCaseProtocol) {
-        super.init(streamingUseCase: streamingUseCase)
+    let statePublisher: AnyPublisher<PlaybackState, Never>
+    let currentTimePublisher: AnyPublisher<Duration, Never>
+    let durationPublisher: AnyPublisher<Duration, Never>
+
+    private nonisolated let debugMessageSubject = PassthroughSubject<String, Never>()
+
+    private let streamingUseCase: any StreamingUseCaseProtocol
+
+    init(streamingUseCase: some StreamingUseCaseProtocol) {
+        self.streamingUseCase = streamingUseCase
+        self.statePublisher = stateSubject.eraseToAnyPublisher()
+        self.currentTimePublisher = currentTimeSubject.eraseToAnyPublisher()
+        self.durationPublisher = durationSubject.eraseToAnyPublisher()
+        super.init()
+
         player.delegate = self
+    }
+}
+
+extension MEGAVLCPlayer: PlayerOptionIdentifiable {
+    nonisolated var option: VideoPlayerOption { .vlc }
+}
+
+extension MEGAVLCPlayer: PlaybackStateObservable {
+    var state: PlaybackState {
+        get { stateSubject.value }
+        set { stateSubject.send(newValue) }
+    }
+
+    var currentTime: Duration {
+        get { currentTimeSubject.value }
+        set { currentTimeSubject.send(newValue) }
+    }
+
+    var duration: Duration {
+        get { durationSubject.value }
+        set { durationSubject.send(newValue) }
+    }
+}
+
+extension MEGAVLCPlayer: PlaybackDebugMessageObservable {
+    nonisolated var debugMessagePublisher: AnyPublisher<String, Never> {
+        debugMessageSubject.eraseToAnyPublisher()
+    }
+
+    func playbackDebugMessage(_ message: String) {
+        debugMessageSubject.send(message)
     }
 }
 
@@ -66,16 +114,38 @@ extension MEGAVLCPlayer: VideoRenderable {
 
 extension MEGAVLCPlayer: VLCMediaPlayerDelegate {
     nonisolated func mediaPlayerStateChanged(_ aNotification: Notification) {
-        Task { @MainActor in
-            state = .init(from: player.state)
-        }
+        Task { @MainActor in stateDidChange() }
     }
 
     nonisolated func mediaPlayerTimeChanged(_ aNotification: Notification) {
-        Task { @MainActor in
-            currentTime = .milliseconds(Double(truncating: player.time.value ?? 0))
-            duration = .milliseconds(Double(truncating: media?.length.value ?? 0))
+        Task { @MainActor in timeChanged() }
+    }
+
+    private func stateDidChange() {
+        state = .init(from: player.state)
+    }
+
+    private func timeChanged() {
+        updateCurrentTime(milliseconds: player.time.value)
+        updateDuration(milliseconds: media?.length.value)
+    }
+
+    private func updateCurrentTime(milliseconds time: NSNumber?) {
+        guard let time, !(time.doubleValue.isNaN || time.doubleValue.isInfinite) else {
+            playbackDebugMessage("Invalid time \(String(describing: time))")
+            return
         }
+
+        currentTime = .milliseconds(time.doubleValue)
+    }
+
+    private func updateDuration(milliseconds duration: NSNumber?) {
+        guard let duration, !(duration.doubleValue.isNaN || duration.doubleValue.isInfinite) else {
+            playbackDebugMessage("Invalid duration \(String(describing: time))")
+            return
+        }
+
+        self.duration = .milliseconds(duration.doubleValue)
     }
 }
 
@@ -83,7 +153,7 @@ extension MEGAVLCPlayer {
     static func liveValue(
         node: any PlayableNode
     ) -> MEGAVLCPlayer {
-        let player = MEGAVLCPlayer(streamingUseCase: DependencyInjection.streamingUseCase)
+        let player = MEGAVLCPlayer.liveValue
         player.loadNode(node)
         return player
     }
@@ -102,14 +172,16 @@ private extension PlaybackState {
             self = .playing
         case .paused:
             self = .paused
-        case .buffering, .opening, .esAdded:
+        case .opening, .esAdded:
+            self = .opening
+        case .buffering:
             self = .buffering
         case .ended:
             self = .ended
         case .error:
-            self = .error
+            self = .error("VLCMediaPlayerState.error")
         @unknown default:
-            self = .error
+            self = .error("Unknown VLCMediaPlayerState: \(vlcState)")
         }
     }
 }
