@@ -23,10 +23,7 @@ final class AudioPlayerViewModelTests: XCTestCase {
                 .showLoading(true),
                 .updateShuffle(status: playerHandler.isShuffleEnabled()),
                 .updateSpeed(mode: .normal),
-                .configureFileLinkPlayer,
-                .shuffleAction(enabled: false),
-                .goToPlaylistAction(enabled: false),
-                .nextTrackAction(enabled: false)
+                .configureFileLinkPlayer
             ],
             timeout: 0.5
         )

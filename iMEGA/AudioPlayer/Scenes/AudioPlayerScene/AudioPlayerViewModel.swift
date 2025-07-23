@@ -89,12 +89,9 @@ final class AudioPlayerViewModel: ViewModelType {
         case configureDefaultPlayer
         case configureOfflinePlayer
         case configureFileLinkPlayer
-        case enableUserInteraction(_ enable: Bool)
+        case enableUserInteraction(_ enable: Bool, isSingleTrackPlayer: Bool)
         case didPausePlayback
         case didResumePlayback
-        case shuffleAction(enabled: Bool)
-        case goToPlaylistAction(enabled: Bool)
-        case nextTrackAction(enabled: Bool)
         case displayPlaybackContinuationDialog(fileName: String, playbackTime: TimeInterval)
     }
     
@@ -242,11 +239,9 @@ final class AudioPlayerViewModel: ViewModelType {
         switch configEntity.playerType {
         case .default, .folderLink, .offline:
             invokeCommand?(configEntity.playerType == .offline ? .configureOfflinePlayer : .configureDefaultPlayer)
-            updateTracksActionStatus(enabled: tracksCount > 1)
             isSingleTrackPlayer = tracksCount == 1
         case .fileLink:
             invokeCommand?(.configureFileLinkPlayer)
-            updateTracksActionStatus(enabled: false)
             isSingleTrackPlayer = true
         }
     }
@@ -295,12 +290,6 @@ final class AudioPlayerViewModel: ViewModelType {
             let strategy = AudioPlayerDefaultPlaylistShiftStrategy()
             return strategy.shift(tracks: tracks, startItem: startItem)
         }
-    }
-    
-    private func updateTracksActionStatus(enabled: Bool) {
-        invokeCommand?(.shuffleAction(enabled: enabled))
-        invokeCommand?(.goToPlaylistAction(enabled: enabled))
-        invokeCommand?(.nextTrackAction(enabled: enabled))
     }
 
     // MARK: - Node Initialize
@@ -629,16 +618,13 @@ extension AudioPlayerViewModel: AudioPlayerObserversProtocol {
     
     nonisolated func audioPlayerWillStartBlockingAction() {
         Task { @MainActor in
-            invokeCommand?(.enableUserInteraction(false))
+            invokeCommand?(.enableUserInteraction(false, isSingleTrackPlayer: isSingleTrackPlayer))
         }
     }
     
     nonisolated func audioPlayerDidFinishBlockingAction() {
         Task { @MainActor in
-            invokeCommand?(.enableUserInteraction(true))
-            if isSingleTrackPlayer {
-                updateTracksActionStatus(enabled: false)
-            }
+            invokeCommand?(.enableUserInteraction(true, isSingleTrackPlayer: isSingleTrackPlayer))
         }
     }
     

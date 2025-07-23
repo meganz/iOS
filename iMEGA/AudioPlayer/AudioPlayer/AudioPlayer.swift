@@ -42,8 +42,15 @@ final class AudioPlayer: NSObject {
     /// Set to `true` during a manual drag movement to prevent stale callbacks from the player (which may carry an outdated progress value) from overwriting
     /// the slider’s thumb position. Once the pending programmatic update has been applied, this flag is reset to `false`.
     var isUpdatingProgress = false
-    /// Set to `true` once the player’s first item has transitioned to .readyToPlay
-    var hasCompletedInitialConfiguration = false
+    /// Set to `true` after the first load/initial configuration finishes (i.e. the player’s first item reaches `.readyToPlay`).
+    /// On the **first** transition from `false` → `true`, `notify(aboutTheEndOfBlockingAction)` is invoked to end the blocking state and re‑enable
+    /// buttons and other UI controls.
+    var hasCompletedInitialConfiguration = false {
+        didSet {
+            guard hasCompletedInitialConfiguration, oldValue == false else { return }
+            notify(aboutTheEndOfBlockingAction)
+        }
+    }
     
     var previouslyPlayedItem: AudioPlayerItem?
     var isUserPreviouslyJustPlayedSameItem = false
@@ -214,7 +221,6 @@ final class AudioPlayer: NSObject {
             self.register()
             
             self.configurePlayer()
-            self.notify(self.aboutTheEndOfBlockingAction)
         }
     }
     
