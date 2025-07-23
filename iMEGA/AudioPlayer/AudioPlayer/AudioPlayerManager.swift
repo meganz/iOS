@@ -50,8 +50,8 @@ import MEGADomain
         player?.isShuffleMode() ?? false
     }
     
-    func autoPlay(enable: Bool) {
-        player?.isAutoPlayEnabled = enable
+    func isSingleItemPlaylist() -> Bool {
+        player?.tracks.count == 1
     }
     
     func currentRepeatMode() -> RepeatMode {
@@ -81,7 +81,6 @@ import MEGADomain
     
     func setCurrent(
         player: AudioPlayer?,
-        autoPlayEnabled: Bool,
         tracks: [AudioPlayerItem],
         playerListener: any AudioPlayerObserversProtocol
     ) {
@@ -89,21 +88,19 @@ import MEGADomain
             self.player?.close { [weak self] in
                 MEGALogDebug("[AudioPlayer] closing current player before assign new instance")
                 self?.player = nil
-                self?.configure(player: player, autoPlayEnabled: autoPlayEnabled, tracks: tracks, playerListener: playerListener)
+                self?.configure(player: player, tracks: tracks, playerListener: playerListener)
             }
         } else {
-            configure(player: player, autoPlayEnabled: autoPlayEnabled, tracks: tracks, playerListener: playerListener)
+            configure(player: player, tracks: tracks, playerListener: playerListener)
         }
     }
     
     private func configure(
         player: AudioPlayer?,
-        autoPlayEnabled: Bool,
         tracks: [AudioPlayerItem],
         playerListener: any AudioPlayerObserversProtocol
     ) {
         self.player = player
-        self.player?.isAutoPlayEnabled = autoPlayEnabled
         configurePlayer(listener: playerListener)
         self.player?.add(tracks: tracks)
     }

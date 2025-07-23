@@ -17,6 +17,7 @@ final class AudioPlayerPlaybackTests: XCTestCase {
         player.add(tracks: tracks)
         player.queuePlayer?.volume = 0.0
         try? await Task.sleep(nanoseconds: 1_100_000_000)
+        player.hasCompletedInitialConfiguration = true
         return (player, tracks)
     }
 

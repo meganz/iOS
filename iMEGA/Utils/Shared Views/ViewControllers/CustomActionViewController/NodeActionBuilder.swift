@@ -35,6 +35,7 @@ final class NodeActionBuilder {
     private var isHiddenNodesFeatureEnabled: Bool = false
     private var addToDestination: NodeActionAddToDestination = .none
     private var viewInFolder: Bool = false
+    private var isAudioFileLink: Bool = false
 
     func setDisplayMode(_ displayMode: DisplayMode) -> NodeActionBuilder {
         self.displayMode = displayMode
@@ -188,6 +189,11 @@ final class NodeActionBuilder {
     
     func setViewInFolder(_ viewInFolder: Bool) -> NodeActionBuilder {
         self.viewInFolder = viewInFolder
+        return self
+    }
+    
+    func setIsAudioFileLink(_ isAudioFileLink: Bool) -> NodeActionBuilder {
+        self.isAudioFileLink = isAudioFileLink
         return self
     }
     
@@ -403,6 +409,10 @@ final class NodeActionBuilder {
             nodeActions.append(.saveToPhotosAction())
         }
         nodeActions.append(.downloadAction())
+        
+        if isAudioFileLink {
+            nodeActions.append(contentsOf: [.sendToChatAction(), .shareLinkAction()])
+        }
         return nodeActions
     }
     

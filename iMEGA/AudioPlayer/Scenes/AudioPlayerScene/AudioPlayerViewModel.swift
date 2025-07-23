@@ -51,7 +51,7 @@ protocol AudioPlayerViewRouting: AnyObject, Routing, Sendable {
     func importNode(_ node: MEGANode)
     func share(sender: UIBarButtonItem?)
     func sendToChat()
-    func showAction(for node: MEGANode, sender: Any)
+    func showAction(for node: MEGANode, isFileLink: Bool, sender: Any)
     func showTermsOfServiceViolationAlert()
 }
 
@@ -88,7 +88,7 @@ final class AudioPlayerViewModel: ViewModelType {
         case updateShuffle(status: Bool)
         case configureDefaultPlayer
         case configureOfflinePlayer
-        case configureFileLinkPlayer(title: String, subtitle: String)
+        case configureFileLinkPlayer
         case enableUserInteraction(_ enable: Bool)
         case didPausePlayback
         case didResumePlayback
@@ -228,25 +228,26 @@ final class AudioPlayerViewModel: ViewModelType {
         configEntity.playerHandler.configurePlayer(listener: self)
         
         guard !configEntity.playerHandler.isPlayerEmpty(),
-              let tracks = configEntity.playerHandler.currentPlayer()?.tracks,
-              let currentTrack = configEntity.playerHandler.playerCurrentItem() else {
+              let tracks = configEntity.playerHandler.currentPlayer()?.tracks else {
             router?.dismiss()
             return
         }
         
         reloadNodeInfoWithCurrentItem()
         
-        configurePlayerType(tracksCount: tracks.count, currentTrackName: currentTrack.name)
+        configurePlayerType(tracksCount: tracks.count)
     }
     
-    private func configurePlayerType(tracksCount: Int, currentTrackName: String) {
+    private func configurePlayerType(tracksCount: Int) {
         switch configEntity.playerType {
         case .default, .folderLink, .offline:
             invokeCommand?(configEntity.playerType == .offline ? .configureOfflinePlayer : .configureDefaultPlayer)
             updateTracksActionStatus(enabled: tracksCount > 1)
             isSingleTrackPlayer = tracksCount == 1
         case .fileLink:
-            invokeCommand?(.configureFileLinkPlayer(title: currentTrackName, subtitle: Strings.Localizable.fileLink))
+            invokeCommand?(.configureFileLinkPlayer)
+            updateTracksActionStatus(enabled: false)
+            isSingleTrackPlayer = true
         }
     }
     
@@ -254,11 +255,10 @@ final class AudioPlayerViewModel: ViewModelType {
         let mutableTracks = await shift(tracks: tracks, startItem: currentTrack)
         
         if !(configEntity.playerHandler.isPlayerDefined()) {
-            configEntity.playerHandler.setCurrent(player: AudioPlayer(), autoPlayEnabled: !configEntity.isFileLink, tracks: mutableTracks, playerListener: self)
+            configEntity.playerHandler.setCurrent(player: AudioPlayer(), tracks: mutableTracks, playerListener: self)
         } else {
             if await shouldInitializePlayer() {
                 await cleanPlayerStateForReuse()
-                configEntity.playerHandler.autoPlay(enable: configEntity.playerType != .fileLink)
                 configEntity.playerHandler.addPlayer(tracks: mutableTracks)
                 
                 if configEntity.fileLink != nil && configEntity.playerHandler.isPlayerPlaying() {
@@ -269,7 +269,7 @@ final class AudioPlayerViewModel: ViewModelType {
             }
         }
         
-        await configurePlayerType(tracksCount: tracks.count, currentTrackName: currentTrack.name)
+        await configurePlayerType(tracksCount: tracks.count)
     }
     
     private nonisolated func cleanPlayerStateForReuse() async {
@@ -495,10 +495,17 @@ final class AudioPlayerViewModel: ViewModelType {
             trackAudioPlayerForward15Seconds()
             configEntity.playerHandler.goForward()
         case .onRepeatPressed:
-            switch repeatItemsState {
-            case .none: repeatItemsState = .loop
-            case .loop: repeatItemsState = .repeatOne
-            case .repeatOne: repeatItemsState = .none
+            if configEntity.playerType == .fileLink || configEntity.playerHandler.isSingleItemPlaylist() {
+                repeatItemsState = switch repeatItemsState {
+                case .none: .repeatOne
+                default: .none
+                }
+            } else {
+                repeatItemsState = switch repeatItemsState {
+                case .none: .loop
+                case .loop: .repeatOne
+                case .repeatOne: .none
+                }
             }
         case .onChangeSpeedModePressed:
             switch speedModeState {
@@ -529,10 +536,10 @@ final class AudioPlayerViewModel: ViewModelType {
             guard let node = configEntity.playerHandler.playerCurrentItem()?.node else { return }
             guard let nodeUseCase = nodeInfoUseCase,
                   let latestNode = nodeUseCase.node(fromHandle: node.handle) else {
-                    self.router?.showAction(for: node, sender: sender)
+                    self.router?.showAction(for: node, isFileLink: configEntity.playerType == .fileLink, sender: sender)
                     return
                 }
-            router?.showAction(for: latestNode, sender: sender)
+            router?.showAction(for: latestNode, isFileLink: configEntity.playerType == .fileLink, sender: sender)
         case .onSelectResumePlaybackContinuationDialog(let playbackTime):
             configEntity.playerHandler.playerResumePlayback(from: playbackTime)
             playbackContinuationUseCase.setPreference(to: .resumePreviousSession)

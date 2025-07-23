@@ -2611,7 +2611,6 @@
 		C4F06F6A2B690C4B005C1A3D /* MockUpgradeEncouragementShowTimeTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F06F692B690C4B005C1A3D /* MockUpgradeEncouragementShowTimeTracker.swift */; };
 		C4F06F742B691633005C1A3D /* UpgradeEncouragementShowTimeTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F06F712B6915F7005C1A3D /* UpgradeEncouragementShowTimeTracker.swift */; };
 		C4F06F792B691941005C1A3D /* UpgradeEncouragementShowTimeTrackerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F06F782B691941005C1A3D /* UpgradeEncouragementShowTimeTrackerTests.swift */; };
-		C4F31EDC25C19ABE00E15146 /* AudioPlayerFileToolbarConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F31EDB25C19ABE00E15146 /* AudioPlayerFileToolbarConfigurator.swift */; };
 		C4F31EF925C1C50B00E15146 /* CustomTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F31EF825C1C50B00E15146 /* CustomTitleView.swift */; };
 		C4F31F0325C1C51A00E15146 /* CustomTitleView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4F31F0225C1C51A00E15146 /* CustomTitleView.xib */; };
 		C4F638602BA97F7400D0B6B7 /* AdsDisplayViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F6385F2BA97F7400D0B6B7 /* AdsDisplayViewModelProtocol.swift */; };
@@ -5408,7 +5407,6 @@
 		C4F06F692B690C4B005C1A3D /* MockUpgradeEncouragementShowTimeTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockUpgradeEncouragementShowTimeTracker.swift; sourceTree = "<group>"; };
 		C4F06F712B6915F7005C1A3D /* UpgradeEncouragementShowTimeTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpgradeEncouragementShowTimeTracker.swift; sourceTree = "<group>"; };
 		C4F06F782B691941005C1A3D /* UpgradeEncouragementShowTimeTrackerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpgradeEncouragementShowTimeTrackerTests.swift; sourceTree = "<group>"; };
-		C4F31EDB25C19ABE00E15146 /* AudioPlayerFileToolbarConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerFileToolbarConfigurator.swift; sourceTree = "<group>"; };
 		C4F31EF825C1C50B00E15146 /* CustomTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTitleView.swift; sourceTree = "<group>"; };
 		C4F31F0225C1C51A00E15146 /* CustomTitleView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomTitleView.xib; sourceTree = "<group>"; };
 		C4F6385F2BA97F7400D0B6B7 /* AdsDisplayViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdsDisplayViewModelProtocol.swift; sourceTree = "<group>"; };
@@ -13113,7 +13111,6 @@
 		C49F861F255ABE860074A054 /* AudioPlayerScene */ = {
 			isa = PBXGroup;
 			children = (
-				C4F31EDB25C19ABE00E15146 /* AudioPlayerFileToolbarConfigurator.swift */,
 				24A6ADE22A8224890035C7B0 /* AudioPlayerPlaylistShiftStrategyProtocol.swift */,
 				C49F8620255ABEA80074A054 /* AudioPlayerViewController.swift */,
 				24EC98A62CCF5ECF00783B68 /* AudioPlayerViewControllerNodeActionForwardingDelegate.swift */,
@@ -14407,7 +14404,6 @@
 				C44CE0052590B57000313719 /* AudioPlayer+RemoteCommand.swift in Sources */,
 				C49F8639255AE2030074A054 /* AudioPlayer.swift in Sources */,
 				9444D0DD28C74B2D001F681C /* AudioPlayerConfigEntity.swift in Sources */,
-				C4F31EDC25C19ABE00E15146 /* AudioPlayerFileToolbarConfigurator.swift in Sources */,
 				94E0548C2DCA19EA00436F4A /* AudioPlayerHandlerBuilder.swift in Sources */,
 				C4CBDD3F256EC00900835CF5 /* AudioPlayerItem.swift in Sources */,
 				C45E402125DD1C230060E116 /* AudioPlayerManager.swift in Sources */,

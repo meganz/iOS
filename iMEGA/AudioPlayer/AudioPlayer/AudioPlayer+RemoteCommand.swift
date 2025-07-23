@@ -63,7 +63,7 @@ extension AudioPlayer {
         if let artwork = item.artwork {
             return MPMediaItemArtwork(boundsSize: artwork.size) { _ in artwork }
         } else {
-            let defaultArtworkImage = MEGAAssets.UIImage.defaultArtwork
+            let defaultArtworkImage = MEGAAssets.UIImage.image(forFileName: item.name)
             return MPMediaItemArtwork(boundsSize: defaultArtworkImage.size) { _ in defaultArtworkImage }
         }
     }

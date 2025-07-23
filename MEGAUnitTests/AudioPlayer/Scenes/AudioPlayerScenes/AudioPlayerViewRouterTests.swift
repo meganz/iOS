@@ -44,19 +44,6 @@ final class AudioPlayerViewRouterTests: XCTestCase {
     }
     
     @MainActor
-    func testBuild_whenNodeIsFileLink_returnsNavigationController() {
-        let fileLink = anyFileLink()
-        let (sut, _, _, _, _) = makeSUT(
-            nodeOriginType: .fileLink,
-            fileLink: fileLink
-        )
-        let vc = sut.build()
-        XCTAssertTrue(vc is MEGANavigationController)
-        let nav = vc as! MEGANavigationController
-        XCTAssertTrue(nav.viewControllers.first is AudioPlayerViewController)
-    }
-    
-    @MainActor
     func testStart_presentBuildedView() {
         let (sut, presenter, _, _, _) = makeSUT()
         

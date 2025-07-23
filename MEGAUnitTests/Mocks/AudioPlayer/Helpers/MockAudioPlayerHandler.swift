@@ -12,6 +12,7 @@ final class MockAudioPlayerHandler: AudioPlayerHandlerProtocol {
     var goForward_calledTimes = 0
     var updateProgressCompleted_calledTimes = 0
     var onShuffle_calledTimes = 0
+    var isSingleItemPlaylist_calledTimes = 0
     var onRepeatAll_calledTimes = 0
     var onRepeatOne_calledTimes = 0
     var onRepeatDisabled_calledTimes = 0
@@ -30,12 +31,10 @@ final class MockAudioPlayerHandler: AudioPlayerHandlerProtocol {
     var setCurrent_callTimes = 0
     var initMiniPlayerCallCount = 0
     var refreshCurrentItemState_calledTimes = 0
-    var autoPlay_calledTimes = 0
     var closePlayer_calledTimes = 0
     var resettingAudioPlayer_calledTimes = 0
     var repeatMode = RepeatMode.none
     
-    var onAutoPlayCompletion: (() -> Void)?
     var onAddPlayerTracksCompletion: (() -> Void)?
     var onAddPlayerListenerCompletion: (() -> Void)?
     var onRefreshCurrentItemStateCompletion: (() -> Void)?
@@ -44,11 +43,13 @@ final class MockAudioPlayerHandler: AudioPlayerHandlerProtocol {
     var mockPlayerQueueItems: [AudioPlayerItem]?
     
     private var _isPlayerDefined: Bool
+    private var _isSingleItemPlaylist: Bool
     
     private(set) var playerResumePlayback_Calls = [TimeInterval]()
     
-    init(isPlayerDefined: Bool = false) {
+    init(isPlayerDefined: Bool = false, isSingleItemPlaylist: Bool = false) {
         _isPlayerDefined = isPlayerDefined
+        _isSingleItemPlaylist = isSingleItemPlaylist
     }
     
     func isPlayerDefined() -> Bool { _isPlayerDefined }
@@ -60,7 +61,6 @@ final class MockAudioPlayerHandler: AudioPlayerHandlerProtocol {
     
     func setCurrent(
         player: AudioPlayer?,
-        autoPlayEnabled: Bool,
         tracks: [AudioPlayerItem],
         playerListener: any AudioPlayerObserversProtocol
     ) {
@@ -101,6 +101,10 @@ final class MockAudioPlayerHandler: AudioPlayerHandlerProtocol {
     
     func playerShuffle(active: Bool) {
         onShuffle_calledTimes += 1
+    }
+    
+    func isSingleItemPlaylist() -> Bool {
+        _isSingleItemPlaylist
     }
     
     func goBackward() {
@@ -175,10 +179,6 @@ final class MockAudioPlayerHandler: AudioPlayerHandlerProtocol {
     func refreshCurrentItemState() {
         refreshCurrentItemState_calledTimes += 1
         onRefreshCurrentItemStateCompletion?()
-    }
-    func autoPlay(enable: Bool) {
-        autoPlay_calledTimes += 1
-        onAutoPlayCompletion?()
     }
     func audioInterruptionDidStart() {}
     func audioInterruptionDidEndNeedToResume(_ resume: Bool) {}

@@ -62,7 +62,7 @@ final class PlaylistItemTableViewCell: UITableViewCell {
             }
             
         } else {
-            thumbnailImageView.image = MEGAAssets.UIImage.defaultArtwork
+            thumbnailImageView.image = MEGAAssets.UIImage.image(forFileName: item?.name ?? "")
         }
         
         thumbnailImageView.layer.cornerRadius = 8.0
