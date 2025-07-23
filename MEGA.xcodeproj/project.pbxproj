@@ -2468,9 +2468,11 @@
 		BFFE2293293488980063CFF2 /* FutureMeetingRoomViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFFE2292293488980063CFF2 /* FutureMeetingRoomViewModel.swift */; };
 		BFFE22952934A7D10063CFF2 /* FutureMeetingRoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFFE22942934A7D10063CFF2 /* FutureMeetingRoomView.swift */; };
 		BFFED4B326FB094F00B9EBEC /* FolderLinkCollectionViewDiffableDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFFED4B226FB094F00B9EBEC /* FolderLinkCollectionViewDiffableDataSource.swift */; };
+		C40097A42E2798CC00B3934D /* AccountMenuNotificationsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40097A32E2798C500B3934D /* AccountMenuNotificationsViewModel.swift */; };
 		C403FA4A2BAD89C9007642AD /* AppDelegate+QuickUploadAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = C403FA492BAD89C9007642AD /* AppDelegate+QuickUploadAction.swift */; };
 		C403FA4D2BAD8DCB007642AD /* CloudDriveQuickUploadActionRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C403FA4C2BAD8DCB007642AD /* CloudDriveQuickUploadActionRouter.swift */; };
 		C41047CD2566FCB500531936 /* AudioPlayer+Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41047CC2566FCB500531936 /* AudioPlayer+Protocols.swift */; };
+		C42B8C7C2E29EB4D00DB1ED5 /* AccountMenuNotificationsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42B8C7B2E29EB4A00DB1ED5 /* AccountMenuNotificationsViewModelTests.swift */; };
 		C43817B52746924300EA82A8 /* MEGALabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4A5F0E7266E31DD001D783B /* MEGALabel.swift */; };
 		C43817B82746924F00EA82A8 /* DynamicTypeComponentProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = C467AD4F26A8656000AFE4D2 /* DynamicTypeComponentProtocol.swift */; };
 		C43817B92746925E00EA82A8 /* FontStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D646601248909F7006030A5 /* FontStyle.swift */; };
@@ -5271,9 +5273,11 @@
 		BFFE2292293488980063CFF2 /* FutureMeetingRoomViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FutureMeetingRoomViewModel.swift; sourceTree = "<group>"; };
 		BFFE22942934A7D10063CFF2 /* FutureMeetingRoomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FutureMeetingRoomView.swift; sourceTree = "<group>"; };
 		BFFED4B226FB094F00B9EBEC /* FolderLinkCollectionViewDiffableDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderLinkCollectionViewDiffableDataSource.swift; sourceTree = "<group>"; };
+		C40097A32E2798C500B3934D /* AccountMenuNotificationsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountMenuNotificationsViewModel.swift; sourceTree = "<group>"; };
 		C403FA492BAD89C9007642AD /* AppDelegate+QuickUploadAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AppDelegate+QuickUploadAction.swift"; sourceTree = "<group>"; };
 		C403FA4C2BAD8DCB007642AD /* CloudDriveQuickUploadActionRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudDriveQuickUploadActionRouter.swift; sourceTree = "<group>"; };
 		C41047CC2566FCB500531936 /* AudioPlayer+Protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AudioPlayer+Protocols.swift"; sourceTree = "<group>"; };
+		C42B8C7B2E29EB4A00DB1ED5 /* AccountMenuNotificationsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountMenuNotificationsViewModelTests.swift; sourceTree = "<group>"; };
 		C43EC4A22CDB01BC00556C4C /* Task+Yield.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Task+Yield.swift"; sourceTree = "<group>"; };
 		C4463BAE2B632EAC007A6756 /* ThumbnailViewerTableViewCell+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ThumbnailViewerTableViewCell+Additions.swift"; sourceTree = "<group>"; };
 		C44947752652A466004B4C8E /* BannerType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerType.swift; sourceTree = "<group>"; };
@@ -11910,6 +11914,7 @@
 			isa = PBXGroup;
 			children = (
 				B6D5482E283E2AF000D7302F /* Account */,
+				C42B8C7A2E29EB4000DB1ED5 /* AccountMenu */,
 				328FDCF629121D2200E5990A /* Album */,
 				E7EE7CCD2AC6DC9E00DBABCD /* AppDelegate */,
 				C452B66225CD4E550073B22C /* AudioPlayer */,
@@ -12416,6 +12421,7 @@
 		BF62C76D2E1259430008B62D /* Menu */ = {
 			isa = PBXGroup;
 			children = (
+				C40097B12E279D7F00B3934D /* ViewModel */,
 				BF62C7B22E14AECE0008B62D /* AccountMenuViewRouter+DeviceCenter.swift */,
 				BF62C76E2E1259560008B62D /* AccountMenuViewRouter.swift */,
 			);
@@ -12765,12 +12771,28 @@
 			path = Mocks;
 			sourceTree = "<group>";
 		};
+		C40097B12E279D7F00B3934D /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				C40097A32E2798C500B3934D /* AccountMenuNotificationsViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
 		C403FA4B2BAD8DB4007642AD /* QuickActions */ = {
 			isa = PBXGroup;
 			children = (
 				C403FA4C2BAD8DCB007642AD /* CloudDriveQuickUploadActionRouter.swift */,
 			);
 			path = QuickActions;
+			sourceTree = "<group>";
+		};
+		C42B8C7A2E29EB4000DB1ED5 /* AccountMenu */ = {
+			isa = PBXGroup;
+			children = (
+				C42B8C7B2E29EB4A00DB1ED5 /* AccountMenuNotificationsViewModelTests.swift */,
+			);
+			path = AccountMenu;
 			sourceTree = "<group>";
 		};
 		C44BE4C62CAF627A00F18033 /* DownloadedNodesListener */ = {
@@ -14264,6 +14286,7 @@
 				BFE64BA2286C18D200F2B69F /* AboutTableViewController+Additions.swift in Sources */,
 				41AC66481AB1D493003FE8DA /* AboutTableViewController.m in Sources */,
 				A8DE32CB22FC14CC006BAC7A /* AccountExpiredViewController.swift in Sources */,
+				C40097A42E2798CC00B3934D /* AccountMenuNotificationsViewModel.swift in Sources */,
 				BF62C7B32E14AEDA0008B62D /* AccountMenuViewRouter+DeviceCenter.swift in Sources */,
 				BF62C76F2E1259560008B62D /* AccountMenuViewRouter.swift in Sources */,
 				B5EF0A7729F0EE2100B166B1 /* AccountPlanPurchaseRepository.swift in Sources */,
@@ -16247,6 +16270,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C42B8C7C2E29EB4D00DB1ED5 /* AccountMenuNotificationsViewModelTests.swift in Sources */,
 				835F71222C4A5DDE000B359D /* AccountPlanEntity+Plans.swift in Sources */,
 				B5663EE629F8FBEC0080FFDA /* AccountPlanPurchaseRepositoryTests.swift in Sources */,
 				B5CC2A1C299347BA00A966A0 /* AccountRepositoryTests.swift in Sources */,

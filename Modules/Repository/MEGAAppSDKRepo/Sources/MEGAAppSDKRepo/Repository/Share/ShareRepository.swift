@@ -62,4 +62,12 @@ public struct ShareRepository: ShareRepositoryProtocol {
     public func isAnyCollectionShared() async -> Bool {
         sdk.megaSets().contains(where: { $0.isExported() })
     }
+
+    public func unverifiedInShares() async -> [ShareEntity] {
+        sdk.getUnverifiedInShares(.defaultAsc).toShareEntities()
+    }
+
+    public func unverifiedOutShares() async -> [ShareEntity] {
+        sdk.getUnverifiedOutShares(.defaultAsc).toShareEntities()
+    }
 }

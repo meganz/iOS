@@ -118,8 +118,8 @@ extension MEGANode {
     @MainActor
     private func navigateToSharedItems(in mainTBC: MainTabBarController) {
         mainTBC.selectedIndex = TabManager.menuTabIndex()
-        guard let presenter = mainTBC.selectedViewController as? (any SharedItemsPresenting) else {
-            return assertionFailure("Trying to navigate to SharedItems screen but selected view controller is not of type SharedItemsPresenting")
+        guard let presenter = mainTBC.selectedViewController as? (any AccountMenuItemsNavigating) else {
+            return assertionFailure("Trying to navigate to SharedItems screen but selected view controller is not of type AccountMenuItemsNavigating")
         }
         presenter.showSharedItems()
     }

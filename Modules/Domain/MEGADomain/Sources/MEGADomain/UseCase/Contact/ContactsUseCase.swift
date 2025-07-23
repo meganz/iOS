@@ -1,5 +1,5 @@
 // MARK: - Use case protocol
-public protocol ContactsUseCaseProtocol {
+public protocol ContactsUseCaseProtocol: Sendable {
     func contact(forUserHandle handle: HandleEntity) -> UserEntity?
     var isContactVerificationWarningEnabled: Bool { get }
 }

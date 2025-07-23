@@ -15,8 +15,8 @@ extension MainTabBarController {
         let menuTabIndex = TabManager.menuTabIndex()
         selectedIndex = menuTabIndex
 
-        guard let navigationController = children[menuTabIndex] as? (any SharedItemsPresenting) else {
-            assertionFailure("SharedItemsPresenting not found")
+        guard let navigationController = children[menuTabIndex] as? (any AccountMenuItemsNavigating) else {
+            assertionFailure("AccountMenuItemsNavigating not found")
             return
         }
 

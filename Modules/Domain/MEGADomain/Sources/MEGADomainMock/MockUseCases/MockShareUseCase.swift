@@ -1,6 +1,14 @@
 import MEGADomain
 
 public final class MockShareUseCase: ShareUseCaseProtocol, @unchecked Sendable {
+    public func unverifiedInShares() async -> [MEGADomain.ShareEntity] {
+        []
+    }
+    
+    public func unverifiedOutShares() async -> [MEGADomain.ShareEntity] {
+        []
+    }
+    
     private let nodes: [NodeEntity]
     private let shares: [ShareEntity]
     private let sharedNodeHandles: [HandleEntity]
