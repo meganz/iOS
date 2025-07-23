@@ -10,21 +10,21 @@ extension MainTabBarController {
     }
     
     @objc func showStartConversation() {
-        selectedIndex = TabType.chat.rawValue
+        selectedIndex = TabManager.chatTabIndex()
         existingChatRoomsListViewController?.viewModel.router.presentStartConversation()
     }
     
     var existingChatRoomsListViewController: ChatRoomsListViewController? {
-        guard let navigationController = self.children[safe: TabType.chat.rawValue] as? MEGANavigationController else {
+        guard let navigationController = children[safe: TabManager.chatTabIndex()] as? MEGANavigationController else {
             return nil
         }
         
         return navigationController.viewControllers.first as? ChatRoomsListViewController
     }
-    
-    @objc func openChatRoom(withPublicLink publicLink: String?, chatID: ChatIdEntity) {
-        selectedIndex = TabType.chat.rawValue
-        guard let navigationController = self.children[safe: TabType.chat.rawValue] as? MEGANavigationController else {
+
+    func openChatRoom(withPublicLink publicLink: String?, chatID: ChatIdEntity) {
+        selectedIndex = TabManager.chatTabIndex()
+        guard let navigationController = selectedViewController as? MEGANavigationController else {
             return
         }
         
