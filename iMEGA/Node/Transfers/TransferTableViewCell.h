@@ -20,6 +20,8 @@
 
 @property (weak, nonatomic) IBOutlet UIImageView *iconImageView;
 
+@property (strong, nonatomic) IBOutlet UIButton *pauseButton;
+
 @property (nonatomic, strong) TransferTableViewCellViewModel *viewModel;
 
 - (void)configureCellForTransfer:(MEGATransfer *)transfer overquota:(BOOL)overquota delegate:(id<TransferTableViewCellDelegate>)delegate;

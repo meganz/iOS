@@ -15,9 +15,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *infoLabel;
 
-@property (strong, nonatomic) IBOutlet UIButton *cancelButton;
-@property (strong, nonatomic) IBOutlet UIButton *pauseButton;
-
 @property (weak, nonatomic) IBOutlet UIView *separatorView;
 @property (strong, nonatomic) IBOutlet UIProgressView *progressView;
 
@@ -48,7 +45,7 @@
     self.uploadTransferLocalIdentifier = nil;
     
     self.nameLabel.text = [MEGASdk.shared unescapeFsIncompatible:transfer.fileName destinationPath:[NSHomeDirectory() stringByAppendingString:@"/"]];
-    self.pauseButton.hidden = self.cancelButton.hidden = NO;
+    self.pauseButton.hidden  = NO;
     
     self.nameLabel.textColor = [UIColor primaryTextColor];
     self.pauseButton.tintColor = [UIColor mnz_secondaryTextColor];
@@ -189,7 +186,7 @@
         self.infoLabel.text = LocalizedString(@"Transfer over quota", @"Label indicating transfer over quota");
         self.infoLabel.textColor = [self transferStateOverQuotaTextColor];
         
-        self.pauseButton.hidden = self.cancelButton.hidden = NO;
+        self.pauseButton.hidden = NO;
         return;
     }
     switch (transferState) {
@@ -199,8 +196,8 @@
             
             self.infoLabel.textColor = [UIColor mnz_secondaryTextColor];
             self.infoLabel.text = LocalizedString(@"queued", @"Queued");
-            [self.pauseButton setImage:[UIImage megaImageWithNamed:@"pauseTransfers"] forState:UIControlStateNormal];
-            self.pauseButton.hidden = self.cancelButton.hidden = NO;
+            [self.pauseButton setImage:[UIImage megaImageTemplateWithNamed:@"pauseTransfers"] forState:UIControlStateNormal];
+            self.pauseButton.hidden = NO;
             break;
         }
             
@@ -210,8 +207,8 @@
             [self setTransferStateIcon:defaultImage color:typeColor];
             [self.arrowImageView setNeedsDisplay];
             
-            [self.pauseButton setImage:[UIImage megaImageWithNamed:@"pauseTransfers"] forState:UIControlStateNormal];
-            self.pauseButton.hidden = self.cancelButton.hidden = NO;
+            [self.pauseButton setImage:[UIImage megaImageTemplateWithNamed:@"pauseTransfers"] forState:UIControlStateNormal];
+            self.pauseButton.hidden = NO;
             if ([[NSUserDefaults standardUserDefaults] boolForKey:@"TransfersPaused"]) {
                 UIImage *queuedImage = (self.transfer.type == MEGATransferTypeDownload) ? UIImage.mnz_downloadQueuedTransferImage : UIImage.mnz_uploadQueuedTransferImage;
                 [self setTransferStateIcon:queuedImage color:typeColor];
@@ -234,8 +231,8 @@
             NSMutableAttributedString *infoLabel = [self transferInfoAttributedString];
             [infoLabel appendAttributedString:status];
             self.infoLabel.attributedText = infoLabel;
-            [self.pauseButton setImage:[UIImage megaImageWithNamed:@"resumeTransfers"] forState:UIControlStateNormal];
-            self.pauseButton.hidden = self.cancelButton.hidden = NO;
+            [self.pauseButton setImage:[UIImage megaImageTemplateWithNamed:@"resumeTransfers"] forState:UIControlStateNormal];
+            self.pauseButton.hidden = NO;
             break;
         }
             
@@ -253,7 +250,7 @@
             NSMutableAttributedString *infoLabel = [self transferInfoAttributedString];
             [infoLabel appendAttributedString:status];
             self.infoLabel.attributedText = infoLabel;
-            self.pauseButton.hidden = self.cancelButton.hidden = NO;
+            self.pauseButton.hidden = NO;
             break;
         }
             
@@ -264,7 +261,7 @@
             NSMutableAttributedString *infoLabel = [self transferInfoAttributedString];
             [infoLabel appendAttributedString:status];
             self.infoLabel.attributedText = infoLabel;
-            self.pauseButton.hidden = self.cancelButton.hidden = YES;
+            self.pauseButton.hidden = YES;
         }
             break;
             
@@ -277,7 +274,7 @@
             [infoLabel appendAttributedString:status];
             self.infoLabel.attributedText = infoLabel;
             self.progressView.progress = 0;
-            self.pauseButton.hidden = self.cancelButton.hidden = YES;
+            self.pauseButton.hidden = YES;
         }
             break;
             
@@ -306,7 +303,7 @@
             [infoLabel appendAttributedString:status];
             self.infoLabel.attributedText = infoLabel;
             self.progressView.progress = 0;
-            self.pauseButton.hidden = self.cancelButton.hidden = YES;
+            self.pauseButton.hidden = YES;
         }
             
             break;
@@ -318,11 +315,12 @@
             NSMutableAttributedString *infoLabel = [self transferInfoAttributedString];
             [infoLabel appendAttributedString:status];
             self.infoLabel.attributedText = infoLabel;
-            [self.pauseButton setImage:[UIImage megaImageWithNamed:@"pauseTransfers"] forState:UIControlStateNormal];
-            self.pauseButton.hidden = self.cancelButton.hidden = NO;
+            [self.pauseButton setImage:[UIImage megaImageTemplateWithNamed:@"pauseTransfers"] forState:UIControlStateNormal];
+            self.pauseButton.hidden = NO;
             break;
         }
     }
+    [self updatePauseButtonTintColor];
 }
 
 - (void)queuedStateLayout {
@@ -331,7 +329,6 @@
     self.infoLabel.textColor = [UIColor mnz_secondaryTextColor];
     self.infoLabel.text = LocalizedString(@"pending", @"Label shown when a contact request is pending");
     self.pauseButton.hidden = YES;
-    self.cancelButton.hidden = NO;
     self.progressView.progress = 0;
 }
 

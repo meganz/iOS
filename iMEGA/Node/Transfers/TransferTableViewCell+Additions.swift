@@ -74,7 +74,7 @@ extension TransferTableViewCell {
         }
     }
     
-    @objc func cancelImageRequest() {
+    func cancelImageRequest() {
         PHImageManager.default().cancelImageRequest(imageRequestID)
     }
     
@@ -85,6 +85,15 @@ extension TransferTableViewCell {
             return String(localIdentifier)
         }
         return nil
+    }
+    
+    static var areTransfersPaused: Bool {
+        UserDefaults.standard.bool(forKey: "TransfersPaused")
+    }
+    
+    @objc func updatePauseButtonTintColor() {
+        let color = Self.areTransfersPaused ? TokenColors.Icon.disabled : TokenColors.Icon.primary
+        pauseButton.tintColor = color
     }
 }
 
