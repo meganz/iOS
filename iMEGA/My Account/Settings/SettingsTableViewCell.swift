@@ -22,7 +22,7 @@ class SettingsTableViewCell: UITableViewCell {
         leadingIcon.image = viewModel.image
         leadingIcon.isHidden = viewModel.image == nil
         titleLabel.text = viewModel.title
-        titleLabel.textAlignment = isDestructive ? .center : .left
+        titleLabel.textAlignment = isDestructive ? .center : .natural
         trailingIcon.isHidden = isDestructive
         displayValueLabel.text = viewModel.displayValue
         displayValueLabel.isHidden = viewModel.displayValue.isEmpty
