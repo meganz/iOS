@@ -2,10 +2,6 @@
 
 #pragma mark - global constants
 
-extern NSString * const MEGAiOSAppUserAgent;
-extern NSString * const MEGAiOSAppKey;
-extern NSString * const MEGAPasswordService;
-extern NSString * const MEGAPasswordName;
 extern NSString * const MEGAFirstLoginDate;
 
 extern NSString * const MEGAGroupIdentifier;
