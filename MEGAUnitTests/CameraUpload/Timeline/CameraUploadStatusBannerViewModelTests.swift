@@ -1,5 +1,6 @@
 import Combine
 @testable import MEGA
+import MEGAAppPresentation
 import MEGAAppPresentationMock
 import MEGADomain
 import MEGADomainMock
@@ -68,7 +69,7 @@ final class CameraUploadStatusBannerViewModelTests: XCTestCase {
             possiblePauseReason: .noWifi
         )
         
-        try await verifyCameraUploadStatus(sut, expectedStatus: .uploadPaused(reason: .noWifiConnection(numberOfFilesPending: 1)), expectedShown: true)
+        try await verifyCameraUploadStatus(sut, expectedStatus: .uploadPaused(reason: .noWifiConnection), expectedShown: true)
     }
     
     @MainActor
@@ -115,20 +116,63 @@ final class CameraUploadStatusBannerViewModelTests: XCTestCase {
             expectedShown: false
         )
     }
+    
+    @MainActor
+    func testTappedCameraUploadBannerStatus_noWiFiConnectionPausedReason_shouldShowCameraUploadSettings() async throws {
+        let router = MockRouter()
+        let sut = makeSUT(
+            cameraUploadStats: [
+                .init(progress: 1, pendingFilesCount: 1, pendingVideosCount: 0)
+            ],
+            possiblePauseReason: .noWifi,
+            cameraUploadsSettingsViewRouter: router
+        )
+        
+        try await verifyCameraUploadStatus(sut, expectedStatus: .uploadPaused(reason: .noWifiConnection), expectedShown: true)
+        
+        sut.tappedCameraUploadBannerStatus()
+        
+        XCTAssertFalse(sut.cameraUploadStatusShown)
+        XCTAssertEqual(router.startCalled, 1)
+    }
+    
+    @MainActor
+    func testTappedCameraUploadBannerStatus_uploadPartialCompletedLibraryLimitedAccess_shouldShowPhotoPermissionAlert() async throws {
+        let sut = makeSUT(
+            cameraUploadStats: [
+                .init(progress: 0.9, pendingFilesCount: 1, pendingVideosCount: 0),
+                .init(progress: 1, pendingFilesCount: 0, pendingVideosCount: 0)
+            ],
+            devicePermissionHandler: MockDevicePermissionHandler(photoAuthorization: .limited, audioAuthorized: true, videoAuthorized: true)
+        )
+        
+        try await verifyCameraUploadStatus(
+            sut,
+            expectedStatus: .uploadPartialCompleted(reason: .photoLibraryLimitedAccess),
+            expectedShown: true
+        )
+        
+        sut.tappedCameraUploadBannerStatus()
+        
+        XCTAssertFalse(sut.cameraUploadStatusShown)
+        XCTAssertTrue(sut.showPhotoPermissionAlert)
+    }
 }
 
 extension CameraUploadStatusBannerViewModelTests {
     private func makeSUT(
         cameraUploadStats: [CameraUploadStatsEntity] = [],
         devicePermissionHandler: some DevicePermissionsHandling = MockDevicePermissionHandler(),
-        possiblePauseReason: CameraUploadPausedReason = .notPaused
+        possiblePauseReason: CameraUploadPausedReason = .notPaused,
+        cameraUploadsSettingsViewRouter: some Routing = MockRouter()
     ) -> CameraUploadStatusBannerViewModel {
         CameraUploadStatusBannerViewModel(
             monitorCameraUploadUseCase: MockMonitorCameraUploadUseCase(
                 monitorUploadStats: makeCameraUploadSequence(entities: cameraUploadStats),
                 possiblePauseReason: possiblePauseReason
             ),
-            devicePermissionHandler: devicePermissionHandler
+            devicePermissionHandler: devicePermissionHandler,
+            cameraUploadsSettingsViewRouter: cameraUploadsSettingsViewRouter
         )
     }
     

@@ -45,13 +45,13 @@ struct MonitorCameraUploadStatusProvider {
     
     private func mapBannerStatus(uploadStats: CameraUploadStatsEntity) -> CameraUploadBannerStatusViewStates {
         guard uploadStats.pendingFilesCount == 0 else {
-            switch monitorCameraUploadUseCase.possibleCameraUploadPausedReason() {
+            return switch monitorCameraUploadUseCase.possibleCameraUploadPausedReason() {
             case .noNetworkConnectivity:
-                return .uploadPaused(reason: .noInternetConnection(numberOfFilesPending: uploadStats.pendingFilesCount))
+                    .uploadPaused(reason: .noInternetConnection)
             case .noWifi:
-                return .uploadPaused(reason: .noWifiConnection(numberOfFilesPending: uploadStats.pendingFilesCount))
+                    .uploadPaused(reason: .noWifiConnection)
             case .notPaused:
-                return .uploadInProgress(numberOfFilesPending: uploadStats.pendingFilesCount)
+                    .uploadInProgress(numberOfFilesPending: uploadStats.pendingFilesCount)
             }
         }
         

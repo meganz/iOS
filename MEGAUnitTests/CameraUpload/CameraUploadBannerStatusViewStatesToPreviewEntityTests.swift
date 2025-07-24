@@ -37,20 +37,24 @@ final class CameraUploadBannerStatusViewStatesToPreviewEntityTests: XCTestCase {
     }
     
     func testToPreviewEntity_ForAllInUploadPausedStates_shouldReturnCorrectStrings() {
+        let fullText = Strings.Localizable.CameraUploads.Banner.Status.Paused.NoWiFiConnection.subheading
+        let fullTextWithoutFormatters = fullText
+            .replacingOccurrences(of: "[S]", with: "")
+            .replacingOccurrences(of: "[/S]", with: "")
+        
+        var attributedString = AttributedString(fullTextWithoutFormatters)
+        attributedString.font = .caption2
+        if let tappableText = fullText.subString(from: "[S]", to: "[/S]"),
+           tappableText.isNotEmpty,
+           let range = attributedString.range(of: tappableText) {
+            attributedString[range].font = .caption2.bold()
+        }
         performPreviewComparisonTest(
-            status: .uploadPaused(reason: .noWifiConnection(numberOfFilesPending: 1)),
+            status: .uploadPaused(reason: .noWifiConnection),
             designTokenTextColor: TokenColors.Text.primary.swiftUI,
             designTokenBackgroundColor: TokenColors.Background.page.swiftUI,
-            expectedTitle: Strings.Localizable.CameraUploads.Banner.Status.UploadsPausedDueToWifi.title,
-            expectedSubheading: { .init(Strings.Localizable.CameraUploads.Banner.Status.FilesPending.subHeading(1)) }
-        )
-
-        performPreviewComparisonTest(
-            status: .uploadPaused(reason: .noWifiConnection(numberOfFilesPending: 13)),
-            designTokenTextColor: TokenColors.Text.primary.swiftUI,
-            designTokenBackgroundColor: TokenColors.Background.page.swiftUI,
-            expectedTitle: Strings.Localizable.CameraUploads.Banner.Status.UploadsPausedDueToWifi.title,
-            expectedSubheading: { .init(Strings.Localizable.CameraUploads.Banner.Status.FilesPending.subHeading(13)) }
+            expectedTitle: Strings.Localizable.CameraUploads.Banner.Status.Paused.NoNetworkConnection.title,
+            expectedSubheading: { attributedString }
         )
     }
     

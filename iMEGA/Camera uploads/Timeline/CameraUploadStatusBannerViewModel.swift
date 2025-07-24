@@ -11,13 +11,17 @@ final class CameraUploadStatusBannerViewModel: ObservableObject {
     @Published var showPhotoPermissionAlert = false
     
     private var monitorCameraUploadStatusProvider: MonitorCameraUploadStatusProvider
+    private let cameraUploadsSettingsViewRouter: any Routing
     
-    init(monitorCameraUploadUseCase: some MonitorCameraUploadUseCaseProtocol,
-         devicePermissionHandler: some DevicePermissionsHandling) {
+    init(
+        monitorCameraUploadUseCase: some MonitorCameraUploadUseCaseProtocol,
+        devicePermissionHandler: some DevicePermissionsHandling,
+        cameraUploadsSettingsViewRouter: some Routing
+    ) {
         self.monitorCameraUploadStatusProvider = MonitorCameraUploadStatusProvider(
             monitorCameraUploadUseCase: monitorCameraUploadUseCase,
             devicePermissionHandler: devicePermissionHandler)
-        
+        self.cameraUploadsSettingsViewRouter = cameraUploadsSettingsViewRouter
         subscribeToHandleAutoPresentation()
     }
         
@@ -65,11 +69,14 @@ final class CameraUploadStatusBannerViewModel: ObservableObject {
     
     func tappedCameraUploadBannerStatus() {
         cameraUploadStatusShown = false
-        guard case .uploadPartialCompleted(reason: .photoLibraryLimitedAccess) = cameraUploadBannerStatusViewState else {
-            return
+        switch cameraUploadBannerStatusViewState {
+        case .uploadPaused(reason: .noWifiConnection):
+            cameraUploadsSettingsViewRouter.start()
+        case .uploadPartialCompleted(reason: .photoLibraryLimitedAccess):
+            showPhotoPermissionAlert = true
+        default:
+            break
         }
-        
-        showPhotoPermissionAlert = true
     }
     
     private func subscribeToHandleAutoPresentation() {

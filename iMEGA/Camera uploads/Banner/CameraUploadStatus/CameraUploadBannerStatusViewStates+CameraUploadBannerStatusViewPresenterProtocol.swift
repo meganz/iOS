@@ -1,4 +1,5 @@
 import Foundation
+import MEGAAppPresentation
 import MEGADesignToken
 import MEGAL10n
 import MEGASwiftUI
@@ -104,16 +105,38 @@ extension CameraUploadBannerStatusUploadPausedReason: CameraUploadBannerStatusVi
     var title: String {
         switch self {
         case .noWifiConnection:
-            return Strings.Localizable.CameraUploads.Banner.Status.UploadsPausedDueToWifi.title
+            Strings.Localizable.CameraUploads.Banner.Status.Paused.NoNetworkConnection.title
         case .noInternetConnection:
-            return Strings.Localizable.noInternetConnection
+            Strings.Localizable.CameraUploads.Banner.Status.Paused.NoNetworkConnection.title
+        case .lowBattery:
+            Strings.Localizable.CameraUploads.Banner.Status.Paused.LowBattery.title
+        case .highThermalState:
+            Strings.Localizable.CameraUploads.Banner.Status.Paused.HighThermalState.title
         }
     }
     
     var subheading: AttributedString {
         switch self {
-        case .noWifiConnection(let numberOfFilesPending), .noInternetConnection(let numberOfFilesPending):
-                .init(Strings.Localizable.CameraUploads.Banner.Status.FilesPending.subHeading(Int(numberOfFilesPending)))
+        case .noWifiConnection:
+            let fullText = Strings.Localizable.CameraUploads.Banner.Status.Paused.NoWiFiConnection.subheading
+            let fullTextWithoutFormatters = fullText
+                .replacingOccurrences(of: "[S]", with: "")
+                .replacingOccurrences(of: "[/S]", with: "")
+            
+            var attributedString = AttributedString(fullTextWithoutFormatters)
+            attributedString.font = .caption2
+            if let tappableText = fullText.subString(from: "[S]", to: "[/S]"),
+               tappableText.isNotEmpty,
+               let range = attributedString.range(of: tappableText) {
+                attributedString[range].font = .caption2.bold()
+            }
+            return attributedString
+        case .noInternetConnection:
+            return .init(Strings.Localizable.CameraUploads.Banner.Status.Paused.NoNetworkConnection.subheading)
+        case .lowBattery:
+             return .init(Strings.Localizable.CameraUploads.Banner.Status.Paused.LowBattery.subheading)
+        case .highThermalState:
+            return .init(Strings.Localizable.CameraUploads.Banner.Status.Paused.HighThermalState.subheading)
         }
     }
     

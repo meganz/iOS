@@ -14,6 +14,8 @@ enum CameraUploadBannerStatusPartiallyCompletedReason: Equatable {
 }
 
 enum CameraUploadBannerStatusUploadPausedReason: Equatable {
-    case noWifiConnection(numberOfFilesPending: UInt)
-    case noInternetConnection(numberOfFilesPending: UInt)
+    case noWifiConnection
+    case noInternetConnection
+    case lowBattery
+    case highThermalState
 }

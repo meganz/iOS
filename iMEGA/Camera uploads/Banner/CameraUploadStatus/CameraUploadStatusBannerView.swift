@@ -61,8 +61,8 @@ struct CameraUploadBannerStatusView: View {
 
 #Preview("Uploads Paused") {
     VStack(spacing: 8) {
-        CameraUploadBannerStatusView(previewEntity: CameraUploadBannerStatusUploadPausedReason.noWifiConnection(numberOfFilesPending: 1)) {}
-        CameraUploadBannerStatusView(previewEntity: CameraUploadBannerStatusUploadPausedReason.noWifiConnection(numberOfFilesPending: 23)) {}
+        CameraUploadBannerStatusView(previewEntity: CameraUploadBannerStatusUploadPausedReason.noWifiConnection) {}
+        CameraUploadBannerStatusView(previewEntity: CameraUploadBannerStatusUploadPausedReason.noWifiConnection) {}
     }
     .frame(maxHeight: .infinity, alignment: .center)
     .background(.background)
