@@ -3602,5 +3602,23 @@
         <string>Se han añadido %d elementos a “[A]”</string>
       </dict>
     </dict>
+    <key>audio.playlist.removeTracks.snack.message</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@removeTracks@</string>
+      <key>removeTracks</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Se ha eliminado “[A]” de la cola</string>
+        <key>many</key>
+        <string>Eliminado %d elementos de la cola</string>
+        <key>other</key>
+        <string>Eliminado %d elementos de la cola</string>
+      </dict>
+    </dict>
   </dict>
 </plist>

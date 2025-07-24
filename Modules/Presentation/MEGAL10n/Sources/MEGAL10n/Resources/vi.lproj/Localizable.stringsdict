@@ -2351,7 +2351,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>Với những tháng không có %d ngày. Thời điểm tái diễn cuộc họp sẽ được lên lịch vào ngày cuối cùng của tháng đó.</string>
+        <string>Với những tháng không có %d ngày. Thời điểm tái diễn cuộc họp sẽ được lên lịch vào ngày cuối cùng của tháng đó.</string>
       </dict>
     </dict>
     <key>meetings.scheduleMeeting.create.selectedRecurrence.daily.customInterval</key>
@@ -2800,6 +2800,20 @@
         <string>d</string>
         <key>other</key>
         <string>Đã thêm %d mục vào “[A]”</string>
+      </dict>
+    </dict>
+    <key>audio.playlist.removeTracks.snack.message</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@removeTracks@</string>
+      <key>removeTracks</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>Đã loại bỏ %d mục khỏi xếp hàng chờ</string>
       </dict>
     </dict>
   </dict>

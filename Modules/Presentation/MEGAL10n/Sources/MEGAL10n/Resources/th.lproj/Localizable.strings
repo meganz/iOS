@@ -3032,7 +3032,9 @@
 "meetings.displayInMainView.title"="แสดงในมุมมองหลัก";
 /* Label indicating storage over quota */
 "transfer.storage.quotaExceeded"="เกินโควต้าพื้นที่จัดเก็บ";
-/* Title of section Next on Audio Playlist */
+/* Header title displayed above the currently playing track in the audio player's playlist */
+"media.audio.playlist.section.nowPlaying.title"="กำลังเล่น";
+/* Header title displayed above the upcoming tracks in the audio player's playlist */
 "media.audio.playlist.section.next.title"="ต่อไป";
 /* Title of Audio Player dialog for Playback Continuation */
 "media.audio.playbackContinuation.dialog.title"="เล่นเสียงต่อจากก่อนหน้านี้หรือไม่";
@@ -3638,6 +3640,10 @@
 "upgradeAccountPlan.button.termsAndPolicies.title"="เงื่อนไขและนโยบาย";
 /* On Upgrade Account Plan screen. Button title to buy account plan. %@ will be the name of the selected plan */
 "upgradeAccountPlan.button.buyAccountPlan.title"="ซื้อแผน %@";
+/* On Upgrade Account Plan screen. Button title to buy account plan via web. %@ will be total savings for the users in percent */
+"upgradeAccountPlan.button.buyViaWeb.save"="Buy via web (Save %@)";
+/* On Upgrade Account Plan screen. Button title to buy account plan via web. %@ will be potential total savings for the users in percent */
+"upgradeAccountPlan.button.buyViaWeb.saveUpTo"="Buy via web (Save up to %@)";
 /* On Upgrade Account Plan screen. Button title to continue to buy account plan in-app when user could buy externally. %@ will be the higher price of the plan */
 "upgradeAccountPlan.button.buyInApp.title"="ดำเนินการต่อในแอป (%@)";
 /* On Upgrade Account Plan screen. Button footer text to continue to buy account plan in-app when user could buy externally. %@ will be the higher price of the plan */
@@ -4744,3 +4750,5 @@
 "accountMenu.otherApps.sectionTitle"="MEGA privacy suite";
 /* Button subtitle for log out in menu */
 "accountMenu.logout"="ออกจากระบบ";
+/* subscription purchase description for the storage capacity */
+"subscriptionPurchase.feature.storage.description"="Store up to %@ of data";

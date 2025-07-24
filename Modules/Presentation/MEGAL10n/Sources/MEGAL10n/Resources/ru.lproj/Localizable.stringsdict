@@ -4002,5 +4002,25 @@
         <string>В «[A]» добавлено %d элемента</string>
       </dict>
     </dict>
+    <key>audio.playlist.removeTracks.snack.message</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@removeTracks@</string>
+      <key>removeTracks</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>«[A]» удалён из очереди</string>
+        <key>few</key>
+        <string>%d элемента удалены из очереди</string>
+        <key>many</key>
+        <string>%d элементов удалено из очереди</string>
+        <key>other</key>
+        <string>%d элемента удалено из очереди</string>
+      </dict>
+    </dict>
   </dict>
 </plist>

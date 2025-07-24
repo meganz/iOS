@@ -3032,7 +3032,9 @@
 "meetings.displayInMainView.title"="Mostrar na vista principal";
 /* Label indicating storage over quota */
 "transfer.storage.quotaExceeded"="Cota de armazenamento excedida";
-/* Title of section Next on Audio Playlist */
+/* Header title displayed above the currently playing track in the audio player's playlist */
+"media.audio.playlist.section.nowPlaying.title"="Reproduzindo agora";
+/* Header title displayed above the upcoming tracks in the audio player's playlist */
 "media.audio.playlist.section.next.title"="Seguinte";
 /* Title of Audio Player dialog for Playback Continuation */
 "media.audio.playbackContinuation.dialog.title"="Retomar o áudio?";
@@ -3638,6 +3640,10 @@
 "upgradeAccountPlan.button.termsAndPolicies.title"="Termos e políticas";
 /* On Upgrade Account Plan screen. Button title to buy account plan. %@ will be the name of the selected plan */
 "upgradeAccountPlan.button.buyAccountPlan.title"="Comprar o %@";
+/* On Upgrade Account Plan screen. Button title to buy account plan via web. %@ will be total savings for the users in percent */
+"upgradeAccountPlan.button.buyViaWeb.save"="Comprar pelo site (economize %@)";
+/* On Upgrade Account Plan screen. Button title to buy account plan via web. %@ will be potential total savings for the users in percent */
+"upgradeAccountPlan.button.buyViaWeb.saveUpTo"="Comprar pelo site (economize até %@)";
 /* On Upgrade Account Plan screen. Button title to continue to buy account plan in-app when user could buy externally. %@ will be the higher price of the plan */
 "upgradeAccountPlan.button.buyInApp.title"="Continuar no aplicativo (%@)";
 /* On Upgrade Account Plan screen. Button footer text to continue to buy account plan in-app when user could buy externally. %@ will be the higher price of the plan */
@@ -4744,3 +4750,5 @@
 "accountMenu.otherApps.sectionTitle"="Ferramentas de privacidade do MEGA";
 /* Button subtitle for log out in menu */
 "accountMenu.logout"="Fazer logout";
+/* subscription purchase description for the storage capacity */
+"subscriptionPurchase.feature.storage.description"="Armazene até %@ de dados";

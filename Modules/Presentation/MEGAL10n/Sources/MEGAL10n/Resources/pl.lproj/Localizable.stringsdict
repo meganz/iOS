@@ -4002,5 +4002,25 @@
         <string>Dodano %d elementy do ”[A]”</string>
       </dict>
     </dict>
+    <key>audio.playlist.removeTracks.snack.message</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@removeTracks@</string>
+      <key>removeTracks</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Usunięto [A] element z kolejki</string>
+        <key>few</key>
+        <string>Usunięto %d elementów z kolejki</string>
+        <key>many</key>
+        <string>Usunięto %d elementów z kolejki</string>
+        <key>other</key>
+        <string>Usunięto %d elementów z kolejki</string>
+      </dict>
+    </dict>
   </dict>
 </plist>

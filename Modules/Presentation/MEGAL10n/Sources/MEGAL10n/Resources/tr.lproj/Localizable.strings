@@ -669,7 +669,7 @@
 /* Title of Photo's Days tab */
 "media.photoLibrary.category.days.title"="Günler";
 /* Title of Photo's All date tab */
-"media.photoLibrary.category.all.title"="Hepsi";
+"media.photoLibrary.category.all.title"="Tümü";
 /* Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin' */
 "rubbishBinLabel"="Çöp kutusu";
 /* Title of one of the Settings sections where you can configure 'Advanced' options */
@@ -985,7 +985,7 @@
 /* Title of the Transfers section */
 "transfers"="Transferler";
 /* Title of one of the filters in the Transfers section. In this case "All" transfers. */
-"all"="Hepsi";
+"all"="Tümü";
 /* Title of one of the filters in the Transfers section. In this case In Progress transfers */
 "In Progress"="Devamında";
 /* Title of one of the filters in the Transfers section. In this case "Completed" transfers. */
@@ -3032,7 +3032,9 @@
 "meetings.displayInMainView.title"="Ana görünümde görüntüle";
 /* Label indicating storage over quota */
 "transfer.storage.quotaExceeded"="Depolama kotası aşıldı";
-/* Title of section Next on Audio Playlist */
+/* Header title displayed above the currently playing track in the audio player's playlist */
+"media.audio.playlist.section.nowPlaying.title"="Şimdi çalıyor";
+/* Header title displayed above the upcoming tracks in the audio player's playlist */
 "media.audio.playlist.section.next.title"="Sonraki";
 /* Title of Audio Player dialog for Playback Continuation */
 "media.audio.playbackContinuation.dialog.title"="Sesi devam ettirmek mi?";
@@ -3638,12 +3640,16 @@
 "upgradeAccountPlan.button.termsAndPolicies.title"="Şartlar ve politikalar";
 /* On Upgrade Account Plan screen. Button title to buy account plan. %@ will be the name of the selected plan */
 "upgradeAccountPlan.button.buyAccountPlan.title"="Satın al %@";
+/* On Upgrade Account Plan screen. Button title to buy account plan via web. %@ will be total savings for the users in percent */
+"upgradeAccountPlan.button.buyViaWeb.save"="Buy via web (Save %@)";
+/* On Upgrade Account Plan screen. Button title to buy account plan via web. %@ will be potential total savings for the users in percent */
+"upgradeAccountPlan.button.buyViaWeb.saveUpTo"="Buy via web (Save up to %@)";
 /* On Upgrade Account Plan screen. Button title to continue to buy account plan in-app when user could buy externally. %@ will be the higher price of the plan */
 "upgradeAccountPlan.button.buyInApp.title"="Continue in-app (%@)";
 /* On Upgrade Account Plan screen. Button footer text to continue to buy account plan in-app when user could buy externally. %@ will be the higher price of the plan */
 "upgradeAccountPlan.button.buyInApp.footer"="Platform fees apply when purchasing through the app";
 /* On Upgrade Account Plan screen. Displayed header title text message */
-"upgradeAccountPlan.header.title.choosePlan"="Sizin için doğru planı seçin";
+"upgradeAccountPlan.header.title.choosePlan"="Size uygun planı seçin";
 /* On Upgrade Account Plan screen. Displayed header title text with current plan. %@ will be the name of the current plan */
 "upgradeAccountPlan.header.title.currentPlan"="Mevcut plan: %@";
 /* On Upgrade Account Plan screen. Account Plan picker option for monthly term. */
@@ -4119,7 +4125,7 @@
 /* Calls: Floating panel participants in call header to mute them all */
 "calls.panel.participantsInCall.header.muteAll"="Tümünü sessize al";
 /* Calls: Floating panel participants in call header to show all participants are muted */
-"calls.panel.participantsInCall.header.allMuted"="Hepsi sessiz";
+"calls.panel.participantsInCall.header.allMuted"="Tümü sessizde";
 /* Calls: Participant context menu action to mute in the call */
 "calls.panel.participantsInCall.participantContextMenu.actions.mute"="Sessiz";
 /* Calls: Mute all participants success message */
@@ -4744,3 +4750,5 @@
 "accountMenu.otherApps.sectionTitle"="MEGA privacy suite";
 /* Button subtitle for log out in menu */
 "accountMenu.logout"="Çıkış yap";
+/* subscription purchase description for the storage capacity */
+"subscriptionPurchase.feature.storage.description"="%@’ye kadar veri depolayın";

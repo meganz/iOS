@@ -2802,5 +2802,21 @@
         <string>Menambahkan %d item untuk”[A]”</string>
       </dict>
     </dict>
+    <key>audio.playlist.removeTracks.snack.message</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@removeTracks@</string>
+      <key>removeTracks</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Removed “[A]” from the queue</string>
+        <key>other</key>
+        <string>Removed %d items from the queue</string>
+      </dict>
+    </dict>
   </dict>
 </plist>
