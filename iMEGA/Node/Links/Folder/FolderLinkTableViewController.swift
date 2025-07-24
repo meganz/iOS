@@ -198,11 +198,13 @@ extension FolderLinkTableViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, shouldBeginMultipleSelectionInteractionAt indexPath: IndexPath) -> Bool {
-        true
+        !tableView.isEditing
     }
     
     func tableView(_ tableView: UITableView, didBeginMultipleSelectionInteractionAt indexPath: IndexPath) {
-        setTableViewEditing(true, animated: true)
+        if !tableView.isEditing {
+            setTableViewEditing(true, animated: true)
+        }
     }
     
     func tableView(_ tableView: UITableView, contextMenuConfigurationForRowAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
