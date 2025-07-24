@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23727" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_0" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23721"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -84,7 +84,7 @@
                         </subviews>
                     </stackView>
                     <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IWt-4B-W9X">
-                        <rect key="frame" x="295" y="13" width="46" height="44"/>
+                        <rect key="frame" x="313" y="13" width="46" height="44"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dEd-SM-wgK" userLabel="Pause Button">
                                 <rect key="frame" x="0.0" y="0.0" width="46" height="44"/>
@@ -127,7 +127,7 @@
                     <constraint firstAttribute="centerY" secondItem="eAU-UG-yZS" secondAttribute="centerY" id="bSr-x9-eFJ"/>
                     <constraint firstItem="JHQ-gu-QfZ" firstAttribute="leading" secondItem="eAU-UG-yZS" secondAttribute="trailing" constant="10" id="dT1-4w-bXK"/>
                     <constraint firstItem="JHQ-gu-QfZ" firstAttribute="top" secondItem="HqL-kb-8bW" secondAttribute="top" constant="12" id="qb1-mH-rpM"/>
-                    <constraint firstAttribute="trailing" secondItem="IWt-4B-W9X" secondAttribute="trailing" constant="34" id="sui-Wb-7nt"/>
+                    <constraint firstAttribute="trailing" secondItem="IWt-4B-W9X" secondAttribute="trailing" constant="16" id="sui-Wb-7nt"/>
                     <constraint firstAttribute="trailing" secondItem="IYc-jr-7zg" secondAttribute="trailing" id="tCv-Cp-lwl"/>
                     <constraint firstAttribute="bottom" secondItem="JHQ-gu-QfZ" secondAttribute="bottom" constant="12" id="uAp-9S-FMz"/>
                 </constraints>
@@ -146,11 +146,6 @@
             <point key="canvasLocation" x="593" y="0.0"/>
         </tableViewCell>
     </objects>
-    <designables>
-        <designable name="9m5-43-hqy">
-            <size key="intrinsicContentSize" width="28.333333333333332" height="17.666666666666668"/>
-        </designable>
-    </designables>
     <resources>
         <image name="pauseTransfers" width="28" height="28"/>
     </resources>
