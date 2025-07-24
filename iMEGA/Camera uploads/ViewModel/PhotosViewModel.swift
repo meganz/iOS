@@ -71,7 +71,8 @@ final class PhotosViewModel: NSObject {
         self.timelineViewModel = TimeLineViewModel(
             cameraUploadStatusBannerViewModel: CameraUploadStatusBannerViewModel(
                 monitorCameraUploadUseCase: monitorCameraUploadUseCase,
-                devicePermissionHandler: devicePermissionHandler)
+                devicePermissionHandler: devicePermissionHandler,
+                cameraUploadsSettingsViewRouter: cameraUploadsSettingsViewRouter)
         )
         self.cameraUploadStatusButtonViewModel = CameraUploadStatusButtonViewModel(
             monitorCameraUploadUseCase: monitorCameraUploadUseCase,

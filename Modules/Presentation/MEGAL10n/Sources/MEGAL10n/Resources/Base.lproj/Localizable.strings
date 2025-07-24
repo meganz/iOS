@@ -4752,3 +4752,17 @@
 "accountMenu.logout"="Log out";
 /* subscription purchase description for the storage capacity */
 "subscriptionPurchase.feature.storage.description"="Store up to %@ of data";
+/* Camera uploads status banner title paused due to network connection */
+"cameraUploads.banner.status.paused.noNetworkConnection.title"="Camera upload paused due to network connection";
+/* Camera uploads status banner sub title paused due to no network connection */
+"cameraUploads.banner.status.paused.noNetworkConnection.subheading"="Connect to WiFi or use mobile data";
+/* Camera uploads status banner sub title paused due to no Wi-Fi connection. Please leave [S], [/S] as it is which is used to bolden the text. */
+"cameraUploads.banner.status.paused.noWiFiConnection.subheading"="Connect to WiFi or use mobile data [S]Tap to allow mobile data[/S]";
+/* Camera uploads status banner title paused due to low battery */
+"cameraUploads.banner.status.paused.lowBattery.title"="Camera upload paused due to low battery";
+/* Camera uploads status banner sub title paused due to low battery */
+"cameraUploads.banner.status.paused.lowBattery.subheading"="Charge device to start camera uploads";
+/* Camera uploads status banner title paused due to device heat */
+"cameraUploads.banner.status.paused.highThermalState.title"="Camera uploads paused due to high device temperature";
+/* Camera uploads status banner sub title paused due to device heat */
+"cameraUploads.banner.status.paused.highThermalState.subheading"="Uploads will resume automatically when your device cools down.";

@@ -31,7 +31,7 @@ final class MonitorCameraUploadBannerStatusProviderTests: XCTestCase {
         
         let result = await sut.monitorCameraUploadBannerStatusSequence().first(where: { _ in true})
         
-        XCTAssertEqual(result, .uploadPaused(reason: .noWifiConnection(numberOfFilesPending: 10)))
+        XCTAssertEqual(result, .uploadPaused(reason: .noWifiConnection))
     }
     
     func testMonitorCameraUploadBannerStatusSequence_whenItContainsPendingFilesAndNoNetworkConnectivity_shouldReturnUploadPausednoInternetConnection() async {
@@ -45,7 +45,7 @@ final class MonitorCameraUploadBannerStatusProviderTests: XCTestCase {
         
         let result = await sut.monitorCameraUploadBannerStatusSequence().first(where: { _ in true})
         
-        XCTAssertEqual(result, .uploadPaused(reason: .noInternetConnection(numberOfFilesPending: 10)))
+        XCTAssertEqual(result, .uploadPaused(reason: .noInternetConnection))
     }
     
     func testMonitorCameraUploadBannerStatusSequence_whenItContainsPendingFilesAndNoWifiInternetButHasMobileDataAvailableAndEnabled_shouldReturnInProgress() async {
@@ -72,7 +72,7 @@ final class MonitorCameraUploadBannerStatusProviderTests: XCTestCase {
         
         let result = await sut.monitorCameraUploadBannerStatusSequence().first(where: { _ in true})
         
-        XCTAssertEqual(result, .uploadPaused(reason: .noWifiConnection(numberOfFilesPending: 10)))
+        XCTAssertEqual(result, .uploadPaused(reason: .noWifiConnection))
     }
     
     func testMonitorCameraUploadBannerStatusSequence_whenNoPendingFilesAndNoWifi_shouldReturnUploadCompleted() async {
