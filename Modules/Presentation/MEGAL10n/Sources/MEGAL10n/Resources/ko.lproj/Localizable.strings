@@ -3032,7 +3032,9 @@
 "meetings.displayInMainView.title"="메인 보기에 표시";
 /* Label indicating storage over quota */
 "transfer.storage.quotaExceeded"="저장소 할당량 초과";
-/* Title of section Next on Audio Playlist */
+/* Header title displayed above the currently playing track in the audio player's playlist */
+"media.audio.playlist.section.nowPlaying.title"="재생 중";
+/* Header title displayed above the upcoming tracks in the audio player's playlist */
 "media.audio.playlist.section.next.title"="다음";
 /* Title of Audio Player dialog for Playback Continuation */
 "media.audio.playbackContinuation.dialog.title"="이어서 들을까요?";
@@ -3638,6 +3640,10 @@
 "upgradeAccountPlan.button.termsAndPolicies.title"="약관 및 정책";
 /* On Upgrade Account Plan screen. Button title to buy account plan. %@ will be the name of the selected plan */
 "upgradeAccountPlan.button.buyAccountPlan.title"="%@ 구매";
+/* On Upgrade Account Plan screen. Button title to buy account plan via web. %@ will be total savings for the users in percent */
+"upgradeAccountPlan.button.buyViaWeb.save"="Buy via web (Save %@)";
+/* On Upgrade Account Plan screen. Button title to buy account plan via web. %@ will be potential total savings for the users in percent */
+"upgradeAccountPlan.button.buyViaWeb.saveUpTo"="Buy via web (Save up to %@)";
 /* On Upgrade Account Plan screen. Button title to continue to buy account plan in-app when user could buy externally. %@ will be the higher price of the plan */
 "upgradeAccountPlan.button.buyInApp.title"="앱 안에서 계속하기 (%@)";
 /* On Upgrade Account Plan screen. Button footer text to continue to buy account plan in-app when user could buy externally. %@ will be the higher price of the plan */
@@ -4297,7 +4303,7 @@
 /* Cancellation Section Webclient on a computer title: On a computer */
 "accounts.cancelSubscriptionSteps.webClient.computer.title"="컴퓨터에서";
 /* Cancellation step Webclient: First step using the computer - 1. Visit https://mega.nz in your web browser. */
-"accounts.cancelSubscriptionSteps.webClient.computer.step.one"="1. Visit https://mega.nz in your web browser.";
+"accounts.cancelSubscriptionSteps.webClient.computer.step.one"="1. 웹 브라우저에서 https://mega.nz를 방문합니다.";
 /* Cancellation step Webclient: Second step using the computer - 2. Log in to your MEGA account. */
 "accounts.cancelSubscriptionSteps.webClient.computer.step.two"="2. MEGA 계정에 로그인합니다.";
 /* Cancellation step Webclient: Third step using the computer - 3. Click the main menu. */
@@ -4311,7 +4317,7 @@
 /* Cancellation Section Webclient on mobile device title: On a mobile device */
 "accounts.cancelSubscriptionSteps.webClient.mobile.title"="휴대 장치에서";
 /* Cancellation step Webclient: First step using the mobile device - 1. Visit https://mega.nz in your web browser. */
-"accounts.cancelSubscriptionSteps.webClient.mobile.step.one"="1. Visit https://mega.nz in your web browser.";
+"accounts.cancelSubscriptionSteps.webClient.mobile.step.one"="1. 웹 브라우저에서 https://mega.nz를 방문합니다.";
 /* Cancellation step Webclient: Second step using the mobile device - 2. Log in to your MEGA account. */
 "accounts.cancelSubscriptionSteps.webClient.mobile.step.two"="2. MEGA 계정에 로그인합니다.";
 /* Cancellation step Webclient: Third step using the mobile device - 3. Tap on your avatar. */
@@ -4669,7 +4675,7 @@
 /* Onboarding Camera Backups CTA *Skip* button */
 "onboarding.cta.cameraBackups.buttons.skip"="지금은 건너뛰기";
 /* String explaining the auto-renewal policy of the Pro subscription. */
-"subscriptionPurchase.autoRenewDescription"="Subscriptions are renewed automatically for successive subscription periods of the same duration and at the same price as the initial period chosen.\n\nYou can cancel your Pro plan anytime but no later than 24 hours before your next subscription payment is due. [L]Learn how to manage your subscription in your settings[/L].";
+"subscriptionPurchase.autoRenewDescription"="구독은 처음 선택한 기간과 같은 기간 그리고 같은 가격으로 연속적으로 자동 갱신됩니다.\n\nPro 요금제는 다음 구독 결제일 24시간 전까지 언제든 취소할 수 있습니다. [L]설정에서 구독을 관리하는 방법에 대해 더 알아보세요[/L].";
 /* Title shown for the free plan card */
 "subscriptionPurchase.freePlanCard.title"="무료 요금제로 시작하세요";
 /* Description shown for the free plan card */
@@ -4691,7 +4697,7 @@
 /* Title for the features of pro plan in the subscription purchase screen. */
 "subscriptionPurchase.featuresOfProPlan.title"="Pro 요금제의 추가 혜택";
 /* Features of pro plan in the subscription purchase screen. */
-"subscriptionPurchase.featuresOfProPlan.message"="• Password-protected links\n\n• Links with expiry dates\n\n• Rewind folders up to 180 days of deleted data\n\n• Host calls and meetings with unlimited participants and no time restrictions\n\n• Schedule rubbish bin clearing between 7 days and 10 years\n\n• Priority support";
+"subscriptionPurchase.featuresOfProPlan.message"="• 암호로 보호된 링크\n\n• 만료일이 있는 링크\n\n• 최대 180일 내의 삭제된 데이터에 대한 폴더 되감기\n\n• 시간과 참여자 수 제한 없는 통화와 회의 주최\n\n• 휴지통 비우기를 7일에서 10년 사이로 예약\n\n• 우선적인 지원";
 /* Title for the first subscription feature: generous storage capacity */
 "subscriptionPurchase.feature.one.title"="넉넉한 저장소";
 /* Description for the first subscription feature: details about available storage */
@@ -4744,3 +4750,5 @@
 "accountMenu.otherApps.sectionTitle"="MEGA 프라이버시 스위트";
 /* Button subtitle for log out in menu */
 "accountMenu.logout"="로그아웃";
+/* subscription purchase description for the storage capacity */
+"subscriptionPurchase.feature.storage.description"="최대 %@의 데이터 저장";

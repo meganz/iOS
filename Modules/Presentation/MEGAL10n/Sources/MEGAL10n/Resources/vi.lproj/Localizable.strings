@@ -929,7 +929,7 @@
 /* Recovery key error alert title */
 "recoveryKey.error.alert.title"="Chìa khóa phục hồi bị lỗi";
 /* Recovery key error alert message when the user provided incorrect or invalid Recovery key */
-"recoveryKey.error.alert.message.invalidKey"="Chìa khóa phục hồi bạn cung cấp không hợp lệ hoặc không hợp lệ cho tài khoản này. Kiểm tra xem bạn có đang sử dụng đúng chìa khóa không và thử lại.";
+"recoveryKey.error.alert.message.invalidKey"="Chìa khóa phục hồi bạn vừa cung cấp không có hợp lệ hoặc không trùng với tài khoản này. Hãy kiểm tra xem bạn có sử dụng đúng chìa khóa hay không và thử lại.";
 /* Text of the alert after opening the recovery link to reset pass being logged. */
 "youRecoveryKeyIsGoingTo"="Chìa Khóa Phục Hồi này sẽ được dùng để đặt lại mật khẩu. Xin nhập mật khẩu mới bạn muốn dùng.";
 /*  */
@@ -3032,8 +3032,10 @@
 "meetings.displayInMainView.title"="Hiện trong khung xem chính";
 /* Label indicating storage over quota */
 "transfer.storage.quotaExceeded"="Vượt mức giới hạn lưu trữ";
-/* Title of section Next on Audio Playlist */
-"media.audio.playlist.section.next.title"="Tiếp";
+/* Header title displayed above the currently playing track in the audio player's playlist */
+"media.audio.playlist.section.nowPlaying.title"="Hiện đang phát";
+/* Header title displayed above the upcoming tracks in the audio player's playlist */
+"media.audio.playlist.section.next.title"="Tiếp theo";
 /* Title of Audio Player dialog for Playback Continuation */
 "media.audio.playbackContinuation.dialog.title"="Tiếp tục phát âm thanh?";
 /* Description of Audio Player dialog for Playback Continuation */
@@ -3638,6 +3640,10 @@
 "upgradeAccountPlan.button.termsAndPolicies.title"="Điều khoản và chính sách";
 /* On Upgrade Account Plan screen. Button title to buy account plan. %@ will be the name of the selected plan */
 "upgradeAccountPlan.button.buyAccountPlan.title"="Mua %@";
+/* On Upgrade Account Plan screen. Button title to buy account plan via web. %@ will be total savings for the users in percent */
+"upgradeAccountPlan.button.buyViaWeb.save"="Mua thông qua web (Tiết kiệm %@)";
+/* On Upgrade Account Plan screen. Button title to buy account plan via web. %@ will be potential total savings for the users in percent */
+"upgradeAccountPlan.button.buyViaWeb.saveUpTo"="Mua thông qua web (Tiết kiệm lên đến %@)";
 /* On Upgrade Account Plan screen. Button title to continue to buy account plan in-app when user could buy externally. %@ will be the higher price of the plan */
 "upgradeAccountPlan.button.buyInApp.title"="Mua trong app (%@)";
 /* On Upgrade Account Plan screen. Button footer text to continue to buy account plan in-app when user could buy externally. %@ will be the higher price of the plan */
@@ -4637,7 +4643,7 @@
 /* Onboarding USP carousel first page title */
 "onboarding.uniqueSellingProposition.carousel.page.first.title"="Chính bạn là người giữ chìa khóa";
 /* Onboarding USP carousel first page subtitle */
-"onboarding.uniqueSellingProposition.carousel.page.first.subtitle"="Kiểm soát người dùng, mã hóa vô kiến thức có nghĩa là không ai có thể xem dữ liệu của bạn trừ khi bạn muốn chúng - ngay cả chúng tôi!";
+"onboarding.uniqueSellingProposition.carousel.page.first.subtitle"="Mã hóa vô kiến thức người dùng kiểm soát có nghĩa là không ai có thể xem dữ liệu của bạn trừ khi bạn tự thực hiện - ngay cả chúng tôi cũng không thể làm gì!";
 /* Onboarding USP carousel second page title */
 "onboarding.uniqueSellingProposition.carousel.page.second.title"="Giữ mọi khoảnh khắc được an toàn";
 /* Onboarding USP carousel second page subtitle */
@@ -4645,15 +4651,15 @@
 /* Onboarding USP carousel third page title */
 "onboarding.uniqueSellingProposition.carousel.page.third.title"="Dữ liệu chính chủ. Không gian riêng tư.";
 /* Onboarding USP carousel third page subtitle */
-"onboarding.uniqueSellingProposition.carousel.page.third.subtitle"="Dồi dào dung lượng lưu trữ và các cách dễ dàng để chuyển, chia sẻ và sắp xếp các tệp của bạn có nghĩa là bạn có thể sử dụng MEGA một cách an toàn cho bất cứ điều gì bạn chọn";
+"onboarding.uniqueSellingProposition.carousel.page.third.subtitle"="Không gian lưu trữ dồi dào và các cách để truyền tải, chia sẻ và sắp xếp các tệp tin dễ dàng giúp trải nghiệm sử dụng MEGA được an toàn cho bất cứ việc gì bạn muốn";
 /* Onboarding USP carousel fourth page title */
 "onboarding.uniqueSellingProposition.carousel.page.fourth.title"="Trò chuyện riêng tư";
 /* Onboarding USP carousel fourth page subtitle */
-"onboarding.uniqueSellingProposition.carousel.page.fourth.subtitle"="Trò chuyện với bạn bè và gia đình, chia sẻ ảnh hoặc thông tin nhạy cảm, gọi video và lên lịch các cuộc họp. An toàn và quyền riêng tư được đảm bảo.";
+"onboarding.uniqueSellingProposition.carousel.page.fourth.subtitle"="Trò chuyện với bạn bè và gia đình, chia sẻ ảnh hoặc thông tin bí mật , gọi video và lên lịch các cuộc họp. An  oàn và quyền riêng tư luôn được đảm bảo.";
 /* Onboarding Notification CTA title */
 "onboarding.cta.notifications.title"="Không bao giờ bỏ lỡ cập nhật quan trọng nào";
 /* Onboarding Notification CTA description */
-"onboarding.cta.notifications.explanation"="Luôn cập nhật thông tin cập nhật theo thời gian thực quan trọng với bạn. Nhận thông báo về hoạt động thư mục được chia sẻ, cập nhật bảo mật và ưu đãi độc quyền, để bạn không bao giờ bỏ lỡ bất cứ điều gì quan trọng.\n\nBạn có thể quản lý tùy chọn thông báo vào bất cứ lúc nào trong cài đặt.";
+"onboarding.cta.notifications.explanation"="Luôn nhận được thông tin cập nhật quan trọng với bạn theo thời gian thực. Nhận thông báo về hoạt động của các thư mục được chia sẻ, bài báo cáo bảo mật và ưu đãi độc quyền, để bạn không bao giờ bỏ lỡ bất cứ điều gì quan trọng.\n\nBạn có thể quản lý tùy chọn nhận thông báo vào bất cứ lúc nào trong thiết đặt.";
 /* Onboarding Notification CTA *Enable* button */
 "onboarding.cta.notifications.buttons.enable"="Bật thông báo";
 /* Onboarding Notification CTA *Skip* button */
@@ -4661,7 +4667,7 @@
 /* Onboarding Camera Backups CTA title */
 "onboarding.cta.cameraBackups.title"="Luôn luôn giữ ảnh của bạn được an toàn";
 /* Onboarding Camera Backups CTA description */
-"onboarding.cta.cameraBackups.explanation"="Ký ức của bạn quan trọng\n\nẢnh đăng tải camêra tự động sao lưu ảnh và video của bạn vào ổ MEGA Cloud của bạn, vì vậy bạn không bao giờ phải lo lắng về việc mất chúng";
+"onboarding.cta.cameraBackups.explanation"="Ký ức của bạn là thứ quan trọng\n\nĐăng tải camêra sẽ tự động sao lưu ảnh và video của bạn lên Ổ MEGA của bạn, vì vậy bạn không bao giờ phải lo lắng về chuyện mất đi hình ảnh quý giá.";
 /* Onboarding Camera Backups CTA note */
 "onboarding.cta.cameraBackups.note"="Đăng tải camêra yêu cầu [B]toàn quyền truy cập[/B] vào thư viện ảnh của thiết bị";
 /* Onboarding Camera Backups CTA *Enable* button */
@@ -4669,11 +4675,11 @@
 /* Onboarding Camera Backups CTA *Skip* button */
 "onboarding.cta.cameraBackups.buttons.skip"="Để lúc khác";
 /* String explaining the auto-renewal policy of the Pro subscription. */
-"subscriptionPurchase.autoRenewDescription"="Đăng ký được gia hạn tự động cho các khoảng thời gian đăng ký liên tiếp có cùng thời hạn và với cùng giá với khoảng thời gian ban đầu được chọn.\n\nBạn có thể hủy gói Pro bất cứ lúc nào nhưng không muộn hơn 24 giờ trước khi thanh toán gói đăng ký tiếp theo của bạn đến hạn. [L]Tìm hiểu cách quản lý gói đăng ký của bạn trong thiết đặt[/L].";
+"subscriptionPurchase.autoRenewDescription"="Các gói đăng ký được tự động gia hạn cho khoảng thời gian đăng ký kế tiếp có cùng thời lượng và ở cùng mức giá như khoảng thời gian ban đầu đã chọn.\n\nBạn có thể hủy gói Pro của mình bất cứ lúc nào, nhưng không được muộn hơn 24 giờ trước kỳ hạn thanh toán đăng ký tiếp theo. [L]Tìm hiểu cách quản lý gói đăng ký trong thiết đặt.[/L]";
 /* Title shown for the free plan card */
 "subscriptionPurchase.freePlanCard.title"="Khởi đầu với gói miễn phí của chúng tôi";
 /* Description shown for the free plan card */
-"subscriptionPurchase.freePlanCard.description"="Chúng tôi cung cấp lượng lớn dung lượng lưu trữ và băng thông truyền tải miễn phí, vì vậy bạn có thể thử MEGA mà không gặp rủi ro";
+"subscriptionPurchase.freePlanCard.description"="Chúng tôi cung cấp lượng lớn không gian lưu trữ và băng thông truyền tải cho gói miễn phí, vì vậy bạn có thể dùng thử MEGA mà không gặp rủi ro";
 /* First benefit shown for the free plan card */
 "subscriptionPurchase.freePlanCard.feature.one"="20 GB không gian lưu trữ miễn phí";
 /* Second benefit shown for the free plan card */
@@ -4744,3 +4750,5 @@
 "accountMenu.otherApps.sectionTitle"="Bộ trọn gói bảo mật MEGA";
 /* Button subtitle for log out in menu */
 "accountMenu.logout"="Đăng xuất";
+/* subscription purchase description for the storage capacity */
+"subscriptionPurchase.feature.storage.description"="Lưu trữ lên đến %@ dữ liệu";

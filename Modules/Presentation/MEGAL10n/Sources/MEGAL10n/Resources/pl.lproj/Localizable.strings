@@ -3032,7 +3032,9 @@
 "meetings.displayInMainView.title"="Wyświetl w widoku głównym";
 /* Label indicating storage over quota */
 "transfer.storage.quotaExceeded"="Przekroczono limit miejsca";
-/* Title of section Next on Audio Playlist */
+/* Header title displayed above the currently playing track in the audio player's playlist */
+"media.audio.playlist.section.nowPlaying.title"="Teraz odtwarza";
+/* Header title displayed above the upcoming tracks in the audio player's playlist */
 "media.audio.playlist.section.next.title"="Dalej";
 /* Title of Audio Player dialog for Playback Continuation */
 "media.audio.playbackContinuation.dialog.title"="Wznowić dźwięk?";
@@ -3638,6 +3640,10 @@
 "upgradeAccountPlan.button.termsAndPolicies.title"="Regulamin i zasady";
 /* On Upgrade Account Plan screen. Button title to buy account plan. %@ will be the name of the selected plan */
 "upgradeAccountPlan.button.buyAccountPlan.title"="Kup %@";
+/* On Upgrade Account Plan screen. Button title to buy account plan via web. %@ will be total savings for the users in percent */
+"upgradeAccountPlan.button.buyViaWeb.save"="Kup przez internet (Oszczędź %@)";
+/* On Upgrade Account Plan screen. Button title to buy account plan via web. %@ will be potential total savings for the users in percent */
+"upgradeAccountPlan.button.buyViaWeb.saveUpTo"="Kup przez internet (Oszczędź do %@)";
 /* On Upgrade Account Plan screen. Button title to continue to buy account plan in-app when user could buy externally. %@ will be the higher price of the plan */
 "upgradeAccountPlan.button.buyInApp.title"="Kontynuuj w aplikacji (%@)";
 /* On Upgrade Account Plan screen. Button footer text to continue to buy account plan in-app when user could buy externally. %@ will be the higher price of the plan */
@@ -4744,3 +4750,5 @@
 "accountMenu.otherApps.sectionTitle"="MEGA pakiet prywatności";
 /* Button subtitle for log out in menu */
 "accountMenu.logout"="Wyloguj się";
+/* subscription purchase description for the storage capacity */
+"subscriptionPurchase.feature.storage.description"="Przechowuj do %@ danych";

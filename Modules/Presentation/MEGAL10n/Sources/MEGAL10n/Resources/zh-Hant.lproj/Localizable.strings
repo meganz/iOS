@@ -3032,7 +3032,9 @@
 "meetings.displayInMainView.title"="在主視窗顯示";
 /* Label indicating storage over quota */
 "transfer.storage.quotaExceeded"="超出空間配額";
-/* Title of section Next on Audio Playlist */
+/* Header title displayed above the currently playing track in the audio player's playlist */
+"media.audio.playlist.section.nowPlaying.title"="正在播放";
+/* Header title displayed above the upcoming tracks in the audio player's playlist */
 "media.audio.playlist.section.next.title"="下一步";
 /* Title of Audio Player dialog for Playback Continuation */
 "media.audio.playbackContinuation.dialog.title"="繼續播放？";
@@ -3638,6 +3640,10 @@
 "upgradeAccountPlan.button.termsAndPolicies.title"="條款和政策";
 /* On Upgrade Account Plan screen. Button title to buy account plan. %@ will be the name of the selected plan */
 "upgradeAccountPlan.button.buyAccountPlan.title"="購買%@";
+/* On Upgrade Account Plan screen. Button title to buy account plan via web. %@ will be total savings for the users in percent */
+"upgradeAccountPlan.button.buyViaWeb.save"="透過網路購買（便宜%@）";
+/* On Upgrade Account Plan screen. Button title to buy account plan via web. %@ will be potential total savings for the users in percent */
+"upgradeAccountPlan.button.buyViaWeb.saveUpTo"="透過網路購買（便宜高達%@）";
 /* On Upgrade Account Plan screen. Button title to continue to buy account plan in-app when user could buy externally. %@ will be the higher price of the plan */
 "upgradeAccountPlan.button.buyInApp.title"="在應用程式中繼續（%@）";
 /* On Upgrade Account Plan screen. Button footer text to continue to buy account plan in-app when user could buy externally. %@ will be the higher price of the plan */
@@ -4669,7 +4675,7 @@
 /* Onboarding Camera Backups CTA *Skip* button */
 "onboarding.cta.cameraBackups.buttons.skip"="暫時跳過";
 /* String explaining the auto-renewal policy of the Pro subscription. */
-"subscriptionPurchase.autoRenewDescription"="Subscriptions are renewed automatically for successive subscription periods of the same duration and at the same price as the initial period chosen.\n\nYou can cancel your Pro plan anytime but no later than 24 hours before your next subscription payment is due. [L]Learn how to manage your subscription in your settings[/L].";
+"subscriptionPurchase.autoRenewDescription"="訂閱會自動續訂，續期期間和價格都與初始訂閱相同。\n\n您可以隨時取消您的Pro方案訂閱，但最晚必須在下一次訂閱付款生效前的24小時取消。[L]瞭解如何在設定中管理您的訂閱[/L]。";
 /* Title shown for the free plan card */
 "subscriptionPurchase.freePlanCard.title"="從我們的免費方案開始吧";
 /* Description shown for the free plan card */
@@ -4691,7 +4697,7 @@
 /* Title for the features of pro plan in the subscription purchase screen. */
 "subscriptionPurchase.featuresOfProPlan.title"="Pro方案的額外好處";
 /* Features of pro plan in the subscription purchase screen. */
-"subscriptionPurchase.featuresOfProPlan.message"="• Password-protected links\n\n• Links with expiry dates\n\n• Rewind folders up to 180 days of deleted data\n\n• Host calls and meetings with unlimited participants and no time restrictions\n\n• Schedule rubbish bin clearing between 7 days and 10 years\n\n• Priority support";
+"subscriptionPurchase.featuresOfProPlan.message"="• 連結加入密碼保護\n\n\n• 為連結設定到期日期\n\n\n• 回溯資料夾中最多180天的已刪除資料\n\n\n• 主持群組通話和會議，與會人數不限，沒有時間限制\n\n\n• 垃圾筒清理排程，支援7天到10年設定\n\n\n• 優先支持";
 /* Title for the first subscription feature: generous storage capacity */
 "subscriptionPurchase.feature.one.title"="大容量空間";
 /* Description for the first subscription feature: details about available storage */
@@ -4744,3 +4750,5 @@
 "accountMenu.otherApps.sectionTitle"="MEGA隱私套件";
 /* Button subtitle for log out in menu */
 "accountMenu.logout"="登出";
+/* subscription purchase description for the storage capacity */
+"subscriptionPurchase.feature.storage.description"="儲存高達%@的資料";

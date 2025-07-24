@@ -2802,5 +2802,19 @@
         <string>%d項目を「[A]」に追加しました</string>
       </dict>
     </dict>
+    <key>audio.playlist.removeTracks.snack.message</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@removeTracks@</string>
+      <key>removeTracks</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>キューから%d個の項目を削除しました</string>
+      </dict>
+    </dict>
   </dict>
 </plist>

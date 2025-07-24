@@ -2802,5 +2802,19 @@
         <string>“[A]”에 %d개의 항목 추가함</string>
       </dict>
     </dict>
+    <key>audio.playlist.removeTracks.snack.message</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@removeTracks@</string>
+      <key>removeTracks</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>대기열에서 항목 %d개 제거함</string>
+      </dict>
+    </dict>
   </dict>
 </plist>

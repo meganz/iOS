@@ -4802,5 +4802,29 @@
         <string>تمت إضافة %d عنصر إلى ”[A]“</string>
       </dict>
     </dict>
+    <key>audio.playlist.removeTracks.snack.message</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@removeTracks@</string>
+      <key>removeTracks</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>zero</key>
+        <string>تمت إزالة %d عنصر من قائمة الانتظار</string>
+        <key>one</key>
+        <string>تمت إزالة ”[A]“ من قائمة الانتظار</string>
+        <key>two</key>
+        <string>تمت إزالة %d عنصرين من قائمة الانتظار</string>
+        <key>few</key>
+        <string>تمت إزالة %d عناصر من قائمة الانتظار</string>
+        <key>many</key>
+        <string>تمت إزالة %d عنصر من قائمة الانتظار</string>
+        <key>other</key>
+        <string>تمت إزالة %d عنصر من قائمة الانتظار</string>
+      </dict>
+    </dict>
   </dict>
 </plist>
