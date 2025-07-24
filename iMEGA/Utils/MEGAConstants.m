@@ -2,10 +2,6 @@
 
 #pragma mark - global constants
 
-NSString * const MEGAiOSAppUserAgent = @"MEGAiOS";
-NSString * const MEGAiOSAppKey = @"EVtjzb7R";
-NSString * const MEGAPasswordService = @"MEGA";
-NSString * const MEGAPasswordName = @"sessionV3";
 NSString * const MEGAFirstLoginDate = @"FirstLoginDate";
 
 NSString * const MEGAGroupIdentifier = @"group.mega.ios";
