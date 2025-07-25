@@ -269,6 +269,7 @@
 }
 
 - (void)reloadUI {
+    [self setParentShareType];
     self.isLoading = YES;
     BOOL showShimmer = self.browserAction == BrowserActionSelectVideo && self.nodes.size == 0;
     [self shouldShowShimmer:showShimmer];
@@ -296,7 +297,6 @@
         if (self.browserAction == BrowserActionSendFromCloudDrive || self.browserAction == BrowserActionSelectVideo) {
             enableToolbarItems = self.selectedNodesMutableDictionary.count > 0;
         } else {
-            self.parentShareType = [MEGASdk.shared accessLevelForNode:self.parentNode];
             enableToolbarItems = self.parentShareType > MEGAShareTypeAccessRead;
         }
     } else if (self.incomingButton.selected) {

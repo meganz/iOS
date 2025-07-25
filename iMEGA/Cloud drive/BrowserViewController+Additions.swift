@@ -113,6 +113,17 @@ extension BrowserViewController {
         updateTitle(title: titleConfig.copy, shouldPlaceInTitleView: titleConfig.renderInTitleView)
     }
     
+    @objc
+    func setParentShareType() {
+        if let cloudDriveButton,
+           let parentNode,
+           cloudDriveButton.isSelected,
+           browserAction != .sendFromCloudDrive,
+           browserAction != .selectVideo {
+            parentShareType = MEGASdk.shared.accessLevel(for: parentNode)
+        }
+    }
+    
     @objc func prompt(forSelectedCount count: Int) -> String {
         guard count > 0 else {
             return Strings.Localizable.selectTitle
