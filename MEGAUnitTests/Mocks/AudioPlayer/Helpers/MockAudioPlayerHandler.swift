@@ -34,6 +34,7 @@ final class MockAudioPlayerHandler: AudioPlayerHandlerProtocol {
     var closePlayer_calledTimes = 0
     var resettingAudioPlayer_calledTimes = 0
     var repeatMode = RepeatMode.none
+    var shuffle = false
     
     var onAddPlayerTracksCompletion: (() -> Void)?
     var onAddPlayerListenerCompletion: (() -> Void)?
@@ -100,6 +101,7 @@ final class MockAudioPlayerHandler: AudioPlayerHandlerProtocol {
     }
     
     func playerShuffle(active: Bool) {
+        shuffle = active
         onShuffle_calledTimes += 1
     }
     
@@ -174,7 +176,7 @@ final class MockAudioPlayerHandler: AudioPlayerHandlerProtocol {
     func updateMiniPlayerPresenter(_ presenter: any AudioPlayerPresenterProtocol) {}
     func addMiniPlayerHandler(_ handler: any AudioMiniPlayerHandlerProtocol) {}
     func removeMiniPlayerHandler(_ handler: any AudioMiniPlayerHandlerProtocol) {}
-    func isShuffleEnabled() -> Bool { false }
+    func isShuffleEnabled() -> Bool { shuffle }
     func currentRepeatMode() -> RepeatMode { repeatMode }
     func refreshCurrentItemState() {
         refreshCurrentItemState_calledTimes += 1
