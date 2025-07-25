@@ -172,6 +172,8 @@ class CallsCoordinatorFactory: NSObject, CallsCoordinatorFactoryProtocol {
             removeCallListeners()
         case .destroyed:
             reportEndCall(call)
+        case .initial:
+            sendAudioPlayerInterruptDidStartNotificationIfNeeded()
         default:
             break
         }
