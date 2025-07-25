@@ -153,11 +153,7 @@ class AudioPlayerViewController: UIViewController, AudioPlayerViewControllerNode
         titleLabel.text = name
         subtitleLabel.text = artist
         
-        if let thumbnail {
-            imageView.image = thumbnail
-        } else {
-            imageView.image = MEGAAssets.UIImage.image(forFileName: name)
-        }
+        imageView.image = thumbnail ?? MEGAAssets.UIImage.image(named: "filetype_audio")
     }
     
     private func updateRepeat(_ status: RepeatMode) {
@@ -237,12 +233,13 @@ class AudioPlayerViewController: UIViewController, AudioPlayerViewControllerNode
     }
     
     private func refreshMultiTrackControlsState(enabled: Bool) {
-        nextButton.isEnabled = enabled
-        setForegroundColor(for: shuffleButton, color: enabled ? TokenColors.Icon.primary : TokenColors.Icon.disabled)
+        let activeShuffleButtonColor = shuffleButton.isSelected ? TokenColors.Components.interactive : TokenColors.Icon.primary
+        setForegroundColor(for: shuffleButton, color: enabled ? activeShuffleButtonColor : TokenColors.Icon.disabled)
         shuffleButton.isEnabled = enabled
         setForegroundColor(for: gotoplaylistButton, color: enabled ? TokenColors.Icon.primary : TokenColors.Icon.disabled)
         gotoplaylistButton.isEnabled = enabled
         setForegroundColor(for: nextButton, color: enabled ? TokenColors.Icon.primary : TokenColors.Icon.disabled)
+        nextButton.isEnabled = enabled
     }
     
     private func configureCloseButtonColor() {
@@ -302,7 +299,7 @@ class AudioPlayerViewController: UIViewController, AudioPlayerViewControllerNode
     
     // MARK: - UI actions
     @IBAction func shuffleButtonAction(_ sender: Any) {
-        shuffleButton.isSelected = !(shuffleButton.isSelected)
+        shuffleButton.isSelected = !shuffleButton.isSelected
         viewModel.dispatch(.onShuffle(active: shuffleButton.isSelected))
     }
     
