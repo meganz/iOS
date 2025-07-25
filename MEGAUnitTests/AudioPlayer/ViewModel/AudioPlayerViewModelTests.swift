@@ -43,10 +43,11 @@ final class AudioPlayerViewModelTests: XCTestCase {
     @MainActor
     func testOnShuffle_activeTrue_invokesPlayerShuffle() async {
         let (onlineSUT, _, playerHandler, _) = makeOnlineSUT()
+        let enableShuffle = true
         await test(
             viewModel: onlineSUT,
-            action: .onShuffle(active: true),
-            expectedCommands: []
+            action: .onShuffle(active: enableShuffle),
+            expectedCommands: [.updateShuffle(status: enableShuffle)]
         )
         XCTAssertEqual(playerHandler.onShuffle_calledTimes, 1)
     }

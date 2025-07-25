@@ -134,6 +134,15 @@ final class AudioPlayerViewModel: ViewModelType {
             }
         }
     }
+    private var shuffleModeEnabled: Bool {
+        didSet {
+            if shuffleModeEnabled {
+                trackShuffleIsEnabled()
+            }
+            invokeCommand?(.updateShuffle(status: shuffleModeEnabled))
+            configEntity.playerHandler.playerShuffle(active: shuffleModeEnabled)
+        }
+    }
     private(set) var isSingleTrackPlayer: Bool = false
     
     private var subscriptions = Set<AnyCancellable>()
@@ -167,6 +176,7 @@ final class AudioPlayerViewModel: ViewModelType {
         self.networkMonitorUseCase = networkMonitorUseCase
         self.repeatItemsState = configEntity.playerHandler.currentRepeatMode()
         self.speedModeState = configEntity.playerHandler.currentSpeedMode()
+        self.shuffleModeEnabled = configEntity.playerHandler.isShuffleEnabled()
         self.tracker = tracker
         
         self.setupUpdateItemSubscription()
@@ -461,10 +471,7 @@ final class AudioPlayerViewModel: ViewModelType {
         case .updateCurrentTime(let percentage):
             configEntity.playerHandler.playerProgressCompleted(percentage: percentage)
         case .onShuffle(let active):
-            if active {
-                trackShuffleIsEnabled()
-            }
-            configEntity.playerHandler.playerShuffle(active: active)
+            shuffleModeEnabled = active
         case .onPrevious:
             if configEntity.playerHandler.playerCurrentItemTime() == 0.0 && repeatItemsState == .repeatOne {
                 repeatItemsState = .loop
