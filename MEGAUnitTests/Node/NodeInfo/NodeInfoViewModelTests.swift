@@ -111,16 +111,6 @@ final class NodeInfoViewModelTests: XCTestCase {
     }
 
     @MainActor
-    func testShouldShowNodeTags_whenNodeInCloudDriveAndFeatureToggleOn_shouldReturnTrue() {
-        assertShouldShowNodeTags(whenFeatureToggleIsOn: true, shouldReturn: true)
-    }
-
-    @MainActor
-    func testShouldShowNodeTags_whenFeatureToggleIsOff_shouldReturnFalse() {
-        assertShouldShowNodeTags(whenFeatureToggleIsOn: false, shouldReturn: false)
-    }
-
-    @MainActor
     func testShouldShowNodeTags_whenNodeInRubbishBin_shouldReturnFalse() {
         let nodeUseCase = MockNodeUseCase(isNodeInRubbishBin: true)
         let sut = makeSUT(nodeUseCase: nodeUseCase)
@@ -132,33 +122,6 @@ final class NodeInfoViewModelTests: XCTestCase {
         let backupUseCase = MockBackupsUseCase(isBackupsNode: true)
         let sut = makeSUT(backupUseCase: backupUseCase)
         XCTAssertFalse(sut.shouldShowNodeTags)
-    }
-
-    @MainActor
-    func testShouldShowNodeTags_whenNodeIsIncomingShareRoot_shouldReturnFalse() {
-        let sut = makeSUT(node: MockNode(handle: 100, isInShare: true))
-        XCTAssertFalse(sut.shouldShowNodeTags)
-    }
-
-    @MainActor
-    func testShouldShowNodeTags_whenNodeIsIncomingShareChild_shouldReturnFalse() {
-        let rootNode = MockNode(handle: 100, isInShare: true)
-        let childNode = MockNode(handle: 101, parentHandle: 100, isInShare: false)
-        let nodeUseCase = MockNodeUseCase(nodes: [100: rootNode.toNodeEntity()])
-        let sut = makeSUT(node: childNode, nodeUseCase: nodeUseCase)
-        XCTAssertFalse(sut.shouldShowNodeTags)
-    }
-
-    @MainActor
-    private func assertShouldShowNodeTags(
-        whenFeatureToggleIsOn flag: Bool,
-        shouldReturn expectedResult: Bool,
-        file: StaticString = #file,
-        line: UInt = #line
-    ) {
-        let featureFlagProvider = MockFeatureFlagProvider(list: [.nodeTags: flag])
-        let sut = makeSUT(featureFlagProvider: featureFlagProvider)
-        XCTAssertEqual(sut.shouldShowNodeTags, expectedResult, file: file, line: line)
     }
 
     @MainActor

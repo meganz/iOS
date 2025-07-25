@@ -34,8 +34,7 @@ enum NodeInfoAction: ActionType {
     }
 
     var shouldShowNodeTags: Bool {
-        featureFlagProvider.isFeatureFlagEnabled(for: .nodeTags)
-        && !nodeUseCase.isInRubbishBin(nodeHandle: node.handle)
+        !nodeUseCase.isInRubbishBin(nodeHandle: node.handle)
         && !backupUseCase.isBackupNode(node.toNodeEntity())
     }
 
