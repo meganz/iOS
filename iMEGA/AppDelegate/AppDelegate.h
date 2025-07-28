@@ -19,6 +19,7 @@ typedef NS_ENUM(NSInteger, MEGANotificationType) {
 @property (nonatomic, nullable, strong) VoIPPushDelegate *voIPPushDelegate;
 @property (strong, nonatomic, nullable) UIWindow *blockingWindow;
 @property (nonatomic, weak, readonly) MainTabBarController *mainTBC;
+@property (nonatomic) MEGANotificationType megatype; //1 share folder, 2 new message, 3 contact request
 @property (nonatomic) NSNumber *openChatLater;
 @property (nonatomic) BOOL showAccountUpgradeScreen;
 @property (nonatomic) BOOL loadProductsAndShowAccountUpgradeScreen;
@@ -30,6 +31,7 @@ typedef NS_ENUM(NSInteger, MEGANotificationType) {
 - (void)presentAccountExpiredAlertIfNeeded;
 - (void)showLink:(NSURL *)url;
 - (void)setAccountFirstLogin:(BOOL)isFirstLogin;
+- (void)openTabBasedOnNotificationMegatype;
 
 @end
 

@@ -61,7 +61,6 @@
 
 @property (nonatomic, weak) MainTabBarController *mainTBC;
 
-@property (nonatomic) MEGANotificationType megatype; //1 share folder, 2 new message, 3 contact request
 @property (nonatomic, nullable) NSDictionary *megaGenericRemoteNotif;
 
 @property (strong, nonatomic) NSString *email;
@@ -651,8 +650,8 @@
 - (BOOL)manageQuickActionType:(NSString *)type {
     BOOL quickActionManaged = YES;
     if ([AppDelegate matchQuickAction:type with:@"search"]) {
-        self.mainTBC.selectedIndex = TabTypeHome;
-        MEGANavigationController *navigationController = [self.mainTBC.childViewControllers objectAtIndex:TabTypeHome];
+        self.mainTBC.selectedIndex = [TabManager homeTabIndex];
+        MEGANavigationController *navigationController = self.mainTBC.selectedViewController;
         HomeViewController *homeVC = navigationController.viewControllers.firstObject;
         if (self.quickActionType) { //Coming from didFinishLaunchingWithOptions
             if ([LTHPasscodeViewController doesPasscodeExist]) {
@@ -797,15 +796,15 @@
     NSUInteger tabTag = 0;
     switch (self.megatype) {
         case MEGANotificationTypeShareFolder:
-            tabTag = TabTypeSharedItems;
+            tabTag = [TabManager sharedItemsTabIndex];
             break;
             
         case MEGANotificationTypeChatMessage:
-            tabTag = TabTypeChat;
+            tabTag = [TabManager chatTabIndex];
             break;
             
         case MEGANotificationTypeContactRequest:
-            tabTag = TabTypeHome;
+            tabTag = [TabManager homeTabIndex];
             break;
             
         default:
@@ -813,11 +812,14 @@
     }
     
     void (^manageNotificationBlock)(void) = ^{
-        if ([UIApplication.mnz_visibleViewController isKindOfClass: [ChatViewController class]]) {
-            MEGANavigationController *navigationController = [self.mainTBC.childViewControllers objectAtIndex:TabTypeChat];
-            [navigationController popToRootViewControllerAnimated:NO];
+
+        if (self.megatype == MEGANotificationTypeChatMessage) {
+            if ([UIApplication.mnz_visibleViewController isKindOfClass: [ChatViewController class]]) {
+                MEGANavigationController *navigationController = [self.mainTBC.childViewControllers objectAtIndex:[TabManager chatTabIndex]];
+                [navigationController popToRootViewControllerAnimated:NO];
+            }
         }
-        
+
         self.mainTBC.selectedIndex = tabTag;
         if (self.megatype == MEGANotificationTypeContactRequest) {
             if ([UIApplication.mnz_visibleViewController isKindOfClass: [ContactRequestsViewController class]]) {
@@ -1094,7 +1096,7 @@
                 self.megaGenericRemoteNotif = response.notification.request.content.userInfo;
             }
         } else {
-            [self openTabBasedOnNotificationMegatype];
+            [self revampedOpenTabBasedOnNotificationMegatype];
         }
     } else {
         if (self.mainTBC) {
