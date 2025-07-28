@@ -43,6 +43,10 @@ def parseAndUploadCodeCoverage() {
     executeFastlaneTask("parse_and_upload_code_coverage")
 }
 
+def postAppSizeToMR() {
+    executeFastlaneTask("post_app_size_to_mr")
+}
+
 pipeline {
     agent { label 'mac-jenkins-slave-ios' }
     options {
@@ -71,6 +75,7 @@ pipeline {
                     statusNotifier.postSuccess(":white_check_mark: Build status check succeeded", env.MEGA_IOS_PROJECT_ID)
                     parseAndUploadCodeCoverage()
                     postBuildWarningsAndError()
+                    postAppSizeToMR()
                 }
             }
 

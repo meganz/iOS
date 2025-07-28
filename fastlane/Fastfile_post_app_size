@@ -1,0 +1,21 @@
+desc "Calculate app size and post it to the MR"
+lane :post_app_size_to_mr do |options|
+  mr_number = options[:mr]
+  merge_request_url = ENV["PROJECT_URL"] + "/merge_requests/#{mr_number}/notes"
+  ipa_path = File.expand_path("../derivedData/Build/products/Debug-iphonesimulator/MEGA.app")
+  unless File.exist?(ipa_path)
+    UI.user_error!("IPA not found at #{ipa_path}")
+  end
+
+  app_size_mb = `du -sm "#{ipa_path}"`.split("\t").first.to_f
+  markdown = "### :package: App Size (DEBUG):\n\n- **#{app_size_mb} MB**\n"
+
+  markdown_path = ENV["APP_SIZE_PATH"]
+  File.write(markdown_path, markdown)
+
+  post_markdown_to_mr(
+    merge_request_url: merge_request_url,
+    token: options[:token],
+    markdown_path: "fastlane/#{markdown_path}"
+  )
+end
