@@ -69,6 +69,14 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 
 
+### post_app_size_to_mr
+
+```sh
+[bundle exec] fastlane post_app_size_to_mr
+```
+
+Calculate app size and post it to the MR
+
 ----
 
 

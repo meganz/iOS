@@ -17,6 +17,7 @@ require 'json'
 import("Fastfile_download_libraries")
 import("Fastfile_parse_code_coverage")
 import("Fastfile_submit_build_to_appstore")
+import("Fastfile_post_app_size")
 
 # Directories
 BUILD_DIR       = File.expand_path('build')
