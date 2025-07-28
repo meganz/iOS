@@ -700,9 +700,16 @@ public class SearchResultsViewModel: ObservableObject {
     private func updateSearchResultsLoaded(_ loaded: Bool) {
         $areNewSearchResultsLoaded.mutate { $0 = loaded }
     }
-    
+
+    private func updateSelectedRowIds() {
+        guard listItems.isNotEmpty else { return }
+
+        selectedRowIds = Set(listItems.compactMap { selectedResultIds.contains($0.result.id) ? $0.id : nil })
+    }
+
     private func updateListItem(with newItems: [SearchResultRowViewModel]) {
-        self.listItems = newItems
+        listItems = newItems
+        updateSelectedRowIds()
         let newEmptyViewModel = Self.makeEmptyView(
             whenListItems: listItems.isEmpty,
             query: currentQuery,
