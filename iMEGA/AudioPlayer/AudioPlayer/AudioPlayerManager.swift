@@ -179,7 +179,6 @@ import MEGADomain
     }
     
     func playerResumePlayback(from timeInterval: TimeInterval) {
-        playerPause()
         player?.setProgressCompleted(timeInterval) { [weak self] in
             self?.playerPlay()
         }
