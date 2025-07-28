@@ -334,7 +334,26 @@ final class SearchResultsViewModelTests: XCTestCase, @unchecked Sendable {
         XCTAssertEqual(harness.sut.listItems.map { $0.result.id }, [4, 5, 6, 7])
         XCTAssertEqual(harness.sut.listItems.map { $0.result.title }, ["refreshed 4", "refreshed 5", "refreshed 6", "refreshed 7"])
     }
-    
+
+    @MainActor
+    func testSelection_whenResultsRefresh_shouldRetainSelection() async {
+        // given
+        let harness = Harness(self).withResultsPrepared(count: 5, startingId: 1)
+        harness.sut.selectedResultIds = [1, 3, 5]
+        await harness.sut.task()
+        harness.resetResultFactory()
+        harness.prepareRefreshedResults(startId: 1, endId: 10)
+
+        // when
+        await harness.sut.task()
+
+        // then
+        let result = harness.sut.listItems.compactMap {
+            harness.sut.selectedRowIds.contains($0.id) ? $0.result.id : nil
+        }
+        XCTAssertEqual(result, [1, 3, 5])
+    }
+
     @MainActor
     func testOnSelectionAction_passesSelectedResultViaBridge() async throws {
         let harness = Harness(self).withSingleResultPrepared()
