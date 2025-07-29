@@ -269,11 +269,11 @@
 }
 
 - (void)reloadUI {
-    [self setParentShareType];
     self.isLoading = YES;
     BOOL showShimmer = self.browserAction == BrowserActionSelectVideo && self.nodes.size == 0;
     [self shouldShowShimmer:showShimmer];
     [self setParentNodeForBrowserAction];
+    [self setParentShareType];
     [self setNavigationBarTitle];
     __weak typeof(self) weakSelf = self;
     [self setNodesWithCompletion:^{
