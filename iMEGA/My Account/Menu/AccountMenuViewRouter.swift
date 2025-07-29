@@ -113,6 +113,7 @@ struct AccountMenuViewRouter: AccountMenuViewRouting {
         )
 
         hostingViewController.navigationItem.backButtonTitle = ""
+        hostingViewController.hidesBottomBarWhenPushed = true
 
         navigationController.viewControllers = [hostingViewController]
         navigationController.router = self
