@@ -103,8 +103,18 @@ final class AudioPlaylistViewController: UIViewController {
         tableView.reloadData()
         tableView.endUpdates()
         
+        /// Deselect the currently playing track if it was selected. The current track should not be selectable.
+        let currentTrackIndexPath = IndexPath(row: 0, section: 0)
+        if selectedIndexPaths?.contains(currentTrackIndexPath) == true {
+            tableView.deselectRow(at: currentTrackIndexPath, animated: false)
+        }
+        
         selectedIndexPaths?.forEach {
             tableView.selectRow(at: $0, animated: false, scrollPosition: .none)
+        }
+        
+        if tableView.indexPathsForSelectedRows?.isEmpty ?? true {
+            hideToolbar()
         }
     }
     
