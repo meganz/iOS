@@ -8,7 +8,7 @@ class FolderLinkTableViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     
-    var folderLink: FolderLinkViewController
+    unowned var folderLink: FolderLinkViewController!
     
     @objc class func instantiate(withFolderLink folderLink: FolderLinkViewController) -> FolderLinkTableViewController {
         guard let folderLinkTableVC = UIStoryboard(name: "Links", bundle: nil).instantiateViewController(withIdentifier: "FolderLinkTableViewControllerID") as? FolderLinkTableViewController else {
@@ -18,11 +18,6 @@ class FolderLinkTableViewController: UIViewController {
         folderLinkTableVC.folderLink = folderLink
         
         return folderLinkTableVC
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        self.folderLink = FolderLinkViewController()
-        super.init(coder: aDecoder)
     }
     
     override func viewDidLoad() {

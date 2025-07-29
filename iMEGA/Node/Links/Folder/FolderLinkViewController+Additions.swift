@@ -21,12 +21,8 @@ extension FolderLinkViewController {
         return viewModel
     }
     
-    @objc func onViewAppear() {
-        viewModel.dispatch(.onViewAppear)
-    }
-    
-    @objc func onViewDisappear() {
-        viewModel.dispatch(.onViewDisappear)
+    @objc func onViewDidLoad() {
+        viewModel.dispatch(.onViewDidLoad)
     }
     
     @objc func containsMediaFiles() -> Bool {
