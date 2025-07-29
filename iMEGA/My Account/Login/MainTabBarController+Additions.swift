@@ -92,7 +92,7 @@ extension MainTabBarController {
         viewControllers = defaultViewControllers
 
         setBadgeValueForSharedItemsIfNeeded()
-        setBadgeValueForChats()
+        updateBadgeValueForChats()
         configurePhoneImageBadge()
 
         let selectedTabIndex = TabManager.indexOfTab(TabManager.selectedTab)
@@ -159,9 +159,9 @@ extension MainTabBarController {
     private func executeCommand(_ command: MainTabBarCallsViewModel.Command) {
         switch command {
         case .showActiveCallIcon:
-            phoneBadgeImageView?.isHidden = unreadMessages > 0
+            updateBadgeValueForChats()
         case .hideActiveCallIcon:
-            phoneBadgeImageView?.isHidden = true
+            updateBadgeValueForChats()
         case .navigateToChatTab:
             selectedIndex = TabManager.chatTabIndex()
         }
@@ -177,23 +177,25 @@ extension MainTabBarController {
         }
     }
     
-    @objc func setBadgeValueForChats() {
+    @objc func updateBadgeValueForChats() {
         let unreadChats = MEGAChatSdk.shared.unreadChats
         let numCalls = MEGAChatSdk.shared.numCalls
-        
-        unreadMessages = unreadChats
-        
-        if MEGAReachabilityManager.isReachable() && numCalls > 0 {
-            let callsInProgress = MEGAChatSdk.shared.chatCalls(withState: .inProgress)?.size ?? 0
-            let shouldHidePhoneBadge = !(callsInProgress > 0) || unreadChats > 0
-            phoneBadgeImageView?.isHidden = shouldHidePhoneBadge
+
+        if MEGAReachabilityManager.isReachable() && numCalls > 0,
+           let callsInProgress = MEGAChatSdk.shared.chatCalls(withState: .inProgress)?.size,
+           callsInProgress > 0 {
+            updatePhoneImageBadgeFrame()
+            phoneBadgeImageView?.isHidden = false
+            setBadgeValueForChats(nil)
         } else {
             phoneBadgeImageView?.isHidden = true
+            let unreadCountString = unreadChats > 99 ? "99+" : "\(unreadChats)"
+            let badgeValue = unreadChats > 0 ? unreadCountString : nil
+            setBadgeValueForChats(badgeValue)
         }
-        
-        let unreadCountString = unreadChats > 99 ? "99+" : "\(unreadChats)"
-        let badgeValue = unreadChats > 0 ? unreadCountString : nil
+    }
 
+    private func setBadgeValueForChats(_ badgeValue: String?) {
         if isNavigationRevampEnabled {
             let tabbarItem = tabBar.items?[TabManager.chatTabIndex()]
             tabbarItem?.badgeValue = badgeValue
@@ -205,7 +207,39 @@ extension MainTabBarController {
             )
         }
     }
-    
+
+    @objc func updatePhoneImageBadgeFrame() {
+        // Need to wrap the code inside a Task in order for the code to work
+        // in case of device orientation change. 
+        Task { [self] in
+            let chatTabIndex = TabManager.chatTabIndex()
+            let tabBarButtons = tabBar.subviews
+                .filter { type(of: $0) == NSClassFromString("UITabBarButton") }
+
+            guard let button = tabBarButtons[safe: chatTabIndex] else { return }
+            phoneBadgeImageView?.frame = frameForPhoneImageBadge(in: button)
+        }
+    }
+
+    @objc func updateBadgeLayout(at index: Int) {
+        guard !isNavigationRevampEnabled else { return }
+        tabBar.updateBadgeLayout(at: index)
+    }
+
+    private func frameForPhoneImageBadge(in button: UIView) -> CGRect {
+        let isRightToLeft = UIApplication.shared.userInterfaceLayoutDirection == .rightToLeft
+        guard let iconView = button.subviews.first(where: { $0 is UIImageView }) else { return .null }
+        let iconWidth = iconView.frame.size.width
+        let iconViewframe = button.convert(iconView.frame, to: tabBar)
+        let revampedBadgeSizeScale = 0.75
+        let legacyBadgeSizeScale = 0.5
+
+        let badgeSize = isNavigationRevampEnabled ? iconWidth * revampedBadgeSizeScale : iconWidth * legacyBadgeSizeScale
+        let xOffset = (isNavigationRevampEnabled ? iconWidth * revampedBadgeSizeScale : iconWidth * 0.6) * (isRightToLeft ? -1 : 1)
+        let yOffset = iconWidth * 0.25
+        return .init(x: iconViewframe.origin.x + xOffset, y: iconViewframe.origin.y - yOffset, width: badgeSize, height: badgeSize)
+    }
+
     @objc func showUploadFile() {
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
         appDelegate?.handleQuickUploadAction()

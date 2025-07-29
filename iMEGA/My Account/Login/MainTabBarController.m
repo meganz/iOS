@@ -34,10 +34,9 @@
     [self.tabBar bringSubviewToFront:self.phoneBadgeImageView];
     [self.tabBar invalidateIntrinsicContentSize];
     [self refreshBottomConstraint];
-    [self updatePhoneImageBadgeFrame];
     [self.tabBar setNeedsLayout];
     [self.tabBar layoutIfNeeded];
-    [self.tabBar updateBadgeLayoutAt:[TabManager chatTabIndex]];
+    [self updateBadgeLayoutAt:[TabManager chatTabIndex]];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -84,8 +83,7 @@
         //Force appearance changes on the tab bar
         [AppearanceManager setupTabbar:self.tabBar];
     }
-    
-    [self configurePhoneImageBadge];
+    [self updatePhoneImageBadgeFrame];
 }
 
 #pragma mark - Public
@@ -163,7 +161,7 @@
     }
 }
 - (void)internetConnectionChanged {
-    [self setBadgeValueForChats];
+    [self updateBadgeValueForChats];
 }
 
 - (UIViewController *)photosViewController {
@@ -178,35 +176,11 @@
     return sharedItemsNavigationController;
 }
 
-- (void)updatePhoneImageBadgeFrame {
-    NSInteger chatTabIndex = [TabManager chatTabIndex];
-    UITabBarItem *item = self.tabBar.items[chatTabIndex];
-    CGFloat iconWidth = item.image.size.width;
-    CGRect frame = [self frameForTabInTabBar:self.tabBar withIndex: chatTabIndex];
-    CGFloat originX = frame.origin.x + (frame.size.width-iconWidth) / 2 + iconWidth;
-    self.phoneBadgeImageView.frame = CGRectMake(originX - 10, 10, 15, 15);
-}
-
-- (CGRect)frameForTabInTabBar:(UITabBar*)tabBar withIndex:(NSUInteger)index {
-    NSUInteger currentTabIndex = 0;
-    
-    for (UIView* subView in tabBar.subviews) {
-        if ([subView isKindOfClass:NSClassFromString(@"UITabBarButton")]) {
-            if (currentTabIndex == index)
-                return subView.frame;
-            else
-                currentTabIndex++;
-        }
-    }
-    
-    return CGRectNull;
-}
-
 #pragma mark - MEGAChatDelegate
 
 - (void)onChatListItemUpdate:(MEGAChatSdk *)api item:(MEGAChatListItem *)item {
     if (item.changes == MEGAChatListItemChangeTypeUnreadCount) {
-        [self debounce:@selector(setBadgeValueForChats) delay:0.1];
+        [self debounce:@selector(updateBadgeValueForChats) delay:0.1];
     }
 }
 
