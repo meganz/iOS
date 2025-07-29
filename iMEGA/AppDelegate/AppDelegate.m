@@ -1599,7 +1599,7 @@
     }
     
     if (request.type == MEGAChatRequestTypeLogout) {
-        [self.mainTBC setBadgeValueForChats];
+        [self.mainTBC updateBadgeValueForChats];
     }
     
     if (request.type == MEGAChatRequestTypeImportMessages) {
