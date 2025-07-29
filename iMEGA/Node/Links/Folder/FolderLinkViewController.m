@@ -82,6 +82,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [self onViewDidLoad];
+    
     [self configureImages];
     
     self.currentContentInsetHeight = 0;
@@ -146,8 +148,6 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    [self onViewAppear];
-    
     self.navigationController.toolbarHidden = NO;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(internetConnectionChanged) name:kReachabilityChangedNotification object:nil];
@@ -155,8 +155,6 @@
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    
-    [self onViewDisappear];
     
     [AudioPlayerManager.shared removeMiniPlayerHandler:self];
 
@@ -177,8 +175,6 @@
     [AudioPlayerManager.shared updateMiniPlayerPresenter:self];
     [AudioPlayerManager.shared addMiniPlayerHandler:self];
     [self shouldShowMiniPlayer];
-    
-    [self reloadUI];
 }
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {

@@ -6,7 +6,7 @@ class FolderLinkCollectionViewController: UIViewController {
    
     @IBOutlet weak var collectionView: UICollectionView!
 
-    var folderLink: FolderLinkViewController
+    unowned var folderLink: FolderLinkViewController!
 
     let layout = CHTCollectionViewWaterfallLayout()
     
@@ -25,11 +25,6 @@ class FolderLinkCollectionViewController: UIViewController {
         folderLinkCollectionVC.folderLink = folderLink
         
         return folderLinkCollectionVC
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        self.folderLink = FolderLinkViewController()
-        super.init(coder: aDecoder)
     }
     
     override func viewDidLoad() {

@@ -5,8 +5,7 @@ import MEGADomain
 @MainActor
 @objc public final class FolderLinkViewModel: NSObject, ViewModelType {
     public enum Action: ActionType {
-        case onViewAppear
-        case onViewDisappear
+        case onViewDidLoad
         case trackSendToChatFolderLinkNoAccountLogged
         case trackSendToChatFolderLink
     }
@@ -28,10 +27,8 @@ import MEGADomain
     public var invokeCommand: ((Command) -> Void)?
     public func dispatch(_ action: Action) {
         switch action {
-        case .onViewAppear:
-            onViewAppear()
-        case .onViewDisappear:
-            onViewDisappear()
+        case .onViewDidLoad:
+            startMonitoringUpdates()
         case .trackSendToChatFolderLink:
             trackSendToChatFolderLinkEvent()
         case .trackSendToChatFolderLinkNoAccountLogged:
@@ -72,9 +69,17 @@ import MEGADomain
     ) {
         self.folderLinkUseCase = folderLinkUseCase
         self.tracker = tracker
+        super.init()
     }
     
-    private func onViewAppear() {
+    deinit {
+        monitorCompletedDownloadTransferTask?.cancel()
+        monitorNodeUpdatesTask?.cancel()
+        monitorFetchNodesRequestStartUpdatesTask?.cancel()
+        monitorRequestFinishUpdatesTask?.cancel()
+    }
+    
+    private func startMonitoringUpdates() {
         monitorCompletedDownloadTransferTask = Task { [weak self, folderLinkUseCase] in
             for await nodeHandle in folderLinkUseCase.completedDownloadTransferUpdates {
                 guard !Task.isCancelled else { break }
@@ -131,13 +136,6 @@ import MEGADomain
     
     private func handleLogoutDone() {
         invokeCommand?(.logoutDone)
-        monitorNodeUpdatesTask = nil
-        monitorFetchNodesRequestStartUpdatesTask = nil
-        monitorRequestFinishUpdatesTask = nil
-    }
-    
-    private func onViewDisappear() {
-        monitorCompletedDownloadTransferTask = nil
         monitorNodeUpdatesTask = nil
         monitorFetchNodesRequestStartUpdatesTask = nil
         monitorRequestFinishUpdatesTask = nil
