@@ -35,8 +35,6 @@ final class PlaylistItemTableViewCell: UITableViewCell {
         contentView.backgroundColor = TokenColors.Background.page
         contentView.superview?.backgroundColor = TokenColors.Background.page
         
-        tintColor = TokenColors.Components.selectionControl
-        
         separatorView.backgroundColor = TokenColors.Border.strong
     }
     

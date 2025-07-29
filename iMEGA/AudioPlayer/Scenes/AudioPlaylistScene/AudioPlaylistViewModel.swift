@@ -82,6 +82,11 @@ final class AudioPlaylistViewModel: ViewModelType {
         }
     }
     
+    private func refreshToolbarVisibility() {
+        let shouldShowToolbar = selectedItems?.isEmpty == false
+        invokeCommand?(shouldShowToolbar ? .showToolbar : .hideToolbar)
+    }
+    
     private func removeAllSelectedItems() {
         guard let items = selectedItems, !items.isEmpty else { return }
         
@@ -131,13 +136,11 @@ final class AudioPlaylistViewModel: ViewModelType {
             trackRemoveTracksButtonTapped()
             removeAllSelectedItems()
         case .didSelect(let item):
-            invokeCommand?(.showToolbar)
             addSelected(item)
+            refreshToolbarVisibility()
         case .didDeselect(let item):
             removeSelected(item)
-            if selectedItems?.isEmpty ?? true {
-                invokeCommand?(.hideToolbar)
-            }
+            refreshToolbarVisibility()
         case .dismiss:
             router.dismiss()
         case .onViewWillDisappear:
@@ -163,6 +166,8 @@ final class AudioPlaylistViewModel: ViewModelType {
 extension AudioPlaylistViewModel: AudioPlayerObserversProtocol {
     func audio(player: AVQueuePlayer, currentItem: AudioPlayerItem?, queue: [AudioPlayerItem]?) {
         guard let currentItem = playerHandler.playerCurrentItem() else { return }
+        
+        selectedItems = selectedItems?.filter { $0 != currentItem }
         
         invokeCommand?(.reloadTracks(currentItem: currentItem, queue: playerHandler.playerQueueItems(), selectedIndexPaths: selectedIndexPaths()))
     }
