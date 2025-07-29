@@ -198,6 +198,7 @@ public class SearchResultsViewModel: ObservableObject {
                         }
                     })
                     .store(in: &subscriptions)
+        observeListItemsUpdate()
     }
 
     /// meant called to be called in the SwiftUI View's .task modifier
@@ -270,7 +271,7 @@ public class SearchResultsViewModel: ObservableObject {
         initialLoadDone = false
         handleEditingChanged(false)
         currentQuery = .initial
-        listItems = []
+        clearSearchResults()
         lastAvailableChips = []
         selectedResultIds = []
         await defaultSearchQuery()
@@ -701,15 +702,8 @@ public class SearchResultsViewModel: ObservableObject {
         $areNewSearchResultsLoaded.mutate { $0 = loaded }
     }
 
-    private func updateSelectedRowIds() {
-        guard listItems.isNotEmpty else { return }
-
-        selectedRowIds = Set(listItems.compactMap { selectedResultIds.contains($0.result.id) ? $0.id : nil })
-    }
-
     private func updateListItem(with newItems: [SearchResultRowViewModel]) {
         listItems = newItems
-        updateSelectedRowIds()
         let newEmptyViewModel = Self.makeEmptyView(
             whenListItems: listItems.isEmpty,
             query: currentQuery,
@@ -783,6 +777,18 @@ public class SearchResultsViewModel: ObservableObject {
                 )
             )
         }
+    }
+
+    private func observeListItemsUpdate() {
+        $listItems
+            .sink { [weak self] viewModels in
+                guard let self else { return }
+                
+                selectedRowIds = viewModels.isEmpty
+                ? []
+                : Set(viewModels.compactMap { selectedResultIds.contains($0.result.id) ? $0.id : nil })
+            }
+            .store(in: &subscriptions)
     }
 
     // create new query by deselecting previously selected chips

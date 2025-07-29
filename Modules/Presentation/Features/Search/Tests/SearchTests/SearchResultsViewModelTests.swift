@@ -355,6 +355,28 @@ final class SearchResultsViewModelTests: XCTestCase, @unchecked Sendable {
     }
 
     @MainActor
+    func testSelection_whenQueryChanges_shouldMaintainSameSelection() async {
+        // given
+        var harness = Harness(self).withResultsPrepared(count: 5, startingId: 1)
+        harness.sut.selectedResultIds = [1, 3, 5]
+        await harness.sut.task()
+
+        // when
+        harness = harness.withResultsPrepared(count: 1, startingId: 1)
+        await harness.sut.queryChanged(to: "1", isSearchActive: true)
+
+        // then
+        XCTAssertEqual(harness.sut.selectedRowIds.count, 1)
+
+        // when
+        harness = harness.withResultsPrepared(count: 5, startingId: 1)
+        await harness.sut.queryChanged(to: "", isSearchActive: true)
+
+        // then
+        XCTAssertEqual(harness.sut.selectedRowIds.count, 3)
+    }
+
+    @MainActor
     func testOnSelectionAction_passesSelectedResultViaBridge() async throws {
         let harness = Harness(self).withSingleResultPrepared()
         await harness.sut.queryChanged(to: "query", isSearchActive: true)
