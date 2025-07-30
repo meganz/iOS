@@ -13,6 +13,7 @@ struct NotificationsViewRouter: NotificationsViewRouting {
     private let notificationsUseCase: any NotificationsUseCaseProtocol
     private let nodeUseCase: any NodeUseCaseProtocol
     private let imageLoader: any ImageLoadingProtocol
+    private let hidesBottomBarWhenPushed: Bool
 
     private var isNavigationRevampEnabled: Bool {
         DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .navigationRevamp)
@@ -22,12 +23,14 @@ struct NotificationsViewRouter: NotificationsViewRouting {
         navigationController: UINavigationController?,
         notificationsUseCase: some NotificationsUseCaseProtocol,
         nodeUseCase: some NodeUseCaseProtocol,
-        imageLoader: some ImageLoadingProtocol
+        imageLoader: some ImageLoadingProtocol,
+        hidesBottomBarWhenPushed: Bool = false
     ) {
         self.navigationController = navigationController
         self.notificationsUseCase = notificationsUseCase
         self.nodeUseCase = nodeUseCase
         self.imageLoader = imageLoader
+        self.hidesBottomBarWhenPushed = hidesBottomBarWhenPushed
     }
     
     func build() -> UIViewController {
@@ -43,6 +46,7 @@ struct NotificationsViewRouter: NotificationsViewRouting {
             tracker: DIContainer.tracker
         )
         notificationsVC.viewModel = viewModel
+        notificationsVC.hidesBottomBarWhenPushed = hidesBottomBarWhenPushed
         return notificationsVC
     }
     

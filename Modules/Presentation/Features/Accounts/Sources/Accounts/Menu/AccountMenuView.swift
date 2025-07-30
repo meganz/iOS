@@ -113,7 +113,16 @@ private struct AccountMenuHeaderView: View {
     private var headerView: some View {
         HStack {
             Spacer()
-            NotificationsView(notificationCount: notificationCount, buttonTapped: buttonTapped)
+            NotificationsView(
+                notificationCount: notificationCount,
+                buttonTapped: buttonTapped,
+                padding: .init(
+                    top: TokenSpacing._6,
+                    leading: TokenSpacing._6,
+                    bottom: TokenSpacing._6,
+                    trailing: 0
+                )
+            )
         }
         .frame(height: 52)
         .padding(.horizontal, TokenSpacing._5)
@@ -132,23 +141,31 @@ private struct AccountMenuHeaderView: View {
 private struct NotificationsView: View {
     let notificationCount: Int
     let buttonTapped: () -> Void
+    let padding: EdgeInsets
 
-    var body: some View {
-        ZStack(alignment: .topTrailing) {
-            MEGAAssets.Image.notificationsInMenu
-                .foregroundStyle(TokenColors.Icon.primary.swiftUI)
-
-            if notificationCount > 0 {
-                NotificationBadgeView(count: notificationCount)
-                    .alignmentGuide(.top) { d in d.height / 2 }
-                    .alignmentGuide(.trailing) { d in d.width / 2 }
-            }
-        }
-        .onTapGesture {
-            buttonTapped()
-        }
+    init(notificationCount: Int, buttonTapped: @escaping () -> Void, padding: EdgeInsets = EdgeInsets()) {
+        self.notificationCount = notificationCount
+        self.buttonTapped = buttonTapped
+        self.padding = padding
     }
 
+    var body: some View {
+        Button {
+            buttonTapped()
+        } label: {
+            ZStack(alignment: .topTrailing) {
+                MEGAAssets.Image.notificationsInMenu
+                    .foregroundStyle(TokenColors.Icon.primary.swiftUI)
+
+                if notificationCount > 0 {
+                    NotificationBadgeView(count: notificationCount)
+                        .alignmentGuide(.top) { d in d.height / 2 }
+                        .alignmentGuide(.trailing) { d in d.width / 2 }
+                }
+            }
+            .padding(padding)
+        }
+    }
 }
 
 private struct NotificationBadgeView: View {
