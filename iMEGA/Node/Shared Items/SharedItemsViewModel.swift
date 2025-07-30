@@ -16,7 +16,6 @@ import UIKit
     private let nodeUseCase: any NodeUseCaseProtocol
     private let saveMediaToPhotosUseCase: any SaveMediaToPhotosUseCaseProtocol
     private let moveToRubbishBinViewModel: any MoveToRubbishBinViewModelProtocol
-    private let featureFlagProvider: any FeatureFlagProviderProtocol
 
     let searchDebouncer = Debouncer(delay: 0.5)
     
@@ -25,18 +24,12 @@ import UIKit
          nodeUseCase: some NodeUseCaseProtocol,
          saveMediaToPhotosUseCase: some SaveMediaToPhotosUseCaseProtocol,
          moveToRubbishBinViewModel: some MoveToRubbishBinViewModelProtocol,
-         featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider
     ) {
         self.shareUseCase = shareUseCase
         self.mediaUseCase = mediaUseCase
         self.nodeUseCase = nodeUseCase
         self.saveMediaToPhotosUseCase = saveMediaToPhotosUseCase
         self.moveToRubbishBinViewModel = moveToRubbishBinViewModel
-        self.featureFlagProvider = featureFlagProvider
-    }
-
-    @objc var isSearchByNodetagsEnabled: Bool {
-        featureFlagProvider.isFeatureFlagEnabled(for: .searchByNodeTags)
     }
 
     func openShareFolderDialog(forNodes nodes: [MEGANode]) {
@@ -84,8 +77,7 @@ import UIKit
     }
 
     @objc func tagsForNode(_ node: MEGANode, with searchText: String?) -> [NSAttributedString] {
-        guard isSearchByNodetagsEnabled,
-              let searchText,
+        guard let searchText,
               searchText.isNotEmpty,
               let tags = node.tags?.toStringArray() else { return [] }
         let removedHashTagSearchText = searchText.removingFirstLeadingHash()

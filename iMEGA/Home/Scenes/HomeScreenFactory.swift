@@ -154,10 +154,6 @@ final class HomeScreenFactory: NSObject {
         NodeIconUseCase(nodeIconRepo: NodeAssetsManager.shared)
     }
 
-    private func makeFeatureFlagProvider() -> some FeatureFlagProviderProtocol {
-        DIContainer.featureFlagProvider
-    }
-
     private func makeDownloadedNodesListener() -> some DownloadedNodesListening {
         CloudDriveDownloadedNodesListener(
             subListeners: [
@@ -247,8 +243,6 @@ final class HomeScreenFactory: NSObject {
             searchBridge?.updateBottomInset(inset)
         }
 
-        let featureFlagProvider = makeFeatureFlagProvider()
-
         let vm = SearchResultsViewModel(
             resultsProvider: makeResultsProvider(
                 parentNodeProvider: {[weak sdk] in sdk?.rootNode?.toNodeEntity() },
@@ -270,7 +264,6 @@ final class HomeScreenFactory: NSObject {
             layout: viewModeStore.viewMode(for: .init(customLocation: CustomViewModeLocation.HomeSearch)).pageLayout ?? .list,
             keyboardVisibilityHandler: KeyboardVisibilityHandler(notificationCenter: notificationCenter),
             viewDisplayMode: .home,
-            isSearchByNodeTagsFeatureEnabled: featureFlagProvider.isFeatureFlagEnabled(for: .searchByNodeTags),
             listHeaderViewModel: nil,
             isSelectionEnabled: false
         )
@@ -322,7 +315,6 @@ final class HomeScreenFactory: NSObject {
         parentNodeProvider: @escaping () -> NodeEntity?,
         navigationController: UINavigationController
     ) -> HomeSearchResultsProvider {
-        let featureFlagProvider = makeFeatureFlagProvider()
         return HomeSearchResultsProvider(
             parentNodeProvider: parentNodeProvider,
             filesSearchUseCase: makeFilesSearchUseCase(),
@@ -336,8 +328,7 @@ final class HomeScreenFactory: NSObject {
             allChips: Self.allChips(),
             sdk: sdk,
             nodeActions: .makeActions(sdk: sdk, navigationController: navigationController),
-            hiddenNodesFeatureEnabled: DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes),
-            searchByNodeTagsEnabled: featureFlagProvider.isFeatureFlagEnabled(for: .searchByNodeTags)
+            hiddenNodesFeatureEnabled: DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes)
         )
     }
     private static func allChips() -> [SearchChipEntity] {

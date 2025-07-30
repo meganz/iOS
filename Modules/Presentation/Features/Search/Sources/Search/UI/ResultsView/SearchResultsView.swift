@@ -197,7 +197,6 @@ public struct SearchResultsView: View {
             layout: .list,
             keyboardVisibilityHandler: MockKeyboardVisibilityHandler(),
             viewDisplayMode: .unknown,
-            isSearchByNodeTagsFeatureEnabled: true,
             listHeaderViewModel: nil,
             isSelectionEnabled: false
         )

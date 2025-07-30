@@ -9,7 +9,7 @@ import MEGASwift
 import Search
 
 /// Dedicated actor to isolate loadMore function to prevent data race where multiple cells can trigger loadMore at the same time
-@globalActor fileprivate actor LoadMoreActor {
+@globalActor private actor LoadMoreActor {
     static var shared = LoadMoreActor()
 }
 
@@ -34,7 +34,6 @@ final class HomeSearchResultsProvider: SearchResultsProviding, @unchecked Sendab
     @Atomic private var subscriptions = Set<AnyCancellable>()
 
     private let hiddenNodesFeatureEnabled: Bool
-    private let searchByNodeTagsEnabled: Bool
 
     // The node from which we want start searching from,
     // root node can be nil in case when we start app in offline
@@ -55,8 +54,7 @@ final class HomeSearchResultsProvider: SearchResultsProviding, @unchecked Sendab
         allChips: [SearchChipEntity],
         sdk: MEGASdk,
         nodeActions: NodeActions,
-        hiddenNodesFeatureEnabled: Bool,
-        searchByNodeTagsEnabled: Bool
+        hiddenNodesFeatureEnabled: Bool
     ) {
         self.parentNodeProvider = parentNodeProvider
         self.filesSearchUseCase = filesSearchUseCase
@@ -67,7 +65,6 @@ final class HomeSearchResultsProvider: SearchResultsProviding, @unchecked Sendab
         self.availableChips = allChips
         self.sdk = sdk
         self.hiddenNodesFeatureEnabled = hiddenNodesFeatureEnabled
-        self.searchByNodeTagsEnabled = searchByNodeTagsEnabled
 
         mapper = SearchResultMapper(
             sdk: sdk,
@@ -189,7 +186,7 @@ final class HomeSearchResultsProvider: SearchResultsProviding, @unchecked Sendab
             .recursive(
                 searchText: searchQuery.query,
                 searchDescription: searchQuery.query,
-                searchTag: searchByNodeTagsEnabled ? searchQuery.query.removingFirstLeadingHash() : nil,
+                searchTag: searchQuery.query.removingFirstLeadingHash(),
                 searchTargetLocation: { if let parentNode { .parentNode(parentNode) } else { .folderTarget(.rootNode) } }(),
                 supportCancel: true,
                 sortOrderType: searchQuery.sorting.toDomainSortOrderEntity(),
@@ -203,7 +200,7 @@ final class HomeSearchResultsProvider: SearchResultsProviding, @unchecked Sendab
             .nonRecursive(
                searchText: searchQuery.query,
                searchDescription: searchQuery.query,
-               searchTag: searchByNodeTagsEnabled ? searchQuery.query.removingFirstLeadingHash() : nil,
+               searchTag: searchQuery.query.removingFirstLeadingHash(),
                searchTargetNode: node,
                supportCancel: true,
                sortOrderType: searchQuery.sorting.toDomainSortOrderEntity(),

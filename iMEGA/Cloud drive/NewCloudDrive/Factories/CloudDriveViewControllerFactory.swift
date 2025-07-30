@@ -898,7 +898,6 @@ struct CloudDriveViewControllerFactory {
             searchBridge?.updateBottomInset(inset)
         }
 
-        let featureFlagProvider = DIContainer.featureFlagProvider
         let shouldEnableSelection = switch nodeSource {
         case .recentActionBucket: false
         default: true
@@ -918,7 +917,6 @@ struct CloudDriveViewControllerFactory {
             layout: layout,
             keyboardVisibilityHandler: KeyboardVisibilityHandler(notificationCenter: .default),
             viewDisplayMode: config.displayMode?.toViewDisplayMode ?? .unknown,
-            isSearchByNodeTagsFeatureEnabled: featureFlagProvider.isFeatureFlagEnabled(for: .searchByNodeTags),
             listHeaderViewModel: listHeaderViewModelFactory.buildIfNeeded(for: nodeSource),
             isSelectionEnabled: shouldEnableSelection
         )

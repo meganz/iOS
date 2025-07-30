@@ -23,7 +23,7 @@ import MEGADomain
     }
 
     private func tagArgument(from searchText: String) -> String? {
-        featureFlagProvider.isFeatureFlagEnabled(for: .searchByNodeTags) ? searchText.removingFirstLeadingHash() : nil
+        searchText.removingFirstLeadingHash()
     }
 
     private func search(type: SharedItemsSearchSourceTypeEntity, text: String, sortType: MEGASortOrderType) async throws -> [MEGANode]? {
