@@ -113,7 +113,6 @@ struct AccountMenuViewRouter: AccountMenuViewRouting {
         )
 
         hostingViewController.navigationItem.backButtonTitle = ""
-        hostingViewController.hidesBottomBarWhenPushed = true
 
         navigationController.viewControllers = [hostingViewController]
         navigationController.router = self
@@ -130,7 +129,8 @@ struct AccountMenuViewRouter: AccountMenuViewRouting {
                 nodeValidationRepository: NodeValidationRepository.newRepo,
                 nodeRepository: NodeRepository.newRepo
             ),
-            imageLoader: ImageLoader()
+            imageLoader: ImageLoader(),
+            hidesBottomBarWhenPushed: true
         ).start()
     }
 
@@ -194,6 +194,7 @@ struct AccountMenuViewRouter: AccountMenuViewRouting {
             return
         }
 
+        vc.hidesBottomBarWhenPushed = true
         navigationController.pushViewController(vc, animated: true)
     }
 
@@ -208,6 +209,7 @@ struct AccountMenuViewRouter: AccountMenuViewRouting {
     func showOfflineFiles() {
         let offlineVC = UIStoryboard(name: "Offline", bundle: nil)
             .instantiateViewController(withIdentifier: "OfflineViewControllerID")
+        offlineVC.hidesBottomBarWhenPushed = true
         navigationController.pushViewController(offlineVC, animated: true)
     }
 
@@ -220,6 +222,7 @@ struct AccountMenuViewRouter: AccountMenuViewRouting {
             config: .init(displayMode: .rubbishBin)
         )
         if let cloudDriveVC {
+            cloudDriveVC.hidesBottomBarWhenPushed = true
             navigationController.pushViewController(cloudDriveVC, animated: true)
         }
     }

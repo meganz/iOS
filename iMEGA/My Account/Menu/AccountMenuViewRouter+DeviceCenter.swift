@@ -41,7 +41,8 @@ extension AccountMenuViewRouter {
                 ),
             networkMonitorUseCase: NetworkMonitorUseCase(repo: NetworkMonitorRepository.newRepo),
             notificationCenter: NotificationCenter.default,
-            deviceCenterActions: makeDeviceCenterActionList()
+            deviceCenterActions: makeDeviceCenterActionList(),
+            hidesBottomBarWhenPushed: true
         ).start()
     }
 

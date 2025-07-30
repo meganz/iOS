@@ -25,6 +25,7 @@ public final class DeviceListViewRouter: NSObject, DeviceListRouting {
     private let notificationCenter: NotificationCenter
     private let backupStatusProvider: any BackupStatusProviding
     private let deviceIconProvider: any DeviceIconProviding
+    private let hidesBottomBarWhenPushed: Bool
 
     public init(
         navigationController: UINavigationController?,
@@ -36,7 +37,8 @@ public final class DeviceListViewRouter: NSObject, DeviceListRouting {
         notificationCenter: NotificationCenter,
         deviceCenterActions: [ContextAction],
         deviceIconProvider: some DeviceIconProviding = DeviceIconProvider(),
-        backupStatusProvider: some BackupStatusProviding = BackupStatusProvider()
+        backupStatusProvider: some BackupStatusProviding = BackupStatusProvider(),
+        hidesBottomBarWhenPushed: Bool = false
     ) {
         self.navigationController = navigationController
         self.deviceCenterBridge = deviceCenterBridge
@@ -51,7 +53,8 @@ public final class DeviceListViewRouter: NSObject, DeviceListRouting {
         self.updateInterval = 30
         self.backupStatusProvider = backupStatusProvider
         self.deviceIconProvider = deviceIconProvider
-        
+        self.hidesBottomBarWhenPushed = hidesBottomBarWhenPushed
+
         super.init()
     }
     
@@ -76,6 +79,7 @@ public final class DeviceListViewRouter: NSObject, DeviceListRouting {
         baseViewController = hostingController
         baseViewController?.title = Strings.Localizable.Device.Center.title
         baseViewController?.navigationItem.backBarButtonItem = BackBarButtonItem(menuTitle: Strings.Localizable.Device.Center.title)
+        hostingController.hidesBottomBarWhenPushed = hidesBottomBarWhenPushed
         return hostingController
     }
     
