@@ -215,7 +215,7 @@ extension SharedItemsViewController {
         nodes.indices.filter {
             nodes[$0].name?.containsIgnoringCaseAndDiacritics(searchText: key) == true
             || nodes[$0].description?.containsIgnoringCaseAndDiacritics(searchText: key) == true
-            || (viewModel.isSearchByNodetagsEnabled && nodes[$0].tags?.toStringArray()?.contains(
+            || (nodes[$0].tags?.toStringArray()?.contains(
                 where: { $0.containsIgnoringCaseAndDiacritics(searchText: tagKey) }
             ) == true)
         }.forEach { index in

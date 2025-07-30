@@ -81,7 +81,6 @@ final class SearchResultsViewModelTests: XCTestCase, @unchecked Sendable {
                 showLoadingPlaceholderDelay: 0.1,
                 keyboardVisibilityHandler: MockKeyboardVisibilityHandler(), 
                 viewDisplayMode: .unknown,
-                isSearchByNodeTagsFeatureEnabled: true,
                 listHeaderViewModel: nil,
                 isSelectionEnabled: true
             )
@@ -280,8 +279,7 @@ final class SearchResultsViewModelTests: XCTestCase, @unchecked Sendable {
                     selectionAction: {},
                     previewTapAction: {}
                 ),
-                swipeActions: [],
-                shouldShowMatchingTags: true
+                swipeActions: []
             )
         ]
         XCTAssertEqual(harness.sut.listItems.map(\.result), expectedListItems.map(\.result))
@@ -802,28 +800,20 @@ final class SearchResultsViewModelTests: XCTestCase, @unchecked Sendable {
     }
 
     @MainActor
-    func testNodeTags_whenFeatureFlagIsDisabled_shouldNotReturnAnyTags() {
-        let sut = generateRandomSearchResultRowViewModel(id: 100, tags: ["tag1"], shouldShowMatchingTags: false)
-        XCTAssertNil(sut.tagListViewModel)
-    }
-
-    @MainActor
-    func testNodeTags_whenFeatureFlagIsEnabledAndQueryTextDoesNotMatch_shouldNotReturnsAnyTags() {
+    func testNodeTags_whenQueryTextDoesNotMatch_shouldNotReturnsAnyTags() {
         let sut = generateRandomSearchResultRowViewModel(
             id: 100,
             tags: ["tag1"],
-            shouldShowMatchingTags: true,
             query: { "test" }
         )
         XCTAssertNil(sut.tagListViewModel)
     }
 
     @MainActor
-    func testNodeTags_whenFeatureFlagIsEnabledAndQueryTextMatches_shouldReturnsTheTag() throws {
+    func testNodeTags_whenQueryTextMatches_shouldReturnsTheTag() throws {
         let sut = generateRandomSearchResultRowViewModel(
             id: 100,
             tags: ["tag1"],
-            shouldShowMatchingTags: true,
             query: { "ta" }
         )
         let result = try XCTUnwrap(sut.tagListViewModel?.tags.map { $0.toNSAttributedString().string })
@@ -845,7 +835,6 @@ final class SearchResultsViewModelTests: XCTestCase, @unchecked Sendable {
         id: Int,
         note: String? = nil,
         tags: [String] = [],
-        shouldShowMatchingTags: Bool = true,
         query: @escaping () -> String? = { nil }
     ) -> SearchResultRowViewModel {
         .init(
@@ -869,8 +858,7 @@ final class SearchResultsViewModelTests: XCTestCase, @unchecked Sendable {
             colorAssets: .example,
             previewContent: .example,
             actions: .init(contextAction: { _ in }, selectionAction: { }, previewTapAction: { }),
-            swipeActions: [],
-            shouldShowMatchingTags: shouldShowMatchingTags
+            swipeActions: []
         )
     }
 

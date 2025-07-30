@@ -218,15 +218,12 @@ final class RecentActionBucketProvider: SearchResultsProviding, @unchecked Senda
             return list // return all when no query
         }
 
-        // if query, just filter with name or desc (and tags if corresponding feature flags are enabled)
-        let isSearchByTagsEnabled = featureFlagProvider.isFeatureFlagEnabled(for: .searchByNodeTags)
-
         let textQuery = queryEntity.query
         let tagQuery = textQuery.removingFirstLeadingHash()
         return list.filter { item in
             return (item.name.containsIgnoringCaseAndDiacritics(searchText: textQuery)
                     || item.description?.containsIgnoringCaseAndDiacritics(searchText: textQuery) == true
-                    || (isSearchByTagsEnabled && item.tags.contains(where: { $0.containsIgnoringCaseAndDiacritics(searchText: tagQuery) }))
+                    || item.tags.contains(where: { $0.containsIgnoringCaseAndDiacritics(searchText: tagQuery) })
             )
         }
     }

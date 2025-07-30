@@ -181,7 +181,7 @@ final class FilesExplorerViewModel: ViewModelType {
             filter: .recursive(
                 searchText: text,
                 searchDescription: text,
-                searchTag: featureFlagProvider.isFeatureFlagEnabled(for: .searchByNodeTags) ? text?.removingFirstLeadingHash() : nil,
+                searchTag: text?.removingFirstLeadingHash(),
                 searchTargetLocation: .folderTarget(.rootNode),
                 supportCancel: true,
                 sortOrderType: SortOrderType.defaultSortOrderType(forNode: nil).toSortOrderEntity(),

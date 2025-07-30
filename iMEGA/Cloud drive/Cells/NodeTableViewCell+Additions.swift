@@ -155,8 +155,7 @@ extension NodeTableViewCell {
 
     private func showTagsIfRequired(for node: MEGANode, searchText: String?) {
         tagsContainerView?.subviews.forEach { $0.removeFromSuperview() }
-        guard DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .searchByNodeTags),
-              let searchText = searchText?.removingFirstLeadingHash(),
+        guard let searchText = searchText?.removingFirstLeadingHash(),
               let tags: [AttributedString] = node.tags?.toStringArray()?.compactMap({ tag in
                   guard tag.containsIgnoringCaseAndDiacritics(searchText: searchText) else { return nil }
                   return AttributedString(

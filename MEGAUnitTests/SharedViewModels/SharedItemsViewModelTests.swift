@@ -42,17 +42,14 @@ final class SharedItemsViewModelTests: XCTestCase {
     }
 
     struct TagsForNodeTestData {
-        let isFeatureFlagEnabled: Bool
         let tags: [String]
         let searchText: String?
         let output: [NSAttributedString]
-        static let flagDisabled = TagsForNodeTestData(isFeatureFlagEnabled: false, tags: ["tag"], searchText: "tag", output: [])
-        static let emptyTags = TagsForNodeTestData(isFeatureFlagEnabled: true, tags: [], searchText: "tag", output: [])
-        static let searchTextIsNil = TagsForNodeTestData(isFeatureFlagEnabled: true, tags: ["tag"], searchText: nil, output: [])
-        static let searchTextNotMatched = TagsForNodeTestData(isFeatureFlagEnabled: true, tags: ["tag"], searchText: "x", output: [])
-        static let singleMatch = TagsForNodeTestData(isFeatureFlagEnabled: true, tags: ["tag"], searchText: "ta", output: [attributedOutput(tag: "tag", searchText: "ta")])
+        static let emptyTags = TagsForNodeTestData(tags: [], searchText: "tag", output: [])
+        static let searchTextIsNil = TagsForNodeTestData(tags: ["tag"], searchText: nil, output: [])
+        static let searchTextNotMatched = TagsForNodeTestData(tags: ["tag"], searchText: "x", output: [])
+        static let singleMatch = TagsForNodeTestData(tags: ["tag"], searchText: "ta", output: [attributedOutput(tag: "tag", searchText: "ta")])
         static let multipleMatches = TagsForNodeTestData(
-            isFeatureFlagEnabled: true,
             tags: ["tag1", "tag2", "xxx"],
             searchText: "tag",
             output: [
@@ -180,7 +177,6 @@ final class SharedItemsViewModelTests: XCTestCase {
     @MainActor
     func testTagsForNode_ShouldReturnCorrectValues() async {
         let testData: [TagsForNodeTestData] = [
-            .flagDisabled,
             .emptyTags,
             .searchTextIsNil,
             .searchTextNotMatched,
@@ -188,8 +184,7 @@ final class SharedItemsViewModelTests: XCTestCase {
             .multipleMatches
         ]
         testData.forEach { data in
-            let featureFlagProvider = MockFeatureFlagProvider(list: [.searchByNodeTags: data.isFeatureFlagEnabled])
-            let sut = makeSUT(featureFlagProvider: featureFlagProvider)
+            let sut = makeSUT()
             let tagsStringList = MockMEGAStringList(size: data.tags.count, strings: data.tags)
             XCTAssertEqual(sut.tagsForNode(MockNode(handle: 1, tags: tagsStringList), with: data.searchText), data.output)
         }
@@ -246,7 +241,6 @@ final class SharedItemsViewModelTests: XCTestCase {
         saveMediaToPhotosUseCase: some SaveMediaToPhotosUseCaseProtocol = MockSaveMediaToPhotosUseCase(),
         nodeUseCase: some NodeUseCaseProtocol = MockNodeUseCase(),
         moveToRubbishBinViewModel: some MoveToRubbishBinViewModelProtocol = MockMoveToRubbishBinViewModel(),
-        featureFlagProvider: MockFeatureFlagProvider = .init(list: [:]),
         file: StaticString = #file,
         line: UInt = #line
     ) -> SharedItemsViewModel {
@@ -255,8 +249,7 @@ final class SharedItemsViewModelTests: XCTestCase {
             mediaUseCase: mediaUseCase,
             nodeUseCase: nodeUseCase,
             saveMediaToPhotosUseCase: saveMediaToPhotosUseCase,
-            moveToRubbishBinViewModel: moveToRubbishBinViewModel,
-            featureFlagProvider: featureFlagProvider
+            moveToRubbishBinViewModel: moveToRubbishBinViewModel
         )
         trackForMemoryLeaks(on: sut, file: file, line: line)
         return sut

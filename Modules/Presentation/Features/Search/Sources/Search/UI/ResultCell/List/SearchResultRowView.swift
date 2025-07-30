@@ -197,8 +197,7 @@ struct SearchResultRowView: View {
                 colorAssets: .example,
                 previewContent: .example,
                 actions: actions,
-                swipeActions: [],
-                shouldShowMatchingTags: true
+                swipeActions: []
             )
         }
     }

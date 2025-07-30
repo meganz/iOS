@@ -60,8 +60,6 @@ class SearchResultRowViewModel: Identifiable, ObservableObject {
     }
 
     var tagListViewModel: HorizontalTagListViewModel? {
-        guard shouldShowMatchingTags else { return nil }
-
         let tags: [AttributedString] = result.tags.compactMap { inputTag in
             guard let query = query()?.removingFirstLeadingHash(),
                   case let tag = "#" + inputTag,
@@ -147,7 +145,6 @@ class SearchResultRowViewModel: Identifiable, ObservableObject {
     let actions: UserActions
     let rowAssets: SearchConfig.RowAssets
     let swipeActions: [SearchResultSwipeAction]
-    let shouldShowMatchingTags: Bool
 
     init(
         result: SearchResult,
@@ -156,8 +153,7 @@ class SearchResultRowViewModel: Identifiable, ObservableObject {
         colorAssets: SearchConfig.ColorAssets,
         previewContent: PreviewContent,
         actions: UserActions,
-        swipeActions: [SearchResultSwipeAction],
-        shouldShowMatchingTags: Bool
+        swipeActions: [SearchResultSwipeAction]
     ) {
         self.result = result
         self.query = query
@@ -166,7 +162,6 @@ class SearchResultRowViewModel: Identifiable, ObservableObject {
         self.actions = actions
         self.rowAssets = rowAssets
         self.swipeActions = swipeActions
-        self.shouldShowMatchingTags = shouldShowMatchingTags
     }
 
     func loadThumbnail() async {

@@ -83,7 +83,6 @@ final class HomeSearchResultsProviderTests: XCTestCase {
             nodes: [NodeEntity] = [],
             excludeSensitives: Bool = false,
             hiddenNodesFeatureEnabled: Bool = true,
-            searchByNodeTagsEnabled: Bool = false,
             nodeUpdates: AnyAsyncSequence<[NodeEntity]> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
             file: StaticString = #filePath,
             line: UInt = #line
@@ -126,8 +125,7 @@ final class HomeSearchResultsProviderTests: XCTestCase {
                 ),
                 sdk: sdk,
                 nodeActions: NodeActions.mock(),
-                hiddenNodesFeatureEnabled: hiddenNodesFeatureEnabled,
-                searchByNodeTagsEnabled: searchByNodeTagsEnabled
+                hiddenNodesFeatureEnabled: hiddenNodesFeatureEnabled
             )
             
             testCase.trackForMemoryLeaks(on: sut, timeoutNanoseconds: 100_000_000, file: file, line: line)
@@ -211,19 +209,16 @@ final class HomeSearchResultsProviderTests: XCTestCase {
     }
 
     func testSearch_whenSearchByNodeTagsEnabled_shouldHaveCorrectFilterProperty() async throws {
-        for enabled in [false, true] {
-            // given
-            let harness = Harness.init(self, searchByNodeTagsEnabled: enabled)
-
-            // when
-            _ = await harness.sut.search(queryRequest: .userSupplied(.query("foo", isSearchActive: false)))
-
-            // then
-            XCTAssertEqual(harness.filesSearchUseCase.filters.count, 1)
-            let filter = try XCTUnwrap(harness.filesSearchUseCase.filters.first)
-            XCTAssertEqual(filter.searchTag == nil, !enabled)
-            XCTAssertFalse(filter.useAndForTextQuery)
-        }
+        // given
+        let harness = Harness.init(self)
+        
+        // when
+        _ = await harness.sut.search(queryRequest: .userSupplied(.query("foo", isSearchActive: false)))
+        
+        // then
+        XCTAssertEqual(harness.filesSearchUseCase.filters.count, 1)
+        let filter = try XCTUnwrap(harness.filesSearchUseCase.filters.first)
+        XCTAssertFalse(filter.useAndForTextQuery)
     }
 
     func testSearch_whenHiddenNodesFeatureEnabledAndShowHiddenNodesSettingIsOn_shouldNotExcludeHiddenNodes() async throws {

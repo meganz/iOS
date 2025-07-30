@@ -43,8 +43,7 @@ func testableSearchResultsViewModel(
             selectionAction: {},
             previewTapAction: {}
         ),
-        swipeActions: [],
-        shouldShowMatchingTags: true
+        swipeActions: []
     )
     viewModel.thumbnailImage = TestAsset.Image.folder
     return viewModel

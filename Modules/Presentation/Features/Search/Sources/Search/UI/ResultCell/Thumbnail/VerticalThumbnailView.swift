@@ -254,8 +254,7 @@ struct VerticalThumbnailView: View {
                 selectionAction: {},
                 previewTapAction: {}
             ),
-            swipeActions: [],
-            shouldShowMatchingTags: true
+            swipeActions: []
         ),
         selected: .constant([]),
         selectionEnabled: .constant(false)
@@ -281,8 +280,7 @@ struct VerticalThumbnailView: View {
                 selectionAction: {},
                 previewTapAction: {}
             ),
-            swipeActions: [],
-            shouldShowMatchingTags: true
+            swipeActions: []
         ),
         selected: .constant([]),
         selectionEnabled: .constant(false)
@@ -308,8 +306,7 @@ struct VerticalThumbnailView: View {
                 selectionAction: {},
                 previewTapAction: {}
             ),
-            swipeActions: [],
-            shouldShowMatchingTags: true
+            swipeActions: []
         ),
         selected: .constant([]),
         selectionEnabled: .constant(false)

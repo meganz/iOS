@@ -9,8 +9,7 @@ extension NodeEntity {
     func toVideoCellPreviewEntity(
         thumbnailContainer: any ImageContaining,
         isDownloaded: Bool,
-        searchText: String?,
-        searchByNodeTagsFeatureFlagEnabled: Bool
+        searchText: String?
     ) -> VideoCellPreviewEntity {
         let description: String? = if let searchText,
                                       let description = description,
@@ -21,7 +20,7 @@ extension NodeEntity {
             nil
         }
 
-        let filteredTags: [String] = if searchByNodeTagsFeatureFlagEnabled, let searchText {
+        let filteredTags: [String] = if let searchText {
             tags.filter({ $0.containsIgnoringCaseAndDiacritics(searchText: searchText.removingFirstLeadingHash()) })
         } else {
             []

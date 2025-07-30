@@ -123,7 +123,6 @@ class NodeBrowserViewModelTests: XCTestCase {
                     searchInputDebounceDelay: 0,
                     keyboardVisibilityHandler: MockKeyboardVisibilityHandler(),
                     viewDisplayMode: .unknown,
-                    isSearchByNodeTagsFeatureEnabled: true,
                     listHeaderViewModel: nil,
                     isSelectionEnabled: true
                 ),

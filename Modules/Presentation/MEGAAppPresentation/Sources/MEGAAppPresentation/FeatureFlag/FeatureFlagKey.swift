@@ -8,7 +8,6 @@ public enum FeatureFlagKey: FeatureFlagName, CaseIterable, Sendable {
     case reorderVideosInVideoPlaylistContent = "Reorder videos in video playlist content"
     case webclientSubscribersCancelSubscription = "Webclient subscribers cancel subscription flow"
     case multipleOptionsForCancellationSurvey = "Multiple Options for Cancellation Survey"
-    case searchByNodeTags = "Search By Node Tags"
     case newSetting = "New Setting"
     case loginRegisterAndOnboardingRevamp = "Use revamp contained in the MEGAAuthentication package"
     case crossfadeSlideShow = "Apply crossfade animation to slideshow"
@@ -18,5 +17,5 @@ public enum FeatureFlagKey: FeatureFlagName, CaseIterable, Sendable {
     /// Discussion:
     /// - For some features, we want to release them without having to remove their flags from code as a risk management measure.
     /// Instead we'll enable them first and then proceed to remove the flags after the features are stable.
-    public static let rolledOutKeys: Set<FeatureFlagKey> = [.searchByNodeTags, .crossfadeSlideShow, .loginRegisterAndOnboardingRevamp]
+    public static let rolledOutKeys: Set<FeatureFlagKey> = [.crossfadeSlideShow, .loginRegisterAndOnboardingRevamp]
 }
