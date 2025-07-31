@@ -279,7 +279,6 @@ extension AppDelegate {
         
         OverDiskQuotaViewRouter(
             presenter: UIApplication.mnz_presentingViewController(),
-            mainTabBar: mainTBC,
             overDiskQuotaInfomation: info,
             dismissCompletionAction: { [weak self] in
                 self?.isOverDiskQuotaPresented = false

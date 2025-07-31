@@ -58,9 +58,6 @@
     [super viewWillDisappear:animated];
     [NSNotificationCenter.defaultCenter removeObserver:self name:kReachabilityChangedNotification object:nil];
     [NSNotificationCenter.defaultCenter removeObserver:self name:UIApplicationWillEnterForegroundNotification object:nil];
-}
-
-- (void)dealloc {
     [AudioPlayerManager.shared removeMiniPlayerHandler:self];
 }
 

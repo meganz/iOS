@@ -10,20 +10,17 @@ protocol OverDiskQuotaViewRouting: Routing {
 final class OverDiskQuotaViewRouter: OverDiskQuotaViewRouting {
     private weak var baseViewController: UIViewController?
     private weak var presenter: UIViewController?
-    private weak var mainTabBar: MainTabBarController?
     private let overDiskQuotaInfomation: any OverDiskQuotaInfomationProtocol
     private let dismissCompletionAction: (() -> Void)?
     private let presentCompletionAction: (() -> Void)?
     
     init(
         presenter: UIViewController?,
-        mainTabBar: MainTabBarController?,
         overDiskQuotaInfomation: some OverDiskQuotaInfomationProtocol,
         dismissCompletionAction: (() -> Void)?,
         presentCompletionAction: (() -> Void)?
     ) {
         self.presenter = presenter
-        self.mainTabBar = mainTabBar
         self.overDiskQuotaInfomation = overDiskQuotaInfomation
         self.dismissCompletionAction = dismissCompletionAction
         self.presentCompletionAction = presentCompletionAction

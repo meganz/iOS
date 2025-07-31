@@ -22,7 +22,7 @@ extension MainTabBarController: AdsSlotViewControllerProtocol {
     }
     
     private func currentAdsSlotConfig() -> AdsSlotConfig? {
-        // Mike: Navigation Revamp, SharedItems are not available, thus directly calling TabManager.sharedItemsTabIndex()
+        // In Navigation Revamp, SharedItems are not available, thus directly calling TabManager.sharedItemsTabIndex()
         // will cause a assertionFailure() to trigger. Here I work around by combining isNavigationRevampEnabled with selectedIndex
         // in the switch, when isNavigationRevampEnabled is `true`, the switch case will fall through and TabManager.sharedItemsTabIndex()
         // won't be called, hence properly avoided the assertion assertionFailure().
