@@ -7,15 +7,24 @@ final class MainTabBarCallsRouter: MainTabBarCallsRouting {
     
     private lazy var callWaitingRoomDialog = CallWaitingRoomUsersDialog()
     private var screenRecordingAlert: UIAlertController?
-    private var baseViewController: UIViewController
     private var shouldCheckPendingWaitingRoomNotification: Bool = false
     private let tracker: any AnalyticsTracking
-    
+
+    // See MR discussion for the reason behind internalBaseViewController-baseViewController dance. 
+    private weak var internalBaseViewController: UIViewController?
+    private var baseViewController: UIViewController {
+        guard let internalBaseViewController else {
+            assertionFailure("interalBaseViewController should be non-nil when accessing baseViewController")
+            return UIViewController()
+        }
+        return internalBaseViewController
+    }
+
     init(
         baseViewController: UIViewController,
         tracker: some AnalyticsTracking = DIContainer.tracker
     ) {
-        self.baseViewController = baseViewController
+        self.internalBaseViewController = baseViewController
         self.tracker = tracker
     }
     
