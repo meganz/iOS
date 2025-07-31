@@ -113,7 +113,7 @@ class AppearanceManager: NSObject {
 
     private class func setupTabbarForRevampedAppearance(_ tabBar: UITabBar) {
         let appearance = UITabBarAppearance()
-        appearance.backgroundColor = .surface1Background()
+        appearance.backgroundColor = .pageBackgroundColor()
 
         let normalColor = TokenColors.Text.secondary
         let selectedColor = TokenColors.Button.brand
