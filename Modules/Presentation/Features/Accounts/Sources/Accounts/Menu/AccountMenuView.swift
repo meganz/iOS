@@ -22,6 +22,7 @@ public struct AccountMenuView: View {
                 viewModel.notificationButtonTapped()
             }
         }
+        .background(TokenColors.Background.page.swiftUI)
         .toolbar(.hidden)
         .onAppear { viewModel.trackOnScreenAppear() }
         .task { await viewModel.onTask() }
@@ -92,7 +93,6 @@ public struct AccountMenuView: View {
             }
         }
         .coordinateSpace(name: AccountMenuViewModel.Constants.coordinateSpaceName)
-
     }
 }
 
