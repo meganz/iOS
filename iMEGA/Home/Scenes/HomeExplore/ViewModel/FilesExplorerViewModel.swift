@@ -46,6 +46,11 @@ final class FilesExplorerViewModel: ViewModelType {
             nodeDownloadCompletionMonitoringTask?.cancel()
         }
     }
+    private var sortingPreferenceNotificationTask: Task<Void, Never>? {
+        didSet {
+            oldValue?.cancel()
+        }
+    }
     
     private let featureFlagProvider: any FeatureFlagProviderProtocol
     private var viewConfiguration: (any FilesExplorerViewConfiguration)? {
@@ -65,6 +70,7 @@ final class FilesExplorerViewModel: ViewModelType {
     private var viewTypePreference: ViewTypePreference = .list
     private var configForDisplayMenu: CMConfigEntity?
     private var configForUploadAddMenu: CMConfigEntity?
+    private let notificationCenter: NotificationCenter
     
     var invokeCommand: ((Command) -> Void)?
     
@@ -84,7 +90,8 @@ final class FilesExplorerViewModel: ViewModelType {
                   sensitiveDisplayPreferenceUseCase: some SensitiveDisplayPreferenceUseCaseProtocol,
                   createContextMenuUseCase: some CreateContextMenuUseCaseProtocol,
                   nodeProvider: some MEGANodeProviderProtocol,
-                  featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider) {
+                  featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider,
+                  notificationCenter: NotificationCenter = .default) {
         self.explorerType = explorerType
         self.router = router
         self.useCase = useCase
@@ -93,12 +100,14 @@ final class FilesExplorerViewModel: ViewModelType {
         self.sensitiveDisplayPreferenceUseCase = sensitiveDisplayPreferenceUseCase
         self.nodeProvider = nodeProvider
         self.featureFlagProvider = featureFlagProvider
+        self.notificationCenter = notificationCenter
     }
     
     deinit {
         monitorTask?.cancel()
         searchTask?.cancel()
         nodeDownloadCompletionMonitoringTask?.cancel()
+        sortingPreferenceNotificationTask?.cancel()
     }
     
     private func configureContextMenus() {
@@ -138,6 +147,7 @@ final class FilesExplorerViewModel: ViewModelType {
             invokeCommand?(.setViewConfiguration(viewConfiguration))
             configureContextMenus()
             monitorTask = Task { await monitorNodeUpdates() }
+            subscribeToSortingPreferenceNotification()
         case .startSearching(let text):
             searchTask = Task { await startSearching(text) }
         case .didSelectNode(let node, let allNodes):
@@ -210,6 +220,15 @@ final class FilesExplorerViewModel: ViewModelType {
             for await node in nodeDownloadUpdatesUseCase.startMonitoringDownloadCompletion(for: nodes) {
                 guard let megaNode = await self?.nodeProvider.node(for: node.handle) else { continue }
                 self?.invokeCommand?(.onTransferCompleted(megaNode))
+            }
+        }
+    }
+    
+    private func subscribeToSortingPreferenceNotification() {
+        sortingPreferenceNotificationTask = Task { [weak self, notificationCenter] in
+            for await _ in notificationCenter.notifications(named: .sortingPreferenceChanged) {
+                self?.invokeCommand?(.sortTypeHasChanged)
+                self?.configureContextMenus()
             }
         }
     }
