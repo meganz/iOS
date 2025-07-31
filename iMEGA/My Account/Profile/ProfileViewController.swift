@@ -90,6 +90,7 @@ import UIKit
         
         dataSource?.configureDataSource()
         bindToSubscriptions()
+        hideSeparatorsIfNeeded()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -338,7 +339,13 @@ import UIKit
         navigation.addRightCancelButton()
         present(navigation, animated: true, completion: nil)
     }
-    
+
+    private func hideSeparatorsIfNeeded() {
+        if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .navigationRevamp) {
+            tableView?.separatorStyle = .none
+        }
+    }
+
     // MARK: - IBActions
     
     @IBAction func backTouchUpInside(_ sender: UIButton) {
