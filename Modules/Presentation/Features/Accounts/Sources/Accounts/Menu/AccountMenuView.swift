@@ -132,7 +132,7 @@ private struct AccountMenuHeaderView: View {
         VStack(spacing: 0) {
             Color
                 .clear
-                .background(Material.regular)
+                .background(TokenColors.Background.page.swiftUI)
             Divider()
         }
     }
