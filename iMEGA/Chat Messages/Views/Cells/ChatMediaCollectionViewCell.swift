@@ -51,6 +51,7 @@ class ChatMediaCollectionViewCell: MessageContentCell, MEGATransferDelegate {
         loadingIndicator.translatesAutoresizingMaskIntoConstraints = false
         loadingIndicator.startAnimating()
         loadingIndicator.hidesWhenStopped = true
+        loadingIndicator.color = TokenColors.Icon.primary
         return loadingIndicator
     }()
     
@@ -137,7 +138,7 @@ class ChatMediaCollectionViewCell: MessageContentCell, MEGATransferDelegate {
         guard let chatMessage = message as? ChatMessage else {
             return
         }
-
+        messageContainerView.backgroundColor = TokenColors.Background.surface3
         let megaMessage = chatMessage.message
         currentTransfer = chatMessage.transfer
         progressView.progress = 0
