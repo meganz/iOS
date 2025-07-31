@@ -125,6 +125,8 @@
         [SAMKeychain setPassword:session forService:@"MEGA" account:@"sessionV3"];
         [self showLoadingView];
     }
+
+    [self createKMTransferFile];
 }
 
 @end

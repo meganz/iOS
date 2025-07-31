@@ -506,6 +506,8 @@
     [Helper resetUserData];
     
     [Helper deletePasscode];
+
+    [Helper deleteKMTransferFile];
 }
 
 + (void)clearEphemeralSession {

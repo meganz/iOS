@@ -1557,7 +1557,13 @@
 		998379342ACA417100A9A439 /* ChatRoomParticipantViewModel+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 998379332ACA417100A9A439 /* ChatRoomParticipantViewModel+Additions.swift */; };
 		9986031E2A78AA1800D39A20 /* SendToViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 996309C52A78A61300382C38 /* SendToViewController+Additions.swift */; };
 		9986031F2A78AA1900D39A20 /* SendToViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 996309C52A78A61300382C38 /* SendToViewController+Additions.swift */; };
+		998CDC862E39D5FE00BC9CA1 /* AppDelegate+KMTransferUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 998CDC852E39D5FE00BC9CA1 /* AppDelegate+KMTransferUtils.swift */; };
+		998CDC9B2E3AC39800BC9CA1 /* DIContainer+KMTransferUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 998CDC9A2E3AC39800BC9CA1 /* DIContainer+KMTransferUtils.swift */; };
+		998CDCAE2E3ACD8400BC9CA1 /* DIContainer+KMTransferUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 998CDC9A2E3AC39800BC9CA1 /* DIContainer+KMTransferUtils.swift */; };
 		99C0CE6D2C7BFEC100778F53 /* LaunchViewController+Addition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C0CE6C2C7BFEC100778F53 /* LaunchViewController+Addition.swift */; };
+		99D151B82E3B28CD00B68675 /* KMTransferUtils.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 99D151B72E3B28CD00B68675 /* KMTransferUtils.xcframework */; };
+		99D151BD2E3B29D500B68675 /* KMTransferUtils.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 99D151B72E3B28CD00B68675 /* KMTransferUtils.xcframework */; };
+		99D151BE2E3B29D500B68675 /* KMTransferUtils.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 99D151B72E3B28CD00B68675 /* KMTransferUtils.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		99D65D732A8BB5AE005D5877 /* WaitingRoomControlsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D65D722A8BB5AE005D5877 /* WaitingRoomControlsView.swift */; };
 		99D65D772A8C699A005D5877 /* WaitingRoomUserAvatarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D65D762A8C699A005D5877 /* WaitingRoomUserAvatarView.swift */; };
 		99DB1D5A2AC64B34004A9CC3 /* ChatRepoMock in Frameworks */ = {isa = PBXBuildFile; productRef = 99DB1D592AC64B34004A9CC3 /* ChatRepoMock */; };
@@ -2721,6 +2727,17 @@
 			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		998CDCAB2E3ACD4A00BC9CA1 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				99D151BE2E3B29D500B68675 /* KMTransferUtils.xcframework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		A55CDB472DCF2D9E00D14103 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -2728,16 +2745,6 @@
 			dstSubfolderSpec = 10;
 			files = (
 				A55CDB462DCF2D9D00D14103 /* MEGAAssets in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		A5A119C32DCB163A0066BAB8 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -4344,7 +4351,10 @@
 		998299052ADCA02E001F9BED /* ChatRoomParticipantsListViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomParticipantsListViewModelTests.swift; sourceTree = "<group>"; };
 		998379302ACA408800A9A439 /* ChatRoomParticipantViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomParticipantViewModelTests.swift; sourceTree = "<group>"; };
 		998379332ACA417100A9A439 /* ChatRoomParticipantViewModel+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatRoomParticipantViewModel+Additions.swift"; sourceTree = "<group>"; };
+		998CDC852E39D5FE00BC9CA1 /* AppDelegate+KMTransferUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppDelegate+KMTransferUtils.swift"; sourceTree = "<group>"; };
+		998CDC9A2E3AC39800BC9CA1 /* DIContainer+KMTransferUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DIContainer+KMTransferUtils.swift"; sourceTree = "<group>"; };
 		99C0CE6C2C7BFEC100778F53 /* LaunchViewController+Addition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LaunchViewController+Addition.swift"; sourceTree = "<group>"; };
+		99D151B72E3B28CD00B68675 /* KMTransferUtils.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = KMTransferUtils.xcframework; sourceTree = "<group>"; };
 		99D65D722A8BB5AE005D5877 /* WaitingRoomControlsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitingRoomControlsView.swift; sourceTree = "<group>"; };
 		99D65D762A8C699A005D5877 /* WaitingRoomUserAvatarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitingRoomUserAvatarView.swift; sourceTree = "<group>"; };
 		99E1A9282A383EC000974FC9 /* BadgeButtonTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeButtonTests.swift; sourceTree = "<group>"; };
@@ -5512,6 +5522,7 @@
 				A8B51ADC27F3534F0030F1EA /* Haptica in Frameworks */,
 				A8F5155827F6F24F00AEE4D6 /* ISEmojiView in Frameworks */,
 				BF1164BB27F692DB00E5C5A4 /* KeyboardLayoutGuide in Frameworks */,
+				99D151B82E3B28CD00B68675 /* KMTransferUtils.xcframework in Frameworks */,
 				BF67F7F82AB4171A00AC127E /* LogRepo in Frameworks */,
 				94A220182A696502004130C4 /* MEGAAnalyticsiOS in Frameworks */,
 				BFE7728E2D9B637A005B114E /* MEGAAppPresentation in Frameworks */,
@@ -5610,6 +5621,7 @@
 				A828E68D286B3204004CED9E /* FirebaseCrashlytics in Frameworks */,
 				BF1CEA3E27FA757800C1A2E5 /* GKContactImage in Frameworks */,
 				B5866BB92CA566BA009E0A1E /* GoogleMobileAds in Frameworks */,
+				99D151BD2E3B29D500B68675 /* KMTransferUtils.xcframework in Frameworks */,
 				BF67F7FA2AB4172100AC127E /* LogRepo in Frameworks */,
 				BFE772A32D9B8A32005B114E /* MEGAAppPresentation in Frameworks */,
 				25455BE82CCB8E1D008DE44E /* MEGAAssets in Frameworks */,
@@ -7109,6 +7121,7 @@
 				A873E84226E117A400CBB174 /* FirstLaunchCheck */,
 				B695E57E23275A3800D12B9E /* Functions */,
 				5B2417E620527F5900C8DDE2 /* Headers */,
+				998CDC992E3AC37600BC9CA1 /* KMTransferUtils */,
 				B51DD9CB28B5D3110094A979 /* LiveText */,
 				A841886827832C5900291F4C /* Logs */,
 				5D72206D24A1D93400910945 /* MarkedString */,
@@ -10685,6 +10698,14 @@
 			path = ChatRoomAvatar;
 			sourceTree = "<group>";
 		};
+		998CDC992E3AC37600BC9CA1 /* KMTransferUtils */ = {
+			isa = PBXGroup;
+			children = (
+				998CDC9A2E3AC39800BC9CA1 /* DIContainer+KMTransferUtils.swift */,
+			);
+			path = KMTransferUtils;
+			sourceTree = "<group>";
+		};
 		99E1A9272A383E9700974FC9 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -11399,6 +11420,7 @@
 				B5E719B7290B716A0076FEA3 /* AppDelegate+Account.swift */,
 				BF69E5162374F3720031913D /* AppDelegate+Additions.swift */,
 				B511CE6D2AA745E800445877 /* AppDelegate+Ads.swift */,
+				998CDC852E39D5FE00BC9CA1 /* AppDelegate+KMTransferUtils.swift */,
 				258BA6242CC9FE2400349CD2 /* AppDelegate+ModuleConfigs.swift */,
 				C49949892E2F6621002B2F2B /* AppDelegate+Notifications.swift */,
 				C403FA492BAD89C9007642AD /* AppDelegate+QuickUploadAction.swift */,
@@ -12256,6 +12278,7 @@
 				1654C7EE2DC47D8100DDB846 /* MEGAStoreKit */,
 				0E04F43D2D96522A0048A692 /* MEGASwift */,
 				0ED1EBD02D9B90E00037B39F /* MEGATest */,
+				99D151B72E3B28CD00B68675 /* KMTransferUtils.xcframework */,
 			);
 			path = Infrastracture;
 			sourceTree = "<group>";
@@ -13441,7 +13464,6 @@
 				942254FF1EDC03150074C51A /* Embed Foundation Extensions */,
 				2FCB996A24CA8CA10040E825 /* Run Script: Automatically sets SDK and chat SDK commit hashes */,
 				B67FFF9329D530F500E830FA /* Run Script: Copy GoogleService-Info */,
-				A5A119C32DCB163A0066BAB8 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -13614,6 +13636,7 @@
 				943F8B0C1EF26E9C00AFD89F /* Frameworks */,
 				943F8B0D1EF26E9C00AFD89F /* Resources */,
 				B6D16A5A29DCFAB700402828 /* Run Script: Copy GoogleService-Info */,
+				998CDCAB2E3ACD4A00BC9CA1 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -14362,6 +14385,7 @@
 				BF69E5172374F3720031913D /* AppDelegate+Additions.swift in Sources */,
 				B511CE6E2AA745E800445877 /* AppDelegate+Ads.swift in Sources */,
 				0E261EB42DA5FE1600858151 /* AppDelegate+Authentication.swift in Sources */,
+				998CDC862E39D5FE00BC9CA1 /* AppDelegate+KMTransferUtils.swift in Sources */,
 				258BA6252CC9FE3C00349CD2 /* AppDelegate+ModuleConfigs.swift in Sources */,
 				C499498A2E2F6628002B2F2B /* AppDelegate+Notifications.swift in Sources */,
 				C403FA4A2BAD89C9007642AD /* AppDelegate+QuickUploadAction.swift in Sources */,
@@ -14751,6 +14775,7 @@
 				0EE5AC202B1EB2C200BCDD88 /* DIContainer+CustomModalAlert.swift in Sources */,
 				163ABD4C2DC4C9D2004B5D5A /* DIContainer+ExternalPurchase.swift in Sources */,
 				A5D527912CCF625E00CC9E46 /* DIContainer+FeatureFlagProvider.swift in Sources */,
+				998CDC9B2E3AC39800BC9CA1 /* DIContainer+KMTransferUtils.swift in Sources */,
 				6D00BD282B1E5D9600370AC7 /* DIContainer+Photos.swift in Sources */,
 				B6AF22C226097C310008FF72 /* DiskFullBlockingModel.swift in Sources */,
 				B60D531B25FA940A003E9829 /* DiskFullBlockingViewController.swift in Sources */,
@@ -16081,6 +16106,7 @@
 				0EE5AC1C2B1E9EE700BCDD88 /* CustomModalAlertViewModel.swift in Sources */,
 				0EE5AC212B1EB2C200BCDD88 /* DIContainer+CustomModalAlert.swift in Sources */,
 				BF5718502D3719EC004BD1EC /* DIContainer+FeatureFlagProvider.swift in Sources */,
+				998CDCAE2E3ACD8400BC9CA1 /* DIContainer+KMTransferUtils.swift in Sources */,
 				BF943E9023553F11001C18E0 /* DNDTurnOnOption.swift in Sources */,
 				838F63CF2836778A009B41D6 /* DuplicatedItem.swift in Sources */,
 				C43817B82746924F00EA82A8 /* DynamicTypeComponentProtocol.swift in Sources */,
