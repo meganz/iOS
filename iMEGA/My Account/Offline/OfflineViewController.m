@@ -68,7 +68,7 @@ static NSString *kisDirectory = @"kisDirectory";
     
     [self configureNavigationBar];
     
-    [self setNavigationBarButtons];
+    [self configureNavigationBarButtons];
     
     [self setUpInvokeCommands];
     
@@ -91,7 +91,7 @@ static NSString *kisDirectory = @"kisDirectory";
     
     [self refreshMiniPlayerIfNeeded];
     
-    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(reloadUI) name:MEGASortingPreference object:nil];
+    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(sortingPreferenceDidChange:) name:MEGASortingPreference object:nil];
     
     [self observeViewMode];
     [self dispatchOnViewAppearAction];
@@ -306,6 +306,11 @@ static NSString *kisDirectory = @"kisDirectory";
     self.activityBarButtonItem.image = [UIImage megaImageWithNamed:@"share"];
     self.selectAllBarButtonItem.image = [UIImage megaImageWithNamed:@"selectAllItems"];
     self.deleteBarButtonItem.image = [UIImage megaImageWithNamed:@"rubbishBin"];
+}
+
+- (void)sortingPreferenceDidChange:(NSNotification *)notification {
+    [self reloadUI];
+    [self configureNavigationBarButtons];
 }
 
 - (void)reloadUI {
@@ -758,7 +763,7 @@ static NSString *kisDirectory = @"kisDirectory";
             }];
         }
     } else {
-        [self setNavigationBarButtons];
+        [self configureNavigationBarButtons];
         self.allItemsSelected = NO;
         self.selectedItems = nil;
         self.navigationItem.leftBarButtonItems = @[];

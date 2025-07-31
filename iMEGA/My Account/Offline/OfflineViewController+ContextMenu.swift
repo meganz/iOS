@@ -12,7 +12,7 @@ extension OfflineViewController: DisplayMenuDelegate {
                               isOfflineFolder: true)
     }
     
-    @objc func setNavigationBarButtons() {
+    @objc func configureNavigationBarButtons() {
         contextMenuManager = ContextMenuManager(displayMenuDelegate: self, createContextMenuUseCase: CreateContextMenuUseCase(repo: CreateContextMenuRepository.newRepo))
         
         contextBarButtonItem = UIBarButtonItem(image: MEGAAssets.UIImage.moreNavigationBar,
@@ -35,13 +35,13 @@ extension OfflineViewController: DisplayMenuDelegate {
         }
         
         if needToRefreshMenu {
-            setNavigationBarButtons()
+            configureNavigationBarButtons()
         }
     }
     
     func sortMenu(didSelect sortType: SortOrderType) {
         Helper.save(sortType.megaSortOrderType, for: currentOfflinePath)
         nodesSortTypeHasChanged()
-        setNavigationBarButtons()
+        configureNavigationBarButtons()
     }
 }
