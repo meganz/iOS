@@ -1,6 +1,7 @@
+import AsyncAlgorithms
 import Foundation
-import MEGASwift
 import MEGAPreference
+import MEGASwift
 
 public enum CameraUploadPausedReason: Sendable {
     case notPaused
@@ -10,7 +11,7 @@ public enum CameraUploadPausedReason: Sendable {
 
 /// UseCase that provides information relating to the current active status of the CameraUploads in the application.
 public protocol MonitorCameraUploadUseCaseProtocol: Sendable {
-    
+    var cameraUploadState: AnyAsyncSequence<CameraUploadStateEntity> { get }
     ///  AsyncSequence that fires off CameraUploadStatsEntity relating to the status of active camera uploads occurring in the application.
     ///   A new stats update should be triggered when uploads have had a state change. This includes completions, failures or paused
     /// - Returns: AsyncSequence that emits CameraUploadStatsEntity, this sequence will continue to remain active and cancel only from cooperative cancellation. Use this sequence appropriately.
@@ -29,6 +30,21 @@ public struct MonitorCameraUploadUseCase<S: CameraUploadsStatsRepositoryProtocol
     
     @PreferenceWrapper(key: PreferenceKeyEntity.cameraUploadsCellularDataUsageAllowed, defaultValue: false)
     private var cameraUploadsUseCellularDataUsageAllowed: Bool
+    
+    public var cameraUploadState: AnyAsyncSequence<CameraUploadStateEntity> {
+        combineLatest(
+            uploadStats(),
+            pausedUploadState())
+        .map { uploadStats, pausedReason -> CameraUploadStateEntity in
+            if let pausedReason {
+                pausedReason
+            } else {
+                uploadStats
+            }
+        }
+        .removeDuplicates()
+        .eraseToAnyAsyncSequence()
+    }
     
     public init(cameraUploadRepository: S, networkMonitorUseCase: T, preferenceUseCase: U) {
         self.cameraUploadRepository = cameraUploadRepository
@@ -67,5 +83,59 @@ public struct MonitorCameraUploadUseCase<S: CameraUploadsStatsRepositoryProtocol
         } else {
             return .notPaused
         }
+    }
+    
+    private func uploadStats() -> AnyAsyncSequence<CameraUploadStateEntity> {
+        cameraUploadRepository.monitorChangedUploadStats()
+            .map {
+                .uploadStats($0)
+            }
+            .eraseToAnyAsyncSequence()
+    }
+        
+    private func pausedUploadState() -> AnyAsyncSequence<CameraUploadStateEntity?> {
+        combineLatest(
+            networkPausedReason(),
+            mediaTypePausedReason())
+        .map { networkIssue, mediaTypePausedReason -> CameraUploadStateEntity? in
+            if let networkIssue = networkIssue {
+                .paused(reason: .networkIssue(networkIssue))
+            } else if let mediaTypePausedReason {
+                .paused(reason: mediaTypePausedReason)
+            } else {
+                nil
+            }
+        }
+        .eraseToAnyAsyncSequence()
+    }
+    
+    private func networkPausedReason() -> AnyAsyncSequence<CameraUploadStateEntity.PausedReason.NetworkIssue?> {
+        networkMonitorUseCase.connectionSequence
+            .prepend(networkMonitorUseCase.isConnected())
+            .map { isConnectionSatisfied -> CameraUploadStateEntity.PausedReason.NetworkIssue? in
+                if !isConnectionSatisfied {
+                    .noConnection
+                } else if !networkMonitorUseCase.isConnectedViaWiFi(), !cameraUploadsUseCellularDataUsageAllowed {
+                    .noWifi
+                } else {
+                    nil
+                }
+            }
+            .eraseToAnyAsyncSequence()
+    }
+    
+    private func mediaTypePausedReason() -> AnyAsyncSequence<CameraUploadStateEntity.PausedReason?> {
+        merge(
+            cameraUploadRepository.photosUploadPausedReason,
+            cameraUploadRepository.videosUploadPausedReason)
+        .map { pausedReason -> CameraUploadStateEntity.PausedReason? in
+            switch pausedReason {
+            case .lowBattery: .lowBattery
+            case .thermalState: .highThermalState
+            case .none: nil
+            }
+        }
+        .removeDuplicates()
+        .eraseToAnyAsyncSequence()
     }
 }

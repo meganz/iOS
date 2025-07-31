@@ -77,6 +77,8 @@ extern NSString * const MEGABannerChangedHomeHeightNotification;
 
 extern NSString * const MEGAPhotoConcurrentCountUserInfoKey;
 extern NSString * const MEGAVideoConcurrentCountUserInfoKey;
+extern NSString * const MEGACameraUploadsPhotosPausedReasonUserInfoKey;
+extern NSString * const MEGACameraUploadsVideosPausedReasonUserInfoKey;
 extern NSString * const MEGAHasUploadingTasksReachedMaximumCountUserInfoKey;
 extern NSString * const MEGACurrentUploadingTasksCountUserInfoKey;
 extern NSString * const MEGAAssetMediaTypeUserInfoKey;

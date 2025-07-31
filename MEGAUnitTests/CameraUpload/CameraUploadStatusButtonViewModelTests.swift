@@ -1,5 +1,7 @@
 import Combine
 @testable import MEGA
+import MEGAAppPresentation
+import MEGAAppPresentationMock
 import MEGADomain
 import MEGADomainMock
 import MEGAPermissions
@@ -87,6 +89,25 @@ final class CameraUploadStatusButtonViewModelTests: XCTestCase {
     }
     
     @MainActor
+    func testMonitorCameraUpload_onPendingFilesFeatureFlagOn_shouldUpdateProgress() async {
+        let progress: Float = 0.55
+        let stats = CameraUploadStatsEntity(progress: progress, pendingFilesCount: 5, pendingVideosCount: 0)
+        let uploadStateAsyncSequence = SingleItemAsyncSequence(
+            item: CameraUploadStateEntity.uploadStats(stats))
+            .eraseToAnyAsyncSequence()
+        let sut = makeSUT(
+            monitorCameraUploadUseCase: MockMonitorCameraUploadUseCase(
+                cameraUploadState: uploadStateAsyncSequence
+            ),
+            preferenceUseCase: MockPreferenceUseCase(dict: [PreferenceKeyEntity.isCameraUploadsEnabled.rawValue: true]),
+            featureFlagProvider: MockFeatureFlagProvider(list: [.cameraUploadsRevamp: true]))
+        
+        await sut.monitorCameraUpload()
+        
+        XCTAssertEqual(sut.imageViewModel.status, .uploading(progress: progress))
+    }
+    
+    @MainActor
     func testMonitorCameraUpload_onNoPendingFiles_shouldSetStatusAsCheckingThenIdle() async throws {
         let uploadAsyncSequence = SingleItemAsyncSequence<CameraUploadStatsEntity>(
             item: CameraUploadStatsEntity(progress: 1.0, pendingFilesCount: 0, pendingVideosCount: 0)).eraseToAnyAsyncSequence()
@@ -131,12 +152,14 @@ final class CameraUploadStatusButtonViewModelTests: XCTestCase {
         idleWaitTimeNanoSeconds: UInt64 = 1_000_000_000,
         monitorCameraUploadUseCase: some MonitorCameraUploadUseCaseProtocol = MockMonitorCameraUploadUseCase(),
         preferenceUseCase: some PreferenceUseCaseProtocol = MockPreferenceUseCase(),
-        devicePermissionHandler: some DevicePermissionsHandling = MockDevicePermissionHandler()
+        devicePermissionHandler: some DevicePermissionsHandling = MockDevicePermissionHandler(),
+        featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:])
     ) -> CameraUploadStatusButtonViewModel {
         CameraUploadStatusButtonViewModel(
             idleWaitTimeNanoSeconds: idleWaitTimeNanoSeconds,
             monitorCameraUploadUseCase: monitorCameraUploadUseCase,
             devicePermissionHandler: devicePermissionHandler,
-            preferenceUseCase: preferenceUseCase)
+            preferenceUseCase: preferenceUseCase,
+            featureFlagProvider: featureFlagProvider)
     }
 }

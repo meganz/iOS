@@ -18,6 +18,34 @@ public final class CameraUploadsStatsRepository: CameraUploadsStatsRepositoryPro
         self.notificationCenter = notificationCenter
     }
     
+    public var photosUploadPausedReason: AnyAsyncSequence<CameraUploadMediaTypePausedReasonEntity> {
+        notificationCenter
+            .publisher(for: Notification.Name.MEGACameraUploadPhotoConcurrentCountChanged)
+            .map { notification in
+                (notification.userInfo?[MEGACameraUploadsPhotosPausedReasonUserInfoKey] as? CameraUploadMediaTypePausedReason)?
+                    .toCameraUploadPausedReasonEntity() ?? .none
+            }
+            .values
+            .prepend { [weak cameraUploadManager] in
+                cameraUploadManager?.photoQueuePausedReason()?.toCameraUploadPausedReasonEntity() ?? .none
+            }
+            .eraseToAnyAsyncSequence()
+    }
+    
+    public var videosUploadPausedReason: AnyAsyncSequence<CameraUploadMediaTypePausedReasonEntity> {
+        notificationCenter
+            .publisher(for: Notification.Name.MEGACameraUploadVideoConcurrentCountChanged)
+            .map { notification in
+                (notification.userInfo?[MEGACameraUploadsVideosPausedReasonUserInfoKey] as? CameraUploadMediaTypePausedReason)?
+                    .toCameraUploadPausedReasonEntity() ?? .none
+            }
+            .values
+            .prepend { [weak cameraUploadManager] in
+                cameraUploadManager?.videoQueuePausedReason()?.toCameraUploadPausedReasonEntity() ?? .none
+            }
+            .eraseToAnyAsyncSequence()
+    }
+    
     public func currentUploadStats() async throws -> CameraUploadStatsEntity {
         let currentStats = try await cameraUploadManager.loadCurrentUploadStats()
         let videoUploadStats = try await cameraUploadManager.loadUploadStats(
