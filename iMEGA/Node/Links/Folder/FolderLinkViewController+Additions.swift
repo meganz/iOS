@@ -136,9 +136,11 @@ extension FolderLinkViewController {
 
     func saveToPhotos(nodes: [NodeEntity]) {
         SaveToPhotosCoordinator
-            .customProgressSVGErrorMessageDisplay(configureProgress: {
-                TransfersWidgetViewController.sharedTransfer().bringProgressToFrontKeyWindowIfNeeded()
-            })
+            .customProgressSVGErrorMessageDisplay(
+                isFolderLink: true,
+                configureProgress: {
+                    TransfersWidgetViewController.sharedTransfer().bringProgressToFrontKeyWindowIfNeeded()
+                })
             .saveToPhotos(nodes: nodes)
     }
     
