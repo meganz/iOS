@@ -118,6 +118,7 @@
     
     [self enableLogsIfNeeded];
 
+    [self importKMTransferFile];
     [self injectSDKRepoDependencies];
     [self injectAuthenticationDependencies];
 

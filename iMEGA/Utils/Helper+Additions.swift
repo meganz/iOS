@@ -1,5 +1,6 @@
 import Foundation
 import LogRepo
+import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGADomain
 import MEGAPreference
@@ -34,6 +35,15 @@ extension Helper {
 
     @objc static func showStorageFullAlertView(requiredStorage: Int64) {
         StorageFullModalAlertViewRouter(requiredStorage: requiredStorage).startIfNeeded()
+    }
+
+    private static var isKMTransferEnabled: Bool {
+        DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .kmTransfer)
+    }
+
+    @objc static func deleteKMTransferFile() {
+        guard isKMTransferEnabled else { return }
+        try? DIContainer.kmTransferUtils.deleteTransferFile()
     }
 }
 
