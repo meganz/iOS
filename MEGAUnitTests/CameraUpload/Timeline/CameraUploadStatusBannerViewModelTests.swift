@@ -7,10 +7,11 @@ import MEGADomainMock
 import MEGAPermissions
 import MEGAPermissionsMock
 import MEGASwift
-import XCTest
+import Testing
 
-final class CameraUploadStatusBannerViewModelTests: XCTestCase {
+struct CameraUploadStatusBannerViewModelTests {
     
+    @Test
     @MainActor
     func testCameraUploadStatusShown_whenTransitionsToCompleted_shouldAutoShowBanner() async throws {
         let sut = makeSUT(
@@ -27,6 +28,7 @@ final class CameraUploadStatusBannerViewModelTests: XCTestCase {
         )
     }
     
+    @Test
     @MainActor
     func testCameraUploadStatusShown_whenStatusEqualsPartiallyCompletedDueToVideoUploadsPending_shouldAutoShowBanner() async throws {
         let sut = makeSUT(
@@ -43,6 +45,7 @@ final class CameraUploadStatusBannerViewModelTests: XCTestCase {
         )
     }
     
+    @Test
     @MainActor
     func testCameraUploadStatusShown_whenStatusEqualsPartiallyCompletedDueToLimitedAccessToPhotoLibrary_shouldAutoShowBanner() async throws {
         let sut = makeSUT(
@@ -60,6 +63,7 @@ final class CameraUploadStatusBannerViewModelTests: XCTestCase {
         )
     }
     
+    @Test
     @MainActor
     func testCameraUploadStatusShown_whenStatusEqualsUploadPaused_shouldAutoShowBanner() async throws {
         let sut = makeSUT(
@@ -72,6 +76,7 @@ final class CameraUploadStatusBannerViewModelTests: XCTestCase {
         try await verifyCameraUploadStatus(sut, expectedStatus: .uploadPaused(reason: .noWifiConnection), expectedShown: true)
     }
     
+    @Test
     @MainActor
     func testCameraUploadStatusShown_whenStatusEqualsInProgress_shouldReturnFalse() async throws {
         let sut = makeSUT(
@@ -87,6 +92,7 @@ final class CameraUploadStatusBannerViewModelTests: XCTestCase {
         )
     }
     
+    @Test
     @MainActor
     func testCameraUploadStatusShown_whenStartingWithCompletedStatus_shouldNotAutoShowBanner() async throws {
         let sut = makeSUT(
@@ -102,6 +108,7 @@ final class CameraUploadStatusBannerViewModelTests: XCTestCase {
         )
     }
     
+    @Test
     @MainActor
     func testCameraUploadStatusShown_whenStartingWithPartiallyCompletedStatus_shouldNotAutoShowBanner() async throws {
         let sut = makeSUT(
@@ -117,6 +124,7 @@ final class CameraUploadStatusBannerViewModelTests: XCTestCase {
         )
     }
     
+    @Test
     @MainActor
     func testTappedCameraUploadBannerStatus_noWiFiConnectionPausedReason_shouldShowCameraUploadSettings() async throws {
         let router = MockRouter()
@@ -132,10 +140,11 @@ final class CameraUploadStatusBannerViewModelTests: XCTestCase {
         
         sut.tappedCameraUploadBannerStatus()
         
-        XCTAssertFalse(sut.cameraUploadStatusShown)
-        XCTAssertEqual(router.startCalled, 1)
+        #expect(sut.cameraUploadStatusShown == false)
+        #expect(router.startCalled == 1)
     }
     
+    @Test
     @MainActor
     func testTappedCameraUploadBannerStatus_uploadPartialCompletedLibraryLimitedAccess_shouldShowPhotoPermissionAlert() async throws {
         let sut = makeSUT(
@@ -154,8 +163,45 @@ final class CameraUploadStatusBannerViewModelTests: XCTestCase {
         
         sut.tappedCameraUploadBannerStatus()
         
-        XCTAssertFalse(sut.cameraUploadStatusShown)
-        XCTAssertTrue(sut.showPhotoPermissionAlert)
+        #expect(sut.cameraUploadStatusShown == false)
+        #expect(sut.showPhotoPermissionAlert)
+    }
+    
+    @Test
+    func uploadStateStats() async throws {
+        let stats =  CameraUploadStatsEntity(progress: 0.3, pendingFilesCount: 3, pendingVideosCount: 0)
+        let statesAsyncSequence = SingleItemAsyncSequence(
+            item: CameraUploadStateEntity.uploadStats(stats))
+            .eraseToAnyAsyncSequence()
+        
+        let sut = makeSUT(
+            cameraUploadState: statesAsyncSequence,
+            featureFlagProvider: MockFeatureFlagProvider(list: [.cameraUploadsRevamp: true])
+        )
+        
+        try await verifyCameraUploadStatus(
+            sut,
+            expectedStatus: .uploadInProgress(numberOfFilesPending: 3),
+            expectedShown: false
+        )
+    }
+    
+    @Test
+    func uploadStatePausedReason() async throws {
+        let statesAsyncSequence = SingleItemAsyncSequence(
+            item: CameraUploadStateEntity.paused(reason: .lowBattery))
+            .eraseToAnyAsyncSequence()
+        
+        let sut = makeSUT(
+            cameraUploadState: statesAsyncSequence,
+            featureFlagProvider: MockFeatureFlagProvider(list: [.cameraUploadsRevamp: true])
+        )
+        
+        try await verifyCameraUploadStatus(
+            sut,
+            expectedStatus: .uploadPaused(reason: .lowBattery),
+            expectedShown: true
+        )
     }
 }
 
@@ -164,15 +210,19 @@ extension CameraUploadStatusBannerViewModelTests {
         cameraUploadStats: [CameraUploadStatsEntity] = [],
         devicePermissionHandler: some DevicePermissionsHandling = MockDevicePermissionHandler(),
         possiblePauseReason: CameraUploadPausedReason = .notPaused,
-        cameraUploadsSettingsViewRouter: some Routing = MockRouter()
+        cameraUploadsSettingsViewRouter: some Routing = MockRouter(),
+        cameraUploadState: AnyAsyncSequence<CameraUploadStateEntity> = EmptyAsyncSequence<CameraUploadStateEntity>().eraseToAnyAsyncSequence(),
+        featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:])
     ) -> CameraUploadStatusBannerViewModel {
         CameraUploadStatusBannerViewModel(
             monitorCameraUploadUseCase: MockMonitorCameraUploadUseCase(
                 monitorUploadStats: makeCameraUploadSequence(entities: cameraUploadStats),
-                possiblePauseReason: possiblePauseReason
+                possiblePauseReason: possiblePauseReason,
+                cameraUploadState: cameraUploadState
             ),
             devicePermissionHandler: devicePermissionHandler,
-            cameraUploadsSettingsViewRouter: cameraUploadsSettingsViewRouter
+            cameraUploadsSettingsViewRouter: cameraUploadsSettingsViewRouter,
+            featureFlagProvider: featureFlagProvider
         )
     }
     
@@ -193,8 +243,8 @@ extension CameraUploadStatusBannerViewModelTests {
         
         let result = await collectLatestValue(from: sut.$cameraUploadStatusShown)
         
-        XCTAssertEqual(result, expectedShown)
-        XCTAssertEqual(sut.cameraUploadBannerStatusViewState, expectedStatus)
+        #expect(result == expectedShown)
+        #expect(sut.cameraUploadBannerStatusViewState == expectedStatus)
     }
     
     @MainActor

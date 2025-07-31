@@ -11,7 +11,6 @@
 #import "MediaInfoLoader.h"
 #import "DiskSpaceDetector.h"
 #import "MEGAReachabilityManager.h"
-#import "CameraUploadConcurrentCountCalculator.h"
 #import "BackgroundUploadingTaskMonitor.h"
 #import "NSError+CameraUpload.h"
 #import "MEGA-Swift.h"
@@ -22,6 +21,7 @@ static const NSTimeInterval LoadMediaInfoTimeout = 60 * 15;
 
 static const NSUInteger PhotoUploadBatchCount = 7;
 static const NSUInteger VideoUploadBatchCount = 1;
+static const NSUInteger PhotoUploadConcurrentCountInMemoryWarning = 1;
 
 @interface CameraUploadManager () <CameraScannerDelegate>
 
@@ -106,6 +106,16 @@ static const NSUInteger VideoUploadBatchCount = 1;
 #pragma mark - manage operation queues
 
 - (void)setupCameraUploadQueues {
+    if ([NSThread isMainThread]) {
+        [self configureQueuesConcurrentCount];
+    } else {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self configureQueuesConcurrentCount];
+        });
+    }
+}
+
+- (void)configureQueuesConcurrentCount {
     self.photoUploadOperationQueue.maxConcurrentOperationCount = [self.concurrentCountCalculator calculatePhotoUploadConcurrentCount];
     self.videoUploadOperationQueue.maxConcurrentOperationCount = [self.concurrentCountCalculator calculateVideoUploadConcurrentCount];
     [self unsuspendCameraUploadQueues];

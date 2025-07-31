@@ -1,3 +1,4 @@
+import MEGAAppPresentation
 import MEGADomain
 import MEGAPermissions
 import MEGAPreference
@@ -16,14 +17,18 @@ final class CameraUploadStatusButtonViewModel: NSObject, ObservableObject {
 
     var onTappedHandler: (() -> Void)?
     
-    init(idleWaitTimeNanoSeconds: UInt64 = 3 * 1_000_000_000,
-         monitorCameraUploadUseCase: some MonitorCameraUploadUseCaseProtocol,
-         devicePermissionHandler: some DevicePermissionsHandling,
-         preferenceUseCase: some PreferenceUseCaseProtocol = PreferenceUseCase.default) {
+    init(
+        idleWaitTimeNanoSeconds: UInt64 = 3 * 1_000_000_000,
+        monitorCameraUploadUseCase: some MonitorCameraUploadUseCaseProtocol,
+        devicePermissionHandler: some DevicePermissionsHandling,
+        preferenceUseCase: some PreferenceUseCaseProtocol = PreferenceUseCase.default,
+        featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider
+    ) {
         self.idleWaitTimeNanoSeconds = idleWaitTimeNanoSeconds
-        self.monitorCameraUploadStatusProvider = MonitorCameraUploadStatusProvider(
+        self.monitorCameraUploadStatusProvider = MonitorCameraUploadStatusProvider( 
             monitorCameraUploadUseCase: monitorCameraUploadUseCase,
-            devicePermissionHandler: devicePermissionHandler)
+            devicePermissionHandler: devicePermissionHandler,
+            featureFlagProvider: featureFlagProvider)
         
         imageViewModel = CameraUploadStatusImageViewModel(
             status: preferenceUseCase[PreferenceKeyEntity.isCameraUploadsEnabled.rawValue] ?? false ? .checkPendingItemsToUpload : .turnedOff)

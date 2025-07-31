@@ -16,12 +16,15 @@ final class CameraUploadStatusBannerViewModel: ObservableObject {
     init(
         monitorCameraUploadUseCase: some MonitorCameraUploadUseCaseProtocol,
         devicePermissionHandler: some DevicePermissionsHandling,
-        cameraUploadsSettingsViewRouter: some Routing
+        cameraUploadsSettingsViewRouter: some Routing,
+        featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider
     ) {
         self.monitorCameraUploadStatusProvider = MonitorCameraUploadStatusProvider(
             monitorCameraUploadUseCase: monitorCameraUploadUseCase,
-            devicePermissionHandler: devicePermissionHandler)
+            devicePermissionHandler: devicePermissionHandler,
+            featureFlagProvider: featureFlagProvider)
         self.cameraUploadsSettingsViewRouter = cameraUploadsSettingsViewRouter
+        
         subscribeToHandleAutoPresentation()
     }
         

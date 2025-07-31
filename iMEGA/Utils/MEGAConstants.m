@@ -59,6 +59,8 @@ NSString * const MEGACameraUploadCompleteNotification = @"nz.mega.cameraUpload.c
 
 NSString * const MEGAPhotoConcurrentCountUserInfoKey = @"nz.mega.photoConcurrentCountKey";
 NSString * const MEGAVideoConcurrentCountUserInfoKey = @"nz.mega.videoConcurrentCountKey";
+NSString * const MEGACameraUploadsPhotosPausedReasonUserInfoKey = @"nz.mega.cameraUploads.photosPausedReason";
+NSString * const MEGACameraUploadsVideosPausedReasonUserInfoKey = @"nz.mega.cameraUploads.videosPausedReason";
 NSString * const MEGAHasUploadingTasksReachedMaximumCountUserInfoKey = @"nz.mega.uploadingTasksReachedMaximumCountKey";
 NSString * const MEGACurrentUploadingTasksCountUserInfoKey = @"nz.mega.currentUploadingTasksCountKey";
 NSString * const MEGAAssetMediaTypeUserInfoKey = @"nz.mega.assetMediaTypeKey";

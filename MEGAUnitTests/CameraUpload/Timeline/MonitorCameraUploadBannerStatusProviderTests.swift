@@ -1,4 +1,5 @@
 @testable import MEGA
+import MEGAAppPresentation
 import MEGAAppPresentationMock
 import MEGADomain
 import MEGADomainMock
@@ -227,10 +228,12 @@ final class MonitorCameraUploadBannerStatusProviderTests: XCTestCase {
 extension MonitorCameraUploadBannerStatusProviderTests {
     private func makeSUT(
         monitorCameraUploadUseCase: some MonitorCameraUploadUseCaseProtocol = MockMonitorCameraUploadUseCase(),
-        devicePermissionHandler: some DevicePermissionsHandling = MockDevicePermissionHandler()
+        devicePermissionHandler: some DevicePermissionsHandling = MockDevicePermissionHandler(),
+        featureFlagProvider: any FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:])
     ) -> MonitorCameraUploadStatusProvider {
         MonitorCameraUploadStatusProvider(
             monitorCameraUploadUseCase: monitorCameraUploadUseCase,
-            devicePermissionHandler: devicePermissionHandler)
+            devicePermissionHandler: devicePermissionHandler,
+            featureFlagProvider: featureFlagProvider)
     }
 }
