@@ -608,5 +608,6 @@ extension MEGAAssets {
         public static var tabBarPhotos: UIKit.UIImage { MEGAUIImageBundle.tabBarPhotos }
         public static var tabBarChat: UIKit.UIImage { MEGAUIImageBundle.tabBarChat }
         public static var tabBarMenu: UIKit.UIImage { MEGAUIImageBundle.tabBarMenu }
+        public static var ellipsis: UIKit.UIImage { MEGAUIImageBundle.ellipsis }
     }
 }

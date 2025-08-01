@@ -372,4 +372,5 @@ public struct MEGAUIImageBundle {
     public static var tabBarPhotos: UIImage { UIImage.tabBarPhotos }
     public static var tabBarChat: UIImage { UIImage.tabBarChat }
     public static var tabBarMenu: UIImage { UIImage.tabBarMenu }
+    public static var ellipsis: UIImage { UIImage.ellipsis }
 }

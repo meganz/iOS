@@ -1,17 +1,19 @@
 import MEGAAppSDKRepo
 import MEGAAssets
 import MEGADesignToken
-import MEGADomain
-import MEGASwiftUI
-import SwiftUI
-import UIKit
+
+/// A dedicated subclass used to distinguish the custom reorder image view from the system-provided `UIImageView` inside `UITableViewCell`.
+/// This avoids relying on view tags or string identifiers and provides a safer, more maintainable way to manage our custom reorder icon.
+private final class CustomReorderIconView: UIImageView {}
 
 final class PlaylistItemTableViewCell: UITableViewCell {
-    
     @IBOutlet weak var thumbnailImageView: UIImageView!
     @IBOutlet weak var titleLabel: MEGALabel!
     @IBOutlet weak var artistLabel: UILabel!
     @IBOutlet weak var separatorView: UIView!
+    
+    private lazy var reorderIconImage = MEGAAssets.UIImage.ellipsis
+    private var customReorderIconView: CustomReorderIconView?
     
     var item: AudioPlayerItem?
     
@@ -24,9 +26,27 @@ final class PlaylistItemTableViewCell: UITableViewCell {
         super.prepareForReuse()
         
         thumbnailImageView.image = nil
+        customReorderIconView?.removeFromSuperview()
+        customReorderIconView = nil
     }
     
-    // MARK: - Private functions
+    override func setEditing(_ editing: Bool, animated: Bool) {
+        super.setEditing(editing, animated: animated)
+        
+        updateReorderControlIcon()
+    }
+    
+    // MARK: - Internal
+    
+    func configure(item: AudioPlayerItem?) {
+        configureViewsColor()
+        self.item = item
+        titleLabel.text = item?.name
+        artistLabel.text = item?.artist ?? ""
+        configureThumbnail(item)
+    }
+    
+    // MARK: - Private
     
     private func configureViewsColor() {
         titleLabel.textColor = TokenColors.Text.primary
@@ -50,7 +70,7 @@ final class PlaylistItemTableViewCell: UITableViewCell {
                     MEGASdk.shared.getThumbnailNode(node, destinationFilePath: thumbnailFilePath, delegate: RequestDelegate { [weak self] result in
                         if case let .success(request) = result,
                            request.nodeHandle == node.handle,
-                           let  file = request.file {
+                           let file = request.file {
                             self?.thumbnailImageView.image = UIImage(contentsOfFile: file)
                         }
                     })
@@ -65,15 +85,45 @@ final class PlaylistItemTableViewCell: UITableViewCell {
         
         thumbnailImageView.layer.cornerRadius = 8.0
     }
-    
-    // MARK: - Internal functions
-    func configure(item: AudioPlayerItem?) {
-        configureViewsColor()
+
+    private func updateReorderControlIcon() {
+        guard showsReorderControl, let reorderClass = NSClassFromString("UITableViewCellReorderControl") else { return }
         
-        self.item = item
-        titleLabel.text = item?.name
-        artistLabel.text = item?.artist ?? ""
-        
-        configureThumbnail(item)
+        for subview in self.subviews {
+            guard subview.isKind(of: reorderClass) else {
+                continue
+            }
+            
+            subview.subviews
+                .compactMap { $0 as? UIImageView }
+                .filter { !($0 is CustomReorderIconView) }
+                .forEach { $0.isHidden = true }
+            
+            if self.customReorderIconView == nil {
+                let icon = self.createCustomReorderIcon()
+                self.add(reorderIcon: icon, to: subview)
+                self.customReorderIconView = icon
+            }
+            
+            break
+        }
+    }
+
+    private func createCustomReorderIcon() -> CustomReorderIconView {
+        let icon = CustomReorderIconView()
+        icon.translatesAutoresizingMaskIntoConstraints = false
+        icon.image = reorderIconImage
+        icon.contentMode = .scaleAspectFit
+        return icon
+    }
+
+    private func add(reorderIcon: CustomReorderIconView, to container: UIView) {
+        container.addSubview(reorderIcon)
+        NSLayoutConstraint.activate([
+            reorderIcon.centerYAnchor.constraint(equalTo: container.centerYAnchor),
+            reorderIcon.centerXAnchor.constraint(equalTo: container.centerXAnchor),
+            reorderIcon.widthAnchor.constraint(equalToConstant: 28),
+            reorderIcon.heightAnchor.constraint(equalToConstant: 28)
+        ])
     }
 }
