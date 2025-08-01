@@ -25,7 +25,7 @@ struct AccountMenuViewModelTests {
     func testInit() {
         let sut = makeSUT()
         #expect(sut.isAtTop == true)
-        #expect(Set(sut.sections.keys) == Set([.account, .tools, .privacySuite]))
+        #expect(Set(sut.sections.keys) == Set([.account, .account, .privacySuite]))
         #expect(sut.isPrivacySuiteExpanded == false)
     }
 
@@ -115,9 +115,9 @@ struct AccountMenuViewModelTests {
     @Test("Test shared items row data")
     func testSharedItemsRowData() throws {
         let sut = makeSUT()
-        let toolsSection = sut.sections[.tools]
+        let toolsSection = sut.sections[.account]
         let sharedItemsRowData = try #require(
-            toolsSection?[SUT.Constants.ToolsSectionIndex.sharedItems.rawValue],
+            toolsSection?[SUT.Constants.AccountSectionIndex.sharedItems.rawValue],
             "Tools section should contain shared items"
         )
         #expect(sharedItemsRowData.title == Strings.Localizable.sharedItems)
@@ -129,9 +129,9 @@ struct AccountMenuViewModelTests {
     @Test("Test device center row data")
     func testDeviceCenterRowData() throws {
         let sut = makeSUT()
-        let toolsSection = sut.sections[.tools]
+        let toolsSection = sut.sections[.account]
         let deviceCenterRowData = try #require(
-            toolsSection?[SUT.Constants.ToolsSectionIndex.deviceCentre.rawValue],
+            toolsSection?[SUT.Constants.AccountSectionIndex.deviceCentre.rawValue],
             "Tools section should contain device center"
         )
         #expect(deviceCenterRowData.title == Strings.Localizable.Device.Center.title)
@@ -143,9 +143,9 @@ struct AccountMenuViewModelTests {
     @Test("Test transfers row data")
     func testTransfersRowData() throws {
         let sut = makeSUT()
-        let toolsSection = sut.sections[.tools]
+        let toolsSection = sut.sections[.account]
         let transfersRowData = try #require(
-            toolsSection?[SUT.Constants.ToolsSectionIndex.transfers.rawValue],
+            toolsSection?[SUT.Constants.AccountSectionIndex.transfers.rawValue],
             "Tools section should contain transfers"
         )
         #expect(transfersRowData.title == Strings.Localizable.transfers)
@@ -157,9 +157,9 @@ struct AccountMenuViewModelTests {
     @Test("Test offline files row data")
     func testOfflineFilesRowData() throws {
         let sut = makeSUT()
-        let toolsSection = sut.sections[.tools]
+        let toolsSection = sut.sections[.account]
         let offlineFilesRowData = try #require(
-            toolsSection?[SUT.Constants.ToolsSectionIndex.offlineFiles.rawValue],
+            toolsSection?[SUT.Constants.AccountSectionIndex.offlineFiles.rawValue],
             "Tools section should contain offline files"
         )
         #expect(offlineFilesRowData.title == Strings.Localizable.AccountMenu.offlineFiles)
@@ -172,9 +172,9 @@ struct AccountMenuViewModelTests {
     func testRubbishBinRowData() throws {
         let accountUseCase = MockAccountUseCase(rubbishBinStorage: 200)
         let sut = makeSUT(accountUseCase: accountUseCase)
-        let toolsSection = sut.sections[.tools]
+        let toolsSection = sut.sections[.account]
         let rubbishBinRowData = try #require(
-            toolsSection?[SUT.Constants.ToolsSectionIndex.rubbishBin.rawValue],
+            toolsSection?[SUT.Constants.AccountSectionIndex.rubbishBin.rawValue],
             "Tools section should contain rubbish bin"
         )
         #expect(rubbishBinRowData.title == Strings.Localizable.rubbishBinLabel)
@@ -186,9 +186,9 @@ struct AccountMenuViewModelTests {
     @Test("Test settings row data")
     func testSettingsRowData() throws {
         let sut = makeSUT()
-        let toolsSection = sut.sections[.tools]
+        let toolsSection = sut.sections[.account]
         let settingsRowData = try #require(
-            toolsSection?[SUT.Constants.ToolsSectionIndex.settings.rawValue],
+            toolsSection?[SUT.Constants.AccountSectionIndex.settings.rawValue],
             "Tools section should contain settings"
         )
         #expect(settingsRowData.title == Strings.Localizable.settingsTitle)
@@ -378,9 +378,9 @@ struct AccountMenuViewModelTests {
     func testSharedItemsRowTap() throws {
         let router = MockMenuViewRouter()
         let sut = makeSUT(router: router)
-        let toolsSection = try #require(sut.sections[.tools], "Tools section should exist")
+        let toolsSection = try #require(sut.sections[.account], "Tools section should exist")
         let sharedItemsRow = try #require(
-            toolsSection[SUT.Constants.ToolsSectionIndex.sharedItems.rawValue],
+            toolsSection[SUT.Constants.AccountSectionIndex.sharedItems.rawValue],
             "Tools section should contain shared items"
         )
 
@@ -398,9 +398,9 @@ struct AccountMenuViewModelTests {
     func testDeviceCenterRowTap() throws {
         let router = MockMenuViewRouter()
         let sut = makeSUT(router: router)
-        let toolsSection = try #require(sut.sections[.tools], "Tools section should exist")
+        let toolsSection = try #require(sut.sections[.account], "Tools section should exist")
         let deviceCenterRow = try #require(
-            toolsSection[SUT.Constants.ToolsSectionIndex.deviceCentre.rawValue],
+            toolsSection[SUT.Constants.AccountSectionIndex.deviceCentre.rawValue],
             "Tools section should contain device center"
         )
 
@@ -418,9 +418,9 @@ struct AccountMenuViewModelTests {
     func testTransfersRowTap() throws {
         let router = MockMenuViewRouter()
         let sut = makeSUT(router: router)
-        let toolsSection = try #require(sut.sections[.tools], "Tools section should exist")
+        let toolsSection = try #require(sut.sections[.account], "Tools section should exist")
         let transfersRow = try #require(
-            toolsSection[SUT.Constants.ToolsSectionIndex.transfers.rawValue],
+            toolsSection[SUT.Constants.AccountSectionIndex.transfers.rawValue],
             "Tools section should contain transfers"
         )
 
@@ -438,9 +438,9 @@ struct AccountMenuViewModelTests {
     func testOfflineFilesRowTap() throws {
         let router = MockMenuViewRouter()
         let sut = makeSUT(router: router)
-        let toolsSection = try #require(sut.sections[.tools], "Tools section should exist")
+        let toolsSection = try #require(sut.sections[.account], "Tools section should exist")
         let offlineFilesRow = try #require(
-            toolsSection[SUT.Constants.ToolsSectionIndex.offlineFiles.rawValue],
+            toolsSection[SUT.Constants.AccountSectionIndex.offlineFiles.rawValue],
             "Tools section should contain offline files"
         )
 
@@ -458,9 +458,9 @@ struct AccountMenuViewModelTests {
     func testRubbishBinRowTap() throws {
         let router = MockMenuViewRouter()
         let sut = makeSUT(router: router)
-        let toolsSection = try #require(sut.sections[.tools], "Tools section should exist")
+        let toolsSection = try #require(sut.sections[.account], "Tools section should exist")
         let rubbishBinRow = try #require(
-            toolsSection[SUT.Constants.ToolsSectionIndex.rubbishBin.rawValue],
+            toolsSection[SUT.Constants.AccountSectionIndex.rubbishBin.rawValue],
             "Tools section should contain rubbish bin"
         )
 
@@ -478,9 +478,9 @@ struct AccountMenuViewModelTests {
     func testSettingsRowTap() throws {
         let router = MockMenuViewRouter()
         let sut = makeSUT(router: router)
-        let toolsSection = try #require(sut.sections[.tools], "Tools section should exist")
+        let toolsSection = try #require(sut.sections[.account], "Tools section should exist")
         let settingsRow = try #require(
-            toolsSection[SUT.Constants.ToolsSectionIndex.settings.rawValue],
+            toolsSection[SUT.Constants.AccountSectionIndex.settings.rawValue],
             "Tools section should contain settings"
         )
 
@@ -600,13 +600,13 @@ struct AccountMenuViewModelTests {
     @Test("Test the shared items notifications count logic with valid number of notifications")
     func testSharedItemsNotificationsCount_withValidNumberOfNotifications() throws {
         let sut = makeSUT(sharedItemsNotificationCountHandler: { 10 })
-        #expect(sut.sections[.tools]?[SUT.Constants.ToolsSectionIndex.sharedItems.rawValue]?.notificationCount == 10)
+        #expect(sut.sections[.account]?[SUT.Constants.AccountSectionIndex.sharedItems.rawValue]?.notificationCount == 10)
     }
 
     @Test("Test the shared items notifications count logic with no notifications")
     func testSharedItemsNotificationsCount_withNoNotifications() throws {
         let sut = makeSUT(sharedItemsNotificationCountHandler: { 0 })
-        #expect(sut.sections[.tools]?[SUT.Constants.ToolsSectionIndex.sharedItems.rawValue]?.notificationCount == nil)
+        #expect(sut.sections[.account]?[SUT.Constants.AccountSectionIndex.sharedItems.rawValue]?.notificationCount == nil)
     }
 
     @Test("Test the contacts notifications count logic with valid number of contact requests")
@@ -826,33 +826,33 @@ struct AccountMenuViewModelTests {
                 expectedEventIdentifier: MyMenuAchievementsNavigationItemEvent()
             ),
             TestEventTrackingData(
-                section: .tools,
-                row: SUT.Constants.ToolsSectionIndex.sharedItems.rawValue,
+                section: .account,
+                row: SUT.Constants.AccountSectionIndex.sharedItems.rawValue,
                 expectedEventIdentifier: MyMenuSharedItemsNavigationItemEvent()
             ),
             TestEventTrackingData(
-                section: .tools,
-                row: SUT.Constants.ToolsSectionIndex.deviceCentre.rawValue,
+                section: .account,
+                row: SUT.Constants.AccountSectionIndex.deviceCentre.rawValue,
                 expectedEventIdentifier: MyMenuDeviceCentreNavigationItemEvent()
             ),
             TestEventTrackingData(
-                section: .tools,
-                row: SUT.Constants.ToolsSectionIndex.transfers.rawValue,
+                section: .account,
+                row: SUT.Constants.AccountSectionIndex.transfers.rawValue,
                 expectedEventIdentifier: MyMenuTransfersNavigationItemEvent()
             ),
             TestEventTrackingData(
-                section: .tools,
-                row: SUT.Constants.ToolsSectionIndex.offlineFiles.rawValue,
+                section: .account,
+                row: SUT.Constants.AccountSectionIndex.offlineFiles.rawValue,
                 expectedEventIdentifier: MyMenuOfflineFilesNavigationItemEvent()
             ),
             TestEventTrackingData(
-                section: .tools,
-                row: SUT.Constants.ToolsSectionIndex.rubbishBin.rawValue,
+                section: .account,
+                row: SUT.Constants.AccountSectionIndex.rubbishBin.rawValue,
                 expectedEventIdentifier: MyMenuRubbishBinNavigationItemEvent()
             ),
             TestEventTrackingData(
-                section: .tools,
-                row: SUT.Constants.ToolsSectionIndex.settings.rawValue,
+                section: .account,
+                row: SUT.Constants.AccountSectionIndex.settings.rawValue,
                 expectedEventIdentifier: MyMenuSettingsNavigationItemEvent()
             )
         ]

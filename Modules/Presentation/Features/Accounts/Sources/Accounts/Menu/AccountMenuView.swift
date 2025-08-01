@@ -7,6 +7,7 @@ import SwiftUI
 
 public struct AccountMenuView: View {
     @StateObject var viewModel: AccountMenuViewModel
+    private let headerHeight: CGFloat = 52
 
     public init(viewModel: @autoclosure @escaping () -> AccountMenuViewModel) {
         _viewModel = StateObject(wrappedValue: viewModel())
@@ -17,7 +18,8 @@ public struct AccountMenuView: View {
             contentView
             AccountMenuHeaderView(
                 hideHeaderBackground: viewModel.isAtTop,
-                notificationCount: viewModel.appNotificationsCount
+                notificationCount: viewModel.appNotificationsCount,
+                headerHeight: headerHeight
             ) {
                 viewModel.notificationButtonTapped()
             }
@@ -31,74 +33,82 @@ public struct AccountMenuView: View {
     private var contentView: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 0) {
-                Color.clear
-                    .frame(height: 52)
-                    .onScrollNearTop(
-                        coordinateSpaceName: AccountMenuViewModel.Constants.coordinateSpaceName,
-                        topInset: 0,
-                        topOffsetThreshold: AccountMenuViewModel.Constants.topOffsetThreshold
-                    ) { newValue in
-                        guard viewModel.isAtTop != newValue else { return }
-                        withAnimation(.easeInOut(duration: 0.4)) {
-                            viewModel.isAtTop = newValue
-                        }
-                    }
-
-                ForEach([AccountMenuSectionType.account, .tools], id: \.self) { section in
-                    if let items = viewModel.sections[section] {
-                        if let sectionName = section.description {
-                            Text(sectionName)
-                                .font(.caption)
-                                .foregroundStyle(TokenColors.Text.secondary.swiftUI)
-                                .padding([.horizontal, .top], section == .account ? TokenSpacing._5 : TokenSpacing._4)
-                        }
-
-                        ForEach(items.compactMap { $0 }) { option in
-                            Button {
-                                guard case .disclosure(let action) = option.rowType else { return }
-                                action()
-                            } label: {
-                                MenuRowView(option: option)
-                            }
-                        }
-
-                        if section == .account {
-                            Spacer().frame(height: TokenSpacing._5)
-                        }
-                    }
-                }
-
-                if let privacyItems = viewModel.sections[.privacySuite],
-                    let title = AccountMenuSectionType.privacySuite.description {
-                    CollapsibleSectionView(
-                        title: title,
-                        isExpanded: $viewModel.isPrivacySuiteExpanded,
-                        options: privacyItems.compactMap { $0 }
-                    )
-                }
-
-                Button {
-                    viewModel.logoutButtonTapped()
-                } label: {
-                    Text(Strings.Localizable.AccountMenu.logout)
-                        .font(.body.bold())
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        .foregroundStyle(TokenColors.Text.accent.swiftUI)
-                        .background(TokenColors.Button.secondary.swiftUI)
-                        .cornerRadius(TokenRadius.medium)
-                        .padding(.horizontal)
-                        .padding(.vertical, TokenSpacing._6)
-                }
+                emptySpaceView
+                accountSection
+                privacySuiteSection
+                logoutButton
             }
         }
         .coordinateSpace(name: AccountMenuViewModel.Constants.coordinateSpaceName)
+    }
+
+    private var emptySpaceView: some View {
+        Color
+            .clear
+            .frame(height: headerHeight)
+            .onScrollNearTop(
+                coordinateSpaceName: AccountMenuViewModel.Constants.coordinateSpaceName,
+                topInset: 0,
+                topOffsetThreshold: AccountMenuViewModel.Constants.topOffsetThreshold
+            ) { newValue in
+                guard viewModel.isAtTop != newValue else { return }
+                withAnimation(.easeInOut(duration: 0.4)) {
+                    viewModel.isAtTop = newValue
+                }
+            }
+    }
+
+    @ViewBuilder
+    private var accountSection: some View {
+        if let items = viewModel.sections[.account] {
+            ForEach(items.compactMap { $0 }) { option in
+                Button {
+                    guard case .disclosure(let action) = option.rowType else { return }
+                    action()
+                } label: {
+                    MenuRowView(option: option)
+                }
+            }
+        } else {
+            EmptyView()
+        }
+    }
+
+    @ViewBuilder
+    private var privacySuiteSection: some View {
+        if let privacyItems = viewModel.sections[.privacySuite],
+           let title = AccountMenuSectionType.privacySuite.description {
+            CollapsibleSectionView(
+                title: title,
+                isExpanded: $viewModel.isPrivacySuiteExpanded,
+                options: privacyItems.compactMap { $0 }
+            )
+        } else {
+            EmptyView()
+        }
+    }
+
+    private var logoutButton: some View {
+        Button {
+            viewModel.logoutButtonTapped()
+        } label: {
+            Text(Strings.Localizable.AccountMenu.logout)
+                .font(.body.bold())
+                .frame(maxWidth: .infinity)
+                .padding()
+                .foregroundStyle(TokenColors.Text.accent.swiftUI)
+                .background(TokenColors.Button.secondary.swiftUI)
+                .cornerRadius(TokenRadius.medium)
+                .padding(.horizontal)
+                .padding(.vertical, TokenSpacing._6)
+        }
     }
 }
 
 private struct AccountMenuHeaderView: View {
     let hideHeaderBackground: Bool
     let notificationCount: Int
+    let headerHeight: CGFloat
     let buttonTapped: () -> Void
 
     var body: some View {
@@ -124,7 +134,7 @@ private struct AccountMenuHeaderView: View {
                 )
             )
         }
-        .frame(height: 52)
+        .frame(height: headerHeight)
         .padding(.horizontal, TokenSpacing._5)
     }
 

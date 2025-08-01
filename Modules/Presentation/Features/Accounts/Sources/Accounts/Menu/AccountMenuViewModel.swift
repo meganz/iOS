@@ -62,13 +62,7 @@ public final class AccountMenuViewModel: ObservableObject {
             case storageUsed
             case contacts
             case achievements
-
-            static var totalCount: Int { allCases.count }
-        }
-
-        // Section Index for [.tools]
-        enum ToolsSectionIndex: Int, CaseIterable {
-            case sharedItems = 0
+            case sharedItems
             case deviceCentre
             case transfers
             case offlineFiles
@@ -142,7 +136,6 @@ public final class AccountMenuViewModel: ObservableObject {
     private var sectionData: [AccountMenuSectionType: [AccountMenuOption?]] {
         [
             .account: accountSectionData,
-            .tools: toolsSectionData,
             .privacySuite: privacySuiteSectionData
         ]
     }
@@ -170,37 +163,31 @@ public final class AccountMenuViewModel: ObservableObject {
             title: Strings.Localizable.achievementsTitle,
             rowType: .disclosure { [weak self] in self?.showAchievements() }
         )
-        return accountSection
-    }
-
-    // Tools section
-    private var toolsSectionData: [AccountMenuOption?] {
-        var toolsSection: [AccountMenuOption?] = .init(repeating: nil, count: Constants.ToolsSectionIndex.totalCount)
-        toolsSection[Constants.ToolsSectionIndex.sharedItems.rawValue] = sharedItemsMenuOption()
-        toolsSection[Constants.ToolsSectionIndex.deviceCentre.rawValue] = AccountMenuOption(
+        accountSection[Constants.AccountSectionIndex.sharedItems.rawValue] = sharedItemsMenuOption()
+        accountSection[Constants.AccountSectionIndex.deviceCentre.rawValue] = AccountMenuOption(
             iconConfiguration: .init(icon: MEGAAssets.Image.deviceCentreInMenu),
             title: Strings.Localizable.Device.Center.title,
             rowType: .disclosure { [weak self] in self?.showDeviceCentre() }
         )
-        toolsSection[Constants.ToolsSectionIndex.transfers.rawValue] = AccountMenuOption(
+        accountSection[Constants.AccountSectionIndex.transfers.rawValue] = AccountMenuOption(
             iconConfiguration: .init(icon: MEGAAssets.Image.transfersInMenu),
             title: Strings.Localizable.transfers,
             rowType: .disclosure { [weak self] in self?.showTransfers() }
         )
-        toolsSection[Constants.ToolsSectionIndex.offlineFiles.rawValue] = AccountMenuOption(
+        accountSection[Constants.AccountSectionIndex.offlineFiles.rawValue] = AccountMenuOption(
             iconConfiguration: .init(icon: MEGAAssets.Image.offlineFilesInMenu),
             title: Strings.Localizable.AccountMenu.offlineFiles,
             rowType: .disclosure { [weak self] in self?.showOfflineFiles() }
         )
-        toolsSection[Constants.ToolsSectionIndex.rubbishBin.rawValue] = rubbishBinMenuOption(
+        accountSection[Constants.AccountSectionIndex.rubbishBin.rawValue] = rubbishBinMenuOption(
             accountUseCase: accountUseCase
         )
-        toolsSection[Constants.ToolsSectionIndex.settings.rawValue] = AccountMenuOption(
+        accountSection[Constants.AccountSectionIndex.settings.rawValue] = AccountMenuOption(
             iconConfiguration: .init(icon: MEGAAssets.Image.settingsInMenu),
             title: Strings.Localizable.settingsTitle,
             rowType: .disclosure { [weak self] in self?.showSettings() }
         )
-        return toolsSection
+        return accountSection
     }
 
     // Privacy suite section
@@ -400,7 +387,7 @@ public final class AccountMenuViewModel: ObservableObject {
             accountDetails: accountDetails
         )
 
-        updatedSections[.tools]?[Constants.ToolsSectionIndex.rubbishBin.rawValue] = rubbishBinMenuOption(
+        updatedSections[.account]?[Constants.AccountSectionIndex.rubbishBin.rawValue] = rubbishBinMenuOption(
             accountUseCase: accountUseCase
         )
 
@@ -540,7 +527,7 @@ public final class AccountMenuViewModel: ObservableObject {
 
     private func updateSharedItemsNotificationCount() {
         let notificationsCount = sharedItemsNotificationCountHandler()
-        sections[.tools]?[Constants.ToolsSectionIndex.sharedItems.rawValue] = sharedItemsMenuOption(
+        sections[.account]?[Constants.AccountSectionIndex.sharedItems.rawValue] = sharedItemsMenuOption(
             notificationsCount: notificationsCount > 0 ? notificationsCount : nil
         )
     }
