@@ -42,11 +42,17 @@ pipeline {
 
                 def parameters = parseParameters(env.gitlabTriggerPhrase)
                 if (parameters[0]) {
+                    def command = "announce_release"
+    
                     if (parameters[1]) {
-                        statusNotifier.postMessage("announce_release --hotfix-build true", env.MEGA_IOS_PROJECT_ID, "good")
-                    } else {
-                        statusNotifier.postMessage("announce_release", env.MEGA_IOS_PROJECT_ID, "good")
+                        command += " --hotfix-build true"
                     }
+                    
+                    if (parameters[2]) {
+                        command += " --first-announcement true"
+                    }
+
+                    statusNotifier.postMessage(command, env.MEGA_IOS_PROJECT_ID, "good")
                 }
             }
         }
@@ -454,17 +460,27 @@ private def parseParameters(String fullCommand) {
             .argName("Hotfix Build")
             .hasArg()
             .required(false)
-            .desc("Specify the next release version to be announced")
+            .desc("Specify if this is a hotfix build")
+            .build()
+    Option firstAnnouncement = Option
+            .builder("fa")
+            .longOpt("first-announcement")
+            .argName("First announcement")
+            .hasArg()
+            .required(false)
+            .desc("Specify if this is the first announcement of the release")
             .build()
             
     options.addOption(announceReleaseOption)
     options.addOption(hotfixBuild)
+    options.addOption(firstAnnouncement)
 
     CommandLineParser commandLineParser = new DefaultParserWrapper()
     CommandLine commandLine = commandLineParser.parse(options, parameters)
 
     boolean shouldAnnounceRelease = false  // Default to false
     boolean isHotfixBuild = false  // Default to false
+    boolean isFirstAnnouncement = false  // Default to false
 
     if (commandLine.hasOption("ar")) {
         shouldAnnounceRelease = Boolean.parseBoolean(commandLine.getOptionValue("ar"))
@@ -474,7 +490,12 @@ private def parseParameters(String fullCommand) {
         isHotfixBuild = Boolean.parseBoolean(commandLine.getOptionValue("hfb"))
     }
 
+    if (commandLine.hasOption("fa")) {
+        isFirstAnnouncement = Boolean.parseBoolean(commandLine.getOptionValue("fa"))
+    }
+
     println("should announce release: $shouldAnnounceRelease")
     println("is hotfix build: $isHotfixBuild")
-    return [shouldAnnounceRelease, isHotfixBuild]
+    println("is first announcement: $isFirstAnnouncement")
+    return [shouldAnnounceRelease, isHotfixBuild, isFirstAnnouncement]
 }

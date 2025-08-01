@@ -37,6 +37,13 @@ struct App: AsyncParsableCommand {
     @Option(help: "Indicates if the build is a hotfix build")
     var isHotfixBuild: Bool
 
+    @Option(help: "Indicates if this is the first announcement of a new release")
+    var isFirstAnnouncement: Bool
+
+    private var shouldCreateVersionAndSendFreezeReminder: Bool {
+        !isHotfixBuild && isFirstAnnouncement
+    }
+
     func run() async throws {
         guard let jiraBaseURL = URL(string: jiraBaseURLString) else {
             throw AppError.invalidURL("Could not convert \(jiraBaseURLString) to URL")
@@ -48,7 +55,7 @@ struct App: AsyncParsableCommand {
         print("Current version: \(currentReleaseVersion)")
 
         var nextReleaseVersion: String = ""
-        if !isHotfixBuild {
+        if shouldCreateVersionAndSendFreezeReminder {
             print("Calculating the next version.")
             nextReleaseVersion = try calculateNextReleaseVersion(
                 with: versionFetcher,
@@ -98,7 +105,7 @@ struct App: AsyncParsableCommand {
                 isHotfixBuild: isHotfixBuild
             )
 
-        if !isHotfixBuild {
+        if shouldCreateVersionAndSendFreezeReminder {
             try await sendCodeFreezeReminder(currentVersion: currentReleaseVersion, nextVersion: nextReleaseVersion)
         }
 
