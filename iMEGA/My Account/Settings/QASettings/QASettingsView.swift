@@ -1,5 +1,7 @@
+import MEGAAppPresentation
 import MEGADesignToken
 import MEGASwiftUI
+import Settings
 import SwiftUI
 
 struct QASettingsView: View {
@@ -41,7 +43,15 @@ struct QASettingsView: View {
                         }
                     }
                     .listRowSeparatorTint(TokenColors.Border.strong.swiftUI)
-            
+
+            NavigationLink {
+                KMTransferQASettingsView(
+                    kmTransferUtils: DIContainer.kmTransferUtils
+                )
+            } label: {
+                Text("KM Transfer QA Settings")
+            }
+
             Section(
                 header:
                     Text(Constants.featureListHeaderText)
