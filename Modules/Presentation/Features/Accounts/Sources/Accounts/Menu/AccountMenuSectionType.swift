@@ -3,7 +3,6 @@ import MEGAL10n
 
 enum AccountMenuSectionType {
     case account
-    case tools
     case privacySuite
 
     var description: String? {
