@@ -96,8 +96,9 @@ pipeline {
                                 def parameters = parseParameters(env.gitlabTriggerPhrase)
                                 env.IS_HOTFIX_BUILD = parameters[0]
                                 env.NEXT_RELEASE_VERSION = parameters[1]
+                                env.IS_FIRST_ANNOUNCEMENT = parameters[2]
 
-                                sh 'swift run ReleaseCandidateAnnouncement --transifex-authorization \"$TRANSIFIX_AUTHORIZATION_TOKEN\" --release-notes-resource-id \"$IOS_MEGA_CHANGELOG_RESOURCE_ID\" --jira-base-url-string \"$JIRA_BASE_URL\" --jira-authorization \"$JIRA_TOKEN\" --jira-projects \"$MEGA_IOS_JIRA_PROJECT_NAME_AND_ID_TABLE\" --slack-authorization \"$RELEASE_ANNOUNCEMENT_SLACK_TOKEN\" --code-freeze-slack-channel-ids \"$MOBILE_DEV_TEAM_SLACK_CHANNEL_ID\" --testflight-base-url \"$MEGA_IOS_TESTFLIGHT_BASE_URL\" --release-candidate-slack-channel-ids \"$IOS_RC_TEAM_SLACK_CHANNEL_IDS\" --next-release-version \"$NEXT_RELEASE_VERSION\" --is-hotfix-build \"$IS_HOTFIX_BUILD\"'
+                                sh 'swift run ReleaseCandidateAnnouncement --transifex-authorization \"$TRANSIFIX_AUTHORIZATION_TOKEN\" --release-notes-resource-id \"$IOS_MEGA_CHANGELOG_RESOURCE_ID\" --jira-base-url-string \"$JIRA_BASE_URL\" --jira-authorization \"$JIRA_TOKEN\" --jira-projects \"$MEGA_IOS_JIRA_PROJECT_NAME_AND_ID_TABLE\" --slack-authorization \"$RELEASE_ANNOUNCEMENT_SLACK_TOKEN\" --code-freeze-slack-channel-ids \"$MOBILE_DEV_TEAM_SLACK_CHANNEL_ID\" --testflight-base-url \"$MEGA_IOS_TESTFLIGHT_BASE_URL\" --release-candidate-slack-channel-ids \"$IOS_RC_TEAM_SLACK_CHANNEL_IDS\" --next-release-version \"$NEXT_RELEASE_VERSION\" --is-hotfix-build \"$IS_HOTFIX_BUILD\" --is-first-announcement \"$IS_FIRST_ANNOUNCEMENT\"'
                             }
                         }
                     }
@@ -147,22 +148,38 @@ private def parseParameters(String fullCommand) {
             .desc("Specify the next release version to be announced")
             .build()
 
+    Option firstAnnouncement = Option
+            .builder("fa")
+            .longOpt("first-announcement")
+            .argName("First announcement")
+            .hasArg()
+            .required(false)
+            .desc("Specify if this is the first announcement of the release")
+            .build()
+
     options.addOption(releaseVersionOption)
     options.addOption(hotfixBuild)
+    options.addOption(firstAnnouncement)
 
     CommandLineParser commandLineParser = new DefaultParserWrapper()
     CommandLine commandLine = commandLineParser.parse(options, parameters)
 
     String nextReleaseVersion = commandLine.getOptionValue("nrv")
     boolean isHotfixBuild = false  // Default to false
+    boolean isFirstAnnouncement = false  // Default to false
 
     if (commandLine.hasOption("hfb")) {
         isHotfixBuild = Boolean.parseBoolean(commandLine.getOptionValue("hfb"))
     }
 
+    if (commandLine.hasOption("fa")) {
+        isFirstAnnouncement = Boolean.parseBoolean(commandLine.getOptionValue("fa"))
+    }
+
     println("nextReleaseVersion: $nextReleaseVersion")
     println("Is Hotfix build: $isHotfixBuild")
+    println("is first announcement: $isFirstAnnouncement")
 
-    return [isHotfixBuild, nextReleaseVersion]
+    return [isHotfixBuild, nextReleaseVersion, isFirstAnnouncement]
 }
 
