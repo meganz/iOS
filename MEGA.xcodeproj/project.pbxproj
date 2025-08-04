@@ -192,6 +192,7 @@
 		165487ED2DDF093200170EF8 /* MEGASdk in Frameworks */ = {isa = PBXBuildFile; productRef = 165487EC2DDF093200170EF8 /* MEGASdk */; };
 		1654C7F02DC47F1D00DDB846 /* MEGAStoreKit in Frameworks */ = {isa = PBXBuildFile; productRef = 1654C7EF2DC47F1D00DDB846 /* MEGAStoreKit */; };
 		1678D7F22A45487E00336C52 /* MEGATest in Frameworks */ = {isa = PBXBuildFile; productRef = 1678D7F12A45487E00336C52 /* MEGATest */; };
+		16886B382E20B67A0096D21D /* MEGAPurchase+CheckCancellation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16886B312E20B5250096D21D /* MEGAPurchase+CheckCancellation.swift */; };
 		169ADFCE2DD5BAA500AB80F1 /* MEGAInfrastructure in Frameworks */ = {isa = PBXBuildFile; productRef = 169ADFCD2DD5BAA500AB80F1 /* MEGAInfrastructure */; };
 		16F95A2E2DDF129A00A14DDE /* DeviceKit in Frameworks */ = {isa = PBXBuildFile; productRef = 16F95A2D2DDF129A00A14DDE /* DeviceKit */; };
 		240380542A30687500C06E61 /* ReportIssueMessageViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 240380532A30687500C06E61 /* ReportIssueMessageViewModelTests.swift */; };
@@ -2940,6 +2941,7 @@
 		1654223B2DC8B491000A229C /* PlanEntity+ExternalPurchasePlan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PlanEntity+ExternalPurchasePlan.swift"; sourceTree = "<group>"; };
 		1654C7EE2DC47D8100DDB846 /* MEGAStoreKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = MEGAStoreKit; path = Modules/MEGASharedRepo/MEGAStoreKit; sourceTree = SOURCE_ROOT; };
 		167845462A172AAA00568FBE /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Platforms/iPhoneOS.platform/Developer/Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		16886B312E20B5250096D21D /* MEGAPurchase+CheckCancellation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAPurchase+CheckCancellation.swift"; sourceTree = "<group>"; };
 		169ADFCC2DD5BA7700AB80F1 /* MEGAInfrastructure */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = MEGAInfrastructure; path = Modules/MEGASharedRepo/MEGAInfrastructure; sourceTree = SOURCE_ROOT; };
 		16E14DD22A4ADE4700ED3AD5 /* MEGAAnalyticsDomain */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MEGAAnalyticsDomain; sourceTree = "<group>"; };
 		240380532A30687500C06E61 /* ReportIssueMessageViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportIssueMessageViewModelTests.swift; sourceTree = "<group>"; };
@@ -11379,6 +11381,7 @@
 		B5EF0A7329F0EDF900B166B1 /* MEGAPurchase */ = {
 			isa = PBXGroup;
 			children = (
+				16886B312E20B5250096D21D /* MEGAPurchase+CheckCancellation.swift */,
 				BF0DB7812DCC0BBB00869BF4 /* MEGAPurchase+Pricing.swift */,
 				B53B02BD2A96135200550A69 /* MEGAPurchase+PromotedPlan.swift */,
 				A58902652C5B31C5001B0E3C /* MEGAPurchase+Sendable.swift */,
@@ -15178,6 +15181,7 @@
 				8357ADE6246AED2700045137 /* MEGAPresentationManager.swift in Sources */,
 				A81AD7391F3099F800CA4059 /* MEGAProcessAsset.m in Sources */,
 				C460DA3B263ACD17000ED9E4 /* MEGAProgressBarView.swift in Sources */,
+				16886B382E20B67A0096D21D /* MEGAPurchase+CheckCancellation.swift in Sources */,
 				BF0DB7822DCC0BBB00869BF4 /* MEGAPurchase+Pricing.swift in Sources */,
 				B53B02BE2A96135200550A69 /* MEGAPurchase+PromotedPlan.swift in Sources */,
 				A58902662C5B31C5001B0E3C /* MEGAPurchase+Sendable.swift in Sources */,

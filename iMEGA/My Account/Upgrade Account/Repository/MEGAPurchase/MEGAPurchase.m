@@ -14,6 +14,7 @@
 @property (nonatomic, strong) SKProduct *pendingStoreProduct;
 @property (nonatomic, getter=isPurchasingPromotedPlan) BOOL purchasingPromotedPlan;
 @property (nonatomic, getter=isSubmittingReceipt) BOOL submittingReceipt;
+@property (nonatomic, strong, nullable) NSArray<SKPaymentTransaction *> *submittingTransactions;
 @end
 
 @implementation MEGAPurchase
@@ -21,7 +22,7 @@
 + (MEGAPurchase *)sharedInstance {
     static dispatch_once_t onceToken;
     static MEGAPurchase * storeManagerSharedInstance;
-    
+
     dispatch_once(&onceToken, ^{
         storeManagerSharedInstance = [[MEGAPurchase alloc] init];
     });
@@ -43,7 +44,7 @@
     if (self != nil) {
         self.products = [products mutableCopy];
     }
-    
+
     return self;
 }
 
@@ -69,7 +70,7 @@
         SKProductsRequest *prodRequest = [[SKProductsRequest alloc] initWithProductIdentifiers:[NSSet setWithArray:self.iOSProductIdentifiers]];
         prodRequest.delegate = self;
         [prodRequest start];
-        
+
     } else {
         MEGALogWarning(@"[StoreKit] In-App purchases is disabled");
     }
@@ -84,14 +85,14 @@
     if (product != nil) {
         if ([SKPaymentQueue canMakePayments]) {
             [SVProgressHUD show];
-            
+
             SKMutablePayment *paymentRequest = [SKMutablePayment paymentWithProduct:product];
             NSString *base64UserHandle = [MEGASdk base64HandleForUserHandle:MEGASdk.currentUserHandle.unsignedLongLongValue];
             paymentRequest.applicationUsername = base64UserHandle;
             [[SKPaymentQueue defaultQueue] addPayment:paymentRequest];
         } else {
             MEGALogWarning(@"[StoreKit] In-App purchases is disabled");
-            
+
             UIAlertController *alertController = [UIAlertController inAppPurchaseAlertWithAppStoreSettingsButton:LocalizedString(@"appPurchaseDisabled", @"Error message shown the In App Purchase is disabled in the device Settings") alertMessage:nil];
             [UIApplication.mnz_presentingViewController presentViewController:alertController animated:YES completion:nil];
         }
@@ -101,18 +102,18 @@
         [alertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"ok", @"") style:UIAlertActionStyleCancel handler:nil]];
         [UIApplication.mnz_presentingViewController presentViewController:alertController animated:YES completion:nil];
     }
-    
+
     [self savePendingPromotedProduct:nil];
 }
 
 - (void)restorePurchase {
     if ([SKPaymentQueue canMakePayments]) {
         [SVProgressHUD show];
-        
+
         [[SKPaymentQueue defaultQueue] restoreCompletedTransactions];
     } else {
         MEGALogWarning(@"[StoreKit] In-App purchases is disabled");
-        
+
         UIAlertController *alertController = [UIAlertController inAppPurchaseAlertWithAppStoreSettingsButton:LocalizedString(@"allowPurchase_title", @"Alert title to remenber the user that needs to enable purchases") alertMessage:LocalizedString(@"allowPurchase_message", @"Alert message to remenber the user that needs to enable purchases before continue")];
         [UIApplication.mnz_presentingViewController presentViewController:alertController animated:YES completion:nil];
     }
@@ -144,25 +145,27 @@
 
 - (void)productsRequest:(SKProductsRequest *)request didReceiveResponse:(SKProductsResponse *)response {
     MEGALogDebug(@"[StoreKit] Products request did receive response %lu products", (unsigned long)response.products.count);
-    
+
     NSArray *sortedProducts = [response.products sortedArrayUsingComparator:^NSComparisonResult(SKProduct *a, SKProduct *b) {
         return [a.productIdentifier compare:b.productIdentifier];
     }];
-    
+
     for (SKProduct *product in sortedProducts) {
         MEGALogDebug(@"[StoreKit] Product \"%@\" received", product.productIdentifier);
         [self.products addObject:product];
     }
-    
+
     for (NSString *invalidProductIdentifiers in response.invalidProductIdentifiers) {
         MEGALogError(@"[StoreKit] Invalid product \"%@\"", invalidProductIdentifiers);
     }
-    
+
     dispatch_async(dispatch_get_main_queue(), ^{
         for (id<MEGAPurchasePricingDelegate> pricingsDelegate in self.pricingsDelegateMutableArray) {
             [pricingsDelegate pricingsReady];
         }
     });
+
+    [self checkForCancellation];
 }
 
 - (void)request:(SKRequest *)request didFailWithError:(NSError *)error {
@@ -174,7 +177,7 @@
 - (void)paymentQueue:(SKPaymentQueue *)queue updatedTransactions:(NSArray *)transactions {
     NSURL *receiptURL = [[NSBundle mainBundle] appStoreReceiptURL];
     MEGALogDebug(@"[StoreKit] Receipt URL: %@", receiptURL);
-    
+
     NSData *receiptData = [NSData dataWithContentsOfURL:receiptURL];
     NSString *receipt;
     if (receiptData) {
@@ -183,82 +186,77 @@
     } else {
         MEGALogWarning(@"[StoreKit] No receipt data");
     }
-    
-    BOOL shouldSubmitReceiptOnRestore = YES; // If restore purchase, send only one time the receipt.
-    
+
+    // We should only submit receipt once, because there's no point to submit the same receipt multiple times
+    // Even if there is multiple transactions, they will be processed in the same way
+    BOOL hasSubmittedReceipt = NO;
+
     for(SKPaymentTransaction *transaction in transactions) {
         switch (transaction.transactionState) {
             case SKPaymentTransactionStatePurchasing:
                 MEGALogDebug(@"[StoreKit] Transaction purchasing");
                 break;
-                
+
             case SKPaymentTransactionStatePurchased: {
                 MEGALogDebug(@"[StoreKit] Date: %@\nIdentifier: %@\n\t-Original Date: %@\n\t-Original Identifier: %@", transaction.transactionDate, transaction.transactionIdentifier, transaction.originalTransaction.transactionDate, transaction.originalTransaction.transactionIdentifier);
-                if (receipt) {
-                    [MEGASdk.shared submitPurchase:MEGAPaymentMethodItunes receipt:receipt delegate:self];
-                }
-                
+                [self submitReceiptIfNeededWithReceipt:receipt transactions:transactions hasSubmittedReceipt:&hasSubmittedReceipt];
+
                 MEGALogDebug(@"[StoreKit] Transaction purchased");
-                
+
                 for (id<MEGAPurchaseDelegate> delegate in self.purchaseDelegateMutableArray) {
                     [delegate successfulPurchase:self];
                 }
-                
+
                 [SVProgressHUD dismiss];
-                [[SKPaymentQueue defaultQueue] finishTransaction:transaction];
-                
+
                 if (self.isPurchasingPromotedPlan) {
                     [self setIsPurchasingPromotedPlan:NO];
                     [self handlePromotedPlanPurchaseResultWithIsSuccess:YES];
                 }
-                
+
                 break;
             }
-                
+
             case SKPaymentTransactionStateRestored:
                 MEGALogDebug(@"[StoreKit] Date: %@\nIdentifier: %@\n\t-Original Date: %@\n\t-Original Identifier: %@", transaction.transactionDate, transaction.transactionIdentifier, transaction.originalTransaction.transactionDate, transaction.originalTransaction.transactionIdentifier);
-                if (shouldSubmitReceiptOnRestore) {
-                    if (receipt) {
-                        [MEGASdk.shared submitPurchase:MEGAPaymentMethodItunes receipt:receipt delegate:self];
-                    }
+                if (!hasSubmittedReceipt) {
+                    [self submitReceiptIfNeededWithReceipt:receipt transactions:transactions hasSubmittedReceipt:&hasSubmittedReceipt];
                     MEGALogDebug(@"[StoreKit] Transaction restored");
                     for (id<MEGARestoreDelegate> restoreDelegate in self.restoreDelegateMutableArray) {
                         [restoreDelegate successfulRestore:self];
                     }
-                    shouldSubmitReceiptOnRestore = NO;
                 }
-                
+
                 [SVProgressHUD dismiss];
-                [[SKPaymentQueue defaultQueue] finishTransaction:transaction];
-                
+
                 break;
-                
+
             case SKPaymentTransactionStateFailed:
                 MEGALogError(@"[StoreKit] Transaction failed");
                 MEGALogError(@"[StoreKit] Date: %@\nIdentifier: %@\n\t-Original Date: %@\n\t-Original Identifier: %@, failed error: %@", transaction.transactionDate, transaction.transactionIdentifier, transaction.originalTransaction.transactionDate, transaction.originalTransaction.transactionIdentifier, transaction.error);
-                
+
                 for (id<MEGAPurchaseDelegate> purchaseDelegate in self.purchaseDelegateMutableArray) {
                     if ([purchaseDelegate respondsToSelector:@selector(failedPurchase:message:)]) {
                         [purchaseDelegate failedPurchase:transaction.error.code message:transaction.error.localizedDescription];
                     }
                 }
-                
+
                 [SVProgressHUD dismiss];
                 [[SKPaymentQueue defaultQueue] finishTransaction:transaction];
-                
+
                 if (self.isPurchasingPromotedPlan) {
                     [self setIsPurchasingPromotedPlan:NO];
-                    
+
                     if (transaction.error.code != SKErrorPaymentCancelled) {
                         [self handlePromotedPlanPurchaseResultWithIsSuccess:NO];
                     }
                 }
                 break;
-                
+
             case SKPaymentTransactionStateDeferred:
                 MEGALogDebug(@"[StoreKit] Transaction deferred");
                 break;
-                
+
             default:
                 break;
         }
@@ -273,7 +271,7 @@
             }
         }
     }
-    
+
     if ([SVProgressHUD isVisible]) {
         [SVProgressHUD dismiss];
     }
@@ -293,17 +291,26 @@
 
 - (BOOL)paymentQueue:(SKPaymentQueue *)queue shouldAddStorePayment:(SKPayment *)payment forProduct:(SKProduct *)product {
     MEGALogDebug(@"[StoreKit] Initiated App store promoted plan purchase");
-    
+
     BOOL shouldAddStorePayment = [self shouldAddStorePaymentFor:product];
     [self setIsPurchasingPromotedPlan:shouldAddStorePayment];
-    
+
     return shouldAddStorePayment;
+}
+
+- (void)submitReceiptIfNeededWithReceipt:(NSString *)receipt transactions:(NSArray<SKPaymentTransaction *> *)transactions hasSubmittedReceipt:(BOOL *)hasSubmittedReceipt {
+    if (receipt && !(*hasSubmittedReceipt) && !self.isSubmittingReceipt) {
+        [MEGASdk.shared submitPurchase:MEGAPaymentMethodItunes receipt:receipt delegate:self];
+        self.submittingTransactions = [transactions copy];
+        *hasSubmittedReceipt = YES;
+    }
 }
 
 #pragma mark - MEGARequestDelegate
 
 - (void)onRequestStart:(MEGASdk *)api request:(MEGARequest *)request {
     if (request.type == MEGARequestTypeSubmitPurchaseReceipt) {
+        MEGALogDebug(@"[StoreKit] Submitting receipt for purchase");
         [self setIsSubmittingReceipt:true];
     }
 }
@@ -313,31 +320,46 @@
         if (request.type == MEGARequestTypeSubmitPurchaseReceipt) {
             //MEGAErrorTypeApiEExist is skipped because if a user is downgrading its subscription, this error will be returned by the API, because the receipt does not contain any new information.
             if (error.type != MEGAErrorTypeApiEExist) {
+                MEGALogDebug(@"[StoreKit] Submitting receipt failed with error: %@", error);
                 for (id<MEGAPurchaseDelegate> purchaseDelegate in self.purchaseDelegateMutableArray) {
                     if ([purchaseDelegate respondsToSelector:@selector(failedSubmitReceipt:)]) {
                         [purchaseDelegate failedSubmitReceipt:error.type];
                     }
                 }
-                
+
                 [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:LocalizedString(@"wrongPurchase", @"Error message shown when the purchase has failed"), error.name, (long)error.type]];
+            } else {
+                MEGALogDebug(@"[StoreKit] Submitting receipt failed with error: %@, but it is expected when downgrading subscription", error);
+                [self finishSubmittedTransactions];
             }
             [self setIsSubmittingReceipt:false];
+            self.submittingTransactions = nil;
         }
         return;
     }
-    
+
     if (request.type == MEGARequestTypeGetPricing) {
         self.pricing = request.pricing;
         self.currency = request.currency;
         [self requestProducts];
     } else if (request.type == MEGARequestTypeSubmitPurchaseReceipt) {
+        MEGALogDebug(@"[StoreKit] Receipt submitted successfully");
         [self setIsSubmittingReceipt:false];
         for (id<MEGAPurchaseDelegate> delegate in self.purchaseDelegateMutableArray) {
             if ([delegate respondsToSelector:@selector(successSubmitReceipt)]) {
                 [delegate successSubmitReceipt];
             }
         }
+        [self finishSubmittedTransactions];
+        self.submittingTransactions = nil;
     }
 }
+
+- (void)finishSubmittedTransactions {
+    for (SKPaymentTransaction *transaction in self.submittingTransactions) {
+        [[SKPaymentQueue defaultQueue] finishTransaction:transaction];
+    }
+}
+
 
 @end
