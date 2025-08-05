@@ -18,7 +18,7 @@ struct MockMEGANotificationUseCaseProtocol: MEGANotificationUseCaseProtocol {
     var userContactRequestsUpdates: AnyAsyncSequence<Void> { EmptyAsyncSequence().eraseToAnyAsyncSequence() }
     func relevantAndNotSeenAlerts() -> [UserAlertEntity]? { nil }
     func incomingContactRequest() -> [ContactRequestEntity] { [] }
-    func unreadNotificationIDs() async -> [NotificationIDEntity] { [] }
+    func unreadNotificationsCount() async -> Int { 0 }
 }
 
 final class MockCloudDriveViewModeMonitoringService: @unchecked Sendable, CloudDriveViewModeMonitoring {
@@ -133,11 +133,6 @@ class NodeBrowserViewModelTests: XCTestCase {
                 adsVisibilityViewModel: nil,
                 config: config, // Pass the modified config here
                 nodeSource: nodeSource,
-                avatarViewModel: MyAvatarViewModel(
-                    megaNotificationUseCase: MockMEGANotificationUseCaseProtocol(),
-                    userImageUseCase: MockUserImageUseCase(),
-                    megaHandleUseCase: MockMEGAHandleUseCase()
-                ),
                 noInternetViewModel: LegacyNoInternetViewModel(
                     networkMonitorUseCase: MockNetworkMonitorUseCase(),
                     networkConnectionStateChanged: { _ in }

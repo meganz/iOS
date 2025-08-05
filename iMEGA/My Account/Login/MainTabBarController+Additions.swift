@@ -41,7 +41,6 @@ extension MainTabBarController {
     func makeCloudDriveViewController() -> UIViewController? {
         let config = NodeBrowserConfig(
             displayMode: .cloudDrive,
-            showsAvatar: true,
             adsConfiguratorProvider: {
                 UIApplication.mainTabBarRootViewController() as? MainTabBarController
             }
@@ -64,10 +63,7 @@ extension MainTabBarController {
     }
 
     func sharedItemsViewController() -> UIViewController? {
-        guard let sharedItemsNavigationController = UIStoryboard(name: "SharedItems", bundle: nil).instantiateInitialViewController() as? MEGANavigationController,
-              let vc = sharedItemsNavigationController.viewControllers.first
-        else { return nil }
-        (vc as? (any MyAvatarPresenterProtocol))?.configureMyAvatarManager()
+        guard let sharedItemsNavigationController = UIStoryboard(name: "SharedItems", bundle: nil).instantiateInitialViewController() as? MEGANavigationController else { return nil }
         sharedItemsNavigationController.navigationDelegate = self
         sharedItemsNavigationController.tabBarItem = UITabBarItem(
             title: nil,

@@ -65,7 +65,6 @@
     }
     
     [self.viewModel loadAllPhotosWithSavedFilters];
-    [self refreshMyAvatar];
     
     [self setupNavigationBarButtons];
 }

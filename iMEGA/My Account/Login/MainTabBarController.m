@@ -167,9 +167,6 @@
 
 - (UIViewController *)SharedItemsViewController {
     MEGANavigationController *sharedItemsNavigationController = [[UIStoryboard storyboardWithName:@"SharedItems" bundle:nil] instantiateInitialViewController];
-    if ([[sharedItemsNavigationController.viewControllers firstObject] conformsToProtocol:@protocol(MyAvatarPresenterProtocol)]) {
-        [[sharedItemsNavigationController.viewControllers firstObject] configureMyAvatarManager];
-    }
     return sharedItemsNavigationController;
 }
 

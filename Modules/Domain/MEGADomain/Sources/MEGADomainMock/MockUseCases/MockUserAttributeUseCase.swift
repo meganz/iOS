@@ -66,4 +66,8 @@ public final class MockUserAttributeUseCase: UserAttributeUseCaseProtocol, @unch
         }
         return NoteToSelfNewFeatureBadgeEntity(presentedCount: presentedTimesInt)
     }
+    
+    public func getUserAttribute(for attribute: UserAttributeEntity) async throws -> String? {
+        nil
+    }
 }

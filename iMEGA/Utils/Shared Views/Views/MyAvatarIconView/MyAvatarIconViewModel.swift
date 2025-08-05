@@ -1,35 +1,26 @@
 import Combine
 import MEGAAssets
+import MEGADesignToken
 import SwiftUI
 
 @MainActor
-final class MyAvatarIconViewModel<AvatarObserver: MyAvatarObserver>: ObservableObject {
-    @Published var avatar: UIImage = MEGAAssets.UIImage.iconContacts
-    @Published var text: String?
+final class MyAvatarIconViewModel: ObservableObject {
+    @Published var avatar: UIImage?
+    @Published var badge: String?
+    @Published var avatarInitial: String = ""
+    @Published var avatarBackgroundColor: Color = TokenColors.Text.primary.swiftUI
+    
+    private let avatarObserver: any MyAvatarObserverProtocol
 
-    private var avatarObserver: AvatarObserver
-    private let onAvatarTapped: () -> Void
-
-    init(
-        avatarObserver: AvatarObserver,
-        onAvatarTapped: @escaping () -> Void
-    ) {
+    init(avatarObserver: some MyAvatarObserverProtocol) {
         self.avatarObserver = avatarObserver
-        self.onAvatarTapped = onAvatarTapped
-
-        self.avatarObserver.notifyUpdate = { [weak self] output in
-            self?.avatar = output.avatarImage
-            self?.text = output.notificationNumber
-        }
-
-        avatarObserver.viewIsReady()
+        self.avatarObserver.avatarInitial.receive(on: DispatchQueue.main).assign(to: &$avatarInitial)
+        self.avatarObserver.avatarBackgroundColor.receive(on: DispatchQueue.main).assign(to: &$avatarBackgroundColor)
+        self.avatarObserver.avatar.receive(on: DispatchQueue.main).assign(to: &$avatar)
+        self.avatarObserver.badge.receive(on: DispatchQueue.main).assign(to: &$badge)
     }
-
-    func onAppear() {
-        avatarObserver.viewIsAppearing()
-    }
-
-    func openUserProfile() {
-        onAvatarTapped()
+    
+    func onAppear() async {
+        await avatarObserver.onAppear()
     }
 }

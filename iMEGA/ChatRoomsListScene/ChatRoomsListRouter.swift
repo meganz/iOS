@@ -38,8 +38,7 @@ final class ChatRoomsListRouter: ChatRoomsListRouting {
             permissionAlertRouter: PermissionAlertRouter.makeRouter(deviceHandler: permissionHandler),
             chatListItemCacheUseCase: ChatListItemCacheUseCase(repository: ChatListItemCacheRepository.newRepo),
             retryPendingConnectionsUseCase: RetryPendingConnectionsUseCase(repo: RetryPendingConnectionsRepository.newRepo),
-            urlOpener: { UIApplication.shared.open($0) },
-            myAvatarViewModel: myAvatarViewModel
+            urlOpener: { UIApplication.shared.open($0) }
         )
         
         let chatRoomsListView = ChatRoomsListView(viewModel: viewModel)
@@ -53,20 +52,6 @@ final class ChatRoomsListRouter: ChatRoomsListRouting {
         navigationController = navigation
         chatRoomsListViewController = viewController
         return navigation
-    }
-    
-    var myAvatarViewModel: MyAvatarViewModel {
-        MyAvatarViewModel(
-            megaNotificationUseCase: MEGANotificationUseCase(
-                userAlertsRepository: UserAlertsRepository.newRepo,
-                notificationsUseCase: NotificationsUseCase(repository: NotificationsRepository.newRepo)
-            ), userImageUseCase: UserImageUseCase(
-                userImageRepo: UserImageRepository.newRepo,
-                userStoreRepo: UserStoreRepository.newRepo,
-                thumbnailRepo: ThumbnailRepository.newRepo,
-                fileSystemRepo: FileSystemRepository.sharedRepo
-            ), megaHandleUseCase: MEGAHandleUseCase(repo: MEGAHandleRepository.newRepo)
-        )
     }
     
     func presentStartConversation() {

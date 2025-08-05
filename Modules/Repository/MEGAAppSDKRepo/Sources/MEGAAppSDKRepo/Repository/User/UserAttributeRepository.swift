@@ -99,4 +99,23 @@ public struct UserAttributeRepository: UserAttributeRepositoryProtocol {
         }
         return decodedObject
     }
+    
+    public func getUserAttribute(for attribute: UserAttributeEntity) async throws -> String? {
+        try await withAsyncThrowingValue(in: { completion in
+            sdk.getUserAttributeType(attribute.toMEGAUserAttribute(), delegate: RequestDelegate { result in
+                switch result {
+                case .success(let request):
+                    completion(.success(request.text))
+                case .failure(let error):
+                    let mappedError: any Error = switch error.type {
+                    case .apiERange:
+                        UserAttributeErrorEntity.attributeNotFound
+                    default:
+                        GenericErrorEntity()
+                    }
+                    completion(.failure(mappedError))
+                }
+            })
+        })
+    }
 }

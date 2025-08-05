@@ -1,6 +1,6 @@
 #import <UIKit/UIKit.h>
 
-@class MyAvatarManager, ContextMenuManager, MEGAVerticalButton, SharedItemsViewModel, SharedItemsTableViewCell, SharedItemsNodeSearcher, TaskOCWrapper;
+@class ContextMenuManager, MEGAVerticalButton, SharedItemsViewModel, SharedItemsTableViewCell, SharedItemsNodeSearcher, TaskOCWrapper;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -19,9 +19,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic) MEGASortOrderType sortOrderType;
 
-@property (nonatomic, strong, nullable) MyAvatarManager *myAvatarManager;
 @property (nonatomic, strong, nullable) ContextMenuManager * contextMenuManager;
 @property (nonatomic, strong) UIBarButtonItem *contextBarButtonItem;
+@property (nonatomic, strong) UIBarButtonItem *avatarBarButtonItem;
 @property (nonatomic, strong) NSMutableArray *selectedNodesMutableArray;
 
 @property (nonatomic) UISearchController *searchController;

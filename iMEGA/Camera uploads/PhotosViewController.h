@@ -2,11 +2,10 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@class MyAvatarManager, PhotoLibraryContentViewModel, PhotoUpdatePublisher, PhotoSelectionAdapter, PhotoAlbumContainerViewController, PhotosViewModel, ContextMenuManager, DefaultNodeAccessoryActionDelegate;
+@class PhotoLibraryContentViewModel, PhotoUpdatePublisher, PhotoSelectionAdapter, PhotoAlbumContainerViewController, PhotosViewModel, ContextMenuManager, DefaultNodeAccessoryActionDelegate;
 
 @interface PhotosViewController : UIViewController <MEGATransferDelegate, MEGAGlobalDelegate>
 
-@property (nonatomic, nullable, strong) MyAvatarManager *myAvatarManager;
 @property (strong, nonatomic) PhotoSelectionAdapter *selection;
 
 @property (weak,   nonatomic) PhotoAlbumContainerViewController *parentPhotoAlbumsController;
@@ -15,6 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) UIBarButtonItem *editBarButtonItem;
 @property (nonatomic, strong) UIBarButtonItem *cancelBarButtonItem;
 @property (nonatomic, strong) UIBarButtonItem *filterBarButtonItem;
+@property (nonatomic, strong, nullable) UIBarButtonItem *avatarBarButtonItem;
 @property (nonatomic, strong, nullable) UIBarButtonItem *cameraUploadStatusBarButtonItem;
 @property (nonatomic, strong) PhotosViewModel *viewModel;
 @property (strong, nonatomic) PhotoUpdatePublisher *photoUpdatePublisher;

@@ -23,8 +23,8 @@ class MEGANotificationUseCaseTests: XCTestCase {
             notificationsUseCase: MockNotificationUseCase(unreadNotificationIDs: expectedUnreadIDs)
         )
         
-        let unreadIDs = await sut.unreadNotificationIDs()
-        XCTAssertEqual(unreadIDs, expectedUnreadIDs)
+        let unreadNotificationsCount = await sut.unreadNotificationsCount()
+        XCTAssertEqual(unreadNotificationsCount, expectedUnreadIDs.count)
     }
 }
 

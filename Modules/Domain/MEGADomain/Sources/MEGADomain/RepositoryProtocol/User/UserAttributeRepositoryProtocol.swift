@@ -29,4 +29,6 @@ public protocol UserAttributeRepositoryProtocol: Sendable {
     ///
     /// - Returns: Decodable object stored at the attribute and key
     func userAttribute<T: Decodable>(for attribute: UserAttributeEntity, key: String) async throws -> T
+    
+    func getUserAttribute(for attribute: UserAttributeEntity) async throws -> String?
 }

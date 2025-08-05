@@ -48,18 +48,6 @@ final class HomeScreenFactory: NSObject {
             rootViewController: homeViewController
         )
         
-        let myAvatarViewModel = MyAvatarViewModel(
-            megaNotificationUseCase: MEGANotificationUseCase(
-                userAlertsRepository: UserAlertsRepository.newRepo,
-                notificationsUseCase: NotificationsUseCase(repository: NotificationsRepository.newRepo)
-            ), userImageUseCase: UserImageUseCase(
-                userImageRepo: UserImageRepository.newRepo,
-                userStoreRepo: UserStoreRepository.newRepo,
-                thumbnailRepo: ThumbnailRepository.newRepo,
-                fileSystemRepo: FileSystemRepository.sharedRepo
-            ), megaHandleUseCase: MEGAHandleUseCase(repo: MEGAHandleRepository.newRepo)
-        )
-        
         let permissionHandler: some DevicePermissionsHandling = DevicePermissionsHandler.makeHandler()
         
         let uploadViewModel = HomeUploadingViewModel(
@@ -73,7 +61,6 @@ final class HomeScreenFactory: NSObject {
             router: FileUploadingRouter(navigationController: navigationController, baseViewController: homeViewController, photoPicker: MEGAPhotoPicker(presenter: navigationController), remoteFeatureFlagUseCase: RemoteFeatureFlagUseCase(repository: RemoteFeatureFlagRepository.newRepo))
         )
         
-        homeViewController.myAvatarViewModel = myAvatarViewModel
         homeViewController.uploadViewModel = uploadViewModel
         homeViewController.startConversationViewModel = StartConversationViewModel(
             networkMonitorUseCase: NetworkMonitorUseCase(repo: NetworkMonitorRepository.newRepo),

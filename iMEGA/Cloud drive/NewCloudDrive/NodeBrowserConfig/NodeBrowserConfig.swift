@@ -3,7 +3,6 @@ struct NodeBrowserConfig {
     var isFromViewInFolder: Bool?
     var isFromUnverifiedContactSharedFolder: Bool?
     var isFromSharedItem: Bool?
-    var showsAvatar: Bool?
     var shouldRemovePlayerDelegate: Bool?
     var warningViewModel: WarningBannerViewModel?
     // this should enabled for non-root nodes

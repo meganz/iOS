@@ -50,4 +50,8 @@ public final class MockUserAttributeRepository: UserAttributeRepositoryProtocol,
         }
         return decodedObject
     }
+    
+    public func getUserAttribute(for attribute: UserAttributeEntity) async throws -> String? {
+        nil
+    }
 }
