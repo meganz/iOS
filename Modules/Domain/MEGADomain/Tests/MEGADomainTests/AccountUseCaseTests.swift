@@ -273,19 +273,6 @@ final class AccountUseCaseTests: XCTestCase {
         XCTAssertFalse(sut.isSmsAllowed)
     }
     
-    func testCurrentUser_whenUserExists_shouldReturnUser() async {
-        let user = UserEntity(handle: 1)
-        let sut = makeSUT(currentUser: user)
-        let fetchedUser = await sut.currentUser()
-        XCTAssertEqual(fetchedUser, user)
-    }
-    
-    func testCurrentUser_whenUserDoesNotExist_shouldReturnNil() async {
-        let sut = makeSUT(currentUser: nil)
-        let fetchedUser = await sut.currentUser()
-        XCTAssertNil(fetchedUser)
-    }
-    
     func testAccountCreationDate_whenSet_shouldReturnDate() {
         let testDate = Date()
         let sut = makeSUT(accountCreationDate: testDate)

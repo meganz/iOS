@@ -219,9 +219,6 @@ public class MockAccountUseCase: AccountUseCaseProtocol, @unchecked Sendable {
     }
     
     // MARK: - User and session management
-    public func currentUser() async -> UserEntity? {
-        _currentUser
-    }
     
     public func isLoggedIn() -> Bool {
         _isLoggedIn

@@ -18,15 +18,6 @@ final class AccountRepositoryTests: XCTestCase {
         XCTAssertEqual(sut.currentUserHandle, expectedHandle)
     }
     
-    func testCurrentUser() async {
-        let expectedUser = MockUser(handle: .random())
-        
-        let (sut, _) = makeSUT(user: expectedUser)
-        
-        let currentUser = await sut.currentUser()
-        XCTAssertEqual(currentUser, expectedUser.toUserEntity())
-    }
-    
     func testIsGuest() {
         func assert(
             whenUserEmail email: String,

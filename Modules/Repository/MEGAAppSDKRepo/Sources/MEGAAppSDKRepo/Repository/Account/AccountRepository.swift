@@ -42,7 +42,7 @@ public final class AccountRepository: NSObject, AccountRepositoryProtocol {
     }
     
     public var myEmail: String? {
-        sdk.myEmail
+        currentUserSource.currentUserEmail
     }
 
     // MARK: - Account characteristics
@@ -107,9 +107,6 @@ public final class AccountRepository: NSObject, AccountRepositoryProtocol {
     }
 
     // MARK: - User and session management
-    public func currentUser() async -> UserEntity? {
-        await currentUserSource.currentUser()
-    }
     
     public func isLoggedIn() -> Bool {
         currentUserSource.isLoggedIn

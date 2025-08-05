@@ -34,7 +34,6 @@ public protocol AccountRepositoryProtocol: Sendable, RepositoryProtocol {
     var isUnlimitedStorageAccount: Bool { get }
 
     // User and session management
-    func currentUser() async -> UserEntity?
     func isLoggedIn() -> Bool
     func isAccountType(_ type: AccountTypeEntity) -> Bool
     func refreshCurrentAccountDetails() async throws -> AccountDetailsEntity
