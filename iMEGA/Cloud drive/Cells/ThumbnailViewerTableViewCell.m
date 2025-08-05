@@ -14,7 +14,7 @@
 #import "MEGA-Swift.h"
 #import "MEGARecentActionBucket+MNZCategory.h"
 
-@import MEGAL10nObjc;
+#import "LocalizationHelper.h"
 @import MEGAAppSDKRepo;
 
 @interface ThumbnailViewerTableViewCell () <UICollectionViewDataSource, UICollectionViewDelegate>

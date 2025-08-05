@@ -1633,6 +1633,10 @@
 		A5F63E702BE8808C00B7A3F0 /* AppDelegate+SaveNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5F63E6F2BE8808C00B7A3F0 /* AppDelegate+SaveNode.swift */; };
 		A802B1FA1FAB293700AC8BB0 /* MEGAChatBaseRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A802B1F91FAB293700AC8BB0 /* MEGAChatBaseRequestDelegate.m */; };
 		A803C8FD2955DB790056C9F0 /* SAMKeychain in Frameworks */ = {isa = PBXBuildFile; productRef = A803C8FC2955DB790056C9F0 /* SAMKeychain */; };
+		A8077B7D2E421186009954FD /* LocalizationObjC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8077B7C2E421186009954FD /* LocalizationObjC.swift */; };
+		A8077B7E2E421186009954FD /* LocalizationObjC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8077B7C2E421186009954FD /* LocalizationObjC.swift */; };
+		A8077BB72E42270F009954FD /* LocalizationHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = A8077BB62E42270F009954FD /* LocalizationHelper.m */; };
+		A8077BB82E42270F009954FD /* LocalizationHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = A8077BB62E42270F009954FD /* LocalizationHelper.m */; };
 		A808F1832795D286004E4D31 /* ReportIssueViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A808F1822795D286004E4D31 /* ReportIssueViewRouter.swift */; };
 		A812CB392A4B0FAD00F99382 /* MEGAChatSdk in Frameworks */ = {isa = PBXBuildFile; productRef = A812CB382A4B0FAD00F99382 /* MEGAChatSdk */; };
 		A812CB3B2A4B0FB400F99382 /* MEGAChatSdk in Frameworks */ = {isa = PBXBuildFile; productRef = A812CB3A2A4B0FB400F99382 /* MEGAChatSdk */; };
@@ -2254,13 +2258,11 @@
 		BF5F118C2C3E25A400C48DB4 /* NodeSensitivityCheckerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5F118B2C3E25A400C48DB4 /* NodeSensitivityCheckerTests.swift */; };
 		BF6029B72C5AEBD900AD1961 /* NodeDescriptionSeparatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6029B62C5AEBD900AD1961 /* NodeDescriptionSeparatorView.swift */; };
 		BF6149522A9FF33300AB051A /* MEGAL10n in Frameworks */ = {isa = PBXBuildFile; productRef = BF6149512A9FF33300AB051A /* MEGAL10n */; };
-		BF6149542A9FF33300AB051A /* MEGAL10nObjc in Frameworks */ = {isa = PBXBuildFile; productRef = BF6149532A9FF33300AB051A /* MEGAL10nObjc */; };
 		BF6149562A9FF34400AB051A /* MEGAL10n in Frameworks */ = {isa = PBXBuildFile; productRef = BF6149552A9FF34400AB051A /* MEGAL10n */; };
 		BF61495A2A9FF35200AB051A /* MEGAL10n in Frameworks */ = {isa = PBXBuildFile; productRef = BF6149592A9FF35200AB051A /* MEGAL10n */; };
 		BF61495E2A9FF36200AB051A /* MEGAL10n in Frameworks */ = {isa = PBXBuildFile; productRef = BF61495D2A9FF36200AB051A /* MEGAL10n */; };
 		BF6149622A9FF37000AB051A /* MEGAL10n in Frameworks */ = {isa = PBXBuildFile; productRef = BF6149612A9FF37000AB051A /* MEGAL10n */; };
 		BF6149662A9FF38400AB051A /* MEGAL10n in Frameworks */ = {isa = PBXBuildFile; productRef = BF6149652A9FF38400AB051A /* MEGAL10n */; };
-		BF6149682A9FF38400AB051A /* MEGAL10nObjc in Frameworks */ = {isa = PBXBuildFile; productRef = BF6149672A9FF38400AB051A /* MEGAL10nObjc */; };
 		BF61496A2A9FF39500AB051A /* MEGAL10n in Frameworks */ = {isa = PBXBuildFile; productRef = BF6149692A9FF39500AB051A /* MEGAL10n */; };
 		BF62C76F2E1259560008B62D /* AccountMenuViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF62C76E2E1259560008B62D /* AccountMenuViewRouter.swift */; };
 		BF62C7B32E14AEDA0008B62D /* AccountMenuViewRouter+DeviceCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF62C7B22E14AECE0008B62D /* AccountMenuViewRouter+DeviceCenter.swift */; };
@@ -4414,6 +4416,9 @@
 		A802B1F81FAB293700AC8BB0 /* MEGAChatBaseRequestDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MEGAChatBaseRequestDelegate.h; path = iMEGA/API/Chat/MEGAChatBaseRequestDelegate.h; sourceTree = SOURCE_ROOT; };
 		A802B1F91FAB293700AC8BB0 /* MEGAChatBaseRequestDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MEGAChatBaseRequestDelegate.m; path = iMEGA/API/Chat/MEGAChatBaseRequestDelegate.m; sourceTree = SOURCE_ROOT; };
 		A80550302A7BCA3900BC3725 /* MEGARepo */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MEGARepo; sourceTree = "<group>"; };
+		A8077B7C2E421186009954FD /* LocalizationObjC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationObjC.swift; sourceTree = "<group>"; };
+		A8077BB52E4226EC009954FD /* LocalizationHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LocalizationHelper.h; sourceTree = "<group>"; };
+		A8077BB62E42270F009954FD /* LocalizationHelper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LocalizationHelper.m; sourceTree = "<group>"; };
 		A808F1822795D286004E4D31 /* ReportIssueViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportIssueViewRouter.swift; sourceTree = "<group>"; };
 		A811DCB72476C460002FCD98 /* MetalKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MetalKit.framework; path = System/Library/Frameworks/MetalKit.framework; sourceTree = SDKROOT; };
 		A811DCBC2476C4CE002FCD98 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = System/Library/Frameworks/CoreServices.framework; sourceTree = SDKROOT; };
@@ -5534,7 +5539,6 @@
 				B6A01BAC289A61CA00B503FD /* MEGAFoundation in Frameworks */,
 				169ADFCE2DD5BAA500AB80F1 /* MEGAInfrastructure in Frameworks */,
 				BF6149522A9FF33300AB051A /* MEGAL10n in Frameworks */,
-				BF6149542A9FF33300AB051A /* MEGAL10nObjc in Frameworks */,
 				9418DB292A4EE5FB002B0077 /* MEGAPermissions in Frameworks */,
 				0E119ACC2C7C3CBC0091BF06 /* MEGAPhotos in Frameworks */,
 				6D8A01162DBEFCA100EA77ED /* MEGAPreference in Frameworks */,
@@ -5626,7 +5630,6 @@
 				B610447228979E9B00AAECF4 /* MEGADomain in Frameworks */,
 				B6A01BB0289A623C00B503FD /* MEGAFoundation in Frameworks */,
 				BF6149662A9FF38400AB051A /* MEGAL10n in Frameworks */,
-				BF6149682A9FF38400AB051A /* MEGAL10nObjc in Frameworks */,
 				A891E8A729C1E0A70020072A /* MEGASdk in Frameworks */,
 				B63D341A2898A9E20059DE66 /* MEGASwift in Frameworks */,
 				B63995442898D03400EA88F1 /* MEGASwiftUI in Frameworks */,
@@ -7146,6 +7149,9 @@
 				B6D0B356283CE48C0020C64D /* Helper+Additions.swift */,
 				415226871A692ECC00EC7BB6 /* Helper.h */,
 				415226881A692ECC00EC7BB6 /* Helper.m */,
+				A8077BB52E4226EC009954FD /* LocalizationHelper.h */,
+				A8077BB62E42270F009954FD /* LocalizationHelper.m */,
+				A8077B7C2E421186009954FD /* LocalizationObjC.swift */,
 				B60DDC1421A7A7930097E4A3 /* MEGAConstants.h */,
 				B60DDC1521A7A7930097E4A3 /* MEGAConstants.m */,
 				A8ABAD072E21075500B3B767 /* MEGALocalNotificationManager+.swift */,
@@ -13498,7 +13504,6 @@
 				94A220172A696502004130C4 /* MEGAAnalyticsiOS */,
 				A85CF69C2A7180A90018FEF1 /* ChatRepo */,
 				BF6149512A9FF33300AB051A /* MEGAL10n */,
-				BF6149532A9FF33300AB051A /* MEGAL10nObjc */,
 				BF67F7F72AB4171A00AC127E /* LogRepo */,
 				99DB1D592AC64B34004A9CC3 /* ChatRepoMock */,
 				B5D58D542AC67C89004ECD36 /* Accounts */,
@@ -13645,7 +13650,6 @@
 				A812CB3C2A4B0FBE00F99382 /* MEGAChatSdk */,
 				A855D23D2A796634001D2168 /* ChatRepo */,
 				BF6149652A9FF38400AB051A /* MEGAL10n */,
-				BF6149672A9FF38400AB051A /* MEGAL10nObjc */,
 				BF67F7F92AB4172100AC127E /* LogRepo */,
 				B5D58D572AC67D0D004ECD36 /* Accounts */,
 				6D88207E2B1C0E6E00F0BE18 /* MEGADesignToken */,
@@ -15011,6 +15015,8 @@
 				B6575FD622012F8D00B7AD82 /* LoadMediaInfoOperation.m in Sources */,
 				B6D11AC6219B8ABC00446B86 /* LocalFileNameGenerator.m in Sources */,
 				5D0E255025073404005848F3 /* LocalFileSystemFolders.swift in Sources */,
+				A8077BB82E42270F009954FD /* LocalizationHelper.m in Sources */,
+				A8077B7D2E421186009954FD /* LocalizationObjC.swift in Sources */,
 				8366518626497B3600BC02F0 /* LocalUserView.swift in Sources */,
 				A8F1381F21D3F8B0003C7364 /* LocationSearchTableViewCell.m in Sources */,
 				A8F1381C21D3ABF2003C7364 /* LocationSearchTableViewController.m in Sources */,
@@ -16121,6 +16127,8 @@
 				8340CAFF284E52F5007C3B39 /* ItemView.swift in Sources */,
 				995C81DF2C7C31AF00FDCCA6 /* LaunchViewController+Addition.swift in Sources */,
 				943F8B271EF283BD00AFD89F /* LaunchViewController.m in Sources */,
+				A8077BB72E42270F009954FD /* LocalizationHelper.m in Sources */,
+				A8077B7E2E421186009954FD /* LocalizationObjC.swift in Sources */,
 				941135591F01006A00D33428 /* LTHKeychainUtils.m in Sources */,
 				1648E4AE2C5A10ED0056A66E /* LTHPasscodeViewController+Additions.swift in Sources */,
 				9411355A1F01006A00D33428 /* LTHPasscodeViewController.m in Sources */,
@@ -19012,10 +19020,6 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = MEGAL10n;
 		};
-		BF6149532A9FF33300AB051A /* MEGAL10nObjc */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = MEGAL10nObjc;
-		};
 		BF6149552A9FF34400AB051A /* MEGAL10n */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = MEGAL10n;
@@ -19035,10 +19039,6 @@
 		BF6149652A9FF38400AB051A /* MEGAL10n */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = MEGAL10n;
-		};
-		BF6149672A9FF38400AB051A /* MEGAL10nObjc */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = MEGAL10nObjc;
 		};
 		BF6149692A9FF39500AB051A /* MEGAL10n */ = {
 			isa = XCSwiftPackageProductDependency;

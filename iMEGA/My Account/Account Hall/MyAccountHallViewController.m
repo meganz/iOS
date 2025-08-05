@@ -4,7 +4,7 @@
 #import "MEGA-Swift.h"
 #import "TransfersWidgetViewController.h"
 
-@import MEGAL10nObjc;
+#import "LocalizationHelper.h"
 @import MEGASDKRepo;
 
 @interface MyAccountHallViewController () <UITableViewDelegate, MEGAGlobalDelegate, MEGARequestDelegate>

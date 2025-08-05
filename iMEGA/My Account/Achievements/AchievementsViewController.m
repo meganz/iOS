@@ -10,7 +10,7 @@
 #import "NSArray+MNZCategory.h"
 
 @import MEGAUIKit;
-@import MEGAL10nObjc;
+#import "LocalizationHelper.h"
 
 @interface AchievementsViewController () <UITableViewDataSource, UITableViewDelegate, MEGARequestDelegate>
 

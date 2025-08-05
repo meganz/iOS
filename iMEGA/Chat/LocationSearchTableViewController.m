@@ -4,7 +4,7 @@
 
 #import "LocationSearchTableViewCell.h"
 
-@import MEGAL10nObjc;
+#import "LocalizationHelper.h"
 
 @interface LocationSearchTableViewController ()
 

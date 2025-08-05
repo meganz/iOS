@@ -10,7 +10,7 @@
 #import "NSURL+MNZCategory.h"
 #import "MEGA-Swift.h"
 
-@import MEGAL10nObjc;
+#import "LocalizationHelper.h"
 
 static const void *chatIdTagKey = &chatIdTagKey;
 static const void *attributedTextTagKey = &attributedTextTagKey;

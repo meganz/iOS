@@ -10,7 +10,7 @@
 
 #import "MEGANavigationController.h"
 
-@import MEGAL10nObjc;
+#import "LocalizationHelper.h"
 
 @interface TwoFactorAuthenticationViewController () <UITextViewDelegate, MEGARequestDelegate>
 

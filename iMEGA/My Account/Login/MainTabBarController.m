@@ -10,7 +10,7 @@
 
 #import "NSObject+Debounce.h"
 
-@import MEGAL10nObjc;
+#import "LocalizationHelper.h"
 @import MEGAUIKit;
 
 @interface MainTabBarController () < MEGAGlobalDelegate>

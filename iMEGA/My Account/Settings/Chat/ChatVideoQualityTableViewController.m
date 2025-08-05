@@ -4,7 +4,7 @@
 
 #import "ChatVideoUploadQuality.h"
 
-@import MEGAL10nObjc;
+#import "LocalizationHelper.h"
 
 @interface ChatVideoQualityTableViewController ()
 

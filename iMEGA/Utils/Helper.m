@@ -29,7 +29,7 @@
 #import "NodeTableViewCell.h"
 
 @import LogRepo;
-@import MEGAL10nObjc;
+#import "LocalizationHelper.h"
 
 @implementation Helper
 

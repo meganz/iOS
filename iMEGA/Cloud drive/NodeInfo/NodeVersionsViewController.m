@@ -12,7 +12,7 @@
 #import "NodeTableViewCell.h"
 #import "MEGAPhotoBrowserViewController.h"
 
-@import MEGAL10nObjc;
+#import "LocalizationHelper.h"
 @import MEGASDKRepo;
 
 @interface NodeVersionsViewController () <

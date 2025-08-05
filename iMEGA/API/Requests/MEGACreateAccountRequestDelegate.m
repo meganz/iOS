@@ -5,7 +5,7 @@
 
 #import "UIApplication+MNZCategory.h"
 
-@import MEGAL10nObjc;
+#import "LocalizationHelper.h"
 @import SAMKeychain;
 
 @interface MEGACreateAccountRequestDelegate ()

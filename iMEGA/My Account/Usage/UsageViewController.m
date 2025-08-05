@@ -7,7 +7,7 @@
 #import "Helper.h"
 
 @import PieChart;
-@import MEGAL10nObjc;
+#import "LocalizationHelper.h"
 
 @interface UsageViewController () <PieChartViewDelegate, PieChartViewDataSource, UIGestureRecognizerDelegate, UIScrollViewDelegate>
 @end

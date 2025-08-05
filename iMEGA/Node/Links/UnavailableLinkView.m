@@ -1,8 +1,7 @@
 #import "UnavailableLinkView.h"
 
 #import "MEGA-Swift.h"
-
-@import MEGAL10nObjc;
+#import "LocalizationHelper.h"
 
 @implementation UnavailableLinkView
 

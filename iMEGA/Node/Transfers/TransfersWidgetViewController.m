@@ -24,7 +24,7 @@
 #import "MEGA-Swift.h"
 #import "NSArray+MNZCategory.h"
 
-@import MEGAL10nObjc;
+#import "LocalizationHelper.h"
 @import MEGAAppSDKRepo;
 
 @interface TransfersWidgetViewController () <UITableViewDelegate, UITableViewDataSource, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGARequestDelegate, MEGATransferDelegate, TransferTableViewCellDelegate, TransferActionViewControllerDelegate>

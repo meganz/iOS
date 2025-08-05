@@ -2,7 +2,7 @@
 #import "MEGA-Swift.h"
 #import "CameraUploadManager+Settings.h"
 
-@import MEGAL10nObjc;
+#import "LocalizationHelper.h"
 
 typedef NS_ENUM(NSUInteger, VideoUploadsSection) {
     VideoUploadsSectionFeatureSwitch,

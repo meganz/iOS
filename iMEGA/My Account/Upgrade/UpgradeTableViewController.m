@@ -15,7 +15,7 @@
 #import "ProductDetailViewController.h"
 #import "ProductTableViewCell.h"
 
-@import MEGAL10nObjc;
+#import "LocalizationHelper.h"
 @import MEGAUIKit;
 
 @interface UpgradeTableViewController () <MFMailComposeViewControllerDelegate, UITableViewDataSource, UITableViewDelegate, MEGARestoreDelegate>

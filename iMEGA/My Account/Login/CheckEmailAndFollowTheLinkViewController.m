@@ -10,7 +10,7 @@
 #import "MEGAReachabilityManager.h"
 #import "MEGA-Swift.h"
 
-@import MEGAL10nObjc;
+#import "LocalizationHelper.h"
 @import MEGASDKRepo;
 
 @interface CheckEmailAndFollowTheLinkViewController () <UITextFieldDelegate, MEGAGlobalDelegate>

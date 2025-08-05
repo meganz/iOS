@@ -14,7 +14,7 @@
 #import "InputView.h"
 #import "PasswordView.h"
 
-@import MEGAL10nObjc;
+#import "LocalizationHelper.h"
 
 @interface ConfirmAccountViewController () <UITextFieldDelegate, MEGARequestDelegate>
 

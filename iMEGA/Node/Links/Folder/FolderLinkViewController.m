@@ -27,7 +27,7 @@
 #import "SendToViewController.h"
 #import "UnavailableLinkView.h"
 @import MEGADomain;
-@import MEGAL10nObjc;
+#import "LocalizationHelper.h"
 @import MEGAUIKit;
 @import MEGAAppSDKRepo;
 

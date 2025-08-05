@@ -4,7 +4,7 @@
 #import "MEGA-Swift.h"
 #import "UIApplication+MNZCategory.h"
 
-@import MEGAL10nObjc;
+#import "LocalizationHelper.h"
 
 @interface EnabledTwoFactorAuthenticationViewController () <MEGARequestDelegate>
 

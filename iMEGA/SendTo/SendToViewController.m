@@ -21,7 +21,7 @@
 @import ChatRepo;
 @import DZNEmptyDataSet;
 @import MEGAUIKit;
-@import MEGAL10nObjc;
+#import "LocalizationHelper.h"
 
 @interface SendToViewController () <UISearchBarDelegate, UISearchResultsUpdating, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, UISearchControllerDelegate, ItemListViewControllerDelegate, UIGestureRecognizerDelegate, UIAdaptivePresentationControllerDelegate>
 

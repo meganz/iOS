@@ -7,7 +7,7 @@
 #import "UIApplication+MNZCategory.h"
 #import "MEGA-Swift.h"
 
-@import MEGAL10nObjc;
+#import "LocalizationHelper.h"
 @import MEGAAppSDKRepo;
 
 @interface MEGAInviteContactRequestDelegate ()

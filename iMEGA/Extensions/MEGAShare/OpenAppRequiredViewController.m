@@ -1,9 +1,8 @@
 #import "OpenAppRequiredViewController.h"
 #import "UIViewController+MNZCategory.h"
-
 #import "MEGAShare-Swift.h"
 
-@import MEGAL10nObjc;
+#import "LocalizationHelper.h"
 
 @interface OpenAppRequiredViewController ()
 

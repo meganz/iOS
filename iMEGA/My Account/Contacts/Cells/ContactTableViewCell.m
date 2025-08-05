@@ -1,12 +1,10 @@
 #import "ContactTableViewCell.h"
-
-@import MEGAL10nObjc;
-
 #ifdef MNZ_SHARE_EXTENSION
 #import "MEGAShare-Swift.h"
 #else
 #import "MEGA-Swift.h"
 #endif
+#import "LocalizationHelper.h"
 
 @interface ContactTableViewCell () <ChatNotificationControlCellProtocol>
 @end

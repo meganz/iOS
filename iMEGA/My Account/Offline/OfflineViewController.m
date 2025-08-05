@@ -20,7 +20,7 @@
 #import "NSArray+MNZCategory.h"
 @import ChatRepo;
 @import MEGADomain;
-@import MEGAL10nObjc;
+#import "LocalizationHelper.h"
 @import MEGAUIKit;
 
 static NSString *kFileName = @"kFileName";

@@ -16,10 +16,6 @@ let package = Package(
         .library(
             name: "MEGAL10n",
             targets: ["MEGAL10n"]
-        ),
-        .library(
-            name: "MEGAL10nObjc",
-            targets: ["MEGAL10nObjc"]
         )
     ],
     dependencies: [
@@ -28,23 +24,10 @@ let package = Package(
     targets: [
         .target(
             name: "MEGAL10n",
-            exclude: [
-                "Localization.h",
-                "Localization.m"
-            ],
             swiftSettings: settings,
             plugins: [
                 .plugin(name: "SwiftGen", package: "MEGABuildTools")
             ]
-        ),
-        .target(
-            name: "MEGAL10nObjc",
-            path: "Sources/MEGAL10n",
-            exclude: [
-                "Localization.swift"
-            ],
-            publicHeadersPath: ".",
-            swiftSettings: settings
         )
     ],
     swiftLanguageModes: [.v6]

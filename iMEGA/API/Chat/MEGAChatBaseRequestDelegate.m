@@ -2,7 +2,7 @@
 
 #import "SVProgressHUD.h"
 
-@import MEGAL10nObjc;
+#import "LocalizationHelper.h"
 
 @implementation MEGAChatBaseRequestDelegate
 

@@ -9,7 +9,7 @@
 #import "SetupTwoFactorAuthenticationTableViewController.h"
 #import "QRSettingsTableViewController.h"
 
-@import MEGAL10nObjc;
+#import "LocalizationHelper.h"
 @import MEGASDKRepo;
 
 @interface SecurityOptionsTableViewController () <UITableViewDataSource, UITableViewDelegate>

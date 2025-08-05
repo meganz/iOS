@@ -5,18 +5,12 @@
 #import "NSDate+MNZCategory.h"
 #import "MEGAUser+MNZCategory.h"
 #import <CoreMedia/CoreMedia.h>
-
-@import MEGAL10nObjc;
-
 #ifdef MNZ_SHARE_EXTENSION
 #import "MEGAShare-Swift.h"
-#elif MNZ_NOTIFICATION_EXTENSION
-#import "MEGANotifications-Swift.h"
-#elif MNZ_WIDGET_EXTENSION
-#import "MEGAWidgetExtension-Swift.h"
 #else
 #import "MEGA-Swift.h"
 #endif
+#import "LocalizationHelper.h"
 
 static NSString* const A = @"[A]";
 static NSString* const B = @"[B]";

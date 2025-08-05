@@ -3,7 +3,7 @@
 #import "MEGAUser+MNZCategory.h"
 #import "MEGA-Swift.h"
 
-@import MEGAL10nObjc;
+#import "LocalizationHelper.h"
 
 @interface MEGARemoveContactRequestDelegate ()
 @property (nonatomic, copy) void (^completion)(void);

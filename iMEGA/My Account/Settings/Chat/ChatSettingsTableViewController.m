@@ -5,7 +5,6 @@
 #import "Helper.h"
 #import "MEGAGetAttrUserRequestDelegate.h"
 #import "MEGAReachabilityManager.h"
-#import "MEGA-Swift.h"
 #import "NSString+MNZCategory.h"
 
 #import "ChatStatusTableViewController.h"
@@ -14,7 +13,7 @@
 #import "MEGA-Swift.h"
 #import "ChatImageUploadQuality.h"
 
-@import MEGAL10nObjc;
+#import "LocalizationHelper.h"
 
 typedef NS_ENUM(NSInteger, ChatSettingsSection) {
     ChatSettingsSectionStatus = 0,

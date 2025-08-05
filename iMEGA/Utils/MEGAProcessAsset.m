@@ -9,14 +9,12 @@
 #import "UIApplication+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 #import <AVFoundation/AVFoundation.h>
-
-@import MEGAL10nObjc;
-
 #ifdef MNZ_SHARE_EXTENSION
 #import "MEGAShare-Swift.h"
 #else
 #import "MEGA-Swift.h"
 #endif
+#import "LocalizationHelper.h"
 
 static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
 

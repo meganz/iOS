@@ -5,7 +5,7 @@
 #import "SelectableTableViewCell.h"
 #import "CameraUploadManager+Settings.h"
 
-@import MEGAL10nObjc;
+#import "LocalizationHelper.h"
 
 @interface VideoUploadsQualityTableViewController ()
 

@@ -9,7 +9,7 @@
 
 #import "LocationSearchTableViewController.h"
 
-@import MEGAL10nObjc;
+#import "LocalizationHelper.h"
 
 @interface ShareLocationViewController () <MKMapViewDelegate, CLLocationManagerDelegate, LocationSearchTableViewControllerDelegate>
 

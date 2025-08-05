@@ -8,7 +8,7 @@
 
 #import "TwoFactorAuthenticationViewController.h"
 
-@import MEGAL10nObjc;
+#import "LocalizationHelper.h"
 
 @interface EnablingTwoFactorAuthenticationViewController ()
 

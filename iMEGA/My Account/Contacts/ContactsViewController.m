@@ -28,7 +28,7 @@
 #import "NSArray+MNZCategory.h"
 
 @import ChatRepo;
-@import MEGAL10nObjc;
+#import "LocalizationHelper.h"
 @import MEGAUIKit;
 @import MEGAAppSDKRepo;
 

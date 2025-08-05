@@ -2,12 +2,11 @@
 
 #import <Photos/Photos.h>
 
-
 #import "Helper.h"
 #import "MEGA-Swift.h"
 #import "NSString+MNZCategory.h"
 
-@import MEGAL10nObjc;
+#import "LocalizationHelper.h"
 
 @interface AdvancedTableViewController () <MEGARequestDelegate>
 

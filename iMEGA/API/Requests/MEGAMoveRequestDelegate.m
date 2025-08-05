@@ -1,10 +1,8 @@
 #import "MEGAMoveRequestDelegate.h"
 
 #import "SVProgressHUD.h"
-
-@import MEGAL10nObjc;
-
 #import "MEGA-Swift.h"
+#import "LocalizationHelper.h"
 
 @interface MEGAMoveRequestDelegate ()
 
