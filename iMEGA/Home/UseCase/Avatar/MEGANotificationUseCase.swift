@@ -9,7 +9,7 @@ protocol MEGANotificationUseCaseProtocol: Sendable {
     
     func relevantAndNotSeenAlerts() -> [UserAlertEntity]?
     func incomingContactRequest() -> [ContactRequestEntity]
-    func unreadNotificationIDs() async -> [NotificationIDEntity]
+    func unreadNotificationsCount() async -> Int
 }
 
 final class MEGANotificationUseCase: MEGANotificationUseCaseProtocol {
@@ -48,7 +48,7 @@ final class MEGANotificationUseCase: MEGANotificationUseCaseProtocol {
         userAlertsRepository.incomingContactRequest
     }
     
-    func unreadNotificationIDs() async -> [NotificationIDEntity] {
-        await notificationsUseCase.unreadNotificationIDs()
+    func unreadNotificationsCount() async -> Int {
+        await notificationsUseCase.unreadNotificationIDs().count
     }
 }

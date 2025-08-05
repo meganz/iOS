@@ -31,12 +31,9 @@ struct ChatRoomsListView: View {
         .toolbar {
             if viewModel.shouldShowAvatar {
                 ToolbarItem(placement: .topBarLeading) {
-                    MyAvatarIconView(
-                        viewModel: .init(
-                            avatarObserver: viewModel.myAvatarViewModel,
-                            onAvatarTapped: { viewModel.openUserProfile() }
-                        )
-                    )
+                    MyAvatarIconView {
+                        viewModel.openUserProfile()
+                    }
                 }
             }
             

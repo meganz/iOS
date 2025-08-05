@@ -33,7 +33,6 @@ struct CloudDriveViewControllerFactory {
     private let userDefaults: UserDefaults
     private let contextMenuConfigFactory: CloudDriveContextMenuConfigFactory
     private let backupsUseCase: any BackupsUseCaseProtocol
-    private let avatarViewModel: MyAvatarViewModel
     private let rubbishBinUseCase: any RubbishBinUseCaseProtocol
     private let createContextMenuUseCase: any CreateContextMenuUseCaseProtocol
     private let nodeActions: NodeActions
@@ -98,21 +97,6 @@ struct CloudDriveViewControllerFactory {
         self.calendar = calendar
         self.nodeUpdateRepository = nodeUpdateRepository
         self.sensitiveDisplayPreferenceUseCase = sensitiveDisplayPreferenceUseCase
-        
-        self.avatarViewModel = MyAvatarViewModel(
-            megaNotificationUseCase: MEGANotificationUseCase(
-                userAlertsRepository: UserAlertsRepository.newRepo,
-                notificationsUseCase: NotificationsUseCase(repository: NotificationsRepository.newRepo)
-            ), userImageUseCase: UserImageUseCase(
-                userImageRepo: UserImageRepository.newRepo,
-                userStoreRepo: UserStoreRepository.newRepo,
-                thumbnailRepo: ThumbnailRepository.newRepo,
-                fileSystemRepo: FileSystemRepository.sharedRepo
-            ), megaHandleUseCase: MEGAHandleUseCase(repo: MEGAHandleRepository.newRepo)
-        )
-        
-        self.avatarViewModel.inputs.viewIsReady()
-        
         viewModeFactory = ViewModeFactory(viewModeStore: viewModeStore)
     }
     
@@ -286,12 +270,6 @@ struct CloudDriveViewControllerFactory {
             selectedImage: nil
         )
         
-        if
-            let legacy = vc as? (any MyAvatarPresenterProtocol),
-            config.showsAvatar == true {
-            legacy.configureMyAvatarManager()
-        }
-        
         return navigationController
     }
     
@@ -342,7 +320,6 @@ struct CloudDriveViewControllerFactory {
             adsVisibilityViewModel: adsVisibilityViewModel,
             config: config,
             nodeSource: nodeSource,
-            avatarViewModel: avatarViewModel, 
             noInternetViewModel: noInternetViewModel,
             nodeSourceUpdatesListener: nodeSourceUpdatesListener,
             nodeUpdatesProvider: nodeUpdatesProvider,

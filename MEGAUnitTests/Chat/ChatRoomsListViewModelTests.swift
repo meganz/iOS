@@ -752,12 +752,7 @@ final class ChatRoomsListViewModelTests: XCTestCase {
             chatListItemCacheUseCase: chatListItemCacheUseCase,
             retryPendingConnectionsUseCase: retryPendingConnectionsUseCase,
             tracker: tracker,
-            urlOpener: {_ in },
-            myAvatarViewModel: MyAvatarViewModel(
-                megaNotificationUseCase: MockMEGANotificationUseCaseProtocol(),
-                userImageUseCase: MockUserImageUseCase(),
-                megaHandleUseCase: MockMEGAHandleUseCase()
-            )
+            urlOpener: {_ in }
         )
         return sut
     }

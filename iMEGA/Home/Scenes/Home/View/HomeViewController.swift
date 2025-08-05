@@ -31,8 +31,6 @@ final class HomeViewController: UIViewController, DisplayMenuDelegate {
     }
 
     // MARK: - View Model
-    
-    var myAvatarViewModel: (any MyAvatarViewModelType)?
 
     var uploadViewModel: (any HomeUploadingViewModelType)?
     
@@ -67,8 +65,6 @@ final class HomeViewController: UIViewController, DisplayMenuDelegate {
     private weak var startConversationItem: UIBarButtonItem!
 
     private let startUploadBarButtonItem: UIBarButtonItem = UIBarButtonItem()
-
-    private weak var badgeButton: BadgeButton!
 
     private var searchResultContainerView: UIView!
     
@@ -200,22 +196,6 @@ final class HomeViewController: UIViewController, DisplayMenuDelegate {
     }
 
     private func setupViewModelEventListening() {
-        if !isNavigationRevampEnabled {
-            myAvatarViewModel?.notifyUpdate = { [weak self] output in
-                guard let self else { return }
-                let resizedImage = output.avatarImage
-
-                asyncOnMain {
-                    if let badgeButton = self.badgeButton {
-                        badgeButton.setBadgeText(output.notificationNumber)
-                        badgeButton.setAvatarImage(resizedImage)
-                    }
-                }
-            }
-            myAvatarViewModel?.inputs.viewIsReady()
-        }
-
-
         recentsViewModel?.notifyUpdate = { [weak self] recentsViewModel in
             if let error = recentsViewModel.error {
                 self?.handle(error)
@@ -307,14 +287,6 @@ final class HomeViewController: UIViewController, DisplayMenuDelegate {
         })
     }
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-
-        if !isNavigationRevampEnabled {
-            myAvatarViewModel?.inputs.viewIsAppearing()
-        }
-    }
-
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
 
@@ -377,12 +349,8 @@ final class HomeViewController: UIViewController, DisplayMenuDelegate {
         guard !isNavigationRevampEnabled else {
             return
         }
-        let badgeButton = BadgeButton()
-        self.badgeButton = badgeButton
-        badgeButton.addTarget(self, action: .didTapAvatar, for: .touchUpInside)
-
-        let avatarButtonItem = UIBarButtonItem(customView: badgeButton)
-        self.navigationItem.leftBarButtonItems = [avatarButtonItem]
+        
+        self.navigationItem.leftBarButtonItems = [createAvatarBarButtonItem()]
     }
 
     private func setupRightItems() {
@@ -464,7 +432,7 @@ final class HomeViewController: UIViewController, DisplayMenuDelegate {
 
     // MARK: - Tap Actions
 
-    @objc fileprivate func didTapAvatarItem() {
+    fileprivate func didTapAvatarItem() {
         router.didTap(on: .avatar)
     }
 
@@ -841,7 +809,6 @@ extension UIColor {
 // MARK: - Private Selector Extensions
 
 private extension Selector {
-    static let didTapAvatar = #selector(HomeViewController.didTapAvatarItem)
     static let didTapNewChat = #selector(HomeViewController.didTapNewChat)
 }
 

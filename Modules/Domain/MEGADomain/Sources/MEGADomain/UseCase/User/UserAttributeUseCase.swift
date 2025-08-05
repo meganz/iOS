@@ -10,6 +10,7 @@ public protocol UserAttributeUseCaseProtocol: Sendable {
     func saveRaiseHandNewFeatureBadge(presentedTimes: Int) async throws
     func retrieveNoteToSelfNewFeatureBadgeAttribute() async throws -> NoteToSelfNewFeatureBadgeEntity?
     func saveNoteToSelfNewFeatureBadge(presentedTimes: Int) async throws
+    func getUserAttribute(for attribute: UserAttributeEntity) async throws -> String?
 }
 
 public struct UserAttributeUseCase<T: UserAttributeRepositoryProtocol>: UserAttributeUseCaseProtocol {
@@ -44,6 +45,10 @@ public struct UserAttributeUseCase<T: UserAttributeRepositoryProtocol>: UserAttr
         
         guard resultJson.isNotEmpty else { throw JSONCodingErrorEntity.encoding }
         try await updateUserAttribute(.appsPreferences, key: key, value: resultJson)
+    }
+    
+    public func getUserAttribute(for attribute: UserAttributeEntity) async throws -> String? {
+        try await repo.getUserAttribute(for: attribute)
     }
         
     // MARK: - Scheduled meeting onboarding

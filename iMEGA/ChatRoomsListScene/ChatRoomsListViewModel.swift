@@ -49,7 +49,6 @@ final class ChatRoomsListViewModel: ObservableObject {
         meetingContextMenuDelegate: self,
         createContextMenuUseCase: CreateContextMenuUseCase(repo: CreateContextMenuRepository.newRepo)
     )
-    let myAvatarViewModel: MyAvatarViewModel
     
     lazy private var globalDNDNotificationControl = GlobalDNDNotificationControl(delegate: self)
     lazy private var chatNotificationControl = ChatNotificationControl(delegate: self)
@@ -168,8 +167,7 @@ final class ChatRoomsListViewModel: ObservableObject {
         chatListItemCacheUseCase: some ChatListItemCacheUseCaseProtocol,
         retryPendingConnectionsUseCase: some RetryPendingConnectionsUseCaseProtocol,
         tracker: some AnalyticsTracking = DIContainer.tracker,
-        urlOpener: @escaping (URL) -> Void,
-        myAvatarViewModel: MyAvatarViewModel
+        urlOpener: @escaping (URL) -> Void
     ) {
         self.router = router
         self.chatUseCase = chatUseCase
@@ -191,7 +189,6 @@ final class ChatRoomsListViewModel: ObservableObject {
         self.isSearchActive = false
         self.isFirstMeetingsLoad = true
         self.urlOpener = urlOpener
-        self.myAvatarViewModel = myAvatarViewModel
         
         configureTitle()
         initNoteToSelfChat()

@@ -54,7 +54,7 @@ extension PhotosViewController {
         if isEditing {
             self.objcWrapper_parent.navigationItem.setLeftBarButton(selectAllBarButtonItem, animated: false)
         } else {
-            self.objcWrapper_parent.navigationItem.setLeftBarButton(self.myAvatarManager?.myAvatarBarButton, animated: false)
+            self.objcWrapper_parent.navigationItem.setLeftBarButton(avatarBarButtonItem, animated: false)
         }
     }
     

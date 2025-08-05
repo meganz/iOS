@@ -56,7 +56,7 @@ extension SharedItemsViewController: DisplayMenuDelegate {
             contextBarButtonItem.accessibilityLabel = Strings.Localizable.more
             
             navigationItem.rightBarButtonItem = contextBarButtonItem
-            navigationItem.leftBarButtonItem = myAvatarManager?.myAvatarBarButton
+            navigationItem.leftBarButtonItem = avatarBarButtonItem
         }
     }
     

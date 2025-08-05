@@ -102,6 +102,13 @@
     [self configureButtons];
 }
 
+- (UIBarButtonItem *)avatarBarButtonItem {
+    if (!_avatarBarButtonItem) {
+        _avatarBarButtonItem = [self createAvatarBarButtonItem];
+    }
+    return _avatarBarButtonItem;
+}
+
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
@@ -113,8 +120,6 @@
     [self addSearchBar];
     
     [self reloadUI];
-    
-    [self refreshMyAvatar];
     
     [self setBackBarButton];
 
@@ -659,7 +664,7 @@
         allNodesSelected = NO;
         [_selectedNodesMutableArray removeAllObjects];
         [_selectedSharesMutableArray removeAllObjects];
-        self.navigationItem.leftBarButtonItems = @[self.myAvatarManager.myAvatarBarButton];
+        self.navigationItem.leftBarButtonItems = @[self.avatarBarButtonItem];
         
         [UIView animateWithDuration:0.33f animations:^ {
             [self.toolbar setAlpha:0.0];

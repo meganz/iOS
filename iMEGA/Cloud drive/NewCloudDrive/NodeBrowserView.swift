@@ -74,12 +74,9 @@ struct NodeBrowserView: View {
         case .regular(let leftBarButton):
             switch leftBarButton {
             case .avatar:
-                MyAvatarIconView(
-                    viewModel: .init(
-                        avatarObserver: viewModel.avatarViewModel,
-                        onAvatarTapped: { viewModel.openUserProfile() }
-                    )
-                )
+                MyAvatarIconView {
+                    viewModel.openUserProfile()
+                }
             case .back:
                 EmptyView()
             case .close:
