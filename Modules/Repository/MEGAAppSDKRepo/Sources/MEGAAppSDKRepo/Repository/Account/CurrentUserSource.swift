@@ -75,12 +75,6 @@ public final class CurrentUserSource: @unchecked Sendable {
         _isPaywalled
     }
     
-    public func currentUser() async -> UserEntity? {
-        await Task.detached {
-            self.sdk.myUser?.toUserEntity()
-        }.value
-    }
-    
     public var currentUser: MEGAUser? {
         _myUser.wrappedValue
     }

@@ -27,7 +27,6 @@ public protocol AccountUseCaseProtocol: Sendable {
     func currentSubscription() -> AccountSubscriptionEntity?
     
     // User and session management
-    func currentUser() async -> UserEntity?
     func isLoggedIn() -> Bool
     func isAccountType(_ type: AccountTypeEntity) -> Bool
     /// Check if the current account has a Pro plan or Pro Flexi plan that is not expired
@@ -208,9 +207,6 @@ public final class AccountUseCase<T: AccountRepositoryProtocol>: AccountUseCaseP
     }
 
     // MARK: - User and session management
-    public func currentUser() async -> UserEntity? {
-        await repository.currentUser()
-    }
     
     public func isLoggedIn() -> Bool {
         repository.isLoggedIn()

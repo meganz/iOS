@@ -27,8 +27,10 @@ final class ReportIssueMessageViewModelTests: XCTestCase {
     
     private func mockAccountUseCase() -> any AccountUseCaseProtocol {
         MockAccountUseCase(
-            currentUser: UserEntity(email: anyEmail()),
-            currentAccountDetails: AccountDetailsEntity.build(proLevel: .free)
+            currentAccountDetails: AccountDetailsEntity.build(
+                proLevel: .free
+            ),
+            email: anyEmail()
         )
     }
     

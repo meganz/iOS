@@ -189,10 +189,6 @@ public final class MockAccountRepository: AccountRepositoryProtocol, @unchecked 
         currentUser?.handle
     }
     
-    public func currentUser() async -> UserEntity? {
-        currentUser
-    }
-    
     public var myEmail: String? {
         _myEmail
     }

@@ -28,7 +28,7 @@ final class SendFeedbackViewModel: NSObject {
     // MARK: - Public
     func getFeedback() async -> FeedbackEntity {
         await setupAccountDetails()
-        userEmail = await accountUseCase.currentUser()?.email
+        userEmail = accountUseCase.myEmail
         
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "YYMMdd_hhmmss"
