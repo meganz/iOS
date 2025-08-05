@@ -15,7 +15,7 @@
 
 @import ChatRepo;
 @import MEGAFoundation;
-@import MEGAL10nObjc;
+#import "LocalizationHelper.h"
 @import MEGAAppSDKRepo;
 
 @interface RecentsViewController () <UITableViewDataSource, UITableViewDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, TextFileEditable, RecentsPreferenceProtocol>

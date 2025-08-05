@@ -2,7 +2,7 @@
 #import "OnboardingView.h"
 #import "MEGA-Swift.h"
 
-@import MEGAL10nObjc;
+#import "LocalizationHelper.h"
 
 @interface OnboardingViewController () <UIScrollViewDelegate>
 

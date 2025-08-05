@@ -12,7 +12,7 @@
 #import "InputView.h"
 #import "TwoFactorAuthenticationViewController.h"
 @import MEGAAppSDKRepo;
-@import MEGAL10nObjc;
+#import "LocalizationHelper.h"
 
 typedef NS_ENUM(NSUInteger, TextFieldTag) {
     CurrentEmailTextFieldTag = 0,

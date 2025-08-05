@@ -16,7 +16,7 @@
 #import "SendToViewController.h"
 #import "UnavailableLinkView.h"
 
-@import MEGAL10nObjc;
+#import "LocalizationHelper.h"
 @import MEGAUIKit;
 
 @interface FileLinkViewController ()

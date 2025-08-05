@@ -9,7 +9,7 @@
 #import "MEGA-Swift.h"
 #import "NSURL+MNZCategory.h"
 
-@import MEGAL10nObjc;
+#import "LocalizationHelper.h"
 
 @interface HelpTableViewController () <MFMailComposeViewControllerDelegate>
 

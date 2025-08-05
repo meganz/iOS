@@ -11,7 +11,7 @@
 #import "TwoFactorAuthenticationViewController.h"
 #import "PasswordView.h"
 
-@import MEGAL10nObjc;
+#import "LocalizationHelper.h"
 
 typedef NS_ENUM(NSInteger, TextFieldTag) {
     EmailTextFieldTag = 0,

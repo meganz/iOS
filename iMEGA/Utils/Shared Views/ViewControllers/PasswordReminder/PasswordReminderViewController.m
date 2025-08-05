@@ -6,7 +6,7 @@
 #import "UIApplication+MNZCategory.h"
 #import "TestPasswordViewController.h"
 
-@import MEGAL10nObjc;
+#import "LocalizationHelper.h"
 @import MEGASDKRepo;
 
 @interface PasswordReminderViewController ()

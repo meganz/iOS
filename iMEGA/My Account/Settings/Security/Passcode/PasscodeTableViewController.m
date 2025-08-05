@@ -5,10 +5,8 @@
 
 #import "Helper.h"
 #import "NSString+MNZCategory.h"
-
 #import "MEGA-Swift.h"
-
-@import MEGAL10nObjc;
+#import "LocalizationHelper.h"
 
 @interface PasscodeTableViewController () {
     BOOL wasPasscodeAlreadyEnabled;

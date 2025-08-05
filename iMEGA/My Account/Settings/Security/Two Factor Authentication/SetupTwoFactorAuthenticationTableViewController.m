@@ -7,7 +7,7 @@
 #import "MEGA-Swift.h"
 #import "TwoFactorAuthenticationViewController.h"
 
-@import MEGAL10nObjc;
+#import "LocalizationHelper.h"
 
 @interface SetupTwoFactorAuthenticationTableViewController ()
 

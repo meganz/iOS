@@ -42,11 +42,10 @@
 #import "CameraUploadManager+Settings.h"
 #import "TransferSessionManager.h"
 #import <SDWebImage/SDWebImage.h>
-
-@import Firebase;
-@import MEGAL10nObjc;
-@import SDWebImageWebPCoder;
 #import "MEGA-Swift.h"
+@import Firebase;
+#import "LocalizationHelper.h"
+@import SDWebImageWebPCoder;
 
 @interface AppDelegate () <UIApplicationDelegate, UNUserNotificationCenterDelegate, LTHPasscodeViewControllerDelegate, LaunchViewControllerDelegate, MEGAChatDelegate, MEGAChatRequestDelegate, MEGAGlobalDelegate, MEGAPurchasePricingDelegate, MEGARequestDelegate, MEGATransferDelegate> {
     BOOL isAccountFirstLogin;

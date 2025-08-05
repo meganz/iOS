@@ -31,7 +31,7 @@
 #import "SendToViewController.h"
 
 @import ChatRepo;
-@import MEGAL10nObjc;
+#import "LocalizationHelper.h"
 @import MEGAAppPresentation;
 @import MEGAAppSDKRepo;
 

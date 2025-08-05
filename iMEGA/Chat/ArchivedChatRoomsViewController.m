@@ -2,7 +2,6 @@
 #import "UIScrollView+EmptyDataSet.h"
 #import "MEGALinkManager.h"
 #import "MEGAReachabilityManager.h"
-#import "MEGA-Swift.h"
 #import "ChatRoomCell.h"
 #import "ContactDetailsViewController.h"
 #import "EmptyStateView.h"
@@ -11,7 +10,7 @@
 #import "NSArray+MNZCategory.h"
 
 @import ChatRepo;
-@import MEGAL10nObjc;
+#import "LocalizationHelper.h"
 @import MEGAUIKit;
 
 @interface ArchivedChatRoomsViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchResultsUpdating, DZNEmptyDataSetSource, MEGAChatDelegate, MEGAChatCallDelegate, UISearchControllerDelegate>

@@ -4,7 +4,7 @@
 #import "CameraScanner.h"
 #import "MEGA-Swift.h"
 
-@import MEGAL10nObjc;
+#import "LocalizationHelper.h"
 
 typedef NS_ENUM(NSUInteger, AdvancedOptionSection) {
     AdvancedOptionSectionLivePhoto,

@@ -7,7 +7,7 @@
 #endif
 
 @import MEGAAppSDKRepo;
-@import MEGAL10nObjc;
+#import "LocalizationHelper.h"
 
 @interface LaunchViewController () <MEGARequestDelegate>
 

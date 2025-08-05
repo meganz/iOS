@@ -10,7 +10,7 @@
 #import "MEGAStore.h"
 #import "MEGA-Swift.h"
 
-@import MEGAL10nObjc;
+#import "LocalizationHelper.h"
 
 static const NSUInteger MIN_SECOND = 10; // Save only where the users were playing the file, if the streaming second is greater than this value.
 

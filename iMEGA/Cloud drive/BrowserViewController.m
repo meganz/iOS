@@ -21,7 +21,7 @@
 #import "NodeTableViewCell.h"
 
 @import DZNEmptyDataSet;
-@import MEGAL10nObjc;
+#import "LocalizationHelper.h"
 @import MEGAUIKit;
 @import MEGASDKRepo;
 

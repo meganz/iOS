@@ -17,7 +17,7 @@
 #import "NotificationTableViewCell.h"
 #import "SharedItemsViewController.h"
 
-@import MEGAL10nObjc;
+#import "LocalizationHelper.h"
 @import MEGAAppSDKRepo;
 
 @interface NotificationsTableViewController () <DZNEmptyDataSetDelegate, DZNEmptyDataSetSource, MEGAGlobalDelegate>

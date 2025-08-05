@@ -1,8 +1,6 @@
 #import "QRSettingsTableViewController.h"
-
 #import "MEGA-Swift.h"
-
-@import MEGAL10nObjc;
+#import "LocalizationHelper.h"
 
 @interface QRSettingsTableViewController ()
 

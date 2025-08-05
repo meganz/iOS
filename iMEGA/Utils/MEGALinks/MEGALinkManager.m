@@ -35,7 +35,7 @@
 #import "MEGA-Swift.h"
 
 @import ChatRepo;
-@import MEGAL10nObjc;
+#import "LocalizationHelper.h"
 @import MEGAUIKit;
 
 static NSURL *linkURL;

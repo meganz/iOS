@@ -13,7 +13,7 @@
 
 #import "MEGAMultiFactorAuthCheckRequestDelegate.h"
 
-@import MEGAL10nObjc;
+#import "LocalizationHelper.h"
 
 @interface TestPasswordViewController () <UITextFieldDelegate>
 

@@ -10,7 +10,7 @@
 #import "NSFileManager+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 
-@import MEGAL10nObjc;
+#import "LocalizationHelper.h"
 @import MEGAAppSDKRepo;
 
 typedef NS_ENUM(NSUInteger, FileManagementTableSection) {

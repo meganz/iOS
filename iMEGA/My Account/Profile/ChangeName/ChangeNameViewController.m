@@ -9,7 +9,7 @@
 #import "NSString+MNZCategory.h"
 @import MEGAAppSDKRepo;
 
-@import MEGAL10nObjc;
+#import "LocalizationHelper.h"
 
 @interface ChangeNameViewController () <UITextFieldDelegate, MEGARequestDelegate, UIAdaptivePresentationControllerDelegate>
 

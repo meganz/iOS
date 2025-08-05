@@ -5,7 +5,7 @@
 #else
 #import "MEGA-Swift.h"
 #endif
-@import MEGAL10nObjc;
+#import "LocalizationHelper.h"
 
 @interface MEGAShareRequestDelegate ()
 

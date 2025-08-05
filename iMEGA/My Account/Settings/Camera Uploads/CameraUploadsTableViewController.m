@@ -10,7 +10,7 @@
 #import "MEGA-Swift.h"
 #import "TransferSessionManager.h"
 
-@import MEGAL10nObjc;
+#import "LocalizationHelper.h"
 
 @interface CameraUploadsTableViewController () <BrowserViewControllerDelegate>
 @property (weak, nonatomic) IBOutlet UISwitch *enableCameraUploadsSwitch;

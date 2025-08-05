@@ -11,7 +11,7 @@
 #import "UIImageView+MNZCategory.h"
 #import "MEGAReachabilityManager.h"
 
-@import MEGAL10nObjc;
+#import "LocalizationHelper.h"
 
 @interface ChatRoomCell ()
 

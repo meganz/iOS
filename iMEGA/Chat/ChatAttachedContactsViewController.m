@@ -6,10 +6,8 @@
 
 #import "ContactDetailsViewController.h"
 #import "ContactTableViewCell.h"
-
 #import "MEGA-Swift.h"
-
-@import MEGAL10nObjc;
+#import "LocalizationHelper.h"
 
 @interface ChatAttachedContactsViewController ()
 

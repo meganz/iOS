@@ -16,7 +16,7 @@
 #import "UIViewController+MNZCategory.h"
 #import "NSArray+MNZCategory.h"
 
-@import MEGAL10nObjc;
+#import "LocalizationHelper.h"
 @import StoreKit;
 @import Photos;
 @import MEGAUIKit;

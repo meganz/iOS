@@ -17,7 +17,7 @@
 #import "MEGA-Swift.h"
 #import "UIView+MNZCategory.h"
 
-@import MEGAL10nObjc;
+#import "LocalizationHelper.h"
 @import MEGAAppSDKRepo;
 
 @interface PreviewDocumentViewController () <QLPreviewControllerDataSource, QLPreviewControllerDelegate, MEGATransferDelegate, UICollectionViewDelegate, UICollectionViewDataSource, NodeActionViewControllerDelegate, NodeInfoViewControllerDelegate, SearchInPdfViewControllerProtocol, UIGestureRecognizerDelegate, PDFViewDelegate> {

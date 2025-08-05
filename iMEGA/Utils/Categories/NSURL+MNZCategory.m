@@ -8,7 +8,7 @@
 #import "NSFileManager+MNZCategory.h"
 #import "MEGA-Swift.h"
 
-@import MEGAL10nObjc;
+#import "LocalizationHelper.h"
 @import MEGASDKRepo;
 
 @implementation NSURL (MNZCategory)

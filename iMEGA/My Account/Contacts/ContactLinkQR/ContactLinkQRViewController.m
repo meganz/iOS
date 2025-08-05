@@ -16,7 +16,7 @@
 #import "UIImage+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
 
-@import MEGAL10nObjc;
+#import "LocalizationHelper.h"
 @import MEGAAppSDKRepo;
 @import MEGAUIKit;
 

@@ -7,10 +7,8 @@
 #import "NSString+MNZCategory.h"
 #import "UICollectionView+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
-
 #import "MEGA-Swift.h"
-
-@import MEGAL10nObjc;
+#import "LocalizationHelper.h"
 @import MEGAUIKit;
 
 @interface MEGAPhotoBrowserPickerViewController () <UICollectionViewDataSource, UICollectionViewDelegate>

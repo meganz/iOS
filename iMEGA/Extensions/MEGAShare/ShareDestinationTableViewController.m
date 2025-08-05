@@ -8,7 +8,7 @@
 #import "ShareViewController.h"
 #import "UIImageView+MNZCategory.h"
 
-@import MEGAL10nObjc;
+#import "LocalizationHelper.h"
 
 @interface ShareDestinationTableViewController () <UITextFieldDelegate, MEGAChatDelegate>
 

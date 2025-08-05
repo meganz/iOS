@@ -24,7 +24,7 @@
 #import "MEGA-Swift.h"
 #import "NSArray+MNZCategory.h"
 
-@import MEGAL10nObjc;
+#import "LocalizationHelper.h"
 @import MEGAUIKit;
 @import MEGAAppSDKRepo;
 

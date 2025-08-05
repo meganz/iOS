@@ -12,7 +12,7 @@
 #import "NSString+MNZCategory.h"
 #import "NSDate+MNZCategory.h"
 
-@import MEGAL10nObjc;
+#import "LocalizationHelper.h"
 @import MEGAUIKit;
 
 typedef NS_ENUM(NSInteger, Segment) {

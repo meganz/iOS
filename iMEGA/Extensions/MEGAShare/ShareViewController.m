@@ -26,7 +26,7 @@
 @import ChatRepo;
 @import Firebase;
 @import MEGASDKRepo;
-@import MEGAL10nObjc;
+#import "LocalizationHelper.h"
 
 #define MNZ_ANIMATION_TIME 0.35
 
