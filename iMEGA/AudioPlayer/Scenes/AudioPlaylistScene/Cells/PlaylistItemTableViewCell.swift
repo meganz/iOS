@@ -28,6 +28,8 @@ final class PlaylistItemTableViewCell: UITableViewCell {
         thumbnailImageView.image = nil
         customReorderIconView?.removeFromSuperview()
         customReorderIconView = nil
+        
+        artistLabel.isHidden = true
     }
     
     override func setEditing(_ editing: Bool, animated: Bool) {
@@ -42,7 +44,12 @@ final class PlaylistItemTableViewCell: UITableViewCell {
         configureViewsColor()
         self.item = item
         titleLabel.text = item?.name
-        artistLabel.text = item?.artist ?? ""
+        if let artist = item?.artist {
+            artistLabel.text = artist
+            artistLabel.isHidden = false
+        } else {
+            artistLabel.isHidden = true
+        }
         configureThumbnail(item)
     }
     

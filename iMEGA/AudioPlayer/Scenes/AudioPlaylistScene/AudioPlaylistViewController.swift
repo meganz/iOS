@@ -125,9 +125,9 @@ final class AudioPlaylistViewController: UIViewController {
         
         let selectedIndexPaths = tableView.indexPathsForSelectedRows
         
-        tableView.beginUpdates()
-        items.isNotEmpty ? tableView.reloadRows(at: indexPaths, with: .none) : tableView.reloadData()
-        tableView.endUpdates()
+        UIView.performWithoutAnimation {
+            items.isNotEmpty ? tableView.reloadRows(at: indexPaths, with: .none) : tableView.reloadData()
+        }
         
         let indexesToReload = items.isNotEmpty ?
         Array(Set(selectedIndexPaths ?? []).intersection(Set(indexPaths))) : selectedIndexPaths
