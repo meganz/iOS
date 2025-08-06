@@ -2125,6 +2125,9 @@
 		BF017D982448077C00FB4DFD /* AudioWaveView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF017D972448077C00FB4DFD /* AudioWaveView.xib */; };
 		BF06E3DE243191B000B30FB7 /* ChatTitleView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF06E3DC243191B000B30FB7 /* ChatTitleView.xib */; };
 		BF06E3DF243191B000B30FB7 /* ChatTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF06E3DD243191B000B30FB7 /* ChatTitleView.swift */; };
+		BF06FFA32E431E800012AC13 /* NSString+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 41BADDAC1A8E1659008408B3 /* NSString+MNZCategory.m */; };
+		BF06FFA82E431F8B0012AC13 /* LocalizationHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = A8077BB62E42270F009954FD /* LocalizationHelper.m */; };
+		BF06FFAA2E431F9E0012AC13 /* LocalizationObjC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8077B7C2E421186009954FD /* LocalizationObjC.swift */; };
 		BF0730CE2C9801D900DC5D11 /* StorageFullModalAlertViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0730CD2C9801D900DC5D11 /* StorageFullModalAlertViewModel.swift */; };
 		BF0730CF2C9801D900DC5D11 /* StorageFullModalAlertViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0730CD2C9801D900DC5D11 /* StorageFullModalAlertViewModel.swift */; };
 		BF0730D22C98023000DC5D11 /* StorageFullModalAlertViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0730D12C98023000DC5D11 /* StorageFullModalAlertViewRouter.swift */; };
@@ -15951,6 +15954,8 @@
 				B60C7B2F2A29CD5500AAA21F /* AppEnvironmentConfigurator.swift in Sources */,
 				B6F8CE18262823250074CBBF /* CoreDataErrorHandler.m in Sources */,
 				A8F1D1082A5ECB15000DEB6F /* FileExtensionGroupOCWrapper.swift in Sources */,
+				BF06FFA82E431F8B0012AC13 /* LocalizationHelper.m in Sources */,
+				BF06FFAA2E431F9E0012AC13 /* LocalizationObjC.swift in Sources */,
 				774941E42410F3CD00FC5CB6 /* MEGACD.xcdatamodeld in Sources */,
 				772DE069244464BA0013EF52 /* MEGAChatRoom+Additions.swift in Sources */,
 				A84F4A9A298904860017ACB4 /* MEGAChatSdk+SharedInstanceWrapper.swift in Sources */,
@@ -15980,6 +15985,7 @@
 				7794AED7231E4E0A0039C1D2 /* NotificationService.swift in Sources */,
 				A857F5002B45B2D0001CA42C /* NSDate+MNZCategory.m in Sources */,
 				77F0ED4323C4C750000E6B5B /* NSFileManager+MNZCategory.m in Sources */,
+				BF06FFA32E431E800012AC13 /* NSString+MNZCategory.m in Sources */,
 				7794AF19231FDF3D0039C1D2 /* Reachability.m in Sources */,
 				BF121D672A09FF1700DA3633 /* ScheduleMeetingNotificationInfo.swift in Sources */,
 				BFCB32B72A023A7F0013409C /* ScheduleMeetingPushNotifications.swift in Sources */,
