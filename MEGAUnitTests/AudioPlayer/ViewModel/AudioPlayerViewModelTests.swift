@@ -23,6 +23,7 @@ final class AudioPlayerViewModelTests: XCTestCase {
                 .showLoading(true),
                 .updateShuffle(status: playerHandler.isShuffleEnabled()),
                 .updateSpeed(mode: .normal),
+                .enableUserInteraction(false, isSingleTrackPlayer: false),
                 .configureFileLinkPlayer,
                 .forceDisableMultiTrackControls
             ],
