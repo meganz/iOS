@@ -38,6 +38,8 @@ final class DocScannerSaveSettingsViewModel: ViewModelType {
     }
     
     enum Command: CommandType {
+        case showLoading
+        case hideLoading
         case upload(transfers: [CancellableTransfer], collisionEntities: [NameCollisionEntity], collisionType: NameCollisionType)
     }
 
@@ -62,6 +64,7 @@ final class DocScannerSaveSettingsViewModel: ViewModelType {
 extension DocScannerSaveSettingsViewModel {
     private func upload(model: Action.UploadModel) {
         Task {
+            invokeCommand?(.showLoading)
             let paths = await exportScannedDocs(docs: model.docs, currentFileName: model.currentFileName, originalFileName: model.originalFileName)
             let transfers = await buildTransfers(for: paths, parentNodeHandle: model.parentNodeHandle)
             let collisionEntities = transfers.map {
@@ -72,6 +75,7 @@ extension DocScannerSaveSettingsViewModel {
                     fileUrl: $0.localFileURL
                 )
             }
+            invokeCommand?(.hideLoading)
             invokeCommand?(.upload(transfers: transfers, collisionEntities: collisionEntities, collisionType: .upload))
         }
     }

@@ -133,7 +133,13 @@ final class DocScannerSaveSettingTableViewController: UITableViewController, Vie
     func executeCommand(_ command: DocScannerSaveSettingsViewModel.Command) {
         switch command {
         case let .upload(transfers, collisionEntities, collisionType):
-            NameCollisionViewRouter(presenter: UIApplication.mnz_presentingViewController(), transfers: transfers, nodes: nil, collisions: collisionEntities, collisionType: collisionType).start()
+            dismiss(animated: true) {
+                NameCollisionViewRouter(presenter: UIApplication.mnz_presentingViewController(), transfers: transfers, nodes: nil, collisions: collisionEntities, collisionType: collisionType).start()
+            }
+        case .showLoading:
+            SVProgressHUD.show()
+        case .hideLoading:
+            SVProgressHUD.dismiss()
         }
     }
     
@@ -413,7 +419,6 @@ extension DocScannerSaveSettingTableViewController: BrowserViewControllerDelegat
                 )
             )
         )
-        dismiss(animated: true)
     }
 }
 
