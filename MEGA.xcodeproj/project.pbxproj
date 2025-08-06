@@ -2312,6 +2312,8 @@
 		BF8B02EE28359EDD009AC794 /* callEnded.wav in Resources */ = {isa = PBXBuildFile; fileRef = BF8B02EB28359EDD009AC794 /* callEnded.wav */; };
 		BF8CB0402C34F63900119979 /* NodeSensitivityChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8CB03F2C34F63900119979 /* NodeSensitivityChecker.swift */; };
 		BF8DD11C2C7D715B00BE7DF0 /* NodeInfoWrapperViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8DD11B2C7D715B00BE7DF0 /* NodeInfoWrapperViewController.swift */; };
+		BF8F9C452E436A0E005940E0 /* NSString+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 41BADDAC1A8E1659008408B3 /* NSString+MNZCategory.m */; };
+		BF8F9C472E436BE7005940E0 /* MEGAL10nObjc in Frameworks */ = {isa = PBXBuildFile; productRef = BF8F9C462E436BE7005940E0 /* MEGAL10nObjc */; };
 		BF90C7A726040930006061F8 /* UserStoreRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF90C7A626040930006061F8 /* UserStoreRepository.swift */; };
 		BF923EC72A007DEB00C4D8B0 /* ScheduleMeetingCreationRecurrenceOptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF923EC62A007DEB00C4D8B0 /* ScheduleMeetingCreationRecurrenceOptionsView.swift */; };
 		BF943E8F23553F11001C18E0 /* DNDTurnOnOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF943E8E23553F11001C18E0 /* DNDTurnOnOption.swift */; };
@@ -5565,6 +5567,7 @@
 				A86280BC291E8D510010D6E0 /* MEGADomain in Frameworks */,
 				B6A01BB4289A644D00B503FD /* MEGAFoundation in Frameworks */,
 				BF61495A2A9FF35200AB051A /* MEGAL10n in Frameworks */,
+				BF8F9C472E436BE7005940E0 /* MEGAL10nObjc in Frameworks */,
 				A891E8A929C1E0B00020072A /* MEGASdk in Frameworks */,
 				B63D341C2898A9E90059DE66 /* MEGASwift in Frameworks */,
 				BF0CB9402803AF5500C21F11 /* SAMKeychain in Frameworks */,
@@ -13546,6 +13549,7 @@
 				BF29179C2A9D8DD800A59D12 /* ChatRepo */,
 				BF6149592A9FF35200AB051A /* MEGAL10n */,
 				BFE7729E2D9B8A17005B114E /* MEGAAppPresentation */,
+				BF8F9C462E436BE7005940E0 /* MEGAL10nObjc */,
 			);
 			productName = MEGANotifications;
 			productReference = 7794AED4231E4E0A0039C1D2 /* MEGANotifications.appex */;
@@ -15956,6 +15960,7 @@
 				7794AED7231E4E0A0039C1D2 /* NotificationService.swift in Sources */,
 				A857F5002B45B2D0001CA42C /* NSDate+MNZCategory.m in Sources */,
 				77F0ED4323C4C750000E6B5B /* NSFileManager+MNZCategory.m in Sources */,
+				BF8F9C452E436A0E005940E0 /* NSString+MNZCategory.m in Sources */,
 				7794AF19231FDF3D0039C1D2 /* Reachability.m in Sources */,
 				BF121D672A09FF1700DA3633 /* ScheduleMeetingNotificationInfo.swift in Sources */,
 				BFCB32B72A023A7F0013409C /* ScheduleMeetingPushNotifications.swift in Sources */,
@@ -19020,6 +19025,10 @@
 		BF67F7F92AB4172100AC127E /* LogRepo */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = LogRepo;
+		};
+		BF8F9C462E436BE7005940E0 /* MEGAL10nObjc */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = MEGAL10nObjc;
 		};
 		BFD2ED4C281228B30018C05A /* PieChart */ = {
 			isa = XCSwiftPackageProductDependency;
