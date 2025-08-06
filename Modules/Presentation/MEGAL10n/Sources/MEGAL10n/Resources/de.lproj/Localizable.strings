@@ -3033,7 +3033,7 @@
 /* Label indicating storage over quota */
 "transfer.storage.quotaExceeded"="Speicherlimit überschritten";
 /* Header title displayed above the currently playing track in the audio player's playlist */
-"media.audio.playlist.section.nowPlaying.title"="Now playing";
+"media.audio.playlist.section.nowPlaying.title"="Aktuelle Wiedergabe";
 /* Header title displayed above the upcoming tracks in the audio player's playlist */
 "media.audio.playlist.section.next.title"="Weiter";
 /* Title of Audio Player dialog for Playback Continuation */
@@ -3641,9 +3641,9 @@
 /* On Upgrade Account Plan screen. Button title to buy account plan. %@ will be the name of the selected plan */
 "upgradeAccountPlan.button.buyAccountPlan.title"="%@ kaufen";
 /* On Upgrade Account Plan screen. Button title to buy account plan via web. %@ will be total savings for the users in percent */
-"upgradeAccountPlan.button.buyViaWeb.save"="Buy via web (Save %@)";
+"upgradeAccountPlan.button.buyViaWeb.save"="Auf unserer Website kaufen (%@ sparen)";
 /* On Upgrade Account Plan screen. Button title to buy account plan via web. %@ will be potential total savings for the users in percent */
-"upgradeAccountPlan.button.buyViaWeb.saveUpTo"="Buy via web (Save up to %@)";
+"upgradeAccountPlan.button.buyViaWeb.saveUpTo"="Auf unserer Website kaufen (bis zu %@ sparen)";
 /* On Upgrade Account Plan screen. Button title to continue to buy account plan in-app when user could buy externally. %@ will be the higher price of the plan */
 "upgradeAccountPlan.button.buyInApp.title"="In der App fortfahren (%@)";
 /* On Upgrade Account Plan screen. Button footer text to continue to buy account plan in-app when user could buy externally. %@ will be the higher price of the plan */
@@ -4752,3 +4752,17 @@
 "accountMenu.logout"="Ausloggen";
 /* subscription purchase description for the storage capacity */
 "subscriptionPurchase.feature.storage.description"="Speichern Sie bis zu %@ an Daten";
+/* Camera uploads status banner title paused due to network connection */
+"cameraUploads.banner.status.paused.noNetworkConnection.title"="Kamera-Uploads pausiert";
+/* Camera uploads status banner sub title paused due to no network connection */
+"cameraUploads.banner.status.paused.noNetworkConnection.subheading"="Stellen Sie eine WLAN-Verbindung her oder verwenden Sie mobile Daten";
+/* Camera uploads status banner sub title paused due to no Wi-Fi connection. Please leave [S], [/S] as it is which is used to bolden the text. */
+"cameraUploads.banner.status.paused.noWiFiConnection.subheading"="Stellen Sie eine WLAN-Verbindung her oder verwenden Sie mobile Daten [S]Antippen, um mobile Datennutzung zuzulassen[/S]";
+/* Camera uploads status banner title paused due to low battery */
+"cameraUploads.banner.status.paused.lowBattery.title"="Kamera-Uploads pausiert – Akkuladestand niedrig";
+/* Camera uploads status banner sub title paused due to low battery */
+"cameraUploads.banner.status.paused.lowBattery.subheading"="Laden Sie das Gerät auf, um die Kamera-Uploads zu starten";
+/* Camera uploads status banner title paused due to device heat */
+"cameraUploads.banner.status.paused.highThermalState.title"="Kamera-Uploads pausiert – hohe Gerätetemperatur";
+/* Camera uploads status banner sub title paused due to device heat */
+"cameraUploads.banner.status.paused.highThermalState.subheading"="Die Uploads werden automatisch fortgesetzt, wenn sich Ihr Gerät abgekühlt hat";

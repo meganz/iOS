@@ -3641,9 +3641,9 @@
 /* On Upgrade Account Plan screen. Button title to buy account plan. %@ will be the name of the selected plan */
 "upgradeAccountPlan.button.buyAccountPlan.title"="Mua %@";
 /* On Upgrade Account Plan screen. Button title to buy account plan via web. %@ will be total savings for the users in percent */
-"upgradeAccountPlan.button.buyViaWeb.save"="Mua thông qua web (Tiết kiệm %@)";
+"upgradeAccountPlan.button.buyViaWeb.save"="Mua từ trang web MEGA (giảm %@)";
 /* On Upgrade Account Plan screen. Button title to buy account plan via web. %@ will be potential total savings for the users in percent */
-"upgradeAccountPlan.button.buyViaWeb.saveUpTo"="Mua thông qua web (Tiết kiệm lên đến %@)";
+"upgradeAccountPlan.button.buyViaWeb.saveUpTo"="Mua từ trang web MEGA (giảm tới %@)";
 /* On Upgrade Account Plan screen. Button title to continue to buy account plan in-app when user could buy externally. %@ will be the higher price of the plan */
 "upgradeAccountPlan.button.buyInApp.title"="Mua trong app (%@)";
 /* On Upgrade Account Plan screen. Button footer text to continue to buy account plan in-app when user could buy externally. %@ will be the higher price of the plan */
@@ -4752,3 +4752,17 @@
 "accountMenu.logout"="Đăng xuất";
 /* subscription purchase description for the storage capacity */
 "subscriptionPurchase.feature.storage.description"="Lưu trữ lên đến %@ dữ liệu";
+/* Camera uploads status banner title paused due to network connection */
+"cameraUploads.banner.status.paused.noNetworkConnection.title"="Đăng tải camêra đã tạm dừng";
+/* Camera uploads status banner sub title paused due to no network connection */
+"cameraUploads.banner.status.paused.noNetworkConnection.subheading"="Hãy kết nối với WiFi hoặc dùng mạng dữ liệu di động";
+/* Camera uploads status banner sub title paused due to no Wi-Fi connection. Please leave [S], [/S] as it is which is used to bolden the text. */
+"cameraUploads.banner.status.paused.noWiFiConnection.subheading"="Hãy kết nối với WiFi hoặc dùng mạng dữ liệu di động [S]Chạm để cho phép dùng mạng di động[/S]";
+/* Camera uploads status banner title paused due to low battery */
+"cameraUploads.banner.status.paused.lowBattery.title"="Đăng tải camêra tạm dừng do pin yếu";
+/* Camera uploads status banner sub title paused due to low battery */
+"cameraUploads.banner.status.paused.lowBattery.subheading"="Sạc thiết bị để tiếp tục đăng tải camêra";
+/* Camera uploads status banner title paused due to device heat */
+"cameraUploads.banner.status.paused.highThermalState.title"="Đăng tải camêra tạm dừng do nhiệt độ của thiết bị cao";
+/* Camera uploads status banner sub title paused due to device heat */
+"cameraUploads.banner.status.paused.highThermalState.subheading"="Các phiên tải lên sẽ tự động tiếp tục khi thiết bị của bạn nguội đi";

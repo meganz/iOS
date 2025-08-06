@@ -3641,9 +3641,9 @@
 /* On Upgrade Account Plan screen. Button title to buy account plan. %@ will be the name of the selected plan */
 "upgradeAccountPlan.button.buyAccountPlan.title"="Comprar o %@";
 /* On Upgrade Account Plan screen. Button title to buy account plan via web. %@ will be total savings for the users in percent */
-"upgradeAccountPlan.button.buyViaWeb.save"="Comprar pelo site (economize %@)";
+"upgradeAccountPlan.button.buyViaWeb.save"="Comprar no nosso site (economize %@)";
 /* On Upgrade Account Plan screen. Button title to buy account plan via web. %@ will be potential total savings for the users in percent */
-"upgradeAccountPlan.button.buyViaWeb.saveUpTo"="Comprar pelo site (economize até %@)";
+"upgradeAccountPlan.button.buyViaWeb.saveUpTo"="Comprar no nosso site (economize até %@)";
 /* On Upgrade Account Plan screen. Button title to continue to buy account plan in-app when user could buy externally. %@ will be the higher price of the plan */
 "upgradeAccountPlan.button.buyInApp.title"="Continuar no aplicativo (%@)";
 /* On Upgrade Account Plan screen. Button footer text to continue to buy account plan in-app when user could buy externally. %@ will be the higher price of the plan */
@@ -4752,3 +4752,17 @@
 "accountMenu.logout"="Fazer logout";
 /* subscription purchase description for the storage capacity */
 "subscriptionPurchase.feature.storage.description"="Armazene até %@ de dados";
+/* Camera uploads status banner title paused due to network connection */
+"cameraUploads.banner.status.paused.noNetworkConnection.title"="Uploads da câmera pausados";
+/* Camera uploads status banner sub title paused due to no network connection */
+"cameraUploads.banner.status.paused.noNetworkConnection.subheading"="Conecte-se ao WIFI ou use dados móveis";
+/* Camera uploads status banner sub title paused due to no Wi-Fi connection. Please leave [S], [/S] as it is which is used to bolden the text. */
+"cameraUploads.banner.status.paused.noWiFiConnection.subheading"="Conecte-se ao WIFI ou use dados móveis [S]Pressione para permitir o uso de dados móveis[/S]";
+/* Camera uploads status banner title paused due to low battery */
+"cameraUploads.banner.status.paused.lowBattery.title"="Os uploads da câmera foram pausados porque a bateria está baixa";
+/* Camera uploads status banner sub title paused due to low battery */
+"cameraUploads.banner.status.paused.lowBattery.subheading"="Coloque o dispositivo para carregar para iniciar os uploads da câmera";
+/* Camera uploads status banner title paused due to device heat */
+"cameraUploads.banner.status.paused.highThermalState.title"="Os uploads da câmera foram pausados porque a temperatura do dispositivo está alta";
+/* Camera uploads status banner sub title paused due to device heat */
+"cameraUploads.banner.status.paused.highThermalState.subheading"="Os uploads serão retomados automaticamente quando o seu dispositivo esfriar";

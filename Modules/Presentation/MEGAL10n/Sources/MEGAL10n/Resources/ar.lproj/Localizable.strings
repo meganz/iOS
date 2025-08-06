@@ -3641,9 +3641,9 @@
 /* On Upgrade Account Plan screen. Button title to buy account plan. %@ will be the name of the selected plan */
 "upgradeAccountPlan.button.buyAccountPlan.title"="شراء %@";
 /* On Upgrade Account Plan screen. Button title to buy account plan via web. %@ will be total savings for the users in percent */
-"upgradeAccountPlan.button.buyViaWeb.save"="الشراء عبر الويب (وفر %@)";
+"upgradeAccountPlan.button.buyViaWeb.save"="قم بالشراء على موقعنا (وفر %@)";
 /* On Upgrade Account Plan screen. Button title to buy account plan via web. %@ will be potential total savings for the users in percent */
-"upgradeAccountPlan.button.buyViaWeb.saveUpTo"="الشراء عبر الويب (وفر حتى %@)";
+"upgradeAccountPlan.button.buyViaWeb.saveUpTo"="اشترِ على موقعنا الإلكتروني (وفر ما يصل إلى %@)";
 /* On Upgrade Account Plan screen. Button title to continue to buy account plan in-app when user could buy externally. %@ will be the higher price of the plan */
 "upgradeAccountPlan.button.buyInApp.title"="متابعة داخل التطبيق (%@)";
 /* On Upgrade Account Plan screen. Button footer text to continue to buy account plan in-app when user could buy externally. %@ will be the higher price of the plan */
@@ -4752,3 +4752,17 @@
 "accountMenu.logout"="تسجيل خروج";
 /* subscription purchase description for the storage capacity */
 "subscriptionPurchase.feature.storage.description"="تخزين ما يصل إلى %@ من البيانات";
+/* Camera uploads status banner title paused due to network connection */
+"cameraUploads.banner.status.paused.noNetworkConnection.title"="تم إيقاف ترفيعات الكاميرا";
+/* Camera uploads status banner sub title paused due to no network connection */
+"cameraUploads.banner.status.paused.noNetworkConnection.subheading"="اتصل بالواي فاي WiFi أو استخدم بيانات الهاتف المحمول";
+/* Camera uploads status banner sub title paused due to no Wi-Fi connection. Please leave [S], [/S] as it is which is used to bolden the text. */
+"cameraUploads.banner.status.paused.noWiFiConnection.subheading"="اتصل بالواي فاي WiFi أو استخدم بيانات الهاتف المحمول [S]انقر للسماح ببيانات الهاتف المحمول[/S]";
+/* Camera uploads status banner title paused due to low battery */
+"cameraUploads.banner.status.paused.lowBattery.title"="تم إيقاف ترفيعات الكاميرا مؤقتًا بسبب انخفاض طاقة البطارية";
+/* Camera uploads status banner sub title paused due to low battery */
+"cameraUploads.banner.status.paused.lowBattery.subheading"="شحن الجهاز لبدء ترفيعات الكاميرا";
+/* Camera uploads status banner title paused due to device heat */
+"cameraUploads.banner.status.paused.highThermalState.title"="تم إيقاف ترفيعات الكاميرا مؤقتًا بسبب ارتفاع درجة حرارة الجهاز";
+/* Camera uploads status banner sub title paused due to device heat */
+"cameraUploads.banner.status.paused.highThermalState.subheading"="سيتم استئناف الترفيعات تلقائيًا عندما يبرد جهازك";

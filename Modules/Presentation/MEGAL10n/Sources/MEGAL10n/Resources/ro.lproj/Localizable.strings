@@ -3641,9 +3641,9 @@
 /* On Upgrade Account Plan screen. Button title to buy account plan. %@ will be the name of the selected plan */
 "upgradeAccountPlan.button.buyAccountPlan.title"="Cumpără %@";
 /* On Upgrade Account Plan screen. Button title to buy account plan via web. %@ will be total savings for the users in percent */
-"upgradeAccountPlan.button.buyViaWeb.save"="Buy via web (Save %@)";
+"upgradeAccountPlan.button.buyViaWeb.save"="Cumpără de pe site-ul nostru (economisește %@)";
 /* On Upgrade Account Plan screen. Button title to buy account plan via web. %@ will be potential total savings for the users in percent */
-"upgradeAccountPlan.button.buyViaWeb.saveUpTo"="Buy via web (Save up to %@)";
+"upgradeAccountPlan.button.buyViaWeb.saveUpTo"="Cumpără de pe site-ul nostru (economisește până la %@)";
 /* On Upgrade Account Plan screen. Button title to continue to buy account plan in-app when user could buy externally. %@ will be the higher price of the plan */
 "upgradeAccountPlan.button.buyInApp.title"="Continuați în aplicație (%@)";
 /* On Upgrade Account Plan screen. Button footer text to continue to buy account plan in-app when user could buy externally. %@ will be the higher price of the plan */
@@ -4752,3 +4752,17 @@
 "accountMenu.logout"="Deconectați-vă";
 /* subscription purchase description for the storage capacity */
 "subscriptionPurchase.feature.storage.description"="Depozitați până la %@ de date";
+/* Camera uploads status banner title paused due to network connection */
+"cameraUploads.banner.status.paused.noNetworkConnection.title"="Încărcările de la cameră sunt întrerupte";
+/* Camera uploads status banner sub title paused due to no network connection */
+"cameraUploads.banner.status.paused.noNetworkConnection.subheading"="Conectați-vă la Wi-Fi sau folosiți date mobile";
+/* Camera uploads status banner sub title paused due to no Wi-Fi connection. Please leave [S], [/S] as it is which is used to bolden the text. */
+"cameraUploads.banner.status.paused.noWiFiConnection.subheading"="Conectați-vă la Wi-Fi sau folosiți date mobile [S] Atingeți pentru a permite datele mobile [/S]";
+/* Camera uploads status banner title paused due to low battery */
+"cameraUploads.banner.status.paused.lowBattery.title"="Încărcările camerei au fost întrerupte din cauza bateriei descărcate";
+/* Camera uploads status banner sub title paused due to low battery */
+"cameraUploads.banner.status.paused.lowBattery.subheading"="Încărcați dispozitivul pentru a începe încărcările camerei";
+/* Camera uploads status banner title paused due to device heat */
+"cameraUploads.banner.status.paused.highThermalState.title"="Încărcările camerei au fost întrerupte din cauza temperaturii ridicate a dispozitivului";
+/* Camera uploads status banner sub title paused due to device heat */
+"cameraUploads.banner.status.paused.highThermalState.subheading"="Încărcările se vor relua automat când dispozitivul se răcește";

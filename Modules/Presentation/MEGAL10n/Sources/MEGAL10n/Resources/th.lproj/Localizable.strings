@@ -3641,9 +3641,9 @@
 /* On Upgrade Account Plan screen. Button title to buy account plan. %@ will be the name of the selected plan */
 "upgradeAccountPlan.button.buyAccountPlan.title"="ซื้อแผน %@";
 /* On Upgrade Account Plan screen. Button title to buy account plan via web. %@ will be total savings for the users in percent */
-"upgradeAccountPlan.button.buyViaWeb.save"="Buy via web (Save %@)";
+"upgradeAccountPlan.button.buyViaWeb.save"="ซื้อบนเว็บไซต์ของเรา (ประหยัด %@)";
 /* On Upgrade Account Plan screen. Button title to buy account plan via web. %@ will be potential total savings for the users in percent */
-"upgradeAccountPlan.button.buyViaWeb.saveUpTo"="Buy via web (Save up to %@)";
+"upgradeAccountPlan.button.buyViaWeb.saveUpTo"="ซื้อบนเว็บไซต์ของเรา (ประหยัดสูงสุด %@)";
 /* On Upgrade Account Plan screen. Button title to continue to buy account plan in-app when user could buy externally. %@ will be the higher price of the plan */
 "upgradeAccountPlan.button.buyInApp.title"="ดำเนินการต่อในแอป (%@)";
 /* On Upgrade Account Plan screen. Button footer text to continue to buy account plan in-app when user could buy externally. %@ will be the higher price of the plan */
@@ -4303,7 +4303,7 @@
 /* Cancellation Section Webclient on a computer title: On a computer */
 "accounts.cancelSubscriptionSteps.webClient.computer.title"="บนคอมพิวเตอร์";
 /* Cancellation step Webclient: First step using the computer - 1. Visit https://mega.nz in your web browser. */
-"accounts.cancelSubscriptionSteps.webClient.computer.step.one"="1. Visit https://mega.nz in your web browser.";
+"accounts.cancelSubscriptionSteps.webClient.computer.step.one"="1. ไปที่ https://mega.nz ในเว็บเบราว์เซอร์ของคุณ";
 /* Cancellation step Webclient: Second step using the computer - 2. Log in to your MEGA account. */
 "accounts.cancelSubscriptionSteps.webClient.computer.step.two"="2. เข้าสู่ระบบบัญชี MEGA ของคุณ";
 /* Cancellation step Webclient: Third step using the computer - 3. Click the main menu. */
@@ -4317,7 +4317,7 @@
 /* Cancellation Section Webclient on mobile device title: On a mobile device */
 "accounts.cancelSubscriptionSteps.webClient.mobile.title"="บนอุปกรณ์มือถือ";
 /* Cancellation step Webclient: First step using the mobile device - 1. Visit https://mega.nz in your web browser. */
-"accounts.cancelSubscriptionSteps.webClient.mobile.step.one"="1. Visit https://mega.nz in your web browser.";
+"accounts.cancelSubscriptionSteps.webClient.mobile.step.one"="ไปที่ https://mega.nz ในเว็บเบราว์เซอร์ของคุณ";
 /* Cancellation step Webclient: Second step using the mobile device - 2. Log in to your MEGA account. */
 "accounts.cancelSubscriptionSteps.webClient.mobile.step.two"="2. เข้าสู่ระบบบัญชี MEGA ของคุณ";
 /* Cancellation step Webclient: Third step using the mobile device - 3. Tap on your avatar. */
@@ -4675,7 +4675,7 @@
 /* Onboarding Camera Backups CTA *Skip* button */
 "onboarding.cta.cameraBackups.buttons.skip"="ข้ามไปก่อน";
 /* String explaining the auto-renewal policy of the Pro subscription. */
-"subscriptionPurchase.autoRenewDescription"="Subscriptions are renewed automatically for successive subscription periods of the same duration and at the same price as the initial period chosen.\n\nYou can cancel your Pro plan anytime but no later than 24 hours before your next subscription payment is due. [L]Learn how to manage your subscription in your settings[/L].";
+"subscriptionPurchase.autoRenewDescription"="การสมัครใช้งานจะต่ออายุโดยอัตโนมัติทุกครั้ง โดยจะใช้ระยะเวลาและราคาเท่ากับครั้งแรกที่สมัคร\n\nคุณสามารถยกเลิกแผน Pro ได้ทุกเมื่อ แต่ต้องไม่เกิน 24 ชั่วโมงก่อนถึงกำหนดชำระเงินครั้งถัดไป [L]เรียนรู้วิธีจัดการการสมัครใช้งานได้ในตั้งค่าของคุณ[/L]";
 /* Title shown for the free plan card */
 "subscriptionPurchase.freePlanCard.title"="เริ่มต้นใช้งานแผนฟรีของเรา";
 /* Description shown for the free plan card */
@@ -4697,7 +4697,7 @@
 /* Title for the features of pro plan in the subscription purchase screen. */
 "subscriptionPurchase.featuresOfProPlan.title"="ประโยชน์เพิ่มเติมของแผน Pro";
 /* Features of pro plan in the subscription purchase screen. */
-"subscriptionPurchase.featuresOfProPlan.message"="• Password-protected links\n\n• Links with expiry dates\n\n• Rewind folders up to 180 days of deleted data\n\n• Host calls and meetings with unlimited participants and no time restrictions\n\n• Schedule rubbish bin clearing between 7 days and 10 years\n\n• Priority support";
+"subscriptionPurchase.featuresOfProPlan.message"="• ตั้งค่าลิงก์แบบมีรหัสผ่านได้\n\n• กำหนดวันหมดอายุลิงก์ได้\n\n• ย้อนกลับโฟลเดอร์ที่ลบไปแล้วได้สูงสุด 180 วัน\n\n• ผู้จัดประชุมสามารถโทรและประชุมได้โดยไม่จำกัดจำนวนผู้เข้าร่วมและไม่จำกัดเวลา\n\n• กำหนดเวลาล้างถังขยะได้ตั้งแต่ 7 วันถึง 10 ปี\n\n• การสนับสนุนแบบพิเศษ";
 /* Title for the first subscription feature: generous storage capacity */
 "subscriptionPurchase.feature.one.title"="พื้นที่เก็บข้อมูลจุได้ไม่อั้น";
 /* Description for the first subscription feature: details about available storage */
@@ -4733,22 +4733,36 @@
 /* Button title for the free plan card for upgrading */
 "subscriptionPurchase.freePlanCard.button.title.upgrade"="ดำเนินการต่อด้วยแผนฟรี";
 /* Button title for offline files in menu */
-"accountMenu.offlineFiles"="Offline files";
+"accountMenu.offlineFiles"="ไฟล์ออฟไลน์";
 /* Button title for MEGA VPN in menu */
 "accountMenu.megaVPN.buttonTitle"="MEGA VPN";
 /* Button subtitle for MEGA VPN in menu */
-"accountMenu.megaVPN.buttonSubtitle"="High-speed VPN";
+"accountMenu.megaVPN.buttonSubtitle"="VPN ความเร็วสูง";
 /* Button title for MEGA Pass in menu */
-"accountMenu.megaPass.buttonTitle"="MEGA Pass";
+"accountMenu.megaPass.buttonTitle"="MEGA Pass";
 /* Button subtitle for MEGA Pass in menu */
-"accountMenu.megaPass.buttonSubtitle"="Securely store and autofill your passwords";
+"accountMenu.megaPass.buttonSubtitle"="จัดเก็บและกรอกรหัสผ่านของคุณอัตโนมัติอย่างปลอดภัย";
 /* Button title for MEGA transfer it in menu */
 "accountMenu.transferIt.buttonTitle"="Transfer.it";
 /* Button subtitle for MEGA transfer it in menu */
-"accountMenu.transferIt.buttonSubtitle"="Fast, secure file transfers";
+"accountMenu.transferIt.buttonSubtitle"="ถ่ายโอนไฟล์ได้รวดเร็วและปลอดภัย";
 /* Section title for the other MEGA apps in menu */
-"accountMenu.otherApps.sectionTitle"="MEGA privacy suite";
+"accountMenu.otherApps.sectionTitle"="ชุดความเป็นส่วนตัวของ MEGA";
 /* Button subtitle for log out in menu */
 "accountMenu.logout"="ออกจากระบบ";
 /* subscription purchase description for the storage capacity */
-"subscriptionPurchase.feature.storage.description"="Store up to %@ of data";
+"subscriptionPurchase.feature.storage.description"="จัดเก็บข้อมูลได้สูงสุด %@";
+/* Camera uploads status banner title paused due to network connection */
+"cameraUploads.banner.status.paused.noNetworkConnection.title"="การอัปโหลดจากกล้องหยุดชั่วคราว";
+/* Camera uploads status banner sub title paused due to no network connection */
+"cameraUploads.banner.status.paused.noNetworkConnection.subheading"="เชื่อมต่อ WiFi หรือใช้ข้อมูลมือถือ";
+/* Camera uploads status banner sub title paused due to no Wi-Fi connection. Please leave [S], [/S] as it is which is used to bolden the text. */
+"cameraUploads.banner.status.paused.noWiFiConnection.subheading"="เชื่อมต่อ WiFi หรือใช้ข้อมูลมือถือ [S]แตะเพื่ออนุญาตให้ใช้ข้อมูลมือถือ[/S]";
+/* Camera uploads status banner title paused due to low battery */
+"cameraUploads.banner.status.paused.lowBattery.title"="การอัปโหลดจากกล้องหยุดชั่วคราวเนื่องจากแบตเตอรี่ต่ำ";
+/* Camera uploads status banner sub title paused due to low battery */
+"cameraUploads.banner.status.paused.lowBattery.subheading"="ชาร์จอุปกรณ์เพื่อเริ่มการอัปโหลดจากกล้อง";
+/* Camera uploads status banner title paused due to device heat */
+"cameraUploads.banner.status.paused.highThermalState.title"="การอัปโหลดจากกล้องหยุดชั่วคราวเนื่องจากอุปกรณ์มีอุณหภูมิสูง";
+/* Camera uploads status banner sub title paused due to device heat */
+"cameraUploads.banner.status.paused.highThermalState.subheading"="การอัปโหลดจะกลับมาทำงานต่อโดยอัตโนมัติเมื่ออุปกรณ์ของคุณเย็นลง";

@@ -1267,7 +1267,7 @@
 /* Title used in settings that enables the generation of link previews in the chat */
 "richUrlPreviews"="Attiva le anteprime dei link che invii";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
-"richPreviewsFooter"="Generates previews for certain links you send in chat, when available. Note that retrieving these previews isn’t protected by zero-knowledge encryption.";
+"richPreviewsFooter"="Genera anteprime per determinati link inviati in chat, se disponibili. Nota che il recupero di queste anteprime non è protetto dalla criptazione a conoscenza zero.";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
 "voiceAndVideoCalls"="Chiamate vocali e video";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
@@ -3641,9 +3641,9 @@
 /* On Upgrade Account Plan screen. Button title to buy account plan. %@ will be the name of the selected plan */
 "upgradeAccountPlan.button.buyAccountPlan.title"="Compra %@";
 /* On Upgrade Account Plan screen. Button title to buy account plan via web. %@ will be total savings for the users in percent */
-"upgradeAccountPlan.button.buyViaWeb.save"="Buy via web (Save %@)";
+"upgradeAccountPlan.button.buyViaWeb.save"="Buy on our website (save %@)";
 /* On Upgrade Account Plan screen. Button title to buy account plan via web. %@ will be potential total savings for the users in percent */
-"upgradeAccountPlan.button.buyViaWeb.saveUpTo"="Buy via web (Save up to %@)";
+"upgradeAccountPlan.button.buyViaWeb.saveUpTo"="Buy on our website (save up to %@)";
 /* On Upgrade Account Plan screen. Button title to continue to buy account plan in-app when user could buy externally. %@ will be the higher price of the plan */
 "upgradeAccountPlan.button.buyInApp.title"="Continue in-app (%@)";
 /* On Upgrade Account Plan screen. Button footer text to continue to buy account plan in-app when user could buy externally. %@ will be the higher price of the plan */
@@ -4587,7 +4587,7 @@
 /* Title used in settings that enables the generation of link previews in the chat */
 "settings.chat.richUrlPreview.title"="Attiva le anteprime dei link che invii";
 /* Title used in settings that enables the generation of link previews in the chat */
-"settings.chat.richUrlPreview.subtitle"="Generates previews for certain links you send in chat, when available. Note that retrieving these previews isn’t protected by zero-knowledge encryption.";
+"settings.chat.richUrlPreview.subtitle"="Genera anteprime per determinati link inviati in chat, se disponibili. Nota che il recupero di queste anteprime non è protetto dalla criptazione a conoscenza zero.";
 /* Title in chat status settings */
 "settings.chat.status.setStatus.title"="Imposta lo stato";
 /* Title section header in set status settings */
@@ -4752,3 +4752,17 @@
 "accountMenu.logout"="Esci";
 /* subscription purchase description for the storage capacity */
 "subscriptionPurchase.feature.storage.description"="Store up to %@ of data";
+/* Camera uploads status banner title paused due to network connection */
+"cameraUploads.banner.status.paused.noNetworkConnection.title"="Camera uploads paused";
+/* Camera uploads status banner sub title paused due to no network connection */
+"cameraUploads.banner.status.paused.noNetworkConnection.subheading"="Connect to WiFi or use mobile data";
+/* Camera uploads status banner sub title paused due to no Wi-Fi connection. Please leave [S], [/S] as it is which is used to bolden the text. */
+"cameraUploads.banner.status.paused.noWiFiConnection.subheading"="Connect to WiFi or use mobile data [S]Tap to allow mobile data[/S]";
+/* Camera uploads status banner title paused due to low battery */
+"cameraUploads.banner.status.paused.lowBattery.title"="Camera uploads paused due to low battery";
+/* Camera uploads status banner sub title paused due to low battery */
+"cameraUploads.banner.status.paused.lowBattery.subheading"="Charge device to start camera uploads";
+/* Camera uploads status banner title paused due to device heat */
+"cameraUploads.banner.status.paused.highThermalState.title"="Camera uploads paused due to high device temperature";
+/* Camera uploads status banner sub title paused due to device heat */
+"cameraUploads.banner.status.paused.highThermalState.subheading"="Uploads will resume automatically when your device cools down";
