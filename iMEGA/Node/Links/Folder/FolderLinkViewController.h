@@ -29,8 +29,12 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, getter=areAllNodesSelected) BOOL allNodesSelected;
 
 @property (nonatomic, strong, nullable) UIView *bottomView;
+
 @property (nonatomic, strong) IBOutlet UIBarButtonItem *moreBarButtonItem;
 @property (nonatomic, strong) IBOutlet UIBarButtonItem *editBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *closeBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *selectAllBarButtonItem;
+
 @property (nonatomic, strong, nullable) AudioPlayer *player;
 @property (nonatomic, strong, nullable) MiniPlayerViewRouter *miniPlayerRouter;
 @property (nonatomic, strong, nullable) ContextMenuManager * contextMenuManager;

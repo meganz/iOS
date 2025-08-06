@@ -43,7 +43,7 @@ class FolderLinkTableViewController: UIViewController {
         tableView.visibleCells.forEach { (cell) in
             let view = UIView()
             view.backgroundColor = .clear
-            cell.selectedBackgroundView = editing ?  UIView() : nil
+            cell.selectedBackgroundView = editing ? view : nil
         }
     }
     
@@ -161,6 +161,11 @@ extension FolderLinkTableViewController: UITableViewDelegate {
         guard let node = getNode(at: indexPath) else {
             return
         }
+        
+        if folderLink.selectedNodesArray == nil {
+            folderLink.selectedNodesArray = []
+        }
+        
         if tableView.isEditing {
             folderLink.selectedNodesArray?.add(node)
             folderLink.setNavigationBarTitleLabel()
@@ -197,6 +202,8 @@ extension FolderLinkTableViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didBeginMultipleSelectionInteractionAt indexPath: IndexPath) {
+        folderLink.setNavigationBarButton(tableView.isEditing)
+        
         if !tableView.isEditing {
             setTableViewEditing(true, animated: true)
         }
