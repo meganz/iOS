@@ -37,8 +37,6 @@
 @property (nonatomic, getter=isFetchNodesDone) BOOL fetchNodesDone;
 @property (nonatomic, getter=isValidatingDecryptionKey) BOOL validatingDecryptionKey;
 
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *closeBarButtonItem;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *selectAllBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *importBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *downloadBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *shareLinkBarButtonItem;
