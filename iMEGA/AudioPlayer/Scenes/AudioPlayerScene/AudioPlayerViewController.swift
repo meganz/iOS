@@ -426,6 +426,8 @@ class AudioPlayerViewController: UIViewController, AudioPlayerViewControllerNode
         case .configureFileLinkPlayer:
             playerType = .fileLink
             updateAppearance()
+        case .forceDisableMultiTrackControls:
+            refreshMultiTrackControlsState(enabled: false)
         case .enableUserInteraction(let enabled, let isSingleTrackPlayer):
             userInteraction(enabled: enabled, isSingleTrackPlayer: isSingleTrackPlayer)
         case .didPausePlayback, .didResumePlayback:

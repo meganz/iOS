@@ -89,6 +89,7 @@ final class AudioPlayerViewModel: ViewModelType {
         case configureDefaultPlayer
         case configureOfflinePlayer
         case configureFileLinkPlayer
+        case forceDisableMultiTrackControls
         case enableUserInteraction(_ enable: Bool, isSingleTrackPlayer: Bool)
         case didPausePlayback
         case didResumePlayback
@@ -253,6 +254,10 @@ final class AudioPlayerViewModel: ViewModelType {
         case .fileLink:
             invokeCommand?(.configureFileLinkPlayer)
             isSingleTrackPlayer = true
+        }
+        
+        if isSingleTrackPlayer {
+            invokeCommand?(.forceDisableMultiTrackControls)
         }
     }
     
