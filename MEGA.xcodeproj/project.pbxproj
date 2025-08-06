@@ -2193,6 +2193,7 @@
 		BF22BFBC268AF67700460DB3 /* MOUploadTransfer+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF22BFB0268AC51400460DB3 /* MOUploadTransfer+Mapper.swift */; };
 		BF22BFBD268AF67800460DB3 /* MOUploadTransfer+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF22BFB0268AC51400460DB3 /* MOUploadTransfer+Mapper.swift */; };
 		BF2406A92BA7E880004CD513 /* CloudDrivePhotosPickerRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2406A82BA7E880004CD513 /* CloudDrivePhotosPickerRouter.swift */; };
+		BF25A3742E41894B00583D88 /* MEGAProcessAssetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF25A3732E41894B00583D88 /* MEGAProcessAssetTests.swift */; };
 		BF2675D32A3169A900736759 /* ScheduleMeetingCreationMonthlyDatePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2675D22A3169A900736759 /* ScheduleMeetingCreationMonthlyDatePickerView.swift */; };
 		BF2675D52A328F3B00736759 /* ScheduleMeetingCreationIntervalFooterNote.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2675D42A328F3B00736759 /* ScheduleMeetingCreationIntervalFooterNote.swift */; };
 		BF2675D72A32973100736759 /* ScheduleMeetingCreationMonthlyCustomOptionsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2675D62A32973100736759 /* ScheduleMeetingCreationMonthlyCustomOptionsViewModel.swift */; };
@@ -2236,6 +2237,8 @@
 		BF53B77C274351F700B47CA0 /* MeetingAlreadyExistsAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF53B77B274351F700B47CA0 /* MeetingAlreadyExistsAlert.swift */; };
 		BF5455E92844377600544A53 /* EndCallDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5455E82844377600544A53 /* EndCallDialog.swift */; };
 		BF5718502D3719EC004BD1EC /* DIContainer+FeatureFlagProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D527902CCF625000CC9E46 /* DIContainer+FeatureFlagProvider.swift */; };
+		BF58A7AF2E408B6400E2582D /* MEGAProcessAsset+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF58A7AE2E408B6400E2582D /* MEGAProcessAsset+Additions.swift */; };
+		BF58A7B02E408B6400E2582D /* MEGAProcessAsset+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF58A7AE2E408B6400E2582D /* MEGAProcessAsset+Additions.swift */; };
 		BF5C36792491C917004DDA2F /* MEGAUser+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB463F624342F7F00FB90B9 /* MEGAUser+Additions.swift */; };
 		BF5C96612BA92C9B00B71CB2 /* CloudDriveAssetUploader.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5C96602BA92C9B00B71CB2 /* CloudDriveAssetUploader.swift */; };
 		BF5D8E152B9AB0FF008F0DDF /* CloudDriveMediaCaptureRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5D8E142B9AB0FF008F0DDF /* CloudDriveMediaCaptureRouter.swift */; };
@@ -5026,6 +5029,7 @@
 		BF22BFAC268AC39100460DB3 /* TransferRecordDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferRecordDTO.swift; sourceTree = "<group>"; };
 		BF22BFB0268AC51400460DB3 /* MOUploadTransfer+Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MOUploadTransfer+Mapper.swift"; sourceTree = "<group>"; };
 		BF2406A82BA7E880004CD513 /* CloudDrivePhotosPickerRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudDrivePhotosPickerRouter.swift; sourceTree = "<group>"; };
+		BF25A3732E41894B00583D88 /* MEGAProcessAssetTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGAProcessAssetTests.swift; sourceTree = "<group>"; };
 		BF2675D22A3169A900736759 /* ScheduleMeetingCreationMonthlyDatePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingCreationMonthlyDatePickerView.swift; sourceTree = "<group>"; };
 		BF2675D42A328F3B00736759 /* ScheduleMeetingCreationIntervalFooterNote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingCreationIntervalFooterNote.swift; sourceTree = "<group>"; };
 		BF2675D62A32973100736759 /* ScheduleMeetingCreationMonthlyCustomOptionsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingCreationMonthlyCustomOptionsViewModel.swift; sourceTree = "<group>"; };
@@ -5063,6 +5067,7 @@
 		BF5375682C6D805900D4F364 /* NodeDescriptionFooterViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeDescriptionFooterViewModelTests.swift; sourceTree = "<group>"; };
 		BF53B77B274351F700B47CA0 /* MeetingAlreadyExistsAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingAlreadyExistsAlert.swift; sourceTree = "<group>"; };
 		BF5455E82844377600544A53 /* EndCallDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndCallDialog.swift; sourceTree = "<group>"; };
+		BF58A7AE2E408B6400E2582D /* MEGAProcessAsset+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAProcessAsset+Additions.swift"; sourceTree = "<group>"; };
 		BF5C96602BA92C9B00B71CB2 /* CloudDriveAssetUploader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudDriveAssetUploader.swift; sourceTree = "<group>"; };
 		BF5D8E142B9AB0FF008F0DDF /* CloudDriveMediaCaptureRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudDriveMediaCaptureRouter.swift; sourceTree = "<group>"; };
 		BF5E336B2558BE2A0055395E /* ExplorerBaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExplorerBaseViewController.swift; sourceTree = "<group>"; };
@@ -7150,6 +7155,7 @@
 				E8C8D73D1B1DCB4000BCDBA4 /* MEGANavigationController.h */,
 				E8C8D73E1B1DCB4000BCDBA4 /* MEGANavigationController.m */,
 				8357ADE5246AED2700045137 /* MEGAPresentationManager.swift */,
+				BF58A7AE2E408B6400E2582D /* MEGAProcessAsset+Additions.swift */,
 				A81AD7371F3099F800CA4059 /* MEGAProcessAsset.h */,
 				A81AD7381F3099F800CA4059 /* MEGAProcessAsset.m */,
 				7271895F27FF128B00B2DB08 /* MEGAReachabilityManager+Additions.swift */,
@@ -11493,6 +11499,7 @@
 				B63AEB172512040E000B8517 /* Array+Additions.swift */,
 				B5488B792A8DBFAD00A069DF /* CountdownTimerTests.swift */,
 				0E847F842A68E27D00AFE051 /* MEGALinkManager+AdditionsTests.swift */,
+				BF25A3732E41894B00583D88 /* MEGAProcessAssetTests.swift */,
 				B6AADE9B251845E2009A874C /* Routing+Addition.swift */,
 				C43EC4A22CDB01BC00556C4C /* Task+Yield.swift */,
 				947755BD2A4C74ED00DAAEE5 /* ToolbarButtonsDisablerTests.swift */,
@@ -15158,6 +15165,7 @@
 				5DF016812499BD60005A121D /* MEGAPlan.swift in Sources */,
 				5DF016832499BD7B005A121D /* MEGAPlanService.swift in Sources */,
 				8357ADE6246AED2700045137 /* MEGAPresentationManager.swift in Sources */,
+				BF58A7B02E408B6400E2582D /* MEGAProcessAsset+Additions.swift in Sources */,
 				A81AD7391F3099F800CA4059 /* MEGAProcessAsset.m in Sources */,
 				C460DA3B263ACD17000ED9E4 /* MEGAProgressBarView.swift in Sources */,
 				16886B382E20B67A0096D21D /* MEGAPurchase+CheckCancellation.swift in Sources */,
@@ -16142,6 +16150,7 @@
 				94C9D7561FBDC87B008BA1B5 /* MEGANodeList+MNZCategory.m in Sources */,
 				C460506F27282F9500D67A44 /* MEGAOperation.m in Sources */,
 				83DA2092248522EF004C24B8 /* MEGAPresentationManager.swift in Sources */,
+				BF58A7AF2E408B6400E2582D /* MEGAProcessAsset+Additions.swift in Sources */,
 				A81F2C6A1F334FB2008600A5 /* MEGAProcessAsset.m in Sources */,
 				941135521F00FFE400D33428 /* MEGAReachabilityManager.m in Sources */,
 				7794AEA9231674750039C1D2 /* MEGASdk+MNZCategory.m in Sources */,
@@ -16446,6 +16455,7 @@
 				BFE556FC27E183B40028EF1F /* MEGANode+Additions_Tests.swift in Sources */,
 				BFE556FE27E183B40028EF1F /* MEGANode+FilePaths_Tests.swift in Sources */,
 				5D62093824ED1511004648A1 /* MEGANotificationUseCaseTests.swift in Sources */,
+				BF25A3742E41894B00583D88 /* MEGAProcessAssetTests.swift in Sources */,
 				A8F6624E2DE7133200D70F4A /* MEGAQLPreviewControllerTests.swift in Sources */,
 				6DEEA7B82C119596004641C9 /* MEGASDKErrorTypeTests.swift in Sources */,
 				2455359C2AE8E2D0007373C6 /* MiniPlayerDataSourceTests.swift in Sources */,

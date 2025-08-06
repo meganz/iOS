@@ -497,6 +497,9 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
     }
     
     NSString *filePath = [[[NSFileManager defaultManager] uploadsDirectory] stringByAppendingPathComponent:name];
+    // If the same filename is already found, generate a unique one
+    filePath = [self generateUniqueFilePathFrom:filePath allFilePaths:self.filePathsArray];
+
     return filePath;
 }
 
