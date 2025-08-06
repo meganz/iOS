@@ -3213,9 +3213,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Removed “[A]” from the queue</string>
+        <string>„[A]“ aus Warteschlange entfernt</string>
         <key>other</key>
-        <string>Removed %d items from the queue</string>
+        <string>%d Elemente aus Warteschlange entfernt</string>
       </dict>
     </dict>
   </dict>

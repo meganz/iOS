@@ -2812,10 +2812,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Removed “[A]” from the queue</string>
         <key>other</key>
-        <string>Removed %d items from the queue</string>
+        <string>ลบรายการออกจากคิวแล้ว %d รายการ</string>
       </dict>
     </dict>
   </dict>

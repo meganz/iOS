@@ -3641,9 +3641,9 @@
 /* On Upgrade Account Plan screen. Button title to buy account plan. %@ will be the name of the selected plan */
 "upgradeAccountPlan.button.buyAccountPlan.title"="%@を購入";
 /* On Upgrade Account Plan screen. Button title to buy account plan via web. %@ will be total savings for the users in percent */
-"upgradeAccountPlan.button.buyViaWeb.save"="ウェブで購入（%@ご節約）";
+"upgradeAccountPlan.button.buyViaWeb.save"="当社のウェブサイトで購入（%@ご節約）";
 /* On Upgrade Account Plan screen. Button title to buy account plan via web. %@ will be potential total savings for the users in percent */
-"upgradeAccountPlan.button.buyViaWeb.saveUpTo"="ウェブで購入（最大%@ご節約）";
+"upgradeAccountPlan.button.buyViaWeb.saveUpTo"="当社のウェブサイトで購入（最大%@ご節約）";
 /* On Upgrade Account Plan screen. Button title to continue to buy account plan in-app when user could buy externally. %@ will be the higher price of the plan */
 "upgradeAccountPlan.button.buyInApp.title"="アプリ内で続行（%@）";
 /* On Upgrade Account Plan screen. Button footer text to continue to buy account plan in-app when user could buy externally. %@ will be the higher price of the plan */
@@ -4752,3 +4752,17 @@
 "accountMenu.logout"="ログアウト";
 /* subscription purchase description for the storage capacity */
 "subscriptionPurchase.feature.storage.description"="最大%@のデータを保管";
+/* Camera uploads status banner title paused due to network connection */
+"cameraUploads.banner.status.paused.noNetworkConnection.title"="カメラアップロードを一時停止しました";
+/* Camera uploads status banner sub title paused due to no network connection */
+"cameraUploads.banner.status.paused.noNetworkConnection.subheading"="Wi-Fiに接続するかモバイルデータを使用してください";
+/* Camera uploads status banner sub title paused due to no Wi-Fi connection. Please leave [S], [/S] as it is which is used to bolden the text. */
+"cameraUploads.banner.status.paused.noWiFiConnection.subheading"="Wi-Fiに接続するか、モバイルデータを使用してください[S]モバイルデータを許可するにはタップしてください[/S]";
+/* Camera uploads status banner title paused due to low battery */
+"cameraUploads.banner.status.paused.lowBattery.title"="バッテリー残量が少ないため、カメラのアップロードが一時停止されました";
+/* Camera uploads status banner sub title paused due to low battery */
+"cameraUploads.banner.status.paused.lowBattery.subheading"="カメラアップロードを開始するにはデバイスを充電してください";
+/* Camera uploads status banner title paused due to device heat */
+"cameraUploads.banner.status.paused.highThermalState.title"="デバイスの温度が高いため、カメラのアップロードが一時停止されました";
+/* Camera uploads status banner sub title paused due to device heat */
+"cameraUploads.banner.status.paused.highThermalState.subheading"="デバイスの温度が下がるとアップロードは自動的に再開されます";
