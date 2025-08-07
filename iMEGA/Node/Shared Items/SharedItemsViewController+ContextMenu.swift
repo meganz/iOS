@@ -1,4 +1,5 @@
 import Foundation
+import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGAAssets
 import MEGADomain
@@ -56,7 +57,7 @@ extension SharedItemsViewController: DisplayMenuDelegate {
             contextBarButtonItem.accessibilityLabel = Strings.Localizable.more
             
             navigationItem.rightBarButtonItem = contextBarButtonItem
-            navigationItem.leftBarButtonItem = avatarBarButtonItem
+            updateAvatarButtonItem()
         }
     }
     
@@ -107,5 +108,9 @@ extension SharedItemsViewController: DisplayMenuDelegate {
         let navigationController = MEGANavigationController(rootViewController: verifyCredentialsVC)
         navigationController.addRightCancelButton()
         self.present(navigationController, animated: true)
+    }
+
+    @objc func updateAvatarButtonItem() {
+        navigationItem.leftBarButtonItem = DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .navigationRevamp) ? nil : avatarBarButtonItem
     }
 }
