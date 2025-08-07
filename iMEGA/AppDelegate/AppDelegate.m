@@ -387,6 +387,8 @@
     
     [self endBackgroundTaskWithName:@"Chat-Request-SET_BACKGROUND_STATUS=YES"];
     [self endBackgroundTaskWithName:@"PendingTasks"];
+    
+    [self setupCameraUploadBackupReminder];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
@@ -810,22 +812,24 @@
         default:
             return;
     }
-    
-    void (^manageNotificationBlock)(void) = ^{
+    [self setTabIndexForNotification:tabTag];
+}
 
+- (void)setTabIndexForNotification:(NSUInteger)selectedIndex {
+    void (^manageNotificationBlock)(void) = ^{
         if (self.megatype == MEGANotificationTypeChatMessage) {
             if ([UIApplication.mnz_visibleViewController isKindOfClass: [ChatViewController class]]) {
                 MEGANavigationController *navigationController = [self.mainTBC.childViewControllers objectAtIndex:[TabManager chatTabIndex]];
                 [navigationController popToRootViewControllerAnimated:NO];
             }
         }
-
-        self.mainTBC.selectedIndex = tabTag;
+        
+        self.mainTBC.selectedIndex = selectedIndex;
         if (self.megatype == MEGANotificationTypeContactRequest) {
             if ([UIApplication.mnz_visibleViewController isKindOfClass: [ContactRequestsViewController class]]) {
                 return;
             }
-            MEGANavigationController *navigationController = [[self.mainTBC viewControllers] objectAtIndex:tabTag];
+            MEGANavigationController *navigationController = [[self.mainTBC viewControllers] objectAtIndex:selectedIndex];
             ContactRequestsViewController *contactRequestsVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsRequestsViewControllerID"];
             [navigationController pushViewController:contactRequestsVC animated:NO];
         }
@@ -1076,6 +1080,10 @@
 - (void)userNotificationCenter:(UNUserNotificationCenter *)center didReceiveNotificationResponse:(UNNotificationResponse *)response withCompletionHandler:(void (^)(void))completionHandler {
     MEGALogDebug(@"userNotificationCenter didReceiveNotificationResponse %@", response);
     [[UNUserNotificationCenter currentNotificationCenter] removeDeliveredNotificationsWithIdentifiers:@[response.notification.request.identifier]];
+    if (response.notification.isLocalNotification) {
+        [self handleLocalNotification:response.notification completion:completionHandler];
+        return;
+    }
     self.megatype = (MEGANotificationType)[response.notification.request.content.userInfo[@"megatype"] integerValue];
     
     if ([self isScheduleMeetingNotification:response.notification]) {
@@ -1112,6 +1120,10 @@
 - (void)userNotificationCenter:(UNUserNotificationCenter *)center willPresentNotification:(UNNotification *)notification withCompletionHandler:(void (^)(UNNotificationPresentationOptions options))completionHandler {
     MEGALogDebug(@"[Notification] will present notification %@", notification);
     
+    if (notification.isLocalNotification) {
+        completionHandler(UNNotificationPresentationOptionNone);
+        return;
+    }
     if ([self isScheduleMeetingNotification:notification]) {
         completionHandler(UNNotificationPresentationOptionList | UNNotificationPresentationOptionBanner);
         return;

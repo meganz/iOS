@@ -67,6 +67,7 @@
 		0E5F5EAA2C6EAF3C0037A99C /* HiddenFilesFoldersOnboardingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E5F5EA92C6EAF3C0037A99C /* HiddenFilesFoldersOnboardingViewModel.swift */; };
 		0E5F5EAD2C6EAFC40037A99C /* HiddenFilesFoldersOnboardingViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E5F5EAC2C6EAFC40037A99C /* HiddenFilesFoldersOnboardingViewModelTests.swift */; };
 		0E5F5EB02C6EB9050037A99C /* Preview_AnalyticsTracking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E5F5EAF2C6EB9050037A99C /* Preview_AnalyticsTracking.swift */; };
+		0E5F863D2E38859D000BE8CA /* LocalNotificationId.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E5F863B2E38859D000BE8CA /* LocalNotificationId.swift */; };
 		0E639DA72CB7278A0069BFA2 /* Preview_SensitiveDisplayPreferenceUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E639DA62CB727880069BFA2 /* Preview_SensitiveDisplayPreferenceUseCase.swift */; };
 		0E6607C22C74231D00958FA6 /* DefaultNodeActionAccessoryDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E6607C12C74231D00958FA6 /* DefaultNodeActionAccessoryDelegate.swift */; };
 		0E69C0E92DC8313E00E473B7 /* CreateAccountRoutingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E69C0E82DC8313E00E473B7 /* CreateAccountRoutingViewModel.swift */; };
@@ -2823,6 +2824,7 @@
 		0E5F5EA92C6EAF3C0037A99C /* HiddenFilesFoldersOnboardingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HiddenFilesFoldersOnboardingViewModel.swift; sourceTree = "<group>"; };
 		0E5F5EAC2C6EAFC40037A99C /* HiddenFilesFoldersOnboardingViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HiddenFilesFoldersOnboardingViewModelTests.swift; sourceTree = "<group>"; };
 		0E5F5EAF2C6EB9050037A99C /* Preview_AnalyticsTracking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preview_AnalyticsTracking.swift; sourceTree = "<group>"; };
+		0E5F863B2E38859D000BE8CA /* LocalNotificationId.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNotificationId.swift; sourceTree = "<group>"; };
 		0E639DA62CB727880069BFA2 /* Preview_SensitiveDisplayPreferenceUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preview_SensitiveDisplayPreferenceUseCase.swift; sourceTree = "<group>"; };
 		0E6607C12C74231D00958FA6 /* DefaultNodeActionAccessoryDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultNodeActionAccessoryDelegate.swift; sourceTree = "<group>"; };
 		0E69C0E82DC8313E00E473B7 /* CreateAccountRoutingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAccountRoutingViewModel.swift; sourceTree = "<group>"; };
@@ -5790,6 +5792,14 @@
 				0E385A7A2BB3BD6A00261892 /* HideFilesAndFoldersViewModelTests.swift */,
 			);
 			path = HiddenFilesAndFolders;
+			sourceTree = "<group>";
+		};
+		0E5F863C2E38859D000BE8CA /* LocalNotifications */ = {
+			isa = PBXGroup;
+			children = (
+				0E5F863B2E38859D000BE8CA /* LocalNotificationId.swift */,
+			);
+			path = LocalNotifications;
 			sourceTree = "<group>";
 		};
 		0E72E11F2A27EC8D00C900F9 /* CopyrightWarning */ = {
@@ -11413,6 +11423,7 @@
 		B611E16F286165A700F360CF /* AppDelegate */ = {
 			isa = PBXGroup;
 			children = (
+				0E5F863C2E38859D000BE8CA /* LocalNotifications */,
 				0E9FE3592E0B6D720003AC0F /* Authentication */,
 				B5E719B7290B716A0076FEA3 /* AppDelegate+Account.swift */,
 				BF69E5162374F3720031913D /* AppDelegate+Additions.swift */,
@@ -14617,6 +14628,7 @@
 				E8534D4B1E15231C00911C40 /* ChatSettingsTableViewController.m in Sources */,
 				833B0B7F28EEBEB20074EB6B /* ChatSettingsTableViewController.swift in Sources */,
 				9D3563CC28B54DE900CB3365 /* ChatSettingsViewRouter.swift in Sources */,
+				0E5F863D2E38859D000BE8CA /* LocalNotificationId.swift in Sources */,
 				83B0B45F242CC21800468191 /* ChatSharedItemsViewController.swift in Sources */,
 				83B0B45D242CC1DB00468191 /* ChatSharedItemTableViewCell.swift in Sources */,
 				9956B7672B4BA16500A3B8EB /* ChatStatusEntity+Additions.swift in Sources */,
