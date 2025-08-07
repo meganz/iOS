@@ -68,7 +68,7 @@ struct NotificationsViewRouter: NotificationsViewRouting {
         selectTabController(in: mainTBC, isOwnNode: isOwnNode)
         
         guard let navigationController = mainTBC.selectedViewController as? UINavigationController else {
-            return assertionFailure("Openning a node from notification but couldn't find the target navigation controller in the tab bar.")
+            return assertionFailure("Opening a node from notification but couldn't find the target navigation controller in the tab bar.")
         }
 
         navigationController.popToRootViewController(animated: false)

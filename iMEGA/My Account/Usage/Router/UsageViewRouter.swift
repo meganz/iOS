@@ -6,15 +6,18 @@ final class UsageViewRouter: Routing {
     private let accountStorageUseCase: any AccountStorageUseCaseProtocol
     private weak var navigationController: UINavigationController?
     private weak var viewController: UIViewController?
-    
+    private let hidesBottomBarWhenPushed: Bool
+
     init(
         accountUseCase: some AccountUseCaseProtocol,
         accountStorageUseCase: some AccountStorageUseCaseProtocol,
-        navigationController: UINavigationController?
+        navigationController: UINavigationController?,
+        hidesBottomBarWhenPushed: Bool = false
     ) {
         self.accountUseCase = accountUseCase
         self.accountStorageUseCase = accountStorageUseCase
         self.navigationController = navigationController
+        self.hidesBottomBarWhenPushed = hidesBottomBarWhenPushed
     }
     
     func build() -> UIViewController {
@@ -28,6 +31,7 @@ final class UsageViewRouter: Routing {
         )
         
         usageVC.viewModel = viewModel
+        usageVC.hidesBottomBarWhenPushed = hidesBottomBarWhenPushed
         viewController = usageVC
         
         return usageVC
