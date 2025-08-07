@@ -1,4 +1,9 @@
 import MEGAAppPresentation
+import MEGADomain
+import MEGAL10n
+import MEGAPreference
+import MEGARepo
+import UserNotifications
 
 extension AppDelegate {
     @objc func revampedOpenTabBasedOnNotificationMegatype() {
@@ -65,5 +70,52 @@ extension AppDelegate {
             return assertionFailure("Trying to navigate to SharedItems screen but selected view controller is not of type AccountMenuItemsNavigating")
         }
         presenter.showSharedItems()
+    }
+    
+    @objc func setupCameraUploadBackupReminder() {
+        guard DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .cameraUploadsRevamp) else { return }
+        
+        Task {
+            do {
+                try await CameraUploadBackupReminderUseCase(
+                    localNotificationRepository: LocalNotificationRepository(),
+                    preferenceUseCase: PreferenceUseCase(repository: PreferenceRepository.newRepo))
+                .setupReminderNotification(.init(
+                    notificationId: LocalNotificationId.cameraUploadBackupReminder.rawValue,
+                    title: Strings.Localizable.Notification.Local.CameraUploadBackupReminder.title,
+                    body: Strings.Localizable.Notification.Local.CameraUploadBackupReminder.body))
+            } catch {
+                MEGALogError("[AppDelegate] failed to setup camera upload reminder notification: \(error)")
+            }
+        }
+    }
+    
+    @objc func handleLocalNotification(_ notification: UNNotification, completion: @escaping () -> Void) {
+        guard let notificationId = LocalNotificationId(rawValue: notification.request.identifier) else {
+            completion()
+            return
+        }
+        switch notificationId {
+        case .cameraUploadBackupReminder: navigateToPhotoTab()
+        }
+        completion()
+    }
+    
+    private func navigateToPhotoTab() {
+        if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .navigationRevamp) {
+            let navigateToPhotosTab = { [weak self] in
+                guard let self, let mainTBC else { return }
+                mainTBC.selectedIndex = TabManager.photosTabIndex()
+            }
+            
+            guard let rootViewController = window.rootViewController, rootViewController.presentedViewController != nil else {
+                navigateToPhotosTab()
+                return
+            }
+            
+            rootViewController.dismiss(animated: true, completion: navigateToPhotosTab)
+        } else {
+            setTabIndexForNotification(UInt(TabType.cameraUploads.rawValue))
+        }
     }
 }

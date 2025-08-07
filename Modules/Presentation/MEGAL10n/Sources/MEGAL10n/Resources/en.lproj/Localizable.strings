@@ -4766,3 +4766,7 @@
 "cameraUploads.banner.status.paused.highThermalState.title"="Camera uploads paused due to high device temperature";
 /* Camera uploads status banner sub title paused due to device heat */
 "cameraUploads.banner.status.paused.highThermalState.subheading"="Uploads will resume automatically when your device cools down";
+/* Local Notification Title for Camera uploads backup reminder */
+"notification.local.cameraUploadBackupReminder.title"="Protect your precious moments!";
+/* Local Notification Body for Camera uploads backup reminder */
+"notification.local.cameraUploadBackupReminder.body"="It’s time to back up your photos and videos";
