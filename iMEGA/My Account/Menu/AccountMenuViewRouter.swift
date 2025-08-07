@@ -170,7 +170,8 @@ struct AccountMenuViewRouter: AccountMenuViewRouting {
                 accountRepository: AccountRepository.newRepo,
                 preferenceUseCase: PreferenceUseCase.default
             ),
-            navigationController: navigationController
+            navigationController: navigationController,
+            hidesBottomBarWhenPushed: true
         ).start()
     }
 
