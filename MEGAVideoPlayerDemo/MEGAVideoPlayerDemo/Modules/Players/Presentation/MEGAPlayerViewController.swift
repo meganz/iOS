@@ -1,3 +1,4 @@
+import MEGADesignToken
 import UIKit
 
 final class MEGAPlayerViewController: UIViewController {
@@ -18,6 +19,7 @@ final class MEGAPlayerViewController: UIViewController {
 
         view.insetsLayoutMarginsFromSafeArea = false
         view.directionalLayoutMargins = .zero
+        view.backgroundColor = .black
 
         setupVideoView()
         setupOverlay()
@@ -40,13 +42,19 @@ final class MEGAPlayerViewController: UIViewController {
     }
 
     private func setupOverlay() {
-        let overlayView = UIHostingConfiguration { [player = viewModel.player] in
-            PlayerOverlayView(viewModel: PlayerOverlayViewModel(player: player))
+        let overlayView = UIHostingConfiguration { [viewModel] in
+            let player = viewModel.player
+            let onDismiss = viewModel.onDismiss
+            PlayerOverlayView(
+                viewModel: PlayerOverlayViewModel(
+                    player: player,
+                    onDismiss: onDismiss ?? {}
+                )
+            )
         }
         .margins(.all, 0)
         .makeContentView()
 
-        overlayView.backgroundColor = .clear
         overlayView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(overlayView)
 
@@ -76,12 +84,34 @@ import SwiftUI
 
 struct MEGAPlayerView: UIViewControllerRepresentable {
     let viewModel: MEGAPlayerViewModel
+    @Environment(\.dismiss) private var dismiss
 
     func makeUIViewController(context: Context) -> MEGAPlayerViewController {
-        MEGAPlayerViewController(viewModel: viewModel)
+        if viewModel.onDismiss == nil {
+            viewModel.onDismiss = {
+                dismiss()
+            }
+        }
+        let controller = MEGAPlayerViewController(
+            viewModel: viewModel
+        )
+        return controller
     }
 
     func updateUIViewController(_ uiViewController: MEGAPlayerViewController, context: Context) {}
 }
 
 extension UIView: PlayerLayerProtocol {}
+
+
+#Preview {
+    NavigationStack {
+        MEGAPlayerView(
+            viewModel: MEGAPlayerViewModel(
+                player: MockVideoPlayer(
+                    state: .playing, currentTime: .seconds(12), duration: .seconds(5_678)
+                )
+            )
+        )
+    }
+}

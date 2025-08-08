@@ -8,13 +8,22 @@ final class PlayerOverlayViewModel: ObservableObject {
     @Published var duration: Duration = .seconds(0)
 
     private let player: any VideoPlayerProtocol
+    private let onDismiss: () -> Void
 
-    init(player: some VideoPlayerProtocol) {
+    init(
+        player: some VideoPlayerProtocol,
+        onDismiss: @escaping () -> Void
+    ) {
         self.player = player
+        self.onDismiss = onDismiss
     }
 
     func viewWillAppear() {
         observePlayer()
+    }
+
+    func didTapBack() {
+        onDismiss()
     }
 
     func didTapPlay() {
@@ -77,6 +86,16 @@ extension PlayerOverlayViewModel {
 
     var durationString: String {
         string(from: duration)
+    }
+    
+    var progress: CGFloat {
+        let durationSeconds = duration.components.seconds
+        guard durationSeconds > 0 else { return 0 }
+        
+        let currentSeconds = currentTime.components.seconds
+        let result = CGFloat(currentSeconds) / CGFloat(durationSeconds)
+        print("progress: \(result)")
+        return result
     }
 
     private func string(from duration: Duration) -> String {

@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "pause.svg",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
