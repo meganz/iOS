@@ -5,7 +5,7 @@ import SwiftUI
 
 @MainActor
 final class HomeViewModel: ObservableObject {
-    @Published var path = NavigationPath()
+    @Published var selectedVideoNode: MEGANode?
     @Published var nodes: [MEGANode]?
 
     @Published private(set) var selectedPlayerOption: VideoPlayerOption = .vlc
@@ -30,7 +30,7 @@ final class HomeViewModel: ObservableObject {
 
     func didTapNode(_ node: MEGANode) {
         selectedPlayerOption = selectPlayerUseCase.selectedPlayer
-        path.append(node)
+        selectedVideoNode = node
     }
 
     func didTapLogout() async {

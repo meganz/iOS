@@ -54,6 +54,7 @@
 		16BFBD672E2E2DFD00150FD0 /* PlaybackState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16BFBD662E2E2DFC00150FD0 /* PlaybackState.swift */; };
 		16E04E582E2E245C00AAD10F /* MEGAPlaybackReportingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16E04E572E2E245400AAD10F /* MEGAPlaybackReportingManager.swift */; };
 		16F0ABCA2E0A82B8008D980F /* MEGANode+Identifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16F0ABC92E0A82B4008D980F /* MEGANode+Identifiable.swift */; };
+		993ECB532E441C9100FF90D1 /* MEGALogger in Frameworks */ = {isa = PBXBuildFile; productRef = 993ECB522E441C9100FF90D1 /* MEGALogger */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -116,7 +117,16 @@
 		16BFBD662E2E2DFC00150FD0 /* PlaybackState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackState.swift; sourceTree = "<group>"; };
 		16E04E572E2E245400AAD10F /* MEGAPlaybackReportingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGAPlaybackReportingManager.swift; sourceTree = "<group>"; };
 		16F0ABC92E0A82B4008D980F /* MEGANode+Identifiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGANode+Identifiable.swift"; sourceTree = "<group>"; };
+		993ECB512E441B6000FF90D1 /* MEGALogger */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = MEGALogger; path = ../Modules/MEGASharedRepo/MEGALogger; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		993ECB542E45C5AB00FF90D1 /* Mock */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Mock;
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		161D69CC2E0156A500B3FD1F /* Frameworks */ = {
@@ -126,6 +136,7 @@
 				161D6A8E2E01780C00B3FD1F /* MEGAAccountManagement in Frameworks */,
 				161D6A1F2E015F7800B3FD1F /* MEGAAuthentication in Frameworks */,
 				161D6A432E01644700B3FD1F /* MEGADesignToken in Frameworks */,
+				993ECB532E441C9100FF90D1 /* MEGALogger in Frameworks */,
 				164E270F2E0AB118008BB794 /* VLCKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -177,6 +188,7 @@
 			children = (
 				161D6A8C2E0177F600B3FD1F /* MEGAAccountManagement */,
 				161D69E52E01570A00B3FD1F /* MEGAAuthentication */,
+				993ECB512E441B6000FF90D1 /* MEGALogger */,
 			);
 			path = SharedRepo;
 			sourceTree = "<group>";
@@ -427,6 +439,7 @@
 			children = (
 				166752E82E0BDA2900478F4A /* AVPlayer */,
 				168780542E0AB95F00C376CA /* MEGAVLC */,
+				993ECB542E45C5AB00FF90D1 /* Mock */,
 			);
 			path = Implementations;
 			sourceTree = "<group>";
@@ -482,12 +495,16 @@
 			);
 			dependencies = (
 			);
+			fileSystemSynchronizedGroups = (
+				993ECB542E45C5AB00FF90D1 /* Mock */,
+			);
 			name = MEGAVideoPlayerDemo;
 			packageProductDependencies = (
 				161D6A1E2E015F7800B3FD1F /* MEGAAuthentication */,
 				161D6A422E01644700B3FD1F /* MEGADesignToken */,
 				161D6A8D2E01780C00B3FD1F /* MEGAAccountManagement */,
 				164E270E2E0AB118008BB794 /* VLCKit */,
+				993ECB522E441C9100FF90D1 /* MEGALogger */,
 			);
 			productName = MEGAVideoPlayerDemo;
 			productReference = 161D69CF2E0156A500B3FD1F /* MEGAVideoPlayerDemo.app */;
@@ -928,6 +945,10 @@
 		164E270E2E0AB118008BB794 /* VLCKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = VLCKit;
+		};
+		993ECB522E441C9100FF90D1 /* MEGALogger */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = MEGALogger;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

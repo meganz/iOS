@@ -7,7 +7,7 @@ struct HomeView: View {
     @StateObject var viewModel: HomeViewModel
 
     var body: some View {
-        NavigationStack(path: $viewModel.path) {
+        NavigationStack {
             VStack(spacing: .zero) {
                 List {
                     if let nodes = viewModel.nodes {
@@ -30,9 +30,9 @@ struct HomeView: View {
             }
             .navigationTitle("Videos (\(viewModel.selectedPlayerOption.rawValue))")
             .navigationBarTitleDisplayMode(.inline)
-            .navigationDestination(for: MEGANode.self) { node in
+            .fullScreenCover(item: $viewModel.selectedVideoNode) { node in
                 MEGAPlayerView(node: node)
-                    .navigationTitle(viewModel.selectedPlayerOption.rawValue)
+                    .ignoresSafeArea()
             }
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {

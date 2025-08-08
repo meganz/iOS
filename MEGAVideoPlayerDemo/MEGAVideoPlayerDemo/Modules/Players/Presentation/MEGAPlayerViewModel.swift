@@ -1,10 +1,15 @@
 @MainActor
 final class MEGAPlayerViewModel {
     let player: any VideoPlayerProtocol
+    var onDismiss: (() -> Void)? = nil
     let reportingManager: MEGAPlaybackReportingManager
 
-    init(player: some VideoPlayerProtocol) {
+    init(
+        player: some VideoPlayerProtocol,
+        onDismiss: (() -> Void)? = nil
+    ) {
         self.player = player
+        self.onDismiss = onDismiss
         self.reportingManager = MEGAPlaybackReportingManager(
             player: player,
             playbackReporter: DependencyInjection.playbackReporter
