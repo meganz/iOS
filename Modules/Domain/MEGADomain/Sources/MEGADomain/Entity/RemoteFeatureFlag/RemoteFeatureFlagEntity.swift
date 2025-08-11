@@ -6,4 +6,5 @@ public enum RemoteFeatureFlag: String, Sendable {
     case sdkUpdateHandlerManager = "iguhm"
     case noteToSelfChat = "n2s"
     case appleExternalPurchase = "aep"
+    case dotAppDomainExtension = "site"
 }
