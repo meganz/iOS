@@ -1,3 +1,4 @@
+import MEGADesignToken
 import MEGASwiftUI
 import SwiftUI
 
@@ -122,8 +123,9 @@ struct HorizontalThumbnailView: View {
     }
     
     private var moreButton: some View {
-        UIButtonWrapper(
-            image: viewModel.moreList
+        ImageButtonWrapper(
+            image: Image(uiImage: viewModel.moreList),
+            imageColor: TokenColors.Icon.secondary.swiftUI
         ) { button in
             viewModel.actions.contextAction(button)
         }
