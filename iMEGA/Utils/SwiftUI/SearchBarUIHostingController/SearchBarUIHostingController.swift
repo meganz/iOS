@@ -21,7 +21,6 @@ class SearchBarUIHostingController<Content>: UIHostingController<Content>, Audio
     private var searchBarVisible: Bool
     let matchingNodeProvider: CloudDriveMatchingNodeProvider
     private weak var audioPlayerManager: (any AudioPlayerHandlerProtocol)?
-    private var selectionModeEnabled = false
     
     init(
         rootView: Content,
@@ -71,8 +70,6 @@ class SearchBarUIHostingController<Content>: UIHostingController<Content>, Audio
         
         selectionHandler?.onSelectionModeChange = { [weak self] enabled, config in
             guard let self else { return }
-            
-            selectionModeEnabled = enabled
             
             if enabled {
                 addToolbar(for: config, animated: true)
