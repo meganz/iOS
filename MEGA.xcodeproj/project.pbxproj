@@ -1537,6 +1537,8 @@
 		9911BA902A8B20DE00B88F28 /* WaitingRoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9911BA8F2A8B20DE00B88F28 /* WaitingRoomView.swift */; };
 		9911BA922A8B216900B88F28 /* WaitingRoomViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9911BA912A8B216900B88F28 /* WaitingRoomViewModel.swift */; };
 		9911BA9C2A8B949200B88F28 /* WaitingRoomMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9911BA9B2A8B949200B88F28 /* WaitingRoomMessageView.swift */; };
+		991648C52E40278200D4E0D2 /* LTMPasscodeViewController+KMTransfer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 991648C42E40278200D4E0D2 /* LTMPasscodeViewController+KMTransfer.swift */; };
+		991648C62E40278200D4E0D2 /* LTMPasscodeViewController+KMTransfer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 991648C42E40278200D4E0D2 /* LTMPasscodeViewController+KMTransfer.swift */; };
 		991754F12B7440E2001E586D /* GroupChatDetailsViewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 991754F02B7440E2001E586D /* GroupChatDetailsViewTableViewCell.swift */; };
 		991C87062A53F2B900BF940B /* ScheduleMeetingOnboardingRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 991C87052A53F2B900BF940B /* ScheduleMeetingOnboardingRecord.swift */; };
 		992003582B0C09620058FF5F /* CallParticipantCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992003572B0C09620058FF5F /* CallParticipantCellTests.swift */; };
@@ -4337,6 +4339,7 @@
 		9911BA8F2A8B20DE00B88F28 /* WaitingRoomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitingRoomView.swift; sourceTree = "<group>"; };
 		9911BA912A8B216900B88F28 /* WaitingRoomViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitingRoomViewModel.swift; sourceTree = "<group>"; };
 		9911BA9B2A8B949200B88F28 /* WaitingRoomMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitingRoomMessageView.swift; sourceTree = "<group>"; };
+		991648C42E40278200D4E0D2 /* LTMPasscodeViewController+KMTransfer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LTMPasscodeViewController+KMTransfer.swift"; sourceTree = "<group>"; };
 		991754F02B7440E2001E586D /* GroupChatDetailsViewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupChatDetailsViewTableViewCell.swift; sourceTree = "<group>"; };
 		991C87052A53F2B900BF940B /* ScheduleMeetingOnboardingRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingOnboardingRecord.swift; sourceTree = "<group>"; };
 		992003572B0C09620058FF5F /* CallParticipantCellTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallParticipantCellTests.swift; sourceTree = "<group>"; };
@@ -7201,6 +7204,7 @@
 				4156C8091AD7E79A00F5E818 /* LTHKeychainUtils.m */,
 				4156C80A1AD7E79A00F5E818 /* LTHPasscodeViewController.h */,
 				4156C80B1AD7E79A00F5E818 /* LTHPasscodeViewController.m */,
+				991648C42E40278200D4E0D2 /* LTMPasscodeViewController+KMTransfer.swift */,
 			);
 			name = LTHPasscodeViewController;
 			path = Vendor/LTHPasscodeViewController/LTHPasscodeViewController;
@@ -15045,6 +15049,7 @@
 				4156C80C1AD7E79A00F5E818 /* LTHKeychainUtils.m in Sources */,
 				1648E4AC2C5A10380056A66E /* LTHPasscodeViewController+Additions.swift in Sources */,
 				4156C80D1AD7E79A00F5E818 /* LTHPasscodeViewController.m in Sources */,
+				991648C62E40278200D4E0D2 /* LTMPasscodeViewController+KMTransfer.swift in Sources */,
 				137361901A6664C300B740E8 /* main.m in Sources */,
 				B54081142AD8F5DF004392E8 /* MainTabBarAdsViewModel.swift in Sources */,
 				83F79CBB2AA7372C00D2DE64 /* MainTabBarCallsRouter.swift in Sources */,
@@ -16150,6 +16155,7 @@
 				941135591F01006A00D33428 /* LTHKeychainUtils.m in Sources */,
 				1648E4AE2C5A10ED0056A66E /* LTHPasscodeViewController+Additions.swift in Sources */,
 				9411355A1F01006A00D33428 /* LTHPasscodeViewController.m in Sources */,
+				991648C52E40278200D4E0D2 /* LTMPasscodeViewController+KMTransfer.swift in Sources */,
 				7764AAB4246EE62900134C88 /* MegaAvatarView.swift in Sources */,
 				77892EA120E503580020A533 /* MEGACD.xcdatamodeld in Sources */,
 				77F95CF320E3E60A00F42D9C /* MEGAChatAttachNodeRequestDelegate.m in Sources */,

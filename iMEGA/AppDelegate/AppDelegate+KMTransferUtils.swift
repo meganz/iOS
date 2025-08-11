@@ -1,3 +1,4 @@
+import MEGAAnalyticsiOS
 import MEGAAppPresentation
 
 extension AppDelegate {
@@ -9,7 +10,21 @@ extension AppDelegate {
         guard isKMTransferEnabled else { return }
         do {
             try DIContainer.kmTransferUtils.importTransferFile()
-            // Add analytics
+            DIContainer.tracker.trackAnalyticsEvent(
+                with: IOSKMTransferImportedSuccessfullyEvent()
+            )
         } catch {}
+    }
+
+    @objc func createKMTransferFile() {
+        guard isKMTransferEnabled else { return }
+        Task {
+            do {
+                try await DIContainer.kmTransferUtils.createTransferFile()
+                DIContainer.tracker.trackAnalyticsEvent(
+                    with: IOSKMTransferCreatedSuccessfullyEvent()
+                )
+            } catch {}
+        }
     }
 }

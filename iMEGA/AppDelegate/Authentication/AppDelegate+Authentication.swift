@@ -66,6 +66,8 @@ extension AppDelegate {
         QuickAccessWidgetManager.reloadAllWidgetsContent()
         
         MEGAPurchase.sharedInstance().requestPricing()
+
+        createKMTransferFile()
     }
     
     @objc func isOnboardingViewControllerAlreadyShown() -> Bool {
