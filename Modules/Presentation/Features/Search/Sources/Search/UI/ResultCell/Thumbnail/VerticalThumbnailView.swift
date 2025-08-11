@@ -212,8 +212,9 @@ struct VerticalThumbnailView: View {
     }
     
     private var moreButton: some View {
-        UIButtonWrapper(
-            image: viewModel.moreGrid
+        ImageButtonWrapper(
+            image: Image(uiImage: viewModel.moreGrid),
+            imageColor: TokenColors.Icon.secondary.swiftUI
         ) { button in
             viewModel.actions.contextAction(button)
         }
