@@ -2229,6 +2229,8 @@
 		BF33EF8424457A0700CD35AC /* ChatInputBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF33EF8324457A0700CD35AC /* ChatInputBar.swift */; };
 		BF33EF8C2447E6DD00CD35AC /* EnlargementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF33EF8B2447E6DC00CD35AC /* EnlargementView.swift */; };
 		BF33EF902447E70200CD35AC /* CondensationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF33EF8F2447E70200CD35AC /* CondensationView.swift */; };
+		BF3E1A112E457BB6008F0E7E /* DIContainer+AppDomain.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF3E1A102E457BA5008F0E7E /* DIContainer+AppDomain.swift */; };
+		BF3E1A122E457BB6008F0E7E /* DIContainer+AppDomain.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF3E1A102E457BA5008F0E7E /* DIContainer+AppDomain.swift */; };
 		BF4156322C80270F00849251 /* NodeDescriptionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4156312C80270F00849251 /* NodeDescriptionViewCell.swift */; };
 		BF418B7E2A43DE14004C5A5D /* ScheduledMeetingDateBuilderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF418B7D2A43DE14004C5A5D /* ScheduledMeetingDateBuilderTests.swift */; };
 		BF4296642BBC0CC300C1BD66 /* CloudDriveContextMenuConfigFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4296632BBC0CC300C1BD66 /* CloudDriveContextMenuConfigFactoryTests.swift */; };
@@ -5063,6 +5065,7 @@
 		BF33EF8324457A0700CD35AC /* ChatInputBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatInputBar.swift; sourceTree = "<group>"; };
 		BF33EF8B2447E6DC00CD35AC /* EnlargementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnlargementView.swift; sourceTree = "<group>"; };
 		BF33EF8F2447E70200CD35AC /* CondensationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CondensationView.swift; sourceTree = "<group>"; };
+		BF3E1A102E457BA5008F0E7E /* DIContainer+AppDomain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DIContainer+AppDomain.swift"; sourceTree = "<group>"; };
 		BF4156312C80270F00849251 /* NodeDescriptionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeDescriptionViewCell.swift; sourceTree = "<group>"; };
 		BF418B7D2A43DE14004C5A5D /* ScheduledMeetingDateBuilderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduledMeetingDateBuilderTests.swift; sourceTree = "<group>"; };
 		BF4296632BBC0CC300C1BD66 /* CloudDriveContextMenuConfigFactoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudDriveContextMenuConfigFactoryTests.swift; sourceTree = "<group>"; };
@@ -10760,6 +10763,7 @@
 		A5D5278F2CCF624600CC9E46 /* FeatureFlag */ = {
 			isa = PBXGroup;
 			children = (
+				BF3E1A102E457BA5008F0E7E /* DIContainer+AppDomain.swift */,
 				A5D527902CCF625000CC9E46 /* DIContainer+FeatureFlagProvider.swift */,
 			);
 			path = FeatureFlag;
@@ -11427,8 +11431,8 @@
 		B611E16F286165A700F360CF /* AppDelegate */ = {
 			isa = PBXGroup;
 			children = (
-				0E5F863C2E38859D000BE8CA /* LocalNotifications */,
 				0E9FE3592E0B6D720003AC0F /* Authentication */,
+				0E5F863C2E38859D000BE8CA /* LocalNotifications */,
 				B5E719B7290B716A0076FEA3 /* AppDelegate+Account.swift */,
 				BF69E5162374F3720031913D /* AppDelegate+Additions.swift */,
 				B511CE6D2AA745E800445877 /* AppDelegate+Ads.swift */,
@@ -14632,7 +14636,6 @@
 				E8534D4B1E15231C00911C40 /* ChatSettingsTableViewController.m in Sources */,
 				833B0B7F28EEBEB20074EB6B /* ChatSettingsTableViewController.swift in Sources */,
 				9D3563CC28B54DE900CB3365 /* ChatSettingsViewRouter.swift in Sources */,
-				0E5F863D2E38859D000BE8CA /* LocalNotificationId.swift in Sources */,
 				83B0B45F242CC21800468191 /* ChatSharedItemsViewController.swift in Sources */,
 				83B0B45D242CC1DB00468191 /* ChatSharedItemTableViewCell.swift in Sources */,
 				9956B7672B4BA16500A3B8EB /* ChatStatusEntity+Additions.swift in Sources */,
@@ -14782,6 +14785,7 @@
 				5D31674B24FCA9330032492F /* DevicePermissionAlerting.swift in Sources */,
 				5D31674524FC9A5F0032492F /* DevicePermissionDeniedError.swift in Sources */,
 				943649DB2A4D8292006CE8B8 /* DevicePermissionsHandlerObjC.swift in Sources */,
+				BF3E1A122E457BB6008F0E7E /* DIContainer+AppDomain.swift in Sources */,
 				0EE5AC202B1EB2C200BCDD88 /* DIContainer+CustomModalAlert.swift in Sources */,
 				163ABD4C2DC4C9D2004B5D5A /* DIContainer+ExternalPurchase.swift in Sources */,
 				A5D527912CCF625E00CC9E46 /* DIContainer+FeatureFlagProvider.swift in Sources */,
@@ -15036,6 +15040,7 @@
 				5D0E255025073404005848F3 /* LocalFileSystemFolders.swift in Sources */,
 				A8077BB82E42270F009954FD /* LocalizationHelper.m in Sources */,
 				A8077B7D2E421186009954FD /* LocalizationObjC.swift in Sources */,
+				0E5F863D2E38859D000BE8CA /* LocalNotificationId.swift in Sources */,
 				8366518626497B3600BC02F0 /* LocalUserView.swift in Sources */,
 				A8F1381F21D3F8B0003C7364 /* LocationSearchTableViewCell.m in Sources */,
 				A8F1381C21D3ABF2003C7364 /* LocationSearchTableViewController.m in Sources */,
@@ -16120,6 +16125,7 @@
 				B53A57CE2B5E8B4E00B18519 /* CustomModalAlertViewController+Additions.swift in Sources */,
 				83FF502F247E86CD00EAC08B /* CustomModalAlertViewController.m in Sources */,
 				0EE5AC1C2B1E9EE700BCDD88 /* CustomModalAlertViewModel.swift in Sources */,
+				BF3E1A112E457BB6008F0E7E /* DIContainer+AppDomain.swift in Sources */,
 				0EE5AC212B1EB2C200BCDD88 /* DIContainer+CustomModalAlert.swift in Sources */,
 				BF5718502D3719EC004BD1EC /* DIContainer+FeatureFlagProvider.swift in Sources */,
 				998CDCAE2E3ACD8400BC9CA1 /* DIContainer+KMTransferUtils.swift in Sources */,
