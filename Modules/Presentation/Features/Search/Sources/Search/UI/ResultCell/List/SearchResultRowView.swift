@@ -177,8 +177,9 @@ struct SearchResultRowView: View {
     @ViewBuilder
     private var moreButton: some View {
         if editMode?.wrappedValue.isEditing != true {
-            UIButtonWrapper(
-                image: viewModel.contextButtonImage
+            ImageButtonWrapper(
+                image: Image(uiImage: viewModel.contextButtonImage),
+                imageColor: TokenColors.Icon.secondary.swiftUI
             ) { button in
                 viewModel.actions.contextAction(button)
             }
