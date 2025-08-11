@@ -35,18 +35,4 @@ extension MEGALoginRequestDelegate {
     private var isLoginRegisterAndOnboardingRevampFeatureToggleOn: Bool {
         DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .loginRegisterAndOnboardingRevamp)
     }
-
-    private var isKMTransferEnabled: Bool {
-        DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .kmTransfer)
-    }
-
-    @objc func createKMTransferFile() {
-        guard isKMTransferEnabled else { return }
-        Task {
-            do {
-                try await DIContainer.kmTransferUtils.createTransferFile()
-                // Add analytics
-            } catch {}
-        }
-    }
 }

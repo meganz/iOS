@@ -10,6 +10,21 @@ import Swift
 import _Concurrency
 import _StringProcessing
 import _SwiftConcurrencyShims
+public struct KMQueryConfig : Swift.Hashable {
+  public let service: Swift.String
+  public let account: Swift.String
+  public let group: Swift.String?
+  public let label: Swift.String?
+  public init(service: Swift.String, account: Swift.String, group: Swift.String? = nil, label: Swift.String? = nil)
+  public static func == (a: KMTransferUtils.KMQueryConfig, b: KMTransferUtils.KMQueryConfig) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+public struct KMTransferConfig {
+  public init(kmQueryConfigs: [KMTransferUtils.KMQueryConfig], transferFileName: Swift.String? = nil, transferSalt: Swift.String? = nil)
+}
 public protocol KMTransferring {
   func createTransferFile() async throws
   func importTransferFile() throws
@@ -24,18 +39,4 @@ public struct MEGAKMTransferUtils : KMTransferUtils.KMTransferring {
   public func getDataFromTransferFile() throws -> [KMTransferUtils.KMQueryConfig]
   public func deleteTransferFile() throws
   public func recreateTransferFile() async throws
-}
-public struct KMQueryConfig : Swift.Hashable {
-  public let service: Swift.String
-  public let account: Swift.String
-  public let group: Swift.String?
-  public init(service: Swift.String, account: Swift.String, group: Swift.String? = nil)
-  public static func == (a: KMTransferUtils.KMQueryConfig, b: KMTransferUtils.KMQueryConfig) -> Swift.Bool
-  public func hash(into hasher: inout Swift.Hasher)
-  public var hashValue: Swift.Int {
-    get
-  }
-}
-public struct KMTransferConfig {
-  public init(kmQueryConfigs: [KMTransferUtils.KMQueryConfig], transferFileName: Swift.String? = nil, transferSalt: Swift.String? = nil)
 }

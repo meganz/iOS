@@ -10,23 +10,23 @@
 		</data>
 		<key>Modules/KMTransferUtils.swiftmodule/arm64-apple-ios.abi.json</key>
 		<data>
-		6n2GhYyX0TSzZT1VPubqLya3g74=
+		lqO3MAPsiBiK72ZgUpG5g7RAzoM=
 		</data>
 		<key>Modules/KMTransferUtils.swiftmodule/arm64-apple-ios.private.swiftinterface</key>
 		<data>
-		7yvkkl03uLCHissYWMFi7GVMeE8=
+		y2FvojyVOTWJ2T03GIBtsPgl9vQ=
 		</data>
 		<key>Modules/KMTransferUtils.swiftmodule/arm64-apple-ios.swiftdoc</key>
 		<data>
-		J9VEEH6BIbEPzltIhnnTMn4Kkfs=
+		Qi25A16woT22KXdO97DR8qbNm2g=
 		</data>
 		<key>Modules/KMTransferUtils.swiftmodule/arm64-apple-ios.swiftinterface</key>
 		<data>
-		7yvkkl03uLCHissYWMFi7GVMeE8=
+		y2FvojyVOTWJ2T03GIBtsPgl9vQ=
 		</data>
 		<key>Modules/KMTransferUtils.swiftmodule/arm64-apple-ios.swiftmodule</key>
 		<data>
-		gq9ZIiD7QCl32MkmlNaYCoI4Dw0=
+		onQrInzCAoCXlluQEAx28Jo2Vdo=
 		</data>
 	</dict>
 	<key>files2</key>
@@ -35,35 +35,35 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			DqKpox/UQiMWa6tfSsfJZXqsGxhbLqiOuohRYqSXsrY=
+			e4zYe6afTpDRiPSUbMBCfabwApnxIfBFEpGRn3SI2E8=
 			</data>
 		</dict>
 		<key>Modules/KMTransferUtils.swiftmodule/arm64-apple-ios.private.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			ASwYNZkwzwiOaHP6SnAEsctpCttyXKgmPeoz4IhMA2Q=
+			1/kJP55186/be23wjhkTNZ6h2ElaHrmDS/FtBwAYQpM=
 			</data>
 		</dict>
 		<key>Modules/KMTransferUtils.swiftmodule/arm64-apple-ios.swiftdoc</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			WeAqvIgTqol+hC9Y9fPeBbAiJrIkfkZyzWMFqxHtDVA=
+			4QdGc65XD3XBDO51RcIhPvoqnXWBT0WXxL8oCAcNjbs=
 			</data>
 		</dict>
 		<key>Modules/KMTransferUtils.swiftmodule/arm64-apple-ios.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			ASwYNZkwzwiOaHP6SnAEsctpCttyXKgmPeoz4IhMA2Q=
+			1/kJP55186/be23wjhkTNZ6h2ElaHrmDS/FtBwAYQpM=
 			</data>
 		</dict>
 		<key>Modules/KMTransferUtils.swiftmodule/arm64-apple-ios.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			TQ6og1VyOizZQo0mMAJaLmQwrIbniIbrmlpYVUt/5Ng=
+			hU+pSZOchAoBcktbNW/X1FzvoJD9ar/VD57Q3oyEWkU=
 			</data>
 		</dict>
 	</dict>

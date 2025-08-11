@@ -17,27 +17,33 @@ extension DIContainer {
                     // PIN related
                     KMQueryConfig(
                         service: "demoServiceName",
-                        account: "demoPasscode"
+                        account: "demoPasscode",
+                        label: "demoServiceName"
                     ),
                     KMQueryConfig(
                         service: "demoServiceName",
-                        account: "demoPasscodeTimerStart"
+                        account: "demoPasscodeTimerStart",
+                        label: "demoServiceName"
                     ),
                     KMQueryConfig(
                         service: "demoServiceName",
-                        account: "passcodeTimerDuration"
+                        account: "passcodeTimerDuration",
+                        label: "demoServiceName"
                     ),
                     KMQueryConfig(
                         service: "demoServiceName",
-                        account: "passcodeIsSimple"
+                        account: "passcodeIsSimple",
+                        label: "demoServiceName"
                     ),
                     KMQueryConfig(
                         service: "demoServiceName",
-                        account: "passcodeType"
+                        account: "passcodeType",
+                        label: "demoServiceName"
                     ),
                     KMQueryConfig(
                         service: "demoServiceName",
-                        account: "allowUnlockWithTouchID"
+                        account: "allowUnlockWithTouchID",
+                        label: "demoServiceName"
                     )
                 ]
             )
