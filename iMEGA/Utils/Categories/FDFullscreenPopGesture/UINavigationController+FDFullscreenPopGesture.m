@@ -106,9 +106,11 @@ typedef void (^_FDViewControllerWillAppearInjectBlock)(UIViewController *viewCon
 {
     // Forward to primary implementation.
     [self fd_viewWillAppear:animated];
-    
-    [CrashlyticsLogger logWithCategory:LogCategoryViewLifecycle msg:[NSString stringWithFormat: @"will appear: %@",
-                                                                     [self class]] file:@(__FILENAME__) function:@(__FUNCTION__)];
+
+    if (![[NSStringFromClass([self class]) description] containsString:@"UIHostingController"]) {
+        [CrashlyticsLogger logWithCategory:LogCategoryViewLifecycle msg:[NSString stringWithFormat: @"will appear: %@",
+                                                                         [self class]] file:@(__FILENAME__) function:@(__FUNCTION__)];
+    }
     
     if ([self avoidInstallingPopGesture]) {
         return;
@@ -123,10 +125,11 @@ typedef void (^_FDViewControllerWillAppearInjectBlock)(UIViewController *viewCon
 {
     // Forward to primary implementation.
     [self fd_viewWillDisappear:animated];
-    
-    [CrashlyticsLogger logWithCategory:LogCategoryViewLifecycle msg:[NSString stringWithFormat: @"will disappear: %@",
-                                                                     [self class]] file:@(__FILENAME__) function:@(__FUNCTION__)];
-    
+    if (![[NSStringFromClass([self class]) description] containsString:@"UIHostingController"]) {
+        [CrashlyticsLogger logWithCategory:LogCategoryViewLifecycle msg:[NSString stringWithFormat: @"will disappear: %@",
+                                                                         [self class]] file:@(__FILENAME__) function:@(__FUNCTION__)];
+    }
+
     if ([self avoidInstallingPopGesture]) {
         return;
     }
