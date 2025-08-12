@@ -37,12 +37,7 @@ extension Helper {
         StorageFullModalAlertViewRouter(requiredStorage: requiredStorage).startIfNeeded()
     }
 
-    private static var isKMTransferEnabled: Bool {
-        DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .kmTransfer)
-    }
-
     @objc static func deleteKMTransferFile() {
-        guard isKMTransferEnabled else { return }
         try? DIContainer.kmTransferUtils.deleteTransferFile()
     }
 }
