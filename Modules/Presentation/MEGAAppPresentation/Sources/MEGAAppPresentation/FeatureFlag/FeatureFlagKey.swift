@@ -13,7 +13,6 @@ public enum FeatureFlagKey: FeatureFlagName, CaseIterable, Sendable {
     case crossfadeSlideShow = "Apply crossfade animation to slideshow"
     case navigationRevamp = "Navigation Revamp"
     case cameraUploadsRevamp = "Camera Uploads Revamp"
-    case kmTransfer = "KM Transfer"
     case dotAppDomain = ".app Domain"
 
     /// The keys that are ready for production release, but not yet removed from code.
