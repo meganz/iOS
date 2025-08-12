@@ -1,6 +1,7 @@
 import MEGAAccountManagement
 import MEGASdk
 import MEGASDKRepo
+import MEGAVideoPlayer
 import SwiftUI
 
 @MainActor
@@ -55,7 +56,7 @@ extension HomeViewModel {
         HomeViewModel(
             fetchVideoNodesUseCase: DependencyInjection.fetchVideoNodesUseCase,
             offboardingUseCase: DependencyInjection.offboardingUseCase,
-            selectPlayerUseCase: DependencyInjection.selectVideoPlayerOptionUseCase
+            selectPlayerUseCase: MEGAVideoPlayer.DependencyInjection.selectVideoPlayerOptionUseCase
         )
     }
 }

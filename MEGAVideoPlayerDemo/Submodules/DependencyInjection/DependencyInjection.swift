@@ -4,6 +4,7 @@ enum DependencyInjection {
         composeLogger()
         composeAuthentication()
         composeAccountManagement()
+        composeVideoPlayer()
     }
 
     // MARK: - Private
@@ -13,17 +14,5 @@ enum DependencyInjection {
             sdk: .sharedSdk,
             nodesUpdatesStream: nodesUpdatesStream
         )
-    }
-
-    static var streamingUseCase: some StreamingUseCaseProtocol {
-        StreamingUseCase(repository: StreamingRepository(sdk: .sharedSdk))
-    }
-
-    static var selectVideoPlayerOptionUseCase: some SelectVideoPlayerUseCaseProtocol {
-        SelectVideoPlayerUseCase.shared
-    }
-
-    static var playbackReporter: some PlaybackReporting {
-        MEGALogPlaybackReporter()
     }
 }

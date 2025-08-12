@@ -1,6 +1,7 @@
 import CasePaths
 import MEGASdk
 import MEGAUIComponent
+import MEGAVideoPlayer
 import SwiftUI
 
 struct HomeView: View {
@@ -56,7 +57,9 @@ struct HomeView: View {
 
 extension MEGAPlayerView {
     init(node: MEGANode) {
-        self.init(viewModel: VideoPlayerFactory.liveValue.playerViewModel(for: node))
+        self.init(
+            viewModel: VideoPlayerFactory.liveValue.playerViewModel(for: node)
+        )
     }
 }
 
