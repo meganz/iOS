@@ -40,7 +40,8 @@ let package = Package(
                 "MEGAL10n",
                 "MEGASwift",
                 "MEGADesignToken",
-                "MEGAFoundation"
+                "MEGAFoundation",
+                "MEGAUIKit"
             ],
             swiftSettings: settings
         ),

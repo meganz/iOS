@@ -3,7 +3,7 @@ import Foundation
 import MEGAChatSdk
 import MEGASdk
 
-@objc public final class Logger: NSObject, Sendable {
+@objc public final class Logger: NSObject, @unchecked Sendable {
     private let fileLogger: DDFileLogger
     
     @objc public let logsDirectoryUrl: URL
