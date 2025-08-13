@@ -381,6 +381,7 @@ struct CloudDriveViewControllerFactory {
     // need to be retained in the viewModel to make sure they live as long as the view
     private func makeContextMenuManager(
         nodeSource: NodeSource,
+        nodeSourceUpdatesListener: some CloudDriveNodeSourceUpdatesListening,
         nodeBrowserViewModel: NodeBrowserViewModel,
         navigationController: UINavigationController
     ) -> (ContextMenuManager, [AnyObject]) {
@@ -428,7 +429,8 @@ struct CloudDriveViewControllerFactory {
             leaveSharing: nodeActions.leaveSharing,
             hide: nodeActions.hide,
             unhide: nodeActions.unhide,
-            nodeSource: nodeSource
+            nodeSource: nodeSource,
+            nodeSourceUpdatesListener: nodeSourceUpdatesListener
         )
         
         let rubbishBinMenuDelegate = RubbishBinMenuDelegateHandler(
@@ -656,6 +658,7 @@ struct CloudDriveViewControllerFactory {
         
         let (contextMenuManager, actionHandlers) = makeContextMenuManager(
             nodeSource: nodeSource,
+            nodeSourceUpdatesListener: nodeSourceUpdatesListener,
             nodeBrowserViewModel: nodeBrowserViewModel,
             navigationController: navigationController
         )
