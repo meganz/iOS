@@ -145,7 +145,7 @@ final class SlideShowViewModel: ViewModelType {
     
     private func subscribeToWillResignActiveNotificationNotification() {
         willResignActiveNotificationTask = Task(priority: .utility) { [weak self, notificationCenter] in
-            for await _ in notificationCenter.publisher(for: UIApplication.willResignActiveNotification).values {
+            for await _ in notificationCenter.notifications(named: UIApplication.willResignActiveNotification).map({ _ in () }) {
                 self?.pauseSlideShow()
                 self?.invokeCommand?(.hideLoader)
             }
@@ -154,8 +154,8 @@ final class SlideShowViewModel: ViewModelType {
     
     private func subscribeToDidBecomeActiveNotificationNotification() {
         didBecomeActiveNotificationNotificationTask = Task { [notificationCenter, invokeCommand] in
-            for await _ in notificationCenter.publisher(
-                for: UIApplication.didBecomeActiveNotification).values {
+            for await _ in notificationCenter.notifications(
+                named: UIApplication.didBecomeActiveNotification).map({ _ in () }) {
                 invokeCommand?(.adjustHeightOfTopAndBottomViews)
             }
         }
