@@ -33,7 +33,7 @@ public actor VisualMediaSearchHistoryCacheRepository: VisualMediaSearchHistoryRe
     }
     
     private func observeAccountLogout() async {
-        for await _ in notificationCenter.notifications(named: .accountDidLogout) {
+        for await _ in notificationCenter.notifications(named: .accountDidLogout).map({ _ in () }) {
             recentSearches.removeAll()
         }
     }

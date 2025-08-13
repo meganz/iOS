@@ -226,7 +226,7 @@ final class MyAvatarObserver: MyAvatarObserverProtocol {
     
     private func observeAccountDidLogin() {
         Task {
-            for await _ in NotificationCenter.default.publisher(for: .accountDidLogin).values {
+            for await _ in NotificationCenter.default.notifications(named: .accountDidLogin).map({ _ in () }) {
                 guard !Task.isCancelled else { break }
                 loadData()
                 startMonitoringUpdates()
@@ -236,7 +236,7 @@ final class MyAvatarObserver: MyAvatarObserverProtocol {
     
     private func observeAccountDidLogout() {
         Task {
-            for await _ in NotificationCenter.default.publisher(for: .accountDidLogout).values {
+            for await _ in NotificationCenter.default.notifications(named: .accountDidLogout).map({ _ in () }) {
                 stopMonitoringUpdates()
             }
         }

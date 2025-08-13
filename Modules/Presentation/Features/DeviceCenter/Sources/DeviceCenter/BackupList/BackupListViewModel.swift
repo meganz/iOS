@@ -110,7 +110,7 @@ public final class BackupListViewModel: ObservableObject {
     private func addObservers() {
         if selectedDevice.isCurrent && selectedDevice.isMobile {
             shouldChangeCUBackupNameTask = Task { [weak self, notificationCenter] in
-                for await _ in notificationCenter.notifications(named: .shouldChangeCameraUploadsBackupName) {
+                for await _ in notificationCenter.notifications(named: .shouldChangeCameraUploadsBackupName).map({ _ in () }) {
                     await self?.handleShouldChangeCameraUploadsBackupName()
                 }
             }

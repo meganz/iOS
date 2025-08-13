@@ -226,7 +226,7 @@ final class FilesExplorerViewModel: ViewModelType {
     
     private func subscribeToSortingPreferenceNotification() {
         sortingPreferenceNotificationTask = Task { [weak self, notificationCenter] in
-            for await _ in notificationCenter.notifications(named: .sortingPreferenceChanged) {
+            for await _ in notificationCenter.notifications(named: .sortingPreferenceChanged).map({ _ in () }) {
                 self?.invokeCommand?(.sortTypeHasChanged)
                 self?.configureContextMenus()
             }
