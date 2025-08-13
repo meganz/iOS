@@ -7,6 +7,7 @@ import MEGADomain
 final public class TermsAndPoliciesViewModel: ObservableObject {
     private let accountUseCase: any AccountUseCaseProtocol
     private let remoteFeatureFlagUseCase: any RemoteFeatureFlagUseCaseProtocol
+    private let appDomainUseCase: any AppDomainUseCaseProtocol
     private let router: any TermsAndPoliciesRouting
     
     let privacyUrl = URL(string: "https://mega.io/privacy") ?? URL(fileURLWithPath: "")
@@ -16,16 +17,18 @@ final public class TermsAndPoliciesViewModel: ObservableObject {
     public init(
         accountUseCase: some AccountUseCaseProtocol,
         remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = DIContainer.remoteFeatureFlagUseCase,
+        appDomainUseCase: some AppDomainUseCaseProtocol,
         router: some TermsAndPoliciesRouting
     ) {
         self.accountUseCase = accountUseCase
         self.remoteFeatureFlagUseCase = remoteFeatureFlagUseCase
+        self.appDomainUseCase = appDomainUseCase
         self.router = router
     }
     
     // MARK: - Cookie policy
     func setupCookiePolicyURL() async {
-        guard let cookiePolicyURL = URL(string: "https://mega.nz/cookie") else { return }
+        guard let cookiePolicyURL = URL(string: "https://\(appDomainUseCase.domainName)/cookie") else { return }
 
         let isExternalAdsEnabled = remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .externalAds)
         guard isExternalAdsEnabled else {

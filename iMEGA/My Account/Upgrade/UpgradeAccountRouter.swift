@@ -106,6 +106,7 @@ final class UpgradeAccountRouter: UpgradeAccountRouting {
         OnboardingUpgradeAccountRouter(
             purchaseUseCase: AccountPlanPurchaseUseCase(repository: AccountPlanPurchaseRepository.newRepo),
             accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
+            appDomainUseCase: DIContainer.appDomainUseCase,
             tracker: DIContainer.tracker,
             onboardingABvariant: onboardingVariant,
             presenter: UIApplication.mnz_presentingViewController(),

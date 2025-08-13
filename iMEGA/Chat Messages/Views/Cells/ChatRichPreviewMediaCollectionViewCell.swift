@@ -1,5 +1,6 @@
 import ChatRepo
 import Foundation
+import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGADesignToken
 import MEGADomain
@@ -315,18 +316,18 @@ open class ChatRichPreviewMediaCollectionViewSizeCalculator: TextMessageSizeCalc
             case .fileLink:
                 return (chatMessage.message.node?.name ?? "",
                         String.memoryStyleString(fromByteCount: Int64(truncating: chatMessage.message.node?.size ?? 0)),
-                        "mega.nz")
-                
+                        DIContainer.appDomainUseCase.domainName)
+
             case .folderLink:
                 return (chatMessage.message.richTitle ?? "",
                         String(format: "%@\n%@", chatMessage.message.richString ?? "", String.memoryStyleString(fromByteCount: max(chatMessage.message.richNumber?.int64Value ?? 0, 0))),
-                        "mega.nz")
-                
+                        DIContainer.appDomainUseCase.domainName)
+
             case .publicChatLink:
                 return (chatMessage.message.richString ?? "",
                         "\(chatMessage.message.richNumber?.int64Value ?? 0) \(Strings.Localizable.participants)",
-                        "mega.nz")
-                
+                        DIContainer.appDomainUseCase.domainName)
+
             default:
                 return ("", "", "")
             }

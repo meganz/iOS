@@ -1,8 +1,12 @@
 import MEGAAssets
 import MEGADesignToken
+import MEGAAppPresentation
 import MEGAL10n
 
 extension CreateAccountViewController {
+    @objc var domainName: String {
+        DIContainer.appDomainUseCase.domainName
+    }
     
     // MARK: - Login
     @objc func setLoginAttributedText() {

@@ -72,6 +72,7 @@ final class UpgradeAccountPlanRouter: NSObject, UpgradeAccountPlanRouting {
     func showTermsAndPolicies() {
         TermsAndPoliciesRouter(
             accountUseCase: accountUseCase,
+            appDomainUseCase: DIContainer.appDomainUseCase,
             presenter: baseViewController
         ).start()
     }

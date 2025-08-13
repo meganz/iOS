@@ -173,7 +173,7 @@ class NodeActionViewControllerGenericDelegate: NodeActionViewControllerDelegate 
         case .addTo:
             addTo(mode: .collection, nodes: [node.toNodeEntity()])
         case .disputeTakedown:
-            guard let url = NSURL(string: MEGADisputeURL) else {
+            guard let url = NSURL(string: Constants.Link.dispute) else {
                 return
             }
                 

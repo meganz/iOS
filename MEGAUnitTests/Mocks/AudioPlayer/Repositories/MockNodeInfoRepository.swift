@@ -21,7 +21,7 @@ struct MockNodeInfoRepository: NodeInfoRepositoryProtocol {
     func path(fromHandle: HandleEntity) -> URL? {
         switch result {
         case .failure: return nil
-        case .success: return URL(string: "www.mega.nz")
+        case .success: return URL(string: "www.mega.app")
         }
     }
     

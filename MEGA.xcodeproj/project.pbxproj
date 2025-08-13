@@ -2195,6 +2195,9 @@
 		BF15894C2436EB8D007AF9EC /* MessageTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF15894B2436EB8D007AF9EC /* MessageTextView.swift */; };
 		BF1CEA3427FA737200C1A2E5 /* GKContactImage in Frameworks */ = {isa = PBXBuildFile; productRef = BF1CEA3327FA737200C1A2E5 /* GKContactImage */; };
 		BF1CEA3E27FA757800C1A2E5 /* GKContactImage in Frameworks */ = {isa = PBXBuildFile; productRef = BF1CEA3D27FA757800C1A2E5 /* GKContactImage */; };
+		BF20BB552E49814C0013CAE6 /* UnavailableLinkView+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF20BB542E49813D0013CAE6 /* UnavailableLinkView+Additions.swift */; };
+		BF20BB592E49827A0013CAE6 /* NSURL+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF20BB582E4982700013CAE6 /* NSURL+Additions.swift */; };
+		BF20BB652E4985420013CAE6 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF20BB642E49853B0013CAE6 /* Constants.swift */; };
 		BF22BFAD268AC39100460DB3 /* TransferRecordDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF22BFAC268AC39100460DB3 /* TransferRecordDTO.swift */; };
 		BF22BFB1268AC51400460DB3 /* MOUploadTransfer+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF22BFB0268AC51400460DB3 /* MOUploadTransfer+Mapper.swift */; };
 		BF22BFB7268ACFAE00460DB3 /* TransferRecordDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF22BFAC268AC39100460DB3 /* TransferRecordDTO.swift */; };
@@ -5043,6 +5046,9 @@
 		BF1589232436A27A007AF9EC /* MessageInputBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageInputBar.swift; sourceTree = "<group>"; };
 		BF1589252436A296007AF9EC /* MessageInputBar.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MessageInputBar.xib; sourceTree = "<group>"; };
 		BF15894B2436EB8D007AF9EC /* MessageTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageTextView.swift; sourceTree = "<group>"; };
+		BF20BB542E49813D0013CAE6 /* UnavailableLinkView+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UnavailableLinkView+Additions.swift"; sourceTree = "<group>"; };
+		BF20BB582E4982700013CAE6 /* NSURL+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSURL+Additions.swift"; sourceTree = "<group>"; };
+		BF20BB642E49853B0013CAE6 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		BF22BFAC268AC39100460DB3 /* TransferRecordDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferRecordDTO.swift; sourceTree = "<group>"; };
 		BF22BFB0268AC51400460DB3 /* MOUploadTransfer+Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MOUploadTransfer+Mapper.swift"; sourceTree = "<group>"; };
 		BF2406A82BA7E880004CD513 /* CloudDrivePhotosPickerRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudDrivePhotosPickerRouter.swift; sourceTree = "<group>"; };
@@ -7379,6 +7385,7 @@
 				C49FB1ED258B6F1000B1280D /* CALayer+Additions.swift */,
 				BF7EBD27244E8B5A0015255F /* CGPoint+Additions.swift */,
 				0D213D212638DF9300B43723 /* CHTCollectionViewWaterfallLayout+Additions.swift */,
+				BF20BB642E49853B0013CAE6 /* Constants.swift */,
 				BFB463EC2433FD9C00FB90B9 /* Date+Additions.swift */,
 				BFFD20DD2BC68D41009885F0 /* DisplayMode+Additions.swift */,
 				B6A01BA7289A5E9200B503FD /* FileManager+Additions.swift */,
@@ -7422,6 +7429,7 @@
 				83751C6629E5AE4D0030310B /* NSString+Additions.swift */,
 				41BADDAB1A8E1659008408B3 /* NSString+MNZCategory.h */,
 				41BADDAC1A8E1659008408B3 /* NSString+MNZCategory.m */,
+				BF20BB582E4982700013CAE6 /* NSURL+Additions.swift */,
 				2F53F84E2612B8860027A5EF /* NSURL+Deeplinking.swift */,
 				77B3227D20A436D60037FA89 /* NSURL+MNZCategory.h */,
 				77B3227E20A436D60037FA89 /* NSURL+MNZCategory.m */,
@@ -13341,6 +13349,7 @@
 				945339D02A60150D00363DAD /* File */,
 				945339CF2A60150500363DAD /* Folder */,
 				E84CDB001A7292C9003F4C77 /* Links.storyboard */,
+				BF20BB542E49813D0013CAE6 /* UnavailableLinkView+Additions.swift */,
 				E8CD19851A9266D600CB8B2A /* UnavailableLinkView.h */,
 				E8CD19861A9266D600CB8B2A /* UnavailableLinkView.m */,
 				E8CD19891A9270CB00CB8B2A /* UnavailableLinkView.xib */,
@@ -14700,6 +14709,7 @@
 				0E9FE35C2E0B6DAC0003AC0F /* ConfigureAuthEnvironmentUseCase.swift in Sources */,
 				B5C5E80127CCBA8C0021B27B /* ConfirmAccountViewcontroller+DeleteAccount.swift in Sources */,
 				E8D4B8911A69429200A3B2E2 /* ConfirmAccountViewController.m in Sources */,
+				BF20BB652E4985420013CAE6 /* Constants.swift in Sources */,
 				E8CA8AB11DF17F7500C205DE /* ContactDetailsViewController.m in Sources */,
 				BF67C527264CB0A7003CE3C6 /* ContactDetailsViewController.swift in Sources */,
 				9433A72328DB7D720041F0DB /* ContactLinkCollectionViewCell.swift in Sources */,
@@ -15397,6 +15407,7 @@
 				2FDE43B924B6C11D00280A75 /* NSObject+Debounce.m in Sources */,
 				83751C6729E5AE4E0030310B /* NSString+Additions.swift in Sources */,
 				41BADDAD1A8E1659008408B3 /* NSString+MNZCategory.m in Sources */,
+				BF20BB592E49827A0013CAE6 /* NSURL+Additions.swift in Sources */,
 				B6BD012521B71FB500E97086 /* NSURL+CameraUpload.m in Sources */,
 				2F53F84F2612B8860027A5EF /* NSURL+Deeplinking.swift in Sources */,
 				77B3227F20A436D60037FA89 /* NSURL+MNZCategory.m in Sources */,
@@ -15892,6 +15903,7 @@
 				BF0BBEFE230627BE001FD542 /* UIViewController+MNZCategory.m in Sources */,
 				A53D87622E15040F00BA1AA0 /* UIViewController+MyAvatar.swift in Sources */,
 				A56F8A062C8EF64E005D00A9 /* UIViewController+SnackBar.swift in Sources */,
+				BF20BB552E49814C0013CAE6 /* UnavailableLinkView+Additions.swift in Sources */,
 				E8CD19871A9266D600CB8B2A /* UnavailableLinkView.m in Sources */,
 				B6990164262F879400176FFC /* UncaughtExceptionHandler.swift in Sources */,
 				5B76EBA325DE8D9000CE77F2 /* UpgradeAccountFactory.swift in Sources */,

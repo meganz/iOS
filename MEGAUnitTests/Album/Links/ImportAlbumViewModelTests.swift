@@ -19,13 +19,13 @@ final class ImportAlbumViewModelTests: XCTestCase {
     
     private var validFullAlbumLink: URL {
         get throws {
-            try XCTUnwrap(URL(string: "https://mega.nz/collection/p3IBQCiZ#Nt8-bopPB8em4cOlKas"))
+            try XCTUnwrap(URL(string: "https://mega.app/collection/p3IBQCiZ#Nt8-bopPB8em4cOlKas"))
         }
     }
     
     private var requireDecryptionKeyAlbumLink: URL {
         get throws {
-            try XCTUnwrap(URL(string: "https://mega.nz/collection/yro2RbQAx"))
+            try XCTUnwrap(URL(string: "https://mega.app/collection/yro2RbQAx"))
         }
     }
     
@@ -959,7 +959,7 @@ struct ImportAlbumViewModelTestSuite {
     
     @MainActor
     private static func makSUT(
-        publicLink: URL = URL(string: "https://mega.nz/collection/p3IBQCiZ#Nt8-bopPB8em4cOlKas")!,
+        publicLink: URL = URL(string: "https://mega.app/collection/p3IBQCiZ#Nt8-bopPB8em4cOlKas")!,
         publicCollectionUseCase: some PublicCollectionUseCaseProtocol = MockPublicCollectionUseCase(),
         albumNameUseCase: some AlbumNameUseCaseProtocol = MockAlbumNameUseCase(),
         accountStorageUseCase: some AccountStorageUseCaseProtocol = MockAccountStorageUseCase(),

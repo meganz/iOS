@@ -45,6 +45,8 @@ enum DeeplinkFragmentKey: String {
     case sitetransfer = "sitetransfer"
 
     // https://mega.nz/# + Base64Handle
+    // OR
+    // https://mega.app/# + Base64Handle
     case handle
 }
 
@@ -64,6 +66,8 @@ enum DeeplinkHostKey: String {
     case upgrade
     case presentNode = "presentNode"
     // https://mega.nz/# + Base64Handle
+    // OR
+    // https://mega.app/# + Base64Handle
     case handle
     case vpn
     case settings

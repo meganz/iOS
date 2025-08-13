@@ -1,3 +1,4 @@
+import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGADesignToken
 import MEGADomain
@@ -47,6 +48,7 @@ extension UpgradeTableViewController {
     @objc func showTermsAndPolicies() {
         TermsAndPoliciesRouter(
             accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
+            appDomainUseCase: DIContainer.appDomainUseCase,
             navigationController: navigationController
         ).start()
     }

@@ -52,7 +52,9 @@
     }
     
     self.contactLinkCreateDelegate = [[MEGAContactLinkCreateRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
-        NSString *destination = [NSString stringWithFormat:@"https://mega.nz/C!%@", [MEGASdk base64HandleForHandle:request.nodeHandle]];
+        NSString *destination = [NSString stringWithFormat:@"https://%@/C!%@",
+                                 self.domainName,
+                                 [MEGASdk base64HandleForHandle:request.nodeHandle]];
         self.contactLinkLabel.text = destination;
         if (self.segmentedControl.selectedSegmentIndex == QRSectionMyCode) {
             self.linkCopyButton.hidden = self.moreButton.hidden = NO;
@@ -225,7 +227,7 @@
             if (!self.queryInProgress) {
                 self.queryInProgress = YES;
                 NSString *detectedString = metadata.stringValue;
-                NSString *baseString = @"https://mega.nz/C!";
+                NSString *baseString = [NSString stringWithFormat:@"https://%@/C!", [self domainName]];
                 if ([detectedString containsString:baseString]) {
                     NSString *base64Handle = [detectedString stringByReplacingOccurrencesOfString:baseString withString:@""];
                     

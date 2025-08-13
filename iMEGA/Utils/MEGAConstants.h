@@ -105,7 +105,6 @@ extern NSString * const H264Format;
 
 #pragma mark - MEGA URLS
 
-extern NSString * const MEGADisputeURL;
 extern NSString * const RequireTransferSession;
 
 #pragma mark - Group Shared Directory

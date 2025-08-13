@@ -5,7 +5,7 @@ import MEGAPreference
 import XCTest
 
 final class PSAViewModelTests: XCTestCase {
-    private let urlString = "https://mega.nz/updatedterms"
+    private let urlString = "https://mega.app/updatedterms"
     
     @MainActor func testAction_onViewReady_fetchPSAEntity() async {
         let (viewModel, router, _) = makeSUT(psaResult: .success(mockPSAEntity()))

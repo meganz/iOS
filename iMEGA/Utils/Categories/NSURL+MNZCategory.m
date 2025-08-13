@@ -57,7 +57,7 @@
 
 - (NSString *)mnz_MEGAURL {
     NSURLComponents *component = [NSURLComponents.alloc initWithURL:self resolvingAgainstBaseURL:YES];
-    component.host = @"mega.nz";
+    component.host = self.domainName;
     component.scheme = @"https";
     return [component.URL absoluteString];
 }

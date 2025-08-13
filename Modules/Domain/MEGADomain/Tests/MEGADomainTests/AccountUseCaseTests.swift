@@ -218,18 +218,20 @@ final class AccountUseCaseTests: XCTestCase {
     }
     
     func testSessionTransferURL_whenSuccess_shouldReturnURL() async throws {
-        let urlPath = "https://mega.nz"
-        let expectedURL = try XCTUnwrap(URL(string: urlPath))
-        let sut = makeSUT(sessionTransferURLResult: .success(expectedURL))
-        let urlResult = try await sut.sessionTransferURL(path: urlPath)
-        XCTAssertEqual(urlResult, expectedURL)
+        for urlPath in ["https://mega.nz", "https://mega.app"] {
+            let expectedURL = try XCTUnwrap(URL(string: urlPath))
+            let sut = makeSUT(sessionTransferURLResult: .success(expectedURL))
+            let urlResult = try await sut.sessionTransferURL(path: urlPath)
+            XCTAssertEqual(urlResult, expectedURL)
+        }
     }
     
     func testSessionTransferURL_whenFail_shouldThrowGenericError() async throws {
-        let urlPath = "https://mega.nz"
-        let sut = makeSUT(sessionTransferURLResult: .failure(.generic))
-        await XCTAsyncAssertThrowsError(try await sut.sessionTransferURL(path: urlPath)) { errorThrown in
-            XCTAssertEqual(errorThrown as? AccountErrorEntity, .generic)
+        for urlPath in ["https://mega.nz", "https://mega.app"] {
+            let sut = makeSUT(sessionTransferURLResult: .failure(.generic))
+            await XCTAsyncAssertThrowsError(try await sut.sessionTransferURL(path: urlPath)) { errorThrown in
+                XCTAssertEqual(errorThrown as? AccountErrorEntity, .generic)
+            }
         }
     }
     

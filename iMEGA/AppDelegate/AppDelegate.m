@@ -1441,7 +1441,8 @@
                     
                     [self.sslKeyPinningController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"openBrowser", @"Button title to allow the user open the default browser") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
                         self.sslKeyPinningController = nil;
-                        NSURL *url = [NSURL URLWithString:@"https://mega.nz"];
+                        NSString *urlString = [NSString stringWithFormat:@"https://%@", self.domainName];
+                        NSURL *url = [NSURL URLWithString:urlString];
                         [[UIApplication sharedApplication] openURL:url options:@{} completionHandler:NULL];
                     }]];
                     

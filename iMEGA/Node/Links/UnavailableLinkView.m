@@ -24,7 +24,8 @@
 }
 
 - (void)showTerms {
-    [UIApplication.sharedApplication openURL:[NSURL URLWithString:@"https://mega.nz/terms"] options:@{} completionHandler:nil];
+    NSString *urlString = [NSString stringWithFormat:@"https://%@/terms", self.domainName];
+    [UIApplication.sharedApplication openURL:[NSURL URLWithString:urlString] options:@{} completionHandler:nil];
 }
 
 - (void)resetLabels {

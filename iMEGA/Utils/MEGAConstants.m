@@ -106,7 +106,6 @@ NSString * const H264Format = @"H.264";
 
 #pragma mark - MEGA URLS
 
-NSString * const MEGADisputeURL = @"https://mega.nz/dispute";
 NSString * const RequireTransferSession = @"fm/";
 
 #pragma mark - Group Shared Directory

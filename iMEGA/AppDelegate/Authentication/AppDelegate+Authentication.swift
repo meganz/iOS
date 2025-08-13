@@ -42,6 +42,8 @@ extension AppDelegate {
         MEGAAuthentication.DependencyInjection.accountConfirmationUseCase = makeAccountConfirmationUseCase()
         
         MEGAAuthentication.DependencyInjection.configureAuthEnvironmentUseCase = makeConfigureAuthEnvironmentUseCase()
+
+        MEGAAuthentication.DependencyInjection.domainName = DIContainer.appDomainUseCase.domainName
     }
 
     @objc func injectVideoPlayerDependencies() {

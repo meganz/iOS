@@ -1,3 +1,4 @@
+import MEGAAppPresentation
 import MEGADesignToken
 
 extension TwoFactorAuthenticationViewController {
@@ -15,5 +16,9 @@ extension TwoFactorAuthenticationViewController {
 
     @objc var labelColor: UIColor {
         TokenColors.Text.primary
+    }
+
+    @objc var domainName: String {
+        DIContainer.appDomainUseCase.domainName
     }
 }

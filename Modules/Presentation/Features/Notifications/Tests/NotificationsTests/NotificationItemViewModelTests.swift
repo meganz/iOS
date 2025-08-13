@@ -27,7 +27,7 @@ struct NotificationItemViewModelTests {
         
         @Test(
             "HasBannerImage should return true only if notification has imageName and imagePath",
-            arguments: ["Test banner name", "", nil], ["https://mega.nz/banner", nil]
+            arguments: ["Test banner name", "", nil], ["https://mega.app/banner", nil]
         )
         func hasBannerImage(imageName: String?, imagePath: String?) {
             let sut = makeSUT(
@@ -42,7 +42,7 @@ struct NotificationItemViewModelTests {
         
         @Test(
             "HasIcon should return true only if notification has iconName and imagePath",
-            arguments: ["Test icon name", "", nil], ["https://mega.nz/icon", nil]
+            arguments: ["Test icon name", "", nil], ["https://mega.app/icon", nil]
         )
         func hasIcon(iconName: String?, imagePath: String?) {
             let sut = makeSUT(
@@ -87,7 +87,7 @@ struct NotificationItemViewModelTests {
             let sut = makeSUT(
                 notification: NotificationItem(
                     imageName: "Test banner name",
-                    imagePath: "https://mega.nz/banner"
+                    imagePath: "https://mega.app/banner"
                 ),
                 imageLoader: MockImageLoader(image: defaultImage)
             )
@@ -101,7 +101,7 @@ struct NotificationItemViewModelTests {
             let sut = makeSUT(
                 notification: NotificationItem(
                     imageName: "Test banner name",
-                    imagePath: "https://mega.nz/banner", 
+                    imagePath: "https://mega.app/banner",
                     iconName: "Test icon name"
                 ),
                 imageLoader: MockImageLoader(image: defaultImage)
@@ -115,7 +115,7 @@ struct NotificationItemViewModelTests {
         func loadIconImage() async {
             let sut = makeSUT(
                 notification: NotificationItem(
-                    imagePath: "https://mega.nz/banner", 
+                    imagePath: "https://mega.app/banner",
                     iconName: "Test icon name"
                 ),
                 imageLoader: MockImageLoader(image: defaultImage)

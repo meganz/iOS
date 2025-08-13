@@ -540,7 +540,7 @@ extension SharedItemsViewController {
     }
     
     @objc func presentDisputeInSafari() {
-        NSURL(string: MEGADisputeURL)?.mnz_presentSafariViewController()
+        NSURL(string: Constants.Link.dispute)?.mnz_presentSafariViewController()
     }
 
     @objc func userDisplayName(for email: String?) -> String? {
