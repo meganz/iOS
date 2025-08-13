@@ -15,6 +15,7 @@ public final class OnboardingUpgradeAccountRouter: OnboardingUpgradeAccountRouti
     private weak var presenter: UIViewController?
     private let purchaseUseCase: any AccountPlanPurchaseUseCaseProtocol
     private let accountUseCase: any AccountUseCaseProtocol
+    private let appDomainUseCase: any AppDomainUseCaseProtocol
     private let tracker: any AnalyticsTracking
     private let onboardingABvariant: ABTestVariant
     private let accountsConfig: AccountsConfig
@@ -25,6 +26,7 @@ public final class OnboardingUpgradeAccountRouter: OnboardingUpgradeAccountRouti
     public init(
         purchaseUseCase: some AccountPlanPurchaseUseCaseProtocol,
         accountUseCase: some AccountUseCaseProtocol,
+        appDomainUseCase: some AppDomainUseCaseProtocol,
         tracker: some AnalyticsTracking = DIContainer.tracker,
         onboardingABvariant: ABTestVariant,
         presenter: UIViewController? = nil,
@@ -36,6 +38,7 @@ public final class OnboardingUpgradeAccountRouter: OnboardingUpgradeAccountRouti
         self.presenter = presenter
         self.purchaseUseCase = purchaseUseCase
         self.accountUseCase = accountUseCase
+        self.appDomainUseCase = appDomainUseCase
         self.tracker = tracker
         self.onboardingABvariant = onboardingABvariant
         self.accountsConfig = accountsConfig
@@ -95,6 +98,7 @@ public final class OnboardingUpgradeAccountRouter: OnboardingUpgradeAccountRouti
     public func showTermsAndPolicies() {
         TermsAndPoliciesRouter(
             accountUseCase: accountUseCase,
+            appDomainUseCase: appDomainUseCase,
             presenter: baseViewController
         ).start()
     }

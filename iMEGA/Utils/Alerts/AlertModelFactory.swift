@@ -6,7 +6,7 @@ final class AlertModelFactory {
     private init() { }
 
     /// Creates an AlertModel to notify the user that a file has been taken down.
-    static func makeTakenDownModel(disputeURL: String = MEGADisputeURL) -> AlertModel {
+    static func makeTakenDownModel(disputeURL: String = Constants.Link.dispute) -> AlertModel {
         .init(
             title: nil,
             message: Strings.Localizable.thisFileHasBeenTheSubjectOfATakedownNotice,

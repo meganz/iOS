@@ -200,27 +200,63 @@ final class AdsSlotViewModelTests: XCTestCase {
     
     @MainActor
     func testDetermineAdsAvailability_whenAdsIsEnabledAndHasPublicFileLinkThatShouldHaveAds_shouldEnableExternalAds() async {
-        await assertDetermineAdsAvailabilityWithPublicLinks(queryAdsValue: 0, isFolderLink: false, expectedExternalAdsValue: true)
+        for domain in ["mega.nz", "mega.app"] {
+            await assertDetermineAdsAvailabilityWithPublicLinks(
+                queryAdsValue: 0,
+                isFolderLink: false,
+                expectedExternalAdsValue: true,
+                domain: domain
+            )
+        }
     }
     
     @MainActor
     func testDetermineAdsAvailability_whenAdsIsEnabledAndHasPublicFileLinkThatShouldNotHaveAds_shouldDisableExternalAds() async {
-        await assertDetermineAdsAvailabilityWithPublicLinks(queryAdsValue: 1, isFolderLink: false, expectedExternalAdsValue: false)
+        for domain in ["mega.nz", "mega.app"] {
+            await assertDetermineAdsAvailabilityWithPublicLinks(
+                queryAdsValue: 1,
+                isFolderLink: false,
+                expectedExternalAdsValue: false,
+                domain: domain
+            )
+        }
     }
     
     @MainActor
     func testDetermineAdsAvailability_whenAdsIsEnabledAndHasPublicFolderLinkThatShouldHaveAds_shouldEnableExternalAds() async {
-        await assertDetermineAdsAvailabilityWithPublicLinks(queryAdsValue: 0, isFolderLink: true, expectedExternalAdsValue: true)
+        for domain in ["mega.nz", "mega.app"] {
+            await assertDetermineAdsAvailabilityWithPublicLinks(
+                queryAdsValue: 0,
+                isFolderLink: true,
+                expectedExternalAdsValue: true,
+                domain: domain
+            )
+        }
     }
     
     @MainActor
     func testDetermineAdsAvailability_whenAdsIsEnabledAndHasPublicFolderLinkThatShouldNotHaveAds_shouldDisableExternalAds() async {
-        await assertDetermineAdsAvailabilityWithPublicLinks(queryAdsValue: 1, isFolderLink: true, expectedExternalAdsValue: false)
+        for domain in ["mega.nz", "mega.app"] {
+            await assertDetermineAdsAvailabilityWithPublicLinks(
+                queryAdsValue: 1,
+                isFolderLink: true,
+                expectedExternalAdsValue: false,
+                domain: domain
+            )
+        }
     }
     
     @MainActor
     func testDetermineAdsAvailability_whenAdsIsDisabledAndHasPublicLinkThatShouldHaveAds_shouldStillDisableExternalAds() async {
-        await assertDetermineAdsAvailabilityWithPublicLinks(isAdsEnabled: false, queryAdsValue: 0, isFolderLink: Bool.random(), expectedExternalAdsValue: false)
+        for domain in ["mega.nz", "mega.app"] {
+            await assertDetermineAdsAvailabilityWithPublicLinks(
+                isAdsEnabled: false,
+                queryAdsValue: 0,
+                isFolderLink: Bool.random(),
+                expectedExternalAdsValue: false,
+                domain: domain
+            )
+        }
     }
     
     @MainActor
@@ -228,7 +264,8 @@ final class AdsSlotViewModelTests: XCTestCase {
         isAdsEnabled: Bool = true,
         queryAdsValue: Int,
         isFolderLink: Bool,
-        expectedExternalAdsValue: Bool
+        expectedExternalAdsValue: Bool,
+        domain: String
     ) async {
         // queryAdsValue
         // 0 - show ads
@@ -241,7 +278,7 @@ final class AdsSlotViewModelTests: XCTestCase {
                 accountDetailsResult: .success(AccountDetailsEntity.build(proLevel: .free))
             ),
             isExternalAdsFlagEnabled: isAdsEnabled,
-            publicNodeLink: "https://mega.nz/link/1dICRLJS#snJiad_4WfCKEK7bgPri3A",
+            publicNodeLink: "https://\(domain)/link/1dICRLJS#snJiad_4WfCKEK7bgPri3A",
             isFolderLink: isFolderLink
         )
         

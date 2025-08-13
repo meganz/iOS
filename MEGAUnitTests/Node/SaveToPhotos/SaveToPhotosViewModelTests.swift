@@ -66,13 +66,14 @@ struct SaveToPhotosViewModelTests {
     @Suite("Save to photos file link")
     @MainActor
     struct SaveToPhotosFileLink {
-        @Test func saveToPhotos() async throws {
+        @Test(arguments: ["https://mega.nz/", "https://mega.app/"])
+        func saveToPhotos(urlString: String) async throws {
             let coordinator = MockSaveToPhotosCoordinator()
             let sut = makeSUT(
                 coordinator: coordinator,
                 saveMediaToPhotosUseCase: MockSaveMediaToPhotosUseCase(saveToPhotosResult: .success))
             
-            await sut.saveToPhotos(fileLink: .init(linkURL: try #require(URL(string: "https://mega.nz/"))))
+            await sut.saveToPhotos(fileLink: .init(linkURL: try #require(URL(string: urlString))))
             
             #expect(coordinator.actions == [.showProgress])
         }

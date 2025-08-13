@@ -52,7 +52,7 @@ class InviteContactViewController: UIViewController {
 
         let contactLinkCreateDelegate = MEGAContactLinkCreateRequestDelegate { (request) in
             guard let base64Handle = MEGASdk.base64Handle(forHandle: request.nodeHandle) else { return }
-            self.userLink = String(format: "https://mega.nz/C!%@", base64Handle)
+            self.userLink = "https://\(DIContainer.appDomainUseCase.domainName)/C!\(base64Handle)"
         }
 
         MEGASdk.shared.contactLinkCreateRenew(false, delegate: contactLinkCreateDelegate)

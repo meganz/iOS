@@ -242,7 +242,7 @@ extension NodeActions {
                 megaNode.mnz_showVersions(in: navigationController)
             },
             disputeTakedown: { _ in
-                NSURL(string: MEGADisputeURL)?.mnz_presentSafariViewController()
+                NSURL(string: Constants.Link.dispute)?.mnz_presentSafariViewController()
             },
             moveToRubbishBin: { nodes in
                 moveNodesToRubbishBin(nodes, presenter: navigationController)

@@ -29,7 +29,7 @@ public struct AppDomainUseCase: AppDomainUseCaseProtocol {
     }
     
     public init(
-        preferenceUseCase: any PreferenceUseCaseProtocol,
+        preferenceUseCase: some PreferenceUseCaseProtocol,
         remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol,
         isLocalFeatureFlagEnabled: Bool
     ) {

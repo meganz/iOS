@@ -385,7 +385,8 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
 }
 
 - (IBAction)termOfServiceTouchUpInside:(UIButton *)sender {
-    [[NSURL URLWithString:@"https://mega.nz/terms"] mnz_presentSafariViewController];
+    NSString *urlString = [NSString stringWithFormat:@"https://%@/terms", self.domainName];
+    [[NSURL URLWithString:urlString] mnz_presentSafariViewController];
 }
 
 - (IBAction)termsForLosingPasswordCheckboxButtonPressed:(UIButton *)sender {
@@ -395,7 +396,8 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
 }
 
 - (IBAction)termsForLosingPasswordTapGesture:(UITapGestureRecognizer *)tapGestureRecognizer {
-    [[NSURL URLWithString:@"https://mega.nz/security"] mnz_presentSafariViewController];
+    NSString *urlString = [NSString stringWithFormat:@"https://%@/security", self.domainName];
+    [[NSURL URLWithString:urlString] mnz_presentSafariViewController];
 }
 
 - (IBAction)createAccountTouchUpInside:(id)sender {

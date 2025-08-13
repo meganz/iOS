@@ -105,10 +105,15 @@ extension SettingViewRouter {
                                                          systemVersion: UIDevice.current.systemVersion,
                                                          deviceName: UIDevice.current.deviceName() ?? ""))
             
-            SettingCellViewModel(image: MEGAAssets.UIImage.termsAndPoliciesSettings,
-                                 title: Strings.Localizable.Settings.Section.termsAndPolicies,
-                                 router: TermsAndPoliciesRouter(accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
-                                                                navigationController: presenter))
+            SettingCellViewModel(
+                image: MEGAAssets.UIImage.termsAndPoliciesSettings,
+                title: Strings.Localizable.Settings.Section.termsAndPolicies,
+                router: TermsAndPoliciesRouter(
+                    accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
+                    appDomainUseCase: DIContainer.appDomainUseCase,
+                    navigationController: presenter
+                )
+            )
             
             SettingCellViewModel(image: MEGAAssets.UIImage.cookieSettings,
                                  title: cookieSettingsMenuTitle(),

@@ -1,8 +1,12 @@
+import MEGAAppPresentation
 import MEGADesignToken
 import MEGAL10n
 import UIKit
 
 extension ContactLinkQRViewController {
+    @objc var domainName: String {
+        DIContainer.appDomainUseCase.domainName
+    }
     
     @objc func updateAppearance(_ segmentControl: MEGASegmentedControl) {
         switch segmentControl.selectedSegmentIndex {

@@ -1,5 +1,6 @@
 import ChatRepoMock
 @testable import MEGA
+import MEGAAppPresentation
 import XCTest
 
 final class MEGALinkManager_AdditionsTests: XCTestCase {
@@ -10,17 +11,19 @@ final class MEGALinkManager_AdditionsTests: XCTestCase {
     }
     
     func testAlbumPublicLink_onNormalLink_shouldStayTheSame() {
-        let link = URL(string: "https://mega.nz/collection/p3IBQCiZ#Nt8-bopPB8em4cOlKFqStA")
-        MEGALinkManager.linkURL = link
-        
-        XCTAssertEqual(MEGALinkManager.albumPublicLink(), link)
+        for urlString in ["https://mega.nz/collection/p3IBQCiZ#Nt8-bopPB8em4cOlKFqStA", "https://mega.app/collection/p3IBQCiZ#Nt8-bopPB8em4cOlKFqStA"] {
+            let link = URL(string: urlString)
+            MEGALinkManager.linkURL = link
+
+            XCTAssertEqual(MEGALinkManager.albumPublicLink(), link)
+        }
     }
     
     func testAlbumPublicLink_onMegaSchemeLink_convertsUrlCorrectly() {
         MEGALinkManager.linkURL = URL(string: "mega://collection/p3IBQCiZ#Nt8-bopPB8em4cOlKFqStA")
         
         XCTAssertEqual(MEGALinkManager.albumPublicLink(),
-                       URL(string: "https://mega.nz/collection/p3IBQCiZ#Nt8-bopPB8em4cOlKFqStA"))
+                       URL(string: "https://\(DIContainer.appDomainUseCase.domainName)/collection/p3IBQCiZ#Nt8-bopPB8em4cOlKFqStA"))
     }
     
     func testShouldOpenWaitingRoom_forWaitingRoomEnabledAndOwnPrivilegeNotModerator_shouldReturnTrue() {

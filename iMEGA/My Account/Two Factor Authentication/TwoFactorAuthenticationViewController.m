@@ -218,8 +218,9 @@
 
 #pragma mark - IBActions
 
-- (IBAction)lostYourAuthenticatorDeviceTouchUpInside:(UIButton *)sender {
-    [[NSURL URLWithString:@"https://mega.nz/recovery"] mnz_presentSafariViewController];
+- (IBAction)lostYourAuthenticatorDeviceTouchUpInside:(UIButton *)sender {\
+    NSString *urlString = [NSString stringWithFormat:@"https://%@/recovery", self.domainName];
+    [[NSURL URLWithString:urlString] mnz_presentSafariViewController];
 }
 
 #pragma mark - UITextViewDelegate

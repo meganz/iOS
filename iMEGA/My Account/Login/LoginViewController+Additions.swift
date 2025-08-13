@@ -1,3 +1,4 @@
+import MEGAAppPresentation
 import MEGADesignToken
 import MEGASwift
 
@@ -9,8 +10,10 @@ extension LoginViewController {
     
     @objc func recoveryPasswordURL(_ email: String?) -> URL {
         let encodedEmail = email?.base64Encoded
-        let recoveryURLString = encodedEmail != nil ? "https://mega.nz/recovery?email=\(encodedEmail ?? "")" : "https://mega.nz/recovery"
-        
+        let recoveryURLString = encodedEmail != nil
+        ? "https://\(DIContainer.appDomainUseCase.domainName)/recovery?email=\(encodedEmail ?? "")"
+        : "https://\(DIContainer.appDomainUseCase.domainName)/recovery"
+
         return URL(string: recoveryURLString) ?? URL(fileURLWithPath: "")
     }
     

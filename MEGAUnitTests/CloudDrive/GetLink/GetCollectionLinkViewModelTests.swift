@@ -213,7 +213,7 @@ final class GetCollectionLinkViewModelTests: XCTestCase {
         for hiddenNodesFeatureFlagActive in [true, false] {
             
             let album = SetEntity(handle: 1, setType: .album)
-            let link = "https://mega.nz/collection/link#key"
+            let link = "https://mega.app/collection/link#key"
             let sections = [
                 GetLinkSectionViewModel(sectionType: .decryptKeySeparate,
                                         cellViewModels: [GetLinkSwitchOptionCellViewModel(type: .decryptKeySeparate,
@@ -250,7 +250,7 @@ final class GetCollectionLinkViewModelTests: XCTestCase {
     func testDispatchShareLink_onDecryptSeperateOn_shouldShareLinkSeperatelyFromKey() async {
         for hiddenNodesFeatureFlagActive in [true, false] {
             let album = SetEntity(handle: 1, setType: .album)
-            let linkOnly = "https://mega.nz/collection/link"
+            let linkOnly = "https://mega.app/collection/link"
             let key = "key"
             let link = "\(linkOnly)#\(key)"
             let sections = [
@@ -288,7 +288,7 @@ final class GetCollectionLinkViewModelTests: XCTestCase {
     func testDispatchCopyLink_onDecryptSeperateOff_shouldCopyShareOriginalLink() async {
         for hiddenNodesFeatureFlagActive in [true, false] {
             let album = SetEntity(handle: 1, setType: .album)
-            let link = "https://mega.nz/collection/link#key"
+            let link = "https://mega.app/collection/link#key"
             let sections = [
                 GetLinkSectionViewModel(sectionType: .decryptKeySeparate,
                                         cellViewModels: [GetLinkSwitchOptionCellViewModel(type: .decryptKeySeparate,
@@ -329,7 +329,7 @@ final class GetCollectionLinkViewModelTests: XCTestCase {
     func testDispatchCopyLink_onDecryptSeperateOn_shouldCopyOnlyLink() async {
         for hiddenNodesFeatureFlagActive in [true, false] {
             let album = SetEntity(handle: 1, setType: .album)
-            let linkOnly = "https://mega.nz/collection/link"
+            let linkOnly = "https://mega.app/collection/link"
             let key = "key"
             let link = "\(linkOnly)#\(key)"
             let sections = [
@@ -373,7 +373,7 @@ final class GetCollectionLinkViewModelTests: XCTestCase {
     func testDispatchCopyKey_onDecryptSeperateOn_shouldCopyKey() async {
         for hiddenNodesFeatureFlagActive in [true, false] {
             let album = SetEntity(handle: 1, setType: .album)
-            let linkOnly = "https://mega.nz/collection/link"
+            let linkOnly = "https://mega.app/collection/link"
             let key = "key"
             let link = "\(linkOnly)#\(key)"
             let sections = [

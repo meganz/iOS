@@ -166,6 +166,10 @@ final class GetNodeLinkViewModelTests: XCTestCase {
             ("https://mega.nz/folder/link#key", "https://mega.nz/folder/link"),
             ("https://mega.nz/file/link%key", "https://mega.nz/file/link%key"),
             ("https://mega.nz/unknown/link!link2!key", "https://mega.nz/unknown/link!link2"),
+            ("https://mega.app/file/link#key", "https://mega.app/file/link"),
+            ("https://mega.app/folder/link#key", "https://mega.app/folder/link"),
+            ("https://mega.app/file/link%key", "https://mega.app/file/link%key"),
+            ("https://mega.app/unknown/link!link2!key", "https://mega.app/unknown/link!link2"),
             ("#", "#")
         ]
         
@@ -185,6 +189,11 @@ final class GetNodeLinkViewModelTests: XCTestCase {
             ("https://mega.nz/file/link%key", ""),
             ("https://mega.nz/unknown/link!link2!key", "key"),
             ("https://mega.nz/unknown/link!key", ""),
+            ("https://mega.app/file/link#key", "key"),
+            ("https://mega.app/folder/link#key", "key"),
+            ("https://mega.app/file/link%key", ""),
+            ("https://mega.app/unknown/link!link2!key", "key"),
+            ("https://mega.app/unknown/link!key", ""),
             ("!", "")
         ]
         

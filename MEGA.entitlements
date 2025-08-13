@@ -9,6 +9,8 @@
 		<string>applinks:mega.nz</string>
 		<string>applinks:www.mega.nz</string>
 		<string>applinks:testbed.preview.mega.co.nz</string>
+		<string>applinks:mega.app</string>
+		<string>applinks:www.mega.app</string>
 	</array>
 	<key>com.apple.developer.icloud-container-identifiers</key>
 	<array>

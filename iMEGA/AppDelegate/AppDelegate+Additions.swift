@@ -18,6 +18,10 @@ import PushKit
 import SafariServices
 
 extension AppDelegate {
+    @objc var domainName: String {
+        DIContainer.appDomainUseCase.domainName
+    }
+    
     @objc func showEnableTwoFactorAuthenticationIfNeeded() {
         if UserDefaults.standard.bool(forKey: "twoFactorAuthenticationAlreadySuggested") {
             return
@@ -114,12 +118,12 @@ extension AppDelegate {
             call: call.toCallEntity()
         ).start()
     }
-    
+
     private func showCookieDialog() async {
         guard shouldPresentModal else { return }
         
         CustomModalAlertCookieDialogRouter(
-            cookiePolicyURLString: "https://mega.nz/cookie",
+            cookiePolicyURLString: "https://\(domainName)/cookie",
             presenter: UIApplication.mnz_presentingViewController()
         ).start()
     }

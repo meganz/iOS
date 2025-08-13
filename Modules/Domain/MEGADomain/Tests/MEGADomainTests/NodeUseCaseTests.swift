@@ -274,6 +274,6 @@ final class NodeUseCaseTests: XCTestCase {
             nodeRepository: mockNodeRepository)
     }
     
-    private let sampleFolderLink = "https://mega.nz/folder/1dICRLJS#snJiad_4WfCKEK7bgPri3A"
-    private let sampleFileLink = FileLinkEntity(linkURL: URL(string: "https://mega.nz/file/1dICRLJS#snJiad_4WfCKEK7bgPri3A")!) 
+    private let sampleFolderLink = "https://mega.app/folder/1dICRLJS#snJiad_4WfCKEK7bgPri3A"
+    private let sampleFileLink = FileLinkEntity(linkURL: URL(string: "https://mega.app/file/1dICRLJS#snJiad_4WfCKEK7bgPri3A")!)
 }

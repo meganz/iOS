@@ -23,7 +23,9 @@ struct DeepLinkingTestSuite {
             "https://mega.nz/file/paBmgYJQ#sL6x-6LcvZEV6R4JxOuNI6I-0NKB5LcMoQnM-7Qw1Os",
             "https://testbed.preview.mega.co.nz/file/cNpAEKLS#B7T0WMhV38wOUkEUBRy6eej46wWJo0NKQC2Hz3wW0jc",
             "mega://#!paBmgYJQ!sL6x-6LcvZEV6R4JxOuNI6I-0NKB5LcMoQnM-7Qw1Os",
-            "https://mega.nz/file/paBmgYJQ?a=sdf&b=123#sL6x-6LcvZEV6R4JxOuNI6I-0NKB5LcMoQnM-7Qw1Os"
+            "https://mega.nz/file/paBmgYJQ?a=sdf&b=123#sL6x-6LcvZEV6R4JxOuNI6I-0NKB5LcMoQnM-7Qw1Os",
+            "https://mega.app/file/paBmgYJQ#sL6x-6LcvZEV6R4JxOuNI6I-0NKB5LcMoQnM-7Qw1Os",
+            "https://mega.app/file/paBmgYJQ?a=sdf&b=123#sL6x-6LcvZEV6R4JxOuNI6I-0NKB5LcMoQnM-7Qw1Os"
         ])
         func fileLinkShouldReturnFileLinkType(url: String) {
             assertDeepLinkType(urlString: url, expectedType: .fileLink)
@@ -34,7 +36,8 @@ struct DeepLinkingTestSuite {
     @Suite("File Request Link Tests - Verifies correct type is returned for file request URLs.")
     struct FileRequestLinkTests {
         @Test("File Request NSURL should return .fileRequestLink", arguments: [
-            "https://mega.nz/filerequest/7W2qzsGbNpU"
+            "https://mega.nz/filerequest/7W2qzsGbNpU",
+            "https://mega.app/filerequest/7W2qzsGbNpU"
         ])
         func fileRequestLinkShouldReturnFileRequestLinkType(url: String) {
             assertDeepLinkType(urlString: url, expectedType: .fileRequestLink)
@@ -59,7 +62,9 @@ struct DeepLinkingTestSuite {
             "https://testbed.preview.mega.co.nz/folder/1dICRLJS#snJiad_4WfCKEK7bgPri3A",
             "https://mega.nz/folder/1dICRLJS#snJiad_4WfCKEK7bgPri3A",
             "mega://#F!1dICRLJS!snJiad_4WfCKEK7bgPri3A!0ch3QSwA",
-            "https://mega.nz/folder/1dICRLJS?a=sdf&b=123#snJiad_4WfCKEK7bgPri3A"
+            "https://mega.nz/folder/1dICRLJS?a=sdf&b=123#snJiad_4WfCKEK7bgPri3A",
+            "https://mega.app/folder/1dICRLJS#snJiad_4WfCKEK7bgPri3A",
+            "https://mega.app/folder/1dICRLJS?a=sdf&b=123#snJiad_4WfCKEK7bgPri3A"
         ])
         func folderLinkShouldReturnFolderLinkType(url: String) {
             assertDeepLinkType(urlString: url, expectedType: .folderLink)
@@ -71,7 +76,9 @@ struct DeepLinkingTestSuite {
     struct EncryptedLinkTests {
         @Test("Encrypted NSURL should return .encryptedLink", arguments: [
             "https://mega.nz/#P!AgGaA3GQAEBzfpgzeA4GC-CwSRMY0TpxxG6fXPmuUMcsVr2vDnSQYoS0K50PRR5Uh7HjyI2u56t_Lv_AkVRld5-c_rvBFoaqokLtTOz-ELFYE1BgAlhjKcPe3q8iicg9sUPDNjXYzH4",
-            "https://mega.nz/?a=sdf&b=123#P!AgGaA3GQAEBzfpgzeA4GC-CwSRMY0TpxxG6fXPmuUMcsVr2vDnSQYoS0K50PRR5Uh7HjyI2u56t_Lv_AkVRld5-c_rvBFoaqokLtTOz-ELFYE1BgAlhjKcPe3q8iicg9sUPDNjXYzH4"
+            "https://mega.nz/?a=sdf&b=123#P!AgGaA3GQAEBzfpgzeA4GC-CwSRMY0TpxxG6fXPmuUMcsVr2vDnSQYoS0K50PRR5Uh7HjyI2u56t_Lv_AkVRld5-c_rvBFoaqokLtTOz-ELFYE1BgAlhjKcPe3q8iicg9sUPDNjXYzH4",
+            "https://mega.app/#P!AgGaA3GQAEBzfpgzeA4GC-CwSRMY0TpxxG6fXPmuUMcsVr2vDnSQYoS0K50PRR5Uh7HjyI2u56t_Lv_AkVRld5-c_rvBFoaqokLtTOz-ELFYE1BgAlhjKcPe3q8iicg9sUPDNjXYzH4",
+            "https://mega.app/?a=sdf&b=123#P!AgGaA3GQAEBzfpgzeA4GC-CwSRMY0TpxxG6fXPmuUMcsVr2vDnSQYoS0K50PRR5Uh7HjyI2u56t_Lv_AkVRld5-c_rvBFoaqokLtTOz-ELFYE1BgAlhjKcPe3q8iicg9sUPDNjXYzH4"
         ])
         func encryptedLinkShouldReturnEncryptedLinkType(url: String) {
             assertDeepLinkType(urlString: url, expectedType: .encryptedLink)
@@ -84,7 +91,11 @@ struct DeepLinkingTestSuite {
         @Test("Confirmation NSURL should return .confirmationLink", arguments: [
             "https://mega.nz/confirmQ29uZmlybUNvZGVWMr-2MuOxBAAEFCHyYDarFmhsKzA0MTlAbWVnYS5jby5ueglwZXRlciBsaesszDn6UKiJ",
             "https://mega.nz/confirm?a=sdf&b=123",
-            "https://mega.nz/#confirmQ29uZmlybUNvZGVWMr-2MuOxBAAEFCHyYDarFmhsKzA0MTlAbWVnYS5jby5ueglwZXRlciBsaesszDn6UKiJ"
+            "https://mega.nz/#confirmQ29uZmlybUNvZGVWMr-2MuOxBAAEFCHyYDarFmhsKzA0MTlAbWVnYS5jby5ueglwZXRlciBsaesszDn6UKiJ",
+            "https://mega.app/confirmQ29uZmlybUNvZGVWMr-2MuOxBAAEFCHyYDarFmhsKzA0MTlAbWVnYS5jby5ueglwZXRlciBsaesszDn6UKiJ",
+            "https://mega.app/confirm?a=sdf&b=123",
+            "https://mega.app/#confirmQ29uZmlybUNvZGVWMr-2MuOxBAAEFCHyYDarFmhsKzA0MTlAbWVnYS5jby5ueglwZXRlciBsaesszDn6UKiJ"
+
         ])
         func confirmationLinkShouldReturnConfirmationLinkType(url: String) {
             assertDeepLinkType(urlString: url, expectedType: .confirmationLink)
@@ -109,7 +120,11 @@ struct DeepLinkingTestSuite {
             "https://mega.nz/newsignup",
             "https://mega.nz/newsignup?a=sdf&b=123",
             "https://mega.nz/#newsignup",
-            "https://mega.nz/?a=sdf&b=123#newsignup"
+            "https://mega.nz/?a=sdf&b=123#newsignup",
+            "https://mega.app/newsignup",
+            "https://mega.app/newsignup?a=sdf&b=123",
+            "https://mega.app/#newsignup",
+            "https://mega.app/?a=sdf&b=123#newsignup"
         ])
         func newSignUpLinkShouldReturnNewSignUpLinkType(url: String) {
             assertDeepLinkType(urlString: url, expectedType: .newSignUpLink)
@@ -123,7 +138,11 @@ struct DeepLinkingTestSuite {
             "https://mega.nz/backup",
             "https://mega.nz/backup?a=sdf&b=123",
             "https://mega.nz/#backup",
-            "https://mega.nz/?a=sdf&b=123#backup"
+            "https://mega.nz/?a=sdf&b=123#backup",
+            "https://mega.app/backup",
+            "https://mega.app/backup?a=sdf&b=123",
+            "https://mega.app/#backup",
+            "https://mega.app/?a=sdf&b=123#backup"
         ])
         func backupLinkShouldReturnBackupLinkType(url: String) {
             assertDeepLinkType(urlString: url, expectedType: .backupLink)
@@ -137,7 +156,11 @@ struct DeepLinkingTestSuite {
             "https://mega.nz/fm/ipc",
             "https://mega.nz/fm/ipc?a=sdf&b=123",
             "https://mega.nz/#fm/ipc",
-            "https://mega.nz/?a=sdf&b=123#fm/ipc"
+            "https://mega.nz/?a=sdf&b=123#fm/ipc",
+            "https://mega.app/fm/ipc",
+            "https://mega.app/fm/ipc?a=sdf&b=123",
+            "https://mega.app/#fm/ipc",
+            "https://mega.app/?a=sdf&b=123#fm/ipc"
         ])
         func incomingPendingContactsLinkShouldReturnIPCLinkType(url: String) {
             assertDeepLinkType(urlString: url, expectedType: .incomingPendingContactsLink)
@@ -151,7 +174,11 @@ struct DeepLinkingTestSuite {
             "https://mega.nz/verify",
             "https://mega.nz/verify?a=sdf&b=123",
             "https://mega.nz/#verify",
-            "https://mega.nz/?a=sdf&b=123#verify"
+            "https://mega.nz/?a=sdf&b=123#verify",
+            "https://mega.app/verify",
+            "https://mega.app/verify?a=sdf&b=123",
+            "https://mega.app/#verify",
+            "https://mega.app/?a=sdf&b=123#verify"
         ])
         func changeEmailLinkShouldReturnChangeEmailLinkType(url: String) {
             assertDeepLinkType(urlString: url, expectedType: .changeEmailLink)
@@ -165,7 +192,11 @@ struct DeepLinkingTestSuite {
             "https://mega.nz/cancel",
             "https://mega.nz/cancel?a=sdf&b=123",
             "https://mega.nz/#cancel",
-            "https://mega.nz/?a=sdf&b=123#cancel"
+            "https://mega.nz/?a=sdf&b=123#cancel",
+            "https://mega.app/cancel",
+            "https://mega.app/cancel?a=sdf&b=123",
+            "https://mega.app/#cancel",
+            "https://mega.app/?a=sdf&b=123#cancel"
         ])
         func cancelAccountLinkShouldReturnCancelAccountLinkType(url: String) {
             assertDeepLinkType(urlString: url, expectedType: .cancelAccountLink)
@@ -177,7 +208,9 @@ struct DeepLinkingTestSuite {
     struct RecoverLinkTests {
         @Test("Recover NSURL should return .recoverLink", arguments: [
             "https://mega.nz/recover",
-            "https://mega.nz/recoveryxqwefdsfd"
+            "https://mega.nz/recoveryxqwefdsfd",
+            "https://mega.app/recover",
+            "https://mega.app/recoveryxqwefdsfd"
         ])
         func recoverLinkShouldReturnRecoverLinkType(url: String) {
             assertDeepLinkType(urlString: url, expectedType: .recoverLink)
@@ -191,7 +224,11 @@ struct DeepLinkingTestSuite {
             "https://mega.nz/C!",
             "https://mega.nz/C!?a=sdf&b=123",
             "https://mega.nz/#C!",
-            "https://mega.nz/?a=sdf&b=123#C!"
+            "https://mega.nz/?a=sdf&b=123#C!",
+            "https://mega.app/C!",
+            "https://mega.app/C!?a=sdf&b=123",
+            "https://mega.app/#C!",
+            "https://mega.app/?a=sdf&b=123#C!"
         ])
         func contactLinkShouldReturnContactLinkType(url: String) {
             assertDeepLinkType(urlString: url, expectedType: .contactLink)
@@ -205,7 +242,11 @@ struct DeepLinkingTestSuite {
             "https://mega.nz/fm/chat",
             "https://mega.nz/fm/chat?a=sdf&b=123",
             "https://mega.nz/#fm/chat",
-            "https://mega.nz/?a=sdf&b=123#fm/chat"
+            "https://mega.nz/?a=sdf&b=123#fm/chat",
+            "https://mega.app/fm/chat",
+            "https://mega.app/fm/chat?a=sdf&b=123",
+            "https://mega.app/#fm/chat",
+            "https://mega.app/?a=sdf&b=123#fm/chat"
         ])
         func openChatSectionLinkShouldReturnOpenChatSectionLinkType(url: String) {
             assertDeepLinkType(urlString: url, expectedType: .openChatSectionLink)
@@ -218,7 +259,9 @@ struct DeepLinkingTestSuite {
         @Test("Public Chat NSURL should return .publicChatLink", arguments: [
             "https://mega.nz/chat/X1FRRCaL#a7qjLayRnqR0fFHpov8DrA",
             "mega://chat/5LpjxQAa#N_fC9cHlBXXWdbfpWQHrRg",
-            "https://mega.nz/chat/X1FRRCaL?a=sdf&b=123#a7qjLayRnqR0fFHpov8DrA"
+            "https://mega.nz/chat/X1FRRCaL?a=sdf&b=123#a7qjLayRnqR0fFHpov8DrA",
+            "https://mega.app/chat/X1FRRCaL#a7qjLayRnqR0fFHpov8DrA",
+            "https://mega.app/chat/X1FRRCaL?a=sdf&b=123#a7qjLayRnqR0fFHpov8DrA"
         ])
         func publicChatLinkShouldReturnPublicChatLinkType(url: String) {
             assertDeepLinkType(urlString: url, expectedType: .publicChatLink)
@@ -230,7 +273,9 @@ struct DeepLinkingTestSuite {
     struct LoginRequiredLinkTests {
         @Test("Login Required NSURL should return .loginRequiredLink", arguments: [
             "https://mega.nz/loginrequired",
-            "https://mega.nz/loginrequired?a=sdf&b=123"
+            "https://mega.nz/loginrequired?a=sdf&b=123",
+            "https://mega.app/loginrequired",
+            "https://mega.app/loginrequired?a=sdf&b=123"
         ])
         func loginRequiredLinkShouldReturnLoginRequiredLinkType(url: String) {
             assertDeepLinkType(urlString: url, expectedType: .loginRequiredLink)
@@ -242,7 +287,9 @@ struct DeepLinkingTestSuite {
     struct HandleLinkTests {
         @Test("Handle NSURL should return .handleLink", arguments: [
             "https://mega.nz/#sdfsdsdf",
-            "https://mega.nz/?a=sdf&b=123#sdfsdsdf"
+            "https://mega.nz/?a=sdf&b=123#sdfsdsdf",
+            "https://mega.app/#sdfsdsdf",
+            "https://mega.app/?a=sdf&b=123#sdfsdsdf"
         ])
         func handleLinkShouldReturnHandleLinkType(url: String) {
             assertDeepLinkType(urlString: url, expectedType: .handleLink)
@@ -254,7 +301,9 @@ struct DeepLinkingTestSuite {
     struct AchievementsLinkTests {
         @Test("Achievements NSURL should return .achievementsLink", arguments: [
             "https://mega.nz/achievements",
-            "https://mega.nz/achievements?a=sdf&b=123"
+            "https://mega.nz/achievements?a=sdf&b=123",
+            "https://mega.app/achievements",
+            "https://mega.app/achievements?a=sdf&b=123"
         ])
         func achievementsLinkShouldReturnAchievementsLinkType(url: String) {
             assertDeepLinkType(urlString: url, expectedType: .achievementsLink)
@@ -266,7 +315,9 @@ struct DeepLinkingTestSuite {
     struct NewTextFileLinkTests {
         @Test("New Text File NSURL should return .newTextFile", arguments: [
             "https://mega.nz/newText",
-            "https://mega.nz/newText?a=sdf&b=123"
+            "https://mega.nz/newText?a=sdf&b=123",
+            "https://mega.app/newText",
+            "https://mega.app/newText?a=sdf&b=123"
         ])
         func newTextFileLinkShouldReturnNewTextFileType(url: String) {
             assertDeepLinkType(urlString: url, expectedType: .newTextFile)
@@ -284,7 +335,15 @@ struct DeepLinkingTestSuite {
             "https://mega.nz/terms",
             "https://mega.nz/terms?a=sdf&b=123",
             "https://example.com/data.csv#row=4",
-            "https://mega.nz/recovery"
+            "https://mega.app/recovery",
+            "https://mega.app/privacy",
+            "https://mega.app/privacy?a=sdf&b=123",
+            "https://mega.app/cookie",
+            "https://mega.app/cookie?a=sdf&b=123",
+            "https://mega.app/terms",
+            "https://mega.app/terms?a=sdf&b=123",
+            "https://example.com/data.csv#row=4",
+            "https://mega.app/recovery"
         ])
         func defaultLinkShouldReturnDefaultType(url: String) {
             assertDeepLinkType(urlString: url, expectedType: .default)
@@ -307,7 +366,8 @@ struct DeepLinkingTestSuite {
     struct CollectionLinkTests {
         @Test("Collection NSURL should return .collection", arguments: [
             "https://mega.nz/collection/p3IBQCiZ#Nt8-bopPB8em4cOlKFqStA",
-            "mega://collection/p3IBQCiZ#Nt8-bopPB8em4cOlKFqStA"
+            "mega://collection/p3IBQCiZ#Nt8-bopPB8em4cOlKFqStA",
+            "https://mega.app/collection/p3IBQCiZ#Nt8-bopPB8em4cOlKFqStA",
         ])
         func collectionLinkShouldReturnCollectionType(url: String) {
             assertDeepLinkType(urlString: url, expectedType: .collection)
@@ -318,7 +378,8 @@ struct DeepLinkingTestSuite {
     @Suite("Recover Link Edge Case Tests - Verifies recovery-related edge cases.")
     struct RecoverLinkEdgeCaseTests {
         @Test("Recover NSURL containing 'recovery' should return .recoverLink", arguments: [
-            "https://mega.nz/recoveryxqwefdsfd"
+            "https://mega.nz/recoveryxqwefdsfd",
+            "https://mega.app/recoveryxqwefdsfd"
         ])
         func recoverLinkWithRecoveryInPathShouldReturnRecoverLinkType(url: String) {
             assertDeepLinkType(urlString: url, expectedType: .recoverLink)

@@ -58,6 +58,7 @@ final class OnboardingUpgradeAccountRouterTests: XCTestCase {
         let sut = OnboardingUpgradeAccountRouter(
             purchaseUseCase: MockAccountPlanPurchaseUseCase(),
             accountUseCase: MockAccountUseCase(),
+            appDomainUseCase: MockAppDomainUseCase(domainName: ""),
             onboardingABvariant: onboardingVariant,
             accountsConfig: AccountsConfig(onboardingViewAssets: accountsConfig),
             isAdsEnabled: isAdsEnabled, 

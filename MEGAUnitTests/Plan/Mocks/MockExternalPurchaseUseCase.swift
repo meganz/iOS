@@ -7,7 +7,7 @@ import MEGASwift
 public final class MockExternalPurchaseUseCase: ExternalPurchaseUseCaseProtocol, @unchecked Sendable {
     public enum Action: Equatable {
         case shouldProvideExternalPurchase
-        case externalPurchaseLink(path: String, sourceApp: String?, months: Int?)
+        case externalPurchaseLink(domain: String, path: String, sourceApp: String?, months: Int?)
     }
 
     @Atomic public var actions: [Action] = []
@@ -27,8 +27,15 @@ public final class MockExternalPurchaseUseCase: ExternalPurchaseUseCaseProtocol,
         return _shouldProvideExternalPurchase
     }
 
-    public func externalPurchaseLink(path: String, sourceApp: String?, months: Int?) async throws -> URL {
-        $actions.mutate { $0.append(.externalPurchaseLink(path: path, sourceApp: sourceApp, months: months)) }
+    public func externalPurchaseLink(
+        domain: String,
+        path: String,
+        sourceApp: String?,
+        months: Int?
+    ) async throws -> URL {
+        $actions.mutate {
+            $0.append(.externalPurchaseLink(domain: domain, path: path, sourceApp: sourceApp, months: months))
+        }
         return try _externalPurchaseLink.get()
     }
 }
