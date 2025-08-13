@@ -3,19 +3,19 @@ import MEGAL10n
 
 final class QuickActionsMenuDelegateHandler: QuickActionsMenuDelegate, RefreshMenuTriggering {
     
-    let showNodeInfo: (NodeEntity) -> Void
-    let manageShare: (NodeEntity) -> Void
-    let shareFolders: ([NodeEntity]) -> Void
-    let download: ([NodeEntity]) -> Void
-    let shareOrManageLink: ([NodeEntity]) -> Void
-    let copy: (NodeEntity) -> Void
-    let removeLink: ([NodeEntity]) -> Void
-    let removeSharing: (NodeEntity) -> Void
-    let rename: (NodeEntity) -> Void
-    let leaveSharing: (NodeEntity) -> Void
-    let nodeSource: NodeSource
-    let hide: ([NodeEntity]) -> Void
-    let unhide: ([NodeEntity]) -> Void
+    private let showNodeInfo: (NodeEntity) -> Void
+    private let manageShare: (NodeEntity) -> Void
+    private let shareFolders: ([NodeEntity]) -> Void
+    private let download: ([NodeEntity]) -> Void
+    private let shareOrManageLink: ([NodeEntity]) -> Void
+    private let copy: (NodeEntity) -> Void
+    private let removeLink: ([NodeEntity]) -> Void
+    private let removeSharing: (NodeEntity) -> Void
+    private let rename: (NodeEntity) -> Void
+    private let leaveSharing: (NodeEntity) -> Void
+    private let hide: ([NodeEntity]) -> Void
+    private let unhide: ([NodeEntity]) -> Void
+    @Published private var nodeSource: NodeSource
 
     // this needs to be supplied from the outside to trigger the menu rebuild
     var refreshMenu: (() -> Void)?
@@ -33,7 +33,8 @@ final class QuickActionsMenuDelegateHandler: QuickActionsMenuDelegate, RefreshMe
         leaveSharing: @escaping (NodeEntity) -> Void,
         hide: @escaping ([NodeEntity]) -> Void,
         unhide: @escaping ([NodeEntity]) -> Void,
-        nodeSource: NodeSource
+        nodeSource: NodeSource,
+        nodeSourceUpdatesListener: some CloudDriveNodeSourceUpdatesListening
     ) {
         self.showNodeInfo = showNodeInfo
         self.manageShare = manageShare
@@ -49,6 +50,8 @@ final class QuickActionsMenuDelegateHandler: QuickActionsMenuDelegate, RefreshMe
         self.unhide = unhide
 
         self.nodeSource = nodeSource
+        nodeSourceUpdatesListener.nodeSourcePublisher
+            .assign(to: &$nodeSource)
     }
     
     func quickActionsMenu(
