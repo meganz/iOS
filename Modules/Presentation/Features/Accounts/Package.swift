@@ -29,6 +29,7 @@ let package = Package(
         .package(path: "../../../MEGASharedRepo/MEGATest"),
         .package(path: "../../../Presentation/MEGAAssets"),
         .package(path: "../../../UI/MEGAUI"),
+        .package(path: "../../../UI/MEGAUIKit"),
         .package(path: "../Settings"),
         .package(path: "../../../MEGASharedRepo/MEGAUIComponent"),
         .package(url: "https://github.com/googleads/swift-package-manager-google-mobile-ads.git", from: "12.6.0"),
@@ -44,6 +45,7 @@ let package = Package(
                            "MEGASwiftUI",
                            "MEGAAssets",
                            "MEGAUI",
+                           "MEGAUIKit",
                            "Settings",
                            "MEGAUIComponent"],
             swiftSettings: settings

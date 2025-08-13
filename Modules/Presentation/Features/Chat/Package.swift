@@ -26,7 +26,8 @@ let package = Package(
         .package(path: "../../MEGAAppPresentation"),
         .package(path: "../../../UI/MEGASwiftUI"),
         .package(path: "../../../Infrastracture/MEGATest"),
-        .package(path: "../../../MEGAAssets")
+        .package(path: "../../../MEGAAssets"),
+        .package(path: "../../../Infrastracture/MEGAPermissions")
     ],
     targets: [
         .target(
@@ -36,7 +37,8 @@ let package = Package(
                 "ChatRepo",
                 "MEGAL10n",
                 "MEGAAssets",
-                "MEGASwiftUI"
+                "MEGASwiftUI",
+                "MEGAPermissions"
             ],
             swiftSettings: settings
         ),
