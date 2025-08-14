@@ -11,6 +11,7 @@ struct BottomToolbarConfig {
     let isBackupNode: Bool
     let selectedNodes: [NodeEntity]
     let isIncomingShareChildView: Bool
+    let isFromSharedItem: Bool
 }
 
 // Responsibility of this factory is to take output from the actionFactory, which decided what are visible tool bar items,
@@ -60,6 +61,7 @@ struct CloudDriveBottomToolbarItemsFactory {
                     displayMode: config.displayMode,
                     selectedNodes: config.selectedNodes,
                     isIncomingShareChildView: config.isIncomingShareChildView,
+                    isFromSharedItem: config.isFromSharedItem,
                     parent: parent,
                     sender: item
                 )
@@ -92,6 +94,7 @@ struct CloudDriveBottomToolbarItemsFactory {
         displayMode: DisplayMode,
         selectedNodes: [NodeEntity],
         isIncomingShareChildView: Bool,
+        isFromSharedItem: Bool,
         parent: UIViewController,
         sender: Any
     ) {
@@ -123,6 +126,7 @@ struct CloudDriveBottomToolbarItemsFactory {
                 for: selectedNodes,
                 parent: parent,
                 isIncomingShareChildView: isIncomingShareChildView,
+                isFromSharedItem: isFromSharedItem,
                 sender: sender
             )
         }
@@ -135,6 +139,7 @@ struct CloudDriveBottomToolbarItemsFactory {
         for nodes: [NodeEntity],
         parent: UIViewController,
         isIncomingShareChildView: Bool,
+        isFromSharedItem: Bool,
         sender: Any
     ) {
         
@@ -144,6 +149,7 @@ struct CloudDriveBottomToolbarItemsFactory {
             displayMode: displayMode,
             isIncoming: isIncomingShareChildView,
             containsABackupNode: displayMode == .backup,
+            isFromSharedItem: isFromSharedItem,
             sender: sender
         )
         nodeActionsViewController.accessoryActionDelegate = nodeAccessoryActionDelegate

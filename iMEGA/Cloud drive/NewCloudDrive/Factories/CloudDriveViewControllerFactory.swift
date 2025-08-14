@@ -511,7 +511,8 @@ struct CloudDriveViewControllerFactory {
                     displayMode: overriddenConfig.displayMode ?? .cloudDrive,
                     isBackupNode: isBackupsNode(),
                     selectedNodes: nodes,
-                    isIncomingShareChildView: false
+                    isIncomingShareChildView: false,
+                    isFromSharedItem: overriddenConfig.isFromSharedItem ?? false
                 )
         }
 
