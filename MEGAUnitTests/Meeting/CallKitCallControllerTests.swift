@@ -19,24 +19,13 @@ extension String {
 
 @Suite("CallKitCallController")
 struct CallKitCallControllerTests {
-    class MockCallKitCallController: CallKitCallControlling {
+    class MockCallKitCallController: CXCallController {
         var requestedTransactions: [CXTransaction] = []
         var errorToReturn: (any Error)?
-        func request(_ transaction: CXTransaction, completion: @escaping ((any Error)?) -> Void) {
+        override func request(_ transaction: CXTransaction, completion: @escaping ((any Error)?) -> Void) {
             requestedTransactions.append(transaction)
             completion(errorToReturn)
         }
-        
-        func request(_ transaction: CXTransaction) async throws { /* not used */ }
-        
-        func requestTransaction(with actions: [CXAction], completion: @escaping ((any Error)?) -> Void) { /* not used */ }
-        
-        func requestTransaction(with actions: [CXAction]) async throws { /* not used */ }
-        
-        func requestTransaction(with action: CXAction, completion: @escaping ((any Error)?) -> Void) { /* not used */ }
-        
-        func requestTransaction(with action: CXAction) async throws { /* not used */ }
-        
     }
     class Harness {
         let callController = MockCallKitCallController()

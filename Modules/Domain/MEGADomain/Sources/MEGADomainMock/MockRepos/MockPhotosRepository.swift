@@ -3,7 +3,7 @@ import MEGASwift
 
 public actor MockPhotosRepository: PhotosRepositoryProtocol {
     
-    public static var sharedRepo: MockPhotosRepository = MockPhotosRepository()
+    public static let sharedRepo: MockPhotosRepository = MockPhotosRepository()
     
     private let photosUpdated: AnyAsyncSequence<[NodeEntity]>
     private let photos: [NodeEntity]

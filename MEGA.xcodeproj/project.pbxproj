@@ -1800,7 +1800,6 @@
 		A8F1D10C2A5ECBC2000DEB6F /* RemovalConfirmationMessageGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275682F82A4015280038E13A /* RemovalConfirmationMessageGenerator.swift */; };
 		A8F29E6F2D958279002774A7 /* MockNodeSensitivityChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8F29E6E2D958279002774A7 /* MockNodeSensitivityChecker.swift */; };
 		A8F5155827F6F24F00AEE4D6 /* ISEmojiView in Frameworks */ = {isa = PBXBuildFile; productRef = A8F5155727F6F24F00AEE4D6 /* ISEmojiView */; };
-		A8F5156B27F6F58300AEE4D6 /* FLEX in Frameworks */ = {isa = PBXBuildFile; productRef = A8F5156A27F6F58300AEE4D6 /* FLEX */; };
 		A8F5157427F6F87A00AEE4D6 /* DZNEmptyDataSet in Frameworks */ = {isa = PBXBuildFile; productRef = A8F5157327F6F87A00AEE4D6 /* DZNEmptyDataSet */; };
 		A8F5157827F6F92800AEE4D6 /* DZNEmptyDataSet in Frameworks */ = {isa = PBXBuildFile; productRef = A8F5157727F6F92800AEE4D6 /* DZNEmptyDataSet */; };
 		A8F5158527F6FF4F00AEE4D6 /* FlexLayout in Frameworks */ = {isa = PBXBuildFile; productRef = A8F5158427F6FF4F00AEE4D6 /* FlexLayout */; };
@@ -5526,7 +5525,6 @@
 				A8F5157427F6F87A00AEE4D6 /* DZNEmptyDataSet in Frameworks */,
 				BFE64BA6286C1D1F00F2B69F /* FirebaseAppDistribution-Beta in Frameworks */,
 				A828E681286B3112004CED9E /* FirebaseCrashlytics in Frameworks */,
-				A8F5156B27F6F58300AEE4D6 /* FLEX in Frameworks */,
 				A8F5158527F6FF4F00AEE4D6 /* FlexLayout in Frameworks */,
 				A8F5158727F6FF4F00AEE4D6 /* FlexLayoutYoga in Frameworks */,
 				A8F5158927F6FF4F00AEE4D6 /* FlexLayoutYogaKit in Frameworks */,
@@ -13495,7 +13493,6 @@
 			packageProductDependencies = (
 				BF11643027F6612A00E5C5A4 /* CHTCollectionViewWaterfallLayoutObjC */,
 				A8F5157327F6F87A00AEE4D6 /* DZNEmptyDataSet */,
-				A8F5156A27F6F58300AEE4D6 /* FLEX */,
 				BFE64BA5286C1D1F00F2B69F /* FirebaseAppDistribution-Beta */,
 				A828E680286B3112004CED9E /* FirebaseCrashlytics */,
 				A8F5158427F6FF4F00AEE4D6 /* FlexLayout */,
@@ -13885,7 +13882,6 @@
 			packageReferences = (
 				BF11642F27F6612A00E5C5A4 /* XCRemoteSwiftPackageReference "CHTCollectionViewWaterfallLayout" */,
 				A8F5157227F6F87900AEE4D6 /* XCRemoteSwiftPackageReference "DZNEmptyDataSet" */,
-				A8F5156927F6F58200AEE4D6 /* XCRemoteSwiftPackageReference "FLEX" */,
 				A8F5158327F6FF4F00AEE4D6 /* XCRemoteSwiftPackageReference "FlexLayout" */,
 				BF1CEA3227FA737200C1A2E5 /* XCRemoteSwiftPackageReference "GKContactImage" */,
 				A8B51ADA27F3534F0030F1EA /* XCRemoteSwiftPackageReference "Haptica" */,
@@ -18467,14 +18463,6 @@
 				minimumVersion = 0.3.0;
 			};
 		};
-		A8F5156927F6F58200AEE4D6 /* XCRemoteSwiftPackageReference "FLEX" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/FLEXTool/FLEX";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 5.0.0;
-			};
-		};
 		A8F5157227F6F87900AEE4D6 /* XCRemoteSwiftPackageReference "DZNEmptyDataSet" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/meganz/DZNEmptyDataSet.git";
@@ -18834,11 +18822,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = A8F5155627F6F24F00AEE4D6 /* XCRemoteSwiftPackageReference "ISEmojiView" */;
 			productName = ISEmojiView;
-		};
-		A8F5156A27F6F58300AEE4D6 /* FLEX */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = A8F5156927F6F58200AEE4D6 /* XCRemoteSwiftPackageReference "FLEX" */;
-			productName = FLEX;
 		};
 		A8F5157327F6F87A00AEE4D6 /* DZNEmptyDataSet */ = {
 			isa = XCSwiftPackageProductDependency;

@@ -3,6 +3,7 @@ import MEGATest
 @testable @preconcurrency import PhotosBrowser
 import Testing
 
+@MainActor
 struct ToolbarConfigurationFactoryTests {
     
     static let arguments: [PhotosBrowserDisplayMode: any ToolbarConfigurationStrategy.Type] = [
@@ -10,9 +11,15 @@ struct ToolbarConfigurationFactoryTests {
         PhotosBrowserDisplayMode.chatAttachment: ChatAttachmenToolbarConfigurationStrategy.self
     ]
     
-    @Test("New Photos Browser Bottom Tool Bar Configuration Tests", arguments: arguments)
-    func bottomToolBarConfig(with displayMode: PhotosBrowserDisplayMode, strategy: any ToolbarConfigurationStrategy.Type) {
-        let config = ToolbarConfigurationFactory.configuration(on: displayMode)
-        #expect(type(of: config) == strategy)
+    @Test
+    func whenCloudDriveMode_shouldUseCloudDriveToolbarConfigurationStrategy() {
+        let config = ToolbarConfigurationFactory.configuration(on: .cloudDrive)
+        #expect(type(of: config) == CloudDriveToolbarConfigurationStrategy.self)
+    }
+    
+    @Test
+    func whenChatAttachmentMode_shouldUseChatAttachmenToolbarConfigurationStrategy() {
+        let config = ToolbarConfigurationFactory.configuration(on: .chatAttachment)
+        #expect(type(of: config) == ChatAttachmenToolbarConfigurationStrategy.self)
     }
 }

@@ -30,23 +30,43 @@ public final class MockGoogleMobileAdsConsentManager: GoogleMobileAdsConsentMana
     }
 }
 
-public final class MockAdMobConsentInformation: AdMobConsentInformationProtocol, @unchecked Sendable {
-    public private(set) var canRequestAds: Bool
+public final class MockAdMobConsentInformation: ConsentInformation, @unchecked Sendable {
+    private var _canRequestAds: Bool
     public private(set) var didRequestConsentInfoUpdate = false
-    public private(set) var privacyOptionsRequirementStatus: PrivacyOptionsRequirementStatus
+    private var _privacyOptionsRequirementStatus: PrivacyOptionsRequirementStatus
     private let shouldThrowError: Bool
 
+    public override var canRequestAds: Bool {
+        get {
+            _canRequestAds
+        }
+        
+        set {
+            _canRequestAds = newValue
+        }
+    }
+    
+    public override var privacyOptionsRequirementStatus: PrivacyOptionsRequirementStatus {
+        get {
+            _privacyOptionsRequirementStatus
+        }
+        
+        set {
+            _privacyOptionsRequirementStatus = newValue
+        }
+    }
+    
     public init(
         privacyOptionsRequirementStatus: PrivacyOptionsRequirementStatus = .unknown,
         canRequestAds: Bool = true,
         shouldThrowError: Bool = false
     ) {
-        self.canRequestAds = canRequestAds
+        self._canRequestAds = canRequestAds
         self.shouldThrowError = shouldThrowError
-        self.privacyOptionsRequirementStatus = privacyOptionsRequirementStatus
+        self._privacyOptionsRequirementStatus = privacyOptionsRequirementStatus
     }
     
-    public func requestConsentInfoUpdate(with parameters: RequestParameters?, completionHandler: @escaping UMPConsentInformationUpdateCompletionHandler) {
+    public override func requestConsentInfoUpdate(with parameters: RequestParameters?, completionHandler: @escaping UMPConsentInformationUpdateCompletionHandler) {
         didRequestConsentInfoUpdate = true
         if shouldThrowError {
             completionHandler(AdMobError.genericError)
@@ -56,22 +76,22 @@ public final class MockAdMobConsentInformation: AdMobConsentInformationProtocol,
     }
 }
 
-public final class MockAdMobConsentForm: AdMobConsentFormProtocol, @unchecked Sendable {
+public final class MockAdMobConsentForm: ConsentForm, @unchecked Sendable {
     nonisolated(unsafe) public static private(set) var didLoadAndPresent = false
     
-    public static func loadAndPresentIfRequired(from viewController: UIViewController?) async throws {
+    public override static func loadAndPresentIfRequired(from viewController: UIViewController?) async throws {
         didLoadAndPresent = true
     }
     
-    public static func presentPrivacyOptionsForm(from viewController: UIViewController?) async throws {}
+    public override static func presentPrivacyOptionsForm(from viewController: UIViewController?) async throws {}
 }
 
-public final class MockMobileAds: MobileAdsProtocol, @unchecked Sendable {
+public final class MockMobileAds: MobileAds, @unchecked Sendable {
     public private(set) var startAdsCalledCount = 0
 
-    public init() {}
+    public override init() {}
     
-    public func start(completionHandler: GADInitializationCompletionHandler?) {
+    public override func start(completionHandler: GADInitializationCompletionHandler?) {
         startAdsCalledCount += 1
         completionHandler?(.init())
     }

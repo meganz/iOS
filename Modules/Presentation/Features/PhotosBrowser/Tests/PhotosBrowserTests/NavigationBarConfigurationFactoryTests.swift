@@ -3,6 +3,7 @@ import MEGATest
 @testable @preconcurrency import PhotosBrowser
 import Testing
 
+@MainActor
 struct NavigationBarConfigurationFactoryTests {
     
     static let arguments: [PhotosBrowserDisplayMode: any NavigationBarConfigurationStrategy.Type] = [
@@ -10,9 +11,15 @@ struct NavigationBarConfigurationFactoryTests {
         PhotosBrowserDisplayMode.chatAttachment: ChatAttachmentNavigationBarConfigurationStrategy.self
     ]
     
-    @Test("New Photos Browser Navigation Bar Configuration Tests", arguments: arguments)
-    func navigationBarConfig(with displayMode: PhotosBrowserDisplayMode, strategy: any NavigationBarConfigurationStrategy.Type) {
-        let config = NavigationBarConfigurationFactory.configuration(on: displayMode)
-        #expect(type(of: config) == strategy)
+    @Test
+    func whenCloudDriveMode_shouldUseCloudDriveNavigationBarConfigurationStrategy() {
+        let config = NavigationBarConfigurationFactory.configuration(on: .cloudDrive)
+        #expect(type(of: config) == CloudDriveNavigationBarConfigurationStrategy.self)
+    }
+    
+    @Test
+    func whenChatAttachmentMode_shouldUseChatAttachmentNavigationBarConfigurationStrategy() {
+        let config = NavigationBarConfigurationFactory.configuration(on: .chatAttachment)
+        #expect(type(of: config) == ChatAttachmentNavigationBarConfigurationStrategy.self)
     }
 }
