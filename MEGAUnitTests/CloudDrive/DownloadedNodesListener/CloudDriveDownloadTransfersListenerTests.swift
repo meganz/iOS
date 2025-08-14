@@ -65,5 +65,3 @@ final class CloudDriveDownloadTransfersListenerTests: XCTestCase {
         .init(type: type, parentPath: parentPath, nodeHandle: handle, isStreamingTransfer: isStreamingTransfer)
     }
 }
-
-extension HandleEntity: Sendable {}

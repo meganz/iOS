@@ -36,12 +36,8 @@ extension MEGAChatListItem {
     private func nickName(forHandle handle: HandleEntity?) -> String? {
         guard let handle, let backgroundContext = MEGAStore.shareInstance().stack.newBackgroundContext() else { return nil }
         
-        var nickname: String?
-        
-        backgroundContext.performAndWait {
-            nickname = MEGAStore.shareInstance().fetchUser(withUserHandle: handle, context: backgroundContext)?.nickname
+        return backgroundContext.performAndWait {
+            MEGAStore.shareInstance().fetchUser(withUserHandle: handle, context: backgroundContext)?.nickname
         }
-        
-        return nickname
     }
 }
