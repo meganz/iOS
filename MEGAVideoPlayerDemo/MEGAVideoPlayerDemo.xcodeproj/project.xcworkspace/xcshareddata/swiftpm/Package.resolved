@@ -1,4 +1,5 @@
 {
+  "originHash" : "11f83055614b10e066a5188d9856b578845d241e3bfcad61f194826615dbf5b3",
   "pins" : [
     {
       "identity" : "cocoalumberjack",
@@ -7,24 +8,6 @@
       "state" : {
         "revision" : "a9ed4b6f9bdedce7d77046f43adfb8ce1fd54114",
         "version" : "3.9.0"
-      }
-    },
-    {
-      "identity" : "devicekit",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/devicekit/DeviceKit.git",
-      "state" : {
-        "revision" : "513b9d7e7a1bd46504a1009bbab943b75ce2f195",
-        "version" : "5.6.0"
-      }
-    },
-    {
-      "identity" : "libffi",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/623637646/libffi.git",
-      "state" : {
-        "revision" : "ba435e5a3b38cf2eede5974d3e2bd3c737f066e1",
-        "version" : "3.4.7"
       }
     },
     {
@@ -55,15 +38,6 @@
       }
     },
     {
-      "identity" : "swift-case-paths",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/pointfreeco/swift-case-paths.git",
-      "state" : {
-        "revision" : "fc45e7b2cfece9dd80b5a45e6469ffe67fe67984",
-        "version" : "0.14.1"
-      }
-    },
-    {
       "identity" : "swift-collections",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-collections.git",
@@ -89,34 +63,7 @@
         "revision" : "74203046135342e4a4a627476dd6caf8b28fe11b",
         "version" : "509.0.0"
       }
-    },
-    {
-      "identity" : "swifthook",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/623637646/SwiftHook.git",
-      "state" : {
-        "revision" : "2a6199f90aa2c10cd01b92488639dd246caf277e",
-        "version" : "3.5.3"
-      }
-    },
-    {
-      "identity" : "swiftui-introspect",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/siteline/swiftui-introspect",
-      "state" : {
-        "revision" : "668a65735751432b640260c56dfa621cec568368",
-        "version" : "1.2.0"
-      }
-    },
-    {
-      "identity" : "xctest-dynamic-overlay",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/pointfreeco/xctest-dynamic-overlay",
-      "state" : {
-        "revision" : "50843cbb8551db836adec2290bb4bc6bac5c1865",
-        "version" : "0.9.0"
-      }
     }
   ],
-  "version" : 2
+  "version" : 3
 }

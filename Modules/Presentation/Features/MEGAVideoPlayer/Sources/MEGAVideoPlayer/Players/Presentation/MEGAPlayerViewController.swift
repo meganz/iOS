@@ -8,6 +8,7 @@ public final class MEGAPlayerViewController: UIViewController {
     public init(viewModel: MEGAPlayerViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
+        setupDismiss()
     }
 
     required init?(coder: NSCoder) {
@@ -41,14 +42,20 @@ public final class MEGAPlayerViewController: UIViewController {
         viewModel.viewDidDisappear()
     }
 
+    private func setupDismiss() {
+        viewModel.dismissAction = { [weak self] in
+            self?.dismiss(animated: true)
+        }
+    }
+
     private func setupOverlay() {
         let overlayView = UIHostingConfiguration { [viewModel] in
             let player = viewModel.player
-            let onDismiss = viewModel.onDismiss
+            let dismissAction = viewModel.dismissAction
             PlayerOverlayView(
                 viewModel: PlayerOverlayViewModel(
                     player: player,
-                    onDismiss: onDismiss ?? {}
+                    didTapBackAction: dismissAction ?? {}
                 )
             )
         }
@@ -91,10 +98,8 @@ public struct MEGAPlayerView: UIViewControllerRepresentable {
     }
 
     public func makeUIViewController(context: Context) -> MEGAPlayerViewController {
-        if viewModel.onDismiss == nil {
-            viewModel.onDismiss = {
-                dismiss()
-            }
+        viewModel.dismissAction = {
+            dismiss()
         }
         let controller = MEGAPlayerViewController(
             viewModel: viewModel
@@ -106,7 +111,6 @@ public struct MEGAPlayerView: UIViewControllerRepresentable {
 }
 
 extension UIView: PlayerLayerProtocol {}
-
 
 #Preview {
     NavigationStack {

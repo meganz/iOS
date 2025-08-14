@@ -8,14 +8,14 @@ public final class PlayerOverlayViewModel: ObservableObject {
     @Published var duration: Duration = .seconds(0)
 
     private let player: any VideoPlayerProtocol
-    private let onDismiss: () -> Void
+    private let didTapBackAction: () -> Void
 
     public init(
         player: some VideoPlayerProtocol,
-        onDismiss: @escaping () -> Void
+        didTapBackAction: @escaping () -> Void
     ) {
         self.player = player
-        self.onDismiss = onDismiss
+        self.didTapBackAction = didTapBackAction
     }
 
     func viewWillAppear() {
@@ -23,7 +23,7 @@ public final class PlayerOverlayViewModel: ObservableObject {
     }
 
     func didTapBack() {
-        onDismiss()
+        didTapBackAction()
     }
 
     func didTapPlay() {

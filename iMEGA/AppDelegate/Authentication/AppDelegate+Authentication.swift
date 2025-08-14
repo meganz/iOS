@@ -13,6 +13,7 @@ import MEGAPreference
 import MEGAPresentation
 import MEGASDKRepo
 import MEGASwiftUI
+import MEGAVideoPlayer
 import SwiftUI
 
 extension AppDelegate {
@@ -41,6 +42,11 @@ extension AppDelegate {
         MEGAAuthentication.DependencyInjection.accountConfirmationUseCase = makeAccountConfirmationUseCase()
         
         MEGAAuthentication.DependencyInjection.configureAuthEnvironmentUseCase = makeConfigureAuthEnvironmentUseCase()
+    }
+
+    @objc func injectVideoPlayerDependencies() {
+        // This is temporary. Will remove this depencency injection once the video player is fully integrated.
+        MEGAVideoPlayer.DependencyInjection.sharedSdk = .shared
     }
 
     @objc func makeOnboardingViewController() -> UIViewController {
