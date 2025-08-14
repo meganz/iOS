@@ -7,7 +7,7 @@ import MEGAPermissionsMock
 import SwiftUI
 import Testing
 
-@Suite("Permission Onboarding Router Tests")
+@Suite("Permission Onboarding Router Tests", .serialized)
 struct PermissionOnboardingRouterTests {
     class MockViewController: UIViewController {
         private(set) var presentCallCount = 0
