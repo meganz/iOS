@@ -11,6 +11,7 @@ import MEGAPermissions
 import MEGAPhotos
 import MEGASwift
 import MEGASwiftUI
+import MEGAVideoPlayer
 import SwiftUI
 import UIKit
 
@@ -105,9 +106,19 @@ extension MEGAPhotoBrowserViewController {
                 Crashlytics.crashlytics().record(error: error)
                 return
             }
-            
-            controller.modalPresentationStyle = .overFullScreen
-            present(controller, animated: true)
+
+            if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .videoPlayerRevamp) {
+                let playerVC = MEGAPlayerViewController(
+                    viewModel: MEGAPlayerViewModel(
+                        player: MEGAAVPlayer.liveValue(node: node)
+                    )
+                )
+                playerVC.modalPresentationStyle = .overFullScreen
+                present(playerVC, animated: true)
+            } else {
+                controller.modalPresentationStyle = .overFullScreen
+                present(controller, animated: true)
+            }
         } else {
             let controller = UIAlertController(
                 title: Strings.Localizable.fileNotSupported,

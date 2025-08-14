@@ -1545,6 +1545,7 @@
 		992003582B0C09620058FF5F /* CallParticipantCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992003572B0C09620058FF5F /* CallParticipantCellTests.swift */; };
 		992453F02A8DF8FF00ADB76B /* WaitingRoomJoinPanelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992453EF2A8DF8FF00ADB76B /* WaitingRoomJoinPanelView.swift */; };
 		99487BCC2A8F328D00BE4685 /* WaitingRoomViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FF30D12A8F16E6006CE3DB /* WaitingRoomViewModelTests.swift */; };
+		994890EB2E4D70B100CBDC33 /* MEGAVideoPlayer in Frameworks */ = {isa = PBXBuildFile; productRef = 994890EA2E4D70B100CBDC33 /* MEGAVideoPlayer */; };
 		9949C3622A72421F000C299B /* ChatRoomAvatarInitialsGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9949C3612A72421F000C299B /* ChatRoomAvatarInitialsGenerator.swift */; };
 		9949C3662A72424C000C299B /* ChatRoomAvatarInitialsGeneratorTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9949C3652A72424C000C299B /* ChatRoomAvatarInitialsGeneratorTest.swift */; };
 		995403F82E3CD0F500468F84 /* KMTransferUtils in Frameworks */ = {isa = PBXBuildFile; productRef = 995403F72E3CD0F500468F84 /* KMTransferUtils */; };
@@ -4346,6 +4347,7 @@
 		991C87052A53F2B900BF940B /* ScheduleMeetingOnboardingRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingOnboardingRecord.swift; sourceTree = "<group>"; };
 		992003572B0C09620058FF5F /* CallParticipantCellTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallParticipantCellTests.swift; sourceTree = "<group>"; };
 		992453EF2A8DF8FF00ADB76B /* WaitingRoomJoinPanelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitingRoomJoinPanelView.swift; sourceTree = "<group>"; };
+		994890E72E4D707900CBDC33 /* MEGAVideoPlayer */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MEGAVideoPlayer; sourceTree = "<group>"; };
 		9949C3612A72421F000C299B /* ChatRoomAvatarInitialsGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatRoomAvatarInitialsGenerator.swift; sourceTree = "<group>"; };
 		9949C3652A72424C000C299B /* ChatRoomAvatarInitialsGeneratorTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatRoomAvatarInitialsGeneratorTest.swift; sourceTree = "<group>"; };
 		995403F92E3CD18000468F84 /* KMTransferUtils */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = KMTransferUtils; sourceTree = "<group>"; };
@@ -5561,6 +5563,7 @@
 				6DFE02982CB7338400703844 /* MEGAUIComponent in Frameworks */,
 				B65D17CF2899E16400D5AD33 /* MEGAUIKit in Frameworks */,
 				A87F09192CCFE65100A1B03C /* MEGAUIMock in Frameworks */,
+				994890EB2E4D70B100CBDC33 /* MEGAVideoPlayer in Frameworks */,
 				BF1163BB27F12ED000E5C5A4 /* MessageKit in Frameworks */,
 				B51616492B83361900C6E842 /* Notifications in Frameworks */,
 				BF1163C227F1305400E5C5A4 /* PanModal in Frameworks */,
@@ -10895,6 +10898,7 @@
 				94F568C12A56E7A6005CE9F2 /* DeviceCenter */,
 				0E261EAB2DA5E9BF00858151 /* MEGAAuthentication */,
 				0E119ACA2C7C3CAF0091BF06 /* MEGAPhotos */,
+				994890E72E4D707900CBDC33 /* MEGAVideoPlayer */,
 				B5E378A22B8334DA000C1DAD /* Notifications */,
 				6D93A46D2C5CB24D00529098 /* PhotosBrowser */,
 				945928F22AA23B1A0037694C /* Search */,
@@ -13554,6 +13558,7 @@
 				169ADFCD2DD5BAA500AB80F1 /* MEGAInfrastructure */,
 				16F95A2D2DDF129A00A14DDE /* DeviceKit */,
 				995403F72E3CD0F500468F84 /* KMTransferUtils */,
+				994890EA2E4D70B100CBDC33 /* MEGAVideoPlayer */,
 			);
 			productName = iMEGA;
 			productReference = 1373618A1A6664C300B740E8 /* MEGA.app */;
@@ -18691,6 +18696,10 @@
 		94B6E8872A83F8530082D9B1 /* MEGAPickerFileProviderRepo */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = MEGAPickerFileProviderRepo;
+		};
+		994890EA2E4D70B100CBDC33 /* MEGAVideoPlayer */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = MEGAVideoPlayer;
 		};
 		995403F72E3CD0F500468F84 /* KMTransferUtils */ = {
 			isa = XCSwiftPackageProductDependency;
