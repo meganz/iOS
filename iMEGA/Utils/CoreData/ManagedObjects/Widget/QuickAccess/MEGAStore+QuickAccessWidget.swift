@@ -3,7 +3,7 @@ import MEGADomain
 
 extension MEGAStore {
     
-    func deleteQuickAccessRecentItems(completion: @escaping (Result<Void, GetFavouriteNodesErrorEntity>) -> Void) {
+    func deleteQuickAccessRecentItems(completion: @Sendable @escaping (Result<Void, GetFavouriteNodesErrorEntity>) -> Void) {
         guard let context = stack.newBackgroundContext() else {
             completion(.failure(.megaStore))
             return
@@ -71,13 +71,12 @@ extension MEGAStore {
     }
     
     func fetchAllQuickAccessRecentItem() -> [RecentItemEntity] {
-        var items = [RecentItemEntity]()
+        guard let context = stack.newBackgroundContext() else { return [] }
         
-        guard let context = stack.newBackgroundContext() else { return items }
-        context.performAndWait {
+        return context.performAndWait {
             do {
                 let fetchRequest: NSFetchRequest<QuickAccessWidgetRecentItem> = QuickAccessWidgetRecentItem.fetchRequest()
-                items = try context.fetch(fetchRequest).compactMap {
+                return try context.fetch(fetchRequest).compactMap {
                     guard let handle = $0.handle,
                           let name = $0.name,
                           let date = $0.timestamp,
@@ -89,10 +88,9 @@ extension MEGAStore {
                 }
             } catch let error as NSError {
                 MEGALogError("Could not fetch [QuickAccessWidgetRecentItem] object for path \(error.localizedDescription)")
+                return []
             }
         }
-        
-        return items
     }
     
     func insertQuickAccessFavouriteItem(withBase64Handle base64Handle: String,
@@ -166,12 +164,11 @@ extension MEGAStore {
     }
     
     func fetchAllQuickAccessFavouriteItems() -> [FavouriteItemEntity] {
-        var items = [FavouriteItemEntity]()
-        guard let context = stack.newBackgroundContext() else { return items }
-        context.performAndWait {
+        guard let context = stack.newBackgroundContext() else { return [] }
+        return context.performAndWait {
             do {
                 let fetchRequest: NSFetchRequest<QuickAccessWidgetFavouriteItem> = QuickAccessWidgetFavouriteItem.fetchRequest()
-                items = try context.fetch(fetchRequest).compactMap {
+                return try context.fetch(fetchRequest).compactMap {
                     guard let handle = $0.handle,
                           let name = $0.name,
                           let date = $0.timestamp else { return nil }
@@ -180,16 +177,14 @@ extension MEGAStore {
                 
             } catch let error as NSError {
                 MEGALogError("Could not fetch [QuickAccessWidgetFavouriteItem] object for path \(error.localizedDescription)")
+                return []
             }
         }
-        
-        return items
     }
     
     func fetchQuickAccessFavourtieItems(withLimit fetchLimit: Int?) -> [FavouriteItemEntity] {
-        var items = [FavouriteItemEntity]()
-        guard let context = stack.newBackgroundContext() else { return items }
-        context.performAndWait {
+        guard let context = stack.newBackgroundContext() else { return [] }
+        return context.performAndWait {
             let fetchRequest: NSFetchRequest<QuickAccessWidgetFavouriteItem> = QuickAccessWidgetFavouriteItem.fetchRequest()
             fetchRequest.sortDescriptors = [NSSortDescriptor(key: "timestamp", ascending: false)]
             
@@ -198,7 +193,7 @@ extension MEGAStore {
             }
             
             do {
-                items = try context.fetch(fetchRequest).compactMap {
+                return try context.fetch(fetchRequest).compactMap {
                     guard let handle = $0.handle,
                           let name = $0.name,
                           let date = $0.timestamp else { return nil }
@@ -206,10 +201,9 @@ extension MEGAStore {
                 }
             } catch let error as NSError {
                 MEGALogError("Error fetching QuickAccessWidgetFavouriteItem: \(error.description)")
+                return []
             }
         }
-        
-        return items
     }
     
     func deleteQuickAccessFavouriteItems(completion: @escaping (Result<Void, GetFavouriteNodesErrorEntity>) -> Void) {

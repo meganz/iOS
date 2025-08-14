@@ -68,19 +68,16 @@ extension MEGAStore {
              }
          }() else { return nil }
          
-         var result: NSNumber?
-         
-         context.performAndWait {
+         return context.performAndWait {
              let fetchRequest = NSFetchRequest<OfflineAppearancePreference>(entityName: "OfflineAppearancePreference")
              fetchRequest.predicate = NSPredicate(format: "localPath == %@", path)
              do {
-                 result = try context.fetch(fetchRequest).first?.sortType
+                 return try context.fetch(fetchRequest).first?.sortType
              } catch let error as NSError {
                  MEGALogError("Could not fetch [OfflineAppearancePreference] \(error)")
+                 return nil
              }
          }
-        
-        return result
      }
     
     @objc func fetchOfflineAppearancePreferences() -> [OfflineAppearancePreference]? {
