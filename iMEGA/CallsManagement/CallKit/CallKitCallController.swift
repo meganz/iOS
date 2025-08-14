@@ -2,17 +2,6 @@ import CallKit
 import MEGADomain
 import MEGASwift
 
-protocol CallKitCallControlling {
-    func request(_ transaction: CXTransaction, completion: @escaping ((any Error)?) -> Void)
-    func request(_ transaction: CXTransaction) async throws
-    func requestTransaction(with actions: [CXAction], completion: @escaping ((any Error)?) -> Void)
-    func requestTransaction(with actions: [CXAction]) async throws
-    func requestTransaction(with action: CXAction, completion: @escaping ((any Error)?) -> Void)
-    func requestTransaction(with action: CXAction) async throws
-}
-
-extension CXCallController: CallKitCallControlling {}
-
 final class CallKitCallController {
     static var shared = CallKitCallController(
         callController: CXCallController(),
@@ -26,14 +15,14 @@ final class CallKitCallController {
         callKitProviderDelegateFactory: CallKitProviderDelegateProvider()
     )
     
-    private let callController: any CallKitCallControlling
+    private let callController: CXCallController
     private let uuidFactory: () -> UUID
     private let chatIdBase64Converter: (ChatIdEntity) -> String
     private let callsManager: any CallsManagerProtocol
     private let callKitProviderDelegateFactory: any CallKitProviderDelegateProviding
 
     init(
-        callController: any CallKitCallControlling,
+        callController: CXCallController,
         uuidFactory: @escaping () -> UUID,
         chatIdBase64Converter: @escaping (ChatIdEntity) -> String,
         callsManager: some CallsManagerProtocol,

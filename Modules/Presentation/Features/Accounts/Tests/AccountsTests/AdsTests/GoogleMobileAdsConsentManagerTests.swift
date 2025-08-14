@@ -104,7 +104,7 @@ struct GoogleMobileAdsConsentManagerTests {
     private static func makeSUT(
         canRequestAds: Bool = true,
         consentInformation: MockAdMobConsentInformation? = nil,
-        consentFormType: any AdMobConsentFormProtocol.Type = MockAdMobConsentForm.self,
+        consentFormType: MockAdMobConsentForm.Type = MockAdMobConsentForm.self,
         mobileAds: MockMobileAds = MockMobileAds()
     ) -> GoogleMobileAdsConsentManager {
         GoogleMobileAdsConsentManager(

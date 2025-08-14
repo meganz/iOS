@@ -76,7 +76,8 @@ public final class VideoPlaylistsCollectionViewCoordinator<ViewModel: VideoPlayl
     private func reloadData(with videoPlaylists: [VideoPlaylistEntity]) async {
         var snapshot = DiffableDataSourceSnapshot()
         snapshot.appendSections([.videoPlaylists])
-        snapshot.appendItems(videoPlaylists.map(RowItem.init(videoPlaylist:)), toSection: .videoPlaylists)
+        let items = videoPlaylists.map { RowItem(videoPlaylist: $0) }
+        snapshot.appendItems(items, toSection: .videoPlaylists)
         guard !Task.isCancelled else { return }
         await dataSource?.apply(snapshot, animatingDifferences: true)
     }

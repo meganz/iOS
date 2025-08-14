@@ -1,37 +1,14 @@
-import GoogleMobileAds
+@preconcurrency import GoogleMobileAds
 import MEGADomain
 import MEGARepo
 import MEGASwift
-import UserMessagingPlatform
+@preconcurrency import UserMessagingPlatform
 
 public protocol GoogleMobileAdsConsentManagerProtocol: Sendable {
     var isPrivacyOptionsRequired: Bool { get }
     func gatherConsent() async throws
     func initializeGoogleMobileAdsSDK() async
     func presentPrivacyOptionsForm() async throws -> Bool
-}
-
-public protocol AdMobConsentInformationProtocol: Sendable {
-    var canRequestAds: Bool { get }
-    var privacyOptionsRequirementStatus: PrivacyOptionsRequirementStatus { get }
-    func requestConsentInfoUpdate(
-        with parameters: RequestParameters?,
-        completionHandler: @escaping UMPConsentInformationUpdateCompletionHandler
-    )
-}
-
-public protocol AdMobConsentFormProtocol {
-    static func loadAndPresentIfRequired(
-        from viewController: UIViewController?
-    ) async throws
-    
-    static func presentPrivacyOptionsForm(
-        from viewController: UIViewController?
-    ) async throws
-}
-
-public protocol MobileAdsProtocol: Sendable {
-    func start(completionHandler: GADInitializationCompletionHandler?)
 }
 
 /// AdMob contains all the unit ids for AdMob.
@@ -55,9 +32,9 @@ public enum AdMob {
 public struct GoogleMobileAdsConsentManager: GoogleMobileAdsConsentManagerProtocol {
     public static let shared = GoogleMobileAdsConsentManager()
     
-    private let consentInformation: any AdMobConsentInformationProtocol
-    private let consentFormType: any AdMobConsentFormProtocol.Type
-    private let mobileAds: any MobileAdsProtocol
+    private let consentInformation: ConsentInformation
+    private let consentFormType: ConsentForm.Type
+    private let mobileAds: MobileAds
 
     @Atomic public var isMobileAdsInitialized = false
     
@@ -70,9 +47,9 @@ public struct GoogleMobileAdsConsentManager: GoogleMobileAdsConsentManagerProtoc
     }
     
     public init(
-        consentInformation: some AdMobConsentInformationProtocol = ConsentInformation.shared,
-        consentFormType: any AdMobConsentFormProtocol.Type = ConsentForm.self,
-        mobileAds: some MobileAdsProtocol = MobileAds.shared
+        consentInformation: ConsentInformation = ConsentInformation.shared,
+        consentFormType: ConsentForm.Type = ConsentForm.self,
+        mobileAds: MobileAds = MobileAds.shared
     ) {
         self.consentInformation = consentInformation
         self.consentFormType = consentFormType
@@ -136,12 +113,3 @@ public struct GoogleMobileAdsConsentManager: GoogleMobileAdsConsentManagerProtoc
         }
     }
 }
-
-extension ConsentInformation: @retroactive @unchecked Sendable {}
-extension ConsentInformation: AdMobConsentInformationProtocol {}
-
-extension ConsentForm: @retroactive @unchecked Sendable {}
-extension ConsentForm: AdMobConsentFormProtocol {}
-
-extension MobileAds: @retroactive @unchecked Sendable {}
-extension MobileAds: MobileAdsProtocol {}

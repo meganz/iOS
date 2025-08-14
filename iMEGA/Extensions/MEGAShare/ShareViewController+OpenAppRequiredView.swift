@@ -35,7 +35,9 @@ extension ShareViewController {
             openAppVC?.cancelCompletion = { [weak self] in
                 self?.openAppNC?.dismiss(animated: true) {
                     self?.hideView {
-                        self?.extensionContext?.completeRequest(returningItems: [])
+                        MainActor.assumeIsolated {
+                            self?.extensionContext?.completeRequest(returningItems: [])
+                        }
                     }
                 }
             }
