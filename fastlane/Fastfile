@@ -293,7 +293,6 @@ platform :ios do
     scan(
       workspace: WORKSPACE,
       scheme: SCHEME,
-      devices: ['iPhone 14 Pro Max'],
       cloned_source_packages_path: ENV['SWIFT_PACKAGES_PATH'],
       disable_package_automatic_updates: true,
       output_directory: ".",

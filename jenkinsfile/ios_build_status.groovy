@@ -1,6 +1,10 @@
 @Library('jenkins-ios-shared-lib') _
 
 def postWarningAboutFilesChanged(int maxNumberOfFilesAllowed) {
+    if (env.RUN_UNIT_TESTS_STEP_REACHED != 'true') {
+        return
+    }
+
     withCredentials([gitUsernamePassword(credentialsId: 'Gitlab-Access-Token', gitToolName: 'Default')]) {
         def script = "git diff --name-only origin/develop...origin/${env.BRANCH_NAME} -- \"*.swift\" | wc -l"
         def numberOfFiles = sh(script: script, returnStdout: true).trim() ?: "0"
@@ -15,7 +19,7 @@ def postWarningAboutFilesChanged(int maxNumberOfFilesAllowed) {
 }
 
 def executeFastlaneTask(taskCommand) {
-    if (RUN_UNIT_TESTS_STEP_REACHED == 'false') {
+    if (env.RUN_UNIT_TESTS_STEP_REACHED != 'true') {
         return
     }
 
@@ -152,7 +156,7 @@ pipeline {
                         withCredentials([gitUsernamePassword(credentialsId: 'Gitlab-Access-Token', gitToolName: 'Default')]) {
                             script {
                                 envInjector.injectEnvs {
-                                    RUN_UNIT_TESTS_STEP_REACHED = 'true'
+                                    env.RUN_UNIT_TESTS_STEP_REACHED = 'true'
                                     sh "bundle exec fastlane run_tests_app"
                                     sh "bundle exec fastlane get_coverage"
                                 }
