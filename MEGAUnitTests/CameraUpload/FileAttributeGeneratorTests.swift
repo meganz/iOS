@@ -182,7 +182,7 @@ final class FileAttributeGeneratorTests: XCTestCase {
     
     // MARK: - Mock Classes
     
-    private final class MockThumbnailRepresentation: QLThumbnailRepresentation {
+    private final class MockThumbnailRepresentation: QLThumbnailRepresentation, @unchecked Sendable {
         var _cgImage: CGImage?
         var _uiImage: UIImage?
         
@@ -213,3 +213,6 @@ final class FileAttributeGeneratorTests: XCTestCase {
         }
     }
 }
+
+extension QLThumbnailGenerator.Request: @unchecked @retroactive Sendable {}
+extension QLThumbnailRepresentation: @unchecked @retroactive Sendable {}
