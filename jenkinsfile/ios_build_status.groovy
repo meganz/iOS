@@ -1,7 +1,11 @@
+import groovy.transform.Field
 @Library('jenkins-ios-shared-lib') _
 
+// This is global variable is required to check if the unit test step was reached or not. This is required to avoid running the parse_and_upload_build_warnings_and_errors lane if the unit test step was not reached.
+@Field boolean runUnitTestsStepReached = false
+
 def postWarningAboutFilesChanged(int maxNumberOfFilesAllowed) {
-    if (env.RUN_UNIT_TESTS_STEP_REACHED != 'true') {
+    if (!runUnitTestsStepReached) {
         return
     }
 
@@ -19,7 +23,7 @@ def postWarningAboutFilesChanged(int maxNumberOfFilesAllowed) {
 }
 
 def executeFastlaneTask(taskCommand) {
-    if (env.RUN_UNIT_TESTS_STEP_REACHED != 'true') {
+    if (!runUnitTestsStepReached) {
         return
     }
 
@@ -60,8 +64,6 @@ pipeline {
         ansiColor('xterm')
     }
     environment {
-        // This environment variable is required to check if the unit test step was reached or not. This is required to avoid running the parse_and_upload_build_warnings_and_errors lane if the unit test step was not reached.
-        RUN_UNIT_TESTS_STEP_REACHED = 'false'
         MEGA_IOS_PROJECT_ID = credentials('MEGA_IOS_PROJECT_ID')
     }
     post { 
@@ -156,7 +158,7 @@ pipeline {
                         withCredentials([gitUsernamePassword(credentialsId: 'Gitlab-Access-Token', gitToolName: 'Default')]) {
                             script {
                                 envInjector.injectEnvs {
-                                    env.RUN_UNIT_TESTS_STEP_REACHED = 'true'
+                                    runUnitTestsStepReached = true
                                     sh "bundle exec fastlane run_tests_app"
                                     sh "bundle exec fastlane get_coverage"
                                 }
