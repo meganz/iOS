@@ -49,6 +49,8 @@ extension MEGAAVPlayer: PlayerOptionIdentifiable {
     public nonisolated var option: VideoPlayerOption { .avPlayer }
 }
 
+// MARK: - PlaybackStateObservable
+
 extension MEGAAVPlayer: PlaybackStateObservable {
     public var state: PlaybackState {
         get { stateSubject.value }
@@ -66,6 +68,8 @@ extension MEGAAVPlayer: PlaybackStateObservable {
     }
 }
 
+// MARK: - PlaybackDebugMessageObservable
+
 extension MEGAAVPlayer: PlaybackDebugMessageObservable {
     public nonisolated var debugMessagePublisher: AnyPublisher<String, Never> {
         debugMessageSubject.eraseToAnyPublisher()
@@ -75,6 +79,8 @@ extension MEGAAVPlayer: PlaybackDebugMessageObservable {
         debugMessageSubject.send(message)
     }
 }
+
+// MARK: - PlaybackControllable
 
 extension MEGAAVPlayer: PlaybackControllable {
     public func play() {
@@ -111,6 +117,8 @@ extension MEGAAVPlayer: PlaybackControllable {
     }
 }
 
+// MARK: - VideoRenderable
+
 extension MEGAAVPlayer: VideoRenderable {
     public func setupPlayer(in playerLayer: any PlayerLayerProtocol) {
         if let existingLayer = self.playerLayer {
@@ -129,13 +137,21 @@ extension MEGAAVPlayer: VideoRenderable {
     }
 }
 
+// MARK: - NodeLoadable
+
 extension MEGAAVPlayer: NodeLoadable {
-    public func loadNode(_ node: any PlayableNode) {
+    public func loadNode(_ node: some PlayableNode) {
         if !streamingUseCase.isStreaming {
             streamingUseCase.startStreaming()
         }
 
-        guard let url = streamingUseCase.streamingLink(for: node) else { return }
+        guard let url = streamingUseCase.streamingLink(for: node) else {
+            let errorMessage = "Failed to get streaming link for node"
+            state = .error(errorMessage)
+            playbackDebugMessage(errorMessage)
+            return
+        }
+
         let playerItem = AVPlayerItem(url: url)
         player.replaceCurrentItem(with: playerItem)
 
@@ -171,22 +187,20 @@ extension MEGAAVPlayer: NodeLoadable {
     }
 
     private func willFinishBuffering() {
-        let newStatus: PlaybackState? = {
-            switch player.timeControlStatus {
-            case .playing: return .playing
-            case .paused: return .paused
-            default: return nil
-            }
-        }()
-
-        if let newStatus {
-            state = newStatus
-        }
+        timeControlStatusUpdated()
     }
 
     private func observeStatus(for item: AVPlayerItem) {
         item.publisher(for: \.status, options: [.initial, .new])
-            .sink { [weak self] in self?.playbackDebugMessage("Player item status changed to \($0.rawValue)") }
+            .sink { [weak self] status in
+                if status == .failed {
+                    let errorMessage = "Player item failed with error: \(item.error?.localizedDescription ?? "Unknown error")"
+                    self?.state = .error(errorMessage)
+                    self?.playbackDebugMessage(errorMessage)
+                }
+
+                self?.playbackDebugMessage("Player item status changed to \(status.rawValue)")
+            }
             .store(in: &cancellables)
     }
 
@@ -204,6 +218,8 @@ extension MEGAAVPlayer: NodeLoadable {
             .store(in: &cancellables)
     }
 }
+
+// MARK: - TimeObserver
 
 extension MEGAAVPlayer {
     private func observePlayerPeriodicTime() {
@@ -235,6 +251,10 @@ extension MEGAAVPlayer {
             return
         }
 
+        let newDuration = Duration.seconds(duration.seconds)
+
+        guard newDuration != self.duration else { return }
+
         self.duration = .seconds(duration.seconds)
     }
 }
@@ -242,7 +262,15 @@ extension MEGAAVPlayer {
 extension MEGAAVPlayer {
     private func observePlayerStatus() {
         player.publisher(for: \.status, options: [.initial, .new])
-            .sink { [weak self] in self?.playbackDebugMessage("Player status changed to \($0.rawValue)") }
+            .sink { [weak self] status in
+                if status == .failed {
+                    let errorMessage = self?.player.error?.localizedDescription ?? "Unknown player error"
+                    self?.state = .error(errorMessage)
+                    self?.playbackDebugMessage("Player failed: \(errorMessage)")
+                }
+
+                self?.playbackDebugMessage("Player status changed to \(status.rawValue)")
+            }
             .store(in: &cancellables)
     }
 }
@@ -268,10 +296,9 @@ extension MEGAAVPlayer {
     }
 }
 
-
 public extension MEGAAVPlayer {
     static func liveValue(
-        node: any PlayableNode
+        node: some PlayableNode
     ) -> MEGAAVPlayer {
         let player = MEGAAVPlayer.liveValue
         player.loadNode(node)

@@ -93,7 +93,7 @@ extension MEGAVLCPlayer: PlaybackControllable {
 }
 
 extension MEGAVLCPlayer: NodeLoadable {
-    func loadNode(_ node: any PlayableNode) {
+    func loadNode(_ node: some PlayableNode) {
         if !streamingUseCase.isStreaming {
             streamingUseCase.startStreaming()
         }
