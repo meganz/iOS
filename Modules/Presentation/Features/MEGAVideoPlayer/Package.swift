@@ -11,7 +11,12 @@ let package = Package(
     products: [
         .library(
             name: "MEGAVideoPlayer",
-            targets: ["MEGAVideoPlayer"]),
+            targets: ["MEGAVideoPlayer"]
+        ),
+        .library(
+            name: "MEGAVideoPlayerMock",
+            targets: ["MEGAVideoPlayerMock"]
+        )
     ],
     dependencies: [
         .package(path: "../../../DataSource/MEGASDK"),
@@ -37,9 +42,16 @@ let package = Package(
                 .define("HAVE_LIBUV")
             ]
         ),
+        .target(
+            name: "MEGAVideoPlayerMock",
+            dependencies: ["MEGAVideoPlayer"]
+        ),
         .testTarget(
             name: "MEGAVideoPlayerTests",
-            dependencies: ["MEGAVideoPlayer"]
+            dependencies: [
+                "MEGAVideoPlayer",
+                "MEGAVideoPlayerMock"
+            ]
         ),
     ]
 )

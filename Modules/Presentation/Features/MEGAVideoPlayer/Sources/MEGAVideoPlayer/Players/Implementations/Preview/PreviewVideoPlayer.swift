@@ -2,7 +2,7 @@ import Combine
 import Foundation
 
 @MainActor
-final class MockVideoPlayer: VideoPlayerProtocol {
+final class PreviewVideoPlayer: VideoPlayerProtocol {
     @Published var state: PlaybackState
     @Published var currentTime: Duration
     @Published var duration: Duration
@@ -46,7 +46,7 @@ final class MockVideoPlayer: VideoPlayerProtocol {
     func jumpForward(by seconds: TimeInterval) {}
     func jumpBackward(by seconds: TimeInterval) {}
     func seek(to time: TimeInterval) {}
-    func loadNode(_ node: any PlayableNode) {}
+    func loadNode(_ node: some PlayableNode) {}
     func setupPlayer(in layer: any PlayerLayerProtocol) {}
     func resizePlayer(to frame: CGRect) {}
 }

@@ -1,5 +1,5 @@
-import Foundation
 import Combine
+import Foundation
 
 public typealias VideoPlayerProtocol = PlaybackStateObservable
     & PlaybackControllable
@@ -37,9 +37,20 @@ public protocol VideoRenderable {
     func resizePlayer(to frame: CGRect)
 }
 
+/// Protocol for video players that can load content from playable nodes.
+///
+/// This protocol defines the interface for loading video content into a player.
+/// It abstracts the process of preparing a video player to play content from
+/// various sources that conform to the `PlayableNode` protocol.
 @MainActor
 public protocol NodeLoadable {
-    func loadNode(_ node: any PlayableNode)
+    /// Loads a playable node into the video player.
+    ///
+    /// This method prepares the video player to play content from the specified node.
+    /// The implementation should handle the necessary setup for streaming and playback.
+    ///
+    /// - Parameter node: A playable node containing the video content to be loaded.
+    func loadNode(_ node: some PlayableNode)
 }
 
 public protocol PlaybackDebugMessageObservable {

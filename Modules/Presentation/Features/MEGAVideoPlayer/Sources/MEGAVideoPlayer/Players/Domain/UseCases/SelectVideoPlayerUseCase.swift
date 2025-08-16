@@ -10,7 +10,7 @@ public protocol SelectVideoPlayerUseCaseProtocol {
 public final class SelectVideoPlayerUseCase: SelectVideoPlayerUseCaseProtocol {
     public init() {}
 
-    public var selectedPlayer: VideoPlayerOption = .vlc
+    public var selectedPlayer: VideoPlayerOption = .avPlayer
 
     public func selectPlayer(_ player: VideoPlayerOption) {
         selectedPlayer = player

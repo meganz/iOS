@@ -6,6 +6,10 @@ public final class PlayerOverlayViewModel: ObservableObject {
     @Published var state: PlaybackState = .stopped
     @Published var currentTime: Duration = .seconds(0)
     @Published var duration: Duration = .seconds(0)
+    @Published var isLoading: Bool = true
+    @Published var isControlsVisible: Bool = false
+    private var autoHideTimer: Timer?
+    private var cancellables = Set<AnyCancellable>()
 
     private let player: any VideoPlayerProtocol
     private let didTapBackAction: () -> Void
@@ -35,18 +39,22 @@ public final class PlayerOverlayViewModel: ObservableObject {
         }
 
         player.play()
+        didTapControl()
     }
 
     func didTapPause() {
         player.pause()
+        didTapControl()
     }
 
     func didTapJumpForward() {
         player.jumpForward(by: 10)
+        didTapControl()
     }
 
     func didTapJumpBackward() {
         player.jumpBackward(by: 10)
+        didTapControl()
     }
 
     private func observePlayer() {
@@ -59,7 +67,10 @@ public final class PlayerOverlayViewModel: ObservableObject {
         player
            .statePublisher
            .receive(on: DispatchQueue.main)
-           .assign(to: &$state)
+           .sink { [weak self] newState in
+               self?.handleStateChange(newState)
+           }
+           .store(in: &cancellables)
     }
 
     private func observeCurrentTime() {
@@ -120,6 +131,69 @@ extension PlayerOverlayViewModel {
                     )
                 )
             )
+        }
+    }
+}
+
+// MARK: - Overlay Visibility Management
+
+extension PlayerOverlayViewModel {
+    func showControls() {
+        isControlsVisible = true
+        if shouldAutoHide {
+            startAutoHideTimer()
+        }
+    }
+
+    func hideControls() {
+        isControlsVisible = false
+        cancelAutoHideTimer()
+    }
+
+    func didTapVideoArea() {
+        if isControlsVisible {
+            hideControls()
+        } else {
+            showControls()
+        }
+    }
+
+    private func didTapControl() {
+        guard shouldAutoHide else { return }
+        startAutoHideTimer()
+    }
+
+    private func startAutoHideTimer() {
+        cancelAutoHideTimer()
+
+        autoHideTimer = Timer.scheduledTimer(withTimeInterval: 3.0, repeats: false) { [weak self] _ in
+            Task { @MainActor in
+                self?.hideControls()
+            }
+        }
+    }
+
+    private func cancelAutoHideTimer() {
+        autoHideTimer?.invalidate()
+        autoHideTimer = nil
+    }
+
+    private var shouldAutoHide: Bool {
+        switch state {
+        case .paused:
+            return false
+        case .playing, .buffering, .opening, .stopped, .ended, .error:
+            return true
+        }
+    }
+
+    private func handleStateChange(_ newState: PlaybackState) {
+        state = newState
+        switch newState {
+        case .opening, .buffering:
+            isLoading = true
+        case .playing, .paused, .ended, .error, .stopped:
+            isLoading = false
         }
     }
 }

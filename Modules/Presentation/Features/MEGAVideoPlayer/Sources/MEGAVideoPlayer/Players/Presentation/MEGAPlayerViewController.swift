@@ -1,5 +1,7 @@
 import MEGADesignToken
+#if canImport(UIKit)
 import UIKit
+#endif
 
 public final class MEGAPlayerViewController: UIViewController {
     private let videoView = UIView()
@@ -116,7 +118,7 @@ extension UIView: PlayerLayerProtocol {}
     NavigationStack {
         MEGAPlayerView(
             viewModel: MEGAPlayerViewModel(
-                player: MockVideoPlayer(
+                player: PreviewVideoPlayer(
                     state: .playing, currentTime: .seconds(12), duration: .seconds(5_678)
                 )
             )

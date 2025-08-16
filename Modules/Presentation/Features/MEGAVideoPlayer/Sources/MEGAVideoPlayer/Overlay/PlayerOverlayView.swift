@@ -6,13 +6,34 @@ public struct PlayerOverlayView: View {
 
     public var body: some View {
         ZStack {
-            topToolbar
-            centerPlaybackButtons
-            bottomToolbar
-        }
+            backgroundColor
+                .contentShape(Rectangle())
+                .onTapGesture {
+                    viewModel.didTapVideoArea()
+                }
+            
+            if viewModel.isControlsVisible {
+                topToolbar
+                centerPlaybackButtons
+                bottomToolbar
+            }
 
+            if viewModel.isLoading {
+                ProgressView()
+                    .progressViewStyle(CircularProgressViewStyle(tint: .white))
+            }
+        }
+        .animation(.easeInOut(duration: 0.3), value: viewModel.isControlsVisible)
         .buttonStyle(.plain)
         .task { viewModel.viewWillAppear() }
+    }
+
+    private var backgroundColor: Color {
+        if viewModel.isControlsVisible {
+            TokenColors.Background.blur.swiftUI
+        } else {
+            Color.clear
+        }
     }
 }
 
@@ -41,6 +62,7 @@ extension PlayerOverlayView {
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .frame(width: 24, height: 24)
+                .foregroundStyle(TokenColors.Icon.onColor.swiftUI)
         }
     }
 
@@ -52,6 +74,7 @@ extension PlayerOverlayView {
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .frame(width: 24, height: 24)
+                .foregroundStyle(TokenColors.Icon.onColor.swiftUI)
         }
     }
 
@@ -63,6 +86,7 @@ extension PlayerOverlayView {
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .frame(width: 24, height: 24)
+                .foregroundStyle(TokenColors.Icon.onColor.swiftUI)
         }
     }
 
@@ -74,6 +98,7 @@ extension PlayerOverlayView {
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .frame(width: 24, height: 24)
+                .foregroundStyle(TokenColors.Icon.onColor.swiftUI)
         }
     }
 
@@ -85,6 +110,7 @@ extension PlayerOverlayView {
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .frame(width: 24, height: 24)
+                .foregroundStyle(TokenColors.Icon.onColor.swiftUI)
         }
     }
 }
@@ -121,6 +147,7 @@ extension PlayerOverlayView {
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .frame(width: 56, height: 56)
+                .foregroundStyle(TokenColors.Icon.onColor.swiftUI)
         }
     }
 
@@ -132,6 +159,7 @@ extension PlayerOverlayView {
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .frame(width: 56, height: 56)
+                .foregroundStyle(TokenColors.Icon.onColor.swiftUI)
         }
     }
 
@@ -144,6 +172,7 @@ extension PlayerOverlayView {
                 .aspectRatio(contentMode: .fit)
                 .scaleEffect(x: -1, y: 1)
                 .frame(width: 24, height: 24)
+                .foregroundStyle(TokenColors.Icon.onColor.swiftUI)
         }
     }
 
@@ -155,6 +184,7 @@ extension PlayerOverlayView {
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .frame(width: 24, height: 24)
+                .foregroundStyle(TokenColors.Icon.onColor.swiftUI)
         }
     }
 
@@ -166,6 +196,7 @@ extension PlayerOverlayView {
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .frame(width: 24, height: 24)
+                .foregroundStyle(TokenColors.Icon.onColor.swiftUI)
         }
     }
 
@@ -177,6 +208,7 @@ extension PlayerOverlayView {
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .frame(width: 24, height: 24)
+                .foregroundStyle(TokenColors.Icon.onColor.swiftUI)
         }
     }
 }
@@ -267,6 +299,7 @@ extension PlayerOverlayView {
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .frame(width: 24, height: 24)
+                .foregroundStyle(TokenColors.Icon.onColor.swiftUI)
         }
     }
 
@@ -278,6 +311,7 @@ extension PlayerOverlayView {
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .frame(width: 24, height: 24)
+                .foregroundStyle(TokenColors.Icon.onColor.swiftUI)
         }
     }   
 
@@ -289,6 +323,7 @@ extension PlayerOverlayView {
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .frame(width: 24, height: 24)
+                .foregroundStyle(TokenColors.Icon.onColor.swiftUI)
         }
     }
 
@@ -299,7 +334,8 @@ extension PlayerOverlayView {
             Image("moreBottom", bundle: .module)
                 .resizable()
                 .aspectRatio(contentMode: .fit)
-                .frame(width: 24, height: 24) 
+                .frame(width: 24, height: 24)
+                .foregroundStyle(TokenColors.Icon.onColor.swiftUI)
         }
     }
 }
@@ -313,8 +349,10 @@ extension PlayerOverlayView {
             .aspectRatio(contentMode: .fit)
         PlayerOverlayView(
             viewModel: PlayerOverlayViewModel(
-                player: MockVideoPlayer(
-                    state: .playing, currentTime: .seconds(12), duration: .seconds(5_678)
+                player: PreviewVideoPlayer(
+                    state: .playing,
+                    currentTime: .seconds(345),
+                    duration: .seconds(1_234)
                 )
             ) {}
         )
