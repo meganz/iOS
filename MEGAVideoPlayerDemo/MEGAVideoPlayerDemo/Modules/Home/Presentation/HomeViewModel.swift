@@ -9,7 +9,7 @@ final class HomeViewModel: ObservableObject {
     @Published var selectedVideoNode: MEGANode?
     @Published var nodes: [MEGANode]?
 
-    @Published private(set) var selectedPlayerOption: VideoPlayerOption = .vlc
+    @Published private(set) var selectedPlayerOption: VideoPlayerOption = .avPlayer
 
     private let fetchVideoNodesUseCase: any FetchVideoNodesUseCaseProtocol
     private let offboardingUseCase: any OffboardingUseCaseProtocol
