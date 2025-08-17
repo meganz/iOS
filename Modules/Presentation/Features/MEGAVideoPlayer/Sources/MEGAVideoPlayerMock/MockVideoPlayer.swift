@@ -84,7 +84,6 @@ public final class MockVideoPlayer: VideoPlayerProtocol {
         seekTime = time
     }
     
-    public func loadNode(_ node: any PlayableNode) {
     public func loadNode(_ node: some PlayableNode) {
         loadNodeCallCount += 1
         loadedNode = node

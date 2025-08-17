@@ -15,13 +15,11 @@ public struct VideoPlayerFactory {
 
     private func player(for node: (any PlayableNode)?) -> any VideoPlayerProtocol {
         switch (node, selectPlayerUseCase.selectedPlayer) {
-        case (.some(let node), .vlc):
-            MEGAVLCPlayer.liveValue(node: node)
         case (.some(let node), .avPlayer):
             MEGAAVPlayer.liveValue(node: node)
-        case (.none, .vlc):
-            MEGAVLCPlayer.liveValue
         case (.none, .avPlayer):
+            MEGAAVPlayer.liveValue
+        default:
             MEGAAVPlayer.liveValue
         }
     }
