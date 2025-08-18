@@ -68,29 +68,13 @@ struct SlideShowRouter: Routing {
         )
     }
 
-    private func crossfadeSlideShowViewController() -> UIViewController {
+    func build() -> UIViewController {
         let storyboard: UIStoryboard = UIStoryboard(name: "Slideshow", bundle: nil)
 
         let vc = storyboard.instantiateInitialViewController { coder in
             SlideShowViewController(coder: coder, viewModel: configSlideShowViewModel())
         }
         return vc!
-    }
-
-    private func legacySlideShowViewController() -> UIViewController {
-        let storyboard: UIStoryboard = UIStoryboard(name: "Slideshow", bundle: nil)
-        let slideShowVC = storyboard.instantiateViewController(identifier: "LegacySlideshow") as! LegacySlideShowViewController
-        let vm = configLegacySlideShowViewModel()
-        slideShowVC.update(viewModel: vm)
-        return slideShowVC
-    }
-
-    func build() -> UIViewController {
-        if featureFlagProvider.isFeatureFlagEnabled(for: .crossfadeSlideShow) {
-            crossfadeSlideShowViewController()
-        } else {
-            legacySlideShowViewController()
-        }
     }
     
     func start() {
