@@ -311,7 +311,6 @@ class NodeBrowserViewModel: ObservableObject {
         configureAdsVisibility()
         nodeSourceUpdatesListener.stopListening()
         cancelNodeSensitivityChangesListener()
-        CrashlyticsLogger.log(category: .cloudDrive, "Folder \(nodeSource.parentNode?.handle ?? 0)  disppeared")
     }
     
     func parentNodeMatches(node: NodeEntity) -> Bool {
@@ -340,12 +339,6 @@ class NodeBrowserViewModel: ObservableObject {
 
     private func trackScreenViewEvent() {
         tracker.trackAnalyticsEvent(with: CloudDriveScreenEvent())
-        // Wait for 0.1s for the UI to be rendered then send a log to crashlytics, if the crash happens during the waiting time,
-        // we can be more sure that the crash cause comes from CD.
-        Task {
-            try await Task.sleep(nanoseconds: 100_000_000)
-            CrashlyticsLogger.log(category: .cloudDrive, "Folder \(nodeSource.parentNode?.handle ?? 0) fully appeared")
-        }
     }
     
     private func startObservingNodeSourceChanges() {
@@ -523,8 +516,6 @@ class NodeBrowserViewModel: ObservableObject {
         editing = false
         refresh()
         searchResultsViewModel.bridge.editingCancelled()
-        
-        CrashlyticsLogger.log(category: .cloudDrive, "stop editing")
     }
 
     /// Waits for the node to be loaded from the `NodeSource`.

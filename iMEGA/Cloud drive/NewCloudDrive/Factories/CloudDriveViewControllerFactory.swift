@@ -549,8 +549,6 @@ struct CloudDriveViewControllerFactory {
                     nodeUseCase: nodeUseCase
                 )()
         )
-
-        CrashlyticsLogger.log(category: .cloudDrive, "initialViewMode: \(initialViewMode)")
         
         let searchResultsVM = makeSearchResultsViewModel(
             nodeSource: nodeSource,
@@ -830,11 +828,6 @@ struct CloudDriveViewControllerFactory {
                     isFromSharedItem: config.isFromSharedItem ?? false,
                     warningViewModel: config.warningViewModel
                 )
-                
-                CrashlyticsLogger.log(
-                    category: .cloudDrive,
-                    "didTapNode - id: \($0.result.id) - thumbnailDisplayMode: \($0.result.thumbnailDisplayMode)"
-                )
             },
             context: { result, button in
                 router.didTapMoreAction(
@@ -843,21 +836,11 @@ struct CloudDriveViewControllerFactory {
                     displayMode: carriedOverDisplayMode, 
                     isFromSharedItem: config.isFromSharedItem ?? false
                 )
-                
-                CrashlyticsLogger.log(
-                    category: .cloudDrive,
-                    "didTapMoreAction - id: \(result.id) - thumbnailDisplayMode: \(result.thumbnailDisplayMode)"
-                )
             },
             resignKeyboard: { [weak bridge] in
                 bridge?.hideKeyboard()
             },
-            chipTapped: { chip, selected in
-                CrashlyticsLogger.log(
-                    category: .cloudDrive,
-                    "chipTapped - chip: \(chip.title) - chipType: \(chip.type) - selected: \(selected)"
-                )
-            },
+            chipTapped: { _, _ in },
             sortingOrder: { @MainActor in
                 sortOrderPreferenceUseCase.sortOrder(for: nodeSource.parentNode).toSearchSortOrderEntity()
             }
