@@ -49,4 +49,5 @@ final class PreviewVideoPlayer: VideoPlayerProtocol {
     func loadNode(_ node: some PlayableNode) {}
     func setupPlayer(in layer: any PlayerLayerProtocol) {}
     func resizePlayer(to frame: CGRect) {}
+    func changeRate(to rate: Float) {}
 }

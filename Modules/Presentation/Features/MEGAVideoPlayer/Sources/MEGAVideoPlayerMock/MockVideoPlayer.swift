@@ -37,6 +37,8 @@ public final class MockVideoPlayer: VideoPlayerProtocol {
     public var jumpBackwardSeconds: TimeInterval = 0
     public var seekCallCount: Int = 0
     public var seekTime: TimeInterval = 0
+    public var changeRateCallCount: Int = 0
+    public var changeRateValue: Float = 1.0
     public var loadNodeCallCount: Int = 0
     public var loadedNode: (any PlayableNode)?
     public var setupPlayerCallCount: Int = 0
@@ -83,7 +85,12 @@ public final class MockVideoPlayer: VideoPlayerProtocol {
         seekCallCount += 1
         seekTime = time
     }
-    
+
+    public func changeRate(to rate: Float) {
+        changeRateCallCount += 1
+        changeRateValue = rate
+    }
+
     public func loadNode(_ node: some PlayableNode) {
         loadNodeCallCount += 1
         loadedNode = node

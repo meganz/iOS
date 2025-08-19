@@ -115,6 +115,10 @@ extension MEGAAVPlayer: PlaybackControllable {
         guard newTime.isValid else { return }
         player.seek(to: newTime)
     }
+
+    public func changeRate(to rate: Float) {
+        player.rate = rate
+    }
 }
 
 // MARK: - VideoRenderable

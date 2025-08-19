@@ -1,5 +1,5 @@
-@testable import MEGAVideoPlayer
 import Combine
+@testable import MEGAVideoPlayer
 import MEGAVideoPlayerMock
 import Testing
 
@@ -122,7 +122,7 @@ struct PlayerOverlayViewModelTests {
 
     @Test(arguments: [
         (true, false),
-        (false, true),
+        (false, true)
     ])
     func didTapVideoArea(
         initialControlsVisible: Bool,
@@ -135,8 +135,6 @@ struct PlayerOverlayViewModelTests {
 
         #expect(sut.isControlsVisible == afterControlsVisible)
     }
-
-    // MARK: - Auto-Hide Timer Tests
 
     @Test(arguments: [
         (PlaybackState.playing, false),
@@ -252,6 +250,28 @@ struct PlayerOverlayViewModelTests {
         #expect(mockPlayer.jumpBackwardSeconds == 10)
     }
 
+    @Test(arguments: [
+        (PlaybackSpeed.quarter, PlaybackSpeed.half),
+        (.half, .threeQuarter),
+        (.threeQuarter, .normal),
+        (.normal, .oneQuarter),
+        (.oneQuarter, .oneHalf),
+        (.oneHalf, .oneThreeQuarter),
+        (.oneThreeQuarter, .double),
+        (.double, .quarter)
+    ])
+    func didTapPlaybackSpeed(
+        currentSpeed: PlaybackSpeed,
+        expectedNextSpeed: PlaybackSpeed
+    ) async throws {
+        let sut = makeSUT()
+        sut.currentSpeed = currentSpeed
+
+        sut.didTapPlaybackSpeed()
+
+        #expect(sut.currentSpeed == expectedNextSpeed)
+    }
+
     // MARK: - Time and Duration Tests
 
     @Test
@@ -318,5 +338,25 @@ struct PlayerOverlayViewModelTests {
         sut.duration = duration
 
         #expect(abs(sut.progress - expectedProgress) < 0.001)
+    }
+
+    @Test(arguments: [
+        (PlaybackSpeed.quarter, "0.25x"),
+        (.half, "0.5x"),
+        (.threeQuarter, "0.75x"),
+        (.normal, "1x"),
+        (.oneQuarter, "1.25x"),
+        (.oneHalf, "1.5x"),
+        (.oneThreeQuarter, "1.75x"),
+        (.double, "2x")
+    ])
+    func currentSpeedString(
+        currentSpeed: PlaybackSpeed,
+        expectedCurrentSpeedString: String
+    ) async throws {
+        let sut = makeSUT()
+        sut.currentSpeed = currentSpeed
+
+        #expect(sut.currentSpeedString == expectedCurrentSpeedString)
     }
 }
