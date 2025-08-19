@@ -20,6 +20,8 @@ public final class MEGAAVPlayer {
 
     private nonisolated let debugMessageSubject = PassthroughSubject<String, Never>()
 
+    private var isLoopEnabled: Bool = false
+
     private var cancellables = Set<AnyCancellable>()
 
     private let streamingUseCase: any StreamingUseCaseProtocol
@@ -119,6 +121,10 @@ extension MEGAAVPlayer: PlaybackControllable {
     public func changeRate(to rate: Float) {
         player.rate = rate
     }
+    
+    public func setLooping(_ enabled: Bool) {
+        isLoopEnabled = enabled
+    }
 }
 
 // MARK: - VideoRenderable
@@ -211,7 +217,7 @@ extension MEGAAVPlayer: NodeLoadable {
     private func observeDidPlayToEndTime(for item: AVPlayerItem) {
         notificationCenter
             .publisher(for: AVPlayerItem.didPlayToEndTimeNotification, object: item)
-            .sink { [weak self] _ in self?.state = .ended }
+            .sink { [weak self] _ in self?.handlePlaybackEnded() }
             .store(in: &cancellables)
     }
 
@@ -220,6 +226,15 @@ extension MEGAAVPlayer: NodeLoadable {
             .publisher(for: AVPlayerItem.playbackStalledNotification, object: item)
             .sink { [weak self] _ in self?.willStartBuffering() }
             .store(in: &cancellables)
+    }
+
+    func handlePlaybackEnded() {
+        if isLoopEnabled {
+            seek(to: 0)
+            play()
+        } else {
+            state = .ended
+        }
     }
 }
 

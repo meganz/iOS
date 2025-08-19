@@ -50,4 +50,7 @@ final class PreviewVideoPlayer: VideoPlayerProtocol {
     func setupPlayer(in layer: any PlayerLayerProtocol) {}
     func resizePlayer(to frame: CGRect) {}
     func changeRate(to rate: Float) {}
+    func setLooping(_ enabled: Bool) { }
+    
+    var isLoopEnabled: Bool = false
 }

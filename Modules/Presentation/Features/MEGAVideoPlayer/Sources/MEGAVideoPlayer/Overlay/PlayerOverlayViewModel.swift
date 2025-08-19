@@ -11,6 +11,7 @@ public final class PlayerOverlayViewModel: ObservableObject {
     @Published var isLoading: Bool = true
     @Published var isControlsVisible: Bool = false
     @Published var currentSpeed: PlaybackSpeed = .normal
+    @Published var isLoopEnabled: Bool = false
 
     private var autoHideTimer: Timer?
     private var cancellables = Set<AnyCancellable>()
@@ -155,6 +156,12 @@ extension PlayerOverlayViewModel {
 
     var currentSpeedString: String {
         currentSpeed.displayText
+    }
+    
+    func didTapLoopButton() {
+        isLoopEnabled.toggle()
+        player.setLooping(isLoopEnabled)
+        didTapControl()
     }
 }
 

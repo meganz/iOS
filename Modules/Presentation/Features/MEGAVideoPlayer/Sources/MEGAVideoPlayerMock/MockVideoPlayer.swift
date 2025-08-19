@@ -39,6 +39,9 @@ public final class MockVideoPlayer: VideoPlayerProtocol {
     public var seekTime: TimeInterval = 0
     public var changeRateCallCount: Int = 0
     public var changeRateValue: Float = 1.0
+    public var setLoopingCallCount: Int = 0
+    public var setLoopingValue: Bool = false
+    public var isLoopEnabled: Bool = false
     public var loadNodeCallCount: Int = 0
     public var loadedNode: (any PlayableNode)?
     public var setupPlayerCallCount: Int = 0
@@ -89,6 +92,12 @@ public final class MockVideoPlayer: VideoPlayerProtocol {
     public func changeRate(to rate: Float) {
         changeRateCallCount += 1
         changeRateValue = rate
+    }
+    
+    public func setLooping(_ enabled: Bool) {
+        setLoopingCallCount += 1
+        setLoopingValue = enabled
+        isLoopEnabled = enabled
     }
 
     public func loadNode(_ node: some PlayableNode) {
