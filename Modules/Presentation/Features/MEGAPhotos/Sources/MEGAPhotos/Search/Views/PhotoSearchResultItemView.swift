@@ -23,11 +23,12 @@ struct PhotoSearchResultItemView: View {
                 .font(.subheadline)
                 .fontWeight(.medium)
                 .lineLimit(1)
-            
+
             Spacer()
-            
-            UIButtonWrapper(
-                image: MEGAAssets.UIImage.moreList
+
+            ImageButtonWrapper(
+                image: Image(uiImage: MEGAAssets.UIImage.moreList),
+                imageColor: TokenColors.Icon.secondary.swiftUI
             ) { button in
                 viewModel.moreButtonPressed(button)
             }
