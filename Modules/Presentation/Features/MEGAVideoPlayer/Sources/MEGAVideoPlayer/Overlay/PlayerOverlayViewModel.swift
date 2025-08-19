@@ -4,10 +4,14 @@ import SwiftUI
 @MainActor
 public final class PlayerOverlayViewModel: ObservableObject {
     @Published var state: PlaybackState = .stopped
+
     @Published var currentTime: Duration = .seconds(0)
     @Published var duration: Duration = .seconds(0)
+    
     @Published var isLoading: Bool = true
     @Published var isControlsVisible: Bool = false
+    @Published var currentSpeed: PlaybackSpeed = .normal
+
     private var autoHideTimer: Timer?
     private var cancellables = Set<AnyCancellable>()
 
@@ -28,33 +32,6 @@ public final class PlayerOverlayViewModel: ObservableObject {
 
     func didTapBack() {
         didTapBackAction()
-    }
-
-    func didTapPlay() {
-        switch state {
-        case .ended, .stopped:
-            player.seek(to: 0)
-        default:
-            break
-        }
-
-        player.play()
-        didTapControl()
-    }
-
-    func didTapPause() {
-        player.pause()
-        didTapControl()
-    }
-
-    func didTapJumpForward() {
-        player.jumpForward(by: 10)
-        didTapControl()
-    }
-
-    func didTapJumpBackward() {
-        player.jumpBackward(by: 10)
-        didTapControl()
     }
 
     private func observePlayer() {
@@ -88,7 +65,38 @@ public final class PlayerOverlayViewModel: ObservableObject {
     }
 }
 
-// MARK: - UI Logic
+// MARK: - Center controls logic
+
+extension PlayerOverlayViewModel {
+    func didTapPlay() {
+        switch state {
+        case .ended, .stopped:
+            player.seek(to: 0)
+        default:
+            break
+        }
+
+        player.play()
+        didTapControl()
+    }
+
+    func didTapPause() {
+        player.pause()
+        didTapControl()
+    }
+
+    func didTapJumpForward() {
+        player.jumpForward(by: 10)
+        didTapControl()
+    }
+
+    func didTapJumpBackward() {
+        player.jumpBackward(by: 10)
+        didTapControl()
+    }
+}
+
+// MARK: - Timeline logic
 
 extension PlayerOverlayViewModel {
     var currentTimeString: String {
@@ -132,6 +140,21 @@ extension PlayerOverlayViewModel {
                 )
             )
         }
+    }
+}
+
+// MARK: - Bottom controls logic
+
+extension PlayerOverlayViewModel {
+    func didTapPlaybackSpeed() {
+        let nextSpeed = currentSpeed.next()
+        player.changeRate(to: nextSpeed.rawValue)
+        currentSpeed = nextSpeed
+        didTapControl()
+    }
+
+    var currentSpeedString: String {
+        currentSpeed.displayText
     }
 }
 

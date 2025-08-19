@@ -43,9 +43,6 @@ extension PlayerOverlayView {
         HStack(alignment: .center, spacing: TokenSpacing._5) {
             backButton
             Spacer()
-            downloadButton
-            shareButton
-            snapshotButton
             moreTopButton
         }
         .padding(TokenSpacing._5)
@@ -66,45 +63,9 @@ extension PlayerOverlayView {
         }
     }
 
-    var downloadButton: some View {
-        Button {
-            // TODO: Implement download functionality
-        } label: {
-            Image("download", bundle: .module)
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(width: 24, height: 24)
-                .foregroundStyle(TokenColors.Icon.onColor.swiftUI)
-        }
-    }
-
-    var shareButton: some View {
-        Button {
-            // TODO: Implement share functionality
-        } label: {
-            Image("share", bundle: .module)
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(width: 24, height: 24)
-                .foregroundStyle(TokenColors.Icon.onColor.swiftUI)
-        }
-    }
-
-    var snapshotButton: some View {
-        Button {
-            // TODO: Implement snapshot functionality
-        } label: {
-            Image("snapshot", bundle: .module)
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(width: 24, height: 24)
-                .foregroundStyle(TokenColors.Icon.onColor.swiftUI)
-        }
-    }
-
     var moreTopButton: some View {
         Button {
-            // TODO: Implement more top functionality
+            // Implement more top functionality
         } label: {
             Image("moreTop", bundle: .module)
                 .resizable()
@@ -165,7 +126,7 @@ extension PlayerOverlayView {
 
     var skipBackwardButton: some View {
         Button {
-            // TODO: Implement skip backward functionality
+            // Implement skip backward functionality
         } label: {
             Image("skipForward", bundle: .module)
                 .resizable()
@@ -178,7 +139,7 @@ extension PlayerOverlayView {
 
     var skipForwardButton: some View {
         Button {
-            // TODO: Implement skip forward functionality
+            // Implement skip forward functionality
         } label: {
             Image("skipForward", bundle: .module)
                 .resizable()
@@ -270,22 +231,27 @@ extension PlayerOverlayView {
     var bottomControls: some View {
         HStack(alignment: .center, spacing: TokenSpacing._1) {
             playbackSpeedButton
+                .frame(minWidth: 60, alignment: .center)
             Spacer()
             loopButton
+                .frame(minWidth: 60, alignment: .center)
             Spacer()
             zoomToFillButton
+                .frame(minWidth: 60, alignment: .center)
             Spacer()
             lockButton
+                .frame(minWidth: 60, alignment: .center)
             Spacer()
             moreBottomButton
+                .frame(minWidth: 60, alignment: .center)
         }
     }
 
     var playbackSpeedButton: some View {
         Button {
-            // TODO: Implement playback speed functionality
+            viewModel.didTapPlaybackSpeed()
         } label: {
-            Text("1x")
+            Text(viewModel.currentSpeedString)
                 .foregroundStyle(TokenColors.Text.onColor.swiftUI)
                 .font(.system(size: 18))
         }
@@ -293,7 +259,7 @@ extension PlayerOverlayView {
 
     var loopButton: some View {
         Button {    
-            // TODO: Implement loop functionality
+            // Implement loop functionality
         } label: {
             Image("loop", bundle: .module)
                 .resizable()
@@ -305,7 +271,7 @@ extension PlayerOverlayView {
 
     var zoomToFillButton: some View {
         Button {
-            // TODO: Implement zoom to fit functionality
+            // Implement zoom to fit functionality
         } label: {  
             Image("zoomToFill", bundle: .module)
                 .resizable()
@@ -317,7 +283,7 @@ extension PlayerOverlayView {
 
     var lockButton: some View {
         Button {
-            // TODO: Implement lock functionality
+            // Implement lock functionality
         } label: {
             Image("lock", bundle: .module)
                 .resizable()
@@ -329,7 +295,7 @@ extension PlayerOverlayView {
 
     var moreBottomButton: some View {
         Button {
-            // TODO: Implement more bottom functionality
+            // Implement more bottom functionality
         } label: {
             Image("moreBottom", bundle: .module)
                 .resizable()

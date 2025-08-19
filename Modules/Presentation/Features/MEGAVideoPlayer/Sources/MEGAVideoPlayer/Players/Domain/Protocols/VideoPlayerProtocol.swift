@@ -29,6 +29,7 @@ public protocol PlaybackControllable {
     func jumpForward(by seconds: TimeInterval)
     func jumpBackward(by seconds: TimeInterval)
     func seek(to time: TimeInterval)
+    func changeRate(to rate: Float)
 }
 
 @MainActor
