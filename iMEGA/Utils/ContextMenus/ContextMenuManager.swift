@@ -100,8 +100,6 @@ final class ContextMenuManager: NSObject {
     ///     - contextType: The action's context type
     ///     - subMenuActions: (iOS 13) Action's submenu, allows us to open a new ActionSheet controller with the submenu's actions.
     private func actionHandler(_ identifier: String, contextType: CMElementTypeEntity, subMenuActions: [ContextActionSheetAction]? = nil) {
-        CrashlyticsLogger.log(category: .cloudDrive, "contextMenu identifier: \(identifier), type: \(contextType)")
-        
         switch contextType {
         case .uploadAdd(let action):
             uploadAddMenuDelegate?.uploadAddMenu(didSelect: action)
