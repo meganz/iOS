@@ -359,4 +359,28 @@ struct PlayerOverlayViewModelTests {
 
         #expect(sut.currentSpeedString == expectedCurrentSpeedString)
     }
+    
+    // MARK: - Loop Button Tests
+    
+    @Test
+    func didTapLoopButton_togglesLoopEnabled() {
+        let mockPlayer = MockVideoPlayer()
+        let sut = makeSUT(player: mockPlayer)
+        
+        // Initial state
+        #expect(sut.isLoopEnabled == false)
+        #expect(mockPlayer.setLoopingCallCount == 0)
+        
+        // First tap - should enable loop
+        sut.didTapLoopButton()
+        #expect(sut.isLoopEnabled == true)
+        #expect(mockPlayer.setLoopingCallCount == 1)
+        #expect(mockPlayer.setLoopingValue == true)
+        
+        // Second tap - should disable loop
+        sut.didTapLoopButton()
+        #expect(sut.isLoopEnabled == false)
+        #expect(mockPlayer.setLoopingCallCount == 2)
+        #expect(mockPlayer.setLoopingValue == false)
+    }
 }

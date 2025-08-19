@@ -7,6 +7,7 @@ public struct PlayerOverlayView: View {
     public var body: some View {
         ZStack {
             backgroundColor
+                .ignoresSafeArea()
                 .contentShape(Rectangle())
                 .onTapGesture {
                     viewModel.didTapVideoArea()
@@ -35,6 +36,20 @@ public struct PlayerOverlayView: View {
             Color.clear
         }
     }
+
+    private func controlButton(
+        name: String,
+        action: @escaping () -> Void
+    ) -> some View {
+        Button(action: action) {
+            Image(name, bundle: .module)
+                .renderingMode(.template)
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(width: 24, height: 24)
+                .foregroundStyle(TokenColors.Icon.onColor.swiftUI)
+        }
+    }
 }
 
 // MARK: - Top Toolbar
@@ -52,27 +67,13 @@ extension PlayerOverlayView {
     }
 
     var backButton: some View {
-        Button {
-            viewModel.didTapBack()
-        } label: {
-            Image("back", bundle: .module)
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(width: 24, height: 24)
-                .foregroundStyle(TokenColors.Icon.onColor.swiftUI)
-        }
+        controlButton(name: "back", action: viewModel.didTapBack)
     }
 
     var moreTopButton: some View {
-        Button {
+        controlButton(name: "moreTop", action: {
             // Implement more top functionality
-        } label: {
-            Image("moreTop", bundle: .module)
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(width: 24, height: 24)
-                .foregroundStyle(TokenColors.Icon.onColor.swiftUI)
-        }
+        })
     }
 }
 
@@ -125,52 +126,24 @@ extension PlayerOverlayView {
     }
 
     var skipBackwardButton: some View {
-        Button {
+        controlButton(name: "skipForward", action: {
             // Implement skip backward functionality
-        } label: {
-            Image("skipForward", bundle: .module)
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .scaleEffect(x: -1, y: 1)
-                .frame(width: 24, height: 24)
-                .foregroundStyle(TokenColors.Icon.onColor.swiftUI)
-        }
+        })
+        .scaleEffect(x: -1, y: 1)
     }
 
     var skipForwardButton: some View {
-        Button {
+        controlButton(name: "skipForward", action: {
             // Implement skip forward functionality
-        } label: {
-            Image("skipForward", bundle: .module)
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(width: 24, height: 24)
-                .foregroundStyle(TokenColors.Icon.onColor.swiftUI)
-        }
+        })
     }
 
     var jumpBackwardButton: some View {
-        Button {
-            viewModel.didTapJumpBackward()
-        } label: {
-            Image("backward15", bundle: .module)
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(width: 24, height: 24)
-                .foregroundStyle(TokenColors.Icon.onColor.swiftUI)
-        }
+        controlButton(name: "backward15", action: viewModel.didTapJumpBackward)
     }
 
     var jumpForwardButton: some View {
-        Button {
-            viewModel.didTapJumpForward()
-        } label: {
-            Image("forward15", bundle: .module)
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(width: 24, height: 24)
-                .foregroundStyle(TokenColors.Icon.onColor.swiftUI)
-        }
+        controlButton(name: "forward15", action: viewModel.didTapJumpForward)
     }
 }
 
@@ -258,51 +231,28 @@ extension PlayerOverlayView {
     }
 
     var loopButton: some View {
-        Button {    
-            // Implement loop functionality
-        } label: {
-            Image("loop", bundle: .module)
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(width: 24, height: 24)
-                .foregroundStyle(TokenColors.Icon.onColor.swiftUI)
-        }
+        controlButton(
+            name: viewModel.isLoopEnabled ? "loopEnabled" : "loop",
+            action: viewModel.didTapLoopButton
+        )
     }
 
     var zoomToFillButton: some View {
-        Button {
+        controlButton(name: "zoomToFill", action: {
             // Implement zoom to fit functionality
-        } label: {  
-            Image("zoomToFill", bundle: .module)
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(width: 24, height: 24)
-                .foregroundStyle(TokenColors.Icon.onColor.swiftUI)
-        }
+        })
     }   
 
     var lockButton: some View {
-        Button {
-            // Implement lock functionality
-        } label: {
-            Image("lock", bundle: .module)
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(width: 24, height: 24)
-                .foregroundStyle(TokenColors.Icon.onColor.swiftUI)
-        }
+        controlButton(name: "lock", action: {
+            // Implement zoom to fit functionality
+        })
     }
 
     var moreBottomButton: some View {
-        Button {
+        controlButton(name: "moreBottom", action: {
             // Implement more bottom functionality
-        } label: {
-            Image("moreBottom", bundle: .module)
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(width: 24, height: 24)
-                .foregroundStyle(TokenColors.Icon.onColor.swiftUI)
-        }
+        })
     }
 }
 
