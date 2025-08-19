@@ -589,6 +589,9 @@ extension SharedItemsViewController {
 // MARK: - Ads
 extension SharedItemsViewController: AdsSlotDisplayable {
     @objc func configureAds() {
+        guard !DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .navigationRevamp) else {
+            return
+        }
         configureAdsVisibility()
     }
 }
