@@ -368,9 +368,14 @@ public struct MEGAUIImageBundle {
     public static var achievementsFreeTrialVPN: UIImage { UIImage.achievementsFreeTrialVPN }
     public static var achievementsFreeTrialPass: UIImage { UIImage.achievementsFreeTrialPass }
     public static var tabBarHome: UIImage { UIImage.tabBarHome }
+    public static var tabBarHomeSelected: UIImage { UIImage.tabBarHomeSelected }
     public static var tabBarDrive: UIImage { UIImage.tabBarDrive }
+    public static var tabBarDriveSelected: UIImage { UIImage.tabBarDriveSelected }
     public static var tabBarPhotos: UIImage { UIImage.tabBarPhotos }
+    public static var tabBarPhotosSelected: UIImage { UIImage.tabBarPhotosSelected }
     public static var tabBarChat: UIImage { UIImage.tabBarChat }
+    public static var tabBarChatSelected: UIImage { UIImage.tabBarChatSelected }
     public static var tabBarMenu: UIImage { UIImage.tabBarMenu }
+    public static var tabBarMenuSelected: UIImage { UIImage.tabBarMenuSelected }
     public static var ellipsis: UIImage { UIImage.ellipsis }
 }

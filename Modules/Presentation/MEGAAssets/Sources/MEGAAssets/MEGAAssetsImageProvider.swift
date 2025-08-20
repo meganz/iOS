@@ -604,10 +604,15 @@ extension MEGAAssets {
         public static var achievementsFreeTrialVPN: UIKit.UIImage { MEGAUIImageBundle.achievementsFreeTrialVPN }
         public static var achievementsFreeTrialPass: UIKit.UIImage { MEGAUIImageBundle.achievementsFreeTrialPass }
         public static var tabBarHome: UIKit.UIImage { MEGAUIImageBundle.tabBarHome }
+        public static var tabBarHomeSelected: UIKit.UIImage { MEGAUIImageBundle.tabBarHomeSelected }
         public static var tabBarDrive: UIKit.UIImage { MEGAUIImageBundle.tabBarDrive }
+        public static var tabBarDriveSelected: UIKit.UIImage { MEGAUIImageBundle.tabBarDriveSelected }
         public static var tabBarPhotos: UIKit.UIImage { MEGAUIImageBundle.tabBarPhotos }
+        public static var tabBarPhotosSelected: UIKit.UIImage { MEGAUIImageBundle.tabBarPhotosSelected }
         public static var tabBarChat: UIKit.UIImage { MEGAUIImageBundle.tabBarChat }
+        public static var tabBarChatSelected: UIKit.UIImage { MEGAUIImageBundle.tabBarChatSelected }
         public static var tabBarMenu: UIKit.UIImage { MEGAUIImageBundle.tabBarMenu }
+        public static var tabBarMenuSelected: UIKit.UIImage { MEGAUIImageBundle.tabBarMenuSelected }
         public static var ellipsis: UIKit.UIImage { MEGAUIImageBundle.ellipsis }
     }
 }

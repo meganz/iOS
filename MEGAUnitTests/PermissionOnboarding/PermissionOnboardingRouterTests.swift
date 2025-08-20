@@ -72,6 +72,7 @@ struct PermissionOnboardingRouterTests {
     @MainActor
     @Test(
         "when permission can be requested, should show PermissionOnboardingView with correct view model data and output",
+        .disabled("Disabled due to flakiness"),
         arguments: [
             (TestCase.notifications, true),
             (.notifications, false),

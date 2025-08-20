@@ -89,6 +89,7 @@ import MEGASwift
     }
 
     let icon: UIImage
+    let selectedIcon: UIImage?
     let title: String
     fileprivate let tabType: TabType
 
@@ -101,6 +102,7 @@ import MEGASwift
 
     fileprivate init(tabType: TabType) {
         self.icon = tabType.icon
+        self.selectedIcon = tabType.selectedIcon
         self.title = tabType.title
         self.tabType = tabType
         super.init()
@@ -159,6 +161,20 @@ extension Tab.TabType {
         case .chat: isNavigationRevampEnabled ? MEGAAssets.UIImage.tabBarChat : MEGAAssets.UIImage.chatIcon
         case .sharedItems: MEGAAssets.UIImage.sharedItemsIcon
         case .menu: MEGAAssets.UIImage.tabBarMenu
+        }
+    }
+
+    fileprivate var selectedIcon: UIImage? {
+        guard DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .navigationRevamp) else {
+            return nil
+        }
+        return switch self {
+        case .cloudDrive: MEGAAssets.UIImage.tabBarDriveSelected
+        case .cameraUploads: MEGAAssets.UIImage.tabBarPhotosSelected
+        case .home: MEGAAssets.UIImage.tabBarHomeSelected
+        case .chat: MEGAAssets.UIImage.tabBarChatSelected
+        case .sharedItems: nil
+        case .menu: MEGAAssets.UIImage.tabBarMenuSelected
         }
     }
 
