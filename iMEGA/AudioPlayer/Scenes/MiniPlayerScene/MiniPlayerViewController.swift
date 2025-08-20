@@ -10,7 +10,8 @@ final class MiniPlayerViewController: UIViewController {
     @IBOutlet weak var closeButtonImage: UIImageView!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var stackView: UIStackView!
-    @IBOutlet weak var separatorView: UIView!
+    @IBOutlet weak var topSeparatorView: UIView!
+    @IBOutlet weak var bottomSeparatorView: UIView!
     @IBOutlet weak var activityIndicatorView: UIActivityIndicatorView!
     @IBOutlet weak var containerView: UIView!
     
@@ -170,7 +171,8 @@ final class MiniPlayerViewController: UIViewController {
         progressBarView.backgroundColor = TokenColors.Background.surface2
         progressBarView.progressColor = TokenColors.Components.selectionControl
         
-        separatorView.backgroundColor = TokenColors.Border.strong
+        topSeparatorView.backgroundColor = TokenColors.Border.strong
+        bottomSeparatorView.backgroundColor = TokenColors.Border.strong
         
         playPauseButtonImageView.tintColor = TokenColors.Icon.primary
         
