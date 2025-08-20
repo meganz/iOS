@@ -107,30 +107,33 @@ extension AchievementsDetailsViewController {
     }
 
     @objc func setupIncompletedAchivementDetail() {
-        guard let achievementsDetails = achievementsDetails else { return }
+        guard let achievementsDetails else { return }
 
         self.subtitleView?.layer.borderWidth = 0
 
-        let storageString = String.memoryStyleString(fromByteCount: achievementsDetails.classStorage(forClassId: Int(self.achievementClass.rawValue)))
-        self.subtitleLabel?.text = Strings.Localizable.Account.Achievement.Incomplete.subtitle(storageString)
+        let storageString = storageString(achievementsDetails: achievementsDetails)
+        let validityString = validityString(achievementsDetails: achievementsDetails)
+        let validitySubstring = validitySubstring(achievementsDetails: achievementsDetails)
+
+        self.subtitleLabel?.text = Strings.Localizable.Account.Achievement.Incomplete.subtitle(storageString, validityString)
         self.howItWorksLabel?.text = Strings.Localizable.howItWorks
 
         var howItWorksExplanation = ""
 
         switch achievementClass {
         case .desktopInstall:
-            howItWorksExplanation = Strings.Localizable.Account.Achievement.DesktopApp.Incomplete.Explaination.label(storageString)
+            howItWorksExplanation = Strings.Localizable.Account.Achievement.DesktopApp.Incomplete.Explaination.label(storageString, validitySubstring)
         case .mobileInstall:
-            howItWorksExplanation = Strings.Localizable.Account.Achievement.MobileApp.Incomplete.Explaination.label(storageString)
+            howItWorksExplanation = Strings.Localizable.Account.Achievement.MobileApp.Incomplete.Explaination.label(storageString, validitySubstring)
         case .addPhone:
             updateAddPhoneNumberStatus(isHidden: false)
-            howItWorksExplanation = Strings.Localizable.Account.Achievement.PhoneNumber.Incomplete.Explaination.label(storageString)
+            howItWorksExplanation = Strings.Localizable.Account.Achievement.PhoneNumber.Incomplete.Explaination.label(storageString, validitySubstring)
         case .vpnFreeTrial:
-            subtitleLabel?.text = Strings.Localizable.Account.Achievement.VpnFreeTrial.Detail.Incomplete.label(storageString)
+            subtitleLabel?.text = Strings.Localizable.Account.Achievement.VpnFreeTrial.Detail.Incomplete.label(storageString, validityString)
             howItWorksExplanation = Strings.Localizable.Account.Achievement.VpnFreeTrial.Incomplete.Explanation.label
             addInstallButton(title: Strings.Localizable.Account.Achievement.VpnFreeTrial.buttonText, action: MEGALinkManager.openVPNApp)
         case .passFreeTrial:
-            subtitleLabel?.text = Strings.Localizable.Account.Achievement.PassFreeTrial.Detail.Incomplete.label(storageString)
+            subtitleLabel?.text = Strings.Localizable.Account.Achievement.PassFreeTrial.Detail.Incomplete.label(storageString, validityString)
             howItWorksExplanation = Strings.Localizable.Account.Achievement.PassFreeTrial.Incomplete.Explanation.label
             addInstallButton(title: Strings.Localizable.Account.Achievement.PassFreeTrial.buttonText, action: MEGALinkManager.openPWMApp)
         default:
@@ -147,19 +150,18 @@ extension AchievementsDetailsViewController {
 
         var bonusExpiresIn = ""
 
+        let storageString = storageString(achievementsDetails: achievementsDetails)
+        let validityString = validityString(achievementsDetails: achievementsDetails)
+
         switch achievementClass {
         case .vpnFreeTrial:
-            bonusExpiresIn = Strings.Localizable.Account.Achievement.VpnFreeTrial.Detail.Complete.label(
-                storageString(achievementsDetails: achievementsDetails)
-            )
+            bonusExpiresIn = Strings.Localizable.Account.Achievement.FreeTrial.Detail.Complete.label(storageString, validityString)
             subtitleLabel?.textColor = TokenColors.Text.secondary
             subtitleView?.backgroundColor = TokenColors.Background.surface1
             subtitleView?.layer.borderColor = TokenColors.Border.strong.cgColor
             addInstallButton(title: Strings.Localizable.Account.Achievement.VpnFreeTrial.buttonText, state: .disabled)
         case .passFreeTrial:
-            bonusExpiresIn = Strings.Localizable.Account.Achievement.PassFreeTrial.Detail.Complete.label(
-                storageString(achievementsDetails: achievementsDetails)
-            )
+            bonusExpiresIn = Strings.Localizable.Account.Achievement.FreeTrial.Detail.Complete.label(storageString, validityString)
             subtitleLabel?.textColor = TokenColors.Text.secondary
             subtitleView?.backgroundColor = TokenColors.Background.surface1
             subtitleView?.layer.borderColor = TokenColors.Border.strong.cgColor
@@ -181,9 +183,24 @@ extension AchievementsDetailsViewController {
     }
 
     private func storageString(achievementsDetails: MEGAAchievementsDetails) -> String {
-        String.memoryStyleString(fromByteCount: achievementsDetails.classStorage(
-            forClassId: Int(self.achievementClass.rawValue)
-        ))
+        let classId = Int(self.achievementClass.rawValue)
+        return String.memoryStyleString(fromByteCount: achievementsDetails.classStorage(forClassId: classId))
+    }
+
+    private func validityString(achievementsDetails: MEGAAchievementsDetails) -> String {
+        let classId = Int(self.achievementClass.rawValue)
+        let rewardDuration = achievementsDetails.classExpire(forClassId: classId)
+        return rewardDuration > 0
+            ? Strings.Localizable.Account.Achievement.Validity.days(rewardDuration)
+            : Strings.Localizable.Account.Achievement.Validity.permanent
+    }
+
+    private func validitySubstring(achievementsDetails: MEGAAchievementsDetails) -> String {
+        let classId = Int(self.achievementClass.rawValue)
+        let rewardDuration = achievementsDetails.classExpire(forClassId: classId)
+        return rewardDuration > 0
+            ? Strings.Localizable.Account.Achievement.Validity.Substring.days(rewardDuration)
+            : Strings.Localizable.Account.Achievement.Validity.Substring.permanent
     }
 
     // MARK: - VPN & PWM Free Trial

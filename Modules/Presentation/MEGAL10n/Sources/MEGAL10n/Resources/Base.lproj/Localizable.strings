@@ -1012,8 +1012,8 @@
 "achievementsTitle"="Achievements";
 /* Cell title shown on the achievements view for referral achievement */
 "account.achievement.referral.title"="Invite your friends";
-/* Subtitle of the referral achievement introduction, %@ is a placeholder. */
-"account.achievement.referral.subtitle"="%@ of storage for each invitation. \nValid for 365 days.";
+/* Subtitle of the referral achievement introduction, %1$@ is a placeholder, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
+"account.achievement.referral.subtitle"="%1$@ of storage for each invitation. \n%2$@";
 /* Text shown to explain how and where you can invite friends */
 "Select from phone contacts or enter multiple email addresses"="Select from device contacts or enter multiple email addresses.";
 /*  */
@@ -1050,20 +1050,20 @@
 "account.achievement.desktopApp.title"="Install the MEGA Desktop App";
 /* Explanation label shown on the achievements view for complete install MEGA desktop app achievement, %@ is a placeholder. */
 "account.achievement.desktopApp.complete.explaination.label"="You have received %@ storage space for installing the MEGA Desktop App.";
-/* Explanation label shown on the achievements view for incomplete install MEGA desktop app achievement, %@ is a placeholder. */
-"account.achievement.desktopApp.incomplete.explaination.label"="When you install the MEGA Desktop App you get %@ of complimentary storage space, valid for 365 days. The MEGA Desktop App is available for Windows, macOS and most Linux distributions.";
+/* Explanation label shown on the achievements view for incomplete install MEGA desktop app achievement, %1$@ is a placeholder, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
+"account.achievement.desktopApp.incomplete.explaination.label"="When you install the MEGA Desktop App you get %1$@ of complimentary storage space, %2$@. The MEGA Desktop App is available for Windows, macOS and most Linux distributions.";
 /* Cell title shown on the achievements view for install MEGA mobile app achievement */
 "account.achievement.mobileApp.title"="Install the MEGA Mobile App";
 /* Explanation label shown on the achievements view for complete install MEGA mobile app achievement, %@ is a placeholder. */
 "account.achievement.mobileApp.complete.explaination.label"="You have received %@ storage space for installing the MEGA mobile app.";
-/* Explanation label shown on the achievements view for incomplete install MEGA mobile app achievement, %@ is a placeholder. */
-"account.achievement.mobileApp.incomplete.explaination.label"="When you install the MEGA Mobile App you get %@ of complimentary storage space, valid for 365 days. The MEGA Mobile App is available for iOS and Android. ";
+/* Explanation label shown on the achievements view for incomplete install MEGA mobile app achievement, %1$@ is a placeholder, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
+"account.achievement.mobileApp.incomplete.explaination.label"="When you install the MEGA Mobile App you get %@ of complimentary storage space, %2$@. The MEGA Mobile App is available for iOS and Android. ";
+/* Detail label shown on the achievements details view for Start Free Trial when its completed, %1$@ is placeholder for the storage amount, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
+"account.achievement.freeTrial.detail.complete.label"="%1$@ bonus applied. %2$@";
 /* Cell title shown on the achievements view for Start MEGA VPN Free Trial */
 "account.achievement.vpnFreeTrial.title"="Start MEGA VPN free trial";
-/* Detail label shown on the achievements details view for Start MEGA VPN Free Trial when its incomplete, %@ is placeholder for the storage amount */
-"account.achievement.vpnFreeTrial.detail.incomplete.label"="Get %@ of free storage when you start a MEGA VPN free trial. Valid permanently.";
-/* Detail label shown on the achievements details view for Start MEGA VPN Free Trial when its completed, %@ is placeholder for the storage amount */
-"account.achievement.vpnFreeTrial.detail.complete.label"="%@ bonus applied. Valid permanently.";
+/* Detail label shown on the achievements details view for Start MEGA VPN Free Trial when its incomplete, %1$@ is placeholder for the storage amount, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
+"account.achievement.vpnFreeTrial.detail.incomplete.label"="Get %1$@ of free storage when you start a MEGA VPN free trial. %2$@";
 /* Explanation label shown on the achievements view for incomplete start MEGA VPN Free Trial achievement, %@ is a placeholder. */
 "account.achievement.vpnFreeTrial.incomplete.explanation.label"="Install the MEGA VPN app, log in with your MEGA account, and start your free trial. Your bonus storage is added automatically after starting your free trial.";
 /* Explanation label shown on the achievements view for complete start MEGA VPN Free Trial achievement, %@ is a placeholder. */
@@ -1072,28 +1072,28 @@
 "account.achievement.vpnFreeTrial.buttonText"="Install MEGA VPN";
 /* Cell title shown on the achievements view for Start MEGA Pass Free Trial */
 "account.achievement.passFreeTrial.title"="Start MEGA Pass free trial";
-/* Detail label shown on the achievements details view for Start MEGA Pass Free Trial when its incomplete, %@ is placeholder for the storage amount */
-"account.achievement.passFreeTrial.detail.incomplete.label"="Get %@ of free storage when you start a MEGA Pass free trial. Valid permanently.";
-/* Detail label shown on the achievements details view for Start MEGA Pass Free Trial when its completed, %@ is placeholder for the storage amount */
-"account.achievement.passFreeTrial.detail.complete.label"="%@ bonus applied. Valid permanently.";
+/* Detail label shown on the achievements details view for Start MEGA Pass Free Trial when its incomplete, %1$@ is placeholder for the storage amount, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
+"account.achievement.passFreeTrial.detail.incomplete.label"="Get %1$@ of free storage when you start a MEGA Pass free trial. %2$@";
 /* Explanation label shown on the achievements view for incomplete start MEGA Pass Free Trial achievement, %@ is a placeholder. */
 "account.achievement.passFreeTrial.incomplete.explanation.label"="Install the MEGA Pass app, log in with your MEGA account, and start your free trial. Your bonus storage is added automatically after starting your free trial.";
 /* Explanation label shown on the achievements view for complete start MEGA Pass Free Trial achievement, %@ is a placeholder. */
 "account.achievement.passFreeTrial.complete.explanation.label"="You have received %@ storage space for starting a MEGA Pass free trial";
 /* Text for the button to install MEGA Pass in the Start MEGA Pass Free Trial achievement */
 "account.achievement.passFreeTrial.buttonText"="Install MEGA Pass";
-/* Subtitle of the incomplete achievement, %@ is a placeholder. */
-"account.achievement.incomplete.subtitle"="%@ of storage. Valid for 365 days.";
-/* Subtitle of the incomplete achievement with permanent bonus, %@ is a placeholder. */
-"account.achievement.incomplete.subtitle.permanent"="%@ of storage. Valid permanently.";
+/* Subtitle of the incomplete achievement with permanent bonus, %1$@ is a placeholder for amount of storage, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
+"account.achievement.incomplete.subtitle"="%1$@ of storage. %2$@";
+/* String of the achievements with permanent bonus, used as a full sentence */
+"account.achievement.validity.permanent"="Valid permanently.";
+/* Substring of the achievements with permanent bonus, used as a part of a sentence */
+"account.achievement.validity.substring.permanent"="valid permanently";
 /* Subtitle of the complete achievement with permanent bonus */
 "account.achievement.complete.subtitle.permanent"="Bonus applied";
 /* Add Phone Number title */
 "Add Phone Number"="Add phone number";
 /* Explanation Label shown on the achievements view for complete add phone number achievement, %@ is a placeholder. */
 "account.achievement.phoneNumber.complete.explaination.label"="You have received %@ storage space for adding your phone number.";
-/* Explanation Label shown on the achievements view for incomplete add phone number achievement, %@ is a placeholder. */
-"account.achievement.phoneNumber.incomplete.explaination.label"="When you add your phone number you get %@ of complimentary storage space, valid for 365 days.";
+/* Explanation Label shown on the achievements view for incomplete add phone number achievement, %1$@ is a placeholder, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
+"account.achievement.phoneNumber.incomplete.explaination.label"="When you add your phone number you get %@ of complimentary storage space, %2$@.";
 /* Free storage description to encourage users to add phone number to their accounts */
 "Get free %@ when you add your phone number. This makes it easier for your contacts to find you on MEGA."="Get %@ free when you add your phone number. This makes it easier for your contacts to find you on MEGA.";
 /* Description to encourage users to add phone number to their accounts when there are not achievements */

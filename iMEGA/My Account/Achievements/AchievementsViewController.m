@@ -211,7 +211,11 @@
     }
 
     NSString *inviteStorageString = [NSString memoryStyleStringFromByteCount:[self.achievementsDetails classStorageForClassId:MEGAAchievementInvite]];
-    self.inviteYourFriendsSubtitleLabel.text = [NSString stringWithFormat:LocalizedString(@"account.achievement.referral.subtitle", @""), inviteStorageString];
+    NSInteger rewardDuration = [self.achievementsDetails classExpireForClassId:MEGAAchievementInvite];
+    NSString *validityString = rewardDuration > 0
+        ? [NSString stringWithFormat:LocalizedString(@"account.achievement.validity.days", @""), rewardDuration]
+        : LocalizedString(@"account.achievement.validity.permanent", @"");
+    self.inviteYourFriendsSubtitleLabel.text = [NSString stringWithFormat:LocalizedString(@"account.achievement.referral.subtitle", @""), inviteStorageString, validityString];
 
     self.unlockedStorageQuotaLabel.attributedText = [self textForUnlockedBonuses:self.achievementsDetails.currentStorage];
 
@@ -277,13 +281,17 @@
             [self configureAchievementSubtitleForCell:cell withIndex:index.unsignedIntegerValue forAchievementClass:achievementClass];
         } else {
             NSString *storageString = [NSString memoryStyleStringFromByteCount:[self.achievementsDetails classStorageForClassId:achievementClass]];
-            
+            NSInteger rewardDuration = [self.achievementsDetails classExpireForClassId:achievementClass];
+            NSString *validityString = rewardDuration > 0
+                ? [NSString stringWithFormat:LocalizedString(@"account.achievement.validity.days", @""), rewardDuration]
+                : LocalizedString(@"account.achievement.validity.permanent", @"");
+
             cell.storageQuotaRewardLabel.text = storageString;
             
             cell.storageQuotaRewardView.backgroundColor = [UIColor supportInfoColor];
             cell.storageQuotaRewardLabel.backgroundColor = [UIColor supportInfoColor];
             cell.storageQuotaRewardLabel.textColor = [UIColor whiteTextColor];
-            cell.subtitleLabel.text = [self subtitleTextForIncompleteAchievementWithStorageString:storageString forAchievementClass:achievementClass];
+            cell.subtitleLabel.text = [self subtitleTextForIncompleteAchievementWithStorageString:storageString andValidityString:validityString forAchievementClass:achievementClass];
             cell.subtitleLabel.textColor = [UIColor mnz_secondaryTextColor];
         }
     }
@@ -342,18 +350,10 @@
     }
 }
 
-- (NSString *)subtitleTextForIncompleteAchievementWithStorageString:(NSString *)storageString forAchievementClass:(MEGAAchievement)achievementClass {
+- (NSString *)subtitleTextForIncompleteAchievementWithStorageString:(NSString *)storageString andValidityString:(NSString *)validityString forAchievementClass:(MEGAAchievement)achievementClass {
     NSString *key;
-    switch (achievementClass) {
-        case MEGAAchievementVPNFreeTrial:
-        case MEGAAchievementPassFreeTrial:
-            key = @"account.achievement.incomplete.subtitle.permanent";
-            break;
-        default:
-            key = @"account.achievement.incomplete.subtitle";
-            break;
-    }
-    return [NSString stringWithFormat:LocalizedString(key, @""), storageString];
+    key = @"account.achievement.incomplete.subtitle";
+    return [NSString stringWithFormat:LocalizedString(key, @""), storageString, validityString];
 }
 
 @end
