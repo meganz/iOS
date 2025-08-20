@@ -33,6 +33,7 @@ extension Tab {
 
         viewController?.tabBarItem.title = displayTitle
         viewController?.tabBarItem.image = icon
+        viewController?.tabBarItem.selectedImage = selectedIcon
         return viewController
     }
 }

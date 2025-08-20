@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "tabBarDriveSelected.svg",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

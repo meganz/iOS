@@ -6,51 +6,51 @@
 	<dict>
 		<key>Assets.car</key>
 		<data>
-		2iT28RRmbxAu0mbpJtI6iyaPEpU=
+		mVWn/0GXTcQyt2605xzic4bua78=
 		</data>
 		<key>Info.plist</key>
 		<data>
-		/xOdvDnEjzavRe9Ok94imKmNgfQ=
+		NqyyTrFCtyo8O/cH03//Lb0+nZI=
 		</data>
 		<key>Modules/MEGAAssetsBundle.swiftmodule/arm64-apple-ios-simulator.abi.json</key>
 		<data>
-		cFm0bxJdk3R6+iWVky+FW3/bDiQ=
+		zWIHRXw/Z+aR0Gs61c9gNzvv+LQ=
 		</data>
 		<key>Modules/MEGAAssetsBundle.swiftmodule/arm64-apple-ios-simulator.private.swiftinterface</key>
 		<data>
-		B5CFrayewQy3ts0eaFNwzFN3e4Y=
+		jpvmS1Huc8PlOgmWrwuCOd3/pJs=
 		</data>
 		<key>Modules/MEGAAssetsBundle.swiftmodule/arm64-apple-ios-simulator.swiftdoc</key>
 		<data>
-		No45XZ/a4fo9f4oyuY3KvxQdMmQ=
+		oWCqMFhGAtvZFAnCw+GnRatKl9Q=
 		</data>
 		<key>Modules/MEGAAssetsBundle.swiftmodule/arm64-apple-ios-simulator.swiftinterface</key>
 		<data>
-		B5CFrayewQy3ts0eaFNwzFN3e4Y=
+		jpvmS1Huc8PlOgmWrwuCOd3/pJs=
 		</data>
 		<key>Modules/MEGAAssetsBundle.swiftmodule/arm64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		geZBnys7+YiZhY16uq8AbljSjpw=
+		+hO4BOzNHKH6R0TM+vNd+eTt0Zw=
 		</data>
 		<key>Modules/MEGAAssetsBundle.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
 		<data>
-		cFm0bxJdk3R6+iWVky+FW3/bDiQ=
+		zWIHRXw/Z+aR0Gs61c9gNzvv+LQ=
 		</data>
 		<key>Modules/MEGAAssetsBundle.swiftmodule/x86_64-apple-ios-simulator.private.swiftinterface</key>
 		<data>
-		WHuPZnY50TdS3NjXf57Hc27+08U=
+		kcGh9/ufWdBGckcZp3RJK+3BEaY=
 		</data>
 		<key>Modules/MEGAAssetsBundle.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
 		<data>
-		+I4BRI9iX08D8zv3RqB4tD9NXeM=
+		JYX8zVnUNP7vUWwAviVbhBF2KPQ=
 		</data>
 		<key>Modules/MEGAAssetsBundle.swiftmodule/x86_64-apple-ios-simulator.swiftinterface</key>
 		<data>
-		WHuPZnY50TdS3NjXf57Hc27+08U=
+		kcGh9/ufWdBGckcZp3RJK+3BEaY=
 		</data>
 		<key>Modules/MEGAAssetsBundle.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		y0vpocvE5PYbNBcfwlc6FT7OhdQ=
+		WdpturIm0xAyMAruyu51oGgE0P8=
 		</data>
 	</dict>
 	<key>files2</key>
@@ -59,77 +59,77 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			9b8fE9ZTYe3fIshhZJnOnlHA0HYxGZlYrc9agWFZtuo=
+			Ap3N2gPFdvP51s9xCWcK3omK944nVTMgBh76n/hJsEE=
 			</data>
 		</dict>
 		<key>Modules/MEGAAssetsBundle.swiftmodule/arm64-apple-ios-simulator.abi.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			wsK0Nx9uciNsTTwWlac84PCAoHHqvnMy/mLpJw+HR+M=
+			3NZMdoeyl//6SliSvDBtgzUuyjEfxuDdXhNm0wHYMws=
 			</data>
 		</dict>
 		<key>Modules/MEGAAssetsBundle.swiftmodule/arm64-apple-ios-simulator.private.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			imAcl6ybCf98WewRhD9Cz6EH3C68fkEeeLcVGptKs5w=
+			e8uIoAmnAm9f9V512G6quOxWDnEg1AY4RqUs5SIV1Io=
 			</data>
 		</dict>
 		<key>Modules/MEGAAssetsBundle.swiftmodule/arm64-apple-ios-simulator.swiftdoc</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			RKTv8ujW0O0J+77A37UL644u406duFwqkBfCc7NdHsU=
+			mfAolzfv7rbIq5sI/SOne0A7sd4JVFYGrNchGdxW2A4=
 			</data>
 		</dict>
 		<key>Modules/MEGAAssetsBundle.swiftmodule/arm64-apple-ios-simulator.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			imAcl6ybCf98WewRhD9Cz6EH3C68fkEeeLcVGptKs5w=
+			e8uIoAmnAm9f9V512G6quOxWDnEg1AY4RqUs5SIV1Io=
 			</data>
 		</dict>
 		<key>Modules/MEGAAssetsBundle.swiftmodule/arm64-apple-ios-simulator.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			QA5Z8Cw9rhPNnGbrEcv3oC7Hvez6MqhlEMuB59BrrpE=
+			szH67rh31LnFj0137a1c1huSRuJy4JV41+ha1GKuJlk=
 			</data>
 		</dict>
 		<key>Modules/MEGAAssetsBundle.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			wsK0Nx9uciNsTTwWlac84PCAoHHqvnMy/mLpJw+HR+M=
+			3NZMdoeyl//6SliSvDBtgzUuyjEfxuDdXhNm0wHYMws=
 			</data>
 		</dict>
 		<key>Modules/MEGAAssetsBundle.swiftmodule/x86_64-apple-ios-simulator.private.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			53miLuSQA57buddSzP0BAWGLPFWSQw+k+IAarn7uhvM=
+			i6IIeiMergtbGwN3QLnyAKlKXHWMER06/DJ9hB9fyn8=
 			</data>
 		</dict>
 		<key>Modules/MEGAAssetsBundle.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			+AN/q9tg9dvbcBQ2gQJiaxf5fESwqp0UUcZoOj4ut84=
+			WRg5EwQgeDCfZuYv6BA8idB6F3jhMq5+L31AUqyzjwY=
 			</data>
 		</dict>
 		<key>Modules/MEGAAssetsBundle.swiftmodule/x86_64-apple-ios-simulator.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			53miLuSQA57buddSzP0BAWGLPFWSQw+k+IAarn7uhvM=
+			i6IIeiMergtbGwN3QLnyAKlKXHWMER06/DJ9hB9fyn8=
 			</data>
 		</dict>
 		<key>Modules/MEGAAssetsBundle.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			ZjFZAY1NGXodC6eh5ID+FcB+xLh37jufGvuc5IwcmgM=
+			WXgSeybP9BkgLMSDXja2J5UOWn21xInfD4azLaruurM=
 			</data>
 		</dict>
 	</dict>

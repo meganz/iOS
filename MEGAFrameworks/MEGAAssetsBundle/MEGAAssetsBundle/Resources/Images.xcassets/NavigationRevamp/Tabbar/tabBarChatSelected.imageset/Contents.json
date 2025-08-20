@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "tabBarChatSelected.svg",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
