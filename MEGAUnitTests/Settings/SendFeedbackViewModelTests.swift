@@ -24,7 +24,7 @@ final class SendFeedbackViewModelTests: XCTestCase {
         let sut = SendFeedbackViewModel(accountUseCase: mockUseCase)
         
         let feedbackEntity = await sut.getFeedback()
-        XCTAssertEqual(feedbackEntity.toEmail, "iosfeedback@mega.nz")
+        XCTAssertEqual(feedbackEntity.toEmail, "iosfeedback@mega.io")
     }
     
     @MainActor
