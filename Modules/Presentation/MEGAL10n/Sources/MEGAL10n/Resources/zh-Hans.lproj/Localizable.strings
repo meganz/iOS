@@ -877,7 +877,7 @@
 /* Message that is shown when the user click on 'Cancel your account' to confirm that he's aware that his data will be deleted. */
 "youWillLooseAllData"="您将丢失与此帐户关联的所有数据。您确定要继续吗？";
 /* Account closure, warning message to remind user to contact MEGA support after he confirms that he wants to cancel account. */
-"ifYouCantAccessYourEmailAccount"="如果您无法访问您的电子邮件收件箱，联系support@mega.nz";
+"ifYouCantAccessYourEmailAccount"="如果您无法访问您的电子邮件收件箱，联系support@mega.io";
 /* During account cancellation (deletion) */
 "cancellationLinkHasExpired"="取消链接已过期。";
 /* Text shown in the last alert dialog to confirm the cancellation of an account */
@@ -927,7 +927,7 @@
 /* An alert title where the user provided the incorrect Recovery Key. */
 "invalidRecoveryKey"="恢复密钥无效";
 /* Recovery key error alert title */
-"recoveryKey.error.alert.title"="Recovery key error";
+"recoveryKey.error.alert.title"="恢复密钥错误";
 /* Recovery key error alert message when the user provided incorrect or invalid Recovery key */
 "recoveryKey.error.alert.message.invalidKey"="The recovery key you supplied is either invalid, or is not for this account. Check if you’re using the correct key and try again.";
 /* Text of the alert after opening the recovery link to reset pass being logged. */
@@ -1177,7 +1177,7 @@
 /* Error message shown the In App Purchase is disabled in the device Settings */
 "appPurchaseDisabled"="应用内购买已禁用，请在iOS设置中启用此功能";
 /* Error message shown when the selected product doesn't exist */
-"productNotFound"="未找到产品%@，请联系ios@mega.nz";
+"productNotFound"="未找到产品%@，请联系ios@mega.io";
 /* Alert title to remenber the user that needs to enable purchases */
 "allowPurchase_title"="允许购买";
 /* Alert message to remenber the user that needs to enable purchases before continue */
@@ -1199,7 +1199,7 @@
 /* Alert title shown when a purchase has stopped because some error between the process */
 "failedPurchase_title"="购买已停止";
 /* Alert message shown when a purchase has stopped because some error between the process */
-"failedPurchase_message"="请求已取消或Apple报告了交易错误。请稍后再试，或联系ios@mega.nz。";
+"failedPurchase_message"="请求已取消或Apple报告了交易错误。请稍后再试，或联系ios@mega.io。";
 /* Alert title shown when a restore hasn't been completed correctly */
 "incompleteRestore_title"="恢复出错";
 /* Alert message shown when a restore hasn't been completed correctly */
@@ -1207,7 +1207,7 @@
 /* Alert title shown when the restoring process has stopped for some reason */
 "failedRestore_title"="恢复已停止";
 /* Alert message shown when the restoring process has stopped for some reason */
-"failedRestore_message"="请求被取消或之前的购买无法恢复。请稍后再试，或联系 ios@mega.nz。";
+"failedRestore_message"="请求被取消或之前的购买无法恢复。请稍后再试，或联系 ios@mega.io。";
 /* Title of a warning recommending upgrade to Pro */
 "Upgrade to Pro"="升级到Pro会员";
 /* A description of MEGA features available only with a Pro plan. */
@@ -2446,8 +2446,6 @@
 "MEGA CAMERA UPLOADS FOLDER"="MEGA相机上传文件夹";
 /* Action button text of folder selection screen for camera uploads */
 "Select Folder"="选择文件夹";
-/* Section header of Audio Player playlist that contains playing track */
-"Playing"="正在播放";
 /* Message when to move Camera Uploads folder to Rubbish Bin */
 "Are you sure you want to move Camera Uploads folder to Rubbish Bin? If so, a new folder will be auto-generated for Camera Uploads."="您确定要将相机上传文件夹移至回收站吗？如果是，系统将为您自动生成一个新的相机上传文件夹。";
 /* Text to indicate the action of uploading a file to the cloud drive */
@@ -3019,7 +3017,7 @@
 /* Error title shown when the user try to send more than one report in less than 10 minutes */
 "help.reportIssue.fail.too.many.request.title"="您必须等待10分钟才能提交另一个问题";
 /* Error message shown when the user try to send more than one report in less than 10 minutes */
-"help.reportIssue.fail.too.many.request.message"="请稍候再试，如果问题仍然存在，请通过support@mega.nz联系我们的支持团队";
+"help.reportIssue.fail.too.many.request.message"="请稍候再试，如果问题仍然存在，请通过support@mega.io联系我们的支持团队";
 /* Confirmation title shown when the user is trying to cancel the ongoing upload report. */
 "help.reportIssue.creating.cancel.title"="您确定要取消上传您报告的问题吗？";
 /* Confirmation message shown when the user is trying to cancel the ongoing upload report. */
@@ -4643,29 +4641,29 @@
 /* Onboarding USP carousel first page title */
 "onboarding.uniqueSellingProposition.carousel.page.first.title"="您持有这把密钥";
 /* Onboarding USP carousel first page subtitle */
-"onboarding.uniqueSellingProposition.carousel.page.first.subtitle"="User controlled, zero-knowledge encryption means no one can see your data unless you want them to - not even us!";
+"onboarding.uniqueSellingProposition.carousel.page.first.subtitle"="用户控制的零知识加密意味着除非您愿意，否则没有人能看到您的数据，即使是我们也是如此！";
 /* Onboarding USP carousel second page title */
-"onboarding.uniqueSellingProposition.carousel.page.second.title"="Keep every moment safe";
+"onboarding.uniqueSellingProposition.carousel.page.second.title"="确保每时每刻的安全";
 /* Onboarding USP carousel second page subtitle */
-"onboarding.uniqueSellingProposition.carousel.page.second.subtitle"="With automatic camera uploads to MEGA Cloud, and generous storage, you’ll never lose a precious memory";
+"onboarding.uniqueSellingProposition.carousel.page.second.subtitle"="借助自动将相机上传到MEGA云端，以及充足的存储空间，您永远不会丢失宝贵的回忆。";
 /* Onboarding USP carousel third page title */
-"onboarding.uniqueSellingProposition.carousel.page.third.title"="Your data. Your space.";
+"onboarding.uniqueSellingProposition.carousel.page.third.title"="您的数据。您的地盘。";
 /* Onboarding USP carousel third page subtitle */
-"onboarding.uniqueSellingProposition.carousel.page.third.subtitle"="Ample storage and easy ways to transfer, share, and organise your files means you can safely use MEGA for whatever you choose";
+"onboarding.uniqueSellingProposition.carousel.page.third.subtitle"="充足的存储空间和简易的传输、共享和整理文件的方式意味着您可以安全地使用MEGA执行任意操作";
 /* Onboarding USP carousel fourth page title */
 "onboarding.uniqueSellingProposition.carousel.page.fourth.title"="私密的谈话";
 /* Onboarding USP carousel fourth page subtitle */
 "onboarding.uniqueSellingProposition.carousel.page.fourth.subtitle"="Chat with friends and family, share photos or sensitive information, video call, and schedule meetings. Safety and privacy guaranteed.";
 /* Onboarding Notification CTA title */
-"onboarding.cta.notifications.title"="Never miss an important update";
+"onboarding.cta.notifications.title"="千万不要错过重要的更新";
 /* Onboarding Notification CTA description */
 "onboarding.cta.notifications.explanation"="Stay informed with real-time updates that matter to you. Get alerts for shared folder activity, security updates, and exclusive offers, so you never miss anything important.\n\nYou can manage notification preferences at any time in the settings.";
 /* Onboarding Notification CTA *Enable* button */
 "onboarding.cta.notifications.buttons.enable"="启用提醒通知";
 /* Onboarding Notification CTA *Skip* button */
-"onboarding.cta.notifications.buttons.skip"="Skip for now";
+"onboarding.cta.notifications.buttons.skip"="暂时跳过";
 /* Onboarding Camera Backups CTA title */
-"onboarding.cta.cameraBackups.title"="Keep your photos safe, always";
+"onboarding.cta.cameraBackups.title"="始终确保照片安全";
 /* Onboarding Camera Backups CTA description */
 "onboarding.cta.cameraBackups.explanation"="Your memories matter\n\nCamera uploads automatically backs up your photos and videos to your MEGA Cloud drive, so you never have to worry about losing them";
 /* Onboarding Camera Backups CTA note */
@@ -4673,7 +4671,7 @@
 /* Onboarding Camera Backups CTA *Enable* button */
 "onboarding.cta.cameraBackups.buttons.enable"="启用相机上传";
 /* Onboarding Camera Backups CTA *Skip* button */
-"onboarding.cta.cameraBackups.buttons.skip"="Skip for now";
+"onboarding.cta.cameraBackups.buttons.skip"="暂时跳过";
 /* String explaining the auto-renewal policy of the Pro subscription. */
 "subscriptionPurchase.autoRenewDescription"="Subscriptions are renewed automatically for successive subscription periods of the same duration and at the same price as the initial period chosen.\n\nYou can cancel your Pro plan anytime but no later than 24 hours before your next subscription payment is due. [L]Learn how to manage your subscription in your settings[/L].";
 /* Title shown for the free plan card */
@@ -4683,7 +4681,7 @@
 /* First benefit shown for the free plan card */
 "subscriptionPurchase.freePlanCard.feature.one"="Free 20 GB of storage";
 /* Second benefit shown for the free plan card */
-"subscriptionPurchase.freePlanCard.feature.two"="Limited transfers";
+"subscriptionPurchase.freePlanCard.feature.two"="有限的传输";
 /* Button title for the free plan card */
 "subscriptionPurchase.freePlanCard.button.title"="使用免费帐户";
 /* Displays the amount of storage included in the subscription plan */
@@ -4695,7 +4693,7 @@
 /* Button title to cancel the subscription purchase. */
 "subscriptionPurchase.maybeLater"="稍后";
 /* Title for the features of pro plan in the subscription purchase screen. */
-"subscriptionPurchase.featuresOfProPlan.title"="Additional benefits of Pro plans";
+"subscriptionPurchase.featuresOfProPlan.title"="Pro计划的其他好处";
 /* Features of pro plan in the subscription purchase screen. */
 "subscriptionPurchase.featuresOfProPlan.message"="• Password-protected links\n\n• Links with expiry dates\n\n• Rewind folders up to 180 days of deleted data\n\n• Host calls and meetings with unlimited participants and no time restrictions\n\n• Schedule rubbish bin clearing between 7 days and 10 years\n\n• Priority support";
 /* Title for the first subscription feature: generous storage capacity */
@@ -4705,15 +4703,15 @@
 /* Title for the second subscription feature: transfer quota sharing */
 "subscriptionPurchase.feature.two.title"="传输流量共享";
 /* Description for the second subscription feature: how shared users can use your quota */
-"subscriptionPurchase.feature.two.description"="People you share items with can use your quota to download and stream files";
+"subscriptionPurchase.feature.two.description"="接收您共享项目的人可以使用您的配额下载和串流文件";
 /* Title for the third subscription feature: MEGA VPN service */
 "subscriptionPurchase.feature.three.title"="MEGA VPN";
 /* Description for the third subscription feature: benefits of using the MEGA VPN */
-"subscriptionPurchase.feature.three.description"="Stay safe online with our high-speed VPN that’s both fast and simple to use";
+"subscriptionPurchase.feature.three.description"="使用我们既快速又简单易用的高速VPN保持在线安全";
 /* Title for the fourth subscription feature: MEGA Pass password manager */
 "subscriptionPurchase.feature.four.title"="MEGA Pass";
 /* Description for the fourth subscription feature: benefits of using MEGA Pass for password management */
-"subscriptionPurchase.feature.four.description"="Organise all your passwords and keep them safe with our password manager";
+"subscriptionPurchase.feature.four.description"="使用我们的密码管理器整理您所有密码并确保其安全";
 /* Title for all the feature in subscription purchase view. */
 "subscriptionPurchase.feature.title"="您将获得：";
 /* Title for the Home tab bar item */
@@ -4729,31 +4727,31 @@
 /* Storage benefit shown for the free plan card */
 "subscriptionPurchase.freePlanCard.feature.storage"="%@存储空间";
 /* Title shown for the free plan card for upgrading */
-"subscriptionPurchase.freePlanCard.title.upgrade"="Continue with your free plan";
+"subscriptionPurchase.freePlanCard.title.upgrade"="继续使用您的免费方案";
 /* Button title for the free plan card for upgrading */
-"subscriptionPurchase.freePlanCard.button.title.upgrade"="Continue with free plan";
+"subscriptionPurchase.freePlanCard.button.title.upgrade"="继续使用免费方案";
 /* Button title for offline files in menu */
 "accountMenu.offlineFiles"="离线文件";
 /* Button title for MEGA VPN in menu */
 "accountMenu.megaVPN.buttonTitle"="MEGA VPN";
 /* Button subtitle for MEGA VPN in menu */
-"accountMenu.megaVPN.buttonSubtitle"="High-speed VPN";
+"accountMenu.megaVPN.buttonSubtitle"="高速VPN";
 /* Button title for MEGA Pass in menu */
 "accountMenu.megaPass.buttonTitle"="MEGA Pass";
 /* Button subtitle for MEGA Pass in menu */
-"accountMenu.megaPass.buttonSubtitle"="Securely store and autofill your passwords";
+"accountMenu.megaPass.buttonSubtitle"="安全存储和自动填充您的密码";
 /* Button title for MEGA transfer it in menu */
 "accountMenu.transferIt.buttonTitle"="Transfer.it";
 /* Button subtitle for MEGA transfer it in menu */
-"accountMenu.transferIt.buttonSubtitle"="Fast, secure file transfers";
+"accountMenu.transferIt.buttonSubtitle"="快速、安全的文件传输";
 /* Section title for the other MEGA apps in menu */
 "accountMenu.otherApps.sectionTitle"="MEGA privacy suite";
 /* Button subtitle for log out in menu */
 "accountMenu.logout"="登出";
 /* subscription purchase description for the storage capacity */
-"subscriptionPurchase.feature.storage.description"="Store up to %@ of data";
+"subscriptionPurchase.feature.storage.description"="最多可存储%@的数据";
 /* Camera uploads status banner title paused due to network connection */
-"cameraUploads.banner.status.paused.noNetworkConnection.title"="Camera uploads paused";
+"cameraUploads.banner.status.paused.noNetworkConnection.title"="相机上传已暂停";
 /* Camera uploads status banner sub title paused due to no network connection */
 "cameraUploads.banner.status.paused.noNetworkConnection.subheading"="Connect to WiFi or use mobile data";
 /* Camera uploads status banner sub title paused due to no Wi-Fi connection. Please leave [S], [/S] as it is which is used to bolden the text. */
@@ -4766,3 +4764,7 @@
 "cameraUploads.banner.status.paused.highThermalState.title"="Camera uploads paused due to high device temperature";
 /* Camera uploads status banner sub title paused due to device heat */
 "cameraUploads.banner.status.paused.highThermalState.subheading"="Uploads will resume automatically when your device cools down";
+/* Local Notification Title for Camera uploads backup reminder */
+"notification.local.cameraUploadBackupReminder.title"="Protect your precious moments!";
+/* Local Notification Body for Camera uploads backup reminder */
+"notification.local.cameraUploadBackupReminder.body"="It’s time to back up your photos and videos";

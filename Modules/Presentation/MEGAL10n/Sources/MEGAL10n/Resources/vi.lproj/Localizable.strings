@@ -629,9 +629,9 @@
 /* Label shown when a contact request is pending */
 "pending"="Chờ hồi âm";
 /* Button title of the action that allows to leave a shared folder */
-"leaveFolder"="Rời khỏi thư mục";
+"leaveFolder"="Từ bỏ thư mục";
 /* Alert message shown when the user tap on the leave share action for one inshare */
-"leaveShareAlertMessage"="Bạn có chắc muốn rời khỏi thư mục này không?";
+"leaveShareAlertMessage"="Bạn có chắc muốn từ bỏ thư mục chia sẻ này không?";
 /* Alert message shown when the user tap on the leave share action selecting multiple inshares */
 "leaveSharesAlertMessage"="Bạn có chắc muốn rời khỏi các thư mục này không?";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected */
@@ -877,7 +877,7 @@
 /* Message that is shown when the user click on 'Cancel your account' to confirm that he's aware that his data will be deleted. */
 "youWillLooseAllData"="Bạn sẽ mất tất cả dữ liệu liên quan đến tới tài khoản này. Bạn có chắc muốn tiếp tục không?";
 /* Account closure, warning message to remind user to contact MEGA support after he confirms that he wants to cancel account. */
-"ifYouCantAccessYourEmailAccount"="Nếu bạn không truy cập được hộp thư email của mình, xin liên hệ support@mega.nz";
+"ifYouCantAccessYourEmailAccount"="Nếu bạn không truy cập được hộp thư email của mình, xin liên hệ support@mega.io";
 /* During account cancellation (deletion) */
 "cancellationLinkHasExpired"="Yêu cầu hủy bỏ này đã hết hạn.";
 /* Text shown in the last alert dialog to confirm the cancellation of an account */
@@ -1177,7 +1177,7 @@
 /* Error message shown the In App Purchase is disabled in the device Settings */
 "appPurchaseDisabled"="Mua in-app bị tắt, xin bật lại trong phần Cài đặt của iOS";
 /* Error message shown when the selected product doesn't exist */
-"productNotFound"="Không tìm thấy mặt hàng %@, xin liên lạc với ios@mega.nz";
+"productNotFound"="Không tìm thấy mặt hàng %@, xin liên lạc với ios@mega.io";
 /* Alert title to remenber the user that needs to enable purchases */
 "allowPurchase_title"="Quyền truy cập mua hàng";
 /* Alert message to remenber the user that needs to enable purchases before continue */
@@ -1199,7 +1199,7 @@
 /* Alert title shown when a purchase has stopped because some error between the process */
 "failedPurchase_title"="Việc mua hàng đã bị dừng";
 /* Alert message shown when a purchase has stopped because some error between the process */
-"failedPurchase_message"="Có thể quý khách đã hủy mua hàng hoặc Apple báo lỗi phiên giao dịch này. Xin thử lại sau, hoặc liên hệ ios@mega.nz.";
+"failedPurchase_message"="Có thể quý khách đã hủy mua hàng hoặc Apple báo lỗi phiên giao dịch này. Xin thử lại sau, hoặc liên hệ ios@mega.io";
 /* Alert title shown when a restore hasn't been completed correctly */
 "incompleteRestore_title"="Lỗi khôi phục";
 /* Alert message shown when a restore hasn't been completed correctly */
@@ -1207,7 +1207,7 @@
 /* Alert title shown when the restoring process has stopped for some reason */
 "failedRestore_title"="Việc khôi phục đã dừng lại";
 /* Alert message shown when the restoring process has stopped for some reason */
-"failedRestore_message"="Có thể yêu cầu đã bị hủy hoặc không thể phục hồi lại được mặt hàng giao dịch trước đây. Xin thử lại sau, hoặc liên hệ ios@mega.nz để được trợ giúp.";
+"failedRestore_message"="Có thể yêu cầu đã bị hủy hoặc không thể phục hồi lại được mặt hàng giao dịch trước đây. Xin thử lại sau, hoặc liên hệ ios@mega.io để được trợ giúp.";
 /* Title of a warning recommending upgrade to Pro */
 "Upgrade to Pro"="Nâng cấp lên hạng Pro";
 /* A description of MEGA features available only with a Pro plan. */
@@ -2446,8 +2446,6 @@
 "MEGA CAMERA UPLOADS FOLDER"="Thư mục Đăng Tải Camêra trên MEGA";
 /* Action button text of folder selection screen for camera uploads */
 "Select Folder"="Chọn thư mục";
-/* Section header of Audio Player playlist that contains playing track */
-"Playing"="Đang phát";
 /* Message when to move Camera Uploads folder to Rubbish Bin */
 "Are you sure you want to move Camera Uploads folder to Rubbish Bin? If so, a new folder will be auto-generated for Camera Uploads."="Bạn có chắc muốn chuyển thư mục Đăng Tải Camêra vào Thùng Rác không? Nếu có, một thư mục mới sẽ được tự tạo ra để thay thế cho việc Đăng Tải Camêra.";
 /* Text to indicate the action of uploading a file to the cloud drive */
@@ -3019,7 +3017,7 @@
 /* Error title shown when the user try to send more than one report in less than 10 minutes */
 "help.reportIssue.fail.too.many.request.title"="Bạn phải đợi 10 phút trước khi gửi vấn đề khác";
 /* Error message shown when the user try to send more than one report in less than 10 minutes */
-"help.reportIssue.fail.too.many.request.message"="Vui lòng thử lại sau, hoặc liên hệ với nhóm hỗ trợ của chúng tôi qua support@mega.nz nếu vấn đề vẫn tiếp diễn";
+"help.reportIssue.fail.too.many.request.message"="Vui lòng thử lại sau, hoặc liên hệ với nhóm hỗ trợ của chúng tôi qua support@mega.io nếu vấn đề vẫn tiếp diễn";
 /* Confirmation title shown when the user is trying to cancel the ongoing upload report. */
 "help.reportIssue.creating.cancel.title"="Bạn có chắc chắn muốn hủy bỏ việc gửi đăng tải lên báo cáo?";
 /* Confirmation message shown when the user is trying to cancel the ongoing upload report. */
@@ -3415,9 +3413,9 @@
 /* Alert title shown for video with options to resume playing the video or start from the beginning */
 "video.alert.resumeVideo.title"="Tiếp tục phát video?";
 /* Alert message shown for video with options to resume playing the video or start from the beginning. %1$s will be replaced by name of the video. %2$s will be replaced by video timestamp */
-"video.alert.resumeVideo.message"="“%1$s” sẽ tiếp tục phát tại %2$s";
+"video.alert.resumeVideo.message"="“%1$s” sẽ tiếp tục phát tại mốc %2$s";
 /* Alert button title that will resume playing the video */
-"video.alert.resumeVideo.button.resume"="Tiếp tục chỗ cũ";
+"video.alert.resumeVideo.button.resume"="Tiếp tục";
 /* Alert button title that will start playing the video from the beginning */
 "video.alert.resumeVideo.button.restart"="Phát từ đầu";
 /* Push notification message to be shown when the meeting is about to start now. */
@@ -4766,3 +4764,7 @@
 "cameraUploads.banner.status.paused.highThermalState.title"="Đăng tải camêra tạm dừng do nhiệt độ của thiết bị cao";
 /* Camera uploads status banner sub title paused due to device heat */
 "cameraUploads.banner.status.paused.highThermalState.subheading"="Các phiên tải lên sẽ tự động tiếp tục khi thiết bị của bạn nguội đi";
+/* Local Notification Title for Camera uploads backup reminder */
+"notification.local.cameraUploadBackupReminder.title"="Bảo vệ những khoảnh khắc quý giá của bạn!";
+/* Local Notification Body for Camera uploads backup reminder */
+"notification.local.cameraUploadBackupReminder.body"="Đã đến lúc sao lưu lại hình ảnh và đoạn video của bạn";

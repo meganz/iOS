@@ -877,7 +877,7 @@
 /* Message that is shown when the user click on 'Cancel your account' to confirm that he's aware that his data will be deleted. */
 "youWillLooseAllData"="このアカウントに関連付けられているデータがすべて失われます。続行してもよろしいですか？";
 /* Account closure, warning message to remind user to contact MEGA support after he confirms that he wants to cancel account. */
-"ifYouCantAccessYourEmailAccount"="メール受信箱にアクセスできない場合、support@mega.nzにご連絡ください";
+"ifYouCantAccessYourEmailAccount"="メール受信箱にアクセスできない場合、support@mega.ioにご連絡ください";
 /* During account cancellation (deletion) */
 "cancellationLinkHasExpired"="キャンセルリンクは失効しました。";
 /* Text shown in the last alert dialog to confirm the cancellation of an account */
@@ -1177,7 +1177,7 @@
 /* Error message shown the In App Purchase is disabled in the device Settings */
 "appPurchaseDisabled"="アプリ内購入が無効になっています。iOSの設定で有効にしてください";
 /* Error message shown when the selected product doesn't exist */
-"productNotFound"="製品%@が見つかりません。ios@mega.nz にお問い合わせください";
+"productNotFound"="製品%@が見つかりません。ios@mega.io にお問い合わせください";
 /* Alert title to remenber the user that needs to enable purchases */
 "allowPurchase_title"="購入を有効にしてください";
 /* Alert message to remenber the user that needs to enable purchases before continue */
@@ -1199,7 +1199,7 @@
 /* Alert title shown when a purchase has stopped because some error between the process */
 "failedPurchase_title"="ご購入が停止されました";
 /* Alert message shown when a purchase has stopped because some error between the process */
-"failedPurchase_message"="お客様の方でご要求をキャンセルされたか、Appleがトランザクションエラーを報告しました。後でもう一度やり直すか、ios@mega.nzにお問い合わせください。";
+"failedPurchase_message"="お客様の方でご要求をキャンセルされたか、Appleがトランザクションエラーを報告しました。後でもう一度やり直すか、ios@mega.ioにお問い合わせください。";
 /* Alert title shown when a restore hasn't been completed correctly */
 "incompleteRestore_title"="復元の問題";
 /* Alert message shown when a restore hasn't been completed correctly */
@@ -1207,7 +1207,7 @@
 /* Alert title shown when the restoring process has stopped for some reason */
 "failedRestore_title"="復元が停止されました";
 /* Alert message shown when the restoring process has stopped for some reason */
-"failedRestore_message"="要求がキャンセルされたか、以前のご購入を復元できませんでした。後でもう一度やり直すか、ios@mega.nz にお問い合わせください。";
+"failedRestore_message"="要求がキャンセルされたか、以前のご購入を復元できませんでした。後でもう一度やり直すか、ios@mega.io にお問い合わせください。";
 /* Title of a warning recommending upgrade to Pro */
 "Upgrade to Pro"="Proにアップグレード";
 /* A description of MEGA features available only with a Pro plan. */
@@ -2446,8 +2446,6 @@
 "MEGA CAMERA UPLOADS FOLDER"="MEGAカメラアップロードフォルダ";
 /* Action button text of folder selection screen for camera uploads */
 "Select Folder"="フォルダを選択";
-/* Section header of Audio Player playlist that contains playing track */
-"Playing"="再生中";
 /* Message when to move Camera Uploads folder to Rubbish Bin */
 "Are you sure you want to move Camera Uploads folder to Rubbish Bin? If so, a new folder will be auto-generated for Camera Uploads."="カメラアップロードフォルダをごみ箱に移動してもよろしいですか？その場合、新しいフォルダがカメラアップロード用に自動的に生成されます。";
 /* Text to indicate the action of uploading a file to the cloud drive */
@@ -3019,7 +3017,7 @@
 /* Error title shown when the user try to send more than one report in less than 10 minutes */
 "help.reportIssue.fail.too.many.request.title"="別の問題を送信する前に10分待つ必要があります";
 /* Error message shown when the user try to send more than one report in less than 10 minutes */
-"help.reportIssue.fail.too.many.request.message"="後でもう一度お試しになるか、問題が解決しない場合はsupport@mega.nzから当社サポートチームにご連絡ください。";
+"help.reportIssue.fail.too.many.request.message"="後でもう一度お試しになるか、問題が解決しない場合はsupport@mega.ioから当社サポートチームにご連絡ください。";
 /* Confirmation title shown when the user is trying to cancel the ongoing upload report. */
 "help.reportIssue.creating.cancel.title"="ご報告された問題のアップロードをキャンセルしてもよろしいですか？";
 /* Confirmation message shown when the user is trying to cancel the ongoing upload report. */
@@ -4766,3 +4764,7 @@
 "cameraUploads.banner.status.paused.highThermalState.title"="デバイスの温度が高いため、カメラのアップロードが一時停止されました";
 /* Camera uploads status banner sub title paused due to device heat */
 "cameraUploads.banner.status.paused.highThermalState.subheading"="デバイスの温度が下がるとアップロードは自動的に再開されます";
+/* Local Notification Title for Camera uploads backup reminder */
+"notification.local.cameraUploadBackupReminder.title"="大切な瞬間を守りましょう！";
+/* Local Notification Body for Camera uploads backup reminder */
+"notification.local.cameraUploadBackupReminder.body"="写真と動画をバックアップして保護";

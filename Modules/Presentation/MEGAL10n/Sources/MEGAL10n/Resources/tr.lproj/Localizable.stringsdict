@@ -13,9 +13,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>[A] ve %d Diğerleri ellerini kaldırdı</string>
+        <string>[A] ve %d diğer kişi elini kaldırdı</string>
         <key>other</key>
-        <string>[A] ve %d Diğerleri ellerini kaldırdı</string>
+        <string>[A] ve %d diğer kişi elini kaldırdı</string>
       </dict>
     </dict>
     <key>chat.call.raiseHands.snackBar.youAndOtherPersonRaisedHands</key>
@@ -29,9 +29,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Sen ve %d diğeri ellerini kaldırdı</string>
+        <string>Siz ve %d diğer kişi elini kaldırdı</string>
         <key>other</key>
-        <string>Sen ve %d diğerleri ellerini kaldırdı</string>
+        <string>Siz ve %d diğer kişi elini kaldırdı</string>
       </dict>
     </dict>
     <key>sharedItems.rubbish.warning.fileCount</key>
@@ -47,7 +47,7 @@
         <key>one</key>
         <string>%d dosya</string>
         <key>other</key>
-        <string>%d dosyalar</string>
+        <string>%d dosya</string>
       </dict>
     </dict>
     <key>sharedItems.rubbish.confirmation.removedItemCount</key>
@@ -63,7 +63,7 @@
         <key>one</key>
         <string>%d öğe kaldırıldı</string>
         <key>other</key>
-        <string>%d öğeler kaldırıldı</string>
+        <string>%d öğe kaldırıldı</string>
       </dict>
     </dict>
     <key>sharedItems.rubbish.confirmation.fileCount</key>
@@ -79,7 +79,7 @@
         <key>one</key>
         <string>%d dosya</string>
         <key>other</key>
-        <string>%d dosyalar</string>
+        <string>%d dosya</string>
       </dict>
     </dict>
     <key>sharedItems.rubbish.warning.folderCount</key>
@@ -95,7 +95,7 @@
         <key>one</key>
         <string>%d klasör</string>
         <key>other</key>
-        <string>%d klasörler</string>
+        <string>%d klasör</string>
       </dict>
     </dict>
     <key>sharedItems.rubbish.confirmation.folderCount</key>
@@ -111,7 +111,7 @@
         <key>one</key>
         <string>%d klasör</string>
         <key>other</key>
-        <string>%d klasörler</string>
+        <string>%d klasör</string>
       </dict>
     </dict>
     <key>sharedItems.link.accessInfo</key>
@@ -125,9 +125,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Bu bağlantıya sahip herkes verilerinizi görüntüleyebilir ve indirebilir</string>
+        <string>Bu bağlantıya sahip olan herkes verilerinizi görüntüleyebilir ve indirebilir</string>
         <key>other</key>
-        <string>Bu bağlantılara sahip herkes verilerinizi görüntüleyebilir ve indirebilir</string>
+        <string>Bu bağlantılara sahip olan herkes verilerinizi görüntüleyebilir ve indirebilir</string>
       </dict>
     </dict>
     <key>sharedItems.getLink.linkCopied</key>
@@ -143,7 +143,7 @@
         <key>one</key>
         <string>Bağlantı panoya kopyalandı</string>
         <key>other</key>
-        <string>Panoya kopyalanan bağlantılar</string>
+        <string>Bağlantılar panoya kopyalandı</string>
       </dict>
     </dict>
     <key>sharedItems.getLink.linkCreatedAndCopied</key>
@@ -157,9 +157,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Bağlantı oluşturuldu ve panonuza kopyalandı</string>
+        <string>Bağlantı oluşturulup panonuza kopyalandı</string>
         <key>other</key>
-        <string>Oluşturulan ve panonuza kopyalanan bağlantılar</string>
+        <string>Bağlantılar oluşturulup panonuza kopyalandı</string>
       </dict>
     </dict>
     <key>nameCollision.applyToAll</key>
@@ -173,9 +173,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Kopyaya uygula</string>
+        <string>Yinelemeye uygula</string>
         <key>other</key>
-        <string>Herkese uygula %d kopyaları</string>
+        <string>%d yinelemenin tümüne uygula</string>
       </dict>
     </dict>
     <key>chat.manageHistory.clearing.custom.option.hour</key>
@@ -191,7 +191,7 @@
         <key>one</key>
         <string>saat</string>
         <key>other</key>
-        <string>saatler</string>
+        <string>saat</string>
       </dict>
     </dict>
     <key>chat.manageHistory.clearing.custom.option.day</key>
@@ -207,7 +207,7 @@
         <key>one</key>
         <string>gün</string>
         <key>other</key>
-        <string>günler</string>
+        <string>gün</string>
       </dict>
     </dict>
     <key>chat.manageHistory.clearing.custom.option.week</key>
@@ -223,7 +223,7 @@
         <key>one</key>
         <string>hafta</string>
         <key>other</key>
-        <string>haftalar</string>
+        <string>hafta</string>
       </dict>
     </dict>
     <key>chat.manageHistory.clearing.custom.option.month</key>
@@ -239,7 +239,7 @@
         <key>one</key>
         <string>ay</string>
         <key>other</key>
-        <string>aylar</string>
+        <string>ay</string>
       </dict>
     </dict>
     <key>chat.manageHistory.clearing.custom.option.year</key>
@@ -255,7 +255,7 @@
         <key>one</key>
         <string>yıl</string>
         <key>other</key>
-        <string>yıllar</string>
+        <string>yıl</string>
       </dict>
     </dict>
     <key>general.format.retentionPeriod.hour</key>
@@ -271,7 +271,7 @@
         <key>one</key>
         <string>%d saat</string>
         <key>other</key>
-        <string>%d saatler</string>
+        <string>%d saat</string>
       </dict>
     </dict>
     <key>general.format.retentionPeriod.day</key>
@@ -287,7 +287,7 @@
         <key>one</key>
         <string>%d gün</string>
         <key>other</key>
-        <string>%d günler</string>
+        <string>%d gün</string>
       </dict>
     </dict>
     <key>general.format.retentionPeriod.week</key>
@@ -303,7 +303,7 @@
         <key>one</key>
         <string>%d hafta</string>
         <key>other</key>
-        <string>%d haftalar</string>
+        <string>%d hafta</string>
       </dict>
     </dict>
     <key>general.format.retentionPeriod.month</key>
@@ -319,7 +319,7 @@
         <key>one</key>
         <string>%d ay</string>
         <key>other</key>
-        <string>%d aylar</string>
+        <string>%d ay</string>
       </dict>
     </dict>
     <key>general.format.retentionPeriod.year</key>
@@ -335,7 +335,7 @@
         <key>one</key>
         <string>%d yıl</string>
         <key>other</key>
-        <string>%d yıllar</string>
+        <string>%d yıl</string>
       </dict>
     </dict>
     <key>general.format.count.file</key>
@@ -351,7 +351,7 @@
         <key>one</key>
         <string>%d dosya</string>
         <key>other</key>
-        <string>%d dosyalar</string>
+        <string>%d dosya</string>
       </dict>
     </dict>
     <key>general.format.count.folder</key>
@@ -367,7 +367,7 @@
         <key>one</key>
         <string>%d klasör</string>
         <key>other</key>
-        <string>%d klasörler</string>
+        <string>%d klasör</string>
       </dict>
     </dict>
     <key>general.format.count.folderAndFile.folder</key>
@@ -383,7 +383,7 @@
         <key>one</key>
         <string>%d klasör</string>
         <key>other</key>
-        <string>%d klasörler</string>
+        <string>%d klasör</string>
       </dict>
     </dict>
     <key>general.format.count.folderAndFile.file</key>
@@ -399,7 +399,7 @@
         <key>one</key>
         <string>• %d dosya</string>
         <key>other</key>
-        <string>• %d dosyalar</string>
+        <string>• %d dosya</string>
       </dict>
     </dict>
     <key>general.format.count.items</key>
@@ -415,7 +415,7 @@
         <key>one</key>
         <string>%d öğe</string>
         <key>other</key>
-        <string>%d öğeleri</string>
+        <string>%d öğe</string>
       </dict>
     </dict>
     <key>recents.section.title.items</key>
@@ -431,7 +431,7 @@
         <key>one</key>
         <string>%d öğe</string>
         <key>other</key>
-        <string>%d öğeleri</string>
+        <string>%d öğe</string>
       </dict>
     </dict>
     <key>recents.section.thumbnail.count.image</key>
@@ -447,7 +447,7 @@
         <key>one</key>
         <string>%d resim</string>
         <key>other</key>
-        <string>%d görüntüler</string>
+        <string>%d resim</string>
       </dict>
     </dict>
     <key>recents.section.thumbnail.count.video</key>
@@ -463,7 +463,7 @@
         <key>one</key>
         <string>%d video</string>
         <key>other</key>
-        <string>%d görüntüler</string>
+        <string>%d video</string>
       </dict>
     </dict>
     <key>recents.section.thumbnail.count.imageAndVideo.image</key>
@@ -479,7 +479,7 @@
         <key>one</key>
         <string>%d resim</string>
         <key>other</key>
-        <string>%d görüntüler</string>
+        <string>%d resim</string>
       </dict>
     </dict>
     <key>recents.section.thumbnail.count.imageAndVideo.video</key>
@@ -495,7 +495,7 @@
         <key>one</key>
         <string>ve %d video</string>
         <key>other</key>
-        <string>ve %d görüntüler</string>
+        <string>ve %d video</string>
       </dict>
     </dict>
     <key>recents.section.multipleFile.title</key>
@@ -509,9 +509,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>”[A]” ve %d daha</string>
+        <string>“[A]” ve %d tane daha</string>
         <key>other</key>
-        <string>”[A]” ve %d daha</string>
+        <string>“[A]” ve %d tane daha</string>
       </dict>
     </dict>
     <key>media.photo.browser.indexOfTotalFiles</key>
@@ -525,9 +525,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>[A] dan %d dosya</string>
+        <string>%d dosyadan [A]. </string>
         <key>other</key>
-        <string>[A] dan %d dosyalar</string>
+        <string>%d dosyadan [A]. </string>
       </dict>
     </dict>
     <key>extensions.share.destination.section.files</key>
@@ -543,7 +543,7 @@
         <key>one</key>
         <string>%d dosya</string>
         <key>other</key>
-        <string>%d dosyalar</string>
+        <string>%d dosya</string>
       </dict>
     </dict>
     <key>general.menuAction.removeLink.title</key>
@@ -589,9 +589,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Bağlantıyı kaldırın mı?</string>
+        <string>Bağlantı kaldırılsın mı?</string>
         <key>other</key>
-        <string>Bağlantıları kaldırın mı?</string>
+        <string>Bağlantılar kaldırılsın mı?</string>
       </dict>
     </dict>
     <key>general.menuAction.removeLink.doubleCheck.warning.message</key>
@@ -605,9 +605,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Bu bağlantıyı paylaştığınız kişiler artık ona erişemeyecek.</string>
+        <string>Bu bağlantıyı paylaştığınız kişiler artık bu bağlantıya erişemeyecek.</string>
         <key>other</key>
-        <string>Bu bağlantıları paylaştığınız kişiler artık bunlara erişemeyecek.</string>
+        <string>Bu bağlantıları paylaştığınız kişiler artık bu bağlantılara erişemeyecek.</string>
       </dict>
     </dict>
     <key>general.menuAction.shareFolder.title</key>
@@ -671,7 +671,7 @@
         <key>one</key>
         <string>Dosyayı dışa aktar</string>
         <key>other</key>
-        <string>Dosyaları dışa aktarma</string>
+        <string>Dosyaları dışa aktar</string>
       </dict>
     </dict>
     <key>call.duration.second</key>
@@ -685,9 +685,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d ikinci</string>
+        <string>%d saniye</string>
         <key>other</key>
-        <string>%d saniyeler</string>
+        <string>%d saniye</string>
       </dict>
     </dict>
     <key>call.duration.minute</key>
@@ -703,7 +703,7 @@
         <key>one</key>
         <string>%d dakika</string>
         <key>other</key>
-        <string>%d dakikalar</string>
+        <string>%d dakika</string>
       </dict>
     </dict>
     <key>call.duration.hour</key>
@@ -719,7 +719,7 @@
         <key>one</key>
         <string>%d saat</string>
         <key>other</key>
-        <string>%d saatler</string>
+        <string>%d saat</string>
       </dict>
     </dict>
     <key>call.duration.hourAndMinute.hour</key>
@@ -735,7 +735,7 @@
         <key>one</key>
         <string>%d saat</string>
         <key>other</key>
-        <string>%d saatler</string>
+        <string>%d saat</string>
       </dict>
     </dict>
     <key>call.duration.hourAndMinute.minute</key>
@@ -751,7 +751,7 @@
         <key>one</key>
         <string>, %d dakika</string>
         <key>other</key>
-        <string>, %d dakikalar</string>
+        <string>, %d dakika</string>
       </dict>
     </dict>
     <key>dnd.duration.minute</key>
@@ -767,7 +767,7 @@
         <key>one</key>
         <string>%d dakika</string>
         <key>other</key>
-        <string>%d dakikalar</string>
+        <string>%d dakika</string>
       </dict>
     </dict>
     <key>dnd.duration.hour</key>
@@ -783,7 +783,7 @@
         <key>one</key>
         <string>%d saat</string>
         <key>other</key>
-        <string>%d saatler</string>
+        <string>%d saat</string>
       </dict>
     </dict>
     <key>chat.status.duration.minute</key>
@@ -799,7 +799,7 @@
         <key>one</key>
         <string>%d dakika</string>
         <key>other</key>
-        <string>%d dakikalar</string>
+        <string>%d dakika</string>
       </dict>
     </dict>
     <key>mybackups.share.folder.warning.message</key>
@@ -813,9 +813,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Bu klasör bir yedekleme klasörü olduğu için yalnızca salt okunur olarak paylaşılabilir. İçeriğindeki herhangi bir değişiklik yedeklemeyi devre dışı bırakabilir.</string>
+        <string>Bu klasör bir yedekleme klasörü olduğu için yalnızca salt okunur olarak paylaşılabilir. İçeriğinde yapılacak herhangi bir değişiklik yedeklemeyi devre dışı bırakabilir.</string>
         <key>other</key>
-        <string>Bu klasörler yedekleme klasörleri oldukları için yalnızca salt okunur olarak paylaşılabilir. İçeriğindeki herhangi bir değişiklik yedeklemeleri devre dışı bırakabilir.</string>
+        <string>Bu klasörler yedekleme klasörleri oldukları için yalnızca salt okunur olarak paylaşılabilir. İçeriklerinde yapılacak herhangi bir değişiklik yedeklemeleri devre dışı bırakabilir.</string>
       </dict>
     </dict>
     <key>chat.autoAway.hour</key>
@@ -831,7 +831,7 @@
         <key>one</key>
         <string>%d saat</string>
         <key>other</key>
-        <string>%d saatler</string>
+        <string>%d saat</string>
       </dict>
     </dict>
     <key>chat.autoAway.minute</key>
@@ -847,7 +847,7 @@
         <key>one</key>
         <string>%d dakika</string>
         <key>other</key>
-        <string>%d dakikalar</string>
+        <string>%d dakika</string>
       </dict>
     </dict>
     <key>chat.autoAway.label.hour</key>
@@ -863,7 +863,7 @@
         <key>one</key>
         <string>saat</string>
         <key>other</key>
-        <string>saatler</string>
+        <string>saat</string>
       </dict>
     </dict>
     <key>chat.autoAway.label.minute</key>
@@ -879,7 +879,7 @@
         <key>one</key>
         <string>dakika</string>
         <key>other</key>
-        <string>dakikalar</string>
+        <string>dakika</string>
       </dict>
     </dict>
     <key>chat.message.unreadMessage</key>
@@ -895,7 +895,7 @@
         <key>one</key>
         <string>%d okunmamış mesaj</string>
         <key>other</key>
-        <string>%d okunmamış mesajlar</string>
+        <string>%d okunmamış mesaj</string>
       </dict>
     </dict>
     <key>cameraUploads.albums.addItems.alert.limitReached.message</key>
@@ -909,9 +909,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Yalnızca en fazla ekleyebilirsiniz %d Bir albümde bir seferde öğe.</string>
+        <string>Bir albüme tek seferde en fazla %d öğe ekleyebilirsiniz.</string>
         <key>other</key>
-        <string>Yalnızca en fazla ekleyebilirsiniz %d Bir albümde bir seferde öğeler.</string>
+        <string>Bir albüme tek seferde en fazla %d öğe ekleyebilirsiniz.</string>
       </dict>
     </dict>
     <key>cameraUploads.albums.addedItemTo</key>
@@ -925,9 +925,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Eklendi %d öğeye”[A]”</string>
+        <string>“[A]” albümüne %d öğe eklendi</string>
         <key>other</key>
-        <string>Eklendi %d öğeler”[A]”</string>
+        <string>“[A]” albümüne %d öğe eklendi</string>
       </dict>
     </dict>
     <key>cameraUploads.banner.status.uploadsPartialComplete.videosNotUploaded.subHeading</key>
@@ -943,7 +943,7 @@
         <key>one</key>
         <string>Fotoğraflar yüklendi. Video yüklemeleri kapalı: video yüklenmedi</string>
         <key>other</key>
-        <string>Fotoğraflar yüklendi. Video yüklemeleri kapalı: %d Yüklenmemiş videolar</string>
+        <string>Fotoğraflar yüklendi. Video yüklemeleri kapalı: %d video yüklenmedi</string>
       </dict>
     </dict>
     <key>cameraUploads.banner.status.filesPending.subHeading</key>
@@ -959,7 +959,7 @@
         <key>one</key>
         <string>%d dosya beklemede</string>
         <key>other</key>
-        <string>%d bekleyen dosyalar</string>
+        <string>%d dosya beklemede</string>
       </dict>
     </dict>
     <key>cameraUploads.albums.delete</key>
@@ -989,9 +989,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Albümü silmek mi?</string>
+        <string>Albüm silinsin mi?</string>
         <key>other</key>
-        <string>Albümleri silmek mi?</string>
+        <string>Albümler silinsin mi?</string>
       </dict>
     </dict>
     <key>cameraUploads.albums.deleteAlbumMessage</key>
@@ -1005,9 +1005,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Albüm silinecek ancak içeriği Zaman Çizelgenizde kalacaktır.</string>
+        <string>Albüm silinecek ancak içeriği Zaman Tünelinizde kalacaktır.</string>
         <key>other</key>
-        <string>Albümler silinecek ancak içerikleri Zaman Çizelgenizde kalacaktır.</string>
+        <string>Albümler silinecek ancak içerikleri Zaman Tünelinizde kalacaktır.</string>
       </dict>
     </dict>
     <key>cameraUploads.albums.deleteAlbumSuccess</key>
@@ -1021,9 +1021,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>”[A]” silindi</string>
+        <string>“[A]” silindi</string>
         <key>other</key>
-        <string>%d albümler silindi</string>
+        <string>%d albüm silindi</string>
       </dict>
     </dict>
     <key>cameraUploads.albums.removedItemFrom</key>
@@ -1037,9 +1037,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Kaldırıldı %d öğe”[A]”</string>
+        <string>“[A]” albümünden %d öğe kaldırıldı</string>
         <key>other</key>
-        <string>Kaldırıldı %d öğeler”[A]”</string>
+        <string>“[A]” albümünden %d öğe kaldırıldı</string>
       </dict>
     </dict>
     <key>cameraUploads.albums.removeShareLinkAlertTitle</key>
@@ -1053,9 +1053,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Bağlantıyı kaldırın mı?</string>
+        <string>Bağlantı kaldırılsın mı?</string>
         <key>other</key>
-        <string>Bağlantıları kaldırın mı?</string>
+        <string>Bağlantılar kaldırılsın mı?</string>
       </dict>
     </dict>
     <key>cameraUploads.albums.removeShareLinkAlertConfirmButtonTitle</key>
@@ -1085,9 +1085,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Bu bağlantıyı paylaştığınız kişiler albüme erişimini kaybeder.</string>
+        <string>Bu bağlantıyı paylaştığınız kişiler albüme erişimlerini kaybedecektir.</string>
         <key>other</key>
-        <string>Bu bağlantıları paylaştığınız kişiler albümlere erişimini kaybeder.</string>
+        <string>Bu bağlantıları paylaştığınız kişiler albümlere erişimlerini kaybedecektir.</string>
       </dict>
     </dict>
     <key>cameraUploads.albums.removeShareLinkSuccessMessage</key>
@@ -1117,9 +1117,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Her gün etkili [B][StartDate] kadar [UntilDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate] - [UntilDate][/B] tarihleri arasında, [B][StartTime] - [EndTime][/B] saatlerinde her gün</string>
         <key>other</key>
-        <string>Her %d etkili günler [B][StartDate] kadar [UntilDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate] - [UntilDate][/B] tarihleri arasında, [B][StartTime] - [EndTime][/B] saatlerinde her %d günde bir</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.daily.forever</key>
@@ -1133,9 +1133,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Her gün etkili [B][StartDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate][/B] tarihinden itibaren [B][StartTime] - [EndTime][/B] saatlerinde her gün</string>
         <key>other</key>
-        <string>Her %d etkili günler [B][StartDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate][/B] tarihinden itibaren [B][StartTime] - [EndTime][/B] saatlerinde her %d günde bir</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.weekly.oneDay.until</key>
@@ -1149,9 +1149,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>[WeekDay] Her hafta etkili [B][StartDate] kadar [UntilDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate] - [UntilDate][/B] tarihleri arasında, [B][StartTime] - [EndTime][/B] saatlerinde her hafta [WeekDay] günü</string>
         <key>other</key>
-        <string>[WeekDay] her bir %d etkili haftalar [B][StartDate] kadar [UntilDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate] - [UntilDate][/B] tarihleri arasında, [B][StartTime] - [EndTime][/B] saatlerinde her %d haftada bir [WeekDay] günü</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.weekly.oneDay.forever</key>
@@ -1165,9 +1165,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>[WeekDay] Her hafta etkili [B][StartDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate][/B] tarihinden itibaren [B][StartTime] - [EndTime][/B] saatlerinde her hafta [WeekDay] günü</string>
         <key>other</key>
-        <string>[WeekDay] her bir %d etkili haftalar [B][StartDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate][/B] tarihinden itibaren [B][StartTime] - [EndTime][/B] saatlerinde her %d haftada bir [WeekDay] günü</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.weekly.severalDays.until</key>
@@ -1181,9 +1181,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>[WeekDaysList] ve [LastWeekDay] Her hafta etkili [B][StartDate] kadar [UntilDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate] - [UntilDate][/B] tarihleri arasında, [B][StartTime] - [EndTime][/B] saatlerinde her hafta [WeekDaysList] ve [LastWeekDay] günleri</string>
         <key>other</key>
-        <string>[WeekDaysList] ve [LastWeekDay] her bir %d etkili haftalar [B][StartDate] kadar [UntilDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate] - [UntilDate][/B] tarihleri arasında, [B][StartTime] - [EndTime][/B] saatlerinde her %d haftada bir [WeekDaysList] ve [LastWeekDay] günleri</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.weekly.severalDays.forever</key>
@@ -1197,9 +1197,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>[WeekDaysList] ve [LastWeekDay] Her hafta etkili [B][StartDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate][/B] tarihinden itibaren [B][StartTime] - [EndTime][/B] saatlerinde her hafta [WeekDaysList] ve [LastWeekDay] günleri</string>
         <key>other</key>
-        <string>[WeekDaysList] ve [LastWeekDay] her bir %d etkili haftalar [B][StartDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate][/B] tarihinden itibaren [B][StartTime] - [EndTime][/B] saatlerinde her %d haftada bir [WeekDaysList] ve [LastWeekDay] günleri</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.singleDay.until</key>
@@ -1213,9 +1213,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Gün [MonthDay] Her ayın etkili [B][StartDate] kadar [UntilDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate] - [UntilDate][/B] tarihleri arasında, [B][StartTime] - [EndTime][/B] saatlerinde her ayın [MonthDay]. günü</string>
         <key>other</key>
-        <string>Gün [MonthDay] her birinin %d etkili aylar [B][StartDate] kadar [UntilDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate] - [UntilDate][/B] tarihleri arasında, [B][StartTime] - [EndTime][/B] saatlerinde her %d ayda bir, ayın [MonthDay]. günü</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.singleDay.forever</key>
@@ -1229,9 +1229,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Gün [MonthDay] Her ayın etkili [B][StartDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate][/B] tarihinden itibaren [B][StartTime] - [EndTime][/B] saatlerinde her ayın [MonthDay]. günü</string>
         <key>other</key>
-        <string>Gün [MonthDay] her birinin %d etkili aylar [B][StartDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate][/B] tarihinden itibaren [B][StartTime] - [EndTime][/B] saatlerinde her %d ayda bir, ayın [MonthDay]. günü</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.monday.first</key>
@@ -1245,9 +1245,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Her ayın ilk Pazartesi günü geçerli [B][StartDate] kadar [UntilDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate] - [UntilDate][/B] tarihleri arasında, [B][StartTime] - [EndTime][/B] saatlerinde her ayın ilk Pazartesi günü</string>
         <key>other</key>
-        <string>Her günün ilk pazartesi %d etkili aylar [B][StartDate] kadar [UntilDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate] - [UntilDate][/B] tarihleri arasında, [B][StartTime] - [EndTime][/B] saatlerinde her %d ayda bir, ayın ilk Pazartesi günü</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.monday.first</key>
@@ -1261,9 +1261,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Her ayın ilk Pazartesi günü geçerli [B][StartDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate][/B] tarihinden itibaren [B][StartTime] - [EndTime][/B] saatlerinde her ayın ilk Pazartesi günü</string>
         <key>other</key>
-        <string>Her günün ilk pazartesi %d etkili aylar [B][StartDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate][/B] tarihinden itibaren [B][StartTime] - [EndTime][/B] saatlerinde her %d ayda bir, ayın ilk Pazartesi günü</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.monday.second</key>
@@ -1277,9 +1277,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Her ayın ikinci pazartesi geçerli [B][StartDate] kadar [UntilDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate] - [UntilDate][/B] tarihleri arasında, [B][StartTime] - [EndTime][/B] saatlerinde her ayın ikinci Pazartesi günü</string>
         <key>other</key>
-        <string>Her günün ikinci pazartesi %d etkili aylar [B][StartDate] kadar [UntilDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate] - [UntilDate][/B] tarihleri arasında, [B][StartTime] - [EndTime][/B] saatlerinde her %d ayda bir, ayın ikinci Pazartesi günü</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.monday.second</key>
@@ -1293,9 +1293,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Her ayın ikinci pazartesi geçerli [B][StartDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate][/B] tarihinden itibaren [B][StartTime] - [EndTime][/B] saatlerinde her ayın ikinci Pazartesi günü</string>
         <key>other</key>
-        <string>Her günün ikinci pazartesi %d etkili aylar [B][StartDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate][/B] tarihinden itibaren [B][StartTime] - [EndTime][/B] saatlerinde her %d ayda bir, ayın ikinci Pazartesi günü</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.monday.third</key>
@@ -1309,9 +1309,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Her ayın üçüncü pazartesi geçerli [B][StartDate] kadar [UntilDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate] - [UntilDate][/B] tarihleri arasında, [B][StartTime] - [EndTime][/B] saatlerinde her ayın üçüncü Pazartesi günü</string>
         <key>other</key>
-        <string>Her günün üçüncü pazartesi %d etkili aylar [B][StartDate] kadar [UntilDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate] - [UntilDate][/B] tarihleri arasında, [B][StartTime] - [EndTime][/B] saatlerinde her %d ayda bir, ayın üçüncü Pazartesi günü</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.monday.third</key>
@@ -1325,9 +1325,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Her ayın üçüncü pazartesi geçerli [B][StartDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate][/B] tarihinden itibaren [B][StartTime] - [EndTime][/B] saatlerinde her ayın üçüncü Pazartesi günü</string>
         <key>other</key>
-        <string>Her günün üçüncü pazartesi %d etkili aylar [B][StartDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate][/B] tarihinden itibaren [B][StartTime] - [EndTime][/B] saatlerinde her %d ayda bir, ayın üçüncü Pazartesi günü</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.monday.fourth</key>
@@ -1341,9 +1341,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Her ayın dördüncü Pazartesi geçerli [B][StartDate] kadar [UntilDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate] - [UntilDate][/B] tarihleri arasında, [B][StartTime] - [EndTime][/B] saatlerinde her ayın dördüncü Pazartesi günü</string>
         <key>other</key>
-        <string>Her günün dördüncü pazartesi %d etkili aylar [B][StartDate] kadar [UntilDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate] - [UntilDate][/B] tarihleri arasında, [B][StartTime] - [EndTime][/B] saatlerinde her %d ayda bir, ayın dördüncü Pazartesi günü</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.monday.fourth</key>
@@ -1357,9 +1357,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Her ayın dördüncü Pazartesi geçerli [B][StartDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate][/B] tarihinden itibaren [B][StartTime] - [EndTime][/B] saatlerinde her ayın dördüncü Pazartesi günü</string>
         <key>other</key>
-        <string>Her günün dördüncü pazartesi %d etkili aylar [B][StartDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate][/B] tarihinden itibaren [B][StartTime] - [EndTime][/B] saatlerinde her %d ayda bir, ayın dördüncü Pazartesi günü</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.monday.fifth</key>
@@ -1373,9 +1373,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Her ayın beşinci Pazartesi geçerli [B][StartDate] kadar [UntilDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate] - [UntilDate][/B] tarihleri arasında, [B][StartTime] - [EndTime][/B] saatlerinde her ayın beşinci Pazartesi günü</string>
         <key>other</key>
-        <string>Her günün beşinci pazartesi %d etkili aylar [B][StartDate] kadar [UntilDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate] - [UntilDate][/B] tarihleri arasında, [B][StartTime] - [EndTime][/B] saatlerinde her %d ayda bir, ayın beşinci Pazartesi günü</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.monday.fifth</key>
@@ -1389,9 +1389,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Her ayın beşinci Pazartesi geçerli [B][StartDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate][/B] tarihinden itibaren [B][StartTime] - [EndTime][/B] saatlerinde her ayın beşinci Pazartesi günü</string>
         <key>other</key>
-        <string>Her günün beşinci pazartesi %d etkili aylar [B][StartDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate][/B] tarihinden itibaren [B][StartTime] - [EndTime][/B] saatlerinde her %d ayda bir, ayın beşinci Pazartesi günü</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.tuesday.first</key>
@@ -1405,9 +1405,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Her ayın ilk Salı günü geçerli [B][StartDate] kadar [UntilDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate] - [UntilDate][/B] tarihleri arasında, [B][StartTime] - [EndTime][/B] saatlerinde her ayın ilk Salı günü</string>
         <key>other</key>
-        <string>Her günün ilk salı günü %d etkili aylar [B][StartDate] kadar [UntilDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate] - [UntilDate][/B] tarihleri arasında, [B][StartTime] - [EndTime][/B] saatlerinde her %d ayda bir, ayın ilk Salı günü</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.tuesday.first</key>
@@ -1421,9 +1421,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Her ayın ilk Salı günü geçerli [B][StartDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate][/B] tarihinden itibaren [B][StartTime] - [EndTime][/B] saatlerinde her ayın ilk Salı günü</string>
         <key>other</key>
-        <string>Her günün ilk salı günü %d etkili aylar [B][StartDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate][/B] tarihinden itibaren [B][StartTime] - [EndTime][/B] saatlerinde her %d ayda bir, ayın ilk Salı günü</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.tuesday.second</key>
@@ -1437,9 +1437,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Her ayın ikinci Salı günü geçerli [B][StartDate] kadar [UntilDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate] - [UntilDate][/B] tarihleri arasında, [B][StartTime] - [EndTime][/B] saatlerinde her ayın ikinci Salı günü</string>
         <key>other</key>
-        <string>Her günün ikinci salı %d etkili aylar [B][StartDate] kadar [UntilDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate] - [UntilDate][/B] tarihleri arasında, [B][StartTime] - [EndTime][/B] saatlerinde her %d ayda bir, ayın ikinci Salı günü</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.tuesday.second</key>
@@ -1453,9 +1453,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Her ayın ikinci Salı günü geçerli [B][StartDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate][/B] tarihinden itibaren [B][StartTime] - [EndTime][/B] saatlerinde her ayın ikinci Salı günü</string>
         <key>other</key>
-        <string>Her günün ikinci salı %d etkili aylar [B][StartDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate][/B] tarihinden itibaren [B][StartTime] - [EndTime][/B] saatlerinde her %d ayda bir, ayın ikinci Salı günü</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.tuesday.third</key>
@@ -1469,9 +1469,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Her ayın üçüncü Salı günü geçerli [B][StartDate] kadar [UntilDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate] - [UntilDate][/B] tarihleri arasında, [B][StartTime] - [EndTime][/B] saatlerinde her ayın üçüncü Salı günü</string>
         <key>other</key>
-        <string>Her günün üçüncü salı %d etkili aylar [B][StartDate] kadar [UntilDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate] - [UntilDate][/B] tarihleri arasında, [B][StartTime] - [EndTime][/B] saatlerinde her %d ayda bir, ayın üçüncü Salı günü</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.tuesday.third</key>
@@ -1485,9 +1485,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Her ayın üçüncü Salı günü geçerli [B][StartDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate][/B] tarihinden itibaren [B][StartTime] - [EndTime][/B] saatlerinde her ayın üçüncü Salı günü</string>
         <key>other</key>
-        <string>Her günün üçüncü salı %d etkili aylar [B][StartDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate][/B] tarihinden itibaren [B][StartTime] - [EndTime][/B] saatlerinde her %d ayda bir, ayın üçüncü Salı günü</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.tuesday.fourth</key>
@@ -1501,9 +1501,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Her ayın dördüncü Salı günü geçerli [B][StartDate] kadar [UntilDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate] - [UntilDate][/B] tarihleri arasında, [B][StartTime] - [EndTime][/B] saatlerinde her ayın dördüncü Salı günü</string>
         <key>other</key>
-        <string>Her günün dördüncü salı %d etkili aylar [B][StartDate] kadar [UntilDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate] - [UntilDate][/B] tarihleri arasında, [B][StartTime] - [EndTime][/B] saatlerinde her %d ayda bir, ayın dördüncü Salı günü</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.tuesday.fourth</key>
@@ -1517,9 +1517,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Her ayın dördüncü Salı günü geçerli [B][StartDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate][/B] tarihinden itibaren [B][StartTime] - [EndTime][/B] saatlerinde her ayın dördüncü Salı günü</string>
         <key>other</key>
-        <string>Her günün dördüncü salı %d etkili aylar [B][StartDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate][/B] tarihinden itibaren [B][StartTime] - [EndTime][/B] saatlerinde her %d ayda bir, ayın dördüncü Salı günü</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.tuesday.fifth</key>
@@ -1533,9 +1533,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Her ayın beşinci Salı günü geçerli [B][StartDate] kadar [UntilDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate] - [UntilDate][/B] tarihleri arasında, [B][StartTime] - [EndTime][/B] saatlerinde her ayın beşinci Salı günü</string>
         <key>other</key>
-        <string>Her günün beşinci salı %d etkili aylar [B][StartDate] kadar [UntilDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate] - [UntilDate][/B] tarihleri arasında, [B][StartTime] - [EndTime][/B] saatlerinde her %d ayda bir, ayın beşinci Salı günü</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.tuesday.fifth</key>
@@ -1549,9 +1549,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Her ayın beşinci Salı günü geçerli [B][StartDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate][/B] tarihinden itibaren [B][StartTime] - [EndTime][/B] saatlerinde her ayın beşinci Salı günü</string>
         <key>other</key>
-        <string>Her günün beşinci salı %d etkili aylar [B][StartDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate][/B] tarihinden itibaren [B][StartTime] - [EndTime][/B] saatlerinde her %d ayda bir, ayın beşinci Salı günü</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.wednesday.first</key>
@@ -1565,9 +1565,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Her ayın ilk Çarşamba günü geçerli [B][StartDate] kadar [UntilDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate] - [UntilDate][/B] tarihleri arasında, [B][StartTime] - [EndTime][/B] saatlerinde her ayın ilk Çarşamba günü</string>
         <key>other</key>
-        <string>Her günün ilk çarşambası %d etkili aylar [B][StartDate] kadar [UntilDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate] - [UntilDate][/B] tarihleri arasında, [B][StartTime] - [EndTime][/B] saatlerinde her %d ayda bir, ayın ilk Çarşamba günü</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.wednesday.first</key>
@@ -1581,9 +1581,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Her ayın ilk Çarşamba günü geçerli [B][StartDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate][/B] tarihinden itibaren [B][StartTime] - [EndTime][/B] saatlerinde her ayın ilk Çarşamba günü</string>
         <key>other</key>
-        <string>Her günün ilk çarşambası %d etkili aylar [B][StartDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate][/B] tarihinden itibaren [B][StartTime] - [EndTime][/B] saatlerinde her %d ayda bir, ayın ilk Çarşamba günü</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.wednesday.second</key>
@@ -1597,9 +1597,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Her ayın ikinci çarşambası geçerli [B][StartDate] kadar [UntilDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate] - [UntilDate][/B] tarihleri arasında, [B][StartTime] - [EndTime][/B] saatlerinde her ayın ikinci Çarşamba günü</string>
         <key>other</key>
-        <string>Her günün ikinci çarşambası %d etkili aylar [B][StartDate] kadar [UntilDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate] - [UntilDate][/B] tarihleri arasında, [B][StartTime] - [EndTime][/B] saatlerinde her %d ayda bir, ayın ikinci Çarşamba günü</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.wednesday.second</key>
@@ -1613,9 +1613,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Her ayın ikinci çarşambası geçerli [B][StartDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate][/B] tarihinden itibaren [B][StartTime] - [EndTime][/B] saatlerinde her ayın ikinci Çarşamba günü</string>
         <key>other</key>
-        <string>Her günün ikinci çarşambası %d etkili aylar [B][StartDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate][/B] tarihinden itibaren [B][StartTime] - [EndTime][/B] saatlerinde her %d ayda bir, ayın ikinci Çarşamba günü</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.wednesday.third</key>
@@ -1629,9 +1629,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Her ayın üçüncü çarşambası geçerli [B][StartDate] kadar [UntilDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate] - [UntilDate][/B] tarihleri arasında, [B][StartTime] - [EndTime][/B] saatlerinde her ayın üçüncü Çarşamba günü</string>
         <key>other</key>
-        <string>Her günün üçüncü çarşambası %d etkili aylar [B][StartDate] kadar [UntilDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate] - [UntilDate][/B] tarihleri arasında, [B][StartTime] - [EndTime][/B] saatlerinde her %d ayda bir, ayın üçüncü Çarşamba günü</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.wednesday.third</key>
@@ -1645,9 +1645,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Her ayın üçüncü çarşambası geçerli [B][StartDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate][/B] tarihinden itibaren [B][StartTime] - [EndTime][/B] saatlerinde her ayın üçüncü Çarşamba günü</string>
         <key>other</key>
-        <string>Her günün üçüncü çarşambası %d etkili aylar [B][StartDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate][/B] tarihinden itibaren [B][StartTime] - [EndTime][/B] saatlerinde her %d ayda bir, ayın üçüncü Çarşamba günü</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.wednesday.fourth</key>
@@ -1661,9 +1661,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Her ayın dördüncü çarşambası geçerli [B][StartDate] kadar [UntilDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate] - [UntilDate][/B] tarihleri arasında, [B][StartTime] - [EndTime][/B] saatlerinde her ayın dördüncü Çarşamba günü</string>
         <key>other</key>
-        <string>Her günün dördüncü çarşambası %d etkili aylar [B][StartDate] kadar [UntilDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate] - [UntilDate][/B] tarihleri arasında, [B][StartTime] - [EndTime][/B] saatlerinde her %d ayda bir, ayın dördüncü Çarşamba günü</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.wednesday.fourth</key>
@@ -1677,9 +1677,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Her ayın dördüncü çarşambası geçerli [B][StartDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate][/B] tarihinden itibaren [B][StartTime] - [EndTime][/B] saatlerinde her ayın dördüncü Çarşamba günü</string>
         <key>other</key>
-        <string>Her günün dördüncü çarşambası %d etkili aylar [B][StartDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate][/B] tarihinden itibaren [B][StartTime] - [EndTime][/B] saatlerinde her %d ayda bir, ayın dördüncü Çarşamba günü</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.wednesday.fifth</key>
@@ -1693,9 +1693,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Her ayın beşinci Çarşamba günü geçerli [B][StartDate] kadar [UntilDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate] - [UntilDate][/B] tarihleri arasında, [B][StartTime] - [EndTime][/B] saatlerinde her ayın beşinci Çarşamba günü</string>
         <key>other</key>
-        <string>Her günün beşinci çarşambası %d etkili aylar [B][StartDate] kadar [UntilDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate] - [UntilDate][/B] tarihleri arasında, [B][StartTime] - [EndTime][/B] saatlerinde her %d ayda bir, ayın beşinci Çarşamba günü</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.wednesday.fifth</key>
@@ -1709,9 +1709,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Her ayın beşinci Çarşamba günü geçerli [B][StartDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate][/B] tarihinden itibaren [B][StartTime] - [EndTime][/B] saatlerinde her ayın beşinci Çarşamba günü</string>
         <key>other</key>
-        <string>Her günün beşinci çarşambası %d etkili aylar [B][StartDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate][/B] tarihinden itibaren [B][StartTime] - [EndTime][/B] saatlerinde her %d ayda bir, ayın beşinci Çarşamba günü</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.thursday.first</key>
@@ -1725,9 +1725,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Her ayın ilk Perşembe günü geçerli [B][StartDate] kadar [UntilDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate] - [UntilDate][/B] tarihleri arasında, [B][StartTime] - [EndTime][/B] saatlerinde her ayın ilk Perşembe günü</string>
         <key>other</key>
-        <string>Her günün ilk perşembesi %d etkili aylar [B][StartDate] kadar [UntilDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate] - [UntilDate][/B] tarihleri arasında, [B][StartTime] - [EndTime][/B] saatlerinde her %d ayda bir, ayın ilk Perşembe günü</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.thursday.first</key>
@@ -1741,9 +1741,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Her ayın ilk Perşembe günü geçerli [B][StartDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate][/B] tarihinden itibaren [B][StartTime] - [EndTime][/B] saatlerinde her ayın ilk Perşembe günü</string>
         <key>other</key>
-        <string>Her günün ilk perşembesi %d etkili aylar [B][StartDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate][/B] tarihinden itibaren [B][StartTime] - [EndTime][/B] saatlerinde her %d ayda bir, ayın ilk Perşembe günü</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.thursday.second</key>
@@ -1757,9 +1757,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Her ayın ikinci perşembesi geçerli [B][StartDate] kadar [UntilDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate] - [UntilDate][/B] tarihleri arasında, [B][StartTime] - [EndTime][/B] saatlerinde her ayın ikinci Perşembe günü</string>
         <key>other</key>
-        <string>Her günün ikinci perşembesi %d etkili aylar [B][StartDate] kadar [UntilDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate] - [UntilDate][/B] tarihleri arasında, [B][StartTime] - [EndTime][/B] saatlerinde her %d ayda bir, ayın ikinci Perşembe günü</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.thursday.second</key>
@@ -1773,9 +1773,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Her ayın ikinci perşembesi geçerli [B][StartDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate][/B] tarihinden itibaren [B][StartTime] - [EndTime][/B] saatlerinde her ayın ikinci Perşembe günü</string>
         <key>other</key>
-        <string>Her günün ikinci perşembesi %d etkili aylar [B][StartDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate][/B] tarihinden itibaren [B][StartTime] - [EndTime][/B] saatlerinde her %d ayda bir, ayın ikinci Perşembe günü</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.thursday.third</key>
@@ -1789,9 +1789,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Her ayın üçüncü perşembesi geçerli [B][StartDate] kadar [UntilDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate] - [UntilDate][/B] tarihleri arasında, [B][StartTime] - [EndTime][/B] saatlerinde her ayın üçüncü Perşembe günü</string>
         <key>other</key>
-        <string>Her günün üçüncü perşembe günü %d etkili aylar [B][StartDate] kadar [UntilDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate] - [UntilDate][/B] tarihleri arasında, [B][StartTime] - [EndTime][/B] saatlerinde her %d ayda bir, ayın üçüncü Perşembe günü</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.thursday.third</key>
@@ -1805,9 +1805,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Her ayın üçüncü perşembesi geçerli [B][StartDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate][/B] tarihinden itibaren [B][StartTime] - [EndTime][/B] saatlerinde her ayın üçüncü Perşembe günü</string>
         <key>other</key>
-        <string>Her günün üçüncü perşembe günü %d etkili aylar [B][StartDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate][/B] tarihinden itibaren [B][StartTime] - [EndTime][/B] saatlerinde her %d ayda bir, ayın üçüncü Perşembe günü</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.thursday.fourth</key>
@@ -1821,9 +1821,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Her ayın dördüncü Perşembe günü geçerli [B][StartDate] kadar [UntilDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate] - [UntilDate][/B] tarihleri arasında, [B][StartTime] - [EndTime][/B] saatlerinde her ayın dördüncü Perşembe günü</string>
         <key>other</key>
-        <string>Her günün dördüncü perşembesi %d etkili aylar [B][StartDate] kadar [UntilDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate] - [UntilDate][/B] tarihleri arasında, [B][StartTime] - [EndTime][/B] saatlerinde her %d ayda bir, ayın dördüncü Perşembe günü</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.thursday.fourth</key>
@@ -1837,9 +1837,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Her ayın dördüncü Perşembe günü geçerli [B][StartDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate][/B] tarihinden itibaren [B][StartTime] - [EndTime][/B] saatlerinde her ayın dördüncü Perşembe günü</string>
         <key>other</key>
-        <string>Her günün dördüncü perşembesi %d etkili aylar [B][StartDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate][/B] tarihinden itibaren [B][StartTime] - [EndTime][/B] saatlerinde her %d ayda bir, ayın dördüncü Perşembe günü</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.thursday.fifth</key>
@@ -1853,9 +1853,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Her ayın beşinci Perşembe günü geçerli [B][StartDate] kadar [UntilDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate] - [UntilDate][/B] tarihleri arasında, [B][StartTime] - [EndTime][/B] saatlerinde her ayın beşinci Perşembe günü</string>
         <key>other</key>
-        <string>Her günün beşinci perşembe %d etkili aylar [B][StartDate] kadar [UntilDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate] - [UntilDate][/B] tarihleri arasında, [B][StartTime] - [EndTime][/B] saatlerinde her %d ayda bir, ayın beşinci Perşembe günü</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.thursday.fifth</key>
@@ -1869,9 +1869,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Her ayın beşinci Perşembe günü geçerli [B][StartDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate][/B] tarihinden itibaren [B][StartTime] - [EndTime][/B] saatlerinde her ayın beşinci Perşembe günü</string>
         <key>other</key>
-        <string>Her günün beşinci perşembe %d etkili aylar [B][StartDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate][/B] tarihinden itibaren [B][StartTime] - [EndTime][/B] saatlerinde her %d ayda bir, ayın beşinci Perşembe günü</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.friday.first</key>
@@ -1885,9 +1885,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Her ayın ilk Cuma günü geçerli [B][StartDate] kadar [UntilDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate] - [UntilDate][/B] tarihleri arasında, [B][StartTime] - [EndTime][/B] saatlerinde her ayın ilk Cuma günü</string>
         <key>other</key>
-        <string>Her günün ilk cuması %d etkili aylar [B][StartDate] kadar [UntilDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate] - [UntilDate][/B] tarihleri arasında, [B][StartTime] - [EndTime][/B] saatlerinde her %d ayda bir, ayın ilk Cuma günü</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.friday.first</key>
@@ -1901,9 +1901,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Her ayın ilk Cuma günü geçerli [B][StartDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate][/B] tarihinden itibaren [B][StartTime] - [EndTime][/B] saatlerinde her ayın ilk Cuma günü</string>
         <key>other</key>
-        <string>Her günün ilk cuması %d etkili aylar [B][StartDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate][/B] tarihinden itibaren [B][StartTime] - [EndTime][/B] saatlerinde her %d ayda bir, ayın ilk Cuma günü</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.friday.second</key>
@@ -1917,9 +1917,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Her ayın ikinci Cuma günü geçerli [B][StartDate] kadar [UntilDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate] - [UntilDate][/B] tarihleri arasında, [B][StartTime] - [EndTime][/B] saatlerinde her ayın ikinci Cuma günü</string>
         <key>other</key>
-        <string>Her günün ikinci cuması %d etkili aylar [B][StartDate] kadar [UntilDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate] - [UntilDate][/B] tarihleri arasında, [B][StartTime] - [EndTime][/B] saatlerinde her %d ayda bir, ayın ikinci Cuma günü</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.friday.second</key>
@@ -1933,9 +1933,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Her ayın ikinci Cuma günü geçerli [B][StartDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate][/B] tarihinden itibaren [B][StartTime] - [EndTime][/B] saatlerinde her ayın ikinci Cuma günü</string>
         <key>other</key>
-        <string>Her günün ikinci cuması %d etkili aylar [B][StartDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate][/B] tarihinden itibaren [B][StartTime] - [EndTime][/B] saatlerinde her %d ayda bir, ayın ikinci Cuma günü</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.friday.third</key>
@@ -1949,9 +1949,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Her ayın üçüncü Cuma günü geçerli [B][StartDate] kadar [UntilDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate] - [UntilDate][/B] tarihleri arasında, [B][StartTime] - [EndTime][/B] saatlerinde her ayın üçüncü Cuma günü</string>
         <key>other</key>
-        <string>Her günün üçüncü cuması %d etkili aylar [B][StartDate] kadar [UntilDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate] - [UntilDate][/B] tarihleri arasında, [B][StartTime] - [EndTime][/B] saatlerinde her %d ayda bir, ayın üçüncü Cuma günü</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.friday.third</key>
@@ -1965,9 +1965,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Her ayın üçüncü Cuma günü geçerli [B][StartDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate][/B] tarihinden itibaren [B][StartTime] - [EndTime][/B] saatlerinde her ayın üçüncü Cuma günü</string>
         <key>other</key>
-        <string>Her günün üçüncü cuması %d etkili aylar [B][StartDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate][/B] tarihinden itibaren [B][StartTime] - [EndTime][/B] saatlerinde her %d ayda bir, ayın üçüncü Cuma günü</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.friday.fourth</key>
@@ -1981,9 +1981,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Her ayın dördüncü Cuma günü geçerli [B][StartDate] kadar [UntilDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate] - [UntilDate][/B] tarihleri arasında, [B][StartTime] - [EndTime][/B] saatlerinde her ayın dördüncü Cuma günü</string>
         <key>other</key>
-        <string>Her günün dördüncü Cuma %d etkili aylar [B][StartDate] kadar [UntilDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate] - [UntilDate][/B] tarihleri arasında, [B][StartTime] - [EndTime][/B] saatlerinde her %d ayda bir, ayın dördüncü Cuma günü</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.friday.fourth</key>
@@ -1997,9 +1997,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Her ayın dördüncü Cuma günü geçerli [B][StartDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate][/B] tarihinden itibaren [B][StartTime] - [EndTime][/B] saatlerinde her ayın dördüncü Cuma günü</string>
         <key>other</key>
-        <string>Her günün dördüncü Cuma %d etkili aylar [B][StartDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate][/B] tarihinden itibaren [B][StartTime] - [EndTime][/B] saatlerinde her %d ayda bir, ayın dördüncü Cuma günü</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.friday.fifth</key>
@@ -2013,9 +2013,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Her ayın beşinci Cuma günü geçerli [B][StartDate] kadar [UntilDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate] - [UntilDate][/B] tarihleri arasında, [B][StartTime] - [EndTime][/B] saatlerinde her ayın beşinci Cuma günü</string>
         <key>other</key>
-        <string>Her günün beşinci cuması %d etkili aylar [B][StartDate] kadar [UntilDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate] - [UntilDate][/B] tarihleri arasında, [B][StartTime] - [EndTime][/B] saatlerinde her %d ayda bir, ayın beşinci Cuma günü</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.friday.fifth</key>
@@ -2029,9 +2029,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Her ayın beşinci Cuma günü geçerli [B][StartDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate][/B] tarihinden itibaren [B][StartTime] - [EndTime][/B] saatlerinde her ayın beşinci Cuma günü</string>
         <key>other</key>
-        <string>Her günün beşinci cuması %d etkili aylar [B][StartDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate][/B] tarihinden itibaren [B][StartTime] - [EndTime][/B] saatlerinde her %d ayda bir, ayın beşinci Cuma günü</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.saturday.first</key>
@@ -2045,9 +2045,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Her ayın ilk cumartesi günü geçerli [B][StartDate] kadar [UntilDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate] - [UntilDate][/B] tarihleri arasında, [B][StartTime] - [EndTime][/B] saatlerinde her ayın ilk Cumartesi günü</string>
         <key>other</key>
-        <string>Her günün ilk cumartesi %d etkili aylar [B][StartDate] kadar [UntilDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate] - [UntilDate][/B] tarihleri arasında, [B][StartTime] - [EndTime][/B] saatlerinde her %d ayda bir, ayın ilk Cumartesi günü</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.saturday.first</key>
@@ -2061,9 +2061,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Her ayın ilk cumartesi günü geçerli [B][StartDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate][/B] tarihinden itibaren [B][StartTime] - [EndTime][/B] saatlerinde her ayın ilk Cumartesi günü</string>
         <key>other</key>
-        <string>Her günün ilk cumartesi %d etkili aylar [B][StartDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate][/B] tarihinden itibaren [B][StartTime] - [EndTime][/B] saatlerinde her %d ayda bir, ayın ilk Cumartesi günü</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.saturday.second</key>
@@ -2077,9 +2077,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Her ayın ikinci cumartesi günü geçerli [B][StartDate] kadar [UntilDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate] - [UntilDate][/B] tarihleri arasında, [B][StartTime] - [EndTime][/B] saatlerinde her ayın ikinci Cumartesi günü</string>
         <key>other</key>
-        <string>Her günün ikinci cumartesi günü %d etkili aylar [B][StartDate] kadar [UntilDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate] - [UntilDate][/B] tarihleri arasında, [B][StartTime] - [EndTime][/B] saatlerinde her %d ayda bir, ayın ikinci Cumartesi günü</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.saturday.second</key>
@@ -2093,9 +2093,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Her ayın ikinci cumartesi günü geçerli [B][StartDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate][/B] tarihinden itibaren [B][StartTime] - [EndTime][/B] saatlerinde her ayın ikinci Cumartesi günü</string>
         <key>other</key>
-        <string>Her günün ikinci cumartesi günü %d etkili aylar [B][StartDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate][/B] tarihinden itibaren [B][StartTime] - [EndTime][/B] saatlerinde her %d ayda bir, ayın ikinci Cumartesi günü</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.saturday.third</key>
@@ -2109,9 +2109,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Her ayın üçüncü cumartesi günü geçerli [B][StartDate] kadar [UntilDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate] - [UntilDate][/B] tarihleri arasında, [B][StartTime] - [EndTime][/B] saatlerinde her ayın üçüncü Cumartesi günü</string>
         <key>other</key>
-        <string>Her günün üçüncü cumartesi %d etkili aylar [B][StartDate] kadar [UntilDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate] - [UntilDate][/B] tarihleri arasında, [B][StartTime] - [EndTime][/B] saatlerinde her %d ayda bir, ayın üçüncü Cumartesi günü</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.saturday.third</key>
@@ -2125,9 +2125,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Her ayın üçüncü cumartesi günü geçerli [B][StartDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate][/B] tarihinden itibaren [B][StartTime] - [EndTime][/B] saatlerinde her ayın üçüncü Cumartesi günü</string>
         <key>other</key>
-        <string>Her günün üçüncü cumartesi %d etkili aylar [B][StartDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate][/B] tarihinden itibaren [B][StartTime] - [EndTime][/B] saatlerinde her %d ayda bir, ayın üçüncü Cumartesi günü</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.saturday.fourth</key>
@@ -2141,9 +2141,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Her ayın dördüncü cumartesi günü geçerli [B][StartDate] kadar [UntilDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate] - [UntilDate][/B] tarihleri arasında, [B][StartTime] - [EndTime][/B] saatlerinde her ayın dördüncü Cumartesi günü</string>
         <key>other</key>
-        <string>Her günün dördüncü cumartesi %d etkili aylar [B][StartDate] kadar [UntilDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate] - [UntilDate][/B] tarihleri arasında, [B][StartTime] - [EndTime][/B] saatlerinde her %d ayda bir, ayın dördüncü Cumartesi günü</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.saturday.fourth</key>
@@ -2157,9 +2157,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Her ayın dördüncü cumartesi günü geçerli [B][StartDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate][/B] tarihinden itibaren [B][StartTime] - [EndTime][/B] saatlerinde her ayın dördüncü Cumartesi günü</string>
         <key>other</key>
-        <string>Her günün dördüncü cumartesi %d etkili aylar [B][StartDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate][/B] tarihinden itibaren [B][StartTime] - [EndTime][/B] saatlerinde her %d ayda bir, ayın dördüncü Cumartesi günü</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.saturday.fifth</key>
@@ -2173,9 +2173,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Her ayın beşinci cumartesi geçerli [B][StartDate] kadar [UntilDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate] - [UntilDate][/B] tarihleri arasında, [B][StartTime] - [EndTime][/B] saatlerinde her ayın beşinci Cumartesi günü</string>
         <key>other</key>
-        <string>Her günün beşinci cumartesi %d etkili aylar [B][StartDate] kadar [UntilDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate] - [UntilDate][/B] tarihleri arasında, [B][StartTime] - [EndTime][/B] saatlerinde her %d ayda bir, ayın beşinci Cumartesi günü</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.saturday.fifth</key>
@@ -2189,9 +2189,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Her ayın beşinci cumartesi geçerli [B][StartDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate][/B] tarihinden itibaren [B][StartTime] - [EndTime][/B] saatlerinde her ayın beşinci Cumartesi günü</string>
         <key>other</key>
-        <string>Her günün beşinci cumartesi %d etkili aylar [B][StartDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate][/B] tarihinden itibaren [B][StartTime] - [EndTime][/B] saatlerinde her %d ayda bir, ayın beşinci Cumartesi günü</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.sunday.first</key>
@@ -2205,9 +2205,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Her ayın ilk Pazar günü geçerli [B][StartDate] kadar [UntilDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate] - [UntilDate][/B] tarihleri arasında, [B][StartTime] - [EndTime][/B] saatlerinde her ayın ilk Pazar günü</string>
         <key>other</key>
-        <string>Her günün ilk pazar günü %d etkili aylar [B][StartDate] kadar [UntilDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate] - [UntilDate][/B] tarihleri arasında, [B][StartTime] - [EndTime][/B] saatlerinde her %d ayda bir, ayın ilk Pazar günü</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.sunday.first</key>
@@ -2221,9 +2221,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Her ayın ilk Pazar günü geçerli [B][StartDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate][/B] tarihinden itibaren [B][StartTime] - [EndTime][/B] saatlerinde her ayın ilk Pazar günü</string>
         <key>other</key>
-        <string>Her günün ilk pazar günü %d etkili aylar [B][StartDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate][/B] tarihinden itibaren [B][StartTime] - [EndTime][/B] saatlerinde her %d ayda bir, ayın ilk Pazar günü</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.sunday.second</key>
@@ -2237,9 +2237,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Her ayın ikinci Pazar günü geçerli [B][StartDate] kadar [UntilDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate] - [UntilDate][/B] tarihleri arasında, [B][StartTime] - [EndTime][/B] saatlerinde her ayın ikinci Pazar günü</string>
         <key>other</key>
-        <string>Her günün ikinci pazar günü %d etkili aylar [B][StartDate] kadar [UntilDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate] - [UntilDate][/B] tarihleri arasında, [B][StartTime] - [EndTime][/B] saatlerinde her %d ayda bir, ayın ikinci Pazar günü</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.sunday.second</key>
@@ -2253,9 +2253,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Her ayın ikinci Pazar günü geçerli [B][StartDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate][/B] tarihinden itibaren [B][StartTime] - [EndTime][/B] saatlerinde her ayın ikinci Pazar günü</string>
         <key>other</key>
-        <string>Her günün ikinci pazar günü %d etkili aylar [B][StartDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate][/B] tarihinden itibaren [B][StartTime] - [EndTime][/B] saatlerinde her %d ayda bir, ayın ikinci Pazar günü</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.sunday.third</key>
@@ -2269,9 +2269,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Her ayın üçüncü pazar günü geçerli [B][StartDate] kadar [UntilDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate] - [UntilDate][/B] tarihleri arasında, [B][StartTime] - [EndTime][/B] saatlerinde her ayın üçüncü Pazar günü</string>
         <key>other</key>
-        <string>Her günün üçüncü pazar günü %d etkili aylar [B][StartDate] kadar [UntilDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate] - [UntilDate][/B] tarihleri arasında, [B][StartTime] - [EndTime][/B] saatlerinde her %d ayda bir, ayın üçüncü Pazar günü</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.sunday.third</key>
@@ -2285,9 +2285,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Her ayın üçüncü pazar günü geçerli [B][StartDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate][/B] tarihinden itibaren [B][StartTime] - [EndTime][/B] saatlerinde her ayın üçüncü Pazar günü</string>
         <key>other</key>
-        <string>Her günün üçüncü pazar günü %d etkili aylar [B][StartDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate][/B] tarihinden itibaren [B][StartTime] - [EndTime][/B] saatlerinde her %d ayda bir, ayın üçüncü Pazar günü</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.sunday.fourth</key>
@@ -2301,9 +2301,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Her ayın dördüncü Pazar günü geçerli [B][StartDate] kadar [UntilDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate] - [UntilDate][/B] tarihleri arasında, [B][StartTime] - [EndTime][/B] saatlerinde her ayın dördüncü Pazar günü</string>
         <key>other</key>
-        <string>Her günün dördüncü pazar günü %d etkili aylar [B][StartDate] kadar [UntilDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate] - [UntilDate][/B] tarihleri arasında, [B][StartTime] - [EndTime][/B] saatlerinde her %d ayda bir, ayın dördüncü Pazar günü</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.sunday.fourth</key>
@@ -2317,9 +2317,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Her ayın dördüncü Pazar günü geçerli [B][StartDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate][/B] tarihinden itibaren [B][StartTime] - [EndTime][/B] saatlerinde her ayın dördüncü Pazar günü</string>
         <key>other</key>
-        <string>Her günün dördüncü pazar günü %d etkili aylar [B][StartDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate][/B] tarihinden itibaren [B][StartTime] - [EndTime][/B] saatlerinde her %d ayda bir, ayın dördüncü Pazar günü</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.until.sunday.fifth</key>
@@ -2333,9 +2333,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Her ayın beşinci Pazar günü geçerli [B][StartDate] kadar [UntilDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate] - [UntilDate][/B] tarihleri arasında, [B][StartTime] - [EndTime][/B] saatlerinde her ayın beşinci Pazar günü</string>
         <key>other</key>
-        <string>Her günün beşinci pazar günü %d etkili aylar [B][StartDate] kadar [UntilDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate] - [UntilDate][/B] tarihleri arasında, [B][StartTime] - [EndTime][/B] saatlerinde her %d ayda bir, ayın beşinci Pazar günü</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.sunday.fifth</key>
@@ -2349,9 +2349,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Her ayın beşinci Pazar günü geçerli [B][StartDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate][/B] tarihinden itibaren [B][StartTime] - [EndTime][/B] saatlerinde her ayın beşinci Pazar günü</string>
         <key>other</key>
-        <string>Her günün beşinci pazar günü %d etkili aylar [B][StartDate][/B] beri [B][StartTime] doğru [EndTime][/B]</string>
+        <string>[B][StartDate][/B] tarihinden itibaren [B][StartTime] - [EndTime][/B] saatlerinde her %d ayda bir, ayın beşinci Pazar günü</string>
       </dict>
     </dict>
     <key>sharedItems.tab.recents.undecryptedFileName</key>
@@ -2383,7 +2383,7 @@
         <key>one</key>
         <string>%d gün kaldı</string>
         <key>other</key>
-        <string>%d kalan günler</string>
+        <string>%d gün kaldı</string>
       </dict>
     </dict>
     <key>account.achievement.complete.validBonusExpiry.detail.subtitle</key>
@@ -2397,9 +2397,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Bonusun süresi doluyor %d gün.</string>
+        <string>Bonusun süresinin dolmasına %d gün kaldı.</string>
         <key>other</key>
-        <string>Bonusun süresi doluyor %d günler.</string>
+        <string>Bonusun süresinin dolmasına %d gün kaldı.</string>
       </dict>
     </dict>
     <key>accounts.cancelSubscriptionSurvey.error.minimumRequiredCharacterCount</key>
@@ -2413,9 +2413,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Mesaj en azından olmalıdır %d karakter</string>
+        <string>Mesaj en az %d karakter olmalıdır</string>
         <key>other</key>
-        <string>Mesaj en azından olmalıdır %d karakterler</string>
+        <string>Mesaj en az %d karakter olmalıdır</string>
       </dict>
     </dict>
     <key>share.message.uploadedToDestinationFolder</key>
@@ -2429,9 +2429,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Yüklendi”[A]“to”[B]”</string>
+        <string>“[A]” öğesi “[B]” konumuna yüklendi</string>
         <key>other</key>
-        <string>Yüklendi %d öğeler”[B]”</string>
+        <string>%d öğe “[B]” konumuna yüklendi</string>
       </dict>
     </dict>
     <key>share.message.uploadedToCloudDrive</key>
@@ -2445,9 +2445,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Yüklendi”[A]” Cloud drive to</string>
+        <string>“[A]” Bulut depolamaya yüklendi</string>
         <key>other</key>
-        <string>Yüklendi %d Bulut sürücüsüne öğeler</string>
+        <string>%d öğe Bulut depolamaya yüklendi</string>
       </dict>
     </dict>
     <key>share.message.sendToChat.withOneFile</key>
@@ -2461,9 +2461,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Gönderildi”[A]” chat</string>
+        <string>“[A]” sohbete gönderildi</string>
         <key>other</key>
-        <string>Gönderildi”[A]” tüm sohbetlere</string>
+        <string>“[A]” tüm sohbetlere gönderildi</string>
       </dict>
     </dict>
     <key>share.message.sendToChat.withMultipleFiles</key>
@@ -2477,9 +2477,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Gönderildi [A] sohbet etmek</string>
+        <string>[A] sohbete gönderildi</string>
         <key>other</key>
-        <string>Gönderildi [A] tüm sohbetlere</string>
+        <string>[A] tüm sohbetlere gönderildi</string>
       </dict>
     </dict>
     <key>meetings.scheduled.create.daily.interval</key>
@@ -2495,7 +2495,7 @@
         <key>one</key>
         <string>%d gün</string>
         <key>other</key>
-        <string>%d günler</string>
+        <string>%d gün</string>
       </dict>
     </dict>
     <key>meetings.scheduled.create.weekly.interval</key>
@@ -2511,7 +2511,7 @@
         <key>one</key>
         <string>%d hafta</string>
         <key>other</key>
-        <string>%d haftalar</string>
+        <string>%d hafta</string>
       </dict>
     </dict>
     <key>meetings.scheduled.create.monthly.interval</key>
@@ -2527,7 +2527,7 @@
         <key>one</key>
         <string>%d ay</string>
         <key>other</key>
-        <string>%d aylar</string>
+        <string>%d ay</string>
       </dict>
     </dict>
     <key>meetings.scheduled.create.daily.footerNote</key>
@@ -2541,9 +2541,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Toplantı her gün gerçekleşecek.</string>
+        <string>Toplantı her gün tekrarlanacak.</string>
         <key>other</key>
-        <string>Toplantı her zaman gerçekleşecek %d günler.</string>
+        <string>Toplantı %d günde bir tekrarlanacak.</string>
       </dict>
     </dict>
     <key>meetings.scheduled.create.weekly.singleDay.footerNote</key>
@@ -2557,9 +2557,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Toplantı her hafta yapılacak [weekDayName].</string>
+        <string>Toplantı her hafta [weekDayName] günü tekrarlanacak.</string>
         <key>other</key>
-        <string>Toplantı her zaman gerçekleşecek %d haftalar sonra [weekDayName].</string>
+        <string>Toplantı %d haftada bir [weekDayName] günü tekrarlanacak.</string>
       </dict>
     </dict>
     <key>meetings.scheduled.create.weekly.multipleDays.footerNote</key>
@@ -2573,9 +2573,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Toplantı her hafta yapılacak [weekDayNames] ve [lastWeekDayName].</string>
+        <string>Toplantı her hafta [weekDayNames] ve [lastWeekDayName] günleri tekrarlanacak.</string>
         <key>other</key>
-        <string>Toplantı her zaman gerçekleşecek %d haftalar [weekDayNames] ve [lastWeekDayName].</string>
+        <string>Toplantı %d haftada bir [weekDayNames] ve [lastWeekDayName] günleri tekrarlanacak.</string>
       </dict>
     </dict>
     <key>meetings.scheduled.create.monthly.singleDayCardinal.footerNote</key>
@@ -2589,9 +2589,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Toplantı her ay gün yapılacak [cardinalDay].</string>
+        <string>Toplantı her ayın [cardinalDay]. günü tekrarlanacak.</string>
         <key>other</key>
-        <string>Toplantı her zaman gerçekleşecek %d gün içinde aylar [cardinalDay].</string>
+        <string>Toplantı %d ayda bir, ayın [cardinalDay]. günü tekrarlanacak.</string>
       </dict>
     </dict>
     <key>meetings.scheduled.create.monthly.multipleDaysCardinal.footerNote</key>
@@ -2605,9 +2605,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Toplantı her ay gün yapılacak [cardinalDays] ve gün [cardinalLastDay].</string>
+        <string>Toplantı her ayın [cardinalDays]. ve [cardinalLastDay]. günleri tekrarlanacak.</string>
         <key>other</key>
-        <string>Toplantı her zaman gerçekleşecek %d gün içinde aylar [cardinalDays] ve gün [cardinalLastDay].</string>
+        <string>Toplantı %d ayda bir, ayın [cardinalDays]. ve [cardinalLastDay]. günleri tekrarlanacak.</string>
       </dict>
     </dict>
     <key>meetings.scheduled.create.monthly.weekNumberAndWeekDay.footerNote</key>
@@ -2621,9 +2621,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Toplantı her ay düzenlenecek [weekNumber] [weekDayName].</string>
+        <string>Toplantı her ayın [weekNumber] [weekDayName] günü tekrarlanacak.</string>
         <key>other</key>
-        <string>Toplantı her zaman gerçekleşecek %d aylar üzerinde [weekNumber] [weekDayName].</string>
+        <string>Toplantı %d ayda bir, ayın [weekNumber] [weekDayName] günü tekrarlanacak.</string>
       </dict>
     </dict>
     <key>meetings.scheduled.create.weekly.selectedFrequency</key>
@@ -2637,9 +2637,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Her hafta [weekDayNames]</string>
+        <string>Her hafta [weekDayNames] günleri</string>
         <key>other</key>
-        <string>Her %d haftalar [weekDayNames]</string>
+        <string>%d haftada bir [weekDayNames] günleri</string>
       </dict>
     </dict>
     <key>meetings.scheduled.create.monthly.weekDayCardinal.selectedFrequency</key>
@@ -2653,9 +2653,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Her ay gün [cardinalNumber]</string>
+        <string>Her ayın [cardinalNumber]. günü</string>
         <key>other</key>
-        <string>Her %d gün içinde aylar [cardinalNumber]</string>
+        <string>%d ayda bir, ayın [cardinalNumber]. günü</string>
       </dict>
     </dict>
     <key>meetings.scheduled.create.monthly.weekNumberAndWeekDay.selectedFrequency</key>
@@ -2671,7 +2671,7 @@
         <key>one</key>
         <string>Her ay, [ordinalNumber] [weekDayName]</string>
         <key>other</key>
-        <string>Her %d aylar, [ordinalNumber] [weekDayName]</string>
+        <string>Her %d ayda bir, [ordinalNumber] [weekDayName]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.create.monthlyRecurrenceOption.beyondTheLastDayOfTheMonthSelected.footNote</key>
@@ -2685,9 +2685,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Bazı aylar yok %d gün. Bu aylar için olay ayın son günü için planlanacaktır.</string>
+        <string>Bazı aylarda %d gün yoktur. Bu aylar için tekrar, ayın son gününe planlanacaktır.</string>
         <key>other</key>
-        <string>Bazı aylar yok %d günler. Bu aylar için olay ayın son günü için planlanacaktır.</string>
+        <string>Bazı aylarda %d gün yoktur. Bu aylar için tekrar, ayın son gününe planlanacaktır.</string>
       </dict>
     </dict>
     <key>meetings.scheduleMeeting.create.selectedRecurrence.daily.customInterval</key>
@@ -2703,7 +2703,7 @@
         <key>one</key>
         <string>Günlük</string>
         <key>other</key>
-        <string>Her %d günler</string>
+        <string>%d günde bir</string>
       </dict>
     </dict>
     <key>albumLink.alert.message.filesSaveToCloudDrive</key>
@@ -2717,9 +2717,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d Bulut sürücüsüne kaydedilen dosya</string>
+        <string>%d dosya Bulut depolamaya kaydedildi</string>
         <key>other</key>
-        <string>%d Bulut sürücüsüne kaydedilen dosyalar</string>
+        <string>%d dosya Bulut depolamaya kaydedildi</string>
       </dict>
     </dict>
     <key>general.saveToPhotos.started</key>
@@ -2735,7 +2735,7 @@
         <key>one</key>
         <string>İndirme başladı</string>
         <key>other</key>
-        <string>%d indirmeler başladı</string>
+        <string>%d indirme başladı</string>
       </dict>
     </dict>
     <key>chat.call.waitingRoom.alert.outsideCallUI.message</key>
@@ -2749,9 +2749,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>[UserName] Katılmayı bekliyor”[MeetingName]”</string>
+        <string>[UserName], “[MeetingName]“ toplantısına katılmak için bekliyor</string>
         <key>other</key>
-        <string>%d Katılımcılar katılmayı bekliyor”[MeetingName]”</string>
+        <string>%d katılımcı “[MeetingName]“ toplantısına katılmak için bekliyor</string>
       </dict>
     </dict>
     <key>chat.call.waitingRoom.alert.message</key>
@@ -2765,9 +2765,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>[UserName] çağrıya katılmak için bekliyor</string>
+        <string>[UserName] aramaya katılmak için bekliyor</string>
         <key>other</key>
-        <string>%d Katılımcılar çağrıya katılmayı bekliyor</string>
+        <string>%d katılımcı aramaya katılmak için bekliyor</string>
       </dict>
     </dict>
     <key>chat.call.waitingRoom.participantsCount</key>
@@ -2783,7 +2783,7 @@
         <key>one</key>
         <string>%d katılımcı</string>
         <key>other</key>
-        <string>%d katılanlar</string>
+        <string>%d katılımcı</string>
       </dict>
     </dict>
     <key>general.format.itemsSelected</key>
@@ -2799,7 +2799,7 @@
         <key>one</key>
         <string>%d öğe seçildi</string>
         <key>other</key>
-        <string>%d seçilmiş öğeler</string>
+        <string>%d öğe seçildi</string>
       </dict>
     </dict>
     <key>chat.message.filesSentToAChat</key>
@@ -2813,9 +2813,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Sohbete gönderilen dosya</string>
+        <string>Dosya sohbete gönderildi</string>
         <key>other</key>
-        <string>Sohbete gönderilen dosyalar</string>
+        <string>Dosyalar sohbete gönderildi</string>
       </dict>
     </dict>
     <key>chat.message.fileSentToMultipleChats</key>
@@ -2829,9 +2829,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Şuraya gönderilen dosya %d sohbet</string>
+        <string>Dosya %d sohbete gönderildi</string>
         <key>other</key>
-        <string>Şuraya gönderilen dosya %d sohbetler</string>
+        <string>Dosya %d sohbete gönderildi</string>
       </dict>
     </dict>
     <key>chat.message.multipleFilesSentToMultipleChats</key>
@@ -2845,9 +2845,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Gönderilen dosyalar %d sohbet</string>
+        <string>Dosyalar %d sohbete gönderildi</string>
         <key>other</key>
-        <string>Gönderilen dosyalar %d sohbetler</string>
+        <string>Dosyalar %d sohbete gönderildi</string>
       </dict>
     </dict>
     <key>chat.message.numberOfContacts</key>
@@ -2861,9 +2861,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d temas</string>
+        <string>%d kişi</string>
         <key>other</key>
-        <string>%d kişileri</string>
+        <string>%d kişi</string>
       </dict>
     </dict>
     <key>chat.message.numberOfAttachments</key>
@@ -2877,9 +2877,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Ekli %d dosya</string>
+        <string>%d dosya eklendi</string>
         <key>other</key>
-        <string>Ekli %d dosyalar</string>
+        <string>%d dosya eklendi</string>
       </dict>
     </dict>
     <key>contacts.invite.emailAddress.inviteNumberOfContacts</key>
@@ -2893,9 +2893,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Davet et %d temas</string>
+        <string>%d kişiyi davet et</string>
         <key>other</key>
-        <string>Davet et %d kişileri</string>
+        <string>%d kişiyi davet et</string>
       </dict>
     </dict>
     <key>chat.info.numberOfParticipants</key>
@@ -2911,7 +2911,7 @@
         <key>one</key>
         <string>%d katılımcı</string>
         <key>other</key>
-        <string>%d katılanlar</string>
+        <string>%d katılımcı</string>
       </dict>
     </dict>
     <key>chat.info.notifications.mutedUntilTime</key>
@@ -2925,9 +2925,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Bildirimler şu ana kadar sessize alınacaktır [Time]</string>
+        <string>Bildirimler [Time] saatine kadar sessize alınacak</string>
         <key>other</key>
-        <string>Bildirimler şu ana kadar sessize alınacaktır [Time]</string>
+        <string>Bildirimler [Time] saatine kadar sessize alınacak</string>
       </dict>
     </dict>
     <key>general.menuAction.shareFolders.successMessage</key>
@@ -2941,9 +2941,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Paylaşılan klasör</string>
+        <string>Klasör paylaşıldı</string>
         <key>other</key>
-        <string>%d paylaşılan klasörler</string>
+        <string>%d klasör paylaşıldı</string>
       </dict>
     </dict>
     <key>calls.freePlanLimitWarning.durationLimitAlert.title</key>
@@ -2957,9 +2957,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Ücretsiz aramanız şu tarihte sona erecek %d dakika</string>
+        <string>Ücretsiz aramanız %d dakika içinde sona erecek</string>
         <key>other</key>
-        <string>Ücretsiz aramanız şu tarihte sona erecek %d dakikalar</string>
+        <string>Ücretsiz aramanız %d dakika içinde sona erecek</string>
       </dict>
     </dict>
     <key>videos.tab.playlist.snackbar.videoCount</key>
@@ -2973,9 +2973,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Eklendi %d video için”[A]”</string>
+        <string>“[A]” albümüne %d video eklendi</string>
         <key>other</key>
-        <string>Eklendi %d videolar için”[A]”</string>
+        <string>“[A]” albümüne %d video eklendi</string>
       </dict>
     </dict>
     <key>videos.tab.playlist.playlistContent.snackbar.removedVideosCountFromPlaylistName</key>
@@ -2989,9 +2989,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Kaldırıldı %d Videosu”[A]”</string>
+        <string>“[A]” albümünden %d video kaldırıldı</string>
         <key>other</key>
-        <string>Kaldırıldı %d Videoları”[A]”</string>
+        <string>“[A]” albümünden %d video kaldırıldı</string>
       </dict>
     </dict>
     <key>nodes.action.hideItems</key>
@@ -3005,9 +3005,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d öğe gizli</string>
+        <string>%d öğe gizlendi</string>
         <key>other</key>
-        <string>%d gizli öğeler</string>
+        <string>%d öğe gizlendi</string>
       </dict>
     </dict>
     <key>nodes.action.unhideItems</key>
@@ -3021,9 +3021,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d öğe gizlenmemiş</string>
+        <string>%d öğe gösterildi</string>
         <key>other</key>
-        <string>%d gizlenmemiş öğeler</string>
+        <string>%d öğe gösterildi</string>
       </dict>
     </dict>
     <key>set.addTo.AddedToSet.snack.message</key>
@@ -3037,9 +3037,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Eklendi [A]</string>
+        <string>[A] konumuna eklendi</string>
         <key>other</key>
-        <string>Eklendi %d öğeleri [A]</string>
+        <string>%d öğe [A] konumuna eklendi</string>
       </dict>
     </dict>
     <key>notifications.message.sharedItems.filesOnly</key>
@@ -3053,9 +3053,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Eklendi %d dosya</string>
+        <string>%d dosya eklendi</string>
         <key>other</key>
-        <string>Eklendi %d dosyalar</string>
+        <string>%d dosya eklendi</string>
       </dict>
     </dict>
     <key>notifications.message.sharedItems.foldersOnly</key>
@@ -3069,9 +3069,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Eklendi %d klasör</string>
+        <string>%d klasör eklendi</string>
         <key>other</key>
-        <string>Eklendi %d klasörler</string>
+        <string>%d klasör eklendi</string>
       </dict>
     </dict>
     <key>notifications.message.sharedItems.filesAndfolders.files</key>
@@ -3085,9 +3085,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Eklendi %d dosya</string>
+        <string>%d dosya eklendi</string>
         <key>other</key>
-        <string>Eklendi %d dosyalar</string>
+        <string>%d dosya eklendi</string>
       </dict>
     </dict>
     <key>notifications.message.sharedItems.filesAndfolders.folders</key>
@@ -3103,7 +3103,7 @@
         <key>one</key>
         <string>ve %d klasör</string>
         <key>other</key>
-        <string>ve %d klasörler</string>
+        <string>ve %d klasör</string>
       </dict>
     </dict>
     <key>overDiskQuota.paywall.notFinalWarning.oneEmailSent.message</key>
@@ -3117,9 +3117,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Sizinle e-posta ile iletişime geçmemize rağmen [date]Deponuz hala dolu. Sahip olduğun %d dosya alma [storageSpace] Bulut sürücünüzde ve hesabınız kilitlendi. Bir sürüme yükseltin [plan] depolama alanınızı artırmayı ve hesabınızın kilidini açmayı planlayın. Yakında işlem yapmazsanız, verileriniz silinecektir. Dosyanızı korumak için şimdi yükseltin. [A]Depolama sınırlarınız hakkında daha fazla bilgi edinin[/A]. </string>
+        <string>[date] tarihinde sizinle e-posta yoluyla iletişime geçmiş olmamıza rağmen depolama alanınız hala dolu. Bulut depolamanızda [storageSpace] yer kaplayan %d dosyanız var ve hesabınız kilitlendi. Depolama alanınızı artırmak ve hesabınızın kilidini açmak için [plan] planına yükseltin. Yakında işlem yapmazsanız verileriniz silinecektir. Dosyanızı korumak için şimdi yükseltin. [A]Depolama limitleriniz hakkında daha fazlasını öğrenin[/A]. </string>
         <key>other</key>
-        <string>Sizinle e-posta ile iletişime geçmemize rağmen [date]Deponuz hala dolu. Sahip olduğun %d dosyalar kaplayan [storageSpace] Bulut sürücünüzde ve hesabınız kilitlendi. Bir sürüme yükseltin [plan] depolama alanınızı artırmayı ve hesabınızın kilidini açmayı planlayın. Yakında işlem yapmazsanız, verileriniz silinecektir. Dosyalarınızı korumak için şimdi yükseltin. [A]Depolama sınırlarınız hakkında daha fazla bilgi edinin[/A]. </string>
+        <string>[date] tarihinde sizinle e-posta yoluyla iletişime geçmiş olmamıza rağmen depolama alanınız hala dolu. Bulut depolamanızda [storageSpace] yer kaplayan %d dosyanız var ve hesabınız kilitlendi. Depolama alanınızı artırmak ve hesabınızın kilidini açmak için [plan] planına yükseltin. Yakında işlem yapmazsanız verileriniz silinecektir. Dosyalarınızı korumak için şimdi yükseltin. [A]Depolama limitleriniz hakkında daha fazlasını öğrenin[/A]. </string>
       </dict>
     </dict>
     <key>overDiskQuota.paywall.notFinalWarning.multipleEmailsSent.message</key>
@@ -3133,9 +3133,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Sizinle e-posta yoluyla defalarca iletişime geçmemize rağmen, depolama alanınız hala dolu. Sahip olduğun %d dosya alma [storageSpace] Bulut sürücünüzde ve hesabınız kilitlendi. Bir sürüme yükseltin [plan] depolama alanınızı artırmayı ve hesabınızın kilidini açmayı planlayın. Yakında işlem yapmazsanız, verileriniz silinecektir. Dosyanızı korumak için şimdi yükseltin. [A]Depolama sınırlarınız hakkında daha fazla bilgi edinin[/A]. </string>
+        <string>Sizinle e-posta yoluyla birden çok kez iletişime geçmemize rağmen depolama alanınız hala dolu. Bulut depolamanızda [storageSpace] yer kaplayan %d dosyanız var ve hesabınız kilitlendi. Depolama alanınızı artırmak ve hesabınızın kilidini açmak için [plan] planına yükseltin. Yakında işlem yapmazsanız verileriniz silinecektir. Dosyanızı korumak için şimdi yükseltin. [A]Depolama limitleriniz hakkında daha fazlasını öğrenin[/A]. </string>
         <key>other</key>
-        <string>Sizinle e-posta yoluyla defalarca iletişime geçmemize rağmen, depolama alanınız hala dolu. Sahip olduğun %d dosyalar kaplayan [storageSpace] Bulut sürücünüzde ve hesabınız kilitlendi. Bir sürüme yükseltin [plan] depolama alanınızı artırmayı ve hesabınızın kilidini açmayı planlayın. Yakında işlem yapmazsanız, verileriniz silinecektir. Dosyalarınızı korumak için şimdi yükseltin. [A]Depolama sınırlarınız hakkında daha fazla bilgi edinin[/A]. </string>
+        <string>Sizinle e-posta yoluyla birden çok kez iletişime geçmemize rağmen depolama alanınız hala dolu. Bulut depolamanızda [storageSpace] yer kaplayan %d dosyanız var ve hesabınız kilitlendi. Depolama alanınızı artırmak ve hesabınızın kilidini açmak için [plan] planına yükseltin. Yakında işlem yapmazsanız verileriniz silinecektir. Dosyalarınızı korumak için şimdi yükseltin. [A]Depolama limitleriniz hakkında daha fazlasını öğrenin[/A]. </string>
       </dict>
     </dict>
     <key>overDiskQuota.paywall.notFinalWarning.unknownTimesEmailWasSent.message</key>
@@ -3149,9 +3149,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Sizinle e-posta yoluyla iletişime geçmemize rağmen, depolama alanınız hala dolu. Sahip olduğun %d dosya alma [storageSpace] Bulut sürücünüzde ve hesabınız kilitlendi. Bir sürüme yükseltin [plan] depolama alanınızı artırmayı ve hesabınızın kilidini açmayı planlayın. Yakında işlem yapmazsanız, verileriniz silinecektir. Dosyanızı korumak için şimdi yükseltin. [A]Depolama sınırlarınız hakkında daha fazla bilgi edinin[/A]. </string>
+        <string>Sizinle e-posta yoluyla iletişime geçmemize rağmen depolama alanınız hala dolu. Bulut depolamanızda [storageSpace] yer kaplayan %d dosyanız var ve hesabınız kilitlendi. Depolama alanınızı artırmak ve hesabınızın kilidini açmak için [plan] planına yükseltin. Yakında işlem yapmazsanız verileriniz silinecektir. Dosyanızı korumak için şimdi yükseltin. [A]Depolama limitleriniz hakkında daha fazlasını öğrenin[/A]. </string>
         <key>other</key>
-        <string>Sizinle e-posta yoluyla iletişime geçmemize rağmen, depolama alanınız hala dolu. Sahip olduğun %d dosyalar kaplayan [storageSpace] Bulut sürücünüzde ve hesabınız kilitlendi. Bir sürüme yükseltin [plan] depolama alanınızı artırmayı ve hesabınızın kilidini açmayı planlayın. Yakında işlem yapmazsanız, verileriniz silinecektir. Dosyalarınızı korumak için şimdi yükseltin. [A]Depolama sınırlarınız hakkında daha fazla bilgi edinin[/A].</string>
+        <string>Sizinle e-posta yoluyla iletişime geçmemize rağmen depolama alanınız hala dolu. Bulut depolamanızda [storageSpace] yer kaplayan %d dosyanız var ve hesabınız kilitlendi. Depolama alanınızı artırmak ve hesabınızın kilidini açmak için [plan] planına yükseltin. Yakında işlem yapmazsanız verileriniz silinecektir. Dosyalarınızı korumak için şimdi yükseltin. [A]Depolama limitleriniz hakkında daha fazlasını öğrenin[/A].</string>
       </dict>
     </dict>
     <key>settings.fileManagement.fileVersioning.enabledState.fileVersions</key>
@@ -3167,7 +3167,7 @@
         <key>one</key>
         <string>%d dosya sürümü.</string>
         <key>other</key>
-        <string>%d dosya sürümleri.</string>
+        <string>%d dosya sürümü.</string>
       </dict>
     </dict>
     <key>settings.fileManagement.fileVersioning.enabledState.totalSizeTaken</key>
@@ -3181,9 +3181,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Dosya sürümü tarafından kullanılan toplam boyut: [storageSpace]</string>
+        <string>Dosya sürümünün kullandığı toplam boyut: [storageSpace]</string>
         <key>other</key>
-        <string>Dosya sürümleri tarafından kullanılan toplam boyut: [storageSpace]</string>
+        <string>Dosya sürümlerinin kullandığı toplam boyut: [storageSpace]</string>
       </dict>
     </dict>
     <key>set.addTo.snackbar.message</key>
@@ -3197,9 +3197,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Eklendi”[A]”</string>
+        <string>“[A]” konumuna eklendi</string>
         <key>other</key>
-        <string>Eklendi %d öğeler”[A]”</string>
+        <string>%d öğe “[A]” konumuna eklendi</string>
       </dict>
     </dict>
     <key>audio.playlist.removeTracks.snack.message</key>
@@ -3213,9 +3213,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Removed “[A]” from the queue</string>
+        <string>“[A]” öğesi sıradan kaldırıldı</string>
         <key>other</key>
-        <string>Removed %d items from the queue</string>
+        <string>%d öğe, sıradan kaldırıldı</string>
       </dict>
     </dict>
   </dict>

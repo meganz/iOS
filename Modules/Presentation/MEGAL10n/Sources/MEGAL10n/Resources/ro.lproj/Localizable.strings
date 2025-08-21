@@ -877,7 +877,7 @@
 /* Message that is shown when the user click on 'Cancel your account' to confirm that he's aware that his data will be deleted. */
 "youWillLooseAllData"="Veți pierde toate datele asociate acestui cont. Sigur vreți să continuați?";
 /* Account closure, warning message to remind user to contact MEGA support after he confirms that he wants to cancel account. */
-"ifYouCantAccessYourEmailAccount"="Dacă nu puteți accesa căsuța de e-mail, contactați support@mega.nz";
+"ifYouCantAccessYourEmailAccount"="Dacă nu puteți accesa căsuța de e-mail, contactați support@mega.io";
 /* During account cancellation (deletion) */
 "cancellationLinkHasExpired"="Linkul de anulare a expirat.";
 /* Text shown in the last alert dialog to confirm the cancellation of an account */
@@ -1177,7 +1177,7 @@
 /* Error message shown the In App Purchase is disabled in the device Settings */
 "appPurchaseDisabled"="Achizițiile în aplicație sunt dezactivate, te rugăm să le activezi din setările iOS";
 /* Error message shown when the selected product doesn't exist */
-"productNotFound"="Produsul %@ nu a fost găsit, te rugăm să contactezi ios@mega.nz";
+"productNotFound"="Produsul %@ nu a fost găsit, te rugăm să contactezi ios@mega.io";
 /* Alert title to remenber the user that needs to enable purchases */
 "allowPurchase_title"="Permite achizițiile";
 /* Alert message to remenber the user that needs to enable purchases before continue */
@@ -1199,7 +1199,7 @@
 /* Alert title shown when a purchase has stopped because some error between the process */
 "failedPurchase_title"="Achiziție oprită";
 /* Alert message shown when a purchase has stopped because some error between the process */
-"failedPurchase_message"="Fie ai anulat cererea, fie Apple a raportat o eroare de tranzacție. Te rugăm să reîncerci mai târziu sau să contactezi ios@mega.nz.";
+"failedPurchase_message"="Fie ai anulat cererea, fie Apple a raportat o eroare de tranzacție. Te rugăm să reîncerci mai târziu sau să contactezi ios@mega.io";
 /* Alert title shown when a restore hasn't been completed correctly */
 "incompleteRestore_title"="Problemă de restaurare";
 /* Alert message shown when a restore hasn't been completed correctly */
@@ -1207,7 +1207,7 @@
 /* Alert title shown when the restoring process has stopped for some reason */
 "failedRestore_title"="Restaurare oprită";
 /* Alert message shown when the restoring process has stopped for some reason */
-"failedRestore_message"="Fie cererea a fost anulată, fie achiziționarea anterioară nu a putut fi restaurată. Te rugăm să reîncerci mai târziu sau să contactezi ios@mega.nz.";
+"failedRestore_message"="Fie cererea a fost anulată, fie achiziționarea anterioară nu a putut fi restaurată. Te rugăm să reîncerci mai târziu sau să contactezi ios@mega.io";
 /* Title of a warning recommending upgrade to Pro */
 "Upgrade to Pro"="Upgradează la Pro";
 /* A description of MEGA features available only with a Pro plan. */
@@ -2446,8 +2446,6 @@
 "MEGA CAMERA UPLOADS FOLDER"="Folder de încărcări cameră MEGA";
 /* Action button text of folder selection screen for camera uploads */
 "Select Folder"="Selectează folderul";
-/* Section header of Audio Player playlist that contains playing track */
-"Playing"="Se redă";
 /* Message when to move Camera Uploads folder to Rubbish Bin */
 "Are you sure you want to move Camera Uploads folder to Rubbish Bin? If so, a new folder will be auto-generated for Camera Uploads."="Sigur vreți să mutați folderul Încărcări cameră în Coșul de gunoi? Dacă da, un folder nou va fi generat automat pentru Încărcări cameră.";
 /* Text to indicate the action of uploading a file to the cloud drive */
@@ -3019,7 +3017,7 @@
 /* Error title shown when the user try to send more than one report in less than 10 minutes */
 "help.reportIssue.fail.too.many.request.title"="Trebuie să așteptați 10 minute înainte de a trimite o altă problemă";
 /* Error message shown when the user try to send more than one report in less than 10 minutes */
-"help.reportIssue.fail.too.many.request.message"="Așteptați și încercați din nou mai târziu sau contactați echipa noastră de asistență prin support@mega.nz dacă problema persistă";
+"help.reportIssue.fail.too.many.request.message"="Așteptați și încercați din nou mai târziu sau contactați echipa noastră de asistență prin support@mega.io dacă problema persistă";
 /* Confirmation title shown when the user is trying to cancel the ongoing upload report. */
 "help.reportIssue.creating.cancel.title"="Sigur vreți să anulați încărcarea problemei raportate?";
 /* Confirmation message shown when the user is trying to cancel the ongoing upload report. */
@@ -4766,3 +4764,7 @@
 "cameraUploads.banner.status.paused.highThermalState.title"="Încărcările camerei au fost întrerupte din cauza temperaturii ridicate a dispozitivului";
 /* Camera uploads status banner sub title paused due to device heat */
 "cameraUploads.banner.status.paused.highThermalState.subheading"="Încărcările se vor relua automat când dispozitivul se răcește";
+/* Local Notification Title for Camera uploads backup reminder */
+"notification.local.cameraUploadBackupReminder.title"="Protejați-vă momentele prețioase!";
+/* Local Notification Body for Camera uploads backup reminder */
+"notification.local.cameraUploadBackupReminder.body"="Este timpul să faceți o copie de rezervă a fotografiilor și videoclipurilor";

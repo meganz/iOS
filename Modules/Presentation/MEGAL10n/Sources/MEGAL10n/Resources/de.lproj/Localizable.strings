@@ -877,7 +877,7 @@
 /* Message that is shown when the user click on 'Cancel your account' to confirm that he's aware that his data will be deleted. */
 "youWillLooseAllData"="Sie werden alle gespeicherten Daten dieses Accounts verlieren. Wirklich löschen?";
 /* Account closure, warning message to remind user to contact MEGA support after he confirms that he wants to cancel account. */
-"ifYouCantAccessYourEmailAccount"="Falls Sie keinen Zugang zu Ihrem E-Mail-Posteingang haben, wenden Sie sich an support@mega.nz";
+"ifYouCantAccessYourEmailAccount"="Falls Sie keinen Zugang zu Ihrem E-Mail-Posteingang haben, wenden Sie sich an support@mega.io";
 /* During account cancellation (deletion) */
 "cancellationLinkHasExpired"="Stornolink abgelaufen.";
 /* Text shown in the last alert dialog to confirm the cancellation of an account */
@@ -1177,7 +1177,7 @@
 /* Error message shown the In App Purchase is disabled in the device Settings */
 "appPurchaseDisabled"="In-App-Käufe sind derzeit deaktiviert, bitte aktivieren Sie sie in den iOS-Einstellungen";
 /* Error message shown when the selected product doesn't exist */
-"productNotFound"="Produkt %@ wurde nicht gefunden - bitte setzen Sie sich mit ios@mega.nz in Verbindung";
+"productNotFound"="Produkt %@ wurde nicht gefunden - bitte setzen Sie sich mit ios@mega.io in Verbindung";
 /* Alert title to remenber the user that needs to enable purchases */
 "allowPurchase_title"="Käufe erlauben";
 /* Alert message to remenber the user that needs to enable purchases before continue */
@@ -1199,7 +1199,7 @@
 /* Alert title shown when a purchase has stopped because some error between the process */
 "failedPurchase_title"="Kaufvorgang angehalten";
 /* Alert message shown when a purchase has stopped because some error between the process */
-"failedPurchase_message"="Sie haben den Vorgang entweder storniert, oder Apple hat einen Transaktionsfehler gemeldet. Bitte versuchen Sie es später erneut, oder setzen Sie sich mit ios@mega,nz in Verbindung.";
+"failedPurchase_message"="Sie haben den Vorgang entweder storniert, oder Apple hat einen Transaktionsfehler gemeldet. Bitte versuchen Sie es später erneut, oder setzen Sie sich mit ios@mega.io in Verbindung.";
 /* Alert title shown when a restore hasn't been completed correctly */
 "incompleteRestore_title"="Fehler beim Wiederherstellen";
 /* Alert message shown when a restore hasn't been completed correctly */
@@ -1207,7 +1207,7 @@
 /* Alert title shown when the restoring process has stopped for some reason */
 "failedRestore_title"="Wiederherstellung angehalten";
 /* Alert message shown when the restoring process has stopped for some reason */
-"failedRestore_message"="Der Vorgang wurde storniert, oder der vorhergehende Kauf konnte nicht wiederhergestellt werden. Bitte versuchen Sie es erneut, oder kontaktieren Sie ios@mega.nz.";
+"failedRestore_message"="Der Vorgang wurde storniert, oder der vorhergehende Kauf konnte nicht wiederhergestellt werden. Bitte versuchen Sie es erneut, oder kontaktieren Sie ios@mega.io";
 /* Title of a warning recommending upgrade to Pro */
 "Upgrade to Pro"="Auf Pro umsteigen";
 /* A description of MEGA features available only with a Pro plan. */
@@ -2446,8 +2446,6 @@
 "MEGA CAMERA UPLOADS FOLDER"="MEGA-Kamerauploads-Ordner";
 /* Action button text of folder selection screen for camera uploads */
 "Select Folder"="Ordner auswählen";
-/* Section header of Audio Player playlist that contains playing track */
-"Playing"="Aktuelle Wiedergabe";
 /* Message when to move Camera Uploads folder to Rubbish Bin */
 "Are you sure you want to move Camera Uploads folder to Rubbish Bin? If so, a new folder will be auto-generated for Camera Uploads."="Möchten Sie den Ordner für Kamera-Uploads wirklich in den Papierkorb verschieben? Wenn Sie dies tun, wird automatisch ein neuer Ordner für Kamera-Uploads erstellt.";
 /* Text to indicate the action of uploading a file to the cloud drive */
@@ -3019,7 +3017,7 @@
 /* Error title shown when the user try to send more than one report in less than 10 minutes */
 "help.reportIssue.fail.too.many.request.title"="Sie müssen 10 Minuten warten, bevor Sie eine weitere Problemmeldung einreichen können";
 /* Error message shown when the user try to send more than one report in less than 10 minutes */
-"help.reportIssue.fail.too.many.request.message"="Versuchen Sie es später noch einmal oder kontaktieren Sie unser Supportteam unter support@mega.nz, falls das Problem weiterhin besteht";
+"help.reportIssue.fail.too.many.request.message"="Versuchen Sie es später noch einmal oder kontaktieren Sie unser Supportteam unter support@mega.io, falls das Problem weiterhin besteht";
 /* Confirmation title shown when the user is trying to cancel the ongoing upload report. */
 "help.reportIssue.creating.cancel.title"="Möchten Sie den Upload Ihres Problemberichts wirklich abbrechen?";
 /* Confirmation message shown when the user is trying to cancel the ongoing upload report. */
@@ -4766,3 +4764,7 @@
 "cameraUploads.banner.status.paused.highThermalState.title"="Kamera-Uploads pausiert – hohe Gerätetemperatur";
 /* Camera uploads status banner sub title paused due to device heat */
 "cameraUploads.banner.status.paused.highThermalState.subheading"="Die Uploads werden automatisch fortgesetzt, wenn sich Ihr Gerät abgekühlt hat";
+/* Local Notification Title for Camera uploads backup reminder */
+"notification.local.cameraUploadBackupReminder.title"="Schützen Sie kostbare Momente!";
+/* Local Notification Body for Camera uploads backup reminder */
+"notification.local.cameraUploadBackupReminder.body"="Sichern Sie Ihre Fotos und Videos";

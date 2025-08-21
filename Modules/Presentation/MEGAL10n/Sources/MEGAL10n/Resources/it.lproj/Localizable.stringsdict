@@ -3397,9 +3397,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d item unhidden</string>
+        <string>%d oggetto svelato</string>
+        <key>many</key>
+        <string>%d di oggetti svelati</string>
         <key>other</key>
-        <string>%d items unhidden</string>
+        <string>%d oggetti svelati</string>
       </dict>
     </dict>
     <key>set.addTo.AddedToSet.snack.message</key>

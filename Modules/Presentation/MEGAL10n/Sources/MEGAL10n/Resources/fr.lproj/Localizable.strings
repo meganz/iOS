@@ -877,7 +877,7 @@
 /* Message that is shown when the user click on 'Cancel your account' to confirm that he's aware that his data will be deleted. */
 "youWillLooseAllData"="Vous perdrez toutes les données associées à ce compte. Voulez-vous vraiment poursuivre ?";
 /* Account closure, warning message to remind user to contact MEGA support after he confirms that he wants to cancel account. */
-"ifYouCantAccessYourEmailAccount"="Si vous ne pouvez pas accéder à votre boîte de réception des courriels, contactez support@mega.nz";
+"ifYouCantAccessYourEmailAccount"="Si vous ne pouvez pas accéder à votre boîte de réception des courriels, contactez support@mega.io";
 /* During account cancellation (deletion) */
 "cancellationLinkHasExpired"="Le lien d’annulation est expiré.";
 /* Text shown in the last alert dialog to confirm the cancellation of an account */
@@ -1177,7 +1177,7 @@
 /* Error message shown the In App Purchase is disabled in the device Settings */
 "appPurchaseDisabled"="Les achats intégrés sont désactivés, veuillez les activer dans l’appli Réglages d’iOS";
 /* Error message shown when the selected product doesn't exist */
-"productNotFound"="Le produit %@ est introuvable, veuillez contacter ios@mega.nz";
+"productNotFound"="Le produit %@ est introuvable, veuillez contacter ios@mega.io";
 /* Alert title to remenber the user that needs to enable purchases */
 "allowPurchase_title"="Autoriser les achats";
 /* Alert message to remenber the user that needs to enable purchases before continue */
@@ -1199,7 +1199,7 @@
 /* Alert title shown when a purchase has stopped because some error between the process */
 "failedPurchase_title"="L’achat est interrompu";
 /* Alert message shown when a purchase has stopped because some error between the process */
-"failedPurchase_message"="Soit vous avez annulé la demande, soit Apple a signalé une erreur de transaction. Veuillez réessayer ultérieurement ou contacter ios@mega.nz.";
+"failedPurchase_message"="Soit vous avez annulé la demande, soit Apple a signalé une erreur de transaction. Veuillez réessayer ultérieurement ou contacter ios@mega.io";
 /* Alert title shown when a restore hasn't been completed correctly */
 "incompleteRestore_title"="Problème de restauration";
 /* Alert message shown when a restore hasn't been completed correctly */
@@ -1207,7 +1207,7 @@
 /* Alert title shown when the restoring process has stopped for some reason */
 "failedRestore_title"="La restauration est interrompue";
 /* Alert message shown when the restoring process has stopped for some reason */
-"failedRestore_message"="Soit la demande a été annulée, soit l’achat préalable n’a pas pu être restauré. Veuillez réessayer ultérieurement ou contacter ios@mega.nz.";
+"failedRestore_message"="Soit la demande a été annulée, soit l’achat préalable n’a pas pu être restauré. Veuillez réessayer ultérieurement ou contacter ios@mega.io";
 /* Title of a warning recommending upgrade to Pro */
 "Upgrade to Pro"="Souscrire un abonnement Pro";
 /* A description of MEGA features available only with a Pro plan. */
@@ -2446,8 +2446,6 @@
 "MEGA CAMERA UPLOADS FOLDER"="Dossier MEGA des Téléversements de l’appareil photo";
 /* Action button text of folder selection screen for camera uploads */
 "Select Folder"="Sélectionner le dossier";
-/* Section header of Audio Player playlist that contains playing track */
-"Playing"="En cours de lecture";
 /* Message when to move Camera Uploads folder to Rubbish Bin */
 "Are you sure you want to move Camera Uploads folder to Rubbish Bin? If so, a new folder will be auto-generated for Camera Uploads."="Voulez-vous vraiment déplacer le dossier des Téléversements de l’appareil photo vers la Corbeille ? Si oui, un nouveau dossier sera automatiquement généré pour les Téléversements de l’appareil photo.";
 /* Text to indicate the action of uploading a file to the cloud drive */
@@ -3019,7 +3017,7 @@
 /* Error title shown when the user try to send more than one report in less than 10 minutes */
 "help.reportIssue.fail.too.many.request.title"="Vous devez attendre 10 minutes avant d’envoyer un autre problème.";
 /* Error message shown when the user try to send more than one report in less than 10 minutes */
-"help.reportIssue.fail.too.many.request.message"="Si le problème persiste, réessayez plus tard ou contactez notre équipe d’assistance par courriel à l’adresse support@mega.nz.";
+"help.reportIssue.fail.too.many.request.message"="Si le problème persiste, réessayez plus tard ou contactez notre équipe d’assistance par courriel à l’adresse support@mega.io";
 /* Confirmation title shown when the user is trying to cancel the ongoing upload report. */
 "help.reportIssue.creating.cancel.title"="Voulez-vous vraiment annuler le téléversement du problème signalé ?";
 /* Confirmation message shown when the user is trying to cancel the ongoing upload report. */
@@ -3641,9 +3639,9 @@
 /* On Upgrade Account Plan screen. Button title to buy account plan. %@ will be the name of the selected plan */
 "upgradeAccountPlan.button.buyAccountPlan.title"="Acheter %@";
 /* On Upgrade Account Plan screen. Button title to buy account plan via web. %@ will be total savings for the users in percent */
-"upgradeAccountPlan.button.buyViaWeb.save"="Buy on our website (save %@)";
+"upgradeAccountPlan.button.buyViaWeb.save"="Acheter sur notre site web (économisez %@)";
 /* On Upgrade Account Plan screen. Button title to buy account plan via web. %@ will be potential total savings for the users in percent */
-"upgradeAccountPlan.button.buyViaWeb.saveUpTo"="Buy on our website (save up to %@)";
+"upgradeAccountPlan.button.buyViaWeb.saveUpTo"="Acheter sur notre site web (économisez jusqu'à %@)";
 /* On Upgrade Account Plan screen. Button title to continue to buy account plan in-app when user could buy externally. %@ will be the higher price of the plan */
 "upgradeAccountPlan.button.buyInApp.title"="Continuer dans l'application (%@)";
 /* On Upgrade Account Plan screen. Button footer text to continue to buy account plan in-app when user could buy externally. %@ will be the higher price of the plan */
@@ -4766,3 +4764,7 @@
 "cameraUploads.banner.status.paused.highThermalState.title"="Téléversements de l'appareil photo mis en pause en raison d'une température élevée de l'appareil";
 /* Camera uploads status banner sub title paused due to device heat */
 "cameraUploads.banner.status.paused.highThermalState.subheading"="Les téléversements reprendront automatiquement lorsque votre appareil aura refroidi";
+/* Local Notification Title for Camera uploads backup reminder */
+"notification.local.cameraUploadBackupReminder.title"="Protégez vos moments précieux !";
+/* Local Notification Body for Camera uploads backup reminder */
+"notification.local.cameraUploadBackupReminder.body"="Il est temps de sauvegarder vos photos et vidéos";
