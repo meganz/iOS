@@ -18,13 +18,16 @@ public final class PlayerOverlayViewModel: ObservableObject {
 
     private let player: any VideoPlayerProtocol
     private let didTapBackAction: () -> Void
+    private let didTapRotateAction: () -> Void
 
     public init(
         player: some VideoPlayerProtocol,
-        didTapBackAction: @escaping () -> Void
+        didTapBackAction: @escaping () -> Void,
+        didTapRotateAction: @escaping () -> Void = {}
     ) {
         self.player = player
         self.didTapBackAction = didTapBackAction
+        self.didTapRotateAction = didTapRotateAction
     }
 
     func viewWillAppear() {
@@ -157,10 +160,15 @@ extension PlayerOverlayViewModel {
     var currentSpeedString: String {
         currentSpeed.displayText
     }
-    
+
     func didTapLoopButton() {
         isLoopEnabled.toggle()
         player.setLooping(isLoopEnabled)
+        didTapControl()
+    }
+
+    func didTapRotate() {
+        didTapRotateAction()
         didTapControl()
     }
 }

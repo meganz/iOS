@@ -6,6 +6,7 @@ import UIKit
 public final class MEGAPlayerViewController: UIViewController {
     private let videoView = UIView()
     private let viewModel: MEGAPlayerViewModel
+    private var currentOrientation: VideoOrientation = .portrait
 
     public init(viewModel: MEGAPlayerViewModel) {
         self.viewModel = viewModel
@@ -26,6 +27,7 @@ public final class MEGAPlayerViewController: UIViewController {
 
         setupVideoView()
         setupOverlay()
+        setupInitialOrientation()
         viewModel.viewDidLoad(playerLayer: videoView)
     }
 
@@ -57,7 +59,10 @@ public final class MEGAPlayerViewController: UIViewController {
             PlayerOverlayView(
                 viewModel: PlayerOverlayViewModel(
                     player: player,
-                    didTapBackAction: dismissAction ?? {}
+                    didTapBackAction: dismissAction ?? {},
+                    didTapRotateAction: { [weak self] in
+                        self?.toggleOrientation()
+                    }
                 )
             )
         }
@@ -84,6 +89,45 @@ public final class MEGAPlayerViewController: UIViewController {
             videoView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             videoView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
         ])
+    }
+
+    private func setupInitialOrientation() {
+        let deviceOrientation = UIDevice.current.orientation
+        let initialVideoOrientation = deviceOrientation.toVideoOrientation(currentOrientation)
+        setOrientation(initialVideoOrientation)
+    }
+    
+    // MARK: - Orientation
+
+    private func toggleOrientation() {
+        let newOrientation = currentOrientation.toggled()
+        setOrientation(newOrientation)
+    }
+
+    public override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        switch currentOrientation {
+        case .portrait: .portrait
+        case .landscape: .landscapeRight
+        }
+    }
+
+    private func setOrientation(_ orientation: VideoOrientation) {
+        guard orientation != currentOrientation else { return }
+        
+        currentOrientation = orientation
+        
+        let targetOrientation = orientation.toUIInterfaceOrientation()
+
+        let windowScene = view.window?.windowScene
+        windowScene?.requestGeometryUpdate(
+            .iOS(
+                interfaceOrientations: UIInterfaceOrientationMask(
+                    rawValue: 1 << targetOrientation.rawValue
+                )
+            )
+        )
+
+        setNeedsUpdateOfSupportedInterfaceOrientations()
     }
 }
 

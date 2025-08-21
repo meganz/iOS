@@ -10,11 +10,13 @@ struct PlayerOverlayViewModelTests {
 
     private func makeSUT(
         player: VideoPlayerProtocol = MockVideoPlayer(),
-        didTapBackAction: @escaping () -> Void = {}
+        didTapBackAction: @escaping () -> Void = {},
+        didTapRotateAction: @escaping () -> Void = {}
     ) -> PlayerOverlayViewModel {
         PlayerOverlayViewModel(
             player: player,
-            didTapBackAction: didTapBackAction
+            didTapBackAction: didTapBackAction,
+            didTapRotateAction: didTapRotateAction
         )
     }
 
@@ -370,17 +372,33 @@ struct PlayerOverlayViewModelTests {
         // Initial state
         #expect(sut.isLoopEnabled == false)
         #expect(mockPlayer.setLoopingCallCount == 0)
-        
+
         // First tap - should enable loop
         sut.didTapLoopButton()
         #expect(sut.isLoopEnabled == true)
         #expect(mockPlayer.setLoopingCallCount == 1)
         #expect(mockPlayer.setLoopingValue == true)
-        
+
         // Second tap - should disable loop
         sut.didTapLoopButton()
         #expect(sut.isLoopEnabled == false)
         #expect(mockPlayer.setLoopingCallCount == 2)
         #expect(mockPlayer.setLoopingValue == false)
+    }
+
+    // MARK: - Rotation Tests
+    
+    @Test
+    func didTapRotate_callsRotateAction() {
+        var rotateActionCalled = false
+        let sut = makeSUT(
+            didTapRotateAction: {
+                rotateActionCalled = true
+            }
+        )
+        
+        sut.didTapRotate()
+        
+        #expect(rotateActionCalled == true)
     }
 }
