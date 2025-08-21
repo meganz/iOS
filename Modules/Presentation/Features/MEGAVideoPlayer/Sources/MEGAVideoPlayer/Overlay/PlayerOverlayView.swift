@@ -48,6 +48,13 @@ public struct PlayerOverlayView: View {
                 .aspectRatio(contentMode: .fit)
                 .frame(width: 24, height: 24)
                 .foregroundStyle(TokenColors.Icon.onColor.swiftUI)
+                .overlay {
+                    // This is to increase the tappable area
+                    Rectangle()
+                        .fill(Color.clear)
+                        .contentShape(Rectangle())
+                        .frame(width: 44, height: 44)
+                }
         }
     }
 }
@@ -209,7 +216,7 @@ extension PlayerOverlayView {
             loopButton
                 .frame(minWidth: 60, alignment: .center)
             Spacer()
-            zoomToFillButton
+            rotateButton
                 .frame(minWidth: 60, alignment: .center)
             Spacer()
             lockButton
@@ -227,6 +234,13 @@ extension PlayerOverlayView {
             Text(viewModel.currentSpeedString)
                 .foregroundStyle(TokenColors.Text.onColor.swiftUI)
                 .font(.system(size: 18))
+                .overlay {
+                    // This is to increase the tappable area
+                    Rectangle()
+                        .fill(Color.clear)
+                        .contentShape(Rectangle())
+                        .frame(width: 44, height: 44)
+                }
         }
     }
 
@@ -249,6 +263,10 @@ extension PlayerOverlayView {
         })
     }
 
+    var rotateButton: some View {
+        controlButton(name: "rotate", action: viewModel.didTapRotate)
+    }
+    
     var moreBottomButton: some View {
         controlButton(name: "moreBottom", action: {
             // Implement more bottom functionality
@@ -269,8 +287,10 @@ extension PlayerOverlayView {
                     state: .playing,
                     currentTime: .seconds(345),
                     duration: .seconds(1_234)
-                )
-            ) {}
+                ),
+                didTapBackAction: {},
+                didTapRotateAction: {}
+            )
         )
     }
     .background(.black)
