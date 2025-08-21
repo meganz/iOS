@@ -439,8 +439,8 @@
     if ([MFMailComposeViewController canSendMail]) {
         MFMailComposeViewController *mailComposeVC = [[MFMailComposeViewController alloc] init];
         mailComposeVC.mailComposeDelegate = self;
-        mailComposeVC.toRecipients = @[@"support@mega.nz"];
-        
+        mailComposeVC.toRecipients = @[@"support@mega.io"];
+
         mailComposeVC.subject = LocalizedString(@"Upgrade to a custom plan", @"Mail title to upgrade to a custom plan");
         [mailComposeVC setMessageBody:LocalizedString(@"Ask us how you can upgrade to a custom plan:", @"Mail subject to upgrade to a custom plan") isHTML:NO];
         

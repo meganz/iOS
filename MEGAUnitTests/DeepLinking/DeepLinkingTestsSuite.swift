@@ -1,7 +1,7 @@
 @testable import MEGA
 import Testing
 
-@Suite("Deep Linking Tests Suite - Tests various types of deep links and their expected behavior.")
+@Suite("Deep Linking Tests Suite - Tests various types of deep links and their expected behavior.", .serialized)
 struct DeepLinkingTestSuite {
     
     // MARK: - Helpers
@@ -367,7 +367,7 @@ struct DeepLinkingTestSuite {
         @Test("Collection NSURL should return .collection", arguments: [
             "https://mega.nz/collection/p3IBQCiZ#Nt8-bopPB8em4cOlKFqStA",
             "mega://collection/p3IBQCiZ#Nt8-bopPB8em4cOlKFqStA",
-            "https://mega.app/collection/p3IBQCiZ#Nt8-bopPB8em4cOlKFqStA",
+            "https://mega.app/collection/p3IBQCiZ#Nt8-bopPB8em4cOlKFqStA"
         ])
         func collectionLinkShouldReturnCollectionType(url: String) {
             assertDeepLinkType(urlString: url, expectedType: .collection)

@@ -34,7 +34,7 @@ final class SendFeedbackViewModel: NSObject {
         dateFormatter.dateFormat = "YYMMdd_hhmmss"
         let logsFileName = "\(dateFormatter.string(from: Date()))_iOS_\(userEmail ?? "").zip"
         
-        return FeedbackEntity(toEmail: "iosfeedback@mega.nz",
+        return FeedbackEntity(toEmail: "iosfeedback@mega.io",
                               subject: "Feedback \(appVersion ?? "")",
                               messageBody: feedbackMessageBody(),
                               logsFileName: logsFileName)
