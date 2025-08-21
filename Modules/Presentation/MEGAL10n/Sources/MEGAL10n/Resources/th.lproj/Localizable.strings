@@ -877,7 +877,7 @@
 /* Message that is shown when the user click on 'Cancel your account' to confirm that he's aware that his data will be deleted. */
 "youWillLooseAllData"="คุณจะสูญเสียข้อมูลทั้งหมดที่เชื่อมโยงกับบัญชีนี้ คุณแน่ใจหรือไม่ว่าต้องการดำเนินการต่อ";
 /* Account closure, warning message to remind user to contact MEGA support after he confirms that he wants to cancel account. */
-"ifYouCantAccessYourEmailAccount"="หากคุณไม่สามารถเข้าถึงกล่องจดหมายอีเมลของคุณได้ ติดต่อ support@mega.nz";
+"ifYouCantAccessYourEmailAccount"="หากคุณไม่สามารถเข้าถึงกล่องจดหมายอีเมลของคุณได้ ติดต่อ support@mega.io";
 /* During account cancellation (deletion) */
 "cancellationLinkHasExpired"="ลิงก์ยกเลิกหมดอายุแล้ว";
 /* Text shown in the last alert dialog to confirm the cancellation of an account */
@@ -1177,7 +1177,7 @@
 /* Error message shown the In App Purchase is disabled in the device Settings */
 "appPurchaseDisabled"="การซื้อภายในแอปถูกปิดใช้งาน กรุณาเปิดใช้งานได้ในการตั้งค่า iOS";
 /* Error message shown when the selected product doesn't exist */
-"productNotFound"="ไม่พบผลิตภัณฑ์ %@ กรุณาติดต่อ ios@mega.nz";
+"productNotFound"="ไม่พบผลิตภัณฑ์ %@ กรุณาติดต่อ ios@mega.io";
 /* Alert title to remenber the user that needs to enable purchases */
 "allowPurchase_title"="อนุญาตให้สั่งซื้อ";
 /* Alert message to remenber the user that needs to enable purchases before continue */
@@ -1199,7 +1199,7 @@
 /* Alert title shown when a purchase has stopped because some error between the process */
 "failedPurchase_title"="การสั่งซื้อหยุดทำงาน";
 /* Alert message shown when a purchase has stopped because some error between the process */
-"failedPurchase_message"="ไม่ว่าคุณจะยกเลิกการร้องขอหรือรายงานข้อผิดพลาดของการทำธุรกรรมไปยัง Apple กรุณาลองอีกครั้งในภายหลังหรือติดต่อได้ที่ ios@mega.nz";
+"failedPurchase_message"="ไม่ว่าคุณจะยกเลิกการร้องขอหรือรายงานข้อผิดพลาดของการทำธุรกรรมไปยัง Apple กรุณาลองอีกครั้งในภายหลังหรือติดต่อได้ที่ ios@mega.io";
 /* Alert title shown when a restore hasn't been completed correctly */
 "incompleteRestore_title"="ปัญหาการกู้คืน";
 /* Alert message shown when a restore hasn't been completed correctly */
@@ -1207,7 +1207,7 @@
 /* Alert title shown when the restoring process has stopped for some reason */
 "failedRestore_title"="การกู้คืนหยุดทำงาน";
 /* Alert message shown when the restoring process has stopped for some reason */
-"failedRestore_message"="ไม่ว่าคุณจะยกเลิกการร้องขอหรือไม่สามารถคืนการสั่งซื้อ กรุณาลองอีกครั้งในภายหลังหรือติดต่อได้ที่ ios@mega.nz";
+"failedRestore_message"="ไม่ว่าคุณจะยกเลิกการร้องขอหรือไม่สามารถคืนการสั่งซื้อ กรุณาลองอีกครั้งในภายหลังหรือติดต่อได้ที่ ios@mega.io";
 /* Title of a warning recommending upgrade to Pro */
 "Upgrade to Pro"="อัปเกรดเป็นบัญชี Pro";
 /* A description of MEGA features available only with a Pro plan. */
@@ -2446,8 +2446,6 @@
 "MEGA CAMERA UPLOADS FOLDER"="โฟลเดอร์อัปโหลดจากกล้องของแอป MEGA";
 /* Action button text of folder selection screen for camera uploads */
 "Select Folder"="เลือกโฟลเดอร์";
-/* Section header of Audio Player playlist that contains playing track */
-"Playing"="กำลังเล่น";
 /* Message when to move Camera Uploads folder to Rubbish Bin */
 "Are you sure you want to move Camera Uploads folder to Rubbish Bin? If so, a new folder will be auto-generated for Camera Uploads."="แน่ใจหรือไม่ว่าต้องการย้ายโฟลเดอร์อัปโหลดจากกล้องไปที่ถังขยะ ในกรณีนี้โฟลเดอร์ใหม่สำหรับการอัปโหลดจากกล้องจะถูกสร้างขึ้นโดยอัตโนมัติ";
 /* Text to indicate the action of uploading a file to the cloud drive */
@@ -3019,7 +3017,7 @@
 /* Error title shown when the user try to send more than one report in less than 10 minutes */
 "help.reportIssue.fail.too.many.request.title"="คุณต้องทิ้งช่วงการส่งรายงานปัญหาอย่างน้อย 10 นาที";
 /* Error message shown when the user try to send more than one report in less than 10 minutes */
-"help.reportIssue.fail.too.many.request.message"="รอสักครู่แล้วลองใหม่อีกครั้ง หรือติดต่อทีมสนับสนุนของเราผ่าน support@mega.nz หากคุณยังประสบปัญหาอยู่";
+"help.reportIssue.fail.too.many.request.message"="รอสักครู่แล้วลองใหม่อีกครั้ง หรือติดต่อทีมสนับสนุนของเราผ่าน support@mega.io หากคุณยังประสบปัญหาอยู่";
 /* Confirmation title shown when the user is trying to cancel the ongoing upload report. */
 "help.reportIssue.creating.cancel.title"="คุณแน่ใจหรือไม่ว่าต้องการยกเลิกการอัปโหลดรายงานปัญหาของคุณ";
 /* Confirmation message shown when the user is trying to cancel the ongoing upload report. */
@@ -4766,3 +4764,7 @@
 "cameraUploads.banner.status.paused.highThermalState.title"="การอัปโหลดจากกล้องหยุดชั่วคราวเนื่องจากอุปกรณ์มีอุณหภูมิสูง";
 /* Camera uploads status banner sub title paused due to device heat */
 "cameraUploads.banner.status.paused.highThermalState.subheading"="การอัปโหลดจะกลับมาทำงานต่อโดยอัตโนมัติเมื่ออุปกรณ์ของคุณเย็นลง";
+/* Local Notification Title for Camera uploads backup reminder */
+"notification.local.cameraUploadBackupReminder.title"="ปกป้องความทรงจำอันล้ำค่าของคุณ!";
+/* Local Notification Body for Camera uploads backup reminder */
+"notification.local.cameraUploadBackupReminder.body"="ถึงเวลาสำรองรูปภาพและวิดีโอของคุณแล้ว";

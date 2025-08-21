@@ -877,7 +877,7 @@
 /* Message that is shown when the user click on 'Cancel your account' to confirm that he's aware that his data will be deleted. */
 "youWillLooseAllData"="Anda akan kehilangan seluruh data yang berhubungan dengan akun ini. Anda yakin ingin melanjutkan?";
 /* Account closure, warning message to remind user to contact MEGA support after he confirms that he wants to cancel account. */
-"ifYouCantAccessYourEmailAccount"="Jika anda tidak dapat mengakses kotak masuk email anda, hubungi support@mega.nz";
+"ifYouCantAccessYourEmailAccount"="Jika anda tidak dapat mengakses kotak masuk email anda, hubungi support@mega.io";
 /* During account cancellation (deletion) */
 "cancellationLinkHasExpired"="Link pembatalan telah habis.";
 /* Text shown in the last alert dialog to confirm the cancellation of an account */
@@ -927,7 +927,7 @@
 /* An alert title where the user provided the incorrect Recovery Key. */
 "invalidRecoveryKey"="Kunci pemulihan salah";
 /* Recovery key error alert title */
-"recoveryKey.error.alert.title"="Recovery key error";
+"recoveryKey.error.alert.title"="Kesalahan kunci pemulihan";
 /* Recovery key error alert message when the user provided incorrect or invalid Recovery key */
 "recoveryKey.error.alert.message.invalidKey"="The recovery key you supplied is either invalid, or is not for this account. Check if you’re using the correct key and try again.";
 /* Text of the alert after opening the recovery link to reset pass being logged. */
@@ -1177,7 +1177,7 @@
 /* Error message shown the In App Purchase is disabled in the device Settings */
 "appPurchaseDisabled"="In-App Purchases di nonaktifkan, harap aktifkan pada iOS Settings";
 /* Error message shown when the selected product doesn't exist */
-"productNotFound"="Produk %@ tidak ditemukan, harap kontak ios@mega.nz";
+"productNotFound"="Produk %@ tidak ditemukan, harap kontak ios@mega.io";
 /* Alert title to remenber the user that needs to enable purchases */
 "allowPurchase_title"="Izinkan pembelian";
 /* Alert message to remenber the user that needs to enable purchases before continue */
@@ -1199,7 +1199,7 @@
 /* Alert title shown when a purchase has stopped because some error between the process */
 "failedPurchase_title"="Pembelian dihentikan";
 /* Alert message shown when a purchase has stopped because some error between the process */
-"failedPurchase_message"="Antara anda membatalkan request atau Apple melaporkan masalah transaksi. Harap coba kembali, atau kontak ios@mega.nz.";
+"failedPurchase_message"="Antara anda membatalkan request atau Apple melaporkan masalah transaksi. Harap coba kembali, atau kontak ios@mega.io";
 /* Alert title shown when a restore hasn't been completed correctly */
 "incompleteRestore_title"="Masalah restore";
 /* Alert message shown when a restore hasn't been completed correctly */
@@ -1207,7 +1207,7 @@
 /* Alert title shown when the restoring process has stopped for some reason */
 "failedRestore_title"="Restore dihentikan";
 /* Alert message shown when the restoring process has stopped for some reason */
-"failedRestore_message"="Antara request telah dibatalkan atau pembelian sebelumnya tidak dapat dikembalikan. Harap coba kembali lagi nanti, atau kontak ios@mega.nz.";
+"failedRestore_message"="Antara request telah dibatalkan atau pembelian sebelumnya tidak dapat dikembalikan. Harap coba kembali lagi nanti, atau kontak ios@mega.io";
 /* Title of a warning recommending upgrade to Pro */
 "Upgrade to Pro"="Upgrade ke Pro";
 /* A description of MEGA features available only with a Pro plan. */
@@ -1267,7 +1267,7 @@
 /* Title used in settings that enables the generation of link previews in the chat */
 "richUrlPreviews"="Aktifkan pratinjau tautan terkirim";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
-"richPreviewsFooter"="Generates previews for certain links you send in chat, when available. Note that retrieving these previews isn’t protected by zero-knowledge encryption.";
+"richPreviewsFooter"="Menghasilkan pratinjau untuk tautan tertentu yang anda kirim dalam obrolan, jika tersedia. Perhatikan bahwa mengambil pratinjau ini tidak dilindungi oleh enkripsi zero-knowledge.";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
 "voiceAndVideoCalls"="Panggilan suara dan video";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
@@ -2143,7 +2143,7 @@
 /* Button title which, if tapped, will trigger the action of opening a folder containg this file */
 "View in Folder"="Lihat di folder";
 /* Error message shown when opening a link with an account that not corresponds to the link */
-"This link is not related to this account. Please log in with the correct account."="You’re logged in to a different MEGA account. Log out and open the password reset link again.";
+"This link is not related to this account. Please log in with the correct account."="Anda masuk ke akun MEGA yang berbeda. Keluar dan buka tautan reset kata sandi lagi.";
 /* Text emncouraging the user to add contacts in MEGA */
 "Invite contact now"="Undang kontak sekarang";
 /* Error message if user click next button without enter a valid phone number */
@@ -2239,13 +2239,13 @@
 /* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the header title that appears above */
 "settings.userInterface.mediaDiscovery.header"="Tampilan galeri";
 /* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the footer message body that appears under that option */
-"settings.userInterface.mediaDiscovery.footer.body"="Open folders with only images or videos in a visual grid. Browse media by thumbnails and filter by date.";
+"settings.userInterface.mediaDiscovery.footer.body"="Buka folder dengan hanya gambar atau video dalam kisi visual. Jelajahi media berdasarkan thumbnail dan filter berdasarkan tanggal.";
 /* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the footer message body link that appears under that option */
 "settings.userInterface.mediaDiscovery.footer.link"="Learn more about gallery view";
 /* In Settings - User Interface, there is a setting that can determine if the app should also load sub folder media. This is the label in the setting */
-"settings.userInterface.mediaDiscoverySubFolder"="Gallery view in subfolders";
+"settings.userInterface.mediaDiscoverySubFolder"="Tampilan galeri di subfolder";
 /* In Settings - User Interface, there is a setting that can determine if the app should also load sub folder media. This is the footer message body that appears under that option */
-"settings.userInterface.mediaDiscoverySubFolder.footer"="Images and videos from subfolders will also be included in gallery view";
+"settings.userInterface.mediaDiscoverySubFolder.footer"="Gambar dan video dari subfolder juga akan disertakan dalam tampilan galeri";
 /* In Settings - User Interface, there is an option that you can enable to hide the contents of the Recents section */
 "settings.userInterface.hideRecentActivity"="Sembunyikan Aktivitas Terbaru";
 /* In Settings - User Interface, there is an option that you can enable to hide the contents of the Recents section. This is the footer that appears under that option. */
@@ -2446,8 +2446,6 @@
 "MEGA CAMERA UPLOADS FOLDER"="Folder Unggahan kamera MEGA";
 /* Action button text of folder selection screen for camera uploads */
 "Select Folder"="Pilih Folder";
-/* Section header of Audio Player playlist that contains playing track */
-"Playing"="Bermain";
 /* Message when to move Camera Uploads folder to Rubbish Bin */
 "Are you sure you want to move Camera Uploads folder to Rubbish Bin? If so, a new folder will be auto-generated for Camera Uploads."="Apakah anda yakin ingin memindahkan folder Unggahan kamera ke Tempat Sampah? Jika demikian, folder baru akan dibuat secara otomatis untuk Unggahan kamera.";
 /* Text to indicate the action of uploading a file to the cloud drive */
@@ -3019,7 +3017,7 @@
 /* Error title shown when the user try to send more than one report in less than 10 minutes */
 "help.reportIssue.fail.too.many.request.title"="Anda harus menunggu 10 menit sebelum mengirimkan masalah lain";
 /* Error message shown when the user try to send more than one report in less than 10 minutes */
-"help.reportIssue.fail.too.many.request.message"="Tunggu dan coba lagi nanti, atau hubungi tim dukungan kami melalui support@mega.nz jika masalah berlanjut";
+"help.reportIssue.fail.too.many.request.message"="Tunggu dan coba lagi nanti, atau hubungi tim dukungan kami melalui support@mega.io jika masalah berlanjut";
 /* Confirmation title shown when the user is trying to cancel the ongoing upload report. */
 "help.reportIssue.creating.cancel.title"="Apakah anda yakin ingin membatalkan mengunggah masalah yang anda laporkan?";
 /* Confirmation message shown when the user is trying to cancel the ongoing upload report. */
@@ -3925,7 +3923,7 @@
 /* Error shown when moving folder to inside itself */
 "Error.nodeCopyOrMove.circularDependency"="Anda tidak dapat memindahkan folder ini karena tujuan adalah folder yang sama.";
 /* Auto media discovery banner title */
-"photos.mediaDiscovery.autoMediaDiscoveryBanner.title"="As this folder contains only images and videos, we’ve automatically opened it in gallery view. You can enjoy your visual content with a more immersive layout. You can disable this in Settings.";
+"photos.mediaDiscovery.autoMediaDiscoveryBanner.title"="Karena folder ini hanya berisi gambar dan video, kami secara otomatis membukanya dalam tampilan galeri. Anda dapat menikmati konten visual anda dengan tata letak yang lebih imersif. Anda dapat menonaktifkan ini di Pengaturan.";
 /* Upgrade account screen header title after user onboarding */
 "onboarding.upgradeAccount.header.title"="Dapatkan lebih banyak dengan paket Pro";
 /* Upgrade account screen header subTitle after user onboarding. %@ will be replaced by the price of the lowest plan per month. */
@@ -4587,7 +4585,7 @@
 /* Title used in settings that enables the generation of link previews in the chat */
 "settings.chat.richUrlPreview.title"="Aktifkan pratinjau tautan terkirim";
 /* Title used in settings that enables the generation of link previews in the chat */
-"settings.chat.richUrlPreview.subtitle"="Generates previews for certain links you send in chat, when available. Note that retrieving these previews isn’t protected by zero-knowledge encryption.";
+"settings.chat.richUrlPreview.subtitle"="Menghasilkan pratinjau untuk tautan tertentu yang anda kirim dalam obrolan, jika tersedia. Perhatikan bahwa mengambil pratinjau ini tidak dilindungi oleh enkripsi zero-knowledge.";
 /* Title in chat status settings */
 "settings.chat.status.setStatus.title"="Ganti status";
 /* Title section header in set status settings */
@@ -4643,29 +4641,29 @@
 /* Onboarding USP carousel first page title */
 "onboarding.uniqueSellingProposition.carousel.page.first.title"="Anda memegang kunci";
 /* Onboarding USP carousel first page subtitle */
-"onboarding.uniqueSellingProposition.carousel.page.first.subtitle"="User controlled, zero-knowledge encryption means no one can see your data unless you want them to - not even us!";
+"onboarding.uniqueSellingProposition.carousel.page.first.subtitle"="Enkripsi tanpa pengetahuan yang dikendalikan pengguna berarti tidak ada yang dapat melihat data anda kecuali anda menginginkannya - bahkan kami!";
 /* Onboarding USP carousel second page title */
-"onboarding.uniqueSellingProposition.carousel.page.second.title"="Keep every moment safe";
+"onboarding.uniqueSellingProposition.carousel.page.second.title"="Jaga setiap saat aman";
 /* Onboarding USP carousel second page subtitle */
-"onboarding.uniqueSellingProposition.carousel.page.second.subtitle"="With automatic camera uploads to MEGA Cloud, and generous storage, you’ll never lose a precious memory";
+"onboarding.uniqueSellingProposition.carousel.page.second.subtitle"="Dengan pengunggahan kamera otomatis ke MEGA Cloud, dan penyimpanan yang luas, Anda tidak akan pernah kehilangan memori berharga";
 /* Onboarding USP carousel third page title */
-"onboarding.uniqueSellingProposition.carousel.page.third.title"="Your data. Your space.";
+"onboarding.uniqueSellingProposition.carousel.page.third.title"="Data anda. Ruang anda.";
 /* Onboarding USP carousel third page subtitle */
-"onboarding.uniqueSellingProposition.carousel.page.third.subtitle"="Ample storage and easy ways to transfer, share, and organise your files means you can safely use MEGA for whatever you choose";
+"onboarding.uniqueSellingProposition.carousel.page.third.subtitle"="Penyimpanan yang cukup dan cara mudah untuk mentransfer, berbagi, dan mengatur file anda berarti anda dapat menggunakan MEGA dengan aman untuk apa pun yang anda pilih";
 /* Onboarding USP carousel fourth page title */
 "onboarding.uniqueSellingProposition.carousel.page.fourth.title"="Katakan secara pribadi";
 /* Onboarding USP carousel fourth page subtitle */
 "onboarding.uniqueSellingProposition.carousel.page.fourth.subtitle"="Chat with friends and family, share photos or sensitive information, video call, and schedule meetings. Safety and privacy guaranteed.";
 /* Onboarding Notification CTA title */
-"onboarding.cta.notifications.title"="Never miss an important update";
+"onboarding.cta.notifications.title"="Jangan pernah melewatkan pembaruan penting";
 /* Onboarding Notification CTA description */
 "onboarding.cta.notifications.explanation"="Stay informed with real-time updates that matter to you. Get alerts for shared folder activity, security updates, and exclusive offers, so you never miss anything important.\n\nYou can manage notification preferences at any time in the settings.";
 /* Onboarding Notification CTA *Enable* button */
 "onboarding.cta.notifications.buttons.enable"="Aktifkan Notifikasi";
 /* Onboarding Notification CTA *Skip* button */
-"onboarding.cta.notifications.buttons.skip"="Skip for now";
+"onboarding.cta.notifications.buttons.skip"="Lewati untuk saat ini";
 /* Onboarding Camera Backups CTA title */
-"onboarding.cta.cameraBackups.title"="Keep your photos safe, always";
+"onboarding.cta.cameraBackups.title"="Jaga foto anda tetap aman, selalu";
 /* Onboarding Camera Backups CTA description */
 "onboarding.cta.cameraBackups.explanation"="Your memories matter\n\nCamera uploads automatically backs up your photos and videos to your MEGA Cloud drive, so you never have to worry about losing them";
 /* Onboarding Camera Backups CTA note */
@@ -4673,7 +4671,7 @@
 /* Onboarding Camera Backups CTA *Enable* button */
 "onboarding.cta.cameraBackups.buttons.enable"="Aktifkan Unggahan kamera";
 /* Onboarding Camera Backups CTA *Skip* button */
-"onboarding.cta.cameraBackups.buttons.skip"="Skip for now";
+"onboarding.cta.cameraBackups.buttons.skip"="Lewati untuk saat ini";
 /* String explaining the auto-renewal policy of the Pro subscription. */
 "subscriptionPurchase.autoRenewDescription"="Subscriptions are renewed automatically for successive subscription periods of the same duration and at the same price as the initial period chosen.\n\nYou can cancel your Pro plan anytime but no later than 24 hours before your next subscription payment is due. [L]Learn how to manage your subscription in your settings[/L].";
 /* Title shown for the free plan card */
@@ -4683,7 +4681,7 @@
 /* First benefit shown for the free plan card */
 "subscriptionPurchase.freePlanCard.feature.one"="Free 20 GB of storage";
 /* Second benefit shown for the free plan card */
-"subscriptionPurchase.freePlanCard.feature.two"="Limited transfers";
+"subscriptionPurchase.freePlanCard.feature.two"="Transfer terbatas";
 /* Button title for the free plan card */
 "subscriptionPurchase.freePlanCard.button.title"="Mulai Gratis";
 /* Displays the amount of storage included in the subscription plan */
@@ -4695,7 +4693,7 @@
 /* Button title to cancel the subscription purchase. */
 "subscriptionPurchase.maybeLater"="Mungkin nanti";
 /* Title for the features of pro plan in the subscription purchase screen. */
-"subscriptionPurchase.featuresOfProPlan.title"="Additional benefits of Pro plans";
+"subscriptionPurchase.featuresOfProPlan.title"="Manfaat tambahan dari paket Pro";
 /* Features of pro plan in the subscription purchase screen. */
 "subscriptionPurchase.featuresOfProPlan.message"="• Password-protected links\n\n• Links with expiry dates\n\n• Rewind folders up to 180 days of deleted data\n\n• Host calls and meetings with unlimited participants and no time restrictions\n\n• Schedule rubbish bin clearing between 7 days and 10 years\n\n• Priority support";
 /* Title for the first subscription feature: generous storage capacity */
@@ -4705,15 +4703,15 @@
 /* Title for the second subscription feature: transfer quota sharing */
 "subscriptionPurchase.feature.two.title"="Berbagi transfer";
 /* Description for the second subscription feature: how shared users can use your quota */
-"subscriptionPurchase.feature.two.description"="People you share items with can use your quota to download and stream files";
+"subscriptionPurchase.feature.two.description"="Orang yang berbagi item dengan anda dapat menggunakan kuota anda untuk mengunduh dan melakukan streaming file";
 /* Title for the third subscription feature: MEGA VPN service */
 "subscriptionPurchase.feature.three.title"="MEGA VPN";
 /* Description for the third subscription feature: benefits of using the MEGA VPN */
-"subscriptionPurchase.feature.three.description"="Stay safe online with our high-speed VPN that’s both fast and simple to use";
+"subscriptionPurchase.feature.three.description"="Tetap aman saat online dengan VPN berkecepatan tinggi kami yang cepat dan mudah digunakan";
 /* Title for the fourth subscription feature: MEGA Pass password manager */
 "subscriptionPurchase.feature.four.title"="MEGA Pass";
 /* Description for the fourth subscription feature: benefits of using MEGA Pass for password management */
-"subscriptionPurchase.feature.four.description"="Organise all your passwords and keep them safe with our password manager";
+"subscriptionPurchase.feature.four.description"="Atur semua kata sandi anda dan jaga agar tetap aman dengan pengelola kata sandi kami";
 /* Title for all the feature in subscription purchase view. */
 "subscriptionPurchase.feature.title"="Anda akan mendapatkan:";
 /* Title for the Home tab bar item */
@@ -4729,31 +4727,31 @@
 /* Storage benefit shown for the free plan card */
 "subscriptionPurchase.freePlanCard.feature.storage"="%@ Penyimpanan";
 /* Title shown for the free plan card for upgrading */
-"subscriptionPurchase.freePlanCard.title.upgrade"="Continue with your free plan";
+"subscriptionPurchase.freePlanCard.title.upgrade"="Lanjutkan dengan paket gratis anda";
 /* Button title for the free plan card for upgrading */
-"subscriptionPurchase.freePlanCard.button.title.upgrade"="Continue with free plan";
+"subscriptionPurchase.freePlanCard.button.title.upgrade"="Lanjutkan dengan paket gratis";
 /* Button title for offline files in menu */
-"accountMenu.offlineFiles"="Offline files";
+"accountMenu.offlineFiles"="File offline";
 /* Button title for MEGA VPN in menu */
 "accountMenu.megaVPN.buttonTitle"="MEGA VPN";
 /* Button subtitle for MEGA VPN in menu */
-"accountMenu.megaVPN.buttonSubtitle"="High-speed VPN";
+"accountMenu.megaVPN.buttonSubtitle"="VPN berkecepatan tinggi";
 /* Button title for MEGA Pass in menu */
 "accountMenu.megaPass.buttonTitle"="MEGA Pass";
 /* Button subtitle for MEGA Pass in menu */
-"accountMenu.megaPass.buttonSubtitle"="Securely store and autofill your passwords";
+"accountMenu.megaPass.buttonSubtitle"="Simpan dan isi otomatis kata sandi anda dengan aman";
 /* Button title for MEGA transfer it in menu */
 "accountMenu.transferIt.buttonTitle"="Transfer.it";
 /* Button subtitle for MEGA transfer it in menu */
-"accountMenu.transferIt.buttonSubtitle"="Fast, secure file transfers";
+"accountMenu.transferIt.buttonSubtitle"="Transfer file yang cepat dan aman";
 /* Section title for the other MEGA apps in menu */
 "accountMenu.otherApps.sectionTitle"="MEGA privacy suite";
 /* Button subtitle for log out in menu */
 "accountMenu.logout"="Keluar";
 /* subscription purchase description for the storage capacity */
-"subscriptionPurchase.feature.storage.description"="Store up to %@ of data";
+"subscriptionPurchase.feature.storage.description"="Simpan hingga %@ dari data";
 /* Camera uploads status banner title paused due to network connection */
-"cameraUploads.banner.status.paused.noNetworkConnection.title"="Camera uploads paused";
+"cameraUploads.banner.status.paused.noNetworkConnection.title"="Unggahan kamera dijeda";
 /* Camera uploads status banner sub title paused due to no network connection */
 "cameraUploads.banner.status.paused.noNetworkConnection.subheading"="Connect to WiFi or use mobile data";
 /* Camera uploads status banner sub title paused due to no Wi-Fi connection. Please leave [S], [/S] as it is which is used to bolden the text. */
@@ -4766,3 +4764,7 @@
 "cameraUploads.banner.status.paused.highThermalState.title"="Camera uploads paused due to high device temperature";
 /* Camera uploads status banner sub title paused due to device heat */
 "cameraUploads.banner.status.paused.highThermalState.subheading"="Uploads will resume automatically when your device cools down";
+/* Local Notification Title for Camera uploads backup reminder */
+"notification.local.cameraUploadBackupReminder.title"="Protect your precious moments!";
+/* Local Notification Body for Camera uploads backup reminder */
+"notification.local.cameraUploadBackupReminder.body"="It’s time to back up your photos and videos";

@@ -877,7 +877,7 @@
 /* Message that is shown when the user click on 'Cancel your account' to confirm that he's aware that his data will be deleted. */
 "youWillLooseAllData"="Вы потеряете все связанные данные. Действительно хотите продолжить?";
 /* Account closure, warning message to remind user to contact MEGA support after he confirms that he wants to cancel account. */
-"ifYouCantAccessYourEmailAccount"="Если вы не можете получить доступ к своей электронной почте, напишите на support@mega.nz.";
+"ifYouCantAccessYourEmailAccount"="Если вы не можете получить доступ к своей электронной почте, напишите на support@mega.io";
 /* During account cancellation (deletion) */
 "cancellationLinkHasExpired"="Срок действия ссылки для удаления истёк.";
 /* Text shown in the last alert dialog to confirm the cancellation of an account */
@@ -1177,7 +1177,7 @@
 /* Error message shown the In App Purchase is disabled in the device Settings */
 "appPurchaseDisabled"="Покупки внутри приложений отключены, включите их в настройках iOS";
 /* Error message shown when the selected product doesn't exist */
-"productNotFound"="Продукт %@ не найден, пожалуйста, свяжитесь с ios@mega.nz";
+"productNotFound"="Продукт %@ не найден, пожалуйста, свяжитесь с ios@mega.io";
 /* Alert title to remenber the user that needs to enable purchases */
 "allowPurchase_title"="Разрешение покупок";
 /* Alert message to remenber the user that needs to enable purchases before continue */
@@ -1207,7 +1207,7 @@
 /* Alert title shown when the restoring process has stopped for some reason */
 "failedRestore_title"="Восстановление остановлено";
 /* Alert message shown when the restoring process has stopped for some reason */
-"failedRestore_message"="Запрос был отменён, либо предыдущую покупку нельзя восстановить. Пожалуйста, повторите попытку позже или свяжитесь с ios@mega.nz.";
+"failedRestore_message"="Запрос был отменён, либо предыдущую покупку нельзя восстановить. Пожалуйста, повторите попытку позже или свяжитесь с ios@mega.io";
 /* Title of a warning recommending upgrade to Pro */
 "Upgrade to Pro"="Улучшить до Pro";
 /* A description of MEGA features available only with a Pro plan. */
@@ -2446,8 +2446,6 @@
 "MEGA CAMERA UPLOADS FOLDER"="Папка MEGA «Загрузки из камеры»";
 /* Action button text of folder selection screen for camera uploads */
 "Select Folder"="Выбрать папку";
-/* Section header of Audio Player playlist that contains playing track */
-"Playing"="Воспроизводится";
 /* Message when to move Camera Uploads folder to Rubbish Bin */
 "Are you sure you want to move Camera Uploads folder to Rubbish Bin? If so, a new folder will be auto-generated for Camera Uploads."="Вы действительно хотите переместить папку «Загрузки из камеры» в Корзину? В этом случае будет автоматически создана новая папка для «Загрузок из камеры».";
 /* Text to indicate the action of uploading a file to the cloud drive */
@@ -3019,7 +3017,7 @@
 /* Error title shown when the user try to send more than one report in less than 10 minutes */
 "help.reportIssue.fail.too.many.request.title"="Должно пройти 10 минут, прежде чем вы сможете сообщить о новой проблеме.";
 /* Error message shown when the user try to send more than one report in less than 10 minutes */
-"help.reportIssue.fail.too.many.request.message"="Повторите попытку позже или напишите в нашу команду поддержки на support@mega.nz, если проблема не исчезнет.";
+"help.reportIssue.fail.too.many.request.message"="Повторите попытку позже или напишите в нашу команду поддержки на support@mega.io, если проблема не исчезнет.";
 /* Confirmation title shown when the user is trying to cancel the ongoing upload report. */
 "help.reportIssue.creating.cancel.title"="Вы уверены, что хотите отменить загрузку сообщения об ошибке?";
 /* Confirmation message shown when the user is trying to cancel the ongoing upload report. */
@@ -4766,3 +4764,7 @@
 "cameraUploads.banner.status.paused.highThermalState.title"="Загрузки из камеры приостановлены из-за высокой температуры устройства";
 /* Camera uploads status banner sub title paused due to device heat */
 "cameraUploads.banner.status.paused.highThermalState.subheading"="Они возобновятся автоматически, когда устройство остынет";
+/* Local Notification Title for Camera uploads backup reminder */
+"notification.local.cameraUploadBackupReminder.title"="Сохраните самые ценные моменты!";
+/* Local Notification Body for Camera uploads backup reminder */
+"notification.local.cameraUploadBackupReminder.body"="Пора сделать резервную копию ваших фото и видео";

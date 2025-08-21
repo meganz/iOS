@@ -877,7 +877,7 @@
 /* Message that is shown when the user click on 'Cancel your account' to confirm that he's aware that his data will be deleted. */
 "youWillLooseAllData"="您將遺失所有與此帳戶相關的資料。確定要繼續嗎？";
 /* Account closure, warning message to remind user to contact MEGA support after he confirms that he wants to cancel account. */
-"ifYouCantAccessYourEmailAccount"="如果您無法存取您的電子郵件收件匣，請聯繫support@mega.nz";
+"ifYouCantAccessYourEmailAccount"="如果您無法存取您的電子郵件收件匣，請聯繫support@mega.io";
 /* During account cancellation (deletion) */
 "cancellationLinkHasExpired"="取消連結已過期。";
 /* Text shown in the last alert dialog to confirm the cancellation of an account */
@@ -1177,7 +1177,7 @@
 /* Error message shown the In App Purchase is disabled in the device Settings */
 "appPurchaseDisabled"="應用程式內購買功能尚未啟用，請於iOS的設定中啟用此功能";
 /* Error message shown when the selected product doesn't exist */
-"productNotFound"="未找到產品%@，請聯繫 ios@mega.nz";
+"productNotFound"="未找到產品%@，請聯繫 ios@mega.io";
 /* Alert title to remenber the user that needs to enable purchases */
 "allowPurchase_title"="允許購買";
 /* Alert message to remenber the user that needs to enable purchases before continue */
@@ -1199,7 +1199,7 @@
 /* Alert title shown when a purchase has stopped because some error between the process */
 "failedPurchase_title"="購買已停止";
 /* Alert message shown when a purchase has stopped because some error between the process */
-"failedPurchase_message"="可能是您取消請求或是Apple回報傳輸錯誤。請晚點再試一次或聯繫 ios@mega.nz";
+"failedPurchase_message"="可能是您取消請求或是Apple回報傳輸錯誤。請晚點再試一次或聯繫 ios@mega.io";
 /* Alert title shown when a restore hasn't been completed correctly */
 "incompleteRestore_title"="恢復出錯";
 /* Alert message shown when a restore hasn't been completed correctly */
@@ -1207,7 +1207,7 @@
 /* Alert title shown when the restoring process has stopped for some reason */
 "failedRestore_title"="復原停止";
 /* Alert message shown when the restoring process has stopped for some reason */
-"failedRestore_message"="不是請求已取消就是先前的購買未能復原。請晚點再試一次或聯繫 ios@mega.nz";
+"failedRestore_message"="不是請求已取消就是先前的購買未能復原。請晚點再試一次或聯繫 ios@mega.io";
 /* Title of a warning recommending upgrade to Pro */
 "Upgrade to Pro"="升級至Pro方案";
 /* A description of MEGA features available only with a Pro plan. */
@@ -2446,8 +2446,6 @@
 "MEGA CAMERA UPLOADS FOLDER"="MEGA相機上傳資料夾";
 /* Action button text of folder selection screen for camera uploads */
 "Select Folder"="選擇資料夾";
-/* Section header of Audio Player playlist that contains playing track */
-"Playing"="播放中";
 /* Message when to move Camera Uploads folder to Rubbish Bin */
 "Are you sure you want to move Camera Uploads folder to Rubbish Bin? If so, a new folder will be auto-generated for Camera Uploads."="您確定要將照片上傳資料夾移到垃圾筒嗎？如果是，將會為相機上傳自動產生一個新的資料夾。";
 /* Text to indicate the action of uploading a file to the cloud drive */
@@ -3019,7 +3017,7 @@
 /* Error title shown when the user try to send more than one report in less than 10 minutes */
 "help.reportIssue.fail.too.many.request.title"="您必須等待10分鐘才能提交另一個問題";
 /* Error message shown when the user try to send more than one report in less than 10 minutes */
-"help.reportIssue.fail.too.many.request.message"="請稍後重試，如果問題仍然存在，請透過support@mega.nz聯繫我們的客服團隊";
+"help.reportIssue.fail.too.many.request.message"="請稍後重試，如果問題仍然存在，請透過support@mega.io聯繫我們的客服團隊";
 /* Confirmation title shown when the user is trying to cancel the ongoing upload report. */
 "help.reportIssue.creating.cancel.title"="您確定要取消正在上傳的問題回報嗎？";
 /* Confirmation message shown when the user is trying to cancel the ongoing upload report. */
@@ -4345,7 +4343,7 @@
 /* Cancel subscription survey reason with id 4 */
 "accounts.cancelSubscriptionSurvey.reason.four"="我需要的功能MEGA沒有提供";
 /* Cancel subscription survey reason with id 5 */
-"accounts.cancelSubscriptionSurvey.reason.five"="我要轉換到另一個供應商";
+"accounts.cancelSubscriptionSurvey.reason.five"="我要轉換到另一個提供商";
 /* Cancel subscription survey reason with id 6 */
 "accounts.cancelSubscriptionSurvey.reason.six"="我覺得MEGA很難用";
 /* Cancel subscription survey reason with id 7 */
@@ -4645,7 +4643,7 @@
 /* Onboarding USP carousel first page subtitle */
 "onboarding.uniqueSellingProposition.carousel.page.first.subtitle"="使用者控制的零知識加密意味著沒有人可以看到您的資料，除非您想讓他們看到，否則連我們也無法看到您的資料。";
 /* Onboarding USP carousel second page title */
-"onboarding.uniqueSellingProposition.carousel.page.second.title"="時時刻刻保持安全";
+"onboarding.uniqueSellingProposition.carousel.page.second.title"="保護每刻珍貴回憶";
 /* Onboarding USP carousel second page subtitle */
 "onboarding.uniqueSellingProposition.carousel.page.second.subtitle"="透過自動相機上傳到MEGA雲端和充足的儲存空間，您永遠不會失去寶貴的回憶";
 /* Onboarding USP carousel third page title */
@@ -4766,3 +4764,7 @@
 "cameraUploads.banner.status.paused.highThermalState.title"="由於裝置溫度過高，相機上傳已暫停";
 /* Camera uploads status banner sub title paused due to device heat */
 "cameraUploads.banner.status.paused.highThermalState.subheading"="當你的裝置冷卻下來時，上傳將自動恢復";
+/* Local Notification Title for Camera uploads backup reminder */
+"notification.local.cameraUploadBackupReminder.title"="保護你的珍貴時刻！";
+/* Local Notification Body for Camera uploads backup reminder */
+"notification.local.cameraUploadBackupReminder.body"="是時候備份你的照片和影片了";
