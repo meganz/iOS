@@ -4300,8 +4300,8 @@
 "accounts.cancelSubscriptionSteps.webClient.message"="Ini karena anda berlangganan MEGA di browser web anda. Untuk membatalkan langganan anda, anda harus:";
 /* Cancellation Section Webclient on a computer title: On a computer */
 "accounts.cancelSubscriptionSteps.webClient.computer.title"="Di komputer";
-/* Cancellation step Webclient: First step using the computer - 1. Visit https://mega.nz in your web browser. */
-"accounts.cancelSubscriptionSteps.webClient.computer.step.one"="1. Visit https://mega.nz in your web browser.";
+/* Cancellation step Webclient: First step using the computer - 1. Visit MEGA website in your web browser. */
+"accounts.cancelSubscriptionSteps.webClient.computer.step.one"="1. Visit https://%@ in your web browser.";
 /* Cancellation step Webclient: Second step using the computer - 2. Log in to your MEGA account. */
 "accounts.cancelSubscriptionSteps.webClient.computer.step.two"="2. Masuk ke akun MEGA anda.";
 /* Cancellation step Webclient: Third step using the computer - 3. Click the main menu. */
@@ -4314,8 +4314,8 @@
 "accounts.cancelSubscriptionSteps.webClient.computer.step.six"="6. Klik <b>Batalkan langganan</b>.";
 /* Cancellation Section Webclient on mobile device title: On a mobile device */
 "accounts.cancelSubscriptionSteps.webClient.mobile.title"="Pada perangkat seluler";
-/* Cancellation step Webclient: First step using the mobile device - 1. Visit https://mega.nz in your web browser. */
-"accounts.cancelSubscriptionSteps.webClient.mobile.step.one"="1. Visit https://mega.nz in your web browser.";
+/* Cancellation step Webclient: First step using the mobile device - 1. Visit MEGA website in your web browser. */
+"accounts.cancelSubscriptionSteps.webClient.mobile.step.one"="1. Visit https://%@ in your web browser.";
 /* Cancellation step Webclient: Second step using the mobile device - 2. Log in to your MEGA account. */
 "accounts.cancelSubscriptionSteps.webClient.mobile.step.two"="2. Masuk ke akun MEGA anda.";
 /* Cancellation step Webclient: Third step using the mobile device - 3. Tap on your avatar. */

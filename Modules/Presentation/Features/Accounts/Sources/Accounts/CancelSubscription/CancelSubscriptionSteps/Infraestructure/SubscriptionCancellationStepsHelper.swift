@@ -76,7 +76,11 @@ struct CancelSubscriptionStepsHelper: CancelSubscriptionStepsHelperProtocol {
             StepSection(
                 title: Strings.Localizable.Accounts.CancelSubscriptionSteps.WebClient.Computer.title,
                 steps: [
-                    Step(text: Strings.Localizable.Accounts.CancelSubscriptionSteps.WebClient.Computer.Step.one),
+                    Step(
+                        text: Strings.Localizable.Accounts.CancelSubscriptionSteps.WebClient.Computer.Step.one(
+                            DependencyInjection.appDomain
+                        )
+                    ),
                     Step(text: Strings.Localizable.Accounts.CancelSubscriptionSteps.WebClient.Computer.Step.two),
                     Step(text: Strings.Localizable.Accounts.CancelSubscriptionSteps.WebClient.Computer.Step.three),
                     Step(text: Strings.Localizable.Accounts.CancelSubscriptionSteps.WebClient.Computer.Step.four),
@@ -87,7 +91,11 @@ struct CancelSubscriptionStepsHelper: CancelSubscriptionStepsHelperProtocol {
             StepSection(
                 title: Strings.Localizable.Accounts.CancelSubscriptionSteps.WebClient.Mobile.title,
                 steps: [
-                    Step(text: Strings.Localizable.Accounts.CancelSubscriptionSteps.WebClient.Mobile.Step.one),
+                    Step(
+                        text: Strings.Localizable.Accounts.CancelSubscriptionSteps.WebClient.Mobile.Step.one(
+                            DependencyInjection.appDomain
+                        )
+                    ),
                     Step(text: Strings.Localizable.Accounts.CancelSubscriptionSteps.WebClient.Mobile.Step.two),
                     Step(text: Strings.Localizable.Accounts.CancelSubscriptionSteps.WebClient.Mobile.Step.three),
                     Step(text: Strings.Localizable.Accounts.CancelSubscriptionSteps.WebClient.Mobile.Step.four)

@@ -4300,8 +4300,8 @@
 "accounts.cancelSubscriptionSteps.webClient.message"="Você assinou o MEGA usando um navegador. Para cancelar a sua assinatura, você precisa fazer o seguinte:";
 /* Cancellation Section Webclient on a computer title: On a computer */
 "accounts.cancelSubscriptionSteps.webClient.computer.title"="Usando um computador";
-/* Cancellation step Webclient: First step using the computer - 1. Visit https://mega.nz in your web browser. */
-"accounts.cancelSubscriptionSteps.webClient.computer.step.one"="1. Acesse https://mega.nz usando um navegador.";
+/* Cancellation step Webclient: First step using the computer - 1. Visit MEGA website in your web browser. */
+"accounts.cancelSubscriptionSteps.webClient.computer.step.one"="1. Acesse https://%@ usando um navegador.";
 /* Cancellation step Webclient: Second step using the computer - 2. Log in to your MEGA account. */
 "accounts.cancelSubscriptionSteps.webClient.computer.step.two"="2. Faça login na sua conta do MEGA.";
 /* Cancellation step Webclient: Third step using the computer - 3. Click the main menu. */
@@ -4314,8 +4314,8 @@
 "accounts.cancelSubscriptionSteps.webClient.computer.step.six"="6. Clique em <b>Cancelar assinatura</b>.";
 /* Cancellation Section Webclient on mobile device title: On a mobile device */
 "accounts.cancelSubscriptionSteps.webClient.mobile.title"="Usando um dispositivo móvel";
-/* Cancellation step Webclient: First step using the mobile device - 1. Visit https://mega.nz in your web browser. */
-"accounts.cancelSubscriptionSteps.webClient.mobile.step.one"="1. Acesse https://mega.nz usando um navegador.";
+/* Cancellation step Webclient: First step using the mobile device - 1. Visit MEGA website in your web browser. */
+"accounts.cancelSubscriptionSteps.webClient.mobile.step.one"="1. Acesse https://%@ usando um navegador.";
 /* Cancellation step Webclient: Second step using the mobile device - 2. Log in to your MEGA account. */
 "accounts.cancelSubscriptionSteps.webClient.mobile.step.two"="2. Faça login na sua conta do MEGA.";
 /* Cancellation step Webclient: Third step using the mobile device - 3. Tap on your avatar. */
