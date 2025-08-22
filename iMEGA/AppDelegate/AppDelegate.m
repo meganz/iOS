@@ -121,6 +121,7 @@
     [self injectSDKRepoDependencies];
     [self injectAuthenticationDependencies];
     [self injectVideoPlayerDependencies];
+    [self injectAccountsDependencies];
 
     [self initialiseModules];
     

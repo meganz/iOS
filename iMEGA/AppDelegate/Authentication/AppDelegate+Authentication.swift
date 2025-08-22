@@ -46,6 +46,10 @@ extension AppDelegate {
         MEGAAuthentication.DependencyInjection.domainName = DIContainer.appDomainUseCase.domainName
     }
 
+    @objc func injectAccountsDependencies() {
+        Accounts.DependencyInjection.appDomain = DIContainer.appDomainUseCase.domainName
+    }
+
     @objc func injectVideoPlayerDependencies() {
         // This is temporary. Will remove this depencency injection once the video player is fully integrated.
         MEGAVideoPlayer.DependencyInjection.sharedSdk = .shared

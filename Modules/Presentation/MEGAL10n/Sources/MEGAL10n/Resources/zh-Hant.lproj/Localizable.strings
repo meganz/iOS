@@ -4300,8 +4300,8 @@
 "accounts.cancelSubscriptionSteps.webClient.message"="這是因為您在網頁瀏覽器中訂閱了MEGA。若要取消訂閱，您需要：";
 /* Cancellation Section Webclient on a computer title: On a computer */
 "accounts.cancelSubscriptionSteps.webClient.computer.title"="在電腦上";
-/* Cancellation step Webclient: First step using the computer - 1. Visit https://mega.nz in your web browser. */
-"accounts.cancelSubscriptionSteps.webClient.computer.step.one"="1. 在您的網頁瀏覽器中造訪 https://mega.nz";
+/* Cancellation step Webclient: First step using the computer - 1. Visit MEGA website in your web browser. */
+"accounts.cancelSubscriptionSteps.webClient.computer.step.one"="1. 在您的網頁瀏覽器中造訪 https://%@";
 /* Cancellation step Webclient: Second step using the computer - 2. Log in to your MEGA account. */
 "accounts.cancelSubscriptionSteps.webClient.computer.step.two"="2. 登入您的MEGA帳戶。";
 /* Cancellation step Webclient: Third step using the computer - 3. Click the main menu. */
@@ -4314,8 +4314,8 @@
 "accounts.cancelSubscriptionSteps.webClient.computer.step.six"="6. 點擊<b>取消訂閱</b>。";
 /* Cancellation Section Webclient on mobile device title: On a mobile device */
 "accounts.cancelSubscriptionSteps.webClient.mobile.title"="在行動裝置上";
-/* Cancellation step Webclient: First step using the mobile device - 1. Visit https://mega.nz in your web browser. */
-"accounts.cancelSubscriptionSteps.webClient.mobile.step.one"="1. 在您的網頁瀏覽器中造訪 https://mega.nz";
+/* Cancellation step Webclient: First step using the mobile device - 1. Visit MEGA website in your web browser. */
+"accounts.cancelSubscriptionSteps.webClient.mobile.step.one"="1. 在您的網頁瀏覽器中造訪 https://%@";
 /* Cancellation step Webclient: Second step using the mobile device - 2. Log in to your MEGA account. */
 "accounts.cancelSubscriptionSteps.webClient.mobile.step.two"="2. 登入您的MEGA帳戶。";
 /* Cancellation step Webclient: Third step using the mobile device - 3. Tap on your avatar. */
