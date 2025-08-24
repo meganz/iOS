@@ -74,7 +74,8 @@ struct PhotoLibraryContentViewRouter: PhotoLibraryContentViewRouting {
             .photoBrowser(
                 currentPhoto: photo,
                 allPhotos: allPhotos,
-                displayMode: displayMode)
+                displayMode: displayMode,
+                isFromSharedItem: contentMode == .mediaDiscoverySharedItems)
         
         topController.modalPresentationStyle = .popover
         topController.present(photoBrowser, animated: true)
@@ -128,7 +129,7 @@ extension PhotoLibraryContentMode {
             .photosTimeline
         case .album:
             .photosAlbum
-        case .mediaDiscovery:
+        case .mediaDiscovery, .mediaDiscoverySharedItems:
             .cloudDrive
         case .albumLink:
             .albumLink

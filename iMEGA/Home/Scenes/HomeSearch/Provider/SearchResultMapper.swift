@@ -13,14 +13,36 @@ import SwiftUI
 /// into a fully self contained SearchResults item that has all properties needed
 /// to display in the SearchResultsView
 struct SearchResultMapper: Sendable {
-    let sdk: MEGASdk
-    let nodeIconUsecase: any NodeIconUsecaseProtocol
-    let nodeDetailUseCase: any NodeDetailUseCaseProtocol
-    let nodeUseCase: any NodeUseCaseProtocol
-    let sensitiveNodeUseCase: any SensitiveNodeUseCaseProtocol
-    let mediaUseCase: any MediaUseCaseProtocol
-    let nodeActions: NodeActions
-    let hiddenNodesFeatureEnabled: Bool
+    private let sdk: MEGASdk
+    private let nodeIconUsecase: any NodeIconUsecaseProtocol
+    private let nodeDetailUseCase: any NodeDetailUseCaseProtocol
+    private let nodeUseCase: any NodeUseCaseProtocol
+    private let sensitiveNodeUseCase: any SensitiveNodeUseCaseProtocol
+    private let mediaUseCase: any MediaUseCaseProtocol
+    private let nodeActions: NodeActions
+    private let hiddenNodesFeatureEnabled: Bool
+    private let showHiddenNodeBlur: Bool
+    
+    init(
+        sdk: MEGASdk,
+        nodeIconUsecase: some NodeIconUsecaseProtocol,
+        nodeDetailUseCase: some NodeDetailUseCaseProtocol,
+        nodeUseCase: some NodeUseCaseProtocol,
+        sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol,
+        mediaUseCase: some MediaUseCaseProtocol,
+        nodeActions: NodeActions,
+        hiddenNodesFeatureEnabled: Bool,
+        showHiddenNodeBlur: Bool = true) {
+        self.sdk = sdk
+        self.nodeIconUsecase = nodeIconUsecase
+        self.nodeDetailUseCase = nodeDetailUseCase
+        self.nodeUseCase = nodeUseCase
+        self.sensitiveNodeUseCase = sensitiveNodeUseCase
+        self.mediaUseCase = mediaUseCase
+        self.nodeActions = nodeActions
+        self.hiddenNodesFeatureEnabled = hiddenNodesFeatureEnabled
+        self.showHiddenNodeBlur = showHiddenNodeBlur
+    }
     
     func map(node: NodeEntity) -> SearchResult {
         .init(
@@ -218,6 +240,7 @@ struct SearchResultMapper: Sendable {
     
     private func isSensitive(node: NodeEntity) -> Bool {
         guard hiddenNodesFeatureEnabled,
+              showHiddenNodeBlur,
               sensitiveNodeUseCase.isAccessible() else { return false }
         if node.isMarkedSensitive {
             return true

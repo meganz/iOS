@@ -32,7 +32,7 @@ final class ThumbnailLoaderFactoryTests: XCTestCase {
     }
     
     func testMakeThumbnailLoader_featureFlagOnAlbumLinkAndMediaDiscoveryLink_shouldReturnThumbnailLoader() {
-        [PhotoLibraryContentMode.albumLink, .mediaDiscoveryFolderLink]
+        [PhotoLibraryContentMode.albumLink, .mediaDiscoveryFolderLink, .mediaDiscoverySharedItems]
             .forEach {
                 let thumbnailLoader = ThumbnailLoaderFactory.makeThumbnailLoader(
                     remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.hiddenNodes: true]),

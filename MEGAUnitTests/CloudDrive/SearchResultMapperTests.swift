@@ -150,6 +150,17 @@ final class SearchResultMapperTests: XCTestCase {
         // then
         XCTAssertFalse(result.isSensitive)
     }
+    
+    func test_isSensitive_whenShowHiddenNodeBlurIsFalse_shouldReturnFalse() {
+        let sut = makeSUT(
+            hiddenNodesFeatureEnabled: true,
+            showHiddenNodeBlur: false)
+        
+        let node = NodeEntity(isMarkedSensitive: false)
+        let result = sut.map(node: node)
+        
+        XCTAssertFalse(result.isSensitive)
+    }
 
     // MARK: - Private methods
 
@@ -163,7 +174,8 @@ final class SearchResultMapperTests: XCTestCase {
         sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol = MockSensitiveNodeUseCase(),
         mediaUseCase: some MediaUseCaseProtocol = MockMediaUseCase(),
         nodeActions: NodeActions = .makeActions(sdk: MockSdk(), navigationController: .init()),
-        hiddenNodesFeatureEnabled: Bool = true
+        hiddenNodesFeatureEnabled: Bool = true,
+        showHiddenNodeBlur: Bool = true
     ) -> SUT {
         .init(
             sdk: sdk,
@@ -173,7 +185,8 @@ final class SearchResultMapperTests: XCTestCase {
             sensitiveNodeUseCase: sensitiveNodeUseCase,
             mediaUseCase: mediaUseCase,
             nodeActions: nodeActions,
-            hiddenNodesFeatureEnabled: hiddenNodesFeatureEnabled
+            hiddenNodesFeatureEnabled: hiddenNodesFeatureEnabled,
+            showHiddenNodeBlur: showHiddenNodeBlur
         )
     }
 

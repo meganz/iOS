@@ -10,7 +10,7 @@ extension ThumbnailLoaderFactory {
         mode: PhotoLibraryContentMode? = nil,
         configuration: ContentLibraries.Configuration = ContentLibraries.configuration
     ) -> any ThumbnailLoaderProtocol {
-        if [PhotoLibraryContentMode.albumLink, .mediaDiscoveryFolderLink].notContains(mode) {
+        if [PhotoLibraryContentMode.albumLink, .mediaDiscoveryFolderLink, .mediaDiscoverySharedItems].notContains(mode) {
             makeThumbnailLoader(
                 config: .sensitive(
                     sensitiveNodeUseCase: configuration.sensitiveNodeUseCase

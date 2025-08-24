@@ -84,6 +84,7 @@ final class HomeSearchResultsProviderTests: XCTestCase {
             excludeSensitives: Bool = false,
             hiddenNodesFeatureEnabled: Bool = true,
             nodeUpdates: AnyAsyncSequence<[NodeEntity]> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
+            isFromSharedItem: Bool = false,
             file: StaticString = #filePath,
             line: UInt = #line
         ) {
@@ -125,7 +126,8 @@ final class HomeSearchResultsProviderTests: XCTestCase {
                 ),
                 sdk: sdk,
                 nodeActions: NodeActions.mock(),
-                hiddenNodesFeatureEnabled: hiddenNodesFeatureEnabled
+                hiddenNodesFeatureEnabled: hiddenNodesFeatureEnabled,
+                isFromSharedItem: isFromSharedItem
             )
             
             testCase.trackForMemoryLeaks(on: sut, timeoutNanoseconds: 100_000_000, file: file, line: line)
