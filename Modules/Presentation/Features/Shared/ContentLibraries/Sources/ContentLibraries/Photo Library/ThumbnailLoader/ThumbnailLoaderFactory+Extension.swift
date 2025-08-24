@@ -25,10 +25,14 @@ extension ThumbnailLoaderFactory {
     }
     
     private static func makeThumbnailUseCase(mode: PhotoLibraryContentMode? = nil) -> any ThumbnailUseCaseProtocol {
-        if let mode {
+        guard let mode else {
+            return ThumbnailUseCase(repository: ThumbnailRepository.newRepo)
+        }
+        return switch mode {
+        case .albumLink:
+            ThumbnailUseCase.makeAlbumLinkThumbnailUseCase()
+        default:
             ThumbnailUseCase.makeThumbnailUseCase(mode: mode)
-        } else {
-            ThumbnailUseCase(repository: ThumbnailRepository.newRepo)
         }
     }
 }
@@ -36,8 +40,6 @@ extension ThumbnailLoaderFactory {
 fileprivate extension ThumbnailUseCase where T == ThumbnailRepository {
     static func makeThumbnailUseCase(mode: PhotoLibraryContentMode) -> Self {
         let repository: ThumbnailRepository = switch mode {
-        case .albumLink:
-            .publicThumbnailRepository()
         case .mediaDiscoveryFolderLink:
             .folderLinkThumbnailRepository()
         default:
@@ -45,5 +47,11 @@ fileprivate extension ThumbnailUseCase where T == ThumbnailRepository {
         }
         
         return ThumbnailUseCase(repository: repository)
+    }
+}
+
+fileprivate extension ThumbnailUseCase where T == AlbumLinkThumbnailRepository {
+    static func makeAlbumLinkThumbnailUseCase() -> Self {
+        .init(repository: .albumLinkThumbnailRepository())
     }
 }

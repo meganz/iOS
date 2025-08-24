@@ -165,15 +165,6 @@ extension ThumbnailRepository {
             nodeProvider: DefaultMEGANodeProvider(sdk: .sharedSdk))
     }
     
-    /// A preconfigured variation of ThumbnailRepository. This uses the .sharedSDK in conjunction with the PublicAlbumNodeProvider. This version is typically only required to be used when working with Public SetEntities and SetElements.
-    /// - Returns: ThumbnailRepository - Public Set and Element Configuration
-    public static func publicThumbnailRepository(nodeProvider: PublicAlbumNodeProvider = .shared) -> Self {
-        ThumbnailRepository(
-            sdk: .sharedSdk,
-            fileManager: .default,
-            nodeProvider: nodeProvider)
-    }
-    
     /// A preconfigured variation of ThumbnailRepository. This uses the .sharedFolderLinkSdk in conjunction with the DefaultMEGANodeProvider. This version is typically only required to be used when working with folder links.
     /// - Returns: ThumbnailRepository - Folder Links Configured
     public static func folderLinkThumbnailRepository() -> Self {
