@@ -300,7 +300,8 @@ final class HomeScreenFactory: NSObject {
 
     func makeResultsProvider(
         parentNodeProvider: @escaping () -> NodeEntity?,
-        navigationController: UINavigationController
+        navigationController: UINavigationController,
+        isFromSharedItem: Bool = false
     ) -> HomeSearchResultsProvider {
         return HomeSearchResultsProvider(
             parentNodeProvider: parentNodeProvider,
@@ -315,7 +316,8 @@ final class HomeScreenFactory: NSObject {
             allChips: Self.allChips(),
             sdk: sdk,
             nodeActions: .makeActions(sdk: sdk, navigationController: navigationController),
-            hiddenNodesFeatureEnabled: DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes)
+            hiddenNodesFeatureEnabled: DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes),
+            isFromSharedItem: isFromSharedItem
         )
     }
     private static func allChips() -> [SearchChipEntity] {

@@ -54,7 +54,8 @@ final class HomeSearchResultsProvider: SearchResultsProviding, @unchecked Sendab
         allChips: [SearchChipEntity],
         sdk: MEGASdk,
         nodeActions: NodeActions,
-        hiddenNodesFeatureEnabled: Bool
+        hiddenNodesFeatureEnabled: Bool,
+        isFromSharedItem: Bool
     ) {
         self.parentNodeProvider = parentNodeProvider
         self.filesSearchUseCase = filesSearchUseCase
@@ -74,7 +75,8 @@ final class HomeSearchResultsProvider: SearchResultsProviding, @unchecked Sendab
             sensitiveNodeUseCase: sensitiveNodeUseCase,
             mediaUseCase: mediaUseCase,
             nodeActions: nodeActions,
-            hiddenNodesFeatureEnabled: hiddenNodesFeatureEnabled
+            hiddenNodesFeatureEnabled: hiddenNodesFeatureEnabled,
+            showHiddenNodeBlur: !isFromSharedItem
         )
     }
     

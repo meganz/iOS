@@ -457,12 +457,31 @@ class MediaDiscoveryContentViewModelTests: XCTestCase {
         let changedPreference = try XCTUnwrap(preferenceUseCase.dict[PreferenceKeyEntity.autoMediaDiscoveryBannerDismissed.rawValue] as? Bool)
         XCTAssertTrue(changedPreference)
     }
+    
+    @MainActor
+    func testLoadPhotos_mediaDiscoverySharedItems_shouldExcludeSensitive() async {
+        let shouldExcludeSensitive = true
+        let sensitiveDisplayPreferenceUseCase = MockSensitiveDisplayPreferenceUseCase(
+            excludeSensitives: shouldExcludeSensitive
+        )
+        let mediaDiscoveryUseCase = MockMediaDiscoveryUseCase()
+        let sut = makeSUT(
+            contentMode: .mediaDiscoverySharedItems,
+            mediaDiscoveryUseCase: mediaDiscoveryUseCase,
+            sensitiveDisplayPreferenceUseCase: sensitiveDisplayPreferenceUseCase)
+        
+        await sut.loadPhotos()
+        
+        let searchExcludesSensitive = await mediaDiscoveryUseCase.state.discoverWithExcludeSensitive
+        XCTAssertEqual(searchExcludesSensitive, shouldExcludeSensitive)
+    }
 }
 
 extension MediaDiscoveryContentViewModelTests {
     
     @MainActor
     private func makeSUT(
+        contentMode: PhotoLibraryContentMode = .mediaDiscovery,
         parentNode: NodeEntity = NodeEntity(),
         sortOrder: SortOrderType = .newest,
         isAutomaticallyShown: Bool = false,
@@ -474,7 +493,7 @@ extension MediaDiscoveryContentViewModelTests {
         file: StaticString = #filePath,
         line: UInt = #line) -> MediaDiscoveryContentViewModel {
             let viewModel = MediaDiscoveryContentViewModel(
-                contentMode: .mediaDiscovery,
+                contentMode: contentMode,
                 parentNodeProvider: { parentNode },
                 sortOrder: sortOrder,
                 isAutomaticallyShown: isAutomaticallyShown,

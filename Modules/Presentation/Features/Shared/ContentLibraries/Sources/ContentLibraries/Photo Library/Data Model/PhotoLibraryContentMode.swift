@@ -6,4 +6,5 @@ public enum PhotoLibraryContentMode: Sendable {
     case albumLink
     case mediaDiscovery
     case mediaDiscoveryFolderLink
+    case mediaDiscoverySharedItems
 }

@@ -305,7 +305,8 @@ struct CloudDriveViewControllerFactory {
             mediaDiscoveryViewModel: makeOptionalMediaDiscoveryViewModel(
                 nodeSource: nodeSource,
                 mediaContentDelegate: mediaContentDelegate,
-                isShowingAutomatically: initialViewMode == .mediaDiscovery
+                isShowingAutomatically: initialViewMode == .mediaDiscovery,
+                isFromSharedItem: config.isFromSharedItem ?? false
             ),
             warningViewModel: makeOptionalWarningViewModel(
                 nodeSource,
@@ -869,7 +870,8 @@ struct CloudDriveViewControllerFactory {
         return SearchResultsViewModel(
             resultsProvider: resultProvider(
                 for: nodeSource,
-                searchBridge: searchBridge
+                searchBridge: searchBridge,
+                isFromSharedItem: config.isFromSharedItem ?? false
             ),
             bridge: searchBridge,
             config: .searchConfig(
@@ -924,13 +926,15 @@ struct CloudDriveViewControllerFactory {
     
     private func resultProvider(
         for nodeSource: NodeSource,
-        searchBridge: SearchBridge
+        searchBridge: SearchBridge,
+        isFromSharedItem: Bool
     ) -> any SearchResultsProviding {
         switch nodeSource {
         case .node(let nodeProvider):
             homeScreenFactory.makeResultsProvider(
                 parentNodeProvider: nodeProvider,
-                navigationController: navigationController
+                navigationController: navigationController,
+                isFromSharedItem: isFromSharedItem
             )
         case .recentActionBucket(let bucket):
             RecentActionBucketProvider(
@@ -992,24 +996,27 @@ struct CloudDriveViewControllerFactory {
     private func makeOptionalMediaDiscoveryViewModel(
         nodeSource: NodeSource,
         mediaContentDelegate: MediaContentDelegateHandler,
-        isShowingAutomatically: Bool
+        isShowingAutomatically: Bool,
+        isFromSharedItem: Bool
     ) -> MediaDiscoveryContentViewModel? {
         guard case let .node(parentNodeProvider) = nodeSource else { return nil }
         
         return makeMediaDiscoveryViewModel(
             parentNodeProvider: parentNodeProvider,
             mediaContentDelegate: mediaContentDelegate,
-            isShowingAutomatically: isShowingAutomatically
+            isShowingAutomatically: isShowingAutomatically,
+            isFromSharedItem: isFromSharedItem
         )
     }
     
     private func makeMediaDiscoveryViewModel(
         parentNodeProvider: @escaping ParentNodeProvider,
         mediaContentDelegate: MediaContentDelegateHandler,
-        isShowingAutomatically: Bool
+        isShowingAutomatically: Bool,
+        isFromSharedItem: Bool
     ) -> MediaDiscoveryContentViewModel {
         .init(
-            contentMode: .mediaDiscovery,
+            contentMode: isFromSharedItem ? .mediaDiscoverySharedItems : .mediaDiscovery,
             parentNodeProvider: parentNodeProvider,
             sortOrder: .newest, // For media discovery, we default the sort order to newest.
             isAutomaticallyShown: isShowingAutomatically,
