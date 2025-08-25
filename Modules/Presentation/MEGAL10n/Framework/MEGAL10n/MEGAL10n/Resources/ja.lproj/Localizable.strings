@@ -1013,7 +1013,7 @@
 /* Cell title shown on the achievements view for referral achievement */
 "account.achievement.referral.title"="友人を招待する";
 /* Subtitle of the referral achievement introduction, %1$@ is a placeholder, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
-"account.achievement.referral.subtitle"="%1$@ of storage for each invitation. \n%2$@";
+"account.achievement.referral.subtitle"="各紹介に対して%1$@ストレージ。\n%2$@";
 /* Text shown to explain how and where you can invite friends */
 "Select from phone contacts or enter multiple email addresses"="端末の連絡先から選択するか、複数のメールアドレスを入力してください";
 /*  */
@@ -1051,19 +1051,19 @@
 /* Explanation label shown on the achievements view for complete install MEGA desktop app achievement, %@ is a placeholder. */
 "account.achievement.desktopApp.complete.explaination.label"="あなたはMEGAデスクトップアプリのインストールに対して、%@のストレージスペースを受け取りました。";
 /* Explanation label shown on the achievements view for incomplete install MEGA desktop app achievement, %1$@ is a placeholder, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
-"account.achievement.desktopApp.incomplete.explaination.label"="When you install the MEGA Desktop App you get %1$@ of complimentary storage space, %2$@. The MEGA Desktop App is available for Windows, macOS and most Linux distributions.";
+"account.achievement.desktopApp.incomplete.explaination.label"="MEGAデスクトップアプリをインストールすると、%1$@分のストレージスペース（%2$@）を無料でご利用いただけます。MEGAデスクトップアプリは、Windows、macOS、およびほとんどのLinuxディストリビューションでご利用いただけます。";
 /* Cell title shown on the achievements view for install MEGA mobile app achievement */
 "account.achievement.mobileApp.title"="MEGAモバイルアプリをインストール";
 /* Explanation label shown on the achievements view for complete install MEGA mobile app achievement, %@ is a placeholder. */
 "account.achievement.mobileApp.complete.explaination.label"="あなたはMEGAモバイルアプリのインストールに対して、%@のストレージスペースを受け取りました。";
 /* Explanation label shown on the achievements view for incomplete install MEGA mobile app achievement, %1$@ is a placeholder, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
-"account.achievement.mobileApp.incomplete.explaination.label"="When you install the MEGA Mobile App you get %@ of complimentary storage space, %2$@. The MEGA Mobile App is available for iOS and Android. ";
+"account.achievement.mobileApp.incomplete.explaination.label"="MEGAモバイルアプリをインストールすると、%@分の無料ストレージ容量（%2$@）が付与されます。MEGAモバイルアプリはiOSとAndroidでご利用いただけます。";
 /* Detail label shown on the achievements details view for Start Free Trial when its completed, %1$@ is placeholder for the storage amount, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
-"account.achievement.freeTrial.detail.complete.label"="%1$@ bonus applied. %2$@";
+"account.achievement.freeTrial.detail.complete.label"="%1$@ボーナスが適用されました。%2$@";
 /* Cell title shown on the achievements view for Start MEGA VPN Free Trial */
 "account.achievement.vpnFreeTrial.title"="MEGA VPNの無料トライアルを開始";
 /* Detail label shown on the achievements details view for Start MEGA VPN Free Trial when its incomplete, %1$@ is placeholder for the storage amount, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
-"account.achievement.vpnFreeTrial.detail.incomplete.label"="Get %1$@ of free storage when you start a MEGA VPN free trial. %2$@";
+"account.achievement.vpnFreeTrial.detail.incomplete.label"="MEGA VPNの無料トライアルを開始すると、%1$@の無料ストレージを入手できます。%2$@";
 /* Explanation label shown on the achievements view for incomplete start MEGA VPN Free Trial achievement, %@ is a placeholder. */
 "account.achievement.vpnFreeTrial.incomplete.explanation.label"="MEGA VPNアプリをインストールし、MEGAアカウントでログインして無料トライアルを開始してください。無料トライアル開始後、ボーナスストレージが自動的に追加されます。";
 /* Explanation label shown on the achievements view for complete start MEGA VPN Free Trial achievement, %@ is a placeholder. */
@@ -1073,7 +1073,7 @@
 /* Cell title shown on the achievements view for Start MEGA Pass Free Trial */
 "account.achievement.passFreeTrial.title"="MEGA Passの無料トライアルを開始";
 /* Detail label shown on the achievements details view for Start MEGA Pass Free Trial when its incomplete, %1$@ is placeholder for the storage amount, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
-"account.achievement.passFreeTrial.detail.incomplete.label"="Get %1$@ of free storage when you start a MEGA Pass free trial. %2$@";
+"account.achievement.passFreeTrial.detail.incomplete.label"="MEGA Passの無料トライアルを開始すると、%1$@の無料ストレージを入手できます。%2$@";
 /* Explanation label shown on the achievements view for incomplete start MEGA Pass Free Trial achievement, %@ is a placeholder. */
 "account.achievement.passFreeTrial.incomplete.explanation.label"="MEGA Passアプリをインストールし、MEGAアカウントでログインして無料トライアルを開始してください。無料トライアル開始後、ボーナスストレージが自動的に追加されます。";
 /* Explanation label shown on the achievements view for complete start MEGA Pass Free Trial achievement, %@ is a placeholder. */
@@ -1081,11 +1081,11 @@
 /* Text for the button to install MEGA Pass in the Start MEGA Pass Free Trial achievement */
 "account.achievement.passFreeTrial.buttonText"="MEGA Passをインストール";
 /* Subtitle of the incomplete achievement with permanent bonus, %1$@ is a placeholder for amount of storage, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
-"account.achievement.incomplete.subtitle"="%1$@ of storage. %2$@";
+"account.achievement.incomplete.subtitle"="%1$@のストレージ。%2$@";
 /* String of the achievements with permanent bonus, used as a full sentence */
-"account.achievement.validity.permanent"="Valid permanently.";
+"account.achievement.validity.permanent"="永久に有効です。";
 /* Substring of the achievements with permanent bonus, used as a part of a sentence */
-"account.achievement.validity.substring.permanent"="valid permanently";
+"account.achievement.validity.substring.permanent"="永久に有効";
 /* Subtitle of the complete achievement with permanent bonus */
 "account.achievement.complete.subtitle.permanent"="ボーナス適用";
 /* Add Phone Number title */
@@ -1093,7 +1093,7 @@
 /* Explanation Label shown on the achievements view for complete add phone number achievement, %@ is a placeholder. */
 "account.achievement.phoneNumber.complete.explaination.label"="あなたはお使いの電話番号の検証に対して、%@のストレージスペースを受け取りました。";
 /* Explanation Label shown on the achievements view for incomplete add phone number achievement, %1$@ is a placeholder, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
-"account.achievement.phoneNumber.incomplete.explaination.label"="When you add your phone number you get %@ of complimentary storage space, %2$@.";
+"account.achievement.phoneNumber.incomplete.explaination.label"="電話番号を追加すると、%@の無料ストレージスペース（%2$@）が得られます。";
 /* Free storage description to encourage users to add phone number to their accounts */
 "Get free %@ when you add your phone number. This makes it easier for your contacts to find you on MEGA."="あなたの携帯電話番号の追加時に%@を無料で獲得します。これにより、あなたの連絡先がMEGAであなたを見つけやすくなります。";
 /* Description to encourage users to add phone number to their accounts when there are not achievements */
