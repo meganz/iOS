@@ -1,4 +1,5 @@
 import Combine
+import Foundation
 @testable import MEGAVideoPlayer
 import MEGAVideoPlayerMock
 import Testing
@@ -31,6 +32,8 @@ struct PlayerOverlayViewModelTests {
         #expect(sut.duration == .seconds(0))
         #expect(sut.isLoading == true)
         #expect(sut.isControlsVisible == false)
+        #expect(sut.currentSpeed == .normal)
+        #expect(sut.scalingMode == .fit)
     }
 
     // MARK: - State Change Tests
@@ -398,5 +401,50 @@ struct PlayerOverlayViewModelTests {
         sut.didTapRotate()
         
         #expect(rotateActionCalled == true)
+    }
+    
+    // MARK: - Scaling Tests
+    
+    @Test
+    func didTapScalingButton_togglesScalingMode() {
+        let mockPlayer = MockVideoPlayer()
+        let sut = makeSUT(player: mockPlayer)
+        #expect(sut.scalingMode == .fit)
+
+        // First tap - should switch to fill mode
+        sut.didTapScalingButton()
+        #expect(sut.scalingMode == .fill)
+        #expect(mockPlayer.setScalingModeCallCount == 1)
+        #expect(mockPlayer.setScalingModeValue == .fill)
+
+        // Second tap - should switch back to fit mode
+        sut.didTapScalingButton()
+        #expect(sut.scalingMode == .fit)
+        #expect(mockPlayer.setScalingModeCallCount == 2)
+        #expect(mockPlayer.setScalingModeValue == .fit)
+    }
+    
+    @Test(arguments: [
+        (VideoScalingMode.fill, 0.5, VideoScalingMode.fit, 2),
+        (.fill, 1.5, .fill, 1),
+        (.fit, 0.5, .fit, 1),
+        (.fit, 1.5, .fill, 2)
+    ])
+    func handlePinchGesture(
+        initialScale: VideoScalingMode,
+        pinchScale: CGFloat,
+        expectedScale: VideoScalingMode,
+        expectedSetScalingModeCallCount: Int
+    ) {
+        let mockPlayer = MockVideoPlayer()
+        mockPlayer.setScalingMode(initialScale)
+        let sut = makeSUT(player: mockPlayer)
+        sut.scalingMode = initialScale
+
+        sut.handlePinchGesture(scale: pinchScale)
+
+        #expect(sut.scalingMode == expectedScale)
+        #expect(mockPlayer.setScalingModeCallCount == expectedSetScalingModeCallCount)
+        #expect(mockPlayer.setScalingModeValue == expectedScale)
     }
 }

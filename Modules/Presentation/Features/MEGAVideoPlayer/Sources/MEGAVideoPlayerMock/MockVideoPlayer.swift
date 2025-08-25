@@ -47,6 +47,8 @@ public final class MockVideoPlayer: VideoPlayerProtocol {
     public var setupPlayerCallCount: Int = 0
     public var resizePlayerCallCount: Int = 0
     public var resizedFrame: CGRect = .zero
+    public var setScalingModeCallCount: Int = 0
+    public var setScalingModeValue: VideoScalingMode = .fit
 
     public init(
         option: VideoPlayerOption = .avPlayer,
@@ -114,6 +116,11 @@ public final class MockVideoPlayer: VideoPlayerProtocol {
         resizedFrame = frame
     }
     
+    public func setScalingMode(_ mode: VideoScalingMode) {
+        setScalingModeCallCount += 1
+        setScalingModeValue = mode
+    }
+    
     // MARK: - Reset for testing
     public func resetCallCounts() {
         playCallCount = 0
@@ -130,5 +137,7 @@ public final class MockVideoPlayer: VideoPlayerProtocol {
         setupPlayerCallCount = 0
         resizePlayerCallCount = 0
         resizedFrame = .zero
+        setScalingModeCallCount = 0
+        setScalingModeValue = .fit
     }
 }

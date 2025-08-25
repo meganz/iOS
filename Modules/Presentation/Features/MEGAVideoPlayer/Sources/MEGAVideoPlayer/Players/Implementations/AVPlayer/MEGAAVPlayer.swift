@@ -145,6 +145,10 @@ extension MEGAAVPlayer: VideoRenderable {
     public func resizePlayer(to frame: CGRect) {
         playerLayer?.frame = frame
     }
+    
+    public func setScalingMode(_ mode: VideoScalingMode) {
+        playerLayer?.videoGravity = mode.toAVLayerVideoGravity()
+    }
 }
 
 // MARK: - NodeLoadable
@@ -331,3 +335,4 @@ public extension MEGAAVPlayer {
         )
     }
 }
+

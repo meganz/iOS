@@ -13,6 +13,7 @@ public final class PlayerOverlayViewModel: ObservableObject {
     @Published var currentSpeed: PlaybackSpeed = .normal
     @Published var isLoopEnabled: Bool = false
     @Published var isPlaybackBottomSheetPresented: Bool = false
+    @Published var scalingMode: VideoScalingMode = .fit
 
     private var autoHideTimer: Timer?
     private var cancellables = Set<AnyCancellable>()
@@ -181,6 +182,30 @@ extension PlayerOverlayViewModel {
     func didTapRotate() {
         didTapRotateAction()
         didTapControl()
+    }
+    
+    func didTapScalingButton() {
+        scalingMode = scalingMode.toggled()
+        player.setScalingMode(scalingMode)
+        didTapControl()
+    }
+    
+    func handlePinchGesture(scale: CGFloat) {
+        let threshold: CGFloat = 1.0
+        
+        if scale > threshold {
+            // Pinch out - switch to fill mode
+            if scalingMode != .fill {
+                scalingMode = .fill
+                player.setScalingMode(.fill)
+            }
+        } else if scale < threshold {
+            // Pinch in - switch to fit mode
+            if scalingMode != .fit {
+                scalingMode = .fit
+                player.setScalingMode(.fit)
+            }
+        }
     }
 }
 
