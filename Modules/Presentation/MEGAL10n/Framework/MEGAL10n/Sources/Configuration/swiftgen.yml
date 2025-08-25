@@ -1,0 +1,14 @@
+input_dir: ../../MEGAL10n
+output_dir: ${DERIVED_SOURCES_DIR}
+
+## Strings
+strings:
+  inputs:
+    - Resources/Base.lproj
+  outputs:
+    - templatePath: structured-swift5-existential-any.stencil
+      params:
+        forceFileNameEnum: true
+        publicAccess: true
+        enumName: Strings
+      output: Strings+Generated.swift
