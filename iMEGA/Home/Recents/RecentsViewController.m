@@ -38,7 +38,6 @@
     
     self.tableView.emptyDataSetDelegate = self;
     self.tableView.emptyDataSetSource = self;
-    self.tableView.estimatedSectionHeaderHeight = 36.0f;
     
     [self.tableView registerNib:[UINib nibWithNibName:@"RecentsTableViewHeaderView" bundle:nil] forHeaderFooterViewReuseIdentifier:@"RecentsHeaderFooterView"];
     
@@ -175,22 +174,12 @@
     return recentsTVHFV;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForHeaderInSection:(NSInteger)section {
+    return [self heightForHeaderInSection:section expectedValueForVisibleHeader:36];
+}
+
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    MEGARecentActionBucket *recentActionBucket = [self.recentActionBucketArray objectOrNilAtIndex:section];
-    if (!recentActionBucket) {
-        return 0;
-    }
-    if (section > 0) {
-        MEGARecentActionBucket *previousRecentActionBucket = [self.recentActionBucketArray objectOrNilAtIndex:(section - 1)];
-        if (!previousRecentActionBucket) {
-            return 0;
-        }
-        if ([previousRecentActionBucket.timestamp isSameDayAsDate:recentActionBucket.timestamp]) {
-            return 0;
-        }
-    }
-    
-    return UITableViewAutomaticDimension;
+    return [self heightForHeaderInSection:section expectedValueForVisibleHeader:UITableViewAutomaticDimension];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
