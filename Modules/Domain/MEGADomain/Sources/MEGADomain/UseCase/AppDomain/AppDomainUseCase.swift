@@ -1,5 +1,4 @@
 import Foundation
-import MEGAPreference
 
 public protocol AppDomainUseCaseProtocol: Sendable {
     var domainName: String { get }
@@ -20,21 +19,20 @@ public struct AppDomainUseCase: AppDomainUseCaseProtocol {
         }
     }
 
-    @PreferenceWrapper(key: PreferenceKeyEntity.isDomainNameMEGADotApp, defaultValue: false)
-    private var isDomainNameMEGADotApp: Bool
+    private let remoteFeatureFlagUseCase: any RemoteFeatureFlagUseCaseProtocol
+    private let isLocalFeatureFlagEnabled: Bool
 
     public var domainName: String {
-        guard isDomainNameMEGADotApp else { return DomainExtension.nz.domain }
-        return DomainExtension.app.domain
+        remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .dotAppDomainExtension) && isLocalFeatureFlagEnabled
+        ? DomainExtension.app.domain
+        : DomainExtension.nz.domain
     }
     
     public init(
-        preferenceUseCase: some PreferenceUseCaseProtocol,
         remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol,
         isLocalFeatureFlagEnabled: Bool
     ) {
-        $isDomainNameMEGADotApp.useCase = preferenceUseCase
-        isDomainNameMEGADotApp = remoteFeatureFlagUseCase
-            .isFeatureFlagEnabled(for: .dotAppDomainExtension) && isLocalFeatureFlagEnabled
+        self.remoteFeatureFlagUseCase = remoteFeatureFlagUseCase
+        self.isLocalFeatureFlagEnabled = isLocalFeatureFlagEnabled
     }
 }

@@ -78,7 +78,7 @@ struct CancelSubscriptionStepsHelper: CancelSubscriptionStepsHelperProtocol {
                 steps: [
                     Step(
                         text: Strings.Localizable.Accounts.CancelSubscriptionSteps.WebClient.Computer.Step.one(
-                            DependencyInjection.appDomain
+                            DependencyInjection.appDomain()
                         )
                     ),
                     Step(text: Strings.Localizable.Accounts.CancelSubscriptionSteps.WebClient.Computer.Step.two),
@@ -93,7 +93,7 @@ struct CancelSubscriptionStepsHelper: CancelSubscriptionStepsHelperProtocol {
                 steps: [
                     Step(
                         text: Strings.Localizable.Accounts.CancelSubscriptionSteps.WebClient.Mobile.Step.one(
-                            DependencyInjection.appDomain
+                            DependencyInjection.appDomain()
                         )
                     ),
                     Step(text: Strings.Localizable.Accounts.CancelSubscriptionSteps.WebClient.Mobile.Step.two),
