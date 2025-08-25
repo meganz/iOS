@@ -2112,10 +2112,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>valid for %d day</string>
         <key>other</key>
-        <string>valid for %d days</string>
+        <string>%d日間有効</string>
       </dict>
     </dict>
     <key>account.achievement.complete.validBonusExpiry.detail.subtitle</key>
