@@ -9,7 +9,7 @@ struct PlayerOverlayViewModelTests {
     // MARK: - Helper
 
     private func makeSUT(
-        player: VideoPlayerProtocol = MockVideoPlayer(),
+        player: some VideoPlayerProtocol = MockVideoPlayer(),
         didTapBackAction: @escaping () -> Void = {},
         didTapRotateAction: @escaping () -> Void = {}
     ) -> PlayerOverlayViewModel {
@@ -140,7 +140,7 @@ struct PlayerOverlayViewModelTests {
 
     @Test(arguments: [
         (PlaybackState.playing, false),
-        (.paused, true),
+        (.paused, false),
         (.buffering, false),
         (.opening, false),
         (.stopped, false),
@@ -164,7 +164,7 @@ struct PlayerOverlayViewModelTests {
 
     @Test(arguments: [
         (PlaybackState.playing, false),
-        (.paused, true),
+        (.paused, false),
         (.buffering, false),
         (.opening, false),
         (.stopped, false),
@@ -252,6 +252,16 @@ struct PlayerOverlayViewModelTests {
         #expect(mockPlayer.jumpBackwardSeconds == 10)
     }
 
+    @Test
+    func didTapPlaybackSpeed_shouldShowSelectPlaybackSpeedBottomSheet() async throws {
+        let sut = makeSUT()
+        #expect(sut.isPlaybackBottomSheetPresented == false)
+
+        sut.didTapPlaybackSpeed()
+
+        #expect(sut.isPlaybackBottomSheetPresented == true)
+    }
+
     @Test(arguments: [
         (PlaybackSpeed.quarter, PlaybackSpeed.half),
         (.half, .threeQuarter),
@@ -262,14 +272,14 @@ struct PlayerOverlayViewModelTests {
         (.oneThreeQuarter, .double),
         (.double, .quarter)
     ])
-    func didTapPlaybackSpeed(
+    func didSelectPlaybackSpeed(
         currentSpeed: PlaybackSpeed,
         expectedNextSpeed: PlaybackSpeed
     ) async throws {
         let sut = makeSUT()
         sut.currentSpeed = currentSpeed
 
-        sut.didTapPlaybackSpeed()
+        sut.didSelectPlaybackSpeed(expectedNextSpeed)
 
         #expect(sut.currentSpeed == expectedNextSpeed)
     }
@@ -299,30 +309,18 @@ struct PlayerOverlayViewModelTests {
     // MARK: - UI Logic Tests
 
     @Test(arguments: [
-        (Duration.seconds(125), "02:05"),
-        (.seconds(3661), "01:01:01")
+        (Duration.seconds(125), Duration.seconds(130), "02:05 / 02:10"),
+        (.seconds(3661), .seconds(3671), "01:01:01 / 01:01:11")
     ])
     func currentTimeString_formatsCorrectly(
         time: Duration,
+        duration: Duration,
         expectedString: String
     ) {
         let sut = makeSUT()
         sut.currentTime = time
-        #expect(sut.currentTimeString == expectedString)
-    }
-
-    @Test(arguments: [
-        (Duration.seconds(125), "02:05"),
-        (.seconds(3661), "01:01:01")
-    ])
-    func durationString_formatsCorrectly(
-        time: Duration,
-        expectedString: String
-    ) {
-        let sut = makeSUT()
-        sut.duration = time
-
-        #expect(sut.durationString == expectedString)
+        sut.duration = duration
+        #expect(sut.currentTimeAndDurationString == expectedString)
     }
 
     @Test(arguments: [
