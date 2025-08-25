@@ -37,6 +37,7 @@ public protocol PlaybackControllable {
 public protocol VideoRenderable {
     func setupPlayer(in layer: any PlayerLayerProtocol)
     func resizePlayer(to frame: CGRect)
+    func setScalingMode(_ mode: VideoScalingMode)
 }
 
 /// Protocol for video players that can load content from playable nodes.

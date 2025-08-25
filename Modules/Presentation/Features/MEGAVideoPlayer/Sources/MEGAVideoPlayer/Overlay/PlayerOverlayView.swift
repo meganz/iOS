@@ -33,6 +33,12 @@ public struct PlayerOverlayView: View {
         .animation(.easeInOut(duration: 0.3), value: viewModel.isControlsVisible)
         .buttonStyle(.plain)
         .task { viewModel.viewWillAppear() }
+        .gesture(
+            MagnificationGesture()
+                .onEnded { scale in
+                    viewModel.handlePinchGesture(scale: scale)
+                }
+        )
         .bottomSheet(
             isPresented: $viewModel.isPlaybackBottomSheetPresented,
             detents: [.fixed(playbackSpeedsBottomSelectionListHeight)],
@@ -249,7 +255,7 @@ extension PlayerOverlayView {
             Spacer()
             rotateButton
             Spacer()
-            lockButton
+            scalingButton
             Spacer()
             moreBottomButton
         }
@@ -284,10 +290,11 @@ extension PlayerOverlayView {
         )
     }
 
-    var zoomToFillButton: some View {
-        controlButton(name: "zoomToFill", action: {
-            // Implement zoom to fit functionality
-        })
+    var scalingButton: some View {
+        controlButton(
+            name: viewModel.scalingMode == .fit ? "zoomToFill" : "scaleToFit",
+            action: viewModel.didTapScalingButton
+        )
     }   
 
     var lockButton: some View {

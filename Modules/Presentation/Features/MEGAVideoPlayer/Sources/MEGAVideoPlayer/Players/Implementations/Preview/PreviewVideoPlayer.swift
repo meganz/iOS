@@ -6,6 +6,7 @@ final class PreviewVideoPlayer: VideoPlayerProtocol {
     @Published var state: PlaybackState
     @Published var currentTime: Duration
     @Published var duration: Duration
+    @Published var scalingMode: VideoScalingMode
 
     let debugMessage: String
     nonisolated let option: VideoPlayerOption
@@ -22,6 +23,10 @@ final class PreviewVideoPlayer: VideoPlayerProtocol {
         $duration.eraseToAnyPublisher()
     }
 
+    var scalingModePublisher: AnyPublisher<VideoScalingMode, Never> {
+        $scalingMode.eraseToAnyPublisher()
+    }
+
     nonisolated var debugMessagePublisher: AnyPublisher<String, Never> {
         Just(debugMessage).eraseToAnyPublisher()
     }
@@ -31,12 +36,14 @@ final class PreviewVideoPlayer: VideoPlayerProtocol {
         state: PlaybackState = .stopped,
         currentTime: Duration = .seconds(0),
         duration: Duration = .seconds(0),
+        scalingMode: VideoScalingMode = .fit,
         debugMessage: String = ""
     ) {
         self.option = option
         self.state = state
         self.currentTime = currentTime
         self.duration = duration
+        self.scalingMode = scalingMode
         self.debugMessage = debugMessage
     }
 
@@ -49,6 +56,9 @@ final class PreviewVideoPlayer: VideoPlayerProtocol {
     func loadNode(_ node: some PlayableNode) {}
     func setupPlayer(in layer: any PlayerLayerProtocol) {}
     func resizePlayer(to frame: CGRect) {}
+    func setScalingMode(_ mode: VideoScalingMode) {
+        scalingMode = mode
+    }
     func changeRate(to rate: Float) {}
     func setLooping(_ enabled: Bool) { }
     
