@@ -1,0 +1,3658 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+  <dict>
+    <key>chat.call.raiseHands.snackBar.manyOtherPersonsRaisedHands</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>[A] și alți %d persoană au ridicat mâna</string>
+        <key>few</key>
+        <string>[A] și alte %d persoane au ridicat mâna</string>
+        <key>other</key>
+        <string>[A] și alte %d de persoane au ridicat mâna</string>
+      </dict>
+    </dict>
+    <key>chat.call.raiseHands.snackBar.youAndOtherPersonRaisedHands</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Dvs. și %d altă persoană ați ridicat mâna</string>
+        <key>few</key>
+        <string>Dvs. și alte %d persoane ați ridicat mâna</string>
+        <key>other</key>
+        <string>Dvs. și alte %d de persoane ați ridicat mâna</string>
+      </dict>
+    </dict>
+    <key>sharedItems.rubbish.warning.fileCount</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d fișier</string>
+        <key>few</key>
+        <string>%d fișiere</string>
+        <key>other</key>
+        <string>%d de fișiere</string>
+      </dict>
+    </dict>
+    <key>sharedItems.rubbish.confirmation.removedItemCount</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d element a fost eliminat</string>
+        <key>few</key>
+        <string>%d elemente au fost eliminate</string>
+        <key>other</key>
+        <string>%d de elemente au fost eliminate</string>
+      </dict>
+    </dict>
+    <key>sharedItems.rubbish.confirmation.fileCount</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d fișier</string>
+        <key>few</key>
+        <string>%d fișiere</string>
+        <key>other</key>
+        <string>%d de fișiere</string>
+      </dict>
+    </dict>
+    <key>sharedItems.rubbish.warning.folderCount</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d folder</string>
+        <key>few</key>
+        <string>%d foldere</string>
+        <key>other</key>
+        <string>%d de foldere</string>
+      </dict>
+    </dict>
+    <key>sharedItems.rubbish.confirmation.folderCount</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d folder</string>
+        <key>few</key>
+        <string>%d foldere</string>
+        <key>other</key>
+        <string>%d de foldere</string>
+      </dict>
+    </dict>
+    <key>sharedItems.link.accessInfo</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Oricine are acest link vă poate vizualiza și descărca datele</string>
+        <key>few</key>
+        <string>Oricine are aceste link-uri vă poate vizualiza și descărca datele</string>
+        <key>other</key>
+        <string>Oricine are aceste link-uri vă poate vizualiza și descărca datele</string>
+      </dict>
+    </dict>
+    <key>sharedItems.getLink.linkCopied</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Link copiat în clipboard</string>
+        <key>few</key>
+        <string>Link-uri copiate în clipboard</string>
+        <key>other</key>
+        <string>Link-uri copiate în clipboard</string>
+      </dict>
+    </dict>
+    <key>sharedItems.getLink.linkCreatedAndCopied</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Link creat și copiat în clipboard</string>
+        <key>few</key>
+        <string>Link-uri create și copiate în clipboard</string>
+        <key>other</key>
+        <string>Link-uri create și copiate în clipboard</string>
+      </dict>
+    </dict>
+    <key>nameCollision.applyToAll</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Aplică la duplicat</string>
+        <key>few</key>
+        <string>Aplică la toate cele %d duplicate</string>
+        <key>other</key>
+        <string>Aplică la toate cele %d de duplicate</string>
+      </dict>
+    </dict>
+    <key>chat.manageHistory.clearing.custom.option.hour</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@hour@</string>
+      <key>hour</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>oră</string>
+        <key>few</key>
+        <string>ore</string>
+        <key>other</key>
+        <string>de ore</string>
+      </dict>
+    </dict>
+    <key>chat.manageHistory.clearing.custom.option.day</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@day@</string>
+      <key>day</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>zi</string>
+        <key>few</key>
+        <string>zile</string>
+        <key>other</key>
+        <string>de zile</string>
+      </dict>
+    </dict>
+    <key>chat.manageHistory.clearing.custom.option.week</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@week@</string>
+      <key>week</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>săptămână</string>
+        <key>few</key>
+        <string>săptămâni</string>
+        <key>other</key>
+        <string>de săptămâni</string>
+      </dict>
+    </dict>
+    <key>chat.manageHistory.clearing.custom.option.month</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@month@</string>
+      <key>month</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>lună</string>
+        <key>few</key>
+        <string>luni</string>
+        <key>other</key>
+        <string>de luni</string>
+      </dict>
+    </dict>
+    <key>chat.manageHistory.clearing.custom.option.year</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@year@</string>
+      <key>year</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>an</string>
+        <key>few</key>
+        <string>ani</string>
+        <key>other</key>
+        <string>de ani</string>
+      </dict>
+    </dict>
+    <key>general.format.retentionPeriod.hour</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@hour@</string>
+      <key>hour</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d oră</string>
+        <key>few</key>
+        <string>%d ore</string>
+        <key>other</key>
+        <string>%d de ore</string>
+      </dict>
+    </dict>
+    <key>general.format.retentionPeriod.day</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@day@</string>
+      <key>day</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d zi</string>
+        <key>few</key>
+        <string>%d zile</string>
+        <key>other</key>
+        <string>%d de zile</string>
+      </dict>
+    </dict>
+    <key>general.format.retentionPeriod.week</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@week@</string>
+      <key>week</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d săptămână</string>
+        <key>few</key>
+        <string>%d săptămâni</string>
+        <key>other</key>
+        <string>%d de săptămâni</string>
+      </dict>
+    </dict>
+    <key>general.format.retentionPeriod.month</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@month@</string>
+      <key>month</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d lună</string>
+        <key>few</key>
+        <string>%d luni</string>
+        <key>other</key>
+        <string>%d de luni</string>
+      </dict>
+    </dict>
+    <key>general.format.retentionPeriod.year</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@year@</string>
+      <key>year</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d an</string>
+        <key>few</key>
+        <string>%d ani</string>
+        <key>other</key>
+        <string>%d de ani</string>
+      </dict>
+    </dict>
+    <key>general.format.count.file</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@file@</string>
+      <key>file</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d fișier</string>
+        <key>few</key>
+        <string>%d fișiere</string>
+        <key>other</key>
+        <string>%d de fișiere</string>
+      </dict>
+    </dict>
+    <key>general.format.count.folder</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@folder@</string>
+      <key>folder</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d folder</string>
+        <key>few</key>
+        <string>%d foldere</string>
+        <key>other</key>
+        <string>%d de foldere</string>
+      </dict>
+    </dict>
+    <key>general.format.count.folderAndFile.folder</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@folder@</string>
+      <key>folder</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d folder</string>
+        <key>few</key>
+        <string>%d foldere</string>
+        <key>other</key>
+        <string>%d de foldere</string>
+      </dict>
+    </dict>
+    <key>general.format.count.folderAndFile.file</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@file@</string>
+      <key>file</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>• %d fișier</string>
+        <key>few</key>
+        <string>• %d fișiere</string>
+        <key>other</key>
+        <string>• %d de fișiere</string>
+      </dict>
+    </dict>
+    <key>general.format.count.items</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@item@</string>
+      <key>item</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d element</string>
+        <key>few</key>
+        <string>%d elemente</string>
+        <key>other</key>
+        <string>%d de elemente</string>
+      </dict>
+    </dict>
+    <key>recents.section.title.items</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@items@</string>
+      <key>items</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d element</string>
+        <key>few</key>
+        <string>%d elemente</string>
+        <key>other</key>
+        <string>%d de elemente</string>
+      </dict>
+    </dict>
+    <key>recents.section.thumbnail.count.image</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@image@</string>
+      <key>image</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d imagine</string>
+        <key>few</key>
+        <string>%d imagini</string>
+        <key>other</key>
+        <string>%d de imagini</string>
+      </dict>
+    </dict>
+    <key>recents.section.thumbnail.count.video</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@video@</string>
+      <key>video</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d videoclip</string>
+        <key>few</key>
+        <string>%d videoclipuri</string>
+        <key>other</key>
+        <string>%d de videoclipuri</string>
+      </dict>
+    </dict>
+    <key>recents.section.thumbnail.count.imageAndVideo.image</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@image@</string>
+      <key>image</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d imagine</string>
+        <key>few</key>
+        <string>%d imagini</string>
+        <key>other</key>
+        <string>%d de imagini</string>
+      </dict>
+    </dict>
+    <key>recents.section.thumbnail.count.imageAndVideo.video</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@video@</string>
+      <key>video</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>și %d videoclip</string>
+        <key>few</key>
+        <string>și %d videoclipuri</string>
+        <key>other</key>
+        <string>și %d de videoclipuri</string>
+      </dict>
+    </dict>
+    <key>recents.section.multipleFile.title</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@file@</string>
+      <key>file</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>„[A]” și alți %d</string>
+        <key>few</key>
+        <string>„[A]” și alți %d</string>
+        <key>other</key>
+        <string>„[A]” și alți %d</string>
+      </dict>
+    </dict>
+    <key>media.photo.browser.indexOfTotalFiles</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@total@</string>
+      <key>total</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>[A] din %d fișier</string>
+        <key>few</key>
+        <string>[A] din %d fișiere</string>
+        <key>other</key>
+        <string>[A] din %d de fișiere</string>
+      </dict>
+    </dict>
+    <key>extensions.share.destination.section.files</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@file@</string>
+      <key>file</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string> %d fișier</string>
+        <key>few</key>
+        <string> %d fișiere</string>
+        <key>other</key>
+        <string> %d de fișiere</string>
+      </dict>
+    </dict>
+    <key>general.menuAction.removeLink.title</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@link@</string>
+      <key>link</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Elimină linkul</string>
+        <key>few</key>
+        <string>Elimină linkurile</string>
+        <key>other</key>
+        <string>Elimină linkurile</string>
+      </dict>
+    </dict>
+    <key>general.menuAction.removeLink.message.success</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@link@</string>
+      <key>link</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Link eliminat</string>
+        <key>few</key>
+        <string>Linkuri eliminate</string>
+        <key>other</key>
+        <string>Linkuri eliminate</string>
+      </dict>
+    </dict>
+    <key>general.menuAction.removeLink.doubleCheck.warning.title</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@link@</string>
+      <key>link</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Elimini linkul?</string>
+        <key>few</key>
+        <string>Elimini linkurile?</string>
+        <key>other</key>
+        <string>Elimini linkurile?</string>
+      </dict>
+    </dict>
+    <key>general.menuAction.removeLink.doubleCheck.warning.message</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@link@</string>
+      <key>link</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Persoanele cu care ați partajat acest link nu vor mai putea accesa acest link.</string>
+        <key>few</key>
+        <string>Persoanele cu care ați partajat aceste linkuri nu le vor mai putea accesa.</string>
+        <key>other</key>
+        <string>Persoanele cu care ați partajat aceste linkuri nu le vor mai putea accesa.</string>
+      </dict>
+    </dict>
+    <key>general.menuAction.shareFolder.title</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@folder@</string>
+      <key>folder</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Partajează folderul</string>
+        <key>few</key>
+        <string>Partajează folderele</string>
+        <key>other</key>
+        <string>Partajează folderele</string>
+      </dict>
+    </dict>
+    <key>general.menuAction.shareLink.title</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@link@</string>
+      <key>link</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Partajați linkul</string>
+        <key>few</key>
+        <string>Partajați linkurile</string>
+        <key>other</key>
+        <string>Partajați linkurile</string>
+      </dict>
+    </dict>
+    <key>general.menuAction.manageLink.title</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@link@</string>
+      <key>link</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Gestionează linkul</string>
+        <key>few</key>
+        <string>Gestionează linkurile</string>
+        <key>other</key>
+        <string>Gestionează linkurile</string>
+      </dict>
+    </dict>
+    <key>general.menuAction.exportFile.title</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@file@</string>
+      <key>file</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Exportă fișierul</string>
+        <key>few</key>
+        <string>Exportă fișierele</string>
+        <key>other</key>
+        <string>Exportă fișierele</string>
+      </dict>
+    </dict>
+    <key>call.duration.second</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@second@</string>
+      <key>second</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d secundă</string>
+        <key>few</key>
+        <string>%d secunde</string>
+        <key>other</key>
+        <string>%d de secunde</string>
+      </dict>
+    </dict>
+    <key>call.duration.minute</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@minute@</string>
+      <key>minute</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d minut</string>
+        <key>few</key>
+        <string>%d minute</string>
+        <key>other</key>
+        <string>%d de minute</string>
+      </dict>
+    </dict>
+    <key>call.duration.hour</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@hour@</string>
+      <key>hour</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d oră</string>
+        <key>few</key>
+        <string>%d ore</string>
+        <key>other</key>
+        <string>%d de ore</string>
+      </dict>
+    </dict>
+    <key>call.duration.hourAndMinute.hour</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@hour@</string>
+      <key>hour</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d</string>
+        <key>few</key>
+        <string>%d ore</string>
+        <key>other</key>
+        <string>%d de ore</string>
+      </dict>
+    </dict>
+    <key>call.duration.hourAndMinute.minute</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@minute@</string>
+      <key>minute</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>, %d minut</string>
+        <key>few</key>
+        <string>, %d minute</string>
+        <key>other</key>
+        <string>, %d de minute</string>
+      </dict>
+    </dict>
+    <key>dnd.duration.minute</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@minute@</string>
+      <key>minute</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d minut</string>
+        <key>few</key>
+        <string>%d minute</string>
+        <key>other</key>
+        <string>%d de minute</string>
+      </dict>
+    </dict>
+    <key>dnd.duration.hour</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@hour@</string>
+      <key>hour</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d oră</string>
+        <key>few</key>
+        <string>%d ore</string>
+        <key>other</key>
+        <string>%d de ore</string>
+      </dict>
+    </dict>
+    <key>chat.status.duration.minute</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@minute@</string>
+      <key>minute</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d minut</string>
+        <key>few</key>
+        <string>%d minute</string>
+        <key>other</key>
+        <string>%d de minute</string>
+      </dict>
+    </dict>
+    <key>mybackups.share.folder.warning.message</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@share@</string>
+      <key>share</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Acest folder poate fi partajat doar în modul numai citire, deoarece este un folder de backup. Orice modificare a conținutului său ar putea dezactiva backupul.</string>
+        <key>few</key>
+        <string>Aceste foldere pot fi partajate doar în modul numai citire, deoarece sunt foldere de backup. Orice modificare a conținutului lor ar putea dezactiva backupurile.</string>
+        <key>other</key>
+        <string>Aceste foldere pot fi partajate doar în modul numai citire, deoarece sunt foldere de backup. Orice modificare a conținutului lor ar putea dezactiva backupurile.</string>
+      </dict>
+    </dict>
+    <key>chat.autoAway.hour</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@hour@</string>
+      <key>hour</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d oră</string>
+        <key>few</key>
+        <string>%d ore</string>
+        <key>other</key>
+        <string>%d de ore</string>
+      </dict>
+    </dict>
+    <key>chat.autoAway.minute</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@minute@</string>
+      <key>minute</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d minut</string>
+        <key>few</key>
+        <string>%d minute</string>
+        <key>other</key>
+        <string>%d de minute</string>
+      </dict>
+    </dict>
+    <key>chat.autoAway.label.hour</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@hour@</string>
+      <key>hour</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>oră</string>
+        <key>few</key>
+        <string>ore</string>
+        <key>other</key>
+        <string>de ore</string>
+      </dict>
+    </dict>
+    <key>chat.autoAway.label.minute</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@minute@</string>
+      <key>minute</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>minut</string>
+        <key>few</key>
+        <string>minute</string>
+        <key>other</key>
+        <string>de minute</string>
+      </dict>
+    </dict>
+    <key>chat.message.unreadMessage</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d mesaj necitit</string>
+        <key>few</key>
+        <string>%d mesaje necitite</string>
+        <key>other</key>
+        <string>%d de mesaje necitite</string>
+      </dict>
+    </dict>
+    <key>cameraUploads.albums.addItems.alert.limitReached.message</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Poți adăuga doar până la %d element o dată într-un album</string>
+        <key>few</key>
+        <string>Poți adăuga doar până la %d elemente o dată într-un album</string>
+        <key>other</key>
+        <string>Poți adăuga doar până la %d de elemente o dată într-un album</string>
+      </dict>
+    </dict>
+    <key>cameraUploads.albums.addedItemTo</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d element a fost adăugat în „[A]”</string>
+        <key>few</key>
+        <string>%d elemente au fost adăugate în „[A]”</string>
+        <key>other</key>
+        <string>%d de elemente au fost adăugate în „[A]”</string>
+      </dict>
+    </dict>
+    <key>cameraUploads.banner.status.uploadsPartialComplete.videosNotUploaded.subHeading</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Fotografii încărcate. Încărcările video sunt dezactivate: videoclipul nu a fost încărcat</string>
+        <key>few</key>
+        <string>Fotografii încărcate. Încărcările video sunt dezactivate: %d videoclipuri nu au fost încărcate</string>
+        <key>other</key>
+        <string>Fotografii încărcate. Încărcările video sunt dezactivate: %d de videoclipuri nu au fost încărcate</string>
+      </dict>
+    </dict>
+    <key>cameraUploads.banner.status.filesPending.subHeading</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d fișier în așteptare</string>
+        <key>few</key>
+        <string>%d fișiere în așteptare</string>
+        <key>other</key>
+        <string>%d de fișiere în așteptare</string>
+      </dict>
+    </dict>
+    <key>cameraUploads.albums.delete</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Ștergeți (%d)</string>
+        <key>few</key>
+        <string>Ștergeți (%d)</string>
+        <key>other</key>
+        <string>Ștergeți (%d)</string>
+      </dict>
+    </dict>
+    <key>cameraUploads.albums.deleteAlbumTitle</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Ștergi albumul?</string>
+        <key>few</key>
+        <string>Ștergi albumele?</string>
+        <key>other</key>
+        <string>Ștergi albumele?</string>
+      </dict>
+    </dict>
+    <key>cameraUploads.albums.deleteAlbumMessage</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Albumul va fi șters, însă conținutul lui va rămâne în Cronologie.</string>
+        <key>few</key>
+        <string>Albumele vor fi șterse, însă conținutul lor va rămâne în Cronologie.</string>
+        <key>other</key>
+        <string>Albumele vor fi șterse, însă conținutul lor va rămâne în Cronologie.</string>
+      </dict>
+    </dict>
+    <key>cameraUploads.albums.deleteAlbumSuccess</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>„[A]” șters</string>
+        <key>few</key>
+        <string>%d albume șterse</string>
+        <key>other</key>
+        <string>%d de albume șterse</string>
+      </dict>
+    </dict>
+    <key>cameraUploads.albums.removedItemFrom</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d element eliminat din „[A]”</string>
+        <key>few</key>
+        <string>%d elemente eliminate din „[A]”</string>
+        <key>other</key>
+        <string>%d de elemente eliminate din „[A]”</string>
+      </dict>
+    </dict>
+    <key>cameraUploads.albums.removeShareLinkAlertTitle</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Elimini linkul?</string>
+        <key>few</key>
+        <string>Elimini linkurile?</string>
+        <key>other</key>
+        <string>Elimini linkurile?</string>
+      </dict>
+    </dict>
+    <key>cameraUploads.albums.removeShareLinkAlertConfirmButtonTitle</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Elimină linkul</string>
+        <key>few</key>
+        <string>Elimină linkurile</string>
+        <key>other</key>
+        <string>Elimină linkurile</string>
+      </dict>
+    </dict>
+    <key>cameraUploads.albums.removeShareLinkAlertMessage</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Persoanele cu care ați partajat acest link vor pierde accesul la album.</string>
+        <key>few</key>
+        <string>Persoanele cu care ați partajat aceste linkuri vor pierde accesul la albume.</string>
+        <key>other</key>
+        <string>Persoanele cu care ați partajat aceste linkuri vor pierde accesul la albume.</string>
+      </dict>
+    </dict>
+    <key>cameraUploads.albums.removeShareLinkSuccessMessage</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Link eliminat</string>
+        <key>few</key>
+        <string>Linkuri eliminate</string>
+        <key>other</key>
+        <string>Linkuri eliminate</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.recurring.daily.until</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@interval@</string>
+      <key>interval</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>În fiecare zi, începând cu [B][StartDate] până in [/B] de la [B][StartTime] la [EndTime][/B][UntilDate]</string>
+        <key>few</key>
+        <string>În fiecare %d zi, începând cu [B][StartDate] până in [/B] de la [B][StartTime] la [EndTime][/B][UntilDate]</string>
+        <key>other</key>
+        <string>În fiecare %d zi, începând cu [B][StartDate] până in [/B] de la [B][StartTime] la [EndTime][/B][UntilDate]</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.recurring.daily.forever</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@interval@</string>
+      <key>interval</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>În fiecare zi, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>În fiecare %d zi, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>other</key>
+        <string>În fiecare %d zi, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.recurring.weekly.oneDay.until</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@interval@</string>
+      <key>interval</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>[WeekDay], în fiecare săptămână, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>[WeekDay], la fiecare %d de săptămâni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>other</key>
+        <string>[WeekDay], la fiecare %d săptămâni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.recurring.weekly.oneDay.forever</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@interval@</string>
+      <key>interval</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>[WeekDay], în fiecare săptămână, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>[WeekDay], la fiecare %d săptămâni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>other</key>
+        <string>[WeekDay], la fiecare %d de săptămâni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.recurring.weekly.severalDays.until</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@interval@</string>
+      <key>interval</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>[WeekDaysList] și [LastWeekDay], în fiecare săptămână, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>[WeekDaysList] și [LastWeekDay], la fiecare %d săptămâni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>other</key>
+        <string>[WeekDaysList] și [LastWeekDay], la fiecare %d de săptămâni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.recurring.weekly.severalDays.forever</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@interval@</string>
+      <key>interval</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>[WeekDaysList] și [LastWeekDay], în fiecare săptămână, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>[WeekDaysList] și [LastWeekDay], la fiecare %d săptămâni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>other</key>
+        <string>[WeekDaysList] și [LastWeekDay], la fiecare %d de săptămâni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B] </string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.recurring.monthly.singleDay.until</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@interval@</string>
+      <key>interval</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Ziua a [MonthDay]-a a fiecărei luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>Ziua a [MonthDay]-a la fiecare %d luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>other</key>
+        <string>Ziua a [MonthDay]-a la fiecare %d de luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.recurring.monthly.singleDay.forever</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@interval@</string>
+      <key>interval</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Ziua a [MonthDay]-a a fiecărei luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>Ziua a [MonthDay]-a la fiecare %d luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>other</key>
+        <string>Ziua a [MonthDay]-a la fiecare %d de luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.recurring.monthly.ordinalDay.until.monday.first</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@interval@</string>
+      <key>interval</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Prima luni a fiecărei luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>Prima luni la fiecare %d luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>other</key>
+        <string>Prima luni la fiecare %d de luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.monday.first</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@interval@</string>
+      <key>interval</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Prima luni a fiecărei luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>Prima luni la fiecare %d luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>other</key>
+        <string>Prima luni la fiecare %d de luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.recurring.monthly.ordinalDay.until.monday.second</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@interval@</string>
+      <key>interval</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>A doua luni a fiecărei luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>A doua luni la fiecare %d luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>other</key>
+        <string>A doua luni la fiecare %d de luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.monday.second</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@interval@</string>
+      <key>interval</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>A doua luni a fiecărei luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>A doua luni la fiecare %d luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>other</key>
+        <string>A doua luni la fiecare %d de luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.recurring.monthly.ordinalDay.until.monday.third</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@interval@</string>
+      <key>interval</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>A treia luni a fiecărei luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>A treia luni la fiecare %d luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>other</key>
+        <string>A treia luni la fiecare %d de luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.monday.third</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@interval@</string>
+      <key>interval</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>A treia luni a fiecărei luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>A treia luni la fiecare %d luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>other</key>
+        <string>A treia luni la fiecare %d de luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.recurring.monthly.ordinalDay.until.monday.fourth</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@interval@</string>
+      <key>interval</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>A patra luni a fiecărei luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>A patra luni la fiecare %d luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>other</key>
+        <string>A patra luni la fiecare %d de luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.monday.fourth</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@interval@</string>
+      <key>interval</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>A patra luni a fiecărei luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>A patra luni la fiecare %d luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>other</key>
+        <string>A patra luni la fiecare %d de luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.recurring.monthly.ordinalDay.until.monday.fifth</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@interval@</string>
+      <key>interval</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>A cincea luni a fiecărei luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>A cincea luni la fiecare %d luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>other</key>
+        <string>A cincea luni la fiecare %d de luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.monday.fifth</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@interval@</string>
+      <key>interval</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>A cincea luni a fiecărei luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>A cincea luni la fiecare %d luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>other</key>
+        <string>A cincea luni la fiecare %d de luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.recurring.monthly.ordinalDay.until.tuesday.first</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@interval@</string>
+      <key>interval</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Prima marți a fiecărei luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>Prima marți la fiecare %d luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>other</key>
+        <string>Prima marți la fiecare %d de luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.tuesday.first</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@interval@</string>
+      <key>interval</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Prima marți a fiecărei luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>Prima marți la fiecare %d luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>other</key>
+        <string>Prima marți la fiecare %d de luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.recurring.monthly.ordinalDay.until.tuesday.second</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@interval@</string>
+      <key>interval</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>A doua marți a fiecărei luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>A doua marți la fiecare %d luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>other</key>
+        <string>A doua marți la fiecare %d de luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.tuesday.second</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@interval@</string>
+      <key>interval</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>A doua marți a fiecărei luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>A doua marți la fiecare %d luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>other</key>
+        <string>A doua marți la fiecare %d de luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.recurring.monthly.ordinalDay.until.tuesday.third</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@interval@</string>
+      <key>interval</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>A treia marți a fiecărei luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>A treia marți la fiecare %d luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>other</key>
+        <string>A treia marți la fiecare %d de luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.tuesday.third</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@interval@</string>
+      <key>interval</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>A treia marți a fiecărei luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>A treia marți la fiecare %d luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>other</key>
+        <string>A treia marți la fiecare %d de luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.recurring.monthly.ordinalDay.until.tuesday.fourth</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@interval@</string>
+      <key>interval</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>A patra marți a fiecărei luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>A patra marți la fiecare %d luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>other</key>
+        <string>A patra marți la fiecare %d de luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.tuesday.fourth</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@interval@</string>
+      <key>interval</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>A patra marți a fiecărei luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>A patra marți la fiecare %d luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>other</key>
+        <string>A patra marți la fiecare %d de luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.recurring.monthly.ordinalDay.until.tuesday.fifth</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@interval@</string>
+      <key>interval</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>A cincea marți a fiecărei luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>A cincea marți la fiecare %d luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>other</key>
+        <string>A cincea marți la fiecare %d de luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.tuesday.fifth</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@interval@</string>
+      <key>interval</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>A cincea marți a fiecărei luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>A cincea marți la fiecare %d luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>other</key>
+        <string>A cincea marți la fiecare %d de luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.recurring.monthly.ordinalDay.until.wednesday.first</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@interval@</string>
+      <key>interval</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Prima miercuri a fiecărei luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>Prima miercuri la fiecare %d luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>other</key>
+        <string>Prima miercuri la fiecare %d de luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.wednesday.first</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@interval@</string>
+      <key>interval</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Prima miercuri a fiecărei luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>Prima miercuri la fiecare %d luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>other</key>
+        <string>Prima miercuri la fiecare %d de luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.recurring.monthly.ordinalDay.until.wednesday.second</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@interval@</string>
+      <key>interval</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>A doua miercuri a fiecărei luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>A doua miercuri la fiecare %d luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>other</key>
+        <string>A doua miercuri la fiecare %d de luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.wednesday.second</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@interval@</string>
+      <key>interval</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>A doua miercuri a fiecărei luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>A doua miercuri la fiecare %d luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>other</key>
+        <string>A doua miercuri la fiecare %d de luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.recurring.monthly.ordinalDay.until.wednesday.third</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@interval@</string>
+      <key>interval</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>A treia miercuri a fiecărei luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>A treia miercuri la fiecare %d luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>other</key>
+        <string>A treia miercuri la fiecare %d de luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.wednesday.third</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@interval@</string>
+      <key>interval</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>A treia miercuri a fiecărei luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>A treia miercuri la fiecare %d luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>other</key>
+        <string>A treia miercuri la fiecare %d de luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.recurring.monthly.ordinalDay.until.wednesday.fourth</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@interval@</string>
+      <key>interval</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>A patra miercuri a fiecărei luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>A patra miercuri la fiecare %d luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>other</key>
+        <string>A patra miercuri la fiecare %d de luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.wednesday.fourth</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@interval@</string>
+      <key>interval</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>A patra miercuri a fiecărei luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>A patra miercuri la fiecare %d luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>other</key>
+        <string>A patra miercuri la fiecare %d de luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.recurring.monthly.ordinalDay.until.wednesday.fifth</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@interval@</string>
+      <key>interval</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>A cincea miercuri a fiecărei luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>A cincea miercuri la fiecare %d luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>other</key>
+        <string>A cincea miercuri la fiecare %d de luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.wednesday.fifth</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@interval@</string>
+      <key>interval</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>A cincea miercuri a fiecărei luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>A cincea miercuri la fiecare %d luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>other</key>
+        <string>A cincea miercuri la fiecare %d de luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.recurring.monthly.ordinalDay.until.thursday.first</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@interval@</string>
+      <key>interval</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Prima joi a fiecărei luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>Prima joi la fiecare %d luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>other</key>
+        <string>Prima joi la fiecare %d de luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.thursday.first</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@interval@</string>
+      <key>interval</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Prima joi a fiecărei luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>Prima joi la fiecare %d luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>other</key>
+        <string>Prima joi la fiecare %d de luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.recurring.monthly.ordinalDay.until.thursday.second</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@interval@</string>
+      <key>interval</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>A doua joi a fiecărei luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>A doua joi la fiecare %d luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>other</key>
+        <string>A doua joi la fiecare %d de luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.thursday.second</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@interval@</string>
+      <key>interval</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>A doua joi a fiecărei luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>A doua joi la fiecare %d luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>other</key>
+        <string>A doua joi la fiecare %d de luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.recurring.monthly.ordinalDay.until.thursday.third</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@interval@</string>
+      <key>interval</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>A treia joi a fiecărei luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>A treia joi la fiecare %d luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>other</key>
+        <string>A treia joi la fiecare %d de luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.thursday.third</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@interval@</string>
+      <key>interval</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>A treia joi a fiecărei luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>A treia joi la fiecare %d luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>other</key>
+        <string>A treia joi la fiecare %d de luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.recurring.monthly.ordinalDay.until.thursday.fourth</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@interval@</string>
+      <key>interval</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>A patra joi a fiecărei luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>A patra joi la fiecare %d luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>other</key>
+        <string>A patra joi la fiecare %d de luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.thursday.fourth</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@interval@</string>
+      <key>interval</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>A patra joi a fiecărei luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>A patra joi la fiecare %d luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>other</key>
+        <string>A patra joi la fiecare %d de luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.recurring.monthly.ordinalDay.until.thursday.fifth</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@interval@</string>
+      <key>interval</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>A cincea joi a fiecărei luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>A cincea joi la fiecare %d luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>other</key>
+        <string>A cincea joi la fiecare %d de luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.thursday.fifth</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@interval@</string>
+      <key>interval</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>A cincea joi a fiecărei luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>A cincea joi la fiecare %d luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>other</key>
+        <string>A cincea joi la fiecare %d de luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.recurring.monthly.ordinalDay.until.friday.first</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@interval@</string>
+      <key>interval</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Prima vineri a fiecărei luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>Prima vineri la fiecare %d luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>other</key>
+        <string>Prima vineri la fiecare %d de luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.friday.first</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@interval@</string>
+      <key>interval</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Prima vineri a fiecărei luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>Prima vineri la fiecare %d luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>other</key>
+        <string>Prima vineri la fiecare %d de luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.recurring.monthly.ordinalDay.until.friday.second</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@interval@</string>
+      <key>interval</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>A doua vineri a fiecărei luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>A doua vineri la fiecare %d luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>other</key>
+        <string>A doua vineri la fiecare %d de luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.friday.second</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@interval@</string>
+      <key>interval</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>A doua vineri a fiecărei luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>A doua vineri la fiecare %d luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>other</key>
+        <string>A doua vineri la fiecare %d de luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.recurring.monthly.ordinalDay.until.friday.third</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@interval@</string>
+      <key>interval</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>A treia vineri a fiecărei luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>A treia vineri la fiecare %d luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>other</key>
+        <string>A treia vineri la fiecare %d de luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.friday.third</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@interval@</string>
+      <key>interval</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>A treia vineri a fiecărei luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>A treia vineri la fiecare %d luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>other</key>
+        <string>A treia vineri la fiecare %d de luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.recurring.monthly.ordinalDay.until.friday.fourth</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@interval@</string>
+      <key>interval</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>A patra vineri a fiecărei luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>A patra vineri la fiecare %d luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>other</key>
+        <string>A patra vineri la fiecare %d de luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.friday.fourth</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@interval@</string>
+      <key>interval</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>A patra vineri a fiecărei luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>A patra vineri la fiecare %d luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>other</key>
+        <string>A patra vineri la fiecare %d de luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.recurring.monthly.ordinalDay.until.friday.fifth</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@interval@</string>
+      <key>interval</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>A cincea vineri a fiecărei luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>A cincea vineri la fiecare %d luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>other</key>
+        <string>A cincea vineri la fiecare %d de luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.friday.fifth</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@interval@</string>
+      <key>interval</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>A cincea vineri a fiecărei luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>A cincea vineri la fiecare %d luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>other</key>
+        <string>A cincea vineri la fiecare %d de luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.recurring.monthly.ordinalDay.until.saturday.first</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@interval@</string>
+      <key>interval</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Prima sâmbătă a fiecărei luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>Prima sâmbătă la fiecare %d luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>other</key>
+        <string>Prima sâmbătă la fiecare %d de luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.saturday.first</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@interval@</string>
+      <key>interval</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Prima sâmbătă a fiecărei luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>Prima sâmbătă la fiecare %d luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>other</key>
+        <string>Prima sâmbătă la fiecare %d de luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.recurring.monthly.ordinalDay.until.saturday.second</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@interval@</string>
+      <key>interval</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>A doua sâmbătă a fiecărei luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>A doua sâmbătă la fiecare %d luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>other</key>
+        <string>A doua sâmbătă la fiecare %d de luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.saturday.second</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@interval@</string>
+      <key>interval</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>A doua sâmbătă a fiecărei luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>A doua sâmbătă la fiecare %d luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>other</key>
+        <string>A doua sâmbătă la fiecare %d de luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.recurring.monthly.ordinalDay.until.saturday.third</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@interval@</string>
+      <key>interval</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>A treia sâmbătă a fiecărei luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>A treia sâmbătă la fiecare %d luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>other</key>
+        <string>A treia sâmbătă la fiecare %d de luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.saturday.third</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@interval@</string>
+      <key>interval</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>A treia sâmbătă a fiecărei luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>A treia sâmbătă la fiecare %d luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>other</key>
+        <string>A treia sâmbătă la fiecare %d de luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.recurring.monthly.ordinalDay.until.saturday.fourth</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@interval@</string>
+      <key>interval</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>A patra sâmbătă a fiecărei luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>A patra sâmbătă la fiecare %d luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>other</key>
+        <string>A patra sâmbătă la fiecare %d de luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.saturday.fourth</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@interval@</string>
+      <key>interval</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>A patra sâmbătă a fiecărei luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>A patra sâmbătă la fiecare %d luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>other</key>
+        <string>A patra sâmbătă la fiecare %d de luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.recurring.monthly.ordinalDay.until.saturday.fifth</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@interval@</string>
+      <key>interval</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>A cincea sâmbătă a fiecărei luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>A cincea sâmbătă la fiecare %d luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>other</key>
+        <string>A cincea sâmbătă la fiecare %d de luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.saturday.fifth</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@interval@</string>
+      <key>interval</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>A cincea sâmbătă a fiecărei luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>A cincea sâmbătă la fiecare %d luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>other</key>
+        <string>A cincea sâmbătă la fiecare %d de luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.recurring.monthly.ordinalDay.until.sunday.first</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@interval@</string>
+      <key>interval</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Prima duminică a fiecărei luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>Prima duminică la fiecare %d luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>other</key>
+        <string>Prima duminică la fiecare %d de luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.sunday.first</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@interval@</string>
+      <key>interval</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Prima duminică a fiecărei luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>Prima duminică la fiecare %d luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>other</key>
+        <string>Prima duminică la fiecare %d de luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.recurring.monthly.ordinalDay.until.sunday.second</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@interval@</string>
+      <key>interval</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>A doua duminică a fiecărei luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>A doua duminică la fiecare %d luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>other</key>
+        <string>A doua duminică la fiecare %d de luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.sunday.second</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@interval@</string>
+      <key>interval</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>A doua duminică a fiecărei luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>A doua duminică la fiecare %d luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>other</key>
+        <string>A doua duminică la fiecare %d de luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.recurring.monthly.ordinalDay.until.sunday.third</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@interval@</string>
+      <key>interval</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>A treia duminică a fiecărei luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>A treia duminică la fiecare %d luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>other</key>
+        <string>A treia duminică la fiecare %d de luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.sunday.third</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@interval@</string>
+      <key>interval</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>A treia duminică a fiecărei luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>A treia duminică la fiecare %d luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>other</key>
+        <string>A treia duminică la fiecare %d de luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.recurring.monthly.ordinalDay.until.sunday.fourth</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@interval@</string>
+      <key>interval</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>A patra duminică a fiecărei luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>A patra duminică la fiecare %d luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>other</key>
+        <string>A patra duminică la fiecare %d de luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.sunday.fourth</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@interval@</string>
+      <key>interval</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>A patra duminică a fiecărei luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>A patra duminică la fiecare %d luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>other</key>
+        <string>A patra duminică la fiecare %d de luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.recurring.monthly.ordinalDay.until.sunday.fifth</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@interval@</string>
+      <key>interval</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>A cincea duminică a fiecărei luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>A cincea duminică la fiecare %d luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>other</key>
+        <string>A cincea duminică la fiecare %d de luni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.recurring.monthly.ordinalDay.forever.sunday.fifth</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@interval@</string>
+      <key>interval</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>A cincea duminică a fiecărei luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>A cincea duminică la fiecare %d luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>other</key>
+        <string>A cincea duminică la fiecare %d de luni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+      </dict>
+    </dict>
+    <key>sharedItems.tab.recents.undecryptedFileName</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>[Fișier nedecriptat]</string>
+        <key>few</key>
+        <string>[Fișiere nedecriptate]</string>
+        <key>other</key>
+        <string>[Fișiere nedecriptate]</string>
+      </dict>
+    </dict>
+    <key>account.achievement.complete.validDays.subtitle</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@days@</string>
+      <key>days</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d zi rămasă</string>
+        <key>few</key>
+        <string>%d zile rămase</string>
+        <key>other</key>
+        <string>%d zile rămase</string>
+      </dict>
+    </dict>
+    <key>account.achievement.validity.days</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@days@</string>
+      <key>days</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string></string>
+        <key>few</key>
+        <string></string>
+        <key>other</key>
+        <string></string>
+      </dict>
+    </dict>
+    <key>account.achievement.validity.substring.days</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@days@</string>
+      <key>days</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>valid for %d day</string>
+        <key>other</key>
+        <string>valid for %d days</string>
+      </dict>
+    </dict>
+    <key>account.achievement.complete.validBonusExpiry.detail.subtitle</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@days@</string>
+      <key>days</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Bonusul expiră în %d zi</string>
+        <key>few</key>
+        <string>Bonusul expiră în %d zile.</string>
+        <key>other</key>
+        <string>Bonusul expiră în %d zile.</string>
+      </dict>
+    </dict>
+    <key>accounts.cancelSubscriptionSurvey.error.minimumRequiredCharacterCount</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Mesajul trebuie să aibă cel puțin %d caracter</string>
+        <key>few</key>
+        <string>Mesajul trebuie să aibă cel puțin %d caractere</string>
+        <key>other</key>
+        <string>Mesajul trebuie să aibă cel puțin %d de caractere</string>
+      </dict>
+    </dict>
+    <key>share.message.uploadedToDestinationFolder</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>„[A]” a fost încărcat în „[B]”</string>
+        <key>few</key>
+        <string>%d elemente au fost încărcate în „[B]”</string>
+        <key>other</key>
+        <string>%d de elemente au fost încărcate în „[B]”</string>
+      </dict>
+    </dict>
+    <key>share.message.uploadedToCloudDrive</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>„[A]” a fost încărcat în Unitatea cloud</string>
+        <key>few</key>
+        <string>%d de elemente au fost încărcate în Unitatea cloud</string>
+        <key>other</key>
+        <string>%d de elemente au fost încărcate în Unitatea cloud</string>
+      </dict>
+    </dict>
+    <key>share.message.sendToChat.withOneFile</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@receiverCount@</string>
+      <key>receiverCount</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>A trimis „[A]” la chat</string>
+        <key>few</key>
+        <string>A trimis „[A]” la toate chat-urile</string>
+        <key>other</key>
+        <string>A trimis „[A]” la toate chat-urile</string>
+      </dict>
+    </dict>
+    <key>share.message.sendToChat.withMultipleFiles</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@receiverCount@</string>
+      <key>receiverCount</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>A trimis [A] la chat</string>
+        <key>few</key>
+        <string>A trimis [A] la toate chat-urile</string>
+        <key>other</key>
+        <string>A trimis [A] la toate chat-urile</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.create.daily.interval</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@day@</string>
+      <key>day</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d zi</string>
+        <key>few</key>
+        <string>%d zile</string>
+        <key>other</key>
+        <string>%d de zile</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.create.weekly.interval</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@week@</string>
+      <key>week</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d săptămână</string>
+        <key>few</key>
+        <string>%d săptămâni</string>
+        <key>other</key>
+        <string>%d de săptămâni</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.create.monthly.interval</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@month@</string>
+      <key>month</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d lună</string>
+        <key>few</key>
+        <string>%d luni</string>
+        <key>other</key>
+        <string>%d de luni</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.create.daily.footerNote</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Întâlnirile vor avea loc în fiecare zi.</string>
+        <key>few</key>
+        <string>Întâlnirea va avea loc la fiecare %d zile.</string>
+        <key>other</key>
+        <string>Întâlnirea va avea loc la fiecare %d zile.</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.create.weekly.singleDay.footerNote</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Întâlnirea va avea loc în fiecare săptămână, [weekDayName].</string>
+        <key>few</key>
+        <string>Întâlnirea va avea loc la fiecare %d săptămâni, [weekDayName]</string>
+        <key>other</key>
+        <string>Întâlnirea va avea loc la fiecare %d săptămâni, [weekDayName]</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.create.weekly.multipleDays.footerNote</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Întâlnirea va avea loc în fiecare săptămână, [weekDayNames] și [lastWeekDayName].</string>
+        <key>few</key>
+        <string>Întâlnirea va avea loc la fiecare %d săptămâni, [weekDayNames] și [lastWeekDayName].</string>
+        <key>other</key>
+        <string>Întâlnirea va avea loc la fiecare %d săptămâni, [weekDayNames] și [lastWeekDayName].</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.create.monthly.singleDayCardinal.footerNote</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Întâlnirea va avea loc în fiecare lună în ziua [cardinalDay].</string>
+        <key>few</key>
+        <string>Întâlnirea va avea loc la fiecare %d luni în ziua [cardinalDay].</string>
+        <key>other</key>
+        <string>Întâlnirea va avea loc la fiecare %d luni în ziua [cardinalDay].</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.create.monthly.multipleDaysCardinal.footerNote</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Întâlnirea va avea loc în fiecare lună în ziua [cardinalDays] și în ziua [cardinalLastDay].</string>
+        <key>few</key>
+        <string>Întâlnirea va avea loc la fiecare %d luni în ziua [cardinalDays] și în ziua [cardinalLastDay].</string>
+        <key>other</key>
+        <string>Întâlnirea va avea loc la fiecare %d luni în ziua [cardinalDays] și în ziua [cardinalLastDay].</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.create.monthly.weekNumberAndWeekDay.footerNote</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Întâlnirea va avea loc în fiecare lună, în [weekNumber] [weekDayName].</string>
+        <key>few</key>
+        <string>Întâlnirea va avea loc la fiecare %d luni, în [weekNumber] [weekDayName].</string>
+        <key>other</key>
+        <string>Întâlnirea va avea loc la fiecare %d luni, în [weekNumber] [weekDayName].</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.create.weekly.selectedFrequency</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>În fiecare săptămână, [weekDayNames]</string>
+        <key>few</key>
+        <string>La fiecare %d săptămâni, [weekDayNames]</string>
+        <key>other</key>
+        <string>La fiecare %d săptămâni, [weekDayNames]</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.create.monthly.weekDayCardinal.selectedFrequency</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>În fiecare lună, în ziua [cardinalNumber]</string>
+        <key>few</key>
+        <string>La fiecare %d luni, în ziua [cardinalNumber]</string>
+        <key>other</key>
+        <string>La fiecare %d luni, în ziua [cardinalNumber]</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.create.monthly.weekNumberAndWeekDay.selectedFrequency</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>În fiecare lună, în [ordinalNumber][weekDayName]</string>
+        <key>few</key>
+        <string>La fiecare %d luni, în [ordinalNumber] [weekDayName]</string>
+        <key>other</key>
+        <string>La fiecare %d luni, în [ordinalNumber] [weekDayName]</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.create.monthlyRecurrenceOption.beyondTheLastDayOfTheMonthSelected.footNote</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Unele luni nu au %d zi. Pentru aceste luni, ocurența va fi planificată pentru ultima zi a lunii.</string>
+        <key>few</key>
+        <string>Unele luni nu au %d de zile. Pentru aceste luni, ocurența va fi planificată pentru ultima zi a lunii.</string>
+        <key>other</key>
+        <string>Unele luni nu au %d de zile. Pentru aceste luni, ocurența va fi planificată pentru ultima zi a lunii.</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduleMeeting.create.selectedRecurrence.daily.customInterval</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Zilnică</string>
+        <key>few</key>
+        <string>Fiecare %d zile</string>
+        <key>other</key>
+        <string>Fiecare %d zile</string>
+      </dict>
+    </dict>
+    <key>albumLink.alert.message.filesSaveToCloudDrive</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d fișier a fost salvat pe Unitatea cloud</string>
+        <key>few</key>
+        <string>%d fișiere au fost salvate pe Unitatea cloud</string>
+        <key>other</key>
+        <string>%d de fișiere au fost salvate pe Unitatea cloud</string>
+      </dict>
+    </dict>
+    <key>general.saveToPhotos.started</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Descărcarea a început</string>
+        <key>few</key>
+        <string>%d descărcări au început</string>
+        <key>other</key>
+        <string>%d de descărcări au început</string>
+      </dict>
+    </dict>
+    <key>chat.call.waitingRoom.alert.outsideCallUI.message</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>[UserName] așteaptă să se alăture „[MeetingName]”</string>
+        <key>few</key>
+        <string>%d participanți așteaptă să se alăture „[MeetingName]”.</string>
+        <key>other</key>
+        <string>%d de participanți așteaptă să se alăture „[MeetingName]”.</string>
+      </dict>
+    </dict>
+    <key>chat.call.waitingRoom.alert.message</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>[UserName] așteaptă să se alăture apelului</string>
+        <key>few</key>
+        <string>%d participanții așteaptă să se alăture apelului</string>
+        <key>other</key>
+        <string>%d de participanții așteaptă să se alăture apelului</string>
+      </dict>
+    </dict>
+    <key>chat.call.waitingRoom.participantsCount</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d participant</string>
+        <key>few</key>
+        <string>%d participanți</string>
+        <key>other</key>
+        <string>%d de participanți</string>
+      </dict>
+    </dict>
+    <key>general.format.itemsSelected</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d element selectat</string>
+        <key>few</key>
+        <string>%d elemente selectate</string>
+        <key>other</key>
+        <string>%d de elemente selectate</string>
+      </dict>
+    </dict>
+    <key>chat.message.filesSentToAChat</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Fișier trimis la chat</string>
+        <key>few</key>
+        <string>Fișierele trimise la chat</string>
+        <key>other</key>
+        <string>Fișierele trimise la chat</string>
+      </dict>
+    </dict>
+    <key>chat.message.fileSentToMultipleChats</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Fișier trimis la %d chat</string>
+        <key>few</key>
+        <string>Fișier trimis la %d chat-uri</string>
+        <key>other</key>
+        <string>Fișier trimis la %d de chat-uri</string>
+      </dict>
+    </dict>
+    <key>chat.message.multipleFilesSentToMultipleChats</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@chatCount@</string>
+      <key>chatCount</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Fișiere trimise la %d chat</string>
+        <key>few</key>
+        <string>Fișiere trimise la %d chat-uri</string>
+        <key>other</key>
+        <string>Fișiere trimise la %d de chat-uri</string>
+      </dict>
+    </dict>
+    <key>chat.message.numberOfContacts</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d contact</string>
+        <key>few</key>
+        <string>%d contacte</string>
+        <key>other</key>
+        <string>%d de contacte</string>
+      </dict>
+    </dict>
+    <key>chat.message.numberOfAttachments</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>A fost atașat %d fișier</string>
+        <key>few</key>
+        <string>Au fost atașate %d fișiere</string>
+        <key>other</key>
+        <string>Au fost atașate %d de fișiere</string>
+      </dict>
+    </dict>
+    <key>contacts.invite.emailAddress.inviteNumberOfContacts</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Invită %d contact</string>
+        <key>few</key>
+        <string>Invită %d contacte</string>
+        <key>other</key>
+        <string>Invită %d de contacte</string>
+      </dict>
+    </dict>
+    <key>chat.info.numberOfParticipants</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d participant</string>
+        <key>few</key>
+        <string>%d participanți</string>
+        <key>other</key>
+        <string>%d de participanți</string>
+      </dict>
+    </dict>
+    <key>chat.info.notifications.mutedUntilTime</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@hour@</string>
+      <key>hour</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Notificările vor fi dezactivate până [Time]</string>
+        <key>few</key>
+        <string>Notificările vor fi dezactivate până [Time]</string>
+        <key>other</key>
+        <string>Notificările vor fi dezactivate până [Time]</string>
+      </dict>
+    </dict>
+    <key>general.menuAction.shareFolders.successMessage</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Folderul a fost partajat</string>
+        <key>few</key>
+        <string>%d foldere au fost  partajate</string>
+        <key>other</key>
+        <string>%d de foldere au fost partajate</string>
+      </dict>
+    </dict>
+    <key>calls.freePlanLimitWarning.durationLimitAlert.title</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Apelul dvs. gratuit se va încheia în %d minută</string>
+        <key>few</key>
+        <string>Apelul dvs. gratuit se va încheia în %d minute</string>
+        <key>other</key>
+        <string>Apelul dvs. gratuit se va încheia în %d de minute</string>
+      </dict>
+    </dict>
+    <key>videos.tab.playlist.snackbar.videoCount</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@video@</string>
+      <key>video</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d videoclip a fost adăugat în „[A]”</string>
+        <key>few</key>
+        <string>%d videoclipuri au fost adăugate în „[A]”</string>
+        <key>other</key>
+        <string>%d de videoclipuri au fost adăugate în „[A]”</string>
+      </dict>
+    </dict>
+    <key>videos.tab.playlist.playlistContent.snackbar.removedVideosCountFromPlaylistName</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@video@</string>
+      <key>video</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>A fost eliminat %d videoclip din „[A]”</string>
+        <key>few</key>
+        <string>Au fost eliminate %d videoclipuri din „[A]”</string>
+        <key>other</key>
+        <string>Au fost eliminate %d de videoclipuri din „[A]”</string>
+      </dict>
+    </dict>
+    <key>nodes.action.hideItems</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@hiddeItems@</string>
+      <key>hiddeItems</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d element ascunse</string>
+        <key>few</key>
+        <string>%d elemente ascunse</string>
+        <key>other</key>
+        <string>%d de elemente ascunse</string>
+      </dict>
+    </dict>
+    <key>nodes.action.unhideItems</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@unhiddeItems@</string>
+      <key>unhiddeItems</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d element neascuns</string>
+        <key>few</key>
+        <string>%d elemente neascunse</string>
+        <key>other</key>
+        <string>%d elemente neascunse</string>
+      </dict>
+    </dict>
+    <key>set.addTo.AddedToSet.snack.message</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@addedItems@</string>
+      <key>addedItems</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Adăugat la [A]</string>
+        <key>few</key>
+        <string>Adăugat %d elemente la [A]</string>
+        <key>other</key>
+        <string>Adăugat %d elemente la [A]</string>
+      </dict>
+    </dict>
+    <key>notifications.message.sharedItems.filesOnly</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@addedFiles@</string>
+      <key>addedFiles</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Adăugat %d fişier</string>
+        <key>few</key>
+        <string>Adăugat %d fișiere</string>
+        <key>other</key>
+        <string>Adăugat %d fișiere</string>
+      </dict>
+    </dict>
+    <key>notifications.message.sharedItems.foldersOnly</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@addedFolders@</string>
+      <key>addedFolders</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Adăugat %d folder</string>
+        <key>few</key>
+        <string>Adăugat %d foldere</string>
+        <key>other</key>
+        <string>Adăugat %d foldere</string>
+      </dict>
+    </dict>
+    <key>notifications.message.sharedItems.filesAndfolders.files</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@addedFiles@</string>
+      <key>addedFiles</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Adăugat %d fişier</string>
+        <key>few</key>
+        <string>Adăugat %d fișiere</string>
+        <key>other</key>
+        <string>Adăugat %d fișiere</string>
+      </dict>
+    </dict>
+    <key>notifications.message.sharedItems.filesAndfolders.folders</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@addedFolders@</string>
+      <key>addedFolders</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>și %d folder</string>
+        <key>few</key>
+        <string>și %d foldere</string>
+        <key>other</key>
+        <string>și %d foldere</string>
+      </dict>
+    </dict>
+    <key>overDiskQuota.paywall.notFinalWarning.oneEmailSent.message</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@filesCount@</string>
+      <key>filesCount</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Deși v-am contactat prin e-mail pe[date], spațiul dvs. de stocare este încă plin. Aveți %d fișier care ocupă [storageSpace] în unitatea dvs. Cloud, iar contul dvs. a fost blocat. Faceți upgrade la un abonament [plan] pentru a vă mări spațiul de stocare și a vă debloca contul. Dacă nu luați măsuri în curând, datele dvs. vor fi șterse. Faceți upgrade acum pentru a vă proteja fișierul.[A]Aflați mai multe despre limitele dvs. de stocare[/A].</string>
+        <key>few</key>
+        <string>Deși v-am contactat prin e-mail la [date], spațiul de stocare este încă plin. Tu ai %d fișiere preluând [storageSpace] în Unitatea cloud, iar contul dvs. a fost blocat. Treceți la a [plan] planificați să vă măriți spațiul de stocare și să vă deblocați contul. Dacă nu luați măsuri în curând, datele dvs. vor fi șterse. Actualizați acum pentru a vă proteja fișierele. [A]Aflați mai multe despre limitele de spațiu de stocare[/A]. </string>
+        <key>other</key>
+        <string>Deși v-am contactat prin e-mail la [date], spațiul de stocare este încă plin. Tu ai %d fișiere preluând [storageSpace] în Unitatea cloud, iar contul dvs. a fost blocat. Treceți la a [plan] planificați să vă măriți spațiul de stocare și să vă deblocați contul. Dacă nu luați măsuri în curând, datele dvs. vor fi șterse. Actualizați acum pentru a vă proteja fișierele. [A]Aflați mai multe despre limitele de spațiu de stocare[/A]. </string>
+      </dict>
+    </dict>
+    <key>overDiskQuota.paywall.notFinalWarning.multipleEmailsSent.message</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@filesCount@</string>
+      <key>filesCount</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Deși v-am contactat de mai multe ori prin e-mail, spațiul dvs. de stocare este încă plin. Aveți %d fișiere care ocupă [storageSpace] în unitatea dvs. Cloud, iar contul dvs. a fost blocat. Faceți upgrade la un abonament [plan] pentru a vă mări spațiul de stocare și a vă debloca contul. Dacă nu luați măsuri în curând, datele dvs. vor fi șterse. Faceți upgrade acum pentru a vă proteja fișierul. [A]Aflați mai multe despre limitele dvs. de stocare[/A].</string>
+        <key>few</key>
+        <string>Deși v-am contactat de mai multe ori prin e-mail, spațiul dvs. de stocare este încă plin. Aveți %d fișiere care ocupă [storageSpace] în unitatea dvs. Cloud, iar contul dvs. a fost blocat. Faceți upgrade la un abonament [plan] pentru a vă mări spațiul de stocare și a vă debloca contul. Dacă nu luați măsuri în curând, datele dvs. vor fi șterse. Faceți upgrade acum pentru a vă proteja fișierul. [A]Aflați mai multe despre limitele dvs. de stocare[/A].</string>
+        <key>other</key>
+        <string>Deși v-am contactat de mai multe ori prin e-mail, spațiul dvs. de stocare este încă plin. Aveți %d fișiere care ocupă [storageSpace] în unitatea dvs. Cloud, iar contul dvs. a fost blocat. Faceți upgrade la un abonament [plan] pentru a vă mări spațiul de stocare și a vă debloca contul. Dacă nu luați măsuri în curând, datele dvs. vor fi șterse. Faceți upgrade acum pentru a vă proteja fișierul. [A]Aflați mai multe despre limitele dvs. de stocare[/A].</string>
+      </dict>
+    </dict>
+    <key>overDiskQuota.paywall.notFinalWarning.unknownTimesEmailWasSent.message</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@filesCount@</string>
+      <key>filesCount</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Deși v-am contactat prin e-mail, spațiul dvs. de stocare este încă plin. Aveți %d fișiere care ocupă [storageSpace] în unitatea dvs. Cloud, iar contul dvs. a fost blocat. Faceți upgrade la un abonament [plan] pentru a vă mări spațiul de stocare și a vă debloca contul. Dacă nu luați măsuri în curând, datele dvs. vor fi șterse. Faceți upgrade acum pentru a vă proteja fișierul. [A]Aflați mai multe despre limitele dvs. de stocare[/A].</string>
+        <key>few</key>
+        <string>Deși v-am contactat prin e-mail, spațiul dvs. de stocare este încă plin. Aveți %d fișiere care ocupă [storageSpace] în unitatea dvs. Cloud, iar contul dvs. a fost blocat. Faceți upgrade la un abonament [plan] pentru a vă mări spațiul de stocare și a vă debloca contul. Dacă nu luați măsuri în curând, datele dvs. vor fi șterse. Faceți upgrade acum pentru a vă proteja fișierul. [A]Aflați mai multe despre limitele dvs. de stocare[/A].</string>
+        <key>other</key>
+        <string>Deși v-am contactat prin e-mail, spațiul dvs. de stocare este încă plin. Aveți %d fișiere care ocupă [storageSpace] în unitatea dvs. Cloud, iar contul dvs. a fost blocat. Faceți upgrade la un abonament [plan] pentru a vă mări spațiul de stocare și a vă debloca contul. Dacă nu luați măsuri în curând, datele dvs. vor fi șterse. Faceți upgrade acum pentru a vă proteja fișierul. [A]Aflați mai multe despre limitele dvs. de stocare[/A].</string>
+      </dict>
+    </dict>
+    <key>settings.fileManagement.fileVersioning.enabledState.fileVersions</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@versionCount@</string>
+      <key>versionCount</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d versiune de fișier.</string>
+        <key>few</key>
+        <string>%d versiunile fișierelor.</string>
+        <key>other</key>
+        <string>%d versiunile fișierelor.</string>
+      </dict>
+    </dict>
+    <key>settings.fileManagement.fileVersioning.enabledState.totalSizeTaken</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@versionCount@</string>
+      <key>versionCount</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Dimensiunea totală utilizată de versiunea fișierului: [storageSpace]</string>
+        <key>few</key>
+        <string>Dimensiunea totală utilizată de versiunile de fișiere: [storageSpace]</string>
+        <key>other</key>
+        <string>Dimensiunea totală utilizată de versiunile de fișiere: [storageSpace]</string>
+      </dict>
+    </dict>
+    <key>set.addTo.snackbar.message</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@addedItems@</string>
+      <key>addedItems</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Adăugat la „[A]”</string>
+        <key>few</key>
+        <string>%d elemente au fost adăugate în „[A]”</string>
+        <key>other</key>
+        <string>%d de elemente au fost adăugate în „[A]”</string>
+      </dict>
+    </dict>
+    <key>audio.playlist.removeTracks.snack.message</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@removeTracks@</string>
+      <key>removeTracks</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Eliminat „[A]” din coadă</string>
+        <key>few</key>
+        <string>Au fost eliminate elemente %d din coada</string>
+        <key>other</key>
+        <string>Au fost eliminate elementele %d din coada</string>
+      </dict>
+    </dict>
+  </dict>
+</plist>

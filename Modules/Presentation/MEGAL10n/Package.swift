@@ -18,16 +18,11 @@ let package = Package(
             targets: ["MEGAL10n"]
         )
     ],
-    dependencies: [
-        .package(path: "../../MEGASharedRepo/MEGABuildTools")
-    ],
+    dependencies: [],
     targets: [
-        .target(
+        .binaryTarget(
             name: "MEGAL10n",
-            swiftSettings: settings,
-            plugins: [
-                .plugin(name: "SwiftGen", package: "MEGABuildTools")
-            ]
+            path: "Framework/MEGAL10n/xcframeworks/MEGAL10n.xcframework"
         )
     ],
     swiftLanguageModes: [.v6]

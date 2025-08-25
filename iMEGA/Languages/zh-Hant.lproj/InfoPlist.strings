@@ -7,7 +7,7 @@
 /* Contacts Usage Description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
 "NSContactsUsageDescription"="如果您允許存取，您可以透過發送訊息或電子郵件邀請您的聯絡人使用MEGA。";
 /* Write-only access to the user’s photo library description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
-"NSPhotoLibraryAddUsageDescription"="MEGA需要有您照片的存取權，才能新增相片和影片到您裝置中的相簿裡";
+"NSPhotoLibraryAddUsageDescription"="MEGA需要存取您相簿的權限，才能新增相片和影片到您裝置的媒體庫中";
 /* Face ID usage description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
 "NSFaceIDUsageDescription"="當您啟用此選項時，MEGA會存取Face ID，以便您輕鬆解鎖應用程式。";
 /* Label for any 'Search' button, link, etc. - (String as short as possible). */
