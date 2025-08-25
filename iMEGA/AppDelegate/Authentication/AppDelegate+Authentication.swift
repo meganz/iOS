@@ -43,11 +43,11 @@ extension AppDelegate {
         
         MEGAAuthentication.DependencyInjection.configureAuthEnvironmentUseCase = makeConfigureAuthEnvironmentUseCase()
 
-        MEGAAuthentication.DependencyInjection.domainName = DIContainer.appDomainUseCase.domainName
+        MEGAAuthentication.DependencyInjection.domainName = { DIContainer.appDomainUseCase.domainName }
     }
 
     @objc func injectAccountsDependencies() {
-        Accounts.DependencyInjection.appDomain = DIContainer.appDomainUseCase.domainName
+        Accounts.DependencyInjection.appDomain = { DIContainer.appDomainUseCase.domainName }
     }
 
     @objc func injectVideoPlayerDependencies() {

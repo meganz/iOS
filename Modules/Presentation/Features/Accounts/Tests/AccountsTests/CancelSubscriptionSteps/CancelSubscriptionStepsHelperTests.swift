@@ -89,7 +89,7 @@ final class CancelSubscriptionStepsHelperTests: XCTestCase {
     private func makeSUTAndLoadData(type: SubscriptionType, appDomain: String? = nil) -> CancelSubscriptionData {
         let sut = CancelSubscriptionStepsHelper(type: type)
         if let appDomain {
-            Accounts.DependencyInjection.appDomain = appDomain
+            Accounts.DependencyInjection.appDomain = { appDomain }
         }
         return sut.loadCancellationData()
     }
