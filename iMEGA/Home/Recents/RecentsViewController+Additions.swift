@@ -2,6 +2,7 @@ import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGADesignToken
 import MEGADomain
+import MEGAFoundation
 
 extension RecentsViewController {
     
@@ -85,7 +86,24 @@ extension RecentsViewController {
         tableView?.backgroundColor = TokenColors.Background.page
         tableView?.separatorColor = TokenColors.Border.strong
     }
-    
+
+    @objc func heightForHeaderIn(section: Int, expectedValueForVisibleHeader: CGFloat) -> CGFloat {
+        guard let recentActionBucket = recentActionBucketArray[safe: section], let timestamp = recentActionBucket.timestamp else {
+            return 0
+        }
+
+        if section > 0 {
+            if let previousRecentActionBucket = recentActionBucketArray[safe: section - 1],
+               let previousTimeStamp = previousRecentActionBucket.timestamp {
+                if previousTimeStamp.isSameDay(date: timestamp) {
+                    return 0
+                }
+            }
+        }
+
+        return expectedValueForVisibleHeader
+    }
+
     private func getRecentActions() async {
         let excludeSensitives = await shouldExcludeSensitive()
         
