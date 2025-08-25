@@ -1,8 +1,14 @@
 import MEGADesignToken
+import MEGAUIComponent
 import SwiftUI
 
 public struct PlayerOverlayView: View {
     @StateObject var viewModel: PlayerOverlayViewModel
+
+    enum Constants {
+        static let bottomSheetRowHeight: CGFloat = 58
+        static let bottomSheetTopPadding: CGFloat = 21
+    }
 
     public var body: some View {
         ZStack {
@@ -27,6 +33,14 @@ public struct PlayerOverlayView: View {
         .animation(.easeInOut(duration: 0.3), value: viewModel.isControlsVisible)
         .buttonStyle(.plain)
         .task { viewModel.viewWillAppear() }
+        .bottomSheet(
+            isPresented: $viewModel.isPlaybackBottomSheetPresented,
+            detents: [.fixed(playbackSpeedsBottomSelectionListHeight)],
+            showDragIndicator: true,
+            cornerRadius: TokenRadius.large
+        ) {
+            playbackSpeedsSelectionListView
+        }
     }
 
     private var backgroundColor: Color {
@@ -39,6 +53,7 @@ public struct PlayerOverlayView: View {
 
     private func controlButton(
         name: String,
+        color: Color = TokenColors.Icon.onColor.swiftUI,
         action: @escaping () -> Void
     ) -> some View {
         Button(action: action) {
@@ -47,7 +62,7 @@ public struct PlayerOverlayView: View {
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .frame(width: 24, height: 24)
-                .foregroundStyle(TokenColors.Icon.onColor.swiftUI)
+                .foregroundStyle(color)
                 .overlay {
                     // This is to increase the tappable area
                     Rectangle()
@@ -67,9 +82,10 @@ extension PlayerOverlayView {
             Spacer()
             moreTopButton
         }
-        .padding(TokenSpacing._5)
+        .padding(.horizontal, TokenSpacing._5)
+        .padding(.vertical, 10)
         .frame(maxWidth: .infinity, alignment: .center)
-        .background(.clear)
+        .background(TokenColors.Background.blur.swiftUI)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
     }
 
@@ -78,9 +94,7 @@ extension PlayerOverlayView {
     }
 
     var moreTopButton: some View {
-        controlButton(name: "moreTop", action: {
-            // Implement more top functionality
-        })
+        controlButton(name: "moreTop", action: viewModel.didTapMore)
     }
 }
 
@@ -158,29 +172,47 @@ extension PlayerOverlayView {
 
 extension PlayerOverlayView {
     var bottomToolbar: some View {
-        VStack(spacing: TokenSpacing._7) {
-            timeLineView
-            bottomControls
+        GeometryReader { geometry in
+            let isLandscape = geometry.size.width > geometry.size.height
+            if isLandscape {
+                HStack(alignment: .bottom, spacing: TokenSpacing._7) {
+                    timeLineView
+                    bottomControls
+                        .frame(maxWidth: 264)
+                }
+                .padding(.horizontal, TokenSpacing._5)
+                .padding(.bottom, TokenSpacing._7)
+                .frame(maxWidth: .infinity, alignment: .center)
+                .background(.clear)
+                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
+            } else {
+                VStack(spacing: TokenSpacing._7) {
+                    timeLineView
+                    bottomControls
+                }
+                .padding(.horizontal, TokenSpacing._5)
+                .padding(.bottom, TokenSpacing._10)
+                .frame(maxWidth: .infinity, alignment: .center)
+                .background(.clear)
+                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
+            }
         }
-        .padding(TokenSpacing._5)
-        .frame(maxWidth: .infinity, alignment: .center)
-        .background(.clear)
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
     }
 
     var timeLineView: some View {
-        HStack(alignment: .center, spacing: TokenSpacing._3) {
-            Text(viewModel.currentTimeString)
-                .foregroundStyle(TokenColors.Text.onColor.swiftUI)
-                .font(.footnote)
-                .frame(minWidth: 40, alignment: .leading)
+        VStack(alignment: .center, spacing: TokenSpacing._1) {
+            currentTimeAndDuration
             seekBar
-            Text(viewModel.durationString)
+        }
+    }
+
+    private var currentTimeAndDuration: some View {
+        HStack {
+            Text(viewModel.currentTimeAndDurationString)
                 .foregroundStyle(TokenColors.Text.onColor.swiftUI)
                 .font(.footnote)
-                .frame(minWidth: 40, alignment: .trailing)
+            Spacer()
         }
-        .frame(height: TokenSpacing._7)
     }
 
     private var seekBar: some View {
@@ -206,24 +238,20 @@ extension PlayerOverlayView {
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
         }
+        .frame(height: TokenSpacing._8)
     }
 
     var bottomControls: some View {
         HStack(alignment: .center, spacing: TokenSpacing._1) {
             playbackSpeedButton
-                .frame(minWidth: 60, alignment: .center)
             Spacer()
             loopButton
-                .frame(minWidth: 60, alignment: .center)
             Spacer()
             rotateButton
-                .frame(minWidth: 60, alignment: .center)
             Spacer()
             lockButton
-                .frame(minWidth: 60, alignment: .center)
             Spacer()
             moreBottomButton
-                .frame(minWidth: 60, alignment: .center)
         }
     }
 
@@ -234,6 +262,8 @@ extension PlayerOverlayView {
             Text(viewModel.currentSpeedString)
                 .foregroundStyle(TokenColors.Text.onColor.swiftUI)
                 .font(.system(size: 18))
+                .frame(minWidth: 24)
+                .frame(height: 24)
                 .overlay {
                     // This is to increase the tappable area
                     Rectangle()
@@ -246,7 +276,10 @@ extension PlayerOverlayView {
 
     var loopButton: some View {
         controlButton(
-            name: viewModel.isLoopEnabled ? "loopEnabled" : "loop",
+            name: "loop",
+            color: viewModel.isLoopEnabled ?
+                TokenColors.Icon.brand.swiftUI :
+                TokenColors.Icon.onColor.swiftUI,
             action: viewModel.didTapLoopButton
         )
     }
@@ -271,6 +304,50 @@ extension PlayerOverlayView {
         controlButton(name: "moreBottom", action: {
             // Implement more bottom functionality
         })
+    }
+
+    private var playbackSpeedsBottomSelectionListHeight: Int {
+        PlaybackSpeed.allCases.count * Int(Constants.bottomSheetRowHeight) + Int(Constants.bottomSheetTopPadding)
+    }
+
+    private var playbackSpeedsSelectionListView: some View {
+        ScrollView {
+            VStack(spacing: .zero) {
+                ForEach(PlaybackSpeed.allCases, id: \.rawValue) { playbackSpeed in
+                    Button(action: {
+                        viewModel.didSelectPlaybackSpeed(playbackSpeed)
+                    }, label: {
+                        playbackSpeedRowView(playbackSpeed)
+                    })
+                }
+            }
+            .padding(.top, Constants.bottomSheetTopPadding)
+        }
+        .background(
+            TokenColors.Background.surface1.swiftUI,
+            ignoresSafeAreaEdges: .all
+        )
+        .preferredColorScheme(.dark)
+    }
+
+    private func playbackSpeedRowView(
+    _ playbackSpeed: PlaybackSpeed
+    ) -> some View {
+        HStack(spacing: .zero) {
+            Text(playbackSpeed.displayText)
+                .font(.body)
+                .foregroundStyle(TokenColors.Text.primary.swiftUI)
+
+            Spacer()
+
+            if playbackSpeed == viewModel.currentSpeed {
+                Image(systemName: "checkmark")
+                    .foregroundStyle(TokenColors.Icon.secondary.swiftUI)
+                    .frame(width: 24, height: 24, alignment: .center)
+            }
+        }
+        .frame(height: Constants.bottomSheetRowHeight)
+        .padding(.horizontal, TokenSpacing._5)
     }
 }
 

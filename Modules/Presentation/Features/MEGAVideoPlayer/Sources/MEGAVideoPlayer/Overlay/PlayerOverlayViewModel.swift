@@ -12,6 +12,7 @@ public final class PlayerOverlayViewModel: ObservableObject {
     @Published var isControlsVisible: Bool = false
     @Published var currentSpeed: PlaybackSpeed = .normal
     @Published var isLoopEnabled: Bool = false
+    @Published var isPlaybackBottomSheetPresented: Bool = false
 
     private var autoHideTimer: Timer?
     private var cancellables = Set<AnyCancellable>()
@@ -32,10 +33,6 @@ public final class PlayerOverlayViewModel: ObservableObject {
 
     func viewWillAppear() {
         observePlayer()
-    }
-
-    func didTapBack() {
-        didTapBackAction()
     }
 
     private func observePlayer() {
@@ -66,6 +63,18 @@ public final class PlayerOverlayViewModel: ObservableObject {
             .durationPublisher
             .receive(on: DispatchQueue.main)
             .assign(to: &$duration)
+    }
+}
+
+// MARK: - nav bar logic
+
+extension PlayerOverlayViewModel {
+    func didTapBack() {
+        didTapBackAction()
+    }
+
+    func didTapMore() {
+        // Placeholder for future functionality
     }
 }
 
@@ -103,14 +112,12 @@ extension PlayerOverlayViewModel {
 // MARK: - Timeline logic
 
 extension PlayerOverlayViewModel {
-    var currentTimeString: String {
-        string(from: currentTime)
+    var currentTimeAndDurationString: String {
+        let currentTimeString = string(from: currentTime)
+        let durationString = string(from: duration)
+        return "\(currentTimeString) / \(durationString)"
     }
 
-    var durationString: String {
-        string(from: duration)
-    }
-    
     var progress: CGFloat {
         let durationSeconds = duration.components.seconds
         guard durationSeconds > 0 else { return 0 }
@@ -151,10 +158,14 @@ extension PlayerOverlayViewModel {
 
 extension PlayerOverlayViewModel {
     func didTapPlaybackSpeed() {
-        let nextSpeed = currentSpeed.next()
-        player.changeRate(to: nextSpeed.rawValue)
-        currentSpeed = nextSpeed
+        isPlaybackBottomSheetPresented = true
         didTapControl()
+    }
+
+    func didSelectPlaybackSpeed(_ speed: PlaybackSpeed) {
+        currentSpeed = speed
+        player.changeRate(to: speed.rawValue)
+        isPlaybackBottomSheetPresented = false
     }
 
     var currentSpeedString: String {
@@ -178,9 +189,7 @@ extension PlayerOverlayViewModel {
 extension PlayerOverlayViewModel {
     func showControls() {
         isControlsVisible = true
-        if shouldAutoHide {
-            startAutoHideTimer()
-        }
+        startAutoHideTimer()
     }
 
     func hideControls() {
@@ -197,7 +206,6 @@ extension PlayerOverlayViewModel {
     }
 
     private func didTapControl() {
-        guard shouldAutoHide else { return }
         startAutoHideTimer()
     }
 
@@ -214,15 +222,6 @@ extension PlayerOverlayViewModel {
     private func cancelAutoHideTimer() {
         autoHideTimer?.invalidate()
         autoHideTimer = nil
-    }
-
-    private var shouldAutoHide: Bool {
-        switch state {
-        case .paused:
-            return false
-        case .playing, .buffering, .opening, .stopped, .ended, .error:
-            return true
-        }
     }
 
     private func handleStateChange(_ newState: PlaybackState) {

@@ -3,6 +3,11 @@
 
 import PackageDescription
 
+let settings: [SwiftSetting] = [
+    .unsafeFlags(["-warnings-as-errors"]),
+    .enableExperimentalFeature("ExistentialAny")
+]
+
 let package = Package(
     name: "MEGAVideoPlayer",
     platforms: [
@@ -21,6 +26,7 @@ let package = Package(
     dependencies: [
         .package(path: "../../../DataSource/MEGASDK"),
         .package(path: "../../../MEGASharedRepo/MEGALogger"),
+        .package(path: "../../../MEGASharedRepo/MEGAUIComponent"),
         .package(url: "https://github.com/meganz/MEGADesignToken", branch: "main"),
         .package(url: "https://github.com/CocoaLumberjack/CocoaLumberjack.git", from: "3.0.0")
     ],
@@ -33,6 +39,7 @@ let package = Package(
                 .product(name: "MEGASdk", package: "MEGASDK"),
                 "MEGALogger",
                 "MEGADesignToken",
+                "MEGAUIComponent",
                 .product(name: "CocoaLumberjackSwift", package: "CocoaLumberjack")
             ],
             resources: [
@@ -40,18 +47,21 @@ let package = Package(
             ],
             cxxSettings: [
                 .define("HAVE_LIBUV")
-            ]
+            ],
+            swiftSettings: settings
         ),
         .target(
             name: "MEGAVideoPlayerMock",
-            dependencies: ["MEGAVideoPlayer"]
+            dependencies: ["MEGAVideoPlayer"],
+            swiftSettings: settings
         ),
         .testTarget(
             name: "MEGAVideoPlayerTests",
             dependencies: [
                 "MEGAVideoPlayer",
                 "MEGAVideoPlayerMock"
-            ]
-        ),
+            ],
+            swiftSettings: settings
+        )
     ]
 )
