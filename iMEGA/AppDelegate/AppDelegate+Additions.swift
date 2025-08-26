@@ -567,13 +567,20 @@ extension AppDelegate {
             return
         }
 
-        guard MEGASdk.shared.mnz_accountDetails != nil else {
+        let accountUseCase = AccountUseCase(repository: AccountRepository.newRepo)
+        guard let accountDetails = accountUseCase.currentAccountDetails else {
             MEGALogDebug("[Upgrade Account] Account details are empty")
             self.showAccountUpgradeScreen = true
             return
         }
 
-        UpgradeAccountRouter().presentUpgradeTVC()
+        SubscriptionPurchaseRouter(
+            presenter: UIApplication.mnz_visibleViewController(),
+            currentAccountDetails: accountDetails,
+            viewType: .upgrade,
+            accountUseCase: accountUseCase,
+            isFromAds: false)
+        .start()
     }
     
     @objc func showMyAccountHall() {
@@ -653,6 +660,8 @@ extension AppDelegate {
                         AudioPlayerManager.shared.closePlayer()
                         completion()
                     }
+                } else {
+                    completion()
                 }
             },
             dismissHandler: {
@@ -669,7 +678,9 @@ extension AppDelegate {
     }
     
     @objc func showChooseAccountPlanTypeView() {
-        UpgradeAccountRouter().presentChooseAccountType()
+        UpgradeSubscriptionRouter(
+            presenter: UIApplication.mnz_presentingViewController())
+        .showUpgradeAccount()
     }
     
     // MARK: - Promoted plan

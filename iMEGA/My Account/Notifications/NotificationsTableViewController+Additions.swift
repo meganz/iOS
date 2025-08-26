@@ -1,4 +1,5 @@
 import MEGAAppPresentation
+import MEGAAppSDKRepo
 import MEGADesignToken
 import MEGADomain
 import MEGAL10n
@@ -85,7 +86,8 @@ extension NotificationsTableViewController {
     
     @objc func showUpgradePlanView() {
         guard let navigationController else { return }
-        UpgradeAccountRouter().pushUpgradeTVC(navigationController: navigationController)
+        UpgradeSubscriptionRouter(presenter: navigationController)
+            .showUpgradeAccount()
     }
     
     @objc func notificationCellBackground(_ isNotificationSeen: Bool) -> UIColor {

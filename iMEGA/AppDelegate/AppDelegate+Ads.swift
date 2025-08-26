@@ -24,13 +24,10 @@ extension AppDelegate {
     }
     
     @objc func showUpgradePlanPageFromAds() {
-        let accountUseCase = AccountUseCase(repository: AccountRepository.newRepo)
-        guard let accountDetails = accountUseCase.currentAccountDetails else { return }
-        UpgradeAccountPlanRouter(
+        UpgradeSubscriptionRouter(
             presenter: UIApplication.mnz_visibleViewController(),
-            accountDetails: accountDetails,
-            isFromAds: true
-        ).start()
+            isFromAds: true)
+        .showUpgradeAccount()
     }
     
     func showAdMobConsentIfNeeded(isFromCookieDialog: Bool = false) async {

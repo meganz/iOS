@@ -42,8 +42,22 @@ extension CustomModalAlertViewController {
             firstCompletion = { [weak self] in
                 guard let self else { return }
                 dismiss(animated: true) {
-                    actionHandler? {
-                        UpgradeAccountRouter().presentUpgradeTVC()
+                    let showUpgrade = {
+                        SubscriptionPurchaseRouter(
+                            presenter: UIApplication.mnz_visibleViewController(),
+                            currentAccountDetails: accountDetails,
+                            viewType: .upgrade,
+                            accountUseCase: AccountUseCase(
+                                repository: AccountRepository.newRepo),
+                            isFromAds: false)
+                        .start()
+                    }
+                    if let actionHandler {
+                        actionHandler {
+                            showUpgrade()
+                        }
+                    } else {
+                        showUpgrade()
                     }
                 }
             }

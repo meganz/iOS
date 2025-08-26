@@ -157,7 +157,13 @@ extension ScheduleMeetingRouter: ScheduleMeetingRouting {
     
     func showUpgradeAccount(_ account: AccountDetailsEntity) {
         guard let baseViewController else { return }
-        UpgradeAccountPlanRouter(presenter: baseViewController, accountDetails: account).start()
+        SubscriptionPurchaseRouter(
+            presenter: baseViewController,
+            currentAccountDetails: account,
+            viewType: .upgrade,
+            accountUseCase: AccountUseCase(
+                repository: AccountRepository.newRepo))
+        .start()
     }
 }
  

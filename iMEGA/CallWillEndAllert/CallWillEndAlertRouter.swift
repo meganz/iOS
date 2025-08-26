@@ -87,7 +87,13 @@ class CallWillEndAlertRouter: CallWillEndAlertRouting {
     
     func showUpgradeAccount(_ account: AccountDetailsEntity) {
         guard let presenter = baseViewController.presenterViewController() else { return }
-        UpgradeAccountPlanRouter(presenter: presenter, accountDetails: account).start()
+        SubscriptionPurchaseRouter(
+            presenter: presenter,
+            currentAccountDetails: account,
+            viewType: .upgrade,
+            accountUseCase: AccountUseCase(
+                repository: AccountRepository.newRepo))
+        .start()
     }
     
     func dismissCallWillEndAlertIfNeeded() {

@@ -131,6 +131,8 @@
 		0EE89C732BA8FAAF00956F1D /* NodeActionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EE89C722BA8FAAF00956F1D /* NodeActionTableViewCell.swift */; };
 		0EEA79F82E1E0D470093E736 /* SaveToPhotosViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EEA79F72E1E0D470093E736 /* SaveToPhotosViewModelTests.swift */; };
 		0EEA79FC2E1E0FC50093E736 /* MockSaveToPhotosCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EEA79FB2E1E0FB50093E736 /* MockSaveToPhotosCoordinator.swift */; };
+		0EEB9B2D2E5C071C00CB27EA /* UpgradeSubscriptionRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EEB9B2C2E5C071C00CB27EA /* UpgradeSubscriptionRouter.swift */; };
+		0EEB9B302E5C074400CB27EA /* MockUpgradeSubscriptionRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EEB9B2E2E5C074400CB27EA /* MockUpgradeSubscriptionRouter.swift */; };
 		122977DE27DA976F0048F381 /* MediaDiscoveryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122977DD27DA976F0048F381 /* MediaDiscoveryViewModel.swift */; };
 		12397E172820C3B100A30CCC /* PageTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12397E162820C3B100A30CCC /* PageTabView.swift */; };
 		12397E192820C3D100A30CCC /* PagerTabViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12397E182820C3D100A30CCC /* PagerTabViewModel.swift */; };
@@ -2893,6 +2895,8 @@
 		0EE89C722BA8FAAF00956F1D /* NodeActionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeActionTableViewCell.swift; sourceTree = "<group>"; };
 		0EEA79F72E1E0D470093E736 /* SaveToPhotosViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveToPhotosViewModelTests.swift; sourceTree = "<group>"; };
 		0EEA79FB2E1E0FB50093E736 /* MockSaveToPhotosCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockSaveToPhotosCoordinator.swift; sourceTree = "<group>"; };
+		0EEB9B2C2E5C071C00CB27EA /* UpgradeSubscriptionRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpgradeSubscriptionRouter.swift; sourceTree = "<group>"; };
+		0EEB9B2E2E5C074400CB27EA /* MockUpgradeSubscriptionRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockUpgradeSubscriptionRouter.swift; sourceTree = "<group>"; };
 		122977DD27DA976F0048F381 /* MediaDiscoveryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaDiscoveryViewModel.swift; sourceTree = "<group>"; };
 		12397E162820C3B100A30CCC /* PageTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageTabView.swift; sourceTree = "<group>"; };
 		12397E182820C3D100A30CCC /* PagerTabViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagerTabViewModel.swift; sourceTree = "<group>"; };
@@ -5927,6 +5931,14 @@
 				0EEA79F72E1E0D470093E736 /* SaveToPhotosViewModelTests.swift */,
 			);
 			path = SaveToPhotos;
+			sourceTree = "<group>";
+		};
+		0EEB9B2F2E5C074400CB27EA /* Mock */ = {
+			isa = PBXGroup;
+			children = (
+				0EEB9B2E2E5C074400CB27EA /* MockUpgradeSubscriptionRouter.swift */,
+			);
+			path = Mock;
 			sourceTree = "<group>";
 		};
 		0EED79E62A9C0AFF00213201 /* Extensions */ = {
@@ -10371,6 +10383,7 @@
 		946AC10A2CAFC19A0020442F /* UpgradeAccount */ = {
 			isa = PBXGroup;
 			children = (
+				0EEB9B2F2E5C074400CB27EA /* Mock */,
 				946AC10B2CAFC1A80020442F /* UpgradeAccountViewModelTests.swift */,
 			);
 			path = UpgradeAccount;
@@ -12627,6 +12640,7 @@
 				BF0FE7DB2DB99FCE0083E23B /* SubscriptionPurchaseRouter.swift */,
 				BFA2A21A2DAC9E4F00E8673D /* SubscriptionPurchaseView.swift */,
 				BFB349F52DD1962C0082F948 /* SubscriptionPurchaseViewCoordinator.swift */,
+				0EEB9B2C2E5C071C00CB27EA /* UpgradeSubscriptionRouter.swift */,
 			);
 			path = SubscriptionsScreen;
 			sourceTree = "<group>";
@@ -15916,6 +15930,7 @@
 				C4A016962B63AE8A00492185 /* UpgradeEncouragementViewModel.swift in Sources */,
 				B59580B42A1478E800E5FC1C /* UpgradeSectionFeatureOfProView.swift in Sources */,
 				B59580B32A1478E800E5FC1C /* UpgradeSectionHeaderView.swift in Sources */,
+				0EEB9B2D2E5C071C00CB27EA /* UpgradeSubscriptionRouter.swift in Sources */,
 				C4709A9926B05DA2008FB0C8 /* UpgradeTableViewController+Additions.swift in Sources */,
 				41A66D071AE7900F007D7E20 /* UpgradeTableViewController.m in Sources */,
 				94B09E602B84CC87007D6B84 /* UploadAddMenuDelegateHandler.swift in Sources */,
@@ -16584,6 +16599,7 @@
 				947336C22BC5D8F400B85972 /* MockUpgradeAccountPlanRouter.swift in Sources */,
 				C4A016C02B67630F00492185 /* MockUpgradeAccountRouter.swift in Sources */,
 				C4F06F6A2B690C4B005C1A3D /* MockUpgradeEncouragementShowTimeTracker.swift in Sources */,
+				0EEB9B302E5C074400CB27EA /* MockUpgradeSubscriptionRouter.swift in Sources */,
 				943FA1E12CBEF4110021EAC3 /* MockUserAttributesMEGAStore.swift in Sources */,
 				94BF69162CAFFA840052F1D5 /* MockUserBannerUseCase.swift in Sources */,
 				24EDF7212C1BF13A0065A26D /* MockVideoRevampRouter.swift in Sources */,

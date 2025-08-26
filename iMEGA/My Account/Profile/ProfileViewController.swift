@@ -1,6 +1,7 @@
 import Accounts
 import Combine
 import MEGAAppPresentation
+import MEGAAppSDKRepo
 import MEGAAssets
 import MEGADesignToken
 import MEGADomain
@@ -393,10 +394,7 @@ extension ProfileViewController: UITableViewDelegate {
         case .upgrade, .role:
             if !MEGASdk.shared.isAccountType(.business) &&
                 !MEGASdk.shared.isAccountType(.proFlexi) {
-                guard let navigationController = navigationController else {
-                    return
-                }
-                UpgradeAccountRouter().pushUpgradeTVC(navigationController: navigationController)
+                navigateToUpgradeAccount()
             }
         case .logout:
             viewModel.dispatch(.didTapLogout)
@@ -426,6 +424,14 @@ extension ProfileViewController: UITableViewDelegate {
         case .profile, .session, .subscription:
             return nil
         }
+    }
+    
+    private func navigateToUpgradeAccount() {
+        guard let navigationController else {
+            return
+        }
+        UpgradeSubscriptionRouter(presenter: navigationController)
+            .showUpgradeAccount()
     }
 }
 

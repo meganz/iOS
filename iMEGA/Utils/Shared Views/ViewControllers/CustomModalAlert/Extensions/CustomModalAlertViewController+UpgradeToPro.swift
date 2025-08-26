@@ -14,7 +14,9 @@ extension CustomModalAlertViewController {
         firstCompletion = { [weak self] in
             self?.dismiss(animated: true, completion: {
                 onConfirm()
-                UpgradeAccountRouter().presentUpgradeTVC()
+                UpgradeSubscriptionRouter(
+                    presenter: UIApplication.mnz_visibleViewController())
+                .showUpgradeAccount()
             })
         }
         

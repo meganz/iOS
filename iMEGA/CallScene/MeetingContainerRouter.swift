@@ -352,7 +352,13 @@ final class MeetingContainerRouter: MeetingContainerRouting {
         let dialogConfig = SimpleDialogConfigFactory.upgradePlanDialog {
             tracker.trackAnalyticsEvent(with: MaxCallDurationReachedModalEvent())
             presenter.dismiss(animated: true) {
-                UpgradeAccountPlanRouter(presenter: presenter, accountDetails: account).start()
+                SubscriptionPurchaseRouter(
+                    presenter: presenter,
+                    currentAccountDetails: account,
+                    viewType: .upgrade,
+                    accountUseCase: AccountUseCase(
+                        repository: AccountRepository.newRepo))
+                .start()
             }
         } dismissAction: {
             presenter.dismiss(animated: true)

@@ -16,11 +16,11 @@ final class HiddenFilesSeeUpgradePlansOnboardingButtonViewModelTests: XCTestCase
     @MainActor
     func testButtonAction_init_dismissViewAndRouteToAccountOnDismissCompletion() async {
         let hideFilesAndFoldersRouter = MockHideFilesAndFoldersRouter()
-        let upgradeAccountRouter = MockUpgradeAccountRouter()
+        let upgradeSubscriptionRouter = MockUpgradeSubscriptionRouter()
         let tracker = MockTracker()
         let sut = makeSUT(
             hideFilesAndFoldersRouter: hideFilesAndFoldersRouter,
-            upgradeAccountRouter: upgradeAccountRouter,
+            upgradeSubscriptionRouter: upgradeSubscriptionRouter,
             tracker: tracker
         )
         
@@ -28,7 +28,7 @@ final class HiddenFilesSeeUpgradePlansOnboardingButtonViewModelTests: XCTestCase
         
         XCTAssertEqual(hideFilesAndFoldersRouter.dismissCalled, 1)
         hideFilesAndFoldersRouter.dismissCompletion?()
-        XCTAssertEqual(upgradeAccountRouter.presentUpgradeTVCRecorder.callCount, 1)
+        XCTAssertEqual(upgradeSubscriptionRouter.upgradeCalled, 1)
         assertTrackAnalyticsEventCalled(
             trackedEventIdentifiers: tracker.trackedEventIdentifiers,
             with: [HiddenNodeUpgradeUpgradeButtonPressedEvent()]
@@ -37,12 +37,12 @@ final class HiddenFilesSeeUpgradePlansOnboardingButtonViewModelTests: XCTestCase
     
     private func makeSUT(
         hideFilesAndFoldersRouter: some HideFilesAndFoldersRouting = MockHideFilesAndFoldersRouter(),
-        upgradeAccountRouter: some UpgradeAccountRouting = MockUpgradeAccountRouter(),
+        upgradeSubscriptionRouter: some UpgradeSubscriptionRouting = MockUpgradeSubscriptionRouter(),
         tracker: some AnalyticsTracking = MockTracker()
     ) -> HiddenFilesSeeUpgradePlansOnboardingButtonViewModel {
         HiddenFilesSeeUpgradePlansOnboardingButtonViewModel(
             hideFilesAndFoldersRouter: hideFilesAndFoldersRouter,
-            upgradeAccountRouter: upgradeAccountRouter,
+            upgradeSubscriptionRouter: upgradeSubscriptionRouter,
             tracker: tracker
         )
     }
