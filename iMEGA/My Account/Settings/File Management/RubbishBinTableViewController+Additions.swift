@@ -3,7 +3,9 @@ import UIKit
 
 extension RubbishBinTableViewController {
     @objc func showUpgradeToPro() {
-        UpgradeAccountRouter().presentUpgradeTVC()
+        UpgradeSubscriptionRouter(
+            presenter: navigationController)
+        .showUpgradeAccount()
     }
 
     @objc func setupColors() {

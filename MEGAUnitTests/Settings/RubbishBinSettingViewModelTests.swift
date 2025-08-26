@@ -11,13 +11,14 @@ import Testing
 struct RubbishBinSettingViewModelTests {
     @MainActor
     private static func makeSUT(
-        accountUseCase: any AccountUseCaseProtocol = MockAccountUseCase(),
-        rubbishBinSettingsUseCase: any RubbishBinSettingsUseCaseProtocol = MockRubbishBinSettingsUseCase(),
-        upgradeAccountRouter: any UpgradeAccountRouting = MockUpgradeAccountRouter()
+        accountUseCase: some AccountUseCaseProtocol = MockAccountUseCase(),
+        rubbishBinSettingsUseCase: some RubbishBinSettingsUseCaseProtocol = MockRubbishBinSettingsUseCase(),
+        upgradeSubscriptionRouter: some UpgradeSubscriptionRouting = MockUpgradeSubscriptionRouter()
     ) -> RubbishBinSettingViewModel {
-        RubbishBinSettingViewModel(accountUseCase: accountUseCase,
-                                   rubbishBinSettingsUseCase: rubbishBinSettingsUseCase,
-                                   upgradeAccountRouter: upgradeAccountRouter)
+        RubbishBinSettingViewModel(
+            accountUseCase: accountUseCase,
+            rubbishBinSettingsUseCase: rubbishBinSettingsUseCase,
+            upgradeSubscriptionRouter: upgradeSubscriptionRouter)
     }
     
     @Suite("Actions user can do on Rubbish bin setting page")
@@ -25,13 +26,13 @@ struct RubbishBinSettingViewModelTests {
         @Test("Tap Upgrade Account Button")
         @MainActor
         func onTapUpgradeButtton() {
-            let mockRouter = MockUpgradeAccountRouter()
+            let upgradeSubscriptionRouter = MockUpgradeSubscriptionRouter()
             
-            let sut = makeSUT(upgradeAccountRouter: mockRouter)
+            let sut = makeSUT(upgradeSubscriptionRouter: upgradeSubscriptionRouter)
             
             sut.onTapUpgradeButtton()
             
-            #expect(mockRouter.presentUpgradeTVCRecorder.called)
+            #expect(upgradeSubscriptionRouter.upgradeCalled == 1)
         }
         
         @Test("Tap Auto Purge Period Cell")
@@ -65,9 +66,8 @@ struct RubbishBinSettingViewModelTests {
         @MainActor
         func onTapAutoPurgeRow() async {
             let mockRubbishbinSettingUseCase = MockRubbishBinSettingsUseCase()
-            let mockRouter = MockUpgradeAccountRouter()
             
-            let sut = makeSUT(rubbishBinSettingsUseCase: mockRubbishbinSettingUseCase, upgradeAccountRouter: mockRouter)
+            let sut = makeSUT(rubbishBinSettingsUseCase: mockRubbishbinSettingUseCase)
             
             sut.onTapAutoPurgeRow(with: .oneYear)
             await sut.updateAutoPurgeTask?.value

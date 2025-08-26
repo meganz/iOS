@@ -291,8 +291,6 @@ struct CloudDriveViewControllerFactory {
         sortOrderProvider: @escaping () -> MEGADomain.SortOrderEntity,
         onNodeStructureChanged: @escaping () -> Void
     ) -> NodeBrowserViewModel {
-        
-        let upgradeEncouragementViewModel: UpgradeEncouragementViewModel? = config.supportsUpgradeEncouragement ? .init() : nil
         let adsVisibilityViewModel = AdsVisibilityViewModel(configuratorProvider: config.adsConfiguratorProvider)
         let accountStorageUseCase = AccountStorageUseCase(
             accountRepository: AccountRepository.newRepo,
@@ -317,7 +315,10 @@ struct CloudDriveViewControllerFactory {
                 nodeSource,
                 config: config
             ),
-            upgradeEncouragementViewModel: upgradeEncouragementViewModel,
+            upgradeEncouragementViewModel: makeUpgradeEncouragementViewModel(
+                config: config,
+                presenter: navigationController
+            ),
             adsVisibilityViewModel: adsVisibilityViewModel,
             config: config,
             nodeSource: nodeSource,
@@ -336,6 +337,8 @@ struct CloudDriveViewControllerFactory {
                 viewModeStore.save(viewMode: $0, for: .node(node))
             },
             storageFullModalAlertViewRouter: StorageFullModalAlertViewRouter(),
+            warningBannerViewRouter: WarningBannerViewRouter(
+                navigationController: navigationController),
             titleBuilder: { isEditing, selectedNodesCount in
                 // The code below is needed due the fact that most of new code uses NodeEntity struct
                 // and for the code to be robust and reuse the title logic, title should be derived from
@@ -991,6 +994,16 @@ struct CloudDriveViewControllerFactory {
                 nodesCount: bucket.nodeCount
             )
         }
+    }
+    
+    private func makeUpgradeEncouragementViewModel(
+        config: NodeBrowserConfig,
+        presenter: UIViewController
+    ) -> UpgradeEncouragementViewModel? {
+        guard config.supportsUpgradeEncouragement else { return nil }
+        return UpgradeEncouragementViewModel(
+            router: UpgradeSubscriptionRouter(
+            presenter: presenter))
     }
     
     private func makeOptionalMediaDiscoveryViewModel(

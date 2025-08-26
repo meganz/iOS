@@ -13,12 +13,12 @@ struct HiddenFilesSeeUpgradePlansOnboardingButtonViewModel: HiddenFilesOnboardin
     let buttonAction: (@MainActor () async -> Void)
     
     init(hideFilesAndFoldersRouter: some HideFilesAndFoldersRouting,
-         upgradeAccountRouter: some UpgradeAccountRouting,
+         upgradeSubscriptionRouter: some UpgradeSubscriptionRouting,
          tracker: some AnalyticsTracking) {
         buttonAction = {
             tracker.trackAnalyticsEvent(with: HiddenNodeUpgradeUpgradeButtonPressedEvent())
             hideFilesAndFoldersRouter.dismissOnboarding(animated: true, completion: {
-                upgradeAccountRouter.presentUpgradeTVC()
+                upgradeSubscriptionRouter.showUpgradeAccount()
             })
         }
     }

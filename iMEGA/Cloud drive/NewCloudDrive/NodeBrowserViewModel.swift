@@ -89,6 +89,7 @@ class NodeBrowserViewModel: ObservableObject {
     private let accountStorageUseCase: any AccountStorageUseCaseProtocol
     private let sensitiveNodeUseCase: any SensitiveNodeUseCaseProtocol
     private let tracker: any AnalyticsTracking
+    private let warningBannerViewRouter: any WarningBannerViewRouting
 
     private let titleBuilder: (_ isEditing: Bool, _ selectedNodeCount: Int) -> String
     private let onOpenUserProfile: () -> Void
@@ -136,6 +137,7 @@ class NodeBrowserViewModel: ObservableObject {
         // - context menu can be reconstructed
         viewModeSaver: @escaping (ViewModePreferenceEntity) -> Void,
         storageFullModalAlertViewRouter: some StorageFullModalAlertViewRouting,
+        warningBannerViewRouter: any WarningBannerViewRouting,
         titleBuilder: @escaping (Bool, Int) -> String,
         onOpenUserProfile: @escaping () -> Void,
         onUpdateSearchBarVisibility: @escaping (Bool) -> Void,
@@ -159,6 +161,7 @@ class NodeBrowserViewModel: ObservableObject {
         self.sortOrder = sortOrderProvider()
         self.noInternetViewModel = noInternetViewModel
         self.storageFullModalAlertViewRouter = storageFullModalAlertViewRouter
+        self.warningBannerViewRouter = warningBannerViewRouter
         self.titleBuilder = titleBuilder
         self.onOpenUserProfile = onOpenUserProfile
         self.onUpdateSearchBarVisibility = onUpdateSearchBarVisibility
@@ -647,7 +650,7 @@ class NodeBrowserViewModel: ObservableObject {
     ) -> WarningBannerViewModel {
         WarningBannerViewModel(
             warningType: warningType,
-            router: WarningBannerViewRouter(),
+            router: warningBannerViewRouter,
             shouldShowCloseButton: shouldShowCloseButton,
             closeButtonAction: closeButtonAction
         )

@@ -8,7 +8,7 @@ import MEGAUIComponent
 final class RubbishBinSettingViewModel: ObservableObject {
     private let accountUseCase: any AccountUseCaseProtocol
     private let rubbishBinSettingsUseCase: any RubbishBinSettingsUseCaseProtocol
-    private let upgradeAccountRouter: any UpgradeAccountRouting
+    private let upgradeSubscriptionRouter: any UpgradeSubscriptionRouting
     
     @Published private(set) var isPaidAccount: Bool = false
     @Published private(set) var rubbishBinAutopurgePeriod = 0
@@ -27,10 +27,10 @@ final class RubbishBinSettingViewModel: ObservableObject {
     
     init(accountUseCase: some AccountUseCaseProtocol,
          rubbishBinSettingsUseCase: some RubbishBinSettingsUseCaseProtocol,
-         upgradeAccountRouter: some UpgradeAccountRouting = UpgradeAccountRouter()) {
+         upgradeSubscriptionRouter: some UpgradeSubscriptionRouting) {
         self.accountUseCase = accountUseCase
         self.rubbishBinSettingsUseCase = rubbishBinSettingsUseCase
-        self.upgradeAccountRouter = upgradeAccountRouter
+        self.upgradeSubscriptionRouter = upgradeSubscriptionRouter
         
         isPaidAccount = accountUseCase.isPaidAccount
         autoPurgePeriods = AutoPurgePeriod.options(forPaidAccount: isPaidAccount)
@@ -69,7 +69,7 @@ final class RubbishBinSettingViewModel: ObservableObject {
     // MARK: Actions
     
     func onTapUpgradeButtton() {
-        upgradeAccountRouter.presentUpgradeTVC()
+        upgradeSubscriptionRouter.showUpgradeAccount()
     }
     
     func onTapAutoPurgeCell() {

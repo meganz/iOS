@@ -1,5 +1,6 @@
 import MEGAAnalyticsiOS
 import MEGAAppPresentation
+import MEGAAppSDKRepo
 import MEGADomain
 import MEGAL10n
 
@@ -208,7 +209,13 @@ final class MainTabBarCallsRouter: MainTabBarCallsRouting {
             tracker.trackAnalyticsEvent(with: MaxCallDurationReachedModalEvent())
             baseViewController.dismiss(animated: true) { [weak self] in
                 guard let self else { return }
-                UpgradeAccountPlanRouter(presenter: baseViewController, accountDetails: account).start()
+                SubscriptionPurchaseRouter(
+                    presenter: baseViewController,
+                    currentAccountDetails: account,
+                    viewType: .upgrade,
+                    accountUseCase: AccountUseCase(
+                        repository: AccountRepository.newRepo))
+                .start()
             }
         } dismissAction: { [weak self] in
             guard let self else { return }

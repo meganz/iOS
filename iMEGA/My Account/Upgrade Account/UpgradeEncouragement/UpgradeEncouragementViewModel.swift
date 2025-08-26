@@ -14,14 +14,14 @@ final class UpgradeEncouragementViewModel {
 
     private let showTimeTracker: any UpgradeEncouragementShowTimeTracking
     private let accountUseCase: any AccountUseCaseProtocol
-    private let router: any UpgradeAccountRouting
+    private let router: any UpgradeSubscriptionRouting
     private let randomNumberGenerator: any RandomNumberGenerating
     private let calendar: Calendar
     
     init(
         showTimeTracker: some UpgradeEncouragementShowTimeTracking = UpgradeEncouragementShowTimeTracker(),
         accountUseCase: some AccountUseCaseProtocol = AccountUseCase(repository: AccountRepository.newRepo),
-        router: some UpgradeAccountRouting = UpgradeAccountRouter(),
+        router: some UpgradeSubscriptionRouting,
         preferenceUseCase: some PreferenceUseCaseProtocol = PreferenceUseCase.default,
         randomNumberGenerator: some RandomNumberGenerating = RandomNumberGenerator(),
         calendar: Calendar = .current
@@ -49,7 +49,7 @@ final class UpgradeEncouragementViewModel {
         // Don't show encouragement if it was shown within one week
         if let weeksSincePreviousEncouragement, weeksSincePreviousEncouragement < 1 { return }
         
-        router.presentUpgradeTVC()
+        router.showUpgradeAccount()
         lastEncourageUpgradeDate = Date()
         showTimeTracker.alreadyPresented = true
     }

@@ -49,7 +49,8 @@ final class HideFilesAndFoldersRouter: HideFilesAndFoldersRouting {
         showHiddenFilesAndFoldersOnboarding(
             primaryButtonViewModel: HiddenFilesSeeUpgradePlansOnboardingButtonViewModel(
                 hideFilesAndFoldersRouter: self,
-                upgradeAccountRouter: UpgradeAccountRouter(),
+                upgradeSubscriptionRouter: UpgradeSubscriptionRouter(
+                    presenter: presenter),
                 tracker: DIContainer.tracker),
             viewModel: viewModel
         )

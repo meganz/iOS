@@ -91,22 +91,12 @@ struct ParticipantsAddingViewFactory {
         }
         contactController.participantsMutableDictionary = NSMutableDictionary(dictionary: participantsDict)
         
-        let accountDetails = accountUseCase.currentAccountDetails
-        let presentUpgrade: () -> Void = {
-            guard let accountDetails else { return }
-            UpgradeAccountPlanRouter(
-                presenter: contactController,
-                accountDetails: accountDetails
-            ).start()
-        }
-        
         // [MEET-3401] conditionally show banner about limit of participants for a meeting
         // organized by the free-tier user
         // for a organiser, we it will be possible to show upgrade modal sheet from it
         // for a host-non-organiser, it can be dismissed (once per lifetime of the view controller)
         let bannerConfig = bannerConfigFactory(
-            warningMode: contactPickerConfig.canInviteParticipants ? .dismissible : .noWarning,
-            presentUpgrade: presentUpgrade
+            warningMode: contactPickerConfig.canInviteParticipants ? .dismissible : .noWarning
         )
         if let bannerConfig {
             contactController.setBannerConfig(bannerConfig)
@@ -125,8 +115,7 @@ struct ParticipantsAddingViewFactory {
     }
     
     private func bannerConfigFactory(
-        warningMode: ParticipantLimitWarningMode,
-        presentUpgrade: @escaping () -> Void
+        warningMode: ParticipantLimitWarningMode
     ) -> BannerView.Config? {
         switch warningMode {
         case .dismissible:

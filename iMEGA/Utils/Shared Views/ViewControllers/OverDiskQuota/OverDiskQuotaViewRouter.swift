@@ -31,14 +31,8 @@ final class OverDiskQuotaViewRouter: OverDiskQuotaViewRouting {
     }
     
     func showUpgradePlanPage() {
-        guard let currentAccountDetails = AccountUseCase(repository: AccountRepository.newRepo).currentAccountDetails else {
-            return
-        }
-        
-        UpgradeAccountPlanRouter(
-            presenter: baseViewController,
-            accountDetails: currentAccountDetails
-        ).start()
+        UpgradeSubscriptionRouter(presenter: baseViewController)
+            .showUpgradeAccount()
     }
     
     func build() -> UIViewController {

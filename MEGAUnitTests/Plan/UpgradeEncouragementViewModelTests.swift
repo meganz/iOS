@@ -9,7 +9,7 @@ import XCTest
 
 final class UpgradeEncouragementViewModelTests: XCTestCase {
     var sut: UpgradeEncouragementViewModel!
-    var router: MockUpgradeAccountRouter!
+    var router: MockUpgradeSubscriptionRouter!
     var showTimeTracker: MockUpgradeEncouragementShowTimeTracker!
     var randomNumberGenerator: MockRandomNumberGenerator!
     
@@ -41,7 +41,7 @@ final class UpgradeEncouragementViewModelTests: XCTestCase {
         
         // then
         XCTAssertFalse(randomNumberGenerator.generateRecorder.called)
-        XCTAssertFalse(router.presentUpgradeTVCRecorder.called)
+        XCTAssertEqual(router.upgradeCalled, 0)
     }
     
     @MainActor
@@ -55,7 +55,7 @@ final class UpgradeEncouragementViewModelTests: XCTestCase {
         
         // then
         XCTAssertFalse(randomNumberGenerator.generateRecorder.called)
-        XCTAssertFalse(router.presentUpgradeTVCRecorder.called)
+        XCTAssertEqual(router.upgradeCalled, 0)
     }
     
     @MainActor
@@ -69,7 +69,7 @@ final class UpgradeEncouragementViewModelTests: XCTestCase {
         
         // then
         XCTAssertFalse(randomNumberGenerator.generateRecorder.called)
-        XCTAssertFalse(router.presentUpgradeTVCRecorder.called)
+        XCTAssertEqual(router.upgradeCalled, 0)
     }
     
     // MARK: - From here, test functions are implicitly have inputs with free account and created more than 3 days
@@ -88,7 +88,7 @@ final class UpgradeEncouragementViewModelTests: XCTestCase {
         
         // then
         XCTAssertTrue(randomNumberGenerator.generateRecorder.called)
-        XCTAssertFalse(router.presentUpgradeTVCRecorder.called)
+        XCTAssertEqual(router.upgradeCalled, 0)
     }
     
     @MainActor
@@ -106,7 +106,7 @@ final class UpgradeEncouragementViewModelTests: XCTestCase {
         
         // then
         XCTAssertTrue(randomNumberGenerator.generateRecorder.called)
-        XCTAssertFalse(router.presentUpgradeTVCRecorder.called)
+        XCTAssertEqual(router.upgradeCalled, 0)
     }
     
     @MainActor
@@ -125,7 +125,7 @@ final class UpgradeEncouragementViewModelTests: XCTestCase {
         // then
         XCTAssertTrue(randomNumberGenerator.generateRecorder.called)
         XCTAssertNotNil(preferenceUseCase[PreferenceKeyEntity.lastEncourageUpgradeDate.rawValue])
-        XCTAssertTrue(router.presentUpgradeTVCRecorder.called)
+        XCTAssertEqual(router.upgradeCalled, 1)
     }
     
     @MainActor
@@ -143,7 +143,7 @@ final class UpgradeEncouragementViewModelTests: XCTestCase {
         sut.encourageUpgradeIfNeeded()
         
         // then
-        XCTAssertEqual(router.presentUpgradeTVCRecorder.callCount, 1)
+        XCTAssertEqual(router.upgradeCalled, 1)
         XCTAssertTrue(showTimeTracker.alreadyPresented)
         
         // and when
@@ -151,7 +151,7 @@ final class UpgradeEncouragementViewModelTests: XCTestCase {
         
         // and then
         
-        XCTAssertEqual(router.presentUpgradeTVCRecorder.callCount, 1)
+        XCTAssertEqual(router.upgradeCalled, 1)
     }
     
     @MainActor
