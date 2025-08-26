@@ -262,6 +262,19 @@ final class HomeSearchResultsProviderTests: XCTestCase {
         XCTAssertEqual(filter.sensitiveFilterOption, .disabled)
     }
     
+    func testSearch_whenIsFromSharedItem_shouldNotExcludeHiddenNodes() async throws {
+        // given
+        let harness = Harness(self, isFromSharedItem: true)
+        
+        // when
+        _ = await harness.sut.search(queryRequest: .initial)
+
+        // then
+        XCTAssertEqual(harness.filesSearchUseCase.filters.count, 1)
+        let filter = try XCTUnwrap(harness.filesSearchUseCase.filters.first)
+        XCTAssertEqual(filter.sensitiveFilterOption, .disabled)
+    }
+    
     func testSearch_nodeType_shouldMatchChipIfSelected() async throws {
         // given
         let query = SearchQuery.userSupplied(.query(chips: [.folders]))

@@ -459,21 +459,16 @@ class MediaDiscoveryContentViewModelTests: XCTestCase {
     }
     
     @MainActor
-    func testLoadPhotos_mediaDiscoverySharedItems_shouldExcludeSensitive() async {
-        let shouldExcludeSensitive = true
-        let sensitiveDisplayPreferenceUseCase = MockSensitiveDisplayPreferenceUseCase(
-            excludeSensitives: shouldExcludeSensitive
-        )
+    func testLoadPhotos_mediaDiscoverySharedItems_shouldIncludeSensitives() async throws {
         let mediaDiscoveryUseCase = MockMediaDiscoveryUseCase()
         let sut = makeSUT(
             contentMode: .mediaDiscoverySharedItems,
-            mediaDiscoveryUseCase: mediaDiscoveryUseCase,
-            sensitiveDisplayPreferenceUseCase: sensitiveDisplayPreferenceUseCase)
+            mediaDiscoveryUseCase: mediaDiscoveryUseCase)
         
         await sut.loadPhotos()
         
         let searchExcludesSensitive = await mediaDiscoveryUseCase.state.discoverWithExcludeSensitive
-        XCTAssertEqual(searchExcludesSensitive, shouldExcludeSensitive)
+        XCTAssertFalse(try XCTUnwrap(searchExcludesSensitive))
     }
 }
 
