@@ -1664,7 +1664,6 @@
 		A828E683286B3150004CED9E /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = A828E682286B3150004CED9E /* FirebaseCrashlytics */; };
 		A828E685286B317F004CED9E /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = A828E684286B317F004CED9E /* FirebaseCrashlytics */; };
 		A828E687286B318A004CED9E /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = A828E686286B318A004CED9E /* FirebaseCrashlytics */; };
-		A828E68D286B3204004CED9E /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = A828E68C286B3204004CED9E /* FirebaseCrashlytics */; };
 		A83428B32B7D2CF1002393FA /* SelectableTableViewCell+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A83428B22B7D2CF1002393FA /* SelectableTableViewCell+Additions.swift */; };
 		A83465262BAAF4F3009A4E40 /* MEGAPermissionsMock in Frameworks */ = {isa = PBXBuildFile; productRef = A83465252BAAF4F3009A4E40 /* MEGAPermissionsMock */; };
 		A834DD0C2BC0293B00A57058 /* View+WidgetBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = A834DD0B2BC0293B00A57058 /* View+WidgetBackground.swift */; };
@@ -4807,7 +4806,6 @@
 		B6826B662898F43900B2B8D0 /* MEGAUI */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MEGAUI; sourceTree = "<group>"; };
 		B686F45721866BB4009C0DAA /* CameraUploadRequestDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CameraUploadRequestDelegate.h; sourceTree = "<group>"; };
 		B686F45821866BB4009C0DAA /* CameraUploadRequestDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CameraUploadRequestDelegate.m; sourceTree = "<group>"; };
-		B6873A9C25A6C63800BBD15A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B6873AD825A6C75300BBD15A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B6873AE325A6C7DC00BBD15A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B6873AF625A6C86100BBD15A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -4904,8 +4902,6 @@
 		B6D11AE1219E5E2C00446B86 /* AttributeUploadOperation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AttributeUploadOperation.m; sourceTree = "<group>"; };
 		B6D11AE321A24C7700446B86 /* PutNodeOperation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PutNodeOperation.h; sourceTree = "<group>"; };
 		B6D11AE421A24C7700446B86 /* PutNodeOperation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PutNodeOperation.m; sourceTree = "<group>"; };
-		B6D16A5E29DCFD6000402828 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		B6D16A5F29DCFD8B00402828 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B6D16A6529DCFE4400402828 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B6D16A6629DCFE7400402828 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B6D16A6B29DD03AC00402828 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -5603,7 +5599,6 @@
 				B5053BC72D112156003718E0 /* AppTrackingTransparency.framework in Frameworks */,
 				A855D23E2A796634001D2168 /* ChatRepo in Frameworks */,
 				A8F5157827F6F92800AEE4D6 /* DZNEmptyDataSet in Frameworks */,
-				A828E68D286B3204004CED9E /* FirebaseCrashlytics in Frameworks */,
 				BF1CEA3E27FA757800C1A2E5 /* GKContactImage in Frameworks */,
 				B5866BB92CA566BA009E0A1E /* GoogleMobileAds in Frameworks */,
 				BF67F7FA2AB4172100AC127E /* LogRepo in Frameworks */,
@@ -10158,9 +10153,6 @@
 		942FD0791EF3EE8800E99FB1 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				B6D16A5C29DCFCBE00402828 /* Debug */,
-				B6D16A5B29DCFCBA00402828 /* QA */,
-				B6D16A5D29DCFCD100402828 /* Release */,
 				943F8B241EF2708E00AFD89F /* Info.plist */,
 				5B716E3123741AC900925E18 /* MEGAShare-Bridging-Header.h */,
 				943F8B291EF284A500AFD89F /* MEGAShare-PrefixHeader.pch */,
@@ -12004,30 +11996,6 @@
 			path = UploadUtils;
 			sourceTree = "<group>";
 		};
-		B6D16A5B29DCFCBA00402828 /* QA */ = {
-			isa = PBXGroup;
-			children = (
-				B6D16A5E29DCFD6000402828 /* GoogleService-Info.plist */,
-			);
-			path = QA;
-			sourceTree = "<group>";
-		};
-		B6D16A5C29DCFCBE00402828 /* Debug */ = {
-			isa = PBXGroup;
-			children = (
-				B6D16A5F29DCFD8B00402828 /* GoogleService-Info.plist */,
-			);
-			path = Debug;
-			sourceTree = "<group>";
-		};
-		B6D16A5D29DCFCD100402828 /* Release */ = {
-			isa = PBXGroup;
-			children = (
-				B6873A9C25A6C63800BBD15A /* GoogleService-Info.plist */,
-			);
-			path = Release;
-			sourceTree = "<group>";
-		};
 		B6D16A6129DCFE0100402828 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
@@ -13600,7 +13568,6 @@
 				943F8B0B1EF26E9C00AFD89F /* Sources */,
 				943F8B0C1EF26E9C00AFD89F /* Frameworks */,
 				943F8B0D1EF26E9C00AFD89F /* Resources */,
-				B6D16A5A29DCFAB700402828 /* Run Script: Copy GoogleService-Info */,
 				998CDCAB2E3ACD4A00BC9CA1 /* Embed Frameworks */,
 			);
 			buildRules = (
@@ -14145,25 +14112,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "PATH_TO_CONFIG=\"${SRCROOT}/iMEGA/Supporting Files/${CONFIGURATION}/GoogleService-Info.plist\"\nFILENAME_IN_BUNDLE=\"GoogleService-Info.plist\"\nBUILD_APP_DIR=\"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app\"\ncp \"$PATH_TO_CONFIG\" \"$BUILD_APP_DIR/$FILENAME_IN_BUNDLE\"\n";
-		};
-		B6D16A5A29DCFAB700402828 /* Run Script: Copy GoogleService-Info */ = {
-			isa = PBXShellScriptBuildPhase;
-			alwaysOutOfDate = 1;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = "Run Script: Copy GoogleService-Info";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "PATH_TO_CONFIG=\"${SRCROOT}/iMEGA/Extensions/MEGAShare/Supporting Files/${CONFIGURATION}/GoogleService-Info.plist\"\nFILENAME_IN_BUNDLE=\"GoogleService-Info.plist\"\nBUILD_APP_DIR=\"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.appex\"\ncp \"$PATH_TO_CONFIG\" \"$BUILD_APP_DIR/$FILENAME_IN_BUNDLE\"\n";
 		};
 		B6D16A6029DCFDB000402828 /* Run Script: Copy GoogleService-Info */ = {
 			isa = PBXShellScriptBuildPhase;
