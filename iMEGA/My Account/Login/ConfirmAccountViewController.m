@@ -109,7 +109,7 @@
             [self lockUI:YES];
             switch (self.urlType) {
                 case URLTypeConfirmationLink:
-                    [MEGASdk.shared confirmAccountWithLink:self.confirmationLinkString password:self.passwordView.passwordTextField.text delegate:self];
+                    [MEGASdk.shared confirmAccountWithLink:self.confirmationLinkString delegate:self];
                     
                     break;
                     
@@ -315,7 +315,7 @@
             
         case MEGARequestTypeLogout: {
             [Helper logout];
-            [MEGASdk.shared confirmAccountWithLink:self.confirmationLinkString password:self.passwordView.passwordTextField.text delegate:self];
+            [MEGASdk.shared confirmAccountWithLink:self.confirmationLinkString delegate:self];
             break;
         }
             
