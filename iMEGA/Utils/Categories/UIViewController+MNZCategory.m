@@ -10,8 +10,8 @@
     
     UIResponder *responder = self.nextResponder;
     while (responder) {
-        if ([responder respondsToSelector:@selector(openURL:)]) {
-            [responder performSelector:@selector(openURL:) withObject:url];
+        if ([responder isKindOfClass: UIApplication.class]) {
+            [((UIApplication *)responder) openURL:url options:@{} completionHandler:nil];
         }
         
         responder = responder.nextResponder;
