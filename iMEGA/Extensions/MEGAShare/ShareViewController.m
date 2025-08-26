@@ -24,7 +24,6 @@
 #import "MEGATransfer+MNZCategory.h"
 
 @import ChatRepo;
-@import Firebase;
 @import MEGASDKRepo;
 #import "LocalizationHelper.h"
 
@@ -69,7 +68,6 @@
     if (self) {
         [self injectSDKRepoDependencies];
         [AppEnvironmentConfigurator configAppEnvironment];
-        [FIRApp configure];
         [UncaughtExceptionHandler registerHandler];
     }
     return self;
