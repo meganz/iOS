@@ -216,8 +216,7 @@ final class MediaDiscoveryContentViewModel: ObservableObject {
     }
     
     private func shouldExcludeSensitiveItems() async -> Bool {
-        if [.mediaDiscovery, .mediaDiscoverySharedItems]
-            .contains(photoLibraryContentViewModel.contentMode) {
+        if .mediaDiscovery == photoLibraryContentViewModel.contentMode {
             await sensitiveDisplayPreferenceUseCase.excludeSensitives()
         } else {
             false

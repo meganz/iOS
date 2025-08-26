@@ -34,6 +34,7 @@ final class HomeSearchResultsProvider: SearchResultsProviding, @unchecked Sendab
     @Atomic private var subscriptions = Set<AnyCancellable>()
 
     private let hiddenNodesFeatureEnabled: Bool
+    private let isFromSharedItem: Bool
 
     // The node from which we want start searching from,
     // root node can be nil in case when we start app in offline
@@ -66,6 +67,7 @@ final class HomeSearchResultsProvider: SearchResultsProviding, @unchecked Sendab
         self.availableChips = allChips
         self.sdk = sdk
         self.hiddenNodesFeatureEnabled = hiddenNodesFeatureEnabled
+        self.isFromSharedItem = isFromSharedItem
 
         mapper = SearchResultMapper(
             sdk: sdk,
@@ -218,6 +220,9 @@ final class HomeSearchResultsProvider: SearchResultsProviding, @unchecked Sendab
     }
     
     private func shouldExcludeSensitive() async -> Bool {
+        guard !isFromSharedItem else {
+            return false
+        }
         let excludeSensitives = await sensitiveDisplayPreferenceUseCase.excludeSensitives()
 
         return hiddenNodesFeatureEnabled
