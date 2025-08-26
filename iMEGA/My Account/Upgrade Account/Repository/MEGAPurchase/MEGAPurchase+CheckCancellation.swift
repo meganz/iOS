@@ -2,6 +2,13 @@ import MEGAAppSDKRepo
 import StoreKit
 
 extension MEGAPurchase {
+    // [AP-2132]
+    // There are situation for some users where our BE has cancelled the subscriptions (e.g: payment card issues).
+    // But from Appstore side, user is still actively subscribing/paying for the product.
+    // As a results, they wouldn't receive the Pro benefit from the plan they paid for.
+    // In order to resolve this, we need to get the latest purchase receipt and send it to BE for them to revalidate the receipt and
+    // possibly re-enable user's Pro status.
+
     @objc func checkForCancellation() {
         MEGALogDebug("[StoreKit] Checking for subscription cancellation details")
         Task(priority: .background) {
@@ -13,7 +20,7 @@ extension MEGAPurchase {
                     case .success(let request) where request.isLastSubscriptionCanceled:
                         MEGALogDebug("[StoreKit] Last subscription with id \(request.transactionId) is cancelled")
 
-                        self?.submitReceipt()
+                        self?.submitSyncedReceipt()
                     case .success(let request):
                         MEGALogDebug("[StoreKit] Last subscription with id \(request.transactionId) is not cancelled")
                     case .failure(let error):
@@ -28,7 +35,7 @@ extension MEGAPurchase {
         }
     }
 
-    private func submitReceipt() {
+    private func submitSyncedReceipt() {
         MEGALogDebug("[StoreKit] Submitting App Store receipt to check for un-synced purchases")
 
         guard !isSubmittingReceipt else {
@@ -46,7 +53,18 @@ extension MEGAPurchase {
             return
         }
 
-        MEGASdk.shared.submitPurchase(.itunes, receipt: receiptData.base64EncodedString(), delegate: self)
+        MEGASdk.shared.submitPurchase(
+            .itunes,
+            receipt: receiptData.base64EncodedString(),
+            delegate: RequestDelegate { result in
+                switch result {
+                case .success:
+                    MEGALogDebug("[StoreKit] Receipt submitted successfully")
+                case .failure(let error):
+                    MEGALogError("[StoreKit] Submitting receipt failed with error: \(error.localizedDescription)")
+                }
+            }
+        )
     }
 }
 
