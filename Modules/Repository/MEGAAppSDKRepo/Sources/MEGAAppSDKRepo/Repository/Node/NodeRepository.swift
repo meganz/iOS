@@ -7,7 +7,7 @@ public struct NodeRepository: NodeRepositoryProtocol {
         let sdk = MEGASdk.sharedSdk
         return NodeRepository(sdk: sdk,
                               sharedFolderSdk: MEGASdk.sharedFolderLinkSdk,
-                              nodeUpdatesProvider: NodeUpdatesProvider(sdk: sdk))
+                              nodeUpdatesProvider: NodeUpdatesProvider())
     }
     
     public var nodeUpdates: AnyAsyncSequence<[NodeEntity]> {

@@ -22,7 +22,7 @@ import StoreKit
         nodeRepository: NodeRepository(
             sdk: sdk,
             sharedFolderSdk: .shared,
-            nodeUpdatesProvider: NodeUpdatesProvider(sdk: sdk)
+            nodeUpdatesProvider: NodeUpdatesProvider()
         )
     )
     

@@ -13,7 +13,7 @@ extension PhotosRepository: @retroactive SharedRepositoryProtocol {
                 photoLocalSource: localSource,
                 photoCacheRepositoryMonitors: PhotoCacheRepositoryMonitors(
                     sdk: sdk,
-                    nodeUpdatesProvider: NodeUpdatesProvider(sdk: sdk),
+                    nodeUpdatesProvider: NodeUpdatesProvider(),
                     photoLocalSource: localSource,
                     cacheInvalidationTrigger: .init(
                         logoutNotificationName: .accountDidLogout,
