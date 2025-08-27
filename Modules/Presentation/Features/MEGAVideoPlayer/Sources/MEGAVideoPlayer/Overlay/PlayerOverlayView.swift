@@ -243,8 +243,26 @@ extension PlayerOverlayView {
                     .offset(x: viewModel.progress * geometry.size.width - 8)
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+            .gesture(
+                DragGesture(minimumDistance: 0)
+                    .onChanged { value in
+                        viewModel.updateSeekBarDrag(
+                            at: value.location,
+                            in: geometry.frame(in: .local)
+                        )
+                    }
+                    .onEnded { value in
+                        Task {
+                            await self.viewModel.endSeekBarDrag(
+                                at: value.location,
+                                in: geometry.frame(in: .local)
+                            )
+                        }
+                    }
+            )
         }
         .frame(height: TokenSpacing._8)
+        .contentShape(Rectangle())
     }
 
     var bottomControls: some View {

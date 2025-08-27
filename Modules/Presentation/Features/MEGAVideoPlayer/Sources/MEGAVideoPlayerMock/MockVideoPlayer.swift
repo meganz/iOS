@@ -37,6 +37,7 @@ public final class MockVideoPlayer: VideoPlayerProtocol {
     public var jumpBackwardSeconds: TimeInterval = 0
     public var seekCallCount: Int = 0
     public var seekTime: TimeInterval = 0
+    public var seekResult: Bool = true
     public var changeRateCallCount: Int = 0
     public var changeRateValue: Float = 1.0
     public var setLoopingCallCount: Int = 0
@@ -89,6 +90,12 @@ public final class MockVideoPlayer: VideoPlayerProtocol {
     public func seek(to time: TimeInterval) {
         seekCallCount += 1
         seekTime = time
+    }
+
+    public func seek(to time: TimeInterval) async -> Bool {
+        seekCallCount += 1
+        seekTime = time
+        return seekResult
     }
 
     public func changeRate(to rate: Float) {

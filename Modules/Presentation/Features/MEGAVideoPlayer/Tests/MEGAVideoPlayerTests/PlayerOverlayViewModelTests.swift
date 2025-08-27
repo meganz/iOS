@@ -34,6 +34,7 @@ struct PlayerOverlayViewModelTests {
         #expect(sut.isControlsVisible == false)
         #expect(sut.currentSpeed == .normal)
         #expect(sut.scalingMode == .fit)
+        #expect(sut.isSeeking == false)
     }
 
     // MARK: - State Change Tests
@@ -446,5 +447,75 @@ struct PlayerOverlayViewModelTests {
         #expect(sut.scalingMode == expectedScale)
         #expect(mockPlayer.setScalingModeCallCount == expectedSetScalingModeCallCount)
         #expect(mockPlayer.setScalingModeValue == expectedScale)
+    }
+    
+    // MARK: - Seek Bar Tests
+    
+    @Test(arguments: [
+        (Duration.seconds(100), true),
+        (.seconds(0), false)
+    ])
+    func updateSeekBarDrag_whenDifferentDuration_shouldSetCorrectSeekingState(
+        duration: Duration,
+        expectedIsSeeking: Bool
+    ) {
+        let sut = makeSUT()
+        sut.duration = duration
+        let frame = CGRect(x: 0, y: 0, width: 100, height: 20)
+        let location = CGPoint(x: 50, y: 10)
+
+        sut.updateSeekBarDrag(at: location, in: frame)
+        
+        #expect(sut.isSeeking == expectedIsSeeking)
+    }
+
+    @Test(arguments: [
+        (0, 0.0, "00:00 / 01:40"),
+        (25, 0.25, "00:25 / 01:40"),
+        (50, 0.50, "00:50 / 01:40"),
+        (75, 0.75, "01:15 / 01:40"),
+        (100, 1.0, "01:40 / 01:40")
+    ])
+    func updateSeekBarDrag_whenDifferentLocation_shouldSetCorrectProgressAndTimeString(
+        location: CGFloat,
+        expectedProgress: CGFloat,
+        expectedCurrentTimeAndDurationString: String
+    ) {
+        let sut = makeSUT()
+        sut.duration = .seconds(100)
+        let frame = CGRect(x: 0, y: 0, width: 100, height: 20)
+        let location = CGPoint(x: location, y: 10)
+
+        sut.updateSeekBarDrag(at: location, in: frame)
+
+        #expect(sut.progress == expectedProgress)
+        #expect(sut.currentTimeAndDurationString == expectedCurrentTimeAndDurationString)
+    }
+    
+    @Test(arguments: [
+        (0, 0, 0.0, Duration.seconds(0)),
+        (25, 25, 0.25, Duration.seconds(25)),
+        (50, 50, 0.50, Duration.seconds(50)),
+        (75, 75, 0.75, Duration.seconds(75)),
+        (100, 100, 1.0, Duration.seconds(100))
+    ])
+    func endSeekBarDrag_whenDifferentLocation_shouldUpdateSeekTimeAndProgressAndCurrentTime(
+        location: CGFloat,
+        expectedSeekTime: TimeInterval,
+        expectedProgress: CGFloat,
+        expectedCurrentTime: Duration
+    ) async {
+        let mockPlayer = MockVideoPlayer()
+        let sut = makeSUT(player: mockPlayer)
+        sut.duration = .seconds(100)
+
+        let frame = CGRect(x: 0, y: 0, width: 100, height: 20)
+        let location = CGPoint(x: location, y: 10)
+
+        await sut.endSeekBarDrag(at: location, in: frame)
+
+        #expect(mockPlayer.seekTime == expectedSeekTime)
+        #expect(sut.progress == expectedProgress)
+        #expect(sut.currentTime == expectedCurrentTime)
     }
 }

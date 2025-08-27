@@ -53,6 +53,9 @@ final class PreviewVideoPlayer: VideoPlayerProtocol {
     func jumpForward(by seconds: TimeInterval) {}
     func jumpBackward(by seconds: TimeInterval) {}
     func seek(to time: TimeInterval) {}
+    func seek(to time: TimeInterval) async -> Bool {
+        true
+    }
     func loadNode(_ node: some PlayableNode) {}
     func setupPlayer(in layer: any PlayerLayerProtocol) {}
     func resizePlayer(to frame: CGRect) {}
