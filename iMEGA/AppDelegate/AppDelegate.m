@@ -262,6 +262,8 @@
         } else {
             [self listenToStorePaymentTransactions];
         }
+        
+        [self fetchMiscFlagsBeforeDomainCheck];
     }
     
     UIApplicationShortcutItem *applicationShortcutItem = launchOptions[UIApplicationLaunchOptionsShortcutItemKey];

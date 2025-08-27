@@ -21,7 +21,20 @@ extension AppDelegate {
     @objc var domainName: String {
         DIContainer.appDomainUseCase.domainName
     }
-    
+
+    /// Requests the SDK to fetch and sync remote feature flags (e.g., domain name) when user is not logged in.
+    @objc func fetchMiscFlagsBeforeDomainCheck() {
+        Task {
+            do {
+                let accountUseCase = AccountUseCase(repository: AccountRepository.newRepo)
+                try await accountUseCase.getMiscFlags()
+                MEGALogDebug("Domain name: \(DIContainer.appDomainUseCase.domainName)")
+            } catch {
+                MEGALogError("[Domain name] error \(error)")
+            }
+        }
+    }
+
     @objc func showEnableTwoFactorAuthenticationIfNeeded() {
         if UserDefaults.standard.bool(forKey: "twoFactorAuthenticationAlreadySuggested") {
             return
