@@ -21,6 +21,9 @@ struct SubscriptionPurchaseView: View {
 
     var body: some View {
         contentView
+            .onLoad {
+                viewModel.onLoad()
+            }
             .onChange(of: viewModel.isDismiss) { newValue in
                 if newValue {
                     dismiss()
