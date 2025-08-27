@@ -113,9 +113,19 @@ extension MEGAAVPlayer: PlaybackControllable {
     }
 
     public func seek(to time: TimeInterval) {
+        // A timescale of 600 is recommended because it balances precision with efficiency
+        // and has been the long-standing convention in Apple’s media frameworks.
         let newTime = CMTime(seconds: time, preferredTimescale: 600)
         guard newTime.isValid else { return }
         player.seek(to: newTime)
+    }
+
+    public func seek(to time: TimeInterval) async -> Bool {
+        // A timescale of 600 is recommended because it balances precision with efficiency
+        // and has been the long-standing convention in Apple’s media frameworks.
+        let newTime = CMTime(seconds: time, preferredTimescale: 600)
+        guard newTime.isValid else { return false }
+        return await player.seek(to: newTime)
     }
 
     public func changeRate(to rate: Float) {
@@ -335,4 +345,3 @@ public extension MEGAAVPlayer {
         )
     }
 }
-

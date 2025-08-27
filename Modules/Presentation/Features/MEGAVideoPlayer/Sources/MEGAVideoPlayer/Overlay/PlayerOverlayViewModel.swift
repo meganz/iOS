@@ -14,8 +14,10 @@ public final class PlayerOverlayViewModel: ObservableObject {
     @Published var isLoopEnabled: Bool = false
     @Published var isPlaybackBottomSheetPresented: Bool = false
     @Published var scalingMode: VideoScalingMode = .fit
+    @Published var isSeeking: Bool = false
 
     private var autoHideTimer: Timer?
+    private var dragProgress: CGFloat = 0
     private var cancellables = Set<AnyCancellable>()
 
     private let player: any VideoPlayerProtocol
@@ -114,7 +116,8 @@ extension PlayerOverlayViewModel {
 
 extension PlayerOverlayViewModel {
     var currentTimeAndDurationString: String {
-        let currentTimeString = string(from: currentTime)
+        let timeToDisplay = isSeeking ? dragTime : currentTime
+        let currentTimeString = string(from: timeToDisplay)
         let durationString = string(from: duration)
         return "\(currentTimeString) / \(durationString)"
     }
@@ -122,11 +125,49 @@ extension PlayerOverlayViewModel {
     var progress: CGFloat {
         let durationSeconds = duration.components.seconds
         guard durationSeconds > 0 else { return 0 }
-        
-        let currentSeconds = currentTime.components.seconds
-        let result = CGFloat(currentSeconds) / CGFloat(durationSeconds)
-        print("progress: \(result)")
+
+        let seconds = isSeeking ? dragTime.components.seconds : currentTime.components.seconds
+        let result = CGFloat(seconds) / CGFloat(durationSeconds)
         return result
+    }
+
+    func updateSeekBarDrag(at location: CGPoint, in frame: CGRect) {
+        guard duration.components.seconds > 0 else { return }
+        isSeeking = true
+        cancelAutoHideTimer()
+        dragProgress = calculateDragProgress(from: location.x, in: frame.width)
+    }
+
+    func endSeekBarDrag(at location: CGPoint, in frame: CGRect) async {
+        guard duration.components.seconds > 0 else { return }
+        dragProgress = calculateDragProgress(from: location.x, in: frame.width)
+        guard await seekToProgress(dragProgress) else { return }
+        currentTime = dragTime
+        isSeeking = false
+        dragProgress = 0
+        didTapControl()
+    }
+
+    private func calculateDragProgress(from xPosition: CGFloat, in width: CGFloat) -> CGFloat {
+        let clampedX = max(0, min(xPosition, width))
+        let progress = clampedX / width
+        return max(0, min(progress, 1.0))
+    }
+    
+    private func seekToProgress(_ progress: CGFloat) async -> Bool {
+        let durationSeconds = duration.components.seconds
+        guard durationSeconds > 0 else { return false }
+        
+        let targetTime = progress * Double(durationSeconds)
+        return await player.seek(to: targetTime)
+    }
+
+    private var dragTime: Duration {
+        let durationSeconds = duration.components.seconds
+        guard durationSeconds > 0 else { return .seconds(0) }
+
+        let dragSeconds = dragProgress * Double(durationSeconds)
+        return .seconds(dragSeconds)
     }
 
     private func string(from duration: Duration) -> String {
