@@ -611,7 +611,7 @@ struct CloudDriveViewControllerFactory {
             networkMonitorUseCase: NetworkMonitorUseCase(repo: NetworkMonitorRepository.newRepo)
         )
         
-        let nodeUpdatesProvider = NodeUpdatesProvider(sdk: sdk)
+        let nodeUpdatesProvider = NodeUpdatesProvider()
 
         let nodeSourceUpdatesListener = NewCloudDriveNodeSourceUpdatesListener(
             originalNodeSource: nodeSource,

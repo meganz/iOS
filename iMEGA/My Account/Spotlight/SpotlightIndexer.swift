@@ -34,7 +34,7 @@ final class SpotlightIndexer: NSObject {
             nodeAttributeUseCase: NodeAttributeUseCase(
                 repo: NodeAttributeRepository.newRepo),
             spotlightSearchableIndexUseCase: spotlightSearchableIndexUseCase,
-            nodeUpdatesProvider: NodeUpdatesProvider(sdk: sdk)
+            nodeUpdatesProvider: NodeUpdatesProvider()
         )
         super.init()
     }
