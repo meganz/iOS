@@ -147,20 +147,13 @@ struct AccountMenuViewRouter: AccountMenuViewRouting {
             MEGALogDebug("The account details is nil - cannot upgrade")
             return
         }
-
-        if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .loginRegisterAndOnboardingRevamp) {
-            SubscriptionPurchaseRouter(
-                presenter: UIApplication.mnz_presentingViewController(),
-                currentAccountDetails: accountDetails,
-                viewType: .upgrade,
-                accountUseCase: accountUseCase
-            ).start()
-        } else {
-            UpgradeAccountPlanRouter(
-                presenter: UIApplication.mnz_presentingViewController(),
-                accountDetails: accountDetails
-            ).start()
-        }
+        
+        SubscriptionPurchaseRouter(
+            presenter: UIApplication.mnz_presentingViewController(),
+            currentAccountDetails: accountDetails,
+            viewType: .upgrade,
+            accountUseCase: accountUseCase
+        ).start()
     }
 
     func showStorage() {

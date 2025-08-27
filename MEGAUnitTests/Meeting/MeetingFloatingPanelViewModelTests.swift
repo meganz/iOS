@@ -52,7 +52,6 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
                 hasDismissedBanner: false,
                 shouldHideCallAllIcon: false,
                 shouldDisableMuteAllButton: false,
-                presentUpgradeFlow: {},
                 dismissFreeUserLimitBanner: {},
                 actionButtonTappedHandler: {}
             ),
@@ -939,7 +938,6 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
                 headerConfigFactory: headerConfigFactory,
                 featureFlags: MockFeatureFlagProvider(list: .init()),
                 notificationCenter: NotificationCenter.default,
-                presentUpgradeFlow: { _ in },
                 tracker: tracker
             )
         }

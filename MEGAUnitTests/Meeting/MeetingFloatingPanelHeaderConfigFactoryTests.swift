@@ -18,7 +18,6 @@ final class MeetingFloatingPanelHeaderConfigFactoryTests: XCTestCase {
                 freeTierInCallParticipantPlusWaitingRoomLimitReached: Bool,
                 warningMode: ParticipantLimitWarningMode,
                 hasDismissedBanner: Bool,
-                presentUpgradeFlow: @escaping ActionHandler,
                 dismissFreeUserLimitBanner: @escaping ActionHandler
             ) -> MeetingInfoHeaderData? {
                 nil
@@ -43,7 +42,6 @@ final class MeetingFloatingPanelHeaderConfigFactoryTests: XCTestCase {
                 hasDismissedBanner: hasDismissedBanner,
                 shouldHideCallAllIcon: shouldHideCallAllIcon,
                 shouldDisableMuteAllButton: shouldDisableMuteAllButton,
-                presentUpgradeFlow: {},
                 dismissFreeUserLimitBanner: {}, 
                 actionButtonTappedHandler: {}
             )

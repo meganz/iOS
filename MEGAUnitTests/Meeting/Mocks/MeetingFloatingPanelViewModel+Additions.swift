@@ -17,7 +17,6 @@ struct MockMeetingFloatingPanelHeaderConfigFactory: MeetingFloatingPanelHeaderCo
         hasDismissedBanner: Bool,
         shouldHideCallAllIcon: Bool,
         shouldDisableMuteAllButton: Bool,
-        presentUpgradeFlow: @escaping ActionHandler,
         dismissFreeUserLimitBanner: @escaping ActionHandler,
         actionButtonTappedHandler: @escaping ActionHandler
     ) -> MeetingParticipantTableViewHeader.ViewConfig {
@@ -65,7 +64,6 @@ extension MeetingFloatingPanelViewModel {
             headerConfigFactory: headerConfigFactory,
             featureFlags: MockFeatureFlagProvider(list: .init()), 
             notificationCenter: NotificationCenter.default,
-            presentUpgradeFlow: {_ in },
             tracker: MockTracker()
         )
     }

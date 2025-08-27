@@ -6,6 +6,11 @@ import MEGADomain
 import Settings
 import SwiftUI
 
+protocol UpgradeAccountPlanRouting: Routing {
+    func showTermsAndPolicies()
+    var isFromAds: Bool { get }
+}
+
 final class SubscriptionPurchaseRouter: UpgradeAccountPlanRouting {
     private weak var presenter: UIViewController?
     private weak var baseViewController: UIViewController?
