@@ -40,7 +40,6 @@ protocol MeetingFloatingPanelRouting: AnyObject {
     func showWaitingRoomParticipantsList(for call: CallEntity)
     func showMuteSuccess(for participant: CallParticipantEntity?)
     func showMuteError(for participant: CallParticipantEntity?)
-    func showUpgradeFlow(_ accountDetails: AccountDetailsEntity)
     func showHangOrEndCallDialog(containerViewModel: MeetingContainerViewModel)
     func transitionToLongForm()
     var panelIsLongForm: Bool { get }
@@ -132,7 +131,6 @@ final class MeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
             headerConfigFactory: MeetingFloatingPanelHeaderConfigFactory(infoBannerFactory: MeetingFloatingPanelBannerFactory()),
             featureFlags: DIContainer.featureFlagProvider,
             notificationCenter: NotificationCenter.default,
-            presentUpgradeFlow: showUpgradeFlow,
             tracker: DIContainer.tracker
         )
         
@@ -318,14 +316,6 @@ final class MeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
         } else {
             SVProgressHUD.showError(withStatus: Strings.Localizable.Calls.ParticipantsInCall.MuteAll.error)
         }
-    }
-    
-    func showUpgradeFlow(_ accountDetails: AccountDetailsEntity) {
-        guard let baseViewController else { return }
-        UpgradeAccountPlanRouter(
-            presenter: baseViewController,
-            accountDetails: accountDetails
-        ).start()
     }
     
     func showHangOrEndCallDialog(containerViewModel: MeetingContainerViewModel) {

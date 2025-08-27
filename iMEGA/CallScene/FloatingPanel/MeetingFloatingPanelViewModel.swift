@@ -73,7 +73,6 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
     private var callParticipantsInWaitingRoom = [CallParticipantEntity]()
     private var seeWaitingRoomListNotificationTask: Task<Void, Never>?
     
-    private let presentUpgradeFlow: (AccountDetailsEntity) -> Void
     // store state of the fact that user dismissed upsell banner
     // shown to non-organizer host when there's more than max number of meeting participant
     // if organiser-user is free-tier user
@@ -135,7 +134,6 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
          headerConfigFactory: some MeetingFloatingPanelHeaderConfigFactoryProtocol,
          featureFlags: some FeatureFlagProviderProtocol,
          notificationCenter: NotificationCenter,
-         presentUpgradeFlow: @escaping (AccountDetailsEntity) -> Void,
          tracker: some AnalyticsTracking
     ) {
         self.router = router
@@ -153,7 +151,6 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
         self.headerConfigFactory = headerConfigFactory
         self.featureFlagProvider = featureFlags
         self.notificationCenter = notificationCenter
-        self.presentUpgradeFlow = presentUpgradeFlow
         self.tracker = tracker
     }
     
@@ -755,10 +752,6 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
                 hasDismissedBanner: dismissedFreeUserLimitBanner,
                 shouldHideCallAllIcon: shouldHideCallAllIconInNotInCallTab,
                 shouldDisableMuteAllButton: shouldDisableMuteAllButtonInInCallTab,
-                presentUpgradeFlow: { [weak self]  in
-                    guard let self, let details = accountUseCase.currentAccountDetails else { return }
-                    presentUpgradeFlow(details)
-                },
                 dismissFreeUserLimitBanner: dismissFreeUserLimitBanner,
                 actionButtonTappedHandler: { [weak self] in
                     self?.dispatch(.onHeaderActionTap)

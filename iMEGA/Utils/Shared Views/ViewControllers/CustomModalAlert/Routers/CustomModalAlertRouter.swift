@@ -135,9 +135,7 @@ import MEGADomain
     @objc func start() {
         let visibleViewController = UIApplication.mnz_visibleViewController()
         if mode != .upgradeSecurity &&
-            (visibleViewController is CustomModalAlertViewController ||
-             visibleViewController is UpgradeTableViewController ||
-             visibleViewController is ProductDetailViewController) {
+            visibleViewController is CustomModalAlertViewController {
             return
         }
         

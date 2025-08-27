@@ -17,7 +17,6 @@ protocol MeetingFloatingPanelBannerFactoryProtocol {
         freeTierInCallParticipantPlusWaitingRoomLimitReached: Bool,
         warningMode: ParticipantLimitWarningMode,
         hasDismissedBanner: Bool,
-        presentUpgradeFlow: @escaping ActionHandler,
         dismissFreeUserLimitBanner: @escaping ActionHandler
     ) -> MeetingInfoHeaderData?
 }
@@ -34,7 +33,6 @@ struct MeetingFloatingPanelBannerFactory: MeetingFloatingPanelBannerFactoryProto
         freeTierInCallParticipantPlusWaitingRoomLimitReached: Bool,
         warningMode: ParticipantLimitWarningMode,
         hasDismissedBanner: Bool,
-        presentUpgradeFlow: @escaping ActionHandler,
         dismissFreeUserLimitBanner: @escaping ActionHandler
     ) -> MeetingInfoHeaderData? {
         

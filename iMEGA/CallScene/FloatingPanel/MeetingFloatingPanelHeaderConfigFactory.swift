@@ -14,7 +14,6 @@ protocol MeetingFloatingPanelHeaderConfigFactoryProtocol {
         hasDismissedBanner: Bool,
         shouldHideCallAllIcon: Bool,
         shouldDisableMuteAllButton: Bool,
-        presentUpgradeFlow: @escaping ActionHandler,
         dismissFreeUserLimitBanner: @escaping ActionHandler,
         actionButtonTappedHandler: @escaping ActionHandler
     ) -> MeetingParticipantTableViewHeader.ViewConfig
@@ -33,7 +32,6 @@ struct MeetingFloatingPanelHeaderConfigFactory: MeetingFloatingPanelHeaderConfig
         hasDismissedBanner: Bool,
         shouldHideCallAllIcon: Bool,
         shouldDisableMuteAllButton: Bool,
-        presentUpgradeFlow: @escaping ActionHandler,
         dismissFreeUserLimitBanner: @escaping ActionHandler,
         actionButtonTappedHandler: @escaping ActionHandler
     ) -> MeetingParticipantTableViewHeader.ViewConfig {
@@ -68,7 +66,6 @@ struct MeetingFloatingPanelHeaderConfigFactory: MeetingFloatingPanelHeaderConfig
                 // [MEET-3663] will also make use of .organizer privilege level
                 warningMode: isMyselfAModerator ? .dismissible : .noWarning,
                 hasDismissedBanner: hasDismissedBanner,
-                presentUpgradeFlow: presentUpgradeFlow,
                 dismissFreeUserLimitBanner: dismissFreeUserLimitBanner
             )
         )

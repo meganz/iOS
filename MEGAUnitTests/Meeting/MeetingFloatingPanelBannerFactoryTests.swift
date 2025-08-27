@@ -19,7 +19,6 @@ final class MeetingFloatingPanelBannerFactoryTests: XCTestCase {
                 freeTierInCallParticipantPlusWaitingRoomLimitReached: freeTierInCallParticipantPlusWaitingRoomLimitReached,
                 warningMode: warningMode,
                 hasDismissedBanner: hasDismissedBanner,
-                presentUpgradeFlow: {},
                 dismissFreeUserLimitBanner: {}
             )
         }
