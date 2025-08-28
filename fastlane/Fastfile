@@ -53,7 +53,6 @@ platform :ios do
       "MEGAIntent",
       "MEGAPicker",
       "MEGAPickerFileProvider",
-      "MEGAShare",
       "MEGAWidget"
     ]
 
