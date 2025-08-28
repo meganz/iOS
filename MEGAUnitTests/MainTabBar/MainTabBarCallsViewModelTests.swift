@@ -365,7 +365,31 @@ final class MainTabBarCallsViewModelTests: XCTestCase {
             self.router.showUpgradeToProDialog_calledTimes == 0
         }
     }
-    
+
+    @MainActor
+    func testTabBarTapEvents_whenInvoked_shouldMatchTheEvents() {
+        let mockTracker = MockTracker()
+
+        let viewModel = makeMainTabBarCallsViewModel(tracker: mockTracker)
+
+        viewModel.dispatch(.didTapCloudDriveTab)
+        viewModel.dispatch(.didTapChatRoomsTab)
+        viewModel.dispatch(.didTapMenuTab)
+        viewModel.dispatch(.didTapPhotosTab)
+        viewModel.dispatch(.didTapHomeTab)
+
+        assertTrackAnalyticsEventCalled(
+            trackedEventIdentifiers: mockTracker.trackedEventIdentifiers,
+            with: [
+                CloudDriveBottomNavigationItemEvent(),
+                ChatRoomsBottomNavigationItemEvent(),
+                MenuBottomNavigationItemEvent(),
+                PhotosBottomNavigationItemEvent(),
+                HomeBottomNavigationItemEvent()
+            ]
+        )
+    }
+
     @MainActor
     func testCallUpdate_callPlusWaitingRoomExceedLimit_AdmitButtonDisabled() {
         let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity(ownPrivilege: .moderator, isWaitingRoomEnabled: true), peerPrivilege: .standard)

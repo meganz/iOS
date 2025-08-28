@@ -169,6 +169,12 @@ extension MainTabBarController {
             mainTabBarViewModel.dispatch(.didTapCloudDriveTab)
         case TabManager.chatTabIndex():
             mainTabBarViewModel.dispatch(.didTapChatRoomsTab)
+        case TabManager.menuTabIndex():
+            mainTabBarViewModel.dispatch(.didTapMenuTab)
+        case TabManager.photosTabIndex():
+            mainTabBarViewModel.dispatch(.didTapPhotosTab)
+        case TabManager.homeTabIndex():
+            mainTabBarViewModel.dispatch(.didTapHomeTab)
         default: break
         }
     }

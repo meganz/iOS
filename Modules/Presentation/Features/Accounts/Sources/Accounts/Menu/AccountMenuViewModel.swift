@@ -106,6 +106,7 @@ public final class AccountMenuViewModel: ObservableObject {
     private var onUserAlertsUpdatesTask: Task<Void, any Error>?
     private var monitorSubmitReceiptAfterPurchaseTask: Task<Void, Never>?
     private let notificationsUseCase: any NotificationsUseCaseProtocol
+    private var subscriptions: Set<AnyCancellable> = []
 
     @PreferenceWrapper(key: PreferenceKeyEntity.offlineLogOutWarningDismissed, defaultValue: false)
     private var offlineLogOutWarningDismissed: Bool
@@ -258,6 +259,7 @@ public final class AccountMenuViewModel: ObservableObject {
         listenToContactsRequestsUpdates()
         listenToUserAlertsUpdates()
         listenToSubmitReceiptAfterPurchase()
+        listenToPrivacySuiteExpanded()
     }
 
     deinit {
@@ -666,9 +668,20 @@ public final class AccountMenuViewModel: ObservableObject {
         case .passwordManager:
             tracker.trackAnalyticsEvent(with: MyMenuMEGAPassNavigationItemEvent())
         case .transferIt:
-            tracker.trackAnalyticsEvent(with: MyMenuTransfersNavigationItemEvent())
+            tracker.trackAnalyticsEvent(with: MyMenuTransferITNavigationItemEvent())
         }
 
         router.openLink(for: app)
+    }
+
+    private func listenToPrivacySuiteExpanded() {
+        $isPrivacySuiteExpanded
+            .sink { [weak self] updatedValue in
+                guard let self else { return }
+                if updatedValue {
+                    tracker.trackAnalyticsEvent(with: PrivacySuiteExpandedEvent())
+                }
+            }
+            .store(in: &subscriptions)
     }
 }

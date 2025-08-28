@@ -898,7 +898,7 @@ struct AccountMenuViewModelTests {
             TestEventTrackingData(
                 section: .privacySuite,
                 row: SUT.Constants.PrivacySuiteSectionIndex.transferItApp.rawValue,
-                expectedEventIdentifier: MyMenuTransfersNavigationItemEvent()
+                expectedEventIdentifier: MyMenuTransferITNavigationItemEvent()
             )
         ]
     )
@@ -935,6 +935,18 @@ struct AccountMenuViewModelTests {
         Test.assertTrackAnalyticsEventCalled(
             trackedEventIdentifiers: tracker.trackedEventIdentifiers,
             with: [AccountNotificationCentreDisplayedWithUnreadNotificationsEvent()]
+        )
+    }
+
+    @Test("Test tracking event when user taps on the privacy suite header to expand")
+    func testAnalyticsEventWhenPrivacySuiteExpanded() async throws {
+        let tracker = MockTracker()
+        let sut = makeSUT(tracker: tracker)
+        sut.isPrivacySuiteExpanded = true
+        try await waitUntil(tracker.trackedEventIdentifiers.count == 0)
+        Test.assertTrackAnalyticsEventCalled(
+            trackedEventIdentifiers: tracker.trackedEventIdentifiers,
+            with: [PrivacySuiteExpandedEvent()]
         )
     }
 
