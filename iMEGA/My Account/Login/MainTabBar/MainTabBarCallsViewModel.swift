@@ -87,6 +87,9 @@ enum MainTabBarCallsAction: ActionType {
     case startCallIntent(INStartCallIntent)
     case didTapCloudDriveTab
     case didTapChatRoomsTab
+    case didTapMenuTab
+    case didTapPhotosTab
+    case didTapHomeTab
 }
 
 class MainTabBarCallsViewModel: ViewModelType {
@@ -178,6 +181,12 @@ class MainTabBarCallsViewModel: ViewModelType {
             trackCloudDriveTabEvent()
         case .didTapChatRoomsTab:
             trackChatRoomsTabEvent()
+        case .didTapMenuTab:
+            trackMenuButtonTapEvent()
+        case .didTapPhotosTab:
+            trackPhotosButtonTapEvent()
+        case .didTapHomeTab:
+            trackHomeButtonTapEvent()
         }
     }
     
@@ -543,5 +552,17 @@ class MainTabBarCallsViewModel: ViewModelType {
     
     private func trackChatRoomsTabEvent() {
         tracker.trackAnalyticsEvent(with: ChatRoomsBottomNavigationItemEvent())
+    }
+
+    private func trackMenuButtonTapEvent() {
+        tracker.trackAnalyticsEvent(with: MenuBottomNavigationItemEvent())
+    }
+
+    private func trackHomeButtonTapEvent() {
+        tracker.trackAnalyticsEvent(with: HomeBottomNavigationItemEvent())
+    }
+
+    private func trackPhotosButtonTapEvent() {
+        tracker.trackAnalyticsEvent(with: PhotosBottomNavigationItemEvent())
     }
 }
