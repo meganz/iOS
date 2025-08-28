@@ -71,7 +71,11 @@ extension SettingsTableViewController: MEGARequestDelegate {
 }
 
 // MARK: - BottomOverlayPresenterProtocol
-extension SettingsTableViewController: BottomOverlayPresenterProtocol {
+extension SettingsTableViewController: BottomOverlayPresenterProtocol, BottomSafeAreaOverlayCoverStatusProviderProtocol {
+    public var shouldShowSafeAreaOverlayCover: Bool {
+        true
+    }
+    
     public func updateContentView(_ height: CGFloat) {
         additionalSafeAreaInsets = .init(top: 0, left: 0, bottom: height, right: 0)
     }
