@@ -18,3 +18,13 @@ import UIKit
     /// - Returns: A Boolean value indicating whether the content view has been updated.
     func hasUpdatedContentView() -> Bool
 }
+
+
+// Bottom overlay will only span to the bottom of the safe area, some case the content outside the safe area
+// will be visible below the bottom overlay.
+// In case we want to cover the said visible area we can use BottomSafeAreaOverlayCoverStatusProviderProtocol
+// and set the value for shouldShowSafeAreaOverlayCover for the MainTabBarController to decide
+// whether to cover that area or not.
+@objc public protocol BottomSafeAreaOverlayCoverStatusProviderProtocol where Self: UIViewController {
+    var shouldShowSafeAreaOverlayCover: Bool { get }
+}

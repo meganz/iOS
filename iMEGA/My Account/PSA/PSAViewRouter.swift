@@ -39,9 +39,9 @@ final class PSAViewRouter: NSObject, PSAViewRouting {
     }
     
     func hidePSAView(_ hide: Bool) {
-        guard let tabBar = tabBarController as? MainTabBarController else { return }
-        
-        hide ? tabBar.hidePSA() : tabBar.showPSA()
+        guard let tabBarController = tabBarController as? MainTabBarController else { return }
+
+        hide ? tabBarController.hidePSA() : tabBarController.showPSA(shouldAddSafeAreaCoverView: tabBarController.tabBar.isHidden == true)
     }
     
     // MARK: - PSAViewDelegate
