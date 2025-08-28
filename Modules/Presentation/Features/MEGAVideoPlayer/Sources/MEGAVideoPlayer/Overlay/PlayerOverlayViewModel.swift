@@ -8,8 +8,7 @@ public final class PlayerOverlayViewModel: ObservableObject {
     @Published var currentTime: Duration = .seconds(0)
     @Published var duration: Duration = .seconds(0)
     
-    @Published var isLoading: Bool = true
-    @Published var isControlsVisible: Bool = false
+    @Published var isControlsVisible: Bool = true
     @Published var currentSpeed: PlaybackSpeed = .normal
     @Published var isLoopEnabled: Bool = false
     @Published var isPlaybackBottomSheetPresented: Bool = false
@@ -17,7 +16,6 @@ public final class PlayerOverlayViewModel: ObservableObject {
     @Published var isSeeking: Bool = false
 
     private var autoHideTimer: Timer?
-    private var dragProgress: CGFloat = 0
     private var cancellables = Set<AnyCancellable>()
 
     private let player: any VideoPlayerProtocol
@@ -58,7 +56,11 @@ public final class PlayerOverlayViewModel: ObservableObject {
         player
            .currentTimePublisher
            .receive(on: DispatchQueue.main)
-           .assign(to: &$currentTime)
+           .sink { [weak self] newTime in
+               guard let self, !isSeeking else { return }
+               currentTime = newTime
+           }
+           .store(in: &cancellables)
     }
 
     private func observeDuration() {
@@ -93,22 +95,22 @@ extension PlayerOverlayViewModel {
         }
 
         player.play()
-        didTapControl()
+        resetAutoHide()
     }
 
     func didTapPause() {
         player.pause()
-        didTapControl()
+        resetAutoHide()
     }
 
-    func didTapJumpForward() {
-        player.jumpForward(by: 10)
-        didTapControl()
-    }
-
-    func didTapJumpBackward() {
-        player.jumpBackward(by: 10)
-        didTapControl()
+    func didTapJump(by second: Int) async {
+        guard duration.components.seconds > 0 else { return }
+        isSeeking = true
+        cancelAutoHideTimer()
+        updateCurrentTimeForSeek(by: second)
+        guard await seekToCurrentTime() else { return }
+        isSeeking = false
+        resetAutoHide()
     }
 }
 
@@ -116,8 +118,7 @@ extension PlayerOverlayViewModel {
 
 extension PlayerOverlayViewModel {
     var currentTimeAndDurationString: String {
-        let timeToDisplay = isSeeking ? dragTime : currentTime
-        let currentTimeString = string(from: timeToDisplay)
+        let currentTimeString = string(from: currentTime)
         let durationString = string(from: duration)
         return "\(currentTimeString) / \(durationString)"
     }
@@ -126,8 +127,8 @@ extension PlayerOverlayViewModel {
         let durationSeconds = duration.components.seconds
         guard durationSeconds > 0 else { return 0 }
 
-        let seconds = isSeeking ? dragTime.components.seconds : currentTime.components.seconds
-        let result = CGFloat(seconds) / CGFloat(durationSeconds)
+        let currentSeconds = currentTime.components.seconds
+        let result = CGFloat(currentSeconds) / CGFloat(durationSeconds)
         return result
     }
 
@@ -135,39 +136,44 @@ extension PlayerOverlayViewModel {
         guard duration.components.seconds > 0 else { return }
         isSeeking = true
         cancelAutoHideTimer()
-        dragProgress = calculateDragProgress(from: location.x, in: frame.width)
+        updateCurrentTimeForSeek(from: location.x, in: frame.width)
     }
 
     func endSeekBarDrag(at location: CGPoint, in frame: CGRect) async {
         guard duration.components.seconds > 0 else { return }
-        dragProgress = calculateDragProgress(from: location.x, in: frame.width)
-        guard await seekToProgress(dragProgress) else { return }
-        currentTime = dragTime
+        isSeeking = true
+        cancelAutoHideTimer()
+        updateCurrentTimeForSeek(from: location.x, in: frame.width)
+        guard await seekToCurrentTime() else { return }
         isSeeking = false
-        dragProgress = 0
-        didTapControl()
+        resetAutoHide()
     }
 
-    private func calculateDragProgress(from xPosition: CGFloat, in width: CGFloat) -> CGFloat {
+    private func updateCurrentTimeForSeek(
+        from xPosition: CGFloat,
+        in width: CGFloat
+    ) {
+        let durationInSeconds = duration.components.seconds
+        guard durationInSeconds > 0 else { return }
         let clampedX = max(0, min(xPosition, width))
         let progress = clampedX / width
-        return max(0, min(progress, 1.0))
-    }
-    
-    private func seekToProgress(_ progress: CGFloat) async -> Bool {
-        let durationSeconds = duration.components.seconds
-        guard durationSeconds > 0 else { return false }
-        
-        let targetTime = progress * Double(durationSeconds)
-        return await player.seek(to: targetTime)
+        let finalProgress = max(0, min(progress, 1.0))
+        let targetTime = finalProgress * Double(durationInSeconds)
+        currentTime = Duration.milliseconds(targetTime * 1000)
     }
 
-    private var dragTime: Duration {
-        let durationSeconds = duration.components.seconds
-        guard durationSeconds > 0 else { return .seconds(0) }
+    private func updateCurrentTimeForSeek(by seconds: Int) {
+        let durationInSeconds = duration.components.seconds
+        guard durationInSeconds > 0 else { return }
+        let targetTime = Int(currentTime.components.seconds) + seconds
+        currentTime = Duration.seconds(
+            max(0, min(targetTime, Int(durationInSeconds)))
+        )
+    }
 
-        let dragSeconds = dragProgress * Double(durationSeconds)
-        return .seconds(dragSeconds)
+    private func seekToCurrentTime() async -> Bool {
+        let timeInSeconds = currentTime.components.seconds
+        return await player.seek(to: Double(timeInSeconds))
     }
 
     private func string(from duration: Duration) -> String {
@@ -201,7 +207,7 @@ extension PlayerOverlayViewModel {
 extension PlayerOverlayViewModel {
     func didTapPlaybackSpeed() {
         isPlaybackBottomSheetPresented = true
-        didTapControl()
+        resetAutoHide()
     }
 
     func didSelectPlaybackSpeed(_ speed: PlaybackSpeed) {
@@ -217,18 +223,18 @@ extension PlayerOverlayViewModel {
     func didTapLoopButton() {
         isLoopEnabled.toggle()
         player.setLooping(isLoopEnabled)
-        didTapControl()
+        resetAutoHide()
     }
 
     func didTapRotate() {
         didTapRotateAction()
-        didTapControl()
+        resetAutoHide()
     }
     
     func didTapScalingButton() {
         scalingMode = scalingMode.toggled()
         player.setScalingMode(scalingMode)
-        didTapControl()
+        resetAutoHide()
     }
     
     func handlePinchGesture(scale: CGFloat) {
@@ -255,7 +261,7 @@ extension PlayerOverlayViewModel {
 extension PlayerOverlayViewModel {
     func showControls() {
         isControlsVisible = true
-        startAutoHideTimer()
+        resetAutoHide()
     }
 
     func hideControls() {
@@ -271,8 +277,12 @@ extension PlayerOverlayViewModel {
         }
     }
 
-    private func didTapControl() {
-        startAutoHideTimer()
+    private func resetAutoHide() {
+        if shouldAutoHide {
+            startAutoHideTimer()
+        } else {
+            cancelAutoHideTimer()
+        }
     }
 
     private func startAutoHideTimer() {
@@ -290,13 +300,21 @@ extension PlayerOverlayViewModel {
         autoHideTimer = nil
     }
 
+    private var shouldAutoHide: Bool {
+        switch state {
+        case .paused, .buffering:
+            false
+        case .playing, .opening, .stopped, .error, .ended:
+            true
+        }
+    }
+
     private func handleStateChange(_ newState: PlaybackState) {
         state = newState
-        switch newState {
-        case .opening, .buffering:
-            isLoading = true
-        case .playing, .paused, .ended, .error, .stopped:
-            isLoading = false
-        }
+        resetAutoHide()
+    }
+
+    var shouldShownJumpButtons: Bool {
+        duration.components.seconds > 0
     }
 }

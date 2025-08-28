@@ -30,9 +30,10 @@ struct PlayerOverlayViewModelTests {
         #expect(sut.state == .stopped)
         #expect(sut.currentTime == .seconds(0))
         #expect(sut.duration == .seconds(0))
-        #expect(sut.isLoading == true)
-        #expect(sut.isControlsVisible == false)
+        #expect(sut.isControlsVisible == true)
         #expect(sut.currentSpeed == .normal)
+        #expect(sut.isLoopEnabled == false)
+        #expect(sut.isPlaybackBottomSheetPresented == false)
         #expect(sut.scalingMode == .fit)
         #expect(sut.isSeeking == false)
     }
@@ -42,16 +43,13 @@ struct PlayerOverlayViewModelTests {
     struct StateChangeTestCase {
         let initialState: PlaybackState
         let newState: PlaybackState
-        let expectedIsLoading: Bool
 
         init(
             initialState: PlaybackState = .stopped,
-            newState: PlaybackState,
-            expectedIsLoading: Bool
+            newState: PlaybackState
         ) {
             self.initialState = initialState
             self.newState = newState
-            self.expectedIsLoading = expectedIsLoading
         }
     }
 
@@ -59,37 +57,30 @@ struct PlayerOverlayViewModelTests {
         arguments: [
             StateChangeTestCase(
                 newState: .opening,
-                expectedIsLoading: true
             ),
             StateChangeTestCase(
                 initialState: .opening,
-                newState: .playing,
-                expectedIsLoading: false
+                newState: .playing
             ),
             StateChangeTestCase(
                 initialState: .playing,
-                newState: .paused,
-                expectedIsLoading: false
+                newState: .paused
             ),
             StateChangeTestCase(
                 initialState: .playing,
-                newState: .buffering,
-                expectedIsLoading: true
+                newState: .buffering
             ),
             StateChangeTestCase(
                 initialState: .playing,
-                newState: .ended,
-                expectedIsLoading: false
+                newState: .ended
             ),
             StateChangeTestCase(
                 initialState: .playing,
-                newState: .error("Test error"),
-                expectedIsLoading: false
+                newState: .error("Test error")
             ),
             StateChangeTestCase(
                 initialState: .playing,
-                newState: .stopped,
-                expectedIsLoading: false
+                newState: .stopped
             )
         ]
     )
@@ -103,7 +94,6 @@ struct PlayerOverlayViewModelTests {
         try? await Task.sleep(for: .milliseconds(100))
 
         #expect(sut.state == testCase.newState)
-        #expect(sut.isLoading == testCase.expectedIsLoading)
     }
 
     // MARK: - Controls Visibility Tests
@@ -144,14 +134,14 @@ struct PlayerOverlayViewModelTests {
 
     @Test(arguments: [
         (PlaybackState.playing, false),
-        (.paused, false),
-        (.buffering, false),
+        (.paused, true),
+        (.buffering, true),
         (.opening, false),
         (.stopped, false),
         (.ended, false),
         (.error("Test error"), false)
     ])
-    func autoHideTimer_whenShowControlsAfter3Seconds(
+    func autoHideTimer_whenShowControlsAfterThreeSeconds_shouldChangeControlVisibility(
         playerState: PlaybackState,
         expectedIsControlsVisible: Bool
     ) async {
@@ -168,14 +158,14 @@ struct PlayerOverlayViewModelTests {
 
     @Test(arguments: [
         (PlaybackState.playing, false),
-        (.paused, false),
-        (.buffering, false),
+        (.paused, true),
+        (.buffering, true),
         (.opening, false),
         (.stopped, false),
         (.ended, false),
         (.error("Test error"), false)
     ])
-    func autoHideTimer_whenControlTappedAndAfterThreeSeconds(
+    func autoHideTimer_whenControlTappedAndAfterThreeSeconds_shouldChangeControlVisibility(
         playerState: PlaybackState,
         expectedIsControlsVisible: Bool
     ) async {
@@ -234,26 +224,27 @@ struct PlayerOverlayViewModelTests {
         #expect(mockPlayer.pauseCallCount == 1)
     }
 
-    @Test
-    func didTapJumpForward_callsJumpForward() {
+    @Test(arguments: [
+        (15, 50, 65.0),
+        (15, 90, 100.0),
+        (-15, 50, 35.0),
+        (-15, 0, 0.0),
+    ])
+    func didTapJump(
+        seconds: Int,
+        initialTime: Int = 50,
+        expectedSeekTime: TimeInterval
+    ) async {
         let mockPlayer = MockVideoPlayer()
         let sut = makeSUT(player: mockPlayer)
+        sut.duration = .seconds(100)
+        sut.currentTime = .seconds(initialTime)
 
-        sut.didTapJumpForward()
+        await sut.didTapJump(by: seconds)
 
-        #expect(mockPlayer.jumpForwardCallCount == 1)
-        #expect(mockPlayer.jumpForwardSeconds == 10)
-    }
-
-    @Test
-    func didTapJumpBackward_callsJumpBackward() {
-        let mockPlayer = MockVideoPlayer()
-        let sut = makeSUT(player: mockPlayer)
-
-        sut.didTapJumpBackward()
-
-        #expect(mockPlayer.jumpBackwardCallCount == 1)
-        #expect(mockPlayer.jumpBackwardSeconds == 10)
+        #expect(sut.currentTime == Duration.seconds(expectedSeekTime))
+        #expect(mockPlayer.seekTime == expectedSeekTime)
+        #expect(mockPlayer.seekCallCount == 1)
     }
 
     @Test
@@ -488,6 +479,7 @@ struct PlayerOverlayViewModelTests {
 
         sut.updateSeekBarDrag(at: location, in: frame)
 
+        #expect(sut.isSeeking == true)
         #expect(sut.progress == expectedProgress)
         #expect(sut.currentTimeAndDurationString == expectedCurrentTimeAndDurationString)
     }
@@ -514,8 +506,23 @@ struct PlayerOverlayViewModelTests {
 
         await sut.endSeekBarDrag(at: location, in: frame)
 
+        #expect(sut.isSeeking == false)
         #expect(mockPlayer.seekTime == expectedSeekTime)
         #expect(sut.progress == expectedProgress)
         #expect(sut.currentTime == expectedCurrentTime)
+    }
+
+    @Test(arguments: [
+        (Duration.seconds(100), true),
+        (.seconds(0), false)
+    ])
+    func shouldShownJumpButtons(
+        duration: Duration,
+        expectedShouldShownJumpButtons: Bool
+    ) {
+        let sut = makeSUT()
+        sut.duration = duration
+
+        #expect(sut.shouldShownJumpButtons == expectedShouldShownJumpButtons)
     }
 }

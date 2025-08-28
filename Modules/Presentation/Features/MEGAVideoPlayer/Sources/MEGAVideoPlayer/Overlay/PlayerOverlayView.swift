@@ -24,11 +24,6 @@ public struct PlayerOverlayView: View {
                 centerPlaybackButtons
                 bottomToolbar
             }
-
-            if viewModel.isLoading {
-                ProgressView()
-                    .progressViewStyle(CircularProgressViewStyle(tint: .white))
-            }
         }
         .animation(.easeInOut(duration: 0.3), value: viewModel.isControlsVisible)
         .buttonStyle(.plain)
@@ -109,11 +104,15 @@ extension PlayerOverlayView {
 extension PlayerOverlayView {
     var centerPlaybackButtons: some View {
         HStack(alignment: .center, spacing: 48) {
-            jumpBackwardButton
+            if viewModel.shouldShownJumpButtons {
+                jumpBackwardButton
+            }
             skipBackwardButton
             playPauseButton
             skipForwardButton
-            jumpForwardButton
+            if viewModel.shouldShownJumpButtons {
+                jumpForwardButton
+            }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
         .foregroundStyle(TokenColors.Icon.onColor.swiftUI)
@@ -121,11 +120,20 @@ extension PlayerOverlayView {
 
     @ViewBuilder var playPauseButton: some View {
         switch viewModel.state {
-        case .playing, .buffering, .opening:
+        case .buffering, .opening:
+            loadingSpinner
+        case .playing:
             pauseButton
         case .paused, .stopped, .error, .ended:
             playButton
         }
+    }
+
+    var loadingSpinner: some View {
+        ProgressView()
+            .progressViewStyle(CircularProgressViewStyle(tint: .white))
+            .scaleEffect(1.5)
+            .frame(width: 56, height: 56)
     }
 
     var playButton: some View {
@@ -166,11 +174,19 @@ extension PlayerOverlayView {
     }
 
     var jumpBackwardButton: some View {
-        controlButton(name: "backward15", action: viewModel.didTapJumpBackward)
+        controlButton(name: "backward15") {
+            Task {
+                await viewModel.didTapJump(by: -15)
+            }
+        }
     }
 
     var jumpForwardButton: some View {
-        controlButton(name: "forward15", action: viewModel.didTapJumpForward)
+        controlButton(name: "forward15") {
+            Task {
+                await viewModel.didTapJump(by: 15)
+            }
+        }
     }
 }
 
