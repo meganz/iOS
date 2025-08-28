@@ -411,5 +411,7 @@ extension AudioPlayer: AudioQueueLoaderDelegate {
                 anchor = item
             }
         }
+        
+        preloadNextTracksMetadata()
     }
 }
