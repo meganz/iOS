@@ -8,6 +8,7 @@
 #import "PHFetchOptions+CameraUpload.h"
 #import "PHFetchResult+CameraUpload.h"
 #import "AssetFetchResult.h"
+#import "MEGA-Swift.h"
 
 @interface CameraScanner () <PHPhotoLibraryChangeObserver>
 
@@ -52,6 +53,15 @@
 - (void)scanMediaTypes:(NSArray<NSNumber *> *)mediaTypes completion:(void (^)(NSError * _Nullable))completion {
     [self.cameraScanQueue addOperationWithBlock:^{
         MEGALogDebug(@"[Camera Upload] Start local album scanning for media types %@", mediaTypes);
+        
+        DevicePermissionsHandlerObjC *handler = [[DevicePermissionsHandlerObjC alloc] init];
+        if ([handler shouldAskForPhotosPermissions]) {
+            if (completion) {
+                completion(nil);
+            }
+            MEGALogDebug(@"[Camera Upload] photos permissions not determined, the scanning is interrupted");
+            return;
+        }
         
         PHFetchResult<PHAsset *> *fetchResult = [PHAsset fetchAssetsWithOptions:[PHFetchOptions mnz_fetchOptionsForCameraUploadWithMediaTypes:mediaTypes]];
         
