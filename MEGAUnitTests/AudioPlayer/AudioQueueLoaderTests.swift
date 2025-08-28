@@ -31,6 +31,19 @@ struct AudioQueueLoaderTestSuite {
             #expect(firstBatch.last?.name == "Track 100")
             #expect(sut.loader.hasPendingWork)
         }
+        
+        @Test("Returns fewer than batchSize when total tracks are smaller")
+        func returnsSmallerFirstBatchWhenNotEnoughTracks() {
+            let sut = makeSUT(batchSize: 100)
+            let totalTracks = AudioPlayerItem.mockArray(count: 60)
+            
+            let firstBatch = sut.loader.addAllTracks(totalTracks)
+            
+            #expect(firstBatch.count == 60)
+            #expect(firstBatch.first?.name == "Track 1")
+            #expect(firstBatch.last?.name == "Track 60")
+            #expect(!sut.loader.hasPendingWork) // no remaining, no pending
+        }
     }
     
     // MARK: - Tests for reset
@@ -115,35 +128,80 @@ struct AudioQueueLoaderTestSuite {
             #expect(!sut.loader.hasPendingWork)
         }
     }
-
-    // MARK: - Tests for prepareNextBatchInBackground
-    @Suite("PrepareNextBatchInBackground")
-    struct PrepareNextBatchInBackgroundTests {
-        @Test("Preloads and inserts pending batch when queue is below threshold")
-        @MainActor func preloadsAndInsertsPendingBatch() async throws {
+    
+    // MARK: - Tests for prepareNextBatch
+    @Suite("PrepareNextBatch")
+    struct PrepareNextBatchTests {
+        @Test("Stages and inserts pending batch when queue is below threshold (synchronous)")
+        func stagesAndInsertsPendingBatchWhenBelowThreshold() throws {
+            let sut = makeSUT(batchSize: 100, queueThreshold: 50)
+            sut.delegate.currentQueue = [] // trigger immediate insert
+            
+            _ = sut.loader.addAllTracks(AudioPlayerItem.mockArray(count: defaultBatchSize))
+            
+            sut.loader.prepareNextBatch()
+            
+            #expect(sut.delegate.insertedBatches.count == 1)
+            let batch = try #require(sut.delegate.insertedBatches.first, "Should have inserted the pending batch")
+            #expect(batch.count == 50)
+        }
+        
+        @Test("Does nothing if a pending batch already exists and queue is not below threshold")
+        func doesNothingIfPendingBatchExists() {
+            let sut = makeSUT(batchSize: 100, queueThreshold: 50)
+            sut.delegate.currentQueue = Array(AudioPlayerItem.mockArray(count: 60))
+            
+            _ = sut.loader.addAllTracks(AudioPlayerItem.mockArray(count: defaultBatchSize))
+            sut.loader.prepareNextBatch()
+            sut.loader.prepareNextBatch()
+            
+            #expect(sut.delegate.insertedBatches.isEmpty)
+            #expect(sut.loader.hasPendingWork)
+        }
+    }
+    
+    // MARK: - Tests for InsertPendingBatch behavior
+    @Suite("InsertPendingBatch")
+    struct InsertPendingBatchTests {
+        @Test("insertPendingBatch clears pending and does not double-insert")
+        func insertClearsPendingAndIsIdempotent() {
+            let sut = makeSUT(batchSize: 100, queueThreshold: 50)
+            sut.delegate.currentQueue = Array(AudioPlayerItem.mockArray(count: 60))
+            
+            _ = sut.loader.addAllTracks(AudioPlayerItem.mockArray(count: defaultBatchSize))
+            sut.loader.prepareNextBatch()
+            
+            #expect(sut.delegate.insertedBatches.isEmpty)
+            
+            sut.loader.insertPendingBatch()
+            #expect(sut.delegate.insertedBatches.count == 1)
+            
+            sut.loader.insertPendingBatch()
+            #expect(sut.delegate.insertedBatches.count == 1)
+        }
+        
+        @Test("Refill does not duplicate insertion when called twice back-to-back")
+        func refillIsIdempotent() {
             let sut = makeSUT(batchSize: 100, queueThreshold: 50)
             sut.delegate.currentQueue = []
             
             _ = sut.loader.addAllTracks(AudioPlayerItem.mockArray(count: defaultBatchSize))
             
-            sut.loader.prepareNextBatchInBackground()
+            sut.loader.refillQueueIfNeeded()
+            sut.loader.refillQueueIfNeeded()
             
-            try await Task.sleep(nanoseconds: 200_000_000)
-            
-            #expect(sut.delegate.insertedBatches.count >= 1)
-            let batch = try #require(sut.delegate.insertedBatches.first, "Should have inserted the pending batch")
-            #expect(batch.count == 50)
+            #expect(sut.delegate.insertedBatches.count == 1)
         }
     }
     
-    // MARK: - Tests for Reset Behavior during Preloading
+    // MARK: - Tests for Reset Behavior
     @Suite("ResetBehavior")
     struct ResetBehaviorTests {
-        @Test("Reset cancels preloading and clears all work")
-        func resetCancelsPreloading() {
+        @Test("Reset clears staged batch and remaining tracks")
+        func resetClearsAllWork() {
             let sut = makeSUT()
             _ = sut.loader.addAllTracks(AudioPlayerItem.mockArray(count: defaultBatchSize))
-            sut.loader.prepareNextBatchInBackground()
+            sut.loader.prepareNextBatch()
             sut.loader.reset()
             #expect(!sut.loader.hasPendingWork)
         }
