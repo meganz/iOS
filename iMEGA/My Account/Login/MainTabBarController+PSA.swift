@@ -9,7 +9,7 @@ extension MainTabBarController {
         )
         
         shouldUpdateProgressViewLocation()
-        showPSA()
+        showPSA(shouldAddSafeAreaCoverView: tabBar.isHidden)
     }
     
     func hidePSA() {
@@ -22,11 +22,11 @@ extension MainTabBarController {
         }
     }
     
-    func showPSA() {
+    func showPSA(shouldAddSafeAreaCoverView: Bool) {
         guard bottomOverlayManager?.contains(.psa) == true else { return }
-        
-        tabBar.isHidden ? addSafeAreaCoverView() : removeSafeAreaCoverView()
-        
+
+        shouldAddSafeAreaCoverView ? addSafeAreaCoverView() : removeSafeAreaCoverView()
+
         updateOverlayLayout { [weak self] in
             self?.bottomOverlayManager?.setItemVisibility(
                 for: .psa,
@@ -52,9 +52,12 @@ extension MainTabBarController {
     
     func updatePSABannerVisibility(for viewController: UIViewController) -> Bool {
         let psaHidden = isPSABannerHidden()
-        
+
         if let presenter = viewController as? (any BottomOverlayPresenterProtocol) {
-            psaHidden ? showPSA() : refreshPresenterContentView(presenter)
+            let shouldAddSafeAreaCoverView = (presenter as? (any BottomSafeAreaOverlayCoverStatusProviderProtocol))?.shouldShowSafeAreaOverlayCover
+            ?? tabBar.isHidden
+
+            psaHidden ? showPSA(shouldAddSafeAreaCoverView: shouldAddSafeAreaCoverView) : refreshPresenterContentView(presenter)
             return true
         } else {
             if !isPSABannerHidden() {
@@ -63,7 +66,7 @@ extension MainTabBarController {
             return false
         }
     }
-    
+
     private func refreshPresenterContentView(_ presenter: any BottomOverlayPresenterProtocol) {
         let containerHeight = currentContainerHeight()
         presenter.updateContentView(containerHeight)
