@@ -37,7 +37,7 @@ This guide will help you build the MEGA iOS application using Xcode on macOS.
    - `Modules/MEGASharedRepo`
 
 3. **Replace Shared Repo**:
-   - [Download MEGASharedRepo](https://mega.nz/file/It8nnYQT#E5hIgQlxUEfeXH6KrTXYOYnqymWbtanOSKf73ojA91s)
+   - [Download MEGASharedRepo](https://mega.nz/file/SrghGA4J#MA1AbQWBWLKd7ik3ND6EOoJFnHLLt4La99atxYLlJn4)
    - Replace the old one in the `/Modules` directory.
 
 4. **Install CMake**:
@@ -74,7 +74,7 @@ This guide will help you build the MEGA iOS application using Xcode on macOS.
    git checkout -b master
    ```
 
-   - For **SVProgressHUD** (use `custom-MEGA` branch) and **LTHPasscodeViewController** (use `custom_mega` branch):
+   - For **SVProgressHUD** (use `custom_mega` branch) and **LTHPasscodeViewController** (use `custom-MEGA` branch):
      ```bash
      git checkout <latest-commit>
      git branch -D master
@@ -84,8 +84,8 @@ This guide will help you build the MEGA iOS application using Xcode on macOS.
 7. **Download and Unzip Required Dependencies**:
    Place these under:
    `Modules/DataSource/MEGAChatSDK/Sources/MEGAChatSDK/bindings/Objective-C/3rdparty`
-   - [include.zip](https://mega.nz/file/k1UnnZjS#DvuLu-WvlFxp5xbC8Kx0ZOuy8mp4jpBxdDQqSx4toLY)
-   - [webrtc.zip](https://mega.nz/file/9gE0nJBZ#XZmF1YsMoM7pERrfXDqF9UZCRZYU_txTvbYhxbpwgAw)
+   - [include.zip](https://mega.nz/file/urg33S4T#WfPfHFsjLVNmEXREGS6QrCnwY47As3JLwS_Ioh1ATYs)
+   - [webrtc.zip](https://mega.nz/file/PioyHb4B#tE1aHIvRZJqtRXc6wt8Ccv8mdO8RuYAUEdANqsTxlsw)
 
 8. **Generate the DB Schema**:
    Navigate to:
