@@ -319,7 +319,13 @@ public final class AccountMenuViewModel: ObservableObject {
     }
 
     private func upgradeAccount() {
-        tracker.trackAnalyticsEvent(with: UpgradeMyAccountEvent())
+        if let proLevel = accountUseCase.currentAccountDetails?.proLevel {
+            if proLevel == .free {
+                tracker.trackAnalyticsEvent(with: UpgradeForFreeUsersInMenuEvent())
+            } else {
+                tracker.trackAnalyticsEvent(with: UpgradeForPaidUsersInMenuEvent())
+            }
+        }
         router.upgradeAccount()
     }
 
