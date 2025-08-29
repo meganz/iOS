@@ -950,6 +950,22 @@ struct AccountMenuViewModelTests {
         )
     }
 
+    @Test("Ensures tapping the Upgrade button as a free user logs the expected analytics event")
+    func testFreeUserUpgradeButtonAnalytics() throws {
+        try assertAnalytics(
+            for: MockMEGAAccountDetails(type: .free).toAccountDetailsEntity(),
+            with: UpgradeForFreeUsersInMenuEvent()
+        )
+    }
+
+    @Test("Ensures tapping the Upgrade button as a paid user logs the expected analytics event")
+    func testPaidUserUpgradeButtonAnalytics() throws {
+        try assertAnalytics(
+            for: MockMEGAAccountDetails(type: .proIII).toAccountDetailsEntity(),
+            with: UpgradeForPaidUsersInMenuEvent()
+        )
+    }
+
     private typealias SUT = AccountMenuViewModel
 
     private func makeSUT(
@@ -996,6 +1012,32 @@ struct AccountMenuViewModelTests {
                 try await Task.sleep(nanoseconds: 10_000_000) // 10ms
             }
         }
+    }
+
+    private func assertAnalytics(
+        for accountDetails: AccountDetailsEntity,
+        with expectedEventIdentifier: any EventIdentifier
+    ) throws {
+        let tracker = MockTracker()
+        let router = MockMenuViewRouter()
+        let accountUseCase = MockAccountUseCase(currentAccountDetails: accountDetails)
+        let sut = makeSUT(router: router, tracker: tracker, accountUseCase: accountUseCase)
+        let accountSection = try #require(sut.sections[.account], "Account section should exist")
+        let currentPlanRow = try #require(
+            accountSection[SUT.Constants.AccountSectionIndex.currentPlan.rawValue],
+            "Account section should contain current plan details"
+        )
+
+        guard case .withButton(_, let action) = currentPlanRow.rowType else {
+            Issue.record("Expected button row type but got \(currentPlanRow.rowType)")
+            return
+        }
+
+        action()
+        Test.assertTrackAnalyticsEventCalled(
+            trackedEventIdentifiers: tracker.trackedEventIdentifiers,
+            with: [expectedEventIdentifier]
+        )
     }
 }
 
