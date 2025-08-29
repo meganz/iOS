@@ -386,6 +386,9 @@
                         [viewController dismissViewControllerAnimated:YES completion:nil];
                     };
                 }
+                
+                [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
+                [SVProgressHUD show];
                 MEGARemoveRequestDelegate *removeRequestDelegate = [[MEGARemoveRequestDelegate alloc] initWithMode:1 files:(self.isFile ? 1 : 0) folders:(self.isFolder ? 1 : 0) completion:completion];
                 [MEGASdk.shared removeNode:self delegate:removeRequestDelegate];
                 

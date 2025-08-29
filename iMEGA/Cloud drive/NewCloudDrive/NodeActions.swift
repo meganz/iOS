@@ -348,7 +348,9 @@ extension NodeActions {
                 // not sure if this should trigger some completion
                 // check in [FM-1824]
             }) else { return }
-    
+            
+            SVProgressHUD.setDefaultMaskType(.none)
+            SVProgressHUD.show()
             let mageNodes = megaNodes(from: selectedNodes, using: sdk)
     
             for node in mageNodes {
