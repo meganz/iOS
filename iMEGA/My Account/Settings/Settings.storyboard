@@ -252,7 +252,7 @@
                             </tableViewSection>
                             <tableViewSection footerTitle="" id="KLO-ld-Rtr">
                                 <cells>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" style="IBUITableViewCellStyleDefault" id="tC7-2t-0gF">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="eQN-RX-plq" style="IBUITableViewCellStyleDefault" id="tC7-2t-0gF">
                                         <rect key="frame" x="0.0" y="298.66667366027832" width="414" height="43.666667938232422"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="mE5-t4-Ago">
