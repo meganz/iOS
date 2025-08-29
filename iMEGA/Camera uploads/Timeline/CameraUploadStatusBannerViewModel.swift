@@ -2,6 +2,7 @@ import Combine
 import MEGAAppPresentation
 import MEGADomain
 import MEGAPermissions
+import MEGAPreference
 import MEGASwift
 
 final class CameraUploadStatusBannerViewModel: ObservableObject {
@@ -12,11 +13,14 @@ final class CameraUploadStatusBannerViewModel: ObservableObject {
     
     private var monitorCameraUploadStatusProvider: MonitorCameraUploadStatusProvider
     private let cameraUploadsSettingsViewRouter: any Routing
+    @PreferenceWrapper(key: PreferenceKeyEntity.isCameraUploadsEnabled, defaultValue: false)
+    private var isCameraUploadsEnabled: Bool
     
     init(
         monitorCameraUploadUseCase: some MonitorCameraUploadUseCaseProtocol,
         devicePermissionHandler: some DevicePermissionsHandling,
         cameraUploadsSettingsViewRouter: some Routing,
+        preferenceUseCase: some PreferenceUseCaseProtocol = PreferenceUseCase.default,
         featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider
     ) {
         self.monitorCameraUploadStatusProvider = MonitorCameraUploadStatusProvider(
@@ -24,12 +28,16 @@ final class CameraUploadStatusBannerViewModel: ObservableObject {
             devicePermissionHandler: devicePermissionHandler,
             featureFlagProvider: featureFlagProvider)
         self.cameraUploadsSettingsViewRouter = cameraUploadsSettingsViewRouter
+        $isCameraUploadsEnabled.useCase = preferenceUseCase
         
         subscribeToHandleAutoPresentation()
     }
         
     @MainActor
     func monitorCameraUploadStatus() async throws {
+        guard isCameraUploadsEnabled else {
+            return
+        }
         for await status in monitorCameraUploadStatusProvider.monitorCameraUploadBannerStatusSequence() {
             try Task.checkCancellation()
             cameraUploadBannerStatusViewState = status

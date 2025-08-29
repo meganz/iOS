@@ -6,10 +6,29 @@ import MEGADomain
 import MEGADomainMock
 import MEGAPermissions
 import MEGAPermissionsMock
+import MEGAPreference
 import MEGASwift
 import Testing
 
 struct CameraUploadStatusBannerViewModelTests {
+    
+    @Test
+    func cameraUploadDisabled_shouldNotUpdateBannerStatus() async throws {
+        let preferenceUseCase = MockPreferenceUseCase(
+            dict: [PreferenceKeyEntity.isCameraUploadsEnabled.rawValue: false])
+        let sut = makeSUT(
+            cameraUploadStats: [
+                .init(progress: 0.9, pendingFilesCount: 1, pendingVideosCount: 1),
+                .init(progress: 1, pendingFilesCount: 0, pendingVideosCount: 1)
+            ],
+            preferenceUseCase: preferenceUseCase)
+        
+        #expect(sut.cameraUploadBannerStatusViewState == .uploadCompleted)
+        
+        try await sut.monitorCameraUploadStatus()
+        
+        #expect(sut.cameraUploadBannerStatusViewState == .uploadCompleted)
+    }
     
     @Test
     @MainActor
@@ -212,6 +231,7 @@ extension CameraUploadStatusBannerViewModelTests {
         possiblePauseReason: CameraUploadPausedReason = .notPaused,
         cameraUploadsSettingsViewRouter: some Routing = MockRouter(),
         cameraUploadState: AnyAsyncSequence<CameraUploadStateEntity> = EmptyAsyncSequence<CameraUploadStateEntity>().eraseToAnyAsyncSequence(),
+        preferenceUseCase: some PreferenceUseCaseProtocol = MockPreferenceUseCase(dict: [PreferenceKeyEntity.isCameraUploadsEnabled.rawValue: true]),
         featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:])
     ) -> CameraUploadStatusBannerViewModel {
         CameraUploadStatusBannerViewModel(
@@ -222,6 +242,7 @@ extension CameraUploadStatusBannerViewModelTests {
             ),
             devicePermissionHandler: devicePermissionHandler,
             cameraUploadsSettingsViewRouter: cameraUploadsSettingsViewRouter,
+            preferenceUseCase: preferenceUseCase,
             featureFlagProvider: featureFlagProvider
         )
     }
