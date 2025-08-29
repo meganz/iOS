@@ -97,6 +97,13 @@ class SearchBarUIHostingController<Content>: UIHostingController<Content>, Audio
         }
     }
     
+    override func willMove(toParent parent: UIViewController?) {
+        guard parent == nil else {
+            return
+        }
+        SVProgressHUD.dismiss()
+    }
+    
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         removeToolbar(animated: animated)
