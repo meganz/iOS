@@ -23,8 +23,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, strong) FileLinkViewModel *viewModel;
 
-- (void)importFromFiles;
-
 @end
 
 NS_ASSUME_NONNULL_END

@@ -1162,7 +1162,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
             break;
             
         case MegaNodeActionTypeImport:
-            [node mnz_fileLinkImportFromViewController:self isFolderLink:(self.displayMode == DisplayModeNodeInsideFolderLink)];
+            [self importNodeWithNode:node];
             break;
             
         case MegaNodeActionTypeRemove:

@@ -24,10 +24,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)mnz_copyInViewController:(UIViewController *)viewController;
 - (void)mnz_showNodeVersionsInViewController:(UIViewController *)viewController;
 
-#pragma mark - File links
-
-- (void)mnz_fileLinkImportFromViewController:(UIViewController *)viewController isFolderLink:(BOOL)isFolderLink;
-
 #pragma mark - Utils
 
 - (nullable MEGANode *)mnz_firstbornInShareOrOutShareParentNode;

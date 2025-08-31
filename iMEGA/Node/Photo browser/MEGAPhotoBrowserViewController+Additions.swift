@@ -327,6 +327,13 @@ extension MEGAPhotoBrowserViewController {
             selectedPhotos: [node.toNodeEntity()])
         .start()
     }
+    
+    @objc func importNode(node: MEGANode) {
+        ImportLinkRouter(
+            isFolderLink: displayMode == .nodeInsideFolderLink,
+            nodes: [node],
+            presenter: self).start()
+    }
 }
 
 extension MEGAPhotoBrowserViewController: MEGAPhotoBrowserPickerDelegate {
@@ -489,7 +496,10 @@ extension MEGAPhotoBrowserViewController {
         
         switch displayMode {
         case .fileLink:
-            node.mnz_fileLinkImport(from: self, isFolderLink: false)
+            ImportLinkRouter(
+                isFolderLink: false,
+                nodes: [node],
+                presenter: self).start()
         default:
             didPressAllMediasButton(sender)
         }

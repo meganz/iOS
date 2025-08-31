@@ -32,36 +32,18 @@ extension FolderLinkViewController {
     }
 
     @objc func importFilesFromFolderLink() {
-        if SAMKeychain.password(forService: "MEGA", account: "sessionV3") != nil {
-            guard let navigationController =
-                    UIStoryboard(
-                        name: "Cloud",
-                        bundle: nil
-                    ).instantiateViewController(withIdentifier: "BrowserNavigationControllerID") as? MEGANavigationController,
-                  let browserVC = navigationController.viewControllers.first as? BrowserViewController else {
-                return
-            }
-
-            browserVC.browserAction = .importFromFolderLink
-
-            if selectedNodesArray?.count != 0, let selectedNodesArray = selectedNodesArray as? [MEGANode] {
-                browserVC.selectedNodesArray = selectedNodesArray
-            } else if let parentNode = parentNode {
-                browserVC.selectedNodesArray = [parentNode]
-            }
-
-            UIApplication.mnz_presentingViewController().present(navigationController, animated: true)
+        let nodes: [MEGANode] = if let selectedNodes = selectedNodesArray as? [MEGANode], selectedNodes.isNotEmpty {
+            selectedNodes
+        } else if let parentNode {
+            [parentNode]
         } else {
-            if let nodes = selectedNodesArray as? [MEGANode], nodes.isNotEmpty {
-                MEGALinkManager.nodesFromLinkMutableArray.addObjects(from: nodes)
-            } else if let parentNode = parentNode {
-                MEGALinkManager.nodesFromLinkMutableArray.add(parentNode)
-            }
-
-            MEGALinkManager.selectedOption = .importFolderOrNodes
-
-            navigationController?.pushViewController(OnboardingUSPViewController(), animated: true)
+            []
         }
+        ImportLinkRouter(
+            isFolderLink: true,
+            nodes: nodes,
+            presenter: self)
+        .start()
     }
     
     func showMediaDiscovery() {

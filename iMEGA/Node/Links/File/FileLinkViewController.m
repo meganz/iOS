@@ -300,10 +300,6 @@
     }
 }
 
-- (void)importFromFiles {
-    [self.node mnz_fileLinkImportFromViewController:self isFolderLink:NO];
-}
-
 - (void)open {
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
         NSString *link = self.linkEncryptedString ? self.linkEncryptedString : self.publicLinkString;
