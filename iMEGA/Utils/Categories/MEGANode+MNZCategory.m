@@ -524,38 +524,6 @@
     browserVC.browserAction = browserAction;
 }
 
-- (void)mnz_fileLinkImportFromViewController:(UIViewController *)viewController isFolderLink:(BOOL)isFolderLink {
-    if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-        if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
-            BrowserAction browserAction = isFolderLink ? BrowserActionImportFromFolderLink : BrowserActionImport;
-            if (isFolderLink) {
-                [self presentBrowserViewControllerWithBrowserAction:browserAction];
-            } else {
-                [viewController dismissViewControllerAnimated:YES completion:^{
-                    [self presentBrowserViewControllerWithBrowserAction:browserAction];
-                }];
-            }
-        } else {
-            if (isFolderLink) {
-                [MEGALinkManager.nodesFromLinkMutableArray addObject:self];
-                MEGALinkManager.selectedOption = LinkOptionImportFolderOrNodes;
-            } else {
-                [MEGALinkManager.nodesFromLinkMutableArray addObject:self];
-                MEGALinkManager.selectedOption = LinkOptionImportNode;
-            }
-            
-            OnboardingViewController *onboardingVC = [OnboardingViewController instantiateOnboardingWithType:OnboardingTypeDefault];
-            if (viewController.navigationController) {
-                [viewController.navigationController pushViewController:onboardingVC animated:YES];
-            } else {
-                MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:onboardingVC];
-                [navigationController addRightCancelButton];
-                [viewController presentViewController:navigationController animated:YES completion:nil];
-            }
-        }
-    }
-}
-
 #pragma mark - Utils
 
 - (MEGANode *)mnz_firstbornInShareOrOutShareParentNode {

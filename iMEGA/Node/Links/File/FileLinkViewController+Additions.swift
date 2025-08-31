@@ -55,8 +55,12 @@ extension FileLinkViewController {
         }
     }
     
-    func addToCloudDrive() {
-        self.node?.mnz_fileLinkImport(from: self, isFolderLink: false)
+    @objc func importFromFiles() {
+        guard let node else { return }
+        ImportLinkRouter(
+            isFolderLink: false,
+            nodes: [node],
+            presenter: self).start()
     }
 }
 

@@ -56,6 +56,10 @@
 		0E44671C2D77CC3400691ECA /* OverDiskQuotaNodeActionViewControllerDelegateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E44671B2D77CC3400691ECA /* OverDiskQuotaNodeActionViewControllerDelegateTests.swift */; };
 		0E45ACB429BEB72600541278 /* NodeEntityMapppingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E45ACB329BEB72600541278 /* NodeEntityMapppingTests.swift */; };
 		0E5164512DF9317C0076E6F1 /* SubscriptionPurchaseFreePlanViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E5164502DF9317C0076E6F1 /* SubscriptionPurchaseFreePlanViewModelTests.swift */; };
+		0E51AC372E6118B30075E18F /* ImportLinkRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E51AC342E6118B30075E18F /* ImportLinkRouter.swift */; };
+		0E51AC382E6118B30075E18F /* ImportLinkViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E51AC352E6118B30075E18F /* ImportLinkViewModel.swift */; };
+		0E51AC3A2E6119780075E18F /* ImportLinkViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E51AC392E6119780075E18F /* ImportLinkViewModelTests.swift */; };
+		0E51AC3C2E6119F20075E18F /* MockImportLinkRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E51AC3B2E6119E40075E18F /* MockImportLinkRouter.swift */; };
 		0E52388B2AF0499A00AC5727 /* CameraUploadStatusButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E52388A2AF0499A00AC5727 /* CameraUploadStatusButtonView.swift */; };
 		0E52388D2AF04DF600AC5727 /* CameraUploadStatusButtonViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E52388C2AF04DF600AC5727 /* CameraUploadStatusButtonViewModel.swift */; };
 		0E5A5C9C2E2480DD0090A3CF /* CameraUploadConcurrentCountCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E5A5C9B2E2480D60090A3CF /* CameraUploadConcurrentCountCalculator.swift */; };
@@ -2805,6 +2809,10 @@
 		0E44671B2D77CC3400691ECA /* OverDiskQuotaNodeActionViewControllerDelegateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverDiskQuotaNodeActionViewControllerDelegateTests.swift; sourceTree = "<group>"; };
 		0E45ACB329BEB72600541278 /* NodeEntityMapppingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeEntityMapppingTests.swift; sourceTree = "<group>"; };
 		0E5164502DF9317C0076E6F1 /* SubscriptionPurchaseFreePlanViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionPurchaseFreePlanViewModelTests.swift; sourceTree = "<group>"; };
+		0E51AC342E6118B30075E18F /* ImportLinkRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportLinkRouter.swift; sourceTree = "<group>"; };
+		0E51AC352E6118B30075E18F /* ImportLinkViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportLinkViewModel.swift; sourceTree = "<group>"; };
+		0E51AC392E6119780075E18F /* ImportLinkViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportLinkViewModelTests.swift; sourceTree = "<group>"; };
+		0E51AC3B2E6119E40075E18F /* MockImportLinkRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockImportLinkRouter.swift; sourceTree = "<group>"; };
 		0E52388A2AF0499A00AC5727 /* CameraUploadStatusButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraUploadStatusButtonView.swift; sourceTree = "<group>"; };
 		0E52388C2AF04DF600AC5727 /* CameraUploadStatusButtonViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraUploadStatusButtonViewModel.swift; sourceTree = "<group>"; };
 		0E5A5C9B2E2480D60090A3CF /* CameraUploadConcurrentCountCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraUploadConcurrentCountCalculator.swift; sourceTree = "<group>"; };
@@ -5735,6 +5743,15 @@
 				0E43E13C2B2F958E0079700A /* PhotoBrowserViewModelTests.swift */,
 			);
 			path = PhotoBrowser;
+			sourceTree = "<group>";
+		};
+		0E51AC362E6118B30075E18F /* Import */ = {
+			isa = PBXGroup;
+			children = (
+				0E51AC342E6118B30075E18F /* ImportLinkRouter.swift */,
+				0E51AC352E6118B30075E18F /* ImportLinkViewModel.swift */,
+			);
+			path = Import;
 			sourceTree = "<group>";
 		};
 		0E5238892AF0497C00AC5727 /* Status */ = {
@@ -9186,6 +9203,7 @@
 			children = (
 				835EBCD02DCA0B7A00AD1E57 /* FileLinkViewModelTests.swift */,
 				835EBCEB2DCA17E800AD1E57 /* FolderLinkViewModelTests.swift */,
+				0E51AC392E6119780075E18F /* ImportLinkViewModelTests.swift */,
 			);
 			path = Links;
 			sourceTree = "<group>";
@@ -10431,6 +10449,7 @@
 				94E33C992C2EDB9A00754DCB /* MockCreateTextFileAlertViewRouter.swift */,
 				943DBBC82CB94C5400B8B14C /* MockExportFileViewRouter.swift */,
 				94BF69122CAFFA460052F1D5 /* MockHomeBannerRouter.swift */,
+				0E51AC3B2E6119E40075E18F /* MockImportLinkRouter.swift */,
 				0E80B3202DC4884600582D55 /* MockLoginRouter.swift */,
 				949CC15C2B0FD5230047D581 /* MockMyAccountHallRouter.swift */,
 				947064732D3281CD00C89D7F /* MockNotificationsViewRouter.swift */,
@@ -13256,6 +13275,7 @@
 				837B179A2881811600A4D01B /* DownloadLinkOrOnboarding */,
 				945339D02A60150D00363DAD /* File */,
 				945339CF2A60150500363DAD /* Folder */,
+				0E51AC362E6118B30075E18F /* Import */,
 				E84CDB001A7292C9003F4C77 /* Links.storyboard */,
 				BF20BB542E49813D0013CAE6 /* UnavailableLinkView+Additions.swift */,
 				E8CD19851A9266D600CB8B2A /* UnavailableLinkView.h */,
@@ -14893,6 +14913,8 @@
 				328C153F2A39A63B002499CE /* ImportAlbumAlertView.swift in Sources */,
 				328C15362A3975C8002499CE /* ImportAlbumView.swift in Sources */,
 				328C15382A3975DA002499CE /* ImportAlbumViewModel.swift in Sources */,
+				0E51AC372E6118B30075E18F /* ImportLinkRouter.swift in Sources */,
+				0E51AC382E6118B30075E18F /* ImportLinkViewModel.swift in Sources */,
 				8396AB4127BBDD5600C71291 /* ImportNodeRepository.swift in Sources */,
 				83E10DB52C80BB9C00B4CD5E /* IncomingCallForUnknownChat.swift in Sources */,
 				94162AEE2D54EC9F004153B4 /* InitialLaunchViewController+Additions.swift in Sources */,
@@ -16355,6 +16377,7 @@
 				94A714F52C20DC150006DE7D /* HomeUploadingViewModelTests.swift in Sources */,
 				943C92572AC4360C00C2F67E /* HomeViewModelTests.swift in Sources */,
 				328C153B2A3989B1002499CE /* ImportAlbumViewModelTests.swift in Sources */,
+				0E51AC3A2E6119780075E18F /* ImportLinkViewModelTests.swift in Sources */,
 				94162AF82D54F7E2004153B4 /* InitialLaunchViewModelTests.swift in Sources */,
 				25CF5EC82BDBB613005608F7 /* ItemCollectionViewCellViewModelTests.swift in Sources */,
 				A81971E426FDBE82007DC7B1 /* LegacyFileVersioningViewModelTests.swift in Sources */,
@@ -16414,6 +16437,7 @@
 				948B294A2CA1671D00428787 /* MockFileManager.swift in Sources */,
 				0E5F5E862C6C61280037A99C /* MockHideFilesAndFoldersRouter.swift in Sources */,
 				94BF69132CAFFA4F0052F1D5 /* MockHomeBannerRouter.swift in Sources */,
+				0E51AC3C2E6119F20075E18F /* MockImportLinkRouter.swift in Sources */,
 				B514C5952C730F5000659719 /* MockLinkManager.swift in Sources */,
 				0E80B3212DC4884700582D55 /* MockLoginRouter.swift in Sources */,
 				945A90C82C3D611500E10BBF /* MockMeetingContainerRouter.swift in Sources */,

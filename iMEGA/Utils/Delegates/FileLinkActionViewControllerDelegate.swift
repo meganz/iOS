@@ -21,7 +21,10 @@ final class FileLinkActionViewControllerDelegate: NSObject, NodeActionViewContro
     func importNode(_ node: MEGANode) {
         guard let vc = viewController else { return }
         
-        node.mnz_fileLinkImport(from: vc, isFolderLink: false)
+        ImportLinkRouter(
+            isFolderLink: false,
+            nodes: [node],
+            presenter: vc).start()
     }
     
     func sendToChat() {

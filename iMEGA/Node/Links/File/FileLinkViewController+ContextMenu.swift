@@ -41,10 +41,8 @@ extension FileLinkViewController: FileLinkContextMenuDelegate {
 
     func uploadAddMenu(didSelect action: UploadAddActionEntity) {
         switch action {
-        case .importFrom:
-            importFromFiles()
         case .importFolderLink:
-            addToCloudDrive()
+            importFromFiles()
         default:
             break
         }
