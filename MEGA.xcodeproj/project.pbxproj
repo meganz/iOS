@@ -13601,7 +13601,6 @@
 			name = MEGAShare;
 			packageProductDependencies = (
 				A8F5157727F6F92800AEE4D6 /* DZNEmptyDataSet */,
-				A828E68C286B3204004CED9E /* FirebaseCrashlytics */,
 				BF1CEA3D27FA757800C1A2E5 /* GKContactImage */,
 				B610447128979E9B00AAECF4 /* MEGADomain */,
 				B6A01BAF289A623C00B503FD /* MEGAFoundation */,
@@ -18664,11 +18663,6 @@
 			productName = FirebaseCrashlytics;
 		};
 		A828E686286B318A004CED9E /* FirebaseCrashlytics */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = A828E67F286B3112004CED9E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseCrashlytics;
-		};
-		A828E68C286B3204004CED9E /* FirebaseCrashlytics */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = A828E67F286B3112004CED9E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseCrashlytics;
