@@ -33,7 +33,8 @@ extension FileLinkViewController {
             MEGALinkManager.linkSavedString = linkEncryptedString ?? publicLinkString ?? ""
             MEGALinkManager.selectedOption = .sendNodeLinkToChat
 
-            navigationController?.pushViewController(OnboardingViewController.instantiateOnboarding(with: .default), animated: true)
+            navigationController?.pushViewController(
+                OnboardingUSPViewController(), animated: true)
             viewModel.dispatch(.trackSendToChatFileLinkNoAccountLogged)
         }
     }

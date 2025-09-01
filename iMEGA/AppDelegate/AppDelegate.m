@@ -31,7 +31,6 @@
 #import "ContactRequestsViewController.h"
 #import "LaunchViewController.h"
 #import "MainTabBarController.h"
-#import "OnboardingViewController.h"
 
 #import "MEGAChatNotificationDelegate.h"
 #import "MEGACreateAccountRequestDelegate.h"

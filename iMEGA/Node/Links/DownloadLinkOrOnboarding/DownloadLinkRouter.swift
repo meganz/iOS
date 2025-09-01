@@ -61,7 +61,7 @@ final class DownloadLinkRouter: DownloadLinkRouterProtocol {
 
     func showOnboarding() {
         guard let presenter = presenter else { return }
-        let onboardingVC = OnboardingViewController.instantiateOnboarding(with: .default)
+        let onboardingVC = OnboardingUSPViewController()
         if let navigation = presenter.navigationController {
             navigation.pushViewController(onboardingVC, animated: true)
         } else {

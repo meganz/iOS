@@ -5,7 +5,6 @@
 #import "Helper.h"
 #import "MEGALinkManager.h"
 #import "MEGALoginRequestDelegate.h"
-#import "OnboardingViewController.h"
 #import "UIApplication+MNZCategory.h"
 #import "MEGAChatSdk.h"
 #import "MEGA-Swift.h"
