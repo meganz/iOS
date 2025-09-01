@@ -25,7 +25,6 @@
 #import "MainTabBarController.h"
 #import "MEGANavigationController.h"
 #import "MEGAPhotoBrowserViewController.h"
-#import "OnboardingViewController.h"
 #import "PreviewDocumentViewController.h"
 #import "SharedItemsViewController.h"
 #import "SendToViewController.h"

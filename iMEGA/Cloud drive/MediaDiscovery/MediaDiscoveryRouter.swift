@@ -99,7 +99,7 @@ protocol MediaDiscoveryRouting: Routing {
         MEGALinkManager.selectedOption = linkOption
         MEGALinkManager.nodesFromLinkToDownloadAfterLogin(nodes: photos)
         
-        let onboardingVC = OnboardingViewController.instantiateOnboarding(with: .default)
+        let onboardingVC = OnboardingUSPViewController()
         let navigation = MEGANavigationController(rootViewController: onboardingVC)
         navigation.addRightCancelButton()
         mediaDiscoveryViewController?.present(navigation, animated: true, completion: nil)

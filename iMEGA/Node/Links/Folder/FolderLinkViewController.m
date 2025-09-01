@@ -22,7 +22,6 @@
 #import "EmptyStateView.h"
 #import "NodeTableViewCell.h"
 #import "MainTabBarController.h"
-#import "OnboardingViewController.h"
 #import "LinkOption.h"
 #import "SendToViewController.h"
 #import "UnavailableLinkView.h"

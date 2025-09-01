@@ -44,11 +44,12 @@ extension EncourageGuestUserToJoinMegaRouting {
         dismiss { [weak self] in
             guard let self else { return }
             
-            if let onboardingViewController = self.presenter as? OnboardingViewController {
-                onboardingViewController.presentCreateAccountViewController()
+            if let onboardingViewController = presenter as? OnboardingUSPViewController {
+                onboardingViewController.presentSignUpView()
             } else {
-                let createAccountNC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "CreateAccountNavigationControllerID")
-                self.baseViewController?.present(createAccountNC, animated: true)
+                let onboardingViewController = OnboardingUSPViewController()
+                onboardingViewController.presentSignUpView()
+                baseViewController?.present(onboardingViewController, animated: true)
             }
         }
     }
