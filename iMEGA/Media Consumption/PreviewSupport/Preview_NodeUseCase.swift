@@ -111,4 +111,8 @@ struct Preview_NodeUseCase: NodeUseCaseProtocol {
     func isFileTakenDown(_ nodeHandle: HandleEntity) async -> Bool {
         false
     }
+
+    func isNodeDecrypted(node: MEGADomain.NodeEntity) -> Bool {
+        false
+    }
 }

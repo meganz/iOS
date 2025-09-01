@@ -162,4 +162,8 @@ public final class MockNodeDataUseCase: NodeUseCaseProtocol, @unchecked Sendable
     public func isFileTakenDown(_ nodeHandle: HandleEntity) async -> Bool {
         isFileTakenDown
     }
+
+    public func isNodeDecrypted(node: MEGADomain.NodeEntity) -> Bool {
+        false
+    }
 }

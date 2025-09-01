@@ -3,7 +3,6 @@ import MEGADomain
 import MEGASwift
 
 public final class Preview_NodeUseCase: NodeUseCaseProtocol {
-    
     public var nodeUpdates: AnyAsyncSequence<[NodeEntity]> {
         AsyncStream { continuation in
             continuation.yield(with: .success([]))
@@ -135,6 +134,10 @@ public final class Preview_NodeUseCase: NodeUseCaseProtocol {
     }
     
     public func isFileTakenDown(_ nodeHandle: HandleEntity) async -> Bool {
+        false
+    }
+
+    public func isNodeDecrypted(node: MEGADomain.NodeEntity) -> Bool {
         false
     }
 }
