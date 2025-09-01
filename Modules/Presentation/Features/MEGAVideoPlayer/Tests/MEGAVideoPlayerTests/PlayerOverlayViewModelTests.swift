@@ -36,6 +36,7 @@ struct PlayerOverlayViewModelTests {
         #expect(sut.isPlaybackBottomSheetPresented == false)
         #expect(sut.scalingMode == .fit)
         #expect(sut.isSeeking == false)
+        #expect(sut.isHoldSpeedActive == false)
     }
 
     // MARK: - State Change Tests
@@ -277,6 +278,87 @@ struct PlayerOverlayViewModelTests {
         sut.didSelectPlaybackSpeed(expectedNextSpeed)
 
         #expect(sut.currentSpeed == expectedNextSpeed)
+    }
+
+    // MARK: - Hold to Speed Tests
+
+    @Test(arguments: [
+        (Duration.seconds(100), true),
+        (.seconds(0), false)
+    ])
+    func beginHoldToSpeed_whenDifferentVideoLoadedState_shouldSetRightActivateHoldSpeed(
+        duration: Duration,
+        expectedIsHoldSpeedActive: Bool
+    ) {
+        let mockPlayer = MockVideoPlayer()
+        let sut = makeSUT(player: mockPlayer)
+        sut.duration = duration
+
+        sut.beginHoldToSpeed()
+
+        #expect(sut.isHoldSpeedActive == expectedIsHoldSpeedActive)
+    }
+
+    @Test(arguments: [
+        PlaybackSpeed.quarter,
+        .half,
+        .threeQuarter,
+        .normal,
+        .oneQuarter,
+        .oneHalf,
+        .oneThreeQuarter,
+        .double
+    ])
+    func beginHoldToSpeed_whenDifferentSpeeds_shouldActivateHoldSpeed(
+        currentSpeed: PlaybackSpeed
+    ) {
+        let mockPlayer = MockVideoPlayer()
+        let sut = makeSUT(player: mockPlayer)
+        sut.duration = .seconds(100)
+        sut.currentSpeed = currentSpeed
+
+        sut.beginHoldToSpeed()
+
+        #expect(sut.isHoldSpeedActive == true)
+        #expect(sut.isControlsVisible == false)
+        #expect(mockPlayer.changeRateCallCount == 1)
+        #expect(mockPlayer.changeRateValue == PlaybackSpeed.double.rawValue)
+    }
+
+    @Test
+    func endHoldToSpeed_whenHoldActive_shouldDeactivateAndRestoreSpeed() {
+        let mockPlayer = MockVideoPlayer()
+        let sut = makeSUT(player: mockPlayer)
+        sut.duration = .seconds(100)
+        sut.currentSpeed = .normal
+        sut.isHoldSpeedActive = true
+
+        sut.endHoldToSpeed()
+
+        #expect(sut.isHoldSpeedActive == false)
+        #expect(mockPlayer.changeRateCallCount == 1)
+        #expect(mockPlayer.changeRateValue == PlaybackSpeed.normal.rawValue)
+    }
+
+    @Test
+    func holdToSpeed_whenCompleteFlow_shouldWorkCorrectly() {
+        let mockPlayer = MockVideoPlayer()
+        let sut = makeSUT(player: mockPlayer)
+        sut.duration = .seconds(100)
+        sut.currentSpeed = .oneHalf
+
+        // Begin hold
+        sut.beginHoldToSpeed()
+        #expect(sut.isHoldSpeedActive == true)
+        #expect(sut.isControlsVisible == false)
+        #expect(mockPlayer.changeRateCallCount == 1)
+        #expect(mockPlayer.changeRateValue == PlaybackSpeed.double.rawValue)
+
+        // End hold
+        sut.endHoldToSpeed()
+        #expect(sut.isHoldSpeedActive == false)
+        #expect(mockPlayer.changeRateCallCount == 2)
+        #expect(mockPlayer.changeRateValue == PlaybackSpeed.oneHalf.rawValue)
     }
 
     // MARK: - Time and Duration Tests
