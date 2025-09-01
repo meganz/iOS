@@ -17,10 +17,9 @@ final class NodeOpener {
         allNodes: [HandleEntity]? = nil,
         config: NodeBrowserConfig = .default
     ) {
-        guard
-            let megaNode = sdk.node(forHandle: nodeHandle)
-        else { return }
-        
+        guard let megaNode = sdk.node(forHandle: nodeHandle),
+            megaNode.isNodeKeyDecrypted() else { return }
+
         let allMegaNodes = allNodes?.compactMap { sdk.node(forHandle: $0) }
         
         switch megaNode.isFolder() {

@@ -30,11 +30,11 @@ public protocol NodeUseCaseProtocol: Sendable {
     func isRestorable(node: NodeEntity) -> Bool
     func createFolder(with name: String, in parent: NodeEntity) async throws -> NodeEntity
     func isFileTakenDown(_ nodeHandle: HandleEntity) async -> Bool
+    func isNodeDecrypted(node: NodeEntity) throws -> Bool
 }
 
 // MARK: - Use case implementation -
 public struct NodeUseCase<T: NodeDataRepositoryProtocol, U: NodeValidationRepositoryProtocol, V: NodeRepositoryProtocol>: NodeUseCaseProtocol {
-    
     private let nodeDataRepository: T
     private let nodeValidationRepository: U
     private let nodeRepository: V
@@ -145,5 +145,9 @@ public struct NodeUseCase<T: NodeDataRepositoryProtocol, U: NodeValidationReposi
     public func isFileTakenDown(_ nodeHandle: HandleEntity) async -> Bool {
         guard let node = await nodeForHandle(nodeHandle) else { return false }
         return node.isFile && node.isTakenDown
+    }
+
+    public func isNodeDecrypted(node: NodeEntity) throws -> Bool {
+        try nodeRepository.isNodeDecrypted(node: node)
     }
 }

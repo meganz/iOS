@@ -3,7 +3,6 @@ import MEGADomain
 import MEGASwift
 
 public final class MockNodeRepository: NodeRepositoryProtocol, @unchecked Sendable {
-    
     public static var newRepo: MockNodeRepository { MockNodeRepository() }
     
     public let nodeUpdates: AnyAsyncSequence<[NodeEntity]>
@@ -21,7 +20,8 @@ public final class MockNodeRepository: NodeRepositoryProtocol, @unchecked Sendab
     private let isInheritingSensitivityResult: Result<Bool, any Error>
     private let isInheritingSensitivityResults: [NodeEntity: Result<Bool, any Error>]
     private let isInRubbishBinNodes: [NodeEntity]
-    
+    private let isNodeDecryptedValue: Bool?
+
     public init(
         node: NodeEntity? = nil,
         rubbishBinNode: NodeEntity? = nil,
@@ -37,7 +37,8 @@ public final class MockNodeRepository: NodeRepositoryProtocol, @unchecked Sendab
         isInheritingSensitivityResults: [NodeEntity: Result<Bool, any Error>] = [:],
         nodeUpdates: AnyAsyncSequence<[NodeEntity]> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
         folderLinkNodeUpdates: AnyAsyncSequence<[NodeEntity]> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
-        isInRubbishBinNodes: [NodeEntity] = []
+        isInRubbishBinNodes: [NodeEntity] = [],
+        isNodeDecryptedValue: Bool? = false
     ) {
         self.node = node
         self.rubbishBinNode = rubbishBinNode
@@ -53,7 +54,9 @@ public final class MockNodeRepository: NodeRepositoryProtocol, @unchecked Sendab
         self.nodeUpdates = nodeUpdates
         self.folderLinkNodeUpdates = folderLinkNodeUpdates
         self.isInRubbishBinNodes = isInRubbishBinNodes
+        self.isNodeDecryptedValue = isNodeDecryptedValue
         $childrenNodes.mutate { $0 = childrenNodes }
+
     }
     
     public func nodeForHandle(_ handle: HandleEntity) -> NodeEntity? {
@@ -133,5 +136,12 @@ public final class MockNodeRepository: NodeRepositoryProtocol, @unchecked Sendab
         case .failure(let error):
             throw error
         }
+    }
+
+    public func isNodeDecrypted(node: MEGADomain.NodeEntity) throws -> Bool {
+        guard let isNodeDecryptedValue else {
+            throw NodeErrorEntity.nodeNotFound
+        }
+        return isNodeDecryptedValue
     }
 }

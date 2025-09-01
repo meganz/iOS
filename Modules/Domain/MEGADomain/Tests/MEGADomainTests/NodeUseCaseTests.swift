@@ -223,6 +223,26 @@ final class NodeUseCaseTests: XCTestCase {
         }
     }
 
+    func testIsNodeDecrypted_whenRepositoryThrows_shouldThrowError() {
+        do {
+            let node = NodeEntity(handle: HandleEntity(1))
+            let sut = makeSUT(isNodeDecryptedValue: nil)
+            _ = try sut.isNodeDecrypted(node: node)
+        } catch {
+            XCTAssertEqual(error as? NodeErrorEntity, .nodeNotFound)
+        }
+    }
+
+    func testIsNodeDecrypted_whenInputIsProvided_shouldReturnCorrespondingOuput() throws {
+        let inputs = [false, true]
+        for input in inputs {
+            let node = NodeEntity(handle: HandleEntity(1))
+            let sut = makeSUT(isNodeDecryptedValue: input)
+            let result = try sut.isNodeDecrypted(node: node)
+            XCTAssertEqual(result, input)
+        }
+    }
+
     // MARK: - Helpers
     private func makeSUT(
         accessLevel: NodeAccessTypeEntity = .unknown,
@@ -241,7 +261,8 @@ final class NodeUseCaseTests: XCTestCase {
         isInheritingSensitivityResults: [NodeEntity: Result<Bool, any Error>] = [:],
         nodeUpdates: AnyAsyncSequence<[NodeEntity]> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
         folderLinkInfoRequestResult: Result<FolderLinkInfoEntity?, FolderInfoErrorEntity> = .failure(.notFound),
-        fileLinkNode: NodeEntity? = nil
+        fileLinkNode: NodeEntity? = nil,
+        isNodeDecryptedValue: Bool? = false
     ) -> NodeUseCase<MockNodeDataRepository, MockNodeValidationRepository, MockNodeRepository> {
         let mockNodeDataRepository = MockNodeDataRepository(
             nodeAccessLevel: accessLevel,
@@ -266,7 +287,8 @@ final class NodeUseCaseTests: XCTestCase {
             parentNodes: parents,
             isInheritingSensitivityResult: isInheritingSensitivityResult,
             isInheritingSensitivityResults: isInheritingSensitivityResults,
-            nodeUpdates: nodeUpdates
+            nodeUpdates: nodeUpdates,
+            isNodeDecryptedValue: isNodeDecryptedValue
         )
         return NodeUseCase(
             nodeDataRepository: mockNodeDataRepository,

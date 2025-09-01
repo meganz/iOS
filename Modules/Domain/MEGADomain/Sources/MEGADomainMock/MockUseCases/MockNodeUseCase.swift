@@ -141,4 +141,6 @@ public final class MockNodeUseCase: NodeUseCaseProtocol, @unchecked Sendable {
         guard let node = nodes[nodeHandle] else { return false }
         return node.isFile && node.isTakenDown
     }
+
+    public func isNodeDecrypted(node: MEGADomain.NodeEntity) throws -> Bool { true }
 }

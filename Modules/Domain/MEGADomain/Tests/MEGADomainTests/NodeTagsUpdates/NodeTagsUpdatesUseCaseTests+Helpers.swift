@@ -93,6 +93,8 @@ extension NodeTagsUpdatesUseCaseTests {
         func isInheritingSensitivity(node: NodeEntity) throws -> Bool {
             false
         }
+
+        func isNodeDecrypted(node: MEGADomain.NodeEntity) -> Bool { false }
     }
 }
 

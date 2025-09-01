@@ -2598,6 +2598,8 @@
 		C4B97D752B67820400EBA9E5 /* RandomNumberGeneratorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B97D742B67820400EBA9E5 /* RandomNumberGeneratorTests.swift */; };
 		C4B97D812B67925C00EBA9E5 /* FuncCallRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B97D802B67925C00EBA9E5 /* FuncCallRecorder.swift */; };
 		C4B97D8D2B77916500EBA9E5 /* RandomNumberGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B97D8C2B77916500EBA9E5 /* RandomNumberGenerator.swift */; };
+		C4BD450E2E5EC362009A558E /* NodeUseCaseProtocol+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4BD450D2E5EC358009A558E /* NodeUseCaseProtocol+Additions.swift */; };
+		C4BD450F2E5EC362009A558E /* NodeUseCaseProtocol+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4BD450D2E5EC358009A558E /* NodeUseCaseProtocol+Additions.swift */; };
 		C4C0A0082C32B5AE00B9ECCB /* DownloadedNodesListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C0A0072C32B5AE00B9ECCB /* DownloadedNodesListener.swift */; };
 		C4C5C83325DC26100063D7B4 /* FolderLinkViewController+AudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C5C83225DC26100063D7B4 /* FolderLinkViewController+AudioPlayer.swift */; };
 		C4C6A49827A4632600873165 /* MegaNode+Display.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C6A49527A4632600873165 /* MegaNode+Display.swift */; };
@@ -5389,6 +5391,7 @@
 		C4B97D742B67820400EBA9E5 /* RandomNumberGeneratorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomNumberGeneratorTests.swift; sourceTree = "<group>"; };
 		C4B97D802B67925C00EBA9E5 /* FuncCallRecorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FuncCallRecorder.swift; sourceTree = "<group>"; };
 		C4B97D8C2B77916500EBA9E5 /* RandomNumberGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RandomNumberGenerator.swift; sourceTree = "<group>"; };
+		C4BD450D2E5EC358009A558E /* NodeUseCaseProtocol+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NodeUseCaseProtocol+Additions.swift"; sourceTree = "<group>"; };
 		C4C0A0072C32B5AE00B9ECCB /* DownloadedNodesListener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadedNodesListener.swift; sourceTree = "<group>"; };
 		C4C5C83225DC26100063D7B4 /* FolderLinkViewController+AudioPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FolderLinkViewController+AudioPlayer.swift"; sourceTree = "<group>"; };
 		C4C6A49527A4632600873165 /* MegaNode+Display.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MegaNode+Display.swift"; sourceTree = "<group>"; };
@@ -7181,6 +7184,7 @@
 				418072781AA5BBA00078D950 /* MEGAReachabilityManager.h */,
 				418072791AA5BBA00078D950 /* MEGAReachabilityManager.m */,
 				94C85E6B28B93CEF00007A38 /* NodeAssetsManager.swift */,
+				C4BD450D2E5EC358009A558E /* NodeUseCaseProtocol+Additions.swift */,
 				12E7FEED28723AD6001E4A08 /* PageStayTimeTracker.swift */,
 				5B5C7B26264A92410087200D /* RecentsPreference.swift */,
 				C4E2A83B2E0104BF00893A1A /* Tab+ViewControllers.swift */,
@@ -15295,6 +15299,7 @@
 				4152268F1A692ECC00EC7BB6 /* NodeTableViewCell.m in Sources */,
 				25A4E4E92BD8B83700B3F308 /* NodeTableViewCellViewModel.swift in Sources */,
 				B678D6D82714266300BBA4E1 /* NodeThumbnailHomeUseCase.swift in Sources */,
+				C4BD450E2E5EC362009A558E /* NodeUseCaseProtocol+Additions.swift in Sources */,
 				25AD36E82BD8830B004DCF3B /* NodeValidationRepository+Additions.swift in Sources */,
 				94B761FC29E5C800003EBC92 /* NodeVersionsViewController+Additions.swift in Sources */,
 				837B73AF24DD7EAA00321368 /* NodeVersionsViewController.m in Sources */,
@@ -16139,6 +16144,7 @@
 				B55C1A8A298260DB006A0205 /* NodeTableViewCell+Additions.swift in Sources */,
 				5BAC7CAC2677BF9800F8C305 /* NodeTableViewCell.m in Sources */,
 				25A4E4EA2BD8B83B00B3F308 /* NodeTableViewCellViewModel.swift in Sources */,
+				C4BD450F2E5EC362009A558E /* NodeUseCaseProtocol+Additions.swift in Sources */,
 				25AD36E92BD8848E004DCF3B /* NodeValidationRepository+Additions.swift in Sources */,
 				5B9F336624448FA400E2A15B /* NSDate+MNZCategory.m in Sources */,
 				941135661F01541100D33428 /* NSFileManager+MNZCategory.m in Sources */,

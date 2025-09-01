@@ -1,6 +1,7 @@
 import Foundation
 import MEGAAppPresentation
 import MEGADomain
+import MEGAL10n
 import MEGASwift
 
 enum NodeActionAddToDestination {
@@ -126,7 +127,13 @@ struct NodeActionViewModel {
     func isRestorable(node: NodeEntity, isBackupNode: Bool) -> Bool {
         nodeUseCase.isRestorable(node: node) && !isBackupNode
     }
-    
+
+    func title(for node: NodeEntity) -> String {
+        nodeUseCase.isNodeDecryptedNonThrowing(node: node) ? node.name
+        : node.isFile ? Strings.Localizable.SharedItems.Tab.Recents.undecryptedFileName(1)
+        : Strings.Localizable.SharedItems.Tab.Incoming.undecryptedFolderName
+    }
+
     // MARK: - Private methods
     
     /// Determine if nodes contains only sensitive nodes

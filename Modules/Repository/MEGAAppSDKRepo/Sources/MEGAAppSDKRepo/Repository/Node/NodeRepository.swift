@@ -190,4 +190,11 @@ public struct NodeRepository: NodeRepositoryProtocol {
         }
         return sdk.isNodeInheritingSensitivity(node)
     }
+
+    public func isNodeDecrypted(node: NodeEntity) throws -> Bool {
+        guard let result = sdk.node(forHandle: node.handle)?.isNodeKeyDecrypted() else {
+            throw NodeErrorEntity.nodeNotFound
+        }
+        return result
+    }
 }

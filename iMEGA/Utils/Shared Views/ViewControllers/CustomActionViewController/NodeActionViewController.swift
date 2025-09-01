@@ -422,8 +422,9 @@ class NodeActionViewController: ActionSheetViewController {
             titleLabel.centerYAnchor.constraint(equalTo: headerView!.centerYAnchor, constant: -10)
         ])
         
-        titleLabel.text = isUndecryptedFolder ? Strings.Localizable.SharedItems.Tab.Incoming.undecryptedFolderName : node.name
-        
+        titleLabel.text = isUndecryptedFolder ? Strings.Localizable.SharedItems.Tab.Incoming.undecryptedFolderName
+        : viewModel.title(for: node.toNodeEntity())
+
         headerView?.addSubview(subtitleLabel)
         subtitleLabel.leadingAnchor.constraint(equalTo: nodeImageView.trailingAnchor, constant: 8).isActive = true
         

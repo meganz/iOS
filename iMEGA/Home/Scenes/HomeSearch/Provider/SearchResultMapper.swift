@@ -49,7 +49,7 @@ struct SearchResultMapper: Sendable {
             id: node.handle,
             thumbnailDisplayMode: node.isFile ? .vertical : .horizontal,
             backgroundDisplayMode: node.hasThumbnail ? .preview : .icon,
-            title: node.name,
+            title: name(for: node),
             note: node.description,
             tags: node.tags,
             isSensitive: isSensitive(node: node),
@@ -61,7 +61,15 @@ struct SearchResultMapper: Sendable {
             swipeActions: { swipeActions(for: node, viewDisplayMode: $0) }
         )
     }
-    
+
+    private func name(for node: NodeEntity) -> String {
+        return if nodeUseCase.isNodeDecryptedNonThrowing(node: node) {
+            node.name
+        } else {
+            node.isFile ? Strings.Localizable.SharedItems.Tab.Recents.undecryptedFileName(1) : Strings.Localizable.SharedItems.Tab.Incoming.undecryptedFolderName
+        }
+    }
+
     private func info(for node: NodeEntity) -> @Sendable (ResultCellLayout) -> String {
         guard let megaNode = node.toMEGANode(in: sdk) else { return {_ in ""} }
         // Because of the [FM-1406] description is layout dependent, we need

@@ -2,6 +2,8 @@ import MEGADomain
 import MEGASwift
 
 struct Preview_NodeUseCase: NodeUseCaseProtocol {
+    func isNodeDecrypted(node: MEGADomain.NodeEntity) -> Bool { false }
+    
     var nodeUpdates: AnyAsyncSequence<[NodeEntity]> {
         EmptyAsyncSequence().eraseToAnyAsyncSequence()
     }
