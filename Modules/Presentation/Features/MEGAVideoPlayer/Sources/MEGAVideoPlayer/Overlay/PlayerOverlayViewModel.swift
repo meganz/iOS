@@ -14,6 +14,7 @@ public final class PlayerOverlayViewModel: ObservableObject {
     @Published var isPlaybackBottomSheetPresented: Bool = false
     @Published var scalingMode: VideoScalingMode = .fit
     @Published var isSeeking: Bool = false
+    @Published var isHoldSpeedActive: Bool = false
 
     private var autoHideTimer: Timer?
     private var cancellables = Set<AnyCancellable>()
@@ -253,6 +254,22 @@ extension PlayerOverlayViewModel {
                 player.setScalingMode(.fit)
             }
         }
+    }
+}
+
+// MARK: - Hold to Speed logic
+
+extension PlayerOverlayViewModel {
+    func beginHoldToSpeed() {
+        guard duration.components.seconds > 0 else { return }
+        isHoldSpeedActive = true
+        player.changeRate(to: PlaybackSpeed.double.rawValue)
+        isControlsVisible = false
+    }
+
+    func endHoldToSpeed() {
+        isHoldSpeedActive = false
+        player.changeRate(to: currentSpeed.rawValue)
     }
 }
 

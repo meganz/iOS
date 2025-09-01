@@ -18,11 +18,25 @@ public struct PlayerOverlayView: View {
                 .onTapGesture {
                     viewModel.didTapVideoArea()
                 }
+                .onLongPressGesture(
+                    minimumDuration: 0.5,
+                    perform: {
+                        viewModel.beginHoldToSpeed()
+                    },
+                    onPressingChanged: { isPressing in
+                        guard !isPressing else { return }
+                        viewModel.endHoldToSpeed()
+                    }
+                )
             
             if viewModel.isControlsVisible {
                 topToolbar
                 centerPlaybackButtons
                 bottomToolbar
+            }
+
+            if viewModel.isHoldSpeedActive {
+                holdSpeedChip
             }
         }
         .animation(.easeInOut(duration: 0.3), value: viewModel.isControlsVisible)
@@ -72,6 +86,23 @@ public struct PlayerOverlayView: View {
                         .frame(width: 44, height: 44)
                 }
         }
+    }
+
+    private var holdSpeedChip: some View {
+        HStack(spacing: TokenSpacing._3) {
+            Text("2x")
+                .font(.subheadline)
+                .fontWeight(.semibold)
+            Image(systemName: "forward.fill")
+
+        }
+        .padding(.horizontal, TokenSpacing._4)
+        .padding(.vertical, 6)
+        .background(TokenColors.Background.blur.swiftUI)
+        .foregroundStyle(TokenColors.Text.onColor.swiftUI)
+        .clipShape(Capsule())
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
+        .padding(.bottom, TokenSpacing._7)
     }
 }
 
