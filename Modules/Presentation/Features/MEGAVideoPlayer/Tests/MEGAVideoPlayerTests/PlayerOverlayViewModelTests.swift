@@ -37,6 +37,8 @@ struct PlayerOverlayViewModelTests {
         #expect(sut.scalingMode == .fit)
         #expect(sut.isSeeking == false)
         #expect(sut.isHoldSpeedActive == false)
+        #expect(sut.isDoubleTapSeekActive == false)
+        #expect(sut.doubleTapSeekSeconds == 0)
     }
 
     // MARK: - State Change Tests
@@ -229,7 +231,7 @@ struct PlayerOverlayViewModelTests {
         (15, 50, 65.0),
         (15, 90, 100.0),
         (-15, 50, 35.0),
-        (-15, 0, 0.0),
+        (-15, 0, 0.0)
     ])
     func didTapJump(
         seconds: Int,
@@ -359,6 +361,137 @@ struct PlayerOverlayViewModelTests {
         #expect(sut.isHoldSpeedActive == false)
         #expect(mockPlayer.changeRateCallCount == 2)
         #expect(mockPlayer.changeRateValue == PlaybackSpeed.oneHalf.rawValue)
+    }
+
+    // MARK: - Double Tap Seek Tests
+
+    @Test(arguments: [
+        (Duration.seconds(100), true),
+        (.seconds(0), false)
+    ])
+    func handleDoubleTapSeek_whenDifferentVideoLoadedState_shouldSetRightActivateSeek(
+        duration: Duration,
+        expectedIsDoubleTapSeekActive: Bool
+    ) async {
+        let mockPlayer = MockVideoPlayer()
+        let sut = makeSUT(player: mockPlayer)
+        sut.duration = duration
+
+        await sut.handleDoubleTapSeek(isForward: true)
+
+        #expect(sut.isDoubleTapSeekActive == expectedIsDoubleTapSeekActive)
+    }
+
+    @Test
+    func handleDoubleTapSeek_whenForwardSeek_shouldActivateAndSeekForward() async {
+        let mockPlayer = MockVideoPlayer()
+        let sut = makeSUT(player: mockPlayer)
+        sut.duration = .seconds(100)
+        sut.currentTime = .seconds(50)
+
+        await sut.handleDoubleTapSeek(isForward: true)
+
+        #expect(sut.isDoubleTapSeekActive == true)
+        #expect(sut.doubleTapSeekSeconds == 15)
+        #expect(mockPlayer.seekCallCount == 1)
+        #expect(mockPlayer.seekTime == 65.0)
+    }
+
+    @Test
+    func handleDoubleTapSeek_whenBackwardSeek_shouldActivateAndSeekBackward() async {
+        let mockPlayer = MockVideoPlayer()
+        let sut = makeSUT(player: mockPlayer)
+        sut.duration = .seconds(100)
+        sut.currentTime = .seconds(50)
+
+        await sut.handleDoubleTapSeek(isForward: false)
+
+        #expect(sut.isDoubleTapSeekActive == true)
+        #expect(sut.doubleTapSeekSeconds == -15)
+        #expect(mockPlayer.seekCallCount == 1)
+        #expect(mockPlayer.seekTime == 35.0)
+    }
+
+    @Test
+    func handleDoubleTapSeek_whenMultipleForwardTaps_shouldIncrementCorrectly() async {
+        let mockPlayer = MockVideoPlayer()
+        let sut = makeSUT(player: mockPlayer)
+        sut.duration = .seconds(100)
+        sut.currentTime = .seconds(50)
+
+        // First tap
+        await sut.handleDoubleTapSeek(isForward: true)
+        #expect(sut.doubleTapSeekSeconds == 15)
+        #expect(mockPlayer.seekTime == 65.0)
+
+        // Second tap within 3 seconds
+        await sut.handleDoubleTapSeek(isForward: true)
+        #expect(sut.doubleTapSeekSeconds == 30)
+        #expect(mockPlayer.seekTime == 80.0)
+
+        // Third tap within 3 seconds
+        await sut.handleDoubleTapSeek(isForward: true)
+        #expect(sut.doubleTapSeekSeconds == 45)
+        #expect(mockPlayer.seekTime == 95.0)
+    }
+
+    @Test
+    func handleDoubleTapSeek_whenMultipleBackwardTaps_shouldIncrementCorrectly() async {
+        let mockPlayer = MockVideoPlayer()
+        let sut = makeSUT(player: mockPlayer)
+        sut.duration = .seconds(100)
+        sut.currentTime = .seconds(50)
+
+        // First tap
+        await sut.handleDoubleTapSeek(isForward: false)
+        #expect(sut.doubleTapSeekSeconds == -15)
+        #expect(mockPlayer.seekTime == 35.0)
+
+        // Second tap within 3 seconds
+        await sut.handleDoubleTapSeek(isForward: false)
+        #expect(sut.doubleTapSeekSeconds == -30)
+        #expect(mockPlayer.seekTime == 20.0)
+
+        // Third tap within 3 seconds
+        await sut.handleDoubleTapSeek(isForward: false)
+        #expect(sut.doubleTapSeekSeconds == -45)
+        #expect(mockPlayer.seekTime == 5.0)
+    }
+
+    @Test
+    func doubleTapSeekTimer_whenThreeSecondsPass_shouldDeactivateSeek() async {
+        let mockPlayer = MockVideoPlayer()
+        let sut = makeSUT(player: mockPlayer)
+        sut.duration = .seconds(100)
+        sut.currentTime = .seconds(50)
+
+        await sut.handleDoubleTapSeek(isForward: true)
+        #expect(sut.isDoubleTapSeekActive == true)
+        #expect(sut.doubleTapSeekSeconds == 15)
+
+        // Wait for timer to expire
+        try? await Task.sleep(nanoseconds: 3_100_000_000) // 3.1 seconds
+
+        #expect(sut.isDoubleTapSeekActive == false)
+        #expect(sut.doubleTapSeekSeconds == 0)
+    }
+
+    @Test(arguments: [
+        (15, "15 seconds"),
+        (-15, "15 seconds"),
+        (30, "30 seconds"),
+        (-30, "30 seconds"),
+        (45, "45 seconds"),
+        (-45, "45 seconds")
+    ])
+    func doubleTapSeekDisplayText_whenDifferentSeekValues_shouldFormatCorrectly(
+        seekSeconds: Int,
+        expectedText: String
+    ) {
+        let sut = makeSUT()
+        sut.doubleTapSeekSeconds = seekSeconds
+
+        #expect(sut.doubleTapSeekDisplayText == expectedText)
     }
 
     // MARK: - Time and Duration Tests
