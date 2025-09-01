@@ -1,4 +1,5 @@
 import Combine
+import MEGAL10n
 import SwiftUI
 
 @MainActor
@@ -15,8 +16,11 @@ public final class PlayerOverlayViewModel: ObservableObject {
     @Published var scalingMode: VideoScalingMode = .fit
     @Published var isSeeking: Bool = false
     @Published var isHoldSpeedActive: Bool = false
+    @Published var isDoubleTapSeekActive: Bool = false
+    @Published var doubleTapSeekSeconds: Int = 0
 
     private var autoHideTimer: Timer?
+    private var doubleTapSeekTimer: Timer?
     private var cancellables = Set<AnyCancellable>()
 
     private let player: any VideoPlayerProtocol
@@ -105,11 +109,17 @@ extension PlayerOverlayViewModel {
     }
 
     func didTapJump(by second: Int) async {
+        await performSeek(by: second)
+    }
+
+    func performSeek(by seekTime: Int) async {
         guard duration.components.seconds > 0 else { return }
         isSeeking = true
         cancelAutoHideTimer()
-        updateCurrentTimeForSeek(by: second)
+        updateCurrentTimeForSeek(by: seekTime)
         guard await seekToCurrentTime() else { return }
+        // Slight delay to ensure current time updates correctly after seeking
+        try? await Task.sleep(nanoseconds: 100_000_000)
         isSeeking = false
         resetAutoHide()
     }
@@ -137,39 +147,43 @@ extension PlayerOverlayViewModel {
         guard duration.components.seconds > 0 else { return }
         isSeeking = true
         cancelAutoHideTimer()
-        updateCurrentTimeForSeek(from: location.x, in: frame.width)
+        currentTime = calculateTargetTime(from: location.x, in: frame.width)
     }
 
     func endSeekBarDrag(at location: CGPoint, in frame: CGRect) async {
-        guard duration.components.seconds > 0 else { return }
-        isSeeking = true
-        cancelAutoHideTimer()
-        updateCurrentTimeForSeek(from: location.x, in: frame.width)
-        guard await seekToCurrentTime() else { return }
-        isSeeking = false
-        resetAutoHide()
+        let seekTimeInDuration = calculateSeekTime(from: location.x, in: frame.width)
+        let seekTime = Int(seekTimeInDuration.components.seconds)
+        await performSeek(by: seekTime)
     }
 
-    private func updateCurrentTimeForSeek(
+    private func calculateTargetTime(
         from xPosition: CGFloat,
         in width: CGFloat
-    ) {
+    ) -> Duration {
         let durationInSeconds = duration.components.seconds
-        guard durationInSeconds > 0 else { return }
+        guard durationInSeconds > 0 else { return .seconds(0) }
         let clampedX = max(0, min(xPosition, width))
         let progress = clampedX / width
         let finalProgress = max(0, min(progress, 1.0))
         let targetTime = finalProgress * Double(durationInSeconds)
-        currentTime = Duration.milliseconds(targetTime * 1000)
+        print("Target time: \(targetTime)")
+        return Duration.milliseconds(targetTime * 1000)
+    }
+
+    private func calculateSeekTime(
+        from xPosition: CGFloat,
+        in width: CGFloat
+    ) -> Duration {
+        let targetTime = calculateTargetTime(from: xPosition, in: width)
+        return targetTime - currentTime
     }
 
     private func updateCurrentTimeForSeek(by seconds: Int) {
-        let durationInSeconds = duration.components.seconds
-        guard durationInSeconds > 0 else { return }
-        let targetTime = Int(currentTime.components.seconds) + seconds
-        currentTime = Duration.seconds(
-            max(0, min(targetTime, Int(durationInSeconds)))
-        )
+        guard duration.components.seconds > 0 else { return }
+        let seekTimeInDuration = Duration.seconds(seconds)
+        let targetTime = currentTime + seekTimeInDuration
+        let finalTargetTime = max(.seconds(0), min(targetTime, duration))
+        currentTime = finalTargetTime
     }
 
     private func seekToCurrentTime() async -> Bool {
@@ -270,6 +284,62 @@ extension PlayerOverlayViewModel {
     func endHoldToSpeed() {
         isHoldSpeedActive = false
         player.changeRate(to: currentSpeed.rawValue)
+    }
+}
+
+// MARK: - Double Tap Seek logic
+
+extension PlayerOverlayViewModel {
+    func handleDoubleTapSeek(isForward: Bool) async {
+        guard duration.components.seconds > 0 else { return }
+        isDoubleTapSeekActive = true
+        let seekTime = isForward ? 15 : -15
+
+        let isSameDirection = (seekTime >= 0 && doubleTapSeekSeconds >= 0) || (seekTime < 0 && doubleTapSeekSeconds < 0)
+
+        if isSameDirection {
+            doubleTapSeekSeconds += seekTime
+        } else {
+            doubleTapSeekSeconds = seekTime
+        }
+
+        await performSeek(by: seekTime)
+
+        startDoubleTapSeekTimer()
+    }
+    
+    private func startDoubleTapSeekTimer() {
+        cancelDoubleTapSeekTimer()
+        
+        doubleTapSeekTimer = Timer.scheduledTimer(withTimeInterval: 3.0, repeats: false) { [weak self] _ in
+            Task { @MainActor in
+                self?.endDoubleTapSeek()
+            }
+        }
+    }
+    
+    private func cancelDoubleTapSeekTimer() {
+        doubleTapSeekTimer?.invalidate()
+        doubleTapSeekTimer = nil
+    }
+    
+    private func endDoubleTapSeek() {
+        isDoubleTapSeekActive = false
+        doubleTapSeekSeconds = 0
+        cancelDoubleTapSeekTimer()
+    }
+    
+    var doubleTapSeekDisplayText: String {
+        let seconds = abs(doubleTapSeekSeconds)
+        return Strings.Localizable.VideoPlayer.Chip.seekDisplayText(seconds)
+    }
+
+    func doubleTapSeekChipBottomPadding(isLandscape: Bool) -> CGFloat {
+        if isControlsVisible {
+            isLandscape ? 102 : 188
+        } else {
+            48
+        }
     }
 }
 

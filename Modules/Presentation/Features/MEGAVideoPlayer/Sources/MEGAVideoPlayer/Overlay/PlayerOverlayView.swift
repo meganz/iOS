@@ -15,20 +15,45 @@ public struct PlayerOverlayView: View {
             backgroundColor
                 .ignoresSafeArea()
                 .contentShape(Rectangle())
-                .onTapGesture {
-                    viewModel.didTapVideoArea()
-                }
-                .onLongPressGesture(
-                    minimumDuration: 0.5,
-                    perform: {
-                        viewModel.beginHoldToSpeed()
-                    },
-                    onPressingChanged: { isPressing in
-                        guard !isPressing else { return }
-                        viewModel.endHoldToSpeed()
+                .overlay(
+                    HStack(spacing: 0) {
+                        // Left side - backward seek
+                        Rectangle()
+                            .fill(Color.clear)
+                            .contentShape(Rectangle())
+                            .onTapGesture(count: 2) {
+                                Task {
+                                    await viewModel.handleDoubleTapSeek(isForward: false)
+                                }
+                            }
+                            .frame(maxWidth: .infinity)
+
+                        // Right side - forward seek
+                        Rectangle()
+                            .fill(Color.clear)
+                            .contentShape(Rectangle())
+                            .onTapGesture(count: 2) {
+                                Task {
+                                    await viewModel.handleDoubleTapSeek(isForward: true)
+                                }
+                            }
+                            .frame(maxWidth: .infinity)
                     }
+                        .onTapGesture {
+                            viewModel.didTapVideoArea()
+                        }
+                        .onLongPressGesture(
+                            minimumDuration: 0.5,
+                            perform: {
+                                viewModel.beginHoldToSpeed()
+                            },
+                            onPressingChanged: { isPressing in
+                                guard !isPressing else { return }
+                                viewModel.endHoldToSpeed()
+                            }
+                        )
                 )
-            
+
             if viewModel.isControlsVisible {
                 topToolbar
                 centerPlaybackButtons
@@ -37,6 +62,17 @@ public struct PlayerOverlayView: View {
 
             if viewModel.isHoldSpeedActive {
                 holdSpeedChip
+            }
+
+            if viewModel.isDoubleTapSeekActive {
+                GeometryReader { geo in
+                    doubleTapSeekChip
+                        .padding(
+                            .bottom,
+                            viewModel.doubleTapSeekChipBottomPadding(
+                                isLandscape: geo.size.width > geo.size.height)
+                        )
+                }
             }
         }
         .animation(.easeInOut(duration: 0.3), value: viewModel.isControlsVisible)
@@ -88,21 +124,47 @@ public struct PlayerOverlayView: View {
         }
     }
 
-    private var holdSpeedChip: some View {
-        HStack(spacing: TokenSpacing._3) {
-            Text("2x")
-                .font(.subheadline)
-                .fontWeight(.semibold)
-            Image(systemName: "forward.fill")
+    private func chipView(content: () -> some View) -> some View {
+        content()
+            .padding(.horizontal, TokenSpacing._4)
+            .padding(.vertical, 6)
+            .background(TokenColors.Background.blur.swiftUI)
+            .foregroundStyle(TokenColors.Text.onColor.swiftUI)
+            .clipShape(Capsule())
+    }
 
+    private var holdSpeedChip: some View {
+        chipView {
+            HStack(spacing: TokenSpacing._3) {
+                Text("2x")
+                    .font(.subheadline)
+                    .fontWeight(.semibold)
+                Image(systemName: "forward.fill")
+
+            }
         }
-        .padding(.horizontal, TokenSpacing._4)
-        .padding(.vertical, 6)
-        .background(TokenColors.Background.blur.swiftUI)
-        .foregroundStyle(TokenColors.Text.onColor.swiftUI)
-        .clipShape(Capsule())
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
         .padding(.bottom, TokenSpacing._7)
+    }
+
+    private var doubleTapSeekChip: some View {
+        chipView {
+            HStack(spacing: TokenSpacing._3) {
+                if viewModel.doubleTapSeekSeconds > 0 {
+                    Text(viewModel.doubleTapSeekDisplayText)
+                        .font(.subheadline)
+                        .fontWeight(.semibold)
+                    Image(systemName: "forward.fill")
+                } else {
+                    Image(systemName: "backward.fill")
+                    Text(viewModel.doubleTapSeekDisplayText)
+                        .font(.subheadline)
+                        .fontWeight(.semibold)
+                }
+
+            }
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
     }
 }
 
