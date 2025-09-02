@@ -33,7 +33,7 @@ struct SubscriptionPurchaseHeaderView: View {
                     .foregroundStyle(TokenColors.Text.primary.swiftUI)
                     .padding(.vertical, TokenSpacing._2)
                     .padding(.horizontal, TokenSpacing._4)
-                    .background(TokenColors.Button.secondary.swiftUI)
+                    .background(TokenColors.Background.surface1.swiftUI)
                     .cornerRadius(TokenSpacing._3)
             }
             .opacity(showBackButton ? 0 : 1)
