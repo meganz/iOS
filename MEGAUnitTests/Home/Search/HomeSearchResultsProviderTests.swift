@@ -379,14 +379,14 @@ final class HomeSearchResultsProviderTests: XCTestCase {
     
     func testSearch_resultProperty_isFavorite() async throws {
         let harness = Harness(self, nodes: [
-            .init(name: "node 0", handle: 0, isFavourite: true)
+            .init(name: "node 0", handle: 0, isFavourite: true, duration: -1)
         ])
         let propertyIds = try await harness.propertyIdsForFoundNode()
         XCTAssertEqual(propertyIds, [.favorite])
     }
     
     func testSearch_resultProperty_label() async throws {
-        let node = NodeEntity(name: "node 0", handle: 0, label: .red)
+        let node = NodeEntity(name: "node 0", handle: 0, label: .red, duration: -1)
         
         let harness = Harness(self, nodes: [node])
 
@@ -397,7 +397,7 @@ final class HomeSearchResultsProviderTests: XCTestCase {
     
     func testSearch_resultProperty_isLinked() async throws {
         let harness = Harness(self, nodes: [
-            .init(name: "node 0", handle: 0, isExported: true)
+            .init(name: "node 0", handle: 0, isExported: true, duration: -1)
         ])
 
         harness.nodeDataUseCase.isNodeInRubbishBin = { _ in false }
@@ -407,7 +407,7 @@ final class HomeSearchResultsProviderTests: XCTestCase {
     
     func testSearch_resultProperty_isVersioned() async throws {
         let harness = Harness(self, nodes: [
-            .init(name: "node 0", handle: 0, isFile: true)
+            .init(name: "node 0", handle: 0, isFile: true, duration: -1)
         ])
 
         harness.nodeDataUseCase.versions = true
@@ -417,7 +417,7 @@ final class HomeSearchResultsProviderTests: XCTestCase {
     
     func testSearch_resultProperty_isDownloaded() async throws {
         let harness = Harness(self, nodes: [
-            .init(name: "node 0", handle: 0, isFile: true)
+            .init(name: "node 0", handle: 0, isFile: true, duration: -1)
         ])
 
         harness.nodeDataUseCase.downloadedToReturn = true
@@ -425,19 +425,19 @@ final class HomeSearchResultsProviderTests: XCTestCase {
         XCTAssertEqual(propertyIds, [.downloaded])
     }
     
-    func testSearch_resultProperty_isVideo() async throws {
+    func testSearch_resultProperty_hasDuration() async throws {
         let harness = Harness(self, nodes: [
             .init(name: "node 0", handle: 0, duration: 123)
         ])
 
         harness.mediaUseCase.$isStringVideoToReturn.mutate { $0 = true}
         let propertyIds = try await harness.propertyIdsForFoundNode()
-        XCTAssertEqual(propertyIds, [.videoDuration, .playIcon])
+        XCTAssertEqual(propertyIds, [.duration])
     }
     
     func testSearch_resultProperty_multipleProperties() async throws {
         let harness = Harness(self, nodes: [
-            .init(name: "node 0", handle: 0, isFile: true, isExported: true)
+            .init(name: "node 0", handle: 0, isFile: true, isExported: true, duration: -1)
         ])
         
         harness.nodeDataUseCase.isNodeInRubbishBin = { _ in false }
