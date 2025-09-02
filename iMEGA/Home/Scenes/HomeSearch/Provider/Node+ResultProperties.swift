@@ -9,7 +9,7 @@ enum NodePropertyId: String {
     case label
     case takenDown
     case downloaded
-    case videoDuration
+    case duration
     case playIcon
 }
 
@@ -24,7 +24,7 @@ extension ResultProperty {
     
     static func duration(string: String) -> Self {
         .init(
-            id: NodePropertyId.videoDuration.rawValue,
+            id: NodePropertyId.duration.rawValue,
             content: .text(string),
             vibrancyEnabled: false,
             placement: { mode in

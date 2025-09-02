@@ -137,9 +137,8 @@ struct SearchResultMapper: Sendable {
             properties.append(.downloaded)
         }
         
-        if isVideo(node: node), let duration = duration(for: node) {
+        if let duration = duration(for: node) {
             properties.append(contentsOf: [
-                .playIcon,
                 .duration(string: duration)
             ])
         }
@@ -153,7 +152,7 @@ struct SearchResultMapper: Sendable {
     }
     
     private func duration(for node: NodeEntity) -> String? {
-        guard isNodeVideoWithValidDuration(for: node) else { return nil }
+        guard isValidDuration(for: node) else { return nil }
         return TimeInterval(node.duration).timeString
     }
     
@@ -161,8 +160,8 @@ struct SearchResultMapper: Sendable {
         nodeUseCase.isDownloaded(nodeHandle: node.handle)
     }
     
-    private func isNodeVideoWithValidDuration(for node: NodeEntity) -> Bool {
-        mediaUseCase.isVideo(node.name) && node.duration >= 0
+    private func isValidDuration(for node: NodeEntity) -> Bool {
+        node.duration >= 0
     }
     
     private func isVideo(node: NodeEntity) -> Bool {
