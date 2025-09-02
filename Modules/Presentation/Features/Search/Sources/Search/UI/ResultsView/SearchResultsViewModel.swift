@@ -253,12 +253,6 @@ public class SearchResultsViewModel: ObservableObject {
         await showLoadingPlaceholderIfNeeded()
         await queryChanged(to: "", isSearchActive: false)
     }
-    
-    func scrolled() {
-        if searchingTask == nil {
-            bridge.resignKeyboard()
-        }
-    }
 
     func searchCancelled() async {
         // cancel button on the search bar was tapped

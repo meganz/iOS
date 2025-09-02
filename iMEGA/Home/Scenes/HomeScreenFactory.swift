@@ -200,9 +200,6 @@ final class HomeScreenFactory: NSObject {
                 // button reference is required to position popover on the iPad correctly
                 router.didTapMoreAction(on: result.id, button: button, isFromSharedItem: false)
             },
-            resignKeyboard: { [weak bridge] in
-                bridge?.hideKeyboard()
-            },
             chipTapped: { chip, selected in
                 tracker.trackChip(tapped: chip, selected: selected)
             }, sortingOrder: {

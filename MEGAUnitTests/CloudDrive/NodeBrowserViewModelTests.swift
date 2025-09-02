@@ -113,7 +113,6 @@ class NodeBrowserViewModelTests: XCTestCase {
                     bridge: SearchBridge(
                         selection: { _ in },
                         context: { _, _ in },
-                        resignKeyboard: {},
                         chipTapped: { _, _ in },
                         sortingOrder: { .nameAscending }
                     ),

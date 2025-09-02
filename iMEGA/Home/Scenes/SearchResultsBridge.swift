@@ -28,11 +28,6 @@ class SearchResultsBridge: MEGASearchBarViewEditingDelegate {
         updateBottomInsetTrampoline?(bottomInset)
     }
     
-    func hideKeyboard() {
-        hideKeyboardTrampoline?()
-    }
-    
-    var hideKeyboardTrampoline: (() -> Void)?
     var didFinishSearchingTrampoline: (() -> Void)?
     var didHighlightTrampoline: (() -> Void)?
     var didInputTextTrampoline: ((String) -> Void)?

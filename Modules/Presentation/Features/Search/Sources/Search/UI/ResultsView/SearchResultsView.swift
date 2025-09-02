@@ -31,13 +31,9 @@ public struct SearchResultsView: View {
             await viewModel.task()
         }
         .sheet(item: $viewModel.presentedChipsPickerViewModel) { item in
-            if #available(iOS 16, *) {
-                chipsPickerView(for: item)
-                    .presentationDetents([.medium, .large])
-                    .presentationDragIndicator(.visible)
-            } else {
-                chipsPickerView(for: item)
-            }
+            chipsPickerView(for: item)
+                .presentationDetents([.medium, .large])
+                .presentationDragIndicator(.visible)
         }
     }
     
@@ -82,23 +78,8 @@ public struct SearchResultsView: View {
     @ViewBuilder
     private var content: some View {
         Group {
-            if #available(iOS 16.0, *) {
-                contentWrapper
-                    .scrollDismissesKeyboard(.immediately)
-            } else {
-                if viewModel.layout == .list && viewModel.containsSwipeActions {
-                    // Drag gesture conflicts with the swipe left for listing.
-                    // Hence it is not enabled for iOS 15 and below devices if there is swipe.
-                    contentWrapper
-                } else {
-                    contentWrapper
-                        .simultaneousGesture(
-                            DragGesture().onChanged({ _ in
-                                viewModel.scrolled()
-                            })
-                        )
-                }
-            }
+            contentWrapper
+                .scrollDismissesKeyboard(.immediately)
         }
         .padding(.bottom, viewModel.bottomInset)
         .emptyState(viewModel.emptyViewModel)
@@ -189,7 +170,6 @@ public struct SearchResultsView: View {
             bridge: .init(
                 selection: { _ in },
                 context: {_, _ in },
-                resignKeyboard: {},
                 chipTapped: { _, _ in },
                 sortingOrder: { .nameAscending }
             ),
