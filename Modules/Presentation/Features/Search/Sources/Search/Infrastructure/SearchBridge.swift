@@ -7,21 +7,18 @@ import UIKit
 public class SearchBridge {
     let selection: (SearchResultSelection) -> Void
     let context: (SearchResult, UIButton) -> Void
-    let resignKeyboard: () -> Void
     let sortingOrder: () async -> SortOrderEntity
     private let chipTapped: (SearchChipEntity, Bool) -> Void
     
     public init(
         selection: @escaping (SearchResultSelection) -> Void,
         context: @escaping (SearchResult, UIButton) -> Void,
-        resignKeyboard: @escaping () -> Void,
         chipTapped: @escaping (SearchChipEntity, Bool) -> Void,
         sortingOrder: @escaping () async -> SortOrderEntity
     ) {
         self.selection = selection
         self.context = context
         self.chipTapped = chipTapped
-        self.resignKeyboard = resignKeyboard
         self.sortingOrder = sortingOrder
     }
     

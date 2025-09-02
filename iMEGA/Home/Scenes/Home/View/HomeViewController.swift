@@ -267,10 +267,6 @@ final class HomeViewController: UIViewController, DisplayMenuDelegate {
             }
         }
         bannerViewModel?.inputs.viewIsReady()
-        
-        searchResultsBridge.hideKeyboardTrampoline = { [weak self] in
-            self?.hideKeyboard()
-        }
     }
     
     func changeLayout(to layout: PageLayout) {

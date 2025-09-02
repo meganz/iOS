@@ -34,7 +34,6 @@ final class SearchResultsViewModelTests: XCTestCase, @unchecked Sendable {
         let bridge: SearchBridge
         var selectedResults: [SearchResultSelection] = []
         var contextTriggeredResults: [SearchResult] = []
-        var keyboardResignedCount = 0
         var chipTaps: [(SearchChipEntity, Bool)] = []
         var emptyContentRequested: [EmptyContent] = []
         weak var testcase: XCTestCase?
@@ -48,12 +47,10 @@ final class SearchResultsViewModelTests: XCTestCase, @unchecked Sendable {
             var selection: (SearchResultSelection) -> Void = { _ in }
             var context: (SearchResult, UIButton) -> Void = { _, _ in }
             var chipTapped: (SearchChipEntity, Bool) -> Void = { _, _ in }
-            var keyboardResigned = {}
             
             bridge = SearchBridge(
                 selection: { selection($0) },
                 context: { context($0, $1) },
-                resignKeyboard: { keyboardResigned() },
                 chipTapped: { chipTapped($0, $1) },
                 sortingOrder: { .nameAscending }
             )
@@ -90,9 +87,7 @@ final class SearchResultsViewModelTests: XCTestCase, @unchecked Sendable {
             context = { result, _ in
                 self.contextTriggeredResults.append(result)
             }
-            keyboardResigned = {
-                self.keyboardResignedCount += 1
-            }
+
             chipTapped = { chip, isSelected in
                 self.chipTaps.append((chip, isSelected))
             }
@@ -526,13 +521,6 @@ final class SearchResultsViewModelTests: XCTestCase, @unchecked Sendable {
 
         await harness.sut.queryChanged(to: "query", isSearchActive: true)
         XCTAssertFalse(harness.sut.isLoadingPlaceholderShown)
-    }
-    
-    @MainActor
-    func testScrolled_callsBridgeResignKeyboard() {
-        let harness = Harness(self)
-        harness.sut.scrolled()
-        XCTAssertEqual(harness.keyboardResignedCount, 1)
     }
     
     @MainActor

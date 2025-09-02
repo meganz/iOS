@@ -841,9 +841,6 @@ struct CloudDriveViewControllerFactory {
                     isFromSharedItem: config.isFromSharedItem ?? false
                 )
             },
-            resignKeyboard: { [weak bridge] in
-                bridge?.hideKeyboard()
-            },
             chipTapped: { _, _ in },
             sortingOrder: { @MainActor in
                 sortOrderPreferenceUseCase.sortOrder(for: nodeSource.parentNode).toSearchSortOrderEntity()
