@@ -79,6 +79,9 @@ class SearchBarUIHostingController<Content>: UIHostingController<Content>, Audio
             if let audioPlayerManager, audioPlayerManager.isPlayerAlive() {
                 audioPlayerManager.playerHidden(enabled, presenter: self)
             }
+            if self.hidesBottomBarWhenPushed {
+                self.updateContentView(enabled ? self.tabBarController?.tabBar.frame.height ?? 0 : 0)
+            }
         }
         
         selectionHandler?.onSelectionChanged = { [weak self] config in
