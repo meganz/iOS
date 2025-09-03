@@ -1013,7 +1013,7 @@
 /* Cell title shown on the achievements view for referral achievement */
 "account.achievement.referral.title"="Laden Sie Ihre Freunde ein";
 /* Subtitle of the referral achievement introduction, %1$@ is a placeholder, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
-"account.achievement.referral.subtitle"="%1$@ of storage for each invitation. \n%2$@";
+"account.achievement.referral.subtitle"="%1$@ Speicherplatz für jede Einladung. \n%2$@";
 /* Text shown to explain how and where you can invite friends */
 "Select from phone contacts or enter multiple email addresses"="Wählen Sie Kontakte von Ihrem Gerät oder geben Sie E-Mail-Adressen ein.";
 /*  */
@@ -1051,19 +1051,19 @@
 /* Explanation label shown on the achievements view for complete install MEGA desktop app achievement, %@ is a placeholder. */
 "account.achievement.desktopApp.complete.explaination.label"="Sie haben %@ Extraspeicherplatz für die Installation der MEGA-Desktop-App erhalten.";
 /* Explanation label shown on the achievements view for incomplete install MEGA desktop app achievement, %1$@ is a placeholder, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
-"account.achievement.desktopApp.incomplete.explaination.label"="When you install the MEGA Desktop App you get %1$@ of complimentary storage space, %2$@. The MEGA Desktop App is available for Windows, macOS and most Linux distributions.";
+"account.achievement.desktopApp.incomplete.explaination.label"="Bei Installation der MEGA-Desktop-App erhalten Sie %1$@ kostenlosen Extraspeicherplatz, %2$@. Die MEGA-Desktop-App ist für Windows, macOS und die meisten Linux-Distributionen verfügbar.";
 /* Cell title shown on the achievements view for install MEGA mobile app achievement */
 "account.achievement.mobileApp.title"="MEGA-Mobil-App installieren";
 /* Explanation label shown on the achievements view for complete install MEGA mobile app achievement, %@ is a placeholder. */
 "account.achievement.mobileApp.complete.explaination.label"="Sie haben %@ Extraspeicherplatz für die Installation der MEGA-Mobil-App erhalten.";
 /* Explanation label shown on the achievements view for incomplete install MEGA mobile app achievement, %1$@ is a placeholder, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
-"account.achievement.mobileApp.incomplete.explaination.label"="When you install the MEGA Mobile App you get %@ of complimentary storage space, %2$@. The MEGA Mobile App is available for iOS and Android. ";
+"account.achievement.mobileApp.incomplete.explaination.label"="Bei Installation der MEGA-Mobil-App erhalten Sie %@ kostenlosen Extraspeicherplatz, %2$@. Die MEGA-Mobil-App ist für iOS und Android verfügbar. ";
 /* Detail label shown on the achievements details view for Start Free Trial when its completed, %1$@ is placeholder for the storage amount, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
-"account.achievement.freeTrial.detail.complete.label"="%1$@ bonus applied. %2$@";
+"account.achievement.freeTrial.detail.complete.label"="%1$@ Bonus erhalten. %2$@";
 /* Cell title shown on the achievements view for Start MEGA VPN Free Trial */
 "account.achievement.vpnFreeTrial.title"="Kostenlosen Test von MEGA VPN starten";
 /* Detail label shown on the achievements details view for Start MEGA VPN Free Trial when its incomplete, %1$@ is placeholder for the storage amount, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
-"account.achievement.vpnFreeTrial.detail.incomplete.label"="Get %1$@ of free storage when you start a MEGA VPN free trial. %2$@";
+"account.achievement.vpnFreeTrial.detail.incomplete.label"="Sie erhalten %1$@ kostenlosen Speicherplatz, wenn Sie einen kostenlosen Test von MEGA VPN starten. %2$@";
 /* Explanation label shown on the achievements view for incomplete start MEGA VPN Free Trial achievement, %@ is a placeholder. */
 "account.achievement.vpnFreeTrial.incomplete.explanation.label"="Installieren Sie die MEGA-VPN-App, loggen Sie sich mit Ihrem MEGA-Account ein und starten Sie Ihren kostenlosen Test. Sie erhalten Ihren Speicherbonus automatisch, nachdem Sie den kostenlosen Test gestartet haben.";
 /* Explanation label shown on the achievements view for complete start MEGA VPN Free Trial achievement, %@ is a placeholder. */
@@ -1073,7 +1073,7 @@
 /* Cell title shown on the achievements view for Start MEGA Pass Free Trial */
 "account.achievement.passFreeTrial.title"="Kostenlosen Test von MEGA Pass starten";
 /* Detail label shown on the achievements details view for Start MEGA Pass Free Trial when its incomplete, %1$@ is placeholder for the storage amount, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
-"account.achievement.passFreeTrial.detail.incomplete.label"="Get %1$@ of free storage when you start a MEGA Pass free trial. %2$@";
+"account.achievement.passFreeTrial.detail.incomplete.label"="Sie erhalten %1$@ kostenlosen Speicherplatz, wenn Sie einen kostenlosen Test von MEGA Pass starten. %2$@";
 /* Explanation label shown on the achievements view for incomplete start MEGA Pass Free Trial achievement, %@ is a placeholder. */
 "account.achievement.passFreeTrial.incomplete.explanation.label"="Installieren Sie die MEGA-Pass-App, loggen Sie sich mit Ihrem MEGA-Account ein und starten Sie Ihren kostenlosen Test. Sie erhalten Ihren Speicherbonus automatisch, nachdem Sie den kostenlosen Test gestartet haben.";
 /* Explanation label shown on the achievements view for complete start MEGA Pass Free Trial achievement, %@ is a placeholder. */
@@ -1081,11 +1081,11 @@
 /* Text for the button to install MEGA Pass in the Start MEGA Pass Free Trial achievement */
 "account.achievement.passFreeTrial.buttonText"="MEGA Pass installieren";
 /* Subtitle of the incomplete achievement with permanent bonus, %1$@ is a placeholder for amount of storage, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
-"account.achievement.incomplete.subtitle"="%1$@ of storage. %2$@";
+"account.achievement.incomplete.subtitle"="%1$@ Speicher. %2$@";
 /* String of the achievements with permanent bonus, used as a full sentence */
-"account.achievement.validity.permanent"="Valid permanently.";
+"account.achievement.validity.permanent"="Dauerhaft gültig.";
 /* Substring of the achievements with permanent bonus, used as a part of a sentence */
-"account.achievement.validity.substring.permanent"="valid permanently";
+"account.achievement.validity.substring.permanent"="dauerhaft gültig";
 /* Subtitle of the complete achievement with permanent bonus */
 "account.achievement.complete.subtitle.permanent"="Bonus erhalten";
 /* Add Phone Number title */
@@ -1093,7 +1093,7 @@
 /* Explanation Label shown on the achievements view for complete add phone number achievement, %@ is a placeholder. */
 "account.achievement.phoneNumber.complete.explaination.label"="Sie haben %@ Speicherplatz für das Hinzufügen Ihrer Telefonnummer erhalten.";
 /* Explanation Label shown on the achievements view for incomplete add phone number achievement, %1$@ is a placeholder, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
-"account.achievement.phoneNumber.incomplete.explaination.label"="When you add your phone number you get %@ of complimentary storage space, %2$@.";
+"account.achievement.phoneNumber.incomplete.explaination.label"="Wenn Sie Ihre Telefonnummer hinzufügen, erhalten Sie %@ kostenlosen Extraspeicherplatz, %2$@.";
 /* Free storage description to encourage users to add phone number to their accounts */
 "Get free %@ when you add your phone number. This makes it easier for your contacts to find you on MEGA."="Sie erhalten %@ als kostenlosen Bonus, wenn Sie Ihre Telefonnummer hinzufügen. Dadurch erleichtern Sie es Ihren Freunden und Bekannten, Sie auf MEGA zu finden.";
 /* Description to encourage users to add phone number to their accounts when there are not achievements */
@@ -4768,3 +4768,5 @@
 "notification.local.cameraUploadBackupReminder.title"="Schützen Sie kostbare Momente!";
 /* Local Notification Body for Camera uploads backup reminder */
 "notification.local.cameraUploadBackupReminder.body"="Sichern Sie Ihre Fotos und Videos";
+/* The double tap seek display text in video player */
+"videoPlayer.chip.seekDisplayText"="%@ Sekunden";

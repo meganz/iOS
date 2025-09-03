@@ -2397,9 +2397,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>Valid for %d day.</string>
         <key>other</key>
-        <string></string>
+        <string>Valid for %d days.</string>
       </dict>
     </dict>
     <key>account.achievement.validity.substring.days</key>

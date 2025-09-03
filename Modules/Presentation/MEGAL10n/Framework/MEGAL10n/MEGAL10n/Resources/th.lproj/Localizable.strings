@@ -1013,7 +1013,7 @@
 /* Cell title shown on the achievements view for referral achievement */
 "account.achievement.referral.title"="เชิญเพื่อนของคุณ";
 /* Subtitle of the referral achievement introduction, %1$@ is a placeholder, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
-"account.achievement.referral.subtitle"="%1$@ of storage for each invitation. \n%2$@";
+"account.achievement.referral.subtitle"="รับพื้นที่ %1$@ สำหรับทุกคำเชิญ\n%2$@";
 /* Text shown to explain how and where you can invite friends */
 "Select from phone contacts or enter multiple email addresses"="เลือกจากรายชื่อในอุปกรณ์หรือกรอกอีเมลได้หลายรายการ";
 /*  */
@@ -1051,19 +1051,19 @@
 /* Explanation label shown on the achievements view for complete install MEGA desktop app achievement, %@ is a placeholder. */
 "account.achievement.desktopApp.complete.explaination.label"="คุณได้รับพื้นที่เก็บข้อมูล %@ จากการติดตั้งแอป MEGA บนเดสก์ท็อป ";
 /* Explanation label shown on the achievements view for incomplete install MEGA desktop app achievement, %1$@ is a placeholder, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
-"account.achievement.desktopApp.incomplete.explaination.label"="When you install the MEGA Desktop App you get %1$@ of complimentary storage space, %2$@. The MEGA Desktop App is available for Windows, macOS and most Linux distributions.";
+"account.achievement.desktopApp.incomplete.explaination.label"="รับพื้นที่ฟรี %1$@ เมื่อติดตั้งแอป MEGA สำหรับเดสก์ท็อป %2$@ แอป MEGA สำหรับเดสก์ท็อปพร้อมให้ใช้งานบน Windows, macOS และ Linux ส่วนใหญ่";
 /* Cell title shown on the achievements view for install MEGA mobile app achievement */
 "account.achievement.mobileApp.title"="ติดตั้งแอป MEGA บนมือถือ";
 /* Explanation label shown on the achievements view for complete install MEGA mobile app achievement, %@ is a placeholder. */
 "account.achievement.mobileApp.complete.explaination.label"="คุณได้รับพื้นที่เก็บข้อมูล %@ จากการติดตั้งแอป MEGA บนมือถือ";
 /* Explanation label shown on the achievements view for incomplete install MEGA mobile app achievement, %1$@ is a placeholder, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
-"account.achievement.mobileApp.incomplete.explaination.label"="When you install the MEGA Mobile App you get %@ of complimentary storage space, %2$@. The MEGA Mobile App is available for iOS and Android. ";
+"account.achievement.mobileApp.incomplete.explaination.label"="รับพื้นที่ฟรี %@ เมื่อติดตั้งแอป MEGA สำหรับมือถือ %2$@ แอป MEGA สำหรับมือถือพร้อมให้ใช้งานบน iOS และ Android";
 /* Detail label shown on the achievements details view for Start Free Trial when its completed, %1$@ is placeholder for the storage amount, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
-"account.achievement.freeTrial.detail.complete.label"="%1$@ bonus applied. %2$@";
+"account.achievement.freeTrial.detail.complete.label"="เพิ่มโบนัส %1$@ ให้แล้ว %2$@";
 /* Cell title shown on the achievements view for Start MEGA VPN Free Trial */
 "account.achievement.vpnFreeTrial.title"="เริ่มทดลองใช้ MEGA VPN ฟรี";
 /* Detail label shown on the achievements details view for Start MEGA VPN Free Trial when its incomplete, %1$@ is placeholder for the storage amount, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
-"account.achievement.vpnFreeTrial.detail.incomplete.label"="Get %1$@ of free storage when you start a MEGA VPN free trial. %2$@";
+"account.achievement.vpnFreeTrial.detail.incomplete.label"="รับพื้นที่ฟรี %1$@ เมื่อเริ่มทดลองใช้ MEGA VPN ฟรี %2$@";
 /* Explanation label shown on the achievements view for incomplete start MEGA VPN Free Trial achievement, %@ is a placeholder. */
 "account.achievement.vpnFreeTrial.incomplete.explanation.label"="ติดตั้งแอป MEGA VPN เข้าสู่ระบบด้วยบัญชี MEGA ของคุณ แล้วเริ่มทดลองใช้ฟรี พื้นที่เก็บข้อมูลโบนัสของคุณจะถูกเพิ่มให้โดยอัตโนมัติหลังจากที่คุณเริ่มทดลองใช้ฟรี";
 /* Explanation label shown on the achievements view for complete start MEGA VPN Free Trial achievement, %@ is a placeholder. */
@@ -1073,7 +1073,7 @@
 /* Cell title shown on the achievements view for Start MEGA Pass Free Trial */
 "account.achievement.passFreeTrial.title"="เริ่มทดลองใช้ MEGA Pass ฟรี";
 /* Detail label shown on the achievements details view for Start MEGA Pass Free Trial when its incomplete, %1$@ is placeholder for the storage amount, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
-"account.achievement.passFreeTrial.detail.incomplete.label"="Get %1$@ of free storage when you start a MEGA Pass free trial. %2$@";
+"account.achievement.passFreeTrial.detail.incomplete.label"="รับพื้นที่ฟรี %1$@ เมื่อเริ่มทดลองใช้ MEGA Pass ฟรี %2$@";
 /* Explanation label shown on the achievements view for incomplete start MEGA Pass Free Trial achievement, %@ is a placeholder. */
 "account.achievement.passFreeTrial.incomplete.explanation.label"="ติดตั้งแอป MEGA Pass เข้าสู่ระบบด้วยบัญชี MEGA ของคุณ แล้วเริ่มทดลองใช้ฟรี พื้นที่เก็บข้อมูลโบนัสของคุณจะถูกเพิ่มให้โดยอัตโนมัติหลังจากที่คุณเริ่มทดลองใช้ฟรี";
 /* Explanation label shown on the achievements view for complete start MEGA Pass Free Trial achievement, %@ is a placeholder. */
@@ -1081,11 +1081,11 @@
 /* Text for the button to install MEGA Pass in the Start MEGA Pass Free Trial achievement */
 "account.achievement.passFreeTrial.buttonText"="ติดตั้ง MEGA Pass";
 /* Subtitle of the incomplete achievement with permanent bonus, %1$@ is a placeholder for amount of storage, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
-"account.achievement.incomplete.subtitle"="%1$@ of storage. %2$@";
+"account.achievement.incomplete.subtitle"="พื้นที่ %1$@ %2$@";
 /* String of the achievements with permanent bonus, used as a full sentence */
-"account.achievement.validity.permanent"="Valid permanently.";
+"account.achievement.validity.permanent"="ไม่มีวันหมดอายุ";
 /* Substring of the achievements with permanent bonus, used as a part of a sentence */
-"account.achievement.validity.substring.permanent"="valid permanently";
+"account.achievement.validity.substring.permanent"="ไม่มีวันหมดอายุ";
 /* Subtitle of the complete achievement with permanent bonus */
 "account.achievement.complete.subtitle.permanent"="ใช้สิทธิ์โบนัสแล้ว";
 /* Add Phone Number title */
@@ -1093,7 +1093,7 @@
 /* Explanation Label shown on the achievements view for complete add phone number achievement, %@ is a placeholder. */
 "account.achievement.phoneNumber.complete.explaination.label"="คุณได้รับพื้นที่เก็บข้อมูล %@ จากการเพิ่มหมายเลขโทรศัพท์ของคุณ";
 /* Explanation Label shown on the achievements view for incomplete add phone number achievement, %1$@ is a placeholder, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
-"account.achievement.phoneNumber.incomplete.explaination.label"="When you add your phone number you get %@ of complimentary storage space, %2$@.";
+"account.achievement.phoneNumber.incomplete.explaination.label"="รับพื้นที่ฟรี %@ เมื่อเพิ่มหมายเลขโทรศัพท์ของคุณ %2$@";
 /* Free storage description to encourage users to add phone number to their accounts */
 "Get free %@ when you add your phone number. This makes it easier for your contacts to find you on MEGA."="รับ %@ ฟรีเมื่อคุณเพิ่มหมายเลขโทรศัพท์ จะช่วยทำให้ผู้ติดต่อของคุณหาคุณเจอได้ง่ายขึ้นใน MEGA";
 /* Description to encourage users to add phone number to their accounts when there are not achievements */
@@ -4033,7 +4033,7 @@
 /* Videos: videos filter title for duration */
 "videos.tab.all.filter.duration.title.duration"="ระยะเวลา";
 /* Videos: videos filter option for all duration */
-"videos.tab.all.filter.duration.option.allDurations"="'ระยะเวลาทั้งหมด";
+"videos.tab.all.filter.duration.option.allDurations"="ระยะเวลาทั้งหมด";
 /* Videos: videos filter option for less than 10 seconds */
 "videos.tab.all.filter.duration.option.lessThan10Seconds"="น้อยกว่า 10 วินาที";
 /* Videos: videos filter option for between 10 and 60 seconds */
@@ -4768,3 +4768,5 @@
 "notification.local.cameraUploadBackupReminder.title"="ปกป้องความทรงจำอันล้ำค่าของคุณ!";
 /* Local Notification Body for Camera uploads backup reminder */
 "notification.local.cameraUploadBackupReminder.body"="ถึงเวลาสำรองรูปภาพและวิดีโอของคุณแล้ว";
+/* The double tap seek display text in video player */
+"videoPlayer.chip.seekDisplayText"="%@ วินาที";

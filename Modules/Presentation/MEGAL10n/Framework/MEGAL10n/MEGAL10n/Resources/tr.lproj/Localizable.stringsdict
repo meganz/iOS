@@ -2397,9 +2397,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>%d gün geçerlidir.</string>
         <key>other</key>
-        <string></string>
+        <string>%d gün geçerlidir.</string>
       </dict>
     </dict>
     <key>account.achievement.validity.substring.days</key>
@@ -2413,9 +2413,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>valid for %d day</string>
+        <string>%d gün geçerli</string>
         <key>other</key>
-        <string>valid for %d days</string>
+        <string>%d gün geçerli</string>
       </dict>
     </dict>
     <key>account.achievement.complete.validBonusExpiry.detail.subtitle</key>

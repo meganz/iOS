@@ -2099,7 +2099,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string></string>
+        <string>%d日間有効。</string>
       </dict>
     </dict>
     <key>account.achievement.validity.substring.days</key>
