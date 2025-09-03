@@ -9,7 +9,7 @@ struct ShortcutDetail: Hashable {
     let bottomBackgroundColor: Color
     let link: String
     
-    static let uploadFile = ShortcutDetail(title: Strings.Localizable.uploadFile, imageName: "uploadFileWidgetXL", topBackgroundColor: Color("00A886"), bottomBackgroundColor: Color("#008A6E"), link: "mega://widget.shortcut.uploadFile")
+    static let uploadFile = ShortcutDetail(title: Strings.Localizable.uploadFile, imageName: "uploadFileWidgetXL", topBackgroundColor: Color("#00A886"), bottomBackgroundColor: Color("#008A6E"), link: "mega://widget.shortcut.uploadFile")
 
     static let scanDocument = ShortcutDetail(title: Strings.Localizable.scanDocument, imageName: "scanDocumentWidgetXL", topBackgroundColor: Color("#F9B35F"), bottomBackgroundColor: Color("#E68F4D"), link: "mega://widget.shortcut.scanDocument")
 
