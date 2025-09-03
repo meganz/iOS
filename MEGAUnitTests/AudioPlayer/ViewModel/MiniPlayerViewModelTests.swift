@@ -246,8 +246,7 @@ final class MiniPlayerViewModelTests: XCTestCase {
             node: nil,
             playerType: .default,
             shouldInitializePlayer: false,
-            relatedFileLinks: [],
-            playerHandlerBuilder: MockAudioPlayerHandlerBuilder(handler: mockPlayerHandler)
+            relatedFileLinks: []
         )
         viewModel.dispatch(.refresh(newConfig))
         
@@ -267,8 +266,7 @@ final class MiniPlayerViewModelTests: XCTestCase {
             node: nil,
             playerType: .default,
             shouldInitializePlayer: true,
-            relatedFileLinks: [],
-            playerHandlerBuilder: MockAudioPlayerHandlerBuilder(handler: mockPlayerHandler)
+            relatedFileLinks: []
         )
         viewModel.dispatch(.refresh(newConfig))
         
@@ -296,7 +294,6 @@ final class MiniPlayerViewModelTests: XCTestCase {
     ) {
         let mockRouter = MockMiniPlayerViewRouter(isFolderLinkPresenter: isRouterFolderLinkPresenter)
         let mockPlayerHandler = MockAudioPlayerHandler()
-        let mockPlayerHandlerBuilder = MockAudioPlayerHandlerBuilder(handler: mockPlayerHandler)
         let mockPlaybackContinuationUseCase = MockPlaybackContinuationUseCase()
         let mockNodeInfoUseCase = MockNodeInfoUseCase()
         let mockStreamingInfoUseCase = MockStreamingInfoUseCase()
@@ -306,9 +303,9 @@ final class MiniPlayerViewModelTests: XCTestCase {
                 node: node,
                 playerType: playerType,
                 shouldInitializePlayer: shouldInitializePlayer,
-                relatedFileLinks: relatedFileLinks,
-                playerHandlerBuilder: mockPlayerHandlerBuilder
+                relatedFileLinks: relatedFileLinks
             ),
+            playerHandler: mockPlayerHandler,
             router: mockRouter,
             nodeInfoUseCase: mockNodeInfoUseCase,
             streamingInfoUseCase: mockStreamingInfoUseCase,
@@ -324,8 +321,7 @@ final class MiniPlayerViewModelTests: XCTestCase {
         node: MockNode? = nil,
         playerType: PlayerType = .default,
         shouldInitializePlayer: Bool,
-        relatedFileLinks: [String],
-        playerHandlerBuilder: some AudioPlayerHandlerBuilderProtocol
+        relatedFileLinks: [String]
     ) -> AudioPlayerConfigEntity {
         let isFolderLink = (playerType == .folderLink)
         let fileLink: String?
@@ -348,8 +344,7 @@ final class MiniPlayerViewModelTests: XCTestCase {
             isFolderLink: isFolderLink,
             fileLink: fileLink,
             relatedFiles: relatedFiles,
-            shouldResetPlayer: shouldInitializePlayer,
-            audioPlayerHandlerBuilder: playerHandlerBuilder
+            shouldResetPlayer: shouldInitializePlayer
         )
     }
     

@@ -205,16 +205,15 @@ final class MiniPlayerViewModel_AudioPlayerObserversProtocolTests: XCTestCase {
         playerHandler: MockAudioPlayerHandler
     ) {
         let mockPlayerHandler = MockAudioPlayerHandler()
-        let mockHandlerBuilder = MockAudioPlayerHandlerBuilder(handler: mockPlayerHandler)
         let router = MockMiniPlayerViewRouter()
         let sut = MiniPlayerViewModel(
             configEntity: AudioPlayerConfigEntity(
                 node: nil,
                 isFolderLink: false,
                 fileLink: nil,
-                relatedFiles: nil,
-                audioPlayerHandlerBuilder: mockHandlerBuilder
+                relatedFiles: nil
             ),
+            playerHandler: mockPlayerHandler,
             router: router,
             nodeInfoUseCase: NodeInfoUseCase(nodeInfoRepository: MockNodeInfoRepository(violatesTermsOfServiceResult: .success(false))),
             streamingInfoUseCase: StreamingInfoUseCase(streamingInfoRepository: MockStreamingInfoRepository()),

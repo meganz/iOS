@@ -1,17 +1,13 @@
 import MEGADomain
 import MEGASwift
 
-final class AudioPlayerConfigEntity: @unchecked Sendable {
+struct AudioPlayerConfigEntity: Sendable {
     enum NodeOriginType: CaseIterable {
         case folderLink
         case fileLink
         case chat
         case unknown
     }
-    
-    private let _node: Atomic<MEGANode?> = Atomic(wrappedValue: nil)
-    private let _allNodes: Atomic<[MEGANode]?> = Atomic(wrappedValue: nil)
-    private let audioPlayerHandlerBuilder: any AudioPlayerHandlerBuilderProtocol
     
     let isFolderLink: Bool
     let fileLink: String?
@@ -27,50 +23,36 @@ final class AudioPlayerConfigEntity: @unchecked Sendable {
     let isFromSharedItem: Bool
     
     /// Nodes, File Links, Folder Links
-    var node: MEGANode? {
-        get {
-            _node.wrappedValue
-        }
-        set {
-            _node.mutate { $0 = newValue }
-        }
-    }
-
-    var playerHandler: any AudioPlayerHandlerProtocol {
-        audioPlayerHandlerBuilder.build()
-    }
+    let node: MEGANode?
     
     // Playlist for All Nodes from Explorer entry point
-    var allNodes: [MEGANode]? {
-        get {
-            _allNodes.wrappedValue
-        }
-        set {
-            _allNodes.mutate { $0 = newValue }
-        }
-    }
+    let allNodes: [MEGANode]?
     
     var isFileLink: Bool {
         fileLink != nil && relatedFiles == nil
     }
     
     var playerType: PlayerType {
-        if isFolderLink { return .folderLink }
-        if isFileLink { return .fileLink }
-        if relatedFiles != nil { return .offline }
-        return .default
+        return switch true {
+        case isFolderLink: .folderLink
+        case isFileLink: .fileLink
+        case relatedFiles != nil: .offline
+        default: .default
+        }
+    }
+
+    var nodeOriginType: AudioPlayerConfigEntity.NodeOriginType {
+        return switch true {
+        case isFolderLink: .folderLink
+        case isFileLink: .fileLink
+        case hasValidChatIds: .chat
+        default: .unknown
+        }
     }
     
-    var nodeOriginType: AudioPlayerConfigEntity.NodeOriginType {
-        if isFolderLink { return .folderLink }
-        if isFileLink { return .fileLink }
-        
-        let hasChatIds =
-            (messageId != nil && chatId != nil) ||
-            (messageId != .invalid && chatId != .invalid)
-        
-        if hasChatIds { return .chat }
-        return .unknown
+    private var hasValidChatIds: Bool {
+        (messageId != nil && chatId != nil) ||
+        (messageId != .invalid && chatId != .invalid)
     }
     
     init(
@@ -82,8 +64,7 @@ final class AudioPlayerConfigEntity: @unchecked Sendable {
         relatedFiles: [String]? = nil,
         allNodes: [MEGANode]? = nil,
         shouldResetPlayer: Bool = false,
-        isFromSharedItem: Bool = false,
-        audioPlayerHandlerBuilder: some AudioPlayerHandlerBuilderProtocol = AudioPlayerHandlerBuilder()
+        isFromSharedItem: Bool = false
     ) {
         self.isFolderLink = isFolderLink
         self.fileLink = fileLink
@@ -92,8 +73,7 @@ final class AudioPlayerConfigEntity: @unchecked Sendable {
         self.relatedFiles = relatedFiles?.filter(\.fileExtensionGroup.isAudio)
         self.shouldResetPlayer = shouldResetPlayer
         self.isFromSharedItem = isFromSharedItem
-        self._node.mutate { $0 = node }
-        self._allNodes.mutate { $0 = allNodes }
-        self.audioPlayerHandlerBuilder = audioPlayerHandlerBuilder
+        self.node = node
+        self.allNodes = allNodes
     }
 }

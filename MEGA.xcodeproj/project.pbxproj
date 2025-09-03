@@ -1434,6 +1434,8 @@
 		94A220182A696502004130C4 /* MEGAAnalyticsiOS in Frameworks */ = {isa = PBXBuildFile; productRef = 94A220172A696502004130C4 /* MEGAAnalyticsiOS */; };
 		94A2AD3C2D6E368F0022D6B4 /* MockAudioQueueLoaderDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A2AD3B2D6E368B0022D6B4 /* MockAudioQueueLoaderDelegate.swift */; };
 		94A4649F2D371E1C006D0BC5 /* RecentActionBucketProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A4649E2D371E1C006D0BC5 /* RecentActionBucketProviderTests.swift */; };
+		94A46F302E65C57E00BA9644 /* AudioPlayerToMiniPlayerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A46F2F2E65C57E00BA9644 /* AudioPlayerToMiniPlayerTests.swift */; };
+		94A46F452E65D01C00BA9644 /* ForwardingAudioPlayerViewRouterMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A46F442E65D01C00BA9644 /* ForwardingAudioPlayerViewRouterMock.swift */; };
 		94A518EF2A6ED0E700728730 /* ChatViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A518EE2A6ED0E700728730 /* ChatViewControllerTests.swift */; };
 		94A54A972C2B0B940062D8E3 /* ActionSheetModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A54A962C2B0B940062D8E3 /* ActionSheetModel.swift */; };
 		94A714F52C20DC150006DE7D /* HomeUploadingViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A714F42C20DC150006DE7D /* HomeUploadingViewModelTests.swift */; };
@@ -1505,7 +1507,6 @@
 		94DC6A8B2C3DACB60069E604 /* ContactsGroupCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94DC6A8A2C3DACB60069E604 /* ContactsGroupCellViewModel.swift */; };
 		94DCA6C82CAADEBD00F28AA2 /* SimpleDialogConfigFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94DCA6C72CAADEB900F28AA2 /* SimpleDialogConfigFactoryTests.swift */; };
 		94E0548C2DCA19EA00436F4A /* AudioPlayerHandlerBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E0548B2DCA19EA00436F4A /* AudioPlayerHandlerBuilder.swift */; };
-		94E0548F2DCA1A4F00436F4A /* MockAudioPlayerHandlerBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E0548E2DCA1A4F00436F4A /* MockAudioPlayerHandlerBuilder.swift */; };
 		94E0954F2A40CED30046BB0D /* CustomModalAlertViewController+Permissions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E0954E2A40CED30046BB0D /* CustomModalAlertViewController+Permissions.swift */; };
 		94E33C972C2EDB3200754DCB /* CreateTextFileAlertViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E33C962C2EDB3200754DCB /* CreateTextFileAlertViewModelTests.swift */; };
 		94E33C9A2C2EDB9A00754DCB /* MockCreateTextFileAlertViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E33C992C2EDB9A00754DCB /* MockCreateTextFileAlertViewRouter.swift */; };
@@ -4229,6 +4230,8 @@
 		94A21A082D49753D00D11905 /* RecentActionBucket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentActionBucket.swift; sourceTree = "<group>"; };
 		94A2AD3B2D6E368B0022D6B4 /* MockAudioQueueLoaderDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockAudioQueueLoaderDelegate.swift; sourceTree = "<group>"; };
 		94A4649E2D371E1C006D0BC5 /* RecentActionBucketProviderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentActionBucketProviderTests.swift; sourceTree = "<group>"; };
+		94A46F2F2E65C57E00BA9644 /* AudioPlayerToMiniPlayerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerToMiniPlayerTests.swift; sourceTree = "<group>"; };
+		94A46F442E65D01C00BA9644 /* ForwardingAudioPlayerViewRouterMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForwardingAudioPlayerViewRouterMock.swift; sourceTree = "<group>"; };
 		94A518EE2A6ED0E700728730 /* ChatViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewControllerTests.swift; sourceTree = "<group>"; };
 		94A54A962C2B0B940062D8E3 /* ActionSheetModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionSheetModel.swift; sourceTree = "<group>"; };
 		94A714F42C20DC150006DE7D /* HomeUploadingViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeUploadingViewModelTests.swift; sourceTree = "<group>"; };
@@ -4296,7 +4299,6 @@
 		94DC6A8A2C3DACB60069E604 /* ContactsGroupCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsGroupCellViewModel.swift; sourceTree = "<group>"; };
 		94DCA6C72CAADEB900F28AA2 /* SimpleDialogConfigFactoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleDialogConfigFactoryTests.swift; sourceTree = "<group>"; };
 		94E0548B2DCA19EA00436F4A /* AudioPlayerHandlerBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerHandlerBuilder.swift; sourceTree = "<group>"; };
-		94E0548E2DCA1A4F00436F4A /* MockAudioPlayerHandlerBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockAudioPlayerHandlerBuilder.swift; sourceTree = "<group>"; };
 		94E0954E2A40CED30046BB0D /* CustomModalAlertViewController+Permissions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CustomModalAlertViewController+Permissions.swift"; sourceTree = "<group>"; };
 		94E33C962C2EDB3200754DCB /* CreateTextFileAlertViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTextFileAlertViewModelTests.swift; sourceTree = "<group>"; };
 		94E33C992C2EDB9A00754DCB /* MockCreateTextFileAlertViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockCreateTextFileAlertViewRouter.swift; sourceTree = "<group>"; };
@@ -10588,6 +10590,7 @@
 		94E054902DCA1AFA00436F4A /* Routers */ = {
 			isa = PBXGroup;
 			children = (
+				94A46F442E65D01C00BA9644 /* ForwardingAudioPlayerViewRouterMock.swift */,
 				C45A2DE725D2B8EA00915A83 /* MockAudioPlayerViewRouter.swift */,
 				C45A2E0725D2B9DE00915A83 /* MockAudioPlaylistViewRouter.swift */,
 				C45A2E2C25D2E09C00915A83 /* MockMiniPlayerViewRouter.swift */,
@@ -10618,7 +10621,6 @@
 			isa = PBXGroup;
 			children = (
 				C47E7C3F25D1AC3400DB6FF5 /* MockAudioPlayerHandler.swift */,
-				94E0548E2DCA1A4F00436F4A /* MockAudioPlayerHandlerBuilder.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -12864,6 +12866,7 @@
 		C45A2DF325D2B93B00915A83 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				94A46F2F2E65C57E00BA9644 /* AudioPlayerToMiniPlayerTests.swift */,
 				C47E7BF625D1731200DB6FF5 /* AudioPlayerViewModelTests.swift */,
 				C45A2DF425D2B97F00915A83 /* AudioPlaylistViewModelTests.swift */,
 				24189DCD2AA705C70071F160 /* MiniPlayerViewModel+AudioPlayerObserversProtocolTests.swift */,
@@ -16270,6 +16273,7 @@
 				240D80FB2AB1A1DC00FBD2C4 /* AudioPlayerItemTests.swift in Sources */,
 				C452B66425CD50260073B22C /* AudioPlayerPlaybackTests.swift in Sources */,
 				24A6ADDC2A8222CE0035C7B0 /* AudioPlayerPlaylistShiftStrategyTestSpecs.swift in Sources */,
+				94A46F302E65C57E00BA9644 /* AudioPlayerToMiniPlayerTests.swift in Sources */,
 				24C577FB2AC187F600302849 /* AudioPlayerUseCaseTests.swift in Sources */,
 				C45A2E1925D2E00400915A83 /* AudioPlayerViewModelTests.swift in Sources */,
 				246ACEB52AA2D9C5000BD2A8 /* AudioPlayerViewRouterNodeActionAdapterTests.swift in Sources */,
@@ -16358,6 +16362,7 @@
 				534FFC752C1AA65E00A49D1F /* FilterTypeTests.swift in Sources */,
 				0E5F5E8D2C6C6E730037A99C /* FirstTimeOnboardingPrimaryButtonViewModelTests.swift in Sources */,
 				835EBCEC2DCA17EF00AD1E57 /* FolderLinkViewModelTests.swift in Sources */,
+				94A46F452E65D01C00BA9644 /* ForwardingAudioPlayerViewRouterMock.swift in Sources */,
 				C4B97D812B67925C00EBA9E5 /* FuncCallRecorder.swift in Sources */,
 				BFD4E22B2935F73C0011392C /* FutureMeetingRoomViewModel+Additions.swift in Sources */,
 				BFD4E2292935F67A0011392C /* FutureMeetingRoomViewModelTests.swift in Sources */,
@@ -16418,7 +16423,6 @@
 				0E8EABBB2C869F66001722F7 /* MockAlbumRemoteFeatureFlagProvider.swift in Sources */,
 				0EAF3FA72D67D630007D4E9C /* MockAppDelegateRouter.swift in Sources */,
 				C47E7C4025D1AC3400DB6FF5 /* MockAudioPlayerHandler.swift in Sources */,
-				94E0548F2DCA1A4F00436F4A /* MockAudioPlayerHandlerBuilder.swift in Sources */,
 				24C577F62AC1872F00302849 /* MockAudioPlayerRepository.swift in Sources */,
 				24C577FF2AC18A9F00302849 /* MockAudioPlayerUseCase.swift in Sources */,
 				C45A2DE825D2B8EA00915A83 /* MockAudioPlayerViewRouter.swift in Sources */,

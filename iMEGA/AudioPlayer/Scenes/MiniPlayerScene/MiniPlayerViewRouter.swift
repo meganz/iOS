@@ -12,7 +12,10 @@ final class MiniPlayerViewRouter: NSObject, MiniPlayerViewRouting {
     private var configEntity: AudioPlayerConfigEntity
     private var folderSDKLogoutRequired: Bool = false
     
-    init(configEntity: AudioPlayerConfigEntity, presenter: UIViewController) {
+    init(
+        configEntity: AudioPlayerConfigEntity,
+        presenter: UIViewController
+    ) {
         self.configEntity = configEntity
         self.presenter = presenter
     }
@@ -42,6 +45,7 @@ final class MiniPlayerViewRouter: NSObject, MiniPlayerViewRouting {
         
         return MiniPlayerViewModel(
             configEntity: configEntity,
+            playerHandler: AudioPlayerManager.shared,
             router: self,
             nodeInfoUseCase: NodeInfoUseCase(nodeInfoRepository: NodeInfoRepository()),
             streamingInfoUseCase: StreamingInfoUseCase(streamingInfoRepository: StreamingInfoRepository()),
@@ -52,7 +56,7 @@ final class MiniPlayerViewRouter: NSObject, MiniPlayerViewRouting {
     }
     
     func start() {
-        configEntity.playerHandler.presentMiniPlayer(build())
+        AudioPlayerManager.shared.presentMiniPlayer(build())
     }
     
     @objc func updatePresenter(_ presenter: UIViewController) {
@@ -101,7 +105,7 @@ final class MiniPlayerViewRouter: NSObject, MiniPlayerViewRouting {
             preferredStyle: .alert
         )
         alertController.addAction(UIAlertAction(title: Strings.Localizable.dismiss, style: .default, handler: { [weak self] _ in
-            self?.configEntity.playerHandler.closePlayer()
+            AudioPlayerManager.shared.closePlayer()
             self?.dismiss()
         }))
         
@@ -131,7 +135,7 @@ final class MiniPlayerViewRouter: NSObject, MiniPlayerViewRouting {
     
     // MARK: - UI Actions
     func dismiss() {
-        configEntity.playerHandler.closePlayer()
+        AudioPlayerManager.shared.closePlayer()
     }
     
     func showPlayer(node: MEGANode?, filePath: String?) {
