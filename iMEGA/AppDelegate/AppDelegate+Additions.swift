@@ -6,6 +6,7 @@ import FirebaseCrashlytics
 import Foundation
 import Intents
 import LogRepo
+import MEGAAccountManagement
 import MEGAAnalyticsiOS
 import MEGAAppPresentation
 import MEGAAppSDKRepo
@@ -19,18 +20,13 @@ import SafariServices
 
 extension AppDelegate {
     @objc var domainName: String {
-        DIContainer.appDomainUseCase.domainName
+        DIContainer.domainName
     }
 
-    /// Requests the SDK to fetch and sync remote feature flags (e.g., domain name) when user is not logged in.
-    @objc func fetchMiscFlagsBeforeDomainCheck() {
+    @objc func listenToDomainUpdates() {
         Task {
-            do {
-                let accountUseCase = AccountUseCase(repository: AccountRepository.newRepo)
-                try await accountUseCase.getMiscFlags()
-                MEGALogDebug("Domain name: \(DIContainer.appDomainUseCase.domainName)")
-            } catch {
-                MEGALogError("[Domain name] error \(error)")
+            for await _ in MEGAAccountManagement.DependencyInjection.appDomainUpdatesUseCase.events {
+                MEGAAccountManagement.DependencyInjection.appDomainUseCase.recomputeDomain()
             }
         }
     }

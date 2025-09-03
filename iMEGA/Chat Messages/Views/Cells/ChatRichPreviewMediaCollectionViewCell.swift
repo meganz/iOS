@@ -316,17 +316,17 @@ open class ChatRichPreviewMediaCollectionViewSizeCalculator: TextMessageSizeCalc
             case .fileLink:
                 return (chatMessage.message.node?.name ?? "",
                         String.memoryStyleString(fromByteCount: Int64(truncating: chatMessage.message.node?.size ?? 0)),
-                        DIContainer.appDomainUseCase.domainName)
+                        DIContainer.domainName)
 
             case .folderLink:
                 return (chatMessage.message.richTitle ?? "",
                         String(format: "%@\n%@", chatMessage.message.richString ?? "", String.memoryStyleString(fromByteCount: max(chatMessage.message.richNumber?.int64Value ?? 0, 0))),
-                        DIContainer.appDomainUseCase.domainName)
+                        DIContainer.domainName)
 
             case .publicChatLink:
                 return (chatMessage.message.richString ?? "",
                         "\(chatMessage.message.richNumber?.int64Value ?? 0) \(Strings.Localizable.participants)",
-                        DIContainer.appDomainUseCase.domainName)
+                        DIContainer.domainName)
 
             default:
                 return ("", "", "")

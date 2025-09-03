@@ -56,7 +56,7 @@ final class CookieSettingsRouter: NSObject, CookieSettingsRouting {
             NSURL(string: url.absoluteString)?.mnz_presentSafariViewController()
             
         case .showPrivacyPolicy:
-            NSURL(string: "https://\(DIContainer.appDomainUseCase.domainName)/privacy")?.mnz_presentSafariViewController()
+            NSURL(string: "https://\(DIContainer.domainName)/privacy")?.mnz_presentSafariViewController()
         }
     }
     

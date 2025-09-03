@@ -353,7 +353,7 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
                                             .replacingOccurrences(of: "[/A]", with: "")
         return TextWithLinkDetails(fullText: fullTextWithoutFormatters,
                                    tappableText: tappableText,
-                                   linkString: "https://\(DIContainer.appDomainUseCase.domainName)/pro",
+                                   linkString: "https://\(DIContainer.domainName)/pro",
                                    textColor: MEGAAssets.UIColor.upgradeAccountPrimaryText.swiftUI,
                                    linkColor: TokenColors.Support.success.swiftUI)
     }
@@ -618,7 +618,7 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
             plan.apiPrice != nil,
             await externalPurchaseUseCase.shouldProvideExternalPurchase(),
             let externalPurchaseLink = try? await externalPurchaseUseCase.externalPurchaseLink(
-                domain: DIContainer.appDomainUseCase.domainName,
+                domain: DIContainer.domainName,
                 path: plan.externalPurchasePath,
                 sourceApp: "iOS app Ver \(appVersion)",
                 months: {

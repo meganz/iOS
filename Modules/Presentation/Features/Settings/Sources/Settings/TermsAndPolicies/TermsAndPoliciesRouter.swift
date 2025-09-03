@@ -13,16 +13,16 @@ public struct TermsAndPoliciesRouter: TermsAndPoliciesRouting {
     private weak var navigationController: UINavigationController?
     private weak var presenter: UIViewController?
     private let accountUseCase: any AccountUseCaseProtocol
-    private let appDomainUseCase: any AppDomainUseCaseProtocol
+    private let domainNameHandler: () -> String
 
     public init(
         accountUseCase: some AccountUseCaseProtocol,
-        appDomainUseCase: some AppDomainUseCaseProtocol,
+        domainNameHandler: @escaping () -> String,
         navigationController: UINavigationController? = nil,
         presenter: UIViewController? = nil
     ) {
         self.accountUseCase = accountUseCase
-        self.appDomainUseCase = appDomainUseCase
+        self.domainNameHandler = domainNameHandler
         self.navigationController = navigationController
         self.presenter = presenter
     }
@@ -31,7 +31,7 @@ public struct TermsAndPoliciesRouter: TermsAndPoliciesRouting {
         let termsAndPoliciesView = TermsAndPoliciesView(
             viewModel: TermsAndPoliciesViewModel(
                 accountUseCase: accountUseCase,
-                appDomainUseCase: appDomainUseCase,
+                domainNameHandler: domainNameHandler,
                 router: self
             ),
             isPresented: presenter != nil

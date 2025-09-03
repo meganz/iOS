@@ -123,7 +123,7 @@ extension MEGALinkManager: MEGALinkManagerProtocol {
         }
         var components = URLComponents()
         components.scheme = "https"
-        components.host = DIContainer.appDomainUseCase.domainName
+        components.host = DIContainer.domainName
         var startingPath = ""
         if let host = link.host {
             startingPath = "/" + host

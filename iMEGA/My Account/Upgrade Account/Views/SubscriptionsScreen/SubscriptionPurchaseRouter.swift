@@ -62,7 +62,7 @@ final class SubscriptionPurchaseRouter: UpgradeAccountPlanRouting {
     func showTermsAndPolicies() {
         TermsAndPoliciesRouter(
             accountUseCase: accountUseCase,
-            appDomainUseCase: DIContainer.appDomainUseCase,
+            domainNameHandler: { DIContainer.domainName },
             presenter: baseViewController
         ).start()
     }
