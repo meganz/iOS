@@ -174,6 +174,8 @@ extension PlayerOverlayView {
         HStack(alignment: .center, spacing: TokenSpacing._5) {
             backButton
             Spacer()
+            titleView
+            Spacer()
             moreTopButton
         }
         .padding(.horizontal, TokenSpacing._5)
@@ -185,6 +187,14 @@ extension PlayerOverlayView {
 
     var backButton: some View {
         controlButton(name: "back", action: viewModel.didTapBack)
+    }
+
+    var titleView: some View {
+        Text(viewModel.title)
+            .font(.headline)
+            .fontWeight(.semibold)
+            .lineLimit(1)
+            .foregroundStyle(TokenColors.Icon.onColor.swiftUI)
     }
 
     var moreTopButton: some View {

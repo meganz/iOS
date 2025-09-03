@@ -50,19 +50,22 @@ public final class MockVideoPlayer: VideoPlayerProtocol {
     public var resizedFrame: CGRect = .zero
     public var setScalingModeCallCount: Int = 0
     public var setScalingModeValue: VideoScalingMode = .fit
+    public var nodeName: String = "Mock Video Title"
 
     public init(
         option: VideoPlayerOption = .avPlayer,
         state: PlaybackState = .stopped,
         currentTime: Duration = .seconds(0),
         duration: Duration = .seconds(0),
-        debugMessage: String = ""
+        debugMessage: String = "",
+        nodeName: String = "Mock Video Title"
     ) {
         self.option = option
         self.state = state
         self.currentTime = currentTime
         self.duration = duration
         self.debugMessage = debugMessage
+        self.nodeName = nodeName
     }
 
     public func play() {
@@ -112,6 +115,7 @@ public final class MockVideoPlayer: VideoPlayerProtocol {
     public func loadNode(_ node: some PlayableNode) {
         loadNodeCallCount += 1
         loadedNode = node
+        nodeName = node.nodeName
     }
     
     public func setupPlayer(in layer: any PlayerLayerProtocol) {

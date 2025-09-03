@@ -55,6 +55,8 @@ public protocol NodeLoadable {
     ///
     /// - Parameter node: A playable node containing the video content to be loaded.
     func loadNode(_ node: some PlayableNode)
+
+    var nodeName: String { get }
 }
 
 public protocol PlaybackDebugMessageObservable {
