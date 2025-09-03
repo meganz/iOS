@@ -677,10 +677,17 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
                           duration:0.2
                            options:UIViewAnimationOptionTransitionCrossDissolve
                         animations:^{
-            
-            imageView.image = [UIImage imageWithContentsOfFile:transfer.path];
-            [weakSelf setMaximumZoomScaleOnScrollableImageView:imageView node:node];
-            [weakSelf resizeImageView:imageView];
+            if ([[node.name.pathExtension lowercaseString] isEqualToString:@"gif"]) {
+                [imageView sd_setImageWithURL:[NSURL fileURLWithPath:transfer.path]
+                                    completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
+                    [weakSelf setMaximumZoomScaleOnScrollableImageView:imageView node:node];
+                    [weakSelf resizeImageView:imageView];
+                }];
+            } else {
+                imageView.image = [UIImage imageWithContentsOfFile:transfer.path];
+                [weakSelf setMaximumZoomScaleOnScrollableImageView:imageView node:node];
+                [weakSelf resizeImageView:imageView];
+            }
 
             if (weakSelf.dataProvider.currentIndex == index) {
                 weakSelf.pieChartView.alpha = 0.0f;
