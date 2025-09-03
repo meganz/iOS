@@ -1,3 +1,4 @@
+import MEGAAssets
 import MEGAL10n
 import MEGASwift
 import MEGASwiftUI
@@ -11,7 +12,7 @@ struct ShortcutsProvider: IntentTimelineProvider {
     typealias Entry = ShortcutsWidgetEntry
     
     func placeholder(in context: Context) -> Entry {
-        return Entry(date: Date(), shortcuts: ShortcutDetail.availableShortcuts)
+        Entry(date: Date(), shortcuts: ShortcutDetail.availableShortcuts)
     }
     
     func getSnapshot(for configuration: Intent, in context: Context, completion: @escaping (Entry) -> Void) {
@@ -36,17 +37,12 @@ struct ShortcutsProvider: IntentTimelineProvider {
             return .defaultShortcut
         }
         
-        switch identifier {
-        case ShortcutDetail.uploadFile.link:
-            return .uploadFile
-        case ShortcutDetail.scanDocument.link:
-            return.scanDocument
-        case ShortcutDetail.startConversation.link:
-            return .startConversation
-        case ShortcutDetail.addContact.link:
-            return .addContact
-        default:
-            return .defaultShortcut
+        return switch identifier {
+        case ShortcutDetail.uploadFile.link: .uploadFile
+        case ShortcutDetail.scanDocument.link: .scanDocument
+        case ShortcutDetail.startConversation.link: .startConversation
+        case ShortcutDetail.addContact.link: .addContact
+        default: .defaultShortcut
         }
     }
 }
@@ -76,7 +72,7 @@ struct SmallShortcutWidgetView: View {
         
         HStack(alignment: .top) {
             VStack(alignment: .leading) {
-                Image(shortcut.imageName)
+                MEGAAssets.Image.image(named: shortcut.imageName)
                     .frame(width: 56, height: 56, alignment: .leading)
                     .applyWidgetAccent()
                 Spacer()
@@ -85,7 +81,6 @@ struct SmallShortcutWidgetView: View {
                     .foregroundColor(.white)
                     .applyWidgetAccent()
             }
-            .padding(16)
             Spacer()
         }
         .widgetBackground(LinearGradient(gradient: Gradient(colors: [shortcut.topBackgroundColor, shortcut.bottomBackgroundColor]), startPoint: .top, endPoint: .bottom))
@@ -102,7 +97,7 @@ struct ShortcutView_iOS16: View {
     var body: some View {
         HStack(alignment: .top) {
             VStack(alignment: .leading) {
-                Image(shortcut.imageName)
+                MEGAAssets.Image.image(named: shortcut.imageName)
                     .resizable()
                     .frame(width: 28, height: 28, alignment: .leading)
                     .padding([.leading, .trailing], 8)
@@ -140,7 +135,7 @@ struct MediumShortcutsWidgetView: View {
                         })
                     }
                 }
-                .padding(EdgeInsets(top: 8, leading: 8, bottom: 4, trailing: 8))
+                .padding(.bottom, 4)
                 .frame(width: geometry.size.width, height: geometry.size.height/2)
                 
                 HStack(alignment: .top, spacing: 8) {
@@ -155,7 +150,7 @@ struct MediumShortcutsWidgetView: View {
                         })
                     }
                 }
-                .padding(EdgeInsets(top: 4, leading: 8, bottom: 8, trailing: 8))
+                .padding(.top, 4)
                 .frame(width: geometry.size.width, height: geometry.size.height/2)
             }
             .frame(width: geometry.size.width, height: geometry.size.height)
