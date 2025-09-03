@@ -68,12 +68,16 @@ private final class ScanDocumentViewControllerDelegate: NSObject, @unchecked Sen
     }
 
     func documentCameraViewControllerDidCancel(_ controller: VNDocumentCameraViewController) {
-        continuation?.resume(with: .success(nil))
+        controller.dismiss(animated: true) {
+            self.continuation?.resume(with: .success(nil))
+        }
     }
 
     func documentCameraViewController(
         _ controller: VNDocumentCameraViewController, didFailWithError error: any Error
     ) {
-        continuation?.resume(with: .success(nil))
+        controller.dismiss(animated: true) {
+            self.continuation?.resume(with: .success(nil))
+        }
     }
 }
