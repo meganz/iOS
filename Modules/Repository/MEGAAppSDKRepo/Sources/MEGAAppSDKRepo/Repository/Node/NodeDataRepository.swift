@@ -17,10 +17,7 @@ public struct NodeDataRepository: NodeDataRepositoryProtocol {
     }
     
     public func nodeAccessLevel(nodeHandle: HandleEntity) -> NodeAccessTypeEntity {
-        guard let node = sdk.node(forHandle: nodeHandle) else {
-            return .unknown
-        }
-        return NodeAccessTypeEntity(shareAccess: sdk.accessLevel(for: node)) ?? .unknown
+        NodeAccessTypeEntity(shareAccess: sdk.accessLevel(forNodeHande: nodeHandle)) ?? .unknown
     }
     
     public func nodeAccessLevelAsync(nodeHandle: HandleEntity) async -> NodeAccessTypeEntity {
