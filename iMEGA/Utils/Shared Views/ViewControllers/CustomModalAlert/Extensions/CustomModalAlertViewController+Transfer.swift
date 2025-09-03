@@ -221,14 +221,7 @@ extension CustomModalAlertViewController {
     }
 
     private func presentLogin() {
-        if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .loginRegisterAndOnboardingRevamp) {
-            LoginViewRouter(presenter: UIApplication.mnz_presentingViewController())
-                .start()
-        } else {
-            let loginNC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LoginNavigationControllerID")
-            loginNC.modalPresentationStyle = .fullScreen
-            
-            UIApplication.mnz_presentingViewController().present(loginNC, animated: true)
-        }
+        LoginViewRouter(presenter: UIApplication.mnz_presentingViewController())
+            .start()
     }
 }

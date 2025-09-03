@@ -33,7 +33,6 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
     private let purchaseUseCase: any AccountPlanPurchaseUseCaseProtocol
     private let subscriptionsUseCase: any SubscriptionsUseCaseProtocol
     private let remoteFeatureFlagUseCase: any RemoteFeatureFlagUseCaseProtocol
-    private let localFeatureFlagProvider: any FeatureFlagProviderProtocol
     private let externalPurchaseUseCase: any ExternalPurchaseUseCaseProtocol
     private let tracker: any AnalyticsTracking
     private let router: any UpgradeAccountPlanRouting
@@ -92,7 +91,6 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
         purchaseUseCase: some AccountPlanPurchaseUseCaseProtocol,
         subscriptionsUseCase: some SubscriptionsUseCaseProtocol,
         remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = DIContainer.remoteFeatureFlagUseCase,
-        localFeatureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider,
         preferenceUseCase: some PreferenceUseCaseProtocol = PreferenceUseCase.default,
         externalPurchaseUseCase: some ExternalPurchaseUseCaseProtocol = DIContainer.externalPurchaseUseCase,
         tracker: some AnalyticsTracking = DIContainer.tracker,
@@ -107,7 +105,6 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
         self.subscriptionsUseCase = subscriptionsUseCase
         self.accountDetails = accountDetails
         self.remoteFeatureFlagUseCase = remoteFeatureFlagUseCase
-        self.localFeatureFlagProvider = localFeatureFlagProvider
         self.externalPurchaseUseCase = externalPurchaseUseCase
         self.tracker = tracker
         self.viewType = viewType
@@ -228,13 +225,7 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
             planList = await purchaseUseCase.accountPlanProducts()
             maxStorageFromPlans = planList.max(by: { $0.storageLimit < $1.storageLimit })?.storage ?? Constants.fallbackMaxStorageFromPlans
             
-            if localFeatureFlagProvider.isFeatureFlagEnabled(for: .loginRegisterAndOnboardingRevamp) ||
-                viewType == .upgrade {
-                setRecommendedPlan(basedOnPlan: accountDetails.proLevel)
-            } else {
-                let lowestPlan = planList.sorted(by: { $0.price < $1.price }).first ?? PlanEntity()
-                setRecommendedPlan(basedOnPlan: lowestPlan.type)
-            }
+            setRecommendedPlan(basedOnPlan: accountDetails.proLevel)
             
             setDefaultPlanCycleTab()
             setCurrentPlan(type: accountDetails.proLevel)

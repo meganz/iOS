@@ -22,8 +22,6 @@ extension AppDelegate {
     }
     
     @objc func injectAuthenticationDependencies() {
-        guard isLoginRegisterAndOnboardingRevampFeatureEnabled else { return }
-
         MEGAAuthentication.DependencyInjection.sharedSdk = .shared
         MEGAAuthentication.DependencyInjection.keychainServiceName = "MEGA"
         MEGAAuthentication.DependencyInjection.keychainAccount = "sessionV3"
@@ -56,11 +54,7 @@ extension AppDelegate {
     }
 
     @objc func makeOnboardingViewController() -> UIViewController {
-        if isLoginRegisterAndOnboardingRevampFeatureEnabled {
-            OnboardingUSPViewController()
-        } else {
-            OnboardingViewController.instantiateOnboarding(with: .default)
-        }
+        OnboardingUSPViewController()
     }
     
     @objc func isRootViewNewOnboarding() -> Bool {
@@ -83,15 +77,7 @@ extension AppDelegate {
     }
     
     @objc func isOnboardingViewControllerAlreadyShown() -> Bool {
-        if  isLoginRegisterAndOnboardingRevampFeatureEnabled {
-            isRootViewNewOnboarding()
-        } else {
-            window.rootViewController is OnboardingViewController
-        }
-    }
-
-    @objc var isLoginRegisterAndOnboardingRevampFeatureEnabled: Bool {
-        DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .loginRegisterAndOnboardingRevamp)
+        isRootViewNewOnboarding()
     }
     
     @objc func showConfirmEmailView() {

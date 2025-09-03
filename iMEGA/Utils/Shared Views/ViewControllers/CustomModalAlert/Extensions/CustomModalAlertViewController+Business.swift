@@ -17,8 +17,7 @@ extension CustomModalAlertViewController {
                 guard let rootViewController = UIApplication.shared.keyWindow?.rootViewController else {
                     return
                 }
-                if (rootViewController.isKind(of: UIHostingController<AdsSlotView<MainTabBarWrapper>>.self) == false) &&
-                    (rootViewController.isKind(of: InitialLaunchViewController.self) == false) {
+                if rootViewController.isKind(of: UIHostingController<AdsSlotView<MainTabBarWrapper>>.self) == false {
                     (UIApplication.shared.delegate as? AppDelegate)?.showMainTabBar()
                 }
             })
