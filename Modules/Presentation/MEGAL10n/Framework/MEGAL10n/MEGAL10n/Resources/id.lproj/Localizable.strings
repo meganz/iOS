@@ -4768,3 +4768,5 @@
 "notification.local.cameraUploadBackupReminder.title"="Protect your precious moments!";
 /* Local Notification Body for Camera uploads backup reminder */
 "notification.local.cameraUploadBackupReminder.body"="It’s time to back up your photos and videos";
+/* The double tap seek display text in video player */
+"videoPlayer.chip.seekDisplayText"="%@ detik";

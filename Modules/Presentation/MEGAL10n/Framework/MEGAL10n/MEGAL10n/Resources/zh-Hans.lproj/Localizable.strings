@@ -4493,7 +4493,7 @@
 /* App Store Screenshots string - Image 9 */
 "appstore.screenshot9"="转移到MEGA";
 /* App Store Screenshots string - Image 10 */
-"appstore.screenshot10"="加入数百万信任MEGA的个人和企业的行列，用以存储并保护数据。";
+"appstore.screenshot10"="亿万个人以及企业用户都信任MEGA云盘来存储并保护他们的数据，加入他们的行列吧。";
 /* Modal title when sharing a meeting link */
 "chat.meetings.shareLink.main"="会议确认：邀请其他人加入";
 /* Modal description when sharing a meeting link */
@@ -4768,3 +4768,5 @@
 "notification.local.cameraUploadBackupReminder.title"="Protect your precious moments!";
 /* Local Notification Body for Camera uploads backup reminder */
 "notification.local.cameraUploadBackupReminder.body"="It’s time to back up your photos and videos";
+/* The double tap seek display text in video player */
+"videoPlayer.chip.seekDisplayText"="%@秒";

@@ -2099,7 +2099,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string></string>
+        <string>Có giá trị cho %d ngày.</string>
       </dict>
     </dict>
     <key>account.achievement.validity.substring.days</key>
@@ -2112,10 +2112,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>valid for %d day</string>
         <key>other</key>
-        <string>valid for %d days</string>
+        <string>có giá trị cho %d ngày</string>
       </dict>
     </dict>
     <key>account.achievement.complete.validBonusExpiry.detail.subtitle</key>

@@ -93,7 +93,7 @@
 /* Message shown when the user writes a wrong email or password on login */
 "invalidMailOrPassword"="Geçersiz e-posta adresi veya şifre. Tekrar deneyin.";
 /* Error message when to many attempts to login */
-"tooManyAttemptsLogin"="Çok fazla giriş yapma denemesi yaptınız. Lütfen %@'e kadar bekleyip tekrar deneyin.";
+"tooManyAttemptsLogin"="Çok fazla giriş yapma denemesi yaptınız. Lütfen %@ saatine kadar bekleyip tekrar deneyin.";
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
 "accountNotConfirmed"="E-posta gelen kutunuzu kontrol edin ve hesabınızı onaylamak için bağlantıya tıklayın.";
 /* Error message when trying to login and the account is blocked */
@@ -187,7 +187,7 @@
 /* Alert message for invalid album link */
 "albumLink.invalidAlbum.alert.message"="Albüm bağlantısı kaldırılmış veya albüm silinmiş. Bağlantıyı sizinle paylaşan kişiyle iletişime geçin.";
 /* Alert dismiss button title for invalid album link */
-"albumLink.invalidAlbum.alert.dissmissButtonTitle"="Tamam, anladım";
+"albumLink.invalidAlbum.alert.dissmissButtonTitle"="Tamam";
 /* Importing albums Failed modal because storage quota would exceed alert title */
 "albumLink.importFailed.storageQuotaWillExceed.alert.title"="Albüm kaydedilemiyor";
 /* Importing albums Failed modal because storage quota would exceed alert detail */
@@ -1013,13 +1013,13 @@
 /* Cell title shown on the achievements view for referral achievement */
 "account.achievement.referral.title"="Arkadaşlarınızı davet edin";
 /* Subtitle of the referral achievement introduction, %1$@ is a placeholder, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
-"account.achievement.referral.subtitle"="%1$@ of storage for each invitation. \n%2$@";
+"account.achievement.referral.subtitle"="Her davet için %1$@ depolama alanı. \n%2$@";
 /* Text shown to explain how and where you can invite friends */
 "Select from phone contacts or enter multiple email addresses"="Cihaz kişilerinden seçin veya birden fazla e-posta adresi girin.";
 /*  */
 "insertYourFriendsEmails"="Arkadaşlarınızın e-posta adreslerini girin:";
 /*  */
-"howItWorks"="Nasıl çalışıyor?";
+"howItWorks"="Nasıl işliyor?";
 /*  */
 "howItWorksMain"="Arkadaşınızın MEGA'da ücretsiz bir hesaba kaydolması ve [S]en az bir MEGA uygulaması yüklemesi[/S] (MEGA Masaüstü Uygulaması veya MEGA Mobil Uygulamalarımızdan biri) gerekir";
 /*  */
@@ -1051,19 +1051,19 @@
 /* Explanation label shown on the achievements view for complete install MEGA desktop app achievement, %@ is a placeholder. */
 "account.achievement.desktopApp.complete.explaination.label"="MEGA Masaüstü Uygulamasını yüklediğiniz için %@ depolama alanı kazandınız.";
 /* Explanation label shown on the achievements view for incomplete install MEGA desktop app achievement, %1$@ is a placeholder, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
-"account.achievement.desktopApp.incomplete.explaination.label"="When you install the MEGA Desktop App you get %1$@ of complimentary storage space, %2$@. The MEGA Desktop App is available for Windows, macOS and most Linux distributions.";
+"account.achievement.desktopApp.incomplete.explaination.label"="MEGA Masaüstü Uygulamasını kurduğunuzda %1$@ ek depolama alanı kazanırsınız, %2$@. MEGA Masaüstü Uygulaması Windows, macOS ve çoğu Linux dağıtımında mevcuttur.";
 /* Cell title shown on the achievements view for install MEGA mobile app achievement */
 "account.achievement.mobileApp.title"="MEGA Mobil Uygulamasını yükleyin";
 /* Explanation label shown on the achievements view for complete install MEGA mobile app achievement, %@ is a placeholder. */
 "account.achievement.mobileApp.complete.explaination.label"="MEGA mobil uygulamasını yüklediğiniz için %@ depolama alanı kazandınız.";
 /* Explanation label shown on the achievements view for incomplete install MEGA mobile app achievement, %1$@ is a placeholder, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
-"account.achievement.mobileApp.incomplete.explaination.label"="When you install the MEGA Mobile App you get %@ of complimentary storage space, %2$@. The MEGA Mobile App is available for iOS and Android. ";
+"account.achievement.mobileApp.incomplete.explaination.label"="MEGA Mobil Uygulamasını kurduğunuzda %@ ek depolama alanı kazanırsınız, %2$@. MEGA Mobil Uygulaması iOS ve Android için mevcuttur.";
 /* Detail label shown on the achievements details view for Start Free Trial when its completed, %1$@ is placeholder for the storage amount, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
-"account.achievement.freeTrial.detail.complete.label"="%1$@ bonus applied. %2$@";
+"account.achievement.freeTrial.detail.complete.label"="%1$@ bonusu uygulandı. %2$@";
 /* Cell title shown on the achievements view for Start MEGA VPN Free Trial */
 "account.achievement.vpnFreeTrial.title"="MEGA VPN ücretsiz denemesini başlat";
 /* Detail label shown on the achievements details view for Start MEGA VPN Free Trial when its incomplete, %1$@ is placeholder for the storage amount, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
-"account.achievement.vpnFreeTrial.detail.incomplete.label"="Get %1$@ of free storage when you start a MEGA VPN free trial. %2$@";
+"account.achievement.vpnFreeTrial.detail.incomplete.label"="MEGA VPN ücretsiz deneme sürümünü başlattığınızda %1$@ ücretsiz depolama alanı kazanın. %2$@";
 /* Explanation label shown on the achievements view for incomplete start MEGA VPN Free Trial achievement, %@ is a placeholder. */
 "account.achievement.vpnFreeTrial.incomplete.explanation.label"="MEGA VPN uygulamasını yükleyin, MEGA hesabınızla giriş yapın ve ücretsiz denemenizi başlatın. Bonus depolama alanınız, ücretsiz denemenizi başlattıktan sonra otomatik olarak eklenir.";
 /* Explanation label shown on the achievements view for complete start MEGA VPN Free Trial achievement, %@ is a placeholder. */
@@ -1073,7 +1073,7 @@
 /* Cell title shown on the achievements view for Start MEGA Pass Free Trial */
 "account.achievement.passFreeTrial.title"="MEGA Pass ücretsiz denemesini başlat";
 /* Detail label shown on the achievements details view for Start MEGA Pass Free Trial when its incomplete, %1$@ is placeholder for the storage amount, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
-"account.achievement.passFreeTrial.detail.incomplete.label"="Get %1$@ of free storage when you start a MEGA Pass free trial. %2$@";
+"account.achievement.passFreeTrial.detail.incomplete.label"="MEGA Pass ücretsiz deneme sürümünü başlattığınızda %1$@ ücretsiz depolama alanı kazanın. %2$@";
 /* Explanation label shown on the achievements view for incomplete start MEGA Pass Free Trial achievement, %@ is a placeholder. */
 "account.achievement.passFreeTrial.incomplete.explanation.label"="MEGA Pass uygulamasını yükleyin, MEGA hesabınızla giriş yapın ve ücretsiz denemenizi başlatın. Bonus depolama alanınız, ücretsiz denemenizi başlattıktan sonra otomatik olarak eklenir.";
 /* Explanation label shown on the achievements view for complete start MEGA Pass Free Trial achievement, %@ is a placeholder. */
@@ -1081,11 +1081,11 @@
 /* Text for the button to install MEGA Pass in the Start MEGA Pass Free Trial achievement */
 "account.achievement.passFreeTrial.buttonText"="MEGA Pass'ı Yükle";
 /* Subtitle of the incomplete achievement with permanent bonus, %1$@ is a placeholder for amount of storage, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
-"account.achievement.incomplete.subtitle"="%1$@ of storage. %2$@";
+"account.achievement.incomplete.subtitle"="%1$@ depolama alanı. %2$@";
 /* String of the achievements with permanent bonus, used as a full sentence */
-"account.achievement.validity.permanent"="Valid permanently.";
+"account.achievement.validity.permanent"="Kalıcı olarak geçerlidir.";
 /* Substring of the achievements with permanent bonus, used as a part of a sentence */
-"account.achievement.validity.substring.permanent"="valid permanently";
+"account.achievement.validity.substring.permanent"="kalıcı olarak geçerli";
 /* Subtitle of the complete achievement with permanent bonus */
 "account.achievement.complete.subtitle.permanent"="Bonus uygulandı";
 /* Add Phone Number title */
@@ -1093,7 +1093,7 @@
 /* Explanation Label shown on the achievements view for complete add phone number achievement, %@ is a placeholder. */
 "account.achievement.phoneNumber.complete.explaination.label"="Telefon numaranızı eklediğiniz için %@ depolama alanı kazandınız.";
 /* Explanation Label shown on the achievements view for incomplete add phone number achievement, %1$@ is a placeholder, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
-"account.achievement.phoneNumber.incomplete.explaination.label"="When you add your phone number you get %@ of complimentary storage space, %2$@.";
+"account.achievement.phoneNumber.incomplete.explaination.label"="Telefon numaranızı eklediğinizde %@ ek depolama alanı kazanırsınız, %2$@.";
 /* Free storage description to encourage users to add phone number to their accounts */
 "Get free %@ when you add your phone number. This makes it easier for your contacts to find you on MEGA."="Telefon numaranızı eklediğinizde %@ ücretsiz kazanın. Bu, kişilerinizin sizi MEGA'da bulmasını kolaylaştırır.";
 /* Description to encourage users to add phone number to their accounts when there are not achievements */
@@ -1351,7 +1351,7 @@
 /* A button title which removes a participant from a chat. */
 "removeParticipant"="Katılımcıyı kaldır";
 /* Title show above the name of the persons with whom you're chatting */
-"chattingWith"="Sohbet edilen kişi:";
+"chattingWith"="Sohbet edilen:";
 /* Explanation when loading voice message error */
 "Couldn't load. [RED]Tap to retry[/RED]"="Yüklenemedi. [RED]Tekrar denemek için dokunun[/RED]";
 /* Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server. */
@@ -1411,7 +1411,7 @@
 /* Notification text body shown when you have received a contact request */
 "contactRequest"="Kişi isteği";
 /* Notification text body shown when you have received a new shared folder */
-"newSharedFolder"="Yeni paylaşılan klasör";
+"newSharedFolder"="Paylaşılan yeni klasör";
 /* Asking whether the user really wants to abort/stop the registration process or continue on. */
 "areYouSureYouWantToAbortTheRegistration"="Kaydolma işlemini durdurmak istediğinizden emin misiniz?";
 /* A hint shown at the bottom of the Send Signup Link dialog to tell users they can edit the provided email. */
@@ -3321,7 +3321,7 @@
 /* Upgrade security alert screen message. For cryptographic security upgrade which will be shown only once per account. */
 "account.upgradeSecurity.message.upgrade"="Hesabınızın güvenliğini yükseltiyoruz. Bu mesajı yalnızca bir kez görmelisiniz. Daha önce gördüyseniz öncelikle bunun sahip olduğunuz başka bir MEGA hesabı için değil, bu hesap için olduğundan emin olun.\n\nEmin olduğunuz halde bu mesajı bu hesap için ikinci kez görüyorsanız bu hesabı kullanmayı bırakın.";
 /* Upgrade security alert screen button title. For cryptographic security upgrade which will be shown only once per account. */
-"account.upgradeSecurity.button.title"="Tamam, anladım";
+"account.upgradeSecurity.button.title"="Tamam";
 /* Label to introduce meeting info description field */
 "meetings.info.descriptionLabel"="Açıklama";
 /* In app notification description text representing the meeting repeats every sunday. This text is used at the start of the sentence. */
@@ -3541,7 +3541,7 @@
 /* Device Center backup error: Sync configuration unreadable */
 "device.center.backup.error.couldntReadSyncConfig"="Senkronizasyon yapılandırması okunamadı. Klasör izinlerini kontrol edin ve daha sonra tekrar deneyin.";
 /* Device Center backup error: Unknown drive path for sync */
-"device.center.backup.error.unknownDrivePath"="Senkronizasyonun sürücü yolu bilinmiyor.";
+"device.center.backup.error.unknownDrivePath"="Senkronizasyonun sürücü dizini bilinmiyor.";
 /* Device Center backup error: Invalid scan interval */
 "device.center.backup.error.invalidScanInterval"="Geçersiz tarama aralığı. Tarama aralığı ayarını kontrol edin ve tekrar deneyin.";
 /* Device Center backup error: Sync or backup issue, setup again */
@@ -3839,7 +3839,7 @@
 /* Meeting waiting room alert message of There is no response to your request to join the meeting */
 "meetings.waitingRoom.alert.thereIsNoResponseToYourResquestToJoinTheMeeting"="Toplantıya katılma isteğinize yanıt gelmedi. Bekleme odasından çıkarılacaksınız. Daha sonra tekrar katılmayı deneyin.";
 /* Meeting waiting room alert action of ok got it */
-"meetings.waitingRoom.alert.okGotIt"="Tamam, anladım";
+"meetings.waitingRoom.alert.okGotIt"="Tamam";
 /* Call waiting room alert message text to notify host that someone is waiting to join */
 "chat.call.waitingRoom.alert.message.one"="%@ aramaya katılmak için bekliyor";
 /* Call waiting room alert button to deny access */
@@ -3979,7 +3979,7 @@
 /* Alert button for user not accepting call screen recording and therefor leaving the call */
 "calls.screenRecording.alert.action.leave"="Aramadan ayrıl";
 /* Alert button for user accepting call screen recording */
-"calls.screenRecording.alert.action.accept"="Tamam, anladım";
+"calls.screenRecording.alert.action.accept"="Tamam";
 /* Alert button for user accepting call screen recording */
 "calls.screenRecording.alert.action.learnMore"="Daha fazlasını öğrenin";
 /* Notification message about someone started to record call screen */
@@ -4161,7 +4161,7 @@
 /* Calls: Free plan limit warning alert message for max users reached in free plan call */
 "calls.freePlanLimitWarning.usersLimitAlert.message"="Bu arama yalnızca 100 katılımcıyı destekleyebilir. Düzenleyiciden bu kısıtlamayı kaldırmasını isteyin.";
 /* Calls: Free plan limit warning alert button for max users reached in free plan call */
-"calls.freePlanLimitWarning.usersLimitAlert.button"="Tamam, anladım";
+"calls.freePlanLimitWarning.usersLimitAlert.button"="Tamam";
 /* Meetings: A warning message shown in the call UI when free-plan user has more than 100 participants */
 "meetings.waitingRoom.warning.limit100Participants"="Aramaya yalnızca 100 katılımcı katılabilir. Ek katılımcılar yalnızca sohbet gönderip okuyabilir. Daha fazla katılımcı eklemeniz mi gerekiyor? [A]Hemen yükseltin[/A]";
 /* Meetings: An warning shown in the banner in the waiting room tab when free-plan user has more than 100 participants */
@@ -4369,11 +4369,11 @@
 /* Cancel subscription confirmation alert description, advising the user to stay within the free account's storage limit of %@ (storage limit) */
 "accounts.cancelSubscriptionConfirmationAlert.description.storageLimit"="Lütfen depolama miktarınızın bu tarihe kadar %@ sınırının altında olduğundan emin olun. Sınırı aşarsanız hesabınız kilitlenebilir.";
 /* Cancel subscription confirmation alert button title */
-"accounts.cancelSubscriptionConfirmationAlert.button.title"="Tamam, anladım";
+"accounts.cancelSubscriptionConfirmationAlert.button.title"="Tamam";
 /* Error message displayed in the cancel subscription error alert */
 "accounts.cancelSubscriptionErrorAlert.message"="İptaliniz şu anda işleme alınamıyor. Bağlantınızı kontrol edip tekrar deneyin. Sorun devam ederse Destek ile iletişime geçin.";
 /* Primary action button in the cancel subscription error alert to acknowledge the error */
-"accounts.cancelSubscriptionErrorAlert.button.ok"="Tamam, anladım";
+"accounts.cancelSubscriptionErrorAlert.button.ok"="Tamam";
 /* Secondary action button in the cancel subscription error alert to allow contacting the Help Desk for support */
 "accounts.cancelSubscriptionErrorAlert.button.contactHelpdesk"="Destekle iletişime geç";
 /* Alert presented when generating shared links for an nodes that contains sensitive content */
@@ -4541,7 +4541,7 @@
 /* Description displayed in the popup when the user is a member of a deactivated Business account, advising them to contact their admin to manage tags. */
 "cloudDrive.nodeInfo.nodeTags.featureUnavailable.popup.description.accountType.memberBusiness"="İşletme hesabınız devre dışı bırakıldı. Etiketlerinizi yönetmek için İşletme hesabı yöneticinizle iletişime geçin.";
 /* Text of the button in the popup that confirms the user has acknowledged the message. */
-"cloudDrive.nodeInfo.nodeTags.featureUnavailable.popup.buttonTitle"="Tamam, anladım";
+"cloudDrive.nodeInfo.nodeTags.featureUnavailable.popup.buttonTitle"="Tamam";
 /* Add to collection button title to add items */
 "photos.addTo.button.title.add"="Ekle";
 /* Ad-free experience screen header title */
@@ -4743,7 +4743,7 @@
 /* Button title for MEGA transfer it in menu */
 "accountMenu.transferIt.buttonTitle"="Transfer.it";
 /* Button subtitle for MEGA transfer it in menu */
-"accountMenu.transferIt.buttonSubtitle"="Hızlı, güvenli dosya aktarımları";
+"accountMenu.transferIt.buttonSubtitle"="Hızlı, güvenli dosya transferleri";
 /* Section title for the other MEGA apps in menu */
 "accountMenu.otherApps.sectionTitle"="MEGA gizlilik paketi";
 /* Button subtitle for log out in menu */
@@ -4768,3 +4768,5 @@
 "notification.local.cameraUploadBackupReminder.title"="Değerli anlarınızı koruyun!";
 /* Local Notification Body for Camera uploads backup reminder */
 "notification.local.cameraUploadBackupReminder.body"="Fotoğraflarınızı ve videolarınızı yedeklemenin zamanı geldi";
+/* The double tap seek display text in video player */
+"videoPlayer.chip.seekDisplayText"="%@ saniye";

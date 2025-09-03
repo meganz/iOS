@@ -4768,3 +4768,5 @@
 "notification.local.cameraUploadBackupReminder.title"="大切な瞬間を守りましょう！";
 /* Local Notification Body for Camera uploads backup reminder */
 "notification.local.cameraUploadBackupReminder.body"="写真と動画をバックアップして保護";
+/* The double tap seek display text in video player */
+"videoPlayer.chip.seekDisplayText"="%@秒";

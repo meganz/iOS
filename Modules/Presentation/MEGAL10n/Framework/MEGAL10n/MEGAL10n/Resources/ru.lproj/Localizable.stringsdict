@@ -2993,13 +2993,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>Действует %d день.</string>
         <key>few</key>
-        <string></string>
+        <string>Действует %d дня.</string>
         <key>many</key>
-        <string></string>
+        <string>Действует %d дней.</string>
         <key>other</key>
-        <string></string>
+        <string>Действует %d дня.</string>
       </dict>
     </dict>
     <key>account.achievement.validity.substring.days</key>
@@ -3013,9 +3013,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>valid for %d day</string>
+        <string>на %d день</string>
+        <key>few</key>
+        <string>на %d дня</string>
+        <key>many</key>
+        <string>на %d дней</string>
         <key>other</key>
-        <string>valid for %d days</string>
+        <string>на %d дня</string>
       </dict>
     </dict>
     <key>account.achievement.complete.validBonusExpiry.detail.subtitle</key>
