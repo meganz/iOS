@@ -5,6 +5,7 @@ import AVFoundation
 public final class MEGAAVPlayer {
     private let player = AVPlayer()
     private var playerLayer: AVPlayerLayer?
+    private var _nodeName = ""
 
     private nonisolated(unsafe) var timeObserverToken: Any? {
         willSet { timeObserverToken.map(player.removeTimeObserver) }
@@ -180,6 +181,12 @@ extension MEGAAVPlayer: NodeLoadable {
         player.replaceCurrentItem(with: playerItem)
 
         observe(for: playerItem)
+
+        _nodeName = node.nodeName
+    }
+
+    public var nodeName: String {
+        _nodeName
     }
 
     private func observe(for playerItem: AVPlayerItem) {

@@ -31,6 +31,8 @@ final class PreviewVideoPlayer: VideoPlayerProtocol {
         Just(debugMessage).eraseToAnyPublisher()
     }
 
+    var _nodeName: String = ""
+
     init(
         option: VideoPlayerOption = .avPlayer,
         state: PlaybackState = .stopped,
@@ -66,4 +68,8 @@ final class PreviewVideoPlayer: VideoPlayerProtocol {
     func setLooping(_ enabled: Bool) { }
     
     var isLoopEnabled: Bool = false
+
+    var nodeName: String {
+        _nodeName
+    }
 }

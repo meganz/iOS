@@ -25,6 +25,7 @@ let package = Package(
     ],
     dependencies: [
         .package(path: "../../../DataSource/MEGASDK"),
+        .package(path: "../../../Presentation/MEGAL10n"),
         .package(path: "../../../MEGASharedRepo/MEGALogger"),
         .package(path: "../../../MEGASharedRepo/MEGAUIComponent"),
         .package(url: "https://github.com/meganz/MEGADesignToken", branch: "main"),
@@ -37,6 +38,7 @@ let package = Package(
             name: "MEGAVideoPlayer",
             dependencies: [
                 .product(name: "MEGASdk", package: "MEGASDK"),
+                "MEGAL10n",
                 "MEGALogger",
                 "MEGADesignToken",
                 "MEGAUIComponent",

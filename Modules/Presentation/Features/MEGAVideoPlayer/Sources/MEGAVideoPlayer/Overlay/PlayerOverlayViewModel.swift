@@ -86,6 +86,10 @@ extension PlayerOverlayViewModel {
     func didTapMore() {
         // Placeholder for future functionality
     }
+
+    var title: String {
+        player.nodeName
+    }
 }
 
 // MARK: - Center controls logic

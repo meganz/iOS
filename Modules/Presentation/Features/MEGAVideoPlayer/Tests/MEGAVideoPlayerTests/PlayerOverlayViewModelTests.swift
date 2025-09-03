@@ -740,4 +740,38 @@ struct PlayerOverlayViewModelTests {
 
         #expect(sut.shouldShownJumpButtons == expectedShouldShownJumpButtons)
     }
+    
+    // MARK: - Title Tests
+    
+    @Test
+    func title_returnsPlayerTitle() {
+        let expectedTitle = "Test Video Title"
+        let mockPlayer = MockVideoPlayer(nodeName: expectedTitle)
+        let sut = makeSUT(player: mockPlayer)
+        
+        #expect(sut.title == expectedTitle)
+    }
+    
+    @Test
+    func title_whenPlayerTitleChanges_shouldUpdate() {
+        let mockPlayer = MockVideoPlayer(nodeName: "Initial Title")
+        let sut = makeSUT(player: mockPlayer)
+        #expect(sut.title == "Initial Title")
+
+        mockPlayer.nodeName = "Updated Title"
+        
+        #expect(sut.title == "Updated Title")
+    }
+    
+    @Test
+    func title_whenNodeLoaded_shouldUpdatePlayerTitle() {
+        let mockPlayer = MockVideoPlayer(nodeName: "Initial Title")
+        let sut = makeSUT(player: mockPlayer)
+        let mockNode = MockPlayableNode(nodeName: "Node Title")
+
+        mockPlayer.loadNode(mockNode)
+
+        #expect(mockPlayer.nodeName == "Node Title")
+        #expect(sut.title == "Node Title")
+    }
 }
