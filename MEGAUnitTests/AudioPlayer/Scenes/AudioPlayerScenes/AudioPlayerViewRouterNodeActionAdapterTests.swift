@@ -93,13 +93,12 @@ final class AudioPlayerViewRouterNodeActionAdapterTests: XCTestCase {
         relatedFiles: [String]? = nil
     ) -> AudioPlayerConfigEntity {
         let node = MockNode(handle: .max)
-        let builder = MockAudioPlayerHandlerBuilder()
         
         return switch originType {
-        case .folderLink: AudioPlayerConfigEntity(node: node, isFolderLink: true, fileLink: nil, messageId: .invalid, chatId: .invalid, relatedFiles: relatedFiles, audioPlayerHandlerBuilder:builder)
-        case .fileLink: AudioPlayerConfigEntity(node: node, isFolderLink: false, fileLink: fileLink, messageId: .invalid, chatId: .invalid, relatedFiles: relatedFiles, audioPlayerHandlerBuilder:builder)
-        case .chat: AudioPlayerConfigEntity(node: node, isFolderLink: false, fileLink: nil, messageId: messageId, chatId: chatId, relatedFiles: relatedFiles, audioPlayerHandlerBuilder:builder)
-        case .unknown: AudioPlayerConfigEntity(node: node, isFolderLink: false, fileLink: nil, messageId: .invalid, chatId: .invalid, relatedFiles: relatedFiles, audioPlayerHandlerBuilder:builder)
+        case .folderLink: AudioPlayerConfigEntity(node: node, isFolderLink: true, fileLink: nil, messageId: .invalid, chatId: .invalid, relatedFiles: relatedFiles)
+        case .fileLink: AudioPlayerConfigEntity(node: node, isFolderLink: false, fileLink: fileLink, messageId: .invalid, chatId: .invalid, relatedFiles: relatedFiles)
+        case .chat: AudioPlayerConfigEntity(node: node, isFolderLink: false, fileLink: nil, messageId: messageId, chatId: chatId, relatedFiles: relatedFiles)
+        case .unknown: AudioPlayerConfigEntity(node: node, isFolderLink: false, fileLink: nil, messageId: .invalid, chatId: .invalid, relatedFiles: relatedFiles)
         }
     }
     
@@ -115,6 +114,7 @@ final class AudioPlayerViewRouterNodeActionAdapterTests: XCTestCase {
                 coder: coder,
                 viewModel: AudioPlayerViewModel(
                     configEntity: configEntity,
+                    playerHandler: MockAudioPlayerHandler(),
                     router: MockAudioPlayerViewRouter(),
                     nodeInfoUseCase: MockNodeInfoUseCase(),
                     streamingInfoUseCase: MockStreamingInfoUseCase(),

@@ -286,7 +286,10 @@ import MEGADomain
             let config = AudioPlayerConfigEntity(node: node, isFolderLink: isFolderLink, fileLink: fileLink, relatedFiles: filePaths, allNodes: allNodes, shouldResetPlayer: shouldResetPlayer, isFromSharedItem: isFromSharedItem)
             
             if miniPlayerRouter == nil {
-                miniPlayerRouter = MiniPlayerViewRouter(configEntity: config, presenter: presenter)
+                miniPlayerRouter = MiniPlayerViewRouter(
+                    configEntity: config,
+                    presenter: presenter
+                )
                 miniPlayerRouter?.start()
             } else {
                 miniPlayerRouter?.refresh(with: config)

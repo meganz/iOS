@@ -382,10 +382,10 @@ final class AudioPlayerViewModelTests: XCTestCase {
     @MainActor
     func testViewWillDisappear_whenNotLoggedInAndDisappearReasonUserInitiatedDismissal_stopsPlayer() {
         let playerHandler = MockAudioPlayerHandler()
-        let playerHandlerBuilder = MockAudioPlayerHandlerBuilder(handler: playerHandler)
-        let defaultConfigEntity = audioPlayerConfigEntity(node: anyAudioNode, playerHandlerBuilder: playerHandlerBuilder)
+        let defaultConfigEntity = audioPlayerConfigEntity(node: anyAudioNode)
         let (sut, _, router) = makeSUT(
             configEntity: defaultConfigEntity,
+            playerHandler: playerHandler,
             streamingInfoUseCase: MockStreamingInfoUseCase(),
             accountUseCase: MockAccountUseCase(isLoggedIn: false)
         )
@@ -599,12 +599,12 @@ final class AudioPlayerViewModelTests: XCTestCase {
         let config  = audioPlayerConfigEntity(
             node: mockNode,
             allNodes: [mockNode],
-            playerHandlerBuilder: MockAudioPlayerHandlerBuilder(handler: handler)
         )
         let streamingInfoUseCase = MockStreamingInfoUseCase()
         streamingInfoUseCase.completeInfoNode(with: AudioPlayerItem.mockItem)
         let (sut, _, _) = makeSUT(
             configEntity: config,
+            playerHandler: handler,
             streamingInfoUseCase: streamingInfoUseCase
         )
         
@@ -625,13 +625,13 @@ final class AudioPlayerViewModelTests: XCTestCase {
         handler.mockPlayerCurrentItem = mockTrack
         let config  = audioPlayerConfigEntity(
             node: mockNode,
-            allNodes: [mockNode],
-            playerHandlerBuilder: MockAudioPlayerHandlerBuilder(handler: handler)
+            allNodes: [mockNode]
         )
         let streamingInfoUseCase = MockStreamingInfoUseCase()
         streamingInfoUseCase.completeInfoNode(with: mockTrack)
         let (sut, _, _) = makeSUT(
             configEntity: config,
+            playerHandler: handler,
             streamingInfoUseCase: streamingInfoUseCase
         )
         
@@ -650,10 +650,12 @@ final class AudioPlayerViewModelTests: XCTestCase {
         handler.mockPlayerCurrentItem = mockTrack
         let config = AudioPlayerConfigEntity(
             fileLink: "offline_file",
-            relatedFiles: ["path1"],
-            audioPlayerHandlerBuilder: MockAudioPlayerHandlerBuilder(handler: handler)
+            relatedFiles: ["path1"]
         )
-        let (sut, _, _) = makeSUT(configEntity: config)
+        let (sut, _, _) = makeSUT(
+            configEntity: config,
+            playerHandler: handler
+        )
         
         sut.dispatch(.onViewDidLoad)
         
@@ -667,15 +669,14 @@ final class AudioPlayerViewModelTests: XCTestCase {
     @MainActor
     private func makeOnlineSUT(isSingleItemPlaylist: Bool = false) -> (sut: AudioPlayerViewModel, playbackUseCase: MockPlaybackContinuationUseCase, playerHandler: MockAudioPlayerHandler, router: MockAudioPlayerViewRouter) {
         let playerHandler = MockAudioPlayerHandler(isSingleItemPlaylist: isSingleItemPlaylist)
-        let builder = MockAudioPlayerHandlerBuilder(handler: playerHandler)
         let config = AudioPlayerConfigEntity(
             node: MEGANode(),
             isFolderLink: false,
-            fileLink: "",
-            audioPlayerHandlerBuilder: builder
+            fileLink: ""
         )
         let (sut, playbackUseCase, router) = makeSUT(
             configEntity: config,
+            playerHandler: playerHandler,
             nodeInfoUseCase: NodeInfoUseCase(nodeInfoRepository: MockNodeInfoRepository(violatesTermsOfServiceResult: .success(false))),
             streamingInfoUseCase: StreamingInfoUseCase(streamingInfoRepository: MockStreamingInfoRepository())
         )
@@ -694,6 +695,7 @@ final class AudioPlayerViewModelTests: XCTestCase {
     @MainActor
     private func makeSUT(
         configEntity: AudioPlayerConfigEntity,
+        playerHandler: some AudioPlayerHandlerProtocol = MockAudioPlayerHandler(),
         tracker: some AnalyticsTracking = MockTracker(),
         nodeInfoUseCase: (some NodeInfoUseCaseProtocol)? = MockNodeInfoUseCase(),
         streamingInfoUseCase: (some StreamingInfoUseCaseProtocol)? = MockStreamingInfoUseCase(),
@@ -708,6 +710,7 @@ final class AudioPlayerViewModelTests: XCTestCase {
         
         let sut = AudioPlayerViewModel(
             configEntity: configEntity,
+            playerHandler: playerHandler,
             router: router,
             nodeInfoUseCase: nodeInfoUseCase,
             streamingInfoUseCase: streamingInfoUseCase,
@@ -725,13 +728,14 @@ final class AudioPlayerViewModelTests: XCTestCase {
     @MainActor
     private func simulateUserViewDidLoadWithNewInstane(audioNode: MockNode) -> (sut: AudioPlayerViewModel, playbackUseCase: MockPlaybackContinuationUseCase, playerHandler: MockAudioPlayerHandler, router: MockAudioPlayerViewRouter) {
         let configEntity = audioPlayerConfigEntity(node: audioNode)
+        let playerHandler = MockAudioPlayerHandler()
         let (sut, playbackUseCase, router) = makeSUT(
             configEntity: configEntity,
             nodeInfoUseCase: NodeInfoUseCase(nodeInfoRepository: MockNodeInfoRepository(violatesTermsOfServiceResult: .success(false))),
             streamingInfoUseCase: StreamingInfoUseCase(streamingInfoRepository: MockStreamingInfoRepository())
         )
         sut.dispatch(.onViewDidLoad)
-        return (sut, playbackUseCase, configEntity.playerHandler as! MockAudioPlayerHandler, router)
+        return (sut, playbackUseCase, playerHandler, router)
     }
     
     @MainActor
@@ -762,16 +766,14 @@ final class AudioPlayerViewModelTests: XCTestCase {
         isFolderLink: Bool = false,
         relatedFiles: [String]? = nil,
         fileLink: String? = nil,
-        allNodes: [MEGANode]? = nil,
-        playerHandlerBuilder: some AudioPlayerHandlerBuilderProtocol = MockAudioPlayerHandlerBuilder()
+        allNodes: [MEGANode]? = nil
     ) -> AudioPlayerConfigEntity {
         AudioPlayerConfigEntity(
             node: node,
             isFolderLink: isFolderLink,
             fileLink: fileLink,
             relatedFiles: relatedFiles,
-            allNodes: allNodes,
-            audioPlayerHandlerBuilder: playerHandlerBuilder
+            allNodes: allNodes
         )
     }
     

@@ -64,6 +64,7 @@ final class AudioPlayerViewRouter: NSObject, AudioPlayerViewRouting {
 
         return AudioPlayerViewModel(
             configEntity: configEntity,
+            playerHandler: AudioPlayerManager.shared,
             router: self,
             nodeInfoUseCase: nodeInfoUC,
             streamingInfoUseCase: streamingInfoUC,
@@ -150,11 +151,11 @@ final class AudioPlayerViewRouter: NSObject, AudioPlayerViewRouting {
     }
     
     func showMiniPlayer(node: MEGANode?, shouldReload: Bool) {
-        configEntity.playerHandler.initMiniPlayer(node: node, fileLink: configEntity.fileLink, filePaths: configEntity.relatedFiles, isFolderLink: configEntity.isFolderLink, presenter: presenter, shouldReloadPlayerInfo: shouldReload, shouldResetPlayer: false, isFromSharedItem: configEntity.isFromSharedItem)
+        AudioPlayerManager.shared.initMiniPlayer(node: node, fileLink: configEntity.fileLink, filePaths: configEntity.relatedFiles, isFolderLink: configEntity.isFolderLink, presenter: presenter, shouldReloadPlayerInfo: shouldReload, shouldResetPlayer: false, isFromSharedItem: configEntity.isFromSharedItem)
     }
     
     func showMiniPlayer(file: String, shouldReload: Bool) {
-        configEntity.playerHandler.initMiniPlayer(node: nil, fileLink: file, filePaths: configEntity.relatedFiles, isFolderLink: configEntity.isFolderLink, presenter: presenter, shouldReloadPlayerInfo: shouldReload, shouldResetPlayer: false, isFromSharedItem: configEntity.isFromSharedItem)
+        AudioPlayerManager.shared.initMiniPlayer(node: nil, fileLink: file, filePaths: configEntity.relatedFiles, isFolderLink: configEntity.isFolderLink, presenter: presenter, shouldReloadPlayerInfo: shouldReload, shouldResetPlayer: false, isFromSharedItem: configEntity.isFromSharedItem)
     }
     
     func importNode(_ node: MEGANode) {
@@ -201,7 +202,7 @@ final class AudioPlayerViewRouter: NSObject, AudioPlayerViewRouting {
             preferredStyle: .alert
         )
         alertController.addAction(UIAlertAction(title: Strings.Localizable.dismiss, style: .default, handler: { [weak self] _ in
-            self?.configEntity.playerHandler.closePlayer()
+            AudioPlayerManager.shared.closePlayer()
             self?.dismiss()
         }))
         

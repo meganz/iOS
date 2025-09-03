@@ -36,6 +36,7 @@ final class MiniPlayerViewModel: ViewModelType {
     
     // MARK: - Private properties
     private var configEntity: AudioPlayerConfigEntity
+    private let playerHandler: any AudioPlayerHandlerProtocol
     private var shouldInitializePlayer: Bool
     private weak var router: (any MiniPlayerViewRouting)?
     private let nodeInfoUseCase: any NodeInfoUseCaseProtocol
@@ -52,6 +53,7 @@ final class MiniPlayerViewModel: ViewModelType {
     
     // MARK: - Init
     init(configEntity: AudioPlayerConfigEntity,
+         playerHandler: some AudioPlayerHandlerProtocol,
          router: some MiniPlayerViewRouting,
          nodeInfoUseCase: some NodeInfoUseCaseProtocol,
          streamingInfoUseCase: some StreamingInfoUseCaseProtocol,
@@ -60,6 +62,7 @@ final class MiniPlayerViewModel: ViewModelType {
          audioPlayerUseCase: some AudioPlayerUseCaseProtocol
     ) {
         self.configEntity = configEntity
+        self.playerHandler = playerHandler
         self.router = router
         self.nodeInfoUseCase = nodeInfoUseCase
         self.streamingInfoUseCase = streamingInfoUseCase
@@ -77,19 +80,19 @@ final class MiniPlayerViewModel: ViewModelType {
         case .onViewDidLoad:
             initializeMiniPlayer()
         case .onPlayPause:
-            configEntity.playerHandler.playerTogglePlay()
+            playerHandler.playerTogglePlay()
         case .playItem(let item):
-            if configEntity.playerHandler.currentRepeatMode() == .repeatOne {
-                configEntity.playerHandler.playerRepeatAll(active: true)
+            if playerHandler.currentRepeatMode() == .repeatOne {
+                playerHandler.playerRepeatAll(active: true)
             }
-            configEntity.playerHandler.play(item: item)
+            playerHandler.play(item: item)
         case .onClose:
             closeMiniPlayer()
         case .showPlayer(let node, let filePath):
             showFullScreenPlayer(node, path: filePath)
         case .scrollToCurrentItem:
-            if let currentItem = configEntity.playerHandler.playerCurrentItem(),
-               let queue = configEntity.playerHandler.playerPlaylistItems(),
+            if let currentItem = playerHandler.playerCurrentItem(),
+               let queue = playerHandler.playerPlaylistItems(),
                let index = queue.firstIndex(of: currentItem) {
                 let indexPath = IndexPath(row: index, section: 0)
                 invokeCommand?(.scrollToItem(indexPath: indexPath))
@@ -129,11 +132,11 @@ final class MiniPlayerViewModel: ViewModelType {
     private func determinePlayerSetupOnViewDidLoad() {
         guard shouldInitializePlayer else {
             configurePlayer()
-            configEntity.playerHandler.refreshCurrentItemState()
+            playerHandler.refreshCurrentItemState()
             return
         }
         
-        configEntity.playerHandler.resettingAudioPlayer(shouldResetPlayback: configEntity.playerType != .fileLink)
+        playerHandler.resettingAudioPlayer(shouldResetPlayback: configEntity.playerType != .fileLink)
         
         Task {
             await self.preparePlayer(isOffline: self.configEntity.playerType == .offline)
@@ -159,7 +162,7 @@ final class MiniPlayerViewModel: ViewModelType {
         }
         
         guard
-            let currentItem = configEntity.playerHandler.playerCurrentItem(),
+            let currentItem = playerHandler.playerCurrentItem(),
             currentItem.url.path == configEntity.fileLink,
             currentItem.node == configEntity.node
         else {
@@ -167,7 +170,7 @@ final class MiniPlayerViewModel: ViewModelType {
             return
         }
         configurePlayer()
-        configEntity.playerHandler.resetCurrentItem(shouldResetPlayback: configEntity.playerType != .fileLink)
+        playerHandler.resetCurrentItem(shouldResetPlayback: configEntity.playerType != .fileLink)
     }
     
     private func preparePlayerForNonOfflinePlayerType() async {
@@ -181,24 +184,24 @@ final class MiniPlayerViewModel: ViewModelType {
         }
         
         guard
-            let currentItem = configEntity.playerHandler.playerCurrentItem(),
+            let currentItem = playerHandler.playerCurrentItem(),
             currentItem.node == node
         else {
             await initialize(with: node)
             return
         }
         configurePlayer()
-        configEntity.playerHandler.resetCurrentItem(shouldResetPlayback: configEntity.playerType != .fileLink)
+        playerHandler.resetCurrentItem(shouldResetPlayback: configEntity.playerType != .fileLink)
     }
     
     private func configurePlayer() {
-        configEntity.playerHandler.configurePlayer(listener: self)
+        playerHandler.configurePlayer(listener: self)
         
-        guard !configEntity.playerHandler.isPlayerEmpty(), let currentItem = configEntity.playerHandler.playerCurrentItem() else {
+        guard !playerHandler.isPlayerEmpty(), let currentItem = playerHandler.playerCurrentItem() else {
             router?.dismiss()
             return
         }
-        invokeCommand?(.initTracks(currentItem: currentItem, queue: configEntity.playerHandler.playerPlaylistItems(), loopMode: configEntity.playerHandler.currentRepeatMode() == .loop))
+        invokeCommand?(.initTracks(currentItem: currentItem, queue: playerHandler.playerPlaylistItems(), loopMode: playerHandler.currentRepeatMode() == .loop))
     }
     
     // MARK: - Node Init
@@ -242,43 +245,43 @@ final class MiniPlayerViewModel: ViewModelType {
     
     // MARK: - Private functions
     
-    private nonisolated func initialize(tracks: [AudioPlayerItem], currentTrack: AudioPlayerItem) async {
-        let mutableTracks = await shift(tracks: tracks, startItem: currentTrack)
-        await resetConfigurationIfNeeded(nextCurrentTrack: currentTrack)
-        await configEntity.playerHandler.addPlayer(tracks: mutableTracks)
-        await configurePlayer()
+    private func initialize(tracks: [AudioPlayerItem], currentTrack: AudioPlayerItem) {
+        let mutableTracks = shift(tracks: tracks, startItem: currentTrack)
+        resetConfigurationIfNeeded(nextCurrentTrack: currentTrack)
+        playerHandler.addPlayer(tracks: mutableTracks)
+        configurePlayer()
     }
 
-    private nonisolated func shift(tracks: [AudioPlayerItem], startItem: AudioPlayerItem) async -> [AudioPlayerItem] {
+    private func shift(tracks: [AudioPlayerItem], startItem: AudioPlayerItem) -> [AudioPlayerItem] {
         guard tracks.contains(startItem) else { return tracks }
         return tracks.shifted(tracks.firstIndex(of: startItem) ?? 0)
     }
     
-    private func resetConfigurationIfNeeded(nextCurrentTrack: AudioPlayerItem) async {
+    private func resetConfigurationIfNeeded(nextCurrentTrack: AudioPlayerItem) {
         switch configEntity.playerType {
         case .default:
-            if let currentNode = configEntity.playerHandler.playerCurrentItem()?.node {
+            if let currentNode = playerHandler.playerCurrentItem()?.node {
                 guard let nextCurrentNode = nextCurrentTrack.node,
                       nextCurrentNode.parentHandle != currentNode.parentHandle else { return }
             }
             
         case .folderLink:
-            guard !configEntity.playerHandler.playerTracksContains(url: nextCurrentTrack.url) else { return }
+            guard !playerHandler.playerTracksContains(url: nextCurrentTrack.url) else { return }
             
         case .offline:
             let nextCurrentItemDirectoryURL = nextCurrentTrack.url.deletingLastPathComponent()
-            guard let currentItemDirectoryURL = configEntity.playerHandler.playerCurrentItem()?.url.deletingLastPathComponent(),
+            guard let currentItemDirectoryURL = playerHandler.playerCurrentItem()?.url.deletingLastPathComponent(),
                   nextCurrentItemDirectoryURL != currentItemDirectoryURL else { return }
             
         default:
             break
         }
         
-        configEntity.playerHandler.resetAudioPlayerConfiguration()
+        playerHandler.resetAudioPlayerConfiguration()
     }
     
     private func showFullScreenPlayer(_ node: MEGANode?, path: String?) {
-        configEntity.playerHandler.removePlayer(listener: self)
+        playerHandler.removePlayer(listener: self)
         switch configEntity.playerType {
         case .`default`: router?.showPlayer(node: node, filePath: nil)
         case .folderLink, .fileLink, .offline: router?.showPlayer(node: node, filePath: configEntity.playerType == .fileLink ? configEntity.fileLink : path)
@@ -286,7 +289,7 @@ final class MiniPlayerViewModel: ViewModelType {
     }
     
     private func closeMiniPlayer() {
-        configEntity.playerHandler.removePlayer(listener: self)
+        playerHandler.removePlayer(listener: self)
         
         streamingInfoUseCase.stopServer()
         if configEntity.isFolderLink,
@@ -356,9 +359,9 @@ extension MiniPlayerViewModel: AudioPlayerObserversProtocol {
             switch playbackContinuationUseCase.status(for: fingerprint) {
             case .displayDialog(let playbackTime):
                 playbackContinuationUseCase.setPreference(to: .resumePreviousSession)
-                configEntity.playerHandler.playerResumePlayback(from: playbackTime)
+                playerHandler.playerResumePlayback(from: playbackTime)
             case .resumeSession(let playbackTime):
-                configEntity.playerHandler.playerResumePlayback(from: playbackTime)
+                playerHandler.playerResumePlayback(from: playbackTime)
             case .startFromBeginning: break
             }
         }
@@ -390,12 +393,12 @@ extension MiniPlayerViewModel {
     private func refreshItem(_ nodeHandle: HandleEntity) {
         guard let node = nodeInfoUseCase.node(fromHandle: nodeHandle) else { return }
         
-        configEntity.playerHandler.currentPlayer()?.refreshTrack(with: node)
+        playerHandler.currentPlayer()?.refreshTrack(with: node)
         refreshItemUI(nodeHandle: nodeHandle)
     }
     
     private func refreshItemUI(nodeHandle: HandleEntity) {
-        guard let currentPlayer = configEntity.playerHandler.currentPlayer(),
+        guard let currentPlayer = playerHandler.currentPlayer(),
               let item = currentPlayer.tracks.first(where: { $0.node?.handle == nodeHandle }) else { return }
         
         invokeCommand?(.reload(item: item))

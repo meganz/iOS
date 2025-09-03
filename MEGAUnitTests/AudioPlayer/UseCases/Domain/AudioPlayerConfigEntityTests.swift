@@ -184,7 +184,6 @@ final class AudioPlayerConfigEntityTests: XCTestCase {
         file: StaticString = #filePath,
         line: UInt = #line
     ) -> AudioPlayerConfigEntity {
-        let builder = MockAudioPlayerHandlerBuilder()
         
         let sut = AudioPlayerConfigEntity(
             node: node,
@@ -194,11 +193,8 @@ final class AudioPlayerConfigEntityTests: XCTestCase {
             chatId: chatId,
             relatedFiles: relatedFiles,
             allNodes: allNodes,
-            shouldResetPlayer: shouldResetPlayer,
-            audioPlayerHandlerBuilder: builder
+            shouldResetPlayer: shouldResetPlayer
         )
-        trackForMemoryLeaks(on: sut, file: file, line: line)
-        trackForMemoryLeaks(on: builder.build(), file: file, line: line)
         return sut
     }
 }

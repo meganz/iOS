@@ -7,7 +7,6 @@ import MEGAFoundation
 import MEGAL10n
 
 enum AudioPlayerAction: ActionType {
-    
     /// Enum to represent the reasons for the dissapearance  of a view.
     enum ViewWillDisappearReason {
         /// User dismissal means the user initiated the dismissal of the screen (e.g., tapping the close button or swiping down to close the audio player view).
@@ -98,6 +97,7 @@ final class AudioPlayerViewModel: ViewModelType {
     
     // MARK: - Private properties
     private let configEntity: AudioPlayerConfigEntity
+    private let playerHandler: any AudioPlayerHandlerProtocol
     private weak var router: (any AudioPlayerViewRouting)?
     private let nodeInfoUseCase: (any NodeInfoUseCaseProtocol)?
     private let streamingInfoUseCase: (any StreamingInfoUseCaseProtocol)?
@@ -107,17 +107,18 @@ final class AudioPlayerViewModel: ViewModelType {
     private let accountUseCase: any AccountUseCaseProtocol
     private let networkMonitorUseCase: any NetworkMonitorUseCaseProtocol
     private let tracker: any AnalyticsTracking
+    private var allNodes: [MEGANode]?
     
     private var repeatItemsState: RepeatMode {
         didSet {
             invokeCommand?(.updateRepeat(status: repeatItemsState))
             switch repeatItemsState {
-            case .none: configEntity.playerHandler.playerRepeatDisabled()
+            case .none: playerHandler.playerRepeatDisabled()
             case .loop:
-                configEntity.playerHandler.playerRepeatAll(active: true)
+                playerHandler.playerRepeatAll(active: true)
                 trackLoopIsEnabled()
             case .repeatOne:
-                configEntity.playerHandler.playerRepeatOne(active: true)
+                playerHandler.playerRepeatOne(active: true)
                 trackRepeatOneIsEnabled()
             }
         }
@@ -125,8 +126,8 @@ final class AudioPlayerViewModel: ViewModelType {
     private var speedModeState: SpeedMode {
         didSet {
             invokeCommand?(.updateSpeed(mode: speedModeState))
-            configEntity.playerHandler.changePlayer(speed: speedModeState)
-           
+            playerHandler.changePlayer(speed: speedModeState)
+            
             switch speedModeState {
             case .normal: trackAudioPlayerSpeedChange1X()
             case .oneAndAHalf: trackAudioPlayerSpeedChangeOneAndHalfX()
@@ -141,7 +142,7 @@ final class AudioPlayerViewModel: ViewModelType {
                 trackShuffleIsEnabled()
             }
             invokeCommand?(.updateShuffle(status: shuffleModeEnabled))
-            configEntity.playerHandler.playerShuffle(active: shuffleModeEnabled)
+            playerHandler.playerShuffle(active: shuffleModeEnabled)
         }
     }
     private(set) var isSingleTrackPlayer: Bool = false
@@ -156,6 +157,7 @@ final class AudioPlayerViewModel: ViewModelType {
     
     // MARK: - Init
     init(configEntity: AudioPlayerConfigEntity,
+         playerHandler: some AudioPlayerHandlerProtocol,
          router: some AudioPlayerViewRouting,
          nodeInfoUseCase: (some NodeInfoUseCaseProtocol)? = nil,
          streamingInfoUseCase: (some StreamingInfoUseCaseProtocol)? = nil,
@@ -167,6 +169,7 @@ final class AudioPlayerViewModel: ViewModelType {
          tracker: some AnalyticsTracking
     ) {
         self.configEntity = configEntity
+        self.playerHandler = playerHandler
         self.router = router
         self.nodeInfoUseCase = nodeInfoUseCase
         self.streamingInfoUseCase = streamingInfoUseCase
@@ -175,9 +178,9 @@ final class AudioPlayerViewModel: ViewModelType {
         self.audioPlayerUseCase = audioPlayerUseCase
         self.accountUseCase = accountUseCase
         self.networkMonitorUseCase = networkMonitorUseCase
-        self.repeatItemsState = configEntity.playerHandler.currentRepeatMode()
-        self.speedModeState = configEntity.playerHandler.currentSpeedMode()
-        self.shuffleModeEnabled = configEntity.playerHandler.isShuffleEnabled()
+        self.repeatItemsState = playerHandler.currentRepeatMode()
+        self.speedModeState = playerHandler.currentSpeedMode()
+        self.shuffleModeEnabled = playerHandler.isShuffleEnabled()
         self.tracker = tracker
         
         self.setupUpdateItemSubscription()
@@ -185,18 +188,18 @@ final class AudioPlayerViewModel: ViewModelType {
     
     // MARK: - Private functions
     private func shouldInitializePlayer() -> Bool {
-        if configEntity.playerHandler.isPlayerDefined() {
+        if playerHandler.isPlayerDefined() {
             guard let node = configEntity.node else {
-                return configEntity.fileLink != configEntity.playerHandler.playerCurrentItem()?.url.absoluteString
+                return configEntity.fileLink != playerHandler.playerCurrentItem()?.url.absoluteString
             }
             if configEntity.fileLink != nil {
                 guard let item = streamingInfoUseCase?.info(from: node), let itemNode = item.node,
-                      let currentItem = configEntity.playerHandler.playerCurrentItem(), let currentItemNode = currentItem.node else {
+                      let currentItem = playerHandler.playerCurrentItem(), let currentItemNode = currentItem.node else {
                     return true
                 }
                 return itemNode != currentItemNode
             } else {
-                return node.handle != configEntity.playerHandler.playerCurrentItem()?.node?.handle
+                return node.handle != playerHandler.playerCurrentItem()?.node?.handle
             }
         } else {
             return true
@@ -235,10 +238,10 @@ final class AudioPlayerViewModel: ViewModelType {
     }
     
     private func configurePlayer() {
-        configEntity.playerHandler.configurePlayer(listener: self)
+        playerHandler.configurePlayer(listener: self)
         
-        guard !configEntity.playerHandler.isPlayerEmpty(),
-              let tracks = configEntity.playerHandler.currentPlayer()?.tracks else {
+        guard !playerHandler.isPlayerEmpty(),
+              let tracks = playerHandler.currentPlayer()?.tracks else {
             router?.dismiss()
             return
         }
@@ -263,18 +266,29 @@ final class AudioPlayerViewModel: ViewModelType {
         }
     }
     
+    private func isPlayerDefined() -> Bool { playerHandler.isPlayerDefined() }
+    private func isPlayerPlaying() -> Bool { playerHandler.isPlayerPlaying() }
+    private func pausePlayer() { playerHandler.playerPause() }
+    private func setCurrentPlayer(with tracks: [AudioPlayerItem]) {
+        playerHandler.setCurrent(player: AudioPlayer(), tracks: tracks, playerListener: self)
+    }
+    private func add(tracks: [AudioPlayerItem]) {
+        playerHandler.addPlayer(tracks: tracks)
+    }
+    
     private nonisolated func initialize(tracks: [AudioPlayerItem], currentTrack: AudioPlayerItem) async {
         let mutableTracks = await shift(tracks: tracks, startItem: currentTrack)
         
-        if !(configEntity.playerHandler.isPlayerDefined()) {
-            configEntity.playerHandler.setCurrent(player: AudioPlayer(), tracks: mutableTracks, playerListener: self)
+        if !(await isPlayerDefined()) {
+            await setCurrentPlayer(with: mutableTracks)
         } else {
             if await shouldInitializePlayer() {
                 await cleanPlayerStateForReuse()
-                configEntity.playerHandler.addPlayer(tracks: mutableTracks)
+                await add(tracks: mutableTracks)
                 
-                if configEntity.fileLink != nil && configEntity.playerHandler.isPlayerPlaying() {
-                    configEntity.playerHandler.playerPause()
+                let isPlayerPlaying = await isPlayerPlaying()
+                if configEntity.fileLink != nil && isPlayerPlaying {
+                    await pausePlayer()
                 }
             } else {
                 await self.reloadNodeInfoWithCurrentItem()
@@ -289,18 +303,18 @@ final class AudioPlayerViewModel: ViewModelType {
         await refreshPlayerListener()
     }
     
-    private nonisolated func removePreviousQueuedTrackInPlayer() async {
-        configEntity.playerHandler.currentPlayer()?.queuePlayer = nil
-        configEntity.playerHandler.currentPlayer()?.update(tracks: [])
+    private func removePreviousQueuedTrackInPlayer() {
+        playerHandler.currentPlayer()?.queuePlayer = nil
+        playerHandler.currentPlayer()?.update(tracks: [])
     }
     
-    private nonisolated func refreshPlayerListener() async {
-        configEntity.playerHandler.currentPlayer()?.removeAllListeners()
-        configEntity.playerHandler.currentPlayer()?.configure(listener: self)
+    private func refreshPlayerListener() {
+        playerHandler.currentPlayer()?.removeAllListeners()
+        playerHandler.currentPlayer()?.configure(listener: self)
     }
     
     private nonisolated func shift(tracks: [AudioPlayerItem], startItem: AudioPlayerItem) async -> [AudioPlayerItem] {
-        if let allNodes = configEntity.allNodes, allNodes.isNotEmpty {
+        if let allNodes = await allNodes, allNodes.isNotEmpty {
             let strategy = AudioPlayerAllAudioAsPlaylistShiftStrategy()
             return strategy.shift(tracks: tracks, startItem: startItem)
         } else {
@@ -318,7 +332,7 @@ final class AudioPlayerViewModel: ViewModelType {
             }
             await initialize(tracks: [track], currentTrack: track)
         } else {
-            if let allNodes = configEntity.allNodes, allNodes.isNotEmpty, await isCurrentUserNode(node) {
+            if let allNodes = await allNodes, allNodes.isNotEmpty, await isCurrentUserNode(node) {
                 await initializeTracksForAllAudioFilesAsPlaylist(from: node, allNodes)
             } else {
                 guard let (currentTrack, children) = await getTracks(from: node) else {
@@ -384,7 +398,7 @@ final class AudioPlayerViewModel: ViewModelType {
     }
     
     private func reloadNodeInfoWithCurrentItem() {
-        guard let currentItem = configEntity.playerHandler.playerCurrentItem() else { return }
+        guard let currentItem = playerHandler.playerCurrentItem() else { return }
         invokeCommand?(
             .reloadNodeInfo(
                 name: currentItem.name,
@@ -394,7 +408,7 @@ final class AudioPlayerViewModel: ViewModelType {
             )
         )
         
-        configEntity.playerHandler.refreshCurrentItemState()
+        playerHandler.refreshCurrentItemState()
         
         invokeCommand?(.showLoading(false))
     }
@@ -458,9 +472,7 @@ final class AudioPlayerViewModel: ViewModelType {
                 await audioPlayerUseCase.registerMEGADelegate()
             }
                 
-            if configEntity.allNodes == nil {
-                configEntity.allNodes = configEntity.playerHandler.playerPlaylistItems()?.compactMap(\.node)
-            }
+            allNodes = playerHandler.playerPlaylistItems()?.compactMap(\.node)
             
             if shouldInitializePlayer() {
                 trackInitializeAudioPlayer()
@@ -473,32 +485,32 @@ final class AudioPlayerViewModel: ViewModelType {
                 configurePlayer()
             }
             
-            invokeCommand?(.updateShuffle(status: configEntity.playerHandler.isShuffleEnabled()))
+            invokeCommand?(.updateShuffle(status: playerHandler.isShuffleEnabled()))
             invokeCommand?(.updateSpeed(mode: speedModeState))
         case .updateCurrentTime(let percentage):
-            configEntity.playerHandler.playerProgressCompleted(percentage: percentage)
+            playerHandler.playerProgressCompleted(percentage: percentage)
         case .onShuffle(let active):
             shuffleModeEnabled = active
         case .onPrevious:
-            if configEntity.playerHandler.playerCurrentItemTime() == 0.0 && repeatItemsState == .repeatOne {
+            if playerHandler.playerCurrentItemTime() == 0.0 && repeatItemsState == .repeatOne {
                 repeatItemsState = .loop
             }
-            configEntity.playerHandler.playPrevious()
+            playerHandler.playPrevious()
         case .onPlayPause:
-            configEntity.playerHandler.playerTogglePlay()
+            playerHandler.playerTogglePlay()
         case .onNext:
             if repeatItemsState == .repeatOne {
                 repeatItemsState = .loop
             }
-            configEntity.playerHandler.playNext()
+            playerHandler.playNext()
         case .onGoBackward:
             trackAudioPlayerBack15Seconds()
-            configEntity.playerHandler.goBackward()
+            playerHandler.goBackward()
         case .onGoForward:
             trackAudioPlayerForward15Seconds()
-            configEntity.playerHandler.goForward()
+            playerHandler.goForward()
         case .onRepeatPressed:
-            if configEntity.playerType == .fileLink || configEntity.playerHandler.isSingleItemPlaylist() {
+            if configEntity.playerType == .fileLink || playerHandler.isSingleItemPlaylist() {
                 repeatItemsState = switch repeatItemsState {
                 case .none: .repeatOne
                 default: .none
@@ -534,9 +546,9 @@ final class AudioPlayerViewModel: ViewModelType {
         case .refreshRepeatStatus:
             invokeCommand?(.updateRepeat(status: repeatItemsState))
         case .refreshShuffleStatus:
-            invokeCommand?(.updateShuffle(status: configEntity.playerHandler.isShuffleEnabled()))
+            invokeCommand?(.updateShuffle(status: playerHandler.isShuffleEnabled()))
         case .showActionsforCurrentNode(let sender):
-            guard let node = configEntity.playerHandler.playerCurrentItem()?.node else { return }
+            guard let node = playerHandler.playerCurrentItem()?.node else { return }
             guard let nodeUseCase = nodeInfoUseCase,
                   let latestNode = nodeUseCase.node(fromHandle: node.handle) else {
                     self.router?.showAction(for: node, isFileLink: configEntity.playerType == .fileLink, sender: sender)
@@ -544,11 +556,11 @@ final class AudioPlayerViewModel: ViewModelType {
                 }
             router?.showAction(for: latestNode, isFileLink: configEntity.playerType == .fileLink, sender: sender)
         case .onSelectResumePlaybackContinuationDialog(let playbackTime):
-            configEntity.playerHandler.playerResumePlayback(from: playbackTime)
+            playerHandler.playerResumePlayback(from: playbackTime)
             playbackContinuationUseCase.setPreference(to: .resumePreviousSession)
         case .onSelectRestartPlaybackContinuationDialog:
             playbackContinuationUseCase.setPreference(to: .restartFromBeginning)
-            configEntity.playerHandler.playerPlay()
+            playerHandler.playerPlay()
         case .viewWillDisappear(let reason):
             switch reason {
             case .userInitiatedDismissal:
@@ -568,8 +580,8 @@ final class AudioPlayerViewModel: ViewModelType {
     }
     
     private func removeDelegates() {
-        configEntity.playerHandler.removePlayer(listener: self)
-        if !configEntity.playerHandler.isPlayerDefined() {
+        playerHandler.removePlayer(listener: self)
+        if !playerHandler.isPlayerDefined() {
             streamingInfoUseCase?.stopServer()
         }
         Task { [audioPlayerUseCase] in
@@ -663,16 +675,18 @@ extension AudioPlayerViewModel: AudioPlayerObserversProtocol {
     
     nonisolated func audioPlayerDidFinishBuffering() {
         Task { @MainActor in
-            if configEntity.playerHandler.currentSpeedMode() != speedModeState {
-                configEntity.playerHandler.changePlayer(speed: speedModeState)
+            if playerHandler.currentSpeedMode() != speedModeState {
+                playerHandler.changePlayer(speed: speedModeState)
             }
         }
     }
     
     nonisolated func audioPlayerDidAddTracks() {
-        guard let item = configEntity.playerHandler.playerCurrentItem() else { return }
-        
-        audioDidStartPlayingItem(item)
+        Task { @MainActor in
+            guard let item = playerHandler.playerCurrentItem() else { return }
+            
+            audioDidStartPlayingItem(item)
+        }
     }
     
     nonisolated func audioDidStartPlayingItem(_ item: AudioPlayerItem?) {
@@ -688,15 +702,15 @@ extension AudioPlayerViewModel: AudioPlayerObserversProtocol {
                     playbackTime: playbackTime
                 )
             case .resumeSession(let playbackTime):
-                configEntity.playerHandler.playerResumePlayback(from: playbackTime)
+                playerHandler.playerResumePlayback(from: playbackTime)
             case .startFromBeginning:
-                guard let player = configEntity.playerHandler.currentPlayer() else { return }
+                guard let player = playerHandler.currentPlayer() else { return }
                 
                 if player.currentIndex == 0 && player.resettingPlayback {
-                    configEntity.playerHandler.playerProgressCompleted(percentage: 0)
+                    playerHandler.playerProgressCompleted(percentage: 0)
                     player.resettingPlayback = false
                 } else {
-                    configEntity.playerHandler.playerResumePlayback(from: 0)
+                    playerHandler.playerResumePlayback(from: 0)
                 }
             }
         }
@@ -713,17 +727,17 @@ extension AudioPlayerViewModel: AudioPlayerObserversProtocol {
                     playbackTime: playbackTime
                 )
             )
-            configEntity.playerHandler.playerPause()
+            playerHandler.playerPause()
         } else {
             playbackContinuationUseCase.setPreference(to: .resumePreviousSession)
-            configEntity.playerHandler.playerResumePlayback(from: playbackTime)
+            playerHandler.playerResumePlayback(from: playbackTime)
         }
     }
     
     private func requestStopAudioPlayerSession() {
-        if configEntity.playerHandler.isPlayerAlive() {
-            configEntity.playerHandler.playerPause()
-            configEntity.playerHandler.closePlayer()
+        if playerHandler.isPlayerAlive() {
+            playerHandler.playerPause()
+            playerHandler.closePlayer()
             streamingInfoUseCase?.stopServer()
         }
     }
@@ -731,13 +745,13 @@ extension AudioPlayerViewModel: AudioPlayerObserversProtocol {
     private func initMiniPlayer() {
         switch configEntity.playerType {
         case .`default`:
-            router?.showMiniPlayer(node: configEntity.playerHandler.playerCurrentItem()?.node, shouldReload: true)
+            router?.showMiniPlayer(node: playerHandler.playerCurrentItem()?.node, shouldReload: true)
         case .folderLink:
-            router?.showMiniPlayer(file: configEntity.playerHandler.playerCurrentItem()?.url.absoluteString ?? "", shouldReload: true)
+            router?.showMiniPlayer(file: playerHandler.playerCurrentItem()?.url.absoluteString ?? "", shouldReload: true)
         case .fileLink:
             router?.showMiniPlayer(file: configEntity.fileLink ?? "", shouldReload: true)
         case .offline:
-            router?.showMiniPlayer(file: configEntity.playerHandler.playerCurrentItem()?.url.absoluteString ?? "", shouldReload: true)
+            router?.showMiniPlayer(file: playerHandler.playerCurrentItem()?.url.absoluteString ?? "", shouldReload: true)
         }
     }
 }
@@ -755,7 +769,7 @@ extension AudioPlayerViewModel {
         guard
             nodeList.isNotEmpty,
             let updatedNode = nodeList.first,
-            configEntity.allNodes?.contains(where: { $0.handle == updatedNode.handle }) == true
+            allNodes?.contains(where: { $0.handle == updatedNode.handle }) == true
         else {
             return
         }
@@ -766,7 +780,7 @@ extension AudioPlayerViewModel {
     private func refreshItem(_ updatedNode: NodeEntity) {
         guard let node = nodeInfoUseCase?.node(fromHandle: updatedNode.handle) else { return }
         
-        configEntity.playerHandler.currentPlayer()?.refreshTrack(with: node)
+        playerHandler.currentPlayer()?.refreshTrack(with: node)
         reloadNodeInfoWithCurrentItem()
     }
 }
