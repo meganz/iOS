@@ -11,28 +11,19 @@ extension MEGALoginRequestDelegate {
     
     @MainActor
     @objc func showLoadingView() {
-
-        if isLoginRegisterAndOnboardingRevampFeatureToggleOn {
-            if isNewUserRegistration {
-                MEGALinkManager.resetLinkAndURLType()
-            }
-            guard let window = UIApplication.shared.keyWindow else { return }
-            let accountUseCase = AccountUseCase(repository: AccountRepository.newRepo)
-            let coordinator = SubscriptionPurchaseViewCoordinator(
-                window: window,
-                isNewUserRegistration: isNewUserRegistration,
-                accountUseCase: accountUseCase) {
+        if isNewUserRegistration {
+            MEGALinkManager.resetLinkAndURLType()
+        }
+        guard let window = UIApplication.shared.keyWindow else { return }
+        let accountUseCase = AccountUseCase(repository: AccountRepository.newRepo)
+        let coordinator = SubscriptionPurchaseViewCoordinator(
+            window: window,
+            isNewUserRegistration: isNewUserRegistration,
+            accountUseCase: accountUseCase) {
                 // Note: The fetching/loading of nodes was already done by SubscriptionPurchaseViewCoordinator
                 // Therefore the PermissionAppLaunchRouter doesn't need to show loading screen again.
                 PermissionAppLaunchRouter().setRootViewController(shouldShowLoadingScreen: false)
             }
-            coordinator.start()
-        } else {
-            PermissionAppLaunchRouter().setRootViewController(shouldShowLoadingScreen: true)
-        }
-    }
-
-    private var isLoginRegisterAndOnboardingRevampFeatureToggleOn: Bool {
-        DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .loginRegisterAndOnboardingRevamp)
+        coordinator.start()
     }
 }

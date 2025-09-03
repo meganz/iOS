@@ -689,14 +689,6 @@
             if (![LTHPasscodeViewController doesPasscodeExist]) {
                 if (self->isAccountFirstLogin) {
                     self->isAccountFirstLogin = NO;
-                    if (self.isNewAccount && !self.isLoginRegisterAndOnboardingRevampFeatureEnabled) {
-                        if (MEGAPurchase.sharedInstance.products.count > 0) {
-                            [self showChooseAccountPlanTypeView];
-                        } else {
-                            [MEGAPurchase.sharedInstance.pricingsDelegateMutableArray addObject:self];
-                            self.chooseAccountTypeLater = YES;
-                        }
-                    }
 
                     self.newAccount = NO;
 
@@ -1018,7 +1010,7 @@
 }
 
 - (void)presentAccountExpiredViewIfNeeded {
-    if ([UIApplication.mnz_visibleViewController isKindOfClass:InitialLaunchViewController.class] || [UIApplication.mnz_visibleViewController isKindOfClass:LaunchViewController.class]) {
+    if ([UIApplication.mnz_visibleViewController isKindOfClass:LaunchViewController.class]) {
         return;
     }
     

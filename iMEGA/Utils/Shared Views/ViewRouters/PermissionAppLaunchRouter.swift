@@ -14,23 +14,14 @@ protocol PermissionAppLaunchRouterProtocol {
 
 struct PermissionAppLaunchRouter: PermissionAppLaunchRouterProtocol {
 
-    private let usesNewFlow: Bool
-    init(usesNewFlow: Bool = DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .loginRegisterAndOnboardingRevamp)) {
-        self.usesNewFlow = usesNewFlow
-    }
-
     func setRootViewController(shouldShowLoadingScreen: Bool) {
         guard let window = UIApplication.shared.keyWindow else { return }
         Task { @MainActor in
-            if usesNewFlow {
-                handleNewFlow(in: window, shouldShowLoadingScreen: shouldShowLoadingScreen)
-            } else {
-                window.rootViewController = await makeLaunchViewController()
-            }
+            routeInitialFlow(in: window, shouldShowLoadingScreen: shouldShowLoadingScreen)
         }
     }
 
-    func handleNewFlow(in window: UIWindow, shouldShowLoadingScreen: Bool) {
+    private func routeInitialFlow(in window: UIWindow, shouldShowLoadingScreen: Bool) {
         if shouldShowLoadingScreen {
             window.rootViewController = AppLoadingViewRouter {
                 showPermissionsCTAAndGoToApp(in: window)
@@ -54,33 +45,6 @@ struct PermissionAppLaunchRouter: PermissionAppLaunchRouterProtocol {
                 preference.wrappedValue = true
             }
             showMainApp(designatedTab: (photosPermissionGranted == true) ? .cameraUploads : nil)
-        }
-    }
-
-    private func makeLaunchViewController() async -> UIViewController {
-        let permissionHandler = DevicePermissionsHandler.makeHandler()
-        if await permissionHandler.shouldSetupPermissions() {
-            return AppLoadingViewRouter {
-                guard let launchViewController = UIStoryboard(
-                    name: "Launch",
-                    bundle: nil
-                ).instantiateViewController(
-                    withIdentifier: "InitialLaunchViewControllerID"
-                ) as? InitialLaunchViewController else {
-                    return
-                }
-                launchViewController.delegate = UIApplication.shared.delegate as? any LaunchViewControllerDelegate
-                guard let window = UIApplication.shared.keyWindow else {
-                    return
-                }
-                launchViewController.showViews = true
-                window.rootViewController = launchViewController
-            }.build()
-        } else {
-            return AppLoadingViewRouter {
-                showMainApp()
-            }
-            .build()
         }
     }
 

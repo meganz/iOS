@@ -1222,20 +1222,12 @@ class ChatViewController: MessagesViewController {
     
     private func isOnboardingVisible() -> Bool {
         let visibleViewController = UIApplication.mnz_visibleViewController()
-        return if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .loginRegisterAndOnboardingRevamp) {
-            visibleViewController is OnboardingUSPViewController
-        } else {
-            visibleViewController is OnboardingViewController
-        }
+        return visibleViewController is OnboardingUSPViewController
     }
     
     private func presentLogin() {
         let visibleViewController = UIApplication.mnz_visibleViewController()
-        if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .loginRegisterAndOnboardingRevamp) {
-            (visibleViewController as? OnboardingUSPViewController)?.presentLoginView()
-        } else {
-            (visibleViewController as? OnboardingViewController)?.presentLoginViewController()
-        }
+        (visibleViewController as? OnboardingUSPViewController)?.presentLoginView()
     }
 }
 

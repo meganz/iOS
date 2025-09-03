@@ -100,11 +100,6 @@ class AccountExpiredViewController: UIViewController {
                     if launchViewController.delegate.responds(to: #selector((any LaunchViewControllerDelegate).setupFinished)) {
                         launchViewController.delegate.setupFinished()
                     }
-                } else if rootViewController.isMember(of: InitialLaunchViewController.self) {
-                    guard let initialLaunchViewController = rootViewController as? InitialLaunchViewController else {return}
-                    DispatchQueue.main.async {
-                        initialLaunchViewController.performAnimation()
-                    }
                 }
             }
         }

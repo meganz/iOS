@@ -285,50 +285,6 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
         XCTAssertEqual(sut.selectedPlanType, sut.recommendedPlanType)
     }
     
-    @MainActor
-    func testRecommendedPlan_viewTypeIsOnboarding_withLowestPlanProI_shouldBeProII() async {
-        let planList: [PlanEntity] = [.proI_monthly, .proII_monthly, .proIII_monthly]
-        let (sut, _) = makeSUT(
-            accountDetails: AccountDetailsEntity.build(proLevel: .free),
-            planList: planList,
-            viewType: .onboarding(isFreeAccountFirstLogin: false)
-        )
-        
-        await sut.setUpPlanTask?.value
-
-        XCTAssertEqual(sut.recommendedPlanType, .proII)
-        XCTAssertEqual(sut.selectedPlanType, sut.recommendedPlanType)
-    }
-    
-    @MainActor
-    func testRecommendedPlan_viewTypeIsOnboarding_withLowestPlanProII_shouldBeProIII() async {
-        let planList: [PlanEntity] = [.proII_monthly, .proIII_monthly]
-        let (sut, _) = makeSUT(
-            accountDetails: AccountDetailsEntity.build(proLevel: .free),
-            planList: planList,
-            viewType: .onboarding(isFreeAccountFirstLogin: false)
-        )
-        
-        await sut.setUpPlanTask?.value
-
-        XCTAssertEqual(sut.recommendedPlanType, .proIII)
-        XCTAssertEqual(sut.selectedPlanType, sut.recommendedPlanType)
-    }
-    
-    @MainActor
-    func testRecommendedPlan_viewTypeIsOnboarding_withLowestPlanProIII_shouldHaveNoRecommendedPlan() async {
-        let planList: [PlanEntity] = [.proIII_monthly]
-        let (sut, _) = makeSUT(
-            accountDetails: AccountDetailsEntity.build(proLevel: .free),
-            planList: planList,
-            viewType: .onboarding(isFreeAccountFirstLogin: false)
-        )
-        
-        await sut.setUpPlanTask?.value
-
-        XCTAssertNil(sut.recommendedPlanType)
-        XCTAssertNil(sut.selectedPlanType)
-    }
     
     @MainActor
     func testRecommendedPlan_viewTypeIsOnboardingRevampFeatureFlagOn_shouldSetCorrectPlan() async {
@@ -345,8 +301,7 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
         for (current, recommended, selectedPlanType) in testCase {
             let (sut, _) = makeSUT(
                 accountDetails: AccountDetailsEntity.build(proLevel: current),
-                viewType: .onboarding(isFreeAccountFirstLogin: false),
-                isLoginRegisterAndOnboardingRevampFeatureEnabled: true
+                viewType: .onboarding(isFreeAccountFirstLogin: false)
             )
             
             await sut.setUpPlanTask?.value
@@ -1180,7 +1135,6 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
         appVersion: String = "1.0.0",
         canOpenURL: @Sendable @escaping (URL) async -> Bool = { _ in true },
         openURL: @Sendable @escaping (URL) async -> Void = { _ in },
-        isLoginRegisterAndOnboardingRevampFeatureEnabled: Bool = false
     ) -> (UpgradeAccountPlanViewModel, MockAccountPlanPurchaseUseCase) {
         mockAccountUseCase = MockAccountUseCase(accountDetailsResult: accountDetailsResult)
         let mockPurchaseUseCase = MockAccountPlanPurchaseUseCase(accountPlanProducts: planList)
@@ -1195,8 +1149,6 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
             purchaseUseCase: mockPurchaseUseCase,
             subscriptionsUseCase: subscriptionsUseCase,
             remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.externalAds: isExternalAdsFlagEnabled]),
-            localFeatureFlagProvider: MockFeatureFlagProvider(
-                list: [.loginRegisterAndOnboardingRevamp: isLoginRegisterAndOnboardingRevampFeatureEnabled]),
             preferenceUseCase: preferenceUseCase,
             externalPurchaseUseCase: externalPurchaseUseCase,
             tracker: tracker,
