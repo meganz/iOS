@@ -41,7 +41,7 @@ final class TermsAndPoliciesViewModelTests: XCTestCase {
         let expectedURL = try XCTUnwrap(URL(string: "https://\(domainName)/testCookie"))
         let sut = makeSUT(
             sessionTransferURLResult: .success(expectedURL),
-            appDomainUseCase: MockAppDomainUseCase(domainName: domainName),
+            domainNameHandler: { domainName },
             isExternalAdsFlagEnabled: false
         )
         
@@ -54,7 +54,7 @@ final class TermsAndPoliciesViewModelTests: XCTestCase {
     @MainActor
     private func makeSUT(
         sessionTransferURLResult: Result<URL, AccountErrorEntity> = .success(URL(fileURLWithPath: "")),
-        appDomainUseCase: some AppDomainUseCaseProtocol = MockAppDomainUseCase(domainName: ""),
+        domainNameHandler: @escaping () -> String = { "mega.nz" },
         isExternalAdsFlagEnabled: Bool = true,
         file: StaticString = #filePath,
         line: UInt = #line
@@ -63,14 +63,14 @@ final class TermsAndPoliciesViewModelTests: XCTestCase {
         let accountUseCase = MockAccountUseCase(sessionTransferURLResult: sessionTransferURLResult)
         let router = TermsAndPoliciesRouter(
             accountUseCase: accountUseCase,
-            appDomainUseCase: appDomainUseCase
+            domainNameHandler: domainNameHandler
         )
         let sut = TermsAndPoliciesViewModel(
             accountUseCase: accountUseCase,
             remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(
                 list: [.externalAds: isExternalAdsFlagEnabled]
             ),
-            appDomainUseCase: appDomainUseCase,
+            domainNameHandler: domainNameHandler,
             router: router
         )
         trackForMemoryLeaks(on: sut, file: file, line: line)

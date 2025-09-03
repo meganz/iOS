@@ -14,7 +14,7 @@ final class RecoveryKeyViewRouter: RecoveryKeyViewRouting {
     private weak var presenter: UIViewController?
     private let saveMasterKeyCompletion: (() -> Void)?
     
-    private let securityURLLink = NSURL(string: "https://\(DIContainer.appDomainUseCase.domainName)/security")
+    private let securityURLLink = NSURL(string: "https://\(DIContainer.domainName)/security")
     
     init(
         navigationController: UINavigationController? = nil,

@@ -23,7 +23,7 @@ final class MEGALinkManager_AdditionsTests: XCTestCase {
         MEGALinkManager.linkURL = URL(string: "mega://collection/p3IBQCiZ#Nt8-bopPB8em4cOlKFqStA")
         
         XCTAssertEqual(MEGALinkManager.albumPublicLink(),
-                       URL(string: "https://\(DIContainer.appDomainUseCase.domainName)/collection/p3IBQCiZ#Nt8-bopPB8em4cOlKFqStA"))
+                       URL(string: "https://\(DIContainer.domainName)/collection/p3IBQCiZ#Nt8-bopPB8em4cOlKFqStA"))
     }
     
     func testShouldOpenWaitingRoom_forWaitingRoomEnabledAndOwnPrivilegeNotModerator_shouldReturnTrue() {

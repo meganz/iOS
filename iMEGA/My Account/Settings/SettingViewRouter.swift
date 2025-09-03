@@ -110,7 +110,7 @@ extension SettingViewRouter {
                 title: Strings.Localizable.Settings.Section.termsAndPolicies,
                 router: TermsAndPoliciesRouter(
                     accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
-                    appDomainUseCase: DIContainer.appDomainUseCase,
+                    domainNameHandler: { DIContainer.domainName },
                     navigationController: presenter
                 )
             )

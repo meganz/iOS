@@ -1,12 +1,19 @@
 import MEGAAppPresentation
 import MEGADomain
+import MEGAInfrastructure
 import MEGAPreference
+import MEGASDKRepo
 
 extension DIContainer {
-    static var appDomainUseCase: some AppDomainUseCaseProtocol {
+    private static var appDomainUseCase: some AppDomainUseCaseProtocol {
         AppDomainUseCase(
             remoteFeatureFlagUseCase: remoteFeatureFlagUseCase,
-            isLocalFeatureFlagEnabled: featureFlagProvider.isFeatureFlagEnabled(for: .dotAppDomain)
+            preferenceUseCase: PreferenceUseCase(repository: PreferenceRepository.newRepo)
         )
+    }
+
+    static var domainName: String {
+        guard featureFlagProvider.isFeatureFlagEnabled(for: .dotAppDomain) else { return "mega.nz" }
+        return appDomainUseCase.domainName
     }
 }

@@ -5,7 +5,7 @@ import UIKit
 
 extension ContactLinkQRViewController {
     @objc var domainName: String {
-        DIContainer.appDomainUseCase.domainName
+        DIContainer.domainName
     }
     
     @objc func updateAppearance(_ segmentControl: MEGASegmentedControl) {

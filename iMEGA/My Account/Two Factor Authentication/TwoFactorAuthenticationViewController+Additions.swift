@@ -19,6 +19,6 @@ extension TwoFactorAuthenticationViewController {
     }
 
     @objc var domainName: String {
-        DIContainer.appDomainUseCase.domainName
+        DIContainer.domainName
     }
 }

@@ -181,7 +181,7 @@ final class CookieSettingsViewModel: NSObject, ViewModelType {
     
     // MARK: - Cookie policy
     private func showCookiePolicyURL() {
-        guard let cookiePolicyURL = URL(string: "https://\(DIContainer.appDomainUseCase.domainName)/cookie") else { return }
+        guard let cookiePolicyURL = URL(string: "https://\(DIContainer.domainName)/cookie") else { return }
         self.router.didTap(on: .showCookiePolicy(url: cookiePolicyURL))
     }
     

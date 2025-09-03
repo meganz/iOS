@@ -75,7 +75,7 @@ class RichPreviewContentView: UIView {
                 let node = message.node
                 titleLabel.text = node?.name
                 descriptionLabel.text = String.memoryStyleString(fromByteCount: Int64(truncating: node?.size ?? 0))
-                linkLabel.text = DIContainer.appDomainUseCase.domainName
+                linkLabel.text = DIContainer.domainName
                 iconImageView.image = MEGAAssets.UIImage.favicon
                 if let node = node {
                     imageView.mnz_setThumbnail(by: node)
@@ -83,14 +83,14 @@ class RichPreviewContentView: UIView {
             case .folderLink:
                 titleLabel.text = message.richTitle
                 descriptionLabel.text = String(format: "%@\n%@", message.richString ?? "", String.memoryStyleString(fromByteCount: max(message.richNumber?.int64Value ?? 0, 0)))
-                linkLabel.text = DIContainer.appDomainUseCase.domainName
+                linkLabel.text = DIContainer.domainName
                 iconImageView.image = MEGAAssets.UIImage.favicon
                 imageView.image = UIImage.mnz_folder()
                 
             case .publicChatLink:
                 titleLabel.text = message.richString
                 descriptionLabel.text = "\(message.richNumber?.int64Value ?? 0) \(Strings.Localizable.participants)"
-                linkLabel.text = DIContainer.appDomainUseCase.domainName
+                linkLabel.text = DIContainer.domainName
                 iconImageView.image = MEGAAssets.UIImage.favicon
                 imageView.image = MEGAAssets.UIImage.groupChat
                 

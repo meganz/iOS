@@ -120,7 +120,6 @@
     [self injectSDKRepoDependencies];
     [self injectAuthenticationDependencies];
     [self injectVideoPlayerDependencies];
-    [self injectAccountsDependencies];
 
     [self initialiseModules];
     
@@ -261,9 +260,9 @@
         } else {
             [self listenToStorePaymentTransactions];
         }
-        
-        [self fetchMiscFlagsBeforeDomainCheck];
     }
+
+    [self listenToDomainUpdates];
     
     UIApplicationShortcutItem *applicationShortcutItem = launchOptions[UIApplicationLaunchOptionsShortcutItemKey];
     if (applicationShortcutItem != nil) {
