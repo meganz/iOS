@@ -2,96 +2,95 @@ import Foundation
 
 // MARK: - Audio Player Notify Observers Functions
 extension AudioPlayer: AudioPlayerProtocol {
-
     func notify(_ closure: (any AudioPlayerObserversProtocol) -> Void) {
-        observersListenerManager.notify(closure: closure)
+        notifyObservers(closure)
     }
     
     func notify(_ closures: [(any AudioPlayerObserversProtocol) -> Void]) {
         closures.forEach(notify(_:))
     }
     
-    func aboutCurrentState(_ observer: some AudioPlayerObserversProtocol) {
-        guard let player = queuePlayer, let currentState = currentState, !currentState.currentTime.isNaN, !currentState.remainingTime.isNaN, !currentState.percentage.isNaN else { return }
+    func aboutCurrentState(_ observer: any AudioPlayerObserversProtocol) {
+        guard let queuePlayer, let currentState, !currentState.currentTime.isNaN, !currentState.remainingTime.isNaN, !currentState.percentage.isNaN else { return }
         
-        observer.audio?(player: player, currentTime: currentState.currentTime, remainingTime: currentState.remainingTime, percentageCompleted: currentState.percentage, isPlaying: currentState.isPlaying)
+        observer.audio(player: queuePlayer, currentTime: currentState.currentTime, remainingTime: currentState.remainingTime, percentageCompleted: currentState.percentage, isPlaying: currentState.isPlaying)
     }
     
-    func aboutCurrentItem(_ observer: some AudioPlayerObserversProtocol) {
-        guard let player = queuePlayer else { return }
+    func aboutCurrentItem(_ observer: any AudioPlayerObserversProtocol) {
+        guard let queuePlayer else { return }
         
         if currentNode != nil, let currentItem = currentItem() {
-            observer.audio?(player: player, name: currentName ?? "", artist: currentArtist ?? "", thumbnail: currentThumbnail, url: currentItem.url.absoluteString)
+            observer.audio(player: queuePlayer, name: currentName ?? "", artist: currentArtist ?? "", thumbnail: currentThumbnail, url: currentItem.url.absoluteString)
         } else {
-            observer.audio?(player: player, name: currentName ?? "", artist: currentArtist ?? "", thumbnail: currentThumbnail)
+            observer.audio(player: queuePlayer, name: currentName ?? "", artist: currentArtist ?? "", thumbnail: currentThumbnail)
         }
     }
     
-    func aboutCurrentThumbnail(_ observer: some AudioPlayerObserversProtocol) {
-        guard let player = queuePlayer, let currentItem = currentItem() else { return }
+    func aboutCurrentThumbnail(_ observer: any AudioPlayerObserversProtocol) {
+        guard let queuePlayer, let currentItem = currentItem() else { return }
         
-        observer.audio?(player: player, currentItem: currentItem, currentThumbnail: currentThumbnail)
+        observer.audio(player: queuePlayer, currentItem: currentItem, currentThumbnail: currentThumbnail)
     }
     
-    func aboutToReloadCurrentItem(_ observer: some AudioPlayerObserversProtocol) {
-        guard let player = queuePlayer else { return }
+    func aboutToReloadCurrentItem(_ observer: any AudioPlayerObserversProtocol) {
+        guard let queuePlayer else { return }
         
-        observer.audio?(player: player, reload: currentItem())
+        observer.audio(player: queuePlayer, reload: currentItem())
     }
     
-    func aboutCurrentItemAndQueue(_ observer: some AudioPlayerObserversProtocol) {
-        guard let player = queuePlayer else { return }
+    func aboutCurrentItemAndQueue(_ observer: any AudioPlayerObserversProtocol) {
+        guard let queuePlayer else { return }
         
-        observer.audio?(player: player, currentItem: currentItem(), queue: queueItems())
+        observer.audio(player: queuePlayer, currentItem: currentItem(), queue: queueItems())
     }
     
-    func aboutTheBeginningOfBlockingAction(_ observer: some AudioPlayerObserversProtocol) {
-        observer.audioPlayerWillStartBlockingAction?()
+    func aboutTheBeginningOfBlockingAction(_ observer: any AudioPlayerObserversProtocol) {
+        observer.audioPlayerWillStartBlockingAction()
     }
     
-    func aboutTheEndOfBlockingAction(_ observer: some AudioPlayerObserversProtocol) {
-        observer.audioPlayerDidFinishBlockingAction?()
+    func aboutTheEndOfBlockingAction(_ observer: any AudioPlayerObserversProtocol) {
+        observer.audioPlayerDidFinishBlockingAction()
     }
     
-    func aboutShowingLoadingView(_ observer: some AudioPlayerObserversProtocol) {
-        guard let player = queuePlayer else { return }
-        observer.audio?(player: player, showLoading: true)
+    func aboutShowingLoadingView(_ observer: any AudioPlayerObserversProtocol) {
+        guard let queuePlayer else { return }
+        observer.audio(player: queuePlayer, showLoading: true)
     }
     
-    func aboutHidingLoadingView(_ observer: some AudioPlayerObserversProtocol) {
-        guard let player = queuePlayer else { return }
-        observer.audio?(player: player, showLoading: false)
+    func aboutHidingLoadingView(_ observer: any AudioPlayerObserversProtocol) {
+        guard let queuePlayer else { return }
+        observer.audio(player: queuePlayer, showLoading: false)
     }
     
-    func aboutUpdateCurrentIndexPath(_ observer: some AudioPlayerObserversProtocol) {
-        guard let player = queuePlayer else { return }
+    func aboutUpdateCurrentIndexPath(_ observer: any AudioPlayerObserversProtocol) {
+        guard let queuePlayer else { return }
         
         if let currentIndex = tracks.firstIndex(where: { $0 == currentItem() }) {
-            observer.audio?(player: player, currentItem: currentItem(), indexPath: IndexPath(row: currentIndex, section: 0))
+            observer.audio(player: queuePlayer, currentItem: currentItem(), indexPath: IndexPath(row: currentIndex, section: 0))
         }
     }
     
     func notifyAboutToReload(item: AudioPlayerItem) {
-        guard let player = queuePlayer else { return }
+        guard let queuePlayer else { return }
         
-        observersListenerManager.notify { $0.audio?(player: player, reload: item) }
+        notifyObservers { $0.audio(player: queuePlayer, reload: item) }
     }
     
-    func aboutAudioPlayerConfiguration(_ observer: some AudioPlayerObserversProtocol) {
-        guard let player = queuePlayer else { return }
+    func aboutAudioPlayerConfiguration(_ observer: any AudioPlayerObserversProtocol) {
+        guard let queuePlayer else { return }
         
-        observer.audio?(player: player, loopMode: isRepeatAllMode(), shuffleMode: isShuffleMode(), repeatOneMode: isRepeatOneMode())
+        observer.audio(player: queuePlayer, loopMode: isRepeatAllMode(), shuffleMode: isShuffleMode(), repeatOneMode: isRepeatOneMode())
     }
     
-    func aboutAudioPlayerDidFinishBuffering(_ observer: some AudioPlayerObserversProtocol) {
-        observer.audioPlayerDidFinishBuffering?()
+    func aboutAudioPlayerDidFinishBuffering(_ observer: any AudioPlayerObserversProtocol) {
+        observer.audioPlayerDidFinishBuffering()
     }
     
-    func aboutStartPlayingNewItem(_ observer: some AudioPlayerObserversProtocol) {
-        observer.audioDidStartPlayingItem?(currentItem())
+    func aboutStartPlayingNewItem(_ observer: any AudioPlayerObserversProtocol) {
+        observer.audioDidStartPlayingItem(currentItem())
     }
     
-    func aboutAudioPlayerDidAddTracks(_ observer: some AudioPlayerObserversProtocol) {
-        observer.audioPlayerDidAddTracks?()
+    func aboutAudioPlayerDidAddTracks(_ observer: any AudioPlayerObserversProtocol) {
+        observer.audioPlayerDidAddTracks()
     }
 }

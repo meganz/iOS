@@ -4,7 +4,7 @@ import MediaPlayer
 import MEGAAppPresentation
 import MEGADomain
 
-@objc protocol AudioPlayerProtocol: AnyObject {}
+protocol AudioPlayerProtocol: AnyObject {}
 
 // MARK: - Audio Player Metadata Functions
 protocol AudioPlayerMetadataLoaderProtocol {
@@ -12,30 +12,55 @@ protocol AudioPlayerMetadataLoaderProtocol {
 }
 
 // MARK: - Audio Player Observers Functions
-@objc protocol AudioPlayerObserversProtocol: AudioPlayerProtocol {
-    @objc optional func audio(player: AVQueuePlayer, showLoading: Bool)
-    @objc optional func audio(player: AVQueuePlayer, name: String, artist: String, thumbnail: UIImage?)
-    @objc optional func audio(player: AVQueuePlayer, name: String, artist: String, thumbnail: UIImage?, url: String)
-    @objc optional func audio(player: AVQueuePlayer, currentItem: AudioPlayerItem?, currentThumbnail: UIImage?)
-    @objc optional func audio(player: AVQueuePlayer, currentItem: AudioPlayerItem?, queue: [AudioPlayerItem]?)
-    @objc optional func audio(player: AVQueuePlayer, currentTime: Double, remainingTime: Double, percentageCompleted: Float, isPlaying: Bool)
-    @objc optional func audio(player: AVQueuePlayer, currentItem: AudioPlayerItem?, indexPath: IndexPath?)
-    @objc optional func audio(player: AVQueuePlayer, reload item: AudioPlayerItem?)
-    @objc optional func audio(player: AVQueuePlayer, loopMode: Bool, shuffleMode: Bool, repeatOneMode: Bool)
-    @objc optional func audioPlayerWillStartBlockingAction()
-    @objc optional func audioPlayerDidFinishBlockingAction()
-    @objc optional func audioPlayerDidPausePlayback()
-    @objc optional func audioPlayerDidResumePlayback()
-    @objc optional func audioPlayerDidFinishBuffering()
-    @objc optional func audioPlayerDidAddTracks()
-    @objc optional func audioDidStartPlayingItem(_ item: AudioPlayerItem?)
+protocol AudioPlayerObserversProtocol: AudioPlayerProtocol {
+    func audio(player: AVQueuePlayer, showLoading: Bool)
+    func audio(player: AVQueuePlayer, name: String, artist: String, thumbnail: UIImage?)
+    func audio(player: AVQueuePlayer, name: String, artist: String, thumbnail: UIImage?, url: String)
+    func audio(player: AVQueuePlayer, currentItem: AudioPlayerItem?, currentThumbnail: UIImage?)
+    func audio(player: AVQueuePlayer, currentItem: AudioPlayerItem?, queue: [AudioPlayerItem]?)
+    func audio(player: AVQueuePlayer, currentTime: Double, remainingTime: Double, percentageCompleted: Float, isPlaying: Bool)
+    func audio(player: AVQueuePlayer, currentItem: AudioPlayerItem?, indexPath: IndexPath?)
+    func audio(player: AVQueuePlayer, reload item: AudioPlayerItem?)
+    func audio(player: AVQueuePlayer, loopMode: Bool, shuffleMode: Bool, repeatOneMode: Bool)
+    func audioPlayerWillStartBlockingAction()
+    func audioPlayerDidFinishBlockingAction()
+    func audioPlayerDidPausePlayback()
+    func audioPlayerDidResumePlayback()
+    func audioPlayerDidFinishBuffering()
+    func audioPlayerDidAddTracks()
+    func audioDidStartPlayingItem(_ item: AudioPlayerItem?)
+}
+
+/// Default Observer Callbacks (Optional-by-default)
+/// To keep adopters from having to implement every callback, we provide empty default implementations here. This mirrors
+/// Objective-C’s `@objc optional` behavior while staying in pure Swift
+extension AudioPlayerObserversProtocol {
+    func audio(player: AVQueuePlayer, showLoading: Bool) {}
+    func audio(player: AVQueuePlayer, name: String, artist: String, thumbnail: UIImage?) {}
+    func audio(player: AVQueuePlayer, name: String, artist: String, thumbnail: UIImage?, url: String) {}
+    func audio(player: AVQueuePlayer, currentItem: AudioPlayerItem?, currentThumbnail: UIImage?) {}
+    func audio(player: AVQueuePlayer, currentItem: AudioPlayerItem?, queue: [AudioPlayerItem]?) {}
+    func audio(player: AVQueuePlayer, currentTime: Double, remainingTime: Double, percentageCompleted: Float, isPlaying: Bool) {}
+    func audio(player: AVQueuePlayer, currentItem: AudioPlayerItem?, indexPath: IndexPath?) {}
+    func audio(player: AVQueuePlayer, reload item: AudioPlayerItem?) {}
+    func audio(player: AVQueuePlayer, loopMode: Bool, shuffleMode: Bool, repeatOneMode: Bool) {}
+    func audioPlayerWillStartBlockingAction() {}
+    func audioPlayerDidFinishBlockingAction() {}
+    func audioPlayerDidPausePlayback() {}
+    func audioPlayerDidResumePlayback() {}
+    func audioPlayerDidFinishBuffering() {}
+    func audioPlayerDidAddTracks() {}
+    func audioDidStartPlayingItem(_ item: AudioPlayerItem?) {}
 }
 
 // MARK: - Audio Player Handler
-@objc protocol AudioPlayerHandlerProtocol: AudioPlayerCurrentStatusProtocol & AudioPlayerPlaybackProtocol & AudioPlayerConfigurationProtocol {}
+protocol AudioPlayerHandlerProtocol:
+    AudioPlayerCurrentStatusProtocol &
+    AudioPlayerPlaybackProtocol &
+    AudioPlayerConfigurationProtocol {}
 
 // MARK: - Audio Player Current Status Functions
-@objc protocol AudioPlayerCurrentStatusProtocol: AnyObject {
+protocol AudioPlayerCurrentStatusProtocol: AnyObject {
     func isPlayerDefined() -> Bool
     func isPlayerEmpty() -> Bool
     func isShuffleEnabled() -> Bool
@@ -54,7 +79,7 @@ protocol AudioPlayerMetadataLoaderProtocol {
 }
 
 // MARK: - Audio Player Playback Functions
-@objc protocol AudioPlayerPlaybackProtocol: AnyObject {
+protocol AudioPlayerPlaybackProtocol: AnyObject {
     func move(item: AudioPlayerItem, to position: IndexPath, direction: MovementDirection)
     func delete(items: [AudioPlayerItem]) async
     func playerProgressCompleted(percentage: Float)
@@ -78,7 +103,7 @@ protocol AudioPlayerMetadataLoaderProtocol {
 }
 
 // MARK: - Audio Player Configuration Functions
-@objc protocol AudioPlayerConfigurationProtocol: AnyObject {
+protocol AudioPlayerConfigurationProtocol: AnyObject {
     func setCurrent(player: AudioPlayer?, tracks: [AudioPlayerItem], playerListener: any AudioPlayerObserversProtocol)
     func addPlayer(tracks: [AudioPlayerItem])
     func configurePlayer(listener: any AudioPlayerObserversProtocol)
@@ -100,7 +125,7 @@ protocol AudioPlayerMetadataLoaderProtocol {
 }
 
 // MARK: - Mini Audio Player Handlers Functions
-@objc protocol AudioMiniPlayerHandlerProtocol: AudioPlayerProtocol {
+protocol AudioMiniPlayerHandlerProtocol: AudioPlayerProtocol, AnyObject {
     /// Presents the mini player view controller at the bottom of the screen.
     /// - Parameters:
     ///   - viewController: The view controller whose view will be used as the mini player UI.
@@ -112,21 +137,4 @@ protocol AudioPlayerMetadataLoaderProtocol {
     func resetMiniPlayerContainer()
     func currentContainerHeight() -> CGFloat
     func containsMiniPlayerInstance() -> Bool
-}
-
-final class ListenerManager<T: AudioPlayerProtocol> {
-    var listeners: [T] = []
-    
-    func add(_ listener: T) {
-        guard !listeners.contains(where: { $0 === listener }) else { return }
-        listeners.append(listener)
-    }
-    
-    func remove(_ listener: T) {
-        listeners = listeners.filter { $0 !== listener }
-    }
-    
-    func notify(closure: (T) -> Void) {
-        listeners.forEach(closure)
-    }
 }

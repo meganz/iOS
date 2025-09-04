@@ -121,11 +121,7 @@
     } else {
         if ([FileExtensionGroupOCWrapper verifyIsMultiMedia:self.name] && ![FileExtensionGroupOCWrapper verifyIsVideo:self.name] && self.mnz_isPlayable) {
             UIViewController *presenterVC = [navigationController.viewControllers lastObject];
-            if ([presenterVC conformsToProtocol:@protocol(AudioPlayerPresenterProtocol)] && [AudioPlayerManager.shared isPlayerDefined] && [AudioPlayerManager.shared isPlayerAlive] && (isFolderLink || (!isFolderLink && fileLink == nil))) {
-                [AudioPlayerManager.shared initMiniPlayerWithNode:self fileLink:fileLink filePaths:nil isFolderLink:isFolderLink presenter:presenterVC shouldReloadPlayerInfo:YES shouldResetPlayer:YES isFromSharedItem:isFromSharedItem];
-            } else {
-                [self initFullScreenPlayerWithNode:self fileLink:fileLink filePaths:nil isFolderLink:isFolderLink presenter:presenterVC messageId:messageId chatId:chatId isFromSharedItem:isFromSharedItem allNodes: allNodes];
-            }
+            [self presentAudioPlayerWithNode:self fileLink:fileLink isFolderLink:isFolderLink presenter:presenterVC messageId:messageId chatId:chatId isFromSharedItem:isFromSharedItem allNodes:allNodes];
         } else {
             UIViewController *viewController = [self mnz_viewControllerForNodeInFolderLink:isFolderLink fileLink:fileLink isFromSharedItem:isFromSharedItem inViewController:navigationController.viewControllers.lastObject];
             if (viewController) {
@@ -816,7 +812,7 @@
 }
 
 - (BOOL)mnz_isPlaying {
-    return self.mnz_isPlayable && [AudioPlayerManager.shared isPlayerAlive] && [AudioPlayerManager.shared isPlayingNode:self];
+    return self.mnz_isPlayable && [self isAudioPlayerAliveAndPlayingCurrentNode];
 }
 
 - (NSString *)mnz_voiceCachePath {

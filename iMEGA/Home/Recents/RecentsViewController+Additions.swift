@@ -48,15 +48,36 @@ extension RecentsViewController {
         Task { await getRecentActions() }
     }
     
-    @objc func initFullScreenPlayer(node: MEGANode?, fileLink: String?, filePaths: [String]?, isFolderLink: Bool, presenter: UIViewController) {
+    @objc func presentAudioPlayer(node: MEGANode) {
+        if AudioPlayerManager.shared.isPlayerDefined() && AudioPlayerManager.shared.isPlayerAlive() {
+            initMiniPlayer(node: node)
+        } else {
+            initFullScreenPlayer(node: node)
+        }
+    }
+    
+    private func initMiniPlayer(node: MEGANode?) {
+        AudioPlayerManager.shared.initMiniPlayer(
+            node: node,
+            fileLink: nil,
+            filePaths: nil,
+            isFolderLink: false,
+            presenter: self,
+            shouldReloadPlayerInfo: true,
+            shouldResetPlayer: true,
+            isFromSharedItem: false
+        )
+    }
+    
+    private func initFullScreenPlayer(node: MEGANode?) {
         AudioPlayerManager.shared.initFullScreenPlayer(
             node: node,
-            fileLink: fileLink,
-            filePaths: filePaths,
-            isFolderLink: isFolderLink,
-            presenter: presenter,
+            fileLink: nil,
+            filePaths: nil,
+            isFolderLink: false,
+            presenter: self,
             messageId: .invalid,
-            chatId: .invalid, 
+            chatId: .invalid,
             isFromSharedItem: false,
             allNodes: nil
         )
@@ -80,18 +101,18 @@ extension RecentsViewController {
         )
         delegate?.showSelectedNode(in: vc)
     }
-
+    
     @objc func configureTokenColors() {
         view.backgroundColor = TokenColors.Background.page
         tableView?.backgroundColor = TokenColors.Background.page
         tableView?.separatorColor = TokenColors.Border.strong
     }
-
+    
     @objc func heightForHeaderIn(section: Int, expectedValueForVisibleHeader: CGFloat) -> CGFloat {
         guard let recentActionBucket = recentActionBucketArray[safe: section], let timestamp = recentActionBucket.timestamp else {
             return 0
         }
-
+        
         if section > 0 {
             if let previousRecentActionBucket = recentActionBucketArray[safe: section - 1],
                let previousTimeStamp = previousRecentActionBucket.timestamp {
@@ -100,10 +121,10 @@ extension RecentsViewController {
                 }
             }
         }
-
+        
         return expectedValueForVisibleHeader
     }
-
+    
     private func getRecentActions() async {
         let excludeSensitives = await shouldExcludeSensitive()
         

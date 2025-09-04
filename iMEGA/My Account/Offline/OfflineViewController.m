@@ -703,11 +703,7 @@ static NSString *kisDirectory = @"kisDirectory";
                 AVPlayerViewController *megaAVViewController = [[AVPlayerManager shared] makePlayerControllerFor:[NSURL fileURLWithPath:self.previewDocumentPath]];
                 [self presentViewController:megaAVViewController animated:YES completion:nil];
             } else {
-                if ([AudioPlayerManager.shared isPlayerDefined] && [AudioPlayerManager.shared isPlayerAlive]) {
-                    [AudioPlayerManager.shared initMiniPlayerWithNode:nil fileLink:self.previewDocumentPath filePaths:self.offlineMultimediaFiles isFolderLink:NO presenter:self shouldReloadPlayerInfo:YES shouldResetPlayer:YES isFromSharedItem:NO];
-                } else {
-                    [self initFullScreenPlayerWithNode:nil fileLink:self.previewDocumentPath filePaths:self.offlineMultimediaFiles isFolderLink:NO presenter:self];
-                }
+                [self presentAudioPlayerWithFileLink:self.previewDocumentPath filePaths:self.offlineMultimediaFiles];
             }
         } else {
             MEGAQLPreviewController *previewController = [self qlPreviewControllerForIndexPath:indexPath isMultimedia: YES];
@@ -784,9 +780,7 @@ static NSString *kisDirectory = @"kisDirectory";
         [self.deleteBarButtonItem setEnabled:NO];
     }
     
-    if ([AudioPlayerManager.shared isPlayerAlive]) {
-        [AudioPlayerManager.shared playerHidden:editing presenter:self];
-    }
+    [self updateAudioPlayerVisibility:editing];
     
     [self adjustSafeAreaBottomInset: editing ? self.toolbar.frame.size.height : self.currentContentInsetHeight];
 }

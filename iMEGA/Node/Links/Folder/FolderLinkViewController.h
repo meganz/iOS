@@ -35,7 +35,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *closeBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *selectAllBarButtonItem;
 
-@property (nonatomic, strong, nullable) AudioPlayer *player;
 @property (nonatomic, strong, nullable) MiniPlayerViewRouter *miniPlayerRouter;
 @property (nonatomic, strong, nullable) ContextMenuManager * contextMenuManager;
 @property (nonatomic, strong, nullable) FolderLinkTableViewController *flTableView;

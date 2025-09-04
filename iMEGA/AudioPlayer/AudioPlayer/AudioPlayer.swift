@@ -28,7 +28,6 @@ final class AudioPlayer: NSObject {
     var audioSeekFallbackObserver: NSKeyValueObservation?
     var metadataQueueFinishAllOperationsObserver: NSKeyValueObservation?
     var audioPlayerConfig: [PlayerConfiguration: Any] = [.loop: false, .shuffle: false]
-    var observersListenerManager = ListenerManager<any AudioPlayerObserversProtocol>()
     let preloadMetadataMaxItems = 3
     let defaultRewindInterval: TimeInterval = 15.0
     var itemToRepeat: AudioPlayerItem?
@@ -64,6 +63,11 @@ final class AudioPlayer: NSObject {
     private let timeObserverInterval = CMTime(seconds: 0.5, preferredTimescale: CMTimeScale(NSEC_PER_SEC))
     
     @Atomic private var taskId: UIBackgroundTaskIdentifier?
+    /// Stores all registered audio player observers in a thread-safe array. Access is synchronized with `@Atomic`, and observers are compared
+    /// by identity using `ObjectIdentifier` to avoid duplicates. Observers conforming to `AudioPlayerObserversProtocol` are used by the
+    /// full-screen player, the mini-player, and the playlist view models to react to player-related events such as playback state, queue changes, metadata updates, and
+    /// error notifications.
+    @Atomic var observers: [any AudioPlayerObserversProtocol] = []
     private let debouncer = Debouncer(delay: 1.0, dispatchQueue: DispatchQueue.global(qos: .userInteractive))
     
     // MARK: - Internal Computed Properties, intended for important UTs
@@ -147,7 +151,7 @@ final class AudioPlayer: NSObject {
         audioSeekFallbackObserver?.invalidate()
         metadataQueueFinishAllOperationsObserver?.invalidate()
         mediaPlayerNowPlayingInfoCenter.nowPlayingInfo = nil
-        observersListenerManager.listeners.removeAll()
+        removeAllListeners()
         queueLoader.delegate = nil
         queuePlayer?.removeAllItems()
         queuePlayer = nil
@@ -325,17 +329,17 @@ final class AudioPlayer: NSObject {
     /// - Returns:
     ///   - If `hasCompletedInitialConfiguration` is `true`, the item that `queuePlayer` is currently playing, or`nil` if there isn’t one.
     ///   - Otherwise, the first element of `tracks`, or `nil` if `tracks` is empty (The latter case should not occur, as the audio player always starts with tracks.).
-    @objc func currentItem() -> AudioPlayerItem? {
+    func currentItem() -> AudioPlayerItem? {
         hasCompletedInitialConfiguration ? (queuePlayer?.currentItem as? AudioPlayerItem) : tracks.first
     }
     
-    @objc func queueItems() -> [AudioPlayerItem]? {
+    func queueItems() -> [AudioPlayerItem]? {
         guard let playerItems = queuePlayer?.items() as? [AudioPlayerItem] else { return nil }
         
         return playerItems.filter { $0 != currentItem() }
     }
     
-    @objc func configure(listener: any AudioPlayerObserversProtocol) {
+    func configure(listener: any AudioPlayerObserversProtocol) {
         add(listener: listener)
         
         if shouldShowLoadingView() {
@@ -344,18 +348,27 @@ final class AudioPlayer: NSObject {
     }
     
     private func add(listener: any AudioPlayerObserversProtocol) {
-        if observersListenerManager.listeners.notContains(where: { $0 === listener }) {
-            observersListenerManager.add(listener)
+        $observers.mutate { arr in
+            let exists = arr.contains { ObjectIdentifier($0) == ObjectIdentifier(listener) }
+            if !exists { arr.append(listener) }
         }
     }
-    
-    @objc func remove(listener: any AudioPlayerObserversProtocol) {
-        observersListenerManager.remove(listener)
+
+    func remove(listener: any AudioPlayerObserversProtocol) {
+        $observers.mutate { arr in
+            arr.removeAll { ObjectIdentifier($0) == ObjectIdentifier(listener) }
+        }
     }
-    
+
     func removeAllListeners() {
-        observersListenerManager.listeners.removeAll()
+        $observers.mutate { $0.removeAll() }
     }
+    
+    func notifyObservers(_ closure: (any AudioPlayerObserversProtocol) -> Void) {
+        observers.forEach(closure)
+    }
+    
+    func observerSnapshot() -> [any AudioPlayerObserversProtocol] { observers }
     
     func playerTracksContains(url: URL) -> Bool {
         tracks.compactMap { $0.url }

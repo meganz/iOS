@@ -24,19 +24,44 @@ extension OfflineViewController {
         }
     }
     
-    @objc
-    func initFullScreenPlayer(node: MEGANode?, fileLink: String?, filePaths: [String]?, isFolderLink: Bool, presenter: UIViewController) {
-        AudioPlayerManager.shared.initFullScreenPlayer(
-            node: node,
+    @objc func presentAudioPlayer(fileLink: String?, filePaths: [String]?) {
+        if AudioPlayerManager.shared.isPlayerDefined() && AudioPlayerManager.shared.isPlayerAlive() {
+            initMiniPlayer(fileLink: fileLink, filePaths: filePaths)
+        } else {
+            initFullScreenPlayer(fileLink: fileLink, filePaths: filePaths)
+        }
+    }
+    
+    private func initMiniPlayer(fileLink: String?, filePaths: [String]?) {
+        AudioPlayerManager.shared.initMiniPlayer(
+            node: nil,
             fileLink: fileLink,
             filePaths: filePaths,
-            isFolderLink: isFolderLink,
-            presenter: presenter,
+            isFolderLink: false,
+            presenter: self,
+            shouldReloadPlayerInfo: true,
+            shouldResetPlayer: true,
+            isFromSharedItem: false
+        )
+    }
+    
+    private func initFullScreenPlayer(fileLink: String?, filePaths: [String]?) {
+        AudioPlayerManager.shared.initFullScreenPlayer(
+            node: nil,
+            fileLink: fileLink,
+            filePaths: filePaths,
+            isFolderLink: false,
+            presenter: self,
             messageId: .invalid,
             chatId: .invalid,
             isFromSharedItem: false,
             allNodes: nil
         )
+    }
+    
+    @objc func updateAudioPlayerVisibility(_ isHidden: Bool) {
+        guard AudioPlayerManager.shared.isPlayerAlive() else { return }
+        AudioPlayerManager.shared.playerHidden(isHidden, presenter: self)
     }
     
     @objc
@@ -67,7 +92,7 @@ extension OfflineViewController {
     }
     
     // MARK: - Private
-
+    
     private var screenTitle: String {
         if let path = folderPathFromOffline?.lastPathComponent {
             return path
@@ -89,7 +114,7 @@ extension OfflineViewController {
     
     @objc func refreshMiniPlayerIfNeeded() {
         if AudioPlayerManager.shared.isPlayerAlive(),
-            let mainTabBarController = UIApplication.mainTabBarRootViewController() as? MainTabBarController {
+           let mainTabBarController = UIApplication.mainTabBarRootViewController() as? MainTabBarController {
             mainTabBarController.refreshBottomConstraint()
         }
     }

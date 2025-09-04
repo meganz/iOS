@@ -696,6 +696,10 @@ extension AppDelegate {
         .showUpgradeAccount()
     }
     
+    @objc func notifyPlaybackStoppedForCurrentItem() {
+        AudioPlayerManager.shared.playbackStoppedForCurrentItem()
+    }
+    
     // MARK: - Promoted plan
     @objc func listenToStorePaymentTransactions() {
         SKPaymentQueue.default().add(MEGAPurchase.sharedInstance())

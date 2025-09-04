@@ -48,7 +48,7 @@
                                                name:UIApplicationWillEnterForegroundNotification
                                              object:nil];
     [self.view setNeedsLayout];
-    [AudioPlayerManager.shared addMiniPlayerHandler:self];
+    [self registerMiniPlayerHandler];
     [self forceTabBarPositionToBottomIfNeeded];
     
     [self refreshMiniPlayerVisibility];
@@ -58,7 +58,7 @@
     [super viewWillDisappear:animated];
     [NSNotificationCenter.defaultCenter removeObserver:self name:kReachabilityChangedNotification object:nil];
     [NSNotificationCenter.defaultCenter removeObserver:self name:UIApplicationWillEnterForegroundNotification object:nil];
-    [AudioPlayerManager.shared removeMiniPlayerHandler:self];
+    [self unregisterMiniPlayerHandler];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -139,7 +139,7 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         for (UIView *subview in self.view.subviews) {
             if ([subview isKindOfClass:[ProgressIndicatorView class]]) {
-                CGFloat bottomConstant = [AudioPlayerManager.shared isPlayerAlive] ? -120.0 : -60.0;
+                CGFloat bottomConstant = [self updateTransferWidgetBottomConstraint];
                 [TransfersWidgetViewController.sharedTransferViewController updateProgressViewWithBottomConstant:bottomConstant];
                 
                 [UIView animateWithDuration:0.3 animations:^{

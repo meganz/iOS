@@ -206,11 +206,7 @@
             [self.delegate showSelectedNodeInViewController: [self photosBrowserViewControllerWith:nodesArray]];
         } else {
             if ([FileExtensionGroupOCWrapper verifyIsMultiMedia:node.name] && ![FileExtensionGroupOCWrapper verifyIsVideo:node.name] && node.mnz_isPlayable) {
-                if ([AudioPlayerManager.shared isPlayerDefined] && [AudioPlayerManager.shared isPlayerAlive]) {
-                    [AudioPlayerManager.shared initMiniPlayerWithNode:node fileLink:nil filePaths:nil isFolderLink:NO presenter:self shouldReloadPlayerInfo:YES shouldResetPlayer:YES isFromSharedItem: NO];
-                } else {
-                    [self initFullScreenPlayerWithNode:node fileLink:nil filePaths:nil isFolderLink:NO presenter:self];
-                }
+                [self presentAudioPlayerWithNode:node];
             } else {
                 UIViewController *displayViewController = [self viewControllerForNode:node withFolderLink:NO];
                 [self.delegate showSelectedNodeInViewController:displayViewController];

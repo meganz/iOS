@@ -142,7 +142,7 @@
 
 - (void)bottomViewVisibility {
 #ifdef MAIN_APP_TARGET
-    self.audioPlayerShownView.hidden = ![AudioPlayerManager.shared isPlayerAlive];
+    self.audioPlayerShownView.hidden = ![self isPlayerAlive];
 #endif
 }
 

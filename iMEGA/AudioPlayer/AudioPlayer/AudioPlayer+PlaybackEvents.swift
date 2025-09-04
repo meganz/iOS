@@ -165,24 +165,24 @@ extension AudioPlayer {
         }
     }
     
-    @objc func play() {
+    func play() {
         queuePlayer?.play()
         updatePlayerRateIfNeeded()
         isPaused = false
     }
     
-    @objc func pause() {
+    func pause() {
         guard let queuePlayer else { return }
         storedRate = queuePlayer.rate
         queuePlayer.pause()
         isPaused = true
     }
     
-    @objc func togglePlay() {
+    func togglePlay() {
         isPlaying ? pause() : play()
     }
     
-    @objc func playNext(_ completion: @escaping () -> Void) {
+    func playNext(_ completion: @escaping () -> Void) {
         if queuePlayer?.items().count ?? 0 > 1 {
             queuePlayer?.advanceToNextItem()
         } else {
@@ -205,7 +205,7 @@ extension AudioPlayer {
         completion()
     }
     
-    @objc func playPrevious(_ completion: @escaping () -> Void) {
+    func playPrevious(_ completion: @escaping () -> Void) {
         guard let queuePlayer,
               let currentIndex = tracks.firstIndex(where: {$0 == currentItem()}) else {
             completion()
@@ -227,7 +227,7 @@ extension AudioPlayer {
         }
     }
     
-    @objc func play(item: AudioPlayerItem, completion: @escaping () -> Void) {
+    func play(item: AudioPlayerItem, completion: @escaping () -> Void) {
         guard let queuePlayer,
               let index = tracks.firstIndex(where: {$0 == item}),
               let currentIndex = tracks.firstIndex(where: {$0 == currentItem()}) else {
@@ -326,23 +326,23 @@ extension AudioPlayer {
         }
     }
     
-    @objc func isShuffleMode() -> Bool {
+    func isShuffleMode() -> Bool {
         guard let shuffleMode = audioPlayerConfig[.shuffle] as? Bool else { return false }
         return shuffleMode
     }
     
-    @objc func shuffle(_ active: Bool) {
+    func shuffle(_ active: Bool) {
         audioPlayerConfig[.shuffle] = active
         
         if active { shuffleQueue() }
     }
     
-    @objc func isRepeatAllMode() -> Bool {
+    func isRepeatAllMode() -> Bool {
         guard let repeatAllMode = audioPlayerConfig[.loop] as? Bool else { return false }
         return repeatAllMode
     }
     
-    @objc func repeatAll(_ active: Bool) {
+    func repeatAll(_ active: Bool) {
         audioPlayerConfig[.loop] = active
         itemToRepeat = nil
         if active {
@@ -353,12 +353,12 @@ extension AudioPlayer {
         }
     }
     
-    @objc func isRepeatOneMode() -> Bool {
+    func isRepeatOneMode() -> Bool {
         guard let repeatOneMode = audioPlayerConfig[.repeatOne] as? Bool else { return false }
         return repeatOneMode
     }
 
-    @objc func repeatOne(_ active: Bool) {
+    func repeatOne(_ active: Bool) {
         audioPlayerConfig[.repeatOne] = active
         if active {
             itemToRepeat = currentItem()
@@ -367,18 +367,18 @@ extension AudioPlayer {
         } else { itemToRepeat = nil }
     }
     
-    @objc func isDefaultRepeatMode() -> Bool {
+    func isDefaultRepeatMode() -> Bool {
         return !isRepeatAllMode() && !isRepeatOneMode()
     }
     
-    @objc func setProgressCompleted(_ percentage: Float) {
+    func setProgressCompleted(_ percentage: Float) {
         guard let queuePlayer,
               let currentItem = queuePlayer.currentItem else { return }
         
         setProgressCompleted(CMTimeGetSeconds(currentItem.duration) * Double(percentage))
     }
     
-    @objc func move(of movedItem: AudioPlayerItem, to position: IndexPath, direction: MovementDirection) {
+    func move(of movedItem: AudioPlayerItem, to position: IndexPath, direction: MovementDirection) {
         guard let queuePlayer else { return }
         
         notify(aboutTheBeginningOfBlockingAction)
@@ -450,9 +450,9 @@ extension AudioPlayer {
         update(tracks: tracks.filter { !itemsToRemove.contains($0) })
     }
     
-    @objc func playerCurrentTime() -> TimeInterval { currentTime }
+    func playerCurrentTime() -> TimeInterval { currentTime }
     
-    @objc func refreshCurrentItemState() {
+    func refreshCurrentItemState() {
         notify([aboutCurrentState, aboutCurrentItem])
     }
     

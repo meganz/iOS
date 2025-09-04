@@ -79,19 +79,19 @@ extension SharedItemsViewController {
         
         cell.delegate = self
         cell.thumbnailImageView.image = UIImage.mnz_incomingFolder()
-
+        
         let nameTextColor = UIColor.mnz_red()
         let displayName = node.isNodeKeyDecrypted() ? node.name : Strings.Localizable.SharedItems.Tab.Incoming.undecryptedFolderName
-
+        
         cell.nameLabel.attributedText =
         displayName?.highlightedStringWithKeyword(
             searchText,
             primaryTextColor: nameTextColor,
             highlightedTextColor: TokenColors.Notifications.notificationSuccess
         )
-
+        
         cell.nameLabel.textColor = nameTextColor
-
+        
         cell.nodeHandle = node.handle
         cell.permissionsButton.setImage(MEGAAssets.UIImage.warningPermission, for: .normal)
         cell.permissionsButton.isHidden = false
@@ -107,26 +107,26 @@ extension SharedItemsViewController {
         configureCellDescription(cell, for: node)
         return cell
     }
-
+    
     @objc func unverifiedOutgoingSharedCellAtIndexPath(_ indexPath: IndexPath, node: MEGANode, searchText: String) -> SharedItemsTableViewCell {
         guard let cell = self.tableView?.dequeueReusableCell(withIdentifier: "sharedItemsTableViewCell", for: indexPath) as? SharedItemsTableViewCell else {
             return SharedItemsTableViewCell(style: .default, reuseIdentifier: "sharedItemsTableViewCell")
         }
-
+        
         let nameTextColor = UIColor.mnz_red()
-
+        
         cell.nameLabel.attributedText = node.name?.highlightedStringWithKeyword(
             searchText,
             primaryTextColor: nameTextColor,
             highlightedTextColor: TokenColors.Notifications.notificationSuccess
         )
-
+        
         cell.nameLabel.textColor = nameTextColor
-
+        
         cell.delegate = self
         cell.thumbnailImageView.image = MEGAAssets.UIImage.folderUsers
         cell.nodeHandle = node.handle
-
+        
         cell.permissionsButton.setImage(MEGAAssets.UIImage.warningPermission, for: .normal)
         cell.permissionsButton.isHidden = false
         
@@ -144,27 +144,27 @@ extension SharedItemsViewController {
         configureCellTags(cell, for: node)
         return cell
     }
-
+    
     @objc func configureCellDescription(_ cell: SharedItemsTableViewCell, for node: MEGANode) {
         cell.setNodeDescription(viewModel.descriptionForNode(node, with: searchController.searchBar.text))
     }
-
+    
     @objc func configureCellTags(_ cell: SharedItemsTableViewCell, for node: MEGANode) {
         cell.setNodeTags(viewModel.tagsForNode(node, with: searchController.searchBar.text))
     }
-
+    
     @objc func nodeCellAtIndexPath(_ indexPath: IndexPath, node: MEGANode) -> NodeTableViewCell {
         guard let cell = self.tableView?.dequeueReusableCell(withIdentifier: "nodeCell", for: indexPath) as? NodeTableViewCell else {
             return NodeTableViewCell(style: .default, reuseIdentifier: "nodeCell")
         }
-
+        
         cell.configureCell(
             for: node,
             searchText: searchController.searchBar.text,
             shouldApplySensitiveBehaviour: false,
             api: MEGASdk.shared
         )
-
+        
         cell.moreButtonAction = { [weak self] moreButton in
             guard let moreButton else { return }
             self?.showNodeActions(moreButton)
@@ -177,7 +177,7 @@ extension SharedItemsViewController {
         guard let share = shareAtIndexPath(indexPath) else { return nil }
         return MEGASdk.shared.contact(forEmail: share.user)
     }
-
+    
     @objc func addInShareSearchBarIfNeeded() {
         let inShareSize = incomingShareList?.size ?? 0
         let unverifiedInShareSize = incomingUnverifiedShareList?.size ?? 0
@@ -204,7 +204,7 @@ extension SharedItemsViewController {
             nodes = incomingUnverifiedNodesMutableArray as? [MEGANode]
             shares = incomingUnverifiedSharesMutableArray as? [MEGAShare]
         }
-
+        
         guard let nodes, let shares else { return }
         guard key.isNotEmpty else {
             searchUnverifiedSharesArray.addObjects(from: shares)
@@ -247,26 +247,26 @@ extension SharedItemsViewController {
     
     @objc func shareAtIndexPath(_ indexPath: IndexPath) -> MEGAShare? {
         guard indexPath.section == 0, linksButton?.isSelected == false else { return nil }
-
+        
         if searchController.isActive, searchUnverifiedSharesArray.count > indexPath.row {
             // Add logs to trace the cause of crash in [SAO-2729]
             return searchUnverifiedSharesArray[indexPath.row] as? MEGAShare
         }
-
+        
         if outgoingButton?.isSelected == true,
-            let outgoingUnverifiedSharesMutableArray,
-            outgoingUnverifiedSharesMutableArray.count > indexPath.row {
+           let outgoingUnverifiedSharesMutableArray,
+           outgoingUnverifiedSharesMutableArray.count > indexPath.row {
             // Add logs to trace the cause of crash in [SAO-2729]
             return outgoingUnverifiedSharesMutableArray[indexPath.row] as? MEGAShare
         }
-
+        
         if incomingButton?.isSelected == true,
-            let incomingUnverifiedSharesMutableArray,
-            incomingUnverifiedSharesMutableArray.count > indexPath.row {
+           let incomingUnverifiedSharesMutableArray,
+           incomingUnverifiedSharesMutableArray.count > indexPath.row {
             // Add logs to trace the cause of crash in [SAO-2729]
             return incomingUnverifiedSharesMutableArray[indexPath.row] as? MEGAShare
         }
-
+        
         return nil
     }
     
@@ -279,7 +279,7 @@ extension SharedItemsViewController {
         guard indexPath.section == 0, let share = shareAtIndexPath(indexPath) else { return false }
         return !share.isVerified
     }
-
+    
     @objc func numberOfSections() -> Int {
         guard linksButton?.isSelected == true else {
             return 2
@@ -365,7 +365,7 @@ extension SharedItemsViewController {
         incomingUnverifiedNodesMutableArray?.addObjects(from: nodes)
         
         incomingButton?.setBadgeCount(value: badgeValue(shares.count))
-         
+        
         addInShareSearchBarIfNeeded()
     }
     
@@ -422,7 +422,7 @@ extension SharedItemsViewController {
         GetLinkRouter(presenter: self,
                       nodes: nodes).start()
     }
-
+    
     @objc func configureContactNotVerifiedImageVisibility(
         for cell: SharedItemsTableViewCell,
         with user: MEGAUser?,
@@ -452,29 +452,29 @@ extension SharedItemsViewController {
         
         return isContactVerified(user)
     }
-
+    
     @objc func isContactVerified(_ user: MEGAUser) -> Bool {
         MEGASdk.shared.areCredentialsVerified(of: user)
     }
-
+    
     @objc func isContactVerificationEnabled() -> Bool {
         MEGASdk.shared.isContactVerificationWarningEnabled
     }
-
+    
     @objc func user(for node: MEGANode) -> MEGAUser? {
         guard let incomingShareList = incomingShareList else { return nil }
-
+        
         for i in 0...incomingShareList.size {
             guard let share = incomingShareList.share(at: i), share.nodeHandle == node.handle else {
                 continue
             }
-
+            
             return MEGASdk.shared.contact(forEmail: share.user)
         }
-
+        
         return nil
     }
-
+    
     func shouldDisplayContactVerificationBannerForCloudDrive(_ node: MEGANode) -> Bool {
         var isUserVerified = false
         if let user = user(for: node) {
@@ -542,7 +542,12 @@ extension SharedItemsViewController {
     @objc func presentDisputeInSafari() {
         NSURL(string: Constants.Link.dispute)?.mnz_presentSafariViewController()
     }
-
+    
+    @objc func updateAudioPlayerVisibility(_ isHidden: Bool) {
+        guard AudioPlayerManager.shared.isPlayerAlive() else { return }
+        AudioPlayerManager.shared.playerHidden(isHidden, presenter: self)
+    }
+    
     @objc func userDisplayName(for email: String?) -> String? {
         if let user = MEGASdk.shared.contact(forEmail: email), let displayName = user.mnz_displayName {
             return displayName

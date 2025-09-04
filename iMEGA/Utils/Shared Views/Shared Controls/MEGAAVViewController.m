@@ -60,9 +60,7 @@ static const NSUInteger MIN_SECOND = 10; // Save only where the users were playi
     [self checkIsFileViolatesTermsOfService];
     [AudioSessionUseCaseOCWrapper.alloc.init configureVideoAudioSession];
     
-    if ([AudioPlayerManager.shared isPlayerAlive]) {
-        [AudioPlayerManager.shared audioInterruptionDidStart];
-    }
+    [self beginAudioPlayerInterruptionIfNeeded];
 
     self.viewDidAppearFirstTime = YES;
     
@@ -123,13 +121,9 @@ static const NSUInteger MIN_SECOND = 10; // Save only where the users were playi
     dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), ^{
         [self stopStreaming];
 
-        if (![AudioPlayerManager.shared isPlayerAlive]) {
-            [AudioSessionUseCaseOCWrapper.alloc.init configureDefaultAudioSession];
-        }
+        [self configureDefaultAudioSessionIfNoActivePlayer];
 
-        if ([AudioPlayerManager.shared isPlayerAlive]) {
-            [AudioPlayerManager.shared audioInterruptionDidEndNeedToResume:YES];
-        }
+        [self endAudioPlayerInterruptionIfNeeded];
     });
     
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"presentPasscodeLater"] && [LTHPasscodeViewController doesPasscodeExist]) {

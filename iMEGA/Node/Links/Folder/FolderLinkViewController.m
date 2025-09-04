@@ -153,7 +153,7 @@
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     
-    [AudioPlayerManager.shared removeMiniPlayerHandler:self];
+    [self unregisterMiniPlayerHandler];
 
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kReachabilityChangedNotification object:nil];
 }
@@ -169,8 +169,8 @@
     
     [sdkFolder retryPendingConnections];
     
-    [AudioPlayerManager.shared updateMiniPlayerPresenter:self];
-    [AudioPlayerManager.shared addMiniPlayerHandler:self];
+    [self updateMiniPlayerPresenter];
+    [self registerMiniPlayerHandler];
     [self shouldShowMiniPlayer];
 }
 
@@ -524,9 +524,7 @@
 - (IBAction)cancelAction:(UIBarButtonItem *)sender {
     [MEGALinkManager resetUtilsForLinksWithoutSession];
 
-    if (!AudioPlayerManager.shared.isPlayerAlive) {
-        [MEGASdk.sharedFolderLink logout];
-    }
+    [self logoutFolderLinkIfNoActivePlayer];
 
     [self stopLoading];
 
@@ -572,9 +570,7 @@
         self.selectedNodesArray = [NSMutableArray new];
     }
     
-    if ([AudioPlayerManager.shared isPlayerAlive]) {
-        [AudioPlayerManager.shared playerHidden:editing presenter:self];
-    }
+    [self updateAudioPlayerVisibility:editing];
     
     [self reloadData];
 }

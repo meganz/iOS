@@ -96,4 +96,8 @@ extension EmptyStateView {
                        description: nil,
                        buttonTitle: nil)
     }
+    
+    @objc func isPlayerAlive() -> Bool {
+        AudioPlayerManager.shared.isPlayerAlive()
+    }
 }
