@@ -39,6 +39,8 @@ struct PlayerOverlayViewModelTests {
         #expect(sut.isHoldSpeedActive == false)
         #expect(sut.isDoubleTapSeekActive == false)
         #expect(sut.doubleTapSeekSeconds == 0)
+        #expect(sut.isLocked == false)
+        #expect(sut.isLockOverlayVisible == false)
     }
 
     // MARK: - State Change Tests
@@ -773,5 +775,81 @@ struct PlayerOverlayViewModelTests {
 
         #expect(mockPlayer.nodeName == "Node Title")
         #expect(sut.title == "Node Title")
+    }
+    
+    // MARK: - Lock Functionality Tests
+    
+    @Test
+    func didTapLock_shouldCloseBottomMoreSheetAndAlwaysActivateLock() {
+        let sut = makeSUT()
+        
+        sut.didTapLock()
+
+        #expect(sut.isBottomMoreSheetPresented == false)
+        #expect(sut.isLocked == true)
+        #expect(sut.isLockOverlayVisible == true)
+        #expect(sut.isControlsVisible == false)
+    }
+    
+    @Test
+    func didTapDeactivateLock_whenLocked_shouldUnlock() {
+        let sut = makeSUT()
+        sut.didTapLock()
+        
+        sut.didTapDeactivateLock()
+        
+        #expect(sut.isLocked == false)
+        #expect(sut.isLockOverlayVisible == false)
+        #expect(sut.isControlsVisible == true)
+    }
+    
+    @Test
+    func didTapVideoAreaWhileLocked_whenOverlayVisible_shouldHideOverlay() {
+        let sut = makeSUT()
+        sut.didTapLock()
+        
+        sut.didTapVideoAreaWhileLocked()
+        
+        #expect(sut.isLocked == true)
+        #expect(sut.isLockOverlayVisible == false)
+        #expect(sut.isControlsVisible == false)
+    }
+    
+    @Test
+    func didTapVideoAreaWhileLocked_whenOverlayHidden_shouldShowOverlay() {
+        let sut = makeSUT()
+        sut.didTapLock()
+        sut.didTapVideoAreaWhileLocked()
+        
+        sut.didTapVideoAreaWhileLocked()
+        
+        #expect(sut.isLocked == true)
+        #expect(sut.isLockOverlayVisible == true)
+        #expect(sut.isControlsVisible == false)
+    }
+    
+    @Test
+    func didTapVideoArea_whenLocked_shouldCallLockedBehavior() {
+        let sut = makeSUT()
+        sut.didTapLock()
+        
+        sut.didTapVideoArea()
+        
+        #expect(sut.isLocked == true)
+        #expect(sut.isLockOverlayVisible == false)
+        #expect(sut.isControlsVisible == false)
+    }
+
+    
+    @Test
+    func lockOverlayTimer_shouldFadeOutAfter3Seconds() async {
+        let sut = makeSUT()
+        sut.didTapLock()
+        #expect(sut.isLockOverlayVisible == true)
+        
+        try? await Task.sleep(for: .milliseconds(3100))
+        
+        #expect(sut.isLockOverlayVisible == false)
+        #expect(sut.isLocked == true)
     }
 }

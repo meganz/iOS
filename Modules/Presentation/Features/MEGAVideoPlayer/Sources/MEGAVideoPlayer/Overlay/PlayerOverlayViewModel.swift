@@ -13,14 +13,20 @@ public final class PlayerOverlayViewModel: ObservableObject {
     @Published var currentSpeed: PlaybackSpeed = .normal
     @Published var isLoopEnabled: Bool = false
     @Published var isPlaybackBottomSheetPresented: Bool = false
+    @Published var isBottomMoreSheetPresented: Bool = false
     @Published var scalingMode: VideoScalingMode = .fit
     @Published var isSeeking: Bool = false
     @Published var isHoldSpeedActive: Bool = false
     @Published var isDoubleTapSeekActive: Bool = false
     @Published var doubleTapSeekSeconds: Int = 0
+    
+    // Lock feature properties
+    @Published var isLocked: Bool = false
+    @Published var isLockOverlayVisible: Bool = false
 
     private var autoHideTimer: Timer?
     private var doubleTapSeekTimer: Timer?
+    private var lockOverlayTimer: Timer?
     private var cancellables = Set<AnyCancellable>()
 
     private let player: any VideoPlayerProtocol
@@ -255,7 +261,11 @@ extension PlayerOverlayViewModel {
         player.setScalingMode(scalingMode)
         resetAutoHide()
     }
-    
+
+    func didTapBottomMoreButton() {
+        isBottomMoreSheetPresented = true
+    }
+
     func handlePinchGesture(scale: CGFloat) {
         let threshold: CGFloat = 1.0
         
@@ -272,6 +282,56 @@ extension PlayerOverlayViewModel {
                 player.setScalingMode(.fit)
             }
         }
+    }
+    
+    // MARK: - Lock functionality
+
+    func didTapLock() {
+        isBottomMoreSheetPresented = false
+        activateLock()
+    }
+
+    private func activateLock() {
+        isLocked = true
+        isLockOverlayVisible = true
+        hideControls()
+        startLockOverlayTimer()
+    }
+    
+    private func deactivateLock() {
+        isLocked = false
+        isLockOverlayVisible = false
+        cancelLockOverlayTimer()
+        showControls()
+    }
+    
+    func didTapDeactivateLock() {
+        deactivateLock()
+    }
+    
+    func didTapVideoAreaWhileLocked() {
+        if isLockOverlayVisible {
+            isLockOverlayVisible = false
+            cancelLockOverlayTimer()
+        } else {
+            isLockOverlayVisible = true
+            startLockOverlayTimer()
+        }
+    }
+    
+    private func startLockOverlayTimer() {
+        cancelLockOverlayTimer()
+        
+        lockOverlayTimer = Timer.scheduledTimer(withTimeInterval: 3.0, repeats: false) { [weak self] _ in
+            Task { @MainActor in
+                self?.isLockOverlayVisible = false
+            }
+        }
+    }
+    
+    private func cancelLockOverlayTimer() {
+        lockOverlayTimer?.invalidate()
+        lockOverlayTimer = nil
     }
 }
 
@@ -351,6 +411,7 @@ extension PlayerOverlayViewModel {
 
 extension PlayerOverlayViewModel {
     func showControls() {
+        guard !isLocked else { return }
         isControlsVisible = true
         resetAutoHide()
     }
@@ -361,10 +422,14 @@ extension PlayerOverlayViewModel {
     }
 
     func didTapVideoArea() {
-        if isControlsVisible {
-            hideControls()
+        if isLocked {
+            didTapVideoAreaWhileLocked()
         } else {
-            showControls()
+            if isControlsVisible {
+                hideControls()
+            } else {
+                showControls()
+            }
         }
     }
 
