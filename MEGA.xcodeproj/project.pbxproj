@@ -666,7 +666,6 @@
 		5D08568F2505E2140030AEE3 /* RecentNodeRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D08568E2505E2140030AEE3 /* RecentNodeRouter.swift */; };
 		5D0B42B6250618070057D49B /* NodeLinkRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D0B42B5250618070057D49B /* NodeLinkRouter.swift */; };
 		5D0B42B8250654080057D49B /* NodeManagementRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D0B42B7250654070057D49B /* NodeManagementRouter.swift */; };
-		5D0E255025073404005848F3 /* LocalFileSystemFolders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D0E254F25073404005848F3 /* LocalFileSystemFolders.swift */; };
 		5D166B79252196D8004F4F4A /* HomeSearchResultRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D166B78252196D8004F4F4A /* HomeSearchResultRouter.swift */; };
 		5D166B82252197ED004F4F4A /* NodeActionViewControllerGenericDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D166B81252197ED004F4F4A /* NodeActionViewControllerGenericDelegate.swift */; };
 		5D17CFA42541C46C0000194A /* StartConversationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D17CFA32541C46C0000194A /* StartConversationViewModel.swift */; };
@@ -712,7 +711,6 @@
 		5D66435F249C53A300CE9BD1 /* OverDiskQuotaInfomationProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D66435E249C53A300CE9BD1 /* OverDiskQuotaInfomationProtocol.swift */; };
 		5D664363249CAFFC00CE9BD1 /* OverDiskQuotaCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D664362249CAFFC00CE9BD1 /* OverDiskQuotaCommand.swift */; };
 		5D66F8C824E510510088E5FF /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D66F8C724E510510088E5FF /* PaddingLabel.swift */; };
-		5D6D95C0252039CD0098BCAC /* FileSearchHistoryRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D6D95BF252039CD0098BCAC /* FileSearchHistoryRepository.swift */; };
 		5D73F50E24F74F850041D9FB /* ImagePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D73F50D24F74F850041D9FB /* ImagePickerViewController.swift */; };
 		5D7792DA2506116100378D87 /* HomeRecentActionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D7792D92506116100378D87 /* HomeRecentActionViewModel.swift */; };
 		5D7792DC250613B200378D87 /* NodeInfoRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D7792DB250613B200378D87 /* NodeInfoRouter.swift */; };
@@ -3461,7 +3459,6 @@
 		5D08568E2505E2140030AEE3 /* RecentNodeRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentNodeRouter.swift; sourceTree = "<group>"; };
 		5D0B42B5250618070057D49B /* NodeLinkRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeLinkRouter.swift; sourceTree = "<group>"; };
 		5D0B42B7250654070057D49B /* NodeManagementRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeManagementRouter.swift; sourceTree = "<group>"; };
-		5D0E254F25073404005848F3 /* LocalFileSystemFolders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalFileSystemFolders.swift; sourceTree = "<group>"; };
 		5D166B78252196D8004F4F4A /* HomeSearchResultRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeSearchResultRouter.swift; sourceTree = "<group>"; };
 		5D166B81252197ED004F4F4A /* NodeActionViewControllerGenericDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeActionViewControllerGenericDelegate.swift; sourceTree = "<group>"; };
 		5D17CFA32541C46C0000194A /* StartConversationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartConversationViewModel.swift; sourceTree = "<group>"; };
@@ -3508,7 +3505,6 @@
 		5D66435E249C53A300CE9BD1 /* OverDiskQuotaInfomationProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverDiskQuotaInfomationProtocol.swift; sourceTree = "<group>"; };
 		5D664362249CAFFC00CE9BD1 /* OverDiskQuotaCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverDiskQuotaCommand.swift; sourceTree = "<group>"; };
 		5D66F8C724E510510088E5FF /* PaddingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddingLabel.swift; sourceTree = "<group>"; };
-		5D6D95BF252039CD0098BCAC /* FileSearchHistoryRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileSearchHistoryRepository.swift; sourceTree = "<group>"; };
 		5D73F50D24F74F850041D9FB /* ImagePickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerViewController.swift; sourceTree = "<group>"; };
 		5D7792D92506116100378D87 /* HomeRecentActionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeRecentActionViewModel.swift; sourceTree = "<group>"; };
 		5D7792DB250613B200378D87 /* NodeInfoRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeInfoRouter.swift; sourceTree = "<group>"; };
@@ -7910,13 +7906,6 @@
 			path = UIKit;
 			sourceTree = "<group>";
 		};
-		5D075D00251862800067D363 /* DataStore */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = DataStore;
-			sourceTree = "<group>";
-		};
 		5D166B752521952F004F4F4A /* HomeSearch */ = {
 			isa = PBXGroup;
 			children = (
@@ -8067,14 +8056,6 @@
 				5D64660924890CC7006030A5 /* TextStyle.swift */,
 			);
 			path = BasicStyle;
-			sourceTree = "<group>";
-		};
-		5D3CD8A22531819200E3B459 /* UserDefault */ = {
-			isa = PBXGroup;
-			children = (
-				5D6D95BF252039CD0098BCAC /* FileSearchHistoryRepository.swift */,
-			);
-			path = UserDefault;
 			sourceTree = "<group>";
 		};
 		5D52C744250C4EED00286A43 /* Mocks */ = {
@@ -8284,10 +8265,8 @@
 		5D87C1F224E922C500BB5AB0 /* Repository */ = {
 			isa = PBXGroup;
 			children = (
-				5D075D00251862800067D363 /* DataStore */,
 				5DF249E024F3965F003FED76 /* FileSystem */,
 				5DC016DC24F286D500BE309A /* SDK */,
-				5D3CD8A22531819200E3B459 /* UserDefault */,
 			);
 			path = Repository;
 			sourceTree = "<group>";
@@ -8455,7 +8434,6 @@
 			isa = PBXGroup;
 			children = (
 				B6FEDC5A260D9CF400801A7F /* FileSystemImageCacheClient.swift */,
-				5D0E254F25073404005848F3 /* LocalFileSystemFolders.swift */,
 			);
 			path = FileSystem;
 			sourceTree = "<group>";
@@ -14732,7 +14710,6 @@
 				94AEFB8B2B64705B00FD8D5E /* FileManagementTableViewController+Additions.swift in Sources */,
 				5B00B6E8210745BF0076D5BB /* FileManagementTableViewController.m in Sources */,
 				B6A01BA9289A5E9200B503FD /* FileManager+Additions.swift in Sources */,
-				5D6D95C0252039CD0098BCAC /* FileSearchHistoryRepository.swift in Sources */,
 				BF5E340E2559E2EC0055395E /* FilesExplorerContainerGridViewState.swift in Sources */,
 				BF5E34062559E2C10055395E /* FilesExplorerContainerListViewState.swift in Sources */,
 				BF5E33BE2558D99C0055395E /* FilesExplorerContainerViewController.swift in Sources */,
@@ -14887,7 +14864,6 @@
 				2F528CAD24739053006DE5C2 /* LoadingMessageReusableView.swift in Sources */,
 				B6575FD622012F8D00B7AD82 /* LoadMediaInfoOperation.m in Sources */,
 				B6D11AC6219B8ABC00446B86 /* LocalFileNameGenerator.m in Sources */,
-				5D0E255025073404005848F3 /* LocalFileSystemFolders.swift in Sources */,
 				A8077BB82E42270F009954FD /* LocalizationHelper.m in Sources */,
 				A8077B7D2E421186009954FD /* LocalizationObjC.swift in Sources */,
 				0E5F863D2E38859D000BE8CA /* LocalNotificationId.swift in Sources */,
