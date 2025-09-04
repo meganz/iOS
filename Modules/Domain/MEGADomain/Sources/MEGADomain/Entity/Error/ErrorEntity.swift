@@ -100,6 +100,7 @@ public enum UserErrorEntity: Sendable {
     case unknown
     case copyrightSuspension
     case etdSuspension
+    case suspendedAdminFullDisable
 }
 
 public struct ErrorEntity: Error, Equatable {

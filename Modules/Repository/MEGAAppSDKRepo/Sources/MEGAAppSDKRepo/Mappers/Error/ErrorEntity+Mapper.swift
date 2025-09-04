@@ -97,6 +97,8 @@ extension MEGAUserErrorCode {
             return .copyrightSuspension
         case .etdSuspension:
             return .etdSuspension
+        case .suspendedAdminFullDisable:
+            return .suspendedAdminFullDisable
         @unknown default:
             assertionFailure("Invalid case found \(self)")
             return .unknown
