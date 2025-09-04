@@ -48,7 +48,7 @@ extension FolderLinkViewController: AudioMiniPlayerHandlerProtocol, AudioPlayerP
         resetMiniPlayerContainer()
     }
     
-    func resetMiniPlayerContainer() {        
+    func resetMiniPlayerContainer() {
         bottomView?.removeFromSuperview()
         bottomView = nil
     }
@@ -83,5 +83,28 @@ extension FolderLinkViewController: AudioMiniPlayerHandlerProtocol, AudioPlayerP
     
     public func hasUpdatedContentView() -> Bool {
         currentContentInsetHeight != 0
+    }
+    
+    @objc func updateAudioPlayerVisibility(_ isHidden: Bool) {
+        guard AudioPlayerManager.shared.isPlayerAlive() else { return }
+        AudioPlayerManager.shared.playerHidden(isHidden, presenter: self)
+    }
+    
+    @objc func registerMiniPlayerHandler() {
+        AudioPlayerManager.shared.addMiniPlayerHandler(self)
+    }
+    
+    @objc func unregisterMiniPlayerHandler() {
+        AudioPlayerManager.shared.removeMiniPlayerHandler(self)
+    }
+    
+    @objc func updateMiniPlayerPresenter() {
+        AudioPlayerManager.shared.updateMiniPlayerPresenter(self)
+    }
+    
+    @objc func logoutFolderLinkIfNoActivePlayer() {
+        if !AudioPlayerManager.shared.isPlayerAlive() {
+            MEGASdk.sharedFolderLink.logout()
+        }
     }
 }

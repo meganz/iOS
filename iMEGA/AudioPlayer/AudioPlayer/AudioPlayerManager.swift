@@ -2,14 +2,18 @@ import Foundation
 import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGADomain
+import MEGASwift
 
-@objc final class AudioPlayerManager: NSObject, AudioPlayerHandlerProtocol {
-    @objc static var shared = AudioPlayerManager()
+final class AudioPlayerManager: NSObject, AudioPlayerHandlerProtocol {
+    static var shared = AudioPlayerManager()
     
     private var player: AudioPlayer?
     private var fullScreenPlayerRouter: AudioPlayerViewRouter?
     private var miniPlayerRouter: MiniPlayerViewRouter?
-    private var miniPlayerHandlerListenerManager = ListenerManager<any AudioMiniPlayerHandlerProtocol>()
+    /// Stores all registered mini-player handlers in a thread-safe array. Access is synchronized with `@Atomic`, and handlers are compared
+    /// by identity using `ObjectIdentifier` to avoid duplicates. Handlers conforming to `AudioMiniPlayerHandlerProtocol` manage the
+    /// presentation and behavior of the mini-player, such as showing or hiding it, updating its container height, or embedding the mini-player view.
+    @Atomic private var miniPlayerHandlers: [any AudioMiniPlayerHandlerProtocol] = []
     private var nodeInfoUseCase: (any NodeInfoUseCaseProtocol)?
     private let playbackContinuationUseCase: any PlaybackContinuationUseCaseProtocol =
         DIContainer.playbackContinuationUseCase
@@ -71,7 +75,7 @@ import MEGADomain
         }
     }
     
-    @objc func isPlayingNode(_ node: MEGANode) -> Bool {
+    func isPlayingNode(_ node: MEGANode) -> Bool {
         guard let currentNode = player?.currentNode,
                 isPlayerAlive() else {
             return false
@@ -116,7 +120,7 @@ import MEGADomain
     }
     
     private func isPlayerListened(by listener: any AudioPlayerObserversProtocol) -> Bool {
-        guard let listeners = player?.observersListenerManager.listeners else {
+        guard let listeners = player?.observerSnapshot() else {
             return false
         }
         return listeners.contains { $0 === listener }
@@ -300,16 +304,16 @@ import MEGADomain
             return
         }
         
-        miniPlayerHandlerListenerManager.notify { $0.hideMiniPlayer() }
+        notifyMiniPlayerHandlers { $0.hideMiniPlayer() }
     }
     
-    func closePlayer() {
+    @objc func closePlayer() {
         playbackStoppedForCurrentItem()
         player?.close { [weak self] in
             self?.audioSessionUseCase.configureCallAudioSession()
             self?.clearMiniPlayerResources()
         }
-        miniPlayerHandlerListenerManager.notify { $0.closeMiniPlayer() }
+        notifyMiniPlayerHandlers { $0.closeMiniPlayer() }
         
         NotificationCenter.default.post(name: NSNotification.Name.MEGAAudioPlayerShouldUpdateContainer, object: nil)
         
@@ -348,18 +352,18 @@ import MEGADomain
         if isHidden {
             presenter.updateContentView(0)
         } else {
-            let height = miniPlayerHandlerListenerManager.listeners.last?.currentContainerHeight() ?? 0
+            let height = miniPlayerHandlers.last?.currentContainerHeight() ?? 0
             presenter.updateContentView(height)
         }
     }
     
     private func notifyDelegatesToShowHideMiniPlayer(_ hidden: Bool) {
         if hidden {
-            miniPlayerHandlerListenerManager.notify {
+            miniPlayerHandlers.forEach {
                 $0.hideMiniPlayer()
             }
         } else {
-            miniPlayerHandlerListenerManager.notify {
+            miniPlayerHandlers.forEach {
                 $0.showMiniPlayer()
             }
         }
@@ -371,28 +375,36 @@ import MEGADomain
     }
 
     func addMiniPlayerHandler(_ handler: any AudioMiniPlayerHandlerProtocol) {
-        miniPlayerHandlerListenerManager.add(handler)
+        $miniPlayerHandlers.mutate { arr in
+            let exists = arr.contains { ObjectIdentifier($0) == ObjectIdentifier(handler) }
+            if !exists { arr.append(handler) }
+        }
     }
     
     func removeMiniPlayerHandler(_ handler: any AudioMiniPlayerHandlerProtocol) {
-        miniPlayerHandlerListenerManager.remove(handler)
+        $miniPlayerHandlers.mutate { arr in
+            if let i = arr.firstIndex(where: { ObjectIdentifier($0) == ObjectIdentifier(handler) }) {
+                arr.remove(at: i)
+            }
+        }
         handler.resetMiniPlayerContainer()
     }
     
+    func notifyMiniPlayerHandlers(_ closure: (any AudioMiniPlayerHandlerProtocol) -> Void) {
+        miniPlayerHandlers.forEach(closure)
+    }
+    
     func presentMiniPlayer(_ viewController: UIViewController) {
-        miniPlayerHandlerListenerManager.listeners.last?.presentMiniPlayer(viewController, height: miniPlayerHeight)
+        miniPlayerHandlers.last?.presentMiniPlayer(viewController, height: miniPlayerHeight)
     }
     
     @MainActor
     func showMiniPlayer() {
-        guard let miniPlayerRouter,
-              let currentMiniPlayerHandler = miniPlayerHandlerListenerManager.listeners.last else { return }
-        
-        if currentMiniPlayerHandler.containsMiniPlayerInstance() {
-            currentMiniPlayerHandler.showMiniPlayer()
-        } else {
-            guard let miniPlayerVC = miniPlayerRouter.currentMiniPlayerView() else { return }
-            currentMiniPlayerHandler.presentMiniPlayer(miniPlayerVC, height: miniPlayerHeight)
+        guard let miniPlayerRouter, let current = miniPlayerHandlers.last else { return }
+        if current.containsMiniPlayerInstance() {
+            current.showMiniPlayer()
+        } else if let view = miniPlayerRouter.currentMiniPlayerView() {
+            current.presentMiniPlayer(view, height: miniPlayerHeight)
         }
     }
     
@@ -441,7 +453,7 @@ import MEGADomain
         }
     }
     
-    @objc func playbackStoppedForCurrentItem() {
+    func playbackStoppedForCurrentItem() {
         guard let fingerprint = playerCurrentItem()?.node?.fingerprint else { return }
         
         playbackContinuationUseCase.playbackStopped(

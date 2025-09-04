@@ -1,6 +1,8 @@
+import MEGAAppPresentation
+
 extension MEGANode {
     @MainActor
-    @objc func initFullScreenPlayer(node: MEGANode?, fileLink: String?, filePaths: [String]?, isFolderLink: Bool, presenter: UIViewController, messageId: NSNumber?, chatId: NSNumber?, isFromSharedItem: Bool, allNodes: [MEGANode]?) {
+    private func initFullScreenPlayer(node: MEGANode?, fileLink: String?, filePaths: [String]?, isFolderLink: Bool, presenter: UIViewController, messageId: NSNumber?, chatId: NSNumber?, isFromSharedItem: Bool, allNodes: [MEGANode]?) {
         
         // fixes [CC-5598] as we were passing in all nodes instead of just audio ones
         // this is the same check we do on a single node, when deciding if we can pass it to
@@ -22,5 +24,50 @@ extension MEGANode {
             isFromSharedItem: isFromSharedItem,
             allNodes: allAudioNodes
         )
+    }
+    
+    @MainActor
+    private func initMiniPlayer(node: MEGANode?, fileLink: String?, isFolderLink: Bool, presenter: UIViewController, isFromSharedItem: Bool) {
+        AudioPlayerManager.shared.initMiniPlayer(
+            node: node,
+            fileLink: fileLink,
+            filePaths: nil,
+            isFolderLink: isFolderLink,
+            presenter: presenter,
+            shouldReloadPlayerInfo: true,
+            shouldResetPlayer: true,
+            isFromSharedItem: isFromSharedItem
+        )
+    }
+    
+    @MainActor
+    @objc func presentAudioPlayer(node: MEGANode?, fileLink: String?, isFolderLink: Bool, presenter: UIViewController, messageId: NSNumber?, chatId: NSNumber?, isFromSharedItem: Bool, allNodes: [MEGANode]?) {
+        if presenter.conforms(to: (any AudioPlayerPresenterProtocol).self) && AudioPlayerManager.shared.isPlayerDefined() && AudioPlayerManager.shared.isPlayerAlive() {
+            initMiniPlayer(
+                node: node,
+                fileLink: fileLink,
+                isFolderLink: isFolderLink,
+                presenter: presenter,
+                isFromSharedItem: isFromSharedItem
+            )
+        } else {
+            initFullScreenPlayer(
+                node: node,
+                fileLink: fileLink,
+                filePaths: nil,
+                isFolderLink: isFolderLink,
+                presenter: presenter,
+                messageId: messageId,
+                chatId: chatId,
+                isFromSharedItem: isFromSharedItem,
+                allNodes: allNodes
+            )
+        }
+    }
+    
+    @MainActor
+    @objc func isAudioPlayerAliveAndPlayingCurrentNode() -> Bool {
+        let manager = AudioPlayerManager.shared
+        return manager.isPlayerAlive() && manager.isPlayingNode(self)
     }
 }

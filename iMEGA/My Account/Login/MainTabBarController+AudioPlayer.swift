@@ -132,4 +132,16 @@ extension MainTabBarController: AudioMiniPlayerHandlerProtocol {
             currentPresenter.updateContentView(newHeight)
         }
     }
+    
+    @objc func registerMiniPlayerHandler() {
+        AudioPlayerManager.shared.addMiniPlayerHandler(self)
+    }
+    
+    @objc func unregisterMiniPlayerHandler() {
+        AudioPlayerManager.shared.removeMiniPlayerHandler(self)
+    }
+    
+    @objc func updateTransferWidgetBottomConstraint() -> Float {
+        AudioPlayerManager.shared.isPlayerAlive() ? -120.0 : -60.0
+    }
 }

@@ -404,7 +404,7 @@
     
     [[SKPaymentQueue defaultQueue] removeTransactionObserver:[MEGAPurchase sharedInstance]];
 
-    [AudioPlayerManager.shared playbackStoppedForCurrentItem];
+    [self notifyPlaybackStoppedForCurrentItem];
     [MEGASdkCleanUp localLogoutAndCleanUp];
 }
 

@@ -675,8 +675,6 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
     folderlinkVC.publicLinkString = link;
     folderlinkVC.linkEncryptedString = MEGALinkManager.secondaryLinkURL.absoluteString;
     
-    folderlinkVC.player = [AudioPlayerManager.shared currentPlayer];
-    
     [self presentViewControllerWithAds:folderNavigationController
                             publicLink:link
                           isFolderLink:true

@@ -789,8 +789,8 @@ final class AudioPlayerViewModelTests: XCTestCase {
     }
     
     private func assertThatRefreshPlayerListener(on player: AudioPlayer, sut: AudioPlayerViewModel, file: StaticString = #filePath, line: UInt = #line) {
-        XCTAssertTrue(player.observersListenerManager.listeners.isEmpty, file: file, line: line)
-        XCTAssertTrue(player.observersListenerManager.listeners.notContains(where: { $0 as! AnyHashable == sut as! AnyHashable }), file: file, line: line)
+        XCTAssertTrue(player.observerSnapshot().isEmpty, file: file, line: line)
+        XCTAssertTrue(player.observerSnapshot().notContains(where: { $0 as! AnyHashable == sut as! AnyHashable }), file: file, line: line)
     }
     
     private var anyAudioNode: MockNode {

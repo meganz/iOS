@@ -572,9 +572,7 @@
 }
 
 - (void)audioPlayerHidden:(BOOL)hidden {
-    if ([AudioPlayerManager.shared isPlayerAlive]) {
-        [AudioPlayerManager.shared playerHidden:hidden presenter:self];
-    }
+    [self updateAudioPlayerVisibility:hidden];
 }
 
 #pragma mark - Utils
