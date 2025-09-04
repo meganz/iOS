@@ -4770,3 +4770,9 @@
 "notification.local.cameraUploadBackupReminder.body"="It’s time to back up your photos and videos";
 /* The double tap seek display text in video player */
 "videoPlayer.chip.seekDisplayText"="%@ seconds";
+/* The lock video player option in bottom more menu */
+"videoPlayer.lock.lockVideoPlayer" = "Lock video player";
+/* The screen locked status message in video player */
+"videoPlayer.lock.screenLocked" = "Screen is locked";
+/* The instruction to unlock the video player */
+"videoPlayer.lock.tapIconToUnlock" = "Tap the icon to unlock";

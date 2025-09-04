@@ -1,4 +1,5 @@
 import MEGADesignToken
+import MEGAL10n
 import MEGAUIComponent
 import SwiftUI
 
@@ -12,66 +13,70 @@ public struct PlayerOverlayView: View {
 
     public var body: some View {
         ZStack {
-            backgroundColor
-                .ignoresSafeArea()
-                .contentShape(Rectangle())
-                .overlay(
-                    HStack(spacing: 0) {
-                        // Left side - backward seek
-                        Rectangle()
-                            .fill(Color.clear)
-                            .contentShape(Rectangle())
-                            .onTapGesture(count: 2) {
-                                Task {
-                                    await viewModel.handleDoubleTapSeek(isForward: false)
+            if viewModel.isLocked {
+                lockOverlayView
+            } else {
+                backgroundColor
+                    .ignoresSafeArea()
+                    .contentShape(Rectangle())
+                    .overlay(
+                        HStack(spacing: 0) {
+                            // Left side - backward seek
+                            Rectangle()
+                                .fill(Color.clear)
+                                .contentShape(Rectangle())
+                                .onTapGesture(count: 2) {
+                                    Task {
+                                        await viewModel.handleDoubleTapSeek(isForward: false)
+                                    }
                                 }
-                            }
-                            .frame(maxWidth: .infinity)
+                                .frame(maxWidth: .infinity)
 
-                        // Right side - forward seek
-                        Rectangle()
-                            .fill(Color.clear)
-                            .contentShape(Rectangle())
-                            .onTapGesture(count: 2) {
-                                Task {
-                                    await viewModel.handleDoubleTapSeek(isForward: true)
+                            // Right side - forward seek
+                            Rectangle()
+                                .fill(Color.clear)
+                                .contentShape(Rectangle())
+                                .onTapGesture(count: 2) {
+                                    Task {
+                                        await viewModel.handleDoubleTapSeek(isForward: true)
+                                    }
                                 }
-                            }
-                            .frame(maxWidth: .infinity)
-                    }
-                        .onTapGesture {
-                            viewModel.didTapVideoArea()
+                                .frame(maxWidth: .infinity)
                         }
-                        .onLongPressGesture(
-                            minimumDuration: 0.5,
-                            perform: {
-                                viewModel.beginHoldToSpeed()
-                            },
-                            onPressingChanged: { isPressing in
-                                guard !isPressing else { return }
-                                viewModel.endHoldToSpeed()
+                            .onTapGesture {
+                                viewModel.didTapVideoArea()
                             }
-                        )
-                )
+                            .onLongPressGesture(
+                                minimumDuration: 0.5,
+                                perform: {
+                                    viewModel.beginHoldToSpeed()
+                                },
+                                onPressingChanged: { isPressing in
+                                    guard !isPressing else { return }
+                                    viewModel.endHoldToSpeed()
+                                }
+                            )
+                    )
 
-            if viewModel.isControlsVisible {
-                topToolbar
-                centerPlaybackButtons
-                bottomToolbar
-            }
+                if viewModel.isControlsVisible {
+                    topToolbar
+                    centerPlaybackButtons
+                    bottomToolbar
+                }
 
-            if viewModel.isHoldSpeedActive {
-                holdSpeedChip
-            }
+                if viewModel.isHoldSpeedActive {
+                    holdSpeedChip
+                }
 
-            if viewModel.isDoubleTapSeekActive {
-                GeometryReader { geo in
-                    doubleTapSeekChip
-                        .padding(
-                            .bottom,
-                            viewModel.doubleTapSeekChipBottomPadding(
-                                isLandscape: geo.size.width > geo.size.height)
-                        )
+                if viewModel.isDoubleTapSeekActive {
+                    GeometryReader { geo in
+                        doubleTapSeekChip
+                            .padding(
+                                .bottom,
+                                viewModel.doubleTapSeekChipBottomPadding(
+                                    isLandscape: geo.size.width > geo.size.height)
+                            )
+                    }
                 }
             }
         }
@@ -91,6 +96,14 @@ public struct PlayerOverlayView: View {
             cornerRadius: TokenRadius.large
         ) {
             playbackSpeedsSelectionListView
+        }
+        .bottomSheet(
+            isPresented: $viewModel.isBottomMoreSheetPresented,
+            detents: [.fixed(bottomMoreSheetHeight)],
+            showDragIndicator: true,
+            cornerRadius: TokenRadius.large
+        ) {
+            bottomMoreSheetView
         }
     }
 
@@ -394,7 +407,7 @@ extension PlayerOverlayView {
             Spacer()
             scalingButton
             Spacer()
-            moreBottomButton
+            bottomMoreButton
         }
     }
 
@@ -432,26 +445,22 @@ extension PlayerOverlayView {
             name: viewModel.scalingMode == .fit ? "zoomToFill" : "scaleToFit",
             action: viewModel.didTapScalingButton
         )
-    }   
-
-    var lockButton: some View {
-        controlButton(name: "lock", action: {
-            // Implement zoom to fit functionality
-        })
     }
 
     var rotateButton: some View {
         controlButton(name: "rotate", action: viewModel.didTapRotate)
     }
     
-    var moreBottomButton: some View {
-        controlButton(name: "moreBottom", action: {
-            // Implement more bottom functionality
-        })
+    var bottomMoreButton: some View {
+        controlButton(name: "moreBottom", action: viewModel.didTapBottomMoreButton)
     }
 
     private var playbackSpeedsBottomSelectionListHeight: Int {
         PlaybackSpeed.allCases.count * Int(Constants.bottomSheetRowHeight) + Int(Constants.bottomSheetTopPadding)
+    }
+
+    private var bottomMoreSheetHeight: Int {
+        1 * Int(Constants.bottomSheetRowHeight) + Int(Constants.bottomSheetTopPadding)
     }
 
     private var playbackSpeedsSelectionListView: some View {
@@ -492,6 +501,93 @@ extension PlayerOverlayView {
         }
         .frame(height: Constants.bottomSheetRowHeight)
         .padding(.horizontal, TokenSpacing._5)
+    }
+
+    private var bottomMoreSheetView: some View {
+        VStack(spacing: .zero) {
+            bottomMoreSheetRowView(
+                icon: "lock",
+                title: Strings.Localizable.VideoPlayer.Lock.lockVideoPlayer,
+                action: viewModel.didTapLock)
+
+        }
+        .padding(.top, Constants.bottomSheetTopPadding)
+        .background(
+            TokenColors.Background.surface1.swiftUI,
+            ignoresSafeAreaEdges: .all
+        )
+        .preferredColorScheme(.dark)
+    }
+
+    private func bottomMoreSheetRowView(
+        icon: String,
+        title: String,
+        action: @escaping () -> Void
+    ) -> some View {
+        Button {
+            action()
+        } label: {
+            HStack(spacing: TokenSpacing._4) {
+                Image(systemName: icon)
+                    .foregroundStyle(TokenColors.Icon.secondary.swiftUI)
+                    .frame(width: 24, height: 24, alignment: .center)
+
+                Text(title)
+                    .font(.body)
+                    .foregroundStyle(TokenColors.Text.primary.swiftUI)
+
+                Spacer()
+            }
+            .frame(height: Constants.bottomSheetRowHeight)
+            .padding(.horizontal, TokenSpacing._5)
+        }
+    }
+    
+    // MARK: - Lock Overlay
+    
+    private var lockOverlayView: some View {
+        ZStack {
+            Group {
+                if viewModel.isLockOverlayVisible {
+                    TokenColors.Background.blur.swiftUI
+                } else {
+                    Color.clear
+                }
+            }
+            .ignoresSafeArea()
+            .contentShape(Rectangle())
+            .onTapGesture {
+                viewModel.didTapVideoAreaWhileLocked()
+            }
+
+            if viewModel.isLockOverlayVisible {
+                VStack(spacing: TokenSpacing._5) {
+                    Spacer()
+                    
+                    Button {
+                        viewModel.didTapDeactivateLock()
+                    } label: {
+                        Image("locked", bundle: .module)
+                            .font(.system(size: 56))
+                            .foregroundStyle(TokenColors.Icon.accent.swiftUI)
+                    }
+                    .buttonStyle(.plain)
+
+                    VStack(spacing: TokenSpacing._3) {
+                        Text(Strings.Localizable.VideoPlayer.Lock.screenLocked)
+                            .font(.body)
+                            .fontWeight(.semibold)
+                            .foregroundStyle(.white)
+
+                        Text(Strings.Localizable.VideoPlayer.Lock.tapIconToUnlock)
+                            .font(.subheadline)
+                            .foregroundStyle(TokenColors.Text.secondary.swiftUI)
+                    }
+                    .padding(.bottom, TokenSpacing._13)
+                }
+            }
+        }
+        .animation(.easeInOut(duration: 0.3), value: viewModel.isLockOverlayVisible)
     }
 }
 
