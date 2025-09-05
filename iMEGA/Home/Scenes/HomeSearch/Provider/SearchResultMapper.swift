@@ -47,7 +47,7 @@ struct SearchResultMapper: Sendable {
     func map(node: NodeEntity) -> SearchResult {
         .init(
             id: node.handle,
-            thumbnailDisplayMode: node.isFile ? .vertical : .horizontal,
+            thumbnailDisplayMode: .vertical,
             backgroundDisplayMode: node.hasThumbnail ? .preview : .icon,
             title: name(for: node),
             note: node.description,

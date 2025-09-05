@@ -136,6 +136,6 @@ struct NodeThumbnailHomeUseCase: NodeThumbnailHomeUseCaseProtocol {
         guard node.isFolder else { return nil }
         if node.isInShare { return UIImage.mnz_incomingFolder() }
         if node.isOutShare { return UIImage.mnz_outgoingFolder() }
-        return MEGAAssets.UIImage.filetypeFolder
+        return node.labelImage
     }
 }

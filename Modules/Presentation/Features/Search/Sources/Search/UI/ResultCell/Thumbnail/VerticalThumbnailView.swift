@@ -2,36 +2,36 @@ import MEGADesignToken
 import MEGASwiftUI
 import SwiftUI
 
-// ┌────────────────────────────────────────────────────┐
-// │┌─────────────────────────────────────────────────┐ │
-// ││                       .secondary(.trailingEdge) │ │
-// │╠─────────────────────────────────────────────────╣ │
-// │║                                                 ║ │
-// │║                                                 ║ │
-// │║                                                 ║ │
-// │║                                                 ║ │
-// │║                                                 ║ │
-// │║                                                 ║ │
-// │║                                                 ║ │
-// │║                  Icon/Preview                   ║ │
-// │║                                                 ║ │
-// │║                                                 ║ │
-// │║                                                 ║ │
-// │║                                                 ║ │
-// │║                                                 ║ │
-// │║                                                 ║ │
-// │║                                                 ║ │
-// │║                                                 ║ │
-// │║─────────────────────┐                           ║ │
-// │║ .secondary(.leading)│                           ║ │
-// │╚═════════════════════════════════════════════════╝ │
-// │╔══════════════════════╗┌───────────┐ ┌ ─ ─ ─ ─ ─ ┐ │
-// │║       [TITLE]        ║│.prominent │               │
-// │╚══════════════════════╝└───────────┘ │   Menu    │ │
-// │╔═══════════════╗ ┌─────────────────┐    Select     │
-// │║  [SUBTITLE]   ║ │.secondary(.trail│ │           │ │
-// │╚═══════════════╝ └─────────────────┘  ─ ─ ─ ─ ─ ─  │
-// └────────────────────────────────────────────────────┘
+// ┌─────────────────────────────────────────────────────────────────────────────────────┐
+// │┌─────────────────────────────────────────────────┐                                  │
+// ││                       .secondary(.trailingEdge) │                                  │
+// │╠─────────────────────────────────────────────────╣                                  │
+// │║                                                 ║                                  │
+// │║                                                 ║                                  │
+// │║                                                 ║                                  │
+// │║                                                 ║                                  │
+// │║                                                 ║                                  │
+// │║                                                 ║                                  │
+// │║                                                 ║                                  │
+// │║                  Icon/Preview                   ║                                  │
+// │║                                                 ║                                  │
+// │║                                                 ║                                  │
+// │║                                                 ║                                  │
+// │║                                                 ║                                  │
+// │║                                                 ║                                  │
+// │║                                                 ║                                  │
+// │║                                                 ║                                  │
+// │║                                                 ║                                  │
+// │║─────────────────────┐                           ║                                  │
+// │║ .secondary(.leading)│                           ║                                  │
+// │╚═════════════════════════════════════════════════╝                                  │
+// │┌─────────────────────┐╔══════════════════════╗┌─────────────────────┐ ┌ ─ ─ ─ ─ ─ ┐ │
+// ││.prominent(.leading) │║       [TITLE]        ║│.prominent(.trailing │               │
+// │└─────────────────────┘╚══════════════════════╝└─────────────────────┘ │   Menu    │ │
+// │╔═══════════════╗ ┌─────────────────┐                                     Select     │
+// │║  [SUBTITLE]   ║ │.secondary(.trail│                                  │           │ │
+// │╚═══════════════╝ └─────────────────┘                                   ─ ─ ─ ─ ─ ─  │
+// └─────────────────────────────────────────────────────────────────────────────────────┘
 // The Menu Select (More button or select button) is not affected by the sensitive property (.sensitive modifier)
 
 struct VerticalThumbnailView: View {
@@ -176,6 +176,15 @@ struct VerticalThumbnailView: View {
     // hosts title and .prominent properties
     private var topLine: some View {
         HStack(spacing: 4) {
+            viewModel
+                .result
+                .properties
+                .propertyViewsFor(
+                    layout: layout,
+                    placement: .prominent(.leading),
+                    colorAssets: viewModel.colorAssets
+                )
+
             Text(viewModel.plainTitle)
                 .foregroundStyle(viewModel.titleTextColor)
                 .font(.system(.caption).weight(.medium))
@@ -187,27 +196,32 @@ struct VerticalThumbnailView: View {
                 .properties
                 .propertyViewsFor(
                     layout: layout,
-                    placement: .prominent,
+                    placement: .prominent(.trailing),
                     colorAssets: viewModel.colorAssets
                 )
         }
     }
     
     // hosts subtitle and .secondary(.trailing) properties
+    @ViewBuilder
     private var bottomLine: some View {
-        HStack(spacing: 4) {
-            Text(viewModel.result.description(layout))
-                .foregroundColor(viewModel.colorAssets.subtitleTextColor)
-                .font(.caption)
-            
-            viewModel
-                .result
-                .properties
-                .propertyViewsFor(
-                    layout: layout,
-                    placement: .secondary(.trailing),
-                    colorAssets: viewModel.colorAssets
-                )
+        if viewModel.hasDescriptionOrProperties(for: layout, propertyPlacement: .secondary(.trailing)) {
+            HStack(spacing: 4) {
+                Text(viewModel.result.description(layout))
+                    .foregroundColor(viewModel.colorAssets.subtitleTextColor)
+                    .font(.caption)
+
+                viewModel
+                    .result
+                    .properties
+                    .propertyViewsFor(
+                        layout: layout,
+                        placement: .secondary(.trailing),
+                        colorAssets: viewModel.colorAssets
+                    )
+            }
+        } else {
+            EmptyView()
         }
     }
     

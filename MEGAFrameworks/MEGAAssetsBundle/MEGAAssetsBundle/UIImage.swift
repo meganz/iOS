@@ -378,4 +378,11 @@ public struct MEGAUIImageBundle {
     public static var tabBarMenu: UIImage { UIImage.tabBarMenu }
     public static var tabBarMenuSelected: UIImage { UIImage.tabBarMenuSelected }
     public static var ellipsis: UIImage { UIImage.ellipsis }
+    public static var redFolder: UIImage { UIImage.redFolder }
+    public static var orangeFolder: UIImage { UIImage.orangeFolder }
+    public static var yellowFolder: UIImage { UIImage.yellowFolder }
+    public static var greenFolder: UIImage { UIImage.greenFolder }
+    public static var blueFolder: UIImage { UIImage.blueFolder }
+    public static var purpleFolder: UIImage { UIImage.purpleFolder }
+    public static var greyFolder: UIImage { UIImage.greyFolder }
 }

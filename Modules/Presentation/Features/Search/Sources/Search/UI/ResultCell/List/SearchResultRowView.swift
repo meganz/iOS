@@ -4,9 +4,9 @@ import SwiftUI
 
 // MAKE SCREEN WIDE TO SEE DOCUMENTATION
 // ┌───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
-// │╔══════════════════════╗┌────────────┐                                                          ┌ ─ ─ ─ ─ ─ ─ ─ ─ ─ │
-// │║       [TITLE]        ║│ .prominent │                                                                             ││
-// │╚══════════════════════╝└────────────┘                                                          │                   │
+// │┌──────────────────────┐ ╔══════════════════════╗┌──────────────────────┐                                                ┌ ─ ─ ─ ─ ─ ─ ─ ─ ─ │
+// ││ .prominent(.leading) │ ║       [TITLE]        ║│ .prominent(.trailing │                                                                   ││
+// │└──────────────────────┘ ╚══════════════════════╝└──────────────────────┘
 // │┌ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ┐                                                                       Menu       ││
 // │      [AuxTITLE] (optional)                                                                     │(optional, hidden  │
 // │└ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ┘                                                                in selection mode)││
@@ -109,13 +109,14 @@ struct SearchResultRowView: View {
     
     private var titleLine: some View {
         HStack(spacing: 4) {
+            propertyViewsFor(placement: .prominent(.leading))
             Text(viewModel.attributedTitle)
                 .font(.subheadline)
                 .fontWeight(.medium)
                 .lineLimit(1)
                 .foregroundStyle(viewModel.titleTextColor)
                 .accessibilityLabel(viewModel.accessibilityIdentifier)
-            propertyViewsFor(placement: .prominent)
+            propertyViewsFor(placement: .prominent(.trailing))
         }
     }
     
