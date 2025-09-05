@@ -4,7 +4,11 @@
 /// * HorizontalThumbnailView.swift
 /// * SearchResultRowView.swift
 public enum PropertyPlacement: Equatable, Sendable {
-    
+    public enum Prominent: Equatable, Sendable {
+        case leading
+        case trailing
+    }
+
     public enum Secondary: Equatable, Sendable {
         case leading
         case trailing
@@ -13,8 +17,8 @@ public enum PropertyPlacement: Equatable, Sendable {
     
     /// property not rendered
     case none
-    /// after title
-    case prominent
+    /// various position in the  title
+    case prominent(Prominent)
     /// various positions depending on the Secondary value and given layout mode
     case secondary(Secondary)
     /// middle line of text between title and subtitle, supported only in list mode

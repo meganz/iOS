@@ -420,7 +420,7 @@ final class SearchResultsViewModelTests: XCTestCase, @unchecked Sendable {
                 scalable: false
             ),
             vibrancyEnabled: false,
-            placement: { _  in return .prominent }
+            placement: { _  in return .prominent(.trailing) }
         )
         await harness.sut.searchResultUpdated(.resultWith(
             id: 2,

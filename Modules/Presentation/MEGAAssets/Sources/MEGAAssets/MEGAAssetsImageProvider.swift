@@ -614,5 +614,13 @@ extension MEGAAssets {
         public static var tabBarMenu: UIKit.UIImage { MEGAUIImageBundle.tabBarMenu }
         public static var tabBarMenuSelected: UIKit.UIImage { MEGAUIImageBundle.tabBarMenuSelected }
         public static var ellipsis: UIKit.UIImage { MEGAUIImageBundle.ellipsis }
+        public static var redFolder: UIKit.UIImage { MEGAUIImageBundle.redFolder }
+        public static var orangeFolder: UIKit.UIImage { MEGAUIImageBundle.orangeFolder }
+        public static var yellowFolder: UIKit.UIImage { MEGAUIImageBundle.yellowFolder }
+        public static var greenFolder: UIKit.UIImage { MEGAUIImageBundle.greenFolder }
+        public static var blueFolder: UIKit.UIImage { MEGAUIImageBundle.blueFolder }
+        public static var purpleFolder: UIKit.UIImage { MEGAUIImageBundle.purpleFolder }
+        public static var greyFolder: UIKit.UIImage { MEGAUIImageBundle.greyFolder }
+
     }
 }

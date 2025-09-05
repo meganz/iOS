@@ -2324,6 +2324,8 @@
 		BF943E9F235541E1001C18E0 /* GlobalDNDNotificationControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF943E9D235541E1001C18E0 /* GlobalDNDNotificationControl.swift */; };
 		BF943EA52355449B001C18E0 /* ChatNotificationControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF943EA42355449A001C18E0 /* ChatNotificationControl.swift */; };
 		BF943EA62355449B001C18E0 /* ChatNotificationControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF943EA42355449A001C18E0 /* ChatNotificationControl.swift */; };
+		BF94460F2E6591C000DBD3D4 /* NodeEntity+labelImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF94460E2E6591AE00DBD3D4 /* NodeEntity+labelImage.swift */; };
+		BF9446112E6592F200DBD3D4 /* NodeEntity+labelImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF94460E2E6591AE00DBD3D4 /* NodeEntity+labelImage.swift */; };
 		BF99A3D424A994CB0035A183 /* MessageOptionItemTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF99A3D224A994CB0035A183 /* MessageOptionItemTableCell.swift */; };
 		BF99A3D524A994CB0035A183 /* MessageOptionItemTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF99A3D324A994CB0035A183 /* MessageOptionItemTableCell.xib */; };
 		BF99A3F324AC43F70035A183 /* emojis_v3.json in Resources */ = {isa = PBXBuildFile; fileRef = BF99A3F024AC43F70035A183 /* emojis_v3.json */; };
@@ -5111,6 +5113,7 @@
 		BF943E9A23554181001C18E0 /* PushNotificationControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationControl.swift; sourceTree = "<group>"; };
 		BF943E9D235541E1001C18E0 /* GlobalDNDNotificationControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalDNDNotificationControl.swift; sourceTree = "<group>"; };
 		BF943EA42355449A001C18E0 /* ChatNotificationControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChatNotificationControl.swift; path = Chat/ChatNotificationControl.swift; sourceTree = "<group>"; };
+		BF94460E2E6591AE00DBD3D4 /* NodeEntity+labelImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NodeEntity+labelImage.swift"; sourceTree = "<group>"; };
 		BF99A3D224A994CB0035A183 /* MessageOptionItemTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageOptionItemTableCell.swift; sourceTree = "<group>"; };
 		BF99A3D324A994CB0035A183 /* MessageOptionItemTableCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MessageOptionItemTableCell.xib; sourceTree = "<group>"; };
 		BF99A3F024AC43F70035A183 /* emojis_v3.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = emojis_v3.json; sourceTree = "<group>"; };
@@ -7343,6 +7346,7 @@
 				BFB463F624342F7F00FB90B9 /* MEGAUser+Additions.swift */,
 				411C8B691DECBD87006A0D8C /* MEGAUser+MNZCategory.h */,
 				411C8B6A1DECBD87006A0D8C /* MEGAUser+MNZCategory.m */,
+				BF94460E2E6591AE00DBD3D4 /* NodeEntity+labelImage.swift */,
 				5B118EC11FB1B0C5005D7D90 /* NSArray+MNZCategory.h */,
 				5B118EC21FB1B0C5005D7D90 /* NSArray+MNZCategory.m */,
 				949086861FD5482E002B12BD /* NSAttributedString+MNZCategory.h */,
@@ -15170,6 +15174,7 @@
 				BF6029B72C5AEBD900AD1961 /* NodeDescriptionSeparatorView.swift in Sources */,
 				BF4156322C80270F00849251 /* NodeDescriptionViewCell.swift in Sources */,
 				5DF44CCC251369E000E9F0BC /* NodeDetailsUseCase.swift in Sources */,
+				BF94460F2E6591C000DBD3D4 /* NodeEntity+labelImage.swift in Sources */,
 				833003A624DAFF7F00053B23 /* NodeInfoActionTableViewCell.swift in Sources */,
 				833003A424DAFF6F00053B23 /* NodeInfoDetailTableViewCell.swift in Sources */,
 				8333E51D24DC13FA00BB5A9D /* NodeInfoHeaderTableViewCell.swift in Sources */,
@@ -16038,6 +16043,7 @@
 				8335C641282E7ABB00509479 /* NameCollisionView.swift in Sources */,
 				8335C63E282E7A8400509479 /* NameCollisionViewModel.swift in Sources */,
 				94C85E6F28B9405F00007A38 /* NodeAssetsManager.swift in Sources */,
+				BF9446112E6592F200DBD3D4 /* NodeEntity+labelImage.swift in Sources */,
 				B55C1A8A298260DB006A0205 /* NodeTableViewCell+Additions.swift in Sources */,
 				5BAC7CAC2677BF9800F8C305 /* NodeTableViewCell.m in Sources */,
 				25A4E4EA2BD8B83B00B3F308 /* NodeTableViewCellViewModel.swift in Sources */,

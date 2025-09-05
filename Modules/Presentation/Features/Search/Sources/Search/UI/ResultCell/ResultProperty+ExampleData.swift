@@ -7,7 +7,7 @@ extension ResultProperty {
                 id: "1",
                 content: .icon(image: UIImage(systemName: "figure.walk")!, scalable: true),
                 vibrancyEnabled: true,
-                placement: { _ in .prominent }
+                placement: { _ in .prominent(.trailing) }
             ),
             .init(
                 id: "2",
@@ -49,7 +49,7 @@ extension ResultProperty {
                 id: "8",
                 content: .icon(image: UIImage(systemName: "hand.point.up.fill")!, scalable: true),
                 vibrancyEnabled: false,
-                placement: { _ in .prominent }
+                placement: { _ in .prominent(.trailing) }
             ),
             .init(
                 id: "9",
@@ -84,7 +84,7 @@ extension ResultProperty {
         id: "3",
         content: .icon(image: UIImage(systemName: "cloud")!, scalable: true),
         vibrancyEnabled: false,
-        placement: { _ in .prominent }
+        placement: { _ in .prominent(.trailing) }
     )
     static let someTopIcon: Self = .init(
         id: "4",

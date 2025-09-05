@@ -179,7 +179,15 @@ class SearchResultRowViewModel: Identifiable, ObservableObject {
         self.result = result
         await loadThumbnail()
     }
-    
+
+    func hasDescriptionOrProperties(for layout: ResultCellLayout, propertyPlacement: PropertyPlacement) -> Bool {
+        let description = result.description(layout)
+        let properties = result
+            .properties
+            .propertiesFor(mode: layout, placement: propertyPlacement)
+        return description.isNotEmpty || properties.isNotEmpty
+    }
+
     private func update(thumbnailImage: UIImage) {
         self.thumbnailImage = thumbnailImage
         if !isThumbnailLoadedOnce {

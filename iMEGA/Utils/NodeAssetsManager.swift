@@ -45,7 +45,7 @@ import MEGARepo
         } else if node.isOutShare {
             return MEGAAssets.UIImage.folderUsers
         } else {
-            return MEGAAssets.UIImage.filetypeFolder
+            return node.labelImage
         }
     }
 }

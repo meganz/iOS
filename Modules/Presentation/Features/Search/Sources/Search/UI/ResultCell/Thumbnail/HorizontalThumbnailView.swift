@@ -4,9 +4,9 @@ import SwiftUI
 
 // MAKE SCREEN WIDE TO SEE DOCUMENTATION
 // ┌───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
-// │╔═════════════╗╔══════════════════════╗┌────────────┐                                                          ┌ ─ ─ ─ ─ ─ ─ ─ ─ ─ │
-// │║             ║║       [TITLE]        ║│ .prominent │                                                                             ││
-// │║             ║╚══════════════════════╝└────────────┘                                                          │                   │
+// │╔═════════════╗┌───────────────────────┐╔══════════════════════╗┌───────────────────────┐                      ┌ ─ ─ ─ ─ ─ ─ ─ ─ ─ │
+// │║             ║│ .prominent(.leading)  │║       [TITLE]        ║│ .prominent(.trailing) │                                         ││
+// │║             ║└───────────────────────┘╚══════════════════════╝└───────────────────────┘                      │                   │
 // │║             ║                                                                                                        Menu       ││
 // │║    Icon     ║                                                                                                │(optional, hidden  │
 // │║             ║                                                                                                 in selection mode)││
@@ -66,6 +66,11 @@ struct HorizontalThumbnailView: View {
     
     private var titleAndLabel: some View {
         HStack(spacing: 4) {
+            viewModel
+                .result
+                .properties
+                .propertyViewsFor(layout: layout, placement: .prominent(.leading), colorAssets: viewModel.colorAssets)
+
             Text(viewModel.plainTitle)
                 .font(.system(.caption).weight(.medium))
                 .foregroundStyle(viewModel.titleTextColor)
@@ -74,7 +79,7 @@ struct HorizontalThumbnailView: View {
             viewModel
                 .result
                 .properties
-                .propertyViewsFor(layout: layout, placement: .prominent, colorAssets: viewModel.colorAssets)
+                .propertyViewsFor(layout: layout, placement: .prominent(.trailing), colorAssets: viewModel.colorAssets)
         }
         .frame(height: 12)
     }

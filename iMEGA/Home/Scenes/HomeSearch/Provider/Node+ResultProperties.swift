@@ -94,7 +94,7 @@ extension ResultProperty {
         placement: { mode in
             switch mode {
             case .list:
-                return .prominent
+                return .prominent(.trailing)
             case .thumbnail(.vertical):
                 return .secondary(.trailingEdge)
             case .thumbnail(.horizontal):
@@ -112,7 +112,7 @@ extension ResultProperty {
             placement: { mode in
                 switch mode {
                 case .list:
-                    return .prominent
+                    return .prominent(.trailing)
                 case .thumbnail(.vertical):
                     return .secondary(.trailingEdge)
                 case .thumbnail(.horizontal):
@@ -129,9 +129,7 @@ extension ResultProperty {
             content: .icon(image: image, scalable: false),
             vibrancyEnabled: false,
             accessibilityLabel: accessibilityLabel,
-            placement: { _ in
-                    .prominent
-            }
+            placement: { _ in .prominent(.leading) }
         )
     }
     
@@ -139,9 +137,7 @@ extension ResultProperty {
         propertyId: .takenDown,
         icon: MEGAAssets.UIImage.isTakedown,
         vibrancyEnabled: true, // this will make title of result stand out
-        placement: { _ in
-                .prominent
-        }
+        placement: { _ in .prominent(.trailing) }
     )
     
     init(

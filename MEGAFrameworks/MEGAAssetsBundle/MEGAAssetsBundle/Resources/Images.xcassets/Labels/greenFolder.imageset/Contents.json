@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "greenFolder.svg",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
