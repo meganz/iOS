@@ -39,10 +39,11 @@ extension NodeTableViewCell {
             return
         }
         
-        let firstNodeName = firstNode.name ?? ""
+        let firstNodeName = !firstNode.isNodeKeyDecrypted() ? Strings.Localizable.SharedItems.Tab.Recents.undecryptedFileName(1) : firstNode.name ?? ""
+
         let nodesCount = nodes.count
         nameLabel.text = nodesCount == 1 ? firstNodeName : Strings.Localizable.Recents.Section.MultipleFile.title(nodesCount - 1).replacingOccurrences(of: "[A]", with: firstNodeName)
-        
+
         let parentNode = MEGASdk.shared.node(forHandle: recentActionBucket.parentHandle)
         let parentNodeName = parentNode?.name ?? ""
         infoLabel.text = "\(parentNodeName) ・"

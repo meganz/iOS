@@ -48,5 +48,5 @@ public protocol NodeRepositoryProtocol: RepositoryProtocol, Sendable {
     ///  - Throws: `NodeError.nodeNotFound` if the parent node cant be found
     /// - Important: This could possibly block the calling thread, make sure not to call it on main thread.
     func isInheritingSensitivity(node: NodeEntity) throws -> Bool
-    func isNodeDecrypted(node: NodeEntity) throws -> Bool
+    func isNodeDecrypted(node: NodeEntity, fromFolderLink: Bool) throws -> Bool
 }
