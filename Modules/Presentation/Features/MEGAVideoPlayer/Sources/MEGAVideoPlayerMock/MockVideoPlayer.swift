@@ -1,6 +1,7 @@
 import Combine
 import Foundation
 import MEGAVideoPlayer
+import UIKit
 
 @MainActor
 public final class MockVideoPlayer: VideoPlayerProtocol {
@@ -50,6 +51,8 @@ public final class MockVideoPlayer: VideoPlayerProtocol {
     public var resizedFrame: CGRect = .zero
     public var setScalingModeCallCount: Int = 0
     public var setScalingModeValue: VideoScalingMode = .fit
+    public var captureSnapshotCallCount: Int = 0
+    public var mockSnapshotImage: UIImage?    
     public var nodeName: String = "Mock Video Title"
 
     public init(
@@ -131,6 +134,11 @@ public final class MockVideoPlayer: VideoPlayerProtocol {
         setScalingModeCallCount += 1
         setScalingModeValue = mode
     }
+
+    public func captureSnapshot() async -> UIImage? {
+        captureSnapshotCallCount += 1
+        return mockSnapshotImage
+    }
     
     // MARK: - Reset for testing
     public func resetCallCounts() {
@@ -150,5 +158,6 @@ public final class MockVideoPlayer: VideoPlayerProtocol {
         resizedFrame = .zero
         setScalingModeCallCount = 0
         setScalingModeValue = .fit
+        captureSnapshotCallCount = 0
     }
 }

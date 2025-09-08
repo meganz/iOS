@@ -1,5 +1,6 @@
 import Combine
 import Foundation
+import UIKit
 
 public typealias VideoPlayerProtocol = PlaybackStateObservable
     & PlaybackControllable
@@ -39,6 +40,7 @@ public protocol VideoRenderable {
     func setupPlayer(in layer: any PlayerLayerProtocol)
     func resizePlayer(to frame: CGRect)
     func setScalingMode(_ mode: VideoScalingMode)
+    func captureSnapshot() async -> UIImage?
 }
 
 /// Protocol for video players that can load content from playable nodes.

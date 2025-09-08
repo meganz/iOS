@@ -1,5 +1,6 @@
 import Combine
 import Foundation
+import UIKit
 
 @MainActor
 final class PreviewVideoPlayer: VideoPlayerProtocol {
@@ -71,5 +72,9 @@ final class PreviewVideoPlayer: VideoPlayerProtocol {
 
     var nodeName: String {
         _nodeName
+    }
+
+    func captureSnapshot() async -> UIImage? {
+        UIImage()
     }
 }
