@@ -421,9 +421,10 @@ class NodeActionViewController: ActionSheetViewController {
             titleLabel.trailingAnchor.constraint(equalTo: headerView!.trailingAnchor, constant: -8),
             titleLabel.centerYAnchor.constraint(equalTo: headerView!.centerYAnchor, constant: -10)
         ])
-        
-        titleLabel.text = isUndecryptedFolder ? Strings.Localizable.SharedItems.Tab.Incoming.undecryptedFolderName
-        : viewModel.title(for: node.toNodeEntity())
+
+        let title = isUndecryptedFolder ? Strings.Localizable.SharedItems.Tab.Incoming.undecryptedFolderName
+        : viewModel.title(for: node.toNodeEntity(), displayMode: displayMode)
+        titleLabel.text = title
 
         headerView?.addSubview(subtitleLabel)
         subtitleLabel.leadingAnchor.constraint(equalTo: nodeImageView.trailingAnchor, constant: 8).isActive = true
@@ -437,7 +438,7 @@ class NodeActionViewController: ActionSheetViewController {
                 downloadImageView.leadingAnchor.constraint(equalTo: subtitleLabel.trailingAnchor, constant: 4),
                 downloadImageView.trailingAnchor.constraint(lessThanOrEqualTo: headerView!.safeAreaLayoutGuide.trailingAnchor, constant: -10)
             ])
-            
+
             downloadImageView.image = MEGAAssets.UIImage.downloaded
         } else {
             subtitleLabel.trailingAnchor.constraint(equalTo: headerView!.trailingAnchor, constant: -8).isActive = true

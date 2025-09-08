@@ -26,8 +26,8 @@ enum NodeInfoAction: ActionType {
     let shouldDisplayContactVerificationInfo: Bool
 
     var node: MEGANode
-    var isNodeUndecryptedFolder: Bool
-    
+    let isNodeUndecryptedFolder: Bool
+
     private(set) var nodeInfoLocationViewModel: NodeInfoLocationViewModel?
     private var loadNodeInfoLocationTask: Task<Void, Never>? {
         didSet { oldValue?.cancel() }

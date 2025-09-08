@@ -128,14 +128,18 @@ struct NodeActionViewModel {
         nodeUseCase.isRestorable(node: node) && !isBackupNode
     }
 
-    func title(for node: NodeEntity) -> String {
-        nodeUseCase.isNodeDecryptedNonThrowing(node: node) ? node.name
+    func title(for node: NodeEntity, displayMode: DisplayMode) -> String {
+        let isDecrypted = nodeUseCase.isNodeDecryptedNonThrowing(
+            node: node,
+            fromFolderLink: displayMode == .nodeInsideFolderLink
+        )
+        return isDecrypted ? node.name
         : node.isFile ? Strings.Localizable.SharedItems.Tab.Recents.undecryptedFileName(1)
         : Strings.Localizable.SharedItems.Tab.Incoming.undecryptedFolderName
     }
 
     // MARK: - Private methods
-    
+
     /// Determine if nodes contains only sensitive nodes
     /// - Parameter nodes: The nodes to check if they are all sensitive
     /// - Returns: An `Optional<Bool>` if value contains inherited sensitivity it will return nil, otherwise true if all nodes are marked as sensitive. If nodes are empty it will return nil.

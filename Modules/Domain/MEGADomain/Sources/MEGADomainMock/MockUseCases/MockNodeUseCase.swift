@@ -142,5 +142,5 @@ public final class MockNodeUseCase: NodeUseCaseProtocol, @unchecked Sendable {
         return node.isFile && node.isTakenDown
     }
 
-    public func isNodeDecrypted(node: MEGADomain.NodeEntity) throws -> Bool { true }
+    public func isNodeDecrypted(node: NodeEntity, fromFolderLink: Bool) throws -> Bool { true }
 }
