@@ -137,7 +137,7 @@ public final class Preview_NodeUseCase: NodeUseCaseProtocol {
         false
     }
 
-    public func isNodeDecrypted(node: MEGADomain.NodeEntity) -> Bool {
+    public func isNodeDecrypted(node: MEGADomain.NodeEntity, fromFolderLink: Bool) -> Bool {
         false
     }
 }

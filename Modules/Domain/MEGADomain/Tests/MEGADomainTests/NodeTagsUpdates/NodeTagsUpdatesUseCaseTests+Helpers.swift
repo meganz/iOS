@@ -94,7 +94,7 @@ extension NodeTagsUpdatesUseCaseTests {
             false
         }
 
-        func isNodeDecrypted(node: MEGADomain.NodeEntity) -> Bool { false }
+        func isNodeDecrypted(node: NodeEntity, fromFolderLink: Bool) throws -> Bool { false }
     }
 }
 

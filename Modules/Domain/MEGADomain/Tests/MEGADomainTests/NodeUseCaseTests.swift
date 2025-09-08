@@ -227,7 +227,7 @@ final class NodeUseCaseTests: XCTestCase {
         do {
             let node = NodeEntity(handle: HandleEntity(1))
             let sut = makeSUT(isNodeDecryptedValue: nil)
-            _ = try sut.isNodeDecrypted(node: node)
+            _ = try sut.isNodeDecrypted(node: node, fromFolderLink: false)
         } catch {
             XCTAssertEqual(error as? NodeErrorEntity, .nodeNotFound)
         }
@@ -238,7 +238,7 @@ final class NodeUseCaseTests: XCTestCase {
         for input in inputs {
             let node = NodeEntity(handle: HandleEntity(1))
             let sut = makeSUT(isNodeDecryptedValue: input)
-            let result = try sut.isNodeDecrypted(node: node)
+            let result = try sut.isNodeDecrypted(node: node, fromFolderLink: false)
             XCTAssertEqual(result, input)
         }
     }
