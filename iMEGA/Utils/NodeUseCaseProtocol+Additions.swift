@@ -1,7 +1,7 @@
 import MEGADomain
 
 public extension NodeUseCaseProtocol {
-    func isNodeDecryptedNonThrowing(node: NodeEntity) -> Bool {
-        (try? isNodeDecrypted(node: node) == true) ?? false
+    func isNodeDecryptedNonThrowing(node: NodeEntity, fromFolderLink: Bool = false) -> Bool {
+        (try? isNodeDecrypted(node: node, fromFolderLink: fromFolderLink) == true) ?? false
     }
 }

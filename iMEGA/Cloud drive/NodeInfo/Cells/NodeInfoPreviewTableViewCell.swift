@@ -39,7 +39,9 @@ class NodeInfoPreviewTableViewCell: UITableViewCell {
     }
     
     func configure(forNode node: MEGANode, isNodeInRubbish: Bool, folderInfo: MEGAFolderInfo?, isUndecryptedFolder: Bool) {
-        nameLabel.text = isUndecryptedFolder ? Strings.Localizable.SharedItems.Tab.Incoming.undecryptedFolderName : node.name
+        nameLabel.text = isUndecryptedFolder ? Strings.Localizable.SharedItems.Tab.Incoming.undecryptedFolderName
+        : !node.isNodeKeyDecrypted() ? Strings.Localizable.SharedItems.Tab.Recents.undecryptedFileName(1) : node.name
+
         linkedView.isHidden = !node.isExported()
         if node.type == .file {
             previewImage.mnz_setThumbnail(by: node)

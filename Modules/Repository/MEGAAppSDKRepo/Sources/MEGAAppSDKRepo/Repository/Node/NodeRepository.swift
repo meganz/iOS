@@ -191,7 +191,8 @@ public struct NodeRepository: NodeRepositoryProtocol {
         return sdk.isNodeInheritingSensitivity(node)
     }
 
-    public func isNodeDecrypted(node: NodeEntity) throws -> Bool {
+    public func isNodeDecrypted(node: NodeEntity, fromFolderLink: Bool) throws -> Bool {
+        let sdk = fromFolderLink ? sharedFolderSdk : sdk
         guard let result = sdk.node(forHandle: node.handle)?.isNodeKeyDecrypted() else {
             throw NodeErrorEntity.nodeNotFound
         }

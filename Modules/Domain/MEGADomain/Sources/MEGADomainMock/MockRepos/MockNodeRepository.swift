@@ -138,7 +138,7 @@ public final class MockNodeRepository: NodeRepositoryProtocol, @unchecked Sendab
         }
     }
 
-    public func isNodeDecrypted(node: MEGADomain.NodeEntity) throws -> Bool {
+    public func isNodeDecrypted(node: NodeEntity, fromFolderLink: Bool) throws -> Bool {
         guard let isNodeDecryptedValue else {
             throw NodeErrorEntity.nodeNotFound
         }
