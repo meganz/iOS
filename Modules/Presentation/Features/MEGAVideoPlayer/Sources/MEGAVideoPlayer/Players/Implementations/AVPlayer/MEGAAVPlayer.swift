@@ -1,5 +1,6 @@
 import AVFoundation
 @preconcurrency import Combine
+import UIKit
 
 @MainActor
 public final class MEGAAVPlayer {
@@ -159,6 +160,35 @@ extension MEGAAVPlayer: VideoRenderable {
     
     public func setScalingMode(_ mode: VideoScalingMode) {
         playerLayer?.videoGravity = mode.toAVLayerVideoGravity()
+    }
+
+    public func captureSnapshot() async -> UIImage? {
+        guard let asset = player.currentItem?.asset as? AVURLAsset,
+              duration.components.seconds > 0 else {
+            playbackDebugMessage("No video player asset or video player no initialized")
+            return nil
+        }
+
+        let imageGenerator = AVAssetImageGenerator(asset: asset)
+        imageGenerator.appliesPreferredTrackTransform = true
+        imageGenerator.requestedTimeToleranceBefore = .zero
+        imageGenerator.requestedTimeToleranceAfter = .zero
+
+        let time = player.currentTime()
+        guard time.isValid, !time.seconds.isNaN, !time.seconds.isInfinite else {
+            playbackDebugMessage("Invalid current time for snapshot: \(time)")
+            return nil
+        }
+
+        do {
+            let cgImage = try await imageGenerator.image(at: time).image
+            let image = UIImage(cgImage: cgImage)
+            playbackDebugMessage("Successfully captured snapshot at time: \(time.seconds)")
+            return image
+        } catch {
+            playbackDebugMessage("Failed to capture snapshot: \(error.localizedDescription)")
+            return nil
+        }
     }
 }
 

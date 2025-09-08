@@ -59,6 +59,8 @@ public final class MEGAPlayerViewController: UIViewController {
             PlayerOverlayView(
                 viewModel: PlayerOverlayViewModel(
                     player: player,
+                    photoPermissionHandler: PhotoPermissionHandler(),
+                    saveSnapshotUseCase: SaveSnapshotUseCase(),
                     didTapBackAction: dismissAction ?? {},
                     didTapRotateAction: { [weak self] in
                         self?.toggleOrientation()

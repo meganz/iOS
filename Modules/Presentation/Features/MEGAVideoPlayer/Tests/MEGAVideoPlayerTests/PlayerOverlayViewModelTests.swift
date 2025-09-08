@@ -11,11 +11,15 @@ struct PlayerOverlayViewModelTests {
 
     private func makeSUT(
         player: some VideoPlayerProtocol = MockVideoPlayer(),
+        photoPermissionHandler: some PhotoPermissionHandling = MockPhotoPermissionHandler(),
+        saveSnapshotUseCase: some SaveSnapshotUseCaseProtocol = MockSaveSnapshotUseCase(),
         didTapBackAction: @escaping () -> Void = {},
         didTapRotateAction: @escaping () -> Void = {}
     ) -> PlayerOverlayViewModel {
         PlayerOverlayViewModel(
             player: player,
+            photoPermissionHandler: photoPermissionHandler,
+            saveSnapshotUseCase: saveSnapshotUseCase,
             didTapBackAction: didTapBackAction,
             didTapRotateAction: didTapRotateAction
         )
@@ -840,7 +844,6 @@ struct PlayerOverlayViewModelTests {
         #expect(sut.isControlsVisible == false)
     }
 
-    
     @Test
     func lockOverlayTimer_shouldFadeOutAfter3Seconds() async {
         let sut = makeSUT()

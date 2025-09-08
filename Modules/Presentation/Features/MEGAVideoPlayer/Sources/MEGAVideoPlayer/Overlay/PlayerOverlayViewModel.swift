@@ -1,5 +1,6 @@
 import Combine
 import MEGAL10n
+import Photos
 import SwiftUI
 
 @MainActor
@@ -19,26 +20,30 @@ public final class PlayerOverlayViewModel: ObservableObject {
     @Published var isHoldSpeedActive: Bool = false
     @Published var isDoubleTapSeekActive: Bool = false
     @Published var doubleTapSeekSeconds: Int = 0
-    
-    // Lock feature properties
     @Published var isLocked: Bool = false
     @Published var isLockOverlayVisible: Bool = false
-
+    @Published var showSnapshotSuccessMessage: Bool = false
     private var autoHideTimer: Timer?
     private var doubleTapSeekTimer: Timer?
     private var lockOverlayTimer: Timer?
     private var cancellables = Set<AnyCancellable>()
 
     private let player: any VideoPlayerProtocol
+    private let photoPermissionHandler: any PhotoPermissionHandling
+    private let saveSnapshotUseCase: any SaveSnapshotUseCaseProtocol
     private let didTapBackAction: () -> Void
     private let didTapRotateAction: () -> Void
 
     public init(
         player: some VideoPlayerProtocol,
+        photoPermissionHandler: some PhotoPermissionHandling,
+        saveSnapshotUseCase: some SaveSnapshotUseCaseProtocol,
         didTapBackAction: @escaping () -> Void,
         didTapRotateAction: @escaping () -> Void = {}
     ) {
         self.player = player
+        self.photoPermissionHandler = photoPermissionHandler
+        self.saveSnapshotUseCase = saveSnapshotUseCase
         self.didTapBackAction = didTapBackAction
         self.didTapRotateAction = didTapRotateAction
     }
@@ -332,6 +337,31 @@ extension PlayerOverlayViewModel {
     private func cancelLockOverlayTimer() {
         lockOverlayTimer?.invalidate()
         lockOverlayTimer = nil
+    }
+}
+
+// MARK: - Snapshot functionality
+
+extension PlayerOverlayViewModel {
+    func didTapSnapshot() async {
+        isBottomMoreSheetPresented = false
+        let isPhotoPermissionGranted = await  photoPermissionHandler.requestPhotoLibraryAddOnlyPermissions()
+        if isPhotoPermissionGranted {
+            guard let image = await player.captureSnapshot() else { return }
+            await saveImageToGallery(image)
+        } else {
+            // Implement ask the user to open settings to grant permission in the next MR
+            print("Photo library permission not granted")
+        }
+    }
+
+    private func saveImageToGallery(_ image: UIImage) async {
+        guard await saveSnapshotUseCase.saveToPhotoLibrary(image) else {
+            return
+        }
+        showSnapshotSuccessMessage = true
+        try? await Task.sleep(nanoseconds: 2_000_000_000)
+        showSnapshotSuccessMessage = false
     }
 }
 

@@ -78,8 +78,13 @@ public struct PlayerOverlayView: View {
                             )
                     }
                 }
+
+                if viewModel.showSnapshotSuccessMessage {
+                    snapshotSuccessSnackBar
+                }
             }
         }
+        .animation(.easeInOut(duration: 0.3), value: viewModel.showSnapshotSuccessMessage)
         .animation(.easeInOut(duration: 0.3), value: viewModel.isControlsVisible)
         .buttonStyle(.plain)
         .task { viewModel.viewWillAppear() }
@@ -178,6 +183,26 @@ public struct PlayerOverlayView: View {
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
+    }
+
+    private var snapshotSuccessSnackBar: some View {
+        GeometryReader { geometry in
+            let isLandscape = geometry.size.width > geometry.size.height
+            HStack {
+                Text("Saved image to your device gallery")
+                    .font(.footnote)
+                    .foregroundColor(TokenColors.Text.inverse.swiftUI)
+                Spacer()
+            }
+            .padding(TokenSpacing._5)
+            .frame(height: 50)
+            .frame(maxWidth: 360)
+            .background(TokenColors.Components.toastBackground.swiftUI)
+            .cornerRadius(TokenSpacing._3)
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
+            .padding(.bottom, isLandscape ? 102 : 164)
+        }
+        .preferredColorScheme(.dark)
     }
 }
 
@@ -460,7 +485,7 @@ extension PlayerOverlayView {
     }
 
     private var bottomMoreSheetHeight: Int {
-        1 * Int(Constants.bottomSheetRowHeight) + Int(Constants.bottomSheetTopPadding)
+        2 * Int(Constants.bottomSheetRowHeight) + Int(Constants.bottomSheetTopPadding)
     }
 
     private var playbackSpeedsSelectionListView: some View {
@@ -509,7 +534,15 @@ extension PlayerOverlayView {
                 icon: "lock",
                 title: Strings.Localizable.VideoPlayer.Lock.lockVideoPlayer,
                 action: viewModel.didTapLock)
-
+            
+            bottomMoreSheetRowView(
+                icon: "snapshot",
+                title: "Snapshot"
+            ) {
+                Task {
+                    await viewModel.didTapSnapshot()
+                }
+            }
         }
         .padding(.top, Constants.bottomSheetTopPadding)
         .background(
@@ -528,7 +561,7 @@ extension PlayerOverlayView {
             action()
         } label: {
             HStack(spacing: TokenSpacing._4) {
-                Image(systemName: icon)
+                Image(icon, bundle: .module)
                     .foregroundStyle(TokenColors.Icon.secondary.swiftUI)
                     .frame(width: 24, height: 24, alignment: .center)
 
@@ -605,6 +638,8 @@ extension PlayerOverlayView {
                     currentTime: .seconds(345),
                     duration: .seconds(1_234)
                 ),
+                photoPermissionHandler: PhotoPermissionHandler(),
+                saveSnapshotUseCase: SaveSnapshotUseCase(),
                 didTapBackAction: {},
                 didTapRotateAction: {}
             )
