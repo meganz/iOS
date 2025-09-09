@@ -69,7 +69,8 @@ open class ChatlocationCollectionViewSizeCalculator: MessageSizeCalculator {
     }
     
     open override func messageContainerMaxWidth(for message: any MessageType, at indexPath: IndexPath) -> CGFloat {
-        min(UIDevice.current.mnz_maxSideForChatBubble(withMedia: true), 260)
+        let maxWidth = UIDevice.current.mnz_maxSideForChatBubble(withMedia: true)
+        return max(min(maxWidth, 260), 0)
     }
     
     open override func messageContainerSize(for message: any MessageType, at indexPath: IndexPath) -> CGSize {

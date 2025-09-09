@@ -267,7 +267,7 @@ open class ChatMediaCollectionViewSizeCalculator: MessageSizeCalculator {
 
                 if FileManager.default.fileExists(atPath: path) {
                     guard let previewImage = UIImage(contentsOfFile: path) else {
-                        return CGSize(width: width, height: height)
+                        return CGSize(width: max(width, 0), height: height)
                     }
                     width = previewImage.size.width
                     height = previewImage.size.height
@@ -309,7 +309,7 @@ open class ChatMediaCollectionViewSizeCalculator: MessageSizeCalculator {
                 width = height * ratio
             }
 
-            return CGSize(width: width, height: height)
+            return CGSize(width: max(width, 0), height: height)
         default:
             fatalError("messageContainerSize received unhandled MessageDataType: \(message.kind)")
         }

@@ -1989,7 +1989,6 @@
 		B672EDB3221CD96000DE6684 /* CameraUploadOperation+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = B672EDB2221CD96000DE6684 /* CameraUploadOperation+Utils.m */; };
 		B678D6D82714266300BBA4E1 /* NodeThumbnailHomeUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = B678D6D72714266300BBA4E1 /* NodeThumbnailHomeUseCase.swift */; };
 		B6790E06256B81C600154F6D /* MEGANode+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6790E05256B81C600154F6D /* MEGANode+Additions.swift */; };
-		B67B189925CAAEBA0022D6C0 /* CGSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D33D671250DBA0B00D74666 /* CGSize.swift */; };
 		B67B18C625CAB7B60022D6C0 /* FileSystemImageCacheClient+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B67B18C525CAB7B60022D6C0 /* FileSystemImageCacheClient+Additions.swift */; };
 		B67D44E12B605F7600738E04 /* SearchMock in Frameworks */ = {isa = PBXBuildFile; productRef = B67D44E02B605F7600738E04 /* SearchMock */; };
 		B67DA38A2330AF9900E62067 /* AddPhoneNumberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B67DA3892330AF9900E62067 /* AddPhoneNumberViewController.swift */; };
@@ -3490,7 +3489,6 @@
 		5D31674624FCA8FD0032492F /* UIViewController+ErrorHandling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+ErrorHandling.swift"; sourceTree = "<group>"; };
 		5D31674A24FCA9330032492F /* DevicePermissionAlerting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevicePermissionAlerting.swift; sourceTree = "<group>"; };
 		5D31674C24FCA9880032492F /* UIViewController+DevicePermissionAlerting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+DevicePermissionAlerting.swift"; sourceTree = "<group>"; };
-		5D33D671250DBA0B00D74666 /* CGSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGSize.swift; sourceTree = "<group>"; };
 		5D48593B2526C3F1007BF705 /* MyAvatarObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyAvatarObserver.swift; sourceTree = "<group>"; };
 		5D48593D2526CD5F007BF705 /* NewChatRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewChatRouter.swift; sourceTree = "<group>"; };
 		5D52C749250C4F4100286A43 /* mock-function.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "mock-function.swift"; sourceTree = "<group>"; };
@@ -8076,7 +8074,6 @@
 				C4D6750D2BB2CAE3000A1F79 /* ViewControllers */,
 				32A9DECC28D198E300ABC3F6 /* ViewModel */,
 				C47E7BDA25D1550200DB6FF5 /* AudioPlayerItem.swift */,
-				5D33D671250DBA0B00D74666 /* CGSize.swift */,
 				94A2AD3B2D6E368B0022D6B4 /* MockAudioQueueLoaderDelegate.swift */,
 				94A144612C9DE58800C34A98 /* MockChatUploader.swift */,
 				948B29492CA1671D00428787 /* MockFileManager.swift */,
@@ -16205,7 +16202,6 @@
 				243ABB4D2AB0422A00FF4A56 /* CancellableTransferRouterFactoryTests.swift in Sources */,
 				243E92062AB2DC53007ADD15 /* CancellableTransferType+CustomStringConvertible.swift in Sources */,
 				83B5E87927F6F8F50073C870 /* CancellableTransferViewModelTests.swift in Sources */,
-				B67B189925CAAEBA0022D6C0 /* CGSize.swift in Sources */,
 				B6FB5F8429A3254A0023BA6A /* ChangeTypeEntityMapperTests.swift in Sources */,
 				6DE5563629F61ED40015A950 /* ChatContentViewModelTests.swift in Sources */,
 				9949C3662A72424C000C299B /* ChatRoomAvatarInitialsGeneratorTest.swift in Sources */,

@@ -221,7 +221,8 @@ open class ChatVoiceClipCollectionViewSizeCalculator: MessageSizeCalculator {
     
     open override func messageContainerSize(for message: any MessageType, at indexPath: IndexPath) -> CGSize {
         let fitSize = CGSize(width: messageContainerMaxWidth(for: message, at: indexPath), height: .greatestFiniteMagnitude)
-        return calculateDynamicSize(for: message, fitSize: fitSize)
+        let size = calculateDynamicSize(for: message, fitSize: fitSize)
+        return size.positiveWidth
     }
     
     private func calculateDynamicSize(for message: some MessageType, fitSize: CGSize) -> CGSize {

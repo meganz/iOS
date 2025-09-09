@@ -76,7 +76,8 @@ open class ChatGiphyCollectionViewSizeCalculator: MessageSizeCalculator {
     open override func messageContainerSize(for message: any MessageType, at indexPath: IndexPath) -> CGSize {
         switch message.kind {
         case .custom:
-            return size(for: message, at: indexPath)
+            let size = size(for: message, at: indexPath)
+            return size.positiveWidth
         default:
             fatalError("messageContainerSize received unhandled MessageDataType: \(message.kind)")
         }

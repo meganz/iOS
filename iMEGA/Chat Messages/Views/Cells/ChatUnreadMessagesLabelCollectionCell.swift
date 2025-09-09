@@ -26,7 +26,8 @@ class ChatUnreadMessagesLabelCollectionCellSizeCalculator: MessageSizeCalculator
         guard let notificationMessage = message as? ChatNotificationMessage, case .unreadMessage(let count) = notificationMessage.type, count > 0 else {
             return .zero
         }
-        return calculateDynamicSize()
+        let size = calculateDynamicSize()
+        return size.positiveWidth
     }
     
     private func calculateDynamicSize() -> CGSize {

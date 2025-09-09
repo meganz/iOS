@@ -17,6 +17,7 @@ open class ChatManagementTypeCollectionViewSizeCalculator: TextMessageSizeCalcul
    
     open override func messageContainerSize(for message: any MessageType, at indexPath: IndexPath) -> CGSize {
         guard let chatMessage = message as? ChatMessage else { return .zero }
-        return super.messageContainerSize(for: ConcreteMessageType(chatMessage: chatMessage), at: indexPath)
+        let size = super.messageContainerSize(for: ConcreteMessageType(chatMessage: chatMessage), at: indexPath)
+        return size.positiveWidth
     }
 }
