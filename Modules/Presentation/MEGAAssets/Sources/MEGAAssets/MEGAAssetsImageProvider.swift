@@ -234,6 +234,47 @@ extension MEGAAssets {
         public static var passAppInMenu: SwiftUI.Image { MEGAImageBundle.passAppInMenu }
         public static var transferItAppInMenu: SwiftUI.Image { MEGAImageBundle.transferItAppInMenu }
         public static var externalLinkInMenu: SwiftUI.Image { MEGAImageBundle.externalLinkInMenu }
+        public static var arrowDown: SwiftUI.Image { MEGAImageBundle.arrowDown }
+        public static var arrowDownCircle: SwiftUI.Image { MEGAImageBundle.arrowDownCircle }
+        public static var arrowUp: SwiftUI.Image { MEGAImageBundle.arrowUp }
+        public static var camera: SwiftUI.Image { MEGAImageBundle.camera }
+        public static var checkCircle: SwiftUI.Image { MEGAImageBundle.checkCircle }
+        public static var checkStack: SwiftUI.Image { MEGAImageBundle.checkStack }
+        public static var chevronRight: SwiftUI.Image { MEGAImageBundle.chevronRight }
+        public static var clock: SwiftUI.Image { MEGAImageBundle.clock }
+        public static var clockRotate: SwiftUI.Image { MEGAImageBundle.clockRotate }
+        public static var cloudDownload: SwiftUI.Image { MEGAImageBundle.cloudDownload }
+        public static var copy01: SwiftUI.Image { MEGAImageBundle.copy01 }
+        public static var cornerUpLeft: SwiftUI.Image { MEGAImageBundle.cornerUpLeft }
+        public static var edit: SwiftUI.Image { MEGAImageBundle.edit }
+        public static var eye: SwiftUI.Image { MEGAImageBundle.eye }
+        public static var eyeOffMono: SwiftUI.Image { MEGAImageBundle.eyeOffMono }
+        public static var filePlus02: SwiftUI.Image { MEGAImageBundle.filePlus02 }
+        public static var fileScan: SwiftUI.Image { MEGAImageBundle.fileScan }
+        public static var folderArrow: SwiftUI.Image { MEGAImageBundle.folderArrow }
+        public static var folderPlus01: SwiftUI.Image { MEGAImageBundle.folderPlus01 }
+        public static var heart: SwiftUI.Image { MEGAImageBundle.heart }
+        public static var heartBroken: SwiftUI.Image { MEGAImageBundle.heartBroken }
+        public static var helpCircle: SwiftUI.Image { MEGAImageBundle.helpCircle }
+        public static var infoMono: SwiftUI.Image { MEGAImageBundle.infoMono }
+        public static var link01: SwiftUI.Image { MEGAImageBundle.link01 }
+        public static var linkOff01: SwiftUI.Image { MEGAImageBundle.linkOff01 }
+        public static var listSmall: SwiftUI.Image { MEGAImageBundle.listSmall }
+        public static var mediaDiscoveryMode: SwiftUI.Image { MEGAImageBundle.mediaDiscoveryMode }
+        public static var messagePlus: SwiftUI.Image { MEGAImageBundle.messagePlus }
+        public static var moreHorizontal: SwiftUI.Image { MEGAImageBundle.moreHorizontal }
+        public static var moveMono: SwiftUI.Image { MEGAImageBundle.moveMono }
+        public static var pen2: SwiftUI.Image { MEGAImageBundle.pen2 }
+        public static var photosApp: SwiftUI.Image { MEGAImageBundle.photosApp }
+        public static var rectangleStackPlus: SwiftUI.Image { MEGAImageBundle.rectangleStackPlus }
+        public static var squares4: SwiftUI.Image { MEGAImageBundle.squares4 }
+        public static var tagSimple: SwiftUI.Image { MEGAImageBundle.tagSimple }
+        public static var trash: SwiftUI.Image { MEGAImageBundle.trash }
+        public static var glassCloud: SwiftUI.Image { MEGAImageBundle.glassCloud }
+        public static var glassFolder: SwiftUI.Image { MEGAImageBundle.glassFolder }
+        public static var glassHardDrive: SwiftUI.Image { MEGAImageBundle.glassHardDrive }
+        public static var glassSearch02: SwiftUI.Image { MEGAImageBundle.glassSearch02 }
+        public static var glassTrash: SwiftUI.Image { MEGAImageBundle.glassTrash }
     }
 }
 
@@ -621,6 +662,47 @@ extension MEGAAssets {
         public static var blueFolder: UIKit.UIImage { MEGAUIImageBundle.blueFolder }
         public static var purpleFolder: UIKit.UIImage { MEGAUIImageBundle.purpleFolder }
         public static var greyFolder: UIKit.UIImage { MEGAUIImageBundle.greyFolder }
-
+        public static var arrowDown: UIKit.UIImage { MEGAUIImageBundle.arrowDown }
+        public static var arrowDownCircle: UIKit.UIImage { MEGAUIImageBundle.arrowDownCircle }
+        public static var arrowUp: UIKit.UIImage { MEGAUIImageBundle.arrowUp }
+        public static var camera: UIKit.UIImage { MEGAUIImageBundle.camera }
+        public static var checkCircle: UIKit.UIImage { MEGAUIImageBundle.checkCircle }
+        public static var checkStack: UIKit.UIImage { MEGAUIImageBundle.checkStack }
+        public static var chevronRight: UIKit.UIImage { MEGAUIImageBundle.chevronRight }
+        public static var clock: UIKit.UIImage { MEGAUIImageBundle.clock }
+        public static var clockRotate: UIKit.UIImage { MEGAUIImageBundle.clockRotate }
+        public static var cloudDownload: UIKit.UIImage { MEGAUIImageBundle.cloudDownload }
+        public static var copy01: UIKit.UIImage { MEGAUIImageBundle.copy01 }
+        public static var cornerUpLeft: UIKit.UIImage { MEGAUIImageBundle.cornerUpLeft }
+        public static var edit: UIKit.UIImage { MEGAUIImageBundle.edit }
+        public static var externalLink: UIKit.UIImage { MEGAUIImageBundle.externalLink }
+        public static var eye: UIKit.UIImage { MEGAUIImageBundle.eye }
+        public static var eyeOffMono: UIKit.UIImage { MEGAUIImageBundle.eyeOffMono }
+        public static var filePlus02: UIKit.UIImage { MEGAUIImageBundle.filePlus02 }
+        public static var fileScan: UIKit.UIImage { MEGAUIImageBundle.fileScan }
+        public static var folderArrow: UIKit.UIImage { MEGAUIImageBundle.folderArrow }
+        public static var folderPlus01: UIKit.UIImage { MEGAUIImageBundle.folderPlus01 }
+        public static var heart: UIKit.UIImage { MEGAUIImageBundle.heart }
+        public static var heartBroken: UIKit.UIImage { MEGAUIImageBundle.heartBroken }
+        public static var helpCircle: UIKit.UIImage { MEGAUIImageBundle.helpCircle }
+        public static var infoMono: UIKit.UIImage { MEGAUIImageBundle.infoMono }
+        public static var link01: UIKit.UIImage { MEGAUIImageBundle.link01 }
+        public static var linkOff01: UIKit.UIImage { MEGAUIImageBundle.linkOff01 }
+        public static var listSmall: UIKit.UIImage { MEGAUIImageBundle.listSmall }
+        public static var mediaDiscoveryMode: UIKit.UIImage { MEGAUIImageBundle.mediaDiscoveryMode }
+        public static var messagePlus: UIKit.UIImage { MEGAUIImageBundle.messagePlus }
+        public static var moreHorizontal: UIKit.UIImage { MEGAUIImageBundle.moreHorizontal }
+        public static var moveMono: UIKit.UIImage { MEGAUIImageBundle.moveMono }
+        public static var pen2: UIKit.UIImage { MEGAUIImageBundle.pen2 }
+        public static var photosApp: UIKit.UIImage { MEGAUIImageBundle.photosApp }
+        public static var rectangleStackPlus: UIKit.UIImage { MEGAUIImageBundle.rectangleStackPlus }
+        public static var squares4: UIKit.UIImage { MEGAUIImageBundle.squares4 }
+        public static var tagSimple: UIKit.UIImage { MEGAUIImageBundle.tagSimple }
+        public static var trash: UIKit.UIImage { MEGAUIImageBundle.trash }
+        public static var glassCloud: UIKit.UIImage { MEGAUIImageBundle.glassCloud }
+        public static var glassFolder: UIKit.UIImage { MEGAUIImageBundle.glassFolder }
+        public static var glassHardDrive: UIKit.UIImage { MEGAUIImageBundle.glassHardDrive }
+        public static var glassSearch02: UIKit.UIImage { MEGAUIImageBundle.glassSearch02 }
+        public static var glassTrash: UIKit.UIImage { MEGAUIImageBundle.glassTrash }
     }
 }

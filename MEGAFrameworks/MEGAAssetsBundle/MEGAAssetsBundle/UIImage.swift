@@ -385,4 +385,46 @@ public struct MEGAUIImageBundle {
     public static var blueFolder: UIImage { UIImage.blueFolder }
     public static var purpleFolder: UIImage { UIImage.purpleFolder }
     public static var greyFolder: UIImage { UIImage.greyFolder }
+    public static var arrowDown: UIImage { UIImage.arrowDown }
+    public static var arrowDownCircle: UIImage { UIImage.arrowDownCircle }
+    public static var arrowUp: UIImage { UIImage.arrowUp }
+    public static var camera: UIImage { UIImage.camera }
+    public static var checkCircle: UIImage { UIImage.checkCircle }
+    public static var checkStack: UIImage { UIImage.checkStack }
+    public static var chevronRight: UIImage { UIImage.chevronRight }
+    public static var clock: UIImage { UIImage.clock }
+    public static var clockRotate: UIImage { UIImage.clockRotate }
+    public static var cloudDownload: UIImage { UIImage.cloudDownload }
+    public static var copy01: UIImage { UIImage.copy01 }
+    public static var cornerUpLeft: UIImage { UIImage.cornerUpLeft }
+    public static var edit: UIImage { UIImage.edit }
+    public static var externalLink: UIImage { UIImage.externalLink }
+    public static var eye: UIImage { UIImage.eye }
+    public static var eyeOffMono: UIImage { UIImage.eyeOffMono }
+    public static var filePlus02: UIImage { UIImage.filePlus02 }
+    public static var fileScan: UIImage { UIImage.fileScan }
+    public static var folderArrow: UIImage { UIImage.folderArrow }
+    public static var folderPlus01: UIImage { UIImage.folderPlus01 }
+    public static var heart: UIImage { UIImage.heart }
+    public static var heartBroken: UIImage { UIImage.heartBroken }
+    public static var helpCircle: UIImage { UIImage.helpCircle }
+    public static var infoMono: UIImage { UIImage.infoMono }
+    public static var link01: UIImage { UIImage.link01 }
+    public static var linkOff01: UIImage { UIImage.linkOff01 }
+    public static var listSmall: UIImage { UIImage.listSmall }
+    public static var mediaDiscoveryMode: UIImage { UIImage.mediaDiscoveryMode }
+    public static var messagePlus: UIImage { UIImage.messagePlus }
+    public static var moreHorizontal: UIImage { UIImage.moreHorizontal }
+    public static var moveMono: UIImage { UIImage.moveMono }
+    public static var pen2: UIImage { UIImage.pen2 }
+    public static var photosApp: UIImage { UIImage.photosApp }
+    public static var rectangleStackPlus: UIImage { UIImage.rectangleStackPlus }
+    public static var squares4: UIImage { UIImage.squares4 }
+    public static var tagSimple: UIImage { UIImage.tagSimple }
+    public static var trash: UIImage { UIImage.trash }
+    public static var glassCloud: UIImage { UIImage.glassCloud }
+    public static var glassFolder: UIImage { UIImage.glassFolder }
+    public static var glassHardDrive: UIImage { UIImage.glassHardDrive }
+    public static var glassSearch02: UIImage { UIImage.glassSearch02 }
+    public static var glassTrash: UIImage { UIImage.glassTrash }
 }
