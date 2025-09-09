@@ -17,7 +17,7 @@ public final class PlayerOverlayViewModel: ObservableObject {
     @Published var isBottomMoreSheetPresented: Bool = false
     @Published var scalingMode: VideoScalingMode = .fit
     @Published var isSeeking: Bool = false
-    @Published var isHoldSpeedActive: Bool = false
+    @Published var shouldShowHoldToSpeedChip: Bool = false
     @Published var isDoubleTapSeekActive: Bool = false
     @Published var doubleTapSeekSeconds: Int = 0
     @Published var isLocked: Bool = false
@@ -370,13 +370,15 @@ extension PlayerOverlayViewModel {
 extension PlayerOverlayViewModel {
     func beginHoldToSpeed() {
         guard duration.components.seconds > 0 else { return }
-        isHoldSpeedActive = true
+        if currentSpeed != .double {
+            shouldShowHoldToSpeedChip = true
+        }
         player.changeRate(to: PlaybackSpeed.double.rawValue)
         isControlsVisible = false
     }
 
     func endHoldToSpeed() {
-        isHoldSpeedActive = false
+        shouldShowHoldToSpeedChip = false
         player.changeRate(to: currentSpeed.rawValue)
     }
 }

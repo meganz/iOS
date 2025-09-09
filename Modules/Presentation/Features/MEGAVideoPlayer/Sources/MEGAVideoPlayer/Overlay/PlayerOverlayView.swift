@@ -64,8 +64,8 @@ public struct PlayerOverlayView: View {
                     bottomToolbar
                 }
 
-                if viewModel.isHoldSpeedActive {
-                    holdSpeedChip
+                if viewModel.shouldShowHoldToSpeedChip {
+                    holdToSpeedChip
                 }
 
                 if viewModel.isDoubleTapSeekActive {
@@ -151,7 +151,7 @@ public struct PlayerOverlayView: View {
             .clipShape(Capsule())
     }
 
-    private var holdSpeedChip: some View {
+    private var holdToSpeedChip: some View {
         chipView {
             HStack(spacing: TokenSpacing._3) {
                 Text("2x")
