@@ -120,7 +120,7 @@ extension ContextMenuModel {
         case .saveToPhotos:
             return ContextMenuDataModel(identifier: "saveToPhotos", title: Strings.Localizable.saveToPhotos, image: MEGAAssets.UIImage.saveToPhotos)
         case .hide:
-            return ContextMenuDataModel(identifier: "hide", title: Strings.Localizable.General.MenuAction.Hide.title, image: MEGAAssets.UIImage.eyeOff)
+            return ContextMenuDataModel(identifier: "hide", title: Strings.Localizable.General.MenuAction.Hide.title, image: MEGAAssets.UIImage.eyeOff) 
         case .unhide:
             return ContextMenuDataModel(identifier: "unhide", title: Strings.Localizable.General.MenuAction.Unhide.title, image: MEGAAssets.UIImage.eyeOn)
         case .dispute:

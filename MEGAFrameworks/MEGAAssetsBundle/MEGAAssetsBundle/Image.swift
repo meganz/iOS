@@ -212,4 +212,48 @@ public struct MEGAImageBundle {
     public static var passAppInMenu: Image { Image(.passAppInMenu) }
     public static var transferItAppInMenu: Image { Image(.transferItAppInMenu) }
     public static var externalLinkInMenu: Image { Image(.externalLinkInMenu) }
+
+    // MARK: - Revamped Cloud Drive
+    public static var arrowDown: Image { Image(.arrowDown) }
+    public static var arrowDownCircle: Image { Image(.arrowDownCircle) }
+    public static var arrowUp: Image { Image(.arrowUp) }
+    public static var camera: Image { Image(.camera) }
+    public static var checkCircle: Image { Image(.checkCircle) }
+    public static var checkStack: Image { Image(.checkStack) }
+    public static var chevronRight: Image { Image(.chevronRight) }
+    public static var clock: Image { Image(.clock) }
+    public static var clockRotate: Image { Image(.clockRotate) }
+    public static var cloudDownload: Image { Image(.cloudDownload) }
+    public static var copy01: Image { Image(.copy01) }
+    public static var cornerUpLeft: Image { Image(.cornerUpLeft) }
+    public static var edit: Image { Image(.edit) }
+    public static var eye: Image { Image(.eye) }
+    public static var eyeOffMono: Image { Image(.eyeOffMono) }
+    public static var filePlus02: Image { Image(.filePlus02) }
+    public static var fileScan: Image { Image(.fileScan) }
+    public static var folderArrow: Image { Image(.folderArrow) }
+    public static var folderPlus01: Image { Image(.folderPlus01) }
+    public static var heart: Image { Image(.heart) }
+    public static var heartBroken: Image { Image(.heartBroken) }
+    public static var helpCircle: Image { Image(.helpCircle) }
+    public static var infoMono: Image { Image(.infoMono) }
+    public static var link01: Image { Image(.link01) }
+    public static var linkOff01: Image { Image(.linkOff01) }
+    public static var listSmall: Image { Image(.listSmall) }
+    public static var mediaDiscoveryMode: Image { Image(.mediaDiscoveryMode) }
+    public static var messagePlus: Image { Image(.messagePlus) }
+    public static var moreHorizontal: Image { Image(.moreHorizontal) }
+    public static var moveMono: Image { Image(.moveMono) }
+    public static var pen2: Image { Image(.pen2) }
+    public static var photosApp: Image { Image(.photosApp) }
+    public static var rectangleStackPlus: Image { Image(.rectangleStackPlus) }
+    public static var squares4: Image { Image(.squares4) }
+    public static var tagSimple: Image { Image(.tagSimple) }
+    public static var trash: Image { Image(.trash) }
+    public static var glassCloud: Image { Image(.glassCloud) }
+    public static var glassFolder: Image { Image(.glassFolder) }
+    public static var glassHardDrive: Image { Image(.glassHardDrive) }
+    public static var glassSearch02: Image { Image(.glassSearch02) }
+    public static var glassTrash: Image { Image(.glassTrash) }
+
 }
