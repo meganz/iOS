@@ -40,7 +40,7 @@ struct PlayerOverlayViewModelTests {
         #expect(sut.isPlaybackBottomSheetPresented == false)
         #expect(sut.scalingMode == .fit)
         #expect(sut.isSeeking == false)
-        #expect(sut.isHoldSpeedActive == false)
+        #expect(sut.shouldShowHoldToSpeedChip == false)
         #expect(sut.isDoubleTapSeekActive == false)
         #expect(sut.doubleTapSeekSeconds == 0)
         #expect(sut.isLocked == false)
@@ -296,7 +296,7 @@ struct PlayerOverlayViewModelTests {
     ])
     func beginHoldToSpeed_whenDifferentVideoLoadedState_shouldSetRightActivateHoldSpeed(
         duration: Duration,
-        expectedIsHoldSpeedActive: Bool
+        expectedShouldShowHoldToSpeedChip: Bool
     ) {
         let mockPlayer = MockVideoPlayer()
         let sut = makeSUT(player: mockPlayer)
@@ -304,21 +304,22 @@ struct PlayerOverlayViewModelTests {
 
         sut.beginHoldToSpeed()
 
-        #expect(sut.isHoldSpeedActive == expectedIsHoldSpeedActive)
+        #expect(sut.shouldShowHoldToSpeedChip == expectedShouldShowHoldToSpeedChip)
     }
 
     @Test(arguments: [
-        PlaybackSpeed.quarter,
-        .half,
-        .threeQuarter,
-        .normal,
-        .oneQuarter,
-        .oneHalf,
-        .oneThreeQuarter,
-        .double
+        (PlaybackSpeed.quarter, true),
+        (.half, true),
+        (.threeQuarter, true),
+        (.normal, true),
+        (.oneQuarter, true),
+        (.oneHalf, true),
+        (.oneThreeQuarter, true),
+        (.double, false)
     ])
     func beginHoldToSpeed_whenDifferentSpeeds_shouldActivateHoldSpeed(
-        currentSpeed: PlaybackSpeed
+        currentSpeed: PlaybackSpeed,
+        expectedShouldShowHoldToSpeedChip: Bool
     ) {
         let mockPlayer = MockVideoPlayer()
         let sut = makeSUT(player: mockPlayer)
@@ -327,7 +328,7 @@ struct PlayerOverlayViewModelTests {
 
         sut.beginHoldToSpeed()
 
-        #expect(sut.isHoldSpeedActive == true)
+        #expect(sut.shouldShowHoldToSpeedChip == expectedShouldShowHoldToSpeedChip)
         #expect(sut.isControlsVisible == false)
         #expect(mockPlayer.changeRateCallCount == 1)
         #expect(mockPlayer.changeRateValue == PlaybackSpeed.double.rawValue)
@@ -339,11 +340,11 @@ struct PlayerOverlayViewModelTests {
         let sut = makeSUT(player: mockPlayer)
         sut.duration = .seconds(100)
         sut.currentSpeed = .normal
-        sut.isHoldSpeedActive = true
+        sut.shouldShowHoldToSpeedChip = true
 
         sut.endHoldToSpeed()
 
-        #expect(sut.isHoldSpeedActive == false)
+        #expect(sut.shouldShowHoldToSpeedChip == false)
         #expect(mockPlayer.changeRateCallCount == 1)
         #expect(mockPlayer.changeRateValue == PlaybackSpeed.normal.rawValue)
     }
@@ -357,14 +358,14 @@ struct PlayerOverlayViewModelTests {
 
         // Begin hold
         sut.beginHoldToSpeed()
-        #expect(sut.isHoldSpeedActive == true)
+        #expect(sut.shouldShowHoldToSpeedChip == true)
         #expect(sut.isControlsVisible == false)
         #expect(mockPlayer.changeRateCallCount == 1)
         #expect(mockPlayer.changeRateValue == PlaybackSpeed.double.rawValue)
 
         // End hold
         sut.endHoldToSpeed()
-        #expect(sut.isHoldSpeedActive == false)
+        #expect(sut.shouldShowHoldToSpeedChip == false)
         #expect(mockPlayer.changeRateCallCount == 2)
         #expect(mockPlayer.changeRateValue == PlaybackSpeed.oneHalf.rawValue)
     }
