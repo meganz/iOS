@@ -96,14 +96,10 @@ final class PhotosBrowserCollectionViewCoordinator: NSObject {
     }
     
     private func configureCell(_ cell: UICollectionViewCell, with entity: PhotosBrowserLibraryEntity) {
-        if #available(iOS 16.0, *) {
-            cell.contentConfiguration = UIHostingConfiguration(content: {
-                PhotosBrowserImageCellContent(viewModel: PhotosBrowserImageCellContentViewModel(entity: entity))
-            })
-            .margins(.all, 0)
-        } else {
-            configureCellBelowiOS16(cell: cell, with: entity)
-        }
+        cell.contentConfiguration = UIHostingConfiguration(content: {
+            PhotosBrowserImageCellContent(viewModel: PhotosBrowserImageCellContentViewModel(entity: entity))
+        })
+        .margins(.all, 0)
     }
     
     private func configureCellBelowiOS16(cell: UICollectionViewCell, with entity: PhotosBrowserLibraryEntity) {

@@ -15,18 +15,14 @@ struct ListViewContainer<Content>: View where Content: View {
             if hasNetworkConnection {
                 content()
                     .sheet(item: $selectedItem) { selectedItem in
-                        if #available(iOS 16, *) {
-                            let headerHeight = max(estimatedHeaderHeight(for: selectedItem, width: geometry.size.width), 60.0)
-                            let actionsHeight = CGFloat(selectedItem.availableActions.count) * sheetButtonsHeight
-                            let totalHeight = headerHeight + actionsHeight + sheetBottomPadding
-
-                            sheetContent(selectedItem: selectedItem)
-                                .presentationDetents([
-                                    .height(totalHeight)
-                                ])
-                        } else {
-                            sheetContent(selectedItem: selectedItem)
-                        }
+                        let headerHeight = max(estimatedHeaderHeight(for: selectedItem, width: geometry.size.width), 60.0)
+                        let actionsHeight = CGFloat(selectedItem.availableActions.count) * sheetButtonsHeight
+                        let totalHeight = headerHeight + actionsHeight + sheetBottomPadding
+                        
+                        sheetContent(selectedItem: selectedItem)
+                            .presentationDetents([
+                                .height(totalHeight)
+                            ])
                     }
             } else {
                 ContentUnavailableView(label: {

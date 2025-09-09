@@ -11,7 +11,7 @@ let package = Package(
     name: "MEGARepo",
     platforms: [
         .macOS(.v10_15),
-        .iOS(.v15)
+        .iOS(.v16)
     ],
     products: [
         .library(

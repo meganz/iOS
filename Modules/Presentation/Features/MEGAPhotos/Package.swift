@@ -11,7 +11,8 @@ let settings: [SwiftSetting] = [
 let package = Package(
     name: "MEGAPhotos",
     platforms: [
-        .macOS(.v10_15), .iOS(.v15)
+        .macOS(.v10_15),
+        .iOS(.v16)
     ],
     products: [
         .library(

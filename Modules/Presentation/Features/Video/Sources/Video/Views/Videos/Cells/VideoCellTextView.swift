@@ -110,7 +110,7 @@ private struct VideoCellTitleTextRepresentable: UIViewRepresentable {
     }
     
     func makeUIView(context: Context) -> UITextView {
-        let textView: UITextView = if #available(iOS 16, *) { UITextView() } else { iOS15SupportTextView() }
+        let textView: UITextView = UITextView()
         textView.isScrollEnabled = false
         textView.isEditable = false
         textView.isSelectable = false
@@ -154,7 +154,6 @@ private struct VideoCellTitleTextRepresentable: UIViewRepresentable {
         textView.attributedText = createAttributedTitle()
     }
     
-    @available(iOS 16.0, *)
     func sizeThatFits(_ proposal: ProposedViewSize, uiView: UITextView, context: Context) -> CGSize? {
         let proposedSize = proposal.replacingUnspecifiedDimensions(by: .init(
             width: CGFloat.greatestFiniteMagnitude,
@@ -210,24 +209,5 @@ private struct VideoCellTitleTextRepresentable: UIViewRepresentable {
         imageAttachment.image = image
         imageAttachment.bounds = CGRect(x: 0, y: 0, width: 12, height: 12)
         return NSAttributedString(attachment: imageAttachment)
-    }
-}
-
-private class iOS15SupportTextView: UITextView {
-    
-    override func willMove(toWindow newWindow: UIWindow?) {
-        super.willMove(toWindow: newWindow)
-        
-        guard superview?.frame != .zero else {
-            return
-        }
-        
-        invalidateIntrinsicContentSize()
-    }
-    
-    override var intrinsicContentSize: CGSize {
-        var sizeToFit = super.superview?.frame.size ?? super.intrinsicContentSize
-        sizeToFit.height = .greatestFiniteMagnitude
-        return sizeThatFits(sizeToFit)
     }
 }

@@ -7,11 +7,7 @@ public struct L10nRepository: L10nRepositoryProtocol {
     }
     
     public var deviceRegion: String {
-        if #available(iOS 16, *) {
-            Locale.autoupdatingCurrent.region?.identifier ?? Locale.autoupdatingCurrent.identifier
-        } else {
-            Locale.autoupdatingCurrent.regionCode ?? Locale.autoupdatingCurrent.identifier
-        }
+        Locale.autoupdatingCurrent.region?.identifier ?? Locale.autoupdatingCurrent.identifier
     }
     
     public init() {}

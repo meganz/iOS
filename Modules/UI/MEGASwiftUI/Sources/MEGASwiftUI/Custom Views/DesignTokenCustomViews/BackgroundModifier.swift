@@ -8,14 +8,9 @@ public struct BackgroundModifier: ViewModifier {
     
     @ViewBuilder
     func background(content: Content) -> some View {
-        if #available(iOS 16.0, *) {
-            content
-                .scrollContentBackground(.hidden)
-                .background(TokenColors.Background.page.swiftUI)
-        } else {
-            content
-                .background(TokenColors.Background.page.swiftUI)
-        }
+        content
+            .scrollContentBackground(.hidden)
+            .background(TokenColors.Background.page.swiftUI)
     }
 }
 

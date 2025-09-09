@@ -75,7 +75,7 @@ fileprivate extension PlanEntity {
                 numberFormatter.locale = product.priceLocale
                 return numberFormatter.string(for: product.price) ?? ""
             }(),
-            currency: product.priceLocale.currencyCode ?? ""
+            currency: product.priceLocale.currency?.identifier ?? ""
         )
 
         self.storageLimit = storageLimit
