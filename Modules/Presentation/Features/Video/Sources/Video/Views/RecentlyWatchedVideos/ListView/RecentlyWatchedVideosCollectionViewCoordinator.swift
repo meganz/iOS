@@ -124,14 +124,10 @@ final class RecentlyWatchedVideosCollectionViewCoordinator: NSObject {
     private func configureHeader(_ cell: UICollectionViewCell, text: String) {
         prepareCellForReuse(cell)
         
-        if #available(iOS 16.0, *) {
-            cell.contentConfiguration = UIHostingConfiguration {
-                RecentlyWatchedVideosHeaderView(text: text)
-            }
-            .margins(.all, 0)
-        } else {
-            configureHeaderCellBelowiOS16(text: text, cell: cell)
+        cell.contentConfiguration = UIHostingConfiguration {
+            RecentlyWatchedVideosHeaderView(text: text)
         }
+        .margins(.all, 0)
     }
     
     private func configureHeaderCellBelowiOS16(text: String, cell: UICollectionViewCell) {
@@ -155,21 +151,17 @@ final class RecentlyWatchedVideosCollectionViewCoordinator: NSObject {
     private func configureCell(_ cell: UICollectionViewCell, cellViewModel: VideoCellViewModel) {
         prepareCellForReuse(cell)
         
-        if #available(iOS 16.0, *) {
-            cell.contentConfiguration = UIHostingConfiguration {
-                VideoCellView(
-                    viewModel: cellViewModel,
-                    selection: self.videoSelection(),
-                    onTappedCheckMark: {},
-                    videoConfig: videoConfig
-                )
-                .background(videoConfig.colorAssets.pageBackgroundColor)
-            }
-            .margins(.all, 0)
-            cell.clipsToBounds = true
-        } else {
-            configureCellBelowiOS16(cellViewModel: cellViewModel, cell: cell)
+        cell.contentConfiguration = UIHostingConfiguration {
+            VideoCellView(
+                viewModel: cellViewModel,
+                selection: self.videoSelection(),
+                onTappedCheckMark: {},
+                videoConfig: videoConfig
+            )
+            .background(videoConfig.colorAssets.pageBackgroundColor)
         }
+        .margins(.all, 0)
+        cell.clipsToBounds = true
     }
     
     private func configureCellBelowiOS16(cellViewModel: VideoCellViewModel, cell: UICollectionViewCell) {
@@ -200,11 +192,7 @@ final class RecentlyWatchedVideosCollectionViewCoordinator: NSObject {
     }
     
     private func prepareCellForReuse(_ cell: UICollectionViewCell) {
-        if #available(iOS 16.0, *) {
-            cell.contentConfiguration = nil
-        } else {
-            cell.contentView.subviews.forEach { $0.removeFromSuperview() }
-        }
+        cell.contentConfiguration = nil
     }
     
     private func onTapMoreOptions(_ video: NodeEntity, sender: Any) {

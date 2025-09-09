@@ -9,7 +9,8 @@ let settings: [SwiftSetting] = [.unsafeFlags(["-warnings-as-errors"]),
 let package = Package(
     name: "ChatRepo",
     platforms: [
-        .macOS(.v10_15), .iOS(.v15)
+        .macOS(.v10_15),
+        .iOS(.v16)
     ],
     products: [
         .library(

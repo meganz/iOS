@@ -60,14 +60,11 @@ struct VideoListView: View {
         if #available(iOS 16.4, *) {
             iOS16SupportBottomSheetView()
                 .presentationCornerRadius(16)
-        } else if #available(iOS 16, *) {
-            iOS16SupportBottomSheetView()
         } else {
-            bottomSheetView()
+            iOS16SupportBottomSheetView()
         }
     }
     
-    @available(iOS 16.0, *)
     private func iOS16SupportBottomSheetView() -> some View {
         bottomSheetView()
             .presentationDetents([ .height(presentationDetentsHeight) ])

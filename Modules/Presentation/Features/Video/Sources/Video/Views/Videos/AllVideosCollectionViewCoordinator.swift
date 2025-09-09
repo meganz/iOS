@@ -153,51 +153,21 @@ final class AllVideosCollectionViewCoordinator: NSObject {
     private func configureCell(_ cell: UICollectionViewCell, cellViewModel: VideoCellViewModel, adapter: VideoSelectionCheckmarkUIUpdateAdapter) {
         prepareCellForReuse(cell)
         
-        if #available(iOS 16.0, *) {
-            cell.contentConfiguration = UIHostingConfiguration {
-                VideoCellView(
-                    viewModel: cellViewModel,
-                    selection: self.representer.selection,
-                    onTappedCheckMark: adapter.onTappedCheckMark,
-                    videoConfig: videoConfig
-                )
-                .background(videoConfig.colorAssets.pageBackgroundColor)
-            }
-            .margins(.all, 0)
-            cell.clipsToBounds = true
-        } else {
-            configureCellBelowiOS16(cellViewModel: cellViewModel, cell: cell, adapter: adapter)
+        cell.contentConfiguration = UIHostingConfiguration {
+            VideoCellView(
+                viewModel: cellViewModel,
+                selection: self.representer.selection,
+                onTappedCheckMark: adapter.onTappedCheckMark,
+                videoConfig: videoConfig
+            )
+            .background(videoConfig.colorAssets.pageBackgroundColor)
         }
-    }
-    
-    private func configureCellBelowiOS16(cellViewModel: VideoCellViewModel, cell: UICollectionViewCell, adapter: VideoSelectionCheckmarkUIUpdateAdapter) {
-        let cellView = VideoCellView(
-            viewModel: cellViewModel,
-            selection: self.representer.selection,
-            onTappedCheckMark: adapter.onTappedCheckMark,
-            videoConfig: videoConfig
-        )
-        
-        let cellHostingController = UIHostingController(rootView: cellView)
-        cellHostingController.view.backgroundColor = .clear
-        cellHostingController.view.translatesAutoresizingMaskIntoConstraints = false
-        cell.contentView.addSubview(cellHostingController.view)
-        cell.contentView.backgroundColor = UIColor(videoConfig.colorAssets.pageBackgroundColor)
-        
-        NSLayoutConstraint.activate([
-            cellHostingController.view.topAnchor.constraint(equalTo: cell.contentView.topAnchor),
-            cellHostingController.view.leadingAnchor.constraint(equalTo: cell.contentView.leadingAnchor),
-            cellHostingController.view.trailingAnchor.constraint(equalTo: cell.contentView.trailingAnchor),
-            cellHostingController.view.bottomAnchor.constraint(equalTo: cell.contentView.bottomAnchor)
-        ])
+        .margins(.all, 0)
+        cell.clipsToBounds = true
     }
     
     private func prepareCellForReuse(_ cell: UICollectionViewCell) {
-        if #available(iOS 16.0, *) {
-            cell.contentConfiguration = nil
-        } else {
-            cell.contentView.subviews.forEach { $0.removeFromSuperview() }
-        }
+        cell.contentConfiguration = nil
     }
     
     private func onTapMoreOptions(_ video: NodeEntity, sender: Any) {

@@ -86,16 +86,8 @@ final class VisualMediaSearchResultFoundCollectionViewCoordinator: NSObject {
     }
     
     private func configure(_ cell: UICollectionViewCell, @ViewBuilder content: () -> some View) {
-        if #available(iOS 16.0, *) {
-            cell.contentConfiguration = UIHostingConfiguration(content: content)
-                .margins(.all, 0)
-        } else {
-            let cellHostingController = UIHostingController(rootView: content())
-            cellHostingController.view.translatesAutoresizingMaskIntoConstraints = false
-            cellHostingController.view.backgroundColor = .clear
-            cell.contentView.addSubview(cellHostingController.view)
-            cell.contentView.wrap(cellHostingController.view)
-        }
+        cell.contentConfiguration = UIHostingConfiguration(content: content)
+            .margins(.all, 0)
     }
 }
 

@@ -11,7 +11,7 @@ let settings: [SwiftSetting] = [
 let package = Package(
     name: "Chat",
     platforms: [
-        .iOS(.v15)
+        .iOS(.v16)
     ],
     products: [
         .library(

@@ -516,16 +516,7 @@ public class SearchResultsViewModel: ObservableObject {
             
             selectedRowIds.formUnion(selectedItems.map { $0.id })
             
-            if #available(iOS 16.0, *) {
-                withAnimation {
-                    emptyViewModel = Self.makeEmptyView(
-                        whenListItems: listItems.isEmpty,
-                        query: query,
-                        appliedChips: results.appliedChips,
-                        config: config
-                    )
-                }
-            } else {
+            withAnimation {
                 emptyViewModel = Self.makeEmptyView(
                     whenListItems: listItems.isEmpty,
                     query: query,
@@ -700,13 +691,7 @@ public class SearchResultsViewModel: ObservableObject {
             config: config
         )
 
-        // Disable animation for iOS 15 to avoid app crash
-        // IOS-9571: iOS 15 crash adding files to an empty folder
-        if #available(iOS 16.0, *) {
-            withAnimation {
-                emptyViewModel = newEmptyViewModel
-            }
-        } else {
+        withAnimation {
             emptyViewModel = newEmptyViewModel
         }
     }

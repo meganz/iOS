@@ -1,6 +1,5 @@
 import SwiftUI
 
-@available(iOS 16, *)
 struct ScrollViewDismissKeyboardInteractivelyModifier: ViewModifier {
     func body(content: Content) -> some View {
         content
@@ -19,10 +18,6 @@ struct ScrollViewDismissKeyboardOnDragModifier: ViewModifier {
 public extension View {
     @ViewBuilder
     func customScrollViewDismissKeyboard() -> some View {
-        if #available(iOS 16, *) {
-            self.modifier(ScrollViewDismissKeyboardInteractivelyModifier())
-        } else {
-            self.modifier(ScrollViewDismissKeyboardOnDragModifier())
-        }
+        self.modifier(ScrollViewDismissKeyboardInteractivelyModifier())
     }
 }

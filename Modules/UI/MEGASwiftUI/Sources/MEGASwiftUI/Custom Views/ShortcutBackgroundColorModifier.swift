@@ -1,7 +1,6 @@
 import SwiftUI
 import WidgetKit
 
-@available(iOS 16.0, *)
 public struct ShortcutBackgroundColorModifier: ViewModifier {
     let topBackgroundColor: Color
     let bottomBackgroundColor: Color
@@ -18,7 +17,6 @@ public struct ShortcutBackgroundColorModifier: ViewModifier {
     }
 }
 
-@available(iOS 16.0, *)
 public extension View {
     func shortcutBackgroundColor(topBackgroundColor: Color, bottomBackgroundColor: Color, renderMode: WidgetRenderingMode) -> some View {
         modifier(ShortcutBackgroundColorModifier(topBackgroundColor: topBackgroundColor,

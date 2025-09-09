@@ -23,20 +23,11 @@ struct ActionSheetContentViewModifier<HeaderView: View>: ViewModifier {
     @ViewBuilder
     private func bottomView() -> some View {
         if #available(iOS 16.4, *) {
-            iOS16SupportBottomSheetView()
+            bottomSheetView()
                 .presentationCornerRadius(16)
-        } else if #available(iOS 16, *) {
-            iOS16SupportBottomSheetView()
         } else {
             bottomSheetView()
         }
-    }
-    
-    @available(iOS 16.0, *)
-    private func iOS16SupportBottomSheetView() -> some View {
-        bottomSheetView()
-            .presentationDetents([ .height(sheetHeight) ])
-            .presentationDragIndicator(.hidden)
     }
     
     private func bottomSheetView() -> some View {
@@ -47,6 +38,8 @@ struct ActionSheetContentViewModifier<HeaderView: View>: ViewModifier {
         ) {
             pendingAction = $0
         }
+        .presentationDetents([ .height(sheetHeight) ])
+        .presentationDragIndicator(.hidden)
     }
 }
 

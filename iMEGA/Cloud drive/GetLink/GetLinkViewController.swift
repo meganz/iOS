@@ -222,11 +222,6 @@ class GetLinkViewController: UIViewController {
     
     private func showCopySuccessSnackBar(with message: String) {
         showSnackBar(snackBar: SnackBar(message: message))
-        if #unavailable(iOS 16.0) {
-            DispatchQueue.main.async { [weak self] in
-                self?.navigationController?.setToolbarHidden(false, animated: false)
-            }
-        }
     }
     
     private func updateModel(forNode node: MEGANode) {

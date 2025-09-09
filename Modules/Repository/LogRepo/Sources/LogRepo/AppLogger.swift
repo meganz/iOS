@@ -46,11 +46,7 @@ struct AppLogger {
     }
     
     private func logsPath(withExtensionLogsFolder extensionLogsFolder: String, suiteName: String) -> String? {
-        if #available(iOS 16.0, *) {
-            return FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: suiteName)?.appendingPathComponent(extensionLogsFolder).path()
-        } else {
-            return FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: suiteName)?.appendingPathComponent(extensionLogsFolder).path
-        }
+        FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: suiteName)?.appendingPathComponent(extensionLogsFolder).path()
     }
     
     private func documentDirectoryPath() -> String? {
