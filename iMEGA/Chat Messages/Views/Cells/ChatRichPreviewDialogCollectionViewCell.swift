@@ -87,10 +87,10 @@ open class ChatRichPreviewDialogCollectionViewSizeCalculator: TextMessageSizeCal
             
             switch chatMessage.message.warningDialog {
             case .initial, .standard, .confirmation:
-                return CGSize(width: width, height: containerSize.height + dialogSize.height + 4)
+                return CGSize(width: max(width, 0), height: containerSize.height + dialogSize.height + 4)
 
             default:
-                return CGSize(width: width, height: containerSize.height)
+                return CGSize(width: max(width, 0), height: containerSize.height)
 
             }
             

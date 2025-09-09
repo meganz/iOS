@@ -258,7 +258,7 @@ open class ChatRichPreviewMediaCollectionViewSizeCalculator: TextMessageSizeCalc
             let descriptionLabelSize = calculateDescriptionLabel.sizeThatFits(labelsContainerSize)
             let linkLabelSize = calculateTitleLabel.sizeThatFits(CGSize(width: labelsContainerSize.width - 2 * elementSpacing, height: labelsContainerSize.height))
             
-            return CGSize(width: maxSize.width,
+            return CGSize(width: max(maxSize.width, 0),
                           height: containerSize.height
                                     + max(defaultPreviewSize.height,
                                           elementSpacing

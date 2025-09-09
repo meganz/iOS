@@ -109,6 +109,6 @@ class ChatViewCallCollectionCellCalculator: MessageSizeCalculator {
         
         let height = layoutCell.reasonTextLabel.text?.height(withConstrainedWidth: collectionViewWidth - inset, font: layoutCell.reasonTextLabel.font) ?? .zero
         
-        return CGSize(width: collectionViewWidth - inset, height: max(height, layoutCell.defaultIconSize))
+        return CGSize(width: max(collectionViewWidth - inset, 0), height: max(height, layoutCell.defaultIconSize))
     }
 }

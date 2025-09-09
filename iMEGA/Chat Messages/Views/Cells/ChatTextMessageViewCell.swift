@@ -61,6 +61,6 @@ class ChatTextMessageSizeCalculator: TextMessageSizeCalculator {
         let verticalInset: CGFloat = messageInsets.top + messageInsets.bottom
         messageContainerSize.height += verticalInset
         
-        return messageContainerSize
+        return CGSize(width: max(messageContainerSize.width, 0), height: messageContainerSize.height)
     }
 }

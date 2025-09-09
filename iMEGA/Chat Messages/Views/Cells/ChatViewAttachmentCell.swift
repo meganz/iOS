@@ -138,7 +138,7 @@ open class ChatViewAttachmentCellCalculator: MessageSizeCalculator {
         
         chatViewAttachmentCell.attachmentViewModel = ChatViewAttachmentCellViewModel(chatMessage: chatMessage)
         let size = chatViewAttachmentCell.sizeThatFits()
-        
-        return CGSize(width: min(size.width, maxWidth), height: size.height)
+        let width = max(min(size.width, maxWidth), 0)
+        return CGSize(width: width, height: size.height)
     }
 }

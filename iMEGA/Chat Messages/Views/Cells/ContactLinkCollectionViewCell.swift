@@ -130,7 +130,7 @@ open class ChatContactLinkCollectionViewSizeCalculator: TextMessageSizeCalculato
             let titleLabelSize = calculateTitleLabel.sizeThatFits(labelsContainerSize)
             let descriptionLabelSize = calculateDescriptionLabel.sizeThatFits(labelsContainerSize)
             
-            return CGSize(width: maxSize.width,
+            return CGSize(width: max(maxSize.width, 0),
                           height: containerSize.height
                                     + max(defaultPreviewSize.height,
                                           elementSpacing
