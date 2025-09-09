@@ -27,6 +27,12 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UIStackView *labelsContainerStackView;
 @property (strong, nonatomic) NSSet<id> *cancellables;
 
+- (void)configureCellForNode:(MEGANode *)node
+    allowedMultipleSelection:(BOOL)multipleSelection
+            isFromSharedItem:(BOOL)isFromSharedItem
+                         sdk:(MEGASdk *)sdk
+                    delegate:(id<NodeCollectionViewCellDelegate> _Nullable)delegate
+                 isSampleRow:(BOOL)isSampleRow;
 - (void)configureCellForNode:(MEGANode *)node allowedMultipleSelection:(BOOL)multipleSelection isFromSharedItem:(BOOL)isFromSharedItem sdk:(MEGASdk *)sdk delegate:(id<NodeCollectionViewCellDelegate> _Nullable)delegate;
 - (void)configureCellForFolderLinkNode:(MEGANode *)node allowedMultipleSelection:(BOOL)multipleSelection sdk:(MEGASdk *)sdk delegate:(id<NodeCollectionViewCellDelegate> _Nullable)delegate;
 - (void)configureCellForOfflineItem:(NSDictionary *)item itemPath:(NSString *)pathForItem allowedMultipleSelection:(BOOL)multipleSelection sdk:(MEGASdk *)sdk delegate:(id<NodeCollectionViewCellDelegate> _Nullable)delegate;
@@ -42,8 +48,7 @@ typedef NS_ENUM(NSUInteger, ThumbnailSection) {
 };
 
 typedef NS_ENUM(NSUInteger, ThumbnailSize) {
-    ThumbnailSizeHeightFile = 230,
-    ThumbnailSizeHeightFolder = 45,
+    ThumbnailSizeHeight = 230,
     ThumbnailSizeWidth = 180
 };
 

@@ -33,9 +33,10 @@ final class FolderLinkCollectionViewDiffableDataSource {
         guard let collectionView = collectionView else { return }
 
         dataSource = UICollectionViewDiffableDataSource<ThumbnailSection, MEGANode>(collectionView: collectionView) { (collectionView: UICollectionView, indexPath: IndexPath, node: MEGANode) -> UICollectionViewCell? in
-            let cellId = indexPath.section == 1 ? "NodeCollectionFileID" : "NodeCollectionFolderID"
-            
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as? NodeCollectionViewCell else {
+            guard let cell = collectionView.dequeueReusableCell(
+                withReuseIdentifier: "NodeCollectionViewID",
+                for: indexPath
+            ) as? NodeCollectionViewCell else {
                 fatalError("Could not instantiate NodeCollectionViewCell or Node at index")
             }
             

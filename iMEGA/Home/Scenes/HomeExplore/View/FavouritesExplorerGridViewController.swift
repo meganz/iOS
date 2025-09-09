@@ -28,15 +28,10 @@ final class FavouritesExplorerGridViewController: FilesExplorerViewController {
         configureLayout()
         
         collectionView.register(
-            UINib(nibName: "FileNodeCollectionViewCell", bundle: nil),
-            forCellWithReuseIdentifier: "NodeCollectionFileID"
+            NodeCollectionViewCell.cellNib,
+            forCellWithReuseIdentifier: NodeCollectionViewCell.reusableIdentifier
         )
 
-        collectionView.register(
-            UINib(nibName: "FolderNodeCollectionViewCell", bundle: nil),
-            forCellWithReuseIdentifier: "NodeCollectionFolderID"
-        )
-        
         viewModel.invokeCommand = { [weak self] command in
             self?.executeCommand(command)
         }

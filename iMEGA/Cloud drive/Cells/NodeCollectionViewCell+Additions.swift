@@ -157,4 +157,9 @@ extension NodeCollectionViewCell {
             self.contentView.layer.borderColor = TokenColors.Border.strong.cgColor
         }
     }
+
+    @objc(hasDownloadedNode:)
+    func hasDownloaded(node: MEGANode) -> Bool {
+        MEGAStore.shareInstance().offlineNode(with: node) != nil
+    }
 }

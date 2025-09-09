@@ -112,7 +112,7 @@ extension FilesExplorerGridSource: UICollectionViewDataSource {
 
     func collectionView(_ collectionView: UICollectionView,
                         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: NodeCollectionViewCell.fileReuseIdentifier,
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: NodeCollectionViewCell.reusableIdentifier,
                                                             for: indexPath) as? NodeCollectionViewCell,
               let node = nodes?[indexPath.item] else {
             return UICollectionViewCell()
@@ -131,12 +131,13 @@ extension FilesExplorerGridSource: UICollectionViewDataSource {
 extension FilesExplorerGridSource: DynamicTypeCollectionViewSizing {
     func provideSizingCell(for indexPath: IndexPath) -> UICollectionViewCell? {
         guard let node = nodes?[indexPath.item] else { return nil }
-        let cell = NodeCollectionViewCell.instantiateFromFileNib
+        let cell = NodeCollectionViewCell.instantiateFromNib
         cell.configureCell(for: node,
                            allowedMultipleSelection: collectionView.allowsMultipleSelection,
                            isFromSharedItem: false,
                            sdk: MEGASdk.shared,
-                           delegate: self)
+                           delegate: self,
+                           isSampleRow: true)
         return cell
     }
 }

@@ -11,17 +11,11 @@ final class FavouritesExplorerGridSource: NSObject {
         }
         
         func cellIdentifier() -> String {
-            switch self {
-            case .folders: return "NodeCollectionFolderID"
-            case .files: return "NodeCollectionFileID"
-            }
+            NodeCollectionViewCell.reusableIdentifier
         }
         
         func sizingViewCell() -> NodeCollectionViewCell {
-            switch self {
-            case .folders: return NodeCollectionViewCell.instantiateFromFolderNib
-            case .files: return NodeCollectionViewCell.instantiateFromFileNib
-            }
+            NodeCollectionViewCell.instantiateFromNib
         }
         
         static func count() -> Int {
@@ -198,7 +192,8 @@ extension FavouritesExplorerGridSource: DynamicTypeCollectionViewSizing {
                            allowedMultipleSelection: collectionView.allowsMultipleSelection,
                            isFromSharedItem: false,
                            sdk: .shared,
-                           delegate: self)
+                           delegate: self,
+                           isSampleRow: true)
         return cell
     }
 }

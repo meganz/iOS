@@ -61,9 +61,8 @@ static NSString *kPath = @"kPath";
     self.layout.minimumInteritemSpacing = 8;
     [self.layout configThumbnailListColumnCount];
     
-    [self.collectionView registerNib:[UINib nibWithNibName:@"FileNodeCollectionViewCell" bundle:nil] forCellWithReuseIdentifier:@"NodeCollectionFileID"];
-    [self.collectionView registerNib:[UINib nibWithNibName:@"FolderNodeCollectionViewCell" bundle:nil] forCellWithReuseIdentifier:@"NodeCollectionFolderID"];
-    
+    [self.collectionView registerNib:[UINib nibWithNibName:@"NodeCollectionViewCell" bundle:nil] forCellWithReuseIdentifier:@"NodeCollectionViewID"];
+
     self.collectionView.collectionViewLayout = self.layout;
     
     self.dtCollectionManager = [DynamicTypeCollectionManager.alloc initWithDelegate:self];
@@ -115,8 +114,8 @@ static NSString *kPath = @"kPath";
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     
-    NodeCollectionViewCell *cell = indexPath.section == ThumbnailSectionFile ? [self.collectionView dequeueReusableCellWithReuseIdentifier:@"NodeCollectionFileID" forIndexPath:indexPath] : [self.collectionView dequeueReusableCellWithReuseIdentifier:@"NodeCollectionFolderID" forIndexPath:indexPath];
-   
+    NodeCollectionViewCell *cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:@"NodeCollectionViewID" forIndexPath:indexPath];
+
     NSDictionary *item = [self getItemAtIndexPath:indexPath];
     [cell configureCellForOfflineItem:item itemPath:[[self.offline currentOfflinePath] stringByAppendingPathComponent:item[kFileName]] allowedMultipleSelection:self.collectionView.allowsMultipleSelection sdk:MEGASdk.shared delegate: self];
     
