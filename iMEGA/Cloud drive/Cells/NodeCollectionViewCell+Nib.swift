@@ -1,27 +1,16 @@
 extension NodeCollectionViewCell {
     
-    private static let fileNibName: String = "FileNodeCollectionViewCell"
-    
-    private static let folderNibName: String = "FolderNodeCollectionViewCell"
-    
-    static let fileReuseIdentifier: String = "NodeCollectionFileID"
-    
-    static var fileNib: UINib {
-        UINib(nibName: fileNibName, bundle: nil)
+    private static let nibName: String = "NodeCollectionViewCell"
+
+    static let reusableIdentifier = "NodeCollectionViewID"
+
+    static var cellNib: UINib {
+        UINib(nibName: nibName, bundle: nil)
     }
     
-    class var instantiateFromFileNib: Self {
+    class var instantiateFromNib: Self {
         guard let cell = Bundle(for: Self.self)
-            .loadNibNamed(fileNibName, owner: nil, options: nil)?.first as? Self else {
-                fatalError("could not load the instance from nib")
-        }
-        
-        return cell
-    }
-    
-    class var instantiateFromFolderNib: Self {
-        guard let cell = Bundle(for: Self.self)
-            .loadNibNamed(folderNibName, owner: nil, options: nil)?.first as? Self else {
+            .loadNibNamed(nibName, owner: nil, options: nil)?.first as? Self else {
                 fatalError("could not load the instance from nib")
         }
         

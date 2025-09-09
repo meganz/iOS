@@ -31,8 +31,8 @@ class FilesExplorerGridViewController: FilesExplorerViewController {
         addCollectionView()
         configureLayout()
         collectionView.register(
-            NodeCollectionViewCell.fileNib,
-            forCellWithReuseIdentifier: NodeCollectionViewCell.fileReuseIdentifier
+            NodeCollectionViewCell.cellNib,
+            forCellWithReuseIdentifier: NodeCollectionViewCell.reusableIdentifier
         )
         
         viewModel.invokeCommand = { [weak self] command in

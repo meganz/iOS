@@ -2553,8 +2553,7 @@
 		C485DA612577F45E0076D362 /* AudioPlaylistIndexedDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C485DA602577F45E0076D362 /* AudioPlaylistIndexedDelegate.swift */; };
 		C489EBE52B5503FD00EE30D8 /* UILabel+CustomNavigationTitleLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C489EBE42B5503FD00EE30D8 /* UILabel+CustomNavigationTitleLabel.swift */; };
 		C489EBEA2B550A3700EE30D8 /* UILabel+CustomNavigationTitleLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C489EBE42B5503FD00EE30D8 /* UILabel+CustomNavigationTitleLabel.swift */; };
-		C48AED3D27106F6500DD9F85 /* FileNodeCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C48AED3C27106F6500DD9F85 /* FileNodeCollectionViewCell.xib */; };
-		C48AED3F27106F7F00DD9F85 /* FolderNodeCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C48AED3E27106F7F00DD9F85 /* FolderNodeCollectionViewCell.xib */; };
+		C48AED3D27106F6500DD9F85 /* NodeCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C48AED3C27106F6500DD9F85 /* NodeCollectionViewCell.xib */; };
 		C48AED412710922D00DD9F85 /* NodeCollectionViewCell+Nib.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48AED402710922C00DD9F85 /* NodeCollectionViewCell+Nib.swift */; };
 		C48CADAB2BB521250005519B /* CloudDriveDisplayModeProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48CADAA2BB521250005519B /* CloudDriveDisplayModeProviderTests.swift */; };
 		C48CADB02BB54C550005519B /* NodeBrowserConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48CADAF2BB54C550005519B /* NodeBrowserConfig.swift */; };
@@ -5326,8 +5325,7 @@
 		C480AF5725711BC100898D48 /* AudioPlaylistSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlaylistSource.swift; sourceTree = "<group>"; };
 		C485DA602577F45E0076D362 /* AudioPlaylistIndexedDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlaylistIndexedDelegate.swift; sourceTree = "<group>"; };
 		C489EBE42B5503FD00EE30D8 /* UILabel+CustomNavigationTitleLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+CustomNavigationTitleLabel.swift"; sourceTree = "<group>"; };
-		C48AED3C27106F6500DD9F85 /* FileNodeCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FileNodeCollectionViewCell.xib; sourceTree = "<group>"; };
-		C48AED3E27106F7F00DD9F85 /* FolderNodeCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FolderNodeCollectionViewCell.xib; sourceTree = "<group>"; };
+		C48AED3C27106F6500DD9F85 /* NodeCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NodeCollectionViewCell.xib; sourceTree = "<group>"; };
 		C48AED402710922C00DD9F85 /* NodeCollectionViewCell+Nib.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NodeCollectionViewCell+Nib.swift"; sourceTree = "<group>"; };
 		C48CADAA2BB521250005519B /* CloudDriveDisplayModeProviderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudDriveDisplayModeProviderTests.swift; sourceTree = "<group>"; };
 		C48CADAF2BB54C550005519B /* NodeBrowserConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeBrowserConfig.swift; sourceTree = "<group>"; };
@@ -8821,12 +8819,11 @@
 		832E102C202CB21700BDD30F /* Cells */ = {
 			isa = PBXGroup;
 			children = (
-				C48AED3C27106F6500DD9F85 /* FileNodeCollectionViewCell.xib */,
-				C48AED3E27106F7F00DD9F85 /* FolderNodeCollectionViewCell.xib */,
 				B5FC636329E9283C00EE4C8E /* NodeCollectionViewCell+Additions.swift */,
 				C48AED402710922C00DD9F85 /* NodeCollectionViewCell+Nib.swift */,
 				83E076F32179D7BC00058409 /* NodeCollectionViewCell.h */,
 				83E076F42179D7BC00058409 /* NodeCollectionViewCell.m */,
+				C48AED3C27106F6500DD9F85 /* NodeCollectionViewCell.xib */,
 				B5FC636129E8F53400EE4C8E /* NodeCollectionViewCellViewModel.swift */,
 				B55C1A8729825E4B006A0205 /* NodeTableViewCell+Additions.swift */,
 				415226701A692ECC00EC7BB6 /* NodeTableViewCell.h */,
@@ -13848,9 +13845,7 @@
 				5BE7BEE623745FC700BBD23F /* EmptyStateView.xib in Resources */,
 				BFAD882926911E7200CA592F /* EncourageGuestUserToJoinMegaViewController.xib in Resources */,
 				5DC4DE0F24DBC29600D9AD16 /* ExploreViewStack.xib in Resources */,
-				C48AED3D27106F6500DD9F85 /* FileNodeCollectionViewCell.xib in Resources */,
 				A81971D126FB81C6007DC7B1 /* FileVersioning.storyboard in Resources */,
-				C48AED3F27106F7F00DD9F85 /* FolderNodeCollectionViewCell.xib in Resources */,
 				83D7265B23169067007B2E58 /* GenericHeaderFooterView.xib in Resources */,
 				2F147788244D2DF30069B264 /* GeoLocationView.xib in Resources */,
 				837EE205253DB8540083D927 /* GetLink.storyboard in Resources */,
@@ -13883,6 +13878,7 @@
 				2FC5A62E24A449AF00AE6185 /* MessageReactionReusableView.xib in Resources */,
 				E889C9E61B5565C900ECEFDF /* MyAccount.storyboard in Resources */,
 				834EFDC224D9B373004BFECA /* Node.storyboard in Resources */,
+				C48AED3D27106F6500DD9F85 /* NodeCollectionViewCell.xib in Resources */,
 				BFAFB1A0252C0A66003ADFE3 /* NodeTableViewCell.xib in Resources */,
 				7759700C219EBCE700B31671 /* Notifications.storyboard in Resources */,
 				415226961A692ECC00EC7BB6 /* Offline.storyboard in Resources */,

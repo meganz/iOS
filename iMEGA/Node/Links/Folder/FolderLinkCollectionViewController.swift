@@ -63,9 +63,12 @@ class FolderLinkCollectionViewController: UIViewController {
         layout.minimumInteritemSpacing = 8
         layout.configThumbnailListColumnCount()
         
-        collectionView.register(UINib(nibName: "FileNodeCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "NodeCollectionFileID")
-        collectionView.register(UINib(nibName: "FolderNodeCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "NodeCollectionFolderID")
-        
+        collectionView
+            .register(
+                NodeCollectionViewCell.cellNib,
+                forCellWithReuseIdentifier: NodeCollectionViewCell.reusableIdentifier
+            )
+
         collectionView.collectionViewLayout = layout
         
         dtCollectionManager = DynamicTypeCollectionManager(delegate: self)
@@ -223,10 +226,8 @@ extension FolderLinkCollectionViewController: UICollectionViewDelegate {
 
 extension FolderLinkCollectionViewController: CHTCollectionViewDelegateWaterfallLayout {
     func collectionView(_ collectionView: UICollectionView!, layout collectionViewLayout: UICollectionViewLayout!, sizeForItemAt indexPath: IndexPath!) -> CGSize {
-        if indexPath.section == ThumbnailSection.file.rawValue {
-            CGSize(width: Int(ThumbnailSize.width.rawValue), height: Int(ThumbnailSize.heightFile.rawValue))
-        } else if indexPath.section == ThumbnailSection.folder.rawValue {
-            CGSize(width: Int(ThumbnailSize.width.rawValue), height: Int(ThumbnailSize.heightFolder.rawValue))
+        if indexPath.section == ThumbnailSection.file.rawValue || indexPath.section == ThumbnailSection.folder.rawValue {
+            CGSize(width: Int(ThumbnailSize.width.rawValue), height: Int(ThumbnailSize.height.rawValue))
         } else {
             .zero
         }

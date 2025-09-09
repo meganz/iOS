@@ -3,12 +3,14 @@ extension FolderLinkCollectionViewController: DynamicTypeCollectionViewSizing {
         guard let collectionView = collectionView,
               let node = getNode(at: indexPath) else { return nil }
         
-        let cell = indexPath.section == ThumbnailSection.file.rawValue ?
-                                                        NodeCollectionViewCell.instantiateFromFileNib :
-                                                        NodeCollectionViewCell.instantiateFromFolderNib
-        
-        cell.configureCell(forFolderLinkNode: node, allowedMultipleSelection: collectionView.allowsMultipleSelection, sdk: .shared, delegate: nil)
-        
+        let cell = NodeCollectionViewCell.instantiateFromNib
+
+        cell.configureCell(for: node,
+                           allowedMultipleSelection: collectionView.allowsMultipleSelection,
+                           isFromSharedItem: false,
+                           sdk: MEGASdk.shared,
+                           delegate: self,
+                           isSampleRow: true)
         return cell
     }
 }

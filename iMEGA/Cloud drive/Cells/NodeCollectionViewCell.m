@@ -43,7 +43,25 @@ static NSString *kFileSize = @"kFileSize";
     [self updateSelection];
 }
 
-- (void)configureCellForNode:(MEGANode *)node allowedMultipleSelection:(BOOL)multipleSelection isFromSharedItem:(BOOL)isFromSharedItem sdk:(MEGASdk *)sdk delegate:(id<NodeCollectionViewCellDelegate> _Nullable)delegate {
+- (void)configureCellForNode:(MEGANode *)node
+    allowedMultipleSelection:(BOOL)multipleSelection
+            isFromSharedItem:(BOOL)isFromSharedItem
+                         sdk:(MEGASdk *)sdk
+                    delegate:(id<NodeCollectionViewCellDelegate> _Nullable)delegate {
+    [self configureCellForNode:node
+      allowedMultipleSelection:multipleSelection
+              isFromSharedItem:isFromSharedItem
+                           sdk:sdk
+                      delegate:delegate
+                   isSampleRow:NO];
+}
+
+- (void)configureCellForNode:(MEGANode *)node
+    allowedMultipleSelection:(BOOL)multipleSelection
+            isFromSharedItem:(BOOL)isFromSharedItem
+                         sdk:(MEGASdk *)sdk
+                    delegate:(id<NodeCollectionViewCellDelegate> _Nullable)delegate
+                 isSampleRow:(BOOL)isSampleRow {
     self.node = node;
     self.delegate = delegate;
     
@@ -58,7 +76,11 @@ static NSString *kFileSize = @"kFileSize";
         if (node.isFile) {
             self.infoLabel.text = [Helper sizeForNode:node api:sdk];
         } else if (node.isFolder) {
-            self.infoLabel.text = [Helper filesAndFoldersInFolderNode:node api:sdk];
+            if (isSampleRow) {
+                self.infoLabel.text = @"Sample Row";
+            } else {
+                self.infoLabel.text = nil;
+            }
         }
     }
     
@@ -87,13 +109,8 @@ static NSString *kFileSize = @"kFileSize";
         self.durationLabel.layer.masksToBounds = true;
         self.durationLabel.text = [NSString mnz_stringFromTimeInterval:node.duration];
     }
-    
-    if (self.downloadedView != nil) {
-        self.downloadedImageView.hidden = self.downloadedView.hidden = !(node.isFile && [[MEGAStore shareInstance] offlineNodeWithNode:node]);
-    } else {
-        self.downloadedImageView.hidden = !(node.isFile && [[MEGAStore shareInstance] offlineNodeWithNode:node]);
-    }
 
+    self.downloadedImageView.hidden = self.downloadedView.hidden = !([self hasDownloadedNode:node]) && !isSampleRow;
     self.selectImageView.hidden = !multipleSelection;
     self.moreButton.hidden = multipleSelection;
     
@@ -120,16 +137,7 @@ static NSString *kFileSize = @"kFileSize";
     [[NSFileManager defaultManager] fileExistsAtPath:pathForItem isDirectory:&isDirectory];
     if (isDirectory) {
         self.thumbnailIconView.image = UIImage.mnz_folderImage;
-        dispatch_async(dispatch_get_global_queue(QOS_CLASS_UTILITY, 0), ^(void){
-            // heavy non-UI work
-            FolderContentStat *folderContentStat = [[NSFileManager defaultManager] mnz_folderContentStatWithPathForItem:pathForItem];
-            NSInteger files = folderContentStat.fileCount;
-            NSInteger folders = folderContentStat.folderCount;
-            dispatch_async(dispatch_get_main_queue(), ^(void){
-                // update UI
-                self.infoLabel.text = [NSString mnz_stringByFiles:files andFolders:folders];
-            });
-        });
+        self.infoLabel.text = nil;
     } else {
         self.infoLabel.text = [NSString memoryStyleStringFromByteCount:[item[kFileSize] longLongValue]];
         NSString *extension = nameString.pathExtension.lowercaseString;
@@ -183,14 +191,8 @@ static NSString *kFileSize = @"kFileSize";
 
 - (void)configureCellForFolderLinkNode:(MEGANode *)node allowedMultipleSelection:(BOOL)multipleSelection sdk:(nonnull MEGASdk *)sdk delegate:(id<NodeCollectionViewCellDelegate> _Nullable)delegate {
     [self configureCellForNode:node allowedMultipleSelection:multipleSelection isFromSharedItem:YES sdk:sdk delegate:delegate];
-    
-    if (self.downloadedImageView != nil) {
-        if ([node isFile] && [MEGAStore.shareInstance offlineNodeWithNode:node] != nil) {
-            self.downloadedImageView.hidden = NO;
-        } else {
-            self.downloadedImageView.hidden = YES;
-        }
-    }
+
+    self.downloadedImageView.hidden = !([self hasDownloadedNode:node]);
 }
 
 - (NSString *)itemName {

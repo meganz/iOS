@@ -151,6 +151,13 @@ extension FolderLinkTableViewController: UITableViewDataSource {
         cell.thumbnailPlayImageView.accessibilityIgnoresInvertColors = true
         let isDownloaded = node.isFile() && MEGAStore.shareInstance().offlineNode(with: node) != nil
         cell.downloadedView.isHidden = !isDownloaded
+
+        if node.label != .unknown, let labelString = MEGANode.string(for: node.label)?.appending("Small") {
+            cell.labelView?.isHidden = false
+            cell.labelImageView?.image = MEGAAssets.UIImage.image(named: labelString)
+        } else {
+            cell.labelView?.isHidden = true
+        }
     }
 }
 
