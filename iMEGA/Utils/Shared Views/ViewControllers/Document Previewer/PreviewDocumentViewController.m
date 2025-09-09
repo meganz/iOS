@@ -211,7 +211,9 @@
     self.toolbarItems = toolbarItems.copy;
     [self.navigationController setToolbarHidden:NO animated:YES];
     
+    [self addChildViewController:self.previewController];
     [self.view addSubview:self.previewController.view];
+    [self.previewController didMoveToParentViewController:self];
     
     if ([self.filePath.pathExtension.lowercaseString isEqual: @"zip"] || [self.nodeFilePath.pathExtension.lowercaseString isEqual: @"zip"]) {
         [self createOpenZipButton];
