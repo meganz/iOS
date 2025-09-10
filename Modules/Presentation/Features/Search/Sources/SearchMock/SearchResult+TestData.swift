@@ -9,13 +9,12 @@ extension SearchResult {
         isSensitive: Bool = false,
         hasThumbnail: Bool = false,
         properties: [ResultProperty] = [],
-        thumbnailDisplayMode: ResultCellLayout.ThumbnailMode = .vertical,
         backgroundDisplayMode: VerticalBackgroundViewMode = .preview,
         thumbnailImageData: Data = defaultThumbnailImageData
     ) -> Self {
         .init(
             id: id,
-            thumbnailDisplayMode: thumbnailDisplayMode,
+            isFolder: false,
             backgroundDisplayMode: backgroundDisplayMode,
             title: title,
             note: nil,
@@ -50,7 +49,6 @@ extension SearchResultSelection {
         id: ResultId,
         title: String,
         properties: [ResultProperty] = [],
-        thumbnailDisplayMode: ResultCellLayout.ThumbnailMode = .vertical,
         backgroundDisplayMode: VerticalBackgroundViewMode = .preview,
         siblings: [ResultId] = []
     ) -> Self {
@@ -59,7 +57,6 @@ extension SearchResultSelection {
                 id: id,
                 title: title,
                 properties: properties,
-                thumbnailDisplayMode: thumbnailDisplayMode,
                 backgroundDisplayMode: backgroundDisplayMode
             ),
             siblingsProvider: { siblings }

@@ -821,6 +821,7 @@ final class SearchResultsViewModelTests: XCTestCase, @unchecked Sendable {
     @MainActor
     private func generateRandomSearchResultRowViewModel(
         id: Int,
+        isFolder: Bool = false,
         note: String? = nil,
         tags: [String] = [],
         query: @escaping () -> String? = { nil }
@@ -828,7 +829,7 @@ final class SearchResultsViewModelTests: XCTestCase, @unchecked Sendable {
         .init(
             result: .init(
                 id: UInt64(id),
-                thumbnailDisplayMode: .horizontal,
+                isFolder: isFolder,
                 backgroundDisplayMode: .icon,
                 title: "Title",
                 note: note,

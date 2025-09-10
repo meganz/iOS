@@ -24,13 +24,11 @@ func propertyIcon(placement: PropertyPlacement) -> ResultProperty {
 @MainActor
 func testableSearchResultsViewModel(
     properties: [ResultProperty] = [],
-    thumbnailDisplayMode: ResultCellLayout.ThumbnailMode = .vertical,
     backgroundDisplayMode: VerticalBackgroundViewMode = .preview
 ) -> SearchResultRowViewModel {
     let viewModel = SearchResultRowViewModel(
         result: .previewResult(
             idx: 1,
-            thumbnailDisplayMode: thumbnailDisplayMode,
             backgroundDisplayMode: backgroundDisplayMode,
             properties: properties
         ),

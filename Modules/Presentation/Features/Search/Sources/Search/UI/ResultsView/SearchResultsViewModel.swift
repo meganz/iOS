@@ -23,11 +23,11 @@ public class SearchResultsViewModel: ObservableObject {
     @Published var selectedRowIds = Set<SearchResultRowViewModel.ID>()
 
     var fileListItems: [SearchResultRowViewModel] {
-        listItems.filter { $0.result.thumbnailDisplayMode == .vertical }
+        listItems.filter { !$0.result.isFolder }
     }
 
     var folderListItems: [SearchResultRowViewModel] {
-        listItems.filter { $0.result.thumbnailDisplayMode == .horizontal }
+        listItems.filter { $0.result.isFolder }
     }
 
     var colorAssets: SearchConfig.ColorAssets {
@@ -345,7 +345,7 @@ public class SearchResultsViewModel: ObservableObject {
     }
     
     private func loadMoreIfNeededThumbnailMode(item: SearchResultRowViewModel) async {
-        let isFileItem = item.result.thumbnailDisplayMode == .vertical
+        let isFileItem = !item.result.isFolder
         
         if isFileItem {
             guard let index = fileListItems.firstIndex(where: { $0.id == item.id }) else { return }
