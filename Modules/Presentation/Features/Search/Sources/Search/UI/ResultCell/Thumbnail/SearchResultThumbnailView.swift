@@ -34,14 +34,14 @@ import SwiftUI
 // └─────────────────────────────────────────────────────────────────────────────────────┘
 // The Menu Select (More button or select button) is not affected by the sensitive property (.sensitive modifier)
 
-struct VerticalThumbnailView: View {
+struct SearchResultThumbnailView: View {
     @Environment(\.colorScheme) private var colorScheme
     
     @ObservedObject var viewModel: SearchResultRowViewModel
     @Binding var selected: Set<ResultId>
     @Binding var selectionEnabled: Bool
     
-    private let layout: ResultCellLayout = .thumbnail(.vertical)
+    private let layout: ResultCellLayout = .thumbnail
     
     var body: some View {
         VStack(spacing: .zero) {
@@ -252,11 +252,10 @@ struct VerticalThumbnailView: View {
 }
 
 #Preview("Video") {
-    VerticalThumbnailView(
+    SearchResultThumbnailView(
         viewModel: .init(
             result: .previewResult(
                 idx: 1,
-                thumbnailDisplayMode: .vertical,
                 backgroundDisplayMode: .preview,
                 properties: [.play, .duration, .someProminentIcon, .someTopIcon]
             ),
@@ -278,11 +277,10 @@ struct VerticalThumbnailView: View {
 }
 
 #Preview("Preview") {
-    VerticalThumbnailView(
+    SearchResultThumbnailView(
         viewModel: .init(
             result: .previewResult(
                 idx: 1,
-                thumbnailDisplayMode: .vertical,
                 backgroundDisplayMode: .preview,
                 properties: []
             ),
@@ -304,11 +302,10 @@ struct VerticalThumbnailView: View {
 }
 
 #Preview("Icon") {
-    VerticalThumbnailView(
+    SearchResultThumbnailView(
         viewModel: .init(
             result: .previewResult(
                 idx: 1,
-                thumbnailDisplayMode: .vertical,
                 backgroundDisplayMode: .icon,
                 properties: []
             ),

@@ -236,13 +236,12 @@ struct SearchResultRowView: View {
 extension SearchResult {
     static func previewResult(
         idx: UInt64,
-        thumbnailDisplayMode: ResultCellLayout.ThumbnailMode = .vertical,
         backgroundDisplayMode: VerticalBackgroundViewMode = .icon,
         properties: [ResultProperty] = []
     ) -> Self {
         .init(
             id: idx,
-            thumbnailDisplayMode: thumbnailDisplayMode,
+            isFolder: false,
             backgroundDisplayMode: backgroundDisplayMode,
             title: "title\(idx)",
             note: nil,

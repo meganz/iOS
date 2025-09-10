@@ -1,10 +1,7 @@
 import MEGASwiftUI
 import SwiftUI
 
-/// View shows content of a node in the thumbnails layout
-/// it has two modes of rendering:
-/// .vertical for files that show big preview
-/// .horizontal for folders, that show small icon only
+/// View shows content of a node in the Grid layout
 public struct SearchResultThumbnailItemView: View {
     @Environment(\.colorScheme) private var colorScheme
     @Environment(\.colorSchemeContrast) private var colorSchemeContrast
@@ -38,20 +35,11 @@ public struct SearchResultThumbnailItemView: View {
     
     @ViewBuilder
     private var content: some View {
-        switch viewModel.result.thumbnailDisplayMode {
-        case .horizontal:
-            HorizontalThumbnailView(
-                viewModel: viewModel,
-                selected: selected,
-                selectionEnabled: selectionEnabled
-            )
-        case .vertical:
-            VerticalThumbnailView(
-                viewModel: viewModel,
-                selected: selected,
-                selectionEnabled: selectionEnabled
-            )
-        }
+        SearchResultThumbnailView(
+            viewModel: viewModel,
+            selected: selected,
+            selectionEnabled: selectionEnabled
+        )
     }
 }
 
@@ -69,7 +57,6 @@ extension PreviewContent {
         viewModel: .init(
             result: .previewResult(
                 idx: 1,
-                thumbnailDisplayMode: .horizontal,
                 backgroundDisplayMode: .preview
             ),
             query: { nil },
@@ -94,7 +81,6 @@ extension PreviewContent {
         viewModel: .init(
             result: .previewResult(
                 idx: 1,
-                thumbnailDisplayMode: .vertical,
                 backgroundDisplayMode: .preview
             ),
             query: { nil },

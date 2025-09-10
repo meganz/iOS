@@ -47,7 +47,7 @@ struct SearchResultMapper: Sendable {
     func map(node: NodeEntity) -> SearchResult {
         .init(
             id: node.handle,
-            thumbnailDisplayMode: .vertical,
+            isFolder: node.isFolder,
             backgroundDisplayMode: node.hasThumbnail ? .preview : .icon,
             title: name(for: node),
             note: node.description,
@@ -80,18 +80,15 @@ struct SearchResultMapper: Sendable {
         // without retaining nodes or SDK
         let mapping: [ResultCellLayout: String] = {
             if node.isFile {
-                return [
+                [
                     .list: Helper.sizeAndModificationDate(for: megaNode, api: sdk),
-                    .thumbnail(.horizontal): "", // we do not show files in thumbnail horizontal layout
-                    .thumbnail(.vertical): Helper.size(for: megaNode, api: sdk)
+                    .thumbnail: Helper.size(for: megaNode, api: sdk)
                 ]
                 
             } else {
-                let value = Helper.filesAndFolders(inFolderNode: megaNode, api: sdk)
-                return [
-                    .list: value,
-                    .thumbnail(.horizontal): value,
-                    .thumbnail(.vertical): "" // we do not show folder in thumbnail vertical layout
+                [
+                    .list: Helper.filesAndFolders(inFolderNode: megaNode, api: sdk),
+                    .thumbnail: ""
                 ]
             }
         }()

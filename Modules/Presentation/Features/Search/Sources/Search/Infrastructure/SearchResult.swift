@@ -3,9 +3,7 @@ import UIKit
 
 public struct SearchResult: Identifiable, Sendable {
     public let id: ResultId
-    /// this is needed to know in the thumbnail grid mode if given result should
-    /// be rendered as horizontal (folder) or vertical (file) layout
-    public let thumbnailDisplayMode: ResultCellLayout.ThumbnailMode
+    public let isFolder: Bool
     public let backgroundDisplayMode: VerticalBackgroundViewMode
     public let title: String
     public let note: String?
@@ -20,9 +18,7 @@ public struct SearchResult: Identifiable, Sendable {
 
     public init(
         id: ResultId,
-        /// result need to specify what mode it needs to be presented in
-        /// in thumbnail layout, for list layout all nodes are presented the same way
-        thumbnailDisplayMode: ResultCellLayout.ThumbnailMode,
+        isFolder: Bool,
         /// encodes if background of the vertical cell should present
         /// a preview or a solid background with an icon
         backgroundDisplayMode: VerticalBackgroundViewMode,
@@ -41,7 +37,7 @@ public struct SearchResult: Identifiable, Sendable {
         swipeActions: @escaping @Sendable (ViewDisplayMode) -> [SearchResultSwipeAction]
     ) {
         self.id = id
-        self.thumbnailDisplayMode = thumbnailDisplayMode
+        self.isFolder = isFolder
         self.backgroundDisplayMode = backgroundDisplayMode
         self.title = title
         self.note = note
@@ -67,8 +63,8 @@ extension SearchResult: Equatable {
         lhs.isSensitive == rhs.isSensitive &&
         lhs.hasThumbnail == rhs.hasThumbnail &&
         lhs.description(.list) == rhs.description(.list) &&
-        lhs.description(.thumbnail(.horizontal)) == rhs.description(.thumbnail(.horizontal)) &&
-        lhs.description(.thumbnail(.vertical)) == rhs.description(.thumbnail(.vertical)) &&
+        lhs.description(.thumbnail) == rhs.description(.thumbnail) &&
+        lhs.isFolder == rhs.isFolder &&
         lhs.properties == rhs.properties &&
         lhs.type == rhs.type
     }

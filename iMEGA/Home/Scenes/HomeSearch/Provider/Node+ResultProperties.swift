@@ -28,7 +28,7 @@ extension ResultProperty {
             content: .text(string),
             vibrancyEnabled: false,
             placement: { mode in
-                if mode == .thumbnail(.vertical) {
+                if mode == .thumbnail {
                     return .secondary(.leading)
                 } else {
                     return .none
@@ -43,10 +43,10 @@ extension ResultProperty {
             content: .icon(image: MEGAAssets.UIImage.videoList, scalable: false),
             vibrancyEnabled: false,
             placement: { mode in 
-                if mode == .thumbnail(.vertical) {
-                    return .secondary(.leading)
+                if mode == .thumbnail {
+                    .secondary(.leading)
                 } else {
-                    return .previewOverlay
+                    .previewOverlay
                 }
             }
         )
@@ -60,11 +60,9 @@ extension ResultProperty {
             placement: { mode in
                 switch mode {
                 case .list:
-                    return .secondary(.trailing)
-                case .thumbnail(.vertical):
-                    return .secondary(.trailing)
-                case .thumbnail(.horizontal):
-                    return .secondary(.trailing)
+                    .secondary(.trailing)
+                case .thumbnail:
+                    .secondary(.trailing)
                 }
             }
         )
@@ -77,11 +75,9 @@ extension ResultProperty {
         placement: { mode in
             switch mode {
             case .list:
-                return .secondary(.leading)
-            case .thumbnail(.vertical):
-                return .secondary(.trailingEdge)
-            case .thumbnail(.horizontal):
-                return .secondary(.leading)
+                .secondary(.leading)
+            case .thumbnail:
+                .secondary(.trailingEdge)
             }
         }
     )
@@ -94,11 +90,9 @@ extension ResultProperty {
         placement: { mode in
             switch mode {
             case .list:
-                return .prominent(.trailing)
-            case .thumbnail(.vertical):
-                return .secondary(.trailingEdge)
-            case .thumbnail(.horizontal):
-                return .secondary(.leading)
+                .prominent(.trailing)
+            case .thumbnail:
+                .secondary(.trailingEdge)
             }
         }
     )
@@ -112,11 +106,9 @@ extension ResultProperty {
             placement: { mode in
                 switch mode {
                 case .list:
-                    return .prominent(.trailing)
-                case .thumbnail(.vertical):
-                    return .secondary(.trailingEdge)
-                case .thumbnail(.horizontal):
-                    return .secondary(.trailing)
+                    .prominent(.trailing)
+                case .thumbnail:
+                    .secondary(.trailingEdge)
                 }
             }
         )

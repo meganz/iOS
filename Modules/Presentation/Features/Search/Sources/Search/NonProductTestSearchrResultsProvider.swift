@@ -22,10 +22,7 @@ public struct NonProductionTestResultsProvider: SearchResultsProviding {
 
     public func search(queryRequest: SearchQuery, lastItemIndex: Int?) async -> SearchResultsEntity? {
         
-        if
-            queryRequest == .initial ||
-            queryRequest == .empty
-        {
+        if queryRequest == .initial || queryRequest == .empty {
             return all
         }
         
@@ -170,12 +167,11 @@ fileprivate extension SearchResult {
         idx: UInt64,
         prefix: String,
         image: Data,
-        thumbnailDisplayMode: ResultCellLayout.ThumbnailMode = .vertical,
         backgroundDisplayMode: VerticalBackgroundViewMode = .preview
     ) -> SearchResult {
         .init(
             id: idx,
-            thumbnailDisplayMode: thumbnailDisplayMode,
+            isFolder: false,
             backgroundDisplayMode: backgroundDisplayMode,
             title: "\(prefix) \(idx)",
             note: nil,
@@ -192,9 +188,9 @@ fileprivate extension SearchResult {
     
     static var imageResults: [Self] {
         [
-            test(idx: 1, prefix: "Image", image: image("photo"), thumbnailDisplayMode: .vertical, backgroundDisplayMode: .preview),
-            test(idx: 3, prefix: "Image", image: image("photo"), thumbnailDisplayMode: .vertical, backgroundDisplayMode: .icon),
-            test(idx: 10, prefix: "Image", image: image("photo"), thumbnailDisplayMode: .vertical, backgroundDisplayMode: .icon)
+            test(idx: 1, prefix: "Image", image: image("photo"), backgroundDisplayMode: .preview),
+            test(idx: 3, prefix: "Image", image: image("photo"), backgroundDisplayMode: .icon),
+            test(idx: 10, prefix: "Image", image: image("photo"), backgroundDisplayMode: .icon)
         ]
     }
     
