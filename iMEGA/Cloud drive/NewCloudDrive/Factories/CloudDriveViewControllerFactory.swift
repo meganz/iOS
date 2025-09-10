@@ -15,8 +15,6 @@ import SwiftUI
 
 @MainActor
 struct CloudDriveViewControllerFactory {
-    private let featureFlagProvider: any FeatureFlagProviderProtocol
-    private let abTestProvider: any ABTestProviderProtocol
     private let navigationController: UINavigationController
     private let viewModeStore: any ViewModeStoring
     private let router: any NodeRouting
@@ -44,8 +42,6 @@ struct CloudDriveViewControllerFactory {
     private let sensitiveDisplayPreferenceUseCase: any SensitiveDisplayPreferenceUseCaseProtocol
     
     init(
-        featureFlagProvider: some FeatureFlagProviderProtocol,
-        abTestProvider: some ABTestProviderProtocol,
         navigationController: UINavigationController,
         viewModeStore: some ViewModeStoring,
         router: some NodeRouting,
@@ -71,8 +67,6 @@ struct CloudDriveViewControllerFactory {
         nodeUpdateRepository: some NodeUpdateRepositoryProtocol,
         sensitiveDisplayPreferenceUseCase: some SensitiveDisplayPreferenceUseCaseProtocol
     ) {
-        self.featureFlagProvider = featureFlagProvider
-        self.abTestProvider = abTestProvider
         self.navigationController = navigationController
         self.viewModeStore = viewModeStore
         self.router = router
@@ -144,7 +138,6 @@ struct CloudDriveViewControllerFactory {
         
         let nodeAssetsManager = NodeAssetsManager.shared
         
-        let featureFlagProvider = DIContainer.featureFlagProvider
         let remoteFeatureFlagProvider = DIContainer.remoteFeatureFlagUseCase
         
         let calendar = Calendar.autoupdatingCurrent
@@ -152,8 +145,6 @@ struct CloudDriveViewControllerFactory {
         let hiddenNodesEnabled = remoteFeatureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes)
         
         return CloudDriveViewControllerFactory(
-            featureFlagProvider: featureFlagProvider,
-            abTestProvider: DIContainer.abTestProvider,
             navigationController: navController,
             viewModeStore: ViewModeStore(
                 preferenceRepo: PreferenceRepository(userDefaults: UserDefaults.standard),
@@ -229,13 +220,6 @@ struct CloudDriveViewControllerFactory {
         config: NodeBrowserConfig = .default
     ) -> UIViewController? {
         buildBare(nodeSource: .node({ parentNode }), config: config)
-    }
-    
-    func build(
-        rootNodeProvider: @escaping ParentNodeProvider,
-        config: NodeBrowserConfig
-    ) -> UIViewController? {
-        build(nodeSource: .node(rootNodeProvider), config: config)
     }
     
     func build(
