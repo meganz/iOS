@@ -188,20 +188,24 @@
         return;
     }
     NSArray *nodesArray = recentActionBucket.nodesList.mnz_nodesArrayFromNodeList;
-    
     MEGANode *node = nodesArray.firstObject;
     if (node) {
         BOOL isNodeUndecrypted = [node isUndecryptedWithOwnerEmail:recentActionBucket.userEmail
                                                                 in:MEGASdk.shared];
-        
+
         if (isNodeUndecrypted) {
             [self showContactVerificationViewForUserEmail:recentActionBucket.userEmail];
             [tableView deselectRowAtIndexPath:indexPath animated:YES];
             return;
         }
     }
-    
+
     if (nodesArray.count == 1) {
+        if (![node isNodeKeyDecrypted]) {
+            [tableView deselectRowAtIndexPath:indexPath animated:YES];
+            return;
+        }
+        
         if ([FileExtensionGroupOCWrapper verifyIsVisualMedia:node.name]) {
             [self.delegate showSelectedNodeInViewController: [self photosBrowserViewControllerWith:nodesArray]];
         } else {
