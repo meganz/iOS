@@ -73,26 +73,7 @@
     MEGAPhotoBrowserPickerCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"photoBrowserPickerCellId" forIndexPath:indexPath];
     
     MEGANode *node = [self.mediaNodes objectAtIndex:indexPath.item];
-    cell.nodeHandle = node.handle;
-    
-    NSString *thumbnailPath = [Helper pathForNode:node inSharedSandboxCacheDirectory:@"thumbnailsV3"];
-    if ([[NSFileManager defaultManager] fileExistsAtPath:thumbnailPath]) {
-        cell.imageView.image = [UIImage imageWithContentsOfFile:thumbnailPath];
-    } else {
-        [cell.imageView setImage:[NodeAssetsManager.shared iconFor:node]];
-        [self updateCollectionView:collectionView withThumbnailOfNode:node];
-    }
-    
-    if ([FileExtensionGroupOCWrapper verifyIsVideo:node.name]) {
-        cell.videoDurationLabel.text = node.duration > -1 ? [NSString mnz_stringFromTimeInterval:node.duration] : @"";
-        cell.videoOverlay.hidden = NO;
-        cell.playView.hidden = NO;
-    } else {
-        cell.videoDurationLabel.text = @"";
-        cell.videoOverlay.hidden = YES;
-        cell.playView.hidden = YES;
-    }
-    
+    [cell configureCellFor:node isFromSharedItem:self.isFromSharedItem sdk:self.api];
     return cell;
 }
 
@@ -125,24 +106,6 @@
 
 - (IBAction)didPressClose:(UIBarButtonItem *)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
-}
-
-#pragma mark - Getting the thumbnails
-
-- (void)updateCollectionView:(UICollectionView *)collectionView withThumbnailOfNode:(MEGANode *)node {
-    void (^requestCompletion)(MEGARequest *request) = ^(MEGARequest *request) {
-        for (MEGAPhotoBrowserPickerCollectionViewCell *cell in collectionView.visibleCells) {
-            if (cell.nodeHandle == request.nodeHandle) {
-                cell.imageView.image = [UIImage imageWithContentsOfFile:request.file];
-            }
-        }
-    };
-
-    if (node.hasThumbnail) {
-        MEGAGetThumbnailRequestDelegate *delegate = [[MEGAGetThumbnailRequestDelegate alloc] initWithCompletion:requestCompletion];
-        NSString *path = [Helper pathForNode:node inSharedSandboxCacheDirectory:@"thumbnailsV3"];
-        [self.api getThumbnailNode:node destinationFilePath:path delegate:delegate];
-    }
 }
 
 @end

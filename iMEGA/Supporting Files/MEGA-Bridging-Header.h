@@ -189,3 +189,4 @@
 #import "VideoUploadsQualityTableViewController.h"
 #import "MEGAQueryRecoveryLinkRequestDelegate.h"
 #import "CopyableLabel.h"
+#import "MEGAPhotoBrowserPickerCollectionViewCell.h"
