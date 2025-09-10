@@ -12,10 +12,6 @@ struct MEGARecentActionBucketTrampoline: RecentActionBucket {
     let parentHandle: HandleEntity
     let parentNodeProvider: @Sendable () -> NodeEntity?
     
-    // REMOVE WHEN REMOVING : LegacyCloudDriveViewControllerFactory
-    // it's only needed for backwards compatibility
-    let bucket: MEGARecentActionBucket?
-    
     // this is used to signal situation when last item was remove from currently
     // rendered bucket
     static let empty = MEGARecentActionBucketTrampoline(
@@ -28,7 +24,6 @@ struct MEGARecentActionBucketTrampoline: RecentActionBucket {
         // adde to avoid referencing MEGA SDK
         parentNodeProvider: @escaping (HandleEntity) -> NodeEntity?
     ) {
-        self.bucket = bucket
         timestamp = bucket?.timestamp ?? Date()
         nodeEntities = bucket?.nodesList?.toNodeEntities() ?? []
         isMedia = bucket?.isMedia ?? false
