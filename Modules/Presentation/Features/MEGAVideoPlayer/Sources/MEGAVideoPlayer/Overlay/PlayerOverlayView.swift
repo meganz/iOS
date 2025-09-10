@@ -1,5 +1,6 @@
 import MEGADesignToken
 import MEGAL10n
+import MEGAPermissions
 import MEGAUIComponent
 import SwiftUI
 
@@ -108,6 +109,8 @@ public struct PlayerOverlayView: View {
             showDragIndicator: true,
             cornerRadius: TokenRadius.large
         ) {
+            viewModel.checkToShowPhotoPermissionAlert()
+        } content: {
             bottomMoreSheetView
         }
     }
@@ -189,7 +192,7 @@ public struct PlayerOverlayView: View {
         GeometryReader { geometry in
             let isLandscape = geometry.size.width > geometry.size.height
             HStack {
-                Text("Saved image to your device gallery")
+                Text(Strings.Localizable.VideoPlayer.Snapshot.SnackBar.title)
                     .font(.footnote)
                     .foregroundColor(TokenColors.Text.inverse.swiftUI)
                 Spacer()
@@ -537,7 +540,7 @@ extension PlayerOverlayView {
             
             bottomMoreSheetRowView(
                 icon: "snapshot",
-                title: "Snapshot"
+                title: Strings.Localizable.VideoPlayer.Snapshot.BottomSheet.title
             ) {
                 Task {
                     await viewModel.didTapSnapshot()
@@ -638,7 +641,7 @@ extension PlayerOverlayView {
                     currentTime: .seconds(345),
                     duration: .seconds(1_234)
                 ),
-                photoPermissionHandler: PhotoPermissionHandler(),
+                devicePermissionsHandler: DevicePermissionsHandler.makeHandler(),
                 saveSnapshotUseCase: SaveSnapshotUseCase(),
                 didTapBackAction: {},
                 didTapRotateAction: {}

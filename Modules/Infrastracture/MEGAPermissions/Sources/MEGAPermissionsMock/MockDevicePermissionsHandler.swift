@@ -6,20 +6,24 @@ import UserNotifications
 public final class MockDevicePermissionHandler: DevicePermissionsHandling, @unchecked Sendable {
     
     private var requestPhotoLibraryAccessPermissionsGranted: Bool = false
-    
+
+    private var requestPhotoLibraryAddOnlyPermissionsGranted: Bool = false
+
     public init() { }
     
     public convenience init(
         photoAuthorization: PHAuthorizationStatus = .notDetermined,
         audioAuthorized: Bool = false,
         videoAuthorized: Bool = false,
-        requestPhotoLibraryAccessPermissionsGranted: Bool = false
+        requestPhotoLibraryAccessPermissionsGranted: Bool = false,
+        requestPhotoLibraryAddOnlyPermissionsGranted: Bool = false
     ) {
         self.init()
         photoLibraryAuthorizationStatus = photoAuthorization
         requestMediaPermissionValuesToReturn[.audio] = audioAuthorized
         requestMediaPermissionValuesToReturn[.video] = videoAuthorized
         self.requestPhotoLibraryAccessPermissionsGranted = requestPhotoLibraryAccessPermissionsGranted
+        self.requestPhotoLibraryAddOnlyPermissionsGranted = requestPhotoLibraryAddOnlyPermissionsGranted
     }
 
     public var notificationPermissionStatusToReturn: UNAuthorizationStatus = .notDetermined
@@ -28,7 +32,9 @@ public final class MockDevicePermissionHandler: DevicePermissionsHandling, @unch
     }
     
     public func requestPhotoLibraryAccessPermissions() async -> Bool { requestPhotoLibraryAccessPermissionsGranted }
-    
+
+    public func requestPhotoLibraryAddOnlyPermissions() async -> Bool { requestPhotoLibraryAddOnlyPermissionsGranted }
+
     public var requestPermissionsMediaTypes: [AVMediaType] = []
     public var requestMediaPermissionValuesToReturn: [AVMediaType: Bool] = [:]
     

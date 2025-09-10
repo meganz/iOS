@@ -1,8 +1,11 @@
 import Combine
 import Foundation
+import MEGAPermissions
+import MEGAPermissionsMock
 @testable import MEGAVideoPlayer
 import MEGAVideoPlayerMock
 import Testing
+import UIKit
 
 @MainActor
 struct PlayerOverlayViewModelTests {
@@ -11,14 +14,14 @@ struct PlayerOverlayViewModelTests {
 
     private func makeSUT(
         player: some VideoPlayerProtocol = MockVideoPlayer(),
-        photoPermissionHandler: some PhotoPermissionHandling = MockPhotoPermissionHandler(),
+        devicePermissionsHandler: some DevicePermissionsHandling = MockDevicePermissionHandler(),
         saveSnapshotUseCase: some SaveSnapshotUseCaseProtocol = MockSaveSnapshotUseCase(),
         didTapBackAction: @escaping () -> Void = {},
         didTapRotateAction: @escaping () -> Void = {}
     ) -> PlayerOverlayViewModel {
         PlayerOverlayViewModel(
             player: player,
-            photoPermissionHandler: photoPermissionHandler,
+            devicePermissionsHandler: devicePermissionsHandler,
             saveSnapshotUseCase: saveSnapshotUseCase,
             didTapBackAction: didTapBackAction,
             didTapRotateAction: didTapRotateAction
@@ -45,6 +48,7 @@ struct PlayerOverlayViewModelTests {
         #expect(sut.doubleTapSeekSeconds == 0)
         #expect(sut.isLocked == false)
         #expect(sut.isLockOverlayVisible == false)
+        #expect(sut.shouldShowPhotoPermissionAlert == false)
     }
 
     // MARK: - State Change Tests
@@ -855,5 +859,102 @@ struct PlayerOverlayViewModelTests {
         
         #expect(sut.isLockOverlayVisible == false)
         #expect(sut.isLocked == true)
+    }
+
+    // MARK: - Snapshot Functionality Tests
+
+    @Test
+    func didTapSnapshot_whenPermissionGranted_shouldCaptureAndSaveSnapshot() async {
+        let mockPlayer = MockVideoPlayer()
+        let mockSaveSnapshotUseCase = MockSaveSnapshotUseCase()
+        let mockDevicePermissionsHandler = MockDevicePermissionHandler(
+            requestPhotoLibraryAddOnlyPermissionsGranted: true
+        )
+        mockPlayer.mockSnapshotImage = UIImage(systemName: "photo")
+
+        let sut = makeSUT(
+            player: mockPlayer,
+            devicePermissionsHandler: mockDevicePermissionsHandler,
+            saveSnapshotUseCase: mockSaveSnapshotUseCase
+        )
+        sut.isBottomMoreSheetPresented = true
+
+        await sut.didTapSnapshot()
+
+        #expect(sut.isBottomMoreSheetPresented == false)
+        #expect(mockPlayer.captureSnapshotCallCount == 1)
+        #expect(mockSaveSnapshotUseCase.saveToPhotoLibraryCallCount == 1)
+        #expect(sut.shouldShowPhotoPermissionAlert == false)
+    }
+
+    @Test
+    func didTapSnapshot_whenPermissionDenied_shouldNotCaptureSnapshotAndShowPermissionAlert() async {
+        let mockPlayer = MockVideoPlayer()
+        let mockSaveSnapshotUseCase = MockSaveSnapshotUseCase()
+        let mockDevicePermissionsHandler = MockDevicePermissionHandler(
+            requestPhotoLibraryAddOnlyPermissionsGranted: false
+        )
+        mockPlayer.mockSnapshotImage = UIImage(systemName: "photo")
+
+        let sut = makeSUT(
+            player: mockPlayer,
+            devicePermissionsHandler: mockDevicePermissionsHandler,
+            saveSnapshotUseCase: mockSaveSnapshotUseCase
+        )
+        sut.isBottomMoreSheetPresented = true
+
+        await sut.didTapSnapshot()
+
+        #expect(sut.isBottomMoreSheetPresented == false)
+        #expect(mockPlayer.captureSnapshotCallCount == 0)
+        #expect(mockSaveSnapshotUseCase.saveToPhotoLibraryCallCount == 0)
+        #expect(sut.shouldShowPhotoPermissionAlert == true)
+    }
+
+    @Test
+    func didTapSnapshot_whenPlayerReturnsNilImage_shouldNotSaveToGallery() async {
+        let mockPlayer = MockVideoPlayer()
+        let mockSaveSnapshotUseCase = MockSaveSnapshotUseCase()
+        let mockDevicePermissionsHandler = MockDevicePermissionHandler(
+            requestPhotoLibraryAddOnlyPermissionsGranted: true
+        )
+        mockPlayer.mockSnapshotImage = nil
+
+        let sut = makeSUT(
+            player: mockPlayer,
+            devicePermissionsHandler: mockDevicePermissionsHandler,
+            saveSnapshotUseCase: mockSaveSnapshotUseCase
+        )
+
+        await sut.didTapSnapshot()
+
+        #expect(mockPlayer.captureSnapshotCallCount == 1)
+        #expect(mockSaveSnapshotUseCase.saveToPhotoLibraryCallCount == 0)
+        #expect(sut.showSnapshotSuccessMessage == false)
+        #expect(sut.shouldShowPhotoPermissionAlert == false)
+    }
+
+    func checkToShowPhotoPermissionAlert_shouldSetShouldShowPhotoPermissionAlertToFalse() async {
+        let mockPlayer = MockVideoPlayer()
+        let mockSaveSnapshotUseCase = MockSaveSnapshotUseCase()
+        let mockDevicePermissionsHandler = MockDevicePermissionHandler(
+            requestPhotoLibraryAddOnlyPermissionsGranted: true
+        )
+        mockPlayer.mockSnapshotImage = UIImage(systemName: "photo")
+
+        let sut = makeSUT(
+            player: mockPlayer,
+            devicePermissionsHandler: mockDevicePermissionsHandler,
+            saveSnapshotUseCase: mockSaveSnapshotUseCase
+        )
+        sut.isBottomMoreSheetPresented = true
+
+        await sut.didTapSnapshot()
+
+        #expect(sut.shouldShowPhotoPermissionAlert == true)
+
+        sut.checkToShowPhotoPermissionAlert()
+
+        #expect(sut.shouldShowPhotoPermissionAlert == false)
     }
 }

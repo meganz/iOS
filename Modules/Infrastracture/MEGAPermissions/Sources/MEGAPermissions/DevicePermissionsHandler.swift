@@ -66,12 +66,19 @@ public extension DevicePermissionsHandler {
 }
 
 extension DevicePermissionsHandler: DevicePermissionsHandling {
-    
+
+    /// This request readWrite permission
     public func requestPhotoLibraryAccessPermissions() async -> Bool {
         let level = await photoAccessor(.MEGAAccessLevel)
         return level == .authorized || level == .limited
     }
-    
+
+    /// This request addOnly permission
+    public func requestPhotoLibraryAddOnlyPermissions() async -> Bool {
+        let level = await photoAccessor(.addOnly)
+        return level == .authorized || level == .limited
+    }
+
     public func requestPermission(for mediaType: AVMediaType) async -> Bool {
         await mediaAccessor(mediaType)
     }

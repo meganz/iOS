@@ -1,5 +1,6 @@
 import Combine
 import MEGAL10n
+import MEGAPermissions
 import Photos
 import SwiftUI
 
@@ -23,26 +24,27 @@ public final class PlayerOverlayViewModel: ObservableObject {
     @Published var isLocked: Bool = false
     @Published var isLockOverlayVisible: Bool = false
     @Published var showSnapshotSuccessMessage: Bool = false
+    private(set) var shouldShowPhotoPermissionAlert = false
     private var autoHideTimer: Timer?
     private var doubleTapSeekTimer: Timer?
     private var lockOverlayTimer: Timer?
     private var cancellables = Set<AnyCancellable>()
 
     private let player: any VideoPlayerProtocol
-    private let photoPermissionHandler: any PhotoPermissionHandling
+    private let devicePermissionsHandler: any DevicePermissionsHandling
     private let saveSnapshotUseCase: any SaveSnapshotUseCaseProtocol
     private let didTapBackAction: () -> Void
     private let didTapRotateAction: () -> Void
 
     public init(
         player: some VideoPlayerProtocol,
-        photoPermissionHandler: some PhotoPermissionHandling,
+        devicePermissionsHandler: some DevicePermissionsHandling,
         saveSnapshotUseCase: some SaveSnapshotUseCaseProtocol,
         didTapBackAction: @escaping () -> Void,
         didTapRotateAction: @escaping () -> Void = {}
     ) {
         self.player = player
-        self.photoPermissionHandler = photoPermissionHandler
+        self.devicePermissionsHandler = devicePermissionsHandler
         self.saveSnapshotUseCase = saveSnapshotUseCase
         self.didTapBackAction = didTapBackAction
         self.didTapRotateAction = didTapRotateAction
@@ -345,13 +347,12 @@ extension PlayerOverlayViewModel {
 extension PlayerOverlayViewModel {
     func didTapSnapshot() async {
         isBottomMoreSheetPresented = false
-        let isPhotoPermissionGranted = await  photoPermissionHandler.requestPhotoLibraryAddOnlyPermissions()
+        let isPhotoPermissionGranted = await  devicePermissionsHandler.requestPhotoLibraryAddOnlyPermissions()
         if isPhotoPermissionGranted {
             guard let image = await player.captureSnapshot() else { return }
             await saveImageToGallery(image)
         } else {
-            // Implement ask the user to open settings to grant permission in the next MR
-            print("Photo library permission not granted")
+            shouldShowPhotoPermissionAlert = true
         }
     }
 
@@ -362,6 +363,45 @@ extension PlayerOverlayViewModel {
         showSnapshotSuccessMessage = true
         try? await Task.sleep(nanoseconds: 2_000_000_000)
         showSnapshotSuccessMessage = false
+    }
+
+    func checkToShowPhotoPermissionAlert() {
+        defer { shouldShowPhotoPermissionAlert = false}
+        guard shouldShowPhotoPermissionAlert else { return }
+        showPhotoPermissionAlert()
+    }
+
+    private func showPhotoPermissionAlert() {
+        // When SwiftUI is embedded in UIKit, UIKit's presentation system takes over
+        // Use UIKit alert presentation instead
+        guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+              let window = windowScene.windows.first,
+              let rootViewController = window.rootViewController else {
+            return
+        }
+
+        // Find the topmost presented view controller
+        var topController = rootViewController
+        while let presentedController = topController.presentedViewController {
+            topController = presentedController
+        }
+
+        let alert = UIAlertController(
+            title: Strings.Localizable.attention,
+            message: Strings.Localizable.photoLibraryPermissions,
+            preferredStyle: .alert
+        )
+
+        alert.addAction(UIAlertAction(title: Strings.Localizable.notNow, style: .cancel))
+
+        alert.addAction(UIAlertAction(title: Strings.Localizable.settingsTitle, style: .default) { _ in
+            guard let url = URL(string: UIApplication.openSettingsURLString) else {
+                return
+            }
+            UIApplication.shared.open(url)
+        })
+
+        topController.present(alert, animated: true)
     }
 }
 
