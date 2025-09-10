@@ -41,9 +41,7 @@ class NodeActionViewController: ActionSheetViewController {
     var sender: Any
     var delegate: any NodeActionViewControllerDelegate
     weak var accessoryActionDelegate: (any NodeAccessoryActionDelegate)?
-    
-    private var viewMode: ViewModePreferenceEntity?
-    
+
     let nodeImageView = UIImageView()
     
     lazy var titleLabel: UILabel = {
@@ -268,7 +266,6 @@ class NodeActionViewController: ActionSheetViewController {
         self.nodes = [node]
         self.displayMode = displayMode
         self.delegate = delegate
-        self.viewMode = viewMode
         self.sender = sender
         
         super.init(nibName: nil, bundle: nil)
@@ -423,7 +420,7 @@ class NodeActionViewController: ActionSheetViewController {
         ])
 
         let title = isUndecryptedFolder ? Strings.Localizable.SharedItems.Tab.Incoming.undecryptedFolderName
-        : viewModel.title(for: node.toNodeEntity(), displayMode: displayMode)
+        : title(for: node)
         titleLabel.text = title
 
         headerView?.addSubview(subtitleLabel)
@@ -542,5 +539,12 @@ class NodeActionViewController: ActionSheetViewController {
     
     private func accessoryTapped(type: MegaNodeActionType) {
         accessoryActionDelegate?.nodeAccessoryAction?(self, didSelect: type)
+    }
+
+    private func title(for node: MEGANode) -> String {
+        let isDecrypted = node.isNodeKeyDecrypted()
+        return isDecrypted ? (node.name ?? "")
+        : node.isFile() ? Strings.Localizable.SharedItems.Tab.Recents.undecryptedFileName(1)
+        : Strings.Localizable.SharedItems.Tab.Incoming.undecryptedFolderName
     }
 }
