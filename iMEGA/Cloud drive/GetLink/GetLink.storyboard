@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23094" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="aDc-Jv-Ltn">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23727" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="aDc-Jv-Ltn">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23084"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23721"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -18,7 +19,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalCentering" alignment="center" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="sh8-B7-lNE">
-                                <rect key="frame" x="0.0" y="92" width="414" height="0.0"/>
+                                <rect key="frame" x="0.0" y="140" width="414" height="0.0"/>
                                 <subviews>
                                     <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Q28-08-Wo4">
                                         <rect key="frame" x="0.0" y="0.0" width="720" height="60"/>
@@ -40,7 +41,7 @@
                                 </subviews>
                             </stackView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="60" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="25" sectionFooterHeight="-1" estimatedSectionFooterHeight="25" translatesAutoresizingMaskIntoConstraints="NO" id="8Zw-pY-1gz">
-                                <rect key="frame" x="0.0" y="92" width="414" height="770"/>
+                                <rect key="frame" x="0.0" y="140" width="414" height="688"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="GetLinkInfoTableViewCell" id="GTL-RU-0LD" customClass="GetLinkInfoTableViewCell" customModule="MEGA" customModuleProvider="target">
@@ -85,7 +86,6 @@
                                                     <constraints>
                                                         <constraint firstAttribute="bottom" secondItem="WYd-5e-oZe" secondAttribute="bottom" constant="12.5" id="FRR-Hc-EKy"/>
                                                         <constraint firstItem="e6v-iM-iMp" firstAttribute="centerY" secondItem="VeS-po-Ke3" secondAttribute="centerY" id="U5P-LY-uXx"/>
-                                                        <constraint firstItem="WYd-5e-oZe" firstAttribute="centerX" secondItem="VeS-po-Ke3" secondAttribute="centerX" constant="24" id="ZvP-k5-CXT"/>
                                                         <constraint firstAttribute="trailing" secondItem="WYd-5e-oZe" secondAttribute="trailing" constant="16" id="b4n-5g-3t5"/>
                                                         <constraint firstItem="WYd-5e-oZe" firstAttribute="leading" secondItem="e6v-iM-iMp" secondAttribute="trailing" constant="8" id="fgh-Uc-nHc"/>
                                                         <constraint firstItem="e6v-iM-iMp" firstAttribute="leading" secondItem="VeS-po-Ke3" secondAttribute="leading" constant="16" id="nKG-HX-OR8"/>
@@ -476,12 +476,11 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="aDc-Jv-Ltn" customClass="MEGANavigationController" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="0Wj-C8-Dsi">
-                        <rect key="frame" x="0.0" y="48" width="414" height="44"/>
+                        <rect key="frame" x="0.0" y="96" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Y4Q-U9-dnv">
-                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </toolbar>
                     <connections>
@@ -501,7 +500,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IO0-3o-NpQ" userLabel="Separator View">
-                                <rect key="frame" x="0.0" y="126" width="414" height="0.5"/>
+                                <rect key="frame" x="0.0" y="174" width="414" height="0.5"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="0.5" id="vub-7b-fr3"/>
                                 </constraints>
@@ -754,7 +753,7 @@
                 <navigationController storyboardIdentifier="SetLinkPasswordNavigationID" automaticallyAdjustsScrollViewInsets="NO" id="ziv-sI-GCV" customClass="MEGANavigationController" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="jl7-zt-xXF">
-                        <rect key="frame" x="0.0" y="48" width="414" height="44"/>
+                        <rect key="frame" x="0.0" y="96" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -780,7 +779,7 @@
             <color red="0.49799999594688416" green="0.49799999594688416" blue="0.49799999594688416" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="secondaryLabelColor">
-            <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
