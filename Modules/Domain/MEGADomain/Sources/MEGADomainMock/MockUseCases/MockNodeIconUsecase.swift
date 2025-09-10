@@ -12,10 +12,11 @@ public final class MockNodeIconUsecase: NodeIconUsecaseProtocol, @unchecked Send
     
     @Atomic public var invocations: [Invocation] = []
     
-    public init(stubbedIconData: Data) {
+    public init(stubbedIconData: Data = Data()) {
         self.stubbedIconData = stubbedIconData
     }
-    public func iconData(for node: MEGADomain.NodeEntity) -> Data {
+    
+    public func iconData(for node: NodeEntity) -> Data {
         $invocations.mutate { $0.append(.iconData) }
         return stubbedIconData
     }

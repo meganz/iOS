@@ -849,6 +849,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
 - (IBAction)didPressAllMediasButton:(UIBarButtonItem *)sender {
     MEGAPhotoBrowserPickerViewController *pickerVC = [[UIStoryboard storyboardWithName:@"PhotoBrowser" bundle:[NSBundle bundleForClass:[self class]]] instantiateViewControllerWithIdentifier:@"MEGAPhotoBrowserPickerViewControllerID"];
     pickerVC.mediaNodes = self.dataProvider.allPhotos;
+    pickerVC.isFromSharedItem = self.isFromSharedItem;
     pickerVC.delegate = self;
     pickerVC.api = self.api;
     pickerVC.modalPresentationStyle = UIModalPresentationFullScreen;
