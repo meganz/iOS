@@ -22,7 +22,12 @@ public protocol DevicePermissionsHandling: Sendable {
     // should return true if user given full or partial access
     // (.authorized or .limited)
     func requestPhotoLibraryAccessPermissions() async -> Bool
-    
+
+    // request add only access level to user's photo library
+    // should return true if user given full or partial access
+    // (.authorized or .limited)
+    func requestPhotoLibraryAddOnlyPermissions() async -> Bool
+
     // request access to capture media, we are only using .video and .audio
     // uses AVCaptureDevice
     func requestPermission(for mediaType: AVMediaType) async -> Bool

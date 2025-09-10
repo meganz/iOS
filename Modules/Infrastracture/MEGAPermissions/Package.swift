@@ -2,8 +2,7 @@
 
 import PackageDescription
 
-let settings: [SwiftSetting] = [.unsafeFlags(["-warnings-as-errors"]),
-                                .enableExperimentalFeature("ExistentialAny")]
+let settings: [SwiftSetting] = [.enableExperimentalFeature("ExistentialAny")]
 
 let package = Package(
     name: "MEGAPermissions",
@@ -21,7 +20,7 @@ let package = Package(
         )
     ],
     dependencies: [
-        .package(path: "../../Infrastracture/MEGASwift")
+        .package(path: "../../MEGASharedRepo/MEGASwift")
     ],
     targets: [
         .target(

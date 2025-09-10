@@ -28,6 +28,7 @@ let package = Package(
         .package(path: "../../../Presentation/MEGAL10n"),
         .package(path: "../../../MEGASharedRepo/MEGALogger"),
         .package(path: "../../../MEGASharedRepo/MEGAUIComponent"),
+        .package(path: "../../../Infrastracture/MEGAPermissions"),
         .package(url: "https://github.com/meganz/MEGADesignToken", branch: "main"),
         .package(url: "https://github.com/CocoaLumberjack/CocoaLumberjack.git", from: "3.0.0")
     ],
@@ -42,6 +43,7 @@ let package = Package(
                 "MEGALogger",
                 "MEGADesignToken",
                 "MEGAUIComponent",
+                "MEGAPermissions",
                 .product(name: "CocoaLumberjackSwift", package: "CocoaLumberjack")
             ],
             resources: [
@@ -61,7 +63,9 @@ let package = Package(
             name: "MEGAVideoPlayerTests",
             dependencies: [
                 "MEGAVideoPlayer",
-                "MEGAVideoPlayerMock"
+                "MEGAVideoPlayerMock",
+                .product(name: "MEGAPermissions", package: "MEGAPermissions"),
+                .product(name: "MEGAPermissionsMock", package: "MEGAPermissions")
             ],
             swiftSettings: settings
         )

@@ -1,4 +1,5 @@
 import MEGADesignToken
+import MEGAPermissions
 #if canImport(UIKit)
 import UIKit
 #endif
@@ -59,7 +60,7 @@ public final class MEGAPlayerViewController: UIViewController {
             PlayerOverlayView(
                 viewModel: PlayerOverlayViewModel(
                     player: player,
-                    photoPermissionHandler: PhotoPermissionHandler(),
+                    devicePermissionsHandler: DevicePermissionsHandler.makeHandler(),
                     saveSnapshotUseCase: SaveSnapshotUseCase(),
                     didTapBackAction: dismissAction ?? {},
                     didTapRotateAction: { [weak self] in

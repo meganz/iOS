@@ -4776,3 +4776,7 @@
 "videoPlayer.lock.screenLocked" = "Screen is locked";
 /* The instruction to unlock the video player */
 "videoPlayer.lock.tapIconToUnlock" = "Tap the icon to unlock";
+/* The lock video player option in bottom more menu */
+"videoPlayer.snapshot.bottomSheet.title" = "Snapshot";
+/* The instruction to unlock the video player */
+"videoPlayer.snapshot.snackBar.title" = "Saved image to your device gallery";
