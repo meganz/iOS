@@ -21,7 +21,7 @@ let package = Package(
             targets: ["MEGAUIMock"])
     ],
     dependencies: [
-        .package(url: "https://github.com/meganz/MEGADesignToken", branch: "main")
+        .package(url: "https://github.com/meganz/MEGADesignToken.git", branch: "main")
     ],
     targets: [
         .target(

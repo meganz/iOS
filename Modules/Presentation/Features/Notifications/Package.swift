@@ -22,7 +22,7 @@ let package = Package(
         .package(path: "../../../Localization/MEGAL10n"),
         .package(path: "../../MEGAAppPresentation"),
         .package(path: "../../../UI/MEGASwiftUI"),
-        .package(url: "https://github.com/meganz/MEGADesignToken", branch: "main")
+        .package(url: "https://github.com/meganz/MEGADesignToken.git", branch: "main")
     ],
     targets: [
         .target(

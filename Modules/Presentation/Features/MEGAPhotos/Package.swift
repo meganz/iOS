@@ -21,7 +21,7 @@ let package = Package(
     ],
     dependencies: [
         .package(path: "../../../Domain/MEGASwiftUI"),
-        .package(url: "https://github.com/meganz/MEGADesignToken", branch: "main"),
+        .package(url: "https://github.com/meganz/MEGADesignToken.git", branch: "main"),
         .package(path: "../../../Infrastructure/MEGASwift"),
         .package(path: "../../Infrastracture/MEGATest"),
         .package(path: "../../../Domain/MEGADomain"),
