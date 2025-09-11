@@ -125,8 +125,7 @@ final class MiniPlayerViewRouter: NSObject, MiniPlayerViewRouting {
             return presenter
         }
         
-        if let visibleController = UIApplication.mainTabBarVisibleController(),
-           visibleController.conforms(to: (any AudioPlayerPresenterProtocol).self) {
+        if let visibleController = UIApplication.mainTabBarVisibleController() as? (any AudioPlayerPresenterProtocol) {
             updatePresenter(visibleController)
             return visibleController
         }

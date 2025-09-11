@@ -1,10 +1,15 @@
+import MEGAAppPresentation
 import MEGADomain
 
 /// Mordern replacement of CloudDriveViewController
-final class NewCloudDriveViewController: SearchBarUIHostingController<NodeBrowserView> {
+final class NewCloudDriveViewController: SearchBarUIHostingController<NodeBrowserView>, BottomSafeAreaOverlayCoverStatusProviderProtocol {
     private(set) var viewModeProvider: CloudDriveViewModeProvider
     private(set) var displayModeProvider: CloudDriveDisplayModeProvider
     private let parentNodeProvider: ParentNodeProvider
+    
+    var shouldShowSafeAreaOverlayCover: Bool {
+        displayModeProvider.displayMode() == .rubbishBin
+    }
 
     init(
         rootView: NodeBrowserView,

@@ -124,7 +124,11 @@ extension OfflineViewController {
     }
 }
 
-extension OfflineViewController: AudioPlayerPresenterProtocol {
+extension OfflineViewController: AudioPlayerPresenterProtocol, BottomSafeAreaOverlayCoverStatusProviderProtocol {
+    public var shouldShowSafeAreaOverlayCover: Bool {
+        true
+    }
+    
     public func updateContentView(_ height: CGFloat) {
         currentContentInsetHeight = height
         

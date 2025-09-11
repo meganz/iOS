@@ -23,8 +23,10 @@ extension MainTabBarController: AudioMiniPlayerHandlerProtocol {
     private func adjustMiniPlayerDisplay() {
         let shouldShowMiniPlayer = currentPresenter != nil
         
+        let shouldAddSafeAreaCoverView = (currentPresenter as? (any BottomSafeAreaOverlayCoverStatusProviderProtocol))?.shouldShowSafeAreaOverlayCover ?? tabBar.isHidden
+        
         if shouldShowMiniPlayer {
-            tabBar.isHidden ? addSafeAreaCoverView() : removeSafeAreaCoverView()
+            shouldAddSafeAreaCoverView ? addSafeAreaCoverView() : removeSafeAreaCoverView()
         }
         
         updateOverlayLayout { [weak self] in

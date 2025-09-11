@@ -42,7 +42,10 @@ extension MEGANode {
     
     @MainActor
     @objc func presentAudioPlayer(node: MEGANode?, fileLink: String?, isFolderLink: Bool, presenter: UIViewController, messageId: NSNumber?, chatId: NSNumber?, isFromSharedItem: Bool, allNodes: [MEGANode]?) {
-        if presenter.conforms(to: (any AudioPlayerPresenterProtocol).self) && AudioPlayerManager.shared.isPlayerDefined() && AudioPlayerManager.shared.isPlayerAlive() {
+        let presenterSupportsMiniPlayer = (presenter as? (any AudioPlayerPresenterProtocol)) != nil
+        let canShowMiniPlayer = presenterSupportsMiniPlayer && AudioPlayerManager.shared.isPlayerDefined() && AudioPlayerManager.shared.isPlayerAlive()
+        
+        if canShowMiniPlayer {
             initMiniPlayer(
                 node: node,
                 fileLink: fileLink,
