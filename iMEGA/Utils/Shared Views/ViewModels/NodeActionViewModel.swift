@@ -128,16 +128,6 @@ struct NodeActionViewModel {
         nodeUseCase.isRestorable(node: node) && !isBackupNode
     }
 
-    func title(for node: NodeEntity, displayMode: DisplayMode) -> String {
-        let isDecrypted = nodeUseCase.isNodeDecryptedNonThrowing(
-            node: node,
-            fromFolderLink: displayMode == .nodeInsideFolderLink
-        )
-        return isDecrypted ? node.name
-        : node.isFile ? Strings.Localizable.SharedItems.Tab.Recents.undecryptedFileName(1)
-        : Strings.Localizable.SharedItems.Tab.Incoming.undecryptedFolderName
-    }
-
     // MARK: - Private methods
 
     /// Determine if nodes contains only sensitive nodes
