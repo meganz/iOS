@@ -6,7 +6,6 @@ import MEGADomain
 protocol ImportLinkRouting {
     func start()
     func showNodeBrowser()
-    func dismiss(completion: @escaping () -> Void)
     func showOnboarding()
 }
 
@@ -30,22 +29,12 @@ final class ImportLinkViewModel {
     func importNodes() {
         guard nodes.isNotEmpty else { return }
         if credentialUseCase.hasSession() {
-            showNodeBrowser()
+            router.showNodeBrowser()
         } else {
             MEGALinkManager.selectedOption = isFolderLink ? .importFolderOrNodes : .importNode
             MEGALinkManager.nodesFromLinkMutableArray.add(nodes)
             
             router.showOnboarding()
-        }
-    }
-    
-    private func showNodeBrowser() {
-        if isFolderLink {
-            router.showNodeBrowser()
-        } else {
-            router.dismiss { [weak self] in
-                self?.router.showNodeBrowser()
-            }
         }
     }
 }
