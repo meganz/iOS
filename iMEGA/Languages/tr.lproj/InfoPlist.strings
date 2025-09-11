@@ -9,7 +9,7 @@
 /* Write-only access to the user’s photo library description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
 "NSPhotoLibraryAddUsageDescription"="MEGA, cihazınızın galerisine fotoğraf ve video eklemek için fotoğraf arşivinize erişim gerektirir";
 /* Face ID usage description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
-"NSFaceIDUsageDescription"="MEGA, bu seçeneği etkinleştirdiğinizde uygulamanın kilidini kolayca açmanız için Face ID'ye erişir.";
+"NSFaceIDUsageDescription"="MEGA, bu seçeneği etkinleştirdiğinizde uygulamanın kilidini kolayca açmanız için Face ID’ye erişir.";
 /* Label for any 'Search' button, link, etc. - (String as short as possible). */
 "quickActionSearchString"="Ara";
 /*  */
@@ -19,6 +19,6 @@
 /* Location Usage Description. In order to protect user's privacy, Apple requires a specific string explaining why location will be accessed. */
 "NSLocationWhenInUseUsageDescription"="MEGA, sohbette kişilerinizle paylaştığınızda konumunuza erişir.";
 /* Local Network Usage Description. In order to protect user's privacy, Apple requires a specific string explaining why Local Network will be accessed. */
-"NSLocalNetworkUsageDescription"="Bu, aynı Wi-Fi veya yerel ağdaki cihazlar üzerinden arama yapmak ve almak için MEGA'yı kullanmanıza olanak tanır.";
+"NSLocalNetworkUsageDescription"="Bu, aynı Wi-Fi veya yerel ağdaki cihazlar üzerinden arama yapmak ve almak için MEGA’yı kullanmanıza olanak tanır.";
 /* User tracking usage description. In order to protect user's privacy, Apple requires a specific string explaining why user tracking will be enabled. */
 "NSUserTrackingUsageDescription"="Bu, gördüğünüz reklamları kişiselleştirmek için kullanılır";

@@ -4770,3 +4770,15 @@
 "notification.local.cameraUploadBackupReminder.body"="Sichern Sie Ihre Fotos und Videos";
 /* The double tap seek display text in video player */
 "videoPlayer.chip.seekDisplayText"="%@ Sekunden";
+/* The lock video player option in bottom more menu */
+"videoPlayer.lock.lockVideoPlayer"="Videoplayer sperren";
+/* The screen locked status message in video player */
+"videoPlayer.lock.screenLocked"="Der Bildschirm ist gesperrt";
+/* The instruction to unlock the video player */
+"videoPlayer.lock.tapIconToUnlock"="Tap the lock icon to unlock";
+/* The lock video player option in bottom more menu */
+"videoPlayer.snapshot.bottomSheet.title"="Aufnehmen";
+/* The instruction to unlock the video player */
+"videoPlayer.snapshot.snackBar.title"="Bild wurde auf Ihrem Gerät gespeichert";
+/* The Picture in picture video player option in bottom more menu */
+"videoPlayer.pip.bottomSheet.title"="Picture in picture";

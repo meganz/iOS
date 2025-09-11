@@ -4770,3 +4770,15 @@
 "notification.local.cameraUploadBackupReminder.body"="Đã đến lúc sao lưu lại hình ảnh và đoạn video của bạn";
 /* The double tap seek display text in video player */
 "videoPlayer.chip.seekDisplayText"="%@ giây";
+/* The lock video player option in bottom more menu */
+"videoPlayer.lock.lockVideoPlayer"="Khóa trình phát video";
+/* The screen locked status message in video player */
+"videoPlayer.lock.screenLocked"="Màn hình đã khóa";
+/* The instruction to unlock the video player */
+"videoPlayer.lock.tapIconToUnlock"="Chạm vào hình ổ khóa để mở khóa";
+/* The lock video player option in bottom more menu */
+"videoPlayer.snapshot.bottomSheet.title"="Chụp Ảnh";
+/* The instruction to unlock the video player */
+"videoPlayer.snapshot.snackBar.title"="Hình ảnh được lưu vào thiết bị của bạn";
+/* The Picture in picture video player option in bottom more menu */
+"videoPlayer.pip.bottomSheet.title"="Hình trong hình";

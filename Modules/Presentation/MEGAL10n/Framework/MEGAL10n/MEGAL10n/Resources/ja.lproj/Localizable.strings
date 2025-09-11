@@ -4770,3 +4770,15 @@
 "notification.local.cameraUploadBackupReminder.body"="写真と動画をバックアップして保護";
 /* The double tap seek display text in video player */
 "videoPlayer.chip.seekDisplayText"="%@秒";
+/* The lock video player option in bottom more menu */
+"videoPlayer.lock.lockVideoPlayer"="動画プレーヤーをロックする";
+/* The screen locked status message in video player */
+"videoPlayer.lock.screenLocked"="画面がロックされています";
+/* The instruction to unlock the video player */
+"videoPlayer.lock.tapIconToUnlock"="Tap the lock icon to unlock";
+/* The lock video player option in bottom more menu */
+"videoPlayer.snapshot.bottomSheet.title"="キャプチャ";
+/* The instruction to unlock the video player */
+"videoPlayer.snapshot.snackBar.title"="画像はデバイスに保存されました";
+/* The Picture in picture video player option in bottom more menu */
+"videoPlayer.pip.bottomSheet.title"="Picture in picture";

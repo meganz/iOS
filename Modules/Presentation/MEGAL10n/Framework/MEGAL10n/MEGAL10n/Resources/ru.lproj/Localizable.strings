@@ -4770,3 +4770,15 @@
 "notification.local.cameraUploadBackupReminder.body"="Пора сделать резервную копию ваших фото и видео";
 /* The double tap seek display text in video player */
 "videoPlayer.chip.seekDisplayText"="%@ сек.";
+/* The lock video player option in bottom more menu */
+"videoPlayer.lock.lockVideoPlayer"="Заблокировать видеоплеер";
+/* The screen locked status message in video player */
+"videoPlayer.lock.screenLocked"="Экран заблокирован";
+/* The instruction to unlock the video player */
+"videoPlayer.lock.tapIconToUnlock"="Tap the lock icon to unlock";
+/* The lock video player option in bottom more menu */
+"videoPlayer.snapshot.bottomSheet.title"="Cнимок";
+/* The instruction to unlock the video player */
+"videoPlayer.snapshot.snackBar.title"="Изображение сохранено на устройстве";
+/* The Picture in picture video player option in bottom more menu */
+"videoPlayer.pip.bottomSheet.title"="Picture in picture";
