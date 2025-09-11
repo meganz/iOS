@@ -1,7 +1,12 @@
 import SwiftUI
 
 /// A base view controller for displaying SwiftUI content while managing bottom overlay insets. This controller implements the common functionality for adjusting the bottom safe area inset.
-public class OverlayHostingController<Content: View>: UIHostingController<Content>, BottomOverlayPresenterProtocol {
+public class OverlayHostingController<Content: View>: UIHostingController<Content>, BottomOverlayPresenterProtocol, BottomSafeAreaOverlayCoverStatusProviderProtocol {
+    
+    public var shouldShowSafeAreaOverlayCover: Bool {
+        true
+    }
+    
     public override init(rootView: Content) {
         super.init(rootView: rootView)
     }
