@@ -2098,10 +2098,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Valid for %d day.</string>
         <key>other</key>
-        <string>Valid for %d days.</string>
+        <string>Berlaku untuk %d hari.</string>
       </dict>
     </dict>
     <key>account.achievement.validity.substring.days</key>
@@ -2114,10 +2112,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>valid for %d day</string>
         <key>other</key>
-        <string>valid for %d days</string>
+        <string>berlaku untuk %d hari</string>
       </dict>
     </dict>
     <key>account.achievement.complete.validBonusExpiry.detail.subtitle</key>
@@ -2844,10 +2840,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Removed “[A]” from the queue</string>
         <key>other</key>
-        <string>Removed %d items from the queue</string>
+        <string>Dihapus %d item dari antrian</string>
       </dict>
     </dict>
   </dict>

@@ -4770,3 +4770,15 @@
 "notification.local.cameraUploadBackupReminder.body"="是時候備份你的照片和影片了";
 /* The double tap seek display text in video player */
 "videoPlayer.chip.seekDisplayText"="%@秒";
+/* The lock video player option in bottom more menu */
+"videoPlayer.lock.lockVideoPlayer"="影片播放鎖定";
+/* The screen locked status message in video player */
+"videoPlayer.lock.screenLocked"="螢幕已上鎖";
+/* The instruction to unlock the video player */
+"videoPlayer.lock.tapIconToUnlock"="Tap the lock icon to unlock";
+/* The lock video player option in bottom more menu */
+"videoPlayer.snapshot.bottomSheet.title"="截圖";
+/* The instruction to unlock the video player */
+"videoPlayer.snapshot.snackBar.title"="影像已儲存到您的裝置";
+/* The Picture in picture video player option in bottom more menu */
+"videoPlayer.pip.bottomSheet.title"="Picture in picture";

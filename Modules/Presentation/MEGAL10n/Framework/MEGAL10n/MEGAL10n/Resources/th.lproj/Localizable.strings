@@ -4770,3 +4770,15 @@
 "notification.local.cameraUploadBackupReminder.body"="ถึงเวลาสำรองรูปภาพและวิดีโอของคุณแล้ว";
 /* The double tap seek display text in video player */
 "videoPlayer.chip.seekDisplayText"="%@ วินาที";
+/* The lock video player option in bottom more menu */
+"videoPlayer.lock.lockVideoPlayer"="Lock video player";
+/* The screen locked status message in video player */
+"videoPlayer.lock.screenLocked"="หน้าจอล็อกอยู่";
+/* The instruction to unlock the video player */
+"videoPlayer.lock.tapIconToUnlock"="Tap the lock icon to unlock";
+/* The lock video player option in bottom more menu */
+"videoPlayer.snapshot.bottomSheet.title"="ถ่ายภาพ";
+/* The instruction to unlock the video player */
+"videoPlayer.snapshot.snackBar.title"="รูปภาพที่บันทึกไว้ในอุปกรณ์ของคุณ";
+/* The Picture in picture video player option in bottom more menu */
+"videoPlayer.pip.bottomSheet.title"="Picture in picture";

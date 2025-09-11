@@ -4770,3 +4770,15 @@
 "notification.local.cameraUploadBackupReminder.body"="당신의 사진과 동영상을 백업할 시간입니다";
 /* The double tap seek display text in video player */
 "videoPlayer.chip.seekDisplayText"="%@초";
+/* The lock video player option in bottom more menu */
+"videoPlayer.lock.lockVideoPlayer"="Lock video player";
+/* The screen locked status message in video player */
+"videoPlayer.lock.screenLocked"="화면이 잠겼습니다";
+/* The instruction to unlock the video player */
+"videoPlayer.lock.tapIconToUnlock"="Tap the lock icon to unlock";
+/* The lock video player option in bottom more menu */
+"videoPlayer.snapshot.bottomSheet.title"="캡처";
+/* The instruction to unlock the video player */
+"videoPlayer.snapshot.snackBar.title"="이미지가 장치에 저장되었습니다";
+/* The Picture in picture video player option in bottom more menu */
+"videoPlayer.pip.bottomSheet.title"="Picture in picture";
