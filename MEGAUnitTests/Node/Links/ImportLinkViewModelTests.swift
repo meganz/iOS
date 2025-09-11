@@ -37,7 +37,6 @@ struct ImportLinkViewModelTests {
         sut.importNodes()
         
         #expect(router.showNodeBrowserCalled == 1)
-        #expect(router.dismissCalled == (isFolderLink ? 0 : 1))
     }
     
     @MainActor

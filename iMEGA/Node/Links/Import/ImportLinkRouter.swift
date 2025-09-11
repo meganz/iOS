@@ -36,11 +36,17 @@ final class ImportLinkRouter: ImportLinkRouting {
         browserVC.selectedNodesArray = nodes
         browserVC.browserAction = isFolderLink ? .importFromFolderLink : .import
         
-        presenter?.present(navigationController, animated: true)
-    }
-    
-    func dismiss(completion: @escaping () -> Void) {
-        presenter?.dismiss(animated: true, completion: completion)
+        if isFolderLink {
+            presenter?.present(navigationController, animated: true)
+        } else {
+            guard let presentingVC = presenter?.presentingViewController else {
+                presenter?.present(navigationController, animated: true)
+                return
+            }
+            presenter?.dismiss(animated: true) { [weak presentingVC] in
+                presentingVC?.present(navigationController, animated: true)
+            }
+        }
     }
     
     func showOnboarding() {
