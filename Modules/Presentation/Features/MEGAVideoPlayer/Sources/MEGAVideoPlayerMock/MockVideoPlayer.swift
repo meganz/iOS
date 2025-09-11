@@ -1,3 +1,4 @@
+import AVKit
 import Combine
 import Foundation
 import MEGAVideoPlayer
@@ -121,7 +122,7 @@ public final class MockVideoPlayer: VideoPlayerProtocol {
         nodeName = node.nodeName
     }
     
-    public func setupPlayer(in layer: any PlayerLayerProtocol) {
+    public func setupPlayer(in layer: any PlayerViewProtocol) {
         setupPlayerCallCount += 1
     }
     
@@ -138,6 +139,10 @@ public final class MockVideoPlayer: VideoPlayerProtocol {
     public func captureSnapshot() async -> UIImage? {
         captureSnapshotCallCount += 1
         return mockSnapshotImage
+    }
+    
+    public func loadPIPController() -> AVPictureInPictureController? {
+        return nil
     }
     
     // MARK: - Reset for testing

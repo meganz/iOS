@@ -1,4 +1,5 @@
 import AVFoundation
+import AVKit
 @preconcurrency import Combine
 import UIKit
 
@@ -142,15 +143,15 @@ extension MEGAAVPlayer: PlaybackControllable {
 // MARK: - VideoRenderable
 
 extension MEGAAVPlayer: VideoRenderable {
-    public func setupPlayer(in playerLayer: any PlayerLayerProtocol) {
+    public func setupPlayer(in playerView: any PlayerViewProtocol) {
         if let existingLayer = self.playerLayer {
             existingLayer.removeFromSuperlayer()
         }
 
         let newLayer = AVPlayerLayer(player: player)
-        newLayer.frame = playerLayer.bounds
+        newLayer.frame = playerView.bounds
         newLayer.videoGravity = .resizeAspect
-        playerLayer.layer.addSublayer(newLayer)
+        playerView.layer.addSublayer(newLayer)
         self.playerLayer = newLayer
     }
 
@@ -286,6 +287,21 @@ extension MEGAAVPlayer: NodeLoadable {
         } else {
             state = .ended
         }
+    }
+}
+
+// MARK: - PictureInPictureLoadable
+
+extension MEGAAVPlayer: PictureInPictureLoadable {
+    public func loadPIPController() -> AVPictureInPictureController? {
+        guard AVPictureInPictureController.isPictureInPictureSupported(),
+              let playerLayer else {
+            return nil
+        }
+
+        let pipController = AVPictureInPictureController(playerLayer: playerLayer)
+        pipController?.canStartPictureInPictureAutomaticallyFromInline = true
+        return pipController
     }
 }
 

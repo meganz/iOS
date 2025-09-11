@@ -4780,3 +4780,5 @@
 "videoPlayer.snapshot.bottomSheet.title" = "Snapshot";
 /* The instruction to unlock the video player */
 "videoPlayer.snapshot.snackBar.title" = "Saved image to your device gallery";
+/* The Picture in picture video player option in bottom more menu */
+"videoPlayer.pip.bottomSheet.title" = "Picture in picture";

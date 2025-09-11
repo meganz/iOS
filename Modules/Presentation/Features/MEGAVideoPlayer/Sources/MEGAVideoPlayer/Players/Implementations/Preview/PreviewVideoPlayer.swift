@@ -1,3 +1,5 @@
+import AVFoundation
+import AVKit
 import Combine
 import Foundation
 import UIKit
@@ -60,7 +62,7 @@ final class PreviewVideoPlayer: VideoPlayerProtocol {
         true
     }
     func loadNode(_ node: some PlayableNode) {}
-    func setupPlayer(in layer: any PlayerLayerProtocol) {}
+    func setupPlayer(in layer: any PlayerViewProtocol) {}
     func resizePlayer(to frame: CGRect) {}
     func setScalingMode(_ mode: VideoScalingMode) {
         scalingMode = mode
@@ -76,5 +78,9 @@ final class PreviewVideoPlayer: VideoPlayerProtocol {
 
     func captureSnapshot() async -> UIImage? {
         UIImage()
+    }
+    
+    func loadPIPController() -> AVPictureInPictureController? {
+        return nil
     }
 }

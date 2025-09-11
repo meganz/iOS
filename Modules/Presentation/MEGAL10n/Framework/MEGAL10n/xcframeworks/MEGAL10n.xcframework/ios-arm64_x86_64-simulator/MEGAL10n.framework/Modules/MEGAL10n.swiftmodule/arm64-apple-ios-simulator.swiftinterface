@@ -4763,6 +4763,11 @@ public enum Strings {
         public static let screenLocked: Swift.String
         public static let tapIconToUnlock: Swift.String
       }
+      public enum Pip {
+        public enum BottomSheet {
+          public static let title: Swift.String
+        }
+      }
       public enum Snapshot {
         public enum BottomSheet {
           public static let title: Swift.String

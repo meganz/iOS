@@ -1,3 +1,4 @@
+import AVKit
 import MEGADesignToken
 import MEGAPermissions
 #if canImport(UIKit)
@@ -7,6 +8,7 @@ import UIKit
 public final class MEGAPlayerViewController: UIViewController {
     private let videoView = UIView()
     private let viewModel: MEGAPlayerViewModel
+    private var pipController: AVPictureInPictureController?
 
     public init(viewModel: MEGAPlayerViewModel) {
         self.viewModel = viewModel
@@ -28,12 +30,14 @@ public final class MEGAPlayerViewController: UIViewController {
 
         setupVideoView()
         setupOverlay()
-        viewModel.viewDidLoad(playerLayer: videoView)
+        viewModel.viewDidLoad(playerView: videoView)
+        setupAudioSession()
+        setupPictureInPicture()
     }
 
     public override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        viewModel.viewDidLayoutSubviews(playerLayer: videoView)
+        viewModel.viewDidLayoutSubviews(playerView: videoView)
     }
 
     public override func viewWillAppear(_ animated: Bool) {
@@ -64,6 +68,9 @@ public final class MEGAPlayerViewController: UIViewController {
                     didTapBackAction: dismissAction ?? {},
                     didTapRotateAction: { [weak self] in
                         self?.toggleOrientation()
+                    },
+                    didTapPictureInPictureAction: { [weak self] in
+                        self?.togglePictureInPicture()
                     }
                 )
             )
@@ -92,7 +99,24 @@ public final class MEGAPlayerViewController: UIViewController {
             videoView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
         ])
     }
-    
+
+    private func setupAudioSession() {
+        do {
+             try AVAudioSession.sharedInstance().setCategory(
+                 .playback,
+                 mode: .moviePlayback,
+                 options: [.allowAirPlay, .allowBluetooth]
+             )
+             try AVAudioSession.sharedInstance().setActive(true)
+         } catch {
+             print("Audio session setup failed: \(error)")
+         }
+    }
+
+    private func setupPictureInPicture() {
+        pipController = viewModel.player.loadPIPController()
+    }
+
     // MARK: - Orientation
 
     private func toggleOrientation() {
@@ -121,6 +145,18 @@ public final class MEGAPlayerViewController: UIViewController {
     public override var shouldAutorotate: Bool {
         return true
     }
+    
+    // MARK: - Picture in Picture
+
+    private func togglePictureInPicture() {
+        guard let pipController else { return }
+
+        if pipController.isPictureInPictureActive {
+            pipController.stopPictureInPicture()
+        } else {
+            pipController.startPictureInPicture()
+        }
+    }
 }
 
 // MARK: - SwiftUI View
@@ -148,7 +184,7 @@ public struct MEGAPlayerView: UIViewControllerRepresentable {
     public func updateUIViewController(_ uiViewController: MEGAPlayerViewController, context: Context) {}
 }
 
-extension UIView: PlayerLayerProtocol {}
+extension UIView: PlayerViewProtocol {}
 
 #Preview {
     NavigationStack {

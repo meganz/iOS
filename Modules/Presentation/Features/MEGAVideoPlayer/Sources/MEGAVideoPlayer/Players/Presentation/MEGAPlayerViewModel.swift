@@ -14,17 +14,17 @@ public final class MEGAPlayerViewModel {
         )
     }
 
-    func viewDidLayoutSubviews(playerLayer: any PlayerLayerProtocol) {
-        player.resizePlayer(to: playerLayer.bounds)
+    func viewDidLayoutSubviews(playerView: any PlayerViewProtocol) {
+        player.resizePlayer(to: playerView.bounds)
     }
 
     func viewWillAppear() {
         player.play()
     }
 
-    func viewDidLoad(playerLayer: any PlayerLayerProtocol) {
+    func viewDidLoad(playerView: any PlayerViewProtocol) {
         reportingManager.observePlayback()
-        player.setupPlayer(in: playerLayer)
+        player.setupPlayer(in: playerView)
     }
 
     func viewDidDisappear() {
