@@ -17,14 +17,16 @@ struct PlayerOverlayViewModelTests {
         devicePermissionsHandler: some DevicePermissionsHandling = MockDevicePermissionHandler(),
         saveSnapshotUseCase: some SaveSnapshotUseCaseProtocol = MockSaveSnapshotUseCase(),
         didTapBackAction: @escaping () -> Void = {},
-        didTapRotateAction: @escaping () -> Void = {}
+        didTapRotateAction: @escaping () -> Void = {},
+        didTapPictureInPictureAction: @escaping () -> Void = {}
     ) -> PlayerOverlayViewModel {
         PlayerOverlayViewModel(
             player: player,
             devicePermissionsHandler: devicePermissionsHandler,
             saveSnapshotUseCase: saveSnapshotUseCase,
             didTapBackAction: didTapBackAction,
-            didTapRotateAction: didTapRotateAction
+            didTapRotateAction: didTapRotateAction,
+            didTapPictureInPictureAction: didTapPictureInPictureAction
         )
     }
 
@@ -956,5 +958,24 @@ struct PlayerOverlayViewModelTests {
         sut.checkToShowPhotoPermissionAlert()
 
         #expect(sut.shouldShowPhotoPermissionAlert == false)
+    }
+
+    // MARK: Picture in Picture Tests
+
+    @Test
+    func didTapPictureInPicture_shouldDismissBottomSheetAndCallAction() {
+        var didTapPictureInPictureActionCallTimes = 0
+        let sut = makeSUT(
+            didTapPictureInPictureAction: {
+                didTapPictureInPictureActionCallTimes += 1
+            }
+        )
+        sut.isBottomMoreSheetPresented = true
+        #expect(didTapPictureInPictureActionCallTimes == 0)
+
+        sut.didTapPictureInPicture()
+
+        #expect(sut.isBottomMoreSheetPresented == false)
+        #expect(didTapPictureInPictureActionCallTimes == 1)
     }
 }

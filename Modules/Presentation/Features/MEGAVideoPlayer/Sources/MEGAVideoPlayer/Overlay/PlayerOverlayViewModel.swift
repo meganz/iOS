@@ -35,19 +35,22 @@ public final class PlayerOverlayViewModel: ObservableObject {
     private let saveSnapshotUseCase: any SaveSnapshotUseCaseProtocol
     private let didTapBackAction: () -> Void
     private let didTapRotateAction: () -> Void
+    private let didTapPictureInPictureAction: () -> Void
 
     public init(
         player: some VideoPlayerProtocol,
         devicePermissionsHandler: some DevicePermissionsHandling,
         saveSnapshotUseCase: some SaveSnapshotUseCaseProtocol,
         didTapBackAction: @escaping () -> Void,
-        didTapRotateAction: @escaping () -> Void = {}
+        didTapRotateAction: @escaping () -> Void = {},
+        didTapPictureInPictureAction: @escaping () -> Void = {}
     ) {
         self.player = player
         self.devicePermissionsHandler = devicePermissionsHandler
         self.saveSnapshotUseCase = saveSnapshotUseCase
         self.didTapBackAction = didTapBackAction
         self.didTapRotateAction = didTapRotateAction
+        self.didTapPictureInPictureAction = didTapPictureInPictureAction
     }
 
     func viewWillAppear() {
@@ -271,6 +274,12 @@ extension PlayerOverlayViewModel {
 
     func didTapBottomMoreButton() {
         isBottomMoreSheetPresented = true
+    }
+
+    func didTapPictureInPicture() {
+        isBottomMoreSheetPresented = false
+        didTapPictureInPictureAction()
+        resetAutoHide()
     }
 
     func handlePinchGesture(scale: CGFloat) {
