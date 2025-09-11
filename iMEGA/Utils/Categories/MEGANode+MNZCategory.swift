@@ -15,6 +15,7 @@ extension MEGANode {
             )
         )
         guard let vc else { return }
+        vc.navigationItem.backButtonTitle = ""
         navigationController.pushViewController(vc, animated: false)
     }
     // the prefix `new` is for distinguishing with the old navigateToParentAndPresent()
