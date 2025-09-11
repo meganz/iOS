@@ -26,7 +26,7 @@ let package = Package(
         .package(path: "../../../Presentation/MEGAL10n"),
         .package(path: "../../../Infrastracture/MEGATest"),
         .package(path: "../../../UI/MEGASwiftUI"),
-        .package(url: "https://github.com/meganz/MEGADesignToken", branch: "main")
+        .package(url: "https://github.com/meganz/MEGADesignToken.git", branch: "main")
     ],
     targets: [
         .target(

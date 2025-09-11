@@ -24,7 +24,7 @@ let package = Package(
         .package(path: "../../../Presentation/MEGAL10n"),
         .package(path: "../../../Presentation/MEGAAppPresentation"),
         .package(path: "../../../UI/MEGASwiftUI"),
-        .package(url: "https://github.com/meganz/MEGADesignToken", branch: "main"),
+        .package(url: "https://github.com/meganz/MEGADesignToken.git", branch: "main"),
         .package(url: "https://code.developers.mega.co.nz/mobile/kmm/mobile-analytics-ios.git", branch: "main"),
         .package(url: "https://github.com/apple/swift-async-algorithms", from: "1.0.0")
     ],
