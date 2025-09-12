@@ -235,62 +235,6 @@ final class PhotosViewModelTests: XCTestCase {
     }
     
     @MainActor
-    func testEmptyScreenTypeToShow_cameraUploadsOn_shouldReturnNoMedia() {
-        let sut = makePhotosViewModel(preferenceUseCase: MockPreferenceUseCase(dict: [PreferenceKeyEntity.isCameraUploadsEnabled.rawValue: true]))
-        
-        XCTAssertEqual(sut.emptyScreenTypeToShow(), .noMediaFound)
-    }
-    
-    @MainActor
-    func testEmptyScreenTypeToShow_forFilterTypeAndLocationCameraUploadsOff_shouldReturnCorrectEmptyScreenTypeToDisplay() {
-        let expectations = [(filterType: PhotosFilterOptions.allMedia,
-                             filterLocation: PhotosFilterOptions.allLocations, expectedViewType: PhotosEmptyScreenViewType.enableCameraUploads),
-                            (filterType: .allMedia, filterLocation: .cloudDrive, expectedViewType: .noMediaFound),
-                            (filterType: .allMedia, filterLocation: .cameraUploads, expectedViewType: .enableCameraUploads),
-                            (filterType: .images, filterLocation: .allLocations, expectedViewType: .enableCameraUploads),
-                            (filterType: .images, filterLocation: .cloudDrive, expectedViewType: .noImagesFound),
-                            (filterType: .images, filterLocation: .cameraUploads, expectedViewType: .enableCameraUploads),
-                            (filterType: .videos, filterLocation: .allLocations, expectedViewType: .enableCameraUploads),
-                            (filterType: .videos, filterLocation: .cloudDrive, expectedViewType: .noVideosFound),
-                            (filterType: .videos, filterLocation: .cameraUploads, expectedViewType: .enableCameraUploads)
-        ]
-        
-        for (index, value) in expectations.enumerated() {
-            let sut = makePhotosViewModel(preferenceUseCase: MockPreferenceUseCase(dict: [PreferenceKeyEntity.isCameraUploadsEnabled.rawValue: false]))
-            sut.updateFilter(filterType: value.filterType, filterLocation: value.filterLocation)
-            
-            XCTAssertEqual(sut.emptyScreenTypeToShow(), value.expectedViewType,
-                           "Failed at index: \(index) with value: \(value)")
-        }
-    }
-    
-    @MainActor
-    func testEnableCameraUploadsBannerAction_cameraUploadsOn_shouldReturnNil() {
-        let sut = makePhotosViewModel(preferenceUseCase: MockPreferenceUseCase(dict: [PreferenceKeyEntity.isCameraUploadsEnabled.rawValue: true]))
-        
-        XCTAssertNil(sut.enableCameraUploadsBannerAction())
-    }
-    
-    @MainActor
-    func testEnableCameraUploadsBannerAction_cameraUploadsOffForFilterLocation_shouldReturnCorrectly() throws {
-        let cameraUploadsSettingsViewRouter = MockCameraUploadsSettingsViewRouter()
-        let sut = makePhotosViewModel(preferenceUseCase: MockPreferenceUseCase(dict: [PreferenceKeyEntity.isCameraUploadsEnabled.rawValue: false]),
-                                      cameraUploadsSettingsViewRouter: cameraUploadsSettingsViewRouter)
-        
-        for (index, value) in [PhotosFilterOptions.allLocations, .cameraUploads].enumerated() {
-            sut.updateFilter(filterType: .allMedia, filterLocation: value)
-            XCTAssertNil(sut.enableCameraUploadsBannerAction(), "Failed at index: \(index) with value: \(value)")
-        }
-        
-        sut.updateFilter(filterType: .allMedia, filterLocation: .cloudDrive)
-        
-        let action = try XCTUnwrap(sut.enableCameraUploadsBannerAction())
-        action()
-        
-        XCTAssertEqual(cameraUploadsSettingsViewRouter.startCalled, 1)
-    }
-    
-    @MainActor
     func testNavigateToCameraUploadSettings_called_shouldStartNavigation() {
         let cameraUploadsSettingsViewRouter = MockCameraUploadsSettingsViewRouter()
         let sut = makePhotosViewModel(preferenceUseCase: MockPreferenceUseCase(dict: [PreferenceKeyEntity.isCameraUploadsEnabled.rawValue: false]),

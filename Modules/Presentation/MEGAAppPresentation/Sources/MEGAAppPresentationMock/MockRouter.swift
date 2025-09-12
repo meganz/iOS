@@ -5,7 +5,7 @@ public final class MockRouter: Routing {
     private let viewController: UIViewController?
     public private(set) var startCalled = 0
     
-    public init(viewController: UIViewController? = nil) {
+    nonisolated public init(viewController: UIViewController? = nil) {
         self.viewController = viewController
     }
     

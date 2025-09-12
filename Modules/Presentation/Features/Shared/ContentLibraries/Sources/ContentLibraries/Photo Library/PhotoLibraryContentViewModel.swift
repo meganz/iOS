@@ -39,6 +39,14 @@ extension PhotoLibraryContentViewModel {
         ![.album, .albumLink].contains(contentMode)
     }
     
+    public var appliedMediaTypeFilterOption: PhotosFilterOptions {
+        filterViewModel.appliedMediaTypeFilter.toPhotosFilterOptions()
+    }
+    
+    public var appliedLocationFilterOption: PhotosFilterOptions {
+        filterViewModel.appliedFilterLocation.toPhotosFilterOptions()
+    }
+    
     public func toggleSelectAllPhotos() {
         let allSelectedCurrently = selection.photos.count == library.allPhotos.count
         selection.allSelected = !allSelectedCurrently

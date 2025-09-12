@@ -21,10 +21,9 @@
 @import Photos;
 @import MEGAUIKit;
 
-@interface PhotosViewController () <DZNEmptyDataSetSource, DZNEmptyDataSetDelegate>
+@interface PhotosViewController ()
 
 @property (weak, nonatomic) IBOutlet UIView *photoContainerView;
-@property (weak, nonatomic) IBOutlet UICollectionView *photosCollectionView;
 
 @property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
 
@@ -54,8 +53,6 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didReceiveInternetConnectionChangedNotification) name:kReachabilityChangedNotification object:nil];
-    
     [MEGASdk.shared addMEGAGlobalDelegateAsync:self queueType:ListenerQueueTypeGlobalBackground];
     
     [self.photoUpdatePublisher setupSubscriptions];
@@ -77,26 +74,13 @@
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     
-    [NSNotificationCenter.defaultCenter removeObserver:self name:kReachabilityChangedNotification object:nil];
-    
     [MEGASdk.shared removeMEGAGlobalDelegateAsync:self];
     
     [self.photoUpdatePublisher cancelSubscriptions];
 }
 
-- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
-    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
-    
-    [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
-        [self handleEmptyStateReload];
-    } completion:nil];
-}
-
 #pragma mark - config views
 - (void)configPhotoContainerView {
-    self.photosCollectionView.emptyDataSetSource = self;
-    self.photosCollectionView.emptyDataSetDelegate = self;
-    
     [self objcWrapper_configPhotoLibraryViewIn:self.photoContainerView];
 }
 
@@ -126,32 +110,12 @@
     [self setupNavigationBarButtons];
     dispatch_async(dispatch_get_main_queue(), ^{
         [self objcWrapper_updatePhotoLibrary];
-        [self handleEmptyStateReload];
         [self setupNavigationBarButtons];
     });
 }
 
-- (void)handleEmptyStateReload {
-    if (MEGAReachabilityManager.isReachable && self.viewModel.hasNoPhotos) {
-        [self showEmptyViewForAppliedFilters];
-    } else {
-        [self removeEmptyView];
-        [self.photosCollectionView reloadEmptyDataSet];
-    }
-}
-
 - (void)updateNavigationTitleBar {
     self.objcWrapper_parent.navigationItem.title = LocalizedString(@"photo.navigation.title", @"Title of one of the Settings sections where you can set up the 'Camera Uploads' options");
-}
-
-#pragma mark - notifications
-
-- (void)didReceiveInternetConnectionChangedNotification {
-    if (!MEGAReachabilityManager.isReachable) {
-        self.editBarButtonItem.enabled = NO;
-    }
-    
-    [self handleEmptyStateReload];
 }
 
 #pragma mark - IBAction
@@ -193,7 +157,6 @@
         }
     } else {
         [self updateNavigationTitleBar];
-        [self.photosCollectionView reloadEmptyDataSet];
         [UIView animateWithDuration:0.33f animations:^ {
             [self.toolbar setAlpha:0.0];
         } completion:^(BOOL finished) {
@@ -207,93 +170,6 @@
 - (void)didSelectedPhotoCountChange:(NSInteger)count {
     [self objcWrapper_updateNavigationTitleWithSelectedPhotoCount:count];
     [self setToolbarActionsEnabledIn:self.toolbar isEnabled:count > 0];
-}
-
-#pragma mark - View transitions
-
-- (void)pushCameraUploadSettings {
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"CameraUploadSettings" bundle:nil];
-    CameraUploadsTableViewController *cameraUploadsTableViewController = [storyboard instantiateViewControllerWithIdentifier:@"CameraUploadsSettingsID"];
-    [self.navigationController pushViewController:cameraUploadsTableViewController animated:YES];
-}
-
-#pragma mark - DZNEmptyDataSetSource
-
-- (nullable UIView *)customViewForEmptyDataSet:(UIScrollView *)scrollView {
-    EmptyStateView *emptyStateView = [self emptyStateViewWithImage:[self imageForEmptyState]
-                                                             title:[self titleForEmptyState]
-                                                       description:[self descriptionForEmptyState]
-                                                       buttonTitle:[self buttonTitleForEmptyState]];
-    
-    return emptyStateView;
-}
-
-#pragma mark - Empty State
-
-- (NSString *)titleForEmptyState {
-    NSString *text;
-    if ([MEGAReachabilityManager isReachable]) {
-        if (CameraUploadManager.isCameraUploadEnabled) {
-            text = LocalizedString(@"cameraUploadsEnabled", @"");
-        } else {
-            text = LocalizedString(@"enableCameraUploadsButton", @"Enable Camera Uploads");
-        }
-    } else {
-        text = LocalizedString(@"noInternetConnection",  @"No Internet Connection");
-    }
-    
-    return text;
-}
-
-- (NSString *)descriptionForEmptyState {
-    NSString *text = @"";
-    if (MEGAReachabilityManager.isReachable && !CameraUploadManager.isCameraUploadEnabled) {
-        text = LocalizedString(@"Automatically backup your photos and videos to the Cloud Drive.", @"");
-    } else if (!MEGAReachabilityManager.isReachable && !MEGAReachabilityManager.sharedManager.isMobileDataEnabled) {
-        text = LocalizedString(@"Mobile Data is turned off", @"Information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings.");
-    }
-    
-    return text;
-}
-
-- (UIImage *)imageForEmptyState {
-    UIImage *image = nil;
-    if ([MEGAReachabilityManager isReachable]) {
-        if (CameraUploadManager.isCameraUploadEnabled) {
-            image = [UIImage megaImageWithNamed:@"cameraEmptyState"];
-        } else {
-            image = [UIImage megaImageWithNamed:@"cameraUploadsBoarding"];
-        }
-    } else {
-        image = [UIImage megaImageWithNamed:@"noInternetEmptyState"];
-    }
-    
-    return image;
-}
-
-- (NSString *)buttonTitleForEmptyState {
-    NSString *text = @"";
-    if ([MEGAReachabilityManager isReachable]) {
-        if (!CameraUploadManager.isCameraUploadEnabled) {
-            text = LocalizedString(@"enable", @"Text button shown when the chat is disabled and if tapped the chat will be enabled");
-        }
-    } else {
-        if (!MEGAReachabilityManager.sharedManager.isMobileDataEnabled) {
-            text = LocalizedString(@"Turn Mobile Data on", @"Button title to go to the iOS Settings to enable 'Mobile Data' for the MEGA app.");
-        }
-    }
-    
-    return text;
-}
-
-- (void)buttonTouchUpInsideEmptyState {
-    if (MEGAReachabilityManager.isReachable) {
-        [self pushCameraUploadSettings];
-    } else {
-        if (!MEGAReachabilityManager.sharedManager.isMobileDataEnabled) {
-            [UIApplication.sharedApplication openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString] options:@{} completionHandler:nil];
-        }
-    }
 }
 
 #pragma mark - MEGAGlobalDelegate

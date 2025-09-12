@@ -36,9 +36,10 @@ struct EnableCameraUploadsEmptyView: View {
                     .shadow(color: MEGAAssets.Color.black000000.opacity(0.15), radius: 2, x: 0, y: 1)
                     .contentShape(Rectangle())
             }
+            .padding(.bottom, 32)
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background()
-        .padding(.bottom, 32)
     }
 }
 

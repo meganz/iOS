@@ -61,13 +61,7 @@ public final class PhotoLibraryFilterViewModel: ObservableObject {
         guard shouldShowMediaTypeFilter else {
             return .allMedia
         }
-        var option: PhotosFilterOptions
-        switch type {
-        case .images: option = .images
-        case .videos: option = .videos
-        default: option = .allMedia
-        }
-        return option
+        return type.toPhotosFilterOptions()
     }
     
     func filterTypeMatrixRepresentation(
@@ -103,13 +97,7 @@ public final class PhotoLibraryFilterViewModel: ObservableObject {
     }
     
     func filterOption(for location: PhotosFilterLocation) -> PhotosFilterOptions {
-        var option: PhotosFilterOptions
-        switch location {
-        case .cloudDrive: option = .cloudDrive
-        case .cameraUploads: option = .cameraUploads
-        default: option = .allLocations
-        }
-        return option
+        location.toPhotosFilterOptions()
     }
     
     func applyFilters() {

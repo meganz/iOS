@@ -72,7 +72,8 @@ final class PhotosViewModel: NSObject {
             cameraUploadStatusBannerViewModel: CameraUploadStatusBannerViewModel(
                 monitorCameraUploadUseCase: monitorCameraUploadUseCase,
                 devicePermissionHandler: devicePermissionHandler,
-                cameraUploadsSettingsViewRouter: cameraUploadsSettingsViewRouter)
+                cameraUploadsSettingsViewRouter: cameraUploadsSettingsViewRouter),
+            cameraUploadsSettingsViewRouter: cameraUploadsSettingsViewRouter
         )
         self.cameraUploadStatusButtonViewModel = CameraUploadStatusButtonViewModel(
             monitorCameraUploadUseCase: monitorCameraUploadUseCase,
@@ -158,32 +159,6 @@ final class PhotosViewModel: NSObject {
         sortOrderPreferenceUseCase.save(
             sortOrder: sortOrderType.toSortOrderEntity(),
             for: .cameraUploadExplorerFeed)
-    }
-    
-    // MARK: - Empty Screen
-    func emptyScreenTypeToShow() -> PhotosEmptyScreenViewType {
-        guard !isCameraUploadsEnabled else {
-            return .noMediaFound
-        }
-        switch [filterType, filterLocation] {
-        case [.images, .cloudDrive]:
-            return .noImagesFound
-        case [.videos, .cloudDrive]:
-            return .noVideosFound
-        case [.allMedia, .allLocations], [.allMedia, .cameraUploads],
-            [.images, .allLocations], [.images, .cameraUploads],
-            [.videos, .allLocations], [.videos, .cameraUploads]:
-            return .enableCameraUploads
-        default:
-            return .noMediaFound
-        }
-    }
-    
-    func enableCameraUploadsBannerAction() -> (() -> Void)? {
-        guard shouldShowEnableCameraUploadsBanner() else {
-            return nil
-        }
-        return navigateToCameraUploadSettings
     }
     
     func navigateToCameraUploadSettings() {

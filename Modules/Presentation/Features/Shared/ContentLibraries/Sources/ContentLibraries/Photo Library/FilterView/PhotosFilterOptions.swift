@@ -27,6 +27,14 @@ public extension PhotosFilterType {
         }
     }
     
+    func toPhotosFilterOptions() -> PhotosFilterOptions {
+        switch self {
+        case .images: .images
+        case .videos: .videos
+        default: .allMedia
+        }
+    }
+    
     static func toFilterType(from contentConsumptionMediaType: TimelineUserAttributeEntity.MediaType) -> PhotosFilterType {
         switch contentConsumptionMediaType {
         case .allMedia: return .allMedia
@@ -58,6 +66,14 @@ public extension PhotosFilterLocation {
         case .allLocations: return .allLocations
         case .cloudDrive: return .cloudDrive
         case .cameraUploads: return .cameraUploads
+        }
+    }
+    
+    func toPhotosFilterOptions() -> PhotosFilterOptions {
+        switch self {
+        case .cloudDrive: .cloudDrive
+        case .cameraUploads: .cameraUploads
+        default: .allLocations
         }
     }
     
