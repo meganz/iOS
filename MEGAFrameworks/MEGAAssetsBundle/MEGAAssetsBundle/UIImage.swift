@@ -412,7 +412,7 @@ public struct MEGAUIImageBundle {
     public static var link01: UIImage { UIImage.link01 }
     public static var linkOff01: UIImage { UIImage.linkOff01 }
     public static var listSmall: UIImage { UIImage.listSmall }
-    public static var mediaDiscoveryMode: UIImage { UIImage.mediaDiscoveryMode }
+    public static var image04: UIImage { UIImage.image04 }
     public static var messagePlus: UIImage { UIImage.messagePlus }
     public static var moreHorizontal: UIImage { UIImage.moreHorizontal }
     public static var moveMono: UIImage { UIImage.moveMono }
@@ -427,4 +427,5 @@ public struct MEGAUIImageBundle {
     public static var glassHardDrive: UIImage { UIImage.glassHardDrive }
     public static var glassSearch02: UIImage { UIImage.glassSearch02 }
     public static var glassTrash: UIImage { UIImage.glassTrash }
+    public static var folderUsersMono: UIImage { UIImage.folderUsersMono }
 }

@@ -240,7 +240,7 @@ public struct MEGAImageBundle {
     public static var link01: Image { Image(.link01) }
     public static var linkOff01: Image { Image(.linkOff01) }
     public static var listSmall: Image { Image(.listSmall) }
-    public static var mediaDiscoveryMode: Image { Image(.mediaDiscoveryMode) }
+    public static var image04: Image { Image(.image04) }
     public static var messagePlus: Image { Image(.messagePlus) }
     public static var moreHorizontal: Image { Image(.moreHorizontal) }
     public static var moveMono: Image { Image(.moveMono) }
@@ -255,5 +255,5 @@ public struct MEGAImageBundle {
     public static var glassHardDrive: Image { Image(.glassHardDrive) }
     public static var glassSearch02: Image { Image(.glassSearch02) }
     public static var glassTrash: Image { Image(.glassTrash) }
-
+    public static var folderUsersMono: Image { Image(.folderUsersMono) }
 }

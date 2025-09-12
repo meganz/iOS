@@ -1244,7 +1244,7 @@ public struct MEGAUIImageBundle {
   public static var listSmall: UIKit.UIImage {
     get
   }
-  public static var mediaDiscoveryMode: UIKit.UIImage {
+  public static var image04: UIKit.UIImage {
     get
   }
   public static var messagePlus: UIKit.UIImage {
@@ -1289,6 +1289,12 @@ public struct MEGAUIImageBundle {
   public static var glassTrash: UIKit.UIImage {
     get
   }
+  public static var folderUsersMono: UIKit.UIImage {
+    get
+  }
+}
+extension Foundation.Bundle {
+  public static let MEGAAssetsBundle: Foundation.Bundle
 }
 public struct MEGAColorBundle {
   public static var black000000: SwiftUICore.Color {
@@ -1312,9 +1318,6 @@ public struct MEGAColorBundle {
   public static var backgroundRegularPrimaryElevated: SwiftUICore.Color {
     get
   }
-}
-extension Foundation.Bundle {
-  public static let MEGAAssetsBundle: Foundation.Bundle
 }
 public struct MEGAUIColorBundle {
   public static var whiteFFFFFF: UIKit.UIColor {
@@ -2204,7 +2207,7 @@ public struct MEGAImageBundle {
   public static var listSmall: SwiftUICore.Image {
     get
   }
-  public static var mediaDiscoveryMode: SwiftUICore.Image {
+  public static var image04: SwiftUICore.Image {
     get
   }
   public static var messagePlus: SwiftUICore.Image {
@@ -2247,6 +2250,9 @@ public struct MEGAImageBundle {
     get
   }
   public static var glassTrash: SwiftUICore.Image {
+    get
+  }
+  public static var folderUsersMono: SwiftUICore.Image {
     get
   }
 }
