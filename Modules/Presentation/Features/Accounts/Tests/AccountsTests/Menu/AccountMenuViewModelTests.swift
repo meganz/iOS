@@ -98,9 +98,10 @@ struct AccountMenuViewModelTests {
         #expect(contactsRowData.iconConfiguration.style == .normal)
     }
 
-    @Test("Test achievements row data")
-    func testAchievementsRowData() throws {
-        let sut = makeSUT()
+    @Test("Test achievements row data when isAchievementsIsEnabled is true")
+    func testAchievementsRowData_whenIsAchievementsIsEnabled() throws {
+        let accountUseCase = MockAccountUseCase(isAchievementsEnabled: true)
+        let sut = makeSUT(accountUseCase: accountUseCase)
         let accountSection = sut.sections[.account]
         let achievementsRowData = try #require(
             accountSection?[SUT.Constants.AccountSectionIndex.achievements.rawValue],
@@ -111,6 +112,13 @@ struct AccountMenuViewModelTests {
         #expect(achievementsRowData.rowType == .disclosure(action: {}))
         #expect(achievementsRowData.iconConfiguration.style == .normal)
     }
+
+    @Test("Test achievements row data when isAchievementsIsEnabled is false")
+    func testAchievementsRowData_whenIsAchievementsIsDisabled() throws {
+        let accountUseCase = MockAccountUseCase(isAchievementsEnabled: false)
+        let sut = makeSUT(accountUseCase: accountUseCase)
+        let accountSection = sut.sections[.account]
+        #expect(accountSection?[SUT.Constants.AccountSectionIndex.achievements.rawValue] == nil)    }
 
     @Test("Test shared items row data")
     func testSharedItemsRowData() throws {
@@ -357,7 +365,8 @@ struct AccountMenuViewModelTests {
     @Test("Test achievements row tap")
     func testAchievementsRowTap() throws {
         let router = MockMenuViewRouter()
-        let sut = makeSUT(router: router)
+        let accountUseCase = MockAccountUseCase(isAchievementsEnabled: true)
+        let sut = makeSUT(router: router, accountUseCase: accountUseCase)
         let accountSection = try #require(sut.sections[.account], "Account section should exist")
         let achievementsRow = try #require(
             accountSection[SUT.Constants.AccountSectionIndex.achievements.rawValue],
