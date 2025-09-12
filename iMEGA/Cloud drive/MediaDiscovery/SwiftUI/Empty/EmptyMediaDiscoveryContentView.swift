@@ -16,6 +16,8 @@ struct EmptyMediaDiscoveryContentView: View {
             Spacer()
             actionContent
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(TokenColors.Background.page.swiftUI)
     }
     
     @ViewBuilder
@@ -26,6 +28,7 @@ struct EmptyMediaDiscoveryContentView: View {
                 .frame(width: 120, height: 120)
             Text(title)
                 .font(.body)
+                .foregroundStyle(TokenColors.Text.primary.swiftUI)
         }
     }
     
@@ -42,10 +45,11 @@ struct EmptyMediaDiscoveryContentView: View {
             }, label: {
                 Text(Strings.Localizable.addFiles)
                     .font(.body.weight(.semibold))
-                    .foregroundColor(MEGAAssets.UIColor.whiteFFFFFF.swiftUI)
+                    .foregroundColor(TokenColors.Text.inverseAccent.swiftUI)
+                    .background(TokenColors.Button.primary.swiftUI)
                     .frame(width: 288, height: 50)
             })
-            .background(TokenColors.Support.success.swiftUI)
+            .background(TokenColors.Button.primary.swiftUI)
             .cornerRadius(8, corners: .allCorners)
             .shadow(color: TokenColors.Text.primary.swiftUI.opacity(0.15), radius: 3, x: 0, y: 1)
         }

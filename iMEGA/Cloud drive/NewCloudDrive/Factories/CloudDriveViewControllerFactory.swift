@@ -650,6 +650,16 @@ struct CloudDriveViewControllerFactory {
             navigationController: navigationController
         )
         
+        mediaContentDelegate.mediaDiscoverEmptyTappedHandler = { [weak contextMenuManager] in
+            guard let uploadAddMenuDelegate = contextMenuManager?.uploadAddMenuDelegate else { return }
+            switch $0 {
+            case .choosePhotoVideo:
+                uploadAddMenuDelegate.uploadAddMenu(didSelect: .chooseFromPhotos)
+            case .capturePhotoVideo:
+               uploadAddMenuDelegate.uploadAddMenu(didSelect: .capture)
+            }
+        }
+        
         nodeBrowserViewModel.actionHandlers.append(actionHandlers)
         nodeBrowserViewModel.actionHandlers.append(mediaContentDelegate)
 
