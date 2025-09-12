@@ -10,23 +10,14 @@ extension EmptyStateView {
         case .photos:
             return photosEmptyState()
             
-        case .timeline(let image, let title, let description, let buttonTitle):
-            return timelineEmptyState(image: image, title: title, description: description, buttonTitle: buttonTitle)
-            
         case .documents:
             return documentsEmptyState()
             
         case .audio:
             return audioEmptyState()
             
-        case .videos:
-            return videoEmptyState()
-            
         case .backups(let searchActive):
             return backupsEmptyState(searchActive: searchActive)
-            
-        case .allMedia:
-            return allMediaEmptyState()
         case .album:
             return albumEmptyState()
         }
@@ -37,22 +28,6 @@ extension EmptyStateView {
                        title: Strings.Localizable.Home.Images.empty,
                        description: nil,
                        buttonTitle: nil)
-    }
-    
-    private class func allMediaEmptyState() -> EmptyStateView {
-        let view = EmptyStateView(forHomeWith: MEGAAssets.UIImage.allPhotosEmptyState,
-                                  title: Strings.Localizable.CameraUploads.Timeline.AllMedia.Empty.title,
-                                  description: nil,
-                                  buttonTitle: nil)
-        
-        return view
-    }
-    
-    private class func timelineEmptyState(image: UIImage?, title: String?, description: String?, buttonTitle: String?) -> EmptyStateView {
-        EmptyStateView(forTimelineWith: image,
-                       title: title,
-                       description: description,
-                       buttonTitle: buttonTitle)
     }
     
     private class func documentsEmptyState() -> EmptyStateView {

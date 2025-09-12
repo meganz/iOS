@@ -9,7 +9,8 @@ public protocol PhotoLibraryProvider: UIViewController {
     var photoLibraryContentViewModel: PhotoLibraryContentViewModel { get }
     
     func configPhotoLibraryView(in container: UIView, router: some PhotoLibraryContentViewRouting, onFilterUpdate: ((PhotosFilterOptions, PhotosFilterOptions) -> Void)?)
-    func updatePhotoLibrary(by nodes: [NodeEntity], withSortType type: SortOrderEntity, in hostControllerType: UIViewController.Type)
+    func updatePhotoLibrary(by nodes: [NodeEntity], withSortType type: SortOrderEntity,
+                            in hostControllerType: UIViewController.Type, hideHostOnEmpty: Bool)
     func hideNavigationEditBarButton(_ hide: Bool)
     func enablePhotoLibraryEditMode(_ enable: Bool)
     func configPhotoLibrarySelectAll()
@@ -55,7 +56,12 @@ public extension PhotoLibraryProvider {
         navigationItem.title = message
     }
     
-    func updatePhotoLibrary(by nodes: [NodeEntity], withSortType type: SortOrderEntity = .modificationDesc, in hostControllerType: UIViewController.Type = UIHostingController<PhotoLibraryContentView>.self) {
+    func updatePhotoLibrary(
+        by nodes: [NodeEntity],
+        withSortType type: SortOrderEntity = .modificationDesc,
+        in hostControllerType: UIViewController.Type = UIHostingController<PhotoLibraryContentView>.self,
+        hideHostOnEmpty: Bool = true
+    ) {
         
         guard let host = children.first(where: { Swift.type(of: $0) === hostControllerType }) else {
             return
@@ -64,7 +70,7 @@ public extension PhotoLibraryProvider {
         Task {
             let photoLibrary = await load(by: nodes, withSortType: type)
             
-            host.view.isHidden = photoLibrary.isEmpty
+            host.view.isHidden = hideHostOnEmpty && photoLibrary.isEmpty
             photoLibraryContentViewModel.library = photoLibrary
             
             hideNavigationEditBarButton(photoLibrary.isEmpty)

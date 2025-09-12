@@ -42,7 +42,8 @@ extension PhotosViewController: PhotoLibraryProvider {
         updatePhotoLibrary(
             by: viewModel.mediaNodes,
             withSortType: viewModel.cameraUploadExplorerSortOrderType.toSortOrderEntity(),
-            in: UIHostingController<TimelineView>.self
+            in: UIHostingController<TimelineView>.self,
+            hideHostOnEmpty: false
         )
     }
     

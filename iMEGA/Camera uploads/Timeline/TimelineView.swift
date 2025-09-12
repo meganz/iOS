@@ -31,6 +31,9 @@ struct TimelineView: View {
             router: router,
             onFilterUpdate: onFilterUpdate)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .if(photoLibraryContentViewModel.library.isEmpty) {
+            $0.overlay(emptyView())
+        }
         .overlay(alignment: .top, content: cameraUploadBannerStatusView)
     }
     
@@ -46,5 +49,22 @@ struct TimelineView: View {
         .determineViewSize { @Sendable in cameraUploadBannerStatusSize = $0 }
         .throwingTask { try await cameraUploadStatusBannerViewModel.monitorCameraUploadStatus() }
         .throwingTask { try await cameraUploadStatusBannerViewModel.handleCameraUploadAutoDismissal() }
+    }
+    
+    @ViewBuilder
+    private func emptyView() -> some View {
+        let emptyScreenType = timelineViewModel.emptyScreenTypeToShow(
+            filterType: photoLibraryContentViewModel.appliedMediaTypeFilterOption,
+            filterLocation: photoLibraryContentViewModel.appliedLocationFilterOption)
+        
+        if emptyScreenType == .enableCameraUploads {
+            EnableCameraUploadsEmptyView(action: timelineViewModel.navigateToCameraUploadSettings)
+        } else {
+            PhotoTimelineEmptyView(
+                centerImage: emptyScreenType.centerImage,
+                title: emptyScreenType.title,
+                enableCameraUploadsAction: timelineViewModel.enableCameraUploadsBannerAction(
+                    filterLocation: photoLibraryContentViewModel.appliedLocationFilterOption))
+        }
     }
 }

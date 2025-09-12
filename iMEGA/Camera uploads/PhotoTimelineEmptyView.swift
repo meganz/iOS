@@ -11,10 +11,6 @@ struct PhotoTimelineEmptyView: View {
     
     var body: some View {
         ZStack(alignment: .top) {
-            if let enableCameraUploadsAction {
-                EnableCameraUploadsBannerButtonView(enableCameraUploadsAction)
-            }
-            
             ContentUnavailableView {
                 centerImage
                     .renderingMode(.template)
@@ -25,6 +21,10 @@ struct PhotoTimelineEmptyView: View {
                     .foregroundStyle(TokenColors.Text.primary.swiftUI)
             }
             .frame(maxHeight: .infinity)
+            
+            if let enableCameraUploadsAction {
+                EnableCameraUploadsBannerButtonView(enableCameraUploadsAction)
+            }
         }
         .background()
     }

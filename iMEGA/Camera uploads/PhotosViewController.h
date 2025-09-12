@@ -24,12 +24,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)reloadPhotos;
 - (void)didSelectedPhotoCountChange:(NSInteger)count;
-- (void)buttonTouchUpInsideEmptyState;
-
-- (nullable NSString *)titleForEmptyState;
-- (NSString *)descriptionForEmptyState;
-- (nullable UIImage *)imageForEmptyState;
-- (NSString *)buttonTitleForEmptyState;
 
 @end
 
