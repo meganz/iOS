@@ -159,11 +159,7 @@ public final class AccountMenuViewModel: ObservableObject {
             accountDetails: accountUseCase.currentAccountDetails
         )
         accountSection[Constants.AccountSectionIndex.contacts.rawValue] = contactsMenuOption()
-        accountSection[Constants.AccountSectionIndex.achievements.rawValue] = AccountMenuOption(
-            iconConfiguration: .init(icon: MEGAAssets.Image.achievementsInMenu),
-            title: Strings.Localizable.achievementsTitle,
-            rowType: .disclosure { [weak self] in self?.showAchievements() }
-        )
+        accountSection[Constants.AccountSectionIndex.achievements.rawValue] = achievementsMenuOption()
         accountSection[Constants.AccountSectionIndex.sharedItems.rawValue] = sharedItemsMenuOption()
         accountSection[Constants.AccountSectionIndex.deviceCentre.rawValue] = AccountMenuOption(
             iconConfiguration: .init(icon: MEGAAssets.Image.deviceCentreInMenu),
@@ -452,6 +448,15 @@ public final class AccountMenuViewModel: ObservableObject {
             title: Strings.Localizable.InAppPurchase.ProductDetail.Navigation.currentPlan,
             subtitleState: subtitleState,
             rowType: rowType
+        )
+    }
+
+    private func achievementsMenuOption() -> AccountMenuOption? {
+        guard accountUseCase.isAchievementsEnabled else { return nil }
+        return AccountMenuOption(
+            iconConfiguration: .init(icon: MEGAAssets.Image.achievementsInMenu),
+            title: Strings.Localizable.achievementsTitle,
+            rowType: .disclosure { [weak self] in self?.showAchievements() }
         )
     }
 
