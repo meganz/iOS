@@ -260,7 +260,7 @@ extension MEGAAssets {
         public static var link01: SwiftUI.Image { MEGAImageBundle.link01 }
         public static var linkOff01: SwiftUI.Image { MEGAImageBundle.linkOff01 }
         public static var listSmall: SwiftUI.Image { MEGAImageBundle.listSmall }
-        public static var mediaDiscoveryMode: SwiftUI.Image { MEGAImageBundle.mediaDiscoveryMode }
+        public static var photoPlaceholder: SwiftUI.Image { MEGAImageBundle.image04 }
         public static var messagePlus: SwiftUI.Image { MEGAImageBundle.messagePlus }
         public static var moreHorizontal: SwiftUI.Image { MEGAImageBundle.moreHorizontal }
         public static var moveMono: SwiftUI.Image { MEGAImageBundle.moveMono }
@@ -275,6 +275,7 @@ extension MEGAAssets {
         public static var glassHardDrive: SwiftUI.Image { MEGAImageBundle.glassHardDrive }
         public static var glassSearch02: SwiftUI.Image { MEGAImageBundle.glassSearch02 }
         public static var glassTrash: SwiftUI.Image { MEGAImageBundle.glassTrash }
+        public static var folderUsersMono: SwiftUI.Image { MEGAImageBundle.folderUsersMono }
     }
 }
 
@@ -689,7 +690,7 @@ extension MEGAAssets {
         public static var link01: UIKit.UIImage { MEGAUIImageBundle.link01 }
         public static var linkOff01: UIKit.UIImage { MEGAUIImageBundle.linkOff01 }
         public static var listSmall: UIKit.UIImage { MEGAUIImageBundle.listSmall }
-        public static var mediaDiscoveryMode: UIKit.UIImage { MEGAUIImageBundle.mediaDiscoveryMode }
+        public static var photoPlaceholder: UIKit.UIImage { MEGAUIImageBundle.image04 }
         public static var messagePlus: UIKit.UIImage { MEGAUIImageBundle.messagePlus }
         public static var moreHorizontal: UIKit.UIImage { MEGAUIImageBundle.moreHorizontal }
         public static var moveMono: UIKit.UIImage { MEGAUIImageBundle.moveMono }
@@ -704,5 +705,6 @@ extension MEGAAssets {
         public static var glassHardDrive: UIKit.UIImage { MEGAUIImageBundle.glassHardDrive }
         public static var glassSearch02: UIKit.UIImage { MEGAUIImageBundle.glassSearch02 }
         public static var glassTrash: UIKit.UIImage { MEGAUIImageBundle.glassTrash }
+        public static var folderUsersMono: UIKit.UIImage { MEGAUIImageBundle.folderUsersMono }
     }
 }
