@@ -24,6 +24,7 @@ public final class MEGAAVPlayer {
     private nonisolated let debugMessageSubject = PassthroughSubject<String, Never>()
 
     private var isLoopEnabled: Bool = false
+    private var playerRate: Float = 1.0
 
     private var cancellables = Set<AnyCancellable>()
 
@@ -89,7 +90,7 @@ extension MEGAAVPlayer: PlaybackDebugMessageObservable {
 
 extension MEGAAVPlayer: PlaybackControllable {
     public func play() {
-        player.play()
+        player.rate = playerRate
     }
 
     public func pause() {
@@ -132,9 +133,12 @@ extension MEGAAVPlayer: PlaybackControllable {
     }
 
     public func changeRate(to rate: Float) {
-        player.rate = rate
+        playerRate = rate
+        if player.rate > 0 {
+            player.rate = rate
+        }
     }
-    
+
     public func setLooping(_ enabled: Bool) {
         isLoopEnabled = enabled
     }
@@ -280,7 +284,7 @@ extension MEGAAVPlayer: NodeLoadable {
             .store(in: &cancellables)
     }
 
-    func handlePlaybackEnded() {
+    private func handlePlaybackEnded() {
         if isLoopEnabled {
             seek(to: 0)
             play()
@@ -327,8 +331,12 @@ extension MEGAAVPlayer {
             playbackDebugMessage("Invalid time \(time)")
             return
         }
-
-        currentTime = .seconds(time.seconds)
+        let newDuration = Duration.seconds(time.seconds)
+        if duration.components.seconds > 0 {
+            currentTime = min(newDuration, duration)
+        } else {
+            currentTime = newDuration
+        }
     }
 
     private func updateDuration(_ duration: CMTime) {

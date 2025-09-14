@@ -34,6 +34,8 @@ final class PreviewVideoPlayer: VideoPlayerProtocol {
         Just(debugMessage).eraseToAnyPublisher()
     }
 
+    var isLoopEnabled: Bool = false
+
     var _nodeName: String = ""
 
     init(
@@ -70,8 +72,6 @@ final class PreviewVideoPlayer: VideoPlayerProtocol {
     func changeRate(to rate: Float) {}
     func setLooping(_ enabled: Bool) { }
     
-    var isLoopEnabled: Bool = false
-
     var nodeName: String {
         _nodeName
     }

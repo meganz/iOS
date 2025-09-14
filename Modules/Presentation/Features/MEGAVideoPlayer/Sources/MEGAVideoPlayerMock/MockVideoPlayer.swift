@@ -109,7 +109,7 @@ public final class MockVideoPlayer: VideoPlayerProtocol {
         changeRateCallCount += 1
         changeRateValue = rate
     }
-    
+
     public func setLooping(_ enabled: Bool) {
         setLoopingCallCount += 1
         setLoopingValue = enabled
