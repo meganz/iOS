@@ -215,7 +215,8 @@
     NSString *validityString = rewardDuration > 0
         ? [NSString stringWithFormat:LocalizedString(@"account.achievement.validity.days", @""), rewardDuration]
         : LocalizedString(@"account.achievement.validity.permanent", @"");
-    self.inviteYourFriendsSubtitleLabel.text = [NSString stringWithFormat:LocalizedString(@"account.achievement.referral.subtitle", @""), inviteStorageString, validityString];
+    NSString *subtitleLabelText = [NSString stringWithFormat:LocalizedString(@"account.achievement.referral.subtitle", @""), inviteStorageString, validityString];
+    self.inviteYourFriendsSubtitleLabel.text = subtitleLabelText;
 
     self.unlockedStorageQuotaLabel.attributedText = [self textForUnlockedBonuses:self.achievementsDetails.currentStorage];
 
