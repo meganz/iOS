@@ -25,6 +25,7 @@ public final class PlayerOverlayViewModel: ObservableObject {
     @Published var isLockOverlayVisible: Bool = false
     @Published var showSnapshotSuccessMessage: Bool = false
     private(set) var shouldShowPhotoPermissionAlert = false
+    private var isHoldToSpeed = false
     private var autoHideTimer: Timer?
     private var doubleTapSeekTimer: Timer?
     private var lockOverlayTimer: Timer?
@@ -160,7 +161,8 @@ extension PlayerOverlayViewModel {
 
         let currentSeconds = currentTime.components.seconds
         let result = CGFloat(currentSeconds) / CGFloat(durationSeconds)
-        return result
+        let finalResult = min(result, 1.0)
+        return finalResult
     }
 
     func updateSeekBarDrag(at location: CGPoint, in frame: CGRect) {
@@ -186,7 +188,6 @@ extension PlayerOverlayViewModel {
         let progress = clampedX / width
         let finalProgress = max(0, min(progress, 1.0))
         let targetTime = finalProgress * Double(durationInSeconds)
-        print("Target time: \(targetTime)")
         return Duration.milliseconds(targetTime * 1000)
     }
 
@@ -418,7 +419,11 @@ extension PlayerOverlayViewModel {
 
 extension PlayerOverlayViewModel {
     func beginHoldToSpeed() {
-        guard duration.components.seconds > 0 else { return }
+        guard duration.components.seconds > 0,
+              state == .playing else {
+            return
+        }
+        isHoldToSpeed = true
         if currentSpeed != .double {
             shouldShowHoldToSpeedChip = true
         }
@@ -427,6 +432,10 @@ extension PlayerOverlayViewModel {
     }
 
     func endHoldToSpeed() {
+        guard duration.components.seconds > 0,
+              isHoldToSpeed else {
+            return
+        }
         shouldShowHoldToSpeedChip = false
         player.changeRate(to: currentSpeed.rawValue)
     }

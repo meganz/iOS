@@ -307,6 +307,7 @@ struct PlayerOverlayViewModelTests {
         let mockPlayer = MockVideoPlayer()
         let sut = makeSUT(player: mockPlayer)
         sut.duration = duration
+        sut.state = .playing
 
         sut.beginHoldToSpeed()
 
@@ -331,6 +332,7 @@ struct PlayerOverlayViewModelTests {
         let sut = makeSUT(player: mockPlayer)
         sut.duration = .seconds(100)
         sut.currentSpeed = currentSpeed
+        sut.state = .playing
 
         sut.beginHoldToSpeed()
 
@@ -347,33 +349,26 @@ struct PlayerOverlayViewModelTests {
         sut.duration = .seconds(100)
         sut.currentSpeed = .normal
         sut.shouldShowHoldToSpeedChip = true
+        sut.state = .playing
+        sut.beginHoldToSpeed()
+        #expect(sut.shouldShowHoldToSpeedChip == true)
 
         sut.endHoldToSpeed()
 
         #expect(sut.shouldShowHoldToSpeedChip == false)
-        #expect(mockPlayer.changeRateCallCount == 1)
+        #expect(mockPlayer.changeRateCallCount == 2)
         #expect(mockPlayer.changeRateValue == PlaybackSpeed.normal.rawValue)
     }
 
     @Test
-    func holdToSpeed_whenCompleteFlow_shouldWorkCorrectly() {
+    func endHoldToSpeed_whenHoldNotActive_shouldNotChangeRate() {
         let mockPlayer = MockVideoPlayer()
         let sut = makeSUT(player: mockPlayer)
         sut.duration = .seconds(100)
-        sut.currentSpeed = .oneHalf
 
-        // Begin hold
-        sut.beginHoldToSpeed()
-        #expect(sut.shouldShowHoldToSpeedChip == true)
-        #expect(sut.isControlsVisible == false)
-        #expect(mockPlayer.changeRateCallCount == 1)
-        #expect(mockPlayer.changeRateValue == PlaybackSpeed.double.rawValue)
-
-        // End hold
         sut.endHoldToSpeed()
-        #expect(sut.shouldShowHoldToSpeedChip == false)
-        #expect(mockPlayer.changeRateCallCount == 2)
-        #expect(mockPlayer.changeRateValue == PlaybackSpeed.oneHalf.rawValue)
+
+        #expect(mockPlayer.changeRateCallCount == 0)
     }
 
     // MARK: - Double Tap Seek Tests
@@ -589,7 +584,7 @@ struct PlayerOverlayViewModelTests {
     func didTapLoopButton_togglesLoopEnabled() {
         let mockPlayer = MockVideoPlayer()
         let sut = makeSUT(player: mockPlayer)
-        
+
         // Initial state
         #expect(sut.isLoopEnabled == false)
         #expect(mockPlayer.setLoopingCallCount == 0)

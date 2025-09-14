@@ -13,75 +13,76 @@ public struct PlayerOverlayView: View {
     }
 
     public var body: some View {
-        ZStack {
-            if viewModel.isLocked {
-                lockOverlayView
-            } else {
-                backgroundColor
-                    .ignoresSafeArea()
-                    .contentShape(Rectangle())
-                    .overlay(
-                        HStack(spacing: 0) {
-                            // Left side - backward seek
-                            Rectangle()
-                                .fill(Color.clear)
-                                .contentShape(Rectangle())
-                                .onTapGesture(count: 2) {
-                                    Task {
-                                        await viewModel.handleDoubleTapSeek(isForward: false)
+        GeometryReader { geo in
+            let isLandscape = geo.size.width > geo.size.height
+            return ZStack {
+                if viewModel.isLocked {
+                    lockOverlayView
+                } else {
+                    backgroundColor
+                        .ignoresSafeArea()
+                        .contentShape(Rectangle())
+                        .overlay(
+                            HStack(spacing: 0) {
+                                // Left side - backward seek
+                                Rectangle()
+                                    .fill(Color.clear)
+                                    .contentShape(Rectangle())
+                                    .onTapGesture(count: 2) {
+                                        Task {
+                                            await viewModel.handleDoubleTapSeek(isForward: false)
+                                        }
                                     }
-                                }
-                                .frame(maxWidth: .infinity)
-
-                            // Right side - forward seek
-                            Rectangle()
-                                .fill(Color.clear)
-                                .contentShape(Rectangle())
-                                .onTapGesture(count: 2) {
-                                    Task {
-                                        await viewModel.handleDoubleTapSeek(isForward: true)
+                                    .frame(maxWidth: .infinity)
+                                
+                                // Right side - forward seek
+                                Rectangle()
+                                    .fill(Color.clear)
+                                    .contentShape(Rectangle())
+                                    .onTapGesture(count: 2) {
+                                        Task {
+                                            await viewModel.handleDoubleTapSeek(isForward: true)
+                                        }
                                     }
-                                }
-                                .frame(maxWidth: .infinity)
-                        }
-                            .onTapGesture {
-                                viewModel.didTapVideoArea()
+                                    .frame(maxWidth: .infinity)
                             }
-                            .onLongPressGesture(
-                                minimumDuration: 0.5,
-                                perform: {
-                                    viewModel.beginHoldToSpeed()
-                                },
-                                onPressingChanged: { isPressing in
-                                    guard !isPressing else { return }
-                                    viewModel.endHoldToSpeed()
+                                .onTapGesture {
+                                    viewModel.didTapVideoArea()
                                 }
-                            )
-                    )
-
-                if viewModel.isControlsVisible {
-                    topToolbar
-                    centerPlaybackButtons
-                    bottomToolbar
-                }
-
-                if viewModel.shouldShowHoldToSpeedChip {
-                    holdToSpeedChip
-                }
-
-                if viewModel.isDoubleTapSeekActive {
-                    GeometryReader { geo in
+                                .onLongPressGesture(
+                                    minimumDuration: 0.5,
+                                    perform: {
+                                        viewModel.beginHoldToSpeed()
+                                    },
+                                    onPressingChanged: { isPressing in
+                                        guard !isPressing else { return }
+                                        viewModel.endHoldToSpeed()
+                                    }
+                                )
+                        )
+                    
+                    if viewModel.isControlsVisible {
+                        topToolbar
+                        centerPlaybackButtons
+                        bottomToolbar(isLandscape: isLandscape)
+                    }
+                    
+                    if viewModel.shouldShowHoldToSpeedChip {
+                        holdToSpeedChip
+                    }
+                    
+                    if viewModel.isDoubleTapSeekActive {
                         doubleTapSeekChip
                             .padding(
                                 .bottom,
                                 viewModel.doubleTapSeekChipBottomPadding(
-                                    isLandscape: geo.size.width > geo.size.height)
+                                    isLandscape: isLandscape)
                             )
                     }
-                }
-
-                if viewModel.showSnapshotSuccessMessage {
-                    snapshotSuccessSnackBar
+                    
+                    if viewModel.showSnapshotSuccessMessage {
+                        snapshotSuccessSnackBar(isLandscape: isLandscape)
+                    }
                 }
             }
         }
@@ -188,23 +189,20 @@ public struct PlayerOverlayView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
     }
 
-    private var snapshotSuccessSnackBar: some View {
-        GeometryReader { geometry in
-            let isLandscape = geometry.size.width > geometry.size.height
-            HStack {
-                Text(Strings.Localizable.VideoPlayer.Snapshot.SnackBar.title)
-                    .font(.footnote)
-                    .foregroundColor(TokenColors.Text.inverse.swiftUI)
-                Spacer()
-            }
-            .padding(TokenSpacing._5)
-            .frame(height: 50)
-            .frame(maxWidth: 360)
-            .background(TokenColors.Components.toastBackground.swiftUI)
-            .cornerRadius(TokenSpacing._3)
-            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
-            .padding(.bottom, isLandscape ? 102 : 164)
+    func snapshotSuccessSnackBar(isLandscape: Bool) -> some View {
+        HStack {
+            Text(Strings.Localizable.VideoPlayer.Snapshot.SnackBar.title)
+                .font(.footnote)
+                .foregroundColor(TokenColors.Text.inverse.swiftUI)
+            Spacer()
         }
+        .padding(TokenSpacing._5)
+        .frame(height: 50)
+        .frame(maxWidth: 360)
+        .background(TokenColors.Components.toastBackground.swiftUI)
+        .cornerRadius(TokenSpacing._3)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
+        .padding(.bottom, isLandscape ? 102 : 164)
         .preferredColorScheme(.dark)
     }
 }
@@ -337,31 +335,29 @@ extension PlayerOverlayView {
 // MARK: - Bottom Toolbar
 
 extension PlayerOverlayView {
-    var bottomToolbar: some View {
-        GeometryReader { geometry in
-            let isLandscape = geometry.size.width > geometry.size.height
-            if isLandscape {
-                HStack(alignment: .bottom, spacing: TokenSpacing._7) {
-                    timeLineView
-                    bottomControls
-                        .frame(maxWidth: 264)
-                }
-                .padding(.horizontal, TokenSpacing._5)
-                .padding(.bottom, TokenSpacing._7)
-                .frame(maxWidth: .infinity, alignment: .center)
-                .background(.clear)
-                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
-            } else {
-                VStack(spacing: TokenSpacing._7) {
-                    timeLineView
-                    bottomControls
-                }
-                .padding(.horizontal, TokenSpacing._5)
-                .padding(.bottom, TokenSpacing._10)
-                .frame(maxWidth: .infinity, alignment: .center)
-                .background(.clear)
-                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
+    @ViewBuilder
+    func bottomToolbar(isLandscape: Bool) -> some View {
+        if isLandscape {
+            HStack(alignment: .bottom, spacing: TokenSpacing._7) {
+                timeLineView
+                bottomControls(isLandscape: isLandscape)
+                    .frame(maxWidth: 264)
             }
+            .padding(.horizontal, TokenSpacing._5)
+            .padding(.bottom, TokenSpacing._7)
+            .frame(maxWidth: .infinity, alignment: .center)
+            .background(.clear)
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
+        } else {
+            VStack(spacing: TokenSpacing._7) {
+                timeLineView
+                bottomControls(isLandscape: isLandscape)
+            }
+            .padding(.horizontal, TokenSpacing._5)
+            .padding(.bottom, TokenSpacing._10)
+            .frame(maxWidth: .infinity, alignment: .center)
+            .background(.clear)
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
         }
     }
 
@@ -425,13 +421,13 @@ extension PlayerOverlayView {
         .contentShape(Rectangle())
     }
 
-    var bottomControls: some View {
+    func bottomControls(isLandscape: Bool) -> some View {
         HStack(alignment: .center, spacing: TokenSpacing._1) {
             playbackSpeedButton
             Spacer()
             loopButton
             Spacer()
-            rotateButton
+            rotateButton(isLandscape: isLandscape)
             Spacer()
             scalingButton
             Spacer()
@@ -475,8 +471,8 @@ extension PlayerOverlayView {
         )
     }
 
-    var rotateButton: some View {
-        controlButton(name: "rotate", action: viewModel.didTapRotate)
+    func rotateButton(isLandscape: Bool) -> some View {
+        controlButton(name: isLandscape ? "rotateToPortrait" : "rotateToLandscape", action: viewModel.didTapRotate)
     }
     
     var bottomMoreButton: some View {
