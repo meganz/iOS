@@ -1340,6 +1340,7 @@
 		945339CD2A6014FA00363DAD /* FileLinkViewController+ContextMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945339CC2A6014FA00363DAD /* FileLinkViewController+ContextMenu.swift */; };
 		94548FC6299D537C0050A9CC /* ChangeNameViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94548FC5299D537C0050A9CC /* ChangeNameViewController+Additions.swift */; };
 		94565EB62E05BE320019C921 /* AudioPlayerTimeObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94565EB52E05BE320019C921 /* AudioPlayerTimeObserver.swift */; };
+		94590F832E74349C008E4ACC /* FolderLinkToolbarConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94590F822E74349C008E4ACC /* FolderLinkToolbarConfigurator.swift */; };
 		9459229C2C3EA62B004D6AEF /* ContactsGroupCellViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9459229B2C3EA62B004D6AEF /* ContactsGroupCellViewModelTests.swift */; };
 		945928F52AA23C1B0037694C /* Search in Frameworks */ = {isa = PBXBuildFile; productRef = 945928F42AA23C1B0037694C /* Search */; };
 		94598D751F0CD53A00B57144 /* Share.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 94598D741F0CD53A00B57144 /* Share.storyboard */; };
@@ -4122,6 +4123,7 @@
 		94565EB52E05BE320019C921 /* AudioPlayerTimeObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerTimeObserver.swift; sourceTree = "<group>"; };
 		9458AEE11FB9D3B800BABD58 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		9458AEE21FB9D40500BABD58 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		94590F822E74349C008E4ACC /* FolderLinkToolbarConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderLinkToolbarConfigurator.swift; sourceTree = "<group>"; };
 		9459229B2C3EA62B004D6AEF /* ContactsGroupCellViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsGroupCellViewModelTests.swift; sourceTree = "<group>"; };
 		945928F22AA23B1A0037694C /* Search */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Search; sourceTree = "<group>"; };
 		94598D741F0CD53A00B57144 /* Share.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Share.storyboard; path = iMEGA/Extensions/MEGAShare/Share.storyboard; sourceTree = SOURCE_ROOT; };
@@ -10203,6 +10205,7 @@
 				83FEA8B125C1B3970063A560 /* FolderLinkCollectionViewController.swift */,
 				BFFED4B226FB094F00B9EBEC /* FolderLinkCollectionViewDiffableDataSource.swift */,
 				83FEA8B425C1B3980063A560 /* FolderLinkTableViewController.swift */,
+				94590F822E74349C008E4ACC /* FolderLinkToolbarConfigurator.swift */,
 				0E75681B2A37E7B9006A92B8 /* FolderLinkViewController+Additions.swift */,
 				C4C5C83225DC26100063D7B4 /* FolderLinkViewController+AudioPlayer.swift */,
 				94389C672A3B491600CB156E /* FolderLinkViewController+ContextMenu.swift */,
@@ -14742,6 +14745,7 @@
 				83FEA8B525C1B3990063A560 /* FolderLinkCollectionViewController.swift in Sources */,
 				BFFED4B326FB094F00B9EBEC /* FolderLinkCollectionViewDiffableDataSource.swift in Sources */,
 				83FEA8B625C1B3990063A560 /* FolderLinkTableViewController.swift in Sources */,
+				94590F832E74349C008E4ACC /* FolderLinkToolbarConfigurator.swift in Sources */,
 				0E75681C2A37E7B9006A92B8 /* FolderLinkViewController+Additions.swift in Sources */,
 				C4C5C83325DC26100063D7B4 /* FolderLinkViewController+AudioPlayer.swift in Sources */,
 				94389C682A3B491600CB156E /* FolderLinkViewController+ContextMenu.swift in Sources */,

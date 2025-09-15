@@ -12,8 +12,24 @@ import MEGASwift
 
 extension FolderLinkViewController {
     @objc func makeFolderLinkViewModel() -> FolderLinkViewModel {
+        let downloadFileRepository = DownloadFileRepository(
+            sdk: MEGASdk.shared,
+            sharedFolderSdk: MEGASdk.sharedFolderLink
+        )
+        let saveMediaUseCase = SaveMediaToPhotosUseCase(
+            downloadFileRepository: downloadFileRepository,
+            fileCacheRepository: FileCacheRepository.newRepo,
+            nodeRepository: NodeRepository.newRepo,
+            chatNodeRepository: ChatNodeRepository.newRepo,
+            downloadChatRepository: DownloadChatRepository.newRepo
+        )
         let viewModel = FolderLinkViewModel(
-            folderLinkUseCase: FolderLinkUseCase(transferRepository: TransferRepository.newRepo, nodeRepository: NodeRepository.newRepo, requestStatesRepository: RequestStatesRepository.newRepo)
+            folderLinkUseCase: FolderLinkUseCase(
+                transferRepository: TransferRepository.newRepo,
+                nodeRepository: NodeRepository.newRepo,
+                requestStatesRepository: RequestStatesRepository.newRepo
+            ),
+            saveMediaUseCase: saveMediaUseCase
         )
         
         viewModel.invokeCommand = { [weak self] in self?.executeCommand($0) }
@@ -31,17 +47,10 @@ extension FolderLinkViewController {
         }
     }
 
-    @objc func importFilesFromFolderLink() {
-        let nodes: [MEGANode] = if let selectedNodes = selectedNodesArray as? [MEGANode], selectedNodes.isNotEmpty {
-            selectedNodes
-        } else if let parentNode {
-            [parentNode]
-        } else {
-            []
-        }
+    func importFilesFromFolderLink() {
         ImportLinkRouter(
             isFolderLink: true,
-            nodes: nodes,
+            nodes: targetNodes(),
             presenter: self)
         .start()
     }
@@ -158,6 +167,84 @@ extension FolderLinkViewController {
         navigationItem.titleView?.sizeToFit()
     }
     
+    @objc func configureToolbarButtons() {
+        folderLinkToolbarConfigurator = FolderLinkToolbarConfigurator(
+            importAction: importButtonPressed,
+            downloadAction: downloadButtonPressed,
+            saveToPhotosAction: saveToPhotosButtonPressed,
+            shareLinkAction: shareLinkButtonPressed
+        )
+        
+        refreshToolbarButtonsStatus(true)
+    }
+    
+    @objc func refreshToolbarButtonsStatus(_ enabled: Bool) {
+        let selectedNodes = (selectedNodesArray as? [MEGANode]) ?? []
+        let items = folderLinkToolbarConfigurator?.toolbarItems(
+            allNodes: nodesArray,
+            selectedNodes: selectedNodes
+        ) ?? []
+        
+        setToolbarItems(items, animated: false)
+        navigationController?.setToolbarHidden(items.isEmpty, animated: false)
+        
+        folderLinkToolbarConfigurator?.setToolbarButtonsEnabled(enabled)
+    }
+    
+    @objc func updateToolbarItemsEnabled(_ enabled: Bool) {
+        folderLinkToolbarConfigurator?.setToolbarButtonsEnabled(enabled)
+    }
+    
+    private func targetNodes() -> [MEGANode] {
+        if let selected = selectedNodesArray as? [MEGANode], !selected.isEmpty {
+            return selected
+        }
+        return parentNode.map { [$0] } ?? []
+    }
+    
+    func importButtonPressed(_ button: UIBarButtonItem) {
+        importFilesFromFolderLink()
+    }
+    
+    func downloadButtonPressed(_ button: UIBarButtonItem) {
+        let nodes = targetNodes()
+        guard !nodes.isEmpty else { return }
+        download(nodes)
+        setEditMode(false)
+    }
+    
+    private var permissionHandler: any DevicePermissionsHandling {
+        DevicePermissionsHandler.makeHandler()
+    }
+    
+    private var permissionRouter: some PermissionAlertRouting {
+        PermissionAlertRouter.makeRouter(deviceHandler: permissionHandler)
+    }
+    
+    func saveToPhotosButtonPressed(_ button: UIBarButtonItem) {
+        guard let nodeArray = isEditing ? selectedNodesArray as? [MEGANode] : nodesArray else { return }
+        
+        permissionHandler.photosPermissionWithCompletionHandler { [weak self] granted in
+            guard let self else { return }
+            if granted {
+                TransfersWidgetViewController.sharedTransfer().bringProgressToFrontKeyWindowIfNeeded()
+                
+                viewModel.dispatch(.saveToPhotos(nodeArray.toNodeEntities()))
+            } else {
+                permissionRouter.alertPhotosPermission()
+            }
+        }
+    }
+    
+    func shareLinkButtonPressed(_ button: UIBarButtonItem) {
+        guard let link = linkEncryptedString ?? publicLinkString else { return }
+
+        let activityVC = UIActivityViewController(activityItems: [link], applicationActivities: nil)
+        activityVC.popoverPresentationController?.barButtonItem = button
+
+        present(activityVC, animated: true)
+    }
+    
     // MARK: - Loading spinner
     
     @objc func setupSpinner() {
@@ -231,6 +318,14 @@ extension FolderLinkViewController: ViewType {
             handleFileAttributeUpdate(handleEntity)
         case .fetchNodesStarted:
             startLoading()
+        case .endEditingMode:
+            setEditMode(false)
+            refreshToolbarButtonsStatus(true)
+        case .showSaveToPhotosError(let error):
+            SVProgressHUD.show(
+                MEGAAssets.UIImage.saveToPhotos,
+                status: error
+            )
         }
     }
 }

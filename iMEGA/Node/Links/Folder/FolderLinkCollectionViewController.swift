@@ -144,7 +144,7 @@ extension FolderLinkCollectionViewController: UICollectionViewDelegate {
         if collectionView.allowsMultipleSelection {
             folderLink.selectedNodesArray?.add(node)
             folderLink.setNavigationBarTitleLabel()
-            folderLink.setToolbarButtonsEnabled(true)
+            folderLink.refreshToolbarButtonsStatus(true)
             folderLink.areAllNodesSelected = folderLink.selectedNodesArray?.count == folderLink.nodesArray.count
             return
         }
@@ -166,7 +166,7 @@ extension FolderLinkCollectionViewController: UICollectionViewDelegate {
             }
             
             folderLink.setNavigationBarTitleLabel()
-            folderLink.setToolbarButtonsEnabled(folderLink.selectedNodesArray?.count != 0)
+            folderLink.refreshToolbarButtonsStatus(folderLink.selectedNodesArray?.count != 0)
             folderLink.areAllNodesSelected = false
         }
     }

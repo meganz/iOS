@@ -64,7 +64,7 @@ extension FolderLinkViewController: FolderLinkContextMenuDelegate {
     func quickActionsMenu(didSelect action: QuickActionEntity, needToRefreshMenu: Bool) {
         switch action {
         case .shareLink:
-            shareLinkAction(moreBarButtonItem)
+            shareLinkButtonPressed(moreBarButtonItem)
         case .download:
             guard let node = parentNode else { return }
             download([node])

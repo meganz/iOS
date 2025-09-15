@@ -176,8 +176,8 @@ extension FolderLinkTableViewController: UITableViewDelegate {
         if tableView.isEditing {
             folderLink.selectedNodesArray?.add(node)
             folderLink.setNavigationBarTitleLabel()
-            folderLink.setToolbarButtonsEnabled(true)
             folderLink.areAllNodesSelected = folderLink.selectedNodesArray?.count == folderLink.nodesArray.count
+            folderLink.refreshToolbarButtonsStatus((folderLink.selectedNodesArray?.count ?? 0) > 0)
             return
         }
         
@@ -199,7 +199,7 @@ extension FolderLinkTableViewController: UITableViewDelegate {
             }
             
             folderLink.setNavigationBarTitleLabel()
-            folderLink.setToolbarButtonsEnabled(folderLink.selectedNodesArray?.count != 0)
+            folderLink.refreshToolbarButtonsStatus(folderLink.selectedNodesArray?.count != 0)
             folderLink.areAllNodesSelected = false
         }
     }

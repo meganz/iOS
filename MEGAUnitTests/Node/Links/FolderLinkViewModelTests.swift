@@ -19,6 +19,7 @@ struct FolderLinkViewModelTests {
             self.tracker = tracker
             self.sut = FolderLinkViewModel(
                 folderLinkUseCase: MockFolderLinkUseCase(),
+                saveMediaUseCase: MockSaveMediaToPhotosUseCase(),
                 tracker: tracker
             )
         }
