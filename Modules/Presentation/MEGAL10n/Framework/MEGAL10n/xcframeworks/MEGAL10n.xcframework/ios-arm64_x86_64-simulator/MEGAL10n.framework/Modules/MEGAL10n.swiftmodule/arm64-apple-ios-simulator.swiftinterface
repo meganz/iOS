@@ -4758,6 +4758,24 @@ public enum Strings {
       public enum Chip {
         public static func seekDisplayText(_ p1: Any) -> Swift.String
       }
+      public enum Lock {
+        public static let lockVideoPlayer: Swift.String
+        public static let screenLocked: Swift.String
+        public static let tapIconToUnlock: Swift.String
+      }
+      public enum Pip {
+        public enum BottomSheet {
+          public static let title: Swift.String
+        }
+      }
+      public enum Snapshot {
+        public enum BottomSheet {
+          public static let title: Swift.String
+        }
+        public enum SnackBar {
+          public static let title: Swift.String
+        }
+      }
     }
     public enum Videos {
       public enum Navigationbar {
