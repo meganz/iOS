@@ -4,7 +4,14 @@ import Foundation
 import MEGASwift
 
 @MainActor
-@objc final class PhotoUpdatePublisher: NSObject {
+protocol PhotoUpdatePublisherProtocol {
+    func setupSubscriptions()
+    func cancelSubscriptions()
+    func updatePhotoLibrary()
+}
+
+@MainActor
+@objc final class PhotoUpdatePublisher: NSObject, PhotoUpdatePublisherProtocol {
     private enum Constants {
         static let headerReloadInterval = 1.3
         static let photoUpdateDebounceInterval = 0.5

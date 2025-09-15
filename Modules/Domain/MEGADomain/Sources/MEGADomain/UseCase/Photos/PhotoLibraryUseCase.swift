@@ -56,7 +56,9 @@ public struct PhotoLibraryUseCase<T: PhotoLibraryRepositoryProtocol, U: FilesSea
         
         let shouldExcludeSensitive = await shouldExcludeSensitive(override: excludeSensitive)
         let favouritesOnly = filterOptions.contains(.favourites)
-  
+        
+        try Task.checkCancellation()
+        
         return if filterOptions.isSuperset(of: .allLocations) {
             try await loadAllPhotosRecursively(searchTargetLocation: .folderTarget(.rootNode), excludeSensitive: shouldExcludeSensitive, favouritesOnly: favouritesOnly, includedFormats: filterOptions.requestedNodeFormats, searchText: searchText, sortOrder: sortOrder)
         } else if filterOptions.contains(.cloudDrive) {
@@ -81,6 +83,9 @@ public struct PhotoLibraryUseCase<T: PhotoLibraryRepositoryProtocol, U: FilesSea
     
     private func mediaFromCloudDriveOnly(excludeSensitive: Bool, favouritesOnly: Bool, includedFormats: [NodeFormatEntity], searchText: String, sortOrder: SortOrderEntity) async throws -> [NodeEntity] {
         let container = await photoLibraryContainer()
+        
+        try Task.checkCancellation()
+        
         let exclusionHandles = [container.cameraUploadNode, container.mediaUploadNode]
             .compactMap(\.?.handle)
         
@@ -98,6 +103,8 @@ public struct PhotoLibraryUseCase<T: PhotoLibraryRepositoryProtocol, U: FilesSea
         
         let container = await photoLibraryContainer()
         
+        try Task.checkCancellation()
+        
         var nodes: [NodeEntity] = []
         if let cameraUploadNode = container.cameraUploadNode,
            let photosCameraUpload = try? await loadAllPhotosNonRecursively(
@@ -109,6 +116,8 @@ public struct PhotoLibraryUseCase<T: PhotoLibraryRepositoryProtocol, U: FilesSea
             sortOrder: sortOrder) {
             nodes.append(contentsOf: photosCameraUpload)
         }
+        
+        try Task.checkCancellation()
         
         if let mediaUploadNode = container.mediaUploadNode,
            let photosMediaUpload = try? await loadAllPhotosNonRecursively(
@@ -129,7 +138,8 @@ public struct PhotoLibraryUseCase<T: PhotoLibraryRepositoryProtocol, U: FilesSea
         await includedFormats
             .async
             .compactMap { format -> [NodeEntity]? in
-                try? await searchRepository.search(filter: .recursive(
+                try? Task.checkCancellation()
+                return try? await searchRepository.search(filter: .recursive(
                     searchText: searchText,
                     searchDescription: searchText,
                     searchTag: searchText.removingFirstLeadingHash(),
@@ -149,7 +159,8 @@ public struct PhotoLibraryUseCase<T: PhotoLibraryRepositoryProtocol, U: FilesSea
         await includedFormats
             .async
             .compactMap { format -> [NodeEntity]? in
-                try? await searchRepository.search(filter: .nonRecursive(
+                try? Task.checkCancellation()
+                return try? await searchRepository.search(filter: .nonRecursive(
                     searchText: searchText,
                     searchDescription: searchText,
                     searchTag: searchText.removingFirstLeadingHash(),

@@ -198,7 +198,12 @@ final class PhotoAlbumContainerViewController: UIViewController {
                     networkMonitorUseCase: NetworkMonitorUseCase(repo: NetworkMonitorRepository.newRepo),
                     preferenceUseCase: PreferenceUseCase.default),
                 devicePermissionHandler: DevicePermissionsHandler.makeHandler(),
-                cameraUploadsSettingsViewRouter: CameraUploadsSettingsViewRouter(presenter: navigationController) { }
+                cameraUploadsSettingsViewRouter: CameraUploadsSettingsViewRouter(presenter: navigationController) { },
+                nodeUseCase: NodeUseCase(
+                    nodeDataRepository: NodeDataRepository.newRepo,
+                    nodeValidationRepository: NodeValidationRepository.newRepo,
+                    nodeRepository: NodeRepository.newRepo
+                )
             )
             photoViewController.viewModel = viewModel
             photoViewController.photoUpdatePublisher = photoUpdatePublisher

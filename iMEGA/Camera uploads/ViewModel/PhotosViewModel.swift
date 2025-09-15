@@ -27,7 +27,18 @@ final class PhotosViewModel: NSObject {
     
     let cameraUploadStatusButtonViewModel: CameraUploadStatusButtonViewModel
     
-    var contentConsumptionAttributeLoadingTask: Task<Void, Never>?
+    private(set) var contentConsumptionAttributeLoadingTask: Task<Void, Never>? {
+        didSet { oldValue?.cancel() }
+    }
+    private(set) var loadPhotosTask: Task<Void, Never>? {
+        didSet { oldValue?.cancel() }
+    }
+    private(set) var monitorNodeUpdatesTask: Task<Void, Never>? {
+        didSet { oldValue?.cancel() }
+    }
+    private(set) var currentNodeUpdateTask: Task<Void, any Error>? {
+        didSet { oldValue?.cancel() }
+    }
     
     @Published private(set) var cameraUploadExplorerSortOrderType: SortOrderType = .newest
     
@@ -46,15 +57,17 @@ final class PhotosViewModel: NSObject {
     
     let timelineViewModel: TimeLineViewModel
         
-    private var photoUpdatePublisher: PhotoUpdatePublisher
-    private var photoLibraryUseCase: any PhotoLibraryUseCaseProtocol
+    private let photoUpdatePublisher: any PhotoUpdatePublisherProtocol
+    private let photoLibraryUseCase: any PhotoLibraryUseCaseProtocol
     private let contentConsumptionUserAttributeUseCase: any ContentConsumptionUserAttributeUseCaseProtocol
     private let sortOrderPreferenceUseCase: any SortOrderPreferenceUseCaseProtocol
+    private let nodeUseCase: any NodeUseCaseProtocol
     private let cameraUploadsSettingsViewRouter: any Routing
     private let tracker: any AnalyticsTracking
     private var subscriptions = Set<AnyCancellable>()
+    private var pendingNodeUpdates: [NodeEntity] = []
     
-    init(photoUpdatePublisher: PhotoUpdatePublisher,
+    init(photoUpdatePublisher: some PhotoUpdatePublisherProtocol,
          photoLibraryUseCase: some PhotoLibraryUseCaseProtocol,
          contentConsumptionUserAttributeUseCase: some ContentConsumptionUserAttributeUseCaseProtocol,
          sortOrderPreferenceUseCase: some SortOrderPreferenceUseCaseProtocol,
@@ -62,12 +75,14 @@ final class PhotosViewModel: NSObject {
          monitorCameraUploadUseCase: some MonitorCameraUploadUseCaseProtocol,
          devicePermissionHandler: some DevicePermissionsHandling,
          cameraUploadsSettingsViewRouter: some Routing,
+         nodeUseCase: some NodeUseCaseProtocol,
          tracker: some AnalyticsTracking = DIContainer.tracker) {
         
         self.photoUpdatePublisher = photoUpdatePublisher
         self.photoLibraryUseCase = photoLibraryUseCase
         self.contentConsumptionUserAttributeUseCase = contentConsumptionUserAttributeUseCase
         self.sortOrderPreferenceUseCase = sortOrderPreferenceUseCase
+        self.nodeUseCase = nodeUseCase
         self.cameraUploadsSettingsViewRouter = cameraUploadsSettingsViewRouter
         self.timelineViewModel = TimeLineViewModel(
             cameraUploadStatusBannerViewModel: CameraUploadStatusBannerViewModel(
@@ -88,30 +103,32 @@ final class PhotosViewModel: NSObject {
         cameraUploadStatusButtonViewModel.onTappedHandler = cameraUploadStatusButtonTapped
     }
     
-    @objc func onCameraAndMediaNodesUpdate(nodeList: MEGANodeList) {
-        Task { [weak self] in
-            do {
-                guard let container = await self?.photoLibraryUseCase.photoLibraryContainer() else { return }
-                guard self?.shouldProcessOnNodesUpdate(nodeList: nodeList, container: container) == true else { return }
-                await self?.loadPhotos()
+    @objc func startMonitoringUpdates() {
+        monitorNodeUpdatesTask = Task { [weak self, nodeUseCase] in
+            for await nodeEntities in nodeUseCase.nodeUpdates {
+                self?.handleNodeUpdates(with: nodeEntities)
             }
         }
     }
     
     @objc func loadAllPhotosWithSavedFilters() {
-        contentConsumptionAttributeLoadingTask = Task { [weak self] in
+        contentConsumptionAttributeLoadingTask = Task(priority: .userInitiated) { [weak self] in
             guard let self else { return }
             let timelineFilters = await contentConsumptionUserAttributeUseCase.fetchTimelineFilter()
             if timelineFilters.usePreference {
                 filterType = filterType(from: timelineFilters.filterType)
                 filterLocation = filterLocation(from: timelineFilters.filterLocation)
             }
+            guard !Task.isCancelled else {
+                MEGALogError("[Photos] loadAllPhotosWithSavedFilters cancelled")
+                return
+            }
             loadAllPhotos()
         }
     }
     
     @objc func loadAllPhotos() {
-        Task.detached(priority: .userInitiated) { [weak self] in
+        loadPhotosTask = Task(priority: .userInitiated) { [weak self] in
             await self?.loadPhotos()
         }
     }
@@ -119,6 +136,8 @@ final class PhotosViewModel: NSObject {
     func loadPhotos() async {
         do {
             mediaNodes = try await loadFilteredPhotos()
+        } catch is CancellationError {
+            MEGALogError("[Photos] loadPhotos cancelled")
         } catch {
             MEGALogError("[Photos] - error when to load photos \(error)")
         }
@@ -165,6 +184,13 @@ final class PhotosViewModel: NSObject {
     func navigateToCameraUploadSettings() {
         cameraUploadsSettingsViewRouter.start()
     }
+    
+    @objc func cancelLoading() {
+        monitorNodeUpdatesTask = nil
+        contentConsumptionAttributeLoadingTask = nil
+        loadPhotosTask = nil
+        currentNodeUpdateTask = nil
+    }
         
     // MARK: - Private
     private func loadFilteredPhotos() async throws -> [NodeEntity] {
@@ -173,21 +199,23 @@ final class PhotosViewModel: NSObject {
             for: filterOptions.toPhotosFilterOptionsEntity(),
             excludeSensitive: nil)
         
+        try Task.checkCancellation()
+        
         filter(nodes: &nodes, with: filterType)
         
         return nodes
     }
     
     private func shouldProcessOnNodesUpdate(
-        nodeList: MEGANodeList,
+        nodes: [NodeEntity],
         container: PhotoLibraryContainerEntity
     ) -> Bool {
         if filterLocation == .allLocations || filterLocation == .cloudDrive {
-            return nodeList.toNodeEntities().contains {
+            return nodes.contains {
                 $0.fileExtensionGroup.isVisualMedia && $0.hasThumbnail
             }
         } else if filterLocation == .cameraUploads {
-            return shouldProcessOnNodeEntitiesUpdate(with: nodeList,
+            return shouldProcessOnNodeEntitiesUpdate(with: nodes,
                                                      childNodes: mediaNodes,
                                                      parentNode: container.cameraUploadNode)
         }
@@ -225,7 +253,7 @@ final class PhotosViewModel: NSObject {
         $cameraUploadExplorerSortOrderType
             .removeDuplicates()
             .receive(on: DispatchQueue.main)
-            .sink { [weak photoUpdatePublisher] _ in photoUpdatePublisher?.updatePhotoLibrary() }
+            .sink { [weak self] _ in self?.photoUpdatePublisher.updatePhotoLibrary() }
             .store(in: &subscriptions)
     }
     
@@ -234,6 +262,53 @@ final class PhotosViewModel: NSObject {
             return false
         }
         return filterLocation == .cloudDrive
+    }
+    
+    private func handleNodeUpdates(with updatedNodes: [NodeEntity]) {
+        guard currentNodeUpdateTask == nil else {
+            pendingNodeUpdates.append(contentsOf: updatedNodes)
+            return
+        }
+        processNodeUpdates(updatedNodes)
+    }
+    
+    private func processNodeUpdates(_ nodes: [NodeEntity]) {
+        currentNodeUpdateTask = Task { [weak self] in
+            guard let self else { return }
+            
+            defer { currentNodeUpdateTask = nil }
+            
+            do {
+                let container = await photoLibraryUseCase.photoLibraryContainer()
+                
+                try Task.checkCancellation()
+                
+                guard shouldProcessOnNodesUpdate(nodes: nodes, container: container) else { return }
+                
+                // Cancel any existing search before starting a new one
+                loadPhotosTask = nil
+                
+                await loadPhotos()
+                
+                try Task.checkCancellation()
+                
+                processPendingNodeUpdates()
+            } catch is CancellationError {
+                MEGALogDebug("[Photos] Node update processing cancelled")
+                pendingNodeUpdates.removeAll()
+            } catch {
+                MEGALogError("[Photos] Error processing node updates: \(error)")
+                processPendingNodeUpdates()
+            }
+        }
+    }
+    
+    private func processPendingNodeUpdates() {
+        guard pendingNodeUpdates.isNotEmpty else { return }
+        
+        let nodesToProcess = pendingNodeUpdates
+        pendingNodeUpdates.removeAll()
+        processNodeUpdates(nodesToProcess)
     }
 }
 

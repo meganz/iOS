@@ -9,13 +9,7 @@ public final class MockNodeUseCase: NodeUseCaseProtocol, @unchecked Sendable {
     
     @Atomic public var invocations: [Invocation] = []
     
-    public var nodeUpdates: AnyAsyncSequence<[NodeEntity]> {
-        AsyncStream { continuation in
-            continuation.yield(with: .success([]))
-        }
-        .eraseToAnyAsyncSequence()
-    }
-    
+    public let nodeUpdates: AnyAsyncSequence<[NodeEntity]>
     private let isDownloaded: Bool
     private let isNodeInRubbishBin: Bool
     private let nodeAccessLevel: NodeAccessTypeEntity
@@ -31,7 +25,8 @@ public final class MockNodeUseCase: NodeUseCaseProtocol, @unchecked Sendable {
         nodeAccessLevel: NodeAccessTypeEntity = .unknown,
         folderLinkInfo: FolderLinkInfoEntity? = nil,
         nodeForFileLink: NodeEntity? = nil,
-        nodeInRubbishBin: NodeEntity? = nil
+        nodeInRubbishBin: NodeEntity? = nil,
+        nodeUpdates: AnyAsyncSequence<[NodeEntity]> = EmptyAsyncSequence<[NodeEntity]>().eraseToAnyAsyncSequence()
     ) {
         self.isDownloaded = isDownloaded
         self.isNodeInRubbishBin = isNodeInRubbishBin
@@ -40,6 +35,7 @@ public final class MockNodeUseCase: NodeUseCaseProtocol, @unchecked Sendable {
         self.folderLinkInfo = folderLinkInfo
         self.nodeForFileLink = nodeForFileLink
         self.nodeInRubbishBin = nodeInRubbishBin
+        self.nodeUpdates = nodeUpdates
     }
     
     public func rootNode() -> NodeEntity? {
