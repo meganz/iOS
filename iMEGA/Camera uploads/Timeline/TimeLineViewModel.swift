@@ -12,6 +12,7 @@ import SwiftUI
 final class TimeLineViewModel: ObservableObject {
     
     @Published var cameraUploadStatusBannerViewModel: CameraUploadStatusBannerViewModel
+    @Published var showEmptyStateView = false
     private let cameraUploadsSettingsViewRouter: any Routing
     
     @PreferenceWrapper(key: PreferenceKeyEntity.isCameraUploadsEnabled, defaultValue: false)

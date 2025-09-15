@@ -31,7 +31,7 @@ struct TimelineView: View {
             router: router,
             onFilterUpdate: onFilterUpdate)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .if(photoLibraryContentViewModel.library.isEmpty) {
+        .if(timelineViewModel.showEmptyStateView) {
             $0.overlay(emptyView())
         }
         .overlay(alignment: .top, content: cameraUploadBannerStatusView)
