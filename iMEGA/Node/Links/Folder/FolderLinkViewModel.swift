@@ -8,6 +8,7 @@ import MEGADomain
         case onViewDidLoad
         case trackSendToChatFolderLinkNoAccountLogged
         case trackSendToChatFolderLink
+        case saveToPhotos([NodeEntity])
     }
     
     public enum Command: CommandType {
@@ -22,6 +23,8 @@ import MEGADomain
         case fetchNodesFailed
         case logoutDone
         case fileAttributeUpdate(HandleEntity)
+        case endEditingMode
+        case showSaveToPhotosError(String)
     }
     
     public var invokeCommand: ((Command) -> Void)?
@@ -33,10 +36,13 @@ import MEGADomain
             trackSendToChatFolderLinkEvent()
         case .trackSendToChatFolderLinkNoAccountLogged:
             trackSendToChatFolderLinkNoAccountLoggedEvent()
+        case .saveToPhotos(let nodes):
+            saveToPhotos(nodes)
         }
     }
     
     private let folderLinkUseCase: any FolderLinkUseCaseProtocol
+    private let saveMediaUseCase: any SaveMediaToPhotosUseCaseProtocol
     private let tracker: any AnalyticsTracking
 
     private var monitorCompletedDownloadTransferTask: Task<Void, Never>? {
@@ -65,9 +71,11 @@ import MEGADomain
     
     init(
         folderLinkUseCase: some FolderLinkUseCaseProtocol,
+        saveMediaUseCase: some SaveMediaToPhotosUseCaseProtocol,
         tracker: some AnalyticsTracking = DIContainer.tracker
     ) {
         self.folderLinkUseCase = folderLinkUseCase
+        self.saveMediaUseCase = saveMediaUseCase
         self.tracker = tracker
         super.init()
     }
@@ -147,5 +155,20 @@ import MEGADomain
 
     private func trackSendToChatFolderLinkEvent() {
         tracker.trackAnalyticsEvent(with: SendToChatFolderLinkButtonPressedEvent())
+    }
+    
+    private func saveToPhotos(_ nodes: [NodeEntity]) {
+        invokeCommand?(.endEditingMode)
+        Task { @MainActor in
+            do {
+                try await saveMediaUseCase.saveToPhotos(nodes: nodes)
+            } catch let error as SaveMediaToPhotosErrorEntity {
+                if error != .cancelled {
+                    invokeCommand?(.showSaveToPhotosError(error.localizedDescription))
+                }
+            } catch {
+                MEGALogError("Error saving photos: \(error.localizedDescription)")
+            }
+        }
     }
 }

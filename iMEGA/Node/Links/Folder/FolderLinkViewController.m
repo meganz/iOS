@@ -36,11 +36,6 @@
 @property (nonatomic, getter=isFetchNodesDone) BOOL fetchNodesDone;
 @property (nonatomic, getter=isValidatingDecryptionKey) BOOL validatingDecryptionKey;
 
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *importBarButtonItem;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *downloadBarButtonItem;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *shareLinkBarButtonItem;
-@property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
-
 @property (nonatomic, strong, nullable) MEGANode *parentNode;
 @property (nonatomic, strong) MEGANodeList *nodeList;
 
@@ -118,8 +113,7 @@
     self.editBarButtonItem.title = LocalizedString(@"cancel", @"Button title to cancel something");
 
     self.navigationItem.rightBarButtonItems = @[self.moreBarButtonItem];
-
-    self.navigationController.topViewController.toolbarItems = self.toolbar.items;
+    
     [self.navigationController setToolbarHidden:NO animated:YES];
     
     self.closeBarButtonItem.title = LocalizedString(@"close", @"A button label.");
@@ -200,9 +194,6 @@
 - (void)configureImages {
     self.selectAllBarButtonItem.image = [UIImage megaImageWithNamed:@"selectAllItems"];
     self.moreBarButtonItem.image = [UIImage megaImageWithNamed:@"moreNavigationBar"];
-    self.importBarButtonItem.image = [UIImage megaImageWithNamed:@"import"];
-    self.downloadBarButtonItem.image = [UIImage megaImageWithNamed:@"offline"];
-    self.shareLinkBarButtonItem.image = [UIImage megaImageWithNamed:@"link"];
 }
 
 - (void)reloadUI {
@@ -233,6 +224,8 @@
     } else {
         [self addSearchBar];
     }
+    
+    [self configureToolbarButtons];
 }
 
 - (void)setNavigationBarTitleLabel {
@@ -299,7 +292,7 @@
 
 - (void)setActionButtonsEnabled:(BOOL)boolValue {
     [_moreBarButtonItem setEnabled:boolValue];
-    [self setToolbarButtonsEnabled:boolValue];
+    [self updateToolbarItemsEnabled:boolValue];
 }
 
 - (void)internetConnectionChanged {
@@ -309,12 +302,6 @@
     boolValue ? [self addSearchBar] : [self hideSearchBarIfNotActive];
     
     [self reloadData];
-}
-
-- (void)setToolbarButtonsEnabled:(BOOL)boolValue {
-    [self.shareLinkBarButtonItem setEnabled:boolValue];
-    [self.importBarButtonItem setEnabled:boolValue];
-    self.downloadBarButtonItem.enabled = boolValue;
 }
 
 - (void)addSearchBar {
@@ -534,12 +521,14 @@
 - (IBAction)editAction:(UIBarButtonItem *)sender {
     BOOL enableEditing = self.viewModePreference == ViewModePreferenceEntityList ? !self.flTableView.tableView.isEditing : !self.flCollectionView.collectionView.allowsMultipleSelection;
     [self setEditMode:enableEditing];
+    
+    [self refreshToolbarButtonsStatus:!(enableEditing && _selectedNodesArray.count == 0)];
 }
 
 - (void)setViewEditing:(BOOL)editing {    
     [self setNavigationBarTitleLabel];
-
-    [self setToolbarButtonsEnabled:!editing];
+    
+    [self refreshToolbarButtonsStatus:!(editing && _selectedNodesArray.count == 0)];
     
     if (editing) {
         self.moreBarButtonItem.title = LocalizedString(@"cancel", @"Button title to cancel something");
@@ -578,7 +567,10 @@
 - (IBAction)selectAllAction:(UIBarButtonItem *)sender {
     [_selectedNodesArray removeAllObjects];
     
-    if (![self areAllNodesSelected]) {
+    BOOL areAllNodesSelected = [self areAllNodesSelected];
+    [self refreshToolbarButtonsStatus:!areAllNodesSelected];
+    
+    if (!areAllNodesSelected) {
         BOOL isSearchActive = self.searchController.isActive && !self.searchController.searchBar.text.mnz_isEmpty;
         NSArray *nodesArray = isSearchActive ? self.searchNodesArray : [self.nodeList mnz_nodesArrayFromNodeList];
         self.selectedNodesArray = nodesArray.mutableCopy;
@@ -587,36 +579,9 @@
         [self setAllNodesSelected:NO];
     }
     
-    (self.selectedNodesArray.count == 0) ? [self setToolbarButtonsEnabled:NO] : [self setToolbarButtonsEnabled:YES];
-    
     [self setNavigationBarTitleLabel];
     
     [self reloadData];
-}
-
-- (IBAction)shareLinkAction:(UIBarButtonItem *)sender {
-    NSString *link = self.linkEncryptedString ? self.linkEncryptedString : self.publicLinkString;
-    if (link != nil) {
-        UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:@[link] applicationActivities:nil];
-        activityVC.popoverPresentationController.barButtonItem = sender;
-        [self presentViewController:activityVC animated:YES completion:nil];
-    }
-}
-    
-- (IBAction)downloadAction:(UIBarButtonItem *)sender {
-    if (self.selectedNodesArray.count != 0) {
-        [self download:self.selectedNodesArray];
-    } else {
-        if (self.parentNode == nil) {
-            return;
-        }
-        [self download:@[self.parentNode]];
-    }
-    [self setEditMode:NO];
-}
-
-- (IBAction)importAction:(UIBarButtonItem *)sender {
-    [self importFilesFromFolderLink];
 }
 
 - (void)openNode:(MEGANode *)node {

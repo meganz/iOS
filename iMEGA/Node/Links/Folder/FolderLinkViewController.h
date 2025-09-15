@@ -8,6 +8,7 @@
 @class FolderLinkCollectionViewController;
 @class SendLinkToChatsDelegate;
 @class FolderLinkViewModel;
+@class FolderLinkToolbarConfigurator;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -30,6 +31,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, strong, nullable) UIView *bottomView;
 
+@property (nonatomic, strong, nullable) FolderLinkToolbarConfigurator *folderLinkToolbarConfigurator;
+
 @property (nonatomic, strong) IBOutlet UIBarButtonItem *moreBarButtonItem;
 @property (nonatomic, strong) IBOutlet UIBarButtonItem *editBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *closeBarButtonItem;
@@ -46,12 +49,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, assign) CGFloat currentContentInsetHeight;
 
-- (IBAction)shareLinkAction:(UIBarButtonItem *)sender;
-
 - (BOOL)isListViewModeSelected;
 - (void)didSelectNode:(MEGANode *)node;
 - (void)setNavigationBarTitleLabel;
-- (void)setToolbarButtonsEnabled:(BOOL)boolValue;
 - (void)setViewEditing:(BOOL)editing;
 - (void)setEditMode:(BOOL)editMode;
 - (void)changeViewModePreference;

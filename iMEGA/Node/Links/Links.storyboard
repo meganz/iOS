@@ -35,13 +35,9 @@
                     <connections>
                         <outlet property="closeBarButtonItem" destination="D67-ek-Mq7" id="NiK-Vg-RJp"/>
                         <outlet property="containerView" destination="mt9-FQ-ySs" id="f6r-E7-10J"/>
-                        <outlet property="downloadBarButtonItem" destination="GoK-MS-FZ3" id="Izd-FE-HkI"/>
                         <outlet property="editBarButtonItem" destination="6QU-7i-pIg" id="9Ev-vZ-ukJ"/>
-                        <outlet property="importBarButtonItem" destination="UE7-2a-Z7U" id="Gdc-hQ-k02"/>
                         <outlet property="moreBarButtonItem" destination="wnU-Yc-6PL" id="Zj5-hn-uzQ"/>
                         <outlet property="selectAllBarButtonItem" destination="zfR-jK-5T1" id="E25-XE-D5X"/>
-                        <outlet property="shareLinkBarButtonItem" destination="3v0-rP-iq6" id="0Z0-9C-Ero"/>
-                        <outlet property="toolbar" destination="XS0-b6-FQU" id="gsd-9e-1KP"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="j1E-mY-olh" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -61,30 +57,6 @@
                         <action selector="editAction:" destination="9ZV-tM-uu1" id="yaq-MN-Jhj"/>
                     </connections>
                 </barButtonItem>
-                <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translucent="NO" id="XS0-b6-FQU">
-                    <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <viewLayoutGuide key="safeArea" id="TRc-6b-pxN"/>
-                    <items>
-                        <barButtonItem tag="1" image="import" style="plain" id="UE7-2a-Z7U">
-                            <connections>
-                                <action selector="importAction:" destination="9ZV-tM-uu1" id="vyb-wJ-QPk"/>
-                            </connections>
-                        </barButtonItem>
-                        <barButtonItem style="plain" systemItem="flexibleSpace" id="SvX-Wp-F0v"/>
-                        <barButtonItem tag="1" image="offline" style="plain" id="GoK-MS-FZ3">
-                            <connections>
-                                <action selector="downloadAction:" destination="9ZV-tM-uu1" id="bRB-8z-HqY"/>
-                            </connections>
-                        </barButtonItem>
-                        <barButtonItem style="plain" systemItem="flexibleSpace" id="HiR-aM-9uh"/>
-                        <barButtonItem tag="2" image="link" style="plain" id="3v0-rP-iq6">
-                            <connections>
-                                <action selector="shareLinkAction:" destination="9ZV-tM-uu1" id="2Y6-km-Zvi"/>
-                            </connections>
-                        </barButtonItem>
-                    </items>
-                </toolbar>
             </objects>
             <point key="canvasLocation" x="-994.39999999999998" y="-3941.3793103448279"/>
         </scene>
@@ -553,11 +525,9 @@
     </scenes>
     <resources>
         <image name="downloaded" width="12" height="12"/>
-        <image name="import" width="28" height="28"/>
         <image name="link" width="28" height="28"/>
         <image name="moreList" width="28" height="28"/>
         <image name="moreNavigationBar" width="28" height="28"/>
-        <image name="offline" width="28" height="28"/>
         <image name="selectAllItems" width="28" height="28"/>
         <image name="sendMessage" width="28" height="28"/>
         <image name="video_list" width="22" height="22"/>
