@@ -20,12 +20,12 @@ configure_vcpgk() {
 
 build_libs() {
   echo "${bold}Building libraries for device${normal}"
-  cmake --preset mega-ios -DCMAKE_BUILD_TYPE=RelWithDebInfo -DVCPKG_ROOT=vcpkg -DCMAKE_VERBOSE_MAKEFILE=ON -DENABLE_MEDIA_FILE_METADATA=OFF \
+  cmake --preset mega-ios -DCMAKE_BUILD_TYPE=RelWithDebInfo -DVCPKG_ROOT=vcpkg -DCMAKE_VERBOSE_MAKEFILE=ON \
   -S ../Modules/DataSource/MEGASDK/Sources/MEGASDK -B BUILD_ARM64_iOS
   
   echo "${bold}Building libraries for simulator${normal}"
   cmake --preset mega-ios -DCMAKE_BUILD_TYPE=RelWithDebInfo -DVCPKG_ROOT=vcpkg -DCMAKE_VERBOSE_MAKEFILE=ON -DCMAKE_OSX_SYSROOT=iphonesimulator \
-  -DENABLE_MEDIA_FILE_METADATA=OFF -S ../Modules/DataSource/MEGASDK/Sources/MEGASDK  -B BUILD_ARM64_simulator
+  -S ../Modules/DataSource/MEGASDK/Sources/MEGASDK  -B BUILD_ARM64_simulator
 }
 
 merge_libraries() {
