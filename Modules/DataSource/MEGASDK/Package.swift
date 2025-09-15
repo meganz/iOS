@@ -21,8 +21,6 @@ let package = Package(
         .target(
             name: "MEGASdkCpp",
             dependencies: [
-                "libmediainfo",
-                "libzen",
                 "libmegasdk"
             ],
             path: "Sources/MEGASDK",
@@ -91,19 +89,9 @@ let package = Package(
             ]
         ),
         .binaryTarget(
-            name: "libmediainfo",
-            url: "https://s3.g.s4.mega.io/dmlaaezwz52y37atz56mfvmrvltfagrltbgpr/ios-xcframeworks/libmediainfo_xcframework.zip",
-            checksum: "24fdbe1e3df3642799b1c890d5c810c88088bbe2a1d7bd34c766587f7405b0fa"
-        ),
-        .binaryTarget(
-            name: "libzen",
-            url: "https://s3.g.s4.mega.io/dmlaaezwz52y37atz56mfvmrvltfagrltbgpr/ios-xcframeworks/libzen_xcframework.zip",
-            checksum: "f3759e829d921875c4d9ec55354b225e8c5354488ca492d777bf10b0e9d38ebb"
-        ),
-        .binaryTarget(
             name: "libmegasdk",
-            url: "https://s3.g.s4.mega.io/dmlaaezwz52y37atz56mfvmrvltfagrltbgpr/ios-xcframeworks/libmegasdk_25_07_31.xcframework.zip",
-            checksum: "9fabbc58b13b5b2e8cff1455b51c37bc76f30239f96b223d04bc4891e46d5a81"
+            url: "https://s3.g.s4.mega.io/dmlaaezwz52y37atz56mfvmrvltfagrltbgpr/ios-xcframeworks/libmegasdk_25_09_11.xcframework.zip",
+            checksum: "596cbb34cdde786a1df2c1898454cd7c69917f7b6e21d6eb1efbe40db20bad88"
         )
     ],
     cxxLanguageStandard: .cxx17
