@@ -6,8 +6,11 @@ import MEGAAppPresentation
 import MEGAAppPresentationMock
 @testable import MEGADomain
 import MEGADomainMock
+import MEGAPermissions
 import MEGAPermissionsMock
 import MEGAPreference
+import MEGASwift
+import Testing
 import XCTest
 
 final class PhotosViewModelTests: XCTestCase {
@@ -30,7 +33,8 @@ final class PhotosViewModelTests: XCTestCase {
             sortOrderPreferenceUseCase: MockSortOrderPreferenceUseCase(sortOrderEntity: .defaultAsc),
             monitorCameraUploadUseCase: MockMonitorCameraUploadUseCase(), 
             devicePermissionHandler: MockDevicePermissionHandler(),
-            cameraUploadsSettingsViewRouter: MockCameraUploadsSettingsViewRouter())
+            cameraUploadsSettingsViewRouter: MockCameraUploadsSettingsViewRouter(),
+            nodeUseCase: MockNodeUseCase())
     }
     
     @MainActor
@@ -121,7 +125,8 @@ final class PhotosViewModelTests: XCTestCase {
             sortOrderPreferenceUseCase: MockSortOrderPreferenceUseCase(sortOrderEntity: .defaultAsc),
             monitorCameraUploadUseCase: MockMonitorCameraUploadUseCase(),
             devicePermissionHandler: MockDevicePermissionHandler(),
-            cameraUploadsSettingsViewRouter: MockCameraUploadsSettingsViewRouter())
+            cameraUploadsSettingsViewRouter: MockCameraUploadsSettingsViewRouter(),
+            nodeUseCase: MockNodeUseCase())
         
         sut.filterType = .allMedia
         sut.filterLocation = . allLocations
@@ -338,6 +343,7 @@ final class PhotosViewModelTests: XCTestCase {
         preferenceUseCase: some PreferenceUseCaseProtocol = MockPreferenceUseCase(),
         cameraUploadsSettingsViewRouter: some Routing = MockCameraUploadsSettingsViewRouter(),
         monitorCameraUploadUseCase: MockMonitorCameraUploadUseCase = MockMonitorCameraUploadUseCase(),
+        nodeUseCase: some NodeUseCaseProtocol = MockNodeUseCase(),
         tracker: MockTracker = MockTracker()
     ) -> PhotosViewModel {
         let publisher = PhotoUpdatePublisher(photosViewController: PhotosViewController())
@@ -352,6 +358,7 @@ final class PhotosViewModelTests: XCTestCase {
                                monitorCameraUploadUseCase: monitorCameraUploadUseCase,
                                devicePermissionHandler: MockDevicePermissionHandler(),
                                cameraUploadsSettingsViewRouter: cameraUploadsSettingsViewRouter,
+                               nodeUseCase: nodeUseCase,
                                tracker: tracker
         )
     }
@@ -365,5 +372,118 @@ private class MockCameraUploadsSettingsViewRouter: Routing {
     
     func start() {
         startCalled += 1
+    }
+}
+
+@Suite("PhotosViewModel Tests")
+struct PhotosViewModelTestSuite {
+    @MainActor
+    @Suite("Node Updates")
+    struct NodeUpdates {
+        @Test("Non visual media node updates should not trigger an update")
+        func nonVisualMediaNodeUpdate() async throws {
+            let nodeUpdates = SingleItemAsyncSequence(
+                item: [NodeEntity(handle: 1, hasThumbnail: false)])
+                .eraseToAnyAsyncSequence()
+            let photoLibraryUseCase = MockPhotoLibraryUseCase()
+            
+            let sut = makeSUT(
+                photoLibraryUseCase: photoLibraryUseCase,
+                nodeUseCase: MockNodeUseCase(
+                    nodeUpdates: nodeUpdates)
+            )
+            
+            sut.startMonitoringUpdates()
+            try await sut.currentNodeUpdateTask?.value
+            
+            await #expect(photoLibraryUseCase.messages.isEmpty)
+        }
+        
+        @Test("Visual media node should trigger updates")
+        func visualMediaUpdatesTriggerLoad() async throws {
+            let nodeUpdates = SingleItemAsyncSequence(
+                item: [NodeEntity(name: "test.jpg", handle: 1, hasThumbnail: true)])
+                .eraseToAnyAsyncSequence()
+            let expectedPhotos = [
+                NodeEntity(handle: 15, hasThumbnail: true),
+                NodeEntity(handle: 87, hasThumbnail: true)
+            ]
+            let photoUpdatePublisher = MockPhotoUpdatePublisher()
+            let photoLibraryUseCase = MockPhotoLibraryUseCase(
+                allPhotos: expectedPhotos
+            )
+            
+            let sut = makeSUT(
+                photoUpdatePublisher: photoUpdatePublisher,
+                photoLibraryUseCase: photoLibraryUseCase,
+                nodeUseCase: MockNodeUseCase(
+                    nodeUpdates: nodeUpdates)
+            )
+            
+            sut.startMonitoringUpdates()
+            try await withTimeout(seconds: 1) {
+                await photoUpdatePublisher.waitForUpdatePhotoLibrary()
+            }
+            
+            #expect(sut.mediaNodes == expectedPhotos)
+            await #expect(photoLibraryUseCase.messages == [.media])
+            #expect(sut.currentNodeUpdateTask == nil)
+        }
+    }
+    
+    @MainActor
+    private static func makeSUT(
+        photoUpdatePublisher: some PhotoUpdatePublisherProtocol = MockPhotoUpdatePublisher(),
+        photoLibraryUseCase: some PhotoLibraryUseCaseProtocol = MockPhotoLibraryUseCase(),
+        contentConsumptionUserAttributeUseCase: some ContentConsumptionUserAttributeUseCaseProtocol = MockContentConsumptionUserAttributeUseCase(),
+        sortOrderPreferenceUseCase: some SortOrderPreferenceUseCaseProtocol = MockSortOrderPreferenceUseCase(sortOrderEntity: .defaultAsc),
+        preferenceUseCase: some PreferenceUseCaseProtocol = MockPreferenceUseCase(),
+        monitorCameraUploadUseCase: some MonitorCameraUploadUseCaseProtocol = MockMonitorCameraUploadUseCase(),
+        devicePermissionHandler: some DevicePermissionsHandling = MockDevicePermissionHandler(),
+        cameraUploadsSettingsViewRouter: some Routing = MockCameraUploadsSettingsViewRouter(),
+        nodeUseCase: some NodeUseCaseProtocol = MockNodeUseCase(),
+        tracker: some AnalyticsTracking = MockTracker()
+    ) -> PhotosViewModel {
+        .init(
+            photoUpdatePublisher: photoUpdatePublisher,
+            photoLibraryUseCase: photoLibraryUseCase,
+            contentConsumptionUserAttributeUseCase: contentConsumptionUserAttributeUseCase,
+            sortOrderPreferenceUseCase: sortOrderPreferenceUseCase,
+            monitorCameraUploadUseCase: monitorCameraUploadUseCase,
+            devicePermissionHandler: devicePermissionHandler,
+            cameraUploadsSettingsViewRouter: cameraUploadsSettingsViewRouter,
+            nodeUseCase: nodeUseCase)
+    }
+}
+
+@MainActor
+final class MockPhotoUpdatePublisher: PhotoUpdatePublisherProtocol {
+    private(set) var setupSubscriptionsCallCount = 0
+    private(set) var cancelSubscriptionsCallCount = 0
+    private(set) var updatePhotoLibraryCallCount = 0
+    private var updatePhotoLibraryContinuation: CheckedContinuation<Void, Never>?
+       
+    nonisolated init() {}
+    
+    func setupSubscriptions() {
+        setupSubscriptionsCallCount += 1
+    }
+    
+    func cancelSubscriptions() {
+        cancelSubscriptionsCallCount += 1
+    }
+    
+    func updatePhotoLibrary() {
+        updatePhotoLibraryCallCount += 1
+        if let continuation = updatePhotoLibraryContinuation {
+            updatePhotoLibraryContinuation = nil
+            continuation.resume()
+        }
+    }
+    
+    func waitForUpdatePhotoLibrary() async {
+        await withCheckedContinuation { continuation in
+            self.updatePhotoLibraryContinuation = continuation
+        }
     }
 }

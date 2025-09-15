@@ -53,7 +53,7 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    [MEGASdk.shared addMEGAGlobalDelegateAsync:self queueType:ListenerQueueTypeGlobalBackground];
+    [self.viewModel startMonitoringUpdates];
     
     [self.photoUpdatePublisher setupSubscriptions];
     
@@ -74,7 +74,7 @@
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     
-    [MEGASdk.shared removeMEGAGlobalDelegateAsync:self];
+    [self.viewModel cancelLoading];
     
     [self.photoUpdatePublisher cancelSubscriptions];
 }
@@ -170,12 +170,6 @@
 - (void)didSelectedPhotoCountChange:(NSInteger)count {
     [self objcWrapper_updateNavigationTitleWithSelectedPhotoCount:count];
     [self setToolbarActionsEnabledIn:self.toolbar isEnabled:count > 0];
-}
-
-#pragma mark - MEGAGlobalDelegate
-
-- (void)onNodesUpdate:(MEGASdk *)api nodeList:(MEGANodeList *)nodeList {
-    [self.viewModel onCameraAndMediaNodesUpdateWithNodeList:nodeList];
 }
 
 @end
