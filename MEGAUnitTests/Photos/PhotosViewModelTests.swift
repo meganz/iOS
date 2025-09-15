@@ -92,8 +92,12 @@ final class PhotosViewModelTests: XCTestCase {
         let expectedPhotos = sampleNodesForAllLocations()
         sut.filterType = .allMedia
         sut.filterLocation = . allLocations
+        XCTAssertFalse(sut.timelineViewModel.showEmptyStateView)
+        
         await sut.loadPhotos()
+        
         XCTAssertEqual(sut.mediaNodes, expectedPhotos)
+        XCTAssertFalse(sut.timelineViewModel.showEmptyStateView)
     }
     
     @MainActor
@@ -197,6 +201,19 @@ final class PhotosViewModelTests: XCTestCase {
         sut.filterLocation = .cameraUploads
         await sut.loadPhotos()
         XCTAssertEqual(sut.mediaNodes, expectedVideos)
+    }
+    
+    @MainActor
+    func testLoadingPhotos_empty_shouldShowEmptyView() async {
+        let sut = makePhotosViewModel()
+        sut.filterType = .videos
+        sut.filterLocation = .cameraUploads
+        XCTAssertFalse(sut.timelineViewModel.showEmptyStateView)
+        
+        await sut.loadPhotos()
+        
+        XCTAssertTrue(sut.mediaNodes.isEmpty)
+        XCTAssertTrue(sut.timelineViewModel.showEmptyStateView)
     }
     
     @MainActor

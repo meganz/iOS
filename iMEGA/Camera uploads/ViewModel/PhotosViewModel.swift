@@ -20,6 +20,7 @@ enum PhotosEmptyScreenViewType {
 final class PhotosViewModel: NSObject {
     var mediaNodes: [NodeEntity] = [NodeEntity]() {
         didSet {
+            timelineViewModel.showEmptyStateView = mediaNodes.isEmpty
             photoUpdatePublisher.updatePhotoLibrary()
         }
     }
