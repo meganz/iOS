@@ -7,7 +7,7 @@ import UIKit
 public final class MEGAAVPlayer {
     private let player = AVPlayer()
     private var playerLayer: AVPlayerLayer?
-    private var _nodeName = ""
+    private var currentNode: (any PlayableNode)?
 
     private nonisolated(unsafe) var timeObserverToken: Any? {
         willSet { timeObserverToken.map(player.removeTimeObserver) }
@@ -30,13 +30,16 @@ public final class MEGAAVPlayer {
 
     private let streamingUseCase: any StreamingUseCaseProtocol
     private let notificationCenter: NotificationCenter
+    private let resumePlaybackPositionUseCase: any ResumePlaybackPositionUseCaseProtocol
 
-    init(
+    public init(
         streamingUseCase: some StreamingUseCaseProtocol,
-        notificationCenter: NotificationCenter
+        notificationCenter: NotificationCenter,
+        resumePlaybackPositionUseCase: some ResumePlaybackPositionUseCaseProtocol
     ) {
         self.streamingUseCase = streamingUseCase
         self.notificationCenter = notificationCenter
+        self.resumePlaybackPositionUseCase = resumePlaybackPositionUseCase
         self.statePublisher = stateSubject.eraseToAnyPublisher()
         self.currentTimePublisher = currentTimeSubject.eraseToAnyPublisher()
         self.durationPublisher = durationSubject.eraseToAnyPublisher()
@@ -98,6 +101,7 @@ extension MEGAAVPlayer: PlaybackControllable {
     }
 
     public func stop() {
+        saveOrDeleteCurrentPosition()
         player.replaceCurrentItem(with: nil)
         streamingUseCase.stopStreaming()
     }
@@ -217,11 +221,40 @@ extension MEGAAVPlayer: NodeLoadable {
 
         observe(for: playerItem)
 
-        _nodeName = node.nodeName
+        currentNode = node
+
+        attemptResumeFromSavedPosition()
     }
 
     public var nodeName: String {
-        _nodeName
+        currentNode?.nodeName ?? ""
+    }
+    
+    private func attemptResumeFromSavedPosition() {
+        guard let node = currentNode,
+              let savedPosition = resumePlaybackPositionUseCase.getPlaybackPosition(for: node),
+              savedPosition > 0 else {
+            return
+        }
+        
+        seek(to: savedPosition)
+    }
+    
+    private func saveOrDeleteCurrentPosition() {
+        guard let node = currentNode else {
+            return
+        }
+
+        let minimumVideoResumePosition = 15
+        let minimumVideoResumeDuration = 17
+        if currentTime.components.seconds > minimumVideoResumePosition,
+           duration.components.seconds > minimumVideoResumeDuration,
+           currentTime.components.seconds < duration.components.seconds - 2 {
+            let currentPosition = TimeInterval(currentTime.components.seconds)
+            resumePlaybackPositionUseCase.savePlaybackPosition(currentPosition, for: node)
+        } else {
+            resumePlaybackPositionUseCase.deletePlaybackPosition(for: node)
+        }
     }
 
     private func observe(for playerItem: AVPlayerItem) {
@@ -402,7 +435,8 @@ public extension MEGAAVPlayer {
     static var liveValue: MEGAAVPlayer {
         MEGAAVPlayer(
             streamingUseCase: DependencyInjection.streamingUseCase,
-            notificationCenter: .default
+            notificationCenter: .default,
+            resumePlaybackPositionUseCase: DependencyInjection.resumePlaybackPositionUseCase
         )
     }
 }

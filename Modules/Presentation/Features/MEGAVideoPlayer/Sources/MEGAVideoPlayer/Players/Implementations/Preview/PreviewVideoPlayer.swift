@@ -38,6 +38,8 @@ final class PreviewVideoPlayer: VideoPlayerProtocol {
 
     var _nodeName: String = ""
 
+    var currentNode: (any PlayableNode)?
+
     init(
         option: VideoPlayerOption = .avPlayer,
         state: PlaybackState = .stopped,
