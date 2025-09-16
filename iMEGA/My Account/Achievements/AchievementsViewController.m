@@ -28,7 +28,11 @@
 @property (weak, nonatomic) IBOutlet UIView *unlockedBonusesBottomSeparatorView;
 
 @property (nonatomic) MEGAAchievementsDetails *achievementsDetails;
+
+/// Dictionary of all awarded achievements
 @property (nonatomic) NSMutableDictionary *achievementsIndexesMutableDictionary;
+
+// List of all achievements to display (either awarded or not-awarded)
 @property (nonatomic) NSMutableArray<NSNumber *> *displayOrderMutableArray;
 
 @property (strong, nonatomic) NSNumberFormatter *numberFormatter;
@@ -279,7 +283,7 @@
         NSNumber *index = [self.achievementsIndexesMutableDictionary objectForKey:[NSNumber numberWithInteger:achievementClass]];
         if (index != nil) {
             [self setStorageQuotaRewardsForCell:cell forIndex:index.integerValue];
-            [self configureAchievementSubtitleForCell:cell withIndex:index.unsignedIntegerValue forAchievementClass:achievementClass];
+            [self configureAwardedAchievementSubtitleForCell:cell withIndex:index.unsignedIntegerValue forAchievementClass:achievementClass];
         } else {
             NSString *storageString = [NSString memoryStyleStringFromByteCount:[self.achievementsDetails classStorageForClassId:achievementClass]];
             NSInteger rewardDuration = [self.achievementsDetails classExpireForClassId:achievementClass];
@@ -334,20 +338,17 @@
 
 #pragma mark - Private Methods
 
-- (void)configureAchievementSubtitleForCell:(AchievementsTableViewCell *)cell withIndex:(NSUInteger)index forAchievementClass:(MEGAAchievement)achievementClass {
-    switch (achievementClass) {
-        case MEGAAchievementVPNFreeTrial:
-        case MEGAAchievementPassFreeTrial:
-            cell.subtitleLabel.text = LocalizedString(@"account.achievement.complete.subtitle.permanent", @"");
-            cell.subtitleLabel.textColor = [UIColor mnz_secondaryTextColor];
-            break;
-        default: {
-            NSDate *expirationDate = [self.achievementsDetails awardExpirationAtIndex:index];
-            NSInteger daysRemaining = expirationDate.daysUntil;
-            cell.subtitleLabel.text = [self achievementSubtitleWithRemainingDays:daysRemaining];
-            cell.subtitleLabel.textColor = (daysRemaining <= 15) ? [UIColor mnz_errorRed] : [UIColor mnz_secondaryTextColor];
-            break;
-        }
+- (void)configureAwardedAchievementSubtitleForCell:(AchievementsTableViewCell *)cell withIndex:(NSUInteger)index forAchievementClass:(MEGAAchievement)achievementClass {
+    NSInteger rewardDuration = [self.achievementsDetails classExpireForClassId:achievementClass];
+    // Permanent reward, show the fixed title
+    if (rewardDuration == 0) {
+        cell.subtitleLabel.text = LocalizedString(@"account.achievement.complete.subtitle.permanent", @"");
+        cell.subtitleLabel.textColor = [UIColor mnz_secondaryTextColor];
+    } else { // limited day reward, either show remaining days or "expired"
+        NSDate *expirationDate = [self.achievementsDetails awardExpirationAtIndex:index];
+        NSInteger daysRemaining = expirationDate.daysUntil;
+        cell.subtitleLabel.text = [self achievementSubtitleWithRemainingDays:daysRemaining];
+        cell.subtitleLabel.textColor = (daysRemaining <= 15) ? [UIColor mnz_errorRed] : [UIColor mnz_secondaryTextColor];
     }
 }
 
