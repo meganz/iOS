@@ -2156,7 +2156,6 @@
 		BF1053DE2498663B009094C8 /* ChatUnreadMessagesLabelCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1053DC2498663B009094C8 /* ChatUnreadMessagesLabelCollectionCell.swift */; };
 		BF1053DF2498663B009094C8 /* ChatUnreadMessagesLabelCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF1053DD2498663B009094C8 /* ChatUnreadMessagesLabelCollectionCell.xib */; };
 		BF1163BB27F12ED000E5C5A4 /* MessageKit in Frameworks */ = {isa = PBXBuildFile; productRef = BF1163BA27F12ED000E5C5A4 /* MessageKit */; };
-		BF1163C227F1305400E5C5A4 /* PanModal in Frameworks */ = {isa = PBXBuildFile; productRef = BF1163C127F1305400E5C5A4 /* PanModal */; };
 		BF11643127F6612A00E5C5A4 /* CHTCollectionViewWaterfallLayoutObjC in Frameworks */ = {isa = PBXBuildFile; productRef = BF11643027F6612A00E5C5A4 /* CHTCollectionViewWaterfallLayoutObjC */; };
 		BF11647D27F6734C00E5C5A4 /* PhoneNumberKit in Frameworks */ = {isa = PBXBuildFile; productRef = BF11647C27F6734C00E5C5A4 /* PhoneNumberKit */; };
 		BF1164B027F68EC500E5C5A4 /* SDWebImageWebPCoder in Frameworks */ = {isa = PBXBuildFile; productRef = BF1164AF27F68EC500E5C5A4 /* SDWebImageWebPCoder */; };
@@ -2277,7 +2276,6 @@
 		BF67F7F82AB4171A00AC127E /* LogRepo in Frameworks */ = {isa = PBXBuildFile; productRef = BF67F7F72AB4171A00AC127E /* LogRepo */; };
 		BF67F7FA2AB4172100AC127E /* LogRepo in Frameworks */ = {isa = PBXBuildFile; productRef = BF67F7F92AB4172100AC127E /* LogRepo */; };
 		BF68244725E84D9F00A7740C /* MeetingFloatingPanelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF68244525E84D9F00A7740C /* MeetingFloatingPanelViewController.swift */; };
-		BF68244825E84D9F00A7740C /* MeetingFloatingPanelViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF68244625E84D9F00A7740C /* MeetingFloatingPanelViewController.xib */; };
 		BF695F912A3A7E9A00162E0D /* ScheduleMeetingCreationWeeklyCustomOptionsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF695F902A3A7E9A00162E0D /* ScheduleMeetingCreationWeeklyCustomOptionsViewModelTests.swift */; };
 		BF695F952A3A96B200162E0D /* ScheduleMeetingSelectedFrequencyDetailsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF695F942A3A96B200162E0D /* ScheduleMeetingSelectedFrequencyDetailsTests.swift */; };
 		BF69E5172374F3720031913D /* AppDelegate+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF69E5162374F3720031913D /* AppDelegate+Additions.swift */; };
@@ -5074,7 +5072,6 @@
 		BF67D77E2B9EE21800978846 /* CreateNewFolderAlertViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNewFolderAlertViewModelTests.swift; sourceTree = "<group>"; };
 		BF67F7EC2AB3EF0E00AC127E /* LogRepo */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = LogRepo; sourceTree = "<group>"; };
 		BF68244525E84D9F00A7740C /* MeetingFloatingPanelViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingFloatingPanelViewController.swift; sourceTree = "<group>"; };
-		BF68244625E84D9F00A7740C /* MeetingFloatingPanelViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MeetingFloatingPanelViewController.xib; sourceTree = "<group>"; };
 		BF695F902A3A7E9A00162E0D /* ScheduleMeetingCreationWeeklyCustomOptionsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingCreationWeeklyCustomOptionsViewModelTests.swift; sourceTree = "<group>"; };
 		BF695F942A3A96B200162E0D /* ScheduleMeetingSelectedFrequencyDetailsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingSelectedFrequencyDetailsTests.swift; sourceTree = "<group>"; };
 		BF69E5162374F3720031913D /* AppDelegate+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppDelegate+Additions.swift"; sourceTree = "<group>"; };
@@ -5517,7 +5514,6 @@
 				994890EB2E4D70B100CBDC33 /* MEGAVideoPlayer in Frameworks */,
 				BF1163BB27F12ED000E5C5A4 /* MessageKit in Frameworks */,
 				B51616492B83361900C6E842 /* Notifications in Frameworks */,
-				BF1163C227F1305400E5C5A4 /* PanModal in Frameworks */,
 				BF11647D27F6734C00E5C5A4 /* PhoneNumberKit in Frameworks */,
 				6D797BA72C6117CC004D95F4 /* PhotosBrowser in Frameworks */,
 				BFD2ED4D281228B30018C05A /* PieChart in Frameworks */,
@@ -12346,7 +12342,6 @@
 				94B0C6CB2B9B3F1B00695970 /* MeetingFloatingPanelHeaderConfigFactory.swift */,
 				BF66DFC72613E6AC00066F35 /* MeetingFloatingPanelRouter.swift */,
 				BF68244525E84D9F00A7740C /* MeetingFloatingPanelViewController.swift */,
-				BF68244625E84D9F00A7740C /* MeetingFloatingPanelViewController.xib */,
 				BF66DFD12613E6DC00066F35 /* MeetingFloatingPanelViewModel.swift */,
 			);
 			path = FloatingPanel;
@@ -13376,7 +13371,6 @@
 				B6826B672898F4E900B2B8D0 /* MEGAUI */,
 				B65D17CE2899E16400D5AD33 /* MEGAUIKit */,
 				BF1163BA27F12ED000E5C5A4 /* MessageKit */,
-				BF1163C127F1305400E5C5A4 /* PanModal */,
 				BF11647C27F6734C00E5C5A4 /* PhoneNumberKit */,
 				BFD2ED4C281228B30018C05A /* PieChart */,
 				A8ECD8CA27F34BB0008D75B8 /* PinLayout */,
@@ -13753,7 +13747,6 @@
 				A8F5155627F6F24F00AEE4D6 /* XCRemoteSwiftPackageReference "ISEmojiView" */,
 				BF1164B927F692DB00E5C5A4 /* XCRemoteSwiftPackageReference "KeyboardLayoutGuide" */,
 				BF1163B927F12ED000E5C5A4 /* XCRemoteSwiftPackageReference "MessageKit" */,
-				BF1163C027F1305400E5C5A4 /* XCRemoteSwiftPackageReference "PanModal" */,
 				BF11647B27F6734C00E5C5A4 /* XCRemoteSwiftPackageReference "PhoneNumberKit" */,
 				BFD2ED4B281228B30018C05A /* XCRemoteSwiftPackageReference "PieChart" */,
 				A8ECD8C927F34BB0008D75B8 /* XCRemoteSwiftPackageReference "PinLayout" */,
@@ -13876,7 +13869,6 @@
 				B69AF65F28A1E5190022B094 /* ManageChatHistory.storyboard in Resources */,
 				BFD6535525EDBFA400052DE8 /* MeetingContactInfoHeaderView.xib in Resources */,
 				83E27AEA27ABD8640086E11E /* MeetingCreatingViewController.xib in Resources */,
-				BF68244825E84D9F00A7740C /* MeetingFloatingPanelViewController.xib in Resources */,
 				839BA9E82AB355DE001F852C /* MeetingInviteParticipantTableViewCell.xib in Resources */,
 				83C49BA3265261B900A7764B /* MeetingParticipantsLayoutViewController.xib in Resources */,
 				BF66DFE32613E7BE00066F35 /* MeetingParticipantTableViewCell.xib in Resources */,
@@ -18333,14 +18325,6 @@
 				revision = b024c1287ac30fb6ea2ee07169e6193efc11d972;
 			};
 		};
-		BF1163C027F1305400E5C5A4 /* XCRemoteSwiftPackageReference "PanModal" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/ilia3546/PanModal.git";
-			requirement = {
-				kind = revision;
-				revision = ba721e891b4f32fa015460ad5003d80054171f07;
-			};
-		};
 		BF11642F27F6612A00E5C5A4 /* XCRemoteSwiftPackageReference "CHTCollectionViewWaterfallLayout" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/chiahsien/CHTCollectionViewWaterfallLayout.git";
@@ -18799,11 +18783,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = BF1163B927F12ED000E5C5A4 /* XCRemoteSwiftPackageReference "MessageKit" */;
 			productName = MessageKit;
-		};
-		BF1163C127F1305400E5C5A4 /* PanModal */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = BF1163C027F1305400E5C5A4 /* XCRemoteSwiftPackageReference "PanModal" */;
-			productName = PanModal;
 		};
 		BF11643027F6612A00E5C5A4 /* CHTCollectionViewWaterfallLayoutObjC */ = {
 			isa = XCSwiftPackageProductDependency;

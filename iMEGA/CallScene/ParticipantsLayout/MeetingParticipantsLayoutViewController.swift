@@ -774,8 +774,8 @@ extension MeetingParticipantsLayoutViewController: SnackBarLayoutCustomizable {
 
         return if statusBarHidden {
             snackBarDistanceFromBottomSafe
-        } else {
-            MeetingFloatingPanelViewController.Constants.viewShortFormHeight + snackBarDistanceFromBottomSafe
+        } else {            
+            MeetingFloatingPanelViewController.Constants.floatingViewSpace - view.safeAreaInsets.bottom + snackBarDistanceFromBottomSafe
         }
     }
 }

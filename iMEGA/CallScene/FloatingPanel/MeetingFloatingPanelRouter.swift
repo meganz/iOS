@@ -3,11 +3,11 @@ import ChatRepo
 import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGAAssets
+import MEGADesignToken
 import MEGADomain
 import MEGAL10n
 import MEGAPermissions
 import MEGARepo
-import PanModal
 import SwiftUI
 
 @MainActor
@@ -82,8 +82,8 @@ final class MeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
         self.actionsViewController = actionsViewController
     }
     
-    func build() -> UIViewController {
-        guard let containerViewModel = containerViewModel else { return UIViewController() }
+    func build() -> MeetingFloatingPanelViewController {
+        guard let containerViewModel else { fatalError("MeetingFloatingPanelRouter should have a non-nil MeetingContainerViewModel") }
         let audioSessionRepository = AudioSessionRepository(audioSession: AVAudioSession.sharedInstance())
         let chatRoomUseCase = ChatRoomUseCase(chatRoomRepo: ChatRoomRepository.newRepo)
         let chatRoomUserUseCase = ChatRoomUserUseCase(chatRoomRepo: ChatRoomUserRepository.newRepo,
@@ -113,8 +113,12 @@ final class MeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
             tracker: DIContainer.tracker
         )
         
-        let callControlsViewHost = UIHostingController(rootView: CallControlsView(viewModel: callControlsViewModel))
-        callControlsViewHost.view.backgroundColor = .clear
+        let callControlsView = UIHostingConfiguration {
+            CallControlsView(viewModel: callControlsViewModel)
+                .padding(.top, TokenSpacing._5)
+        }
+            .margins(.all, 0)
+            .makeContentView()
         
         let viewModel = MeetingFloatingPanelViewModel(
             router: self,
@@ -149,7 +153,7 @@ final class MeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
             chatRoomUserUseCase: chatRoomUserUseCase,
             megaHandleUseCase: megaHandleUseCase,
             chatUseCase: ChatUseCase(chatRepo: ChatRepository.newRepo),
-            callControlsViewHost: callControlsViewHost
+            callControlsView: callControlsView
         )
         baseViewController = vc
         self.viewModel = viewModel
@@ -158,10 +162,8 @@ final class MeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
     }
     
     func start(completion: @escaping () -> Void) {
-        guard let viewController = build() as? any PanModalPresentable & UIViewController else { return }
-        viewController.modalPresentationStyle = .custom
-        viewController.modalPresentationCapturesStatusBarAppearance = true
-        viewController.transitioningDelegate = PanModalPresentationDelegate.default
+        let viewController = build()
+        viewController.configureForSheetPresentation()
         presenter?.present(viewController, animated: true, completion: completion)
     }
     

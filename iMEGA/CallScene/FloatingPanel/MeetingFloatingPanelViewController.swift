@@ -3,31 +3,54 @@ import MEGAAssets
 import MEGADesignToken
 import MEGADomain
 import MEGAL10n
-import PanModal
 import SwiftUI
 import UIKit
+
+extension UISheetPresentationController.Detent {
+    static func meetingFloatingPanelShortForm() -> UISheetPresentationController.Detent {
+        UISheetPresentationController.Detent.custom(identifier: .meetingFloatingPanelShortForm) { _ in
+            MeetingFloatingPanelViewController.Constants.viewShortFormHeight
+        }
+    }
+}
+
+extension UISheetPresentationController.Detent.Identifier {
+    static let meetingFloatingPanelShortForm = UISheetPresentationController.Detent.Identifier("meetingFloatingPanelShortForm")
+}
 
 final class MeetingFloatingPanelViewController: UIViewController {
     
     enum Constants {
         static let viewShortFormHeight: CGFloat = 164.0
-        static let viewMaxWidth: CGFloat = 500.0
-        static let backgroundViewCornerRadius: CGFloat = 13.0
-        static let dragIndicatorCornerRadius: CGFloat = 2.5
         static let maxParticipantsToListInWaitingRoom = 4
+        static var floatingViewSpace: CGFloat = 0
     }
 
-    @IBOutlet private weak var dragIndicatorView: UIView!
-    @IBOutlet private weak var backgroundView: UIView!
-    @IBOutlet private weak var participantsTableView: UITableView!
+    private lazy var participantsTableView: UITableView = {
+        let tableView = UITableView()
+        tableView.allowsSelection = false
+        tableView.separatorStyle = .none
+        tableView.backgroundColor = .clear
+        tableView.dataSource = self
+        tableView.delegate = self
+        return tableView
+    }()
 
-    @IBOutlet private weak var optionsStackView: UIStackView!
-    @IBOutlet private weak var shareLinkLabel: UILabel!
+    private lazy var shareLinkView: UIView = {
+        let view = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: 82))
+        view.backgroundColor = .clear
+        return view
+    }()
     
-    @IBOutlet private weak var optionsStackViewHeightConstraint: NSLayoutConstraint!
-    
-    @IBOutlet private var floatingViewSuperViewWidthConstraint: NSLayoutConstraint!
-    @IBOutlet private var floatingViewConstantViewWidthConstraint: NSLayoutConstraint!
+    private lazy var shareLinkButton: UIButton = {
+        let button = UIButton()
+        button.layer.cornerRadius = TokenRadius.medium
+        button.backgroundColor = MEGAAssets.UIColor.black363638
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: .semibold)
+        button.setTitleColor(TokenColors.Text.accent, for: .normal)
+        button.addTarget(self, action: #selector(shareLink(_:)), for: .touchUpInside)
+        return button
+    }()
 
     private var callParticipants: [CallParticipantEntity] = []
     private let viewModel: MeetingFloatingPanelViewModel
@@ -38,7 +61,7 @@ final class MeetingFloatingPanelViewController: UIViewController {
     private let megaHandleUseCase: any MEGAHandleUseCaseProtocol
     private let chatUseCase: any ChatUseCaseProtocol
 
-    private let callControlsViewHost: UIViewController
+    private let callControlsView: UIView
     
     private var isAllowNonHostToAddParticipantsEnabled = false
     private var callParticipantsListView: ParticipantsListView?
@@ -50,7 +73,7 @@ final class MeetingFloatingPanelViewController: UIViewController {
          chatRoomUserUseCase: any ChatRoomUserUseCaseProtocol,
          megaHandleUseCase: any MEGAHandleUseCaseProtocol,
          chatUseCase: some ChatUseCaseProtocol,
-         callControlsViewHost: UIViewController
+         callControlsView: UIView
     ) {
         self.viewModel = viewModel
         self.userImageUseCase = userImageUseCase
@@ -59,7 +82,7 @@ final class MeetingFloatingPanelViewController: UIViewController {
         self.chatRoomUserUseCase = chatRoomUserUseCase
         self.megaHandleUseCase = megaHandleUseCase
         self.chatUseCase = chatUseCase
-        self.callControlsViewHost = callControlsViewHost
+        self.callControlsView = callControlsView
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -70,13 +93,9 @@ final class MeetingFloatingPanelViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         overrideUserInterfaceStyle = .dark
-
-        backgroundView.backgroundColor = TokenColors.Background.surface1
-        backgroundView.layer.cornerRadius = Constants.backgroundViewCornerRadius
-        dragIndicatorView.layer.cornerRadius = Constants.dragIndicatorCornerRadius
-
-        shareLinkLabel.textColor = TokenColors.Text.accent
+        view.backgroundColor = TokenColors.Background.surface1
         
+        configureSubviews()
         registerTableViewCells()
         
         viewModel.invokeCommand = { [weak self] in
@@ -88,31 +107,12 @@ final class MeetingFloatingPanelViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         viewModel.dispatch(.onViewAppear)
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        addCallControlsView()
-    }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        if view.frame.width > Constants.viewMaxWidth {
-            self.floatingViewSuperViewWidthConstraint.isActive = false
-            self.floatingViewConstantViewWidthConstraint.isActive = true
-        } else {
-            self.floatingViewConstantViewWidthConstraint.isActive = false
-            self.floatingViewSuperViewWidthConstraint.isActive = true
-        }
+        calculateSheetPositionInContainer()
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: any UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
-        coordinator.animate(alongsideTransition: nil) { [weak self] _ in
-            self?.panModalSetNeedsLayoutUpdate()
-            self?.panModalTransition(to: .shortForm)
-        }
+        switchMeetingFloatingPanelForm(to: .meetingFloatingPanelShortForm)
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -148,11 +148,9 @@ final class MeetingFloatingPanelViewController: UIViewController {
             callParticipants = participants
             participantsTableView.reloadData()
         case .transitionToShortForm:
-            panModalSetNeedsLayoutUpdate()
-            panModalTransition(to: .shortForm)
+            switchMeetingFloatingPanelForm(to: .meetingFloatingPanelShortForm)
         case .transitionToLongForm:
-            panModalTransition(to: .longForm)
-            panModalSetNeedsLayoutUpdate()
+            switchMeetingFloatingPanelForm(to: .large)
         case .updateAllowNonHostToAddParticipants(let enabled):
             isAllowNonHostToAddParticipantsEnabled = enabled
             participantsTableView.reloadSections([0], with: .automatic)
@@ -165,7 +163,7 @@ final class MeetingFloatingPanelViewController: UIViewController {
     
     // MARK: - Actions
     
-    @IBAction func shareLink(_ sender: UIButton) {
+    @objc private func shareLink(_ sender: UIButton) {
         viewModel.dispatch(
             .participantListShareLinkButtonPressed(
                 presenter: self,
@@ -183,16 +181,12 @@ final class MeetingFloatingPanelViewController: UIViewController {
                           isMyselfAModerator: Bool) {
         // checking if the implicitly unwrapped optional are loaded from XIBS yet [MEET-4517]
         if isOneToOneCall {
-            if optionsStackView != nil {
-                optionsStackView.arrangedSubviews.forEach({ $0.removeFromSuperview() })
-            }
-            if optionsStackViewHeightConstraint != nil {
-                optionsStackViewHeightConstraint.constant = 0.0
-            }
+            participantsTableView.tableFooterView = nil
+        } else {
+            participantsTableView.tableFooterView = shareLinkView
         }
-        if shareLinkLabel != nil {
-            shareLinkLabel.text = isMeeting ? Strings.Localizable.Meetings.Action.shareLink : Strings.Localizable.Meetings.Panel.shareLink
-        }
+        let shareLinkText = isMeeting ? Strings.Localizable.Meetings.Action.shareLink : Strings.Localizable.Meetings.Panel.shareLink
+        shareLinkButton.setTitle(shareLinkText, for: .normal)
         isAllowNonHostToAddParticipantsEnabled = allowNonHostToAddParticipantsEnabled
     }
 }
@@ -305,6 +299,29 @@ extension MeetingFloatingPanelViewController: UITableViewDataSource, UITableView
         }
     }
     
+    private func configureSubviews() {
+        participantsTableView.translatesAutoresizingMaskIntoConstraints = false
+        shareLinkButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        view.addSubview(participantsTableView)
+        shareLinkView.addSubview(shareLinkButton)
+        participantsTableView.tableFooterView = shareLinkView
+        
+        addCallControlsView()
+        
+        NSLayoutConstraint.activate([
+            participantsTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            participantsTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            participantsTableView.topAnchor.constraint(equalTo: view.topAnchor),
+            participantsTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            
+            shareLinkButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40),
+            shareLinkButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40),
+            shareLinkButton.topAnchor.constraint(equalTo: shareLinkView.topAnchor, constant: 16),
+            shareLinkButton.bottomAnchor.constraint(equalTo: shareLinkView.bottomAnchor, constant: -16)
+        ])
+    }
+    
     private func registerTableViewCells() {
         participantsTableView.register(MeetingParticipantTableViewCell.nib, forCellReuseIdentifier: MeetingParticipantTableViewCell.reuseIdentifier)
         participantsTableView.register(MeetingInviteParticipantTableViewCell.nib, forCellReuseIdentifier: MeetingInviteParticipantTableViewCell.reuseIdentifier)
@@ -378,21 +395,18 @@ extension MeetingFloatingPanelViewController: UITableViewDataSource, UITableView
     }
     
     private func addCallControlsView() {
-        guard let swiftUIView = callControlsViewHost.view else { return }
-        
-        addChild(callControlsViewHost)
-        participantsTableView.tableHeaderView?.addSubview(callControlsViewHost.view)
-        
-        callControlsViewHost.view.translatesAutoresizingMaskIntoConstraints = false
-        callControlsViewHost.didMove(toParent: self)
-        
-        NSLayoutConstraint.activate([
-            swiftUIView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            swiftUIView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            swiftUIView.heightAnchor.constraint(equalToConstant: 105)
-        ])
-        
-        view.bringSubviewToFront(swiftUIView)
+        var frame = callControlsView.frame
+        frame.size.height = 105
+        callControlsView.frame = frame
+        participantsTableView.tableHeaderView = callControlsView
+    }
+    
+    private func switchMeetingFloatingPanelForm(to identifier: UISheetPresentationController.Detent.Identifier) {
+        if let sheet = sheetPresentationController {
+            sheet.animateChanges {
+                sheet.selectedDetentIdentifier = identifier
+            }
+        }
     }
 }
 
@@ -411,48 +425,30 @@ extension MeetingFloatingPanelViewController {
     }
 }
 
-extension MeetingFloatingPanelViewController: PanModalPresentable {
-    var panScrollable: UIScrollView? {
-        participantsTableView
+extension MeetingFloatingPanelViewController: UISheetPresentationControllerDelegate {
+    func configureForSheetPresentation() {
+        isModalInPresentation = true
+        modalPresentationStyle = .pageSheet
+        modalPresentationCapturesStatusBarAppearance = true
+        if let sheet = sheetPresentationController {
+            sheet.detents = [
+                .meetingFloatingPanelShortForm(),
+                .large()
+            ]
+            sheet.prefersGrabberVisible = true
+            sheet.largestUndimmedDetentIdentifier = .meetingFloatingPanelShortForm
+            /// When using .pageSheet modalPresentationStyle, in a compact-height size class, the behavior is the same as UIModalPresentationStyle.fullScreen,
+            /// which lost the UISheetPresentationController behavior.
+            /// So setting prefersEdgeAttachedInCompactHeight to true to keep the behavior.
+            sheet.prefersEdgeAttachedInCompactHeight = true
+        }
     }
     
-    var longFormHeight: PanModalHeight {
-        .maxHeight
-    }
-    
-    var shortFormHeight: PanModalHeight {
-        .contentHeight(Constants.viewShortFormHeight)
-    }
-    
-    var panModalBackgroundColor: UIColor {
-        MEGAAssets.UIColor.black000000.withAlphaComponent(0)
-    }
-
-    var anchorModalToLongForm: Bool {
-        false
-    }
-    
-    var allowsTapToDismiss: Bool {
-        false
-    }
-    
-    var allowsDragToDismiss: Bool {
-        false
-    }
-    
-    var backgroundInteraction: PanModalBackgroundInteraction {
-        .forward
-    }
-    
-    var showDragIndicator: Bool {
-        false
-    }
-    
-    var allowsExtendedPanScrolling: Bool {
-        true
-    }
-    
-    func willTransition(to state: PanModalPresentationController.PresentationState) {
-        viewModel.dispatch(.panelTransitionIsLongForm(state == .longForm))
+    private func calculateSheetPositionInContainer() {
+        guard let presenter = presentingViewController else { return }
+        let originY = view.convert(view.frame.origin, to: presenter.view).y
+        let containerHeight = presenter.view.bounds.height
+        let floatingViewSpace = containerHeight - originY
+        MeetingFloatingPanelViewController.Constants.floatingViewSpace = floatingViewSpace
     }
 }

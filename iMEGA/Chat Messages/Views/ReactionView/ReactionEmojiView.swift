@@ -57,7 +57,8 @@ class ReactionEmojiView: UIView {
         backgroundColor = TokenColors.Button.secondary
     }
     
-    @objc func longPress(_ tapGesture: UITapGestureRecognizer) {
+    @objc func longPress(_ tapGesture: UILongPressGestureRecognizer) {
+        guard tapGesture.state == .began else { return }
         buttonLongPress?(emoji, self)
     }
 

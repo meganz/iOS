@@ -359,7 +359,8 @@ class ChatMessageActionMenuViewController: ActionSheetViewController {
         
         if let sourceView = self.sender, let presentingViewController = presentingViewController {
             dismiss(animated: true, completion: nil)
-            presentingViewController.presentPanModal(vc, sourceView: sourceView, sourceRect: sourceView.bounds)
+            vc.configureForPopoverSheetPresentation(sourceView: sourceView)
+            presentingViewController.present(vc, animated: true, completion: nil)
         }
         
     }
