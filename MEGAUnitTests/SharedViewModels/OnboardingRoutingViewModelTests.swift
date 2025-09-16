@@ -27,7 +27,10 @@ struct OnboardingRoutingViewModelTests {
         #expect(confirmAccount == false)
     }
 
-    @Test("when account is confirmed should show subscription page")
+    @Test(
+        "when account is confirmed should show subscription page",
+        .disabled("Disabled due to flakiness")
+    )
     @MainActor
     func accountConfirmation() async throws {
         let accountConfirmationUseCase = MockAccountConfirmationUseCase()

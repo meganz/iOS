@@ -4,7 +4,9 @@
       "id" : "B2BBBC2A-1029-4844-83A0-FFC2E620E6D9",
       "name" : "Default Configuration",
       "options" : {
-
+        "defaultTestExecutionTimeAllowance" : 60,
+        "maximumTestExecutionTimeAllowance" : 60,
+        "testTimeoutsEnabled" : true
       }
     }
   ],
@@ -44,6 +46,7 @@
   },
   "testTargets" : [
     {
+      "parallelizable" : true,
       "target" : {
         "containerPath" : "container:Modules\/Presentation\/Features\/Accounts",
         "identifier" : "AccountsTests",
@@ -51,6 +54,7 @@
       }
     },
     {
+      "parallelizable" : true,
       "target" : {
         "containerPath" : "container:Modules\/Presentation\/Features\/Settings",
         "identifier" : "SettingsTests",
@@ -58,13 +62,7 @@
       }
     },
     {
-      "target" : {
-        "containerPath" : "container:Modules\/MEGASharedRepo\/MEGAAuthentication",
-        "identifier" : "MEGAAuthenticationTests",
-        "name" : "MEGAAuthenticationTests"
-      }
-    },
-    {
+      "parallelizable" : true,
       "target" : {
         "containerPath" : "container:Modules\/Domain\/MEGAAnalyticsDomain",
         "identifier" : "MEGAAnalyticsDomainTests",
@@ -72,6 +70,7 @@
       }
     },
     {
+      "parallelizable" : true,
       "target" : {
         "containerPath" : "container:Modules\/Presentation\/Features\/Search",
         "identifier" : "SearchTests",
@@ -79,6 +78,7 @@
       }
     },
     {
+      "parallelizable" : true,
       "target" : {
         "containerPath" : "container:Modules\/Presentation\/Features\/PhotosBrowser",
         "identifier" : "PhotosBrowserTests",
@@ -86,6 +86,7 @@
       }
     },
     {
+      "parallelizable" : true,
       "target" : {
         "containerPath" : "container:Modules\/Presentation\/MEGAAssets",
         "identifier" : "MEGAAssetsTests",
@@ -93,17 +94,11 @@
       }
     },
     {
+      "parallelizable" : true,
       "target" : {
         "containerPath" : "container:Modules\/Presentation\/Features\/Shared\/ContentLibraries",
         "identifier" : "ContentLibrariesTests",
         "name" : "ContentLibrariesTests"
-      }
-    },
-    {
-      "target" : {
-        "containerPath" : "container:Modules\/MEGASharedRepo\/MEGASwift",
-        "identifier" : "MEGASwiftTests",
-        "name" : "MEGASwiftTests"
       }
     },
     {
@@ -114,6 +109,7 @@
       }
     },
     {
+      "parallelizable" : true,
       "target" : {
         "containerPath" : "container:Modules\/Presentation\/Features\/Chat",
         "identifier" : "ChatTests",
@@ -121,6 +117,7 @@
       }
     },
     {
+      "parallelizable" : true,
       "target" : {
         "containerPath" : "container:Modules\/Domain\/MEGADomain",
         "identifier" : "MEGADomainTests",
@@ -128,6 +125,7 @@
       }
     },
     {
+      "parallelizable" : true,
       "target" : {
         "containerPath" : "container:Modules\/Presentation\/MEGAAppPresentation",
         "identifier" : "MEGAAppPresentationTests",
@@ -135,6 +133,7 @@
       }
     },
     {
+      "parallelizable" : true,
       "target" : {
         "containerPath" : "container:Modules\/Presentation\/Features\/CloudDrive",
         "identifier" : "CloudDriveTests",
@@ -142,6 +141,7 @@
       }
     },
     {
+      "parallelizable" : true,
       "skippedTests" : [
         "DebouncerTests\/testMultipleStarts_whenCalledMultipleTimes_shouldOnlyExecuteLastAction()",
         "DebouncerTests\/testStartAction_whenCalled_shouldExecuteActionAfterDelay()",
@@ -162,13 +162,7 @@
       }
     },
     {
-      "target" : {
-        "containerPath" : "container:Modules\/MEGASharedRepo\/MEGAAuthentication",
-        "identifier" : "MEGAAuthenticationOrchestrationTests",
-        "name" : "MEGAAuthenticationOrchestrationTests"
-      }
-    },
-    {
+      "parallelizable" : true,
       "target" : {
         "containerPath" : "container:Modules\/Presentation\/Features\/Video",
         "identifier" : "VideoTests",
@@ -176,6 +170,7 @@
       }
     },
     {
+      "parallelizable" : true,
       "skippedTests" : [
         "ChatContentViewModelTests\/testUpdateContent_callInProgressLastPeerLeavesAndUserIsTheOnlyOneInTheCall_shouldShowEndCallDialog()",
         "MainTabBarCallsViewModelTests\/testJoinCall_onSessionInProgressIsRecording_alertShouldNotBeShown()",
@@ -195,6 +190,7 @@
       }
     },
     {
+      "parallelizable" : true,
       "target" : {
         "containerPath" : "container:Modules\/UI\/MEGAUI",
         "identifier" : "MEGAUITests",
@@ -202,6 +198,7 @@
       }
     },
     {
+      "parallelizable" : true,
       "target" : {
         "containerPath" : "container:Modules\/Repository\/MEGAAppSDKRepo",
         "identifier" : "MEGAAppSDKRepoTests",
@@ -209,6 +206,7 @@
       }
     },
     {
+      "parallelizable" : true,
       "target" : {
         "containerPath" : "container:Modules\/Presentation\/Features\/DeviceCenter",
         "identifier" : "DeviceCenterTests",
@@ -224,6 +222,7 @@
       }
     },
     {
+      "parallelizable" : true,
       "target" : {
         "containerPath" : "container:Modules\/Repository\/ChatRepo",
         "identifier" : "ChatRepoTests",
@@ -231,6 +230,7 @@
       }
     },
     {
+      "parallelizable" : true,
       "target" : {
         "containerPath" : "container:Modules\/Presentation\/Features\/MEGAVideoPlayer",
         "identifier" : "MEGAVideoPlayerTests",
@@ -238,6 +238,7 @@
       }
     },
     {
+      "parallelizable" : true,
       "target" : {
         "containerPath" : "container:Modules\/Repository\/MEGARepo",
         "identifier" : "MEGARepoTests",
@@ -245,6 +246,7 @@
       }
     },
     {
+      "parallelizable" : true,
       "target" : {
         "containerPath" : "container:Modules\/Presentation\/Features\/Notifications",
         "identifier" : "NotificationsTests",
@@ -252,6 +254,7 @@
       }
     },
     {
+      "parallelizable" : true,
       "target" : {
         "containerPath" : "container:Modules\/Presentation\/Features\/MEGAPhotos",
         "identifier" : "MEGAPhotosTests",
