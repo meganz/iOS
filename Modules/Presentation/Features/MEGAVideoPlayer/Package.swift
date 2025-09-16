@@ -29,6 +29,7 @@ let package = Package(
         .package(path: "../../../MEGASharedRepo/MEGALogger"),
         .package(path: "../../../MEGASharedRepo/MEGAUIComponent"),
         .package(path: "../../../Infrastracture/MEGAPermissions"),
+        .package(path: "../../../MEGASharedRepo/MEGAPreference"),
         .package(url: "https://github.com/meganz/MEGADesignToken.git", branch: "main"),
         .package(url: "https://github.com/CocoaLumberjack/CocoaLumberjack.git", from: "3.0.0")
     ],
@@ -44,6 +45,7 @@ let package = Package(
                 "MEGADesignToken",
                 "MEGAUIComponent",
                 "MEGAPermissions",
+                "MEGAPreference",
                 .product(name: "CocoaLumberjackSwift", package: "CocoaLumberjack")
             ],
             resources: [

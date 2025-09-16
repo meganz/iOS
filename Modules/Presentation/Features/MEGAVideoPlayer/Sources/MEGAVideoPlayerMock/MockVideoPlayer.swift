@@ -55,6 +55,7 @@ public final class MockVideoPlayer: VideoPlayerProtocol {
     public var captureSnapshotCallCount: Int = 0
     public var mockSnapshotImage: UIImage?    
     public var nodeName: String = "Mock Video Title"
+    public var resumePlaybackPositionUseCase: (any ResumePlaybackPositionUseCaseProtocol)?
 
     public init(
         option: VideoPlayerOption = .avPlayer,
