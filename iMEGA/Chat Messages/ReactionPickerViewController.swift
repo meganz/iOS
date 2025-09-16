@@ -1,7 +1,18 @@
 import ISEmojiView
 import MEGADesignToken
-import PanModal
 import UIKit
+
+extension UISheetPresentationController.Detent {
+    static func reactionPickerShortForm() -> UISheetPresentationController.Detent {
+        UISheetPresentationController.Detent.custom(identifier: .reactionPickerShortForm) { _ in
+            300
+        }
+    }
+}
+
+extension UISheetPresentationController.Detent.Identifier {
+    static let reactionPickerShortForm = UISheetPresentationController.Detent.Identifier("reactionPickerShortForm")
+}
 
 class ReactionPickerViewController: UIViewController {
     
@@ -31,26 +42,6 @@ class ReactionPickerViewController: UIViewController {
     
 }
 
-// MARK: - Pan Modal Presentable
-
-extension ReactionPickerViewController: PanModalPresentable {
-    var panScrollable: UIScrollView? {
-        return nil
-    }
-    
-    var showDragIndicator: Bool {
-        return false
-    }
-
-    var longFormHeight: PanModalHeight {
-           return .contentHeight(300)
-       }
-    
-    var anchorModalToLongForm: Bool {
-        return true
-    }
-}
-
 extension ReactionPickerViewController: EmojiViewDelegate {
     
       // MARK: - EmojiViewDelegate
@@ -72,4 +63,19 @@ extension ReactionPickerViewController: EmojiViewDelegate {
       func emojiViewDidPressDismissKeyboardButton(_ emojiView: EmojiView) {
         dismiss(animated: true, completion: nil)
       }
+}
+
+extension ReactionPickerViewController {
+    func configureForPopoverSheetPresentation(sourceView: UIView) {
+        modalPresentationStyle = .popover
+        if let popover = popoverPresentationController {
+            popover.sourceView = sourceView
+            let sheet = popover.adaptiveSheetPresentationController
+            sheet.detents = [
+                .reactionPickerShortForm(),
+                .large()
+            ]
+            sheet.prefersEdgeAttachedInCompactHeight = true
+        }
+    }
 }

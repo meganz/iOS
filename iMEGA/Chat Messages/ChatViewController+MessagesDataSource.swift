@@ -131,7 +131,9 @@ extension ChatViewController: MessageReactionReusableViewDelegate {
         
         vc.message = chatMessage
         dismissKeyboardIfRequired()
-        presentPanModal(vc, sourceView: sender, sourceRect: sender.bounds)
+        
+        vc.configureForPopoverSheetPresentation(sourceView: sender)
+        present(vc, animated: true, completion: nil)
     }
     
     func emojiLongPressed(_ emoji: String, chatMessage: ChatMessage, sender: UIView) {
@@ -152,7 +154,9 @@ extension ChatViewController: MessageReactionReusableViewDelegate {
                                                       messageId: chatMessage.message.messageId)
         
         dismissKeyboardIfRequired()
-        presentPanModal(vc, sourceView: sender, sourceRect: sender.bounds)
+        
+        vc.configureForPopoverSheetPresentation(sourceView: sender)
+        present(vc, animated: true, completion: nil)
     }
 }
 

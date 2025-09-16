@@ -270,7 +270,8 @@ class ChatViewController: MessagesViewController {
         update()
     }
     
-    @objc private func longPressed(_ gesture: UIGestureRecognizer) {
+    @objc private func longPressed(_ gesture: UILongPressGestureRecognizer) {
+        guard gesture.state == .began else { return }
         
         let touchLocation = gesture.location(in: messagesCollectionView)
         guard let indexPath = messagesCollectionView.indexPathForItem(at: touchLocation) else { return }

@@ -1,10 +1,21 @@
 import MEGADesignToken
 import MEGADomain
 import MEGAL10n
-import PanModal
 
 protocol ReactedEmojisUsersListViewControllerDelegate: AnyObject {
     func didSelectUserhandle(_ userhandle: UInt64)
+}
+
+extension UISheetPresentationController.Detent {
+    static func reactedEmojisUsersListShortForm() -> UISheetPresentationController.Detent {
+        UISheetPresentationController.Detent.custom(identifier: .meetingFloatingPanelShortForm) { _ in
+            300
+        }
+    }
+}
+
+extension UISheetPresentationController.Detent.Identifier {
+    static let reactedEmojisUsersListShortForm = UISheetPresentationController.Detent.Identifier("reactedEmojisUsersListShortForm")
 }
 
 class ReactedEmojisUsersListViewController: UIViewController {
@@ -172,35 +183,17 @@ extension ReactedEmojisUsersListViewController: ReactedUsersListPageViewControll
     }
 }
 
-// MARK: - Pan Modal Presentable
-
-extension ReactedEmojisUsersListViewController: PanModalPresentable {
-
-    var panScrollable: UIScrollView? {
-        return reactedUsersListPageViewController.tableViewController?.tableView
-    }
-    
-    var showDragIndicator: Bool {
-        return false
-    }
-
-    var shortFormHeight: PanModalHeight {
-        return isShortFormEnabled ? .contentHeight(300) : longFormHeight
-    }
-    
-    var longFormHeight: PanModalHeight {
-        return .contentHeight(view.bounds.height)
-    }
-    
-    var anchorModalToLongForm: Bool {
-        return false
-    }
-
-    func willTransition(to state: PanModalPresentationController.PresentationState) {
-        guard isShortFormEnabled, case .longForm = state
-            else { return }
-
-        isShortFormEnabled = false
-        panModalSetNeedsLayoutUpdate()
+extension ReactedEmojisUsersListViewController {
+    func configureForPopoverSheetPresentation(sourceView: UIView) {
+        modalPresentationStyle = .popover
+        if let popover = popoverPresentationController {
+            popover.sourceView = sourceView
+            let sheet = popover.adaptiveSheetPresentationController
+            sheet.detents = [
+                .reactedEmojisUsersListShortForm(),
+                .large()
+            ]
+            sheet.prefersEdgeAttachedInCompactHeight = true
+        }
     }
 }

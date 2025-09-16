@@ -1,4 +1,3 @@
-import PanModal
 import UIKit
 
 class PasteImagePreviewViewController: UIViewController {
