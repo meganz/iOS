@@ -56,7 +56,7 @@ def postAppSizeToMR() {
 }
 
 pipeline {
-    agent { label 'mac-jenkins-slave-ios' }
+    agent { label 'mac-jenkins-slave-ios-xcode-26' }
     options {
         timeout(time: 45, unit: 'MINUTES') 
         gitLabConnection('GitLabConnection')

@@ -574,7 +574,7 @@ extension CallsCoordinator: CallsCoordinatorProtocol {
             let audioSession = RTCAudioSession.sharedInstance()
             audioSession.lockForConfiguration()
             let configuration = RTCAudioSessionConfiguration.webRTC()
-            configuration.categoryOptions = [.allowBluetooth, .allowBluetoothA2DP]
+            configuration.categoryOptions = [.allowBluetoothHFP, .allowBluetoothA2DP]
             try? audioSession.setConfiguration(configuration)
             audioSession.unlockForConfiguration()
         }

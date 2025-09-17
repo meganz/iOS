@@ -105,7 +105,7 @@ public final class MEGAPlayerViewController: UIViewController {
              try AVAudioSession.sharedInstance().setCategory(
                  .playback,
                  mode: .moviePlayback,
-                 options: [.allowAirPlay, .allowBluetooth]
+                 options: [.allowAirPlay, .allowBluetoothHFP]
              )
              try AVAudioSession.sharedInstance().setActive(true)
          } catch {
