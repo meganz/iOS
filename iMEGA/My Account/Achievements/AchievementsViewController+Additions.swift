@@ -1,8 +1,13 @@
+import MEGAAnalyticsiOS
 import MEGAAppPresentation
 import MEGAL10n
 
 extension AchievementsViewController {
-    
+
+    var analyticsTracker: some AnalyticsTracking {
+        DIContainer.tracker
+    }
+
     open override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
@@ -19,6 +24,16 @@ extension AchievementsViewController {
             return Strings.Localizable.expired
         }
         return Strings.Localizable.Account.Achievement.Complete.ValidDays.subtitle(remainingDays)
+    }
+
+    @objc func trackSelectedAchievementIfNeeded(achievementClass: MEGAAchievement) {
+        switch achievementClass {
+        case .passFreeTrial:
+            analyticsTracker.trackAnalyticsEvent(with: StartMEGAPWMFreeTrialEvent())
+        case .vpnFreeTrial:
+            analyticsTracker.trackAnalyticsEvent(with: StartMEGAVPNFreeTrialEvent())
+        default: break
+        }
     }
 }
 
