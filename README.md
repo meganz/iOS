@@ -1,17 +1,9 @@
 
 # MEGA for iOS
 
-[![Download on the App Store](https://linkmaker.itunes.apple.com/en-us/badge-lrg.svg?releaseDate=2013-11-26&kind=iossoftware&bubble=ios_apps)](https://apps.apple.com/app/mega/id706857885?mt=8)
+[Download on the App Store](https://apps.apple.com/app/mega/id706857885)
 
-A fully-featured iOS client for accessing your secure cloud storage and communication tools, powered by [MEGA](https://mega.nz).
-
----
-
-## 🚀 Join MEGA Beta via TestFlight
-
-Get early access to updates and new features by joining our beta program:
-
-👉 [Join MEGA TestFlight](https://testflight.apple.com/join/4x1P5Tnx)
+A fully-featured iOS client for accessing your secure cloud storage and communication tools, powered by [MEGA](https://mega.io).
 
 ---
 
@@ -37,7 +29,7 @@ This guide will help you build the MEGA iOS application using Xcode on macOS.
    - `Modules/MEGASharedRepo`
 
 3. **Replace Shared Repo**:
-   - [Download MEGASharedRepo](https://mega.nz/file/SrghGA4J#MA1AbQWBWLKd7ik3ND6EOoJFnHLLt4La99atxYLlJn4)
+   - [Download MEGASharedRepo](https://mega.nz/folder/TqBmgDyI#USMnXad535FoQtIkHPEb9g/file/myZRBRaa)
    - Replace the old one in the `/Modules` directory.
 
 4. **Install CMake**:
@@ -84,8 +76,8 @@ This guide will help you build the MEGA iOS application using Xcode on macOS.
 7. **Download and Unzip Required Dependencies**:
    Place these under:
    `Modules/DataSource/MEGAChatSDK/Sources/MEGAChatSDK/bindings/Objective-C/3rdparty`
-   - [include.zip](https://mega.nz/file/urg33S4T#WfPfHFsjLVNmEXREGS6QrCnwY47As3JLwS_Ioh1ATYs)
-   - [webrtc.zip](https://mega.nz/file/PioyHb4B#tE1aHIvRZJqtRXc6wt8Ccv8mdO8RuYAUEdANqsTxlsw)
+   - [include.zip](https://mega.nz/folder/TqBmgDyI#USMnXad535FoQtIkHPEb9g/file/SuxFjAjJ)
+   - [webrtc.zip](https://mega.nz/folder/TqBmgDyI#USMnXad535FoQtIkHPEb9g/file/f7pBWQCY)
 
 8. **Generate the DB Schema**:
    Navigate to:
