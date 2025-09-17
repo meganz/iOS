@@ -82,14 +82,8 @@
 "needToBeLoggedInToCompleteYourEmailChange"="يجب عليك تسجيل الدخول لإكمال تغيير عنوان بريدك الإلكتروني. يرجى تسجيل الدخول مرة أخرى باستخدام عنوان بريدك الإلكتروني الحالي، ثم انقر على رابط التأكيد مرة أخرى.";
 /* Button title which triggers the action to login in your MEGA account */
 "login"="تسجيل الدخول";
-/* Message for login option on Create Account screen */
-"account.createAccount.alreadyHaveAnAccount"="هل لديك حساب؟";
 /* Button title which triggers the action to create a MEGA account */
 "createAccount"="اشتراك";
-/* Message on login screen for Create Account */
-"account.login.newToMega"="جديد في ميغا MEGA؟";
-/* Button title which triggers the action to join meeting as Guest */
-"general.joinMeetingAsGuest"="انضم إلى الاجتماع كضيف";
 /* Message shown when the user writes a wrong email or password on login */
 "invalidMailOrPassword"="عنوان بريد إلكتروني أو كلمة مرور غير صالحين. حاول مرة أخرى.";
 /* Error message when to many attempts to login */
@@ -130,16 +124,10 @@
 "strong"="قوية";
 /*  */
 "passwordStrong"="ستتحمل كلمة المرور هذه أكثر الهجمات القوية تعقيدًا. يرجى التأكد من أنك سوف تتذكرها.";
-/*  */
-"agreeWithTheMEGATermsOfService"="أنا أوافق على <a href=\"terms\">شروط الخدمة</a> لميغا MEGA";
-/* This text is displayed in the account creation screen with a checkbox. User will have to tick the checkbox before proceeding on to create an account */
-"agreeWithLosingPasswordYouLoseData"="أدرك أنه [S]إذا فقدت كلمة المرور الخاصة بي، قد أفقد بياناتي.[/S] اقرأ المزيد حول <a href=\"terms\">تشفير ميغا MEGA من طرف إلى طرف</a>.";
 /* Error text shown when you have not entered a correct name */
 "nameInvalidFormat"="ادخل اسم صالح";
 /* Error text shown when you have not written the same password */
 "passwordsDoNotMatch"="كلمات المرور غير متطابقة";
-/* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
-"termsCheckboxUnselected"="يجب عليك أن تقبل شروط الخدمة";
 /* This error is shown in the account creation page. User has to agree to the terms and conditions. If the user does not agree to the losing password results in data loss condition then this error is shown */
 "termsForLosingPasswordCheckboxUnselected"="عليك أن توافق على أنك تفهم خطر فقدان كلمة المرور الخاصة بك";
 /* Error text shown when the users tries to create an account with an email already in use */
@@ -1013,7 +1001,7 @@
 /* Cell title shown on the achievements view for referral achievement */
 "account.achievement.referral.title"="ادع اصدقائك";
 /* Subtitle of the referral achievement introduction, %1$@ is a placeholder, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
-"account.achievement.referral.subtitle"="%1$@ of storage for each invitation. \n%2$@";
+"account.achievement.referral.subtitle"="%1$@ مساحة تخزين لكل دعوة. \n%2$@";
 /* Text shown to explain how and where you can invite friends */
 "Select from phone contacts or enter multiple email addresses"="اختر من جهات اتصال الجهاز أو أدخل عناوين بريد إلكتروني متعددة.";
 /*  */
@@ -1051,19 +1039,19 @@
 /* Explanation label shown on the achievements view for complete install MEGA desktop app achievement, %@ is a placeholder. */
 "account.achievement.desktopApp.complete.explaination.label"="لقد تلقيت %@ من مساحة التخزين لتثبيتك تطبيق ميغا للحاسوب المكتبي MEGA desktop.";
 /* Explanation label shown on the achievements view for incomplete install MEGA desktop app achievement, %1$@ is a placeholder, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
-"account.achievement.desktopApp.incomplete.explaination.label"="When you install the MEGA Desktop App you get %1$@ of complimentary storage space, %2$@. The MEGA Desktop App is available for Windows, macOS and most Linux distributions.";
+"account.achievement.desktopApp.incomplete.explaination.label"="عندما تقوم بتثبيت تطبيق ميغا MEGA للحاسوب المكتبي تحصل على %1$@ من مساحة التخزين المجانية، %2$@. يتوفر تطبيق ميغا MEGA للحاسوب المكتبي لأنظمة التشغيل ويندوز Windows و ماك macOS ومعظم إصدارات لينوكس Linux.";
 /* Cell title shown on the achievements view for install MEGA mobile app achievement */
 "account.achievement.mobileApp.title"="تثبيت تطبيق ميغا للهاتف المحمول MEGA mobile";
 /* Explanation label shown on the achievements view for complete install MEGA mobile app achievement, %@ is a placeholder. */
 "account.achievement.mobileApp.complete.explaination.label"="لقد تلقيت %@ من مساحة تخزين لتثبيتك تطبيق ميغا للهاتف المحمول MEGA mobile.";
 /* Explanation label shown on the achievements view for incomplete install MEGA mobile app achievement, %1$@ is a placeholder, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
-"account.achievement.mobileApp.incomplete.explaination.label"="When you install the MEGA Mobile App you get %@ of complimentary storage space, %2$@. The MEGA Mobile App is available for iOS and Android. ";
+"account.achievement.mobileApp.incomplete.explaination.label"="عند تثبيت تطبيق ميغا MEGA للهاتف المحمول، تحصل على %@ من مساحة التخزين المجانية، %2$@. تطبيق ميغا MEGA للهاتف المحمول متاح لنظامي التشغيل أي أو إس iOS و اندرويد Android.";
 /* Detail label shown on the achievements details view for Start Free Trial when its completed, %1$@ is placeholder for the storage amount, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
-"account.achievement.freeTrial.detail.complete.label"="%1$@ bonus applied. %2$@";
+"account.achievement.freeTrial.detail.complete.label"="تم تطبيق المكافأة %1$@. %2$@";
 /* Cell title shown on the achievements view for Start MEGA VPN Free Trial */
 "account.achievement.vpnFreeTrial.title"="ابدأ تشغيل الفترة التجريبية لميغا في بي إن MEGA VPN";
 /* Detail label shown on the achievements details view for Start MEGA VPN Free Trial when its incomplete, %1$@ is placeholder for the storage amount, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
-"account.achievement.vpnFreeTrial.detail.incomplete.label"="Get %1$@ of free storage when you start a MEGA VPN free trial. %2$@";
+"account.achievement.vpnFreeTrial.detail.incomplete.label"="احصل على %1$@ من مساحة التخزين المجاني عند بدء تشغيل الفترة التجريبية المجانية لميغا في بي إن MEGA VPN. %2$@";
 /* Explanation label shown on the achievements view for incomplete start MEGA VPN Free Trial achievement, %@ is a placeholder. */
 "account.achievement.vpnFreeTrial.incomplete.explanation.label"="قم بتثبيت تطبيق ميغا في بي إن MEGA VPN، قم بتسجيل الدخول باستخدام حساب ميغا MEGA الخاص بك وابدأ الفترة التجريبية المجانية. تتم إضافة مساحة تخزين المكافأة تلقائيًا بعد بدء الفترة التجريبية المجانية.";
 /* Explanation label shown on the achievements view for complete start MEGA VPN Free Trial achievement, %@ is a placeholder. */
@@ -1073,7 +1061,7 @@
 /* Cell title shown on the achievements view for Start MEGA Pass Free Trial */
 "account.achievement.passFreeTrial.title"="ابدأ تشغيل الفترة التجريبية المجانية لميغا باس MEGA Pass";
 /* Detail label shown on the achievements details view for Start MEGA Pass Free Trial when its incomplete, %1$@ is placeholder for the storage amount, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
-"account.achievement.passFreeTrial.detail.incomplete.label"="Get %1$@ of free storage when you start a MEGA Pass free trial. %2$@";
+"account.achievement.passFreeTrial.detail.incomplete.label"="احصل على %1$@ من مساحة التخزين المجاني عند بدء تشغيل الفترة التجريبية المجانية لميغا باس MEGA Pass. %2$@";
 /* Explanation label shown on the achievements view for incomplete start MEGA Pass Free Trial achievement, %@ is a placeholder. */
 "account.achievement.passFreeTrial.incomplete.explanation.label"="قم بتثبيت تطبيق ميغا باس MEGA Pass، قم بتسجيل الدخول باستخدام حساب ميغا MEGA الخاص بك وابدأ الفترة التجريبية المجانية. تتم إضافة مساحة تخزين المكافأة تلقائيًا بعد بدء الفترة التجريبية المجانية.";
 /* Explanation label shown on the achievements view for complete start MEGA Pass Free Trial achievement, %@ is a placeholder. */
@@ -1081,11 +1069,11 @@
 /* Text for the button to install MEGA Pass in the Start MEGA Pass Free Trial achievement */
 "account.achievement.passFreeTrial.buttonText"="قم بتثبيت ميغا باس MEGA Pass";
 /* Subtitle of the incomplete achievement with permanent bonus, %1$@ is a placeholder for amount of storage, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
-"account.achievement.incomplete.subtitle"="%1$@ of storage. %2$@";
+"account.achievement.incomplete.subtitle"="%1$@ من مساحة التخزين. %2$@";
 /* String of the achievements with permanent bonus, used as a full sentence */
-"account.achievement.validity.permanent"="Valid permanently.";
+"account.achievement.validity.permanent"="صالح بشكل دائم.";
 /* Substring of the achievements with permanent bonus, used as a part of a sentence */
-"account.achievement.validity.substring.permanent"="valid permanently";
+"account.achievement.validity.substring.permanent"="صالحة بشكل دائم";
 /* Subtitle of the complete achievement with permanent bonus */
 "account.achievement.complete.subtitle.permanent"="تم تطبيق المكافأة";
 /* Add Phone Number title */
@@ -1093,7 +1081,7 @@
 /* Explanation Label shown on the achievements view for complete add phone number achievement, %@ is a placeholder. */
 "account.achievement.phoneNumber.complete.explaination.label"="لقد تلقيت %@ من مساحة تخزين لقيامك بإضافة رقم هاتفك.";
 /* Explanation Label shown on the achievements view for incomplete add phone number achievement, %1$@ is a placeholder, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
-"account.achievement.phoneNumber.incomplete.explaination.label"="When you add your phone number you get %@ of complimentary storage space, %2$@.";
+"account.achievement.phoneNumber.incomplete.explaination.label"="عندما تضيف رقم هاتفك تحصل على %@ من مساحة التخزين المجانية، %2$@.";
 /* Free storage description to encourage users to add phone number to their accounts */
 "Get free %@ when you add your phone number. This makes it easier for your contacts to find you on MEGA."="احصل على %@ مجاناً عند إضافة رقم هاتفك. هذا يسهل العثور عليك من قبل جهات الاتصال الخاصة بك على ميغا MEGA.";
 /* Description to encourage users to add phone number to their accounts when there are not achievements */
@@ -1188,8 +1176,6 @@
 "monthly"="شهرياً";
 /* "Yearly" subscriptions */
 "yearly"="سنويًا";
-/* Alert title shown when a selected plan is not available at that moment on the App store */
-"inAppPurchase.error.alert.title.notAvailable"="هذا عنصر In-App Purchase غير متوفر للشراء داخل التطبيق في متجر تطبيقات آبل App Store في الوقت الحالي. يرجى التحقق من إعدادات الدفع للهوية التعريفية آبل Apple ID الخاص بك.";
 /* Button that redirect you to the main page of your Account in the App Store */
 "inAppPurchase.error.alert.primaryButtonTitle"="إعدادات متجر تطبيقات App Store";
 /* Alert title shown when the user has purchase correctly some plan */
@@ -1720,34 +1706,8 @@
 "Save a copy of the images and videos taken from the MEGA app in your device’s media library."="احفظ نسخة من الصور ومقاطع الفيديو المأخوذة من تطبيق ميغا MEGA في مكتبة الوسائط المتعددة في جهازك.";
 /* Title of the Spotlight Search section */
 "Search"="بحث";
-/* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
-"You hold the keys"="انت تحتفظ بالمفاتيح";
-/* Description shown in a page of the onboarding screens explaining the encryption paradigm */
-"Security is why we exist, your files are safe with us behind a well oiled encryption machine where only you can access your files."="الأمان هو سبب وجودنا، ملفاتك آمنة معنا خلف آلة تشفير متينة حيث يمكنك أنت فقط الوصول إلى ملفاتك.";
-/* Title shown in a page of the on boarding screens explaining that the chat is encrypted */
-"Encrypted chat"="محادثة مشفرة";
-/* Description shown in a page of the onboarding screens explaining the chat feature */
-"Fully encrypted chat with voice and video calls, group messaging and file sharing integration with your Cloud Drive."="محادثة مشفرة بالكامل مع مكالمات صوتية ومكالمات فيديو ومراسلات جماعية و مشاركة ملفات بشكل متكامل مع سواقتك السحابية.";
-/* Title shown in a page of the on boarding screens explaining that the user can add contacts to chat and colaborate */
-"Create your Network"="انشئ شبكتك";
-/* Description shown in a page of the onboarding screens explaining contacts */
-"Add contacts, create a network, colaborate, make voice and video calls without ever leaving MEGA"="أضف جهات اتصال وأنشئ شبكة وتعاون وقم بإجراء مكالمات صوتية و مكالمات فيديو دون مغادرة ميغا MEGA مطلقًا";
-/* Title shown in a page of the on boarding screens explaining that the user can backup the photos automatically */
-"Your Photos in the Cloud"="تطبيق الصور الخاص بك على السحابة";
-/* Description shown in a page of the onboarding screens explaining the camera uploads feature */
-"Camera Uploads is an essential feature for any mobile device and we have got you covered. Create your account now."="تُعد ترفيعات الكاميرا ميزة أساسية لأي جهاز محمول ونحن هنا لنقدم لك الدعم. قم بالتسجيل للحصول على حساب الآن.";
-/* Button which triggers the initial setup */
-"Setup MEGA"="إعداد ميغا MEGA";
-/* Detailed explanation of why the user should give some permissions to MEGA */
-"To fully take advantage of your MEGA account we need to ask you some permissions."="للاستفادة الكاملة من حساب ميغا MEGA الخاص بك، نحتاج إلى أن نطلب منك بعض الأذونات.";
-/* Message warning the user about the risk of not setting up permissions */
-"The MEGA app may not work as expected without the required permissions. Are you sure?"="قد لا يعمل تطبيق ميغا MEGA بالشكل المتوقع بدون الأذونات المطلوبة. هل أنت متأكد؟";
 /* Shows number of the current page. '%1' will be replaced by current page number. '%2' will be replaced by number of all pages. */
 "%1 of %2"="%1 من %2";
-/* Title label that explains that the user is going to be asked for the photos permission */
-"Allow Access to Photos"="السماح بالوصول الى تطبيق الصور";
-/* Detailed explanation of why the user should give permission to access to the photos */
-"Please give the MEGA App permission to access Photos to share photos and videos."="يرجى منح ميغا MEGA إذن الوصول إلى تطبيق الصور Photos لمشاركة الصور ومقاطع الفيديو.";
 /* Title label that explains that the user is going to be asked for the microphone and camera permission */
 "Enable Microphone and Camera"="تفعيل الكاميرا والمايكروفون";
 /* Detailed explanation of why the user should give permission to access to the camera and the microphone */
@@ -2526,8 +2486,6 @@
 "Create new file"="إنشاء ملف جديد";
 /* Confirmation dialog shown to user when they try to revert a node in an incoming ReadWrite share. */
 "You do not have the permissions required to revert this file. In order to continue, we can create a new file with the reverted data. Would you like to proceed?"="ليس لديك الأذونات المطلوبة لترجيع هذا الملف. ومع ذلك، يمكنك إنشاء ملف جديد بالنسخة السابقة. هل ترغب في المتابعة؟";
-/* The new LITE payment plan. This means it is a light or lightweight payment plan compared to the full / heavyweight plans with lots of bandwidth and storage (PRO I, PRO II, PRO III). */
-"Pro Lite"="برو لايت Pro Lite";
 /* The avatar picture button to go to my account page. Use for voice over. */
 "My Account"="حسابي";
 /* Text for title for favourite nodes */
@@ -3634,8 +3592,6 @@
 "meetings.scheduleMeeting.create.selectedRecurrence.weekly.everyDay"="يومياً";
 /* On Upgrade Account Plan screen. Button title to restore purchases */
 "upgradeAccountPlan.button.restore.title"="استعادة شراء";
-/* On Upgrade Account Plan screen. Button title to show terms and policies */
-"upgradeAccountPlan.button.termsAndPolicies.title"="الشروط والسياسات";
 /* On Upgrade Account Plan screen. Button title to buy account plan. %@ will be the name of the selected plan */
 "upgradeAccountPlan.button.buyAccountPlan.title"="شراء %@";
 /* On Upgrade Account Plan screen. Button title to buy account plan via web. %@ will be total savings for the users in percent */
@@ -3646,22 +3602,12 @@
 "upgradeAccountPlan.button.buyInApp.title"="متابعة داخل التطبيق (%@)";
 /* On Upgrade Account Plan screen. Button footer text to continue to buy account plan in-app when user could buy externally. %@ will be the higher price of the plan */
 "upgradeAccountPlan.button.buyInApp.footer"="تُطبق رسوم المنصة عند الشراء من خلال التطبيق";
-/* On Upgrade Account Plan screen. Displayed header title text message */
-"upgradeAccountPlan.header.title.choosePlan"="اختر الباقة المناسبة لك";
-/* On Upgrade Account Plan screen. Displayed header title text with current plan. %@ will be the name of the current plan */
-"upgradeAccountPlan.header.title.currentPlan"="الباقة الحالية: %@";
 /* On Upgrade Account Plan screen. Account Plan picker option for monthly term. */
 "upgradeAccountPlan.header.planTermPicker.monthly"="شهرياً";
 /* On Upgrade Account Plan screen. Account Plan picker option for yearly term. */
 "upgradeAccountPlan.header.planTermPicker.yearly"="سنويًا";
 /* On Upgrade Account Plan screen. Displayed header title text with percent of savings with yearly billing. */
 "upgradeAccountPlan.header.title.saveYearlyBilling"="وفر حتى 16%% مع الفوترة السنوية";
-/* On Upgrade Account Plan screen. Displayed header title text for pro plan features */
-"upgradeAccountPlan.header.title.featuresOfProPlan"="ميزات باقات برو Pro";
-/* On Upgrade Account Plan screen. Displayed text body for pro plan features */
-"upgradeAccountPlan.message.text.featuresOfProPlan"="• روابط محمية بكلمة مرور\n\n• روابط بتواريخ انتهاء الصلاحية\n\n• تشارك حجم تراسل المعطيات المتاح\n\n• الترجيع حتى 90 يومًا من البيانات المحذوفة على برو لايت Pro Lite وحتى 180 يومًا على برو Pro I و II و III\n\n• استضافة المكالمات والاجتماعات مع عدد غير محدود من المشاركين وبدون قيود زمنية\n\n• حافظ على خصوصيتك عبر الإنترنت من خلال في بي إن VPN عالي السرعة\n\n• جدولة إفراغ سلة المحذوفات بين 7 أيام و 10 سنوات\n\n• أولوية الدعم";
-/* On Upgrade Account Plan screen. Displayed text body for pro plan features with ads */
-"upgradeAccountPlan.message.text.featuresOfProPlanWithAds"="• روابط محمية بكلمة مرور\n\n• روابط بتواريخ انتهاء الصلاحية\n\n• تشارك حجم تراسل المعطيات المتاح\n\n• الترجيع حتى 90 يومًا من البيانات المحذوفة على برو لايت Pro Lite وحتى 180 يومًا على برو Pro I و II و III\n\n• استضافة المكالمات والاجتماعات مع عدد غير محدود من المشاركين وبدون قيود زمنية\n\n• حافظ على خصوصيتك عبر الإنترنت من خلال في بي إن VPN عالي السرعة\n\n• جدولة إفراغ سلة المحذوفات بين 7 أيام و 10 سنوات\n\n• أولوية الدعم\n\n• خالية من إعلانات";
 /* On Upgrade Account Plan screen. Displayed header title text for subscription details */
 "upgradeAccountPlan.header.title.subscriptionDetails"="تفاصيل الاشتراك";
 /* On Upgrade Account Plan screen. Displayed text body for subscription details */
@@ -3926,22 +3872,10 @@
 "photos.mediaDiscovery.autoMediaDiscoveryBanner.title"="نظرًا لأن هذا المجلد يحتوي فقط على الصور ومقاطع الفيديو فقد فتحناه تلقائيًا في عرض المعرض. يمكنك الاستمتاع بالمحتوى المرئي الخاص بك بتصميم أكثر شمولاً. يمكنك تعطيل هذا في الإعدادات.";
 /* Upgrade account screen header title after user onboarding */
 "onboarding.upgradeAccount.header.title"="احصل على المزيد مع باقة برو Pro";
-/* Upgrade account screen header subTitle after user onboarding. %@ will be replaced by the price of the lowest plan per month. */
-"onboarding.upgradeAccount.header.subTitle"="قم بالترقية إلى باقة برو Pro واحصل على المزيد من مساحة التخزين و إمكانية الوصول إلى ميزات برو Pro. تبدأ الباقات من %@ كحد ادنى شهرياً";
 /* Upgrade account screen content header for pro plan feature list */
 "onboarding.upgradeAccount.content.proPlanFeatureHeader"="بعض الميزات التي تتطلع إليها هي:";
 /* Upgrade account screen content title about pro plan featuring as Generous Storage */
 "onboarding.upgradeAccount.content.generousStorage.title"="مرونة تخزين فائقة";
-/* Upgrade account screen content message about pro plan featuring as Generous Storage. [A] will be replaced by the storage capacity of the lowest pro plan and [B] will be replaced by its storage unit. Example: Starting from 400 GB, find the perfect fit for your storage needs. */
-"onboarding.upgradeAccount.content.generousStorage.message"="بدءًا من [A] [B]، ابحث عن الحجم المثالي لاحتياجات التخزين الخاصة بك.";
-/* Upgrade account screen content title about pro plan featuring the Transfer Sharing */
-"onboarding.upgradeAccount.content.transferSharing.title"="مشاركة ملفات سهلة وآمنة";
-/* Upgrade account screen content message about pro plan featuring the Transfer Sharing */
-"onboarding.upgradeAccount.content.transferSharing.message"="يمكنك مشاركة الملفات الكبيرة بفضل حجم تراسل المعطيات السخي وضمان الأمان باستخدام الروابط المحمية بكلمة مرور.";
-/* Upgrade account screen content title about pro plan featuring the Back up and rewind */
-"onboarding.upgradeAccount.content.backupAndRewind.title"="لا تفقد البيانات مرة أخرى";
-/* Upgrade account screen content message about pro plan featuring the Back up and rewind */
-"onboarding.upgradeAccount.content.backupAndRewind.message"="قم بعمل نسخة احتياطية من بياناتك ومزامنتها للحصول على الثقة الكاملة. بالإضافة إلى ذلك استخدم الترجيع Rewind لاستعادة المجلدات إلى أي تاريخ يصل حتى 180 يومًا.";
 /* Upgrade account screen content title about pro plan featuring the MEGA VPN */
 "onboarding.upgradeAccount.content.megaVPN.title"="ميغا في بي إن MEGA VPN";
 /* Upgrade account screen content message about pro plan featuring the MEGA VPN */
@@ -3954,12 +3888,6 @@
 "onboarding.upgradeAccount.content.additionalSecurity.title"="أمان إضافي عند المشاركة";
 /* Upgrade account screen content message about pro plan featuring the Additional security when sharing */
 "onboarding.upgradeAccount.content.additionalSecurity.message"="قم بتعيين كلمات المرور وتواريخ انتهاء الصلاحية لروابط الملفات والمجلدات.";
-/* Upgrade account screen content title about pro plan's other benefits */
-"onboarding.upgradeAccount.content.plusBenefits.title"="بالإضافة إلى الوصول إلى هذه المزايا الرائعة:";
-/* Upgrade account screen content message about pro plan's other benefits without Ad-free */
-"onboarding.upgradeAccount.content.plusBenefits.messageWithoutAds"="• ميغا في بي إن MEGA VPN\n• مكالمات واجتماعات غير مقيدة";
-/* Upgrade account screen content message about pro plan's other benefits with Ad-free */
-"onboarding.upgradeAccount.content.plusBenefits.messageWithAds"="• ميغا في بي إن MEGA VPN\n• مكالمات واجتماعات غير مقيدة\n• بدون إعلانات";
 /* Upgrade account screen button title that will direct to Upgrade plan page */
 "onboarding.upgradeAccount.button.viewProPlans"="قم بالترقية إلى برو Pro اليوم";
 /* Camera uploads banner enable state title */
@@ -4200,10 +4128,6 @@
 "onboarding.hiddenFilesAndFolders.outOfSight.content.message"="عليك أن تقرر متى تكون الملفات المخفية مرئية. هناك إعداد جديد لإظهار العناصر المخفية مؤقتًا.";
 /* My Account page: Menu Title of user account page */
 "account.myAccount.title"="حسابي";
-/* Free plan title */
-"free.Plan.name"="مجاني";
-/* Price description for the free plan */
-"free.Plan.Price.description"="مجاني";
 /* Storage limit capacity, where %d is the number of gigabytes that marks the storage limit */
 "storage.Limit.capacity"="%d غيغابايت";
 /* Limited transfer limit title */
@@ -4301,7 +4225,7 @@
 /* Cancellation Section Webclient on a computer title: On a computer */
 "accounts.cancelSubscriptionSteps.webClient.computer.title"="على الحاسوب";
 /* Cancellation step Webclient: First step using the computer - 1. Visit MEGA website in your web browser. */
-"accounts.cancelSubscriptionSteps.webClient.computer.step.one"="1. Visit https://%@ in your web browser.";
+"accounts.cancelSubscriptionSteps.webClient.computer.step.one"="1. قم بزيارة https://%@ في متصفح الويب الخاص بك.";
 /* Cancellation step Webclient: Second step using the computer - 2. Log in to your MEGA account. */
 "accounts.cancelSubscriptionSteps.webClient.computer.step.two"="2. قم بتسجيل الدخول إلى حساب ميغا MEGA الخاص بك.";
 /* Cancellation step Webclient: Third step using the computer - 3. Click the main menu. */
@@ -4315,7 +4239,7 @@
 /* Cancellation Section Webclient on mobile device title: On a mobile device */
 "accounts.cancelSubscriptionSteps.webClient.mobile.title"="على هاتف محمول";
 /* Cancellation step Webclient: First step using the mobile device - 1. Visit MEGA website in your web browser. */
-"accounts.cancelSubscriptionSteps.webClient.mobile.step.one"="1. Visit https://%@ in your web browser.";
+"accounts.cancelSubscriptionSteps.webClient.mobile.step.one"="1. قم بزيارة https://%@ في متصفح الويب الخاص بك.";
 /* Cancellation step Webclient: Second step using the mobile device - 2. Log in to your MEGA account. */
 "accounts.cancelSubscriptionSteps.webClient.mobile.step.two"="2. قم بتسجيل الدخول إلى حساب ميغا MEGA الخاص بك.";
 /* Cancellation step Webclient: Third step using the mobile device - 3. Tap on your avatar. */
@@ -4770,3 +4694,15 @@
 "notification.local.cameraUploadBackupReminder.body"="حان الوقت لعمل نسخة احتياطية من الصور ومقاطع الفيديو";
 /* The double tap seek display text in video player */
 "videoPlayer.chip.seekDisplayText"="%@ ثانية";
+/* The lock video player option in bottom more menu */
+"videoPlayer.lock.lockVideoPlayer"="قفل مشغل الفيديو";
+/* The screen locked status message in video player */
+"videoPlayer.lock.screenLocked"="الشاشة مقفلة";
+/* The instruction to unlock the video player */
+"videoPlayer.lock.tapIconToUnlock"="Tap the lock icon to unlock";
+/* The lock video player option in bottom more menu */
+"videoPlayer.snapshot.bottomSheet.title"="التقاط";
+/* The instruction to unlock the video player */
+"videoPlayer.snapshot.snackBar.title"="تم حفظ الصورة على جهازك";
+/* The Picture in picture video player option in bottom more menu */
+"videoPlayer.pip.bottomSheet.title"="Picture in picture";

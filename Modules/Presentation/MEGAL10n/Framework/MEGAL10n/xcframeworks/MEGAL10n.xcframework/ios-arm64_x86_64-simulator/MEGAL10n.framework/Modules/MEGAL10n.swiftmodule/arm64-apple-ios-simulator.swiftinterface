@@ -1,7 +1,7 @@
 // swift-interface-format-version: 1.0
-// swift-compiler-version: Apple Swift version 6.1 effective-5.10 (swiftlang-6.1.0.110.21 clang-1700.0.13.3)
+// swift-compiler-version: Apple Swift version 6.2 effective-5.10 (swiftlang-6.2.0.19.9 clang-1700.3.19.1)
 // swift-module-flags: -target arm64-apple-ios16.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -enable-experimental-feature DebugDescriptionMacro -enable-bare-slash-regex -module-name MEGAL10n
-// swift-module-flags-ignorable:  -interface-compiler-version 6.1
+// swift-module-flags-ignorable:  -formal-cxx-interoperability-mode=off -interface-compiler-version 6.2
 import Foundation
 import Swift
 import _Concurrency
@@ -42,7 +42,6 @@ public enum Strings {
     public static func accurateToDMeters(_ p1: Swift.Int) -> Swift.String
     public static let achievementsTitle: Swift.String
     public static let acknowledgements: Swift.String
-    public static let addContactsCreateANetworkColaborateMakeVoiceAndVideoCallsWithoutEverLeavingMEGA: Swift.String
     public static let addPhoneNumber: Swift.String
     public static let addYourPhoneNumber: Swift.String
     public static let addContact: Swift.String
@@ -66,8 +65,6 @@ public enum Strings {
     public static let advanced: Swift.String
     public static let afterThatYourDataIsSubjectToDeletion: Swift.String
     public static let agree: Swift.String
-    public static let agreeWithLosingPasswordYouLoseData: Swift.String
-    public static let agreeWithTheMEGATermsOfService: Swift.String
     public static let albumLink: Swift.String
     public static let albums: Swift.String
     public static let aliasNickname: Swift.String
@@ -75,7 +72,6 @@ public enum Strings {
     public static let allMedia: Swift.String
     public static let allThePhotosFromYourBurstPhotoSequencesWillBeUploaded: Swift.String
     public static let allowAccess: Swift.String
-    public static let allowAccessToPhotos: Swift.String
     public static let allowYourContactsToSeeTheLastTimeYouWereActiveOnMEGA: Swift.String
     public static let allowPurchaseMessage: Swift.String
     public static let allowPurchaseTitle: Swift.String
@@ -229,7 +225,6 @@ public enum Strings {
     public static let couldNotSaveItem: Swift.String
     public static let country: Swift.String
     public static let createNewFile: Swift.String
-    public static let createYourNetwork: Swift.String
     public static let createAccount: Swift.String
     public static let createFolderButton: Swift.String
     public static let creditCardRejected: Swift.String
@@ -310,7 +305,6 @@ public enum Strings {
     public static let enableRichUrlPreviews: Swift.String
     public static let encrypt: Swift.String
     public static let encrypted: Swift.String
-    public static let encryptedChat: Swift.String
     public static let encryptedKeyRotation: Swift.String
     public static let enterEmail: Swift.String
     public static let enterGroupName: Swift.String
@@ -377,7 +371,6 @@ public enum Strings {
     public static let free: Swift.String
     public static let fromCloudDrive: Swift.String
     public static let fullAccess: Swift.String
-    public static let fullyEncryptedChatWithVoiceAndVideoCallsGroupMessagingAndFileSharingIntegrationWithYourCloudDrive: Swift.String
     public static let generatingLink: Swift.String
     public static let generatingLinks: Swift.String
     public static let getChatLink: Swift.String
@@ -633,7 +626,6 @@ public enum Strings {
     public static let plan: Swift.String
     public static let pleaseAllowAccess: Swift.String
     public static let pleaseEnterAValidPhoneNumber: Swift.String
-    public static let pleaseGiveTheMEGAAppPermissionToAccessPhotosToSharePhotosAndVideos: Swift.String
     public static let pleaseTypeTheVerificationCodeSentTo: Swift.String
     public static let pleaseEnterTheSixDigitCode: Swift.String
     public static let pleaseEnterYourRecoveryKey: Swift.String
@@ -646,7 +638,6 @@ public enum Strings {
     public static let previewContent: Swift.String
     public static let previousVersions: Swift.String
     public static let privacyPolicyLabel: Swift.String
-    public static let proLite: Swift.String
     public static let proMembershipPlanExpiringSoon: Swift.String
     public static let proceedToLogout: Swift.String
     public static func productNotFound(_ p1: Any) -> Swift.String
@@ -763,7 +754,6 @@ public enum Strings {
     public static let search: Swift.String
     public static let searchGIPHY: Swift.String
     public static let searchYourFiles: Swift.String
-    public static let securityIsWhyWeExistYourFilesAreSafeWithUsBehindAWellOiledEncryptionMachineWhereOnlyYouCanAccessYourFiles: Swift.String
     public static let securityOptions: Swift.String
     public static let seePlans: Swift.String
     public static let select: Swift.String
@@ -801,7 +791,6 @@ public enum Strings {
     public static let setPasswordProtection: Swift.String
     public static func settingsGeneralStorage(_ p1: Any) -> Swift.String
     public static let settingsTitle: Swift.String
-    public static let setupMEGA: Swift.String
     public static let shareWith: Swift.String
     public static let shared: Swift.String
     public static let sharedAlbumsFromYourDeviceSPhotosAppWillBeUploaded: Swift.String
@@ -854,7 +843,6 @@ public enum Strings {
     public static let tapFileToRename: Swift.String
     public static let temporarilyNotAvailable: Swift.String
     public static let termsOfServiceBreached: Swift.String
-    public static let termsCheckboxUnselected: Swift.String
     public static let termsForLosingPasswordCheckboxUnselected: Swift.String
     public static let termsOfServicesLabel: Swift.String
     public static let testPassword: Swift.String
@@ -885,7 +873,6 @@ public enum Strings {
     public static let toAccessThisLinkYouWillNeedItsPassword: Swift.String
     public static let toCreateAChatLinkYouMustNameTheGroup: Swift.String
     public static let toDisableTheRubbishBinCleaningSchedulerOrSetALongerRetentionPeriodYouNeedToSubscribeToAPROPlan: Swift.String
-    public static let toFullyTakeAdvantageOfYourMEGAAccountWeNeedToAskYouSomePermissions: Swift.String
     public static let toMakeEncryptedVoiceAndVideoCallsAllowMEGAAccessToYourCameraAndMicrophone: Swift.String
     public static let toUpgradeYourCurrentSubscriptionPleaseContactSupportForAACustomPlanA: Swift.String
     public static let today: Swift.String
@@ -1005,7 +992,6 @@ public enum Strings {
     public static func youHaveJoined(_ p1: Any) -> Swift.String
     public static let youHaveReachedTheDailyLimit: Swift.String
     public static func youHaveReachedTheMaximumLimitOfDReactions(_ p1: Swift.Int) -> Swift.String
-    public static let youHoldTheKeys: Swift.String
     public static let youIgnoredAContactRequest: Swift.String
     public static let youMayHaveNewMessages: Swift.String
     public static let youHaveSuccessfullyChangedYourProfile: Swift.String
@@ -1022,7 +1008,6 @@ public enum Strings {
     public static let yourPhoneNumber: Swift.String
     public static let yourPhoneNumberHasBeenRemovedSuccessfully: Swift.String
     public static let yourPhoneNumberHasBeenVerifiedSuccessfully: Swift.String
-    public static let yourPhotosInTheCloud: Swift.String
     public static let yourPROMembershipPlanExpired1DaysAgo: Swift.String
     public static let yourPROMembershipPlanExpired1DayAgo: Swift.String
     public static let yourPROMembershipPlanWillExpireIn1Days: Swift.String
@@ -1053,9 +1038,6 @@ public enum Strings {
     }
     public enum AnErrorHasOccurred {
       public static let theChatHistoryHasNotBeenSuccessfullyCleared: Swift.String
-    }
-    public enum CameraUploadsIsAnEssentialFeatureForAnyMobileDeviceAndWeHaveGotYouCovered {
-      public static let createYourAccountNow: Swift.String
     }
     public enum CompressionQualityWhenToTranscodeHEVCVideosToH {
       public static let _264Format: Swift.String
@@ -1098,9 +1080,6 @@ public enum Strings {
     }
     public enum PleaseGoToThePrivacySectionInYourDeviceSSetting {
       public static let enableLocationServicesAndSetMEGAToWhileUsingTheAppOrAlways: Swift.String
-    }
-    public enum TheMEGAAppMayNotWorkAsExpectedWithoutTheRequiredPermissions {
-      public static let areYouSure: Swift.String
     }
     public enum TheRubbishBinCanBeCleanedForYouAutomatically {
       public static let theMinimumPeriodIs7Days: Swift.String
@@ -1315,9 +1294,6 @@ public enum Strings {
           public static let currentPassword: Swift.String
         }
       }
-      public enum CreateAccount {
-        public static let alreadyHaveAnAccount: Swift.String
-      }
       public enum Delete {
         public enum Subscription {
           public static let googlePlay: Swift.String
@@ -1341,9 +1317,6 @@ public enum Strings {
           public static let message: Swift.String
           public static let title: Swift.String
         }
-      }
-      public enum Login {
-        public static let newToMega: Swift.String
       }
       public enum MyAccount {
         public static let title: Swift.String
@@ -2652,14 +2625,6 @@ public enum Strings {
         public static let open: Swift.String
       }
     }
-    public enum Free {
-      public enum Plan {
-        public static let name: Swift.String
-        public enum Price {
-          public static let description: Swift.String
-        }
-      }
-    }
     public enum General {
       public static let cameraUploads: Swift.String
       public static let choose: Swift.String
@@ -2669,7 +2634,6 @@ public enum Strings {
       public static let downloadToOffline: Swift.String
       public static let export: Swift.String
       public static let fileIsBeingDownloaded: Swift.String
-      public static let joinMeetingAsGuest: Swift.String
       public static let noIntenerConnection: Swift.String
       public static let sendToChat: Swift.String
       public static let share: Swift.String
@@ -2965,9 +2929,6 @@ public enum Strings {
       public enum Error {
         public enum Alert {
           public static let primaryButtonTitle: Swift.String
-          public enum Title {
-            public static let notAvailable: Swift.String
-          }
         }
       }
       public enum ProductDetail {
@@ -4012,34 +3973,19 @@ public enum Strings {
             public static let message: Swift.String
             public static let title: Swift.String
           }
-          public enum BackupAndRewind {
-            public static let message: Swift.String
-            public static let title: Swift.String
-          }
           public enum CallsAndMeetings {
             public static let message: Swift.String
             public static let title: Swift.String
           }
           public enum GenerousStorage {
-            public static let message: Swift.String
             public static let title: Swift.String
           }
           public enum MegaVPN {
             public static let message: Swift.String
             public static let title: Swift.String
           }
-          public enum PlusBenefits {
-            public static let messageWithAds: Swift.String
-            public static let messageWithoutAds: Swift.String
-            public static let title: Swift.String
-          }
-          public enum TransferSharing {
-            public static let message: Swift.String
-            public static let title: Swift.String
-          }
         }
         public enum Header {
-          public static func subTitle(_ p1: Any) -> Swift.String
           public static let title: Swift.String
         }
       }
@@ -4687,9 +4633,6 @@ public enum Strings {
         public enum Restore {
           public static let title: Swift.String
         }
-        public enum TermsAndPolicies {
-          public static let title: Swift.String
-        }
       }
       public enum Footer {
         public enum Message {
@@ -4702,17 +4645,12 @@ public enum Strings {
           public static let yearly: Swift.String
         }
         public enum Title {
-          public static let choosePlan: Swift.String
-          public static func currentPlan(_ p1: Any) -> Swift.String
-          public static let featuresOfProPlan: Swift.String
           public static let saveYearlyBilling: Swift.String
           public static let subscriptionDetails: Swift.String
         }
       }
       public enum Message {
         public enum Text {
-          public static let featuresOfProPlan: Swift.String
-          public static let featuresOfProPlanWithAds: Swift.String
           public static let subscriptionDetails: Swift.String
         }
       }

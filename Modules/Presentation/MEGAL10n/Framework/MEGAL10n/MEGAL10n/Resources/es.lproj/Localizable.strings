@@ -82,14 +82,8 @@
 "needToBeLoggedInToCompleteYourEmailChange"="Necesitas estar conectado para completar el cambio de correo electrónico. Accede a tu cuenta con la dirección de correo actual y pulsa de nuevo el enlace de confirmación.";
 /* Button title which triggers the action to login in your MEGA account */
 "login"="Iniciar sesión";
-/* Message for login option on Create Account screen */
-"account.createAccount.alreadyHaveAnAccount"="¿Ya tienes una cuenta?";
 /* Button title which triggers the action to create a MEGA account */
 "createAccount"="Registrarse";
-/* Message on login screen for Create Account */
-"account.login.newToMega"="¿Nuevo en MEGA?";
-/* Button title which triggers the action to join meeting as Guest */
-"general.joinMeetingAsGuest"="Unirse a una reunión como invitado";
 /* Message shown when the user writes a wrong email or password on login */
 "invalidMailOrPassword"="Correo electrónico o contraseña no válidos. Vuelve a intentarlo.";
 /* Error message when to many attempts to login */
@@ -130,16 +124,10 @@
 "strong"="Fuerte";
 /*  */
 "passwordStrong"="Esta contraseña podrá soportar los ataques más sofisticados de fuerza bruta. Por favor, asegúrate de recordarla.";
-/*  */
-"agreeWithTheMEGATermsOfService"="Acepto los <a href='terms'>Términos de Servicio</a> de MEGA";
-/* This text is displayed in the account creation screen with a checkbox. User will have to tick the checkbox before proceeding on to create an account */
-"agreeWithLosingPasswordYouLoseData"="Entiendo que [S]si pierdo mi contraseña, puedo perder mis datos.[/S] Más información sobre <a href=\"terms\">el cifrado punto a punto de MEGA</a>.";
 /* Error text shown when you have not entered a correct name */
 "nameInvalidFormat"="Introduce un nombre válido";
 /* Error text shown when you have not written the same password */
 "passwordsDoNotMatch"="Las contraseñas no coinciden";
-/* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
-"termsCheckboxUnselected"="Debes aceptar los Términos de Servicio";
 /* This error is shown in the account creation page. User has to agree to the terms and conditions. If the user does not agree to the losing password results in data loss condition then this error is shown */
 "termsForLosingPasswordCheckboxUnselected"="Debes confirmar que comprendes el peligro de perder tu contraseña";
 /* Error text shown when the users tries to create an account with an email already in use */
@@ -569,7 +557,7 @@
 /* Title of the Contacts section */
 "contactsTitle"="Contactos";
 /* Label for any ‘Requests’ button, link, text, title, etc. On iOS is used to go to the Contact request section from Contacts */
-"Requests"="Recibidas";
+"Requests"="Invitaciones";
 /* Label for any ‘Groups’ button, link, text, title, etc. On iOS is used to go to the chats 'Groups' section from Contacts */
 "Groups"="Grupos";
 /* Label for any ‘Recently Added’ button, link, text, title, etc. On iOS is used on a section that shows the 'Recently Added' contacts */
@@ -1013,7 +1001,7 @@
 /* Cell title shown on the achievements view for referral achievement */
 "account.achievement.referral.title"="Invita a tus amigos";
 /* Subtitle of the referral achievement introduction, %1$@ is a placeholder, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
-"account.achievement.referral.subtitle"="%1$@ of storage for each invitation. \n%2$@";
+"account.achievement.referral.subtitle"="%1$@ de almacenamiento para cada invitación. \n%2$@";
 /* Text shown to explain how and where you can invite friends */
 "Select from phone contacts or enter multiple email addresses"="Seleccionar contactos desde el dispositivo o añadir varios correos electrónicos.";
 /*  */
@@ -1051,19 +1039,19 @@
 /* Explanation label shown on the achievements view for complete install MEGA desktop app achievement, %@ is a placeholder. */
 "account.achievement.desktopApp.complete.explaination.label"="Has obtenido %@ de espacio de almacenamiento por instalar la aplicación de escritorio de MEGA.";
 /* Explanation label shown on the achievements view for incomplete install MEGA desktop app achievement, %1$@ is a placeholder, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
-"account.achievement.desktopApp.incomplete.explaination.label"="When you install the MEGA Desktop App you get %1$@ of complimentary storage space, %2$@. The MEGA Desktop App is available for Windows, macOS and most Linux distributions.";
+"account.achievement.desktopApp.incomplete.explaination.label"="Al instalar la aplicación de escritorio de MEGA, obtienes %1$@ de almacenamiento adicional, %2$@. La aplicación de escritorio está disponible para Windows, macOS y la mayoría de las distribuciones de Linux.";
 /* Cell title shown on the achievements view for install MEGA mobile app achievement */
 "account.achievement.mobileApp.title"="Instalar la aplicación móvil de MEGA";
 /* Explanation label shown on the achievements view for complete install MEGA mobile app achievement, %@ is a placeholder. */
 "account.achievement.mobileApp.complete.explaination.label"="Has obtenido %@ de espacio de almacenamiento por instalar la aplicación móvil de MEGA.";
 /* Explanation label shown on the achievements view for incomplete install MEGA mobile app achievement, %1$@ is a placeholder, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
-"account.achievement.mobileApp.incomplete.explaination.label"="When you install the MEGA Mobile App you get %@ of complimentary storage space, %2$@. The MEGA Mobile App is available for iOS and Android. ";
+"account.achievement.mobileApp.incomplete.explaination.label"="Al instalar la aplicación móvil de MEGA, obtienes %@ de espacio de almacenamiento, %2$@. La aplicación móvil está disponible para iOS y Android.";
 /* Detail label shown on the achievements details view for Start Free Trial when its completed, %1$@ is placeholder for the storage amount, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
-"account.achievement.freeTrial.detail.complete.label"="%1$@ bonus applied. %2$@";
+"account.achievement.freeTrial.detail.complete.label"="Bono de %1$@ aplicado. %2$@";
 /* Cell title shown on the achievements view for Start MEGA VPN Free Trial */
 "account.achievement.vpnFreeTrial.title"="Probar gratis MEGA VPN";
 /* Detail label shown on the achievements details view for Start MEGA VPN Free Trial when its incomplete, %1$@ is placeholder for the storage amount, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
-"account.achievement.vpnFreeTrial.detail.incomplete.label"="Get %1$@ of free storage when you start a MEGA VPN free trial. %2$@";
+"account.achievement.vpnFreeTrial.detail.incomplete.label"="Obtén %1$@ de almacenamiento gratuito por probar gratis MEGA VPN. %2$@";
 /* Explanation label shown on the achievements view for incomplete start MEGA VPN Free Trial achievement, %@ is a placeholder. */
 "account.achievement.vpnFreeTrial.incomplete.explanation.label"="Instala la app MEGA VPN, inicia sesión con tu cuenta de MEGA y empieza tu prueba gratuita. El almacenamiento adicional se añadirá automáticamente después de iniciar la prueba gratis.";
 /* Explanation label shown on the achievements view for complete start MEGA VPN Free Trial achievement, %@ is a placeholder. */
@@ -1073,7 +1061,7 @@
 /* Cell title shown on the achievements view for Start MEGA Pass Free Trial */
 "account.achievement.passFreeTrial.title"="Probar gratis MEGA Pass";
 /* Detail label shown on the achievements details view for Start MEGA Pass Free Trial when its incomplete, %1$@ is placeholder for the storage amount, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
-"account.achievement.passFreeTrial.detail.incomplete.label"="Get %1$@ of free storage when you start a MEGA Pass free trial. %2$@";
+"account.achievement.passFreeTrial.detail.incomplete.label"="Obtén %1$@ de almacenamiento gratuito por probar gratis MEGA Pass. %2$@";
 /* Explanation label shown on the achievements view for incomplete start MEGA Pass Free Trial achievement, %@ is a placeholder. */
 "account.achievement.passFreeTrial.incomplete.explanation.label"="Instala la app MEGA Pass, inicia sesión con tu cuenta de MEGA y empieza tu prueba gratuita. El almacenamiento adicional se añadirá automáticamente después de iniciar la prueba gratis.";
 /* Explanation label shown on the achievements view for complete start MEGA Pass Free Trial achievement, %@ is a placeholder. */
@@ -1081,11 +1069,11 @@
 /* Text for the button to install MEGA Pass in the Start MEGA Pass Free Trial achievement */
 "account.achievement.passFreeTrial.buttonText"="Instalar MEGA Pass";
 /* Subtitle of the incomplete achievement with permanent bonus, %1$@ is a placeholder for amount of storage, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
-"account.achievement.incomplete.subtitle"="%1$@ of storage. %2$@";
+"account.achievement.incomplete.subtitle"="%1$@ de almacenamiento. %2$@";
 /* String of the achievements with permanent bonus, used as a full sentence */
-"account.achievement.validity.permanent"="Valid permanently.";
+"account.achievement.validity.permanent"="Válido para siempre.";
 /* Substring of the achievements with permanent bonus, used as a part of a sentence */
-"account.achievement.validity.substring.permanent"="valid permanently";
+"account.achievement.validity.substring.permanent"="válido para siempre";
 /* Subtitle of the complete achievement with permanent bonus */
 "account.achievement.complete.subtitle.permanent"="Bono aplicado";
 /* Add Phone Number title */
@@ -1093,7 +1081,7 @@
 /* Explanation Label shown on the achievements view for complete add phone number achievement, %@ is a placeholder. */
 "account.achievement.phoneNumber.complete.explaination.label"="Has obtenido %@ de espacio de almacenamiento por verificar tu número de teléfono.";
 /* Explanation Label shown on the achievements view for incomplete add phone number achievement, %1$@ is a placeholder, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
-"account.achievement.phoneNumber.incomplete.explaination.label"="When you add your phone number you get %@ of complimentary storage space, %2$@.";
+"account.achievement.phoneNumber.incomplete.explaination.label"="Si confirmas tu número de teléfono, obtienes %@ de espacio de almacenamiento gratuito, %2$@.";
 /* Free storage description to encourage users to add phone number to their accounts */
 "Get free %@ when you add your phone number. This makes it easier for your contacts to find you on MEGA."="Obtén %@ gratis al añadir tu número de teléfono. De esta manera tus contactos te encontrarán más facilmente en MEGA.";
 /* Description to encourage users to add phone number to their accounts when there are not achievements */
@@ -1188,8 +1176,6 @@
 "monthly"="Mensualmente";
 /* "Yearly" subscriptions */
 "yearly"="Anual";
-/* Alert title shown when a selected plan is not available at that moment on the App store */
-"inAppPurchase.error.alert.title.notAvailable"="Este producto no está disponible en la App Store en estos momentos. Por favor comprueba los ajustes de pago de tu Apple ID.";
 /* Button that redirect you to the main page of your Account in the App Store */
 "inAppPurchase.error.alert.primaryButtonTitle"="Ajustes del App Store";
 /* Alert title shown when the user has purchase correctly some plan */
@@ -1720,34 +1706,8 @@
 "Save a copy of the images and videos taken from the MEGA app in your device’s media library."="Guarda una copia de las imágenes y de los videos capturados desde la aplicación de MEGA en la galería del dispositivo.";
 /* Title of the Spotlight Search section */
 "Search"="Buscar";
-/* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
-"You hold the keys"="Tú tienes las claves";
-/* Description shown in a page of the onboarding screens explaining the encryption paradigm */
-"Security is why we exist, your files are safe with us behind a well oiled encryption machine where only you can access your files."="La seguridad es la razón por la que existimos. Tus archivos están seguros con nosotros gracias a una máquina de cifrado bien engrasada que permite que solo tú puedas acceder a tus archivos.";
-/* Title shown in a page of the on boarding screens explaining that the chat is encrypted */
-"Encrypted chat"="Chat cifrado";
-/* Description shown in a page of the onboarding screens explaining the chat feature */
-"Fully encrypted chat with voice and video calls, group messaging and file sharing integration with your Cloud Drive."="Chat totalmente cifrado con llamadas y videollamadas, chat de grupo y capacidad de compartir archivos con tu Nube.";
-/* Title shown in a page of the on boarding screens explaining that the user can add contacts to chat and colaborate */
-"Create your Network"="Crea tu propia red";
-/* Description shown in a page of the onboarding screens explaining contacts */
-"Add contacts, create a network, colaborate, make voice and video calls without ever leaving MEGA"="Añade contactos, crea tu propia red, colabora y haz llamadas y videollamadas sin salir de MEGA";
-/* Title shown in a page of the on boarding screens explaining that the user can backup the photos automatically */
-"Your Photos in the Cloud"="Tus fotos en la nube";
-/* Description shown in a page of the onboarding screens explaining the camera uploads feature */
-"Camera Uploads is an essential feature for any mobile device and we have got you covered. Create your account now."="La función Subidas de la cámara es esencial para cualquier dispositivo móvil y nosotros la tenemos. Registra tu cuenta ahora.";
-/* Button which triggers the initial setup */
-"Setup MEGA"="Configurar MEGA";
-/* Detailed explanation of why the user should give some permissions to MEGA */
-"To fully take advantage of your MEGA account we need to ask you some permissions."="Para aprovechar al máximo tu cuenta de MEGA, debemos pedirte algunos permisos.";
-/* Message warning the user about the risk of not setting up permissions */
-"The MEGA app may not work as expected without the required permissions. Are you sure?"="Es posible que la aplicación de MEGA no funcione correctamente sin los permisos necesarios. ¿Confirmas?";
 /* Shows number of the current page. '%1' will be replaced by current page number. '%2' will be replaced by number of all pages. */
 "%1 of %2"="%1 de %2";
-/* Title label that explains that the user is going to be asked for the photos permission */
-"Allow Access to Photos"="Permitir el acceso a Fotos";
-/* Detailed explanation of why the user should give permission to access to the photos */
-"Please give the MEGA App permission to access Photos to share photos and videos."="Permite a MEGA que acceda a Fotos para compartir fotos y vídeos.";
 /* Title label that explains that the user is going to be asked for the microphone and camera permission */
 "Enable Microphone and Camera"="Activar el micrófono y la cámara";
 /* Detailed explanation of why the user should give permission to access to the camera and the microphone */
@@ -2526,8 +2486,6 @@
 "Create new file"="Crear nuevo archivo";
 /* Confirmation dialog shown to user when they try to revert a node in an incoming ReadWrite share. */
 "You do not have the permissions required to revert this file. In order to continue, we can create a new file with the reverted data. Would you like to proceed?"="No tienes los permisos necesarios para revertir este archivo. Sin embargo, puedes crear un nuevo archivo con la versión anterior. ¿Deseas continuar?";
-/* The new LITE payment plan. This means it is a light or lightweight payment plan compared to the full / heavyweight plans with lots of bandwidth and storage (PRO I, PRO II, PRO III). */
-"Pro Lite"="Pro Lite";
 /* The avatar picture button to go to my account page. Use for voice over. */
 "My Account"="Mi cuenta";
 /* Text for title for favourite nodes */
@@ -3634,34 +3592,22 @@
 "meetings.scheduleMeeting.create.selectedRecurrence.weekly.everyDay"="Diaria";
 /* On Upgrade Account Plan screen. Button title to restore purchases */
 "upgradeAccountPlan.button.restore.title"="Restaurar compra";
-/* On Upgrade Account Plan screen. Button title to show terms and policies */
-"upgradeAccountPlan.button.termsAndPolicies.title"="Términos y políticas ";
 /* On Upgrade Account Plan screen. Button title to buy account plan. %@ will be the name of the selected plan */
 "upgradeAccountPlan.button.buyAccountPlan.title"="Comprar %@";
 /* On Upgrade Account Plan screen. Button title to buy account plan via web. %@ will be total savings for the users in percent */
-"upgradeAccountPlan.button.buyViaWeb.save"="Buy on our website (save %@)";
+"upgradeAccountPlan.button.buyViaWeb.save"="Comprar vía web (ahorra un %@)";
 /* On Upgrade Account Plan screen. Button title to buy account plan via web. %@ will be potential total savings for the users in percent */
-"upgradeAccountPlan.button.buyViaWeb.saveUpTo"="Buy on our website (save up to %@)";
+"upgradeAccountPlan.button.buyViaWeb.saveUpTo"="Comprar vía web (ahorra hasta un %@)";
 /* On Upgrade Account Plan screen. Button title to continue to buy account plan in-app when user could buy externally. %@ will be the higher price of the plan */
 "upgradeAccountPlan.button.buyInApp.title"="Continuar en la aplicación (%@)";
 /* On Upgrade Account Plan screen. Button footer text to continue to buy account plan in-app when user could buy externally. %@ will be the higher price of the plan */
 "upgradeAccountPlan.button.buyInApp.footer"="Se aplican tarifas de la plataforma al comprar a través de la app.";
-/* On Upgrade Account Plan screen. Displayed header title text message */
-"upgradeAccountPlan.header.title.choosePlan"="Elige el plan adecuado para ti";
-/* On Upgrade Account Plan screen. Displayed header title text with current plan. %@ will be the name of the current plan */
-"upgradeAccountPlan.header.title.currentPlan"="Plan actual: %@";
 /* On Upgrade Account Plan screen. Account Plan picker option for monthly term. */
 "upgradeAccountPlan.header.planTermPicker.monthly"="Mensual";
 /* On Upgrade Account Plan screen. Account Plan picker option for yearly term. */
 "upgradeAccountPlan.header.planTermPicker.yearly"="Anual";
 /* On Upgrade Account Plan screen. Displayed header title text with percent of savings with yearly billing. */
 "upgradeAccountPlan.header.title.saveYearlyBilling"="Ahorra hasta un 16 %% con el cobro anual";
-/* On Upgrade Account Plan screen. Displayed header title text for pro plan features */
-"upgradeAccountPlan.header.title.featuresOfProPlan"="Características de los planes Pro";
-/* On Upgrade Account Plan screen. Displayed text body for pro plan features */
-"upgradeAccountPlan.message.text.featuresOfProPlan"="• Enlaces protegidos por contraseña\n\n• Enlaces con fechas de caducidad\n\n• Compartición de cuota de transferencia\n\n• Rebobinado de datos hasta 90 días para Pro Lite y hasta 180 días para Pro I, II y III\n\n• Organiza llamadas y reuniones con participantes ilimitados y sin restricciones de tiempo\n\n• Protección en línea con nuestra VPN de alta velocidad\n\n• Limpieza de la papelera programable entre 7 días y 10 años\n\n• Soporte prioritario";
-/* On Upgrade Account Plan screen. Displayed text body for pro plan features with ads */
-"upgradeAccountPlan.message.text.featuresOfProPlanWithAds"="• Enlaces protegidos por contraseña\n\n• Enlaces con fechas de caducidad\n\n• Compartición de cuota de transferencia\n\n• Rebobinado de datos hasta 90 días para Pro Lite y hasta 180 días para Pro I, II y III\n\n• Organiza llamadas y reuniones con participantes ilimitados y sin restricciones de tiempo\n\n• Protección en línea con nuestra VPN de alta velocidad\n\n• Limpieza de la papelera programable entre 7 días y 10 años\n\n• Soporte prioritario\n\n• Sin anuncios";
 /* On Upgrade Account Plan screen. Displayed header title text for subscription details */
 "upgradeAccountPlan.header.title.subscriptionDetails"="Información sobre la suscripción";
 /* On Upgrade Account Plan screen. Displayed text body for subscription details */
@@ -3926,22 +3872,10 @@
 "photos.mediaDiscovery.autoMediaDiscoveryBanner.title"="Como esta carpeta solo contiene imágenes y vídeos, la hemos abierto automáticamente en la vista de galería. Puedes disfrutar de tu contenido visual con un diseño más envolvente. Puedes desactivar esta opción en Ajustes.";
 /* Upgrade account screen header title after user onboarding */
 "onboarding.upgradeAccount.header.title"="Obtén más con un plan Pro";
-/* Upgrade account screen header subTitle after user onboarding. %@ will be replaced by the price of the lowest plan per month. */
-"onboarding.upgradeAccount.header.subTitle"="Amplía a un plan Pro y obtén más almacenamiento y acceso a todas las características Pro. Los planes comienzan desde tan solo %@ al mes";
 /* Upgrade account screen content header for pro plan feature list */
 "onboarding.upgradeAccount.content.proPlanFeatureHeader"="Algunas de las características que esperamos con ansias son:";
 /* Upgrade account screen content title about pro plan featuring as Generous Storage */
 "onboarding.upgradeAccount.content.generousStorage.title"="Máxima flexibilidad de almacenamiento";
-/* Upgrade account screen content message about pro plan featuring as Generous Storage. [A] will be replaced by the storage capacity of the lowest pro plan and [B] will be replaced by its storage unit. Example: Starting from 400 GB, find the perfect fit for your storage needs. */
-"onboarding.upgradeAccount.content.generousStorage.message"="A partir de [A] [B], encuentra la solución perfecta para tus necesidades de almacenamiento.";
-/* Upgrade account screen content title about pro plan featuring the Transfer Sharing */
-"onboarding.upgradeAccount.content.transferSharing.title"="Intercambio seguro de archivos";
-/* Upgrade account screen content message about pro plan featuring the Transfer Sharing */
-"onboarding.upgradeAccount.content.transferSharing.message"="Comparte archivos de gran tamaño gracias a una generosa cuota de transferencia y garantiza la seguridad con enlaces protegidos por contraseña.";
-/* Upgrade account screen content title about pro plan featuring the Back up and rewind */
-"onboarding.upgradeAccount.content.backupAndRewind.title"="No vuelva a perder datos";
-/* Upgrade account screen content message about pro plan featuring the Back up and rewind */
-"onboarding.upgradeAccount.content.backupAndRewind.message"="Sincroniza y haz backups de tus datos para disfrutar de una tranquilidad absoluta. Además, puedes usar el Rebobinado para restaurar carpetas hasta 180 días.";
 /* Upgrade account screen content title about pro plan featuring the MEGA VPN */
 "onboarding.upgradeAccount.content.megaVPN.title"="MEGA VPN";
 /* Upgrade account screen content message about pro plan featuring the MEGA VPN */
@@ -3954,12 +3888,6 @@
 "onboarding.upgradeAccount.content.additionalSecurity.title"="Seguridad adicional al compartir";
 /* Upgrade account screen content message about pro plan featuring the Additional security when sharing */
 "onboarding.upgradeAccount.content.additionalSecurity.message"="Establece contraseñas y fechas de caducidad para los enlaces a carpetas y archivos.";
-/* Upgrade account screen content title about pro plan's other benefits */
-"onboarding.upgradeAccount.content.plusBenefits.title"="Además de acceso a estos fantásticos beneficios:";
-/* Upgrade account screen content message about pro plan's other benefits without Ad-free */
-"onboarding.upgradeAccount.content.plusBenefits.messageWithoutAds"="• MEGA VPN\n• Llamadas y reuniones sin restricciones";
-/* Upgrade account screen content message about pro plan's other benefits with Ad-free */
-"onboarding.upgradeAccount.content.plusBenefits.messageWithAds"="• MEGA VPN\n• Llamadas y reuniones sin restricciones\n• Sin anuncios";
 /* Upgrade account screen button title that will direct to Upgrade plan page */
 "onboarding.upgradeAccount.button.viewProPlans"="Amplía a Pro hoy mismo";
 /* Camera uploads banner enable state title */
@@ -4200,10 +4128,6 @@
 "onboarding.hiddenFilesAndFolders.outOfSight.content.message"="Tú decides cuándo hacer visibles los archivos ocultos. Hay un nuevo ajuste para mostrar temporalmente los elementos ocultos.";
 /* My Account page: Menu Title of user account page */
 "account.myAccount.title"="Mi cuenta";
-/* Free plan title */
-"free.Plan.name"="Gratis";
-/* Price description for the free plan */
-"free.Plan.Price.description"="Gratis";
 /* Storage limit capacity, where %d is the number of gigabytes that marks the storage limit */
 "storage.Limit.capacity"="%d GB";
 /* Limited transfer limit title */
@@ -4301,7 +4225,7 @@
 /* Cancellation Section Webclient on a computer title: On a computer */
 "accounts.cancelSubscriptionSteps.webClient.computer.title"="En un equipo";
 /* Cancellation step Webclient: First step using the computer - 1. Visit MEGA website in your web browser. */
-"accounts.cancelSubscriptionSteps.webClient.computer.step.one"="1. Visit https://%@ in your web browser.";
+"accounts.cancelSubscriptionSteps.webClient.computer.step.one"="1. Visita https://%@ en tu navegador web.";
 /* Cancellation step Webclient: Second step using the computer - 2. Log in to your MEGA account. */
 "accounts.cancelSubscriptionSteps.webClient.computer.step.two"="2. Inicia sesión en tu cuenta de MEGA.";
 /* Cancellation step Webclient: Third step using the computer - 3. Click the main menu. */
@@ -4315,7 +4239,7 @@
 /* Cancellation Section Webclient on mobile device title: On a mobile device */
 "accounts.cancelSubscriptionSteps.webClient.mobile.title"="En un dispositivo móvil";
 /* Cancellation step Webclient: First step using the mobile device - 1. Visit MEGA website in your web browser. */
-"accounts.cancelSubscriptionSteps.webClient.mobile.step.one"="1. Visit https://%@ in your web browser.";
+"accounts.cancelSubscriptionSteps.webClient.mobile.step.one"="1. Visita https://%@ en tu navegador web.";
 /* Cancellation step Webclient: Second step using the mobile device - 2. Log in to your MEGA account. */
 "accounts.cancelSubscriptionSteps.webClient.mobile.step.two"="2. Inicia sesión en tu cuenta de MEGA.";
 /* Cancellation step Webclient: Third step using the mobile device - 3. Tap on your avatar. */
@@ -4765,8 +4689,20 @@
 /* Camera uploads status banner sub title paused due to device heat */
 "cameraUploads.banner.status.paused.highThermalState.subheading"="Las subidas se reanudarán automáticamente cuando el dispositivo se enfríe";
 /* Local Notification Title for Camera uploads backup reminder */
-"notification.local.cameraUploadBackupReminder.title"="Protect your precious moments!";
+"notification.local.cameraUploadBackupReminder.title"="Protege tus momentos más preciados";
 /* Local Notification Body for Camera uploads backup reminder */
-"notification.local.cameraUploadBackupReminder.body"="It’s time to back up your photos and videos";
+"notification.local.cameraUploadBackupReminder.body"="Es hora de hacer un backup de tus fotos y vídeos";
 /* The double tap seek display text in video player */
 "videoPlayer.chip.seekDisplayText"="%@ segundos";
+/* The lock video player option in bottom more menu */
+"videoPlayer.lock.lockVideoPlayer"="Bloquear reproductor de vídeo";
+/* The screen locked status message in video player */
+"videoPlayer.lock.screenLocked"="La pantalla está bloqueada";
+/* The instruction to unlock the video player */
+"videoPlayer.lock.tapIconToUnlock"="Tap the lock icon to unlock";
+/* The lock video player option in bottom more menu */
+"videoPlayer.snapshot.bottomSheet.title"="Capturar";
+/* The instruction to unlock the video player */
+"videoPlayer.snapshot.snackBar.title"="Imagen guardada en tu dispositivo";
+/* The Picture in picture video player option in bottom more menu */
+"videoPlayer.pip.bottomSheet.title"="Picture in picture";

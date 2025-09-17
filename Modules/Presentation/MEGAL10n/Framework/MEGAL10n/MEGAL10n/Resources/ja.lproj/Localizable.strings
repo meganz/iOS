@@ -82,14 +82,8 @@
 "needToBeLoggedInToCompleteYourEmailChange"="メールアドレスの変更を完了するには、ログインする必要があります。現在のメールアドレスで再度ログインしてから、認証リンクをもう一度タップしてください。";
 /* Button title which triggers the action to login in your MEGA account */
 "login"="ログイン";
-/* Message for login option on Create Account screen */
-"account.createAccount.alreadyHaveAnAccount"="すでにアカウントをお持ちですか？";
 /* Button title which triggers the action to create a MEGA account */
 "createAccount"="サインアップ";
-/* Message on login screen for Create Account */
-"account.login.newToMega"="MEGAは初めてですか？";
-/* Button title which triggers the action to join meeting as Guest */
-"general.joinMeetingAsGuest"="ゲストとしてミーティングに参加";
 /* Message shown when the user writes a wrong email or password on login */
 "invalidMailOrPassword"="メールアドレスまたはパスワードが無効です。もう一度やり直してください。";
 /* Error message when to many attempts to login */
@@ -130,16 +124,10 @@
 "strong"="強い";
 /*  */
 "passwordStrong"="このパスワードは、最も高度なブルートフォース攻撃に耐えます。覚えておいてください。";
-/*  */
-"agreeWithTheMEGATermsOfService"="MEGAの<a href=\"terms\">ご利用規約</a>に同意します";
-/* This text is displayed in the account creation screen with a checkbox. User will have to tick the checkbox before proceeding on to create an account */
-"agreeWithLosingPasswordYouLoseData"="[S]パスワードを紛失すると、データを失う可能性がある[/S]ことを理解しています。<a href=\"terms\">MEGAのエンドツーエンド暗号化</a>の詳細をお読みください。";
 /* Error text shown when you have not entered a correct name */
 "nameInvalidFormat"="正しい名前を入力してください";
 /* Error text shown when you have not written the same password */
 "passwordsDoNotMatch"="パスワードが合いません";
-/* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
-"termsCheckboxUnselected"="当社のご利用規約に同​​意していただくご必要があります";
 /* This error is shown in the account creation page. User has to agree to the terms and conditions. If the user does not agree to the losing password results in data loss condition then this error is shown */
 "termsForLosingPasswordCheckboxUnselected"="パスワードを失う危険性を理解していることに同意していただく必要がございます";
 /* Error text shown when the users tries to create an account with an email already in use */
@@ -1188,8 +1176,6 @@
 "monthly"="月間";
 /* "Yearly" subscriptions */
 "yearly"="年間";
-/* Alert title shown when a selected plan is not available at that moment on the App store */
-"inAppPurchase.error.alert.title.notAvailable"="このアプリ内購入項目は、現時点ではApp Storeでご利用いただけません。Apple IDの支払い設定を検証してください。";
 /* Button that redirect you to the main page of your Account in the App Store */
 "inAppPurchase.error.alert.primaryButtonTitle"="App Storeの設定";
 /* Alert title shown when the user has purchase correctly some plan */
@@ -1720,34 +1706,8 @@
 "Save a copy of the images and videos taken from the MEGA app in your device’s media library."="MEGAアプリから取得した画像と動画のコピーをあなたの端末のメディアライブラリに保存します。";
 /* Title of the Spotlight Search section */
 "Search"="検索";
-/* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
-"You hold the keys"="あなたがキーを持っています";
-/* Description shown in a page of the onboarding screens explaining the encryption paradigm */
-"Security is why we exist, your files are safe with us behind a well oiled encryption machine where only you can access your files."="セキュリティこそが私たちの存在理由です。あなたのファイルは、非常に効果的な暗号化マシンの裏側にあり、安全です。そこで、あなたのファイルにアクセスできるのは、あなただけです。";
-/* Title shown in a page of the on boarding screens explaining that the chat is encrypted */
-"Encrypted chat"="暗号化されたチャット";
-/* Description shown in a page of the onboarding screens explaining the chat feature */
-"Fully encrypted chat with voice and video calls, group messaging and file sharing integration with your Cloud Drive."="音声＆ビデオ通話、グループメッセージング、クラウドドライブとのファイル共有統合による完全に暗号化されたチャット。";
-/* Title shown in a page of the on boarding screens explaining that the user can add contacts to chat and colaborate */
-"Create your Network"="ネットワークの作成";
-/* Description shown in a page of the onboarding screens explaining contacts */
-"Add contacts, create a network, colaborate, make voice and video calls without ever leaving MEGA"="連絡先の追加、ネットワークの作成、コラボレーション、MEGAを一切離れずに音声通話とビデオ通話を行う";
-/* Title shown in a page of the on boarding screens explaining that the user can backup the photos automatically */
-"Your Photos in the Cloud"="クラウド内のあなたの写真";
-/* Description shown in a page of the onboarding screens explaining the camera uploads feature */
-"Camera Uploads is an essential feature for any mobile device and we have got you covered. Create your account now."="カメラアップロードは、あらゆるモバイル端末にとって不可欠な機能で、あなたにもご利用いただけます。今すぐアカウントをサインアップ（登録）してください。";
-/* Button which triggers the initial setup */
-"Setup MEGA"="MEGAをセットアップ";
-/* Detailed explanation of why the user should give some permissions to MEGA */
-"To fully take advantage of your MEGA account we need to ask you some permissions."="MEGAアカウントを十分にご活用いただくために、あなたに一部の権限をお尋ねする必要がございます。";
-/* Message warning the user about the risk of not setting up permissions */
-"The MEGA app may not work as expected without the required permissions. Are you sure?"="MEGAアプリは必要な権限がないと期待通りに動作しない可能性があります。よろしいですか？";
 /* Shows number of the current page. '%1' will be replaced by current page number. '%2' will be replaced by number of all pages. */
 "%1 of %2"="%1 / %2";
-/* Title label that explains that the user is going to be asked for the photos permission */
-"Allow Access to Photos"="写真へのアクセスを許可する";
-/* Detailed explanation of why the user should give permission to access to the photos */
-"Please give the MEGA App permission to access Photos to share photos and videos."="写真や動画を共有するには、MEGAに写真へのアクセス許可を与えてください。";
 /* Title label that explains that the user is going to be asked for the microphone and camera permission */
 "Enable Microphone and Camera"="マイクとカメラを有効にする";
 /* Detailed explanation of why the user should give permission to access to the camera and the microphone */
@@ -2526,8 +2486,6 @@
 "Create new file"="新規ファイルを作成";
 /* Confirmation dialog shown to user when they try to revert a node in an incoming ReadWrite share. */
 "You do not have the permissions required to revert this file. In order to continue, we can create a new file with the reverted data. Would you like to proceed?"="このファイルを元に戻すために必要な権限がありません。しかし、以前のバージョンで新しいファイルを作成することはできます。続行しますか？";
-/* The new LITE payment plan. This means it is a light or lightweight payment plan compared to the full / heavyweight plans with lots of bandwidth and storage (PRO I, PRO II, PRO III). */
-"Pro Lite"="Pro Lite";
 /* The avatar picture button to go to my account page. Use for voice over. */
 "My Account"="アカウント設定";
 /* Text for title for favourite nodes */
@@ -3634,8 +3592,6 @@
 "meetings.scheduleMeeting.create.selectedRecurrence.weekly.everyDay"="毎日";
 /* On Upgrade Account Plan screen. Button title to restore purchases */
 "upgradeAccountPlan.button.restore.title"="購入を復元する";
-/* On Upgrade Account Plan screen. Button title to show terms and policies */
-"upgradeAccountPlan.button.termsAndPolicies.title"="規約とポリシー";
 /* On Upgrade Account Plan screen. Button title to buy account plan. %@ will be the name of the selected plan */
 "upgradeAccountPlan.button.buyAccountPlan.title"="%@を購入";
 /* On Upgrade Account Plan screen. Button title to buy account plan via web. %@ will be total savings for the users in percent */
@@ -3646,22 +3602,12 @@
 "upgradeAccountPlan.button.buyInApp.title"="アプリ内で続行（%@）";
 /* On Upgrade Account Plan screen. Button footer text to continue to buy account plan in-app when user could buy externally. %@ will be the higher price of the plan */
 "upgradeAccountPlan.button.buyInApp.footer"="アプリ経由で購入する場合、プラットフォーム手数料が適用されます";
-/* On Upgrade Account Plan screen. Displayed header title text message */
-"upgradeAccountPlan.header.title.choosePlan"="お客様にぴったりのプランをお選びください";
-/* On Upgrade Account Plan screen. Displayed header title text with current plan. %@ will be the name of the current plan */
-"upgradeAccountPlan.header.title.currentPlan"="現在のプラン：%@";
 /* On Upgrade Account Plan screen. Account Plan picker option for monthly term. */
 "upgradeAccountPlan.header.planTermPicker.monthly"="月間";
 /* On Upgrade Account Plan screen. Account Plan picker option for yearly term. */
 "upgradeAccountPlan.header.planTermPicker.yearly"="年間";
 /* On Upgrade Account Plan screen. Displayed header title text with percent of savings with yearly billing. */
 "upgradeAccountPlan.header.title.saveYearlyBilling"="年払いで最大16 %%ご節約";
-/* On Upgrade Account Plan screen. Displayed header title text for pro plan features */
-"upgradeAccountPlan.header.title.featuresOfProPlan"="Proプランの各機能";
-/* On Upgrade Account Plan screen. Displayed text body for pro plan features */
-"upgradeAccountPlan.message.text.featuresOfProPlan"="• パスワードで保護されたリンク\n\n• 有効期限のあるリンク\n\n• 転送容量の共有\n\n• Pro Liteでは削除されたデータを最大90日間、Pro I、II、IIIでは最大180日間巻き戻し\n\n• 無制限の参加者と時間制限なしで通話やミーティングを開催\n\n• 当社の高速VPNでオンラインのプライバシーを確​​保\n\n• ごみ箱の片付けを7日から10年間の間でスケジュール\n\n• 優先サポート";
-/* On Upgrade Account Plan screen. Displayed text body for pro plan features with ads */
-"upgradeAccountPlan.message.text.featuresOfProPlanWithAds"="• パスワードで保護されたリンク\n\n• 有効期限のあるリンク\n\n• 転送容量の共有\n\n• Pro Liteでは削除されたデータを最大90日間、Pro I、II、IIIでは最大180日間巻き戻し\n\n• 無制限の参加者と時間制限なしで通話やミーティングを開催\n\n• 当社の高速VPNでオンラインのプライバシーを確​​保\n\n• ごみ箱の片付けを7日から10年間の間でスケジュール\n\n• 優先サポート\n\n• 広告なし";
 /* On Upgrade Account Plan screen. Displayed header title text for subscription details */
 "upgradeAccountPlan.header.title.subscriptionDetails"="サブスクリプションの詳細";
 /* On Upgrade Account Plan screen. Displayed text body for subscription details */
@@ -3926,22 +3872,10 @@
 "photos.mediaDiscovery.autoMediaDiscoveryBanner.title"="このフォルダには画像と動画のみが含まれているため、自動的にギャラリービューで開きます。また、より没入感のあるレイアウトでビジュアルコンテンツを楽しむことができます。これは「設定」で無効にできます。";
 /* Upgrade account screen header title after user onboarding */
 "onboarding.upgradeAccount.header.title"="Proプランでさらに充実";
-/* Upgrade account screen header subTitle after user onboarding. %@ will be replaced by the price of the lowest plan per month. */
-"onboarding.upgradeAccount.header.subTitle"="Proプランにアップグレードしていただくと、ストレージが増え、各種Pro機能をご利用いただけるようになります。プランは月額%@からご利用いただけます";
 /* Upgrade account screen content header for pro plan feature list */
 "onboarding.upgradeAccount.content.proPlanFeatureHeader"="ご期待いただける機能としては次のようなものがあります。";
 /* Upgrade account screen content title about pro plan featuring as Generous Storage */
 "onboarding.upgradeAccount.content.generousStorage.title"="究極のストレージの柔軟性";
-/* Upgrade account screen content message about pro plan featuring as Generous Storage. [A] will be replaced by the storage capacity of the lowest pro plan and [B] will be replaced by its storage unit. Example: Starting from 400 GB, find the perfect fit for your storage needs. */
-"onboarding.upgradeAccount.content.generousStorage.message"="[A] [B]から始めて、お客様のストレージのニーズに最適なものを見つけてください。";
-/* Upgrade account screen content title about pro plan featuring the Transfer Sharing */
-"onboarding.upgradeAccount.content.transferSharing.title"="簡単で安全なファイル共有";
-/* Upgrade account screen content message about pro plan featuring the Transfer Sharing */
-"onboarding.upgradeAccount.content.transferSharing.message"="十分な転送容量により大容量ファイルを共有し、パスワードで保護されたリンクによりセキュリティを確保できます。";
-/* Upgrade account screen content title about pro plan featuring the Back up and rewind */
-"onboarding.upgradeAccount.content.backupAndRewind.title"="二度とデータを失わない";
-/* Upgrade account screen content message about pro plan featuring the Back up and rewind */
-"onboarding.upgradeAccount.content.backupAndRewind.message"="データをバックアップして同期すると、完全に自信が持てます。さらに、巻き戻しを使用すると、フォルダを最大180日以内の任意の日付に復元できます。";
 /* Upgrade account screen content title about pro plan featuring the MEGA VPN */
 "onboarding.upgradeAccount.content.megaVPN.title"="MEGA VPN";
 /* Upgrade account screen content message about pro plan featuring the MEGA VPN */
@@ -3954,12 +3888,6 @@
 "onboarding.upgradeAccount.content.additionalSecurity.title"="共有時のセキュリティの強化";
 /* Upgrade account screen content message about pro plan featuring the Additional security when sharing */
 "onboarding.upgradeAccount.content.additionalSecurity.message"="ファイルとフォルダのリンクのパスワードと有効期限を設定できます。";
-/* Upgrade account screen content title about pro plan's other benefits */
-"onboarding.upgradeAccount.content.plusBenefits.title"="さらに、以下の素晴らしい特典もご利用いただけます：";
-/* Upgrade account screen content message about pro plan's other benefits without Ad-free */
-"onboarding.upgradeAccount.content.plusBenefits.messageWithoutAds"="• MEGA VPN\n• 無制限の通話とミーティング";
-/* Upgrade account screen content message about pro plan's other benefits with Ad-free */
-"onboarding.upgradeAccount.content.plusBenefits.messageWithAds"="• MEGA VPN\n• 無制限の通話とミーティング\n• 広告なし";
 /* Upgrade account screen button title that will direct to Upgrade plan page */
 "onboarding.upgradeAccount.button.viewProPlans"="今すぐProにアップグレード";
 /* Camera uploads banner enable state title */
@@ -4200,10 +4128,6 @@
 "onboarding.hiddenFilesAndFolders.outOfSight.content.message"="隠しファイルをいつ表示するかを決定します。非表示の項目を一時的に表示する新しい設定が追加されました。";
 /* My Account page: Menu Title of user account page */
 "account.myAccount.title"="私のアカウント";
-/* Free plan title */
-"free.Plan.name"="無料";
-/* Price description for the free plan */
-"free.Plan.Price.description"="無料";
 /* Storage limit capacity, where %d is the number of gigabytes that marks the storage limit */
 "storage.Limit.capacity"="%d GB";
 /* Limited transfer limit title */
@@ -4770,3 +4694,15 @@
 "notification.local.cameraUploadBackupReminder.body"="写真と動画をバックアップして保護";
 /* The double tap seek display text in video player */
 "videoPlayer.chip.seekDisplayText"="%@秒";
+/* The lock video player option in bottom more menu */
+"videoPlayer.lock.lockVideoPlayer"="動画プレーヤーをロックする";
+/* The screen locked status message in video player */
+"videoPlayer.lock.screenLocked"="画面がロックされています";
+/* The instruction to unlock the video player */
+"videoPlayer.lock.tapIconToUnlock"="ロックアイコンをタップするとロック解除されます";
+/* The lock video player option in bottom more menu */
+"videoPlayer.snapshot.bottomSheet.title"="キャプチャ";
+/* The instruction to unlock the video player */
+"videoPlayer.snapshot.snackBar.title"="画像はデバイスに保存されました";
+/* The Picture in picture video player option in bottom more menu */
+"videoPlayer.pip.bottomSheet.title"="ピクチャーインピクチャー";

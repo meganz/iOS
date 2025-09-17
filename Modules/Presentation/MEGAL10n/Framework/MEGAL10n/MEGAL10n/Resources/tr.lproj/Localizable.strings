@@ -29,11 +29,11 @@
 /* Alert title to attract attention */
 "attention"="Dikkat";
 /* Alert message to remember that MEGA app needs permission to use the Camera to take a photo or video and it doesn't have it */
-"cameraPermissions"="Lütfen Ayarlar'dan Kameranıza erişmesi için MEGA'ya izin verin";
+"cameraPermissions"="Lütfen Ayarlar’dan Kameranıza erişmesi için MEGA’ya izin verin";
 /* Alert message to remember that MEGA app needs permission to use the Microphone to make calls and record videos and it doesn't have it */
-"microphonePermissions"="Lütfen Ayarlar'dan Mikrofonunuza erişmesi için MEGA'ya izin verin";
+"microphonePermissions"="Lütfen Ayarlar’dan Mikrofonunuza erişmesi için MEGA’ya izin verin";
 /* Alert message to explain that the MEGA app needs permission to access your device photos */
-"photoLibraryPermissions"="Lütfen Ayarlar'dan Fotoğraflarınıza erişmesi için MEGA'ya izin verin";
+"photoLibraryPermissions"="Lütfen Ayarlar’dan Fotoğraflarınıza erişmesi için MEGA’ya izin verin";
 /* Message shown when the user clicks on a confirm account link that has already been used */
 "accountAlreadyConfirmed"="Hesabınız etkinleştirildi. Lütfen giriş yapın.";
 /*  */
@@ -73,7 +73,7 @@
 /* Message shown when the app is waiting for the server to complete a request due to a HTTP error 500. */
 "serversAreTooBusy"="Sunucular çok meşgul. Lütfen bekleyin…";
 /* Message shown when the app is waiting for the server to complete a request due to connectivity issue. */
-"unableToReachMega"="MEGA'ya ulaşılamıyor. Lütfen bağlantınızı kontrol edin veya daha sonra tekrar deneyin.";
+"unableToReachMega"="MEGA’ya ulaşılamıyor. Lütfen bağlantınızı kontrol edin veya daha sonra tekrar deneyin.";
 /* Message shown when the app is waiting for the server to complete a request due to a rate limit (error -4). */
 "tooManyRequest"="Çok fazla istek var. Lütfen bekleyin.";
 /* Alert title shown when you need to log in to continue with the action you want to do */
@@ -82,14 +82,8 @@
 "needToBeLoggedInToCompleteYourEmailChange"="E-posta adresi değişikliğini tamamlamak için oturum açmanız gerekir. Lütfen mevcut e-posta adresinizle tekrar giriş yapın ve onay bağlantınıza tekrar dokunun.";
 /* Button title which triggers the action to login in your MEGA account */
 "login"="Giriş yap";
-/* Message for login option on Create Account screen */
-"account.createAccount.alreadyHaveAnAccount"="Zaten bir hesabınız var mı?";
 /* Button title which triggers the action to create a MEGA account */
 "createAccount"="Kaydol";
-/* Message on login screen for Create Account */
-"account.login.newToMega"="MEGA'da yeni misiniz?";
-/* Button title which triggers the action to join meeting as Guest */
-"general.joinMeetingAsGuest"="Toplantıya misafir olarak katılın";
 /* Message shown when the user writes a wrong email or password on login */
 "invalidMailOrPassword"="Geçersiz e-posta adresi veya şifre. Tekrar deneyin.";
 /* Error message when to many attempts to login */
@@ -97,7 +91,7 @@
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
 "accountNotConfirmed"="E-posta gelen kutunuzu kontrol edin ve hesabınızı onaylamak için bağlantıya tıklayın.";
 /* Error message when trying to login and the account is blocked */
-"accountBlocked"="Hesabınız, 15. madde dahil ancak bununla sınırlı olmamak üzere MEGA Hizmet Şartları'nın ihlali nedeniyle kapatıldı.";
+"accountBlocked"="Hesabınız, 15. madde dahil ancak bununla sınırlı olmamak üzere MEGA Hizmet Şartları’nın ihlali nedeniyle kapatıldı.";
 /* Message shown when the user writes an invalid format in the email field */
 "emailInvalidFormat"="Geçerli bir e-posta adresi girin";
 /* Add contacts and share dialog error message when user try to add wrong email address */
@@ -130,16 +124,10 @@
 "strong"="Güçlü";
 /*  */
 "passwordStrong"="Bu şifre, en gelişmiş kaba kuvvet saldırılarına karşı dayanıklıdır. Lütfen unutmayacağınızdan emin olun.";
-/*  */
-"agreeWithTheMEGATermsOfService"="MEGA'nın <a href=\"terms\">Hizmet Şartları</a>'nı kabul ediyorum";
-/* This text is displayed in the account creation screen with a checkbox. User will have to tick the checkbox before proceeding on to create an account */
-"agreeWithLosingPasswordYouLoseData"="[S]Şifremi kaybedersem verilerimi de kaybedebileceğimi[/S] anlıyorum. <a href=\"terms\">MEGA'nın uçtan uca şifrelemesi</a> hakkında daha fazlasını okuyun.";
 /* Error text shown when you have not entered a correct name */
 "nameInvalidFormat"="Geçerli bir ad girin";
 /* Error text shown when you have not written the same password */
 "passwordsDoNotMatch"="Şifreler eşleşmiyor";
-/* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
-"termsCheckboxUnselected"="Hizmet Şartlarımızı kabul etmelisiniz";
 /* This error is shown in the account creation page. User has to agree to the terms and conditions. If the user does not agree to the losing password results in data loss condition then this error is shown */
 "termsForLosingPasswordCheckboxUnselected"="Şifrenizi kaybetme tehlikesini anladığınızı kabul etmelisiniz";
 /* Error text shown when the users tries to create an account with an email already in use */
@@ -157,7 +145,7 @@
 /* Title shown inside an alert if you don't have enough space on your device to download something */
 "nodeTooBig"="Cihazınızda biraz yer açmanız gerekiyor";
 /* Message shown when you try to downlonad files bigger than the available memory. */
-"MEGA needs a minimum of %@. Free up some space by deleting apps you no longer use or large video files in your gallery. You can also manage what MEGA stores on your device."="MEGA'nın minimum %@ alana ihtiyacı var. Artık kullanmadığınız uygulamaları veya galerinizdeki büyük video dosyalarını silerek yer açın. MEGA'nın cihazınızda depoladığı öğeleri de yönetebilirsiniz.";
+"MEGA needs a minimum of %@. Free up some space by deleting apps you no longer use or large video files in your gallery. You can also manage what MEGA stores on your device."="MEGA’nın minimum %@ alana ihtiyacı var. Artık kullanmadığınız uygulamaları veya galerinizdeki büyük video dosyalarını silerek yer açın. MEGA’nın cihazınızda depoladığı öğeleri de yönetebilirsiniz.";
 /* Title for the file link view */
 "fileLink"="Dosya bağlantısı";
 /* Button title to trigger the action of opening the file without downloading or opening it. */
@@ -225,7 +213,7 @@
 /* NavigationBar Title shown on Slideshow Preference Setting */
 "slideshow.preferenceSetting.slideshowOptions"="Slayt gösterisi seçenekleri";
 /* Footer note for media in sub folders */
-"slideshow.preferenceSetting.mediaInSubFolders"="Slayt gösterisine alt klasörlerdeki görüntüleri dahil et";
+"slideshow.preferenceSetting.mediaInSubFolders"="Slayt gösterisine alt klasörlerdeki fotoğrafları dahil et";
 /* NavigationBar Title shown on Slideshow Speed preference */
 "slideshow.preferenceSetting.speed"="Slayt gösterisi hızı";
 /* Slideshow Speed preference slow */
@@ -255,9 +243,9 @@
 /* Button title shown in empty views when you can 'Add contacts' */
 "addContacts"="Kişi ekle";
 /* Text shown when the user tries to make a call and the receiver is not a contact */
-"inviteContact"="MEGA'ya davet et";
+"inviteContact"="MEGA’ya davet et";
 /* Detail message shown when you try to call someone that is not you contact in MEGA. The [X] placeholder will be replaced on runtime for the email of the user */
-"dialog.callAttempt.contactNotInMEGA"="Kişiniz [X] MEGA'da değil. MEGA'nın şifreli sohbeti üzerinden arama yapmak için kişinizi davet etmeniz gerekir";
+"dialog.callAttempt.contactNotInMEGA"="Kişiniz [X] MEGA’da değil. MEGA’nın şifreli sohbeti üzerinden arama yapmak için kişinizi davet etmeniz gerekir";
 /* Text shown when the user sends a contact invitation */
 "inviteSent"="Davetiye gönderildi";
 /* Button title to allow the user postpone an action */
@@ -317,7 +305,7 @@
 /* Menu option from the `Add` section that allows the user to scan document and upload it directly to MEGA. */
 "Scan Document"="Belge tara";
 /* Menu option from the `Add` section that allows the user to make voice call. */
-"Voice"="Ses";
+"Voice"="Sesli";
 /* Menu option from the `Add` section that allows the user to share contact. */
 "Contact"="Kişi";
 /* Menu option from the `Add` section that allows the user to Start Group. */
@@ -367,7 +355,7 @@
 /* Error message shown when a user tries to download a folder with the name Inbox on the main directory of the offline section */
 "folderInboxError"="Gelen kutusu, Apple tarafından kullanılmak üzere ayrılmıştır.";
 /* Title shown under the action that allows you to save an image to your camera roll */
-"saveImage"="Görüntüyü kaydet";
+"saveImage"="Fotoğrafı kaydet";
 /* Message shown when a link to a file or folder is being generated */
 "generatingLink"="Bağlantı oluşturuluyor…";
 /* Message shown when some links to files and/or folders are being generated */
@@ -413,7 +401,7 @@
 /* Title shown under the action that allows you to open a file in another app */
 "openIn"="Şurada aç…";
 /*  */
-"uploadToMega"="MEGA'ya yükle";
+"uploadToMega"="MEGA’ya yükle";
 /* Footer shown in the Share Extension telling that a file can be renamed if tapped */
 "tapFileToRename"="Yeniden adlandırmak için dosyaya dokunun";
 /* Title for a button to send a file to a chat */
@@ -501,7 +489,7 @@
 /* Favourites album title */
 "cameraUploads.albums.favourites.title"="Favoriler";
 /* Gif album title */
-"cameraUploads.albums.gif.title"="GIF'ler";
+"cameraUploads.albums.gif.title"="GIF’ler";
 /* Raw album title */
 "cameraUploads.albums.raw.title"="RAW";
 /* My album title */
@@ -547,7 +535,7 @@
 /* Filter UI media type option */
 "cameraUploads.timeline.filter.mediaType.allMedia"="Tüm medya";
 /* Filter UI media type option */
-"cameraUploads.timeline.filter.mediaType.images"="Görüntüler";
+"cameraUploads.timeline.filter.mediaType.images"="Fotoğraflar";
 /* Filter UI media type option */
 "cameraUploads.timeline.filter.mediaType.videos"="Videolar";
 /* Filter UI media location option */
@@ -657,7 +645,7 @@
 /* Title for 'Camera Uploads' used across the app, including the creation of the Camera Uploads folder, as a label for actions in context menus, as the title of the Camera Uploads feature section, in Settings options, and as the title for the Camera Uploads tab. */
 "general.cameraUploads"="Kamera yüklemeleri";
 /* Banner message on Camera Uploads that warns user that they have limited access to photos */
-"cameraUploads.warning.limitedAccessToPhotoMessage"="⚠ MEGA'nın fotoğraf arşivinize sınırlı erişimi var ve tüm medyanızı yedekleyemiyor. İzinleri değiştirmek için dokunun.";
+"cameraUploads.warning.limitedAccessToPhotoMessage"="⚠ MEGA’nın fotoğraf arşivinize sınırlı erişimi var ve tüm medyanızı yedekleyemiyor. İzinleri değiştirmek için dokunun.";
 /* Navigation title for Photo Controller */
 "photo.navigation.title"="Fotoğraflar";
 /* Photo view is empty */
@@ -747,9 +735,9 @@
 /* Title of the switch to config whether to upload Hidden Album */
 "Upload Hidden Album"="Gizli albümü yükle";
 /* Footer description when upload videos for Live Photos is enabled */
-"The video and the photo in each Live Photo will be uploaded."="Her Live Photo'nun fotoğraf ve video sürümleri yüklenecektir.";
+"The video and the photo in each Live Photo will be uploaded."="Her Live Photo’nun fotoğraf ve video sürümleri yüklenecektir.";
 /* Footer description when upload videos for Live Photos is disabled */
-"Only the photo in each Live Photo will be uploaded."="Her Live Photo'nun yalnızca fotoğraf sürümü yüklenecektir.";
+"Only the photo in each Live Photo will be uploaded."="Her Live Photo’nun yalnızca fotoğraf sürümü yüklenecektir.";
 /* Footer description when upload all burst photos is enabled */
 "All the photos from your burst photo sequences will be uploaded."="Seri çekim fotoğraf dizilerinizdeki tüm fotoğraflar yüklenecektir.";
 /* Footer description when upload all burst photos is disabled */
@@ -765,7 +753,7 @@
 /* Title of the switch to config whether to upload synced albums */
 "Upload Albums Synced from iTunes"="iTunes ile senkronize edilen albümleri yükle";
 /* Footer description for upload synced albums title */
-"Synced albums are where you sync photos or videos to your device's Photos app from iTunes."="Senkronize edilmiş albümler, iTunes'dan cihazınızın Fotoğraflar uygulamasına fotoğraf veya video senkronize ettiğiniz yerdir.";
+"Synced albums are where you sync photos or videos to your device's Photos app from iTunes."="Senkronize edilmiş albümler, iTunes’dan cihazınızın Fotoğraflar uygulamasına fotoğraf veya video senkronize ettiğiniz yerdir.";
 /* App means “Application” */
 "App Version"="Uygulama sürümü";
 /* Title of the label where the SDK version is shown */
@@ -797,7 +785,7 @@
 /* Section title where you can 'Clear Cache' of your MEGA app */
 "clearCache"="Önbelleği temizle";
 /* "Title header that refers to where do you do the action 'Empty Rubbish Bin' inside 'Settings' -> 'Advanced' section" */
-"onMEGA"="MEGA'da";
+"onMEGA"="MEGA’da";
 /* Button text on the Rubbish Bin page. This button will empty all files and folders currently stored in the rubbish bin. */
 "emptyRubbishBin"="Çöp kutusunu boşalt";
 /* Alert title shown when you tap 'Empty Rubbish Bin' */
@@ -823,9 +811,9 @@
 /* Section header for settings related to MEGA cloud storage */
 "settings.fileManagement.header.onMEGA"="MEGA ile ilgili";
 /* Toggle option for enabling mobile data to load high-resolution images */
-"settings.fileManagement.useMobileDataForHighResolution"="Yüksek çözünürlüklü görüntüleri yüklemek için mobil veri kullan";
+"settings.fileManagement.useMobileDataForHighResolution"="Yüksek çözünürlüklü fotoğrafları yüklemek için mobil veri kullan";
 /* Description explaining the behavior when the toggle is disabled */
-"settings.fileManagement.useMobileDataForHighResolution.description"="Devre dışı bırakılırsa yüksek çözünürlüklü görüntü yalnızca yakınlaştırdığınızda yüklenir.";
+"settings.fileManagement.useMobileDataForHighResolution.description"="Devre dışı bırakılırsa yüksek çözünürlüklü fotoğraf yalnızca yakınlaştırdığınızda yüklenir.";
 /* Option to open settings related to the Rubbish Bin */
 "settings.fileManagement.rubbishBinSettings"="Çöp kutusu ayarları";
 /* Option for managing file versioning settings */
@@ -893,21 +881,21 @@
 /* Alert message shown on the Rubbish Bin when you want to remove "{1+} file{s} {and} {1+} folder{s}" */
 "sharedItems.rubbish.warning.message"="%@ öğesini kalıcı olarak kaldırmak üzeresiniz. Devam etmek istiyor musunuz? (Bu işlem geri alınamaz.)";
 /* Success message shown when 1 file has been removed from MEGA */
-"fileRemovedToRubbishBinMessage"="MEGA'dan 1 dosya kaldırıldı";
+"fileRemovedToRubbishBinMessage"="MEGA’dan 1 dosya kaldırıldı";
 /* Success message shown when {1+} files have been removed from MEGA */
-"filesRemovedToRubbishBinMessage"="MEGA'dan %d dosya kaldırıldı";
+"filesRemovedToRubbishBinMessage"="MEGA’dan %d dosya kaldırıldı";
 /* Success message shown when 1 folder has been removed from MEGA */
-"folderRemovedToRubbishBinMessage"="MEGA'dan 1 klasör kaldırıldı";
+"folderRemovedToRubbishBinMessage"="MEGA’dan 1 klasör kaldırıldı";
 /* Success message shown when {1+} folders have been removed from MEGA */
-"foldersRemovedToRubbishBinMessage"="MEGA'dan %d klasör kaldırıldı";
+"foldersRemovedToRubbishBinMessage"="MEGA’dan %d klasör kaldırıldı";
 /* Success message shown when 1 file and 1 folder have been removed from MEGA */
-"fileFolderRemovedToRubbishBinMessage"="MEGA'dan 1 dosya ve 1 klasör kaldırıldı";
+"fileFolderRemovedToRubbishBinMessage"="MEGA’dan 1 dosya ve 1 klasör kaldırıldı";
 /* Success message shown when 1 file and {1+} folders have been removed from MEGA */
-"fileFoldersRemovedToRubbishBinMessage"="MEGA'dan 1 dosya ve %d klasör kaldırıldı";
+"fileFoldersRemovedToRubbishBinMessage"="MEGA’dan 1 dosya ve %d klasör kaldırıldı";
 /* Success message shown when {1+} files and 1 folder have been removed from MEGA */
-"filesFolderRemovedToRubbishBinMessage"="MEGA'dan %d dosya ve 1 klasör kaldırıldı";
+"filesFolderRemovedToRubbishBinMessage"="MEGA’dan %d dosya ve 1 klasör kaldırıldı";
 /* Success message shown when [A] = {1+} files and [B] = {1+} folders have been removed from MEGA */
-"filesFoldersRemovedToRubbishBinMessage"="MEGA'dan [A] dosya ve [B] klasör kaldırıldı";
+"filesFoldersRemovedToRubbishBinMessage"="MEGA’dan [A] dosya ve [B] klasör kaldırıldı";
 /* Hint text to suggest that the user have to write the new password on it */
 "newPassword"="Yeni şifre";
 /* Hint text where the user have to re-write the new password to confirm it */
@@ -979,7 +967,7 @@
 /* Title of the section to access MEGA's help centre */
 "helpCentreLabel"="Yardım Merkezi";
 /* Section title that links you to the webpage that let you join and test the beta versions */
-"Join Beta"="Beta'ya katıl";
+"Join Beta"="Beta’ya katıl";
 /* Title to rate the app */
 "rateUsLabel"="Bizi oyla";
 /* Title of the Transfers section */
@@ -1021,7 +1009,7 @@
 /*  */
 "howItWorks"="Nasıl işliyor?";
 /*  */
-"howItWorksMain"="Arkadaşınızın MEGA'da ücretsiz bir hesaba kaydolması ve [S]en az bir MEGA uygulaması yüklemesi[/S] (MEGA Masaüstü Uygulaması veya MEGA Mobil Uygulamalarımızdan biri) gerekir";
+"howItWorksMain"="Arkadaşınızın MEGA’da ücretsiz bir hesaba kaydolması ve [S]en az bir MEGA uygulaması yüklemesi[/S] (MEGA Masaüstü Uygulaması veya MEGA Mobil Uygulamalarımızdan biri) gerekir";
 /*  */
 "howItWorksSecondary"="Arkadaşınıza herhangi bir yöntemle bildirimde bulunabilirsiniz. Arkadaşınızın e-posta adresini, o adresle kaydolmadan önce buraya girerseniz bonus kazanırsınız.";
 /* A message which is shown once someone has invited a friend as part of the achievements program. */
@@ -1069,7 +1057,7 @@
 /* Explanation label shown on the achievements view for complete start MEGA VPN Free Trial achievement, %@ is a placeholder. */
 "account.achievement.vpnFreeTrial.complete.explanation.label"="MEGA VPN ücretsiz denemesini başlattığınız için %@ depolama alanı kazandınız.";
 /* Text for the button to install MEGA VPN in the Start MEGA VPN Free Trial achievement */
-"account.achievement.vpnFreeTrial.buttonText"="MEGA VPN'i Yükle";
+"account.achievement.vpnFreeTrial.buttonText"="MEGA VPN’i Yükle";
 /* Cell title shown on the achievements view for Start MEGA Pass Free Trial */
 "account.achievement.passFreeTrial.title"="MEGA Pass ücretsiz denemesini başlat";
 /* Detail label shown on the achievements details view for Start MEGA Pass Free Trial when its incomplete, %1$@ is placeholder for the storage amount, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
@@ -1079,7 +1067,7 @@
 /* Explanation label shown on the achievements view for complete start MEGA Pass Free Trial achievement, %@ is a placeholder. */
 "account.achievement.passFreeTrial.complete.explanation.label"="MEGA Pass ücretsiz denemesini başlattığınız için %@ depolama alanı kazandınız.";
 /* Text for the button to install MEGA Pass in the Start MEGA Pass Free Trial achievement */
-"account.achievement.passFreeTrial.buttonText"="MEGA Pass'ı Yükle";
+"account.achievement.passFreeTrial.buttonText"="MEGA Pass’ı Yükle";
 /* Subtitle of the incomplete achievement with permanent bonus, %1$@ is a placeholder for amount of storage, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
 "account.achievement.incomplete.subtitle"="%1$@ depolama alanı. %2$@";
 /* String of the achievements with permanent bonus, used as a full sentence */
@@ -1095,9 +1083,9 @@
 /* Explanation Label shown on the achievements view for incomplete add phone number achievement, %1$@ is a placeholder, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
 "account.achievement.phoneNumber.incomplete.explaination.label"="Telefon numaranızı eklediğinizde %@ ek depolama alanı kazanırsınız, %2$@.";
 /* Free storage description to encourage users to add phone number to their accounts */
-"Get free %@ when you add your phone number. This makes it easier for your contacts to find you on MEGA."="Telefon numaranızı eklediğinizde %@ ücretsiz kazanın. Bu, kişilerinizin sizi MEGA'da bulmasını kolaylaştırır.";
+"Get free %@ when you add your phone number. This makes it easier for your contacts to find you on MEGA."="Telefon numaranızı eklediğinizde %@ ücretsiz kazanın. Bu, kişilerinizin sizi MEGA’da bulmasını kolaylaştırır.";
 /* Description to encourage users to add phone number to their accounts when there are not achievements */
-"Add your phone number to MEGA. This makes it easier for your contacts to find you on MEGA."="Telefon numaranızı MEGA'ya ekleyin. Bu, kişilerinizin sizi MEGA'da bulmasını kolaylaştırır.";
+"Add your phone number to MEGA. This makes it easier for your contacts to find you on MEGA."="Telefon numaranızı MEGA’ya ekleyin. Bu, kişilerinizin sizi MEGA’da bulmasını kolaylaştırır.";
 /* Description to unblock account by verifying phone number */
 "Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account."="Hesabınız, olası kötüye kullanım nedeniyle geçici olarak kilitlendi. Hesabınızın kilidini açmak için lütfen telefon numaranızı doğrulayın.";
 /* Verify your account title */
@@ -1188,8 +1176,6 @@
 "monthly"="Aylık";
 /* "Yearly" subscriptions */
 "yearly"="Yıllık";
-/* Alert title shown when a selected plan is not available at that moment on the App store */
-"inAppPurchase.error.alert.title.notAvailable"="Bu Uygulama İçi Satın Alma öğesi şu anda App Store'da mevcut değil. Lütfen Apple Kimliğinizin ödeme ayarlarını doğrulayın.";
 /* Button that redirect you to the main page of your Account in the App Store */
 "inAppPurchase.error.alert.primaryButtonTitle"="App Store ayarları";
 /* Alert title shown when the user has purchase correctly some plan */
@@ -1209,7 +1195,7 @@
 /* Alert message shown when the restoring process has stopped for some reason */
 "failedRestore_message"="İstek iptal edildi veya önceki satın alma geri yüklenemedi. Lütfen daha sonra tekrar deneyin veya ios@mega.io ile iletişime geçin.";
 /* Title of a warning recommending upgrade to Pro */
-"Upgrade to Pro"="Pro'ya yükselt";
+"Upgrade to Pro"="Pro’ya yükselt";
 /* A description of MEGA features available only with a Pro plan. */
 "Access Pro only features like setting password protection and expiry dates for public files."="Herkese açık bağlantılar için şifre koruması ve son kullanma tarihi ayarlama gibi yalnızca Pro özelliklerine erişin.";
 /* Alert title shown when the DEBUG mode is enabled */
@@ -1227,7 +1213,7 @@
 /* Giphy section header */
 "Send GIF"="GIF gönder";
 /* This is the placeholder text for GIPHY search */
-"Search GIPHY"="GIPHY'de ara";
+"Search GIPHY"="GIPHY’de ara";
 /* Empty Gifs section */
 "No GIFs found"="GIF bulunamadı";
 /* Shows the error when the limit of reactions per message is reached and a user tries to add one more. Keep the placeholder because is to show limit number in runtime. */
@@ -1433,9 +1419,9 @@
 /* Label in a button that allows to jump to the latest message */
 "newMessages"="Yeni mesajlar";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
-"autorenewableDescription"="Abonelikler, seçilen ilk dönemle aynı sürede ve aynı fiyatta olan sonraki abonelik dönemleri için otomatik olarak yenilenir. MEGA Pro aboneliğinizin otomatik olarak yenilenmesini, bir sonraki abonelik ödemenizin vadesinden en geç 24 saat önce Apple hesap ayarları sayfanızdan kapatabilirsiniz. Aboneliklerinizi yönetmek için mobil cihazınızdaki App Store simgesine dokunun, sayfanın altındaki Apple Kimliğinizle (henüz yapmadıysanız) giriş yapın ve ardından Kimliği Görüntüle'ye dokunun. Uygulama Aboneliklerini Yönet bölümüne gidebileceğiniz hesap sayfanıza yönlendirileceksiniz. Buradan MEGA Pro aboneliğinizi seçebilir, planlanan yenileme tarihinizi görüntüleyebilir, farklı bir abonelik paketi seçebilir veya aboneliğinizin otomatik olarak yenilenmesini devre dışı bırakmak için açma/kapama düğmesini kapatabilirsiniz.";
+"autorenewableDescription"="Abonelikler, seçilen ilk dönemle aynı sürede ve aynı fiyatta olan sonraki abonelik dönemleri için otomatik olarak yenilenir. MEGA Pro aboneliğinizin otomatik olarak yenilenmesini, bir sonraki abonelik ödemenizin vadesinden en geç 24 saat önce Apple hesap ayarları sayfanızdan kapatabilirsiniz. Aboneliklerinizi yönetmek için mobil cihazınızdaki App Store simgesine dokunun, sayfanın altındaki Apple Kimliğinizle (henüz yapmadıysanız) giriş yapın ve ardından Kimliği Görüntüle’ye dokunun. Uygulama Aboneliklerini Yönet bölümüne gidebileceğiniz hesap sayfanıza yönlendirileceksiniz. Buradan MEGA Pro aboneliğinizi seçebilir, planlanan yenileme tarihinizi görüntüleyebilir, farklı bir abonelik paketi seçebilir veya aboneliğinizin otomatik olarak yenilenmesini devre dışı bırakmak için açma/kapama düğmesini kapatabilirsiniz.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
-"openMEGAAndSignInToContinue"="MEGA'yı açın ve devam etmek için giriş yapın";
+"openMEGAAndSignInToContinue"="MEGA’yı açın ve devam etmek için giriş yapın";
 /* Label in login screen to inform about the chat initialization proccess */
 "connecting"="Bağlanılıyor…";
 /* Inform user that there were unsupported assets in the share extension */
@@ -1597,7 +1583,7 @@
 /* Used as a title in the "Password reminder" dialog, that pop ups to ensure that the user had exported his recovery key OR still remembers his password. */
 "remindPasswordTitle"="Şifrenizi hatırlıyor musunuz?";
 /* Text that describes why the user should test his/her password */
-"remindPasswordText"="MEGA'nın şifreleme teknolojisi nedeniyle veri kaybı olmadan şifrenizi sıfırlayamazsınız. Lütfen şifrenizi unutmadığınızdan emin olun.";
+"remindPasswordText"="MEGA’nın şifreleme teknolojisi nedeniyle veri kaybı olmadan şifrenizi sıfırlayamazsınız. Lütfen şifrenizi unutmadığınızdan emin olun.";
 /* Text that describes why the user should test his/her password before logging out */
 "remindPasswordLogoutText"="Çıkış yapmadan önce kurtarma anahtarınızı güvenli bir yere aktarmanızı öneririz. Unutursanız şifrenizi sıfırlayamayacağınızı unutmayın.";
 /* Text next to a toggle that if enabled won't appear again */
@@ -1689,9 +1675,9 @@
 /* Alert title shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device */
 "Authenticator app required"="Doğrulayıcı uygulaması gerekli";
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device */
-"youNeedATwoFactorAuthenticationApp"="Üzgünüz, cihazınızda iki faktörlü kimlik doğrulama etkinleştirilemiyor. Bir doğrulayıcı uygulaması yüklemek için lütfen App Store'u açın.";
+"youNeedATwoFactorAuthenticationApp"="Üzgünüz, cihazınızda iki faktörlü kimlik doğrulama etkinleştirilemiyor. Bir doğrulayıcı uygulaması yüklemek için lütfen App Store’u açın.";
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device and tap on the question mark */
-"You need an authenticator app to enable 2FA on MEGA. You can download and install the Google Authenticator, Duo Mobile, Authy or Microsoft Authenticator app for your phone or tablet."="MEGA'da 2FA'yı etkinleştirmek için bir doğrulayıcı uygulamasına ihtiyacınız var. Telefonunuz veya tabletiniz için Google Authenticator, Duo Mobile, Authy veya Microsoft Authenticator uygulamasını indirip yükleyebilirsiniz.";
+"You need an authenticator app to enable 2FA on MEGA. You can download and install the Google Authenticator, Duo Mobile, Authy or Microsoft Authenticator app for your phone or tablet."="MEGA’da 2FA’yı etkinleştirmek için bir doğrulayıcı uygulamasına ihtiyacınız var. Telefonunuz veya tabletiniz için Google Authenticator, Duo Mobile, Authy veya Microsoft Authenticator uygulamasını indirip yükleyebilirsiniz.";
 /* A title on the mobile web client page showing that 2FA has been enabled successfully. */
 "twoFactorAuthenticationEnabled"="İki faktörlü kimlik doğrulama etkinleştirildi";
 /* A message on the dialog shown after 2FA was successfully enabled. */
@@ -1699,7 +1685,7 @@
 /* A warning message on the Backup Recovery Key dialog to tell the user to backup their Recovery Key to their local computer. */
 "pleaseSaveYourRecoveryKey"="Lütfen kurtarma anahtarınızı güvenli bir yere kaydedin";
 /* An informational message on the Backup Recovery Key dialog. */
-"twoFactorAuthenticationEnabledWarning"="2FA'yı etkinleştirdikten sonra hesabınıza erişiminizi kaybederseniz ve kurtarma anahtarınızı yedeklemediyseniz MEGA tekrar erişmenize yardımcı olamaz.";
+"twoFactorAuthenticationEnabledWarning"="2FA’yı etkinleştirdikten sonra hesabınıza erişiminizi kaybederseniz ve kurtarma anahtarınızı yedeklemediyseniz MEGA tekrar erişmenize yardımcı olamaz.";
 /* A message on a dialog to say that 2FA has been successfully disabled. */
 "twoFactorAuthenticationDisabled"="İki faktörlü kimlik doğrulama devre dışı bırakıldı";
 /* A message on the setup two-factor authentication page on the mobile web client. */
@@ -1707,51 +1693,25 @@
 /* A button to help them restore their account if they have lost their 2FA device. */
 "lostYourAuthenticatorDevice"="Doğrulayıcı cihazınızı mı kaybettiniz?";
 /* Settings section title where you can enable the option to 'Save Images in Photos' */
-"Save Images in Photos"="Görüntüleri Fotoğraflar'a kaydet";
+"Save Images in Photos"="Görüntüleri Fotoğraflar’a kaydet";
 /* Settings section title where you can enable the option to 'Save Videos in Photos' */
-"Save Videos in Photos"="Videoları Fotoğraflar'a kaydet";
+"Save Videos in Photos"="Videoları Fotoğraflar’a kaydet";
 /* Footer text shown under the settings for download options 'Save Images/Videos in Library' */
-"Images and/or videos downloaded will be stored in the device’s media library instead of the Offline section."="İndirilen görüntüler veya videolar, Çevrim dışı bölümü yerine cihazın medya arşivinde saklanır.";
+"Images and/or videos downloaded will be stored in the device’s media library instead of the Offline section."="İndirilen fotoğraflar veya videolar, Çevrim dışı bölümü yerine cihazın medya arşivinde saklanır.";
 /* Header title of Camera section on MEGA Settings > Advanced screen. */
 "Camera"="Kamera";
 /* Settings section title where you can enable the option to 'Save in Photos' the images or videos taken from your camera in the MEGA app */
 "Save in Photos"="Fotoğraflara Kaydet";
 /* Footer text shown under the Camera setting to explain the option 'Save in Photos' */
-"Save a copy of the images and videos taken from the MEGA app in your device’s media library."="MEGA Uygulamasından çekilen görüntülerin ve videoların bir kopyasını cihazınızın medya arşivine kaydedin.";
+"Save a copy of the images and videos taken from the MEGA app in your device’s media library."="MEGA Uygulamasından çekilen fotoğrafların ve videoların bir kopyasını cihazınızın medya arşivine kaydedin.";
 /* Title of the Spotlight Search section */
 "Search"="Ara";
-/* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
-"You hold the keys"="Kontrol sende";
-/* Description shown in a page of the onboarding screens explaining the encryption paradigm */
-"Security is why we exist, your files are safe with us behind a well oiled encryption machine where only you can access your files."="Güvenlik bizim varoluş nedenimizdir; dosyalarınız, yalnızca sizin erişebileceğiniz, iyi işleyen bir şifreleme makinesinin ardında bizimle güvende.";
-/* Title shown in a page of the on boarding screens explaining that the chat is encrypted */
-"Encrypted chat"="Şifreli sohbet";
-/* Description shown in a page of the onboarding screens explaining the chat feature */
-"Fully encrypted chat with voice and video calls, group messaging and file sharing integration with your Cloud Drive."="Bulut depolamanızla entegre sesli ve görüntülü aramalar, grup mesajlaşması ve dosya paylaşımı ile tamamen şifrelenmiş sohbet.";
-/* Title shown in a page of the on boarding screens explaining that the user can add contacts to chat and colaborate */
-"Create your Network"="Ağınızı oluşturun";
-/* Description shown in a page of the onboarding screens explaining contacts */
-"Add contacts, create a network, colaborate, make voice and video calls without ever leaving MEGA"="MEGA'dan hiç ayrılmadan kişi ekleyin, bir ağ oluşturun, iş birliği yapın, sesli ve görüntülü aramalar yapın.";
-/* Title shown in a page of the on boarding screens explaining that the user can backup the photos automatically */
-"Your Photos in the Cloud"="Buluttaki fotoğraflarınız";
-/* Description shown in a page of the onboarding screens explaining the camera uploads feature */
-"Camera Uploads is an essential feature for any mobile device and we have got you covered. Create your account now."="Kamera yüklemeleri, herhangi bir mobil cihaz için önemli bir özelliktir ve biz sizi koruyoruz. Şimdi bir hesap için kaydolun.";
-/* Button which triggers the initial setup */
-"Setup MEGA"="MEGA'yı yapılandır";
-/* Detailed explanation of why the user should give some permissions to MEGA */
-"To fully take advantage of your MEGA account we need to ask you some permissions."="MEGA hesabınızdan tam olarak yararlanmak için sizden bazı izinler istememiz gerekiyor.";
-/* Message warning the user about the risk of not setting up permissions */
-"The MEGA app may not work as expected without the required permissions. Are you sure?"="MEGA Uygulaması gerekli izinler olmadan beklendiği gibi çalışmayabilir. Emin misiniz?";
 /* Shows number of the current page. '%1' will be replaced by current page number. '%2' will be replaced by number of all pages. */
 "%1 of %2"="%2 öğeden %1 tanesi";
-/* Title label that explains that the user is going to be asked for the photos permission */
-"Allow Access to Photos"="Fotoğraflara erişim izni ver";
-/* Detailed explanation of why the user should give permission to access to the photos */
-"Please give the MEGA App permission to access Photos to share photos and videos."="Lütfen fotoğraf ve video paylaşmak için MEGA'ya Fotoğraflara erişim izni verin.";
 /* Title label that explains that the user is going to be asked for the microphone and camera permission */
 "Enable Microphone and Camera"="Mikrofon ve kamerayı etkinleştir";
 /* Detailed explanation of why the user should give permission to access to the camera and the microphone */
-"To make encrypted voice and video calls, allow MEGA access to your Camera and Microphone"="Sesli mesaj göndermek ve şifreli sesli ve görüntülü arama yapmak için MEGA'nın Kameranıza ve Mikrofonunuza erişmesine izin verin";
+"To make encrypted voice and video calls, allow MEGA access to your Camera and Microphone"="Sesli mesaj göndermek ve şifreli sesli ve görüntülü arama yapmak için MEGA’nın Kameranıza ve Mikrofonunuza erişmesine izin verin";
 /* Title label that explains that the user is going to be asked for the notifications permission */
 "Enable Notifications"="Bildirimleri etkinleştir";
 /* Detailed explanation of why the user should give permission to deliver notifications */
@@ -1787,7 +1747,7 @@
 /* A rubbish bin scheduler setting which allows removing old files from the rubbish bin automatically. E.g. Remove files older than 15 days. */
 "Remove files older than"="Şundan eski dosyaları kaldır:";
 /* This text is displayed in Settings, File Management in Rubbish Bien view. Upgrade to Pro will be bold and green. And if you tap it, the Upgrade Account view will appear. */
-"settings.fileManagement.rubbishBin.longerRetentionUpgrade"="Daha uzun bir saklama süresi için [S]Pro'ya yükselt[/S]";
+"settings.fileManagement.rubbishBin.longerRetentionUpgrade"="Daha uzun bir saklama süresi için [S]Pro’ya yükselt[/S]";
 /* Textfield placeholder for rubbish bin Cleaning Scheduler in days alert */
 "settings.fileManagement.rubbishBin.cleanScheduler.placeholder.days"="gün";
 /* New server-side rubbish-bin cleaning scheduler description (for Free users) */
@@ -1829,7 +1789,7 @@
 /* Footer text to explain what means 'Encrypted Key Rotation' */
 "Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages."="Şifreleme anahtarı döndürme biraz daha güvenlidir ancak sohbet bağlantısı oluşturmanıza izin vermez ve yeni katılımcılar geçmiş mesajları görmez.";
 /* Footer to explain why key rotation is disabled for public chats with many participants */
-"Key rotation is disabled for conversations with more than 100 participants."="100'den fazla katılımcının olduğu sohbetlerde şifreleme anahtarı döndürmesi devre dışı bırakılır.";
+"Key rotation is disabled for conversations with more than 100 participants."="100’den fazla katılımcının olduğu sohbetlerde şifreleme anahtarı döndürmesi devre dışı bırakılır.";
 /* Shown as an error message when the user selects "create chat link", but haven't entered a title for the newly created room */
 "To create a chat link you must name the group."="Sohbet bağlantısı oluşturmak için gruba bir ad vermelisiniz.";
 /* Label shown in a cell where you can enable a switch to get a chat link */
@@ -1885,7 +1845,7 @@
 /* A notification telling the user that the other user deleted them as a contact. E.g. user@email.com deleted you as a contact. */
 "Deleted you as a contact"="Sizi kişilerinden sildi";
 /* A notification telling the user that they are now fully connected with the other user (the users are in each other’s address books). */
-"Contact relationship established"="Kişi ilişkisi kuruldu";
+"Contact relationship established"="Kişiyle bağlantı kuruldu";
 /* A notification telling the user that one of their contact’s accounts has been deleted or deactivated. */
 "Account has been deleted/deactivated"="Hesap silindi veya devre dışı bırakıldı";
 /* A notification telling the user that another user blocked them as a contact (they will no longer be able to contact them). E.g. name@email.com blocked you as a contact. */
@@ -1941,7 +1901,7 @@
 /* uploads over storage quota warning dialog title */
 "Your upload(s) cannot proceed because your account is full"="Bulut depolama alanınız dolu olduğu için yüklemeniz devam edemiyor";
 /* Footer text to explain the meaning of the functionaly 'Last seen' of your chat status. */
-"Allow your contacts to see the last time you were active on MEGA."="Kişilerinizin MEGA'da en son ne zaman aktif olduğunuzu görmesine izin verin";
+"Allow your contacts to see the last time you were active on MEGA."="Kişilerinizin MEGA’da en son ne zaman aktif olduğunuzu görmesine izin verin";
 /* Text to inform the user the 'Last seen' time of a contact is a long time ago (>= 65535 minutes) */
 "Last seen a long time ago"="Son görülme: Uzun zaman önce";
 /*  */
@@ -1981,7 +1941,7 @@
 /* Title of the button in the contact info screen to start an audio call */
 "Call"="Sesli";
 /* Title of the button in the contact info screen to start a video call */
-"Video"="Videolu";
+"Video"="Görüntülü";
 /* The label of the toggle switch to indicate that file versioning is enabled. */
 "Enabled"="Etkin";
 /* Text button for init a group chat with link. */
@@ -1997,7 +1957,7 @@
 /* Label that indicates who modified a file into a recents bucket. %@ is a placeholder for a name, eg: Haley */
 "home.recent.modifiedByLabel"="%@ tarafından değiştirildi";
 /* Title for a recent action bucket with multiple files. %@ will be replaced by the filename of the first file in the bucket. %ld will be replaced by the total number of other files in the bucket. */
-"home.recent.multipleFileTitle"="\"%@\" ve %ld daha";
+"home.recent.multipleFileTitle"="\"%@\" ve %ld tane daha";
 /* Label that indicates who uploaded a file into a recents bucket. %@ is a placeholder for a name, eg: Haley */
 "home.recent.createdByLabel"="%@ tarafından oluşturuldu";
 /* Message shown when the user has not recent activity in their account. */
@@ -2033,13 +1993,13 @@
 /* Text indicating the user to open the device settings for MEGA */
 "Open Settings"="Ayarları Aç";
 /* Text encouraging the user to invite contacts to MEGA */
-"Invite contacts and start chatting securely with MEGA’s encrypted chat."="Kişileri davet edin ve MEGA'nın şifreli sohbeti ile güvenli bir şekilde sohbet etmeye başlayın.";
+"Invite contacts and start chatting securely with MEGA’s encrypted chat."="Kişileri davet edin ve MEGA’nın şifreli sohbeti ile güvenli bir şekilde sohbet etmeye başlayın.";
 /* Text showing the user how to write more than one email in order to invite them to MEGA */
 "Tap space to enter multiple emails"="Birden fazla e-posta adresi girmek için boşluk tuşuna dokunun";
 /* Text used as a section title or similar */
 "Enter Email"="E-posta adresi girin";
 /* Text to send as SMS message to user contacts inviting them to MEGA */
-"contact.invite.message"="Merhaba, MEGA'ya katılın ve ücretsiz, güvenli şifreli depolama ve iletişimin keyfini çıkarın.";
+"contact.invite.message"="Merhaba, MEGA’ya katılın ve ücretsiz, güvenli şifreli depolama ve iletişimin keyfini çıkarın.";
 /* Destination folder name of chat files */
 "My chat files"="Sohbet dosyalarım";
 /* Title of the section about the plan in the storage tab in My Account Section */
@@ -2067,11 +2027,11 @@
 /* Label presented to Admins that full management of the business is only available in a desktop web browser */
 "User management is only available from a desktop web browser."="Kullanıcı yönetimi yalnızca bir masaüstü web tarayıcısından yapılabilir.";
 /* When logging in during the grace period, the administrator of the Business account will be notified that their payment is overdue, indicating that they need to access MEGA using a desktop browser for more information */
-"There has been a problem with your last payment. Please access MEGA using a desktop browser for more information."="Son ödemenizle ilgili bir sorun oluştu. Daha fazla bilgi için lütfen bir masaüstü tarayıcısı kullanarak MEGA'ya erişin.";
+"There has been a problem with your last payment. Please access MEGA using a desktop browser for more information."="Son ödemenizle ilgili bir sorun oluştu. Daha fazla bilgi için lütfen bir masaüstü tarayıcısı kullanarak MEGA’ya erişin.";
 /* A dialog title shown to users when their business account is expired. */
 "Your business account is expired"="Hesap devre dışı bırakıldı";
 /* Details shown when a Business account is expired. Details for the administrator of the Business account */
-"There has been a problem processing your payment. MEGA is limited to view only until this issue has been fixed in a desktop web browser."="İşletme hesabınız ödeme hatası nedeniyle devre dışı bırakıldı. Hesabınızda depolanan verilere erişemeyeceksiniz. Bir ödeme yapmak ve aboneliğinizi yeniden etkinleştirmek için bir tarayıcı üzerinden MEGA'ya giriş yapın.";
+"There has been a problem processing your payment. MEGA is limited to view only until this issue has been fixed in a desktop web browser."="İşletme hesabınız ödeme hatası nedeniyle devre dışı bırakıldı. Hesabınızda depolanan verilere erişemeyeceksiniz. Bir ödeme yapmak ve aboneliğinizi yeniden etkinleştirmek için bir tarayıcı üzerinden MEGA’ya giriş yapın.";
 /* A dialog message which is shown to sub-users of expired business accounts. */
 "Your account is currently [B]suspended[/B]. You can only browse your data."="Hesabınız şu anda [B]devre dışı[/B]. Yalnızca verilerinize göz atabilirsiniz.";
 /* Message shown when users with a business account (no administrators of a business account) try to enable the Camera Uploads, to advise them that the administrator do have the ability to view their data. */
@@ -2197,13 +2157,13 @@
 /* Alert header for asking permission to resume transfers */
 "Resume Transfers?"="Aktarımlara devam edilsin mi?";
 /* Label used near to the option selected to encode the images uploaded to a chat (Automatic, High, Optimised) */
-"Image Quality"="Görüntü kalitesi";
+"Image Quality"="Fotoğraf kalitesi";
 /* Description of Automatic Image Quality option */
-"Send smaller size images through cellular networks and original size images through wifi"="Mobil verideyken optimize edilmiş, kablosuz ağdayken orijinal boyutlu görüntüler gönderin.";
+"Send smaller size images through cellular networks and original size images through wifi"="Mobil verideyken optimize edilmiş, kablosuz ağdayken orijinal boyutlu fotoğraflar gönderin.";
 /* Description of Optimised Image Quality option */
-"Send smaller size images optimised for lower data consumption"="Her zaman optimize edilmiş görüntüler gönderin.";
+"Send smaller size images optimised for lower data consumption"="Her zaman optimize edilmiş fotoğraflar gönderin.";
 /* Description of High Image Quality option */
-"Send original size, increased quality images"="Her zaman orijinal boyutlu görüntüler gönderin.";
+"Send original size, increased quality images"="Her zaman orijinal boyutlu fotoğraflar gönderin.";
 /* Setting title for Doc scan view */
 "Save Settings"="Ayarları kaydet";
 /* Default title given to the document created when you use the option 'Scan Document' in the app */
@@ -2239,13 +2199,13 @@
 /* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the header title that appears above */
 "settings.userInterface.mediaDiscovery.header"="Galeri görünümü";
 /* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the footer message body that appears under that option */
-"settings.userInterface.mediaDiscovery.footer.body"="Yalnızca görüntü veya video içeren klasörleri görsel bir ızgarada açın. Medyaya küçük resimlere göre göz atın ve tarihe göre filtreleyin.";
+"settings.userInterface.mediaDiscovery.footer.body"="Yalnızca fotoğraf veya video içeren klasörleri görsel bir ızgarada açın. Medyaya küçük resimlere göre göz atın ve tarihe göre filtreleyin.";
 /* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the footer message body link that appears under that option */
 "settings.userInterface.mediaDiscovery.footer.link"="Galeri görünümü hakkında daha fazlasını öğrenin";
 /* In Settings - User Interface, there is a setting that can determine if the app should also load sub folder media. This is the label in the setting */
 "settings.userInterface.mediaDiscoverySubFolder"="Alt klasörlerde galeri görünümü";
 /* In Settings - User Interface, there is a setting that can determine if the app should also load sub folder media. This is the footer message body that appears under that option */
-"settings.userInterface.mediaDiscoverySubFolder.footer"="Alt klasörlerdeki görüntüler ve videolar da galeri görünümüne dahil edilecektir";
+"settings.userInterface.mediaDiscoverySubFolder.footer"="Alt klasörlerdeki fotoğraflar ve videolar da galeri görünümüne dahil edilecektir";
 /* In Settings - User Interface, there is an option that you can enable to hide the contents of the Recents section */
 "settings.userInterface.hideRecentActivity"="Son etkinliği gizle";
 /* In Settings - User Interface, there is an option that you can enable to hide the contents of the Recents section. This is the footer that appears under that option. */
@@ -2401,7 +2361,7 @@
 /* Text to indicate the user to reset/change the password of a link */
 "Reset Password"="Şifreyi sıfırla";
 /* Stand-alone error message shown to users who attempt to load/access a link where the user has been suspended/taken-down due to severe violation of our terms of service. */
-"This link is unavailable as the user’s account has been closed for gross violation of MEGA’s [A]Terms of Service[/A]."="Bu bağlantı, kullanıcının hesabının MEGA [A]Hizmet Şartları[/A]'nı ağır şekilde ihlal etmesi nedeniyle kapatılmasından dolayı kullanılamıyor.";
+"This link is unavailable as the user’s account has been closed for gross violation of MEGA’s [A]Terms of Service[/A]."="Bu bağlantı, kullanıcının hesabının MEGA [A]Hizmet Şartları[/A]’nı ağır şekilde ihlal etmesi nedeniyle kapatılmasından dolayı kullanılamıyor.";
 /* Stand-alone error message shown to users who attempt to load/access a link where the link has been taken down due to severe violation of our terms of service. */
 "Taken down due to severe violation of our terms of service"="Bu klasörün veya dosyanın Çocuk İstismarı Materyali, Şiddet İçeren Aşırıcılık veya Hayvanlarla Cinsel İlişki gibi sakıncalı içerik barındırdığı bildirildi. Bağlantıyı oluşturan kişinin hesabı kapatıldı ve IP adresi de dahil olmak üzere tüm bilgileri yetkililere verildi.";
 /* Text used to show the user that some resource is not available */
@@ -2467,9 +2427,9 @@
 /* Video Explorer Screen: No audio files in the account */
 "No videos found"="Video bulunamadı";
 /* Image title for the photo explorer */
-"home.images.title"="Görüntüler";
+"home.images.title"="Fotoğraflar";
 /* Photo Explorer Screen: No images in the account */
-"home.images.empty"="Görüntü bulunamadı";
+"home.images.empty"="Fotoğraf bulunamadı";
 /* Title of Favourites explorer view card on Home */
 "home.favourites.title"="Favoriler";
 /* Accessibility label for Home section in tabbar item */
@@ -2491,13 +2451,13 @@
 /* Cookie dialog title */
 "dialog.cookies.title.yourPrivacy"="Gizliliğiniz";
 /* Cookie dialog text. */
-"dialog.cookies.description"="Çerezleri ve benzer teknolojileri yalnızca size MEGA'dan talep ettiğiniz hizmetleri sunmak veya analiz ve performans verileri toplamak amacıyla kullanırız. Reklam takibi veya sizinle ilgili kişisel bilgileri üçüncü taraflarla paylaşmak için çerez kullanmayız.";
+"dialog.cookies.description"="Çerezleri ve benzer teknolojileri yalnızca size MEGA’dan talep ettiğiniz hizmetleri sunmak veya analiz ve performans verileri toplamak amacıyla kullanırız. Reklam takibi veya sizinle ilgili kişisel bilgileri üçüncü taraflarla paylaşmak için çerez kullanmayız.";
 /* Cookie dialog title to manage cookies */
 "dialog.cookies.title.manageCookies"="Çerezleri yönet";
 /* Cookie dialog description with cookie policy. */
 "dialog.cookies.description.cookiePolicy"="Hizmetlerimizi geliştirmemize yardımcı olmak için çerezleri ve benzer teknolojileri kullanırız. [A]Çerez Politikamızda[/A] daha fazlasını öğrenin.";
 /* Cookie dialog description with advertisement cookie policy. */
-"dialog.cookies.description.adsCookiePolicy"="Hizmetlerimizi iyileştirmemize yardımcı olmak ve reklam amacıyla çerezleri ve benzer teknolojileri kullanıyoruz. MEGA'yı kullanmaya devam ederek güncellenmiş [A]Çerez Politikamızın[/A] şartlarını kabul etmiş olursunuz.";
+"dialog.cookies.description.adsCookiePolicy"="Hizmetlerimizi iyileştirmemize yardımcı olmak ve reklam amacıyla çerezleri ve benzer teknolojileri kullanıyoruz. MEGA’yı kullanmaya devam ederek güncellenmiş [A]Çerez Politikamızın[/A] şartlarını kabul etmiş olursunuz.";
 /* Cookie dialog button label. */
 "dialog.cookies.accept"="Çerezleri kabul et";
 /* Cookie dialog footer description */
@@ -2526,8 +2486,6 @@
 "Create new file"="Yeni dosya oluştur";
 /* Confirmation dialog shown to user when they try to revert a node in an incoming ReadWrite share. */
 "You do not have the permissions required to revert this file. In order to continue, we can create a new file with the reverted data. Would you like to proceed?"="Bu dosyayı geri almak için gereken izinlere sahip değilsiniz. Ancak önceki sürümle yeni bir dosya oluşturabilirsiniz. Devam etmek istiyor musunuz?";
-/* The new LITE payment plan. This means it is a light or lightweight payment plan compared to the full / heavyweight plans with lots of bandwidth and storage (PRO I, PRO II, PRO III). */
-"Pro Lite"="Pro Lite";
 /* The avatar picture button to go to my account page. Use for voice over. */
 "My Account"="Hesabım";
 /* Text for title for favourite nodes */
@@ -2547,7 +2505,7 @@
 /* Text description for the Offline QuickAccess widget */
 "Quickly access files on Offline section"="Çevrim dışı bölümünüzden dosyalara hızlıca erişin";
 /* Dialog title for the no enough device storage screen */
-"The device does not have enough space for MEGA to run properly."="Cihazda MEGA'nın düzgün çalışması için yeterli alan yok.";
+"The device does not have enough space for MEGA to run properly."="Cihazda MEGA’nın düzgün çalışması için yeterli alan yok.";
 /* Dialog description for the no enough device storage screen */
 "Free up some space by deleting apps you no longer use or large video files in your gallery. You can manage your storage in %@"="Artık kullanmadığınız uygulamaları veya galerinizdeki büyük video dosyalarını silerek biraz alan açın. Depolama alanınızı %@ içinde yönetebilirsiniz";
 /* The title of Turn on Notifications view */
@@ -2555,13 +2513,13 @@
 /* The description of Turn on Notifications view */
 "dialog.turnOnNotifications.label.description"="Böylece yeni mesajları cihazınızda anında görebilirsiniz.";
 /* First step to turn on notifications */
-"dialog.turnOnNotifications.label.stepOne"="1. <b>Ayarlar</b>'ı açın";
+"dialog.turnOnNotifications.label.stepOne"="1. <b>Ayarlar</b>’ı açın";
 /* Second step to turn on notifications */
-"dialog.turnOnNotifications.label.stepTwo"="2. <b>Bildirimler</b>'e dokunun";
+"dialog.turnOnNotifications.label.stepTwo"="2. <b>Bildirimler</b>’e dokunun";
 /* Third step to turn on notifications */
-"dialog.turnOnNotifications.label.stepThree"="3. <b>MEGA</b>'ya dokunun";
+"dialog.turnOnNotifications.label.stepThree"="3. <b>MEGA</b>’ya dokunun";
 /* Fourth step to turn on notifications */
-"dialog.turnOnNotifications.label.stepFour"="4. <b>Bildirimlere izin ver</b>'i açın";
+"dialog.turnOnNotifications.label.stepFour"="4. <b>Bildirimlere izin ver</b>’i açın";
 /* Title of the button to open Settings */
 "dialog.turnOnNotifications.button.primary"="Ayarları aç";
 /* Dialog title for the change launch tab screen */
@@ -2589,7 +2547,7 @@
 /* Title of Over Disk Quota dialog */
 "dialog.storage.odq.title"="Lütfen yükseltin";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. @% is placeholder. */
-"dialog.storage.almostFull.detail"="Bulut depolamanız neredeyse dolu. Şimdi yükseltin ve %@ TB'ye kadar bulut depolama alanı kazanın.";
+"dialog.storage.almostFull.detail"="Bulut depolamanız neredeyse dolu. Şimdi yükseltin ve %@ TB’ye kadar bulut depolama alanı kazanın.";
 /* Over Disk Quota detail message informing the user that they've reached the full capacity of their accounts. */
 "dialog.storage.odq.detail"="Bulut depolama alanınız dolu. Depolama alanınızı artırmak ve ek avantajlardan yararlanmak için lütfen bir MEGA Pro planına yükseltin. Depolama sınırınızı aşar ve yükseltme yapmaz veya bazı verileri silmezseniz hesabınız kilitlenebilir. Daha fazla bilgi için lütfen size gönderdiğimiz e-postalara bakın.";
 /* Over Disk Quota paywall not final title. */
@@ -2691,7 +2649,7 @@
 /* Message shown when the user is the only one left in the meeting */
 "meetings.message.noOtherParticipants"="Burada tek başınasınız…";
 /* Message header when the user enters a invalid meeting URL */
-"meetings.joinMeeting.header"="Geçersiz toplantı URL'si";
+"meetings.joinMeeting.header"="Geçersiz toplantı URL’si";
 /* Message description when the user enters a invalid meeting URL */
 "meetings.joinMeeting.description"="Toplantıya katılamıyor. Lütfen bağlantının geçerli olup olmadığını kontrol edin.";
 /* Message shown when the meeting link cannot be generated */
@@ -2701,7 +2659,7 @@
 /* Button text to join a meeting for the logged in user */
 "meetings.link.guest.joinButtonText"="Misafir olarak katıl";
 /* Encourage Guest User to Join Mega Screen Navigation Bar Title */
-"meetings.joinMega.title"="MEGA'ya katıl";
+"meetings.joinMega.title"="MEGA’ya katıl";
 /* Guest user join Mega: paragraph 1 title */
 "meetings.joinMega.paragraph1.title"="Gizliliğiniz önemlidir";
 /* Guest user join Mega: paragraph 1 description */
@@ -2713,7 +2671,7 @@
 /* Message shown when the user privilege is changed to moderator */
 "meetings.notifications.moderatorPrivilege"="Yeni moderatör sizsiniz";
 /* This message is shown when calling and the receiver is not picking up the call */
-"meetings.incompatibility.warningMessage"="MEGA Chat'i yükseltiyoruz. Tüm taraflar MEGA Uygulamalarını en son sürüme güncellemedikçe, sürüm uyumsuzluğu nedeniyle aramalarınız bağlanmayabilir.";
+"meetings.incompatibility.warningMessage"="MEGA Chat’i yükseltiyoruz. Tüm taraflar MEGA Uygulamalarını en son sürüme güncellemedikçe, sürüm uyumsuzluğu nedeniyle aramalarınız bağlanmayabilir.";
 /* This is the button text for enabling the loud speaker in the floating panel for meetings */
 "meetings.quickAction.speaker"="Hoparlör";
 /* This is the button text for flipping the front and back camera in the floating panel for meetings */
@@ -2725,9 +2683,9 @@
 /* Message to inform the local user is having a bad quality network with someone in the current group call */
 "meetings.poorConnection"="Zayıf bağlantı";
 /* Header of a Use Mobile Data setting to load preview of images in hight resolution */
-"settings.fileManagement.useMobileData.header"="Yüksek çözünürlüklü görüntüleri ön izle";
+"settings.fileManagement.useMobileData.header"="Yüksek çözünürlüklü fotoğrafları ön izle";
 /* Footer explaning how Use Mobile Data setting to load preview of images in hight resolution works */
-"settings.fileManagement.useMobileData.footer"="Ön izleme sırasında yüksek çözünürlüklü görüntüleri yüklemek için mobil verileri kullanın. Devre dışı bırakılırsa, yüksek çözünürlüklü görüntü yalnızca yakınlaştırdığınızda yüklenir.";
+"settings.fileManagement.useMobileData.footer"="Ön izleme sırasında yüksek çözünürlüklü fotoğrafları yüklemek için mobil verileri kullanın. Devre dışı bırakılırsa, yüksek çözünürlüklü fotoğraf yalnızca yakınlaştırdığınızda yüklenir.";
 /* Dialog title shown when a user tries to purchase a subscription while having a subscription activated from another platform. */
 "account.upgrade.alreadyHaveASubscription.title"="Zaten aktif bir aboneliğiniz var";
 /* Dialog message shown when a user tries to purchase a subscriptions while having a subscription activated from another platform. */
@@ -2739,21 +2697,21 @@
 /* Dialog title shown before deleting an account with active subscription */
 "account.delete.subscription.title"="Aktif abonelik";
 /* Dialog message shown before deleting an account with active iTunes subscription */
-"account.delete.subscription.itunes"="Apple ile aktif bir MEGA aboneliğiniz var. MEGA sizin için iptal edemediğinden, Abonelikler'den ayrı olarak iptal etmeniz gerekir. Daha fazla bilgi için Yardım Merkezimizi ziyaret edin.";
+"account.delete.subscription.itunes"="Apple ile aktif bir MEGA aboneliğiniz var. MEGA sizin için iptal edemediğinden, Abonelikler’den ayrı olarak iptal etmeniz gerekir. Daha fazla bilgi için Yardım Merkezimizi ziyaret edin.";
 /* Dialog button title which triggers the action to visit AppStore Subscriptions */
 "account.delete.subscription.itunes.manage"="Abonelikleri yönet";
 /* Dialog message shown before deleting an account with active Google play subscription */
-"account.delete.subscription.googlePlay"="Google ile aktif bir MEGA aboneliğiniz var. MEGA sizin için iptal edemediğinden, Google Play'de ayrı olarak iptal etmeniz gerekir. Daha fazla bilgi için Yardım Merkezimizi ziyaret edin.";
+"account.delete.subscription.googlePlay"="Google ile aktif bir MEGA aboneliğiniz var. MEGA sizin için iptal edemediğinden, Google Play’de ayrı olarak iptal etmeniz gerekir. Daha fazla bilgi için Yardım Merkezimizi ziyaret edin.";
 /* Dialog button title which triggers the action to visit Google play */
-"account.delete.subscription.googlePlay.visit"="Google Play'i ziyaret et";
+"account.delete.subscription.googlePlay.visit"="Google Play’i ziyaret et";
 /* Dialog message shown before deleting an account with active Huawei AppGallery subscription */
-"account.delete.subscription.huaweiAppGallery"="Huawei ile aktif bir MEGA aboneliğiniz var. MEGA sizin için iptal edemediğinden, Huawei AppGallery'de ayrı olarak iptal etmeniz gerekir. Daha fazla bilgi için Yardım Merkezimizi ziyaret edin.";
+"account.delete.subscription.huaweiAppGallery"="Huawei ile aktif bir MEGA aboneliğiniz var. MEGA sizin için iptal edemediğinden, Huawei AppGallery’de ayrı olarak iptal etmeniz gerekir. Daha fazla bilgi için Yardım Merkezimizi ziyaret edin.";
 /* Dialog button title which triggers the action to visit Huawei app gallery */
-"account.delete.subscription.huaweiAppGallery.visit"="AppGallery'yi ziyaret et";
+"account.delete.subscription.huaweiAppGallery.visit"="AppGallery’yi ziyaret et";
 /* Dialog message shown before deleting an account with active webclient subscription */
 "account.delete.subscription.webClient"="Bu, hesabınızı silmek için son adımdır. Hem hesabınız hem de aboneliğiniz silinecek ve hesapta depolanan tüm verileri kalıcı olarak kaybedeceksiniz. Lütfen aşağıya şifrenizi girin.";
 /* Button that allows the user to upload a photo, e.g. his avatar photo */
-"account.profile.avatar.uploadPhoto"="Profil resmini değiştir";
+"account.profile.avatar.uploadPhoto"="Profil fotoğrafını değiştir";
 /* Displayed when the user's Business account subscription is active. */
 "account.profile.accountStatus.active"="Aktif";
 /* Displayed when the user's Business account is in a grace period and requires payment to maintain service. */
@@ -2775,7 +2733,7 @@
 /* File extension: .3ds. Commercial names should be stay on English */
 "general.filetype.3ds"="3D sahne";
 /* File extensions: .3fr, .arw, .cr2, .dcr, .fff, .mef, .mrw, .nef, .orf, .pef and .rwl. Commercial names should be stay on English */
-"general.filetype.rawImage"="RAW görüntü";
+"general.filetype.rawImage"="RAW fotoğrafı";
 /* File extension: .3g2. Commercial names should be stay on English */
 "general.filetype.3g2"="Multimedya";
 /* File extension: .7z. Commercial names should be stay on English */
@@ -2799,11 +2757,11 @@
 /* File extension: .avi. Name of a multimedia container format */
 "general.filetype.avi"="A/V arayerleştirme";
 /* File extension: .bat. "DOS" is not a commercial name, but the acronym for disk operating system. "Batch" is common noun */
-"general.filetype.bat"="DOS batch'i";
+"general.filetype.bat"="DOS batch’i";
 /* File extension: .bay. Commercial names should be stay on English */
-"general.filetype.bay"="Casio RAW görüntüsü";
+"general.filetype.bay"="Casio RAW fotoğrafı";
 /* File extension: .bmp. Commercial names should be stay on English */
-"general.filetype.bmp"="Bitmap görüntüsü";
+"general.filetype.bmp"="Bitmap fotoğrafı";
 /* File extension: .bz2. Commercial names should be stay on English */
 "general.filetype.bz2"="UNIX sıkıştırılmış";
 /* File extension: .c. Commercial names should be stay on English */
@@ -2811,7 +2769,7 @@
 /* File extensions: .cc, .cpp and .cxx. Commercial names should be stay on English */
 "general.filetype.cpp"="C++ kaynak kodu";
 /* File extension. Commercial names should be stay on English */
-"general.filetype.cdr"="CorelDRAW görüntüsü";
+"general.filetype.cdr"="CorelDRAW fotoğrafı";
 /* File extension: .cgi. Is not a commercial name, but the name of an interface specification. "script" is common noun. */
 "general.filetype.cgi"="CGI scripti";
 /* File extension: .class. Commercial names should be stay on English */
@@ -2827,9 +2785,9 @@
 /* File extension: .dotx. Commercial names should be stay on English */
 "general.filetype.wordTemplate"="MS Word şablonu";
 /* File extension: .dxf. Commercial names should be stay on English */
-"general.filetype.dxf"="DXF görüntüsü";
+"general.filetype.dxf"="DXF fotoğrafı";
 /* File extension: .eps. Commercial names should be stay on English */
-"general.filetype.eps"="EPS görüntüsü";
+"general.filetype.eps"="EPS fotoğrafı";
 /* File extension: .exe. Commercial names should be stay on English */
 "general.filetype.exe"="Yürütülebilir";
 /* File extension: .flac. Commercial names should be stay on English */
@@ -2841,7 +2799,7 @@
 /* File extension: .fon. Commercial names should be stay on English */
 "general.filetype.fon"="Yazı Tipi";
 /* File extension: .gadget. Commercial names should be stay on English */
-"general.filetype.gadget"="Windows gadget'ı";
+"general.filetype.gadget"="Windows gadget’ı";
 /* File extension: .gif. Commercial names should be stay on English */
 "general.filetype.gif"="GIF görüntüsü";
 /* File extension: .gpx. Commercial names should be stay on English */
@@ -2857,13 +2815,13 @@
 /* File extension: .iff. Commercial names should be stay on English */
 "general.filetype.iff"="Değişim dosya biçimi";
 /* File extension: .iso. Commercial names should be stay on English */
-"general.filetype.iso"="ISO görüntüsü";
+"general.filetype.iso"="ISO imajı";
 /* File extension: .jar. Commercial names should be stay on English */
 "general.filetype.jar"="Java arşivi";
 /* File extension: .java. Commercial names should be stay on English */
 "general.filetype.java"="Java kodu";
 /* File extensions: .jpg and .jpeg. Commercial names should be stay on English */
-"general.filetype.jpeg"="JPEG görüntüsü";
+"general.filetype.jpeg"="JPEG fotoğrafı";
 /* File extension: .log. Commercial names should be stay on English */
 "general.filetype.log"="Günlük";
 /* File extension: .3mu. Commercial names should be stay on English */
@@ -2905,7 +2863,7 @@
 /* File extension: .pls. Commercial names should be stay on English */
 "general.filetype.pls"="Sesli oynatma listesi";
 /* File extension: .png. Commercial names should be stay on English */
-"general.filetype.png"="PNG görüntüsü";
+"general.filetype.png"="PNG fotoğrafı";
 /* File extension: .py. Is not a commercial name. "script" is a common noun */
 "general.filetype.py"="Python scripti";
 /* File extension: .rar. Commercial names should be stay on English */
@@ -2913,9 +2871,9 @@
 /* File extension: .rtf. Commercial names should be stay on English */
 "general.filetype.rtf"="Zengin metin";
 /* File extension: .rw2. Commercial names should be stay on English */
-"general.filetype.rw2"="Panasonic RAW görüntüsü";
+"general.filetype.rw2"="Panasonic RAW fotoğrafı";
 /* File extension: .sh. Is not a commercial name. "shell" is a common noun */
-"general.filetype.sh"="Bash shell'i";
+"general.filetype.sh"="Bash shell’i";
 /* File extension: .shmtl. Commercial names should be stay on English */
 "general.filetype.shtml"="Sunucu HTML";
 /* File extension: .sitx. Commercial names should be stay on English */
@@ -2923,11 +2881,11 @@
 /* File extension: .sql. Commercial names should be stay on English */
 "general.filetype.sql"="SQL ifadeleri";
 /* File extension: .srf. Commercial names should be stay on English */
-"general.filetype.srf"="Sony RAW görüntüsü";
+"general.filetype.srf"="Sony RAW fotoğrafı";
 /* File extension: .srt. Commercial names should be stay on English */
 "general.filetype.subtitle"="Altyazı";
 /* File extension: .svg and .svgz. Commercial names should be stay on English */
-"general.filetype.vectorImage"="Vektör Görüntü";
+"general.filetype.vectorImage"="Vektör Fotoğraf";
 /* File extension: .swf. Commercial names should be stay on English */
 "general.filetype.swf"="Flash filmi";
 /* File extension: .tar. Commercial names should be stay on English */
@@ -2937,9 +2895,9 @@
 /* File extension: .tga. Is not a commercial name. "graphic" is a common noun */
 "general.filetype.tga"="TARGA grafiği";
 /* File extension: .tif. Commercial names should be stay on English */
-"general.filetype.tif"="TIF görüntüsü";
+"general.filetype.tif"="TIF fotoğrafı";
 /* File extension: .tiff. Commercial names should be stay on English */
-"general.filetype.tiff"="TIFF görüntüsü";
+"general.filetype.tiff"="TIFF fotoğrafı";
 /* File extension: .ttf. Commercial names should be stay on English */
 "general.filetype.ttf"="TrueType yazı tipi";
 /* File extension: .wav. Commercial names should be stay on English */
@@ -2959,7 +2917,7 @@
 /* Button title for incoming call with `initial`, `joining` and `userNoPresent` status */
 "chat.joinCall"="Aramaya katıl";
 /* Description shown in chat screen if the user didn't allow access to photos */
-"chat.photos.allowPhotoAccessMessage"="Fotoğraf ve video paylaşmak için MEGA'nın galerinize erişmesine izin verin";
+"chat.photos.allowPhotoAccessMessage"="Fotoğraf ve video paylaşmak için MEGA’nın galerinize erişmesine izin verin";
 /* Alert title to confirm if the users want to attach log files generated by iOS to our support team. */
 "help.reportIssue.attachLogFiles.title"="Günlük dosyalarını ekle";
 /* Alert message to confirm if the users want to attach log files generated by iOS to our support team. */
@@ -2969,7 +2927,7 @@
 /* No backups and old inbox files in the account message */
 "backups.empty.state.message"="Yedeklemelerde öğe yok";
 /* No backups and old inbox files in the account description message */
-"backups.empty.state.description"="Yedeklenmiş dosyalarınızın ve klasörlerinizin depolandığı yer burasıdır. Yedeklenen öğeleriniz, Bulut depolamanızda yanlışlıkla değiştirilmesini önlemek için \"salt okunur\"dur.\nMasaüstü uygulamamızı kullanarak bilgisayarınızdan MEGA'ya öğeleri yedekleyebilirsiniz.";
+"backups.empty.state.description"="Yedeklenmiş dosyalarınızın ve klasörlerinizin depolandığı yer burasıdır. Yedeklenen öğeleriniz, Bulut depolamanızda yanlışlıkla değiştirilmesini önlemek için \"salt okunur\"dur.\nMasaüstü uygulamamızı kullanarak bilgisayarınızdan MEGA’ya öğeleri yedekleyebilirsiniz.";
 /* Title of the alert shown when you confirm to cancel pending transfers */
 "transfers.cancellable.title"="Aktarımlar iptal edilsin mi?";
 /* Message for action of cancelling a transfer */
@@ -3001,7 +2959,7 @@
 /* Title of the dialog button to discard a report. */
 "help.reportIssue.discardReport"="Raporu sil";
 /* Label to indicate the user that needs to describe the issue through the text edit field of bug report form. */
-"help.reportIssue.describe"="Geri bildiriminiz MEGA'yı geliştirmemize yardımcı olur. Lütfen yaşadığınız sorunu açıkça açıklayın. Ne kadar fazla ayrıntı verirseniz çözmemiz o kadar kolay olur.";
+"help.reportIssue.describe"="Geri bildiriminiz MEGA’yı geliştirmemize yardımcı olur. Lütfen yaşadığınız sorunu açıkça açıklayın. Ne kadar fazla ayrıntı verirseniz çözmemiz o kadar kolay olur.";
 /* Label to indicate that users' input has not reached the required minimum characters */
 "help.reportIssue.minCharacterNotReach.error"="Açıklama en az 10 karakter olmalıdır";
 /* Switch to confirm the attachment and upload of log files generated by iOS to our support team. */
@@ -3037,7 +2995,7 @@
 /* Title of Audio Player dialog for Playback Continuation */
 "media.audio.playbackContinuation.dialog.title"="Ses çalmaya devam etsin mi?";
 /* Description of Audio Player dialog for Playback Continuation */
-"media.audio.playbackContinuation.dialog.description"="“%@”, %@'den devam edecektir.";
+"media.audio.playbackContinuation.dialog.description"="“%@”, %@’den devam edecektir.";
 /* Resume option for Audio Player dialog for Playback Continuation */
 "media.audio.playbackContinuation.dialog.resume"="Devam ettir";
 /* Restart option for Audio Player dialog for Playback Continuation */
@@ -3199,7 +3157,7 @@
 /* Error message when trying to login and the account is blocked due to copyright violation */
 "account.suspension.message.copyright"="MEGA hesabınız, tekrarlanan telif hakkı ihlali iddiaları nedeniyle askıya alındı. Bu, hesabınıza veya içindeki verilere erişemeyeceğiniz anlamına gelir.\n\nKarşı bildirimde bulunma hakkında daha fazla bilgi için e-posta gelen kutunuzu kontrol edin.";
 /* Error message when trying to login and the account is blocked due to any type of suspension, but copyright suspension */
-"account.suspension.message.nonCopyright"="Hesabınız MEGA Hizmet Şartları'nın ihlali nedeniyle kapatıldı.\n\nDepolanan verilerinize yeniden erişemeyecek veya yeni bir MEGA hesabına kaydolma yetkiniz olmayacaktır.";
+"account.suspension.message.nonCopyright"="Hesabınız MEGA Hizmet Şartları’nın ihlali nedeniyle kapatıldı.\n\nDepolanan verilerinize yeniden erişemeyecek veya yeni bir MEGA hesabına kaydolma yetkiniz olmayacaktır.";
 /* Text shown in extensions to notify users that they have to open the application first */
 "extensions.OpenApp.Message"="MEGA uygulamasını açın ve devam etmek için giriş yapın.";
 /* Account Storage title label of used storage size */
@@ -3209,7 +3167,7 @@
 /* Content title of expired Pro Flexi account view */
 "account.expired.proFlexi.title"="Hesap devre dışı bırakıldı";
 /* Content message of expired Pro Flexi account view */
-"account.expired.proFlexi.message"="Pro Flexi hesabınız ödeme hatası veya aboneliğinizi iptal etmeniz nedeniyle devre dışı bırakıldı. Hesabınızda depolanan verilere erişemeyeceksiniz. Bir ödeme yapmak ve aboneliğinizi yeniden etkinleştirmek için bir tarayıcı üzerinden MEGA'ya giriş yapın.";
+"account.expired.proFlexi.message"="Pro Flexi hesabınız ödeme hatası veya aboneliğinizi iptal etmeniz nedeniyle devre dışı bırakıldı. Hesabınızda depolanan verilere erişemeyeceksiniz. Bir ödeme yapmak ve aboneliğinizi yeniden etkinleştirmek için bir tarayıcı üzerinden MEGA’ya giriş yapın.";
 /* Label to indicate the user about the activation of a meeting link */
 "meetings.info.meetingLink"="Toplantı bağlantısı";
 /* Label to inform user about privacy of sharing a chat link */
@@ -3227,11 +3185,11 @@
 /* On fingerprint verification screen for Shared Items. Header message located at the top of contact's name and email address if the owner of the received shared item is unverified */
 "sharedItems.contactVerification.section.verifyContact.receiver.message"="Verilerinizi sıfır bilgi şifrelemesi ile koruyoruz. Ekstra güvenlik sağlamak için, paylaşılan klasörlere erişmeden önce bilgi aldığınız kişileri doğrulamanızı rica ederiz.";
 /* On Cloud Drive screen for incoming shared folder, if the contact which shared the folder is not verified, this is the message that wwe display */
-"sharedItems.contactVerification.contactNotVerifiedBannerMessage"="%@, doğrulamadığınız bir kişi tarafından paylaşıldı. Ekstra güvenlik sağlamak için, doğrulamak istediğiniz kişinin yanındaki ⓘ simgesine dokunarak Kişiler'deki kimlik bilgilerini doğrulamanızı öneririz.";
+"sharedItems.contactVerification.contactNotVerifiedBannerMessage"="%@, doğrulamadığınız bir kişi tarafından paylaşıldı. Ekstra güvenlik sağlamak için, doğrulamak istediğiniz kişinin yanındaki ⓘ simgesine dokunarak Kişiler’deki kimlik bilgilerini doğrulamanızı öneririz.";
 /* Title of the label in verification screen. It shows the credentials of the current user so it can be used to be verified by other contacts */
 "verifyCredentials.yourCredentials.title"="Kimlik bilgileriniz";
 /* Title of the header label in contact verification screen. */
-"verifyCredentials.headerMessage"="Verilerinizi sıfır bilgi şifrelemesi ile koruyoruz, böylece MEGA'da depoladığınız, paylaştığınız ve aldığınız tüm bilgiler güvende olur. Ekstra güvenlik sağlamak için, bilgi paylaştığınız veya veri aldığınız kişileri doğrulamanızı rica ederiz.";
+"verifyCredentials.headerMessage"="Verilerinizi sıfır bilgi şifrelemesi ile koruyoruz, böylece MEGA’da depoladığınız, paylaştığınız ve aldığınız tüm bilgiler güvende olur. Ekstra güvenlik sağlamak için, bilgi paylaştığınız veya veri aldığınız kişileri doğrulamanızı rica ederiz.";
 /* On Incoming Shared Items Tab. Name of the folder if the the owner and the receiver has not yet verified each other. */
 "sharedItems.tab.incoming.undecryptedFolderName"="[Şifresi çözülmemiş klasör]";
 /* On Outgoing Shared Items Tab. Text that shows the receiver's name of the shared folder. %@ will be replaced with the receiver's name. */
@@ -3365,7 +3323,7 @@
 /* Title shown in Files app when users open MEGA and passcode is enabled. Files app can't be used with passcode enabled */
 "picker.disable.passcode.title"="MEGA giriş kodunu devre dışı bırak";
 /* Description shown in Files app when users open MEGA and passcode is enabled. Files app can't be used with passcode enabled, it shows the users how to disable the passcode */
-"picker.disable.passcode.description"="Dosyalar uygulamasında MEGA'yı kullanmak için MEGA giriş kodunuzu devre dışı bırakın. MEGA uygulamasında Ayarlar'a gidin, Güvenlik > Giriş Kodu'na dokunun.";
+"picker.disable.passcode.description"="Dosyalar uygulamasında MEGA’yı kullanmak için MEGA giriş kodunuzu devre dışı bırakın. MEGA uygulamasında Ayarlar’a gidin, Güvenlik > Giriş Kodu’na dokunun.";
 /* Description shown when a meeting is in progress. This text appears in the chat listing screeen. */
 "meetings.scheduled.listing.inProgress.description"="Toplantı devam ediyor";
 /* Description shown when a meeting is in progress. Description includes time. This text appears in the chat listing screeen. */
@@ -3413,7 +3371,7 @@
 /* Alert title shown for video with options to resume playing the video or start from the beginning */
 "video.alert.resumeVideo.title"="Videoya devam edilsin mi?";
 /* Alert message shown for video with options to resume playing the video or start from the beginning. %1$s will be replaced by name of the video. %2$s will be replaced by video timestamp */
-"video.alert.resumeVideo.message"="“%1$s”, %2$s'den devam edecektir.";
+"video.alert.resumeVideo.message"="“%1$s”, %2$s’den devam edecektir.";
 /* Alert button title that will resume playing the video */
 "video.alert.resumeVideo.button.resume"="Devam ettir";
 /* Alert button title that will start playing the video from the beginning */
@@ -3501,7 +3459,7 @@
 /* Device Center backup error: Device folder can't be located */
 "device.center.backup.error.folderDeviceUnlocated"="Cihazınızdaki klasör bulunamıyor.";
 /* Device Center backup error: MEGA folder moved or deleted */
-"device.center.backup.error.folderMegaMovedOrDeleted"="MEGA'daki klasör taşındığı veya silindiği için bulunamıyor veya erişiminiz olmayabilir.";
+"device.center.backup.error.folderMegaMovedOrDeleted"="MEGA’daki klasör taşındığı veya silindiği için bulunamıyor veya erişiminiz olmayabilir.";
 /* Device Center backup error: Storage quota limit */
 "device.center.backup.error.storageQuotaReached"="Depolama kotası sınırına ulaşıldı.";
 /* Device Center backup error: Plan expired */
@@ -3634,34 +3592,22 @@
 "meetings.scheduleMeeting.create.selectedRecurrence.weekly.everyDay"="Günlük";
 /* On Upgrade Account Plan screen. Button title to restore purchases */
 "upgradeAccountPlan.button.restore.title"="Satın almayı geri yükle";
-/* On Upgrade Account Plan screen. Button title to show terms and policies */
-"upgradeAccountPlan.button.termsAndPolicies.title"="Şartlar ve politikalar";
 /* On Upgrade Account Plan screen. Button title to buy account plan. %@ will be the name of the selected plan */
 "upgradeAccountPlan.button.buyAccountPlan.title"="%@ satın al";
 /* On Upgrade Account Plan screen. Button title to buy account plan via web. %@ will be total savings for the users in percent */
 "upgradeAccountPlan.button.buyViaWeb.save"="Web sitemizden satın alın (%@ tasarruf edin)";
 /* On Upgrade Account Plan screen. Button title to buy account plan via web. %@ will be potential total savings for the users in percent */
-"upgradeAccountPlan.button.buyViaWeb.saveUpTo"="Web sitemizden satın alın (%@'a varan tasarruf edin)";
+"upgradeAccountPlan.button.buyViaWeb.saveUpTo"="Web sitemizden satın alın (%@’a varan tasarruf edin)";
 /* On Upgrade Account Plan screen. Button title to continue to buy account plan in-app when user could buy externally. %@ will be the higher price of the plan */
 "upgradeAccountPlan.button.buyInApp.title"="Uygulama içinde devam et (%@)";
 /* On Upgrade Account Plan screen. Button footer text to continue to buy account plan in-app when user could buy externally. %@ will be the higher price of the plan */
 "upgradeAccountPlan.button.buyInApp.footer"="Uygulama üzerinden satın alırken platform ücretleri uygulanır";
-/* On Upgrade Account Plan screen. Displayed header title text message */
-"upgradeAccountPlan.header.title.choosePlan"="Size uygun planı seçin";
-/* On Upgrade Account Plan screen. Displayed header title text with current plan. %@ will be the name of the current plan */
-"upgradeAccountPlan.header.title.currentPlan"="Mevcut plan: %@";
 /* On Upgrade Account Plan screen. Account Plan picker option for monthly term. */
 "upgradeAccountPlan.header.planTermPicker.monthly"="Aylık";
 /* On Upgrade Account Plan screen. Account Plan picker option for yearly term. */
 "upgradeAccountPlan.header.planTermPicker.yearly"="Yıllık";
 /* On Upgrade Account Plan screen. Displayed header title text with percent of savings with yearly billing. */
-"upgradeAccountPlan.header.title.saveYearlyBilling"="Yıllık faturalandırma ile %%6'ya kadar tasarruf edin";
-/* On Upgrade Account Plan screen. Displayed header title text for pro plan features */
-"upgradeAccountPlan.header.title.featuresOfProPlan"="Pro planlarının özellikleri";
-/* On Upgrade Account Plan screen. Displayed text body for pro plan features */
-"upgradeAccountPlan.message.text.featuresOfProPlan"="• Şifre korumalı bağlantılar\n\n• Son kullanma tarihi olan bağlantılar\n\n• Aktarım kotası paylaşımı\n\n• Pro Lite'ta 90 güne kadar, Pro I, II ve III'te 180 güne kadar silinmiş verileri geri sarma\n\n• Sınırsız katılımcıyla ve zaman kısıtlaması olmadan arama ve toplantı düzenleme\n\n• Yüksek hızlı VPN'imizle çevrim içi ortamda gizli kalma\n\n• 7 gün ila 10 yıl arasında Çöp kutusu temizliği planlama\n\n• Öncelikli destek";
-/* On Upgrade Account Plan screen. Displayed text body for pro plan features with ads */
-"upgradeAccountPlan.message.text.featuresOfProPlanWithAds"="• Şifre korumalı bağlantılar\n\n• Son kullanma tarihi olan bağlantılar\n\n• Aktarım kotası paylaşımı\n\n• Pro Lite'ta 90 güne kadar, Pro I, II ve III'te 180 güne kadar silinmiş verileri geri sarma\n\n• Sınırsız katılımcıyla ve zaman kısıtlaması olmadan arama ve toplantı düzenleme\n\n• Yüksek hızlı VPN'imizle çevrim içi ortamda gizli kalma\n\n• 7 gün ila 10 yıl arasında Çöp kutusu temizliği planlama\n\n• Öncelikli destek\n\n• Reklamsız";
+"upgradeAccountPlan.header.title.saveYearlyBilling"="Yıllık faturalandırma ile %%6’ya kadar tasarruf edin";
 /* On Upgrade Account Plan screen. Displayed header title text for subscription details */
 "upgradeAccountPlan.header.title.subscriptionDetails"="Abonelik ayrıntıları";
 /* On Upgrade Account Plan screen. Displayed text body for subscription details */
@@ -3737,7 +3683,7 @@
 /* Recurring meeting tip view title */
 "meetings.scheduleMeeting.recurringMeetingTip.title"="Yinelenen toplantıları yönet";
 /* Recurring meeting tip view message */
-"meetings.scheduleMeeting.recurringMeetingTip.message"="Toplantıya dokunup basılı tutarak ve Tekrarlar'ı seçerek yinelenen bir toplantının herhangi bir tekrarını görüntüleyebilir, iptal edebilir veya düzenleyebilirsiniz.";
+"meetings.scheduleMeeting.recurringMeetingTip.message"="Toplantıya dokunup basılı tutarak ve Tekrarlar’ı seçerek yinelenen bir toplantının herhangi bir tekrarını görüntüleyebilir, iptal edebilir veya düzenleyebilirsiniz.";
 /* Schedule meeting update button */
 "meetings.scheduleMeeting.update"="Güncelle";
 /* Schedule meeting update: Success message shown when the schedule meeeting is updated successfully. */
@@ -3779,7 +3725,7 @@
 /* Album failed to save to cloud drive alert message */
 "albumLink.alert.message.albumFailedToSaveToCloudDrive"="\"%@\" Bulut depolamaya kaydedilemiyor. Daha sonra tekrar deneyin ve sorun devam ederse bağlantıyı sizinle paylaşan kişiyle iletişime geçin.";
 /* Text displayed on banner we show when sharing folder with unverified contacts */
-"shareFolder.contactsNotVerified"="Bilgi paylaştığınız kişilerden bazıları sizin tarafınızdan doğrulanmadı. Ekstra güvenlik sağlamak için, doğrulamak istediğiniz kişinin yanındaki ⓘ simgesine dokunarak Kişiler'deki kimlik bilgilerini doğrulamanızı öneririz.";
+"shareFolder.contactsNotVerified"="Bilgi paylaştığınız kişilerden bazıları sizin tarafınızdan doğrulanmadı. Ekstra güvenlik sağlamak için, doğrulamak istediğiniz kişinin yanındaki ⓘ simgesine dokunarak Kişiler’deki kimlik bilgilerini doğrulamanızı öneririz.";
 /* Title of the dialog for sharing a folder containing sensitive items */
 "shareFolder.sensitive.alert.title"="Gizli öğeler";
 /* Message of the dialog for sharing a folder containing sensitive items */
@@ -3797,7 +3743,7 @@
 /* Button title of the dialog for transfer quota error to buy new plan */
 "transferQuotaError.button.buyNewPlan"="Yeni plan satın al";
 /* Footer message of the dialog for transfer quota error. [A] will be replaced by the usage quota percent. [B] will be replaced by the max transfer quota in TB. For example: 100% of 16 TB used */
-"transferQuotaError.footerMessage.quotaUsage"="[B] TB'nin [A]%% kadarı kullanıldı";
+"transferQuotaError.footerMessage.quotaUsage"="[B] TB’nin [A]%% kadarı kullanıldı";
 /* Title of the dialog for transfer quota error with limited available trasfer quota */
 "transferQuotaError.downloadLimitedQuota.title"="Sınırlı kullanılabilir aktarım kotası";
 /* Message text of the dialog for transfer quota error with limited available trasfer quota for free accounts */
@@ -3857,19 +3803,19 @@
 /* Call waiting room alert button to allow access */
 "chat.call.waitingRoom.alert.button.cancel"="İptal";
 /* Context menu action seen from native files application when selecting a file that's also present on MEGA */
-"fileProviderExtension.action.open"="MEGA'da aç";
+"fileProviderExtension.action.open"="MEGA’da aç";
 /* Filter name for searching on the home screen */
 "home.search.filter.docs"="Belgeler";
 /* Filter name for searching on the home screen */
-"home.search.filter.images"="Görüntüler";
+"home.search.filter.images"="Fotoğraflar";
 /* Filter name for searching on the home screen */
-"home.search.filter.audio"="Sesler";
+"home.search.filter.audio"="Ses";
 /* Filter name for searching on the home screen */
 "home.search.filter.video"="Video";
 /* Filter name for searching on the home screen */
 "home.search.filter.folders"="Klasörler";
 /* Filter name for searching on the home screen */
-"home.search.filter.pdfs"="PDF'ler";
+"home.search.filter.pdfs"="PDF’ler";
 /* Filter name for searching on the home screen */
 "home.search.filter.presentations"="Sunumlar";
 /* Filter name for searching on the home screen */
@@ -3899,7 +3845,7 @@
 /* Empty screen copy when no filter is selected on the home screen search */
 "home.search.empty.no-chip-selected"="Sonuç yok";
 /* Empty screen copy when Images filter is selected on the home screen search */
-"home.search.empty.no-images"="Görüntü yok";
+"home.search.empty.no-images"="Fotoğraf yok";
 /* Empty screen copy when Documents is selected on the home screen search */
 "home.search.empty.no-documents"="Belge yok";
 /* Empty screen copy when Audio filter is selected on the home screen search */
@@ -3923,29 +3869,17 @@
 /* Error shown when moving folder to inside itself */
 "Error.nodeCopyOrMove.circularDependency"="Hedef aynı klasör olduğu için bu klasörü taşıyamazsınız.";
 /* Auto media discovery banner title */
-"photos.mediaDiscovery.autoMediaDiscoveryBanner.title"="Bu klasör yalnızca görüntüler ve videolar içerdiğinden, otomatik olarak galeri görünümünde açtık. Görsel içeriğinizin keyfini daha sürükleyici bir düzen ile çıkarabilirsiniz. Bunu Ayarlar'da devre dışı bırakabilirsiniz.";
+"photos.mediaDiscovery.autoMediaDiscoveryBanner.title"="Bu klasör yalnızca fotoğraflar ve videolar içerdiğinden, otomatik olarak galeri görünümünde açtık. Görsel içeriğinizin keyfini daha sürükleyici bir düzen ile çıkarabilirsiniz. Bunu Ayarlar’da devre dışı bırakabilirsiniz.";
 /* Upgrade account screen header title after user onboarding */
 "onboarding.upgradeAccount.header.title"="Bir Pro planıyla daha fazlasını elde edin";
-/* Upgrade account screen header subTitle after user onboarding. %@ will be replaced by the price of the lowest plan per month. */
-"onboarding.upgradeAccount.header.subTitle"="Bir Pro planına yükseltin ve daha fazla depolama alanı ve Pro özelliklerine erişim elde edin. Planlar aylık sadece %@ gibi düşük bir fiyattan başlar";
 /* Upgrade account screen content header for pro plan feature list */
 "onboarding.upgradeAccount.content.proPlanFeatureHeader"="Sahip olacağınız bazı özellikler şunlardır:";
 /* Upgrade account screen content title about pro plan featuring as Generous Storage */
 "onboarding.upgradeAccount.content.generousStorage.title"="Üstün depolama esnekliği";
-/* Upgrade account screen content message about pro plan featuring as Generous Storage. [A] will be replaced by the storage capacity of the lowest pro plan and [B] will be replaced by its storage unit. Example: Starting from 400 GB, find the perfect fit for your storage needs. */
-"onboarding.upgradeAccount.content.generousStorage.message"="[A] [B]'den başlayarak, depolama ihtiyaçlarınız için mükemmel olanı bulun.";
-/* Upgrade account screen content title about pro plan featuring the Transfer Sharing */
-"onboarding.upgradeAccount.content.transferSharing.title"="Kolay, güvenli dosya paylaşımı";
-/* Upgrade account screen content message about pro plan featuring the Transfer Sharing */
-"onboarding.upgradeAccount.content.transferSharing.message"="Cömert bir aktarım kotası sayesinde büyük dosyaları paylaşın ve şifre korumalı bağlantılarla güvenliği sağlayın.";
-/* Upgrade account screen content title about pro plan featuring the Back up and rewind */
-"onboarding.upgradeAccount.content.backupAndRewind.title"="Bir daha asla veri kaybetmeyin";
-/* Upgrade account screen content message about pro plan featuring the Back up and rewind */
-"onboarding.upgradeAccount.content.backupAndRewind.message"="Tam güven için verilerinizi yedekleyin ve senkronize edin. Ayrıca, klasörleri 180 güne kadar herhangi bir tarihe geri yüklemek için Geri Sarma özelliğini kullanın.";
 /* Upgrade account screen content title about pro plan featuring the MEGA VPN */
 "onboarding.upgradeAccount.content.megaVPN.title"="MEGA VPN";
 /* Upgrade account screen content message about pro plan featuring the MEGA VPN */
-"onboarding.upgradeAccount.content.megaVPN.message"="Yüksek hızlı VPN'imizle çevrim içi ortamda gizli kalın.";
+"onboarding.upgradeAccount.content.megaVPN.message"="Yüksek hızlı VPN’imizle çevrim içi ortamda gizli kalın.";
 /* Upgrade account screen content title about pro plan featuring the calls and meetings */
 "onboarding.upgradeAccount.content.callsAndMeetings.title"="Sınırsız arama ve toplantı";
 /* Upgrade account screen content message about pro plan featuring the calls and meetings */
@@ -3954,14 +3888,8 @@
 "onboarding.upgradeAccount.content.additionalSecurity.title"="Paylaşım sırasında ek güvenlik";
 /* Upgrade account screen content message about pro plan featuring the Additional security when sharing */
 "onboarding.upgradeAccount.content.additionalSecurity.message"="Dosya ve klasör bağlantıları için şifreler ve son kullanma tarihleri ayarlayın.";
-/* Upgrade account screen content title about pro plan's other benefits */
-"onboarding.upgradeAccount.content.plusBenefits.title"="Ayrıca bu harika avantajlara erişim:";
-/* Upgrade account screen content message about pro plan's other benefits without Ad-free */
-"onboarding.upgradeAccount.content.plusBenefits.messageWithoutAds"="• MEGA VPN\n• Sınırsız arama ve toplantı";
-/* Upgrade account screen content message about pro plan's other benefits with Ad-free */
-"onboarding.upgradeAccount.content.plusBenefits.messageWithAds"="• MEGA VPN\n• Sınırsız arama ve toplantı\n• Reklamsız";
 /* Upgrade account screen button title that will direct to Upgrade plan page */
-"onboarding.upgradeAccount.button.viewProPlans"="Bugün Pro'ya yükseltin";
+"onboarding.upgradeAccount.button.viewProPlans"="Bugün Pro’ya yükseltin";
 /* Camera uploads banner enable state title */
 "cameraUploads.banner.enableState.title"="Kamera yüklemelerini etkinleştir";
 /* Camera uploads banner enable state description */
@@ -3995,7 +3923,7 @@
 /* Camera uploads status banner - uploads complete description */
 "cameraUploads.banner.status.uploadsComplete.subHeading"="Tüm öğeler yedeklendi";
 /* Camera uploads status banner - uploads partially completed due to limited access to photo library */
-"cameraUploads.banner.status.uploadsPartialComplete.limitedPhotoLibraryAccess.subHeading"="MEGA'nın fotoğraf arşivinize sınırlı erişimi var ve tüm fotoğrafları yedekleyemiyor.";
+"cameraUploads.banner.status.uploadsPartialComplete.limitedPhotoLibraryAccess.subHeading"="MEGA’nın fotoğraf arşivinize sınırlı erişimi var ve tüm fotoğrafları yedekleyemiyor.";
 /* Camera uploads status banner - uploads partially completed due to limited access to photo library action */
 "cameraUploads.banner.status.uploadsPartialComplete.limitedPhotoLibraryAccess.subHeadingAction"="İzinleri değiştirmek için dokunun.";
 /* Title of Terms of Violation alert */
@@ -4145,7 +4073,7 @@
 /* Calls: SFU protocol is outdated then show update alert dialog, with skip button */
 "calls.sfuOutdated.updateAppAlert.button.skip"="Atla";
 /* Meetings: free plan limitation text for scheduled meetings calls longer than 60 minutes. Text between tags is colour formatted, keep tags order in the string: [A] should appear before [/A] always. */
-"meetings.scheduleMeeting.create.freePlanLimitWarning.longerThan60Minutes"="Ücretsiz planınızın toplantılarda 60 dakikalık bir sınırı vardır. Pro kullanıcıları sınırsız arama yapabilir ve 1000'e kadar katılımcı ekleyebilir. [A]Hemen yükseltin[/A]";
+"meetings.scheduleMeeting.create.freePlanLimitWarning.longerThan60Minutes"="Ücretsiz planınızın toplantılarda 60 dakikalık bir sınırı vardır. Pro kullanıcıları sınırsız arama yapabilir ve 1000’e kadar katılımcı ekleyebilir. [A]Hemen yükseltin[/A]";
 /* Notifications: text for notification type display name */
 "notifications.notificationType.promo.title"="Sınırlı süreli teklif";
 /* Notifications: tag to show the user that there are promotions available in the notifications page and section. */
@@ -4165,7 +4093,7 @@
 /* Meetings: A warning message shown in the call UI when free-plan user has more than 100 participants */
 "meetings.waitingRoom.warning.limit100Participants"="Aramaya yalnızca 100 katılımcı katılabilir. Ek katılımcılar yalnızca sohbet gönderip okuyabilir. Daha fazla katılımcı eklemeniz mi gerekiyor? [A]Hemen yükseltin[/A]";
 /* Meetings: An warning shown in the banner in the waiting room tab when free-plan user has more than 100 participants */
-"meetings.waitingRoom.banner.limit100Participants.non-organizer-host"="Aramaya yalnızca 100 katılımcı katılabilir. Bu kısıtlamayı kaldırmak için düzenleyiciden Pro'ya yükseltmesini isteyin.";
+"meetings.waitingRoom.banner.limit100Participants.non-organizer-host"="Aramaya yalnızca 100 katılımcı katılabilir. Bu kısıtlamayı kaldırmak için düzenleyiciden Pro’ya yükseltmesini isteyin.";
 /* Meetings: An warning shown in the banner in the in-call tab when free-plan user has more than 100 participants */
 "meetings.inCall.banner.limit100Participants.organizer-host"="Aramaya yalnızca 100 katılımcı katılabilir. Ek katılımcılar yalnızca sohbet gönderip okuyabilir. Daha fazlasına mı ihtiyacınız var? [A]Hemen yükseltin[/A]";
 /* Calls: Free plan limit warning alert message for duration limit reached in free plan call */
@@ -4179,9 +4107,9 @@
 /* Meetings: Warning banner shown for hosts when showing list of contracts after trying to add participants to a call */
 "meetings.contact-picker.warning.over-limit.host"="Aramaya yalnızca 100 katılımcı katılabilir. Ek katılımcılar yalnızca sohbet gönderip okuyabilir. Daha fazla katılımcı eklemeniz mi gerekiyor? [A]Hemen yükseltin.[/A]";
 /* Calls: Text for dialog title presented when call is finished because of free account call duration limit */
-"calls.freePlanLimitWarning.upgradeToProDialog.title"="Sınırsız arama için Pro'ya yükseltin";
+"calls.freePlanLimitWarning.upgradeToProDialog.title"="Sınırsız arama için Pro’ya yükseltin";
 /* Calls: Text for dialog message presented when call is finished because of free account call duration limit */
-"calls.freePlanLimitWarning.upgradeToProDialog.message"="Aramanız 60 dakika sınırına ulaştı ve sona erdi. Pro kullanıcıları sınırsız arama süresine sahiptir ve 1000'e kadar katılımcı davet edebilir.";
+"calls.freePlanLimitWarning.upgradeToProDialog.message"="Aramanız 60 dakika sınırına ulaştı ve sona erdi. Pro kullanıcıları sınırsız arama süresine sahiptir ve 1000’e kadar katılımcı davet edebilir.";
 /* Calls: Text for dialog button presented when call is finished because of free account call duration limit */
 "calls.freePlanLimitWarning.upgradeToProDialog.button"="Şimdi yükselt";
 /* Hidden files and folders onboarding title */
@@ -4200,10 +4128,6 @@
 "onboarding.hiddenFilesAndFolders.outOfSight.content.message"="Gizli dosyaların ne zaman görünür olacağına siz karar verirsiniz. Gizli öğeleri geçici olarak göstermek için yeni bir ayar var.";
 /* My Account page: Menu Title of user account page */
 "account.myAccount.title"="Hesabım";
-/* Free plan title */
-"free.Plan.name"="Ücretsiz";
-/* Price description for the free plan */
-"free.Plan.Price.description"="Ücretsiz";
 /* Storage limit capacity, where %d is the number of gigabytes that marks the storage limit */
 "storage.Limit.capacity"="%d GB";
 /* Limited transfer limit title */
@@ -4253,7 +4177,7 @@
 /* Cancellation Subscription manage by Google Play title */
 "accounts.cancelSubscriptionSteps.googlePlay.title"="Aboneliğiniz Apple tarafından yönetilmiyor.";
 /* Cancellation Subscription manage by Google Play message */
-"accounts.cancelSubscriptionSteps.googlePlay.message"="Bunun nedeni, MEGA'ya Google Play üzerinden abone olmanızdır. Aboneliğinizi iptal etmek için şunları yapmanız gerekir:";
+"accounts.cancelSubscriptionSteps.googlePlay.message"="Bunun nedeni, MEGA’ya Google Play üzerinden abone olmanızdır. Aboneliğinizi iptal etmek için şunları yapmanız gerekir:";
 /* Cancellation Section Google Play Web Browser title: In a web browser */
 "accounts.cancelSubscriptionSteps.googlePlay.webBrowser.title"="Bir web tarayıcısında";
 /* Cancellation step Google Play Web Browser: First step using the web browser - 1. Visit play.google.com */
@@ -4263,11 +4187,11 @@
 /* Cancellation step Google Play Web Browser: Third step using the web browser - 3. Select your avatar then select Payments & subscriptions */
 "accounts.cancelSubscriptionSteps.googlePlay.webBrowser.step.three"="3. Avatarınıza tıklayın.";
 /* Cancellation step Google Play Web Browser: Fourth step using the web browser - 4. Select the Subscriptions tab */
-"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.step.four"="4. <b>Ödemeler ve abonelikler</b>'e tıklayın.";
+"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.step.four"="4. <b>Ödemeler ve abonelikler</b>’e tıklayın.";
 /* Cancellation step Google Play Web Browser: Fifth step using the web browser - 5. Locate your MEGA subscription */
-"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.step.five"="5. <b>Abonelikler</b>'e tıklayın.";
+"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.step.five"="5. <b>Abonelikler</b>’e tıklayın.";
 /* Cancellation step Google Play Web Browser: Sixth step using the web browser - Select Cancel subscription */
-"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.step.six"="6. MEGA aboneliğinizin altındaki <b>Aboneliği iptal et</b>'e tıklayın.";
+"accounts.cancelSubscriptionSteps.googlePlay.webBrowser.step.six"="6. MEGA aboneliğinizin altındaki <b>Aboneliği iptal et</b>’e tıklayın.";
 /* Cancellation Section Google Play Android Device title: On an Android device */
 "accounts.cancelSubscriptionSteps.googlePlay.androidDevice.title"="Bir Android cihazda";
 /* Cancellation step Google Play Android Device: First step using an android device - 1. Open the Play Store app */
@@ -4277,11 +4201,11 @@
 /* Cancellation step Google Play Android Device: Third step using an android device - 3. Select your avatar then select Payments & subscriptions */
 "accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.three"="3. Avatarınıza dokunun.";
 /* Cancellation step Google Play Android Device: Fourth step using an android device - 4. Select Subscriptions */
-"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.four"="4. <b>Ödemeler ve abonelikler</b>'e dokunun.";
+"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.four"="4. <b>Ödemeler ve abonelikler</b>’e dokunun.";
 /* Cancellation step Google Play Android Device: Fifth step using an android device - 5. Locate your MEGA subscription */
-"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.five"="5. <b>Abonelikler</b>'e dokunun";
+"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.five"="5. <b>Abonelikler</b>’e dokunun";
 /* Cancellation step Google Play Android Device: Sixth step using an android device - 6. Select Cancel subscription */
-"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.six"="6. MEGA aboneliğinizin altındaki <b>Aboneliği iptal et</b>'e dokunun.";
+"accounts.cancelSubscriptionSteps.googlePlay.androidDevice.step.six"="6. MEGA aboneliğinizin altındaki <b>Aboneliği iptal et</b>’e dokunun.";
 /* More button in Call UI that shows context menu. */
 "chat.call.quickAction.more"="Daha fazla";
 /* Context menu item to switch layout to main speaker (Call UI) */
@@ -4297,7 +4221,7 @@
 /* Cancellation Subscription manage by Webclient title */
 "accounts.cancelSubscriptionSteps.webClient.title"="Aboneliğinizi bir web tarayıcısı kullanarak iptal etmeniz gerekiyor";
 /* Cancellation Subscription manage by Webclient message */
-"accounts.cancelSubscriptionSteps.webClient.message"="Bunun nedeni, web tarayıcınızda MEGA'ya abone olmanızdır. Aboneliğinizi iptal etmek için şunları yapmanız gerekir:";
+"accounts.cancelSubscriptionSteps.webClient.message"="Bunun nedeni, web tarayıcınızda MEGA’ya abone olmanızdır. Aboneliğinizi iptal etmek için şunları yapmanız gerekir:";
 /* Cancellation Section Webclient on a computer title: On a computer */
 "accounts.cancelSubscriptionSteps.webClient.computer.title"="Bir bilgisayarda";
 /* Cancellation step Webclient: First step using the computer - 1. Visit MEGA website in your web browser. */
@@ -4307,11 +4231,11 @@
 /* Cancellation step Webclient: Third step using the computer - 3. Click the main menu. */
 "accounts.cancelSubscriptionSteps.webClient.computer.step.three"="3. Ana menüye tıklayın.";
 /* Cancellation step Webclient: Fourth step using the computer - 4. Click Settings. */
-"accounts.cancelSubscriptionSteps.webClient.computer.step.four"="4. <b>Ayarlar</b>'a tıklayın.";
+"accounts.cancelSubscriptionSteps.webClient.computer.step.four"="4. <b>Ayarlar</b>’a tıklayın.";
 /* Cancellation step Webclient: Fifth step using the computer - 5. Click Plan. */
-"accounts.cancelSubscriptionSteps.webClient.computer.step.five"="5. <b>Plan</b>'a tıklayın.";
+"accounts.cancelSubscriptionSteps.webClient.computer.step.five"="5. <b>Plan</b>’a tıklayın.";
 /* Cancellation step Webclient: Sixth step using the computer - 6. Click Cancel subscription. */
-"accounts.cancelSubscriptionSteps.webClient.computer.step.six"="6. <b>Aboneliği iptal et</b>'e tıklayın.";
+"accounts.cancelSubscriptionSteps.webClient.computer.step.six"="6. <b>Aboneliği iptal et</b>’e tıklayın.";
 /* Cancellation Section Webclient on mobile device title: On a mobile device */
 "accounts.cancelSubscriptionSteps.webClient.mobile.title"="Mobil cihazda";
 /* Cancellation step Webclient: First step using the mobile device - 1. Visit MEGA website in your web browser. */
@@ -4321,7 +4245,7 @@
 /* Cancellation step Webclient: Third step using the mobile device - 3. Tap on your avatar. */
 "accounts.cancelSubscriptionSteps.webClient.mobile.step.three"="3. Avatarınıza dokunun.";
 /* Cancellation step Webclient: Four step using the mobile device - 4. Tap Cancel subscription. */
-"accounts.cancelSubscriptionSteps.webClient.mobile.step.four"="4. <b>Aboneliği iptal et</b>'e dokunun.";
+"accounts.cancelSubscriptionSteps.webClient.mobile.step.four"="4. <b>Aboneliği iptal et</b>’e dokunun.";
 /* Cancel subscription survey header title */
 "accounts.cancelSubscriptionSurvey.header.title"="Ayrıldığınızı gördüğümüze üzüldük! Aboneliğinizi neden iptal ettiğinizi bize söyleyebilir misiniz?";
 /* Cancel subscription survey header subtitle */
@@ -4331,7 +4255,7 @@
 /* Cancel subscription survey reason with id 1 */
 "accounts.cancelSubscriptionSurvey.reason.one"="Bu plana geçici olarak ihtiyacım vardı ve artık kullanmıyorum";
 /* Cancel subscription survey follow up reason with id 1.a */
-"accounts.cancelSubscriptionSurvey.reason.one.a"="MEGA'yı yalnızca indirmeler için kullandım";
+"accounts.cancelSubscriptionSurvey.reason.one.a"="MEGA’yı yalnızca indirmeler için kullandım";
 /* Cancel subscription survey follow up reason with id 1.b */
 "accounts.cancelSubscriptionSurvey.reason.one.b"="Dosyaları geçici olarak saklamam gerekiyordu";
 /* Cancel subscription survey follow up reason with id 1.c */
@@ -4341,11 +4265,11 @@
 /* Cancel subscription survey reason with id 3 */
 "accounts.cancelSubscriptionSurvey.reason.three"="Planımdaki tüm depolama alanına ihtiyacım yok";
 /* Cancel subscription survey reason with id 4 */
-"accounts.cancelSubscriptionSurvey.reason.four"="MEGA'nın sahip olmadığı özelliklere ihtiyacım var";
+"accounts.cancelSubscriptionSurvey.reason.four"="MEGA’nın sahip olmadığı özelliklere ihtiyacım var";
 /* Cancel subscription survey reason with id 5 */
 "accounts.cancelSubscriptionSurvey.reason.five"="Başka bir sağlayıcıya geçiyorum";
 /* Cancel subscription survey reason with id 6 */
-"accounts.cancelSubscriptionSurvey.reason.six"="MEGA'yı kullanmayı zor buluyorum";
+"accounts.cancelSubscriptionSurvey.reason.six"="MEGA’yı kullanmayı zor buluyorum";
 /* Cancel subscription survey reason with id 7 */
 "accounts.cancelSubscriptionSurvey.reason.seven"="Destek ve müşteri hizmetlerinden memnun değilim";
 /* Cancel subscription survey reason with id 8 */
@@ -4355,7 +4279,7 @@
 /* Cancel subscription survey reason with id 10 */
 "accounts.cancelSubscriptionSurvey.reason.ten"="Abonelik veya otomatik faturalandırma istemiyorum";
 /* Cancel subscription survey checkbox title to allow MEGA to contact user */
-"accounts.cancelSubscriptionSurvey.allowToContactCheckbox.title"="MEGA'nın bu konu hakkında daha fazla konuşmak için benimle iletişime geçmesine izin veriyorum";
+"accounts.cancelSubscriptionSurvey.allowToContactCheckbox.title"="MEGA’nın bu konu hakkında daha fazla konuşmak için benimle iletişime geçmesine izin veriyorum";
 /* Cancel subscription survey button to cancel Subscription cancellation */
 "accounts.cancelSubscriptionSurvey.dontCancel.title"="İptal etme";
 /* Cancel subscription survey error message when user proceeds cancellation but no reason is selected */
@@ -4491,9 +4415,9 @@
 /* App Store Screenshots string - Image 8 */
 "appstore.screenshot8"="Fotoğraflarınızı ve videolarınızı yükleyip senkronize edebileceğiniz alanınız";
 /* App Store Screenshots string - Image 9 */
-"appstore.screenshot9"="MEGA'ya geçin";
+"appstore.screenshot9"="MEGA’ya geçin";
 /* App Store Screenshots string - Image 10 */
-"appstore.screenshot10"="Verilerini depolamak ve korumak için MEGA'ya güvenen milyonlarca kişi ve işletmeye katılın.";
+"appstore.screenshot10"="Verilerini depolamak ve korumak için MEGA’ya güvenen milyonlarca kişi ve işletmeye katılın.";
 /* Modal title when sharing a meeting link */
 "chat.meetings.shareLink.main"="Toplantı onaylandı: Başkalarını katılmaya davet edin";
 /* Modal description when sharing a meeting link */
@@ -4527,7 +4451,7 @@
 /* Section title for visual media photos section */
 "photos.searchResults.media.section.title"="Medya";
 /* Meetings: Warning banner show in various places about 100 participant limit */
-"meetings.warning.overParticipantLimit"="Aramaya yalnızca 100 katılımcı katılabilir. Ek katılımcılar yalnızca mesaj gönderip alabilir. Düzenleyici, bu kısıtlamaları kaldırmak için Pro'ya yükseltebilir.";
+"meetings.warning.overParticipantLimit"="Aramaya yalnızca 100 katılımcı katılabilir. Ek katılımcılar yalnızca mesaj gönderip alabilir. Düzenleyici, bu kısıtlamaları kaldırmak için Pro’ya yükseltebilir.";
 /* Over Disk Quota paywall Upgrade button title */
 "overDiskQuota.paywall.button.upgradeNow"="Şimdi yükselt";
 /* Over Disk Quota paywall Make some space button title */
@@ -4559,7 +4483,7 @@
 /* Ad-free experience screen content title about pro plan featuring the Additional security when sharing */
 "ads.adFree.content.additionalSecurity.title"="MEGA Pass ve MEGA VPN";
 /* Ad-free experience screen content message about pro plan featuring the Additional security when sharing */
-"ads.adFree.content.additionalSecurity.message"="Şifre yöneticimiz ve yüksek hızlı VPN'imiz ile çevrim içi hayatınızı daha güvenli, daha hızlı ve daha kolay hale getirin";
+"ads.adFree.content.additionalSecurity.message"="Şifre yöneticimiz ve yüksek hızlı VPN’imiz ile çevrim içi hayatınızı daha güvenli, daha hızlı ve daha kolay hale getirin";
 /* Ad-free experience screen button title that will direct to Upgrade plan page */
 "ads.adFree.button.viewProPlans"="Pro planlarını görüntüle";
 /* Ad-free experience screen button title that will dismiss page */
@@ -4567,7 +4491,7 @@
 /* Add to album empty message */
 "photos.addToAlbum.empty.message"="Albüm yok";
 /* Alert message displayed to the user when they attempt to select more tags than the allowed limit. */
-"cloudDrive.nodeInfo.nodeTags.selection.maxLimitReachedAlertMessage"="En fazla etiket sayısı 10'dur";
+"cloudDrive.nodeInfo.nodeTags.selection.maxLimitReachedAlertMessage"="En fazla etiket sayısı 10’dur";
 /* Artist name to display if meta data for artist could not be found */
 "media.audio.metadata.missing.artist"="Bilinmeyen sanatçı";
 /* Add to playlist empty message */
@@ -4593,7 +4517,7 @@
 /* Title in set status settings for show last seen */
 "settings.chat.status.setStatus.statusSettings.lastSeen.title"="Son görülmeyi göster";
 /* Subtitle in set status settings for show last seen */
-"settings.chat.status.setStatus.statusSettings.lastSeen.subtitle"="Kişilerin MEGA'da en son ne zaman aktif olduğunuzu görmesine izin ver";
+"settings.chat.status.setStatus.statusSettings.lastSeen.subtitle"="Kişilerin MEGA’da en son ne zaman aktif olduğunuzu görmesine izin ver";
 /* Title in set status settings for auto away */
 "settings.chat.status.setStatus.statusSettings.autoAway.title"="Durumu Uzakta olarak ayarla";
 /* Subtitle in set status settings for auto away minutes. Placeholder will be replaced by 'X hour(s) Y minute(s)' */
@@ -4603,13 +4527,13 @@
 /* Title for mute chat notifications */
 "settings.chat.notifications.muteNotifications.title"="Bildirimleri sessize al";
 /* Label title in chat media image quality for uploads */
-"settings.chat.mediaQuality.image.title"="Görüntü kalitesi";
+"settings.chat.mediaQuality.image.title"="Fotoğraf kalitesi";
 /* Description of Automatic Image Quality option */
-"settings.chat.mediaQuality.image.option.auto"="Mobil verideyken optimize edilmiş, kablosuz ağdayken orijinal boyutlu görüntüler gönder";
+"settings.chat.mediaQuality.image.option.auto"="Mobil verideyken optimize edilmiş, kablosuz ağdayken orijinal boyutlu fotoğraflar gönder";
 /* Description of Optimised Image Quality option */
-"settings.chat.mediaQuality.image.option.optimised"="Her zaman optimize edilmiş görüntüler gönder";
+"settings.chat.mediaQuality.image.option.optimised"="Her zaman optimize edilmiş fotoğraflar gönder";
 /* Description of High Image Quality option */
-"settings.chat.mediaQuality.image.option.original"="Her zaman orijinal boyutlu görüntüler gönder";
+"settings.chat.mediaQuality.image.option.original"="Her zaman orijinal boyutlu fotoğraflar gönder";
 /* Label title in chat media video quality for uploads */
 "settings.chat.mediaQuality.video.title"="Video kalitesi";
 /* Message displayed while the app is connecting to a MEGA server */
@@ -4645,11 +4569,11 @@
 /* Onboarding USP carousel second page title */
 "onboarding.uniqueSellingProposition.carousel.page.second.title"="Her anı güvende tutun";
 /* Onboarding USP carousel second page subtitle */
-"onboarding.uniqueSellingProposition.carousel.page.second.subtitle"="MEGA Bulut'a otomatik kamera yüklemeleri ve cömert depolama alanı sayesinde değerli bir anıyı asla kaybetmezsiniz";
+"onboarding.uniqueSellingProposition.carousel.page.second.subtitle"="MEGA Bulut’a otomatik kamera yüklemeleri ve cömert depolama alanı sayesinde değerli bir anıyı asla kaybetmezsiniz";
 /* Onboarding USP carousel third page title */
 "onboarding.uniqueSellingProposition.carousel.page.third.title"="Sizin verileriniz. Sizin alanınız.";
 /* Onboarding USP carousel third page subtitle */
-"onboarding.uniqueSellingProposition.carousel.page.third.subtitle"="Geniş depolama alanı ve dosyalarınızı aktarmanın, paylaşmanın ve düzenlemenin kolay yolları, MEGA'yı seçtiğiniz her şey için güvenle kullanabileceğiniz anlamına gelir";
+"onboarding.uniqueSellingProposition.carousel.page.third.subtitle"="Geniş depolama alanı ve dosyalarınızı aktarmanın, paylaşmanın ve düzenlemenin kolay yolları, MEGA’yı seçtiğiniz her şey için güvenle kullanabileceğiniz anlamına gelir";
 /* Onboarding USP carousel fourth page title */
 "onboarding.uniqueSellingProposition.carousel.page.fourth.title"="Özel olarak konuşun";
 /* Onboarding USP carousel fourth page subtitle */
@@ -4677,7 +4601,7 @@
 /* Title shown for the free plan card */
 "subscriptionPurchase.freePlanCard.title"="Ücretsiz planımızla başlayın";
 /* Description shown for the free plan card */
-"subscriptionPurchase.freePlanCard.description"="Ücretsiz olarak cömert miktarda depolama ve aktarım kotası sunuyoruz, böylece MEGA'yı risksiz deneyebilirsiniz";
+"subscriptionPurchase.freePlanCard.description"="Ücretsiz olarak cömert miktarda depolama ve aktarım kotası sunuyoruz, böylece MEGA’yı risksiz deneyebilirsiniz";
 /* First benefit shown for the free plan card */
 "subscriptionPurchase.freePlanCard.feature.one"="Ücretsiz 20 GB depolama alanı";
 /* Second benefit shown for the free plan card */
@@ -4699,7 +4623,7 @@
 /* Title for the first subscription feature: generous storage capacity */
 "subscriptionPurchase.feature.one.title"="Cömert depolama";
 /* Description for the first subscription feature: details about available storage */
-"subscriptionPurchase.feature.one.description"="16 TB'ye kadar veri depolayın";
+"subscriptionPurchase.feature.one.description"="16 TB’ye kadar veri depolayın";
 /* Title for the second subscription feature: transfer quota sharing */
 "subscriptionPurchase.feature.two.title"="Aktarım paylaşımı";
 /* Description for the second subscription feature: how shared users can use your quota */
@@ -4707,7 +4631,7 @@
 /* Title for the third subscription feature: MEGA VPN service */
 "subscriptionPurchase.feature.three.title"="MEGA VPN";
 /* Description for the third subscription feature: benefits of using the MEGA VPN */
-"subscriptionPurchase.feature.three.description"="Hem hızlı hem de kullanımı basit olan yüksek hızlı VPN'imizle çevrim içi ortamda güvende kalın";
+"subscriptionPurchase.feature.three.description"="Hem hızlı hem de kullanımı basit olan yüksek hızlı VPN’imizle çevrim içi ortamda güvende kalın";
 /* Title for the fourth subscription feature: MEGA Pass password manager */
 "subscriptionPurchase.feature.four.title"="MEGA Pass";
 /* Description for the fourth subscription feature: benefits of using MEGA Pass for password management */
@@ -4749,7 +4673,7 @@
 /* Button subtitle for log out in menu */
 "accountMenu.logout"="Çıkış yap";
 /* subscription purchase description for the storage capacity */
-"subscriptionPurchase.feature.storage.description"="%@'ye kadar veri depolayın";
+"subscriptionPurchase.feature.storage.description"="%@’ye kadar veri depolayın";
 /* Camera uploads status banner title paused due to network connection */
 "cameraUploads.banner.status.paused.noNetworkConnection.title"="Kamera yüklemeleri duraklatıldı";
 /* Camera uploads status banner sub title paused due to no network connection */
@@ -4757,7 +4681,7 @@
 /* Camera uploads status banner sub title paused due to no Wi-Fi connection. Please leave [S], [/S] as it is which is used to bolden the text. */
 "cameraUploads.banner.status.paused.noWiFiConnection.subheading"="Kablosuz ağa bağlanın veya mobil veri kullanın [S]Mobil veriye izin vermek için dokunun[/S]";
 /* Camera uploads status banner title paused due to low battery */
-"cameraUploads.banner.status.paused.lowBattery.title"="Düşük pil nedeniyle kamera yüklemeleri duraklatıldı";
+"cameraUploads.banner.status.paused.lowBattery.title"="Düşük şarj nedeniyle kamera yüklemeleri duraklatıldı";
 /* Camera uploads status banner sub title paused due to low battery */
 "cameraUploads.banner.status.paused.lowBattery.subheading"="Kamera yüklemelerini başlatmak için cihazı şarj edin";
 /* Camera uploads status banner title paused due to device heat */
@@ -4770,3 +4694,15 @@
 "notification.local.cameraUploadBackupReminder.body"="Fotoğraflarınızı ve videolarınızı yedeklemenin zamanı geldi";
 /* The double tap seek display text in video player */
 "videoPlayer.chip.seekDisplayText"="%@ saniye";
+/* The lock video player option in bottom more menu */
+"videoPlayer.lock.lockVideoPlayer"="Video oynatıcıyı kilitle";
+/* The screen locked status message in video player */
+"videoPlayer.lock.screenLocked"="Ekran kilitli";
+/* The instruction to unlock the video player */
+"videoPlayer.lock.tapIconToUnlock"="Kilidi açmak için kilit simgesine dokunun";
+/* The lock video player option in bottom more menu */
+"videoPlayer.snapshot.bottomSheet.title"="Yakala";
+/* The instruction to unlock the video player */
+"videoPlayer.snapshot.snackBar.title"="Fotoğraf, cihazınıza kaydedildi";
+/* The Picture in picture video player option in bottom more menu */
+"videoPlayer.pip.bottomSheet.title"="Resim içinde resim";

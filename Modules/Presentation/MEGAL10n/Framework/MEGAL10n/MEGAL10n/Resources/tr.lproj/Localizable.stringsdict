@@ -445,9 +445,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d resim</string>
+        <string>%d fotoğraf</string>
         <key>other</key>
-        <string>%d resim</string>
+        <string>%d fotoğraf</string>
       </dict>
     </dict>
     <key>recents.section.thumbnail.count.video</key>
@@ -477,9 +477,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d resim</string>
+        <string>%d fotoğraf</string>
         <key>other</key>
-        <string>%d resim</string>
+        <string>%d fotoğraf</string>
       </dict>
     </dict>
     <key>recents.section.thumbnail.count.imageAndVideo.video</key>
