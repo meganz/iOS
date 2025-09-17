@@ -236,6 +236,7 @@
         [alertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"ok", @"") style:UIAlertActionStyleCancel handler:nil]];
         return alertController;
     } else {
+        [node trackFileOpenAnalyticsWithIsFolderLink:isFolderLink fileLink:nil isFromChat:nil isFromSharedItem:NO isFromRecent:YES];
         return [node mnz_viewControllerForNodeInFolderLink:isFolderLink fileLink:nil isFromSharedItem:NO inViewController: self];
     }
 }
