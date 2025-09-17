@@ -97,6 +97,7 @@ extension MEGAAVViewController {
     @objc func deallocPlayer() {
         cancelPlayerProcess()
         player = nil
+        subscriptions.removeAllObjects()
     }
     
     @objc func cancelPlayerProcess() {
