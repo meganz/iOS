@@ -54,6 +54,13 @@ static const NSUInteger MIN_SECOND = 10; // Save only where the users were playi
     return self;
 }
 
+- (void)dealloc
+{
+    if (self.isViewLoaded) {
+        [self trackVideoPlaybackEndTime];
+    }
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self.viewModel onViewDidLoad];
@@ -64,13 +71,16 @@ static const NSUInteger MIN_SECOND = 10; // Save only where the users were playi
 
     self.viewDidAppearFirstTime = YES;
     
+    __weak typeof(self) wself = self;
     self.subscriptions = [self bindToSubscriptionsWithMovieStalled:^{
-        [self movieStalledCallback];
+        [wself movieStalledCallback];
     }];
     
     [self configureActivityIndicator];
     
     [self configureViewColor];
+    
+    [self recordVideoPlaybackStartTime];
 }
 
 - (void)viewDidAppear:(BOOL)animated {

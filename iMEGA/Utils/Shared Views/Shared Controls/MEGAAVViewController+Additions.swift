@@ -168,6 +168,15 @@ extension MEGAAVViewController {
     }
     
     // MARK: - Analytics
+    @objc func recordVideoPlaybackStartTime() {
+        startTimeStamp = Date().timeIntervalSince1970
+    }
+    
+    @objc func trackVideoPlaybackEndTime() {
+        let delta = Date().timeIntervalSince1970 - startTimeStamp
+        let clamped = min(max(0, delta), Double(Int32.max))
+        DIContainer.tracker.trackAnalyticsEvent(with: VideoPlaybackRecordEvent(duration: Int32(clamped)))
+    }
     
     func trackAnalytics(for status: AVPlayer.TimeControlStatus, tracker: some AnalyticsTracking) {
         switch status {
