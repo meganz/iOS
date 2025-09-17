@@ -158,7 +158,9 @@
     achievementsDetailsVC.onAchievementDetailsUpdated = ^(MEGAAchievementsDetails* achievementDetails){
         [self setupView:achievementDetails];
     };
-    
+
+    [self trackSelectedAchievementIfNeededWithAchievementClass:achievementClass];
+
     [self.navigationController pushViewController:achievementsDetailsVC animated:YES];
 }
 
