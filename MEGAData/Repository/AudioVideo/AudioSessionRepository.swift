@@ -43,7 +43,7 @@ final class AudioSessionRepository: AudioSessionRepositoryProtocol {
     
     func configureDefaultAudioSession(completion: ((Result<Void, AudioSessionErrorEntity>) -> Void)?) {
         do {
-            try AVAudioSession.sharedInstance().setCategory(.playAndRecord, mode: .voiceChat, options: [.allowBluetooth, .allowBluetoothA2DP])
+            try AVAudioSession.sharedInstance().setCategory(.playAndRecord, mode: .voiceChat, options: [.allowBluetoothHFP, .allowBluetoothA2DP])
             try AVAudioSession.sharedInstance().setActive(false, options: .notifyOthersOnDeactivation)
             completion?(.success)
         } catch {
@@ -55,7 +55,7 @@ final class AudioSessionRepository: AudioSessionRepositoryProtocol {
     func configureCallAudioSession(completion: ((Result<Void, AudioSessionErrorEntity>) -> Void)?) {
         do {
             let isSpeakerEnabled = currentSelectedAudioPort == .builtInSpeaker
-            try audioSession.setCategory(.playAndRecord, mode: .voiceChat, options: [.allowBluetooth, .allowBluetoothA2DP, .mixWithOthers])
+            try audioSession.setCategory(.playAndRecord, mode: .voiceChat, options: [.allowBluetoothHFP, .allowBluetoothA2DP, .mixWithOthers])
             if isSpeakerEnabled {
                 try audioSession.overrideOutputAudioPort(.speaker)
             }
@@ -69,7 +69,7 @@ final class AudioSessionRepository: AudioSessionRepositoryProtocol {
     
     func configureAudioPlayerAudioSession(completion: ((Result<Void, AudioSessionErrorEntity>) -> Void)?) {
         do {
-            try AVAudioSession.sharedInstance().setCategory(.playback, options: [.allowBluetooth, .allowBluetoothA2DP])
+            try AVAudioSession.sharedInstance().setCategory(.playback, options: [.allowBluetoothHFP, .allowBluetoothA2DP])
             completion?(.success)
         } catch {
             MEGALogError("[AudioSession] configureAudioPlayerAudioSession Error: \(error.localizedDescription)")
@@ -79,7 +79,7 @@ final class AudioSessionRepository: AudioSessionRepositoryProtocol {
     
     func configureChatDefaultAudioPlayer(completion: ((Result<Void, AudioSessionErrorEntity>) -> Void)?) {
         do {
-            try AVAudioSession.sharedInstance().setCategory(.playAndRecord, mode: .default, options: [.allowBluetooth, .defaultToSpeaker])
+            try AVAudioSession.sharedInstance().setCategory(.playAndRecord, mode: .default, options: [.allowBluetoothHFP, .defaultToSpeaker])
             completion?(.success)
         } catch {
             MEGALogInfo("[AudioSession] configureChatDefaultAudioPlayerAudioSession Error: \(error.localizedDescription)")
@@ -91,7 +91,7 @@ final class AudioSessionRepository: AudioSessionRepositoryProtocol {
         do {
             if AudioPlayerManager.shared.isPlayerAlive() {
                 AudioPlayerManager.shared.audioInterruptionDidStart()
-                try AVAudioSession.sharedInstance().setCategory(.playAndRecord, mode: .default, options: [.allowBluetooth, .allowBluetoothA2DP])
+                try AVAudioSession.sharedInstance().setCategory(.playAndRecord, mode: .default, options: [.allowBluetoothHFP, .allowBluetoothA2DP])
             }
             try AVAudioSession.sharedInstance().setActive(true)
             completion?(.success)
@@ -179,8 +179,7 @@ final class AudioSessionRepository: AudioSessionRepositoryProtocol {
         let previousAudioPort: AudioPort?
         if
             reason == .categoryChange,
-            let previousRoute = userInfo[AVAudioSessionRouteChangePreviousRouteKey] as? AVAudioSessionRouteDescription
-        {
+            let previousRoute = userInfo[AVAudioSessionRouteChangePreviousRouteKey] as? AVAudioSessionRouteDescription {
             previousAudioPort = previousRoute.outputs.first?.toAudioPort()
         } else {
             previousAudioPort = nil

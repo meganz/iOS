@@ -8,7 +8,7 @@ import org.apache.commons.cli.Option
 import org.apache.commons.cli.Options
 
 pipeline {
-    agent { label 'mac-jenkins-slave-ios' }
+    agent { label 'mac-jenkins-slave-ios-xcode-26' }
     options {
         timeout(time: 3, unit: 'HOURS') 
         gitLabConnection('GitLabConnection')

@@ -1,7 +1,7 @@
 @Library('jenkins-ios-shared-lib') _
 
 pipeline {
-    agent { label 'mac-jenkins-slave-ios' }
+    agent { label 'mac-jenkins-slave-ios-xcode-26' }
     options {
         timeout(time: 1, unit: 'HOURS') 
         gitLabConnection('GitLabConnection')
