@@ -234,14 +234,6 @@
       }
     },
     {
-      "identity" : "panmodal",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/ilia3546/PanModal.git",
-      "state" : {
-        "revision" : "ba721e891b4f32fa015460ad5003d80054171f07"
-      }
-    },
-    {
       "identity" : "phonenumberkit",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/marmelroy/PhoneNumberKit.git",

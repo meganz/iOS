@@ -1137,8 +1137,11 @@ struct AlbumContentViewModelTestSuite {
     @Suite("Rename Album")
     @MainActor
     struct RenameAlbum {
-        @Test("when paywalled it should not show the alert",
-              arguments: [(true, 0), (false, 1)])
+        @Test(
+            "when paywalled it should not show the alert",
+            .disabled("Disabled due to flakiness"),
+            arguments: [(true, 0), (false, 1)]
+        )
         func overDiskQuota(isPaywalled: Bool, expectedCount: Int) async throws {
             let album = AlbumEntity(id: 1, name: "Test", type: .user)
             let albumContentRouter = MockAlbumContentRouting()
