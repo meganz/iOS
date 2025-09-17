@@ -144,8 +144,6 @@ static const NSUInteger MIN_SECOND = 10; // Save only where the users were playi
     }
     
     [self deallocPlayer];
-    [self cancelPlayerProcess];
-    self.player = nil;
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
