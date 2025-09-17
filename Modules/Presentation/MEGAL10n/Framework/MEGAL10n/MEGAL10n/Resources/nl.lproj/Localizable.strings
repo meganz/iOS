@@ -82,14 +82,8 @@
 "needToBeLoggedInToCompleteYourEmailChange"="Om de wijziging van uw e-mailadres te voltooien, moet u ingelogd zijn. Log opnieuw in met uw huidige e-mailadres en tik vervolgens opnieuw op uw bevestigingslink.";
 /* Button title which triggers the action to login in your MEGA account */
 "login"="Login";
-/* Message for login option on Create Account screen */
-"account.createAccount.alreadyHaveAnAccount"="Heeft u al een account?";
 /* Button title which triggers the action to create a MEGA account */
 "createAccount"="Aanmelden";
-/* Message on login screen for Create Account */
-"account.login.newToMega"="Nieuw bij MEGA?";
-/* Button title which triggers the action to join meeting as Guest */
-"general.joinMeetingAsGuest"="Vergadering aansluiten als gast";
 /* Message shown when the user writes a wrong email or password on login */
 "invalidMailOrPassword"="Ongeldig e-mailadres of wachtwoord. Probeer het nog eens.";
 /* Error message when to many attempts to login */
@@ -130,16 +124,10 @@
 "strong"="Sterk";
 /*  */
 "passwordStrong"="Dit wachtwoord zal de meest geavanceerde brute-kracht aanvallen weerstaan. Zorg ervoor dat u deze goed onthoudt.";
-/*  */
-"agreeWithTheMEGATermsOfService"="Ik ga akkoord met de MEGA <a href=\"terms\">Algemene Voorwaarden</a>";
-/* This text is displayed in the account creation screen with a checkbox. User will have to tick the checkbox before proceeding on to create an account */
-"agreeWithLosingPasswordYouLoseData"="Ik begrijp dat [S]als ik mijn wachtwoord verlies, ik mijn gegevens kan verliezen. [/S] Lees meer over  <a href=\"terms\">MEGA’s end-to-end codering</a>.";
 /* Error text shown when you have not entered a correct name */
 "nameInvalidFormat"="Voer een geldige naam in";
 /* Error text shown when you have not written the same password */
 "passwordsDoNotMatch"="Wachtwoorden komen niet overeen";
-/* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
-"termsCheckboxUnselected"="U moet onze Algemene Voorwaarden accepteren";
 /* This error is shown in the account creation page. User has to agree to the terms and conditions. If the user does not agree to the losing password results in data loss condition then this error is shown */
 "termsForLosingPasswordCheckboxUnselected"="U moet akkoord gaan met dat u het gevaar begrijpt van het verliezen van uw wachtwoord";
 /* Error text shown when the users tries to create an account with an email already in use */
@@ -1188,8 +1176,6 @@
 "monthly"="Maandelijks";
 /* "Yearly" subscriptions */
 "yearly"="Jaarlijks";
-/* Alert title shown when a selected plan is not available at that moment on the App store */
-"inAppPurchase.error.alert.title.notAvailable"="Dit item voor in-Applicatie-aankoop is momenteel niet beschikbaar in de Applicatie Store. Controleer de betalingsinstellingen voor uw Apple ID.";
 /* Button that redirect you to the main page of your Account in the App Store */
 "inAppPurchase.error.alert.primaryButtonTitle"="Applicatie Winkel Instellingen";
 /* Alert title shown when the user has purchase correctly some plan */
@@ -1720,34 +1706,8 @@
 "Save a copy of the images and videos taken from the MEGA app in your device’s media library."="Maak een kopie van de afbeeldingen en video's die gemaakt zijn van de MEGA applicatie in de media bibliotheek van uw apparaat.";
 /* Title of the Spotlight Search section */
 "Search"="Zoeken";
-/* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
-"You hold the keys"="U heeft de sleutels";
-/* Description shown in a page of the onboarding screens explaining the encryption paradigm */
-"Security is why we exist, your files are safe with us behind a well oiled encryption machine where only you can access your files."="Veiligheid is waarom we bestaan, uw bestanden zijn veilig bij ons achter een goed geolied coderingsapparaat waar alleen u toegang heeft tot uw bestanden.";
-/* Title shown in a page of the on boarding screens explaining that the chat is encrypted */
-"Encrypted chat"="Gecodeerd gesprek";
-/* Description shown in a page of the onboarding screens explaining the chat feature */
-"Fully encrypted chat with voice and video calls, group messaging and file sharing integration with your Cloud Drive."="Volledig gecodeerd gesprek met spraak en video oproepen, groepsgesprekken en bestandsdeling integratie met uw Cloud Schijf.";
-/* Title shown in a page of the on boarding screens explaining that the user can add contacts to chat and colaborate */
-"Create your Network"="Creëer uw Netwerk";
-/* Description shown in a page of the onboarding screens explaining contacts */
-"Add contacts, create a network, colaborate, make voice and video calls without ever leaving MEGA"="Contacten toevoegen, netwerk creëren, samenwerken, en spraak en video oproepen maken zonder MEGA ooit te verlaten";
-/* Title shown in a page of the on boarding screens explaining that the user can backup the photos automatically */
-"Your Photos in the Cloud"="Uw Foto's in de Cloud";
-/* Description shown in a page of the onboarding screens explaining the camera uploads feature */
-"Camera Uploads is an essential feature for any mobile device and we have got you covered. Create your account now."="Camera-uploads zijn een essentieel kenmerk voor elk mobiel apparaat en we staan voor u klaar. Meld u nu aan voor een account.";
-/* Button which triggers the initial setup */
-"Setup MEGA"="MEGA Instellen";
-/* Detailed explanation of why the user should give some permissions to MEGA */
-"To fully take advantage of your MEGA account we need to ask you some permissions."="Om volledig voordeel te krijgen van uw MEGA-account hebben we sommige toestemmingen nodig.";
-/* Message warning the user about the risk of not setting up permissions */
-"The MEGA app may not work as expected without the required permissions. Are you sure?"="De MEGA applicatie kan niet werken zoals verwacht zonder de vereiste toestemmingen. Weet u het zeker?";
 /* Shows number of the current page. '%1' will be replaced by current page number. '%2' will be replaced by number of all pages. */
 "%1 of %2"="%1 van de %2";
-/* Title label that explains that the user is going to be asked for the photos permission */
-"Allow Access to Photos"="Verleen Toegang tot Foto's";
-/* Detailed explanation of why the user should give permission to access to the photos */
-"Please give the MEGA App permission to access Photos to share photos and videos."="Geef MEGA toestemming om toegang tot uw Foto's om foto's en video's te delen.";
 /* Title label that explains that the user is going to be asked for the microphone and camera permission */
 "Enable Microphone and Camera"="Microfoon en Camera Inschakelen";
 /* Detailed explanation of why the user should give permission to access to the camera and the microphone */
@@ -2526,8 +2486,6 @@
 "Create new file"="Creëer een nieuw bestand";
 /* Confirmation dialog shown to user when they try to revert a node in an incoming ReadWrite share. */
 "You do not have the permissions required to revert this file. In order to continue, we can create a new file with the reverted data. Would you like to proceed?"="U heeft niet de vereiste machtigingen om dit bestand terug te zetten. U kunt echter wel een nieuw bestand aanmaken met de vorige versie. Wilt u verder gaan?";
-/* The new LITE payment plan. This means it is a light or lightweight payment plan compared to the full / heavyweight plans with lots of bandwidth and storage (PRO I, PRO II, PRO III). */
-"Pro Lite"="Pro-Lite";
 /* The avatar picture button to go to my account page. Use for voice over. */
 "My Account"="Mijn Account";
 /* Text for title for favourite nodes */
@@ -3634,8 +3592,6 @@
 "meetings.scheduleMeeting.create.selectedRecurrence.weekly.everyDay"="Dagelijks";
 /* On Upgrade Account Plan screen. Button title to restore purchases */
 "upgradeAccountPlan.button.restore.title"="Aankoop herstellen";
-/* On Upgrade Account Plan screen. Button title to show terms and policies */
-"upgradeAccountPlan.button.termsAndPolicies.title"="Voorwaarden en beleid";
 /* On Upgrade Account Plan screen. Button title to buy account plan. %@ will be the name of the selected plan */
 "upgradeAccountPlan.button.buyAccountPlan.title"="Koop %@";
 /* On Upgrade Account Plan screen. Button title to buy account plan via web. %@ will be total savings for the users in percent */
@@ -3646,22 +3602,12 @@
 "upgradeAccountPlan.button.buyInApp.title"="Ga verder in de applicatie (%@)";
 /* On Upgrade Account Plan screen. Button footer text to continue to buy account plan in-app when user could buy externally. %@ will be the higher price of the plan */
 "upgradeAccountPlan.button.buyInApp.footer"="Bij aankoop via de applicatie zijn platformkosten van toepassing";
-/* On Upgrade Account Plan screen. Displayed header title text message */
-"upgradeAccountPlan.header.title.choosePlan"="Kies het juiste abonnement voor u";
-/* On Upgrade Account Plan screen. Displayed header title text with current plan. %@ will be the name of the current plan */
-"upgradeAccountPlan.header.title.currentPlan"="Huidig abonnement: %@";
 /* On Upgrade Account Plan screen. Account Plan picker option for monthly term. */
 "upgradeAccountPlan.header.planTermPicker.monthly"="Maandelijks";
 /* On Upgrade Account Plan screen. Account Plan picker option for yearly term. */
 "upgradeAccountPlan.header.planTermPicker.yearly"="Jaarlijks";
 /* On Upgrade Account Plan screen. Displayed header title text with percent of savings with yearly billing. */
 "upgradeAccountPlan.header.title.saveYearlyBilling"="Bespaar tot 16 %% met jaarlijkse betaling";
-/* On Upgrade Account Plan screen. Displayed header title text for pro plan features */
-"upgradeAccountPlan.header.title.featuresOfProPlan"="Kenmerken van Pro abonnementen";
-/* On Upgrade Account Plan screen. Displayed text body for pro plan features */
-"upgradeAccountPlan.message.text.featuresOfProPlan"="• Met een wachtwoord beveiligde links\n\n• Links met vervaldatums\n\n• Verdeling van overdrachtstegoed\n\n• Tot 90 dagen aan verwijderde gegevens terugspoelen op Pro Lite en tot 180 dagen op Pro I, II en III\n\n• Host gesprekken en vergaderingen met ongelimiteerde deelnemers en zonder tijdslimieten\n\n• Blijf privé online met onze snelle VPN\n\n• Plan het opruimen van de Prullenbak tussen 7 dagen en 10 jaar\n\n• Prioritaire ondersteuning";
-/* On Upgrade Account Plan screen. Displayed text body for pro plan features with ads */
-"upgradeAccountPlan.message.text.featuresOfProPlanWithAds"="• Met een wachtwoord beveiligde links\n\n• Links met vervaldatums\n\n• Verdeling van overdrachtstegoed\n\n• Tot 90 dagen aan verwijderde gegevens terugspoelen op Pro Lite en tot 180 dagen op Pro I, II en III\n\n• Host gesprekken en vergaderingen met ongelimiteerde deelnemers en zonder tijdslimieten\n\n• Blijf privé online met onze snelle VPN\n\n• Plan het opruimen van de Prullenbak tussen 7 dagen en 10 jaar\n\n• Prioritaire ondersteuning\n\n• Geen advertenties";
 /* On Upgrade Account Plan screen. Displayed header title text for subscription details */
 "upgradeAccountPlan.header.title.subscriptionDetails"="Abonnement details";
 /* On Upgrade Account Plan screen. Displayed text body for subscription details */
@@ -3926,22 +3872,10 @@
 "photos.mediaDiscovery.autoMediaDiscoveryBanner.title"="Omdat deze map alleen afbeeldingen en video's bevat, hebben we deze automatisch geopend in de gallerijweergave. U kunt genieten van uw visuele inhoud met een meer meeslepende lay-out. U kunt dit uitschakelen in Instellingen.";
 /* Upgrade account screen header title after user onboarding */
 "onboarding.upgradeAccount.header.title"="Krijg meer met een Pro abonnement";
-/* Upgrade account screen header subTitle after user onboarding. %@ will be replaced by the price of the lowest plan per month. */
-"onboarding.upgradeAccount.header.subTitle"="Upgrade naar een Pro-abonnement en krijg meer opslag en toegang tot Pro-kenmerken. Abonnementen beginnen zo laag als %@ per maand";
 /* Upgrade account screen content header for pro plan feature list */
 "onboarding.upgradeAccount.content.proPlanFeatureHeader"="Enkele functies om naar uit te kijken zijn:";
 /* Upgrade account screen content title about pro plan featuring as Generous Storage */
 "onboarding.upgradeAccount.content.generousStorage.title"="Ultieme opslagflexibiliteit";
-/* Upgrade account screen content message about pro plan featuring as Generous Storage. [A] will be replaced by the storage capacity of the lowest pro plan and [B] will be replaced by its storage unit. Example: Starting from 400 GB, find the perfect fit for your storage needs. */
-"onboarding.upgradeAccount.content.generousStorage.message"="Vanaf [A] [B], vind de perfecte oplossing voor uw opslagbehoeften.";
-/* Upgrade account screen content title about pro plan featuring the Transfer Sharing */
-"onboarding.upgradeAccount.content.transferSharing.title"="Eenvoudig en veilig bestanden delen";
-/* Upgrade account screen content message about pro plan featuring the Transfer Sharing */
-"onboarding.upgradeAccount.content.transferSharing.message"="Deel grote bestanden dankzij een royaal overdrachtstegoed en zorg voor beveiliging met links die met een wachtwoord zijn beveiligd.";
-/* Upgrade account screen content title about pro plan featuring the Back up and rewind */
-"onboarding.upgradeAccount.content.backupAndRewind.title"="Verlies nooit meer gegevens";
-/* Upgrade account screen content message about pro plan featuring the Back up and rewind */
-"onboarding.upgradeAccount.content.backupAndRewind.message"="Maak een back-up van je gegevens en synchroniseer ze in alle vertrouwen. Bovendien kunt u Terugspoelen gebruiken om mappen te herstellen naar een willekeurige datum tot 180 dagen.";
 /* Upgrade account screen content title about pro plan featuring the MEGA VPN */
 "onboarding.upgradeAccount.content.megaVPN.title"="MEGA VPN";
 /* Upgrade account screen content message about pro plan featuring the MEGA VPN */
@@ -3954,12 +3888,6 @@
 "onboarding.upgradeAccount.content.additionalSecurity.title"="Extra veiligheid bij het delen";
 /* Upgrade account screen content message about pro plan featuring the Additional security when sharing */
 "onboarding.upgradeAccount.content.additionalSecurity.message"="Stel wachtwoorden en vervaldata in voor bestands- en mapkoppelingen.";
-/* Upgrade account screen content title about pro plan's other benefits */
-"onboarding.upgradeAccount.content.plusBenefits.title"="Plus toegang tot deze geweldige voordelen:";
-/* Upgrade account screen content message about pro plan's other benefits without Ad-free */
-"onboarding.upgradeAccount.content.plusBenefits.messageWithoutAds"="• MEGA VPN\n• Onbeperkt bellen en vergaderen";
-/* Upgrade account screen content message about pro plan's other benefits with Ad-free */
-"onboarding.upgradeAccount.content.plusBenefits.messageWithAds"="• MEGA VPN\n• Onbeperkt bellen en vergaderen\n• Geen advertenties";
 /* Upgrade account screen button title that will direct to Upgrade plan page */
 "onboarding.upgradeAccount.button.viewProPlans"="Upgrade vandaag nog naar Pro";
 /* Camera uploads banner enable state title */
@@ -4200,10 +4128,6 @@
 "onboarding.hiddenFilesAndFolders.outOfSight.content.message"="U bepaalt zelf wanneer verborgen bestanden zichtbaar zijn. Er is een nieuwe instelling om verborgen items tijdelijk weer te geven.";
 /* My Account page: Menu Title of user account page */
 "account.myAccount.title"="Mijn Account";
-/* Free plan title */
-"free.Plan.name"="Gratis";
-/* Price description for the free plan */
-"free.Plan.Price.description"="Gratis";
 /* Storage limit capacity, where %d is the number of gigabytes that marks the storage limit */
 "storage.Limit.capacity"="%d GB";
 /* Limited transfer limit title */
@@ -4770,3 +4694,15 @@
 "notification.local.cameraUploadBackupReminder.body"="Het is tijd om een back-up maken van uw foto's en video's";
 /* The double tap seek display text in video player */
 "videoPlayer.chip.seekDisplayText"="%@ seconden";
+/* The lock video player option in bottom more menu */
+"videoPlayer.lock.lockVideoPlayer"="Videospeler vergrendelen";
+/* The screen locked status message in video player */
+"videoPlayer.lock.screenLocked"="Scherm is vergrendeld";
+/* The instruction to unlock the video player */
+"videoPlayer.lock.tapIconToUnlock"="Tik op het slot-icoon om te ontgrendelen";
+/* The lock video player option in bottom more menu */
+"videoPlayer.snapshot.bottomSheet.title"="Vastleggen";
+/* The instruction to unlock the video player */
+"videoPlayer.snapshot.snackBar.title"="Afbeelding opgeslagen op uw apparaat";
+/* The Picture in picture video player option in bottom more menu */
+"videoPlayer.pip.bottomSheet.title"="Afbeelding in afbeelding";

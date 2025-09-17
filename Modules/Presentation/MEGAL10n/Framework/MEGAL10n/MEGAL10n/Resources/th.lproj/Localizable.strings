@@ -82,14 +82,8 @@
 "needToBeLoggedInToCompleteYourEmailChange"="คุณต้องเข้าสู่ระบบก่อนเพื่อให้การเปลี่ยนแปลงอีเมลของคุณเสร็จสมบูรณ์ กรุณาเข้าสู่ระบบอีกครั้งด้วยที่อยู่อีเมลปัจจุบันของคุณ จากนั้นแตะที่ลิงก์ยืนยันของคุณอีกครั้ง";
 /* Button title which triggers the action to login in your MEGA account */
 "login"="เข้าสู่ระบบ";
-/* Message for login option on Create Account screen */
-"account.createAccount.alreadyHaveAnAccount"="มีบัญชีอยู่แล้วใช่ไหม";
 /* Button title which triggers the action to create a MEGA account */
 "createAccount"="ลงทะเบียน";
-/* Message on login screen for Create Account */
-"account.login.newToMega"="เป็นผู้ใช้ MEGA ใหม่";
-/* Button title which triggers the action to join meeting as Guest */
-"general.joinMeetingAsGuest"="เข้าร่วมประชุมในฐานะแขกรับเชิญ";
 /* Message shown when the user writes a wrong email or password on login */
 "invalidMailOrPassword"="อีเมลหรือรหัสผ่านไม่ถูกต้อง ลองใหม่อีกครั้ง";
 /* Error message when to many attempts to login */
@@ -130,16 +124,10 @@
 "strong"="คาดเดาได้ยากมาก";
 /*  */
 "passwordStrong"="รหัสผ่านนี้จะสามารถป้องกันการโจมตีแบบ Brute-Force ที่มีความซับซ้อนได้ กรุณาตรวจสอบอีกครั้งว่าคุณจะสามารถจำรหัสผ่านเหล่านี้ได้";
-/*  */
-"agreeWithTheMEGATermsOfService"="ฉันยอมรับ<a href=\"terms\">เงื่อนไขการให้บริการ</a> MEGA";
-/* This text is displayed in the account creation screen with a checkbox. User will have to tick the checkbox before proceeding on to create an account */
-"agreeWithLosingPasswordYouLoseData"="ฉันเข้าใจว่า[S]ถ้าฉันทำรหัสผ่านหาย ฉันอาจสูญเสียข้อมูลของฉันได้[/S] อ่านเพิ่มเติมเกี่ยวกับ<a href=\"terms\">การเข้ารหัสลับแบบต้นทางถึงปลายทาง</a>";
 /* Error text shown when you have not entered a correct name */
 "nameInvalidFormat"="กรอกชื่อให้ถูกต้อง";
 /* Error text shown when you have not written the same password */
 "passwordsDoNotMatch"="รหัสผ่านไม่ตรงกัน";
-/* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
-"termsCheckboxUnselected"="คุณต้องเห็นด้วยกับเงื่อนไขการให้บริการของเราก่อน";
 /* This error is shown in the account creation page. User has to agree to the terms and conditions. If the user does not agree to the losing password results in data loss condition then this error is shown */
 "termsForLosingPasswordCheckboxUnselected"="คุณต้องยอมรับว่าคุณเข้าใจถึงอันตราย หากลืมรหัสผ่าน";
 /* Error text shown when the users tries to create an account with an email already in use */
@@ -1188,8 +1176,6 @@
 "monthly"="รายเดือน";
 /* "Yearly" subscriptions */
 "yearly"="รายปี";
-/* Alert title shown when a selected plan is not available at that moment on the App store */
-"inAppPurchase.error.alert.title.notAvailable"="ขณะนี้รายการซื้อภายในแอปยังไม่มีให้บริการใน App Store กรุณาตรวจสอบการตั้งค่าการชำระเงินใน Apple ID ของคุณ";
 /* Button that redirect you to the main page of your Account in the App Store */
 "inAppPurchase.error.alert.primaryButtonTitle"="การตั้งค่า App Store";
 /* Alert title shown when the user has purchase correctly some plan */
@@ -1720,34 +1706,8 @@
 "Save a copy of the images and videos taken from the MEGA app in your device’s media library."="บันทึกสำเนาของรูปภาพและวิดีโอที่ถ่ายจากแอป MEGA ในไลบรารีสื่อของอุปกรณ์";
 /* Title of the Spotlight Search section */
 "Search"="ค้นหา";
-/* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
-"You hold the keys"="คุณคือผู้ถือกุญแจ";
-/* Description shown in a page of the onboarding screens explaining the encryption paradigm */
-"Security is why we exist, your files are safe with us behind a well oiled encryption machine where only you can access your files."="ความปลอดภัยคือเหตุผลหลักที่เราดำเนินการอยู่ ไฟล์ของคุณจะมีความปลอดภัยมากยิ่งขึ้น เพราะใช้เครื่องมือเข้ารหัสที่ป้องกันไฟล์ของคุณ ซึ่งมีเพียงคุณเท่านั้นที่สามารถเข้าถึงไฟล์ได้";
-/* Title shown in a page of the on boarding screens explaining that the chat is encrypted */
-"Encrypted chat"="เข้ารหัสแชท";
-/* Description shown in a page of the onboarding screens explaining the chat feature */
-"Fully encrypted chat with voice and video calls, group messaging and file sharing integration with your Cloud Drive."="แชทที่มีการเข้ารหัสอย่างเต็มที่ไม่ว่าจะเป็นการโทรด้วยเสียงและสนทนาทางวิดีโอ การส่งข้อความแบบกลุ่มและบูรณาการไฟล์ร่วมกันกับคลาวด์ไดรฟ์ของคุณ";
-/* Title shown in a page of the on boarding screens explaining that the user can add contacts to chat and colaborate */
-"Create your Network"="สร้างเครือข่ายของคุณ";
-/* Description shown in a page of the onboarding screens explaining contacts */
-"Add contacts, create a network, colaborate, make voice and video calls without ever leaving MEGA"="เพิ่มผู้ติดต่อ สร้างเครือข่าย การทำงานร่วมกันและโทรออกด้วยเสียงและสนทนาทางวิดีโอโดยไม่ต้องออกจากแอป MEGA";
-/* Title shown in a page of the on boarding screens explaining that the user can backup the photos automatically */
-"Your Photos in the Cloud"="รูปภาพของคุณในคลาวด์";
-/* Description shown in a page of the onboarding screens explaining the camera uploads feature */
-"Camera Uploads is an essential feature for any mobile device and we have got you covered. Create your account now."="การอัปโหลดจากกล้องเป็นฟีเจอร์สำคัญสำหรับมือถือทุกเครื่อง และเราก็มีบริการนี้ให้คุณแล้ว สมัครสมาชิกเลยตอนนี้";
-/* Button which triggers the initial setup */
-"Setup MEGA"="ตั้งค่า MEGA";
-/* Detailed explanation of why the user should give some permissions to MEGA */
-"To fully take advantage of your MEGA account we need to ask you some permissions."="ในการใช้ประโยชน์จากบัญชี MEGA ของคุณอย่างเต็มที่ เราจำเป็นต้องขออนุญาตจากคุณ";
-/* Message warning the user about the risk of not setting up permissions */
-"The MEGA app may not work as expected without the required permissions. Are you sure?"="แอป MEGA อาจไม่ทำงานอย่างที่คาดไว้ หากไม่มีการอนุญาตที่จำเป็น คุณแน่ใจหรือไม่";
 /* Shows number of the current page. '%1' will be replaced by current page number. '%2' will be replaced by number of all pages. */
 "%1 of %2"="%1 จาก %2";
-/* Title label that explains that the user is going to be asked for the photos permission */
-"Allow Access to Photos"="อนุญาตให้เข้าถึงรูปภาพ";
-/* Detailed explanation of why the user should give permission to access to the photos */
-"Please give the MEGA App permission to access Photos to share photos and videos."="กรุณาอนุญาตให้ MEGA สามารถเข้าถึงรูปภาพเพื่อแชร์รูปภาพและวิดีโอได้";
 /* Title label that explains that the user is going to be asked for the microphone and camera permission */
 "Enable Microphone and Camera"="เปิดใช้งานไมโครโฟนและกล้องถ่ายรูป";
 /* Detailed explanation of why the user should give permission to access to the camera and the microphone */
@@ -2526,8 +2486,6 @@
 "Create new file"="สร้างไฟล์ใหม่";
 /* Confirmation dialog shown to user when they try to revert a node in an incoming ReadWrite share. */
 "You do not have the permissions required to revert this file. In order to continue, we can create a new file with the reverted data. Would you like to proceed?"="คุณไม่มีสิทธิ์ในการย้อนกลับไฟล์นี้ แต่คุณสามารถสร้างไฟล์ใหม่ด้วยเวอร์ชันก่อนหน้าได้ คุณต้องการดำเนินการต่อหรือไม่";
-/* The new LITE payment plan. This means it is a light or lightweight payment plan compared to the full / heavyweight plans with lots of bandwidth and storage (PRO I, PRO II, PRO III). */
-"Pro Lite"="Pro Lite";
 /* The avatar picture button to go to my account page. Use for voice over. */
 "My Account"="บัญชีของฉัน";
 /* Text for title for favourite nodes */
@@ -3634,8 +3592,6 @@
 "meetings.scheduleMeeting.create.selectedRecurrence.weekly.everyDay"="ทุกวัน";
 /* On Upgrade Account Plan screen. Button title to restore purchases */
 "upgradeAccountPlan.button.restore.title"="เรียกคืนการซื้อ";
-/* On Upgrade Account Plan screen. Button title to show terms and policies */
-"upgradeAccountPlan.button.termsAndPolicies.title"="เงื่อนไขและนโยบาย";
 /* On Upgrade Account Plan screen. Button title to buy account plan. %@ will be the name of the selected plan */
 "upgradeAccountPlan.button.buyAccountPlan.title"="ซื้อแผน %@";
 /* On Upgrade Account Plan screen. Button title to buy account plan via web. %@ will be total savings for the users in percent */
@@ -3646,22 +3602,12 @@
 "upgradeAccountPlan.button.buyInApp.title"="ดำเนินการต่อในแอป (%@)";
 /* On Upgrade Account Plan screen. Button footer text to continue to buy account plan in-app when user could buy externally. %@ will be the higher price of the plan */
 "upgradeAccountPlan.button.buyInApp.footer"="มีค่าธรรมเนียมแพลตฟอร์มเมื่อซื้อผ่านแอป";
-/* On Upgrade Account Plan screen. Displayed header title text message */
-"upgradeAccountPlan.header.title.choosePlan"="เลือกแผนบริการที่ตรงกับความต้องการของคุณ";
-/* On Upgrade Account Plan screen. Displayed header title text with current plan. %@ will be the name of the current plan */
-"upgradeAccountPlan.header.title.currentPlan"="แผนปัจจุบัน: %@";
 /* On Upgrade Account Plan screen. Account Plan picker option for monthly term. */
 "upgradeAccountPlan.header.planTermPicker.monthly"="รายเดือน";
 /* On Upgrade Account Plan screen. Account Plan picker option for yearly term. */
 "upgradeAccountPlan.header.planTermPicker.yearly"="รายปี";
 /* On Upgrade Account Plan screen. Displayed header title text with percent of savings with yearly billing. */
 "upgradeAccountPlan.header.title.saveYearlyBilling"="ถ้าเลือกเก็บเงินทุกปี จะประหยัดได้สูงสุดถึง 16%%";
-/* On Upgrade Account Plan screen. Displayed header title text for pro plan features */
-"upgradeAccountPlan.header.title.featuresOfProPlan"="ฟีเจอร์สำหรับแผน Pro";
-/* On Upgrade Account Plan screen. Displayed text body for pro plan features */
-"upgradeAccountPlan.message.text.featuresOfProPlan"="• ตั้งค่าลิงก์แบบมีรหัสผ่านได้\n\n• กำหนดวันหมดอายุลิงก์ได้\n\n• แชร์โควต้าการถ่ายโอนได้\n\n• ย้อนกลับข้อมูลที่ลบไปแล้วได้สูงสุด 90 วัน สำหรับ Pro Lite หรือ 180 วัน สำหรับ Pro I, II, III\n\n• จัดการประชุมออนไลน์ รองรับผู้เข้าร่วมไม่จำกัด และไม่มีข้อจำกัดด้านเวลา\n\n• VPN ความเร็วสูง ปกป้องข้อมูลของคุณขณะใช้งานอินเทอร์เน็ต\n\n• ตั้งเวลาล้างถังขยะอัตโนมัติ ได้ตั้งแต่ 7 วัน ถึง 10 ปี\n\n• การสนับสนุนแบบพิเศษ";
-/* On Upgrade Account Plan screen. Displayed text body for pro plan features with ads */
-"upgradeAccountPlan.message.text.featuresOfProPlanWithAds"="• ตั้งค่าลิงก์แบบมีรหัสผ่านได้\n\n• กำหนดวันหมดอายุลิงก์ได้\n\n• แชร์โควต้าการถ่ายโอนได้\n\n• ย้อนกลับข้อมูลที่ลบไปแล้วได้สูงสุด 90 วัน สำหรับ Pro Lite หรือ 180 วัน สำหรับ Pro I, II, III\n\n• จัดการประชุมออนไลน์ รองรับผู้เข้าร่วมไม่จำกัด และไม่มีข้อจำกัดด้านเวลา\n\n• VPN ความเร็วสูง ปกป้องข้อมูลของคุณขณะใช้งานอินเทอร์เน็ต\n\n• ตั้งเวลาล้างถังขยะอัตโนมัติ ได้ตั้งแต่ 7 วัน ถึง 10 ปี\n\n• การสนับสนุนแบบพิเศษ\n\n• ไม่มีโฆษณา";
 /* On Upgrade Account Plan screen. Displayed header title text for subscription details */
 "upgradeAccountPlan.header.title.subscriptionDetails"="รายละเอียดการสมัครใช้งาน";
 /* On Upgrade Account Plan screen. Displayed text body for subscription details */
@@ -3926,22 +3872,10 @@
 "photos.mediaDiscovery.autoMediaDiscoveryBanner.title"="เนื่องจากโฟลเดอร์นี้มีเพียงรูปภาพและวิดีโอ เราจึงเปิดในมุมมองแกลเลอรี่โดยอัตโนมัติ คุณจะเพลิดเพลินกับเนื้อหาสื่อที่ดูได้เต็มตามากขึ้น คุณปิดใช้งานฟังก์ชันนี้ได้ในการตั้งค่า";
 /* Upgrade account screen header title after user onboarding */
 "onboarding.upgradeAccount.header.title"="รับสิทธิประโยชน์เพิ่มเติมด้วยการอัปเกรดเป็นแผน Pro";
-/* Upgrade account screen header subTitle after user onboarding. %@ will be replaced by the price of the lowest plan per month. */
-"onboarding.upgradeAccount.header.subTitle"="อัปเกรดเป็นแผน Pro เพิ่มพื้นที่เก็บข้อมูลและเข้าถึงฟีเจอร์ Pro เริ่มต้นเพียง %@ ต่อเดือน";
 /* Upgrade account screen content header for pro plan feature list */
 "onboarding.upgradeAccount.content.proPlanFeatureHeader"="คุณสมบัติที่คุณจะได้สัมผัสอย่างเต็มอิ่มคือ:";
 /* Upgrade account screen content title about pro plan featuring as Generous Storage */
 "onboarding.upgradeAccount.content.generousStorage.title"="พื้นที่จัดเก็บที่ยืดหยุ่นเหนือระดับ";
-/* Upgrade account screen content message about pro plan featuring as Generous Storage. [A] will be replaced by the storage capacity of the lowest pro plan and [B] will be replaced by its storage unit. Example: Starting from 400 GB, find the perfect fit for your storage needs. */
-"onboarding.upgradeAccount.content.generousStorage.message"="เริ่มต้นที่ [A] [B] เลือกขนาดพื้นที่เก็บข้อมูลที่เหมาะกับคุณ";
-/* Upgrade account screen content title about pro plan featuring the Transfer Sharing */
-"onboarding.upgradeAccount.content.transferSharing.title"="แชร์ไฟล์ได้ง่าย ปลอดภัย ไร้กังวล";
-/* Upgrade account screen content message about pro plan featuring the Transfer Sharing */
-"onboarding.upgradeAccount.content.transferSharing.message"="แชร์ไฟล์ใหญ่ ๆ สบายใจด้วยโควต้าการโอนถ่ายที่จุใจ พร้อมทั้งมั่นใจในความปลอดภัยด้วยลิงก์ที่ป้องกันด้วยรหัสผ่าน";
-/* Upgrade account screen content title about pro plan featuring the Back up and rewind */
-"onboarding.upgradeAccount.content.backupAndRewind.title"="ไม่มีพลาดทุกข้อมูลสำคัญของคุณ";
-/* Upgrade account screen content message about pro plan featuring the Back up and rewind */
-"onboarding.upgradeAccount.content.backupAndRewind.message"="สำรองและซิงค์ข้อมูลของคุณเพื่อความมั่นใจสูงสุด เพิ่มเติมด้วยฟีเจอร์ย้อนกลับ ที่ช่วยให้คุณกู้คืนโฟลเดอร์กลับไปยังวันที่ต้องการได้สูงสุด 180 วัน";
 /* Upgrade account screen content title about pro plan featuring the MEGA VPN */
 "onboarding.upgradeAccount.content.megaVPN.title"="MEGA VPN";
 /* Upgrade account screen content message about pro plan featuring the MEGA VPN */
@@ -3954,12 +3888,6 @@
 "onboarding.upgradeAccount.content.additionalSecurity.title"="เพิ่มความปลอดภัยเมื่อแชร์ข้อมูล";
 /* Upgrade account screen content message about pro plan featuring the Additional security when sharing */
 "onboarding.upgradeAccount.content.additionalSecurity.message"="ลิงก์ไฟล์และโฟลเดอร์สามารถตั้งรหัสผ่านและวันหมดอายุได้";
-/* Upgrade account screen content title about pro plan's other benefits */
-"onboarding.upgradeAccount.content.plusBenefits.title"="นอกจากนี้ยังมีสิทธิพิเศษอื่น ๆ เพิ่มเติม เช่น:";
-/* Upgrade account screen content message about pro plan's other benefits without Ad-free */
-"onboarding.upgradeAccount.content.plusBenefits.messageWithoutAds"="• MEGA VPN\n• โทรและประชุมได้ไม่จำกัด";
-/* Upgrade account screen content message about pro plan's other benefits with Ad-free */
-"onboarding.upgradeAccount.content.plusBenefits.messageWithAds"="• MEGA VPN\n• โทรและประชุมได้ไม่จำกัด\n• ไม่มีโฆษณา";
 /* Upgrade account screen button title that will direct to Upgrade plan page */
 "onboarding.upgradeAccount.button.viewProPlans"="อัปเกรดเป็นแผน Pro วันนี้เลย";
 /* Camera uploads banner enable state title */
@@ -4200,10 +4128,6 @@
 "onboarding.hiddenFilesAndFolders.outOfSight.content.message"="คุณสามารถเลือกได้ว่าต้องการให้ไฟล์ที่ซ่อนอยู่ปรากฏหรือไม่ มีการตั้งค่าใหม่ที่ช่วยให้คุณแสดงไฟล์ที่ซ่อนอยู่ชั่วคราวได้";
 /* My Account page: Menu Title of user account page */
 "account.myAccount.title"="บัญชีของฉัน";
-/* Free plan title */
-"free.Plan.name"="ฟรี";
-/* Price description for the free plan */
-"free.Plan.Price.description"="ฟรี";
 /* Storage limit capacity, where %d is the number of gigabytes that marks the storage limit */
 "storage.Limit.capacity"="%d GB";
 /* Limited transfer limit title */
@@ -4770,3 +4694,15 @@
 "notification.local.cameraUploadBackupReminder.body"="ถึงเวลาสำรองรูปภาพและวิดีโอของคุณแล้ว";
 /* The double tap seek display text in video player */
 "videoPlayer.chip.seekDisplayText"="%@ วินาที";
+/* The lock video player option in bottom more menu */
+"videoPlayer.lock.lockVideoPlayer"="Lock video player";
+/* The screen locked status message in video player */
+"videoPlayer.lock.screenLocked"="หน้าจอล็อกอยู่";
+/* The instruction to unlock the video player */
+"videoPlayer.lock.tapIconToUnlock"="Tap the lock icon to unlock";
+/* The lock video player option in bottom more menu */
+"videoPlayer.snapshot.bottomSheet.title"="ถ่ายภาพ";
+/* The instruction to unlock the video player */
+"videoPlayer.snapshot.snackBar.title"="รูปภาพที่บันทึกไว้ในอุปกรณ์ของคุณ";
+/* The Picture in picture video player option in bottom more menu */
+"videoPlayer.pip.bottomSheet.title"="Picture in picture";

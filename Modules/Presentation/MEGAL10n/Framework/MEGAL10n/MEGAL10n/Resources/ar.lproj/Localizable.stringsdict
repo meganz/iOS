@@ -3588,10 +3588,18 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>صالحة لمدة %d يوم.</string>
         <key>one</key>
-        <string>Valid for %d day.</string>
+        <string>صالحة لمدة %d اليوم.</string>
+        <key>two</key>
+        <string>صالحة لمدة %d يومين.</string>
+        <key>few</key>
+        <string>صالحة لمدة %d أيام.</string>
+        <key>many</key>
+        <string>صالحة لمدة %d يوم.</string>
         <key>other</key>
-        <string>Valid for %d days.</string>
+        <string>صالحة لمدة %d يوم.</string>
       </dict>
     </dict>
     <key>account.achievement.validity.substring.days</key>
@@ -3604,10 +3612,18 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>صالحة لمدة %d يوم.</string>
         <key>one</key>
-        <string>valid for %d day</string>
+        <string>صالحة لمدة %d يوم.</string>
+        <key>two</key>
+        <string>صالحة لمدة %d يومين.</string>
+        <key>few</key>
+        <string>صالحة لمدة %d أيام.</string>
+        <key>many</key>
+        <string>صالحة لمدة %d يوم.</string>
         <key>other</key>
-        <string>valid for %d days</string>
+        <string>صالحة لمدة %d يوم.</string>
       </dict>
     </dict>
     <key>account.achievement.complete.validBonusExpiry.detail.subtitle</key>

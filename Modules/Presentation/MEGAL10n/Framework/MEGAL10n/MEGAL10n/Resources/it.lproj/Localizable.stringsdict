@@ -2695,9 +2695,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Valid for %d day.</string>
+        <string>Valido per %d giorno.</string>
+        <key>many</key>
+        <string>Valido per %d giorni.</string>
         <key>other</key>
-        <string>Valid for %d days.</string>
+        <string>Valido per %d giorni.</string>
       </dict>
     </dict>
     <key>account.achievement.validity.substring.days</key>
@@ -2711,9 +2713,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>valid for %d day</string>
+        <string>valido per %d giorno</string>
+        <key>many</key>
+        <string>valido per %d giorni</string>
         <key>other</key>
-        <string>valid for %d days</string>
+        <string>valido per %d giorni</string>
       </dict>
     </dict>
     <key>account.achievement.complete.validBonusExpiry.detail.subtitle</key>
@@ -3639,9 +3643,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Removed “[A]” from the queue</string>
+        <string>Rimosso «[A]» dalla coda</string>
+        <key>many</key>
+        <string>Rimosso %d oggetti dalla coda</string>
         <key>other</key>
-        <string>Removed %d items from the queue</string>
+        <string>Rimosso %d oggetti dalla coda</string>
       </dict>
     </dict>
   </dict>

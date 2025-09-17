@@ -82,14 +82,8 @@
 "needToBeLoggedInToCompleteYourEmailChange"="Um Ihre E-Mail-Adresse zu ändern, müssen Sie eingeloggt sein. Bitte loggen Sie sich mit Ihrer aktuellen E-Mail-Adresse ein und tippen Sie anschließend erneut auf Ihren Bestätigungslink.";
 /* Button title which triggers the action to login in your MEGA account */
 "login"="Anmelden";
-/* Message for login option on Create Account screen */
-"account.createAccount.alreadyHaveAnAccount"="Sie haben bereits einen Account?";
 /* Button title which triggers the action to create a MEGA account */
 "createAccount"="Registrieren";
-/* Message on login screen for Create Account */
-"account.login.newToMega"="Neu bei MEGA?";
-/* Button title which triggers the action to join meeting as Guest */
-"general.joinMeetingAsGuest"="Als Gast beitreten";
 /* Message shown when the user writes a wrong email or password on login */
 "invalidMailOrPassword"="E-Mail-Adresse oder Passwort ungültig. Bitte erneut versuchen.";
 /* Error message when to many attempts to login */
@@ -130,16 +124,10 @@
 "strong"="Stark";
 /*  */
 "passwordStrong"="Dieses Passwort wird auch gut ausgestatteten Angreifern standhalten. Bitte stellen Sie sicher, dass Sie es nicht vergessen.";
-/*  */
-"agreeWithTheMEGATermsOfService"="Ich stimme MEGAs <a href=\"terms\">Allgemeinen Geschäftsbedingungen</a> zu";
-/* This text is displayed in the account creation screen with a checkbox. User will have to tick the checkbox before proceeding on to create an account */
-"agreeWithLosingPasswordYouLoseData"="Mir ist klar, dass ich [S]bei Passwortverlust meine Daten nicht mehr entschlüsseln kann.[/S] Mehr Informationen zum Thema <a href=\"terms\">Ende-zu-Ende-Verschlüsselung</a>.";
 /* Error text shown when you have not entered a correct name */
 "nameInvalidFormat"="Gültigen Namen eingeben";
 /* Error text shown when you have not written the same password */
 "passwordsDoNotMatch"="Passwörter stimmen nicht überein";
-/* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
-"termsCheckboxUnselected"="Sie müssen die AGBs akzeptieren.";
 /* This error is shown in the account creation page. User has to agree to the terms and conditions. If the user does not agree to the losing password results in data loss condition then this error is shown */
 "termsForLosingPasswordCheckboxUnselected"="Bitte bestätigen Sie, dass Ihnen die Konsequenzen eines Passwortverlusts bewusst sind";
 /* Error text shown when the users tries to create an account with an email already in use */
@@ -1188,8 +1176,6 @@
 "monthly"="monatlich";
 /* "Yearly" subscriptions */
 "yearly"="Jährlich";
-/* Alert title shown when a selected plan is not available at that moment on the App store */
-"inAppPurchase.error.alert.title.notAvailable"="Dieser In-App-Kaufartikel ist im App Store derzeit nicht verfügbar. Bitte überprüfen Sie die Zahlungseinstellungen für Ihre Apple ID.";
 /* Button that redirect you to the main page of your Account in the App Store */
 "inAppPurchase.error.alert.primaryButtonTitle"="App-Store-Einstellungen";
 /* Alert title shown when the user has purchase correctly some plan */
@@ -1720,34 +1706,8 @@
 "Save a copy of the images and videos taken from the MEGA app in your device’s media library."="Die aus der App heraus aufgenommenen Fotos und Videos werden auch in den lokalen Mediendateien gespeichert.";
 /* Title of the Spotlight Search section */
 "Search"="Suchen";
-/* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
-"You hold the keys"="Sie sind der alleinige Inhaber Ihrer Schlüssel";
-/* Description shown in a page of the onboarding screens explaining the encryption paradigm */
-"Security is why we exist, your files are safe with us behind a well oiled encryption machine where only you can access your files."="Die Sicherheit Ihrer Daten ist unsere Existenzgrundlage. Dank Ende-zu-Ende-Verschlüsselung kontrollieren Sie alleine, wer Zugang zu ihnen erhält.";
-/* Title shown in a page of the on boarding screens explaining that the chat is encrypted */
-"Encrypted chat"="Verschlüsselte Kommunikation";
-/* Description shown in a page of the onboarding screens explaining the chat feature */
-"Fully encrypted chat with voice and video calls, group messaging and file sharing integration with your Cloud Drive."="Vollverschlüsselter Textchat, Audio- und Videoanrufe, Gruppengespräche und Integration mit Ihrem Cloud Drive.";
-/* Title shown in a page of the on boarding screens explaining that the user can add contacts to chat and colaborate */
-"Create your Network"="Kontaktnetzwerk erstellen";
-/* Description shown in a page of the onboarding screens explaining contacts */
-"Add contacts, create a network, colaborate, make voice and video calls without ever leaving MEGA"="Fügen Sie Kontakte hinzu, tauschen Sie Dokumente aus, führen Sie Audio- und Video-Gespräche, ohne MEGA zu verlassen";
-/* Title shown in a page of the on boarding screens explaining that the user can backup the photos automatically */
-"Your Photos in the Cloud"="Ihre Fotos in der Cloud";
-/* Description shown in a page of the onboarding screens explaining the camera uploads feature */
-"Camera Uploads is an essential feature for any mobile device and we have got you covered. Create your account now."="Kamera-Uploads sind bei Mobilgeräten unverzichtbar und werden von MEGA bestens unterstützt. Registrieren Sie Ihren Account jetzt!";
-/* Button which triggers the initial setup */
-"Setup MEGA"="MEGA konfigurieren";
-/* Detailed explanation of why the user should give some permissions to MEGA */
-"To fully take advantage of your MEGA account we need to ask you some permissions."="Damit Sie alle Funktionen von MEGA nutzen können, benötigt die App einige spezielle Zugriffsrechte.";
-/* Message warning the user about the risk of not setting up permissions */
-"The MEGA app may not work as expected without the required permissions. Are you sure?"="Ohne die nötigen Berechtigungen wird die MEGA-App nicht wie gewünscht funktionieren. Sind Sie sicher?";
 /* Shows number of the current page. '%1' will be replaced by current page number. '%2' will be replaced by number of all pages. */
 "%1 of %2"="%1 von %2";
-/* Title label that explains that the user is going to be asked for the photos permission */
-"Allow Access to Photos"="MEGA Zugriff auf Photos gewähren";
-/* Detailed explanation of why the user should give permission to access to the photos */
-"Please give the MEGA App permission to access Photos to share photos and videos."="Um Fotos und Videos teilen zu können, gewähren Sie MEGA Zugriff auf Ihre Fotos.";
 /* Title label that explains that the user is going to be asked for the microphone and camera permission */
 "Enable Microphone and Camera"="Mikrofon und Kamera aktivieren";
 /* Detailed explanation of why the user should give permission to access to the camera and the microphone */
@@ -2526,8 +2486,6 @@
 "Create new file"="Neue Datei erstellen";
 /* Confirmation dialog shown to user when they try to revert a node in an incoming ReadWrite share. */
 "You do not have the permissions required to revert this file. In order to continue, we can create a new file with the reverted data. Would you like to proceed?"="Sie haben nicht die erforderlichen Rechte, um diese Datei wiederherzustellen. Sie können jedoch eine neue Datei mit der vorherigen Version erstellen. Fortfahren?";
-/* The new LITE payment plan. This means it is a light or lightweight payment plan compared to the full / heavyweight plans with lots of bandwidth and storage (PRO I, PRO II, PRO III). */
-"Pro Lite"="Pro Lite";
 /* The avatar picture button to go to my account page. Use for voice over. */
 "My Account"="Mein Account";
 /* Text for title for favourite nodes */
@@ -3634,8 +3592,6 @@
 "meetings.scheduleMeeting.create.selectedRecurrence.weekly.everyDay"="Täglich";
 /* On Upgrade Account Plan screen. Button title to restore purchases */
 "upgradeAccountPlan.button.restore.title"="Kauf wiederherstellen";
-/* On Upgrade Account Plan screen. Button title to show terms and policies */
-"upgradeAccountPlan.button.termsAndPolicies.title"="Bedingungen und Richtlinien";
 /* On Upgrade Account Plan screen. Button title to buy account plan. %@ will be the name of the selected plan */
 "upgradeAccountPlan.button.buyAccountPlan.title"="%@ kaufen";
 /* On Upgrade Account Plan screen. Button title to buy account plan via web. %@ will be total savings for the users in percent */
@@ -3646,22 +3602,12 @@
 "upgradeAccountPlan.button.buyInApp.title"="In der App fortfahren (%@)";
 /* On Upgrade Account Plan screen. Button footer text to continue to buy account plan in-app when user could buy externally. %@ will be the higher price of the plan */
 "upgradeAccountPlan.button.buyInApp.footer"="Beim Kauf über die App fallen Plattformgebühren an";
-/* On Upgrade Account Plan screen. Displayed header title text message */
-"upgradeAccountPlan.header.title.choosePlan"="Wählen Sie das richtige Paket";
-/* On Upgrade Account Plan screen. Displayed header title text with current plan. %@ will be the name of the current plan */
-"upgradeAccountPlan.header.title.currentPlan"="Aktuelles Paket: %@";
 /* On Upgrade Account Plan screen. Account Plan picker option for monthly term. */
 "upgradeAccountPlan.header.planTermPicker.monthly"="Monatlich";
 /* On Upgrade Account Plan screen. Account Plan picker option for yearly term. */
 "upgradeAccountPlan.header.planTermPicker.yearly"="Jährlich";
 /* On Upgrade Account Plan screen. Displayed header title text with percent of savings with yearly billing. */
 "upgradeAccountPlan.header.title.saveYearlyBilling"="Sparen Sie bis zu 16 %% bei jährlicher Abrechnung";
-/* On Upgrade Account Plan screen. Displayed header title text for pro plan features */
-"upgradeAccountPlan.header.title.featuresOfProPlan"="Leistungsmerkmale der Pro-Pakete";
-/* On Upgrade Account Plan screen. Displayed text body for pro plan features */
-"upgradeAccountPlan.message.text.featuresOfProPlan"="• Passwortgeschützte Links\n\n• Links mit Ablaufdatum\n\n• Teilen des Transfervolumens\n\n• Wiederherstellung von gelöschten Daten bis zu 90 Tage lang für Pro Lite und bis zu 180 Tage lang für Pro I, II und III\n\n• Anrufe und Meetings mit beliebig vielen Teilnehmern und ohne Zeitbeschränkung\n\n• Unerkannt surfen mit unserem schnellen VPN\n\n• Planmäßige Leerung des Papierkorbs – Intervall 7 Tage bis 10 Jahre\n\n• Priorisierter Support";
-/* On Upgrade Account Plan screen. Displayed text body for pro plan features with ads */
-"upgradeAccountPlan.message.text.featuresOfProPlanWithAds"="• Passwortgeschützte Links\n\n• Links mit Ablaufdatum\n\n• Teilen des Transfervolumens\n\n• Wiederherstellung von gelöschten Daten bis zu 90 Tage lang für Pro Lite und bis zu 180 Tage lang für Pro I, II und III\n\n• Anrufe und Meetings mit beliebig vielen Teilnehmern und ohne Zeitbeschränkung\n\n• Unerkannt surfen mit unserem schnellen VPN\n\n• Planmäßige Leerung des Papierkorbs – Intervall 7 Tage bis 10 Jahre\n\n• Priorisierter Support\n\n• Keine Werbung";
 /* On Upgrade Account Plan screen. Displayed header title text for subscription details */
 "upgradeAccountPlan.header.title.subscriptionDetails"="Abonnementdetails";
 /* On Upgrade Account Plan screen. Displayed text body for subscription details */
@@ -3926,22 +3872,10 @@
 "photos.mediaDiscovery.autoMediaDiscoveryBanner.title"="Da dieser Ordner nur Bilder und Videos enthält, haben wir ihn automatisch in der Galerieansicht geöffnet. So können Sie Ihre visuellen Inhalte in einem ablenkungsfreien Layout genießen. Sie können dies in den Einstellungen deaktivieren.";
 /* Upgrade account screen header title after user onboarding */
 "onboarding.upgradeAccount.header.title"="Mit einem Pro-Paket bekommen Sie mehr";
-/* Upgrade account screen header subTitle after user onboarding. %@ will be replaced by the price of the lowest plan per month. */
-"onboarding.upgradeAccount.header.subTitle"="Wechseln Sie auf ein Pro-Paket und erhalten Sie mehr Speicherplatz sowie Zugang zu Pro-Funktionen. Die Pakete sind bereits ab %@ pro Monat erhältlich";
 /* Upgrade account screen content header for pro plan feature list */
 "onboarding.upgradeAccount.content.proPlanFeatureHeader"="Sie können sich unter anderem auf folgende Funktionen freuen:";
 /* Upgrade account screen content title about pro plan featuring as Generous Storage */
 "onboarding.upgradeAccount.content.generousStorage.title"="Hohe Speicherplatz-Flexibilität";
-/* Upgrade account screen content message about pro plan featuring as Generous Storage. [A] will be replaced by the storage capacity of the lowest pro plan and [B] will be replaced by its storage unit. Example: Starting from 400 GB, find the perfect fit for your storage needs. */
-"onboarding.upgradeAccount.content.generousStorage.message"="Finden Sie die perfekte Lösung für Ihren Speicherplatzbedarf – ab [A] [B].";
-/* Upgrade account screen content title about pro plan featuring the Transfer Sharing */
-"onboarding.upgradeAccount.content.transferSharing.title"="Einfache, sichere Dateifreigabe";
-/* Upgrade account screen content message about pro plan featuring the Transfer Sharing */
-"onboarding.upgradeAccount.content.transferSharing.message"="Teilen Sie große Dateien dank eines großzügigen Transfervolumens und gewährleisten Sie die Sicherheit durch passwortgeschützte Links.";
-/* Upgrade account screen content title about pro plan featuring the Back up and rewind */
-"onboarding.upgradeAccount.content.backupAndRewind.title"="Nie mehr Datenverlust";
-/* Upgrade account screen content message about pro plan featuring the Back up and rewind */
-"onboarding.upgradeAccount.content.backupAndRewind.message"="Sichern und synchronisieren Sie Ihre Daten, um sich stets auf ihre Verfügbarkeit verlassen zu können. Mit der Rewind-Funktion können Sie Ordner zudem auf einen früheren Stand (bis zu 180 Tage) zurücksetzen.";
 /* Upgrade account screen content title about pro plan featuring the MEGA VPN */
 "onboarding.upgradeAccount.content.megaVPN.title"="MEGA VPN";
 /* Upgrade account screen content message about pro plan featuring the MEGA VPN */
@@ -3954,12 +3888,6 @@
 "onboarding.upgradeAccount.content.additionalSecurity.title"="Mehr Sicherheit beim Teilen";
 /* Upgrade account screen content message about pro plan featuring the Additional security when sharing */
 "onboarding.upgradeAccount.content.additionalSecurity.message"="Schützen Sie Datei- und Ordnerlinks mit Passwort und Ablaufdatum.";
-/* Upgrade account screen content title about pro plan's other benefits */
-"onboarding.upgradeAccount.content.plusBenefits.title"="Weitere großartige Vorteile:";
-/* Upgrade account screen content message about pro plan's other benefits without Ad-free */
-"onboarding.upgradeAccount.content.plusBenefits.messageWithoutAds"="MEGA VPN\n• Keine Anruf- und Meeting-Beschränkungen";
-/* Upgrade account screen content message about pro plan's other benefits with Ad-free */
-"onboarding.upgradeAccount.content.plusBenefits.messageWithAds"="• MEGA VPN\n• Keine Anruf- und Meeting-Beschränkungen\n• Keine Werbung";
 /* Upgrade account screen button title that will direct to Upgrade plan page */
 "onboarding.upgradeAccount.button.viewProPlans"="Jetzt zu Pro wechseln";
 /* Camera uploads banner enable state title */
@@ -4200,10 +4128,6 @@
 "onboarding.hiddenFilesAndFolders.outOfSight.content.message"="Sie entscheiden, wann verborgene Dateien sichtbar sein sollen. Mit einer neuen Einstellung können Sie verborgene Elemente vorübergehend sichtbar machen.";
 /* My Account page: Menu Title of user account page */
 "account.myAccount.title"="Mein Account";
-/* Free plan title */
-"free.Plan.name"="Free";
-/* Price description for the free plan */
-"free.Plan.Price.description"="Kostenlos";
 /* Storage limit capacity, where %d is the number of gigabytes that marks the storage limit */
 "storage.Limit.capacity"="%d GB";
 /* Limited transfer limit title */
@@ -4770,3 +4694,15 @@
 "notification.local.cameraUploadBackupReminder.body"="Sichern Sie Ihre Fotos und Videos";
 /* The double tap seek display text in video player */
 "videoPlayer.chip.seekDisplayText"="%@ Sekunden";
+/* The lock video player option in bottom more menu */
+"videoPlayer.lock.lockVideoPlayer"="Videoplayer sperren";
+/* The screen locked status message in video player */
+"videoPlayer.lock.screenLocked"="Der Bildschirm ist gesperrt";
+/* The instruction to unlock the video player */
+"videoPlayer.lock.tapIconToUnlock"="Tap the lock icon to unlock";
+/* The lock video player option in bottom more menu */
+"videoPlayer.snapshot.bottomSheet.title"="Aufnehmen";
+/* The instruction to unlock the video player */
+"videoPlayer.snapshot.snackBar.title"="Bild wurde auf Ihrem Gerät gespeichert";
+/* The Picture in picture video player option in bottom more menu */
+"videoPlayer.pip.bottomSheet.title"="Picture in picture";

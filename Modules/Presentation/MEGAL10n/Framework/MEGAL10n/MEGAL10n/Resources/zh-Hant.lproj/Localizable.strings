@@ -82,14 +82,8 @@
 "needToBeLoggedInToCompleteYourEmailChange"="您需要登入才能完成您的電子郵件地址更改。請您使用目前的電子郵件地址再次登入，然後再次點選您的確認連結。";
 /* Button title which triggers the action to login in your MEGA account */
 "login"="登入";
-/* Message for login option on Create Account screen */
-"account.createAccount.alreadyHaveAnAccount"="已有帳戶了嗎？";
 /* Button title which triggers the action to create a MEGA account */
 "createAccount"="註冊";
-/* Message on login screen for Create Account */
-"account.login.newToMega"="還沒有MEGA帳戶？";
-/* Button title which triggers the action to join meeting as Guest */
-"general.joinMeetingAsGuest"="以訪客身份加入會議";
 /* Message shown when the user writes a wrong email or password on login */
 "invalidMailOrPassword"="無效的電子郵件地址或密碼。再試一次。";
 /* Error message when to many attempts to login */
@@ -130,16 +124,10 @@
 "strong"="強";
 /*  */
 "passwordStrong"="這個密碼將可扺擋最典型的暴力破解攻擊。請確保您會記好。";
-/*  */
-"agreeWithTheMEGATermsOfService"="我同意MEGA的<a href='terms'>服務條款</a>";
-/* This text is displayed in the account creation screen with a checkbox. User will have to tick the checkbox before proceeding on to create an account */
-"agreeWithLosingPasswordYouLoseData"="我瞭解[S]若我遺失密碼，我就可能會遺失我的資料。[/S]進一步瞭解關於<a href=\"terms\"> MEGA點對點加密技術</a>";
 /* Error text shown when you have not entered a correct name */
 "nameInvalidFormat"="請輸入有效的名字";
 /* Error text shown when you have not written the same password */
 "passwordsDoNotMatch"="密碼不符";
-/* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
-"termsCheckboxUnselected"="您必須接受服務條款";
 /* This error is shown in the account creation page. User has to agree to the terms and conditions. If the user does not agree to the losing password results in data loss condition then this error is shown */
 "termsForLosingPasswordCheckboxUnselected"="您需要同意您瞭解遺失密碼的風險";
 /* Error text shown when the users tries to create an account with an email already in use */
@@ -1188,8 +1176,6 @@
 "monthly"="每月";
 /* "Yearly" subscriptions */
 "yearly"="每年";
-/* Alert title shown when a selected plan is not available at that moment on the App store */
-"inAppPurchase.error.alert.title.notAvailable"="此應用程式內的購買項目在App Store尚未支援。請驗證您的Apple ID的付款設定。";
 /* Button that redirect you to the main page of your Account in the App Store */
 "inAppPurchase.error.alert.primaryButtonTitle"="App Store設定";
 /* Alert title shown when the user has purchase correctly some plan */
@@ -1720,34 +1706,8 @@
 "Save a copy of the images and videos taken from the MEGA app in your device’s media library."="將MEGA應用程式中拍攝的照片和影片的備份保存在您裝置的媒體庫中。";
 /* Title of the Spotlight Search section */
 "Search"="搜尋";
-/* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
-"You hold the keys"="您握有金鑰";
-/* Description shown in a page of the onboarding screens explaining the encryption paradigm */
-"Security is why we exist, your files are safe with us behind a well oiled encryption machine where only you can access your files."="追求安全性是我們存在的原因，您的檔案安全的存放在我們運行良好的加密主機中，只有您可以存取您的檔案。";
-/* Title shown in a page of the on boarding screens explaining that the chat is encrypted */
-"Encrypted chat"="加密對話";
-/* Description shown in a page of the onboarding screens explaining the chat feature */
-"Fully encrypted chat with voice and video calls, group messaging and file sharing integration with your Cloud Drive."="完全加密的語音及視訊通話，群組對話以及整合雲端硬碟的檔案共享。";
-/* Title shown in a page of the on boarding screens explaining that the user can add contacts to chat and colaborate */
-"Create your Network"="建立您的網路";
-/* Description shown in a page of the onboarding screens explaining contacts */
-"Add contacts, create a network, colaborate, make voice and video calls without ever leaving MEGA"="無需離開MEGA即可加入聯絡人、建立連線，協作及進行語音與視訊通話";
-/* Title shown in a page of the on boarding screens explaining that the user can backup the photos automatically */
-"Your Photos in the Cloud"="您在雲端的相片";
-/* Description shown in a page of the onboarding screens explaining the camera uploads feature */
-"Camera Uploads is an essential feature for any mobile device and we have got you covered. Create your account now."="相機上傳是任何行動裝置的基本功能，我們已經為您提供這項服務。立即註冊一個帳戶。";
-/* Button which triggers the initial setup */
-"Setup MEGA"="設定MEGA";
-/* Detailed explanation of why the user should give some permissions to MEGA */
-"To fully take advantage of your MEGA account we need to ask you some permissions."="要充分發揮您MEGA帳戶的效用，我們需要您授予一些權限。";
-/* Message warning the user about the risk of not setting up permissions */
-"The MEGA app may not work as expected without the required permissions. Are you sure?"="沒有所需要的權限，MEGA應用程式可能無法如預期運作。你確定嗎？";
 /* Shows number of the current page. '%1' will be replaced by current page number. '%2' will be replaced by number of all pages. */
 "%1 of %2"="%2之%1";
-/* Title label that explains that the user is going to be asked for the photos permission */
-"Allow Access to Photos"="允許存取照片";
-/* Detailed explanation of why the user should give permission to access to the photos */
-"Please give the MEGA App permission to access Photos to share photos and videos."="請允許MEGA存取照片的權限以進行相片和影片的共享。";
 /* Title label that explains that the user is going to be asked for the microphone and camera permission */
 "Enable Microphone and Camera"="啟用麥克風和相機";
 /* Detailed explanation of why the user should give permission to access to the camera and the microphone */
@@ -2526,8 +2486,6 @@
 "Create new file"="建立新檔案";
 /* Confirmation dialog shown to user when they try to revert a node in an incoming ReadWrite share. */
 "You do not have the permissions required to revert this file. In order to continue, we can create a new file with the reverted data. Would you like to proceed?"="您沒有恢復檔案所需的權限。然而，您可以使用之前的版本建立一個新檔案。你想繼續嗎？";
-/* The new LITE payment plan. This means it is a light or lightweight payment plan compared to the full / heavyweight plans with lots of bandwidth and storage (PRO I, PRO II, PRO III). */
-"Pro Lite"="Pro Lite";
 /* The avatar picture button to go to my account page. Use for voice over. */
 "My Account"="我的帳戶";
 /* Text for title for favourite nodes */
@@ -3634,8 +3592,6 @@
 "meetings.scheduleMeeting.create.selectedRecurrence.weekly.everyDay"="每日";
 /* On Upgrade Account Plan screen. Button title to restore purchases */
 "upgradeAccountPlan.button.restore.title"="恢復購買";
-/* On Upgrade Account Plan screen. Button title to show terms and policies */
-"upgradeAccountPlan.button.termsAndPolicies.title"="條款和政策";
 /* On Upgrade Account Plan screen. Button title to buy account plan. %@ will be the name of the selected plan */
 "upgradeAccountPlan.button.buyAccountPlan.title"="購買%@";
 /* On Upgrade Account Plan screen. Button title to buy account plan via web. %@ will be total savings for the users in percent */
@@ -3646,22 +3602,12 @@
 "upgradeAccountPlan.button.buyInApp.title"="在應用程式中繼續（%@）";
 /* On Upgrade Account Plan screen. Button footer text to continue to buy account plan in-app when user could buy externally. %@ will be the higher price of the plan */
 "upgradeAccountPlan.button.buyInApp.footer"="透過應用程式購買時需支付平台費用";
-/* On Upgrade Account Plan screen. Displayed header title text message */
-"upgradeAccountPlan.header.title.choosePlan"="選擇適合您的方案";
-/* On Upgrade Account Plan screen. Displayed header title text with current plan. %@ will be the name of the current plan */
-"upgradeAccountPlan.header.title.currentPlan"="目前方案：%@";
 /* On Upgrade Account Plan screen. Account Plan picker option for monthly term. */
 "upgradeAccountPlan.header.planTermPicker.monthly"="每月";
 /* On Upgrade Account Plan screen. Account Plan picker option for yearly term. */
 "upgradeAccountPlan.header.planTermPicker.yearly"="每年";
 /* On Upgrade Account Plan screen. Displayed header title text with percent of savings with yearly billing. */
 "upgradeAccountPlan.header.title.saveYearlyBilling"="按年計費最多可節省16%%";
-/* On Upgrade Account Plan screen. Displayed header title text for pro plan features */
-"upgradeAccountPlan.header.title.featuresOfProPlan"="Pro方案功能";
-/* On Upgrade Account Plan screen. Displayed text body for pro plan features */
-"upgradeAccountPlan.message.text.featuresOfProPlan"="• 受密碼保護的連結\n\n• 可為連結設定到期日期\n\n• 傳輸配額共享\n\n• Pro Lite可回溯最多90天的刪除資料，Pro I、II、和III可回溯最多180天\n\n\n• 主持通話和會議，與會人數和時間不受限制\n• 使用我們的高速VPN保持線上隱私\n\n• 可設定7天到10年之間垃圾筒清理排程\n\n• 優先客服";
-/* On Upgrade Account Plan screen. Displayed text body for pro plan features with ads */
-"upgradeAccountPlan.message.text.featuresOfProPlanWithAds"="• 受密碼保護的連結\n\n• 具有到期日的連結\n\n• 傳輸配額共享\n\n• Pro Lite可回溯最多90天的刪除資料，在Pro I、II和III可回溯最多180天\n\n• 主持通話和會議，與會人數和通話時間不受限制\n\n• 使用我們的高速VPN保持線上隱私\n\n• 可設定7天到10年之間垃圾筒清理排程\n\n• 優先客服\n\n• 無廣告";
 /* On Upgrade Account Plan screen. Displayed header title text for subscription details */
 "upgradeAccountPlan.header.title.subscriptionDetails"="訂閱詳情";
 /* On Upgrade Account Plan screen. Displayed text body for subscription details */
@@ -3926,22 +3872,10 @@
 "photos.mediaDiscovery.autoMediaDiscoveryBanner.title"="由於此資料夾僅包含圖片和影片，我們已經自動在媒體檢視中將其開啟。您可以透過更沉浸式的外觀享受您的影像內容。您可以在設定中停用此功能。";
 /* Upgrade account screen header title after user onboarding */
 "onboarding.upgradeAccount.header.title"="透過Pro方案獲得更多功能";
-/* Upgrade account screen header subTitle after user onboarding. %@ will be replaced by the price of the lowest plan per month. */
-"onboarding.upgradeAccount.header.subTitle"="升級到Pro方案可獲得更多儲存空間和獲得Pro功能的權限。方案售價一個月%@起。";
 /* Upgrade account screen content header for pro plan feature list */
 "onboarding.upgradeAccount.content.proPlanFeatureHeader"="一些值得期待的功能是：";
 /* Upgrade account screen content title about pro plan featuring as Generous Storage */
 "onboarding.upgradeAccount.content.generousStorage.title"="終極的儲存彈性";
-/* Upgrade account screen content message about pro plan featuring as Generous Storage. [A] will be replaced by the storage capacity of the lowest pro plan and [B] will be replaced by its storage unit. Example: Starting from 400 GB, find the perfect fit for your storage needs. */
-"onboarding.upgradeAccount.content.generousStorage.message"="從[A] [B]起，找到最適合您的儲存需求方案。";
-/* Upgrade account screen content title about pro plan featuring the Transfer Sharing */
-"onboarding.upgradeAccount.content.transferSharing.title"="輕鬆、安全的檔案共享";
-/* Upgrade account screen content message about pro plan featuring the Transfer Sharing */
-"onboarding.upgradeAccount.content.transferSharing.message"="透過大量的傳輸配額共享大檔案，並使用受密碼保護的連結確保安全性。";
-/* Upgrade account screen content title about pro plan featuring the Back up and rewind */
-"onboarding.upgradeAccount.content.backupAndRewind.title"="再也不會遺失資料";
-/* Upgrade account screen content message about pro plan featuring the Back up and rewind */
-"onboarding.upgradeAccount.content.backupAndRewind.message"="讓您完全放心的備份和同步您的資料。此外，使用回溯功能可將資料夾恢復到任何日期，最長可達180天。";
 /* Upgrade account screen content title about pro plan featuring the MEGA VPN */
 "onboarding.upgradeAccount.content.megaVPN.title"="MEGA VPN";
 /* Upgrade account screen content message about pro plan featuring the MEGA VPN */
@@ -3954,12 +3888,6 @@
 "onboarding.upgradeAccount.content.additionalSecurity.title"="共享時的額外安全性";
 /* Upgrade account screen content message about pro plan featuring the Additional security when sharing */
 "onboarding.upgradeAccount.content.additionalSecurity.message"="設定檔案和資料夾連結的密碼和到期日期。";
-/* Upgrade account screen content title about pro plan's other benefits */
-"onboarding.upgradeAccount.content.plusBenefits.title"="此外還可獲得這些超棒的好處：";
-/* Upgrade account screen content message about pro plan's other benefits without Ad-free */
-"onboarding.upgradeAccount.content.plusBenefits.messageWithoutAds"="• MEGA VPN\n• 不受限制的通話和會議";
-/* Upgrade account screen content message about pro plan's other benefits with Ad-free */
-"onboarding.upgradeAccount.content.plusBenefits.messageWithAds"="• MEGA VPN\n• 不受限制的通話和會議\n• 無廣告";
 /* Upgrade account screen button title that will direct to Upgrade plan page */
 "onboarding.upgradeAccount.button.viewProPlans"="立即升級到Pro";
 /* Camera uploads banner enable state title */
@@ -4200,10 +4128,6 @@
 "onboarding.hiddenFilesAndFolders.outOfSight.content.message"="您可以決定何時要讓隱藏的檔案顯示。有一個新的設定可以暫時顯示隱藏的項目。";
 /* My Account page: Menu Title of user account page */
 "account.myAccount.title"="我的帳戶";
-/* Free plan title */
-"free.Plan.name"="免費";
-/* Price description for the free plan */
-"free.Plan.Price.description"="免費";
 /* Storage limit capacity, where %d is the number of gigabytes that marks the storage limit */
 "storage.Limit.capacity"="%d GB";
 /* Limited transfer limit title */
@@ -4770,3 +4694,15 @@
 "notification.local.cameraUploadBackupReminder.body"="是時候備份你的照片和影片了";
 /* The double tap seek display text in video player */
 "videoPlayer.chip.seekDisplayText"="%@秒";
+/* The lock video player option in bottom more menu */
+"videoPlayer.lock.lockVideoPlayer"="影片播放鎖定";
+/* The screen locked status message in video player */
+"videoPlayer.lock.screenLocked"="螢幕已上鎖";
+/* The instruction to unlock the video player */
+"videoPlayer.lock.tapIconToUnlock"="點擊鎖定圖示解鎖";
+/* The lock video player option in bottom more menu */
+"videoPlayer.snapshot.bottomSheet.title"="截圖";
+/* The instruction to unlock the video player */
+"videoPlayer.snapshot.snackBar.title"="影像已儲存到您的裝置";
+/* The Picture in picture video player option in bottom more menu */
+"videoPlayer.pip.bottomSheet.title"="子母畫面";

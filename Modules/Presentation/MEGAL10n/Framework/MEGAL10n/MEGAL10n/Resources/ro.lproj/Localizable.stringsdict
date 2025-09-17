@@ -2695,9 +2695,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Valid for %d day.</string>
+        <string>Valabil pentru %d zi.</string>
+        <key>few</key>
+        <string>Valabil pentru %d zile.</string>
         <key>other</key>
-        <string>Valid for %d days.</string>
+        <string>Valabil pentru %d de zile.</string>
       </dict>
     </dict>
     <key>account.achievement.validity.substring.days</key>
@@ -2711,9 +2713,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>valid for %d day</string>
+        <string>valabil pentru %d zi</string>
+        <key>few</key>
+        <string>valabil pentru %d zile</string>
         <key>other</key>
-        <string>valid for %d days</string>
+        <string>valabil pentru %d de zile</string>
       </dict>
     </dict>
     <key>account.achievement.complete.validBonusExpiry.detail.subtitle</key>

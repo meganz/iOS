@@ -82,14 +82,8 @@
 "needToBeLoggedInToCompleteYourEmailChange"="Trebuie să fiți autentificat pentru a finaliza schimbarea adresei de e-mail. Vă rugăm să vă conectați din nou cu adresa dvs. de e-mail curentă, apoi atingeți din nou linkul de confirmare.";
 /* Button title which triggers the action to login in your MEGA account */
 "login"="Conectați-vă";
-/* Message for login option on Create Account screen */
-"account.createAccount.alreadyHaveAnAccount"="Aveți un cont?";
 /* Button title which triggers the action to create a MEGA account */
 "createAccount"="Înscrieți-vă";
-/* Message on login screen for Create Account */
-"account.login.newToMega"="Ești utilizator nou pe MEGA?";
-/* Button title which triggers the action to join meeting as Guest */
-"general.joinMeetingAsGuest"="Alăturați-vă întâlnirii ca invitat";
 /* Message shown when the user writes a wrong email or password on login */
 "invalidMailOrPassword"="Adresă de e-mail sau parolă nevalide. Încercați din nou.";
 /* Error message when to many attempts to login */
@@ -130,16 +124,10 @@
 "strong"="Puternică";
 /*  */
 "passwordStrong"="Această parolă va rezista în fața celor mai sofisticate atacuri de tip „brute-force”. Te rugăm să te asiguri că o vei reține.";
-/*  */
-"agreeWithTheMEGATermsOfService"="Sunt de acord cu <a href=\"terms\">Termenii de utilizare a serviciului</a> MEGA";
-/* This text is displayed in the account creation screen with a checkbox. User will have to tick the checkbox before proceeding on to create an account */
-"agreeWithLosingPasswordYouLoseData"="Înțeleg că [S]dacă îmi pierd parola, se poate să îmi pierd datele.[/S] Citește mai multe despre <a href=\"terms\">criptarea capăt-la-capăt MEGA</a>.";
 /* Error text shown when you have not entered a correct name */
 "nameInvalidFormat"="Introdu un nume valid";
 /* Error text shown when you have not written the same password */
 "passwordsDoNotMatch"="Parolele nu coincid";
-/* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
-"termsCheckboxUnselected"="Trebuie să accepți Termenii de utilizare a serviciului nostru";
 /* This error is shown in the account creation page. User has to agree to the terms and conditions. If the user does not agree to the losing password results in data loss condition then this error is shown */
 "termsForLosingPasswordCheckboxUnselected"="Trebuie să fii de acord cu faptul că înțelegi pericolul pierderii parolei";
 /* Error text shown when the users tries to create an account with an email already in use */
@@ -1013,7 +1001,7 @@
 /* Cell title shown on the achievements view for referral achievement */
 "account.achievement.referral.title"="Invită-ți prietenii";
 /* Subtitle of the referral achievement introduction, %1$@ is a placeholder, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
-"account.achievement.referral.subtitle"="%1$@ of storage for each invitation. \n%2$@";
+"account.achievement.referral.subtitle"="%1$@ spațiu de stocare pentru fiecare invitație. \n%2$@";
 /* Text shown to explain how and where you can invite friends */
 "Select from phone contacts or enter multiple email addresses"="Selectează din contactele dispozitivului sau introdu mai multe adrese de e-mail.";
 /*  */
@@ -1051,19 +1039,19 @@
 /* Explanation label shown on the achievements view for complete install MEGA desktop app achievement, %@ is a placeholder. */
 "account.achievement.desktopApp.complete.explaination.label"="Ați primit %@ spațiu de stocare pentru instalarea Aplicației Desktop MEGA.";
 /* Explanation label shown on the achievements view for incomplete install MEGA desktop app achievement, %1$@ is a placeholder, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
-"account.achievement.desktopApp.incomplete.explaination.label"="When you install the MEGA Desktop App you get %1$@ of complimentary storage space, %2$@. The MEGA Desktop App is available for Windows, macOS and most Linux distributions.";
+"account.achievement.desktopApp.incomplete.explaination.label"="Când instalați Aplicația Desktop MEGA veți obține %1$@ de spațiu de stocare gratuit, %2$@. Aplicația Desktop MEGA este disponibilă pentru Windows, macOS și majoritatea distribuțiilor Linux.";
 /* Cell title shown on the achievements view for install MEGA mobile app achievement */
 "account.achievement.mobileApp.title"="Instalează Aplicația Mobilă MEGA";
 /* Explanation label shown on the achievements view for complete install MEGA mobile app achievement, %@ is a placeholder. */
 "account.achievement.mobileApp.complete.explaination.label"="Ai primit %@ spațiu de stocare pentru instalarea Aplicației Mobile MEGA.";
 /* Explanation label shown on the achievements view for incomplete install MEGA mobile app achievement, %1$@ is a placeholder, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
-"account.achievement.mobileApp.incomplete.explaination.label"="When you install the MEGA Mobile App you get %@ of complimentary storage space, %2$@. The MEGA Mobile App is available for iOS and Android. ";
+"account.achievement.mobileApp.incomplete.explaination.label"="Când instalați aplicația MEGA Mobile veți obține %@ de spațiu de stocare gratuit, %2$@. Aplicația MEGA Mobile este disponibilă pentru iOS și Android. ";
 /* Detail label shown on the achievements details view for Start Free Trial when its completed, %1$@ is placeholder for the storage amount, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
-"account.achievement.freeTrial.detail.complete.label"="%1$@ bonus applied. %2$@";
+"account.achievement.freeTrial.detail.complete.label"="%1$@ bonus aplicat. %2$@";
 /* Cell title shown on the achievements view for Start MEGA VPN Free Trial */
 "account.achievement.vpnFreeTrial.title"="Începeți perioada de probă gratuită MEGA VPN";
 /* Detail label shown on the achievements details view for Start MEGA VPN Free Trial when its incomplete, %1$@ is placeholder for the storage amount, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
-"account.achievement.vpnFreeTrial.detail.incomplete.label"="Get %1$@ of free storage when you start a MEGA VPN free trial. %2$@";
+"account.achievement.vpnFreeTrial.detail.incomplete.label"="Obțineți %1$@ de spațiu de stocare gratuit când începeți o perioadă de probă gratuită MEGA VPN. %2$@";
 /* Explanation label shown on the achievements view for incomplete start MEGA VPN Free Trial achievement, %@ is a placeholder. */
 "account.achievement.vpnFreeTrial.incomplete.explanation.label"="Instalează aplicația MEGA VPN, conectează-te cu contul tău MEGA și începe perioada de probă gratuită. Spațiul de stocare bonus este adăugat automat după începerea perioadei de probă gratuite.";
 /* Explanation label shown on the achievements view for complete start MEGA VPN Free Trial achievement, %@ is a placeholder. */
@@ -1073,7 +1061,7 @@
 /* Cell title shown on the achievements view for Start MEGA Pass Free Trial */
 "account.achievement.passFreeTrial.title"="Începeți perioada de probă gratuită MEGA Pass";
 /* Detail label shown on the achievements details view for Start MEGA Pass Free Trial when its incomplete, %1$@ is placeholder for the storage amount, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
-"account.achievement.passFreeTrial.detail.incomplete.label"="Get %1$@ of free storage when you start a MEGA Pass free trial. %2$@";
+"account.achievement.passFreeTrial.detail.incomplete.label"="Obțineți %1$@ de spațiu de stocare gratuit când începeți o perioadă de probă gratuită MEGA Pass. %2$@";
 /* Explanation label shown on the achievements view for incomplete start MEGA Pass Free Trial achievement, %@ is a placeholder. */
 "account.achievement.passFreeTrial.incomplete.explanation.label"="Instalează aplicația MEGA Pass, conectează-te cu contul tău MEGA și începe perioada de probă gratuită. Spațiul de stocare bonus este adăugat automat după începerea perioadei de probă gratuite.";
 /* Explanation label shown on the achievements view for complete start MEGA Pass Free Trial achievement, %@ is a placeholder. */
@@ -1081,11 +1069,11 @@
 /* Text for the button to install MEGA Pass in the Start MEGA Pass Free Trial achievement */
 "account.achievement.passFreeTrial.buttonText"="Instalați MEGA Pass";
 /* Subtitle of the incomplete achievement with permanent bonus, %1$@ is a placeholder for amount of storage, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
-"account.achievement.incomplete.subtitle"="%1$@ of storage. %2$@";
+"account.achievement.incomplete.subtitle"="%1$@ de spațiu de stocare. %2$@";
 /* String of the achievements with permanent bonus, used as a full sentence */
-"account.achievement.validity.permanent"="Valid permanently.";
+"account.achievement.validity.permanent"="Valabil permanent.";
 /* Substring of the achievements with permanent bonus, used as a part of a sentence */
-"account.achievement.validity.substring.permanent"="valid permanently";
+"account.achievement.validity.substring.permanent"="valabil permanent";
 /* Subtitle of the complete achievement with permanent bonus */
 "account.achievement.complete.subtitle.permanent"="Bonus aplicat";
 /* Add Phone Number title */
@@ -1093,7 +1081,7 @@
 /* Explanation Label shown on the achievements view for complete add phone number achievement, %@ is a placeholder. */
 "account.achievement.phoneNumber.complete.explaination.label"="Ați primit %@ spațiu de stocare pentru adăugarea numărului dvs. de telefon.";
 /* Explanation Label shown on the achievements view for incomplete add phone number achievement, %1$@ is a placeholder, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
-"account.achievement.phoneNumber.incomplete.explaination.label"="When you add your phone number you get %@ of complimentary storage space, %2$@.";
+"account.achievement.phoneNumber.incomplete.explaination.label"="Când adăugați numărul dvs. de telefon primiți %@ de spațiu de stocare gratuit, %2$@.";
 /* Free storage description to encourage users to add phone number to their accounts */
 "Get free %@ when you add your phone number. This makes it easier for your contacts to find you on MEGA."="Obține %@ gratuiți atunci când adaugi numărul de telefon. Acest lucru face mai ușor pentru contactele tale să te găsească pe MEGA.";
 /* Description to encourage users to add phone number to their accounts when there are not achievements */
@@ -1188,8 +1176,6 @@
 "monthly"="Lunar";
 /* "Yearly" subscriptions */
 "yearly"="Anual";
-/* Alert title shown when a selected plan is not available at that moment on the App store */
-"inAppPurchase.error.alert.title.notAvailable"="Acest element de achiziție în aplicație nu este disponibil în App Store în acest moment. Te rugăm să verifici setările de plată pentru ID-ul Apple.";
 /* Button that redirect you to the main page of your Account in the App Store */
 "inAppPurchase.error.alert.primaryButtonTitle"="Setări pentru App Store";
 /* Alert title shown when the user has purchase correctly some plan */
@@ -1720,34 +1706,8 @@
 "Save a copy of the images and videos taken from the MEGA app in your device’s media library."="Salvează o copie a imaginilor și videoclipurilor realizate din aplicația MEGA în biblioteca media a dispozitivului.";
 /* Title of the Spotlight Search section */
 "Search"="Caută";
-/* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
-"You hold the keys"="Tu deții cheile";
-/* Description shown in a page of the onboarding screens explaining the encryption paradigm */
-"Security is why we exist, your files are safe with us behind a well oiled encryption machine where only you can access your files."="Securitatea este motivul pentru care existăm, fișierele tale sunt în siguranță în spatele unei mașini de criptare bine unsă, loc în care numai tu poți accesa fișierele.";
-/* Title shown in a page of the on boarding screens explaining that the chat is encrypted */
-"Encrypted chat"="Chat criptat";
-/* Description shown in a page of the onboarding screens explaining the chat feature */
-"Fully encrypted chat with voice and video calls, group messaging and file sharing integration with your Cloud Drive."="Chat complet criptat cu apeluri vocale și video, mesagerie de grup și integrare pentru partajarea de fișiere din Unitatea cloud.";
-/* Title shown in a page of the on boarding screens explaining that the user can add contacts to chat and colaborate */
-"Create your Network"="Creează-ți rețeaua";
-/* Description shown in a page of the onboarding screens explaining contacts */
-"Add contacts, create a network, colaborate, make voice and video calls without ever leaving MEGA"="Adaugă contacte, creează o rețea, colaborează și efectuează apeluri vocale și video fără să părăsești MEGA";
-/* Title shown in a page of the on boarding screens explaining that the user can backup the photos automatically */
-"Your Photos in the Cloud"="Fotografiile tale în cloud";
-/* Description shown in a page of the onboarding screens explaining the camera uploads feature */
-"Camera Uploads is an essential feature for any mobile device and we have got you covered. Create your account now."="Încărcări cameră sunt o funcție esențială pentru orice dispozitiv mobil și vă asigurăm. Înscrieți-vă acum pentru un cont.";
-/* Button which triggers the initial setup */
-"Setup MEGA"="Configurare MEGA";
-/* Detailed explanation of why the user should give some permissions to MEGA */
-"To fully take advantage of your MEGA account we need to ask you some permissions."="Pentru a beneficia pe deplin de contul MEGA, trebuie să îți cerem câteva permisiuni.";
-/* Message warning the user about the risk of not setting up permissions */
-"The MEGA app may not work as expected without the required permissions. Are you sure?"="Aplicația MEGA poate să nu funcționeze conform așteptărilor fără permisiunile necesare. Ești sigur?";
 /* Shows number of the current page. '%1' will be replaced by current page number. '%2' will be replaced by number of all pages. */
 "%1 of %2"="%1 din %2";
-/* Title label that explains that the user is going to be asked for the photos permission */
-"Allow Access to Photos"="Permite accesul la fotografii";
-/* Detailed explanation of why the user should give permission to access to the photos */
-"Please give the MEGA App permission to access Photos to share photos and videos."="Vă rugăm să acordați MEGA permisiunea de a accesa Fotografii pentru a partaja fotografii și videoclipuri.";
 /* Title label that explains that the user is going to be asked for the microphone and camera permission */
 "Enable Microphone and Camera"="Activează microfonul și camera";
 /* Detailed explanation of why the user should give permission to access to the camera and the microphone */
@@ -2526,8 +2486,6 @@
 "Create new file"="Creează un fișier nou";
 /* Confirmation dialog shown to user when they try to revert a node in an incoming ReadWrite share. */
 "You do not have the permissions required to revert this file. In order to continue, we can create a new file with the reverted data. Would you like to proceed?"="Nu aveți permisiunile necesare pentru a reveni la acest fișier. Cu toate acestea, puteți crea un fișier nou cu versiunea anterioară. Doriți să continuați?";
-/* The new LITE payment plan. This means it is a light or lightweight payment plan compared to the full / heavyweight plans with lots of bandwidth and storage (PRO I, PRO II, PRO III). */
-"Pro Lite"="Pro Lite";
 /* The avatar picture button to go to my account page. Use for voice over. */
 "My Account"="Contul meu";
 /* Text for title for favourite nodes */
@@ -3634,8 +3592,6 @@
 "meetings.scheduleMeeting.create.selectedRecurrence.weekly.everyDay"="Zilnică";
 /* On Upgrade Account Plan screen. Button title to restore purchases */
 "upgradeAccountPlan.button.restore.title"="Restaurați achiziția";
-/* On Upgrade Account Plan screen. Button title to show terms and policies */
-"upgradeAccountPlan.button.termsAndPolicies.title"="Termeni și politici";
 /* On Upgrade Account Plan screen. Button title to buy account plan. %@ will be the name of the selected plan */
 "upgradeAccountPlan.button.buyAccountPlan.title"="Cumpără %@";
 /* On Upgrade Account Plan screen. Button title to buy account plan via web. %@ will be total savings for the users in percent */
@@ -3646,22 +3602,12 @@
 "upgradeAccountPlan.button.buyInApp.title"="Continuați în aplicație (%@)";
 /* On Upgrade Account Plan screen. Button footer text to continue to buy account plan in-app when user could buy externally. %@ will be the higher price of the plan */
 "upgradeAccountPlan.button.buyInApp.footer"="Taxele platformei se aplică la achiziționarea prin aplicație";
-/* On Upgrade Account Plan screen. Displayed header title text message */
-"upgradeAccountPlan.header.title.choosePlan"="Alegeți abonamentul potrivit pentru dvs.";
-/* On Upgrade Account Plan screen. Displayed header title text with current plan. %@ will be the name of the current plan */
-"upgradeAccountPlan.header.title.currentPlan"="abonamentul curent: %@";
 /* On Upgrade Account Plan screen. Account Plan picker option for monthly term. */
 "upgradeAccountPlan.header.planTermPicker.monthly"="Lunar";
 /* On Upgrade Account Plan screen. Account Plan picker option for yearly term. */
 "upgradeAccountPlan.header.planTermPicker.yearly"="Anual";
 /* On Upgrade Account Plan screen. Displayed header title text with percent of savings with yearly billing. */
 "upgradeAccountPlan.header.title.saveYearlyBilling"="Economisiți până la 16 %% cu facturare anuală";
-/* On Upgrade Account Plan screen. Displayed header title text for pro plan features */
-"upgradeAccountPlan.header.title.featuresOfProPlan"="Caracteristicile abonamentelor Pro";
-/* On Upgrade Account Plan screen. Displayed text body for pro plan features */
-"upgradeAccountPlan.message.text.featuresOfProPlan"="• Link-uri protejate prin parolă\n\n• Link-uri cu date de expirare\n\n• Împărțirea cotelor de transfer\n\n• Derulează înapoi până la 90 de zile de date șterse pe Pro Lite și până la 180 de zile pe Pro I, II și III\n\n• Găzduiește apeluri și întâlniri cu participanți nelimitați și fără restricții de timp\n\n• Rămâneți privat online cu VPN-ul nostru de mare viteză\n\n• Programați curățarea Coșului de gunoi între 7 zile și 10 ani\n\n• asistență prioritară";
-/* On Upgrade Account Plan screen. Displayed text body for pro plan features with ads */
-"upgradeAccountPlan.message.text.featuresOfProPlanWithAds"="• Link-uri protejate prin parolă\n\n• Link-uri cu date de expirare\n\n• Împărțirea cotelor de transfer\n\n• Derulează înapoi până la 90 de zile de date șterse pe Pro Lite și până la 180 de zile pe Pro I, II și III\n\n• Găzduiește apeluri și întâlniri cu participanți nelimitați și fără restricții de timp\n\n• Rămâneți privat online cu VPN-ul nostru de mare viteză\n\n• Programați curățarea Coșului de gunoi între 7 zile și 10  ani\n\n• asistență prioritară\n\n• Fara publicitate";
 /* On Upgrade Account Plan screen. Displayed header title text for subscription details */
 "upgradeAccountPlan.header.title.subscriptionDetails"="Detaliile abonamentului";
 /* On Upgrade Account Plan screen. Displayed text body for subscription details */
@@ -3926,22 +3872,10 @@
 "photos.mediaDiscovery.autoMediaDiscoveryBanner.title"="Deoarece acest folder conține doar imagini și videoclipuri, l-am deschis automat în vizualizarea galerie. Vă puteți bucura de conținutul dvs. vizual cu un aspect mai captivant. Puteți dezactiva acest lucru în Setări.";
 /* Upgrade account screen header title after user onboarding */
 "onboarding.upgradeAccount.header.title"="Obțineți mai mult cu un abonament Pro";
-/* Upgrade account screen header subTitle after user onboarding. %@ will be replaced by the price of the lowest plan per month. */
-"onboarding.upgradeAccount.header.subTitle"="Treceți la un abonament Pro și obțineți mai mult spațiu de stocare și acces la funcțiile Pro. Planurile încep de la %@ o lună";
 /* Upgrade account screen content header for pro plan feature list */
 "onboarding.upgradeAccount.content.proPlanFeatureHeader"="Lată ce obțineți:";
 /* Upgrade account screen content title about pro plan featuring as Generous Storage */
 "onboarding.upgradeAccount.content.generousStorage.title"="Flexibilitate maximă în spațiu de stocare";
-/* Upgrade account screen content message about pro plan featuring as Generous Storage. [A] will be replaced by the storage capacity of the lowest pro plan and [B] will be replaced by its storage unit. Example: Starting from 400 GB, find the perfect fit for your storage needs. */
-"onboarding.upgradeAccount.content.generousStorage.message"="Începând de la [A] [B], găsiți potrivirea perfectă pentru nevoile dvs. de stocare.";
-/* Upgrade account screen content title about pro plan featuring the Transfer Sharing */
-"onboarding.upgradeAccount.content.transferSharing.title"="Partajarea de fișiere ușoară și sigură";
-/* Upgrade account screen content message about pro plan featuring the Transfer Sharing */
-"onboarding.upgradeAccount.content.transferSharing.message"="Partajați fișiere mari datorită unei cote generoase de transfer și asigurați securitatea cu link-uri protejate prin parolă.";
-/* Upgrade account screen content title about pro plan featuring the Back up and rewind */
-"onboarding.upgradeAccount.content.backupAndRewind.title"="Nu pierdeți niciodată datele";
-/* Upgrade account screen content message about pro plan featuring the Back up and rewind */
-"onboarding.upgradeAccount.content.backupAndRewind.message"="Fiți liniștit prin back-up și sincronizare a datelor. În plus, utilizați Derulează înapoi pentru a restabili folderele la orice dată de până la 180 de zile.";
 /* Upgrade account screen content title about pro plan featuring the MEGA VPN */
 "onboarding.upgradeAccount.content.megaVPN.title"="MEGA VPN";
 /* Upgrade account screen content message about pro plan featuring the MEGA VPN */
@@ -3954,12 +3888,6 @@
 "onboarding.upgradeAccount.content.additionalSecurity.title"="Securitate suplimentară la partajare";
 /* Upgrade account screen content message about pro plan featuring the Additional security when sharing */
 "onboarding.upgradeAccount.content.additionalSecurity.message"="Setați parolele și datele de expirare pentru linkurile de fișiere și folder.";
-/* Upgrade account screen content title about pro plan's other benefits */
-"onboarding.upgradeAccount.content.plusBenefits.title"="Și acces la aceste beneficii interesante:";
-/* Upgrade account screen content message about pro plan's other benefits without Ad-free */
-"onboarding.upgradeAccount.content.plusBenefits.messageWithoutAds"="• MEGA VPN\n• Apeluri și întâlniri nerestricționate";
-/* Upgrade account screen content message about pro plan's other benefits with Ad-free */
-"onboarding.upgradeAccount.content.plusBenefits.messageWithAds"="• MEGA VPN\n• Apeluri și întâlniri nerestricționate\n• Fără reclame";
 /* Upgrade account screen button title that will direct to Upgrade plan page */
 "onboarding.upgradeAccount.button.viewProPlans"="Upgradeați la un abonament Pro";
 /* Camera uploads banner enable state title */
@@ -4200,10 +4128,6 @@
 "onboarding.hiddenFilesAndFolders.outOfSight.content.message"="Dvs. decideți când sunt vizibile fișierele ascunse. Există o nouă setare pentru a afișa temporar elementele ascunse.";
 /* My Account page: Menu Title of user account page */
 "account.myAccount.title"="Contul meu";
-/* Free plan title */
-"free.Plan.name"="Gratuit";
-/* Price description for the free plan */
-"free.Plan.Price.description"="Gratuit";
 /* Storage limit capacity, where %d is the number of gigabytes that marks the storage limit */
 "storage.Limit.capacity"="%d GB";
 /* Limited transfer limit title */
@@ -4770,3 +4694,15 @@
 "notification.local.cameraUploadBackupReminder.body"="Este timpul să faceți o copie de rezervă a fotografiilor și videoclipurilor";
 /* The double tap seek display text in video player */
 "videoPlayer.chip.seekDisplayText"="%@ secunde";
+/* The lock video player option in bottom more menu */
+"videoPlayer.lock.lockVideoPlayer"="Lock video player";
+/* The screen locked status message in video player */
+"videoPlayer.lock.screenLocked"="Ecranul este blocat";
+/* The instruction to unlock the video player */
+"videoPlayer.lock.tapIconToUnlock"="Tap the lock icon to unlock";
+/* The lock video player option in bottom more menu */
+"videoPlayer.snapshot.bottomSheet.title"="Captura";
+/* The instruction to unlock the video player */
+"videoPlayer.snapshot.snackBar.title"="Imagine salvată pe dispozitivul dvs.";
+/* The Picture in picture video player option in bottom more menu */
+"videoPlayer.pip.bottomSheet.title"="Picture in picture";

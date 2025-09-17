@@ -82,14 +82,8 @@
 "needToBeLoggedInToCompleteYourEmailChange"="Чтобы изменить адрес электронной почты, необходимо войти в свой аккаунт. Пожалуйста, снова войдите с текущим адресом электронной почты и затем перейдите по ссылке для подтверждения.";
 /* Button title which triggers the action to login in your MEGA account */
 "login"="Войти";
-/* Message for login option on Create Account screen */
-"account.createAccount.alreadyHaveAnAccount"="Уже есть аккаунт?";
 /* Button title which triggers the action to create a MEGA account */
 "createAccount"="Регистрация";
-/* Message on login screen for Create Account */
-"account.login.newToMega"="Впервые в MEGA?";
-/* Button title which triggers the action to join meeting as Guest */
-"general.joinMeetingAsGuest"="Присоединиться к встрече как гость";
 /* Message shown when the user writes a wrong email or password on login */
 "invalidMailOrPassword"="Неверный адрес электронной почты или пароль. Попробуйте ещё раз.";
 /* Error message when to many attempts to login */
@@ -130,16 +124,10 @@
 "strong"="Надёжный";
 /*  */
 "passwordStrong"="Этот пароль не поддастся самым самым мощным атакам с применением полного перебора. Убедитесь, что запомнили его.";
-/*  */
-"agreeWithTheMEGATermsOfService"="Я согласен с <a href=\"terms\">Условиями использования</a> MEGA";
-/* This text is displayed in the account creation screen with a checkbox. User will have to tick the checkbox before proceeding on to create an account */
-"agreeWithLosingPasswordYouLoseData"="Я понимаю, что, [S]если я потеряю пароль, я могу потерять свои данные.[/S] Подробнее о <a href=\"terms\">сквозном шифровании MEGA</a>.";
 /* Error text shown when you have not entered a correct name */
 "nameInvalidFormat"="Введите правильное название";
 /* Error text shown when you have not written the same password */
 "passwordsDoNotMatch"="Пароли не совпадают";
-/* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
-"termsCheckboxUnselected"="Вам нужно согласиться с условиями предоставления услуг";
 /* This error is shown in the account creation page. User has to agree to the terms and conditions. If the user does not agree to the losing password results in data loss condition then this error is shown */
 "termsForLosingPasswordCheckboxUnselected"="Вы должны согласиться с тем, что понимаете опасность потери пароля";
 /* Error text shown when the users tries to create an account with an email already in use */
@@ -1061,7 +1049,7 @@
 /* Detail label shown on the achievements details view for Start Free Trial when its completed, %1$@ is placeholder for the storage amount, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
 "account.achievement.freeTrial.detail.complete.label"="Бонус %1$@ применён. %2$@";
 /* Cell title shown on the achievements view for Start MEGA VPN Free Trial */
-"account.achievement.vpnFreeTrial.title"="Активируйте бесплатную пробную версию MEGA VPN";
+"account.achievement.vpnFreeTrial.title"="Попробуйте MEGA VPN бесплатно";
 /* Detail label shown on the achievements details view for Start MEGA VPN Free Trial when its incomplete, %1$@ is placeholder for the storage amount, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
 "account.achievement.vpnFreeTrial.detail.incomplete.label"="%1$@ бесплатного хранилища при активации бесплатной пробной версии MEGA VPN. %2$@";
 /* Explanation label shown on the achievements view for incomplete start MEGA VPN Free Trial achievement, %@ is a placeholder. */
@@ -1071,7 +1059,7 @@
 /* Text for the button to install MEGA VPN in the Start MEGA VPN Free Trial achievement */
 "account.achievement.vpnFreeTrial.buttonText"="Установите MEGA VPN";
 /* Cell title shown on the achievements view for Start MEGA Pass Free Trial */
-"account.achievement.passFreeTrial.title"="Активируйте бесплатную пробную версию MEGA Pass";
+"account.achievement.passFreeTrial.title"="Попробуйте MEGA Pass бесплатно";
 /* Detail label shown on the achievements details view for Start MEGA Pass Free Trial when its incomplete, %1$@ is placeholder for the storage amount, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
 "account.achievement.passFreeTrial.detail.incomplete.label"="%1$@ бесплатного хранилища при активации бесплатной пробной версии MEGA Pass. %2$@";
 /* Explanation label shown on the achievements view for incomplete start MEGA Pass Free Trial achievement, %@ is a placeholder. */
@@ -1188,8 +1176,6 @@
 "monthly"="Ежемесячно";
 /* "Yearly" subscriptions */
 "yearly"="Ежегодно";
-/* Alert title shown when a selected plan is not available at that moment on the App store */
-"inAppPurchase.error.alert.title.notAvailable"="Этот элемент для покупки внутри приложения в настоящее время недоступен в App Store. Пожалуйста, проверьте настройки оплаты для своего Apple ID.";
 /* Button that redirect you to the main page of your Account in the App Store */
 "inAppPurchase.error.alert.primaryButtonTitle"="Настройки App Store";
 /* Alert title shown when the user has purchase correctly some plan */
@@ -1720,34 +1706,8 @@
 "Save a copy of the images and videos taken from the MEGA app in your device’s media library."="Сохраните копию изображений и видео из приложения MEGA в медиатеке вашего устройства.";
 /* Title of the Spotlight Search section */
 "Search"="Поиск";
-/* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
-"You hold the keys"="Ключи хранятся у вас";
-/* Description shown in a page of the onboarding screens explaining the encryption paradigm */
-"Security is why we exist, your files are safe with us behind a well oiled encryption machine where only you can access your files."="Безопасность — это то, для чего существуем. Ваши файлы в безопасности за нашей хорошо смазанной шифровальной машиной, где только вы можете получить доступ к ним.";
-/* Title shown in a page of the on boarding screens explaining that the chat is encrypted */
-"Encrypted chat"="Зашифрованный чат";
-/* Description shown in a page of the onboarding screens explaining the chat feature */
-"Fully encrypted chat with voice and video calls, group messaging and file sharing integration with your Cloud Drive."="Полностью зашифрованный чат с голосовыми и видеозвонками, групповой обмен сообщениями и интеграция файлов с вашим облачным диском.";
-/* Title shown in a page of the on boarding screens explaining that the user can add contacts to chat and colaborate */
-"Create your Network"="Создайте свою сеть";
-/* Description shown in a page of the onboarding screens explaining contacts */
-"Add contacts, create a network, colaborate, make voice and video calls without ever leaving MEGA"="Добавление контактов, создание сети, совместное использование, голосовые и видеозвонки без выхода из MEGA";
-/* Title shown in a page of the on boarding screens explaining that the user can backup the photos automatically */
-"Your Photos in the Cloud"="Ваши фотографии в облаке";
-/* Description shown in a page of the onboarding screens explaining the camera uploads feature */
-"Camera Uploads is an essential feature for any mobile device and we have got you covered. Create your account now."="Загрузки из камеры — важная функция для любого мобильного устройства, и мы о ней позаботились. Зарегистрируйтесь сейчас.";
-/* Button which triggers the initial setup */
-"Setup MEGA"="Настроить MEGA";
-/* Detailed explanation of why the user should give some permissions to MEGA */
-"To fully take advantage of your MEGA account we need to ask you some permissions."="Чтобы обеспечить ваш аккаунт всеми преимуществами MEGA, мы должны попросить о некоторых разрешениях.";
-/* Message warning the user about the risk of not setting up permissions */
-"The MEGA app may not work as expected without the required permissions. Are you sure?"="Приложение MEGA может не работать должным образом без необходимых разрешений. Вы уверены?";
 /* Shows number of the current page. '%1' will be replaced by current page number. '%2' will be replaced by number of all pages. */
 "%1 of %2"="%1 из %2";
-/* Title label that explains that the user is going to be asked for the photos permission */
-"Allow Access to Photos"="Разрешите доступ к фотографиям";
-/* Detailed explanation of why the user should give permission to access to the photos */
-"Please give the MEGA App permission to access Photos to share photos and videos."="Пожалуйста, откройте MEGA доступ к «Фото» для обмена фото и видео.";
 /* Title label that explains that the user is going to be asked for the microphone and camera permission */
 "Enable Microphone and Camera"="Включить микрофон и камеру";
 /* Detailed explanation of why the user should give permission to access to the camera and the microphone */
@@ -2526,8 +2486,6 @@
 "Create new file"="Создать новый файл";
 /* Confirmation dialog shown to user when they try to revert a node in an incoming ReadWrite share. */
 "You do not have the permissions required to revert this file. In order to continue, we can create a new file with the reverted data. Would you like to proceed?"="У вас нет прав, необходимых для восстановления этого файла. Однако вы можете создать новый файл на основе предыдущей версии. Продолжить?";
-/* The new LITE payment plan. This means it is a light or lightweight payment plan compared to the full / heavyweight plans with lots of bandwidth and storage (PRO I, PRO II, PRO III). */
-"Pro Lite"="Pro Lite";
 /* The avatar picture button to go to my account page. Use for voice over. */
 "My Account"="Мой аккаунт";
 /* Text for title for favourite nodes */
@@ -3634,8 +3592,6 @@
 "meetings.scheduleMeeting.create.selectedRecurrence.weekly.everyDay"="Ежедневно";
 /* On Upgrade Account Plan screen. Button title to restore purchases */
 "upgradeAccountPlan.button.restore.title"="Восстановить покупку";
-/* On Upgrade Account Plan screen. Button title to show terms and policies */
-"upgradeAccountPlan.button.termsAndPolicies.title"="Условия и политика";
 /* On Upgrade Account Plan screen. Button title to buy account plan. %@ will be the name of the selected plan */
 "upgradeAccountPlan.button.buyAccountPlan.title"="Купить %@";
 /* On Upgrade Account Plan screen. Button title to buy account plan via web. %@ will be total savings for the users in percent */
@@ -3646,22 +3602,12 @@
 "upgradeAccountPlan.button.buyInApp.title"="Продолжить в приложении (%@)";
 /* On Upgrade Account Plan screen. Button footer text to continue to buy account plan in-app when user could buy externally. %@ will be the higher price of the plan */
 "upgradeAccountPlan.button.buyInApp.footer"="Платформа взимает комиссию при покупке в приложении";
-/* On Upgrade Account Plan screen. Displayed header title text message */
-"upgradeAccountPlan.header.title.choosePlan"="Выберите подходящий план";
-/* On Upgrade Account Plan screen. Displayed header title text with current plan. %@ will be the name of the current plan */
-"upgradeAccountPlan.header.title.currentPlan"="Текущий план: %@";
 /* On Upgrade Account Plan screen. Account Plan picker option for monthly term. */
 "upgradeAccountPlan.header.planTermPicker.monthly"="Ежемесячно";
 /* On Upgrade Account Plan screen. Account Plan picker option for yearly term. */
 "upgradeAccountPlan.header.planTermPicker.yearly"="Ежегодно";
 /* On Upgrade Account Plan screen. Displayed header title text with percent of savings with yearly billing. */
 "upgradeAccountPlan.header.title.saveYearlyBilling"="Сэкономьте до 16 %% при годовой оплате";
-/* On Upgrade Account Plan screen. Displayed header title text for pro plan features */
-"upgradeAccountPlan.header.title.featuresOfProPlan"="Особенности планов Pro";
-/* On Upgrade Account Plan screen. Displayed text body for pro plan features */
-"upgradeAccountPlan.message.text.featuresOfProPlan"="• Защищённые паролем ссылки\n\n• Ссылки со сроком действия\n\n• Обмен квотой передач\n\n• Перемотка удалённых данных на период до 90 дней на Pro Lite и до 180 дней на Pro I, II и III\n\n• Проводите звонки и встречи с неограниченным количеством участников и без ограничений по времени\n\n• Сохраняйте конфиденциальность в Интернете с нашим высокоскоростным VPN\n\n• Срок очистки корзины от 7 дней до 10 лет\n\n• Приоритетная поддержка";
-/* On Upgrade Account Plan screen. Displayed text body for pro plan features with ads */
-"upgradeAccountPlan.message.text.featuresOfProPlanWithAds"="• Защищённые паролем ссылки\n\n• Ссылки со сроком действия\n\n• Обмен квотой передач\n\n• Перемотка удалённых данных на период до 90 дней на Pro Lite и до 180 дней на Pro I, II и III\n\n• Проводите звонки и встречи с неограниченным количеством участников и без ограничений по времени\n\n• Сохраняйте конфиденциальность в Интернете с нашим высокоскоростным VPN\n\n• Срок очистки корзины от 7 дней до 10 лет\n\n• Приоритетная поддержка\n\n• Без рекламы";
 /* On Upgrade Account Plan screen. Displayed header title text for subscription details */
 "upgradeAccountPlan.header.title.subscriptionDetails"="Подробная информация о подписке";
 /* On Upgrade Account Plan screen. Displayed text body for subscription details */
@@ -3926,22 +3872,10 @@
 "photos.mediaDiscovery.autoMediaDiscoveryBanner.title"="Поскольку эта папка содержит только изображения и видео, мы автоматически открыли её в режиме галереи. Наслаждайтесь более наглядным представлением содержимого. Это можно отключить в «Настройках».";
 /* Upgrade account screen header title after user onboarding */
 "onboarding.upgradeAccount.header.title"="Получите больше с планом Pro";
-/* Upgrade account screen header subTitle after user onboarding. %@ will be replaced by the price of the lowest plan per month. */
-"onboarding.upgradeAccount.header.subTitle"="Перейдите на план Pro и получите больше места для хранения и доступ к функциям Pro. Планы стоят от %@ в месяц";
 /* Upgrade account screen content header for pro plan feature list */
 "onboarding.upgradeAccount.content.proPlanFeatureHeader"="Некоторые особенности, которые вас ждут:";
 /* Upgrade account screen content title about pro plan featuring as Generous Storage */
 "onboarding.upgradeAccount.content.generousStorage.title"="Максимально гибкое хранилище";
-/* Upgrade account screen content message about pro plan featuring as Generous Storage. [A] will be replaced by the storage capacity of the lowest pro plan and [B] will be replaced by its storage unit. Example: Starting from 400 GB, find the perfect fit for your storage needs. */
-"onboarding.upgradeAccount.content.generousStorage.message"="Найдите свой идеальный объём хранилища. От [A] [B].";
-/* Upgrade account screen content title about pro plan featuring the Transfer Sharing */
-"onboarding.upgradeAccount.content.transferSharing.title"="Простой и безопасный обмен файлами";
-/* Upgrade account screen content message about pro plan featuring the Transfer Sharing */
-"onboarding.upgradeAccount.content.transferSharing.message"="Делитесь большими файлами благодаря большому объёму передачи данных и обеспечьте безопасность с помощью ссылок, защищённых паролем.";
-/* Upgrade account screen content title about pro plan featuring the Back up and rewind */
-"onboarding.upgradeAccount.content.backupAndRewind.title"="Данные больше не потеряются";
-/* Upgrade account screen content message about pro plan featuring the Back up and rewind */
-"onboarding.upgradeAccount.content.backupAndRewind.message"="Создавайте резервные копии и синхронизируйте данные для полной уверенности. Также используйте функцию перемотки, чтобы восстановить папки до любой даты за период до 180 дней.";
 /* Upgrade account screen content title about pro plan featuring the MEGA VPN */
 "onboarding.upgradeAccount.content.megaVPN.title"="MEGA VPN";
 /* Upgrade account screen content message about pro plan featuring the MEGA VPN */
@@ -3954,12 +3888,6 @@
 "onboarding.upgradeAccount.content.additionalSecurity.title"="Дополнительная безопасность при обмене";
 /* Upgrade account screen content message about pro plan featuring the Additional security when sharing */
 "onboarding.upgradeAccount.content.additionalSecurity.message"="Устанавливайте пароли и сроки действия для ссылок на файлы и папки.";
-/* Upgrade account screen content title about pro plan's other benefits */
-"onboarding.upgradeAccount.content.plusBenefits.title"="Плюс доступ к этим замечательным преимуществам:";
-/* Upgrade account screen content message about pro plan's other benefits without Ad-free */
-"onboarding.upgradeAccount.content.plusBenefits.messageWithoutAds"="• MEGA VPN\n• Звонки и встречи без ограничений";
-/* Upgrade account screen content message about pro plan's other benefits with Ad-free */
-"onboarding.upgradeAccount.content.plusBenefits.messageWithAds"="• MEGA VPN\n• Неограниченные звонки и встречи\n• Без рекламы";
 /* Upgrade account screen button title that will direct to Upgrade plan page */
 "onboarding.upgradeAccount.button.viewProPlans"="Перейти на Pro";
 /* Camera uploads banner enable state title */
@@ -4200,10 +4128,6 @@
 "onboarding.hiddenFilesAndFolders.outOfSight.content.message"="Вы сами решаете, когда будут видны скрытые файлы. Появилась новая настройка для временного отображения скрытых элементов.";
 /* My Account page: Menu Title of user account page */
 "account.myAccount.title"="Мой аккаунт";
-/* Free plan title */
-"free.Plan.name"="Бесплатный";
-/* Price description for the free plan */
-"free.Plan.Price.description"="Бесплатный";
 /* Storage limit capacity, where %d is the number of gigabytes that marks the storage limit */
 "storage.Limit.capacity"="%d ГБ";
 /* Limited transfer limit title */
@@ -4770,3 +4694,15 @@
 "notification.local.cameraUploadBackupReminder.body"="Пора сделать резервную копию ваших фото и видео";
 /* The double tap seek display text in video player */
 "videoPlayer.chip.seekDisplayText"="%@ сек.";
+/* The lock video player option in bottom more menu */
+"videoPlayer.lock.lockVideoPlayer"="Заблокировать видеоплеер";
+/* The screen locked status message in video player */
+"videoPlayer.lock.screenLocked"="Экран заблокирован";
+/* The instruction to unlock the video player */
+"videoPlayer.lock.tapIconToUnlock"="Нажмите на значок замка, чтобы разблокировать";
+/* The lock video player option in bottom more menu */
+"videoPlayer.snapshot.bottomSheet.title"="Cнимок";
+/* The instruction to unlock the video player */
+"videoPlayer.snapshot.snackBar.title"="Изображение сохранено на устройстве";
+/* The Picture in picture video player option in bottom more menu */
+"videoPlayer.pip.bottomSheet.title"="Картинка в картинке";

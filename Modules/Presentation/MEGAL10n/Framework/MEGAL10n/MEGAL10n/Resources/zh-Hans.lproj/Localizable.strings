@@ -82,14 +82,8 @@
 "needToBeLoggedInToCompleteYourEmailChange"="您必须登录才能完成您的电子邮件地址更改。请使用您当前的电子邮件地址重新登录，然后再次点击您的确认链接。";
 /* Button title which triggers the action to login in your MEGA account */
 "login"="登录";
-/* Message for login option on Create Account screen */
-"account.createAccount.alreadyHaveAnAccount"="已经有帐户了？";
 /* Button title which triggers the action to create a MEGA account */
 "createAccount"="注册";
-/* Message on login screen for Create Account */
-"account.login.newToMega"="还没有MEGA帐户？";
-/* Button title which triggers the action to join meeting as Guest */
-"general.joinMeetingAsGuest"="以访客身份加入";
 /* Message shown when the user writes a wrong email or password on login */
 "invalidMailOrPassword"="无效的电子邮件地址或密码。再试一次。";
 /* Error message when to many attempts to login */
@@ -130,16 +124,10 @@
 "strong"="强";
 /*  */
 "passwordStrong"="该密码不会被轻易破解。请确保您牢记您的密码。";
-/*  */
-"agreeWithTheMEGATermsOfService"="我同意MEGA的<a href=\"terms\">服务条款</a>";
-/* This text is displayed in the account creation screen with a checkbox. User will have to tick the checkbox before proceeding on to create an account */
-"agreeWithLosingPasswordYouLoseData"="我了解[S]如果我忘记密码，则会丢失我的数据。[/S]了解更多关于<a href=\"terms\">MEGA的端到端加密技术</a>。";
 /* Error text shown when you have not entered a correct name */
 "nameInvalidFormat"="输入一个有效的名字";
 /* Error text shown when you have not written the same password */
 "passwordsDoNotMatch"="密码不匹配";
-/* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
-"termsCheckboxUnselected"="您需要接受服务条款";
 /* This error is shown in the account creation page. User has to agree to the terms and conditions. If the user does not agree to the losing password results in data loss condition then this error is shown */
 "termsForLosingPasswordCheckboxUnselected"="您需要同意您已了解忘记密码后的风险";
 /* Error text shown when the users tries to create an account with an email already in use */
@@ -867,7 +855,7 @@
 /* Text next to a switch that allows disabling the HTTP protocol for transfers */
 "dontUseHttp"="不使用HTTP";
 /* Footer text that explains when disabling the HTTP protocol for transfers may be useful */
-"transfersSectionFooter"="仅当您的传输未开始时启用此选项。正常情况下，HTTP已位所有传输都加密，且可正常工作。";
+"transfersSectionFooter"="仅在传输无法开始时启用此选项。所有传输均已加密，通常情况下使用 HTTP 即可满足需求。";
 /* Title of the dialog displayed the first time that a user want to download a image. Asks if wants to export image files to the photo album after download in future and informs that user can change this option afterwards - (String as short as possible). */
 "Download options"="下载选项";
 /* Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped */
@@ -929,7 +917,7 @@
 /* Recovery key error alert title */
 "recoveryKey.error.alert.title"="恢复密钥错误";
 /* Recovery key error alert message when the user provided incorrect or invalid Recovery key */
-"recoveryKey.error.alert.message.invalidKey"="The recovery key you supplied is either invalid, or is not for this account. Check if you’re using the correct key and try again.";
+"recoveryKey.error.alert.message.invalidKey"="您提供的恢复密钥要么无效，要么不适用于此帐户。请检查您使用的密钥是否正确，然后重试。";
 /* Text of the alert after opening the recovery link to reset pass being logged. */
 "youRecoveryKeyIsGoingTo"="您的恢复密钥将用于重置您的密码。请输入您的新密码。";
 /*  */
@@ -1013,7 +1001,7 @@
 /* Cell title shown on the achievements view for referral achievement */
 "account.achievement.referral.title"="邀请您的好友";
 /* Subtitle of the referral achievement introduction, %1$@ is a placeholder, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
-"account.achievement.referral.subtitle"="%1$@ of storage for each invitation. \n%2$@";
+"account.achievement.referral.subtitle"="每次邀请可获得%1$@的存储空间。 \n%2$@";
 /* Text shown to explain how and where you can invite friends */
 "Select from phone contacts or enter multiple email addresses"="从设备通讯录中选择或者输入多个电子邮件地址。";
 /*  */
@@ -1051,19 +1039,19 @@
 /* Explanation label shown on the achievements view for complete install MEGA desktop app achievement, %@ is a placeholder. */
 "account.achievement.desktopApp.complete.explaination.label"="您已通过安装MEGA桌面应用程序获得了%@存储空间。";
 /* Explanation label shown on the achievements view for incomplete install MEGA desktop app achievement, %1$@ is a placeholder, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
-"account.achievement.desktopApp.incomplete.explaination.label"="When you install the MEGA Desktop App you get %1$@ of complimentary storage space, %2$@. The MEGA Desktop App is available for Windows, macOS and most Linux distributions.";
+"account.achievement.desktopApp.incomplete.explaination.label"="安装 MEGA 桌面应用程序后，您会获得 %1$@ 免费存储空间， %2$@。MEGA 桌面应用程序使用于 Windows、macOS 和大多数 Linux 发行版。";
 /* Cell title shown on the achievements view for install MEGA mobile app achievement */
 "account.achievement.mobileApp.title"="安装MEGA手机应用程序";
 /* Explanation label shown on the achievements view for complete install MEGA mobile app achievement, %@ is a placeholder. */
 "account.achievement.mobileApp.complete.explaination.label"="您已通过安装MEGA手机应用程序获得了%@存储空间。";
 /* Explanation label shown on the achievements view for incomplete install MEGA mobile app achievement, %1$@ is a placeholder, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
-"account.achievement.mobileApp.incomplete.explaination.label"="When you install the MEGA Mobile App you get %@ of complimentary storage space, %2$@. The MEGA Mobile App is available for iOS and Android. ";
+"account.achievement.mobileApp.incomplete.explaination.label"="安装 MEGA 手机应用程序后，您会获得 %@ 免费存储空间， %2$@。MEGA 手机应用程序适用于 iOS 和Android平台。 ";
 /* Detail label shown on the achievements details view for Start Free Trial when its completed, %1$@ is placeholder for the storage amount, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
-"account.achievement.freeTrial.detail.complete.label"="%1$@ bonus applied. %2$@";
+"account.achievement.freeTrial.detail.complete.label"="%1$@ 奖励已生效。%2$@";
 /* Cell title shown on the achievements view for Start MEGA VPN Free Trial */
 "account.achievement.vpnFreeTrial.title"="开始MEGA VPN的免费试用";
 /* Detail label shown on the achievements details view for Start MEGA VPN Free Trial when its incomplete, %1$@ is placeholder for the storage amount, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
-"account.achievement.vpnFreeTrial.detail.incomplete.label"="Get %1$@ of free storage when you start a MEGA VPN free trial. %2$@";
+"account.achievement.vpnFreeTrial.detail.incomplete.label"="免费试用MEGA VPN您即可获得 %1$@ 免费储存空间。 %2$@";
 /* Explanation label shown on the achievements view for incomplete start MEGA VPN Free Trial achievement, %@ is a placeholder. */
 "account.achievement.vpnFreeTrial.incomplete.explanation.label"="安装MEGA VPN应用程序，使用您的MEGA帐户登录，然后开始免费试用。开启免费试用后，您的奖励存储空间将自动添加。";
 /* Explanation label shown on the achievements view for complete start MEGA VPN Free Trial achievement, %@ is a placeholder. */
@@ -1073,7 +1061,7 @@
 /* Cell title shown on the achievements view for Start MEGA Pass Free Trial */
 "account.achievement.passFreeTrial.title"="开始MEGA Pass的免费试用";
 /* Detail label shown on the achievements details view for Start MEGA Pass Free Trial when its incomplete, %1$@ is placeholder for the storage amount, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
-"account.achievement.passFreeTrial.detail.incomplete.label"="Get %1$@ of free storage when you start a MEGA Pass free trial. %2$@";
+"account.achievement.passFreeTrial.detail.incomplete.label"="免费试用MEGA Pass您即可获得 %1$@ 免费储存空间。 %2$@";
 /* Explanation label shown on the achievements view for incomplete start MEGA Pass Free Trial achievement, %@ is a placeholder. */
 "account.achievement.passFreeTrial.incomplete.explanation.label"="安装MEGA Pass应用程序，使用您的MEGA帐户登录，然后开始免费试用。开启免费试用后，您的奖励存储空间将自动添加。";
 /* Explanation label shown on the achievements view for complete start MEGA Pass Free Trial achievement, %@ is a placeholder. */
@@ -1081,11 +1069,11 @@
 /* Text for the button to install MEGA Pass in the Start MEGA Pass Free Trial achievement */
 "account.achievement.passFreeTrial.buttonText"="安装MEGA Pass";
 /* Subtitle of the incomplete achievement with permanent bonus, %1$@ is a placeholder for amount of storage, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
-"account.achievement.incomplete.subtitle"="%1$@ of storage. %2$@";
+"account.achievement.incomplete.subtitle"="%1$@ 存储空间。%2$@";
 /* String of the achievements with permanent bonus, used as a full sentence */
-"account.achievement.validity.permanent"="Valid permanently.";
+"account.achievement.validity.permanent"="永久有效。";
 /* Substring of the achievements with permanent bonus, used as a part of a sentence */
-"account.achievement.validity.substring.permanent"="valid permanently";
+"account.achievement.validity.substring.permanent"="永久有效";
 /* Subtitle of the complete achievement with permanent bonus */
 "account.achievement.complete.subtitle.permanent"="奖励已生效";
 /* Add Phone Number title */
@@ -1093,7 +1081,7 @@
 /* Explanation Label shown on the achievements view for complete add phone number achievement, %@ is a placeholder. */
 "account.achievement.phoneNumber.complete.explaination.label"="您已通过添加手机号获得了%@存储空间。";
 /* Explanation Label shown on the achievements view for incomplete add phone number achievement, %1$@ is a placeholder, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
-"account.achievement.phoneNumber.incomplete.explaination.label"="When you add your phone number you get %@ of complimentary storage space, %2$@.";
+"account.achievement.phoneNumber.incomplete.explaination.label"="添加手机号后，您将获得 %@ 免费存储空间， %2$@。";
 /* Free storage description to encourage users to add phone number to their accounts */
 "Get free %@ when you add your phone number. This makes it easier for your contacts to find you on MEGA."="添加手机号后可免费获得%@，您的联系人也更容易在MEGA上找到您。";
 /* Description to encourage users to add phone number to their accounts when there are not achievements */
@@ -1188,8 +1176,6 @@
 "monthly"="每月";
 /* "Yearly" subscriptions */
 "yearly"="每年";
-/* Alert title shown when a selected plan is not available at that moment on the App store */
-"inAppPurchase.error.alert.title.notAvailable"="此应用内购买项目前在App Store中不可用。请验证您的Apple ID的付款设置。";
 /* Button that redirect you to the main page of your Account in the App Store */
 "inAppPurchase.error.alert.primaryButtonTitle"="前往App Store设置";
 /* Alert title shown when the user has purchase correctly some plan */
@@ -1720,34 +1706,8 @@
 "Save a copy of the images and videos taken from the MEGA app in your device’s media library."="将MEGA应用程序中拍摄的照片与视频的副本保存在您设备的媒体资料库中。";
 /* Title of the Spotlight Search section */
 "Search"="搜索";
-/* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
-"You hold the keys"="您持有这把密钥";
-/* Description shown in a page of the onboarding screens explaining the encryption paradigm */
-"Security is why we exist, your files are safe with us behind a well oiled encryption machine where only you can access your files."="安全即是我们存在的意义。您的文件会在我们的加密机器下受到安全保护，并且只有您可以访问您的文件。";
-/* Title shown in a page of the on boarding screens explaining that the chat is encrypted */
-"Encrypted chat"="已加密聊天";
-/* Description shown in a page of the onboarding screens explaining the chat feature */
-"Fully encrypted chat with voice and video calls, group messaging and file sharing integration with your Cloud Drive."="使用您的云盘即可享有完全加密的语音与视频通话、群发信息以及文件共享整合。";
-/* Title shown in a page of the on boarding screens explaining that the user can add contacts to chat and colaborate */
-"Create your Network"="创建您的网络";
-/* Description shown in a page of the onboarding screens explaining contacts */
-"Add contacts, create a network, colaborate, make voice and video calls without ever leaving MEGA"="添加联系人、创建关系网、协同合作以及进行语音与视频通话，一切皆可在MEGA内进行";
-/* Title shown in a page of the on boarding screens explaining that the user can backup the photos automatically */
-"Your Photos in the Cloud"="云备份您的照片";
-/* Description shown in a page of the onboarding screens explaining the camera uploads feature */
-"Camera Uploads is an essential feature for any mobile device and we have got you covered. Create your account now."="相机上传是任何移动设备的基本功能，我们已经为您提供这项服务。立即注册一个帐户。";
-/* Button which triggers the initial setup */
-"Setup MEGA"="设置MEGA";
-/* Detailed explanation of why the user should give some permissions to MEGA */
-"To fully take advantage of your MEGA account we need to ask you some permissions."="要充分利用您的MEGA帐户，我们需要您开启一些权限。";
-/* Message warning the user about the risk of not setting up permissions */
-"The MEGA app may not work as expected without the required permissions. Are you sure?"="如果没有所需的权限，MEGA应用程序可能无法正常工作。您确定要这样做吗？";
 /* Shows number of the current page. '%1' will be replaced by current page number. '%2' will be replaced by number of all pages. */
 "%1 of %2"="%1/%2";
-/* Title label that explains that the user is going to be asked for the photos permission */
-"Allow Access to Photos"="允许访问照片";
-/* Detailed explanation of why the user should give permission to access to the photos */
-"Please give the MEGA App permission to access Photos to share photos and videos."="请允许MEGA访问您的照片以共享照片和视频。";
 /* Title label that explains that the user is going to be asked for the microphone and camera permission */
 "Enable Microphone and Camera"="启用麦克风和相机";
 /* Detailed explanation of why the user should give permission to access to the camera and the microphone */
@@ -2241,7 +2201,7 @@
 /* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the footer message body that appears under that option */
 "settings.userInterface.mediaDiscovery.footer.body"="在网格视图中打开仅包含图像或视频的文件夹。按缩略图浏览媒体并按日期筛选。";
 /* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the footer message body link that appears under that option */
-"settings.userInterface.mediaDiscovery.footer.link"="Learn more about gallery view";
+"settings.userInterface.mediaDiscovery.footer.link"="了解更多关于图库视图的信息";
 /* In Settings - User Interface, there is a setting that can determine if the app should also load sub folder media. This is the label in the setting */
 "settings.userInterface.mediaDiscoverySubFolder"="子文件夹中的图库视图";
 /* In Settings - User Interface, there is a setting that can determine if the app should also load sub folder media. This is the footer message body that appears under that option */
@@ -2526,8 +2486,6 @@
 "Create new file"="创建新文件";
 /* Confirmation dialog shown to user when they try to revert a node in an incoming ReadWrite share. */
 "You do not have the permissions required to revert this file. In order to continue, we can create a new file with the reverted data. Would you like to proceed?"="您没有恢复此文件所需的权限。然而，您可以使用以前的版本创建一个新文件。您想继续吗？";
-/* The new LITE payment plan. This means it is a light or lightweight payment plan compared to the full / heavyweight plans with lots of bandwidth and storage (PRO I, PRO II, PRO III). */
-"Pro Lite"="Pro Lite";
 /* The avatar picture button to go to my account page. Use for voice over. */
 "My Account"="我的帐户";
 /* Text for title for favourite nodes */
@@ -2589,7 +2547,7 @@
 /* Title of Over Disk Quota dialog */
 "dialog.storage.odq.title"="请升级帐户";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. @% is placeholder. */
-"dialog.storage.almostFull.detail"="Your Cloud drive is almost full. Upgrade now and get up to %@ TB of cloud storage space.";
+"dialog.storage.almostFull.detail"="您的云盘空间几乎已满。立即升级并获得最高 %@ TB 的云存储空间。";
 /* Over Disk Quota detail message informing the user that they've reached the full capacity of their accounts. */
 "dialog.storage.odq.detail"="您的云盘空间已满。请升级至MEGA Pro会员增加您的存储空间并享受其他会员服务。如果您没有升级帐户或删除多余数据且仍然超出存储空间上限，您的帐户可能会被锁定。请查看我们发送给您的电子邮件以了解更多信息。";
 /* Over Disk Quota paywall not final title. */
@@ -3634,34 +3592,22 @@
 "meetings.scheduleMeeting.create.selectedRecurrence.weekly.everyDay"="每日";
 /* On Upgrade Account Plan screen. Button title to restore purchases */
 "upgradeAccountPlan.button.restore.title"="恢复购买";
-/* On Upgrade Account Plan screen. Button title to show terms and policies */
-"upgradeAccountPlan.button.termsAndPolicies.title"="条款与政策";
 /* On Upgrade Account Plan screen. Button title to buy account plan. %@ will be the name of the selected plan */
 "upgradeAccountPlan.button.buyAccountPlan.title"="购买%@";
 /* On Upgrade Account Plan screen. Button title to buy account plan via web. %@ will be total savings for the users in percent */
-"upgradeAccountPlan.button.buyViaWeb.save"="Buy on our website (save %@)";
+"upgradeAccountPlan.button.buyViaWeb.save"="在我们的网站上购买（节省 %@）";
 /* On Upgrade Account Plan screen. Button title to buy account plan via web. %@ will be potential total savings for the users in percent */
-"upgradeAccountPlan.button.buyViaWeb.saveUpTo"="Buy on our website (save up to %@)";
+"upgradeAccountPlan.button.buyViaWeb.saveUpTo"="在我们的网站上购买（最多节省 %@)";
 /* On Upgrade Account Plan screen. Button title to continue to buy account plan in-app when user could buy externally. %@ will be the higher price of the plan */
-"upgradeAccountPlan.button.buyInApp.title"="Continue in-app (%@)";
+"upgradeAccountPlan.button.buyInApp.title"="继续从应用程序购买(%@)";
 /* On Upgrade Account Plan screen. Button footer text to continue to buy account plan in-app when user could buy externally. %@ will be the higher price of the plan */
-"upgradeAccountPlan.button.buyInApp.footer"="Platform fees apply when purchasing through the app";
-/* On Upgrade Account Plan screen. Displayed header title text message */
-"upgradeAccountPlan.header.title.choosePlan"="请选择适合您的方案";
-/* On Upgrade Account Plan screen. Displayed header title text with current plan. %@ will be the name of the current plan */
-"upgradeAccountPlan.header.title.currentPlan"="当前会员方案：%@";
+"upgradeAccountPlan.button.buyInApp.footer"="通过应用程序购买时需支付平台手续费";
 /* On Upgrade Account Plan screen. Account Plan picker option for monthly term. */
 "upgradeAccountPlan.header.planTermPicker.monthly"="每月";
 /* On Upgrade Account Plan screen. Account Plan picker option for yearly term. */
 "upgradeAccountPlan.header.planTermPicker.yearly"="每年";
 /* On Upgrade Account Plan screen. Displayed header title text with percent of savings with yearly billing. */
 "upgradeAccountPlan.header.title.saveYearlyBilling"="按年结算最多可节省16%%";
-/* On Upgrade Account Plan screen. Displayed header title text for pro plan features */
-"upgradeAccountPlan.header.title.featuresOfProPlan"="Pro方案的功能";
-/* On Upgrade Account Plan screen. Displayed text body for pro plan features */
-"upgradeAccountPlan.message.text.featuresOfProPlan"="• 受密码保护的链接\n\n• 具有到期日期的链接\n\n• 传输流量共享\n\n• Pro Lite可还原最多90天的已删除数据，Pro I、II和III则可还原最多180天\n\n• 主持通话和会议，参与者人数和时间不受限制\n\n• 使用我们的高速VPN保持在线隐私\n\n• 可安排在7天到10年之间定期清理回收站\n\n• 优先客服";
-/* On Upgrade Account Plan screen. Displayed text body for pro plan features with ads */
-"upgradeAccountPlan.message.text.featuresOfProPlanWithAds"="• 受密码保护的链接\n\n• 具有到期日期的链接\n\n• 传输流量共享\n\n• Pro Lite可还原最多90天的已删除数据，Pro I、II和III则可还原最多180天\n\n• 主持通话和会议，参与者人数和时间不受限制\n\n• 使用我们的高速VPN保持在线隐私\n\n• 可安排在7天到10年之间定期清理回收站\n\n• 优先客服\n\n• 无广告";
 /* On Upgrade Account Plan screen. Displayed header title text for subscription details */
 "upgradeAccountPlan.header.title.subscriptionDetails"="订阅详情";
 /* On Upgrade Account Plan screen. Displayed text body for subscription details */
@@ -3926,22 +3872,10 @@
 "photos.mediaDiscovery.autoMediaDiscoveryBanner.title"="由于此文件夹仅包含图像和视频，我们已自动以图库视图中将其打开。您可以通过沉浸式的界面享受视觉内容。你可以在“设置”中禁用此功能。";
 /* Upgrade account screen header title after user onboarding */
 "onboarding.upgradeAccount.header.title"="通过Pro方案获得更多权益";
-/* Upgrade account screen header subTitle after user onboarding. %@ will be replaced by the price of the lowest plan per month. */
-"onboarding.upgradeAccount.header.subTitle"="升级到Pro方案，获得更多存储空间和使用Pro功能的权限。方案低至一个月%@起。";
 /* Upgrade account screen content header for pro plan feature list */
 "onboarding.upgradeAccount.content.proPlanFeatureHeader"="一些值得期待的功能是：";
 /* Upgrade account screen content title about pro plan featuring as Generous Storage */
 "onboarding.upgradeAccount.content.generousStorage.title"="极致的存储灵活性";
-/* Upgrade account screen content message about pro plan featuring as Generous Storage. [A] will be replaced by the storage capacity of the lowest pro plan and [B] will be replaced by its storage unit. Example: Starting from 400 GB, find the perfect fit for your storage needs. */
-"onboarding.upgradeAccount.content.generousStorage.message"="从[A] [B]起，找到最适合您存储需求的方案。";
-/* Upgrade account screen content title about pro plan featuring the Transfer Sharing */
-"onboarding.upgradeAccount.content.transferSharing.title"="轻松、安全的文件共享";
-/* Upgrade account screen content message about pro plan featuring the Transfer Sharing */
-"onboarding.upgradeAccount.content.transferSharing.message"="得益于充足的传输流量来共享大文件，并通过受密码保护的链接确保安全。";
-/* Upgrade account screen content title about pro plan featuring the Back up and rewind */
-"onboarding.upgradeAccount.content.backupAndRewind.title"="再也不会丢失数据";
-/* Upgrade account screen content message about pro plan featuring the Back up and rewind */
-"onboarding.upgradeAccount.content.backupAndRewind.message"="让您完全放心的备份和同步您的数据。另外，使用还原功能将可将文件夹恢复到最长可达180天内的任何日期。";
 /* Upgrade account screen content title about pro plan featuring the MEGA VPN */
 "onboarding.upgradeAccount.content.megaVPN.title"="MEGA VPN";
 /* Upgrade account screen content message about pro plan featuring the MEGA VPN */
@@ -3954,12 +3888,6 @@
 "onboarding.upgradeAccount.content.additionalSecurity.title"="共享时的额外安全性";
 /* Upgrade account screen content message about pro plan featuring the Additional security when sharing */
 "onboarding.upgradeAccount.content.additionalSecurity.message"="为文件和文件夹链接设置密码和到期日期。";
-/* Upgrade account screen content title about pro plan's other benefits */
-"onboarding.upgradeAccount.content.plusBenefits.title"="此外还可获得以下丰厚受益：";
-/* Upgrade account screen content message about pro plan's other benefits without Ad-free */
-"onboarding.upgradeAccount.content.plusBenefits.messageWithoutAds"="• MEGA VPN\n• 无限制的通话和会议";
-/* Upgrade account screen content message about pro plan's other benefits with Ad-free */
-"onboarding.upgradeAccount.content.plusBenefits.messageWithAds"="• MEGA VPN\n• 无限制的通话和会议\n• 无广告";
 /* Upgrade account screen button title that will direct to Upgrade plan page */
 "onboarding.upgradeAccount.button.viewProPlans"="今天升级到Pro";
 /* Camera uploads banner enable state title */
@@ -4200,10 +4128,6 @@
 "onboarding.hiddenFilesAndFolders.outOfSight.content.message"="您可以决定何时显示隐藏的文件。有一个新的设置可以暂时显示隐藏的项目。";
 /* My Account page: Menu Title of user account page */
 "account.myAccount.title"="我的帐户";
-/* Free plan title */
-"free.Plan.name"="免费";
-/* Price description for the free plan */
-"free.Plan.Price.description"="免费";
 /* Storage limit capacity, where %d is the number of gigabytes that marks the storage limit */
 "storage.Limit.capacity"="%d GB";
 /* Limited transfer limit title */
@@ -4301,7 +4225,7 @@
 /* Cancellation Section Webclient on a computer title: On a computer */
 "accounts.cancelSubscriptionSteps.webClient.computer.title"="在计算机上";
 /* Cancellation step Webclient: First step using the computer - 1. Visit MEGA website in your web browser. */
-"accounts.cancelSubscriptionSteps.webClient.computer.step.one"="1. Visit https://%@ in your web browser.";
+"accounts.cancelSubscriptionSteps.webClient.computer.step.one"="1. 在您的网络浏览器中访问https://%@ 。";
 /* Cancellation step Webclient: Second step using the computer - 2. Log in to your MEGA account. */
 "accounts.cancelSubscriptionSteps.webClient.computer.step.two"="2. 登入您的MEGA帐户。";
 /* Cancellation step Webclient: Third step using the computer - 3. Click the main menu. */
@@ -4315,7 +4239,7 @@
 /* Cancellation Section Webclient on mobile device title: On a mobile device */
 "accounts.cancelSubscriptionSteps.webClient.mobile.title"="在移动设备上";
 /* Cancellation step Webclient: First step using the mobile device - 1. Visit MEGA website in your web browser. */
-"accounts.cancelSubscriptionSteps.webClient.mobile.step.one"="1. Visit https://%@ in your web browser.";
+"accounts.cancelSubscriptionSteps.webClient.mobile.step.one"="1. 在您的网络浏览器中访问 https://%@ 。";
 /* Cancellation step Webclient: Second step using the mobile device - 2. Log in to your MEGA account. */
 "accounts.cancelSubscriptionSteps.webClient.mobile.step.two"="2. 登入您的MEGA帐户。";
 /* Cancellation step Webclient: Third step using the mobile device - 3. Tap on your avatar. */
@@ -4545,9 +4469,9 @@
 /* Add to collection button title to add items */
 "photos.addTo.button.title.add"="添加";
 /* Ad-free experience screen header title */
-"ads.adFree.header.title"="Want MEGA without the ads?";
+"ads.adFree.header.title"="想要无广告的MEGA吗？";
 /* Ad-free experience screen header subTitle */
-"ads.adFree.header.subTitle"="Upgrade to a Pro plan with plenty of storage and more. Our Pro plans start at just %@ a month.";
+"ads.adFree.header.subTitle"="升级到 Pro 方案，获得更多储存空间和更多功能。我们的方案从每月 %@ 起。";
 /* Ad-free experience screen content title about pro plan featuring as Generous Storage */
 "ads.adFree.content.generousStorage.title"="大容量存储空间";
 /* Ad-free experience screen content message about pro plan featuring as Generous Storage */
@@ -4627,7 +4551,7 @@
 /* Hidden files and folders onboarding content item two title */
 "onboarding.hiddenFilesAndFolders.content.item.two.title"="轻松控制可见性";
 /* Hidden files and folders onboarding content item two message */
-"onboarding.hiddenFilesAndFolders.content.item.two.message"="To show hidden files, turn on the “Show hidden items” setting under “File Management” -> “User interface” in your app settings.";
+"onboarding.hiddenFilesAndFolders.content.item.two.message"="要显示隐藏文件，请在应用程序设置的 “文件管理”-> “用户界面” 下打开 “显示隐藏项目” 设置。";
 /* Hidden files and folders onboarding content item three title */
 "onboarding.hiddenFilesAndFolders.content.item.three.title"="共享文件保持可见状态";
 /* Hidden files and folders onboarding content item three message */
@@ -4653,11 +4577,11 @@
 /* Onboarding USP carousel fourth page title */
 "onboarding.uniqueSellingProposition.carousel.page.fourth.title"="私密的谈话";
 /* Onboarding USP carousel fourth page subtitle */
-"onboarding.uniqueSellingProposition.carousel.page.fourth.subtitle"="Chat with friends and family, share photos or sensitive information, video call, and schedule meetings. Safety and privacy guaranteed.";
+"onboarding.uniqueSellingProposition.carousel.page.fourth.subtitle"="与朋友和家人聊天、共享照片或敏感信息、视频对话和安排会议。安全和隐私都将得到保障。";
 /* Onboarding Notification CTA title */
 "onboarding.cta.notifications.title"="千万不要错过重要的更新";
 /* Onboarding Notification CTA description */
-"onboarding.cta.notifications.explanation"="Stay informed with real-time updates that matter to you. Get alerts for shared folder activity, security updates, and exclusive offers, so you never miss anything important.\n\nYou can manage notification preferences at any time in the settings.";
+"onboarding.cta.notifications.explanation"="实时掌握与你相关的重要动态。获取共享文件夹活动、安全更新和独家优惠的提醒，让你不错过任何重要信息。\n\n你可以随时在设置中管理通知偏好。";
 /* Onboarding Notification CTA *Enable* button */
 "onboarding.cta.notifications.buttons.enable"="启用提醒通知";
 /* Onboarding Notification CTA *Skip* button */
@@ -4665,21 +4589,21 @@
 /* Onboarding Camera Backups CTA title */
 "onboarding.cta.cameraBackups.title"="始终确保照片安全";
 /* Onboarding Camera Backups CTA description */
-"onboarding.cta.cameraBackups.explanation"="Your memories matter\n\nCamera uploads automatically backs up your photos and videos to your MEGA Cloud drive, so you never have to worry about losing them";
+"onboarding.cta.cameraBackups.explanation"="您的回忆很重要\n\n相机上传会自动将您的照片和视频备份到您的MEGA云盘上，因此您不必担心丢失它们";
 /* Onboarding Camera Backups CTA note */
-"onboarding.cta.cameraBackups.note"="Camera uploads requires [B]full access[/B] to your device’s photo library";
+"onboarding.cta.cameraBackups.note"="相机上传功能需要 [B]完整访问[/B] 您设备的照片库";
 /* Onboarding Camera Backups CTA *Enable* button */
 "onboarding.cta.cameraBackups.buttons.enable"="启用相机上传";
 /* Onboarding Camera Backups CTA *Skip* button */
 "onboarding.cta.cameraBackups.buttons.skip"="暂时跳过";
 /* String explaining the auto-renewal policy of the Pro subscription. */
-"subscriptionPurchase.autoRenewDescription"="Subscriptions are renewed automatically for successive subscription periods of the same duration and at the same price as the initial period chosen.\n\nYou can cancel your Pro plan anytime but no later than 24 hours before your next subscription payment is due. [L]Learn how to manage your subscription in your settings[/L].";
+"subscriptionPurchase.autoRenewDescription"="连续订阅将自动续订，其期限和价格与所选初始订阅期相同。\n\n您可以随时取消您的 Pro方案订阅，但不得迟于下一次订阅付款到期前的24小时。 [L]在设置中了解如何管理您的订阅[/L]。";
 /* Title shown for the free plan card */
 "subscriptionPurchase.freePlanCard.title"="开始使用我们的免费方案";
 /* Description shown for the free plan card */
-"subscriptionPurchase.freePlanCard.description"="We offer generous amount of storage and transfer quota at no charge, so you can try MEGA with no risk";
+"subscriptionPurchase.freePlanCard.description"="我们免费提供大量存储空间和传输配额，让您可以毫无风险地体验MEGA";
 /* First benefit shown for the free plan card */
-"subscriptionPurchase.freePlanCard.feature.one"="Free 20 GB of storage";
+"subscriptionPurchase.freePlanCard.feature.one"="20GB的免费存储空间";
 /* Second benefit shown for the free plan card */
 "subscriptionPurchase.freePlanCard.feature.two"="有限的传输";
 /* Button title for the free plan card */
@@ -4689,17 +4613,17 @@
 /* Displays the amount of data transfer included in the subscription plan */
 "subscriptionPurchase.plan.transfer"="%@传输流量";
 /* Displays the total amount when billed yearly */
-"subscriptionPurchase.plan.billedYearly"="%@ billed yearly";
+"subscriptionPurchase.plan.billedYearly"="%@ 按年计费";
 /* Button title to cancel the subscription purchase. */
 "subscriptionPurchase.maybeLater"="稍后";
 /* Title for the features of pro plan in the subscription purchase screen. */
 "subscriptionPurchase.featuresOfProPlan.title"="Pro计划的其他好处";
 /* Features of pro plan in the subscription purchase screen. */
-"subscriptionPurchase.featuresOfProPlan.message"="• Password-protected links\n\n• Links with expiry dates\n\n• Rewind folders up to 180 days of deleted data\n\n• Host calls and meetings with unlimited participants and no time restrictions\n\n• Schedule rubbish bin clearing between 7 days and 10 years\n\n• Priority support";
+"subscriptionPurchase.featuresOfProPlan.message"="• 受密码保护的链接\n\n• 具有过期时间的链接\n\n• 最多可恢复文件夹在180天内删除的数据\n\n• 主持参与者人数和时间不受限制的通话和会议\n\n• 定期清理回收站周期可设为7天到10年\n\n• 优先客服支持";
 /* Title for the first subscription feature: generous storage capacity */
 "subscriptionPurchase.feature.one.title"="大容量存储空间";
 /* Description for the first subscription feature: details about available storage */
-"subscriptionPurchase.feature.one.description"="Store up to 16 TB of data";
+"subscriptionPurchase.feature.one.description"="最多存储 16 TB 的数据";
 /* Title for the second subscription feature: transfer quota sharing */
 "subscriptionPurchase.feature.two.title"="传输流量共享";
 /* Description for the second subscription feature: how shared users can use your quota */
@@ -4745,7 +4669,7 @@
 /* Button subtitle for MEGA transfer it in menu */
 "accountMenu.transferIt.buttonSubtitle"="快速、安全的文件传输";
 /* Section title for the other MEGA apps in menu */
-"accountMenu.otherApps.sectionTitle"="MEGA privacy suite";
+"accountMenu.otherApps.sectionTitle"="MEGA 隐私工具";
 /* Button subtitle for log out in menu */
 "accountMenu.logout"="登出";
 /* subscription purchase description for the storage capacity */
@@ -4753,20 +4677,32 @@
 /* Camera uploads status banner title paused due to network connection */
 "cameraUploads.banner.status.paused.noNetworkConnection.title"="相机上传已暂停";
 /* Camera uploads status banner sub title paused due to no network connection */
-"cameraUploads.banner.status.paused.noNetworkConnection.subheading"="Connect to WiFi or use mobile data";
+"cameraUploads.banner.status.paused.noNetworkConnection.subheading"="连接到 Wi-Fi 或使用移动数据";
 /* Camera uploads status banner sub title paused due to no Wi-Fi connection. Please leave [S], [/S] as it is which is used to bolden the text. */
-"cameraUploads.banner.status.paused.noWiFiConnection.subheading"="Connect to WiFi or use mobile data [S]Tap to allow mobile data[/S]";
+"cameraUploads.banner.status.paused.noWiFiConnection.subheading"="连接到 Wi-Fi 或使用移动数据 [S]点击允许使用移动数据[/S]";
 /* Camera uploads status banner title paused due to low battery */
-"cameraUploads.banner.status.paused.lowBattery.title"="Camera uploads paused due to low battery";
+"cameraUploads.banner.status.paused.lowBattery.title"="由于电池电量不足，相机上传已暂停";
 /* Camera uploads status banner sub title paused due to low battery */
-"cameraUploads.banner.status.paused.lowBattery.subheading"="Charge device to start camera uploads";
+"cameraUploads.banner.status.paused.lowBattery.subheading"="请为设备充电以开始相机上传";
 /* Camera uploads status banner title paused due to device heat */
-"cameraUploads.banner.status.paused.highThermalState.title"="Camera uploads paused due to high device temperature";
+"cameraUploads.banner.status.paused.highThermalState.title"="由于设备温度过高，相机上传已暂停";
 /* Camera uploads status banner sub title paused due to device heat */
-"cameraUploads.banner.status.paused.highThermalState.subheading"="Uploads will resume automatically when your device cools down";
+"cameraUploads.banner.status.paused.highThermalState.subheading"="设备降温后将自动恢复上传";
 /* Local Notification Title for Camera uploads backup reminder */
-"notification.local.cameraUploadBackupReminder.title"="Protect your precious moments!";
+"notification.local.cameraUploadBackupReminder.title"="保护您的珍贵回忆！";
 /* Local Notification Body for Camera uploads backup reminder */
-"notification.local.cameraUploadBackupReminder.body"="It’s time to back up your photos and videos";
+"notification.local.cameraUploadBackupReminder.body"="是时候备份您的照片和视频了";
 /* The double tap seek display text in video player */
 "videoPlayer.chip.seekDisplayText"="%@秒";
+/* The lock video player option in bottom more menu */
+"videoPlayer.lock.lockVideoPlayer"="锁定播放器";
+/* The screen locked status message in video player */
+"videoPlayer.lock.screenLocked"="屏幕已被锁定";
+/* The instruction to unlock the video player */
+"videoPlayer.lock.tapIconToUnlock"="Tap the lock icon to unlock";
+/* The lock video player option in bottom more menu */
+"videoPlayer.snapshot.bottomSheet.title"="拍照";
+/* The instruction to unlock the video player */
+"videoPlayer.snapshot.snackBar.title"="图片已保存到您的设备";
+/* The Picture in picture video player option in bottom more menu */
+"videoPlayer.pip.bottomSheet.title"="Picture in picture";

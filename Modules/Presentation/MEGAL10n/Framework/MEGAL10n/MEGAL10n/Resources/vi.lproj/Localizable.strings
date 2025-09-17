@@ -82,14 +82,8 @@
 "needToBeLoggedInToCompleteYourEmailChange"="Bạn cần phải đăng nhập vào trước khi bạn được phép tiến hành việc thay đổi địa chỉ email của mình. Xin sử dụng email hiện thời của tài khoản này rồi sau đó chạm lại vào đường liên kết để xác nhận.";
 /* Button title which triggers the action to login in your MEGA account */
 "login"="Đăng nhập";
-/* Message for login option on Create Account screen */
-"account.createAccount.alreadyHaveAnAccount"="Bạn đã có một tài khoản rồi?";
 /* Button title which triggers the action to create a MEGA account */
 "createAccount"="Đăng ký";
-/* Message on login screen for Create Account */
-"account.login.newToMega"="Mới đến MEGA?";
-/* Button title which triggers the action to join meeting as Guest */
-"general.joinMeetingAsGuest"="Tham gia họp mặt với tư cách khách";
 /* Message shown when the user writes a wrong email or password on login */
 "invalidMailOrPassword"="Email hoặc mật khẩu không hợp lệ. Xin thử lại.";
 /* Error message when to many attempts to login */
@@ -130,16 +124,10 @@
 "strong"="Tốt";
 /*  */
 "passwordStrong"="Mật khẩu này chịu được tốt việc tấn công thử dò mật khẩu (brute-force) tinh vi. Hãy chắc rằng bạn ghi nhớ được mật khẩu này.";
-/*  */
-"agreeWithTheMEGATermsOfService"="Tôi đồng ý với <a href=\"terms\">Điều Khoản Dịch Vụ</a> của MEGA";
-/* This text is displayed in the account creation screen with a checkbox. User will have to tick the checkbox before proceeding on to create an account */
-"agreeWithLosingPasswordYouLoseData"="Tôi hoàn toàn hiểu rằng [S]nếu tôi quên mất mật khẩu, tôi sẽ mất toàn bộ dữ liệu.[/S] Đọc hiểu thêm về <a href=\"terms\">mô hình mã hóa đầu-cuối của MEGA</a>.";
 /* Error text shown when you have not entered a correct name */
 "nameInvalidFormat"="Xin nhập một tên hợp lệ";
 /* Error text shown when you have not written the same password */
 "passwordsDoNotMatch"="Hai mật khẩu đã nhập không trùng khớp";
-/* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
-"termsCheckboxUnselected"="Bạn phải chấp thuận Điều Khoản Dịch Vụ.";
 /* This error is shown in the account creation page. User has to agree to the terms and conditions. If the user does not agree to the losing password results in data loss condition then this error is shown */
 "termsForLosingPasswordCheckboxUnselected"="Bạn cần phải đồng ý rằng là đã hiểu được rủi ro sẽ xáy ra khi mất mật khẩu";
 /* Error text shown when the users tries to create an account with an email already in use */
@@ -1188,8 +1176,6 @@
 "monthly"="Hàng tháng";
 /* "Yearly" subscriptions */
 "yearly"="Hàng năm";
-/* Alert title shown when a selected plan is not available at that moment on the App store */
-"inAppPurchase.error.alert.title.notAvailable"="Mua In-App hiện không tồn tại trong App Store vào lúc này. Xin xác thực thông tin thanh toán trong tài khoản Apple ID.";
 /* Button that redirect you to the main page of your Account in the App Store */
 "inAppPurchase.error.alert.primaryButtonTitle"="Cài đặt App Store";
 /* Alert title shown when the user has purchase correctly some plan */
@@ -1720,34 +1706,8 @@
 "Save a copy of the images and videos taken from the MEGA app in your device’s media library."="Giữ một bản sao của hình ảnh và videos được chụp từ app MEGA vào thư viện phương tiện số của máy.";
 /* Title of the Spotlight Search section */
 "Search"="Tìm kiếm";
-/* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
-"You hold the keys"="Chính bạn là người giữ chìa khóa";
-/* Description shown in a page of the onboarding screens explaining the encryption paradigm */
-"Security is why we exist, your files are safe with us behind a well oiled encryption machine where only you can access your files."="Bảo mật là lý do chúng tôi tạo ra MEGA, các tệp tin của bạn được bảo vệ an toàn với chúng tôi với bộ máy mã hóa được hoạt động trơn tru, nơi chỉ bạn mới có thể truy cập các tệp tin của mình.";
-/* Title shown in a page of the on boarding screens explaining that the chat is encrypted */
-"Encrypted chat"="Cuộc chát được mã hóa";
-/* Description shown in a page of the onboarding screens explaining the chat feature */
-"Fully encrypted chat with voice and video calls, group messaging and file sharing integration with your Cloud Drive."="Toàn bộ chát, tin nhắn, thoại hay video đều được mã hóa hoàn toàn và hoạt động với khả năng chia sẻ thông qua Ổ Mây.";
-/* Title shown in a page of the on boarding screens explaining that the user can add contacts to chat and colaborate */
-"Create your Network"="Tạo kết nối của riêng bạn";
-/* Description shown in a page of the onboarding screens explaining contacts */
-"Add contacts, create a network, colaborate, make voice and video calls without ever leaving MEGA"="Thêm tên liên lạc, tạo kết nối, cộng tác với nhau, trao đổi qua gọi thoại và video ngay trong MEGA";
-/* Title shown in a page of the on boarding screens explaining that the user can backup the photos automatically */
-"Your Photos in the Cloud"="Hình ảnh của bạn ở trên mây";
-/* Description shown in a page of the onboarding screens explaining the camera uploads feature */
-"Camera Uploads is an essential feature for any mobile device and we have got you covered. Create your account now."="Đăng tải camêra là tính năng thiết yếu cho mọi thiết bị di động, và MEGA có cung cấp cho mọi người dùng. Tạo tài khoản ngay.";
-/* Button which triggers the initial setup */
-"Setup MEGA"="Thiết lập MEGA";
-/* Detailed explanation of why the user should give some permissions to MEGA */
-"To fully take advantage of your MEGA account we need to ask you some permissions."="Để tận dụng sức mạnh của MEGA, ứng dụng cần phải xin phép một số quyền truy cập.";
-/* Message warning the user about the risk of not setting up permissions */
-"The MEGA app may not work as expected without the required permissions. Are you sure?"="Ứng dụng MEGA có thể sẽ không hoạt động hiệu quả khi bị thiếu đi một số quyền truy cập. Bạn có chắc không?";
 /* Shows number of the current page. '%1' will be replaced by current page number. '%2' will be replaced by number of all pages. */
 "%1 of %2"="%1 trong tổng %2";
-/* Title label that explains that the user is going to be asked for the photos permission */
-"Allow Access to Photos"="Cho phép truy cập vào Ảnh";
-/* Detailed explanation of why the user should give permission to access to the photos */
-"Please give the MEGA App permission to access Photos to share photos and videos."="Xin cấp MEGA quyền truy cập vào Ảnh để chia sẻ hình ảnh và videos.";
 /* Title label that explains that the user is going to be asked for the microphone and camera permission */
 "Enable Microphone and Camera"="Bật Micrô và Camêra";
 /* Detailed explanation of why the user should give permission to access to the camera and the microphone */
@@ -2526,8 +2486,6 @@
 "Create new file"="Tạo tệp mới";
 /* Confirmation dialog shown to user when they try to revert a node in an incoming ReadWrite share. */
 "You do not have the permissions required to revert this file. In order to continue, we can create a new file with the reverted data. Would you like to proceed?"="Bạn không có quyền hạn cần thiết để khôi phục tệp tin này. Tuy nhiên, bạn có thể tạo một tệp tin mới với phiên bản trước đây. Bạn có muốn tiếp tục không?";
-/* The new LITE payment plan. This means it is a light or lightweight payment plan compared to the full / heavyweight plans with lots of bandwidth and storage (PRO I, PRO II, PRO III). */
-"Pro Lite"="Pro Lite";
 /* The avatar picture button to go to my account page. Use for voice over. */
 "My Account"="Tài khoản của tôi";
 /* Text for title for favourite nodes */
@@ -3634,8 +3592,6 @@
 "meetings.scheduleMeeting.create.selectedRecurrence.weekly.everyDay"="Hằng ngày";
 /* On Upgrade Account Plan screen. Button title to restore purchases */
 "upgradeAccountPlan.button.restore.title"="Khôi phục hàng đã mua";
-/* On Upgrade Account Plan screen. Button title to show terms and policies */
-"upgradeAccountPlan.button.termsAndPolicies.title"="Điều khoản và chính sách";
 /* On Upgrade Account Plan screen. Button title to buy account plan. %@ will be the name of the selected plan */
 "upgradeAccountPlan.button.buyAccountPlan.title"="Mua %@";
 /* On Upgrade Account Plan screen. Button title to buy account plan via web. %@ will be total savings for the users in percent */
@@ -3646,22 +3602,12 @@
 "upgradeAccountPlan.button.buyInApp.title"="Mua trong app (%@)";
 /* On Upgrade Account Plan screen. Button footer text to continue to buy account plan in-app when user could buy externally. %@ will be the higher price of the plan */
 "upgradeAccountPlan.button.buyInApp.footer"="Phí nền tảng sẽ áp dụng khi mua hàng qua ứng dụng";
-/* On Upgrade Account Plan screen. Displayed header title text message */
-"upgradeAccountPlan.header.title.choosePlan"="Chọn gói phù hợp với bạn";
-/* On Upgrade Account Plan screen. Displayed header title text with current plan. %@ will be the name of the current plan */
-"upgradeAccountPlan.header.title.currentPlan"="Gói hiện tại: %@";
 /* On Upgrade Account Plan screen. Account Plan picker option for monthly term. */
 "upgradeAccountPlan.header.planTermPicker.monthly"="Hàng tháng";
 /* On Upgrade Account Plan screen. Account Plan picker option for yearly term. */
 "upgradeAccountPlan.header.planTermPicker.yearly"="Thường niên";
 /* On Upgrade Account Plan screen. Displayed header title text with percent of savings with yearly billing. */
 "upgradeAccountPlan.header.title.saveYearlyBilling"="Tiết kiệm lên đến 16%% khi thanh toán thường niên";
-/* On Upgrade Account Plan screen. Displayed header title text for pro plan features */
-"upgradeAccountPlan.header.title.featuresOfProPlan"="Các tính năng của gói Pro";
-/* On Upgrade Account Plan screen. Displayed text body for pro plan features */
-"upgradeAccountPlan.message.text.featuresOfProPlan"="• Đường liên kết được bảo vệ bằng mật khẩu\n\n• Đường liên kết có ngày hết hạn\n\n• Chia sẻ băng thông truyền tải\n\n• Tua lại tối đa 90 ngày cho dữ liệu đã xóa với Pro Lite và lên đến 180 ngày với Pro I, II và III\n\n• Tổ chức cuộc gọi và cuộc họp với thời gian và lượng người tham gia không giới hạn\n\n• Giữ an ninh trực tuyến với VPN tốc độ cao của chúng tôi \n\n• Lên lịch dọn Thùng Rác từ 7 ngày đến 10 năm\n\n• Nhận hỗ trợ ưu tiên";
-/* On Upgrade Account Plan screen. Displayed text body for pro plan features with ads */
-"upgradeAccountPlan.message.text.featuresOfProPlanWithAds"="• Đường liên kết được bảo vệ bằng mật khẩu\n\n• Đường liên kết có ngày hết hạn\n\n• Chia sẻ băng thông truyền tải\n\n• Tua lại tối đa 90 ngày cho dữ liệu đã xóa với Pro Lite và lên đến 180 ngày với Pro I, II và III\n\n• Tổ chức cuộc gọi và cuộc họp với thời gian và lượng người tham gia không giới hạn\n\n• Giữ an ninh trực tuyến với VPN tốc độ cao của chúng tôi\n\n• Lên lịch dọn Thùng Rác từ 7 ngày đến 10 năm\n\n• Nhận hỗ trợ ưu tiên\n\n• Không có quảng cáo";
 /* On Upgrade Account Plan screen. Displayed header title text for subscription details */
 "upgradeAccountPlan.header.title.subscriptionDetails"="Chi tiết gói đăng ký";
 /* On Upgrade Account Plan screen. Displayed text body for subscription details */
@@ -3926,22 +3872,10 @@
 "photos.mediaDiscovery.autoMediaDiscoveryBanner.title"="Bởi vì thư mục này chỉ có chứa hoàn toàn là hình ảnh và videos, chúng tôi đã tự động đặt Xem kiểu triển lãm. Giúp bạn trải nghiệm nội dung hình ảnh của mình với bố cục sống động hơn. Tính năng này có thể tắt đi trong Thiết Đặt.";
 /* Upgrade account screen header title after user onboarding */
 "onboarding.upgradeAccount.header.title"="Nhận được nhiều hơn với gói Pro";
-/* Upgrade account screen header subTitle after user onboarding. %@ will be replaced by the price of the lowest plan per month. */
-"onboarding.upgradeAccount.header.subTitle"="Nâng cấp lên gói Pro và nhận thêm không gian lưu trữ và quyền truy cập vào các tính năng Pro. Gói có giá từ mức thấp nhất %@ một tháng";
 /* Upgrade account screen content header for pro plan feature list */
 "onboarding.upgradeAccount.content.proPlanFeatureHeader"="Một số tính năng được mong đợi là:";
 /* Upgrade account screen content title about pro plan featuring as Generous Storage */
 "onboarding.upgradeAccount.content.generousStorage.title"="Tính linh hoạt không gian tối ưu";
-/* Upgrade account screen content message about pro plan featuring as Generous Storage. [A] will be replaced by the storage capacity of the lowest pro plan and [B] will be replaced by its storage unit. Example: Starting from 400 GB, find the perfect fit for your storage needs. */
-"onboarding.upgradeAccount.content.generousStorage.message"="Bắt đầu từ [A] [B], tìm gói phù hợp hoàn hảo cho nhu cầu lưu trữ của bạn.";
-/* Upgrade account screen content title about pro plan featuring the Transfer Sharing */
-"onboarding.upgradeAccount.content.transferSharing.title"="Chia sẻ tệp tin dễ dàng và an toàn";
-/* Upgrade account screen content message about pro plan featuring the Transfer Sharing */
-"onboarding.upgradeAccount.content.transferSharing.message"="Chia sẻ các tệp tin lớn nhờ băng thông truyền tải hào phóng và đảm bảo bảo mật với các đường liên kết được bảo vệ bằng mật khẩu.";
-/* Upgrade account screen content title about pro plan featuring the Back up and rewind */
-"onboarding.upgradeAccount.content.backupAndRewind.title"="Không bao giờ mất dữ liệu nữa";
-/* Upgrade account screen content message about pro plan featuring the Back up and rewind */
-"onboarding.upgradeAccount.content.backupAndRewind.message"="Sao lưu và đồng bộ hóa dữ liệu để bạn hoàn toàn tự tin. Ngoài ra, sử dụng Tua lại để khôi phục các thư mục từ bất kỳ ngày nào trong phạm vi 180 ngày.";
 /* Upgrade account screen content title about pro plan featuring the MEGA VPN */
 "onboarding.upgradeAccount.content.megaVPN.title"="MEGA VPN";
 /* Upgrade account screen content message about pro plan featuring the MEGA VPN */
@@ -3954,12 +3888,6 @@
 "onboarding.upgradeAccount.content.additionalSecurity.title"="Lớp bảo mật bổ sung khi chia sẻ";
 /* Upgrade account screen content message about pro plan featuring the Additional security when sharing */
 "onboarding.upgradeAccount.content.additionalSecurity.message"="Đặt mật khẩu và ngày hết hạn cho các đường liên kết tệp tin và thư mục.";
-/* Upgrade account screen content title about pro plan's other benefits */
-"onboarding.upgradeAccount.content.plusBenefits.title"="Cộng với quyền truy cập vào những lợi ích tuyệt vời sau:";
-/* Upgrade account screen content message about pro plan's other benefits without Ad-free */
-"onboarding.upgradeAccount.content.plusBenefits.messageWithoutAds"="• MEGA VPN\n• Cuộc gọi và họp không hạn chế";
-/* Upgrade account screen content message about pro plan's other benefits with Ad-free */
-"onboarding.upgradeAccount.content.plusBenefits.messageWithAds"="• MEGA VPN\n• Cuộc gọi và họp không hạn chế\n• Không có quảng cáo";
 /* Upgrade account screen button title that will direct to Upgrade plan page */
 "onboarding.upgradeAccount.button.viewProPlans"="Nâng cấp lên Pro ngay hôm nay";
 /* Camera uploads banner enable state title */
@@ -4200,10 +4128,6 @@
 "onboarding.hiddenFilesAndFolders.outOfSight.content.message"="Bạn tự quyết định khi bạn muốn các tệp tin ẩn đi được hiển thị. Có một mục lựa chọn mới trong thiết đặt để hiển thị các mục ẩn tạm thời.";
 /* My Account page: Menu Title of user account page */
 "account.myAccount.title"="Tài khoản của tôi";
-/* Free plan title */
-"free.Plan.name"="Miễn phí";
-/* Price description for the free plan */
-"free.Plan.Price.description"="Miễn phí";
 /* Storage limit capacity, where %d is the number of gigabytes that marks the storage limit */
 "storage.Limit.capacity"="%d GB";
 /* Limited transfer limit title */
@@ -4770,3 +4694,15 @@
 "notification.local.cameraUploadBackupReminder.body"="Đã đến lúc sao lưu lại hình ảnh và đoạn video của bạn";
 /* The double tap seek display text in video player */
 "videoPlayer.chip.seekDisplayText"="%@ giây";
+/* The lock video player option in bottom more menu */
+"videoPlayer.lock.lockVideoPlayer"="Khóa trình phát video";
+/* The screen locked status message in video player */
+"videoPlayer.lock.screenLocked"="Màn hình đã khóa";
+/* The instruction to unlock the video player */
+"videoPlayer.lock.tapIconToUnlock"="Chạm vào hình ổ khóa để mở khóa";
+/* The lock video player option in bottom more menu */
+"videoPlayer.snapshot.bottomSheet.title"="Chụp Ảnh";
+/* The instruction to unlock the video player */
+"videoPlayer.snapshot.snackBar.title"="Hình ảnh được lưu vào thiết bị của bạn";
+/* The Picture in picture video player option in bottom more menu */
+"videoPlayer.pip.bottomSheet.title"="Hình trong hình";
