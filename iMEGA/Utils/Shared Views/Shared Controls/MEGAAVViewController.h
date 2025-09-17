@@ -15,6 +15,7 @@
 @property (nonatomic, strong, nullable) MEGASdk *apiForStreaming;
 @property (nonatomic, assign) BOOL isFolderLink;
 @property (nonatomic, strong, nonnull) NSMutableSet *subscriptions;
+@property (nonatomic, assign) NSTimeInterval startTimeStamp;
 
 - (instancetype _Nonnull)initWithURL:(NSURL *_Nonnull)fileUrl;
 - (instancetype _Nonnull)initWithNode:(MEGANode * _Nonnull)node folderLink:(BOOL)folderLink apiForStreaming:(MEGASdk * _Nonnull)apiForStreaming;
