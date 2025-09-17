@@ -1556,6 +1556,7 @@
 		998CDC862E39D5FE00BC9CA1 /* AppDelegate+KMTransferUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 998CDC852E39D5FE00BC9CA1 /* AppDelegate+KMTransferUtils.swift */; };
 		998CDC9B2E3AC39800BC9CA1 /* DIContainer+KMTransferUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 998CDC9A2E3AC39800BC9CA1 /* DIContainer+KMTransferUtils.swift */; };
 		998CDCAE2E3ACD8400BC9CA1 /* DIContainer+KMTransferUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 998CDC9A2E3AC39800BC9CA1 /* DIContainer+KMTransferUtils.swift */; };
+		99B8AF712E7A75810006F57D /* MEGANode+FileOpenAnalytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99B8AF702E7A75810006F57D /* MEGANode+FileOpenAnalytics.swift */; };
 		99C0CE6D2C7BFEC100778F53 /* LaunchViewController+Addition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C0CE6C2C7BFEC100778F53 /* LaunchViewController+Addition.swift */; };
 		99D65D732A8BB5AE005D5877 /* WaitingRoomControlsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D65D722A8BB5AE005D5877 /* WaitingRoomControlsView.swift */; };
 		99D65D772A8C699A005D5877 /* WaitingRoomUserAvatarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D65D762A8C699A005D5877 /* WaitingRoomUserAvatarView.swift */; };
@@ -4325,6 +4326,7 @@
 		998379332ACA417100A9A439 /* ChatRoomParticipantViewModel+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatRoomParticipantViewModel+Additions.swift"; sourceTree = "<group>"; };
 		998CDC852E39D5FE00BC9CA1 /* AppDelegate+KMTransferUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppDelegate+KMTransferUtils.swift"; sourceTree = "<group>"; };
 		998CDC9A2E3AC39800BC9CA1 /* DIContainer+KMTransferUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DIContainer+KMTransferUtils.swift"; sourceTree = "<group>"; };
+		99B8AF702E7A75810006F57D /* MEGANode+FileOpenAnalytics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGANode+FileOpenAnalytics.swift"; sourceTree = "<group>"; };
 		99C0CE6C2C7BFEC100778F53 /* LaunchViewController+Addition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LaunchViewController+Addition.swift"; sourceTree = "<group>"; };
 		99D65D722A8BB5AE005D5877 /* WaitingRoomControlsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitingRoomControlsView.swift; sourceTree = "<group>"; };
 		99D65D762A8C699A005D5877 /* WaitingRoomUserAvatarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitingRoomUserAvatarView.swift; sourceTree = "<group>"; };
@@ -7329,6 +7331,7 @@
 				B6A4A10F21A2544C007E7EEC /* MEGAError+MNZCategory.h */,
 				B6A4A11021A2544C007E7EEC /* MEGAError+MNZCategory.m */,
 				C4C6A49527A4632600873165 /* MegaNode+Display.swift */,
+				99B8AF702E7A75810006F57D /* MEGANode+FileOpenAnalytics.swift */,
 				2412B5342A414EC7000EB46E /* MEGANode+initAudioPlayer.swift */,
 				B5CDC70D285355A4006759D4 /* MEGANode+MenuActions.swift */,
 				5B5737D41EFBE6410027ECCD /* MEGANode+MNZCategory.h */,
@@ -15003,6 +15006,7 @@
 				E8C8D73F1B1DCB4000BCDBA4 /* MEGANavigationController.m in Sources */,
 				B6790E06256B81C600154F6D /* MEGANode+Additions.swift in Sources */,
 				C4C6A49827A4632600873165 /* MegaNode+Display.swift in Sources */,
+				99B8AF712E7A75810006F57D /* MEGANode+FileOpenAnalytics.swift in Sources */,
 				2412B5352A414EC7000EB46E /* MEGANode+initAudioPlayer.swift in Sources */,
 				B5CDC70E285355A4006759D4 /* MEGANode+MenuActions.swift in Sources */,
 				5B5737D61EFBE6410027ECCD /* MEGANode+MNZCategory.m in Sources */,

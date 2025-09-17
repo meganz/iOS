@@ -125,6 +125,7 @@
         } else {
             UIViewController *viewController = [self mnz_viewControllerForNodeInFolderLink:isFolderLink fileLink:fileLink isFromSharedItem:isFromSharedItem inViewController:navigationController.viewControllers.lastObject];
             if (viewController) {
+                [self trackFileOpenAnalyticsWithIsFolderLink:isFolderLink fileLink:fileLink isFromChat:(chatId != nil) isFromSharedItem:isFromSharedItem isFromRecent:NO];
                 [navigationController presentViewController:viewController animated:YES completion:nil];
             }
         }
