@@ -44,7 +44,7 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(internetConnectionChanged) name:kReachabilityChangedNotification object:nil];
     [NSNotificationCenter.defaultCenter addObserver:self
-                                           selector:@selector(showPSAViewIfNeeded)
+                                           selector:@selector(handleApplicationWillEnterForeground)
                                                name:UIApplicationWillEnterForegroundNotification
                                              object:nil];
     [self.view setNeedsLayout];

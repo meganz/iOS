@@ -53,14 +53,6 @@ extension MainTabBarController {
                 config: config
             )
     }
-    
-    @objc func showPSAViewIfNeeded() {
-        if psaViewModel == nil {
-            psaViewModel = createPSAViewModel()
-        }
-        guard let psaViewModel else { return }
-        showPSAViewIfNeeded(psaViewModel)
-    }
 
     func sharedItemsViewController() -> UIViewController? {
         guard let sharedItemsNavigationController = UIStoryboard(name: "SharedItems", bundle: nil).instantiateInitialViewController() as? MEGANavigationController else { return nil }
@@ -110,20 +102,6 @@ extension MainTabBarController {
                 tabBar.addSubview(phoneBadgeImageView)
             }
         }
-    }
-
-    @objc func createPSAViewModel() -> PSAViewModel? {
-        let router = PSAViewRouter(tabBarController: self)
-        let useCase = PSAUseCase(repo: PSARepository.newRepo)
-        return PSAViewModel(router: router, useCase: useCase)
-    }
-    
-    @objc func showPSAViewIfNeeded(_ psaViewModel: PSAViewModel) {
-        psaViewModel.dispatch(.showPSAViewIfNeeded)
-    }
-    
-    @objc func hidePSAView(_ hide: Bool, psaViewModel: PSAViewModel) {
-        psaViewModel.dispatch(.setPSAViewHidden(hide))
     }
     
     func createMainTabBarViewModel() -> MainTabBarCallsViewModel {
@@ -272,6 +250,13 @@ extension MainTabBarController {
             closure: { }
         )
         DeepLinkRouter(appNavigator: cuSettingsRouter).navigate()
+    }
+    
+    @objc func handleApplicationWillEnterForeground() {
+        guard let navController = selectedViewController as? MEGANavigationController,
+              navController.viewControllers.last as? (any BottomOverlayPresenterProtocol) != nil else { return }
+        
+        showPSAViewIfNeeded()
     }
 }
 
