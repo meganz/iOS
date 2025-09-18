@@ -41,7 +41,7 @@ class ErrorsMarkdownGenerator
         test_failures.each do |failure|
           failureHash = {}
           failureHash[:testcase] = failure.dig("testCaseName", "_value")
-          failureHash[:reason] = failure.dig("message", "_value")
+          failureHash[:reason] = failure.dig("message", "_value").gsub("\n", "")
 
           url = failure.dig("documentLocationInCreatingWorkspace", "url", "_value")
           url_info = extract_url_params(url)

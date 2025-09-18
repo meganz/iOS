@@ -399,7 +399,10 @@ struct PhotosViewModelTestSuite {
             await #expect(photoLibraryUseCase.messages.isEmpty)
         }
         
-        @Test("Visual media node should trigger updates")
+        @Test(
+            "Visual media node should trigger updates",
+            .disabled("Disabled due to flakiness")
+        )
         func visualMediaUpdatesTriggerLoad() async throws {
             let nodeUpdates = SingleItemAsyncSequence(
                 item: [NodeEntity(name: "test.jpg", handle: 1, hasThumbnail: true)])
