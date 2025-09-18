@@ -50,6 +50,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) CGFloat currentContentInsetHeight;
 
 - (BOOL)isListViewModeSelected;
+- (BOOL)isEditingModeEnabled;
 - (void)didSelectNode:(MEGANode *)node;
 - (void)setNavigationBarTitleLabel;
 - (void)setViewEditing:(BOOL)editing;

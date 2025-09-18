@@ -596,6 +596,10 @@
 
 #pragma mark - Public
 
+- (BOOL)isEditingModeEnabled {
+    return self.viewModePreference == ViewModePreferenceEntityList ? self.flTableView.tableView.isEditing : self.flCollectionView.collectionView.allowsMultipleSelection;
+}
+
 - (BOOL)isListViewModeSelected {
     return self.viewModePreference == ViewModePreferenceEntityList;
 }
