@@ -294,14 +294,13 @@ platform :ios do
       scheme: SCHEME,
       cloned_source_packages_path: ENV['SWIFT_PACKAGES_PATH'],
       disable_package_automatic_updates: true,
-      output_directory: ".",
-      output_types: "junit",
       derived_data_path: "derivedData",
       code_coverage: true,
       xcodebuild_formatter: "xcbeautify",
       xcargs: '-skipPackagePluginValidation',
       parallel_testing: true,
-      concurrent_workers: 2
+      concurrent_workers: 2,
+      skip_build: true
     )
   end
 

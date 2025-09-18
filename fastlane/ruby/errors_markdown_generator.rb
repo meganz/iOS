@@ -1,19 +1,19 @@
-require 'nokogiri'
+require 'json'
 require_relative 'issue_fetcher'
 
 class ErrorsMarkdownGenerator
     ERRORS = "Errors"
     TEST_FAILURES = "Test Failures"
 
-    def generate_markdown(errors_json_path, junit_file_path, output_file_path)
+    def generate_markdown(errors_json_path, output_file_path)
       markdown = initialize_markdown_sections
 
       errors = fetch_all_issues(errors_json_path, :error)
       markdown[:errors] += markdown_rows_text(errors, true)  
 
-      if File.exist?(junit_file_path)
-        failures = fetch_all_failures(junit_file_path)
-        markdown[:test_failures] += test_failures_to_markdown(failures)  
+      failures = fetch_all_failures(errors_json_path)
+      if !failures.empty?
+        markdown[:test_failures] += test_failures_to_markdown(failures)
       end
       
       markdown = append_close_tags(markdown)
@@ -25,37 +25,68 @@ class ErrorsMarkdownGenerator
       markdown_text != header
     end
 
-    private def fetch_all_failures(junit_file_path)
-      failures = []
+    private def fetch_all_failures(json_path)
+      failed_tests = []
 
-      doc = Nokogiri::XML(File.open(junit_file_path))
-      doc.xpath(".//testsuite").each do |testsuite|
-        testsuite.xpath(".//testcase").each do |testcase|
+      json_data = File.read(json_path)
+      parsed_data = JSON.parse(json_data)
+
+      actions = parsed_data.dig("actions", "_values")
+      return failed_tests unless actions
+
+      actions.each do |action|
+        test_failures = action.dig("actionResult", "issues", "testFailureSummaries", "_values")
+        next unless test_failures
+
+        test_failures.each do |failure|
           failureHash = {}
-          testcase.xpath(".//failure").each do |failure|
-            failureHash[:classname] = testcase["classname"]
-            failureHash[:testcase] = testcase["name"]  
-            parts = failure["message"].rpartition("(")
-            failureHash[:reason] = parts[0]
+          failureHash[:testcase] = failure.dig("testCaseName", "_value")
+          failureHash[:reason] = failure.dig("message", "_value")
+
+          url = failure.dig("documentLocationInCreatingWorkspace", "url", "_value")
+          url_info = extract_url_params(url)
+
+          if url && url_info
+            failureHash[:details] = "#{url_info[:file_name]} (#{url_info[:starting_line_number]} - #{url_info[:ending_line_number]})"
+          else
+            failureHash[:details] = ""
           end
-          failures << failureHash unless failureHash.empty?
+
+          failed_tests << failureHash unless failureHash.empty?
         end
       end
 
-      failures
+      failed_tests
+    end
+
+    def extract_url_params(url)
+      # Extract file path and line numbers from URL
+      file_path = url.split('#')[0].gsub('file://', '')
+      params = url.split('#')[1]
+  
+      starting_line = params.match(/StartingLineNumber=(\d+)/)&.captures&.first
+      ending_line = params.match(/EndingLineNumber=(\d+)/)&.captures&.first
+  
+      file_name = File.basename(file_path)
+  
+      {
+        file_name: file_name,
+        starting_line_number: starting_line,
+        ending_line_number: ending_line
+      }
     end
   
     def initialize_markdown_sections
       { 
         errors: initial_markdown_text(ERRORS, "Error", "File", "Line"),
-        test_failures: initial_markdown_text(TEST_FAILURES, "Reason", "Class", "Testcase"),
+        test_failures: initial_markdown_text(TEST_FAILURES, "Reason", "Testcase", "details"),
       }
     end
 
     private def test_failures_to_markdown(failures) 
       rows_text = ""
       failures.each do |failure|
-        text = "| ❌ | #{failure[:reason]} | #{failure[:classname]} | #{failure[:testcase]} |\n"
+        text = "| ❌ | #{failure[:reason]} | #{failure[:testcase]} | #{failure[:details]} |\n"
         if !rows_text.include?(text)
           rows_text += text
         end

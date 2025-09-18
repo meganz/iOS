@@ -180,13 +180,10 @@ GEM
     nanaimo (0.4.0)
     naturally (2.3.0)
     nkf (0.2.0)
-    nokogiri (1.18.8-arm64-darwin)
-      racc (~> 1.4)
     optparse (0.6.0)
     os (1.1.4)
     plist (3.7.2)
     public_suffix (6.0.2)
-    racc (1.8.1)
     rake (13.3.0)
     representable (3.2.0)
       declarative (< 0.1.0)
@@ -251,7 +248,6 @@ DEPENDENCIES
   fastlane-plugin-appcenter
   fastlane-plugin-firebase_app_distribution
   fastlane-plugin-json
-  nokogiri
   xcov
   xcpretty-json-formatter
 
