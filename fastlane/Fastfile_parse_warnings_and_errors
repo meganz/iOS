@@ -51,7 +51,6 @@
   private_lane :parse_errors_and_post_to_mr do |options|
     markdown_file_available = generate_errors_markdown_from_json(
       errors_json_path: ENV["ERRORS_AND_WARNINGS_JSON_PATH"],
-      junit_file_path: ENV["JUNIT_FILE_PATH"],
       output_file_path: ENV["ERRORS_MARKDOWN_PATH"],
     )
 
