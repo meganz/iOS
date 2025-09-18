@@ -222,7 +222,7 @@ extension FolderLinkViewController {
     }
     
     func saveToPhotosButtonPressed(_ button: UIBarButtonItem) {
-        guard let nodeArray = isEditing ? selectedNodesArray as? [MEGANode] : nodesArray else { return }
+        guard let nodeArray = isEditingModeEnabled() ? selectedNodesArray as? [MEGANode] : nodesArray else { return }
         
         permissionHandler.photosPermissionWithCompletionHandler { [weak self] granted in
             guard let self else { return }
