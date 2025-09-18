@@ -1,4 +1,6 @@
 import MEGAAppPresentation
+import MEGAAppSDKRepo
+import MEGADomain
 
 extension MainTabBarController {
     func presentPSA(_ psaView: UIView) {
@@ -70,5 +72,16 @@ extension MainTabBarController {
     private func refreshPresenterContentView(_ presenter: any BottomOverlayPresenterProtocol) {
         let containerHeight = currentContainerHeight()
         presenter.updateContentView(containerHeight)
+    }
+    
+    func showPSAViewIfNeeded() {
+        let viewModel = psaViewModel ?? makePSAViewModel()
+        viewModel.dispatch(.showPSAViewIfNeeded)
+    }
+    
+    func makePSAViewModel() -> PSAViewModel {
+        let router = PSAViewRouter(tabBarController: self)
+        let useCase = PSAUseCase(repo: PSARepository.newRepo)
+        return PSAViewModel(router: router, useCase: useCase)
     }
 }
