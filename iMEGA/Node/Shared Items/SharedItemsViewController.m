@@ -160,6 +160,7 @@
     
     [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
         [self.tableView reloadEmptyDataSet];
+        [self updateSearchBar];
     } completion:nil];
 }
 
