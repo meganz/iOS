@@ -32,7 +32,7 @@ final class ImportLinkViewModel {
             router.showNodeBrowser()
         } else {
             MEGALinkManager.selectedOption = isFolderLink ? .importFolderOrNodes : .importNode
-            MEGALinkManager.nodesFromLinkMutableArray.add(nodes)
+            MEGALinkManager.nodesFromLinkMutableArray.addObjects(from: nodes)
             
             router.showOnboarding()
         }
