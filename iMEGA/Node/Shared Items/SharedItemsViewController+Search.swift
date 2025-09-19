@@ -96,6 +96,15 @@ extension SharedItemsViewController: UISearchBarDelegate {
         searchTask?.task?.cancel()
     }
     
+    @objc func updateSearchBar() {
+        guard self.tableView?.tableHeaderView != nil else { return }
+        let searchBar = self.searchController.searchBar
+        searchBar.sizeToFit()
+        self.tableView?.tableHeaderView = searchBar
+        searchBar.setNeedsLayout()
+        searchBar.layoutIfNeeded()
+    }
+    
     // MARK: - UISearchBarDelegate
     public func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         searchNodesArray.removeAllObjects()
