@@ -71,6 +71,7 @@ pipeline {
             script {
                 statusNotifier.postFailure(":x: Build failed", env.MEGA_IOS_PROJECT_ID)
                 postBuildWarningsAndError()
+                slackUploadFile filePath:"xcresult.zip", initialComment: "xcresult file: ${env.BRANCH_NAME}"
             }
             
             updateGitlabCommitStatus name: 'Jenkins', state: 'failed'
