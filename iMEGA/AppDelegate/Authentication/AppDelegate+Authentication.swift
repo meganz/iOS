@@ -179,7 +179,7 @@ private struct EnsureAudioPlayerStoppedPreLoginAction: PreLoginAction {
     }
     
     func handle() async throws {
-        guard AudioPlayerManager.shared.isPlayerAlive() else { return }
+        guard await AudioPlayerManager.shared.isPlayerAlive() else { return }
         let streamingInfoUseCase = StreamingInfoUseCase()
         streamingInfoUseCase.stopServer()
     }

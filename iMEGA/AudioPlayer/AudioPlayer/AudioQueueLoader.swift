@@ -1,3 +1,4 @@
+@MainActor
 protocol AudioQueueLoaderDelegate: AnyObject {
     /// Returns the number of items currently in the AVQueuePlayer.
     func currentQueueCount() -> Int
@@ -19,6 +20,7 @@ protocol AudioQueueLoaderDelegate: AnyObject {
 /// - **Customization:**
 ///   - `batchSize`: Number of tracks loaded per batch (default is 100).
 ///   - `queueThreshold`: Queue count threshold that triggers loading a new batch (default is 50).
+@MainActor
 final class AudioQueueLoader {
     weak var delegate: (any AudioQueueLoaderDelegate)?
     

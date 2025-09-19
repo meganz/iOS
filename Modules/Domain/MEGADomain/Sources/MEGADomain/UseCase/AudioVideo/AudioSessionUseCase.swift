@@ -7,7 +7,7 @@ public protocol AudioSessionUseCaseProtocol {
     func configureCallAudioSession(completion: ((Result<Void, AudioSessionErrorEntity>) -> Void)?)
     func configureAudioPlayerAudioSession(completion: ((Result<Void, AudioSessionErrorEntity>) -> Void)?)
     func configureChatDefaultAudioPlayer(completion: ((Result<Void, AudioSessionErrorEntity>) -> Void)?)
-    func configureAudioRecorderAudioSession(completion: ((Result<Void, AudioSessionErrorEntity>) -> Void)?)
+    func configureAudioRecorderAudioSession(isPlayerAlive: Bool, completion: ((Result<Void, AudioSessionErrorEntity>) -> Void)?)
     func configureVideoAudioSession(completion: ((Result<Void, AudioSessionErrorEntity>) -> Void)?)
     func isOutputFrom(port: AudioPort) -> Bool
     func enableLoudSpeaker(completion: ((Result<Void, AudioSessionErrorEntity>) -> Void)?)
@@ -33,8 +33,8 @@ extension AudioSessionUseCaseProtocol {
         configureChatDefaultAudioPlayer(completion: nil)
     }
     
-    public func configureAudioRecorderAudioSession() {
-        configureAudioRecorderAudioSession(completion: nil)
+    public func configureAudioRecorderAudioSession(isPlayerAlive: Bool) {
+        configureAudioRecorderAudioSession(isPlayerAlive: isPlayerAlive, completion: nil)
     }
     
     public func configureVideoAudioSession() {
@@ -85,8 +85,8 @@ public final class AudioSessionUseCase<T: AudioSessionRepositoryProtocol>: Audio
         audioSessionRepository.configureChatDefaultAudioPlayer(completion: completion)
     }
     
-    public func configureAudioRecorderAudioSession(completion: ((Result<Void, AudioSessionErrorEntity>) -> Void)?) {
-        audioSessionRepository.configureAudioRecorderAudioSession(completion: completion)
+    public func configureAudioRecorderAudioSession(isPlayerAlive: Bool, completion: ((Result<Void, AudioSessionErrorEntity>) -> Void)?) {
+        audioSessionRepository.configureAudioRecorderAudioSession(isPlayerAlive: isPlayerAlive, completion: completion)
     }
     
     public func configureVideoAudioSession(completion: ((Result<Void, AudioSessionErrorEntity>) -> Void)?) {

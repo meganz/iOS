@@ -6,13 +6,15 @@ import MEGAAppSDKRepoMock
 import MEGATest
 import XCTest
 
+@MainActor
 final class AudioPlaylistViewModelTests: XCTestCase {
     private let playerHandler = MockAudioPlayerHandler()
+    private let defaultTimeout: TimeInterval = 0.05
+    
     private var anyAudioNode: MockNode {
         MockNode(handle: 1, name: "first-audio.mp3", nodeType: .file)
     }
     
-    @MainActor
     private func makeSUT(router: (any AudioPlaylistViewRouting)? = nil) -> (AudioPlaylistViewModel, MockTracker) {
         let router = router ?? MockAudioPlaylistViewRouter()
         let tracker = MockTracker()
@@ -26,73 +28,72 @@ final class AudioPlaylistViewModelTests: XCTestCase {
         return (sut, tracker)
     }
     
-    @MainActor
-    private func captureViewModelCommands(
-        _ action: (AudioPlaylistViewModel, inout [AudioPlaylistViewModel.Command]) -> Void
-    ) {
-        let (sut, _) = makeSUT()
-        var cmds: [AudioPlaylistViewModel.Command] = []
-        sut.invokeCommand = { cmds.append($0) }
-        action(sut, &cmds)
-    }
-    
-    @MainActor
-    func testDispatch_onViewDidLoadThroughDidDraggEnd_executesExpectedAudioPlayerCommands() throws {
+    func testDispatch_onViewDidLoadThroughDidDraggEnd_executesExpectedAudioPlayerCommands() async throws {
         let mockItem = AudioPlayerItem.mockItem
         playerHandler.mockPlayerCurrentItem = mockItem
         let (sut, _) = makeSUT()
         
-        test(viewModel: sut, action: .onViewDidLoad, expectedCommands: [
-            .reloadTracks(currentItem: mockItem, queue: nil, selectedIndexPaths: []),
-            .title(title: "")
-        ])
+        await test(
+            viewModel: sut,
+            action: .onViewDidLoad,
+            expectedCommands: [
+                .reloadTracks(currentItem: mockItem, queue: nil, selectedIndexPaths: []),
+                .title(title: "")
+            ],
+            timeout: defaultTimeout
+        )
         XCTAssertEqual(playerHandler.addPlayerListener_calledTimes, 1)
         
-        test(viewModel: sut, action: .move(mockItem, IndexPath(row: 1, section: 0), .up), expectedCommands: [])
+        await test(viewModel: sut, action: .move(mockItem, IndexPath(row: 1, section: 0), .up), expectedCommands: [], timeout: defaultTimeout)
         XCTAssertEqual(playerHandler.onMoveItem_calledTimes, 1)
         
-        test(viewModel: sut, action: .didSelect(mockItem), expectedCommands: [.showToolbar])
+        await test(viewModel: sut, action: .didSelect(mockItem), expectedCommands: [.showToolbar], timeout: defaultTimeout)
         
-        test(viewModel: sut, action: .removeSelectedItems, expectedCommands: [.deselectAll, .hideToolbar])
+        await test(viewModel: sut, action: .removeSelectedItems, expectedCommands: [.deselectAll, .hideToolbar], timeout: defaultTimeout)
         XCTAssertEqual(playerHandler.onDeleteItems_calledTimes, 1)
         
-        test(viewModel: sut, action: .didDeselect(mockItem), expectedCommands: [.hideToolbar])
+        await test(viewModel: sut, action: .didDeselect(mockItem), expectedCommands: [.hideToolbar], timeout: defaultTimeout)
         
-        test(viewModel: sut, action: .onViewWillDisappear, expectedCommands: [])
+        await test(viewModel: sut, action: .onViewWillDisappear, expectedCommands: [], timeout: defaultTimeout)
         XCTAssertEqual(playerHandler.removePlayerListener_calledTimes, 1)
         
-        test(viewModel: sut, action: .willDraggBegin, expectedCommands: [])
+        await test(viewModel: sut, action: .willDraggBegin, expectedCommands: [], timeout: defaultTimeout)
+        
         let fileURL = try XCTUnwrap(Bundle.main.url(forResource: "audioClipSent", withExtension: "wav"))
         let track1 = AudioPlayerItem(name: "file 1", url: fileURL, node: nil)
-        sut.audio(player: AVQueuePlayer(), reload: track1)
-        test(viewModel: sut, action: .didDraggEnd, expectedCommands: [.reload(items: [track1])])
+        
+        await test(
+            viewModel: sut,
+            trigger: { sut.audio(player: AVQueuePlayer(), reload: track1) },
+            expectedCommands: [],
+            timeout: defaultTimeout
+        )
+        
+        await test(
+            viewModel: sut,
+            action: .didDraggEnd,
+            expectedCommands: [.reload(items: [track1])],
+            timeout: defaultTimeout
+        )
     }
     
-    @MainActor
-    func testDispatch_onDismiss_invokesRouterDismiss() {
+    func testDispatch_onDismiss_invokesRouterDismiss() async {
         let router = MockAudioPlaylistViewRouter()
         let (sut, _) = makeSUT(router: router)
-        test(viewModel: sut, action: .dismiss, expectedCommands: [])
+        await test(viewModel: sut, action: .dismiss, expectedCommands: [], timeout: defaultTimeout)
         XCTAssertEqual(router.dismiss_calledTimes, 1)
     }
     
-    @MainActor
-    func testDispatch_onRemoveSelectedItems_invokesRouterShowSnackBar_async() async throws {
+    func testDispatch_onRemoveSelectedItems_invokesRouterShowSnackBar_async() async {
         let router = MockAudioPlaylistViewRouter()
         let (sut, _) = makeSUT(router: router)
         
-        sut.dispatch(.didSelect(AudioPlayerItem.mockItem))
-        
-        try await Task.sleep(nanoseconds: 100_000_000)
-        
-        sut.dispatch(.removeSelectedItems)
-        
-        try await Task.sleep(nanoseconds: 100_000_000)
+        await test(viewModel: sut, action: .didSelect(AudioPlayerItem.mockItem), expectedCommands: [.showToolbar], timeout: defaultTimeout)
+        await test(viewModel: sut, action: .removeSelectedItems, expectedCommands: [.deselectAll, .hideToolbar], timeout: defaultTimeout)
         
         XCTAssertEqual(router.showSnackBar_calledTimes, 1)
     }
     
-    @MainActor
     func testDispatch_onMove_tracksReorderEvent() {
         let (sut, tracker) = makeSUT()
         let moved = AudioPlayerItem.mockItem
@@ -103,7 +104,6 @@ final class AudioPlaylistViewModelTests: XCTestCase {
         )
     }
     
-    @MainActor
     func testDispatch_onRemoveSelectedItems_tracksRemoveTracksEvent() {
         let (sut, tracker) = makeSUT()
         sut.dispatch(.removeSelectedItems)
@@ -113,116 +113,92 @@ final class AudioPlaylistViewModelTests: XCTestCase {
         )
     }
     
-    @MainActor
-    func testAudioObserver_onQueueUpdate_reloadsTracksCommands() {
+    func testAudioObserver_onQueueUpdate_reloadsTracksCommands() async {
         let mockItem = AudioPlayerItem.mockItem
         playerHandler.mockPlayerQueueItems = [mockItem]
         playerHandler.mockPlayerCurrentItem = mockItem
         let (sut, _) = makeSUT()
-        var cmds: [AudioPlaylistViewModel.Command] = []
-        sut.invokeCommand = { cmds.append($0) }
         
-        sut.audio(player: AVQueuePlayer(), currentItem: nil, queue: playerHandler.playerQueueItems())
-        
-        XCTAssertEqual(
-            cmds,
-            [.reloadTracks(
-                currentItem: mockItem,
-                queue: [mockItem],
-                selectedIndexPaths: []
-            )]
+        await test(
+            viewModel: sut,
+            trigger: {
+                sut.audio(player: AVQueuePlayer(), currentItem: mockItem, queue: self.playerHandler.playerQueueItems())
+            },
+            expectedCommands: [
+                .reloadTracks(currentItem: mockItem, queue: [mockItem], selectedIndexPaths: [])
+            ]
         )
     }
     
-    @MainActor
-    func testAudioObserver_reloadItemWithoutReordering_reloadsItems() {
+    func testAudioObserver_reloadItemWithoutReordering_reloadsItems() async {
         let (sut, _) = makeSUT()
-        var cmds: [AudioPlaylistViewModel.Command] = []
-        sut.invokeCommand = { cmds.append($0) }
-        
         let track = AudioPlayerItem(name: "Test", url: URL(string: "file://test.mp3")!, node: nil)
-        sut.audio(player: AVQueuePlayer(), reload: track)
         
-        XCTAssertEqual(cmds, [.reload(items: [track])])
-    }
-    
-    @MainActor
-    func testAudioObserver_reloadItemDuringReordering_isDeferredUntilDidDraggEnd() {
-        let track = AudioPlayerItem(
-            name: "Deferred",
-            url: URL(string: "file://deferred.mp3")!,
-            node: nil
+        await test(
+            viewModel: sut,
+            trigger: {
+                sut.audio(player: AVQueuePlayer(), reload: track)
+            },
+            expectedCommands: [.reload(items: [track])]
         )
-        let expect = expectation(description: "Deferred reload should be delivered on didDraggEnd")
-        
-        let (sut, _) = makeSUT()
-        var cmds: [AudioPlaylistViewModel.Command] = []
-        sut.invokeCommand = { cmd in
-            cmds.append(cmd)
-            if cmd == .reload(items: [track]) {
-                expect.fulfill()
-            }
-        }
-        
-        sut.dispatch(.willDraggBegin)
-        sut.audio(player: AVQueuePlayer(), reload: track)
-        XCTAssertTrue(cmds.isEmpty)
-        
-        sut.dispatch(.didDraggEnd)
-        wait(for: [expect], timeout: 0.1)
-        XCTAssertEqual(cmds, [.reload(items: [track])])
-    }
-
-    @MainActor
-    func testAudioObserver_onBlockingEvents_togglesUserInteractionCommands() {
-        let cmds = captureViewModelCommands { sut in
-            sut.audioPlayerWillStartBlockingAction()
-            sut.audioPlayerDidFinishBlockingAction()
-        }
-        XCTAssertEqual(cmds, [.disableUserInteraction, .enableUserInteraction])
     }
     
-    @MainActor
-    private func captureViewModelCommands(_ action: (AudioPlaylistViewModel) -> Void) -> [AudioPlaylistViewModel.Command] {
+    func testAudioObserver_reloadItemDuringReordering_isDeferredUntilDidDraggEnd() async {
+        let track = AudioPlayerItem(name: "Deferred", url: URL(string: "file://deferred.mp3")!, node: nil)
         let (sut, _) = makeSUT()
-        var cmds: [AudioPlaylistViewModel.Command] = []
-        sut.invokeCommand = { cmds.append($0) }
-        action(sut)
-        return cmds
+        
+        await test(viewModel: sut, action: .willDraggBegin, expectedCommands: [], timeout: 0.1)
+        
+        await test(
+            viewModel: sut,
+            trigger: { sut.audio(player: AVQueuePlayer(), reload: track) },
+            expectedCommands: [],
+            timeout: 0.1
+        )
+        
+        await test(
+            viewModel: sut,
+            action: .didDraggEnd,
+            expectedCommands: [.reload(items: [track])],
+            timeout: 0.1
+        )
     }
-
-    @MainActor
+    
+    func testAudioObserver_onBlockingEvents_togglesUserInteractionCommands() async {
+        let (sut, _) = makeSUT()
+        await test(
+            viewModel: sut,
+            trigger: {
+                sut.audioPlayerWillStartBlockingAction()
+                sut.audioPlayerDidFinishBlockingAction()
+            },
+            expectedCommands: [.disableUserInteraction, .enableUserInteraction]
+        )
+    }
+    
     func testDispatch_onDidSelectAndDidDeselect_togglesToolbarVisibility() {
         let item = AudioPlayerItem.mockItem
         
-        let selectCmds = captureViewModelCommands { sut in
-            sut.dispatch(.didSelect(item))
-        }
-        XCTAssertEqual(selectCmds, [.showToolbar])
+        test(
+            viewModel: makeSUT().0,
+            action: .didSelect(item),
+            expectedCommands: [.showToolbar]
+        )
         
-        let deselectCmds = captureViewModelCommands { sut in
-            sut.dispatch(.didDeselect(item))
-        }
-        XCTAssertEqual(deselectCmds, [.hideToolbar])
+        test(
+            viewModel: makeSUT().0,
+            action: .didDeselect(item),
+            expectedCommands: [.hideToolbar]
+        )
     }
     
-    @MainActor
-    func testDispatch_onRemoveSelectedItems_clearsSelectionAndTracksEvent() async throws {
+    func testDispatch_onRemoveSelectedItems_clearsSelectionAndTracksEvent() async {
         let (sut, tracker) = makeSUT()
-        var cmds: [AudioPlaylistViewModel.Command] = []
-        sut.invokeCommand = { cmds.append($0) }
         
-        let i1 = AudioPlayerItem.mockItem
-        let i2 = AudioPlayerItem.mockItem
-        sut.dispatch(.didSelect(i1))
-        sut.dispatch(.didSelect(i2))
-        cmds.removeAll()
+        await test(viewModel: sut, action: .didSelect(AudioPlayerItem.mockItem), expectedCommands: [.showToolbar], timeout: defaultTimeout)
+        await test(viewModel: sut, action: .didSelect(AudioPlayerItem.mockItem), expectedCommands: [.showToolbar], timeout: defaultTimeout)
+        await test(viewModel: sut, action: .removeSelectedItems, expectedCommands: [.deselectAll, .hideToolbar], timeout: defaultTimeout)
         
-        sut.dispatch(.removeSelectedItems)
-        
-        try await Task.sleep(nanoseconds: 200_000_000)
-        
-        XCTAssertEqual(cmds, [.deselectAll, .hideToolbar])
         XCTAssertEqual(playerHandler.onDeleteItems_calledTimes, 1)
         assertTrackAnalyticsEventCalled(
             trackedEventIdentifiers: tracker.trackedEventIdentifiers,

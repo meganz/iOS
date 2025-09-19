@@ -54,13 +54,13 @@ extension AudioPlayerObserversProtocol {
 }
 
 // MARK: - Audio Player Handler
-protocol AudioPlayerHandlerProtocol:
+@MainActor protocol AudioPlayerHandlerProtocol:
     AudioPlayerCurrentStatusProtocol &
     AudioPlayerPlaybackProtocol &
     AudioPlayerConfigurationProtocol {}
 
 // MARK: - Audio Player Current Status Functions
-protocol AudioPlayerCurrentStatusProtocol: AnyObject {
+@MainActor protocol AudioPlayerCurrentStatusProtocol: AnyObject {
     func isPlayerDefined() -> Bool
     func isPlayerEmpty() -> Bool
     func isShuffleEnabled() -> Bool
@@ -79,7 +79,7 @@ protocol AudioPlayerCurrentStatusProtocol: AnyObject {
 }
 
 // MARK: - Audio Player Playback Functions
-protocol AudioPlayerPlaybackProtocol: AnyObject {
+@MainActor protocol AudioPlayerPlaybackProtocol: AnyObject {
     func move(item: AudioPlayerItem, to position: IndexPath, direction: MovementDirection)
     func delete(items: [AudioPlayerItem]) async
     func playerProgressCompleted(percentage: Float)
@@ -103,19 +103,19 @@ protocol AudioPlayerPlaybackProtocol: AnyObject {
 }
 
 // MARK: - Audio Player Configuration Functions
-protocol AudioPlayerConfigurationProtocol: AnyObject {
+@MainActor protocol AudioPlayerConfigurationProtocol: AnyObject {
     func setCurrent(player: AudioPlayer?, tracks: [AudioPlayerItem], playerListener: any AudioPlayerObserversProtocol)
     func addPlayer(tracks: [AudioPlayerItem])
     func configurePlayer(listener: any AudioPlayerObserversProtocol)
     func removePlayer(listener: any AudioPlayerObserversProtocol)
-    @MainActor func updateMiniPlayerPresenter(_ presenter: any AudioPlayerPresenterProtocol)
+    func updateMiniPlayerPresenter(_ presenter: any AudioPlayerPresenterProtocol)
     func addMiniPlayerHandler(_ handler: any AudioMiniPlayerHandlerProtocol)
     func removeMiniPlayerHandler(_ handler: any AudioMiniPlayerHandlerProtocol)
-    @MainActor func initFullScreenPlayer(node: MEGANode?, fileLink: String?, filePaths: [String]?, isFolderLink: Bool, presenter: UIViewController, messageId: HandleEntity, chatId: HandleEntity, isFromSharedItem: Bool, allNodes: [MEGANode]?)
-    @MainActor func initMiniPlayer(node: MEGANode?, fileLink: String?, filePaths: [String]?, isFolderLink: Bool, presenter: UIViewController, shouldReloadPlayerInfo: Bool, shouldResetPlayer: Bool, isFromSharedItem: Bool)
+    func initFullScreenPlayer(node: MEGANode?, fileLink: String?, filePaths: [String]?, isFolderLink: Bool, presenter: UIViewController, messageId: HandleEntity, chatId: HandleEntity, isFromSharedItem: Bool, allNodes: [MEGANode]?)
+    func initMiniPlayer(node: MEGANode?, fileLink: String?, filePaths: [String]?, isFolderLink: Bool, presenter: UIViewController, shouldReloadPlayerInfo: Bool, shouldResetPlayer: Bool, isFromSharedItem: Bool)
     func playerHidden(_ hidden: Bool, presenter: UIViewController)
     func closePlayer()
-    @MainActor func dismissFullScreenPlayer() async 
+    func dismissFullScreenPlayer() async
     func presentMiniPlayer(_ viewController: UIViewController)
     func audioInterruptionDidStart()
     func audioInterruptionDidEndNeedToResume(_ resume: Bool)

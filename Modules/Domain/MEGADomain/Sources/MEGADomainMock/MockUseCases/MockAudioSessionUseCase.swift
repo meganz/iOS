@@ -2,7 +2,6 @@ import Combine
 import MEGADomain
 
 public final class MockAudioSessionUseCase: AudioSessionUseCaseProtocol {
-    
     public var isBluetoothAudioRouteAvailable: Bool
     public var currentSelectedAudioPort: AudioPort
     private let audioPortOutput: AudioPort
@@ -82,7 +81,7 @@ public final class MockAudioSessionUseCase: AudioSessionUseCaseProtocol {
         configureChatDefaultAudioPlayerAudioSession_calledTimes += 1
     }
     
-    public func configureAudioRecorderAudioSession(completion: ((Result<Void, AudioSessionErrorEntity>) -> Void)?) {
+    public func configureAudioRecorderAudioSession(isPlayerAlive: Bool, completion: ((Result<Void, AudioSessionErrorEntity>) -> Void)?) {
         configureAudioRecorderAudioSession_calledTimes += 1
     }
     

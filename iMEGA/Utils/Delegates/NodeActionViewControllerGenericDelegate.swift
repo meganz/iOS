@@ -201,7 +201,9 @@ class NodeActionViewControllerGenericDelegate: NodeActionViewControllerDelegate 
         node.mnz_remove(in: viewController) { shouldRemove in
             if shouldRemove {
                 guard node.mnz_isPlaying() else { return }
-                AudioPlayerManager.shared.closePlayer()
+                Task { @MainActor in
+                    AudioPlayerManager.shared.closePlayer()
+                }
             }
         }
     }
