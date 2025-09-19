@@ -160,7 +160,8 @@ class NodeBrowserViewModelTests: XCTestCase {
                 onEditingChanged: { _ in },
                 updateTransferWidgetHandler: updateTransferWidgetHandler,
                 sortOrderProvider: sortOrderProvider,
-                onNodeStructureChanged: onNodeStructureChanged
+                onNodeStructureChanged: onNodeStructureChanged,
+                onMoreOptionsButtonTapped: { _ in }
             )
             
             saver = { self.savedViewModes.append($0) }

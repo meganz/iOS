@@ -1,9 +1,11 @@
+import MEGAAppPresentation
 import MEGAAssets
 import MEGADesignToken
 import MEGAL10n
 import MEGASwiftUI
 import Search
 import SwiftUI
+import UIKit
 
 struct NodeBrowserView: View {
     
@@ -97,10 +99,26 @@ struct NodeBrowserView: View {
                 .foregroundStyle(TokenColors.Icon.primary.swiftUI)
         case .regular:
             viewModel.contextMenuViewFactory?.makeAddMenuWithButtonView()
+            moreOptionsView
+        }
+    }
+
+    @ViewBuilder
+    private var moreOptionsView: some View {
+        if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .cloudDriveRevamp) {
+            if viewModel.hasParentNode {
+                ImageButtonWrapper(
+                    image: Image(uiImage: MEGAAssets.UIImage.moreNavigationBar),
+                    imageColor: TokenColors.Icon.primary.swiftUI,
+                    action: viewModel.moreOptionsButtonTapped
+                )
+                .frame(width: 38, height: 38)
+            }
+        } else {
             viewModel.contextMenuViewFactory?.makeContextMenuWithButtonView()
         }
     }
-    
+
     @ToolbarContentBuilder
     private var toolbarNavigationTitle: some ToolbarContent {
         ToolbarItem(placement: .principal) {

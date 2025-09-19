@@ -100,6 +100,7 @@ class NodeBrowserViewModel: ObservableObject {
     private let updateTransferWidgetHandler: () -> Void
     private let sortOrderProvider: () -> MEGADomain.SortOrderEntity
     private let onNodeStructureChanged: () -> Void
+    private let onMoreOptionsButtonTapped: (UIButton) -> Void
     private var nodeSensitivityChangesListenerTask: Task<Void, Never>?
     private var accountStorageMonitoringTask: Task<Void, Never>?
     private var refreshStorageStatusTask: Task<Void, Never>?
@@ -112,6 +113,14 @@ class NodeBrowserViewModel: ObservableObject {
                 await updateContextMenu()
             }
         }
+    }
+
+    var hasParentNode: Bool {
+        guard let parentNode = nodeSource.parentNode else { return false }
+        
+        return parentNode.nodeType != .root
+        && parentNode.nodeType != .unknown
+        && parentNode.nodeType != .rubbish
     }
 
     init(
@@ -147,7 +156,8 @@ class NodeBrowserViewModel: ObservableObject {
         onEditingChanged: @escaping (Bool) -> Void,
         updateTransferWidgetHandler: @escaping () -> Void,
         sortOrderProvider: @escaping () -> MEGADomain.SortOrderEntity,
-        onNodeStructureChanged: @escaping () -> Void
+        onNodeStructureChanged: @escaping () -> Void,
+        onMoreOptionsButtonTapped: @escaping (UIButton) -> Void
     ) {
         self.viewMode = viewMode
         self.searchResultsViewModel = searchResultsViewModel
@@ -176,6 +186,7 @@ class NodeBrowserViewModel: ObservableObject {
         self.accountStorageUseCase = accountStorageUseCase
         self.tracker = tracker
         self.onNodeStructureChanged = onNodeStructureChanged
+        self.onMoreOptionsButtonTapped = onMoreOptionsButtonTapped
 
         $viewMode
             .removeDuplicates()
@@ -519,6 +530,10 @@ class NodeBrowserViewModel: ObservableObject {
         editing = false
         refresh()
         searchResultsViewModel.bridge.editingCancelled()
+    }
+
+    func moreOptionsButtonTapped(button: UIButton) {
+        onMoreOptionsButtonTapped(button)
     }
 
     /// Waits for the node to be loaded from the `NodeSource`.

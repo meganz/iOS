@@ -273,7 +273,8 @@ struct CloudDriveViewControllerFactory {
         searchControllerWrapper: SearchControllerWrapper,
         onSelectionModeChange: @escaping (Bool) -> Void,
         sortOrderProvider: @escaping () -> MEGADomain.SortOrderEntity,
-        onNodeStructureChanged: @escaping () -> Void
+        onNodeStructureChanged: @escaping () -> Void,
+        onMoreOptionsButtonTapped: @escaping (UIButton) -> Void
     ) -> NodeBrowserViewModel {
         let adsVisibilityViewModel = AdsVisibilityViewModel(configuratorProvider: config.adsConfiguratorProvider)
         let accountStorageUseCase = AccountStorageUseCase(
@@ -360,7 +361,8 @@ struct CloudDriveViewControllerFactory {
                 TransfersWidgetViewController.sharedTransfer().showWidgetIfNeeded()
             }, 
             sortOrderProvider: sortOrderProvider,
-            onNodeStructureChanged: onNodeStructureChanged
+            onNodeStructureChanged: onNodeStructureChanged,
+            onMoreOptionsButtonTapped: onMoreOptionsButtonTapped
         )
     }
 
@@ -606,6 +608,16 @@ struct CloudDriveViewControllerFactory {
             viewModeProvider: viewModeAsyncProvider
         )
 
+        let moreOptionsButtonTapHandler = { button in
+            guard let node = nodeSource.parentNode else { return }
+            router.didTapMoreAction(
+                on: node.handle,
+                button: button,
+                displayMode: config.displayMode?.carriedOverDisplayMode,
+                isFromSharedItem: config.isFromSharedItem ?? false
+            )
+        }
+
         let mediaContentDelegate = MediaContentDelegateHandler()
         let nodeBrowserViewModel = makeNodeBrowserViewModel(
             initialViewMode: initialViewMode,
@@ -625,7 +637,8 @@ struct CloudDriveViewControllerFactory {
             sortOrderProvider: {
                 sortOrderPreferenceUseCase.sortOrder(for: nodeSource.parentNode)
             }, 
-            onNodeStructureChanged: onNodeStructureChanged
+            onNodeStructureChanged: onNodeStructureChanged,
+            onMoreOptionsButtonTapped: moreOptionsButtonTapHandler
         )
         
         mediaContentDelegate.selectedPhotosHandler = { [weak nodeBrowserViewModel] selected, _ in
