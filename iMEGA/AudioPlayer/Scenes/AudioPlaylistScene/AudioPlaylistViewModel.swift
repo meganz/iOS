@@ -47,7 +47,7 @@ final class AudioPlaylistViewModel: ViewModelType {
     // MARK: - Init
     init(
         title: String,
-        playerHandler: some AudioPlayerHandlerProtocol = AudioPlayerManager.shared,
+        playerHandler: some AudioPlayerHandlerProtocol,
         router: some AudioPlaylistViewRouting,
         tracker: some AnalyticsTracking
     ) {

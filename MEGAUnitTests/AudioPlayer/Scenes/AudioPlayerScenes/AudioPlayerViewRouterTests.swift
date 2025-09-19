@@ -8,29 +8,39 @@ import XCTest
 
 @MainActor
 final class AudioPlayerViewRouterTests: XCTestCase {
-    func testBuild_whenNodeIsFolderLink_configCorrectDelegate() {
-        let (sut, _, _, _, _) = makeSUT(nodeOriginType: .folderLink)
+    
+    // MARK: - Tests
+    
+    func testBuild_whenFolderLink_configuresNodeDelegate() {
+        let (sut, _) = makeSUT(nodeOriginType: .folderLink)
         
         _ = sut.build()
         
-        assertThatCorrectDelegateConfiguredWhenNodeIsFromFolderLink(on: sut)
+        assertNodeDelegate(
+            in: sut,
+            isFromFolderLink: true,
+            messageId: .invalid,
+            chatId: .invalid
+        )
+        assertFileLinkDelegateIsNil(in: sut)
     }
     
-    func testBuild_whenNodeIsFileLink_configCorrectDelegate() {
-        let (sut, _, _, _, _) = makeSUT(
+    func testBuild_whenFileLink_configuresFileLinkDelegate() {
+        let (sut, _) = makeSUT(
             nodeOriginType: .fileLink,
             fileLink: anyFileLink()
         )
         
         _ = sut.build()
         
-        assertThatCorrectDelegateConfiguredWhenNodeIsFromFileLink(on: sut)
+        assertFileLinkDelegateIsNotNil(in: sut)
+        assertNodeDelegateIsNil(in: sut)
     }
     
-    func testBuild_whenNodeIsFromChat_configCorrectDelegate() {
+    func testBuild_whenFromChat_configuresNodeDelegateWithIds() {
         let expectedChatId = anyHandleEntity()
         let expectedMessageId = anyHandleEntity()
-        let (sut, _, _, _, _) = makeSUT(
+        let (sut, _) = makeSUT(
             nodeOriginType: .chat,
             messageId: expectedMessageId,
             chatId: expectedChatId
@@ -38,11 +48,17 @@ final class AudioPlayerViewRouterTests: XCTestCase {
         
         _ = sut.build()
         
-        assertThatCorrectDelegateConfiguredWhenNodeIsFromChat(on: sut, expectedChatId, expectedMessageId)
+        assertNodeDelegate(
+            in: sut,
+            isFromFolderLink: false,
+            messageId: expectedMessageId,
+            chatId: expectedChatId
+        )
+        assertFileLinkDelegateIsNil(in: sut)
     }
     
-    func testStart_presentBuildedView() {
-        let (sut, presenter, _, _, _) = makeSUT()
+    func testStart_presentsBuiltView() {
+        let (sut, presenter) = makeSUT()
         
         sut.start()
         
@@ -59,10 +75,9 @@ final class AudioPlayerViewRouterTests: XCTestCase {
         relatedFiles: [String]? = nil,
         file: StaticString = #filePath,
         line: UInt = #line
-    ) -> (sut: AudioPlayerViewRouter, presenter: MockViewController, configEntity: AudioPlayerConfigEntity, mockPlayerHandler: MockAudioPlayerHandler, tracker: MockTracker) {
-        let currentContextViewController = MockViewController()
-        let tracker = MockTracker()
-        let (configEntity, mockPlayerHandler) = audioPlayerConfigEntity(
+    ) -> (sut: AudioPlayerViewRouter, presenter: MockViewController) {
+        let presenter = MockViewController()
+        let config = audioPlayerConfigEntity(
             from: originType,
             fileLink: fileLink,
             messageId: messageId,
@@ -70,35 +85,13 @@ final class AudioPlayerViewRouterTests: XCTestCase {
             relatedFiles: relatedFiles
         )
         let sut = AudioPlayerViewRouter(
-            configEntity: configEntity,
-            presenter: currentContextViewController,
-            tracker: tracker
+            configEntity: config,
+            presenter: presenter,
+            tracker: MockTracker()
         )
         trackForMemoryLeaks(on: sut, file: file, line: line)
-        return (sut, currentContextViewController, configEntity, mockPlayerHandler, tracker)
-    }
-    
-    private func assertThatCorrectDelegateConfiguredWhenNodeIsFromFolderLink(on sut: AudioPlayerViewRouter, file: StaticString = #filePath, line: UInt = #line) {
-        XCTAssertNotNil(sut.nodeActionViewControllerDelegate, file: file, line: line)
-        XCTAssertTrue(sut.nodeActionViewControllerDelegate?.isNodeFromFolderLink == true, file: file, line: line)
-        XCTAssertNil(sut.fileLinkActionViewControllerDelegate, file: file, line: line)
-        XCTAssertEqual(sut.nodeActionViewControllerDelegate?.messageId, .invalid, file: file, line: line)
-        XCTAssertEqual(sut.nodeActionViewControllerDelegate?.chatId, .invalid, file: file, line: line)
-    }
-    
-    private func assertThatCorrectDelegateConfiguredWhenNodeIsFromFileLink(on sut: AudioPlayerViewRouter, file: StaticString = #filePath, line: UInt = #line) {
-        XCTAssertNotNil(sut.fileLinkActionViewControllerDelegate, file: file, line: line)
-        XCTAssertNil(sut.nodeActionViewControllerDelegate, file: file, line: line)
-        XCTAssertEqual(sut.nodeActionViewControllerDelegate?.messageId, nil, file: file, line: line)
-        XCTAssertEqual(sut.nodeActionViewControllerDelegate?.chatId, nil, file: file, line: line)
-    }
-    
-    private func assertThatCorrectDelegateConfiguredWhenNodeIsFromChat(on sut: AudioPlayerViewRouter, _ expectedMessageId: HandleEntity, _ expectedChatId: HandleEntity, file: StaticString = #filePath, line: UInt = #line) {
-        XCTAssertNotNil(sut.nodeActionViewControllerDelegate, file: file, line: line)
-        XCTAssertEqual(sut.nodeActionViewControllerDelegate?.messageId, expectedMessageId, file: file, line: line)
-        XCTAssertEqual(sut.nodeActionViewControllerDelegate?.chatId, expectedChatId, file: file, line: line)
-        XCTAssertTrue(sut.nodeActionViewControllerDelegate?.isNodeFromFolderLink == false, file: file, line: line)
-        XCTAssertNil(sut.fileLinkActionViewControllerDelegate, file: file, line: line)
+        trackForMemoryLeaks(on: presenter, file: file, line: line)
+        return (sut, presenter)
     }
     
     private func audioPlayerConfigEntity(
@@ -107,46 +100,99 @@ final class AudioPlayerViewRouterTests: XCTestCase {
         messageId: HandleEntity? = nil,
         chatId: HandleEntity? = nil,
         relatedFiles: [String]? = nil
-    ) -> (configEntity: AudioPlayerConfigEntity, playerHandler: MockAudioPlayerHandler) {
-        let playerHandler = MockAudioPlayerHandler()
+    ) -> AudioPlayerConfigEntity {
         let node = MockNode(handle: .max)
-        
-        return switch originType {
-        case .folderLink: (AudioPlayerConfigEntity(node: node, isFolderLink: true, fileLink: nil, messageId: .invalid, chatId: .invalid, relatedFiles: relatedFiles), playerHandler)
-        case .fileLink: (AudioPlayerConfigEntity(node: node, isFolderLink: false, fileLink: fileLink, messageId: .invalid, chatId: .invalid, relatedFiles: relatedFiles), playerHandler)
-        case .chat: (AudioPlayerConfigEntity(node: node, isFolderLink: false, fileLink: nil, messageId: messageId, chatId: chatId, relatedFiles: relatedFiles), playerHandler)
-        case .unknown: (AudioPlayerConfigEntity(node: node, isFolderLink: false, fileLink: nil, messageId: .invalid, chatId: .invalid, relatedFiles: relatedFiles), playerHandler)
+        switch originType {
+        case .folderLink:
+            return .init(
+                node: node,
+                isFolderLink: true,
+                fileLink: nil,
+                messageId: .invalid,
+                chatId: .invalid,
+                relatedFiles: relatedFiles
+            )
+        case .fileLink:
+            return .init(
+                node: node,
+                isFolderLink: false,
+                fileLink: fileLink,
+                messageId: .invalid,
+                chatId: .invalid,
+                relatedFiles: relatedFiles
+            )
+        case .chat:
+            return .init(
+                node: node,
+                isFolderLink: false,
+                fileLink: nil,
+                messageId: messageId,
+                chatId: chatId,
+                relatedFiles: relatedFiles
+            )
+        case .unknown:
+            return .init(
+                node: node,
+                isFolderLink: false,
+                fileLink: nil,
+                messageId: .invalid,
+                chatId: .invalid,
+                relatedFiles: relatedFiles
+            )
         }
     }
+    // MARK: - Delegate assertions
     
-    private func anyFileLink() -> String {
-        anyURL().absoluteString
+    private func assertNodeDelegate(
+        in sut: AudioPlayerViewRouter,
+        isFromFolderLink: Bool,
+        messageId: HandleEntity,
+        chatId: HandleEntity,
+        file: StaticString = #filePath,
+        line: UInt = #line
+    ) {
+        let delegate = try? XCTUnwrap(sut.nodeActionViewControllerDelegate, file: file, line: line)
+        XCTAssertEqual(delegate?.isNodeFromFolderLink, isFromFolderLink, file: file, line: line)
+        XCTAssertEqual(delegate?.messageId, messageId, file: file, line: line)
+        XCTAssertEqual(delegate?.chatId, chatId, file: file, line: line)
     }
     
-    private func anyURL() -> URL {
-        URL(string: "https://some-file-link.com")!
+    private func assertNodeDelegateIsNil(
+        in sut: AudioPlayerViewRouter,
+        file: StaticString = #filePath,
+        line: UInt = #line
+    ) {
+        XCTAssertNil(sut.nodeActionViewControllerDelegate, file: file, line: line)
+    }
+    
+    private func assertFileLinkDelegateIsNotNil(
+        in sut: AudioPlayerViewRouter,
+        file: StaticString = #filePath,
+        line: UInt = #line
+    ) {
+        XCTAssertNotNil(sut.fileLinkActionViewControllerDelegate, file: file, line: line)
+    }
+    
+    private func assertFileLinkDelegateIsNil(
+        in sut: AudioPlayerViewRouter,
+        file: StaticString = #filePath,
+        line: UInt = #line
+    ) {
+        XCTAssertNil(sut.fileLinkActionViewControllerDelegate, file: file, line: line)
+    }
+    
+    // MARK: - Test fixtures
+    
+    private func anyFileLink() -> String {
+        "https://some-file-link.com"
     }
     
     private func anyHandleEntity() -> HandleEntity {
         .max
     }
-    
-    private func mockNodeActionViewController() -> NodeActionViewController {
-        NodeActionViewController(
-            node: MockNode(handle: 1),
-            delegate: NodeActionViewControllerGenericDelegate(
-                viewController: UIViewController(),
-                moveToRubbishBinViewModel: MockMoveToRubbishBinViewModel()
-            ),
-            displayMode: .albumLink,
-            isInVersionsView: false,
-            isBackupNode: false,
-            sender: "any-sender"
-        )
-    }
 }
 
-private class MockViewController: UIViewController {
+private final class MockViewController: UIViewController {
     private(set) var presentCallCount = 0
     private(set) var dismissCallCount = 0
     

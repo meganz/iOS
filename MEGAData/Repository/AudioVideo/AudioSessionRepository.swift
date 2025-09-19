@@ -87,11 +87,14 @@ final class AudioSessionRepository: AudioSessionRepositoryProtocol {
         }
     }
     
-    func configureAudioRecorderAudioSession(completion: ((Result<Void, AudioSessionErrorEntity>) -> Void)?) {
+    func configureAudioRecorderAudioSession(isPlayerAlive: Bool, completion: ((Result<Void, AudioSessionErrorEntity>) -> Void)?) {
         do {
-            if AudioPlayerManager.shared.isPlayerAlive() {
-                AudioPlayerManager.shared.audioInterruptionDidStart()
-                try AVAudioSession.sharedInstance().setCategory(.playAndRecord, mode: .default, options: [.allowBluetoothHFP, .allowBluetoothA2DP])
+            if isPlayerAlive {
+                try AVAudioSession.sharedInstance().setCategory(
+                    .playAndRecord,
+                    mode: .default,
+                    options: [.allowBluetoothHFP, .allowBluetoothA2DP]
+                )
             }
             try AVAudioSession.sharedInstance().setActive(true)
             completion?(.success)
@@ -177,9 +180,8 @@ final class AudioSessionRepository: AudioSessionRepositoryProtocol {
         }
         
         let previousAudioPort: AudioPort?
-        if
-            reason == .categoryChange,
-            let previousRoute = userInfo[AVAudioSessionRouteChangePreviousRouteKey] as? AVAudioSessionRouteDescription {
+        if reason == .categoryChange,
+           let previousRoute = userInfo[AVAudioSessionRouteChangePreviousRouteKey] as? AVAudioSessionRouteDescription {
             previousAudioPort = previousRoute.outputs.first?.toAudioPort()
         } else {
             previousAudioPort = nil

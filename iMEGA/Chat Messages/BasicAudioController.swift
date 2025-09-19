@@ -114,10 +114,7 @@ open class BasicAudioController: NSObject, AVAudioPlayerDelegate {
     ///   - message: The `MessageType` that contain the audio item to be played.
     ///   - audioCell: The `AudioMessageCell` that needs to be updated while audio is playing.
     open func playSound(for message: any MessageType, in audioCell: AudioMessageCell) {
-        
-        if AudioPlayerManager.shared.isPlayerAlive() {
-            AudioPlayerManager.shared.audioInterruptionDidStart()
-        }
+        startAudioPlayerInterruptionIfNeeded()
         
         guard let chatMessage = message as? ChatMessage, let audioCell = audioCell as? ChatVoiceClipCollectionViewCell else {
             return
@@ -178,10 +175,8 @@ open class BasicAudioController: NSObject, AVAudioPlayerDelegate {
             audioCell.waveView.stopAnimating()
         }
         
-        if AudioPlayerManager.shared.isPlayerAlive() {
-            let activeCall = MEGAChatSdk.shared.mnz_existsActiveCall
-            AudioPlayerManager.shared.audioInterruptionDidEndNeedToResume(!activeCall)
-        }
+        let activeCall = MEGAChatSdk.shared.mnz_existsActiveCall
+        endAudioPlayerInterruptionIfNeeded(resume: !activeCall)
     }
 
     /// Stops any ongoing audio playing if exists
@@ -210,17 +205,13 @@ open class BasicAudioController: NSObject, AVAudioPlayerDelegate {
         playingCell = nil
         setProximitySensorEnabled(false)
         
-        if AudioPlayerManager.shared.isPlayerAlive() {
-            let activeCall = MEGAChatSdk.shared.mnz_existsActiveCall
-            AudioPlayerManager.shared.audioInterruptionDidEndNeedToResume(!activeCall)
-        }
+        let activeCall = MEGAChatSdk.shared.mnz_existsActiveCall
+        endAudioPlayerInterruptionIfNeeded(resume: !activeCall)
     }
 
     /// Resume a currently pause audio sound
     open func resumeSound() {
-        if AudioPlayerManager.shared.isPlayerAlive() {
-            AudioPlayerManager.shared.audioInterruptionDidStart()
-        }
+        startAudioPlayerInterruptionIfNeeded()
         
         guard let player = audioPlayer, let cell = playingCell as? ChatVoiceClipCollectionViewCell else {
             stopAnyOngoingPlaying()
@@ -287,8 +278,23 @@ open class BasicAudioController: NSObject, AVAudioPlayerDelegate {
         stopAnyOngoingPlaying()
     }
     
+    func startAudioPlayerInterruptionIfNeeded() {
+        Task { @MainActor in
+            if AudioPlayerManager.shared.isPlayerAlive() {
+                AudioPlayerManager.shared.audioInterruptionDidStart()
+            }
+        }
+    }
+
+    func endAudioPlayerInterruptionIfNeeded(resume: Bool) {
+        Task { @MainActor in
+            if AudioPlayerManager.shared.isPlayerAlive() {
+                AudioPlayerManager.shared.audioInterruptionDidEndNeedToResume(resume)
+            }
+        }
+    }
+    
     deinit {
         setProximitySensorEnabled(false)
     }
-    
 }

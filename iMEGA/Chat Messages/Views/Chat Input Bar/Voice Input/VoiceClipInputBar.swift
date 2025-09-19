@@ -139,16 +139,19 @@ class VoiceClipInputBar: UIView {
     
     private func startRecordingAudio() {
         recordTimeLabel.isHidden = false
-        
-        do {
-            let success = try audioRecorder.start()
-            MEGALogDebug("started audio recording successfully: \(success)")
-        } catch {
-            MEGALogDebug("error starting the audio recorder \(error.localizedDescription)")
+
+        Task { @MainActor in
+            do {
+                audioRecorder.configureForRecording()
+                let success = try audioRecorder.start()
+                MEGALogDebug("started audio recording successfully: \(success)")
+            } catch {
+                MEGALogDebug("error starting the audio recorder \(error.localizedDescription)")
+            }
         }
         
-        audioRecorder.updateHandler = {[weak self] timeString, level in
-            guard let `self` = self else {
+        audioRecorder.updateHandler = { [weak self] timeString, level in
+            guard let self else {
                 return
             }
             

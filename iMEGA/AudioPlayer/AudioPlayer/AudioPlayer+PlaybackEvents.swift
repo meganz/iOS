@@ -1,3 +1,4 @@
+import Combine
 import Foundation
 
 enum RewindDirection {
@@ -6,7 +7,6 @@ enum RewindDirection {
 
 // MARK: - Audio Player Control State Functions
 extension AudioPlayer {
-    
     private func refreshCurrentState(refresh: Bool) {
         if refresh {
             notify(aboutCurrentState)
@@ -21,43 +21,47 @@ extension AudioPlayer {
             storedRate = 0.0
         }
     }
-
-    func setProgressCompleted(_ position: TimeInterval) {
+    
+    func setProgressCompleted(_ position: TimeInterval) async {
         isUpdatingProgress = true
-        setProgressCompleted(position, completion: { [weak self] in
-            self?.isUpdatingProgress = false
-        })
+        defer { isUpdatingProgress = false }
+        
+        guard let queuePlayer, let currentItem = queuePlayer.currentItem else { return }
+        
+        var target = CMTime(seconds: position, preferredTimescale: currentItem.duration.timescale)
+        
+        if !CMTIME_IS_VALID(target) {
+            MEGALogDebug("[AudioPlayer] setProgressCompleted invalid time: \(target) timeInterval: \(position)")
+            await waitUntilSeekTimeIsValid(for: currentItem, position: position)
+            target = CMTime(seconds: position, preferredTimescale: currentItem.duration.timescale)
+            guard CMTIME_IS_VALID(target) else {
+                MEGALogDebug("[AudioPlayer] setProgressCompleted still invalid after wait: \(target)")
+                return
+            }
+        }
+        
+        let finished = await currentItem.seek(to: target)
+        refreshCurrentState(refresh: finished)
     }
     
-    func setProgressCompleted(_ position: TimeInterval, completion: @escaping () -> Void) {
-        guard let queuePlayer, let currentItem = queuePlayer.currentItem else {
-            completion()
-            return
-        }
+    private func waitUntilSeekTimeIsValid(for item: AVPlayerItem, position: TimeInterval) async {
+        let initial = CMTime(seconds: position, preferredTimescale: item.duration.timescale)
+        if CMTIME_IS_VALID(initial) { return }
         
-        let time = CMTime(seconds: position, preferredTimescale: currentItem.duration.timescale)
-        guard CMTIME_IS_VALID(time) else {
-            MEGALogDebug("[AudioPlayer] setProgressCompleted invalid time: \(time) timeInterval: \(position)")
-            audioSeekFallbackObserver = currentItem.observe(
-                \.duration,
-                 changeHandler: { [weak self] item, _ in
-                     if CMTIME_IS_VALID(
-                        CMTime(seconds: position, preferredTimescale: item.duration.timescale)
-                     ) {
-                         self?.setProgressCompleted(position, completion: completion)
-                     }
-                 }
-            )
-            return
+        await withCheckedContinuation { continuation in
+            var cancellable: AnyCancellable?
+            
+            cancellable = item.publisher(for: \.duration, options: .new)
+                .receive(on: DispatchQueue.main)
+                .first { newDuration in
+                    CMTIME_IS_VALID(CMTime(seconds: position, preferredTimescale: newDuration.timescale))
+                }
+                .sink { _ in
+                    cancellable?.cancel()
+                    continuation.resume()
+                }
+            
         }
-        
-        Task { @MainActor in
-            let isFinished = await currentItem.seek(to: time)
-            refreshCurrentState(refresh: isFinished)
-            completion()
-        }
-
-        audioSeekFallbackObserver?.invalidate()
     }
     
     func resetPlayerItems() {
@@ -195,8 +199,8 @@ extension AudioPlayer {
                     _ = await currentItem.seek(to: .zero)
                     pause()
                     completion()
-                    return
                 }
+                return
             } else {
                 resetPlaylist()
             }
@@ -369,13 +373,6 @@ extension AudioPlayer {
     
     func isDefaultRepeatMode() -> Bool {
         return !isRepeatAllMode() && !isRepeatOneMode()
-    }
-    
-    func setProgressCompleted(_ percentage: Float) {
-        guard let queuePlayer,
-              let currentItem = queuePlayer.currentItem else { return }
-        
-        setProgressCompleted(CMTimeGetSeconds(currentItem.duration) * Double(percentage))
     }
     
     func move(of movedItem: AudioPlayerItem, to position: IndexPath, direction: MovementDirection) {

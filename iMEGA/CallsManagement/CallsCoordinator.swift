@@ -294,13 +294,17 @@ class CallsCoordinatorFactory: NSObject, CallsCoordinatorFactoryProtocol {
     }
     
     private func sendAudioPlayerInterruptDidStartNotificationIfNeeded() {
-        guard AudioPlayerManager.shared.isPlayerAlive() else { return }
-        AudioPlayerManager.shared.audioInterruptionDidStart()
+        Task { @MainActor in
+            guard AudioPlayerManager.shared.isPlayerAlive() else { return }
+            AudioPlayerManager.shared.audioInterruptionDidStart()
+        }
     }
     
     private func sendAudioPlayerInterruptDidEndNotificationIfNeeded() {
-        guard AudioPlayerManager.shared.isPlayerAlive() else { return }
-        AudioPlayerManager.shared.audioInterruptionDidEndNeedToResume(true)
+        Task { @MainActor in
+            guard AudioPlayerManager.shared.isPlayerAlive() else { return }
+            AudioPlayerManager.shared.audioInterruptionDidEndNeedToResume(true)
+        }
     }
     
     private func startCallUI(chatRoom: ChatRoomEntity, call: CallEntity) {

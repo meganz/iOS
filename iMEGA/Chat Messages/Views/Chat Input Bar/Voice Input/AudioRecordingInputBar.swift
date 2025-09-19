@@ -72,12 +72,15 @@ class AudioRecordingInputBar: UIView {
     }
     
     func startRecording() {
-        do {
-            let success = try audioRecorder.start()
-            delegate?.audioRecordingStarted()
-            MEGALogDebug("Audio recorder started \(success)")
-        } catch {
-            MEGALogDebug("Audio recorder failed to start with error: \(error.localizedDescription)")
+        Task { @MainActor in
+            do {
+                audioRecorder.configureForRecording()
+                let success = try audioRecorder.start()
+                delegate?.audioRecordingStarted()
+                MEGALogDebug("Audio recorder started \(success)")
+            } catch {
+                MEGALogDebug("Audio recorder failed to start with error: \(error.localizedDescription)")
+            }
         }
     }
     

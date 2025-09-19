@@ -184,8 +184,7 @@ final class AudioPlayerConfigEntityTests: XCTestCase {
         file: StaticString = #filePath,
         line: UInt = #line
     ) -> AudioPlayerConfigEntity {
-        
-        let sut = AudioPlayerConfigEntity(
+        AudioPlayerConfigEntity(
             node: node,
             isFolderLink: isFolderLink,
             fileLink: fileLink,
@@ -195,6 +194,5 @@ final class AudioPlayerConfigEntityTests: XCTestCase {
             allNodes: allNodes,
             shouldResetPlayer: shouldResetPlayer
         )
-        return sut
     }
 }

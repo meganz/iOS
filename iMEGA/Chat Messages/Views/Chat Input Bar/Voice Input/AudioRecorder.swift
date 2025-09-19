@@ -6,12 +6,14 @@ class AudioRecorder: NSObject {
         case activeCall
         case recorderInstanceDoesNotExist
         case notCurrentlyRecording
+        case notConfigured
     }
     
     private var recorder: AVAudioRecorder?
     private var displayLink: CADisplayLink!
     private var recordStartDate: Date!
     private var meterTable = MeterTable()
+    private var isConfigured = false
 
     private var isCallActive: Bool {
         return MEGAChatSdk.shared.mnz_existsActiveCall
@@ -37,13 +39,27 @@ class AudioRecorder: NSObject {
         return recorder?.isRecording ?? false
     }
     
+    @MainActor
+    func configureForRecording() {
+        let isPlayerAlive = AudioPlayerManager.shared.isPlayerAlive()
+        if isPlayerAlive {
+            AudioPlayerManager.shared.audioInterruptionDidStart()
+        }
+        AudioSessionUseCase.default.configureAudioRecorderAudioSession(isPlayerAlive: isPlayerAlive)
+        
+        isConfigured = true
+    }
+
     func start() throws -> Bool {
         guard !isCallActive else {
             UINotificationFeedbackGenerator().notificationOccurred(.error)
             throw RecordError.activeCall
         }
         
-        AudioSessionUseCase.default.configureAudioRecorderAudioSession()
+        guard isConfigured else {
+            UINotificationFeedbackGenerator().notificationOccurred(.error)
+            throw RecordError.notConfigured
+        }
         
         if !FileManager.default.fileExists(atPath: NSTemporaryDirectory()) {
             try FileManager.default.createDirectory(atPath: NSTemporaryDirectory(),
@@ -85,14 +101,25 @@ class AudioRecorder: NSObject {
         displayLink?.invalidate()
         displayLink = nil
         
-        if !AudioPlayerManager.shared.isPlayerAlive() {
-            try AVAudioSession.sharedInstance().setMode(.voiceChat)
-            try AVAudioSession.sharedInstance().setActive(false, options: .notifyOthersOnDeactivation)
+        Task {
+            await self.finalizeAfterStopRecording()
         }
-        
-        AudioPlayerManager.shared.audioInterruptionDidEndNeedToResume(true)
 
         return recorder.url.path
+    }
+    
+    @MainActor
+    private func finalizeAfterStopRecording() {
+        if AudioPlayerManager.shared.isPlayerAlive() {
+            AudioPlayerManager.shared.audioInterruptionDidEndNeedToResume(true)
+        } else {
+            do {
+                try AVAudioSession.sharedInstance().setMode(.voiceChat)
+                try AVAudioSession.sharedInstance().setActive(false, options: .notifyOthersOnDeactivation)
+            } catch {
+                MEGALogError("[AudioRecorder] AVAudioSession cleanup error: \(error.localizedDescription)")
+            }
+        }
     }
     
     @objc func update() {

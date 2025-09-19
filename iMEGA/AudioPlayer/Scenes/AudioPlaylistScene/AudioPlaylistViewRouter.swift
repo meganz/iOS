@@ -20,6 +20,7 @@ final class AudioPlaylistViewRouter: NSObject, AudioPlaylistViewRouting {
 
         vc.viewModel = AudioPlaylistViewModel(
             title: parentNodeName,
+            playerHandler: AudioPlayerManager.shared,
             router: self,
             tracker: DIContainer.tracker
         )

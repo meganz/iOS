@@ -2,7 +2,7 @@
 import Testing
 
 @Suite("AudioQueueLoaderTestSuite")
-struct AudioQueueLoaderTestSuite {
+@MainActor struct AudioQueueLoaderTestSuite {
     static let defaultBatchSize = 150
     
     // MARK: - Helpers
@@ -18,7 +18,7 @@ struct AudioQueueLoaderTestSuite {
     
     // MARK: - Tests for addAllTracks
     @Suite("AddAllTracks")
-    struct AddAllTracksTests {
+    @MainActor struct AddAllTracksTests {
         @Test("Returns first batch with correct size and contents")
         func returnsCorrectFirstBatch() {
             let sut = makeSUT()
@@ -48,7 +48,7 @@ struct AudioQueueLoaderTestSuite {
     
     // MARK: - Tests for reset
     @Suite("Reset")
-    struct ResetTests {
+    @MainActor struct ResetTests {
         @Test("Clears internal state and pending work")
         func clearsInternalState() {
             let sut = makeSUT()
@@ -62,7 +62,7 @@ struct AudioQueueLoaderTestSuite {
     
     // MARK: - Tests for refillQueueIfNeeded
     @Suite("RefillQueueIfNeeded")
-    struct RefillQueueIfNeededTests {
+    @MainActor struct RefillQueueIfNeededTests {
         @Test("Inserts immediate batch if queue is below threshold")
         func insertsImmediateBatch() throws {
             let sut = makeSUT()
@@ -80,7 +80,7 @@ struct AudioQueueLoaderTestSuite {
         }
         
         @Test("Shuffles immediate batch when shuffleTracks is called before refilling")
-        @MainActor func shufflesImmediateBatch() async throws {
+        func shufflesImmediateBatch() async throws {
             let sut = makeSUT()
             
             sut.delegate.currentQueue = []
@@ -88,7 +88,7 @@ struct AudioQueueLoaderTestSuite {
             let totalTracks = AudioPlayerItem.mockArray(count: defaultBatchSize)
             _ = sut.loader.addAllTracks(totalTracks)
             sut.loader.shuffleTracks()
-           
+            
             try await Task.sleep(nanoseconds: 100_000_000)
             
             sut.loader.refillQueueIfNeeded()
@@ -107,15 +107,17 @@ struct AudioQueueLoaderTestSuite {
             let sut = makeSUT()
             sut.delegate.currentQueue = []
             _ = sut.loader.addAllTracks(AudioPlayerItem.mockArray(count: defaultBatchSize))
+            
             sut.loader.refillQueueIfNeeded()
             sut.loader.refillQueueIfNeeded() // Second call should not insert duplicate batches.
+            
             #expect(sut.delegate.insertedBatches.count == 1)
         }
     }
     
     // MARK: - Tests for hasPendingWork
     @Suite("HasPendingWork")
-    struct HasPendingWorkTests {
+    @MainActor struct HasPendingWorkTests {
         @Test("Reflects the internal state correctly")
         func pendingWorkState() {
             let sut = makeSUT()
@@ -123,7 +125,7 @@ struct AudioQueueLoaderTestSuite {
             
             _ = sut.loader.addAllTracks(AudioPlayerItem.mockArray(count: defaultBatchSize))
             #expect(sut.loader.hasPendingWork)
-
+            
             sut.loader.reset()
             #expect(!sut.loader.hasPendingWork)
         }
@@ -131,7 +133,7 @@ struct AudioQueueLoaderTestSuite {
     
     // MARK: - Tests for prepareNextBatch
     @Suite("PrepareNextBatch")
-    struct PrepareNextBatchTests {
+    @MainActor struct PrepareNextBatchTests {
         @Test("Stages and inserts pending batch when queue is below threshold (synchronous)")
         func stagesAndInsertsPendingBatchWhenBelowThreshold() throws {
             let sut = makeSUT(batchSize: 100, queueThreshold: 50)
@@ -162,7 +164,7 @@ struct AudioQueueLoaderTestSuite {
     
     // MARK: - Tests for InsertPendingBatch behavior
     @Suite("InsertPendingBatch")
-    struct InsertPendingBatchTests {
+    @MainActor struct InsertPendingBatchTests {
         @Test("insertPendingBatch clears pending and does not double-insert")
         func insertClearsPendingAndIsIdempotent() {
             let sut = makeSUT(batchSize: 100, queueThreshold: 50)
@@ -196,12 +198,13 @@ struct AudioQueueLoaderTestSuite {
     
     // MARK: - Tests for Reset Behavior
     @Suite("ResetBehavior")
-    struct ResetBehaviorTests {
+    @MainActor struct ResetBehaviorTests {
         @Test("Reset clears staged batch and remaining tracks")
         func resetClearsAllWork() {
             let sut = makeSUT()
             _ = sut.loader.addAllTracks(AudioPlayerItem.mockArray(count: defaultBatchSize))
             sut.loader.prepareNextBatch()
+            
             sut.loader.reset()
             #expect(!sut.loader.hasPendingWork)
         }

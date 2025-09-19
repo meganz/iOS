@@ -1,29 +1,45 @@
+@preconcurrency import Combine
 import Foundation
 import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGADomain
 import MEGASwift
 
-final class AudioPlayerManager: NSObject, AudioPlayerHandlerProtocol {
+@MainActor
+final class AudioPlayerManager: AudioPlayerHandlerProtocol {
     static var shared = AudioPlayerManager()
     
     private var player: AudioPlayer?
     private var fullScreenPlayerRouter: AudioPlayerViewRouter?
     private var miniPlayerRouter: MiniPlayerViewRouter?
-    /// Stores all registered mini-player handlers in a thread-safe array. Access is synchronized with `@Atomic`, and handlers are compared
-    /// by identity using `ObjectIdentifier` to avoid duplicates. Handlers conforming to `AudioMiniPlayerHandlerProtocol` manage the
-    /// presentation and behavior of the mini-player, such as showing or hiding it, updating its container height, or embedding the mini-player view.
-    @Atomic private var miniPlayerHandlers: [any AudioMiniPlayerHandlerProtocol] = []
+    /// Stores all registered mini-player handlers. Access is serialized by @MainActor.
+    private var miniPlayerHandlers: [any AudioMiniPlayerHandlerProtocol] = []
     private var nodeInfoUseCase: (any NodeInfoUseCaseProtocol)?
+    private var notificationCancellables = Set<AnyCancellable>()
+    
     private let playbackContinuationUseCase: any PlaybackContinuationUseCaseProtocol =
-        DIContainer.playbackContinuationUseCase
+    DIContainer.playbackContinuationUseCase
     private let audioSessionUseCase = AudioSessionUseCase(audioSessionRepository: AudioSessionRepository(audioSession: AVAudioSession()))
     
     private let miniPlayerHeight: CGFloat = 56.0
     
-    override private init() {
-        super.init()
-        NotificationCenter.default.addObserver(self, selector: #selector(closePlayer), name: Notification.Name.MEGALogout, object: nil)
+    var currentSeekTask: Task<Void, Never>? {
+        didSet { oldValue?.cancel() }
+    }
+    
+    private init() {
+        registerManagerNotifications()
+    }
+    
+    private func registerManagerNotifications() {
+        notificationCancellables.removeAll()
+        NotificationCenter.default
+            .publisher(for: Notification.Name.MEGALogout)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                self?.closePlayer()
+            }
+            .store(in: &notificationCancellables)
     }
     
     func currentPlayer() -> AudioPlayer? {
@@ -90,9 +106,11 @@ final class AudioPlayerManager: NSObject, AudioPlayerHandlerProtocol {
     ) {
         if self.player != nil {
             self.player?.close { [weak self] in
-                MEGALogDebug("[AudioPlayer] closing current player before assign new instance")
-                self?.player = nil
-                self?.configure(player: player, tracks: tracks, playerListener: playerListener)
+                Task { @MainActor [weak self] in
+                    MEGALogDebug("[AudioPlayer] closing current player before assign new instance")
+                    self?.player = nil
+                    self?.configure(player: player, tracks: tracks, playerListener: playerListener)
+                }
             }
         } else {
             configure(player: player, tracks: tracks, playerListener: playerListener)
@@ -140,7 +158,8 @@ final class AudioPlayerManager: NSObject, AudioPlayerHandlerProtocol {
     }
     
     func playerProgressCompleted(percentage: Float) {
-        player?.setProgressCompleted(percentage)
+        guard let currentItem = playerCurrentItem() else { return }
+        playerResumePlayback(from: CMTimeGetSeconds(currentItem.duration) * Double(percentage))
     }
     
     func playerShuffle(active: Bool) {
@@ -155,7 +174,9 @@ final class AudioPlayerManager: NSObject, AudioPlayerHandlerProtocol {
         playbackStoppedForCurrentItem()
         player?.blockAudioPlayerInteraction()
         player?.playPrevious { [weak self] in
-            self?.player?.unblockAudioPlayerInteraction()
+            Task { @MainActor [weak self] in
+                self?.player?.unblockAudioPlayerInteraction()
+            }
         }
     }
     
@@ -183,7 +204,8 @@ final class AudioPlayerManager: NSObject, AudioPlayerHandlerProtocol {
     }
     
     func playerResumePlayback(from timeInterval: TimeInterval) {
-        player?.setProgressCompleted(timeInterval) { [weak self] in
+        currentSeekTask = Task { @MainActor [weak self] in
+            await self?.player?.setProgressCompleted(timeInterval)
             self?.playerPlay()
         }
     }
@@ -192,7 +214,9 @@ final class AudioPlayerManager: NSObject, AudioPlayerHandlerProtocol {
         playbackStoppedForCurrentItem()
         player?.blockAudioPlayerInteraction()
         player?.playNext { [weak self] in
-            self?.player?.unblockAudioPlayerInteraction()
+            Task { @MainActor [weak self] in
+                self?.player?.unblockAudioPlayerInteraction()
+            }
         }
     }
     
@@ -204,7 +228,9 @@ final class AudioPlayerManager: NSObject, AudioPlayerHandlerProtocol {
         playbackStoppedForCurrentItem()
         player?.blockAudioPlayerInteraction()
         player?.play(item: item) { [weak self] in
-            self?.player?.unblockAudioPlayerInteraction()
+            Task { @MainActor [weak self] in
+                self?.player?.unblockAudioPlayerInteraction()
+            }
         }
     }
     
@@ -258,7 +284,6 @@ final class AudioPlayerManager: NSObject, AudioPlayerHandlerProtocol {
         player?.playerTracksContains(url: url) ?? false
     }
     
-    @MainActor
     func initFullScreenPlayer(node: MEGANode?, fileLink: String?, filePaths: [String]?, isFolderLink: Bool, presenter: UIViewController, messageId: HandleEntity, chatId: HandleEntity, isFromSharedItem: Bool, allNodes: [MEGANode]?) {
         let configEntity = AudioPlayerConfigEntity(
             node: node,
@@ -279,7 +304,6 @@ final class AudioPlayerManager: NSObject, AudioPlayerHandlerProtocol {
         fullScreenPlayerRouter = audioPlayerRouter
     }
     
-    @MainActor
     func initMiniPlayer(node: MEGANode?, fileLink: String?, filePaths: [String]?, isFolderLink: Bool, presenter: UIViewController, shouldReloadPlayerInfo: Bool, shouldResetPlayer: Bool, isFromSharedItem: Bool) {
         if shouldReloadPlayerInfo {
             if shouldResetPlayer { folderSDKLogoutIfNeeded() }
@@ -307,17 +331,30 @@ final class AudioPlayerManager: NSObject, AudioPlayerHandlerProtocol {
         notifyMiniPlayerHandlers { $0.hideMiniPlayer() }
     }
     
-    @objc func closePlayer() {
+    func closePlayer() {
         playbackStoppedForCurrentItem()
-        player?.close { [weak self] in
-            self?.audioSessionUseCase.configureCallAudioSession()
-            self?.clearMiniPlayerResources()
+        
+        guard let player else {
+            cleanupAfterClose()
+            return
         }
+        
+        player.close { [weak self] in
+            Task { @MainActor [weak self] in
+                self?.cleanupAfterClose()
+            }
+        }
+    }
+    
+    private func cleanupAfterClose() {
+        audioSessionUseCase.configureCallAudioSession()
+        clearMiniPlayerResources()
         notifyMiniPlayerHandlers { $0.closeMiniPlayer() }
-        
-        NotificationCenter.default.post(name: NSNotification.Name.MEGAAudioPlayerShouldUpdateContainer, object: nil)
-        
+        NotificationCenter.default.post(name: .MEGAAudioPlayerShouldUpdateContainer, object: nil)
+
         player = nil
+        currentSeekTask?.cancel()
+        currentSeekTask = nil
     }
     
     func clearMiniPlayerResources() {
@@ -328,14 +365,15 @@ final class AudioPlayerManager: NSObject, AudioPlayerHandlerProtocol {
         fullScreenPlayerRouter = nil
     }
     
-    @MainActor
     func dismissFullScreenPlayer() async {
         guard let fullScreenPlayerRouter else { return }
         
         await withCheckedContinuation { continuation in
             fullScreenPlayerRouter.dismiss { [weak self] in
-                self?.fullScreenPlayerRouter = nil
-                continuation.resume()
+                Task { @MainActor [weak self] in
+                    self?.fullScreenPlayerRouter = nil
+                    continuation.resume()
+                }
             }
         }
     }
@@ -369,23 +407,18 @@ final class AudioPlayerManager: NSObject, AudioPlayerHandlerProtocol {
         }
     }
     
-    @MainActor
     func updateMiniPlayerPresenter(_ presenter: any AudioPlayerPresenterProtocol) {
         miniPlayerRouter?.updatePresenter(presenter)
     }
 
     func addMiniPlayerHandler(_ handler: any AudioMiniPlayerHandlerProtocol) {
-        $miniPlayerHandlers.mutate { arr in
-            let exists = arr.contains { ObjectIdentifier($0) == ObjectIdentifier(handler) }
-            if !exists { arr.append(handler) }
-        }
+        let exists = miniPlayerHandlers.contains { ObjectIdentifier($0) == ObjectIdentifier(handler) }
+        if !exists { miniPlayerHandlers.append(handler) }
     }
     
     func removeMiniPlayerHandler(_ handler: any AudioMiniPlayerHandlerProtocol) {
-        $miniPlayerHandlers.mutate { arr in
-            if let i = arr.firstIndex(where: { ObjectIdentifier($0) == ObjectIdentifier(handler) }) {
-                arr.remove(at: i)
-            }
+        if let index = miniPlayerHandlers.firstIndex(where: { ObjectIdentifier($0) == ObjectIdentifier(handler) }) {
+            miniPlayerHandlers.remove(at: index)
         }
         handler.resetMiniPlayerContainer()
     }
@@ -398,7 +431,6 @@ final class AudioPlayerManager: NSObject, AudioPlayerHandlerProtocol {
         miniPlayerHandlers.last?.presentMiniPlayer(viewController, height: miniPlayerHeight)
     }
     
-    @MainActor
     func showMiniPlayer() {
         guard let miniPlayerRouter, let current = miniPlayerHandlers.last else { return }
         if current.containsMiniPlayerInstance() {
@@ -436,13 +468,11 @@ final class AudioPlayerManager: NSObject, AudioPlayerHandlerProtocol {
         player?.resetCurrentItem()
     }
     
-    @MainActor
     private func isFolderSDKLogoutRequired() -> Bool {
         guard let miniPlayerRouter else { return false }
         return miniPlayerRouter.isFolderSDKLogoutRequired()
     }
     
-    @MainActor
     private func folderSDKLogoutIfNeeded() {
         if isFolderSDKLogoutRequired() {
             if nodeInfoUseCase == nil {

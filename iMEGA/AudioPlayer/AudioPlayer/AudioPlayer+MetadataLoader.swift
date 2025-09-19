@@ -10,7 +10,7 @@ extension AudioPlayer {
 
     func preloadNextTracksMetadata() {
         let itemsToBePreloaded = tracks.filter { !$0.loadedMetadata }
-        let completion: @Sendable (AudioPlayerItem) -> Void = { [weak self] item in
+        let completion: @MainActor @Sendable (AudioPlayerItem) -> Void = { [weak self] item in
             self?.notifyMetadataLoaded(for: item)
         }
         
@@ -19,7 +19,7 @@ extension AudioPlayer {
             await itemsToBePreloaded.taskGroup(maxConcurrentTasks: 3) {
                 do {
                     try await $0.loadMetadata()
-                    completion($0)
+                    await completion($0)
                 } catch {
                     MEGALogError("[AudioPlayer] Metadata Loader error: \(error.localizedDescription)")
                 }
@@ -34,7 +34,6 @@ extension AudioPlayer {
         notifyAboutToReload(item: item)
     }
     
-    @MainActor
     func loadACurrentItemArtworkIfNeeded() async {
         guard let currentItem = currentItem(), currentItem.artwork == nil else { return }
         let asset = currentItem.asset
