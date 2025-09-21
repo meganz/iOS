@@ -26,25 +26,56 @@ class ErrorsMarkdownGenerator
     end
 
     private def fetch_all_failures(json_path)
-      failed_tests = []
+      threshold = 21
+      failure_counts = Hash.new(0) 
+      all_failures = []
+      parsed_data = nil
 
-      json_data = File.read(json_path)
-      parsed_data = JSON.parse(json_data)
+      begin
+        json_data = File.read(json_path)
+        if json_data.nil? || json_data.strip.empty?
+          puts "Warning: JSON file is empty: #{json_path}"
+          return all_failures
+        end
+
+        first_char = json_data.strip[0]
+        unless ['{', '['].include?(first_char)
+          puts "Warning: File doesn't appear to contain valid JSON (starts with '#{first_char}'): #{json_path}"
+          puts "First 100 characters: #{json_data[0..99]}"
+          return all_failures
+        end
+
+        parsed_data = JSON.parse(json_data)
+      rescue JSON::ParserError => e
+        puts "Error parsing JSON file #{json_path}: #{e.message}"
+        return all_failures
+      rescue Errno::ENOENT
+        puts "Error: JSON file not found: #{json_path}"
+        return all_failures
+      rescue => e
+        puts "Unexpected error reading JSON file #{json_path}: #{e.message}"
+        return all_failures
+      end
 
       actions = parsed_data.dig("actions", "_values")
-      return failed_tests unless actions
+      return all_failures unless actions
 
       actions.each do |action|
         test_failures = action.dig("actionResult", "issues", "testFailureSummaries", "_values")
         next unless test_failures
 
         test_failures.each do |failure|
+          test_case_name = failure.dig("testCaseName", "_value")
+          next unless test_case_name
+
+          failure_counts[test_case_name] += 1
+
           failureHash = {}
-          failureHash[:testcase] = failure.dig("testCaseName", "_value")
-          failureHash[:reason] = failure.dig("message", "_value").gsub("\n", "")
+          failureHash[:testcase] = test_case_name
+          failureHash[:reason] = failure.dig("message", "_value")&.gsub("\n", "") || ""
 
           url = failure.dig("documentLocationInCreatingWorkspace", "url", "_value")
-          url_info = extract_url_params(url)
+          url_info = extract_url_params(url) if url
 
           if url && url_info
             failureHash[:details] = "#{url_info[:file_name]} (#{url_info[:starting_line_number]} - #{url_info[:ending_line_number]})"
@@ -52,11 +83,17 @@ class ErrorsMarkdownGenerator
             failureHash[:details] = ""
           end
 
-          failed_tests << failureHash unless failureHash.empty?
+          all_failures << failureHash
         end
       end
 
-      failed_tests
+      test_cases_failure_with_threshold = failure_counts.select { |_, count| count >= threshold }.keys
+
+      failed_tests = all_failures.select do |failure|
+        test_cases_failure_with_threshold.include?(failure[:testcase])
+      end
+
+      failed_tests.uniq { |failure| failure[:testcase] }
     end
 
     def extract_url_params(url)

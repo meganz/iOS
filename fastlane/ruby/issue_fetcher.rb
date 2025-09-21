@@ -3,9 +3,34 @@
 def fetch_all_issues(json_path, issue_type)
     issues = []
     issue_key = issue_type == :warning ? "warningSummaries" : "errorSummaries"
-  
-    json_data = File.read(json_path)
-    parsed_data = JSON.parse(json_data)
+    parsed_data = nil
+
+    begin
+      json_data = File.read(json_path)
+      if json_data.nil? || json_data.strip.empty?
+        puts "Warning: JSON file is empty: #{json_path}"
+        return issues
+      end
+
+      first_char = json_data.strip[0]
+      unless ['{', '['].include?(first_char)
+        puts "Warning: File doesn't appear to contain valid JSON (starts with '#{first_char}'): #{json_path}"
+        puts "First 100 characters: #{json_data[0..99]}"
+        return issues
+      end
+
+      parsed_data = JSON.parse(json_data)
+    rescue JSON::ParserError => e
+      puts "Error parsing JSON file #{json_path}: #{e.message}"
+      return issues
+    rescue Errno::ENOENT
+      puts "Error: JSON file not found: #{json_path}"
+      return issues
+    rescue => e
+      puts "Unexpected error reading JSON file #{json_path}: #{e.message}"
+      return issues
+    end
+
     issues_list = parsed_data.dig("issues", issue_key, "_values")
   
     unless issues_list.nil?
