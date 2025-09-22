@@ -252,6 +252,10 @@ extension MainTabBarController {
         DeepLinkRouter(appNavigator: cuSettingsRouter).navigate()
     }
     
+    @objc func addMEGAGlobalDelegate() {
+        MEGASdk.shared.add(self)
+    }
+    
     @objc func handleApplicationWillEnterForeground() {
         guard let navController = selectedViewController as? MEGANavigationController,
               navController.viewControllers.last as? (any BottomOverlayPresenterProtocol) != nil else { return }
@@ -294,5 +298,10 @@ extension MainTabBarController: MEGAGlobalDelegate {
                 requestStatusProgressWindowManager.hideProgressView()
             }
         }
+    }
+    
+    public func onNodesUpdate(_ api: MEGASdk, nodeList: MEGANodeList?) {
+        guard !isNavigationRevampEnabled, let nodeList else { return }
+        updateSharedItemsTabBadgeIfNeeded(nodeList)
     }
 }
