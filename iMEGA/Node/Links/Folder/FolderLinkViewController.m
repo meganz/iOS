@@ -306,6 +306,7 @@
 
 - (void)addSearchBar {
     self.navigationItem.searchController = self.searchController;
+    self.navigationItem.hidesSearchBarWhenScrolling = NO;
 }
 
 - (void)hideSearchBarIfNotActive {
