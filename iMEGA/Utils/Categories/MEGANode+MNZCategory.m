@@ -722,6 +722,7 @@
                                                @"tif":@"general.filetype.tif",
                                                @"tiff":@"general.filetype.tiff",
                                                @"torrent":@"Torrent",
+                                               @"ts":@"general.filetype.ts",
                                                @"ttf":@"general.filetype.ttf",
                                                @"txt":@"general.filetype.textDocument",
                                                @"vcf":@"vCard",

@@ -33,6 +33,7 @@ private let fileTypeImageResources: [String: MEGAAssetsFileType] = [
     "mpeg": .filetypeVideo,
     "mpg": .filetypeVideo,
     "ogv": .filetypeVideo,
+    "ts": .filetypeVideo,
     "vob": .filetypeVideo,
     "webm": .filetypeVideo,
     "wmv": .filetypeVideo,
