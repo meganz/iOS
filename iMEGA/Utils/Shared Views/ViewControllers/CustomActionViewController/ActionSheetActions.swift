@@ -29,14 +29,17 @@ class BaseAction: NSObject {
     
     override func isEqual(_ object: Any?) -> Bool {
         guard let otherObject = object as? BaseAction else { return false }
-        return title == otherObject.title
-        && detail == otherObject.detail
-        && accessoryView == otherObject.accessoryView
-        && image == otherObject.image
-        && style == otherObject.style
-        && enabled == otherObject.enabled
-        && syncIconAndTextColor == otherObject.syncIconAndTextColor
-        && showNewFeatureBadge == otherObject.showNewFeatureBadge
+
+        guard title == otherObject.title else { return false }
+        guard detail == otherObject.detail else { return false }
+        guard accessoryView == otherObject.accessoryView else { return false }
+        guard image == otherObject.image else { return false }
+        guard style == otherObject.style else { return false }
+        guard enabled == otherObject.enabled else { return false }
+        guard syncIconAndTextColor == otherObject.syncIconAndTextColor else { return false }
+        guard showNewFeatureBadge == otherObject.showNewFeatureBadge else { return false }
+
+        return true
     }
 }
 
