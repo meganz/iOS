@@ -2,7 +2,7 @@ import MEGADomain
 import MEGAPermissions
 
 @MainActor
-protocol SaveToPhotosCoordinatorProtocol {
+protocol SaveToPhotosCoordinatorProtocol: AnyObject {
     func saveToPhotos(nodes: [NodeEntity], onComplete: (() -> Void)?)
     func saveToPhotos(fileLink: FileLinkEntity, onComplete: (() -> Void)?)
     func saveToPhotosChatNode(handle: HandleEntity, messageId: HandleEntity, chatId: HandleEntity, onComplete: (() -> Void)?)
@@ -27,7 +27,7 @@ extension SaveToPhotosCoordinatorProtocol {
 
 @MainActor
 final class SaveToPhotosViewModel {
-    private let coordinator: any SaveToPhotosCoordinatorProtocol
+    private weak var coordinator: (any SaveToPhotosCoordinatorProtocol)?
     private let overDiskQuotaChecker: any OverDiskQuotaChecking
     private let devicePermissionsHandling: any DevicePermissionsHandling
     private let saveMediaToPhotosUseCase: any SaveMediaToPhotosUseCaseProtocol
@@ -66,11 +66,11 @@ final class SaveToPhotosViewModel {
     private func performSaveToPhotos(_ saveOperation: @escaping () async throws -> Void) async {
         guard !overDiskQuotaChecker.showOverDiskQuotaIfNeeded() else { return }
         guard await devicePermissionsHandling.requestPhotoLibraryAccessPermissions() else {
-            coordinator.showPhotoPermissionAlert()
-            MEGALogError("[SaveToPhotosViewModel] PhotoLibraryAccessPermissions not granted")
+            coordinator?.showPhotoPermissionAlert()
+            MEGALogError("[\(type(of: self))] PhotoLibraryAccessPermissions not granted")
             return
         }
-        coordinator.showProgress()
+        coordinator?.showProgress()
         
         do {
             try await saveOperation()
@@ -79,7 +79,8 @@ final class SaveToPhotosViewModel {
                   errorEntity != .cancelled  else {
                 return
             }
-            coordinator.showError(error)
+            MEGALogError("[\(type(of: self))] failed to save photos: \(error)")
+            coordinator?.showError(error)
         }
     }
 }
