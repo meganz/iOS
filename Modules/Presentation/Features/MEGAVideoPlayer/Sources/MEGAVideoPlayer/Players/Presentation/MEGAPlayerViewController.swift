@@ -60,12 +60,14 @@ public final class MEGAPlayerViewController: UIViewController {
         let overlayView = UIHostingConfiguration { [viewModel] in
             let player = viewModel.player
             let dismissAction = viewModel.dismissAction
+            let moreAction = viewModel.moreAction
             PlayerOverlayView(
                 viewModel: PlayerOverlayViewModel(
                     player: player,
                     devicePermissionsHandler: DevicePermissionsHandler.makeHandler(),
                     saveSnapshotUseCase: SaveSnapshotUseCase(),
                     didTapBackAction: dismissAction ?? {},
+                    didTapMoreAction: moreAction ?? {},
                     didTapRotateAction: { [weak self] in
                         self?.toggleOrientation()
                     },

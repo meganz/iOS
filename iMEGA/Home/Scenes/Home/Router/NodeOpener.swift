@@ -53,7 +53,31 @@ final class NodeOpener {
                                                     sender: sender)
         navigationController.present(nodeActionVC, animated: true, completion: nil)
     }
-    
+
+    func openNodeActions(
+        _ nodeHandle: HandleEntity,
+        presentingController: UIViewController,
+        sender: Any
+    ) {
+        guard let node = sdk.node(forHandle: nodeHandle) else { return }
+
+        let backupsUC = BackupsUseCase(backupsRepository: BackupsRepository.newRepo, nodeRepository: NodeRepository.newRepo)
+        let isBackupNode = backupsUC.isBackupNode(node.toNodeEntity())
+        let delegate = NodeActionViewControllerGenericDelegate(
+            viewController: presentingController,
+            moveToRubbishBinViewModel: MoveToRubbishBinViewModel(presenter: presentingController)
+        )
+        let nodeActionVC = NodeActionViewController(
+            node: node,
+            delegate: delegate,
+            displayMode: .cloudDrive,
+            isIncoming: false,
+            isBackupNode: isBackupNode,
+            sender: sender
+        )
+        presentingController.present(nodeActionVC, animated: true, completion: nil)
+    }
+
     // MARK: - Private
     // CRITICAL SECTION OF THE CODE
     // allNodes has to have all siblings of the node
