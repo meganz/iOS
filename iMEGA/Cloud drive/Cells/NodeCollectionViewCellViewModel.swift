@@ -59,7 +59,8 @@ import MEGASwift
     }
     
     @objc func isNodeVideo() -> Bool {
-        node?.name.fileExtensionGroup.isVideo ?? false
+        guard let node, node.isFile else { return false }
+        return node.name.fileExtensionGroup.isVideo
     }
     
     @objc func isNodeVideo(name: String) -> Bool {

@@ -292,6 +292,27 @@ final class NodeCollectionViewCellViewModelTests: XCTestCase {
         
         XCTAssertEqual(result?.hashValue, imageData.hashValue)
     }
+
+    @MainActor
+    func testIsNodeVideo_whenFolder_shouldReturnFalse() {
+        let node = NodeEntity(nodeType: .folder, name: "mkv", handle: 1, isFolder: true)
+        let sut = sut(node: node)
+        XCTAssertFalse(sut.isNodeVideo())
+    }
+
+    @MainActor
+    func testIsNodeVideo_whenTxtFile_shouldReturnFalse() {
+        let node = NodeEntity(nodeType: .file, name: "test.txt", handle: 1, isFile: true)
+        let sut = sut(node: node)
+        XCTAssertFalse(sut.isNodeVideo())
+    }
+
+    @MainActor
+    func testIsNodeVideo_whenVideoFile_shouldReturnTrue() {
+        let node = NodeEntity(nodeType: .file, name: "test.mkv", handle: 1, isFile: true)
+        let sut = sut(node: node)
+        XCTAssertTrue(sut.isNodeVideo())
+    }
 }
 
 extension NodeCollectionViewCellViewModelTests {
