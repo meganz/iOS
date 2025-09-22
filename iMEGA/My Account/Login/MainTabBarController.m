@@ -25,7 +25,7 @@
     [super viewDidLoad];
     [self loadTabViewControllers];
     [MEGAChatSdk.shared addChatDelegate:self];
-    [self observeNodeUpdatesIfNeeded];
+    [self addMEGAGlobalDelegate];
     [self setupBottomOverlayIfNeeded];
 }
 
@@ -176,12 +176,6 @@
     if (item.changes == MEGAChatListItemChangeTypeUnreadCount) {
         [self debounce:@selector(updateBadgeValueForChats) delay:0.1];
     }
-}
-
-#pragma mark - MEGAGlobalDelegate
-
-- (void)onNodesUpdate:(MEGASdk *)api nodeList:(MEGANodeList *)nodeList {
-    [self updateSharedItemsTabBadgeIfNeeded:nodeList];
 }
 
 @end
