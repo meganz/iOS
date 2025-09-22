@@ -17,6 +17,7 @@ struct PlayerOverlayViewModelTests {
         devicePermissionsHandler: some DevicePermissionsHandling = MockDevicePermissionHandler(),
         saveSnapshotUseCase: some SaveSnapshotUseCaseProtocol = MockSaveSnapshotUseCase(),
         didTapBackAction: @escaping () -> Void = {},
+        didTapMoreAction: @escaping () -> Void = {},
         didTapRotateAction: @escaping () -> Void = {},
         didTapPictureInPictureAction: @escaping () -> Void = {}
     ) -> PlayerOverlayViewModel {
@@ -25,6 +26,7 @@ struct PlayerOverlayViewModelTests {
             devicePermissionsHandler: devicePermissionsHandler,
             saveSnapshotUseCase: saveSnapshotUseCase,
             didTapBackAction: didTapBackAction,
+            didTapMoreAction: didTapMoreAction,
             didTapRotateAction: didTapRotateAction,
             didTapPictureInPictureAction: didTapPictureInPictureAction
         )

@@ -82,40 +82,50 @@ extension MEGAPhotoBrowserViewController {
                 Helper.cannotPlayContentDuringACallAlert()
                 return
             }
-            
-            guard let controller = node.mnz_viewControllerForNode(
-                inFolderLink: displayMode == .nodeInsideFolderLink,
-                fileLink: nil) else {
-                let alertController = UIAlertController(
-                    title: Strings.Localizable.unknownError,
-                    message: Strings.Localizable.somethingWentWrong,
-                    preferredStyle: .alert
-                )
-                let cancelAction = UIAlertAction(
-                    title: Strings.Localizable.ok,
-                    style: .cancel
-                )
-                alertController.addAction(cancelAction)
-                self.present(alertController, animated: true)
-                
-                let error = NSError.init(
-                    domain: "nz.mega.megaphotobrowserviewcontroller",
-                    code: 0,
-                    userInfo: [NSLocalizedDescriptionKey: "Unexpected error when open video from node: \(node.toNodeEntity())"]
-                )
-                Crashlytics.crashlytics().record(error: error)
-                return
-            }
 
             if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .videoPlayerRevamp) {
-                let playerVC = MEGAPlayerViewController(
-                    viewModel: MEGAPlayerViewModel(
-                        player: MEGAAVPlayer.liveValue(node: node)
-                    )
+                let playerViewModel = MEGAPlayerViewModel(
+                    player: MEGAAVPlayer.liveValue(node: node)
                 )
+                let playerVC = MEGAPlayerViewController(
+                    viewModel: playerViewModel
+                )
+                playerViewModel.moreAction = { [weak playerVC] in
+                    guard let playerVC else { return }
+                    NodeOpener(navigationController: nil)
+                        .openNodeActions(
+                            node.handle,
+                            presentingController: playerVC,
+                            sender: playerVC
+                        )
+                }
                 playerVC.modalPresentationStyle = .overFullScreen
                 present(playerVC, animated: true)
             } else {
+                guard let controller = node.mnz_viewControllerForNode(
+                    inFolderLink: displayMode == .nodeInsideFolderLink,
+                    fileLink: nil) else {
+                    let alertController = UIAlertController(
+                        title: Strings.Localizable.unknownError,
+                        message: Strings.Localizable.somethingWentWrong,
+                        preferredStyle: .alert
+                    )
+                    let cancelAction = UIAlertAction(
+                        title: Strings.Localizable.ok,
+                        style: .cancel
+                    )
+                    alertController.addAction(cancelAction)
+                    present(alertController, animated: true)
+
+                    let error = NSError(
+                        domain: "nz.mega.megaphotobrowserviewcontroller",
+                        code: 0,
+                        userInfo: [NSLocalizedDescriptionKey: "Unexpected error when open video from node: \(node.toNodeEntity())"]
+                    )
+                    Crashlytics.crashlytics().record(error: error)
+                    return
+                }
+
                 controller.modalPresentationStyle = .overFullScreen
                 present(controller, animated: true)
             }

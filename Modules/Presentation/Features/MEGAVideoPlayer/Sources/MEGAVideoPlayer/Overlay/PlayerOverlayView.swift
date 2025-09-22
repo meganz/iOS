@@ -645,6 +645,7 @@ extension PlayerOverlayView {
                 devicePermissionsHandler: DevicePermissionsHandler.makeHandler(),
                 saveSnapshotUseCase: SaveSnapshotUseCase(),
                 didTapBackAction: {},
+                didTapMoreAction: {},
                 didTapRotateAction: {},
                 didTapPictureInPictureAction: {}
             )

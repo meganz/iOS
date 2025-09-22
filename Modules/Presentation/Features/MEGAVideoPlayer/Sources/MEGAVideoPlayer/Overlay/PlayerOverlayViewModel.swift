@@ -35,6 +35,7 @@ public final class PlayerOverlayViewModel: ObservableObject {
     private let devicePermissionsHandler: any DevicePermissionsHandling
     private let saveSnapshotUseCase: any SaveSnapshotUseCaseProtocol
     private let didTapBackAction: () -> Void
+    private let didTapMoreAction: () -> Void
     private let didTapRotateAction: () -> Void
     private let didTapPictureInPictureAction: () -> Void
 
@@ -43,6 +44,7 @@ public final class PlayerOverlayViewModel: ObservableObject {
         devicePermissionsHandler: some DevicePermissionsHandling,
         saveSnapshotUseCase: some SaveSnapshotUseCaseProtocol,
         didTapBackAction: @escaping () -> Void,
+        didTapMoreAction: @escaping () -> Void,
         didTapRotateAction: @escaping () -> Void = {},
         didTapPictureInPictureAction: @escaping () -> Void = {}
     ) {
@@ -50,6 +52,7 @@ public final class PlayerOverlayViewModel: ObservableObject {
         self.devicePermissionsHandler = devicePermissionsHandler
         self.saveSnapshotUseCase = saveSnapshotUseCase
         self.didTapBackAction = didTapBackAction
+        self.didTapMoreAction = didTapMoreAction
         self.didTapRotateAction = didTapRotateAction
         self.didTapPictureInPictureAction = didTapPictureInPictureAction
     }
@@ -101,7 +104,7 @@ extension PlayerOverlayViewModel {
     }
 
     func didTapMore() {
-        // Placeholder for future functionality
+        didTapMoreAction()
     }
 
     var title: String {

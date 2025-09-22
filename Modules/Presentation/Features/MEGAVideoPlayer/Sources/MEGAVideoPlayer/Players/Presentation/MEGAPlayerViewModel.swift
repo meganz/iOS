@@ -2,6 +2,7 @@
 public final class MEGAPlayerViewModel {
     let player: any VideoPlayerProtocol
     var dismissAction: (() -> Void)?
+    public var moreAction: (() -> Void)?
     let reportingManager: MEGAPlaybackReportingManager
 
     public init(
