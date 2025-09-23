@@ -42,6 +42,7 @@ class MeetingParticipantTableViewCell: UITableViewCell, ViewType {
         contextMenuButton.setImage(MEGAAssets.UIImage.image(named: "moreList"), for: .normal)
         avatarImageView.image = MEGAAssets.UIImage.image(named: "icon-contacts")
         raisedHandImageView.image = MEGAAssets.UIImage.image(named: "raisedHand")
+        moderatorTextLabel.isHidden = true
     }
     
     var viewModel: MeetingParticipantViewModel? {
@@ -51,6 +52,11 @@ class MeetingParticipantTableViewCell: UITableViewCell, ViewType {
             }
             viewModel?.dispatch(.onViewReady)
         }
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        moderatorTextLabel.isHidden = true
     }
     
     @MainActor
