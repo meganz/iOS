@@ -380,7 +380,10 @@ class NodeBrowserViewModelTests: XCTestCase {
     @MainActor
     func testUpdateViewModeIfNeeded_whenViewModeIsNotChanged_shouldReturnOriginalValue() async {
         let harness = Harness(defaultViewMode: .list, node: NodeEntity(handle: 100))
-        await assertViewMode(with: harness, originalViewMode: .list, updatedViewMode: .list)
+        let originalViewMode = harness.sut.viewMode
+        harness.cloudDriveViewModeMonitoringService.send(event: .list)
+        try? await Task.sleep(nanoseconds: 100_000_000)
+        XCTAssertEqual(harness.sut.viewMode, originalViewMode)
     }
 
     @MainActor
