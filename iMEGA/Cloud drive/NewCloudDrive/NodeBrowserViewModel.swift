@@ -500,6 +500,7 @@ class NodeBrowserViewModel: ObservableObject {
     }
     
     func changeViewMode(_ viewMode: ViewModePreferenceEntity) {
+        guard viewMode != self.viewMode else { return }
         self.viewMode = viewMode
     }
 
