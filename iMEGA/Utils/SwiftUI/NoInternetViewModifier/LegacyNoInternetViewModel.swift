@@ -1,5 +1,6 @@
 import Foundation
 import MEGADomain
+import MEGASwift
 
 final class LegacyNoInternetViewModel: ObservableObject {
     private let networkMonitorUseCase: any NetworkMonitorUseCaseProtocol
@@ -15,16 +16,15 @@ final class LegacyNoInternetViewModel: ObservableObject {
         self.networkMonitorUseCase = networkMonitorUseCase
         self.networkConnectionStateChanged = networkConnectionStateChanged
     }
-
+    
     @MainActor
     func onTask() async {
-        self.isConnected = networkMonitorUseCase.isConnected()
         await monitorNetworkChanges()
     }
 
     @MainActor
     private func monitorNetworkChanges() async {
-        for await isConnected in networkMonitorUseCase.connectionSequence.removeDuplicates() {
+        for await isConnected in networkMonitorUseCase.connectionSequence.prepend(networkMonitorUseCase.isConnected()).removeDuplicates() {
             networkConnectionStateChanged?(isConnected)
             self.isConnected = isConnected
         }
