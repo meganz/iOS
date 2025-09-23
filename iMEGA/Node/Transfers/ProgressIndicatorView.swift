@@ -20,7 +20,6 @@ final class ProgressIndicatorView: UIView {
     )
     private var stateBadge: UIImageView = UIImageView()
     
-    private var transferStatus: Int?
     private var transfers = [TransferEntity]()
     private var queuedUploadTransfers = [String]()
     private var transfersPaused: Bool {
@@ -79,28 +78,6 @@ final class ProgressIndicatorView: UIView {
         }
     }
     
-    @objc func animate(progress: CGFloat, duration: TimeInterval) {
-        guard let progressLayer else {
-            return
-        }
-        progressLayer.removeAnimation(forKey: "strokeEnd")
-        
-        CATransaction.begin()
-        let animation = CABasicAnimation(keyPath: "strokeEnd")
-        animation.duration = duration
-        animation.fromValue = self.progress
-        animation.fillMode = .both // keep to value after finishing
-        animation.isRemovedOnCompletion = false // don't remove after finishing
-        animation.toValue = progress
-        CATransaction.setCompletionBlock {
-            self.progress = progress
-            progressLayer.removeAnimation(forKey: "strokeEnd")
-            
-        }
-        progressLayer.add(animation, forKey: "strokeEnd")
-        CATransaction.commit()
-    }
-    
     // MARK: - Private
     
     private func updateProgress() {
@@ -110,12 +87,6 @@ final class ProgressIndicatorView: UIView {
             result.total += transfer.totalBytes
         }
         progress = CGFloat(totals.transferred) / CGFloat(totals.total)
-    }
-    
-    private func filterUserManualDownloads(_ transfers: [MEGATransfer]) -> [MEGATransfer] {
-        transfers.filter {
-            $0.path?.hasPrefix(FileSystemRepository.sharedRepo.documentsDirectory().path) ?? false
-        }
     }
     
     @objc func showWidgetIfNeeded() {
