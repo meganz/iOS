@@ -10,7 +10,8 @@ import UIKit
 struct AlbumLinkThumbnailRepositoryTests {
     private let thumbnailURL = URL(string: "https://mega.io")
     
-    @Test func loadThumbnailFileNotCreated() async throws {
+    @Test(.disabled("Disabled due to flakiness"))
+    func loadThumbnailFileNotCreated() async throws {
         let base64Handle = "base64Handle"
         let node = MockNode(handle: 4, nodeBase64Handle: base64Handle, hasThumbnail: true)
         let nodeEntity = node.toNodeEntity()

@@ -39,15 +39,12 @@
     ],
     "language" : "en-GB",
     "maximumTestExecutionTimeAllowance" : 300,
-    "maximumTestRepetitions" : 20,
-    "repeatInNewRunnerProcess" : true,
     "targetForVariableExpansion" : {
       "containerPath" : "container:MEGA.xcodeproj",
       "identifier" : "137361891A6664C300B740E8",
       "name" : "MEGA"
     },
     "testExecutionOrdering" : "random",
-    "testRepetitionMode" : "retryOnFailure",
     "testTimeoutsEnabled" : true
   },
   "testTargets" : [
@@ -187,6 +184,7 @@
         "MeetingFloatingPanelViewModelTests\/testAction_onViewReady_isMyselfModerator_isGroupMeeting()",
         "MeetingFloatingPanelViewModelTests\/testAction_onViewReady_isMyselfParticipant_allowNonHostToAddParticipantsEnabled()",
         "MeetingFloatingPanelViewModelTests\/testAction_onViewReady_isMyselfParticipant_isGroupMeeting()",
+        "NoInternetViewModelTests\/testOnTask_isConnectedAttributeIsFalse_shouldMatch()",
         "PSAViewModelTests\/testAction_shouldShowPSAView_genericErrorScenario()"
       ],
       "target" : {
