@@ -13,7 +13,7 @@ public struct TransferRepository: TransferRepositoryProtocol {
         MEGAUpdateHandlerManager
             .shared
             .transferFinishUpdates
-            .compactMap { try? $0.get() }
+            .compactMap { $0.isSuccess ? $0.transferEntity : nil }
             .eraseToAnyAsyncSequence()
     }
     

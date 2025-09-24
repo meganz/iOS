@@ -17,7 +17,10 @@ final class MEGAUpdateHandler: NSObject, Sendable {
     typealias RequestTemporaryErrorHandler = @Sendable (RequestResponseEntity) -> Void
     typealias RequestFinishHandler = @Sendable (RequestResponseEntity) -> Void
     
-    typealias TransferFinishHandler = @Sendable (Result<TransferEntity, ErrorEntity>) -> Void
+    typealias TransferStartHandler = @Sendable (TransferEntity) -> Void
+    typealias TransferUpdateHandler = @Sendable (TransferEntity) -> Void
+    typealias TransferTemporaryErrorHandler = @Sendable (TransferResponseEntity) -> Void
+    typealias TransferFinishHandler = @Sendable (TransferResponseEntity) -> Void
     
     let onNodesUpdate: NodesUpdateHandler?
     let onUsersUpdate: UsersUpdateHandler?
@@ -33,6 +36,9 @@ final class MEGAUpdateHandler: NSObject, Sendable {
     let onRequestTemporaryError: RequestTemporaryErrorHandler?
     let onRequestFinish: RequestFinishHandler?
     
+    let onTransferStart: TransferStartHandler?
+    let onTransferUpdate: TransferUpdateHandler?
+    let onTransferTemporaryError: TransferTemporaryErrorHandler?
     let onTransferFinish: TransferFinishHandler?
     
     init(
@@ -48,6 +54,9 @@ final class MEGAUpdateHandler: NSObject, Sendable {
         onRequestUpdate: RequestUpdateHandler? = nil,
         onRequestTemporaryError: RequestTemporaryErrorHandler? = nil,
         onRequestFinish: RequestFinishHandler? = nil,
+        onTransferStart: TransferStartHandler? = nil,
+        onTransferUpdate: TransferUpdateHandler? = nil,
+        onTransferTemporaryError: TransferTemporaryErrorHandler? = nil,
         onTransferFinish: TransferFinishHandler? = nil
     ) {
         self.onNodesUpdate = onNodesUpdate
@@ -62,6 +71,9 @@ final class MEGAUpdateHandler: NSObject, Sendable {
         self.onRequestUpdate = onRequestUpdate
         self.onRequestTemporaryError = onRequestTemporaryError
         self.onRequestFinish = onRequestFinish
+        self.onTransferStart = onTransferStart
+        self.onTransferUpdate = onTransferUpdate
+        self.onTransferTemporaryError = onTransferTemporaryError
         self.onTransferFinish = onTransferFinish
     }
 }

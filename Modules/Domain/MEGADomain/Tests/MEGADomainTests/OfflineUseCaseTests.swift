@@ -102,10 +102,10 @@ struct OfflineUseCaseTests {
     @Suite("Node Download Completion Updates")
     struct NodeDownloadCompletionUpdates {
         @Test func shouldYieldUpdatesDownloadOnly() async throws {
-            let updates: [Result<TransferEntity, ErrorEntity>] = [
-                .success(TransferEntity(type: .download)),
-                .success(TransferEntity(type: .upload)),
-                .failure(ErrorEntity(type: .badArguments))
+            let updates: [TransferResponseEntity] = [
+                TransferResponseEntity(transferEntity: TransferEntity(type: .download), error: ErrorEntity(type: .ok)),
+                TransferResponseEntity(transferEntity: TransferEntity(type: .upload), error: ErrorEntity(type: .ok)),
+                TransferResponseEntity(transferEntity: TransferEntity(type: .download), error: ErrorEntity(type: .badArguments))
             ]
             
             let nodeTransferRepository = MockNodeTransferRepository(transferFinishUpdates: updates.async.eraseToAnyAsyncSequence())

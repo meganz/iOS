@@ -14,7 +14,7 @@ public struct NodeDownloadUpdatesUseCase<T: NodeTransferRepositoryProtocol>: Nod
     public func startMonitoringDownloadCompletion(for nodes: [NodeEntity]) -> AnyAsyncSequence<NodeEntity> {
         repo
             .transferFinishUpdates
-            .compactMap { try? $0.get() }
+            .compactMap { $0.isSuccess ? $0.transferEntity : nil }
             .filter { $0.type == .download && !$0.isStreamingTransfer}
             .compactMap { transfer in nodes.first(where: { node in node.handle == transfer.nodeHandle }) }
             .eraseToAnyAsyncSequence()

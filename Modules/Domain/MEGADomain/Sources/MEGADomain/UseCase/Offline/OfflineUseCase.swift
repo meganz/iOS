@@ -76,7 +76,7 @@ public struct OfflineUseCase: OfflineUseCaseProtocol {
     public var nodeDownloadCompletionUpdates: AnyAsyncSequence<Void> {
         nodeTransferRepository
             .transferFinishUpdates
-            .compactMap { try? $0.get() }
+            .compactMap { $0.isSuccess ? $0.transferEntity : nil }
             .filter { $0.type == .download }
             .map { _ in () }
             .eraseToAnyAsyncSequence()
