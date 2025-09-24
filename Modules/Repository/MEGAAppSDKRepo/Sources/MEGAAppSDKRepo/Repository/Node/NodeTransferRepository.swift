@@ -7,7 +7,19 @@ public struct NodeTransferRepository: NodeTransferRepositoryProtocol {
         NodeTransferRepository()
     }
     
-    public var transferFinishUpdates: AnyAsyncSequence<Result<TransferEntity, ErrorEntity>> {
+    public var transferStarUpdates: AnyAsyncSequence<TransferEntity> {
+        MEGAUpdateHandlerManager.shared.transferStarUpdates
+    }
+    
+    public var transferUpdates: AnyAsyncSequence<TransferEntity> {
+        MEGAUpdateHandlerManager.shared.transferUpdates
+    }
+    
+    public var transferTemporaryErrorUpdates: AnyAsyncSequence<TransferResponseEntity> {
+        MEGAUpdateHandlerManager.shared.transferTemporaryErrorUpdates
+    }
+    
+    public var transferFinishUpdates: AnyAsyncSequence<TransferResponseEntity> {
         MEGAUpdateHandlerManager.shared.transferFinishUpdates
     }
 }

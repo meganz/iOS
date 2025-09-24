@@ -129,7 +129,40 @@ extension MEGAUpdateHandlerManager {
     
     // MARK: - Transfer updates
     
-    var transferFinishUpdates: AnyAsyncSequence<Result<TransferEntity, ErrorEntity>> {
+    var transferStarUpdates: AnyAsyncSequence<TransferEntity> {
+        AsyncStream { continuation in
+            let handler = MEGAUpdateHandler(onTransferStart: { continuation.yield($0) })
+            
+            add(handler: handler)
+            
+            continuation.onTermination = { [weak self] _ in self?.remove(handler: handler) }
+        }
+        .eraseToAnyAsyncSequence()
+    }
+    
+    var transferUpdates: AnyAsyncSequence<TransferEntity> {
+        AsyncStream { continuation in
+            let handler = MEGAUpdateHandler(onTransferUpdate: { continuation.yield($0) })
+            
+            add(handler: handler)
+            
+            continuation.onTermination = { [weak self] _ in self?.remove(handler: handler) }
+        }
+        .eraseToAnyAsyncSequence()
+    }
+    
+    var transferTemporaryErrorUpdates: AnyAsyncSequence<TransferResponseEntity> {
+        AsyncStream { continuation in
+            let handler = MEGAUpdateHandler(onTransferTemporaryError: { continuation.yield($0) })
+            
+            add(handler: handler)
+            
+            continuation.onTermination = { [weak self] _ in self?.remove(handler: handler) }
+        }
+        .eraseToAnyAsyncSequence()
+    }
+    
+    var transferFinishUpdates: AnyAsyncSequence<TransferResponseEntity> {
         AsyncStream { continuation in
             let handler = MEGAUpdateHandler(onTransferFinish: { continuation.yield($0) })
             
