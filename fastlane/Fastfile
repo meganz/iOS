@@ -300,7 +300,8 @@ platform :ios do
       xcargs: '-skipPackagePluginValidation',
       parallel_testing: true,
       concurrent_workers: 2,
-      skip_build: true
+      skip_build: true,
+      number_of_retries: 20
     )
   end
 
