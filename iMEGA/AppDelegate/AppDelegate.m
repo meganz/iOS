@@ -772,7 +772,7 @@
     
     UIViewController *onboardingVC = [self makeOnboardingViewController];
     UIView *overlayView = [UIScreen.mainScreen snapshotViewAfterScreenUpdates:NO];
-    [onboardingVC.view addSubview:overlayView];
+    [self.window addSubview:overlayView];
     self.window.rootViewController = onboardingVC;
     
     [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
