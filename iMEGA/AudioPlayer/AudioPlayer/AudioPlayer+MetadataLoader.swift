@@ -9,7 +9,11 @@ enum MetadataLoadError: Error {
 extension AudioPlayer {
 
     func preloadNextTracksMetadata() {
-        let itemsToBePreloaded = tracks.filter { !$0.loadedMetadata }
+        /// Only consider items already enqueued in the AVQueuePlayer here. Reading from `queuePlayer.items()` bounds the work to what’s actually staged for imminent playback,
+        /// avoiding iterating over the full `tracks` list (which could be large) and thus preventing unnecessary metadata-loading work and potential performance/memory pressure.
+        guard let queueItems = queuePlayer?.items() as? [AudioPlayerItem] else { return }
+        
+        let itemsToBePreloaded = queueItems.filter { !$0.loadedMetadata }
         let completion: @MainActor @Sendable (AudioPlayerItem) -> Void = { [weak self] item in
             self?.notifyMetadataLoaded(for: item)
         }

@@ -76,6 +76,10 @@ extension AudioPlayerObserversProtocol {
     func playerQueueItems() -> [AudioPlayerItem]?
     func playerPlaylistItems() -> [AudioPlayerItem]?
     func playerTracksContains(url: URL) -> Bool
+    /// Retrieves the upcoming playlist items from the player. We use it to know which tracks of the playlist we should show in the Playlist screen.
+    /// - Returns: An array of `AudioPlayerItem` representing the upcoming tracks in the playback queue. This mirrors the `upcomingPlaylist` property on the player,
+    ///   excluding the current item, and wraps around if looping is enabled.
+    func upcomingPlaylistItems() -> [AudioPlayerItem]
 }
 
 // MARK: - Audio Player Playback Functions

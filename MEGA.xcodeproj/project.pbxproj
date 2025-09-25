@@ -1269,6 +1269,8 @@
 		9412FF332D14B8D10059DB1E /* FolderContentStat.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6A01BA6289A5E9200B503FD /* FolderContentStat.swift */; };
 		941622362D6E311200A14516 /* AudioQueueLoaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941622352D6E311200A14516 /* AudioQueueLoaderTests.swift */; };
 		9418A7A22ACF84210014C01C /* MEGADesignToken in Frameworks */ = {isa = PBXBuildFile; productRef = 9418A7A12ACF84210014C01C /* MEGADesignToken */; };
+		9418AA172E7D710B009A91F5 /* AudioPlayerMoveDirectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9418AA162E7D710B009A91F5 /* AudioPlayerMoveDirectionTests.swift */; };
+		9418AA212E7DAB52009A91F5 /* AudioPlayerShuffleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9418AA202E7DAB52009A91F5 /* AudioPlayerShuffleTests.swift */; };
 		9418DB292A4EE5FB002B0077 /* MEGAPermissions in Frameworks */ = {isa = PBXBuildFile; productRef = 9418DB282A4EE5FB002B0077 /* MEGAPermissions */; };
 		941A019A2CB44F250057C99D /* DeepLinkingTestsSuite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941A01992CB44F250057C99D /* DeepLinkingTestsSuite.swift */; };
 		9422494228DB77A2009626E6 /* ContactLinkContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9422494128DB77A2009626E6 /* ContactLinkContentView.swift */; };
@@ -4033,6 +4035,8 @@
 		940F41362A9ED39200C2543F /* MEGAIntentDomain */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MEGAIntentDomain; sourceTree = "<group>"; };
 		941255512BED03C700058C0D /* CallKitCallControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallKitCallControllerTests.swift; sourceTree = "<group>"; };
 		941622352D6E311200A14516 /* AudioQueueLoaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioQueueLoaderTests.swift; sourceTree = "<group>"; };
+		9418AA162E7D710B009A91F5 /* AudioPlayerMoveDirectionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerMoveDirectionTests.swift; sourceTree = "<group>"; };
+		9418AA202E7DAB52009A91F5 /* AudioPlayerShuffleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerShuffleTests.swift; sourceTree = "<group>"; };
 		9418DB272A4EE5E7002B0077 /* MEGAPermissions */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MEGAPermissions; sourceTree = "<group>"; };
 		9419B6C51F20DC5700FEBE31 /* CoreSpotlight.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreSpotlight.framework; path = System/Library/Frameworks/CoreSpotlight.framework; sourceTree = SDKROOT; };
 		941A01992CB44F250057C99D /* DeepLinkingTestsSuite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepLinkingTestsSuite.swift; sourceTree = "<group>"; };
@@ -12725,7 +12729,9 @@
 				24F231562A5FB313000BFBBA /* Scenes */,
 				C45A2E3625D2F7F100915A83 /* UseCases */,
 				C45A2DF325D2B93B00915A83 /* ViewModel */,
+				9418AA162E7D710B009A91F5 /* AudioPlayerMoveDirectionTests.swift */,
 				C452B66325CD50260073B22C /* AudioPlayerPlaybackTests.swift */,
+				9418AA202E7DAB52009A91F5 /* AudioPlayerShuffleTests.swift */,
 				941622352D6E311200A14516 /* AudioQueueLoaderTests.swift */,
 				24B6276E2A8F687E00AD588C /* NodeInfoRepositoryTests.swift */,
 			);
@@ -16167,8 +16173,10 @@
 				24A6ADD62A81E87D0035C7B0 /* AudioPlayerDefaultPlaylistShiftStrategyTests.swift in Sources */,
 				C47E7BDB25D1550200DB6FF5 /* AudioPlayerItem.swift in Sources */,
 				240D80FB2AB1A1DC00FBD2C4 /* AudioPlayerItemTests.swift in Sources */,
+				9418AA172E7D710B009A91F5 /* AudioPlayerMoveDirectionTests.swift in Sources */,
 				C452B66425CD50260073B22C /* AudioPlayerPlaybackTests.swift in Sources */,
 				24A6ADDC2A8222CE0035C7B0 /* AudioPlayerPlaylistShiftStrategyTestSpecs.swift in Sources */,
+				9418AA212E7DAB52009A91F5 /* AudioPlayerShuffleTests.swift in Sources */,
 				94A46F302E65C57E00BA9644 /* AudioPlayerToMiniPlayerTests.swift in Sources */,
 				24C577FB2AC187F600302849 /* AudioPlayerUseCaseTests.swift in Sources */,
 				C45A2E1925D2E00400915A83 /* AudioPlayerViewModelTests.swift in Sources */,

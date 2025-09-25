@@ -61,7 +61,10 @@ final class AudioPlaylistViewModel: ViewModelType {
     private func initScreen() {
         playerHandler.configurePlayer(listener: self)
         guard !playerHandler.isPlayerEmpty(), let currentItem = playerHandler.playerCurrentItem() else { return }
-        invokeCommand?(.reloadTracks(currentItem: currentItem, queue: playerHandler.playerQueueItems(), selectedIndexPaths: selectedIndexPaths()))
+        
+        /// Passing the current item and all upcoming tracks (everything after the current one). `upcomingPlaylistItems()` returns the slice of `tracks` following the current item so the playlist screen
+        /// shows the full remaining list, not just what's already enqueued in the AVQueuePlayer.
+        invokeCommand?(.reloadTracks(currentItem: currentItem, queue: playerHandler.upcomingPlaylistItems(), selectedIndexPaths: selectedIndexPaths()))
         invokeCommand?(.title(title: title))
     }
 
@@ -169,7 +172,7 @@ extension AudioPlaylistViewModel: AudioPlayerObserversProtocol {
         
         selectedItems = selectedItems?.filter { $0 != currentItem }
         
-        invokeCommand?(.reloadTracks(currentItem: currentItem, queue: playerHandler.playerQueueItems(), selectedIndexPaths: selectedIndexPaths()))
+        invokeCommand?(.reloadTracks(currentItem: currentItem, queue: playerHandler.upcomingPlaylistItems(), selectedIndexPaths: selectedIndexPaths()))
     }
 
     func audio(player: AVQueuePlayer, reload item: AudioPlayerItem?) {

@@ -22,4 +22,8 @@ extension AudioPlayerItem {
             )
         }
     }
+    
+    convenience init(url: URL, node: MEGANode? = nil) {
+        self.init(name: "", url: url, node: node)
+    }
 }

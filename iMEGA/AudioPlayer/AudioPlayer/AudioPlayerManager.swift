@@ -166,6 +166,11 @@ final class AudioPlayerManager: AudioPlayerHandlerProtocol {
         player?.shuffle(active)
     }
     
+    func upcomingPlaylistItems() -> [AudioPlayerItem] {
+        guard let player else { return [] }
+        return player.upcomingPlaylist
+    }
+    
     func goBackward() {
         player?.rewind(direction: .backward)
     }
