@@ -58,6 +58,7 @@ static const NSUInteger MIN_SECOND = 10; // Save only where the users were playi
 {
     if (self.isViewLoaded) {
         [self trackVideoPlaybackEndTime];
+        [self stopVideoMetricsTracking];
     }
 }
 

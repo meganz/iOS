@@ -329,6 +329,7 @@ extension MEGAAVViewController {
         player = AVPlayer(playerItem: playerItem)
         subscriptions.add(bindPlayerItemStatus(playerItem: playerItem))
         
+        setupVideoMetricsTracking()
         player?.play()
         subscriptions.add(bindPlayerTimeControlStatus())
     }
@@ -350,5 +351,22 @@ extension MEGAAVViewController {
             let audioSessionUseCase = AudioSessionUseCase(audioSessionRepository: AudioSessionRepository(audioSession: AVAudioSession.sharedInstance()))
             audioSessionUseCase.configureDefaultAudioSession()
         }
+    }
+}
+
+// 在 MEGAAVViewController+Additions.swift 中添加
+extension MEGAAVViewController {
+    @objc func setupVideoMetricsTracking() {
+        guard let player = player, let playerItem = player.currentItem else { return }
+        metricsTracker = VideoMetricsTracker(
+            player: player,
+            playerItem: playerItem,
+            tracker: DIContainer.tracker
+        )
+        metricsTracker?.startStartupTracking()
+    }
+    
+    @objc func stopVideoMetricsTracking() {
+        metricsTracker?.stopTracking()
     }
 }

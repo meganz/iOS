@@ -3,6 +3,7 @@
 #import <UIKit/UIKit.h>
 
 @class AVViewModel;
+@class VideoMetricsTracker;
 
 @interface MEGAAVViewController : AVPlayerViewController
 
@@ -16,6 +17,7 @@
 @property (nonatomic, assign) BOOL isFolderLink;
 @property (nonatomic, strong, nonnull) NSMutableSet *subscriptions;
 @property (nonatomic, assign) NSTimeInterval startTimeStamp;
+@property (nonatomic, strong, nullable) VideoMetricsTracker *metricsTracker;
 
 - (instancetype _Nonnull)initWithURL:(NSURL *_Nonnull)fileUrl;
 - (instancetype _Nonnull)initWithNode:(MEGANode * _Nonnull)node folderLink:(BOOL)folderLink apiForStreaming:(MEGASdk * _Nonnull)apiForStreaming;

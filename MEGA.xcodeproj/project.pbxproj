@@ -191,6 +191,7 @@
 		12FF88F02846F03300D99BED /* EmptyStateView+Timeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12FF88DB2846D2A400D99BED /* EmptyStateView+Timeline.swift */; };
 		137361901A6664C300B740E8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1373618F1A6664C300B740E8 /* main.m */; };
 		137361931A6664C300B740E8 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 137361921A6664C300B740E8 /* AppDelegate.m */; };
+		147ED4842E73E82B005F7981 /* VideoMetricsTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147ED4832E73E827005F7981 /* VideoMetricsTracker.swift */; };
 		16009FA42BFB4615002903FA /* EnablingTwoFactorAuthenticationViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16009FA32BFB4615002903FA /* EnablingTwoFactorAuthenticationViewController+Additions.swift */; };
 		16009FA72BFB53E0002903FA /* TwoFactorAuthenticationViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16009FA62BFB53E0002903FA /* TwoFactorAuthenticationViewController+Additions.swift */; };
 		160711542A558DED00970A19 /* PagerTabViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 160711532A558DED00970A19 /* PagerTabViewModelTests.swift */; };
@@ -2932,6 +2933,7 @@
 		1373618F1A6664C300B740E8 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		137361911A6664C300B740E8 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		137361921A6664C300B740E8 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = AppDelegate.m; sourceTree = "<group>"; wrapsLines = 1; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		147ED4832E73E827005F7981 /* VideoMetricsTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoMetricsTracker.swift; sourceTree = "<group>"; };
 		16009FA32BFB4615002903FA /* EnablingTwoFactorAuthenticationViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EnablingTwoFactorAuthenticationViewController+Additions.swift"; sourceTree = "<group>"; };
 		16009FA62BFB53E0002903FA /* TwoFactorAuthenticationViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TwoFactorAuthenticationViewController+Additions.swift"; sourceTree = "<group>"; };
 		1606E5842DDF188A000E1141 /* MEGASDKRepo */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = MEGASDKRepo; path = Modules/MEGASharedRepo/MEGASDKRepo; sourceTree = SOURCE_ROOT; };
@@ -11619,6 +11621,7 @@
 				C45390D62565BB840026F215 /* MEGASelectedButton.swift */,
 				C45390CC256587BF0026F215 /* MEGASlider.swift */,
 				24352DE32ACA7E2000392859 /* SetVideoPlayerItemMetadataCommand.swift */,
+				147ED4832E73E827005F7981 /* VideoMetricsTracker.swift */,
 			);
 			path = "Shared Controls";
 			sourceTree = "<group>";
@@ -15736,6 +15739,7 @@
 				E85EB30D1DF58EBA0066AC68 /* VerifyCredentialsViewController.m in Sources */,
 				837C4F8A235DFFBA00FFE177 /* VerifyEmailViewController.swift in Sources */,
 				244CEFCF2B257AD000147302 /* VideoConfig+Live.swift in Sources */,
+				147ED4842E73E82B005F7981 /* VideoMetricsTracker.swift in Sources */,
 				245603672CBCD93700400529 /* VideoPlaylistContentContainerViewModel.swift in Sources */,
 				2484574F2C32A7310042AFA1 /* VideoPlaylistContentViewController+NodeActionViewControllerDelegate.swift in Sources */,
 				24385D292BF09469002F0561 /* VideoPlaylistContentViewController.swift in Sources */,
