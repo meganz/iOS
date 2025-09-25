@@ -93,36 +93,43 @@ extension AudioPlayer {
     }
     
     func updateQueueWithLoopItems() {
-        // Only in case, the loader has no more batches in progress or pending, we call `updateQueueWithLoopItems()` to add items
-        // to the audio player, ensuring the audio playback can continue seamlessly.
+        /// Only in case, the loader has no more batches in progress or pending, we call `updateQueueWithLoopItems()` to add items
+        /// to the audio player, ensuring the audio playback can continue seamlessly.
         guard !queueLoader.hasPendingWork,
               let queuePlayer,
               let loopAllowed = audioPlayerConfig[.loop] as? Bool, loopAllowed,
               let currentItem = currentItem(),
               let currentIndex = tracks.firstIndex(where: { $0 == currentItem }) else { return }
         
+        let itemsToInsert: [AudioPlayerItem]
         if currentIndex == 0 {
-            queuePlayer.secureInsert(tracks[tracks.count - 1], after: queuePlayer.items().last)
+            guard let last = tracks.last else { return }
+            itemsToInsert = [last]
         } else {
-            (0...currentIndex).forEach { index in
-                queuePlayer.secureInsert(tracks[index], after: queuePlayer.items().last)
-            }
+            itemsToInsert = Array(tracks[0...currentIndex])
+        }
+        
+        for item in itemsToInsert {
+            queuePlayer.secureInsert(item, after: queuePlayer.items().last)
         }
         
         notify(aboutCurrentItemAndQueue)
     }
     
     func removeLoopItems() {
-        guard let queuePlayer,
+        /// Only in case, the loader has no more batches in progress or pending, we call `removeLoopItems()` to remove previously
+        /// loop-inserted items from the audio player, ensuring the playback queue reflects the disabled loop mode seamlessly.
+        guard !queueLoader.hasPendingWork,
+              let queuePlayer,
               let loopAllowed = audioPlayerConfig[.loop] as? Bool, !loopAllowed,
               let currentItem = currentItem(),
               let currentIndex = tracks.firstIndex(where: { $0 == currentItem }) else { return }
         
-        queuePlayer.items().filter({$0 != currentItem}).forEach {
+        queuePlayer.items().filter({ $0 != currentItem }).forEach {
             queuePlayer.remove($0)
         }
         
-        ((currentIndex + 1)..<tracks.count).forEach { index in
+        for index in ((currentIndex + 1)..<tracks.count) {
             queuePlayer.secureInsert(tracks[index], after: queuePlayer.items().last)
         }
         
@@ -199,8 +206,8 @@ extension AudioPlayer {
                     _ = await currentItem.seek(to: .zero)
                     pause()
                     completion()
+                    return
                 }
-                return
             } else {
                 resetPlaylist()
             }
@@ -338,7 +345,9 @@ extension AudioPlayer {
     func shuffle(_ active: Bool) {
         audioPlayerConfig[.shuffle] = active
         
-        if active { shuffleQueue() }
+        if active {
+            shuffleQueue()
+        }
     }
     
     func isRepeatAllMode() -> Bool {
@@ -372,7 +381,7 @@ extension AudioPlayer {
     }
     
     func isDefaultRepeatMode() -> Bool {
-        return !isRepeatAllMode() && !isRepeatOneMode()
+        !isRepeatAllMode() && !isRepeatOneMode()
     }
     
     func move(of movedItem: AudioPlayerItem, to position: IndexPath, direction: MovementDirection) {
@@ -380,30 +389,48 @@ extension AudioPlayer {
         
         notify(aboutTheBeginningOfBlockingAction)
         
-        queuePlayer.remove(movedItem)
-        Task { @MainActor in
-            _ = await movedItem.seek(to: .zero)
-        }
+        /// Capture the current playback queue to determine if the item is already enqueued.
+        let queueItems = queuePlayer.items().compactMap { $0 as? AudioPlayerItem }
+        let isInQueue = queueItems.contains(movedItem)
         
-        let afterItem = queuePlayer.items()[position.previous().row]
-        
-        if direction == .up {
-            guard position.hasPrevious() else {
+        if isInQueue {
+            /// If the item is already in the queue, remove it so we can reinsert at the new position.
+            queuePlayer.remove(movedItem)
+            
+            Task { @MainActor in
+                _ = await movedItem.seek(to: .zero)
+            }
+            
+            /// If moving up and there's no valid previous position, insert at the front.
+            if direction == .up, !position.hasPrevious() {
                 insertInQueue(item: movedItem, afterItem: nil)
                 notify(aboutTheEndOfBlockingAction)
                 return
             }
-            insertInQueue(item: movedItem, afterItem: afterItem as? AudioPlayerItem)
-            if let trackPosition = tracks.firstIndex(where: { $0 == afterItem as? AudioPlayerItem }) {
+            
+            let prevIndex = position.previous().row
+            let items = queuePlayer.items()
+            let afterItem: AudioPlayerItem? = items.indices.contains(prevIndex) ? items[prevIndex] as? AudioPlayerItem : nil
+            
+            insertInQueue(item: movedItem, afterItem: afterItem)
+            if let anchor = afterItem,
+               let trackPosition = tracks.firstIndex(where: { $0 == anchor }) {
+                /// We add 1 because we want movedItem to appear immediately after the anchor item.
                 tracks.move(movedItem, to: trackPosition + 1)
             }
-            
         } else {
-            insertInQueue(item: movedItem, afterItem: afterItem as? AudioPlayerItem)
-            if let trackPosition = tracks.firstIndex(where: { $0 == afterItem as? AudioPlayerItem }) {
-                tracks.move(movedItem, to: trackPosition)
+            tracks.move(movedItem, to: position.row)
+            
+            if position.row < queueItems.count {
+                let afterItem: AudioPlayerItem? = position.row > 0 ? queueItems[position.row - 1] : nil
+                insertInQueue(item: movedItem, afterItem: afterItem)
             }
         }
+        
+        /// The moved item might have been outside the currently enqueued batch and therefore its metadata wasn’t yet loaded.
+        /// Trigger metadata preloading for whatever is now in the queue so any newly exposed or repositioned items have their artwork/details ready.
+        preloadNextTracksMetadata()
+        
         notify(aboutTheEndOfBlockingAction)
     }
     
@@ -411,30 +438,32 @@ extension AudioPlayer {
         guard let queuePlayer,
               let currentItem = currentItem() else { return }
         
-        notify(aboutTheBeginningOfBlockingAction)
-        
-        var playerPlaylist: [AudioPlayerItem] = queuePlayer.items()
-                                                           .compactMap({ $0 as? AudioPlayerItem})
-                                                           .filter({$0 != currentItem})
-        
-        playerPlaylist.shuffle()
-        
-        // Update the "tracks" array with the correct position for the current audio player playlist
-        let finalTracks = Array(Set(tracks).subtracting(playerPlaylist)) + playerPlaylist
-        update(tracks: finalTracks)
-        
-        // remove all playlist tracks except the current item
-        queuePlayer.items().filter({$0 != currentItem}).forEach {
-            queuePlayer.remove($0)
+        /// Shuffle everything except the currently playing item in place.
+        if tracks.count > 2 {
+            tracks[1...].shuffle()
         }
         
-        // reset the playlist by inserting the following playlist items
-        playerPlaylist.forEach { queuePlayer.secureInsert($0, after: queuePlayer.items().last) }
+        /// Update full playlist order to reflect shuffle.
+        update(tracks: tracks)
         
-        // Update the queue loader's state to match the new shuffled order
-        queueLoader.shuffleTracks()
+        /// Remove everything from the AVQueuePlayer except the current item so we can rebuild the playback queue.
+        for case let item as AudioPlayerItem in queuePlayer.items() where item !== currentItem {
+            queuePlayer.remove(item)
+        }
         
-        notify(aboutTheEndOfBlockingAction)
+        /// Reset the loader to consider the newly shuffled full playlist, then get the first batch to enqueue.
+        queueLoader.reset()
+        let initialBatch = queueLoader.addAllTracks(tracks)
+        
+        /// Enqueue the initial batch after the current item, preserving batch order.
+        var tail: AVPlayerItem? = currentItem
+        for item in initialBatch {
+            queuePlayer.secureInsert(item, after: tail)
+            tail = item
+        }
+        
+        /// Begin preloading metadata only for the newly enqueued items so their artwork/details are ready.
+        preloadNextTracksMetadata()
     }
     
     func deletePlaylist(items: [AudioPlayerItem]) async {
@@ -443,8 +472,8 @@ extension AudioPlayer {
         let itemsToRemove = items.filter { $0 != currentItem() }
         itemsToRemove.forEach(queuePlayer.remove)
         
-        notify([aboutCurrentItemAndQueue])
         update(tracks: tracks.filter { !itemsToRemove.contains($0) })
+        notify([aboutCurrentItemAndQueue])
     }
     
     func playerCurrentTime() -> TimeInterval { currentTime }
@@ -464,9 +493,18 @@ extension AudioPlayer {
     func insertInQueue(item: AudioPlayerItem, afterItem: AudioPlayerItem?) {
         queuePlayer?.secureInsert(item, after: afterItem)
         
-        if let items = queuePlayer?.items() as? [AudioPlayerItem] {
-            update(tracks: items)
+        if let existingIndex = tracks.firstIndex(where: { $0 == item }) {
+            tracks.remove(at: existingIndex)
         }
+        
+        let insertionIndex: Int
+        if let afterItem, afterItem != item, let afterIndex = tracks.firstIndex(where: { $0 == afterItem }) {
+            insertionIndex = afterIndex + 1
+        } else {
+            insertionIndex = 0
+        }
+        
+        tracks.insert(item, at: insertionIndex)
         
         notify([aboutTheEndOfBlockingAction])
     }

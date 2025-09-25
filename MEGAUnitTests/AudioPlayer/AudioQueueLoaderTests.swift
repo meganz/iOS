@@ -79,29 +79,6 @@ import Testing
             #expect(batch.last?.name == "Track 150")
         }
         
-        @Test("Shuffles immediate batch when shuffleTracks is called before refilling")
-        func shufflesImmediateBatch() async throws {
-            let sut = makeSUT()
-            
-            sut.delegate.currentQueue = []
-            
-            let totalTracks = AudioPlayerItem.mockArray(count: defaultBatchSize)
-            _ = sut.loader.addAllTracks(totalTracks)
-            sut.loader.shuffleTracks()
-            
-            try await Task.sleep(nanoseconds: 100_000_000)
-            
-            sut.loader.refillQueueIfNeeded()
-            
-            let batch = try #require(sut.delegate.insertedBatches.first, "Should retrieve the correct batch")
-            let expectedBatch = Array(totalTracks[100..<150])
-            let isShuffled = batch.enumerated().contains { index, item in
-                item.name != expectedBatch[index].name
-            }
-            
-            #expect(isShuffled)
-        }
-        
         @Test("Handles multiple refillQueueIfNeeded calls gracefully")
         func multipleRefillCalls() {
             let sut = makeSUT()

@@ -109,18 +109,6 @@ final class AudioQueueLoader {
         }
     }
     
-    /// Shuffles the remaining tracks in the loader.
-    /// If a preloaded batch exists, it is first appended to the remaining tracks and cleared. The remaining tracks are then randomized,
-    /// and background preloading is started.
-    func shuffleTracks() {
-        if pendingBatch.isNotEmpty {
-            remainingTracks.append(contentsOf: pendingBatch)
-            pendingBatch.removeAll()
-        }
-        remainingTracks.shuffle()
-        prepareNextBatch()
-    }
-    
     // MARK: - Private Methods
     
     /// Loads up to `batchSize` tracks from `remainingTracks` and removes them.

@@ -70,7 +70,7 @@ final class AudioPlayer: NSObject {
     /// full-screen player, the mini-player, and the playlist view models to react to player-related events such as playback state, queue changes, metadata updates, and
     /// error notifications.
     @Atomic var observers: [any AudioPlayerObserversProtocol] = []
-    private let debouncer = Debouncer(delay: 1.0, dispatchQueue: DispatchQueue.global(qos: .userInteractive))
+    private let debouncer: Debouncer
     
     // MARK: - Internal Computed Properties, intended for important UTs
     var currentIndex: Int? {
@@ -129,6 +129,24 @@ final class AudioPlayer: NSObject {
         return currentItem.duration.value == 0 ? 0.0 : CMTimeGetSeconds(currentItem.duration)
     }
     
+    /// Upcoming items excluding the current one, wrapping around if looping is enabled.
+    var upcomingPlaylist: [AudioPlayerItem] {
+        guard let current = currentItem(),
+              let idx = tracks.firstIndex(where: { $0 == current }) else {
+            return []
+        }
+        
+        var upcoming = Array(tracks[(idx + 1)...])
+        
+        /// If looping is on, append the tracks from the start up to (but not including) the current item
+        if let loopAllowed = audioPlayerConfig[.loop] as? Bool, loopAllowed {
+            let wrapAround = Array(tracks[..<idx])
+            upcoming.append(contentsOf: wrapAround)
+        }
+        
+        return upcoming
+    }
+    
     // MARK: - Private Computed Properties
     
     private var percentageCompleted: Float {
@@ -136,8 +154,10 @@ final class AudioPlayer: NSObject {
     }
     
     // MARK: - Private Functions
-    init(config: [PlayerConfiguration: Any]? = [.loop: false, .shuffle: false, .repeatOne: false]) {
-        if let config = config { audioPlayerConfig = config }
+    init(config: [PlayerConfiguration: Any]? = [.loop: false, .shuffle: false, .repeatOne: false], debounceDelay: TimeInterval = 1.0) {
+        if let config { audioPlayerConfig = config }
+        
+        debouncer = Debouncer(delay: debounceDelay, dispatchQueue: DispatchQueue.global(qos: .userInteractive))
         
         super.init()
         queueLoader.delegate = self
@@ -188,11 +208,11 @@ final class AudioPlayer: NSObject {
         registerTimeObserver()
     }
     
-    private func setupPlayer() {
+    private func setupPlayer(initialBatch: [AudioPlayerItem]) {
         setAudioPlayerSession(active: true)
         
         queuePlayer = AVQueuePlayer()
-        loadTracksIntoQueue()
+        loadTracksIntoQueue(initialBatch)
         queuePlayer?.usesExternalPlaybackWhileExternalScreenIsActive = true
         queuePlayer?.volume = 1.0
         
@@ -205,7 +225,7 @@ final class AudioPlayer: NSObject {
         }
     }
     
-    private func loadTracksIntoQueue() {
+    private func loadTracksIntoQueue(_ itemsToEnqueue: [AudioPlayerItem]) {
         notify(aboutTheBeginningOfBlockingAction)
         unregister()
         
@@ -213,14 +233,13 @@ final class AudioPlayer: NSObject {
         hasCompletedInitialConfiguration = false
         pause()
         
-        if let newFirst = tracks.first {
+        if let newFirst = itemsToEnqueue.first {
             secureReplaceCurrentItem(with: newFirst)
         }
         
-        queuePlayer?.items().lazy.filter({$0 != self.queuePlayer?.items().first}).forEach {
-            self.queuePlayer?.remove($0)
-        }
-        tracks.forEach { self.queuePlayer?.secureInsert($0, after: self.queuePlayer?.items().last) }
+        queuePlayer?.items().lazy.dropFirst().forEach { queuePlayer?.remove($0) }
+        
+        itemsToEnqueue.dropFirst().forEach { queuePlayer?.secureInsert($0, after: queuePlayer?.items().last) }
         
         register()
         
@@ -304,17 +323,18 @@ final class AudioPlayer: NSObject {
     
     func add(tracks: [AudioPlayerItem]) {
         beginBackgroundTask()
+        self.tracks = tracks
         queueLoader.reset()
-        self.tracks = queueLoader.addAllTracks(tracks)
+        let initialBatch = queueLoader.addAllTracks(tracks)
         
         debouncer.start { @MainActor [weak self] in
             guard let self else { return  }
             
             if queuePlayer != nil {
-                loadTracksIntoQueue()
+                loadTracksIntoQueue(initialBatch)
                 MEGALogDebug("[AudioPlayer] Refresh the current audio player")
             } else {
-                setupPlayer()
+                setupPlayer(initialBatch: initialBatch)
                 MEGALogDebug("[AudioPlayer] Setting up a new audio player")
             }
             
@@ -428,6 +448,9 @@ extension AudioPlayer: AudioQueueLoaderDelegate {
             }
         }
         
+        /// The new batch has been enqueued; now preload metadata for those newly added items. `preloadNextTracksMetadata` reads
+        /// from `queuePlayer.items()` and filters out already-loaded metadata, so it will pick up only the just-inserted tracks (or any other
+        /// enqueued items lacking metadata), keeping work bounded to imminent playback.
         preloadNextTracksMetadata()
     }
 }

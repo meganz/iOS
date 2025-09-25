@@ -188,6 +188,7 @@ final class MockAudioPlayerHandler: AudioPlayerHandlerProtocol {
     func resetAudioPlayerConfiguration() {}
     func refreshContentOffset(presenter: any AudioPlayerPresenterProtocol, isHidden: Bool) {}
     func playerTracksContains(url: URL) -> Bool { true }
+    func upcomingPlaylistItems() -> [AudioPlayerItem] { mockPlayerQueueItems ?? [] }
     func resetCurrentItem(shouldResetPlayback: Bool) {
         setCurrent_callTimes += 1
     }

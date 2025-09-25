@@ -37,7 +37,7 @@ final class AudioPlaylistViewModelTests: XCTestCase {
             viewModel: sut,
             action: .onViewDidLoad,
             expectedCommands: [
-                .reloadTracks(currentItem: mockItem, queue: nil, selectedIndexPaths: []),
+                .reloadTracks(currentItem: mockItem, queue: [], selectedIndexPaths: []),
                 .title(title: "")
             ],
             timeout: defaultTimeout
