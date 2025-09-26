@@ -133,9 +133,11 @@ final class VideoRevampTabContainerViewController: UIViewController {
     }
     
     private func setupNavigationBar() {
-        navigationItem.rightBarButtonItems = defaultRightBarButtonItems()
-        setupContextMenuBarButton(currentTab: viewModel.syncModel.currentTab)
-        
+        if !DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .cloudDriveRevamp) {
+            navigationItem.rightBarButtonItems = defaultRightBarButtonItems()
+            setupContextMenuBarButton(currentTab: viewModel.syncModel.currentTab)
+        }
+
         if let navigationBar = navigationController?.navigationBar {
             AppearanceManager.forceNavigationBarUpdate(navigationBar)
         }
@@ -279,7 +281,11 @@ final class VideoRevampTabContainerViewController: UIViewController {
     }
     
     private func setupRightNavigationBarButtons() {
-        navigationItem.setRightBarButtonItems(isEditing ? [cancelBarButtonItem] : defaultRightBarButtonItems(), animated: true)
+        if !DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .cloudDriveRevamp) {
+            navigationItem.setRightBarButtonItems(isEditing ? [cancelBarButtonItem] : defaultRightBarButtonItems(), animated: true)
+        } else if isEditing {
+            navigationItem.setRightBarButtonItems([cancelBarButtonItem], animated: true)
+        }
     }
     
     private func defaultRightBarButtonItems() -> [UIBarButtonItem] {
