@@ -1,3 +1,4 @@
+import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGAAssets
 import MEGADomain
@@ -13,6 +14,8 @@ extension OfflineViewController: DisplayMenuDelegate {
     }
     
     @objc func configureNavigationBarButtons() {
+        guard !DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .cloudDriveRevamp) else { return }
+
         contextMenuManager = ContextMenuManager(displayMenuDelegate: self, createContextMenuUseCase: CreateContextMenuUseCase(repo: CreateContextMenuRepository.newRepo))
         
         contextBarButtonItem = UIBarButtonItem(image: MEGAAssets.UIImage.moreNavigationBar,

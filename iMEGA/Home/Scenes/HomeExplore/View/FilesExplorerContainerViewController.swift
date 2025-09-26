@@ -21,7 +21,7 @@ class FilesExplorerContainerViewController: UIViewController, TextFileEditable {
     private let viewPreference: ViewPreference
     
     private var contextBarButtonItem = UIBarButtonItem()
-    private var uploadAddBarButonItem = UIBarButtonItem()
+    private var uploadAddBarButtonItem = UIBarButtonItem()
     
     private lazy var searchController: UISearchController = {
         let sc = UISearchController(searchResultsController: nil)
@@ -116,7 +116,7 @@ class FilesExplorerContainerViewController: UIViewController, TextFileEditable {
     func showMoreButton(_ show: Bool) {
         contextBarButtonItem.isEnabled = show
         if viewModel.getExplorerType() == .allDocs {
-            uploadAddBarButonItem.isEnabled = show
+            uploadAddBarButtonItem.isEnabled = show
         }
     }
     
@@ -128,16 +128,19 @@ class FilesExplorerContainerViewController: UIViewController, TextFileEditable {
             navigationItem.rightBarButtonItem = nil
         }
     }
-    
-    private func configureNavigationBarButtons() {
-        contextBarButtonItem.image = MEGAAssets.UIImage.moreList
-        
-        if viewModel.getExplorerType() == .allDocs {
-            uploadAddBarButonItem.image = MEGAAssets.UIImage.navigationbarAdd
 
-            navigationItem.rightBarButtonItems = [contextBarButtonItem, uploadAddBarButonItem]
-        } else {
-            navigationItem.rightBarButtonItem = contextBarButtonItem
+    private func configureNavigationBarButtons() {
+        uploadAddBarButtonItem.image = MEGAAssets.UIImage.navigationbarAdd
+        contextBarButtonItem.image = MEGAAssets.UIImage.moreList
+
+        let isRevampEnabled = DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .cloudDriveRevamp)
+        let isAllDocs = viewModel.getExplorerType() == .allDocs
+
+        navigationItem.rightBarButtonItems = switch (isRevampEnabled, isAllDocs) {
+        case (true, true): [uploadAddBarButtonItem]
+        case (true, false): nil
+        case (false, true): [contextBarButtonItem, uploadAddBarButtonItem]
+        case (false, false): [contextBarButtonItem]
         }
     }
     
@@ -152,7 +155,7 @@ class FilesExplorerContainerViewController: UIViewController, TextFileEditable {
     }
     
     func updateUploadAddMenu(menu: UIMenu) {
-        uploadAddBarButonItem.menu = menu
+        uploadAddBarButtonItem.menu = menu
     }
     
     func updateCurrentState() {

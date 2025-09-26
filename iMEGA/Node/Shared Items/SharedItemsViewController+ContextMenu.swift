@@ -49,6 +49,10 @@ extension SharedItemsViewController: DisplayMenuDelegate {
             navigationItem.leftBarButtonItem = selectAllBarButtonItem
             navigationItem.rightBarButtonItem = editBarButtonItem
         } else {
+            updateAvatarButtonItem()
+
+            guard !DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .cloudDriveRevamp) else { return }
+
             contextMenuManager = ContextMenuManager(displayMenuDelegate: self, createContextMenuUseCase: CreateContextMenuUseCase(repo: CreateContextMenuRepository.newRepo))
             
             contextBarButtonItem = UIBarButtonItem(image: MEGAAssets.UIImage.moreNavigationBar,
@@ -57,7 +61,6 @@ extension SharedItemsViewController: DisplayMenuDelegate {
             contextBarButtonItem.accessibilityLabel = Strings.Localizable.more
             
             navigationItem.rightBarButtonItem = contextBarButtonItem
-            updateAvatarButtonItem()
         }
     }
     
