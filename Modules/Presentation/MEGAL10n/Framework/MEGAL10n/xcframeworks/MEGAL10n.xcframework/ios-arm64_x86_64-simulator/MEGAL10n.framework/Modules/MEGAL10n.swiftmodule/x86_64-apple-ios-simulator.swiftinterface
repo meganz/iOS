@@ -2635,6 +2635,7 @@ public enum Strings {
       public static let export: Swift.String
       public static let fileIsBeingDownloaded: Swift.String
       public static let noIntenerConnection: Swift.String
+      public static let prioritySupport: Swift.String
       public static let sendToChat: Swift.String
       public static let share: Swift.String
       public enum Alert {
@@ -4487,6 +4488,17 @@ public enum Strings {
     public enum SubscriptionPurchase {
       public static let autoRenewDescription: Swift.String
       public static let maybeLater: Swift.String
+      public enum Benefits {
+        public enum CallsAndMeetings {
+          public static let title: Swift.String
+        }
+        public enum Rewind {
+          public static let title: Swift.String
+        }
+        public enum RubbishClearing {
+          public static let title: Swift.String
+        }
+      }
       public enum Feature {
         public static let title: Swift.String
         public enum Four {
