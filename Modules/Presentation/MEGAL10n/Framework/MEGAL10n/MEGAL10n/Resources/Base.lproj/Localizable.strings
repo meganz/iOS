@@ -4706,3 +4706,11 @@
 "videoPlayer.snapshot.snackBar.title"="Image saved to your device";
 /* The Picture in picture video player option in bottom more menu */
 "videoPlayer.pip.bottomSheet.title"="Picture in picture";
+/* Subscription benefit for rewind */
+"subscriptionPurchase.benefits.rewind.title"="Rewind up to 180 days of deleted data";
+/* Subscription benefit for for calls and meetings */
+"subscriptionPurchase.benefits.callsAndMeetings.title"="Host calls and meetings with unlimited participants and no time restrictions";
+/* Subscription benefit for rubbish bin clearing */
+"subscriptionPurchase.benefits.rubbishClearing.title"="Schedule rubbish bin clearing between 7 days and 10 years";
+/* General label for priority customer support */
+"general.prioritySupport"="Priority support";

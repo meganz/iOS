@@ -285,7 +285,6 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
         XCTAssertEqual(sut.selectedPlanType, sut.recommendedPlanType)
     }
     
-    
     @MainActor
     func testRecommendedPlan_viewTypeIsOnboardingRevampFeatureFlagOn_shouldSetCorrectPlan() async {
         let testCase: [(currentPlan: AccountTypeEntity, recommendedPlan: AccountTypeEntity?, selectedPlanType: AccountTypeEntity?)] = [
@@ -1117,6 +1116,23 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
         XCTAssertEqual(description.fullText, fullTextWithoutFormatters)
         XCTAssertEqual(description.tappableText, tappableText)
         XCTAssertEqual(description.linkString, "https://support.apple.com/118428")
+    }
+    
+    @MainActor
+    func testProPlanBenefits_correct() {
+        let expectedBenefits =  [
+            Strings.Localizable.Password.Protected.Links.title,
+            Strings.Localizable.Links.With.Expiry.Dates.title,
+            Strings.Localizable.SubscriptionPurchase.Benefits.Rewind.title,
+            Strings.Localizable.SubscriptionPurchase.Benefits.CallsAndMeetings.title,
+            Strings.Localizable.SubscriptionPurchase.Benefits.RubbishClearing.title,
+            Strings.Localizable.General.prioritySupport]
+        
+        let (sut, _) = makeSUT(
+            accountDetails: .build(proLevel: .free),
+        )
+        
+        XCTAssertEqual(sut.benefitsOfProPlans, expectedBenefits)
     }
 
     // MARK: - Helper

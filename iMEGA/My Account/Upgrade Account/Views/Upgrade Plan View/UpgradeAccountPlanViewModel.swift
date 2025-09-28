@@ -381,6 +381,15 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
                                    linkColor: TokenColors.Link.primary.swiftUI)
     }
     
+    var benefitsOfProPlans: [String] {
+        [Strings.Localizable.Password.Protected.Links.title,
+         Strings.Localizable.Links.With.Expiry.Dates.title,
+         Strings.Localizable.SubscriptionPurchase.Benefits.Rewind.title,
+         Strings.Localizable.SubscriptionPurchase.Benefits.CallsAndMeetings.title,
+         Strings.Localizable.SubscriptionPurchase.Benefits.RubbishClearing.title,
+         Strings.Localizable.General.prioritySupport]
+    }
+    
     func createAccountPlanViewModel(_ plan: PlanEntity) -> AccountPlanViewModel {
         AccountPlanViewModel(
             plan: plan,

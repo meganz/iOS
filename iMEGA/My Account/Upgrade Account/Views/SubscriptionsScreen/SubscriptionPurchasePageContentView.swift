@@ -54,7 +54,7 @@ struct SubscriptionPurchasePageContentView: View {
                     SubscriptionPurchaseFeaturesView(
                         maxPlanStorage: viewModel.maxStorageFromPlans)
                     SubscriptionPurchasePlansView(viewModel: viewModel)
-                    SubscriptionPurchaseBenefitsView()
+                    SubscriptionPurchaseBenefitsView(benefits: viewModel.benefitsOfProPlans)
                     if let freePlanViewModel = viewModel.freePlanViewModel {
                         SubscriptionPurchaseFreePlanView(
                             viewModel: freePlanViewModel,
