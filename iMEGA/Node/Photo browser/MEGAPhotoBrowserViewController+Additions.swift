@@ -90,11 +90,11 @@ extension MEGAPhotoBrowserViewController {
                 let playerVC = MEGAPlayerViewController(
                     viewModel: playerViewModel
                 )
-                playerViewModel.moreAction = { [weak playerVC] in
-                    guard let playerVC else { return }
+                playerViewModel.moreAction = { [weak playerVC] playableNode in
+                    guard let playerVC, let playableNode else { return }
                     NodeOpener(navigationController: nil)
                         .openNodeActions(
-                            node.handle,
+                            playableNode.nodeHandle,
                             presentingController: playerVC,
                             sender: playerVC
                         )

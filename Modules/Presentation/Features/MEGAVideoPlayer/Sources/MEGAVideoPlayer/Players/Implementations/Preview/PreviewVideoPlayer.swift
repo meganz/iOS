@@ -6,10 +6,13 @@ import UIKit
 
 @MainActor
 final class PreviewVideoPlayer: VideoPlayerProtocol {
+
     @Published var state: PlaybackState
     @Published var currentTime: Duration
     @Published var duration: Duration
     @Published var scalingMode: VideoScalingMode
+    @Published var canPlayNext: Bool
+    @Published var nodeName: String
 
     let debugMessage: String
     nonisolated let option: VideoPlayerOption
@@ -26,6 +29,14 @@ final class PreviewVideoPlayer: VideoPlayerProtocol {
         $duration.eraseToAnyPublisher()
     }
 
+    var canPlayNextPublisher: AnyPublisher<Bool, Never> {
+        $canPlayNext.eraseToAnyPublisher()
+    }
+
+    var nodeNamePublisher: AnyPublisher<String, Never> {
+        $nodeName.eraseToAnyPublisher()
+    }
+
     var scalingModePublisher: AnyPublisher<VideoScalingMode, Never> {
         $scalingMode.eraseToAnyPublisher()
     }
@@ -36,8 +47,6 @@ final class PreviewVideoPlayer: VideoPlayerProtocol {
 
     var isLoopEnabled: Bool = false
 
-    var _nodeName: String = ""
-
     var currentNode: (any PlayableNode)?
 
     init(
@@ -46,6 +55,8 @@ final class PreviewVideoPlayer: VideoPlayerProtocol {
         currentTime: Duration = .seconds(0),
         duration: Duration = .seconds(0),
         scalingMode: VideoScalingMode = .fit,
+        canPlayNext: Bool = false,
+        nodeName: String = "",
         debugMessage: String = ""
     ) {
         self.option = option
@@ -54,6 +65,8 @@ final class PreviewVideoPlayer: VideoPlayerProtocol {
         self.duration = duration
         self.scalingMode = scalingMode
         self.debugMessage = debugMessage
+        self.canPlayNext = canPlayNext
+        self.nodeName = nodeName
     }
 
     func play() {}
@@ -73,10 +86,6 @@ final class PreviewVideoPlayer: VideoPlayerProtocol {
     }
     func changeRate(to rate: Float) {}
     func setLooping(_ enabled: Bool) { }
-    
-    var nodeName: String {
-        _nodeName
-    }
 
     func captureSnapshot() async -> UIImage? {
         UIImage()
@@ -85,4 +94,10 @@ final class PreviewVideoPlayer: VideoPlayerProtocol {
     func loadPIPController() -> AVPictureInPictureController? {
         return nil
     }
+
+    func playNext() {}
+
+    func playPrevious() {}
+
+    func streamVideoNodes(for node: some PlayableNode) {}
 }

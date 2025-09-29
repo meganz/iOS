@@ -1,4 +1,4 @@
-import Combine
+@preconcurrency import Combine
 import Foundation
 import MEGAPermissions
 import MEGAPermissionsMock
@@ -17,7 +17,7 @@ struct PlayerOverlayViewModelTests {
         devicePermissionsHandler: some DevicePermissionsHandling = MockDevicePermissionHandler(),
         saveSnapshotUseCase: some SaveSnapshotUseCaseProtocol = MockSaveSnapshotUseCase(),
         didTapBackAction: @escaping () -> Void = {},
-        didTapMoreAction: @escaping () -> Void = {},
+        didTapMoreAction: @escaping ((any PlayableNode)?) -> Void = { _ in },
         didTapRotateAction: @escaping () -> Void = {},
         didTapPictureInPictureAction: @escaping () -> Void = {}
     ) -> PlayerOverlayViewModel {
@@ -155,7 +155,7 @@ struct PlayerOverlayViewModelTests {
         (.buffering, true),
         (.opening, false),
         (.stopped, false),
-        (.ended, false),
+        (.ended, true),
         (.error("Test error"), false)
     ])
     func autoHideTimer_whenShowControlsAfterThreeSeconds_shouldChangeControlVisibility(
@@ -179,7 +179,7 @@ struct PlayerOverlayViewModelTests {
         (.buffering, true),
         (.opening, false),
         (.stopped, false),
-        (.ended, false),
+        (.ended, true),
         (.error("Test error"), false)
     ])
     func autoHideTimer_whenControlTappedAndAfterThreeSeconds_shouldChangeControlVisibility(
@@ -752,39 +752,42 @@ struct PlayerOverlayViewModelTests {
     }
     
     // MARK: - Title Tests
-    
+
     @Test
-    func title_returnsPlayerTitle() {
+    func title_returnsPlayerTitle() async {
         let expectedTitle = "Test Video Title"
         let mockPlayer = MockVideoPlayer(nodeName: expectedTitle)
         let sut = makeSUT(player: mockPlayer)
-        
-        #expect(sut.title == expectedTitle)
+        sut.viewWillAppear()
+
+        let result = await sut.$title.values.first { @Sendable newTitle in
+            newTitle == expectedTitle
+        }
+
+        #expect(result == expectedTitle)
     }
-    
+
     @Test
-    func title_whenPlayerTitleChanges_shouldUpdate() {
+    func title_whenPlayerTitleChanges_shouldUpdate() async {
         let mockPlayer = MockVideoPlayer(nodeName: "Initial Title")
         let sut = makeSUT(player: mockPlayer)
-        #expect(sut.title == "Initial Title")
+        sut.viewWillAppear()
+
+        let result = await sut.$title.values.first { @Sendable newTitle in
+            newTitle == "Initial Title"
+        }
+
+        #expect(result == "Initial Title")
 
         mockPlayer.nodeName = "Updated Title"
-        
-        #expect(sut.title == "Updated Title")
-    }
-    
-    @Test
-    func title_whenNodeLoaded_shouldUpdatePlayerTitle() {
-        let mockPlayer = MockVideoPlayer(nodeName: "Initial Title")
-        let sut = makeSUT(player: mockPlayer)
-        let mockNode = MockPlayableNode(nodeName: "Node Title")
 
-        mockPlayer.loadNode(mockNode)
+        let updatedResult = await sut.$title.values.first { @Sendable newTitle in
+            newTitle == "Updated Title"
+        }
 
-        #expect(mockPlayer.nodeName == "Node Title")
-        #expect(sut.title == "Node Title")
+        #expect(updatedResult == "Updated Title")
     }
-    
+
     // MARK: - Lock Functionality Tests
     
     @Test
@@ -974,5 +977,31 @@ struct PlayerOverlayViewModelTests {
 
         #expect(sut.isBottomMoreSheetPresented == false)
         #expect(didTapPictureInPictureActionCallTimes == 1)
+    }
+
+    // MARK: Play next or previous Tests
+
+    @Test
+    func didTapPlayNext_whenCalled_shouldCallThePlayerMethod() {
+        let player = MockVideoPlayer()
+        let sut = makeSUT(
+            player: player
+        )
+
+        sut.didTapPlayNext()
+
+        #expect(player.playNextCallCount == 1)
+    }
+
+    @Test
+    func didTapPlayPrevious_whenCalled_shouldCallThePlayerMethod() {
+        let player = MockVideoPlayer()
+        let sut = makeSUT(
+            player: player
+        )
+
+        sut.didTapPlayPrevious()
+
+        #expect(player.playPreviousCallCount == 1)
     }
 }

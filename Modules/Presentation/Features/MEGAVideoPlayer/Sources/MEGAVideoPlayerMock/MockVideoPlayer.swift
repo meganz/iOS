@@ -9,6 +9,10 @@ public final class MockVideoPlayer: VideoPlayerProtocol {
     @Published public var state: PlaybackState
     @Published public var currentTime: Duration
     @Published public var duration: Duration
+    @Published public var canPlayNext: Bool
+    @Published public var nodeName: String = "Mock Video Title"
+
+    public var currentNode: (any MEGAVideoPlayer.PlayableNode)?
 
     let debugMessage: String
     public nonisolated let option: VideoPlayerOption
@@ -23,6 +27,14 @@ public final class MockVideoPlayer: VideoPlayerProtocol {
 
     public var durationPublisher: AnyPublisher<Duration, Never> {
         $duration.eraseToAnyPublisher()
+    }
+
+    public var canPlayNextPublisher: AnyPublisher<Bool, Never> {
+        $canPlayNext.eraseToAnyPublisher()
+    }
+
+    public var nodeNamePublisher: AnyPublisher<String, Never> {
+        $nodeName.eraseToAnyPublisher()
     }
 
     public nonisolated var debugMessagePublisher: AnyPublisher<String, Never> {
@@ -40,6 +52,8 @@ public final class MockVideoPlayer: VideoPlayerProtocol {
     public var seekCallCount: Int = 0
     public var seekTime: TimeInterval = 0
     public var seekResult: Bool = true
+    public var playNextCallCount: Int = 0
+    public var playPreviousCallCount: Int = 0
     public var changeRateCallCount: Int = 0
     public var changeRateValue: Float = 1.0
     public var setLoopingCallCount: Int = 0
@@ -54,8 +68,9 @@ public final class MockVideoPlayer: VideoPlayerProtocol {
     public var setScalingModeValue: VideoScalingMode = .fit
     public var captureSnapshotCallCount: Int = 0
     public var mockSnapshotImage: UIImage?    
-    public var nodeName: String = "Mock Video Title"
     public var resumePlaybackPositionUseCase: (any ResumePlaybackPositionUseCaseProtocol)?
+    public var nodes: [any PlayableNode] = []
+    public var streamVideoNodesCallCount: Int = 0
 
     public init(
         option: VideoPlayerOption = .avPlayer,
@@ -63,7 +78,9 @@ public final class MockVideoPlayer: VideoPlayerProtocol {
         currentTime: Duration = .seconds(0),
         duration: Duration = .seconds(0),
         debugMessage: String = "",
-        nodeName: String = "Mock Video Title"
+        nodeName: String = "Mock Video Title",
+        nodes: [any PlayableNode] = [],
+        canPlayNext: Bool = false
     ) {
         self.option = option
         self.state = state
@@ -71,6 +88,8 @@ public final class MockVideoPlayer: VideoPlayerProtocol {
         self.duration = duration
         self.debugMessage = debugMessage
         self.nodeName = nodeName
+        self.nodes = nodes
+        self.canPlayNext = canPlayNext
     }
 
     public func play() {
@@ -104,6 +123,14 @@ public final class MockVideoPlayer: VideoPlayerProtocol {
         seekCallCount += 1
         seekTime = time
         return seekResult
+    }
+
+    public func playNext() {
+        playNextCallCount += 1
+    }
+
+    public func playPrevious() {
+        playPreviousCallCount += 1
     }
 
     public func changeRate(to rate: Float) {
@@ -145,7 +172,11 @@ public final class MockVideoPlayer: VideoPlayerProtocol {
     public func loadPIPController() -> AVPictureInPictureController? {
         return nil
     }
-    
+
+    public func streamVideoNodes(for node: some PlayableNode) {
+        streamVideoNodesCallCount += 1
+    }
+
     // MARK: - Reset for testing
     public func resetCallCounts() {
         playCallCount = 0
