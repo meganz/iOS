@@ -59,6 +59,12 @@ public struct PlayerOverlayView: View {
                                         viewModel.endHoldToSpeed()
                                     }
                                 )
+                                .gesture(
+                                    MagnificationGesture()
+                                        .onEnded { scale in
+                                            viewModel.handlePinchGesture(scale: scale)
+                                        }
+                                )
                         )
                     
                     if viewModel.isControlsVisible {
@@ -90,12 +96,6 @@ public struct PlayerOverlayView: View {
         .animation(.easeInOut(duration: 0.3), value: viewModel.isControlsVisible)
         .buttonStyle(.plain)
         .task { viewModel.viewWillAppear() }
-        .gesture(
-            MagnificationGesture()
-                .onEnded { scale in
-                    viewModel.handlePinchGesture(scale: scale)
-                }
-        )
         .bottomSheet(
             isPresented: $viewModel.isPlaybackBottomSheetPresented,
             detents: [.fixed(playbackSpeedsBottomSelectionListHeight)],
