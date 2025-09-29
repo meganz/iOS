@@ -174,7 +174,7 @@ struct FeatureListHelperTestSuite {
             )
         }
         
-        @Test("Should have correct rewind feature details for each plan", arguments: [(AccountTypeEntity.lite, 90), (AccountTypeEntity.proI, 180)])
+        @Test("Should have correct rewind feature details for each plan", arguments: [(AccountTypeEntity.lite, 60), (AccountTypeEntity.proI, 60)])
         func rewindFeatureIsCorrect(for accountType: AccountTypeEntity, expectedLimit: Int) {
             verifyRewindFeature(
                 for: accountType,
