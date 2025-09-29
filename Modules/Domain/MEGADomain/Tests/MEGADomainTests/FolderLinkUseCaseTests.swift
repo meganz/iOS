@@ -167,6 +167,32 @@ struct FolderLinkUseCaseTests {
         }
         
         @Test(
+            "Resource expired error",
+            arguments: zip(
+                [
+                    RequestTypeEntity.login,
+                    RequestTypeEntity.fetchNodes,
+                    RequestTypeEntity.getAttrFile,
+                    RequestTypeEntity.logout
+                ],
+                [
+                    FolderLinkErrorEntity.linkUnavailable(.expired),
+                    .linkUnavailable(.expired),
+                    .linkUnavailable(.expired),
+                    .linkUnavailable(.expired)
+                ]
+            )
+        )
+        func shouldYieldFolderLinkErrorEntityForResourceExpiredError(requestType: RequestTypeEntity, expectedError: FolderLinkErrorEntity?) async {
+            let response = RequestResponseEntity(
+                requestEntity: RequestEntity(type: requestType),
+                error: ErrorEntity(type: .resourceExpired)
+            )
+            
+            #expect(await requestFinishUpdatesShouldYieldCorrectError(response: response, expectedError: expectedError))
+        }
+        
+        @Test(
             "Incomplete request error",
             arguments: zip(
                 [

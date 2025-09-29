@@ -251,11 +251,16 @@
     [self setNavigationTitleViewWithSubTitle:self.titleViewSubtitle];
     
     [self disableUIItems];
+    [self hideActionButtons];
     
     UnavailableLinkView *unavailableLinkView = [[[NSBundle mainBundle] loadNibNamed:@"UnavailableLinkView" owner:self options: nil] firstObject];
     switch (error) {
+        case UnavailableLinkErrorExpired:
+            [unavailableLinkView configureInvalidFolderLinkForExpired];
+            break;
+            
         case UnavailableLinkErrorGeneric:
-            [unavailableLinkView configureInvalidFolderLink];
+            [unavailableLinkView configureGenericInvalidFolderLink];
             break;
             
         case UnavailableLinkErrorETDDown:

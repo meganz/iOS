@@ -10,7 +10,7 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
 
-    self.imageView.image = [UIImage megaImageWithNamed:@"invalidFileLink"];
+    self.imageView.image = [UIImage megaImageWithNamed:@"invalidLink"];
     
     [self updateAppearance];
 }
@@ -20,7 +20,7 @@
 - (void)updateAppearance {
     self.backgroundColor = [UIColor pageBackgroundColor];
     
-    self.firstTextLabel.textColor = self.secondTextLabel.textColor = self.thirdTextLabel.textColor = [UIColor mnz_secondaryTextColor];
+    self.firstTextLabel.textColor = self.secondTextLabel.textColor = self.thirdTextLabel.textColor = self.fourthTextLabel.textColor = [UIColor mnz_secondaryTextColor];
 }
 
 - (void)showTerms {
@@ -32,6 +32,7 @@
     self.firstTextLabel.text = @"";
     self.secondTextLabel.text = @"";
     self.thirdTextLabel.text = @"";
+    self.fourthTextLabel.text = @"";
 }
 
 - (NSAttributedString *)linkAttributedString:(NSString *)text {
@@ -65,12 +66,12 @@
 }
 
 - (void)configureHeaderInvalidFileLink {
-    self.imageView.image = [UIImage megaImageWithNamed:@"invalidFileLink"];
+    self.imageView.image = [UIImage megaImageWithNamed:@"invalidLink"];
     self.titleLabel.text = LocalizedString(@"File link unavailable", @"Error message shown when opening a file link which doesn’t exist");
 }
 
 - (void)configureHeaderInvalidFolderLink {
-    self.imageView.image = [UIImage megaImageWithNamed:@"invalidFolderLink"];
+    self.imageView.image = [UIImage megaImageWithNamed:@"invalidLink"];
     self.titleLabel.text = LocalizedString(@"Folder link unavailable", @"Error message shown when opening a folder link which doesn’t exist");
 }
 
@@ -123,7 +124,7 @@
 }
 
 - (void)configureInvalidQueryLink {
-    self.imageView.image = [UIImage megaImageWithNamed:@"invalidFileLink"];
+    self.imageView.image = [UIImage megaImageWithNamed:@"invalidLink"];
     self.titleLabel.text = LocalizedString(@"linkNotValid", @"Message shown when the user clicks on an link that is not valid");
     self.descriptionLabel.text = @"";
     [self resetLabels];

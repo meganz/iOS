@@ -2180,6 +2180,24 @@ public enum Strings {
           public static let title: Swift.String
         }
       }
+      public enum FileLink {
+        public static let hasExpired: Swift.String
+        public static let noLongerAvailable: Swift.String
+        public static let notAvailable: Swift.String
+        public static let unavailableReason1: Swift.String
+        public static let unavailableReason2: Swift.String
+        public static let unavailableReason3: Swift.String
+        public static let unavailableReason4: Swift.String
+      }
+      public enum FolderLink {
+        public static let hasExpired: Swift.String
+        public static let noLongerAvailable: Swift.String
+        public static let notAvailable: Swift.String
+        public static let unavailableReason1: Swift.String
+        public static let unavailableReason2: Swift.String
+        public static let unavailableReason3: Swift.String
+        public static let unavailableReason4: Swift.String
+      }
       public enum Info {
         public enum Node {
           public static let location: Swift.String
