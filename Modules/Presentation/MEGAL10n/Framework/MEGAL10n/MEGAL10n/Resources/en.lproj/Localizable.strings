@@ -164,6 +164,16 @@
 "fileLinkUnavailableText3"="Invalid URL - the link you are trying to access does not exist";
 /*  */
 "fileLinkUnavailableText4"="The file has been deleted by the user.";
+/*file has been deleted*/
+"cloudDrive.fileLink.unavailableReason1"="The file has been deleted";
+/*file link has been disabled*/
+"cloudDrive.fileLink.unavailableReason2"="The file link has been disabled by the owner";
+/*file link invalid*/
+"cloudDrive.fileLink.unavailableReason3"="Invalid URL - the link you’re trying to access does not exist";
+/*file link has been removed*/
+"cloudDrive.fileLink.unavailableReason4"="The file link has been removed as it violated our Terms of Service";
+/*file link has expired*/
+"cloudDrive.fileLink.hasExpired"="The link has expired";
 /* Message shown when a download starts */
 "downloadStarted"="Download started";
 /* Title for the folder link view */
@@ -194,6 +204,16 @@
 "folderLinkUnavailableText3"="Invalid URL - the link you are trying to access does not exist";
 /*  */
 "folderLinkUnavailableText4"="The folder link has been disabled by the user.";
+/*folder has been deleted*/
+"cloudDrive.folderLink.unavailableReason1"="The folder has been deleted";
+/*folder link has been disabled*/
+"cloudDrive.folderLink.unavailableReason2"="The folder link has been disabled by the owner";
+/*folder link invalid*/
+"cloudDrive.folderLink.unavailableReason3"="Invalid URL - the link you’re trying to access does not exist";
+/*folder link has been removed*/
+"cloudDrive.folderLink.unavailableReason4"="The folder link has been removed as it violated our Terms of Service";
+/*folder link has expired*/
+"cloudDrive.folderLink.hasExpired"="The link has expired";
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
 "noInternetConnection"="No internet connection";
 /* Title shown when a folder doesn't have any files */
@@ -2252,6 +2272,14 @@
 "Folder link unavailable"="Folder link unavailable";
 /* Error message shown when opening a file link which doesn’t exist */
 "File link unavailable"="File link unavailable";
+/* Error message shown when opening a folder link which is deleted/disabled/invalid */
+"cloudDrive.folderLink.notAvailable"="The folder link you’re trying to access is not available";
+/* Error message shown when opening a file link which is deleted/disabled/invalid */
+"cloudDrive.fileLink.notAvailable"="The file link you’re trying to access is not available";
+/* Error message shown when opening a folder link which is expired */
+"cloudDrive.folderLink.noLongerAvailable"="The folder link you’re trying to access is no longer available";
+/* Error message shown when opening a file link which is expired */
+"cloudDrive.fileLink.noLongerAvailable"="The file link you’re trying to access is no longer available";
 /* Header of block with all shared files in chat. */
 "Shared Files"="Shared files";
 /* Over Disk Quota Screen Navigation Bar Title */

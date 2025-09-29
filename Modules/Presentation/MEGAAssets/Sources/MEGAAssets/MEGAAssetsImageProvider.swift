@@ -706,5 +706,6 @@ extension MEGAAssets {
         public static var glassSearch02: UIKit.UIImage { MEGAUIImageBundle.glassSearch02 }
         public static var glassTrash: UIKit.UIImage { MEGAUIImageBundle.glassTrash }
         public static var folderUsersMono: UIKit.UIImage { MEGAUIImageBundle.folderUsersMono }
+        public static var invalidLink: UIKit.UIImage { MEGAUIImageBundle.invalidLink }
     }
 }

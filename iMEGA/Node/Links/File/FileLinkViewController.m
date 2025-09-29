@@ -135,7 +135,7 @@
                 }
                    
                 case MEGAErrorTypeApiEExpired:
-                    [self showUnavailableLinkViewWithError:UnavailableLinkErrorGeneric];
+                    [self showUnavailableLinkViewWithError:UnavailableLinkErrorExpired];
                     break;
                 case MEGAErrorTypeApiEBlocked:
                 case MEGAErrorTypeApiENoent:
@@ -207,14 +207,19 @@
 
 - (void)showUnavailableLinkViewWithError:(UnavailableLinkError)error {
     self.moreBarButtonItem.enabled = self.shareLinkBarButtonItem.enabled = self.sendToBarButtonItem.enabled = NO;
+    [self hideActionButtons];
     
     self.navigationBarLabel = [UILabel customNavigationBarLabelWithTitle:LocalizedString(@"fileLink", @"") subtitle:LocalizedString(@"Unavailable", @"Text used to show the user that some resource is not available") traitCollection:self.traitCollection];
     self.navigationItem.titleView = self.navigationBarLabel;
     [self.navigationItem.titleView sizeToFit];
     UnavailableLinkView *unavailableLinkView = [[[NSBundle mainBundle] loadNibNamed:@"UnavailableLinkView" owner:self options: nil] firstObject];
     switch (error) {
+        case UnavailableLinkErrorExpired:
+            [unavailableLinkView configureInvalidFileLinkForExpired];
+            break;
+            
         case UnavailableLinkErrorGeneric:
-            [unavailableLinkView configureInvalidFileLink];
+            [unavailableLinkView configureGenericInvalidFileLink];
             break;
             
         case UnavailableLinkErrorETDDown:

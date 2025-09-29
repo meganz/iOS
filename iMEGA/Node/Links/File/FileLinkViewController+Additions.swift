@@ -79,3 +79,11 @@ extension FileLinkViewController: AdsSlotViewControllerProtocol {
         ).eraseToAnyAsyncSequence()
     }
 }
+
+// MARK: - hide action buttons
+extension FileLinkViewController {
+    @objc func hideActionButtons() {
+        moreBarButtonItem?.isHidden = true
+        navigationController?.isToolbarHidden = true
+    }
+}

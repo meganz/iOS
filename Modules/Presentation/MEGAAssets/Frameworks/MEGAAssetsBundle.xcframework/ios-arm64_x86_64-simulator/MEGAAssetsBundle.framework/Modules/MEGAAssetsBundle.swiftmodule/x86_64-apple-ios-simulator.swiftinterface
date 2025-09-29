@@ -1,7 +1,7 @@
 // swift-interface-format-version: 1.0
-// swift-compiler-version: Apple Swift version 6.1.2 effective-5.10 (swiftlang-6.1.2.1.2 clang-1700.0.13.5)
+// swift-compiler-version: Apple Swift version 6.2 effective-5.10 (swiftlang-6.2.0.19.9 clang-1700.3.19.1)
 // swift-module-flags: -target x86_64-apple-ios15.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -enable-experimental-feature DebugDescriptionMacro -enable-bare-slash-regex -module-name MEGAAssetsBundle
-// swift-module-flags-ignorable:  -interface-compiler-version 6.1.2
+// swift-module-flags-ignorable:  -formal-cxx-interoperability-mode=off -interface-compiler-version 6.2
 import DeveloperToolsSupport
 import Foundation
 import Swift
@@ -10,9 +10,6 @@ import UIKit
 import _Concurrency
 import _StringProcessing
 import _SwiftConcurrencyShims
-extension Foundation.Bundle {
-  public static let MEGAAssetsBundle: Foundation.Bundle
-}
 public struct MEGAColorBundle {
   public static var black000000: SwiftUICore.Color {
     get
@@ -790,6 +787,9 @@ public struct MEGAImageBundle {
   public static var folderUsersMono: SwiftUICore.Image {
     get
   }
+}
+extension Foundation.Bundle {
+  public static let MEGAAssetsBundle: Foundation.Bundle
 }
 public struct MEGAUIColorBundle {
   public static var whiteFFFFFF: UIKit.UIColor {
@@ -2253,6 +2253,9 @@ public struct MEGAUIImageBundle {
     get
   }
   public static var folderUsersMono: UIKit.UIImage {
+    get
+  }
+  public static var invalidLink: UIKit.UIImage {
     get
   }
 }

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="24127" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="landscape" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24063"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -14,9 +14,9 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="52" translatesAutoresizingMaskIntoConstraints="NO" id="nHx-2K-c5f">
-                    <rect key="frame" x="12" y="55.5" width="643" height="264"/>
+                    <rect key="frame" x="12" y="19" width="643" height="337"/>
                     <subviews>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="invalidFolderLink" translatesAutoresizingMaskIntoConstraints="NO" id="rvn-KO-Arx">
+                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="invalidLink" translatesAutoresizingMaskIntoConstraints="NO" id="rvn-KO-Arx">
                             <rect key="frame" x="221.5" y="0.0" width="200" height="120"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="200" id="7hi-wX-zCa"/>
@@ -24,13 +24,13 @@
                             </constraints>
                         </imageView>
                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="File Unavailable" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bur-Bl-fx0">
-                            <rect key="frame" x="271.5" y="150" width="100.5" height="17"/>
+                            <rect key="frame" x="262.5" y="150" width="118" height="20.5"/>
                             <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="ke3-Cf-1Gy">
-                            <rect key="frame" x="158" y="197" width="327" height="67"/>
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="ke3-Cf-1Gy">
+                            <rect key="frame" x="131.5" y="200.5" width="380.5" height="136.5"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This could be due to the following reasons:" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="12" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GIz-Fn-kCu" customClass="MEGALabel" customModule="MEGA" customModuleProvider="target">
                                     <rect key="frame" x="0.0" y="0.0" width="252.5" height="14.5"/>
@@ -43,19 +43,25 @@
                                     </userDefinedRuntimeAttributes>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="- The file has been removed because of a ToS/AUP violation." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="12" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yjr-Ix-NuO">
-                                    <rect key="frame" x="0.0" y="18.5" width="316.5" height="13.5"/>
+                                    <rect key="frame" x="0.0" y="30.5" width="341.5" height="14.5"/>
                                     <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="- Invalid URL – the link you are trying to access does not exist." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="12" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Rk-cf-NhA">
-                                    <rect key="frame" x="0.0" y="36" width="327" height="13.5"/>
+                                    <rect key="frame" x="0.0" y="61" width="352" height="14.5"/>
                                     <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="- The file has been deleted by the user." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="12" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D0V-Ae-FsO">
-                                    <rect key="frame" x="0.0" y="53.5" width="206" height="13.5"/>
+                                    <rect key="frame" x="0.0" y="91.5" width="221.5" height="14.5"/>
+                                    <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="- The file link has been removed as it violated our Terms of Service." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="12" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yue-cK-ccq">
+                                    <rect key="frame" x="0.0" y="122" width="380.5" height="14.5"/>
                                     <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
@@ -76,8 +82,10 @@
             <connections>
                 <outlet property="descriptionLabel" destination="GIz-Fn-kCu" id="fPH-Om-w1R"/>
                 <outlet property="firstTextLabel" destination="Yjr-Ix-NuO" id="S7n-4l-2zr"/>
+                <outlet property="fourthTextLabel" destination="Yue-cK-ccq" id="9lX-pf-Eke"/>
                 <outlet property="imageView" destination="rvn-KO-Arx" id="vG6-tf-OQF"/>
                 <outlet property="secondTextLabel" destination="5Rk-cf-NhA" id="COP-8W-AB8"/>
+                <outlet property="stackView" destination="nHx-2K-c5f" id="D4j-NW-ixj"/>
                 <outlet property="thirdTextLabel" destination="D0V-Ae-FsO" id="SiN-rn-hAS"/>
                 <outlet property="titleLabel" destination="Bur-Bl-fx0" id="dgL-3z-AAU"/>
             </connections>
@@ -85,6 +93,6 @@
         </view>
     </objects>
     <resources>
-        <image name="invalidFolderLink" width="120" height="120"/>
+        <image name="invalidLink" width="128" height="128"/>
     </resources>
 </document>

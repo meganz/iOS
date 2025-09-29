@@ -428,4 +428,5 @@ public struct MEGAUIImageBundle {
     public static var glassSearch02: UIImage { UIImage.glassSearch02 }
     public static var glassTrash: UIImage { UIImage.glassTrash }
     public static var folderUsersMono: UIImage { UIImage.folderUsersMono }
+    public static var invalidLink: UIImage { UIImage.invalidLink }
 }

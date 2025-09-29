@@ -270,6 +270,14 @@ extension FolderLinkViewController {
     }
 }
 
+// MARK: - hide action buttons
+extension FolderLinkViewController {
+    @objc func hideActionButtons() {
+        moreBarButtonItem.isHidden = true
+        navigationController?.isToolbarHidden = true
+    }
+}
+
 // MARK: - Ads
 extension FolderLinkViewController: AdsSlotViewControllerProtocol {
     public var adsSlotUpdates: AnyAsyncSequence<AdsSlotConfig?> {
@@ -301,6 +309,8 @@ extension FolderLinkViewController: ViewType {
                 showUnavailableLinkViewWithError(.userCopyrightSuspension)
             case .generic:
                 showUnavailableLinkViewWithError(.generic)
+            case .expired:
+                showUnavailableLinkViewWithError(.expired)
             }
         case .invalidDecryptionKey:
             handleInvalidDecryptionKey()

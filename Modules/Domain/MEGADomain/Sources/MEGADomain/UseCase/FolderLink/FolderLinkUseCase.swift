@@ -5,6 +5,7 @@ public enum FolderLinkUnavailableReason: Sendable, Equatable {
     case userETDSuspension
     case copyrightSuspension
     case generic
+    case expired
 }
 
 public enum FolderLinkErrorEntity: Error, Sendable, Equatable {
@@ -80,6 +81,8 @@ public struct FolderLinkUseCase<T: TransferRepositoryProtocol, N: NodeRepository
                             } else {
                                 nil
                             }
+                        case .resourceExpired:
+                            .failure(.linkUnavailable(.expired))
                         case .resourceNotExists:
                             if requestEntity.type == .fetchNodes || requestEntity.type == .login {
                                 .failure(.linkUnavailable(.generic))
