@@ -688,10 +688,10 @@ final class ChatRoomViewModel: ObservableObject, Identifiable {
         guard let chatRoom = chatRoomUseCase.chatRoom(forChatId: chatListItem.chatId) else { return }
         let message = chatRoomUseCase.message(forChatRoom: chatRoom, messageId: chatListItem.lastMessageId)
         
-        guard let image = UIImage(named: chatListItem.unreadCount > 0 ? "voiceMessage" : "voiceMessageGrey") else {
-            return
-        }
-        
+        let image = chatListItem.unreadCount > 0 ?
+            MEGAAssets.UIImage.voiceMessage :
+            MEGAAssets.UIImage.voiceMessageGrey
+
         let duration = TimeInterval(message?.nodes?.first?.duration ?? 0).timeString
         if let sender {
             updateHybridDescription(with: "\(sender):", image: image, duration: duration)
@@ -706,8 +706,10 @@ final class ChatRoomViewModel: ObservableObject, Identifiable {
             guard let chatRoom = chatRoomUseCase.chatRoom(forChatId: chatListItem.chatId) else { return }
             let message = chatRoomUseCase.message(forChatRoom: chatRoom, messageId: chatListItem.lastMessageId)
             
-            if message?.containsMeta?.type == .geolocation,
-               let image = UIImage(named: chatListItem.unreadCount > 0 ? "locationMessage" : "locationMessageGrey") {
+            if message?.containsMeta?.type == .geolocation {
+                let image = chatListItem.unreadCount > 0 ?
+                    MEGAAssets.UIImage.locationMessage :
+                    MEGAAssets.UIImage.locationMessageGrey
                 if let sender {
                     updateHybridDescription(with: "\(sender):", image: image, duration: Strings.Localizable.pinnedLocation)
                 } else {
