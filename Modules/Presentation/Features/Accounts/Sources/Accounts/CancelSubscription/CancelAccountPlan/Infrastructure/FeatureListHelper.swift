@@ -17,8 +17,7 @@ struct FeatureListHelper: FeatureListHelperProtocol {
     // For this reason, we only set the limit of the rewind feature for the above-mentioned accounts.
     var rewindLimit: Int {
         switch currentPlan.type {
-        case .lite: 90
-        case .proI, .proII, .proIII, .business, .proFlexi: 180
+        case .lite, .proI, .proII, .proIII, .business, .proFlexi: 60
         default: 0
         }
     }

@@ -4619,7 +4619,7 @@
 /* Title for the features of pro plan in the subscription purchase screen. */
 "subscriptionPurchase.featuresOfProPlan.title"="Additional benefits of Pro plans";
 /* Features of pro plan in the subscription purchase screen. */
-"subscriptionPurchase.featuresOfProPlan.message"="• Password-protected links\n\n• Links with expiry dates\n\n• Rewind folders up to 180 days of deleted data\n\n• Host calls and meetings with unlimited participants and no time restrictions\n\n• Schedule rubbish bin clearing between 7 days and 10 years\n\n• Priority support";
+"subscriptionPurchase.featuresOfProPlan.message"="• Password-protected links\n\n• Links with expiry dates\n\n• Rewind folders up to 60 days of deleted data\n\n• Host calls and meetings with unlimited participants and no time restrictions\n\n• Schedule rubbish bin clearing between 7 days and 10 years\n\n• Priority support";
 /* Title for the first subscription feature: generous storage capacity */
 "subscriptionPurchase.feature.one.title"="Generous storage";
 /* Description for the first subscription feature: details about available storage */
@@ -4707,7 +4707,7 @@
 /* The Picture in picture video player option in bottom more menu */
 "videoPlayer.pip.bottomSheet.title"="Picture in picture";
 /* Subscription benefit for rewind */
-"subscriptionPurchase.benefits.rewind.title"="Rewind up to 180 days of deleted data";
+"subscriptionPurchase.benefits.rewind.title"="Rewind up to 60 days of deleted data";
 /* Subscription benefit for for calls and meetings */
 "subscriptionPurchase.benefits.callsAndMeetings.title"="Host calls and meetings with unlimited participants and no time restrictions";
 /* Subscription benefit for rubbish bin clearing */
