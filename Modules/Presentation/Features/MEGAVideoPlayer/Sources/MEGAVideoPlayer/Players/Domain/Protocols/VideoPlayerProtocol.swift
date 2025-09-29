@@ -19,10 +19,12 @@ public protocol PlaybackStateObservable {
     var state: PlaybackState { get }
     var currentTime: Duration { get }
     var duration: Duration { get }
+    var canPlayNext: Bool { get }
 
     var statePublisher: AnyPublisher<PlaybackState, Never> { get }
     var currentTimePublisher: AnyPublisher<Duration, Never> { get }
     var durationPublisher: AnyPublisher<Duration, Never> { get }
+    var canPlayNextPublisher: AnyPublisher<Bool, Never> { get }
 }
 
 @MainActor
@@ -36,6 +38,8 @@ public protocol PlaybackControllable {
     func seek(to time: TimeInterval) async -> Bool
     func changeRate(to rate: Float)
     func setLooping(_ enabled: Bool)
+    func playNext()
+    func playPrevious()
 }
 
 @MainActor
@@ -66,7 +70,11 @@ public protocol NodeLoadable {
     /// - Parameter node: A playable node containing the video content to be loaded.
     func loadNode(_ node: some PlayableNode)
 
-    var nodeName: String { get }
+    var currentNode: (any PlayableNode)? { get set }
+
+    var nodeNamePublisher: AnyPublisher<String, Never> { get }
+
+    func streamVideoNodes(for node: some PlayableNode)
 }
 
 public protocol PlaybackDebugMessageObservable {

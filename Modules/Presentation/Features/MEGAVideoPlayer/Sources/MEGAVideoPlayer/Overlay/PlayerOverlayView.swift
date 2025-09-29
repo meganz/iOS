@@ -246,15 +246,14 @@ extension PlayerOverlayView {
 extension PlayerOverlayView {
     var centerPlaybackButtons: some View {
         HStack(alignment: .center, spacing: 48) {
-            if viewModel.shouldShownJumpButtons {
-                jumpBackwardButton
-            }
+            jumpBackwardButton
+                .disabled(!viewModel.shouldShownJumpButtons)
             skipBackwardButton
             playPauseButton
             skipForwardButton
-            if viewModel.shouldShownJumpButtons {
-                jumpForwardButton
-            }
+                .disabled(!viewModel.canPlayNext)
+            jumpForwardButton
+                .disabled(!viewModel.shouldShownJumpButtons)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
         .foregroundStyle(TokenColors.Icon.onColor.swiftUI)
@@ -303,16 +302,12 @@ extension PlayerOverlayView {
     }
 
     var skipBackwardButton: some View {
-        controlButton(name: "skipForward", action: {
-            // Implement skip backward functionality
-        })
+        controlButton(name: "skipForward", action: viewModel.didTapPlayPrevious)
         .scaleEffect(x: -1, y: 1)
     }
 
     var skipForwardButton: some View {
-        controlButton(name: "skipForward", action: {
-            // Implement skip forward functionality
-        })
+        controlButton(name: "skipForward", action: viewModel.didTapPlayNext)
     }
 
     var jumpBackwardButton: some View {
@@ -645,7 +640,7 @@ extension PlayerOverlayView {
                 devicePermissionsHandler: DevicePermissionsHandler.makeHandler(),
                 saveSnapshotUseCase: SaveSnapshotUseCase(),
                 didTapBackAction: {},
-                didTapMoreAction: {},
+                didTapMoreAction: { _ in },
                 didTapRotateAction: {},
                 didTapPictureInPictureAction: {}
             )

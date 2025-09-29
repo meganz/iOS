@@ -1,3 +1,4 @@
+import MEGAAppSDKRepo
 import MEGAPreference
 import MEGASdk
 
@@ -42,6 +43,19 @@ public enum DependencyInjection {
     public static var resumePlaybackPositionUseCase: some ResumePlaybackPositionUseCaseProtocol {
         ResumePlaybackPositionUseCase(
             preferenceUseCase: PreferenceUseCase.default
+        )
+    }
+
+    public static var videoNodesUseCase: some VideoNodesUseCaseProtocol {
+        VideoNodesUseCase(
+            repo: videoNodeRepository
+        )
+    }
+
+    public static var videoNodeRepository: some VideoNodesRepositoryProtocol {
+        VideoNodesRepository(
+            sdk: DependencyInjection.sharedSdk,
+            nodeUpdatesProvider: NodeUpdatesProvider()
         )
     }
 }

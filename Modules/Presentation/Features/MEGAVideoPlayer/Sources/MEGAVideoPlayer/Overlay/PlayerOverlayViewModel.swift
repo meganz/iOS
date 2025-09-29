@@ -10,7 +10,9 @@ public final class PlayerOverlayViewModel: ObservableObject {
 
     @Published var currentTime: Duration = .seconds(0)
     @Published var duration: Duration = .seconds(0)
-    
+    @Published var canPlayNext = false
+
+    @Published var title: String = ""
     @Published var isControlsVisible: Bool = true
     @Published var currentSpeed: PlaybackSpeed = .normal
     @Published var isLoopEnabled: Bool = false
@@ -35,7 +37,7 @@ public final class PlayerOverlayViewModel: ObservableObject {
     private let devicePermissionsHandler: any DevicePermissionsHandling
     private let saveSnapshotUseCase: any SaveSnapshotUseCaseProtocol
     private let didTapBackAction: () -> Void
-    private let didTapMoreAction: () -> Void
+    private let didTapMoreAction: ((any PlayableNode)?) -> Void
     private let didTapRotateAction: () -> Void
     private let didTapPictureInPictureAction: () -> Void
 
@@ -44,7 +46,7 @@ public final class PlayerOverlayViewModel: ObservableObject {
         devicePermissionsHandler: some DevicePermissionsHandling,
         saveSnapshotUseCase: some SaveSnapshotUseCaseProtocol,
         didTapBackAction: @escaping () -> Void,
-        didTapMoreAction: @escaping () -> Void,
+        didTapMoreAction: @escaping ((any PlayableNode)?) -> Void,
         didTapRotateAction: @escaping () -> Void = {},
         didTapPictureInPictureAction: @escaping () -> Void = {}
     ) {
@@ -65,6 +67,8 @@ public final class PlayerOverlayViewModel: ObservableObject {
         observeState()
         observeCurrentTime()
         observeDuration()
+        observeCanPlayNext()
+        observeNodeName()
     }
 
     private func observeState() {
@@ -94,6 +98,20 @@ public final class PlayerOverlayViewModel: ObservableObject {
             .receive(on: DispatchQueue.main)
             .assign(to: &$duration)
     }
+
+    private func observeCanPlayNext() {
+        player
+            .canPlayNextPublisher
+            .receive(on: DispatchQueue.main)
+            .assign(to: &$canPlayNext)
+    }
+
+    private func observeNodeName() {
+        player
+            .nodeNamePublisher
+            .receive(on: DispatchQueue.main)
+            .assign(to: &$title)
+    }
 }
 
 // MARK: - nav bar logic
@@ -104,11 +122,7 @@ extension PlayerOverlayViewModel {
     }
 
     func didTapMore() {
-        didTapMoreAction()
-    }
-
-    var title: String {
-        player.nodeName
+        didTapMoreAction(player.currentNode)
     }
 }
 
@@ -146,6 +160,14 @@ extension PlayerOverlayViewModel {
         try? await Task.sleep(nanoseconds: 100_000_000)
         isSeeking = false
         resetAutoHide()
+    }
+
+    func didTapPlayPrevious() {
+        player.playPrevious()
+    }
+
+    func didTapPlayNext() {
+        player.playNext()
     }
 }
 
@@ -551,15 +573,21 @@ extension PlayerOverlayViewModel {
 
     private var shouldAutoHide: Bool {
         switch state {
-        case .paused, .buffering:
+        case .paused, .buffering, .ended:
             false
-        case .playing, .opening, .stopped, .error, .ended:
+        case .playing, .opening, .stopped, .error:
             true
         }
     }
 
     private func handleStateChange(_ newState: PlaybackState) {
         state = newState
+        switch newState {
+        case .opening, .ended:
+            showControls()
+        default:
+            break
+        }
         resetAutoHide()
     }
 

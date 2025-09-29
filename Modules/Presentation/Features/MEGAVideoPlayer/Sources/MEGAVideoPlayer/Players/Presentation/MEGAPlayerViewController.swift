@@ -67,7 +67,7 @@ public final class MEGAPlayerViewController: UIViewController {
                     devicePermissionsHandler: DevicePermissionsHandler.makeHandler(),
                     saveSnapshotUseCase: SaveSnapshotUseCase(),
                     didTapBackAction: dismissAction ?? {},
-                    didTapMoreAction: moreAction ?? {},
+                    didTapMoreAction: moreAction ?? { _ in },
                     didTapRotateAction: { [weak self] in
                         self?.toggleOrientation()
                     },

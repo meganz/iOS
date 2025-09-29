@@ -30,15 +30,104 @@ struct MEGAAVPlayerTests {
         #expect(mockUseCase.getPlaybackPositionCallCount == 1)
     }
 
+    @Test
+    func playNext_whenInMiddleOfList_shouldLoadNextNodeAndUpdateCanPlayNext() async {
+        let node1 = MockPlayableNode(id: "1", nodeName: "v1.mp4")
+        let node2 = MockPlayableNode(id: "2", nodeName: "v2.mp4")
+        let node3 = MockPlayableNode(id: "3", nodeName: "v3.mp4")
+        let videoNodesUseCase = MockVideoNodesUseCase(
+            nodes: [node1, node2, node3]
+        )
+        let sut = makeSUT(
+            videoNodesUseCase: videoNodesUseCase
+        )
+
+        sut.loadNode(node2)
+        sut.streamVideoNodes(for: node2)
+        
+        await _ = sut.streamVideoNodesTask?.value
+
+        sut.playNext()
+
+        #expect(sut.nodeName == node3.nodeName)
+    }
+
+    @Test
+    func playNext_whenAtEnd_shouldDoNothing() async {
+        let node1 = MockPlayableNode(id: "1", nodeName: "v1.mp4")
+        let node2 = MockPlayableNode(id: "2", nodeName: "v2.mp4")
+        let videoNodesUseCase = MockVideoNodesUseCase(
+            nodes: [node1, node2]
+        )
+        let sut = makeSUT(
+            videoNodesUseCase: videoNodesUseCase
+        )
+        sut.loadNode(node2)
+        sut.streamVideoNodes(for: node2)
+
+        await _ = sut.streamVideoNodesTask?.value
+
+        sut.playNext()
+
+        #expect(sut.nodeName == node2.nodeName)
+    }
+
+    @Test
+    func playPrevious_whenInMiddle_shouldLoadPreviousNode() async {
+        let node1 = MockPlayableNode(id: "1", nodeName: "v1.mp4")
+        let node2 = MockPlayableNode(id: "2", nodeName: "v2.mp4")
+        let node3 = MockPlayableNode(id: "3", nodeName: "v3.mp4")
+        let videoNodesUseCase = MockVideoNodesUseCase(
+            nodes: [node1, node2, node3]
+        )
+        let sut = makeSUT(
+            videoNodesUseCase: videoNodesUseCase
+        )
+
+        sut.loadNode(node2)
+        sut.streamVideoNodes(for: node2)
+
+        await _ = sut.streamVideoNodesTask?.value
+
+        sut.playPrevious()
+
+        #expect(sut.nodeName == node1.nodeName)
+    }
+
+    @Test
+    func playPrevious_whenAtStart_shouldStillPlayTheCurrentVideo() async {
+        let node1 = MockPlayableNode(id: "1", nodeName: "v1.mp4")
+        let node2 = MockPlayableNode(id: "2", nodeName: "v2.mp4")
+        let videoNodesUseCase = MockVideoNodesUseCase(
+            nodes: [node1, node2]
+        )
+        let sut = makeSUT(
+            videoNodesUseCase: videoNodesUseCase
+        )
+
+        sut.loadNode(node1)
+        sut.streamVideoNodes(for: node1)
+        
+        await _ = sut.streamVideoNodesTask?.value
+
+        sut.playPrevious()
+
+        #expect(sut.nodeName == node1.nodeName)
+    }
+
     // MARK: - Helper
 
     private func makeSUT(
-        resumePlaybackPositionUseCase: some ResumePlaybackPositionUseCaseProtocol = MockResumePlaybackPositionUseCase()
+        streamingUseCase: some StreamingUseCaseProtocol = MockStreamingUseCase(),
+        resumePlaybackPositionUseCase: some ResumePlaybackPositionUseCaseProtocol = MockResumePlaybackPositionUseCase(),
+        videoNodesUseCase: some VideoNodesUseCaseProtocol =
+            MockVideoNodesUseCase()
     ) -> MEGAAVPlayer {
-        MEGAAVPlayer(
-            streamingUseCase: MockStreamingUseCase(),
+        return MEGAAVPlayer(
+            streamingUseCase: streamingUseCase,
             notificationCenter: .default,
-            resumePlaybackPositionUseCase: resumePlaybackPositionUseCase
+            resumePlaybackPositionUseCase: resumePlaybackPositionUseCase,
+            videoNodesUseCase: videoNodesUseCase
         )
     }
 }
