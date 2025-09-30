@@ -8,8 +8,8 @@ public protocol TransferInventoryUseCaseProtocol: Sendable {
     func downloadTransfers(filteringUserTransfers: Bool) -> [TransferEntity]
     func uploadTransfers(filteringUserTransfers: Bool) -> [TransferEntity]
     func completedTransfers(filteringUserTransfers: Bool) -> [TransferEntity]
-    func saveToPhotosTransfers(filteringUserTransfer: Bool) -> [TransferEntity]?
     func documentsDirectory() -> URL
+    func areThereAnyTransferWithAppData(matching filter: @escaping (String) -> Bool) -> Bool
 }
 
 // MARK: - Use case implementation -
@@ -68,11 +68,6 @@ public struct TransferInventoryUseCase<T: TransferInventoryRepositoryProtocol, U
         }
     }
     
-    public func saveToPhotosTransfers(filteringUserTransfer: Bool) -> [TransferEntity]? {
-        let transfers = transfers(filteringUserTransfers: filteringUserTransfer)
-        return transfers.filter(isSaveToPhotosAppTransfer)
-    }
-    
     private func filterUserTransfers(_ transfers: [TransferEntity]) -> [TransferEntity] {
         transfers.filter {
             $0.type == .upload || isOfflineTransfer($0) || isExportFileTransfer($0) || isSaveToPhotosAppTransfer($0)
@@ -93,5 +88,9 @@ public struct TransferInventoryUseCase<T: TransferInventoryRepositoryProtocol, U
     
     public func documentsDirectory() -> URL {
         fileSystemRepository.documentsDirectory()
+    }
+    
+    public func areThereAnyTransferWithAppData(matching filter: @escaping (String) -> Bool) -> Bool {
+        transferInventoryRepository.areThereAnyTransferWithAppData(matching: filter)
     }
 }

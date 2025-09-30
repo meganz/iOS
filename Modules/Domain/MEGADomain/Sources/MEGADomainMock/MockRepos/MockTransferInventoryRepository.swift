@@ -1,6 +1,7 @@
 import MEGADomain
 
 public struct MockTransferInventoryRepository: TransferInventoryRepositoryProtocol {
+    
     public static var newRepo: MockTransferInventoryRepository {
         MockTransferInventoryRepository()
     }
@@ -28,5 +29,10 @@ public struct MockTransferInventoryRepository: TransferInventoryRepositoryProtoc
     
     public func isSaveToPhotosAppTransfer(_ transfer: TransferEntity) -> Bool {
         transfer.appData?.contains(">SaveInPhotosApp") ?? false
+    }
+    
+    public func areThereAnyTransferWithAppData(matching filter: @escaping (String) -> Bool) -> Bool {
+        let allTransfers = transfers()
+        return allTransfers.compactMap(\.appData).contains(where: filter)
     }
 }
