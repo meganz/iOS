@@ -144,9 +144,6 @@ import MEGADomain
     
     private func handleLogoutDone() {
         invokeCommand?(.logoutDone)
-        monitorNodeUpdatesTask = nil
-        monitorFetchNodesRequestStartUpdatesTask = nil
-        monitorRequestFinishUpdatesTask = nil
     }
     
     private func trackSendToChatFolderLinkNoAccountLoggedEvent() {
