@@ -167,12 +167,21 @@ extension FolderLinkViewController {
         navigationItem.titleView?.sizeToFit()
     }
     
-    @objc func configureToolbarButtons() {
+    @objc func
+    configureToolbarButtons() {
         folderLinkToolbarConfigurator = FolderLinkToolbarConfigurator(
-            importAction: importButtonPressed,
-            downloadAction: downloadButtonPressed,
-            saveToPhotosAction: saveToPhotosButtonPressed,
-            shareLinkAction: shareLinkButtonPressed
+            importAction: { [weak self] button in
+                self?.importButtonPressed(button)
+            },
+            downloadAction: { [weak self] button in
+                self?.downloadButtonPressed(button)
+            },
+            saveToPhotosAction: { [weak self] button in
+                self?.saveToPhotosButtonPressed(button)
+            },
+            shareLinkAction: { [weak self] button in
+                self?.shareLinkButtonPressed(button)
+            }
         )
         
         refreshToolbarButtonsStatus(true)
