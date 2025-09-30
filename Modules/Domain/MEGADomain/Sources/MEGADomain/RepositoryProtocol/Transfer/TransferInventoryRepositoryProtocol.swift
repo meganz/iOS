@@ -7,4 +7,5 @@ public protocol TransferInventoryRepositoryProtocol: RepositoryProtocol, Sendabl
     func completedTransfers() -> [TransferEntity]
     func isExportFileTransfer(_ transfer: TransferEntity) -> Bool
     func isSaveToPhotosAppTransfer(_ transfer: TransferEntity) -> Bool
+    func areThereAnyTransferWithAppData(matching filter: @escaping (String) -> Bool) -> Bool
 }

@@ -46,6 +46,10 @@ public struct TransferInventoryRepository: TransferInventoryRepositoryProtocol {
         transfer.appData?.contains(TransferMetaDataEntity.saveInPhotos.rawValue) ?? false
     }
     
+    public func areThereAnyTransferWithAppData(matching filter: @escaping (String) -> Bool) -> Bool {
+        sdk.areThereAnyTransferWithAppData(matching: filter)
+    }
+    
     private func getTransfers(completion: @Sendable @escaping ([TransferEntity]) -> Void) {
         queue.async {
             completion(sdk.transfers.toTransferEntities())

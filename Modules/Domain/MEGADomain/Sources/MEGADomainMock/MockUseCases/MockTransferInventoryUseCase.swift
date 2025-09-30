@@ -6,7 +6,6 @@ public struct MockTransferInventoryUseCase: TransferInventoryUseCaseProtocol {
     private let downloadTransfers: [TransferEntity]
     private let uploadTransfers: [TransferEntity]
     private let completedTransfers: [TransferEntity]
-    private let saveToPhotosTransfers: [TransferEntity]
     private let defaultDocumentsDirectory: String
     
     public init(
@@ -14,14 +13,12 @@ public struct MockTransferInventoryUseCase: TransferInventoryUseCaseProtocol {
         downloadTransfers: [TransferEntity] = [],
         uploadTransfers: [TransferEntity] = [],
         completedTransfers: [TransferEntity] = [],
-        saveToPhotosTransfers: [TransferEntity] = [],
         defaultDocumentsDirectory: String = "/mock/documents/directory"
     ) {
         self.transfers = transfers
         self.downloadTransfers = downloadTransfers
         self.uploadTransfers = uploadTransfers
         self.completedTransfers = completedTransfers
-        self.saveToPhotosTransfers = saveToPhotosTransfers
         self.defaultDocumentsDirectory = defaultDocumentsDirectory
     }
     
@@ -45,11 +42,12 @@ public struct MockTransferInventoryUseCase: TransferInventoryUseCaseProtocol {
         completedTransfers
     }
     
-    public func saveToPhotosTransfers(filteringUserTransfer: Bool) -> [TransferEntity]? {
-        saveToPhotosTransfers
-    }
-    
     public func documentsDirectory() -> URL {
         URL(fileURLWithPath: defaultDocumentsDirectory)
+    }
+    
+    public func areThereAnyTransferWithAppData(matching filter: @escaping (String) -> Bool) -> Bool {
+        let allTransfers = transfers(filteringUserTransfers: false)
+        return allTransfers.compactMap(\.appData).contains(where: filter)
     }
 }

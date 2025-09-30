@@ -37,7 +37,7 @@ import MEGARepo
     private func handleSaveNode(_ savedToPhotos: Bool) async {
         let transferInventoryUseCase = TransferInventoryUseCase(
             transferInventoryRepository: TransferInventoryRepository.newRepo, fileSystemRepository: FileSystemRepository.sharedRepo)
-        let anyPendingSavePhotosTransfer = transferInventoryUseCase.saveToPhotosTransfers(filteringUserTransfer: true)?.isNotEmpty ?? false
+        let anyPendingSavePhotosTransfer = transferInventoryUseCase.areThereAnyTransferWithAppData { $0.contains(TransferMetaDataEntity.saveInPhotos.rawValue) }
         if savedToPhotos, !anyPendingSavePhotosTransfer {
             await SVProgressHUD.show(MEGAAssets.UIImage.saveToPhotos, status: Strings.Localizable.savedToPhotos)
         }
