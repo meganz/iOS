@@ -72,7 +72,7 @@ static NSString *kFileSize = @"kFileSize";
         self.nameLabel.textColor = [UIColor mnz_takenDownNodeTextColor];
     } else {
         self.nameLabel.textColor = [UIColor primaryTextColor];
-        self.nameLabel.text = node.name;
+        self.nameLabel.text = [node nameAfterDecryptionCheck];
         if (node.isFile) {
             self.infoLabel.text = [Helper sizeForNode:node api:sdk];
         } else if (node.isFolder) {

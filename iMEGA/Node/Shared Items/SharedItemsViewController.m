@@ -418,7 +418,10 @@
         return;
     }
 
-    BOOL isNodeUndecryptedFolder = self.incomingButton.selected && indexPath.section == 0;
+    // For incoming shares: We need to check for undecrypted nodes using the below logic:
+    // - If the indexPath's section is 0, the section only contains sharer-not-verfieid nodes, thus it's undecrypted
+    // - Otherwise, if the node itself is not `isNodeKeyDecrypted`, it's also undecrypted
+    BOOL isNodeUndecryptedFolder = self.incomingButton.selected && (indexPath.section == 0 || !node.isNodeKeyDecrypted);
     NodeInfoViewModel *viewModel = [self createNodeInfoViewModelWithNode:node
                                                  isNodeUndecryptedFolder:isNodeUndecryptedFolder];
     MEGANavigationController *nodeInfoNavigation = [NodeInfoViewController instantiateWithViewModel:viewModel delegate:self];
@@ -461,7 +464,7 @@
 
     cell.thumbnailImageView.image = UIImage.mnz_incomingFolderImage;
 
-    [cell configureNodeWithName:node.name searchText: self.searchController.searchBar.text isTakenDown:node.isTakenDown];
+    [cell configureNodeWithName:[node nameAfterDecryptionCheck] searchText: self.searchController.searchBar.text isTakenDown:node.isTakenDown];
     [self setupLabelAndFavouriteForNode:node cell:cell];
     
     MEGAUser *user = [MEGASdk.shared contactForEmail:userEmail];
@@ -979,7 +982,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     MEGANode *node = [self nodeAtIndexPath:indexPath];
-    
+
     if (tableView.isEditing) {
         for (MEGANode *tempNode in self.selectedNodesMutableArray) {
             if (tempNode.handle == node.handle) {

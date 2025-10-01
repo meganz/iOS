@@ -574,10 +574,12 @@ final class NodeInfoViewController: UITableViewController {
             fatalError("Could not get NodeInfoDetailTableViewCell")
         }
         
-        cell.configure(forNode: node,
+        cell.configure(
+            forNode: node,
                        isNodeInRubbish: node.mnz_isInRubbishBin(),
                        folderInfo: folderInfo,
-                       isUndecryptedFolder: viewModel.isNodeUndecryptedFolder)
+                       isUndecryptedFolder: viewModel.isNodeUndecryptedFolder
+        )
         return cell
     }
     

@@ -5,6 +5,16 @@ import MEGASwift
 import MEGAUIKit
 
 extension MEGANode {
+    
+    /// Returns the proper text for node name based on decryption status
+    /// - Returns:
+    ///         - Node's proper name if it's decrypted
+    ///         - The translation for `[Undecrypted folder]` (if node is a folder) or `[Undecrypted file]` (if node is a file)
+    @objc func nameAfterDecryptionCheck() -> String {
+        isNodeKeyDecrypted() ? (name ?? "")
+        : isFile() ? Strings.Localizable.SharedItems.Tab.Recents.undecryptedFileName(1)
+        : Strings.Localizable.SharedItems.Tab.Incoming.undecryptedFolderName
+    }
 
     @objc func attributedName(searchText: String?) -> NSAttributedString {
         name?.highlightedStringWithKeyword(
