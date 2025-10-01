@@ -36,6 +36,7 @@ final class NodeActionBuilder {
     private var addToDestination: NodeActionAddToDestination = .none
     private var viewInFolder: Bool = false
     private var isAudioFileLink: Bool = false
+    private var isSelectionEnabled: Bool = false
 
     func setDisplayMode(_ displayMode: DisplayMode) -> NodeActionBuilder {
         self.displayMode = displayMode
@@ -196,7 +197,12 @@ final class NodeActionBuilder {
         self.isAudioFileLink = isAudioFileLink
         return self
     }
-    
+
+    func setIsSelectionEnabled(_ isSelectionEnabled: Bool) -> NodeActionBuilder {
+        self.isSelectionEnabled = isSelectionEnabled
+        return self
+    }
+
     func build() -> [NodeAction] {
         var nodeActions = [NodeAction]()
         
@@ -585,7 +591,8 @@ final class NodeActionBuilder {
         }
         
         if displayMode != .nodeInfo {
-            nodeActions.append(.infoAction())
+            nodeActions.append(contentsOf: isSelectionEnabled ? [.infoAction(), .selectAction()] : [.infoAction()])
+            
             if versionCount > 0 {
                 nodeActions.append(.viewVersionsAction(versionCount: versionCount))
             }

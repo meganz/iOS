@@ -11,8 +11,8 @@ class NodeActionViewControllerGenericDelegate: NodeActionViewControllerDelegate 
     private(set) var messageId: HandleEntity?
     private(set) var chatId: HandleEntity?
     private let moveToRubbishBinViewModel: any MoveToRubbishBinViewModelProtocol
-    private let nodeActionListener: (MegaNodeActionType?) -> Void
-    
+    private let nodeActionListener: (MegaNodeActionType?, [MEGANode]) -> Void
+
     private let saveMediaToPhotosUseCase = SaveMediaToPhotosUseCase(
         downloadFileRepository: DownloadFileRepository(
             sdk: MEGASdk.shared
@@ -29,7 +29,7 @@ class NodeActionViewControllerGenericDelegate: NodeActionViewControllerDelegate 
         messageId: HandleEntity? = nil,
         chatId: HandleEntity? = nil,
         moveToRubbishBinViewModel: any MoveToRubbishBinViewModelProtocol,
-        nodeActionListener: @escaping (MegaNodeActionType?) -> Void = { _ in }
+        nodeActionListener: @escaping (MegaNodeActionType?, [MEGANode]) -> Void = { _, _ in }
     ) {
         self.viewController = viewController
         self.isNodeFromFolderLink = isNodeFromFolderLink
@@ -40,7 +40,7 @@ class NodeActionViewControllerGenericDelegate: NodeActionViewControllerDelegate 
     }
     
     func nodeAction(_ nodeAction: NodeActionViewController, didSelect action: MegaNodeActionType, forNodes nodes: [MEGANode], from sender: Any) {
-        nodeActionListener(action)
+        nodeActionListener(action, nodes)
         guard let viewController = viewController else { return }
         
         switch action {
@@ -93,7 +93,7 @@ class NodeActionViewControllerGenericDelegate: NodeActionViewControllerDelegate 
         for node: MEGANode,
         from sender: Any
     ) {
-        nodeActionListener(action)
+        nodeActionListener(action, [node])
         guard let viewController = viewController else { return }
         switch action {
         case .editTextFile:

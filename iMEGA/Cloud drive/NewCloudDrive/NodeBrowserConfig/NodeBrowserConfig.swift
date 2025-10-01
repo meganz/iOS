@@ -1,3 +1,5 @@
+import MEGADomain
+
 struct NodeBrowserConfig {
     var displayMode: DisplayMode?
     var isFromViewInFolder: Bool?
@@ -7,6 +9,7 @@ struct NodeBrowserConfig {
     var warningViewModel: WarningBannerViewModel?
     // this should enabled for non-root nodes
     var mediaDiscoveryAutomaticDetectionEnabled: () -> Bool = { false }
+
     // Determines whether the NodeBrowserView should handle upgrade encouragement flow or not, default value is true
     var supportsUpgradeEncouragement: Bool = true
     

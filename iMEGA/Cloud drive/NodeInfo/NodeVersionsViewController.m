@@ -352,7 +352,7 @@ MEGADelegate
     MEGANode *node = [[self itemAt:indexPath] node];
     
     BOOL isBackupNode = [[[BackupsOCWrapper alloc] init] isBackupNode:node];
-    NodeActionViewController *nodeActions = [NodeActionViewController.alloc initWithNode:node delegate:self displayMode:DisplayModeNodeVersions isIncoming:NO isBackupNode:isBackupNode isFromSharedItem: NO sender:sender];
+    NodeActionViewController *nodeActions = [NodeActionViewController.alloc initWithNode:node delegate:self displayMode:DisplayModeNodeVersions isIncoming:NO isBackupNode:isBackupNode isFromSharedItem:NO isSelectionEnabled:NO sender:sender];
     [self presentViewController:nodeActions animated:YES completion:nil];
 }
 

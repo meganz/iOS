@@ -148,6 +148,7 @@ class NodeBrowserViewModelTests: XCTestCase {
                     sensitivityChangesForNode: sensitivityChangesForNode
                 ),
                 accountStorageUseCase: mockAccountStorageUseCase, // Inject the mock here
+                nodeActionsBridge: NodeActionsBridge(),
                 tracker: tracker,
                 viewModeSaver: { saver($0) },
                 storageFullModalAlertViewRouter: MockStorageFullModalAlertViewRouter(),

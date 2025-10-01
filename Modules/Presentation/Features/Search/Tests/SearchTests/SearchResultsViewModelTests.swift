@@ -809,12 +809,23 @@ final class SearchResultsViewModelTests: XCTestCase, @unchecked Sendable {
     }
 
     @MainActor
-    private func makeHarnessWithAllItemsSelected(listItemCount count: Int) -> Harness {
+    func testSelectSearchResults_whenInvoked_shouldMatchResults() {
+        let harness = makeHarnessWithAllItemsSelected(listItemCount: 5, toggleSelection: false)
+        let selectedResultsViewModel = harness.sut.listItems[0..<1]
+        harness.sut.selectSearchResults(selectedResultsViewModel.map(\.result))
+        XCTAssertTrue(harness.sut.editing)
+        XCTAssertEqual(harness.sut.selectedRowIds, Set(selectedResultsViewModel.map(\.id)))
+    }
+
+    @MainActor
+    private func makeHarnessWithAllItemsSelected(listItemCount count: Int, toggleSelection: Bool = true) -> Harness {
         let harness = Harness(self)
         let listItems = Array(1...count).map { generateRandomSearchResultRowViewModel(id: $0) }
         harness.resultsProvider.currentResultIdsToReturn = listItems.map { $0.result.id }
         harness.sut.listItems = listItems
-        harness.sut.toggleSelectAll()
+        if toggleSelection {
+            harness.sut.toggleSelectAll()
+        }
         return harness
     }
 

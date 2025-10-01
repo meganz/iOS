@@ -213,8 +213,8 @@ final class AudioPlayerViewRouter: NSObject, AudioPlayerViewRouting {
         presenter.isKind(of: NodeVersionsViewController.self)
     }
     
-    private func nodeActionListener(_ tracker: some AnalyticsTracking) -> (MegaNodeActionType?) -> Void {
-        { action in
+    private func nodeActionListener(_ tracker: some AnalyticsTracking) -> (MegaNodeActionType?, [MEGANode]) -> Void {
+        { action, _ in
             switch action {
             case .hide:
                 tracker.trackAnalyticsEvent(with: AudioPlayerHideNodeMenuItemEvent())
