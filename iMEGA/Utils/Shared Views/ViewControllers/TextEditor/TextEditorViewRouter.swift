@@ -149,7 +149,15 @@ extension TextEditorViewRouter: TextEditorViewRouting {
         let backupsUC = BackupsUseCase(backupsRepository: BackupsRepository.newRepo, nodeRepository: NodeRepository.newRepo)
         let isBackupNode = backupsUC.isBackupNode(node.toNodeEntity())
         let displayMode: DisplayMode = node.mnz_isInRubbishBin() ? .rubbishBin : .textEditor
-        let nodeActionViewController = NodeActionViewController(node: node, delegate: delegate, displayMode: displayMode, isBackupNode: isBackupNode, isFromSharedItem: isFromSharedItem, sender: button)
+        let nodeActionViewController = NodeActionViewController(
+            node: node,
+            delegate: delegate,
+            displayMode: displayMode,
+            isBackupNode: isBackupNode,
+            isFromSharedItem: isFromSharedItem,
+            isSelectionEnabled: false,
+            sender: button
+        )
         nodeActionViewController.accessoryActionDelegate = nodeAccessoryActionDelegate
         baseViewController?.present(nodeActionViewController, animated: true, completion: nil)
     }

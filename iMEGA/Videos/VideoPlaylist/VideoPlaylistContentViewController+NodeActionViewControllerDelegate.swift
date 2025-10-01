@@ -37,8 +37,8 @@ extension VideoPlaylistContentViewController: NodeActionViewControllerDelegate {
         }
     }
     
-    private func nodeActionListener(tracker: any AnalyticsTracking) -> (MegaNodeActionType?) -> Void {
-        { action in
+    private func nodeActionListener(tracker: any AnalyticsTracking) -> (MegaNodeActionType?, [MEGANode]) -> Void {
+        { action, _ in
             switch action {
             case .hide:
                 tracker.trackAnalyticsEvent(with: HideNodeMultiSelectMenuItemEvent())

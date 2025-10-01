@@ -257,8 +257,8 @@ final class HomeScreenFactory: NSObject {
         )
     }
     
-    private func nodeActionListener(_ tracker: any AnalyticsTracking) -> (MegaNodeActionType?) -> Void {
-        { action in
+    private func nodeActionListener(_ tracker: any AnalyticsTracking) -> (MegaNodeActionType?, [MEGANode]) -> Void {
+        { action, _ in
             switch action {
             case .saveToPhotos:
                 tracker.trackAnalyticsEvent(with: SearchResultSaveToDeviceMenuItemEvent())

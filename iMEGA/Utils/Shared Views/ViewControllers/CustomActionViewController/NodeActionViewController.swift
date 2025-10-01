@@ -85,7 +85,9 @@ class NodeActionViewController: ActionSheetViewController {
         isIncoming: Bool = false,
         isBackupNode: Bool,
         isFromSharedItem: Bool = false,
-        sender: Any) {
+        isSelectionEnabled: Bool = false,
+        sender: Any
+    ) {
             guard let node = MEGASdk.shared.node(forHandle: node) else { return nil }
             self.init(
                 node: node,
@@ -94,6 +96,7 @@ class NodeActionViewController: ActionSheetViewController {
                 isIncoming: isIncoming,
                 isBackupNode: isBackupNode,
                 isFromSharedItem: isFromSharedItem,
+                isSelectionEnabled: isSelectionEnabled,
                 sender: sender
             )
         }
@@ -103,7 +106,8 @@ class NodeActionViewController: ActionSheetViewController {
         delegate: some NodeActionViewControllerDelegate,
         displayMode: DisplayMode,
         isBackupNode: Bool = false,
-        sender: Any) {
+        sender: Any
+    ) {
         
         guard let node = MEGASdk.shared.node(forHandle: nodeHandle) else { return nil }
         self.nodes = [node]
@@ -122,7 +126,15 @@ class NodeActionViewController: ActionSheetViewController {
             .build()
     }
     
-    init(nodes: [MEGANode], delegate: some NodeActionViewControllerDelegate, displayMode: DisplayMode, isIncoming: Bool = false, containsABackupNode: Bool = false, isFromSharedItem: Bool = false, sender: Any) {
+    init(
+        nodes: [MEGANode],
+        delegate: some NodeActionViewControllerDelegate,
+        displayMode: DisplayMode,
+        isIncoming: Bool = false,
+        containsABackupNode: Bool = false,
+        isFromSharedItem: Bool = false,
+        sender: Any
+    ) {
         self.nodes = nodes
         self.displayMode = displayMode
         self.delegate = delegate
@@ -173,7 +185,16 @@ class NodeActionViewController: ActionSheetViewController {
         }
     }
 
-    @objc init(node: MEGANode, delegate: any NodeActionViewControllerDelegate, displayMode: DisplayMode, isIncoming: Bool = false, isBackupNode: Bool, isFromSharedItem: Bool = false, sender: Any) {
+    @objc init(
+        node: MEGANode,
+        delegate: any NodeActionViewControllerDelegate,
+        displayMode: DisplayMode,
+        isIncoming: Bool = false,
+        isBackupNode: Bool,
+        isFromSharedItem: Bool = false,
+        isSelectionEnabled: Bool = false,
+        sender: Any
+    ) {
         self.nodes = [node]
         self.displayMode = displayMode
         self.delegate = delegate
@@ -182,14 +203,24 @@ class NodeActionViewController: ActionSheetViewController {
         
         configurePresentationStyle(from: sender)
         
-        self.setupActions(node: node,
-                          displayMode: displayMode,
-                          isIncoming: isIncoming,
-                          isBackupNode: isBackupNode,
-                          isFromSharedItem: isFromSharedItem)
+        self.setupActions(
+            node: node,
+            displayMode: displayMode,
+            isIncoming: isIncoming,
+            isBackupNode: isBackupNode,
+            isFromSharedItem: isFromSharedItem,
+            isSelectionEnabled: isSelectionEnabled
+        )
     }
     
-    @objc init(node: MEGANode, delegate: any NodeActionViewControllerDelegate, displayMode: DisplayMode, isBackupNode: Bool, viewInFolder: Bool = false, sender: Any) {
+    @objc init(
+        node: MEGANode,
+        delegate: any NodeActionViewControllerDelegate,
+        displayMode: DisplayMode,
+        isBackupNode: Bool,
+        viewInFolder: Bool = false,
+        sender: Any
+    ) {
         self.nodes = [node]
         self.displayMode = displayMode
         self.delegate = delegate
@@ -206,7 +237,16 @@ class NodeActionViewController: ActionSheetViewController {
         )
     }
     
-    @objc init(node: MEGANode, delegate: any NodeActionViewControllerDelegate, displayMode: DisplayMode, isIncoming: Bool = false, isBackupNode: Bool, sharedFolder: MEGAShare, shouldShowVerifyContact: Bool, sender: Any) {
+    @objc init(
+        node: MEGANode,
+        delegate: any NodeActionViewControllerDelegate,
+        displayMode: DisplayMode,
+        isIncoming: Bool = false,
+        isBackupNode: Bool,
+        sharedFolder: MEGAShare,
+        shouldShowVerifyContact: Bool,
+        sender: Any
+    ) {
         self.nodes = [node]
         self.displayMode = displayMode
         self.delegate = delegate
@@ -224,7 +264,15 @@ class NodeActionViewController: ActionSheetViewController {
                           shouldShowVerifyContact: shouldShowVerifyContact)
     }
     
-    @objc init(node: MEGANode, delegate: any NodeActionViewControllerDelegate, displayMode: DisplayMode, isInVersionsView: Bool, isBackupNode: Bool, isFromSharedItem: Bool = false, sender: Any) {
+    @objc init(
+        node: MEGANode,
+        delegate: any NodeActionViewControllerDelegate,
+        displayMode: DisplayMode,
+        isInVersionsView: Bool,
+        isBackupNode: Bool,
+        isFromSharedItem: Bool = false,
+        sender: Any
+    ) {
         self.nodes = [node]
         self.displayMode = displayMode
         self.delegate = delegate
@@ -241,7 +289,16 @@ class NodeActionViewController: ActionSheetViewController {
                           isFromSharedItem: isFromSharedItem)
     }
     
-    @objc init(node: MEGANode, delegate: any NodeActionViewControllerDelegate, displayMode: DisplayMode, isInVersionsView: Bool, isBackupNode: Bool, isFromSharedItem: Bool = false, isAudioFileLink: Bool, sender: Any) {
+    @objc init(
+        node: MEGANode,
+        delegate: any NodeActionViewControllerDelegate,
+        displayMode: DisplayMode,
+        isInVersionsView: Bool,
+        isBackupNode: Bool,
+        isFromSharedItem: Bool = false,
+        isAudioFileLink: Bool,
+        sender: Any
+    ) {
         self.nodes = [node]
         self.displayMode = displayMode
         self.delegate = delegate
@@ -261,8 +318,15 @@ class NodeActionViewController: ActionSheetViewController {
         )
     }
     
-    @objc init(node: MEGANode, delegate: any NodeActionViewControllerDelegate, displayMode: DisplayMode, viewMode: ViewModePreferenceEntity,
-               isBackupNode: Bool, containsMediaFiles: Bool, sender: Any) {
+    @objc init(
+        node: MEGANode,
+        delegate: any NodeActionViewControllerDelegate,
+        displayMode: DisplayMode,
+        viewMode: ViewModePreferenceEntity,
+        isBackupNode: Bool,
+        containsMediaFiles: Bool,
+        sender: Any
+    ) {
         self.nodes = [node]
         self.displayMode = displayMode
         self.delegate = delegate
@@ -280,7 +344,16 @@ class NodeActionViewController: ActionSheetViewController {
             .build()
     }
     
-    @objc init(node: MEGANode, delegate: any NodeActionViewControllerDelegate, isLink: Bool = false, displayMode: DisplayMode, isInVersionsView: Bool = false, isBackupNode: Bool, isFromSharedItem: Bool = false, sender: Any) {
+    @objc init(
+        node: MEGANode,
+        delegate: any NodeActionViewControllerDelegate,
+        isLink: Bool = false,
+        displayMode: DisplayMode,
+        isInVersionsView: Bool = false,
+        isBackupNode: Bool,
+        isFromSharedItem: Bool = false,
+        sender: Any
+    ) {
         self.nodes = [node]
         self.displayMode = displayMode
         self.delegate = delegate
@@ -477,7 +550,19 @@ class NodeActionViewController: ActionSheetViewController {
         return numberOfFilesAndFoldersString
     }
     
-    private func setupActions(node: MEGANode, displayMode: DisplayMode, isIncoming: Bool = false, isInVersionsView: Bool = false, isBackupNode: Bool, isAudioFileLink: Bool = false, sharedFolder: MEGAShare = MEGAShare(), shouldShowVerifyContact: Bool = false, isFromSharedItem: Bool = false, viewInFolder: Bool = false) {
+    private func setupActions(
+        node: MEGANode,
+        displayMode: DisplayMode,
+        isIncoming: Bool = false,
+        isInVersionsView: Bool = false,
+        isBackupNode: Bool,
+        isAudioFileLink: Bool = false,
+        sharedFolder: MEGAShare = MEGAShare(),
+        shouldShowVerifyContact: Bool = false,
+        isFromSharedItem: Bool = false,
+        viewInFolder: Bool = false,
+        isSelectionEnabled: Bool = false
+    ) {
         loadActions = { [self] in
             let isImageOrVideoFile = node.name?.fileExtensionGroup.isVisualMedia == true
             let isMediaFile = node.isFile() && isImageOrVideoFile && node.mnz_isPlayable()
@@ -519,6 +604,7 @@ class NodeActionViewController: ActionSheetViewController {
                     isFromSharedItem: isFromSharedItem))
                 .setViewInFolder(viewInFolder)
                 .setIsAudioFileLink(isAudioFileLink)
+                .setIsSelectionEnabled(isSelectionEnabled)
                 .build()
             
             update(actions: actions, sender: self.sender)

@@ -1,4 +1,5 @@
 import Foundation
+import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGADomain
 import MEGAL10n
@@ -81,6 +82,7 @@ final class HomeSearchResultRouter: NodeRouting {
             isIncoming: false,
             isBackupNode: isBackupNode,
             isFromSharedItem: isFromSharedItem,
+            isSelectionEnabled: DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .cloudDriveRevamp),
             sender: button
         ) else { return }
         nodeActionViewController.accessoryActionDelegate = nodeAccessoryActionDelegate

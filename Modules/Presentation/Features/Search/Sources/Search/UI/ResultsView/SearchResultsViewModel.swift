@@ -868,4 +868,16 @@ public extension SearchResultsViewModel {
         selectedResultIds.removeAll()
         selectedRowIds.removeAll()
     }
+
+    func selectSearchResults(_ results: [SearchResult]) {
+        if !editing {
+            handleEditingChanged(true)
+        }
+
+        results.forEach { result in
+            if let selectedRow = rowViewModel(for: result) {
+                toggleSelected(selectedRow)
+            }
+        }
+    }
 }

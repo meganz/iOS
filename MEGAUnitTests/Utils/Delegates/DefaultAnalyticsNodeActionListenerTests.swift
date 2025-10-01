@@ -12,8 +12,8 @@ struct DefaultAnalyticsNodeActionListenerTests {
         let sut = DefaultAnalyticsNodeActionListenerTests
             .makeSUT(tracker: tracker)
         
-        sut.nodeActionListener()(.hide)
-        
+        sut.nodeActionListener()(.hide, [])
+
         Test.assertTrackAnalyticsEventCalled(
             trackedEventIdentifiers: tracker.trackedEventIdentifiers,
             with: [

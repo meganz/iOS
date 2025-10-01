@@ -140,6 +140,7 @@ class NodeBrowserViewModel: ObservableObject {
         nodeUseCase: some NodeUseCaseProtocol,
         sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol,
         accountStorageUseCase: some AccountStorageUseCaseProtocol,
+        nodeActionsBridge: NodeActionsBridge,
         tracker: some AnalyticsTracking = DIContainer.tracker,
         // we call this whenever view sate is changed so that:
         // - preference is saved if it's required
@@ -282,6 +283,10 @@ class NodeBrowserViewModel: ObservableObject {
         subscribeToViewModePreferenceChangeNotification(with: cloudDriveViewModeMonitoringService)
         if !accountStorageUseCase.isUnlimitedStorageAccount {
             monitorStorageStatusUpdates()
+        }
+
+        nodeActionsBridge.selectedResultsHandler = { [weak self] searchResults in
+            self?.searchResultsViewModel.selectSearchResults(searchResults)
         }
     }
     

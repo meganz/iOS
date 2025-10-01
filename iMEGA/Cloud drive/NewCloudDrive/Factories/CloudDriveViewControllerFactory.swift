@@ -13,6 +13,10 @@ import MEGAUIKit
 import Search
 import SwiftUI
 
+final class NodeActionsBridge {
+    var selectedResultsHandler: ([SearchResult]) -> Void = { _ in }
+}
+
 @MainActor
 struct CloudDriveViewControllerFactory {
     private let navigationController: UINavigationController
@@ -40,7 +44,8 @@ struct CloudDriveViewControllerFactory {
     private let calendar: Calendar
     private let nodeUpdateRepository: any NodeUpdateRepositoryProtocol
     private let sensitiveDisplayPreferenceUseCase: any SensitiveDisplayPreferenceUseCaseProtocol
-    
+    private let nodeActionsBridge: NodeActionsBridge
+
     init(
         navigationController: UINavigationController,
         viewModeStore: some ViewModeStoring,
@@ -65,7 +70,8 @@ struct CloudDriveViewControllerFactory {
         listHeaderViewModelFactory: some RecentListHeaderViewModelFactoryProtocol,
         calendar: Calendar,
         nodeUpdateRepository: some NodeUpdateRepositoryProtocol,
-        sensitiveDisplayPreferenceUseCase: some SensitiveDisplayPreferenceUseCaseProtocol
+        sensitiveDisplayPreferenceUseCase: some SensitiveDisplayPreferenceUseCaseProtocol,
+        nodeActionsBridge: NodeActionsBridge
     ) {
         self.navigationController = navigationController
         self.viewModeStore = viewModeStore
@@ -91,6 +97,7 @@ struct CloudDriveViewControllerFactory {
         self.calendar = calendar
         self.nodeUpdateRepository = nodeUpdateRepository
         self.sensitiveDisplayPreferenceUseCase = sensitiveDisplayPreferenceUseCase
+        self.nodeActionsBridge = nodeActionsBridge
         viewModeFactory = ViewModeFactory(viewModeStore: viewModeStore)
     }
     
@@ -116,14 +123,36 @@ struct CloudDriveViewControllerFactory {
         let sensitiveNodeUseCase = SensitiveNodeUseCase(
             nodeRepository: nodeRepository,
             accountUseCase: accountUseCase)
-        
+
+        let nodeActionBridge = NodeActionsBridge()
+        let nodeAssetsManager = NodeAssetsManager.shared
+        let remoteFeatureFlagProvider = DIContainer.remoteFeatureFlagUseCase
+        let calendar = Calendar.autoupdatingCurrent
+        let hiddenNodesEnabled = remoteFeatureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes)
+
+        let resultsMapper = SearchResultMapper(
+            sdk: sdk,
+            nodeIconUsecase: NodeIconUseCase(nodeIconRepo: nodeAssetsManager),
+            nodeDetailUseCase: homeFactory.makeNodeDetailUseCase(),
+            nodeUseCase: nodeUseCase,
+            sensitiveNodeUseCase: homeFactory.makeSensitiveNodeUseCase(),
+            mediaUseCase: homeFactory.makeMediaUseCase(),
+            nodeActions: nodeActions,
+            hiddenNodesFeatureEnabled: hiddenNodesEnabled
+        )
+
         let nodeActionViewControllerDelegate = NodeActionViewControllerGenericDelegate(
             viewController: navController,
             moveToRubbishBinViewModel: MoveToRubbishBinViewModel(presenter: navController),
-            nodeActionListener: { action in
+            nodeActionListener: { action, nodes in
                 switch action {
                 case .hide:
                     tracker.trackAnalyticsEvent(with: CloudDriveHideNodeMenuItemEvent())
+                case .select:
+                    let results = nodes.map { node in
+                        resultsMapper.map(node: node.toNodeEntity())
+                    }
+                    nodeActionBridge.selectedResultsHandler(results)
                 default:
                     break
                 }
@@ -135,15 +164,7 @@ struct CloudDriveViewControllerFactory {
             backupsUseCase: backupsUseCase,
             nodeUseCase: nodeUseCase
         )
-        
-        let nodeAssetsManager = NodeAssetsManager.shared
-        
-        let remoteFeatureFlagProvider = DIContainer.remoteFeatureFlagUseCase
-        
-        let calendar = Calendar.autoupdatingCurrent
-        
-        let hiddenNodesEnabled = remoteFeatureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes)
-        
+
         return CloudDriveViewControllerFactory(
             navigationController: navController,
             viewModeStore: ViewModeStore(
@@ -162,16 +183,7 @@ struct CloudDriveViewControllerFactory {
                 nodeUpdateRepository: NodeUpdateRepository.newRepo
             ),
             homeScreenFactory: homeFactory,
-            resultsMapper: SearchResultMapper(
-                sdk: sdk,
-                nodeIconUsecase: NodeIconUseCase(nodeIconRepo: nodeAssetsManager),
-                nodeDetailUseCase: homeFactory.makeNodeDetailUseCase(),
-                nodeUseCase: nodeUseCase,
-                sensitiveNodeUseCase: homeFactory.makeSensitiveNodeUseCase(),
-                mediaUseCase: homeFactory.makeMediaUseCase(),
-                nodeActions: nodeActions,
-                hiddenNodesFeatureEnabled: hiddenNodesEnabled
-            ),
+            resultsMapper: resultsMapper,
             nodeUseCase: nodeUseCase,
             preferences: PreferenceUseCase.default,
             
@@ -210,7 +222,8 @@ struct CloudDriveViewControllerFactory {
                 contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(
                     repo: UserAttributeRepository.newRepo),
                 hiddenNodesFeatureFlagEnabled: { hiddenNodesEnabled }
-            )
+            ),
+            nodeActionsBridge: nodeActionBridge
         )
     }
     
@@ -271,6 +284,7 @@ struct CloudDriveViewControllerFactory {
         navigationController: UINavigationController,
         mediaContentDelegate: MediaContentDelegateHandler,
         searchControllerWrapper: SearchControllerWrapper,
+        nodeActionsBridge: NodeActionsBridge,
         onSelectionModeChange: @escaping (Bool) -> Void,
         sortOrderProvider: @escaping () -> MEGADomain.SortOrderEntity,
         onNodeStructureChanged: @escaping () -> Void,
@@ -317,6 +331,7 @@ struct CloudDriveViewControllerFactory {
                 accountUseCase: AccountUseCase(
                     repository: AccountRepository.newRepo)),
             accountStorageUseCase: accountStorageUseCase,
+            nodeActionsBridge: nodeActionsBridge,
             viewModeSaver: {
                 guard let node = nodeSource.parentNode else { return }
                 viewModeStore.save(viewMode: $0, for: .node(node))
@@ -633,6 +648,7 @@ struct CloudDriveViewControllerFactory {
             navigationController: navigationController,
             mediaContentDelegate: mediaContentDelegate,
             searchControllerWrapper: searchControllerWrapper,
+            nodeActionsBridge: nodeActionsBridge,
             onSelectionModeChange: onSelectionModeChange,
             sortOrderProvider: {
                 sortOrderPreferenceUseCase.sortOrder(for: nodeSource.parentNode)

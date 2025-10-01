@@ -8,8 +8,8 @@ struct DefaultAnalyticsNodeActionListener {
         self.tracker = tracker
     }
     
-    func nodeActionListener() -> (MegaNodeActionType?) -> Void {
-        { action in
+    func nodeActionListener() -> (MegaNodeActionType?, [MEGANode]) -> Void {
+        { action, _ in
             switch action {
             case .hide:
                 tracker.trackAnalyticsEvent(with: HideNodeMenuItemEvent())
