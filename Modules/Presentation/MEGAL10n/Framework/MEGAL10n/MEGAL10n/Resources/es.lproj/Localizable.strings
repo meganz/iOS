@@ -164,6 +164,16 @@
 "fileLinkUnavailableText3"="Enlace inválido - el enlace al que está intentando acceder no existe";
 /*  */
 "fileLinkUnavailableText4"="El archivo ha sido borrado por el usuario.";
+/* file has been deleted */
+"cloudDrive.fileLink.unavailableReason1"="Se ha eliminado el archivo";
+/* file link has been disabled */
+"cloudDrive.fileLink.unavailableReason2"="El propietario ha desactivado el enlace de archivo";
+/* file link invalid */
+"cloudDrive.fileLink.unavailableReason3"="Enlace inválido - el enlace al que intentas acceder no existe";
+/* file link has been removed */
+"cloudDrive.fileLink.unavailableReason4"="El enlace de archivo ha sido eliminado por infringir nuestros Términos de servicio";
+/* file link has expired */
+"cloudDrive.fileLink.hasExpired"="El enlace ha caducado";
 /* Message shown when a download starts */
 "downloadStarted"="Descarga iniciada";
 /* Title for the folder link view */
@@ -194,6 +204,16 @@
 "folderLinkUnavailableText3"="Enlace inválido - el enlace al que está intentando acceder no existe";
 /*  */
 "folderLinkUnavailableText4"="El enlace de la carpeta ha sido desactivado por el usuario.";
+/* folder has been deleted */
+"cloudDrive.folderLink.unavailableReason1"="Se ha eliminado la carpeta";
+/* folder link has been disabled */
+"cloudDrive.folderLink.unavailableReason2"="El enlace de carpeta ha sido desactivado por el propietario";
+/* folder link invalid */
+"cloudDrive.folderLink.unavailableReason3"="Enlace inválido - el enlace al que intentas acceder no existe";
+/* folder link has been removed */
+"cloudDrive.folderLink.unavailableReason4"="El enlace de carpeta ha sido eliminado por infringir nuestros Términos de servicio";
+/* folder link has expired */
+"cloudDrive.folderLink.hasExpired"="El enlace ha caducado";
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
 "noInternetConnection"="No hay conexión a internet";
 /* Title shown when a folder doesn't have any files */
@@ -1009,7 +1029,7 @@
 /*  */
 "howItWorks"="Cómo funciona";
 /*  */
-"howItWorksMain"="Tu amigo tiene que registrarse para obtener una cuenta gratuita en MEGA e [S]instalar al menos una aplicación de MEGA[/S] (ya sea la aplicación de escritorio de MEGA o una de nuestras aplicaciones móviles)";
+"howItWorksMain"="Your friend needs to sign up for a free account on MEGA and [S]install at least one MEGA application[/S] (either our desktop app or one of our mobile apps)";
 /*  */
 "howItWorksSecondary"="Puedes avisar a tu amigo de la manera que prefieras. Ganarás el bono si has introducido la dirección de correo electrónico de tu amigo aquí antes de que se registre con esa dirección.";
 /* A message which is shown once someone has invited a friend as part of the achievements program. */
@@ -1035,13 +1055,13 @@
 /* Cell title shown on the achievements view for referral achievement */
 "account.achievement.referralBonus.title"="Bonos por invitación";
 /* Cell title shown on the achievements view for install MEGA desktop app achievement */
-"account.achievement.desktopApp.title"="Instalar la aplicación de escritorio";
+"account.achievement.desktopApp.title"="Install MEGA’s desktop app";
 /* Explanation label shown on the achievements view for complete install MEGA desktop app achievement, %@ is a placeholder. */
 "account.achievement.desktopApp.complete.explaination.label"="Has obtenido %@ de espacio de almacenamiento por instalar la aplicación de escritorio de MEGA.";
 /* Explanation label shown on the achievements view for incomplete install MEGA desktop app achievement, %1$@ is a placeholder, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
 "account.achievement.desktopApp.incomplete.explaination.label"="Al instalar la aplicación de escritorio de MEGA, obtienes %1$@ de almacenamiento adicional, %2$@. La aplicación de escritorio está disponible para Windows, macOS y la mayoría de las distribuciones de Linux.";
 /* Cell title shown on the achievements view for install MEGA mobile app achievement */
-"account.achievement.mobileApp.title"="Instalar la aplicación móvil de MEGA";
+"account.achievement.mobileApp.title"="Install one of MEGA’s mobile apps";
 /* Explanation label shown on the achievements view for complete install MEGA mobile app achievement, %@ is a placeholder. */
 "account.achievement.mobileApp.complete.explaination.label"="Has obtenido %@ de espacio de almacenamiento por instalar la aplicación móvil de MEGA.";
 /* Explanation label shown on the achievements view for incomplete install MEGA mobile app achievement, %1$@ is a placeholder, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
@@ -2252,6 +2272,14 @@
 "Folder link unavailable"="Enlace de carpeta no disponible";
 /* Error message shown when opening a file link which doesn’t exist */
 "File link unavailable"="Enlace del archivo no disponible";
+/* Error message shown when opening a folder link which is deleted/disabled/invalid */
+"cloudDrive.folderLink.notAvailable"="El enlace de carpeta al que intentas acceder no está disponible";
+/* Error message shown when opening a file link which is deleted/disabled/invalid */
+"cloudDrive.fileLink.notAvailable"="El enlace de archivo al que intentas acceder no está disponible";
+/* Error message shown when opening a folder link which is expired */
+"cloudDrive.folderLink.noLongerAvailable"="El enlace de carpeta al que intentas acceder ya no está disponible";
+/* Error message shown when opening a file link which is expired */
+"cloudDrive.fileLink.noLongerAvailable"="El enlace de archivo al que intentas acceder ya no está disponible";
 /* Header of block with all shared files in chat. */
 "Shared Files"="Archivos compartidos";
 /* Over Disk Quota Screen Navigation Bar Title */
@@ -4619,7 +4647,7 @@
 /* Title for the features of pro plan in the subscription purchase screen. */
 "subscriptionPurchase.featuresOfProPlan.title"="Beneficios adicionales de los planes Pro";
 /* Features of pro plan in the subscription purchase screen. */
-"subscriptionPurchase.featuresOfProPlan.message"="• Enlaces protegidos por contraseña\n\n• Enlaces con fecha de caducidad\n\n• Rebobinado de carpetas de hasta 180 días de datos borrados\n\n• Organiza llamadas y reuniones con participantes ilimitados y sin restricciones de tiempo\n\n• Programa la limpieza de la papelera entre 7 días y 10 años\n\n• Soporte prioritario";
+"subscriptionPurchase.featuresOfProPlan.message"="• Enlaces protegidos por contraseña\n\n• Enlaces con fecha de caducidad\n\n• Rebobinado de carpetas de hasta 60 días de datos borrados\n\n• Organiza llamadas y reuniones con participantes ilimitados y sin restricciones de tiempo\n\n• Programa la limpieza de la papelera entre 7 días y 10 años\n\n• Soporte prioritario";
 /* Title for the first subscription feature: generous storage capacity */
 "subscriptionPurchase.feature.one.title"="Almacenamiento generoso";
 /* Description for the first subscription feature: details about available storage */
@@ -4706,3 +4734,11 @@
 "videoPlayer.snapshot.snackBar.title"="Imagen guardada en tu dispositivo";
 /* The Picture in picture video player option in bottom more menu */
 "videoPlayer.pip.bottomSheet.title"="Picture in picture";
+/* Subscription benefit for rewind */
+"subscriptionPurchase.benefits.rewind.title"="Rebobinado hasta 60 días de datos eliminados.";
+/* Subscription benefit for for calls and meetings */
+"subscriptionPurchase.benefits.callsAndMeetings.title"="Llamadas y reuniones con participantes ilimitados y sin restricciones de tiempo.";
+/* Subscription benefit for rubbish bin clearing */
+"subscriptionPurchase.benefits.rubbishClearing.title"="Limpieza automática de la papelera entre 7 días y 10 años";
+/* General label for priority customer support */
+"general.prioritySupport"="Asistencia prioritaria";

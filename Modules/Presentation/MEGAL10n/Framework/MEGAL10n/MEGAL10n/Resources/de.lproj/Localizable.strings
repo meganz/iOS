@@ -164,6 +164,16 @@
 "fileLinkUnavailableText3"="Ungültiger URL – der Link, den Sie öffnen möchten, existiert nicht";
 /*  */
 "fileLinkUnavailableText4"="Die Datei wurde vom Benutzer gelöscht.";
+/* file has been deleted */
+"cloudDrive.fileLink.unavailableReason1"="Die Datei wurde gelöscht";
+/* file link has been disabled */
+"cloudDrive.fileLink.unavailableReason2"="Der Dateilink wurde vom Eigentümer deaktiviert";
+/* file link invalid */
+"cloudDrive.fileLink.unavailableReason3"="Ungültige URL – der Link, den Sie öffnen möchten, existiert nicht";
+/* file link has been removed */
+"cloudDrive.fileLink.unavailableReason4"="Der Dateilink wurde entfernt, da er gegen unsere Nutzungsbedingungen verstieß";
+/* file link has expired */
+"cloudDrive.fileLink.hasExpired"="Der Link ist abgelaufen";
 /* Message shown when a download starts */
 "downloadStarted"="Download gestartet";
 /* Title for the folder link view */
@@ -194,6 +204,16 @@
 "folderLinkUnavailableText3"="Ungültiger URL – der Link, den Sie öffnen möchten, existiert nicht";
 /*  */
 "folderLinkUnavailableText4"="Der Ordner-Link wurde vom Benutzer deaktiviert.";
+/* folder has been deleted */
+"cloudDrive.folderLink.unavailableReason1"="Der Ordner wurde gelöscht";
+/* folder link has been disabled */
+"cloudDrive.folderLink.unavailableReason2"="Der Ordnerlink wurde vom Eigentümer deaktiviert";
+/* folder link invalid */
+"cloudDrive.folderLink.unavailableReason3"="Ungültige URL – der Link, den Sie öffnen möchten, existiert nicht";
+/* folder link has been removed */
+"cloudDrive.folderLink.unavailableReason4"="Der Ordnerlink wurde entfernt, da er gegen unsere Nutzungsbedingungen verstieß";
+/* folder link has expired */
+"cloudDrive.folderLink.hasExpired"="Der Link ist abgelaufen";
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
 "noInternetConnection"="Keine Internetverbindung";
 /* Title shown when a folder doesn't have any files */
@@ -1009,7 +1029,7 @@
 /*  */
 "howItWorks"="Funktionsprinzip";
 /*  */
-"howItWorksMain"="Der eingeladene Benutzer muss einen kostenlosen MEGA-Account erstellen und [S]mindestens eine MEGA-App installieren[/S] (MEGA-Desktop-App oder eine MEGA-Mobil-App)";
+"howItWorksMain"="Der eingeladene Benutzer muss einen kostenlosen MEGA-Account erstellen und [S]mindestens eine MEGA-App installieren[/S] (unsere Desktop-App oder eine unserer Mobil-Apps)";
 /*  */
 "howItWorksSecondary"="Sie können den Eingeladenen auf jede beliebige Weise benachrichtigen. Sie erhalten den Bonus, wenn Sie die E-Mail-Adresse der eingeladenen Person hier eingegeben haben, bevor diese sich mit dieser Adresse registriert.";
 /* A message which is shown once someone has invited a friend as part of the achievements program. */
@@ -1041,7 +1061,7 @@
 /* Explanation label shown on the achievements view for incomplete install MEGA desktop app achievement, %1$@ is a placeholder, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
 "account.achievement.desktopApp.incomplete.explaination.label"="Bei Installation der MEGA-Desktop-App erhalten Sie %1$@ kostenlosen Extraspeicherplatz, %2$@. Die MEGA-Desktop-App ist für Windows, macOS und die meisten Linux-Distributionen verfügbar.";
 /* Cell title shown on the achievements view for install MEGA mobile app achievement */
-"account.achievement.mobileApp.title"="MEGA-Mobil-App installieren";
+"account.achievement.mobileApp.title"="Eine MEGA-Mobil-App installieren";
 /* Explanation label shown on the achievements view for complete install MEGA mobile app achievement, %@ is a placeholder. */
 "account.achievement.mobileApp.complete.explaination.label"="Sie haben %@ Extraspeicherplatz für die Installation der MEGA-Mobil-App erhalten.";
 /* Explanation label shown on the achievements view for incomplete install MEGA mobile app achievement, %1$@ is a placeholder, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
@@ -2252,6 +2272,14 @@
 "Folder link unavailable"="Ordnerlink nicht verfügbar";
 /* Error message shown when opening a file link which doesn’t exist */
 "File link unavailable"="Datei-Link nicht verfügbar";
+/* Error message shown when opening a folder link which is deleted/disabled/invalid */
+"cloudDrive.folderLink.notAvailable"="Der Ordnerlink, auf den Sie zugreifen möchten, ist nicht verfügbar";
+/* Error message shown when opening a file link which is deleted/disabled/invalid */
+"cloudDrive.fileLink.notAvailable"="Der Dateilink, auf den Sie zugreifen möchten, ist nicht verfügbar";
+/* Error message shown when opening a folder link which is expired */
+"cloudDrive.folderLink.noLongerAvailable"="Der Ordnerlink, auf den Sie zugreifen möchten, ist nicht mehr verfügbar";
+/* Error message shown when opening a file link which is expired */
+"cloudDrive.fileLink.noLongerAvailable"="Der Dateilink, auf den Sie zugreifen möchten, ist nicht mehr verfügbar";
 /* Header of block with all shared files in chat. */
 "Shared Files"="Freigegebene Dateien";
 /* Over Disk Quota Screen Navigation Bar Title */
@@ -4619,7 +4647,7 @@
 /* Title for the features of pro plan in the subscription purchase screen. */
 "subscriptionPurchase.featuresOfProPlan.title"="Zusatzvorteile der Pro-Pakete";
 /* Features of pro plan in the subscription purchase screen. */
-"subscriptionPurchase.featuresOfProPlan.message"="• Passwortgeschützte Links\n\n• Links mit Ablaufdatum\n\n• Rewind-Funktion für Ordner zur Wiederherstellung gelöschter Daten bis zu 180 Tage lang\n\n• Anrufe und Meetings mit beliebig vielen Teilnehmern und ohne Zeitbeschränkung\n\n• Planmäßige Leerung des Papierkorbs – Intervall 7 Tage bis 10 Jahre\n\n• Priorisierter Support";
+"subscriptionPurchase.featuresOfProPlan.message"="• Passwortgeschützte Links\n\n• Links mit Ablaufdatum\n\n• Rewind-Funktion für Ordner zur Wiederherstellung gelöschter Daten bis zu 60 Tage lang\n\n• Anrufe und Meetings mit beliebig vielen Teilnehmern und ohne Zeitbeschränkung\n\n• Planmäßige Leerung des Papierkorbs – Intervall 7 Tage bis 10 Jahre\n\n• Priorisierter Support";
 /* Title for the first subscription feature: generous storage capacity */
 "subscriptionPurchase.feature.one.title"="Großzügiger Speicherplatz";
 /* Description for the first subscription feature: details about available storage */
@@ -4699,10 +4727,18 @@
 /* The screen locked status message in video player */
 "videoPlayer.lock.screenLocked"="Der Bildschirm ist gesperrt";
 /* The instruction to unlock the video player */
-"videoPlayer.lock.tapIconToUnlock"="Tap the lock icon to unlock";
+"videoPlayer.lock.tapIconToUnlock"="Zum Entsperren das Schlosssymbol antippen";
 /* The lock video player option in bottom more menu */
 "videoPlayer.snapshot.bottomSheet.title"="Aufnehmen";
 /* The instruction to unlock the video player */
 "videoPlayer.snapshot.snackBar.title"="Bild wurde auf Ihrem Gerät gespeichert";
 /* The Picture in picture video player option in bottom more menu */
-"videoPlayer.pip.bottomSheet.title"="Picture in picture";
+"videoPlayer.pip.bottomSheet.title"="Bild in Bild";
+/* Subscription benefit for rewind */
+"subscriptionPurchase.benefits.rewind.title"="Rewind zur Wiederherstellung gelöschter Daten bis zu 60 Tage lang";
+/* Subscription benefit for for calls and meetings */
+"subscriptionPurchase.benefits.callsAndMeetings.title"="Anrufe und Meetings mit beliebig vielen Teilnehmern und ohne Zeitbeschränkung";
+/* Subscription benefit for rubbish bin clearing */
+"subscriptionPurchase.benefits.rubbishClearing.title"="Planmäßige Leerung des Papierkorbs – Intervall 7 Tage bis 10 Jahre";
+/* General label for priority customer support */
+"general.prioritySupport"="Priorisierter Kundenservice";

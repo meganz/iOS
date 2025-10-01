@@ -3541,9 +3541,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Although we have contacted you by email on [date], your storage is still full. You have %d file taking up [storageSpace] in your Cloud drive, and your account has been locked. Upgrade to a [plan] plan to increase your storage and unlock your account. If you don’t take action soon, your data will be deleted. Upgrade now to protect your file. [A]Learn more about your storage limits[/A]. </string>
+        <string>Sebbene ti abbiamo contattato via e-mail il giorno [date], lo spazio di archiviazione è ancora pieno. Tu hai %d file che occupa [storageSpace] nel tuo Cloud drive e il tuo account è stato bloccato. Esegui l'upgrade a un [plan] per aumentare lo spazio di archiviazione e sbloccare il tuo account. Se non agisci subito, i tuoi dati verranno eliminati. Effettua subito l'upgrade per proteggere il tuo file. [A]Scopri di più sui limiti di archiviazione[/A]. </string>
+        <key>many</key>
+        <string>Sebbene ti abbiamo contattato via e-mail il giorno [date], lo spazio di archiviazione è ancora pieno. Tu hai %d file che occupano [storageSpace] nel tuo Cloud drive e il tuo account è stato bloccato. Esegui l'upgrade a un [plan] per aumentare lo spazio di archiviazione e sbloccare il tuo account. Se non agisci subito, i tuoi dati verranno eliminati. Effettua subito l'upgrade per proteggere i tuoi file. [A]Scopri di più sui limiti di archiviazione[/A]. </string>
         <key>other</key>
-        <string>Although we have contacted you by email on [date], your storage is still full. You have %d files taking up [storageSpace] in your Cloud drive, and your account has been locked. Upgrade to a [plan] plan to increase your storage and unlock your account. If you don’t take action soon, your data will be deleted. Upgrade now to protect your files. [A]Learn more about your storage limits[/A]. </string>
+        <string>Sebbene ti abbiamo contattato via e-mail il giorno [date], lo spazio di archiviazione è ancora pieno. Tu hai %d file che occupano [storageSpace] nel tuo Cloud drive e il tuo account è stato bloccato. Esegui l'upgrade a un [plan] per aumentare lo spazio di archiviazione e sbloccare il tuo account. Se non agisci subito, i tuoi dati verranno eliminati. Effettua subito l'upgrade per proteggere i tuoi file. [A]Scopri di più sui limiti di archiviazione[/A]. </string>
       </dict>
     </dict>
     <key>overDiskQuota.paywall.notFinalWarning.multipleEmailsSent.message</key>
@@ -3557,9 +3559,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Although we have contacted you multiple times by email, your storage is still full. You have %d file taking up [storageSpace] in your Cloud drive, and your account has been locked. Upgrade to a [plan] plan to increase your storage and unlock your account. If you don’t take action soon, your data will be deleted. Upgrade now to protect your file. [A]Learn more about your storage limits[/A]. </string>
+        <string>Sebbene ti abbiamo contattato via e-mail più volte, lo spazio di archiviazione è ancora pieno. Tu hai %d file che occupa [storageSpace] nel tuo Cloud drive e il tuo account è stato bloccato. Esegui l'upgrade a un [plan] per aumentare lo spazio di archiviazione e sbloccare il tuo account. Se non agisci subito, i tuoi dati verranno eliminati. Effettua subito l'upgrade per proteggere il tuo file. [A]Scopri di più sui limiti di archiviazione[/A].</string>
+        <key>many</key>
+        <string>Sebbene ti abbiamo contattato via e-mail più volte, lo spazio di archiviazione è ancora pieno. Tu hai %d file che occupano [storageSpace] nel tuo Cloud drive e il tuo account è stato bloccato. Esegui l'upgrade a un [plan] per aumentare lo spazio di archiviazione e sbloccare il tuo account. Se non agisci subito, i tuoi dati verranno eliminati. Effettua subito l'upgrade per proteggere i tuoi file. [A]Scopri di più sui limiti di archiviazione[/A].</string>
         <key>other</key>
-        <string>Although we have contacted you multiple times by email, your storage is still full. You have %d files taking up [storageSpace] in your Cloud drive, and your account has been locked. Upgrade to a [plan] plan to increase your storage and unlock your account. If you don’t take action soon, your data will be deleted. Upgrade now to protect your files. [A]Learn more about your storage limits[/A]. </string>
+        <string>Sebbene ti abbiamo contattato via e-mail più volte, lo spazio di archiviazione è ancora pieno. Tu hai %d file che occupano [storageSpace] nel tuo Cloud drive e il tuo account è stato bloccato. Esegui l'upgrade a un [plan] per aumentare lo spazio di archiviazione e sbloccare il tuo account. Se non agisci subito, i tuoi dati verranno eliminati. Effettua subito l'upgrade per proteggere i tuoi file. [A]Scopri di più sui limiti di archiviazione[/A]. </string>
       </dict>
     </dict>
     <key>overDiskQuota.paywall.notFinalWarning.unknownTimesEmailWasSent.message</key>
@@ -3573,9 +3577,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Although we have contacted you by email, your storage is still full. You have %d file taking up [storageSpace] in your Cloud drive, and your account has been locked. Upgrade to a [plan] plan to increase your storage and unlock your account. If you don’t take action soon, your data will be deleted. Upgrade now to protect your file. [A]Learn more about your storage limits[/A]. </string>
+        <string>Sebbene ti abbiamo contattato via e-mail, lo spazio di archiviazione è ancora pieno. Tu hai %d file che occupa [storageSpace] nel tuo Cloud drive e il tuo account è stato bloccato. Esegui l'upgrade a un [plan] per aumentare lo spazio di archiviazione e sbloccare il tuo account. Se non agisci subito, i tuoi dati verranno eliminati. Effettua subito l'upgrade per proteggere il tuo file. [A]Scopri di più sui limiti di archiviazione[/A]. </string>
+        <key>many</key>
+        <string>Sebbene ti abbiamo contattato via e-mail, lo spazio di archiviazione è ancora pieno. Tu hai %d file che occupano [storageSpace] nel tuo Cloud drive e il tuo account è stato bloccato. Esegui l'upgrade a un [plan] per aumentare lo spazio di archiviazione e sbloccare il tuo account. Se non agisci subito, i tuoi dati verranno eliminati. Effettua subito l'upgrade per proteggere i tuoi file. [A]Scopri di più sui limiti di archiviazione[/A]. </string>
         <key>other</key>
-        <string>Although we have contacted you by email, your storage is still full. You have %d files taking up [storageSpace] in your Cloud drive, and your account has been locked. Upgrade to a [plan] plan to increase your storage and unlock your account. If you don’t take action soon, your data will be deleted. Upgrade now to protect your files. [A]Learn more about your storage limits[/A].</string>
+        <string>Sebbene ti abbiamo contattato via e-mail, lo spazio di archiviazione è ancora pieno. Tu hai %d file che occupano [storageSpace] nel tuo Cloud drive e il tuo account è stato bloccato. Esegui l'upgrade a un [plan] per aumentare lo spazio di archiviazione e sbloccare il tuo account. Se non agisci subito, i tuoi dati verranno eliminati. Effettua subito l'upgrade per proteggere i tuoi file. [A]Scopri di più sui limiti di archiviazione[/A]. </string>
       </dict>
     </dict>
     <key>settings.fileManagement.fileVersioning.enabledState.fileVersions</key>

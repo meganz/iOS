@@ -164,6 +164,16 @@
 "fileLinkUnavailableText3"="Ongeldige URL - de link die u probeert te bereiken bestaat niet";
 /*  */
 "fileLinkUnavailableText4"="Het bestand is door de gebruiker verwijderd.";
+/* file has been deleted */
+"cloudDrive.fileLink.unavailableReason1"="Het bestand is verwijderd";
+/* file link has been disabled */
+"cloudDrive.fileLink.unavailableReason2"="De bestandslink is door de eigenaar uitgeschakeld";
+/* file link invalid */
+"cloudDrive.fileLink.unavailableReason3"="Ongeldige URL - de link die u probeert te openen bestaat niet";
+/* file link has been removed */
+"cloudDrive.fileLink.unavailableReason4"="De bestandslink is verwijderd omdat deze in strijd is met onze Algemene Voorwaarden";
+/* file link has expired */
+"cloudDrive.fileLink.hasExpired"="De link is verlopen";
 /* Message shown when a download starts */
 "downloadStarted"="Download gestart";
 /* Title for the folder link view */
@@ -194,6 +204,16 @@
 "folderLinkUnavailableText3"="Ongeldige URL - de link die u probeert te bereiken bestaat niet";
 /*  */
 "folderLinkUnavailableText4"="De link naar de map is door de gebruiker uitgeschakeld.";
+/* folder has been deleted */
+"cloudDrive.folderLink.unavailableReason1"="De map is verwijderd";
+/* folder link has been disabled */
+"cloudDrive.folderLink.unavailableReason2"="De maplink is door de eigenaar uitgeschakeld";
+/* folder link invalid */
+"cloudDrive.folderLink.unavailableReason3"="Ongeldige URL - de link die u probeert te openen bestaat niet";
+/* folder link has been removed */
+"cloudDrive.folderLink.unavailableReason4"="De maplink is verwijderd omdat het onze Algemene Voorwaarden schendt.";
+/* folder link has expired */
+"cloudDrive.folderLink.hasExpired"="De link is verlopen";
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
 "noInternetConnection"="Geen internet verbinding";
 /* Title shown when a folder doesn't have any files */
@@ -1009,7 +1029,7 @@
 /*  */
 "howItWorks"="Hoe het werkt";
 /*  */
-"howItWorksMain"="Uw vriend moet zich aanmelden voor een gratis account op MEGA en [S]installeer minstens één MEGA-applicatie[/S] (ofwel de MEGA Desktop Applicatie of een van onze MEGA Mobile Applicaties)";
+"howItWorksMain"="Uw vriend moet zich aanmelden voor een gratis account op MEGA en [S]installeer minstens één MEGA-applicatie[/S] (ofwel onze desktop-applicatie of een van onze mobiele applicaties)";
 /*  */
 "howItWorksSecondary"="U kunt uw vriend op elke manier op de hoogte stellen. U verdient de bonus als u hier het e-mailadres van uw vriend hebt ingevoerd voordat ze zich met dat adres hebben aangemeld.";
 /* A message which is shown once someone has invited a friend as part of the achievements program. */
@@ -1035,13 +1055,13 @@
 /* Cell title shown on the achievements view for referral achievement */
 "account.achievement.referralBonus.title"="Uitnodigingsbonussen";
 /* Cell title shown on the achievements view for install MEGA desktop app achievement */
-"account.achievement.desktopApp.title"="Installeer de MEGA Desktop Applicatie";
+"account.achievement.desktopApp.title"="De desktop-applicatie van MEGA installeren";
 /* Explanation label shown on the achievements view for complete install MEGA desktop app achievement, %@ is a placeholder. */
 "account.achievement.desktopApp.complete.explaination.label"="U heeft %@ opslagruimte ontvangen voor het installeren van de MEGA Desktop Applicatie.";
 /* Explanation label shown on the achievements view for incomplete install MEGA desktop app achievement, %1$@ is a placeholder, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
 "account.achievement.desktopApp.incomplete.explaination.label"="Wanneer u de MEGA Desktop Applicatie installeert, krijgt u %1$@ aan gratis opslagruimte, %2$@. De MEGA Desktop Applicatie is beschikbaar voor Windows, MacOS en de meeste Linux-distributies.";
 /* Cell title shown on the achievements view for install MEGA mobile app achievement */
-"account.achievement.mobileApp.title"="Installeer de MEGA Mobile Applicatie";
+"account.achievement.mobileApp.title"="Installeer één van de mobiele applicaties van MEGA";
 /* Explanation label shown on the achievements view for complete install MEGA mobile app achievement, %@ is a placeholder. */
 "account.achievement.mobileApp.complete.explaination.label"="U heeft %@ opslagruimte ontvangen voor het installeren van de MEGA-mobiele applicatie.";
 /* Explanation label shown on the achievements view for incomplete install MEGA mobile app achievement, %1$@ is a placeholder, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
@@ -2252,6 +2272,14 @@
 "Folder link unavailable"="Maplink is onbeschikbaar";
 /* Error message shown when opening a file link which doesn’t exist */
 "File link unavailable"="Bestandslink is onbeschikbaar";
+/* Error message shown when opening a folder link which is deleted/disabled/invalid */
+"cloudDrive.folderLink.notAvailable"="De maplink die u probeert te openen is niet beschikbaar";
+/* Error message shown when opening a file link which is deleted/disabled/invalid */
+"cloudDrive.fileLink.notAvailable"="De bestandslink die u probeert te openen is niet beschikbaar";
+/* Error message shown when opening a folder link which is expired */
+"cloudDrive.folderLink.noLongerAvailable"="De maplink die je probeert te openen is niet langer beschikbaar";
+/* Error message shown when opening a file link which is expired */
+"cloudDrive.fileLink.noLongerAvailable"="De bestandslink die u probeert te openen is niet langer beschikbaar";
 /* Header of block with all shared files in chat. */
 "Shared Files"="Gedeelde bestanden";
 /* Over Disk Quota Screen Navigation Bar Title */
@@ -4619,7 +4647,7 @@
 /* Title for the features of pro plan in the subscription purchase screen. */
 "subscriptionPurchase.featuresOfProPlan.title"="Bijkomende voordelen van Pro-abonnementen";
 /* Features of pro plan in the subscription purchase screen. */
-"subscriptionPurchase.featuresOfProPlan.message"="• Met een wachtwoord beveiligde links\n\n• Links met vervaldatums\n\n• Terugspoelen van mappen tot 180 dagen aan verwijderde gegevens\n\n• Host gesprekken en vergaderingen met ongelimiteerde deelnemers en zonder tijdslimieten\n\n• Plan het opruimen van vuilnisbakken tussen 7 dagen en 10 jaar\n\n• Prioritaire ondersteuning";
+"subscriptionPurchase.featuresOfProPlan.message"="• Met een wachtwoord beveiligde links\n\n• Links met vervaldatums\n\n• Terugspoelen van mappen tot 60 dagen aan verwijderde gegevens\n\n• Host gesprekken en vergaderingen met ongelimiteerde deelnemers en zonder tijdslimieten\n\n• Plan het opruimen van vuilnisbakken tussen 7 dagen en 10 jaar\n\n• Prioritaire ondersteuning";
 /* Title for the first subscription feature: generous storage capacity */
 "subscriptionPurchase.feature.one.title"="Vrijgevige opslag";
 /* Description for the first subscription feature: details about available storage */
@@ -4706,3 +4734,11 @@
 "videoPlayer.snapshot.snackBar.title"="Afbeelding opgeslagen op uw apparaat";
 /* The Picture in picture video player option in bottom more menu */
 "videoPlayer.pip.bottomSheet.title"="Afbeelding in afbeelding";
+/* Subscription benefit for rewind */
+"subscriptionPurchase.benefits.rewind.title"="Terugspoelen van verwijderde gegevens tot 60 dagen";
+/* Subscription benefit for for calls and meetings */
+"subscriptionPurchase.benefits.callsAndMeetings.title"="Organiseer gesprekken en vergaderingen met ongelimiteerde deelnemers en zonder tijdsbeperkingen";
+/* Subscription benefit for rubbish bin clearing */
+"subscriptionPurchase.benefits.rubbishClearing.title"="Plan het opruimen van de Prullenbak tussen 7 dagen en 10 jaar";
+/* General label for priority customer support */
+"general.prioritySupport"="Prioritaire ondersteuning";

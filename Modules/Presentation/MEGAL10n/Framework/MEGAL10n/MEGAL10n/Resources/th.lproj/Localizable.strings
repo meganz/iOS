@@ -164,6 +164,16 @@
 "fileLinkUnavailableText3"="URL ไม่ถูกต้อง - ไม่พบลิงก์ที่คุณพยายามเข้าถึง";
 /*  */
 "fileLinkUnavailableText4"="ผู้ใช้งานได้ลบไฟล์นี้ออกแล้ว";
+/* file has been deleted */
+"cloudDrive.fileLink.unavailableReason1"="ไฟล์ถูกลบแล้ว";
+/* file link has been disabled */
+"cloudDrive.fileLink.unavailableReason2"="เจ้าของปิดใช้งานลิงก์ไฟล์แล้ว";
+/* file link invalid */
+"cloudDrive.fileLink.unavailableReason3"="URL ไม่ถูกต้อง - ลิงก์ที่คุณพยายามเข้าถึงไม่มีอยู่จริง";
+/* file link has been removed */
+"cloudDrive.fileLink.unavailableReason4"="ลิงก์โฟลเดอร์ถูกลบเนื่องจากละเมิดเงื่อนไขการให้บริการของเรา";
+/* file link has expired */
+"cloudDrive.fileLink.hasExpired"="ลิงก์นี้หมดอายุแล้ว";
 /* Message shown when a download starts */
 "downloadStarted"="เริ่มต้นดาวน์โหลด";
 /* Title for the folder link view */
@@ -194,6 +204,16 @@
 "folderLinkUnavailableText3"="URL ไม่ถูกต้อง - ไม่พบลิงก์ที่คุณพยายามเข้าถึง";
 /*  */
 "folderLinkUnavailableText4"="ลิงก์โฟลเดอร์ถูกปิดใช้งานโดยผู้ใช้";
+/* folder has been deleted */
+"cloudDrive.folderLink.unavailableReason1"="โฟลเดอร์ถูกลบแล้ว";
+/* folder link has been disabled */
+"cloudDrive.folderLink.unavailableReason2"="เจ้าของปิดใช้งานลิงก์โฟลเดอร์แล้ว";
+/* folder link invalid */
+"cloudDrive.folderLink.unavailableReason3"="URL ไม่ถูกต้อง - ลิงก์ที่คุณพยายามเข้าถึงไม่มีอยู่จริง";
+/* folder link has been removed */
+"cloudDrive.folderLink.unavailableReason4"="ลิงก์โฟลเดอร์ถูกลบเนื่องจากละเมิดเงื่อนไขการให้บริการของเรา";
+/* folder link has expired */
+"cloudDrive.folderLink.hasExpired"="ลิงก์นี้หมดอายุแล้ว";
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
 "noInternetConnection"="ไม่มีการเชื่อมต่ออินเทอร์เน็ต";
 /* Title shown when a folder doesn't have any files */
@@ -1009,7 +1029,7 @@
 /*  */
 "howItWorks"="วิธีการทำงาน";
 /*  */
-"howItWorksMain"="เพื่อนของคุณจำเป็นต้องลงทะเบียนบัญชี MEGA ฟรี และ[S]ติดตั้งแอปพลิเคชัน MEGA อย่างน้อย 1 ตัว[/S] (ไม่ว่าจะเป็น แอป MEGA บนคอมพิวเตอร์หรือแอป MEGA บนมือถือ)";
+"howItWorksMain"="เพื่อนของคุณต้องลงทะเบียนบัญชีฟรีบน MEGA และ[S]ติดตั้งแอป MEGA อย่างน้อย 1 แอป[/S] (แอปสำหรับเดสก์ท็อปหรือมือถือก็ได้)";
 /*  */
 "howItWorksSecondary"="คุณสามารถแจ้งให้เพื่อนของคุณทราบได้ด้วยวิธีการใดก็ได้ คุณจะได้รับโบนัสหากคุณได้กรอกที่อยู่อีเมลเพื่อนคุณไว้ที่นี่ก่อนที่เพื่อนคุณจะลงทะเบียนด้วยที่อยู่อีเมลนั้น";
 /* A message which is shown once someone has invited a friend as part of the achievements program. */
@@ -1035,13 +1055,13 @@
 /* Cell title shown on the achievements view for referral achievement */
 "account.achievement.referralBonus.title"="โบนัสคำเชิญ";
 /* Cell title shown on the achievements view for install MEGA desktop app achievement */
-"account.achievement.desktopApp.title"="ติดตั้งแอป MEGA บนเดสก์ท็อป";
+"account.achievement.desktopApp.title"="ติดตั้งแอปเดสก์ท็อปของ MEGA";
 /* Explanation label shown on the achievements view for complete install MEGA desktop app achievement, %@ is a placeholder. */
 "account.achievement.desktopApp.complete.explaination.label"="คุณได้รับพื้นที่เก็บข้อมูล %@ จากการติดตั้งแอป MEGA บนเดสก์ท็อป ";
 /* Explanation label shown on the achievements view for incomplete install MEGA desktop app achievement, %1$@ is a placeholder, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
 "account.achievement.desktopApp.incomplete.explaination.label"="รับพื้นที่ฟรี %1$@ เมื่อติดตั้งแอป MEGA สำหรับเดสก์ท็อป %2$@ แอป MEGA สำหรับเดสก์ท็อปพร้อมให้ใช้งานบน Windows, macOS และ Linux ส่วนใหญ่";
 /* Cell title shown on the achievements view for install MEGA mobile app achievement */
-"account.achievement.mobileApp.title"="ติดตั้งแอป MEGA บนมือถือ";
+"account.achievement.mobileApp.title"="ติดตั้งแอปมือถือของ MEGA";
 /* Explanation label shown on the achievements view for complete install MEGA mobile app achievement, %@ is a placeholder. */
 "account.achievement.mobileApp.complete.explaination.label"="คุณได้รับพื้นที่เก็บข้อมูล %@ จากการติดตั้งแอป MEGA บนมือถือ";
 /* Explanation label shown on the achievements view for incomplete install MEGA mobile app achievement, %1$@ is a placeholder, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
@@ -2252,6 +2272,14 @@
 "Folder link unavailable"="ลิงก์โฟลเดอร์ยังไม่พร้อมใช้งาน";
 /* Error message shown when opening a file link which doesn’t exist */
 "File link unavailable"="ลิงก์ไฟล์ไม่พร้อมใช้งาน";
+/* Error message shown when opening a folder link which is deleted/disabled/invalid */
+"cloudDrive.folderLink.notAvailable"="ลิงก์โฟลเดอร์ที่คุณกำลังจะเปิดไม่สามารถใช้งานได้";
+/* Error message shown when opening a file link which is deleted/disabled/invalid */
+"cloudDrive.fileLink.notAvailable"="ลิงก์ไฟล์ที่คุณกำลังจะเปิดไม่สามารถใช้งานได้";
+/* Error message shown when opening a folder link which is expired */
+"cloudDrive.folderLink.noLongerAvailable"="ลิงก์โฟลเดอร์ที่คุณกำลังจะเปิดไม่สามารถใช้งานได้แล้ว";
+/* Error message shown when opening a file link which is expired */
+"cloudDrive.fileLink.noLongerAvailable"="ลิงก์ไฟล์ที่คุณกำลังจะเปิดไม่สามารถใช้งานได้แล้ว";
 /* Header of block with all shared files in chat. */
 "Shared Files"="ไฟล์ที่ใช้ร่วมกัน";
 /* Over Disk Quota Screen Navigation Bar Title */
@@ -4619,7 +4647,7 @@
 /* Title for the features of pro plan in the subscription purchase screen. */
 "subscriptionPurchase.featuresOfProPlan.title"="ประโยชน์เพิ่มเติมของแผน Pro";
 /* Features of pro plan in the subscription purchase screen. */
-"subscriptionPurchase.featuresOfProPlan.message"="• ตั้งค่าลิงก์แบบมีรหัสผ่านได้\n\n• กำหนดวันหมดอายุลิงก์ได้\n\n• ย้อนกลับโฟลเดอร์ที่ลบไปแล้วได้สูงสุด 180 วัน\n\n• ผู้จัดประชุมสามารถโทรและประชุมได้โดยไม่จำกัดจำนวนผู้เข้าร่วมและไม่จำกัดเวลา\n\n• กำหนดเวลาล้างถังขยะได้ตั้งแต่ 7 วันถึง 10 ปี\n\n• การสนับสนุนแบบพิเศษ";
+"subscriptionPurchase.featuresOfProPlan.message"="• ตั้งค่าลิงก์แบบมีรหัสผ่านได้\n\n• กำหนดวันหมดอายุลิงก์ได้\n\n• ย้อนกลับโฟลเดอร์ที่ลบไปแล้วได้สูงสุด 60 วัน\n\n• ผู้จัดประชุมสามารถโทรและประชุมได้โดยไม่จำกัดจำนวนผู้เข้าร่วมและไม่จำกัดเวลา\n\n• กำหนดเวลาล้างถังขยะได้ตั้งแต่ 7 วันถึง 10 ปี\n\n• การสนับสนุนแบบพิเศษ";
 /* Title for the first subscription feature: generous storage capacity */
 "subscriptionPurchase.feature.one.title"="พื้นที่เก็บข้อมูลจุได้ไม่อั้น";
 /* Description for the first subscription feature: details about available storage */
@@ -4695,14 +4723,22 @@
 /* The double tap seek display text in video player */
 "videoPlayer.chip.seekDisplayText"="%@ วินาที";
 /* The lock video player option in bottom more menu */
-"videoPlayer.lock.lockVideoPlayer"="Lock video player";
+"videoPlayer.lock.lockVideoPlayer"="ล็อกหน้าจอวิดีโอ";
 /* The screen locked status message in video player */
 "videoPlayer.lock.screenLocked"="หน้าจอล็อกอยู่";
 /* The instruction to unlock the video player */
-"videoPlayer.lock.tapIconToUnlock"="Tap the lock icon to unlock";
+"videoPlayer.lock.tapIconToUnlock"="แตะไอคอนแม่กุญแจเพื่อปลดล็อก";
 /* The lock video player option in bottom more menu */
 "videoPlayer.snapshot.bottomSheet.title"="ถ่ายภาพ";
 /* The instruction to unlock the video player */
 "videoPlayer.snapshot.snackBar.title"="รูปภาพที่บันทึกไว้ในอุปกรณ์ของคุณ";
 /* The Picture in picture video player option in bottom more menu */
-"videoPlayer.pip.bottomSheet.title"="Picture in picture";
+"videoPlayer.pip.bottomSheet.title"="เล่นวิดีโอซ้อนภาพ";
+/* Subscription benefit for rewind */
+"subscriptionPurchase.benefits.rewind.title"="กู้คืนข้อมูลที่ถูกลบได้นานสูงสุด 60 วัน";
+/* Subscription benefit for for calls and meetings */
+"subscriptionPurchase.benefits.callsAndMeetings.title"="โทรและประชุมได้แบบไม่จำกัดจำนวนผู้เข้าร่วมและไม่มีข้อจำกัดด้านเวลา";
+/* Subscription benefit for rubbish bin clearing */
+"subscriptionPurchase.benefits.rubbishClearing.title"="กำหนดเวลาการล้างถังขยะระหว่าง 7 วันถึง 10 ปี";
+/* General label for priority customer support */
+"general.prioritySupport"="การสนับสนุนแบบพิเศษ";

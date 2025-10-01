@@ -164,6 +164,16 @@
 "fileLinkUnavailableText3"="عنوان الرابط الالكتروني URL غير صالح - الرابط الذي تحاول الوصول إليه غير موجود";
 /*  */
 "fileLinkUnavailableText4"="تم حذف الملف من قبل المستخدم.";
+/* file has been deleted */
+"cloudDrive.fileLink.unavailableReason1"="تم حذف الملف";
+/* file link has been disabled */
+"cloudDrive.fileLink.unavailableReason2"="تم تعطيل رابط الملف من قبل المالك";
+/* file link invalid */
+"cloudDrive.fileLink.unavailableReason3"="عنوان الرابط الالكتروني URL غير صالح - الرابط الذي تحاول الوصول إليه غير موجود";
+/* file link has been removed */
+"cloudDrive.fileLink.unavailableReason4"="تمت إزالة رابط الملف لأنه انتهك شروط الخدمة الخاصة بنا";
+/* file link has expired */
+"cloudDrive.fileLink.hasExpired"="انتهت صلاحية الرابط";
 /* Message shown when a download starts */
 "downloadStarted"="بدء التنزيل";
 /* Title for the folder link view */
@@ -194,6 +204,16 @@
 "folderLinkUnavailableText3"="عنوان الرابط الالكتروني URL غير صالح - الرابط الذي تحاول الوصول إليه غير موجود";
 /*  */
 "folderLinkUnavailableText4"="لقد تم تعطيل رابط المجلد من قبل المستخدم.";
+/* folder has been deleted */
+"cloudDrive.folderLink.unavailableReason1"="تم حذف المجلد";
+/* folder link has been disabled */
+"cloudDrive.folderLink.unavailableReason2"="تم تعطيل رابط المجلد من قبل المالك";
+/* folder link invalid */
+"cloudDrive.folderLink.unavailableReason3"="عنوان الرابط الالكتروني URL غير صالح - الرابط الذي تحاول الوصول إليه غير موجود";
+/* folder link has been removed */
+"cloudDrive.folderLink.unavailableReason4"="تمت إزالة رابط المجلد لأنه انتهك شروط الخدمة الخاصة بنا";
+/* folder link has expired */
+"cloudDrive.folderLink.hasExpired"="انتهت صلاحية الرابط";
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
 "noInternetConnection"="لا يوجد اتصال بالإنترنت";
 /* Title shown when a folder doesn't have any files */
@@ -1009,7 +1029,7 @@
 /*  */
 "howItWorks"="كيف تعمل";
 /*  */
-"howItWorksMain"="يحتاج صديقك إلى التسجيل للحصول على حساب مجاني على ميغا MEGA و [S]القيام بتثبيت تطبيق ميغا MEGA واحد على الأقل[/S] (إما تطبيق ميغا MEGA للحاسوب المكتبي أو أحد تطبيقات ميغا MEGA للهاتف المحمول الخاصة بنا)";
+"howItWorksMain"="يحتاج صديقك إلى التسجيل للحصول على حساب مجاني على ميغا MEGA و [S]قم بتثبيت تطبيق ميغا MEGA واحد على الأقل[/S] (إما تطبيق الحاسوب المكتبي الخاص بنا أو أحد تطبيقات الهاتف المحمول الخاصة بنا)";
 /*  */
 "howItWorksSecondary"="يمكنك إخطار صديقك من خلال أي طريقة. ستكسب المكافأة إذا أدخلت عنوان البريد الإلكتروني لصديقك هنا قبل تسجيله بهذا العنوان.";
 /* A message which is shown once someone has invited a friend as part of the achievements program. */
@@ -1041,7 +1061,7 @@
 /* Explanation label shown on the achievements view for incomplete install MEGA desktop app achievement, %1$@ is a placeholder, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
 "account.achievement.desktopApp.incomplete.explaination.label"="عندما تقوم بتثبيت تطبيق ميغا MEGA للحاسوب المكتبي تحصل على %1$@ من مساحة التخزين المجانية، %2$@. يتوفر تطبيق ميغا MEGA للحاسوب المكتبي لأنظمة التشغيل ويندوز Windows و ماك macOS ومعظم إصدارات لينوكس Linux.";
 /* Cell title shown on the achievements view for install MEGA mobile app achievement */
-"account.achievement.mobileApp.title"="تثبيت تطبيق ميغا للهاتف المحمول MEGA mobile";
+"account.achievement.mobileApp.title"="تثبيت أحد تطبيقات ميغا للهاتف المحمول MEGA mobile";
 /* Explanation label shown on the achievements view for complete install MEGA mobile app achievement, %@ is a placeholder. */
 "account.achievement.mobileApp.complete.explaination.label"="لقد تلقيت %@ من مساحة تخزين لتثبيتك تطبيق ميغا للهاتف المحمول MEGA mobile.";
 /* Explanation label shown on the achievements view for incomplete install MEGA mobile app achievement, %1$@ is a placeholder, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
@@ -2252,6 +2272,14 @@
 "Folder link unavailable"="رابط المجلد غير متوفر";
 /* Error message shown when opening a file link which doesn’t exist */
 "File link unavailable"="رابط الملف غير متوفر";
+/* Error message shown when opening a folder link which is deleted/disabled/invalid */
+"cloudDrive.folderLink.notAvailable"="رابط المجلد الذي تحاول الوصول إليه غير متاح";
+/* Error message shown when opening a file link which is deleted/disabled/invalid */
+"cloudDrive.fileLink.notAvailable"="رابط الملف الذي تحاول الوصول إليه غير متاح";
+/* Error message shown when opening a folder link which is expired */
+"cloudDrive.folderLink.noLongerAvailable"="رابط المجلد الذي تحاول الوصول إليه لم يعد متوفرًا";
+/* Error message shown when opening a file link which is expired */
+"cloudDrive.fileLink.noLongerAvailable"="لم يعد رابط الملف الذي تحاول الوصول إليه متاحًا";
 /* Header of block with all shared files in chat. */
 "Shared Files"="الملفات المشاركة";
 /* Over Disk Quota Screen Navigation Bar Title */
@@ -4619,7 +4647,7 @@
 /* Title for the features of pro plan in the subscription purchase screen. */
 "subscriptionPurchase.featuresOfProPlan.title"="مزايا إضافية لباقات برو Pro";
 /* Features of pro plan in the subscription purchase screen. */
-"subscriptionPurchase.featuresOfProPlan.message"="• روابط محمية بكلمة مرور\n\n• روابط بتواريخ انتهاء الصلاحية\n\n• إرجاع المجلدات حتى 180 يومًا من البيانات المحذوفة\n\n• استضافة المكالمات والاجتماعات مع عدد غير محدود من المشاركين وبدون قيود زمنية\n\n• جدولة إفراغ سلة المحذوفات بين 7 أيام و 10 سنوات\n\n• أولوية الدعم";
+"subscriptionPurchase.featuresOfProPlan.message"="• روابط محمية بكلمة مرور\n\n• روابط بتواريخ انتهاء الصلاحية\n\n• إرجاع المجلدات حتى 60 يومًا من البيانات المحذوفة\n\n• استضافة المكالمات والاجتماعات مع عدد غير محدود من المشاركين وبدون قيود زمنية\n\n• جدولة إفراغ سلة المحذوفات بين 7 أيام و 10 سنوات\n\n• أولوية الدعم";
 /* Title for the first subscription feature: generous storage capacity */
 "subscriptionPurchase.feature.one.title"="مساحة تخزين سخية";
 /* Description for the first subscription feature: details about available storage */
@@ -4699,10 +4727,18 @@
 /* The screen locked status message in video player */
 "videoPlayer.lock.screenLocked"="الشاشة مقفلة";
 /* The instruction to unlock the video player */
-"videoPlayer.lock.tapIconToUnlock"="Tap the lock icon to unlock";
+"videoPlayer.lock.tapIconToUnlock"="انقر فوق رمز القفل لفتح القفل";
 /* The lock video player option in bottom more menu */
 "videoPlayer.snapshot.bottomSheet.title"="التقاط";
 /* The instruction to unlock the video player */
 "videoPlayer.snapshot.snackBar.title"="تم حفظ الصورة على جهازك";
 /* The Picture in picture video player option in bottom more menu */
-"videoPlayer.pip.bottomSheet.title"="Picture in picture";
+"videoPlayer.pip.bottomSheet.title"="صورة داخل صورة";
+/* Subscription benefit for rewind */
+"subscriptionPurchase.benefits.rewind.title"="قم بإرجاع ما يصل إلى 60 يومًا من البيانات المحذوفة";
+/* Subscription benefit for for calls and meetings */
+"subscriptionPurchase.benefits.callsAndMeetings.title"="استضف مكالمات واجتماعات مع عدد غير محدود من المشاركين وبدون قيود زمنية";
+/* Subscription benefit for rubbish bin clearing */
+"subscriptionPurchase.benefits.rubbishClearing.title"="حدد موعدًا لتفريغ سلة المحذوفات بين 7 أيام و 10 سنوات";
+/* General label for priority customer support */
+"general.prioritySupport"="أولوية الدعم";

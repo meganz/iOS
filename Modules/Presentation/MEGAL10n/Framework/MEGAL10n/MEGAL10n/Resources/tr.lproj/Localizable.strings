@@ -164,6 +164,16 @@
 "fileLinkUnavailableText3"="Geçersiz URL - erişmeye çalıştığınız bağlantı mevcut değil";
 /*  */
 "fileLinkUnavailableText4"="Dosya, kullanıcı tarafından silindi.";
+/* file has been deleted */
+"cloudDrive.fileLink.unavailableReason1"="Dosya silindi";
+/* file link has been disabled */
+"cloudDrive.fileLink.unavailableReason2"="Dosya bağlantısı, sahibi tarafından devre dışı bırakıldı";
+/* file link invalid */
+"cloudDrive.fileLink.unavailableReason3"="Geçersiz URL - erişmeye çalıştığınız bağlantı mevcut değil";
+/* file link has been removed */
+"cloudDrive.fileLink.unavailableReason4"="Dosya bağlantısı, Hizmet Şartları’mızı ihlal ettiği için kaldırılmıştır";
+/* file link has expired */
+"cloudDrive.fileLink.hasExpired"="Bağlantının süresi doldu";
 /* Message shown when a download starts */
 "downloadStarted"="İndirme başladı";
 /* Title for the folder link view */
@@ -194,6 +204,16 @@
 "folderLinkUnavailableText3"="Geçersiz URL - erişmeye çalıştığınız bağlantı mevcut değil";
 /*  */
 "folderLinkUnavailableText4"="Klasör bağlantısı kullanıcı tarafından devre dışı bırakıldı.";
+/* folder has been deleted */
+"cloudDrive.folderLink.unavailableReason1"="Klasör silindi";
+/* folder link has been disabled */
+"cloudDrive.folderLink.unavailableReason2"=" Klasör bağlantısı, sahibi tarafından devre dışı bırakıldı";
+/* folder link invalid */
+"cloudDrive.folderLink.unavailableReason3"="Geçersiz URL - erişmeye çalıştığınız bağlantı mevcut değil";
+/* folder link has been removed */
+"cloudDrive.folderLink.unavailableReason4"="Klasör bağlantısı, Hizmet Şartları’mızı ihlal ettiği için kaldırılmıştır";
+/* folder link has expired */
+"cloudDrive.folderLink.hasExpired"="Bağlantının süresi doldu";
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
 "noInternetConnection"="İnternet bağlantısı yok";
 /* Title shown when a folder doesn't have any files */
@@ -1009,7 +1029,7 @@
 /*  */
 "howItWorks"="Nasıl işliyor?";
 /*  */
-"howItWorksMain"="Arkadaşınızın MEGA’da ücretsiz bir hesaba kaydolması ve [S]en az bir MEGA uygulaması yüklemesi[/S] (MEGA Masaüstü Uygulaması veya MEGA Mobil Uygulamalarımızdan biri) gerekir";
+"howItWorksMain"="Arkadaşınızın MEGA’da ücretsiz bir hesaba kaydolması ve [S]en az bir MEGA uygulamasını kurması[/S] (masaüstü uygulamamız veya mobil uygulamalarımızdan biri) gerekiyor.";
 /*  */
 "howItWorksSecondary"="Arkadaşınıza herhangi bir yöntemle bildirimde bulunabilirsiniz. Arkadaşınızın e-posta adresini, o adresle kaydolmadan önce buraya girerseniz bonus kazanırsınız.";
 /* A message which is shown once someone has invited a friend as part of the achievements program. */
@@ -1035,13 +1055,13 @@
 /* Cell title shown on the achievements view for referral achievement */
 "account.achievement.referralBonus.title"="Davetiye bonusları";
 /* Cell title shown on the achievements view for install MEGA desktop app achievement */
-"account.achievement.desktopApp.title"="MEGA Masaüstü Uygulamasını yükleyin";
+"account.achievement.desktopApp.title"="MEGA’nın masaüstü uygulamasını kurun";
 /* Explanation label shown on the achievements view for complete install MEGA desktop app achievement, %@ is a placeholder. */
 "account.achievement.desktopApp.complete.explaination.label"="MEGA Masaüstü Uygulamasını yüklediğiniz için %@ depolama alanı kazandınız.";
 /* Explanation label shown on the achievements view for incomplete install MEGA desktop app achievement, %1$@ is a placeholder, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
 "account.achievement.desktopApp.incomplete.explaination.label"="MEGA Masaüstü Uygulamasını kurduğunuzda %1$@ ek depolama alanı kazanırsınız, %2$@. MEGA Masaüstü Uygulaması Windows, macOS ve çoğu Linux dağıtımında mevcuttur.";
 /* Cell title shown on the achievements view for install MEGA mobile app achievement */
-"account.achievement.mobileApp.title"="MEGA Mobil Uygulamasını yükleyin";
+"account.achievement.mobileApp.title"="MEGA’nın mobil uygulamalarından birini kurun";
 /* Explanation label shown on the achievements view for complete install MEGA mobile app achievement, %@ is a placeholder. */
 "account.achievement.mobileApp.complete.explaination.label"="MEGA mobil uygulamasını yüklediğiniz için %@ depolama alanı kazandınız.";
 /* Explanation label shown on the achievements view for incomplete install MEGA mobile app achievement, %1$@ is a placeholder, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
@@ -1051,7 +1071,7 @@
 /* Cell title shown on the achievements view for Start MEGA VPN Free Trial */
 "account.achievement.vpnFreeTrial.title"="MEGA VPN ücretsiz denemesini başlat";
 /* Detail label shown on the achievements details view for Start MEGA VPN Free Trial when its incomplete, %1$@ is placeholder for the storage amount, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
-"account.achievement.vpnFreeTrial.detail.incomplete.label"="MEGA VPN ücretsiz deneme sürümünü başlattığınızda %1$@ ücretsiz depolama alanı kazanın. %2$@";
+"account.achievement.vpnFreeTrial.detail.incomplete.label"="MEGA VPN ücretsiz denemesini başlattığınızda %1$@ ücretsiz depolama alanı kazanın. %2$@";
 /* Explanation label shown on the achievements view for incomplete start MEGA VPN Free Trial achievement, %@ is a placeholder. */
 "account.achievement.vpnFreeTrial.incomplete.explanation.label"="MEGA VPN uygulamasını yükleyin, MEGA hesabınızla giriş yapın ve ücretsiz denemenizi başlatın. Bonus depolama alanınız, ücretsiz denemenizi başlattıktan sonra otomatik olarak eklenir.";
 /* Explanation label shown on the achievements view for complete start MEGA VPN Free Trial achievement, %@ is a placeholder. */
@@ -1061,7 +1081,7 @@
 /* Cell title shown on the achievements view for Start MEGA Pass Free Trial */
 "account.achievement.passFreeTrial.title"="MEGA Pass ücretsiz denemesini başlat";
 /* Detail label shown on the achievements details view for Start MEGA Pass Free Trial when its incomplete, %1$@ is placeholder for the storage amount, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
-"account.achievement.passFreeTrial.detail.incomplete.label"="MEGA Pass ücretsiz deneme sürümünü başlattığınızda %1$@ ücretsiz depolama alanı kazanın. %2$@";
+"account.achievement.passFreeTrial.detail.incomplete.label"="MEGA Pass ücretsiz denemesini başlattığınızda %1$@ ücretsiz depolama alanı kazanın. %2$@";
 /* Explanation label shown on the achievements view for incomplete start MEGA Pass Free Trial achievement, %@ is a placeholder. */
 "account.achievement.passFreeTrial.incomplete.explanation.label"="MEGA Pass uygulamasını yükleyin, MEGA hesabınızla giriş yapın ve ücretsiz denemenizi başlatın. Bonus depolama alanınız, ücretsiz denemenizi başlattıktan sonra otomatik olarak eklenir.";
 /* Explanation label shown on the achievements view for complete start MEGA Pass Free Trial achievement, %@ is a placeholder. */
@@ -1105,13 +1125,13 @@
 /* Button to remove some photo, e.g. avatar photo. Try to keep the text short (as in English) */
 "Remove Photo"="Fotoğrafı kaldır";
 /* Button title that allows the user change his name */
-"changeName"="Adı değiştir";
+"changeName"="İsmi değiştir";
 /* Success message when changing profile information. */
 "youHaveSuccessfullyChangedYourProfile"="Profilinizi değiştirdiniz";
 /* Hint text for the first name (Placeholder) */
-"firstName"="Ad";
+"firstName"="İsim";
 /* Hint text for the last name (Placeholder) */
-"lastName"="Soyad";
+"lastName"="Soy isim";
 /* Title for "Local" used space. */
 "localLabel"="Yerel";
 /* Title for MEGA "Available" space. */
@@ -2077,13 +2097,13 @@
 /* Subtitle of chat screen when the chat is inactive */
 "Inactive chat"="Etkin olmayan sohbet";
 /* Contact details screen: Set the alias(nickname) for a user */
-"Set Nickname"="Takma ad belirle";
+"Set Nickname"="Takma isim belirle";
 /* Contact details screen: Edit the alias(nickname) for a user */
-"Edit Nickname"="Takma adı düzenle";
+"Edit Nickname"="Takma ismi düzenle";
 /* Edit nickname screen: Remove nickname button title */
-"Remove Nickname"="Takma adı kaldır";
+"Remove Nickname"="Takma ismi kaldır";
 /* Add nickname screen: This text appears above the alias(nickname) entry */
-"Alias/ Nickname"="Diğer ad veya takma ad";
+"Alias/ Nickname"="Diğer isim veya takma isim";
 /* title of a field to show the role or position (you can use whichever is best for translation) of the user in business accounts */
 "Role:"="Rol:";
 /* Used in camera upload settings: This text will appear with a switch to turn on/off location tags while uploading a file */
@@ -2105,7 +2125,7 @@
 /* Error message shown when opening a link with an account that not corresponds to the link */
 "This link is not related to this account. Please log in with the correct account."="Farklı bir MEGA hesabına giriş yaptınız. Çıkış yapın ve şifre sıfırlama bağlantısını tekrar açın.";
 /* Text emncouraging the user to add contacts in MEGA */
-"Invite contact now"="Kişileri şimdi davet et";
+"Invite contact now"="Kişileri hemen davet et";
 /* Error message if user click next button without enter a valid phone number */
 "Please enter a valid phone number"="Lütfen geçerli bir telefon numarası girin.";
 /* Error message that will show to user when user reached the sms verification daily limit */
@@ -2252,6 +2272,14 @@
 "Folder link unavailable"="Klasör bağlantısı kullanılamıyor";
 /* Error message shown when opening a file link which doesn’t exist */
 "File link unavailable"="Dosya bağlantısı kullanılamıyor";
+/* Error message shown when opening a folder link which is deleted/disabled/invalid */
+"cloudDrive.folderLink.notAvailable"="Erişmeye çalıştığınız klasör bağlantısı kullanılamıyor";
+/* Error message shown when opening a file link which is deleted/disabled/invalid */
+"cloudDrive.fileLink.notAvailable"="Erişmeye çalıştığınız dosya bağlantısı kullanılamıyor";
+/* Error message shown when opening a folder link which is expired */
+"cloudDrive.folderLink.noLongerAvailable"="Erişmeye çalıştığınız klasör bağlantısı artık geçerli değil";
+/* Error message shown when opening a file link which is expired */
+"cloudDrive.fileLink.noLongerAvailable"="Erişmeye çalıştığınız dosya bağlantısı artık geçerli değil";
 /* Header of block with all shared files in chat. */
 "Shared Files"="Paylaşılan dosyalar";
 /* Over Disk Quota Screen Navigation Bar Title */
@@ -2989,7 +3017,7 @@
 /* Label indicating storage over quota */
 "transfer.storage.quotaExceeded"="Depolama kotası aşıldı";
 /* Header title displayed above the currently playing track in the audio player's playlist */
-"media.audio.playlist.section.nowPlaying.title"="Şimdi çalıyor";
+"media.audio.playlist.section.nowPlaying.title"="Şu anda çalıyor";
 /* Header title displayed above the upcoming tracks in the audio player's playlist */
 "media.audio.playlist.section.next.title"="Sonraki";
 /* Title of Audio Player dialog for Playback Continuation */
@@ -3351,7 +3379,7 @@
 /* Schedule meeting description field placeholder */
 "meetings.scheduleMeeting.description"="Açıklama ekle";
 /* Schedule meeting title unencrypted disclaimer message */
-"meetings.scheduleMeeting.meetingName.titleUnencrypted"="MEGA, toplantı adınızı ve açıklamanızı görebilir ancak biz bunları gizli tutarız";
+"meetings.scheduleMeeting.meetingName.titleUnencrypted"="MEGA, toplantı adınızı ve açıklamanızı görebilir ancak bunları gizli tutarız";
 /* Schedule meeting name error */
 "meetings.scheduleMeeting.meetingName.lenghtError"="En fazla 30 karakter girin";
 /* Schedule meeting description error */
@@ -3767,9 +3795,9 @@
 /* Meeting waiting room don't leave button */
 "meetings.waitingRoom.alert.dontLeave"="Ayrılma";
 /* Meeting waiting room guest join first name textfield */
-"meetings.waitingRoom.guest.firstName"="Ad";
+"meetings.waitingRoom.guest.firstName"="İsim";
 /* Meeting waiting room guest join last name textfield */
-"meetings.waitingRoom.guest.lastName"="Soyadı";
+"meetings.waitingRoom.guest.lastName"="Soy isim";
 /* Meeting waiting room guest join button */
 "meetings.waitingRoom.guest.join"="Katıl";
 /* Meeting waiting room message of wait for host to let you in */
@@ -4111,7 +4139,7 @@
 /* Calls: Text for dialog message presented when call is finished because of free account call duration limit */
 "calls.freePlanLimitWarning.upgradeToProDialog.message"="Aramanız 60 dakika sınırına ulaştı ve sona erdi. Pro kullanıcıları sınırsız arama süresine sahiptir ve 1000’e kadar katılımcı davet edebilir.";
 /* Calls: Text for dialog button presented when call is finished because of free account call duration limit */
-"calls.freePlanLimitWarning.upgradeToProDialog.button"="Şimdi yükselt";
+"calls.freePlanLimitWarning.upgradeToProDialog.button"="Hemen yükselt";
 /* Hidden files and folders onboarding title */
 "onboarding.hiddenFilesAndFolders.title"="Gizli dosyalar ve klasörler";
 /* Hidden files and folders onboarding content hide important title */
@@ -4381,13 +4409,13 @@
 /* Banner title shown when storage is full */
 "account.storage.banner.fullStorageOverQuotaBanner.title"="Depolama alanınız dolu";
 /* Button title to upgrade when storage is full */
-"account.storage.banner.fullStorageOverQuotaBanner.button"="Şimdi yükselt";
+"account.storage.banner.fullStorageOverQuotaBanner.button"="Hemen yükselt";
 /* Banner description shown when storage is full, prompting the user to upgrade */
 "account.storage.banner.fullStorageOverQuotaBanner.description"="Veri yüklemeye devam etmek için hemen yükselterek daha fazla depolama alanı edinin.";
 /* Banner title shown when storage is almost full */
 "account.storage.banner.almostFullStorageOverQuotaBanner.title"="Depolama alanınız neredeyse dolu";
 /* Button title to upgrade when storage is almost full */
-"account.storage.banner.almostFullStorageOverQuotaBanner.button"="Şimdi yükselt";
+"account.storage.banner.almostFullStorageOverQuotaBanner.button"="Hemen yükselt";
 /* Banner description shown when storage is almost full, prompting the user to upgrade */
 "account.storage.banner.almostFullStorageOverQuotaBanner.description"="Veri yüklemeye devam etmek için daha fazla depolama alanı edinmek üzere yükseltin.";
 /* Title of meetings screen empty view */
@@ -4453,7 +4481,7 @@
 /* Meetings: Warning banner show in various places about 100 participant limit */
 "meetings.warning.overParticipantLimit"="Aramaya yalnızca 100 katılımcı katılabilir. Ek katılımcılar yalnızca mesaj gönderip alabilir. Düzenleyici, bu kısıtlamaları kaldırmak için Pro’ya yükseltebilir.";
 /* Over Disk Quota paywall Upgrade button title */
-"overDiskQuota.paywall.button.upgradeNow"="Şimdi yükselt";
+"overDiskQuota.paywall.button.upgradeNow"="Hemen yükselt";
 /* Over Disk Quota paywall Make some space button title */
 "overDiskQuota.paywall.button.makeSomeSpace"="Biraz yer açın";
 /* Title of the popup displayed when the user tries to manage tags but the feature is unavailable due to their account status. */
@@ -4619,7 +4647,7 @@
 /* Title for the features of pro plan in the subscription purchase screen. */
 "subscriptionPurchase.featuresOfProPlan.title"="Pro planlarının ek avantajları";
 /* Features of pro plan in the subscription purchase screen. */
-"subscriptionPurchase.featuresOfProPlan.message"="• Şifre korumalı bağlantılar\n\n• Son kullanma tarihli bağlantılar\n\n• 180 güne kadar silinmiş verileri içeren klasörleri geri sarma\n\n• Sınırsız katılımcıyla ve zaman kısıtlaması olmadan arama ve toplantı düzenleme\n\n• Çöp kutusunun temizlenmesini 7 gün ila 10 yıl arasında planlama\n\n• Öncelikli destek";
+"subscriptionPurchase.featuresOfProPlan.message"="• Şifre korumalı bağlantılar\n\n• Son kullanma tarihli bağlantılar\n\n• 60 güne kadar silinmiş verileri içeren klasörleri geri sarma\n\n• Sınırsız katılımcıyla ve zaman kısıtlaması olmadan arama ve toplantı düzenleme\n\n• Çöp kutusunun temizlenmesini 7 gün ila 10 yıl arasında planlama\n\n• Öncelikli destek";
 /* Title for the first subscription feature: generous storage capacity */
 "subscriptionPurchase.feature.one.title"="Cömert depolama";
 /* Description for the first subscription feature: details about available storage */
@@ -4706,3 +4734,11 @@
 "videoPlayer.snapshot.snackBar.title"="Fotoğraf, cihazınıza kaydedildi";
 /* The Picture in picture video player option in bottom more menu */
 "videoPlayer.pip.bottomSheet.title"="Resim içinde resim";
+/* Subscription benefit for rewind */
+"subscriptionPurchase.benefits.rewind.title"="Silinen verileri 60 güne kadar geri sarabilme";
+/* Subscription benefit for for calls and meetings */
+"subscriptionPurchase.benefits.callsAndMeetings.title"="Sınırsız katılımcıyla ve süre kısıtlaması olmadan aramalar ve toplantılar düzenleyebilme";
+/* Subscription benefit for rubbish bin clearing */
+"subscriptionPurchase.benefits.rubbishClearing.title"="Çöp kutusunun temizlenmesini 7 gün ila 10 yıl arasında planlama";
+/* General label for priority customer support */
+"general.prioritySupport"="Öncelikli destek";

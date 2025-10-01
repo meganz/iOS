@@ -164,6 +164,16 @@
 "fileLinkUnavailableText3"="URL non valido - il link che si sta provando ad accedere non esiste";
 /*  */
 "fileLinkUnavailableText4"="Il file è stato rimosso dall'utente.";
+/* file has been deleted */
+"cloudDrive.fileLink.unavailableReason1"="Il file è stato eliminato";
+/* file link has been disabled */
+"cloudDrive.fileLink.unavailableReason2"="Il link del file è stato disabilitato dal proprietario";
+/* file link invalid */
+"cloudDrive.fileLink.unavailableReason3"="URL non valido: il link a cui stai tentando di accedere non esiste";
+/* file link has been removed */
+"cloudDrive.fileLink.unavailableReason4"="Il link del file è stato rimosso in quanto violava i nostri Termini di servizio";
+/* file link has expired */
+"cloudDrive.fileLink.hasExpired"="Il link è scaduto";
 /* Message shown when a download starts */
 "downloadStarted"="Download avviato";
 /* Title for the folder link view */
@@ -194,6 +204,16 @@
 "folderLinkUnavailableText3"="URL non valido - il link che si sta provando ad accedere non esiste";
 /*  */
 "folderLinkUnavailableText4"="Il collegamento della cartella è stato disattivato dall'utente.";
+/* folder has been deleted */
+"cloudDrive.folderLink.unavailableReason1"="La cartella è stata eliminata";
+/* folder link has been disabled */
+"cloudDrive.folderLink.unavailableReason2"="Il link della cartella è stato disabilitato dal proprietario";
+/* folder link invalid */
+"cloudDrive.folderLink.unavailableReason3"="URL non valido: il link a cui stai tentando di accedere non esiste";
+/* folder link has been removed */
+"cloudDrive.folderLink.unavailableReason4"="Il link della cartella è stato rimosso perché viola i nostri Termini di servizio";
+/* folder link has expired */
+"cloudDrive.folderLink.hasExpired"="Il link è scaduto";
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
 "noInternetConnection"="Nessuna connessione ad Internet";
 /* Title shown when a folder doesn't have any files */
@@ -1009,7 +1029,7 @@
 /*  */
 "howItWorks"="Come funziona";
 /*  */
-"howItWorksMain"="La persona invitata da te deve creare un account gratuito su MEGA e [S]installare almeno un'applicazione MEGA[/S] (l'app MEGA per desktop o una delle nostre app MEGA per mobile)";
+"howItWorksMain"="La persona invitata da te deve creare un account gratuito su MEGA e [S]installare almeno un'applicazione MEGA[/S] (la nostra app per desktop o una delle nostre app per mobile)";
 /*  */
 "howItWorksSecondary"="Puoi avvisare la persona che hai invitato con qualsiasi metodo. Guadagnerai il bonus se hai inserito qui il suo indirizzo email prima che si registrasse con quell'indirizzo.";
 /* A message which is shown once someone has invited a friend as part of the achievements program. */
@@ -1041,7 +1061,7 @@
 /* Explanation label shown on the achievements view for incomplete install MEGA desktop app achievement, %1$@ is a placeholder, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
 "account.achievement.desktopApp.incomplete.explaination.label"="Quando installi l'app per desktop di MEGA ottieni %1$@ di spazio di archiviazione gratuito, %2$@. L'app per desktop di MEGA è disponibile per Windows, macOS e la maggior parte delle distribuzioni Linux.";
 /* Cell title shown on the achievements view for install MEGA mobile app achievement */
-"account.achievement.mobileApp.title"="Install the MEGA Mobile App";
+"account.achievement.mobileApp.title"="Installa una delle app per mobile di MEGA";
 /* Explanation label shown on the achievements view for complete install MEGA mobile app achievement, %@ is a placeholder. */
 "account.achievement.mobileApp.complete.explaination.label"="Hai ricevuto %@ di spazio di archiviazione per aver installato l'app per mobile di MEGA.";
 /* Explanation label shown on the achievements view for incomplete install MEGA mobile app achievement, %1$@ is a placeholder, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
@@ -2252,6 +2272,14 @@
 "Folder link unavailable"="Collegamento Cartella non disponibile";
 /* Error message shown when opening a file link which doesn’t exist */
 "File link unavailable"="File link non disponibile";
+/* Error message shown when opening a folder link which is deleted/disabled/invalid */
+"cloudDrive.folderLink.notAvailable"="Il link della cartella a cui stai tentando di accedere non è disponibile";
+/* Error message shown when opening a file link which is deleted/disabled/invalid */
+"cloudDrive.fileLink.notAvailable"="Il link del file a cui stai tentando di accedere non è disponibile";
+/* Error message shown when opening a folder link which is expired */
+"cloudDrive.folderLink.noLongerAvailable"="Il link della cartella a cui stai tentando di accedere non è più disponibile";
+/* Error message shown when opening a file link which is expired */
+"cloudDrive.fileLink.noLongerAvailable"="Il link del file a cui stai tentando di accedere non è più disponibile";
 /* Header of block with all shared files in chat. */
 "Shared Files"="File condivisi";
 /* Over Disk Quota Screen Navigation Bar Title */
@@ -2471,7 +2499,7 @@
 /* Cookie settings dialog text. */
 "settings.cookies.performanceAndAnalytics"="Cookie di performance e statistiche";
 /* Cookie settings dialog text. */
-"settings.cookies.performanceAndAnalytics.footer"="Aiutaci a capire come utilizzi i nostri servizi e forniscici dati che possiamo utilizzare per fare miglioramenti. Non accettare questi Cookie significa che avremo meno dati disponibili per fare dei miglioramenti grafici.";
+"settings.cookies.performanceAndAnalytics.footer"="Aiutaci a capire come utilizzi i nostri servizi e forniscici dati che possiamo utilizzare per fare miglioramenti. Non accettare questi cookie significa che avremo meno dati disponibili per fare dei miglioramenti grafici.";
 /* Cookie settings dialog title label for Advertising Cookies */
 "settings.cookies.advertisingCookies"="Cookie pubblicitari";
 /* Cookie settings dialog footer text for Advertising Cookies */
@@ -4619,7 +4647,7 @@
 /* Title for the features of pro plan in the subscription purchase screen. */
 "subscriptionPurchase.featuresOfProPlan.title"="Vantaggi aggiuntivi dei piani Pro";
 /* Features of pro plan in the subscription purchase screen. */
-"subscriptionPurchase.featuresOfProPlan.message"="• Link protetti da password\n\n• Link con date di scadenza\n\n• Riavvolgi la cartella fino a 180 giorni di dati eliminati\n\n• Organizza chiamate e meeting con un numero illimitato di partecipanti e senza limiti di tempo\n\n• Pianifica lo sgombero del Cestino tra 7 giorni e 10 anni\n\n• Supporto prioritario";
+"subscriptionPurchase.featuresOfProPlan.message"="• Link protetti da password\n\n• Link con date di scadenza\n\n• Riavvolgi la cartella fino a 60 giorni di dati eliminati\n\n• Organizza chiamate e meeting con un numero illimitato di partecipanti e senza limiti di tempo\n\n• Pianifica lo sgombero del Cestino tra 7 giorni e 10 anni\n\n• Supporto prioritario";
 /* Title for the first subscription feature: generous storage capacity */
 "subscriptionPurchase.feature.one.title"="Grande archivio";
 /* Description for the first subscription feature: details about available storage */
@@ -4695,14 +4723,22 @@
 /* The double tap seek display text in video player */
 "videoPlayer.chip.seekDisplayText"="%@ secondi";
 /* The lock video player option in bottom more menu */
-"videoPlayer.lock.lockVideoPlayer"="Lock video player";
+"videoPlayer.lock.lockVideoPlayer"="Blocca il lettore video";
 /* The screen locked status message in video player */
 "videoPlayer.lock.screenLocked"="Lo schermo è bloccato";
 /* The instruction to unlock the video player */
-"videoPlayer.lock.tapIconToUnlock"="Tap the lock icon to unlock";
+"videoPlayer.lock.tapIconToUnlock"="Tocca l'icona del lucchetto per sbloccare";
 /* The lock video player option in bottom more menu */
 "videoPlayer.snapshot.bottomSheet.title"="Cattura";
 /* The instruction to unlock the video player */
 "videoPlayer.snapshot.snackBar.title"="Immagine salvata sul tuo dispositivo";
 /* The Picture in picture video player option in bottom more menu */
 "videoPlayer.pip.bottomSheet.title"="Picture in picture";
+/* Subscription benefit for rewind */
+"subscriptionPurchase.benefits.rewind.title"="Riavvolgi fino a 60 giorni di dati eliminati";
+/* Subscription benefit for for calls and meetings */
+"subscriptionPurchase.benefits.callsAndMeetings.title"="Organizza chiamate e riunioni con un numero illimitato di partecipanti e senza limiti di tempo";
+/* Subscription benefit for rubbish bin clearing */
+"subscriptionPurchase.benefits.rubbishClearing.title"="Pianifica la pulizia del Cestino tra 7 giorni e 10 anni";
+/* General label for priority customer support */
+"general.prioritySupport"="Supporto prioritario";
