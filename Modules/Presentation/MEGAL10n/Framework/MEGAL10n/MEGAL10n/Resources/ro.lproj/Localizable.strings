@@ -164,6 +164,16 @@
 "fileLinkUnavailableText3"="URL nevalid - linkul pe care încerci să-l accesezi nu există";
 /*  */
 "fileLinkUnavailableText4"="Fișierul a fost șters de către utilizator.";
+/* file has been deleted */
+"cloudDrive.fileLink.unavailableReason1"="Fișierul a fost șters";
+/* file link has been disabled */
+"cloudDrive.fileLink.unavailableReason2"="Proprietarul a dezactivat link-ul de fișier";
+/* file link invalid */
+"cloudDrive.fileLink.unavailableReason3"="URL nevalid - linkul pe care încercați să îl accesați nu există";
+/* file link has been removed */
+"cloudDrive.fileLink.unavailableReason4"="Linkul fișierului a fost eliminat deoarece a încălcat Termenii de utilizare a serviciului";
+/* file link has expired */
+"cloudDrive.fileLink.hasExpired"="Link-ul a expirat";
 /* Message shown when a download starts */
 "downloadStarted"="Descărcarea a început";
 /* Title for the folder link view */
@@ -194,6 +204,16 @@
 "folderLinkUnavailableText3"="URL nevalid - linkul pe care încerci să-l accesezi nu există";
 /*  */
 "folderLinkUnavailableText4"="Linkul folderului a fost dezactivat de către utilizator.";
+/* folder has been deleted */
+"cloudDrive.folderLink.unavailableReason1"="Folderul a fost șters";
+/* folder link has been disabled */
+"cloudDrive.folderLink.unavailableReason2"="Link-ul folder a fost dezactivat de proprietar";
+/* folder link invalid */
+"cloudDrive.folderLink.unavailableReason3"="URL nevalid - linkul pe care încercați să îl accesați nu există";
+/* folder link has been removed */
+"cloudDrive.folderLink.unavailableReason4"="Linkul folderului a fost eliminat deoarece a încălcat Termenii de utilizare a serviciului";
+/* folder link has expired */
+"cloudDrive.folderLink.hasExpired"="Link-ul a expirat";
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
 "noInternetConnection"="Fără conexiune la internet";
 /* Title shown when a folder doesn't have any files */
@@ -1009,7 +1029,7 @@
 /*  */
 "howItWorks"="Cum funcționează";
 /*  */
-"howItWorksMain"="Prietenul tău trebuie să se înscrie pentru un cont gratuit pe MEGA și [S]instalați cel puțin o aplicație MEGA[/S] (fie Aplicația Desktop MEGA, fie una dintre aplicațiile noastre MEGA Mobile)";
+"howItWorksMain"="Your friend needs to sign up for a free account on MEGA and [S]install at least one MEGA application[/S] (either our desktop app or one of our mobile apps)";
 /*  */
 "howItWorksSecondary"="Puteți să vă anunțați prietenul prin orice metodă. Veți câștiga bonusul dacă ați introdus e-mailul prietenului dvs. aici înainte de a se înscrie cu acea adresă.";
 /* A message which is shown once someone has invited a friend as part of the achievements program. */
@@ -1035,13 +1055,13 @@
 /* Cell title shown on the achievements view for referral achievement */
 "account.achievement.referralBonus.title"="Bonusuri pt. invitații";
 /* Cell title shown on the achievements view for install MEGA desktop app achievement */
-"account.achievement.desktopApp.title"="Instalează Aplicația Desktop MEGA";
+"account.achievement.desktopApp.title"="Install MEGA’s desktop app";
 /* Explanation label shown on the achievements view for complete install MEGA desktop app achievement, %@ is a placeholder. */
 "account.achievement.desktopApp.complete.explaination.label"="Ați primit %@ spațiu de stocare pentru instalarea Aplicației Desktop MEGA.";
 /* Explanation label shown on the achievements view for incomplete install MEGA desktop app achievement, %1$@ is a placeholder, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
 "account.achievement.desktopApp.incomplete.explaination.label"="Când instalați Aplicația Desktop MEGA veți obține %1$@ de spațiu de stocare gratuit, %2$@. Aplicația Desktop MEGA este disponibilă pentru Windows, macOS și majoritatea distribuțiilor Linux.";
 /* Cell title shown on the achievements view for install MEGA mobile app achievement */
-"account.achievement.mobileApp.title"="Instalează Aplicația Mobilă MEGA";
+"account.achievement.mobileApp.title"="Install one of MEGA’s mobile apps";
 /* Explanation label shown on the achievements view for complete install MEGA mobile app achievement, %@ is a placeholder. */
 "account.achievement.mobileApp.complete.explaination.label"="Ai primit %@ spațiu de stocare pentru instalarea Aplicației Mobile MEGA.";
 /* Explanation label shown on the achievements view for incomplete install MEGA mobile app achievement, %1$@ is a placeholder, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
@@ -1225,7 +1245,7 @@
 /* Empty Conversations section */
 "noConversations"="Nicio conversație";
 /* Empty Conversations description */
-"Start chatting securely with your contacts using end-to-end encryption"="Începe să chatuiești securizat cu contactele tale folosind criptare tip zero cunoștințe";
+"Start chatting securely with your contacts using end-to-end encryption"="Începe să chatuiești securizat cu contactele tale folosind criptare cu cunoștință zero";
 /* Text button shown when the chat is disabled and if tapped the chat will be enabled */
 "enable"="Activează";
 /* A button on a dialog which invites a contact to join MEGA. */
@@ -1253,7 +1273,7 @@
 /* Title used in settings that enables the generation of link previews in the chat */
 "richUrlPreviews"="Activați previzualizările linkurilor trimise";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
-"richPreviewsFooter"="Generează previzualizări pentru anumite link-uri pe care le trimiteți în chat, atunci când sunt disponibile. Rețineți că preluarea acestor previzualizări nu este protejată de criptarea tip zero cunoștințe.";
+"richPreviewsFooter"="Generează previzualizări pentru anumite link-uri pe care le trimiteți în chat, atunci când sunt disponibile. Rețineți că preluarea acestor previzualizări nu este protejată de criptare cu cunoștință zero.";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
 "voiceAndVideoCalls"="Apeluri vocale și video";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
@@ -1341,7 +1361,7 @@
 /* Explanation when loading voice message error */
 "Couldn't load. [RED]Tap to retry[/RED]"="Nu se poate încărca. [RED]Atinge pentru a reîncerca[/RED]";
 /* Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server. */
-"chatIntroductionMessage"="MEGA vă protejează chat-ul cu criptare tip zero cunoștințe, oferind asigurări esențiale de siguranță:";
+"chatIntroductionMessage"="MEGA vă protejează chat-ul cu criptare cu cunoștință zero, oferind asigurări esențiale de siguranță:";
 /* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
 "confidentialityExplanation"="[S]Confidențialitate.[/S] Doar autorul și destinatarii vizați sunt capabili să descifreze și să citească conținutul.";
 /* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
@@ -1677,7 +1697,7 @@
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device */
 "youNeedATwoFactorAuthenticationApp"="Ne pare rău, autentificarea cu doi factori nu poate fi activată pe dispozitiv. Te rugăm să deschizi App Store pentru a instala o aplicație de autentificare.";
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device and tap on the question mark */
-"You need an authenticator app to enable 2FA on MEGA. You can download and install the Google Authenticator, Duo Mobile, Authy or Microsoft Authenticator app for your phone or tablet."="Ai nevoie de o aplicație de autentificare pentru a activa A2F pe MEGA. Poți descărca și instala aplicația Google Authenticator, Duo Mobile, Authy sau Microsoft Authenticator pentru telefon sau tabletă.";
+"You need an authenticator app to enable 2FA on MEGA. You can download and install the Google Authenticator, Duo Mobile, Authy or Microsoft Authenticator app for your phone or tablet."="Ai nevoie de o aplicație de autentificare pentru a activa 2FA pe MEGA. Poți descărca și instala aplicația Google Authenticator, Duo Mobile, Authy sau Microsoft Authenticator pentru telefon sau tabletă.";
 /* A title on the mobile web client page showing that 2FA has been enabled successfully. */
 "twoFactorAuthenticationEnabled"="Autentificarea cu doi factori activată";
 /* A message on the dialog shown after 2FA was successfully enabled. */
@@ -1685,7 +1705,7 @@
 /* A warning message on the Backup Recovery Key dialog to tell the user to backup their Recovery Key to their local computer. */
 "pleaseSaveYourRecoveryKey"="Te rugăm să salvezi cheia de recuperare într-o locație sigură";
 /* An informational message on the Backup Recovery Key dialog. */
-"twoFactorAuthenticationEnabledWarning"="Dacă pierdeți accesul la contul dvs. după activarea A2F și nu ați făcut backup pentru cheia de recuperare, MEGA nu vă poate ajuta să obțineți din nou acces la acesta.";
+"twoFactorAuthenticationEnabledWarning"="Dacă pierdeți accesul la contul dvs. după activarea 2FA și nu ați făcut backup pentru cheia de recuperare, MEGA nu vă poate ajuta să obțineți din nou acces la acesta.";
 /* A message on a dialog to say that 2FA has been successfully disabled. */
 "twoFactorAuthenticationDisabled"="Autentificarea cu doi factori dezactivată";
 /* A message on the setup two-factor authentication page on the mobile web client. */
@@ -2252,6 +2272,14 @@
 "Folder link unavailable"="Linkul folderului indisponibil";
 /* Error message shown when opening a file link which doesn’t exist */
 "File link unavailable"="Linkul fișierului indisponibil";
+/* Error message shown when opening a folder link which is deleted/disabled/invalid */
+"cloudDrive.folderLink.notAvailable"="Link-ul folder pe care încercați să îl accesați nu este disponibil";
+/* Error message shown when opening a file link which is deleted/disabled/invalid */
+"cloudDrive.fileLink.notAvailable"="Fișierul link-ul pe care încercați să îl accesați nu este disponibil";
+/* Error message shown when opening a folder link which is expired */
+"cloudDrive.folderLink.noLongerAvailable"="Link-ul folder pe care încercați să îl accesați nu mai este disponibil";
+/* Error message shown when opening a file link which is expired */
+"cloudDrive.fileLink.noLongerAvailable"="Fișierul link-ul pe care încercați să îl accesați nu mai este disponibil";
 /* Header of block with all shared files in chat. */
 "Shared Files"="Fișiere partajate";
 /* Over Disk Quota Screen Navigation Bar Title */
@@ -2355,7 +2383,7 @@
 /* Message shown when the password has been copied to the Clipboard */
 "Password Copied to Clipboard"="Parolă copiată în clipboard";
 /* Export links dialog -> Keys tip about links and keys. */
-"Our end-to-end encryption system requires a unique key automatically generated for this file. A link with this key is created by default, but you can export the decryption key separately for an added layer of security."="Sistemul nostru de criptare tip zero cunoștințe necesită o cheie unică generată automat pentru acest fișier sau folder. În mod implicit, este creat un link cu această cheie, însă poți exporta cheia de decriptare separat pentru un strat de securitate suplimentar.";
+"Our end-to-end encryption system requires a unique key automatically generated for this file. A link with this key is created by default, but you can export the decryption key separately for an added layer of security."="Sistemul nostru de criptare cu cunoștință zero necesită o cheie unică generată automat pentru acest fișier sau folder. În mod implicit, este creat un link cu această cheie, însă poți exporta cheia de decriptare separat pentru un strat de securitate suplimentar.";
 /* Text to indicate the user to remove the password of a link */
 "Remove Password"="Elimină parola";
 /* Text to indicate the user to reset/change the password of a link */
@@ -3179,17 +3207,17 @@
 /* Context menu item. Allows the user to verify contacts of the shared folder. The %@ placeholder will be replaced with the contact's name */
 "general.menuAction.verifyContact.title"="Verifică %@";
 /* On fingerprint verification screen for Shared Items. Header message located at the top of contact's name and email address that needs to be verified */
-"sharedItems.contactVerification.section.verifyContact.owner.message"="Vă protejăm datele cu criptare tip zero cunoștințe. Pentru a asigura un plus de securitate, vă rugăm să confirmați contactele cu care partajați informații înainte de a putea accesa folderele partajate.";
+"sharedItems.contactVerification.section.verifyContact.owner.message"="Vă protejăm datele cu criptare cu cunoștință zero. Pentru a asigura un plus de securitate, vă rugăm să confirmați contactele cu care partajați informații înainte de a putea accesa folderele partajate.";
 /* On fingerprint verification screen for Shared Items. Header message located at the top of "My credentials" section */
 "sharedItems.contactVerification.section.myCredentials.message"="Pentru a vă confirma contactul, asigurați-vă că acreditările pe care le vedeți mai sus corespund cu acreditările contului lor. Le puteți cere să vă împărtășească acreditările.";
 /* On fingerprint verification screen for Shared Items. Header message located at the top of contact's name and email address if the owner of the received shared item is unverified */
-"sharedItems.contactVerification.section.verifyContact.receiver.message"="Vă protejăm datele cu criptare tip zero cunoștințe. Pentru a asigura un plus de securitate, vă rugăm să confirmați contactele de la care primiți informații înainte de a putea accesa folderele partajate.";
+"sharedItems.contactVerification.section.verifyContact.receiver.message"="Vă protejăm datele cu criptare cu cunoștință zero. Pentru a asigura un plus de securitate, vă rugăm să confirmați contactele de la care primiți informații înainte de a putea accesa folderele partajate.";
 /* On Cloud Drive screen for incoming shared folder, if the contact which shared the folder is not verified, this is the message that wwe display */
 "sharedItems.contactVerification.contactNotVerifiedBannerMessage"="%@ este partajat de un contact pe care nu l-ați confirmat. Pentru a asigura un plus de securitate, vă recomandăm să confirmați acreditările lor în Contacte apăsând pe ⓘ lângă contactul pe care doriți să îl confirmați.";
 /* Title of the label in verification screen. It shows the credentials of the current user so it can be used to be verified by other contacts */
 "verifyCredentials.yourCredentials.title"="Acreditările tale";
 /* Title of the header label in contact verification screen. */
-"verifyCredentials.headerMessage"="Vă protejăm datele cu criptare tip zero, astfel încât toate informațiile pe care le stocați, partajați și primiți pe MEGA să fie sigure. Pentru a asigura un plus de securitate, vă rugăm să confirmați contactele cu care partajați informații sau de la care primiți date.";
+"verifyCredentials.headerMessage"="Vă protejăm datele cu criptare cu cunoștință zero, astfel încât toate informațiile pe care le stocați, partajați și primiți pe MEGA să fie sigure. Pentru a asigura un plus de securitate, vă rugăm să confirmați contactele cu care partajați informații sau de la care primiți date.";
 /* On Incoming Shared Items Tab. Name of the folder if the the owner and the receiver has not yet verified each other. */
 "sharedItems.tab.incoming.undecryptedFolderName"="[folder nedecriptat]";
 /* On Outgoing Shared Items Tab. Text that shows the receiver's name of the shared folder. %@ will be replaced with the receiver's name. */
@@ -3219,7 +3247,7 @@
 /* Button title to see less participants in meeting info view */
 "meetings.info.participants.seeLess"="Vezi mai puțini";
 /* Text description for chat privacy communication */
-"chat.introductionHeader.privacy.description"="MEGA vă protejează comunicațiile cu sistemul nostru de criptare tip zero cunoștințe, oferind asigurări esențiale de siguranță:";
+"chat.introductionHeader.privacy.description"="MEGA vă protejează comunicațiile cu sistemul nostru de criptare cu cunoștință zero, oferind asigurări esențiale de siguranță:";
 /* Button title to start an scheduled meeting before the start date */
 "meetings.scheduled.buttonOverlay.startMeeting"="Începe o întâlnire";
 /* Button title to join an scheduled meeting */
@@ -4347,7 +4375,7 @@
 /* Title for empty chats tab */
 "chat.chats.emptyState.v2.title"="Păstrați conversațiile private";
 /* Description for empty chats tab */
-"chat.chats.emptyState.v2.description"="Toate mesajele, conversațiile de grup și apelurile dvs. sunt protejate de criptarea tip zero cunoștințe. [A]Aflați mai multe[/A]";
+"chat.chats.emptyState.v2.description"="Toate mesajele, conversațiile de grup și apelurile dvs. sunt protejate de criptare cu cunoștință zero. [A]Aflați mai multe[/A]";
 /* Title for invite button on the empty chat screen */
 "chat.chats.emptyState.v2.button.invite.title"="Invitați un prieten";
 /* Description in new chat screen empty screen mode when user has no contacts */
@@ -4393,7 +4421,7 @@
 /* Title of meetings screen empty view */
 "chat.meetings.emptyState.v2.title"="Protejați-vă apelurile";
 /* Description of meetings screen empty view */
-"chat.meetings.emptyState.v2.description"="Întâlnirile, apelurile de familie și conversațiile private sunt protejate de criptarea tip zero cunoștințe. \n[A]Aflați mai multe[/A]";
+"chat.meetings.emptyState.v2.description"="Întâlnirile, apelurile de familie și conversațiile private sunt protejate de criptare cu cunoștință zero. \n[A]Aflați mai multe[/A]";
 /* Button title to start new meeting on meetings screen when empty */
 "chat.meetings.emptyState.v2.button.startMeetingNow"="Începe întâlnirea acum";
 /* Button title to schedule a meeting on meetings screen when empty */
@@ -4509,7 +4537,7 @@
 /* Title used in settings that enables the generation of link previews in the chat */
 "settings.chat.richUrlPreview.title"="Activați previzualizările linkurilor trimise";
 /* Title used in settings that enables the generation of link previews in the chat */
-"settings.chat.richUrlPreview.subtitle"="Generează previzualizări pentru anumite link-uri pe care le trimiteți în chat, atunci când sunt disponibile. Rețineți că preluarea acestor previzualizări nu este protejată de criptarea tip zero cunoștințe.";
+"settings.chat.richUrlPreview.subtitle"="Generează previzualizări pentru anumite link-uri pe care le trimiteți în chat, atunci când sunt disponibile. Rețineți că preluarea acestor previzualizări nu este protejată de criptare cu cunoștință zero.";
 /* Title in chat status settings */
 "settings.chat.status.setStatus.title"="Setează statusul";
 /* Title section header in set status settings */
@@ -4561,11 +4589,11 @@
 /* Title for note to self chat messages view header, at the top the chat room */
 "chat.messages.noteToSelf.header.title"="Păstrează-l pentru tine";
 /* Description text for note to self chat messages view header, at the top of the chat room */
-"chat.messages.noteToSelf.header.description"="Un spațiu privat pentru imagini, informații importante sau idei mari. Întotdeauna sincronizat și protejat cu criptarea tip zero cunoștințe.";
+"chat.messages.noteToSelf.header.description"="Un spațiu privat pentru imagini, informații importante sau idei mari. Întotdeauna sincronizat și protejat cu criptare cu cunoștință zero.";
 /* Onboarding USP carousel first page title */
 "onboarding.uniqueSellingProposition.carousel.page.first.title"="Tu deții cheile";
 /* Onboarding USP carousel first page subtitle */
-"onboarding.uniqueSellingProposition.carousel.page.first.subtitle"="Controlată de utilizator, criptarea tip zero cunoștințe înseamnă că nimeni nu vă poate vedea datele decât dacă doriți - nici măcar noi!";
+"onboarding.uniqueSellingProposition.carousel.page.first.subtitle"="Controlată de utilizator, criptare cu cunoștință zero înseamnă că nimeni nu vă poate vedea datele decât dacă doriți - nici măcar noi!";
 /* Onboarding USP carousel second page title */
 "onboarding.uniqueSellingProposition.carousel.page.second.title"="Păstrați fiecare moment în siguranță";
 /* Onboarding USP carousel second page subtitle */
@@ -4619,7 +4647,7 @@
 /* Title for the features of pro plan in the subscription purchase screen. */
 "subscriptionPurchase.featuresOfProPlan.title"="Beneficii suplimentare ale abonamentelor Pro";
 /* Features of pro plan in the subscription purchase screen. */
-"subscriptionPurchase.featuresOfProPlan.message"="• Link-uri protejate prin parolă\n\n• Link-uri cu date de expirare\n\n• Derularea înapoi a folderelor până la 180 de zile de date șterse\n\n• Găzduiește apeluri și întâlniri cu participanți nelimitați și fără restricții de timp\n\n• Programați curățarea coșului de gunoi între 7 zile și 10 ani\n\n• Asistență prioritară";
+"subscriptionPurchase.featuresOfProPlan.message"="• Link-uri protejate prin parolă\n\n• Link-uri cu date de expirare\n\n• Derularea înapoi a folderelor până la 60 de zile de date șterse\n\n• Găzduiește apeluri și întâlniri cu participanți nelimitați și fără restricții de timp\n\n• Programați curățarea coșului de gunoi între 7 zile și 10 ani\n\n• Asistență prioritară";
 /* Title for the first subscription feature: generous storage capacity */
 "subscriptionPurchase.feature.one.title"="Spațiu de stocare generos";
 /* Description for the first subscription feature: details about available storage */
@@ -4695,14 +4723,22 @@
 /* The double tap seek display text in video player */
 "videoPlayer.chip.seekDisplayText"="%@ secunde";
 /* The lock video player option in bottom more menu */
-"videoPlayer.lock.lockVideoPlayer"="Lock video player";
+"videoPlayer.lock.lockVideoPlayer"="Blocați playerul video";
 /* The screen locked status message in video player */
 "videoPlayer.lock.screenLocked"="Ecranul este blocat";
 /* The instruction to unlock the video player */
-"videoPlayer.lock.tapIconToUnlock"="Tap the lock icon to unlock";
+"videoPlayer.lock.tapIconToUnlock"="Atingeți pictograma de blocare pentru a debloca";
 /* The lock video player option in bottom more menu */
 "videoPlayer.snapshot.bottomSheet.title"="Captura";
 /* The instruction to unlock the video player */
 "videoPlayer.snapshot.snackBar.title"="Imagine salvată pe dispozitivul dvs.";
 /* The Picture in picture video player option in bottom more menu */
-"videoPlayer.pip.bottomSheet.title"="Picture in picture";
+"videoPlayer.pip.bottomSheet.title"="Imagine în imagine";
+/* Subscription benefit for rewind */
+"subscriptionPurchase.benefits.rewind.title"="Derularea înapoi până la 60 de zile de date șterse";
+/* Subscription benefit for for calls and meetings */
+"subscriptionPurchase.benefits.callsAndMeetings.title"="Găzduiește apeluri și întâlniri cu participanți nelimitați și fără restricții de timp";
+/* Subscription benefit for rubbish bin clearing */
+"subscriptionPurchase.benefits.rubbishClearing.title"="Programați curățarea Coșului de gunoi între 7 zile și 10 ani";
+/* General label for priority customer support */
+"general.prioritySupport"="Asistență prioritară";

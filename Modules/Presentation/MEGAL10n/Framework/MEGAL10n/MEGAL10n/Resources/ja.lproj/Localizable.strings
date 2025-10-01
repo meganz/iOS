@@ -164,6 +164,16 @@
 "fileLinkUnavailableText3"="無効なURL－アクセスしようとしているリンクは存在しません";
 /*  */
 "fileLinkUnavailableText4"="このファイルはユーザーによって削除されています。";
+/* file has been deleted */
+"cloudDrive.fileLink.unavailableReason1"="このファイルは削除されました";
+/* file link has been disabled */
+"cloudDrive.fileLink.unavailableReason2"="そのファイルリンクはオーナーによって無効化されました";
+/* file link invalid */
+"cloudDrive.fileLink.unavailableReason3"="URLが無効です－アクセスしようとしているリンクは存在しません";
+/* file link has been removed */
+"cloudDrive.fileLink.unavailableReason4"="このファイルリンクは当社のご利用規約に違反するため、削除されました。";
+/* file link has expired */
+"cloudDrive.fileLink.hasExpired"="リンクが期限切れです";
 /* Message shown when a download starts */
 "downloadStarted"="ダウンロード開始";
 /* Title for the folder link view */
@@ -194,6 +204,16 @@
 "folderLinkUnavailableText3"="無効なURL - アクセスしようとしているリンクは存在しません";
 /*  */
 "folderLinkUnavailableText4"="そのリンクはユーザーによって無効とされました。";
+/* folder has been deleted */
+"cloudDrive.folderLink.unavailableReason1"="このフォルダは削除されました";
+/* folder link has been disabled */
+"cloudDrive.folderLink.unavailableReason2"="そのフォルダリンクはオーナーによって無効化されました";
+/* folder link invalid */
+"cloudDrive.folderLink.unavailableReason3"="URLが無効です－アクセスしようとしているリンクは存在しません";
+/* folder link has been removed */
+"cloudDrive.folderLink.unavailableReason4"="このフォルダリンクは当社のご利用規約に違反するため、削除されました。";
+/* folder link has expired */
+"cloudDrive.folderLink.hasExpired"="リンクが期限切れです";
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
 "noInternetConnection"="インターネット接続がありません";
 /* Title shown when a folder doesn't have any files */
@@ -1009,7 +1029,7 @@
 /*  */
 "howItWorks"="仕組み";
 /*  */
-"howItWorksMain"="ご友人はMEGAの無料アカウントにサインアップし、[S]MEGAアプリケーションを少なくとも1つインストールする[/S]必要があります（MEGAデスクトップアプリまたは当社のMEGAモバイルアプリのいずれか）";
+"howItWorksMain"="ご友人はMEGAの無料アカウントにサインアップし、[S]MEGAアプリケーションを少なくとも1つインストールする[/S]必要があります（当社のMEGAデスクトップアプリまたはMEGAモバイルアプリのいずれか）。";
 /*  */
 "howItWorksSecondary"="何らかの方法でご友人にお知らせください。ご友人がご友人のメールアドレスでサインアップされる前に、そのメールアドレスをこちらでご入力いただいた場合、あなたに当該ボーナスを贈呈いたします。";
 /* A message which is shown once someone has invited a friend as part of the achievements program. */
@@ -1041,7 +1061,7 @@
 /* Explanation label shown on the achievements view for incomplete install MEGA desktop app achievement, %1$@ is a placeholder, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
 "account.achievement.desktopApp.incomplete.explaination.label"="MEGAデスクトップアプリをインストールすると、%1$@分のストレージスペース（%2$@）を無料でご利用いただけます。MEGAデスクトップアプリは、Windows、macOS、およびほとんどのLinuxディストリビューションでご利用いただけます。";
 /* Cell title shown on the achievements view for install MEGA mobile app achievement */
-"account.achievement.mobileApp.title"="MEGAモバイルアプリをインストール";
+"account.achievement.mobileApp.title"="MEGAモバイルアプリのいずれかをインストール";
 /* Explanation label shown on the achievements view for complete install MEGA mobile app achievement, %@ is a placeholder. */
 "account.achievement.mobileApp.complete.explaination.label"="あなたはMEGAモバイルアプリのインストールに対して、%@のストレージスペースを受け取りました。";
 /* Explanation label shown on the achievements view for incomplete install MEGA mobile app achievement, %1$@ is a placeholder, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
@@ -2252,6 +2272,14 @@
 "Folder link unavailable"="フォルダリンクが使用できません";
 /* Error message shown when opening a file link which doesn’t exist */
 "File link unavailable"="ファイルリンクがありません";
+/* Error message shown when opening a folder link which is deleted/disabled/invalid */
+"cloudDrive.folderLink.notAvailable"="アクセスしようとしているフォルダのリンクは使用できません。";
+/* Error message shown when opening a file link which is deleted/disabled/invalid */
+"cloudDrive.fileLink.notAvailable"="アクセスしようとしているファイルのリンクは使用できません";
+/* Error message shown when opening a folder link which is expired */
+"cloudDrive.folderLink.noLongerAvailable"="アクセスしようとしているフォルダのリンクは使用できなくなりました";
+/* Error message shown when opening a file link which is expired */
+"cloudDrive.fileLink.noLongerAvailable"="アクセスしようとしているファイルのリンクは使用できなくなりました";
 /* Header of block with all shared files in chat. */
 "Shared Files"="共有ファイル";
 /* Over Disk Quota Screen Navigation Bar Title */
@@ -4619,7 +4647,7 @@
 /* Title for the features of pro plan in the subscription purchase screen. */
 "subscriptionPurchase.featuresOfProPlan.title"="Proプランの追加特典";
 /* Features of pro plan in the subscription purchase screen. */
-"subscriptionPurchase.featuresOfProPlan.message"="・パスワードで保護されたリンク\n\n・有効期限付きリンク\n\n・削除されたデータの属するフォルダを最大180日巻き戻す\n\n・参加者数無制限、時間制限なしの通話やミーティングの開催\n\n・ゴミ箱のクリアを7日から10年の間でスケジュール設定\n\n・優先サポート";
+"subscriptionPurchase.featuresOfProPlan.message"="・パスワードで保護されたリンク\n\n・有効期限付きリンク\n\n・削除されたデータの属するフォルダを最大60日巻き戻す\n\n・参加者数無制限、時間制限なしの通話やミーティングの開催\n\n・ゴミ箱のクリアを7日から10年の間でスケジュール設定\n\n・優先サポート";
 /* Title for the first subscription feature: generous storage capacity */
 "subscriptionPurchase.feature.one.title"="豊富なストレージ";
 /* Description for the first subscription feature: details about available storage */
@@ -4706,3 +4734,11 @@
 "videoPlayer.snapshot.snackBar.title"="画像はデバイスに保存されました";
 /* The Picture in picture video player option in bottom more menu */
 "videoPlayer.pip.bottomSheet.title"="ピクチャーインピクチャー";
+/* Subscription benefit for rewind */
+"subscriptionPurchase.benefits.rewind.title"="削除されたデータを最大60日分復元";
+/* Subscription benefit for for calls and meetings */
+"subscriptionPurchase.benefits.callsAndMeetings.title"="無制限の参加者と時間制限なしで、通話やミーティングを開催";
+/* Subscription benefit for rubbish bin clearing */
+"subscriptionPurchase.benefits.rubbishClearing.title"="ごみ箱を空にするのを7日から10年の間でスケジュール";
+/* General label for priority customer support */
+"general.prioritySupport"="優先サポート";

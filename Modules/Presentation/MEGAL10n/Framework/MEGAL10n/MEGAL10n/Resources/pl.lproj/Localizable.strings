@@ -164,6 +164,16 @@
 "fileLinkUnavailableText3"="Nieważny adres URL - link którego próbujesz użyć jest niedostępny";
 /*  */
 "fileLinkUnavailableText4"="Plik został skasowany przez użytkownika.";
+/* file has been deleted */
+"cloudDrive.fileLink.unavailableReason1"="Plik został usunięty";
+/* file link has been disabled */
+"cloudDrive.fileLink.unavailableReason2"="Link do pliku został wyłączony przez właściciela";
+/* file link invalid */
+"cloudDrive.fileLink.unavailableReason3"="Nieprawidłowy link - link, do którego próbujesz uzyskać dostęp, nie istnieje";
+/* file link has been removed */
+"cloudDrive.fileLink.unavailableReason4"="Łącze do pliku zostało usunięte, ponieważ naruszało nasz Regulamin.";
+/* file link has expired */
+"cloudDrive.fileLink.hasExpired"="Link wygasł";
 /* Message shown when a download starts */
 "downloadStarted"="Pobieranie rozpoczęte";
 /* Title for the folder link view */
@@ -194,6 +204,16 @@
 "folderLinkUnavailableText3"="Nieważny adres URL - link którego próbujesz użyć jest niedostępny";
 /*  */
 "folderLinkUnavailableText4"="Link został zablokowany przez użytkownika.";
+/* folder has been deleted */
+"cloudDrive.folderLink.unavailableReason1"="Katalog został usunięty";
+/* folder link has been disabled */
+"cloudDrive.folderLink.unavailableReason2"="Link do katalogu został wyłączony przez właściciela";
+/* folder link invalid */
+"cloudDrive.folderLink.unavailableReason3"="Nieprawidłowy link - link, do którego próbujesz uzyskać dostęp, nie istnieje";
+/* folder link has been removed */
+"cloudDrive.folderLink.unavailableReason4"="Link do katalogu został usunięty, ponieważ naruszał nasz Regulamin.";
+/* folder link has expired */
+"cloudDrive.folderLink.hasExpired"="Link wygasł";
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
 "noInternetConnection"="Brak połączenia z internetem";
 /* Title shown when a folder doesn't have any files */
@@ -1009,7 +1029,7 @@
 /*  */
 "howItWorks"="Jak to działa";
 /*  */
-"howItWorksMain"="Twój znajomy musi założyć darmowe konto w MEGA i [S]Zainstaluj co najmniej jedną aplikację MEGA[/S] (albo Aplikacja MEGA Desktop, albo jedna z naszych aplikacji mobilnych MEGA)";
+"howItWorksMain"="Twój znajomy musi założyć darmowe konto w MEGA i [S]zainstalować co najmniej jedną aplikację MEGA[/S] (albo naszą aplikację desktopową, albo jedną z naszych aplikacji mobilnych)";
 /*  */
 "howItWorksSecondary"="Możesz powiadomić znajomego dowolną metodą. Zdobędziesz bonus, jeśli wpisałeś tutaj adres email znajomego przed zarejestrowaniem się pod tym adresem.";
 /* A message which is shown once someone has invited a friend as part of the achievements program. */
@@ -1041,7 +1061,7 @@
 /* Explanation label shown on the achievements view for incomplete install MEGA desktop app achievement, %1$@ is a placeholder, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
 "account.achievement.desktopApp.incomplete.explaination.label"="Po zainstalowaniu Aplikacji MEGA Desktop otrzymujesz %1$@ bezpłatnej pojemności, %2$@. Aplikacja MEGA Desktop jest dostępna dla systemów Windows, macOS i większości dystrybucji Linuksa.";
 /* Cell title shown on the achievements view for install MEGA mobile app achievement */
-"account.achievement.mobileApp.title"="Zainstaluj aplikację MEGA Mobile App";
+"account.achievement.mobileApp.title"="Zainstaluj jedną z aplikacji mobilnych MEGA";
 /* Explanation label shown on the achievements view for complete install MEGA mobile app achievement, %@ is a placeholder. */
 "account.achievement.mobileApp.complete.explaination.label"="Za instalację aplikacji MEGA mobile otrzymaliście Państwo %@ przestrzeni dyskowej.";
 /* Explanation label shown on the achievements view for incomplete install MEGA mobile app achievement, %1$@ is a placeholder, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
@@ -2252,6 +2272,14 @@
 "Folder link unavailable"="Link do katalogu jest niedostępny";
 /* Error message shown when opening a file link which doesn’t exist */
 "File link unavailable"="Link pliku jest niedostępny";
+/* Error message shown when opening a folder link which is deleted/disabled/invalid */
+"cloudDrive.folderLink.notAvailable"="Link do katalogu, do którego próbujesz uzyskać dostęp, jest niedostępny";
+/* Error message shown when opening a file link which is deleted/disabled/invalid */
+"cloudDrive.fileLink.notAvailable"="Link do pliku, do którego próbujesz uzyskać dostęp, jest niedostępny";
+/* Error message shown when opening a folder link which is expired */
+"cloudDrive.folderLink.noLongerAvailable"="Link do katalogu, do którego próbujesz uzyskać dostęp, nie jest już dostępny";
+/* Error message shown when opening a file link which is expired */
+"cloudDrive.fileLink.noLongerAvailable"="Link do pliku, do którego próbujesz uzyskać dostęp, nie jest już dostępny";
 /* Header of block with all shared files in chat. */
 "Shared Files"="Udostępnione pliki";
 /* Over Disk Quota Screen Navigation Bar Title */
@@ -4619,7 +4647,7 @@
 /* Title for the features of pro plan in the subscription purchase screen. */
 "subscriptionPurchase.featuresOfProPlan.title"="Dodatkowe korzyści z plan Pro";
 /* Features of pro plan in the subscription purchase screen. */
-"subscriptionPurchase.featuresOfProPlan.message"="• Linki chronione hasłem\n\n• Linki z datami wygasania\n\n• Przywracanie katalogów do 180 dni usuniętych danych\n\n• Prowadzenie rozmów i spotkań z nieograniczoną liczbą uczestników i bez ograniczeń czasowych\n\n• Planowanie opróżniania kosza na śmieci od 7 dni do 10 lat\n\n• Priorytetowe wsparcie";
+"subscriptionPurchase.featuresOfProPlan.message"="• Linki chronione hasłem\n\n• Linki z datami wygasania\n\n• Przywracanie katalogów do 60 dni usuniętych danych\n\n• Prowadzenie rozmów i spotkań z nieograniczoną liczbą uczestników i bez ograniczeń czasowych\n\n• Planowanie opróżniania kosza na śmieci od 7 dni do 10 lat\n\n• Priorytetowe wsparcie";
 /* Title for the first subscription feature: generous storage capacity */
 "subscriptionPurchase.feature.one.title"="Pojemna pamięć";
 /* Description for the first subscription feature: details about available storage */
@@ -4706,3 +4734,11 @@
 "videoPlayer.snapshot.snackBar.title"="Obraz zapisany na Twoim urządzeniu";
 /* The Picture in picture video player option in bottom more menu */
 "videoPlayer.pip.bottomSheet.title"="Obraz w obrazie";
+/* Subscription benefit for rewind */
+"subscriptionPurchase.benefits.rewind.title"="Przywróć usunięte dane do 60 dni wstecz";
+/* Subscription benefit for for calls and meetings */
+"subscriptionPurchase.benefits.callsAndMeetings.title"="Prowadź rozmowy i spotkania z nieograniczoną liczbą uczestników i bez ograniczeń czasowych";
+/* Subscription benefit for rubbish bin clearing */
+"subscriptionPurchase.benefits.rubbishClearing.title"="Zaplanuj opróżnianie Kosza na śmieci w przedziale od 7 dni do 10 lat";
+/* General label for priority customer support */
+"general.prioritySupport"="Wsparcie priorytetowe";

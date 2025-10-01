@@ -164,6 +164,16 @@
 "fileLinkUnavailableText3"="URL không hợp lệ - đường dẫn không tồn tại";
 /*  */
 "fileLinkUnavailableText4"="Tệp tin đã bị xóa bởi chính người sở hữu.";
+/* file has been deleted */
+"cloudDrive.fileLink.unavailableReason1"="Tệp tin đã bị xóa";
+/* file link has been disabled */
+"cloudDrive.fileLink.unavailableReason2"="Chủ sở hữu đã vô hiệu đường liên[w]kết vào tệp[w]tin";
+/* file link invalid */
+"cloudDrive.fileLink.unavailableReason3"="URL không hợp lệ - đường liên kết bạn đang cố truy cập không tồn tại";
+/* file link has been removed */
+"cloudDrive.fileLink.unavailableReason4"="Đường liên kết tệp tin đã bị xóa bỏ do vi phạm Điều Khoản Dịch Vụ của MEGA";
+/* file link has expired */
+"cloudDrive.fileLink.hasExpired"="Đường liên kết đã hết hạn.";
 /* Message shown when a download starts */
 "downloadStarted"="Tải xuống được bắt đầu";
 /* Title for the folder link view */
@@ -194,6 +204,16 @@
 "folderLinkUnavailableText3"="URL không hợp lệ - đường dẫn không tồn tại";
 /*  */
 "folderLinkUnavailableText4"="Liên kết thư mục đã bị vô hiệu hóa bởi chính người sở hữu.";
+/* folder has been deleted */
+"cloudDrive.folderLink.unavailableReason1"="Thư mục đã bị xóa";
+/* folder link has been disabled */
+"cloudDrive.folderLink.unavailableReason2"="Chủ sở hữu đã vô hiệu đường liên[w]kết vào thư[w]mục";
+/* folder link invalid */
+"cloudDrive.folderLink.unavailableReason3"="URL không hợp lệ - đường liên kết bạn đang cố truy cập không tồn tại";
+/* folder link has been removed */
+"cloudDrive.folderLink.unavailableReason4"="Đường liên kết thư mục đã bị xóa bỏ do vi phạm Điều Khoản Dịch Vụ của MEGA";
+/* folder link has expired */
+"cloudDrive.folderLink.hasExpired"="Đường liên kết đã hết hạn.";
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
 "noInternetConnection"="Không có kết nối internet";
 /* Title shown when a folder doesn't have any files */
@@ -1009,7 +1029,7 @@
 /*  */
 "howItWorks"="Cách hoạt động";
 /*  */
-"howItWorksMain"="Bạn của bạn cần phải đăng ký một tài khoản miễn phí trên MEGA và [S]cài đặt một trong những ứng dụng máy khách của MEGA[/S] (App MEGA cho Máy Tính hoặc App MEGA cho Di Động)";
+"howItWorksMain"="Your friend needs to sign up for a free account on MEGA and [S]install at least one MEGA application[/S] (either our desktop app or one of our mobile apps)";
 /*  */
 "howItWorksSecondary"="Bạn có thể nhắc nhở bạn bè bằng nhiều cách. Bạn sẽ nhận được phần thưởng nếu bạn điền địa chỉ email của bạn mình vào đây trước khi họ tạo tài khoản với địa chỉ email đó.";
 /* A message which is shown once someone has invited a friend as part of the achievements program. */
@@ -1035,13 +1055,13 @@
 /* Cell title shown on the achievements view for referral achievement */
 "account.achievement.referralBonus.title"="Phần thưởng lời mời";
 /* Cell title shown on the achievements view for install MEGA desktop app achievement */
-"account.achievement.desktopApp.title"="Cài app MEGA cho Máy Tính";
+"account.achievement.desktopApp.title"="Install MEGA’s desktop app";
 /* Explanation label shown on the achievements view for complete install MEGA desktop app achievement, %@ is a placeholder. */
 "account.achievement.desktopApp.complete.explaination.label"="Bạn đã nhận được %@ không gian lưu trữ từ việc cài ứng dụng MEGA cho máy tính.";
 /* Explanation label shown on the achievements view for incomplete install MEGA desktop app achievement, %1$@ is a placeholder, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
 "account.achievement.desktopApp.incomplete.explaination.label"="Sau khi cài đặt App MEGA cho Máy Tính, bạn sẽ nhận được thêm %1$@ cho lưu trữ, %2$@. App MEGA cho Máy Tính còn có cho Windows, macOS và đa số các bản phân phối Linux.";
 /* Cell title shown on the achievements view for install MEGA mobile app achievement */
-"account.achievement.mobileApp.title"="Cài app MEGA cho Di Động";
+"account.achievement.mobileApp.title"="Install one of MEGA’s mobile apps";
 /* Explanation label shown on the achievements view for complete install MEGA mobile app achievement, %@ is a placeholder. */
 "account.achievement.mobileApp.complete.explaination.label"="Bạn đã nhận được %@ không gian lưu trữ từ việc cài ứng dụng MEGA cho di động.";
 /* Explanation label shown on the achievements view for incomplete install MEGA mobile app achievement, %1$@ is a placeholder, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
@@ -2252,6 +2272,14 @@
 "Folder link unavailable"="Liên kết thư mục bất khả dụng";
 /* Error message shown when opening a file link which doesn’t exist */
 "File link unavailable"="Đường liên kết này không còn tồn tại";
+/* Error message shown when opening a folder link which is deleted/disabled/invalid */
+"cloudDrive.folderLink.notAvailable"="Đường liên kết thư mục bạn đang cố truy[w]cập không có khả[w]dụng";
+/* Error message shown when opening a file link which is deleted/disabled/invalid */
+"cloudDrive.fileLink.notAvailable"="Đường liên kết tệp tin bạn đang cố truy[w]cập không có khả[w]dụng";
+/* Error message shown when opening a folder link which is expired */
+"cloudDrive.folderLink.noLongerAvailable"="Đường liên kết thư mục bạn đang cố truy[w]cập không còn khả[w]dụng nữa";
+/* Error message shown when opening a file link which is expired */
+"cloudDrive.fileLink.noLongerAvailable"="Đường liên kết tệp tin bạn đang cố truy[w]cập không còn khả[w]dụng nữa";
 /* Header of block with all shared files in chat. */
 "Shared Files"="Tệp tin đã chia sẻ";
 /* Over Disk Quota Screen Navigation Bar Title */
@@ -4619,7 +4647,7 @@
 /* Title for the features of pro plan in the subscription purchase screen. */
 "subscriptionPurchase.featuresOfProPlan.title"="Lợi ích bổ sung cho các gói Pro";
 /* Features of pro plan in the subscription purchase screen. */
-"subscriptionPurchase.featuresOfProPlan.message"="• Các đường liên kết có lựa chọn bảo vệ bằng mật khẩu\n\n• Đặt ngày hết hạn cho đường liên kết\n\n• Tua lại thư mục lên đến 180 ngày từ lúc dữ liệu bị xóa\n\n• Tổ chức các cuộc gọi và cuộc họp với lượng người tham gia không giới hạn và không giới hạn thời gian\n\n• Lên lịch dọn thùng rác từ 7 ngày đến 10 năm\n\n• Hỗ trợ được ưu tiên";
+"subscriptionPurchase.featuresOfProPlan.message"="• Các đường liên kết có lựa chọn bảo vệ bằng mật khẩu\n\n• Đặt ngày hết hạn cho đường liên kết\n\n• Tua lại thư mục lên đến 60 ngày từ lúc dữ liệu bị xóa\n\n• Tổ chức các cuộc gọi và cuộc họp với lượng người tham gia không giới hạn và không giới hạn thời gian\n\n• Lên lịch dọn thùng rác từ 7 ngày đến 10 năm\n\n• Hỗ trợ được ưu tiên";
 /* Title for the first subscription feature: generous storage capacity */
 "subscriptionPurchase.feature.one.title"="Không gian hào phóng";
 /* Description for the first subscription feature: details about available storage */
@@ -4706,3 +4734,11 @@
 "videoPlayer.snapshot.snackBar.title"="Hình ảnh được lưu vào thiết bị của bạn";
 /* The Picture in picture video player option in bottom more menu */
 "videoPlayer.pip.bottomSheet.title"="Hình trong hình";
+/* Subscription benefit for rewind */
+"subscriptionPurchase.benefits.rewind.title"="Tua lại dữ liệu bị xóa lên đến 60 ngày ";
+/* Subscription benefit for for calls and meetings */
+"subscriptionPurchase.benefits.callsAndMeetings.title"="Tổ chức các cuộc gọi và cuộc họp với thời gian và số lượng người tham gia không giới hạn";
+/* Subscription benefit for rubbish bin clearing */
+"subscriptionPurchase.benefits.rubbishClearing.title"="Lên lịch dọn dẹp Thùng Rác từ 7 ngày đến 10 năm";
+/* General label for priority customer support */
+"general.prioritySupport"="Hỗ trợ ưu tiên";

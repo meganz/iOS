@@ -164,6 +164,16 @@
 "fileLinkUnavailableText3"="잘못된 URL - 당신이 접근하려던 링크는 존재하지 않습니다";
 /*  */
 "fileLinkUnavailableText4"="이 파일은 이용자에 의해 삭제되었습니다.";
+/* file has been deleted */
+"cloudDrive.fileLink.unavailableReason1"="파일이 삭제되었습니다";
+/* file link has been disabled */
+"cloudDrive.fileLink.unavailableReason2"="파일 링크가 소유자에 의해 비활성화 되었습니다";
+/* file link invalid */
+"cloudDrive.fileLink.unavailableReason3"="잘못된 URL - 당신이 접근하려던 링크는 존재하지 않습니다";
+/* file link has been removed */
+"cloudDrive.fileLink.unavailableReason4"="파일 링크가 이용 약관 위반으로 인해 삭제되었습니다";
+/* file link has expired */
+"cloudDrive.fileLink.hasExpired"="링크가 만료되었습니다";
 /* Message shown when a download starts */
 "downloadStarted"="다운로드 시작됨";
 /* Title for the folder link view */
@@ -194,6 +204,16 @@
 "folderLinkUnavailableText3"="잘못된 URL - 당신이 접근하려던 링크는 존재하지 않습니다";
 /*  */
 "folderLinkUnavailableText4"="폴더 링크가 이용자에 의해 비활성화 되었습니다.";
+/* folder has been deleted */
+"cloudDrive.folderLink.unavailableReason1"="폴더가 삭제되었습니다";
+/* folder link has been disabled */
+"cloudDrive.folderLink.unavailableReason2"="폴더 링크가 소유자에 의해 비활성화 되었습니다";
+/* folder link invalid */
+"cloudDrive.folderLink.unavailableReason3"="잘못된 URL - 당신이 접근하려던 링크는 존재하지 않습니다";
+/* folder link has been removed */
+"cloudDrive.folderLink.unavailableReason4"="폴더 링크가 이용 약관 위반으로 삭제되었습니다";
+/* folder link has expired */
+"cloudDrive.folderLink.hasExpired"="링크가 만료되었습니다";
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
 "noInternetConnection"="인터넷 연결이 없습니다";
 /* Title shown when a folder doesn't have any files */
@@ -1009,7 +1029,7 @@
 /*  */
 "howItWorks"="작동 원리";
 /*  */
-"howItWorksMain"="친구가 MEGA에 무료 계정에 가입하고 [S]MEGA 애플리케이션 중 하나를 설치[/S]해야 합니다 (데스크톱 앱이나 모바일 앱 중 하나)";
+"howItWorksMain"="친구가 MEGA 무료 계정에 가입하고 [S]MEGA 애플리케이션 중 하나를 설치[/S]해야 합니다 (데스크톱 앱이나 모바일 앱 중 하나)";
 /*  */
 "howItWorksSecondary"="당신의 친구에게 어떤 방법을 통해서든 알릴 수 있습니다. 친구가 이메일을 이용하여 가입하기 전에 여기에 친구의 이메일 주소를 입력하면 보너스를 얻을 것입니다.";
 /* A message which is shown once someone has invited a friend as part of the achievements program. */
@@ -1041,7 +1061,7 @@
 /* Explanation label shown on the achievements view for incomplete install MEGA desktop app achievement, %1$@ is a placeholder, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
 "account.achievement.desktopApp.incomplete.explaination.label"="MEGA 데스크톱 앱을 설치하면 %1$@의 무료 저장 공간을 받게 되며, %2$@. MEGA 데스크톱 앱은 Windows, macOS 그리고 대부분의 Linux 배포판에서 이용 가능합니다.";
 /* Cell title shown on the achievements view for install MEGA mobile app achievement */
-"account.achievement.mobileApp.title"="MEGA 모바일 앱 설치";
+"account.achievement.mobileApp.title"="MEGA 모바일 앱 중 하나 설치";
 /* Explanation label shown on the achievements view for complete install MEGA mobile app achievement, %@ is a placeholder. */
 "account.achievement.mobileApp.complete.explaination.label"="MEGA 모바일 앱을 설치하여 저장소 공간 %@를 받았습니다.";
 /* Explanation label shown on the achievements view for incomplete install MEGA mobile app achievement, %1$@ is a placeholder, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
@@ -2252,6 +2272,14 @@
 "Folder link unavailable"="폴더 링크가 사용불가입니다";
 /* Error message shown when opening a file link which doesn’t exist */
 "File link unavailable"="파일 링크가 사용불가능합니다";
+/* Error message shown when opening a folder link which is deleted/disabled/invalid */
+"cloudDrive.folderLink.notAvailable"="접속하려는 폴더 링크가 이용 불가합니다";
+/* Error message shown when opening a file link which is deleted/disabled/invalid */
+"cloudDrive.fileLink.notAvailable"="접속하려는 파일 링크가 이용 불가합니다";
+/* Error message shown when opening a folder link which is expired */
+"cloudDrive.folderLink.noLongerAvailable"="접속하려는 폴더 링크가 더 이상 이용 가능하지 않습니다";
+/* Error message shown when opening a file link which is expired */
+"cloudDrive.fileLink.noLongerAvailable"="접근하려는 파일 링크가 더 이상 이용 가능하지 않습니다";
 /* Header of block with all shared files in chat. */
 "Shared Files"="공유된 파일";
 /* Over Disk Quota Screen Navigation Bar Title */
@@ -4619,7 +4647,7 @@
 /* Title for the features of pro plan in the subscription purchase screen. */
 "subscriptionPurchase.featuresOfProPlan.title"="Pro 요금제의 추가 혜택";
 /* Features of pro plan in the subscription purchase screen. */
-"subscriptionPurchase.featuresOfProPlan.message"="• 암호로 보호된 링크\n\n• 만료일이 있는 링크\n\n• 최대 180일 내의 삭제된 데이터에 대한 폴더 되감기\n\n• 시간과 참여자 수 제한 없는 통화와 회의 주최\n\n• 휴지통 비우기를 7일에서 10년 사이로 예약\n\n• 우선적인 지원";
+"subscriptionPurchase.featuresOfProPlan.message"="• 암호로 보호된 링크\n\n• 만료일이 있는 링크\n\n• 최대 60일 내의 삭제된 데이터에 대한 폴더 되감기\n\n• 시간과 참여자 수 제한 없는 통화와 회의 주최\n\n• 휴지통 비우기를 7일에서 10년 사이로 예약\n\n• 우선적인 지원";
 /* Title for the first subscription feature: generous storage capacity */
 "subscriptionPurchase.feature.one.title"="넉넉한 저장소";
 /* Description for the first subscription feature: details about available storage */
@@ -4706,3 +4734,11 @@
 "videoPlayer.snapshot.snackBar.title"="이미지가 장치에 저장되었습니다";
 /* The Picture in picture video player option in bottom more menu */
 "videoPlayer.pip.bottomSheet.title"="픽처 인 픽처";
+/* Subscription benefit for rewind */
+"subscriptionPurchase.benefits.rewind.title"="최대 60일의 삭제된 데이터 되감기";
+/* Subscription benefit for for calls and meetings */
+"subscriptionPurchase.benefits.callsAndMeetings.title"="제한 없는 참여자 수와 시간 제한 없는 통화와 회의 주최";
+/* Subscription benefit for rubbish bin clearing */
+"subscriptionPurchase.benefits.rubbishClearing.title"="7일에서 10년 사이의 휴지통 비우기 예약";
+/* General label for priority customer support */
+"general.prioritySupport"="우선 지원";

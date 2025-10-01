@@ -164,6 +164,16 @@
 "fileLinkUnavailableText3"="無效的連結－你嘗試存取的連結不存在";
 /*  */
 "fileLinkUnavailableText4"="該檔案已被用戶刪除。";
+/* file has been deleted */
+"cloudDrive.fileLink.unavailableReason1"="檔案已被刪除";
+/* file link has been disabled */
+"cloudDrive.fileLink.unavailableReason2"="檔案連結已被擁有者停用";
+/* file link invalid */
+"cloudDrive.fileLink.unavailableReason3"="無效的網頁位置－你嘗試存取的連結不存在";
+/* file link has been removed */
+"cloudDrive.fileLink.unavailableReason4"="該檔案連結因違反我們的服務條款而被移除了。";
+/* file link has expired */
+"cloudDrive.fileLink.hasExpired"="連結已過期";
 /* Message shown when a download starts */
 "downloadStarted"="已開始下載";
 /* Title for the folder link view */
@@ -194,6 +204,16 @@
 "folderLinkUnavailableText3"="無效的連結－你嘗試存取的連結不存在";
 /*  */
 "folderLinkUnavailableText4"="該資料夾連結被使用者關閉。";
+/* folder has been deleted */
+"cloudDrive.folderLink.unavailableReason1"="資料夾已被刪除";
+/* folder link has been disabled */
+"cloudDrive.folderLink.unavailableReason2"="資料夾連結已被擁有者停用";
+/* folder link invalid */
+"cloudDrive.folderLink.unavailableReason3"="無效的網頁位置－你嘗試存取的連結不存在";
+/* folder link has been removed */
+"cloudDrive.folderLink.unavailableReason4"="資料夾連結因違反我們的服務條款而被刪除。";
+/* folder link has expired */
+"cloudDrive.folderLink.hasExpired"="連結已過期";
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
 "noInternetConnection"="無網路連線";
 /* Title shown when a folder doesn't have any files */
@@ -1009,7 +1029,7 @@
 /*  */
 "howItWorks"="如何使用";
 /*  */
-"howItWorksMain"="您的朋友需要在MEGA註冊一個免費帳戶，並[S]安裝至少一個MEGA用應用程式[/S] （MEGA桌面應用程式或MEGA行動應用程式）";
+"howItWorksMain"="您的朋友需要在MEGA上註冊一個免費帳戶，並[S]至少安裝MEGA其中一款應用程式[/S]（我們的桌面應用程式或其中一款行動應用程式）";
 /*  */
 "howItWorksSecondary"="您可以透過任何方式通知您的朋友。如果您在您的朋友使用該電子郵件地址註冊MEGA之前在此輸入了他們的電子郵件地址，您將會獲得獎金。";
 /* A message which is shown once someone has invited a friend as part of the achievements program. */
@@ -1035,13 +1055,13 @@
 /* Cell title shown on the achievements view for referral achievement */
 "account.achievement.referralBonus.title"="邀請獎勵";
 /* Cell title shown on the achievements view for install MEGA desktop app achievement */
-"account.achievement.desktopApp.title"="安裝MEGA桌面應用程式";
+"account.achievement.desktopApp.title"="安裝MEGA的桌面應用程式";
 /* Explanation label shown on the achievements view for complete install MEGA desktop app achievement, %@ is a placeholder. */
 "account.achievement.desktopApp.complete.explaination.label"="您已經安裝MEGA桌面應用程式而獲得%@儲存空間過了。";
 /* Explanation label shown on the achievements view for incomplete install MEGA desktop app achievement, %1$@ is a placeholder, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
 "account.achievement.desktopApp.incomplete.explaination.label"="當您安裝MEGA桌面應用程式時，您可獲得%1$@的免費儲存空間，有效期為%2$@。MEGA桌面應用程式適用於Windows、macOS和大多數Linux發行版。";
 /* Cell title shown on the achievements view for install MEGA mobile app achievement */
-"account.achievement.mobileApp.title"="安裝MEGA手機應用程式";
+"account.achievement.mobileApp.title"="安裝其中一款MEGA的行動應用程式";
 /* Explanation label shown on the achievements view for complete install MEGA mobile app achievement, %@ is a placeholder. */
 "account.achievement.mobileApp.complete.explaination.label"="您已經安裝MEGA手機應用程式而獲得%@儲存空間過了。";
 /* Explanation label shown on the achievements view for incomplete install MEGA mobile app achievement, %1$@ is a placeholder, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
@@ -2252,6 +2272,14 @@
 "Folder link unavailable"="資料夾連結無法使用";
 /* Error message shown when opening a file link which doesn’t exist */
 "File link unavailable"="這不是有效的檔案連結";
+/* Error message shown when opening a folder link which is deleted/disabled/invalid */
+"cloudDrive.folderLink.notAvailable"="您嘗試存取的資料夾連結無法使用";
+/* Error message shown when opening a file link which is deleted/disabled/invalid */
+"cloudDrive.fileLink.notAvailable"="您嘗試存取的檔案連結無法使用";
+/* Error message shown when opening a folder link which is expired */
+"cloudDrive.folderLink.noLongerAvailable"="您嘗試存取的資料夾連結無法再使用";
+/* Error message shown when opening a file link which is expired */
+"cloudDrive.fileLink.noLongerAvailable"="您嘗試存取的檔案連結無法再使用";
 /* Header of block with all shared files in chat. */
 "Shared Files"="共享的檔案";
 /* Over Disk Quota Screen Navigation Bar Title */
@@ -4149,7 +4177,7 @@
 /* Rewind fro free users */
 "rewind.for.free.users"="最多30天（僅能檢視）";
 /* Rewind for pro users, where %d is the number of days that marks the rewind limit */
-"rewind.for.pro.users"="長達%d天";
+"rewind.for.pro.users"="最多%d天";
 /* MEGA VPN title */
 "mega.vpn.title"="MEGA VPN";
 /* Call and meeting duration title */
@@ -4619,7 +4647,7 @@
 /* Title for the features of pro plan in the subscription purchase screen. */
 "subscriptionPurchase.featuresOfProPlan.title"="Pro方案的額外好處";
 /* Features of pro plan in the subscription purchase screen. */
-"subscriptionPurchase.featuresOfProPlan.message"="• 連結加入密碼保護\n\n\n• 為連結設定到期日期\n\n\n• 回溯資料夾中最多180天的已刪除資料\n\n\n• 主持群組通話和會議，與會人數不限，沒有時間限制\n\n\n• 垃圾筒清理排程，支援7天到10年設定\n\n\n• 優先支持";
+"subscriptionPurchase.featuresOfProPlan.message"="• 連結加入密碼保護\n\n\n• 為連結設定到期日期\n\n\n• 回溯資料夾中最多60天的已刪除資料\n\n\n• 主持群組通話和會議，與會人數不限，沒有時間限制\n\n\n• 垃圾筒清理排程，支援7天到10年設定\n\n\n• 優先支持";
 /* Title for the first subscription feature: generous storage capacity */
 "subscriptionPurchase.feature.one.title"="大容量空間";
 /* Description for the first subscription feature: details about available storage */
@@ -4706,3 +4734,11 @@
 "videoPlayer.snapshot.snackBar.title"="影像已儲存到您的裝置";
 /* The Picture in picture video player option in bottom more menu */
 "videoPlayer.pip.bottomSheet.title"="子母畫面";
+/* Subscription benefit for rewind */
+"subscriptionPurchase.benefits.rewind.title"="最多可回溯60天內刪除的資料";
+/* Subscription benefit for for calls and meetings */
+"subscriptionPurchase.benefits.callsAndMeetings.title"="主持通話和會議，與會人數和通話時間皆無限制。";
+/* Subscription benefit for rubbish bin clearing */
+"subscriptionPurchase.benefits.rubbishClearing.title"="可設定垃圾筒清空排程7天至10年";
+/* General label for priority customer support */
+"general.prioritySupport"="優先的支援";

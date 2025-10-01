@@ -164,15 +164,15 @@
 "fileLinkUnavailableText3"="Invalid URL - the link you are trying to access does not exist";
 /*  */
 "fileLinkUnavailableText4"="The file has been deleted by the user.";
-/*file has been deleted*/
+/* file has been deleted */
 "cloudDrive.fileLink.unavailableReason1"="The file has been deleted";
-/*file link has been disabled*/
+/* file link has been disabled */
 "cloudDrive.fileLink.unavailableReason2"="The file link has been disabled by the owner";
-/*file link invalid*/
+/* file link invalid */
 "cloudDrive.fileLink.unavailableReason3"="Invalid URL - the link you’re trying to access does not exist";
-/*file link has been removed*/
+/* file link has been removed */
 "cloudDrive.fileLink.unavailableReason4"="The file link has been removed as it violated our Terms of Service";
-/*file link has expired*/
+/* file link has expired */
 "cloudDrive.fileLink.hasExpired"="The link has expired";
 /* Message shown when a download starts */
 "downloadStarted"="Download started";
@@ -204,15 +204,15 @@
 "folderLinkUnavailableText3"="Invalid URL - the link you are trying to access does not exist";
 /*  */
 "folderLinkUnavailableText4"="The folder link has been disabled by the user.";
-/*folder has been deleted*/
+/* folder has been deleted */
 "cloudDrive.folderLink.unavailableReason1"="The folder has been deleted";
-/*folder link has been disabled*/
+/* folder link has been disabled */
 "cloudDrive.folderLink.unavailableReason2"="The folder link has been disabled by the owner";
-/*folder link invalid*/
+/* folder link invalid */
 "cloudDrive.folderLink.unavailableReason3"="Invalid URL - the link you’re trying to access does not exist";
-/*folder link has been removed*/
+/* folder link has been removed */
 "cloudDrive.folderLink.unavailableReason4"="The folder link has been removed as it violated our Terms of Service";
-/*folder link has expired*/
+/* folder link has expired */
 "cloudDrive.folderLink.hasExpired"="The link has expired";
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
 "noInternetConnection"="No internet connection";
@@ -1029,7 +1029,7 @@
 /*  */
 "howItWorks"="How it works";
 /*  */
-"howItWorksMain"="Your friend needs to sign up for a free account on MEGA and [S]install at least one MEGA application[/S] (either the MEGA Desktop App or one of our MEGA Mobile Apps)";
+"howItWorksMain"="Your friend needs to sign up for a free account on MEGA and [S]install at least one MEGA application[/S] (either our desktop app or one of our mobile apps)";
 /*  */
 "howItWorksSecondary"="You can notify your friend through any method. You will earn the bonus if you have entered your friend’s email address here prior to them signing up with that address.";
 /* A message which is shown once someone has invited a friend as part of the achievements program. */
@@ -1055,13 +1055,13 @@
 /* Cell title shown on the achievements view for referral achievement */
 "account.achievement.referralBonus.title"="Invitation bonuses";
 /* Cell title shown on the achievements view for install MEGA desktop app achievement */
-"account.achievement.desktopApp.title"="Install the MEGA Desktop App";
+"account.achievement.desktopApp.title"="Install MEGA’s desktop app";
 /* Explanation label shown on the achievements view for complete install MEGA desktop app achievement, %@ is a placeholder. */
 "account.achievement.desktopApp.complete.explaination.label"="You have received %@ storage space for installing the MEGA Desktop App.";
 /* Explanation label shown on the achievements view for incomplete install MEGA desktop app achievement, %1$@ is a placeholder, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
 "account.achievement.desktopApp.incomplete.explaination.label"="When you install the MEGA Desktop App you get %1$@ of complimentary storage space, %2$@. The MEGA Desktop App is available for Windows, macOS and most Linux distributions.";
 /* Cell title shown on the achievements view for install MEGA mobile app achievement */
-"account.achievement.mobileApp.title"="Install the MEGA Mobile App";
+"account.achievement.mobileApp.title"="Install one of MEGA’s mobile apps";
 /* Explanation label shown on the achievements view for complete install MEGA mobile app achievement, %@ is a placeholder. */
 "account.achievement.mobileApp.complete.explaination.label"="You have received %@ storage space for installing the MEGA mobile app.";
 /* Explanation label shown on the achievements view for incomplete install MEGA mobile app achievement, %1$@ is a placeholder, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
@@ -4739,6 +4739,6 @@
 /* Subscription benefit for for calls and meetings */
 "subscriptionPurchase.benefits.callsAndMeetings.title"="Host calls and meetings with unlimited participants and no time restrictions";
 /* Subscription benefit for rubbish bin clearing */
-"subscriptionPurchase.benefits.rubbishClearing.title"="Schedule rubbish bin clearing between 7 days and 10 years";
+"subscriptionPurchase.benefits.rubbishClearing.title"="Schedule Rubbish bin clearing between 7 days and 10 years";
 /* General label for priority customer support */
 "general.prioritySupport"="Priority support";

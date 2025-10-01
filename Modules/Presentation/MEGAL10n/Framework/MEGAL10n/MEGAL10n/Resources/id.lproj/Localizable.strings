@@ -164,6 +164,16 @@
 "fileLinkUnavailableText3"="URL tidak benar - link yang anda coba akses tidak ada";
 /*  */
 "fileLinkUnavailableText4"="Berkas telah dihapus oleh pengguna.";
+/* file has been deleted */
+"cloudDrive.fileLink.unavailableReason1"="File telah dihapus";
+/* file link has been disabled */
+"cloudDrive.fileLink.unavailableReason2"="Tautan file telah dinonaktifkan oleh pemilik";
+/* file link invalid */
+"cloudDrive.fileLink.unavailableReason3"="URL tidak valid - tautan yang anda coba akses tidak ada";
+/* file link has been removed */
+"cloudDrive.fileLink.unavailableReason4"="Tautan file telah dihapus karena melanggar Persyaratan Layanan kami";
+/* file link has expired */
+"cloudDrive.fileLink.hasExpired"="Tautan telah kedaluwarsa";
 /* Message shown when a download starts */
 "downloadStarted"="Unduhan dimulai";
 /* Title for the folder link view */
@@ -194,6 +204,16 @@
 "folderLinkUnavailableText3"="URL tidak valid - link yang anda coba akses tidak ada";
 /*  */
 "folderLinkUnavailableText4"="Link ke folder telah di non-aktifkan oleh pengguna.";
+/* folder has been deleted */
+"cloudDrive.folderLink.unavailableReason1"="Folder telah dihapus";
+/* folder link has been disabled */
+"cloudDrive.folderLink.unavailableReason2"="Tautan folder telah dinonaktifkan oleh pemilik";
+/* folder link invalid */
+"cloudDrive.folderLink.unavailableReason3"="URL tidak valid - tautan yang anda coba akses tidak ada";
+/* folder link has been removed */
+"cloudDrive.folderLink.unavailableReason4"="Tautan folder telah dihapus karena melanggar Persyaratan Layanan kami";
+/* folder link has expired */
+"cloudDrive.folderLink.hasExpired"="Tautan telah kedaluwarsa";
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
 "noInternetConnection"="Tidak ada koneksi internet";
 /* Title shown when a folder doesn't have any files */
@@ -1009,7 +1029,7 @@
 /*  */
 "howItWorks"="Cara kerja";
 /*  */
-"howItWorksMain"="Teman anda perlu mendaftar untuk akun gratis di MEGA dan [S]instal setidaknya satu aplikasi MEGA[/S] (baik Aplikasi MEGA Desktop atau salah satu Aplikasi Seluler MEGA kami)";
+"howItWorksMain"="Your friend needs to sign up for a free account on MEGA and [S]install at least one MEGA application[/S] (either our desktop app or one of our mobile apps)";
 /*  */
 "howItWorksSecondary"="Anda dapat memberi tahu teman anda melalui metode apa pun. Anda akan mendapatkan bonus jika anda telah memasukkan alamat email teman anda di sini sebelum mereka mendaftar dengan alamat itu.";
 /* A message which is shown once someone has invited a friend as part of the achievements program. */
@@ -1035,13 +1055,13 @@
 /* Cell title shown on the achievements view for referral achievement */
 "account.achievement.referralBonus.title"="Bonus undangan";
 /* Cell title shown on the achievements view for install MEGA desktop app achievement */
-"account.achievement.desktopApp.title"="Instal aplikasi desktop MEGA";
+"account.achievement.desktopApp.title"="Install MEGA’s desktop app";
 /* Explanation label shown on the achievements view for complete install MEGA desktop app achievement, %@ is a placeholder. */
 "account.achievement.desktopApp.complete.explaination.label"="Anda telah menerima %@ ruang penyimpanan untuk menginstal aplikasi desktop MEGA.";
 /* Explanation label shown on the achievements view for incomplete install MEGA desktop app achievement, %1$@ is a placeholder, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
 "account.achievement.desktopApp.incomplete.explaination.label"="Saat anda menginstal aplikasi MEGA desktop, anda mendapatkan %1$@ ruang penyimpanan gratis, %2$@. Aplikasi MEGA Desktop tersedia untuk Windows, macOS dan sebagian besar distribusi Linux.";
 /* Cell title shown on the achievements view for install MEGA mobile app achievement */
-"account.achievement.mobileApp.title"="Install Aplikasi Seluler MEGA";
+"account.achievement.mobileApp.title"="Install one of MEGA’s mobile apps";
 /* Explanation label shown on the achievements view for complete install MEGA mobile app achievement, %@ is a placeholder. */
 "account.achievement.mobileApp.complete.explaination.label"="Anda telah menerima %@ ruang penyimpanan untuk menginstal aplikasi seluler MEGA.";
 /* Explanation label shown on the achievements view for incomplete install MEGA mobile app achievement, %1$@ is a placeholder, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
@@ -2252,6 +2272,14 @@
 "Folder link unavailable"="Link / Tautan tidak tersedia";
 /* Error message shown when opening a file link which doesn’t exist */
 "File link unavailable"="Link file tidak tersedia";
+/* Error message shown when opening a folder link which is deleted/disabled/invalid */
+"cloudDrive.folderLink.notAvailable"="Tautan folder yang anda coba akses tidak tersedia";
+/* Error message shown when opening a file link which is deleted/disabled/invalid */
+"cloudDrive.fileLink.notAvailable"="Tautan file yang anda coba akses tidak tersedia";
+/* Error message shown when opening a folder link which is expired */
+"cloudDrive.folderLink.noLongerAvailable"="Tautan folder yang anda coba akses tidak lagi tersedia";
+/* Error message shown when opening a file link which is expired */
+"cloudDrive.fileLink.noLongerAvailable"="Tautan file yang anda coba akses tidak lagi tersedia";
 /* Header of block with all shared files in chat. */
 "Shared Files"="File berbagi";
 /* Over Disk Quota Screen Navigation Bar Title */
@@ -4619,7 +4647,7 @@
 /* Title for the features of pro plan in the subscription purchase screen. */
 "subscriptionPurchase.featuresOfProPlan.title"="Manfaat tambahan dari paket Pro";
 /* Features of pro plan in the subscription purchase screen. */
-"subscriptionPurchase.featuresOfProPlan.message"="• Tautan yang dilindungi kata sandi\n\n• Tautan dengan tanggal kedaluwarsa\n\n• Putar ulang folder hingga 180 hari data yang dihapus\n\n• Selenggarakan panggilan dan rapat dengan peserta tak terbatas dan tanpa batasan waktu\n\n• Jadwalkan pembersihan tempat sampah antara 7 hari dan 10 tahun\n\n• Dukungan prioritas";
+"subscriptionPurchase.featuresOfProPlan.message"="• Tautan yang dilindungi kata sandi\n\n• Tautan dengan tanggal kedaluwarsa\n\n• Putar ulang folder hingga 60 hari data yang dihapus\n\n• Selenggarakan panggilan dan rapat dengan peserta tak terbatas dan tanpa batasan waktu\n\n• Jadwalkan pembersihan tempat sampah antara 7 hari dan 10 tahun\n\n• Dukungan prioritas";
 /* Title for the first subscription feature: generous storage capacity */
 "subscriptionPurchase.feature.one.title"="Penyimpanan murah hati";
 /* Description for the first subscription feature: details about available storage */
@@ -4706,3 +4734,11 @@
 "videoPlayer.snapshot.snackBar.title"="Gambar disimpan ke perangkat anda";
 /* The Picture in picture video player option in bottom more menu */
 "videoPlayer.pip.bottomSheet.title"="Picture in picture";
+/* Subscription benefit for rewind */
+"subscriptionPurchase.benefits.rewind.title"="Putar ulang hingga 60 hari data yang dihapus";
+/* Subscription benefit for for calls and meetings */
+"subscriptionPurchase.benefits.callsAndMeetings.title"="Selenggarakan panggilan dan rapat dengan peserta tak terbatas dan tanpa batasan waktu";
+/* Subscription benefit for rubbish bin clearing */
+"subscriptionPurchase.benefits.rubbishClearing.title"="Jadwalkan pembersihan Tempat Sampah antara 7 hari dan 10 tahun";
+/* General label for priority customer support */
+"general.prioritySupport"="Dukungan prioritas";

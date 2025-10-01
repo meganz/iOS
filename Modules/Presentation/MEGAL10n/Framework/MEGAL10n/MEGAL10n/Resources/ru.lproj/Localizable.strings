@@ -164,6 +164,16 @@
 "fileLinkUnavailableText3"="Неправильная ссылка — ссылка, которую вы хотите открыть, не существует";
 /*  */
 "fileLinkUnavailableText4"="Файл был удалён пользователем.";
+/* file has been deleted */
+"cloudDrive.fileLink.unavailableReason1"="Файл был удалён";
+/* file link has been disabled */
+"cloudDrive.fileLink.unavailableReason2"="Ссылка на файл была отключена владельцем";
+/* file link invalid */
+"cloudDrive.fileLink.unavailableReason3"="Неправильный URL — ссылка, по которой вы перешли, не существует";
+/* file link has been removed */
+"cloudDrive.fileLink.unavailableReason4"="Ссылка на файл была удалена, так как она нарушила наши Условия использования";
+/* file link has expired */
+"cloudDrive.fileLink.hasExpired"="Ссылка устарела";
 /* Message shown when a download starts */
 "downloadStarted"="Скачивание запущено";
 /* Title for the folder link view */
@@ -194,6 +204,16 @@
 "folderLinkUnavailableText3"="Неправильная ссылка — ссылка, по которой вы перешли, не существует";
 /*  */
 "folderLinkUnavailableText4"="Ссылка была деактивирована пользователем.";
+/* folder has been deleted */
+"cloudDrive.folderLink.unavailableReason1"="Папка была удалена";
+/* folder link has been disabled */
+"cloudDrive.folderLink.unavailableReason2"="Ссылка на папку была отключена владельцем";
+/* folder link invalid */
+"cloudDrive.folderLink.unavailableReason3"="Неправильный URL — ссылка, по которой вы перешли, не существует";
+/* folder link has been removed */
+"cloudDrive.folderLink.unavailableReason4"="Ссылка на папку была удалёна, поскольку она нарушала наши условия обслуживания";
+/* folder link has expired */
+"cloudDrive.folderLink.hasExpired"="Ссылка устарела";
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
 "noInternetConnection"="Нет подключения к Интернету";
 /* Title shown when a folder doesn't have any files */
@@ -1035,13 +1055,13 @@
 /* Cell title shown on the achievements view for referral achievement */
 "account.achievement.referralBonus.title"="Бонусы за приглашения";
 /* Cell title shown on the achievements view for install MEGA desktop app achievement */
-"account.achievement.desktopApp.title"="Установить настольное приложение MEGA";
+"account.achievement.desktopApp.title"="Установите настольное приложение MEGA";
 /* Explanation label shown on the achievements view for complete install MEGA desktop app achievement, %@ is a placeholder. */
 "account.achievement.desktopApp.complete.explaination.label"="Вы получили %@ на диске за установку настольного приложения.";
 /* Explanation label shown on the achievements view for incomplete install MEGA desktop app achievement, %1$@ is a placeholder, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
 "account.achievement.desktopApp.incomplete.explaination.label"="Установив настольное приложение MEGA, вы получите %1$@ бонусного места на диске %2$@. Настольное приложение MEGA доступно на Windows, macOS и большинстве дистрибутивов Linux.";
 /* Cell title shown on the achievements view for install MEGA mobile app achievement */
-"account.achievement.mobileApp.title"="Установить мобильное приложение MEGA";
+"account.achievement.mobileApp.title"="Установите одно из мобильных приложений MEGA";
 /* Explanation label shown on the achievements view for complete install MEGA mobile app achievement, %@ is a placeholder. */
 "account.achievement.mobileApp.complete.explaination.label"="Вы получили %@ на диске за установку мобильного приложения.";
 /* Explanation label shown on the achievements view for incomplete install MEGA mobile app achievement, %1$@ is a placeholder, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
@@ -2252,6 +2272,14 @@
 "Folder link unavailable"="Ссылка на папку недоступна";
 /* Error message shown when opening a file link which doesn’t exist */
 "File link unavailable"="Ссылка на файл недоступна";
+/* Error message shown when opening a folder link which is deleted/disabled/invalid */
+"cloudDrive.folderLink.notAvailable"="Ссылка на папку, по которой вы пытаетесь перейти, недоступна";
+/* Error message shown when opening a file link which is deleted/disabled/invalid */
+"cloudDrive.fileLink.notAvailable"="Ссылка на файл, по которой вы пытаетесь перейти, недоступна";
+/* Error message shown when opening a folder link which is expired */
+"cloudDrive.folderLink.noLongerAvailable"="Ссылка на папку, по которой вы пытаетесь перейти, больше не доступна";
+/* Error message shown when opening a file link which is expired */
+"cloudDrive.fileLink.noLongerAvailable"="Ссылка на файл, по которой вы пытаетесь перейти, больше не доступна";
 /* Header of block with all shared files in chat. */
 "Shared Files"="Общие файлы";
 /* Over Disk Quota Screen Navigation Bar Title */
@@ -4619,7 +4647,7 @@
 /* Title for the features of pro plan in the subscription purchase screen. */
 "subscriptionPurchase.featuresOfProPlan.title"="Дополнительные преимущества планов Pro";
 /* Features of pro plan in the subscription purchase screen. */
-"subscriptionPurchase.featuresOfProPlan.message"="• Защищённые паролем ссылки\n\n• Ссылки со сроками действия\n\n• Перемотка папок с удалёнными данными на срок до 180 дней назад\n\n• Звонки и встречи без ограничений по времени и количеству участников\n\n• Период очистки корзины от 7 дней до 10 лет\n\n• Приоритетная поддержка";
+"subscriptionPurchase.featuresOfProPlan.message"="• Защищённые паролем ссылки\n\n• Ссылки со сроками действия\n\n• Перемотка папок с удалёнными данными на срок до 60 дней назад\n\n• Звонки и встречи без ограничений по времени и количеству участников\n\n• Период очистки корзины от 7 дней до 10 лет\n\n• Приоритетная поддержка";
 /* Title for the first subscription feature: generous storage capacity */
 "subscriptionPurchase.feature.one.title"="Выгодный объём";
 /* Description for the first subscription feature: details about available storage */
@@ -4706,3 +4734,11 @@
 "videoPlayer.snapshot.snackBar.title"="Изображение сохранено на устройстве";
 /* The Picture in picture video player option in bottom more menu */
 "videoPlayer.pip.bottomSheet.title"="Картинка в картинке";
+/* Subscription benefit for rewind */
+"subscriptionPurchase.benefits.rewind.title"="Перемотка удалённых данных до 60 дней назад";
+/* Subscription benefit for for calls and meetings */
+"subscriptionPurchase.benefits.callsAndMeetings.title"="Звонки и встречи без ограничений по количеству участников и времени";
+/* Subscription benefit for rubbish bin clearing */
+"subscriptionPurchase.benefits.rubbishClearing.title"="Срок очистки Корзины от 7 дней до 10 лет";
+/* General label for priority customer support */
+"general.prioritySupport"="Приоритетная поддержка";
