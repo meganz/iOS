@@ -3,10 +3,21 @@ import MEGADomain
 import MEGARepo
 import MEGASwift
 
+extension UIViewController {
+    private static var megaDocumentPickerDelegateKey: UInt8 = 0
+    fileprivate var megaDocumentPickerDelegate: DocumentPickerDelegate? {
+        get {
+            return objc_getAssociatedObject(self, &UIViewController.megaDocumentPickerDelegateKey) as? DocumentPickerDelegate
+        }
+        set {
+            objc_setAssociatedObject(self, &UIViewController.megaDocumentPickerDelegateKey, newValue, .OBJC_ASSOCIATION_RETAIN)
+        }
+    }
+}
+
 final class DocumentPickerViewRouter {
     private let presenter: UIViewController
     private let parent: NodeEntity
-    private var pickerDelegate: DocumentPickerDelegate?
 
     init(presenter: UIViewController, parent: NodeEntity) {
         self.presenter = presenter
@@ -33,7 +44,7 @@ final class DocumentPickerViewRouter {
             metadataUseCase: metadataUseCase
         )
         documentPicker.delegate = delegate
-        pickerDelegate = delegate
+        documentPicker.megaDocumentPickerDelegate = delegate
 
         documentPicker.allowsMultipleSelection = true
         presenter.present(documentPicker, animated: true)
