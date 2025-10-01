@@ -477,8 +477,8 @@ final class AudioPlayerViewModel: ViewModelType {
             if shouldInitializePlayer() {
                 trackInitializeAudioPlayer()
                 invokeCommand?(.showLoading(true))
-                Task {
-                    await self.preparePlayer()
+                Task { [weak self] in
+                    await self?.preparePlayer()
                 }
             } else {
                 invokeCommand?(.showLoading(false))

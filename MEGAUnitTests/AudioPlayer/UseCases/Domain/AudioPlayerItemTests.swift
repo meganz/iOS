@@ -1,41 +1,31 @@
 @testable import MEGA
 import MEGAAppSDKRepoMock
-import MEGATest
-import XCTest
+import Testing
 
-final class AudioPlayerItemTests: XCTestCase {
+@Suite("AudioPlayerItem")
+struct AudioPlayerItemTests {
+    private let originalName = "original-track-name"
+    private let nodeName = "node-name"
+    private let url = URL(string: "https://any-url.com")!
+    private let node = MockNode(handle: 1, name: "node-name")
     
-    func testName_whenCalled_mustUseNodeNameInsteadOfItemName() {
-        let originalTrackName = "original-track-name"
-        let nodeName = "node-name"
-        let node = MockNode(handle: 1, name: nodeName)
-        let sut = makeSUT(name: originalTrackName, node: node)
-        
-        let result = sut.name
-        
-        XCTAssertEqual(result, nodeName)
+    private func makeSUT(name: String, node: MockNode? = nil) -> AudioPlayerItem {
+        AudioPlayerItem(
+            name: name,
+            url: url,
+            node: node
+        )
     }
     
-    func testName_whenCalled_mustUseTrackNameWhenNodeIsNil() {
-        let originalTrackName = originalTrackName()
-        let sut = makeSUT(name: originalTrackName)
-        
-        let result = sut.name
-        
-        XCTAssertEqual(result, originalTrackName)
+    @Test("name uses node.name when node exists")
+    func nameUsesNodeName() {
+        let sut = makeSUT(name: originalName, node: node)
+        #expect(sut.name == nodeName)
     }
     
-    // MARK: - Helpers
-    
-    private func makeSUT(name: String, node: MockNode? = nil, file: StaticString = #filePath, line: UInt = #line) -> AudioPlayerItem {
-        let anyURL = URL(string: "https://any-url.com")!
-        let sut = AudioPlayerItem(name: name, url: anyURL, node: node)
-        trackForMemoryLeaks(on: sut, file: file, line: line)
-        return sut
+    @Test("name falls back to track name when node is nil")
+    func nameFallsBackToTrackNameWhenNodeIsNil() {
+        let sut = makeSUT(name: originalName)
+        #expect(sut.name == originalName)
     }
-    
-    private func originalTrackName() -> String {
-        "original-track-name"
-    }
-    
 }

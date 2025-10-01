@@ -1,23 +1,30 @@
 @testable import MEGA
-import XCTest
+import Testing
 
-final class OfflineFileInfoUseCaseTests: XCTestCase {
-    let offlineFileInfoSuccessRepository = MockOfflineInfoRepository(result: .success(()))
-    let offlineFileInfoFailureRepository = MockOfflineInfoRepository(result: .failure(.generic))
+@Suite("OfflineFileInfoUseCase")
+struct OfflineFileInfoUseCaseTests {
+    static let successRepo = MockOfflineInfoRepository(result: .success)
+    static let failureRepo = MockOfflineInfoRepository(result: .failure(.generic))
     
-    func testGetInfoFromFolderLinkNode() throws {
-        let folderLinkNodesArray = try XCTUnwrap(offlineFileInfoSuccessRepository.info(fromFiles: [""]))
-        let mockArray = try XCTUnwrap(AudioPlayerItem.mockArray)
-        
-        XCTAssertEqual(folderLinkNodesArray.compactMap {$0.url}, mockArray.compactMap {$0.url})
-        XCTAssertNil(offlineFileInfoFailureRepository.info(fromFiles: [""]))
+    @Suite("InfoFromFiles")
+    struct InfoFromFilesSuite {
+        @Test("returns items on success and nil on failure")
+        func infoFromFiles() throws {
+            let items = try #require(OfflineFileInfoUseCaseTests.successRepo.info(fromFiles: [""]))
+            let expected = AudioPlayerItem.mockArray
+            #expect(items.compactMap(\.url) == expected.compactMap(\.url))
+            #expect(OfflineFileInfoUseCaseTests.failureRepo.info(fromFiles: [""]) == nil)
+        }
     }
     
-    func testGetNodeLocalPath() throws {
-        let nodePath = try XCTUnwrap(offlineFileInfoSuccessRepository.localPath(fromNode: MEGANode()))
-        let mockNodePath = try XCTUnwrap(AudioPlayerItem.mockItem.url)
-        
-        XCTAssertEqual(nodePath, mockNodePath)
-        XCTAssertNil(offlineFileInfoFailureRepository.localPath(fromNode: MEGANode()))
+    @Suite("LocalPath")
+    struct LocalPathSuite {
+        @Test("returns local path on success and nil on failure")
+        func localPathFromNode() throws {
+            let path = try #require(OfflineFileInfoUseCaseTests.successRepo.localPath(fromNode: MEGANode()))
+            let expected = AudioPlayerItem.mockItem.url
+            #expect(path == expected)
+            #expect(OfflineFileInfoUseCaseTests.failureRepo.localPath(fromNode: MEGANode()) == nil)
+        }
     }
 }

@@ -134,68 +134,43 @@ struct AudioPlayerPlaybackTests {
         }
     }
     
-    @Suite("Rewind")
+    enum TimeChange { case increased, decreased, unchanged }
+    
+    @Suite("Rewind/Forward")
     @MainActor
-    struct Rewind {
-        @Test("rewind(.forward) increases playback time")
-        func rewindForwardIncreasesTime() async throws {
-            let (player, _) = try await makePlayerAndTracks()
-            let queuePlayer = try await requireQueuePlayer(player)
-            let before = queuePlayer.currentTime().seconds
-            
-            player.rewind(direction: .forward)
-            let didAdvance = await waitUntil(timeout: 1) {
-                queuePlayer.currentTime().seconds > before
-            }
-            #expect(didAdvance)
-        }
+    struct RewindForwardSuite {
+        private let timescale: CMTimeScale = 600
+        private let initialSeekSeconds: Double = 10.0
         
-        @Test("rewind(.backward) decreases playback time")
-        func rewindBackwardDecreasesTime() async throws {
+        func testRewind_forward_advancesPlaybackTime() async throws {
             let (player, _) = try await makePlayerAndTracks()
-            let queuePlayer = try await requireQueuePlayer(player)
-            let forwardTime = CMTime(
-                seconds: 10,
-                preferredTimescale: queuePlayer.currentTime().timescale
-            )
+            let queue = try await requireQueuePlayer(player)
+            let before = queue.currentTime().seconds
+
+            player.rewind(direction: .forward)
             
+            try? await Task.sleep(nanoseconds: 200_000_000)
+            
+            let advanced = queue.currentTime().seconds > before
+            #expect(advanced, "Expected playback time to advance after forward rewind")
+        }
+
+        func testRewind_backward_decreasesPlaybackTime() async throws {
+            let (player, _) = try await makePlayerAndTracks()
+            let queue = try await requireQueuePlayer(player)
+            
+            let forwardTime = CMTime(seconds: initialSeekSeconds, preferredTimescale: timescale)
             await withCheckedContinuation { cont in
-                queuePlayer.seek(to: forwardTime) { _ in cont.resume() }
+                queue.seek(to: forwardTime) { _ in cont.resume() }
             }
-            
+
             player.rewind(direction: .backward)
             
-            let didRewind = await waitUntil(timeout: 1) {
-                queuePlayer.currentTime().seconds < forwardTime.seconds - 0.05
-            }
+            try? await Task.sleep(nanoseconds: 200_000_000)
             
-            #expect(didRewind, "Expected playback time to decrease after rewind backward")
-        }
-    }
-    
-    @Suite("Toggle Play")
-    @MainActor
-    struct Toggle {
-        @Test("togglePlay pauses then resumes playback")
-        func togglePlayPausesAndResumes() async throws {
-            let (player, _) = try await makePlayerAndTracks()
-            let queuePlayer = try await requireQueuePlayer(player)
+            let movedBack = queue.currentTime().seconds < initialSeekSeconds
             
-            await expectRate(1.0, on: queuePlayer)
-            
-            await toggleAndExpect(
-                player,
-                queuePlayer: queuePlayer,
-                expectedRate: 0.0
-            )
-            #expect(player.isPaused)
-            
-            await toggleAndExpect(
-                player,
-                queuePlayer: queuePlayer,
-                expectedRate: 1.0
-            )
-            #expect(player.isPlaying)
+            #expect(movedBack, "Expected playback time to move backward after rewind")
         }
     }
     

@@ -1,188 +1,27 @@
 @testable import MEGA
 import MEGAAppSDKRepoMock
 import MEGADomain
-import MEGATest
-import XCTest
+import Testing
 
-final class AudioPlayerConfigEntityTests: XCTestCase {
+@Suite("AudioPlayerConfigEntity")
+struct AudioPlayerConfigEntityTests {
+    private static let node = MockNode(handle: 1)
+    private static let link = "exampleFileLink"
+    private static let chatId: HandleEntity = 2
+    private static let messageId: HandleEntity = 1
+    private static let audioFiles = ["relatedFile1.mp3", "relatedFile2.mp3"]
+    private static let mixedFiles = ["relatedFile1.mp3", "relatedFile2.mov", "relatedFile3.jpeg", "relatedFile4.txt"]
+    private static let nonAudio = ["relatedFile1.mov", "relatedFile2.mov", "relatedFile3.jpeg", "relatedFile4.txt"]
     
-    // MARK: - isFolderLink
-    
-    func testIsFolderLink_WhenIsFolderLink_ReturnsTrue() {
-        let sut = makeSUT(isFolderLink: true)
-        
-        let result = sut.isFolderLink
-        
-        XCTAssertTrue(result)
-    }
-    
-    func testIsFolderLink_WhenIsNotFolderLink_ReturnsFalse() {
-        let sut = makeSUT(isFolderLink: false)
-        
-        let result = sut.isFolderLink
-        
-        XCTAssertFalse(result)
-    }
-    
-    // MARK: - node
-    
-    func testNode_WhenNodeIsSet_ReturnsCorrectNode() {
-        let node = MockNode(handle: 1)
-        let sut = makeSUT(node: node)
-        
-        let result = sut.node
-        
-        XCTAssertEqual(result, node)
-    }
-    
-    func testNode_WhenNodeIsNotSet_ReturnsNil() {
-        let sut = makeSUT()
-        
-        let result = sut.node
-        
-        XCTAssertNil(result)
-    }
-    
-    // MARK: - chatId
-    
-    func testChatId_WhenChatIdIsSet_ReturnsCorrectChatId() {
-        let chatId: HandleEntity = 123
-        let sut = makeSUT(chatId: chatId)
-        
-        let result = sut.chatId
-        
-        XCTAssertEqual(result, chatId)
-    }
-    
-    func testChatId_WhenChatIdIsNotSet_ReturnsNil() {
-        let sut = makeSUT()
-        
-        let result = sut.chatId
-        
-        XCTAssertNil(result)
-    }
-    
-    // MARK: - isFileLink
-    
-    func testIsFileLink_WhenFileLinkExists_ReturnsTrue() {
-        let sut = makeSUT(fileLink: "exampleFileLink")
-        
-        let result = sut.isFileLink
-        
-        XCTAssertTrue(result)
-    }
-    
-    func testIsFileLink_WhenRelatedFilesExist_ReturnsFalse() {
-        let sut = makeSUT(relatedFiles: ["relatedFile1.mp3", "relatedFile2.mp3"])
-        
-        let result = sut.isFileLink
-        
-        XCTAssertFalse(result)
-    }
-    
-    // MARK: - playerType
-    
-    func testPlayerType_WhenIsFolderLink_ReturnsFolderLink() {
-        let sut = makeSUT(isFolderLink: true)
-        
-        let result = sut.playerType
-        
-        XCTAssertEqual(result, .folderLink)
-    }
-    
-    func testPlayerType_WhenIsFileLink_ReturnsFileLink() {
-        let sut = makeSUT(fileLink: "exampleFileLink")
-        
-        let result = sut.playerType
-        
-        XCTAssertEqual(result, .fileLink)
-    }
-    
-    func testPlayerType_WhenRelatedFilesExist_ReturnsOffline() {
-        let sut = makeSUT(relatedFiles: ["relatedFile1.mp3", "relatedFile2.mp3"])
-        
-        let result = sut.playerType
-        
-        XCTAssertEqual(result, .offline)
-    }
-    
-    func testPlayerType_WhenDefaultCase_ReturnsDefault() {
-        let sut = makeSUT()
-        
-        let result = sut.playerType
-        
-        XCTAssertEqual(result, .default)
-    }
-    
-    // MARK: - nodeOriginType
-    
-    func testNodeOriginType_WhenIsFolderLink_ReturnsFolderLink() {
-        let sut = makeSUT(isFolderLink: true)
-        
-        let result = sut.nodeOriginType
-        
-        XCTAssertEqual(result, .folderLink)
-    }
-    
-    func testNodeOriginType_WhenIsFileLink_ReturnsFileLink() {
-        let sut = makeSUT(fileLink: "exampleFileLink")
-        
-        let result = sut.nodeOriginType
-        
-        XCTAssertEqual(result, .fileLink)
-    }
-    
-    func testNodeOriginType_WhenChatIdsExist_ReturnsChat() {
-        let sut = makeSUT(messageId: 1, chatId: 2)
-        
-        let result = sut.nodeOriginType
-        
-        XCTAssertEqual(result, .chat)
-    }
-    
-    // MARK: - relatedFiles
-    
-    func testRelatedFiles_whenRelatedFilesIsAudioFiles_doesNotFilterRelatedFiles() {
-        let expectedRelatedFiles = ["relatedFile1.mp3", "relatedFile2.mp3"]
-        let sut = makeSUT(relatedFiles: expectedRelatedFiles)
-        
-        let result = sut.relatedFiles
-        
-        XCTAssertEqual(result, expectedRelatedFiles)
-    }
-    
-    func testRelatedFiles_whenRelatedFilesNonAudioFiles_filterRelatedFiles() {
-        let expectedRelatedFiles = ["relatedFile1.mov", "relatedFile2.mov", "relatedFile3.jpeg", "relatedFile4.txt"]
-        let sut = makeSUT(relatedFiles: expectedRelatedFiles)
-        
-        let result = sut.relatedFiles
-        
-        XCTAssertEqual(result?.isEmpty, true)
-    }
-    
-    func testRelatedFiles_whenRelatedFilesMixAudioAndNonAudio_filterRelatedFiles() {
-        let expectedRelatedFiles = ["relatedFile1.mp3", "relatedFile2.mov", "relatedFile3.jpeg", "relatedFile4.txt"]
-        let sut = makeSUT(relatedFiles: expectedRelatedFiles)
-        
-        let result = sut.relatedFiles
-        
-        XCTAssertEqual(result, [ expectedRelatedFiles[0] ])
-    }
-    
-    // MARK: - Helpers
-    
-    private func makeSUT(
+    private static func makeSUT(
         node: MockNode? = nil,
         isFolderLink: Bool = false,
         fileLink: String? = nil,
         messageId: HandleEntity? = nil,
         chatId: HandleEntity? = nil,
         relatedFiles: [String]? = nil,
-        parentNode: MockNode? = nil,
         allNodes: [MockNode]? = nil,
-        shouldResetPlayer: Bool = false,
-        file: StaticString = #filePath,
-        line: UInt = #line
+        shouldResetPlayer: Bool = false
     ) -> AudioPlayerConfigEntity {
         AudioPlayerConfigEntity(
             node: node,
@@ -194,5 +33,134 @@ final class AudioPlayerConfigEntityTests: XCTestCase {
             allNodes: allNodes,
             shouldResetPlayer: shouldResetPlayer
         )
+    }
+    
+    @Suite("isFolderLink")
+    struct IsFolderLink {
+        @Test("returns true when isFolderLink is true")
+        func returnsTrueWhenFlagIsTrue() {
+            let sut = makeSUT(isFolderLink: true)
+            #expect(sut.isFolderLink)
+        }
+        
+        @Test("returns false when isFolderLink is false")
+        func returnsFalseWhenFlagIsFalse() {
+            let sut = makeSUT(isFolderLink: false)
+            #expect(!sut.isFolderLink)
+        }
+    }
+    
+    @Suite("node")
+    struct NodeSuite {
+        @Test("returns provided node when set")
+        func returnsProvidedNodeWhenSet() {
+            let sut = makeSUT(node: node)
+            #expect(sut.node == node)
+        }
+        
+        @Test("returns nil when node not set")
+        func returnsNilWhenNodeNotSet() {
+            let sut = makeSUT()
+            #expect(sut.node == nil)
+        }
+    }
+    
+    @Suite("chatId")
+    struct ChatIdSuite {
+        @Test("returns provided chatId when set")
+        func returnsChatIdWhenSet() {
+            let sut = makeSUT(chatId: chatId)
+            #expect(sut.chatId == chatId)
+        }
+        
+        @Test("returns nil when chatId not set")
+        func returnsNilWhenChatIdNotSet() {
+            let sut = makeSUT()
+            #expect(sut.chatId == nil)
+        }
+    }
+    
+    @Suite("isFileLink")
+    struct IsFileLinkSuite {
+        @Test("returns true when fileLink exists")
+        func returnsTrueWhenFileLinkExists() {
+            let sut = makeSUT(fileLink: link)
+            #expect(sut.isFileLink)
+        }
+        
+        @Test("returns false when relatedFiles exist instead of fileLink")
+        func returnsFalseWhenOnlyRelatedFilesExist() {
+            let sut = makeSUT(relatedFiles: audioFiles)
+            #expect(!sut.isFileLink)
+        }
+    }
+    
+    @Suite("playerType")
+    struct PlayerTypeSuite {
+        @Test("returns .folderLink when isFolderLink is true")
+        func returnsFolderLinkWhenFlagIsTrue() {
+            let sut = makeSUT(isFolderLink: true)
+            #expect(sut.playerType == .folderLink)
+        }
+        
+        @Test("returns .fileLink when fileLink exists")
+        func returnsFileLinkWhenFileLinkExists() {
+            let sut = makeSUT(fileLink: link)
+            #expect(sut.playerType == .fileLink)
+        }
+        
+        @Test("returns .offline when relatedFiles exist")
+        func returnsOfflineWhenRelatedFilesExist() {
+            let sut = makeSUT(relatedFiles: audioFiles)
+            #expect(sut.playerType == .offline)
+        }
+        
+        @Test("returns .default when no special values provided")
+        func returnsDefaultWhenNoSpecialValues() {
+            let sut = makeSUT()
+            #expect(sut.playerType == .default)
+        }
+    }
+    
+    @Suite("nodeOriginType")
+    struct NodeOriginTypeSuite {
+        @Test("returns .folderLink when isFolderLink is true")
+        func returnsFolderLinkWhenFlagIsTrue() {
+            let sut = makeSUT(isFolderLink: true)
+            #expect(sut.nodeOriginType == .folderLink)
+        }
+        
+        @Test("returns .fileLink when fileLink exists")
+        func returnsFileLinkWhenFileLinkExists() {
+            let sut = makeSUT(fileLink: link)
+            #expect(sut.nodeOriginType == .fileLink)
+        }
+        
+        @Test("returns .chat when chat and message ids exist")
+        func returnsChatWhenChatAndMessageIdsExist() {
+            let sut = makeSUT(messageId: messageId, chatId: chatId)
+            #expect(sut.nodeOriginType == .chat)
+        }
+    }
+    
+    @Suite("relatedFiles")
+    struct RelatedFilesSuite {
+        @Test("keeps only audio files when all are audio")
+        func keepsAllAudioFiles() {
+            let sut = makeSUT(relatedFiles: audioFiles)
+            #expect(sut.relatedFiles == audioFiles)
+        }
+        
+        @Test("filters out all when files are non-audio")
+        func filtersOutAllNonAudioFiles() {
+            let sut = makeSUT(relatedFiles: nonAudio)
+            #expect(sut.relatedFiles?.isEmpty == true)
+        }
+        
+        @Test("keeps only audio files when mixed with non-audio")
+        func keepsOnlyAudioFromMixedFiles() {
+            let sut = makeSUT(relatedFiles: mixedFiles)
+            #expect(sut.relatedFiles == [mixedFiles[0]])
+        }
     }
 }

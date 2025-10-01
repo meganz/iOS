@@ -1,24 +1,31 @@
 @testable import MEGA
 import MEGADomain
-import XCTest
+import Testing
 
-final class StreamingInfoUseCaseTests: XCTestCase {
-    let nodeStreamingInfoSuccessRepository = MockStreamingInfoRepository(result: .success(()))
-    let nodeStreamingInfoFailureRepository = MockStreamingInfoRepository(result: .failure(.generic))
+@Suite("StreamingInfoUseCase")
+struct StreamingInfoUseCaseTests {
+    static let successRepo = MockStreamingInfoRepository(result: .success)
+    static let failureRepo = MockStreamingInfoRepository(result: .failure(.generic))
     
-    func testGetInfoFromFolderLinkNode() throws {
-        let folderLinkItem = try XCTUnwrap(nodeStreamingInfoSuccessRepository.info(fromFolderLinkNode: MEGANode()))
-        let mockItem = try XCTUnwrap(AudioPlayerItem.mockItem)
-        
-        XCTAssertEqual(folderLinkItem.url, mockItem.url)
-        XCTAssertNil(nodeStreamingInfoFailureRepository.info(fromFolderLinkNode: MEGANode()))
+    @Suite("Info")
+    struct InfoSuite {
+        @Test("returns item on success and nil on failure")
+        func infoFromFolderLinkNode() throws {
+            let item = try #require(StreamingInfoUseCaseTests.successRepo.info(fromFolderLinkNode: MEGANode()))
+            let expected = AudioPlayerItem.mockItem
+            #expect(item.url == expected.url)
+            #expect(StreamingInfoUseCaseTests.failureRepo.info(fromFolderLinkNode: MEGANode()) == nil)
+        }
     }
     
-    func testGetPathFromNode() throws {
-        let nodePath = try XCTUnwrap(nodeStreamingInfoSuccessRepository.path(fromNode: MEGANode()))
-        let mockNodePath = try XCTUnwrap(AudioPlayerItem.mockItem.url)
-        
-        XCTAssertEqual(nodePath, mockNodePath)
-        XCTAssertNil(nodeStreamingInfoFailureRepository.path(fromNode: MEGANode()))
+    @Suite("Path")
+    struct PathSuite {
+        @Test("returns path on success and nil on failure")
+        func pathFromNode() throws {
+            let path = try #require(StreamingInfoUseCaseTests.successRepo.path(fromNode: MEGANode()))
+            let expected = AudioPlayerItem.mockItem.url
+            #expect(path == expected)
+            #expect(StreamingInfoUseCaseTests.failureRepo.path(fromNode: MEGANode()) == nil)
+        }
     }
 }

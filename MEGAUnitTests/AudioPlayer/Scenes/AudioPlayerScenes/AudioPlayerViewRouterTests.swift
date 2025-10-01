@@ -1,18 +1,18 @@
 @testable import MEGA
-import MEGAAnalyticsiOS
 import MEGAAppPresentationMock
 import MEGAAppSDKRepoMock
 import MEGADomain
-import MEGATest
-import XCTest
+import Testing
 
 @MainActor
-final class AudioPlayerViewRouterTests: XCTestCase {
+@Suite("AudioPlayerViewRouter")
+struct AudioPlayerViewRouterTests {
+    private func anyFileLink() -> String { "https://some-file-link.com" }
+    private func anyHandle() -> HandleEntity { .max }
     
-    // MARK: - Tests
-    
-    func testBuild_whenFolderLink_configuresNodeDelegate() {
-        let (sut, _) = makeSUT(nodeOriginType: .folderLink)
+    @Test("build – folder link configures node delegate")
+    func buildFolderLinkConfiguresNodeDelegate() {
+        let (sut, _) = makeSUT(origin: .folderLink)
         
         _ = sut.build()
         
@@ -22,26 +22,25 @@ final class AudioPlayerViewRouterTests: XCTestCase {
             messageId: .invalid,
             chatId: .invalid
         )
-        assertFileLinkDelegateIsNil(in: sut)
+        #expect(sut.fileLinkActionViewControllerDelegate == nil)
     }
     
-    func testBuild_whenFileLink_configuresFileLinkDelegate() {
-        let (sut, _) = makeSUT(
-            nodeOriginType: .fileLink,
-            fileLink: anyFileLink()
-        )
+    @Test("build – file link configures file link delegate")
+    func buildFileLinkConfiguresFileLinkDelegate() {
+        let (sut, _) = makeSUT(origin: .fileLink, fileLink: anyFileLink())
         
         _ = sut.build()
         
-        assertFileLinkDelegateIsNotNil(in: sut)
-        assertNodeDelegateIsNil(in: sut)
+        #expect(sut.fileLinkActionViewControllerDelegate != nil)
+        #expect(sut.nodeActionViewControllerDelegate == nil)
     }
     
-    func testBuild_whenFromChat_configuresNodeDelegateWithIds() {
-        let expectedChatId = anyHandleEntity()
-        let expectedMessageId = anyHandleEntity()
+    @Test("build – chat configures node delegate with ids")
+    func buildChatConfiguresNodeDelegateWithIds() {
+        let expectedChatId = anyHandle()
+        let expectedMessageId = anyHandle()
         let (sut, _) = makeSUT(
-            nodeOriginType: .chat,
+            origin: .chat,
             messageId: expectedMessageId,
             chatId: expectedChatId
         )
@@ -54,21 +53,23 @@ final class AudioPlayerViewRouterTests: XCTestCase {
             messageId: expectedMessageId,
             chatId: expectedChatId
         )
-        assertFileLinkDelegateIsNil(in: sut)
+        #expect(sut.fileLinkActionViewControllerDelegate == nil)
     }
     
-    func testStart_presentsBuiltView() {
+    @Test("start – presents built view")
+    func startPresentsBuiltView() {
         let (sut, presenter) = makeSUT()
         
         sut.start()
         
-        XCTAssertEqual(presenter.presentCallCount, 1)
+        #expect(presenter.presentCallCount == 1)
     }
     
     // MARK: - Helpers
     
+    @MainActor
     private func makeSUT(
-        nodeOriginType originType: AudioPlayerConfigEntity.NodeOriginType = .folderLink,
+        origin: AudioPlayerConfigEntity.NodeOriginType = .folderLink,
         fileLink: String? = nil,
         messageId: HandleEntity? = nil,
         chatId: HandleEntity? = nil,
@@ -77,8 +78,8 @@ final class AudioPlayerViewRouterTests: XCTestCase {
         line: UInt = #line
     ) -> (sut: AudioPlayerViewRouter, presenter: MockViewController) {
         let presenter = MockViewController()
-        let config = audioPlayerConfigEntity(
-            from: originType,
+        let config = makeConfig(
+            origin: origin,
             fileLink: fileLink,
             messageId: messageId,
             chatId: chatId,
@@ -89,106 +90,67 @@ final class AudioPlayerViewRouterTests: XCTestCase {
             presenter: presenter,
             tracker: MockTracker()
         )
-        trackForMemoryLeaks(on: sut, file: file, line: line)
-        trackForMemoryLeaks(on: presenter, file: file, line: line)
         return (sut, presenter)
     }
     
-    private func audioPlayerConfigEntity(
-        from originType: AudioPlayerConfigEntity.NodeOriginType,
+    private func makeConfig(
+        origin: AudioPlayerConfigEntity.NodeOriginType,
         fileLink: String? = nil,
         messageId: HandleEntity? = nil,
         chatId: HandleEntity? = nil,
         relatedFiles: [String]? = nil
     ) -> AudioPlayerConfigEntity {
         let node = MockNode(handle: .max)
-        switch originType {
-        case .folderLink:
-            return .init(
-                node: node,
-                isFolderLink: true,
-                fileLink: nil,
-                messageId: .invalid,
-                chatId: .invalid,
-                relatedFiles: relatedFiles
-            )
-        case .fileLink:
-            return .init(
-                node: node,
-                isFolderLink: false,
-                fileLink: fileLink,
-                messageId: .invalid,
-                chatId: .invalid,
-                relatedFiles: relatedFiles
-            )
-        case .chat:
-            return .init(
-                node: node,
-                isFolderLink: false,
-                fileLink: nil,
-                messageId: messageId,
-                chatId: chatId,
-                relatedFiles: relatedFiles
-            )
-        case .unknown:
-            return .init(
-                node: node,
-                isFolderLink: false,
-                fileLink: nil,
-                messageId: .invalid,
-                chatId: .invalid,
-                relatedFiles: relatedFiles
-            )
+        return switch origin {
+        case .folderLink: .init(
+            node: node,
+            isFolderLink: true,
+            fileLink: nil,
+            messageId: .invalid,
+            chatId: .invalid,
+            relatedFiles: relatedFiles
+        )
+        case .fileLink: .init(
+            node: node,
+            isFolderLink: false,
+            fileLink: fileLink,
+            messageId: .invalid,
+            chatId: .invalid,
+            relatedFiles: relatedFiles
+        )
+        case .chat: .init(
+            node: node,
+            isFolderLink: false,
+            fileLink: nil,
+            messageId: messageId,
+            chatId: chatId,
+            relatedFiles: relatedFiles
+        )
+        case .unknown: .init(
+            node: node,
+            isFolderLink: false,
+            fileLink: nil,
+            messageId: .invalid,
+            chatId: .invalid,
+            relatedFiles: relatedFiles
+        )
         }
     }
-    // MARK: - Delegate assertions
     
     private func assertNodeDelegate(
         in sut: AudioPlayerViewRouter,
         isFromFolderLink: Bool,
         messageId: HandleEntity,
-        chatId: HandleEntity,
-        file: StaticString = #filePath,
-        line: UInt = #line
+        chatId: HandleEntity
     ) {
-        let delegate = try? XCTUnwrap(sut.nodeActionViewControllerDelegate, file: file, line: line)
-        XCTAssertEqual(delegate?.isNodeFromFolderLink, isFromFolderLink, file: file, line: line)
-        XCTAssertEqual(delegate?.messageId, messageId, file: file, line: line)
-        XCTAssertEqual(delegate?.chatId, chatId, file: file, line: line)
-    }
-    
-    private func assertNodeDelegateIsNil(
-        in sut: AudioPlayerViewRouter,
-        file: StaticString = #filePath,
-        line: UInt = #line
-    ) {
-        XCTAssertNil(sut.nodeActionViewControllerDelegate, file: file, line: line)
-    }
-    
-    private func assertFileLinkDelegateIsNotNil(
-        in sut: AudioPlayerViewRouter,
-        file: StaticString = #filePath,
-        line: UInt = #line
-    ) {
-        XCTAssertNotNil(sut.fileLinkActionViewControllerDelegate, file: file, line: line)
-    }
-    
-    private func assertFileLinkDelegateIsNil(
-        in sut: AudioPlayerViewRouter,
-        file: StaticString = #filePath,
-        line: UInt = #line
-    ) {
-        XCTAssertNil(sut.fileLinkActionViewControllerDelegate, file: file, line: line)
-    }
-    
-    // MARK: - Test fixtures
-    
-    private func anyFileLink() -> String {
-        "https://some-file-link.com"
-    }
-    
-    private func anyHandleEntity() -> HandleEntity {
-        .max
+        guard let delegate = sut.nodeActionViewControllerDelegate else {
+            Issue.record("Expected nodeActionViewControllerDelegate to be non-nil")
+            return
+        }
+        
+        #expect(delegate.isNodeFromFolderLink == isFromFolderLink)
+        #expect(delegate.messageId == messageId)
+        #expect(delegate.chatId == chatId)
     }
 }
 
@@ -196,11 +158,18 @@ private final class MockViewController: UIViewController {
     private(set) var presentCallCount = 0
     private(set) var dismissCallCount = 0
     
-    override func present(_ viewControllerToPresent: UIViewController, animated flag: Bool, completion: (() -> Void)? = nil) {
+    override func present(
+        _ viewControllerToPresent: UIViewController,
+        animated flag: Bool,
+        completion: (() -> Void)? = nil
+    ) {
         presentCallCount += 1
     }
     
-    override func dismiss(animated flag: Bool, completion: (() -> Void)? = nil) {
+    override func dismiss(
+        animated flag: Bool,
+        completion: (() -> Void)? = nil
+    ) {
         dismissCallCount += 1
     }
 }

@@ -9,6 +9,16 @@ import Testing
 @MainActor
 @Suite
 struct AudioPlayerToMiniPlayerTests {
+    enum Scenario: String, CaseIterable {
+        case currentItemWithNode
+        case noCurrentItem
+        case fileLink
+    }
+    
+    private let url = URL(string: "https://example.com/audio.mp3")!
+    private let handler = MockAudioPlayerHandler()
+    private let node = MockNode(handle: 1)
+    
     private func makeSUT(
         configEntity: AudioPlayerConfigEntity,
         playerHandler: MockAudioPlayerHandler
@@ -29,7 +39,7 @@ struct AudioPlayerToMiniPlayerTests {
         )
         return (sut, router)
     }
-
+    
     private func audioPlayerConfigEntity(
         node: MockNode,
         isFolderLink: Bool = false,
@@ -46,46 +56,24 @@ struct AudioPlayerToMiniPlayerTests {
         )
     }
     
-    @Test
-    func testDispatchInitMiniPlayer_withCurrentItemNode_callsPlayerHandlerInitMiniPlayer() {
-        let handler = MockAudioPlayerHandler()
-        let node = MockNode(handle: 1)
-        handler.mockPlayerCurrentItem = AudioPlayerItem(
-            name: "track",
-            url: URL(string: "https://example.com/audio.mp3")!,
-            node: node
-        )
-        let config = audioPlayerConfigEntity(node: node, isFolderLink: false)
-        let (sut, router) = makeSUT(configEntity: config, playerHandler: handler)
+    @Test("Dispatching `.initMiniPlayer` shows the mini-player and initializes the handler for every scenario (current item, no current item, or file link)", arguments: Scenario.allCases)
+    func initMiniPlayerCallsHandlerAndShowsMiniPlayer(_ scenario: Scenario) {
+        let config: AudioPlayerConfigEntity
         
+        switch scenario {
+        case .currentItemWithNode:
+            handler.mockPlayerCurrentItem = AudioPlayerItem(name: "track", url: url, node: node)
+            config = audioPlayerConfigEntity(node: node, isFolderLink: false)
+        case .noCurrentItem:
+            config = audioPlayerConfigEntity(node: node, isFolderLink: false)
+        case .fileLink:
+            config = AudioPlayerConfigEntity(fileLink: "file_path_or_link")
+        }
+        
+        let (sut, router) = makeSUT(configEntity: config, playerHandler: handler)
         sut.dispatch(.initMiniPlayer)
         
-        #expect(router.showMiniPlayer_calledTimes == 1)
-        #expect(handler.initMiniPlayerCallCount == 1)
-    }
-    
-    @Test
-    func testDispatchInitMiniPlayer_withoutCurrentItemNode_callsPlayerHandlerInitMiniPlayer() {
-        let handler = MockAudioPlayerHandler()
-        let node = MockNode(handle: 1)
-        let config = audioPlayerConfigEntity(node: node, isFolderLink: false)
-        let (sut, router) = makeSUT(configEntity: config, playerHandler: handler)
-        
-        sut.dispatch(.initMiniPlayer)
-        
-        #expect(router.showMiniPlayer_calledTimes == 1)
-        #expect(handler.initMiniPlayerCallCount == 1)
-    }
-    
-    @Test
-    func testDispatchInitMiniPlayer_withFileLink_callsPlayerHandlerInitMiniPlayer() {
-        let handler = MockAudioPlayerHandler()
-        let config = AudioPlayerConfigEntity(fileLink: "file_path_or_link")
-        let (sut, router) = makeSUT(configEntity: config, playerHandler: handler)
-        
-        sut.dispatch(.initMiniPlayer)
-        
-        #expect(router.showMiniPlayer_calledTimes == 1)
-        #expect(handler.initMiniPlayerCallCount == 1)
+        #expect(router.showMiniPlayer_calledTimes == 1, "Scenario: \(scenario.rawValue)")
+        #expect(handler.initMiniPlayerCallCount == 1, "Scenario: \(scenario.rawValue)")
     }
 }
