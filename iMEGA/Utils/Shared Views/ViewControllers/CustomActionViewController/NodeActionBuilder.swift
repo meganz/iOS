@@ -854,8 +854,10 @@ final class NodeActionBuilder {
     private func exportedNodeActions() -> [NodeAction] {
         if isExported {
             return [.manageLinkAction(), .removeLinkAction()]
-        } else {
+        } else if accessLevel == .accessOwner {
             return [.shareLinkAction()]
+        } else {
+            return []
         }
     }
     

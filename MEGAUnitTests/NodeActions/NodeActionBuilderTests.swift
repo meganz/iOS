@@ -872,14 +872,22 @@ class NodeActionBuilderTests {
     
     // MARK: - Preview Documents
     
-    @Test
-    func testDocumentPreviewFileLink() {
-        actions = NodeActionBuilder()
+    @Test(arguments: [
+        (accessLevel: MEGAShareType.accessUnknown, expectedActions: [MegaNodeActionType.import, .download, .sendToChat]),
+        (accessLevel: MEGAShareType.accessOwner, expectedActions: [MegaNodeActionType.import, .download, .shareLink, .exportFile, .sendToChat])
+    ])
+    func testDocumentPreviewFileLink(accessLevel: MEGAShareType?, expectedActions: [MegaNodeActionType]) {
+        var builder = NodeActionBuilder()
             .setDisplayMode(.previewDocument)
             .setIsLink(true)
-            .build()
         
-        #expect(isEqual(nodeActionTypes: [.import, .download, .shareLink, .sendToChat]) == true)
+        if let accessLevel = accessLevel {
+            builder = builder.setAccessLevel(accessLevel)
+        }
+        
+        actions = builder.build()
+        
+        #expect(isEqual(nodeActionTypes: expectedActions) == true)
     }
     
     @Test
@@ -890,7 +898,7 @@ class NodeActionBuilderTests {
             .setIsLink(true)
             .build()
         
-        #expect(isEqual(nodeActionTypes: [.import, .download, .shareLink, .sendToChat, .search, .pdfThumbnailView]) == true)
+        #expect(isEqual(nodeActionTypes: [.import, .download, .sendToChat, .search, .pdfThumbnailView]) == true)
     }
     
     @Test
@@ -914,7 +922,7 @@ class NodeActionBuilderTests {
             .setIsExported(false)
             .build()
         
-        #expect(isEqual(nodeActionTypes: [.import, .download, .shareLink, .sendToChat, .search, .pdfThumbnailView]) == true)
+        #expect(isEqual(nodeActionTypes: [.import, .download, .sendToChat, .search, .pdfThumbnailView]) == true)
     }
     
     @Test
@@ -950,7 +958,7 @@ class NodeActionBuilderTests {
             .setIsExported(false)
             .build()
         
-        #expect(isEqual(nodeActionTypes: [.import, .download, .shareLink, .sendToChat, .search, .pdfPageView]) == true)
+        #expect(isEqual(nodeActionTypes: [.import, .download, .sendToChat, .search, .pdfPageView]) == true)
     }
     
     @Test
@@ -973,7 +981,7 @@ class NodeActionBuilderTests {
             .setIsLink(true)
             .build()
         
-        #expect(isEqual(nodeActionTypes: [.import, .download, .shareLink, .sendToChat, .search, .pdfPageView]) == true)
+        #expect(isEqual(nodeActionTypes: [.import, .download, .sendToChat, .search, .pdfPageView]) == true)
     }
     
     @Test
@@ -1013,7 +1021,7 @@ class NodeActionBuilderTests {
             .setIsLink(true)
             .build()
         
-        #expect(isEqual(nodeActionTypes: [.import, .download, .shareLink, .sendToChat, .search, .pdfThumbnailView]) == true)
+        #expect(isEqual(nodeActionTypes: [.import, .download, .sendToChat, .search, .pdfThumbnailView]) == true)
     }
     
     @Test
@@ -1056,7 +1064,7 @@ class NodeActionBuilderTests {
             .setIsLink(true)
             .build()
         
-        #expect(isEqual(nodeActionTypes: [.import, .download, .shareLink, .sendToChat, .search, .pdfPageView]) == true)
+        #expect(isEqual(nodeActionTypes: [.import, .download, .sendToChat, .search, .pdfPageView]) == true)
     }
     
     @Test
@@ -1117,9 +1125,9 @@ class NodeActionBuilderTests {
             .build()
         
         #expect(actions.notContains(where: { $0.type == .hide }) == true,
-                      "Actions should not contain hide action")
+                "Actions should not contain hide action")
         #expect(actions.notContains(where: { $0.type == .unhide }) == true,
-                      "Actions should not contain unhide action")
+                "Actions should not contain unhide action")
     }
     
     // MARK: - Chat tests
@@ -1468,7 +1476,7 @@ class NodeActionBuilderTests {
                 .compactMap { $0 }
             
             #expect(isEqual(nodeActionTypes: expectedActionTypes) == true,
-                          "NodeActions invalid for isHidden: \(String(describing: isHidden))")
+                    "NodeActions invalid for isHidden: \(String(describing: isHidden))")
         }
     }
     
