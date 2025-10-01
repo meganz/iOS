@@ -11,245 +11,232 @@ import XCTest
 
 @MainActor
 final class AudioPlayerViewModelTests: XCTestCase {
-    let playbackTime: TimeInterval = 1234.0
-    
-    private func captureCommands(
-        from viewModel: AudioPlayerViewModel,
-        trigger: @MainActor () -> Void,
-        timeout: TimeInterval = 0.3
-    ) async -> [AudioPlayerViewModel.Command] {
-        var buffer = [AudioPlayerViewModel.Command]()
-        viewModel.invokeCommand = { buffer.append($0) }
-        trigger()
-        try? await Task.sleep(nanoseconds: UInt64(timeout * 1_000_000_000))
-        return buffer
-    }
-    
-    private func assertCommands(
-        _ expected: [AudioPlayerViewModel.Command],
-        when action: AudioPlayerAction,
-        on viewModel: AudioPlayerViewModel,
-        timeout: TimeInterval = 1.0,
-        line: UInt = #line
-    ) async {
-        let cmds = await captureCommands(from: viewModel, trigger: { viewModel.dispatch(action) }, timeout: timeout)
-        XCTAssertEqual(cmds, expected, line: line)
-    }
-    
-    private func assertCommands(
-        _ expected: [AudioPlayerViewModel.Command],
-        trigger: @MainActor () -> Void,
-        on viewModel: AudioPlayerViewModel,
-        timeout: TimeInterval = 1.0,
-        line: UInt = #line
-    ) async {
-        let cmds = await captureCommands(from: viewModel, trigger: trigger, timeout: timeout)
-        XCTAssertEqual(cmds, expected, line: line)
-    }
-    
-    private func tap(_ action: AudioPlayerAction, times: Int, on viewModel: AudioPlayerViewModel) {
-        for _ in 0..<times { viewModel.dispatch(action) }
+    private let shortTimeout: TimeInterval = 0.3
+    private let defaultTimeout: TimeInterval = 1.0
+    private let playbackTime: TimeInterval = 1234.0
+    private let anyURL = URL(string: "any-url")!
+    private let offlineURL = URL(string: "offline_file")!
+    private let mockTrackURL = URL(string: "www.url.com")!
+    private let testItemName = "test-name"
+    private let firstAudioName = "first-audio.mp3"
+    private let offlineFilePath = "offline_file"
+    private var anyAudioNode: MockNode {
+        MockNode(handle: 1, name: firstAudioName, nodeType: .file)
     }
     
     func testOnViewDidLoad_fileLinkPlayer_emitsExpectedCommands() async {
-        let (onlineSUT, _, playerHandler, _) = makeOnlineSUT()
-        await assertCommands(
-            [
-                .showLoading(true),
-                .updateShuffle(status: playerHandler.isShuffleEnabled()),
-                .updateSpeed(mode: .normal),
-                .enableUserInteraction(false, isSingleTrackPlayer: false),
-                .configureFileLinkPlayer,
-                .forceDisableMultiTrackControls
-            ],
-            when: .onViewDidLoad,
-            on: onlineSUT
-        )
+        let (sut, _, playerHandler, _) = makeOnlineSUT()
+        let expected: [AudioPlayerViewModel.Command] = [
+            .showLoading(true),
+            .updateShuffle(status: playerHandler.isShuffleEnabled()),
+            .updateSpeed(mode: .normal),
+            .enableUserInteraction(false, isSingleTrackPlayer: false),
+            .configureFileLinkPlayer,
+            .forceDisableMultiTrackControls
+        ]
+        await test(viewModel: sut, action: .onViewDidLoad, expectedCommands: expected, timeout: shortTimeout)
     }
     
-    func testUpdateCurrentTime_percentageGiven_progressCompletedCalled() async {
-        let (onlineSUT, _, playerHandler, _) = makeOnlineSUT()
-        _ = await captureCommands(from: onlineSUT, trigger: { onlineSUT.dispatch(.updateCurrentTime(percentage: 0.2)) })
-        XCTAssertEqual(playerHandler.updateProgressCompleted_calledTimes, 1)
+    func testUpdateCurrentTime_percentageGiven_progressCompletedCalled_once() async {
+        let (sut, _, handler, _) = makeOnlineSUT()
+        await test(viewModel: sut, action: .updateCurrentTime(percentage: 0.2), expectedCommands: [], timeout: shortTimeout)
+        XCTAssertEqual(handler.updateProgressCompleted_calledTimes, 1)
     }
     
-    func testOnShuffle_activeTrue_invokesPlayerShuffle() async {
-        let (onlineSUT, _, playerHandler, _) = makeOnlineSUT()
-        let enableShuffle = true
-        await assertCommands([.updateShuffle(status: enableShuffle)], when: .onShuffle(active: enableShuffle), on: onlineSUT)
-        XCTAssertEqual(playerHandler.onShuffle_calledTimes, 1)
+    func testOnShuffle_activeTrue_emitsUpdateShuffle() async {
+        let (sut, _, _, _) = makeOnlineSUT()
+        await test(viewModel: sut, action: .onShuffle(active: true), expectedCommands: [.updateShuffle(status: true)], timeout: shortTimeout)
     }
     
-    func testOnPlayPause_action_invokesTogglePlay() async {
-        let (onlineSUT, _, playerHandler, _) = makeOnlineSUT()
-        _ = await captureCommands(from: onlineSUT, trigger: { onlineSUT.dispatch(.onPlayPause) })
-        XCTAssertEqual(playerHandler.togglePlay_calledTimes, 1)
+    func testOnShuffle_activeTrue_invokesPlayerShuffle_once() async {
+        let (sut, _, handler, _) = makeOnlineSUT()
+        await test(viewModel: sut, action: .onShuffle(active: true), expectedCommands: [.updateShuffle(status: true)], timeout: shortTimeout)
+        XCTAssertEqual(handler.onShuffle_calledTimes, 1)
     }
     
-    func testOnGoBackward_action_invokesGoBackward() async {
-        let (onlineSUT, _, playerHandler, _) = makeOnlineSUT()
-        _ = await captureCommands(from: onlineSUT, trigger: { onlineSUT.dispatch(.onGoBackward) })
-        XCTAssertEqual(playerHandler.goBackward_calledTimes, 1)
+    func testOnPlayPause_invokesTogglePlay_once() async {
+        let (sut, _, handler, _) = makeOnlineSUT()
+        await test(viewModel: sut, action: .onPlayPause, expectedCommands: [], timeout: shortTimeout)
+        XCTAssertEqual(handler.togglePlay_calledTimes, 1)
     }
     
-    func testOnPrevious_action_invokesPlayPrevious() async {
-        let (onlineSUT, _, playerHandler, _) = makeOnlineSUT()
-        _ = await captureCommands(from: onlineSUT, trigger: { onlineSUT.dispatch(.onPrevious) })
-        XCTAssertEqual(playerHandler.playPrevious_calledTimes, 1)
+    func testOnGoBackward_invokesGoBackward_once() async {
+        let (sut, _, handler, _) = makeOnlineSUT()
+        await test(viewModel: sut, action: .onGoBackward, expectedCommands: [], timeout: shortTimeout)
+        XCTAssertEqual(handler.goBackward_calledTimes, 1)
     }
     
-    func testOnNext_action_invokesPlayNext() async {
-        let (onlineSUT, _, playerHandler, _) = makeOnlineSUT()
-        _ = await captureCommands(from: onlineSUT, trigger: { onlineSUT.dispatch(.onNext) })
-        XCTAssertEqual(playerHandler.playNext_calledTimes, 1)
+    func testOnPrevious_invokesPlayPrevious_once() async {
+        let (sut, _, handler, _) = makeOnlineSUT()
+        await test(viewModel: sut, action: .onPrevious, expectedCommands: [], timeout: shortTimeout)
+        XCTAssertEqual(handler.playPrevious_calledTimes, 1)
     }
     
-    func testOnGoForward_action_invokesGoForward() async {
-        let (onlineSUT, _, playerHandler, _) = makeOnlineSUT()
-        _ = await captureCommands(from: onlineSUT, trigger: { onlineSUT.dispatch(.onGoForward) })
-        XCTAssertEqual(playerHandler.goForward_calledTimes, 1)
+    func testOnNext_invokesPlayNext_once() async {
+        let (sut, _, handler, _) = makeOnlineSUT()
+        await test(viewModel: sut, action: .onNext, expectedCommands: [], timeout: shortTimeout)
+        XCTAssertEqual(handler.playNext_calledTimes, 1)
+    }
+    
+    func testOnGoForward_invokesGoForward_once() async {
+        let (sut, _, handler, _) = makeOnlineSUT()
+        await test(viewModel: sut, action: .onGoForward, expectedCommands: [], timeout: shortTimeout)
+        XCTAssertEqual(handler.goForward_calledTimes, 1)
     }
     
     func testOnRepeatPressed_firstPress_updatesRepeatOne() async {
         let (onlineSUT, _, playerHandler, _) = makeOnlineSUT()
-        await assertCommands([.updateRepeat(status: .repeatOne)], when: .onRepeatPressed, on: onlineSUT)
+        await test(viewModel: onlineSUT, action: .onRepeatPressed, expectedCommands: [.updateRepeat(status: .repeatOne)], timeout: shortTimeout)
         XCTAssertEqual(playerHandler.onRepeatOne_calledTimes, 1)
     }
     
     func testOnRepeatPressed_secondPress_updatesRepeatNone() async {
         let (onlineSUT, _, playerHandler, _) = makeOnlineSUT()
         onlineSUT.dispatch(.onRepeatPressed)
-        await assertCommands([.updateRepeat(status: .none)], when: .onRepeatPressed, on: onlineSUT)
+        await test(viewModel: onlineSUT, action: .onRepeatPressed, expectedCommands: [.updateRepeat(status: .none)], timeout: shortTimeout)
         XCTAssertEqual(playerHandler.onRepeatDisabled_calledTimes, 1)
     }
     
     func testOnRepeatPressed_singleItemPlaylist_cyclesBetweenNoneAndRepeatOne() async {
         let (onlineSUT, _, playerHandler, _) = makeOnlineSUT(isSingleItemPlaylist: true)
         onlineSUT.dispatch(.onRepeatPressed)
-        await assertCommands([.updateRepeat(status: .none)], when: .onRepeatPressed, on: onlineSUT)
+        await test(viewModel: onlineSUT, action: .onRepeatPressed, expectedCommands: [.updateRepeat(status: .none)], timeout: shortTimeout)
         XCTAssertTrue(playerHandler.isSingleItemPlaylist())
-        await assertCommands([.updateRepeat(status: .repeatOne)], when: .onRepeatPressed, on: onlineSUT)
-        await assertCommands([.updateRepeat(status: .none)], when: .onRepeatPressed, on: onlineSUT)
+        await test(viewModel: onlineSUT, action: .onRepeatPressed, expectedCommands: [.updateRepeat(status: .repeatOne)], timeout: shortTimeout)
+        await test(viewModel: onlineSUT, action: .onRepeatPressed, expectedCommands: [.updateRepeat(status: .none)], timeout: shortTimeout)
     }
     
-    func testRemoveDelegates_action_invokesRemovePlayerListener() async {
-        let (onlineSUT, _, playerHandler, _) = makeOnlineSUT()
-        _ = await captureCommands(from: onlineSUT, trigger: { onlineSUT.dispatch(.removeDelegates) })
-        XCTAssertEqual(playerHandler.removePlayerListener_calledTimes, 1)
+    func testRemoveDelegates_invokesRemovePlayerListener_once() async {
+        let (sut, _, handler, _) = makeOnlineSUT()
+        await test(viewModel: sut, action: .removeDelegates, expectedCommands: [], timeout: shortTimeout)
+        XCTAssertEqual(handler.removePlayerListener_calledTimes, 1)
     }
     
-    func testOnChangeSpeedModePressed_firstPress_updatesOneAndAHalfX() async {
-        let (onlineSUT, _, playerHandler, _) = makeOnlineSUT()
-        await assertCommands([.updateSpeed(mode: .oneAndAHalf)], when: .onChangeSpeedModePressed, on: onlineSUT)
-        XCTAssertEqual(playerHandler.changePlayerRate_calledTimes, 1)
+    func testOnChangeSpeedModePressed_sequence_emitsCorrectSpeeds() async {
+        let (sut, _, _, _) = makeOnlineSUT()
+        await test(viewModel: sut, action: .onChangeSpeedModePressed, expectedCommands: [.updateSpeed(mode: .oneAndAHalf)], timeout: shortTimeout)
+        await test(viewModel: sut, action: .onChangeSpeedModePressed, expectedCommands: [.updateSpeed(mode: .double)], timeout: shortTimeout)
+        await test(viewModel: sut, action: .onChangeSpeedModePressed, expectedCommands: [.updateSpeed(mode: .half)], timeout: shortTimeout)
+        await test(viewModel: sut, action: .onChangeSpeedModePressed, expectedCommands: [.updateSpeed(mode: .normal)], timeout: shortTimeout)
     }
     
-    func testOnChangeSpeedModePressed_secondPress_updatesDoubleX() async {
-        let (onlineSUT, _, playerHandler, _) = makeOnlineSUT()
-        onlineSUT.dispatch(.onChangeSpeedModePressed)
-        await assertCommands([.updateSpeed(mode: .double)], when: .onChangeSpeedModePressed, on: onlineSUT)
-        XCTAssertEqual(playerHandler.changePlayerRate_calledTimes, 2)
+    func testOnChangeSpeedModePressed_firstPress_invokesChangeRate_once() async {
+        let (sut, _, handler, _) = makeOnlineSUT()
+        await test(viewModel: sut, action: .onChangeSpeedModePressed, expectedCommands: [.updateSpeed(mode: .oneAndAHalf)], timeout: shortTimeout)
+        XCTAssertEqual(handler.changePlayerRate_calledTimes, 1)
     }
     
-    func testOnChangeSpeedModePressed_thirdPress_updatesHalfX() async {
-        let (onlineSUT, _, playerHandler, _) = makeOnlineSUT()
-        tap(.onChangeSpeedModePressed, times: 2, on: onlineSUT)
-        await assertCommands([.updateSpeed(mode: .half)], when: .onChangeSpeedModePressed, on: onlineSUT)
-        XCTAssertEqual(playerHandler.changePlayerRate_calledTimes, 3)
+    func testRouter_dismiss_invokedOnce() async {
+        let (sut, _, _, router) = makeOnlineSUT()
+        await test(viewModel: sut, action: .dismiss, expectedCommands: [], timeout: shortTimeout)
+        XCTAssertEqual(router.dismiss_calledTimes, 1)
     }
     
-    func testOnChangeSpeedModePressed_fourthPress_updatesNormalX() async {
-        let (onlineSUT, _, playerHandler, _) = makeOnlineSUT()
-        tap(.onChangeSpeedModePressed, times: 3, on: onlineSUT)
-        await assertCommands([.updateSpeed(mode: .normal)], when: .onChangeSpeedModePressed, on: onlineSUT)
-        XCTAssertEqual(playerHandler.changePlayerRate_calledTimes, 4)
+    func testRouter_showPlaylist_invokedOnce() async {
+        let (sut, _, _, router) = makeOnlineSUT()
+        await test(viewModel: sut, action: .showPlaylist, expectedCommands: [], timeout: shortTimeout)
+        XCTAssertEqual(router.goToPlaylist_calledTimes, 1)
     }
     
-    func testRouterActions() async {
-        let (onlineSUT, _, _, onlineRouter) = makeOnlineSUT()
-        let (offlineSUT, offlineRouter) = makeOfflineSUT()
-        
-        _ = await captureCommands(from: onlineSUT, trigger: { onlineSUT.dispatch(.dismiss) })
-        XCTAssertEqual(onlineRouter.dismiss_calledTimes, 1)
-        
-        _ = await captureCommands(from: onlineSUT, trigger: { onlineSUT.dispatch(.showPlaylist) })
-        XCTAssertEqual(onlineRouter.goToPlaylist_calledTimes, 1)
-        
-        _ = await captureCommands(from: onlineSUT, trigger: { onlineSUT.dispatch(.viewWillDisappear(reason: .userInitiatedDismissal)) })
-        XCTAssertEqual(onlineRouter.showMiniPlayer_calledTimes, 1)
-        
-        _ = await captureCommands(from: offlineSUT, trigger: { offlineSUT.dispatch(.viewWillDisappear(reason: .userInitiatedDismissal)) })
-        XCTAssertEqual(offlineRouter.showMiniPlayer_calledTimes, 1)
-        
-        _ = await captureCommands(from: onlineSUT, trigger: { onlineSUT.dispatch(.initMiniPlayer) })
-        XCTAssertEqual(onlineRouter.showMiniPlayer_calledTimes, 2)
-        
-        _ = await captureCommands(from: onlineSUT, trigger: { onlineSUT.dispatch(.import) })
-        XCTAssertEqual(onlineRouter.importNode_calledTimes, 1)
-        
-        _ = await captureCommands(from: onlineSUT, trigger: { onlineSUT.dispatch(.share(sender: nil)) })
-        XCTAssertEqual(onlineRouter.share_calledTimes, 1)
-        
-        _ = await captureCommands(from: onlineSUT, trigger: { onlineSUT.dispatch(.sendToChat) })
-        XCTAssertEqual(onlineRouter.sendToContact_calledTimes, 1)
-        
-        _ = await captureCommands(from: onlineSUT, trigger: { onlineSUT.dispatch(.showActionsforCurrentNode(sender: UIButton())) })
-        XCTAssertEqual(onlineRouter.showAction_calledTimes, 1)
+    func testRouter_viewWillDisappear_userDismiss_online_invokesShowMiniPlayerOnce() async {
+        let (sut, _, _, router) = makeOnlineSUT()
+        await test(viewModel: sut, action: .viewWillDisappear(reason: .userInitiatedDismissal), expectedCommands: [], timeout: shortTimeout)
+        XCTAssertEqual(router.showMiniPlayer_calledTimes, 1)
     }
     
-    func testOnReceiveAudioPlayerActions_shouldInvokeCorrectCommands() async {
-        let (onlineSUT, playbackUseCase, _, _) = makeOnlineSUT()
+    func testRouter_viewWillDisappear_userDismiss_offline_invokesShowMiniPlayerOnce() async {
+        let (sut, router) = makeOfflineSUT()
+        await test(viewModel: sut, action: .viewWillDisappear(reason: .userInitiatedDismissal), expectedCommands: [], timeout: shortTimeout)
+        XCTAssertEqual(router.showMiniPlayer_calledTimes, 1)
+    }
+    
+    func testRouter_initMiniPlayer_invokedOnce() async {
+        let (sut, _, _, router) = makeOnlineSUT()
+        await test(viewModel: sut, action: .initMiniPlayer, expectedCommands: [], timeout: shortTimeout)
+        XCTAssertEqual(router.showMiniPlayer_calledTimes, 1)
+    }
+    
+    func testRouter_import_invokedOnce() async {
+        let (sut, _, _, router) = makeOnlineSUT()
+        await test(viewModel: sut, action: .import, expectedCommands: [], timeout: shortTimeout)
+        XCTAssertEqual(router.importNode_calledTimes, 1)
+    }
+    
+    func testRouter_share_invokedOnce() async {
+        let (sut, _, _, router) = makeOnlineSUT()
+        await test(viewModel: sut, action: .share(sender: nil), expectedCommands: [], timeout: shortTimeout)
+        XCTAssertEqual(router.share_calledTimes, 1)
+    }
+    
+    func testRouter_sendToChat_invokedOnce() async {
+        let (sut, _, _, router) = makeOnlineSUT()
+        await test(viewModel: sut, action: .sendToChat, expectedCommands: [], timeout: shortTimeout)
+        XCTAssertEqual(router.sendToContact_calledTimes, 1)
+    }
+    
+    func testRouter_showActionsForCurrentNode_invokedOnce() async {
+        let (sut, _, _, router) = makeOnlineSUT()
+        await test(viewModel: sut, action: .showActionsforCurrentNode(sender: UIButton()), expectedCommands: [], timeout: shortTimeout)
+        XCTAssertEqual(router.showAction_calledTimes, 1)
+    }
+    
+    func testOnReceiveAudioPlayerActions_startFromBeginning_emitsNoCommands() async {
+        let (sut, playbackUseCase, _, _) = makeOnlineSUT()
         playbackUseCase._status = .startFromBeginning
-        await assertCommands([], trigger: { onlineSUT.audioDidStartPlayingItem(testItem) }, on: onlineSUT)
+        await test(viewModel: sut, trigger: { sut.audioDidStartPlayingItem(testItem) }, expectedCommands: [], timeout: shortTimeout)
     }
     
-    func testAudioStartPlayingWithDisplayDialogStatus_shouldDisplayDialog_andPausePlayer_whenAppIsActive() async {
-        let (onlineSUT, playbackUseCase, playerHandler, _) = makeOnlineSUT()
-        onlineSUT.checkAppIsActive = { true }
+    func testAudioStartPlaying_displayDialog_whenAppActive_displaysDialogAndPauses() async {
+        let (sut, playbackUseCase, handler, _) = makeOnlineSUT()
+        sut.checkAppIsActive = { true }
         playbackUseCase._status = .displayDialog(playbackTime: playbackTime)
         let expected: [AudioPlayerViewModel.Command] = [
             .displayPlaybackContinuationDialog(fileName: testItem.name, playbackTime: playbackTime)
         ]
-        await assertCommands(expected, trigger: { onlineSUT.audioDidStartPlayingItem(testItem) }, on: onlineSUT)
-        XCTAssertEqual(playerHandler.pause_calledTimes, 1)
+        await test(viewModel: sut, trigger: { sut.audioDidStartPlayingItem(testItem) }, expectedCommands: expected, timeout: shortTimeout)
+        XCTAssertEqual(handler.pause_calledTimes, 1)
     }
     
-    func testAudioStartPlayingWithDisplayDialogStatus_shouldNotDisplayDialog_whenAppIsNotActive() async {
-        let (onlineSUT, playbackUseCase, _, _) = makeOnlineSUT()
-        onlineSUT.checkAppIsActive = { false }
+    func testAudioStartPlaying_displayDialog_whenAppNotActive_emitsNoCommands() async {
+        let (sut, playbackUseCase, _, _) = makeOnlineSUT()
+        sut.checkAppIsActive = { false }
         playbackUseCase._status = .displayDialog(playbackTime: playbackTime)
-        await assertCommands([], trigger: { onlineSUT.audioDidStartPlayingItem(testItem) }, on: onlineSUT)
+        await test(viewModel: sut, trigger: { sut.audioDidStartPlayingItem(testItem) }, expectedCommands: [], timeout: shortTimeout)
     }
     
-    func testAudioStartPlayingWithDisplayDialogStatus_shouldResumePlayback_whenAppIsNotActive() async {
-        let (onlineSUT, playbackUseCase, playerHandler, _) = makeOnlineSUT()
-        onlineSUT.checkAppIsActive = { false }
+    func testAudioStartPlaying_displayDialog_whenAppNotActive_resumesPlayback() async {
+        let (sut, playbackUseCase, handler, _) = makeOnlineSUT()
+        sut.checkAppIsActive = { false }
         playbackUseCase._status = .displayDialog(playbackTime: playbackTime)
         let exp = expectation(description: #function)
-        playerHandler.onPlayerResumePlaybackCompletion = { exp.fulfill() }
-        _ = await captureCommands(from: onlineSUT, trigger: { onlineSUT.audioDidStartPlayingItem(testItem) })
-        await fulfillment(of: [exp], timeout: 1)
-        XCTAssertEqual(playerHandler.pause_calledTimes, 0)
-        XCTAssertEqual(playerHandler.playerResumePlayback_Calls, [playbackTime])
+        handler.onPlayerResumePlaybackCompletion = { exp.fulfill() }
+        await test(viewModel: sut, trigger: { sut.audioDidStartPlayingItem(testItem) }, expectedCommands: [], timeout: shortTimeout)
+        await fulfillment(of: [exp], timeout: defaultTimeout)
+        XCTAssertEqual(handler.pause_calledTimes, 0)
+        XCTAssertEqual(handler.playerResumePlayback_Calls, [playbackTime])
         XCTAssertEqual(playbackUseCase.setPreference_Calls, [.resumePreviousSession])
     }
     
-    func testAudioPlaybackContinuation_resumeSession() async {
+    func testAudioStartPlaying_resumeSession_resumesPlaybackAtTime() async {
         let exp = expectation(description: #function)
-        let (onlineSUT, playbackUseCase, playerHandler, _) = makeOnlineSUT()
+        let (sut, playbackUseCase, handler, _) = makeOnlineSUT()
         playbackUseCase._status = .resumeSession(playbackTime: playbackTime)
-        playerHandler.onPlayerResumePlaybackCompletion = { exp.fulfill() }
-        _ = await captureCommands(from: onlineSUT, trigger: { onlineSUT.audioDidStartPlayingItem(testItem) })
-        await fulfillment(of: [exp], timeout: 1)
-        XCTAssertEqual(playerHandler.playerResumePlayback_Calls, [playbackTime])
+        handler.onPlayerResumePlaybackCompletion = { exp.fulfill() }
+        await test(viewModel: sut, trigger: { sut.audioDidStartPlayingItem(testItem) }, expectedCommands: [], timeout: shortTimeout)
+        await fulfillment(of: [exp], timeout: defaultTimeout)
+        XCTAssertEqual(handler.playerResumePlayback_Calls, [playbackTime])
     }
     
-    func testSelectPlaybackContinuationDialog_shouldSetPreference() {
-        let (onlineSUT, playbackUseCase, _, _) = makeOnlineSUT()
-        onlineSUT.dispatch(.onSelectResumePlaybackContinuationDialog(playbackTime: playbackTime))
+    func testSelectPlaybackContinuationDialog_setsResumePreference() {
+        let (sut, playbackUseCase, _, _) = makeOnlineSUT()
+        sut.dispatch(.onSelectResumePlaybackContinuationDialog(playbackTime: playbackTime))
         XCTAssertEqual(playbackUseCase.setPreference_Calls, [.resumePreviousSession])
-        onlineSUT.dispatch(.onSelectRestartPlaybackContinuationDialog)
-        XCTAssertEqual(playbackUseCase.setPreference_Calls, [.resumePreviousSession, .restartFromBeginning])
+    }
+    
+    func testSelectRestartPlaybackContinuationDialog_setsRestartPreference() {
+        let (sut, playbackUseCase, _, _) = makeOnlineSUT()
+        sut.dispatch(.onSelectRestartPlaybackContinuationDialog)
+        XCTAssertEqual(playbackUseCase.setPreference_Calls, [.restartFromBeginning])
     }
     
     func testViewWillDisappear_whenLoggedInAndDisappearReasonUserInitiatedDismissal_initMiniPlayer() async {
@@ -258,35 +245,31 @@ final class AudioPlayerViewModelTests: XCTestCase {
             playerHandler: MockAudioPlayerHandler(),
             accountUseCase: MockAccountUseCase(isLoggedIn: true)
         )
-        _ = await captureCommands(from: sut, trigger: { sut.dispatch(.viewWillDisappear(reason: .userInitiatedDismissal)) })
+        await test(viewModel: sut, action: .viewWillDisappear(reason: .userInitiatedDismissal), expectedCommands: [], timeout: shortTimeout)
         XCTAssertEqual(router.showNodesMiniPlayer_calledTimes, 1)
     }
     
     func testViewWillDisappear_whenNotLoggedInAndDisappearReasonUserInitiatedDismissal_stopsPlayer() async {
         let handler = MockAudioPlayerHandler()
-        let defaultConfig = audioPlayerConfigEntity(node: anyAudioNode)
         let (sut, _, router) = makeSUT(
-            configEntity: defaultConfig,
+            configEntity: audioPlayerConfigEntity(node: anyAudioNode),
             playerHandler: handler,
-            streamingInfoUseCase: MockStreamingInfoUseCase(),
             accountUseCase: MockAccountUseCase(isLoggedIn: false)
         )
-        _ = await captureCommands(from: sut, trigger: { sut.dispatch(.onViewDidLoad) })
-        _ = await captureCommands(from: sut, trigger: { sut.dispatch(.viewWillDisappear(reason: .userInitiatedDismissal)) })
+        await test(viewModel: sut, action: .viewWillDisappear(reason: .userInitiatedDismissal), expectedCommands: [], timeout: shortTimeout)
         XCTAssertEqual(router.showNodesMiniPlayer_calledTimes, 0)
         XCTAssertEqual(handler.pause_calledTimes, 1)
         XCTAssertEqual(handler.closePlayer_calledTimes, 1)
     }
     
-    func testViewWillDisappear_whenNotLoggedInAndDisappearReasonSystemPushedAnotherView_shouldNotStopsPlayer() async {
+    func testViewWillDisappear_whenNotLoggedInAndDisappearReasonSystemPushedAnotherView_shouldNotStopsPlayer() {
         let (sut, _, router) = makeSUT(
             configEntity: audioPlayerConfigEntity(node: anyAudioNode),
             playerHandler: MockAudioPlayerHandler(),
             streamingInfoUseCase: MockStreamingInfoUseCase(),
             accountUseCase: MockAccountUseCase(isLoggedIn: false)
         )
-        _ = await captureCommands(from: sut, trigger: { sut.dispatch(.onViewDidLoad) })
-        _ = await captureCommands(from: sut, trigger: { sut.dispatch(.viewWillDisappear(reason: .systemPushedAnotherView)) })
+        test(viewModel: sut, actions: [.viewWillDisappear(reason: .systemPushedAnotherView)], expectedCommands: [], timeout: shortTimeout)
         XCTAssertEqual(router.showNodesMiniPlayer_calledTimes, 0)
     }
     
@@ -297,7 +280,7 @@ final class AudioPlayerViewModelTests: XCTestCase {
             accountUseCase: MockAccountUseCase(isLoggedIn: true),
             networkMonitorUseCase: MockNetworkMonitorUseCase(connected: true)
         )
-        _ = await captureCommands(from: sut, trigger: { sut.dispatch(.viewWillDisappear(reason: .userInitiatedDismissal)) })
+        await test(viewModel: sut, action: .viewWillDisappear(reason: .userInitiatedDismissal), expectedCommands: [], timeout: shortTimeout)
         XCTAssertEqual(router.showMiniPlayer_calledTimes, 1)
     }
     
@@ -307,36 +290,38 @@ final class AudioPlayerViewModelTests: XCTestCase {
             playerHandler: MockAudioPlayerHandler(),
             networkMonitorUseCase: MockNetworkMonitorUseCase(connected: false)
         )
-        _ = await captureCommands(from: sut, trigger: { sut.dispatch(.viewWillDisappear(reason: .userInitiatedDismissal)) })
+        await test(viewModel: sut, action: .viewWillDisappear(reason: .userInitiatedDismissal), expectedCommands: [], timeout: shortTimeout)
         XCTAssertEqual(router.showMiniPlayer_calledTimes, 1)
     }
     
-    func testAnalytics_onViewDidLoad_shouldTrackAudioPlayerIsActivatedEvent() async {
+    func testAnalytics_onViewDidLoad_tracksIsActivated() {
         let tracker = MockTracker()
+        let handler = MockAudioPlayerHandler()
+        let mockNode = MockNode(handle: 1)
+        let mockTrack = AudioPlayerItem(name: "", url: mockTrackURL, node: mockNode)
+        handler.mockPlayerCurrentItem = mockTrack
+        let config = audioPlayerConfigEntity(node: mockNode, allNodes: [mockNode])
+        let streamingInfoUseCase = MockStreamingInfoUseCase()
+        streamingInfoUseCase.completeInfoNode(with: mockTrack)
         let (sut, _, _) = makeSUT(
-            configEntity: audioPlayerConfigEntity(node: anyAudioNode),
-            playerHandler: MockAudioPlayerHandler(),
-            tracker: tracker
+            configEntity: config,
+            playerHandler: handler,
+            tracker: tracker,
+            streamingInfoUseCase: streamingInfoUseCase
         )
-        _ = await captureCommands(from: sut, trigger: { sut.dispatch(.onViewDidLoad) })
-        assertTrackAnalyticsEventCalled(
-            trackedEventIdentifiers: tracker.trackedEventIdentifiers,
-            with: [AudioPlayerIsActivatedEvent()]
-        )
+        test(viewModel: sut, actions: [.onViewDidLoad], relaysCommand: .forceDisableMultiTrackControls, timeout: 10.0)
+        assertTrackAnalyticsEventCalled(trackedEventIdentifiers: tracker.trackedEventIdentifiers, with: [AudioPlayerIsActivatedEvent()])
     }
     
-    func testAnalytics_onShuffleActive_shouldTrackAudioPlayerShuffleEnabledEvent() async {
+    func testAnalytics_onShuffleActive_tracksShuffleEnabled() async {
         let tracker = MockTracker()
         let (sut, _, _) = makeSUT(
             configEntity: audioPlayerConfigEntity(node: anyAudioNode),
             playerHandler: MockAudioPlayerHandler(),
             tracker: tracker
         )
-        _ = await captureCommands(from: sut, trigger: { sut.dispatch(.onShuffle(active: true)) })
-        assertTrackAnalyticsEventCalled(
-            trackedEventIdentifiers: tracker.trackedEventIdentifiers,
-            with: [AudioPlayerShuffleEnabledEvent()]
-        )
+        await test(viewModel: sut, action: .onShuffle(active: true), expectedCommands: [.updateShuffle(status: true)], timeout: shortTimeout)
+        assertTrackAnalyticsEventCalled(trackedEventIdentifiers: tracker.trackedEventIdentifiers, with: [AudioPlayerShuffleEnabledEvent()])
     }
     
     func testAnalytics_onRepeatPressed_shouldTrackLoopAndRepeatOneEvents() async {
@@ -346,46 +331,47 @@ final class AudioPlayerViewModelTests: XCTestCase {
             playerHandler: MockAudioPlayerHandler(),
             tracker: tracker
         )
-        _ = await captureCommands(from: sut, trigger: { sut.dispatch(.onRepeatPressed) })
+        await test(viewModel: sut, action: .onRepeatPressed, expectedCommands: [.updateRepeat(status: .loop)], timeout: shortTimeout)
         assertTrackAnalyticsEventCalled(
             trackedEventIdentifiers: tracker.trackedEventIdentifiers,
             with: [AudioPlayerLoopQueueEnabledEvent()]
         )
         tracker.reset()
-        _ = await captureCommands(from: sut, trigger: { sut.dispatch(.onRepeatPressed) })
+        await test(viewModel: sut, action: .onRepeatPressed, expectedCommands: [.updateRepeat(status: .repeatOne)], timeout: shortTimeout)
         assertTrackAnalyticsEventCalled(
             trackedEventIdentifiers: tracker.trackedEventIdentifiers,
             with: [AudioPlayerLoopPlayingItemEnabledEvent()]
         )
         tracker.reset()
-        _ = await captureCommands(from: sut, trigger: { sut.dispatch(.onRepeatPressed) })
+        await test(viewModel: sut, action: .onRepeatPressed, expectedCommands: [.updateRepeat(status: .none)], timeout: shortTimeout)
         assertTrackAnalyticsEventCalled(
             trackedEventIdentifiers: tracker.trackedEventIdentifiers,
             with: []
         )
     }
     
-    func testAnalytics_onChangeSpeedModePressed_shouldTrackSpeedChangeEvents() async {
+    func testAnalytics_onChangeSpeed_sequence_tracksAll() async {
         let tracker = MockTracker()
         let (sut, _, _) = makeSUT(
             configEntity: audioPlayerConfigEntity(node: anyAudioNode),
             playerHandler: MockAudioPlayerHandler(),
             tracker: tracker
         )
-        _ = await captureCommands(from: sut, trigger: { sut.dispatch(.onChangeSpeedModePressed) })
+        await test(viewModel: sut, action: .onChangeSpeedModePressed, expectedCommands: [.updateSpeed(mode: .oneAndAHalf)], timeout: shortTimeout)
         assertTrackAnalyticsEventCalled(trackedEventIdentifiers: tracker.trackedEventIdentifiers, with: [AudioPlayerSpeedChangeOneAndHalfXEvent()])
         tracker.reset()
-        _ = await captureCommands(from: sut, trigger: { sut.dispatch(.onChangeSpeedModePressed) })
+        await test(viewModel: sut, action: .onChangeSpeedModePressed, expectedCommands: [.updateSpeed(mode: .double)], timeout: shortTimeout)
         assertTrackAnalyticsEventCalled(trackedEventIdentifiers: tracker.trackedEventIdentifiers, with: [AudioPlayerSpeedChange2XEvent()])
         tracker.reset()
-        _ = await captureCommands(from: sut, trigger: { sut.dispatch(.onChangeSpeedModePressed) })
+        await test(viewModel: sut, action: .onChangeSpeedModePressed, expectedCommands: [.updateSpeed(mode: .half)], timeout: shortTimeout)
         assertTrackAnalyticsEventCalled(trackedEventIdentifiers: tracker.trackedEventIdentifiers, with: [AudioPlayerSpeedChangeHalfXEvent()])
         tracker.reset()
-        _ = await captureCommands(from: sut, trigger: { sut.dispatch(.onChangeSpeedModePressed) })
+        await test(viewModel: sut, action: .onChangeSpeedModePressed, expectedCommands: [.updateSpeed(mode: .normal)], timeout: shortTimeout)
         assertTrackAnalyticsEventCalled(trackedEventIdentifiers: tracker.trackedEventIdentifiers, with: [AudioPlayerSpeedChange1XEvent()])
+        tracker.reset()
     }
     
-    func testDispatchOnViewDidLoad_whenPlayerNotDefined_shouldCallSetCurrentOnlyOnce() async {
+    func testOnViewDidLoad_whenPlayerNotDefined_setsCurrentOnlyOnce() async {
         let handler = MockAudioPlayerHandler()
         handler.mockPlayerCurrentItem = AudioPlayerItem.mockItem
         let mockNode = MockNode(handle: 1)
@@ -397,16 +383,24 @@ final class AudioPlayerViewModelTests: XCTestCase {
             playerHandler: handler,
             streamingInfoUseCase: streamingInfoUseCase
         )
-        _ = await captureCommands(from: sut, trigger: { sut.dispatch(.onViewDidLoad) })
+        let expected: [AudioPlayerViewModel.Command] = [
+            .showLoading(true),
+            .updateShuffle(status: handler.isShuffleEnabled()),
+            .updateSpeed(mode: .normal),
+            .enableUserInteraction(false, isSingleTrackPlayer: false),
+            .configureDefaultPlayer,
+            .forceDisableMultiTrackControls
+        ]
+        await test(viewModel: sut, action: .onViewDidLoad, expectedCommands: expected, timeout: shortTimeout)
         XCTAssertEqual(handler.addPlayer_calledTimes, 1)
         XCTAssertEqual(handler.addPlayerTracks_calledTimes, 1)
         XCTAssertEqual(handler.addPlayerListener_calledTimes, 0)
     }
     
-    func testDispatchOnViewDidLoad_existingPlayerWithStreamingNodes_shouldCallAddsListenerOnce() async {
+    func testOnViewDidLoad_existingPlayer_withStreamingNodes_addsListenerOnce() async {
         let handler = MockAudioPlayerHandler(isPlayerDefined: true)
         let mockNode = MockNode(handle: 1)
-        let mockTrack = AudioPlayerItem(name: "", url: URL(string: "www.url.com")!, node: mockNode)
+        let mockTrack = AudioPlayerItem(name: "", url: mockTrackURL, node: mockNode)
         handler.mockPlayerCurrentItem = mockTrack
         let config = audioPlayerConfigEntity(node: mockNode, allNodes: [mockNode])
         let streamingInfoUseCase = MockStreamingInfoUseCase()
@@ -416,18 +410,19 @@ final class AudioPlayerViewModelTests: XCTestCase {
             playerHandler: handler,
             streamingInfoUseCase: streamingInfoUseCase
         )
-        _ = await captureCommands(from: sut, trigger: { sut.dispatch(.onViewDidLoad) })
+        test(viewModel: sut, actions: [.onViewDidLoad], relaysCommand: .configureDefaultPlayer, timeout: shortTimeout)
         XCTAssertEqual(handler.addPlayerListener_calledTimes, 1)
     }
     
-    func testDispatchOnViewDidLoad_existingPlayerWithOfflineFiles_shouldCallAddsListenerOnce() async {
+    func testOnViewDidLoad_existingPlayer_withOfflineFiles_addsListenerOnce() {
         let handler = MockAudioPlayerHandler(isPlayerDefined: true)
         let mockNode = MockNode(handle: 1)
-        let mockTrack = AudioPlayerItem(name: "", url: URL(string: "offline_file")!, node: mockNode)
+        let mockTrack = AudioPlayerItem(name: "", url: offlineURL, node: mockNode)
         handler.mockPlayerCurrentItem = mockTrack
-        let config = AudioPlayerConfigEntity(fileLink: "offline_file", relatedFiles: ["path1"])
+        let config = AudioPlayerConfigEntity(fileLink: offlineFilePath, relatedFiles: ["path1"])
         let (sut, _, _) = makeSUT(configEntity: config, playerHandler: handler)
-        _ = await captureCommands(from: sut, trigger: { sut.dispatch(.onViewDidLoad) })
+        
+        test(viewModel: sut, actions: [.onViewDidLoad], relaysCommand: .configureOfflinePlayer, timeout: shortTimeout)
         XCTAssertEqual(handler.addPlayerListener_calledTimes, 1)
     }
     
@@ -480,14 +475,14 @@ final class AudioPlayerViewModelTests: XCTestCase {
             networkMonitorUseCase: networkMonitorUseCase,
             tracker: tracker
         )
-        trackForMemoryLeaks(on: sut, timeoutNanoseconds: 1_000_000_000, file: file, line: line)
+        trackForMemoryLeaks(on: sut, file: file, line: line)
         return (sut, playback, router)
     }
     
     private var testItem: AudioPlayerItem {
         AudioPlayerItem(
-            name: "test-name",
-            url: URL(string: "any-url")!,
+            name: testItemName,
+            url: anyURL,
             node: MockNode(handle: 1, fingerprint: "test-fingerprint")
         )
     }
@@ -506,25 +501,5 @@ final class AudioPlayerViewModelTests: XCTestCase {
             relatedFiles: relatedFiles,
             allNodes: allNodes
         )
-    }
-    
-    private func assertThatCleanPlayerStateForReuse(on playerHandler: MockAudioPlayerHandler, sut: AudioPlayerViewModel, file: StaticString = #filePath, line: UInt = #line) throws {
-        let player = try XCTUnwrap(playerHandler.currentPlayer(), file: file, line: line)
-        assertThatRemovePreviousQueuedTrackInPlayer(on: player, file: file, line: line)
-        assertThatRefreshPlayerListener(on: player, sut: sut, file: file, line: line)
-    }
-    
-    private func assertThatRemovePreviousQueuedTrackInPlayer(on player: AudioPlayer, file: StaticString = #filePath, line: UInt = #line) {
-        XCTAssertNil(player.queuePlayer, file: file, line: line)
-        XCTAssertTrue(player.tracks.isEmpty, file: file, line: line)
-    }
-    
-    private func assertThatRefreshPlayerListener(on player: AudioPlayer, sut: AudioPlayerViewModel, file: StaticString = #filePath, line: UInt = #line) {
-        XCTAssertTrue(player.observerSnapshot().isEmpty, file: file, line: line)
-        XCTAssertTrue(player.observerSnapshot().notContains(where: { $0 as! AnyHashable == sut as! AnyHashable }), file: file, line: line)
-    }
-    
-    private var anyAudioNode: MockNode {
-        MockNode(handle: 1, name: "first-audio.mp3", nodeType: .file)
     }
 }

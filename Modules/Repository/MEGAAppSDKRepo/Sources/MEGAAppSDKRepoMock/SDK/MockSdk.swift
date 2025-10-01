@@ -69,6 +69,10 @@ public final class MockSdk: MEGASdk, @unchecked Sendable {
     private let retryReason: Retry
     private let fetchNodesProgressSteps: [Double]
     private let transferList: MEGATransferList
+    private var isRunning: Bool
+    private var isLocalOnly: Bool
+    private var localLink: URL?
+    private var updatedAddressURL: URL?
     
     public private(set) var sendEvent_Calls = [(
         eventType: Int,
@@ -94,6 +98,9 @@ public final class MockSdk: MEGASdk, @unchecked Sendable {
     public private(set) var setRubbishBinAutopurgePeriodCallCount = 0
     public private(set) var rubbishBinAutopurgePeriodDays = 0
     public private(set) var pausedTransfersCall: Bool?
+    public private(set) var httpServerStart_calledTimes = 0
+    public private(set) var httpServerStart_lastArgs: (localOnly: Bool, port: Int)?
+    public private(set) var httpServerStop_calledTimes = 0
     
     public enum Message: Equatable, Hashable {
         case publicNodeForMegaFileLink(String)
@@ -188,7 +195,11 @@ public final class MockSdk: MEGASdk, @unchecked Sendable {
         fetchNodesProgressSteps: [Double] = [],
         fetchNodesErrorType: MEGAErrorType = .apiOk,
         retryReason: Retry = .none,
-        transferList: MEGATransferList = MEGATransferList()
+        transferList: MEGATransferList = MEGATransferList(),
+        localLink: URL? = nil,
+        isLocalOnly: Bool = true,
+        isRunning: Bool = false,
+        updatedAddressURL: URL? = nil
     ) {
         self.fileLinkNode = fileLinkNode
         self.nodes = nodes
@@ -254,6 +265,10 @@ public final class MockSdk: MEGASdk, @unchecked Sendable {
         self.fetchNodesErrorType = fetchNodesErrorType
         self.retryReason = retryReason
         self.transferList = transferList
+        self.localLink = localLink
+        self.isLocalOnly = isLocalOnly
+        self.isRunning = isRunning
+        self.updatedAddressURL = updatedAddressURL
         super.init()
     }
     
@@ -270,7 +285,7 @@ public final class MockSdk: MEGASdk, @unchecked Sendable {
     public override var totalNodes: UInt64 { UInt64(nodes.count) }
     
     public override var bandwidthOverquotaDelay: Int64 { _bandwidthOverquotaDelay }
-
+    
     public override var isContactVerificationWarningEnabled: Bool { _isContactVerificationWarningEnabled }
     
     public override var isNewAccount: Bool { _isNewAccount }
@@ -426,7 +441,7 @@ public final class MockSdk: MEGASdk, @unchecked Sendable {
         moveNodeWithNewNameCallCount += 1
         processRequestResult(delegate: delegate)
     }
-
+    
     public override var rootNode: MEGANode? { megaRootNode }
     public override var rubbishNode: MEGANode? { rubbishBinNode }
     
@@ -503,14 +518,14 @@ public final class MockSdk: MEGASdk, @unchecked Sendable {
     public override func megaSetElement(bySid sid: MEGAHandle, eid: MEGAHandle) -> MEGASetElement? {
         setElements.first(where: { $0.handle == eid})
     }
-        
+    
     public override func createSet(_ name: String?, type: MEGASetType, delegate: any MEGARequestDelegate) {
         messages.append(.createSet(name: name, type: type))
         let mockRequest = MockRequest(handle: 1, set: MockMEGASet(handle: 1, userId: 0, coverId: 1, name: name, type: type))
         
         delegate.onRequestFinish?(self, request: mockRequest, error: MEGAError())
     }
-
+    
     public override func updateSetName(_ sid: MEGAHandle, name: String, delegate: any MEGARequestDelegate) {
         messages.append(.updateSetName(sid: sid, name: name))
         let mockRequest = MockRequest(handle: 1, text: name)
@@ -719,7 +734,7 @@ public final class MockSdk: MEGASdk, @unchecked Sendable {
         case .contentConsumptionPreferences: .init(handle: 1,
                                                    stringDict: contentConsumptionPreferences.mapValues { $0.base64Encoded ?? "Failed to encode to base64" })
         case .storageState:
-            .init(handle: 1, number: Int64(storageState?.rawValue ?? 0))
+                .init(handle: 1, number: Int64(storageState?.rawValue ?? 0))
         default: nil
         }
         
@@ -728,7 +743,7 @@ public final class MockSdk: MEGASdk, @unchecked Sendable {
     
     public override func setUserAttributeType(_ type: MEGAUserAttribute, key: String, value: String, delegate: any MEGARequestDelegate) {
         switch type {
-        case .contentConsumptionPreferences: 
+        case .contentConsumptionPreferences:
             contentConsumptionPreferences[key] = value
         default:
             return
@@ -740,7 +755,7 @@ public final class MockSdk: MEGASdk, @unchecked Sendable {
     public override func deviceId() -> String? {
         _deviceId
     }
-
+    
     public override func getThumbnailNode(_ node: MEGANode, destinationFilePath: String, delegate: any MEGARequestDelegate) {
         let mockRequest = MockRequest(handle: node.handle, file: file)
         delegate.onRequestFinish?(self, request: mockRequest, error: MockError(errorType: megaSetError))
@@ -882,12 +897,12 @@ public final class MockSdk: MEGASdk, @unchecked Sendable {
     public override func renameDevice(_ deviceId: String?, newName name: String, delegate: any MEGARequestDelegate) {
         processRequestResult(delegate: delegate)
     }
-
+    
     // MARK: - Contacts
     public override func outgoingContactRequests() -> MEGAContactRequestList {
         _outgoingContactRequests
     }
-  
+    
     public override func inviteContact(withEmail email: String, message: String?, action: MEGAInviteAction, delegate: any MEGARequestDelegate) {
         processRequestResult(delegate: delegate)
     }
@@ -925,6 +940,32 @@ public final class MockSdk: MEGASdk, @unchecked Sendable {
     
     public override func contactLinkCreateRenew(_ renew: Bool, delegate: any MEGARequestDelegate) {
         processRequestResult(delegate: delegate)
+    }
+    
+    // MARK: - Streaming
+    public override func httpServerStart(_ localOnly: Bool, port: Int) -> Bool {
+        httpServerStart_calledTimes += 1
+        httpServerStart_lastArgs = (localOnly, port)
+        isRunning = true
+        
+        return isRunning
+    }
+    
+    public override func httpServerStop() {
+        httpServerStop_calledTimes += 1
+        isRunning = false
+    }
+    
+    public override func httpServerIsRunning() -> Int {
+        isRunning ? 1 : 0
+    }
+    
+    public override func httpServerIsLocalOnly() -> Bool {
+        isLocalOnly
+    }
+    
+    public override func httpServerGetLocalLink(_ node: MEGANode) -> URL? {
+        localLink
     }
     
     // MARK: - Folder link
@@ -1052,7 +1093,7 @@ public final class MockSdk: MEGASdk, @unchecked Sendable {
             }
         }
     }
-
+    
     private func simulateRequestStart(delegate: any MEGARequestDelegate) {
         delegate.onRequestStart?(self, request: MockRequest(
             handle: 1,
@@ -1061,7 +1102,7 @@ public final class MockSdk: MEGASdk, @unchecked Sendable {
             totalBytes: fetchNodesTotalBytes
         ))
     }
-
+    
     private func simulateRequestUpdate(delegate: any MEGARequestDelegate, progress: Double) {
         let transferredBytes = Int64(Double(fetchNodesTotalBytes) * progress)
         delegate.onRequestUpdate?(self, request: MockRequest(
@@ -1071,14 +1112,14 @@ public final class MockSdk: MEGASdk, @unchecked Sendable {
             totalBytes: fetchNodesTotalBytes
         ))
     }
-
+    
     private func simulateRequestTemporaryError(delegate: any MEGARequestDelegate) {
         delegate.onRequestTemporaryError?(self, request: MockRequest(
             handle: 1,
             requestType: .MEGARequestTypeFetchNodes
         ), error: MockError(errorType: fetchNodesErrorType))
     }
-
+    
     private func simulateRequestFinish(delegate: any MEGARequestDelegate, error: MockError) {
         delegate.onRequestFinish?(self, request: MockRequest(
             handle: 1,

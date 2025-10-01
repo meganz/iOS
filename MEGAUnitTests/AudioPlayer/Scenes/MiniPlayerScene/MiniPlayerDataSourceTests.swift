@@ -1,92 +1,100 @@
 @testable import MEGA
 import MEGAAppSDKRepoMock
-import MEGATest
+import Testing
 import UIKit
-import XCTest
 
-final class MiniPlayerDataSourceTests: XCTestCase {
+@MainActor
+@Suite("MiniPlayerDataSource")
+struct MiniPlayerDataSourceTests {
+    private static let anyURL = URL(string: "https://some-file-link.com")!
     
-    // MARK: - Init
-    
-    func testInit_whenQueueIsNil_setCurrentTrackAsTracks() {
-        let currentTrack = sampleItem().currentTrack
-        let sut = makeSUT(currentTrack: currentTrack, queue: nil)
-        
-        XCTAssertEqual(sut.tracks, [currentTrack])
+    private static func makeSUT(
+        currentTrack: AudioPlayerItem,
+        queue: [AudioPlayerItem]?,
+        loopMode: Bool = false
+    ) -> MiniPlayerDataSource {
+        MiniPlayerDataSource(currentTrack: currentTrack, queue: queue, loopMode: loopMode)
     }
-    
-    func testInit_whenHasQueueAndLoopModeIsFalse_setsQueueAsTracks() {
-        let currentTrack = sampleItem().currentTrack
-        let queue = sampleItem().queue
-        let sut = makeSUT(currentTrack: currentTrack, queue: queue, loopMode: false)
-        
-        XCTAssertEqual(sut.tracks, queue)
-        XCTAssertEqual(sut.tracks?.count, queue.count)
-    }
-    
-    func testInit_whenHasQueueAndLoopModeIsTrue_setsCurrentTrackAndQueueAsTracks() {
-        let currentTrack = sampleItem().currentTrack
-        let queue = sampleItem().queue
-        let sut = makeSUT(currentTrack: currentTrack, queue: queue, loopMode: true)
-        
-        XCTAssertEqual(sut.tracks, queue + [currentTrack])
-        XCTAssertEqual(sut.tracks?.count, queue.count + 1)
-    }
-    
-    // MARK: - itemAtIndexPath
-    
-    func testItem_atIndexPath_ReturnsExpectedItem() {
-        let currentTrack = sampleItem().currentTrack
-        let queue = sampleItem().queue
-        let sut = makeSUT(currentTrack: currentTrack, queue: queue)
-        let indexPath = IndexPath(row: 1, section: 0)
-        
-        let item = sut.item(at: indexPath)
-        
-        XCTAssertEqual(item?.name, "Song 3")
-        XCTAssertEqual(item?.url, anyURL())
-        XCTAssertEqual(item?.node?.handle, 67890)
-    }
-    
-    // MARK: - collectionViewNumberOfItemsInSection
-    
-    func testCollectionView_numberOfItemsInSection_ReturnsExpectedCount() {
-        let currentTrack = sampleItem().currentTrack
-        let queue = sampleItem().queue
-        let sut = makeSUT(currentTrack: currentTrack, queue: queue)
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
-        
-        let count = sut.collectionView(collectionView, numberOfItemsInSection: 0)
-        
-        XCTAssertEqual(count, 2)
-    }
-    
-    // MARK: - Helpers
-    
-    private func makeSUT(currentTrack: AudioPlayerItem, queue: [AudioPlayerItem]?, loopMode: Bool = false, file: StaticString = #filePath, line: UInt = #line) -> MiniPlayerDataSource {
-        let sut = MiniPlayerDataSource(currentTrack: currentTrack, queue: queue, loopMode: loopMode)
-        trackForMemoryLeaks(on: sut, file: file, line: line)
-        return sut
-    }
-    
-    private func sampleItem() -> (currentTrack: AudioPlayerItem, queue: [AudioPlayerItem]) {
-        let currentTrack = audioPlayerItem(name: "Song 1", node: anyNode(handle: 12345, name: "Song 1"))
+
+    private static func sample() -> (currentTrack: AudioPlayerItem, queue: [AudioPlayerItem]) {
+        let current = audioItem(name: "Song 1", node: anyNode(handle: 12345, name: "Song 1"))
         let queue = [
-            audioPlayerItem(name: "Song 2", node: anyNode(handle: 54321, name: "Song 2")),
-            audioPlayerItem(name: "Song 3", node: anyNode(handle: 67890, name: "Song 3"))
+            audioItem(name: "Song 2", node: anyNode(handle: 54321, name: "Song 2")),
+            audioItem(name: "Song 3", node: anyNode(handle: 67890, name: "Song 3"))
         ]
-        return (currentTrack, queue)
+        return (current, queue)
     }
-    
-    private func audioPlayerItem(name: String, node: MockNode) -> AudioPlayerItem {
-        AudioPlayerItem(name: name, url: anyURL(), node: node)
+
+    private static func audioItem(name: String, node: MockNode) -> AudioPlayerItem {
+        AudioPlayerItem(name: name, url: URL(string: "https://some-file-link.com")!, node: node)
     }
-    
-    private func anyURL() -> URL {
-        URL(string: "https://some-file-link.com")!
-    }
-    
-    private func anyNode(handle: MEGAHandle, name: String) -> MockNode {
+
+    private static func anyNode(handle: MEGAHandle, name: String) -> MockNode {
         MockNode(handle: handle, name: name)
+    }
+
+    // MARK: - Init
+    @Suite("Init")
+    @MainActor struct InitSuite {
+        @Test("queue is nil -> tracks = [current]")
+        func nilQueueSetsCurrentTrack() {
+            let (current, _) = sample()
+            let sut = makeSUT(currentTrack: current, queue: nil)
+            #expect(sut.tracks == [current])
+        }
+        
+        @Test("queue present & loopMode = false -> tracks = queue")
+        func queuePresentLoopOffSetsQueue() {
+            let (current, queue) = sample()
+            let sut = makeSUT(currentTrack: current, queue: queue, loopMode: false)
+            #expect(sut.tracks == queue)
+            #expect(sut.tracks?.count == queue.count)
+        }
+        
+        @Test("queue present & loopMode = true -> tracks = queue + [current]")
+        func queuePresentLoopOnAppendsCurrent() {
+            let (current, queue) = sample()
+            let sut = makeSUT(currentTrack: current, queue: queue, loopMode: true)
+            
+            let expected = queue + [current]
+            
+            #expect(sut.tracks == expected)
+            #expect(sut.tracks?.count == expected.count)
+        }
+    }
+
+    // MARK: - Item Access
+    @Suite("Item Access")
+    @MainActor struct ItemAccessSuite {
+        @Test("item(at:) returns expected item")
+        func itemAtIndexPathReturnsExpectedItem() {
+            let (current, queue) = sample()
+            let sut = makeSUT(currentTrack: current, queue: queue)
+            let indexPath = IndexPath(row: 1, section: 0)
+
+            let item = sut.item(at: indexPath)
+
+            #expect(item?.name == "Song 3")
+            #expect(item?.url == anyURL)
+            #expect(item?.node?.handle == 67890)
+        }
+    }
+
+    // MARK: - Collection View
+    @Suite("Collection View")
+    @MainActor struct CollectionViewSuite {
+        @Test("numberOfItemsInSection returns expected count")
+        func numberOfItemsReturnsExpectedCount() {
+            let (current, queue) = sample()
+            let sut = makeSUT(currentTrack: current, queue: queue)
+            let collectionView = UICollectionView(
+                frame: .zero,
+                collectionViewLayout: UICollectionViewFlowLayout()
+            )
+
+            let count = sut.collectionView(collectionView, numberOfItemsInSection: 0)
+
+            #expect(count == 2)
+        }
     }
 }

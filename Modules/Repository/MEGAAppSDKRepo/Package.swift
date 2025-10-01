@@ -56,6 +56,9 @@ let package = Package(
                 "MEGAAppSDKRepo",
                 .product(name: "MEGASDKRepo", package: "MEGASDKRepo")
             ],
+            cxxSettings: [
+                .define("HAVE_LIBUV")
+            ],
             swiftSettings: settings
         ),
         .testTarget(

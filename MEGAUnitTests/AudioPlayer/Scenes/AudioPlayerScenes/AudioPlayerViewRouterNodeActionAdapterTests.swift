@@ -4,74 +4,69 @@ import MEGAAppPresentationMock
 import MEGAAppSDKRepoMock
 import MEGADomain
 import MEGADomainMock
-import MEGATest
-import XCTest
+import Testing
 
-final class AudioPlayerViewRouterNodeActionAdapterTests: XCTestCase {
+@MainActor
+@Suite("AudioPlayerViewRouterNodeActionAdapter")
+struct AudioPlayerViewRouterNodeActionAdapterTests {
     
-    @MainActor
-    func testNodeAction_fromFileLinkNode_fordwardsCorrectDelegate() {
+    @Test("from file link -> forwards to AudioPlayerViewController")
+    func fileLinkForwardsToAudioPlayerVC() {
         let link = "any-file-link"
-        let (sut, audioPlayerViewController) = makeSUT(configEntity: audioPlayerConfigEntity(from: .fileLink, fileLink: link, relatedFiles: nil))
+        let (sut, vc) = makeSUT(config: makeConfig(origin: .fileLink, fileLink: link))
         
-        sut.nodeAction(mockNodeActionViewController(), didSelect: .rename, for: MockNode(handle: 1), from: "any-sender")
+        sut.nodeAction(makeNodeActionVC(), didSelect: .rename, for: MockNode(handle: 1), from: "any-sender")
         
-        guard let mockNodeActionDelegate = sut.nodeActionViewControllerDelegate as? MockNodeActionViewControllerGenericDelegate else {
-            XCTFail("Expect to have mock type of : \(type(of: MockNodeActionViewControllerGenericDelegate.self))")
+        guard let generic = sut.nodeActionViewControllerDelegate as? MockNodeActionViewControllerGenericDelegate else {
+            Issue.record("Expected MockNodeActionViewControllerGenericDelegate")
             return
         }
-        XCTAssertEqual(mockNodeActionDelegate.didSelectNodeActionCallCount, 0)
-        XCTAssertEqual(audioPlayerViewController.didSelectNodeActionTypeMenuCallCount, 1)
+        #expect(generic.didSelectNodeActionCallCount == 0)
+        #expect(vc.didSelectNodeActionTypeMenuCallCount == 1)
     }
     
-    @MainActor
-    func testNodeAction_fromNonFileLinkNode_fordwardsCorrectDelegate() {
-        AudioPlayerConfigEntity.NodeOriginType.allCases
-            .filter { $0 == .fileLink }
-            .map { audioPlayerConfigEntity(from: $0) }
-            .enumerated()
-            .forEach { (index, configEntity) in
-                
-                let (sut, audioPlayerViewController) = makeSUT(configEntity: configEntity)
-                
-                sut.nodeAction(mockNodeActionViewController(), didSelect: .rename, for: MockNode(handle: 1), from: "any-sender")
-                
-                guard let mockNodeActionDelegate = sut.nodeActionViewControllerDelegate as? MockNodeActionViewControllerGenericDelegate else {
-                    XCTFail("Expect to have mock type of : \(type(of: MockNodeActionViewControllerGenericDelegate.self))")
-                    return
-                }
-                XCTAssertEqual(mockNodeActionDelegate.didSelectNodeActionCallCount, 1, "Fail at index: \(index)")
-                XCTAssertEqual(audioPlayerViewController.didSelectNodeActionTypeMenuCallCount, 0, "Fail at index: \(index)")
-            }
+    @Test(
+        "from non-file link -> forwards to generic delegate",
+        arguments: [
+            AudioPlayerConfigEntity.NodeOriginType.folderLink,
+            .chat,
+            .unknown
+        ]
+    )
+    func nonFileLinkForwardsToGenericDelegate(origin: AudioPlayerConfigEntity.NodeOriginType) {
+        let (sut, vc) = makeSUT(config: makeConfig(origin: origin))
+        
+        sut.nodeAction(makeNodeActionVC(), didSelect: .rename, for: MockNode(handle: 1), from: "any-sender")
+        
+        guard let generic = sut.nodeActionViewControllerDelegate as? MockNodeActionViewControllerGenericDelegate else {
+            Issue.record("Expected MockNodeActionViewControllerGenericDelegate for origin \(origin)")
+            return
+        }
+        #expect(generic.didSelectNodeActionCallCount == 1, "Origin \(origin) should call generic delegate once")
+        #expect(vc.didSelectNodeActionTypeMenuCallCount == 0, "Origin \(origin) should not call AudioPlayer VC")
     }
     
-    // MARK: - Helpers
+    // MARK: - Shared Helpers
     
     @MainActor
     private func makeSUT(
-        configEntity: AudioPlayerConfigEntity,
-        file: StaticString = #filePath,
-        line: UInt = #line
-    ) -> (
-        sut: AudioPlayerViewRouterNodeActionAdapter,
-        audioPlayerViewController: MockAudioPlayerViewController
-    ) {
-        let audioPlayerViewController = mockAudioPlayerViewController()
+        config: AudioPlayerConfigEntity
+    ) -> (sut: AudioPlayerViewRouterNodeActionAdapter, vc: MockAudioPlayerViewController) {
+        let vc = makeAudioPlayerVC()
         let sut = AudioPlayerViewRouterNodeActionAdapter(
-            configEntity: configEntity,
+            configEntity: config,
             nodeActionViewControllerDelegate: MockNodeActionViewControllerGenericDelegate(
                 viewController: UIViewController(),
                 moveToRubbishBinViewModel: MockMoveToRubbishBinViewModel()
             ),
             fileLinkActionViewControllerDelegate: FileLinkActionViewControllerDelegate(link: "any-link", viewController: UIViewController()),
-            audioPlayerViewController: audioPlayerViewController
+            audioPlayerViewController: vc
         )
-        trackForMemoryLeaks(on: sut, file: file, line: line)
-        return (sut, audioPlayerViewController)
+        return (sut, vc)
     }
     
     @MainActor
-    private func mockNodeActionViewController() -> NodeActionViewController {
+    private func makeNodeActionVC() -> NodeActionViewController {
         NodeActionViewController(
             node: MockNode(handle: 1),
             delegate: MockNodeActionViewControllerGenericDelegate(
@@ -85,35 +80,35 @@ final class AudioPlayerViewRouterNodeActionAdapterTests: XCTestCase {
         )
     }
     
-    private func audioPlayerConfigEntity(
-        from originType: AudioPlayerConfigEntity.NodeOriginType,
+    private func makeConfig(
+        origin: AudioPlayerConfigEntity.NodeOriginType,
         fileLink: String? = nil,
         messageId: HandleEntity? = nil,
         chatId: HandleEntity? = nil,
         relatedFiles: [String]? = nil
     ) -> AudioPlayerConfigEntity {
         let node = MockNode(handle: .max)
-        
-        return switch originType {
-        case .folderLink: AudioPlayerConfigEntity(node: node, isFolderLink: true, fileLink: nil, messageId: .invalid, chatId: .invalid, relatedFiles: relatedFiles)
-        case .fileLink: AudioPlayerConfigEntity(node: node, isFolderLink: false, fileLink: fileLink, messageId: .invalid, chatId: .invalid, relatedFiles: relatedFiles)
-        case .chat: AudioPlayerConfigEntity(node: node, isFolderLink: false, fileLink: nil, messageId: messageId, chatId: chatId, relatedFiles: relatedFiles)
-        case .unknown: AudioPlayerConfigEntity(node: node, isFolderLink: false, fileLink: nil, messageId: .invalid, chatId: .invalid, relatedFiles: relatedFiles)
+        return switch origin {
+        case .folderLink:
+            AudioPlayerConfigEntity(node: node, isFolderLink: true, fileLink: nil, messageId: .invalid, chatId: .invalid, relatedFiles: relatedFiles)
+        case .fileLink:
+            AudioPlayerConfigEntity(node: node, isFolderLink: false, fileLink: fileLink, messageId: .invalid, chatId: .invalid, relatedFiles: relatedFiles)
+        case .chat:
+            AudioPlayerConfigEntity(node: node, isFolderLink: false, fileLink: nil, messageId: messageId, chatId: chatId, relatedFiles: relatedFiles)
+        case .unknown:
+            AudioPlayerConfigEntity(node: node, isFolderLink: false, fileLink: nil, messageId: .invalid, chatId: .invalid, relatedFiles: relatedFiles)
         }
     }
     
     @MainActor
-    private func mockAudioPlayerViewController(
-        file: StaticString = #filePath,
-        line: UInt = #line
-    ) -> MockAudioPlayerViewController {
+    private func makeAudioPlayerVC() -> MockAudioPlayerViewController {
         let storyboard = UIStoryboard(name: "AudioPlayer", bundle: nil)
-        let viewController = storyboard.instantiateViewController(identifier: "AudioPlayerViewControllerID") { coder in
-            let configEntity = AudioPlayerConfigEntity()
+        let vc = storyboard.instantiateViewController(identifier: "AudioPlayerViewControllerID") { coder in
+            let config = AudioPlayerConfigEntity()
             return MockAudioPlayerViewController(
                 coder: coder,
                 viewModel: AudioPlayerViewModel(
-                    configEntity: configEntity,
+                    configEntity: config,
                     playerHandler: MockAudioPlayerHandler(),
                     router: MockAudioPlayerViewRouter(),
                     nodeInfoUseCase: MockNodeInfoUseCase(),
@@ -127,18 +122,15 @@ final class AudioPlayerViewRouterNodeActionAdapterTests: XCTestCase {
                 )
             )
         }
-        
-        guard let audioPlayerViewController = viewController as? MockAudioPlayerViewController else {
-            XCTFail("Failed to create \(type(of: AudioPlayerViewController.self)) from storyboard", file: file, line: line)
-            fatalError("")
+        guard let typed = vc as? MockAudioPlayerViewController else {
+            Issue.record("Failed to instantiate AudioPlayerViewController from storyboard")
+            fatalError()
         }
-        return audioPlayerViewController
+        return typed
     }
-    
 }
 
 private final class MockNodeActionViewControllerGenericDelegate: NodeActionViewControllerGenericDelegate {
-    
     private(set) var didSelectNodeActionCallCount = 0
     
     override func nodeAction(_ nodeAction: NodeActionViewController, didSelect action: MegaNodeActionType, for node: MEGANode, from sender: Any) {
@@ -147,7 +139,6 @@ private final class MockNodeActionViewControllerGenericDelegate: NodeActionViewC
 }
 
 private final class MockAudioPlayerViewController: AudioPlayerViewController {
-    
     private(set) var didSelectNodeActionTypeMenuCallCount = 0
     
     override func didSelectNodeActionTypeMenu(_ nodeActionTypeEntity: NodeActionTypeEntity) {
