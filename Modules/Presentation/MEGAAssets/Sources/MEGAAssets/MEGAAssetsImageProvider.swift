@@ -276,6 +276,7 @@ extension MEGAAssets {
         public static var glassSearch02: SwiftUI.Image { MEGAImageBundle.glassSearch02 }
         public static var glassTrash: SwiftUI.Image { MEGAImageBundle.glassTrash }
         public static var folderUsersMono: SwiftUI.Image { MEGAImageBundle.folderUsersMono }
+        public static var plus: SwiftUI.Image { MEGAImageBundle.plus }
     }
 }
 

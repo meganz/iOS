@@ -256,4 +256,5 @@ public struct MEGAImageBundle {
     public static var glassSearch02: Image { Image(.glassSearch02) }
     public static var glassTrash: Image { Image(.glassTrash) }
     public static var folderUsersMono: Image { Image(.folderUsersMono) }
+    public static var plus: Image { Image(.plus) }
 }

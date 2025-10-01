@@ -14,11 +14,11 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		EHqh9S+tyoD/K0gyVHOA1SVBoqk=
+		Rg+5MzP9nHpkOS2KE4WH2kjjVE4=
 		</data>
 		<key>Modules/MEGAL10n.swiftmodule/arm64-apple-ios-simulator.abi.json</key>
 		<data>
-		SI/oNGUe3mMl02iTvP8RhE8mEzs=
+		gSYlDd1MTjUQhYB/3eyQ+kKCpq8=
 		</data>
 		<key>Modules/MEGAL10n.swiftmodule/arm64-apple-ios-simulator.private.swiftinterface</key>
 		<data>
@@ -34,11 +34,11 @@
 		</data>
 		<key>Modules/MEGAL10n.swiftmodule/arm64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		sPmiW/85DaRYVMQau7pNo1H5wGA=
+		vkwMzz7pWVmbqaUYF2qOyIIaxIU=
 		</data>
 		<key>Modules/MEGAL10n.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
 		<data>
-		SI/oNGUe3mMl02iTvP8RhE8mEzs=
+		gSYlDd1MTjUQhYB/3eyQ+kKCpq8=
 		</data>
 		<key>Modules/MEGAL10n.swiftmodule/x86_64-apple-ios-simulator.private.swiftinterface</key>
 		<data>
@@ -54,7 +54,7 @@
 		</data>
 		<key>Modules/MEGAL10n.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		u8nRi3/z6asKLvIhwJgYhUR/7I0=
+		yVn/OxXC4Qjw5xhoQK0gTROVmYQ=
 		</data>
 		<key>ar.lproj/Localizable.strings</key>
 		<dict>
@@ -419,7 +419,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			9VBqfylMbri7jjYwLykoTuMcIg6szfyrRJPTUe6fHlM=
+			9jrakZsAswXWBCfPMkYR/zm/720N7MwAJjIOO6Q33pI=
 			</data>
 		</dict>
 		<key>Modules/MEGAL10n.swiftmodule/arm64-apple-ios-simulator.private.swiftinterface</key>
@@ -447,14 +447,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			1ZkU1ky6t0O1q2C4mQdefhBGnTHsTMCcsnG3Gn2jOIw=
+			JxyXfRaFb+hkQnoTSuxZLNaDwPTinNWr1Ez7w7ri5d8=
 			</data>
 		</dict>
 		<key>Modules/MEGAL10n.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			9VBqfylMbri7jjYwLykoTuMcIg6szfyrRJPTUe6fHlM=
+			9jrakZsAswXWBCfPMkYR/zm/720N7MwAJjIOO6Q33pI=
 			</data>
 		</dict>
 		<key>Modules/MEGAL10n.swiftmodule/x86_64-apple-ios-simulator.private.swiftinterface</key>
@@ -482,7 +482,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			crtXjvYGMyerPdOGtaffD7+WwPES79PR63OqjFSRW68=
+			xwag8nikckqthh5Lu/Ejeg7+BFZYZTs6ANRv33bJ2Bk=
 			</data>
 		</dict>
 		<key>ar.lproj/Localizable.strings</key>

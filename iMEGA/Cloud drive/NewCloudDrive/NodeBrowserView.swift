@@ -1,3 +1,4 @@
+import CloudDrive
 import MEGAAppPresentation
 import MEGAAssets
 import MEGADesignToken
@@ -8,8 +9,13 @@ import SwiftUI
 import UIKit
 
 struct NodeBrowserView: View {
-    
+
+    var isCloudDriveRevampEnabled: Bool {
+        DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .cloudDriveRevamp)
+    }
+
     @StateObject var viewModel: NodeBrowserViewModel
+    @StateObject var floatingAddButtonViewModel: FloatingAddButtonViewModel
 
     var body: some View {
         content
@@ -41,6 +47,12 @@ struct NodeBrowserView: View {
             }
         }
         .background()
+        .overlay(alignment: .bottomTrailing) {
+            if floatingAddButtonViewModel.showsFloatingAddButton {
+                RoundedPrimaryImageButton(image: MEGAAssets.Image.plus, action: floatingAddButtonViewModel.action)
+                    .padding(TokenSpacing._5)
+            }
+        }
         .navigationBarTitleDisplayMode(.inline)
         .onAppear { viewModel.onViewAppear() }
         .onDisappear { viewModel.onViewDisappear() }
@@ -98,14 +110,17 @@ struct NodeBrowserView: View {
             Button(Strings.Localizable.cancel) { viewModel.stopEditing() }
                 .foregroundStyle(TokenColors.Icon.primary.swiftUI)
         case .regular:
-            viewModel.contextMenuViewFactory?.makeAddMenuWithButtonView()
+            if !isCloudDriveRevampEnabled {
+                viewModel.contextMenuViewFactory?.makeAddMenuWithButtonView()
+            }
+
             moreOptionsView
         }
     }
 
     @ViewBuilder
     private var moreOptionsView: some View {
-        if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .cloudDriveRevamp) {
+        if isCloudDriveRevampEnabled {
             if viewModel.hasParentNode {
                 ImageButtonWrapper(
                     image: Image(uiImage: MEGAAssets.UIImage.moreNavigationBar),
