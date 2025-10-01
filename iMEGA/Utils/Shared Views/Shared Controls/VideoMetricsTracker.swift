@@ -89,15 +89,17 @@ import MEGAAppPresentation
         } else {
             MEGALogError("[VideoMetrics] Stop tracking before first frame time was recorded - assuming")
             tracker.trackAnalyticsEvent(with: VideoPlaybackStartupFailureEvent(scenario: VideoPlaybackStartupFailure.VideoPlaybackScenario.manualclick,
-                                                                        commonMap: dictToJsonString(commonMap) ?? ""))
+                                                                        commonMap: ""))
         }
     }
     
     private func handleRateChange(oldRate: Float, newRate: Float) {
         MEGALogInfo("[VideoMetrics] oldRate: \(oldRate), newRate: \(newRate)")
         if oldRate == 0, newRate > 0 {
-            MEGALogInfo("[VideoMetrics] a new playback start")
-            startTimeStamp = CACurrentMediaTime()
+            MEGALogInfo("[VideoMetrics] playback start")
+            if startTimeStamp == nil {
+                startTimeStamp = CACurrentMediaTime()
+            }
         }
     }
     
@@ -114,7 +116,7 @@ import MEGAAppPresentation
             startStallIfNeeded()
         case .paused:
             MEGALogInfo("[VideoMetrics] paused")
-            pauseStartTime = CACurrentMediaTime()
+            updatePauseStartTimeIfNeeded()
             endStallIfNeeded()
         @unknown default:
            break
@@ -139,7 +141,9 @@ import MEGAAppPresentation
     
     private func recordPauseTimeIfNeeded() {
         guard let pauseStartTime else { return }
-        totalPauseTime = CACurrentMediaTime() - pauseStartTime
+        let pauseDuration = CACurrentMediaTime() - pauseStartTime
+        totalPauseTime += pauseDuration
+        MEGALogInfo("[VideoMetrics] paused for \(pauseDuration)s, totalPauseTime:\(totalPauseTime)s")
         self.pauseStartTime = nil
     }
 
@@ -160,6 +164,7 @@ import MEGAAppPresentation
         case .readyToPlay:
             MEGALogInfo("[VideoMetrics] readyToPlay")
             recordFirstFrameTimeIfNeeded()
+            updatePauseStartTimeIfNeeded()
             startStallIfNeeded()
         case .unknown:
             MEGALogInfo("[VideoMetrics] unknown")
@@ -169,16 +174,23 @@ import MEGAAppPresentation
     }
      
     // MARK: - stall time tracking
+    private func updatePauseStartTimeIfNeeded() {
+        guard firstFrameTimeStamp != nil, player?.timeControlStatus == .paused, pauseStartTime == nil else { return }
+        pauseStartTime = CACurrentMediaTime()
+        MEGALogInfo("[VideoMetrics] pauseStartTime updated")
+    }
+    
     private func startStallIfNeeded() {
-        guard firstFrameTimeStamp != nil, stallStartTime == nil else { return }
+        guard firstFrameTimeStamp != nil, stallStartTime == nil, player?.timeControlStatus == .waitingToPlayAtSpecifiedRate else { return }
         stallStartTime = CACurrentMediaTime()
+        MEGALogInfo("[VideoMetrics] stall started")
     }
      
     private func endStallIfNeeded() {
         guard firstFrameTimeStamp != nil, let startTime = stallStartTime else { return }
         let stallTime = CACurrentMediaTime() - startTime
-        MEGALogInfo("[VideoMetrics] stall Time: \(stallTime)s")
         totalStallTime += stallTime
+        MEGALogInfo("[VideoMetrics] stall Time: \(stallTime)s, totalStallTime:\(totalStallTime)s")
         stallStartTime = nil
     }
      
@@ -189,17 +201,19 @@ import MEGAAppPresentation
         MEGALogInfo("[VideoMetrics] firstFrame Time: \(firstFrameTime)s")
         tracker.trackAnalyticsEvent(with: VideoPlaybackFirstFrameEvent(time: Int32(firstFrameTime*1000),
                                                                   scenario: VideoPlaybackFirstFrame.VideoPlaybackScenario.manualclick,
-                                                                  commonMap: dictToJsonString(commonMap) ?? ""))
+                                                                  commonMap: ""))
     }
 
     private func trackStartupFailure() {
         MEGALogError("[VideoMetrics] Startup Failure occurred")
         tracker.trackAnalyticsEvent(with: VideoPlaybackStartupFailureEvent(scenario: VideoPlaybackStartupFailure.VideoPlaybackScenario.manualclick,
-                                                                    commonMap: dictToJsonString(commonMap) ?? ""))
+                                                                    commonMap: ""))
     }
 
     private func trackFinalMetrics() {
         guard let firstFrameTimeStamp else { return }
+        recordPauseTimeIfNeeded()
+        endStallIfNeeded()
         let effectivePlayTime = CACurrentMediaTime() - firstFrameTimeStamp - totalPauseTime
         guard effectivePlayTime > 0, totalStallTime >= 0 else { return }
         let stallTimeInHundredSeconds = totalStallTime/effectivePlayTime * 100.0 * 1000.0
@@ -208,7 +222,7 @@ import MEGAAppPresentation
         totalPauseTime = 0
         tracker.trackAnalyticsEvent(with: VideoPlaybackStallEvent(time: Int32(stallTimeInHundredSeconds),
                                                                   scenario: VideoPlaybackStall.VideoPlaybackScenario.manualclick,
-                                                                  commonMap: dictToJsonString(commonMap) ?? ""))
+                                                                  commonMap: ""))
     }
     
     // MARK: - utility method
