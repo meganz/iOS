@@ -787,6 +787,9 @@ public struct MEGAImageBundle {
   public static var folderUsersMono: SwiftUICore.Image {
     get
   }
+  public static var plus: SwiftUICore.Image {
+    get
+  }
 }
 extension Foundation.Bundle {
   public static let MEGAAssetsBundle: Foundation.Bundle

@@ -1,3 +1,4 @@
+import CloudDrive
 import Foundation
 import MEGAAnalyticsiOS
 import MEGAAppPresentation
@@ -692,12 +693,15 @@ struct CloudDriveViewControllerFactory {
         nodeBrowserViewModel.actionHandlers.append(actionHandlers)
         nodeBrowserViewModel.actionHandlers.append(mediaContentDelegate)
 
-        let view = NodeBrowserView(
-            viewModel: nodeBrowserViewModel
-        )
-        
+        let shouldShowFloatingAddButton = DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .cloudDriveRevamp)
+        let floatingAddButtonViewModel = FloatingAddButtonViewModel(initiallyShowsFloatingAddButton: shouldShowFloatingAddButton) {
+            // [IOS-10543]
+        }
+
+        let nodeBrowserView = NodeBrowserView(viewModel: nodeBrowserViewModel, floatingAddButtonViewModel: floatingAddButtonViewModel)
+
         let vc = NewCloudDriveViewController(
-            rootView: view,
+            rootView: nodeBrowserView,
             wrapper: searchControllerWrapper,
             selectionHandler: selectionHandler,
             toolbarBuilder: CloudDriveBottomToolbarItemsFactory(

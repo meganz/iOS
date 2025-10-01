@@ -1,5 +1,7 @@
+import CloudDrive
 import MEGAAppPresentation
 import MEGADomain
+import SwiftUI
 
 /// Mordern replacement of CloudDriveViewController
 final class NewCloudDriveViewController: SearchBarUIHostingController<NodeBrowserView>, BottomSafeAreaOverlayCoverStatusProviderProtocol {
