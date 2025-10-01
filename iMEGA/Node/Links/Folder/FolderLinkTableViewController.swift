@@ -124,9 +124,9 @@ extension FolderLinkTableViewController: UITableViewDataSource {
             cell.thumbnailImageView.image = NodeAssetsManager.shared.icon(for: node)
             cell.infoLabel.text = Helper.filesAndFolders(inFolderNode: node, api: MEGASdk.sharedFolderLink)
         }
-        
+
         cell.thumbnailPlayImageView.isHidden = node.name?.fileExtensionGroup.isVideo != true
-        cell.nameLabel.text = node.name
+        cell.nameLabel.text = node.nameAfterDecryptionCheck()
         cell.nameLabel.textColor = TokenColors.Text.primary
         cell.node = node
         

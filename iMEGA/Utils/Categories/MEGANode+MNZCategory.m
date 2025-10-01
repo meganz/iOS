@@ -217,7 +217,7 @@
             return navigationController;
         }
         
-        // Mike: This log is specificially intended for tracking non-fatal event with domain "nz.mega.megaphotobrowserviewcontroller"
+        // This log is specificially intended for tracking non-fatal event with domain "nz.mega.megaphotobrowserviewcontroller"
         NSDictionary *logInfo = @{@"Node Handle": self.base64Handle ? self.base64Handle : @"nil",
                                   @"Node Name": self.name ? self.name : @"nil",
                                   @"Node Size": self.size ? self.size : @"nil",
