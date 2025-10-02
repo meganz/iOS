@@ -622,3 +622,10 @@ extension SharedItemsViewController {
         navigationController?.present(alert, animated: true)
     }
 }
+
+extension SharedItemsViewController {
+    open override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        updateSearchBar()
+    }
+}
