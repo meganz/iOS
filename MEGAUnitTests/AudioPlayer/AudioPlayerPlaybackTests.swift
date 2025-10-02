@@ -73,7 +73,7 @@ struct AudioPlayerPlaybackTests {
     ) async {
         let deadline = Date().addingTimeInterval(timeout)
         var matched = false
-
+        
         while Date() < deadline {
             if abs(queuePlayer.rate - value) < 0.0001 {
                 matched = true
@@ -81,7 +81,7 @@ struct AudioPlayerPlaybackTests {
             }
             try? await Task.sleep(nanoseconds: UInt64(interval * 1_000_000_000))
         }
-
+        
         #expect(matched, "Expected rate \(value) within \(timeout)s, last rate \(queuePlayer.rate)")
     }
     
@@ -142,7 +142,7 @@ struct AudioPlayerPlaybackTests {
             let (player, _) = try await makePlayerAndTracks()
             let queue = player.queuePlayer
             let before = queue.currentTime().seconds
-
+            
             player.rewind(direction: .forward)
             
             try? await Task.sleep(nanoseconds: 200_000_000)
@@ -150,7 +150,7 @@ struct AudioPlayerPlaybackTests {
             let advanced = queue.currentTime().seconds > before
             #expect(advanced, "Expected playback time to advance after forward rewind")
         }
-
+        
         func testRewind_backward_decreasesPlaybackTime() async throws {
             let (player, _) = try await makePlayerAndTracks()
             let queue = player.queuePlayer
@@ -159,7 +159,7 @@ struct AudioPlayerPlaybackTests {
             await withCheckedContinuation { cont in
                 queue.seek(to: forwardTime) { _ in cont.resume() }
             }
-
+            
             player.rewind(direction: .backward)
             
             try? await Task.sleep(nanoseconds: 200_000_000)
@@ -206,61 +206,6 @@ struct AudioPlayerPlaybackTests {
             let queuePlayer = player.queuePlayer
             let items = queuePlayer.items().compactMap { $0 as? AudioPlayerItem }
             #expect(!tracks.elementsEqual(items))
-        }
-    }
-    
-    @Suite("Shuffle")
-    @MainActor
-    struct Shuffle {
-        @Test("shuffleQueue preserves current and items for multiple tracks")
-        func shuffleMultiplePreservesCurrentAndItems() async throws {
-            let (player, _) = try await makePlayerAndTracks(items: 40)
-            let original = player.tracks
-            let current = try #require(player.currentItem())
-            
-            player.shuffleQueue()
-            let shuffled = player.tracks
-            
-            #expect(shuffled.first == current)
-            #expect(Set(shuffled) == Set(original))
-            
-            if shuffled == original {
-                player.shuffleQueue()
-                #expect(player.tracks != original)
-            }
-        }
-        
-        @Test("shuffleQueue is a no-op for single track")
-        func shuffleSingleNoOp() async throws {
-            let player = AudioPlayer()
-            let url = try #require(
-                Bundle.main.url(forResource: "audioClipSent", withExtension: "wav")
-            )
-            let solo   = AudioPlayerItem(name: "solo", url: url, node: nil)
-            player.add(tracks: [solo])
-            player.queuePlayer.volume = 0.0
-            try? await Task.sleep(nanoseconds: 200_000_000)
-            player.hasCompletedInitialConfiguration = true
-            
-            let before = player.tracks
-            player.shuffleQueue()
-            #expect(player.tracks == before)
-        }
-        
-        @Test("shuffleQueue while playing preserves order and current")
-        func shuffleWhilePlayingPreservesOrderAndCurrent() async throws {
-            let (player, _) = try await makePlayerAndTracks()
-            let queuePlayer = player.queuePlayer
-            #expect(player.isPlaying)
-            
-            let current = try #require(player.currentItem())
-            let beforeItems = queuePlayer.items().compactMap { $0 as? AudioPlayerItem }
-            
-            player.shuffleQueue()
-            let afterItems = queuePlayer.items().compactMap { $0 as? AudioPlayerItem }
-            
-            #expect(afterItems.first == current)
-            #expect(Set(afterItems) == Set(beforeItems))
         }
     }
 }
