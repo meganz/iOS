@@ -15,7 +15,6 @@ final class AudioPlayer: NSObject {
     // MARK: - Internal properties
     var mediaPlayerNowPlayingInfoCenter = MPNowPlayingInfoCenter.default()
     var mediaPlayerRemoteCommandCenter = MPRemoteCommandCenter.shared()
-    var queuePlayer: AVQueuePlayer?
     var tracks: [AudioPlayerItem] = []
     var eventCancellables = Set<AnyCancellable>()
     var notificationCancellables = Set<AnyCancellable>()
@@ -49,6 +48,7 @@ final class AudioPlayer: NSObject {
     var isUserPreviouslyJustPlayedSameItem = false
     
     let queueLoader = AudioQueueLoader()
+    let queuePlayer: AVQueuePlayer
     
     var preloadMetadataTask: Task<Void, Never>?
     
@@ -61,7 +61,8 @@ final class AudioPlayer: NSObject {
     }
     
     // MARK: - Private properties
-    private var timeObserver: AudioPlayerTimeObserver?
+    /// Token returned by AVQueuePlayer when registering a periodic time observer.
+    private var periodicTimeObserverToken: Any?
     private let timeObserverInterval = CMTime(seconds: 0.5, preferredTimescale: CMTimeScale(NSEC_PER_SEC))
     
     @Atomic private var taskId: UIBackgroundTaskIdentifier?
@@ -74,7 +75,7 @@ final class AudioPlayer: NSObject {
     
     // MARK: - Internal Computed Properties, intended for important UTs
     var currentIndex: Int? {
-        queuePlayer?.items().firstIndex(where: { $0 as? AudioPlayerItem == currentItem() })
+        queuePlayer.items().firstIndex(where: { $0 as? AudioPlayerItem == currentItem() })
     }
 
     var currentName: String? {
@@ -94,7 +95,7 @@ final class AudioPlayer: NSObject {
     }
     
     var currentTime: Double {
-        guard let currentItem = queuePlayer?.currentItem, currentItem.currentTime().isValid, CMTimeGetSeconds(currentItem.currentTime()) > 0 else { return 0.0 }
+        guard let currentItem = queuePlayer.currentItem, currentItem.currentTime().isValid, CMTimeGetSeconds(currentItem.currentTime()) > 0 else { return 0.0 }
         
         return CMTimeGetSeconds(currentItem.currentTime())
     }
@@ -103,20 +104,18 @@ final class AudioPlayer: NSObject {
         PlayerCurrentStateEntity(currentTime: currentTime, remainingTime: duration > currentTime ? duration - currentTime: 0.0, percentage: percentageCompleted, isPlaying: isPlaying)
     }
     
-    var rate: Float? {
-        get { queuePlayer?.rate }
+    var rate: Float {
+        get { queuePlayer.rate }
         set {
-            guard let newValue = newValue else { return }
-            if newValue == 0 { storedRate = queuePlayer?.rate }
-            queuePlayer?.rate = newValue
+            if newValue == 0 { storedRate = queuePlayer.rate }
+            queuePlayer.rate = newValue
         }
     }
     
     var storedRate: Float?
     
     var isPlaying: Bool {
-        guard let rate = rate else { return false }
-        return rate > Float(0.0)
+        rate > Float(0.0)
     }
     
     var isAlive: Bool {
@@ -124,7 +123,7 @@ final class AudioPlayer: NSObject {
     }
     
     var duration: Double {
-        guard let currentItem = queuePlayer?.currentItem, currentItem.duration.isValid else { return 0.0 }
+        guard let currentItem = queuePlayer.currentItem, currentItem.duration.isValid else { return 0.0 }
         
         return currentItem.duration.value == 0 ? 0.0 : CMTimeGetSeconds(currentItem.duration)
     }
@@ -154,13 +153,17 @@ final class AudioPlayer: NSObject {
     }
     
     // MARK: - Private Functions
-    init(config: [PlayerConfiguration: Any]? = [.loop: false, .shuffle: false, .repeatOne: false], debounceDelay: TimeInterval = 1.0) {
+    init(player: AVQueuePlayer = AVQueuePlayer(), config: [PlayerConfiguration: Any]? = [.loop: false, .shuffle: false, .repeatOne: false], debounceDelay: TimeInterval = 1.0) {
+        queuePlayer = player
+        
         if let config { audioPlayerConfig = config }
         
         debouncer = Debouncer(delay: debounceDelay, dispatchQueue: DispatchQueue.global(qos: .userInteractive))
         
         super.init()
         queueLoader.delegate = self
+        
+        setAudioPlayerSession(active: true)
     }
     
     deinit {
@@ -183,8 +186,7 @@ final class AudioPlayer: NSObject {
         mediaPlayerNowPlayingInfoCenter.nowPlayingInfo = nil
         removeAllListeners()
         queueLoader.delegate = nil
-        queuePlayer?.removeAllItems()
-        queuePlayer = nil
+        queuePlayer.removeAllItems()
         tracks.removeAll()
     }
     
@@ -208,14 +210,9 @@ final class AudioPlayer: NSObject {
         registerTimeObserver()
     }
     
-    private func setupPlayer(initialBatch: [AudioPlayerItem]) {
-        setAudioPlayerSession(active: true)
-        
-        queuePlayer = AVQueuePlayer()
-        loadTracksIntoQueue(initialBatch)
-        queuePlayer?.usesExternalPlaybackWhileExternalScreenIsActive = true
-        queuePlayer?.volume = 1.0
-        
+    private func prepareForPlayback() {
+        queuePlayer.usesExternalPlaybackWhileExternalScreenIsActive = true
+        queuePlayer.volume = 1.0
         hasTornDown = false
     }
     
@@ -233,13 +230,15 @@ final class AudioPlayer: NSObject {
         hasCompletedInitialConfiguration = false
         pause()
         
+        prepareForPlayback()
+        
         if let newFirst = itemsToEnqueue.first {
             secureReplaceCurrentItem(with: newFirst)
         }
         
-        queuePlayer?.items().lazy.dropFirst().forEach { queuePlayer?.remove($0) }
+        queuePlayer.items().lazy.dropFirst().forEach { queuePlayer.remove($0) }
         
-        itemsToEnqueue.dropFirst().forEach { queuePlayer?.secureInsert($0, after: queuePlayer?.items().last) }
+        itemsToEnqueue.dropFirst().forEach { queuePlayer.secureInsert($0, after: queuePlayer.items().last) }
         
         register()
         
@@ -247,16 +246,23 @@ final class AudioPlayer: NSObject {
     }
     
     func registerTimeObserver() {
-        timeObserver = AudioPlayerTimeObserver(
-            player: queuePlayer,
-            interval: timeObserverInterval
+        removeTimeObserver()
+        
+        periodicTimeObserverToken = queuePlayer.addPeriodicTimeObserver(
+            forInterval: timeObserverInterval,
+            queue: .main
         ) { [weak self] _ in
-            self?.timeObserverHandler()
+            Task { @MainActor in
+                self?.timeObserverHandler()
+            }
         }
     }
     
     func removeTimeObserver() {
-        timeObserver = nil
+        if let token = periodicTimeObserverToken {
+            queuePlayer.removeTimeObserver(token)
+            periodicTimeObserverToken = nil
+        }
     }
     
     func onItemFinishedPlaying() {
@@ -288,11 +294,11 @@ final class AudioPlayer: NSObject {
     private func secureReplaceCurrentItem(with item: AudioPlayerItem?) {
         guard let newItem = item else { return }
         
-        self.queuePlayer?.items().filter({$0 == newItem}).forEach {
-            self.queuePlayer?.remove($0)
+        queuePlayer.items().filter({$0 == newItem}).forEach {
+            queuePlayer.remove($0)
         }
         
-        self.queuePlayer?.replaceCurrentItem(with: newItem)
+        queuePlayer.replaceCurrentItem(with: newItem)
     }
 
     // MARK: - Internal Functions
@@ -327,18 +333,12 @@ final class AudioPlayer: NSObject {
         queueLoader.reset()
         let initialBatch = queueLoader.addAllTracks(tracks)
         
-        debouncer.start { @MainActor [weak self] in
-            guard let self else { return  }
-            
-            if queuePlayer != nil {
-                loadTracksIntoQueue(initialBatch)
-                MEGALogDebug("[AudioPlayer] Refresh the current audio player")
-            } else {
-                setupPlayer(initialBatch: initialBatch)
-                MEGALogDebug("[AudioPlayer] Setting up a new audio player")
+        debouncer.start { [weak self, aboutAudioPlayerDidAddTracks] in
+            Task { @MainActor in
+                self?.loadTracksIntoQueue(initialBatch)
+                MEGALogDebug("[AudioPlayer] Load tracks into the current audio player")
+                self?.notify(aboutAudioPlayerDidAddTracks)
             }
-            
-            notify(aboutAudioPlayerDidAddTracks)
         }
     }
     
@@ -353,11 +353,11 @@ final class AudioPlayer: NSObject {
     ///   - If `hasCompletedInitialConfiguration` is `true`, the item that `queuePlayer` is currently playing, or`nil` if there isn’t one.
     ///   - Otherwise, the first element of `tracks`, or `nil` if `tracks` is empty (The latter case should not occur, as the audio player always starts with tracks.).
     func currentItem() -> AudioPlayerItem? {
-        hasCompletedInitialConfiguration ? (queuePlayer?.currentItem as? AudioPlayerItem) : tracks.first
+        hasCompletedInitialConfiguration ? (queuePlayer.currentItem as? AudioPlayerItem) : tracks.first
     }
     
     func queueItems() -> [AudioPlayerItem]? {
-        guard let playerItems = queuePlayer?.items() as? [AudioPlayerItem] else { return nil }
+        guard let playerItems = queuePlayer.items() as? [AudioPlayerItem] else { return nil }
         
         return playerItems.filter { $0 != currentItem() }
     }
@@ -415,10 +415,10 @@ final class AudioPlayer: NSObject {
     /// 1. Buffering to minimize stalls: The player is actively buffering to prevent underruns.
     /// 2. Awaiting initial playback: The player hasn’t yet attempted to load any media, so we show the loading UI before the very first playback attempt.
     func shouldShowLoadingView() -> Bool {
-        let isBuffering = queuePlayer?.timeControlStatus == .waitingToPlayAtSpecifiedRate
-            && queuePlayer?.reasonForWaitingToPlay == .toMinimizeStalls
+        let isBuffering = queuePlayer.timeControlStatus == .waitingToPlayAtSpecifiedRate
+        && queuePlayer.reasonForWaitingToPlay == .toMinimizeStalls
 
-        let isWaitingForInitialPlayback = queuePlayer?.status == .unknown /// status of the player is not yet known because it has not tried to load new media resources for playback.
+        let isWaitingForInitialPlayback = queuePlayer.status == .unknown /// status of the player is not yet known because it has not tried to load new media resources for playback.
 
         return isBuffering || isWaitingForInitialPlayback
     }
@@ -426,24 +426,24 @@ final class AudioPlayer: NSObject {
 
 extension AudioPlayer: AudioQueueLoaderDelegate {
     func currentQueueCount() -> Int {
-        queuePlayer?.items().count ?? 0
+        queuePlayer.items().count
     }
     
     func insertBatchInQueue(_ items: [AudioPlayerItem]) {
         guard items.isNotEmpty else { return }
         tracks.append(contentsOf: items)
         
-        if let lastItem = queuePlayer?.items().last {
+        if let lastItem = queuePlayer.items().last {
             var anchor = lastItem
             for item in items {
-                queuePlayer?.secureInsert(item, after: anchor)
+                queuePlayer.secureInsert(item, after: anchor)
                 anchor = item
             }
         } else if let first = items.first {
             secureReplaceCurrentItem(with: first)
-            var anchor = queuePlayer?.currentItem ?? first
+            var anchor = queuePlayer.currentItem ?? first
             for item in items.dropFirst() {
-                queuePlayer?.secureInsert(item, after: anchor)
+                queuePlayer.secureInsert(item, after: anchor)
                 anchor = item
             }
         }

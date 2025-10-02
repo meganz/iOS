@@ -73,19 +73,19 @@ extension AudioPlayer {
 extension AudioPlayer {
     @objc func audioPlayer(didReceivePlayCommand event: MPRemoteCommandEvent) -> MPRemoteCommandHandlerStatus {
         performRemoteCommand(event, requiresPlayableItem: true) { player in
-            if player.queuePlayer?.rate == 0.0 { player.play() }
+            if player.queuePlayer.rate == 0.0 { player.play() }
         }
     }
     
     @objc func audioPlayer(didReceivePauseCommand event: MPRemoteCommandEvent) -> MPRemoteCommandHandlerStatus {
         performRemoteCommand(event, requiresPlayableItem: true) { player in
-            if player.queuePlayer?.rate == 1.0 { player.pause() }
+            if player.queuePlayer.rate == 1.0 { player.pause() }
         }
     }
     
     @objc func audioPlayer(didReceiveTogglePlayPauseCommand event: MPRemoteCommandEvent) -> MPRemoteCommandHandlerStatus {
         performRemoteCommand(event, requiresPlayableItem: true) { player in
-            if player.queuePlayer?.rate == 0.0 { player.play() } else { player.pause() }
+            if player.queuePlayer.rate == 0.0 { player.play() } else { player.pause() }
         }
     }
     
@@ -151,7 +151,7 @@ extension AudioPlayer {
         guard event.command.isEnabled, !hasTornDown, !isAudioPlayerInterrupted else { return .commandFailed }
         
         if requiresPlayableItem, currentItem() == nil {
-            return queuePlayer == nil ? .noSuchContent : .noActionableNowPlayingItem
+            return .noActionableNowPlayingItem
         }
         
         return nil

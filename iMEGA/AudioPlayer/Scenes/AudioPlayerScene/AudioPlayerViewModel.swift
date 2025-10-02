@@ -304,7 +304,6 @@ final class AudioPlayerViewModel: ViewModelType {
     }
     
     private func removePreviousQueuedTrackInPlayer() {
-        playerHandler.currentPlayer()?.queuePlayer = nil
         playerHandler.currentPlayer()?.update(tracks: [])
     }
     

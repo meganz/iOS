@@ -13,7 +13,7 @@ struct AudioPlayerPlaybackTests {
             return AudioPlayerItem(name: info.name, url: url, node: nil)
         }
         player.add(tracks: items)
-        player.queuePlayer?.volume = 0.0
+        player.queuePlayer.volume = 0.0
         
         try? await Task.sleep(nanoseconds: 200_000_000)
         
@@ -36,10 +36,6 @@ struct AudioPlayerPlaybackTests {
         }
         
         return try await makePlayer(with: requested)
-    }
-    
-    static func requireQueuePlayer(_ player: AudioPlayer) async throws -> AVQueuePlayer {
-        try #require(player.queuePlayer)
     }
     
     static func performAsync(_ action: @MainActor @Sendable @escaping (@escaping () -> Void) -> Void) async {
@@ -144,7 +140,7 @@ struct AudioPlayerPlaybackTests {
         
         func testRewind_forward_advancesPlaybackTime() async throws {
             let (player, _) = try await makePlayerAndTracks()
-            let queue = try await requireQueuePlayer(player)
+            let queue = player.queuePlayer
             let before = queue.currentTime().seconds
 
             player.rewind(direction: .forward)
@@ -157,7 +153,7 @@ struct AudioPlayerPlaybackTests {
 
         func testRewind_backward_decreasesPlaybackTime() async throws {
             let (player, _) = try await makePlayerAndTracks()
-            let queue = try await requireQueuePlayer(player)
+            let queue = player.queuePlayer
             
             let forwardTime = CMTime(seconds: initialSeekSeconds, preferredTimescale: timescale)
             await withCheckedContinuation { cont in
@@ -207,7 +203,7 @@ struct AudioPlayerPlaybackTests {
                 direction: .down
             )
             
-            let queuePlayer = try await requireQueuePlayer(player)
+            let queuePlayer = player.queuePlayer
             let items = queuePlayer.items().compactMap { $0 as? AudioPlayerItem }
             #expect(!tracks.elementsEqual(items))
         }
@@ -242,7 +238,7 @@ struct AudioPlayerPlaybackTests {
             )
             let solo   = AudioPlayerItem(name: "solo", url: url, node: nil)
             player.add(tracks: [solo])
-            player.queuePlayer?.volume = 0.0
+            player.queuePlayer.volume = 0.0
             try? await Task.sleep(nanoseconds: 200_000_000)
             player.hasCompletedInitialConfiguration = true
             
@@ -254,7 +250,7 @@ struct AudioPlayerPlaybackTests {
         @Test("shuffleQueue while playing preserves order and current")
         func shuffleWhilePlayingPreservesOrderAndCurrent() async throws {
             let (player, _) = try await makePlayerAndTracks()
-            let queuePlayer = try await requireQueuePlayer(player)
+            let queuePlayer = player.queuePlayer
             #expect(player.isPlaying)
             
             let current = try #require(player.currentItem())

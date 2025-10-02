@@ -11,7 +11,7 @@ extension AudioPlayer {
     func preloadNextTracksMetadata() {
         /// Only consider items already enqueued in the AVQueuePlayer here. Reading from `queuePlayer.items()` bounds the work to what’s actually staged for imminent playback,
         /// avoiding iterating over the full `tracks` list (which could be large) and thus preventing unnecessary metadata-loading work and potential performance/memory pressure.
-        guard let queueItems = queuePlayer?.items() as? [AudioPlayerItem] else { return }
+        guard let queueItems = queuePlayer.items() as? [AudioPlayerItem] else { return }
         
         let itemsToBePreloaded = queueItems.filter { !$0.loadedMetadata }
         let completion: @MainActor @Sendable (AudioPlayerItem) -> Void = { [weak self] item in
@@ -32,7 +32,7 @@ extension AudioPlayer {
     }
     
     private func notifyMetadataLoaded(for item: AudioPlayerItem) {
-        if queuePlayer?.currentItem == item {
+        if queuePlayer.currentItem == item {
             notify([aboutCurrentItem, aboutCurrentThumbnail, aboutToReloadCurrentItem])
         }
         notifyAboutToReload(item: item)

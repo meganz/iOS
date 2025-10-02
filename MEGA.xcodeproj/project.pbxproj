@@ -1340,7 +1340,6 @@
 		9451F90A28229A11000ACE3B /* OfflineViewController+ContextMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9451F90928229A11000ACE3B /* OfflineViewController+ContextMenu.swift */; };
 		945339CD2A6014FA00363DAD /* FileLinkViewController+ContextMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945339CC2A6014FA00363DAD /* FileLinkViewController+ContextMenu.swift */; };
 		94548FC6299D537C0050A9CC /* ChangeNameViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94548FC5299D537C0050A9CC /* ChangeNameViewController+Additions.swift */; };
-		94565EB62E05BE320019C921 /* AudioPlayerTimeObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94565EB52E05BE320019C921 /* AudioPlayerTimeObserver.swift */; };
 		94590F832E74349C008E4ACC /* FolderLinkToolbarConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94590F822E74349C008E4ACC /* FolderLinkToolbarConfigurator.swift */; };
 		9459229C2C3EA62B004D6AEF /* ContactsGroupCellViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9459229B2C3EA62B004D6AEF /* ContactsGroupCellViewModelTests.swift */; };
 		945928F52AA23C1B0037694C /* Search in Frameworks */ = {isa = PBXBuildFile; productRef = 945928F42AA23C1B0037694C /* Search */; };
@@ -4120,7 +4119,6 @@
 		9451F90928229A11000ACE3B /* OfflineViewController+ContextMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OfflineViewController+ContextMenu.swift"; sourceTree = "<group>"; };
 		945339CC2A6014FA00363DAD /* FileLinkViewController+ContextMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FileLinkViewController+ContextMenu.swift"; sourceTree = "<group>"; };
 		94548FC5299D537C0050A9CC /* ChangeNameViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChangeNameViewController+Additions.swift"; sourceTree = "<group>"; };
-		94565EB52E05BE320019C921 /* AudioPlayerTimeObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerTimeObserver.swift; sourceTree = "<group>"; };
 		9458AEE11FB9D3B800BABD58 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		9458AEE21FB9D40500BABD58 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		94590F822E74349C008E4ACC /* FolderLinkToolbarConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderLinkToolbarConfigurator.swift; sourceTree = "<group>"; };
@@ -12710,7 +12708,6 @@
 				C44CE0042590B57000313719 /* AudioPlayer+RemoteCommand.swift */,
 				C49F8638255AE2030074A054 /* AudioPlayer.swift */,
 				C45E402025DD1C230060E116 /* AudioPlayerManager.swift */,
-				94565EB52E05BE320019C921 /* AudioPlayerTimeObserver.swift */,
 				944C3AD32D5A516D00C6BFB9 /* AudioQueueLoader.swift */,
 			);
 			path = AudioPlayer;
@@ -14273,7 +14270,6 @@
 				C4CBDD3F256EC00900835CF5 /* AudioPlayerItem.swift in Sources */,
 				C45E402125DD1C230060E116 /* AudioPlayerManager.swift in Sources */,
 				24A6ADE32A8224890035C7B0 /* AudioPlayerPlaylistShiftStrategyProtocol.swift in Sources */,
-				94565EB62E05BE320019C921 /* AudioPlayerTimeObserver.swift in Sources */,
 				C49F8621255ABEA80074A054 /* AudioPlayerViewController.swift in Sources */,
 				24EC98A72CCF5ECF00783B68 /* AudioPlayerViewControllerNodeActionForwardingDelegate.swift in Sources */,
 				C49F8631255AC0310074A054 /* AudioPlayerViewModel.swift in Sources */,
