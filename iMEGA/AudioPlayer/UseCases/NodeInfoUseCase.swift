@@ -23,15 +23,15 @@ final class NodeInfoUseCase: NodeInfoUseCaseProtocol {
     }
     
     func node(fromHandle: HandleEntity) -> MEGANode? {
-        nodeInfoRepository.node(fromHandle: fromHandle)
+        nodeInfoRepository.node(for: fromHandle)
     }
     
     func childrenInfo(fromParentHandle: HandleEntity) -> [AudioPlayerItem]? {
-        nodeInfoRepository.childrenInfo(fromParentHandle: fromParentHandle)
+        nodeInfoRepository.fetchAudioTracks(from: fromParentHandle)
     }
     
     func folderChildrenInfo(fromParentHandle: HandleEntity) -> [AudioPlayerItem]? {
-        nodeInfoRepository.folderChildrenInfo(fromParentHandle: fromParentHandle)
+        nodeInfoRepository.fetchFolderLinkAudioTracks(from: fromParentHandle)
     }
     
     func folderLinkLogout() {

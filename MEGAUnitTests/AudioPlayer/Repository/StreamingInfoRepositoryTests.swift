@@ -95,7 +95,7 @@ struct StreamingInfoRepositoryTests {
         )
         func infoReturnsNil(args: (node: MEGANode, sdk: MockSdk)) {
             let sut = StreamingInfoRepositoryTests.makeSUT(sdk: args.sdk)
-            #expect(sut.info(fromFolderLinkNode: args.node) == nil)
+            #expect(sut.fetchTrack(from: args.node) == nil)
         }
         
         @Test("valid node with link returns non-nil item")
@@ -103,7 +103,7 @@ struct StreamingInfoRepositoryTests {
             let node = StreamingInfoRepositoryTests.makeNode()
             let sut = StreamingInfoRepositoryTests.makeSUT(sdk: StreamingInfoRepositoryTests.makeSdk(localLink: StreamingInfoRepositoryTests.localURL))
             
-            #expect(sut.info(fromFolderLinkNode: node) != nil)
+            #expect(sut.fetchTrack(from: node) != nil)
         }
         
         @Test("item has expected name, url and node reference")
@@ -111,7 +111,7 @@ struct StreamingInfoRepositoryTests {
             let node = StreamingInfoRepositoryTests.makeNode()
             let sut = StreamingInfoRepositoryTests.makeSUT(sdk: StreamingInfoRepositoryTests.makeSdk(localLink: StreamingInfoRepositoryTests.localURL))
             
-            let item = sut.info(fromFolderLinkNode: node)
+            let item = sut.fetchTrack(from: node)
             
             #expect(item?.name == StreamingInfoRepositoryTests.defaultName)
             #expect(item?.url == StreamingInfoRepositoryTests.localURL)
@@ -137,7 +137,7 @@ struct StreamingInfoRepositoryTests {
                     isLocalOnly: true
                 )
             )
-            #expect(sut.path(fromNode: node) == args.expected)
+            #expect(sut.streamingURL(for: node) == args.expected)
         }
     }
     
@@ -152,7 +152,7 @@ struct StreamingInfoRepositoryTests {
         )
         func returnsExpectedRunningState(args: (isRunning: Bool, expected: Bool)) {
             let sut = StreamingInfoRepositoryTests.makeSUT(sdk: StreamingInfoRepositoryTests.makeSdk(isRunning: args.isRunning))
-            #expect(sut.isLocalHTTPProxyServerRunning() == args.expected)
+            #expect(sut.isLocalHTTPServerRunning() == args.expected)
         }
     }
 }

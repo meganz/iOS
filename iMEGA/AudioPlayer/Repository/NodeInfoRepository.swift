@@ -5,21 +5,37 @@ import MEGAPreference
 import MEGASwift
 
 protocol NodeInfoRepositoryProtocol: Sendable {
-    func childrenInfo(fromParentHandle: HandleEntity) -> [AudioPlayerItem]?
-    func folderChildrenInfo(fromParentHandle: HandleEntity) -> [AudioPlayerItem]?
-    func node(fromHandle: HandleEntity) -> MEGANode?
+    /// Fetches audio tracks contained in a folder owned/accessible by the current account. The `folder` handle identifies a MEGA folder. The implementation resolves its contents (files and/or subfolders) and returns only files that are suitable for audio playback.
+    /// - Parameter folder: The `HandleEntity` of the target folder in the current account context.
+    /// - Returns: An array of `AudioPlayerItem` representing audio tracks in the folder, or `nil` if the folder does not exist or cannot be read.
+    func fetchAudioTracks(from folder: HandleEntity) -> [AudioPlayerItem]?
+    
+    /// Fetches audio tracks from a folder-link context. The `folder` handle refers to a folder-link. Tracks are resolved and authorized for playback before being returned as `AudioPlayerItem`s.
+    /// - Parameter folder: The `HandleEntity` of the folder-link.
+    /// - Returns: An array of authorized `AudioPlayerItem` for playback, or `nil` if the folder is unavailable or cannot be read.
+    func fetchFolderLinkAudioTracks(from folder: HandleEntity) -> [AudioPlayerItem]?
+    
+    /// Resolves a `MEGANode` for the given handle in the current account context.
+    /// - Parameter handle: The `HandleEntity` to look up.
+    /// - Returns: The resolved `MEGANode` if found; otherwise `nil`.
+    func node(for handle: HandleEntity) -> MEGANode?
+    
+    /// Ends the active folder-link session (if any) for the repository.
     func folderLinkLogout()
     
-    /// Used for check wethere a node from a non current user folder link is got take down or not.
-    /// - Parameter node: node to check
-    /// - Returns: returns a either is take down or not
+    /// Used to check whether a node from a non-current user folder link has been taken down or not.
+    /// - Parameter node: Node to check.
+    /// - Returns: `true` if the node has been taken down; `false` otherwise.
+    /// - Throws: An error if the check cannot be completed.
     func isFolderLinkNodeTakenDown(node: MEGANode) async throws -> Bool
+    
     /// Determines whether the given node has been taken down via API.
     /// This covers both:
     /// 1. Nodes owned by the current user.
-    /// 2. Nodes imported from file or folder‑links (which themselves may have been subsequently removed).
-    /// - Parameter node: node to check
+    /// 2. Nodes imported from file or folder-links (which themselves may have been subsequently removed).
+    /// - Parameter node: Node to check.
     /// - Returns: `true` if the node has been taken down; `false` otherwise.
+    /// - Throws: An error if the check cannot be completed.
     func isNodeTakenDown(node: MEGANode) async throws -> Bool
 }
 
@@ -47,23 +63,23 @@ final class NodeInfoRepository: NodeInfoRepositoryProtocol {
     }
     
     // MARK: - Private functions
-    private func playableChildren(of parent: HandleEntity, using sdk: MEGASdk, parentNodeLookup: (HandleEntity) -> MEGANode?) -> [MEGANode]? {
-        guard let parentNode = parentNodeLookup(parent) else {
+    private func fetchAudioNodes(inFolder folder: HandleEntity, using sdk: MEGASdk, nodeLookup: (HandleEntity) -> MEGANode?) -> [MEGANode]? {
+        guard let parentNode = nodeLookup(folder) else {
             return nil
         }
         
-        return sdk.children(forParent: parentNode, order: sortType(for: parent)).toPlayableNodeArray()
+        return sdk.children(forParent: parentNode, order: sortType(for: folder)).toPlayableNodeArray()
     }
        
-    private func playableChildren(of parent: HandleEntity) -> [MEGANode]? {
-        playableChildren(of: parent, using: sdk) { handle in
+    private func fetchAudioNodes(inFolder folder: HandleEntity) -> [MEGANode]? {
+        fetchAudioNodes(inFolder: folder, using: sdk) { handle in
             sdk.node(forHandle: handle)
         }
     }
     
-    private func folderPlayableChildren(of parent: HandleEntity) -> [MEGANode]? {
-        playableChildren(of: parent, using: folderSDK) { handle in
-            folderNode(fromHandle: handle)
+    private func fetchFolderLinkAudioNodes(inFolder folder: HandleEntity) -> [MEGANode]? {
+        fetchAudioNodes(inFolder: folder, using: folderSDK) { handle in
+            folderNode(from: handle)
         }
     }
     
@@ -81,46 +97,46 @@ final class NodeInfoRepository: NodeInfoRepositoryProtocol {
         return sortType
     }
 
-    private func folderNode(fromHandle: HandleEntity) -> MEGANode? { folderSDK.node(forHandle: fromHandle) }
+    private func folderNode(from handle: HandleEntity) -> MEGANode? { folderSDK.node(forHandle: handle) }
     
-    private func folderAuthNode(fromNode: MEGANode) -> MEGANode? { folderSDK.authorizeNode(fromNode) }
+    private func folderAuthNode(from node: MEGANode) -> MEGANode? { folderSDK.authorizeNode(node) }
 
-    func info(fromNodes: [MEGANode]?) -> [AudioPlayerItem]? {
-        fromNodes?.compactMap {
-            guard let url = path(fromHandle: $0.handle),
+    func makeAudioPlayerItems(from nodes: [MEGANode]?) -> [AudioPlayerItem]? {
+        nodes?.compactMap {
+            guard let url = playbackURL(for: $0.handle),
                   let name = $0.name else { return nil }
             return AudioPlayerItem(name: name, url: url, node: $0, hasThumbnail: $0.hasThumbnail())
         }
     }
 
-    private func authInfo(fromNodes: [MEGANode]?) -> [AudioPlayerItem]? {
-        fromNodes?.compactMap {
-            guard let node = folderAuthNode(fromNode: $0),
+    private func makeAuthorizedFolderLinkAudioPlayerItems(from nodes: [MEGANode]?) -> [AudioPlayerItem]? {
+        nodes?.compactMap {
+            guard let node = folderAuthNode(from: $0),
                   let name = node.name,
-                  let url = streamingInfoRepository.path(fromNode: node) else { return nil }
+                  let url = streamingInfoRepository.streamingURL(for: node) else { return nil }
             return AudioPlayerItem(name: name, url: url, node: node, hasThumbnail: $0.hasThumbnail())
         }
     }
 
     // MARK: - Public functions
-    func node(fromHandle: HandleEntity) -> MEGANode? { sdk.node(forHandle: fromHandle) }
+    func node(for handle: HandleEntity) -> MEGANode? { sdk.node(forHandle: handle) }
     
-    func path(fromHandle: HandleEntity) -> URL? {
-        guard let node = node(fromHandle: fromHandle) else { return nil }
+    func playbackURL(for handle: HandleEntity) -> URL? {
+        guard let node = node(for: handle) else { return nil }
         
-        if offlineFileInfoRepository.isOffline(node: node) {
-            return offlineFileInfoRepository.localPath(fromNode: node) ?? streamingInfoRepository.path(fromNode: node)
+        if offlineFileInfoRepository.isNodeAvailableOffline(node) {
+            return offlineFileInfoRepository.offlineFileURL(for: node) ?? streamingInfoRepository.streamingURL(for: node)
         } else {
-            return streamingInfoRepository.path(fromNode: node)
+            return streamingInfoRepository.streamingURL(for: node)
         }
     }
     
-    func childrenInfo(fromParentHandle: HandleEntity) -> [AudioPlayerItem]? {
-        playableChildren(of: fromParentHandle).flatMap(info)
+    func fetchAudioTracks(from folder: HandleEntity) -> [AudioPlayerItem]? {
+        fetchAudioNodes(inFolder: folder).flatMap(makeAudioPlayerItems)
     }
     
-    func folderChildrenInfo(fromParentHandle parent: HandleEntity) -> [AudioPlayerItem]? {
-        folderPlayableChildren(of: parent).flatMap(authInfo)
+    func fetchFolderLinkAudioTracks(from folder: HandleEntity) -> [AudioPlayerItem]? {
+        fetchFolderLinkAudioNodes(inFolder: folder).flatMap(makeAuthorizedFolderLinkAudioPlayerItems)
     }
      
     func folderLinkLogout() {

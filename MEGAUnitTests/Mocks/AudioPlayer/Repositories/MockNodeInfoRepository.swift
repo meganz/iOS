@@ -6,7 +6,6 @@ enum NodeInfoError: Error {
 }
 
 struct MockNodeInfoRepository: NodeInfoRepositoryProtocol {
-    
     var result: Result<Void, NodeInfoError>
     var violatesTermsOfServiceResult: Result<Bool, NodeInfoError>
     
@@ -18,60 +17,41 @@ struct MockNodeInfoRepository: NodeInfoRepositoryProtocol {
         self.violatesTermsOfServiceResult = violatesTermsOfServiceResult
     }
     
+    private var isSuccess: Bool {
+        if case .success = result { return true }
+        return false
+    }
+    
     func path(fromHandle: HandleEntity) -> URL? {
-        switch result {
-        case .failure: return nil
-        case .success: return URL(string: "www.mega.app")
-        }
+        isSuccess ? URL(string: "www.mega.app") : nil
     }
     
     func info(fromNodes: [MEGANode]?) -> [AudioPlayerItem]? {
-        switch result {
-        case .failure: return nil
-        case .success: return AudioPlayerItem.mockArray
-        }
+        isSuccess ? AudioPlayerItem.mockArray : nil
     }
     
     func authInfo(fromNodes: [MEGANode]?) -> [AudioPlayerItem]? {
-        switch result {
-        case .failure: return nil
-        case .success: return AudioPlayerItem.mockArray
-        }
+        isSuccess ? AudioPlayerItem.mockArray : nil
     }
     
-    func childrenInfo(fromParentHandle: HandleEntity) -> [AudioPlayerItem]? {
-        switch result {
-        case .failure: return nil
-        case .success: return AudioPlayerItem.mockArray
-        }
+    func fetchAudioTracks(from folder: HandleEntity) -> [AudioPlayerItem]? {
+        isSuccess ? AudioPlayerItem.mockArray : nil
     }
     
-    func folderChildrenInfo(fromParentHandle: HandleEntity) -> [AudioPlayerItem]? {
-        switch result {
-        case .failure: return nil
-        case .success: return AudioPlayerItem.mockArray
-        }
+    func fetchFolderLinkAudioTracks(from folder: HandleEntity) -> [AudioPlayerItem]? {
+        isSuccess ? AudioPlayerItem.mockArray : nil
     }
     
-    func node(fromHandle: HandleEntity) -> MEGANode? {
-        switch result {
-        case .failure: return nil
-        case .success: return MEGANode()
-        }
+    func node(for handle: HandleEntity) -> MEGANode? {
+        isSuccess ? MEGANode() : nil
     }
     
     func folderNode(fromHandle: HandleEntity) -> MEGANode? {
-        switch result {
-        case .failure: return nil
-        case .success: return MEGANode()
-        }
+        isSuccess ? MEGANode() : nil
     }
     
     func folderAuthNode(fromNode: MEGANode) -> MEGANode? {
-        switch result {
-        case .failure: return nil
-        case .success: return MEGANode()
-        }
+        isSuccess ? MEGANode() : nil
     }
     
     func folderLinkLogout() {}

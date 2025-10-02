@@ -18,7 +18,7 @@ final class NodeInfoRepositoryTests: XCTestCase {
     func testNodeFromHandle_whenCalled_callNode() {
         let (sut, mockSdk, _, _, _) = makeSUT(sdk: MockSdk(), folderSdk: MockFolderSdk(isLoggedIn: true))
         
-        _ = sut.node(fromHandle: .invalid)
+        _ = sut.node(for: .invalid)
         
         XCTAssertEqual(mockSdk.nodeForHandleCallCount, 1)
     }
@@ -27,7 +27,7 @@ final class NodeInfoRepositoryTests: XCTestCase {
     func testPathFromHandle_whenCalled_searchNode() {
         let (sut, mockSdk, _, _, _) = makeSUT(sdk: MockSdk(nodes: []), folderSdk: MockFolderSdk(isLoggedIn: true))
         
-        _ = sut.path(fromHandle: .invalid)
+        _ = sut.playbackURL(for: .invalid)
         
         XCTAssertEqual(mockSdk.nodeForHandleCallCount, 1)
     }
@@ -35,7 +35,7 @@ final class NodeInfoRepositoryTests: XCTestCase {
     func testPathFromHandle_whenNotFoundHandle_returnsNilPath() {
         let (sut, _, _, _, _) = makeSUT(sdk: MockSdk(nodes: []), folderSdk: MockFolderSdk(isLoggedIn: true))
         
-        let node = sut.path(fromHandle: .invalid)
+        let node = sut.playbackURL(for: .invalid)
         
         XCTAssertNil(node)
     }
@@ -51,7 +51,7 @@ final class NodeInfoRepositoryTests: XCTestCase {
             )
         )
         
-        _ = sut.path(fromHandle: node.handle)
+        _ = sut.playbackURL(for: node.handle)
         
         XCTAssertEqual(offlineFileInfoRepository.localPathfromNodeCallCount, 1)
     }
@@ -65,16 +65,16 @@ final class NodeInfoRepositoryTests: XCTestCase {
             streamingInfoRepository: MockStreamingInfoRepository(result: .success)
         )
         
-        _ = sut.path(fromHandle: node.handle)
+        _ = sut.playbackURL(for: node.handle)
         
         XCTAssertEqual(streamingInfoRepository.pathFromNodeCallCount, 1)
     }
     
-    // MARK: - infoFromNodes
+    // MARK: - makeAudioPlayerItems
     func testInfoFromNodes_whenNilNodes_returnsNilPlayerItems() {
         let (sut, _, _, _, _) = makeSUT(sdk: MockSdk(), folderSdk: MockFolderSdk(isLoggedIn: true))
         
-        let playerItems = sut.info(fromNodes: nil)
+        let playerItems = sut.makeAudioPlayerItems(from: nil)
         
         XCTAssertNil(playerItems)
     }
@@ -82,7 +82,7 @@ final class NodeInfoRepositoryTests: XCTestCase {
     func testInfoFromNodes_whenSingleNode_returnsNilPlayerItemOnNotFoundItem() {
         let (sut, _, _, _, _) = makeSUT(sdk: MockSdk(nodes: []), folderSdk: MockFolderSdk(isLoggedIn: true))
         
-        let playerItems = sut.info(fromNodes: nil)
+        let playerItems = sut.makeAudioPlayerItems(from: nil)
         
         XCTAssertNil(playerItems)
     }
@@ -97,7 +97,7 @@ final class NodeInfoRepositoryTests: XCTestCase {
             streamingInfoRepository: MockStreamingInfoRepository(result: .success)
         )
         
-        let playerItems = sut.info(fromNodes: nodes)
+        let playerItems = sut.makeAudioPlayerItems(from: nodes)
         
         XCTAssertEqual(nodes.count, playerItems?.count)
         XCTAssertEqual(nodes.first?.name, playerItems?.first?.name)
@@ -115,7 +115,7 @@ final class NodeInfoRepositoryTests: XCTestCase {
             streamingInfoRepository: MockStreamingInfoRepository(result: .success)
         )
         
-        let playerItems = sut.info(fromNodes: nodes)
+        let playerItems = sut.makeAudioPlayerItems(from: nodes)
         
         XCTAssertEqual(nodes.count, playerItems?.count)
         playerItems?.enumerated().forEach { (index, playerItem) in
@@ -124,12 +124,12 @@ final class NodeInfoRepositoryTests: XCTestCase {
         }
     }
     
-    // MARK: - childrenInfoFromParentHandle
+    // MARK: - fetchAudioTracks
     func testChildrenInfoFromParentHandle_whenInvalidNode_returnsNil() {
         let node1 = anyNode(handle: 1, name: "any-invalid-node-1")
         let (sut, _, _, _, _) = makeSUT(sdk: MockSdk(nodes: [node1]), folderSdk: MockFolderSdk(isLoggedIn: true))
         
-        let playerItems = sut.childrenInfo(fromParentHandle: .invalid)
+        let playerItems = sut.fetchAudioTracks(from: .invalid)
         
         XCTAssertNil(playerItems)
     }
@@ -143,7 +143,7 @@ final class NodeInfoRepositoryTests: XCTestCase {
             offlineInfoRepository: MockOfflineInfoRepository(result: .success)
         )
         
-        guard let playerItems = sut.childrenInfo(fromParentHandle: parentNode.handle) else {
+        guard let playerItems = sut.fetchAudioTracks(from: parentNode.handle) else {
             XCTFail("Expect to have empty items, got nil instead.")
             return
         }
@@ -164,7 +164,7 @@ final class NodeInfoRepositoryTests: XCTestCase {
             offlineInfoRepository: MockOfflineInfoRepository(result: .success)
         )
         
-        guard let playerItems = sut.childrenInfo(fromParentHandle: parentNode.handle) else {
+        guard let playerItems = sut.fetchAudioTracks(from: parentNode.handle) else {
             XCTFail("Expect to have empty items, got nil instead.")
             return
         }
@@ -175,12 +175,12 @@ final class NodeInfoRepositoryTests: XCTestCase {
         }
     }
     
-    // MARK: - folderInfoFromParentHandle
+    // MARK: - fetchFolderLinkAudioTracks
     func testFolderChildrenInfoFromParentHandle_whenInvalidNode_returnsNil() {
         let node1 = anyNode(handle: 1, name: "any-invalid-node-1")
         let (sut, _, _, _, _) = makeSUT(sdk: MockSdk(nodes: [node1]), folderSdk: MockFolderSdk(isLoggedIn: true, nodes: [node1]))
         
-        let playerItems = sut.folderChildrenInfo(fromParentHandle: .invalid)
+        let playerItems = sut.fetchFolderLinkAudioTracks(from: .invalid)
         
         XCTAssertNil(playerItems)
     }
@@ -197,7 +197,7 @@ final class NodeInfoRepositoryTests: XCTestCase {
         )
         nodes.forEach(mockFolderSdk.mockAuthorizeNode(with:))
         
-        guard let playerItems = sut.folderChildrenInfo(fromParentHandle: parentNode.handle) else {
+        guard let playerItems = sut.fetchFolderLinkAudioTracks(from: parentNode.handle) else {
             XCTFail("Expect to have empty items, got nil instead.")
             return
         }
@@ -221,7 +221,7 @@ final class NodeInfoRepositoryTests: XCTestCase {
         )
         nodes.forEach(mockFolderSdk.mockAuthorizeNode(with:))
         
-        guard let playerItems = sut.folderChildrenInfo(fromParentHandle: parentNode.handle) else {
+        guard let playerItems = sut.fetchFolderLinkAudioTracks(from: parentNode.handle) else {
             XCTFail("Expect to have empty items, got nil instead.")
             return
         }
