@@ -57,25 +57,8 @@ public final class MEGAPlayerViewController: UIViewController {
     }
 
     private func setupOverlay() {
-        let overlayView = UIHostingConfiguration { [viewModel] in
-            let player = viewModel.player
-            let dismissAction = viewModel.dismissAction
-            let moreAction = viewModel.moreAction
-            PlayerOverlayView(
-                viewModel: PlayerOverlayViewModel(
-                    player: player,
-                    devicePermissionsHandler: DevicePermissionsHandler.makeHandler(),
-                    saveSnapshotUseCase: SaveSnapshotUseCase(),
-                    didTapBackAction: dismissAction ?? {},
-                    didTapMoreAction: moreAction ?? { _ in },
-                    didTapRotateAction: { [weak self] in
-                        self?.toggleOrientation()
-                    },
-                    didTapPictureInPictureAction: { [weak self] in
-                        self?.togglePictureInPicture()
-                    }
-                )
-            )
+        let overlayView = UIHostingConfiguration { [weak self] in
+            self?.makeOverlayView()
         }
         .margins(.all, 0)
         .makeContentView()
@@ -89,6 +72,30 @@ public final class MEGAPlayerViewController: UIViewController {
             overlayView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             overlayView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
         ])
+    }
+
+    private func makeOverlayView() -> some View {
+        let player = viewModel.player
+        return PlayerOverlayView(
+            viewModel: PlayerOverlayViewModel(
+                player: player,
+                devicePermissionsHandler: DevicePermissionsHandler.makeHandler(),
+                saveSnapshotUseCase: SaveSnapshotUseCase(),
+                didTapBackAction: { [weak self] in
+                    self?.viewModel.viewWillDismiss()
+                    self?.viewModel.dismissAction?()
+                },
+                didTapMoreAction: { [weak self] node in
+                    self?.viewModel.moreAction?(node)
+                },
+                didTapRotateAction: { [weak self] in
+                    self?.toggleOrientation()
+                },
+                didTapPictureInPictureAction: { [weak self] in
+                    self?.togglePictureInPicture()
+                }
+            )
+        )
     }
 
     private func setupVideoView() {

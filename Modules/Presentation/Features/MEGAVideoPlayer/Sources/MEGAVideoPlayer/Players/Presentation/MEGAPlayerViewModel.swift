@@ -11,7 +11,8 @@ public final class MEGAPlayerViewModel {
         self.player = player
         self.reportingManager = MEGAPlaybackReportingManager(
             player: player,
-            playbackReporter: DependencyInjection.playbackReporter
+            playbackReporter: DependencyInjection.playbackReporter,
+            analyticsTracker: DependencyInjection.analyticsTracker
         )
     }
 
@@ -26,9 +27,14 @@ public final class MEGAPlayerViewModel {
     func viewDidLoad(playerView: any PlayerViewProtocol) {
         reportingManager.observePlayback()
         player.setupPlayer(in: playerView)
+        reportingManager.recordOpenTimeStamp()
     }
 
     func viewDidDisappear() {
         player.stop()
+    }
+
+    func viewWillDismiss() {
+        reportingManager.trackVideoPlaybackFinalEvents()
     }
 }
