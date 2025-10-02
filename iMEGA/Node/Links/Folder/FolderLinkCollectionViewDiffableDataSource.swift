@@ -32,7 +32,7 @@ final class FolderLinkCollectionViewDiffableDataSource {
     func configureDataSource() {
         guard let collectionView = collectionView else { return }
 
-        dataSource = UICollectionViewDiffableDataSource<ThumbnailSection, MEGANode>(collectionView: collectionView) { (collectionView: UICollectionView, indexPath: IndexPath, node: MEGANode) -> UICollectionViewCell? in
+        dataSource = UICollectionViewDiffableDataSource<ThumbnailSection, MEGANode>(collectionView: collectionView) { [weak self] (collectionView: UICollectionView, indexPath: IndexPath, node: MEGANode) -> UICollectionViewCell? in
             guard let cell = collectionView.dequeueReusableCell(
                 withReuseIdentifier: "NodeCollectionViewID",
                 for: indexPath
@@ -40,7 +40,7 @@ final class FolderLinkCollectionViewDiffableDataSource {
                 fatalError("Could not instantiate NodeCollectionViewCell or Node at index")
             }
             
-            cell.configureCell(forFolderLinkNode: node, allowedMultipleSelection: collectionView.allowsMultipleSelection, sdk: MEGASdk.sharedFolderLink, delegate: self.controller)
+            cell.configureCell(forFolderLinkNode: node, allowedMultipleSelection: collectionView.allowsMultipleSelection, sdk: MEGASdk.sharedFolderLink, delegate: self?.controller)
             
             return cell
         }
