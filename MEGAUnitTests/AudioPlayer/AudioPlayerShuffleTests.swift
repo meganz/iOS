@@ -6,8 +6,7 @@ struct AudioPlayerShuffleTests {
     private static func makeSUT() -> AudioPlayer {
         let urls = (1...4).map { URL(string: "file://\($0).mp3")! }
         let items = urls.map { AudioPlayerItem(url: $0) }
-        let sut = AudioPlayer()
-        sut.queuePlayer = AVQueuePlayer(items: items)
+        let sut = AudioPlayer(player: AVQueuePlayer(items: items))
         sut.tracks = items
         return sut
     }

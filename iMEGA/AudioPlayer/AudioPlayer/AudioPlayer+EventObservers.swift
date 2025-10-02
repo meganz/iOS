@@ -4,7 +4,7 @@ extension AudioPlayer {
     func registerAudioPlayerEvents() {
         eventCancellables.removeAll()
         
-        queuePlayer?
+        queuePlayer
             .publisher(for: \.currentItem, options: [.old, .new])
             .scan((previousItem: AVPlayerItem?.none, currentItem: AVPlayerItem?.none)) { last, newItem in
                 (previousItem: last.currentItem, currentItem: newItem)
@@ -19,7 +19,7 @@ extension AudioPlayer {
             }
             .store(in: &eventCancellables)
         
-        queuePlayer?.currentItem?
+        queuePlayer.currentItem?
             .publisher(for: \.status, options: .new)
             .receive(on: DispatchQueue.main)
             .sink { [weak self] itemStatus in
@@ -28,7 +28,7 @@ extension AudioPlayer {
             }
             .store(in: &eventCancellables)
         
-        queuePlayer?
+        queuePlayer
             .publisher(for: \.currentItem, options: .initial)
             .receive(on: DispatchQueue.main)
             .sink { [weak self] newItem in
@@ -37,7 +37,7 @@ extension AudioPlayer {
             }
             .store(in: &eventCancellables)
         
-        queuePlayer?
+        queuePlayer
             .publisher(for: \.rate, options: .new)
             .receive(on: DispatchQueue.main)
             .sink { [weak self] newRate in
@@ -46,7 +46,7 @@ extension AudioPlayer {
             }
             .store(in: &eventCancellables)
         
-        queuePlayer?
+        queuePlayer
             .publisher(for: \.timeControlStatus, options: .new)
             .receive(on: DispatchQueue.main)
             .sink { [weak self] newTimeControlStatus in
@@ -55,7 +55,7 @@ extension AudioPlayer {
             }
             .store(in: &eventCancellables)
         
-        queuePlayer?
+        queuePlayer
             .publisher(for: \.reasonForWaitingToPlay, options: .new)
             .receive(on: DispatchQueue.main)
             .sink { [weak self] newReason in
@@ -64,7 +64,7 @@ extension AudioPlayer {
             }
             .store(in: &eventCancellables)
         
-        queuePlayer?.currentItem?
+        queuePlayer.currentItem?
             .publisher(for: \.isPlaybackBufferEmpty, options: .new)
             .receive(on: DispatchQueue.main)
             .sink { [weak self] bufferStatus in
@@ -73,7 +73,7 @@ extension AudioPlayer {
             }
             .store(in: &eventCancellables)
         
-        queuePlayer?.currentItem?
+        queuePlayer.currentItem?
             .publisher(for: \.isPlaybackLikelyToKeepUp, options: .new)
             .receive(on: DispatchQueue.main)
             .sink { [weak self] bufferStatus in
@@ -82,7 +82,7 @@ extension AudioPlayer {
             }
             .store(in: &eventCancellables)
         
-        queuePlayer?.currentItem?
+        queuePlayer.currentItem?
             .publisher(for: \.isPlaybackBufferFull, options: .new)
             .receive(on: DispatchQueue.main)
             .sink { [weak self] bufferStatus in
@@ -91,7 +91,7 @@ extension AudioPlayer {
             }
             .store(in: &eventCancellables)
         
-        queuePlayer?.publisher(for: \.currentItem, options: [.initial, .new])
+        queuePlayer.publisher(for: \.currentItem, options: [.initial, .new])
             .compactMap { $0 }
             .flatMap { item in
                 item
@@ -217,7 +217,7 @@ extension AudioPlayer {
             updateLoadingView(isLoading: false)
         }
         
-        if queuePlayer?.status == .readyToPlay, !hasCompletedInitialConfiguration {
+        if queuePlayer.status == .readyToPlay, !hasCompletedInitialConfiguration {
             hasCompletedInitialConfiguration = true
         }
     }
@@ -229,7 +229,7 @@ extension AudioPlayer {
             isPaused = true
             notify([aboutCurrentItem, aboutCurrentState, aboutCurrentThumbnail])
             
-            if let currentItem = queuePlayer?.currentItem as? AudioPlayerItem {
+            if let currentItem = queuePlayer.currentItem as? AudioPlayerItem {
                 // Check if the new item is the same as the previously played item
                 isUserPreviouslyJustPlayedSameItem = (currentItem == previouslyPlayedItem)
             }
@@ -237,7 +237,7 @@ extension AudioPlayer {
         case .waitingToPlayAtSpecifiedRate:
             /// Only show the loading indicator when AVPlayer is buffering
             /// (i.e. waiting “to minimize stalls”), to avoid spinners for other wait reasons
-            if queuePlayer?.reasonForWaitingToPlay == .toMinimizeStalls || queuePlayer?.reasonForWaitingToPlay == .evaluatingBufferingRate {
+            if queuePlayer.reasonForWaitingToPlay == .toMinimizeStalls || queuePlayer.reasonForWaitingToPlay == .evaluatingBufferingRate {
                 updateLoadingView(isLoading: true)
             }
             
@@ -245,7 +245,7 @@ extension AudioPlayer {
             isPaused = false
             notify([aboutCurrentItem, aboutCurrentState, aboutCurrentThumbnail, aboutHidingLoadingView])
             
-            if let currentItem = queuePlayer?.currentItem as? AudioPlayerItem {
+            if let currentItem = queuePlayer.currentItem as? AudioPlayerItem {
                 // Check if the new item is the same as the previously played item
                 isUserPreviouslyJustPlayedSameItem = (currentItem == previouslyPlayedItem)
                 
@@ -268,7 +268,7 @@ extension AudioPlayer {
         
         let isRepeatAllEnabled = audioPlayerConfig[.loop] as? Bool ?? false
         let isRepeatOneEnabled = audioPlayerConfig[.repeatOne] as? Bool ?? false
-        let hasReachedEndOfPlaylist = queuePlayer?.items().count == 1
+        let hasReachedEndOfPlaylist = queuePlayer.items().count == 1
         
         if hasReachedEndOfPlaylist && !isRepeatOneEnabled && !isRepeatAllEnabled {
             resettingPlayback = true
