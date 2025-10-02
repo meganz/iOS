@@ -1,3 +1,4 @@
+import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGAPreference
 import MEGASdk
@@ -39,7 +40,11 @@ public enum DependencyInjection {
     public static var playbackReporter: some PlaybackReporting {
         MEGALogPlaybackReporter()
     }
-    
+
+    public static var analyticsTracker: some AnalyticsTracking {
+        DIContainer.tracker
+    }
+
     public static var resumePlaybackPositionUseCase: some ResumePlaybackPositionUseCaseProtocol {
         ResumePlaybackPositionUseCase(
             preferenceUseCase: PreferenceUseCase.default

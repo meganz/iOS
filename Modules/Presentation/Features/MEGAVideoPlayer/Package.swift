@@ -29,10 +29,13 @@ let package = Package(
         .package(path: "../../../MEGASharedRepo/MEGALogger"),
         .package(path: "../../../MEGASharedRepo/MEGAUIComponent"),
         .package(path: "../../../Infrastracture/MEGAPermissions"),
+        .package(path: "../../../Infrastracture/MEGATest"),
         .package(path: "../../../MEGASharedRepo/MEGAPreference"),
         .package(path: "../../../MEGASharedRepo/MEGASwift"),
         .package(path: "../../../Repository/MEGAAppSDKRepo"),
+        .package(path: "../../../Presentation/MEGAAppPresentation"),
         .package(url: "https://github.com/meganz/MEGADesignToken.git", branch: "main"),
+        .package(url: "https://code.developers.mega.co.nz/mobile/kmm/mobile-analytics-ios.git", branch: "main"),
         .package(url: "https://github.com/CocoaLumberjack/CocoaLumberjack.git", from: "3.0.0")
     ],
     targets: [
@@ -49,7 +52,9 @@ let package = Package(
                 "MEGAPermissions",
                 "MEGAPreference",
                 "MEGASwift",
+                .product(name: "MEGAAppPresentation", package: "MEGAAppPresentation"),
                 .product(name: "MEGAAppSDKRepo", package: "MEGAAppSDKRepo"),
+                .product(name: "MEGAAnalyticsiOS", package: "mobile-analytics-ios"),
                 .product(name: "CocoaLumberjackSwift", package: "CocoaLumberjack")
             ],
             resources: [
@@ -72,10 +77,13 @@ let package = Package(
         .testTarget(
             name: "MEGAVideoPlayerTests",
             dependencies: [
+                "MEGATest",
                 "MEGAVideoPlayer",
                 "MEGAVideoPlayerMock",
                 .product(name: "MEGAPermissions", package: "MEGAPermissions"),
-                .product(name: "MEGAPermissionsMock", package: "MEGAPermissions")
+                .product(name: "MEGAPermissionsMock", package: "MEGAPermissions"),
+                .product(name: "MEGAAppPresentation", package: "MEGAAppPresentation"),
+                .product(name: "MEGAAppPresentationMock", package: "MEGAAppPresentation")
             ],
             swiftSettings: settings
         )

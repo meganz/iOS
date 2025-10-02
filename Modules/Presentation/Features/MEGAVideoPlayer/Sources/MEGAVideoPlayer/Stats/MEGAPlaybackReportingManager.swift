@@ -1,4 +1,8 @@
+import AVFoundation
 import Combine
+import MEGAAnalyticsiOS
+import MEGAAppPresentation
+import UIKit
 
 @MainActor
 final class MEGAPlaybackReportingManager {
@@ -8,35 +12,47 @@ final class MEGAPlaybackReportingManager {
     private var lastObservedTime: Duration?
     private var lastStalledTime: Duration?
 
+    private var openTimeStamp: CFTimeInterval?
+    private var firstFrameTimeStamp: CFTimeInterval?
+    private var pauseStartTime: CFTimeInterval?
+    private var totalPauseTime: CFTimeInterval = 0
+    private var stallStartTime: CFTimeInterval?
+    private var totalStallTime: CFTimeInterval = 0
+
     private var cancellables = Set<AnyCancellable>()
 
     private let playerOptionIdentifiable: any PlayerOptionIdentifiable
     private let playbackState: any PlaybackStateObservable
     private let playbackDebugMessage: any PlaybackDebugMessageObservable
     private let playbackReporter: any PlaybackReporting
+    private let analyticsTracker: any AnalyticsTracking
 
     init(
         playerOptionIdentifiable: some PlayerOptionIdentifiable,
         playbackState: some PlaybackStateObservable,
         playbackDebugMessage: some PlaybackDebugMessageObservable,
-        playbackReporter: some PlaybackReporting
+        playbackReporter: some PlaybackReporting,
+        analyticsTracker: some AnalyticsTracking
     ) {
         self.playerOptionIdentifiable = playerOptionIdentifiable
         self.playbackState = playbackState
         self.playbackDebugMessage = playbackDebugMessage
         self.playbackReporter = playbackReporter
+        self.analyticsTracker = analyticsTracker
         playbackReporter.playbackPlayerOption(playerOptionIdentifiable.option)
     }
 
     convenience init(
         player: some VideoPlayerProtocol,
-        playbackReporter: some PlaybackReporting
+        playbackReporter: some PlaybackReporting,
+        analyticsTracker: some AnalyticsTracking
     ) {
         self.init(
             playerOptionIdentifiable: player,
             playbackState: player,
             playbackDebugMessage: player,
-            playbackReporter: playbackReporter
+            playbackReporter: playbackReporter,
+            analyticsTracker: analyticsTracker
         )
     }
 
@@ -44,6 +60,15 @@ final class MEGAPlaybackReportingManager {
         observeDebugMessage()
         observeState()
         observeCurrentTime()
+    }
+
+    func recordOpenTimeStamp() {
+        openTimeStamp = CACurrentMediaTime()
+    }
+
+    func trackVideoPlaybackFinalEvents() {
+        trackVideoPlaybackRecordEvent()
+        trackVideoPlaybackStallEvent()
     }
 
     private func observeDebugMessage() {
@@ -72,6 +97,7 @@ final class MEGAPlaybackReportingManager {
         if newState != lastKnownState {
             playbackReporter.playbackStateDidChange(newState)
             lastKnownState = newState
+            handleVideoPlaybackStateChangeForEventsTracking(newState)
         }
 
         detectStalling(newState, with: playbackState.currentTime)
@@ -93,7 +119,7 @@ final class MEGAPlaybackReportingManager {
         guard playbackStarted else { return }
 
         switch newState {
-        case .paused, .stopped, .ended, .error:
+        case .paused, .stopped, .ended, .error, .opening:
             break
         default:
             if currentTime == lastObservedTime, lastStalledTime == nil {
@@ -107,4 +133,98 @@ final class MEGAPlaybackReportingManager {
 
         lastObservedTime = currentTime
     }
+
+    // MARK: - Events Tracking
+
+    private func trackVideoPlaybackRecordEvent() {
+        guard let openTimeStamp else { return }
+        let delta = CACurrentMediaTime() - openTimeStamp
+        let clamped = min(max(0, delta), Double(Int32.max))
+        analyticsTracker.trackAnalyticsEvent(
+            with: VideoPlaybackRecordNewVPEvent(duration: Int32(clamped))
+        )
+    }
+
+    private func trackVideoPlaybackStallEvent() {
+        guard let firstFrameTimeStamp else { return }
+        let effectivePlayTime = CACurrentMediaTime() - firstFrameTimeStamp - totalPauseTime
+        guard effectivePlayTime > 0, totalStallTime >= 0 else { return }
+        // The ratio is multiplied by 100 to convert to percentage and then by 1000 make the final value accurate
+        let stallTimeToEffectivePlayTime = totalStallTime/effectivePlayTime * 100.0 * 1000
+        totalStallTime = 0
+        totalPauseTime = 0
+        analyticsTracker.trackAnalyticsEvent(
+            with: VideoPlaybackStallNewVPEvent(
+                time: Int32(stallTimeToEffectivePlayTime),
+                scenario: VideoPlaybackStallNewVP.VideoPlaybackScenario.manualclick,
+                commonMap: eventsCommonMap
+            )
+        )
+    }
+
+    private func handleVideoPlaybackStateChangeForEventsTracking(_ state: PlaybackState) {
+        switch state {
+        case .playing:
+            if firstFrameTimeStamp == nil {
+                firstFrameTimeStamp = CACurrentMediaTime()
+                trackVideoPlaybackFirstFrameEvent()
+            } else {
+                recordPauseTime()
+                recordStallTime()
+            }
+        case .buffering:
+            guard firstFrameTimeStamp != nil else { return }
+            stallStartTime = CACurrentMediaTime()
+            recordPauseTime()
+        case .paused:
+            guard firstFrameTimeStamp != nil else { return }
+            pauseStartTime = CACurrentMediaTime()
+            recordStallTime()
+        case .error:
+            trackVideoPlaybackStartupFailureEvent()
+        default:
+            guard firstFrameTimeStamp != nil else { return }
+            recordPauseTime()
+            recordStallTime()
+        }
+    }
+
+    private func trackVideoPlaybackFirstFrameEvent() {
+        guard let firstFrameTimeStamp, let openTimeStamp else { return }
+        let firstFrameTime = firstFrameTimeStamp - openTimeStamp
+        analyticsTracker.trackAnalyticsEvent(
+            with: VideoPlaybackFirstFrameNewVPEvent(
+                time: Int32(firstFrameTime),
+                scenario: VideoPlaybackFirstFrameNewVP.VideoPlaybackScenario.manualclick,
+                commonMap: eventsCommonMap
+            )
+        )
+    }
+
+    private func recordPauseTime() {
+        guard let pauseStartTime else { return }
+        totalPauseTime += CACurrentMediaTime() - pauseStartTime
+        self.pauseStartTime = nil
+    }
+
+    private func recordStallTime() {
+        guard let stallStartTime else { return }
+        totalStallTime += CACurrentMediaTime() - stallStartTime
+        self.stallStartTime = nil
+    }
+
+    private func trackVideoPlaybackStartupFailureEvent() {
+        analyticsTracker.trackAnalyticsEvent(
+            with: VideoPlaybackStartupFailureNewVPEvent(
+                scenario: VideoPlaybackStartupFailureNewVP.VideoPlaybackScenario.manualclick,
+                commonMap: eventsCommonMap
+            )
+        )
+    }
+
+    private var eventsCommonMap: String = {
+        // We use empty map for now.
+        // After the map structure is confirm we will update it
+        ""
+    }()
 }
