@@ -16,6 +16,12 @@ final class AudioPlayer: NSObject {
     var mediaPlayerNowPlayingInfoCenter = MPNowPlayingInfoCenter.default()
     var mediaPlayerRemoteCommandCenter = MPRemoteCommandCenter.shared()
     var tracks: [AudioPlayerItem] = []
+    /// Stores the original playlist order when shuffle is enabled.
+    /// This snapshot is used to restore the (unshuffled) order once shuffle is disabled. While shuffle is active, `tracks` may be randomized, but `defaultTracksOrder` remains unchanged. It is:
+    /// - Set when shuffle is first turned on.
+    /// - Cleared when shuffle is turned off (after restoring the order).
+    /// - Updated only when the playlist changes while shuffle is off (e.g. add, delete, reorder).
+    var defaultTracksOrder: [AudioPlayerItem]?
     var eventCancellables = Set<AnyCancellable>()
     var notificationCancellables = Set<AnyCancellable>()
     var audioPlayerConfig: [PlayerConfiguration: Any] = [.loop: false, .shuffle: false]
@@ -332,6 +338,8 @@ final class AudioPlayer: NSObject {
         self.tracks = tracks
         queueLoader.reset()
         let initialBatch = queueLoader.addAllTracks(tracks)
+        
+        defaultTracksOrder = nil
         
         debouncer.start { [weak self, aboutAudioPlayerDidAddTracks] in
             Task { @MainActor in

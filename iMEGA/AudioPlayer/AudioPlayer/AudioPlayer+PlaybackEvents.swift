@@ -131,7 +131,7 @@ extension AudioPlayer {
         
         notify(aboutCurrentItemAndQueue)
     }
-
+    
     func repeatLastItem() {
         // the current item is nil only when the audio player has played the last track of the playlist
         if currentItem() == nil {
@@ -244,7 +244,7 @@ extension AudioPlayer {
             Task { @MainActor in
                 _ = await item.seek(to: .zero)
             }
-
+            
             if let currentItem = queuePlayer.currentItem {
                 queuePlayer.remove(currentItem)
                 queuePlayer.secureInsert(currentItem, after: item)
@@ -332,11 +332,13 @@ extension AudioPlayer {
     }
     
     func shuffle(_ active: Bool) {
+        guard let shuffleMode = audioPlayerConfig[.shuffle] as? Bool, shuffleMode != active else {
+            return
+        }
+        
         audioPlayerConfig[.shuffle] = active
         
-        if active {
-            shuffleQueue()
-        }
+        shuffleQueue()
     }
     
     func isRepeatAllMode() -> Bool {
@@ -359,7 +361,7 @@ extension AudioPlayer {
         guard let repeatOneMode = audioPlayerConfig[.repeatOne] as? Bool else { return false }
         return repeatOneMode
     }
-
+    
     func repeatOne(_ active: Bool) {
         audioPlayerConfig[.repeatOne] = active
         if active {
@@ -422,34 +424,75 @@ extension AudioPlayer {
     }
     
     func shuffleQueue() {
-        guard let currentItem = currentItem() else { return }
-        
-        /// Shuffle everything except the currently playing item in place.
-        if tracks.count > 2 {
-            tracks[1...].shuffle()
+        guard currentItem() != nil,
+              let current = currentItem(),
+              let currentIndex = tracks.firstIndex(where: { $0 == current }) else {
+            return
         }
         
-        /// Update full playlist order to reflect shuffle.
-        update(tracks: tracks)
+        notify(aboutTheBeginningOfBlockingAction)
         
-        /// Remove everything from the AVQueuePlayer except the current item so we can rebuild the playback queue.
-        for case let item as AudioPlayerItem in queuePlayer.items() where item !== currentItem {
-            queuePlayer.remove(item)
+        /// Shuffle affects only the tail (tracks after current):
+        /// - prefix -> playback history must stay intact for Previous tracks
+        /// - current -> keep playing without interruption
+        /// - tail -> randomized once for upcoming order
+        if isShuffleMode() {
+            let alreadyPlayedPrefix = Array(tracks[..<currentIndex])
+            let upcomingTail = Array(tracks[(currentIndex + 1)...]).shuffled()
+            
+            defaultTracksOrder = tracks
+            
+            /// Update the logical order (history + current + shuffled tail).
+            tracks = alreadyPlayedPrefix + [current] + upcomingTail
+            
+            /// Rebuild queue preserving the current item.
+            rebuildQueuePreservingCurrent(current, with: upcomingTail)
+            
+        } else {
+            /// Shuffle OFF: restore the original canonical order while keeping the current track.
+            let base = defaultTracksOrder ?? tracks
+            guard let baseIndex = base.firstIndex(of: current) else {
+                notify(aboutTheEndOfBlockingAction)
+                return
+            }
+            
+            tracks = base
+            
+            /// Upcoming tracks in original linear order.
+            let linearTail = Array(base[(baseIndex + 1)...])
+            
+            /// Rebuild queue preserving the current item.
+            rebuildQueuePreservingCurrent(current, with: linearTail)
+            
+            /// Clear the snapshot: once shuffle is disabled, we’ve restored the original order
+            defaultTracksOrder = nil
         }
         
-        /// Reset the loader to consider the newly shuffled full playlist, then get the first batch to enqueue.
-        queueLoader.reset()
-        let initialBatch = queueLoader.addAllTracks(tracks)
-        
-        /// Enqueue the initial batch after the current item, preserving batch order.
-        var tail: AVPlayerItem? = currentItem
-        for item in initialBatch {
-            queuePlayer.secureInsert(item, after: tail)
-            tail = item
-        }
+        notify(aboutTheEndOfBlockingAction)
         
         /// Begin preloading metadata only for the newly enqueued items so their artwork/details are ready.
         preloadNextTracksMetadata()
+    }
+    
+    private func rebuildQueuePreservingCurrent(
+        _ current: AudioPlayerItem,
+        with tail: [AudioPlayerItem]
+    ) {
+        /// Remove everything except the current item:
+        /// - keeps playback uninterrupted (we don’t touch the item being played)
+        /// - avoids stale order/duplicates left from the previous queue state
+        queuePlayer.items()
+            .compactMap { $0 as? AudioPlayerItem }
+            .filter { $0 != current }
+            .forEach { queuePlayer.remove($0) }
+        
+        /// Rebuild the queue to match the logical order in `tracks`:
+        /// - create/enqueue the tail in the exact target sequence (shuffled or linear)
+        /// - append after the current item so “Next” follows our computed order
+        queueLoader.reset()
+        
+        let initialBatch = queueLoader.addAllTracks(tail)
+        initialBatch.forEach { queuePlayer.secureInsert($0, after: queuePlayer.items().last) }
     }
     
     func deletePlaylist(items: [AudioPlayerItem]) async {
@@ -457,6 +500,10 @@ extension AudioPlayer {
         itemsToRemove.forEach(queuePlayer.remove)
         
         update(tracks: tracks.filter { !itemsToRemove.contains($0) })
+        
+        if defaultTracksOrder != nil {
+            defaultTracksOrder?.removeAll(where: { itemsToRemove.contains($0) })
+        }
         notify([aboutCurrentItemAndQueue])
     }
     
@@ -489,8 +536,6 @@ extension AudioPlayer {
         }
         
         tracks.insert(item, at: insertionIndex)
-        
-        notify([aboutTheEndOfBlockingAction])
     }
     
     func reset(item: AudioPlayerItem) {
