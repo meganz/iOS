@@ -17,11 +17,11 @@ final class MockStreamingInfoUseCase: StreamingInfoUseCaseProtocol, @unchecked S
         stopServer_calledTimes += 1
     }
     
-    func info(from folderLinkNode: MEGANode) -> MEGA.AudioPlayerItem? {
+    func fetchTrack(from folderLinkNode: MEGANode) -> AudioPlayerItem? {
         infoNodePlayerItem
     }
 
-    func isLocalHTTPProxyServerRunning() -> Bool {
+    func isLocalHTTPServerRunning() -> Bool {
         false
     }
     
@@ -33,8 +33,7 @@ final class MockStreamingInfoUseCase: StreamingInfoUseCaseProtocol, @unchecked S
         infoNode = node
     }
     
-    func path(fromNode: MEGANode) -> URL? {
+    func streamingURL(for node: MEGANode) -> URL? {
         nil
     }
-    
 }

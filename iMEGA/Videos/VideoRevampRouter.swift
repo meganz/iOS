@@ -99,8 +99,8 @@ struct VideoRevampRouter: VideoRevampRouting {
     
     func openMediaBrowser(for video: NodeEntity, allVideos: [NodeEntity]) {
         let nodeInfoUseCase = NodeInfoUseCase()
-        guard let selectedNode = nodeInfoUseCase.node(fromHandle: video.handle) else { return }
-        let allNodes = allVideos.compactMap { nodeInfoUseCase.node(fromHandle: $0.handle) }
+        guard let selectedNode = nodeInfoUseCase.node(for: video.handle) else { return }
+        let allNodes = allVideos.compactMap { nodeInfoUseCase.node(for: $0.handle) }
         
         guard let navigationController else { return }
         let nodeOpener = NodeOpener(navigationController: navigationController)
