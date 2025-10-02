@@ -179,7 +179,7 @@ final class MiniPlayerViewModel: ViewModelType {
             return
         }
         
-        if !streamingInfoUseCase.isLocalHTTPProxyServerRunning() {
+        if !streamingInfoUseCase.isLocalHTTPServerRunning() {
             streamingInfoUseCase.startServer()
         }
         
@@ -208,17 +208,17 @@ final class MiniPlayerViewModel: ViewModelType {
     
     private nonisolated func initialize(with node: MEGANode) async {
         if await configEntity.isFileLink {
-            guard let track = streamingInfoUseCase.info(from: node) else {
+            guard let track = streamingInfoUseCase.fetchTrack(from: node) else {
                 await dismiss()
                 return
             }
             await initialize(tracks: [track], currentTrack: track)
         } else {
-            guard let children = await configEntity.isFolderLink ? nodeInfoUseCase.folderChildrenInfo(fromParentHandle: node.parentHandle) :
-                                                nodeInfoUseCase.childrenInfo(fromParentHandle: node.parentHandle),
+            guard let children = await configEntity.isFolderLink ? nodeInfoUseCase.fetchFolderLinkAudioTracks(from: node.parentHandle) :
+                                                nodeInfoUseCase.fetchAudioTracks(from: node.parentHandle),
                   let currentTrack = await children.async.first(where: { await $0.node?.handle == node.handle }) else {
                 
-                guard let track = streamingInfoUseCase.info(from: node) else {
+                guard let track = streamingInfoUseCase.fetchTrack(from: node) else {
                     await dismiss()
                     return
                 }
@@ -233,7 +233,7 @@ final class MiniPlayerViewModel: ViewModelType {
     
     private nonisolated func initialize(with offlineFilePaths: [String]) async {
         guard
-            let files = offlineInfoUseCase.info(from: offlineFilePaths),
+            let files = offlineInfoUseCase.fetchTracks(from: offlineFilePaths),
             let currentFilePath = await configEntity.fileLink,
             let currentTrack = await files.async.first(where: { await $0.url.path == currentFilePath })
         else {
@@ -391,7 +391,7 @@ extension MiniPlayerViewModel {
     }
     
     private func refreshItem(_ nodeHandle: HandleEntity) {
-        guard let node = nodeInfoUseCase.node(fromHandle: nodeHandle) else { return }
+        guard let node = nodeInfoUseCase.node(for: nodeHandle) else { return }
         
         playerHandler.currentPlayer()?.refreshTrack(with: node)
         refreshItemUI(nodeHandle: nodeHandle)

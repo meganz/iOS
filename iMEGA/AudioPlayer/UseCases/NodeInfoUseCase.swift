@@ -2,16 +2,10 @@ import Foundation
 import MEGADomain
 
 protocol NodeInfoUseCaseProtocol: Sendable {
-    func node(fromHandle: HandleEntity) -> MEGANode?
-    func childrenInfo(fromParentHandle: HandleEntity) -> [AudioPlayerItem]?
-    func folderChildrenInfo(fromParentHandle: HandleEntity) -> [AudioPlayerItem]?
+    func node(for handle: HandleEntity) -> MEGANode?
+    func fetchAudioTracks(from folder: HandleEntity) -> [AudioPlayerItem]?
+    func fetchFolderLinkAudioTracks(from folder: HandleEntity) -> [AudioPlayerItem]?
     func folderLinkLogout()
-    
-    /// Check if a node is taken down. For current user node, it check through `MEGANode.isTakenDown()`. For non current user node, it will check through `MEGASdk.sharedFolderLink.getDownloadUrl()`.
-    /// - Parameters:
-    ///   - node: node to check
-    ///   - isFolderLink: a boolean to indicates node accessed from folder link or not
-    /// - Returns: returns true if it is taken down, false if it is not taken down
     func isTakenDown(node: MEGANode, isFolderLink: Bool) async throws -> Bool
 }
 
@@ -22,16 +16,16 @@ final class NodeInfoUseCase: NodeInfoUseCaseProtocol {
         self.nodeInfoRepository = nodeInfoRepository
     }
     
-    func node(fromHandle: HandleEntity) -> MEGANode? {
-        nodeInfoRepository.node(for: fromHandle)
+    func node(for handle: HandleEntity) -> MEGANode? {
+        nodeInfoRepository.node(for: handle)
     }
     
-    func childrenInfo(fromParentHandle: HandleEntity) -> [AudioPlayerItem]? {
-        nodeInfoRepository.fetchAudioTracks(from: fromParentHandle)
+    func fetchAudioTracks(from folder: HandleEntity) -> [AudioPlayerItem]? {
+        nodeInfoRepository.fetchAudioTracks(from: folder)
     }
     
-    func folderChildrenInfo(fromParentHandle: HandleEntity) -> [AudioPlayerItem]? {
-        nodeInfoRepository.fetchFolderLinkAudioTracks(from: fromParentHandle)
+    func fetchFolderLinkAudioTracks(from folder: HandleEntity) -> [AudioPlayerItem]? {
+        nodeInfoRepository.fetchFolderLinkAudioTracks(from: folder)
     }
     
     func folderLinkLogout() {

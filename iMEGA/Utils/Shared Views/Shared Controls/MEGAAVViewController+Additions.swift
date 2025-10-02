@@ -269,7 +269,7 @@ extension MEGAAVViewController {
         guard let apiForStreaming else { return nil }
         let streamingInfoRepository = StreamingInfoRepository(sdk: apiForStreaming)
         let streamingInfoUseCase = StreamingInfoUseCase(streamingInfoRepository: streamingInfoRepository)
-        let path = streamingInfoUseCase.path(fromNode: node)
+        let path = streamingInfoUseCase.streamingURL(for: node)
         return path
     }
     

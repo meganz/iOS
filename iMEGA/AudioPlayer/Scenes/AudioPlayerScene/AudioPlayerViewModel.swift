@@ -193,7 +193,7 @@ final class AudioPlayerViewModel: ViewModelType {
                 return configEntity.fileLink != playerHandler.playerCurrentItem()?.url.absoluteString
             }
             if configEntity.fileLink != nil {
-                guard let item = streamingInfoUseCase?.info(from: node), let itemNode = item.node,
+                guard let item = streamingInfoUseCase?.fetchTrack(from: node), let itemNode = item.node,
                       let currentItem = playerHandler.playerCurrentItem(), let currentItemNode = currentItem.node else {
                     return true
                 }
@@ -230,7 +230,7 @@ final class AudioPlayerViewModel: ViewModelType {
                 return
             }
             
-            if !(streamingInfoUseCase?.isLocalHTTPProxyServerRunning() ?? true) {
+            if !(streamingInfoUseCase?.isLocalHTTPServerRunning() ?? true) {
                 streamingInfoUseCase?.startServer()
             }
             await initialize(with: node)
@@ -325,7 +325,7 @@ final class AudioPlayerViewModel: ViewModelType {
     // MARK: - Node Initialize
     private nonisolated func initialize(with node: MEGANode) async {
         if configEntity.fileLink != nil {
-            guard let track = streamingInfoUseCase?.info(from: node) else {
+            guard let track = streamingInfoUseCase?.fetchTrack(from: node) else {
                 await dismiss()
                 return
             }
@@ -335,7 +335,7 @@ final class AudioPlayerViewModel: ViewModelType {
                 await initializeTracksForAllAudioFilesAsPlaylist(from: node, allNodes)
             } else {
                 guard let (currentTrack, children) = await getTracks(from: node) else {
-                    guard let track = streamingInfoUseCase?.info(from: node) else {
+                    guard let track = streamingInfoUseCase?.fetchTrack(from: node) else {
                         await dismiss()
                         return
                     }
@@ -352,10 +352,10 @@ final class AudioPlayerViewModel: ViewModelType {
     }
     
     private nonisolated func initializeTracksForAllAudioFilesAsPlaylist(from node: MEGANode, _ allNodes: [MEGANode]) async {
-        let tracksFromNodes = allNodes.compactMap { streamingInfoUseCase?.info(from: $0) }
+        let tracksFromNodes = allNodes.compactMap { streamingInfoUseCase?.fetchTrack(from: $0) }
         guard tracksFromNodes.isNotEmpty,
             let currentTrack = await tracksFromNodes.async.first(where: { await $0.node?.handle == node.handle }) else {
-            guard let track = streamingInfoUseCase?.info(from: node) else {
+            guard let track = streamingInfoUseCase?.fetchTrack(from: node) else {
                 await dismiss()
                 return
             }
@@ -368,8 +368,8 @@ final class AudioPlayerViewModel: ViewModelType {
     private nonisolated func getTracks(from node: MEGANode) async -> (currentTrack: AudioPlayerItem, childrenTracks: [AudioPlayerItem])? {
         guard
             let children = configEntity.isFolderLink
-                ? nodeInfoUseCase?.folderChildrenInfo(fromParentHandle: node.parentHandle)
-                : nodeInfoUseCase?.childrenInfo(fromParentHandle: node.parentHandle),
+                ? nodeInfoUseCase?.fetchFolderLinkAudioTracks(from: node.parentHandle)
+                : nodeInfoUseCase?.fetchAudioTracks(from: node.parentHandle),
             let currentTrack = await children.async.first(where: { await $0.node?.handle == node.handle })
         else {
             return nil
@@ -380,7 +380,7 @@ final class AudioPlayerViewModel: ViewModelType {
     
     // MARK: - Offline Files Initialize
     private func initialize(with offlineFilePaths: [String]) async {
-        guard let files = offlineInfoUseCase?.info(from: offlineFilePaths),
+        guard let files = offlineInfoUseCase?.fetchTracks(from: offlineFilePaths),
               let currentFilePath = configEntity.fileLink,
               let currentTrack = files.first(where: { $0.url.path == currentFilePath ||
                                                 $0.url.absoluteString == currentFilePath }) else {
@@ -529,7 +529,7 @@ final class AudioPlayerViewModel: ViewModelType {
             case .half: speedModeState = .normal
             }
         case .showPlaylist:
-            let parentNodeName = nodeInfoUseCase?.node(fromHandle: configEntity.node?.parentHandle ?? .invalid)?.name
+            let parentNodeName = nodeInfoUseCase?.node(for: configEntity.node?.parentHandle ?? .invalid)?.name
             trackAccessingAudioPlayerPlaylist()
             router?.goToPlaylist(parentNodeName: parentNodeName ?? "")
         case .`import`:
@@ -549,7 +549,7 @@ final class AudioPlayerViewModel: ViewModelType {
         case .showActionsforCurrentNode(let sender):
             guard let node = playerHandler.playerCurrentItem()?.node else { return }
             guard let nodeUseCase = nodeInfoUseCase,
-                  let latestNode = nodeUseCase.node(fromHandle: node.handle) else {
+                  let latestNode = nodeUseCase.node(for: node.handle) else {
                     self.router?.showAction(for: node, isFileLink: configEntity.playerType == .fileLink, sender: sender)
                     return
                 }
@@ -777,7 +777,7 @@ extension AudioPlayerViewModel {
     }
     
     private func refreshItem(_ updatedNode: NodeEntity) {
-        guard let node = nodeInfoUseCase?.node(fromHandle: updatedNode.handle) else { return }
+        guard let node = nodeInfoUseCase?.node(for: updatedNode.handle) else { return }
         
         playerHandler.currentPlayer()?.refreshTrack(with: node)
         reloadNodeInfoWithCurrentItem()

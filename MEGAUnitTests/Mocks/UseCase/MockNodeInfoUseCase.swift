@@ -9,15 +9,15 @@ final class MockNodeInfoUseCase: NodeInfoUseCaseProtocol, @unchecked Sendable {
         self.isTakenDownNode = isTakenDownNode
     }
     
-    func node(fromHandle: MEGADomain.HandleEntity) -> MEGANode? {
+    func node(for: HandleEntity) -> MEGANode? {
         nil
     }
     
-    func childrenInfo(fromParentHandle: MEGADomain.HandleEntity) -> [MEGA.AudioPlayerItem]? {
+    func fetchAudioTracks(from folder: HandleEntity) -> [AudioPlayerItem]? {
         nil
     }
     
-    func folderChildrenInfo(fromParentHandle: MEGADomain.HandleEntity) -> [MEGA.AudioPlayerItem]? {
+    func fetchFolderLinkAudioTracks(from folder: HandleEntity) -> [AudioPlayerItem]? {
         nil
     }
     
