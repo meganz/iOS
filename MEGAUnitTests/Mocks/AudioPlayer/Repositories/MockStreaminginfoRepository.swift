@@ -14,20 +14,16 @@ class MockStreamingInfoRepository: StreamingInfoRepositoryProtocol, @unchecked S
     
     func serverStop() {}
     
-    func info(fromFolderLinkNode: MEGANode) -> AudioPlayerItem? {
-        switch result {
-        case .failure: return nil
-        case .success: return AudioPlayerItem.mockItem
-        }
+    func fetchTrack(from node: MEGANode) -> AudioPlayerItem? {
+        guard case .success = result else { return nil }
+        return .mockItem
     }
     
-    func path(fromNode: MEGANode) -> URL? {
+    func streamingURL(for node: MEGANode) -> URL? {
         pathFromNodeCallCount += 1
-        switch result {
-        case .failure: return nil
-        case .success: return AudioPlayerItem.mockItem.url
-        }
+        guard case .success = result else { return nil }
+        return AudioPlayerItem.mockItem.url
     }
     
-    func isLocalHTTPProxyServerRunning() -> Bool { return false }
+    func isLocalHTTPServerRunning() -> Bool { false }
 }

@@ -11,10 +11,10 @@ struct StreamingInfoUseCaseTests {
     struct InfoSuite {
         @Test("returns item on success and nil on failure")
         func infoFromFolderLinkNode() throws {
-            let item = try #require(StreamingInfoUseCaseTests.successRepo.info(fromFolderLinkNode: MEGANode()))
+            let item = try #require(StreamingInfoUseCaseTests.successRepo.fetchTrack(from: MEGANode()))
             let expected = AudioPlayerItem.mockItem
             #expect(item.url == expected.url)
-            #expect(StreamingInfoUseCaseTests.failureRepo.info(fromFolderLinkNode: MEGANode()) == nil)
+            #expect(StreamingInfoUseCaseTests.failureRepo.fetchTrack(from: MEGANode()) == nil)
         }
     }
     
@@ -22,10 +22,10 @@ struct StreamingInfoUseCaseTests {
     struct PathSuite {
         @Test("returns path on success and nil on failure")
         func pathFromNode() throws {
-            let path = try #require(StreamingInfoUseCaseTests.successRepo.path(fromNode: MEGANode()))
+            let path = try #require(StreamingInfoUseCaseTests.successRepo.streamingURL(for: MEGANode()))
             let expected = AudioPlayerItem.mockItem.url
             #expect(path == expected)
-            #expect(StreamingInfoUseCaseTests.failureRepo.path(fromNode: MEGANode()) == nil)
+            #expect(StreamingInfoUseCaseTests.failureRepo.streamingURL(for: MEGANode()) == nil)
         }
     }
 }

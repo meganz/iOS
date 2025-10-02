@@ -11,14 +11,14 @@ class MockOfflineInfoRepository: OfflineInfoRepositoryProtocol, @unchecked Senda
         self.isOffline = isOffline
     }
     
-    func info(fromFiles: [String]?) -> [AudioPlayerItem]? {
+    func fetchTracks(from files: [String]?) -> [AudioPlayerItem]? {
         switch result {
         case .failure: return nil
         case .success: return AudioPlayerItem.mockArray
         }
     }
     
-    func localPath(fromNode: MEGANode) -> URL? {
+    func offlineFileURL(for node: MEGANode) -> URL? {
         localPathfromNodeCallCount += 1
         switch result {
         case .failure: return nil
@@ -26,7 +26,7 @@ class MockOfflineInfoRepository: OfflineInfoRepositoryProtocol, @unchecked Senda
         }
     }
     
-    func isOffline(node: MEGANode) -> Bool {
+    func isNodeAvailableOffline(_ node: MEGANode) -> Bool {
         isOffline
     }
 }

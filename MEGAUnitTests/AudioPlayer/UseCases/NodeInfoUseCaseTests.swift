@@ -26,8 +26,8 @@ struct NodeInfoUseCaseTests {
     struct RetrievalSuite {
         @Test("node(fromHandle:) returns value only on success")
         func nodeFromHandle() {
-            #expect(successRepo.node(fromHandle: anyHandle) != nil)
-            #expect(failureRepo.node(fromHandle: anyHandle) == nil)
+            #expect(successRepo.node(for: anyHandle) != nil)
+            #expect(failureRepo.node(for: anyHandle) == nil)
         }
         
         @Test("folderNode(fromHandle:) returns value only on success")
@@ -47,18 +47,18 @@ struct NodeInfoUseCaseTests {
     struct ChildrenInfoSuite {
         @Test("childrenInfo(fromParentHandle:) matches mock urls on success, nil on failure")
         func parentChildren() throws {
-            let children = try #require(successRepo.childrenInfo(fromParentHandle: anyHandle))
+            let children = try #require(successRepo.fetchAudioTracks(from: anyHandle))
             let expected = try mockURLs()
             #expect(children.compactMap(\.url) == expected)
-            #expect(failureRepo.childrenInfo(fromParentHandle: anyHandle) == nil)
+            #expect(failureRepo.fetchAudioTracks(from: anyHandle) == nil)
         }
         
         @Test("folderChildrenInfo(fromParentHandle:) matches mock urls on success, nil on failure")
         func folderParentChildren() throws {
-            let children = try #require(successRepo.folderChildrenInfo(fromParentHandle: anyHandle))
+            let children = try #require(successRepo.fetchFolderLinkAudioTracks(from: anyHandle))
             let expected = try mockURLs()
             #expect(children.compactMap(\.url) == expected)
-            #expect(failureRepo.folderChildrenInfo(fromParentHandle: anyHandle) == nil)
+            #expect(failureRepo.fetchFolderLinkAudioTracks(from: anyHandle) == nil)
         }
         
         @Test("info(fromNodes:) matches mock urls on success, nil on failure")

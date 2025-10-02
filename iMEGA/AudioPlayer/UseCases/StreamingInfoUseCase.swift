@@ -25,14 +25,14 @@ final class StreamingInfoUseCase: StreamingInfoUseCaseProtocol {
     }
     
     func info(from folderLinkNode: MEGANode) -> AudioPlayerItem? {
-        streamingInfoRepository.info(fromFolderLinkNode: folderLinkNode)
+        streamingInfoRepository.fetchTrack(from: folderLinkNode)
     }
     
     func isLocalHTTPProxyServerRunning() -> Bool {
-        streamingInfoRepository.isLocalHTTPProxyServerRunning()
+        streamingInfoRepository.isLocalHTTPServerRunning()
     }
     
     func path(fromNode: MEGANode) -> URL? {
-        streamingInfoRepository.path(fromNode: fromNode)
+        streamingInfoRepository.streamingURL(for: fromNode)
     }
 }

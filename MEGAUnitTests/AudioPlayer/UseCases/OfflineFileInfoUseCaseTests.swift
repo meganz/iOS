@@ -10,10 +10,10 @@ struct OfflineFileInfoUseCaseTests {
     struct InfoFromFilesSuite {
         @Test("returns items on success and nil on failure")
         func infoFromFiles() throws {
-            let items = try #require(OfflineFileInfoUseCaseTests.successRepo.info(fromFiles: [""]))
+            let items = try #require(OfflineFileInfoUseCaseTests.successRepo.fetchTracks(from: [""]))
             let expected = AudioPlayerItem.mockArray
             #expect(items.compactMap(\.url) == expected.compactMap(\.url))
-            #expect(OfflineFileInfoUseCaseTests.failureRepo.info(fromFiles: [""]) == nil)
+            #expect(OfflineFileInfoUseCaseTests.failureRepo.fetchTracks(from: [""]) == nil)
         }
     }
     
@@ -21,10 +21,10 @@ struct OfflineFileInfoUseCaseTests {
     struct LocalPathSuite {
         @Test("returns local path on success and nil on failure")
         func localPathFromNode() throws {
-            let path = try #require(OfflineFileInfoUseCaseTests.successRepo.localPath(fromNode: MEGANode()))
+            let path = try #require(OfflineFileInfoUseCaseTests.successRepo.offlineFileURL(for: MEGANode()))
             let expected = AudioPlayerItem.mockItem.url
             #expect(path == expected)
-            #expect(OfflineFileInfoUseCaseTests.failureRepo.localPath(fromNode: MEGANode()) == nil)
+            #expect(OfflineFileInfoUseCaseTests.failureRepo.offlineFileURL(for: MEGANode()) == nil)
         }
     }
 }

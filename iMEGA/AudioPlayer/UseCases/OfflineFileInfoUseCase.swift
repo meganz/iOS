@@ -13,6 +13,6 @@ final class OfflineFileInfoUseCase: OfflineFileInfoUseCaseProtocol {
     }
     
     func info(from files: [String]?) -> [AudioPlayerItem]? {
-        offlineInfoRepository.info(fromFiles: files)
+        offlineInfoRepository.fetchTracks(from: files)
     }
 }
