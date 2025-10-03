@@ -1,252 +1,24 @@
 @testable import MEGA
 import MEGAAppSDKRepoMock
-import MEGATest
-import XCTest
+import Testing
 
-final class NodeInfoRepositoryTests: XCTestCase {
+struct NodeInfoRepositoryTests {
+    static let defaultNode = MockNode(handle: 1)
     
-    // MARK: - folderLinkLogout
-    func testFolderLinkLogout_whenCalled_logoutSDK() {
-        let (sut, _, mockFolderSdk, _, _) = makeSUT()
-        
-        sut.folderLinkLogout()
-        
-        XCTAssertEqual(mockFolderSdk.folderLinkLogoutCallCount, 1)
-    }
-    
-    // MARK: - nodeFromHandle
-    func testNodeFromHandle_whenCalled_callNode() {
-        let (sut, mockSdk, _, _, _) = makeSUT(sdk: MockSdk(), folderSdk: MockFolderSdk(isLoggedIn: true))
-        
-        _ = sut.node(for: .invalid)
-        
-        XCTAssertEqual(mockSdk.nodeForHandleCallCount, 1)
-    }
-    
-    // MARK: - pathFromHandle
-    func testPathFromHandle_whenCalled_searchNode() {
-        let (sut, mockSdk, _, _, _) = makeSUT(sdk: MockSdk(nodes: []), folderSdk: MockFolderSdk(isLoggedIn: true))
-        
-        _ = sut.playbackURL(for: .invalid)
-        
-        XCTAssertEqual(mockSdk.nodeForHandleCallCount, 1)
-    }
-    
-    func testPathFromHandle_whenNotFoundHandle_returnsNilPath() {
-        let (sut, _, _, _, _) = makeSUT(sdk: MockSdk(nodes: []), folderSdk: MockFolderSdk(isLoggedIn: true))
-        
-        let node = sut.playbackURL(for: .invalid)
-        
-        XCTAssertNil(node)
-    }
-    
-    func testPathFromHandle_whenHasValidNode_searchPathFromOfflineFileInfo() {
-        let node = anyNode(handle: 1)
-        let (sut, _, _, offlineFileInfoRepository, _) = makeSUT(
-            sdk: MockSdk(nodes: [node]),
-            folderSdk: MockFolderSdk(isLoggedIn: true),
-            offlineInfoRepository: MockOfflineInfoRepository(
-                result: .success,
-                isOffline: true
-            )
-        )
-        
-        _ = sut.playbackURL(for: node.handle)
-        
-        XCTAssertEqual(offlineFileInfoRepository.localPathfromNodeCallCount, 1)
-    }
-    
-    func testPathFromHandle_whenHasValidNodeAndNilOfflinePath_searchPathFromStreamingInfo() {
-        let node = anyNode(handle: 1)
-        let (sut, _, _, _, streamingInfoRepository) = makeSUT(
-            sdk: MockSdk(nodes: [node]),
-            folderSdk: MockFolderSdk(isLoggedIn: true),
-            offlineInfoRepository: MockOfflineInfoRepository(result: .failure(.generic)),
-            streamingInfoRepository: MockStreamingInfoRepository(result: .success)
-        )
-        
-        _ = sut.playbackURL(for: node.handle)
-        
-        XCTAssertEqual(streamingInfoRepository.pathFromNodeCallCount, 1)
-    }
-    
-    // MARK: - makeAudioPlayerItems
-    func testInfoFromNodes_whenNilNodes_returnsNilPlayerItems() {
-        let (sut, _, _, _, _) = makeSUT(sdk: MockSdk(), folderSdk: MockFolderSdk(isLoggedIn: true))
-        
-        let playerItems = sut.makeAudioPlayerItems(from: nil)
-        
-        XCTAssertNil(playerItems)
-    }
-    
-    func testInfoFromNodes_whenSingleNode_returnsNilPlayerItemOnNotFoundItem() {
-        let (sut, _, _, _, _) = makeSUT(sdk: MockSdk(nodes: []), folderSdk: MockFolderSdk(isLoggedIn: true))
-        
-        let playerItems = sut.makeAudioPlayerItems(from: nil)
-        
-        XCTAssertNil(playerItems)
-    }
-    
-    func testInfoFromNodes_whenSingleNode_returnsSinglePlayerItem() {
-        let node = anyNode(handle: 1, name: "any-name")
-        let nodes = [node]
-        let (sut, _, _, _, _) = makeSUT(
-            sdk: MockSdk(nodes: nodes),
-            folderSdk: MockFolderSdk(isLoggedIn: true),
-            offlineInfoRepository: MockOfflineInfoRepository(result: .failure(.generic)),
-            streamingInfoRepository: MockStreamingInfoRepository(result: .success)
-        )
-        
-        let playerItems = sut.makeAudioPlayerItems(from: nodes)
-        
-        XCTAssertEqual(nodes.count, playerItems?.count)
-        XCTAssertEqual(nodes.first?.name, playerItems?.first?.name)
-        XCTAssertEqual(nodes.first, playerItems?.first?.node)
-    }
-    
-    func testInfoFromNodes_whenMoreThanOneItems_returnsMoreThanOneItems() {
-        let node1 = anyNode(handle: 1, name: "any-name-1")
-        let node2 = anyNode(handle: 2, name: "any-name-2")
-        let nodes = [node1, node2]
-        let (sut, _, _, _, _) = makeSUT(
-            sdk: MockSdk(nodes: nodes),
-            folderSdk: MockFolderSdk(isLoggedIn: true),
-            offlineInfoRepository: MockOfflineInfoRepository(result: .failure(.generic)),
-            streamingInfoRepository: MockStreamingInfoRepository(result: .success)
-        )
-        
-        let playerItems = sut.makeAudioPlayerItems(from: nodes)
-        
-        XCTAssertEqual(nodes.count, playerItems?.count)
-        playerItems?.enumerated().forEach { (index, playerItem) in
-            XCTAssertEqual(nodes[index].name, playerItem.name)
-            XCTAssertEqual(nodes[index], playerItem.node)
-        }
-    }
-    
-    // MARK: - fetchAudioTracks
-    func testChildrenInfoFromParentHandle_whenInvalidNode_returnsNil() {
-        let node1 = anyNode(handle: 1, name: "any-invalid-node-1")
-        let (sut, _, _, _, _) = makeSUT(sdk: MockSdk(nodes: [node1]), folderSdk: MockFolderSdk(isLoggedIn: true))
-        
-        let playerItems = sut.fetchAudioTracks(from: .invalid)
-        
-        XCTAssertNil(playerItems)
-    }
-    
-    func testChildrenInfoFromParentHandle_withValidAudioNodes_returnsSingleItem() {
-        let parentNode = anyNode(handle: 1, name: "any-valid-node-1.mp3", parentHandle: 100)
-        let childNode = anyNode(handle: 2, name: "any-valid-node-2.mp3", parentHandle: 1)
-        let (sut, _, _, _, _) = makeSUT(
-            sdk: MockSdk(nodes: [parentNode, childNode]),
-            folderSdk: MockFolderSdk(isLoggedIn: true),
-            offlineInfoRepository: MockOfflineInfoRepository(result: .success)
-        )
-        
-        guard let playerItems = sut.fetchAudioTracks(from: parentNode.handle) else {
-            XCTFail("Expect to have empty items, got nil instead.")
-            return
-        }
-        
-        XCTAssertEqual(playerItems.count, 1)
-        playerItems.enumerated().forEach { (index, playerItem) in
-            XCTAssertEqual(playerItem.node?.parentHandle, 1, "Expect to have correct parent handle 1, got wrong instead at index: \(index)")
-        }
-    }
-    
-    func testChildrenInfoFromParentHandle_withValidAudioNodes_returnsMoreThanOneItems() {
-        let parentNode = anyNode(handle: 1, name: "any-valid-node-1.mp3", parentHandle: 100)
-        let childNode1 = anyNode(handle: 2, name: "any-valid-node-2.mp3", parentHandle: 1)
-        let childNode2 = anyNode(handle: 3, name: "any-valid-node-3.mp3", parentHandle: 1)
-        let (sut, _, _, _, _) = makeSUT(
-            sdk: MockSdk(nodes: [parentNode, childNode1, childNode2]),
-            folderSdk: MockFolderSdk(isLoggedIn: true),
-            offlineInfoRepository: MockOfflineInfoRepository(result: .success)
-        )
-        
-        guard let playerItems = sut.fetchAudioTracks(from: parentNode.handle) else {
-            XCTFail("Expect to have empty items, got nil instead.")
-            return
-        }
-        
-        XCTAssertEqual(playerItems.count, 2)
-        playerItems.enumerated().forEach { (index, playerItem) in
-            XCTAssertEqual(playerItem.node?.parentHandle, 1, "Expect to have correct parent handle 1, got wrong instead at index: \(index)")
-        }
-    }
-    
-    // MARK: - fetchFolderLinkAudioTracks
-    func testFolderChildrenInfoFromParentHandle_whenInvalidNode_returnsNil() {
-        let node1 = anyNode(handle: 1, name: "any-invalid-node-1")
-        let (sut, _, _, _, _) = makeSUT(sdk: MockSdk(nodes: [node1]), folderSdk: MockFolderSdk(isLoggedIn: true, nodes: [node1]))
-        
-        let playerItems = sut.fetchFolderLinkAudioTracks(from: .invalid)
-        
-        XCTAssertNil(playerItems)
-    }
-    
-    func testFolderChildrenInfoFromParentHandle_withValidAudioNodes_returnsSingleItem() {
-        let parentNode = anyNode(handle: 1, name: "any-valid-node-1.mp3", parentHandle: 100)
-        let childNode = anyNode(handle: 2, name: "any-valid-node-2.mp3", parentHandle: 1)
-        let nodes = [parentNode, childNode]
-        let (sut, _, mockFolderSdk, _, _) = makeSUT(
-            sdk: MockSdk(nodes: nodes),
-            folderSdk: MockFolderSdk(isLoggedIn: true, nodes: nodes),
-            offlineInfoRepository: MockOfflineInfoRepository(result: .success),
-            streamingInfoRepository: MockStreamingInfoRepository(result: .success)
-        )
-        nodes.forEach(mockFolderSdk.mockAuthorizeNode(with:))
-        
-        guard let playerItems = sut.fetchFolderLinkAudioTracks(from: parentNode.handle) else {
-            XCTFail("Expect to have empty items, got nil instead.")
-            return
-        }
-        
-        XCTAssertEqual(playerItems.count, 1)
-        playerItems.enumerated().forEach { (index, playerItem) in
-            XCTAssertEqual(playerItem.node?.parentHandle, 1, "Expect to have correct parent handle 1, got wrong instead at index: \(index)")
-        }
-    }
-    
-    func testFolderChildrenInfoFromParentHandle_withValidAudioNodes_returnsMoreThanOneItems() {
-        let parentNode = anyNode(handle: 1, name: "any-valid-node-1.mp3", parentHandle: 100)
-        let childNode1 = anyNode(handle: 2, name: "any-valid-node-2.mp3", parentHandle: 1)
-        let childNode2 = anyNode(handle: 3, name: "any-valid-node-2.mp3", parentHandle: 1)
-        let nodes = [parentNode, childNode1, childNode2]
-        let (sut, _, mockFolderSdk, _, _) = makeSUT(
-            sdk: MockSdk(nodes: nodes),
-            folderSdk: MockFolderSdk(isLoggedIn: true, nodes: nodes),
-            offlineInfoRepository: MockOfflineInfoRepository(result: .success),
-            streamingInfoRepository: MockStreamingInfoRepository(result: .success)
-        )
-        nodes.forEach(mockFolderSdk.mockAuthorizeNode(with:))
-        
-        guard let playerItems = sut.fetchFolderLinkAudioTracks(from: parentNode.handle) else {
-            XCTFail("Expect to have empty items, got nil instead.")
-            return
-        }
-        
-        XCTAssertEqual(playerItems.count, 2)
-        playerItems.enumerated().forEach { (index, playerItem) in
-            XCTAssertEqual(playerItem.node?.parentHandle, 1, "Expect to have correct parent handle 1, got wrong instead at index: \(index)")
-        }
-    }
-    
-    // MARK: - Helpers
-    private func makeSUT(
+    static func makeSUT(
         sdk: MockSdk = MockSdk(),
-        folderSdk: MockFolderSdk = MockFolderSdk(),
+        folderSdk: MockFolderSdk = MockFolderSdk(isLoggedIn: true),
         megaStore: MEGAStore = MEGAStore(),
         offlineInfoRepository: MockOfflineInfoRepository = MockOfflineInfoRepository(result: .success),
         streamingInfoRepository: MockStreamingInfoRepository = MockStreamingInfoRepository(result: .success),
-        file: StaticString = #filePath,
+        file: StaticString = #fileID,
         line: UInt = #line
     ) -> (
         sut: NodeInfoRepository,
-        mockSdk: MockSdk,
-        mockFolderSdk: MockFolderSdk,
-        offlineFileInfoRepository: MockOfflineInfoRepository,
-        streamingInfoRepository: MockStreamingInfoRepository
+        sdk: MockSdk,
+        folderSdk: MockFolderSdk,
+        offline: MockOfflineInfoRepository,
+        streaming: MockStreamingInfoRepository
     ) {
         let sut = NodeInfoRepository(
             sdk: sdk,
@@ -255,17 +27,212 @@ final class NodeInfoRepositoryTests: XCTestCase {
             offlineFileInfoRepository: offlineInfoRepository,
             streamingInfoRepository: streamingInfoRepository
         )
-        trackForMemoryLeaks(on: sut, file: file, line: line)
-        trackForMemoryLeaks(on: sdk, file: file, line: line)
-        trackForMemoryLeaks(on: folderSdk, file: file, line: line)
-        trackForMemoryLeaks(on: megaStore, file: file, line: line)
-        trackForMemoryLeaks(on: offlineInfoRepository, file: file, line: line)
-        trackForMemoryLeaks(on: offlineInfoRepository, file: file, line: line)
         return (sut, sdk, folderSdk, offlineInfoRepository, streamingInfoRepository)
     }
     
-    private func anyNode(handle: MEGAHandle = 1, name: String = "", parentHandle: MEGAHandle = 100) -> MockNode {
-        MockNode(handle: handle, name: name, parentHandle: parentHandle)
+    static func anyNode(
+        handle: MEGAHandle = 1,
+        name: String = "",
+        parentHandle: MEGAHandle = 100,
+        isTakenDown: Bool = false
+    ) -> MockNode {
+        MockNode(
+            handle: handle,
+            name: name,
+            parentHandle: parentHandle,
+            isTakenDown: isTakenDown
+        )
     }
-
+    
+    static func authorizeAll(_ nodes: [MockNode], in sdk: MockFolderSdk) {
+        nodes.forEach(sdk.mockAuthorizeNode(with:))
+    }
+    
+    static func makeChildren(parent: MEGAHandle, names: [String]) -> [MockNode] {
+        names.enumerated().map { i, name in
+            anyNode(handle: MEGAHandle(2 + i), name: name, parentHandle: parent)
+        }
+    }
+    
+    @Suite("Folder-link session")
+    struct FolderLinkLogoutSuite {
+        @Test("logout completes in folder SDK")
+        func folderLinkLogoutLogsOut() {
+            let (sut, _, folderSdk, _, _) = makeSUT()
+            sut.folderLinkLogout()
+            #expect(folderSdk.folderLinkLogoutCallCount == 1)
+        }
+    }
+    
+    @Suite("Node lookup")
+    struct NodeLookupSuite {
+        @Test("node(for:) uses SDK lookup")
+        func nodeLookupCallsSdk() {
+            let (sut, sdk, _, _, _) = makeSUT(sdk: MockSdk())
+            _ = sut.node(for: .invalid)
+            #expect(sdk.nodeForHandleCallCount == 1)
+        }
+    }
+    
+    @Suite("Playback URL")
+    struct PlaybackURLSuite {
+        @Test("returns nil when handle not found")
+        func returnsNilWhenNodeMissing() {
+            let (sut, _, _, _, _) = makeSUT(sdk: MockSdk(nodes: []))
+            #expect(sut.playbackURL(for: .invalid) == nil)
+        }
+        
+        @Test("checks offline first when available")
+        func checksOfflineFirst() {
+            let (sut, _, _, offline, _) = makeSUT(
+                sdk: MockSdk(nodes: [defaultNode]),
+                offlineInfoRepository: MockOfflineInfoRepository(result: .success, isOffline: true)
+            )
+            _ = sut.playbackURL(for: defaultNode.handle)
+            #expect(offline.localPathfromNodeCallCount == 1)
+        }
+        
+        @Test("falls back to streaming when offline path is nil")
+        func fallsBackToStreaming() {
+            let (sut, _, _, _, streaming) = makeSUT(
+                sdk: MockSdk(nodes: [defaultNode]),
+                offlineInfoRepository: MockOfflineInfoRepository(result: .failure(.generic)),
+                streamingInfoRepository: MockStreamingInfoRepository(result: .success)
+            )
+            _ = sut.playbackURL(for: defaultNode.handle)
+            #expect(streaming.pathFromNodeCallCount == 1)
+        }
+    }
+    
+    @Suite("Node → AudioPlayerItem mapping – sequence")
+    struct MakeItemsSequenceSuite {
+        @Test(arguments: [
+            [String](),
+            ["n0"],
+            ["n0", "n1", "n2"]
+        ])
+        func mapsNodesToItemsPreservingNames(_ names: [String]) {
+            let nodes: [MockNode] = names.enumerated().map { i, name in
+                anyNode(handle: MEGAHandle(10 + i), name: name, parentHandle: 1)
+            }
+            let (sut, _, _, _, _) = makeSUT(
+                sdk: MockSdk(nodes: nodes),
+                streamingInfoRepository: MockStreamingInfoRepository(result: .success)
+            )
+            let items = sut.makeAudioPlayerItems(from: nodes)
+            if names.isEmpty {
+                #expect(items == nil || items?.isEmpty == true)
+            } else {
+                let unwrapped = try! #require(items)
+                #expect(unwrapped.map(\.name) == names)
+            }
+        }
+    }
+    
+    @Suite("Fetch audio tracks (account folders) – sequence")
+    struct FetchAccountSequenceSuite {
+        @Test(arguments: [
+            (MEGAHandle(1), ["c0.mp3"]),
+            (MEGAHandle(1), ["c0.mp3", "c1.mp3"]),
+            (MEGAHandle(42), ["intro.mp3", "song.mp3", "outro.mp3"])
+        ])
+        func itemsMatchChildrenSequence(_ parent: MEGAHandle, _ children: [String]) throws {
+            let parentNode  = anyNode(handle: parent, name: "parent.mp3", parentHandle: 100)
+            let childNodes  = makeChildren(parent: parent, names: children)
+            let (sut, _, _, _, _) = makeSUT(sdk: MockSdk(nodes: [parentNode] + childNodes))
+            let items = try #require(sut.fetchAudioTracks(from: parentNode.handle))
+            #expect(items.count == children.count)
+            #expect(items.map(\.name) == children)
+            #expect(Set(items.compactMap { $0.node?.parentHandle }) == [parent])
+        }
+    }
+    
+    @Suite("Fetch audio tracks (folder-link) – sequence")
+    struct FetchLinkSequenceSuite {
+        @Test(arguments: [
+            (MEGAHandle(1), ["x.mp3"]),
+            (MEGAHandle(9), ["x.mp3", "y.mp3"]),
+            (MEGAHandle(9), ["x.mp3", "y.mp3", "z.mp3"])
+        ])
+        func itemsMatchChildrenSequence_link(_ parent: MEGAHandle, _ children: [String]) throws {
+            let parentNode = anyNode(handle: parent, name: "p.mp3", parentHandle: 100)
+            let childNodes = makeChildren(parent: parent, names: children)
+            let nodes = [parentNode] + childNodes
+            let folderSdk = MockFolderSdk(isLoggedIn: true, nodes: nodes)
+            let (sut, _, _, _, _) = makeSUT(
+                sdk: MockSdk(nodes: nodes),
+                folderSdk: folderSdk,
+                streamingInfoRepository: MockStreamingInfoRepository(result: .success)
+            )
+            authorizeAll(nodes, in: folderSdk)
+            let items = try #require(sut.fetchFolderLinkAudioTracks(from: parentNode.handle))
+            #expect(items.count == children.count)
+            #expect(items.map(\.name) == children)
+            #expect(Set(items.compactMap { $0.node?.parentHandle }) == [parent])
+        }
+    }
+    
+    @Suite("Playback URL – offline vs streaming")
+    struct PlaybackTruthTableSuite {
+        @Test(arguments: [
+            (true, false),
+            (false, true)
+        ])
+        func resolvesURL(_ isOffline: Bool, _ expectStreamingFallback: Bool) {
+            let offlineRepo = isOffline
+            ? MockOfflineInfoRepository(result: .success, isOffline: true)
+            : MockOfflineInfoRepository(result: .failure(.generic), isOffline: false)
+            let (sut, _, _, offline, streaming) = makeSUT(
+                sdk: MockSdk(nodes: [defaultNode]),
+                offlineInfoRepository: offlineRepo,
+                streamingInfoRepository: MockStreamingInfoRepository(result: .success)
+            )
+            _ = sut.playbackURL(for: defaultNode.handle)
+            if expectStreamingFallback {
+                #expect(streaming.pathFromNodeCallCount == 1)
+            } else {
+                #expect(offline.localPathfromNodeCallCount == 1)
+                #expect(streaming.pathFromNodeCallCount == 0)
+            }
+        }
+    }
+    
+    @Suite("Takedown checks")
+    struct TakedownSuite {
+        @Test("node not taken down when API returns URL")
+        func nodeNotTakenDownWhenOK() async throws {
+            let sdk = MockSdk(nodes: [defaultNode], megaSetError: .apiOk)
+            let (sut, _, _, _, _) = makeSUT(sdk: sdk)
+            let result = try await sut.isNodeTakenDown(node: defaultNode)
+            #expect(result == false)
+        }
+        
+        @Test("node taken down when API returns .apiEBlocked")
+        func nodeTakenDownWhenBlocked() async throws {
+            let sdk = MockSdk(nodes: [defaultNode], megaSetError: .apiEBlocked)
+            let (sut, _, _, _, _) = makeSUT(sdk: sdk)
+            let result = try await sut.isNodeTakenDown(node: defaultNode)
+            #expect(result == true)
+        }
+        
+        @Test("node throws when API returns unexpected error")
+        func nodeThrowsWhenError() async {
+            let sdk = MockSdk(nodes: [defaultNode], megaSetError: .apiETooMany)
+            let (sut, _, _, _, _) = makeSUT(sdk: sdk)
+            await #expect(throws: (any Error).self) {
+                _ = try await sut.isNodeTakenDown(node: defaultNode)
+            }
+        }
+        
+        @Test("folder-link taken down when API returns .apiEBlocked")
+        func folderLinkTakenDownWhenBlocked() async throws {
+            let folderSdk = MockFolderSdk(isLoggedIn: true, nodes: [defaultNode], errorType: .apiEBlocked)
+            let (sut, _, _, _, _) = makeSUT(
+                sdk: MockSdk(nodes: [defaultNode]),
+                folderSdk: folderSdk
+            )
+            let result = try await sut.isFolderLinkNodeTakenDown(node: defaultNode)
+            #expect(result == true)
+        }
+    }
 }

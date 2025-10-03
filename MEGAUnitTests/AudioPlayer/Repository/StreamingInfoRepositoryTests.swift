@@ -7,6 +7,7 @@ import Testing
 struct StreamingInfoRepositoryTests {
     static let defaultName = "any-name"
     static let localURL = URL(string: "http://127.0.0.1:4443/file")!
+    static let updatedURL = URL(string: "http://10.0.0.2:4443/file")!
     static let defaultPort = 4443
     
     private static func makeSUT(sdk: MockSdk) -> StreamingInfoRepository {
@@ -41,97 +42,100 @@ struct StreamingInfoRepositoryTests {
         )
     }
     
-    @Suite("Server lifecycle")
-    struct ServerLifecycle {
-        @Test("serverStart starts the HTTP server")
-        func serverStart_startsHttpServer() {
-            let sdk = StreamingInfoRepositoryTests.makeSdk()
-            let sut = StreamingInfoRepositoryTests.makeSUT(sdk: sdk)
-            
+    @Suite("HTTP Server Lifecycle")
+    struct HttpServerLifecycleSuite {
+        @Test("startServer() starts the HTTP server exactly once")
+        func startServer_startsHttpServerOnce() {
+            let sdk = makeSdk()
+            let sut = makeSUT(sdk: sdk)
             sut.serverStart()
-            
             #expect(sdk.httpServerStart_calledTimes == 1)
         }
         
-        @Test("serverStart sets localOnly = false")
-        func serverStart_setsLocalOnlyFalse() {
-            let sdk = StreamingInfoRepositoryTests.makeSdk()
-            let sut = StreamingInfoRepositoryTests.makeSUT(sdk: sdk)
-            
+        @Test("startServer() sets localOnly to false")
+        func startServer_setsLocalOnlyToFalse() {
+            let sdk = makeSdk()
+            let sut = makeSUT(sdk: sdk)
             sut.serverStart()
-            
             #expect(sdk.httpServerStart_lastArgs?.localOnly == false)
         }
         
-        @Test("serverStart uses default port")
-        func serverStart_usesDefaultPort() {
-            let sdk = StreamingInfoRepositoryTests.makeSdk()
-            let sut = StreamingInfoRepositoryTests.makeSUT(sdk: sdk)
-            
+        @Test("startServer() uses the expected default port")
+        func startServer_usesExpectedDefaultPort() {
+            let sdk = makeSdk()
+            let sut = makeSUT(sdk: sdk)
             sut.serverStart()
-            
-            #expect(sdk.httpServerStart_lastArgs?.port == StreamingInfoRepositoryTests.defaultPort)
+            #expect(sdk.httpServerStart_lastArgs?.port == defaultPort)
         }
         
-        @Test("serverStop stops the HTTP server")
-        func serverStop_stopsHttpServer() {
-            let sdk = StreamingInfoRepositoryTests.makeSdk()
-            let sut = StreamingInfoRepositoryTests.makeSUT(sdk: sdk)
-            
+        @Test("stopServer() stops the HTTP server exactly once")
+        func stopServer_stopsHttpServerOnce() {
+            let sdk = makeSdk()
+            let sut = makeSUT(sdk: sdk)
             sut.serverStop()
-            
             #expect(sdk.httpServerStop_calledTimes == 1)
         }
     }
     
-    @Suite("Folder link → info")
-    struct FolderLinkInfo {
+    @Suite("Track Mapping (fetchTrack)")
+    struct TrackMappingSuite {
         @Test(
-            "returns nil when node invalid or link missing",
+            "fetchTrack(from:) returns nil when node is unauthorized or link missing",
             arguments: [
-                (node: MEGANode(), sdk: StreamingInfoRepositoryTests.makeSdk(localLink: StreamingInfoRepositoryTests.localURL)),
-                (node: StreamingInfoRepositoryTests.makeNode(), sdk: StreamingInfoRepositoryTests.makeSdk(localLink: nil))
+                (node: MEGANode(), sdk: makeSdk(localLink: localURL)),
+                (node: makeNode(), sdk: makeSdk(localLink: nil))
             ]
         )
-        func infoReturnsNil(args: (node: MEGANode, sdk: MockSdk)) {
-            let sut = StreamingInfoRepositoryTests.makeSUT(sdk: args.sdk)
+        func fetchTrack_returnsNilForInvalidInputs(_ args: (node: MEGANode, sdk: MockSdk)) {
+            let sut = makeSUT(sdk: args.sdk)
             #expect(sut.fetchTrack(from: args.node) == nil)
         }
         
-        @Test("valid node with link returns non-nil item")
-        func validNode_withLink_returnsItem() {
-            let node = StreamingInfoRepositoryTests.makeNode()
-            let sut = StreamingInfoRepositoryTests.makeSUT(sdk: StreamingInfoRepositoryTests.makeSdk(localLink: StreamingInfoRepositoryTests.localURL))
-            
+        @Test("fetchTrack(from:) returns an item when node is valid and link exists")
+        func fetchTrack_returnsItemForValidNodeAndLink() {
+            let node = makeNode()
+            let sut = makeSUT(
+                sdk: makeSdk(localLink: localURL)
+            )
             #expect(sut.fetchTrack(from: node) != nil)
         }
         
-        @Test("item has expected name, url and node reference")
-        func item_fields_areCorrect() {
-            let node = StreamingInfoRepositoryTests.makeNode()
-            let sut = StreamingInfoRepositoryTests.makeSUT(sdk: StreamingInfoRepositoryTests.makeSdk(localLink: StreamingInfoRepositoryTests.localURL))
-            
+        @Test(arguments: [true, false])
+        func fetchTrack_setsHasThumbnailFromNode(_ hasThumb: Bool) {
+            let node = makeNode(hasThumb ? 1 : 2, hasThumb: hasThumb)
+            let sut = makeSUT(
+                sdk: makeSdk(localLink: localURL)
+            )
             let item = sut.fetchTrack(from: node)
-            
-            #expect(item?.name == StreamingInfoRepositoryTests.defaultName)
-            #expect(item?.url == StreamingInfoRepositoryTests.localURL)
+            #expect(item?.nodeHasThumbnail == hasThumb)
+        }
+        
+        @Test("fetchTrack(from:) populates name, url, and node reference")
+        func fetchTrack_populatesFieldsCorrectly() {
+            let node = makeNode()
+            let sut = makeSUT(
+                sdk: makeSdk(localLink: localURL)
+            )
+            let item = sut.fetchTrack(from: node)
+            #expect(item?.name == defaultName)
+            #expect(item?.url == localURL)
             #expect(item?.node as AnyObject === node)
         }
     }
     
-    @Suite("Path resolution")
-    struct PathResolution {
+    @Suite("Streaming URL Resolution")
+    struct StreamingURLResolutionSuite {
         @Test(
-            "returns correct path depending on link presence",
+            "streamingURL(for:) returns expected value based on link presence when localOnly is true",
             arguments: [
-                (link: StreamingInfoRepositoryTests.localURL, expected: StreamingInfoRepositoryTests.localURL),
+                (link: localURL, expected: localURL),
                 (link: nil, expected: nil)
             ]
         )
-        func pathMatchesLinkPresence(args: (link: URL?, expected: URL?)) {
-            let node = StreamingInfoRepositoryTests.makeNode()
-            let sut = StreamingInfoRepositoryTests.makeSUT(
-                sdk: StreamingInfoRepositoryTests.makeSdk(
+        func streamingURL_returnsLinkWhenLocalOnly(_ args: (link: URL?, expected: URL?)) {
+            let node = makeNode()
+            let sut = makeSUT(
+                sdk: makeSdk(
                     nodes: [node],
                     localLink: args.link,
                     isLocalOnly: true
@@ -139,19 +143,49 @@ struct StreamingInfoRepositoryTests {
             )
             #expect(sut.streamingURL(for: node) == args.expected)
         }
+        
+        @Test("streamingURL(for:) returns address-updated URL when localOnly is false and link exists")
+        func streamingURL_returnsUpdatedAddressWhenNotLocalOnly() {
+            let node = makeNode()
+            let sut = makeSUT(
+                sdk: makeSdk(
+                    nodes: [node],
+                    localLink: localURL,
+                    isLocalOnly: false,
+                    updatedAddressURL: updatedURL
+                )
+            )
+            #expect(sut.streamingURL(for: node) == updatedURL)
+        }
+        
+        @Test("streamingURL(for:) returns nil when localOnly is false, link exists, but updated address is unavailable")
+        func streamingURL_returnsNilWhenUpdatedAddressMissing() {
+            let node = makeNode()
+            let sut = makeSUT(
+                sdk: makeSdk(
+                    nodes: [node],
+                    localLink: localURL,
+                    isLocalOnly: false,
+                    updatedAddressURL: nil
+                )
+            )
+            #expect(sut.streamingURL(for: node) == nil)
+        }
     }
     
-    @Suite("Server status")
-    struct ServerStatus {
+    @Suite("HTTP Server Running State")
+    struct HttpServerRunningStateSuite {
         @Test(
-            "returns correct running state",
+            "isLocalHTTPServerRunning() reflects SDK running state",
             arguments: [
                 (isRunning: false, expected: false),
                 (isRunning: true, expected: true)
             ]
         )
-        func returnsExpectedRunningState(args: (isRunning: Bool, expected: Bool)) {
-            let sut = StreamingInfoRepositoryTests.makeSUT(sdk: StreamingInfoRepositoryTests.makeSdk(isRunning: args.isRunning))
+        func isLocalHTTPServerRunning_reflectsSdkState(_ args: (isRunning: Bool, expected: Bool)) {
+            let sut = makeSUT(
+                sdk: makeSdk(isRunning: args.isRunning)
+            )
             #expect(sut.isLocalHTTPServerRunning() == args.expected)
         }
     }

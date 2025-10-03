@@ -947,6 +947,7 @@ public final class MockSdk: MEGASdk, @unchecked Sendable {
         httpServerStart_calledTimes += 1
         httpServerStart_lastArgs = (localOnly, port)
         isRunning = true
+        isLocalOnly = localOnly
         
         return isRunning
     }
@@ -965,7 +966,7 @@ public final class MockSdk: MEGASdk, @unchecked Sendable {
     }
     
     public override func httpServerGetLocalLink(_ node: MEGANode) -> URL? {
-        localLink
+        isLocalOnly ? localLink : updatedAddressURL
     }
     
     // MARK: - Folder link
@@ -1092,6 +1093,12 @@ public final class MockSdk: MEGASdk, @unchecked Sendable {
                 )
             }
         }
+    }
+    
+    public override func getDownloadUrl(_ node: MEGANode, singleUrl: Bool, delegate: any MEGARequestDelegate) {
+        let request = MEGARequest()
+        let error = MockError(errorType: megaSetError)
+        delegate.onRequestFinish?(self, request: request, error: error)
     }
     
     private func simulateRequestStart(delegate: any MEGARequestDelegate) {
