@@ -5,9 +5,12 @@ enum NodeInfoError: Error {
     case generic
 }
 
-struct MockNodeInfoRepository: NodeInfoRepositoryProtocol {
+final class MockNodeInfoRepository: NodeInfoRepositoryProtocol, @unchecked Sendable {
     var result: Result<Void, NodeInfoError>
     var violatesTermsOfServiceResult: Result<Bool, NodeInfoError>
+    private(set) var folderLinkLogoutCount: Int = 0
+    
+    let defaultNode = MEGANode()
     
     init(
         result: Result<Void, NodeInfoError> = .success,
@@ -43,28 +46,26 @@ struct MockNodeInfoRepository: NodeInfoRepositoryProtocol {
     }
     
     func node(for handle: HandleEntity) -> MEGANode? {
-        isSuccess ? MEGANode() : nil
+        isSuccess ? defaultNode : nil
     }
     
     func folderNode(fromHandle: HandleEntity) -> MEGANode? {
-        isSuccess ? MEGANode() : nil
+        isSuccess ? defaultNode : nil
     }
     
     func folderAuthNode(fromNode: MEGANode) -> MEGANode? {
-        isSuccess ? MEGANode() : nil
+        isSuccess ? defaultNode : nil
     }
     
-    func folderLinkLogout() {}
+    func folderLinkLogout() {
+        folderLinkLogoutCount += 1
+    }
     
     func isFolderLinkNodeTakenDown(node: MEGANode) async throws -> Bool {
-        try await withCheckedThrowingContinuation { continuation in
-            continuation.resume(with: violatesTermsOfServiceResult)
-        }
+        try violatesTermsOfServiceResult.get()
     }
     
     func isNodeTakenDown(node: MEGANode) async throws -> Bool {
-        try await withCheckedThrowingContinuation { continuation in
-            continuation.resume(with: violatesTermsOfServiceResult)
-        }
+        try violatesTermsOfServiceResult.get()
     }
 }

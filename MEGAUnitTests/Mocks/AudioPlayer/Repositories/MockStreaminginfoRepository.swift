@@ -1,18 +1,31 @@
 @testable import MEGA
 import MEGADomain
 
-class MockStreamingInfoRepository: StreamingInfoRepositoryProtocol, @unchecked Sendable {
+final class MockStreamingInfoRepository: StreamingInfoRepositoryProtocol, @unchecked Sendable {
     var result: Result<Void, NodeInfoError>
-    
     private(set) var pathFromNodeCallCount = 0
+    private(set) var serverStartCallCount = 0
+    private(set) var serverStopCallCount = 0
     
-    init(result: Result<Void, NodeInfoError> = .success) {
+    private var isRunning: Bool
+    
+    init(
+        result: Result<Void, NodeInfoError> = .success,
+        isRunning: Bool = false
+    ) {
         self.result = result
+        self.isRunning = isRunning
     }
     
-    func serverStart() {}
+    func serverStart() {
+        serverStartCallCount += 1
+        isRunning = true
+    }
     
-    func serverStop() {}
+    func serverStop() {
+        serverStopCallCount += 1
+        isRunning = false
+    }
     
     func fetchTrack(from node: MEGANode) -> AudioPlayerItem? {
         guard case .success = result else { return nil }
@@ -25,5 +38,7 @@ class MockStreamingInfoRepository: StreamingInfoRepositoryProtocol, @unchecked S
         return AudioPlayerItem.mockItem.url
     }
     
-    func isLocalHTTPServerRunning() -> Bool { false }
+    func isLocalHTTPServerRunning() -> Bool {
+        isRunning
+    }
 }
