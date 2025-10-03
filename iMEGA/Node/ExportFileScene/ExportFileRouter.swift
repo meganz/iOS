@@ -18,23 +18,23 @@ final class ExportFileRouter: ExportFileViewRouting {
     
     // MARK: - Dispatch actions without viewcontroller -
     func export(node: NodeEntity) {
-        viewModel.dispatch(.exportFileFromNode(node))
+        createViewModel().dispatch(.exportFileFromNode(node))
     }
     
     func export(nodes: [NodeEntity]) {
-        viewModel.dispatch(.exportFilesFromNodes(nodes))
+        createViewModel().dispatch(.exportFilesFromNodes(nodes))
     }
     
     func export(messages: [ChatMessageEntity], chatId: HandleEntity) {
-        viewModel.dispatch(.exportFilesFromMessages(messages, chatId))
+        createViewModel().dispatch(.exportFilesFromMessages(messages, chatId))
     }
     
     func exportMessage(node: MEGANode, messageId: HandleEntity, chatId: HandleEntity) {
-        viewModel.dispatch(.exportFileFromMessageNode(node, messageId, chatId))
+        createViewModel().dispatch(.exportFileFromMessageNode(node, messageId, chatId))
     }
     
     // MARK: - Private -
-    private lazy var viewModel: ExportFileViewModel = {
+    private func createViewModel() -> ExportFileViewModel {
         let exportFileUC = ExportFileUseCase(
             downloadFileRepository: DownloadFileRepository.newRepo,
             offlineFilesRepository: OfflineFilesRepository.newRepo,
@@ -60,7 +60,7 @@ final class ExportFileRouter: ExportFileViewRouting {
             analyticsEventUseCase: AnalyticsEventUseCase(repository: AnalyticsRepository.newRepo),
             exportFileUseCase: exportFileUC,
             overDiskQuotaChecker: overDiskQuotaChecker)
-    }()
+    }
     
     // MARK: - ExportFileViewRouting -
     func exportedFiles(urls: [URL]) {
