@@ -26,6 +26,7 @@ let package = Package(
     dependencies: [
         .package(path: "../../../DataSource/MEGASDK"),
         .package(path: "../../../Presentation/MEGAL10n"),
+        .package(path: "../../../MEGASharedRepo/MEGAInfrastructure"),
         .package(path: "../../../MEGASharedRepo/MEGALogger"),
         .package(path: "../../../MEGASharedRepo/MEGAUIComponent"),
         .package(path: "../../../Infrastracture/MEGAPermissions"),
@@ -52,6 +53,7 @@ let package = Package(
                 "MEGAPermissions",
                 "MEGAPreference",
                 "MEGASwift",
+                .product(name: "MEGAInfrastructure", package: "MEGAInfrastructure"),
                 .product(name: "MEGAAppPresentation", package: "MEGAAppPresentation"),
                 .product(name: "MEGAAppSDKRepo", package: "MEGAAppSDKRepo"),
                 .product(name: "MEGAAnalyticsiOS", package: "mobile-analytics-ios"),
@@ -80,6 +82,7 @@ let package = Package(
                 "MEGATest",
                 "MEGAVideoPlayer",
                 "MEGAVideoPlayerMock",
+                .product(name: "MEGAInfrastructureMocks", package: "MEGAInfrastructure"),
                 .product(name: "MEGAPermissions", package: "MEGAPermissions"),
                 .product(name: "MEGAPermissionsMock", package: "MEGAPermissions"),
                 .product(name: "MEGAAppPresentation", package: "MEGAAppPresentation"),

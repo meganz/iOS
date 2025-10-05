@@ -1,5 +1,7 @@
 @preconcurrency import Combine
 import Foundation
+import MEGAInfrastructure
+import MEGAInfrastructureMocks
 import MEGAPermissions
 import MEGAPermissionsMock
 @testable import MEGAVideoPlayer
@@ -16,6 +18,7 @@ struct PlayerOverlayViewModelTests {
         player: some VideoPlayerProtocol = MockVideoPlayer(),
         devicePermissionsHandler: some DevicePermissionsHandling = MockDevicePermissionHandler(),
         saveSnapshotUseCase: some SaveSnapshotUseCaseProtocol = MockSaveSnapshotUseCase(),
+        hapticFeedbackUseCase: some HapticFeedbackUseCaseProtocol = MockHapticFeedbackUseCase(),
         didTapBackAction: @escaping () -> Void = {},
         didTapMoreAction: @escaping ((any PlayableNode)?) -> Void = { _ in },
         didTapRotateAction: @escaping () -> Void = {},
@@ -25,6 +28,7 @@ struct PlayerOverlayViewModelTests {
             player: player,
             devicePermissionsHandler: devicePermissionsHandler,
             saveSnapshotUseCase: saveSnapshotUseCase,
+            hapticFeedbackUseCase: hapticFeedbackUseCase,
             didTapBackAction: didTapBackAction,
             didTapMoreAction: didTapMoreAction,
             didTapRotateAction: didTapRotateAction,
@@ -299,45 +303,57 @@ struct PlayerOverlayViewModelTests {
     // MARK: - Hold to Speed Tests
 
     @Test(arguments: [
-        (Duration.seconds(100), true),
-        (.seconds(0), false)
+        (Duration.seconds(100), true, [HapticFeedbackType.light]),
+        (.seconds(0), false, [])
     ])
     func beginHoldToSpeed_whenDifferentVideoLoadedState_shouldSetRightActivateHoldSpeed(
         duration: Duration,
-        expectedShouldShowHoldToSpeedChip: Bool
+        expectedShouldShowHoldToSpeedChip: Bool,
+        expectedHapticFeedbacks: [HapticFeedbackType]
     ) {
         let mockPlayer = MockVideoPlayer()
-        let sut = makeSUT(player: mockPlayer)
+        let mockHapticFeedbackUseCase = MockHapticFeedbackUseCase()
+        let sut = makeSUT(
+            player: mockPlayer,
+            hapticFeedbackUseCase: mockHapticFeedbackUseCase
+        )
         sut.duration = duration
         sut.state = .playing
 
         sut.beginHoldToSpeed()
 
+        #expect(mockHapticFeedbackUseCase.feedbacks == expectedHapticFeedbacks)
         #expect(sut.shouldShowHoldToSpeedChip == expectedShouldShowHoldToSpeedChip)
     }
 
     @Test(arguments: [
-        (PlaybackSpeed.quarter, true),
-        (.half, true),
-        (.threeQuarter, true),
-        (.normal, true),
-        (.oneQuarter, true),
-        (.oneHalf, true),
-        (.oneThreeQuarter, true),
-        (.double, false)
+        (PlaybackSpeed.quarter, true, [HapticFeedbackType.light]),
+        (.half, true, [.light]),
+        (.threeQuarter, true, [.light]),
+        (.normal, true, [.light]),
+        (.oneQuarter, true, [.light]),
+        (.oneHalf, true, [.light]),
+        (.oneThreeQuarter, true, [.light]),
+        (.double, false, [])
     ])
     func beginHoldToSpeed_whenDifferentSpeeds_shouldActivateHoldSpeed(
         currentSpeed: PlaybackSpeed,
-        expectedShouldShowHoldToSpeedChip: Bool
+        expectedShouldShowHoldToSpeedChip: Bool,
+        expectedHapticFeedbacks: [HapticFeedbackType]
     ) {
         let mockPlayer = MockVideoPlayer()
-        let sut = makeSUT(player: mockPlayer)
+        let mockHapticFeedbackUseCase = MockHapticFeedbackUseCase()
+        let sut = makeSUT(
+            player: mockPlayer,
+            hapticFeedbackUseCase: mockHapticFeedbackUseCase
+        )
         sut.duration = .seconds(100)
         sut.currentSpeed = currentSpeed
         sut.state = .playing
 
         sut.beginHoldToSpeed()
 
+        #expect(mockHapticFeedbackUseCase.feedbacks == expectedHapticFeedbacks)
         #expect(sut.shouldShowHoldToSpeedChip == expectedShouldShowHoldToSpeedChip)
         #expect(sut.isControlsVisible == false)
         #expect(mockPlayer.changeRateCallCount == 1)
@@ -376,31 +392,42 @@ struct PlayerOverlayViewModelTests {
     // MARK: - Double Tap Seek Tests
 
     @Test(arguments: [
-        (Duration.seconds(100), true),
-        (.seconds(0), false)
+        (Duration.seconds(100), true, [HapticFeedbackType.light]),
+        (.seconds(0), false, [])
     ])
     func handleDoubleTapSeek_whenDifferentVideoLoadedState_shouldSetRightActivateSeek(
         duration: Duration,
-        expectedIsDoubleTapSeekActive: Bool
+        expectedIsDoubleTapSeekActive: Bool,
+        expectedHapticFeedbacks: [HapticFeedbackType]
     ) async {
         let mockPlayer = MockVideoPlayer()
-        let sut = makeSUT(player: mockPlayer)
+        let mockHapticFeedbackUseCase = MockHapticFeedbackUseCase()
+        let sut = makeSUT(
+            player: mockPlayer,
+            hapticFeedbackUseCase: mockHapticFeedbackUseCase
+        )
         sut.duration = duration
 
         await sut.handleDoubleTapSeek(isForward: true)
 
+        #expect(mockHapticFeedbackUseCase.feedbacks == expectedHapticFeedbacks)
         #expect(sut.isDoubleTapSeekActive == expectedIsDoubleTapSeekActive)
     }
 
     @Test
     func handleDoubleTapSeek_whenForwardSeek_shouldActivateAndSeekForward() async {
         let mockPlayer = MockVideoPlayer()
-        let sut = makeSUT(player: mockPlayer)
+        let mockHapticFeedbackUseCase = MockHapticFeedbackUseCase()
+        let sut = makeSUT(
+            player: mockPlayer,
+            hapticFeedbackUseCase: mockHapticFeedbackUseCase
+        )
         sut.duration = .seconds(100)
         sut.currentTime = .seconds(50)
 
         await sut.handleDoubleTapSeek(isForward: true)
 
+        #expect(mockHapticFeedbackUseCase.feedbacks == [HapticFeedbackType.light])
         #expect(sut.isDoubleTapSeekActive == true)
         #expect(sut.doubleTapSeekSeconds == 15)
         #expect(mockPlayer.seekCallCount == 1)
@@ -410,12 +437,17 @@ struct PlayerOverlayViewModelTests {
     @Test
     func handleDoubleTapSeek_whenBackwardSeek_shouldActivateAndSeekBackward() async {
         let mockPlayer = MockVideoPlayer()
-        let sut = makeSUT(player: mockPlayer)
+        let mockHapticFeedbackUseCase = MockHapticFeedbackUseCase()
+        let sut = makeSUT(
+            player: mockPlayer,
+            hapticFeedbackUseCase: mockHapticFeedbackUseCase
+        )
         sut.duration = .seconds(100)
         sut.currentTime = .seconds(50)
 
         await sut.handleDoubleTapSeek(isForward: false)
 
+        #expect(mockHapticFeedbackUseCase.feedbacks == [HapticFeedbackType.light])
         #expect(sut.isDoubleTapSeekActive == true)
         #expect(sut.doubleTapSeekSeconds == -15)
         #expect(mockPlayer.seekCallCount == 1)

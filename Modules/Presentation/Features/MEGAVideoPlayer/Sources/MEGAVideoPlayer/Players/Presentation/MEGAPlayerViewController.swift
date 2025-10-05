@@ -1,9 +1,8 @@
 import AVKit
 import MEGADesignToken
+import MEGAInfrastructure
 import MEGAPermissions
-#if canImport(UIKit)
 import UIKit
-#endif
 
 public final class MEGAPlayerViewController: UIViewController {
     private let videoView = UIView()
@@ -81,6 +80,7 @@ public final class MEGAPlayerViewController: UIViewController {
                 player: player,
                 devicePermissionsHandler: DevicePermissionsHandler.makeHandler(),
                 saveSnapshotUseCase: SaveSnapshotUseCase(),
+                hapticFeedbackUseCase: HapticFeedbackUseCase(),
                 didTapBackAction: { [weak self] in
                     self?.viewModel.viewWillDismiss()
                     self?.viewModel.dismissAction?()
