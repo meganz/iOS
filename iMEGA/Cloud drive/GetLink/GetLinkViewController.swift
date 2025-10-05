@@ -828,7 +828,16 @@ class GetLinkViewController: UIViewController {
         switch sectionType {
         case .decryptKeySeparate:
             let foregroundColor = TokenColors.Link.primary
-            let attributedString = NSMutableAttributedString(string: Strings.Localizable.exportTheLinkAndDecryptionKeySeparately, attributes: [NSAttributedString.Key.foregroundColor: TokenColors.Text.secondary as Any])
+            let paragraph = NSMutableParagraphStyle()
+            paragraph.alignment = .natural
+            let attributes: [NSAttributedString.Key: Any] = [
+                .foregroundColor: TokenColors.Text.secondary,
+                .paragraphStyle: paragraph
+            ]
+            let attributedString = NSMutableAttributedString(
+                string: Strings.Localizable.exportTheLinkAndDecryptionKeySeparately,
+                attributes: attributes
+            )
             let learnMoreString = NSAttributedString(string: " " + Strings.Localizable.learnMore, attributes: [NSAttributedString.Key.foregroundColor: foregroundColor as Any])
             attributedString.append(learnMoreString)
             footer.titleLabel.numberOfLines = 0

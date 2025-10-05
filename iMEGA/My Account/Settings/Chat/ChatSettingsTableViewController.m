@@ -85,6 +85,7 @@ typedef NS_ENUM(NSInteger, ChatSettingsNotificationRow) {
     self.videoQualityLabel.text = LocalizedString(@"videoQuality", @"Title that refers to the status of the chat (Either Online or Offline)");
     
     self.doNotDisturbLabel.text = LocalizedString(@"Do Not Disturb", @"");
+    self.doNotDisturbLabel.textAlignment = NSTextAlignmentNatural;
 
     self.chatNotificationsLabel.text = LocalizedString(@"Chat Notifications", @"Title that refers to disabling the chat notifications forever.");
     
