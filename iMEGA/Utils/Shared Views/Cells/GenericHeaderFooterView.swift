@@ -56,6 +56,7 @@ final class GenericHeaderFooterView: UITableViewHeaderFooterView {
             return
         }
         titleLabel.isHidden = false
+        titleLabel.textAlignment = .natural
         marginView.isHidden = false
         titleLabel.text = title
     }
@@ -71,6 +72,7 @@ final class GenericHeaderFooterView: UITableViewHeaderFooterView {
         
         titleLabel.isHidden = false
         titleLabel.attributedText = attributedTitle
+        titleLabel.textAlignment = .natural
     }
     
     // MARK: - Private

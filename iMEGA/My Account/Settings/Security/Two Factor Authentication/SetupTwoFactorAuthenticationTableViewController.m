@@ -30,7 +30,8 @@
     [self setMenuCapableBackButtonWithMenuTitle:title];
     
     self.twoFactorAuthenticationLabel.text = LocalizedString(@"twoFactorAuthentication", @"");
-    
+    self.twoFactorAuthenticationLabel.textAlignment = NSTextAlignmentNatural;
+
     [self setupColors];
 }
 

@@ -81,6 +81,7 @@ class AppearanceTableViewController: UITableViewController {
         sortingAndViewModeLabel.text = Strings.Localizable.sortingAndViewMode
         hiddenItemsViewLabel.text = Strings.Localizable.Settings.UserInterface.HiddenItems.label
         mediaDiscoveryViewLabel.text = Strings.Localizable.Settings.UserInterface.mediaDiscovery
+        mediaDiscoveryViewLabel.textAlignment = .natural
         mediaDiscoverySubfolderLabel.text = Strings.Localizable.Settings.UserInterface.mediaDiscoverySubFolder
         hideRecentActivityLabel.text = Strings.Localizable.Settings.UserInterface.hideRecentActivity
         
