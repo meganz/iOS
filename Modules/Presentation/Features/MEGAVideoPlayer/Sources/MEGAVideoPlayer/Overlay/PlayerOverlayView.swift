@@ -1,4 +1,5 @@
 import MEGADesignToken
+import MEGAInfrastructure
 import MEGAL10n
 import MEGAPermissions
 import MEGAUIComponent
@@ -639,6 +640,7 @@ extension PlayerOverlayView {
                 ),
                 devicePermissionsHandler: DevicePermissionsHandler.makeHandler(),
                 saveSnapshotUseCase: SaveSnapshotUseCase(),
+                hapticFeedbackUseCase: HapticFeedbackUseCase(),
                 didTapBackAction: {},
                 didTapMoreAction: { _ in },
                 didTapRotateAction: {},

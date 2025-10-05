@@ -1,4 +1,5 @@
 import Combine
+import MEGAInfrastructure
 import MEGAL10n
 import MEGAPermissions
 import Photos
@@ -36,6 +37,7 @@ public final class PlayerOverlayViewModel: ObservableObject {
     private let player: any VideoPlayerProtocol
     private let devicePermissionsHandler: any DevicePermissionsHandling
     private let saveSnapshotUseCase: any SaveSnapshotUseCaseProtocol
+    private let hapticFeedbackUseCase: any HapticFeedbackUseCaseProtocol
     private let didTapBackAction: () -> Void
     private let didTapMoreAction: ((any PlayableNode)?) -> Void
     private let didTapRotateAction: () -> Void
@@ -45,6 +47,7 @@ public final class PlayerOverlayViewModel: ObservableObject {
         player: some VideoPlayerProtocol,
         devicePermissionsHandler: some DevicePermissionsHandling,
         saveSnapshotUseCase: some SaveSnapshotUseCaseProtocol,
+        hapticFeedbackUseCase: some HapticFeedbackUseCaseProtocol,
         didTapBackAction: @escaping () -> Void,
         didTapMoreAction: @escaping ((any PlayableNode)?) -> Void,
         didTapRotateAction: @escaping () -> Void = {},
@@ -53,6 +56,7 @@ public final class PlayerOverlayViewModel: ObservableObject {
         self.player = player
         self.devicePermissionsHandler = devicePermissionsHandler
         self.saveSnapshotUseCase = saveSnapshotUseCase
+        self.hapticFeedbackUseCase = hapticFeedbackUseCase
         self.didTapBackAction = didTapBackAction
         self.didTapMoreAction = didTapMoreAction
         self.didTapRotateAction = didTapRotateAction
@@ -450,6 +454,7 @@ extension PlayerOverlayViewModel {
         }
         isHoldToSpeed = true
         if currentSpeed != .double {
+            hapticFeedbackUseCase.generateHapticFeedback(.light)
             shouldShowHoldToSpeedChip = true
         }
         player.changeRate(to: PlaybackSpeed.double.rawValue)
@@ -471,6 +476,7 @@ extension PlayerOverlayViewModel {
 extension PlayerOverlayViewModel {
     func handleDoubleTapSeek(isForward: Bool) async {
         guard duration.components.seconds > 0 else { return }
+        hapticFeedbackUseCase.generateHapticFeedback(.light)
         isDoubleTapSeekActive = true
         let seekTime = isForward ? 15 : -15
 
