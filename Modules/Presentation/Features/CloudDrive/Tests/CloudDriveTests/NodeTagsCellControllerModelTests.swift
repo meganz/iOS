@@ -93,7 +93,7 @@ struct NodeTagsCellControllerModelTests {
         isInGracePeriod: Bool = false,
         nodeAccessLevel: NodeAccessTypeEntity = .unknown
     ) -> NodeTagsCellControllerModel {
-        let nodeUseCase = MockNodeUseCase(nodeAccessLevel: nodeAccessLevel)
+        let nodeUseCase = MockNodeUseCase(nodeAccessLevel: { nodeAccessLevel })
         let accountUseCase = AccountUseCase(
             repository: MockAccountRepository(
                 isMasterBusinessAccount: isMasterBusinessAccount,

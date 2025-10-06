@@ -2582,6 +2582,8 @@
 		C4AF4A8F2582836000594716 /* MiniPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4AF4A8E2582836000594716 /* MiniPlayerViewController.swift */; };
 		C4AF4A992582839A00594716 /* MiniPlayerViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4AF4A982582839A00594716 /* MiniPlayerViewRouter.swift */; };
 		C4AF4AA3258283A700594716 /* MiniPlayerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4AF4AA2258283A700594716 /* MiniPlayerViewModel.swift */; };
+		C4B0F7A62E8E3BFD007C4E0B /* FloatingAddButtonVisibilityDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B0F7A42E8E3BF6007C4E0B /* FloatingAddButtonVisibilityDataSource.swift */; };
+		C4B0F7EB2E8F42D4007C4E0B /* FloatingAddButtonVisibilityDataSourceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B0F7E92E8F42C8007C4E0B /* FloatingAddButtonVisibilityDataSourceTests.swift */; };
 		C4B4B1652B27C3ED00F78710 /* PasswordView+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B4B1642B27C3ED00F78710 /* PasswordView+Additions.swift */; };
 		C4B4B1692B27CAF900F78710 /* InputView+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B4B1682B27CAF900F78710 /* InputView+Additions.swift */; };
 		C4B97D752B67820400EBA9E5 /* RandomNumberGeneratorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B97D742B67820400EBA9E5 /* RandomNumberGeneratorTests.swift */; };
@@ -5357,6 +5359,8 @@
 		C4AF4A8E2582836000594716 /* MiniPlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniPlayerViewController.swift; sourceTree = "<group>"; };
 		C4AF4A982582839A00594716 /* MiniPlayerViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniPlayerViewRouter.swift; sourceTree = "<group>"; };
 		C4AF4AA2258283A700594716 /* MiniPlayerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniPlayerViewModel.swift; sourceTree = "<group>"; };
+		C4B0F7A42E8E3BF6007C4E0B /* FloatingAddButtonVisibilityDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingAddButtonVisibilityDataSource.swift; sourceTree = "<group>"; };
+		C4B0F7E92E8F42C8007C4E0B /* FloatingAddButtonVisibilityDataSourceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingAddButtonVisibilityDataSourceTests.swift; sourceTree = "<group>"; };
 		C4B4B1642B27C3ED00F78710 /* PasswordView+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PasswordView+Additions.swift"; sourceTree = "<group>"; };
 		C4B4B1682B27CAF900F78710 /* InputView+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "InputView+Additions.swift"; sourceTree = "<group>"; };
 		C4B97D742B67820400EBA9E5 /* RandomNumberGeneratorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomNumberGeneratorTests.swift; sourceTree = "<group>"; };
@@ -5961,6 +5965,7 @@
 				C48CADA92BB521130005519B /* DisplayModeProvider */,
 				C44BE4C62CAF627A00F18033 /* DownloadedNodesListener */,
 				BFB529762C4A2CD1003034EF /* Factories */,
+				C4B0F7E72E8F42BD007C4E0B /* FloatingAddButton */,
 				0E3B1A362A1D917900EC5859 /* GetLink */,
 				1240A4A127DD545F00627262 /* MediaDiscovery */,
 				94B09E6C2B84D0B5007D6B84 /* NewNodeBrowser */,
@@ -10421,6 +10426,7 @@
 				C4F6385E2BA97F6200D0B6B7 /* AdsDisplayViewModel */,
 				C4C0A0062C32B57700B9ECCB /* DownloadedNodeListener */,
 				C48CADAD2BB549880005519B /* Factories */,
+				C4B0F7A32E8E3BEE007C4E0B /* FloatingAddButton */,
 				BF8CB03D2C34F61800119979 /* Node Sensitivity */,
 				C48CADAE2BB54C260005519B /* NodeBrowserConfig */,
 				C48CADB72BBAB1A40005519B /* NodeUpdates */,
@@ -13050,6 +13056,22 @@
 			path = MiniPlayerScene;
 			sourceTree = "<group>";
 		};
+		C4B0F7A32E8E3BEE007C4E0B /* FloatingAddButton */ = {
+			isa = PBXGroup;
+			children = (
+				C4B0F7A42E8E3BF6007C4E0B /* FloatingAddButtonVisibilityDataSource.swift */,
+			);
+			path = FloatingAddButton;
+			sourceTree = "<group>";
+		};
+		C4B0F7E72E8F42BD007C4E0B /* FloatingAddButton */ = {
+			isa = PBXGroup;
+			children = (
+				C4B0F7E92E8F42C8007C4E0B /* FloatingAddButtonVisibilityDataSourceTests.swift */,
+			);
+			path = FloatingAddButton;
+			sourceTree = "<group>";
+		};
 		C4B97D732B6781F900EBA9E5 /* RandomNumberGenerator */ = {
 			isa = PBXGroup;
 			children = (
@@ -14722,6 +14744,7 @@
 				320262F9298CB0B40049688C /* FilterType+Mapper.swift in Sources */,
 				3258B90F298B787C0055E65C /* FilterType.swift in Sources */,
 				BF7EBD20244E50270015255F /* FingerLiftupGestureRecognizer.swift in Sources */,
+				C4B0F7A62E8E3BFD007C4E0B /* FloatingAddButtonVisibilityDataSource.swift in Sources */,
 				B6A01BA8289A5E9200B503FD /* FolderContentStat.swift in Sources */,
 				C46D2A7C270F0EC100DA26D0 /* FolderLinkCollectionViewController+DynamicType.swift in Sources */,
 				83FEA8B525C1B3990063A560 /* FolderLinkCollectionViewController.swift in Sources */,
@@ -16252,6 +16275,7 @@
 				320262EE298C97EE0049688C /* FilterTypeEntityMappingTests.swift in Sources */,
 				534FFC752C1AA65E00A49D1F /* FilterTypeTests.swift in Sources */,
 				0E5F5E8D2C6C6E730037A99C /* FirstTimeOnboardingPrimaryButtonViewModelTests.swift in Sources */,
+				C4B0F7EB2E8F42D4007C4E0B /* FloatingAddButtonVisibilityDataSourceTests.swift in Sources */,
 				835EBCEC2DCA17EF00AD1E57 /* FolderLinkViewModelTests.swift in Sources */,
 				94A46F452E65D01C00BA9644 /* ForwardingAudioPlayerViewRouterMock.swift in Sources */,
 				C4B97D812B67925C00EBA9E5 /* FuncCallRecorder.swift in Sources */,

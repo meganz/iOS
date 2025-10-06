@@ -101,14 +101,14 @@ struct CloudDriveViewControllerFactory {
         self.nodeActionsBridge = nodeActionsBridge
         viewModeFactory = ViewModeFactory(viewModeStore: viewModeStore)
     }
-    
+
     static func make(nc: UINavigationController? = nil) -> CloudDriveViewControllerFactory {
         let sdk = MEGASdk.shared
         let homeFactory = HomeScreenFactory()
         let tracker = DIContainer.tracker
-        
+
         let navController = nc ?? MEGANavigationController(rootViewController: UIViewController())
-        
+
         let nodeActions = NodeActions.makeActions(
             sdk: sdk,
             navigationController: navController
@@ -158,7 +158,7 @@ struct CloudDriveViewControllerFactory {
                     break
                 }
             })
-        
+
         let router = HomeSearchResultRouter(
             navigationController: navController,
             nodeActionViewControllerDelegate: nodeActionViewControllerDelegate,
@@ -187,7 +187,7 @@ struct CloudDriveViewControllerFactory {
             resultsMapper: resultsMapper,
             nodeUseCase: nodeUseCase,
             preferences: PreferenceUseCase.default,
-            
+
             sortOrderPreferenceUseCase: SortOrderPreferenceUseCase(
                 preferenceUseCase: PreferenceUseCase.default,
                 sortOrderPreferenceRepository: SortOrderPreferenceRepository.newRepo
@@ -227,7 +227,7 @@ struct CloudDriveViewControllerFactory {
             nodeActionsBridge: nodeActionBridge
         )
     }
-    
+
     /// build bare is return a plain UIViewController, bare-less version returns one wrapped in the UINavigationController
     func buildBare(
         parentNode: NodeEntity,
@@ -235,14 +235,14 @@ struct CloudDriveViewControllerFactory {
     ) -> UIViewController? {
         buildBare(nodeSource: .node({ parentNode }), config: config)
     }
-    
+
     func build(
         parentNode: NodeEntity,
         config: NodeBrowserConfig
     ) -> UIViewController? {
         build(nodeSource: .node({ parentNode }), config: config)
     }
-    
+
     func buildBare(
         nodeSource: NodeSource,
         config: NodeBrowserConfig
@@ -252,7 +252,7 @@ struct CloudDriveViewControllerFactory {
             config: config
         )
     }
-    
+
     func build(
         nodeSource: NodeSource,
         config: NodeBrowserConfig
@@ -260,17 +260,17 @@ struct CloudDriveViewControllerFactory {
         guard
             let vc = buildBare(nodeSource: nodeSource, config: config)
         else { return navigationController }
-        
+
         navigationController.viewControllers = [vc]
         navigationController.tabBarItem = UITabBarItem(
             title: nil,
             image: MEGAAssets.UIImage.cloudDriveIcon,
             selectedImage: nil
         )
-        
+
         return navigationController
     }
-    
+
     private func makeNodeBrowserViewModel(
         initialViewMode: ViewModePreferenceEntity,
         nodeSource: NodeSource,
@@ -296,7 +296,7 @@ struct CloudDriveViewControllerFactory {
             accountRepository: AccountRepository.newRepo,
             preferenceUseCase: PreferenceUseCase.default
         )
-        
+
         return .init(
             viewMode: initialViewMode,
             searchResultsViewModel: searchResultsViewModel,
@@ -375,7 +375,7 @@ struct CloudDriveViewControllerFactory {
             },
             updateTransferWidgetHandler: {
                 TransfersWidgetViewController.sharedTransfer().showWidgetIfNeeded()
-            }, 
+            },
             sortOrderProvider: sortOrderProvider,
             onNodeStructureChanged: onNodeStructureChanged,
             onMoreOptionsButtonTapped: onMoreOptionsButtonTapped
@@ -391,13 +391,13 @@ struct CloudDriveViewControllerFactory {
         nodeBrowserViewModel: NodeBrowserViewModel,
         navigationController: UINavigationController
     ) -> (ContextMenuManager, [AnyObject]) {
-        
+
         // All node actions triggered via context menus (three dot or toolbar)
         // are handled from a central place: NodeActions which keeps
         // closure that can execute each operation
         // possible improvement is to also use this mechanism
         // when three dots are tapped on the single node cell
-        
+
         let displayMenuDelegateHandler = DisplayMenuDelegateHandler(
             rubbishBinUseCase: rubbishBinUseCase,
             toggleSelection: { [weak nodeBrowserViewModel] in
@@ -413,9 +413,9 @@ struct CloudDriveViewControllerFactory {
                 nodeBrowserViewModel?.changeSortOrder(sortOrder)
             }
         )
-        
+
         displayMenuDelegateHandler.presenterViewController = navigationController
-        
+
         let quickActionsMenuDelegateHandler = QuickActionsMenuDelegateHandler(
             showNodeInfo: nodeActions.showNodeInfo,
             manageShare: { nodeActions.manageShare([$0]) },
@@ -438,7 +438,7 @@ struct CloudDriveViewControllerFactory {
             nodeSource: nodeSource,
             nodeSourceUpdatesListener: nodeSourceUpdatesListener
         )
-        
+
         let rubbishBinMenuDelegate = RubbishBinMenuDelegateHandler(
             restore: { nodeActions.restoreFromRubbishBin([$0]) },
             showNodeInfo: nodeActions.showNodeInfo,
@@ -460,7 +460,7 @@ struct CloudDriveViewControllerFactory {
             rubbishBinMenuDelegate: rubbishBinMenuDelegate,
             createContextMenuUseCase: createContextMenuUseCase
         )
-        
+
         return (contextMenuManager, contextMenuManager.allNonNilActionHandlers())
     }
 
@@ -490,7 +490,7 @@ struct CloudDriveViewControllerFactory {
             nodeSource: nodeSource,
             config: config
         )
-        
+
         // this object will communicate from views showing the nodes
         // into search hosting controller which will configure the tool bar with items
         // depending on the context, selection state and selected items
@@ -502,7 +502,7 @@ struct CloudDriveViewControllerFactory {
             else { return false }
             return backupsUseCase.isBackupNode(node)
         }
-        
+
         let parentNodeAccessType: () async -> NodeAccessTypeEntity = {
             guard
                 case let .node(nodeProvider) = nodeSource,
@@ -510,7 +510,7 @@ struct CloudDriveViewControllerFactory {
             else { return .unknown }
             return await accessType(for: node)
         }
-        
+
         let toolbarConfig: (_ selectedNodes: [NodeEntity], _ accessType: NodeAccessTypeEntity) -> BottomToolbarConfig = { nodes, accessType in
                 .init(
                     accessType: accessType,
@@ -555,19 +555,19 @@ struct CloudDriveViewControllerFactory {
                     nodeUseCase: nodeUseCase
                 )()
         )
-        
+
         let searchResultsVM = makeSearchResultsViewModel(
             nodeSource: nodeSource,
             initialViewMode: initialViewMode,
             config: overriddenConfig,
             calendar: calendar
         )
-        
+
         let searchControllerWrapper = SearchControllerWrapper(
             onSearch: { [weak searchResultsVM] in searchResultsVM?.bridge.queryChanged($0) },
             onCancel: { [weak searchResultsVM] in searchResultsVM?.bridge.queryCleaned() }
         )
-        
+
         searchResultsVM.bridge.selectionChanged = { selectedNodes in
             let nodes: [NodeEntity] = selectedNodes.compactMap {
                 nodeUseCase.nodeForHandle($0)
@@ -579,9 +579,9 @@ struct CloudDriveViewControllerFactory {
                 )
             }
         }
-        
+
         let onSelectionModeChange: (Bool) -> Void  = { enabled in
-            
+
             Task { @MainActor in
                 let accessType = await parentNodeAccessType()
                 selectionHandler.onSelectionModeChange?(
@@ -612,7 +612,7 @@ struct CloudDriveViewControllerFactory {
         let noInternetViewModel = LegacyNoInternetViewModel(
             networkMonitorUseCase: NetworkMonitorUseCase(repo: NetworkMonitorRepository.newRepo)
         )
-        
+
         let nodeUpdatesProvider = NodeUpdatesProvider()
 
         let nodeSourceUpdatesListener = NewCloudDriveNodeSourceUpdatesListener(
@@ -639,7 +639,7 @@ struct CloudDriveViewControllerFactory {
             initialViewMode: initialViewMode,
             nodeSource: nodeSource,
             searchResultsViewModel: searchResultsVM,
-            noInternetViewModel: noInternetViewModel, 
+            noInternetViewModel: noInternetViewModel,
             nodeSourceUpdatesListener: nodeSourceUpdatesListener,
             nodeUpdatesProvider: nodeUpdatesProvider,
             cloudDriveViewModeMonitoringService: cloudDriveViewModeMonitoringService,
@@ -653,11 +653,11 @@ struct CloudDriveViewControllerFactory {
             onSelectionModeChange: onSelectionModeChange,
             sortOrderProvider: {
                 sortOrderPreferenceUseCase.sortOrder(for: nodeSource.parentNode)
-            }, 
+            },
             onNodeStructureChanged: onNodeStructureChanged,
             onMoreOptionsButtonTapped: moreOptionsButtonTapHandler
         )
-        
+
         mediaContentDelegate.selectedPhotosHandler = { [weak nodeBrowserViewModel] selected, _ in
             guard let nodeBrowserViewModel else { return }
             Task { @MainActor in
@@ -672,14 +672,14 @@ struct CloudDriveViewControllerFactory {
                 nodeBrowserViewModel.refreshTitle()
             }
         }
-        
+
         let (contextMenuManager, actionHandlers) = makeContextMenuManager(
             nodeSource: nodeSource,
             nodeSourceUpdatesListener: nodeSourceUpdatesListener,
             nodeBrowserViewModel: nodeBrowserViewModel,
             navigationController: navigationController
         )
-        
+
         mediaContentDelegate.mediaDiscoverEmptyTappedHandler = { [weak contextMenuManager] in
             guard let uploadAddMenuDelegate = contextMenuManager?.uploadAddMenuDelegate else { return }
             switch $0 {
@@ -689,12 +689,20 @@ struct CloudDriveViewControllerFactory {
                uploadAddMenuDelegate.uploadAddMenu(didSelect: .capture)
             }
         }
-        
+
         nodeBrowserViewModel.actionHandlers.append(actionHandlers)
         nodeBrowserViewModel.actionHandlers.append(mediaContentDelegate)
 
-        let shouldShowFloatingAddButton = DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .cloudDriveRevamp)
-        let floatingAddButtonViewModel = FloatingAddButtonViewModel(initiallyShowsFloatingAddButton: shouldShowFloatingAddButton) {
+        let floatingButtonVisibilityDataSource = FloatingAddButtonVisibilityDataSource(
+            parentNode: nodeSource.parentNode,
+            nodeBrowserConfig: config,
+            nodeUpdatesProvider: nodeUpdatesProvider,
+            nodeUseCase: nodeUseCase
+        )
+
+        let floatingAddButtonViewModel = FloatingAddButtonViewModel(
+            floatingButtonVisibilityDataSource: floatingButtonVisibilityDataSource,
+            featureFlagProvider: DIContainer.featureFlagProvider) {
             // [IOS-10543]
         }
 
@@ -717,9 +725,9 @@ struct CloudDriveViewControllerFactory {
                 nodeSource,
                 config: overriddenConfig
             ),
-            searchBarVisible: initialViewMode != .mediaDiscovery, 
+            searchBarVisible: initialViewMode != .mediaDiscovery,
             viewModeProvider: makeViewModeProvider(viewModel: nodeBrowserViewModel),
-            displayModeProvider: makeDisplayModeProvider(viewModel: nodeBrowserViewModel), 
+            displayModeProvider: makeDisplayModeProvider(viewModel: nodeBrowserViewModel),
             matchingNodeProvider: makeMatchingNodeProvider(viewModel: nodeBrowserViewModel),
             audioPlayerManager: AudioPlayerManager.shared,
             parentNodeProvider: { nodeSource.parentNode }
@@ -752,7 +760,7 @@ struct CloudDriveViewControllerFactory {
     private func accessType(for node: NodeEntity?) async -> NodeAccessTypeEntity {
         await nodeUseCase.nodeAccessLevelAsync(nodeHandle: node?.handle ?? .invalid)
     }
-    
+
     /// Returns a `WarningBannerViewModel` if the current screen is inside the Cloud Drive section
     /// and the account's storage status indicates that a storage over-quota banner should be displayed.
     /// The banner will be shown when the user is nearing or exceeding their storage limit,
@@ -773,7 +781,7 @@ struct CloudDriveViewControllerFactory {
         MEGALogDebug("[StorageBanner] creating temporary banner view model with \(accountStorageUseCase.currentStorageStatus) storage status.")
         return makeSOQWarningViewModel(status: accountStorageUseCase.currentStorageStatus)
     }
-    
+
     private func makeOptionalWarningViewModel(
         _ nodeSource: NodeSource,
         config: NodeBrowserConfig
@@ -784,19 +792,19 @@ struct CloudDriveViewControllerFactory {
         else {
             return nil
         }
-        
+
         if config.isFromUnverifiedContactSharedFolder == true {
             return makeWarningViewModel(warningType: .contactNotVerifiedSharedFolder(parentNodeProvider()?.name ?? ""))
         }
-        
+
         return config.warningViewModel
     }
-    
+
     private func makeOverriddenConfigIfNeeded(
         nodeSource: NodeSource,
         config: NodeBrowserConfig
     ) -> NodeBrowserConfig {
-        
+
         switch nodeSource {
         case .node(let parentNodeProvider):
             var overriddenConfig = config
@@ -810,20 +818,20 @@ struct CloudDriveViewControllerFactory {
                 else {
                     return false
                 }
-                
+
                 if config.displayMode == .rubbishBin {
                     return false
                 }
-                
+
                 return preferences[PreferenceKeyEntity.shouldDisplayMediaDiscoveryWhenMediaOnly.rawValue] ?? true
             }
-            
+
             return overriddenConfig
         case .recentActionBucket:
             return config
         }
     }
-    
+
     private func makeSearchResultsViewModel(
         nodeSource: NodeSource,
         initialViewMode: ViewModePreferenceEntity,
@@ -832,12 +840,12 @@ struct CloudDriveViewControllerFactory {
     ) -> SearchResultsViewModel {
         // not all actions are triggered using bridge yet
         let bridge = SearchResultsBridge()
-        
+
         // display mode is pass down through the folder hierarchy for rubbish bin and backups
         // this makes sure the actions that can be performed on the nodes
         // are valid
         let carriedOverDisplayMode = config.displayMode?.carriedOverDisplayMode
-        
+
         let layout: PageLayout = {
             if initialViewMode == .thumbnail {
                 .thumbnail
@@ -845,7 +853,7 @@ struct CloudDriveViewControllerFactory {
                 .list
             }
         }()
-        
+
         let searchBridge = SearchBridge(
             selection: {
                 router.didTapNode(
@@ -855,7 +863,7 @@ struct CloudDriveViewControllerFactory {
                     // audio player and image gallery
                     // for more details inspect NodeOpener.swift and it's openNode method
                     allNodeHandles: $0.nonEmptyOrNilSiblingsIds(),
-                    displayMode: config.displayMode?.carriedOverDisplayMode, 
+                    displayMode: config.displayMode?.carriedOverDisplayMode,
                     isFromSharedItem: config.isFromSharedItem ?? false,
                     warningViewModel: config.warningViewModel
                 )
@@ -864,7 +872,7 @@ struct CloudDriveViewControllerFactory {
                 router.didTapMoreAction(
                     on: result.id,
                     button: button,
-                    displayMode: carriedOverDisplayMode, 
+                    displayMode: carriedOverDisplayMode,
                     isFromSharedItem: config.isFromSharedItem ?? false
                 )
             },
@@ -873,19 +881,19 @@ struct CloudDriveViewControllerFactory {
                 sortOrderPreferenceUseCase.sortOrder(for: nodeSource.parentNode).toSearchSortOrderEntity()
             }
         )
-        
+
         bridge.didInputTextTrampoline = { [weak searchBridge] text in
             searchBridge?.queryChanged(text)
         }
-        
+
         bridge.didClearTrampoline = { [weak searchBridge] in
             searchBridge?.queryCleaned()
         }
-        
+
         bridge.didFinishSearchingTrampoline = { [weak searchBridge] in
             searchBridge?.searchCancelled()
         }
-        
+
         bridge.updateBottomInsetTrampoline = { [weak searchBridge] inset in
             searchBridge?.updateBottomInset(inset)
         }
@@ -938,7 +946,7 @@ struct CloudDriveViewControllerFactory {
     private func makeWarningViewModel(warningType: WarningBannerType) -> WarningBannerViewModel {
         WarningBannerViewModel(warningType: warningType)
     }
-    
+
     private func makeSOQWarningViewModel(status: StorageStatusEntity) -> WarningBannerViewModel? {
         switch status {
         case .almostFull: WarningBannerViewModel(warningType: .almostFullStorageOverQuota)
@@ -946,11 +954,11 @@ struct CloudDriveViewControllerFactory {
         default: nil
         }
     }
-    
+
     private func makeWarningViewModel(parentNodeProvider: ParentNodeProvider) -> WarningBannerViewModel {
         WarningBannerViewModel(warningType: .contactNotVerifiedSharedFolder(parentNodeProvider()?.name ?? ""))
     }
-    
+
     private func resultProvider(
         for nodeSource: NodeSource,
         searchBridge: SearchBridge,
@@ -974,7 +982,7 @@ struct CloudDriveViewControllerFactory {
             )
         }
     }
-    
+
     private func locationFor(_ nodeSource: NodeSource) -> ViewModeLocation_ObjWrapper {
         switch nodeSource {
         case .node(let nodeProvider):
@@ -990,7 +998,7 @@ struct CloudDriveViewControllerFactory {
             return .init(customLocation: CustomViewModeLocation.Generic)
         }
     }
-    
+
     private func titleFor(
         _ nodeSource: NodeSource,
         config: NodeBrowserConfig,
@@ -1019,7 +1027,7 @@ struct CloudDriveViewControllerFactory {
             )
         }
     }
-    
+
     private func makeUpgradeEncouragementViewModel(
         config: NodeBrowserConfig,
         presenter: UIViewController
@@ -1029,7 +1037,7 @@ struct CloudDriveViewControllerFactory {
             router: UpgradeSubscriptionRouter(
             presenter: presenter))
     }
-    
+
     private func makeOptionalMediaDiscoveryViewModel(
         nodeSource: NodeSource,
         mediaContentDelegate: MediaContentDelegateHandler,
@@ -1037,7 +1045,7 @@ struct CloudDriveViewControllerFactory {
         isFromSharedItem: Bool
     ) -> MediaDiscoveryContentViewModel? {
         guard case let .node(parentNodeProvider) = nodeSource else { return nil }
-        
+
         return makeMediaDiscoveryViewModel(
             parentNodeProvider: parentNodeProvider,
             mediaContentDelegate: mediaContentDelegate,
@@ -1045,7 +1053,7 @@ struct CloudDriveViewControllerFactory {
             isFromSharedItem: isFromSharedItem
         )
     }
-    
+
     private func makeMediaDiscoveryViewModel(
         parentNodeProvider: @escaping ParentNodeProvider,
         mediaContentDelegate: MediaContentDelegateHandler,
@@ -1068,14 +1076,14 @@ struct CloudDriveViewControllerFactory {
                 hiddenNodesFeatureFlagEnabled: { DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes) })
         )
     }
-    
+
     /// This is to be injected into the NewCloudDriveViewController to server the Quick Upload feature.
     private func makeViewModeProvider(viewModel: NodeBrowserViewModel) -> CloudDriveViewModeProvider {
         CloudDriveViewModeProvider { [weak viewModel] in
             viewModel?.viewMode
         }
     }
-    
+
     /// This is to be injected into the NewCloudDriveViewController to server the Ads slot feature.
     private func makeDisplayModeProvider(viewModel: NodeBrowserViewModel) -> CloudDriveDisplayModeProvider {
         CloudDriveDisplayModeProvider { [weak viewModel] in

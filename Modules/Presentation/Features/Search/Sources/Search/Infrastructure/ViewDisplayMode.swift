@@ -1,7 +1,7 @@
 import Foundation
 
 /// Represents the view display mode
-public enum ViewDisplayMode: Sendable {
+public enum ViewDisplayMode: Sendable, CaseIterable {
     case unknown
     case cloudDrive
     case rubbishBin
