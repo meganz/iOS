@@ -15,11 +15,12 @@ final class NodeOpener {
     func openNode(
         nodeHandle: HandleEntity,
         allNodes: [HandleEntity]? = nil,
-        config: NodeBrowserConfig = .default
+        config: NodeBrowserConfig? = nil
     ) {
         guard let megaNode = sdk.node(forHandle: nodeHandle),
             megaNode.isNodeKeyDecrypted() else { return }
 
+        let config: NodeBrowserConfig = config ?? NodeBrowserConfig.default
         let allMegaNodes = allNodes?.compactMap { sdk.node(forHandle: $0) }
         
         switch megaNode.isFolder() {
@@ -28,7 +29,8 @@ final class NodeOpener {
         }
     }
     
-    func openNode(node: MEGANode, allNodes: [MEGANode]?, config: NodeBrowserConfig = .default) {
+    func openNode(node: MEGANode, allNodes: [MEGANode]?, config: NodeBrowserConfig? = nil) {
+        let config: NodeBrowserConfig = config ?? NodeBrowserConfig.default
         switch node.isFolder() {
         case true: openFolderNode(node, config: config)
         case false: openFileNode(node, allNodes: allNodes, displayMode: config.displayMode, isFromSharedItem: config.isFromSharedItem)

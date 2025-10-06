@@ -6,6 +6,7 @@ import MEGADomainMock
 import Testing
 
 @Suite("FloatingAddButtonVisibilityDataSourceTests")
+@MainActor
 struct FloatingAddButtonVisibilityDataSourceTests {
     enum TestInput {
         static let parentNode = NodeEntity(handle: 0)
@@ -24,7 +25,6 @@ struct FloatingAddButtonVisibilityDataSourceTests {
     }
 
     // MARK: - Helpers
-
     private static func makeBrowserConfig(
         displayMode: DisplayMode,
         isFromViewInFolder: Bool
@@ -40,7 +40,7 @@ struct FloatingAddButtonVisibilityDataSourceTests {
         displayMode: DisplayMode,
         isFromViewInFolder: Bool,
         nodeAccessLevel: NodeAccessTypeEntity
-    ) -> FloatingAddButtonVisibilityDataSource {
+    ) async -> FloatingAddButtonVisibilityDataSource {
         let nodeUseCase = MockNodeUseCase(nodeAccessLevel: { nodeAccessLevel })
         return FloatingAddButtonVisibilityDataSource(
             parentNode: parentNode,
@@ -66,7 +66,7 @@ struct FloatingAddButtonVisibilityDataSourceTests {
               arguments: TestInput.allNodeAccessLevels, TestInput.allDisplayModes)
         func nilParentNode(nodeAccessLevel: NodeAccessTypeEntity, displayMode: DisplayMode) async {
             for isFromViewInFolder in TestInput.allIsFromViewInFolder {
-                let sut = Test.makeSUT(parentNode: nil,
+                let sut = await Test.makeSUT(parentNode: nil,
                                        displayMode: displayMode,
                                        isFromViewInFolder: isFromViewInFolder,
                                        nodeAccessLevel: nodeAccessLevel)
@@ -78,7 +78,7 @@ struct FloatingAddButtonVisibilityDataSourceTests {
               arguments: TestInput.enabledNodeAccessLevels, TestInput.enabledDisplayModes)
         func nonNilParentNodeEnabled(nodeAccessLevel: NodeAccessTypeEntity, displayMode: DisplayMode) async {
             for isFromViewInFolder in TestInput.enabledIsFromViewInFolder {
-                let sut = Test.makeSUT(parentNode: TestInput.parentNode,
+                let sut = await Test.makeSUT(parentNode: TestInput.parentNode,
                                        displayMode: displayMode,
                                        isFromViewInFolder: isFromViewInFolder,
                                        nodeAccessLevel: nodeAccessLevel)
@@ -90,7 +90,7 @@ struct FloatingAddButtonVisibilityDataSourceTests {
               arguments: TestInput.disabledNodeAccesslevels, TestInput.allDisplayModes)
         func nonNilParentNodeWithDisabledNodeAccessLevels(nodeAccessLevel: NodeAccessTypeEntity, displayMode: DisplayMode) async {
             for isFromViewInFolder in TestInput.allIsFromViewInFolder {
-                let sut = Test.makeSUT(parentNode: TestInput.parentNode,
+                let sut = await Test.makeSUT(parentNode: TestInput.parentNode,
                                        displayMode: displayMode,
                                        isFromViewInFolder: isFromViewInFolder,
                                        nodeAccessLevel: nodeAccessLevel)
@@ -102,7 +102,7 @@ struct FloatingAddButtonVisibilityDataSourceTests {
               arguments: TestInput.allNodeAccessLevels, TestInput.disabledDisplayModes)
         func nonNilParentNodeWithDisabledDisplayMode(nodeAccessLevel: NodeAccessTypeEntity, displayMode: DisplayMode) async {
             for isFromViewInFolder in TestInput.allIsFromViewInFolder {
-                let sut = Test.makeSUT(parentNode: TestInput.parentNode,
+                let sut = await Test.makeSUT(parentNode: TestInput.parentNode,
                                        displayMode: displayMode,
                                        isFromViewInFolder: isFromViewInFolder,
                                        nodeAccessLevel: nodeAccessLevel)
@@ -114,7 +114,7 @@ struct FloatingAddButtonVisibilityDataSourceTests {
               arguments: TestInput.allNodeAccessLevels, TestInput.allDisplayModes)
         func nonNilParentNodeWithDisabledIsFromViewInFolder(nodeAccessLevel: NodeAccessTypeEntity, displayMode: DisplayMode) async {
             for isFromViewInFolder in TestInput.disabledIsFromViewInFolder {
-                let sut = Test.makeSUT(parentNode: TestInput.parentNode,
+                let sut = await Test.makeSUT(parentNode: TestInput.parentNode,
                                        displayMode: displayMode,
                                        isFromViewInFolder: isFromViewInFolder,
                                        nodeAccessLevel: nodeAccessLevel)
@@ -129,7 +129,7 @@ struct FloatingAddButtonVisibilityDataSourceTests {
 
         @Test("Multiple updates should toggle values")
         func multipleNodesUpdates() async {
-            let browserConfig = Test.makeBrowserConfig(
+            let browserConfig = await Test.makeBrowserConfig(
                 displayMode: TestInput.enabledDisplayModes.randomElement()!,
                 isFromViewInFolder: TestInput.enabledIsFromViewInFolder.randomElement()!
             )

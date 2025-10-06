@@ -11,6 +11,7 @@ import SearchMock
 import SwiftUI
 import XCTest
 
+@MainActor
 final class CloudDriveEmptyViewAssetFactoryTests: XCTestCase {
 
     func testDefaultAsset_forRecentBucket_shouldMatch() {

@@ -42,6 +42,7 @@ final class MockCloudDriveViewModeMonitoringService: @unchecked Sendable, CloudD
     }
 }
 
+@MainActor
 class NodeBrowserViewModelTests: XCTestCase {
     
     @MainActor
@@ -67,7 +68,7 @@ class NodeBrowserViewModelTests: XCTestCase {
             defaultViewMode: ViewModePreferenceEntity = .list,
             defaultLayout: PageLayout = .list,
             node: NodeEntity,
-            config: NodeBrowserConfig = .default,
+            config: NodeBrowserConfig? = nil,
             mockAccountStorageUseCase: MockAccountStorageUseCase = MockAccountStorageUseCase(),
             updateTransferWidgetHandler: @escaping () -> Void = {},
             sortOrderProvider: @escaping () -> MEGADomain.SortOrderEntity = { .defaultAsc },
@@ -77,6 +78,7 @@ class NodeBrowserViewModelTests: XCTestCase {
             sensitivityChangesForNode: AnyAsyncSequence<Bool> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
             tempWarningBannerViewModel: WarningBannerViewModel? = nil
         ) {
+            let config: NodeBrowserConfig = config ?? NodeBrowserConfig.default
             let nodeSource = NodeSource.node { node }
             let expectedNodes = [
                 node
@@ -821,7 +823,7 @@ class NodeBrowserViewModelTests: XCTestCase {
             return
         }
     }
-    
+    @MainActor
     private func makeContextMenuFactory(
         nodeUseCase: some NodeUseCaseProtocol,
         isSensitive: Bool

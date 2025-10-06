@@ -4,6 +4,7 @@ import MEGADomainMock
 import SwiftUI
 import XCTest
 
+@MainActor
 final class CloudDriveViewControllerNavItemsFactoryTests: XCTestCase {
 
     func testContextMenu_whenNodeSourceIsRecentBucketAction_shouldReturnNil() {
@@ -78,7 +79,7 @@ final class CloudDriveViewControllerNavItemsFactoryTests: XCTestCase {
 
     private func makeSUT(
         nodeSource: NodeSource = .node { nil },
-        config: NodeBrowserConfig = .default,
+        config: NodeBrowserConfig? = nil,
         currentViewMode: ViewModePreferenceEntity = .list,
         contextMenuManager: ContextMenuManager = .init(
             createContextMenuUseCase: MockCreateContextMenuUseCase()
@@ -94,7 +95,7 @@ final class CloudDriveViewControllerNavItemsFactoryTests: XCTestCase {
     ) -> SUT {
         SUT(
             nodeSource: nodeSource,
-            config: config,
+            config: config ?? config ?? NodeBrowserConfig.default,
             currentViewMode: currentViewMode,
             contextMenuManager: contextMenuManager,
             contextMenuConfigFactory: contextMenuConfigFactory,

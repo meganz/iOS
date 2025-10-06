@@ -1,5 +1,6 @@
 import MEGADomain
 
+@MainActor
 struct NodeBrowserConfig {
     var displayMode: DisplayMode?
     var isFromViewInFolder: Bool?
@@ -17,6 +18,7 @@ struct NodeBrowserConfig {
     /// The AdsVisibilityConfigurating can be access via `UIApplication.mainTabBarRootViewController())` which
     /// might not be available at the time this config is created so we need to use closure to refer to it at a later time.
     var adsConfiguratorProvider: () -> (any AdsVisibilityConfigurating)? = { nil }
+
     static var `default`: Self {
         .init()
     }
@@ -28,14 +30,14 @@ struct NodeBrowserConfig {
         config.displayMode = displayMode
         return config
     }
-    
+
     static func withOptionalDisplayMode(_ displayMode: DisplayMode?, warningViewModel: WarningBannerViewModel?) -> Self {
         var config = Self.default
         config.displayMode = displayMode
         config.warningViewModel = warningViewModel
         return config
     }
-    
+
     static func withSupportsUpgradeEncouragement(_ supportsUpgradeEncouragement: Bool) -> Self {
         var config = Self.default
         config.supportsUpgradeEncouragement = supportsUpgradeEncouragement
