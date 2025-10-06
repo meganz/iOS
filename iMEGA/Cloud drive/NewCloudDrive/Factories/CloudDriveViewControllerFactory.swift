@@ -231,9 +231,9 @@ struct CloudDriveViewControllerFactory {
     /// build bare is return a plain UIViewController, bare-less version returns one wrapped in the UINavigationController
     func buildBare(
         parentNode: NodeEntity,
-        config: NodeBrowserConfig = .default
+        config: NodeBrowserConfig? = nil
     ) -> UIViewController? {
-        buildBare(nodeSource: .node({ parentNode }), config: config)
+        buildBare(nodeSource: .node({ parentNode }), config: config ?? NodeBrowserConfig.default)
     }
 
     func build(

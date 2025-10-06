@@ -3,6 +3,7 @@ import MEGADomain
 import MEGADomainMock
 import XCTest
 
+@MainActor
 final class CloudDriveContextMenuFactoryTests: XCTestCase {
 
     func testMakeNodeBrowserContextMenuViewFactory_whenSensitivityIsntDetermined_shouldCompleteImmediately() async {

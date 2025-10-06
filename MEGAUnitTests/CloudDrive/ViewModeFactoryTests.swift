@@ -9,6 +9,7 @@ extension NodeSource {
     }
 }
 
+@MainActor
 final class ViewModeFactoryTests: XCTestCase {
     
     class MockViewModeStore: ViewModeStoring {
@@ -31,7 +32,8 @@ final class ViewModeFactoryTests: XCTestCase {
             var location: ViewModeLocation
         }
     }
-    
+
+    @MainActor
     class Harness {
         let sut: ViewModeFactory
         let nodeSource: NodeSource

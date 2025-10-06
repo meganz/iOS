@@ -4,7 +4,8 @@ import MEGADomain
 struct ViewModeFactory {
     
     let viewModeStore: any ViewModeStoring
-    
+
+    @MainActor
     func determineViewMode(
         nodeSource: NodeSource,
         config: NodeBrowserConfig,
