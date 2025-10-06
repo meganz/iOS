@@ -1,3 +1,4 @@
+import AVFoundation
 @preconcurrency import Combine
 import Foundation
 import MEGADomain
@@ -58,6 +59,7 @@ struct PlayerOverlayViewModelTests {
         #expect(sut.doubleTapSeekSeconds == 0)
         #expect(sut.isLocked == false)
         #expect(sut.isLockOverlayVisible == false)
+        #expect(sut.bufferRange == nil)
         #expect(sut.shouldShowPhotoPermissionAlert == false)
     }
 
@@ -783,6 +785,110 @@ struct PlayerOverlayViewModelTests {
         sut.duration = duration
 
         #expect(sut.shouldShownJumpButtons == expectedShouldShownJumpButtons)
+    }
+    
+    // MARK: - Buffer Range Tests
+    
+    @Test
+    func bufferEndProgress_whenNilBufferRange_shouldReturnZero() {
+        let sut = makeSUT()
+        sut.duration = .seconds(100)
+        sut.bufferRange = nil
+        
+        #expect(sut.bufferEndProgress == 0.0)
+    }
+    
+    @Test
+    func bufferEndProgress_whenZeroDuration_shouldReturnZero() {
+        let sut = makeSUT()
+        sut.duration = .seconds(0)
+        sut.bufferRange = (start: .seconds(10), end: .seconds(40))
+
+        #expect(sut.bufferEndProgress == 0.0)
+    }
+    
+    @Test(arguments: [
+        (0, 30, 100, 0.3),
+        (10, 30, 100, 0.3),
+        (25, 50, 100, 0.5),
+        (0, 100, 100, 1.0),
+        (50, 100, 200, 0.5)
+    ])
+    func bufferEndProgress_whenValidBufferRange_shouldReturnCorrectEndProgress(
+        bufferStart: Double,
+        bufferEnd: Double,
+        totalDuration: Double,
+        expectedEndProgress: CGFloat
+    ) {
+        let bufferRange = (
+            start: Duration.seconds(bufferStart),
+            end: Duration.seconds(bufferEnd)
+        )
+        let sut = makeSUT()
+        sut.duration = .seconds(totalDuration)
+        sut.bufferRange = bufferRange
+        
+        #expect(sut.bufferEndProgress == expectedEndProgress)
+    }
+    
+    @Test
+    func bufferStartProgress_whenNilBufferRange_shouldReturnZero() {
+        let sut = makeSUT()
+        sut.duration = .seconds(100)
+        sut.bufferRange = nil
+        
+        #expect(sut.bufferStartProgress == 0.0)
+    }
+    
+    @Test
+    func bufferStartProgress_whenZeroDuration_shouldReturnZero() {
+        let sut = makeSUT()
+        sut.duration = .seconds(0)
+        sut.bufferRange = (start: .seconds(10), end: .seconds(40))
+
+        #expect(sut.bufferStartProgress == 0.0)
+    }
+    
+    @Test(arguments: [
+        (0, 30, 100, 0.0),
+        (25, 75, 100, 0.25),
+        (50, 75, 100, 0.5),
+        (75, 100, 200, 0.375),
+        (100, 200, 200, 0.5)
+    ])
+    func bufferStartProgress_whenValidBufferRange_shouldReturnCorrectStartProgress(
+        bufferStart: Double,
+        bufferEnd: Double,
+        totalDuration: Double,
+        expectedStartProgress: CGFloat
+    ) {
+        let bufferRange = (
+            start: Duration.seconds(bufferStart),
+            end: Duration.seconds(bufferEnd)
+        )
+        let sut = makeSUT()
+        sut.duration = .seconds(totalDuration)
+        sut.bufferRange = bufferRange
+        
+        #expect(sut.bufferStartProgress == expectedStartProgress)
+    }
+    
+    @Test
+    func bufferRangeObservation_whenPlayerBufferRangeChanges_shouldUpdateViewModel() async throws {
+        let mockPlayer = MockVideoPlayer()
+        let testRange = (start: Duration.seconds(10), end: Duration.seconds(40))
+        let sut = makeSUT(player: mockPlayer)
+        
+        sut.viewWillAppear()
+        
+        mockPlayer.bufferRange = testRange
+
+        _ = await sut.$bufferRange.values.first { @Sendable newRange in
+            guard let newRange = newRange else { return false }
+            return newRange == testRange
+        }
+        let bufferRange = try #require(sut.bufferRange)
+        #expect(bufferRange == testRange)
     }
     
     // MARK: - Title Tests

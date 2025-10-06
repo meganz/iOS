@@ -20,12 +20,14 @@ public final class MEGAAVPlayer {
     private let durationSubject: CurrentValueSubject<Duration, Never> = .init(.seconds(-1))
     private let canPlayNextSubject: CurrentValueSubject<Bool, Never> = .init(false)
     private let nodeNameSubject: CurrentValueSubject<String, Never> = .init("")
+    private let bufferRangeSubject: CurrentValueSubject<(start: Duration, end: Duration)?, Never> = .init(nil)
 
     public let statePublisher: AnyPublisher<PlaybackState, Never>
     public let currentTimePublisher: AnyPublisher<Duration, Never>
     public let durationPublisher: AnyPublisher<Duration, Never>
     public let canPlayNextPublisher: AnyPublisher<Bool, Never>
     public let nodeNamePublisher: AnyPublisher<String, Never>
+    public let bufferRangePublisher: AnyPublisher<(start: Duration, end: Duration)?, Never>
 
     private nonisolated let debugMessageSubject = PassthroughSubject<String, Never>()
 
@@ -55,6 +57,7 @@ public final class MEGAAVPlayer {
         self.durationPublisher = durationSubject.eraseToAnyPublisher()
         self.canPlayNextPublisher = canPlayNextSubject.eraseToAnyPublisher()
         self.nodeNamePublisher = nodeNameSubject.eraseToAnyPublisher()
+        self.bufferRangePublisher = bufferRangeSubject.eraseToAnyPublisher()
 
         observePlayerTimeControlStatus()
         observePlayerPeriodicTime()
@@ -351,6 +354,7 @@ extension MEGAAVPlayer: NodeLoadable {
         observeStatus(for: playerItem)
         observeDidPlayToEndTime(for: playerItem)
         observePlaybackStalledNotification(for: playerItem)
+        observeBufferRange(for: playerItem)
     }
 
     private func observePlaybackBufferStatus(for item: AVPlayerItem) {
@@ -404,6 +408,26 @@ extension MEGAAVPlayer: NodeLoadable {
             .publisher(for: AVPlayerItem.playbackStalledNotification, object: item)
             .sink { [weak self] _ in self?.willStartBuffering() }
             .store(in: &cancellables)
+    }
+    
+    private func observeBufferRange(for item: AVPlayerItem) {
+        item.publisher(for: \.loadedTimeRanges, options: [.new])
+            .sink { [weak self] timeRanges in
+                self?.updateBufferRange(timeRanges)
+            }
+            .store(in: &cancellables)
+    }
+    
+    private func updateBufferRange(_ timeRanges: [NSValue]) {
+        guard let latestRange = timeRanges.last?.timeRangeValue else {
+            bufferRangeSubject.send(nil)
+            return
+        }
+        let bufferStartSeconds = CMTimeGetSeconds(latestRange.start)
+        let bufferEndSeconds = CMTimeGetSeconds(CMTimeRangeGetEnd(latestRange))
+        bufferRangeSubject.send(
+            (start: .seconds(bufferStartSeconds), end: .seconds(bufferEndSeconds))
+        )
     }
 
     private func handlePlaybackEnded() {

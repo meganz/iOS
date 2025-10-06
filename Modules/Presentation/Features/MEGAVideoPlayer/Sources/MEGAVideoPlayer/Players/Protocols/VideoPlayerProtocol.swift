@@ -26,6 +26,7 @@ public protocol PlaybackStateObservable {
     var currentTimePublisher: AnyPublisher<Duration, Never> { get }
     var durationPublisher: AnyPublisher<Duration, Never> { get }
     var canPlayNextPublisher: AnyPublisher<Bool, Never> { get }
+    var bufferRangePublisher: AnyPublisher<(start: Duration, end: Duration)?, Never> { get }
 }
 
 @MainActor

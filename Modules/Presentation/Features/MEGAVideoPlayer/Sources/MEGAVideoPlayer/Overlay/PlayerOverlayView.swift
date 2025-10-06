@@ -383,6 +383,13 @@ extension PlayerOverlayView {
                     .foregroundStyle(Color.white.opacity(0.3))
                     .cornerRadius(2)
                 
+                // Buffer overlay
+                Rectangle()
+                    .frame(width: (viewModel.bufferEndProgress - viewModel.bufferStartProgress) * geometry.size.width, height: 4)
+                    .foregroundStyle(Color.white.opacity(0.5))
+                    .cornerRadius(2)
+                    .offset(x: viewModel.bufferStartProgress * geometry.size.width)
+                
                 // Progress bar
                 Rectangle()
                     .frame(width: viewModel.progress * geometry.size.width, height: 4)

@@ -11,6 +11,7 @@ final class PreviewVideoPlayer: VideoPlayerProtocol {
     @Published var state: PlaybackState
     @Published var currentTime: Duration
     @Published var duration: Duration
+    @Published var bufferRange: (start: Duration, end: Duration)?
     @Published var scalingMode: VideoScalingMode
     @Published var canPlayNext: Bool
     @Published var nodeName: String
@@ -28,6 +29,10 @@ final class PreviewVideoPlayer: VideoPlayerProtocol {
 
     var durationPublisher: AnyPublisher<Duration, Never> {
         $duration.eraseToAnyPublisher()
+    }
+
+    var bufferRangePublisher: AnyPublisher<(start: Duration, end: Duration)?, Never> {
+        $bufferRange.eraseToAnyPublisher()
     }
 
     var canPlayNextPublisher: AnyPublisher<Bool, Never> {
