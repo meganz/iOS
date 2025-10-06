@@ -12,7 +12,7 @@ public final class MockNodeUseCase: NodeUseCaseProtocol, @unchecked Sendable {
     public let nodeUpdates: AnyAsyncSequence<[NodeEntity]>
     private let isDownloaded: Bool
     private let isNodeInRubbishBin: Bool
-    private let nodeAccessLevel: NodeAccessTypeEntity
+    private let nodeAccessLevel: () -> NodeAccessTypeEntity
     private let nodes: [HandleEntity: NodeEntity]
     private let folderLinkInfo: FolderLinkInfoEntity?
     private let nodeForFileLink: NodeEntity?
@@ -22,7 +22,7 @@ public final class MockNodeUseCase: NodeUseCaseProtocol, @unchecked Sendable {
         isDownloaded: Bool = false,
         isNodeInRubbishBin: Bool = false,
         nodes: [HandleEntity: NodeEntity] = [:],
-        nodeAccessLevel: NodeAccessTypeEntity = .unknown,
+        nodeAccessLevel: @escaping () -> NodeAccessTypeEntity = { .unknown },
         folderLinkInfo: FolderLinkInfoEntity? = nil,
         nodeForFileLink: NodeEntity? = nil,
         nodeInRubbishBin: NodeEntity? = nil,
@@ -43,11 +43,11 @@ public final class MockNodeUseCase: NodeUseCaseProtocol, @unchecked Sendable {
     }
     
     public func nodeAccessLevel(nodeHandle: HandleEntity) -> NodeAccessTypeEntity {
-        nodeAccessLevel
+        nodeAccessLevel()
     }
     
     public func nodeAccessLevelAsync(nodeHandle: HandleEntity) async -> NodeAccessTypeEntity {
-        nodeAccessLevel
+        nodeAccessLevel()
     }
     
     public func labelString(label: NodeLabelTypeEntity) -> String {

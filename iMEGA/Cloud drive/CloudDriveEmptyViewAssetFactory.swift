@@ -16,7 +16,8 @@ struct CloudDriveEmptyViewAssetFactory {
     init(
         tracker: some AnalyticsTracking,
         nodeInsertionRouter: some NodeInsertionRouting,
-        nodeUseCase: some NodeUseCaseProtocol
+        nodeUseCase: some NodeUseCaseProtocol,
+
     ) {
         self.tracker = tracker
         self.nodeUseCase = nodeUseCase
@@ -109,7 +110,8 @@ struct CloudDriveEmptyViewAssetFactory {
     }
 
     private func makeDefaultActions(for parentNode: NodeEntity?) -> [SearchConfig.EmptyViewAssets.Action] {
-        guard let parentNode else {
+
+        guard let parentNode, !DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .cloudDriveRevamp) else {
             return []
         }
 
