@@ -45,7 +45,7 @@ extension PreviewDocumentViewController {
     }
     
     @objc func setupTextView() -> UITextView {
-        let textView = UITextView()
+        let textView = UITextView(usingTextLayoutManager: false)
         textView.font = UIFont.preferredFont(forTextStyle: .body)
         textView.adjustsFontForContentSizeCategory = true
         view.addSubview(textView)

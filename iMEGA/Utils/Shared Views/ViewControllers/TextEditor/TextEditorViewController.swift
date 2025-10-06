@@ -10,7 +10,7 @@ final class TextEditorViewController: UIViewController {
     private var viewModel: TextEditorViewModel
     
     private lazy var textView: UITextView = {
-        let textView = UITextView()
+        let textView = UITextView(usingTextLayoutManager: false)
         textView.translatesAutoresizingMaskIntoConstraints = false
         textView.font = UIFont.preferredFont(forTextStyle: .body)
         textView.adjustsFontForContentSizeCategory = true
