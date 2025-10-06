@@ -94,7 +94,7 @@ extension MEGAPhotoBrowserViewController {
                     guard let playerVC, let playableNode else { return }
                     NodeOpener(navigationController: nil)
                         .openNodeActions(
-                            playableNode.nodeHandle,
+                            playableNode.handle,
                             presentingController: playerVC,
                             sender: playerVC
                         )

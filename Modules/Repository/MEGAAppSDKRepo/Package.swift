@@ -47,7 +47,8 @@ let package = Package(
                 "MEGARepo"
             ],
             cxxSettings: [
-                .define("ENABLE_CHAT")
+                .define("ENABLE_CHAT"),
+                .define("HAVE_LIBUV")
             ],
             swiftSettings: settings),
         .target(

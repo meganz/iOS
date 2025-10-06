@@ -1,6 +1,7 @@
 import AVKit
 import Combine
 import Foundation
+import MEGADomain
 import MEGAVideoPlayer
 import UIKit
 
@@ -12,7 +13,7 @@ public final class MockVideoPlayer: VideoPlayerProtocol {
     @Published public var canPlayNext: Bool
     @Published public var nodeName: String = "Mock Video Title"
 
-    public var currentNode: (any MEGAVideoPlayer.PlayableNode)?
+    public var currentNode: (any PlayableNode)?
 
     let debugMessage: String
     public nonisolated let option: VideoPlayerOption
@@ -147,7 +148,7 @@ public final class MockVideoPlayer: VideoPlayerProtocol {
     public func loadNode(_ node: some PlayableNode) {
         loadNodeCallCount += 1
         loadedNode = node
-        nodeName = node.nodeName
+        nodeName = node.name ?? ""
     }
     
     public func setupPlayer(in layer: any PlayerViewProtocol) {

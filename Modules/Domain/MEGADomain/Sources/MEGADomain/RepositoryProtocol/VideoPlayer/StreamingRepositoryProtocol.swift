@@ -1,6 +1,6 @@
 import Foundation
 
-public protocol StreamingRepositoryProtocol {
+public protocol StreamingRepositoryProtocol: RepositoryProtocol, Sendable {
     var httpServerIsLocalOnly: Bool { get }
     var httpServerIsRunning: Int { get }
 

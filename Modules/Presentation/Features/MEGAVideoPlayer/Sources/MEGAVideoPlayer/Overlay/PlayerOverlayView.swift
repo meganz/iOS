@@ -1,4 +1,5 @@
 import MEGADesignToken
+import MEGADomain
 import MEGAInfrastructure
 import MEGAL10n
 import MEGAPermissions

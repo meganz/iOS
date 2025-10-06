@@ -1,7 +1,7 @@
 import AVFoundation
 import AVKit
 @preconcurrency import Combine
-import MEGASdk
+import MEGADomain
 import UIKit
 
 @MainActor
@@ -277,7 +277,7 @@ extension MEGAAVPlayer: NodeLoadable {
         observe(for: playerItem)
 
         currentNode = node
-        nodeName = currentNode?.nodeName ?? ""
+        nodeName = currentNode?.name ?? ""
 
         attemptResumeFromSavedPosition()
     }
@@ -296,7 +296,7 @@ extension MEGAAVPlayer: NodeLoadable {
                 if let currentNode = self?.currentNode,
                    let updatedCurrentNode = videoNodes.first(where: { $0.id == currentNode.id}) {
                     self?.currentNode = updatedCurrentNode
-                    self?.nodeName = updatedCurrentNode.nodeName
+                    self?.nodeName = updatedCurrentNode.name ?? ""
                 }
                 self?.updateCanPlayNext()
             }

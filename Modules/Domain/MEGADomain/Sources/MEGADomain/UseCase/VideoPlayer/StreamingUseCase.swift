@@ -2,7 +2,7 @@ import Foundation
 import Network
 import SystemConfiguration.CaptiveNetwork
 
-public protocol StreamingUseCaseProtocol {
+public protocol StreamingUseCaseProtocol: Sendable {
     var isStreaming: Bool { get }
 
     func startStreaming()

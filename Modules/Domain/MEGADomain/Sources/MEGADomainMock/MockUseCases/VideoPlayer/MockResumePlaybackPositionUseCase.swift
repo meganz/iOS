@@ -1,5 +1,5 @@
 import Foundation
-@testable import MEGAVideoPlayer
+import MEGADomain
 
 public final class MockResumePlaybackPositionUseCase: ResumePlaybackPositionUseCaseProtocol {
     public var savedPositions: [String: TimeInterval] = [:]
@@ -8,12 +8,12 @@ public final class MockResumePlaybackPositionUseCase: ResumePlaybackPositionUseC
     public var deletePlaybackPositionCallCount = 0
 
     public init() {}
-    
+
     public func savePlaybackPosition(_ position: TimeInterval, for node: any PlayableNode) {
         savePlaybackPositionCallCount += 1
         savedPositions[node.id] = position
     }
-    
+
     public func getPlaybackPosition(for node: any PlayableNode) -> TimeInterval? {
         getPlaybackPositionCallCount += 1
         return savedPositions[node.id]

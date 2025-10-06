@@ -1,6 +1,6 @@
 import Foundation
+import MEGADomain
 import MEGASwift
-import MEGAVideoPlayer
 
 public struct MockVideoNodesUseCase: VideoNodesUseCaseProtocol, @unchecked Sendable {
     public let nodes: [any PlayableNode]

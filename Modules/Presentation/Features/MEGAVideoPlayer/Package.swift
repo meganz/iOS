@@ -24,7 +24,7 @@ let package = Package(
         )
     ],
     dependencies: [
-        .package(path: "../../../DataSource/MEGASDK"),
+        .package(path: "../../../Domain/MEGADomain"),
         .package(path: "../../../Presentation/MEGAL10n"),
         .package(path: "../../../MEGASharedRepo/MEGAInfrastructure"),
         .package(path: "../../../MEGASharedRepo/MEGALogger"),
@@ -45,7 +45,6 @@ let package = Package(
         .target(
             name: "MEGAVideoPlayer",
             dependencies: [
-                .product(name: "MEGASdk", package: "MEGASDK"),
                 "MEGAL10n",
                 "MEGALogger",
                 "MEGADesignToken",
@@ -62,17 +61,13 @@ let package = Package(
             resources: [
                 .process("Resources")
             ],
-            cxxSettings: [
-                .define("HAVE_LIBUV")
-            ],
             swiftSettings: settings
         ),
         .target(
             name: "MEGAVideoPlayerMock",
             dependencies: [
                 "MEGAVideoPlayer",
-                "MEGASwift",
-                .product(name: "MEGASdk", package: "MEGASDK")
+                "MEGASwift"
             ],
             swiftSettings: settings
         ),
@@ -82,6 +77,8 @@ let package = Package(
                 "MEGATest",
                 "MEGAVideoPlayer",
                 "MEGAVideoPlayerMock",
+                .product(name: "MEGADomainMock", package: "MEGADomain"),
+                .product(name: "MEGAInfrastructure", package: "MEGAInfrastructure"),
                 .product(name: "MEGAInfrastructureMocks", package: "MEGAInfrastructure"),
                 .product(name: "MEGAPermissions", package: "MEGAPermissions"),
                 .product(name: "MEGAPermissionsMock", package: "MEGAPermissions"),

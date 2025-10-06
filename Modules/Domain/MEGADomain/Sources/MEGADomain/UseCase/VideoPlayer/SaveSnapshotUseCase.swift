@@ -1,7 +1,7 @@
 import Photos
 import UIKit
 
-public protocol SaveSnapshotUseCaseProtocol {
+public protocol SaveSnapshotUseCaseProtocol: Sendable {
     @MainActor
     func saveToPhotoLibrary(_ image: UIImage) async -> Bool
 }
