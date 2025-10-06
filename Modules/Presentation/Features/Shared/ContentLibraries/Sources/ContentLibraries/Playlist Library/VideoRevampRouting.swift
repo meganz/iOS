@@ -14,7 +14,7 @@ public struct VideoPlaylistContentSnackBarPresentationConfig {
 
 public protocol VideoRevampRouting: Routing {
     func openMediaBrowser(for video: NodeEntity, allVideos: [NodeEntity])
-    func openMoreOptions(for video: NodeEntity, sender: Any)
+    func openMoreOptions(for video: NodeEntity, sender: Any, shouldShowSelection: Bool)
     func openVideoPlaylistContent(for videoPlaylistEntity: VideoPlaylistEntity, presentationConfig: VideoPlaylistContentSnackBarPresentationConfig)
     func openVideoPicker(completion: @escaping ([NodeEntity]) -> Void)
     func popScreen()

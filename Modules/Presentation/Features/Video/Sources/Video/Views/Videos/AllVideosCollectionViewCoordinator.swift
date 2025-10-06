@@ -99,7 +99,9 @@ final class AllVideosCollectionViewCoordinator: NSObject {
                 sensitiveNodeUseCase: viewModel.sensitiveNodeUseCase,
                 nodeUseCase: viewModel.nodeUseCase,
                 featureFlagProvider: featureFlagProvider,
-                onTapMoreOptions: { [weak self] in self?.onTapMoreOptions($0, sender: cell) },
+                onTapMoreOptions: { [weak self] node, shouldShowSelection in
+                    self?.onTapMoreOptions(node, sender: cell, shouldShowSelection: shouldShowSelection)
+                },
                 onTapped: { [weak self] in self?.onTapCell(video: $0) }
             )
             let adapter = VideoSelectionCheckmarkUIUpdateAdapter(
@@ -170,8 +172,8 @@ final class AllVideosCollectionViewCoordinator: NSObject {
         cell.contentConfiguration = nil
     }
     
-    private func onTapMoreOptions(_ video: NodeEntity, sender: Any) {
-        representer.router.openMoreOptions(for: video, sender: sender)
+    private func onTapMoreOptions(_ video: NodeEntity, sender: Any, shouldShowSelection: Bool) {
+        representer.router.openMoreOptions(for: video, sender: sender, shouldShowSelection: shouldShowSelection)
     }
 }
 

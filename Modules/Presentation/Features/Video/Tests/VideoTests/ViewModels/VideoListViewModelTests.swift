@@ -2,7 +2,9 @@
 import MEGAAppPresentationMock
 import MEGADomain
 import MEGADomainMock
+import MEGASwift
 import MEGATest
+import Testing
 @preconcurrency @testable import Video
 import XCTest
 
@@ -460,7 +462,55 @@ final class VideoListViewModelTests: XCTestCase {
         XCTAssertTrue(sut.videos.isNotEmpty)
         cancellable.cancel()
     }
-    
+
+    @MainActor
+    func testSelectedVideos_whenItemSelected_shouldMatchResults() async {
+        let videoNodes = [
+            anyNode(id: 1, mediaType: .video),
+            anyNode(id: 2, mediaType: .video)
+        ]
+        let (sut, _, _, _) = makeSUT(
+            photoLibraryUseCase: MockPhotoLibraryUseCase(allVideos: videoNodes)
+        )
+
+        await confirmation("selected videos updated", isolation: MainActor.shared) { confirmation in
+            sut.syncModel.selectVideos([videoNodes[0]])
+
+            let received = await {
+                for await value in sut.selection.$videos.values where !value.isEmpty {
+                    return value
+                }
+                return [:]
+            }()
+
+            #expect(received == [1: videoNodes[0]])
+            confirmation.confirm()
+        }
+    }
+
+    @MainActor
+    func testSelectedVideos_whenNoItemSelected_shouldMatchResults() async {
+        let videoNodes = [
+            anyNode(id: 1, mediaType: .video),
+            anyNode(id: 2, mediaType: .video)
+        ]
+        let (sut, _, _, _) = makeSUT(
+            photoLibraryUseCase: MockPhotoLibraryUseCase(allVideos: videoNodes)
+        )
+
+        sut.selection.videos = [1: videoNodes[0]]
+
+        await confirmation("selected videos cleared") { confirmation in
+            sut.syncModel.selectVideos([])
+
+            let received = await sut.selection.$videos.values.first { @Sendable in $0.isEmpty }
+
+            #expect(received?.isEmpty == true)
+            #expect(sut.selection.videos.isEmpty)
+            confirmation.confirm()
+        }
+    }
+
     // MARK: - didFinishSelectFilterOption
     
     @MainActor

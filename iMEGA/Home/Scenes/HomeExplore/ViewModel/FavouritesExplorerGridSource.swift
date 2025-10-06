@@ -110,6 +110,11 @@ final class FavouritesExplorerGridSource: NSObject {
         collectionView.reloadData()
     }
 
+    func selectNodes(_ nodes: [MEGANode]) {
+        selectedNodes = nodes
+        collectionView.reloadData()
+    }
+
     func collectionView(_ collectionView: UICollectionView,
                         willDisplay cell: UICollectionViewCell,
                         forItemAt indexPath: IndexPath) {

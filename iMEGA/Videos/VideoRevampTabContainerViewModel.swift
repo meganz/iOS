@@ -80,9 +80,6 @@ final class VideoRevampTabContainerViewModel: ViewModelType {
             switch action {
             case .select:
                 syncModel.editMode = .active
-                invokeCommand?(.navigationBarCommand(.toggleEditing))
-                invokeCommand?(.searchBarCommand(.hideSearchBar))
-                syncModel.searchText.removeAll()
             case .newPlaylist:
                 guard !overDiskQuotaChecker.showOverDiskQuotaIfNeeded() else { return }
                 syncModel.shouldShowAddNewPlaylistAlert = true

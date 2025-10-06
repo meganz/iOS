@@ -125,6 +125,7 @@ final class VideoRevampTabContainerViewController: UIViewController {
         configureToolbarAppearance()
         subscribeToVideoSelection()
         listenToSnackBarPresentation()
+        subscribeToEditMode()
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -323,7 +324,27 @@ final class VideoRevampTabContainerViewController: UIViewController {
             .sink { [weak self] in self?.refreshContextMenuBarButton(currentTab: $0) }
             .store(in: &cancellables)
     }
-    
+
+    private func subscribeToEditMode() {
+        viewModel.syncModel.$editMode
+            .sink { [weak self] editMode in
+                guard let self, isEditing != editMode.isEditing else { return }
+                enterEditingMode()
+            }
+            .store(in: &cancellables)
+    }
+
+    private func enterEditingMode() {
+        guard !isEditing else { return }
+
+        executeCommand(.navigationBarCommand(.toggleEditing))
+        executeCommand(.searchBarCommand(.hideSearchBar))
+
+        setupNavigationBarButtons()
+
+        viewModel.syncModel.searchText.removeAll()
+    }
+
     private func subscribeToVideoSelection() {
         Publishers.CombineLatest(
             viewModel.videoSelection.$editMode.map(\.isEditing),

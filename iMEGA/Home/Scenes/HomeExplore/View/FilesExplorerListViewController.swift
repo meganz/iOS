@@ -45,7 +45,15 @@ class FilesExplorerListViewController: FilesExplorerViewController {
         configureExplorerToolbarButtons()
         delegate?.didSelectNodes(withCount: listSource?.selectedNodes?.count ?? 0)
     }
-    
+
+    override func selectNodes(_ nodes: [MEGANode]) {
+        setEditingMode()
+        delegate?.showSelectButton(true)
+        listSource?.selectNodes(nodes)
+        configureExplorerToolbarButtons()
+        delegate?.didSelectNodes(withCount: listSource?.selectedNodes?.count ?? 0)
+    }
+
     override func configureSearchController(_ searchController: UISearchController) {
         tableView.tableHeaderView = searchController.searchBar
         searchController.searchBar.barTintColor = TokenColors.Background.page

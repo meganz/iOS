@@ -56,7 +56,15 @@ final class FavouritesExplorerGridViewController: FilesExplorerViewController {
         configureFavouriteToolbarButtons()
         delegate?.didSelectNodes(withCount: gridSource?.selectedNodes?.count ?? 0)
     }
-    
+
+    override func selectNodes(_ nodes: [MEGANode]) {
+        setEditingMode()
+        delegate?.showSelectButton(true)
+        gridSource?.selectNodes(nodes)
+        configureToolbarButtons()
+        delegate?.didSelectNodes(withCount: gridSource?.selectedNodes?.count ?? 0)
+    }
+
     override func removeSearchController(_ searchController: UISearchController) {
         guard let searchBar = searchBarView.subviews.first,
               searchBar == searchController.searchBar else {

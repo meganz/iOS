@@ -189,21 +189,59 @@ final class VideoCellViewModelTests: XCTestCase {
     }
     
     @MainActor
-    func testOnTappedMoreOptions_whenCalled_triggerTap() async {
-        let video = nodeEntity(name: "name", handle: 1, hasThumbnail: true, isFavorite: true, label: .blue, size: 12, duration: 12)
+    func testOnTappedMoreOptions_whenCalledForAllVideos_triggerTap() async {
+        let video = (nodeEntity(name: "name", handle: 1, hasThumbnail: true, isFavorite: true, label: .blue, size: 12, duration: 12), true)
         let thumbnailLoader = MockThumbnailLoader()
-        var tappedNodes = [NodeEntity]()
+        var tappedNodes = [(NodeEntity, Bool)]()
         let (sut, _) = makeSUT(
             thumbnailLoader: thumbnailLoader,
-            nodeEntity: video,
-            onTapMoreOptions: { tappedNodes.append($0) }
+            nodeEntity: video.0,
+            viewContext: .allVideos,
+            onTapMoreOptions: { tappedNodes.append(($0, $1)) }
         )
         
         sut.onTappedMoreOptions()
         
-        XCTAssertEqual(tappedNodes, [ video ])
+        XCTAssertEqual(tappedNodes.map(\.0), [ video.0 ])
+        XCTAssertEqual(tappedNodes.map(\.1), [ video.1 ])
     }
-    
+
+    @MainActor
+    func testOnTappedMoreOptions_whenCalledForPlayListContent_triggerTap() async {
+        let video = (nodeEntity(name: "name", handle: 1, hasThumbnail: true, isFavorite: true, label: .blue, size: 12, duration: 12), false)
+        let thumbnailLoader = MockThumbnailLoader()
+        var tappedNodes = [(NodeEntity, Bool)]()
+        let (sut, _) = makeSUT(
+            thumbnailLoader: thumbnailLoader,
+            nodeEntity: video.0,
+            viewContext: .playlistContent(type: .favourite),
+            onTapMoreOptions: { tappedNodes.append(($0, $1)) }
+        )
+
+        sut.onTappedMoreOptions()
+
+        XCTAssertEqual(tappedNodes.map(\.0), [ video.0 ])
+        XCTAssertEqual(tappedNodes.map(\.1), [ video.1 ])
+    }
+
+    @MainActor
+    func testOnTappedMoreOptions_whenCalledForRecentlyWatchedVideos_triggerTap() async {
+        let video = (nodeEntity(name: "name", handle: 1, hasThumbnail: true, isFavorite: true, label: .blue, size: 12, duration: 12), false)
+        let thumbnailLoader = MockThumbnailLoader()
+        var tappedNodes = [(NodeEntity, Bool)]()
+        let (sut, _) = makeSUT(
+            thumbnailLoader: thumbnailLoader,
+            nodeEntity: video.0,
+            viewContext: .recentlyWatchedVideos,
+            onTapMoreOptions: { tappedNodes.append(($0, $1)) }
+        )
+
+        sut.onTappedMoreOptions()
+
+        XCTAssertEqual(tappedNodes.map(\.0), [ video.0 ])
+        XCTAssertEqual(tappedNodes.map(\.1), [ video.1 ])
+    }
+
     // MARK: - onCellTapped
     
     @MainActor
@@ -249,7 +287,8 @@ final class VideoCellViewModelTests: XCTestCase {
         nodeUseCase: MockNodeUseCase = MockNodeUseCase(),
         nodeEntity: NodeEntity,
         searchText: String? = nil,
-        onTapMoreOptions: @escaping (_ node: NodeEntity) -> Void = { _ in },
+        viewContext: VideoCellViewModel.ViewContext = .allVideos,
+        onTapMoreOptions: @escaping (_ node: NodeEntity, _ shouldShowSelection: Bool) -> Void = { _, _ in },
         onTapped: @escaping (_ node: NodeEntity) -> Void = { _ in },
         featureFlagHiddenNodes: Bool = false,
         file: StaticString = #filePath,
@@ -261,7 +300,7 @@ final class VideoCellViewModelTests: XCTestCase {
                 
         let sut = VideoCellViewModel(
             mode: .plain,
-            viewContext: .allVideos,
+            viewContext: viewContext,
             nodeEntity: nodeEntity,
             searchText: searchText,
             thumbnailLoader: thumbnailLoader,

@@ -50,17 +50,22 @@ class FilesExplorerViewController: ExplorerBaseViewController {
         
         let backupsUC = BackupsUseCase(backupsRepository: BackupsRepository.newRepo, nodeRepository: NodeRepository.newRepo)
         let isBackupNode = backupsUC.isBackupNode(node.toNodeEntity())
-        
+
+        let nodeActionResponder = NodeActionResponder { [weak self] selectedNodes in
+            self?.selectNodes(selectedNodes)
+        }
+
         let delegate = NodeActionViewControllerGenericDelegate(
             viewController: navigationController,
             moveToRubbishBinViewModel: MoveToRubbishBinViewModel(presenter: navigationController),
-            nodeActionListener: DefaultAnalyticsNodeActionListener().nodeActionListener()
+            nodeActionListener: nodeActionResponder.nodeActionListener()
         )
         let vc = NodeActionViewController(node: node,
                                           delegate: delegate,
                                           displayMode: .cloudDrive,
                                           isIncoming: false,
                                           isBackupNode: isBackupNode,
+                                          isSelectionEnabled: DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .cloudDriveRevamp),
                                           sender: sender)
         vc.accessoryActionDelegate = nodeAccessoryActionDelegate
         navigationController.present(vc, animated: true, completion: nil)
@@ -87,7 +92,11 @@ class FilesExplorerViewController: ExplorerBaseViewController {
     func removeSearchController(_ searchController: UISearchController) {
         fatalError("removeSearchController(searchController:) needs to be implemented by the subclass")
     }
-    
+
+    func selectNodes(_ nodes: [MEGANode]) {
+        fatalError("selectNodes(_:) needs to be implemented by the subclass")
+    }
+
     override func endEditingMode() {
         delegate?.configureNavigationBarToDefault()
     }

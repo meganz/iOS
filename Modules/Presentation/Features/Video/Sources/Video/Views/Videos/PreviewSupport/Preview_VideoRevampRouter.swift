@@ -6,7 +6,7 @@ import UIKit
 struct Preview_VideoRevampRouter: VideoRevampRouting {
     func openMediaBrowser(for video: NodeEntity, allVideos: [NodeEntity]) { }
     
-    func openMoreOptions(for video: NodeEntity, sender: Any) { }
+    func openMoreOptions(for video: NodeEntity, sender: Any, shouldShowSelection: Bool) { }
     
     func openVideoPlaylistContent(for videoPlaylistEntity: VideoPlaylistEntity, presentationConfig: VideoPlaylistContentSnackBarPresentationConfig) { }
     

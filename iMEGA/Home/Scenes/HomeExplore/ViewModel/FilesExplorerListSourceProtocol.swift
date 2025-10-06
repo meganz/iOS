@@ -30,6 +30,7 @@ protocol FilesExplorerListSourceProtocol: UITableViewDataSource, UITableViewDele
     func toggleSelectAllNodes()
     func select(indexPath: IndexPath)
     func deselect(indexPath: IndexPath)
+    func selectNodes(_ nodes: [MEGANode])
 }
 
 extension FilesExplorerListSourceProtocol {
@@ -110,6 +111,11 @@ extension FilesExplorerListSourceProtocol {
         let selectedSet = Set(selectedNodes ?? [])
         let nodeSet = Set(nodes ?? [])
         selectedNodes = selectedSet == nodeSet ? [] : nodes
+        tableView.reloadData()
+    }
+
+    func selectNodes(_ nodes: [MEGANode]) {
+        selectedNodes = nodes
         tableView.reloadData()
     }
 }

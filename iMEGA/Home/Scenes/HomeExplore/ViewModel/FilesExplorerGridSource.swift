@@ -67,7 +67,12 @@ final class FilesExplorerGridSource: NSObject {
         selectedNodes = selectedSet == nodeSet ? [] : nodes
         collectionView.reloadData()
     }
-    
+
+    func selectNodes(_ nodes: [MEGANode]) {
+        selectedNodes = nodes
+        collectionView.reloadData()
+    }
+
     func collectionView(_ collectionView: UICollectionView,
                         willDisplay cell: UICollectionViewCell,
                         forItemAt indexPath: IndexPath) {
