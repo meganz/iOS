@@ -1,8 +1,15 @@
-import MEGAAppSDKRepo
+import MEGADomain
 import MEGASdk
 import MEGASwift
 
 public struct VideoNodesRepository: VideoNodesRepositoryProtocol, Sendable {
+    public static var newRepo: VideoNodesRepository {
+        VideoNodesRepository(
+            sdk: .sharedSdk,
+            nodeUpdatesProvider: NodeUpdatesProvider()
+        )
+    }
+
     private let sdk: MEGASdk
 
     private let nodeUpdatesProvider: any NodeUpdatesProviderProtocol
@@ -20,7 +27,7 @@ public struct VideoNodesRepository: VideoNodesRepositoryProtocol, Sendable {
             nodeList: sdk.search(
                 with: MEGASearchFilter(
                     term: "",
-                    parentNodeHandle: node.nodeParentHandle,
+                    parentNodeHandle: node.parentHandle,
                     nodeType: .unknown,
                     category: .video,
                     sensitiveFilter: .disabled,

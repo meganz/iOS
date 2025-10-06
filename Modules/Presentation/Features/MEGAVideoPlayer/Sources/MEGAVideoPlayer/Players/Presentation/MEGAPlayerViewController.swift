@@ -1,5 +1,6 @@
 import AVKit
 import MEGADesignToken
+import MEGADomain
 import MEGAInfrastructure
 import MEGAPermissions
 import UIKit

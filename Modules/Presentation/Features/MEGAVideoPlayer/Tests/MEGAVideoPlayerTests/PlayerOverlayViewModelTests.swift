@@ -1,5 +1,7 @@
 @preconcurrency import Combine
 import Foundation
+import MEGADomain
+import MEGADomainMock
 import MEGAInfrastructure
 import MEGAInfrastructureMocks
 import MEGAPermissions

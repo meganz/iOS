@@ -1,3 +1,5 @@
+import MEGADomain
+
 @MainActor
 public final class MEGAPlayerViewModel {
     let player: any VideoPlayerProtocol

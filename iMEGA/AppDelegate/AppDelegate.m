@@ -119,7 +119,6 @@
     [self importKMTransferFile];
     [self injectSDKRepoDependencies];
     [self injectAuthenticationDependencies];
-    [self injectVideoPlayerDependencies];
 
     [self initialiseModules];
     

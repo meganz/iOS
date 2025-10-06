@@ -41,11 +41,6 @@ extension AppDelegate {
         MEGAAuthentication.DependencyInjection.configureAuthEnvironmentUseCase = makeConfigureAuthEnvironmentUseCase()
     }
 
-    @objc func injectVideoPlayerDependencies() {
-        // This is temporary. Will remove this depencency injection once the video player is fully integrated.
-        MEGAVideoPlayer.DependencyInjection.sharedSdk = .shared
-    }
-
     @objc func makeOnboardingViewController() -> UIViewController {
         OnboardingUSPViewController()
     }

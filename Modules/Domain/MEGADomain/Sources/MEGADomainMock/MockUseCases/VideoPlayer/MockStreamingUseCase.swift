@@ -1,7 +1,7 @@
 import Foundation
-import MEGAVideoPlayer
+import MEGADomain
 
-public final class MockStreamingUseCase: StreamingUseCaseProtocol {
+public final class MockStreamingUseCase: StreamingUseCaseProtocol, @unchecked Sendable {
     public var startStreamingCallCount = 0
     public var stopStreamingCallCount = 0
     public var streamingLink: URL? = URL(string: "test_URL")

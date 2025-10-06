@@ -2,6 +2,7 @@ import AVFoundation
 import AVKit
 import Combine
 import Foundation
+import MEGADomain
 import UIKit
 
 public typealias VideoPlayerProtocol = PlaybackStateObservable
