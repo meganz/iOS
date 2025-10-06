@@ -1,3 +1,4 @@
+import AVFoundation
 import AVKit
 import Combine
 import Foundation
@@ -12,6 +13,7 @@ public final class MockVideoPlayer: VideoPlayerProtocol {
     @Published public var duration: Duration
     @Published public var canPlayNext: Bool
     @Published public var nodeName: String = "Mock Video Title"
+    @Published public var bufferRange: (start: Duration, end: Duration)?
 
     public var currentNode: (any PlayableNode)?
 
@@ -36,6 +38,10 @@ public final class MockVideoPlayer: VideoPlayerProtocol {
 
     public var nodeNamePublisher: AnyPublisher<String, Never> {
         $nodeName.eraseToAnyPublisher()
+    }
+
+    public var bufferRangePublisher: AnyPublisher<(start: Duration, end: Duration)?, Never> {
+        $bufferRange.eraseToAnyPublisher()
     }
 
     public nonisolated var debugMessagePublisher: AnyPublisher<String, Never> {
@@ -81,7 +87,8 @@ public final class MockVideoPlayer: VideoPlayerProtocol {
         debugMessage: String = "",
         nodeName: String = "Mock Video Title",
         nodes: [any PlayableNode] = [],
-        canPlayNext: Bool = false
+        canPlayNext: Bool = false,
+        bufferRange: (start: Duration, end: Duration)? = nil
     ) {
         self.option = option
         self.state = state
@@ -91,6 +98,7 @@ public final class MockVideoPlayer: VideoPlayerProtocol {
         self.nodeName = nodeName
         self.nodes = nodes
         self.canPlayNext = canPlayNext
+        self.bufferRange = bufferRange
     }
 
     public func play() {

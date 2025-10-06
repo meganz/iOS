@@ -28,6 +28,7 @@ public final class PlayerOverlayViewModel: ObservableObject {
     @Published var isLocked: Bool = false
     @Published var isLockOverlayVisible: Bool = false
     @Published var showSnapshotSuccessMessage: Bool = false
+    @Published var bufferRange: (start: Duration, end: Duration)?
     private(set) var shouldShowPhotoPermissionAlert = false
     private var isHoldToSpeed = false
     private var autoHideTimer: Timer?
@@ -74,6 +75,7 @@ public final class PlayerOverlayViewModel: ObservableObject {
         observeDuration()
         observeCanPlayNext()
         observeNodeName()
+        observeBufferRange()
     }
 
     private func observeState() {
@@ -116,6 +118,13 @@ public final class PlayerOverlayViewModel: ObservableObject {
             .nodeNamePublisher
             .receive(on: DispatchQueue.main)
             .assign(to: &$title)
+    }
+    
+    private func observeBufferRange() {
+        player
+            .bufferRangePublisher
+            .receive(on: DispatchQueue.main)
+            .assign(to: &$bufferRange)
     }
 }
 
@@ -193,6 +202,24 @@ extension PlayerOverlayViewModel {
         let result = CGFloat(currentSeconds) / CGFloat(durationSeconds)
         let finalResult = min(result, 1.0)
         return finalResult
+    }
+    
+    var bufferStartProgress: CGFloat {
+        let durationSeconds = duration.components.seconds
+        guard durationSeconds > 0, let bufferRange else { return 0 }
+        
+        let bufferStartSeconds = bufferRange.start.components.seconds
+        let result = CGFloat(bufferStartSeconds) / CGFloat(durationSeconds)
+        return max(0, min(result, bufferEndProgress))
+    }
+
+    var bufferEndProgress: CGFloat {
+        let durationSeconds = duration.components.seconds
+        guard durationSeconds > 0, let bufferRange else { return 0 }
+
+        let bufferEndSeconds = bufferRange.end.components.seconds
+        let result = CGFloat(bufferEndSeconds) / CGFloat(durationSeconds)
+        return min(result, 1.0)
     }
 
     func updateSeekBarDrag(at location: CGPoint, in frame: CGRect) {
