@@ -4,13 +4,12 @@ import MEGAAppPresentation
 import MEGAAppPresentationMock
 import Testing
 
-struct DefaultAnalyticsNodeActionListenerTests {
+struct NodeActionResponderTests {
 
     @Test
     func hide() async throws {
         let tracker = MockTracker()
-        let sut = DefaultAnalyticsNodeActionListenerTests
-            .makeSUT(tracker: tracker)
+        let sut = makeSUT(tracker: tracker)
         
         sut.nodeActionListener()(.hide, [])
 
@@ -22,9 +21,10 @@ struct DefaultAnalyticsNodeActionListenerTests {
         )
     }
 
-    private static func makeSUT(
-        tracker: some AnalyticsTracking = MockTracker()
-    ) -> DefaultAnalyticsNodeActionListener {
-        .init(tracker: tracker)
+    private func makeSUT(
+        tracker: some AnalyticsTracking = MockTracker(),
+        selectedNodesHandler: @escaping ([MEGANode]) -> Void = { _ in }
+    ) -> NodeActionResponder {
+        .init(tracker: tracker, selectedNodesHandler: selectedNodesHandler)
     }
 }

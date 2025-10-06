@@ -24,7 +24,7 @@ final class VideoSelectionCheckmarkUIUpdateAdapterTests: XCTestCase {
             sensitiveNodeUseCase: MockSensitiveNodeUseCase(),
             nodeUseCase: MockNodeUseCase(),
             featureFlagProvider: MockFeatureFlagProvider(list: [:]),
-            onTapMoreOptions: { _ in },
+            onTapMoreOptions: { _, _ in },
             onTapped: { _ in }
         )
         let sut = VideoSelectionCheckmarkUIUpdateAdapter(
@@ -62,7 +62,7 @@ final class VideoSelectionCheckmarkUIUpdateAdapterTests: XCTestCase {
             sensitiveNodeUseCase: MockSensitiveNodeUseCase(),
             nodeUseCase: MockNodeUseCase(),
             featureFlagProvider: MockFeatureFlagProvider(list: [:]),
-            onTapMoreOptions: { _ in },
+            onTapMoreOptions: { _, _ in },
             onTapped: { _ in }
         )
         let sut = VideoSelectionCheckmarkUIUpdateAdapter(

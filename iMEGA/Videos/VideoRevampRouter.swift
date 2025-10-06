@@ -107,21 +107,25 @@ struct VideoRevampRouter: VideoRevampRouting {
         nodeOpener.openNode(node: selectedNode, allNodes: allNodes)
     }
     
-    func openMoreOptions(for videoNodeEntity: NodeEntity, sender: Any) {
+    func openMoreOptions(for videoNodeEntity: NodeEntity, sender: Any, shouldShowSelection: Bool) {
         guard
             let navigationController,
             let videoMegaNode = videoNodeEntity.toMEGANode(in: MEGASdk.shared)
         else {
             return
         }
-        
+
+        let nodeActionResponder = NodeActionResponder { [weak syncModel] nodes in
+            syncModel?.selectVideos(nodes.map { $0.toNodeEntity() })
+        }
+
         let backupsUseCase = BackupsUseCase(backupsRepository: BackupsRepository.newRepo, nodeRepository: NodeRepository.newRepo)
         let isBackupNode = backupsUseCase.isBackupNode(videoNodeEntity)
         let delegate = NodeActionViewControllerGenericDelegate(
             viewController: navigationController,
             moveToRubbishBinViewModel: MoveToRubbishBinViewModel(
                 presenter: navigationController),
-            nodeActionListener: DefaultAnalyticsNodeActionListener().nodeActionListener()
+            nodeActionListener: nodeActionResponder.nodeActionListener()
         )
         let overDiskQuotaNodeActionDelegate = OverDiskQuotaNodeActionViewControllerDelegate(
             delegate: delegate,
@@ -140,6 +144,7 @@ struct VideoRevampRouter: VideoRevampRouting {
             displayMode: .cloudDrive,
             isIncoming: false,
             isBackupNode: isBackupNode,
+            isSelectionEnabled: DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .cloudDriveRevamp) && shouldShowSelection,
             sender: sender
         )
         viewController.accessoryActionDelegate = nodeAccessoryActionDelegate

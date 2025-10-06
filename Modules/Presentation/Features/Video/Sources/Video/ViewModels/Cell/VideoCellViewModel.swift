@@ -32,7 +32,7 @@ final class VideoCellViewModel: ObservableObject {
     private let featureFlagProvider: any FeatureFlagProviderProtocol
     private(set) var nodeEntity: NodeEntity
     private let searchText: String?
-    private let onTapMoreOptions: (_ node: NodeEntity) -> Void
+    private let onTapMoreOptions: (_ node: NodeEntity, _ shouldShowSelection: Bool) -> Void
     private let onTapped: (_ node: NodeEntity) -> Void
     
     @Published var previewEntity: VideoCellPreviewEntity
@@ -55,7 +55,7 @@ final class VideoCellViewModel: ObservableObject {
         nodeUseCase: some NodeUseCaseProtocol,
         remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = DIContainer.remoteFeatureFlagUseCase,
         featureFlagProvider: some FeatureFlagProviderProtocol,
-        onTapMoreOptions: @escaping (_ node: NodeEntity) -> Void,
+        onTapMoreOptions: @escaping (_ node: NodeEntity, _ shouldShowSelection: Bool) -> Void,
         onTapped: @escaping (_ node: NodeEntity) -> Void
     ) {
         self.mode = mode
@@ -106,7 +106,7 @@ final class VideoCellViewModel: ObservableObject {
     }
     
     func onTappedMoreOptions() {
-        onTapMoreOptions(nodeEntity)
+        onTapMoreOptions(nodeEntity, viewContext == .allVideos)
     }
         
     private func updateThumbnailContainerIfNeeded(_ container: any ImageContaining) async {

@@ -24,6 +24,7 @@ public final class VideoRevampSyncModel: ObservableObject {
     @Published public var isSearchActive = false
     
     @Published public var shouldShowSnackBar = false
+    @Published public private(set) var selectedVideos: [NodeEntity]?
     public var snackBarMessage = ""
     
     private var subscriptions = Set<AnyCancellable>()
@@ -34,6 +35,11 @@ public final class VideoRevampSyncModel: ObservableObject {
             .removeDuplicates()
             .receive(on: DispatchQueue.main)
             .assign(to: &$showsTabView)
+    }
+
+    public func selectVideos(_ videos: [NodeEntity]) {
+        editMode = .active
+        selectedVideos = videos
     }
 }
 

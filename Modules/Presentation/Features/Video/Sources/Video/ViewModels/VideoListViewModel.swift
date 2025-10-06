@@ -90,6 +90,7 @@ final class VideoListViewModel: ObservableObject {
         
         subscribeToEditingMode()
         subscribeToAllSelected()
+        subscribeToSelectedVideos()
         subscribeToChipFilterOptions()
         
         monitorNodeUpdatesTask = Task { @MainActor in await monitorNodeUpdates() }
@@ -187,7 +188,7 @@ final class VideoListViewModel: ObservableObject {
         selection.allSelected = !allSelectedCurrently
         
         if selection.allSelected {
-            selection.setSelectedVideos(videos)
+            setSelectedVideos(videos)
         }
     }
     
@@ -221,7 +222,24 @@ final class VideoListViewModel: ObservableObject {
             }
             .store(in: &subscriptions)
     }
-    
+
+    private func subscribeToSelectedVideos() {
+        syncModel.$selectedVideos
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] selectedVideos in
+                guard let self else { return }
+                guard let selectedVideos else {
+                    return setSelectedVideos([])
+                }
+                setSelectedVideos(selectedVideos)
+            }
+            .store(in: &subscriptions)
+    }
+
+    private func setSelectedVideos(_ videos: [NodeEntity]) {
+        selection.setSelectedVideos(videos)
+    }
+
     private func toggleChip(_ selectedChip: ChipContainerViewModel) {
         for (index, chip) in chips.enumerated() where chip.title == selectedChip.title {
             chips[index] = ChipContainerViewModel(title: title(for: chip), type: chip.type, isActive: shouldActivate(chip: chip))

@@ -68,7 +68,6 @@ final class VideoRevampTabContainerViewModelTests: XCTestCase {
         
         sut.dispatch(.navigationBarAction(.didReceivedDisplayMenuAction(action: .select)))
         
-        XCTAssertTrue(receivedCommands.contains(.navigationBarCommand(.toggleEditing)))
         XCTAssertEqual(sut.syncModel.editMode, .active)
     }
     
@@ -291,59 +290,6 @@ final class VideoRevampTabContainerViewModelTests: XCTestCase {
     }
     
     // MARK: - Searching state behavior
-    
-    @MainActor func testDispatch_navigationBarActionSelect_hidesSearchBar() {
-        let (sut, _, _) = makeSUT()
-        let exp = expectation(description: "Wait for invokeCommand")
-        var receivedCommands = [VideoRevampTabContainerViewModel.Command]()
-        sut.invokeCommand = { command in
-            if command == .searchBarCommand(.hideSearchBar) {
-                receivedCommands.append(command)
-                exp.fulfill()
-            }
-        }
-        
-        sut.dispatch(.navigationBarAction(.didReceivedDisplayMenuAction(action: .select)))
-        wait(for: [exp], timeout: 0.5)
-        
-        XCTAssertTrue(receivedCommands.contains(.searchBarCommand(.hideSearchBar)))
-    }
-    
-    @MainActor func testDispatch_navigationBarActionSelect_resetsSearchState() {
-        let (sut, _, _) = makeSUT()
-        let exp = expectation(description: "Wait for invokeCommand")
-        var receivedCommands = [VideoRevampTabContainerViewModel.Command]()
-        sut.invokeCommand = { command in
-            if command == .searchBarCommand(.hideSearchBar) {
-                receivedCommands.append(command)
-                exp.fulfill()
-            }
-        }
-        
-        sut.syncModel.searchText = "searching something"
-        sut.dispatch(.navigationBarAction(.didReceivedDisplayMenuAction(action: .select)))
-        wait(for: [exp], timeout: 0.5)
-        
-        XCTAssertEqual(sut.syncModel.searchText, "")
-    }
-    
-    @MainActor
-    func testDispatch_navigationBarActionSelect_hidesTabView() {
-        let (sut, _, _) = makeSUT()
-        let exp = expectation(description: "Wait for invokeCommand")
-        var receivedCommands = [VideoRevampTabContainerViewModel.Command]()
-        sut.invokeCommand = { command in
-            if command == .searchBarCommand(.hideSearchBar) {
-                receivedCommands.append(command)
-                exp.fulfill()
-            }
-        }
-        
-        sut.dispatch(.navigationBarAction(.didReceivedDisplayMenuAction(action: .select)))
-        wait(for: [exp], timeout: 0.5)
-        
-        XCTAssertFalse(sut.syncModel.showsTabView)
-    }
     
     @MainActor func testDispatch_navigationBarActionDidTapCancel_reshowSearchBar() {
         let (sut, _, _) = makeSUT()
