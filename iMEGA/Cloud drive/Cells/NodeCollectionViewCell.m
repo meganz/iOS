@@ -137,6 +137,7 @@ static NSString *kFileSize = @"kFileSize";
     [[NSFileManager defaultManager] fileExistsAtPath:pathForItem isDirectory:&isDirectory];
     if (isDirectory) {
         self.thumbnailIconView.image = UIImage.mnz_folderImage;
+        self.thumbnailIconView.hidden = NO;
         self.infoLabel.text = nil;
     } else {
         self.infoLabel.text = [NSString memoryStyleStringFromByteCount:[item[kFileSize] longLongValue]];
