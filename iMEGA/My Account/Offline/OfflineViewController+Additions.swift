@@ -1,10 +1,36 @@
 import MEGAAppPresentation
 import MEGAAppSDKRepo
+import MEGAAssets
 import MEGADomain
 import MEGAL10n
 import MEGARepo
 
 extension OfflineViewController {
+    @objc func isCloudDriveRevampEnabled() -> Bool {
+        DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .cloudDriveRevamp)
+    }
+
+    @objc func makeSelectActionSheet(for indexPath: IndexPath) -> ActionSheetAction {
+        ActionSheetAction(
+            title: Strings.Localizable.select,
+            detail: nil,
+            image: MEGAAssets.UIImage.selectItem,
+            style: .default) { [weak self] in
+                guard let self else { return }
+                selectItem(at: indexPath)
+            }
+    }
+
+    private func selectItem(at indexPath: IndexPath) {
+        setEditMode(true)
+        if isListViewModeSelected() {
+            offlineTableView?.tableViewSelect(indexPath)
+        } else {
+            offlineCollectionView?.collectionViewSelect(indexPath)
+        }
+        reloadData()
+    }
+
     @objc func createOfflineViewModel() -> OfflineViewModel {
         OfflineViewModel(
             offlineUseCase: OfflineUseCase(

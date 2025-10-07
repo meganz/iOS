@@ -14,7 +14,10 @@ extension OfflineViewController: DisplayMenuDelegate {
     }
     
     @objc func configureNavigationBarButtons() {
-        guard !DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .cloudDriveRevamp) else { return }
+        guard !DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .cloudDriveRevamp) else {
+            navigationItem.rightBarButtonItems = nil
+            return
+        }
 
         contextMenuManager = ContextMenuManager(displayMenuDelegate: self, createContextMenuUseCase: CreateContextMenuUseCase(repo: CreateContextMenuRepository.newRepo))
         

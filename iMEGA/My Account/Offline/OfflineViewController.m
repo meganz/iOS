@@ -844,6 +844,10 @@ static NSString *kisDirectory = @"kisDirectory";
     __weak __typeof__(self) weakSelf = self;
     
     NSMutableArray<ActionSheetAction *> *actions = NSMutableArray.new;
+    if ([self isCloudDriveRevampEnabled]) {
+        [actions addObject:[self makeSelectActionSheetFor:indexPath]];
+    }
+
     [actions addObject:[ActionSheetAction.alloc initWithTitle:LocalizedString(@"remove", @"Title for the action that allows to remove a file or folder") detail:nil image:[UIImage megaImageWithNamed:@"rubbishBin"] style:UIAlertActionStyleDefault actionHandler:^{
         [self showRemoveAlertWithConfirmAction:^{
             [self removeOfflineItems:@[[NSURL fileURLWithPath:itemPath]]];
