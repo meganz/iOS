@@ -357,7 +357,6 @@ extension AudioPlayer {
             setAudioPlayer(interrupted: true, needToBeResumed: !isPaused)
             
             if !isPaused {
-                disableRemoteCommands()
                 pause()
             }
             
@@ -365,8 +364,6 @@ extension AudioPlayer {
             guard isAudioPlayerInterrupted, let optionsValue = userInfo[AVAudioSessionInterruptionOptionKey] as? UInt else { return }
             
             MEGALogDebug("[AudioPlayer] AVAudioSessionInterruptionEnded")
-            
-            enableRemoteCommands()
             
             if AVAudioSession.InterruptionOptions(rawValue: optionsValue).contains(.shouldResume) && needToBeResumedAfterInterruption {
                 resetAudioSessionCategoryIfNeeded()

@@ -3,6 +3,17 @@ import MediaPlayer
 import MEGAAssets
 
 extension AudioPlayer {
+    private var managedRemoteCommands: [MPRemoteCommand] {
+        [
+            mediaPlayerRemoteCommandCenter.playCommand,
+            mediaPlayerRemoteCommandCenter.pauseCommand,
+            mediaPlayerRemoteCommandCenter.togglePlayPauseCommand,
+            mediaPlayerRemoteCommandCenter.nextTrackCommand,
+            mediaPlayerRemoteCommandCenter.previousTrackCommand,
+            mediaPlayerRemoteCommandCenter.changePlaybackPositionCommand
+        ]
+    }
+    
     func registerRemoteControls() {
         mediaPlayerRemoteCommandCenter.playCommand.addTarget(self, action: #selector(audioPlayer(didReceivePlayCommand:)))
         mediaPlayerRemoteCommandCenter.pauseCommand.addTarget(self, action: #selector(audioPlayer(didReceivePauseCommand:)))
@@ -10,6 +21,8 @@ extension AudioPlayer {
         mediaPlayerRemoteCommandCenter.previousTrackCommand.addTarget(self, action: #selector(audioPlayer(didReceivePreviousTrackCommand:)))
         mediaPlayerRemoteCommandCenter.togglePlayPauseCommand.addTarget(self, action: #selector(audioPlayer(didReceiveTogglePlayPauseCommand:)))
         mediaPlayerRemoteCommandCenter.changePlaybackPositionCommand.addTarget(self, action: #selector(audioPlayer(didReceiveChangePlaybackPositionCommand:)))
+        
+        updateRemoteCommandAvailability()
     }
     
     func unregisterRemoteControls() {
@@ -18,14 +31,42 @@ extension AudioPlayer {
         mediaPlayerRemoteCommandCenter.nextTrackCommand.removeTarget(self)
         mediaPlayerRemoteCommandCenter.previousTrackCommand.removeTarget(self)
         mediaPlayerRemoteCommandCenter.togglePlayPauseCommand.removeTarget(self)
-        mediaPlayerRemoteCommandCenter.seekForwardCommand.removeTarget(self)
-        mediaPlayerRemoteCommandCenter.seekBackwardCommand.removeTarget(self)
         mediaPlayerRemoteCommandCenter.changePlaybackPositionCommand.removeTarget(self)
+    }
+    
+    /// Updates the enabled state of all remote commands based on player availability.
+    /// Remote commands are enabled only when the player is active and not interrupted. This method delegates the actual state handling to `setRemoteCommandsEnabled(_:)`,
+    /// which ensures redundant updates are avoided.
+    func updateRemoteCommandAvailability() {
+        setRemoteCommandsEnabled(!(hasTornDown || isAudioPlayerInterrupted))
+    }
+    
+    func enableRemoteCommands() {
+        setRemoteCommandsEnabled(true)
+        refreshNowPlayingInfo()
+    }
+    
+    func disableRemoteCommands() {
+        setRemoteCommandsEnabled(false)
+    }
+    
+    /// Enables or disables all remote commands, taking into account the player's state.
+    /// This function automatically prevents enabling commands when the player is unavailable, either because it has been torn down (The AudioPlayer has been torn down and its resources released)
+    /// or is currently interrupted (Possible reasons: a call or meeting in progress, music playing in another app, etc.).
+    /// When unavailable, all remote commands are explicitly disabled to avoid user interactions from the system media controls. Otherwise, commands are set to
+    /// the desired enabled state only when necessary, minimizing redundant updates.
+    func setRemoteCommandsEnabled(_ shouldEnable: Bool) {
+        guard !hasTornDown, !isAudioPlayerInterrupted else {
+            managedRemoteCommands.forEach { $0.isEnabled = false }
+            return
+        }
+        
+        managedRemoteCommands.forEach { $0.isEnabled = shouldEnable }
     }
     
     func refreshNowPlayingInfo() {
         updateNowPlayingInfo()
-        updateCommandsState(enabled: true)
+        setRemoteCommandsEnabled(true)
     }
     
     private func updateNowPlayingInfo() {
@@ -71,102 +112,70 @@ extension AudioPlayer {
 
 // MARK: - Audio Player Remote Command Functions
 extension AudioPlayer {
-    @objc func audioPlayer(didReceivePlayCommand event: MPRemoteCommandEvent) -> MPRemoteCommandHandlerStatus {
-        performRemoteCommand(event, requiresPlayableItem: true) { player in
-            if player.queuePlayer.rate == 0.0 { player.play() }
+    @objc nonisolated func audioPlayer(didReceivePlayCommand event: MPRemoteCommandEvent) -> MPRemoteCommandHandlerStatus {
+        performRemoteCommand(event) { [weak self] in
+            if self?.queuePlayer.rate == 0.0 { self?.play() }
         }
     }
     
-    @objc func audioPlayer(didReceivePauseCommand event: MPRemoteCommandEvent) -> MPRemoteCommandHandlerStatus {
-        performRemoteCommand(event, requiresPlayableItem: true) { player in
-            if player.queuePlayer.rate == 1.0 { player.pause() }
+    @objc nonisolated func audioPlayer(didReceivePauseCommand event: MPRemoteCommandEvent) -> MPRemoteCommandHandlerStatus {
+        performRemoteCommand(event) { [weak self] in
+            if self?.queuePlayer.rate == 1.0 { self?.pause() }
         }
     }
     
-    @objc func audioPlayer(didReceiveTogglePlayPauseCommand event: MPRemoteCommandEvent) -> MPRemoteCommandHandlerStatus {
-        performRemoteCommand(event, requiresPlayableItem: true) { player in
-            if player.queuePlayer.rate == 0.0 { player.play() } else { player.pause() }
+    @objc nonisolated func audioPlayer(didReceiveTogglePlayPauseCommand event: MPRemoteCommandEvent) -> MPRemoteCommandHandlerStatus {
+        performRemoteCommand(event) { [weak self] in
+            if self?.queuePlayer.rate == 0.0 { self?.play() } else { self?.pause() }
         }
     }
     
-    @objc func audioPlayer(didReceiveNextTrackCommand event: MPRemoteCommandEvent) -> MPRemoteCommandHandlerStatus {
-        performRemoteCommand(event) { player in
-            if player.isRepeatOneMode() {
-                player.repeatAll(true)
-                player.notify(player.aboutAudioPlayerConfiguration)
+    @objc nonisolated func audioPlayer(didReceiveNextTrackCommand event: MPRemoteCommandEvent) -> MPRemoteCommandHandlerStatus {
+        performRemoteCommand(event) { [weak self, aboutAudioPlayerConfiguration] in
+            if self?.isRepeatOneMode() == true {
+                self?.repeatAll(true)
+                self?.notify(aboutAudioPlayerConfiguration)
             }
-            player.disableRemoteCommands()
-            player.playNext { [weak player] in
-                player?.enableRemoteCommands()
-            }
-        }
-    }
-    
-    @objc func audioPlayer(didReceivePreviousTrackCommand event: MPRemoteCommandEvent) -> MPRemoteCommandHandlerStatus {
-        performRemoteCommand(event) { player in
-            player.disableRemoteCommands()
-            player.playPrevious { [weak player] in
-                player?.enableRemoteCommands()
+            self?.setRemoteCommandsEnabled(false)
+            self?.playNext {
+                self?.setRemoteCommandsEnabled(true)
             }
         }
     }
     
-    @objc func audioPlayer(didReceiveChangePlaybackPositionCommand event: MPChangePlaybackPositionCommandEvent) -> MPRemoteCommandHandlerStatus {
-        performRemoteCommand(event, requiresPlayableItem: true) { player in
-            changePlaybackPositionCommandTask = Task { @MainActor in
-                await player.setProgressCompleted(event.positionTime)
+    @objc nonisolated func audioPlayer(didReceivePreviousTrackCommand event: MPRemoteCommandEvent) -> MPRemoteCommandHandlerStatus {
+        performRemoteCommand(event) { [weak self] in
+            self?.setRemoteCommandsEnabled(false)
+            self?.playPrevious {
+                self?.setRemoteCommandsEnabled(true)
             }
         }
     }
     
-    private func updateCommandsState(enabled: Bool) {
-        mediaPlayerRemoteCommandCenter.playCommand.isEnabled = enabled
-        mediaPlayerRemoteCommandCenter.pauseCommand.isEnabled = enabled
-        mediaPlayerRemoteCommandCenter.nextTrackCommand.isEnabled = enabled
-        mediaPlayerRemoteCommandCenter.previousTrackCommand.isEnabled = enabled
-        mediaPlayerRemoteCommandCenter.togglePlayPauseCommand.isEnabled = enabled
-        mediaPlayerRemoteCommandCenter.changePlaybackPositionCommand.isEnabled = enabled
-        
-        if enabled {
-            registerRemoteControls()
-        } else {
-            unregisterRemoteControls()
+    @objc nonisolated func audioPlayer(didReceiveChangePlaybackPositionCommand event: MPChangePlaybackPositionCommandEvent) -> MPRemoteCommandHandlerStatus {
+        performRemoteCommand(event) { [weak self] in
+            self?.changePlaybackPositionCommandTask = Task { @MainActor in
+                await self?.setProgressCompleted(event.positionTime)
+            }
         }
     }
     
-    func enableRemoteCommands() {
-        updateCommandsState(enabled: true)
-        refreshNowPlayingInfo()
-    }
-    
-    func disableRemoteCommands() {
-        updateCommandsState(enabled: false)
-    }
-    
-    /// Centralized preflight for all remote commands. Returns a non-nil status if the command should not proceed.
-    func remoteCommandPreflight(
+    /// Executes a remote command action on the main actor and returns its status.
+    /// Returns `.success` when the command is enabled and its action is scheduled for execution.
+    /// Returns `.commandFailed` only if the command is disabled, ensuring that no work is performed when the command is not actionable.
+    /// Remote commands are dynamically enabled or disabled through `updateRemoteCommandAvailability()`, so this function can safely assume that
+    /// actionable commands are valid by the time they reach this point.
+    nonisolated private func performRemoteCommand(
         _ event: MPRemoteCommandEvent,
-        requiresPlayableItem: Bool
-    ) -> MPRemoteCommandHandlerStatus? {
-        guard event.command.isEnabled, !hasTornDown, !isAudioPlayerInterrupted else { return .commandFailed }
-        
-        if requiresPlayableItem, currentItem() == nil {
-            return .noActionableNowPlayingItem
-        }
-        
-        return nil
-    }
-    
-    /// Unified execution path: perform preflight checks, run the action, return status. `.success` means the command was accepted and the operation was **initiated**.
-    func performRemoteCommand(
-        _ event: MPRemoteCommandEvent,
-        requiresPlayableItem: Bool = false,
-        _ action: (AudioPlayer) -> Void
+        _ action: @escaping @MainActor () -> Void
     ) -> MPRemoteCommandHandlerStatus {
-        if let status = remoteCommandPreflight(event, requiresPlayableItem: requiresPlayableItem) {
-            return status
+        guard event.command.isEnabled else { return .commandFailed }
+        
+        Task { @MainActor [weak self] in
+            if self?.currentItem() != nil {
+                action()
+            }
         }
-        action(self)
         return .success
     }
 }
