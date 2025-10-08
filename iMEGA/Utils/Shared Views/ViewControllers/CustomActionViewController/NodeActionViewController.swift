@@ -245,6 +245,7 @@ class NodeActionViewController: ActionSheetViewController {
         isBackupNode: Bool,
         sharedFolder: MEGAShare,
         shouldShowVerifyContact: Bool,
+        isSelectionEnabled: Bool = false,
         sender: Any
     ) {
         self.nodes = [node]
@@ -256,12 +257,15 @@ class NodeActionViewController: ActionSheetViewController {
         
         configurePresentationStyle(from: sender)
         
-        self.setupActions(node: node,
-                          displayMode: displayMode,
-                          isIncoming: isIncoming,
-                          isBackupNode: isBackupNode,
-                          sharedFolder: sharedFolder,
-                          shouldShowVerifyContact: shouldShowVerifyContact)
+        self.setupActions(
+            node: node,
+            displayMode: displayMode,
+            isIncoming: isIncoming,
+            isBackupNode: isBackupNode,
+            sharedFolder: sharedFolder,
+            shouldShowVerifyContact: shouldShowVerifyContact,
+            isSelectionEnabled: isSelectionEnabled
+        )
     }
     
     @objc init(
