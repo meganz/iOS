@@ -123,7 +123,6 @@ extension AudioPlayerObserversProtocol {
     func presentMiniPlayer(_ viewController: UIViewController)
     func audioInterruptionDidStart()
     func audioInterruptionDidEndNeedToResume(_ resume: Bool)
-    func remoteCommandEnabled(_ enabled: Bool)
     func resetAudioPlayerConfiguration()
     func refreshContentOffset(presenter: any AudioPlayerPresenterProtocol, isHidden: Bool)
 }

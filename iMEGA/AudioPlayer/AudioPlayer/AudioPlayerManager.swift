@@ -461,10 +461,6 @@ final class AudioPlayerManager: AudioPlayerHandlerProtocol {
                                         userInfo: userInfo)
     }
     
-    func remoteCommandEnabled(_ enabled: Bool) {
-        enabled ? player?.enableRemoteCommands() : player?.disableRemoteCommands()
-    }
-    
     func resetAudioPlayerConfiguration() {
         player?.resetAudioPlayerConfiguration()
     }

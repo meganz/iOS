@@ -28,7 +28,11 @@ final class AudioPlayer: NSObject {
     let preloadMetadataMaxItems = 3
     let defaultRewindInterval: TimeInterval = 15.0
     var itemToRepeat: AudioPlayerItem?
-    var isAudioPlayerInterrupted = false
+    var isAudioPlayerInterrupted = false {
+        didSet {
+            setRemoteCommandsEnabled(!isAudioPlayerInterrupted)
+        }
+    }
     var isPaused = false
     var isCloseRequested = false
     var needToBeResumedAfterInterruption = false
@@ -48,7 +52,11 @@ final class AudioPlayer: NSObject {
     }
     /// Set to `true` once `AudioPlayer` has released its resources. Checked in async callbacks (KVO, notifications, tasks) to avoid
     /// running code after teardown has started.
-    var hasTornDown = false
+    var hasTornDown = false {
+        didSet {
+            setRemoteCommandsEnabled(!hasTornDown)
+        }
+    }
     
     var previouslyPlayedItem: AudioPlayerItem?
     var isUserPreviouslyJustPlayedSameItem = false
