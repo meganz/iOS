@@ -439,7 +439,11 @@ final class NodeActionBuilder {
                 nodeActions.append(.viewVersionsAction(versionCount: versionCount))
             }
         }
-        
+
+        if displayMode == .sharedItem, isSelectionEnabled {
+            nodeActions.append(.selectAction())
+        }
+
         if isMediaFile {
             nodeActions.append(.saveToPhotosAction())
         }
@@ -478,11 +482,15 @@ final class NodeActionBuilder {
                 nodeActions.append(.viewVersionsAction(versionCount: versionCount))
             }
 
+            if displayMode == .sharedItem, isSelectionEnabled {
+                nodeActions.append(.selectAction())
+            }
+
             if !isBackupNode {
                 nodeActions.append(.labelAction(label: label))
             }
         }
-        
+
         if isMediaFile {
             nodeActions.append(.saveToPhotosAction())
         }

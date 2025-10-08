@@ -628,4 +628,8 @@ extension SharedItemsViewController {
         super.viewDidLayoutSubviews()
         updateSearchBar()
     }
+
+    @objc var isCloudDriveRevampEnabled: Bool {
+        DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .cloudDriveRevamp)
+    }
 }

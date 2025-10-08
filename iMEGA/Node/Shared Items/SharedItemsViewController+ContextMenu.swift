@@ -51,7 +51,10 @@ extension SharedItemsViewController: DisplayMenuDelegate {
         } else {
             updateAvatarButtonItem()
 
-            guard !DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .cloudDriveRevamp) else { return }
+            guard !isCloudDriveRevampEnabled else {
+                navigationItem.rightBarButtonItem = nil
+                return
+            }
 
             contextMenuManager = ContextMenuManager(displayMenuDelegate: self, createContextMenuUseCase: CreateContextMenuUseCase(repo: CreateContextMenuRepository.newRepo))
             

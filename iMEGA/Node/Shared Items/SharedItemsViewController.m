@@ -756,7 +756,7 @@
     }
     MEGANode *node = [self nodeAtIndexPath:indexPath];
     BOOL isBackupNode = [[[BackupsOCWrapper alloc] init] isBackupNode:node];
-    NodeActionViewController *nodeActions = [NodeActionViewController.alloc initWithNode:node delegate:self displayMode:self.linksButton.selected ? DisplayModeCloudDrive : DisplayModeSharedItem isIncoming:self.incomingButton.selected isBackupNode:isBackupNode isFromSharedItem:YES isSelectionEnabled:NO sender:sender];
+    NodeActionViewController *nodeActions = [NodeActionViewController.alloc initWithNode:node delegate:self displayMode:self.linksButton.selected ? DisplayModeCloudDrive : DisplayModeSharedItem isIncoming:self.incomingButton.selected isBackupNode:isBackupNode isFromSharedItem:YES isSelectionEnabled:self.isCloudDriveRevampEnabled sender:sender];
     [self presentViewController:nodeActions animated:YES completion:nil];
 }
 
@@ -1267,6 +1267,11 @@
         case MegaNodeActionTypeDisputeTakedown:
             [self presentDisputeInSafari];
             break;
+
+        case MegaNodeActionTypeSelect:
+            [self startEditingModeAtIndex:[self indexPathFromSender:sender]];
+            break;
+
         default:
             break;
     }
@@ -1292,6 +1297,7 @@
                                                                             isBackupNode:isBackupNode
                                                                             sharedFolder:share
                                                                  shouldShowVerifyContact:indexPath.section == 0
+                                                                      isSelectionEnabled:self.isCloudDriveRevampEnabled
                                                                                   sender:sender];
     [self presentViewController:nodeActions animated:YES completion:nil];
 }
