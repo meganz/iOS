@@ -1,7 +1,7 @@
 import MEGAAppSDKRepo
 import MEGASdk
 
-public final class MockEvent: MEGAEvent {
+public final class MockEvent: MEGAEvent, @unchecked Sendable {
     public let _type: Event
     public let _text: String?
     public let _number: Int
