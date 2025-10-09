@@ -29,6 +29,8 @@ public final class MEGAAVPlayer {
     public let nodeNamePublisher: AnyPublisher<String, Never>
     public let bufferRangePublisher: AnyPublisher<(start: Duration, end: Duration)?, Never>
 
+    public var onNodeDeleted: (() -> Void)?
+
     private nonisolated let debugMessageSubject = PassthroughSubject<String, Never>()
 
     private var isLoopEnabled: Bool = false
@@ -295,13 +297,17 @@ extension MEGAAVPlayer: NodeLoadable {
         streamVideoNodesTask = Task { [weak self, videoNodesUseCase] in
             for await videoNodes in await videoNodesUseCase.streamVideoNodes(for: node) {
                 guard !Task.isCancelled else { return }
-                self?.nodes = videoNodes
+
                 if let currentNode = self?.currentNode,
                    let updatedCurrentNode = videoNodes.first(where: { $0.id == currentNode.id}) {
+                    self?.nodes = videoNodes
                     self?.currentNode = updatedCurrentNode
-                    self?.nodeName = updatedCurrentNode.name ?? ""
+                    self?.nodeName = self?.currentNode?.name ?? ""
+                    self?.updateCanPlayNext()
+                } else {
+                    self?.onNodeDeleted?()
+                    return
                 }
-                self?.updateCanPlayNext()
             }
         }
     }

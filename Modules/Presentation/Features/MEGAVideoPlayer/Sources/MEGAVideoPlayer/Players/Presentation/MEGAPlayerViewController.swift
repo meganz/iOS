@@ -13,7 +13,6 @@ public final class MEGAPlayerViewController: UIViewController {
     public init(viewModel: MEGAPlayerViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
-        setupDismiss()
     }
 
     required init?(coder: NSCoder) {
@@ -28,6 +27,7 @@ public final class MEGAPlayerViewController: UIViewController {
         view.backgroundColor = .black
         overrideUserInterfaceStyle = .dark
 
+        setupDismissAction()
         setupVideoView()
         setupOverlay()
         viewModel.viewDidLoad(playerView: videoView)
@@ -50,7 +50,7 @@ public final class MEGAPlayerViewController: UIViewController {
         viewModel.viewDidDisappear()
     }
 
-    private func setupDismiss() {
+    private func setupDismissAction() {
         viewModel.dismissAction = { [weak self] in
             self?.dismiss(animated: true)
         }

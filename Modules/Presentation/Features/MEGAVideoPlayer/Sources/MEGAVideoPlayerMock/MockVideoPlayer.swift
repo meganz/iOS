@@ -16,6 +16,7 @@ public final class MockVideoPlayer: VideoPlayerProtocol {
     @Published public var bufferRange: (start: Duration, end: Duration)?
 
     public var currentNode: (any PlayableNode)?
+    public var onNodeDeleted: (() -> Void)?
 
     let debugMessage: String
     public nonisolated let option: VideoPlayerOption
