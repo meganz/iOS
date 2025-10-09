@@ -11,14 +11,14 @@ public final class MockPhotoLibraryThumbnailRepository: PhotoLibraryThumbnailRep
         case clearCache
     }
     
-    private let thumbnailResultAsyncSequence: AnyAsyncSequence<PhotoLibraryThumbnailResultEntity>?
+    private let thumbnailResultAsyncSequence: AnyAsyncThrowingSequence<PhotoLibraryThumbnailResultEntity, any Error>?
     @Atomic public var invocations: [Invocation] = []
     
-    public init(thumbnailResultAsyncSequence: AnyAsyncSequence<PhotoLibraryThumbnailResultEntity>? = nil) {
+    public init(thumbnailResultAsyncSequence: AnyAsyncThrowingSequence<PhotoLibraryThumbnailResultEntity, any Error>? = nil) {
         self.thumbnailResultAsyncSequence = thumbnailResultAsyncSequence
     }
     
-    public func thumbnailData(for identifier: String, targetSize: CGSize, compressionQuality: CGFloat) -> AnyAsyncSequence<PhotoLibraryThumbnailResultEntity>? {
+    public func thumbnailData(for identifier: String, targetSize: CGSize, compressionQuality: CGFloat) -> AnyAsyncThrowingSequence<PhotoLibraryThumbnailResultEntity, any Error>? {
         addInvocation(.thumbnailData(for: identifier, targetSize: targetSize, compressionQuality: compressionQuality))
         return thumbnailResultAsyncSequence
     }
