@@ -293,7 +293,7 @@ extension MEGAAVPlayer: NodeLoadable {
     public func streamVideoNodes(for node: some PlayableNode) {
         streamVideoNodesTask?.cancel()
         streamVideoNodesTask = Task { [weak self, videoNodesUseCase] in
-            for await videoNodes in videoNodesUseCase.streamVideoNodes(for: node) {
+            for await videoNodes in await videoNodesUseCase.streamVideoNodes(for: node) {
                 guard !Task.isCancelled else { return }
                 self?.nodes = videoNodes
                 if let currentNode = self?.currentNode,
