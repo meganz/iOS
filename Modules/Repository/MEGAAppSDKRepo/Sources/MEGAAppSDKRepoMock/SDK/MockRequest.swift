@@ -1,7 +1,7 @@
 import MEGAAppSDKRepo
 import MEGASdk
 
-public final class MockRequest: MEGARequest {
+public final class MockRequest: MEGARequest, @unchecked Sendable {
     private let handle: MEGAHandle
     private let requestType: MEGARequestType
     private let parameterType: MEGAUserAttribute

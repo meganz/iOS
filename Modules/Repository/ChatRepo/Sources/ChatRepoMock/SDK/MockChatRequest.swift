@@ -1,7 +1,7 @@
 import ChatRepo
 import MEGAChatSdk
 
-public final class MockChatRequest: MEGAChatRequest {
+public final class MockChatRequest: MEGAChatRequest, @unchecked Sendable {
     
     private let _chatHandle: UInt64
     private let _privilege: Int

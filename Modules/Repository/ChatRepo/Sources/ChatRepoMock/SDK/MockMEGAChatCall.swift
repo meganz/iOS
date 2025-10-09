@@ -1,7 +1,7 @@
 import MEGAChatSdk
 import MEGASdk
 
-public final class MockMEGAChatCall: MEGAChatCall {
+public final class MockMEGAChatCall: MEGAChatCall, @unchecked Sendable {
     
     private let _status: MEGAChatCallStatus
     private let _chatId: UInt64

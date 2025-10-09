@@ -1,6 +1,6 @@
 import MEGASdk
 
-public final class MockNodeList: MEGANodeList {
+public final class MockNodeList: MEGANodeList, @unchecked Sendable {
     private let nodes: [MEGANode]
     
     public init(nodes: [MEGANode] = []) {
