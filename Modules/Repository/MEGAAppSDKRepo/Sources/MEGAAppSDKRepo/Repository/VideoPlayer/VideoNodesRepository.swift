@@ -22,32 +22,22 @@ public struct VideoNodesRepository: VideoNodesRepositoryProtocol, Sendable {
         self.nodeUpdatesProvider = nodeUpdatesProvider
     }
 
-    public func fetchVideoNodes(for node: some PlayableNode) -> [any PlayableNode] {
-        filterForVideos(
-            nodeList: sdk.search(
-                with: MEGASearchFilter(
-                    term: "",
-                    parentNodeHandle: node.parentHandle,
-                    nodeType: .unknown,
-                    category: .video,
-                    sensitiveFilter: .disabled,
-                    favouriteFilter: .disabled,
-                    creationTimeFrame: nil,
-                    modificationTimeFrame: nil
-                ),
-                orderType: .defaultAsc,
-                page: nil,
-                cancelToken: MEGACancelToken()
-            )
-        ).toNodeArray()
+    public func fetchVideoNodes(for node: some PlayableNode) async -> [any PlayableNode] {
+        guard let parentNode = await sdk.node(for: node.parentHandle) else {
+            return []
+        }
+
+        let childrenNodeList = sdk.children(forParent: parentNode)
+
+        return filterForVideos(nodeList: childrenNodeList).toNodeArray()
     }
 
-    public func streamVideoNodes(for node: some PlayableNode) -> AnyAsyncSequence<[any PlayableNode]> {
+    public func streamVideoNodes(for node: some PlayableNode) async -> AnyAsyncSequence<[any PlayableNode]> {
         nodeUpdatesProvider
             .nodeUpdates
             .filter { $0.isNotEmpty }
-            .map { _ in fetchVideoNodes(for: node) }
-            .prepend(fetchVideoNodes(for: node))
+            .map { _ in await fetchVideoNodes(for: node) }
+            .prepend( await fetchVideoNodes(for: node))
             .eraseToAnyAsyncSequence()
     }
 

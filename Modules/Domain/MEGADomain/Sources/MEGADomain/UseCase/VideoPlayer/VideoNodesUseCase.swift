@@ -1,8 +1,8 @@
 import MEGASwift
 
 public protocol VideoNodesUseCaseProtocol: Sendable {
-    func fetchVideoNodes(for node: some PlayableNode) -> [any PlayableNode]
-    func streamVideoNodes(for node: some PlayableNode) -> AnyAsyncSequence<[any PlayableNode]>
+    func fetchVideoNodes(for node: some PlayableNode) async -> [any PlayableNode]
+    func streamVideoNodes(for node: some PlayableNode) async -> AnyAsyncSequence<[any PlayableNode]>
 }
 
 public struct VideoNodesUseCase<T: VideoNodesRepositoryProtocol>: VideoNodesUseCaseProtocol, Sendable {
@@ -14,11 +14,11 @@ public struct VideoNodesUseCase<T: VideoNodesRepositoryProtocol>: VideoNodesUseC
         self.repo = repo
     }
 
-    public func fetchVideoNodes(for node: some PlayableNode) -> [any PlayableNode] {
-        repo.fetchVideoNodes(for: node)
+    public func fetchVideoNodes(for node: some PlayableNode) async -> [any PlayableNode] {
+        await repo.fetchVideoNodes(for: node)
     }
 
-    public func streamVideoNodes(for node: some PlayableNode) -> AnyAsyncSequence<[any PlayableNode]> {
-        repo.streamVideoNodes(for: node)
+    public func streamVideoNodes(for node: some PlayableNode) async -> AnyAsyncSequence<[any PlayableNode]> {
+        await repo.streamVideoNodes(for: node)
     }
 }
