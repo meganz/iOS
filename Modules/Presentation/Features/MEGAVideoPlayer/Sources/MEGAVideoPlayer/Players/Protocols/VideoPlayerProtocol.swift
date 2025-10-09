@@ -77,6 +77,8 @@ public protocol NodeLoadable {
     var nodeNamePublisher: AnyPublisher<String, Never> { get }
 
     func streamVideoNodes(for node: some PlayableNode)
+
+    var onNodeDeleted: (() -> Void)? { get set }
 }
 
 public protocol PlaybackDebugMessageObservable {

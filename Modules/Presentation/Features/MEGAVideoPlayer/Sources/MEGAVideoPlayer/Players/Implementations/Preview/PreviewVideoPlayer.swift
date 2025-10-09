@@ -106,4 +106,6 @@ final class PreviewVideoPlayer: VideoPlayerProtocol {
     func playPrevious() {}
 
     func streamVideoNodes(for node: some PlayableNode) {}
+
+    var onNodeDeleted: (() -> Void)?
 }

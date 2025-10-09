@@ -2,7 +2,7 @@ import MEGADomain
 
 @MainActor
 public final class MEGAPlayerViewModel {
-    let player: any VideoPlayerProtocol
+    var player: any VideoPlayerProtocol
     var dismissAction: (() -> Void)?
     public var moreAction: (((any PlayableNode)?) -> Void)?
     let reportingManager: MEGAPlaybackReportingManager
@@ -30,6 +30,13 @@ public final class MEGAPlayerViewModel {
         reportingManager.observePlayback()
         player.setupPlayer(in: playerView)
         reportingManager.recordOpenTimeStamp()
+        setupNodeDeletionHandling()
+    }
+    
+    private func setupNodeDeletionHandling() {
+        player.onNodeDeleted = { [weak self] in
+            self?.dismissAction?()
+        }
     }
 
     func viewDidDisappear() {

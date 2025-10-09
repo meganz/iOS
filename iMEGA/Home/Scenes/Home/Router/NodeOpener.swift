@@ -59,6 +59,7 @@ final class NodeOpener {
     func openNodeActions(
         _ nodeHandle: HandleEntity,
         presentingController: UIViewController,
+        userInterfaceStyle: UIUserInterfaceStyle = .dark,
         sender: Any
     ) {
         guard let node = sdk.node(forHandle: nodeHandle) else { return }
@@ -77,6 +78,7 @@ final class NodeOpener {
             isBackupNode: isBackupNode,
             sender: sender
         )
+        nodeActionVC.overrideUserInterfaceStyle = userInterfaceStyle
         presentingController.present(nodeActionVC, animated: true, completion: nil)
     }
 
