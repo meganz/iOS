@@ -7,10 +7,24 @@ import MEGADomain
         NameCollisionViewRouter(presenter: presenter, transfers: transfers, nodes: nil, collisions: collisionEntities, collisionType: .upload).start()
     }
     
-    @objc func copyNodes(_ nodes: [MEGANode], to parent: MEGANode, isFolderLink: Bool = false, presenter: UIViewController) {
+    @objc func copyNodes(
+        _ nodes: [MEGANode],
+        to parent: MEGANode,
+        isFolderLink: Bool = false,
+        presenter: UIViewController,
+        completion: (() -> Void)? = nil
+    ) {
         let nodeEntities = nodes.toNodeEntities()
         let collisionEntities = nodeEntities.map { NameCollisionEntity(parentHandle: parent.handle, name: $0.name, isFile: $0.isFile, nodeHandle: $0.handle)}
-        NameCollisionViewRouter(presenter: presenter, transfers: nil, nodes: nodeEntities, collisions: collisionEntities, collisionType: .copy, isFolderLink: isFolderLink).start()
+        NameCollisionViewRouter(
+            presenter: presenter,
+            transfers: nil,
+            nodes: nodeEntities,
+            collisions: collisionEntities,
+            collisionType: .copy,
+            isFolderLink: isFolderLink,
+            copyOrMoveCompletion: completion
+        ).start()
     }
     
     @objc func moveNodes(_ nodes: [MEGANode], to parent: MEGANode, presenter: UIViewController) {

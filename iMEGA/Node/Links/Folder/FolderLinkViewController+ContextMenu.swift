@@ -78,7 +78,7 @@ extension FolderLinkViewController: FolderLinkContextMenuDelegate {
     func uploadAddMenu(didSelect action: UploadAddActionEntity) {
         switch action {
         case .importFolderLink:
-            importFilesFromFolderLink()
+            resetNodeActionSelectionAndImportFilesFromFolderLink()
         default:
             break
         }

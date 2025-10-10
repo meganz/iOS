@@ -455,7 +455,12 @@
         } else {
             [self dismissAndSelectNodesIfNeeded:NO completion:^{
                 [self updateActionTargetNode:self.parentNode];
-                [[NameCollisionRouterOCWrapper.alloc init] copyNodes:self.selectedNodesArray to:self.parentNode isFolderLink:self.browserAction == BrowserActionImportFromFolderLink presenter:UIApplication.mnz_presentingViewController];
+                NameCollisionRouterOCWrapper *router = [[NameCollisionRouterOCWrapper alloc] init];
+                [router copyNodes:self.selectedNodesArray
+                               to:self.parentNode
+                     isFolderLink:self.browserAction == BrowserActionImportFromFolderLink
+                        presenter:UIApplication.mnz_presentingViewController
+                       completion:self.onCopyNodesCompletion];
             }];
         }
     }

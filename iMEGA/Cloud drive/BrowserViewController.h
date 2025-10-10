@@ -65,6 +65,7 @@ typedef NS_ENUM(NSUInteger, BrowserAction) {
 @property (nonatomic, strong, nullable) UIViewController *shimmerViewController;
 
 @property (nonatomic) NSUInteger remainingOperations;
+@property (nonatomic, copy, nullable) void (^onCopyNodesCompletion)(void);
 
 - (void)pushBrowserWithParentNode:(MEGANode *)parentNode;
 - (void)updatePromptTitle;

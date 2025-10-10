@@ -47,11 +47,21 @@ extension FolderLinkViewController {
         }
     }
 
+    func resetNodeActionSelectionAndImportFilesFromFolderLink() {
+        let isEditing = navigationItem.rightBarButtonItem == editBarButtonItem
+        if !isEditing {
+            selectedNodesArray = []
+        }
+        importFilesFromFolderLink()
+    }
+
     func importFilesFromFolderLink() {
         ImportLinkRouter(
             isFolderLink: true,
             nodes: targetNodes(),
-            presenter: self)
+            presenter: self) { [weak self] in
+                self?.setEditMode(false)
+            }
         .start()
     }
     
@@ -212,7 +222,7 @@ extension FolderLinkViewController {
     }
     
     func importButtonPressed(_ button: UIBarButtonItem) {
-        importFilesFromFolderLink()
+        resetNodeActionSelectionAndImportFilesFromFolderLink()
     }
     
     func downloadButtonPressed(_ button: UIBarButtonItem) {
