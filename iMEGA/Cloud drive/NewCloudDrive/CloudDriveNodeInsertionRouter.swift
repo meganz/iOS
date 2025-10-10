@@ -31,9 +31,9 @@ struct CloudDriveNodeInsertionRouter: NodeInsertionRouting {
                 navigationController: navigationController,
                 parentNode: nodeEntity
             )
-            if let node = await router.start() {
+            router.start(with: { node in
                 openNodeHandler(node)
-            }
+            })
         }
     }
 

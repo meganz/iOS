@@ -5,7 +5,7 @@ import UIKit
 
 @MainActor
 protocol CreateNewFolderAlertRouting {
-    func start() async -> NodeEntity?
+    func start(with openNodeHandler: @escaping @MainActor (NodeEntity) -> Void)
     func showNodeAlreadyExistsError() async
 }
 
@@ -18,7 +18,7 @@ struct CreateNewFolderAlertViewRouter: CreateNewFolderAlertRouting {
         self.parentNode = parentNode
     }
 
-    func start() async -> NodeEntity? {
+    func start(with openNodeHandler: @escaping @MainActor (NodeEntity) -> Void) {
         let nodeUseCase = NodeUseCase(
             nodeDataRepository: NodeDataRepository.newRepo,
             nodeValidationRepository: NodeValidationRepository.newRepo,
@@ -30,10 +30,14 @@ struct CreateNewFolderAlertViewRouter: CreateNewFolderAlertRouting {
             parentNode: parentNode,
             nodeUseCase: nodeUseCase
         )
+        viewModel.openNodeHandler = { node in
+            if let node {
+                openNodeHandler(node)
+            }
+        }
 
         let alert = makeAlert(with: viewModel)
         present(alert: alert)
-        return await viewModel.waitUntilFinished()
     }
 
     func showNodeAlreadyExistsError() {
@@ -52,17 +56,15 @@ struct CreateNewFolderAlertViewRouter: CreateNewFolderAlertRouting {
         )
 
         createFolderAlert.addAction(
-            UIAlertAction(title: Strings.Localizable.cancel, style: .cancel) { [weak viewModel] _ in
-                guard let viewModel else { return }
-                viewModel.cancelAction()
+            UIAlertAction(title: Strings.Localizable.cancel, style: .cancel) { _ in
+                viewModel.processAction(with: nil)
             }
         )
 
         let createAction = UIAlertAction(
             title: Strings.Localizable.createFolderButton,
             style: .default
-        ) { [weak createFolderAlert, weak viewModel] _ in
-            guard let viewModel else { return }
+        ) { [weak createFolderAlert] _ in
             viewModel.createButtonTapped(
                 withFolderName: createFolderAlert?.textFields?.last?.text ?? ""
             )
@@ -95,9 +97,9 @@ struct CreateNewFolderAlertViewRouter: CreateNewFolderAlertRouting {
             editingChangedAction(with: textField, alert: alert, createAction: createAction, viewModel: viewModel),
             for: .editingChanged
         )
-        textField.shouldReturnCompletion = { [weak viewModel] _ in
+        textField.shouldReturnCompletion = { [weak viewModel, weak textField] _ in
             guard let viewModel else { return true }
-            return viewModel.shouldReturnCompletion(for: textField.text)
+            return viewModel.shouldReturnCompletion(for: textField?.text)
         }
     }
 
@@ -107,11 +109,11 @@ struct CreateNewFolderAlertViewRouter: CreateNewFolderAlertRouting {
         createAction: UIAlertAction?,
         viewModel: CreateNewFolderAlertViewModel
     ) -> UIAction {
-        UIAction { [weak viewModel] _ in
-            guard let createAction, let viewModel, let text = textField.text else { return }
+        UIAction { [weak viewModel, weak createAction, weak textField, weak alert] _ in
+            guard let createAction, let viewModel, let text = textField?.text else { return }
             let alertProperties = viewModel.makeAlertProperties(with: text)
             alert?.title = alertProperties.title
-            textField.textColor = alertProperties.textFieldTextColor
+            textField?.textColor = alertProperties.textFieldTextColor
             createAction.isEnabled = alertProperties.isActionEnabled
         }
     }
