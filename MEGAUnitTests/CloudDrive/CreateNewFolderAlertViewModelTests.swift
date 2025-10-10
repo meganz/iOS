@@ -125,21 +125,20 @@ final class CreateNewFolderAlertViewModelTests: XCTestCase {
         file: StaticString = #filePath,
         line: UInt = #line
     ) async {
+        var result: NodeEntity?
         let sut = makeSUT(router: router, nodeUseCase: nodeUseCase)
-
-        let waitUntilFinishedTask = Task {
-            await sut.waitUntilFinished()
+        
+        sut.openNodeHandler = { @MainActor node in
+            result = node
         }
-
-        Task {
-            if let folderName {
-                sut.createButtonTapped(withFolderName: folderName)
-            } else {
-                sut.cancelAction()
-            }
+        
+        if let folderName {
+            sut.createButtonTapped(withFolderName: folderName)
+        } else {
+            sut.processAction(with: nil)
         }
+        try? await Task.sleep(nanoseconds: 100_000_000)
 
-        let result = await waitUntilFinishedTask.value
         XCTAssertEqual(result, expectedResult, file: file, line: line)
     }
 
@@ -183,9 +182,8 @@ private final class MockCreateNewFolderAlertRouter: CreateNewFolderAlertRouting 
         self.entity = entity
     }
 
-    func start() async -> NodeEntity? {
+    func start(with openNodeHandler: @escaping @MainActor (NodeEntity) -> Void) {
         actions.append(.start)
-        return entity
     }
 
     func showNodeAlreadyExistsError() {

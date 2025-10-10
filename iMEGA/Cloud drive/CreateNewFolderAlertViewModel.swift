@@ -13,7 +13,7 @@ final class CreateNewFolderAlertViewModel {
     private let router: any CreateNewFolderAlertRouting
     private let nodeUseCase: any NodeUseCaseProtocol
     private let parentNode: NodeEntity
-    private var continuation: CheckedContinuation<NodeEntity?, Never>?
+    var openNodeHandler: (@MainActor (NodeEntity?) -> Void)?
 
     init(
         router: some CreateNewFolderAlertRouting,
@@ -26,26 +26,15 @@ final class CreateNewFolderAlertViewModel {
     }
 
     // MARK: - Interface methods.
-
-    func waitUntilFinished() async -> NodeEntity? {
-        await withCheckedContinuation { continuation in
-            self.continuation = continuation
-        }
+    func processAction(with node: NodeEntity?) {
+        openNodeHandler?(node)
+        openNodeHandler = nil
     }
-
-    func cancelAction() {
-        continuation?.resume(with: .success(nil))
-        continuation = nil
-    }
-
+    
     func createButtonTapped(withFolderName folderName: String) {
-        Task { [weak self] in
-            guard let self else {
-                return
-            }
-            
+        Task {
             guard let name = folderName.trim else {
-                cancelAction()
+                processAction(with: nil)
                 return
             }
 
@@ -85,8 +74,7 @@ final class CreateNewFolderAlertViewModel {
             MEGALogError("Unable to create node with name \(name): \(error)")
         }
 
-        continuation?.resume(with: .success(nodeEntity))
-        continuation = nil
+        processAction(with: nodeEntity)
     }
 
     private func showNodeAlreadyExistsError() async {
