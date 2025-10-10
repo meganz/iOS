@@ -8,14 +8,19 @@ import MEGARepo
 final class ImportLinkRouter: ImportLinkRouting {
     private let isFolderLink: Bool
     private let nodes: [MEGANode]
+    private var importCompletion: (() -> Void)?
     private weak var presenter: UIViewController?
     
-    init(isFolderLink: Bool,
-         nodes: [MEGANode],
-         presenter: UIViewController) {
+    init(
+        isFolderLink: Bool,
+        nodes: [MEGANode],
+        presenter: UIViewController,
+        importCompletion: (() -> Void)? = nil
+    ) {
         self.isFolderLink = isFolderLink
         self.nodes = nodes
         self.presenter = presenter
+        self.importCompletion = importCompletion
     }
     
     func start() {
@@ -35,7 +40,8 @@ final class ImportLinkRouter: ImportLinkRouting {
         }
         browserVC.selectedNodesArray = nodes
         browserVC.browserAction = isFolderLink ? .importFromFolderLink : .import
-        
+        browserVC.onCopyNodesCompletion = importCompletion
+
         if isFolderLink {
             presenter?.present(navigationController, animated: true)
         } else {

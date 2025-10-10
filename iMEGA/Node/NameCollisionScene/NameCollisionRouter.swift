@@ -15,14 +15,24 @@ final class NameCollisionViewRouter: NameCollisionViewRouting {
     private let collisions: [NameCollisionEntity]
     private let collisionType: NameCollisionType
     private let isFolderLink: Bool
+    private let copyOrMoveCompletion: (() -> Void)?
 
-    init(presenter: UIViewController, transfers: [CancellableTransfer]?, nodes: [NodeEntity]?, collisions: [NameCollisionEntity], collisionType: NameCollisionType, isFolderLink: Bool = false) {
+    init(
+        presenter: UIViewController,
+        transfers: [CancellableTransfer]?,
+        nodes: [NodeEntity]?,
+        collisions: [NameCollisionEntity],
+        collisionType: NameCollisionType,
+        isFolderLink: Bool = false,
+        copyOrMoveCompletion: (() -> Void)? = nil
+    ) {
         self.presenter = presenter
         self.transfers = transfers
         self.nodes = nodes
         self.collisions = collisions
         self.collisionType = collisionType
         self.isFolderLink = isFolderLink
+        self.copyOrMoveCompletion = copyOrMoveCompletion
     }
     
     func build() -> UIViewController {
@@ -82,6 +92,7 @@ final class NameCollisionViewRouter: NameCollisionViewRouting {
     func showCopyOrMoveSuccess() async {
         dismiss()
         SVProgressHUD.showSuccess(withStatus: Strings.Localizable.completed)
+        copyOrMoveCompletion?()
     }
 
     @MainActor

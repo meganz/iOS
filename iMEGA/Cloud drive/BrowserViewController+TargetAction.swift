@@ -42,6 +42,7 @@ extension BrowserViewController {
         browserVC.selectedNodesMutableDictionary = selectedNodesMutableDictionary
         browserVC.selectedNodesArray = selectedNodesArray
         browserVC.browserViewControllerDelegate = browserViewControllerDelegate
+        browserVC.onCopyNodesCompletion = onCopyNodesCompletion
         return browserVC
     }
     
