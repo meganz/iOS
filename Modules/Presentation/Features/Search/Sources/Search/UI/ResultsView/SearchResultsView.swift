@@ -13,7 +13,11 @@ public struct SearchResultsView: View {
     
     public var body: some View {
         VStack(spacing: .zero) {
-            chips
+            if viewModel.showChips {
+                chips
+                    .transition(.move(edge: .top).combined(with: .opacity))
+            }
+            
             PlaceholderContainerView(
                 isLoading: $viewModel.isLoadingPlaceholderShown,
                 content: content,
@@ -27,6 +31,7 @@ public struct SearchResultsView: View {
                 alignment: .top
             )
         }
+        .animation(.easeInOut(duration: 0.25), value: viewModel.showChips)
         .task {
             await viewModel.task()
         }
@@ -178,7 +183,8 @@ public struct SearchResultsView: View {
             keyboardVisibilityHandler: MockKeyboardVisibilityHandler(),
             viewDisplayMode: .unknown,
             listHeaderViewModel: nil,
-            isSelectionEnabled: false
+            isSelectionEnabled: false,
+            showChips: true
         )
         var body: some View {
             SearchResultsView(viewModel: viewModel)

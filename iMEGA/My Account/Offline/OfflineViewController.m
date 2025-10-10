@@ -78,9 +78,8 @@ static NSString *kisDirectory = @"kisDirectory";
         self.offlineTableView.tableView.allowsMultipleSelectionDuringEditing = YES;
     }
     
-    self.searchController = [UISearchController customSearchControllerWithSearchResultsUpdaterDelegate:self searchBarDelegate:self];
+    self.searchController = [UISearchController customSearchControllerWithSearchResultsUpdaterDelegate:self searchBarDelegate:self searchControllerDelegate:self];
     self.searchController.hidesNavigationBarDuringPresentation = NO;
-    self.searchController.delegate = self;
     self.navigationItem.searchController = self.searchController;
     self.navigationItem.hidesSearchBarWhenScrolling = NO;
     self.serialQueue = dispatch_queue_create("nz.mega.offlineviewcontroller.reloadui", DISPATCH_QUEUE_SERIAL);

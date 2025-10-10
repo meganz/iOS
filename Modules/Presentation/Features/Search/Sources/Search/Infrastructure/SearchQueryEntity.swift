@@ -22,6 +22,10 @@ public struct SearchQueryEntity: Equatable, Sendable {
         self.isSearchActive = isSearchActive
         self.chips = chips
     }
+
+    public mutating func clearChips() {
+        self = .init(query: query, sorting: sorting, mode: mode, isSearchActive: isSearchActive, chips: [])
+    }
 }
 
 /// default value, iteration one of search project does not allow specifying sort order but that can come in next stages

@@ -125,7 +125,8 @@ class NodeBrowserViewModelTests: XCTestCase {
                     keyboardVisibilityHandler: MockKeyboardVisibilityHandler(),
                     viewDisplayMode: .unknown,
                     listHeaderViewModel: nil,
-                    isSelectionEnabled: true
+                    isSelectionEnabled: true,
+                    showChips: false
                 ),
                 mediaDiscoveryViewModel: mediaDiscoveryViewModel,
                 warningViewModel: nil,

@@ -27,7 +27,12 @@ class ContactsGroupsViewController: UIViewController {
         newGroupChatLabel.text = Strings.Localizable.newGroupChat
         newGroupChatImageView.image = MEGAAssets.UIImage.groupChatToken
         
-        searchController = UISearchController.customSearchController(searchResultsUpdaterDelegate: self, searchBarDelegate: self)
+        searchController = UISearchController
+            .customSearchController(
+                searchResultsUpdaterDelegate: self,
+                searchBarDelegate: self,
+                searchControllerDelegate: nil
+            )
         navigationItem.searchController = searchController
         tableView.tableFooterView = UIView()  // This remove the separator line between empty cells
         
