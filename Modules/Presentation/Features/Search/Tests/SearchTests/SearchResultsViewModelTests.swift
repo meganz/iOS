@@ -38,8 +38,11 @@ final class SearchResultsViewModelTests: XCTestCase, @unchecked Sendable {
         var emptyContentRequested: [EmptyContent] = []
         weak var testcase: XCTestCase?
         
-        init(_ testcase: XCTestCase,
-             searchResultUpdateSignalSequence: AnyAsyncSequence<SearchResultUpdateSignal> = EmptyAsyncSequence().eraseToAnyAsyncSequence()) {
+        init(
+            _ testcase: XCTestCase,
+            searchResultUpdateSignalSequence: AnyAsyncSequence<SearchResultUpdateSignal> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
+            showChips: Bool = true
+        ) {
             self.testcase = testcase
             resultsProvider = MockSearchResultsProviding(
                 searchResultUpdateSignalSequence: searchResultUpdateSignalSequence)
@@ -79,7 +82,8 @@ final class SearchResultsViewModelTests: XCTestCase, @unchecked Sendable {
                 keyboardVisibilityHandler: MockKeyboardVisibilityHandler(), 
                 viewDisplayMode: .unknown,
                 listHeaderViewModel: nil,
-                isSelectionEnabled: true
+                isSelectionEnabled: true,
+                showChips: showChips
             )
             selection = {
                 self.selectedResults.append($0)
@@ -218,7 +222,56 @@ final class SearchResultsViewModelTests: XCTestCase, @unchecked Sendable {
         ]
         XCTAssertEqual(harness.resultsProvider.passedInQueries, expectedReceivedQueries)
     }
-    
+
+    @MainActor
+    func testQueryChanged_shouldRemoveChips_whenShowChipsIsDisabled() async {
+        let harness = Harness(self, showChips: false).withChipsPrepared(chipTypes: [
+            .nodeFormat(.photo),
+            .nodeFormat(.audio),
+            .nodeFormat(.pdf),
+            .nodeFormat(.presentation)
+        ])
+        await harness.sut.task()
+        await harness.sut.chipsItems.first!.select()
+        await harness.sut.queryChanged(to: "test", isSearchActive: true)
+        let expectedReceivedQueries: [SearchQuery] = [
+            .initial,
+            .userSupplied(
+                .init(
+                    query: "",
+                    sorting: .nameAscending,
+                    mode: .home,
+                    isSearchActive: false,
+                    chips: [.init(type: .nodeFormat(.photo), title: "chip_0", icon: nil, subchipsPickerTitle: nil, subchips: [])]
+                )
+            ),
+            .userSupplied(
+                .init(
+                    query: "test",
+                    sorting: .nameAscending,
+                    mode: .home,
+                    isSearchActive: true,
+                    chips: []
+                )
+            )
+        ]
+        XCTAssertEqual(harness.resultsProvider.passedInQueries, expectedReceivedQueries)
+    }
+
+    @MainActor
+    func testQueryChanged_shouldRetainChips_whenCloudDriveRevampFeatureIsEnabled() async {
+        let harness = Harness(self).withSingleResultPrepared()
+        await harness.sut.task()
+        await harness.sut.queryChanged(to: "test", isSearchActive: true)
+        await harness.sut.queryChanged(to: "test1", isSearchActive: true)
+        let expectedReceivedQueries: [SearchQuery] = [
+            .initial,
+            .userSupplied(.query("test", isSearchActive: true)),
+            .userSupplied(.query("test1", isSearchActive: true))
+        ]
+        XCTAssertEqual(harness.resultsProvider.passedInQueries, expectedReceivedQueries)
+    }
+
     @MainActor
     func testListItems_onQueryChanged_returnsResultsFromResultsProvider() async {
         let harness = Harness(self).withSingleResultPrepared()

@@ -395,9 +395,8 @@
 }
 
 - (void)addSearchController {
-    self.searchController = [UISearchController customSearchControllerWithSearchResultsUpdaterDelegate:self searchBarDelegate:self];
+    self.searchController = [UISearchController customSearchControllerWithSearchResultsUpdaterDelegate:self searchBarDelegate:self searchControllerDelegate:self];
     self.searchController.hidesNavigationBarDuringPresentation = NO;
-    self.searchController.delegate = self;
     [self addSearchBar];
 }
 

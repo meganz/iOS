@@ -86,10 +86,9 @@
 
     self.navigationItem.title = LocalizedString(@"selectDestination", @"Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them.");
     
-    self.searchController = [UISearchController customSearchControllerWithSearchResultsUpdaterDelegate:self searchBarDelegate:self];
+    self.searchController = [UISearchController customSearchControllerWithSearchResultsUpdaterDelegate:self searchBarDelegate:self searchControllerDelegate:self];
     self.searchController.definesPresentationContext = YES;
     self.searchController.hidesNavigationBarDuringPresentation = NO;
-    self.searchController.delegate = self;
     [self.searchView addSubview:self.searchController.searchBar];
     
     [self setGroupChatsAndRecents];

@@ -556,16 +556,22 @@ struct CloudDriveViewControllerFactory {
                 )()
         )
 
+        let isCloudDriveRevampEnabled = DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .cloudDriveRevamp)
+
         let searchResultsVM = makeSearchResultsViewModel(
             nodeSource: nodeSource,
             initialViewMode: initialViewMode,
             config: overriddenConfig,
-            calendar: calendar
+            calendar: calendar,
+            showChips: !isCloudDriveRevampEnabled
         )
 
         let searchControllerWrapper = SearchControllerWrapper(
             onSearch: { [weak searchResultsVM] in searchResultsVM?.bridge.queryChanged($0) },
-            onCancel: { [weak searchResultsVM] in searchResultsVM?.bridge.queryCleaned() }
+            onCancel: { [weak searchResultsVM] in searchResultsVM?.bridge.queryCleaned() },
+            onSearchActiveChanged: { [weak searchResultsVM] in
+                searchResultsVM?.showChips = $0 || !isCloudDriveRevampEnabled
+            }
         )
 
         searchResultsVM.bridge.selectionChanged = { selectedNodes in
@@ -836,7 +842,8 @@ struct CloudDriveViewControllerFactory {
         nodeSource: NodeSource,
         initialViewMode: ViewModePreferenceEntity,
         config: NodeBrowserConfig,
-        calendar: Calendar
+        calendar: Calendar,
+        showChips: Bool
     ) -> SearchResultsViewModel {
         // not all actions are triggered using bridge yet
         let bridge = SearchResultsBridge()
@@ -919,7 +926,8 @@ struct CloudDriveViewControllerFactory {
             keyboardVisibilityHandler: KeyboardVisibilityHandler(notificationCenter: .default),
             viewDisplayMode: config.displayMode?.toViewDisplayMode ?? .unknown,
             listHeaderViewModel: listHeaderViewModelFactory.buildIfNeeded(for: nodeSource),
-            isSelectionEnabled: shouldEnableSelection
+            isSelectionEnabled: shouldEnableSelection,
+            showChips: showChips
         )
     }
 

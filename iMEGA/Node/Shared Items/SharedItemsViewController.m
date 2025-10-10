@@ -189,13 +189,12 @@
 }
 
 - (void)configSearchController {
-    self.searchController = [UISearchController customSearchControllerWithSearchResultsUpdaterDelegate:self searchBarDelegate:self];
+    self.searchController = [UISearchController customSearchControllerWithSearchResultsUpdaterDelegate:self searchBarDelegate:self searchControllerDelegate:self];
     self.tableView.tableHeaderView = self.searchController.searchBar;
     
     [AppearanceManager forceSearchBarUpdate:self.searchController.searchBar];
     
     self.searchController.hidesNavigationBarDuringPresentation = NO;
-    self.searchController.delegate = self;
     dispatch_async(dispatch_get_main_queue(), ^{
         self.tableView.contentOffset = CGPointZero;
     });

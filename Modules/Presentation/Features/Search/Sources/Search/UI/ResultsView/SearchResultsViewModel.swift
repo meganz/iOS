@@ -97,6 +97,8 @@ public class SearchResultsViewModel: ObservableObject {
     // Specifies whether the results are selectable or not.
     let isSelectionEnabled: Bool
 
+    @Published public var showChips: Bool = false
+
     public init(
         resultsProvider: any SearchResultsProviding,
         bridge: SearchBridge,
@@ -108,7 +110,8 @@ public class SearchResultsViewModel: ObservableObject {
         viewDisplayMode: ViewDisplayMode,
         updatedSearchResultsPublisher: BatchingPublisher<SearchResultUpdateSignal> = BatchingPublisher(interval: 1), // Emits search result updates as a batch every 1 seconds
         listHeaderViewModel: ListHeaderViewModel?,
-        isSelectionEnabled: Bool
+        isSelectionEnabled: Bool,
+        showChips: Bool
     ) {
         self.resultsProvider = resultsProvider
         self.bridge = bridge
@@ -121,6 +124,7 @@ public class SearchResultsViewModel: ObservableObject {
         self.updatedSearchResultsPublisher = updatedSearchResultsPublisher
         self.listHeaderViewModel = listHeaderViewModel
         self.isSelectionEnabled = isSelectionEnabled
+        self.showChips = showChips
         self.bridge.queryChanged = { [weak self] query  in
             let _self = self
             
@@ -268,6 +272,10 @@ public class SearchResultsViewModel: ObservableObject {
     }
     
     func queryChanged(to query: String, isSearchActive: Bool) async {
+        if !showChips {
+            currentQuery.clearChips()
+        }
+        
         await queryChanged(
             to: .userSupplied(
                 Self.makeQueryUsing(

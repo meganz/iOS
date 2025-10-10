@@ -249,7 +249,8 @@ final class HomeScreenFactory: NSObject {
             keyboardVisibilityHandler: KeyboardVisibilityHandler(notificationCenter: notificationCenter),
             viewDisplayMode: .home,
             listHeaderViewModel: nil,
-            isSelectionEnabled: false
+            isSelectionEnabled: false,
+            showChips: true
         )
         return UIHostingController(
             rootView: SearchResultsView(viewModel: vm)

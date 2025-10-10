@@ -49,6 +49,12 @@ public enum SearchQuery: Equatable, Sendable {
     var mode: SearchModeEntity {
         .home
     }
+
+    public mutating func clearChips() {
+        guard chips.isNotEmpty, case .userSupplied(var query) = self else { return }
+        query.clearChips()
+        self = .userSupplied(query)
+    }
 }
 
 extension SearchQuery {

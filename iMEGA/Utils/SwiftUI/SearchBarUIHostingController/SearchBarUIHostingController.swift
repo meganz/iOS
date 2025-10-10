@@ -202,15 +202,19 @@ class SearchControllerWrapper: NSObject {
     var onCancel: (() -> Void)?
     var onUpdateSearchBarVisibility: ((Bool) -> Void)?
     private var searchText: String?
-    
+    private let onSearchActiveChanged: ((Bool) -> Void)?
+
     init(
         onSearch: ((String) -> Void)?,
-        onCancel: (() -> Void)?
+        onCancel: (() -> Void)?,
+        onSearchActiveChanged: ((Bool) -> Void)?
     ) {
+        self.onSearchActiveChanged = onSearchActiveChanged
         super.init()
         self.searchController = UISearchController.customSearchController(
             searchResultsUpdaterDelegate: self,
-            searchBarDelegate: self
+            searchBarDelegate: self,
+            searchControllerDelegate: self
         )
         self.searchController.hidesNavigationBarDuringPresentation = false
         self.onSearch = onSearch
@@ -230,6 +234,17 @@ class SearchControllerWrapper: NSObject {
     func attachToViewController(_ vc: UIViewController) {
         vc.navigationItem.searchController = searchController
         searchController.searchBar.text = searchText
+    }
+}
+
+// MARK: - UISearchControllerDelegate
+extension SearchControllerWrapper: UISearchControllerDelegate {
+    func willPresentSearchController(_ searchController: UISearchController) {
+        onSearchActiveChanged?(true)
+    }
+
+    func willDismissSearchController(_ searchController: UISearchController) {
+        onSearchActiveChanged?(false)
     }
 }
 
