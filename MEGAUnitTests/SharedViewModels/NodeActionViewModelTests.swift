@@ -291,7 +291,29 @@ struct NodeActionViewModelTests {
             #expect(result.1 == 0)
         }
     }
-    
+
+    @Suite("Calls isModificationTimeUndefined")
+    struct IsModificationTimeUndefined {
+        @Test(
+            arguments: [
+                (Date(), false),
+                (Date(timeIntervalSince1970: 1), false),
+                (Date(timeIntervalSince1970: 0), true)
+            ],
+        )
+        func isModificationTimeUndefined(
+            modificationTime: Date,
+            expectedValue: Bool
+        ) {
+            let sut = makeSUT()
+            let node = NodeEntity(modificationTime: modificationTime)
+
+            let result = sut.isModificationTimeUndefined(for: node)
+
+            #expect(result == expectedValue)
+        }
+    }
+
     private static func makeSUT(
         systemGeneratedNodeUseCase: some SystemGeneratedNodeUseCaseProtocol = MockSystemGeneratedNodeUseCase(nodesForLocation: [:]),
         sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol = MockSensitiveNodeUseCase(),

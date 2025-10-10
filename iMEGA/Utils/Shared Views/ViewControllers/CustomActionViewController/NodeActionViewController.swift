@@ -536,10 +536,14 @@ class NodeActionViewController: ActionSheetViewController {
     }
     
     private func sizeAndModicationDate(_ nodeModel: NodeEntity) -> String {
-        let modificationTime = nodeModel.modificationTime as NSDate
-        let modificationTimeString: String = modificationTime.mnz_formattedDateMediumTimeShortStyle()
-        
-        return sizeForFile(nodeModel) + " • " + modificationTimeString
+        if viewModel.isModificationTimeUndefined(for: nodeModel) {
+            return sizeForFile(nodeModel)
+        } else {
+            let modificationTime = nodeModel.modificationTime as NSDate
+            let modificationTimeString: String = modificationTime.mnz_formattedDateMediumTimeShortStyle()
+
+            return sizeForFile(nodeModel) + " • " + modificationTimeString
+        }
     }
     
     private func sizeForFile(_ nodeModel: NodeEntity) -> String {
