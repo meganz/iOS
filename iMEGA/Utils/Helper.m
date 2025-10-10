@@ -432,7 +432,11 @@
 }
 
 + (NSString *)sizeAndModificationDateForNode:(MEGANode *)node api:(MEGASdk *)api {
-    return [NSString stringWithFormat:@"%@ • %@", [self sizeForNode:node api:api], node.modificationTime.mnz_formattedDateMediumTimeShortStyle];
+    if (node.modificationTime.timeIntervalSince1970 == 0) {
+        return [self sizeForNode:node api:api];
+    } else {
+        return [NSString stringWithFormat:@"%@ • %@", [self sizeForNode:node api:api], node.modificationTime.mnz_formattedDateMediumTimeShortStyle];
+    }
 }
 
 + (NSString *)sizeAndShareLinkCreateDateForSharedLinkNode:(MEGANode *)node api:(MEGASdk *)api {

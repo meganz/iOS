@@ -116,7 +116,10 @@ class NodeInfoDetailTableViewCell: UITableViewCell {
     
     private func configureAsModificationDate(withNode node: MEGANode) {
         keyLabel.text = Strings.Localizable.modified
-        valueLabel.text = DateFormatter.dateMediumTimeShort().localisedString(from: node.modificationTime ?? Date())
+        let value = node.modificationTime?.timeIntervalSince1970 == 0
+            ? ""
+            : DateFormatter.dateMediumTimeShort().localisedString(from: node.modificationTime ?? .init())
+        valueLabel.text = value
     }
     
     private func configureAsLinkCreationDate(withNode node: MEGANode) {

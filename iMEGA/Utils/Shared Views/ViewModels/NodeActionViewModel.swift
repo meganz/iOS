@@ -128,6 +128,10 @@ struct NodeActionViewModel {
         nodeUseCase.isRestorable(node: node) && !isBackupNode
     }
 
+    func isModificationTimeUndefined(for node: NodeEntity) -> Bool {
+        node.modificationTime.timeIntervalSince1970 == 0
+    }
+
     // MARK: - Private methods
 
     /// Determine if nodes contains only sensitive nodes
