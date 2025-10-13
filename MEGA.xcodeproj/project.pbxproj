@@ -16900,7 +16900,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.dev;
 				PRODUCT_NAME = MEGA;
 				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "match Development mega.ios.dev";
+				PROVISIONING_PROFILE_SPECIFIER = "match Development mega.ios.dev 1760050756";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "iMEGA/Supporting Files/MEGA-Bridging-Header.h";
 				SWIFT_TREAT_WARNINGS_AS_ERRORS = YES;
@@ -17024,7 +17024,7 @@
 				OTHER_SWIFT_FLAGS = "-Xfrontend -warn-long-function-bodies=300 -Xfrontend -warn-long-expression-type-checking=300 -DMNZ_NOTIFICATION_EXTENSION";
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.dev.MEGANotifications;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "match Development mega.ios.dev.MEGANotifications";
+				PROVISIONING_PROFILE_SPECIFIER = "match Development mega.ios.dev.MEGANotifications 1760050800";
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OBJC_BRIDGING_HEADER = "iMEGA/Extensions/MEGANotifications/MEGANotifications-Bridging-Header.h";
@@ -17126,7 +17126,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.dev.MEGAWidget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "match Development mega.ios.dev.MEGAWidget";
+				PROVISIONING_PROFILE_SPECIFIER = "match Development mega.ios.dev.MEGAWidget 1760050810";
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OBJC_BRIDGING_HEADER = "iMEGA/Extensions/MEGAWidget/Supporting Files/MEGAWidget-Bridging-Header.h";
@@ -17221,7 +17221,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.dev.MEGAIntent;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "match Development mega.ios.dev.MEGAIntent";
+				PROVISIONING_PROFILE_SPECIFIER = "match Development mega.ios.dev.MEGAIntent 1760050819";
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_UPCOMING_FEATURE_EXISTENTIAL_ANY = NO;
@@ -17318,7 +17318,7 @@
 				OTHER_SWIFT_FLAGS = "-Xfrontend -warn-long-function-bodies=300 -Xfrontend -warn-long-expression-type-checking=300 -DMNZ_SHARE_EXTENSION";
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.dev.MEGAShare;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "match Development mega.ios.dev.MEGAShare";
+				PROVISIONING_PROFILE_SPECIFIER = "match Development mega.ios.dev.MEGAShare 1760050790";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "iMEGA/Extensions/MEGAShare/Supporting Files/MEGAShare-Bridging-Header.h";
@@ -17417,7 +17417,7 @@
 				OTHER_SWIFT_FLAGS = "-Xfrontend -warn-long-function-bodies=300 -Xfrontend -warn-long-expression-type-checking=300 -DDEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.dev.MEGAPickerFileProvider;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "match Development mega.ios.dev.MEGAPickerFileProvider";
+				PROVISIONING_PROFILE_SPECIFIER = "match Development mega.ios.dev.MEGAPickerFileProvider 1760050781";
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -17542,7 +17542,7 @@
 				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.dev.MEGAPicker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "match Development mega.ios.dev.MEGAPicker";
+				PROVISIONING_PROFILE_SPECIFIER = "match Development mega.ios.dev.MEGAPicker 1760050768";
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_EMIT_LOC_STRINGS = YES;
