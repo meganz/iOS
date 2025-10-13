@@ -26,6 +26,7 @@ enum DeeplinkPathKey: String {
     case collection = "/collection"
     case recovery = "/recovery" // whe tapping forgot password
     case cameraUploadsSettings = "/camera"
+    case pro = "/pro"
 }
 
 enum DeeplinkFragmentKey: String {
@@ -213,7 +214,8 @@ extension NSURL {
             (DeeplinkPathKey.privacyPolicy, .default),
             (DeeplinkPathKey.cookiePolicy, .default),
             (DeeplinkPathKey.termsOfService, .default),
-            (DeeplinkPathKey.collection, .collection)
+            (DeeplinkPathKey.collection, .collection),
+            (DeeplinkPathKey.pro, .upgrade)
         ]
         
         if let match = prefixes.first(where: { path.hasPrefix($0.key.rawValue) }) {

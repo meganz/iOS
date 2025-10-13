@@ -29,6 +29,7 @@ typedef NS_ENUM(NSInteger, MEGANotificationType) {
 - (void)showMainTabBar;
 - (void)showOnboardingWithCompletion:(nullable void (^)(void))completion;
 - (void)presentAccountExpiredAlertIfNeeded;
+- (void)manageLink:(NSURL *)url;
 - (void)showLink:(NSURL *)url;
 - (void)setAccountFirstLogin:(BOOL)isFirstLogin;
 - (void)openTabBasedOnNotificationMegatype;
