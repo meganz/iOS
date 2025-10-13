@@ -435,6 +435,13 @@ extension AppDelegate {
                 try await Task.sleep(nanoseconds: 500_000_000)
                 url.mnz_presentSafariViewController()
             }
+        case .upgrade:
+            guard let deepLinkURL = URL(string: urlString),
+                  UIApplication.shared.canOpenURL(deepLinkURL) else {
+                return
+            }
+            MEGALinkManager.linkURL = deepLinkURL
+            manageLink(deepLinkURL)
         default:
             guard let deepLinkURL = URL(string: urlString),
                   UIApplication.shared.canOpenURL(deepLinkURL) else {
