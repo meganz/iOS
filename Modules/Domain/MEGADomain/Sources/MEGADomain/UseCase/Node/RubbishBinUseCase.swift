@@ -3,6 +3,7 @@ import MEGASwift
 public protocol RubbishBinUseCaseProtocol: Sendable {
     func isSyncDebrisNode(_ node: NodeEntity) -> Bool
     func cleanRubbishBin()
+    func cleanRubbishBin(_ completion: (@Sendable () -> Void)?)
 }
 
 public struct RubbishBinUseCase<R: RubbishBinRepositoryProtocol>: RubbishBinUseCaseProtocol {
@@ -18,5 +19,9 @@ public struct RubbishBinUseCase<R: RubbishBinRepositoryProtocol>: RubbishBinUseC
     
     public func cleanRubbishBin() {
         rubbishBinRepository.cleanRubbishBin()
+    }
+    
+    public func cleanRubbishBin(_ completion: (@Sendable () -> Void)?) {
+        rubbishBinRepository.cleanRubbishBin(completion)
     }
 }

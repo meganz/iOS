@@ -37,6 +37,12 @@ public struct RubbishBinRepository: RubbishBinRepositoryProtocol {
         sdk.cleanRubbishBin()
     }
     
+    public func cleanRubbishBin(_ completion: (() -> Void)?) {
+        sdk.cleanRubbishBin(with: RequestDelegate(completion: { (_: Result<MEGARequest, MEGAError>) in
+            completion?()
+        }))
+    }
+    
     // MARK: - Private
     
     private func isSyncDebrisChild(_ node: NodeEntity) -> Bool {
