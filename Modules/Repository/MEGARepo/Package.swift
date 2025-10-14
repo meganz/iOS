@@ -17,7 +17,10 @@ let package = Package(
         .library(
             name: "MEGARepo",
             targets: ["MEGARepo"]
-        )
+        ),
+        .library(
+            name: "MEGARepoMock",
+            targets: ["MEGARepoMock"])
     ],
     dependencies: [
         .package(path: "../../Domain/MEGADomain"),
@@ -35,9 +38,13 @@ let package = Package(
             ],
             swiftSettings: settings
         ),
+        .target(
+            name: "MEGARepoMock",
+            dependencies: ["MEGARepo"]
+        ),
         .testTarget(
             name: "MEGARepoTests",
-            dependencies: ["MEGARepo", "MEGASwift"],
+            dependencies: ["MEGARepo", "MEGARepoMock", "MEGASwift"],
             resources: [.process("Resources")],
             swiftSettings: settings
         )

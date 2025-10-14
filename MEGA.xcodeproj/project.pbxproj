@@ -97,6 +97,7 @@
 		0E8EABC92C891E3A001722F7 /* AlbumRemoteFeatureFlagProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E8EABC82C891E3A001722F7 /* AlbumRemoteFeatureFlagProviderTests.swift */; };
 		0E9301E02B044C1A000306D9 /* EnableCameraUploadsEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E9301DF2B044C1A000306D9 /* EnableCameraUploadsEmptyView.swift */; };
 		0E9301E22B044C62000306D9 /* PhotoTimelineEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E9301E12B044C62000306D9 /* PhotoTimelineEmptyView.swift */; };
+		0E959C152E9C4F9A00E1679A /* CameraAssetUploadStatusDTO+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E959C142E9C4F9A00E1679A /* CameraAssetUploadStatusDTO+Mapper.swift */; };
 		0E96EAD32ACBC29600782D88 /* AutoMediaDiscoveryBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E96EAD22ACBC29600782D88 /* AutoMediaDiscoveryBannerView.swift */; };
 		0E9DBE2D2E4BF56100BF62F6 /* QuickActionsMenuDelegateHandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E9DBE2C2E4BF56100BF62F6 /* QuickActionsMenuDelegateHandlerTests.swift */; };
 		0E9E6D072DF92B44005EA167 /* SubscriptionPurchaseFreePlanViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E9E6D062DF92B3D005EA167 /* SubscriptionPurchaseFreePlanViewModel.swift */; };
@@ -141,6 +142,9 @@
 		0EEA79FC2E1E0FC50093E736 /* MockSaveToPhotosCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EEA79FB2E1E0FB50093E736 /* MockSaveToPhotosCoordinator.swift */; };
 		0EEB9B2D2E5C071C00CB27EA /* UpgradeSubscriptionRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EEB9B2C2E5C071C00CB27EA /* UpgradeSubscriptionRouter.swift */; };
 		0EEB9B302E5C074400CB27EA /* MockUpgradeSubscriptionRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EEB9B2E2E5C074400CB27EA /* MockUpgradeSubscriptionRouter.swift */; };
+		0EF7E5D92E95DF2A0098367B /* CameraUploadRecordManager+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EF7E5D82E95DF2A0098367B /* CameraUploadRecordManager+Additions.swift */; };
+		0EF7E5DD2E95E00E0098367B /* MOAssetUploadFileNameRecord+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EF7E5DC2E95E00E0098367B /* MOAssetUploadFileNameRecord+Mapper.swift */; };
+		0EF7E5E02E95E0360098367B /* MOAssetUploadRecord+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EF7E5DF2E95E0360098367B /* MOAssetUploadRecord+Mapper.swift */; };
 		122977DE27DA976F0048F381 /* MediaDiscoveryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122977DD27DA976F0048F381 /* MediaDiscoveryViewModel.swift */; };
 		12397E172820C3B100A30CCC /* PageTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12397E162820C3B100A30CCC /* PageTabView.swift */; };
 		12397E192820C3D100A30CCC /* PagerTabViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12397E182820C3D100A30CCC /* PagerTabViewModel.swift */; };
@@ -2842,6 +2846,7 @@
 		0E8EABC82C891E3A001722F7 /* AlbumRemoteFeatureFlagProviderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumRemoteFeatureFlagProviderTests.swift; sourceTree = "<group>"; };
 		0E9301DF2B044C1A000306D9 /* EnableCameraUploadsEmptyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnableCameraUploadsEmptyView.swift; sourceTree = "<group>"; };
 		0E9301E12B044C62000306D9 /* PhotoTimelineEmptyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoTimelineEmptyView.swift; sourceTree = "<group>"; };
+		0E959C142E9C4F9A00E1679A /* CameraAssetUploadStatusDTO+Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CameraAssetUploadStatusDTO+Mapper.swift"; sourceTree = "<group>"; };
 		0E96EAD22ACBC29600782D88 /* AutoMediaDiscoveryBannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoMediaDiscoveryBannerView.swift; sourceTree = "<group>"; };
 		0E9DBE2C2E4BF56100BF62F6 /* QuickActionsMenuDelegateHandlerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickActionsMenuDelegateHandlerTests.swift; sourceTree = "<group>"; };
 		0E9E6D062DF92B3D005EA167 /* SubscriptionPurchaseFreePlanViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionPurchaseFreePlanViewModel.swift; sourceTree = "<group>"; };
@@ -2883,6 +2888,9 @@
 		0EEA79FB2E1E0FB50093E736 /* MockSaveToPhotosCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockSaveToPhotosCoordinator.swift; sourceTree = "<group>"; };
 		0EEB9B2C2E5C071C00CB27EA /* UpgradeSubscriptionRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpgradeSubscriptionRouter.swift; sourceTree = "<group>"; };
 		0EEB9B2E2E5C074400CB27EA /* MockUpgradeSubscriptionRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockUpgradeSubscriptionRouter.swift; sourceTree = "<group>"; };
+		0EF7E5D82E95DF2A0098367B /* CameraUploadRecordManager+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CameraUploadRecordManager+Additions.swift"; sourceTree = "<group>"; };
+		0EF7E5DC2E95E00E0098367B /* MOAssetUploadFileNameRecord+Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MOAssetUploadFileNameRecord+Mapper.swift"; sourceTree = "<group>"; };
+		0EF7E5DF2E95E0360098367B /* MOAssetUploadRecord+Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MOAssetUploadRecord+Mapper.swift"; sourceTree = "<group>"; };
 		122977DD27DA976F0048F381 /* MediaDiscoveryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaDiscoveryViewModel.swift; sourceTree = "<group>"; };
 		12397E162820C3B100A30CCC /* PageTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageTabView.swift; sourceTree = "<group>"; };
 		12397E182820C3D100A30CCC /* PagerTabViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagerTabViewModel.swift; sourceTree = "<group>"; };
@@ -11516,6 +11524,7 @@
 				B6BD011E21B62D8E00E97086 /* CameraUploadManager+Settings.m */,
 				B658D3CA218FBC24004C0D64 /* CameraUploadManager.h */,
 				B658D3C9218FBC24004C0D64 /* CameraUploadManager.m */,
+				0EF7E5D82E95DF2A0098367B /* CameraUploadRecordManager+Additions.swift */,
 				B6D9D7ED216AE5D000D7B08A /* CameraUploadRecordManager.h */,
 				B6D9D7EE216AE5D000D7B08A /* CameraUploadRecordManager.m */,
 				B65AC8BC21F6B5A40094FF4F /* ImageExportManager.h */,
@@ -11527,6 +11536,7 @@
 		B65AC8D121F9B3D20094FF4F /* CameraUploads */ = {
 			isa = PBXGroup;
 			children = (
+				0E959C142E9C4F9A00E1679A /* CameraAssetUploadStatusDTO+Mapper.swift */,
 				B65AC8DD21F9B7A30094FF4F /* MOAssetUploadErrorPerLaunch+CoreDataClass.h */,
 				B65AC8D921F9B7A20094FF4F /* MOAssetUploadErrorPerLaunch+CoreDataClass.m */,
 				B65AC8D421F9B7A20094FF4F /* MOAssetUploadErrorPerLaunch+CoreDataProperties.h */,
@@ -11543,10 +11553,12 @@
 				B6D11AD3219BAE6D00446B86 /* MOAssetUploadFileNameRecord+CoreDataClass.m */,
 				B6D11AD5219BAE6D00446B86 /* MOAssetUploadFileNameRecord+CoreDataProperties.h */,
 				B6D11AD6219BAE6D00446B86 /* MOAssetUploadFileNameRecord+CoreDataProperties.m */,
+				0EF7E5DC2E95E00E0098367B /* MOAssetUploadFileNameRecord+Mapper.swift */,
 				B6DA6E612212065E003CB372 /* MOAssetUploadRecord+CoreDataClass.h */,
 				B6DA6E642212065E003CB372 /* MOAssetUploadRecord+CoreDataClass.m */,
 				B6DA6E632212065E003CB372 /* MOAssetUploadRecord+CoreDataProperties.h */,
 				B6DA6E622212065E003CB372 /* MOAssetUploadRecord+CoreDataProperties.m */,
+				0EF7E5DF2E95E0360098367B /* MOAssetUploadRecord+Mapper.swift */,
 			);
 			path = CameraUploads;
 			sourceTree = "<group>";
@@ -14372,6 +14384,7 @@
 				831807B92AA222CB00C91119 /* CallWaitingRoomUsersDialog.swift in Sources */,
 				838F27C72BA1E68700F267BC /* CallWillEndAlertRouter.swift in Sources */,
 				8331D8672BA32E5D0071BAD0 /* CallWillEndAlertViewModel.swift in Sources */,
+				0E959C152E9C4F9A00E1679A /* CameraAssetUploadStatusDTO+Mapper.swift in Sources */,
 				B6D9D7E9216AB0C700D7B08A /* CameraScanner.m in Sources */,
 				B63F3198223BA47400B0C6A6 /* CameraUpload.xcdatamodeld in Sources */,
 				6D90A68F2B61FED200EA7DC2 /* CameraUploadAdvancedOptionsViewController+Additions.swift in Sources */,
@@ -14392,6 +14405,7 @@
 				B672EDB3221CD96000DE6684 /* CameraUploadOperation+Utils.m in Sources */,
 				B68C42CB216DAA85003C5A50 /* CameraUploadOperation.m in Sources */,
 				0E0A24DA2E24D17000F687D3 /* CameraUploadPausedReasonEntity+Mapper.swift in Sources */,
+				0EF7E5D92E95DF2A0098367B /* CameraUploadRecordManager+Additions.swift in Sources */,
 				B6D9D7EF216AE5D000D7B08A /* CameraUploadRecordManager.m in Sources */,
 				B686F45921866BB4009C0DAA /* CameraUploadRequestDelegate.m in Sources */,
 				94F3B75B2DB00C8D00C285A5 /* CameraUploadsAdvancedOptionsViewModel.swift in Sources */,
@@ -15108,8 +15122,10 @@
 				B65AC8E221F9B7A30094FF4F /* MOAssetUploadErrorRecord+CoreDataProperties.m in Sources */,
 				B6D11AD7219BAE6D00446B86 /* MOAssetUploadFileNameRecord+CoreDataClass.m in Sources */,
 				B6D11AD8219BAE6D00446B86 /* MOAssetUploadFileNameRecord+CoreDataProperties.m in Sources */,
+				0EF7E5DD2E95E00E0098367B /* MOAssetUploadFileNameRecord+Mapper.swift in Sources */,
 				B6DA6E662212065E003CB372 /* MOAssetUploadRecord+CoreDataClass.m in Sources */,
 				B6DA6E652212065E003CB372 /* MOAssetUploadRecord+CoreDataProperties.m in Sources */,
+				0EF7E5E02E95E0360098367B /* MOAssetUploadRecord+Mapper.swift in Sources */,
 				A85740C52032F6B80033034C /* MOChatDraft+CoreDataClass.m in Sources */,
 				A85740C42032F6B80033034C /* MOChatDraft+CoreDataProperties.m in Sources */,
 				8387FC062C108363008EDDC4 /* MockCallControlsViewModel.swift in Sources */,

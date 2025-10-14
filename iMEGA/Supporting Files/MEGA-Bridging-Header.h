@@ -190,3 +190,6 @@
 #import "MEGAQueryRecoveryLinkRequestDelegate.h"
 #import "CopyableLabel.h"
 #import "MEGAPhotoBrowserPickerCollectionViewCell.h"
+#import "CameraUploadRecordManager.h"
+#import "MOAssetUploadRecord+CoreDataProperties.h"
+#import "MOAssetUploadFileNameRecord+CoreDataProperties.h"
