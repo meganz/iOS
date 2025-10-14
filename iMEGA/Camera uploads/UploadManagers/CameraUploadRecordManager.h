@@ -69,6 +69,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (BOOL)deleteAllErrorRecordsPerLaunchWithError:(NSError * _Nullable __autoreleasing * _Nullable)error;
 
+#pragma mark - helper methods
+
+- (NSPredicate *)predicateByFilterAssetUploadRecordError;
+
 @end
 
 NS_ASSUME_NONNULL_END
