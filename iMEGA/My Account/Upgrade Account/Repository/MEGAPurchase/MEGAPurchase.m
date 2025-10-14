@@ -165,7 +165,7 @@
         }
     });
 
-    [self checkForCancellation];
+    [self checkForExpiredOrCancellation];
 }
 
 - (void)request:(SKRequest *)request didFailWithError:(NSError *)error {
@@ -197,6 +197,10 @@
                 MEGALogDebug(@"[StoreKit] Transaction purchasing");
                 break;
 
+            // Inside `transactions` there could be multiple transactions with `SKPaymentTransactionStatePurchased` state
+            // For the first `SKPaymentTransactionStatePurchased` transaction in the array, we will call `submitPurchase` with the latest
+            // AppStore receipt, if the receipt is still valid, sdk will callback and update user's pro status.
+            // For the latter `SKPaymentTransactionStatePurchased` transactions (if any) in the for-loop, we check `hasSubmittedReceipt` to avoid redundant calls of `submitPurchase`
             case SKPaymentTransactionStatePurchased: {
                 MEGALogDebug(@"[StoreKit] Date: %@\nIdentifier: %@\n\t-Original Date: %@\n\t-Original Identifier: %@", transaction.transactionDate, transaction.transactionIdentifier, transaction.originalTransaction.transactionDate, transaction.originalTransaction.transactionIdentifier);
                 [self submitReceiptIfNeededWithReceipt:receipt transactions:transactions hasSubmittedReceipt:&hasSubmittedReceipt];
@@ -217,6 +221,8 @@
                 break;
             }
 
+            // Here we apply similar logic as the case for `SKPaymentTransactionStatePurchased`,
+            // Only call `submitPurchase` for the first found transaction with `SKPaymentTransactionStatePurchased`
             case SKPaymentTransactionStateRestored:
                 MEGALogDebug(@"[StoreKit] Date: %@\nIdentifier: %@\n\t-Original Date: %@\n\t-Original Identifier: %@", transaction.transactionDate, transaction.transactionIdentifier, transaction.originalTransaction.transactionDate, transaction.originalTransaction.transactionIdentifier);
                 if (!hasSubmittedReceipt) {
@@ -320,7 +326,7 @@
         if (request.type == MEGARequestTypeSubmitPurchaseReceipt) {
             //MEGAErrorTypeApiEExist is skipped because if a user is downgrading its subscription, this error will be returned by the API, because the receipt does not contain any new information.
             if (error.type != MEGAErrorTypeApiEExist) {
-                MEGALogDebug(@"[StoreKit] Submitting receipt failed with error: %@", error);
+                MEGALogError(@"[StoreKit] Submitting receipt failed with error: %@ - %ld", error.name, (long)error.type);
                 for (id<MEGAPurchaseDelegate> purchaseDelegate in self.purchaseDelegateMutableArray) {
                     if ([purchaseDelegate respondsToSelector:@selector(failedSubmitReceipt:)]) {
                         [purchaseDelegate failedSubmitReceipt:error.type];
@@ -329,7 +335,7 @@
 
                 [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:LocalizedString(@"wrongPurchase", @"Error message shown when the purchase has failed"), error.name, (long)error.type]];
             } else {
-                MEGALogDebug(@"[StoreKit] Submitting receipt failed with error: %@, but it is expected when downgrading subscription", error);
+                MEGALogDebug(@"[StoreKit] Submitting receipt failed with error: %@ - %ld, but it is expected when downgrading subscription", error.name, (long)error.type);
                 [self finishSubmittedTransactions];
             }
             [self setIsSubmittingReceipt:false];
