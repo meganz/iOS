@@ -32,14 +32,17 @@ public struct NodeDataRepository: NodeDataRepositoryProtocol {
     }
     
     public func getFilesAndFolders(nodeHandle: HandleEntity) -> (childFileCount: Int, childFolderCount: Int) {
-        guard let node = sdk.node(forHandle: nodeHandle) else {
-            return (0, 0)
+        if let node = sdk.node(forHandle: nodeHandle) {
+            return getFilesAndFolders(sdk: sdk, node: node)
+        } else if let node = sharedFolderSdk.node(forHandle: nodeHandle) {
+            return getFilesAndFolders(sdk: sharedFolderSdk, node: node)
         }
         
-        let numberOfFiles = sdk.numberChildFiles(forParent: node)
-        let numberOfFolders = sdk.numberChildFolders(forParent: node)
-        
-        return (numberOfFiles, numberOfFolders)
+        return (0, 0)
+    }
+    
+    private func getFilesAndFolders(sdk: MEGASdk, node: MEGANode) -> (childFileCount: Int, childFolderCount: Int) {
+        (sdk.numberChildFiles(forParent: node), sdk.numberChildFolders(forParent: node))
     }
     
     public func folderInfo(node: NodeEntity) async throws -> FolderInfoEntity? {
