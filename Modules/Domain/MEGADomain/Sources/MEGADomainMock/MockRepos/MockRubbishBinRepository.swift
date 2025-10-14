@@ -27,4 +27,6 @@ public struct MockRubbishBinRepository: RubbishBinRepositoryProtocol {
     }
     
     public func cleanRubbishBin() {}
+    
+    public func cleanRubbishBin(_ completion: (() -> Void)?) {}
 }

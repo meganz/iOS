@@ -31,7 +31,13 @@ final class DisplayMenuDelegateHandler: DisplayMenuDelegate, RefreshMenuTriggeri
         
         alertController.addAction(UIAlertAction(title: Strings.Localizable.cancel, style: .cancel))
         alertController.addAction(UIAlertAction(title: Strings.Localizable.ok, style: .default) { [weak self] _ in
-            self?.rubbishBinUseCase.cleanRubbishBin()
+            SVProgressHUD.setDefaultMaskType(.none)
+            SVProgressHUD.show()
+            self?.rubbishBinUseCase.cleanRubbishBin {
+                Task { @MainActor in
+                    SVProgressHUD.dismiss()
+                }
+            }
         })
         
         presenter.present(alertController, animated: true, completion: nil)
