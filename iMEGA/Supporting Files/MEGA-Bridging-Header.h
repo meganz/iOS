@@ -193,3 +193,7 @@
 #import "CameraUploadRecordManager.h"
 #import "MOAssetUploadRecord+CoreDataProperties.h"
 #import "MOAssetUploadFileNameRecord+CoreDataProperties.h"
+#import "TransferSessionTaskDelegate.h"
+#import "UploadRecordsCollator.h"
+#import "TransferSessionManager.h"
+#import "UploadOperationFactory.h"

@@ -2,6 +2,7 @@
 #import "CameraUploadRecordManager.h"
 #import "NSURL+CameraUpload.h"
 #import "NSFileManager+MNZCategory.h"
+#import "MEGA-Swift.h"
 
 @implementation UploadRecordsCollator
 
@@ -46,9 +47,10 @@
         MEGALogDebug(@"[Camera Upload] %lu uploading records to collate, running tasks count %lu", (unsigned long)uploadingRecords.count, (unsigned long)tasks.count);
         NSMutableArray<NSString *> *runningTaskIdentifiers = [NSMutableArray array];
         for (NSURLSessionUploadTask *task in tasks) {
+            NSString *localIdentifier = [CameraUploadTaskIdentifierOCWrapper localIdentifierFrom:task.taskDescription];
             MEGALogDebug(@"[Camera Upload] %@ running task state %li", task.taskDescription, (long)task.state);
             if (task.taskDescription.length > 0) {
-                [runningTaskIdentifiers addObject:task.taskDescription];
+                [runningTaskIdentifiers addObject:localIdentifier];
             }
         }
         

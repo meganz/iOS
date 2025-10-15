@@ -10,6 +10,7 @@ static const NSUInteger MEGATransferTokenLength = 36;
 @property (strong, nonatomic) NSMutableData *mutableData;
 @property (copy, nonatomic) UploadCompletionHandler completion;
 @property (strong, nonatomic) TransferResponseValidator *responseValidator;
+@property (strong, nonatomic, nullable) CameraUploadTransferProgressOCRepository *transferProgressRepository;
 
 @end
 
@@ -21,6 +22,16 @@ static const NSUInteger MEGATransferTokenLength = 36;
         _mutableData = [NSMutableData data];
         _completion = completion;
         _responseValidator = [[TransferResponseValidator alloc] init];
+        _transferProgressRepository = nil;
+    }
+    
+    return self;
+}
+
+- (instancetype)initWithCompletionHandler:(UploadCompletionHandler)completion transferProgressRepository:(nullable CameraUploadTransferProgressOCRepository *)transferProgressRepository {
+    self = [self initWithCompletionHandler:completion];
+    if (self) {
+        _transferProgressRepository = transferProgressRepository;
     }
     
     return self;
@@ -36,6 +47,10 @@ static const NSUInteger MEGATransferTokenLength = 36;
     
     MEGALogInfo(@"[Camera Upload] Session %@ task %@ completed with status %li", session.configuration.identifier, task.taskDescription, (long)statusCode);
 
+    if (self.transferProgressRepository) {
+        [self.transferProgressRepository completeTaskWithIdentifier:task.taskIdentifier description:task.taskDescription];
+    }
+    
     NSData *transferToken = [self.mutableData copy];
     
     if (error) {
@@ -61,6 +76,20 @@ static const NSUInteger MEGATransferTokenLength = 36;
 
 #pragma mark - data level delegate
 
+- (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task
+                                didSendBodyData:(int64_t)bytesSent
+                                 totalBytesSent:(int64_t)totalBytesSent
+                       totalBytesExpectedToSend:(int64_t)totalBytesExpectedToSend {
+    if (self.transferProgressRepository == nil) {
+        return;
+    }
+    [self.transferProgressRepository updateProgressWithIdentifier:task.taskIdentifier
+                                            description:task.taskDescription
+                                        didSendBodyData:bytesSent
+                                         totalBytesSent:totalBytesSent
+                               totalBytesExpectedToSend:totalBytesExpectedToSend];
+}
+
 - (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveData:(NSData *)data {
     MEGALogDebug(@"[Camera Upload] Session %@ task %@ received data with size: %lu", session.configuration.identifier, dataTask.taskDescription, (unsigned long)data.length);
     [self.mutableData appendData:data];
@@ -69,7 +98,7 @@ static const NSUInteger MEGATransferTokenLength = 36;
 #pragma mark - util methods
 
 - (void)handleTransferError:(NSError *)error forTask:(NSURLSessionTask *)task {
-    NSString *localIdentifier = task.taskDescription;
+    NSString *localIdentifier = [CameraUploadTaskIdentifierOCWrapper localIdentifierFrom:task.taskDescription];
     MEGALogError(@"[Camera Upload] Session task %@ completed with error %@", localIdentifier, error);
     if (localIdentifier.length == 0) {
         MEGALogError(@"[Camera Upload] Session task description is empty");
@@ -85,7 +114,7 @@ static const NSUInteger MEGATransferTokenLength = 36;
 }
 
 - (void)handleTransferToken:(NSData *)token forTask:(NSURLSessionTask *)task inSession:(NSURLSession *)session {
-    NSString *localIdentifier = task.taskDescription;
+    NSString *localIdentifier = [CameraUploadTaskIdentifierOCWrapper localIdentifierFrom:task.taskDescription];
     if (localIdentifier.length == 0) {
         MEGALogError(@"[Camera Upload] Session task description is empty");
         return;
