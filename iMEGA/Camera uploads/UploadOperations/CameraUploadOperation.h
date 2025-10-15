@@ -6,7 +6,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@class MOAssetUploadRecord;
+@class MOAssetUploadRecord, CameraUploadTransferProgressOCRepository;
 
 typedef NS_ENUM(NSUInteger, UploadQueueType) {
     UploadQueueTypePhoto,
@@ -20,8 +20,11 @@ typedef NS_ENUM(NSUInteger, UploadQueueType) {
 
 @property (strong, nonatomic) AssetUploadInfo *uploadInfo;
 @property (strong, nonatomic) MOAssetUploadRecord *uploadRecord;
+@property (nonatomic, strong, readonly, nullable) CameraUploadTransferProgressOCRepository *transferProgressRepository;
 
 - (instancetype)initWithUploadInfo:(AssetUploadInfo *)uploadInfo uploadRecord:(MOAssetUploadRecord *)uploadRecord;
+- (instancetype)initWithUploadInfo:(AssetUploadInfo *)uploadInfo uploadRecord:(MOAssetUploadRecord *)uploadRecord
+        transferProgressRepository:(nullable CameraUploadTransferProgressOCRepository *)transferProgressRepository;
 
 - (void)handleProcessedFileWithMediaType:(PHAssetMediaType)type;
 

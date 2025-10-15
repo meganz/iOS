@@ -34,8 +34,17 @@ static NSString * const VideoAttributeImageName = @"AttributeImage";
     if (self) {
         _uploadInfo = uploadInfo;
         _uploadRecord = uploadRecord;
+        _transferProgressRepository = nil;
     }
     
+    return self;
+}
+
+- (instancetype)initWithUploadInfo:(AssetUploadInfo *)uploadInfo uploadRecord:(MOAssetUploadRecord *)uploadRecord transferProgressRepository:(nullable CameraUploadTransferProgressOCRepository *)transferProgressRepository {
+    self = [self initWithUploadInfo:uploadInfo uploadRecord:uploadRecord];
+    if (self) {
+        _transferProgressRepository = transferProgressRepository;
+    }
     return self;
 }
 
@@ -256,6 +265,9 @@ static NSString * const VideoAttributeImageName = @"AttributeImage";
 - (NSArray<NSURLSessionUploadTask *> *)createUploadTasksWithError:(NSError **)error {
     NSMutableArray<NSURLSessionUploadTask *> *uploadTasks = [NSMutableArray array];
     
+    NSInteger totalChunks = self.uploadInfo.encryptedChunkURLsKeyedByUploadSuffix.allKeys.count;
+    NSInteger chunkIndex = 0;
+    
     for (NSString *uploadSuffix in self.uploadInfo.encryptedChunkURLsKeyedByUploadSuffix.allKeys) {
         NSURL *serverURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", self.uploadInfo.uploadURLString, uploadSuffix]];
         NSURL *chunkURL = self.uploadInfo.encryptedChunkURLsKeyedByUploadSuffix[uploadSuffix];
@@ -268,7 +280,10 @@ static NSString * const VideoAttributeImageName = @"AttributeImage";
             }
             
             if (uploadTask) {
-                uploadTask.taskDescription = self.uploadInfo.savedLocalIdentifier;
+                uploadTask.taskDescription = [self makeTaskDescriptionFor:self.uploadInfo.savedLocalIdentifier
+                                                                               chunkIndex:chunkIndex
+                                                                              totalChunks:totalChunks];
+                [self registerTaskWithProgressReporter:uploadTask];
                 [uploadTasks addObject:uploadTask];
             }
         } else {
@@ -277,6 +292,7 @@ static NSString * const VideoAttributeImageName = @"AttributeImage";
             }
             break;
         }
+        chunkIndex++;
     }
     
     return [uploadTasks copy];

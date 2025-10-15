@@ -39,20 +39,24 @@
         case PHAssetMediaTypeImage:
             if (identifierInfo.mediaSubtype & PHAssetMediaSubtypePhotoLive) {
                 if (CameraUploadManager.shouldScanLivePhotosForVideos) {
-                    operation = [[LivePhotoUploadOperation alloc] initWithUploadInfo:uploadInfo uploadRecord:uploadRecord];
+                    operation = [[LivePhotoUploadOperation alloc] initWithUploadInfo:uploadInfo uploadRecord:uploadRecord
+                                                          transferProgressRepository:[UploadOperationFactory makeCameraUploadTransferProgressRepository]];
                 } else {
                     if (error != NULL) {
                         *error = [NSError mnz_cameraUploadDisabledMediaSubtype:identifierInfo.mediaSubtype];
                     }
                 }
             } else if (uploadInfo.asset.mnz_isRawImage) {
-                operation = [[RawPhotoUploadOperation alloc] initWithUploadInfo:uploadInfo uploadRecord:uploadRecord];
+                operation = [[RawPhotoUploadOperation alloc] initWithUploadInfo:uploadInfo uploadRecord:uploadRecord
+                                                     transferProgressRepository:[UploadOperationFactory makeCameraUploadTransferProgressRepository]];
             } else {
-                operation = [[PhotoUploadOperation alloc] initWithUploadInfo:uploadInfo uploadRecord:uploadRecord];
+                operation = [[PhotoUploadOperation alloc] initWithUploadInfo:uploadInfo uploadRecord:uploadRecord
+                                                  transferProgressRepository:[UploadOperationFactory makeCameraUploadTransferProgressRepository]];
             }
             break;
         case PHAssetMediaTypeVideo:
-            operation = [[VideoUploadOperation alloc] initWithUploadInfo:uploadInfo uploadRecord:uploadRecord];
+            operation = [[VideoUploadOperation alloc] initWithUploadInfo:uploadInfo uploadRecord:uploadRecord
+                                              transferProgressRepository:[UploadOperationFactory makeCameraUploadTransferProgressRepository]];
             break;
         default:
             if (error != NULL) {

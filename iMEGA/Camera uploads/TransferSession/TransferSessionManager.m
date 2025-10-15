@@ -3,6 +3,7 @@
 #import "TransferSessionTaskDelegate.h"
 #import "CameraUploadManager+Settings.h"
 #import "CameraUploadCompletionManager.h"
+#import "MEGA-Swift.h"
 
 static NSString * const PhotoCellularAllowedUploadSessionId = @"nz.mega.photoTransfer.cellularAllowed";
 static NSString * const PhotoCellularDisallowedUploadSessionId = @"nz.mega.photoTransfer.cellularDisallowed";
@@ -167,6 +168,7 @@ static NSString * const VideoCellularDisallowedUploadSessionId = @"nz.mega.video
             [session getTasksWithCompletionHandler:^(NSArray<NSURLSessionDataTask *> * _Nonnull dataTasks, NSArray<NSURLSessionUploadTask *> * _Nonnull uploadTasks, NSArray<NSURLSessionDownloadTask *> * _Nonnull downloadTasks) {
                 MEGALogDebug(@"[Camera Upload] session %@ restored tasks count %lu", session.configuration.identifier, (unsigned long)uploadTasks.count);
                 [allUploadTasks addObjectsFromArray:uploadTasks];
+                [self restoreProgressReportingFor:uploadTasks];
                 [self restoreDelegatesForTasks:uploadTasks inSession:session];
                 
                 dispatch_group_leave(tasksRestoreGroup);
@@ -268,7 +270,8 @@ static NSString * const VideoCellularDisallowedUploadSessionId = @"nz.mega.video
 }
 
 - (void)addDelegateForTask:(NSURLSessionTask *)task inSession:(NSURLSession *)session completion:(UploadCompletionHandler)completion {
-    TransferSessionTaskDelegate *delegate = [[TransferSessionTaskDelegate alloc] initWithCompletionHandler:completion];
+    TransferSessionTaskDelegate *delegate = [[TransferSessionTaskDelegate alloc] initWithCompletionHandler:completion
+                                                                                transferProgressRepository:[self makeCameraUploadTransferProgressRepository]];
     [(TransferSessionDelegate *)session.delegate addDelegate:delegate forTask:task];
 }
 
