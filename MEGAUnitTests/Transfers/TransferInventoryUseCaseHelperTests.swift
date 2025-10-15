@@ -9,14 +9,12 @@ struct TransferInventoryUseCaseHelperTests {
     private static func makeSUT(
         transfers: [TransferEntity] = [],
         completed: [TransferEntity] = [],
-        queuedUploads: [TransferRecordDTO]? = nil,
-        nodeMappings: [HandleEntity: NodeEntity] = [:]
+        queuedUploads: [TransferRecordDTO]? = nil
     ) -> TransferInventoryUseCaseHelper {
         let inventory = MockTransferInventoryUseCase(
             transfers: transfers,
             completedTransfers: completed
         )
-        let nodeUseCase = MockNodeUseCase(nodes: nodeMappings)
         let fs = MockFileSystemRepository()
         let store = MockMEGAStore(
             fetchOfflineNodes: nil,
@@ -25,7 +23,6 @@ struct TransferInventoryUseCaseHelperTests {
         )
         return TransferInventoryUseCaseHelper(
             transferInventoryUseCase: inventory,
-            nodeUseCase: nodeUseCase,
             fileSystem: fs,
             store: store
         )
@@ -119,7 +116,6 @@ struct TransferInventoryUseCaseHelperTests {
             let mockInv = MockTransferInventoryUseCase(defaultDocumentsDirectory: customPath)
             let sut = TransferInventoryUseCaseHelper(
                 transferInventoryUseCase: mockInv,
-                nodeUseCase: MockNodeUseCase(),
                 fileSystem: MockFileSystemRepository(),
                 store: MockMEGAStore()
             )
@@ -136,7 +132,6 @@ struct TransferInventoryUseCaseHelperTests {
             let store = MockMEGAStore(uploads: [])
             let sut = TransferInventoryUseCaseHelper(
                 transferInventoryUseCase: MockTransferInventoryUseCase(),
-                nodeUseCase: MockNodeUseCase(),
                 fileSystem: MockFileSystemRepository(),
                 store: store
             )
