@@ -6,14 +6,14 @@ protocol MEGABannerViewDelegate: AnyObject {
     func didScrollMEGABannerView()
     
     func dismissMEGABanner(_ bannerView: MEGABannerView, withBannerIdentifier bannerIdentifier: Int)
-
+    
     func didSelectMEGABanner(withBannerIdentifier bannerIdentifier: Int, actionURL: URL?)
-
+    
     func hideMEGABannerView(_ bannerView: MEGABannerView)
 }
 
 final class MEGABannerView: UIView, NibOwnerLoadable {
-
+    
     struct Banner {
         let identifier: Int
         let title: String
@@ -21,57 +21,57 @@ final class MEGABannerView: UIView, NibOwnerLoadable {
         let iconImage: URL
         let backgroundImage: URL
         let actionURL: URL?
-
+        
         let dismissAction: ((Int) -> Void)?
     }
-
+    
     @IBOutlet private var rootView: UIView!
-
+    
     @IBOutlet private var carouselCollectionView: UICollectionView!
-
+    
     @IBOutlet private var carouselCollectionViewLayout: MEGACarouselFlowLayout!
-
+    
     @IBOutlet private var carouselPageControl: UIPageControl!
-
+    
     @IBOutlet weak var carouselCollectionViewHeightConstraint: NSLayoutConstraint!
     
     weak var delegate: (any MEGABannerViewDelegate)?
-
+    
     private var bannerDataSource: [Banner] = []
-
+    
     private var itemSize: CGSize!
-
+    
     // MARK: - Initialization
-
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupView()
     }
-
+    
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         setupView()
     }
-
+    
     // MARK: - Privates
-
+    
     private func setupView() {
         translatesAutoresizingMaskIntoConstraints = false
         loadNibContent()
-
+        
         // MARK: - initialize
-
+        
         initialiseCollectionView()
         initialiseCollectionViewLayout()
         carouselPageControl.numberOfPages = bannerDataSource.count
         carouselPageControl.currentPage = 0
-
+        
         styleView(with: traitCollection)
     }
-
+    
     private func styleView(with trait: UITraitCollection) {
         trait.theme.customViewStyleFactory.styler(of: .homeBannerView)(rootView)
-
+        
         let styling = trait.theme.customViewStyleFactory.styler(of: .homeCarouselCollectionView)
         styling(carouselCollectionView)
         if let carouselCollectionViewBackgroundView = carouselCollectionView.backgroundView {
@@ -79,17 +79,17 @@ final class MEGABannerView: UIView, NibOwnerLoadable {
         }
         styleCarouselPageControl(carouselPageControl, with: trait)
     }
-
+    
     private func styleCarouselPageControl(_ pageControl: UIPageControl, with trait: UITraitCollection) {
         trait.theme.pageControlStyleFactory.styler(of: .homeBanner)(pageControl)
     }
-
+    
     private func initialiseCollectionView() {
         carouselCollectionView.translatesAutoresizingMaskIntoConstraints = false
         carouselCollectionView.isPagingEnabled = true
         carouselCollectionView.showsHorizontalScrollIndicator = false
         carouselCollectionView.backgroundView = UIView(frame: .zero)
-
+        
         carouselCollectionView.dataSource = self
         carouselCollectionView.delegate = self
         carouselCollectionView.register(
@@ -97,7 +97,7 @@ final class MEGABannerView: UIView, NibOwnerLoadable {
             forCellWithReuseIdentifier: CarouselCollection.cell.rawValue
         )
     }
-
+    
     private func initialiseCollectionViewLayout() {
         carouselCollectionViewLayout.scrollDirection = .horizontal
         carouselCollectionViewLayout.delegate = self
@@ -105,7 +105,11 @@ final class MEGABannerView: UIView, NibOwnerLoadable {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        refreshContainer()
+        
+        if carouselCollectionView.bounds.size != .zero {
+            calculateCarouselItemSize()
+            carouselCollectionViewLayout.updateLayout()
+        }
     }
     
     // MARK: - Public Interface
@@ -135,18 +139,23 @@ final class MEGABannerView: UIView, NibOwnerLoadable {
         calculateCarouselItemSize()
         carouselCollectionViewLayout.updateLayout()
         carouselCollectionView.reloadData()
+        
+        let currentPage = carouselPageControl.currentPage
+        let currentOffsetY = carouselCollectionView.contentOffset.y
+        let newOffset = CGPoint(x: CGFloat(currentPage) * itemSize.width, y: currentOffsetY)
+        carouselCollectionView.setContentOffset(newOffset, animated: false)
     }
-
+    
     private func removeBanner(withIdentifier identifierOfToBeRemovedBanner: Int) {
         guard let indexOfToBeRemovedBanner = (bannerDataSource.firstIndex { banner -> Bool in
             banner.identifier == identifierOfToBeRemovedBanner
         }) else { return }
-
+        
         self.delegate?.dismissMEGABanner(self, withBannerIdentifier: identifierOfToBeRemovedBanner)
-
+        
         var bannerDataSourceWithoutDismissedBanner = self.bannerDataSource
         bannerDataSourceWithoutDismissedBanner.remove(at: indexOfToBeRemovedBanner)
-
+        
         carouselCollectionView.performBatchUpdates { [weak self] in
             guard let self else { return }
             
@@ -154,7 +163,7 @@ final class MEGABannerView: UIView, NibOwnerLoadable {
             self.carouselCollectionView.deleteItems(at: [IndexPath(row: indexOfToBeRemovedBanner, section: 0)])
         } completion: { [weak self] _ in
             guard let self else { return }
-
+            
             self.carouselPageControl.numberOfPages = self.bannerDataSource.count
             if bannerDataSourceWithoutDismissedBanner.isEmpty {
                 self.delegate?.hideMEGABannerView(self)
@@ -178,15 +187,15 @@ final class MEGABannerView: UIView, NibOwnerLoadable {
 }
 
 extension MEGABannerView: UICollectionViewDataSource, UICollectionViewDelegate {
-
+    
     private enum CarouselCollection: String {
         case cell = "BannerCarouselCollectionViewCell"
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         bannerDataSource.count
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(
             withReuseIdentifier: CarouselCollection.cell.rawValue,
@@ -195,7 +204,7 @@ extension MEGABannerView: UICollectionViewDataSource, UICollectionViewDelegate {
         cell.configure(with: bannerDataSource[indexPath.row])
         return cell
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let selectedBanner =  bannerDataSource[indexPath.row]
         delegate?.didSelectMEGABanner(
@@ -220,7 +229,7 @@ extension MEGABannerView: MEGACarouselFlowLayoutDelegate {
 // MARK: - TraitEnvironmentAware
 
 extension MEGABannerView: TraitEnvironmentAware {
-
+    
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         traitCollectionChanged(to: traitCollection, from: previousTraitCollection)
@@ -230,7 +239,7 @@ extension MEGABannerView: TraitEnvironmentAware {
             carouselCollectionView.reloadData()
         }
     }
-
+    
     func colorAppearanceDidChange(to currentTrait: UITraitCollection, from previousTrait: UITraitCollection?) {
         styleView(with: currentTrait)
     }
