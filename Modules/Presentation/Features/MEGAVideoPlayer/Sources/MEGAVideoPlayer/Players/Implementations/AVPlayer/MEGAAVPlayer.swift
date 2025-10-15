@@ -175,7 +175,7 @@ extension MEGAAVPlayer: PlaybackControllable {
     public func playNext() {
         guard let currentNode,
               let nodes,
-              let currentIndex = nodes.firstIndex(where: { $0.id == currentNode.id }) else { return }
+              let currentIndex = nodes.firstIndex(where: { $0.handle == currentNode.handle }) else { return }
 
         let nextIndex = currentIndex + 1
         guard nextIndex < nodes.count else { return }
@@ -190,7 +190,7 @@ extension MEGAAVPlayer: PlaybackControllable {
     public func playPrevious() {
         guard let currentNode,
               let nodes,
-              let currentIndex = nodes.firstIndex(where: { $0.id == currentNode.id }) else { return }
+              let currentIndex = nodes.firstIndex(where: { $0.handle == currentNode.handle }) else { return }
 
         let previousIndex = currentIndex - 1
         guard previousIndex >= 0 else {
@@ -299,7 +299,7 @@ extension MEGAAVPlayer: NodeLoadable {
                 guard !Task.isCancelled else { return }
 
                 if let currentNode = self?.currentNode,
-                   let updatedCurrentNode = videoNodes.first(where: { $0.id == currentNode.id}) {
+                   let updatedCurrentNode = videoNodes.first(where: { $0.handle == currentNode.handle }) {
                     self?.nodes = videoNodes
                     self?.currentNode = updatedCurrentNode
                     self?.nodeName = self?.currentNode?.name ?? ""
@@ -315,7 +315,7 @@ extension MEGAAVPlayer: NodeLoadable {
     private func updateCanPlayNext() {
         guard let currentNode,
               let nodes,
-              let currentIndex = nodes.firstIndex(where: { $0.id == currentNode.id }) else {
+              let currentIndex = nodes.firstIndex(where: { $0.handle == currentNode.handle }) else {
             canPlayNext = false
             return
         }

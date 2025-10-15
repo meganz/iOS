@@ -1,20 +1,20 @@
 import MEGADomain
 
 public struct MockPlayableNode: PlayableNode {
-    public let id: String
     public let handle: UInt64
     public let name: String?
     public let parentHandle: UInt64
+    public let fingerprint: String?
 
     public init(
-        id: String = "",
         handle: UInt64 = 0,
         name: String,
         parentHandle: UInt64 = 0,
+        fingerprint: String? = nil
     ) {
-        self.id = id
         self.handle = handle
         self.name = name
         self.parentHandle = parentHandle
+        self.fingerprint = fingerprint
     }
 }
