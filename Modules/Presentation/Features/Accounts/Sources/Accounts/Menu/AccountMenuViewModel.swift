@@ -478,8 +478,9 @@ public final class AccountMenuViewModel: ObservableObject {
         } else if let accountDetails {
             let storageUsed = String.memoryStyleString(fromByteCount: accountDetails.storageUsed).formattedByteCountString()
             let totalStorage = String.memoryStyleString(fromByteCount: accountDetails.storageMax).formattedByteCountString()
-            let subtitle = "\(storageUsed) / \(totalStorage)"
-            subtitleState = .value(subtitle)
+            subtitleState = isBusinessAccount || isProFlexiAccount
+            ? .value(Strings.Localizable.AccountMenu.BusinessAndProFlexiAccountsStorageUsed.title(storageUsed))
+            : .value("\(storageUsed) / \(totalStorage)")
         } else {
             subtitleState = nil
         }

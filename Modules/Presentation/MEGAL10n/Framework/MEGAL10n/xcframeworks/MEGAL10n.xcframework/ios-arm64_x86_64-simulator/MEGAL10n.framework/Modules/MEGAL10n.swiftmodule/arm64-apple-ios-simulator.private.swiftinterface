@@ -1403,6 +1403,9 @@ public enum Strings {
     public enum AccountMenu {
       public static let logout: Swift.String
       public static let offlineFiles: Swift.String
+      public enum BusinessAndProFlexiAccountsStorageUsed {
+        public static func title(_ p1: Any) -> Swift.String
+      }
       public enum MegaPass {
         public static let buttonSubtitle: Swift.String
         public static let buttonTitle: Swift.String

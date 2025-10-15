@@ -66,12 +66,31 @@ struct AccountMenuViewModelTests {
         #expect(planRowData.iconConfiguration.style == .normal)
     }
 
-    @Test("Test for storage row data")
-    func testStorageRowData() throws {
-        let accountUseCase = MockAccountUseCase(
-            currentAccountDetails: MockMEGAAccountDetails(storageUsed: 10, storageMax: 100, type: .proI)
-                .toAccountDetailsEntity()
-        )
+    @Test(
+        arguments: [
+            (
+                MockMEGAAccountDetails(storageUsed: 10, storageMax: 100, type: .business),
+                AccountMenuOption.TextLoadState.value("10 B used")
+            ),
+            (
+                MockMEGAAccountDetails(storageUsed: 10, storageMax: 100, type: .proFlexi),
+                AccountMenuOption.TextLoadState.value("10 B used")
+            ),
+            (
+                MockMEGAAccountDetails(storageUsed: 10, storageMax: 100, type: .free),
+                AccountMenuOption.TextLoadState.value("10 B / 100 B")
+            ),
+            (
+                MockMEGAAccountDetails(storageUsed: 10, storageMax: 100, type: .proI),
+                AccountMenuOption.TextLoadState.value("10 B / 100 B")
+            )
+        ]
+    )
+    func testStorageRowData(
+        _ currentAccountDetails: MockMEGAAccountDetails,
+        _ expectedSubtitleState: AccountMenuOption.TextLoadState
+    ) throws {
+        let accountUseCase = MockAccountUseCase(currentAccountDetails: currentAccountDetails.toAccountDetailsEntity())
         let sut = makeSUT(accountUseCase: accountUseCase)
         let accountSection = sut.sections[.account]
         let storageRowData = try #require(
@@ -79,7 +98,7 @@ struct AccountMenuViewModelTests {
             "Account section should contain storage used"
         )
         #expect(storageRowData.title == Strings.Localizable.storage)
-        #expect(storageRowData.subtitleState == .value("10 B / 100 B"))
+        #expect(storageRowData.subtitleState == expectedSubtitleState)
         #expect(storageRowData.rowType == .disclosure(action: {}))
         #expect(storageRowData.iconConfiguration.style == .normal)
     }
