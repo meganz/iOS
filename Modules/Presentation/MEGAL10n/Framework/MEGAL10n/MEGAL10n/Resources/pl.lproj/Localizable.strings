@@ -1019,7 +1019,7 @@
 /* Title of the Achievements section */
 "achievementsTitle"="Osiągnięcia";
 /* Cell title shown on the achievements view for referral achievement */
-"account.achievement.referral.title"="Zaproś znajomych";
+"account.achievement.referral.title"="Zaproś ludzi do MEGA";
 /* Subtitle of the referral achievement introduction, %1$@ is a placeholder, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
 "account.achievement.referral.subtitle"="%1$@ pojemności za każde zaproszenie. \n%2$@";
 /* Text shown to explain how and where you can invite friends */
@@ -1053,17 +1053,17 @@
 /* Label shown on the achievements view for complete registration achievement, %@ is a placeholder. */
 "account.achievement.registration.explanation.label"="Otrzymałeś %@ miejsce do przechowywania jako darmowy bonus rejestracyjny.";
 /* Cell title shown on the achievements view for referral achievement */
-"account.achievement.referralBonus.title"="Premie za zaproszenia";
+"account.achievement.referralBonus.title"="Zaproś ludzi do MEGA";
 /* Cell title shown on the achievements view for install MEGA desktop app achievement */
-"account.achievement.desktopApp.title"="Zainstaluj aplikację desktopową MEGA";
+"account.achievement.desktopApp.title"="Zainstaluj naszą aplikację na komputer";
 /* Explanation label shown on the achievements view for complete install MEGA desktop app achievement, %@ is a placeholder. */
-"account.achievement.desktopApp.complete.explaination.label"="Otrzymałeś %@ przestrzeni dyskowej do instalacji aplikacji desktopowej MEGA.";
+"account.achievement.desktopApp.complete.explaination.label"="Otrzymałeś %@ dodatkowej pojemności za zainstalowanie naszej aplikacji desktopowej.";
 /* Explanation label shown on the achievements view for incomplete install MEGA desktop app achievement, %1$@ is a placeholder, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
 "account.achievement.desktopApp.incomplete.explaination.label"="Po zainstalowaniu Aplikacji MEGA Desktop otrzymujesz %1$@ bezpłatnej pojemności, %2$@. Aplikacja MEGA Desktop jest dostępna dla systemów Windows, macOS i większości dystrybucji Linuksa.";
 /* Cell title shown on the achievements view for install MEGA mobile app achievement */
-"account.achievement.mobileApp.title"="Zainstaluj jedną z aplikacji mobilnych MEGA";
+"account.achievement.mobileApp.title"="Zainstaluj naszą aplikację mobilną";
 /* Explanation label shown on the achievements view for complete install MEGA mobile app achievement, %@ is a placeholder. */
-"account.achievement.mobileApp.complete.explaination.label"="Za instalację aplikacji MEGA mobile otrzymaliście Państwo %@ przestrzeni dyskowej.";
+"account.achievement.mobileApp.complete.explaination.label"="Otrzymałeś %@ dodatkowej pojemności za zainstalowanie naszej aplikacji mobilnej.";
 /* Explanation label shown on the achievements view for incomplete install MEGA mobile app achievement, %1$@ is a placeholder, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
 "account.achievement.mobileApp.incomplete.explaination.label"="Po zainstalowaniu aplikacji mobilnej MEGA otrzymujesz %@ bezpłatnej pojemności, %2$@. Aplikacja mobilna MEGA jest dostępna dla systemów iOS i Android. ";
 /* Detail label shown on the achievements details view for Start Free Trial when its completed, %1$@ is placeholder for the storage amount, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
@@ -1075,7 +1075,7 @@
 /* Explanation label shown on the achievements view for incomplete start MEGA VPN Free Trial achievement, %@ is a placeholder. */
 "account.achievement.vpnFreeTrial.incomplete.explanation.label"="Zainstaluj MEGA aplikacja VPN, zaloguj się na swoje konto MEGA i rozpocznij bezpłatny okres próbny. Twoja premiowa pojemność jest dodawana automatycznie po rozpoczęciu bezpłatnej wersji próbnej.";
 /* Explanation label shown on the achievements view for complete start MEGA VPN Free Trial achievement, %@ is a placeholder. */
-"account.achievement.vpnFreeTrial.complete.explanation.label"="Otrzymałeś %@ pojemności za rozpoczęcie darmowego okresu próbnego MEGA VPN";
+"account.achievement.vpnFreeTrial.complete.explanation.label"="Otrzymałeś %@ dodatkowej pojemności za rozpoczęcie darmowego okresu próbnego MEGA VPN";
 /* Text for the button to install MEGA VPN in the Start MEGA VPN Free Trial achievement */
 "account.achievement.vpnFreeTrial.buttonText"="Zainstaluj MEGA VPN";
 /* Cell title shown on the achievements view for Start MEGA Pass Free Trial */
@@ -1085,7 +1085,7 @@
 /* Explanation label shown on the achievements view for incomplete start MEGA Pass Free Trial achievement, %@ is a placeholder. */
 "account.achievement.passFreeTrial.incomplete.explanation.label"="Zainstaluj aplikację MEGA Pass, zaloguj się na swoje konto MEGA i rozpocznij darmowy okres próbny. Twoja dodatkowa pojemność zostanie automatycznie dodana po rozpoczęciu darmowego okresu próbnego.";
 /* Explanation label shown on the achievements view for complete start MEGA Pass Free Trial achievement, %@ is a placeholder. */
-"account.achievement.passFreeTrial.complete.explanation.label"="Otrzymałeś %@ pojemności za rozpoczęcie darmowego okresu próbnego MEGA Pass";
+"account.achievement.passFreeTrial.complete.explanation.label"="Otrzymałeś %@ dodatkowej pojemności za rozpoczęcie darmowego okresu próbnego MEGA Pass";
 /* Text for the button to install MEGA Pass in the Start MEGA Pass Free Trial achievement */
 "account.achievement.passFreeTrial.buttonText"="Zainstaluj MEGA Pass";
 /* Subtitle of the incomplete achievement with permanent bonus, %1$@ is a placeholder for amount of storage, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
@@ -4742,3 +4742,5 @@
 "subscriptionPurchase.benefits.rubbishClearing.title"="Zaplanuj opróżnianie Kosza na śmieci w przedziale od 7 dni do 10 lat";
 /* General label for priority customer support */
 "general.prioritySupport"="Wsparcie priorytetowe";
+/* Storage used for Business and Pro Flexi accounts in the account menu. */
+"accountMenu.businessAndProFlexiAccountsStorageUsed.title"="%@ used";

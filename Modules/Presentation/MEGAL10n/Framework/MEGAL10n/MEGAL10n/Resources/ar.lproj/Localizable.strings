@@ -1019,9 +1019,9 @@
 /* Title of the Achievements section */
 "achievementsTitle"="الإنجازات";
 /* Cell title shown on the achievements view for referral achievement */
-"account.achievement.referral.title"="ادع اصدقائك";
+"account.achievement.referral.title"="قم بدعوة الناس إلى ميغا MEGA";
 /* Subtitle of the referral achievement introduction, %1$@ is a placeholder, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
-"account.achievement.referral.subtitle"="%1$@ مساحة تخزين لكل دعوة. \n%2$@";
+"account.achievement.referral.subtitle"="%1$@ مساحة تخزين إضافية لكل دعوة، \n%2$@";
 /* Text shown to explain how and where you can invite friends */
 "Select from phone contacts or enter multiple email addresses"="اختر من جهات اتصال الجهاز أو أدخل عناوين بريد إلكتروني متعددة.";
 /*  */
@@ -1053,17 +1053,17 @@
 /* Label shown on the achievements view for complete registration achievement, %@ is a placeholder. */
 "account.achievement.registration.explanation.label"="لقد استلمت %@ من مساحة التخزين كمكافأة تسجيل مجانية.";
 /* Cell title shown on the achievements view for referral achievement */
-"account.achievement.referralBonus.title"="مكافآت الدعوة";
+"account.achievement.referralBonus.title"="قم بدعوة الناس إلى ميغا ميغا MEGA";
 /* Cell title shown on the achievements view for install MEGA desktop app achievement */
-"account.achievement.desktopApp.title"="قم بتثبيت تطبيق ميغا MEGA للحاسوب المكتبي";
+"account.achievement.desktopApp.title"="قم بتثبيت تطبيق الحاسوب المكتبي الخاص بنا";
 /* Explanation label shown on the achievements view for complete install MEGA desktop app achievement, %@ is a placeholder. */
-"account.achievement.desktopApp.complete.explaination.label"="لقد تلقيت %@ من مساحة التخزين لتثبيتك تطبيق ميغا للحاسوب المكتبي MEGA desktop.";
+"account.achievement.desktopApp.complete.explaination.label"="لقد استلمت %@ مساحة تخزين إضافية لقيامك بتثبيت تطبيق الحاسوب المكتبي الخاص بنا";
 /* Explanation label shown on the achievements view for incomplete install MEGA desktop app achievement, %1$@ is a placeholder, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
 "account.achievement.desktopApp.incomplete.explaination.label"="عندما تقوم بتثبيت تطبيق ميغا MEGA للحاسوب المكتبي تحصل على %1$@ من مساحة التخزين المجانية، %2$@. يتوفر تطبيق ميغا MEGA للحاسوب المكتبي لأنظمة التشغيل ويندوز Windows و ماك macOS ومعظم إصدارات لينوكس Linux.";
 /* Cell title shown on the achievements view for install MEGA mobile app achievement */
-"account.achievement.mobileApp.title"="تثبيت أحد تطبيقات ميغا للهاتف المحمول MEGA mobile";
+"account.achievement.mobileApp.title"="حمل تطبيقاتنا للجوال";
 /* Explanation label shown on the achievements view for complete install MEGA mobile app achievement, %@ is a placeholder. */
-"account.achievement.mobileApp.complete.explaination.label"="لقد تلقيت %@ من مساحة تخزين لتثبيتك تطبيق ميغا للهاتف المحمول MEGA mobile.";
+"account.achievement.mobileApp.complete.explaination.label"="لقد استلمت %@ مساحة تخزين إضافية لقيامك بتثبيت تطبيق الهاتف المحمول الخاص بنا";
 /* Explanation label shown on the achievements view for incomplete install MEGA mobile app achievement, %1$@ is a placeholder, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
 "account.achievement.mobileApp.incomplete.explaination.label"="عند تثبيت تطبيق ميغا MEGA للهاتف المحمول، تحصل على %@ من مساحة التخزين المجانية، %2$@. تطبيق ميغا MEGA للهاتف المحمول متاح لنظامي التشغيل أي أو إس iOS و اندرويد Android.";
 /* Detail label shown on the achievements details view for Start Free Trial when its completed, %1$@ is placeholder for the storage amount, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
@@ -1075,7 +1075,7 @@
 /* Explanation label shown on the achievements view for incomplete start MEGA VPN Free Trial achievement, %@ is a placeholder. */
 "account.achievement.vpnFreeTrial.incomplete.explanation.label"="قم بتثبيت تطبيق ميغا في بي إن MEGA VPN، قم بتسجيل الدخول باستخدام حساب ميغا MEGA الخاص بك وابدأ الفترة التجريبية المجانية. تتم إضافة مساحة تخزين المكافأة تلقائيًا بعد بدء الفترة التجريبية المجانية.";
 /* Explanation label shown on the achievements view for complete start MEGA VPN Free Trial achievement, %@ is a placeholder. */
-"account.achievement.vpnFreeTrial.complete.explanation.label"="لقد استلمت %@ من مساحة التخزين لبدء تشغيل الفترة التجريبية المجانية من ميغا في بي إن MEGA VPN";
+"account.achievement.vpnFreeTrial.complete.explanation.label"="لقد استلمت %@ من مساحة التخزين إضافية لبدء تشغيل الفترة التجريبية المجانية من ميغا في بي إن MEGA VPN";
 /* Text for the button to install MEGA VPN in the Start MEGA VPN Free Trial achievement */
 "account.achievement.vpnFreeTrial.buttonText"="قم بتثبيت ميغا في بي إن MEGA VPN";
 /* Cell title shown on the achievements view for Start MEGA Pass Free Trial */
@@ -1085,7 +1085,7 @@
 /* Explanation label shown on the achievements view for incomplete start MEGA Pass Free Trial achievement, %@ is a placeholder. */
 "account.achievement.passFreeTrial.incomplete.explanation.label"="قم بتثبيت تطبيق ميغا باس MEGA Pass، قم بتسجيل الدخول باستخدام حساب ميغا MEGA الخاص بك وابدأ الفترة التجريبية المجانية. تتم إضافة مساحة تخزين المكافأة تلقائيًا بعد بدء الفترة التجريبية المجانية.";
 /* Explanation label shown on the achievements view for complete start MEGA Pass Free Trial achievement, %@ is a placeholder. */
-"account.achievement.passFreeTrial.complete.explanation.label"="لقد استلمت %@ من مساحة التخزين لبدء تشغيل الفترة التجريبية المجانية من ميغا باس MEGA Pass";
+"account.achievement.passFreeTrial.complete.explanation.label"="قد استلمت %@ من مساحة التخزين إضافية لبدء تشغيل الفترة التجريبية المجانية من ميغا باس MEGA Pass";
 /* Text for the button to install MEGA Pass in the Start MEGA Pass Free Trial achievement */
 "account.achievement.passFreeTrial.buttonText"="قم بتثبيت ميغا باس MEGA Pass";
 /* Subtitle of the incomplete achievement with permanent bonus, %1$@ is a placeholder for amount of storage, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
@@ -4742,3 +4742,5 @@
 "subscriptionPurchase.benefits.rubbishClearing.title"="حدد موعدًا لتفريغ سلة المحذوفات بين 7 أيام و 10 سنوات";
 /* General label for priority customer support */
 "general.prioritySupport"="أولوية الدعم";
+/* Storage used for Business and Pro Flexi accounts in the account menu. */
+"accountMenu.businessAndProFlexiAccountsStorageUsed.title"="%@ used";

@@ -1,11 +1,11 @@
 ---
 triple:          'arm64-apple-darwin'
-binary-path:     '/Users/lancy/Library/Developer/Xcode/DerivedData/MEGAL10n-bpgtpbhrxyqpyhbjvpjkrvtyosrx/Build/Intermediates.noindex/ArchiveIntermediates/MEGAL10n/InstallationBuildProductsLocation/Library/Frameworks/MEGAL10n.framework/MEGAL10n'
+binary-path:     '/Users/mega-yfa/Library/Developer/Xcode/DerivedData/MEGAL10n-amqbnslxlmbmjcftwlbioenofqfm/Build/Intermediates.noindex/ArchiveIntermediates/MEGAL10n/InstallationBuildProductsLocation/Library/Frameworks/MEGAL10n.framework/MEGAL10n'
 relocations:
   - { offset: 0x2928C, size: 0x8, addend: 0x0, symName: _MEGAL10nVersionString, symObjAddr: 0x0, symBinAddr: 0x12C790, symSize: 0x0 }
   - { offset: 0x292C3, size: 0x8, addend: 0x0, symName: _MEGAL10nVersionNumber, symObjAddr: 0x30, symBinAddr: 0x12C7C0, symSize: 0x0 }
   - { offset: 0x29301, size: 0x8, addend: 0x0, symName: '_$s8MEGAL10n0A11BundleClassCfD', symObjAddr: 0x0, symBinAddr: 0x4000, symSize: 0x10 }
-  - { offset: 0x29325, size: 0x8, addend: 0x0, symName: '_$sSo8NSBundleC8MEGAL10nE0B6BundleABvpZ', symObjAddr: 0x5968, symBinAddr: 0x1A8F20, symSize: 0x0 }
+  - { offset: 0x29325, size: 0x8, addend: 0x0, symName: '_$sSo8NSBundleC8MEGAL10nE0B6BundleABvpZ', symObjAddr: 0x5998, symBinAddr: 0x1A8F20, symSize: 0x0 }
   - { offset: 0x29356, size: 0x8, addend: 0x0, symName: '_$sSo8NSBundleC8MEGAL10nE0B6Bundle_WZ', symObjAddr: 0x10, symBinAddr: 0x4010, symSize: 0x50 }
   - { offset: 0x29397, size: 0x8, addend: 0x0, symName: '_$s8MEGAL10n7StringsO9localized_7commentS2S_SStFZ', symObjAddr: 0x60, symBinAddr: 0x4060, symSize: 0xF4 }
   - { offset: 0x293EC, size: 0x8, addend: 0x0, symName: '_$s8MEGAL10n0A11BundleClassCMa', symObjAddr: 0x154, symBinAddr: 0x4154, symSize: 0x20 }
@@ -4396,13 +4396,13 @@ relocations:
   - { offset: 0x73BAE, size: 0x8, addend: 0x0, symName: '_$s8MEGAL10n7StringsO11LocalizableO7AccountO11AchievementO8CompleteO8SubtitleO9permanent_WZ', symObjAddr: 0x74F08, symBinAddr: 0x7907C, symSize: 0x1B0 }
   - { offset: 0x73C29, size: 0x8, addend: 0x0, symName: '_$s8MEGAL10n7StringsO11LocalizableO7AccountO11AchievementO8CompleteO16ValidBonusExpiryO6DetailO8subtitleySSSiFZ', symObjAddr: 0x750D8, symBinAddr: 0x7924C, symSize: 0x1F0 }
   - { offset: 0x73D33, size: 0x8, addend: 0x0, symName: '_$s8MEGAL10n7StringsO11LocalizableO7AccountO11AchievementO8CompleteO9ValidDaysO8subtitleySSSiFZ', symObjAddr: 0x752C8, symBinAddr: 0x7943C, symSize: 0x1F0 }
-  - { offset: 0x73E31, size: 0x8, addend: 0x0, symName: '_$s8MEGAL10n7StringsO11LocalizableO7AccountO11AchievementO10DesktopAppO5title_WZ', symObjAddr: 0x754B8, symBinAddr: 0x7962C, symSize: 0x1A8 }
-  - { offset: 0x73EBA, size: 0x8, addend: 0x0, symName: '_$s8MEGAL10n7StringsO11LocalizableO7AccountO11AchievementO10DesktopAppO8CompleteO12ExplainationO5labelySSypFZ', symObjAddr: 0x75680, symBinAddr: 0x797F4, symSize: 0x21C }
+  - { offset: 0x73E31, size: 0x8, addend: 0x0, symName: '_$s8MEGAL10n7StringsO11LocalizableO7AccountO11AchievementO10DesktopAppO5title_WZ', symObjAddr: 0x754B8, symBinAddr: 0x7962C, symSize: 0x1AC }
+  - { offset: 0x73EBA, size: 0x8, addend: 0x0, symName: '_$s8MEGAL10n7StringsO11LocalizableO7AccountO11AchievementO10DesktopAppO8CompleteO12ExplainationO5labelySSypFZ', symObjAddr: 0x75684, symBinAddr: 0x797F8, symSize: 0x218 }
   - { offset: 0x73FC4, size: 0x8, addend: 0x0, symName: '_$s8MEGAL10n7StringsO11LocalizableO7AccountO11AchievementO10DesktopAppO10IncompleteO12ExplainationO5labelySSyp_yptFZ', symObjAddr: 0x7589C, symBinAddr: 0x79A10, symSize: 0x24C }
   - { offset: 0x740DF, size: 0x8, addend: 0x0, symName: '_$s8MEGAL10n7StringsO11LocalizableO7AccountO11AchievementO9FreeTrialO6DetailO8CompleteO5labelySSyp_yptFZ', symObjAddr: 0x75AE8, symBinAddr: 0x79C5C, symSize: 0x24C }
   - { offset: 0x741FA, size: 0x8, addend: 0x0, symName: '_$s8MEGAL10n7StringsO11LocalizableO7AccountO11AchievementO10IncompleteO8subtitleySSyp_yptFZ', symObjAddr: 0x75D34, symBinAddr: 0x79EA8, symSize: 0x24C }
-  - { offset: 0x74309, size: 0x8, addend: 0x0, symName: '_$s8MEGAL10n7StringsO11LocalizableO7AccountO11AchievementO9MobileAppO5title_WZ', symObjAddr: 0x75F80, symBinAddr: 0x7A0F4, symSize: 0x1A8 }
-  - { offset: 0x74392, size: 0x8, addend: 0x0, symName: '_$s8MEGAL10n7StringsO11LocalizableO7AccountO11AchievementO9MobileAppO8CompleteO12ExplainationO5labelySSypFZ', symObjAddr: 0x76148, symBinAddr: 0x7A2BC, symSize: 0x21C }
+  - { offset: 0x74309, size: 0x8, addend: 0x0, symName: '_$s8MEGAL10n7StringsO11LocalizableO7AccountO11AchievementO9MobileAppO5title_WZ', symObjAddr: 0x75F80, symBinAddr: 0x7A0F4, symSize: 0x1AC }
+  - { offset: 0x74392, size: 0x8, addend: 0x0, symName: '_$s8MEGAL10n7StringsO11LocalizableO7AccountO11AchievementO9MobileAppO8CompleteO12ExplainationO5labelySSypFZ', symObjAddr: 0x7614C, symBinAddr: 0x7A2C0, symSize: 0x218 }
   - { offset: 0x7449C, size: 0x8, addend: 0x0, symName: '_$s8MEGAL10n7StringsO11LocalizableO7AccountO11AchievementO9MobileAppO10IncompleteO12ExplainationO5labelySSyp_yptFZ', symObjAddr: 0x76364, symBinAddr: 0x7A4D8, symSize: 0x24C }
   - { offset: 0x745AB, size: 0x8, addend: 0x0, symName: '_$s8MEGAL10n7StringsO11LocalizableO7AccountO11AchievementO13PassFreeTrialO10buttonText_WZ', symObjAddr: 0x765B0, symBinAddr: 0x7A724, symSize: 0x1A8 }
   - { offset: 0x74628, size: 0x8, addend: 0x0, symName: '_$s8MEGAL10n7StringsO11LocalizableO7AccountO11AchievementO13PassFreeTrialO5title_WZ', symObjAddr: 0x76778, symBinAddr: 0x7A8EC, symSize: 0x1A8 }

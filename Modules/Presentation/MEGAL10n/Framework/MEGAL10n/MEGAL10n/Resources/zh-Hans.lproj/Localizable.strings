@@ -1019,9 +1019,9 @@
 /* Title of the Achievements section */
 "achievementsTitle"="成就";
 /* Cell title shown on the achievements view for referral achievement */
-"account.achievement.referral.title"="邀请您的好友";
+"account.achievement.referral.title"="邀请他人加入MEGA";
 /* Subtitle of the referral achievement introduction, %1$@ is a placeholder, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
-"account.achievement.referral.subtitle"="每次邀请可获得%1$@的存储空间。 \n%2$@";
+"account.achievement.referral.subtitle"="%1$@每份邀请都有额外的存储空间，\n%2$@";
 /* Text shown to explain how and where you can invite friends */
 "Select from phone contacts or enter multiple email addresses"="从设备通讯录中选择或者输入多个电子邮件地址。";
 /*  */
@@ -1029,7 +1029,7 @@
 /*  */
 "howItWorks"="如何使用";
 /*  */
-"howItWorksMain"="Your friend needs to sign up for a free account on MEGA and [S]install at least one MEGA application[/S] (either our desktop app or one of our mobile apps)";
+"howItWorksMain"="您的朋友需要在MEGA注册一个免费帐户，并[S]安装至少一个MEGA应用程序[/S]（MEGA桌面应用程序或者MEGA移动应用程序）";
 /*  */
 "howItWorksSecondary"="您可以通过任何方式通知您的朋友。如果您在您的朋友使用该电子地址注册之前在此处输入了他们的电子邮件地址，您将会获得奖励。";
 /* A message which is shown once someone has invited a friend as part of the achievements program. */
@@ -1053,17 +1053,17 @@
 /* Label shown on the achievements view for complete registration achievement, %@ is a placeholder. */
 "account.achievement.registration.explanation.label"="您已经收到%@的存储空间作为您的免费注册奖励。";
 /* Cell title shown on the achievements view for referral achievement */
-"account.achievement.referralBonus.title"="邀请奖励";
+"account.achievement.referralBonus.title"="邀请他人加入MEGA";
 /* Cell title shown on the achievements view for install MEGA desktop app achievement */
-"account.achievement.desktopApp.title"="Install MEGA’s desktop app";
+"account.achievement.desktopApp.title"="安装我们的桌面应用程序";
 /* Explanation label shown on the achievements view for complete install MEGA desktop app achievement, %@ is a placeholder. */
-"account.achievement.desktopApp.complete.explaination.label"="您已通过安装MEGA桌面应用程序获得了%@存储空间。";
+"account.achievement.desktopApp.complete.explaination.label"="您已通过安装MEGA桌面应用程序获得了%@额外存储空间。";
 /* Explanation label shown on the achievements view for incomplete install MEGA desktop app achievement, %1$@ is a placeholder, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
 "account.achievement.desktopApp.incomplete.explaination.label"="安装 MEGA 桌面应用程序后，您会获得 %1$@ 免费存储空间， %2$@。MEGA 桌面应用程序使用于 Windows、macOS 和大多数 Linux 发行版。";
 /* Cell title shown on the achievements view for install MEGA mobile app achievement */
-"account.achievement.mobileApp.title"="Install one of MEGA’s mobile apps";
+"account.achievement.mobileApp.title"="安装手机App";
 /* Explanation label shown on the achievements view for complete install MEGA mobile app achievement, %@ is a placeholder. */
-"account.achievement.mobileApp.complete.explaination.label"="您已通过安装MEGA手机应用程序获得了%@存储空间。";
+"account.achievement.mobileApp.complete.explaination.label"="您已通过安装MEGA移动应用程序获得了%@额外存储空间。";
 /* Explanation label shown on the achievements view for incomplete install MEGA mobile app achievement, %1$@ is a placeholder, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
 "account.achievement.mobileApp.incomplete.explaination.label"="安装 MEGA 手机应用程序后，您会获得 %@ 免费存储空间， %2$@。MEGA 手机应用程序适用于 iOS 和Android平台。 ";
 /* Detail label shown on the achievements details view for Start Free Trial when its completed, %1$@ is placeholder for the storage amount, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
@@ -1075,7 +1075,7 @@
 /* Explanation label shown on the achievements view for incomplete start MEGA VPN Free Trial achievement, %@ is a placeholder. */
 "account.achievement.vpnFreeTrial.incomplete.explanation.label"="安装MEGA VPN应用程序，使用您的MEGA帐户登录，然后开始免费试用。开启免费试用后，您的奖励存储空间将自动添加。";
 /* Explanation label shown on the achievements view for complete start MEGA VPN Free Trial achievement, %@ is a placeholder. */
-"account.achievement.vpnFreeTrial.complete.explanation.label"="您已开始MEGA VPN的免费试用，因此您获得了%@的存储空间。";
+"account.achievement.vpnFreeTrial.complete.explanation.label"="您已开始MEGA VPN的免费试用，因此您获得了%@的额外存储空间。";
 /* Text for the button to install MEGA VPN in the Start MEGA VPN Free Trial achievement */
 "account.achievement.vpnFreeTrial.buttonText"="安装MEGA VPN";
 /* Cell title shown on the achievements view for Start MEGA Pass Free Trial */
@@ -1085,7 +1085,7 @@
 /* Explanation label shown on the achievements view for incomplete start MEGA Pass Free Trial achievement, %@ is a placeholder. */
 "account.achievement.passFreeTrial.incomplete.explanation.label"="安装MEGA Pass应用程序，使用您的MEGA帐户登录，然后开始免费试用。开启免费试用后，您的奖励存储空间将自动添加。";
 /* Explanation label shown on the achievements view for complete start MEGA Pass Free Trial achievement, %@ is a placeholder. */
-"account.achievement.passFreeTrial.complete.explanation.label"="您已开始MEGA Pass的免费试用，因此您获得了%@的存储空间。";
+"account.achievement.passFreeTrial.complete.explanation.label"="您已开始MEGA Pass的免费试用，因此您获得了%@的额外存储空间。";
 /* Text for the button to install MEGA Pass in the Start MEGA Pass Free Trial achievement */
 "account.achievement.passFreeTrial.buttonText"="安装MEGA Pass";
 /* Subtitle of the incomplete achievement with permanent bonus, %1$@ is a placeholder for amount of storage, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
@@ -4727,13 +4727,13 @@
 /* The screen locked status message in video player */
 "videoPlayer.lock.screenLocked"="屏幕已被锁定";
 /* The instruction to unlock the video player */
-"videoPlayer.lock.tapIconToUnlock"="Tap the lock icon to unlock";
+"videoPlayer.lock.tapIconToUnlock"="点按锁定图标解锁";
 /* The lock video player option in bottom more menu */
 "videoPlayer.snapshot.bottomSheet.title"="拍照";
 /* The instruction to unlock the video player */
 "videoPlayer.snapshot.snackBar.title"="图片已保存到您的设备";
 /* The Picture in picture video player option in bottom more menu */
-"videoPlayer.pip.bottomSheet.title"="Picture in picture";
+"videoPlayer.pip.bottomSheet.title"="画中画";
 /* Subscription benefit for rewind */
 "subscriptionPurchase.benefits.rewind.title"="还原最多60天的已删除数据";
 /* Subscription benefit for for calls and meetings */
@@ -4742,3 +4742,5 @@
 "subscriptionPurchase.benefits.rubbishClearing.title"="设置回收站清理时间从7天到10年的任意时间";
 /* General label for priority customer support */
 "general.prioritySupport"="优先支持服务";
+/* Storage used for Business and Pro Flexi accounts in the account menu. */
+"accountMenu.businessAndProFlexiAccountsStorageUsed.title"="%@ used";
