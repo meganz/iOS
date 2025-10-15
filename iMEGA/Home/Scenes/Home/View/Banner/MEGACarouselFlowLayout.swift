@@ -66,8 +66,7 @@ final class MEGACarouselFlowLayout: UICollectionViewFlowLayout {
         let scaledItemOffset = (itemSize.width - itemSize.width * itemScaleFactor) / 2
 
         switch spacingMode {
-        case .fixed(spacing: let spacing):
-            self.minimumLineSpacing = spacing - scaledItemOffset
+        case .fixed: minimumLineSpacing = 0
         case .overlap(visibleOffset: let visibleOffset):
             self.minimumLineSpacing = insetX - visibleOffset - scaledItemOffset
         }
@@ -128,7 +127,7 @@ final class MEGACarouselFlowLayout: UICollectionViewFlowLayout {
         let closest = sorted.first ?? UICollectionViewLayoutAttributes()
         let targetContentOffset = CGPoint(x: floor(closest.center.x - midSide), y: proposedContentOffset.y)
 
-        page = Int(round(targetContentOffset.x / (itemSize.width + minimumLineSpacing)))
+        page = closest.indexPath.item
         return targetContentOffset
     }
 
