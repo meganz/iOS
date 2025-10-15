@@ -24,6 +24,7 @@ extension ParagraphStyle {
 extension ParagraphStyle {
 
     @discardableResult
+    @MainActor
     func applied(on label: UILabel) -> UILabel {
         apply(style: self)(label)
     }
@@ -92,6 +93,7 @@ private func apply(style: ParagraphStyle) -> (TextAttributes) -> TextAttributes 
     }
 }
 
+@MainActor
 private func apply(style: ParagraphStyle) -> (UILabel) -> UILabel {
     return { label in
         label.textAlignment = style.alignment.nsTextAlignment

@@ -1,3 +1,4 @@
+@MainActor
 protocol DynamicTypeComponentProtocol where Self: UIView {
     func observeContentSizeUpdates()
     func removeObserver()

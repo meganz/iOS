@@ -11,10 +11,10 @@ class ChatVoiceClipCollectionViewCell: AudioMessageCell {
     }
     
     struct Dimensions {
-        static var waveViewSize = CGSize(width: 42, height: 25)
-        static var playButtonSize = CGSize(width: 15, height: 15)
-        static var itemSpacing: CGFloat = 10
-        static var containerDefaultHeight: CGFloat = 40
+        static let waveViewSize = CGSize(width: 42, height: 25)
+        static let playButtonSize = CGSize(width: 15, height: 15)
+        static let itemSpacing: CGFloat = 10
+        static let containerDefaultHeight: CGFloat = 40
     }
     
     var currentNode: MEGANode?

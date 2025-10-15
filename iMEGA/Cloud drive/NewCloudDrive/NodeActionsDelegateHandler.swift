@@ -16,7 +16,7 @@ final class NodeActionsDelegateHandler: NodeActionViewControllerDelegate {
     var toggleNodeFavourite: (NodeEntity) -> Void
     var assignLabel: (NodeEntity) -> Void
     var leaveSharing: (NodeEntity) -> Void
-    var rename: (_ node: NodeEntity, _ nameChanged: @escaping () -> Void) -> Void
+    var rename: (_ node: NodeEntity, _ nameChanged: @escaping @Sendable () -> Void) -> Void
     var removeSharing: (NodeEntity) -> Void
     var viewVersions: (NodeEntity) -> Void
     var restore: ([NodeEntity]) -> Void
@@ -48,7 +48,7 @@ final class NodeActionsDelegateHandler: NodeActionViewControllerDelegate {
         toggleNodeFavourite: @escaping (NodeEntity) -> Void,
         assignLabel: @escaping (NodeEntity) -> Void,
         leaveSharing: @escaping (NodeEntity) -> Void,
-        rename: @escaping (_ node: NodeEntity, _ nameChanged: @escaping () -> Void) -> Void,
+        rename: @escaping (_ node: NodeEntity, _ nameChanged: @escaping @Sendable () -> Void) -> Void,
         removeSharing: @escaping (NodeEntity) -> Void,
         viewVersions: @escaping (NodeEntity) -> Void,
         restore: @escaping ([NodeEntity]) -> Void,

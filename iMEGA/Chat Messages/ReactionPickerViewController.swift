@@ -42,7 +42,7 @@ class ReactionPickerViewController: UIViewController {
     
 }
 
-extension ReactionPickerViewController: EmojiViewDelegate {
+extension ReactionPickerViewController: @MainActor EmojiViewDelegate {
     
       // MARK: - EmojiViewDelegate
       

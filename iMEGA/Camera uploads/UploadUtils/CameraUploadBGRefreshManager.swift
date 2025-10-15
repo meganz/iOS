@@ -1,6 +1,6 @@
 import BackgroundTasks
 
-final class CameraUploadBGRefreshManager {
+final class CameraUploadBGRefreshManager: Sendable {
     private enum Constants {
         static let identifier = "mega.iOS.cameraUpload.backgroundFetch"
         static let backgroundFetchInterval: TimeInterval = 3 * 3600

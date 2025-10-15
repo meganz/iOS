@@ -1,4 +1,4 @@
-import Combine
+@preconcurrency import Combine
 @testable import MEGA
 import MEGAAnalyticsiOS
 import MEGAAppPresentation
@@ -8,11 +8,12 @@ import MEGATest
 import XCTest
 
 extension NodeSource {
-    static var mockRecentActionBucketEmpty = NodeSource.recentActionBucket(
+    static let mockRecentActionBucketEmpty = NodeSource.recentActionBucket(
         MockRecentActionBucketTrampoline()
     )
 }
 
+@MainActor
 final class UploadAddMenuDelegateHandlerTests: XCTestCase {
 
     func testUploadAddMenu_whenNodeIsNil_shouldAvoidCallingAction() {
@@ -103,7 +104,7 @@ final class UploadAddMenuDelegateHandlerTests: XCTestCase {
         tracker: some AnalyticsTracking = MockTracker(),
         nodeInsertionRouter: some NodeInsertionRouting = MockNodeInsertionRouter(),
         nodeSource: NodeSource,
-        file: StaticString = #file,
+        file: StaticString = #filePath,
         line: UInt = #line
     ) -> SUT {
         let sut = SUT(
@@ -116,7 +117,7 @@ final class UploadAddMenuDelegateHandlerTests: XCTestCase {
         return sut
     }
 
-    private func assertEmptyActions(with nodeSource: NodeSource, file: StaticString = #file, line: UInt = #line) {
+    private func assertEmptyActions(with nodeSource: NodeSource, file: StaticString = #filePath, line: UInt = #line) {
         let router = MockNodeInsertionRouter()
         let sut = makeSUT(
             nodeInsertionRouter: router,

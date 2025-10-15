@@ -1,5 +1,7 @@
 @testable import MEGA
 import XCTest
+
+@MainActor
 final class UpgradeEncouragementShowTimeTrackerTests: XCTestCase {
     func testAlreadyPresented() {
         let sut = UpgradeEncouragementShowTimeTracker()

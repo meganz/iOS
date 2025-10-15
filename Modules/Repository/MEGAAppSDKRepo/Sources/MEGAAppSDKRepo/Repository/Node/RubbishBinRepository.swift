@@ -37,7 +37,7 @@ public struct RubbishBinRepository: RubbishBinRepositoryProtocol {
         sdk.cleanRubbishBin()
     }
     
-    public func cleanRubbishBin(_ completion: (() -> Void)?) {
+    public func cleanRubbishBin(_ completion: (@Sendable () -> Void)?) {
         sdk.cleanRubbishBin(with: RequestDelegate(completion: { (_: Result<MEGARequest, MEGAError>) in
             completion?()
         }))

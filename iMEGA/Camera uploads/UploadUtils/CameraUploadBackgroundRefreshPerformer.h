@@ -3,6 +3,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+NS_SWIFT_SENDABLE
 @interface CameraUploadBackgroundRefreshPerformer : NSObject
 
 - (void)performBackgroundRefreshWithTask:(BGAppRefreshTask *)task;

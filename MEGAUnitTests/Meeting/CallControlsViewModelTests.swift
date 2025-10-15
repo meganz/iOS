@@ -535,7 +535,7 @@ extension Notification.Name {
 }
 
 extension UserEntity? {
-    static var testUser: UserEntity? = UserEntity(
+    static let testUser: MEGADomain.UserEntity? = MEGADomain.UserEntity(
         email: "email",
         handle: 123,
         visibility: .unknown,

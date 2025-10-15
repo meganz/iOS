@@ -4,7 +4,7 @@ import MEGAAppSDKRepo
 import MEGADomain
 import MEGARepo
 
-public enum DIContainer {
+public enum DIContainer: @unchecked Sendable {
     public static var authUseCase: any AuthUseCaseProtocol {
         AuthUseCase(
             repo: AuthRepository.newRepo,

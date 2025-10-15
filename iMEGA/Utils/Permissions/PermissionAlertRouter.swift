@@ -3,6 +3,7 @@
 // audio/video/photos/notifications
 import MEGAPermissions
 
+@MainActor
 struct PermissionAlertRouter {
     
     static func makeRouter(deviceHandler: some DevicePermissionsHandling) -> PermissionAlertRouter {

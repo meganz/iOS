@@ -116,8 +116,11 @@ static const NSUInteger PhotoUploadConcurrentCountInMemoryWarning = 1;
 }
 
 - (void)configureQueuesConcurrentCount {
-    self.photoUploadOperationQueue.maxConcurrentOperationCount = [self.concurrentCountCalculator calculatePhotoUploadConcurrentCount];
-    self.videoUploadOperationQueue.maxConcurrentOperationCount = [self.concurrentCountCalculator calculateVideoUploadConcurrentCount];
+    UIApplicationState applicationState = UIApplication.sharedApplication.applicationState;
+    UIDeviceBatteryState batteryState = UIDevice.currentDevice.batteryState;
+    float batteryLevel = UIDevice.currentDevice.batteryLevel;
+    self.photoUploadOperationQueue.maxConcurrentOperationCount = [self.concurrentCountCalculator calculatePhotoUploadConcurrentCountWithApplicationState:applicationState batteryState:batteryState batteryLevel:batteryLevel];
+    self.videoUploadOperationQueue.maxConcurrentOperationCount = [self.concurrentCountCalculator calculateVideoUploadConcurrentCountWithApplicationState:applicationState batteryState:batteryState batteryLevel:batteryLevel];
     [self unsuspendCameraUploadQueues];
 }
 
@@ -773,7 +776,11 @@ static const NSUInteger PhotoUploadConcurrentCountInMemoryWarning = 1;
 
 - (void)didReceiveMemoryWarningNotification {
     MEGALogDebug(@"[Camera Upload] memory warning");
-    NSInteger photoConcurrentCount = MIN([self.concurrentCountCalculator calculatePhotoUploadConcurrentCount], PhotoUploadConcurrentCountInMemoryWarning);
+    UIApplicationState applicationState = UIApplication.sharedApplication.applicationState;
+    UIDeviceBatteryState batteryState = UIDevice.currentDevice.batteryState;
+    float batteryLevel = UIDevice.currentDevice.batteryLevel;
+    NSInteger photoUploadConcurrentCount = [self.concurrentCountCalculator calculatePhotoUploadConcurrentCountWithApplicationState:applicationState batteryState:batteryState batteryLevel:batteryLevel];
+    NSInteger photoConcurrentCount = MIN(photoUploadConcurrentCount, PhotoUploadConcurrentCountInMemoryWarning);
     self.photoUploadOperationQueue.maxConcurrentOperationCount = photoConcurrentCount;
     
     NSInteger index = 0;

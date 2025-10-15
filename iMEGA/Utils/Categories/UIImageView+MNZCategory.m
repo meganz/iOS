@@ -103,7 +103,9 @@ static const void *base64HandleKey = &base64HandleKey;
         } else {
             MEGAGetPreviewRequestDelegate *delegate = [[MEGAGetPreviewRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
                 if (completion) {
-                    completion(request);
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        completion(request);
+                    });
                 }
             }];
             self.image = nil;

@@ -1095,15 +1095,17 @@ extension GetLinkViewController: UITableViewDelegate {
 // MARK: - MEGARequestDelegate
 
 extension GetLinkViewController: MEGARequestDelegate {
-    func onRequestFinish(_ api: MEGASdk, request: MEGARequest, error: MEGAError) {
-        if request.type == .MEGARequestTypeAccountDetails {
-            if error.type == .apiOk {
-                if justUpgradedToProAccount {
-                    // Reset temporal flag when the account details are received to allow using the PRO features
-                    justUpgradedToProAccount = false
-                    reloadProSections()
-                    
-                    removeDelegates()
+    nonisolated func onRequestFinish(_ api: MEGASdk, request: MEGARequest, error: MEGAError) {
+        Task { @MainActor in
+            if request.type == .MEGARequestTypeAccountDetails {
+                if error.type == .apiOk {
+                    if justUpgradedToProAccount {
+                        // Reset temporal flag when the account details are received to allow using the PRO features
+                        justUpgradedToProAccount = false
+                        reloadProSections()
+                        
+                        removeDelegates()
+                    }
                 }
             }
         }
@@ -1130,18 +1132,22 @@ extension GetLinkViewController: SetLinkPasswordViewControllerDelegate {
 // MARK: - MEGAPurchaseDelegate
 
 extension GetLinkViewController: MEGAPurchaseDelegate {
-    func successfulPurchase(_ megaPurchase: MEGAPurchase!) {
-        justUpgradedToProAccount = true
-        reloadProSections()
+    nonisolated func successfulPurchase(_ megaPurchase: MEGAPurchase!) {
+        Task { @MainActor in
+            justUpgradedToProAccount = true
+            reloadProSections()
+        }
     }
 }
 
 // MARK: - MEGARestoreDelegate
 
 extension GetLinkViewController: MEGARestoreDelegate {
-    func successfulRestore(_ megaPurchase: MEGAPurchase!) {
-        justUpgradedToProAccount = true
-        reloadProSections()
+    nonisolated func successfulRestore(_ megaPurchase: MEGAPurchase!) {
+        Task { @MainActor in
+            justUpgradedToProAccount = true
+            reloadProSections()
+        }
     }
 }
 

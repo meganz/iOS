@@ -2,6 +2,7 @@ import AVKit
 import Combine
 import Foundation
 
+@MainActor
 @objc protocol AVPlayerManagerProtocol {
     
     ///  Creates a new AVPlayerViewController for the given node or return the current active AVPlayerViewController that is currently playing in Picture in Picture mode.
@@ -68,7 +69,7 @@ import Foundation
 }
 
 // MARK: AVPlayerViewControllerDelegate
-extension AVPlayerManager: AVPlayerViewControllerDelegate {
+extension AVPlayerManager: @MainActor AVPlayerViewControllerDelegate {
         
     func playerViewController(_ playerViewController: AVPlayerViewController, restoreUserInterfaceForPictureInPictureStopWithCompletionHandler completionHandler: @escaping (Bool) -> Void) {
         

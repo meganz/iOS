@@ -1,6 +1,7 @@
 import MEGAPermissions
 import UIKit
 
+@MainActor
 protocol AddToChatMenuPageViewControllerDelegate: AnyObject {
     func loadPhotosView()
     func showCloudDrive()

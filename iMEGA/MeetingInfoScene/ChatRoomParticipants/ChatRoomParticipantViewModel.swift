@@ -4,6 +4,7 @@ import MEGADomain
 import MEGAL10n
 import MEGARepo
 
+@MainActor
 final class ChatRoomParticipantViewModel: ObservableObject, Identifiable {
     private var chatRoomUseCase: any ChatRoomUseCaseProtocol
     private var chatRoomUserUseCase: any ChatRoomUserUseCaseProtocol
@@ -190,7 +191,7 @@ final class ChatRoomParticipantViewModel: ObservableObject, Identifiable {
     }
 }
 
-extension ChatRoomParticipantViewModel: Equatable {
+extension ChatRoomParticipantViewModel: @MainActor Equatable {
     static func == (lhs: ChatRoomParticipantViewModel, rhs: ChatRoomParticipantViewModel) -> Bool {
         lhs.chatRoom == rhs.chatRoom
     }

@@ -2,6 +2,7 @@ import Combine
 import MEGASwiftUI
 import SwiftUI
 
+@MainActor
 protocol SnackBarLayoutCustomizable {
     /// Specify the bottom inset of the snack bar to its super view. If not implemented, default to the bottomAnchor view controller's view safeAreaLayoutGuide.
     var additionalSnackBarBottomInset: CGFloat { get }

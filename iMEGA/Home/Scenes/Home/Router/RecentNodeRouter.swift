@@ -2,6 +2,7 @@ import Foundation
 import MEGAAppSDKRepo
 import MEGADomain
 
+@MainActor
 final class RecentNodeRouter {
 
     private weak var navigationController: UINavigationController?

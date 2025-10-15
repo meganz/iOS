@@ -3,6 +3,7 @@ import MEGADomain
 import MEGADomainMock
 import XCTest
 
+@MainActor
 final class ToolbarButtonsDisablerTests: XCTestCase {
     
     func testToolbarButtons_withoutDisputedNodesAndDisabled_shouldBeDisabled() {

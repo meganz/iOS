@@ -1,3 +1,4 @@
+@preconcurrency import Combine
 import Foundation
 
 public protocol TimerSequenceProtocol: Sendable {

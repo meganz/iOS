@@ -5,6 +5,7 @@ import MEGADomainMock
 import Search
 import Testing
 
+@MainActor
 @Suite("RecentActionBucketProvider Tests")
 struct RecentActionBucketProviderTests {
     
@@ -14,7 +15,8 @@ struct RecentActionBucketProviderTests {
         }
     }
     
-    actor Harness {
+    @MainActor
+    final class Harness {
         let sut: RecentActionBucketProvider
         let mapper = SearchResultMapper(
             sdk: MockSdk(),

@@ -5,6 +5,7 @@ import MEGADomain
 import MEGAPermissions
 import MEGASwift
 
+@MainActor
 protocol HomeRecentActionViewModelInputs: AnyObject {
     
     func saveToPhotoAlbum(of node: NodeEntity)
@@ -12,11 +13,13 @@ protocol HomeRecentActionViewModelInputs: AnyObject {
     func toggleFavourite(of node: NodeEntity)
 }
 
+@MainActor
 protocol HomeRecentActionViewModelOutputs {
     
     var error: DevicePermissionDeniedError? { get }
 }
 
+@MainActor
 protocol HomeRecentActionViewModelType {
     
     var inputs: any HomeRecentActionViewModelInputs { get }

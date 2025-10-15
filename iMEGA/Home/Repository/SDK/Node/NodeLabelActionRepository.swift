@@ -9,12 +9,12 @@ protocol NodeLabelActionRepositoryProtocol {
     func setNodeLabelColor(
         _ labelColor: NodeLabelColor,
         forNode nodeHandle: HandleEntity,
-        completion: ((Result<Void, NodeLabelActionDomainError>) -> Void)?
+        completion: (@Sendable (Result<Void, NodeLabelActionDomainError>) -> Void)?
     )
 
     func resetNodeLabelColor(
         forNode nodeHandle: HandleEntity,
-        completion: ((Result<Void, NodeLabelActionDomainError>) -> Void)?
+        completion: (@Sendable (Result<Void, NodeLabelActionDomainError>) -> Void)?
     )
 
     func nodeLabelColor(
@@ -34,7 +34,7 @@ final class NodeLabelActionRepository: NodeLabelActionRepositoryProtocol {
     func setNodeLabelColor(
         _ labelColor: NodeLabelColor,
         forNode nodeHandle: HandleEntity,
-        completion: ((Result<Void, NodeLabelActionDomainError>) -> Void)?
+        completion: (@Sendable (Result<Void, NodeLabelActionDomainError>) -> Void)?
     ) {
         guard let node = sdk.node(forHandle: nodeHandle) else {
             completion?(.failure(.nodeNotFound))
@@ -62,7 +62,7 @@ final class NodeLabelActionRepository: NodeLabelActionRepositoryProtocol {
 
     func resetNodeLabelColor(
         forNode nodeHandle: HandleEntity,
-        completion: ((Result<Void, NodeLabelActionDomainError>) -> Void)?
+        completion: (@Sendable (Result<Void, NodeLabelActionDomainError>) -> Void)?
     ) {
         guard let node = sdk.node(forHandle: nodeHandle) else {
             completion?(.failure(.nodeNotFound))

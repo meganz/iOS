@@ -1,8 +1,8 @@
 import MEGADomain
 
-typealias ParentNodeProvider = () -> NodeEntity?
+typealias ParentNodeProvider = @Sendable () -> NodeEntity?
 
-enum NodeSource {
+enum NodeSource: Sendable {
     /// we are using a closure returning an optional entity as
     /// when app is started offline, root node of the SDK is nil,
     /// but we need to have a way to attempt to re-acquire the node

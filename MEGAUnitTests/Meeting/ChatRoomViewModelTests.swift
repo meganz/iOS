@@ -14,7 +14,7 @@ final class ChatRoomViewModelTests: XCTestCase {
     func test_scheduledMeetingManagementMessage_meetingUpdatedMyself() async throws {
         let chatListItemEntity = ChatListItemEntity(lastMessageType: .scheduledMeeting, lastMessageSender: 1001)
         let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity(), message: ChatMessageEntity())
-        let userUseCase = MockAccountUseCase(currentUser: UserEntity(handle: 1001))
+        let userUseCase = MockAccountUseCase(currentUser: MEGADomain.UserEntity(handle: 1001))
         let viewModel = ChatRoomViewModelFactory.make(chatListItem: chatListItemEntity,
                                           chatRoomUseCase: chatRoomUseCase,
                                           accountUseCase: userUseCase,
@@ -133,7 +133,7 @@ final class ChatRoomViewModelTests: XCTestCase {
     private func assertHideAds(
         isAdsEnabled: Bool,
         expectedCallTimes: Int,
-        file: StaticString = #file,
+        file: StaticString = #filePath,
         line: UInt = #line
     ) async throws {
         let router = MockChatRoomsListRouter()

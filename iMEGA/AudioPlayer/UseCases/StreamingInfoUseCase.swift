@@ -3,7 +3,7 @@ import MEGADomain
 protocol StreamingInfoUseCaseProtocol: Sendable {
     func startServer()
     func stopServer()
-    func fetchTrack(from node: MEGANode) -> AudioPlayerItem?
+    @MainActor func fetchTrack(from node: MEGANode) -> AudioPlayerItem?
     func isLocalHTTPServerRunning() -> Bool
     func streamingURL(for node: MEGANode) -> URL?
 }
@@ -23,6 +23,7 @@ final class StreamingInfoUseCase: StreamingInfoUseCaseProtocol {
         streamingInfoRepository.serverStop()
     }
     
+    @MainActor
     func fetchTrack(from node: MEGANode) -> AudioPlayerItem? {
         streamingInfoRepository.fetchTrack(from: node)
     }

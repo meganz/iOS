@@ -106,7 +106,7 @@ final class VideoPlaylistContentContainerViewModelTests: XCTestCase {
     @MainActor
     private func makeSUT(
         sortOrderPreferenceUseCase: MockSortOrderPreferenceUseCase = MockSortOrderPreferenceUseCase(sortOrderEntity: .defaultAsc),
-        file: StaticString = #file,
+        file: StaticString = #filePath,
         line: UInt = #line
     ) -> (
         sut: VideoPlaylistContentContainerViewModel,

@@ -1,6 +1,7 @@
 @testable import MEGA
 import XCTest
 
+@MainActor
 final class AppDelegateTests: XCTestCase {
     
     func testMatchQuickAction_withMatchingType_shouldReturnTrue() {

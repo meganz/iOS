@@ -16,6 +16,7 @@ struct DefaultCXProviderFactory {
     }
 }
 
+@MainActor
 protocol CallKitProviderDelegateProviding {
     func build(
         callCoordinator: any CallsCoordinatorProtocol,
@@ -36,16 +37,17 @@ struct CallKitProviderDelegateProvider: CallKitProviderDelegateProviding {
     }
 }
 
+@MainActor
 protocol CallKitProviderDelegateProtocol {
     func reportOutgoingCallStartedConnecting(with uuid: UUID)
     func reportOutgoingCallConnected(with uuid: UUID)
     func updateCallTitle(_ title: String, for callUUID: UUID)
     func updateCallVideo(_ video: Bool, for callUUID: UUID)
-    func reportNewIncomingCall(with uuid: UUID, title: String, completion: @escaping (Bool) -> Void)
+    func reportNewIncomingCall(with uuid: UUID, title: String, completion: @escaping @MainActor (Bool) -> Void)
     func reportEndedCall(with uuid: UUID, reason: EndCallReason)
 }
 
-final class CallKitProviderDelegate: NSObject, CallKitProviderDelegateProtocol, CXProviderDelegate {
+final class CallKitProviderDelegate: NSObject, CallKitProviderDelegateProtocol, @MainActor CXProviderDelegate {
     func reportOutgoingCallStartedConnecting(with uuid: UUID) {
         provider.reportOutgoingCall(with: uuid, startedConnectingAt: nil)
     }
@@ -62,7 +64,7 @@ final class CallKitProviderDelegate: NSObject, CallKitProviderDelegateProtocol, 
         provider.reportCall(with: callUUID, updated: callUpdateFactory.callUpdate(withVideo: video))
     }
     
-    func reportNewIncomingCall(with uuid: UUID, title: String, completion: @escaping (Bool) -> Void) {
+    func reportNewIncomingCall(with uuid: UUID, title: String, completion: @escaping @MainActor (Bool) -> Void) {
         let update = callUpdateFactory.createCallUpdate(title: title)
         provider.reportNewIncomingCall(with: uuid, update: update) { error in
             if let error {
@@ -72,7 +74,10 @@ final class CallKitProviderDelegate: NSObject, CallKitProviderDelegateProtocol, 
                     MEGALogDebug("[CallKit] Do not disturb enabled")
                 }
             }
-            completion(error == nil)
+            // Safe because of provider.setDelegate(self, queue: DispatchQueue.main)
+            MainActor.assumeIsolated {
+                completion(error == nil)
+            }
         }
     }
     
@@ -101,7 +106,10 @@ final class CallKitProviderDelegate: NSObject, CallKitProviderDelegateProtocol, 
         provider = cxProviderFactory()
         self.callUpdateFactory = callUpdateFactory
         super.init()
-        provider.setDelegate(self, queue: nil)
+        /// Previously `nil` is passed for the `queue` param implicitly means main queue
+        /// This is changed to DispatchQueue.main to make it explicitly clear.
+        /// Since we specify main queue here, it's safe and fine to use `@MainActor` isolated conformance of CXProviderDelegate for self (aka CallKitProviderDelegate)
+        provider.setDelegate(self, queue: DispatchQueue.main)
     }
     
     // MARK: - CXProviderDelegate
@@ -129,18 +137,15 @@ final class CallKitProviderDelegate: NSObject, CallKitProviderDelegateProtocol, 
     
     func provider(_ provider: CXProvider, perform action: CXAnswerCallAction) {
         MEGALogDebug("[CallKit] Provider perform answer call action")
-        guard callsManager.call(forUUID: action.callUUID) != nil
-        else {
-            Task { @MainActor in
-                if callsCoordinator?.incomingCallForUnknownChat != nil {
-                    MEGALogDebug("[CallKit] Provider saving answer call action for a call in a new chat that is not ready yet. It will be answered when chatRoom connectionStatus becomes online")
-                    callsCoordinator?.incomingCallForUnknownChat?.answeredCompletion = { [weak self] in
-                        self?.answerCall(forAction: action)
-                    }
-                } else {
-                    MEGALogError("[CallKit] Provider fail to answer call because no chat found for incoming call")
-                    action.fail()
+        guard callsManager.call(forUUID: action.callUUID) != nil else {
+            if callsCoordinator?.incomingCallForUnknownChat != nil {
+                MEGALogDebug("[CallKit] Provider saving answer call action for a call in a new chat that is not ready yet. It will be answered when chatRoom connectionStatus becomes online")
+                callsCoordinator?.incomingCallForUnknownChat?.answeredCompletion = { [weak self] in
+                    self?.answerCall(forAction: action)
                 }
+            } else {
+                MEGALogError("[CallKit] Provider fail to answer call because no chat found for incoming call")
+                action.fail()
             }
             return
         }
@@ -193,9 +198,7 @@ final class CallKitProviderDelegate: NSObject, CallKitProviderDelegateProtocol, 
         
         callsCoordinator?.didActivateCallAudioSession()
         
-        Task { @MainActor in
-            callsCoordinator?.configureWebRTCAudioSession()
-        }
+        callsCoordinator?.configureWebRTCAudioSession()
     }
     
     func provider(_ provider: CXProvider, didDeactivate audioSession: AVAudioSession) {
@@ -205,7 +208,7 @@ final class CallKitProviderDelegate: NSObject, CallKitProviderDelegateProtocol, 
     }
     
     // MARK: - Private
-    @MainActor private func manageActionSuccess(_ action: CXAction, success: Bool) {
+    private func manageActionSuccess(_ action: CXAction, success: Bool) {
         if success {
             action.fulfill()
         } else {

@@ -5,6 +5,7 @@ import MEGAPermissions
 import MEGAPreference
 import MEGASwift
 
+@MainActor
 final class CameraUploadStatusBannerViewModel: ObservableObject {
     
     @Published var cameraUploadStatusShown = false
@@ -33,7 +34,6 @@ final class CameraUploadStatusBannerViewModel: ObservableObject {
         subscribeToHandleAutoPresentation()
     }
         
-    @MainActor
     func monitorCameraUploadStatus() async throws {
         guard isCameraUploadsEnabled else {
             return
@@ -44,7 +44,6 @@ final class CameraUploadStatusBannerViewModel: ObservableObject {
         }
     }
     
-    @MainActor
     func handleCameraUploadAutoDismissal() async throws {
         let asyncPublisher = $cameraUploadStatusShown
             .map { [weak self] isBannerShown -> AnyPublisher<Void, Never> in

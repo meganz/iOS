@@ -28,7 +28,7 @@ struct FileVersionsRepository: FileVersionsRepositoryProtocol {
         }
     }
     
-    private func isFileVersionsEnabled(completion: @escaping (Result<Bool, FileVersionErrorEntity>) -> Void) {
+    private func isFileVersionsEnabled(completion: @escaping @Sendable (Result<Bool, FileVersionErrorEntity>) -> Void) {
         sdk.getFileVersionsOption(with: RequestDelegate { result in
             switch result {
             case .success(let request):
@@ -56,7 +56,7 @@ struct FileVersionsRepository: FileVersionsRepositoryProtocol {
         }
     }
     
-    private func enableFileVersions(_ enable: Bool, completion: @escaping (Result<Bool, FileVersionErrorEntity>) -> Void) {
+    private func enableFileVersions(_ enable: Bool, completion: @escaping @Sendable (Result<Bool, FileVersionErrorEntity>) -> Void) {
         sdk.setFileVersionsOption(!enable, delegate: RequestDelegate { result in
             switch result {
             case .success(let request):
@@ -104,7 +104,7 @@ struct FileVersionsRepository: FileVersionsRepositoryProtocol {
         }
     }
 
-    private func deletePreviousFileVersions(completion: @escaping (Result<Bool, FileVersionErrorEntity>) -> Void) {
+    private func deletePreviousFileVersions(completion: @escaping @Sendable (Result<Bool, FileVersionErrorEntity>) -> Void) {
         sdk.removeVersions(with: RequestDelegate { result in
             switch result {
             case .success:

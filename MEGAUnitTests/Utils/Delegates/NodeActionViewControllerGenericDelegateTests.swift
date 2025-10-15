@@ -3,6 +3,7 @@ import MEGAAppSDKRepoMock
 import MEGATest
 import XCTest
 
+@MainActor
 final class NodeActionViewControllerGenericDelegateTests: XCTestCase {
 
     @MainActor

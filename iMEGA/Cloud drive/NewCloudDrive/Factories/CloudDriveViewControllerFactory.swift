@@ -428,7 +428,9 @@ struct CloudDriveViewControllerFactory {
             rename: { [weak nodeBrowserViewModel] in
                 nodeActions.rename(
                     $0, {
-                        nodeBrowserViewModel?.refreshTitle()
+                        Task { @MainActor in
+                            nodeBrowserViewModel?.refreshTitle()
+                        }
                     }
                 )
             },
@@ -522,7 +524,7 @@ struct CloudDriveViewControllerFactory {
                 )
         }
 
-        let viewModeProvider = { nodeSource, hasOnlyMediaNodes in
+        let viewModeProvider = { @MainActor nodeSource, hasOnlyMediaNodes in
             viewModeFactory.determineViewMode(
                 nodeSource: nodeSource,
                 config: makeOverriddenConfigIfNeeded(
@@ -533,7 +535,7 @@ struct CloudDriveViewControllerFactory {
             )
         }
 
-        let viewModeAsyncProvider: (NodeSource) async -> ViewModePreferenceEntity = { nodeSource in
+        let viewModeAsyncProvider: @Sendable (NodeSource) async -> ViewModePreferenceEntity = { nodeSource in
             let hasOnlyMediaNodes = CloudDriveViewControllerMediaCheckerMode
                 .containsExclusivelyMedia
                 .makeVisualMediaPresenceChecker(

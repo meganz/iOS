@@ -1,6 +1,7 @@
 import Foundation
 import MEGADomain
 
+@MainActor
 protocol HomeBannerViewModelInputs {
 
     func viewIsReady()
@@ -10,11 +11,13 @@ protocol HomeBannerViewModelInputs {
     func didSelectBanner(actionURL: URL?)
 }
 
+@MainActor
 protocol HomeBannerViewModelOutputs {
 
     var state: HomeBannerDisplayModel { get }
 }
 
+@MainActor
 protocol HomeBannerViewModelType {
 
     var inputs: any HomeBannerViewModelInputs { get }
@@ -72,23 +75,28 @@ extension HomeBannerViewModel: HomeBannerViewModelInputs {
     func viewIsReady() {
         userBannerUseCase.banners { [weak self] bannersResult in
             guard let self else { return }
-
-            switch bannersResult {
-            case .failure(let error): MEGALogError(error.localizedDescription)
-            case .success(let banners):
-                self.displayingBanners = banners.map { bannerEntity -> HomeBannerDisplayModel.Banner in
-                    HomeBannerDisplayModel.Banner(
-                        identifier: bannerEntity.identifier,
-                        title: bannerEntity.title,
-                        description: bannerEntity.description,
-                        image: bannerEntity.imageURL,
-                        backgroundImage: bannerEntity.backgroundImageURL,
-                        actionURL: bannerEntity.url
-                    )
-                }
-                if !self.displayingBanners.isEmpty {
-                    self.notifyUpdate?(self)
-                }
+            Task { @MainActor in
+                self.handleUserBanners(bannersResult: bannersResult)
+            }
+        }
+    }
+    
+    private func handleUserBanners(bannersResult: Result<[BannerEntity], BannerErrorEntity>) {
+        switch bannersResult {
+        case .failure(let error): MEGALogError(error.localizedDescription)
+        case .success(let banners):
+            self.displayingBanners = banners.map { bannerEntity -> HomeBannerDisplayModel.Banner in
+                HomeBannerDisplayModel.Banner(
+                    identifier: bannerEntity.identifier,
+                    title: bannerEntity.title,
+                    description: bannerEntity.description,
+                    image: bannerEntity.imageURL,
+                    backgroundImage: bannerEntity.backgroundImageURL,
+                    actionURL: bannerEntity.url
+                )
+            }
+            if !self.displayingBanners.isEmpty {
+                self.notifyUpdate?(self)
             }
         }
     }

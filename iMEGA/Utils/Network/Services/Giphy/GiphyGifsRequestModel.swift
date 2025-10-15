@@ -1,6 +1,6 @@
 import Foundation
 
-class GiphyGifsRequestModel: RequestModel {
+class GiphyGifsRequestModel: RequestModel, @unchecked Sendable {
     
     // MARK: - Properties
     private var searchKey: String = ""

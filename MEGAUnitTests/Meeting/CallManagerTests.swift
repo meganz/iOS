@@ -2,9 +2,11 @@
 import MEGADomain
 import Testing
 
+@MainActor
 @Suite("CallsManager")
 struct CallManagerTests {
-    class Harness {
+    @MainActor
+    final class Harness {
         let sut: CallsManager
         
         init() {
@@ -22,6 +24,7 @@ struct CallManagerTests {
         }
     }
     
+    @MainActor
     @Suite("Remove Call")
     struct RemoveCall {
         @Test("Removing call cleans storage")
@@ -41,6 +44,7 @@ struct CallManagerTests {
         }
     }
     
+    @MainActor
     @Suite("Update Call")
     struct UpdateCall {
         @Test("Mute/unmute call", arguments: [false, true])

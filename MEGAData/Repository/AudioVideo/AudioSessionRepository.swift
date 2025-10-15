@@ -7,8 +7,6 @@ final class AudioSessionRepository: AudioSessionRepositoryProtocol {
     
     private let audioSession: AVAudioSession
     
-    var routeChanged: ((_ reason: AudioSessionRouteChangedReason, _ previousAudioPort: AudioPort?) -> Void)?
-    
     var isBluetoothAudioRouteAvailable: Bool {
         audioSession.isBluetoothAudioRouteAvailable
     }
@@ -34,11 +32,6 @@ final class AudioSessionRepository: AudioSessionRepositoryProtocol {
     
     public init(audioSession: AVAudioSession) {
         self.audioSession = audioSession
-        addObservers()
-    }
-    
-    deinit {
-        removeObservers()
     }
     
     func configureDefaultAudioSession(completion: ((Result<Void, AudioSessionErrorEntity>) -> Void)?) {
@@ -160,41 +153,6 @@ final class AudioSessionRepository: AudioSessionRepositoryProtocol {
     }
     
     // MARK: - Private methods
-    
-    private func addObservers() {
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(sessionRouteChanged(notification:)),
-                                               name: AVAudioSession.routeChangeNotification,
-                                               object: nil)
-    }
-    
-    private func removeObservers() {
-        NotificationCenter.default.removeObserver(self, name: AVAudioSession.routeChangeNotification, object: nil)
-    }
-    
-    @objc private func sessionRouteChanged(notification: NSNotification) {
-        guard let userInfo = notification.userInfo,
-              let reasonValue = userInfo[AVAudioSessionRouteChangeReasonKey] as? UInt,
-              let reason = AVAudioSession.RouteChangeReason(rawValue: reasonValue) else {
-            return
-        }
-        
-        let previousAudioPort: AudioPort?
-        if reason == .categoryChange,
-           let previousRoute = userInfo[AVAudioSessionRouteChangePreviousRouteKey] as? AVAudioSessionRouteDescription {
-            previousAudioPort = previousRoute.outputs.first?.toAudioPort()
-        } else {
-            previousAudioPort = nil
-        }
-        
-        if let handler = routeChanged,
-           let previousAudioPort,
-           let audioSessionRouteChangeReason = reason.toAudioSessionRouteChangedReason() {
-            handler(audioSessionRouteChangeReason, previousAudioPort)
-        } else {
-            MEGALogDebug("AudioSession: Either the handler is nil or the audioSessionRouteChangeReason is nil")
-        }
-    }
 }
 
 extension AudioPort {

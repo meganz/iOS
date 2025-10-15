@@ -6,6 +6,7 @@ import MEGADomain
 import MEGAL10n
 import XCTest
 
+@MainActor
 final class SlideShowOptionViewModelTests: XCTestCase {
     private func cellViewModels() -> [SlideShowOptionCellViewModel] {
         [
@@ -141,7 +142,7 @@ final class SlideShowOptionViewModelTests: XCTestCase {
 }
 
 extension SlideShowOptionViewModelTests {
-    private func makeSUT(id: String = "", name: SlideShowOptionName, title: String = "", type: SlideShowOptionCellViewModel.OptionType = .detail, children: [SlideShowOptionDetailCellViewModel] = [], isOn: Bool = false, tracker: some AnalyticsTracking = MockTracker(), file: StaticString = #file, line: UInt = #line) -> SlideShowOptionCellViewModel {
+    private func makeSUT(id: String = "", name: SlideShowOptionName, title: String = "", type: SlideShowOptionCellViewModel.OptionType = .detail, children: [SlideShowOptionDetailCellViewModel] = [], isOn: Bool = false, tracker: some AnalyticsTracking = MockTracker(), file: StaticString = #filePath, line: UInt = #line) -> SlideShowOptionCellViewModel {
 
         let sut = SlideShowOptionCellViewModel(
             id: id,

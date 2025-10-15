@@ -3,8 +3,8 @@ import MEGADomain
 import XCTest
 
 extension NodeSource {
-    static var testBucket = NodeSource.mockRecentActionBucketEmpty
-    static var testNode = NodeSource.node {
+    static let testBucket = NodeSource.mockRecentActionBucketEmpty
+    static let testNode = NodeSource.node {
         NodeEntity(handle: 123)
     }
 }

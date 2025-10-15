@@ -2,6 +2,7 @@
 import MEGADomain
 import XCTest
 
+@MainActor
 final class DocScannerSaveSettingTableViewControllerTests: XCTestCase {
     
     func testNumberOfSections_rendersCorrectSectionCount() {

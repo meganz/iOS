@@ -1,6 +1,7 @@
 import MEGADomain
 import SwiftUI
 
+@MainActor
 final class ScheduleMeetingEndRecurrenceOptionsRouter {
     private let presenter: UINavigationController
 

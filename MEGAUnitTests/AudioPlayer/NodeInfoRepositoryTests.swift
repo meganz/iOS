@@ -104,6 +104,7 @@ struct NodeInfoRepositoryTests {
         }
     }
     
+    @MainActor
     @Suite("Node → AudioPlayerItem mapping – sequence")
     struct MakeItemsSequenceSuite {
         @Test(arguments: [
@@ -129,6 +130,7 @@ struct NodeInfoRepositoryTests {
         }
     }
     
+    @MainActor
     @Suite("Fetch audio tracks (account folders) – sequence")
     struct FetchAccountSequenceSuite {
         @Test(arguments: [
@@ -147,6 +149,7 @@ struct NodeInfoRepositoryTests {
         }
     }
     
+    @MainActor
     @Suite("Fetch audio tracks (folder-link) – sequence")
     struct FetchLinkSequenceSuite {
         @Test(arguments: [

@@ -2,6 +2,7 @@ import DeviceCenter
 import MEGAL10n
 import SwiftUI
 
+@MainActor
 final class ResourceInfoViewModel: ObservableObject {
     var icon: Image {
         infoModel.icon

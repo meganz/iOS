@@ -1,5 +1,6 @@
 import Foundation
 
+@MainActor
 enum InterfaceStyle {
     case light
     case dark
@@ -16,6 +17,7 @@ extension UITraitCollection {
     }
 }
 
+@MainActor
 extension UITraitCollection {
 
     func styler(of style: MEGALabelStyle) -> LabelStyler {
@@ -35,6 +37,7 @@ extension UITraitCollection {
     }
 }
 
+@MainActor
 extension UITraitCollection {
     
     func backgroundStyler(of style: MEGAColor.Background) -> ViewStyler {
@@ -47,6 +50,7 @@ extension UITraitCollection {
 
 // MARK: - Special Alwyas Bright Label Style
 
+@MainActor
 extension UITraitCollection {
 
     func alwaysBrightLabelStyler(of style: MEGALabelStyle) -> LabelStyler {

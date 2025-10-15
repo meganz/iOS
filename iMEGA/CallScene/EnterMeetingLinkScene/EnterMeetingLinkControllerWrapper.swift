@@ -1,6 +1,7 @@
 import MEGAL10n
 import UIKit
 
+@MainActor
 final class EnterMeetingLinkControllerWrapper: NSObject {
 
     private let viewModel: EnterMeetingLinkViewModel
@@ -52,11 +53,9 @@ final class EnterMeetingLinkControllerWrapper: NSObject {
 
 extension EnterMeetingLinkControllerWrapper: UITextFieldDelegate {
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        OperationQueue.main.addOperation {
-            let interaction = UIEditMenuInteraction(delegate: nil)
-            textField.addInteraction(interaction)
-            let configuration = UIEditMenuConfiguration(identifier: nil, sourcePoint: .zero)
-            interaction.presentEditMenu(with: configuration)
-        }
+        let interaction = UIEditMenuInteraction(delegate: nil)
+        textField.addInteraction(interaction)
+        let configuration = UIEditMenuConfiguration(identifier: nil, sourcePoint: .zero)
+        interaction.presentEditMenu(with: configuration)
     }
 }

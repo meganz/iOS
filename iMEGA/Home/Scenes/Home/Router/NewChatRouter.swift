@@ -2,6 +2,7 @@ import ChatRepo
 import Foundation
 import MEGADomain
 
+@MainActor
 final class NewChatRouter {
 
     // MARK: - Navigation Controllers

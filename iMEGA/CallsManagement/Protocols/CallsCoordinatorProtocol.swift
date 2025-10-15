@@ -15,6 +15,7 @@ import MEGADomain
 ///
 /// This protocol ensures that call events are seamlessly coordinated between the controller layer
 /// and the underlying MEGA system, supporting both system-integrated (e.g., CallKit) and in-app call functionalities.
+@MainActor
 protocol CallsCoordinatorProtocol: AnyObject, Sendable {
     /// Starts a new call based on the provided `CallActionSync`.
     ///

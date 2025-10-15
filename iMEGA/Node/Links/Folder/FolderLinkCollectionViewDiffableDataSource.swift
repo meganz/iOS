@@ -1,5 +1,6 @@
 import Foundation
 
+@MainActor
 final class FolderLinkCollectionViewDiffableDataSource {
     private var dataSource: UICollectionViewDiffableDataSource<ThumbnailSection, MEGANode>?
     private weak var collectionView: UICollectionView?

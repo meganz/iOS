@@ -311,7 +311,7 @@ extension ChatViewController {
         }
     }
     
-    private nonisolated func buildUploadAppData(filePath: String, chatRoomId: HandleEntity, localIdentifier: String) async -> String {
+    private func buildUploadAppData(filePath: String, chatRoomId: HandleEntity, localIdentifier: String) async -> String {
         let metadataUseCase = MetadataUseCase(
             metadataRepository: MetadataRepository(),
             fileSystemRepository: FileSystemRepository.sharedRepo,
@@ -364,7 +364,7 @@ extension ChatViewController {
     }
     
     private nonisolated func uploadAsset(withFilePath filePath: String, parentNode: MEGANode, localIdentifier: String, chatRoomId: HandleEntity, delegate: MEGAStartUploadTransferDelegate) {
-        Task {
+        Task { @MainActor in
             let appData = await buildUploadAppData(filePath: filePath, chatRoomId: chatRoomId, localIdentifier: localIdentifier)
             ChatUploader.sharedInstance.upload(filepath: filePath,
                                                appData: appData,
@@ -597,20 +597,9 @@ extension ChatViewController: ChatInputBarDelegate {
     func typing(withText text: String) {
         if text.isEmpty {
             MEGAChatSdk.shared.sendStopTypingNotification(forChat: chatRoom.chatId)
-            if sendTypingTimer != nil {
-                self.sendTypingTimer?.invalidate()
-                self.sendTypingTimer = nil
-            }
-        } else if !text.isEmpty && sendTypingTimer == nil {
-            sendTypingTimer = Timer.scheduledTimer(withTimeInterval: 4.0, repeats: false) { [weak self] _ in
-                guard let `self` = self,
-                    let timer = self.sendTypingTimer else {
-                    return
-                }
-                
-                timer.invalidate()
-                self.sendTypingTimer = nil
-            }
+            sendTypingTimer?.invalidate()
+        } else if !text.isEmpty && sendTypingTimer?.isValid != true {
+            sendTypingTimer = Timer.scheduledTimer(withTimeInterval: 4.0, repeats: false) { _ in }
             MEGAChatSdk.shared.sendTypingNotification(forChat: chatRoom.chatId)
         }
     }
@@ -732,8 +721,8 @@ extension ChatViewController: AddToChatViewControllerDelegate {
                 }
                 
                 selectedNodes.forEach { node in
-                    Helper.import(node) { newNode in
-                        MEGAChatSdk.shared.attachNode(toChat: self.chatRoom.chatId, node: newNode.handle)
+                    Helper.import(node) { [chatRoomId = self.chatRoom.chatId] newNode in
+                        MEGAChatSdk.shared.attachNode(toChat: chatRoomId, node: newNode.handle)
                     }
                 }
             }
@@ -768,41 +757,10 @@ extension ChatViewController: AddToChatViewControllerDelegate {
     }
     
     func showLocation() {
-        let genericRequestDelegate = RequestDelegate { result in
-            if case .success = result {
-                let title = Strings.Localizable.sendLocation
-                
-                let message = Strings.Localizable.thisLocationWillBeOpenedUsingAThirdPartyMapsProviderOutsideTheEndToEndEncryptedMEGAPlatform
-                
-                let cancelAction = UIAlertAction(title: Strings.Localizable.cancel, style: .cancel, handler: nil)
-                
-                let continueAction = UIAlertAction(title: Strings.Localizable.continue, style: .default) { _ in
-                    let enableGeolocationDelegate = RequestDelegate { result in
-                        if case let .failure(error) = result {
-                            let alertTitle = Strings.Localizable.error
-                            let alertMessage = Strings.Localizable.Chat.Map.Location.enableGeolocationFailedError(error.name)
-                            
-                            let enableGeolocationAlertAction = UIAlertAction(title: Strings.Localizable.ok,
-                                                                             style: .default,
-                                                                             handler: nil)
-                            let enableGeolocationAlertController = UIAlertController(title: alertTitle,
-                                                                                     message: alertMessage,
-                                                                                     preferredStyle: .alert)
-                            enableGeolocationAlertController.addAction(enableGeolocationAlertAction)
-                            self.present(viewController: enableGeolocationAlertController)
-                        } else {
-                            self.presentShareLocation()
-                        }
-                    }
-                    MEGASdk.shared.enableGeolocation(with: enableGeolocationDelegate)
-                }
-                
-                let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
-                alertController.addAction(cancelAction)
-                alertController.addAction(continueAction)
-                self.present(viewController: alertController)
-            } else {
-                self.presentShareLocation()
+        let genericRequestDelegate = RequestDelegate { [weak self] result in
+            guard let self else { return }
+            Task { @MainActor in
+                self.handleIsGeolocationEnabled(result: result)
             }
         }
         MEGASdk.shared.isGeolocationEnabled(with: genericRequestDelegate)
@@ -836,6 +794,51 @@ extension ChatViewController: AddToChatViewControllerDelegate {
     private func informPermissionsDenied() {
         permissionRouter.alertAudioPermission(incomingCall: false)
         UINotificationFeedbackGenerator().notificationOccurred(.error)
+    }
+    
+    private func handleIsGeolocationEnabled(result: Result<MEGARequest, MEGAError>) {
+        if case .success = result {
+            let title = Strings.Localizable.sendLocation
+            
+            let message = Strings.Localizable.thisLocationWillBeOpenedUsingAThirdPartyMapsProviderOutsideTheEndToEndEncryptedMEGAPlatform
+            
+            let cancelAction = UIAlertAction(title: Strings.Localizable.cancel, style: .cancel, handler: nil)
+            
+            let continueAction = UIAlertAction(title: Strings.Localizable.continue, style: .default) { _ in
+                let enableGeolocationDelegate = RequestDelegate { [weak self] enableGeolocationResult in
+                    guard let self else { return }
+                    Task { @MainActor in
+                        self.handleEnableGeolocation(result: enableGeolocationResult)
+                    }
+                }
+                MEGASdk.shared.enableGeolocation(with: enableGeolocationDelegate)
+            }
+            
+            let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+            alertController.addAction(cancelAction)
+            alertController.addAction(continueAction)
+            self.present(viewController: alertController)
+        } else {
+            self.presentShareLocation()
+        }
+    }
+    
+    private func handleEnableGeolocation(result: Result<MEGARequest, MEGAError>) {
+        if case let .failure(error) = result {
+            let alertTitle = Strings.Localizable.error
+            let alertMessage = Strings.Localizable.Chat.Map.Location.enableGeolocationFailedError(error.name)
+            
+            let enableGeolocationAlertAction = UIAlertAction(title: Strings.Localizable.ok,
+                                                             style: .default,
+                                                             handler: nil)
+            let enableGeolocationAlertController = UIAlertController(title: alertTitle,
+                                                                     message: alertMessage,
+                                                                     preferredStyle: .alert)
+            enableGeolocationAlertController.addAction(enableGeolocationAlertAction)
+            self.present(viewController: enableGeolocationAlertController)
+        } else {
+            self.presentShareLocation()
+        }
     }
 }
 

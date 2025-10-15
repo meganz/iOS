@@ -1,6 +1,7 @@
 import MEGAAssets
 import SwiftUI
 
+@MainActor
 struct NodeBrowserContextMenuViewFactory {
     typealias MakeNavItemsFactory = () -> CloudDriveViewControllerNavItemsFactory
     let makeNavItemsFactory: MakeNavItemsFactory

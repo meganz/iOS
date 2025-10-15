@@ -13,7 +13,7 @@ extension ContactsViewController {
         viewModel.bannerConfig = config
     }
     
-    private static let throttler = Throttler(timeInterval: 0.5, dispatchQueue: .main)
+    nonisolated private static let throttler = Throttler(timeInterval: 0.5, dispatchQueue: .main)
     
     func selectUsers(_ users: [MEGAUser]) {
         guard users.count > 0 else { return }
@@ -284,15 +284,15 @@ extension ContactsViewController {
 // MARK: - MEGARequestDelegate
 
 extension ContactsViewController: MEGARequestDelegate {
-    public func onRequestFinish(_ api: MEGASdk, request: MEGARequest, error: MEGAError) {
+    nonisolated public func onRequestFinish(_ api: MEGASdk, request: MEGARequest, error: MEGAError) {
         guard error.type == .apiOk else { return }
         switch request.type {
         case .MEGARequestTypeGetAttrUser:
             let userAttribute = UserAttributeEntity(rawValue: request.paramType)
             guard userAttribute == .firstName || userAttribute == .lastName else { return }
-            Self.throttler.start { [weak self] in
+            Self.throttler.start {
                 Task { @MainActor in
-                    self?.reloadUI()
+                    self.reloadUI()
                 }
             }
         default:

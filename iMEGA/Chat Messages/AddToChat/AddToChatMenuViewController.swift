@@ -1,5 +1,6 @@
 import UIKit
 
+@MainActor
 protocol AddToChatMenuViewControllerDelegate: AnyObject {
     func didTap(menu: AddToChatMenu)
 }

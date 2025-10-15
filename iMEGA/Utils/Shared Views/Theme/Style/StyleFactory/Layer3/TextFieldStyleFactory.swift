@@ -16,6 +16,7 @@ enum MEGATextFieldStyle {
     case searchBar
 }
 
+@MainActor
 protocol TextFieldStyleFactory {
 
     func styler(of style: MEGATextFieldStyle) -> TextFieldStyler

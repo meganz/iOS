@@ -8,7 +8,9 @@ final class MEGAVerticalButton: UIButton {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        titleLabel?.adjustsFontForContentSizeCategory = true
+        MainActor.assumeIsolated {
+            titleLabel?.adjustsFontForContentSizeCategory = true
+        }
     }
     
     // MARK: - Badge

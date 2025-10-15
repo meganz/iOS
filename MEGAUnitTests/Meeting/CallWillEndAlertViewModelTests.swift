@@ -3,6 +3,7 @@ import MEGADomain
 import MEGADomainMock
 import XCTest
 
+@MainActor
 final class CallWillEndAlertViewModelTests: XCTestCase {
     func testAction_onViewReady() {
         let router = MockCallWillEndAlertRouter()

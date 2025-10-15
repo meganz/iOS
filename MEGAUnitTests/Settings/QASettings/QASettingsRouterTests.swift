@@ -3,6 +3,7 @@ import MEGATest
 import SwiftUI
 import XCTest
 
+@MainActor
 final class QASettingsRouterTests: XCTestCase {
     
     func testBuild_rendersCorrectViewController() {

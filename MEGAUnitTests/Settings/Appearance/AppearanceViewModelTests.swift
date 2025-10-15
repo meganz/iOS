@@ -4,6 +4,7 @@ import MEGADomainMock
 import MEGAPreference
 import XCTest
 
+@MainActor
 final class AppearanceViewModelTests: XCTestCase {
     @MainActor
     func testAutoMediaDiscoverySetting_noPreferenceSet_shouldDefaultToTrue() async {
@@ -195,7 +196,7 @@ final class AppearanceViewModelTests: XCTestCase {
         sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol = MockSensitiveNodeUseCase(),
         contentConsumptionUserAttributeUseCase: some ContentConsumptionUserAttributeUseCaseProtocol = MockContentConsumptionUserAttributeUseCase(),
         remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = MockRemoteFeatureFlagUseCase(list: [.hiddenNodes: false]),
-        file: StaticString = #file,
+        file: StaticString = #filePath,
         line: UInt = #line) -> AppearanceViewModel {
             let sut = AppearanceViewModel(
                 preferenceUseCase: preferenceUseCase,

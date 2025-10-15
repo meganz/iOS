@@ -1,10 +1,11 @@
-import Combine
+@preconcurrency import Combine
 import MEGAAppSDKRepo
 import MEGADomain
 import MEGASdk
 import MEGASwift
 import Search
 
+@MainActor
 protocol CloudDriveNodeSourceUpdatesListening {
     var nodeSourcePublisher: AnyPublisher<NodeSource, Never> { get }
     func startListening()
@@ -35,7 +36,6 @@ final class NewCloudDriveNodeSourceUpdatesListener: CloudDriveNodeSourceUpdatesL
     private let nodeUpdatesProvider: any NodeUpdatesProviderProtocol
     private var monitorNodeUpdatesTask: Task<Void, Never>?
     
-    @Atomic
     private var runningState: RunningState = .notStarted
     
     init(
@@ -56,7 +56,7 @@ final class NewCloudDriveNodeSourceUpdatesListener: CloudDriveNodeSourceUpdatesL
         if case let .inactive(pendingNodesUpdate) = runningState, let pendingNodesUpdate {
             processNodeUpdates(pendingNodesUpdate)
         }
-        $runningState.mutate { $0 = .active }
+        runningState = .active
     }
     
     /// To be called when the client no longer needs to listening to NodeSource updates
@@ -66,7 +66,7 @@ final class NewCloudDriveNodeSourceUpdatesListener: CloudDriveNodeSourceUpdatesL
     /// (e.g: When a CD screen is not top of navigation stack, it shouldn't update the navigation bar items, because navigation bar is common used
     /// by all VC in the stacks, only the top VC in the stack should update the navigation bar)
     func stopListening() {
-        $runningState.mutate { $0 = .inactive(pendingNodesUpdate: nil) }
+        runningState = .inactive(pendingNodesUpdate: nil)
     }
     
     private func startMonitoringNodeUpdates() {
@@ -83,7 +83,7 @@ final class NewCloudDriveNodeSourceUpdatesListener: CloudDriveNodeSourceUpdatesL
         case .active:
             processNodeUpdates(updatedNodes)
         case .inactive:
-            $runningState.mutate { $0 = .inactive(pendingNodesUpdate: updatedNodes) }
+            runningState = .inactive(pendingNodesUpdate: updatedNodes)
         }
     }
     

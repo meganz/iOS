@@ -126,7 +126,7 @@ final class NotificationsViewModelTests: XCTestCase {
         )
         
         let exp = expectation(description: "Notifications are updated when feature is enabled and notifications are available.")
-        sut.invokeCommand = { _ in
+        notificationsUseCase.updateLastReadNotificationCompletion = {
             exp.fulfill()
         }
         sut.dispatch(.onViewDidAppear)

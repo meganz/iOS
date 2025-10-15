@@ -152,7 +152,7 @@ final class AlbumContentPhotoLibraryDataProviderTests: XCTestCase {
     }
     
     private func makeSUT(
-        file: StaticString = #file,
+        file: StaticString = #filePath,
         line: UInt = #line
     ) -> AlbumContentPhotoLibraryDataProvider {
         let sut = AlbumContentPhotoLibraryDataProvider()

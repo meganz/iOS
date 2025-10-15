@@ -5,6 +5,7 @@ import MEGAAppPresentationMock
 import MEGAL10n
 import XCTest
 
+@MainActor
 final class HiddenFilesSeeUpgradePlansOnboardingButtonViewModelTests: XCTestCase {
 
     func testButtonTitle_init_isCorrect() throws {
@@ -13,7 +14,6 @@ final class HiddenFilesSeeUpgradePlansOnboardingButtonViewModelTests: XCTestCase
         XCTAssertEqual(sut.buttonTitle, Strings.Localizable.seePlans)
     }
     
-    @MainActor
     func testButtonAction_init_dismissViewAndRouteToAccountOnDismissCompletion() async {
         let hideFilesAndFoldersRouter = MockHideFilesAndFoldersRouter()
         let upgradeSubscriptionRouter = MockUpgradeSubscriptionRouter()

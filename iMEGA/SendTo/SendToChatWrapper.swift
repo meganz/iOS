@@ -28,18 +28,20 @@ final class SendToChatWrapper: NSObject, Sendable, SendToChatPresenting {
     }
     
     func showSendToChat( presenter: UIViewController ) {
-        guard let navigationController =
-                UIStoryboard(name: "Chat", bundle: nil).instantiateViewController(withIdentifier: "SendToNavigationControllerID") as? MEGANavigationController, let sendToViewController = navigationController.viewControllers.first as? SendToViewController else {
-            return
+        Task { @MainActor in
+            guard let navigationController =
+                    UIStoryboard(name: "Chat", bundle: nil).instantiateViewController(withIdentifier: "SendToNavigationControllerID") as? MEGANavigationController, let sendToViewController = navigationController.viewControllers.first as? SendToViewController else {
+                return
+            }
+            
+            sendToViewController.sendToChatActivityDelegate = self
+            sendToViewController.sendMode = .text
+            if let interfaceStyle {
+                navigationController.overrideUserInterfaceStyle = interfaceStyle
+            }
+            
+            presenter.present(navigationController, animated: true)
         }
-        
-        sendToViewController.sendToChatActivityDelegate = self
-        sendToViewController.sendMode = .text
-        if let interfaceStyle {
-            navigationController.overrideUserInterfaceStyle = interfaceStyle
-        }
-        
-        presenter.present(navigationController, animated: true)
     }
 }
 
@@ -48,7 +50,9 @@ extension SendToChatWrapper: SendToChatActivityDelegate {
         _ viewController: SendToViewController!,
         didFinishActivity completed: Bool
     ) {
-        viewController.dismiss(animated: true)
+        Task { @MainActor in
+            viewController.dismiss(animated: true)
+        }
     }
     
     func textToSend() -> String {

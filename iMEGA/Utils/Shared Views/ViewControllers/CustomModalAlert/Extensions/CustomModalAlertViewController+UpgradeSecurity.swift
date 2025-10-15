@@ -12,7 +12,7 @@ extension CustomModalAlertViewController {
         firstButtonTitle = Strings.Localizable.Account.UpgradeSecurity.Button.title
         firstCompletion = { [weak self] in
             self?.dismiss(animated: true, completion: {
-                Task.detached { @MainActor in
+                Task { @MainActor in
                     do {
                         let accountUseCase = AccountUseCase(repository: AccountRepository.newRepo)
                         _ = try await accountUseCase.upgradeSecurity()

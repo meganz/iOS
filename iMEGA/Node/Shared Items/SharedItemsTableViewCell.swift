@@ -5,6 +5,7 @@ import MEGASwiftUI
 import SwiftUI
 import UIKit
 
+@MainActor
 @objc protocol SharedItemsTableViewCellDelegate {
     func didTapInfoButton(sender: UIButton)
 }
@@ -37,8 +38,10 @@ final class SharedItemsTableViewCell: UITableViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        configureImages()
-        updateAppearance()
+        MainActor.assumeIsolated {
+            configureImages()
+            updateAppearance()
+        }
     }
     
     override func setEditing(_ editing: Bool, animated: Bool) {

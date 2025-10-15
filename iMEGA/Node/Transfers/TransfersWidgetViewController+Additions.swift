@@ -271,6 +271,7 @@ extension TransfersWidgetViewController: BottomOverlayPresenterProtocol {
     }
 }
 
+@MainActor
 protocol TransferWidgetResponderProtocol: AnyObject {
     
     func setProgressViewInKeyWindow()

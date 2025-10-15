@@ -1,6 +1,7 @@
 import MEGADesignToken
 import UIKit
 
+@MainActor
 protocol ChatMessageOptionsTableViewControllerDataSource: AnyObject {
     func headerViewHeight() -> CGFloat
     func headerView() -> UIView?

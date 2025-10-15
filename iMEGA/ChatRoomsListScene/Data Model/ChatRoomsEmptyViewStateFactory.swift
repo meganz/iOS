@@ -2,6 +2,7 @@ import MEGAAssets
 import MEGAL10n
 import SwiftUI
 
+@MainActor
 struct ChatRoomsEmptyViewStateFactory {
     
     struct ChatEmptyViewActions {
@@ -11,6 +12,7 @@ struct ChatRoomsEmptyViewStateFactory {
         var newChat: () -> Void
         var linkTappedAction: () -> Void
         
+        @MainActor
         static let preview = ChatEmptyViewActions(
             startMeeting: {},
             scheduleMeeting: {},

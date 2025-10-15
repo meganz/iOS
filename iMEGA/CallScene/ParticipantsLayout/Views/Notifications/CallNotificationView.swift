@@ -25,8 +25,10 @@ class CallNotificationView: UIView {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        layer.cornerRadius = Constants.notificationHeight / 2.0
-        notificationLabel.font = UIFont.preferredFont(style: .subheadline, weight: .medium)
+        MainActor.assumeIsolated {
+            layer.cornerRadius = Constants.notificationHeight / 2.0
+            notificationLabel.font = UIFont.preferredFont(style: .subheadline, weight: .medium)
+        }
     }
     
     override var intrinsicContentSize: CGSize {

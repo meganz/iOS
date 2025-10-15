@@ -9,7 +9,9 @@ final class MEGASlider: UISlider {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        configure()
+        MainActor.assumeIsolated {
+            configure()
+        }
     }
     
     override init(frame: CGRect) {

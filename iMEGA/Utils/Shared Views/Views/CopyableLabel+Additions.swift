@@ -1,6 +1,6 @@
 import MEGAL10n
 
-extension CopyableLabel: UIEditMenuInteractionDelegate {
+extension CopyableLabel: @MainActor UIEditMenuInteractionDelegate {
     @objc func showHideEditMenu() {
         if let menuInteraction {
             menuInteraction.dismissMenu()
@@ -32,4 +32,3 @@ extension CopyableLabel: UIEditMenuInteractionDelegate {
         }
     }
 }
-

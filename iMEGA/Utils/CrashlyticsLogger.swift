@@ -1,9 +1,9 @@
 import FirebaseCrashlytics
 
 @objc
-final class CrashlyticsLogger: NSObject {
+final class CrashlyticsLogger: NSObject, Sendable {
     static let shared = CrashlyticsLogger()
-    private lazy var loggerQueue = DispatchQueue(label: "CrashlyticsLogger")
+    private let loggerQueue = DispatchQueue(label: "CrashlyticsLogger")
     
     /// The category of the issue we want to keep track of
     @objc enum LogCategory: Int, RawRepresentable {

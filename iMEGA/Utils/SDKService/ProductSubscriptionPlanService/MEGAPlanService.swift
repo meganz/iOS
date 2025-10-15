@@ -1,8 +1,9 @@
 import Foundation
 import MEGAAppSDKRepo
 import MEGAFoundation
+import MEGASwift
 
-final class MEGAPlanCommand: NSObject {
+final class MEGAPlanCommand: NSObject, Sendable {
 
     // MARK: - Typealias
 
@@ -10,11 +11,11 @@ final class MEGAPlanCommand: NSObject {
 
     // MARK: - Properties
 
-    fileprivate var completionAction: (MEGAPlanFetchResult) -> Void
+    fileprivate let completionAction: @Sendable (MEGAPlanFetchResult) -> Void
 
     // MARK: - Lifecycles
 
-    init(completionAction: @escaping (MEGAPlanFetchResult) -> Void) {
+    init(completionAction: @escaping @Sendable (MEGAPlanFetchResult) -> Void) {
         self.completionAction = completionAction
     }
 
@@ -23,7 +24,7 @@ final class MEGAPlanCommand: NSObject {
     fileprivate func execute(
         with api: MEGASdk,
         cachedPlans: [MEGAPlan]?,
-        completion: @escaping (MEGAPlanCommand?, MEGAPlanFetchResult) -> Void
+        completion: @escaping @Sendable (MEGAPlanCommand?, MEGAPlanFetchResult) -> Void
     ) {
         guard let cachedPlans = cachedPlans else {
             fetchMEGAPlans(with: api, completionAction: completionAction, completion: completion)
@@ -37,8 +38,8 @@ final class MEGAPlanCommand: NSObject {
 
     fileprivate func fetchMEGAPlans(
         with api: MEGASdk,
-        completionAction: @escaping (MEGAPlanFetchResult) -> Void,
-        completion: @escaping (MEGAPlanCommand?, MEGAPlanFetchResult) -> Void
+        completionAction: @escaping @Sendable (MEGAPlanFetchResult) -> Void,
+        completion: @escaping @Sendable (MEGAPlanCommand?, MEGAPlanFetchResult) -> Void
     ) {
         let planLoadingTask = MEGAPlanLoadTask()
         planLoadingTask.start(with: api) { result in
@@ -52,13 +53,13 @@ final class MEGAPlanCommand: NSObject {
     }
 }
 
-private final class MEGAPlanLoadTask {
+private final class MEGAPlanLoadTask: Sendable {
 
     // MARK: - Methods
 
     fileprivate func start(
         with api: MEGASdk,
-        completion: @escaping (MEGAPlanCommand.MEGAPlanFetchResult) -> Void) {
+        completion: @escaping @Sendable (MEGAPlanCommand.MEGAPlanFetchResult) -> Void) {
             api.getPricingWith(RequestDelegate { [weak self] result in
                 guard let self else {
                     assertionFailure("MEGAPlanLoadTask instance is unexpected released.")
@@ -97,11 +98,11 @@ private final class MEGAPlanLoadTask {
     }
 }
 
-@objc final class MEGAPlanService: NSObject {
+@objc final class MEGAPlanService: NSObject, Sendable {
 
     // MARK: - Static
 
-    static var shared: MEGAPlanService = MEGAPlanService()
+    static let shared: MEGAPlanService = MEGAPlanService()
 
     // MARK: - Lifecycle
 
@@ -111,17 +112,17 @@ private final class MEGAPlanLoadTask {
 
     // MARK: - Properties
 
-    private var cachedMEGAPlans: [MEGAPlan]?
+    private let cachedMEGAPlans: Atomic<[MEGAPlan]?> = Atomic(wrappedValue: nil)
 
-    private var commands: [MEGAPlanCommand] = []
+    private let commands: Atomic<[MEGAPlanCommand]> = Atomic(wrappedValue: [])
 
-    private var api: MEGASdk = MEGASdk.shared
+    private let api: MEGASdk = MEGASdk.shared
 
     // MARK: - Setup MEGA Plan
 
     func send(_ command: MEGAPlanCommand) {
-        commands.append(command)
-        command.execute(with: api, cachedPlans: cachedMEGAPlans, completion: completion(ofCommand:with:))
+        commands.mutate { $0.append(command) }
+        command.execute(with: api, cachedPlans: cachedMEGAPlans.wrappedValue, completion: completion(ofCommand:with:))
     }
 
     // MARK: - Privates
@@ -132,13 +133,18 @@ private final class MEGAPlanLoadTask {
     }
 
     private func cachePlans(_ plans: [MEGAPlan]?) {
-        guard cachedMEGAPlans == nil, let plans = plans else { return }
-        self.cachedMEGAPlans = plans
+        guard let plans = plans else { return }
+        cachedMEGAPlans.mutate {
+            guard $0 != nil else { return }
+            $0 = plans
+        }
     }
 
     private func remove(_ completedCommand: MEGAPlanCommand) {
-        commands.removeAll { command -> Bool in
-            command == completedCommand
+        commands.mutate {
+            $0.removeAll { command -> Bool in
+                command == completedCommand
+            }
         }
     }
 

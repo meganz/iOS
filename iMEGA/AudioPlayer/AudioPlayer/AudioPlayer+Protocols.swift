@@ -128,6 +128,7 @@ extension AudioPlayerObserversProtocol {
 }
 
 // MARK: - Mini Audio Player Handlers Functions
+@MainActor
 protocol AudioMiniPlayerHandlerProtocol: AudioPlayerProtocol, AnyObject {
     /// Presents the mini player view controller at the bottom of the screen.
     /// - Parameters:

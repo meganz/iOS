@@ -7,6 +7,7 @@ import MEGARepo
 @MainActor
 final class DocScannerSaveSettingsViewModel: ViewModelType {
     var invokeCommand: ((Command) -> Void)?
+    private let screenScale = UIScreen.main.scale
     
     enum Action: ActionType {
         struct SendToChatRoomModel {
@@ -105,7 +106,11 @@ extension DocScannerSaveSettingsViewModel {
                 }
             }
             
-            return await taskGroup.reduce(into: []) { $0.append($1) }
+            var transfers: [CancellableTransfer] = []
+            for await transfer in taskGroup {
+                transfers.append(transfer)
+            }
+            return transfers
         }
     }
 }
@@ -241,7 +246,11 @@ extension DocScannerSaveSettingsViewModel {
                 }
             }
             
-            return await taskGroup.reduce(into: []) { $0.append($1) }
+            var results: [(String, String)] = []
+            for await result in taskGroup {
+                results.append(result)
+            }
+            return results
         }
     }
     
@@ -261,7 +270,7 @@ extension DocScannerSaveSettingsViewModel {
         if fileType == .pdf {
             let pdfDoc = PDFDocument()
             docs?.enumerated().forEach {
-                if let shrinkedImageData = $0.element.shrinkedImageData(docScanQuality: scanQuality),
+                if let shrinkedImageData = $0.element.shrinkedImageData(docScanQuality: scanQuality, screenScale: screenScale),
                    let shrinkedImage = UIImage(data: shrinkedImageData),
                    let pdfPage = PDFPage(image: shrinkedImage) {
                     pdfDoc.insert(pdfPage, at: $0.offset)
@@ -284,7 +293,7 @@ extension DocScannerSaveSettingsViewModel {
             }
         } else if fileType == .jpg {
             docs?.enumerated().forEach {
-                if let data = $0.element.shrinkedImageData(docScanQuality: scanQuality) {
+                if let data = $0.element.shrinkedImageData(docScanQuality: scanQuality, screenScale: screenScale) {
                     let fileName = (docs?.count ?? 1 > 1) ? "\(currentFileName ?? originalFileName) \($0.offset + 1).jpg" : "\(currentFileName ?? originalFileName).jpg"
                     let tempPath = (NSTemporaryDirectory() as NSString).appendingPathComponent(fileName)
                     do {

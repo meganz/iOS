@@ -1,7 +1,7 @@
 import Foundation
 
 /// A protocol that must be adopted by `NSObject` instances to handle error from a source of UIViewController.
-protocol ErrorHandling: NSObject {
+@MainActor protocol ErrorHandling: NSObject {
 
     /// Handle an error which is from `UIViewControllers` with a retry completion.
     /// Usually errors should be handled separately in the `UIViewController` who populates them.

@@ -2,6 +2,7 @@ import MEGADomain
 import MEGAPermissions
 import MEGAPreference
 
+@MainActor
 struct CloudDriveMediaCaptureRouter {
     @PreferenceWrapper(key: PreferenceKeyEntity.isSaveMediaCapturedToGalleryEnabled, defaultValue: false, useCase: PreferenceUseCase.default)
     private static var isSaveMediaCapturedToGalleryEnabled: Bool

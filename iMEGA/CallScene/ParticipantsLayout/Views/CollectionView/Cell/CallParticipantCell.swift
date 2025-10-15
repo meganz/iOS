@@ -19,7 +19,9 @@ class CallParticipantCell: UICollectionViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        configureImages()
+        MainActor.assumeIsolated {
+            configureImages()
+        }
     }
     
     func configure(for participant: CallParticipantEntity, in layoutMode: ParticipantsLayoutMode) {
@@ -127,15 +129,17 @@ class CallParticipantCell: UICollectionViewCell {
 // MARK: - CallParticipantVideoDelegate
 
 extension CallParticipantCell: CallParticipantVideoDelegate {
-    func videoFrameData(width: Int, height: Int, buffer: Data!, type: VideoFrameType) {
-        guard let participant = participant else { return }
-        if participant.isScreenShareCell {
-            if type == .screenShare {
-                videoImageView.image = UIImage.mnz_convert(toUIImage: buffer, withWidth: width, withHeight: height)
-            }
-        } else {
-            if type == .cameraVideo {
-                videoImageView.image = UIImage.mnz_convert(toUIImage: buffer, withWidth: width, withHeight: height)
+    nonisolated func videoFrameData(width: Int, height: Int, buffer: Data!, type: VideoFrameType) {
+        Task { @MainActor in
+            guard let participant = participant else { return }
+            if participant.isScreenShareCell {
+                if type == .screenShare {
+                    videoImageView.image = UIImage.mnz_convert(toUIImage: buffer, withWidth: width, withHeight: height)
+                }
+            } else {
+                if type == .cameraVideo {
+                    videoImageView.image = UIImage.mnz_convert(toUIImage: buffer, withWidth: width, withHeight: height)
+                }
             }
         }
     }

@@ -2,7 +2,7 @@
 // dialogs in a testable and configurable manner
 // Models contain all data needed to present either UIAlertControlle or CustomModalAlertViewController
 // which enables the PermssionAlertRouter to not be tied to any UIKit nor use any implicit singleton access
-enum PermissionsModalModel {
+@MainActor enum PermissionsModalModel {
     case alert(AlertModel)
     case custom(CustomModalModel)
 }

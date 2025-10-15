@@ -10,6 +10,7 @@ import MEGAPreference
 /// It's  injected to CloudDriveFactory from the outside as it mostly needs
 /// parentViewController and a node or array of nodes
 /// More complex logic should be moved their own routers (move to bin, delete from bin)
+@MainActor
 struct NodeActions {
     var nodeDownloader: ([NodeEntity]) -> Void
     var editTextFile: (NodeEntity) -> Void
@@ -26,7 +27,7 @@ struct NodeActions {
     var removeSharing: (NodeEntity) -> Void
     
     // second argument should be called to trigger NavBar title refresh
-    var rename: (_ node: NodeEntity, _ nameChanged: @escaping () -> Void) -> Void
+    var rename: (_ node: NodeEntity, _ nameChanged: @escaping @Sendable () -> Void) -> Void
     var shareFolders: ([NodeEntity]) -> Void
     var leaveSharing: (NodeEntity) -> Void
     var manageShare: ([NodeEntity]) -> Void
@@ -186,7 +187,9 @@ extension NodeActions {
                 
                 megaNode.mnz_removeSharing { [weak navigationController] completed in
                     if completed {
-                        navigationController?.popViewController(animated: true)
+                        Task { @MainActor in
+                            navigationController?.popViewController(animated: true)
+                        }
                     }
                 }
             },
@@ -222,7 +225,9 @@ extension NodeActions {
                 else { return }
                 megaNode.mnz_leaveSharing(in: navigationController) { [weak navigationController] actionCompleted in
                     if actionCompleted {
-                        navigationController?.popViewController(animated: true)
+                        Task { @MainActor in
+                            navigationController?.popViewController(animated: true)
+                        }
                     }
                 }
             },
@@ -379,7 +384,7 @@ extension NodeActions {
     private static func checkIfCameraUploadPromptIsNeeded(
         selectedNodes: [NodeEntity],
         sdk: MEGASdk,
-        completion: @escaping (Bool) -> Void
+        completion: @Sendable @escaping (Bool) -> Void
     ) {
         let mageNodes = megaNodes(from: selectedNodes, using: sdk)
         

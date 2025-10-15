@@ -17,12 +17,14 @@ extension CornerStyle {
 extension CornerStyle {
 
     @discardableResult
+    @MainActor
     func applied<T: UIView>(on view: T) -> T {
         apply(style: self)(view)
     }
 }
 
 @discardableResult
+@MainActor
 private func apply<T: UIView>(style: CornerStyle) -> (T) -> T {
     return { view in
         view.layer.cornerRadius = style.radius

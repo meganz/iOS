@@ -1,7 +1,9 @@
+@MainActor
 protocol AdsVisibilityViewModelProtocol: AnyObject {
     func configureAdsVisibility()
 }
 
+@MainActor
 protocol AdsVisibilityConfigurating {
     func configureAdsVisibility()
 }

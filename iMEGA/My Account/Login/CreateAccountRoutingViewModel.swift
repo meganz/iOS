@@ -17,7 +17,7 @@ final class CreateAccountRoutingViewModel {
         setupSubscription()
     }
     
-    deinit {
+    isolated deinit {
         routeToSubscription?.cancel()
     }
     

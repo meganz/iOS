@@ -7,6 +7,7 @@ import UIKit
 
 final class OverDiskQuotaViewController: UIViewController {
 
+    @MainActor
     final class OverDiskQuotaAdviceGenerator {
 
         // MARK: - Formatters

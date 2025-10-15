@@ -68,7 +68,7 @@ extension ResultProperty {
         )
     }
     
-    static var versioned: Self = .init(
+    static let versioned: Self = .init(
         propertyId: .versioned,
         icon: MEGAAssets.UIImage.versionedThumbnail,
         vibrancyEnabled: false,
@@ -82,7 +82,7 @@ extension ResultProperty {
         }
     )
     
-    static var favorite: Self = .init(
+    static let favorite: Self = .init(
         propertyId: .favorite,
         icon: MEGAAssets.UIImage.favouriteThumbnail,
         vibrancyEnabled: false,

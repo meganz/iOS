@@ -20,8 +20,8 @@
 
 @interface MEGALocalNotificationManager ()
 
-@property (nonatomic) MEGAChatMessage *message;
-@property (nonatomic) MEGAChatRoom *chatRoom;
+@property (atomic) MEGAChatMessage *message;
+@property (atomic) MEGAChatRoom *chatRoom;
 
 @end
 

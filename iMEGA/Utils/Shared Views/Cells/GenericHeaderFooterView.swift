@@ -21,7 +21,7 @@ final class GenericHeaderFooterView: UITableViewHeaderFooterView {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        Task { @MainActor in
+        MainActor.assumeIsolated {
             updateAppearance()
         }
     }

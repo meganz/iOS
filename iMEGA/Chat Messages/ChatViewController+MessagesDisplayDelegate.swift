@@ -155,7 +155,7 @@ extension ChatViewController: MessagesDisplayDelegate {
             // Because we use presence of the image file at a given path as marker of needing to kick off the fetch, once avatar
             // is generated, it will not be refetched
             
-            let avatarLoaded = {[weak self] in
+            let avatarLoaded = { @MainActor [weak self] in
                 guard let self else { return }
                 let indexPaths = messagesCollectionView.visibleCells.compactMap { cell in
                     cell as? MessageContentCell

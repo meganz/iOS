@@ -10,9 +10,9 @@ public struct BannerRepository: BannerRepositoryProtocol {
 
     // MARK: - BannerRepositoryProtocol
 
-    public func banners(completion: @escaping (Result<[BannerEntity], BannerErrorEntity>) -> Void) {
+    public func banners(completion: @escaping @Sendable (Result<[BannerEntity], BannerErrorEntity>) -> Void) {
 
-        func mapError(sdkError: MEGAErrorType) -> BannerErrorEntity {
+        @Sendable func mapError(sdkError: MEGAErrorType) -> BannerErrorEntity {
             switch sdkError {
             case .apiEAccess: return .userSessionTimeout
             case .apiEInternal: return .internal
@@ -37,7 +37,7 @@ public struct BannerRepository: BannerRepositoryProtocol {
 
     public func dismissBanner(
         withBannerId bannerId: Int,
-        completion: ((Result<Void, BannerErrorEntity>) -> Void)?
+        completion: (@Sendable (Result<Void, BannerErrorEntity>) -> Void)?
     ) {
         sdk.dismissBanner(bannerId, delegate: RequestDelegate { result in
             switch result {

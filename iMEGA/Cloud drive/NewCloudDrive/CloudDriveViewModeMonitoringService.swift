@@ -1,7 +1,7 @@
 import MEGADomain
 import MEGASwift
 
-protocol CloudDriveViewModeMonitoring {
+protocol CloudDriveViewModeMonitoring: Sendable {
     func updatedViewModes(
         with nodeSource: NodeSource,
         currentViewMode: ViewModePreferenceEntity
@@ -9,9 +9,9 @@ protocol CloudDriveViewModeMonitoring {
 }
 
 final class CloudDriveViewModeMonitoringService: CloudDriveViewModeMonitoring {
-    private let viewModeProvider: (NodeSource) async -> ViewModePreferenceEntity
+    private let viewModeProvider: @Sendable (NodeSource) async -> ViewModePreferenceEntity
 
-    init(viewModeProvider: @escaping (NodeSource) async -> ViewModePreferenceEntity) {
+    init(viewModeProvider: @escaping @Sendable (NodeSource) async -> ViewModePreferenceEntity) {
         self.viewModeProvider = viewModeProvider
     }
 

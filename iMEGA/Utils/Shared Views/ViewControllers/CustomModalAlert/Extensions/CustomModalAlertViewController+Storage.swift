@@ -19,18 +19,25 @@ extension CustomModalAlertViewController {
         
         if MEGAPurchase.sharedInstance().pricing == nil {
             SVProgressHUD.show()
-            let sdkDelegate = RequestDelegate { result in
-                SVProgressHUD.dismiss()
-                switch result {
-                case .success(let request):
-                    let pricing = request.pricing ?? MEGAPricing()
-                    let detailText = self.storageDetailForEvent(event, pricing: pricing)
-                    self.configureUpgradeAccountDetailText(detailText)
-                default:
-                    return
+            let sdkDelegate = RequestDelegate { [weak self] result in
+                guard let self else { return }
+                Task { @MainActor in
+                    self.handleGetPricingRequest(result: result, event: event)
                 }
             }
             MEGASdk.shared.getPricingWith(sdkDelegate)
+        }
+    }
+    
+    private func handleGetPricingRequest(result: Result<MEGARequest, MEGAError>, event: MEGAEvent) {
+        SVProgressHUD.dismiss()
+        switch result {
+        case .success(let request):
+            let pricing = request.pricing ?? MEGAPricing()
+            let detailText = self.storageDetailForEvent(event, pricing: pricing)
+            self.configureUpgradeAccountDetailText(detailText)
+        default:
+            return
         }
     }
     

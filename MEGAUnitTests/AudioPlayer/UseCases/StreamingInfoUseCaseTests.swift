@@ -8,6 +8,7 @@ struct StreamingInfoUseCaseTests {
         StreamingInfoUseCase(streamingInfoRepository: repo)
     }
     
+    @MainActor
     @Suite("Fetch track")
     struct FetchTrackSuite {
         @Test(arguments: [

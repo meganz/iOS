@@ -1,6 +1,7 @@
 import Foundation
 import MEGADomain
 
+@MainActor
 final class NodeManagementRouter: NSObject {
 
     private weak var navigationController: UINavigationController?

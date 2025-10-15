@@ -13,10 +13,12 @@ class GetLinkSwitchOptionTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        nameLabel.textColor = TokenColors.Text.primary
-        activityIndicatorView.color = TokenColors.Icon.secondary
-        selectorSwitch.tintColor = TokenColors.Support.success
-        proImageView.image = MEGAAssets.UIImage.image(named: "proLabel")
+        MainActor.assumeIsolated {
+            nameLabel.textColor = TokenColors.Text.primary
+            activityIndicatorView.color = TokenColors.Icon.secondary
+            selectorSwitch.tintColor = TokenColors.Support.success
+            proImageView.image = MEGAAssets.UIImage.image(named: "proLabel")
+        }
     }
     
     func configureDecryptKeySeparatedCell(isOn: Bool, enabled: Bool) {

@@ -4,6 +4,7 @@ import MEGADesignToken
 import PinLayout
 import UIKit
 
+@MainActor
 protocol ReactionEmojiViewDelegate: AnyObject {
     func emojiLongPressed(_ emoji: String, sender: UIView)
     func addMorePressed(sender: UIView)

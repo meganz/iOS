@@ -2,6 +2,7 @@
 import MEGAAppSDKRepoMock
 import Testing
 
+@MainActor
 @Suite("AudioPlayerItem")
 struct AudioPlayerItemTests {
     private let originalName = "original-track-name"

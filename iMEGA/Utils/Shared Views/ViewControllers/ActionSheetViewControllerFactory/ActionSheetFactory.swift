@@ -3,6 +3,7 @@ import MEGAAssets
 import MEGADomain
 import MEGAL10n
 
+@MainActor
 protocol ActionSheetFactoryProtocol {
 
     func nodeLabelColorView(forNode nodeHandle: HandleEntity,

@@ -1,19 +1,19 @@
 import Foundation
 
-class ServiceManager {
+final class ServiceManager: Sendable {
     
     // MARK: - Properties
     public static let shared: ServiceManager = ServiceManager()
     
-    public var BASE_URL: String = "https://giphy.mega.nz/"
+    public let BASE_URL: String = "https://giphy.mega.nz/"
     
-    public var GIPHY_URL = "giphy://"
+    public let GIPHY_URL = "giphy://"
 }
 
 // MARK: - Public Functions
 extension ServiceManager {
     
-    func sendRequest<T: Decodable>(request: RequestModel, completion: @escaping(Swift.Result<[T], ErrorModel>) -> Void) -> URLSessionDataTask {
+    func sendRequest<T: Decodable & Sendable>(request: RequestModel, completion: @escaping @Sendable (Swift.Result<[T], ErrorModel>) -> Void) -> URLSessionDataTask {
         if request.isLoggingEnabled.0 {
             LogManager.req(request)
         }

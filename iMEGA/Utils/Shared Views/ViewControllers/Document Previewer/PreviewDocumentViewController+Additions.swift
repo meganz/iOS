@@ -101,9 +101,11 @@ extension PreviewDocumentViewController {
 }
 
 extension PreviewDocumentViewController: MEGAGlobalDelegate {
-    public func onNodesUpdate(_ api: MEGASdk, nodeList: MEGANodeList?) {
-        guard let updatedNode = nodeList?.toNodeArray()
-            .first(where: { $0.handle == node?.handle }) else { return }
-        node = updatedNode
+    nonisolated public func onNodesUpdate(_ api: MEGASdk, nodeList: MEGANodeList?) {
+        guard let nodes = nodeList?.toNodeArray() else { return }
+        Task { @MainActor in
+            guard let updatedNode = nodes.first(where: { $0.handle == node?.handle }) else { return }
+            node = updatedNode
+        }
     }
 }

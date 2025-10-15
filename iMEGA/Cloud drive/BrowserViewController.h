@@ -20,6 +20,7 @@ typedef NS_ENUM(NSUInteger, BrowserAction) {
     BrowserActionSelectVideo // A BrowserAction type specific for video picker selection.
 };
 
+NS_SWIFT_UI_ACTOR
 @protocol BrowserViewControllerDelegate <NSObject>
 @optional
 - (void)didSelectNode:(MEGANode *)node;

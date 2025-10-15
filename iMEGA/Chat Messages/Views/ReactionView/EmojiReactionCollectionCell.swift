@@ -21,7 +21,9 @@ class EmojiReactionCollectionCell: UICollectionViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        configureColors()
+        MainActor.assumeIsolated {
+            configureColors()
+        }
     }
     
     override func prepareForReuse() {

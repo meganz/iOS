@@ -1,11 +1,11 @@
 import MEGADomain
 import MEGAL10n
 
-struct ScheduleMeetingCreationFrequencyOption {
+struct ScheduleMeetingCreationFrequencyOption: Sendable {
     let name: String
     let frequency: ScheduledMeetingRulesEntity.Frequency
     let intervalOption: [Int]
-    let localizedString: (Int) -> String
+    let localizedString: @Sendable (Int) -> String
     
     func createRules(usingInterval interval: Int, startDate: Date) -> ScheduledMeetingRulesEntity {
         var rules = ScheduledMeetingRulesEntity(frequency: frequency)

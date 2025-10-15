@@ -3,6 +3,7 @@ import Foundation
 import MEGAL10n
 import SwiftUI
 
+@MainActor
 private var AssociatedPhotoLibraryContentViewModelHandle: UInt8 = 0
 
 extension PhotosViewController: PhotoLibraryProvider {

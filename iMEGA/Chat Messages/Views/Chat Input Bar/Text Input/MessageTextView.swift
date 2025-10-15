@@ -85,19 +85,8 @@ class MessageTextView: UITextView {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        addPlaceholderTextView()
-        updateAppearance()
-        
-        textChangeNotificationToken = NotificationCenter.default.addObserver(
-            forName: UITextView.textDidChangeNotification,
-            object: self,
-            queue: .main
-        ) { [weak self] _ in
-            guard let `self` = self else {
-                return
-            }
-
-            self.updatePlaceholder()
+        MainActor.assumeIsolated {
+            configureViews()
         }
     }
     
@@ -135,6 +124,25 @@ class MessageTextView: UITextView {
     }
     
     // MARK: - Private methods
+    
+    private func configureViews() {
+        addPlaceholderTextView()
+        updateAppearance()
+        
+        textChangeNotificationToken = NotificationCenter.default.addObserver(
+            forName: UITextView.textDidChangeNotification,
+            object: self,
+            queue: .main
+        ) { [weak self] _ in
+            guard let self else {
+                return
+            }
+
+            Task { @MainActor in
+                self.updatePlaceholder()
+            }
+        }
+    }
     
     private func updateAppearance() {
         tintColor = TokenColors.Icon.accent
@@ -176,7 +184,7 @@ class MessageTextView: UITextView {
     
     // MARK: - Deinit
     
-    deinit {
+    isolated deinit {
         NotificationCenter.default.removeObserver(textChangeNotificationToken!)
     }
 }

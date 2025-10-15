@@ -3,6 +3,7 @@ import MEGADesignToken
 import QuickLook
 import Testing
 
+@MainActor
 @Suite("MEGAQLPreviewControllerTests")
 struct MEGAQLPreviewControllerTests {
 
@@ -43,7 +44,8 @@ struct MEGAQLPreviewControllerTests {
     }
     
     @Test func testShouldOpenURL_returnsFalse_andDispatchesToMain() {
-        class MockMEGALinkManager {
+        @MainActor
+        final class MockMEGALinkManager {
             static var linkURL: URL?
             static var processLinkURLCalled = false
             static func processLinkURL(_ url: URL) {

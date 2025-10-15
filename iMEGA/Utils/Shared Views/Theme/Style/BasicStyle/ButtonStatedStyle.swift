@@ -16,6 +16,7 @@ enum ButtonState: Hashable, CaseIterable {
     }
 }
 
+@MainActor
 struct ButtonStatedStyle<T> {
 
     let stated: [ButtonState: T]

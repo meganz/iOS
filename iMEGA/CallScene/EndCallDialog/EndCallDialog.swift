@@ -1,5 +1,6 @@
 import UIKit
 
+@MainActor
 final class EndCallDialog {
     
     // MARK: - Private properties

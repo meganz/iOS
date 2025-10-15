@@ -18,6 +18,7 @@ public enum PlayerState {
 
 /// The `BasicAudioController` update UI for current audio cell that is playing a sound
 /// and also creates and manage an `AVAudioPlayer` states, play, pause and stop.
+@MainActor
 open class BasicAudioController: NSObject, AVAudioPlayerDelegate {
 
     /// The `AVAudioPlayer` that is playing the sound
@@ -270,31 +271,31 @@ open class BasicAudioController: NSObject, AVAudioPlayerDelegate {
     }
 
     // MARK: - AVAudioPlayerDelegate
-    open func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
-        stopAnyOngoingPlaying()
+    nonisolated open func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
+        Task { @MainActor in
+            stopAnyOngoingPlaying()
+        }
     }
     
-    open func audioPlayerDecodeErrorDidOccur(_ player: AVAudioPlayer, error: (any Error)?) {
-        stopAnyOngoingPlaying()
+    nonisolated open func audioPlayerDecodeErrorDidOccur(_ player: AVAudioPlayer, error: (any Error)?) {
+        Task { @MainActor in
+            stopAnyOngoingPlaying()
+        }
     }
     
     func startAudioPlayerInterruptionIfNeeded() {
-        Task { @MainActor in
-            if AudioPlayerManager.shared.isPlayerAlive() {
-                AudioPlayerManager.shared.audioInterruptionDidStart()
-            }
+        if AudioPlayerManager.shared.isPlayerAlive() {
+            AudioPlayerManager.shared.audioInterruptionDidStart()
         }
     }
 
     func endAudioPlayerInterruptionIfNeeded(resume: Bool) {
-        Task { @MainActor in
-            if AudioPlayerManager.shared.isPlayerAlive() {
-                AudioPlayerManager.shared.audioInterruptionDidEndNeedToResume(resume)
-            }
+        if AudioPlayerManager.shared.isPlayerAlive() {
+            AudioPlayerManager.shared.audioInterruptionDidEndNeedToResume(resume)
         }
     }
     
-    deinit {
+    isolated deinit {
         setProximitySensorEnabled(false)
     }
 }

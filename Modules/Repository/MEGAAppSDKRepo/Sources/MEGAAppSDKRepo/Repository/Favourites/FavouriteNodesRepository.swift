@@ -31,7 +31,7 @@ public final class FavouriteNodesRepository: NSObject, FavouriteNodesRepositoryP
         }
     }
         
-    private func getFavouriteNodes(limitCount: Int, completion: @escaping (Result<[NodeEntity], GetFavouriteNodesErrorEntity>) -> Void) {
+    private func getFavouriteNodes(limitCount: Int, completion: @escaping @Sendable (Result<[NodeEntity], GetFavouriteNodesErrorEntity>) -> Void) {
         sdk.favourites(forParent: nil, count: limitCount, delegate: RequestDelegate { [weak sdk] (result) in
             switch result {
             case .success(let request):
@@ -53,7 +53,7 @@ public final class FavouriteNodesRepository: NSObject, FavouriteNodesRepositoryP
         })
     }
     
-    private func allFavouriteNodes(searchString: String?, limit: Int, completion: @escaping (Result<[NodeEntity], GetFavouriteNodesErrorEntity>) -> Void) {
+    private func allFavouriteNodes(searchString: String?, limit: Int, completion: @escaping @Sendable (Result<[NodeEntity], GetFavouriteNodesErrorEntity>) -> Void) {
         getFavouriteNodes(limitCount: limit) { result in
             switch result {
             case .success(let nodes):

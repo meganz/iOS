@@ -2,6 +2,7 @@ import MEGAAppSDKRepo
 import MEGADomain
 import MEGARepo
 
+@MainActor
 final class WaitingRoomParticipantViewModel: ObservableObject, Identifiable {
     private var chatRoomUseCase: any ChatRoomUseCaseProtocol
     private var chatRoomUserUseCase: any ChatRoomUserUseCaseProtocol

@@ -54,8 +54,9 @@ final class CloudDriveViewModeMonitoringServiceTests: XCTestCase {
 
     private typealias SUT = CloudDriveViewModeMonitoringService
 
+    @MainActor
     private func makeSUT(
-        viewModeProvider: @escaping (NodeSource) async -> ViewModePreferenceEntity
+        viewModeProvider: @escaping @Sendable (NodeSource) async -> ViewModePreferenceEntity
     ) -> SUT {
         SUT(viewModeProvider: viewModeProvider)
     }

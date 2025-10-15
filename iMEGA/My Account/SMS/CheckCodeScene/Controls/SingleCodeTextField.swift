@@ -1,5 +1,6 @@
 import UIKit
 
+@MainActor
 @objc protocol SingleCodeTextFieldDelegate: AnyObject {
     func didDeleteBackwardInTextField(_ textField: SingleCodeTextField)
 }

@@ -3,19 +3,8 @@ import ChatRepoMock
 import MEGAL10n
 import XCTest
 
+@MainActor
 final class ChatViewControllerTests: XCTestCase {
-    
-    var sut: ChatViewController!
-    override func setUp() {
-        super.setUp()
-        sut = ChatContentRouter.chatViewController(for: MockChatRoom())
-    }
-    
-    override func tearDown() {
-        sut = nil
-        super.tearDown()
-    }
-    
     func testbackButtonMenuTitle_NilChatTitle_IsEmptyString() {
         let title = ChatViewController.backButtonMenuTitle(chatTitle: nil, isOneToOne: false)
         XCTAssertEqual(title, "")

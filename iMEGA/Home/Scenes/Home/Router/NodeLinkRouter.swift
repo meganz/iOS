@@ -1,5 +1,6 @@
 import Foundation
 
+@MainActor
 final class NodeLinkRouter: NSObject {
 
     private weak var navigationController: UINavigationController?

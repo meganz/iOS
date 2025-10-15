@@ -3,7 +3,8 @@ import MEGADomain
 import MEGADomainMock
 import XCTest
 
-class AlbumToolbarConfiguratorTest: XCTestCase {
+@MainActor
+final class AlbumToolbarConfiguratorTest: XCTestCase {
     func testToolbarItems_forGifAndRawAlbum_shouldReturnCorrectItems() {
         [AlbumType.gif, .raw].forEach { albumType in
             [true, false].forEach { isHiddenNodesEnabled in

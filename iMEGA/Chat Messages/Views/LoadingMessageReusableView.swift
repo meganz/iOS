@@ -8,7 +8,9 @@ class LoadingMessageReusableView: MessageReusableView {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        updateAppearance()
+        MainActor.assumeIsolated {
+            updateAppearance()
+        }
     }
     
     func updateAppearance() {

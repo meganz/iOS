@@ -10,10 +10,12 @@ class SeeAllParticipantsInWaitingRoomTableViewCell: UITableViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        disclosureImageView.image = MEGAAssets.UIImage.image(named: "seeMoreWaitingRoomDisclosure")
-        seeAllLabel?.text = Strings.Localizable.Meetings.Info.Participants.seeAll
-        
-        addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(seeAllCellTapped(_:))))
+        MainActor.assumeIsolated {
+            disclosureImageView.image = MEGAAssets.UIImage.image(named: "seeMoreWaitingRoomDisclosure")
+            seeAllLabel?.text = Strings.Localizable.Meetings.Info.Participants.seeAll
+            
+            addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(seeAllCellTapped(_:))))
+        }
     }
     
     @objc func seeAllCellTapped(_ sender: UITapGestureRecognizer) {

@@ -8,8 +8,10 @@ class GetLinkAccessInfoTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        titleLabel.textColor = TokenColors.Text.secondary
-        descriptionLabel.textColor = TokenColors.Text.primary
+        MainActor.assumeIsolated {
+            titleLabel.textColor = TokenColors.Text.secondary
+            descriptionLabel.textColor = TokenColors.Text.primary
+        }
     }
 
     func configure(nodesCount: Int, isPasswordSet: Bool) {

@@ -8,12 +8,12 @@ protocol NodeLabelActionUseCaseProtocol {
     func setNodeLabelColor(
         _ labelColor: NodeLabelColor,
         forNode nodeHandle: HandleEntity,
-        completion: ((Result<Void, NodeLabelActionDomainError>) -> Void)?
+        completion: (@Sendable (Result<Void, NodeLabelActionDomainError>) -> Void)?
     )
 
     func resetNodeLabelColor(
         forNode nodeHandle: HandleEntity,
-        completion: ((Result<Void, NodeLabelActionDomainError>) -> Void)?
+        completion: (@Sendable (Result<Void, NodeLabelActionDomainError>) -> Void)?
     )
 
     func nodeLabelColor(
@@ -42,14 +42,14 @@ final class NodeLabelActionUseCase: NodeLabelActionUseCaseProtocol {
     func setNodeLabelColor(
         _ labelColor: NodeLabelColor,
         forNode nodeHandle: HandleEntity,
-        completion: ((Result<Void, NodeLabelActionDomainError>) -> Void)?
+        completion: (@Sendable (Result<Void, NodeLabelActionDomainError>) -> Void)?
     ) {
         nodeLabelActionRepository.setNodeLabelColor(labelColor, forNode: nodeHandle, completion: completion)
     }
 
     func resetNodeLabelColor(
         forNode nodeHandle: HandleEntity,
-        completion: ((Result<Void, NodeLabelActionDomainError>) -> Void)?
+        completion: (@Sendable (Result<Void, NodeLabelActionDomainError>) -> Void)?
     ) {
         nodeLabelActionRepository.resetNodeLabelColor(forNode: nodeHandle, completion: completion)
     }

@@ -98,27 +98,13 @@ class ChatRichPreviewMediaCollectionViewCell: TextMessageCell, MEGARequestDelega
             if megaMessage.richNumber == nil {
                 
                 MEGASdk.shared.getPublicLinkInformation(withFolderLink: megaLink.mnz_MEGAURL(), delegate: RequestDelegate { result in
-                    let visibleIndexPaths = messagesCollectionView.indexPathsForVisibleItems
-                    
-                    guard visibleIndexPaths.contains(indexPath), case let .success(request) = result else {
-                        return
-                    }
-                    
-                    let totalNumberOfFiles = request.megaFolderInfo?.files ?? 0
-                    let totalNumberOfFolders = request.megaFolderInfo?.folders ?? 0
-                    let numOfVersionedFiles = request.megaFolderInfo?.versions ?? 0
-                    let totalFileSize = request.megaFolderInfo?.currentSize ?? 0
-                    let versionsSize = request.megaFolderInfo?.versionsSize ?? 0
-                    let sizeWithoutIncludingVersionsSize = totalFileSize - versionsSize
-                    
-                    megaMessage.richString = NSString.mnz_string(byFiles: totalNumberOfFiles - numOfVersionedFiles, andFolders: totalNumberOfFolders)
-                    megaMessage.richNumber = NSNumber(floatLiteral: Double(sizeWithoutIncludingVersionsSize > 0 ? sizeWithoutIncludingVersionsSize : -1))
-                    megaMessage.richTitle = request.text
-                    
-                    if self.isLastSectionVisible(collectionView: messagesCollectionView) {
-                        messagesCollectionView.reloadDataAndKeepOffset()
-                    } else {
-                        messagesCollectionView.reloadItems(at: [indexPath])
+                    Task { @MainActor in
+                        self.handleGetPublicLinkInformation(
+                            result: result,
+                            megaMessage: megaMessage,
+                            indexPath: indexPath,
+                            messagesCollectionView: messagesCollectionView
+                        )
                     }
                 })
                 return
@@ -169,6 +155,36 @@ class ChatRichPreviewMediaCollectionViewCell: TextMessageCell, MEGARequestDelega
     }
     
     // MARK: - Private
+    private func handleGetPublicLinkInformation(
+        result: Result<MEGARequest, MEGAError>,
+        megaMessage: MEGAChatMessage,
+        indexPath: IndexPath,
+        messagesCollectionView: MessagesCollectionView
+    ) {
+        let visibleIndexPaths = messagesCollectionView.indexPathsForVisibleItems
+        
+        guard visibleIndexPaths.contains(indexPath), case let .success(request) = result else {
+            return
+        }
+        
+        let totalNumberOfFiles = request.megaFolderInfo?.files ?? 0
+        let totalNumberOfFolders = request.megaFolderInfo?.folders ?? 0
+        let numOfVersionedFiles = request.megaFolderInfo?.versions ?? 0
+        let totalFileSize = request.megaFolderInfo?.currentSize ?? 0
+        let versionsSize = request.megaFolderInfo?.versionsSize ?? 0
+        let sizeWithoutIncludingVersionsSize = totalFileSize - versionsSize
+        
+        megaMessage.richString = NSString.mnz_string(byFiles: totalNumberOfFiles - numOfVersionedFiles, andFolders: totalNumberOfFolders)
+        megaMessage.richNumber = NSNumber(floatLiteral: Double(sizeWithoutIncludingVersionsSize > 0 ? sizeWithoutIncludingVersionsSize : -1))
+        megaMessage.richTitle = request.text
+        
+        if self.isLastSectionVisible(collectionView: messagesCollectionView) {
+            messagesCollectionView.reloadDataAndKeepOffset()
+        } else {
+            messagesCollectionView.reloadItems(at: [indexPath])
+        }
+    }
+    
     private func addListenerAsync() {
         Task {
             MEGASdk.shared.add(self)

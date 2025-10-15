@@ -2,10 +2,12 @@ import Foundation
 import MEGADomain
 import MEGAPreference
 
+@MainActor
 @objc protocol RecentsPreferenceProtocol: AnyObject {
     func recentsPreferenceChanged()
 }
 
+@MainActor
 @objc final class RecentsPreferenceManager: NSObject {
     @PreferenceWrapper(key: PreferenceKeyEntity.showRecents, defaultValue: true, useCase: PreferenceUseCase.default)
     private static var recentsPreference: Bool

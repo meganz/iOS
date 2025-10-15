@@ -1,6 +1,6 @@
 import Foundation
 
-struct GiphyResponseModel: Decodable {
+struct GiphyResponseModel: Decodable, Sendable {
    
     var title: String
     var url: String = ""

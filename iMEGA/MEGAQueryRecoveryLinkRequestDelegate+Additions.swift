@@ -6,7 +6,7 @@ extension MEGAQueryRecoveryLinkRequestDelegate {
     @objc func checkRecoveryKey(
         _ recoveryKey: String,
         link: String,
-        completion: @escaping (Bool) -> Void
+        completion: @Sendable @escaping (Bool) -> Void
     ) {
         let accountUseCase = AccountUseCase(repository: AccountRepository.newRepo)
         Task { @MainActor in
@@ -25,6 +25,7 @@ extension MEGAQueryRecoveryLinkRequestDelegate {
         }
     }
     
+    @MainActor
     private func showAlertError(message: String) {
         let alert = UIAlertController(
             title: Strings.Localizable.RecoveryKey.Error.Alert.title,

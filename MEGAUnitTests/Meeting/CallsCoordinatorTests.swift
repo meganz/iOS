@@ -7,9 +7,11 @@ import XCTest
 
 class MockCXCallUpdate: CXCallUpdate { }
 
+@MainActor
 final class CallsCoordinatorTests: XCTestCase {
     
-    class Harness {
+    @MainActor
+    final class Harness {
         let sut: CallsCoordinator
         let chatRoomUseCase: MockChatRoomUseCase
         let callUseCase: MockCallUseCase
@@ -19,7 +21,6 @@ final class CallsCoordinatorTests: XCTestCase {
         let callKitProviderDelegateFactory = MockCallKitProviderDelegateFactory()
         let meetingNoUserJoinedUseCase = MockMeetingNoUserJoinedUseCase()
         
-        @MainActor
         init(
             chatRoomEntity: ChatRoomEntity? = nil,
             call: CallEntity? = nil
@@ -277,7 +278,7 @@ extension CallActionSync {
 }
 
 struct MockCallKitProviderDelegateFactory: CallKitProviderDelegateProviding {
-    class MockCXProviderDelegate: NSObject, CallKitProviderDelegateProtocol {
+    final class MockCXProviderDelegate: NSObject, CallKitProviderDelegateProtocol {
         
         var reportOutgoingCallStartedConnecting_calledTimes = 0
         var reportOutgoingCallConnected_calledTimes = 0
@@ -302,7 +303,7 @@ struct MockCallKitProviderDelegateFactory: CallKitProviderDelegateProviding {
             updateCallVideo_calledTimes += 1
         }
         
-        func reportNewIncomingCall(with uuid: UUID, title: String, completion: @escaping (Bool) -> Void) {
+        func reportNewIncomingCall(with uuid: UUID, title: String, completion: @escaping @MainActor (Bool) -> Void) {
             reportNewIncomingCall_calledTimes += 1
             completion(true)
         }

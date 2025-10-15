@@ -8,6 +8,7 @@ import MEGAUIKit
 import Search
 import UIKit
 
+@MainActor
 @objc(HomeRouting)
 protocol HomeRouting: NSObjectProtocol {
 
@@ -204,11 +205,9 @@ final class HomeViewController: UIViewController, DisplayMenuDelegate {
         
         startConversationViewModel?.dispatch(.viewDidLoad)
         startConversationViewModel?.invokeCommand = { [weak self] command in
-            asyncOnMain {
-                switch command {
-                case .networkAvailabilityUpdate(let networkAvailable):
-                    self?.startConversationItem.isEnabled = networkAvailable
-                }
+            switch command {
+            case .networkAvailabilityUpdate(let networkAvailable):
+                self?.startConversationItem.isEnabled = networkAvailable
             }
         }
         
@@ -234,8 +233,8 @@ final class HomeViewController: UIViewController, DisplayMenuDelegate {
         quickAccessWidgetViewModel?.dispatch(.managePendingAction)
 
         uploadViewModel?.notifyUpdate = { [weak self] homeUploadingViewModel in
-            asyncOnMain {
-                guard let self else { return }
+            guard let self else { return }
+            Task { @MainActor in
                 self.startUploadBarButtonItem.isEnabled = homeUploadingViewModel.networkReachable
 
                 switch homeUploadingViewModel.state {
@@ -261,7 +260,7 @@ final class HomeViewController: UIViewController, DisplayMenuDelegate {
 
         bannerViewModel?.notifyUpdate = { [weak self] bannerViewModelOutput in
             guard let self else { return }
-            asyncOnMain {
+            Task { @MainActor in
                 self.bannerCollectionView.reloadBanners(bannerViewModelOutput.state.banners)
                 self.toggleBannerCollectionView(isOn: true)
             }

@@ -771,7 +771,7 @@ class ChatViewController: MessagesViewController {
     
     func avatarImage(
         for message: any MessageType,
-        avatarLoaded: @escaping () -> Void
+        avatarLoaded: @escaping @MainActor () -> Void
     ) -> UIImage? {
         guard let userHandle = UInt64(message.sender.senderId) else { return nil }
         
@@ -783,7 +783,9 @@ class ChatViewController: MessagesViewController {
                 // `avatarLoaded` will reload all cells with avatars once fetch is finished
                 // to allow cells displayed with generated avatar to be reconfigured with the one that was fetched
                 MEGALogDebug("[AVATAR] loaded for \(userHandle)")
-                avatarLoaded()
+                Task { @MainActor in
+                    avatarLoaded()
+                }
             })
         )
     }
@@ -1216,7 +1218,7 @@ class ChatViewController: MessagesViewController {
         }
     }
     
-    deinit {
+    isolated deinit {
         removeObservers()
         closeChatRoom()
     }

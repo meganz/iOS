@@ -11,6 +11,7 @@ protocol StreamingInfoRepositoryProtocol: Sendable {
     /// Converts a node into an `AudioPlayerItem` suitable for playback through the streaming server. The node is authorized for the current SDK context before creating the item.
     /// - Parameter node: The `MEGANode` to map into an audio track.
     /// - Returns: An `AudioPlayerItem` if the node is valid and streamable; otherwise `nil`.
+    @MainActor
     func fetchTrack(from node: MEGANode) -> AudioPlayerItem?
     
     /// Resolves the streaming URL for a given node.
@@ -38,6 +39,7 @@ final class StreamingInfoRepository: StreamingInfoRepositoryProtocol {
         sdk.httpServerStop()
     }
     
+    @MainActor
     func fetchTrack(from node: MEGANode) -> AudioPlayerItem? {
         guard let node = sdk.authorizeNode(node),
               let url = streamingURL(for: node),

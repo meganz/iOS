@@ -1,7 +1,8 @@
 import MEGADomain
 import PushKit
 
-@objc final class VoIPPushDelegate: NSObject, PKPushRegistryDelegate {
+@MainActor
+@objc final class VoIPPushDelegate: NSObject, @MainActor PKPushRegistryDelegate {
     private weak var callsCoordinator: (any CallsCoordinatorProtocol)?
     private let voIpTokenUseCase: any VoIPTokenUseCaseProtocol
     private let megaHandleUseCase: any MEGAHandleUseCaseProtocol
@@ -25,13 +26,10 @@ import PushKit
     
     private func registerForVoIPNotifications() {
         logger("[VoIPPushDelegate] register for voIP notifications")
+        /// Since we specify main queue here, it's safe and fine to use `@MainActor` isolated conformance of PKPushRegistryDelegate for self (aka VoIPPushDelegate)
         voIPPushRegistry = PKPushRegistry(queue: DispatchQueue.main)
         voIPPushRegistry?.delegate = self
         voIPPushRegistry?.desiredPushTypes = Set([.voIP])
-    }
-    
-    deinit {
-        logger("[VoIPPushDelegate] deinit")
     }
     
     // MARK: - PKPushRegistryDelegate

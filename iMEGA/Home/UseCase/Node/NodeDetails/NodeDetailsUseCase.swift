@@ -7,7 +7,7 @@ protocol NodeDetailUseCaseProtocol: Sendable {
 
     func loadThumbnail(
         of node: HandleEntity,
-        completion: @escaping (UIImage?) -> Void
+        completion: @escaping @Sendable (UIImage?) -> Void
     )
 }
 
@@ -30,7 +30,7 @@ final class NodeDetailUseCase: NodeDetailUseCaseProtocol {
 
     func loadThumbnail(
         of node: HandleEntity,
-        completion: @escaping (UIImage?) -> Void
+        completion: @escaping @Sendable (UIImage?) -> Void
     ) {
         return nodeThumbnailHomeUseCase.loadThumbnail(of: node, completion: completion)
     }

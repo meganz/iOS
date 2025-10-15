@@ -10,6 +10,7 @@ import MEGASdk
 import SwiftUI
 import UserNotifications
 
+@MainActor
 @objc public protocol MEGALinkManagerProtocol: AnyObject {
     @objc static var adapterLinkURL: URL? { get set }
     @objc static func processLinkURL(_ url: URL?)
@@ -192,7 +193,9 @@ extension MEGALinkManager: MEGALinkManagerProtocol {
         )
         
         UNUserNotificationCenter.current().add(request) { _ in
-            SVProgressHUD.showSuccess(withStatus: notificationText)
+            Task { @MainActor in
+                SVProgressHUD.showSuccess(withStatus: notificationText)
+            }
         }
     }
     

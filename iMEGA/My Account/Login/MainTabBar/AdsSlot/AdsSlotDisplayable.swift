@@ -1,3 +1,4 @@
+@MainActor
 protocol AdsSlotDisplayable {
     func configureAdsVisibility()
 }

@@ -1,6 +1,7 @@
 import MEGAL10n
 
-class ChatViewAttachmentCellViewModel {
+@MainActor
+final class ChatViewAttachmentCellViewModel {
     // MARK: - Private properties.
     private let chatMessage: ChatMessage
     

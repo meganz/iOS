@@ -131,8 +131,10 @@ final class VerifyEmailViewController: UIViewController {
                 MEGASdk.shared.fastLogin(withSession: session, delegate: loginRequestDelegate)
             }
             
-            self.presentedViewController?.dismiss(animated: true, completion: nil)
-            self.dismiss(animated: true, completion: nil)
+            Task { @MainActor in
+                self.presentedViewController?.dismiss(animated: true, completion: nil)
+                self.dismiss(animated: true, completion: nil)
+            }
         }
         MEGASdk.shared.whyAmIBlocked(with: whyAmIBlockedRequestDelegate)
     }
@@ -147,15 +149,17 @@ final class VerifyEmailViewController: UIViewController {
         if MEGAReachabilityManager.isReachableHUDIfNot() {
             SVProgressHUD.show()
             let resendVerificationEmailDelegate = RequestDelegate { result in
-                SVProgressHUD.dismiss()
-                switch result {
-                case .success:
-                    self.hintLabel.isHidden = false
-                case .failure(let error):
-                    if error.type == .apiEArgs {
+                Task { @MainActor in
+                    SVProgressHUD.dismiss()
+                    switch result {
+                    case .success:
                         self.hintLabel.isHidden = false
-                    } else {
-                        SVProgressHUD.showError(withStatus: Strings.Localizable.EmailAlreadySent.pleaseWaitAFewMinutesBeforeTryingAgain)
+                    case .failure(let error):
+                        if error.type == .apiEArgs {
+                            self.hintLabel.isHidden = false
+                        } else {
+                            SVProgressHUD.showError(withStatus: Strings.Localizable.EmailAlreadySent.pleaseWaitAFewMinutesBeforeTryingAgain)
+                        }
                     }
                 }
             }

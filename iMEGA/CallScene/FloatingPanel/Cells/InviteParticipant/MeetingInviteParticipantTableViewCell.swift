@@ -11,10 +11,12 @@ class MeetingInviteParticipantTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        inviteLabel.text = Strings.Localizable.Meetings.Panel.inviteParticipants
-        inviteIcon.image = MEGAAssets.UIImage.inviteToChatDesignToken
-        
-        addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(viewTapped(_:))))
+        MainActor.assumeIsolated {
+            inviteLabel.text = Strings.Localizable.Meetings.Panel.inviteParticipants
+            inviteIcon.image = MEGAAssets.UIImage.inviteToChatDesignToken
+            
+            addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(viewTapped(_:))))
+        }
     }
     
     @objc func viewTapped(_ gesture: UITapGestureRecognizer) {

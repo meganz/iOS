@@ -166,7 +166,7 @@ final class AudioPlaylistViewModel: ViewModelType {
     }
 }
 
-extension AudioPlaylistViewModel: AudioPlayerObserversProtocol {
+extension AudioPlaylistViewModel: @MainActor AudioPlayerObserversProtocol {
     func audio(player: AVQueuePlayer, currentItem: AudioPlayerItem?, queue: [AudioPlayerItem]?) {
         guard let currentItem = playerHandler.playerCurrentItem() else { return }
         

@@ -2,19 +2,24 @@ import FirebaseCrashlytics
 import Foundation
 import MEGADomain
 import MEGAFoundation
+import MEGASwift
 
 struct NodeBackupRecord: Codable {
     let date: Date
     let nodeHandle: HandleEntity
 }
 
-final class BackupRecorder: NSObject {
+final class BackupRecorder: Sendable {
     private enum Constants {
         static let recordCacheKey = "LastBackupRecordKey"
     }
     
     private let debouncer = Debouncer(delay: 1, dispatchQueue: DispatchQueue.global(qos: .utility))
-    private var hasCameraUploadsFinishedProcessing = false
+    private let _hasCameraUploadsFinishedProcessing: Atomic<Bool> = Atomic(wrappedValue: false)
+    private var hasCameraUploadsFinishedProcessing: Bool {
+        get { _hasCameraUploadsFinishedProcessing.wrappedValue }
+        set { _hasCameraUploadsFinishedProcessing.mutate { $0 = newValue } }
+    }
     
     // MARK: - recoding update
     func startRecordingBackupUpdate() {

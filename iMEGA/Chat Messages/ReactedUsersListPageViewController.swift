@@ -1,5 +1,6 @@
 import UIKit
 
+@MainActor
 protocol ReactedUsersListPageViewControllerDelegate: AnyObject {
     func userHandleList(atIndex index: Int) -> [UInt64]
     func pageChanged(toIndex index: Int)

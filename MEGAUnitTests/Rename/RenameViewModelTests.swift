@@ -5,7 +5,8 @@ import MEGADomainMock
 import MEGAL10n
 import XCTest
 
-class RenameViewModelTests: XCTestCase {
+@MainActor
+final class RenameViewModelTests: XCTestCase {
     @MainActor
     func testRename_deviceRenamedSuccessfully() async {
         let (viewModel, router, _) = makeSUT(renameShouldThrowError: false)

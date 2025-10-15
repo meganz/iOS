@@ -7,16 +7,18 @@ import MEGADomainMock
 import MEGATest
 import XCTest
 
+@MainActor
 final class RubbishBinMenuDelegateHandlerTests: XCTestCase {
     
-    class Harness {
+    @MainActor
+    final class Harness {
         var sut: RubbishBinMenuDelegateHandler
         var receivedRestore: [NodeEntity] = []
         var receivedShowNodeInfo: [NodeEntity] = []
         var receivedShowNodeVersions: [NodeEntity] = []
         var receivedRemove: [NodeEntity] = []
         
-        static let testNode: NodeEntity = NodeEntity(handle: 64)
+        nonisolated static let testNode: NodeEntity = NodeEntity(handle: 64)
         
         init() {
             var restore: (NodeEntity) -> Void = { _ in }

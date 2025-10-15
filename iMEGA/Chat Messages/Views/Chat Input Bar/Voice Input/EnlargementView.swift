@@ -27,10 +27,12 @@ class EnlargementView: UIView {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        originalWidth = widthConstraint.constant
-        originalHeight = heightConstraint.constant
-        originalPlaceholderValue = placeholderConstraint.constant
-        updateAppearance()
+        MainActor.assumeIsolated {
+            originalWidth = widthConstraint.constant
+            originalHeight = heightConstraint.constant
+            originalPlaceholderValue = placeholderConstraint.constant
+            updateAppearance()
+        }
     }
     
     var finalRatio: CGFloat = 0.25

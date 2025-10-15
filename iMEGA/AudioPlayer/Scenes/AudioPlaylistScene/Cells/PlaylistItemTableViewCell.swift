@@ -19,7 +19,9 @@ final class PlaylistItemTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        configureViewsColor()
+        MainActor.assumeIsolated {
+            configureViewsColor()
+        }
     }
     
     override func prepareForReuse() {
@@ -78,7 +80,9 @@ final class PlaylistItemTableViewCell: UITableViewCell {
                         if case let .success(request) = result,
                            request.nodeHandle == node.handle,
                            let file = request.file {
-                            self?.thumbnailImageView.image = UIImage(contentsOfFile: file)
+                            Task { @MainActor in
+                                self?.thumbnailImageView.image = UIImage(contentsOfFile: file)
+                            }
                         }
                     })
                 }

@@ -21,7 +21,6 @@ final class StartConversationViewModel: ViewModelType {
         }
     }
     
-    @MainActor
     private func registerNetworkListener() {
         let connectionSequence = networkMonitorUseCase.connectionSequence
         

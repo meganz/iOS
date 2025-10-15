@@ -5,7 +5,7 @@ import MEGADomain
 import MEGASdk
 import UIKit
 
-private var AssociatedLoadThumbnailTaskHandle: UInt8 = 0
+@MainActor private var AssociatedLoadThumbnailTaskHandle: UInt8 = 0
 
 extension NodeCollectionViewCell {
     

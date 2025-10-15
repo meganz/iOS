@@ -144,7 +144,7 @@ class InviteContactViewController: UIViewController {
 }
 
 // MARK: - MFMessageComposeViewControllerDelegate
-extension InviteContactViewController: MFMessageComposeViewControllerDelegate {
+extension InviteContactViewController: @preconcurrency MFMessageComposeViewControllerDelegate {
     func messageComposeViewController(_ controller: MFMessageComposeViewController, didFinishWith result: MessageComposeResult) {
         switch result {
         case .failed:
@@ -159,7 +159,7 @@ extension InviteContactViewController: MFMessageComposeViewControllerDelegate {
     }
 }
 
-extension InviteContactViewController: CNContactPickerDelegate {
+extension InviteContactViewController: @preconcurrency CNContactPickerDelegate {
     func contactPicker(_ picker: CNContactPickerViewController, didSelect contacts: [CNContact]) {
         forceResetNavigationBar()
         let phoneNumbers = contacts.extractPhoneNumbers()

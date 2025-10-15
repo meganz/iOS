@@ -1,15 +1,16 @@
 @testable import MEGA
-import MEGAAnalyticsiOS
+@preconcurrency import MEGAAnalyticsiOS
 import MEGAAppPresentation
 import MEGAAppPresentationMock
 import MEGATest
 import Testing
 
+@MainActor
 struct TestPasswordViewModelTests {
 
     @Suite("Track analytics events")
     struct TestPasswordAnalyticsEvents {
-        struct TestCaseData {
+        struct TestCaseData: Sendable {
             var event: TestPasswordViewModel.TestPasswordAnalyticsEvent
             var expectedEventIdentifier: any EventIdentifier
         }

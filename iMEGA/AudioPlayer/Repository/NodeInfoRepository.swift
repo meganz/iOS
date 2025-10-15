@@ -8,11 +8,13 @@ protocol NodeInfoRepositoryProtocol: Sendable {
     /// Fetches audio tracks contained in a folder owned/accessible by the current account. The `folder` handle identifies a MEGA folder. The implementation resolves its contents (files and/or subfolders) and returns only files that are suitable for audio playback.
     /// - Parameter folder: The `HandleEntity` of the target folder in the current account context.
     /// - Returns: An array of `AudioPlayerItem` representing audio tracks in the folder, or `nil` if the folder does not exist or cannot be read.
+    @MainActor
     func fetchAudioTracks(from folder: HandleEntity) -> [AudioPlayerItem]?
     
     /// Fetches audio tracks from a folder-link context. The `folder` handle refers to a folder-link. Tracks are resolved and authorized for playback before being returned as `AudioPlayerItem`s.
     /// - Parameter folder: The `HandleEntity` of the folder-link.
     /// - Returns: An array of authorized `AudioPlayerItem` for playback, or `nil` if the folder is unavailable or cannot be read.
+    @MainActor
     func fetchFolderLinkAudioTracks(from folder: HandleEntity) -> [AudioPlayerItem]?
     
     /// Resolves a `MEGANode` for the given handle in the current account context.
@@ -86,21 +88,18 @@ final class NodeInfoRepository: NodeInfoRepositoryProtocol {
     private func sortType(for parent: HandleEntity) -> Int {
         guard let context = megaStore.stack.newBackgroundContext() else { return MEGASortOrderType.defaultAsc.rawValue }
         
-        var sortType: Int = MEGASortOrderType.defaultAsc.rawValue
-        
-        context.performAndWait {
-            sortType = sortingPreference.wrappedValue == .perFolder ?
+        return context.performAndWait {
+            sortingPreference.wrappedValue == .perFolder ?
             megaStore.fetchCloudAppearancePreference(handle: parent, context: context)?.sortType?.intValue ?? MEGASortOrderType.defaultAsc.rawValue :
             sortingType.wrappedValue.rawValue
         }
-        
-        return sortType
     }
 
     private func folderNode(from handle: HandleEntity) -> MEGANode? { folderSDK.node(forHandle: handle) }
     
     private func folderAuthNode(from node: MEGANode) -> MEGANode? { folderSDK.authorizeNode(node) }
 
+    @MainActor
     func makeAudioPlayerItems(from nodes: [MEGANode]?) -> [AudioPlayerItem]? {
         nodes?.compactMap {
             guard let url = playbackURL(for: $0.handle),
@@ -109,6 +108,7 @@ final class NodeInfoRepository: NodeInfoRepositoryProtocol {
         }
     }
 
+    @MainActor
     private func makeAuthorizedFolderLinkAudioPlayerItems(from nodes: [MEGANode]?) -> [AudioPlayerItem]? {
         nodes?.compactMap {
             guard let node = folderAuthNode(from: $0),
@@ -131,10 +131,12 @@ final class NodeInfoRepository: NodeInfoRepositoryProtocol {
         }
     }
     
+    @MainActor
     func fetchAudioTracks(from folder: HandleEntity) -> [AudioPlayerItem]? {
         fetchAudioNodes(inFolder: folder).flatMap(makeAudioPlayerItems)
     }
     
+    @MainActor
     func fetchFolderLinkAudioTracks(from folder: HandleEntity) -> [AudioPlayerItem]? {
         fetchFolderLinkAudioNodes(inFolder: folder).flatMap(makeAuthorizedFolderLinkAudioPlayerItems)
     }

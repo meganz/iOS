@@ -14,7 +14,9 @@ class ChatSharedItemTableViewCell: UITableViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        moreButton.setImage(MEGAAssets.UIImage.moreList, for: .normal)
+        MainActor.assumeIsolated {
+            moreButton.setImage(MEGAAssets.UIImage.moreList, for: .normal)
+        }
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -52,7 +54,9 @@ class ChatSharedItemTableViewCell: UITableViewCell {
                     if case .success(let request) = result,
                        request.nodeHandle == node.handle,
                        let file = request.file {
-                        self?.thumbnailImage.image = UIImage(contentsOfFile: file)
+                        Task { @MainActor in
+                            self?.thumbnailImage.image = UIImage(contentsOfFile: file)
+                        }
                     }
                 })
             }

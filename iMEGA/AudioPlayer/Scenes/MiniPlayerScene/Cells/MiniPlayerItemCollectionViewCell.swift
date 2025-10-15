@@ -14,7 +14,9 @@ final class MiniPlayerItemCollectionViewCell: UICollectionViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        configureViewsColor()
+        MainActor.assumeIsolated {
+            configureViewsColor()
+        }
     }
     
     // MARK: - Private functions

@@ -1,5 +1,6 @@
 import UIKit
 
+@MainActor
 struct ShadowStyle {
     typealias Offset = CGSize
     typealias Opacity = Float
@@ -22,7 +23,7 @@ extension ShadowStyle {
 }
 
 @discardableResult
-private func apply(style: ShadowStyle) -> (UIView) -> UIView {
+@MainActor private func apply(style: ShadowStyle) -> (UIView) -> UIView {
     return { view in
         view.layer.shadowColor = style.shadowColor.cgColor
         view.layer.shadowOffset = style.shadowOffset

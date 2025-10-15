@@ -15,6 +15,7 @@ import MEGASwift
     case sharedItems
 }
 
+@MainActor
 @objc final class TabManager: NSObject {
 
     /// Migrate the `launchTabPreference` from using `Int` to `Tab.TabType.RawValue`
@@ -78,6 +79,7 @@ import MEGASwift
     }()
 }
 
+@MainActor
 @objc final class Tab: NSObject {
     fileprivate enum TabType: String {
         case cloudDrive

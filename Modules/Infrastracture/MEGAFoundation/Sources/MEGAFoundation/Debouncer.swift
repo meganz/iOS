@@ -19,7 +19,7 @@ public final class Debouncer: NSObject, Sendable {
         }
     }
     
-    public func start(action: @escaping Action) {
+    public func start(action: @escaping @Sendable Action) {
         subject.send(action)
     }
 

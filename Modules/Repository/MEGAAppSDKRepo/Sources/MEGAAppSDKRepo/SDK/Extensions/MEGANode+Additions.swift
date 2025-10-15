@@ -36,7 +36,7 @@ public extension MEGANode {
         return !sdk.areCredentialsVerified(of: owner)
     }
     
-    @objc func mnz_renameNode(_ newName: String, completion: ((MEGARequest) -> Void)?) {
+    @objc func mnz_renameNode(_ newName: String, completion: (@Sendable (MEGARequest) -> Void)?) {
         MEGASdk.sharedSdk.renameNode(
             self,
             newName: newName,

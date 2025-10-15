@@ -13,6 +13,7 @@ import MEGAStoreKit
 import MEGAUIComponent
 import XCTest
 
+@MainActor
 final class UpgradeAccountPlanViewModelTests: XCTestCase {
     private var mockAccountUseCase: MockAccountUseCase!
 

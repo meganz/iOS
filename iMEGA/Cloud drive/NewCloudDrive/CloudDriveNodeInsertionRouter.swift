@@ -3,6 +3,7 @@ import MEGADomain
 import MEGAUI
 import UIKit
 
+@MainActor
 protocol NodeInsertionRouting {
     func createTextFileAlert(for nodeEntity: NodeEntity)
     func createNewFolder(for nodeEntity: NodeEntity)

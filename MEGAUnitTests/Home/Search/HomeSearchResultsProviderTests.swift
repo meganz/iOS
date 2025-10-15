@@ -64,16 +64,17 @@ fileprivate extension Date {
     }
 }
 
+@MainActor
 final class HomeSearchResultsProviderTests: XCTestCase {
     
-    final class Harness: @unchecked Sendable {
+    @MainActor
+    final class Harness {
         static let parentNodeHandle: HandleEntity = 999
         let filesSearchUseCase: MockFilesSearchUseCase
         let nodeDetails: MockNodeDetailUseCase
         let sensitiveNodeUseCase: MockSensitiveNodeUseCase
         let nodeDataUseCase: MockNodeDataUseCase
         let mediaUseCase: MockMediaUseCase
-        let downloadedNodesListener: MockDownloadedNodesListener
         let sensitiveDisplayPreferenceUseCase: MockSensitiveDisplayPreferenceUseCase
         let sut: HomeSearchResultsProvider
         let nodes: [NodeEntity]
@@ -84,6 +85,7 @@ final class HomeSearchResultsProviderTests: XCTestCase {
             excludeSensitives: Bool = false,
             hiddenNodesFeatureEnabled: Bool = true,
             nodeUpdates: AnyAsyncSequence<[NodeEntity]> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
+            downloadedNodesUpdates: AnyAsyncSequence<NodeEntity> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
             isFromSharedItem: Bool = false,
             file: StaticString = #filePath,
             line: UInt = #line
@@ -105,8 +107,6 @@ final class HomeSearchResultsProviderTests: XCTestCase {
             
             mediaUseCase = MockMediaUseCase()
             
-            downloadedNodesListener = MockDownloadedNodesListener()
-            
             sensitiveDisplayPreferenceUseCase =  MockSensitiveDisplayPreferenceUseCase(
                 excludeSensitives: excludeSensitives)
             
@@ -117,7 +117,7 @@ final class HomeSearchResultsProviderTests: XCTestCase {
                 nodeUseCase: nodeDataUseCase,
                 sensitiveNodeUseCase: sensitiveNodeUseCase,
                 mediaUseCase: mediaUseCase,
-                downloadedNodesListener: downloadedNodesListener,
+                downloadedNodesListener: MockDownloadedNodesListener(downloadedNodes: downloadedNodesUpdates),
                 nodeIconUsecase: MockNodeIconUsecase(stubbedIconData: Data()),
                 sensitiveDisplayPreferenceUseCase: sensitiveDisplayPreferenceUseCase,
                 allChips: SearchChipEntity.allChips(
@@ -777,43 +777,31 @@ final class HomeSearchResultsProviderTests: XCTestCase {
     func testSearchResultUpdateSignalSequence_whenShouldProcessNodesUpdate_shouldProcessNodeUpdates() async throws {
         // given
         let nodes = NodeEntity.entities(startHandle: 1, endHandle: 2)
-        let (stream, continuation) = AsyncStream.makeStream(of: [NodeEntity].self)
-        let harness = Harness(self, nodes: nodes, nodeUpdates: stream.eraseToAnyAsyncSequence())
-        
-        @Atomic
-        var nodeUpdatesSignals = [SearchResultUpdateSignal]()
-        let exp = expectation(description: "wait for update signals")
-        exp.expectedFulfillmentCount = 2
-        
-        trackTaskCancellation {
-            for await nodeUpdatesSignal in harness.sut.searchResultUpdateSignalSequence() {
-                $nodeUpdatesSignals.mutate {
-                    $0.append(nodeUpdatesSignal)
-                }
-                exp.fulfill()
-            }
-        }
+        let parentNode = NodeEntity(parentHandle: Harness.parentNodeHandle)
+        let harness = Harness(
+            self,
+            nodes: nodes,
+            nodeUpdates: [[parentNode]].async.eraseToAnyAsyncSequence(),
+            downloadedNodesUpdates: [nodes[1]].async.eraseToAnyAsyncSequence()
+        )
         
         // when
-        continuation.yield([.init(parentHandle: Harness.parentNodeHandle)]) // Trigger .generic signal
-        try await Task.sleep(nanoseconds: 50_000_000)
-        harness.downloadedNodesListener.simulateDownloadedNode(nodes[1]) // Trigger .specific signal
+        var nodeUpdatesSignals = [SearchResultUpdateSignal]()
+        
+        for await nodeUpdatesSignal in harness.sut.searchResultUpdateSignalSequence() {
+            nodeUpdatesSignals.append(nodeUpdatesSignal)
+        }
         
         // then
-        await fulfillment(of: [exp], timeout: 1.0)
-        continuation.finish()
-        
-        guard case .generic = nodeUpdatesSignals[0] else {
-            XCTFail("Expecting .generic update signal")
-            return
-        }
-        
-        guard case let .specific(result) = nodeUpdatesSignals[1] else {
-            XCTFail("Expecting .specific update signal")
-            return
-        }
-        
-        XCTAssertEqual(result.id, 2)
+        XCTAssert(nodeUpdatesSignals.count == 2)
+        XCTAssertTrue(nodeUpdatesSignals.contains(where: { $0 == .generic }))
+        XCTAssertTrue(nodeUpdatesSignals.contains(where: { signal in
+            if case let .specific(result) = signal, result.id == 2 {
+                true
+            } else {
+                false
+            }
+        }))
     }
     
     func testSearchResultUpdateSignalSequence_nodeUpdatePartOfResults_shouldTriggerGenericUpdateSignal() async throws {

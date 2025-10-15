@@ -20,7 +20,7 @@ fileprivate extension ViewModeLocation.Custom {
 }
 
 fileprivate extension HandleEntity {
-    static var anyHandle: Self = 1
+    static let anyHandle: Self = 1
 }
 
 final class ViewModeStoreTests: XCTestCase {

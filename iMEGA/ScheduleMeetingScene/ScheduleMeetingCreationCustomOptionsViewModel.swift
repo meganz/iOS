@@ -2,6 +2,7 @@ import Combine
 import MEGADomain
 import MEGASwift
 
+@MainActor
 protocol ScheduleMeetingCreationCustomOptionsRouting {
     func start()
 }

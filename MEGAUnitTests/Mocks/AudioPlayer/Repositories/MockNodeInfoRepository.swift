@@ -29,10 +29,12 @@ final class MockNodeInfoRepository: NodeInfoRepositoryProtocol, @unchecked Senda
         isSuccess ? URL(string: "www.mega.app") : nil
     }
     
+    @MainActor
     func info(fromNodes: [MEGANode]?) -> [AudioPlayerItem]? {
         isSuccess ? AudioPlayerItem.mockArray : nil
     }
     
+    @MainActor
     func authInfo(fromNodes: [MEGANode]?) -> [AudioPlayerItem]? {
         isSuccess ? AudioPlayerItem.mockArray : nil
     }

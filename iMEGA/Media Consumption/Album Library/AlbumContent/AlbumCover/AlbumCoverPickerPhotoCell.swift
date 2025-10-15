@@ -29,7 +29,7 @@ struct AlbumCoverPickerPhotoCell: View {
     }
 }
 
-extension AlbumCoverPickerPhotoCell: Equatable {
+extension AlbumCoverPickerPhotoCell: @MainActor Equatable {
     static func == (lhs: AlbumCoverPickerPhotoCell, rhs: AlbumCoverPickerPhotoCell) -> Bool {
         true // we are taking over the update of the view
     }

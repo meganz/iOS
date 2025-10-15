@@ -14,6 +14,7 @@ enum MEGAPageControlStyle {
     case homeBanner
 }
 
+@MainActor
 protocol PageControlStyleFactory {
 
     func styler(of style: MEGAPageControlStyle) -> PageControlStyler

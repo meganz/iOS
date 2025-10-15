@@ -58,7 +58,7 @@ final class OfflineViewModelTests: XCTestCase {
     private func executeRemoveOfflineItemsTest(
         config: TestConfig,
         function: String = #function,
-        file: StaticString = #file,
+        file: StaticString = #filePath,
         line: UInt = #line
     ) async {
         let sut = makeOfflineViewModelVMSut(

@@ -1,6 +1,6 @@
 import Foundation
 
-@objc protocol OverDiskQuotaInfomationProtocol {
+@objc protocol OverDiskQuotaInfomationProtocol: Sendable {
     typealias Email = String
     typealias Deadline = Date
     typealias WarningDates = [Date]

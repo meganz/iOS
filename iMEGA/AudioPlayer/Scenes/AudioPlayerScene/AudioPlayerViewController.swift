@@ -87,7 +87,7 @@ class AudioPlayerViewController: UIViewController, AudioPlayerViewControllerNode
         viewModel.dispatch(.viewWillDisappear(reason: .userInitiatedDismissal))
     }
     
-    deinit {
+    isolated deinit {
         MEGALogDebug("[AudioPlayer] deallocating AudioPlayerViewController instance")
         removeDelegates()
     }

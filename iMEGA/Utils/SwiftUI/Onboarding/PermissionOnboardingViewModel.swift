@@ -4,6 +4,7 @@ import MEGAPermissions
 import MEGAPresentation
 import SwiftUI
 
+@MainActor
 final class PermissionOnboardingViewModel: ViewModel<PermissionOnboardingViewModel.Route> {
 
     enum Route: Equatable {

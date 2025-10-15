@@ -36,18 +36,18 @@ struct MockMeetingFloatingPanelHeaderConfigFactory: MeetingFloatingPanelHeaderCo
 @MainActor
 extension MeetingFloatingPanelViewModel {
     static func make(
-        router: some MeetingFloatingPanelRouting = MockMeetingFloatingPanelRouter(),
+        router: MockMeetingFloatingPanelRouter = MockMeetingFloatingPanelRouter(),
         containerViewModel: MeetingContainerViewModel? = nil,
         chatRoom: ChatRoomEntity = ChatRoomEntity(),
-        callUseCase: some CallUseCaseProtocol = MockCallUseCase(),
-        callUpdateUseCase: some CallUpdateUseCaseProtocol = MockCallUpdateUseCase(),
-        sessionUpdateUseCase: some SessionUpdateUseCaseProtocol = MockSessionUpdateUseCase(),
-        chatRoomUpdateUseCase: some ChatRoomUpdateUseCaseProtocol = MockChatRoomUpdateUseCase(),
-        accountUseCase: some AccountUseCaseProtocol = MockAccountUseCase(),
-        chatRoomUseCase: some ChatRoomUseCaseProtocol = MockChatRoomUseCase(),
-        chatUseCase: some ChatUseCaseProtocol = MockChatUseCase(),
+        callUseCase: MockCallUseCase = MockCallUseCase(),
+        callUpdateUseCase: MockCallUpdateUseCase = MockCallUpdateUseCase(),
+        sessionUpdateUseCase: MockSessionUpdateUseCase = MockSessionUpdateUseCase(),
+        chatRoomUpdateUseCase: MockChatRoomUpdateUseCase = MockChatRoomUpdateUseCase(),
+        accountUseCase: MockAccountUseCase = MockAccountUseCase(),
+        chatRoomUseCase: MockChatRoomUseCase = MockChatRoomUseCase(),
+        chatUseCase: MockChatUseCase = MockChatUseCase(),
         selectWaitingRoomList: Bool = false,
-        headerConfigFactory: some MeetingFloatingPanelHeaderConfigFactoryProtocol
+        headerConfigFactory: MockMeetingFloatingPanelHeaderConfigFactory
     ) -> MeetingFloatingPanelViewModel {
         .init(
             router: router,

@@ -1,7 +1,7 @@
 import Foundation
 import MEGASwift
 
-public enum VideoFrameType {
+public enum VideoFrameType: Sendable {
     case cameraVideo
     case screenShare
 }

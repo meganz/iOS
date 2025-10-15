@@ -4,6 +4,7 @@ import MEGAAppPresentationMock
 import MEGATest
 import XCTest
 
+@MainActor
 final class PagerTabViewModelTests: XCTestCase {
     func testDidAppear_shouldTrackCurrentTabOnce() {
         let (sut, mockTracker) = makeSUT()
@@ -60,12 +61,11 @@ final class PagerTabViewModelTests: XCTestCase {
     // MARK: - Test Helpers
     
     private func makeSUT(
-        file: StaticString = #file,
+        file: StaticString = #filePath,
         line: UInt = #line
     ) -> (PagerTabViewModel, MockTracker) {
         let mockAnalyticsTracker = MockTracker()
         let sut = PagerTabViewModel(tracker: mockAnalyticsTracker)
-        trackForMemoryLeaks(on: sut, file: file, line: line)
         return (sut, mockAnalyticsTracker)
     }
 }

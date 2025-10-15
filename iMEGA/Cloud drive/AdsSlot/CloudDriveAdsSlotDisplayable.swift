@@ -1,4 +1,5 @@
 /// Abstract protocol for a  CloudDrive screen to decide whether it should display ads or not
+@MainActor
 protocol CloudDriveAdsSlotDisplayable {
     var shouldDisplayAdsSlot: Bool { get }
 }

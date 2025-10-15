@@ -3,6 +3,7 @@ import Foundation
 import MEGAAppSDKRepoMock
 import XCTest
 
+@MainActor
 class AVPlayerManagerTests: XCTestCase {
 
     func testIsPIPModeActive_forValidController_shouldBeTrue() throws {
@@ -11,9 +12,10 @@ class AVPlayerManagerTests: XCTestCase {
         let manager = AVPlayerManager(sdk: mockSDK)
         let videoURL = try XCTUnwrap(URL(string: "file://videos/abc.mp4"))
         let controller = try XCTUnwrap(MEGAAVViewController(url: videoURL))
+        let delegate: any AVPlayerViewControllerDelegate = manager
         
         // Act
-        manager.playerViewControllerWillStartPictureInPicture(controller)
+        delegate.playerViewControllerWillStartPictureInPicture?(controller)
         
         // Assert
         XCTAssertTrue(manager.isPIPModeActive(for: controller), "Expected avplayercontroller to be in PIP mode")
@@ -29,9 +31,10 @@ class AVPlayerManagerTests: XCTestCase {
         
         let secondVideoURL = try XCTUnwrap(URL(string: "file://videos/abc2.mp4"))
         let secondController = try XCTUnwrap(MEGAAVViewController(url: secondVideoURL))
-
+        let delegate: any AVPlayerViewControllerDelegate = manager
+        
         // Act
-        manager.playerViewControllerWillStartPictureInPicture(controller)
+        delegate.playerViewControllerWillStartPictureInPicture?(controller)
         
         // Assert
         XCTAssertFalse(manager.isPIPModeActive(for: secondController), "Expected avplayercontroller to not be in PIP mode")
@@ -45,11 +48,12 @@ class AVPlayerManagerTests: XCTestCase {
         
         let videoURL = try XCTUnwrap(URL(string: "file://videos/abc.mp4"))
         let controller = try XCTUnwrap(MEGAAVViewController(url: videoURL))
-
+        let delegate: any AVPlayerViewControllerDelegate = manager
+        
         // Act
-        manager.playerViewControllerWillStartPictureInPicture(controller)
+        delegate.playerViewControllerWillStartPictureInPicture?(controller)
         XCTAssertTrue(manager.isPIPModeActive(for: controller), "Expected avplayercontroller to be in PIP mode")
-        manager.playerViewControllerDidStopPictureInPicture(controller)
+        delegate.playerViewControllerDidStopPictureInPicture?(controller)
 
         // Assert
         XCTAssertFalse(manager.isPIPModeActive(for: controller), "Expected avplayercontroller to not be in PIP mode")
@@ -61,9 +65,10 @@ class AVPlayerManagerTests: XCTestCase {
         let manager = AVPlayerManager(sdk: mockSDK)
         
         let videoURL = try XCTUnwrap(URL(string: "file://videos/abc.mp4"))
-
+        let delegate: any AVPlayerViewControllerDelegate = manager
+        
         let controller = manager.makePlayerController(for: videoURL)
-        manager.playerViewControllerWillStartPictureInPicture(controller)
+        delegate.playerViewControllerWillStartPictureInPicture?(controller)
         
         // Act
         let secondController = manager.makePlayerController(for: videoURL)
@@ -111,7 +116,9 @@ class AVPlayerManagerTests: XCTestCase {
         let manager = AVPlayerManager(sdk: mockSDK)
         let node = MockNode(handle: 0, fingerprint: "12345")
         let controller = manager.makePlayerController(for: node, folderLink: false, sdk: mockSDK)
-        manager.playerViewControllerWillStartPictureInPicture(controller)
+        let delegate: any AVPlayerViewControllerDelegate = manager
+        
+        delegate.playerViewControllerWillStartPictureInPicture?(controller)
         
         // Act
         let secondController = manager.makePlayerController(for: node, folderLink: false, sdk: mockSDK)
@@ -142,9 +149,10 @@ class AVPlayerManagerTests: XCTestCase {
         let manager = AVPlayerManager(sdk: mockSDK)
         
         let node = MockNode(handle: 0, fingerprint: "12345")
-
+        let delegate: any AVPlayerViewControllerDelegate = manager
+        
         let controller = manager.makePlayerController(for: node, folderLink: false, sdk: mockSDK)
-        manager.playerViewControllerWillStartPictureInPicture(controller)
+        delegate.playerViewControllerWillStartPictureInPicture?(controller)
 
         // Act
         let secondNode = MockNode(handle: 0, fingerprint: "54321")

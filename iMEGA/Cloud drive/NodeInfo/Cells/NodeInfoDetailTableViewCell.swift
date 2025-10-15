@@ -9,7 +9,9 @@ class NodeInfoDetailTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        setupColors()
+        MainActor.assumeIsolated {
+            setupColors()
+        }
     }
     
     private func setupColors() {

@@ -165,7 +165,7 @@ final class CloudDriveEmptyViewAssetFactoryTests: XCTestCase {
         expectedImage: Image,
         expectedTitle: String,
         actions: [SearchConfig.EmptyViewAssets.Action] = [],
-        file: StaticString = #file,
+        file: StaticString = #filePath,
         line: UInt = #line
     ) {
         let sut = makeSUT(nodeUseCase: nodeUseCase)

@@ -1,10 +1,12 @@
 import Foundation
 import UIKit
 
+@MainActor
 @objc protocol DynamicTypeCollectionViewSizing {
     func provideSizingCell(for indexPath: IndexPath) -> UICollectionViewCell?
 }
 
+@MainActor
 @objc final class DynamicTypeCollectionManager: NSObject {
     
     final class CollectionItem {

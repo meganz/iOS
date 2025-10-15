@@ -7,6 +7,7 @@ struct AudioPlayerPlaylistShiftStrategyTests {
     static let anyNode = MockNode(handle: 1)
 
     // MARK: - Default Strategy
+    @MainActor
     @Suite("Default")
     struct DefaultStrategy {
 
@@ -44,6 +45,7 @@ struct AudioPlayerPlaylistShiftStrategyTests {
     }
 
     // MARK: - All Audio As Playlist Strategy
+    @MainActor
     @Suite("AllAudioAsPlaylist")
     struct AllAudioAsPlaylistStrategy {
 
@@ -93,6 +95,7 @@ struct AudioPlayerPlaylistShiftStrategyTests {
         AudioPlayerAllAudioAsPlaylistShiftStrategy()
     }
 
+    @MainActor
     private static func makeItem(_ name: String, file: String? = nil) -> AudioPlayerItem {
         AudioPlayerItem(
             name: name,

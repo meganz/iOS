@@ -1,6 +1,7 @@
 import Foundation
 import MEGADesignToken
 
+@MainActor
 protocol AudioPlaylistDelegate: AnyObject {
     func didSelect(item: AudioPlayerItem)
     func didDeselect(item: AudioPlayerItem)

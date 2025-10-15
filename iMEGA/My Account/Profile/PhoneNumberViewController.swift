@@ -70,16 +70,10 @@ class PhoneNumberViewController: UITableViewController {
     private func showModifyPhoneAlert() {
         let modifyPhoneNumberAlert = UIAlertController(title: Strings.Localizable.modifyPhoneNumber, message: Strings.Localizable.thisOperationWillRemoveYourCurrentPhoneNumberAndStartTheProcessOfAssociatingANewPhoneNumberWithYourAccount, preferredStyle: .alert)
         modifyPhoneNumberAlert.addAction(UIAlertAction(title: Strings.Localizable.ok, style: .default, handler: { _ in
-            MEGASdk.shared.resetSmsVerifiedPhoneNumber(with: RequestDelegate { result in
-                if case .success = result {
-                    let presenter = self.presentingViewController
-                    self.dismiss(animated: true, completion: {
-                        if let presenter = presenter {
-                            AddPhoneNumberRouter(hideDontShowAgain: true, presenter: presenter).start()
-                        }
-                    })
-                } else {
-                    SVProgressHUD.showError(withStatus: Strings.Localizable.failedToRemoveYourPhoneNumberPleaseTryAgainLater)
+            MEGASdk.shared.resetSmsVerifiedPhoneNumber(with: RequestDelegate { [weak self] result in
+                guard let self else { return }
+                Task { @MainActor in
+                    self.handleModifyPhoneNumber(result: result)
                 }
             })
         }))
@@ -87,21 +81,41 @@ class PhoneNumberViewController: UITableViewController {
         present(modifyPhoneNumberAlert, animated: true, completion: nil)
     }
     
+    private func handleModifyPhoneNumber(result: Result<MEGARequest, MEGAError>) {
+        if case .success = result {
+            let presenter = self.presentingViewController
+            self.dismiss(animated: true, completion: {
+                if let presenter {
+                    AddPhoneNumberRouter(hideDontShowAgain: true, presenter: presenter).start()
+                }
+            })
+        } else {
+            SVProgressHUD.showError(withStatus: Strings.Localizable.failedToRemoveYourPhoneNumberPleaseTryAgainLater)
+        }
+    }
+    
     private func showRemovePhoneAlert() {
         let removePhoneNumberAlert = UIAlertController(title: Strings.Localizable.removePhoneNumber, message: Strings.Localizable.ThisWillRemoveYourAssociatedPhoneNumberFromYourAccount.ifYouLaterChooseToAddAPhoneNumberYouWillBeRequiredToVerifyIt, preferredStyle: .alert)
         removePhoneNumberAlert.addAction(UIAlertAction(title: Strings.Localizable.ok, style: .default, handler: { _ in
-            MEGASdk.shared.resetSmsVerifiedPhoneNumber(with: RequestDelegate { result in
-                if case .success = result {
-                    self.dismiss(animated: true, completion: {
-                        SVProgressHUD.showInfo(withStatus: Strings.Localizable.yourPhoneNumberHasBeenRemovedSuccessfully)
-                    })
-                } else {
-                    SVProgressHUD.showError(withStatus: Strings.Localizable.failedToRemoveYourPhoneNumberPleaseTryAgainLater)
+            MEGASdk.shared.resetSmsVerifiedPhoneNumber(with: RequestDelegate { [weak self] result in
+                guard let self else { return }
+                Task { @MainActor in
+                    self.handleRemovePhoneNumber(result: result)
                 }
             })
         }))
         removePhoneNumberAlert.addAction(UIAlertAction(title: Strings.Localizable.cancel, style: .cancel, handler: nil))
         present(removePhoneNumberAlert, animated: true, completion: nil)
+    }
+    
+    private func handleRemovePhoneNumber(result: Result<MEGARequest, MEGAError>) {
+        if case .success = result {
+            self.dismiss(animated: true, completion: {
+                SVProgressHUD.showInfo(withStatus: Strings.Localizable.yourPhoneNumberHasBeenRemovedSuccessfully)
+            })
+        } else {
+            SVProgressHUD.showError(withStatus: Strings.Localizable.failedToRemoveYourPhoneNumberPleaseTryAgainLater)
+        }
     }
     
     // MARK: - TableViewDelegate

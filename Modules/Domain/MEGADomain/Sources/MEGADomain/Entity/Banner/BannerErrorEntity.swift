@@ -1,4 +1,4 @@
-public enum BannerErrorEntity: Error {
+public enum BannerErrorEntity: Error, Sendable {
     case unexpected
     case userSessionTimeout
     case `internal`

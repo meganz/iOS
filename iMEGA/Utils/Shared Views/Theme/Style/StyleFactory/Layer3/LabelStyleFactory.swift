@@ -37,7 +37,7 @@ enum MEGALabelStyle {
 }
 
 // MARK: - Themed Label Style Factory
-
+@MainActor
 protocol LabelStyleFactory {
 
     func styler(of style: MEGALabelStyle) -> LabelStyler

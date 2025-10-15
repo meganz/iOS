@@ -1,11 +1,13 @@
 import MEGADomain
 
+@MainActor
 protocol DownloadLinkRouterProtocol {
     func downloadFileLink()
     func downloadFolderLinkNodes()
     func showOnboarding()
 }
 
+@MainActor
 final class DownloadLinkViewModel {
     private let router: any DownloadLinkRouterProtocol
     private let credentialUseCase: any CredentialUseCaseProtocol

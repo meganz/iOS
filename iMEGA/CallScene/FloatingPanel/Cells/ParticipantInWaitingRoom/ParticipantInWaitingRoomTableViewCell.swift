@@ -24,7 +24,9 @@ class ParticipantInWaitingRoomTableViewCell: UITableViewCell, ViewType {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        configureImages()
+        MainActor.assumeIsolated {
+            configureImages()
+        }
     }
     
     @IBAction func admitButtonTapped(_ sender: UIButton) {

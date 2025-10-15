@@ -15,7 +15,7 @@ extension MeetingContainerViewModel {
         chatRoomUseCase: some ChatRoomUseCaseProtocol = MockChatRoomUseCase(),
         chatUseCase: some ChatUseCaseProtocol = MockChatUseCase(),
         scheduledMeetingUseCase: some ScheduledMeetingUseCaseProtocol = MockScheduledMeetingUseCase(),
-        accountUseCase: any AccountUseCaseProtocol = MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true),
+        accountUseCase: any AccountUseCaseProtocol = MockAccountUseCase(currentUser: MEGADomain.UserEntity(handle: 100), isGuest: false, isLoggedIn: true),
         authUseCase: some AuthUseCaseProtocol = MockAuthUseCase(),
         noUserJoinedUseCase: some MeetingNoUserJoinedUseCaseProtocol = MockMeetingNoUserJoinedUseCase(),
         analyticsEventUseCase: some AnalyticsEventUseCaseProtocol =  MockAnalyticsEventUseCase(),

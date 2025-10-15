@@ -3,6 +3,7 @@ import ChatRepoMock
 import MEGAAppPresentation
 import XCTest
 
+@MainActor
 final class MEGALinkManager_AdditionsTests: XCTestCase {
     func testAlbumPublicLink_noLinkSet_shouldReturnNil() {
         MEGALinkManager.linkURL = nil

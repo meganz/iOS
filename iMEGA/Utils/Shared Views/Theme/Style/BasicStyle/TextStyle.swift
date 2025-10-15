@@ -11,6 +11,7 @@ extension TextStyle {
     // MARK: - UILabel Applier
 
     @discardableResult
+    @MainActor
     func applied(on label: UILabel) -> UILabel {
         apply(style: self)(label)
     }
@@ -18,6 +19,7 @@ extension TextStyle {
     // MARK: - UIButton Applier
 
     @discardableResult
+    @MainActor
     func applied(on button: UIButton) -> UIButton {
         apply(style: self)(button)
     }
@@ -32,11 +34,13 @@ extension TextStyle {
     // MARK: - UILabel Applier
 
     @discardableResult
+    @MainActor
     func applied(on textField: UITextField) -> UITextField {
         apply(style: self)(textField)
     }
 }
 
+@MainActor
 private func apply(style: TextStyle) -> (UILabel) -> UILabel {
     return { label in
         label.font = style.font.value
@@ -44,6 +48,7 @@ private func apply(style: TextStyle) -> (UILabel) -> UILabel {
     }
 }
 
+@MainActor
 private func apply(style: TextStyle) -> (UIButton) -> UIButton {
     return { button in
         button.titleLabel?.font = style.font.value
@@ -60,6 +65,7 @@ private func apply(style: TextStyle) -> (TextAttributes) -> TextAttributes {
     }
 }
 
+@MainActor
 private func apply(style: TextStyle) -> (UITextField) -> UITextField {
     return { textField in
         textField.font = style.font.value

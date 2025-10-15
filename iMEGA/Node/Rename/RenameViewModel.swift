@@ -4,10 +4,12 @@ import MEGADesignToken
 import MEGADomain
 import MEGAL10n
 
+@MainActor
 protocol RenameViewRouting: Routing, Sendable {
     func renamingFinished(with result: Result<Void, any Error>)
 }
 
+@MainActor
 struct RenameViewModel: Sendable {
     private let router: any RenameViewRouting
     private let renameEntity: RenameActionEntity
@@ -30,7 +32,7 @@ struct RenameViewModel: Sendable {
         }
     }
 
-    private func renameEntityIfNeeded<T>(_ identifier: T?, newName: String, renameAction: (T, String) async throws -> Void) async -> Result<Void, any Error> {
+    private func renameEntityIfNeeded<T>(_ identifier: T?, newName: String, renameAction: (T, String) async throws -> Void) async -> Result<Void, any Error> where T: Sendable {
         guard let id = identifier else { return .failure(GenericErrorEntity()) }
         do {
             try await renameAction(id, newName)

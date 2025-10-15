@@ -7,7 +7,7 @@ import MEGASwift
 import SAMKeychain
 import UserNotifications
 
-class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationDelegate {
+final class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationDelegate, @unchecked Sendable {
     private static let session = Atomic<String?>(wrappedValue: nil)
     private static let setLogToConsole = Atomic<Bool>(wrappedValue: false)
     

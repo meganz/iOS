@@ -5,7 +5,7 @@ enum RequestHTTPMethod: String {
     case post = "POST"
 }
 
-class RequestModel: NSObject {
+class RequestModel: NSObject, @unchecked Sendable {
     
     // MARK: - Properties
     var path: String {

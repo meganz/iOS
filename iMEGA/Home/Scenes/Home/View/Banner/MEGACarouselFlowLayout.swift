@@ -1,5 +1,6 @@
 import UIKit
 
+@MainActor
 protocol MEGACarouselFlowLayoutDelegate: AnyObject {
 
     func collectionView(_ collectionView: UICollectionView,

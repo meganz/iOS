@@ -185,7 +185,7 @@ class ChatInputBar: UIView {
         }
     }
     
-    deinit {
+    isolated deinit {
         guard let keyboardFrameChangeObserver = keyboardFrameChangeObserver else {
             return
         }
@@ -351,23 +351,28 @@ class ChatInputBar: UIView {
             object: nil,
             queue: .main
         ) { [weak self] notification in
-            guard let `self` = self,
-                self.voiceRecordingViewEnabled,
-                self.messageInputBar.isTextViewTheFirstResponder(),
-                let userInfo = notification.userInfo,
-                let keyboardHeight = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue.height,
-                let animationDuration: TimeInterval = (userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? NSNumber)?.doubleValue
+                guard
+                    let self,
+                    let userInfo = notification.userInfo,
+                    let keyboardHeight = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue.height,
+                    let animationDuration: TimeInterval = (userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? NSNumber)?.doubleValue
                 else {
                 return
             }
             
-            if keyboardHeight - self.frame.height > 0.0 {
-                let defaultAnimationDuration = self.animationDuration
-                self.animationDuration = animationDuration
-                self.voiceRecordingViewEnabled = false
-                self.animationDuration = defaultAnimationDuration
+            Task { @MainActor in
+                self.handleKeyboardFrameChangeNotification(keyboardHeight: keyboardHeight, animationDuration: animationDuration)
             }
         }
+    }
+    
+    private func handleKeyboardFrameChangeNotification(keyboardHeight: CGFloat, animationDuration: TimeInterval) {
+        guard voiceRecordingViewEnabled, messageInputBar.isTextViewTheFirstResponder() else { return }
+        guard keyboardHeight - self.frame.height > 0.0 else { return }
+        let defaultAnimationDuration = self.animationDuration
+        self.animationDuration = animationDuration
+        self.voiceRecordingViewEnabled = false
+        self.animationDuration = defaultAnimationDuration
     }
     
     // MARK: - Gesture callback methods.

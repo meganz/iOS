@@ -1,6 +1,7 @@
 import MEGADomain
 
 /// A protocol that forwards node action selection from `NodeActionViewController` to an audio player view.
+@MainActor
 protocol AudioPlayerViewControllerNodeActionForwardingDelegate {
     
     /// Delegate function forwarding node action selection.

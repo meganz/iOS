@@ -3,6 +3,7 @@ import MEGADesignToken
 import MEGAL10n
 import UIKit
 
+@MainActor
 protocol SlidePanelDelegate: AnyObject {
     
     func slidePanel(_ panel: SlidePanelView, didBeginPanningWithVelocity: CGPoint)

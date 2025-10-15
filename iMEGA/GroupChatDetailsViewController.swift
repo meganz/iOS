@@ -231,22 +231,24 @@ extension GroupChatDetailsViewController {
 }
 
 extension GroupChatDetailsViewController: MEGAChatCallDelegate {
-    public func onChatCallUpdate(_ api: MEGAChatSdk, call: MEGAChatCall) {
-        guard call.chatId == self.chatRoom.chatId else { return }
-        
-        let statusToReload: [MEGAChatCallStatus] = [.inProgress,
-                                                    .userNoPresent,
-                                                    .destroyed]
-        if statusToReload.contains(call.status) {
-            self.reloadData()
+    nonisolated public func onChatCallUpdate(_ api: MEGAChatSdk, call: MEGAChatCall) {
+        Task { @MainActor in
+            guard call.chatId == self.chatRoom.chatId else { return }
+            
+            let statusToReload: [MEGAChatCallStatus] = [.inProgress,
+                                                        .userNoPresent,
+                                                        .destroyed]
+            if statusToReload.contains(call.status) {
+                self.reloadData()
+            }
         }
     }
 }
 
 extension GroupChatDetailsViewController: MEGAChatRoomDelegate {
-    public func onChatRoomUpdate(_ api: MEGAChatSdk, chat: MEGAChatRoom) {
-        if chat.hasChanged(for: .openInvite) {
-            DispatchQueue.main.async {
+    nonisolated public func onChatRoomUpdate(_ api: MEGAChatSdk, chat: MEGAChatRoom) {
+        Task { @MainActor in
+            if chat.hasChanged(for: .openInvite) {
                 self.chatRoom = chat
                 self.reloadData()
             }

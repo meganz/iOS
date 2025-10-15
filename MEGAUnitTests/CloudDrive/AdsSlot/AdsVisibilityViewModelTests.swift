@@ -1,6 +1,7 @@
 @testable import MEGA
 import XCTest
 
+@MainActor
 final class AdsVisibilityViewModelTests: XCTestCase {
     class MockAdsVisibilityConfigurator: AdsVisibilityConfigurating {
         

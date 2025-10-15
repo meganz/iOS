@@ -1,6 +1,6 @@
 import MEGADomain
 
-public final class MockRatingRequestBaseConditionsUseCase: RatingRequestBaseConditionsUseCaseProtocol {
+public final class MockRatingRequestBaseConditionsUseCase: RatingRequestBaseConditionsUseCaseProtocol, @unchecked Sendable {
     var hasMet: Bool
     var savedVersion: String
     

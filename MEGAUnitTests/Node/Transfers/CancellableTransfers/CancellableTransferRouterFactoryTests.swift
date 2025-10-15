@@ -3,6 +3,7 @@ import MEGAAppSDKRepoMock
 import MEGADomain
 import XCTest
 
+@MainActor
 final class CancellableTransferRouterFactoryTests: XCTestCase {
 
     func testMake_fromFolderLink_createsFolderLinkRouterSetup() {

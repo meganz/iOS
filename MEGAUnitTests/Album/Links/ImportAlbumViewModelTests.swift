@@ -846,7 +846,7 @@ final class ImportAlbumViewModelTests: XCTestCase {
         tracker: some AnalyticsTracking = MockTracker(),
         monitorUseCase: some NetworkMonitorUseCaseProtocol = MockNetworkMonitorUseCase(),
         appDelegateRouter: some AppDelegateRouting = MockAppDelegateRouter(),
-        file: StaticString = #file,
+        file: StaticString = #filePath,
         line: UInt = #line
     ) -> ImportAlbumViewModel {
         let sut = ImportAlbumViewModel(

@@ -15,12 +15,17 @@ extension MEGAPurchase {
     
     // MARK: - Promoted plan purchase
     @objc func shouldAddStorePayment(for product: SKProduct) -> Bool {
-        SVProgressHUD.show()
+        Task { @MainActor in
+            SVProgressHUD.show()
+        }
+        
         do {
             return try canProcessStorePayment(for: product)
         } catch {
             guard let error = error as? InAppPurchaseStoreError else {
-                SVProgressHUD.dismiss()
+                Task { @MainActor in
+                    SVProgressHUD.dismiss()
+                }
                 return false
             }
             
@@ -33,8 +38,10 @@ extension MEGAPurchase {
                 return false
             }
             
-            SVProgressHUD.dismiss()
-            showStoreErrorMessage(error)
+            Task { @MainActor in
+                SVProgressHUD.dismiss()
+                showStoreErrorMessage(error)
+            }
             return false
         }
     }
@@ -51,17 +58,16 @@ extension MEGAPurchase {
     }
     
     @objc func handlePromotedPlanPurchaseResult(isSuccess: Bool) {
-        guard isSuccess else {
-            // Failed purchase. Show the default purchase error message.
-            handleFailedPurchaseWithAlert()
-            return
-        }
-        
-        // Success purchase. Refresh account details.
-        SVProgressHUD.show()
-        Task {
+        Task { @MainActor in
+            guard isSuccess else {
+                // Failed purchase. Show the default purchase error message.
+                handleFailedPurchaseWithAlert()
+                return
+            }
+            
+            SVProgressHUD.show()
             await handleRefreshAccountDetails()
-            await MainActor.run { SVProgressHUD.dismiss() }
+            await SVProgressHUD.dismiss()
         }
     }
     
@@ -75,6 +81,7 @@ extension MEGAPurchase {
         }
     }
     
+    @MainActor
     private func handleFailedPurchaseWithAlert() {
         let alertController = UIAlertController(
             title: Strings.Localizable.failedPurchaseTitle,
@@ -141,6 +148,7 @@ extension MEGAPurchase {
         }
     }
     
+    @MainActor
     private func showStoreErrorMessage(_ error: InAppPurchaseStoreError) {
         switch error {
         case .alreadyPurchasedPlan:

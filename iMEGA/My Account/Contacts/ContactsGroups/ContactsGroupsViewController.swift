@@ -177,7 +177,7 @@ extension ContactsGroupsViewController: UITableViewDelegate {
 
 // MARK: - DZNEmptyDataSetSource
 
-extension ContactsGroupsViewController: DZNEmptyDataSetSource {
+extension ContactsGroupsViewController: @MainActor DZNEmptyDataSetSource {
     func customView(forEmptyDataSet scrollView: UIScrollView) -> UIView? {
         return EmptyStateView.init(image: imageForEmptyDataSet(), title: titleForEmptyDataSet(), description: nil, buttonTitle: nil)
     }

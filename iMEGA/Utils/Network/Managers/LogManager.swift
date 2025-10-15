@@ -31,7 +31,7 @@ class LogManager {
         formatter.timeZone = TimeZone.current
         return formatter
     }
-    private static var dateFormat = "hh:mm:ss"
+    private static let dateFormat = "hh:mm:ss"
     private static var isLoggingEnabled: Bool {
         #if DEBUG
         return true

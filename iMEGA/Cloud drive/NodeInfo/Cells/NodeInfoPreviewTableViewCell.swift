@@ -20,8 +20,10 @@ class NodeInfoPreviewTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        setupColors()
-        configureImages()
+        MainActor.assumeIsolated {
+            setupColors()
+            configureImages()
+        }
     }
     
     private func configureImages() {

@@ -87,26 +87,32 @@ private final class ScanDocumentViewControllerDelegate: NSObject, @unchecked Sen
     func documentCameraViewController(
         _ controller: VNDocumentCameraViewController, didFinishWith scan: VNDocumentCameraScan
     ) {
-        controller.dismiss(animated: true) {
-            let docs = (0..<scan.pageCount).map(scan.imageOfPage)
-            self.continuation?.resume(with: .success(docs))
-            self.$continuation.mutate { $0 = nil }
+        let docs = (0..<scan.pageCount).map(scan.imageOfPage)
+        Task { @MainActor in
+            controller.dismiss(animated: true) {
+                self.continuation?.resume(with: .success(docs))
+                self.$continuation.mutate { $0 = nil }
+            }
         }
     }
 
     func documentCameraViewControllerDidCancel(_ controller: VNDocumentCameraViewController) {
-        controller.dismiss(animated: true) {
-            self.continuation?.resume(with: .success(nil))
-            self.$continuation.mutate { $0 = nil }
+        Task { @MainActor in
+            controller.dismiss(animated: true) {
+                self.continuation?.resume(with: .success(nil))
+                self.$continuation.mutate { $0 = nil }
+            }
         }
     }
 
     func documentCameraViewController(
         _ controller: VNDocumentCameraViewController, didFailWithError error: any Error
     ) {
-        controller.dismiss(animated: true) {
-            self.continuation?.resume(with: .success(nil))
-            self.$continuation.mutate { $0 = nil }
+        Task { @MainActor in
+            controller.dismiss(animated: true) {
+                self.continuation?.resume(with: .success(nil))
+                self.$continuation.mutate { $0 = nil }
+            }
         }
     }
 }

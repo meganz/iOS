@@ -2,6 +2,7 @@ import MEGADesignToken
 import MEGAL10n
 import UIKit
 
+@MainActor
 protocol SetLinkPasswordViewControllerDelegate {
     func setLinkPassword(_ setLinkPassword: SetLinkPasswordViewController, password: String)
     func setLinkPasswordCanceled(_ setLinkPassword: SetLinkPasswordViewController)

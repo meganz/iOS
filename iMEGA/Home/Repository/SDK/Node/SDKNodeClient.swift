@@ -2,24 +2,24 @@ import Foundation
 import MEGAAppSDKRepo
 import MEGADomain
 
-struct SDKNodeClient {
+struct SDKNodeClient: Sendable {
 
-    var findNode: (
+    var findNode: @Sendable (
         _ nodeHandle: HandleEntity
     ) -> NodeEntity?
 
-    var loadThumbnail: (
+    var loadThumbnail: @Sendable (
         _ nodeHandle: HandleEntity,
         _ destinationPath: URL,
-        _ completion: @escaping (Bool) -> Void
+        _ completion: @Sendable @escaping (Bool) -> Void
     ) -> Void
 
-    var findOwnerNode: (
+    var findOwnerNode: @Sendable (
         _ nodeHandle: HandleEntity
     ) -> MEGANode?
 
-    var findChatFolderNode: (
-        _ completion: @escaping (NodeEntity?) -> Void
+    var findChatFolderNode: @Sendable (
+        _ completion: @Sendable @escaping (NodeEntity?) -> Void
     ) -> Void
 }
 

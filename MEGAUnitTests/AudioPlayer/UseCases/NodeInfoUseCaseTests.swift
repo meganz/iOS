@@ -31,6 +31,7 @@ struct NodeInfoUseCaseTests {
         }
     }
     
+    @MainActor
     @Suite("Fetch audio tracks")
     struct FetchTracksSuite {
         @Test(arguments: [

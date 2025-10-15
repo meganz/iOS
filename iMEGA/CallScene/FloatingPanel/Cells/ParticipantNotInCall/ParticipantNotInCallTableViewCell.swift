@@ -21,9 +21,11 @@ class ParticipantNotInCallTableViewCell: UITableViewCell, ViewType {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        avatarImageView.image = MEGAAssets.UIImage.image(named: "icon-contacts")
-        callButton.setTitle(Strings.Localizable.Calls.Panel.ParticipantsNotInCall.Participant.call, for: .normal)
-        callButton.setTitleColor(TokenColors.Link.primary, for: .normal)
+        MainActor.assumeIsolated {
+            avatarImageView.image = MEGAAssets.UIImage.image(named: "icon-contacts")
+            callButton.setTitle(Strings.Localizable.Calls.Panel.ParticipantsNotInCall.Participant.call, for: .normal)
+            callButton.setTitleColor(TokenColors.Link.primary, for: .normal)
+        }
     }
     
     var viewModel: ParticipantNotInCallViewModel? {

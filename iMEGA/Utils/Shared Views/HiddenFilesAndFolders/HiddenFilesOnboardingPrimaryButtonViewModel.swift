@@ -3,6 +3,7 @@ import MEGAAppPresentation
 import MEGADomain
 import MEGAL10n
 
+@MainActor
 protocol HiddenFilesOnboardingPrimaryButtonViewModelProtocol {
     var buttonTitle: String { get }
     var buttonAction: (@MainActor () async -> Void) { get }

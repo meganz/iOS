@@ -3,7 +3,7 @@ import MEGADomain
 import MEGAL10n
 import MessageKit
 
-extension ChatViewController: MessageCellDelegate, MessageLabelDelegate {
+extension ChatViewController: @MainActor MessageCellDelegate, @MainActor MessageLabelDelegate {
     
     func didSelectPhoneNumber(_ phoneNumber: String) {
         guard let number = generateURL(forPhoneNumber: phoneNumber) else { return }

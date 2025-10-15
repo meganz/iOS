@@ -75,7 +75,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
     // forces us to adjust parameters in 50 places right now, clearly not sustainable
     @MainActor
     func makeSUT(
-        chatType: ChatRoomEntity.ChatType = .meeting
+        chatType: ChatRoomEntity.ChatType = ChatRoomEntity.ChatType.meeting
     ) -> MeetingFloatingPanelViewModel {
         let chatRoom = ChatRoomEntity(ownPrivilege: .moderator, chatType: chatType)
         
@@ -86,7 +86,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
             containerViewModel: containerViewModel,
             chatRoom: chatRoom,
             callUseCase: callUseCase,
-            accountUseCase: MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true),
+            accountUseCase: MockAccountUseCase(currentUser: MEGADomain.UserEntity(handle: 100), isGuest: false, isLoggedIn: true),
             headerConfigFactory: headerConfigFactory
         )
         return viewModel
@@ -281,7 +281,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
                                                            containerViewModel: containerViewModel,
                                                            chatRoom: chatRoom,
                                                            callUseCase: callUseCase,
-                                                           accountUseCase: MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true),
+                                                           accountUseCase: MockAccountUseCase(currentUser: MEGADomain.UserEntity(handle: 100), isGuest: false, isLoggedIn: true),
                                                            headerConfigFactory: headerConfigFactory)
         test(
             viewModel: viewModel,
@@ -316,7 +316,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
                                                            containerViewModel: containerViewModel,
                                                            chatRoom: chatRoom,
                                                            callUseCase: callUseCase,
-                                                           accountUseCase: MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true),
+                                                           accountUseCase: MockAccountUseCase(currentUser: MEGADomain.UserEntity(handle: 100), isGuest: false, isLoggedIn: true),
                                                            headerConfigFactory: headerConfigFactory)
         test(viewModel: viewModel,
              action: .onViewReady,
@@ -335,7 +335,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
                                                            containerViewModel: containerViewModel,
                                                            chatRoom: chatRoom,
                                                            callUseCase: callUseCase,
-                                                           accountUseCase: MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true),
+                                                           accountUseCase: MockAccountUseCase(currentUser: MEGADomain.UserEntity(handle: 100), isGuest: false, isLoggedIn: true),
                                                            headerConfigFactory: headerConfigFactory)
         test(viewModel: viewModel,
              action: .onViewReady,
@@ -353,7 +353,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
                                                            containerViewModel: containerViewModel,
                                                            chatRoom: chatRoom,
                                                            callUseCase: callUseCase,
-                                                           accountUseCase: MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true),
+                                                           accountUseCase: MockAccountUseCase(currentUser: MEGADomain.UserEntity(handle: 100), isGuest: false, isLoggedIn: true),
                                                            headerConfigFactory: headerConfigFactory)
         test(viewModel: viewModel,
              action: .onViewReady,
@@ -376,7 +376,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
                                                            containerViewModel: containerViewModel,
                                                            chatRoom: chatRoom,
                                                            callUseCase: callUseCase,
-                                                           accountUseCase: MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true),
+                                                           accountUseCase: MockAccountUseCase(currentUser: MEGADomain.UserEntity(handle: 100), isGuest: false, isLoggedIn: true),
                                                            headerConfigFactory: headerConfigFactory)
         await test(viewModel: viewModel, action: .participantListShareLinkButtonPressed(presenter: UIViewController(), sender: UIButton()), expectedCommands: [])
         
@@ -395,7 +395,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
                                                            containerViewModel: containerViewModel,
                                                            chatRoom: chatRoom,
                                                            callUseCase: callUseCase,
-                                                           accountUseCase: MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true),
+                                                           accountUseCase: MockAccountUseCase(currentUser: MEGADomain.UserEntity(handle: 100), isGuest: false, isLoggedIn: true),
                                                            headerConfigFactory: headerConfigFactory)
         test(viewModel: viewModel, action: .participantListShareLinkButtonPressed(presenter: UIViewController(), sender: UIButton()), expectedCommands: [])
         XCTAssert(containerRouter.shareLink_calledTimes == 0)
@@ -404,7 +404,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
     @MainActor func testAction_inviteParticipants() {
         let router = MockMeetingFloatingPanelRouter()
         let accountUseCase = MockAccountUseCase(contacts: [
-            UserEntity(email: "user@email.com", handle: 101, visibility: .visible)
+            MEGADomain.UserEntity(email: "user@email.com", handle: 101, visibility: .visible)
         ])
         let viewModel = MeetingFloatingPanelViewModel.make(router: router, accountUseCase: accountUseCase, chatRoomUseCase: MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity()),
                                                            headerConfigFactory: headerConfigFactory)
@@ -415,7 +415,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
     @MainActor func testAction_inviteParticipants_showAllContactsAlreadyAddedAlert() {
         let router = MockMeetingFloatingPanelRouter()
         let accountUseCase = MockAccountUseCase(contacts: [
-            UserEntity(email: "user@email.com", handle: 101, visibility: .visible)
+            MEGADomain.UserEntity(email: "user@email.com", handle: 101, visibility: .visible)
         ])
         let chatRoomUseCase = MockChatRoomUseCase(myPeerHandles: [101])
         let viewModel = MeetingFloatingPanelViewModel.make(router: router, accountUseCase: accountUseCase, chatRoomUseCase: chatRoomUseCase,
@@ -427,7 +427,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
     @MainActor func testAction_inviteParticipants_showNoAvailableContactsAlert() {
         let router = MockMeetingFloatingPanelRouter()
         let accountUseCase = MockAccountUseCase(contacts: [
-            UserEntity(email: "user@email.com", handle: 101, visibility: .blocked)
+            MEGADomain.UserEntity(email: "user@email.com", handle: 101, visibility: .blocked)
         ])
         let viewModel = MeetingFloatingPanelViewModel.make(router: router, accountUseCase: accountUseCase,
                                                            headerConfigFactory: headerConfigFactory)
@@ -438,7 +438,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
     @MainActor func testAction_inviteParticipants_singleContactBlocked() {
         let router = MockMeetingFloatingPanelRouter()
         let accountUseCase = MockAccountUseCase(contacts: [
-            UserEntity(email: "user@email.com", handle: 101, visibility: .blocked)
+            MEGADomain.UserEntity(email: "user@email.com", handle: 101, visibility: .blocked)
         ])
         let viewModel = MeetingFloatingPanelViewModel.make(router: router, accountUseCase: accountUseCase,
                                                            headerConfigFactory: headerConfigFactory)
@@ -449,7 +449,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
     @MainActor func testAction_inviteParticipants_singleContactVisible() {
         let router = MockMeetingFloatingPanelRouter()
         let accountUseCase = MockAccountUseCase(contacts: [
-            UserEntity(email: "user@email.com", handle: 101, visibility: .visible)
+            MEGADomain.UserEntity(email: "user@email.com", handle: 101, visibility: .visible)
         ])
         let viewModel = MeetingFloatingPanelViewModel.make(router: router, accountUseCase: accountUseCase, chatRoomUseCase: MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity()),
                                                            headerConfigFactory: headerConfigFactory)
@@ -461,8 +461,8 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
     func testAction_inviteParticipants_singleAddedContactAndABlockedContact() {
         let router = MockMeetingFloatingPanelRouter()
         let mockAccountUseCase = MockAccountUseCase(contacts: [
-            UserEntity(email: "user@email.com", handle: 101, visibility: .visible),
-            UserEntity(email: "user@email.com", handle: 102, visibility: .blocked)
+            MEGADomain.UserEntity(email: "user@email.com", handle: 101, visibility: .visible),
+            MEGADomain.UserEntity(email: "user@email.com", handle: 102, visibility: .blocked)
         ])
         let chatRoomUseCase = MockChatRoomUseCase(myPeerHandles: [101])
         let viewModel = MeetingFloatingPanelViewModel.make(router: router, accountUseCase: mockAccountUseCase, chatRoomUseCase: chatRoomUseCase,
@@ -476,7 +476,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
         let router = MockMeetingFloatingPanelRouter()
         router.invitedParticipantHandles = [101]
         let mockAccountUseCase = MockAccountUseCase(contacts: [
-            UserEntity(email: "user@email.com", handle: 101, visibility: .visible)
+            MEGADomain.UserEntity(email: "user@email.com", handle: 101, visibility: .visible)
         ])
         let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity())
         let viewModel = MeetingFloatingPanelViewModel.make(
@@ -500,7 +500,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
                                                            containerViewModel: containerViewModel,
                                                            chatRoom: chatRoom,
                                                            callUseCase: callUseCase,
-                                                           accountUseCase: MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true),
+                                                           accountUseCase: MockAccountUseCase(currentUser: MEGADomain.UserEntity(handle: 100), isGuest: false, isLoggedIn: true),
                                                            headerConfigFactory: headerConfigFactory)
         let particpant = CallParticipantEntity(chatId: 100, participantId: 100, clientId: 100, isModerator: false, canReceiveVideoHiRes: true)
         test(viewModel: viewModel, action: .onContextMenuTap(presenter: UIViewController(), sender: UIButton(), participant: particpant), expectedCommands: [])
@@ -517,7 +517,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
                                                            containerViewModel: containerViewModel,
                                                            chatRoom: chatRoom,
                                                            callUseCase: callUseCase,
-                                                           accountUseCase: MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true),
+                                                           accountUseCase: MockAccountUseCase(currentUser: MEGADomain.UserEntity(handle: 100), isGuest: false, isLoggedIn: true),
                                                            headerConfigFactory: headerConfigFactory)
         let particpant = CallParticipantEntity(chatId: 100, participantId: 100, clientId: 100, isModerator: false, canReceiveVideoHiRes: true)
         test(viewModel: viewModel,
@@ -533,7 +533,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
         let router = MockMeetingFloatingPanelRouter()
         router.invitedParticipantHandles = [101]
         let mockAccountUseCase = MockAccountUseCase(contacts: [
-            UserEntity(email: "user@email.com", handle: 101, visibility: .visible)
+            MEGADomain.UserEntity(email: "user@email.com", handle: 101, visibility: .visible)
         ])
         let chatRoomEntity = ChatRoomEntity(chatId: 100, isOpenInviteEnabled: true)
         let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: chatRoomEntity)
@@ -566,7 +566,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
         let router = MockMeetingFloatingPanelRouter()
         router.invitedParticipantHandles = [101]
         let mockAccountUseCase = MockAccountUseCase(contacts: [
-            UserEntity(email: "user@email.com", handle: 101, visibility: .visible)
+            MEGADomain.UserEntity(email: "user@email.com", handle: 101, visibility: .visible)
         ])
         let chatRoomEntity = ChatRoomEntity(chatId: 100, isOpenInviteEnabled: false)
         let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: chatRoomEntity)

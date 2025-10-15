@@ -1,7 +1,7 @@
 import MEGAAssets
 import MEGAL10n
 
-extension SharedItemsViewController: DZNEmptyDataSetSource {
+extension SharedItemsViewController: @preconcurrency DZNEmptyDataSetSource {
     public func customView(forEmptyDataSet scrollView: UIScrollView) -> UIView? {
         let emptyStateView = EmptyStateView(image: imageForEmptyState(), title: titleForEmptyState(), description: descriptionForEmptyState(), buttonTitle: buttonTitleForEmptyState())
         

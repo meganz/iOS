@@ -2,6 +2,7 @@
 import MEGATest
 import XCTest
 
+@MainActor
 final class SecuritySettingsViewRouterTests: XCTestCase {
     func test_build_returnsSecurityOptionsTableViewController() {
         let (sut, _) = makeSUT()

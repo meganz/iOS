@@ -8,7 +8,7 @@ import UniformTypeIdentifiers
 final class UploadImagePickerViewController: UIImagePickerController {
 
     private var assetCreationRequestLocationManager: AssetCreationRequestLocationManager?
-    var completion: ((Result<String, ImagePickingError>) -> Void)?
+    var completion: (@Sendable (Result<String, ImagePickingError>) -> Void)?
     
     @PreferenceWrapper(key: PreferenceKeyEntity.isSaveMediaCapturedToGalleryEnabled, defaultValue: false, useCase: PreferenceUseCase.default)
     private var isSaveMediaCapturedToGalleryEnabled: Bool
@@ -36,7 +36,7 @@ final class UploadImagePickerViewController: UIImagePickerController {
 
     func prepare(
         withSourceType sourceType: SourceType,
-        completion: @escaping (Result<String, ImagePickingError>) -> Void
+        completion: @escaping @Sendable (Result<String, ImagePickingError>) -> Void
     ) throws {
         try createTemporaryDirectory()
         try isSourceTypeAvailable(sourceType)
@@ -156,7 +156,7 @@ extension UploadImagePickerViewController: UIImagePickerControllerDelegate, UINa
 
     private func createAsset(fromFilePath filePath: String, forAssetType assetType: PHAssetResourceType) {
 
-        func relativeLocalPath(_ filePath: String) -> String {
+        @Sendable func relativeLocalPath(_ filePath: String) -> String {
             (filePath as NSString).mnz_relativeLocalPath()
         }
 

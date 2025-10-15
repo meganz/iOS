@@ -2,6 +2,7 @@
 import MEGADomain
 import XCTest
 
+@MainActor
 final class CallParticipantCellTests: XCTestCase {
     func testConfigureForParticipant_forParticipantIsNotScreenShareCell_shouldNotHideNameLabel() {
         let sut = makeCallParticipantCell()

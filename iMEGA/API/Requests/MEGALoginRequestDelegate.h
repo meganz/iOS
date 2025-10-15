@@ -1,10 +1,11 @@
 #import "MEGARequestDelegate.h"
 
+NS_SWIFT_SENDABLE
 @interface MEGALoginRequestDelegate : NSObject <MEGARequestDelegate>
 
-@property (nonatomic, copy) void (^errorCompletion)(MEGAError *error);
+@property (atomic, copy) void (^errorCompletion)(MEGAError *error);
 
-@property (nonatomic) BOOL confirmAccountInOtherClient;
-@property (nonatomic) BOOL isNewUserRegistration;
+@property (atomic) BOOL confirmAccountInOtherClient;
+@property (atomic) BOOL isNewUserRegistration;
 
 @end

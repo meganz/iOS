@@ -12,7 +12,6 @@ public protocol AudioSessionUseCaseProtocol {
     func isOutputFrom(port: AudioPort) -> Bool
     func enableLoudSpeaker(completion: ((Result<Void, AudioSessionErrorEntity>) -> Void)?)
     func disableLoudSpeaker(completion: ((Result<Void, AudioSessionErrorEntity>) -> Void)?)
-    func routeChanged(handler: ((_ reason: AudioSessionRouteChangedReason, _ previousAudioPort: AudioPort?) -> Void)?)
     func onAudioSessionRouteChange() -> AnyPublisher<AudioSessionRouteChangedReason, Never>
 }
 
@@ -47,10 +46,6 @@ extension AudioSessionUseCaseProtocol {
     
     public func disableLoudSpeaker() {
         disableLoudSpeaker(completion: nil)
-    }
-    
-    public func routeChanged() {
-        routeChanged(handler: nil)
     }
 }
 
@@ -103,10 +98,6 @@ public final class AudioSessionUseCase<T: AudioSessionRepositoryProtocol>: Audio
     
     public func isOutputFrom(port: AudioPort) -> Bool {
         audioSessionRepository.isOutputFrom(port: port)
-    }
-    
-    public func routeChanged(handler: ((_ reason: AudioSessionRouteChangedReason, _ previousAudioPort: AudioPort?) -> Void)?) {
-        audioSessionRepository.routeChanged = handler
     }
     
     // Change it to AsyncSequence once we drop iOS 14

@@ -3,7 +3,8 @@ import MEGAAppPresentation
 import MEGADomain
 import MEGAPreference
 
-class AppearanceViewModel {
+@MainActor
+final class AppearanceViewModel {
     
     enum SaveSettingValue {
         case showHiddenItems(Bool)
@@ -42,7 +43,6 @@ class AppearanceViewModel {
         $mediaDiscoveryShouldIncludeSubfolderSetting.useCase = preferenceUseCase
     }
     
-    @MainActor
     func fetchSettingValue(for setting: SettingValue) async -> Bool {
         switch setting {
         case .showHiddenItems:

@@ -5,6 +5,7 @@ import MEGAAppPresentationMock
 import MEGATest
 import XCTest
 
+@MainActor
 final class CustomModalAlertViewModelTests: XCTestCase {
     func testOnViewDidLoad_analyticsEvents_shouldTrackCorrectly() {
         let dialogEvent = MockDialogEvent()
@@ -52,7 +53,7 @@ final class CustomModalAlertViewModelTests: XCTestCase {
     
     private func makeSUT(tracker: some AnalyticsTracking = MockTracker(),
                          analyticsEvents: CustomModalAlertViewModel.CustomModalAlertViewAnalyticEvents? = nil,
-                         file: StaticString = #file,
+                         file: StaticString = #filePath,
                          line: UInt = #line) -> CustomModalAlertViewModel {
         let sut = CustomModalAlertViewModel(tracker: tracker,
                                   analyticsEvents: analyticsEvents)

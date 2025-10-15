@@ -6,9 +6,10 @@ import MEGADomainMock
 import MEGASwift
 import XCTest
 
+@MainActor
 final class NewCloudDriveNodeSourceUpdatesListenerTests: XCTestCase {
-    
-    class Harness {
+    @MainActor
+    final class Harness {
         private let stream: AsyncStream<[NodeEntity]>
         private let continuation: AsyncStream<[NodeEntity]>.Continuation
         

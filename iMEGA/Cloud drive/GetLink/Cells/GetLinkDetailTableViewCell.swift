@@ -16,8 +16,10 @@ class GetLinkDetailTableViewCell: UITableViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        activityIndicatorView.color = TokenColors.Icon.secondary
-        proImageView.image = MEGAAssets.UIImage.image(named: "proLabel")
+        MainActor.assumeIsolated {
+            activityIndicatorView.color = TokenColors.Icon.secondary
+            proImageView.image = MEGAAssets.UIImage.image(named: "proLabel")
+        }
     }
 
     lazy private var detailLabelSelectedTextColor: UIColor = {

@@ -99,7 +99,7 @@ public protocol ViewType {
     - Router holds weak references to it's base view controller if needed
     - Router holds weak references to it's containing `UINavigationController`
  */
-@preconcurrency @MainActor
+@MainActor
 public protocol Routing {
     func build() -> UIViewController
     func start()

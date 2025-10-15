@@ -5,6 +5,7 @@ import MEGAAppPresentationMock
 import MEGAAssets
 import Testing
 
+@MainActor
 struct PermissionOnboardingViewModelTests {
 
     @Test("On appear should track correct event")

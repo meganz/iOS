@@ -9,15 +9,21 @@ extension Notification.Name {
     static let didChangeCameraUploadsFolderName = Notification.Name("didChangeCameraUploadsFolderName")
 }
  
-final class BackupRegister {
+final class BackupRegister: Sendable {
     private let sdk: MEGASdk
     private let cameraUploadsUseCase: any CameraUploadsUseCaseProtocol
     
-    @PreferenceWrapper(key: PreferenceKeyEntity.backupHeartbeatRegistrationId, defaultValue: nil, useCase: PreferenceUseCase.default)
-    var cachedBackupId: HandleEntity?
+    var cachedBackupId: HandleEntity? {
+        _cachedBackupId.wrappedValue
+    }
     
-    @PreferenceWrapper(key: PreferenceKeyEntity.hasUpdatedBackupToFixExistingBackupNameStorageIssue, defaultValue: false, useCase: PreferenceUseCase.default)
-    var hasUpdatedBackup: Bool
+    nonisolated(unsafe) private var _cachedBackupId: PreferenceWrapper<HandleEntity?, PreferenceKeyEntity> = PreferenceWrapper(key: .backupHeartbeatRegistrationId, defaultValue: nil, useCase: PreferenceUseCase.default)
+    
+    var hasUpdatedBackup: Bool {
+        _hasUpdatedBackup.wrappedValue
+    }
+    
+    nonisolated(unsafe) private var _hasUpdatedBackup: PreferenceWrapper<Bool, PreferenceKeyEntity> = PreferenceWrapper(key: .hasUpdatedBackupToFixExistingBackupNameStorageIssue, defaultValue: false, useCase: PreferenceUseCase.default)
     
     init(
         sdk: MEGASdk,
@@ -77,7 +83,7 @@ final class BackupRegister {
                     Strings.Localizable.General.cameraUploads
                 )
                 MEGALogDebug("[Camera Upload] heartbeat - register backup \(String(describing: type(of: sdk).base64Handle(forHandle: parentHandle))) success")
-                cachedBackupId = parentHandle
+                _cachedBackupId.wrappedValue = parentHandle
             } catch {
                 Crashlytics.crashlytics().record(error: error)
                 MEGALogError("[Camera Upload] heartbeat - error when to register backup \(error)")
@@ -125,7 +131,7 @@ final class BackupRegister {
                     state: state,
                     substate: subState
                 )
-                hasUpdatedBackup = true
+                _hasUpdatedBackup.wrappedValue = true
             } catch {
                 Crashlytics.crashlytics().record(error: error)
                 MEGALogError("[Camera Upload] heartbeat - error when to update backup status \(String(describing: type(of: sdk).base64Handle(forHandle: backupId))) \(error)")

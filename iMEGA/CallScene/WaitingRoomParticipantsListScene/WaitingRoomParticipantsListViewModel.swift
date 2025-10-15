@@ -5,6 +5,7 @@ import MEGAAppPresentation
 import MEGADomain
 import MEGAL10n
 
+@MainActor
 protocol WaitingRoomParticipantsListRouting {
     func dismiss()
 }

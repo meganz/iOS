@@ -2,6 +2,7 @@
 import MEGADomain
 import Testing
 
+@MainActor
 @Suite("User Attribute Handler Tests - Using in-memory MockMEGAStore")
 struct UserAttributeHandlerTests {
     static let defaultHandle: UInt64 = 12345
@@ -54,7 +55,7 @@ struct UserAttributeHandlerTests {
         func updatesFirstNameWhenUserExistsByHandle() {
             let (handler, mockStore) = makeSUT(existingUserForHandle: user)
 
-            handler.handleUserAttribute(user: UserEntity(handle: defaultHandle), email: nil, attributeType: .firstName, newValue: defaultNewFirstName)
+            handler.handleUserAttribute(user: MEGADomain.UserEntity(handle: defaultHandle), email: nil, attributeType: .firstName, newValue: defaultNewFirstName)
             let updatedUser = mockStore.fetchUser(withUserHandle: defaultHandle)
             
             #expect(updatedUser?.firstname == defaultNewFirstName, "Expected user's first name to be updated to \(defaultNewFirstName).")
@@ -65,7 +66,7 @@ struct UserAttributeHandlerTests {
         func insertsNewUserWhenUserDoesNotExistByHandle() {
             let (handler, mockStore) = makeSUT()
 
-            handler.handleUserAttribute(user: UserEntity(handle: defaultHandle), email: nil, attributeType: .firstName, newValue: defaultNewFirstName)
+            handler.handleUserAttribute(user: MEGADomain.UserEntity(handle: defaultHandle), email: nil, attributeType: .firstName, newValue: defaultNewFirstName)
             let insertedUser = mockStore.fetchUser(withUserHandle: defaultHandle)
             
             #expect(insertedUser?.firstname == defaultNewFirstName, "Expected new user with first name \(defaultNewFirstName) to be inserted.")
@@ -119,7 +120,7 @@ struct UserAttributeHandlerTests {
         func updatesAliasWhenAliasIsDifferent() {
             let (handler, mockStore) = makeSUT(existingUserForHandle: user)
 
-            handler.handleUserAttribute(user: UserEntity(handle: defaultHandle), email: nil, attributeType: .alias, newValue: defaultNewAlias)
+            handler.handleUserAttribute(user: MEGADomain.UserEntity(handle: defaultHandle), email: nil, attributeType: .alias, newValue: defaultNewAlias)
             let updatedUser = mockStore.fetchUser(withUserHandle: defaultHandle)
             
             #expect(updatedUser?.nickname == defaultNewAlias, "Expected user's nickname to be updated to \(defaultNewAlias).")
@@ -131,7 +132,7 @@ struct UserAttributeHandlerTests {
             let (handler, mockStore) = makeSUT(existingUserForHandle: user)
             let newAlias = user.nickname ?? ""
 
-            handler.handleUserAttribute(user: UserEntity(handle: defaultHandle), email: nil, attributeType: .alias, newValue: newAlias)
+            handler.handleUserAttribute(user: MEGADomain.UserEntity(handle: defaultHandle), email: nil, attributeType: .alias, newValue: newAlias)
             let updatedUser = mockStore.fetchUser(withUserHandle: defaultHandle)
             
             #expect(updatedUser?.nickname == newAlias, "Expected alias to remain unchanged because it was the same.")

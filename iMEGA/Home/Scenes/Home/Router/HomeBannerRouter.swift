@@ -1,5 +1,6 @@
 import Foundation
 
+@MainActor
 protocol HomeBannerRouterProtocol {
     func didTrigger(from source: HomeBannerRouter.BannerTarget)
 }

@@ -161,7 +161,7 @@ struct DialogButtonWrapper: UIViewRepresentable {
     
     func updateUIView(_ uiView: UIButton, context: Self.Context) {}
     
-    class Coordinator: NSObject {
+    @MainActor class Coordinator: NSObject {
         var parent: DialogButtonWrapper
         var uiButton = UIButton()
         var action: SimpleDialogConfig.ButtonModel.Action = .action({ _ in })

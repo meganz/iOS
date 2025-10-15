@@ -1,4 +1,4 @@
-import Combine
+@preconcurrency import Combine
 import MEGAAuthentication
 
 @MainActor
@@ -17,7 +17,7 @@ final class LoginRoutingViewModel {
         setupSubscription()
     }
     
-    deinit {
+    isolated deinit {
         routeToSubscription?.cancel()
     }
     

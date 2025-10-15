@@ -20,8 +20,10 @@ class GetLinkInfoTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        nameLabel.textColor = TokenColors.Text.primary
-        subtitleLabel.textColor = TokenColors.Text.secondary
+        MainActor.assumeIsolated {
+            nameLabel.textColor = TokenColors.Text.primary
+            subtitleLabel.textColor = TokenColors.Text.secondary
+        }
     }
     
     override func prepareForReuse() {

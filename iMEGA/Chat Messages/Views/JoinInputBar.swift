@@ -13,9 +13,11 @@ class JoinInputBar: UIView {
         super.awakeFromNib()
         
         let title = Strings.Localizable.join
-        joinButton.setTitle(title, for: .normal)
-        joinButton.isHidden = false
-        joiningOrLeavingView.isHidden = true
+        MainActor.assumeIsolated {
+            joinButton.setTitle(title, for: .normal)
+            joinButton.isHidden = false
+            joiningOrLeavingView.isHidden = true
+        }
     }
     
     func setJoinViewState(newState: JoinViewState) {

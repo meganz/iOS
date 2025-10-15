@@ -2,6 +2,7 @@
 import MEGATest
 import XCTest
 
+@MainActor
 final class AdvancedTableViewControllerTests: XCTestCase {
     
     func testNumberOfSections_rendersCorrectSectionCount() {

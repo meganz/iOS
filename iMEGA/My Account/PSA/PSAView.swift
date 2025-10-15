@@ -68,12 +68,14 @@ final class PSAView: UIView, ViewType {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        imageView.layer.cornerRadius = imageView.bounds.width / 2.0
-        leftButton.layer.cornerRadius = 8.0
-        rightButton.layer.cornerRadius = 8.0
-        
-        imageDefaultWidth = imageViewWidthConstraint.constant
-        titleLabelDefaultLeadingSpace = titleLabelLeadingConstraint.constant
+        MainActor.assumeIsolated {
+            imageView.layer.cornerRadius = imageView.bounds.width / 2.0
+            leftButton.layer.cornerRadius = 8.0
+            rightButton.layer.cornerRadius = 8.0
+            
+            imageDefaultWidth = imageViewWidthConstraint.constant
+            titleLabelDefaultLeadingSpace = titleLabelLeadingConstraint.constant
+        }
     }
     
     func executeCommand(_ command: PSAViewModel.Command) {

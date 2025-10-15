@@ -28,7 +28,9 @@ class AddToChatMenuView: UIView {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        updateAppearance()
+        MainActor.assumeIsolated {
+            updateAppearance()
+        }
     }
     
     func disable(_ disable: Bool) {

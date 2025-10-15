@@ -20,10 +20,12 @@ final class BannerCarouselCollectionViewCell: UICollectionViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        bannerView.layer.cornerRadius = 10
-        bannerView.layer.masksToBounds = true
-        dismissButton.setImage(MEGAAssets.UIImage.image(named: "closeBanner"), for: .normal)
-        dismissButton.addTarget(self, action: .didTapDismissButton, for: .touchUpInside)
+        MainActor.assumeIsolated {
+            bannerView.layer.cornerRadius = 10
+            bannerView.layer.masksToBounds = true
+            dismissButton.setImage(MEGAAssets.UIImage.image(named: "closeBanner"), for: .normal)
+            dismissButton.addTarget(self, action: .didTapDismissButton, for: .touchUpInside)
+        }
     }
 
     func configure(with banner: MEGABannerView.Banner) {

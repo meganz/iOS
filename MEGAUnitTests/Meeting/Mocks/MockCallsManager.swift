@@ -1,7 +1,7 @@
 @testable import MEGA
 import MEGADomain
 
-final class MockCallsManager: CallsManagerProtocol {
+final class MockCallsManager: CallsManagerProtocol, @unchecked Sendable {
     struct Incoming: Equatable {
         var uuid: UUID
         var chatRoom: ChatRoomEntity

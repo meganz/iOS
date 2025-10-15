@@ -10,10 +10,11 @@ class CallTitleView: UIView {
        return UIView.layoutFittingExpandedSize
      }
     
-    
     override func awakeFromNib() {
         super.awakeFromNib()
-        recordingImageView.image = MEGAAssets.UIImage.image(named: "Rec indicator")
+        MainActor.assumeIsolated {
+            recordingImageView.image = MEGAAssets.UIImage.image(named: "Rec indicator")
+        }
     }
     
     internal func configure(title: String?, subtitle: String?) {

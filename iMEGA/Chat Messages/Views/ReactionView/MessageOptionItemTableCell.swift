@@ -1,5 +1,6 @@
 import MEGADesignToken
 
+@MainActor
 protocol MessageOptionItemTableCellDelegate: AnyObject {
     func setImageView(_ imageView: UIImageView, forIndex index: Int)
     func setLabel(_ label: UILabel, forIndex index: Int)
@@ -24,7 +25,9 @@ class MessageOptionItemTableCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        configureColors()
+        MainActor.assumeIsolated {
+            configureColors()
+        }
     }
     
     override func prepareForReuse() {

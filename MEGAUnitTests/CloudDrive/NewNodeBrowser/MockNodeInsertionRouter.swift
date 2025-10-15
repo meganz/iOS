@@ -15,7 +15,7 @@ final class MockNodeInsertionRouter: NodeInsertionRouting {
 
     @Published var actions: [Action] = []
 
-    func shouldMatch(expectedAction: Action, file: StaticString = #file, line: UInt = #line) {
+    func shouldMatch(expectedAction: Action, file: StaticString = #filePath, line: UInt = #line) {
         XCTAssertEqual(actions.first, expectedAction, file: file, line: line)
     }
 

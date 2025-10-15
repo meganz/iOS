@@ -4,6 +4,7 @@ import MEGADomainMock
 import MEGAPermissionsMock
 import Testing
 
+@MainActor
 @Suite("Home recent actions test suite")
 struct HomeRecentActionViewModelTests {
 
@@ -23,6 +24,7 @@ struct HomeRecentActionViewModelTests {
         )
     }
     
+    @MainActor
     @Suite("Save to Photos action")
     struct SaveToPhotosAction {
         @Test(
@@ -99,6 +101,7 @@ struct HomeRecentActionViewModelTests {
         }
     }
     
+    @MainActor
     @Suite("Toggle favourite node action")
     struct FavouriteRecentNodeAction {
         @Test(
@@ -124,6 +127,7 @@ struct HomeRecentActionViewModelTests {
         }
     }
     
+    @MainActor
     @Suite("Inputs protocol")
     struct HomeRecentActionViewModelInputs {
         @Test

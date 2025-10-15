@@ -1,6 +1,7 @@
 import MEGADesignToken
 import UIKit
 
+@MainActor
 protocol EmojiCarousalViewDelegate: AnyObject {
     func numberOfEmojis() -> Int
     func emojiAtIndex(_ index: Int) -> String
@@ -19,10 +20,12 @@ class EmojiCarousalView: UIView {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        collectionView.register(EmojiReactionCollectionCell.nib,
-                                forCellWithReuseIdentifier: EmojiReactionCollectionCell.reuseIdentifier)
-        configureColors()
-        handlebarView.isHidden = UIDevice.current.iPadDevice
+        MainActor.assumeIsolated {
+            collectionView.register(EmojiReactionCollectionCell.nib,
+                                    forCellWithReuseIdentifier: EmojiReactionCollectionCell.reuseIdentifier)
+            configureColors()
+            handlebarView.isHidden = UIDevice.current.iPadDevice
+        }
     }
     
     func updateDescription(text: String?) {

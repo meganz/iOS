@@ -6,6 +6,7 @@ import MEGADomainMock
 import MEGATest
 import XCTest
 
+@MainActor
 final class ChatRoomParticipantsListViewModelTests: XCTestCase {
     func testInviteParticipants_onNotCall_shouldInviteParticipantsAndMatch() {
         let invitedUserId: [HandleEntity] = [1]
@@ -114,7 +115,7 @@ final class ChatRoomParticipantsListViewModelTests: XCTestCase {
         callUpdateUseCase: some CallUpdateUseCaseProtocol = MockCallUpdateUseCase(),
         chatRoom: ChatRoomEntity = ChatRoomEntity(),
         tracker: MockTracker = .init(),
-        file: StaticString = #file,
+        file: StaticString = #filePath,
         line: UInt = #line
     ) -> ChatRoomParticipantsListViewModel {
         let sut = ChatRoomParticipantsListViewModel(

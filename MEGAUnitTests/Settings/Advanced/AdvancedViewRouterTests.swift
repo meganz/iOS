@@ -2,6 +2,7 @@
 import MEGATest
 import XCTest
 
+@MainActor
 final class AdvancedViewRouterTests: XCTestCase {
     
     func testBuild_rendersCorrectViewController() {
