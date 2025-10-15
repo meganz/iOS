@@ -52,7 +52,7 @@ public struct PlayerOverlayView: View {
                                     viewModel.didTapVideoArea()
                                 }
                                 .onLongPressGesture(
-                                    minimumDuration: 0.5,
+                                    minimumDuration: 0.1,
                                     perform: {
                                         viewModel.beginHoldToSpeed()
                                     },

@@ -9,7 +9,7 @@ struct ResumePlaybackPositionUseCaseTests {
     @Test
     func saveAndRetrievePlaybackPosition() {
         let sut = makeSUT()
-        let mockNode = MockPlayableNode(id: "test_123", name: "test_video.mp4")
+        let mockNode = MockPlayableNode(name: "test_video.mp4", fingerprint: "test_123")
 
         sut.savePlaybackPosition(120.5, for: mockNode)
         let retrievedPosition = sut.getPlaybackPosition(for: mockNode)
@@ -20,8 +20,8 @@ struct ResumePlaybackPositionUseCaseTests {
     @Test
     func savePositionWithDifferentNodes() {
         let sut = makeSUT()
-        let mockNode1 = MockPlayableNode(id: "unique_1", name: "video1.mp4")
-        let mockNode2 = MockPlayableNode(id: "unique_2", name: "video2.mp4")
+        let mockNode1 = MockPlayableNode(name: "video1.mp4", fingerprint: "unique_1")
+        let mockNode2 = MockPlayableNode(name: "video2.mp4", fingerprint: "unique_2")
 
         sut.savePlaybackPosition(100.0, for: mockNode1)
         sut.savePlaybackPosition(200.0, for: mockNode2)
