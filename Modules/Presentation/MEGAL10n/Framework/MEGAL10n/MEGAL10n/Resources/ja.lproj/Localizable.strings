@@ -1019,9 +1019,9 @@
 /* Title of the Achievements section */
 "achievementsTitle"="達成";
 /* Cell title shown on the achievements view for referral achievement */
-"account.achievement.referral.title"="友人を招待する";
+"account.achievement.referral.title"="友人や知り合いをMEGAに招待";
 /* Subtitle of the referral achievement introduction, %1$@ is a placeholder, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
-"account.achievement.referral.subtitle"="各紹介に対して%1$@ストレージ。\n%2$@";
+"account.achievement.referral.subtitle"="各紹介に対して%1$@の追加ストレージ。\n%2$@";
 /* Text shown to explain how and where you can invite friends */
 "Select from phone contacts or enter multiple email addresses"="端末の連絡先から選択するか、複数のメールアドレスを入力してください";
 /*  */
@@ -1053,17 +1053,17 @@
 /* Label shown on the achievements view for complete registration achievement, %@ is a placeholder. */
 "account.achievement.registration.explanation.label"="無料サインアップボーナスとして%@のストレージスペースを受け取りました。";
 /* Cell title shown on the achievements view for referral achievement */
-"account.achievement.referralBonus.title"="招待ボーナス";
+"account.achievement.referralBonus.title"="友人や知り合いをMEGAに招待";
 /* Cell title shown on the achievements view for install MEGA desktop app achievement */
-"account.achievement.desktopApp.title"="MEGAデスクトップアプリをインストール";
+"account.achievement.desktopApp.title"="当社デスクトップアプリをインストール";
 /* Explanation label shown on the achievements view for complete install MEGA desktop app achievement, %@ is a placeholder. */
-"account.achievement.desktopApp.complete.explaination.label"="あなたはMEGAデスクトップアプリのインストールに対して、%@のストレージスペースを受け取りました。";
+"account.achievement.desktopApp.complete.explaination.label"="当社のデスクトップ アプリをインストールすると、%@の追加ストレージ容量が付与されます";
 /* Explanation label shown on the achievements view for incomplete install MEGA desktop app achievement, %1$@ is a placeholder, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
 "account.achievement.desktopApp.incomplete.explaination.label"="MEGAデスクトップアプリをインストールすると、%1$@分のストレージスペース（%2$@）を無料でご利用いただけます。MEGAデスクトップアプリは、Windows、macOS、およびほとんどのLinuxディストリビューションでご利用いただけます。";
 /* Cell title shown on the achievements view for install MEGA mobile app achievement */
-"account.achievement.mobileApp.title"="MEGAモバイルアプリのいずれかをインストール";
+"account.achievement.mobileApp.title"="当社のモバイルアプリをインストール";
 /* Explanation label shown on the achievements view for complete install MEGA mobile app achievement, %@ is a placeholder. */
-"account.achievement.mobileApp.complete.explaination.label"="あなたはMEGAモバイルアプリのインストールに対して、%@のストレージスペースを受け取りました。";
+"account.achievement.mobileApp.complete.explaination.label"="当社のモバイルアプリをインストールすると、%@の追加ストレージ容量が付与されます";
 /* Explanation label shown on the achievements view for incomplete install MEGA mobile app achievement, %1$@ is a placeholder, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
 "account.achievement.mobileApp.incomplete.explaination.label"="MEGAモバイルアプリをインストールすると、%@分の無料ストレージ容量（%2$@）が付与されます。MEGAモバイルアプリはiOSとAndroidでご利用いただけます。";
 /* Detail label shown on the achievements details view for Start Free Trial when its completed, %1$@ is placeholder for the storage amount, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
@@ -1075,7 +1075,7 @@
 /* Explanation label shown on the achievements view for incomplete start MEGA VPN Free Trial achievement, %@ is a placeholder. */
 "account.achievement.vpnFreeTrial.incomplete.explanation.label"="MEGA VPNアプリをインストールし、MEGAアカウントでログインして無料トライアルを開始してください。無料トライアル開始後、ボーナスストレージが自動的に追加されます。";
 /* Explanation label shown on the achievements view for complete start MEGA VPN Free Trial achievement, %@ is a placeholder. */
-"account.achievement.vpnFreeTrial.complete.explanation.label"="%@のストレージスペースを受け取りました。これでMEGA VPNの無料トライアルを開始できます。";
+"account.achievement.vpnFreeTrial.complete.explanation.label"="%@の追加ストレージスペースを受け取りました。これでMEGA VPNの無料トライアルを開始できます。";
 /* Text for the button to install MEGA VPN in the Start MEGA VPN Free Trial achievement */
 "account.achievement.vpnFreeTrial.buttonText"="MEGA VPNをインストール";
 /* Cell title shown on the achievements view for Start MEGA Pass Free Trial */
@@ -1085,7 +1085,7 @@
 /* Explanation label shown on the achievements view for incomplete start MEGA Pass Free Trial achievement, %@ is a placeholder. */
 "account.achievement.passFreeTrial.incomplete.explanation.label"="MEGA Passアプリをインストールし、MEGAアカウントでログインして無料トライアルを開始してください。無料トライアル開始後、ボーナスストレージが自動的に追加されます。";
 /* Explanation label shown on the achievements view for complete start MEGA Pass Free Trial achievement, %@ is a placeholder. */
-"account.achievement.passFreeTrial.complete.explanation.label"="%@のストレージスペースを受け取りました。これでMEGA Passの無料トライアルを開始できます。";
+"account.achievement.passFreeTrial.complete.explanation.label"="%@の追加ストレージスペースを受け取りました。これでMEGA Passの無料トライアルを開始できます。";
 /* Text for the button to install MEGA Pass in the Start MEGA Pass Free Trial achievement */
 "account.achievement.passFreeTrial.buttonText"="MEGA Passをインストール";
 /* Subtitle of the incomplete achievement with permanent bonus, %1$@ is a placeholder for amount of storage, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
@@ -4742,3 +4742,5 @@
 "subscriptionPurchase.benefits.rubbishClearing.title"="ごみ箱を空にするのを7日から10年の間でスケジュール";
 /* General label for priority customer support */
 "general.prioritySupport"="優先サポート";
+/* Storage used for Business and Pro Flexi accounts in the account menu. */
+"accountMenu.businessAndProFlexiAccountsStorageUsed.title"="%@ used";

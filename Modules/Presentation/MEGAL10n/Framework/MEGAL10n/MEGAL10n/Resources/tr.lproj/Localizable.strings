@@ -1019,9 +1019,9 @@
 /* Title of the Achievements section */
 "achievementsTitle"="Başarılar";
 /* Cell title shown on the achievements view for referral achievement */
-"account.achievement.referral.title"="Arkadaşlarınızı davet edin";
+"account.achievement.referral.title"="MEGA’ya davet et";
 /* Subtitle of the referral achievement introduction, %1$@ is a placeholder, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
-"account.achievement.referral.subtitle"="Her davet için %1$@ depolama alanı. \n%2$@";
+"account.achievement.referral.subtitle"="Her davet için %1$@ ekstra depolama alanı, \n%2$@";
 /* Text shown to explain how and where you can invite friends */
 "Select from phone contacts or enter multiple email addresses"="Cihaz kişilerinden seçin veya birden fazla e-posta adresi girin.";
 /*  */
@@ -1053,17 +1053,17 @@
 /* Label shown on the achievements view for complete registration achievement, %@ is a placeholder. */
 "account.achievement.registration.explanation.label"="Ücretsiz kaydolma bonusu olarak %@ depolama alanı kazandınız.";
 /* Cell title shown on the achievements view for referral achievement */
-"account.achievement.referralBonus.title"="Davetiye bonusları";
+"account.achievement.referralBonus.title"="MEGA’ya davet et";
 /* Cell title shown on the achievements view for install MEGA desktop app achievement */
-"account.achievement.desktopApp.title"="MEGA’nın masaüstü uygulamasını kurun";
+"account.achievement.desktopApp.title"="Masaüstü uygulamamızı yükleyin";
 /* Explanation label shown on the achievements view for complete install MEGA desktop app achievement, %@ is a placeholder. */
-"account.achievement.desktopApp.complete.explaination.label"="MEGA Masaüstü Uygulamasını yüklediğiniz için %@ depolama alanı kazandınız.";
+"account.achievement.desktopApp.complete.explaination.label"="Masaüstü uygulamamızı yüklediğiniz için %@ ek depolama alanı kazandınız";
 /* Explanation label shown on the achievements view for incomplete install MEGA desktop app achievement, %1$@ is a placeholder, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
 "account.achievement.desktopApp.incomplete.explaination.label"="MEGA Masaüstü Uygulamasını kurduğunuzda %1$@ ek depolama alanı kazanırsınız, %2$@. MEGA Masaüstü Uygulaması Windows, macOS ve çoğu Linux dağıtımında mevcuttur.";
 /* Cell title shown on the achievements view for install MEGA mobile app achievement */
-"account.achievement.mobileApp.title"="MEGA’nın mobil uygulamalarından birini kurun";
+"account.achievement.mobileApp.title"="Mobil uygulamamızı yükleyin";
 /* Explanation label shown on the achievements view for complete install MEGA mobile app achievement, %@ is a placeholder. */
-"account.achievement.mobileApp.complete.explaination.label"="MEGA mobil uygulamasını yüklediğiniz için %@ depolama alanı kazandınız.";
+"account.achievement.mobileApp.complete.explaination.label"="Mobil uygulamamızı yüklediğiniz için %@ ek depolama alanı kazandınız";
 /* Explanation label shown on the achievements view for incomplete install MEGA mobile app achievement, %1$@ is a placeholder, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
 "account.achievement.mobileApp.incomplete.explaination.label"="MEGA Mobil Uygulamasını kurduğunuzda %@ ek depolama alanı kazanırsınız, %2$@. MEGA Mobil Uygulaması iOS ve Android için mevcuttur.";
 /* Detail label shown on the achievements details view for Start Free Trial when its completed, %1$@ is placeholder for the storage amount, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
@@ -1075,7 +1075,7 @@
 /* Explanation label shown on the achievements view for incomplete start MEGA VPN Free Trial achievement, %@ is a placeholder. */
 "account.achievement.vpnFreeTrial.incomplete.explanation.label"="MEGA VPN uygulamasını yükleyin, MEGA hesabınızla giriş yapın ve ücretsiz denemenizi başlatın. Bonus depolama alanınız, ücretsiz denemenizi başlattıktan sonra otomatik olarak eklenir.";
 /* Explanation label shown on the achievements view for complete start MEGA VPN Free Trial achievement, %@ is a placeholder. */
-"account.achievement.vpnFreeTrial.complete.explanation.label"="MEGA VPN ücretsiz denemesini başlattığınız için %@ depolama alanı kazandınız.";
+"account.achievement.vpnFreeTrial.complete.explanation.label"="MEGA VPN ücretsiz denemesini başlattığınız için %@ ek depolama alanı kazandınız";
 /* Text for the button to install MEGA VPN in the Start MEGA VPN Free Trial achievement */
 "account.achievement.vpnFreeTrial.buttonText"="MEGA VPN’i Yükle";
 /* Cell title shown on the achievements view for Start MEGA Pass Free Trial */
@@ -1085,7 +1085,7 @@
 /* Explanation label shown on the achievements view for incomplete start MEGA Pass Free Trial achievement, %@ is a placeholder. */
 "account.achievement.passFreeTrial.incomplete.explanation.label"="MEGA Pass uygulamasını yükleyin, MEGA hesabınızla giriş yapın ve ücretsiz denemenizi başlatın. Bonus depolama alanınız, ücretsiz denemenizi başlattıktan sonra otomatik olarak eklenir.";
 /* Explanation label shown on the achievements view for complete start MEGA Pass Free Trial achievement, %@ is a placeholder. */
-"account.achievement.passFreeTrial.complete.explanation.label"="MEGA Pass ücretsiz denemesini başlattığınız için %@ depolama alanı kazandınız.";
+"account.achievement.passFreeTrial.complete.explanation.label"="MEGA Pass ücretsiz denemesini başlattığınız için %@ ek depolama alanı kazandınız";
 /* Text for the button to install MEGA Pass in the Start MEGA Pass Free Trial achievement */
 "account.achievement.passFreeTrial.buttonText"="MEGA Pass’ı Yükle";
 /* Subtitle of the incomplete achievement with permanent bonus, %1$@ is a placeholder for amount of storage, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
@@ -1125,13 +1125,13 @@
 /* Button to remove some photo, e.g. avatar photo. Try to keep the text short (as in English) */
 "Remove Photo"="Fotoğrafı kaldır";
 /* Button title that allows the user change his name */
-"changeName"="İsmi değiştir";
+"changeName"="Adı değiştir";
 /* Success message when changing profile information. */
 "youHaveSuccessfullyChangedYourProfile"="Profilinizi değiştirdiniz";
 /* Hint text for the first name (Placeholder) */
-"firstName"="İsim";
+"firstName"="Adı";
 /* Hint text for the last name (Placeholder) */
-"lastName"="Soy isim";
+"lastName"="Soyadı";
 /* Title for "Local" used space. */
 "localLabel"="Yerel";
 /* Title for MEGA "Available" space. */
@@ -2097,13 +2097,13 @@
 /* Subtitle of chat screen when the chat is inactive */
 "Inactive chat"="Etkin olmayan sohbet";
 /* Contact details screen: Set the alias(nickname) for a user */
-"Set Nickname"="Takma isim belirle";
+"Set Nickname"="Takma adı belirle";
 /* Contact details screen: Edit the alias(nickname) for a user */
-"Edit Nickname"="Takma ismi düzenle";
+"Edit Nickname"="Takma adı düzenle";
 /* Edit nickname screen: Remove nickname button title */
-"Remove Nickname"="Takma ismi kaldır";
+"Remove Nickname"="Takma adı kaldır";
 /* Add nickname screen: This text appears above the alias(nickname) entry */
-"Alias/ Nickname"="Diğer isim veya takma isim";
+"Alias/ Nickname"="Diğer adı veya takma adı";
 /* title of a field to show the role or position (you can use whichever is best for translation) of the user in business accounts */
 "Role:"="Rol:";
 /* Used in camera upload settings: This text will appear with a switch to turn on/off location tags while uploading a file */
@@ -2445,7 +2445,7 @@
 /* Title for document explorer view */
 "Documents"="Belgeler";
 /* Title for audio explorer view */
-"Audio"="Sesler";
+"Audio"="Ses";
 /* Title for video explorer view */
 "Videos"="Videolar";
 /* Photo Explorer Screen: No documents in the account */
@@ -3795,9 +3795,9 @@
 /* Meeting waiting room don't leave button */
 "meetings.waitingRoom.alert.dontLeave"="Ayrılma";
 /* Meeting waiting room guest join first name textfield */
-"meetings.waitingRoom.guest.firstName"="İsim";
+"meetings.waitingRoom.guest.firstName"="Adı";
 /* Meeting waiting room guest join last name textfield */
-"meetings.waitingRoom.guest.lastName"="Soy isim";
+"meetings.waitingRoom.guest.lastName"="Soyadı";
 /* Meeting waiting room guest join button */
 "meetings.waitingRoom.guest.join"="Katıl";
 /* Meeting waiting room message of wait for host to let you in */
@@ -4742,3 +4742,5 @@
 "subscriptionPurchase.benefits.rubbishClearing.title"="Çöp kutusunun temizlenmesini 7 gün ila 10 yıl arasında planlama";
 /* General label for priority customer support */
 "general.prioritySupport"="Öncelikli destek";
+/* Storage used for Business and Pro Flexi accounts in the account menu. */
+"accountMenu.businessAndProFlexiAccountsStorageUsed.title"="%@ used";

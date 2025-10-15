@@ -167,13 +167,13 @@
 /* file has been deleted */
 "cloudDrive.fileLink.unavailableReason1"="Tệp tin đã bị xóa";
 /* file link has been disabled */
-"cloudDrive.fileLink.unavailableReason2"="Chủ sở hữu đã vô hiệu đường liên[w]kết vào tệp[w]tin";
+"cloudDrive.fileLink.unavailableReason2"="Chủ sở hữu đã vô hiệu đường liên kết của tệp tin";
 /* file link invalid */
 "cloudDrive.fileLink.unavailableReason3"="URL không hợp lệ - đường liên kết bạn đang cố truy cập không tồn tại";
 /* file link has been removed */
 "cloudDrive.fileLink.unavailableReason4"="Đường liên kết tệp tin đã bị xóa bỏ do vi phạm Điều Khoản Dịch Vụ của MEGA";
 /* file link has expired */
-"cloudDrive.fileLink.hasExpired"="Đường liên kết đã hết hạn.";
+"cloudDrive.fileLink.hasExpired"="Đường liên kết đã hết hạn";
 /* Message shown when a download starts */
 "downloadStarted"="Tải xuống được bắt đầu";
 /* Title for the folder link view */
@@ -207,13 +207,13 @@
 /* folder has been deleted */
 "cloudDrive.folderLink.unavailableReason1"="Thư mục đã bị xóa";
 /* folder link has been disabled */
-"cloudDrive.folderLink.unavailableReason2"="Chủ sở hữu đã vô hiệu đường liên[w]kết vào thư[w]mục";
+"cloudDrive.folderLink.unavailableReason2"="Chủ sở hữu đã vô hiệu đường liên kết của thư mục";
 /* folder link invalid */
-"cloudDrive.folderLink.unavailableReason3"="URL không hợp lệ - đường liên kết bạn đang cố truy cập không tồn tại";
+"cloudDrive.folderLink.unavailableReason3"="URL không hợp lệ - đường liên kết bạn đang cố truy cập không có tồn tại";
 /* folder link has been removed */
 "cloudDrive.folderLink.unavailableReason4"="Đường liên kết thư mục đã bị xóa bỏ do vi phạm Điều Khoản Dịch Vụ của MEGA";
 /* folder link has expired */
-"cloudDrive.folderLink.hasExpired"="Đường liên kết đã hết hạn.";
+"cloudDrive.folderLink.hasExpired"="Đường liên kết đã hết hạn";
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
 "noInternetConnection"="Không có kết nối internet";
 /* Title shown when a folder doesn't have any files */
@@ -1019,9 +1019,9 @@
 /* Title of the Achievements section */
 "achievementsTitle"="Thành Tích";
 /* Cell title shown on the achievements view for referral achievement */
-"account.achievement.referral.title"="Mời bạn bè";
+"account.achievement.referral.title"="Mời người tham gia MEGA";
 /* Subtitle of the referral achievement introduction, %1$@ is a placeholder, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
-"account.achievement.referral.subtitle"="%1$@ thêm cho lưu trữ mỗi lần khi mời. \n%2$@";
+"account.achievement.referral.subtitle"="%1$@ thêm cho lưu trữ với mỗi lần mời, \n%2$@";
 /* Text shown to explain how and where you can invite friends */
 "Select from phone contacts or enter multiple email addresses"="Chọn từ sổ danh bạ của thiết bị hoặc điền vào các địa chỉ email.";
 /*  */
@@ -1029,7 +1029,7 @@
 /*  */
 "howItWorks"="Cách hoạt động";
 /*  */
-"howItWorksMain"="Your friend needs to sign up for a free account on MEGA and [S]install at least one MEGA application[/S] (either our desktop app or one of our mobile apps)";
+"howItWorksMain"="Bạn của bạn cần phải đăng ký một tài khoản miễn phí trên MEGA và [S]cài đặt một trong những ứng dụng máy khách của MEGA[/S] (app MEGA cho máy tính hoặc di động)";
 /*  */
 "howItWorksSecondary"="Bạn có thể nhắc nhở bạn bè bằng nhiều cách. Bạn sẽ nhận được phần thưởng nếu bạn điền địa chỉ email của bạn mình vào đây trước khi họ tạo tài khoản với địa chỉ email đó.";
 /* A message which is shown once someone has invited a friend as part of the achievements program. */
@@ -1053,17 +1053,17 @@
 /* Label shown on the achievements view for complete registration achievement, %@ is a placeholder. */
 "account.achievement.registration.explanation.label"="Bạn đã nhận được %@ không gian lưu trữ thưởng cho việc đăng ký của bạn.";
 /* Cell title shown on the achievements view for referral achievement */
-"account.achievement.referralBonus.title"="Phần thưởng lời mời";
+"account.achievement.referralBonus.title"="Mời người tham gia MEGA";
 /* Cell title shown on the achievements view for install MEGA desktop app achievement */
-"account.achievement.desktopApp.title"="Install MEGA’s desktop app";
+"account.achievement.desktopApp.title"="Cài app MEGA cho máy tính";
 /* Explanation label shown on the achievements view for complete install MEGA desktop app achievement, %@ is a placeholder. */
-"account.achievement.desktopApp.complete.explaination.label"="Bạn đã nhận được %@ không gian lưu trữ từ việc cài ứng dụng MEGA cho máy tính.";
+"account.achievement.desktopApp.complete.explaination.label"="Bạn đã nhận được %@ thêm cho không gian lưu trữ từ việc cài app MEGA cho máy tính";
 /* Explanation label shown on the achievements view for incomplete install MEGA desktop app achievement, %1$@ is a placeholder, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
 "account.achievement.desktopApp.incomplete.explaination.label"="Sau khi cài đặt App MEGA cho Máy Tính, bạn sẽ nhận được thêm %1$@ cho lưu trữ, %2$@. App MEGA cho Máy Tính còn có cho Windows, macOS và đa số các bản phân phối Linux.";
 /* Cell title shown on the achievements view for install MEGA mobile app achievement */
-"account.achievement.mobileApp.title"="Install one of MEGA’s mobile apps";
+"account.achievement.mobileApp.title"="Tải và cài đặt MEGA cho di động";
 /* Explanation label shown on the achievements view for complete install MEGA mobile app achievement, %@ is a placeholder. */
-"account.achievement.mobileApp.complete.explaination.label"="Bạn đã nhận được %@ không gian lưu trữ từ việc cài ứng dụng MEGA cho di động.";
+"account.achievement.mobileApp.complete.explaination.label"="Bạn đã nhận được %@ thêm cho không gian lưu trữ từ việc cài app MEGA cho di động";
 /* Explanation label shown on the achievements view for incomplete install MEGA mobile app achievement, %1$@ is a placeholder, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
 "account.achievement.mobileApp.incomplete.explaination.label"="Sau khi cài đặt App MEGA cho Di Động, bạn sẽ nhận được thêm %@ cho lưu trữ, %2$@. App MEGA cho Di Động còn có cho iOS và Android.";
 /* Detail label shown on the achievements details view for Start Free Trial when its completed, %1$@ is placeholder for the storage amount, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
@@ -1075,7 +1075,7 @@
 /* Explanation label shown on the achievements view for incomplete start MEGA VPN Free Trial achievement, %@ is a placeholder. */
 "account.achievement.vpnFreeTrial.incomplete.explanation.label"="Cài ứng dụng MEGA VPN, đăng nhập bằng tài khoản MEGA của bạn và bắt đầu hạn dùng thử miễn phí. Phần thưởng không gian lưu trữ sẽ được thêm tự động sau khi hạn dùng thử bắt đầu.";
 /* Explanation label shown on the achievements view for complete start MEGA VPN Free Trial achievement, %@ is a placeholder. */
-"account.achievement.vpnFreeTrial.complete.explanation.label"="Bạn đã nhận được %@ cho không gian lưu trữ khi dùng thử MEGA VPN miễn phí";
+"account.achievement.vpnFreeTrial.complete.explanation.label"="Bạn đã nhận được %@ cho không gian lưu trữ vì dùng thử hạn miễn phí của MEGA VPN";
 /* Text for the button to install MEGA VPN in the Start MEGA VPN Free Trial achievement */
 "account.achievement.vpnFreeTrial.buttonText"="Cài MEGA VPN";
 /* Cell title shown on the achievements view for Start MEGA Pass Free Trial */
@@ -1085,7 +1085,7 @@
 /* Explanation label shown on the achievements view for incomplete start MEGA Pass Free Trial achievement, %@ is a placeholder. */
 "account.achievement.passFreeTrial.incomplete.explanation.label"="Cài ứng dụng MEGA Pass, đăng nhập bằng tài khoản MEGA của bạn và bắt đầu hạn dùng thử miễn phí. Phần thưởng không gian lưu trữ sẽ được thêm tự động sau khi hạn dùng thử bắt đầu.";
 /* Explanation label shown on the achievements view for complete start MEGA Pass Free Trial achievement, %@ is a placeholder. */
-"account.achievement.passFreeTrial.complete.explanation.label"="Bạn đã nhận được %@ cho không gian lưu trữ khi dùng thử MEGA Pass miễn phí";
+"account.achievement.passFreeTrial.complete.explanation.label"="Bạn đã nhận được %@ cho không gian lưu trữ vì dùng thử hạn miễn phí của MEGA Pass";
 /* Text for the button to install MEGA Pass in the Start MEGA Pass Free Trial achievement */
 "account.achievement.passFreeTrial.buttonText"="Cài MEGA Pass";
 /* Subtitle of the incomplete achievement with permanent bonus, %1$@ is a placeholder for amount of storage, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
@@ -2273,13 +2273,13 @@
 /* Error message shown when opening a file link which doesn’t exist */
 "File link unavailable"="Đường liên kết này không còn tồn tại";
 /* Error message shown when opening a folder link which is deleted/disabled/invalid */
-"cloudDrive.folderLink.notAvailable"="Đường liên kết thư mục bạn đang cố truy[w]cập không có khả[w]dụng";
+"cloudDrive.folderLink.notAvailable"="Đường liên kết thư mục bạn đang cố truy cập không có khả dụng";
 /* Error message shown when opening a file link which is deleted/disabled/invalid */
-"cloudDrive.fileLink.notAvailable"="Đường liên kết tệp tin bạn đang cố truy[w]cập không có khả[w]dụng";
+"cloudDrive.fileLink.notAvailable"="Đường liên kết tệp tin bạn đang cố truy cập không có khả dụng";
 /* Error message shown when opening a folder link which is expired */
-"cloudDrive.folderLink.noLongerAvailable"="Đường liên kết thư mục bạn đang cố truy[w]cập không còn khả[w]dụng nữa";
+"cloudDrive.folderLink.noLongerAvailable"="Đường liên kết thư mục bạn đang cố truy cập không còn khả dụng nữa";
 /* Error message shown when opening a file link which is expired */
-"cloudDrive.fileLink.noLongerAvailable"="Đường liên kết tệp tin bạn đang cố truy[w]cập không còn khả[w]dụng nữa";
+"cloudDrive.fileLink.noLongerAvailable"="Đường liên kết tệp tin bạn đang cố truy cập không còn khả dụng nữa";
 /* Header of block with all shared files in chat. */
 "Shared Files"="Tệp tin đã chia sẻ";
 /* Over Disk Quota Screen Navigation Bar Title */
@@ -4729,7 +4729,7 @@
 /* The instruction to unlock the video player */
 "videoPlayer.lock.tapIconToUnlock"="Chạm vào hình ổ khóa để mở khóa";
 /* The lock video player option in bottom more menu */
-"videoPlayer.snapshot.bottomSheet.title"="Chụp Ảnh";
+"videoPlayer.snapshot.bottomSheet.title"="Chụp";
 /* The instruction to unlock the video player */
 "videoPlayer.snapshot.snackBar.title"="Hình ảnh được lưu vào thiết bị của bạn";
 /* The Picture in picture video player option in bottom more menu */
@@ -4742,3 +4742,5 @@
 "subscriptionPurchase.benefits.rubbishClearing.title"="Lên lịch dọn dẹp Thùng Rác từ 7 ngày đến 10 năm";
 /* General label for priority customer support */
 "general.prioritySupport"="Hỗ trợ ưu tiên";
+/* Storage used for Business and Pro Flexi accounts in the account menu. */
+"accountMenu.businessAndProFlexiAccountsStorageUsed.title"="%@ used";

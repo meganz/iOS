@@ -1019,9 +1019,9 @@
 /* Title of the Achievements section */
 "achievementsTitle"="Достижения";
 /* Cell title shown on the achievements view for referral achievement */
-"account.achievement.referral.title"="Пригласите друзей";
+"account.achievement.referral.title"="Приглашайте людей в MEGA";
 /* Subtitle of the referral achievement introduction, %1$@ is a placeholder, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
-"account.achievement.referral.subtitle"="%1$@ на диске за каждое приглашение.\n%2$@";
+"account.achievement.referral.subtitle"="Дополнительно %1$@ на диске %2$@ за каждое приглашение\n";
 /* Text shown to explain how and where you can invite friends */
 "Select from phone contacts or enter multiple email addresses"="Выберите из контактов на устройстве или введите адреса электронной почты.";
 /*  */
@@ -1053,17 +1053,17 @@
 /* Label shown on the achievements view for complete registration achievement, %@ is a placeholder. */
 "account.achievement.registration.explanation.label"="За регистрацию вы получаете %@ на диске в качестве бонуса.";
 /* Cell title shown on the achievements view for referral achievement */
-"account.achievement.referralBonus.title"="Бонусы за приглашения";
+"account.achievement.referralBonus.title"="Приглашайте людей в MEGA";
 /* Cell title shown on the achievements view for install MEGA desktop app achievement */
-"account.achievement.desktopApp.title"="Установите настольное приложение MEGA";
+"account.achievement.desktopApp.title"="Установите настольное приложение";
 /* Explanation label shown on the achievements view for complete install MEGA desktop app achievement, %@ is a placeholder. */
-"account.achievement.desktopApp.complete.explaination.label"="Вы получили %@ на диске за установку настольного приложения.";
+"account.achievement.desktopApp.complete.explaination.label"="Вы получили дополнительно %@ на диске за установку настольного приложения";
 /* Explanation label shown on the achievements view for incomplete install MEGA desktop app achievement, %1$@ is a placeholder, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
 "account.achievement.desktopApp.incomplete.explaination.label"="Установив настольное приложение MEGA, вы получите %1$@ бонусного места на диске %2$@. Настольное приложение MEGA доступно на Windows, macOS и большинстве дистрибутивов Linux.";
 /* Cell title shown on the achievements view for install MEGA mobile app achievement */
-"account.achievement.mobileApp.title"="Установите одно из мобильных приложений MEGA";
+"account.achievement.mobileApp.title"="Установить мобильное приложение";
 /* Explanation label shown on the achievements view for complete install MEGA mobile app achievement, %@ is a placeholder. */
-"account.achievement.mobileApp.complete.explaination.label"="Вы получили %@ на диске за установку мобильного приложения.";
+"account.achievement.mobileApp.complete.explaination.label"="Вы получили дополнительно %@ на диске за установку мобильного приложения";
 /* Explanation label shown on the achievements view for incomplete install MEGA mobile app achievement, %1$@ is a placeholder, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
 "account.achievement.mobileApp.incomplete.explaination.label"="Установив мобильное приложение MEGA, вы получите %@ бонусного места на диске %2$@. Мобильные приложения MEGA доступны для iOS и Android.";
 /* Detail label shown on the achievements details view for Start Free Trial when its completed, %1$@ is placeholder for the storage amount, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
@@ -1075,7 +1075,7 @@
 /* Explanation label shown on the achievements view for incomplete start MEGA VPN Free Trial achievement, %@ is a placeholder. */
 "account.achievement.vpnFreeTrial.incomplete.explanation.label"="Установите приложение MEGA VPN, войдите в свой аккаунт MEGA и активируйте бесплатную пробную версию. Бонусное хранилище будет добавлено автоматически после активации бесплатной пробной версии.";
 /* Explanation label shown on the achievements view for complete start MEGA VPN Free Trial achievement, %@ is a placeholder. */
-"account.achievement.vpnFreeTrial.complete.explanation.label"="Вы получили %@ на диске за то, что активировали бесплатную пробную версию MEGA VPN";
+"account.achievement.vpnFreeTrial.complete.explanation.label"="Вы получили дополнительно %@ на диске за активацию бесплатной пробной версии MEGA VPN";
 /* Text for the button to install MEGA VPN in the Start MEGA VPN Free Trial achievement */
 "account.achievement.vpnFreeTrial.buttonText"="Установите MEGA VPN";
 /* Cell title shown on the achievements view for Start MEGA Pass Free Trial */
@@ -1085,7 +1085,7 @@
 /* Explanation label shown on the achievements view for incomplete start MEGA Pass Free Trial achievement, %@ is a placeholder. */
 "account.achievement.passFreeTrial.incomplete.explanation.label"="Установите приложение MEGA Pass, войдите в свой аккаунт MEGA и активируйте бесплатную пробную версию. Бонусное хранилище будет добавлено автоматически после активации бесплатной пробной версии.";
 /* Explanation label shown on the achievements view for complete start MEGA Pass Free Trial achievement, %@ is a placeholder. */
-"account.achievement.passFreeTrial.complete.explanation.label"="Вы получили %@ на диске за то, что активировали бесплатную пробную версию MEGA Pass";
+"account.achievement.passFreeTrial.complete.explanation.label"="Вы получили дополнительно %@ на диске за активацию бесплатной пробной версии MEGA Pass";
 /* Text for the button to install MEGA Pass in the Start MEGA Pass Free Trial achievement */
 "account.achievement.passFreeTrial.buttonText"="Установите MEGA Pass";
 /* Subtitle of the incomplete achievement with permanent bonus, %1$@ is a placeholder for amount of storage, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
@@ -4742,3 +4742,5 @@
 "subscriptionPurchase.benefits.rubbishClearing.title"="Срок очистки Корзины от 7 дней до 10 лет";
 /* General label for priority customer support */
 "general.prioritySupport"="Приоритетная поддержка";
+/* Storage used for Business and Pro Flexi accounts in the account menu. */
+"accountMenu.businessAndProFlexiAccountsStorageUsed.title"="%@ used";

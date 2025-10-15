@@ -1019,9 +1019,9 @@
 /* Title of the Achievements section */
 "achievementsTitle"="Realizări";
 /* Cell title shown on the achievements view for referral achievement */
-"account.achievement.referral.title"="Invită-ți prietenii";
+"account.achievement.referral.title"="Invitați oameni la MEGA";
 /* Subtitle of the referral achievement introduction, %1$@ is a placeholder, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
-"account.achievement.referral.subtitle"="%1$@ spațiu de stocare pentru fiecare invitație. \n%2$@";
+"account.achievement.referral.subtitle"="%1$@ spațiu de stocare suplimentar pentru fiecare invitație, \n%2$@";
 /* Text shown to explain how and where you can invite friends */
 "Select from phone contacts or enter multiple email addresses"="Selectează din contactele dispozitivului sau introdu mai multe adrese de e-mail.";
 /*  */
@@ -1029,7 +1029,7 @@
 /*  */
 "howItWorks"="Cum funcționează";
 /*  */
-"howItWorksMain"="Your friend needs to sign up for a free account on MEGA and [S]install at least one MEGA application[/S] (either our desktop app or one of our mobile apps)";
+"howItWorksMain"="Prietenul tău trebuie să se înscrie-te pentru un cont gratuit pe MEGA și [S]instalați cel puțin o aplicație MEGA[/S] (fie aplicația desktop, fie una dintre aplicațiile noastre mobile)";
 /*  */
 "howItWorksSecondary"="Puteți să vă anunțați prietenul prin orice metodă. Veți câștiga bonusul dacă ați introdus e-mailul prietenului dvs. aici înainte de a se înscrie cu acea adresă.";
 /* A message which is shown once someone has invited a friend as part of the achievements program. */
@@ -1053,17 +1053,17 @@
 /* Label shown on the achievements view for complete registration achievement, %@ is a placeholder. */
 "account.achievement.registration.explanation.label"="Ați primit %@ spațiu de stocare ca bonus de înscriere gratuit.";
 /* Cell title shown on the achievements view for referral achievement */
-"account.achievement.referralBonus.title"="Bonusuri pt. invitații";
+"account.achievement.referralBonus.title"="Invitați oameni la MEGA";
 /* Cell title shown on the achievements view for install MEGA desktop app achievement */
-"account.achievement.desktopApp.title"="Install MEGA’s desktop app";
+"account.achievement.desktopApp.title"="Instalați aplicația desktop";
 /* Explanation label shown on the achievements view for complete install MEGA desktop app achievement, %@ is a placeholder. */
-"account.achievement.desktopApp.complete.explaination.label"="Ați primit %@ spațiu de stocare pentru instalarea Aplicației Desktop MEGA.";
+"account.achievement.desktopApp.complete.explaination.label"="Ați primit %@ spațiu de stocare suplimentar pentru instalarea aplicației desktop";
 /* Explanation label shown on the achievements view for incomplete install MEGA desktop app achievement, %1$@ is a placeholder, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
 "account.achievement.desktopApp.incomplete.explaination.label"="Când instalați Aplicația Desktop MEGA veți obține %1$@ de spațiu de stocare gratuit, %2$@. Aplicația Desktop MEGA este disponibilă pentru Windows, macOS și majoritatea distribuțiilor Linux.";
 /* Cell title shown on the achievements view for install MEGA mobile app achievement */
-"account.achievement.mobileApp.title"="Install one of MEGA’s mobile apps";
+"account.achievement.mobileApp.title"="Instalează aplicația noastră mobilă";
 /* Explanation label shown on the achievements view for complete install MEGA mobile app achievement, %@ is a placeholder. */
-"account.achievement.mobileApp.complete.explaination.label"="Ai primit %@ spațiu de stocare pentru instalarea Aplicației Mobile MEGA.";
+"account.achievement.mobileApp.complete.explaination.label"="Ai primit %@ spațiu de stocare suplimentar pentru instalarea aplicației noastre mobile";
 /* Explanation label shown on the achievements view for incomplete install MEGA mobile app achievement, %1$@ is a placeholder, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
 "account.achievement.mobileApp.incomplete.explaination.label"="Când instalați aplicația MEGA Mobile veți obține %@ de spațiu de stocare gratuit, %2$@. Aplicația MEGA Mobile este disponibilă pentru iOS și Android. ";
 /* Detail label shown on the achievements details view for Start Free Trial when its completed, %1$@ is placeholder for the storage amount, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
@@ -1075,7 +1075,7 @@
 /* Explanation label shown on the achievements view for incomplete start MEGA VPN Free Trial achievement, %@ is a placeholder. */
 "account.achievement.vpnFreeTrial.incomplete.explanation.label"="Instalează aplicația MEGA VPN, conectează-te cu contul tău MEGA și începe perioada de probă gratuită. Spațiul de stocare bonus este adăugat automat după începerea perioadei de probă gratuite.";
 /* Explanation label shown on the achievements view for complete start MEGA VPN Free Trial achievement, %@ is a placeholder. */
-"account.achievement.vpnFreeTrial.complete.explanation.label"="Ați primit %@ spațiu de stocare pentru pornirea unui MEGA VPN de încercare gratuită";
+"account.achievement.vpnFreeTrial.complete.explanation.label"="Ați primit %@ spațiu de stocare suplimentar pentru pornirea unui MEGA VPN de încercare gratuită";
 /* Text for the button to install MEGA VPN in the Start MEGA VPN Free Trial achievement */
 "account.achievement.vpnFreeTrial.buttonText"="Instalați MEGA VPN";
 /* Cell title shown on the achievements view for Start MEGA Pass Free Trial */
@@ -1085,7 +1085,7 @@
 /* Explanation label shown on the achievements view for incomplete start MEGA Pass Free Trial achievement, %@ is a placeholder. */
 "account.achievement.passFreeTrial.incomplete.explanation.label"="Instalează aplicația MEGA Pass, conectează-te cu contul tău MEGA și începe perioada de probă gratuită. Spațiul de stocare bonus este adăugat automat după începerea perioadei de probă gratuite.";
 /* Explanation label shown on the achievements view for complete start MEGA Pass Free Trial achievement, %@ is a placeholder. */
-"account.achievement.passFreeTrial.complete.explanation.label"="Ați primit %@ spațiu de stocare pentru pornirea unui MEGA Pass de încercare gratuită";
+"account.achievement.passFreeTrial.complete.explanation.label"="Ați primit %@ spațiu de stocare suplimentar pentru pornirea unui MEGA Pass de încercare gratuită";
 /* Text for the button to install MEGA Pass in the Start MEGA Pass Free Trial achievement */
 "account.achievement.passFreeTrial.buttonText"="Instalați MEGA Pass";
 /* Subtitle of the incomplete achievement with permanent bonus, %1$@ is a placeholder for amount of storage, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
@@ -4742,3 +4742,5 @@
 "subscriptionPurchase.benefits.rubbishClearing.title"="Programați curățarea Coșului de gunoi între 7 zile și 10 ani";
 /* General label for priority customer support */
 "general.prioritySupport"="Asistență prioritară";
+/* Storage used for Business and Pro Flexi accounts in the account menu. */
+"accountMenu.businessAndProFlexiAccountsStorageUsed.title"="%@ used";

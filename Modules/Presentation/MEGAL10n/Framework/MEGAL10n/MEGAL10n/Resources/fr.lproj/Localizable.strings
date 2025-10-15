@@ -1019,9 +1019,9 @@
 /* Title of the Achievements section */
 "achievementsTitle"="Objectifs";
 /* Cell title shown on the achievements view for referral achievement */
-"account.achievement.referral.title"="Inviter vos amies et amis";
+"account.achievement.referral.title"="Invitez des personnes sur MEGA";
 /* Subtitle of the referral achievement introduction, %1$@ is a placeholder, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
-"account.achievement.referral.subtitle"="%1$@ d'espace de stockage pour chaque invitation. \n%2$@";
+"account.achievement.referral.subtitle"="%1$@ d'espace de stockage supplémentaire pour chaque invitation, \n%2$@";
 /* Text shown to explain how and where you can invite friends */
 "Select from phone contacts or enter multiple email addresses"="Sélectionner des contacts sur votre appareil ou saisir plusieurs adresses courriel";
 /*  */
@@ -1029,7 +1029,7 @@
 /*  */
 "howItWorks"="Fonctionnement";
 /*  */
-"howItWorksMain"="Your friend needs to sign up for a free account on MEGA and [S]install at least one MEGA application[/S] (either our desktop app or one of our mobile apps)";
+"howItWorksMain"="Votre ami(e) doit créer un compte gratuit sur MEGA et [S]installer au moins une application MEGA[/S] (soit notre application pour ordinateur, soit l'une de nos applications mobiles).";
 /*  */
 "howItWorksSecondary"="Vous pouvez informer votre ami par n'importe quelle méthode. Vous gagnerez la prime si vous avez saisi le courriel de votre ami ici avant qu'il ne s'inscriive avec cette adresse.";
 /* A message which is shown once someone has invited a friend as part of the achievements program. */
@@ -1053,17 +1053,17 @@
 /* Label shown on the achievements view for complete registration achievement, %@ is a placeholder. */
 "account.achievement.registration.explanation.label"="Vous avez reçu %@ d’espace de stockage supplémentaire comme prime d’inscription.";
 /* Cell title shown on the achievements view for referral achievement */
-"account.achievement.referralBonus.title"="Primes d’invitation";
+"account.achievement.referralBonus.title"="Invitez des personnes sur MEGA";
 /* Cell title shown on the achievements view for install MEGA desktop app achievement */
-"account.achievement.desktopApp.title"="Install MEGA’s desktop app";
+"account.achievement.desktopApp.title"="Installez notre appli pour ordinateur";
 /* Explanation label shown on the achievements view for complete install MEGA desktop app achievement, %@ is a placeholder. */
-"account.achievement.desktopApp.complete.explaination.label"="Vous avez reçu %@ d’espace de stockage pour avoir installé l’appli MEGA pour ordinateur.";
+"account.achievement.desktopApp.complete.explaination.label"="Vous avez reçu %@ d'espace de stockage supplémentaire pour avoir installé notre appli pour ordinateur.";
 /* Explanation label shown on the achievements view for incomplete install MEGA desktop app achievement, %1$@ is a placeholder, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
 "account.achievement.desktopApp.incomplete.explaination.label"="Lorsque vous installez l'application MEGA pour ordinateur, vous bénéficiez de %1$@ d'espace de stockage gratuit, %2$@. L'application MEGA Desktop est disponible pour Windows, macOS et la plupart des distributions Linux.";
 /* Cell title shown on the achievements view for install MEGA mobile app achievement */
-"account.achievement.mobileApp.title"="Install one of MEGA’s mobile apps";
+"account.achievement.mobileApp.title"="Installer notre appli mobile";
 /* Explanation label shown on the achievements view for complete install MEGA mobile app achievement, %@ is a placeholder. */
-"account.achievement.mobileApp.complete.explaination.label"="Vous avez reçu %@ d’espace de stockage pour avoir installé l’appli MEGA mobile.";
+"account.achievement.mobileApp.complete.explaination.label"="Vous avez reçu %@ d'espace de stockage supplémentaire pour avoir installé notre appli mobile.";
 /* Explanation label shown on the achievements view for incomplete install MEGA mobile app achievement, %1$@ is a placeholder, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
 "account.achievement.mobileApp.incomplete.explaination.label"="Lorsque vous installez l'appli mobile MEGA, vous bénéficiez de %@ d'espace de stockage gratuit, %2$@. L'appli mobile MEGA est disponible pour iOS et Android. ";
 /* Detail label shown on the achievements details view for Start Free Trial when its completed, %1$@ is placeholder for the storage amount, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
@@ -1075,7 +1075,7 @@
 /* Explanation label shown on the achievements view for incomplete start MEGA VPN Free Trial achievement, %@ is a placeholder. */
 "account.achievement.vpnFreeTrial.incomplete.explanation.label"="Installez l'appli MEGA VPN, connectez-vous avec votre compte MEGA et commencez votre essai gratuit. Votre bonus d'espace de stockage est ajouté automatiquement après le démarrage de l'essai gratuit.";
 /* Explanation label shown on the achievements view for complete start MEGA VPN Free Trial achievement, %@ is a placeholder. */
-"account.achievement.vpnFreeTrial.complete.explanation.label"="Vous avez reçu %@ d'espace de stockage pour avoir commencé l'essai gratuit de MEGA VPN.";
+"account.achievement.vpnFreeTrial.complete.explanation.label"="Vous avez reçu %@ d'espace de stockage supplémentaire pour avoir commencé un essai gratuit MEGA VPN.";
 /* Text for the button to install MEGA VPN in the Start MEGA VPN Free Trial achievement */
 "account.achievement.vpnFreeTrial.buttonText"="Installer MEGA VPN";
 /* Cell title shown on the achievements view for Start MEGA Pass Free Trial */
@@ -1085,7 +1085,7 @@
 /* Explanation label shown on the achievements view for incomplete start MEGA Pass Free Trial achievement, %@ is a placeholder. */
 "account.achievement.passFreeTrial.incomplete.explanation.label"="Installez l'appli MEGA Pass, connectez-vous avec votre compte MEGA et commencez votre essai gratuit. Votre bonus d'espace de stockage est ajouté automatiquement après le démarrage de l'essai gratuit.";
 /* Explanation label shown on the achievements view for complete start MEGA Pass Free Trial achievement, %@ is a placeholder. */
-"account.achievement.passFreeTrial.complete.explanation.label"="Vous avez reçu %@ d'espace de stockage pour avoir commencé l'essai gratuit de MEGA Pass.";
+"account.achievement.passFreeTrial.complete.explanation.label"="Vous avez reçu %@ d'espace de stockage supplémentaire pour avoir commencé un essai gratuit MEGA Pass.";
 /* Text for the button to install MEGA Pass in the Start MEGA Pass Free Trial achievement */
 "account.achievement.passFreeTrial.buttonText"="Installer MEGA Pass";
 /* Subtitle of the incomplete achievement with permanent bonus, %1$@ is a placeholder for amount of storage, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
@@ -4727,13 +4727,13 @@
 /* The screen locked status message in video player */
 "videoPlayer.lock.screenLocked"="L’écran est verrouillé";
 /* The instruction to unlock the video player */
-"videoPlayer.lock.tapIconToUnlock"="Tap the lock icon to unlock";
+"videoPlayer.lock.tapIconToUnlock"="Appuyez sur l'icône de cadenas pour déverrouiller.";
 /* The lock video player option in bottom more menu */
 "videoPlayer.snapshot.bottomSheet.title"="Prendre une photo";
 /* The instruction to unlock the video player */
 "videoPlayer.snapshot.snackBar.title"="Image enregistrée sur votre appareil";
 /* The Picture in picture video player option in bottom more menu */
-"videoPlayer.pip.bottomSheet.title"="Picture in picture";
+"videoPlayer.pip.bottomSheet.title"="Image dans l'image";
 /* Subscription benefit for rewind */
 "subscriptionPurchase.benefits.rewind.title"="Récupération de données supprimées sur une période pouvant aller jusqu'à 60 jours";
 /* Subscription benefit for for calls and meetings */
@@ -4742,3 +4742,5 @@
 "subscriptionPurchase.benefits.rubbishClearing.title"="Planification de vidage de la Corbeille entre 7 jours et 10 ans";
 /* General label for priority customer support */
 "general.prioritySupport"="Assistance prioritaire";
+/* Storage used for Business and Pro Flexi accounts in the account menu. */
+"accountMenu.businessAndProFlexiAccountsStorageUsed.title"="%@ used";

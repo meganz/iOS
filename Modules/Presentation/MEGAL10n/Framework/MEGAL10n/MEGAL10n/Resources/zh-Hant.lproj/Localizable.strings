@@ -1019,9 +1019,9 @@
 /* Title of the Achievements section */
 "achievementsTitle"="成就";
 /* Cell title shown on the achievements view for referral achievement */
-"account.achievement.referral.title"="邀請朋友";
+"account.achievement.referral.title"="邀請朋友加入MEGA";
 /* Subtitle of the referral achievement introduction, %1$@ is a placeholder, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
-"account.achievement.referral.subtitle"="每個邀請可獲得%1$@儲存空間，有效期為\n%2$@";
+"account.achievement.referral.subtitle"="%1$@ extra storage for each invitation, \n%2$@";
 /* Text shown to explain how and where you can invite friends */
 "Select from phone contacts or enter multiple email addresses"="從裝置上的聯絡人來選擇或輸入多個電子郵件地址。";
 /*  */
@@ -1053,17 +1053,17 @@
 /* Label shown on the achievements view for complete registration achievement, %@ is a placeholder. */
 "account.achievement.registration.explanation.label"="您已收到%@儲存空間作為免費註冊獎勵。";
 /* Cell title shown on the achievements view for referral achievement */
-"account.achievement.referralBonus.title"="邀請獎勵";
+"account.achievement.referralBonus.title"="邀請朋友加入MEGA";
 /* Cell title shown on the achievements view for install MEGA desktop app achievement */
-"account.achievement.desktopApp.title"="安裝MEGA的桌面應用程式";
+"account.achievement.desktopApp.title"="安裝我們的桌面應用程式";
 /* Explanation label shown on the achievements view for complete install MEGA desktop app achievement, %@ is a placeholder. */
-"account.achievement.desktopApp.complete.explaination.label"="您已經安裝MEGA桌面應用程式而獲得%@儲存空間過了。";
+"account.achievement.desktopApp.complete.explaination.label"="您已安裝我們的MEGA桌面應用程式並獲得%@儲存空間了。";
 /* Explanation label shown on the achievements view for incomplete install MEGA desktop app achievement, %1$@ is a placeholder, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
 "account.achievement.desktopApp.incomplete.explaination.label"="當您安裝MEGA桌面應用程式時，您可獲得%1$@的免費儲存空間，有效期為%2$@。MEGA桌面應用程式適用於Windows、macOS和大多數Linux發行版。";
 /* Cell title shown on the achievements view for install MEGA mobile app achievement */
-"account.achievement.mobileApp.title"="安裝其中一款MEGA的行動應用程式";
+"account.achievement.mobileApp.title"="安裝我們的手機應用程式";
 /* Explanation label shown on the achievements view for complete install MEGA mobile app achievement, %@ is a placeholder. */
-"account.achievement.mobileApp.complete.explaination.label"="您已經安裝MEGA手機應用程式而獲得%@儲存空間過了。";
+"account.achievement.mobileApp.complete.explaination.label"="您已安裝我們的行動應用程式並獲得%@儲存空間了。";
 /* Explanation label shown on the achievements view for incomplete install MEGA mobile app achievement, %1$@ is a placeholder, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
 "account.achievement.mobileApp.incomplete.explaination.label"="當您安裝MEGA行動應用程式時，您可獲得%@的免費儲存空間，有效期為%2$@。 MEGA行機應用程式適用於iOS與Android。";
 /* Detail label shown on the achievements details view for Start Free Trial when its completed, %1$@ is placeholder for the storage amount, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
@@ -1075,7 +1075,7 @@
 /* Explanation label shown on the achievements view for incomplete start MEGA VPN Free Trial achievement, %@ is a placeholder. */
 "account.achievement.vpnFreeTrial.incomplete.explanation.label"="安裝MEGA VPN應用程式，使用您的MEGA帳戶登入，然後開始免費試用。開始免費試用後，您將獲得儲存空間自動增加的獎勵。";
 /* Explanation label shown on the achievements view for complete start MEGA VPN Free Trial achievement, %@ is a placeholder. */
-"account.achievement.vpnFreeTrial.complete.explanation.label"="您已經開始免費試用MEGA VPN而獲得%@儲存空間";
+"account.achievement.vpnFreeTrial.complete.explanation.label"="You’ve received %@ extra storage space for starting a MEGA VPN free trial";
 /* Text for the button to install MEGA VPN in the Start MEGA VPN Free Trial achievement */
 "account.achievement.vpnFreeTrial.buttonText"="安裝MEGA VPN";
 /* Cell title shown on the achievements view for Start MEGA Pass Free Trial */
@@ -1085,7 +1085,7 @@
 /* Explanation label shown on the achievements view for incomplete start MEGA Pass Free Trial achievement, %@ is a placeholder. */
 "account.achievement.passFreeTrial.incomplete.explanation.label"="安裝MEGA Pass應用程式，使用您的MEGA帳戶登入，然後開始免費試用。開始免費試用後，您將獲得儲存空間自動增加的獎勵。";
 /* Explanation label shown on the achievements view for complete start MEGA Pass Free Trial achievement, %@ is a placeholder. */
-"account.achievement.passFreeTrial.complete.explanation.label"="您已經開始免費試用MEGA Pass而獲得%@儲存空間";
+"account.achievement.passFreeTrial.complete.explanation.label"="You’ve received %@ extra storage space for starting a MEGA Pass free trial";
 /* Text for the button to install MEGA Pass in the Start MEGA Pass Free Trial achievement */
 "account.achievement.passFreeTrial.buttonText"="安裝MEGA Pass";
 /* Subtitle of the incomplete achievement with permanent bonus, %1$@ is a placeholder for amount of storage, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
@@ -4742,3 +4742,5 @@
 "subscriptionPurchase.benefits.rubbishClearing.title"="可設定垃圾筒清空排程7天至10年";
 /* General label for priority customer support */
 "general.prioritySupport"="優先的支援";
+/* Storage used for Business and Pro Flexi accounts in the account menu. */
+"accountMenu.businessAndProFlexiAccountsStorageUsed.title"="%@ used";

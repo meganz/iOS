@@ -1019,9 +1019,9 @@
 /* Title of the Achievements section */
 "achievementsTitle"="Beloningen";
 /* Cell title shown on the achievements view for referral achievement */
-"account.achievement.referral.title"="Nodig uw vrienden uit";
+"account.achievement.referral.title"="Uitnodigen bij MEGA";
 /* Subtitle of the referral achievement introduction, %1$@ is a placeholder, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
-"account.achievement.referral.subtitle"="%1$@ opslagruimte voor elke uitnodiging. \n%2$@";
+"account.achievement.referral.subtitle"="%1$@ extra opslag voor elke uitnodiging, \n%2$@";
 /* Text shown to explain how and where you can invite friends */
 "Select from phone contacts or enter multiple email addresses"="Selecteer vanuit apparaat contacten of voer meerdere e-mailadressen in.";
 /*  */
@@ -1053,17 +1053,17 @@
 /* Label shown on the achievements view for complete registration achievement, %@ is a placeholder. */
 "account.achievement.registration.explanation.label"="U ontvangt %@ opslagruimte als gratis aanmeldingsbonus.";
 /* Cell title shown on the achievements view for referral achievement */
-"account.achievement.referralBonus.title"="Uitnodigingsbonussen";
+"account.achievement.referralBonus.title"="Uitnodigen bij MEGA";
 /* Cell title shown on the achievements view for install MEGA desktop app achievement */
-"account.achievement.desktopApp.title"="De desktop-applicatie van MEGA installeren";
+"account.achievement.desktopApp.title"="Installeer onze desktop applicatie";
 /* Explanation label shown on the achievements view for complete install MEGA desktop app achievement, %@ is a placeholder. */
-"account.achievement.desktopApp.complete.explaination.label"="U heeft %@ opslagruimte ontvangen voor het installeren van de MEGA Desktop Applicatie.";
+"account.achievement.desktopApp.complete.explaination.label"="U heeft %@ extra opslagruimte voor het installeren van onze desktop applicatie ontvangen";
 /* Explanation label shown on the achievements view for incomplete install MEGA desktop app achievement, %1$@ is a placeholder, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
 "account.achievement.desktopApp.incomplete.explaination.label"="Wanneer u de MEGA Desktop Applicatie installeert, krijgt u %1$@ aan gratis opslagruimte, %2$@. De MEGA Desktop Applicatie is beschikbaar voor Windows, MacOS en de meeste Linux-distributies.";
 /* Cell title shown on the achievements view for install MEGA mobile app achievement */
-"account.achievement.mobileApp.title"="Installeer één van de mobiele applicaties van MEGA";
+"account.achievement.mobileApp.title"="Installeer onze mobiele applicatie";
 /* Explanation label shown on the achievements view for complete install MEGA mobile app achievement, %@ is a placeholder. */
-"account.achievement.mobileApp.complete.explaination.label"="U heeft %@ opslagruimte ontvangen voor het installeren van de MEGA-mobiele applicatie.";
+"account.achievement.mobileApp.complete.explaination.label"="U heeft %@ extra opslagruimte voor het installeren van onze mobiele applicatie ontvangen";
 /* Explanation label shown on the achievements view for incomplete install MEGA mobile app achievement, %1$@ is a placeholder, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
 "account.achievement.mobileApp.incomplete.explaination.label"="Wanneer u de MEGA Mobile Applicatie installeert, krijgt u %@ van gratis opslagruimte, %2$@. De MEGA Mobile Applicatie is beschikbaar voor iOS en Android. ";
 /* Detail label shown on the achievements details view for Start Free Trial when its completed, %1$@ is placeholder for the storage amount, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
@@ -1075,7 +1075,7 @@
 /* Explanation label shown on the achievements view for incomplete start MEGA VPN Free Trial achievement, %@ is a placeholder. */
 "account.achievement.vpnFreeTrial.incomplete.explanation.label"="Installeer de MEGA VPN-applicatie, inloggen met uw MEGA-account en uw gratis proefperiode starten. Uw bonusopslag wordt automatisch toegevoegd na het starten van uw gratis proefperiode.";
 /* Explanation label shown on the achievements view for complete start MEGA VPN Free Trial achievement, %@ is a placeholder. */
-"account.achievement.vpnFreeTrial.complete.explanation.label"="U heeft %@ aan opslagruimte voor het starten van een MEGA VPN  proefversie ontvangen";
+"account.achievement.vpnFreeTrial.complete.explanation.label"="U heeft %@ extra opslagruimte ontvangen voor het starten van een MEGA VPN gratis proefversie ";
 /* Text for the button to install MEGA VPN in the Start MEGA VPN Free Trial achievement */
 "account.achievement.vpnFreeTrial.buttonText"="MEGA VPN installeren";
 /* Cell title shown on the achievements view for Start MEGA Pass Free Trial */
@@ -1085,7 +1085,7 @@
 /* Explanation label shown on the achievements view for incomplete start MEGA Pass Free Trial achievement, %@ is a placeholder. */
 "account.achievement.passFreeTrial.incomplete.explanation.label"="Installeer de MEGA Pass-applicatie, inloggen met uw MEGA-account en start uw gratis proefperiode. Uw bonusopslag wordt automatisch toegevoegd na het starten van uw gratis proefperiode.";
 /* Explanation label shown on the achievements view for complete start MEGA Pass Free Trial achievement, %@ is a placeholder. */
-"account.achievement.passFreeTrial.complete.explanation.label"="U heeft %@ opslagruimte ontvangen voor het starten van een MEGA Pass gratis proefversie";
+"account.achievement.passFreeTrial.complete.explanation.label"="U heeft %@ extra opslagruimte ontvangen voor het starten van een MEGA Pass gratis proefversie";
 /* Text for the button to install MEGA Pass in the Start MEGA Pass Free Trial achievement */
 "account.achievement.passFreeTrial.buttonText"="MEGA Pass installeren";
 /* Subtitle of the incomplete achievement with permanent bonus, %1$@ is a placeholder for amount of storage, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
@@ -4742,3 +4742,5 @@
 "subscriptionPurchase.benefits.rubbishClearing.title"="Plan het opruimen van de Prullenbak tussen 7 dagen en 10 jaar";
 /* General label for priority customer support */
 "general.prioritySupport"="Prioritaire ondersteuning";
+/* Storage used for Business and Pro Flexi accounts in the account menu. */
+"accountMenu.businessAndProFlexiAccountsStorageUsed.title"="%@ used";

@@ -1019,9 +1019,9 @@
 /* Title of the Achievements section */
 "achievementsTitle"="Errungenschaften";
 /* Cell title shown on the achievements view for referral achievement */
-"account.achievement.referral.title"="Laden Sie Ihre Freunde ein";
+"account.achievement.referral.title"="Einladungen zu MEGA";
 /* Subtitle of the referral achievement introduction, %1$@ is a placeholder, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
-"account.achievement.referral.subtitle"="%1$@ Speicherplatz für jede Einladung. \n%2$@";
+"account.achievement.referral.subtitle"="%1$@ Extraspeicher für jede Einladung, \n%2$@";
 /* Text shown to explain how and where you can invite friends */
 "Select from phone contacts or enter multiple email addresses"="Wählen Sie Kontakte von Ihrem Gerät oder geben Sie E-Mail-Adressen ein.";
 /*  */
@@ -1053,17 +1053,17 @@
 /* Label shown on the achievements view for complete registration achievement, %@ is a placeholder. */
 "account.achievement.registration.explanation.label"="Sie haben %@ Speicherplatz als kostenlosen Registrierungsbonus erhalten.";
 /* Cell title shown on the achievements view for referral achievement */
-"account.achievement.referralBonus.title"="Einladungsboni";
+"account.achievement.referralBonus.title"="Einladungen zu MEGA";
 /* Cell title shown on the achievements view for install MEGA desktop app achievement */
-"account.achievement.desktopApp.title"="MEGA-Desktop-App installieren";
+"account.achievement.desktopApp.title"="Desktop-App installieren";
 /* Explanation label shown on the achievements view for complete install MEGA desktop app achievement, %@ is a placeholder. */
-"account.achievement.desktopApp.complete.explaination.label"="Sie haben %@ Extraspeicherplatz für die Installation der MEGA-Desktop-App erhalten.";
+"account.achievement.desktopApp.complete.explaination.label"="Sie haben %@ Extraspeicherplatz für die Installation unserer Desktop-App erhalten";
 /* Explanation label shown on the achievements view for incomplete install MEGA desktop app achievement, %1$@ is a placeholder, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
 "account.achievement.desktopApp.incomplete.explaination.label"="Bei Installation der MEGA-Desktop-App erhalten Sie %1$@ kostenlosen Extraspeicherplatz, %2$@. Die MEGA-Desktop-App ist für Windows, macOS und die meisten Linux-Distributionen verfügbar.";
 /* Cell title shown on the achievements view for install MEGA mobile app achievement */
-"account.achievement.mobileApp.title"="Eine MEGA-Mobil-App installieren";
+"account.achievement.mobileApp.title"="Mobil-App installieren";
 /* Explanation label shown on the achievements view for complete install MEGA mobile app achievement, %@ is a placeholder. */
-"account.achievement.mobileApp.complete.explaination.label"="Sie haben %@ Extraspeicherplatz für die Installation der MEGA-Mobil-App erhalten.";
+"account.achievement.mobileApp.complete.explaination.label"="Sie haben %@ Extraspeicherplatz für die Installation unserer Mobil-App erhalten";
 /* Explanation label shown on the achievements view for incomplete install MEGA mobile app achievement, %1$@ is a placeholder, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
 "account.achievement.mobileApp.incomplete.explaination.label"="Bei Installation der MEGA-Mobil-App erhalten Sie %@ kostenlosen Extraspeicherplatz, %2$@. Die MEGA-Mobil-App ist für iOS und Android verfügbar. ";
 /* Detail label shown on the achievements details view for Start Free Trial when its completed, %1$@ is placeholder for the storage amount, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
@@ -1075,7 +1075,7 @@
 /* Explanation label shown on the achievements view for incomplete start MEGA VPN Free Trial achievement, %@ is a placeholder. */
 "account.achievement.vpnFreeTrial.incomplete.explanation.label"="Installieren Sie die MEGA-VPN-App, loggen Sie sich mit Ihrem MEGA-Account ein und starten Sie Ihren kostenlosen Test. Sie erhalten Ihren Speicherbonus automatisch, nachdem Sie den kostenlosen Test gestartet haben.";
 /* Explanation label shown on the achievements view for complete start MEGA VPN Free Trial achievement, %@ is a placeholder. */
-"account.achievement.vpnFreeTrial.complete.explanation.label"="Sie haben für den Start eines kostenlosen Tests von MEGA VPN %@ Speicher erhalten";
+"account.achievement.vpnFreeTrial.complete.explanation.label"="Sie haben %@ Extraspeicherplatz für den Start eines kostenlosen Tests von MEGA VPN erhalten";
 /* Text for the button to install MEGA VPN in the Start MEGA VPN Free Trial achievement */
 "account.achievement.vpnFreeTrial.buttonText"="MEGA VPN installieren";
 /* Cell title shown on the achievements view for Start MEGA Pass Free Trial */
@@ -1085,7 +1085,7 @@
 /* Explanation label shown on the achievements view for incomplete start MEGA Pass Free Trial achievement, %@ is a placeholder. */
 "account.achievement.passFreeTrial.incomplete.explanation.label"="Installieren Sie die MEGA-Pass-App, loggen Sie sich mit Ihrem MEGA-Account ein und starten Sie Ihren kostenlosen Test. Sie erhalten Ihren Speicherbonus automatisch, nachdem Sie den kostenlosen Test gestartet haben.";
 /* Explanation label shown on the achievements view for complete start MEGA Pass Free Trial achievement, %@ is a placeholder. */
-"account.achievement.passFreeTrial.complete.explanation.label"="Sie haben für den Start eines kostenlosen Tests von MEGA Pass %@ Speicher erhalten";
+"account.achievement.passFreeTrial.complete.explanation.label"="Sie haben %@ Extraspeicherplatz für den Start eines kostenlosen Tests von MEGA Pass erhalten";
 /* Text for the button to install MEGA Pass in the Start MEGA Pass Free Trial achievement */
 "account.achievement.passFreeTrial.buttonText"="MEGA Pass installieren";
 /* Subtitle of the incomplete achievement with permanent bonus, %1$@ is a placeholder for amount of storage, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
@@ -4742,3 +4742,5 @@
 "subscriptionPurchase.benefits.rubbishClearing.title"="Planmäßige Leerung des Papierkorbs – Intervall 7 Tage bis 10 Jahre";
 /* General label for priority customer support */
 "general.prioritySupport"="Priorisierter Kundenservice";
+/* Storage used for Business and Pro Flexi accounts in the account menu. */
+"accountMenu.businessAndProFlexiAccountsStorageUsed.title"="%@ used";

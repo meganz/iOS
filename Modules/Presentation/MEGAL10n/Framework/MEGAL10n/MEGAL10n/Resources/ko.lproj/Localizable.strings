@@ -1019,9 +1019,9 @@
 /* Title of the Achievements section */
 "achievementsTitle"="도전 과제";
 /* Cell title shown on the achievements view for referral achievement */
-"account.achievement.referral.title"="친구를 초대하세요";
+"account.achievement.referral.title"="MEGA에 사람들 초대";
 /* Subtitle of the referral achievement introduction, %1$@ is a placeholder, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
-"account.achievement.referral.subtitle"="초대마다 %1$@의 저장소. \n%2$@";
+"account.achievement.referral.subtitle"="초대마다 %1$@의 추가 저장소, \n%2$@";
 /* Text shown to explain how and where you can invite friends */
 "Select from phone contacts or enter multiple email addresses"="기기 연락처에서 선택하거나 여러 이메일 주소를 입력하세요.";
 /*  */
@@ -1053,17 +1053,17 @@
 /* Label shown on the achievements view for complete registration achievement, %@ is a placeholder. */
 "account.achievement.registration.explanation.label"="당신은 무료 가입 보너스로 저장 공간 %@를 받았습니다.";
 /* Cell title shown on the achievements view for referral achievement */
-"account.achievement.referralBonus.title"="초대 보너스";
+"account.achievement.referralBonus.title"="MEGA에 사람들 초대";
 /* Cell title shown on the achievements view for install MEGA desktop app achievement */
-"account.achievement.desktopApp.title"="MEGA 데스크톱 앱 설치";
+"account.achievement.desktopApp.title"="데스크톱 앱 설치";
 /* Explanation label shown on the achievements view for complete install MEGA desktop app achievement, %@ is a placeholder. */
-"account.achievement.desktopApp.complete.explaination.label"="MEGA 데스크톱 앱을 설치하여 %@의 저장 공간을 받았습니다.";
+"account.achievement.desktopApp.complete.explaination.label"="데스크톱 앱을 설치하여 %@의 추가 저장 공간을 받았습니다";
 /* Explanation label shown on the achievements view for incomplete install MEGA desktop app achievement, %1$@ is a placeholder, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
 "account.achievement.desktopApp.incomplete.explaination.label"="MEGA 데스크톱 앱을 설치하면 %1$@의 무료 저장 공간을 받게 되며, %2$@. MEGA 데스크톱 앱은 Windows, macOS 그리고 대부분의 Linux 배포판에서 이용 가능합니다.";
 /* Cell title shown on the achievements view for install MEGA mobile app achievement */
-"account.achievement.mobileApp.title"="MEGA 모바일 앱 중 하나 설치";
+"account.achievement.mobileApp.title"="모바일 앱 설치";
 /* Explanation label shown on the achievements view for complete install MEGA mobile app achievement, %@ is a placeholder. */
-"account.achievement.mobileApp.complete.explaination.label"="MEGA 모바일 앱을 설치하여 저장소 공간 %@를 받았습니다.";
+"account.achievement.mobileApp.complete.explaination.label"="모바일 앱을 설치하여 %@의 추가 저장 공간을 받았습니다";
 /* Explanation label shown on the achievements view for incomplete install MEGA mobile app achievement, %1$@ is a placeholder, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
 "account.achievement.mobileApp.incomplete.explaination.label"="MEGA 모바일 앱을 설치하면 %@의 무료 저장 공간을 받게 되며, %2$@. MEGA 모바일 앱은 iOS와 Android에서 이용 가능합니다.";
 /* Detail label shown on the achievements details view for Start Free Trial when its completed, %1$@ is placeholder for the storage amount, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
@@ -1075,7 +1075,7 @@
 /* Explanation label shown on the achievements view for incomplete start MEGA VPN Free Trial achievement, %@ is a placeholder. */
 "account.achievement.vpnFreeTrial.incomplete.explanation.label"="MEGA VPN 앱을 설치하고, MEGA 계정으로 로그인한 다음, 무료 체험을 시작하세요. 보너스 저장소는 무료 체험을 시작한 이후 자동으로 추가됩니다.";
 /* Explanation label shown on the achievements view for complete start MEGA VPN Free Trial achievement, %@ is a placeholder. */
-"account.achievement.vpnFreeTrial.complete.explanation.label"="MEGA VPN 무료 체험을 시작하여 %@ 저장소 보너스를 받았습니다";
+"account.achievement.vpnFreeTrial.complete.explanation.label"="MEGA VPN 무료 체험을 시작하여 %@의 추가 저장 공간을 받았습니다";
 /* Text for the button to install MEGA VPN in the Start MEGA VPN Free Trial achievement */
 "account.achievement.vpnFreeTrial.buttonText"="MEGA VPN 설치";
 /* Cell title shown on the achievements view for Start MEGA Pass Free Trial */
@@ -1085,7 +1085,7 @@
 /* Explanation label shown on the achievements view for incomplete start MEGA Pass Free Trial achievement, %@ is a placeholder. */
 "account.achievement.passFreeTrial.incomplete.explanation.label"="MEGA Pass 앱을 설치하고, MEGA 계정으로 로그인한 다음, 무료 체험을 시작하세요. 보너스 저장소는 무료 체험을 시작한 이후 자동으로 추가됩니다.";
 /* Explanation label shown on the achievements view for complete start MEGA Pass Free Trial achievement, %@ is a placeholder. */
-"account.achievement.passFreeTrial.complete.explanation.label"="MEGA Pass 무료 체험을 시작하여 %@ 저장소 보너스를 받았습니다";
+"account.achievement.passFreeTrial.complete.explanation.label"="MEGA Pass 무료 체험을 시작하여 %@의 추가 저장 공간을 받았습니다";
 /* Text for the button to install MEGA Pass in the Start MEGA Pass Free Trial achievement */
 "account.achievement.passFreeTrial.buttonText"="MEGA Pass 설치";
 /* Subtitle of the incomplete achievement with permanent bonus, %1$@ is a placeholder for amount of storage, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
@@ -4742,3 +4742,5 @@
 "subscriptionPurchase.benefits.rubbishClearing.title"="7일에서 10년 사이의 휴지통 비우기 예약";
 /* General label for priority customer support */
 "general.prioritySupport"="우선 지원";
+/* Storage used for Business and Pro Flexi accounts in the account menu. */
+"accountMenu.businessAndProFlexiAccountsStorageUsed.title"="%@ used";
