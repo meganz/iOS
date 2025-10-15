@@ -2,6 +2,7 @@ import MEGAAssets
 import MEGADesignToken
 import UIKit
 
+@MainActor
 protocol VoiceClipInputBarDelegate: AnyObject {
     func removeVoiceClipView(withClipPath path: String?)
     func voiceRecordingStarted()
@@ -32,14 +33,16 @@ class VoiceClipInputBar: UIView {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        configureImages()
-        
-        sendImageView.renderImage(withColor: MEGAAssets.UIColor.whiteFFFFFF)
-        
-        audioWavesView = AudioWavesView.instanceFromNib        
-        audioWavesholderView.wrap(audioWavesView)
-        
-        updateAppearance()
+        MainActor.assumeIsolated {
+            configureImages()
+            
+            sendImageView.renderImage(withColor: MEGAAssets.UIColor.whiteFFFFFF)
+            
+            audioWavesView = AudioWavesView.instanceFromNib
+            audioWavesholderView.wrap(audioWavesView)
+            
+            updateAppearance()
+        }
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {

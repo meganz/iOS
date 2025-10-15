@@ -31,7 +31,7 @@ final class ReportIssueViewModelTests: XCTestCase {
         sourceUrl: URL? = nil,
         transfer: TransferEntity? = nil,
         totalBytes: Int = 1,
-        file: StaticString = #file,
+        file: StaticString = #filePath,
         line: UInt = #line
     ) -> (ReportIssueViewModel, MockReportIssueViewRouter) {
         let router: some ReportIssueViewRouting = MockReportIssueViewRouter()
@@ -69,7 +69,7 @@ final class ReportIssueViewModelTests: XCTestCase {
         title: String,
         message: String,
         buttonTitle: String,
-        file: StaticString = #file,
+        file: StaticString = #filePath,
         line: UInt = #line
     ) {
         XCTAssertEqual(alertData.title, title, file: file, line: line)
@@ -82,7 +82,7 @@ final class ReportIssueViewModelTests: XCTestCase {
         _ sut: ReportIssueViewModel,
         details: String,
         shouldDisableSendButton: Bool,
-        file: StaticString = #file,
+        file: StaticString = #filePath,
         line: UInt = #line
     ) {
         sut.details = details

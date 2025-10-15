@@ -2,6 +2,7 @@ import Foundation
 
 extension UIControl.State: @retroactive Hashable {}
 
+@MainActor
 protocol ButtonBackgroundStateAware {
 
     var statedColor: [UIControl.State: UIColor] { get }
@@ -37,9 +38,11 @@ final class MEGAThemeButton: UIButton, ButtonBackgroundStateAware, DynamicTypeCo
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        titleLabel?.adjustsFontForContentSizeCategory = true
+        MainActor.assumeIsolated {
+            titleLabel?.adjustsFontForContentSizeCategory = true
 
-        applyFontSizes()
+            applyFontSizes()
+        }
     }
 
     override var isHighlighted: Bool {

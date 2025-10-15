@@ -1,3 +1,4 @@
+@MainActor
 struct DeviceMetaDataFactory {
     let bundle: Bundle
     let locale: NSLocale

@@ -4,6 +4,7 @@ import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGADomain
 
+@MainActor
 final class ChatRoomParticipantsListViewModel: ObservableObject {
     
     private let initialParticipantsLoad: Int = 4
@@ -63,7 +64,6 @@ final class ChatRoomParticipantsListViewModel: ObservableObject {
         monitorOnCallUpdate()
     }
     
-    @MainActor
     func addParticipantTapped() {
         tracker.trackAnalyticsEvent(with: MeetingInfoAddParticipantButtonTappedEvent())
         let participantsAddingViewFactory = createParticipantsAddingViewFactory()

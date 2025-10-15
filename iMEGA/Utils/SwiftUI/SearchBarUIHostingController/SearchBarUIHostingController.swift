@@ -196,7 +196,8 @@ class SearchControllerSelectionHandler {
 }
 
 // responsible for communicating search status and search queries
-class SearchControllerWrapper: NSObject {
+@MainActor
+final class SearchControllerWrapper: NSObject {
     var searchController: UISearchController = UISearchController()
     var onSearch: ((String) -> Void)?
     var onCancel: (() -> Void)?

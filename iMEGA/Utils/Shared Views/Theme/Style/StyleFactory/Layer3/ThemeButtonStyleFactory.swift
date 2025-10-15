@@ -17,6 +17,7 @@ enum MEGAThemeButtonStyle {
     case secondary
 }
 
+@MainActor
 protocol ThemeButtonStyleFactory {
 
     func styler(of buttonStyle: MEGAThemeButtonStyle) -> ButtonStyler

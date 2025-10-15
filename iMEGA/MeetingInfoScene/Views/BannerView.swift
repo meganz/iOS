@@ -13,6 +13,7 @@ struct BannerView: View {
         var closeAction: (() -> Void)?
         var tapAction: (() -> Void)?
         
+        @MainActor
         static let empty: Config = .init(copy: "", theme: .light)
         
         struct Theme {

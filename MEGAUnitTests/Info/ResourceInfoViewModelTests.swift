@@ -6,6 +6,7 @@ import MEGATest
 import SwiftUI
 import XCTest
 
+@MainActor
 final class ResourceInfoViewModelTests: XCTestCase {
     
     func testIconProperty_returnsInfoModelIcon() {
@@ -70,7 +71,7 @@ final class ResourceInfoViewModelTests: XCTestCase {
         dateFormatting: (any DateFormatting)? = nil,
         files: Int = 0,
         folders: Int = 0,
-        file: StaticString = #file,
+        file: StaticString = #filePath,
         line: UInt = #line
     ) -> ResourceInfoViewModel {
         let infoModel = ResourceInfoModel(

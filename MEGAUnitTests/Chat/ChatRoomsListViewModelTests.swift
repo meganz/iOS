@@ -28,7 +28,7 @@ final class ChatRoomsListViewModelTests: XCTestCase {
     func test_remoteChatStatusChange() {
         let userHandle: HandleEntity = 100
         let chatUseCase = MockChatUseCase(myUserHandle: userHandle)
-        let viewModel = makeChatRoomsListViewModel(chatUseCase: chatUseCase, accountUseCase: MockAccountUseCase(currentUser: UserEntity(handle: 100)))
+        let viewModel = makeChatRoomsListViewModel(chatUseCase: chatUseCase, accountUseCase: MockAccountUseCase(currentUser: MEGADomain.UserEntity(handle: 100)))
         viewModel.loadChatRoomsIfNeeded()
         
         let expectation = expectation(description: "Awaiting publisher")

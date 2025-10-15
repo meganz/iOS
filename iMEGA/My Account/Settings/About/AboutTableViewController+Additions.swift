@@ -6,23 +6,28 @@ extension AboutTableViewController {
         AppDistribution.appDistribution().checkForUpdate { [weak self] release, error in
             guard let release = release, error == nil else {
                 if let error = error {
-                    self?.showAlert(withError: error)
+                    Task { @MainActor in
+                        self?.showAlert(withError: error)
+                    }
                 }
                 return
             }
             
-            self?.showAlert(withRelease: release)
+            Task { @MainActor [displayVersion = release.displayVersion, buildVersion = release.buildVersion, downloadURL = release.downloadURL] in
+                self?.showAlert(displayVersion: displayVersion, buildVersion: buildVersion, downloadURL: downloadURL)
+            }
+            
         }
     }
     
-    private func showAlert(withRelease release: AppDistributionRelease) {
+    private func showAlert(displayVersion: String, buildVersion: String, downloadURL: URL) {
         let title = "New Version Available"
-        let message = "Version \(release.displayVersion)(\(release.buildVersion)) is available."
+        let message = "Version \(displayVersion)(\(buildVersion)) is available."
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
         
         alertController.addAction(
             UIAlertAction(title: "Update", style: .default) { _ in
-                UIApplication.shared.open(release.downloadURL)
+                UIApplication.shared.open(downloadURL)
             }
         )
         

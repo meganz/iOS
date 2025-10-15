@@ -2,6 +2,7 @@ protocol FilesExplorerGridSourceDelegate: UIViewController {
     func showMoreNodeOptions(for node: MEGANode, sender: UIView)
 }
 
+@MainActor
 final class FilesExplorerGridSource: NSObject {
     private unowned let collectionView: UICollectionView
     private(set) var nodes: [MEGANode]?

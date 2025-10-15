@@ -43,7 +43,7 @@ public struct CookieSettingsRepository: CookieSettingsRepositoryProtocol {
 
 extension CookieSettingsRepository {
     
-    private func cookieSettings(completion: @escaping (Result<Int, CookieSettingsErrorEntity>) -> Void) {
+    private func cookieSettings(completion: @escaping @Sendable (Result<Int, CookieSettingsErrorEntity>) -> Void) {
         sdk.cookieSettings(with: RequestDelegate { result in
             switch result {
             case .success(let request):
@@ -61,7 +61,7 @@ extension CookieSettingsRepository {
         })
     }
     
-    private func setCookieSettings(with settings: NSInteger, completion: @escaping (Result<Int, CookieSettingsErrorEntity>) -> Void) {
+    private func setCookieSettings(with settings: NSInteger, completion: @escaping @Sendable (Result<Int, CookieSettingsErrorEntity>) -> Void) {
         sdk.setCookieSettings(settings, delegate: RequestDelegate { result in
             switch result {
             case .success(let request):

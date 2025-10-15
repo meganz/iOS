@@ -1,5 +1,5 @@
 @testable import MEGA
-import MEGAAnalyticsiOS
+@preconcurrency import MEGAAnalyticsiOS
 import MEGAAppPresentation
 import MEGAAppPresentationMock
 import Testing
@@ -8,7 +8,7 @@ struct CameraUploadsSettingsViewModelTests {
     @Suite("Track analytics events")
     struct TestCUSettingsAnalyticsEvents {
         
-        struct TestCaseData {
+        struct TestCaseData: Sendable {
             var event: CUSettingsEvent
             var expectedEventIdentifier: any EventIdentifier
         }

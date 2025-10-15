@@ -45,7 +45,7 @@ extension RecentsViewController {
     }
     
     @objc func getRecentActions() {
-        Task { await getRecentActions() }
+        Task { try await getRecentActions() }
     }
     
     @objc func presentAudioPlayer(node: MEGANode) {
@@ -125,18 +125,19 @@ extension RecentsViewController {
         return expectedValueForVisibleHeader
     }
     
-    private func getRecentActions() async {
+    private func getRecentActions() async throws {
         let excludeSensitives = await shouldExcludeSensitive()
+        let request = try await withCheckedThrowingContinuation { continuation in
+            MEGASdk.shared.getRecentActionsAsync(sinceDays: 30, maxNodes: 500, excludeSensitives: excludeSensitives, delegate: RequestDelegate {
+                continuation.resume(with: $0)
+            })
+        }
         
-        MEGASdk.shared.getRecentActionsAsync(sinceDays: 30, maxNodes: 500, excludeSensitives: excludeSensitives, delegate: RequestDelegate { @MainActor [weak self] result in
-            if case let .success(request) = result,
-               let recentActionsBuckets = request.recentActionsBuckets {
-                self?.recentActionBucketArray = recentActionsBuckets
-                self?.getRecentActionsActivityIndicatorView?.stopAnimating()
-                self?.tableView?.isHidden = false
-                self?.tableView?.reloadData()
-            }
-        })
+        guard let recentActionsBuckets = request.recentActionsBuckets else { return }
+        recentActionBucketArray = recentActionsBuckets
+        getRecentActionsActivityIndicatorView?.stopAnimating()
+        tableView?.isHidden = false
+        tableView?.reloadData()
     }
     
     private func shouldExcludeSensitive() async -> Bool {

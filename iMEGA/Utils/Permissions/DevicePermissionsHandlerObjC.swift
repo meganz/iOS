@@ -7,11 +7,11 @@
 // is converted to Swift.
 import MEGAPermissions
 
-@MainActor
 final class DevicePermissionsHandlerObjC: NSObject {
     
     private let permissionHandler: any DevicePermissionsHandling
     
+    @MainActor
     private var router: PermissionAlertRouter {
         PermissionAlertRouter.makeRouter(deviceHandler: permissionHandler)
     }
@@ -26,7 +26,7 @@ final class DevicePermissionsHandlerObjC: NSObject {
         permissionHandler.shouldAskForNotificationsPermissions(handler: handler)
     }
     
-    @objc
+    @objc @MainActor
     func presentModalNotificationsPermissionPrompt() {
         router.presentModalNotificationsPermissionPrompt()
     }
@@ -36,12 +36,12 @@ final class DevicePermissionsHandlerObjC: NSObject {
         permissionHandler.notificationsPermission(with: handler)
     }
     
-    @objc
+    @objc @MainActor
     func alertAudioPermission(incomingCall: Bool) {
         router.alertAudioPermission(incomingCall: incomingCall)
     }
     
-    @objc
+    @objc @MainActor
     func audioPermission(
         modal: Bool,
         incomingCall: Bool,
@@ -52,7 +52,7 @@ final class DevicePermissionsHandlerObjC: NSObject {
         }
     }
     
-    @objc
+    @objc @MainActor
     func requestPhotoAlbumAccessPermissionsWithGrantedHandler(_ grantedHandler: @escaping () -> Void) {
         permissionHandler.photosPermissionWithCompletionHandler {[weak self] granted in
             if granted {
@@ -63,7 +63,7 @@ final class DevicePermissionsHandlerObjC: NSObject {
         }
     }
     
-    @objc
+    @objc @MainActor
     func alertPhotosPermission() {
         router.alertPhotosPermission()
     }
@@ -105,13 +105,13 @@ final class DevicePermissionsHandlerObjC: NSObject {
     
     @objc
     func shouldSetupPermissionsWithCompletion(_ completion: @Sendable @escaping (Bool) -> Void) {
-        Task { @MainActor in
+        Task { @MainActor [permissionHandler] in
             let shouldSetup = await permissionHandler.shouldSetupPermissions()
-            await MainActor.run { completion(shouldSetup) }
+            completion(shouldSetup)
         }
     }
     
-    @objc
+    @objc @MainActor
     func alertVideoPermission() {
         router.alertVideoPermission()
     }

@@ -17,7 +17,7 @@ struct Pagination: Codable {
      }
 }
 
-struct ResponseModel<T: Decodable>: Decodable {
+struct ResponseModel<T: Decodable>: Decodable, @unchecked Sendable {
     
     // MARK: - Properties
     var error: ErrorModel {

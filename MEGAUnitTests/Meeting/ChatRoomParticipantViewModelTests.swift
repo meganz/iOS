@@ -3,6 +3,7 @@ import MEGADomain
 import MEGADomainMock
 import XCTest
 
+@MainActor
 final class ChatRoomParticipantViewModelTests: XCTestCase {
     func testPrivilegeTapped_forOwnPrivilegeModeratorAndPariticipantIsMyself_shouldNotShowPrivilegeOptions() {
         let chatUseCase = MockChatUseCase(myUserHandle: 1)

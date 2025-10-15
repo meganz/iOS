@@ -185,8 +185,10 @@ class AppearanceTableViewController: UITableViewController {
                 if let error = error {
                     MEGALogError("App icon failed to change due to \(error.localizedDescription)")
                 } else {
-                    self.selectIcon(with: iconName)
-                    self.resetPreviousIcon(with: alternateIconName)
+                    Task { @MainActor in
+                        self.selectIcon(with: iconName)
+                        self.resetPreviousIcon(with: alternateIconName)
+                    }
                 }
             })
         }

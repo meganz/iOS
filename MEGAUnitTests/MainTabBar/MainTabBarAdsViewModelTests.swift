@@ -2,6 +2,7 @@
 @testable import MEGA
 import Testing
 
+@MainActor
 struct MainTabBarAdsViewModelTests {
     @Test("Should receive correct ads slot configs", .timeLimit(.minutes(1)))
     func sendNewAdsConfig() async throws {

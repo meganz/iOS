@@ -1,7 +1,7 @@
 import UIKit
 
 extension UIImage {
-    func shrinkedImageData(docScanQuality: DocScanQuality) -> Data? {
+    func shrinkedImageData(docScanQuality: DocScanQuality, screenScale: CGFloat) -> Data? {
         let maxSize = CGFloat(docScanQuality.imageSize)
         let width = self.size.width
         let height = self.size.height
@@ -16,6 +16,6 @@ extension UIImage {
                 newWidth = (width * maxSize) / height
             }
         }
-        return self.resize(to: CGSize(width: newWidth / UIScreen.main.scale, height: newHeight / UIScreen.main.scale)).jpegData(compressionQuality: CGFloat(docScanQuality.rawValue))
+        return self.resize(to: CGSize(width: newWidth / screenScale, height: newHeight / screenScale)).jpegData(compressionQuality: CGFloat(docScanQuality.rawValue))
     }
 }

@@ -3,6 +3,7 @@ import MEGAAppSDKRepo
 import MEGADomain
 import MEGAL10n
 
+@MainActor
 final class BackupNodesValidator {
     private let backupsUseCase: any BackupsUseCaseProtocol
     private let nodes: [NodeEntity]

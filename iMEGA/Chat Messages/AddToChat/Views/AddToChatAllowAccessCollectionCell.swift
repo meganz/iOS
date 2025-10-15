@@ -10,9 +10,11 @@ class AddToChatAllowAccessCollectionCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        allowAccessTextLabel.text = Strings.Localizable.Chat.Photos.allowPhotoAccessMessage
-        allowAccessImageView.image = MEGAAssets.UIImage.image(named: "Allow Acess")
-        updateAppearance()
+        MainActor.assumeIsolated {
+            allowAccessTextLabel.text = Strings.Localizable.Chat.Photos.allowPhotoAccessMessage
+            allowAccessImageView.image = MEGAAssets.UIImage.image(named: "Allow Acess")
+            updateAppearance()
+        }
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {

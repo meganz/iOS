@@ -1,5 +1,6 @@
 import MEGADomain
 
+@MainActor
 final class TransfersWidgetViewModel: NSObject {
     private let transfersListenerUseCase: any TransfersListenerUseCaseProtocol
     private let transferInventoryUseCase: any TransferInventoryUseCaseProtocol
@@ -29,11 +30,11 @@ final class TransfersWidgetViewModel: NSObject {
     }
     
     func navigateToParentNode(_ node: NodeEntity) {
-        Task { [weak self] in
-            guard let nodeHierarchy = await self?.nodeUseCase.parentsForHandle(node.handle) else { return }
-            let nodeAccess = self?.nodeUseCase.nodeAccessLevel(nodeHandle: node.handle)
+        Task {
+            guard let nodeHierarchy = await nodeUseCase.parentsForHandle(node.handle) else { return }
+            let nodeAccess = nodeUseCase.nodeAccessLevel(nodeHandle: node.handle)
             
-            await self?.router.navigateThroughNodeHierarchy(
+            router.navigateThroughNodeHierarchy(
                 nodeHierarchy,
                 isOwnNode: nodeAccess == .owner,
                 isInRubbishBin: node.nodeType == .rubbish

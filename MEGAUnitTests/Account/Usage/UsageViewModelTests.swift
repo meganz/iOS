@@ -33,7 +33,7 @@ final class UsageViewModelTests: XCTestCase {
         currentStorageStatus: StorageStatusEntity = .noStorageProblems,
         shouldShowStorageBanner: Bool = false,
         isUnlimitedStorageAccount: Bool = false,
-        file: StaticString = #file,
+        file: StaticString = #filePath,
         line: UInt = #line
     ) -> UsageViewModel {
         let mockAccountUseCase = MockAccountUseCase(

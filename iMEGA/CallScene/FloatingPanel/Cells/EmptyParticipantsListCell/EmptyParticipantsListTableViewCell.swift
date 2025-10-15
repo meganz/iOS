@@ -8,7 +8,9 @@ class EmptyParticipantsListTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        emptyStateImageView.image = MEGAAssets.UIImage.image(named: "floating panel lists empty state")
+        MainActor.assumeIsolated {
+            emptyStateImageView.image = MEGAAssets.UIImage.image(named: "floating panel lists empty state")
+        }
     }
     
     func configure(for selectedTab: ParticipantsListTab) {

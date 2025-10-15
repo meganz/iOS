@@ -7,81 +7,41 @@ final class CloudDriveDownloadedNodesListenerTests: XCTestCase {
         // given
         let sut = makeSUT(subListeners: [])
         let exp = expectation(description: "Wait for sequence to complete immediately")
-        var outputCount = 0
         
         // when
         let task = Task {
+            var outputCount = 0
             for await _ in sut.downloadedNodes {
                 outputCount += 1
             }
             exp.fulfill()
+            return outputCount
         }
         
         // then
         await fulfillment(of: [exp], timeout: 0.5)
+        let outputCount = await task.value
         XCTAssertEqual(outputCount, 0)
-        task.cancel()
-    }
-    
-    func testDownloadedNodes_withSingleSubListener_shouldEmitProperValues() async {
-        // given
-        let mockListener = MockDownloadedNodesListener()
-        let inputHandles: [HandleEntity] = Array((0..<5))
-        let downloadedNodes = inputHandles.compactMap { NodeEntity(handle: $0) }
-        
-        let sut = makeSUT(subListeners: [mockListener])
-        let exp = expectation(description: "Wait for downloaded nodes")
-        exp.expectedFulfillmentCount = downloadedNodes.count
-        var outputHandles = [HandleEntity]()
-        
-        // when
-        let task = Task {
-            for await node in sut.downloadedNodes {
-                outputHandles.append(node.handle)
-                exp.fulfill()
-            }
-        }
-        for node in downloadedNodes {
-            mockListener.simulateDownloadedNode(node)
-        }
-        await fulfillment(of: [exp], timeout: 0.5)
-        
-        // then
-        XCTAssertEqual(inputHandles, inputHandles)
         task.cancel()
     }
     
     func testDownloadedNodes_withTwoSubListeners_shouldEmitProperValues() async {
         // given
-        let mockListener1 = MockDownloadedNodesListener()
-        let mockListener2 = MockDownloadedNodesListener()
-        let inputHandles: [HandleEntity] = Array((0..<10))
-        let downloadedNodes = inputHandles.compactMap { NodeEntity(handle: $0) }
+        let nodes1 = [1, 2, 3].map { NodeEntity(handle: $0) }
+        let nodes2 = [4, 5, 6].map { NodeEntity(handle: $0) }
+        let mockListener1 = MockDownloadedNodesListener(downloadedNodes: nodes1.async.eraseToAnyAsyncSequence())
+        let mockListener2 = MockDownloadedNodesListener(downloadedNodes: nodes2.async.eraseToAnyAsyncSequence())
+        let inputHandles: Set<HandleEntity> = [1, 2, 3, 4, 5, 6]
         
         let sut = makeSUT(subListeners: [mockListener1, mockListener2])
-        let exp = expectation(description: "Wait for downloaded nodes")
-        exp.expectedFulfillmentCount = downloadedNodes.count
-        var outputHandles = [HandleEntity]()
         
         // when
-        let task = Task {
-            for await node in sut.downloadedNodes {
-                outputHandles.append(node.handle)
-                exp.fulfill()
-            }
+        var outputHandles: Set<HandleEntity> = []
+        for await node in sut.downloadedNodes {
+            outputHandles.insert(node.handle)
         }
         
-        for (index, node) in downloadedNodes.enumerated() {
-            // randomize the emission of sub listeners
-            let listener = (index % 2 == 0) ? mockListener1 : mockListener2
-            listener.simulateDownloadedNode(node)
-        }
-        
-        // then
-        await fulfillment(of: [exp], timeout: 0.5)
-        XCTAssertEqual(outputHandles.sorted(), inputHandles)
-        task.cancel()
-    
+        XCTAssertEqual(outputHandles, inputHandles)
     }
     
     private func makeSUT(subListeners: [any DownloadedNodesListening]) -> CloudDriveDownloadedNodesListener {

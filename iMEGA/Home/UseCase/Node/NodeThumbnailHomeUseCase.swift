@@ -8,7 +8,7 @@ import UIKit
 protocol NodeThumbnailHomeUseCaseProtocol: Sendable {
     func loadThumbnail(
         of nodeHandle: HandleEntity,
-        completion: @escaping (UIImage?) -> Void
+        completion: @escaping @Sendable (UIImage?) -> Void
     )
     
     func loadThumbnail(of nodeHandle: HandleEntity) async -> UIImage?
@@ -16,9 +16,9 @@ protocol NodeThumbnailHomeUseCaseProtocol: Sendable {
 
 struct NodeThumbnailHomeUseCase: NodeThumbnailHomeUseCaseProtocol {
 
-    private var sdkNodeClient: SDKNodeClient
-    private var fileSystemClient: FileSystemImageCacheClient
-    private var thumbnailRepo: any ThumbnailRepositoryProtocol
+    private let sdkNodeClient: SDKNodeClient
+    private let fileSystemClient: FileSystemImageCacheClient
+    private let thumbnailRepo: any ThumbnailRepositoryProtocol
 
     init(
         sdkNodeClient: SDKNodeClient,
@@ -32,7 +32,7 @@ struct NodeThumbnailHomeUseCase: NodeThumbnailHomeUseCaseProtocol {
 
     func loadThumbnail(
         of nodeHandle: HandleEntity,
-        completion: @escaping (UIImage?) -> Void
+        completion: @escaping @Sendable (UIImage?) -> Void
     ) {
         guard let node = sdkNodeClient.findNode(nodeHandle) else {
             completion(nil)
@@ -51,7 +51,7 @@ struct NodeThumbnailHomeUseCase: NodeThumbnailHomeUseCaseProtocol {
         }
     }
 
-    fileprivate func downloadthumbnailForNode(_ node: NodeEntity, completion: @escaping (UIImage?) -> Void) {
+    fileprivate func downloadthumbnailForNode(_ node: NodeEntity, completion: @escaping @Sendable (UIImage?) -> Void) {
         switch node.hasThumbnail {
         case true:
             loadThumbnailForThumbnailedNode(of: node.handle, base64Handle: node.base64Handle, completion: completion)
@@ -63,7 +63,7 @@ struct NodeThumbnailHomeUseCase: NodeThumbnailHomeUseCaseProtocol {
     private func loadThumbnailForThumbnailedNode(
         of nodeHandle: HandleEntity,
         base64Handle: Base64HandleEntity,
-        completion: @escaping (UIImage?) -> Void
+        completion: @escaping @Sendable (UIImage?) -> Void
     ) {
         let destinationThumbnailCachePath = thumbnailRepo.generateCachingURL(for: base64Handle, type: .thumbnail)
         let fileExists = fileSystemClient.fileExists(destinationThumbnailCachePath)
@@ -87,7 +87,7 @@ struct NodeThumbnailHomeUseCase: NodeThumbnailHomeUseCaseProtocol {
 
     private func loadThumbnailForNonThumbnailedNode(
         of nodeHandle: HandleEntity,
-        completion: @escaping (UIImage?) -> Void
+        completion: @escaping @Sendable (UIImage?) -> Void
     ) {
         guard let node = sdkNodeClient.findNode(nodeHandle) else {
             completion(nil)
@@ -105,7 +105,7 @@ struct NodeThumbnailHomeUseCase: NodeThumbnailHomeUseCaseProtocol {
 
     fileprivate func loadThumbnailForFolderNode(
         _ node: NodeEntity,
-        completion: @escaping (UIImage?) -> Void
+        completion: @escaping @Sendable (UIImage?) -> Void
     ) {
         if node.name == MEGACameraUploadsNodeName {
             completion(UIImage.mnz_folderCameraUploads())

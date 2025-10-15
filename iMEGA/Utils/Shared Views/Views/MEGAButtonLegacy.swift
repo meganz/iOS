@@ -36,9 +36,11 @@ class MEGAButtonLegacy: UIButton, DynamicTypeComponentProtocol {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        titleLabel?.adjustsFontForContentSizeCategory = true
+        MainActor.assumeIsolated {
+            titleLabel?.adjustsFontForContentSizeCategory = true
 
-        applyFontSizes()
+            applyFontSizes()
+        }
     }
     
     func applyFontSizes() {

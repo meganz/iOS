@@ -1,5 +1,6 @@
 import UIKit
 
+@MainActor
 protocol SlidePanelAnimationControllerDelegate: AnyObject {
 
     func animateToTopPosition()
@@ -16,6 +17,7 @@ protocol SlidePanelAnimationControllerDelegate: AnyObject {
     )
 }
 
+@MainActor
 final class SlidePanelAnimationController {
 
     enum DockingPosition {

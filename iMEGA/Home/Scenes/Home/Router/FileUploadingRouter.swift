@@ -7,6 +7,7 @@ import MEGARepo
 import MEGAUI
 import VisionKit
 
+@MainActor
 final class FileUploadingRouter {
     private var browserVCDelegate: TargetFolderBrowserVCDelegate?
     
@@ -70,15 +71,12 @@ final class FileUploadingRouter {
         var documentImportsDelegate: DocumentImportsDelegate? {
             let documentImportsDelegate = DocumentImportsDelegate()
             documentImportsDelegate.navigationController = navigationController
-            documentImportsDelegate.importsURLsCompletion = { [documentImportsDelegate, weak self] urls in
-                _ = documentImportsDelegate
-                asyncOnMain {
-                    self?.presentDestinationFolderBrowser { [weak self] parentNode in
-                        guard let presenter = self?.navigationController else {
-                            return
-                        }
-                        self?.uploadImportedDocuments(at: urls, to: parentNode, presenter: presenter)
+            documentImportsDelegate.importsURLsCompletion = { [weak self] urls in
+                self?.presentDestinationFolderBrowser { [weak self] parentNode in
+                    guard let presenter = self?.navigationController else {
+                        return
                     }
+                    self?.uploadImportedDocuments(at: urls, to: parentNode, presenter: presenter)
                 }
             }
             return documentImportsDelegate
@@ -128,35 +126,37 @@ final class FileUploadingRouter {
                 )
             }
             
-            return await taskGroup.reduce(into: []) { $0.append($1) }
+            var transfers: [CancellableTransfer] = []
+            for await transfer in taskGroup {
+                transfers.append(transfer)
+            }
+            return transfers
         }
     }
 
     // MARK: - Display Camera Capture View Controller
 
     private func presentCameraViewController() {
-        asyncOnMain { [weak self] in
+        let imagePickerController = UploadImagePickerViewController()
+        try? imagePickerController.prepare(withSourceType: .camera) { [weak self] result in
             guard let self else { return }
-            let imagePickerController = UploadImagePickerViewController()
-            try? imagePickerController.prepare(withSourceType: .camera) { [weak self] result in
-                asyncOnMain {
-                    guard let self else { return }
-                    imagePickerController.dismiss(animated: true) {
-                        switch result {
-                        case .failure: break
-                        case .success(let filePath):
-                            self.presentDestinationFolderBrowser { [weak self] parentNode in
-                                guard let presenter = self?.navigationController else {
-                                    return
-                                }
-                                self?.uploadCapturedMedia(filePath: filePath, to: parentNode, presenter: presenter)
+                
+            Task { @MainActor in
+                imagePickerController.dismiss(animated: true) {
+                    switch result {
+                    case .failure: break
+                    case .success(let filePath):
+                        self.presentDestinationFolderBrowser { [weak self] parentNode in
+                            guard let presenter = self?.navigationController else {
+                                return
                             }
+                            self?.uploadCapturedMedia(filePath: filePath, to: parentNode, presenter: presenter)
                         }
                     }
                 }
             }
-            self.navigationController?.present(imagePickerController, animated: true, completion: nil)
         }
+        self.navigationController?.present(imagePickerController, animated: true, completion: nil)
     }
     
     private func uploadCapturedMedia(filePath: String, to parentNode: MEGANode, presenter: UIViewController) {
@@ -169,23 +169,20 @@ final class FileUploadingRouter {
 
     // MARK: - Display Document Scan View Controller
     private func presentDocumentScanViewController() {
-        asyncOnMain { [weak self] in
+        let scanViewController = VNDocumentCameraViewController()
+        let vNDocumentCameraVCDelegate = VNDocumentCameraVCDelegate()
+        vNDocumentCameraVCDelegate.completion = { [weak self] images in
             guard let self else { return }
-            let scanViewController = VNDocumentCameraViewController()
-            let vNDocumentCameraVCDelegate = VNDocumentCameraVCDelegate()
-            vNDocumentCameraVCDelegate.completion = { [weak self] images in
-                asyncOnMain {
-                    guard let self else { return }
-                    scanViewController.dismiss(animated: true, completion: nil)
-                    let rootNode = MEGASdk.shared.rootNode
-                    let documentScanViewController = self.documentScanerSaveSettingViewController(parentNode: rootNode, images: images)
-                    self.navigationController?.present(documentScanViewController, animated: true, completion: nil)
-                }
+            Task { @MainActor in
+                scanViewController.dismiss(animated: true, completion: nil)
+                let rootNode = MEGASdk.shared.rootNode
+                let documentScanViewController = self.documentScanerSaveSettingViewController(parentNode: rootNode, images: images)
+                self.navigationController?.present(documentScanViewController, animated: true, completion: nil)
             }
-            scanViewController.delegate = vNDocumentCameraVCDelegate
-            self.vNDocumentCameraVCDelegate = vNDocumentCameraVCDelegate
-            self.navigationController?.present(scanViewController, animated: true, completion: nil)
         }
+        scanViewController.delegate = vNDocumentCameraVCDelegate
+        self.vNDocumentCameraVCDelegate = vNDocumentCameraVCDelegate
+        self.navigationController?.present(scanViewController, animated: true, completion: nil)
     }
 
     private func documentScanerSaveSettingViewController(parentNode: MEGANode?, images: [UIImage]) -> UIViewController {
@@ -199,7 +196,7 @@ final class FileUploadingRouter {
 
     // MARK: - Display Destination Folder Browser Controller
 
-    private func presentDestinationFolderBrowser(with completion: @escaping (MEGANode) -> Void) {
+    private func presentDestinationFolderBrowser(with completion: @escaping @MainActor (MEGANode) -> Void) {
         let browserViewController = UIStoryboard(name: "Cloud", bundle: nil)
             .instantiateViewController(withIdentifier: "BrowserViewControllerID") as! BrowserViewController
         browserVCDelegate = TargetFolderBrowserVCDelegate()
@@ -240,7 +237,7 @@ private final class DocumentImportsDelegate: NSObject, UIDocumentPickerDelegate 
 
     weak var navigationController: UINavigationController?
 
-    var importsURLsCompletion: (([URL]) -> Void)?
+    var importsURLsCompletion: (@MainActor ([URL]) -> Void)?
 
     // MARK: - UIDocumentPickerDelegate
     
@@ -254,24 +251,25 @@ final class TargetFolderBrowserVCDelegate: NSObject, BrowserViewControllerDelega
     var completion: ((MEGANode) -> Void)?
 
     func upload(toParentNode parentNode: MEGANode) {
-        asyncOnMain(weakify(self) {
-            $0.completion?(parentNode)
-        })
+        Task { @MainActor in
+            completion?(parentNode)
+        }
     }
 }
 
+@MainActor
 private final class VNDocumentCameraVCDelegate: NSObject, VNDocumentCameraViewControllerDelegate {
     var completion: (([UIImage]) -> Void)?
 
-    func documentCameraViewController(
+    nonisolated func documentCameraViewController(
         _ controller: VNDocumentCameraViewController,
         didFinishWith scan: VNDocumentCameraScan
     ) {
         let scanedImages = (0..<scan.pageCount).map { index in
             scan.imageOfPage(at: index)
         }
-        asyncOnMain(weakify(self) {
-            $0.completion?(scanedImages)
-        })
+        Task { @MainActor in
+            self.completion?(scanedImages)
+        }
     }
 }

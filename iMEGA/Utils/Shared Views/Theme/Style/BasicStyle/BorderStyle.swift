@@ -12,12 +12,14 @@ extension BorderStyle {
     // MARK: - UIView
      
     @discardableResult
+    @MainActor
     func applied(on view: UIView) -> UIView {
         apply(style: self)(view)
     }
 }
 
 @discardableResult
+@MainActor
 private func apply(style: BorderStyle) -> (UIView) -> UIView {
     return { view in
         view.layer.borderColor = style.color.cgColor

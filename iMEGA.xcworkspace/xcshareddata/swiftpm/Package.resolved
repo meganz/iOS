@@ -140,8 +140,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/nathantannar4/InputBarAccessoryView",
       "state" : {
-        "revision" : "c7acd5fa32e54cd7a44ad7eb9a7730da35b54c95",
-        "version" : "6.5.1"
+        "revision" : "0451bb8bebff4da089f15d440aaa1740fee29ce6",
+        "version" : "7.0.2"
       }
     },
     {
@@ -212,7 +212,7 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/MessageKit/MessageKit",
       "state" : {
-        "revision" : "b024c1287ac30fb6ea2ee07169e6193efc11d972"
+        "revision" : "dc48356f830d40de5acc0e126a44257d0a1329b6"
       }
     },
     {

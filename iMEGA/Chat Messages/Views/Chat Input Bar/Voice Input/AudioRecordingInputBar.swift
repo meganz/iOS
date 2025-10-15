@@ -3,6 +3,7 @@ import MEGADesignToken
 import MEGAL10n
 import UIKit
 
+@MainActor
 protocol AudioRecordingInputBarDelegate: AnyObject {
     func trashButtonTapped()
     func audioRecordingStarted()
@@ -39,28 +40,29 @@ class AudioRecordingInputBar: UIView {
     }()
 
     override func awakeFromNib() {
-        
         super.awakeFromNib()
         
-        addGestureRecognizer(trashedTapGesture)
-        
-        configureImages()
-        
-        suggestionLabel.text = Strings.Localizable.dragLeftToCancelReleaseToSend
-        audioWavesView = AudioWavesView.instanceFromNib
-        audioWavesholderView.wrap(audioWavesView)
-        trashView.imageView.image = MEGAAssets.UIImage.rubbishBin.withTintColor(TokenColors.Icon.primary, renderingMode: .alwaysTemplate)
-        updateAppearance()
-
-        audioRecorder.updateHandler = {[weak self] timeString, level in
-            guard let `self` = self else {
-                return
-            }
+        MainActor.assumeIsolated {
+            addGestureRecognizer(trashedTapGesture)
             
-            self.recordTimeLabel.text = timeString
-            self.audioWavesView.updateAudioView(withLevel: level)
+            configureImages()
+            
+            suggestionLabel.text = Strings.Localizable.dragLeftToCancelReleaseToSend
+            audioWavesView = AudioWavesView.instanceFromNib
+            audioWavesholderView.wrap(audioWavesView)
+            trashView.imageView.image = MEGAAssets.UIImage.rubbishBin.withTintColor(TokenColors.Icon.primary, renderingMode: .alwaysTemplate)
+            updateAppearance()
+
+            audioRecorder.updateHandler = {[weak self] timeString, level in
+                guard let `self` = self else {
+                    return
+                }
+                
+                self.recordTimeLabel.text = timeString
+                self.audioWavesView.updateAudioView(withLevel: level)
+            }
+            backgroundColor = TokenColors.Background.page
         }
-        backgroundColor = TokenColors.Background.page
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
@@ -181,5 +183,27 @@ class AudioRecordingInputBar: UIView {
         lockView.imageView.image = MEGAAssets.UIImage.image(named: "lockRecording-1")
         trashView.imageView.image = MEGAAssets.UIImage.image(named: "cancelVoice")
         voiceView.imageView.image = MEGAAssets.UIImage.image(named: "sendVoiceClipDefault-1")
+    }
+    
+    private func configureViews() {
+        addGestureRecognizer(trashedTapGesture)
+        
+        configureImages()
+        
+        suggestionLabel.text = Strings.Localizable.dragLeftToCancelReleaseToSend
+        audioWavesView = AudioWavesView.instanceFromNib
+        audioWavesholderView.wrap(audioWavesView)
+        trashView.imageView.image = MEGAAssets.UIImage.rubbishBin.withTintColor(TokenColors.Icon.primary, renderingMode: .alwaysTemplate)
+        updateAppearance()
+
+        audioRecorder.updateHandler = {[weak self] timeString, level in
+            guard let self else {
+                return
+            }
+            
+            recordTimeLabel.text = timeString
+            audioWavesView.updateAudioView(withLevel: level)
+        }
+        backgroundColor = TokenColors.Background.page
     }
 }

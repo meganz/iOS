@@ -1,5 +1,6 @@
 import MEGADomain
 
+@MainActor
 class AudioRecorder: NSObject {
 
     enum RecordError: Error {
@@ -39,7 +40,6 @@ class AudioRecorder: NSObject {
         return recorder?.isRecording ?? false
     }
     
-    @MainActor
     func configureForRecording() {
         let isPlayerAlive = AudioPlayerManager.shared.isPlayerAlive()
         if isPlayerAlive {
@@ -101,14 +101,11 @@ class AudioRecorder: NSObject {
         displayLink?.invalidate()
         displayLink = nil
         
-        Task {
-            await self.finalizeAfterStopRecording()
-        }
+        finalizeAfterStopRecording()
 
         return recorder.url.path
     }
     
-    @MainActor
     private func finalizeAfterStopRecording() {
         if AudioPlayerManager.shared.isPlayerAlive() {
             AudioPlayerManager.shared.audioInterruptionDidEndNeedToResume(true)

@@ -1,9 +1,9 @@
 import MEGAAssets
 import MEGAL10n
 
-final class SendToChatActivity: UIActivity, SendToChatActivityDelegate {
+final class SendToChatActivity: UIActivity, SendToChatActivityDelegate, @unchecked Sendable {
     
-    private var text: String
+    private let text: String
     
     init(text: String) {
         self.text = text
@@ -26,21 +26,23 @@ final class SendToChatActivity: UIActivity, SendToChatActivityDelegate {
     }
     
     override var activityViewController: UIViewController? {
-        guard let navigationController = UIStoryboard(
-            name: "Chat",
-            bundle: nil
-        )
-            .instantiateViewController(
-                withIdentifier: "SendToNavigationControllerID"
-            ) as? MEGANavigationController,
-              let sendToViewController = navigationController.viewControllers.first as? SendToViewController else {
-            return nil
+        MainActor.assumeIsolated {
+            guard let navigationController = UIStoryboard(
+                name: "Chat",
+                bundle: nil
+            )
+                .instantiateViewController(
+                    withIdentifier: "SendToNavigationControllerID"
+                ) as? MEGANavigationController,
+                  let sendToViewController = navigationController.viewControllers.first as? SendToViewController else {
+                return nil
+            }
+            
+            sendToViewController.sendToChatActivityDelegate = self
+            sendToViewController.sendMode = .text
+            
+            return navigationController
         }
-        
-        sendToViewController.sendToChatActivityDelegate = self
-        sendToViewController.sendMode = .text
-        
-        return navigationController
     }
     
     // MARK: - SendToChatActivityDelegate

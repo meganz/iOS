@@ -262,71 +262,79 @@ class ChatSharedItemsViewController: UIViewController {
 
 extension ChatSharedItemsViewController: MEGAChatNodeHistoryDelegate {
     
-    func onAttachmentLoaded(_ api: MEGAChatSdk, message: MEGAChatMessage?) {
+    nonisolated func onAttachmentLoaded(_ api: MEGAChatSdk, message: MEGAChatMessage?) {
         MEGALogDebug("[ChatSharedFiles] onAttachmentLoaded messageId: \(String(describing: message?.messageId)), node handle: \(String(describing: message?.nodeList?.node(at: 0)?.handle)), node name: \(String(describing: message?.nodeList?.node(at: 0)?.name))")
         
-        guard let message = message else {
-            attachmentsLoading = false
-            activityIndicator.stopAnimating()
-            return
-        }
-        
-        if messagesArray.isEmpty {
-            navigationItem.rightBarButtonItem = selectBarButton
-        }
-        
-        tableView.performBatchUpdates {
-            self.messagesArray.append(message)
-            if self.tableView.isEmptyDataSetVisible {
-                self.tableView.reloadEmptyDataSet()
+        Task { @MainActor in
+            guard let message else {
+                attachmentsLoading = false
+                activityIndicator.stopAnimating()
+                return
             }
-            self.tableView.insertRows(at: [IndexPath(row: self.messagesArray.count - 1, section: 0)], with: .automatic)
+            
+            if messagesArray.isEmpty {
+                navigationItem.rightBarButtonItem = selectBarButton
+            }
+            
+            tableView.performBatchUpdates {
+                self.messagesArray.append(message)
+                if self.tableView.isEmptyDataSetVisible {
+                    self.tableView.reloadEmptyDataSet()
+                }
+                self.tableView.insertRows(at: [IndexPath(row: self.messagesArray.count - 1, section: 0)], with: .automatic)
+            }
         }
     }
     
-    func onAttachmentReceived(_ api: MEGAChatSdk, message: MEGAChatMessage) {
+    nonisolated func onAttachmentReceived(_ api: MEGAChatSdk, message: MEGAChatMessage) {
         MEGALogDebug("[ChatSharedFiles] onAttachmentReceived messageId: \(String(describing: message.messageId)), node handle: \(String(describing: message.nodeList?.node(at: 0)?.handle)), node name: \(String(describing: message.nodeList?.node(at: 0)?.name))")
         
-        if messagesArray.isEmpty {
-            navigationItem.rightBarButtonItem = selectBarButton
-        }
-    
-        tableView.performBatchUpdates {
-            self.messagesArray.insert(message, at: 0)
-            self.tableView.insertRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
-        } completion: { _ in
-            if self.tableView.isEmptyDataSetVisible {
-                self.tableView.reloadEmptyDataSet()
+        Task { @MainActor in
+            if messagesArray.isEmpty {
+                navigationItem.rightBarButtonItem = selectBarButton
+            }
+        
+            tableView.performBatchUpdates {
+                self.messagesArray.insert(message, at: 0)
+                self.tableView.insertRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
+            } completion: { _ in
+                if self.tableView.isEmptyDataSetVisible {
+                    self.tableView.reloadEmptyDataSet()
+                }
             }
         }
     }
     
-    func onAttachmentDeleted(_ api: MEGAChatSdk, messageId: UInt64) {
+    nonisolated func onAttachmentDeleted(_ api: MEGAChatSdk, messageId: UInt64) {
         MEGALogDebug("[ChatSharedFiles] onAtonAttachmentReceivedtachmentLoaded \(messageId)")
-        guard let message = messagesArray.first(where: { $0.messageId == messageId }) else {
-            return
-        }
-        
-        guard let index = messagesArray.firstIndex(of: message) else {
-            return
-        }
-        
-        tableView.performBatchUpdates {
-            self.tableView.deleteRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
-            self.messagesArray.remove(at: index)
-        } completion: { _ in
-            if self.messagesArray.isEmpty {
-                self.navigationItem.rightBarButtonItem = nil
-                self.tableView.reloadEmptyDataSet()
+        Task { @MainActor in
+            guard let message = messagesArray.first(where: { $0.messageId == messageId }) else {
+                return
+            }
+            
+            guard let index = messagesArray.firstIndex(of: message) else {
+                return
+            }
+            
+            tableView.performBatchUpdates {
+                self.tableView.deleteRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
+                self.messagesArray.remove(at: index)
+            } completion: { _ in
+                if self.messagesArray.isEmpty {
+                    self.navigationItem.rightBarButtonItem = nil
+                    self.tableView.reloadEmptyDataSet()
+                }
             }
         }
     }
     
-    func onTruncate(_ api: MEGAChatSdk, messageId: UInt64) {
+    nonisolated func onTruncate(_ api: MEGAChatSdk, messageId: UInt64) {
         MEGALogDebug("[ChatSharedFiles] onTruncate")
-        messagesArray.removeAll()
-        tableView.reloadData()
-        navigationItem.rightBarButtonItem = nil
+        Task { @MainActor in
+            messagesArray.removeAll()
+            tableView.reloadData()
+            navigationItem.rightBarButtonItem = nil
+        }
     }
 }
 
@@ -451,7 +459,7 @@ extension ChatSharedItemsViewController: UITableViewDelegate {
 
 // MARK: - DZNEmptyDataSetSource
 
-extension ChatSharedItemsViewController: DZNEmptyDataSetSource {
+extension ChatSharedItemsViewController: @MainActor DZNEmptyDataSetSource {
     
     func customView(forEmptyDataSet scrollView: UIScrollView) -> UIView? {
         return EmptyStateView(image: imageForEmptyState(), title: titleForEmtyState(), description: nil, buttonTitle: nil)
@@ -527,33 +535,35 @@ extension ChatSharedItemsViewController: NodeActionViewControllerDelegate {
 // MARK: - MEGAChatRequestDelegate
 
 extension ChatSharedItemsViewController: MEGAChatRequestDelegate {
-    func onChatRequestFinish(_ api: MEGAChatSdk, request: MEGAChatRequest, error: MEGAChatError) {
-        chatRoom = api.chatRoom(forChatId: chatRoom.chatId) ?? chatRoom
-        
-        if error.type != .MEGAChatErrorTypeOk {
-            return
-        }
-        
-        if request.type == .getPeerAttributes {
-            guard let handleList = request.megaHandleList, let indexPaths = tableView.indexPathsForVisibleRows else {
+    nonisolated func onChatRequestFinish(_ api: MEGAChatSdk, request: MEGAChatRequest, error: MEGAChatError) {
+        Task { @MainActor in
+            chatRoom = api.chatRoom(forChatId: chatRoom.chatId) ?? chatRoom
+            
+            if error.type != .MEGAChatErrorTypeOk {
                 return
             }
             
-            var indexPathsToReload = [IndexPath]()
-            for i in 0 ..< handleList.size {
-                let handle = handleList.megaHandle(at: i)
-                for indexPath in indexPaths {
-                    if indexPath.row >= messagesArray.count {
-                        continue
-                    }
-                    let message = messagesArray[indexPath.row]
-                    if message.userHandle == handle {
-                        indexPathsToReload.append(indexPath)
+            if request.type == .getPeerAttributes {
+                guard let handleList = request.megaHandleList, let indexPaths = tableView.indexPathsForVisibleRows else {
+                    return
+                }
+                
+                var indexPathsToReload = [IndexPath]()
+                for i in 0 ..< handleList.size {
+                    let handle = handleList.megaHandle(at: i)
+                    for indexPath in indexPaths {
+                        if indexPath.row >= messagesArray.count {
+                            continue
+                        }
+                        let message = messagesArray[indexPath.row]
+                        if message.userHandle == handle {
+                            indexPathsToReload.append(indexPath)
+                        }
                     }
                 }
+                
+                tableView.reloadRows(at: indexPathsToReload, with: .none)
             }
-            
-            tableView.reloadRows(at: indexPathsToReload, with: .none)
         }
     }
 }

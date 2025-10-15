@@ -8,23 +8,28 @@ typealias FolderLinkContextMenuDelegate = DisplayMenuDelegate & QuickActionsMenu
 
 typealias FileLinkContextMenuDelegate = QuickActionsMenuDelegate & UploadAddMenuDelegate & RubbishBinMenuDelegate
 
+@MainActor
 protocol DisplayMenuDelegate: AnyObject {
     func displayMenu(didSelect action: DisplayActionEntity, needToRefreshMenu: Bool)
     func sortMenu(didSelect sortType: SortOrderType)
 }
 
+@MainActor
 protocol QuickActionsMenuDelegate: AnyObject {
     func quickActionsMenu(didSelect action: QuickActionEntity, needToRefreshMenu: Bool)
 }
 
+@MainActor
 protocol RubbishBinMenuDelegate: AnyObject {
     func rubbishBinMenu(didSelect action: RubbishBinActionEntity)
 }
 
+@MainActor
 protocol UploadAddMenuDelegate: AnyObject {
     func uploadAddMenu(didSelect action: UploadAddActionEntity)
 }
 
+@MainActor
 protocol ChatMenuDelegate: AnyObject {
     func chatStatusMenu(didSelect action: ChatStatusEntity)
     func chatDoNotDisturbMenu(didSelect option: DNDTurnOnOption)
@@ -32,26 +37,32 @@ protocol ChatMenuDelegate: AnyObject {
     func archivedChatsTapped()
 }
 
+@MainActor
 protocol QRMenuDelegate: AnyObject {
     func qrMenu(didSelect action: MyQRActionEntity)
 }
 
+@MainActor
 protocol MeetingContextMenuDelegate: AnyObject {
     func meetingContextMenu(didSelect action: MeetingActionEntity)
 }
 
+@MainActor
 protocol FilterMenuDelegate: AnyObject {
     func filterMenu(didSelect filterType: FilterType)
 }
 
+@MainActor
 protocol AlbumMenuDelegate: AnyObject {
     func albumMenu(didSelect action: AlbumActionEntity)
 }
 
+@MainActor
 protocol VideoPlaylistMenuDelegate: AnyObject {
     func videoPlaylistMenu(didSelect action: VideoPlaylistActionEntity)
 }
 
+@MainActor
 final class ContextMenuManager: NSObject {
     weak var displayMenuDelegate: (any DisplayMenuDelegate)?
     weak var quickActionsMenuDelegate: (any QuickActionsMenuDelegate)?

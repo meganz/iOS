@@ -89,10 +89,12 @@ open class AnimatedCollectionViewLayoutAttributes: UICollectionViewLayoutAttribu
     open override func isEqual(_ object: Any?) -> Bool {
         guard let o = object as? AnimatedCollectionViewLayoutAttributes else { return false }
 
-        return o.contentView == contentView
-            && o.scrollDirection == scrollDirection
-            && o.startOffset == startOffset
-            && o.middleOffset == middleOffset
-            && o.endOffset == endOffset
+        return MainActor.assumeIsolated {
+            return o.contentView == contentView
+                && o.scrollDirection == scrollDirection
+                && o.startOffset == startOffset
+                && o.middleOffset == middleOffset
+                && o.endOffset == endOffset
+        }
     }
 }

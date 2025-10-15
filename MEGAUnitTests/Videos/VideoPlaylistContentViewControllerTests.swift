@@ -7,6 +7,7 @@ import MEGATest
 import Video
 import XCTest
 
+@MainActor
 final class VideoPlaylistContentViewControllerTests: XCTestCase {
     
     // MARK: - quickActionsMenu

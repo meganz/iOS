@@ -7,9 +7,11 @@ import MEGADomainMock
 import MEGATest
 import XCTest
 
+@MainActor
 final class QuickActionsMenuDelegateHandlerTests: XCTestCase {
     
-    class Harness {
+    @MainActor
+    final class Harness {
         var sut: QuickActionsMenuDelegateHandler
         var receivedSharedFolderNodes: [[NodeEntity]] = []
         var receivedInfoNodes: [NodeEntity] = []
@@ -24,7 +26,7 @@ final class QuickActionsMenuDelegateHandlerTests: XCTestCase {
         var receivedNodesToHide: [[NodeEntity]] = []
         var receivedNodesToUnhide: [[NodeEntity]] = []
         
-        static let testNode: NodeEntity = NodeEntity(handle: 64)
+        nonisolated static let testNode: NodeEntity = NodeEntity(handle: 64)
         private let (stream, continuation) = AsyncStream.makeStream(of: [NodeEntity].self)
         
         init() {

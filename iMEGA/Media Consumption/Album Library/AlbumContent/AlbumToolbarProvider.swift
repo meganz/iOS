@@ -8,6 +8,7 @@ import MEGAL10n
 import MEGAPermissions
 import UIKit
 
+@MainActor
 protocol AlbumToolbarProvider {
     var isToolbarShown: Bool { get }
     

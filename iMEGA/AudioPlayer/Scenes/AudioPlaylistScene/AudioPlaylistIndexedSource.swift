@@ -1,5 +1,6 @@
 import Foundation
 
+@MainActor
 protocol AudioPlaylistSourceDelegate: AnyObject {
     func move(item: AudioPlayerItem, position: IndexPath, direction: MovementDirection)
 }

@@ -8,7 +8,8 @@ protocol CallWillEndAlertRouting: Routing {
     func dismissCallWillEndAlertIfNeeded()
 }
 
-class CallWillEndAlertViewModel {
+@MainActor
+final class CallWillEndAlertViewModel {
     private let router: any CallWillEndAlertRouting
     private let accountUseCase: any AccountUseCaseProtocol
     private var timeToEndCall: Double
@@ -50,9 +51,11 @@ class CallWillEndAlertViewModel {
         callWillEndTimer?.invalidate()
         callWillEndTimer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { [weak self] _ in
             guard let self else { return }
-            timeToEndCall -= 1
-            guard timeToEndCall > 0 else { return }
-            router.updateCallWillEndAlertTitle(remainingMinutes: remainingSecondsCountRoundedUp())
+            Task { @MainActor in
+                timeToEndCall -= 1
+                guard timeToEndCall > 0 else { return }
+                router.updateCallWillEndAlertTitle(remainingMinutes: remainingSecondsCountRoundedUp())
+            }
         })
     }
     

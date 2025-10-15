@@ -2,9 +2,10 @@ import FirebaseCrashlytics
 import Foundation
 import MEGAAppSDKRepo
 import MEGADomain
+import MEGASwift
 import MEGAUI
 
-final class CameraUploadHeartbeat: NSObject {
+final class CameraUploadHeartbeat: NSObject, @unchecked Sendable {
     private enum Constants {
         static let activeTimerInterval: Double = 30
         static let statusTimerInterval: Double = 30 * 60
@@ -14,9 +15,9 @@ final class CameraUploadHeartbeat: NSObject {
     private let deviceUseCase: any DeviceUseCaseProtocol
     private let register: BackupRegister
     private let recorder: BackupRecorder
-    private var activeTimer: (any DispatchSourceTimer)?
-    private var statusTimer: (any DispatchSourceTimer)?
-    private var lastHeartbeatNodeHandle: HandleEntity?
+    @Atomic private var activeTimer: (any DispatchSourceTimer)?
+    @Atomic private var statusTimer: (any DispatchSourceTimer)?
+    @Atomic private var lastHeartbeatNodeHandle: HandleEntity?
     
     init(
         cameraUploadsUseCase: any CameraUploadsUseCaseProtocol,
@@ -66,27 +67,23 @@ final class CameraUploadHeartbeat: NSObject {
     }
     
     private func setDeviceNameIfNeeded() {
-        Task {
+        Task { [deviceUseCase] in
             do {
                 let deviceName = try await deviceUseCase.fetchCurrentDeviceName()
                 MEGALogError("[Camera Upload] heartbeat - The device already has a name associated with it:  \(String(describing: deviceName))")
             } catch let error as MEGAError {
                 if error.type == .apiENoent {
-                    await setDeviceName(UIDevice.current.modelName)
+                    do {
+                        try await deviceUseCase.renameCurrentDevice(newName: UIDevice.current.modelName)
+                    } catch let error as MEGAError {
+                        MEGALogError("[Camera Upload] heartbeat - error when to set device name \(error.type) \(String(describing: error.name))")
+                    } catch {
+                        MEGALogError("[Camera Upload] heartbeat - error when to set device name")
+                    }
                 }
             } catch {
                 MEGALogError("[Camera Upload] heartbeat - error getting the device name")
             }
-        }
-    }
-    
-    private func setDeviceName(_ name: String) async {
-        do {
-            try await deviceUseCase.renameCurrentDevice(newName: name)
-        } catch let error as MEGAError {
-            MEGALogError("[Camera Upload] heartbeat - error when to set device name \(error.type) \(String(describing: error.name))")
-        } catch {
-            MEGALogError("[Camera Upload] heartbeat - error when to set device name")
         }
     }
     
@@ -98,10 +95,10 @@ final class CameraUploadHeartbeat: NSObject {
     
     private func cancelHeartbeatTimers() {
         activeTimer?.cancel()
-        activeTimer = nil
+        $activeTimer.mutate { $0 = nil }
         
         statusTimer?.cancel()
-        statusTimer = nil
+        $statusTimer.mutate { $0 = nil }
     }
     
     // MARK: - Active Timer
@@ -117,7 +114,7 @@ final class CameraUploadHeartbeat: NSObject {
             self?.activeTimerDidFire()
         }
         timer.activate()
-        activeTimer = timer
+        $activeTimer.mutate { $0 = timer }
     }
     
     private func activeTimerDidFire() {
@@ -155,7 +152,7 @@ final class CameraUploadHeartbeat: NSObject {
             self?.statusTimerDidFire()
         }
         timer.activate()
-        statusTimer = timer
+        $statusTimer.mutate { $0 = timer }
     }
     
     private func statusTimerDidFire() {
@@ -200,7 +197,7 @@ final class CameraUploadHeartbeat: NSObject {
                 progress = Int(stats.progress * 100)
             }
             
-            self.sdk.sendBackupHeartbeat(backupId,
+            sdk.sendBackupHeartbeat(backupId,
                                          status: status,
                                          progress: progress,
                                          pendingUploadCount: stats.pendingFilesCount,
@@ -213,7 +210,7 @@ final class CameraUploadHeartbeat: NSObject {
                                                 MEGALogError("[Camera Upload] heartbeat - error when to send heartbeat \(type(of: sdk).base64Handle(forHandle: backupId) ?? "") \(error)")
                                             case .success:
                                                 if let lastNode = lastNode {
-                                                    self?.lastHeartbeatNodeHandle = lastNode.handle
+                                                    self?.$lastHeartbeatNodeHandle.mutate { $0 = lastNode.handle }
                                                 }
                                                 MEGALogDebug("[Camera Upload] heartbeat - send heartbeat to backup \(type(of: sdk).base64Handle(forHandle: backupId) ?? "") success")
                                             }

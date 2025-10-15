@@ -31,11 +31,15 @@ public final class MockContentConsumptionUserAttributeUseCase: ContentConsumptio
     
     public func saveSensitiveSetting(showHiddenNodes: Bool) async throws {
         sensitiveShowHiddenNodes = showHiddenNodes
-        sensitiveAttributeChanged = await fetchSensitiveAttribute()
+        Task { @MainActor in
+            sensitiveAttributeChanged = await fetchSensitiveAttribute()
+        }
     }
     
     public func saveSensitiveSetting(onboarded: Bool) async throws {
         sensitiveOnboarded = onboarded
-        sensitiveAttributeChanged = await fetchSensitiveAttribute()
+        Task { @MainActor in
+            sensitiveAttributeChanged = await fetchSensitiveAttribute()
+        }
     }
 }

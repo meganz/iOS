@@ -1,6 +1,7 @@
 @testable import MEGA
 import XCTest
 
+@MainActor
 final class RegionListViewModelTests: XCTestCase {
     private let nzRegion = SMSRegion(regionCode: "NZ", displayCallingCode: "+64", displayName: "New Zealand (+64)")
     private let auRegion = SMSRegion(regionCode: "AU", displayCallingCode: "+61", displayName: "Australia (+61)")

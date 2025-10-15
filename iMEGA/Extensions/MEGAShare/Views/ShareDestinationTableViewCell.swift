@@ -6,9 +6,6 @@ class ShareDestinationTableViewCell: UITableViewCell {
     @IBOutlet weak var iconImageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
     var showActivityIndicator = false
-    override func awakeFromNib() {
-        super.awakeFromNib()
-    }
     
     func set(name: String,
              image: UIImage,

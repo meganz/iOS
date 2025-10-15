@@ -1177,7 +1177,7 @@ final class TextEditorViewModelTests: XCTestCase {
         nodeUseCase: MockNodeDataUseCase = MockNodeDataUseCase(),
         backupsUseCase: MockBackupsUseCase = MockBackupsUseCase(),
         tracker: MockTracker = MockTracker(),
-        file: StaticString = #file,
+        file: StaticString = #filePath,
         line: UInt = #line
     ) -> TextEditorViewModel {
         let sut = TextEditorViewModel(

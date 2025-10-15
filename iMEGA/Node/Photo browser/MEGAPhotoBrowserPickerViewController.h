@@ -2,6 +2,7 @@
 
 @class MEGAPhotoBrowserPickerViewController;
 
+NS_SWIFT_UI_ACTOR
 @protocol MEGAPhotoBrowserPickerDelegate
 
 - (void)updateCurrentIndexTo:(NSUInteger)newIndex;

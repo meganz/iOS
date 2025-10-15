@@ -8,6 +8,8 @@ class PreviewersView: UIView {
  
     override func awakeFromNib() {
         super.awakeFromNib()
-        showHidePasswordImageView.image = MEGAAssets.UIImage.image(named: "showHidePassword_white")
+        MainActor.assumeIsolated {
+            showHidePasswordImageView.image = MEGAAssets.UIImage.image(named: "showHidePassword_white")
+        }
     }
 }

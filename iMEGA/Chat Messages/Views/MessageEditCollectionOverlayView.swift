@@ -1,6 +1,7 @@
 import MEGAAssets
 import MessageKit
 
+@MainActor
 protocol MessagesEditCollectionOverlayViewDelegate: AnyObject {
     func editOverlayView(_ editOverlayView: MessageEditCollectionOverlayView, activated: Bool)
 }
@@ -23,11 +24,13 @@ class MessageEditCollectionOverlayView: MessageReusableView {
     override func awakeFromNib() {
         super.awakeFromNib()
 
-        leftIconView.image = MEGAAssets.UIImage.checkBoxUnselected
-        
-        let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(MessageEditCollectionOverlayView.onTapOverlayButton))
-        isUserInteractionEnabled = true
-        addGestureRecognizer(tapRecognizer)
+        MainActor.assumeIsolated {
+            leftIconView.image = MEGAAssets.UIImage.checkBoxUnselected
+            
+            let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(MessageEditCollectionOverlayView.onTapOverlayButton))
+            isUserInteractionEnabled = true
+            addGestureRecognizer(tapRecognizer)
+        }
     }
     
     @objc func onTapOverlayButton(sender: UITapGestureRecognizer) {

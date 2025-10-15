@@ -4,6 +4,7 @@ import MEGADomain
 import MEGADomainMock
 import XCTest
 
+@MainActor
 final class CloudDriveQuickUploadActionRouterTests: XCTestCase {
     func testBuild_cannotCreateContextMenuConfig_shouldNotReturnActionSheet() {
         // given

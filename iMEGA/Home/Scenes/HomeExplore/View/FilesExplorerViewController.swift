@@ -114,7 +114,7 @@ class FilesExplorerViewController: ExplorerBaseViewController {
     }
 }
 
-extension FilesExplorerViewController: DZNEmptyDataSetSource {
+extension FilesExplorerViewController: @MainActor DZNEmptyDataSetSource {
     func customView(forEmptyDataSet scrollView: UIScrollView) -> UIView? {
         guard let emptyStateType = configuration?.emptyStateType else { return nil }
         return EmptyStateView.create(for: emptyStateType)

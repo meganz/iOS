@@ -2,6 +2,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+NS_SWIFT_SENDABLE
 @interface MEGAStartUploadTransferDelegate : NSObject  <MEGATransferDelegate>
 
 - (id)init NS_UNAVAILABLE;

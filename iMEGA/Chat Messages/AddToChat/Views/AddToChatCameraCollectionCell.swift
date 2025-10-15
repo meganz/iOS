@@ -1,3 +1,4 @@
+@preconcurrency import AVFoundation
 import MEGAAssets
 import MEGADesignToken
 import MEGAPermissions
@@ -22,7 +23,9 @@ class AddToChatCameraCollectionCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        updateAppearance()
+        MainActor.assumeIsolated {
+            updateAppearance()
+        }
     }
     
     func prepareToShowLivefeed() {

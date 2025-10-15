@@ -1,21 +1,24 @@
 import Foundation
+import MEGASwift
 
-@objc final class OverDiskQuotaService: NSObject {
+@objc final class OverDiskQuotaService: NSObject, @unchecked Sendable {
 
     // MARK: - Static
 
-    @objc(sharedService) static var shared: OverDiskQuotaService = OverDiskQuotaService()
+    @objc(sharedService) static let shared: OverDiskQuotaService = OverDiskQuotaService()
 
     @objc static func updateAPI(with api: MEGASdk) {
-        shared.api = api
+        shared.$api.mutate { $0 = api }
     }
 
     // MARK: - OverDiskQuotaService
 
     // MARK: - Instance
 
+    @Atomic
     private var blockedCommands: [OverDiskQuotaCommand] = []
 
+    @Atomic
     private var api: MEGASdk = .shared
 
     // MARK: - Lifecycle
@@ -25,7 +28,7 @@ import Foundation
     // MARK: - Instance Method
 
     @objc func invalidate() {
-        blockedCommands = []
+        $blockedCommands.mutate { $0 = [] }
     }
 
     @objc func updateUserStorageUsed(_ storageUsed: Int64) {
@@ -38,7 +41,7 @@ import Foundation
     }
 
     @objc func send(_ command: OverDiskQuotaCommand) {
-        blockedCommands.append(command)
+        $blockedCommands.mutate { $0.append(command) }
         if command.storageUsed != -1 {
             command.execute(with: api, completion: completion(ofCommand:result:))
         }
@@ -55,8 +58,10 @@ import Foundation
     }
 
     private func remove(_ completedCommand: OverDiskQuotaCommand) {
-        blockedCommands.removeAll { command -> Bool in
-            command == completedCommand
+        $blockedCommands.mutate {
+            $0.removeAll { command -> Bool in
+                command == completedCommand
+            }
         }
     }
 

@@ -9,7 +9,9 @@ class GeoLocationView: UIView {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        updateAppearance()
+        MainActor.assumeIsolated {
+            updateAppearance()
+        }
     }
     
     private func updateAppearance () {

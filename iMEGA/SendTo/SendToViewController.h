@@ -6,6 +6,7 @@
 
 @class SendToViewController;
 
+NS_SWIFT_UI_ACTOR
 @protocol SendToViewControllerDelegate <NSObject>
 - (void)sendToViewController:(SendToViewController *)viewController toChats:(NSArray<MEGAChatListItem *> *)chats andUsers:(NSArray<MEGAUser *> *)users;
 @end

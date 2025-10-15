@@ -1,5 +1,6 @@
 import MEGADomain
 
+@MainActor
 final class ContactsGroupCellViewModel {
     private let chatRoomUseCase: any ChatRoomUseCaseProtocol
     private let accountUseCase: any AccountUseCaseProtocol

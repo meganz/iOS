@@ -15,6 +15,7 @@ extension UIViewController {
     }
 }
 
+@MainActor
 final class DocumentPickerViewRouter {
     private let presenter: UIViewController
     private let parent: NodeEntity

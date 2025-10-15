@@ -4,6 +4,7 @@ import MEGAAppPresentationMock
 import MEGATest
 import XCTest
 
+@MainActor
 final class MEGAAVViewControllerTests: XCTestCase {
     
     @MainActor
@@ -181,8 +182,10 @@ private final class MockAVPlayer: AVPlayer {
     private(set) var currentItemAssetCancelLoading = 0
     
     override func pause() {
-        pauseCallCount += 1
-        currentItemCancelPendingSeeksCallCount += 1
-        currentItemAssetCancelLoading += 1
+        MainActor.assumeIsolated {
+            pauseCallCount += 1
+            currentItemCancelPendingSeeksCallCount += 1
+            currentItemAssetCancelLoading += 1
+        }
     }
 }

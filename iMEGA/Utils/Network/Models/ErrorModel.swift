@@ -1,7 +1,7 @@
-class ErrorModel: Error {
+final class ErrorModel: Error {
     
     // MARK: - Properties
-    var messageKey: String
+    let messageKey: String
     
     init(_ messageKey: String) {
         self.messageKey = messageKey

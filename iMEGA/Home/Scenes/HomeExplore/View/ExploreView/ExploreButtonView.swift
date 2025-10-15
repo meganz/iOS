@@ -56,13 +56,15 @@ final class ExplorerView: UIView {
     override func awakeFromNib() {
         super.awakeFromNib()
 
-        guard let bottomSubview = subviews.first else {
-            return
+        MainActor.assumeIsolated {
+            guard let bottomSubview = subviews.first else {
+                return
+            }
+            
+            layer.insertSublayer(backgroundColorGradientLayer, below: bottomSubview.layer)
+            layer.insertSublayer(foregroundGradientLayer, below: bottomSubview.layer)
+            layer.insertSublayer(borderGradientLayer, below: bottomSubview.layer)
         }
-        
-        layer.insertSublayer(backgroundColorGradientLayer, below: bottomSubview.layer)
-        layer.insertSublayer(foregroundGradientLayer, below: bottomSubview.layer)
-        layer.insertSublayer(borderGradientLayer, below: bottomSubview.layer)
     }
     
     override func layoutSubviews() {

@@ -2,6 +2,7 @@
 
 #import "URLType.h"
 
+NS_SWIFT_SENDABLE
 @interface MEGAQueryRecoveryLinkRequestDelegate : NSObject <MEGARequestDelegate>
 
 - (id)init NS_UNAVAILABLE;

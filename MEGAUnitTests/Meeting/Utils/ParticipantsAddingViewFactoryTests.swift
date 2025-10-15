@@ -20,7 +20,7 @@ final class ParticipantsAddingViewFactoryTests: XCTestCase {
     
     func test_shouldShowAddParticipantsScreen_hasNonAddedVisibleContacts() {
         let mockAccountUseCase = MockAccountUseCase(contacts: [
-            UserEntity(email: "user@email.com", handle: 101, visibility: .visible)
+            MEGADomain.UserEntity(email: "user@email.com", handle: 101, visibility: .visible)
         ])
         let participantsAddingViewFactory = ParticipantsAddingViewFactory(
             accountUseCase: mockAccountUseCase,
@@ -37,7 +37,7 @@ final class ParticipantsAddingViewFactoryTests: XCTestCase {
     
     func test_shouldShowAddParticipantsScreen_AllContactsAlreadyAdded() {
         let mockAccountUseCase = MockAccountUseCase(contacts: [
-            UserEntity(email: "user@email.com", handle: 101, visibility: .visible)
+            MEGADomain.UserEntity(email: "user@email.com", handle: 101, visibility: .visible)
         ])
         let chatRoomUseCase = MockChatRoomUseCase(myPeerHandles: [101])
         let participantsAddingViewFactory = ParticipantsAddingViewFactory(

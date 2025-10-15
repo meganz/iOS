@@ -4,6 +4,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @class NodeCollectionViewCellViewModel;
 
+NS_SWIFT_UI_ACTOR
 @protocol NodeCollectionViewCellDelegate <NSObject>
 - (void)showMoreMenuForNode:(MEGANode *)node from:(UIButton *)sender;
 @end

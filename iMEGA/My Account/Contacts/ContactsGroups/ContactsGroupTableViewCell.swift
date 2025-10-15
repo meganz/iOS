@@ -44,8 +44,10 @@ class ContactsGroupTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        updateStyle()
-        keyRotationImage.image = MEGAAssets.UIImage.image(named: "privateChat")
+        MainActor.assumeIsolated {
+            updateStyle()
+            keyRotationImage.image = MEGAAssets.UIImage.image(named: "privateChat")
+        }
     }
     
     override func prepareForReuse() {

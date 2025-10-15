@@ -10,7 +10,7 @@ final class ChatRoomAvatarViewModelTests: XCTestCase {
     func testLoadAvatar_forOneToOneChat_shouldUpdateOneAvatarAndMatch() async {
         let chatRoom = ChatRoomEntity(chatType: .oneToOne)
         let megaHandleUseCase = MockMEGAHandleUseCase(base64Handle: "base64Handle")
-        let mockAccountUseCase = MockAccountUseCase(currentUser: UserEntity(handle: 1))
+        let mockAccountUseCase = MockAccountUseCase(currentUser: MEGADomain.UserEntity(handle: 1))
         let userImageUseCase = MockUserImageUseCase()
         let sut = makeChatRoomAvatarViewModel(
             chatRoom: chatRoom,

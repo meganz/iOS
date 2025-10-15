@@ -2,6 +2,7 @@ import MEGADesignToken
 import MEGAPermissions
 import UIKit
 
+@MainActor
 protocol AddToChatViewControllerDelegate: AnyObject {
     func send(asset: PHAsset)
     func loadPhotosView()
@@ -354,6 +355,7 @@ extension AddToChatViewController: AddToChatMenuPageViewControllerDelegate {
     }
 }
 
+@MainActor
 private struct SafeArea {
     let width: CGFloat
     let height: CGFloat

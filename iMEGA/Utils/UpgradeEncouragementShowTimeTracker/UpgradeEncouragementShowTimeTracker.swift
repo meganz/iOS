@@ -1,5 +1,5 @@
 /// Helper to check whether upgrade encouragement was presented during the current app launch
-protocol UpgradeEncouragementShowTimeTracking: AnyObject {
+@MainActor protocol UpgradeEncouragementShowTimeTracking: AnyObject {
     var alreadyPresented: Bool { get set }
 }
 

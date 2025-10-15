@@ -106,27 +106,27 @@ class GiphySelectionView: UIView {
 
     @objc private func requestGiphy() {
         requestTask?.cancel()
-        requestTask = Services.getGiphyStickers(searchKey: searchKey, offset: datasource.count, category: category) { result in
-
-            switch result {
-            case let Result.success(response):
-                if self.searchKey.isEmpty {
-                    switch self.category {
-                    case .gifs:
-                        self.gifs += response
-                    case .stickers:
-                        self.stickers += response
-                    default:
-                        break
+        requestTask = Services.getGiphyStickers(searchKey: searchKey, offset: datasource.count, category: category) { [weak self] result in
+            guard let self else { return }
+            Task { @MainActor in
+                switch result {
+                case let Result.success(response):
+                    if self.searchKey.isEmpty {
+                        switch self.category {
+                        case .gifs:
+                            self.gifs += response
+                        case .stickers:
+                            self.stickers += response
+                        default:
+                            break
+                        }
+                    } else {
+                        self.filteredGifs += response
                     }
-                } else {
-                    self.filteredGifs += response
+                case Result.failure:
+                    // Handle error
+                    break
                 }
-            case Result.failure:
-                // Handle error
-                break
-            }
-            DispatchQueue.main.async {
                 self.collectionView.reloadData()
             }
         }
@@ -256,7 +256,7 @@ extension GiphySelectionView: UISearchBarDelegate, UISearchControllerDelegate {
     }
 }
 
-extension GiphySelectionView: DZNEmptyDataSetSource, DZNEmptyDataSetDelegate {
+extension GiphySelectionView: @MainActor DZNEmptyDataSetSource, @MainActor DZNEmptyDataSetDelegate {
     func title(forEmptyDataSet _: UIScrollView) -> NSAttributedString? {
         let title = NSAttributedString(string: Strings.localized("No GIFs found", comment: ""),
                                        attributes: [

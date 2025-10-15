@@ -3,6 +3,7 @@ import MEGADesignToken
 import MEGAUIKit
 import UIKit
 
+@MainActor
 protocol ExploreViewStackDelegate: AnyObject {
     func tappedCard(_ card: MEGAExploreViewStyle)
 }

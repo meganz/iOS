@@ -1,7 +1,6 @@
 import MEGAAssets
 import MEGADesignToken
 import MEGAL10n
-import MEGAAssets
 import UIKit
 
 class GetLinkStringTableViewCell: UITableViewCell {
@@ -21,8 +20,10 @@ class GetLinkStringTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        nameLabel.textColor = TokenColors.Text.primary
-        rightImageView.image = MEGAAssets.UIImage.image(named: "link")
+        MainActor.assumeIsolated {
+            nameLabel.textColor = TokenColors.Text.primary
+            rightImageView.image = MEGAAssets.UIImage.image(named: "link")
+        }
     }
     
     override func prepareForReuse() {

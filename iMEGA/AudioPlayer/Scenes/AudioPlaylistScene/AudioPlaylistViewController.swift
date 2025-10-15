@@ -153,7 +153,7 @@ final class AudioPlaylistViewController: UIViewController {
         
         removeButton.setTitle(Strings.Localizable.remove, for: .normal)
         
-        toolbarView.layer.addBorder(
+        toolbarView.addBorder(
             edge: .top,
             color: TokenColors.Border.strong,
             thickness: 0.5

@@ -144,7 +144,7 @@ final class NodeInfoViewController: UITableViewController {
         setupColor()
     }
 
-    deinit {
+    isolated deinit {
         sdk.remove(self)
     }
 
@@ -223,22 +223,23 @@ final class NodeInfoViewController: UITableViewController {
     }
     
     private func fetchFolderInfo() {
-        sdk.getFolderInfo(
-                for: node,
-                delegate: RequestDelegate { [weak self] result in
-            guard
-                let self,
-                case .success(let request) = result,
-                let folderInfo = request.megaFolderInfo
-            else {
-                MEGALogError("Could not fetch MEGAFolderInfo")
-                self?.presentingViewController?.dismiss(animated: true)
-                return
+        sdk.getFolderInfo(for: node, delegate: RequestDelegate { [weak self] result in
+            guard let self else { return }
+            Task { @MainActor in
+                self.handleGetFolderInfo(result: result)
             }
-            self.folderInfo = folderInfo
-            cacheNodePropertiesSoThatTableViewChangesAreAtomic()
-            reloadData()
         })
+    }
+    
+    private func handleGetFolderInfo(result: Result<MEGARequest, MEGAError>) {
+        guard case .success(let request) = result, let folderInfo = request.megaFolderInfo else {
+            MEGALogError("Could not fetch MEGAFolderInfo")
+            presentingViewController?.dismiss(animated: true)
+            return
+        }
+        self.folderInfo = folderInfo
+        cacheNodePropertiesSoThatTableViewChangesAreAtomic()
+        reloadData()
     }
     
     private func reloadOrShowWarningAfterNodeUpdate() {
@@ -403,7 +404,7 @@ final class NodeInfoViewController: UITableViewController {
     }
 
     private func descriptionCellController() -> NodeDescriptionCellController? {
-        cachedSections.compactMap { section in
+        cachedSections.compactMap { section -> NodeDescriptionCellController? in
             guard case .description(let controller) = section else { return nil }
             return controller
         }.first
@@ -931,9 +932,19 @@ extension NodeInfoViewController {
 // MARK: - MEGAGlobalDelegate
 
 extension NodeInfoViewController: MEGAGlobalDelegate {
-    func onNodesUpdate(_ api: MEGASdk, nodeList: MEGANodeList?) {
+    nonisolated func onNodesUpdate(_ api: MEGASdk, nodeList: MEGANodeList?) {
+        Task { @MainActor in
+            handleNodeUpdates(nodeList)
+        }
+    }
+    
+    @objc func logDebug(message: String) {
+        CrashlyticsLogger.log(category: .nodeInfo, message)
+    }
+    
+    private func handleNodeUpdates(_ nodeList: MEGANodeList?) {
         guard let nodeList else { return }
-            
+        
         for nodeIndex in 0..<nodeList.size {
             guard let nodeUpdated = nodeList.node(at: nodeIndex) else {
                 continue
@@ -973,10 +984,6 @@ extension NodeInfoViewController: MEGAGlobalDelegate {
                 return reloadOrShowWarningAfterNodeUpdate()
             }
         }
-    }
-    
-    @objc func logDebug(message: String) {
-        CrashlyticsLogger.log(category: .nodeInfo, message)
     }
 }
 

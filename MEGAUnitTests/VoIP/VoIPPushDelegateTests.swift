@@ -3,8 +3,10 @@ import MEGADomainMock
 import PushKit
 import XCTest
 
+@MainActor
 final class VoIPPushDelegateTests: XCTestCase {
-    class Harness {
+    @MainActor
+    final class Harness {
         let sut: VoIPPushDelegate
         let voIpTokenUseCase = MockVoIPTokenUseCase()
         let callsCoordinator = MockCallsCoordinator()

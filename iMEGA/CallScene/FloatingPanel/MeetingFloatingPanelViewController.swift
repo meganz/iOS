@@ -23,7 +23,7 @@ final class MeetingFloatingPanelViewController: UIViewController {
     enum Constants {
         static let viewShortFormHeight: CGFloat = 164.0
         static let maxParticipantsToListInWaitingRoom = 4
-        static var floatingViewSpace: CGFloat = 0
+        @MainActor static var floatingViewSpace: CGFloat = 0
     }
 
     private lazy var participantsTableView: UITableView = {

@@ -1,7 +1,7 @@
 import MEGAAssets
 import UIKit
 
-extension ChatViewController: DZNEmptyDataSetSource {
+extension ChatViewController: @MainActor DZNEmptyDataSetSource {
 
     func customView(forEmptyDataSet scrollView: UIScrollView) -> UIView? {
 
@@ -38,7 +38,7 @@ extension ChatViewController: DZNEmptyDataSetSource {
     }
 }
 
-extension ChatViewController: DZNEmptyDataSetDelegate {
+extension ChatViewController: @MainActor DZNEmptyDataSetDelegate {
     
     func emptyDataSetShouldAllowScroll(_ scrollView: UIScrollView) -> Bool {
         return true

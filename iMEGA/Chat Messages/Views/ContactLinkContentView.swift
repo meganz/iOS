@@ -18,7 +18,9 @@ class ContactLinkContentView: UIView {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        updateAppearance(with: traitCollection)
+        MainActor.assumeIsolated {
+            updateAppearance(with: traitCollection)
+        }
     }
     
     private func updateAppearance(with trait: UITraitCollection) {

@@ -6,6 +6,8 @@ public final class MockNotificationUseCase: NotificationsUseCaseProtocol, @unche
     private let unreadNotificationIDs: [NotificationIDEntity]
     public var enabledNotifications: [NotificationIDEntity]
     
+    public var updateLastReadNotificationCompletion: (() -> Void)?
+    
     public init(
         lastReadNotification: NotificationIDEntity = 1,
         enabledNotifications: [NotificationIDEntity] = [],
@@ -24,6 +26,7 @@ public final class MockNotificationUseCase: NotificationsUseCaseProtocol, @unche
     
     public func updateLastReadNotification(notificationId: NotificationIDEntity) async throws {
         lastReadNotification = notificationId
+        updateLastReadNotificationCompletion?()
     }
     
     public func fetchEnabledNotifications() -> [NotificationIDEntity] {

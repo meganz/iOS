@@ -1,6 +1,7 @@
 import MEGAUIKit
 import UIKit
 
+@MainActor
 protocol MEGABannerViewDelegate: AnyObject {
     func didScrollMEGABannerView()
     

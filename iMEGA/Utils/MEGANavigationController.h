@@ -1,5 +1,6 @@
 #import <UIKit/UIKit.h>
 
+NS_SWIFT_UI_ACTOR
 @protocol MEGANavigationControllerDelegate <NSObject>
 @optional
 - (void)navigationController:(UINavigationController *)navigationController

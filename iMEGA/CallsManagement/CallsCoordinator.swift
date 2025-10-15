@@ -5,6 +5,7 @@ import MEGADomain
 import MEGAL10n
 import MEGASwift
 
+@MainActor
 protocol CallsCoordinatorFactoryProtocol {
     func makeCallsCoordinator(
         callUseCase: some CallUseCaseProtocol,
@@ -20,7 +21,7 @@ protocol CallsCoordinatorFactoryProtocol {
     ) -> CallsCoordinator
 }
 
-class CallsCoordinatorFactory: NSObject, CallsCoordinatorFactoryProtocol {
+final class CallsCoordinatorFactory: CallsCoordinatorFactoryProtocol {
     func makeCallsCoordinator(
         callUseCase: some CallUseCaseProtocol,
         callUpdateUseCase: some CallUpdateUseCaseProtocol,
@@ -48,7 +49,8 @@ class CallsCoordinatorFactory: NSObject, CallsCoordinatorFactoryProtocol {
     }
 }
 
-@objc final class CallsCoordinator: NSObject, @unchecked Sendable {
+@MainActor
+@objc final class CallsCoordinator: NSObject {
     private let callUseCase: any CallUseCaseProtocol
     private let callUpdateUseCase: any CallUpdateUseCaseProtocol
     private let chatRoomUseCase: any ChatRoomUseCaseProtocol
@@ -59,18 +61,18 @@ class CallsCoordinatorFactory: NSObject, CallsCoordinatorFactoryProtocol {
     private let audioSessionUseCase: any AudioSessionUseCaseProtocol
     private let callsManager: any CallsManagerProtocol
     
-    @Atomic private var providerDelegate: (any CallKitProviderDelegateProtocol)?
+    private var providerDelegate: (any CallKitProviderDelegateProtocol)?
     
     private let uuidFactory: () -> UUID
     
-    @Atomic private var callUpdateTask: Task<Void, Never>?
-    @Atomic private var callSessionUpdateTask: Task<Void, Never>?
+    private var callUpdateTask: Task<Void, Never>?
+    private var callSessionUpdateTask: Task<Void, Never>?
     
     var incomingCallForUnknownChat: IncomingCallForUnknownChat?
     
-    private var logoutNotificationObserver: (any NSObjectProtocol)?
+    private var observeLogoutNotificationsTask: Task<Void, Never>?
     
-    @Atomic private var isCallAudioSessionActivated: Bool = false
+    private var isCallAudioSessionActivated: Bool = false
     
     init(
         callUseCase: some CallUseCaseProtocol,
@@ -99,10 +101,11 @@ class CallsCoordinatorFactory: NSObject, CallsCoordinatorFactoryProtocol {
         
         onCallUpdateListener()
         monitorOnChatConnectionStateUpdate()
-        logoutNotificationObserver = logoutNotificationsObserver()
+        observeLogoutNotifications()
     }
     
     deinit {
+        observeLogoutNotificationsTask?.cancel()
         callUpdateTask?.cancel()
     }
     
@@ -111,11 +114,9 @@ class CallsCoordinatorFactory: NSObject, CallsCoordinatorFactoryProtocol {
     private func onCallUpdateListener() {
         let callUpdates = callUpdateUseCase.monitorOnCallUpdate()
         callUpdateTask?.cancel()
-        $callUpdateTask.mutate {
-            $0 = Task { [weak self] in
-                for await call in callUpdates {
-                    self?.onCallUpdate(call)
-                }
+        callUpdateTask = Task { [weak self] in
+            for await call in callUpdates {
+                self?.onCallUpdate(call)
             }
         }
     }
@@ -138,16 +139,14 @@ class CallsCoordinatorFactory: NSObject, CallsCoordinatorFactoryProtocol {
     private func configureCallSessionsListener() {
         guard callSessionUpdateTask == nil else { return }
         let sessionUpdates = sessionUpdateUseCase.monitorOnSessionUpdate()
-        $callSessionUpdateTask.mutate {
-            $0 = Task { [weak self] in
-                guard let self else { return }
-                for await (session, call) in sessionUpdates {
-                    switch session.changeType {
-                    case .remoteAvFlags:
-                        updateVideoForCall(call)
-                    default:
-                        break
-                    }
+        callSessionUpdateTask = Task { [weak self] in
+            guard let self else { return }
+            for await (session, call) in sessionUpdates {
+                switch session.changeType {
+                case .remoteAvFlags:
+                    updateVideoForCall(call)
+                default:
+                    break
                 }
             }
         }
@@ -235,7 +234,7 @@ class CallsCoordinatorFactory: NSObject, CallsCoordinatorFactoryProtocol {
     
     private func removeCallListeners() {
         callSessionUpdateTask?.cancel()
-        $callSessionUpdateTask.mutate { $0 = nil }
+        callSessionUpdateTask = nil
     }
     
     private func reportCallStateIfNeeded(
@@ -426,13 +425,12 @@ class CallsCoordinatorFactory: NSObject, CallsCoordinatorFactoryProtocol {
         }
     }
     
-    private func logoutNotificationsObserver() -> any NSObjectProtocol {
-        NotificationCenter.default.addObserver(
-            forName: Notification.Name.MEGAIsBeingLogout,
-            object: nil,
-            queue: .main
-        ) { [weak self] _ in
-            self?.didReceiveIsBeingLogoutNotification()
+    private func observeLogoutNotifications() {
+        observeLogoutNotificationsTask = Task { [weak self] in
+            for await _ in NotificationCenter.default.notifications(named: .MEGAIsBeingLogout) {
+                guard !Task.isCancelled else { break }
+                self?.didReceiveIsBeingLogoutNotification()
+            }
         }
     }
     
@@ -574,28 +572,24 @@ extension CallsCoordinator: CallsCoordinatorProtocol {
     // Solution provided in the below link.
     // https://stackoverflow.com/questions/48023629/abnormal-behavior-of-speaker-button-on-system-provided-call-screen?rq=1
     func configureWebRTCAudioSession() {
-        RTCDispatcher.dispatchAsync(on: .typeAudioSession) {
-            let audioSession = RTCAudioSession.sharedInstance()
-            audioSession.lockForConfiguration()
-            let configuration = RTCAudioSessionConfiguration.webRTC()
-            configuration.categoryOptions = [.allowBluetoothHFP, .allowBluetoothA2DP]
-            try? audioSession.setConfiguration(configuration)
-            audioSession.unlockForConfiguration()
-        }
+        let audioSession = RTCAudioSession.sharedInstance()
+        audioSession.lockForConfiguration()
+        let configuration = RTCAudioSessionConfiguration.webRTC()
+        configuration.categoryOptions = [.allowBluetoothHFP, .allowBluetoothA2DP]
+        try? audioSession.setConfiguration(configuration)
+        audioSession.unlockForConfiguration()
     }
     
     func setupProviderDelegate(_ provider: any CallKitProviderDelegateProtocol) {
-        $providerDelegate.mutate {
-            $0 = provider
-        }
+        providerDelegate = provider
     }
     
     func didActivateCallAudioSession() {
-        $isCallAudioSessionActivated.mutate { $0 = true }
+        isCallAudioSessionActivated = true
     }
     
     func didDeactivateCallAudioSession() {
-        $isCallAudioSessionActivated.mutate { $0 = false }
+        isCallAudioSessionActivated = false
         sendAudioPlayerInterruptDidEndNotificationIfNeeded()
     }
 }

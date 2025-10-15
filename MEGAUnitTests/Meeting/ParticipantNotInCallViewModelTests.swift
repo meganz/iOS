@@ -36,7 +36,7 @@ final class ParticipantNotInCallViewModelTests: XCTestCase {
     
     @MainActor func testAction_onViewReady_updateNameAndAvatar() {
         let participant = CallParticipantEntity(chatId: 100, participantId: 101, clientId: 100, isModerator: false)
-        let accountUseCase = MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true)
+        let accountUseCase = MockAccountUseCase(currentUser: MEGADomain.UserEntity(handle: 100), isGuest: false, isLoggedIn: true)
         let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity(chatType: .group))
         let userUseCase = MockChatRoomUserUseCase(userDisplayNameForPeerResult: .success("Test"))
         let userImageUseCase = MockUserImageUseCase()

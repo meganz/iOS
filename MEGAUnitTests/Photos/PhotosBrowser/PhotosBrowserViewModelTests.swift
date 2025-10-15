@@ -34,6 +34,7 @@ final class PhotosBrowserViewModelXCTests: XCTestCase {
 
 struct PhotosBrowserViewModelTests {
     
+    @MainActor
     @Suite("Calls Dispatch Action")
     struct PhotosBrowserActionTests {
         @Test("When action is onViewReady, it will invoke command .onViewReady")

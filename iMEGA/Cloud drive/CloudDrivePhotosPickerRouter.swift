@@ -8,6 +8,7 @@ protocol AssetUploader {
     func upload(assets: [PHAsset], to handle: MEGAHandle)
 }
 
+@MainActor
 struct CloudDrivePhotosPickerRouter {
     private let parentNode: NodeEntity
     private let presenter: UIViewController
@@ -38,7 +39,6 @@ struct CloudDrivePhotosPickerRouter {
         self.remoteFeatureFlagUseCase = remoteFeatureFlagUseCase
     }
 
-    @MainActor
     func start() {
         permissionHandler.photosPermissionWithCompletionHandler { granted in
             if granted {

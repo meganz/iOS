@@ -4,6 +4,7 @@ import MEGADomain
 /// `CallControllerProtocol` defines the entry points for managing call actions triggered by user, such as starting, muting, or ending a call.
 /// This protocol acts as an abstraction layer for systems responsible for handling call-related operations.
 /// It can be implemented by frameworks like CallKit or by custom in-app call management systems (e.g., MEGA app).
+@MainActor
 protocol CallControllerProtocol: AnyObject {
     /// Configures the calls coordinator with necessary information to handle incoming and outgoing calls.
     ///
@@ -52,6 +53,7 @@ protocol CallControllerProtocol: AnyObject {
     func muteCall(in chatRoom: ChatRoomEntity, muted: Bool)
 }
 
+@MainActor
 struct CallControllerProvider {
     func provideCallController() -> any CallControllerProtocol {
         if isCallKitAvailable() {

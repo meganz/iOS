@@ -13,7 +13,9 @@ class SettingsTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
 
-        setupColors()
+        MainActor.assumeIsolated {
+            setupColors()
+        }
     }
     
     func update(viewModel: SettingCellViewModel) {

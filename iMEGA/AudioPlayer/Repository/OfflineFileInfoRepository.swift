@@ -5,6 +5,7 @@ protocol OfflineInfoRepositoryProtocol: Sendable {
     /// Fetches audio tracks from a list of local file paths. Each path is mapped into an `AudioPlayerItem` representing an offline audio track.
     /// - Parameter files: Absolute file paths to map.
     /// - Returns: An array of `AudioPlayerItem` for the given files, or `nil` if `files` is `nil`.
+    @MainActor
     func fetchTracks(from files: [String]?) -> [AudioPlayerItem]?
     
     /// Resolves the local offline file URL for a given audio node, if available.
@@ -27,6 +28,7 @@ final class OfflineInfoRepository: OfflineInfoRepositoryProtocol {
         self.fileManager = fileManager
     }
     
+    @MainActor
     func fetchTracks(from files: [String]?) -> [AudioPlayerItem]? {
         files?.compactMap { AudioPlayerItem(name: $0.lastPathComponent, url: URL(fileURLWithPath: $0), node: nil) }
     }
@@ -37,17 +39,17 @@ final class OfflineInfoRepository: OfflineInfoRepositoryProtocol {
     
     func offlineFileURL(for node: MEGANode) -> URL? {
         guard let childQueueContext = megaStore.stack.newBackgroundContext() else { return nil }
-        var url: URL?
-        childQueueContext.performAndWait {
+        return childQueueContext.performAndWait {
             if let offlineNode = megaStore.offlineNode(with: node, context: childQueueContext) {
-                url = URL(fileURLWithPath: Helper.pathForOffline().append(pathComponent: offlineNode.localPath))
+                return URL(fileURLWithPath: Helper.pathForOffline().append(pathComponent: offlineNode.localPath))
             } else if let base64Handle = node.base64Handle, let name = node.name {
                 let nodeFolderPath = NSTemporaryDirectory().append(pathComponent: base64Handle)
                 let tmpFilePath = nodeFolderPath.append(pathComponent: name)
             
-                url = fileManager.fileExists(atPath: tmpFilePath) ? URL(fileURLWithPath: tmpFilePath) : nil
+                return fileManager.fileExists(atPath: tmpFilePath) ? URL(fileURLWithPath: tmpFilePath) : nil
+            } else {
+                return nil
             }
         }
-        return url
     }
 }

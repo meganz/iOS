@@ -3,7 +3,7 @@ import MEGASwift
 import QuickLook
 import UIKit
 
-final class MEGAQLPreviewController: QLPreviewController, QLPreviewControllerDelegate, QLPreviewControllerDataSource {
+final class MEGAQLPreviewController: QLPreviewController, @preconcurrency QLPreviewControllerDelegate, QLPreviewControllerDataSource {
 
     private var files: [String] = []
 

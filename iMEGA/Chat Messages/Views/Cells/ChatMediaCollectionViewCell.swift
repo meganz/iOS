@@ -18,6 +18,8 @@ extension CGFloat {
     }
 }
 
+extension MessagesCollectionView: @unchecked @retroactive Sendable {}
+
 class ChatMediaCollectionViewCell: MessageContentCell, MEGATransferDelegate {
     var currentNode: MEGANode?
     var currentTransfer: MEGATransfer?
@@ -178,14 +180,17 @@ class ChatMediaCollectionViewCell: MessageContentCell, MEGATransferDelegate {
             loadingIndicator.startAnimating()
         }
         imageView.mnz_setPreview(by: node) { [weak self] _ in
-            guard messagesCollectionView.cellForItem(at: indexPath) != nil, let strongSelf = self else {
-                return
-            }
-            
-            if strongSelf.isLastSectionVisible(collectionView: messagesCollectionView) {
-                messagesCollectionView.reloadDataAndKeepOffset()
-            } else {
-                messagesCollectionView.reloadItems(at: [indexPath])
+            guard let self else { return }
+            Task { @MainActor in
+                guard messagesCollectionView.cellForItem(at: indexPath) != nil else {
+                    return
+                }
+                
+                if isLastSectionVisible(collectionView: messagesCollectionView) {
+                    messagesCollectionView.reloadDataAndKeepOffset()
+                } else {
+                    messagesCollectionView.reloadItems(at: [indexPath])
+                }
             }
         }
 
@@ -221,19 +226,23 @@ class ChatMediaCollectionViewCell: MessageContentCell, MEGATransferDelegate {
         }
     }
 
-    func onTransferUpdate(_ api: MEGASdk, transfer: MEGATransfer) {
-        if currentTransfer?.tag == transfer.tag {
-            progressView.setProgress( Float(transfer.transferredBytes) / Float(transfer.totalBytes), animated: true)
+    nonisolated func onTransferUpdate(_ api: MEGASdk, transfer: MEGATransfer) {
+        Task { @MainActor in
+            if currentTransfer?.tag == transfer.tag {
+                progressView.setProgress( Float(transfer.transferredBytes) / Float(transfer.totalBytes), animated: true)
+            }
         }
     }
     
-    func onTransferFinish(_: MEGASdk, transfer: MEGATransfer, error _: MEGAError) {
-        if currentNode?.handle == transfer.nodeHandle,
-           let transferPath = transfer.path,
-            FileManager.default.fileExists(atPath: transferPath),
-           transfer.appData != TransferMetaDataEntity.saveInPhotos.rawValue {
-            imageView.sd_setImage(with: URL(fileURLWithPath: transferPath))
-            downloadGifIcon.isHidden = true
+    nonisolated func onTransferFinish(_: MEGASdk, transfer: MEGATransfer, error _: MEGAError) {
+        Task { @MainActor in
+            if currentNode?.handle == transfer.nodeHandle,
+               let transferPath = transfer.path,
+                FileManager.default.fileExists(atPath: transferPath),
+               transfer.appData != TransferMetaDataEntity.saveInPhotos.rawValue {
+                imageView.sd_setImage(with: URL(fileURLWithPath: transferPath))
+                downloadGifIcon.isHidden = true
+            }
         }
     }
 }

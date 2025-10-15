@@ -337,6 +337,7 @@ final class AlbumContentViewModel: ViewModelType {
     private func setupSubscription() {
         albumContentsUseCase.albumReloadPublisher(forAlbum: album)
             .debounce(for: .seconds(0.35), scheduler: DispatchQueue.global())
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] in
                 guard let self else { return }
                 reloadAlbum()

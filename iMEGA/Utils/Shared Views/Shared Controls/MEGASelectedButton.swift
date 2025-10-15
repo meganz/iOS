@@ -11,7 +11,9 @@ final class MEGASelectedButton: UIButton {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        self.setRightTintColor()
+        MainActor.assumeIsolated {
+            self.setRightTintColor()
+        }
     }
     
     func setRightTintColor() {

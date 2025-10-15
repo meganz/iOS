@@ -8,6 +8,7 @@ protocol CreateTextFileAlertViewRouting: Routing {
     func createTextFile(_ fileName: String)
 }
 
+@MainActor
 final class CreateTextFileAlertViewModel {
     private var router: any CreateTextFileAlertViewRouting
     

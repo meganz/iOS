@@ -1,5 +1,6 @@
 import MEGADomain
 
+@MainActor
 protocol MoveToRubbishBinViewModelProtocol {
     func moveToRubbishBin(nodes: [NodeEntity])
 }

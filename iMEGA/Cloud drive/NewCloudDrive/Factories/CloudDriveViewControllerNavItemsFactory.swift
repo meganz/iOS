@@ -4,6 +4,7 @@ import UIKit
 
 /// Factory struct to construct the navigation items of CloudDrive
 /// This factory will construct the navigation items needed for the CD page based on the latest state of the parent node.
+@MainActor
 struct CloudDriveViewControllerNavItemsFactory {
     let nodeSource: NodeSource
     let config: NodeBrowserConfig

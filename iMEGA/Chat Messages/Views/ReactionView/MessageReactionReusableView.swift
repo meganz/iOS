@@ -1,5 +1,6 @@
 import MessageKit
 
+@MainActor
 protocol MessageReactionReusableViewDelegate: AnyObject {
     func emojiLongPressed(_ emoji: String, chatMessage: ChatMessage, sender: UIView)
     func addMorePressed(chatMessage: ChatMessage, sender: UIView)
@@ -24,11 +25,6 @@ class MessageReactionReusableView: MessageReusableView {
     }
 
     weak var delegate: (any MessageReactionReusableViewDelegate)?
-
-    override func awakeFromNib() {
-        super.awakeFromNib()
-
-    }
     
     override func layoutSubviews() {
         super.layoutSubviews()

@@ -7,6 +7,7 @@ import MEGAPermissionsMock
 import SwiftUI
 import Testing
 
+@MainActor
 @Suite("Permission Onboarding Router Tests", .serialized)
 struct PermissionOnboardingRouterTests {
     class MockViewController: UIViewController {
@@ -27,7 +28,7 @@ struct PermissionOnboardingRouterTests {
         }
     }
 
-    struct TestCase {
+    struct TestCase: @unchecked Sendable {
         struct ViewModelOutput {
             let image: Image
             let title: String
@@ -69,7 +70,6 @@ struct PermissionOnboardingRouterTests {
         )
     }
 
-    @MainActor
     @Test(
         "when permission can be requested, should show PermissionOnboardingView with correct view model data and output",
         .disabled("Disabled due to flakiness"),
@@ -106,10 +106,10 @@ struct PermissionOnboardingRouterTests {
         #expect(viewModel.secondaryButtonTitle == testCase.viewModelOutput.secondaryButton)
 
         viewModel.routeTo(.finished(result: output))
-        #expect(await startTask.value == output)
+        let receivedOutput = await startTask.value
+        #expect(receivedOutput == output)
     }
 
-    @MainActor
     @Test(
         "when permission can NOT be requested, should not show anything",
         arguments: [TestCase.notifications, .cameraBackups]
@@ -129,6 +129,7 @@ struct PermissionOnboardingRouterTests {
 
         #expect(window.rootViewController == nil)
 
-        #expect(await startTask.value == nil)
+        let receivedOutput = await startTask.value
+        #expect(receivedOutput == nil)
     }
 }

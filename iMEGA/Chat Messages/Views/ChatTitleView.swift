@@ -38,7 +38,9 @@ class ChatTitleView: UIView {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        updateAppearance()
+        MainActor.assumeIsolated {
+            updateAppearance()
+        }
     }
     
     @IBAction func didTap(tapGesture: UITapGestureRecognizer) {

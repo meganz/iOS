@@ -1,6 +1,7 @@
 import Foundation
 import MEGAAssets
 
+@MainActor
 final class FolderLinkToolbarConfigurator {
     typealias FolderLinkToolbarButtonAction = (UIBarButtonItem) -> Void
     

@@ -10,8 +10,10 @@ class AudioWaveView: UIView {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        proportionalDefaultMultiplier = proportionalHeightConstraint?.multiplier ?? .zero
-        representationView.backgroundColor = TokenColors.Icon.accent
+        MainActor.assumeIsolated {
+            proportionalDefaultMultiplier = proportionalHeightConstraint?.multiplier ?? .zero
+            representationView.backgroundColor = TokenColors.Icon.accent
+        }
     }
 
     /// The value of level can be between 1 and 100

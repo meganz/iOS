@@ -1,4 +1,5 @@
 import Foundation
+import MEGASwift
 import UIKit
 
 enum CameraUploadMediaTypePausedReason: Sendable, Equatable {
@@ -10,7 +11,8 @@ enum CameraUploadMediaTypePausedReason: Sendable, Equatable {
     case thermalState(ThermalState)
 }
 
-@objc class CameraUploadConcurrentCountCalculator: NSObject {
+@objc final class CameraUploadConcurrentCountCalculator: NSObject, @unchecked Sendable {
+    @Atomic
     private var currentUploadQueueStates = CameraUploadQueueStates(
             photoUploadState: .defaultMaximum,
             videoUploadState: .defaultMaximum)
@@ -37,8 +39,11 @@ enum CameraUploadMediaTypePausedReason: Sendable, Equatable {
     @objc private func applicationStatesChangedNotification(_ notification: Notification) {
         MEGALogDebug("[Camera Upload] concurrent calculator received \(notification.name)")
         Task { @MainActor in
-            let uploadQueueState = calculateCameraUploadQueueStates()
-            
+            let uploadQueueState = calculateCameraUploadQueueStates(
+                applicationState: UIApplication.shared.applicationState,
+                batteryState: UIDevice.current.batteryState,
+                batteryLevel: UIDevice.current.batteryLevel
+            )
             if currentUploadQueueStates.photoConcurrentCount != uploadQueueState.photoConcurrentCount {
                 var userInfo: [AnyHashable: Any] = [MEGAPhotoConcurrentCountUserInfoKey: uploadQueueState.photoConcurrentCount]
                 if let pausedReason = uploadQueueState.photoPausedReason {
@@ -61,21 +66,37 @@ enum CameraUploadMediaTypePausedReason: Sendable, Equatable {
                     userInfo: userInfo)
             }
             
-            currentUploadQueueStates = uploadQueueState
+            $currentUploadQueueStates.mutate { $0 = uploadQueueState }
         }
     }
     
     // MARK: - Concurrent count calculation
     
-    @MainActor
-    @objc func calculatePhotoUploadConcurrentCount() -> Int {
-        currentUploadQueueStates = calculateCameraUploadQueueStates()
+    @objc func calculatePhotoUploadConcurrentCount(
+        applicationState: UIApplication.State,
+        batteryState: UIDevice.BatteryState,
+        batteryLevel: Float
+    ) -> Int {
+        let uploadQueueStates = calculateCameraUploadQueueStates(
+            applicationState: applicationState,
+            batteryState: batteryState,
+            batteryLevel: batteryLevel
+        )
+        $currentUploadQueueStates.mutate { $0 = uploadQueueStates }
         return currentUploadQueueStates.photoConcurrentCount
     }
     
-    @MainActor
-    @objc func calculateVideoUploadConcurrentCount() -> Int {
-        currentUploadQueueStates = calculateCameraUploadQueueStates()
+    @objc func calculateVideoUploadConcurrentCount(
+        applicationState: UIApplication.State,
+        batteryState: UIDevice.BatteryState,
+        batteryLevel: Float
+    ) -> Int {
+        let uploadQueueStates = calculateCameraUploadQueueStates(
+            applicationState: applicationState,
+            batteryState: batteryState,
+            batteryLevel: batteryLevel
+        )
+        $currentUploadQueueStates.mutate { $0 = uploadQueueStates }
         return currentUploadQueueStates.videoConcurrentCount
     }
     
@@ -87,13 +108,16 @@ enum CameraUploadMediaTypePausedReason: Sendable, Equatable {
         currentUploadQueueStates.videoPausedReason
     }
     
-    @MainActor
-    private func calculateCameraUploadQueueStates() -> CameraUploadQueueStates {
+    private func calculateCameraUploadQueueStates(
+        applicationState: UIApplication.State,
+        batteryState: UIDevice.BatteryState,
+        batteryLevel: Float
+    ) -> CameraUploadQueueStates {
         let statuses = [
-            queueStatusByApplicationState(UIApplication.shared.applicationState),
+            queueStatusByApplicationState(applicationState),
             queueStatusByBatteryState(
-                UIDevice.current.batteryState,
-                batteryLevel: UIDevice.current.batteryLevel,
+                batteryState,
+                batteryLevel: batteryLevel,
                 isLowPowerModeEnabled: ProcessInfo.processInfo.isLowPowerModeEnabled),
             queueStatusByThermalState(ProcessInfo.processInfo.thermalState)
         ]
@@ -205,7 +229,7 @@ extension CameraUploadQueueState {
     }
 }
 
-private struct CameraUploadQueueStates {
+private struct CameraUploadQueueStates: Sendable {
     let photoUploadState: CameraUploadQueueState
     let videoUploadState: CameraUploadQueueState
 }

@@ -1,5 +1,6 @@
 import MEGADomain
 
+@MainActor
 protocol ScheduleMeetingCreationRecurrenceOptionsRouting {
     var rules: ScheduledMeetingRulesEntity { get }
     var startDate: Date { get }
@@ -9,6 +10,7 @@ protocol ScheduleMeetingCreationRecurrenceOptionsRouting {
     func dismiss()
 }
 
+@MainActor
 final class ScheduleMeetingCreationRecurrenceOptionsViewModel: ObservableObject {
     private let router: any ScheduleMeetingCreationRecurrenceOptionsRouting
     private let startDate: Date

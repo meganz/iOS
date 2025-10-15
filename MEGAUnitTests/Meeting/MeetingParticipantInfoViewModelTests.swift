@@ -10,7 +10,7 @@ final class MeetingParticipantInfoViewModelTests: XCTestCase {
     @MainActor func testAction_onViewReady_MyselfAsModerator_ParticipantIsAModeratorAndIsInContactList() {
         let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity(), contactEmail: "test@email.com")
         let megaHandleUseCase = MockMEGAHandleUseCase(base64Handle: Base64HandleEntity(100))
-        let contactsUseCase = MockContactsUseCase(contact: UserEntity(handle: 200))
+        let contactsUseCase = MockContactsUseCase(contact: MEGADomain.UserEntity(handle: 200))
         let viewModel = makeSUT(
             participant: Self.mockParticipant(isModerator: true),
             chatRoomUseCase: chatRoomUseCase,
@@ -55,7 +55,7 @@ final class MeetingParticipantInfoViewModelTests: XCTestCase {
     @MainActor func testAction_onViewReady_MyselfAsModerator_ParticipantIsNotAModeratorAndAlsoInContactList() {
         let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity(), contactEmail: "test@email.com")
         let megaHandleUseCase = MockMEGAHandleUseCase(base64Handle: Base64HandleEntity(100))
-        let contactsUseCase = MockContactsUseCase(contact: UserEntity(handle: 200))
+        let contactsUseCase = MockContactsUseCase(contact: MEGADomain.UserEntity(handle: 200))
 
         let viewModel = makeSUT(
             chatRoomUseCase: chatRoomUseCase,
@@ -99,7 +99,7 @@ final class MeetingParticipantInfoViewModelTests: XCTestCase {
     @MainActor func testAction_onViewReady_MyselfAsParticipant_ParticipantIsNotAModeratorAndAlsoInContactList() {
         let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity(), contactEmail: "test@email.com")
         let megaHandleUseCase = MockMEGAHandleUseCase(base64Handle: Base64HandleEntity(100))
-        let contactsUseCase = MockContactsUseCase(contact: UserEntity(handle: 200))
+        let contactsUseCase = MockContactsUseCase(contact: MEGADomain.UserEntity(handle: 200))
 
         let viewModel = makeSUT(
             chatRoomUseCase: chatRoomUseCase,

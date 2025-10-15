@@ -1,18 +1,14 @@
 import Foundation
 
-struct FileSystemImageCacheClient {
+struct FileSystemImageCacheClient: Sendable {
 
-    var fileExists: (
-        _ filePathURL: URL
-    ) -> Bool
+    var fileExists: @Sendable (_ filePathURL: URL) -> Bool
 
-    var cachedImage: (
-        _ filePathURL: URL
-    ) -> Data?
+    var cachedImage: @Sendable (_ filePathURL: URL) -> Data?
 
-    var loadCachedImageAsync: (
+    var loadCachedImageAsync: @Sendable (
         _ filePathURL: URL,
-        _ foundCachedImageCompletion: @escaping (Data?) -> Void
+        _ foundCachedImageCompletion: @escaping @Sendable (Data?) -> Void
     ) -> Void
 }
 

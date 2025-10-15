@@ -15,8 +15,10 @@ class ReactionCollectionViewCell: UILabel {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(longPress(_:)))
-        addGestureRecognizer(longPressGesture)
+        MainActor.assumeIsolated {
+            let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(longPress(_:)))
+            addGestureRecognizer(longPressGesture)
+        }
     }
     
     @objc func longPress(_ tapGesture: UITapGestureRecognizer) {

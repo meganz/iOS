@@ -4,6 +4,7 @@ import MEGADomain
 import MEGASdk
 
 /// Routing the app to show the quick upload actions at CD's root.
+@MainActor
 @objc final class CloudDriveQuickUploadActionRouter: NSObject {
     let navigationController: UINavigationController
     let uploadAddMenuDelegateHandler: any UploadAddMenuDelegate

@@ -239,32 +239,26 @@ final class FilesExplorerViewModel: ViewModelType {
 }
 
 extension FilesExplorerViewModel: DisplayMenuDelegate, UploadAddMenuDelegate {
-    nonisolated func displayMenu(didSelect action: DisplayActionEntity, needToRefreshMenu: Bool) {
-        Task { @MainActor in
-            switch action {
-            case .select:
-                invokeCommand?(.editingModeStatusChanges)
-            case .thumbnailView, .listView:
-                if viewTypePreference == .list && action == .thumbnailView ||
-                    viewTypePreference == .grid && action == .listView {
-                    invokeCommand?(.viewTypeHasChanged)
-                }
-            default: break
+    func displayMenu(didSelect action: DisplayActionEntity, needToRefreshMenu: Bool) {
+        switch action {
+        case .select:
+            invokeCommand?(.editingModeStatusChanges)
+        case .thumbnailView, .listView:
+            if viewTypePreference == .list && action == .thumbnailView ||
+                viewTypePreference == .grid && action == .listView {
+                invokeCommand?(.viewTypeHasChanged)
             }
+        default: break
         }
     }
     
-    nonisolated func sortMenu(didSelect sortType: SortOrderType) {
-        Task { @MainActor in
-            Helper.save(sortType.megaSortOrderType, for: nil)
-            invokeCommand?(.sortTypeHasChanged)
-            configureContextMenus()
-        }
+    func sortMenu(didSelect sortType: SortOrderType) {
+        Helper.save(sortType.megaSortOrderType, for: nil)
+        invokeCommand?(.sortTypeHasChanged)
+        configureContextMenus()
     }
     
-    nonisolated func uploadAddMenu(didSelect action: UploadAddActionEntity) {
-        Task { @MainActor in
-            invokeCommand?(.didSelect(action))
-        }
+    func uploadAddMenu(didSelect action: UploadAddActionEntity) {
+        invokeCommand?(.didSelect(action))
     }
 }

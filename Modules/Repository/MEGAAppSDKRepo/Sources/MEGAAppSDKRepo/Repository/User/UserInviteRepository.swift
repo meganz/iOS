@@ -1,5 +1,5 @@
 import MEGADomain
-import MEGASdk
+@preconcurrency import MEGASdk
 import MEGASwift
 
 public struct UserInviteRepository: UserInviteRepositoryProtocol {

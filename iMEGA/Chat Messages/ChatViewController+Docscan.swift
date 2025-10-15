@@ -2,7 +2,7 @@ import Foundation
 import MEGAL10n
 import VisionKit
 
-extension ChatViewController: VNDocumentCameraViewControllerDelegate {
+extension ChatViewController: @MainActor VNDocumentCameraViewControllerDelegate {
     func documentCameraViewController(_ controller: VNDocumentCameraViewController, didFinishWith scan: VNDocumentCameraScan) {
         var docs = [UIImage]()
         for idx in 0 ..< scan.pageCount {

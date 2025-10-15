@@ -77,6 +77,7 @@ struct StreamingInfoRepositoryTests {
         }
     }
     
+    @MainActor
     @Suite("Track Mapping (fetchTrack)")
     struct TrackMappingSuite {
         @Test(

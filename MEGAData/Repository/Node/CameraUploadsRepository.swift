@@ -153,10 +153,9 @@ public final class CameraUploadsRepository: NSObject, CameraUploadsRepositoryPro
 
 extension CameraUploadsRepository: MEGAGlobalDelegate {
     public func onNodesUpdate(_ api: MEGASdk, nodeList: MEGANodeList?) {
+        guard let nodes = nodeList?.toNodeArray() else { return }
+        let renamedNodes = nodes.nodes(for: [.name])
         Task {
-            guard let nodes = nodeList?.toNodeArray() else { return }
-            let renamedNodes = nodes.nodes(for: [.name])
-             
             guard let cameraUploadsNode = try? await cameraUploadsNode() else { return }
            
             let isCUNodeRenamed = renamedNodes.contains(where: { node in

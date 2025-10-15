@@ -4,7 +4,9 @@ final class CircularView: UIView {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        clipsToBounds = true
+        MainActor.assumeIsolated {
+            clipsToBounds = true
+        }
     }
 
     override func layoutSubviews() {

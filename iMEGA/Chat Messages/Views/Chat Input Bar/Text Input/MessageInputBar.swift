@@ -3,6 +3,7 @@ import MEGADesignToken
 import MEGAL10n
 import UIKit
 
+@MainActor
 protocol MessageInputBarDelegate: AnyObject {
     func tappedAddButton(_ button: UIButton)
     func tappedSendButton(withText text: String)
@@ -109,36 +110,9 @@ class MessageInputBar: UIView {
     override func awakeFromNib() {
         super.awakeFromNib()
 
-        configureImages()
-
-        messageTextView.collapsedMaxHeightReachedAction = { [weak self] collapsedMaxHeightReached in
-            guard let `self` = self, !self.expanded else {
-                return
-            }
-            
-            self.expandCollapseButton.isHidden = !collapsedMaxHeightReached
+        MainActor.assumeIsolated {
+            configureViews()
         }
-        
-        messageTextView.pasteAction = { [weak self] image in
-            self?.delegate?.didPasteImage(image)
-        }
-        
-        registerKeyboardNotifications()
-        
-        guard let messageTextViewFont = messageTextView.font else {
-            fatalError("text view font does not exsists")
-        }
-        
-        editViewHeightConstraint.constant = 0
-        let inset: CGFloat = messageTextView.textContainerInset.top + messageTextView.textContainerInset.bottom
-        let cover: CGFloat = messageTextViewCoverViewTopConstraint.constant + messageTextViewCoverViewBottomConstraint.constant
-        messageTextViewCoverView.maxCornerRadius = messageTextViewFont.lineHeight + inset + cover
-        
-        calculateAddButtonBotomSpacing()
-        updateAppearance()
-        setSendButtonColor()
-        
-        backgroundColor = TokenColors.Background.page
     }
     
     override var intrinsicContentSize: CGSize {
@@ -274,6 +248,39 @@ class MessageInputBar: UIView {
     }
     
     // MARK: - Private methods
+    
+    private func configureViews() {
+        configureImages()
+
+        messageTextView.collapsedMaxHeightReachedAction = { [weak self] collapsedMaxHeightReached in
+            guard let self, !expanded else {
+                return
+            }
+            
+            expandCollapseButton.isHidden = !collapsedMaxHeightReached
+        }
+        
+        messageTextView.pasteAction = { [weak self] image in
+            self?.delegate?.didPasteImage(image)
+        }
+        
+        registerKeyboardNotifications()
+        
+        guard let messageTextViewFont = messageTextView.font else {
+            fatalError("text view font does not exsists")
+        }
+        
+        editViewHeightConstraint.constant = 0
+        let inset: CGFloat = messageTextView.textContainerInset.top + messageTextView.textContainerInset.bottom
+        let cover: CGFloat = messageTextViewCoverViewTopConstraint.constant + messageTextViewCoverViewBottomConstraint.constant
+        messageTextViewCoverView.maxCornerRadius = messageTextViewFont.lineHeight + inset + cover
+        
+        calculateAddButtonBotomSpacing()
+        updateAppearance()
+        setSendButtonColor()
+        
+        backgroundColor = TokenColors.Background.page
+    }
     
     private func configureImages() {
         clearEditButton.setImage(MEGAAssets.UIImage.image(named: "clearEdit"), for: .normal)
@@ -438,25 +445,27 @@ class MessageInputBar: UIView {
             object: nil,
             queue: .main
         ) { [weak self] notification in
-            guard let self else {
+            guard let self, let keyboardFrame = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else {
                 return
             }
-            
-            guard let keyboardFrame = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue, self.messageTextView.isFirstResponder else {
-                return
+            Task { @MainActor in
+                handleKeyboardShowNotification(keyboardFrame)
             }
+        }
+    }
+    
+    private func handleKeyboardShowNotification(_ keyboardFrame: CGRect) {
+        MEGALogDebug("[MessageInputBar] Keyboard did show notification triggered")
 
-            MEGALogDebug("[MessageInputBar] Keyboard did show notification triggered")
+        guard self.messageTextView.isFirstResponder else { return }
+        self.keyboardHeight = keyboardFrame.size.height
 
-            self.keyboardHeight = keyboardFrame.size.height
-
-            // We only update messageTextView's height when the mic button is not visible
-            // (aka: when the textView is empty)
-            if self.micButton.isHidden,
-              let messageTextViewExpanadedHeight = self.messageTextView.expandedHeight,
-                messageTextViewExpanadedHeight != self.expandedHeight {
-                self.messageTextView.expandedHeight = self.expandedHeight
-            }
+        // We only update messageTextView's height when the mic button is not visible
+        // (aka: when the textView is empty)
+        if self.micButton.isHidden,
+          let messageTextViewExpanadedHeight = self.messageTextView.expandedHeight,
+            messageTextViewExpanadedHeight != self.expandedHeight {
+            self.messageTextView.expandedHeight = self.expandedHeight
         }
     }
 
@@ -466,16 +475,19 @@ class MessageInputBar: UIView {
             object: nil,
             queue: .main
         ) { [weak self] _ in
-            guard let `self` = self else {
-                return
+            guard let self else { return }
+            Task { @MainActor in
+                handleKeyboardHideNotification()
             }
+        }
+    }
+    
+    private func handleKeyboardHideNotification() {
+        keyboardHeight = nil
 
-            keyboardHeight = nil
-
-            if self.expanded {
-                self.expanded = false
-                self.collapse()
-            }
+        if self.expanded {
+            self.expanded = false
+            self.collapse()
         }
     }
     
@@ -565,7 +577,7 @@ class MessageInputBar: UIView {
     
     // MARK: - Deinit
     
-    deinit {
+    isolated deinit {
         removeKeyboardNotifications()
     }
 }

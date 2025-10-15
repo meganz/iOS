@@ -1,5 +1,7 @@
+@MainActor
 final class FavouritesExplorerGridSource: NSObject {
     
+    @MainActor
     private enum FavouritesSection: Int {
         case folders = 0, files
 

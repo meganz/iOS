@@ -107,21 +107,23 @@ class AccountExpiredViewController: UIViewController {
 }
 
 extension AccountExpiredViewController: MEGARequestDelegate {
-    func onRequestFinish(_ api: MEGASdk, request: MEGARequest, error: MEGAError) {
-        switch request.type {
-        case .MEGARequestTypeFetchNodes:
-            guard error.type == .apiOk else { return }
-            isFetchNodesDone = true
-        case .MEGARequestTypeAccountDetails:
-            activityIndicator.stopAnimating()
-            guard error.type == .apiOk else {
-                MEGALogError("[Account Expired] Error fetching account details with error \(error.localizedDescription).")
-                self.dismiss(animated: true)
+    nonisolated func onRequestFinish(_ api: MEGASdk, request: MEGARequest, error: MEGAError) {
+        Task { @MainActor in
+            switch request.type {
+            case .MEGARequestTypeFetchNodes:
+                guard error.type == .apiOk else { return }
+                isFetchNodesDone = true
+            case .MEGARequestTypeAccountDetails:
+                activityIndicator.stopAnimating()
+                guard error.type == .apiOk else {
+                    MEGALogError("[Account Expired] Error fetching account details with error \(error.localizedDescription).")
+                    self.dismiss(animated: true)
+                    return
+                }
+                configContent()
+            default:
                 return
             }
-            configContent()
-        default:
-            return
         }
     }
 }

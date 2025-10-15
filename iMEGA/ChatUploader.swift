@@ -2,8 +2,9 @@ import ChatRepo
 import MEGAAppSDKRepo
 import MEGADomain
 import MEGARepo
+import MEGASwift
 
-protocol ChatUploaderProtocol {
+protocol ChatUploaderProtocol: Sendable {
     func upload(image: UIImage, chatRoomId: UInt64) async
     func upload(
         filepath: String,
@@ -20,7 +21,15 @@ final class ChatUploader: NSObject, ChatUploaderProtocol {
     
     private let store = MEGAStore.shareInstance()
     
-    private var isDatabaseCleanupTaskCompleted: Bool?
+    private let _isDatabaseCleanupTaskCompleted: Atomic<Bool?> = Atomic(wrappedValue: nil)
+    private var isDatabaseCleanupTaskCompleted: Bool? {
+        get {
+            _isDatabaseCleanupTaskCompleted.wrappedValue
+        }
+        set {
+            _isDatabaseCleanupTaskCompleted.mutate { $0 = newValue }
+        }
+    }
     private let uploaderQueue = DispatchQueue(label: "ChatUploaderQueue")
 
     private override init() { super.init() }

@@ -600,7 +600,7 @@ extension MockChatRoomUseCase {
 extension MockAccountUseCase {
     static var loggedIn: MockAccountUseCase {
         .init(
-            currentUser: UserEntity(handle: 100),
+            currentUser: MEGADomain.UserEntity(handle: 100),
             isGuest: false,
             isLoggedIn: true
         )

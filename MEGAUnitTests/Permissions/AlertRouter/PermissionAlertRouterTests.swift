@@ -3,8 +3,10 @@ import MEGAPermissions
 import MEGAPermissionsMock
 import XCTest
 
+@MainActor
 final class PermissionAlertRouterTests: XCTestCase {
-    class Harness {
+    @MainActor
+    final class Harness {
         let sut: PermissionAlertRouter
         let presenter: (PermissionsModalModel) -> Void
         // plug in to know when the presenter is called

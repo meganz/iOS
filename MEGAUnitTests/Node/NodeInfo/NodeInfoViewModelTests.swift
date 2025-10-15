@@ -131,7 +131,7 @@ final class NodeInfoViewModelTests: XCTestCase {
         nodeUseCase: some NodeUseCaseProtocol = MockNodeDataUseCase(),
         backupUseCase: some BackupsUseCaseProtocol = MockBackupsUseCase(),
         featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:]),
-        file: StaticString = #file,
+        file: StaticString = #filePath,
         line: UInt = #line
     ) -> NodeInfoViewModel {
         let sut = NodeInfoViewModel(

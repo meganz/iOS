@@ -37,33 +37,39 @@ extension AppDelegate {
         }
 
         MEGASdk.shared.multiFactorAuthCheck(withEmail: MEGASdk.currentUserEmail ?? "", delegate: RequestDelegate { result in
-            switch result {
-            case .success(let request):
-                if request.flag {
-                    return // Two Factor Authentication Enabled
-                }
-            case .failure:
-                break
+            Task { @MainActor in
+                self.handleMultiFactorAuthCheck(result)
             }
-            if UIApplication.mnz_visibleViewController() is AddPhoneNumberViewController ||
-                UIApplication.mnz_visibleViewController() is CustomModalAlertViewController ||
-                UIApplication.mnz_visibleViewController() is AccountExpiredViewController ||
-                (MEGASdk.shared.isAccountType(.business) &&
-                 MEGASdk.shared.businessStatus != .active) {
-                return
-            }
-            
-            if LTHPasscodeViewController.doesPasscodeExist() && LTHPasscodeViewController.sharedUser().isLockscreenPresent() {
-                return
-            }
-            
-            let enable2FACustomModalAlert = CustomModalAlertViewController()
-            enable2FACustomModalAlert.configureForTwoFactorAuthentication(requestedByUser: false)
-
-            UIApplication.mnz_presentingViewController().present(enable2FACustomModalAlert, animated: true, completion: nil)
-            
-            UserDefaults.standard.set(true, forKey: "twoFactorAuthenticationAlreadySuggested")
         })
+    }
+    
+    private func handleMultiFactorAuthCheck(_ result: Result<MEGARequest, MEGAError>) {
+        switch result {
+        case .success(let request):
+            if request.flag {
+                return // Two Factor Authentication Enabled
+            }
+        case .failure:
+            break
+        }
+        if UIApplication.mnz_visibleViewController() is AddPhoneNumberViewController ||
+            UIApplication.mnz_visibleViewController() is CustomModalAlertViewController ||
+            UIApplication.mnz_visibleViewController() is AccountExpiredViewController ||
+            (MEGASdk.shared.isAccountType(.business) &&
+             MEGASdk.shared.businessStatus != .active) {
+            return
+        }
+        
+        if LTHPasscodeViewController.doesPasscodeExist() && LTHPasscodeViewController.sharedUser().isLockscreenPresent() {
+            return
+        }
+        
+        let enable2FACustomModalAlert = CustomModalAlertViewController()
+        enable2FACustomModalAlert.configureForTwoFactorAuthentication(requestedByUser: false)
+
+        UIApplication.mnz_presentingViewController().present(enable2FACustomModalAlert, animated: true, completion: nil)
+        
+        UserDefaults.standard.set(true, forKey: "twoFactorAuthenticationAlreadySuggested")
     }
     
     private var permissionHandler: any DevicePermissionsHandling {
@@ -278,8 +284,10 @@ extension AppDelegate {
         }
         let presentOverDiskQuotaScreenCommand = OverDiskQuotaCommand(
             storageUsed: accountDetails.storageUsed) { [weak self] info in
-                guard let info else { return }
-                self?.presentOverDiskQuotaIfNeededWithInformation(info)
+                guard let self, let info else { return }
+                Task { @MainActor in
+                    self.presentOverDiskQuotaIfNeededWithInformation(info)
+                }
             }
         OverDiskQuotaService.shared.send(presentOverDiskQuotaScreenCommand)
     }

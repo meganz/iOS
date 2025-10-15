@@ -1,6 +1,7 @@
 import Chat
 import MEGAL10n
 
+@MainActor
 final class CallWaitingRoomUsersDialog {
     
     // MARK: - Private properties

@@ -2,9 +2,9 @@
 import MEGADomain
 
 public extension PlanEntity {
-    static var freePlan = PlanEntity(type: .free, name: "Free")
+    static let freePlan = PlanEntity(type: .free, name: "Free")
 
-    static var proLite_monthly = PlanEntity(
+    static let proLite_monthly = PlanEntity(
         type: .lite,
         name: "Pro lite",
         subscriptionCycle: .monthly,
@@ -12,7 +12,7 @@ public extension PlanEntity {
         appStorePrice: .sample(1)
     )
 
-    static var proLite_yearly = PlanEntity(
+    static let proLite_yearly = PlanEntity(
         type: .lite,
         name: "Pro lite",
         subscriptionCycle: .yearly,
@@ -20,7 +20,7 @@ public extension PlanEntity {
         appStorePrice: .sample(2)
     )
 
-    static var proI_monthly = PlanEntity(
+    static let proI_monthly = PlanEntity(
         type: .proI,
         name: "Pro I",
         subscriptionCycle: .monthly,
@@ -30,7 +30,7 @@ public extension PlanEntity {
         appStorePrice: .sample(3)
     )
 
-    static var proI_yearly = PlanEntity(
+    static let proI_yearly = PlanEntity(
         type: .proI,
         name: "Pro I",
         subscriptionCycle: .yearly,
@@ -40,7 +40,7 @@ public extension PlanEntity {
         appStorePrice: .sample(4)
     )
 
-    static var proII_monthly = PlanEntity(
+    static let proII_monthly = PlanEntity(
         type: .proII,
         name: "Pro II",
         subscriptionCycle: .monthly,
@@ -50,7 +50,7 @@ public extension PlanEntity {
         appStorePrice: .sample(5)
     )
 
-    static var proII_yearly = PlanEntity(
+    static let proII_yearly = PlanEntity(
         type: .proII,
         name: "Pro II",
         subscriptionCycle: .yearly,
@@ -60,7 +60,7 @@ public extension PlanEntity {
         appStorePrice: .sample(6)
     )
 
-    static var proIII_monthly = PlanEntity(
+    static let proIII_monthly = PlanEntity(
         type: .proIII,
         name: "Pro III",
         subscriptionCycle: .monthly,
@@ -70,7 +70,7 @@ public extension PlanEntity {
         appStorePrice: .sample(7)
     )
     
-    static var proIII_yearly = PlanEntity(
+    static let proIII_yearly = PlanEntity(
         type: .proIII,
         name: "Pro III",
         subscriptionCycle: .yearly,

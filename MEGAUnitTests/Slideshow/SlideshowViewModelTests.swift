@@ -34,7 +34,7 @@ class SlideshowViewModelTests: XCTestCase {
             slideShowUseCase: MockSlideShowUseCase(
                 config: configuration,
                 forUser: 1),
-            accountUseCase: MockAccountUseCase(currentUser: UserEntity(handle: 3)),
+            accountUseCase: MockAccountUseCase(currentUser: MEGADomain.UserEntity(handle: 3)),
             tracker: tracker
         )
     }

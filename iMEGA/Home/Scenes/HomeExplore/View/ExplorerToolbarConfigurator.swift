@@ -1,5 +1,6 @@
 import MEGAAssets
 
+@MainActor
 class ExplorerToolbarConfigurator {
     typealias ButtonAction = (UIBarButtonItem) -> Void
     let downloadAction: ButtonAction

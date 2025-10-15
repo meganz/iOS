@@ -6,8 +6,10 @@ import MEGADomain
 import MEGAPreference
 import MEGARepo
 
+@MainActor
 final class CancellableTransferRouter: NSObject, CancellableTransferRouting, TransferWidgetRouting {
     
+    @MainActor
     struct Factory {
         let presenter: UIViewController
         let node: MEGANode

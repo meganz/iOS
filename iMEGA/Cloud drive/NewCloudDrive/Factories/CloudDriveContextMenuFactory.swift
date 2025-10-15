@@ -1,6 +1,7 @@
 import MEGADomain
 import MEGASwift
 
+@MainActor
 struct CloudDriveContextMenuFactory {
     private enum NodeBrowserContextMenuState {
         case initial
@@ -34,22 +35,9 @@ struct CloudDriveContextMenuFactory {
         isSelectionHidden: Bool,
         sortOrder: MEGADomain.SortOrderEntity
     ) -> AnyAsyncSequence<NodeBrowserContextMenuViewFactory> {
-        var currentState: NodeBrowserContextMenuState = .initial
-        return AsyncStream {
-            defer {
-                switch currentState {
-                case .initial:
-                    currentState = .sensitivityCheck
-                case .sensitivityCheck:
-                    currentState = .done
-                case .done:
-                    break
-                }
-            }
-
-            switch currentState {
-            case .initial:
-                return NodeBrowserContextMenuViewFactory(
+        AsyncStream { continuation in
+            Task {
+                let initialFactory = NodeBrowserContextMenuViewFactory(
                     makeNavItemsFactory: makeNavItemsFactory(
                         nodeSource: nodeSource,
                         isHidden: nil,
@@ -58,16 +46,21 @@ struct CloudDriveContextMenuFactory {
                         sortOrder: sortOrder
                     )
                 )
-            case .sensitivityCheck:
+                
+                continuation.yield(initialFactory)
+                
                 let isHidden = await nodeSensitivityChecker.evaluateNodeSensitivity(
                     for: nodeSource,
                     displayMode: config.displayMode ?? .cloudDrive,
                     isFromSharedItem: config.isFromSharedItem ?? false
                 )
 
-                guard let isHidden else { return nil }
-
-                return NodeBrowserContextMenuViewFactory(
+                guard let isHidden else {
+                    continuation.finish()
+                    return
+                }
+                
+                let withHiddenNodeFactory = NodeBrowserContextMenuViewFactory(
                     makeNavItemsFactory: makeNavItemsFactory(
                         nodeSource: nodeSource,
                         isHidden: isHidden,
@@ -76,8 +69,8 @@ struct CloudDriveContextMenuFactory {
                         sortOrder: sortOrder
                     )
                 )
-            case .done:
-                return nil
+                continuation.yield(withHiddenNodeFactory)
+                continuation.finish()
             }
         }
         .eraseToAnyAsyncSequence()

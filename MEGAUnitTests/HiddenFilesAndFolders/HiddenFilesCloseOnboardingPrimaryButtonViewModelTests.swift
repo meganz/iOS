@@ -4,6 +4,7 @@ import MEGAAppPresentationMock
 import MEGAL10n
 import XCTest
 
+@MainActor
 final class HiddenFilesCloseOnboardingPrimaryButtonViewModelTests: XCTestCase {
 
     func testButtonTitle_init_isCorrect() throws {

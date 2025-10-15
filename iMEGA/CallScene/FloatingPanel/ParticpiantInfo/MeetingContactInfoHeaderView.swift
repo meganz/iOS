@@ -8,6 +8,8 @@ class MeetingContactInfoHeaderView: UIView {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        avatarImageView.image = MEGAAssets.UIImage.image(named: "icon-contacts")
+        MainActor.assumeIsolated {
+            avatarImageView.image = MEGAAssets.UIImage.image(named: "icon-contacts")
+        }
     }
 }

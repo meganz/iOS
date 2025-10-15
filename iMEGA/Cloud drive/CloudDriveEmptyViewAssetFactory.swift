@@ -7,6 +7,7 @@ import Search
 import SwiftUI
 import UIKit
 
+@MainActor
 struct CloudDriveEmptyViewAssetFactory {
     private let tracker: any AnalyticsTracking
     private let nodeInsertionRouter: any NodeInsertionRouting

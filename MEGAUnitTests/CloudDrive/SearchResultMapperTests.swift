@@ -7,6 +7,7 @@ import Search
 import SwiftUI
 import XCTest
 
+@MainActor
 final class SearchResultMapperTests: XCTestCase {
 
     func testSwipeActions_withNodeAccessLevelRead_shouldReturnSwipeActionsAsEmpty() {

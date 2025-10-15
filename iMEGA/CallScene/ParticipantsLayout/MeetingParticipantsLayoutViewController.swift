@@ -743,13 +743,13 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
 
 // MARK: - CallParticipantVideoDelegate
 
-extension MeetingParticipantsLayoutViewController: CallParticipantVideoDelegate {
+extension MeetingParticipantsLayoutViewController: @MainActor CallParticipantVideoDelegate {
     func videoFrameData(width: Int, height: Int, buffer: Data!, type: VideoFrameType) {
         speakerRemoteVideoImageView.image = UIImage.mnz_convert(toUIImage: buffer, withWidth: width, withHeight: height)
     }
 }
 
-extension MeetingParticipantsLayoutViewController: CallCollectionViewDelegate {
+extension MeetingParticipantsLayoutViewController: @MainActor CallCollectionViewDelegate {
     func collectionViewDidChangeOffset(to page: Int, visibleIndexPaths: [IndexPath]) {
         pageControl.currentPage = page
         viewModel.dispatch(.indexVisibleParticipants(visibleIndexPaths.map { $0.item }))

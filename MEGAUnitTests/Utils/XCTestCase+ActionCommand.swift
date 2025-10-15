@@ -11,7 +11,7 @@ extension XCTestCase {
             actions: [action],
             expectedCommands: expectedCommands, 
             timeout: timeout,
-            expectationValidation: ==,
+            expectationValidation: { $0 == $1 },
             file: file,
             line: line
         )
@@ -24,7 +24,7 @@ extension XCTestCase {
             actions: actions,
             expectedCommands: expectedCommands,
             timeout: timeout,
-            expectationValidation: ==,
+            expectationValidation: { $0 == $1 },
             file: file,
             line: line
         )
@@ -83,7 +83,7 @@ extension XCTestCase {
             actions: [action],
             expectedCommands: expectedCommands,
             timeout: timeout,
-            expectationValidation: ==,
+            expectationValidation: { $0 == $1 },
             file: file,
             line: line
         )
@@ -124,7 +124,7 @@ extension XCTestCase {
     
     @MainActor
     func test<T: ViewModelType>(viewModel: T, trigger: () -> Void, expectedCommands: [T.Command], timeout: TimeInterval = 3.0, file: StaticString = #filePath, line: UInt = #line) async where T.Command: Equatable {
-        await test(viewModel: viewModel, trigger: trigger, expectedCommands: expectedCommands, expectationValidation: ==, file: file, line: line)
+        await test(viewModel: viewModel, trigger: trigger, expectedCommands: expectedCommands, expectationValidation: { $0 == $1 }, file: file, line: line)
     }
     
     @MainActor

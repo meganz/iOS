@@ -19,6 +19,7 @@ typedef NS_ENUM(NSUInteger, ChatOptionType) {
     ChatOptionTypeNonMeeting = 2
 };
 
+NS_SWIFT_UI_ACTOR
 @protocol ContactsViewControllerDelegate <NSObject>
 @optional
 - (void)nodeEditCompleted:(BOOL)complete;

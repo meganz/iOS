@@ -52,8 +52,10 @@ class ChatViewIntroductionHeaderView: MessageReusableView {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        configureImages()
-        updateAppearance()
+        MainActor.assumeIsolated {
+            configureImages()
+            updateAppearance()
+        }
     }
     
     private func configureImages() {
@@ -229,7 +231,7 @@ class ChatViewIntroductionHeaderView: MessageReusableView {
 }
 
 extension ChatViewIntroductionHeaderView: MEGARequestDelegate {
-    func onRequestFinish(_ api: MEGASdk, request: MEGARequest, error: MEGAError) {
+    nonisolated func onRequestFinish(_ api: MEGASdk, request: MEGARequest, error: MEGAError) {
         guard error.type == .apiOk else {
             MEGALogError("ChatMessageHeaderView: Could not fetch avatar image")
             return

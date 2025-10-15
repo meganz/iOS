@@ -8,7 +8,6 @@ import MEGASwift
 import UIKit
 
 final class ProgressIndicatorView: UIView {
-    private let throttler = Throttler(timeInterval: 1.0, dispatchQueue: .main)
     private let transferInventoryUseCaseHelper = TransferInventoryUseCaseHelper()
     
     private var backgroundLayer: CAShapeLayer?
@@ -374,26 +373,24 @@ private extension ProgressIndicatorView {
 // MARK: - MEGATransferDelegate
 
 extension ProgressIndicatorView: MEGATransferDelegate {
-    func onTransferStart(_ api: MEGASdk, transfer: MEGATransfer) {
-        if transfer.type == .download {
-            if overquota {
-                overquota = false
-            }
-            throttler.start { [weak self] in
-                Task { @MainActor in
-                    self?.configureData()
+    nonisolated func onTransferStart(_ api: MEGASdk, transfer: MEGATransfer) {
+        Task { @MainActor in
+            if transfer.type == .download {
+                if overquota {
+                    overquota = false
                 }
+                configureData()
+            } else {
+                guard !isWidgetForbidden else {
+                    isHidden = true
+                    return
+                }
+                updateForActiveTransfers()
             }
-        } else {
-            guard !isWidgetForbidden else {
-                isHidden = true
-                return
-            }
-            updateForActiveTransfers()
         }
     }
     
-    func onTransferUpdate(_ api: MEGASdk, transfer: MEGATransfer) {
+    nonisolated func onTransferUpdate(_ api: MEGASdk, transfer: MEGATransfer) {
         var isExportFile = false
         var isSaveToPhotos = false
         if let appData = transfer.appData {
@@ -407,32 +404,27 @@ extension ProgressIndicatorView: MEGATransferDelegate {
             return
         }
         
-        guard let index = transfers.firstIndex(where: { transfer.nodeHandle == $0.nodeHandle && transfer.parentHandle == $0.parentHandle }) else { return }
-        transfers[index] = transfer.toTransferEntity()
-        
-        updateProgress()
-    }
-    
-    func onTransferFinish(_ api: MEGASdk, transfer: MEGATransfer, error: MEGAError) {
-        Task {
-            await self.processTransferFinish(api, transfer: transfer, error: error)
+        Task { @MainActor in
+            guard let index = transfers.firstIndex(where: { transfer.nodeHandle == $0.nodeHandle && transfer.parentHandle == $0.parentHandle }) else { return }
+            transfers[index] = transfer.toTransferEntity()
+            
+            updateProgress()
         }
     }
     
-    func onTransferTemporaryError(_ api: MEGASdk, transfer: MEGATransfer, error: MEGAError) {
-        if error.type == .apiEOverQuota || error.type == .apiEgoingOverquota {
-            overquota = true
+    nonisolated func onTransferFinish(_ api: MEGASdk, transfer: MEGATransfer, error: MEGAError) {
+        Task { @MainActor in
+            if !transfer.isStreamingTransfer {
+                await api.addCompletedTransfer(transfer)
+            }
+            try await configureData()
         }
     }
     
-    private nonisolated func processTransferFinish(_ api: MEGASdk, transfer: MEGATransfer, error: MEGAError) async {
-        if !transfer.isStreamingTransfer {
-            api.addCompletedTransfer(transfer)
-        }
-        
-        self.throttler.start { [weak self] in
-            Task { @MainActor in
-                self?.configureData()
+    nonisolated func onTransferTemporaryError(_ api: MEGASdk, transfer: MEGATransfer, error: MEGAError) {
+        Task { @MainActor in
+            if error.type == .apiEOverQuota || error.type == .apiEgoingOverquota {
+                overquota = true
             }
         }
     }
@@ -441,22 +433,24 @@ extension ProgressIndicatorView: MEGATransferDelegate {
 // MARK: - MEGARequestDelegate
 
 extension ProgressIndicatorView: MEGARequestDelegate {
-    func onRequestFinish(_ api: MEGASdk, request: MEGARequest, error: MEGAError) {
-        if error.type != .apiOk {
-            switch error.type {
-            case .apiEgoingOverquota, .apiEOverQuota:
-                overquota = true
-            default:
-                break
+    nonisolated func onRequestFinish(_ api: MEGASdk, request: MEGARequest, error: MEGAError) {
+        Task { @MainActor in
+            if error.type != .apiOk {
+                switch error.type {
+                case .apiEgoingOverquota, .apiEOverQuota:
+                    overquota = true
+                default:
+                    break
+                }
+                
+                return
             }
-            
-            return
-        }
-        if request.type == .MEGARequestTypePauseTransfers {
-            if request.flag {
-                stateBadge.image = pauseImage
-            } else {
-                configureData()
+            if request.type == .MEGARequestTypePauseTransfers {
+                if request.flag {
+                    stateBadge.image = pauseImage
+                } else {
+                    configureData()
+                }
             }
         }
     }

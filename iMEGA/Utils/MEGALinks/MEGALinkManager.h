@@ -7,6 +7,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @class SendToChatWrapper;
 
+NS_SWIFT_UI_ACTOR
 @interface MEGALinkManager : NSObject
 
 #pragma mark - Utils to manage MEGA links

@@ -1,7 +1,7 @@
 import MEGAAssets
 import UIKit
 
-struct RoundCornerShadowConfiguration: Equatable {
+@MainActor struct RoundCornerShadowConfiguration: Equatable {
 
     struct Corner: Equatable {
         let corners: UIRectCorner
@@ -23,7 +23,7 @@ struct RoundCornerShadowConfiguration: Equatable {
 
 private typealias CALayerTransformer = (CALayer) -> CALayer
 
-private let roundingCorner: (RoundCornerShadowConfiguration) -> (CAShapeLayer) -> (CAShapeLayer) = { config in
+@MainActor private let roundingCorner: (RoundCornerShadowConfiguration) -> (CAShapeLayer) -> (CAShapeLayer) = { config in
     let corner = config.corner
     return { layer in
         let cornerRadii = CGSize(width: corner.radius, height: corner.radius)
@@ -34,7 +34,7 @@ private let roundingCorner: (RoundCornerShadowConfiguration) -> (CAShapeLayer) -
     }
 }
 
-private let shadowingCorner: (RoundCornerShadowConfiguration) -> CALayerTransformer = { config in
+@MainActor private let shadowingCorner: (RoundCornerShadowConfiguration) -> CALayerTransformer = { config in
     let shadow = config.shadow
     return { layer in
         layer.shadowOffset = shadow.offset
@@ -45,7 +45,7 @@ private let shadowingCorner: (RoundCornerShadowConfiguration) -> CALayerTransfor
     }
 }
 
-private let shadowingTop: (RoundCornerShadowConfiguration) -> CALayerTransformer = { config in
+@MainActor private let shadowingTop: (RoundCornerShadowConfiguration) -> CALayerTransformer = { config in
     let cornerRadius = config.corner.radius
     let cornerRadii = CGSize(width: cornerRadius, height: cornerRadius)
     return { layer in
@@ -57,14 +57,14 @@ private let shadowingTop: (RoundCornerShadowConfiguration) -> CALayerTransformer
     }
 }
 
-private let addShapeLayerReader = Reader<UIView, CAShapeLayer> { view in
+@MainActor private let addShapeLayerReader = Reader<UIView, CAShapeLayer> { view in
     let shapeLayer = CAShapeLayer()
     shapeLayer.frame = view.bounds
     view.layer.addSublayer(shapeLayer)
     return shapeLayer
 }
 
-private let dropTopRoundCornerShadow = Reader<RoundCornerShadowConfiguration, Reader<UIView, CALayer>> { config in
+@MainActor private let dropTopRoundCornerShadow = Reader<RoundCornerShadowConfiguration, Reader<UIView, CALayer>> { config in
     let roundingTop = addShapeLayerReader <|> roundingCorner(config) <|> shadowingTop(config) <|> shadowingCorner(config)
     return roundingTop
 }

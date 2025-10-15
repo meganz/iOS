@@ -4,9 +4,9 @@ public struct SearchResultSwipeAction: Identifiable, Hashable {
     public let id = UUID()
     public let image: Image
     public let backgroundColor: Color
-    public let action: () -> Void
+    public let action: @MainActor () -> Void
 
-    public init(image: Image, backgroundColor: Color, action: @escaping () -> Void) {
+    public init(image: Image, backgroundColor: Color, action: @MainActor @escaping () -> Void) {
         self.image = image
         self.backgroundColor = backgroundColor
         self.action = action

@@ -4,6 +4,7 @@ import MEGADomain
 import MEGADomainMock
 import XCTest
 
+@MainActor
 final class ContactsGroupCellViewModelTests: XCTestCase {
     let moderatorPeer = ChatRoomEntity.Peer(handle: 123, privilege: .moderator)
     let auxPeer = ChatRoomEntity.Peer(handle: 456, privilege: .standard)
@@ -77,7 +78,7 @@ final class ContactsGroupCellViewModelTests: XCTestCase {
             publicChat: publicChat
         )
         let mockChatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: chatRoom)
-        let mockAccountUseCase = MockAccountUseCase(currentUser: UserEntity(handle: currentUserHandle))
+        let mockAccountUseCase = MockAccountUseCase(currentUser: MEGADomain.UserEntity(handle: currentUserHandle))
         
         let sut = ContactsGroupCellViewModel(
             chatListItem: chatListItem,

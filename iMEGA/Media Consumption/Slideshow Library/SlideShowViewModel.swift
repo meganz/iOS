@@ -14,6 +14,7 @@ enum SlideShowAction: ActionType {
     case onViewWillDisappear
 }
 
+@MainActor
 protocol SlideShowViewModelPreferenceProtocol {
     func pause()
     func cancel()

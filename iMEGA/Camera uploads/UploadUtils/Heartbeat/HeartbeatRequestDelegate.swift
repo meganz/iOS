@@ -9,9 +9,9 @@ extension MEGAError {
     }
 }
 
-typealias HeartbeatRequestCompletion = (_ result: Result<MEGARequest, any Error>) -> Void
+typealias HeartbeatRequestCompletion = @Sendable (_ result: Result<MEGARequest, any Error>) -> Void
 
-final class HeartbeatRequestDelegate: NSObject, MEGARequestDelegate {
+final class HeartbeatRequestDelegate: NSObject, MEGARequestDelegate, Sendable {
     private let completion: HeartbeatRequestCompletion
     
     init(completion: @escaping HeartbeatRequestCompletion) {

@@ -12,24 +12,30 @@ extension AchievementsDetailsViewController {
             presenter: self,
             onPhoneNumberVerified: { [weak self] in
                 MEGASdk.shared.getAccountAchievements(with: RequestDelegate { result in
-                    switch result {
-                    case .success(let request):
-                        guard let self, let megaAchievementsDetails = request.megaAchievementsDetails else { return }
-                        self.achievementsDetails = megaAchievementsDetails
-                        for i in 0...megaAchievementsDetails.rewardsCount where megaAchievementsDetails.awardClass(at: UInt(i)) == MEGAAchievement.addPhone.rawValue {
-                            self.completedAchievementIndex = NSNumber(integerLiteral: i)
-                            self.setupView()
-                            self.onAchievementDetailsUpdated?(megaAchievementsDetails)
-                            return
-                        }
-                    case .failure:
-                        break
+                    Task { @MainActor in
+                        self?.handleOnPhoneNumberVerified(result: result)
                     }
                 })
             }
         )
 
         router.start()
+    }
+    
+    private func handleOnPhoneNumberVerified(result: Result<MEGARequest, MEGAError>) {
+        switch result {
+        case .success(let request):
+            guard let megaAchievementsDetails = request.megaAchievementsDetails else { return }
+            self.achievementsDetails = megaAchievementsDetails
+            for i in 0...megaAchievementsDetails.rewardsCount where megaAchievementsDetails.awardClass(at: UInt(i)) == MEGAAchievement.addPhone.rawValue {
+                self.completedAchievementIndex = NSNumber(integerLiteral: i)
+                self.setupView()
+                self.onAchievementDetailsUpdated?(megaAchievementsDetails)
+                return
+            }
+        case .failure:
+            break
+        }
     }
 
     @objc func setupView() {

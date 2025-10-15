@@ -17,9 +17,11 @@ class DocScannerDetailTableCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        backgroundColor = TokenColors.Background.page
-        textLabel?.textColor = TokenColors.Text.primary
-        detailTextLabel?.textColor = TokenColors.Text.secondary
+        MainActor.assumeIsolated {
+            backgroundColor = TokenColors.Background.page
+            textLabel?.textColor = TokenColors.Text.primary
+            detailTextLabel?.textColor = TokenColors.Text.secondary
+        }
     }
     
     private func configure() {

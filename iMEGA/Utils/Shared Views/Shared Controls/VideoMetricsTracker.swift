@@ -30,10 +30,6 @@ import MEGAAppPresentation
         setupObservers()
     }
     
-    deinit {
-        subscriptions.removeAll()
-    }
-    
     private func setupObservers() {
         guard let player, let playerItem else { return }
          

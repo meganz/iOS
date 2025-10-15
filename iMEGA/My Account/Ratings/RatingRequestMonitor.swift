@@ -5,29 +5,31 @@ import MEGAFoundation
 import MEGAPreference
 import StoreKit
 
-@objc final class RatingRequestMonitor: NSObject {
+@objc final class RatingRequestMonitor: NSObject, Sendable {
     private let sdk: MEGASdk
     private let debouncer = Debouncer(delay: 0.7, dispatchQueue: .global(qos: .utility))
     
-    private lazy var currentAppVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? ""
-    private lazy var baseConditionUseCase: any RatingRequestBaseConditionsUseCaseProtocol
-    = RatingRequestBaseConditionsUseCase(
-        preferenceUserCase: PreferenceUseCase.default,
-        accountRepo: AccountRepository.newRepo,
-        currentAppVersion: currentAppVersion
-    )
-    private lazy var shareUseCase: some ShareUseCaseProtocol = ShareUseCase(
-        shareRepository: ShareRepository(sdk: sdk),
-        filesSearchRepository: FilesSearchRepository(sdk: sdk),
-        nodeRepository: NodeRepository(
-            sdk: sdk,
-            sharedFolderSdk: .shared,
-            nodeUpdatesProvider: NodeUpdatesProvider()
-        )
-    )
+    private let currentAppVersion: String
+    private let baseConditionUseCase: any RatingRequestBaseConditionsUseCaseProtocol
+    private let shareUseCase: any ShareUseCaseProtocol
     
     @objc init(sdk: MEGASdk) {
         self.sdk = sdk
+        self.currentAppVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? ""
+        self.baseConditionUseCase = RatingRequestBaseConditionsUseCase(
+            preferenceUserCase: PreferenceUseCase.default,
+            accountRepo: AccountRepository.newRepo,
+            currentAppVersion: currentAppVersion
+        )
+        self.shareUseCase = ShareUseCase(
+            shareRepository: ShareRepository(sdk: sdk),
+            filesSearchRepository: FilesSearchRepository(sdk: sdk),
+            nodeRepository: NodeRepository(
+                sdk: sdk,
+                sharedFolderSdk: .shared,
+                nodeUpdatesProvider: NodeUpdatesProvider()
+            )
+        )
         super.init()
     }
     

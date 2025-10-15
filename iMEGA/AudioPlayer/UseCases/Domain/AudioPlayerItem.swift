@@ -5,7 +5,7 @@ import MEGAL10n
 
 final class AudioPlayerItem: AVPlayerItem {
     var name: String
-    var url: URL
+    nonisolated let url: URL
     var artist: String?
     var album: String?
     var nodeHasThumbnail: Bool

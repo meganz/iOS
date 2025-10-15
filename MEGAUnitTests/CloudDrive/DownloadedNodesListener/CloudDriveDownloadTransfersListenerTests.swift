@@ -5,6 +5,7 @@ import MEGADomainMock
 import MEGASwift
 import XCTest
 
+@MainActor
 final class CloudDriveDownloadTransfersListenerTests: XCTestCase {
     class Harness {
         var offlinePath: String {

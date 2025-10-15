@@ -92,8 +92,10 @@ class AddToChatImageCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        cellType = .media
-        imageView.backgroundColor = TokenColors.Background.page
+        MainActor.assumeIsolated {
+            cellType = .media
+            imageView.backgroundColor = TokenColors.Background.page
+        }
     }
     
     func toggleSelection() {

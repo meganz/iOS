@@ -1,6 +1,7 @@
 #import <UIKit/UIKit.h>
 
 @class GroupChatDetailsViewTableViewCell;
+NS_SWIFT_UI_ACTOR
 @protocol GroupChatDetailsViewTableViewCellDelegate <NSObject>
 @optional
 - (void)controlSwitchValueChanged:(UISwitch *)sender fromCell:(GroupChatDetailsViewTableViewCell *)cell;

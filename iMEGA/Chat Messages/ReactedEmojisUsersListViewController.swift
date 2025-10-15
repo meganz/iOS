@@ -2,6 +2,7 @@ import MEGADesignToken
 import MEGADomain
 import MEGAL10n
 
+@MainActor
 protocol ReactedEmojisUsersListViewControllerDelegate: AnyObject {
     func didSelectUserhandle(_ userhandle: UInt64)
 }

@@ -3,6 +3,7 @@ import MEGADomain
 import MEGADomainMock
 import XCTest
 
+@MainActor
 final class WaitingRoomParticipantViewModelTests: XCTestCase {
     func testAction_admitTapped_allowUsersShouldBeCalled() {
         let callUseCase = MockCallUseCase()

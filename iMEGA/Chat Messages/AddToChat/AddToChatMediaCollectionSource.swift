@@ -1,5 +1,6 @@
 import MEGAPermissions
 
+@MainActor
 protocol AddToChatMediaCollectionSourceDelegate: AnyObject {
     func moreButtonTapped()
     func sendAsset(asset: PHAsset)
@@ -7,6 +8,7 @@ protocol AddToChatMediaCollectionSourceDelegate: AnyObject {
     func dismissView()
 }
 
+@MainActor
 class AddToChatMediaCollectionSource: NSObject {
     private let collectionView: UICollectionView
     private let maxNumberOfAssetsFetched = 16

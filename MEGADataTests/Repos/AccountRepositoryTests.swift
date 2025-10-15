@@ -702,7 +702,7 @@ final class AccountRepositoryTests: XCTestCase {
     
     private func assertRefreshStorageState(
         expectedState: StorageStatusEntity,
-        file: StaticString = #file,
+        file: StaticString = #filePath,
         line: UInt = #line
     ) async throws {
         let (sut, _) = makeSUT(storageStatus: expectedState)

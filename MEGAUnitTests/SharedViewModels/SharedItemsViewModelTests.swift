@@ -8,7 +8,9 @@ import MEGADomainMock
 import MEGASwift
 import XCTest
 
+@MainActor
 final class SharedItemsViewModelTests: XCTestCase {
+    @MainActor
     struct DescriptionForNodeTestData {
         let nodeDescription: String?
         let searchText: String?
@@ -41,6 +43,7 @@ final class SharedItemsViewModelTests: XCTestCase {
         )
     }
 
+    @MainActor
     struct TagsForNodeTestData {
         let tags: [String]
         let searchText: String?
@@ -241,7 +244,7 @@ final class SharedItemsViewModelTests: XCTestCase {
         saveMediaToPhotosUseCase: some SaveMediaToPhotosUseCaseProtocol = MockSaveMediaToPhotosUseCase(),
         nodeUseCase: some NodeUseCaseProtocol = MockNodeUseCase(),
         moveToRubbishBinViewModel: some MoveToRubbishBinViewModelProtocol = MockMoveToRubbishBinViewModel(),
-        file: StaticString = #file,
+        file: StaticString = #filePath,
         line: UInt = #line
     ) -> SharedItemsViewModel {
         let sut = SharedItemsViewModel(

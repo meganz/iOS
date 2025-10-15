@@ -5,6 +5,7 @@ import MEGADomainMock
 import MEGAL10n
 import XCTest
 
+@MainActor
 final class ActiveCallViewModelTests: XCTestCase {
     var subscription: AnyCancellable?
     

@@ -23,6 +23,7 @@ enum MEGACustomViewStyle {
     case homeCarouselPageControl
 }
 
+@MainActor
 protocol CustomViewStyleFactory {
 
     func styler(of style: MEGACustomViewStyle) -> ViewStyler

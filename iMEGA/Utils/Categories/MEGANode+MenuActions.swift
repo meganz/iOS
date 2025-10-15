@@ -1,5 +1,6 @@
 extension MEGANode {
     // MARK: - Import
+    @MainActor
     func openBrowserToImport(in viewController: UIViewController) {
         let storyboard = UIStoryboard(name: "Cloud", bundle: nil)
         guard let browserVC = storyboard.instantiateViewController(withIdentifier: "BrowserViewControllerID") as? BrowserViewController
@@ -10,5 +11,4 @@ extension MEGANode {
         browserNC.setToolbarHidden(false, animated: false)
         viewController.present(browserNC, animated: true, completion: nil)
     }
-    
 }

@@ -1,6 +1,6 @@
 import Foundation
 
-public struct BannerEntity {
+public struct BannerEntity: Sendable {
     public let identifier: Int
     public let title: String
     public let description: String

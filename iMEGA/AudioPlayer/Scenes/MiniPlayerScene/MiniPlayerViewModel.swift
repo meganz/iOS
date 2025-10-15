@@ -206,41 +206,41 @@ final class MiniPlayerViewModel: ViewModelType {
     
     // MARK: - Node Init
     
-    private nonisolated func initialize(with node: MEGANode) async {
-        if await configEntity.isFileLink {
+    private func initialize(with node: MEGANode) async {
+        if configEntity.isFileLink {
             guard let track = streamingInfoUseCase.fetchTrack(from: node) else {
-                await dismiss()
+                dismiss()
                 return
             }
-            await initialize(tracks: [track], currentTrack: track)
+            initialize(tracks: [track], currentTrack: track)
         } else {
-            guard let children = await configEntity.isFolderLink ? nodeInfoUseCase.fetchFolderLinkAudioTracks(from: node.parentHandle) :
+            guard let children = configEntity.isFolderLink ? nodeInfoUseCase.fetchFolderLinkAudioTracks(from: node.parentHandle) :
                                                 nodeInfoUseCase.fetchAudioTracks(from: node.parentHandle),
-                  let currentTrack = await children.async.first(where: { await $0.node?.handle == node.handle }) else {
+                  let currentTrack = children.first(where: { $0.node?.handle == node.handle }) else {
                 
                 guard let track = streamingInfoUseCase.fetchTrack(from: node) else {
-                    await dismiss()
+                    dismiss()
                     return
                 }
-                await initialize(tracks: [track], currentTrack: track)
+                initialize(tracks: [track], currentTrack: track)
                 return
             }
-            await initialize(tracks: children, currentTrack: currentTrack)
+            initialize(tracks: children, currentTrack: currentTrack)
         }
     }
     
     // MARK: - Offline Files Init
     
-    private nonisolated func initialize(with offlineFilePaths: [String]) async {
+    private func initialize(with offlineFilePaths: [String]) async {
         guard
             let files = offlineInfoUseCase.fetchTracks(from: offlineFilePaths),
-            let currentFilePath = await configEntity.fileLink,
-            let currentTrack = await files.async.first(where: { await $0.url.path == currentFilePath })
+            let currentFilePath = configEntity.fileLink,
+            let currentTrack = files.first(where: { $0.url.path == currentFilePath })
         else {
-            await dismiss()
+            dismiss()
             return
         }
-        await initialize(tracks: files, currentTrack: currentTrack)
+        initialize(tracks: files, currentTrack: currentTrack)
     }
     
     // MARK: - Private functions

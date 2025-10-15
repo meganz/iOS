@@ -4,6 +4,7 @@ import MEGADesignToken
 import MEGAL10n
 import UIKit
 
+@MainActor
 protocol SlideShowInteraction: AnyObject {
     func pausePlaying()
 }

@@ -14,8 +14,10 @@ class NodeOwnerInfoTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        setupColor()
-        contactVerifiedImageView.image = MEGAAssets.UIImage.image(named: "contactVerified")
+        MainActor.assumeIsolated {
+            setupColor()
+            contactVerifiedImageView.image = MEGAAssets.UIImage.image(named: "contactVerified")
+        }
     }
 
     private func setupColor() {

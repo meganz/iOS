@@ -3,7 +3,8 @@ import MEGADomain
 import MEGADomainMock
 import XCTest
 
-class DownloadLinkViewModelTests: XCTestCase {
+@MainActor
+final class DownloadLinkViewModelTests: XCTestCase {
 
     func testDownloadFileLinkUserLogged() {
         let router = MockDownloadLinkOrOnboardingRouter()

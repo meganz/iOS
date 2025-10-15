@@ -10,7 +10,7 @@ import Search
 
 /// Dedicated actor to isolate loadMore function to prevent data race where multiple cells can trigger loadMore at the same time
 @globalActor private actor LoadMoreActor {
-    static var shared = LoadMoreActor()
+    static let shared = LoadMoreActor()
 }
 
 /// abstraction into a search results

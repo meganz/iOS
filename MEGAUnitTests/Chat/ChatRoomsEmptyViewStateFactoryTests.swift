@@ -2,7 +2,9 @@
 import MEGAL10n
 import XCTest
 
+@MainActor
 final class ChatRoomsEmptyViewStateFactoryTests: XCTestCase {
+    @MainActor
     class Harness {
         var sut: ChatRoomsEmptyViewStateFactory
         init() {

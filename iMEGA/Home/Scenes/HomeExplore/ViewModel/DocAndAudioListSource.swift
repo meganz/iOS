@@ -173,7 +173,10 @@ extension DocAndAudioListSource {
     
     private func moveToRubbishBin(node: MEGANode) {
         node.mnz_moveToTheRubbishBin { [weak self] in
-            self?.tableView.setEditing(false, animated: true)
+            guard let self else { return }
+            Task { @MainActor in
+                self.tableView.setEditing(false, animated: true)
+            }
         }
     }
     

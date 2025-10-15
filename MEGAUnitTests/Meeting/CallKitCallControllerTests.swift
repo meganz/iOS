@@ -17,17 +17,19 @@ extension String {
     static let testChatIdBase64 = "base"
 }
 
+@MainActor
 @Suite("CallKitCallController")
 struct CallKitCallControllerTests {
     class MockCallKitCallController: CXCallController {
         var requestedTransactions: [CXTransaction] = []
         var errorToReturn: (any Error)?
-        override func request(_ transaction: CXTransaction, completion: @escaping ((any Error)?) -> Void) {
+        override func request(_ transaction: CXTransaction, completion: @escaping @Sendable ((any Error)?) -> Void) {
             requestedTransactions.append(transaction)
             completion(errorToReturn)
         }
     }
-    class Harness {
+    @MainActor
+    final class Harness {
         let callController = MockCallKitCallController()
         let callsManager = MockCallsManager()
         let sut: CallKitCallController
@@ -62,6 +64,7 @@ struct CallKitCallControllerTests {
         }
     }
     
+    @MainActor
     @Suite("Start call")
     struct StartCall {
         

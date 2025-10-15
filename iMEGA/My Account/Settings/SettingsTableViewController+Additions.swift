@@ -59,11 +59,13 @@ extension SettingsTableViewController {
 
 // MARK: - MEGARequestDelegate
 extension SettingsTableViewController: MEGARequestDelegate {
-    public func onRequestFinish(_ api: MEGASdk, request: MEGARequest, error: MEGAError) {
+    nonisolated public func onRequestFinish(_ api: MEGASdk, request: MEGARequest, error: MEGAError) {
         switch request.type {
         case .MEGARequestTypeGetCancelLink:
             guard error.type == .apiOk else { return }
-            showDeleteAccountEmailConfirmationView()
+            Task { @MainActor in
+                showDeleteAccountEmailConfirmationView()
+            }
         default:
             return
         }

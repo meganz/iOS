@@ -11,8 +11,10 @@ class RecoveryKeyTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        recoveryKeyContainerView.layer.cornerRadius = 4
-        fileTypeTextImageView.image = MEGAAssets.UIImage.image(named: "filetype_text")
+        MainActor.assumeIsolated {
+            recoveryKeyContainerView.layer.cornerRadius = 4
+            fileTypeTextImageView.image = MEGAAssets.UIImage.image(named: "filetype_text")
+        }
     }
 
 }

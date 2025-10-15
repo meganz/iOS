@@ -9,7 +9,9 @@ class AllowNonHostToInviteTableViewCell: UITableViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        allowNonHostLabel.text = Strings.Localizable.Meetings.AddContacts.AllowNonHost.message
+        MainActor.assumeIsolated {
+            allowNonHostLabel.text = Strings.Localizable.Meetings.AddContacts.AllowNonHost.message
+        }
     }
     
     func allowNonHostSwitchEnabled(_ enabled: Bool) {

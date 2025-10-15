@@ -129,13 +129,11 @@ static const NSUInteger MIN_SECOND = 10; // Save only where the users were playi
         return;
     }
     
-    dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), ^{
-        [self stopStreaming];
+    [self stopStreaming];
 
-        [self configureDefaultAudioSessionIfNoActivePlayer];
+    [self configureDefaultAudioSessionIfNoActivePlayer];
 
-        [self endAudioPlayerInterruptionIfNeeded];
-    });
+    [self endAudioPlayerInterruptionIfNeeded];
     
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"presentPasscodeLater"] && [LTHPasscodeViewController doesPasscodeExist]) {
         [[LTHPasscodeViewController sharedUser] showLockScreenOver:UIApplication.mnz_presentingViewController.view

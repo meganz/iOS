@@ -7,7 +7,7 @@ final class SendFeedbackViewModelTests: XCTestCase {
 
     @MainActor
     func test_getFeedback_notEmpty() async {
-        let currentUser = UserEntity(email: "test@mega.co.nz")
+        let currentUser = MEGADomain.UserEntity(email: "test@mega.co.nz")
         let mockUseCase = MockAccountUseCase(currentUser: currentUser)
         let sut = SendFeedbackViewModel(accountUseCase: mockUseCase)
         

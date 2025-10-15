@@ -1,9 +1,9 @@
 @testable import MEGA
 
 extension AudioPlayerItem {
-
+    nonisolated static let mockURL = URL(string: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3")!
     static var mockItem: Self {
-        .init(name: "Track 5", url: URL(string: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3")!, node: MEGANode())
+        .init(name: "Track 5", url: mockURL, node: MEGANode())
     }
     
     static var mockArray: [AudioPlayerItem] {

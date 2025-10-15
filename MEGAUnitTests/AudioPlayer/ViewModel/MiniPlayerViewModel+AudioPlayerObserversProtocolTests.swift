@@ -14,7 +14,7 @@ final class MiniPlayerViewModel_AudioPlayerObserversProtocolTests: XCTestCase {
     
     private func makeSUT(
         playbackContinuationUseCase: MockPlaybackContinuationUseCase = MockPlaybackContinuationUseCase(),
-        file: StaticString = #file,
+        file: StaticString = #filePath,
         line: UInt = #line
     ) -> (
         sut: MiniPlayerViewModel,

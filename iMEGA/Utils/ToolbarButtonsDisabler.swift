@@ -1,6 +1,7 @@
 import MEGADomain
 import UIKit
 
+@MainActor
 enum ToolbarButtonsDisabler {
     /// When selecting nodes, toolbar actions should be disabled if any of the selected nodes is disputed (taken down)
     /// - Parameters:

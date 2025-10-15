@@ -1,6 +1,7 @@
 import Accounts
 import SwiftUI
 
+@MainActor
 final class RequestStatusProgressWindowManager {
     private var hostingController: UIHostingController<RequestStatusProgressView>?
 

@@ -3,7 +3,7 @@ import LogRepo
 import MEGAAnalytics
 import MEGAAppPresentation
 import MEGAAppSDKRepo
-import MEGAAuthentication
+@preconcurrency import MEGAAuthentication
 import MEGAAuthenticationOrchestration
 import MEGADomain
 import MEGAInfrastructure

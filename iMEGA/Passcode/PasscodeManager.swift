@@ -2,6 +2,7 @@ import MEGADomain
 import MEGAL10n
 import MEGAPreference
 
+@MainActor
 protocol PasscodeManagerProtocol {
     /// Disables the passcode if it is enabled for properly manage calls.
     ///

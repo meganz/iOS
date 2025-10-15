@@ -225,9 +225,11 @@ class EnterEmailViewController: UIViewController {
 // MARK: - CNContactPickerDelegate
 
 extension EnterEmailViewController: CNContactPickerDelegate {
-    func contactPicker(_ picker: CNContactPickerViewController, didSelect contacts: [CNContact]) {
+    nonisolated func contactPicker(_ picker: CNContactPickerViewController, didSelect contacts: [CNContact]) {
         let emails = contacts.extractEmails()
-        emails.forEach(updateUIOnEmailPickedFromContacts(_:))
+        Task { @MainActor in
+            emails.forEach(updateUIOnEmailPickedFromContacts(_:))
+        }
     }
 }
 

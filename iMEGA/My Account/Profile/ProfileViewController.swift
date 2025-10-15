@@ -163,8 +163,10 @@ import UIKit
     }
     
     // MARK: - MEGAPurchasePricingDelegate
-    func pricingsReady() {
-        tableView.reloadData()
+    nonisolated func pricingsReady() {
+        Task { @MainActor in
+            tableView.reloadData()
+        }
     }
     
     // MARK: - Private
@@ -439,7 +441,7 @@ extension ProfileViewController: UITableViewDelegate {
 
 extension ProfileViewController: MEGARequestDelegate {
     
-    func onRequestFinish(_ api: MEGASdk, request: MEGARequest, error: MEGAError) {
+    nonisolated func onRequestFinish(_ api: MEGASdk, request: MEGARequest, error: MEGAError) {
         guard let myUser = api.myUser else {
             if request.type == .MEGARequestTypeLogout {
                 api.removeMEGARequestDelegateAsync(self)
@@ -453,12 +455,16 @@ extension ProfileViewController: MEGARequestDelegate {
             }
             
             if request.file != nil {
-                avatarImageView.mnz_setImageAvatarOrColor(forUserHandle: myUser.handle)
+                Task { @MainActor [userHandle = myUser.handle] in
+                    avatarImageView.mnz_setImageAvatarOrColor(forUserHandle: userHandle)
+                }
             }
             
             let paramType = MEGAUserAttribute(rawValue: request.paramType)
             if paramType == .firstname || paramType == .lastname {
-                nameLabel.text = myUser.mnz_fullName
+                Task { @MainActor in
+                    nameLabel.text = myUser.mnz_fullName
+                }
             }
             
         case .MEGARequestTypeSetAttrUser:
@@ -466,10 +472,14 @@ extension ProfileViewController: MEGARequestDelegate {
             if paramType == .avatar {
                 if error.type != .apiOk {
                     guard let requestString = request.requestString else {
-                        SVProgressHUD.showError(withStatus: Strings.localized(error.name, comment: ""))
+                        Task { @MainActor in
+                            SVProgressHUD.showError(withStatus: Strings.localized(error.name, comment: ""))
+                        }
                         return
                     }
-                    SVProgressHUD.showError(withStatus: requestString + " " + Strings.localized(error.name, comment: ""))
+                    Task { @MainActor in
+                        SVProgressHUD.showError(withStatus: requestString + " " + Strings.localized(error.name, comment: ""))
+                    }
                     return
                 }
                 
@@ -477,18 +487,26 @@ extension ProfileViewController: MEGARequestDelegate {
                 if request.file == nil {
                     FileManager.default.mnz_removeItem(atPath: avatarFilePath)
                 }
-                avatarImageView.mnz_setImageAvatarOrColor(forUserHandle: myUser.handle)
+                Task { @MainActor in
+                    avatarImageView.mnz_setImageAvatarOrColor(forUserHandle: myUser.handle)
+                }
             }
-            viewModel.dispatch(.invalidateSections)
+            Task { @MainActor in
+                viewModel.dispatch(.invalidateSections)
+            }
         case .MEGARequestTypeAccountDetails:
-            viewModel.dispatch(.invalidateSections)
-            nameLabel.text = myUser.mnz_fullName
-            emailLabel.text = api.myEmail
-            avatarImageView.mnz_setImageAvatarOrColor(forUserHandle: myUser.handle)
-            configureGestures()
+            Task { @MainActor in
+                viewModel.dispatch(.invalidateSections)
+                nameLabel.text = myUser.mnz_fullName
+                emailLabel.text = api.myEmail
+                avatarImageView.mnz_setImageAvatarOrColor(forUserHandle: myUser.handle)
+                configureGestures()
+            }
             
         case .MEGARequestTypeCheckSMSVerificationCode, .MEGARequestTypeResetSmsVerifiedNumber:
-            viewModel.dispatch(.invalidateSections)
+            Task { @MainActor in
+                viewModel.dispatch(.invalidateSections)
+            }
         default:
             break
         }

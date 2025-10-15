@@ -19,9 +19,6 @@
 @property (nonatomic, copy) void (^completion)(MEGARequest *request, MEGAError *error);
 @property (nonatomic) URLType urlType;
 
-@property (nonatomic) NSString *link;
-@property (nonatomic) NSString *email;
-
 @end
 
 @implementation MEGAQueryRecoveryLinkRequestDelegate

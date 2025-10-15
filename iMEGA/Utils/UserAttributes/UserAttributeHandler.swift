@@ -8,7 +8,7 @@ struct UserAttributeHandler: Sendable {
     }
     
     func handleUserAttribute(
-        user: UserEntity?,
+        user: MEGADomain.UserEntity?,
         email: String?,
         attributeType: UserAttributeEntity?,
         newValue: String

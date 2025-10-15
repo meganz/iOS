@@ -29,7 +29,9 @@ final class MEGASegmentedControl: UISegmentedControl, DynamicTypeComponentProtoc
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        applyFontSizes()
+        MainActor.assumeIsolated {
+            applyFontSizes()
+        }
     }
     
     @objc func setTitleTextColor(_ color: UIColor, selectedColor: UIColor) {

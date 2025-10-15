@@ -2,8 +2,9 @@ import CallKit
 import MEGADomain
 import MEGASwift
 
+@MainActor
 final class CallKitCallController {
-    static var shared = CallKitCallController(
+    static let shared = CallKitCallController(
         callController: CXCallController(),
         uuidFactory: {
             UUID()

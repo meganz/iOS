@@ -3,6 +3,7 @@ import MEGADomain
 import Testing
 import XCTest
 
+@MainActor
 @Suite("Home Banner ViewModel Tests Suite - Tests the behavior of HomeBannerViewModel.")
 struct HomeBannerViewModelTests {
     // MARK: - Helpers
@@ -50,6 +51,7 @@ struct HomeBannerViewModelTests {
     }
 }
 
+@MainActor
 final class HomeBannerVMTests: XCTestCase {
     // MARK: - Helpers
     private func makeSUT(bannersResult: Result<[BannerEntity], BannerErrorEntity>? = nil) -> HomeBannerViewModel {

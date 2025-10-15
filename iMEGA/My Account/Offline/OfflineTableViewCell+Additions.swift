@@ -1,7 +1,7 @@
 import Foundation
 import MEGADesignToken
 
-private var AssociatedLoadThumbnailTaskHandle: UInt8 = 0
+@MainActor private var AssociatedLoadThumbnailTaskHandle: UInt8 = 0
 
 extension OfflineTableViewCell {
     open override func prepareForReuse() {

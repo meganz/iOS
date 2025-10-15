@@ -75,7 +75,7 @@ extension AudioPlayer {
         let title = item.name
         let artist = item.artist ?? ""
         let elapsed = item.currentTime().seconds
-        let artwork = mediaItemPropertyArtwork(item)
+        let artwork = mediaItemPropertyArtwork(item.artwork, name: item.name)
         let rate = NSNumber(value: isPaused ? 0.0 : 1.0)
         
         updateNowPlayingInfoTask = Task { @MainActor [weak self] in
@@ -100,12 +100,16 @@ extension AudioPlayer {
         }
     }
     
-    private func mediaItemPropertyArtwork(_ item: AudioPlayerItem) -> MPMediaItemArtwork {
-        if let artwork = item.artwork {
-            return MPMediaItemArtwork(boundsSize: artwork.size) { _ in artwork }
+    private nonisolated func mediaItemPropertyArtwork(_ artwork: UIImage?, name: String) -> MPMediaItemArtwork {
+        if let artwork {
+            return MPMediaItemArtwork(boundsSize: artwork.size) { _ in
+                artwork
+            }
         } else {
-            let defaultArtworkImage = MEGAAssets.UIImage.image(forFileName: item.name)
-            return MPMediaItemArtwork(boundsSize: defaultArtworkImage.size) { _ in defaultArtworkImage }
+            let defaultArtworkImage = MEGAAssets.UIImage.image(forFileName: name)
+            return MPMediaItemArtwork(boundsSize: defaultArtworkImage.size) { _ in
+                defaultArtworkImage
+            }
         }
     }
 }
@@ -153,9 +157,10 @@ extension AudioPlayer {
     }
     
     @objc nonisolated func audioPlayer(didReceiveChangePlaybackPositionCommand event: MPChangePlaybackPositionCommandEvent) -> MPRemoteCommandHandlerStatus {
-        performRemoteCommand(event) { [weak self] in
+        let eventPositionTime = event.positionTime
+        return performRemoteCommand(event) { [weak self] in
             self?.changePlaybackPositionCommandTask = Task { @MainActor in
-                await self?.setProgressCompleted(event.positionTime)
+                await self?.setProgressCompleted(eventPositionTime)
             }
         }
     }

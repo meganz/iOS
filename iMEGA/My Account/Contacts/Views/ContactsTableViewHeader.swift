@@ -21,16 +21,18 @@ class ContactsTableViewHeader: UIView {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        requestsLabel.text = Strings.Localizable.requests
-        groupsLabel.text = Strings.Localizable.groups
-        
-        configDetailsLabel()
-        setupColors()
-        
-        disclosureIndicatorRequestImageView.image?.withRenderingMode(.alwaysTemplate)
-        disclosureIndicatorRequestImageView.tintColor = TokenColors.Icon.secondary
-        disclosureIndicatorGroupsImageView.image?.withRenderingMode(.alwaysTemplate)
-        disclosureIndicatorGroupsImageView.tintColor = TokenColors.Icon.secondary
+        MainActor.assumeIsolated {
+            requestsLabel.text = Strings.Localizable.requests
+            groupsLabel.text = Strings.Localizable.groups
+            
+            configDetailsLabel()
+            setupColors()
+            
+            disclosureIndicatorRequestImageView.image?.withRenderingMode(.alwaysTemplate)
+            disclosureIndicatorRequestImageView.tintColor = TokenColors.Icon.secondary
+            disclosureIndicatorGroupsImageView.image?.withRenderingMode(.alwaysTemplate)
+            disclosureIndicatorGroupsImageView.tintColor = TokenColors.Icon.secondary
+        }
     }
     
     // MARK: - Private

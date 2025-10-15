@@ -4,7 +4,9 @@ import MEGADesignToken
 class CondensationView: EnlargementView {    
     override func awakeFromNib() {
         super.awakeFromNib()
-        enlarge = false
+        MainActor.assumeIsolated {
+            enlarge = false
+        }
     }
     
     override func updateAppearance() {

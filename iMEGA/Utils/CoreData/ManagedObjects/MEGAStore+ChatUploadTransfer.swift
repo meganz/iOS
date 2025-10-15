@@ -1,3 +1,5 @@
+@preconcurrency import CoreData
+
 extension MEGAStore {
     
     @objc func insertChatUploadTransfer(withFilepath filepath: String,
@@ -42,31 +44,27 @@ extension MEGAStore {
         fetchRequest.predicate = NSPredicate(format: "chatRoomId == %@", chatRoomId)
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "index", ascending: true)]
         
-        var transfers = [ChatUploadTransfer]()
-        
-        context.performAndWait {
+        return context.performAndWait {
+            var transfers = [ChatUploadTransfer]()
             do {
                 transfers = try context.fetch(fetchRequest)
             } catch {
                 MEGALogError("Could not fetch [ChatUploadTransfer] object for path \(error.localizedDescription)")
             }
+            return transfers
         }
-        
-        return transfers
     }
     
     func fetchAllChatUploadTransfer(context: NSManagedObjectContext) -> [ChatUploadTransfer] {
-        var transfers = [ChatUploadTransfer]()
-        
         context.performAndWait {
+            var transfers = [ChatUploadTransfer]()
             do {
                 transfers = try context.fetch(ChatUploadTransfer.fetchRequest())
             } catch {
                 MEGALogError("Could not fetch [ChatUploadTransfer] object for path \(error.localizedDescription)")
             }
+            return transfers
         }
-        
-        return transfers
     }
     
     func fetchChatUploadTransfers(filepath: String, chatRoomId: String, transferTag: String?, context: NSManagedObjectContext) -> [ChatUploadTransfer] {
@@ -78,17 +76,15 @@ extension MEGAStore {
             fetchRequest.predicate = NSPredicate(format: "filepath == %@ AND chatRoomId == %@", filepath, chatRoomId)
         }
         
-        var transfers = [ChatUploadTransfer]()
-        
-        context.performAndWait {
+        return context.performAndWait {
+            var transfers = [ChatUploadTransfer]()
             do {
                 transfers = try context.fetch(fetchRequest)
             } catch {
                 MEGALogError("Could not fetch ChatUploadTransfer object for path \(filepath) : \(error.localizedDescription)")
             }
+            return transfers
         }
-        
-        return transfers
     }
     
     func deleteChatUploadTransfer(withChatRoomId chatRoomId: String, transferTag: String, context: NSManagedObjectContext) {
@@ -115,16 +111,14 @@ extension MEGAStore {
         fetchRequest.fetchLimit = 1
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "index", ascending: false)]
         
-        var transfer: ChatUploadTransfer?
-        
-        context.performAndWait {
+        return context.performAndWait {
+            var transfer: ChatUploadTransfer?
             do {
                 transfer = try context.fetch(fetchRequest).last
             } catch {
                 MEGALogError("Could not fetch ChatUploadTransfer \(error.localizedDescription)")
             }
+            return transfer
         }
-        
-        return transfer
     }
 }

@@ -1,8 +1,9 @@
 import Foundation
 import MEGAAppSDKRepo
 import MEGAFoundation
+import MEGASwift
 
-@objc final class OverDiskQuotaCommand: NSObject {
+@objc final class OverDiskQuotaCommand: NSObject, Sendable {
 
     // MARK: - Typealias
 
@@ -11,23 +12,27 @@ import MEGAFoundation
 
     // MARK: - Properties
 
-    private var completionAction: ((any OverDiskQuotaInfomationProtocol)?) -> Void
-
-    var storageUsed: Int64
+    private let completionAction: @Sendable ((any OverDiskQuotaInfomationProtocol)?) -> Void
+    
+    private let _storageUsed: Atomic<Int64>
+    var storageUsed: Int64 {
+        get { _storageUsed.wrappedValue }
+        set { _storageUsed.mutate { $0 = newValue } }
+    }
 
     // MARK: - Lifecycles
 
     @objc init(storageUsed: Int64,
-               completionAction: @escaping ((any OverDiskQuotaInfomationProtocol)?) -> Void) {
+               completionAction: @escaping @Sendable ((any OverDiskQuotaInfomationProtocol)?) -> Void) {
         self.completionAction = completionAction
-        self.storageUsed = storageUsed
+        self._storageUsed = Atomic(wrappedValue: storageUsed)
     }
 
     // MARK: - Exposed
 
     func execute(
         with api: MEGASdk,
-        completion: @escaping (OverDiskQuotaCommand?, OverDiskQuotaFetchResult) -> Void
+        completion: @escaping @Sendable (OverDiskQuotaCommand?, OverDiskQuotaFetchResult) -> Void
     ) {
         let task = OverDiskQuotaQueryTask()
         task.updatedStorageStore(with: storageUsed)
@@ -42,25 +47,29 @@ import MEGAFoundation
     }
 }
 
-private final class OverDiskQuotaQueryTask {
+private final class OverDiskQuotaQueryTask: @unchecked Sendable {
 
     // MARK: - Errors
 
+    @Atomic
     private var errors: Set<OverDiskQuotaService.DataObtainingError> = []
 
     // MARK: - Over Disk Quota Data Store
 
+    @Atomic
     private var userDataStore: OverDiskQuotaUserData?
 
+    @Atomic
     private var storageUsedStore: OverDiskQuotaStorageUsed?
 
+    @Atomic
     private var availablePlansStore: OverDiskQuotaPlans?
 
     // MARK: - Methods
 
     func start(
         with api: MEGASdk,
-        completion: @escaping (Result<any OverDiskQuotaInfomationProtocol, OverDiskQuotaService.DataObtainingError>) -> Void
+        completion: @escaping @Sendable (Result<any OverDiskQuotaInfomationProtocol, OverDiskQuotaService.DataObtainingError>) -> Void
     ) {
         if let userDataStore = userDataStore,
             let storageUsedStore = storageUsedStore,
@@ -87,7 +96,7 @@ private final class OverDiskQuotaQueryTask {
     }
 
     func updatedStorageStore(with storage: Int64) {
-        self.storageUsedStore = OverDiskQuotaStorageUsed(cloudStorageTaking: .bytes(of: storage))
+        self.$storageUsedStore.mutate { $0 = OverDiskQuotaStorageUsed(cloudStorageTaking: .bytes(of: storage)) }
     }
 
     // MARK: - Privates
@@ -102,7 +111,7 @@ private final class OverDiskQuotaQueryTask {
 
     private func fetchUserData(
         _ api: MEGASdk,
-        _ completion: @escaping (Result<any OverDiskQuotaInfomationProtocol, OverDiskQuotaService.DataObtainingError>) -> Void
+        _ completion: @escaping @Sendable (Result<any OverDiskQuotaInfomationProtocol, OverDiskQuotaService.DataObtainingError>) -> Void
     ) {
         api.getUserData(with: RequestDelegate { [weak self] result in
             guard let self else {
@@ -118,10 +127,10 @@ private final class OverDiskQuotaQueryTask {
 
             switch updatedUserData(with: api) {
             case .failure(let error):
-                errors.insert(error)
+                $errors.mutate { $0.insert(error) }
                 completion(.failure(error))
             case .success(let userData):
-                userDataStore = userData
+                $userDataStore.mutate { $0 = userData }
                 start(with: api, completion: completion)
             }
         })
@@ -137,7 +146,7 @@ private final class OverDiskQuotaQueryTask {
 
     private func fetchMEGAPlans(
         _ api: MEGASdk,
-        _ completion: @escaping (Result<any OverDiskQuotaInfomationProtocol, OverDiskQuotaService.DataObtainingError>) -> Void
+        _ completion: @escaping @Sendable (Result<any OverDiskQuotaInfomationProtocol, OverDiskQuotaService.DataObtainingError>) -> Void
     ) {
         MEGAPlanService.shared.send(MEGAPlanCommand { [weak self] result  in
             guard let self else {
@@ -149,7 +158,7 @@ private final class OverDiskQuotaQueryTask {
             switch result {
             case .failure: completion(.failure(.unableToFetchMEGAPlans))
             case .success(let plans):
-                self.availablePlansStore = OverDiskQuotaPlans(availablePlans: plans)
+                self.$availablePlansStore.mutate { $0 = OverDiskQuotaPlans(availablePlans: plans) }
                 self.start(with: api, completion: completion)
             }
         })

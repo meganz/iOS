@@ -86,27 +86,33 @@ class NicknameViewController: UIViewController {
         SVProgressHUD.setDefaultMaskType(.clear)
         SVProgressHUD.show()
         MEGASdk.shared.setUserAlias(nickname, forHandle: user.handle, delegate: RequestDelegate { [weak self] (result) in
-            SVProgressHUD.dismiss()
             guard let self else { return }
-            switch result {
-            case .success:
-                if let user = self.user {
-                    NotificationCenter.default.post(name: NSNotification.Name.MEGContactNicknameChange,
-                                                    object: nil,
-                                                    userInfo: ["user": user])
-
-                    user.mnz_nickname = nickname
-                }
-
-                updateHandler(withNickname: nickname)
-            case .failure(let error):
-                SVProgressHUD.showError(withStatus: Strings.localized(error.name, comment: ""))
+            Task { @MainActor in
+                self.handleSetUserAlias(result: result)
             }
-            
-            dismissViewController()
         })
     }
 
+    private func handleSetUserAlias(result: Result<MEGARequest, MEGAError>) {
+        SVProgressHUD.dismiss()
+        switch result {
+        case .success:
+            if let user {
+                NotificationCenter.default.post(name: NSNotification.Name.MEGContactNicknameChange,
+                                                object: nil,
+                                                userInfo: ["user": user])
+
+                user.mnz_nickname = nickname
+            }
+
+            updateHandler(withNickname: nickname)
+        case .failure(let error):
+            SVProgressHUD.showError(withStatus: Strings.localized(error.name, comment: ""))
+        }
+        
+        dismissViewController()
+    }
+    
     private func dismissViewController() {
         nicknameTextField.resignFirstResponder()
         dismiss(animated: true, completion: nil)

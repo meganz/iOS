@@ -221,19 +221,9 @@ final class ScheduleMeetingViewModel: ObservableObject {
     }
     
     func addParticipantsTap() {
-        let participants = accountUseCase.contacts().filter { participantHandleList.contains($0.handle) }
+        let participants: [UserEntity] = accountUseCase.contacts().filter { participantHandleList.contains($0.handle) }
         router.showAddParticipants(alreadySelectedUsers: participants) { [weak self] selectedParticipants in
-            guard let self else { return }
-            guard let selectedParticipants else {
-                participantHandleList = []
-                return
-            }
-            
-            let removedParticipantHandleList = participants.compactMap { selectedParticipants.contains($0) ? nil : $0.handle }
-            var participantHandleList = participantHandleList
-            participantHandleList.removeAll { removedParticipantHandleList.contains($0) }
-            self.participantHandleList = Array(Set(participantHandleList).union(selectedParticipants.map(\.handle)))
-            self.updateRightBarButtonState()
+            self?.handleAddParticipants(participants: participants, selectedParticipants: selectedParticipants)
         }
     }
     
@@ -300,6 +290,19 @@ final class ScheduleMeetingViewModel: ObservableObject {
     }
     
     // MARK: - Private
+    
+    private func handleAddParticipants(participants: [UserEntity], selectedParticipants: [UserEntity]?) {
+        guard let selectedParticipants else {
+            participantHandleList = []
+            return
+        }
+        
+        let removedParticipantHandleList = participants.compactMap { selectedParticipants.contains($0) ? nil : $0.handle }
+        var participantHandleList = participantHandleList
+        participantHandleList.removeAll { removedParticipantHandleList.contains($0) }
+        self.participantHandleList = Array(Set(participantHandleList).union(selectedParticipants.map(\.handle)))
+        self.updateRightBarButtonState()
+    }
     
     private func initShowWarningBannerSubscription() {
         Publishers.CombineLatest($waitingRoomEnabled, $allowNonHostsToAddParticipantsEnabled)

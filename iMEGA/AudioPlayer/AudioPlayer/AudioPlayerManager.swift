@@ -106,11 +106,9 @@ final class AudioPlayerManager: AudioPlayerHandlerProtocol {
     ) {
         if self.player != nil {
             self.player?.close { [weak self] in
-                Task { @MainActor [weak self] in
-                    MEGALogDebug("[AudioPlayer] closing current player before assign new instance")
-                    self?.player = nil
-                    self?.configure(player: player, tracks: tracks, playerListener: playerListener)
-                }
+                MEGALogDebug("[AudioPlayer] closing current player before assign new instance")
+                self?.player = nil
+                self?.configure(player: player, tracks: tracks, playerListener: playerListener)
             }
         } else {
             configure(player: player, tracks: tracks, playerListener: playerListener)

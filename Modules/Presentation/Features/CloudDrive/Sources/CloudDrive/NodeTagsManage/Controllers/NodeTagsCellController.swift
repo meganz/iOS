@@ -4,6 +4,7 @@ import MEGAL10n
 import MEGASwiftUI
 import UIKit
 
+@MainActor
 public protocol ExpiredAccountAlertPresenting {
     func presentAccountExpiredAlertIfNeeded()
 }

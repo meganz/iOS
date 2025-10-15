@@ -5,6 +5,7 @@ import MEGAUIKit
 import UIKit
 
 /// A protocol defines `SearchBarView`'s search session.
+@MainActor
 protocol MEGASearchBarViewDelegate: AnyObject {
 
     /// Tells the delegte that the search bar view started a new search session. Normally, the new session begins when

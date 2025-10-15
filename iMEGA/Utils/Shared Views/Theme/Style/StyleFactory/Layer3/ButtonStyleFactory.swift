@@ -13,6 +13,7 @@ enum LegacyMEGAButtonStyle {
     case searchControllerCancel
 }
 
+@MainActor
 protocol ButtonStyleFactory {
 
     func styler(of buttonStyle: LegacyMEGAButtonStyle) -> ButtonStyler

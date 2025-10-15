@@ -1,6 +1,6 @@
 import MEGAPreference
 
-public protocol RatingRequestBaseConditionsUseCaseProtocol {
+public protocol RatingRequestBaseConditionsUseCaseProtocol: Sendable {
     func hasMetBaseConditions() -> Bool
     func saveLastRequestedAppVersion(_ appVersion: String)
 }

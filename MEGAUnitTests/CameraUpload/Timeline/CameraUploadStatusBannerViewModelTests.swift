@@ -13,6 +13,7 @@ import Testing
 struct CameraUploadStatusBannerViewModelTests {
     
     @Test
+    @MainActor
     func cameraUploadDisabled_shouldNotUpdateBannerStatus() async throws {
         let preferenceUseCase = MockPreferenceUseCase(
             dict: [PreferenceKeyEntity.isCameraUploadsEnabled.rawValue: false])
@@ -187,6 +188,7 @@ struct CameraUploadStatusBannerViewModelTests {
     }
     
     @Test
+    @MainActor
     func uploadStateStats() async throws {
         let stats =  CameraUploadStatsEntity(progress: 0.3, pendingFilesCount: 3, pendingVideosCount: 0)
         let statesAsyncSequence = SingleItemAsyncSequence(
@@ -206,6 +208,7 @@ struct CameraUploadStatusBannerViewModelTests {
     }
     
     @Test
+    @MainActor
     func uploadStatePausedReason() async throws {
         let statesAsyncSequence = SingleItemAsyncSequence(
             item: CameraUploadStateEntity.paused(reason: .lowBattery))
@@ -225,6 +228,7 @@ struct CameraUploadStatusBannerViewModelTests {
 }
 
 extension CameraUploadStatusBannerViewModelTests {
+    @MainActor
     private func makeSUT(
         cameraUploadStats: [CameraUploadStatsEntity] = [],
         devicePermissionHandler: some DevicePermissionsHandling = MockDevicePermissionHandler(),
@@ -269,7 +273,7 @@ extension CameraUploadStatusBannerViewModelTests {
     }
     
     @MainActor
-    private func collectLatestValue<T>(
+    private func collectLatestValue<T: Sendable>(
         from publishedProperty: Published<T>.Publisher
     ) async -> T? {
         await withCheckedContinuation { continuation in

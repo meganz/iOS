@@ -14,10 +14,13 @@ public extension MEGASdk {
         }
     }
     
-    @objc func addCompletedTransfer(_ transfer: MEGATransfer) {
-        sdkCompletedTransfersProcessingQueue.async {
-            let transfers = self.privateCompletedTransfers
-            transfers.add(transfer)
+    @objc func addCompletedTransfer(_ transfer: MEGATransfer) async {
+        await withCheckedContinuation { continuation in
+            sdkCompletedTransfersProcessingQueue.async {
+                let transfers = self.privateCompletedTransfers
+                transfers.add(transfer)
+                continuation.resume()
+            }
         }
     }
     

@@ -16,8 +16,10 @@ class TapAndHoldMessageView: UIView {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        setLabelText()
-        closeTipButton.setImage(MEGAAssets.UIImage.image(named: "closeTip"), for: .normal)
+        MainActor.assumeIsolated {
+            setLabelText()
+            closeTipButton.setImage(MEGAAssets.UIImage.image(named: "closeTip"), for: .normal)
+        }
     }
     
     // MARK: - Actions
@@ -50,7 +52,10 @@ class TapAndHoldMessageView: UIView {
     
     private func startTimer() {
         timer = Timer.scheduledTimer(withTimeInterval: 3.0, repeats: false) { [weak self] _ in
-            self?.close()
+            guard let self else { return }
+            Task { @MainActor in
+                self.close()
+            }
         }
     }
     

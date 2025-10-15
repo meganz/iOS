@@ -2,6 +2,7 @@ import MEGADesignToken
 import MEGADomain
 import UIKit
 
+@MainActor
 protocol PhotoAlbumContainerToolbarProvider {
     func showToolbar()
     func hideToolbar()

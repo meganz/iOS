@@ -17,6 +17,7 @@ extension ColorStyle {
     // MARK: - UILabel Applier
     
     @discardableResult
+    @MainActor
     func applied(on label: UILabel) -> UILabel {
         apply(style: self)(label)
     }
@@ -24,6 +25,7 @@ extension ColorStyle {
     // MARK: - UIButton Applier
     
     @discardableResult
+    @MainActor
     func applied(on button: UIButton, state: ButtonState) -> UIButton {
         apply(style: self, state: state)(button)
     }
@@ -38,6 +40,7 @@ extension ColorStyle {
     // MARK: - UITextField Applier
     
     @discardableResult
+    @MainActor
     func applied(on textField: UITextField) -> UITextField {
         apply(style: self)(textField)
     }
@@ -45,11 +48,13 @@ extension ColorStyle {
     // MARK: - UIPageControl Applier
     
     @discardableResult
+    @MainActor
     func applied(on pageControl: UIPageControl) -> UIPageControl {
         apply(style: self)(pageControl)
     }
 }
 
+@MainActor
 private func apply(style: ColorStyle) -> (UILabel) -> UILabel {
     return { label in
         switch style.type {
@@ -61,6 +66,7 @@ private func apply(style: ColorStyle) -> (UILabel) -> UILabel {
     }
 }
 
+@MainActor
 private func apply(style: ColorStyle, state: ButtonState) -> (UIButton) -> UIButton {
     return { button in
         switch style.type {
@@ -84,6 +90,7 @@ private func apply(style: ColorStyle) -> (TextAttributes) -> TextAttributes {
     }
 }
 
+@MainActor
 private func apply(style: ColorStyle) -> (UITextField) -> UITextField {
     return { textField in
         switch style.type {
@@ -95,6 +102,7 @@ private func apply(style: ColorStyle) -> (UITextField) -> UITextField {
     }
 }
 
+@MainActor
 private func apply(style: ColorStyle) -> (UIPageControl) -> UIPageControl {
     return { pageControl in
         switch style.type {

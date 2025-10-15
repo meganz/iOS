@@ -16,6 +16,26 @@ class MeetingParticipantTableViewCell: UITableViewCell, ViewType {
         
     override func awakeFromNib() {
         super.awakeFromNib()
+        MainActor.assumeIsolated {
+            configureViews()
+        }
+    }
+    
+    var viewModel: MeetingParticipantViewModel? {
+        didSet {
+            viewModel?.invokeCommand = { [weak self]  in
+                self?.executeCommand($0)
+            }
+            viewModel?.dispatch(.onViewReady)
+        }
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        moderatorTextLabel.isHidden = true
+    }
+    
+    private func configureViews() {
         moderatorTextLabel.backgroundColor = TokenColors.Background.surface3
         moderatorTextLabel.textColor = TokenColors.Text.primary
         moderatorTextLabel.layer.cornerRadius = 4.0
@@ -45,21 +65,6 @@ class MeetingParticipantTableViewCell: UITableViewCell, ViewType {
         moderatorTextLabel.isHidden = true
     }
     
-    var viewModel: MeetingParticipantViewModel? {
-        didSet {
-            viewModel?.invokeCommand = { [weak self]  in
-                self?.executeCommand($0)
-            }
-            viewModel?.dispatch(.onViewReady)
-        }
-    }
-    
-    override func prepareForReuse() {
-        super.prepareForReuse()
-        moderatorTextLabel.isHidden = true
-    }
-    
-    @MainActor
     func executeCommand(_ command: MeetingParticipantViewModel.Command) {
         switch command {
         case .configView(let isModerator, let isMicMuted, let isVideoOn, let shouldHideContextMenu, let raisedHand):

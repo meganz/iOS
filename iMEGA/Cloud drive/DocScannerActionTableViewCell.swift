@@ -20,8 +20,10 @@ class DocScannerActionTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        backgroundColor = TokenColors.Background.page
-        actionLabel.textColor = TokenColors.Text.primary
+        MainActor.assumeIsolated {
+            backgroundColor = TokenColors.Background.page
+            actionLabel.textColor = TokenColors.Text.primary
+        }
     }
     
     private func configure() {

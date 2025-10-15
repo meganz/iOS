@@ -8,7 +8,7 @@ import MEGADesignToken
 import MEGADomain
 import MEGAUIKit
 
-let requestStatusProgressWindowManager = RequestStatusProgressWindowManager()
+@MainActor let requestStatusProgressWindowManager = RequestStatusProgressWindowManager()
 
 extension MainTabBarController {
 
@@ -288,20 +288,24 @@ extension MainTabBarController: MEGANavigationControllerDelegate {
 
 // MARK: - MEGAGlobalDelegate
 extension MainTabBarController: MEGAGlobalDelegate {
-    public func onEvent(_ api: MEGASdk, event: MEGAEvent) {
-        if event.type == .reqStatProgress {
-            if event.number == 0 {
-                requestStatusProgressWindowManager.showProgressView(with: RequestStatusProgressViewModel(requestStatProgressUseCase: RequestStatProgressUseCase(repo: EventRepository.newRepo)))
-            }
-            
-            if event.number == -1 {
-                requestStatusProgressWindowManager.hideProgressView()
+    nonisolated public func onEvent(_ api: MEGASdk, event: MEGAEvent) {
+        Task { @MainActor in
+            if event.type == .reqStatProgress {
+                if event.number == 0 {
+                    requestStatusProgressWindowManager.showProgressView(with: RequestStatusProgressViewModel(requestStatProgressUseCase: RequestStatProgressUseCase(repo: EventRepository.newRepo)))
+                }
+                
+                if event.number == -1 {
+                    requestStatusProgressWindowManager.hideProgressView()
+                }
             }
         }
     }
     
-    public func onNodesUpdate(_ api: MEGASdk, nodeList: MEGANodeList?) {
-        guard !isNavigationRevampEnabled, let nodeList else { return }
-        updateSharedItemsTabBadgeIfNeeded(nodeList)
+    nonisolated public func onNodesUpdate(_ api: MEGASdk, nodeList: MEGANodeList?) {
+        Task { @MainActor in
+            guard !isNavigationRevampEnabled, let nodeList else { return }
+            updateSharedItemsTabBadgeIfNeeded(nodeList)
+        }
     }
 }

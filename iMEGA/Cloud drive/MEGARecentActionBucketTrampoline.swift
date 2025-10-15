@@ -22,7 +22,7 @@ struct MEGARecentActionBucketTrampoline: RecentActionBucket {
     init(
         bucket: MEGARecentActionBucket?,
         // adde to avoid referencing MEGA SDK
-        parentNodeProvider: @escaping (HandleEntity) -> NodeEntity?
+        parentNodeProvider: @Sendable @escaping (HandleEntity) -> NodeEntity?
     ) {
         timestamp = bucket?.timestamp ?? Date()
         nodeEntities = bucket?.nodesList?.toNodeEntities() ?? []

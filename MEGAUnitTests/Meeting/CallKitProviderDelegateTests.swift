@@ -4,6 +4,7 @@ import MEGADomain
 import Testing
 import TestingExpectation
 
+@MainActor
 @Suite("CallKitProviderDelegate")
 struct CallKitProviderDelegateTests {
     class MockStartAction: CXStartCallAction {
@@ -26,7 +27,8 @@ struct CallKitProviderDelegateTests {
             failCalled.fulfill()
         }
     }
-    class MockAnswerAction: CXAnswerCallAction {
+    
+    final class MockAnswerAction: CXAnswerCallAction {
         
         init(callUUID: UUID) {
             super.init(call: callUUID)
@@ -79,7 +81,8 @@ struct CallKitProviderDelegateTests {
         }
     }
     
-    class Harness {
+    @MainActor
+    final class Harness {
         let callsManager = MockCallsManager()
         let cxProvider: MockCXProvider
         let callCoordinator: MockCallsCoordinator
@@ -112,6 +115,7 @@ struct CallKitProviderDelegateTests {
         #expect(harness.callsManager.removeAllCalls_CalledTimes == 1)
     }
     
+    @MainActor
     @Suite("Start Call")
     struct StartCall {
         @Test("Perform Start call action succeeds")
@@ -134,6 +138,7 @@ struct CallKitProviderDelegateTests {
         }
     }
     
+    @MainActor
     @Suite("Answer Call")
     struct AnswerCall {
         @Test("Performs answer call action, succeeds")
@@ -156,6 +161,8 @@ struct CallKitProviderDelegateTests {
             await answerAction.failCalled.fulfillment(within: .seconds(5))
         }
     }
+    
+    @MainActor
     @Suite("End Call")
     struct EndCall {
         @Test("Perform end call action, succeed")
@@ -178,6 +185,8 @@ struct CallKitProviderDelegateTests {
             await endAction.failCalled.fulfillment(within: .seconds(5))
         }
     }
+    
+    @MainActor
     @Suite("Mute call")
     struct MuteCall {
         @Test("Perform mute action succeeds")
@@ -202,6 +211,7 @@ struct CallKitProviderDelegateTests {
         }
     }
     
+    @MainActor
     @Suite("Audio Session")
     struct AudioSessionTests {
         @Test("Provider did activate audio session calls coordinator and configures WebRTC")

@@ -37,9 +37,9 @@ struct NodeLabelActionUseCaseTests {
     }
     
     @discardableResult
-    private static func expectResult<T>(
+    private static func expectResult<T: Sendable>(
         expectedError: NodeLabelActionDomainError?,
-        function: (@escaping (Result<T, NodeLabelActionDomainError>) -> Void) -> Void
+        function: (@escaping @Sendable (Result<T, NodeLabelActionDomainError>) -> Void) -> Void
     ) async -> T? {
         let result = await withCheckedContinuation { continuation in
             function { result in

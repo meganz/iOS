@@ -1,6 +1,6 @@
 @testable import MEGA
 
-class MockChatUploader: ChatUploaderProtocol {
+final class MockChatUploader: ChatUploaderProtocol, @unchecked Sendable {
     var uploadImage_calledTimes: Int = 0
     var uploadFile_calledTimes: Int = 0
     

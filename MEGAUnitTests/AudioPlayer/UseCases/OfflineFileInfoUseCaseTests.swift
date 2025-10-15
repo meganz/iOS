@@ -7,6 +7,7 @@ struct OfflineFileInfoUseCaseTests {
         OfflineFileInfoUseCase(offlineInfoRepository: repo)
     }
     
+    @MainActor
     @Suite("Fetch tracks from file paths")
     struct FetchTracksSuite {
         @Test(arguments: [
@@ -26,6 +27,7 @@ struct OfflineFileInfoUseCaseTests {
         }
     }
     
+    @MainActor
     @Suite("Edge cases")
     struct EdgeCasesSuite {
         @Test(arguments: [

@@ -374,8 +374,6 @@
 		25F4EC772C0EBB11007C528E /* SensitiveContentAcknowledgementStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F4EC762C0EBB11007C528E /* SensitiveContentAcknowledgementStatus.swift */; };
 		25F932842AF476D500A63E73 /* AppearancePreference+Entities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F932832AF476D500A63E73 /* AppearancePreference+Entities.swift */; };
 		25F9329F2AF86C1A00A63E73 /* SortOrderPreferenceRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F9329E2AF86C1A00A63E73 /* SortOrderPreferenceRepository.swift */; };
-		271FC4212A27EA4400E35924 /* ElementStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271FC4202A27EA4400E35924 /* ElementStore.swift */; };
-		274514C22A2F5BDE00BFFB2F /* ElementStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 274514C12A2F5BDE00BFFB2F /* ElementStoreTests.swift */; };
 		27AFAC542A53734500C0D6A0 /* FileExtensionOCWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27AFAC532A53734500C0D6A0 /* FileExtensionOCWrapper.swift */; };
 		27AFAC562A53739500C0D6A0 /* FileExtensionOCWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27AFAC532A53734500C0D6A0 /* FileExtensionOCWrapper.swift */; };
 		2F0194A7243452E500734EA3 /* ChatViewController+InputBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F0194A6243452E500734EA3 /* ChatViewController+InputBar.swift */; };
@@ -3106,8 +3104,6 @@
 		25F4EC762C0EBB11007C528E /* SensitiveContentAcknowledgementStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensitiveContentAcknowledgementStatus.swift; sourceTree = "<group>"; };
 		25F932832AF476D500A63E73 /* AppearancePreference+Entities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppearancePreference+Entities.swift"; sourceTree = "<group>"; };
 		25F9329E2AF86C1A00A63E73 /* SortOrderPreferenceRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortOrderPreferenceRepository.swift; sourceTree = "<group>"; };
-		271FC4202A27EA4400E35924 /* ElementStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementStore.swift; sourceTree = "<group>"; };
-		274514C12A2F5BDE00BFFB2F /* ElementStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementStoreTests.swift; sourceTree = "<group>"; };
 		275682F82A4015280038E13A /* RemovalConfirmationMessageGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemovalConfirmationMessageGenerator.swift; sourceTree = "<group>"; };
 		27AFAC532A53734500C0D6A0 /* FileExtensionOCWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileExtensionOCWrapper.swift; sourceTree = "<group>"; };
 		27D1DA7A2A4328F4008571D7 /* FileExtensionGroupOCWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileExtensionGroupOCWrapper.swift; sourceTree = "<group>"; };
@@ -8645,7 +8641,6 @@
 		77D9A5692023538600B48470 /* Photo browser */ = {
 			isa = PBXGroup;
 			children = (
-				271FC4202A27EA4400E35924 /* ElementStore.swift */,
 				77C544FD2028542D00A9ACD6 /* MEGAPhotoBrowserAnimator.h */,
 				77C544FE2028542D00A9ACD6 /* MEGAPhotoBrowserAnimator.m */,
 				0EAAA31B2E6E4FE300902B53 /* MEGAPhotoBrowserPickerCollectionViewCell+Additions.swift */,
@@ -9343,7 +9338,6 @@
 		837B9C0824781B1600D409B4 /* NodeActions */ = {
 			isa = PBXGroup;
 			children = (
-				274514C12A2F5BDE00BFFB2F /* ElementStoreTests.swift */,
 				837B9C0924781B1600D409B4 /* NodeActionBuilderTests.swift */,
 				250B11A52CBC844100E2743E /* NodeActionBuilderTestSuite.swift */,
 			);
@@ -14670,7 +14664,6 @@
 				838F63CE2836778A009B41D6 /* DuplicatedItem.swift in Sources */,
 				C46D2A80270F1B5E00DA26D0 /* DynamicTypeCollectionManager.swift in Sources */,
 				C467AD5026A8656000AFE4D2 /* DynamicTypeComponentProtocol.swift in Sources */,
-				271FC4212A27EA4400E35924 /* ElementStore.swift in Sources */,
 				BF99A3F524AC445C0035A183 /* Emoji.swift in Sources */,
 				BFC933DD24A44E0300BC2A75 /* EmojiCarousalView.swift in Sources */,
 				BFC933E224A453B400BC2A75 /* EmojiReactionCollectionCell.swift in Sources */,
@@ -16276,7 +16269,6 @@
 				2435921E2A4ABBC100B0C57E /* DocScannerSaveSettingTableViewControllerTests.swift in Sources */,
 				24CCAC482B1363BD00BE4726 /* DownloadFileRepositoryTests.swift in Sources */,
 				837B17A328819CF600A4D01B /* DownloadLinkViewModelTests.swift in Sources */,
-				274514C22A2F5BDE00BFFB2F /* ElementStoreTests.swift in Sources */,
 				B59CD7412C3D41A000BCC2F3 /* EncourageGuestUserToJoinMegaViewModelTests.swift in Sources */,
 				0E72E12A2A285CDD00C900F9 /* EnforceCopyrightWarningViewModelTests.swift in Sources */,
 				B569A2C72C6E0C40005A96AD /* EnterMeetingLinkViewModelTests.swift in Sources */,
@@ -16921,7 +16913,7 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "iMEGA/Supporting Files/MEGA-Bridging-Header.h";
 				SWIFT_TREAT_WARNINGS_AS_ERRORS = YES;
 				SWIFT_UPCOMING_FEATURE_EXISTENTIAL_ANY = YES;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 				USER_HEADER_SEARCH_PATHS = (
 					"Modules/DataSource/MEGAChatSDK/Sources/MEGAChatSDK/bindings/Objective-C/3rdparty/webrtc",
 					"Modules/DataSource/MEGAChatSDK/Sources/MEGAChatSDK/bindings/Objective-C/3rdparty/webrtc/sdk/objc/**",
@@ -16983,7 +16975,7 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "iMEGA/Supporting Files/MEGA-Bridging-Header.h";
 				SWIFT_TREAT_WARNINGS_AS_ERRORS = NO;
 				SWIFT_UPCOMING_FEATURE_EXISTENTIAL_ANY = NO;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 				USER_HEADER_SEARCH_PATHS = (
 					"Modules/DataSource/MEGAChatSDK/Sources/MEGAChatSDK/bindings/Objective-C/3rdparty/webrtc",
 					"Modules/DataSource/MEGAChatSDK/Sources/MEGAChatSDK/bindings/Objective-C/3rdparty/webrtc/sdk/objc/**",
@@ -17691,7 +17683,7 @@
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "iMEGA/Supporting Files/MEGA-Bridging-Header.h";
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MEGA.app/MEGA";
 				USER_HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -17746,7 +17738,7 @@
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "iMEGA/Supporting Files/MEGA-Bridging-Header.h";
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MEGA.app/MEGA";
 				USER_HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -17870,7 +17862,7 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "iMEGA/Supporting Files/MEGA-Bridging-Header.h";
 				SWIFT_TREAT_WARNINGS_AS_ERRORS = NO;
 				SWIFT_UPCOMING_FEATURE_EXISTENTIAL_ANY = NO;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 				USER_HEADER_SEARCH_PATHS = (
 					"Modules/DataSource/MEGAChatSDK/Sources/MEGAChatSDK/bindings/Objective-C/3rdparty/webrtc",
 					"Modules/DataSource/MEGAChatSDK/Sources/MEGAChatSDK/bindings/Objective-C/3rdparty/webrtc/sdk/objc/**",
@@ -18032,7 +18024,7 @@
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "iMEGA/Supporting Files/MEGA-Bridging-Header.h";
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MEGA.app/MEGA";
 				USER_HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -18354,7 +18346,7 @@
 			repositoryURL = "https://github.com/MessageKit/MessageKit";
 			requirement = {
 				kind = revision;
-				revision = b024c1287ac30fb6ea2ee07169e6193efc11d972;
+				revision = dc48356f830d40de5acc0e126a44257d0a1329b6;
 			};
 		};
 		BF11642F27F6612A00E5C5A4 /* XCRemoteSwiftPackageReference "CHTCollectionViewWaterfallLayout" */ = {

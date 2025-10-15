@@ -22,7 +22,7 @@ class MockOfflineInfoRepository: OfflineInfoRepositoryProtocol, @unchecked Senda
         localPathfromNodeCallCount += 1
         switch result {
         case .failure: return nil
-        case .success: return AudioPlayerItem.mockItem.url
+        case .success: return AudioPlayerItem.mockURL
         }
     }
     

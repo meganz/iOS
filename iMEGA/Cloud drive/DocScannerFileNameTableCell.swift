@@ -2,6 +2,7 @@ import MEGADesignToken
 import MEGADomain
 import UIKit
 
+@MainActor
 protocol DocScannerFileInfoTableCellDelegate: AnyObject {
     func filenameChanged(_ newFilename: String)
     func containsCharactersNotAllowed()
@@ -26,8 +27,10 @@ class DocScannerFileNameTableCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        backgroundColor = TokenColors.Background.page
-        filenameTextField.textColor = TokenColors.Text.primary
+        MainActor.assumeIsolated {
+            backgroundColor = TokenColors.Background.page
+            filenameTextField.textColor = TokenColors.Text.primary
+        }
     }
     
     func configure(filename: String, fileType: String?) {

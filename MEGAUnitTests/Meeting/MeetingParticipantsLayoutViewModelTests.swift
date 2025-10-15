@@ -24,7 +24,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
             localVideoUseCase: MockCallLocalVideoUseCase(),
             remoteVideoUseCase: remoteVideoUseCase,
             chatRoomUseCase: MockChatRoomUseCase(),
-            accountUseCase: MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true),
+            accountUseCase: MockAccountUseCase(currentUser: MEGADomain.UserEntity(handle: 100), isGuest: false, isLoggedIn: true),
             userImageUseCase: MockUserImageUseCase(),
             chatRoom: chatRoom,
             call: call
@@ -53,7 +53,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
             containerViewModel: containerViewModel,
             callUseCase: callUseCase,
             remoteVideoUseCase: remoteVideoUseCase,
-            accountUseCase: MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true),
+            accountUseCase: MockAccountUseCase(currentUser: MEGADomain.UserEntity(handle: 100), isGuest: false, isLoggedIn: true),
             chatRoom: chatRoom,
             call: call
         )
@@ -94,7 +94,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
             localVideoUseCase: MockCallLocalVideoUseCase(),
             remoteVideoUseCase: remoteVideoUseCase,
             chatRoomUseCase: MockChatRoomUseCase(),
-            accountUseCase: MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true),
+            accountUseCase: MockAccountUseCase(currentUser: MEGADomain.UserEntity(handle: 100), isGuest: false, isLoggedIn: true),
             userImageUseCase: MockUserImageUseCase(),
             chatRoom: chatRoom,
             call: call
@@ -123,7 +123,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
             localVideoUseCase: MockCallLocalVideoUseCase(),
             remoteVideoUseCase: remoteVideoUseCase,
             chatRoomUseCase: MockChatRoomUseCase(),
-            accountUseCase: MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true),
+            accountUseCase: MockAccountUseCase(currentUser: MEGADomain.UserEntity(handle: 100), isGuest: false, isLoggedIn: true),
             userImageUseCase: MockUserImageUseCase(),
             chatRoom: chatRoom,
             call: call
@@ -151,7 +151,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
             localVideoUseCase: MockCallLocalVideoUseCase(),
             remoteVideoUseCase: remoteVideoUseCase,
             chatRoomUseCase: MockChatRoomUseCase(),
-            accountUseCase: MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true),
+            accountUseCase: MockAccountUseCase(currentUser: MEGADomain.UserEntity(handle: 100), isGuest: false, isLoggedIn: true),
             userImageUseCase: MockUserImageUseCase(),
             chatRoom: chatRoom,
             call: call
@@ -177,7 +177,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
             localVideoUseCase: MockCallLocalVideoUseCase(),
             remoteVideoUseCase: remoteVideoUseCase,
             chatRoomUseCase: MockChatRoomUseCase(),
-            accountUseCase: MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true),
+            accountUseCase: MockAccountUseCase(currentUser: MEGADomain.UserEntity(handle: 100), isGuest: false, isLoggedIn: true),
             userImageUseCase: MockUserImageUseCase(),
             chatRoom: chatRoom,
             call: call
@@ -206,7 +206,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
             localVideoUseCase: MockCallLocalVideoUseCase(),
             remoteVideoUseCase: remoteVideoUseCase,
             chatRoomUseCase: MockChatRoomUseCase(),
-            accountUseCase: MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true),
+            accountUseCase: MockAccountUseCase(currentUser: MEGADomain.UserEntity(handle: 100), isGuest: false, isLoggedIn: true),
             userImageUseCase: MockUserImageUseCase(),
             chatRoom: chatRoom,
             call: call
@@ -234,7 +234,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
             localVideoUseCase: MockCallLocalVideoUseCase(),
             remoteVideoUseCase: remoteVideoUseCase,
             chatRoomUseCase: MockChatRoomUseCase(),
-            accountUseCase: MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true),
+            accountUseCase: MockAccountUseCase(currentUser: MEGADomain.UserEntity(handle: 100), isGuest: false, isLoggedIn: true),
             userImageUseCase: MockUserImageUseCase(),
             chatRoom: chatRoom,
             call: call
@@ -267,7 +267,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
             localVideoUseCase: MockCallLocalVideoUseCase(),
             remoteVideoUseCase: remoteVideoUseCase,
             chatRoomUseCase: MockChatRoomUseCase(),
-            accountUseCase: MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true),
+            accountUseCase: MockAccountUseCase(currentUser: MEGADomain.UserEntity(handle: 100), isGuest: false, isLoggedIn: true),
             userImageUseCase: MockUserImageUseCase(),
             chatRoom: chatRoom,
             call: call
@@ -300,7 +300,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
             localVideoUseCase: MockCallLocalVideoUseCase(),
             remoteVideoUseCase: remoteVideoUseCase,
             chatRoomUseCase: MockChatRoomUseCase(),
-            accountUseCase: MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true),
+            accountUseCase: MockAccountUseCase(currentUser: MEGADomain.UserEntity(handle: 100), isGuest: false, isLoggedIn: true),
             userImageUseCase: MockUserImageUseCase(),
             chatRoom: chatRoom,
             call: call
@@ -333,7 +333,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
             localVideoUseCase: MockCallLocalVideoUseCase(),
             remoteVideoUseCase: remoteVideoUseCase,
             chatRoomUseCase: MockChatRoomUseCase(),
-            accountUseCase: MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true),
+            accountUseCase: MockAccountUseCase(currentUser: MEGADomain.UserEntity(handle: 100), isGuest: false, isLoggedIn: true),
             userImageUseCase: MockUserImageUseCase(),
             chatRoom: chatRoom,
             call: call
@@ -371,7 +371,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
             remoteVideoUseCase: remoteVideoUseCase,
             chatRoomUseCase: chatRoomUseCase,
             chatRoomUserUseCase: userUseCase,
-            accountUseCase: MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true),
+            accountUseCase: MockAccountUseCase(currentUser: MEGADomain.UserEntity(handle: 100), isGuest: false, isLoggedIn: true),
             userImageUseCase: MockUserImageUseCase(),
             chatRoom: chatRoom,
             call: call
@@ -410,7 +410,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
             remoteVideoUseCase: remoteVideoUseCase,
             chatRoomUseCase: chatRoomUseCase,
             chatRoomUserUseCase: userUseCase,
-            accountUseCase: MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true),
+            accountUseCase: MockAccountUseCase(currentUser: MEGADomain.UserEntity(handle: 100), isGuest: false, isLoggedIn: true),
             userImageUseCase: MockUserImageUseCase(),
             chatRoom: chatRoom,
             call: call
@@ -449,7 +449,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
             remoteVideoUseCase: remoteVideoUseCase,
             chatRoomUseCase: chatRoomUseCase,
             chatRoomUserUseCase: userUseCase,
-            accountUseCase: MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true),
+            accountUseCase: MockAccountUseCase(currentUser: MEGADomain.UserEntity(handle: 100), isGuest: false, isLoggedIn: true),
             userImageUseCase: MockUserImageUseCase(),
             chatRoom: chatRoom,
             call: call
@@ -488,7 +488,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
             remoteVideoUseCase: remoteVideoUseCase,
             chatRoomUseCase: chatRoomUseCase,
             chatRoomUserUseCase: userUseCase,
-            accountUseCase: MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true),
+            accountUseCase: MockAccountUseCase(currentUser: MEGADomain.UserEntity(handle: 100), isGuest: false, isLoggedIn: true),
             userImageUseCase: MockUserImageUseCase(),
             chatRoom: chatRoom,
             call: call
@@ -527,7 +527,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
             remoteVideoUseCase: remoteVideoUseCase,
             chatRoomUseCase: chatRoomUseCase,
             chatRoomUserUseCase: userUseCase,
-            accountUseCase: MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true),
+            accountUseCase: MockAccountUseCase(currentUser: MEGADomain.UserEntity(handle: 100), isGuest: false, isLoggedIn: true),
             userImageUseCase: MockUserImageUseCase(),
             chatRoom: chatRoom,
             call: call
@@ -566,7 +566,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
             remoteVideoUseCase: remoteVideoUseCase,
             chatRoomUseCase: chatRoomUseCase,
             chatRoomUserUseCase: userUseCase,
-            accountUseCase: MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true),
+            accountUseCase: MockAccountUseCase(currentUser: MEGADomain.UserEntity(handle: 100), isGuest: false, isLoggedIn: true),
             userImageUseCase: MockUserImageUseCase(),
             chatRoom: chatRoom,
             call: call
@@ -606,7 +606,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
             remoteVideoUseCase: remoteVideoUseCase,
             chatRoomUseCase: chatRoomUseCase,
             chatRoomUserUseCase: userUseCase,
-            accountUseCase: MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true),
+            accountUseCase: MockAccountUseCase(currentUser: MEGADomain.UserEntity(handle: 100), isGuest: false, isLoggedIn: true),
             userImageUseCase: MockUserImageUseCase(),
             chatRoom: chatRoom,
             call: call
@@ -648,7 +648,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
             remoteVideoUseCase: remoteVideoUseCase,
             chatRoomUseCase: chatRoomUseCase,
             chatRoomUserUseCase: userUseCase,
-            accountUseCase: MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true),
+            accountUseCase: MockAccountUseCase(currentUser: MEGADomain.UserEntity(handle: 100), isGuest: false, isLoggedIn: true),
             userImageUseCase: MockUserImageUseCase(),
             chatRoom: chatRoom,
             call: call
@@ -690,7 +690,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
             remoteVideoUseCase: remoteVideoUseCase,
             chatRoomUseCase: chatRoomUseCase,
             chatRoomUserUseCase: userUseCase,
-            accountUseCase: MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true),
+            accountUseCase: MockAccountUseCase(currentUser: MEGADomain.UserEntity(handle: 100), isGuest: false, isLoggedIn: true),
             userImageUseCase: MockUserImageUseCase(),
             chatRoom: chatRoom,
             call: call
@@ -763,7 +763,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
             remoteVideoUseCase: remoteVideoUseCase,
             chatRoomUseCase: chatRoomUseCase,
             chatRoomUserUseCase: chatRoomuserUseCase,
-            accountUseCase: MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true),
+            accountUseCase: MockAccountUseCase(currentUser: MEGADomain.UserEntity(handle: 100), isGuest: false, isLoggedIn: true),
             userImageUseCase: userUseCase,
             megaHandleUseCase: MockMEGAHandleUseCase(base64Handle: "base64Handle"),
             chatRoom: chatRoom,

@@ -13,7 +13,7 @@ public class MockAccountUseCase: AccountUseCaseProtocol, @unchecked Sendable {
     private let multiFactorAuthCheckResult: Bool
     private var multiFactorAuthCheckDelay: TimeInterval
     private let _bandwidthOverquotaDelay: Int64
-    private let _currentUser: UserEntity?
+    private let _currentUser: MEGADomain.UserEntity?
     private let _isGuest: Bool
     private let _isPaidAccount: Bool
     private let _isNewAccount: Bool
@@ -25,7 +25,7 @@ public class MockAccountUseCase: AccountUseCaseProtocol, @unchecked Sendable {
     private let _currentProPlan: AccountPlanEntity?
     private let _currentSubscription: AccountSubscriptionEntity?
     private let _isStandardProAccount: Bool
-    private let _contacts: [UserEntity]
+    private let _contacts: [MEGADomain.UserEntity]
     private var _currentAccountDetails: AccountDetailsEntity?
     private let _isOverQuota: Bool
     private var _email: String?
@@ -59,7 +59,7 @@ public class MockAccountUseCase: AccountUseCaseProtocol, @unchecked Sendable {
     public let onUserAlertsUpdates: AnyAsyncSequence<[UserAlertEntity]>
 
     public init(
-        currentUser: UserEntity? = UserEntity(handle: .invalid),
+        currentUser: MEGADomain.UserEntity? = MEGADomain.UserEntity(handle: .invalid),
         isGuest: Bool = false,
         isPaidAccount: Bool = false,
         isNewAccount: Bool = false,
@@ -69,7 +69,7 @@ public class MockAccountUseCase: AccountUseCaseProtocol, @unchecked Sendable {
         hasMultipleBilledProPlan: Bool = false,
         isStandardProAccount: Bool = false,
         accountCreationDate: Date? = nil,
-        contacts: [UserEntity] = [],
+        contacts: [MEGADomain.UserEntity] = [],
         totalNodesCountVariable: UInt64 = 0,
         getMyChatFilesFolderResult: Result<NodeEntity, AccountErrorEntity> = .failure(.nodeNotFound),
         currentAccountDetails: AccountDetailsEntity? = nil,
@@ -277,7 +277,7 @@ public class MockAccountUseCase: AccountUseCaseProtocol, @unchecked Sendable {
     }
 
     // MARK: - Account operations
-    public func contacts() -> [UserEntity] {
+    public func contacts() -> [MEGADomain.UserEntity] {
         _contacts
     }
     

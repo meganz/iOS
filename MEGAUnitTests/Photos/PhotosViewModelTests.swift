@@ -13,11 +13,9 @@ import MEGASwift
 import Testing
 import XCTest
 
+@MainActor
 final class PhotosViewModelTests: XCTestCase {
-    var sut: PhotosViewModel!
-    
-    @MainActor
-    override func setUp() {
+    func makeDefaultSUT() -> PhotosViewModel {
         let publisher = PhotoUpdatePublisher(photosViewController: PhotosViewController())
         let allPhotos = sampleNodesForAllLocations()
         let allPhotosForCloudDrive = sampleNodesForCloudDriveOnly()
@@ -25,7 +23,7 @@ final class PhotosViewModelTests: XCTestCase {
         let usecase = MockPhotoLibraryUseCase(allPhotos: allPhotos,
                                               allPhotosFromCloudDriveOnly: allPhotosForCloudDrive,
                                               allPhotosFromCameraUpload: allPhotosForCameraUploads)
-        sut = PhotosViewModel(
+        return PhotosViewModel(
             photoUpdatePublisher: publisher,
             photoLibraryUseCase: usecase,
             contentConsumptionUserAttributeUseCase: MockContentConsumptionUserAttributeUseCase(
@@ -93,6 +91,7 @@ final class PhotosViewModelTests: XCTestCase {
     // MARK: - All locations test cases
     @MainActor
     func testLoadingPhotos_withAllMediaAllLocations_shouldReturnTrue() async throws {
+        let sut = makeDefaultSUT()
         let expectedPhotos = sampleNodesForAllLocations()
         sut.filterType = .allMedia
         sut.filterLocation = . allLocations
@@ -118,7 +117,7 @@ final class PhotosViewModelTests: XCTestCase {
         let usecase = MockPhotoLibraryUseCase(allPhotos: photos,
                                               allPhotosFromCloudDriveOnly: [],
                                               allPhotosFromCameraUpload: [])
-        sut = PhotosViewModel(
+        let sut = PhotosViewModel(
             photoUpdatePublisher: publisher,
             photoLibraryUseCase: usecase,
             contentConsumptionUserAttributeUseCase: MockContentConsumptionUserAttributeUseCase(),
@@ -136,6 +135,7 @@ final class PhotosViewModelTests: XCTestCase {
     
     @MainActor
     func testLoadingPhotos_withImagesAllLocations_shouldReturnTrue() async throws {
+        let sut = makeDefaultSUT()
         let expectedImages = sampleNodesForAllLocations().filter(\.fileExtensionGroup.isImage)
         sut.filterType = .images
         sut.filterLocation = .allLocations
@@ -145,6 +145,7 @@ final class PhotosViewModelTests: XCTestCase {
     
     @MainActor
     func testLoadingVideos_withImagesAllLocations_shouldReturnTrue() async throws {
+        let sut = makeDefaultSUT()
         let expectedVideos = sampleNodesForAllLocations().filter(\.fileExtensionGroup.isVideo)
         sut.filterType = .videos
         sut.filterLocation = . allLocations
@@ -155,6 +156,7 @@ final class PhotosViewModelTests: XCTestCase {
     // MARK: - Cloud Drive only test cases
     @MainActor
     func testLoadingPhotos_withAllMediaFromCloudDrive_shouldReturnTrue() async throws {
+        let sut = makeDefaultSUT()
         let expectedPhotos = sampleNodesForCloudDriveOnly()
         sut.filterType = .allMedia
         sut.filterLocation = .cloudDrive
@@ -164,6 +166,7 @@ final class PhotosViewModelTests: XCTestCase {
     
     @MainActor
     func testLoadingPhotos_withImagesFromCloudDrive_shouldReturnTrue() async throws {
+        let sut = makeDefaultSUT()
         let expectedImages = sampleNodesForCloudDriveOnly().filter(\.fileExtensionGroup.isImage)
         sut.filterType = .images
         sut.filterLocation = .cloudDrive
@@ -173,6 +176,7 @@ final class PhotosViewModelTests: XCTestCase {
     
     @MainActor
     func testLoadingPhotos_withVideosFromCloudDrive_shouldReturnTrue() async throws {
+        let sut = makeDefaultSUT()
         let expectedVideos = sampleNodesForCloudDriveOnly().filter(\.fileExtensionGroup.isVideo)
         sut.filterType = .videos
         sut.filterLocation = .cloudDrive
@@ -183,6 +187,7 @@ final class PhotosViewModelTests: XCTestCase {
     // MARK: - Camera Uploads test cases
     @MainActor
     func testLoadingPhotos_withAllMediaFromCameraUploads_shouldReturnTrue() async throws {
+        let sut = makeDefaultSUT()
         let expectedPhotos = sampleNodesForCameraUploads()
         sut.filterType = .allMedia
         sut.filterLocation = .cameraUploads
@@ -192,6 +197,7 @@ final class PhotosViewModelTests: XCTestCase {
     
     @MainActor
     func testLoadingPhotos_withImagesFromCameraUploads_shouldReturnTrue() async throws {
+        let sut = makeDefaultSUT()
         let expectedImages = sampleNodesForCameraUploads().filter(\.fileExtensionGroup.isImage)
         sut.filterType = .images
         sut.filterLocation = .cameraUploads
@@ -201,6 +207,7 @@ final class PhotosViewModelTests: XCTestCase {
     
     @MainActor
     func testLoadingPhotos_withVideosFromCameraUploads_shouldReturnTrue() async throws {
+        let sut = makeDefaultSUT()
         let expectedVideos = sampleNodesForCameraUploads().filter(\.fileExtensionGroup.isVideo)
         sut.filterType = .videos
         sut.filterLocation = .cameraUploads
@@ -223,6 +230,7 @@ final class PhotosViewModelTests: XCTestCase {
     
     @MainActor
     func testIsSelectHidden_onToggle_changesInitialFalseValueToTrue() {
+        let sut = makeDefaultSUT()
         XCTAssertFalse(sut.isSelectHidden)
         sut.isSelectHidden.toggle()
         XCTAssertTrue(sut.isSelectHidden)
@@ -230,6 +238,7 @@ final class PhotosViewModelTests: XCTestCase {
     
     @MainActor
     func testFilterType_whenCheckingSavedFilter_shouldReturnRightValues() {
+        let sut = makeDefaultSUT()
         XCTAssertEqual(PhotosFilterOptions.images, sut.filterType(from: .images))
         XCTAssertEqual(PhotosFilterOptions.videos, sut.filterType(from: .videos))
         XCTAssertEqual(PhotosFilterOptions.allMedia, sut.filterType(from: .allMedia))
@@ -237,6 +246,7 @@ final class PhotosViewModelTests: XCTestCase {
     
     @MainActor
     func testFilterLocation_whenCheckingSavedFilter_shouldReturnRightValues() {
+        let sut = makeDefaultSUT()
         XCTAssertEqual(PhotosFilterOptions.cloudDrive, sut.filterLocation(from: .cloudDrive))
         XCTAssertEqual(PhotosFilterOptions.cameraUploads, sut.filterLocation(from: .cameraUploads))
         XCTAssertEqual(PhotosFilterOptions.allLocations, sut.filterLocation(from: .allLocations))

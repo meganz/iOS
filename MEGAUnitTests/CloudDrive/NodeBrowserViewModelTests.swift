@@ -824,6 +824,7 @@ class NodeBrowserViewModelTests: XCTestCase {
             return
         }
     }
+
     @MainActor
     private func makeContextMenuFactory(
         nodeUseCase: some NodeUseCaseProtocol,
