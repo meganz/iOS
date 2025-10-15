@@ -4742,3 +4742,5 @@
 "subscriptionPurchase.benefits.rubbishClearing.title"="Schedule Rubbish bin clearing between 7 days and 10 years";
 /* General label for priority customer support */
 "general.prioritySupport"="Priority support";
+/* Storage used for Business and Pro Flexi accounts in the account menu. */
+"accountMenu.businessAndProFlexiAccountsStorageUsed.title"="%@ used";
