@@ -1,4 +1,5 @@
 import Combine
+import MEGAAssets
 import MEGAFoundation
 import MEGASwift
 import MEGASwiftUI
@@ -21,6 +22,8 @@ public class SearchResultsViewModel: ObservableObject {
     @Published var presentedChipsPickerViewModel: ChipViewModel?
 
     @Published var selectedRowIds = Set<SearchResultRowViewModel.ID>()
+
+    @Published var showSortSheet = false
 
     var fileListItems: [SearchResultRowViewModel] {
         listItems.filter { !$0.result.isFolder }
@@ -92,12 +95,37 @@ public class SearchResultsViewModel: ObservableObject {
 
     private let updatedSearchResultsPublisher: BatchingPublisher<SearchResultUpdateSignal>
 
+    private let sortOptionsViewModel: SearchResultsSortOptionsViewModel
+
+    var displaySortOptionsViewModel: SearchResultsSortOptionsViewModel {
+        let displaySortOptions = sortOptionsViewModel.sortOptions.compactMap { sortOption -> SearchResultsSortOption? in
+            let currentSortOrder = currentQuery.sorting
+            guard currentSortOrder != sortOption.sortOrder else { return nil }
+            guard currentSortOrder.key != sortOption.sortOrder.key else { return sortOption }
+            guard sortOption.sortOrder.direction != .descending else { return nil }
+            return sortOption.removeIcon()
+        }
+        return sortOptionsViewModel.makeNewViewModel(with: displaySortOptions) { [weak self] option in
+            guard let self else { return }
+            selectedSortOption(option)
+        }
+    }
+
     let listHeaderViewModel: ListHeaderViewModel?
 
     // Specifies whether the results are selectable or not.
     let isSelectionEnabled: Bool
 
-    @Published public var showChips: Bool = false
+    @Published public private(set) var showChips: Bool = false
+    @Published public var showSorting: Bool = false
+
+    var headerViewModel: SearchResultsHeaderSortViewViewModel? {
+        guard let sortOption = sortOptionsViewModel
+            .sortOptions.first(where: { $0.sortOrder == currentQuery.sorting }) else { return nil }
+        return .init(title: sortOption.title, icon: sortOption.currentDirectionIcon) { [weak self] in
+            self?.showSortSheet = true
+        }
+    }
 
     public init(
         resultsProvider: any SearchResultsProviding,
@@ -111,7 +139,8 @@ public class SearchResultsViewModel: ObservableObject {
         updatedSearchResultsPublisher: BatchingPublisher<SearchResultUpdateSignal> = BatchingPublisher(interval: 1), // Emits search result updates as a batch every 1 seconds
         listHeaderViewModel: ListHeaderViewModel?,
         isSelectionEnabled: Bool,
-        showChips: Bool
+        showChips: Bool,
+        sortOptionsViewModel: SearchResultsSortOptionsViewModel
     ) {
         self.resultsProvider = resultsProvider
         self.bridge = bridge
@@ -125,6 +154,7 @@ public class SearchResultsViewModel: ObservableObject {
         self.listHeaderViewModel = listHeaderViewModel
         self.isSelectionEnabled = isSelectionEnabled
         self.showChips = showChips
+        self.sortOptionsViewModel = sortOptionsViewModel
         self.bridge.queryChanged = { [weak self] query  in
             let _self = self
             
@@ -294,6 +324,12 @@ public class SearchResultsViewModel: ObservableObject {
             guard !(areNewSearchResultsLoaded) else { return }
             updateLoadingPlaceholderVisibility(true)
         }
+    }
+
+    private func selectedSortOption(_ sortOption: SearchResultsSortOption) {
+        showSortSheet = false
+        bridge.updateSortOrder(sortOption.sortOrder)
+        Task { await queryChanged(to: updatedQuery(with: sortOption.sortOrder)) }
     }
 
     private func queryChanged(to query: SearchQuery) async {
@@ -765,7 +801,8 @@ public class SearchResultsViewModel: ObservableObject {
         $listItems
             .sink { [weak self] viewModels in
                 guard let self else { return }
-                
+
+                showSorting = viewModels.isNotEmpty
                 selectedRowIds = viewModels.isEmpty
                 ? []
                 : Set(viewModels.compactMap { selectedResultIds.contains($0.result.id) ? $0.id : nil })
@@ -886,6 +923,14 @@ public extension SearchResultsViewModel {
             if let selectedRow = rowViewModel(for: result) {
                 toggleSelected(selectedRow)
             }
+        }
+    }
+
+    func setSearchChipsVisible(_ visible: Bool, animated: Bool = true) {
+        if animated {
+            withAnimation { showChips = visible }
+        } else {
+            showChips = visible
         }
     }
 }

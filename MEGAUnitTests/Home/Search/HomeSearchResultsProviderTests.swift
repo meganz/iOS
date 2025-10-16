@@ -148,7 +148,13 @@ final class HomeSearchResultsProviderTests: XCTestCase {
         func resultsFor(chip: SearchChipEntity) async throws -> [SearchResult] {
             let results = await sut.search(
                 queryRequest: .userSupplied(
-                    .init(query: "", sorting: .nameAscending, mode: .home, isSearchActive: false, chips: [chip])
+                    .init(
+                        query: "",
+                        sorting: .init(key: .name),
+                        mode: .home,
+                        isSearchActive: false,
+                        chips: [chip]
+                    )
                 )
             )
             let items = try XCTUnwrap(results)

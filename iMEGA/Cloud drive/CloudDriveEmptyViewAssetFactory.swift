@@ -13,17 +13,19 @@ struct CloudDriveEmptyViewAssetFactory {
     private let nodeInsertionRouter: any NodeInsertionRouting
     private let nodeUseCase: any NodeUseCaseProtocol
     private let titleTextColor: Color
+    private let isCloudDriveRevampEnabled: Bool
 
     init(
         tracker: some AnalyticsTracking,
         nodeInsertionRouter: some NodeInsertionRouting,
         nodeUseCase: some NodeUseCaseProtocol,
-
+        isCloudDriveRevampEnabled: Bool = DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .cloudDriveRevamp)
     ) {
         self.tracker = tracker
         self.nodeUseCase = nodeUseCase
         self.titleTextColor = TokenColors.Text.primary.swiftUI
         self.nodeInsertionRouter = nodeInsertionRouter
+        self.isCloudDriveRevampEnabled = isCloudDriveRevampEnabled
     }
 
     func defaultAsset(for nodeSource: NodeSource, config: NodeBrowserConfig) -> SearchConfig.EmptyViewAssets {
@@ -111,8 +113,7 @@ struct CloudDriveEmptyViewAssetFactory {
     }
 
     private func makeDefaultActions(for parentNode: NodeEntity?) -> [SearchConfig.EmptyViewAssets.Action] {
-
-        guard let parentNode, !DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .cloudDriveRevamp) else {
+        guard let parentNode, !isCloudDriveRevampEnabled else {
             return []
         }
 

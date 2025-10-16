@@ -8,7 +8,7 @@ extension SearchQueryEntity {
     ) -> Self {
         .init(
             query: string,
-            sorting: .nameAscending,
+            sorting: .init(key: .name),
             mode: .home,
             isSearchActive: isSearchActive,
             chips: chips

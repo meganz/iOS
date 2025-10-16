@@ -155,7 +155,7 @@ public struct NonProductionTestResultsProvider: SearchResultsProviding {
 
 fileprivate extension SearchQuery {
     static let empty: Self = .userSupplied(
-        .init(query: "", sorting: .nameAscending, mode: .home, isSearchActive: false, chips: [])
+        .init(query: "", sorting: .init(key: .name), mode: .home, isSearchActive: false, chips: [])
     )
 }
 

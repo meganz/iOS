@@ -116,7 +116,8 @@ class NodeBrowserViewModelTests: XCTestCase {
                         selection: { _ in },
                         context: { _, _ in },
                         chipTapped: { _, _ in },
-                        sortingOrder: { .nameAscending }
+                        sortingOrder: { .init(key: .name) },
+                        updateSortOrder: { _ in }
                     ),
                     config: .testConfig,
                     layout: defaultLayout,
@@ -126,7 +127,8 @@ class NodeBrowserViewModelTests: XCTestCase {
                     viewDisplayMode: .unknown,
                     listHeaderViewModel: nil,
                     isSelectionEnabled: true,
-                    showChips: false
+                    showChips: false,
+                    sortOptionsViewModel: .init(title: "", sortOptions: [])
                 ),
                 mediaDiscoveryViewModel: mediaDiscoveryViewModel,
                 warningViewModel: nil,

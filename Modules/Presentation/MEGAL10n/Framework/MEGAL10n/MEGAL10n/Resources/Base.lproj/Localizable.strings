@@ -4744,3 +4744,13 @@
 "general.prioritySupport"="Priority support";
 /* Storage used for Business and Pro Flexi accounts in the account menu. */
 "accountMenu.businessAndProFlexiAccountsStorageUsed.title"="%@ used";
+/* Sorting option label for sorting items alphabetically by their name (can be applied in ascending or descending order) */
+"sorting.name.title" = "Name";
+/* Sorting option label for sorting items based on whether they are marked as favourites (can be applied in ascending or descending order) */
+"sorting.favourite.title" = "Favourite";
+/* Sorting option label for sorting items based on the date they were added (can be applied in ascending or descending order) */
+"sorting.dateAdded.title" = "Date added";
+/* Sorting option label for sorting items based on the last time they were modified (can be applied in ascending or descending order) */
+"sorting.lastModified.title" = "Last modified";
+/* Sorting option label for sorting items based on their file size (can be applied in ascending or descending order) */
+"sorting.size.title" = "Size";

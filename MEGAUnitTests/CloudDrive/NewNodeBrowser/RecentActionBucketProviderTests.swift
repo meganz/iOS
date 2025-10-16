@@ -70,7 +70,7 @@ struct RecentActionBucketProviderTests {
                 queryRequest: .userSupplied(
                     .init(
                         query: "",
-                        sorting: .oldest,
+                        sorting: .init(key: .dateAdded),
                         mode: .home,
                         isSearchActive: false,
                         chips: []

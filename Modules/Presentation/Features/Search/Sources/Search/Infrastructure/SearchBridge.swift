@@ -8,18 +8,21 @@ public class SearchBridge {
     let selection: (SearchResultSelection) -> Void
     let context: (SearchResult, UIButton) -> Void
     let sortingOrder: () async -> SortOrderEntity
+    let updateSortOrder: (SortOrderEntity) -> Void
     private let chipTapped: (SearchChipEntity, Bool) -> Void
     
     public init(
         selection: @escaping (SearchResultSelection) -> Void,
         context: @escaping (SearchResult, UIButton) -> Void,
         chipTapped: @escaping (SearchChipEntity, Bool) -> Void,
-        sortingOrder: @escaping () async -> SortOrderEntity
+        sortingOrder: @escaping () async -> SortOrderEntity,
+        updateSortOrder: @escaping (SortOrderEntity) -> Void
     ) {
         self.selection = selection
         self.context = context
         self.chipTapped = chipTapped
         self.sortingOrder = sortingOrder
+        self.updateSortOrder = updateSortOrder
     }
     
     func chip(tapped chip: SearchChipEntity, isSelected: Bool) {

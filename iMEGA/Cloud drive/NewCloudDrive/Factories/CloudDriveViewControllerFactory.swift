@@ -572,7 +572,7 @@ struct CloudDriveViewControllerFactory {
             onSearch: { [weak searchResultsVM] in searchResultsVM?.bridge.queryChanged($0) },
             onCancel: { [weak searchResultsVM] in searchResultsVM?.bridge.queryCleaned() },
             onSearchActiveChanged: { [weak searchResultsVM] in
-                searchResultsVM?.showChips = $0 || !isCloudDriveRevampEnabled
+                searchResultsVM?.setSearchChipsVisible($0 || !isCloudDriveRevampEnabled)
             }
         )
 
@@ -888,6 +888,13 @@ struct CloudDriveViewControllerFactory {
             chipTapped: { _, _ in },
             sortingOrder: { @MainActor in
                 sortOrderPreferenceUseCase.sortOrder(for: nodeSource.parentNode).toSearchSortOrderEntity()
+            },
+            updateSortOrder: { @MainActor sortOrder in
+                guard let node = nodeSource.parentNode else { return }
+                sortOrderPreferenceUseCase.save(
+                    sortOrder: sortOrder.toDomainSortOrderEntity(),
+                    for: node
+                )
             }
         )
 
@@ -929,7 +936,11 @@ struct CloudDriveViewControllerFactory {
             viewDisplayMode: config.displayMode?.toViewDisplayMode ?? .unknown,
             listHeaderViewModel: listHeaderViewModelFactory.buildIfNeeded(for: nodeSource),
             isSelectionEnabled: shouldEnableSelection,
-            showChips: showChips
+            showChips: showChips,
+            sortOptionsViewModel: .init(
+                title: Strings.Localizable.sortTitle,
+                sortOptions: SearchResultsSortOptionFactory.makeAll()
+            )
         )
     }
 

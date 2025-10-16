@@ -40,7 +40,7 @@ public enum SearchQuery: Equatable, Sendable {
     public var sorting: SortOrderEntity {
         switch self {
         case .initial:
-            return .nameAscending
+            return .init(key: .name)
         case .userSupplied(let query):
             return query.sorting
         }
