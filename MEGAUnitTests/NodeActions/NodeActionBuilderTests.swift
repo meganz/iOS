@@ -659,6 +659,38 @@ class NodeActionBuilderTests {
     }
     
     // MARK: - Links tests
+    @Test
+    func testBuild_fileLinkUndecryptedNode_shouldReturnEmptyActions() {
+        actions = NodeActionBuilder()
+            .setDisplayMode(.fileLink)
+            .setIsFile(true)
+            .setIsNodeKeyDecrypted(false)
+            .build()
+        
+        #expect(actions.isEmpty == true)
+    }
+    
+    @Test
+    func testBuild_folderLinkUndecryptedFolder_shouldReturnEmptyActions() {
+        actions = NodeActionBuilder()
+            .setDisplayMode(.folderLink)
+            .setIsFile(false)
+            .setIsNodeKeyDecrypted(false)
+            .build()
+        
+        #expect(actions.isEmpty == true)
+    }
+    
+    @Test
+    func testBuild_folderLinkUndecryptedFile_shouldReturnEmptyActions() {
+        actions = NodeActionBuilder()
+            .setDisplayMode(.folderLink)
+            .setIsFile(true)
+            .setIsNodeKeyDecrypted(false)
+            .build()
+        
+        #expect(actions.isEmpty == true)
+    }
     
     @Test
     func testFileMediaLink() {

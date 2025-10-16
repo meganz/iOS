@@ -123,6 +123,7 @@ class NodeActionViewController: ActionSheetViewController {
             .setDisplayMode(displayMode)
             .setAccessLevel(MEGASdk.shared.accessLevel(for: node))
             .setIsBackupNode(isBackupNode)
+            .setIsNodeKeyDecrypted(node.isNodeKeyDecrypted())
             .build()
     }
     
@@ -345,6 +346,7 @@ class NodeActionViewController: ActionSheetViewController {
             .setViewMode(viewMode)
             .setIsBackupNode(isBackupNode)
             .setContainsMediaFiles(containsMediaFiles)
+            .setIsNodeKeyDecrypted(node.isNodeKeyDecrypted())
             .build()
     }
     
@@ -366,6 +368,7 @@ class NodeActionViewController: ActionSheetViewController {
         super.init(nibName: nil, bundle: nil)
         
         configurePresentationStyle(from: sender)
+
         loadActions = { [self] in
             let actions = NodeActionBuilder()
                 .setDisplayMode(self.displayMode)
@@ -382,6 +385,7 @@ class NodeActionViewController: ActionSheetViewController {
                 .setIsHidden(await viewModel.isHidden(
                     [node.toNodeEntity()], isFromSharedItem: isFromSharedItem, containsBackupNode: isBackupNode))
                 .setHasValidProOrUnexpiredBusinessAccount(viewModel.hasValidProOrUnexpiredBusinessAccount)
+                .setIsNodeKeyDecrypted(node.isNodeKeyDecrypted())
                 .build()
             
             update(actions: actions, sender: sender)
@@ -613,6 +617,7 @@ class NodeActionViewController: ActionSheetViewController {
                 .setViewInFolder(viewInFolder)
                 .setIsAudioFileLink(isAudioFileLink)
                 .setIsSelectionEnabled(isSelectionEnabled)
+                .setIsNodeKeyDecrypted(node.isNodeKeyDecrypted())
                 .build()
             
             update(actions: actions, sender: self.sender)

@@ -37,6 +37,7 @@ final class NodeActionBuilder {
     private var viewInFolder: Bool = false
     private var isAudioFileLink: Bool = false
     private var isSelectionEnabled: Bool = false
+    private var isNodeKeyDecrypted = true
 
     func setDisplayMode(_ displayMode: DisplayMode) -> NodeActionBuilder {
         self.displayMode = displayMode
@@ -202,6 +203,11 @@ final class NodeActionBuilder {
         self.isSelectionEnabled = isSelectionEnabled
         return self
     }
+    
+    func setIsNodeKeyDecrypted(_ isNodeKeyDecrypted: Bool) -> NodeActionBuilder {
+        self.isNodeKeyDecrypted = isNodeKeyDecrypted
+        return self
+    }
 
     func build() -> [NodeAction] {
         var nodeActions = [NodeAction]()
@@ -216,7 +222,11 @@ final class NodeActionBuilder {
             nodeActions.append(contentsOf: nodeActionsForDisplayModeOrAccessLevels())
         }
     
-        return nodeActions
+        return filterForUndecrypted(nodeActions)
+    }
+    
+    private func filterForUndecrypted(_ actions: [NodeAction]) -> [NodeAction] {
+        isNodeKeyDecrypted ? actions : actions.filter { $0.type == .info }
     }
     
     func multiselectBuild() -> [NodeAction] {
