@@ -41,7 +41,8 @@ final class SearchResultsViewModelTests: XCTestCase, @unchecked Sendable {
         init(
             _ testcase: XCTestCase,
             searchResultUpdateSignalSequence: AnyAsyncSequence<SearchResultUpdateSignal> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
-            showChips: Bool = true
+            showChips: Bool = true,
+            sortOptionsViewModel: SearchResultsSortOptionsViewModel = .init(title: "", sortOptions: [])
         ) {
             self.testcase = testcase
             resultsProvider = MockSearchResultsProviding(
@@ -55,7 +56,8 @@ final class SearchResultsViewModelTests: XCTestCase, @unchecked Sendable {
                 selection: { selection($0) },
                 context: { context($0, $1) },
                 chipTapped: { chipTapped($0, $1) },
-                sortingOrder: { .nameAscending }
+                sortingOrder: { .init(key: .name) },
+                updateSortOrder: { _ in }
             )
 
             var askedForEmptyContent: (SearchChipEntity?, SearchQuery) -> SearchConfig.EmptyViewAssets = {
@@ -83,7 +85,8 @@ final class SearchResultsViewModelTests: XCTestCase, @unchecked Sendable {
                 viewDisplayMode: .unknown,
                 listHeaderViewModel: nil,
                 isSelectionEnabled: true,
-                showChips: showChips
+                showChips: showChips,
+                sortOptionsViewModel: sortOptionsViewModel
             )
             selection = {
                 self.selectedResults.append($0)
@@ -239,7 +242,7 @@ final class SearchResultsViewModelTests: XCTestCase, @unchecked Sendable {
             .userSupplied(
                 .init(
                     query: "",
-                    sorting: .nameAscending,
+                    sorting: .init(key: .name),
                     mode: .home,
                     isSearchActive: false,
                     chips: [.init(type: .nodeFormat(.photo), title: "chip_0", icon: nil, subchipsPickerTitle: nil, subchips: [])]
@@ -248,7 +251,7 @@ final class SearchResultsViewModelTests: XCTestCase, @unchecked Sendable {
             .userSupplied(
                 .init(
                     query: "test",
-                    sorting: .nameAscending,
+                    sorting: .init(key: .name),
                     mode: .home,
                     isSearchActive: true,
                     chips: []
@@ -636,14 +639,16 @@ final class SearchResultsViewModelTests: XCTestCase, @unchecked Sendable {
     @MainActor
     func testChangeSortOrder_forAllCases_shouldMatchTheExpectation() async {
         let allCases: [(Search.SortOrderEntity, [SearchQuery]?)] = [
-            (.nameAscending, [.initial]),
-            (.nameDescending, nil),
-            (.largest, nil),
-            (.smallest, nil),
-            (.newest, nil),
-            (.oldest, nil),
-            (.label, nil),
-            (.favourite, nil)
+            (.init(key: .name), [.initial]),
+            (.init(key: .name, direction: .descending), nil),
+            (.init(key: .size, direction: .descending), nil),
+            (.init(key: .size), nil),
+            (.init(key: .dateAdded, direction: .descending), nil),
+            (.init(key: .dateAdded), nil),
+            (.init(key: .label), nil),
+            (.init(key: .label, direction: .descending), nil),
+            (.init(key: .favourite), nil),
+            (.init(key: .favourite, direction: .descending), nil)
         ]
 
         for (sortOrderEntity, expectedQueries) in allCases {
@@ -868,6 +873,62 @@ final class SearchResultsViewModelTests: XCTestCase, @unchecked Sendable {
         harness.sut.selectSearchResults(selectedResultsViewModel.map(\.result))
         XCTAssertTrue(harness.sut.editing)
         XCTAssertEqual(harness.sut.selectedRowIds, Set(selectedResultsViewModel.map(\.id)))
+    }
+
+    @MainActor
+    func testShowChipsInitialValue_whenSet_ShouldMatchResult() {
+        let harness = Harness(self, showChips: false)
+        XCTAssertFalse(harness.sut.showChips)
+    }
+
+    @MainActor
+    func testSetSearchChipsVisible_whenSetWithoutAnimation_shouldShowChips() {
+        let harness = Harness(self, showChips: false)
+        harness.sut.setSearchChipsVisible(true, animated: false)
+        XCTAssertTrue(harness.sut.showChips)
+    }
+
+    @MainActor
+    func testSetSearchChipsVisible_whenSetWithAnimation_shouldShowChips() {
+        let harness = Harness(self, showChips: false)
+        harness.sut.setSearchChipsVisible(true, animated: true)
+        XCTAssertTrue(harness.sut.showChips)
+    }
+
+    @MainActor
+    func testDisplaySortOptionsViewModel_whenDisplayed_shouldOmitSelectedSortOption() throws {
+        let sortOptionsViewModel = SearchResultsSortOptionsViewModel(
+            title: "Sort by",
+            sortOptions: [
+                .init(sortOrder: .init(key: .name), title: "Name", iconsByDirection: [:]),
+                .init(sortOrder: .init(key: .name, direction: .descending), title: "Name", iconsByDirection: [:])
+            ]
+        )
+        let harness = Harness(self, sortOptionsViewModel: sortOptionsViewModel)
+        let displaySortOptionsViewModel = harness.sut.displaySortOptionsViewModel
+        XCTAssertEqual(displaySortOptionsViewModel.title, "Sort by")
+        XCTAssertEqual(displaySortOptionsViewModel.sortOptions.count, 1)
+        let sortOption = try XCTUnwrap(displaySortOptionsViewModel.sortOptions.first)
+        XCTAssertEqual(sortOption.sortOrder, .init(key: .name, direction: .descending))
+    }
+
+    @MainActor
+    func testHeaderViewModel_whenDisplayed_shouldShowSelectedSortOption() throws {
+        let iconByDirection: [SortOrderEntity.Direction: Image] = [
+            .ascending: Image(systemName: "plus"),
+            .descending: Image(systemName: "minus")
+        ]
+        let sortOptionsViewModel = SearchResultsSortOptionsViewModel(
+            title: "Sort by",
+            sortOptions: [
+                .init(sortOrder: .init(key: .name), title: "Name", iconsByDirection: iconByDirection),
+                .init(sortOrder: .init(key: .name, direction: .descending), title: "Name", iconsByDirection: iconByDirection)
+            ]
+        )
+        let harness = Harness(self, sortOptionsViewModel: sortOptionsViewModel)
+        let headerViewModel = try XCTUnwrap(harness.sut.headerViewModel)
+        XCTAssertEqual(headerViewModel.title, "Name")
+        XCTAssertEqual(headerViewModel.icon, Image(systemName: "plus"))
     }
 
     @MainActor

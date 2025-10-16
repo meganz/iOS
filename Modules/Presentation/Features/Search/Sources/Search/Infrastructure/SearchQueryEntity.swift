@@ -29,15 +29,35 @@ public struct SearchQueryEntity: Equatable, Sendable {
 }
 
 /// default value, iteration one of search project does not allow specifying sort order but that can come in next stages
-public enum SortOrderEntity: Sendable {
-    case nameAscending
-    case nameDescending
-    case largest
-    case smallest
-    case newest
-    case oldest
-    case label
-    case favourite
+public struct SortOrderEntity: Hashable, Sendable {
+    public enum Key: Hashable, Sendable {
+        case name
+        case favourite
+        case label
+        case dateAdded
+        case lastModified
+        case size
+    }
+
+    public enum Direction: Hashable, Sendable {
+        case ascending
+        case descending
+
+        func toggled() -> Self {
+            switch self {
+            case .ascending: .descending
+            case .descending: .ascending
+            }
+        }
+    }
+
+    public var key: Key
+    public var direction: Direction
+
+    public init(key: Key, direction: Direction = .ascending) {
+        self.key = key
+        self.direction = direction
+    }
 }
 
 /// Specifies the context in which the search is happening

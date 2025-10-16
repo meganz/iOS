@@ -2236,6 +2236,7 @@
 		BF49DFA5282B230800DE3742 /* participantJoined.wav in Resources */ = {isa = PBXBuildFile; fileRef = BF49DFA2282B230800DE3742 /* participantJoined.wav */; };
 		BF49DFA7282B231300DE3742 /* participantLeft.wav in Resources */ = {isa = PBXBuildFile; fileRef = BF49DFA6282B231300DE3742 /* participantLeft.wav */; };
 		BF519D1B2C6991130051329F /* NodeDescriptionFooterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF519D1A2C6991130051329F /* NodeDescriptionFooterViewModel.swift */; };
+		BF5302972E9DFE450002A9C6 /* SearchResultsSortOptionFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5302962E9DFE420002A9C6 /* SearchResultsSortOptionFactory.swift */; };
 		BF5375612C6D675300D4F364 /* NodeDescriptionCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5375602C6D675300D4F364 /* NodeDescriptionCellViewModel.swift */; };
 		BF5375692C6D805900D4F364 /* NodeDescriptionFooterViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5375682C6D805900D4F364 /* NodeDescriptionFooterViewModelTests.swift */; };
 		BF53B77C274351F700B47CA0 /* MeetingAlreadyExistsAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF53B77B274351F700B47CA0 /* MeetingAlreadyExistsAlert.swift */; };
@@ -5052,6 +5053,7 @@
 		BF49DFA2282B230800DE3742 /* participantJoined.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = participantJoined.wav; sourceTree = "<group>"; };
 		BF49DFA6282B231300DE3742 /* participantLeft.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = participantLeft.wav; sourceTree = "<group>"; };
 		BF519D1A2C6991130051329F /* NodeDescriptionFooterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeDescriptionFooterViewModel.swift; sourceTree = "<group>"; };
+		BF5302962E9DFE420002A9C6 /* SearchResultsSortOptionFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsSortOptionFactory.swift; sourceTree = "<group>"; };
 		BF5375602C6D675300D4F364 /* NodeDescriptionCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeDescriptionCellViewModel.swift; sourceTree = "<group>"; };
 		BF5375682C6D805900D4F364 /* NodeDescriptionFooterViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeDescriptionFooterViewModelTests.swift; sourceTree = "<group>"; };
 		BF53B77B274351F700B47CA0 /* MeetingAlreadyExistsAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingAlreadyExistsAlert.swift; sourceTree = "<group>"; };
@@ -12981,6 +12983,7 @@
 				BFDAC1712B8356DA0003BE4F /* CloudDriveViewControllerNavItemsFactory.swift */,
 				BF875B462B90309F00FE629A /* NodeBrowserContextMenuViewFactory.swift */,
 				94B273EB2D3F01270029D78C /* RecentListHeaderViewModelFactory.swift */,
+				BF5302962E9DFE420002A9C6 /* SearchResultsSortOptionFactory.swift */,
 				94B09E3E2B84CC86007D6B84 /* ToolbarActionFactory.swift */,
 				94B09E4A2B84CC86007D6B84 /* ViewModeFactory.swift */,
 			);
@@ -15559,6 +15562,7 @@
 				949829CF2B470AB500D1686F /* SearchResultMapper.swift in Sources */,
 				947381BA2A9626D000C4E8EC /* SearchResultsBridge.swift in Sources */,
 				94B09E5D2B84CC87007D6B84 /* SearchResultSelection+NonEmptySiblings.swift in Sources */,
+				BF5302972E9DFE450002A9C6 /* SearchResultsSortOptionFactory.swift in Sources */,
 				94B4A0462B160DC10089FC94 /* SearchWithFilterOperation.swift in Sources */,
 				5D1B23F324AF335000ACE1C5 /* SecondaryThemeButtonTextColorFactory.swift in Sources */,
 				41AA1A1C1AC081C600D32691 /* SecurityOptionsTableViewController.m in Sources */,

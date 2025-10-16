@@ -13,11 +13,9 @@ public struct SearchResultsView: View {
     
     public var body: some View {
         VStack(spacing: .zero) {
-            if viewModel.showChips {
-                chips
-                    .transition(.move(edge: .top).combined(with: .opacity))
-            }
-            
+            header
+                .transition(.opacity)
+
             PlaceholderContainerView(
                 isLoading: $viewModel.isLoadingPlaceholderShown,
                 content: content,
@@ -31,7 +29,6 @@ public struct SearchResultsView: View {
                 alignment: .top
             )
         }
-        .animation(.easeInOut(duration: 0.25), value: viewModel.showChips)
         .task {
             await viewModel.task()
         }
@@ -40,8 +37,20 @@ public struct SearchResultsView: View {
                 .presentationDetents([.medium, .large])
                 .presentationDragIndicator(.visible)
         }
+        .sheet(isPresented: $viewModel.showSortSheet) {
+            SearchResultsSortOptionsView(viewModel: viewModel.displaySortOptionsViewModel)
+        }
     }
-    
+
+    @ViewBuilder
+    private var header: some View {
+        if viewModel.showChips {
+            chips
+        } else if viewModel.showSorting, let headerViewModel = viewModel.headerViewModel {
+            SearchResultsHeaderView(leftView: { SearchResultsHeaderSortView(viewModel: headerViewModel) })
+        }
+    }
+
     @ViewBuilder
     private var chips: some View {
         HStack {
@@ -176,7 +185,8 @@ public struct SearchResultsView: View {
                 selection: { _ in },
                 context: {_, _ in },
                 chipTapped: { _, _ in },
-                sortingOrder: { .nameAscending }
+                sortingOrder: { .init(key: .name) },
+                updateSortOrder: { _ in }
             ),
             config: .example,
             layout: .list,
@@ -184,7 +194,8 @@ public struct SearchResultsView: View {
             viewDisplayMode: .unknown,
             listHeaderViewModel: nil,
             isSelectionEnabled: false,
-            showChips: true
+            showChips: true,
+            sortOptionsViewModel: .init(title: "", sortOptions: [])
         )
         var body: some View {
             SearchResultsView(viewModel: viewModel)

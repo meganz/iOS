@@ -112,7 +112,8 @@ final class HomeScreenFactory: NSObject {
             bridge: bridge,
             tracker: tracker,
             viewModeStore: viewModeStore,
-            enableItemMultiSelection: enableItemMultiSelection
+            enableItemMultiSelection: enableItemMultiSelection,
+            sortOptions: SearchResultsSortOptionFactory.makeAll()
         )
         
         homeViewController.searchResultViewController = searchResultViewController
@@ -162,7 +163,8 @@ final class HomeScreenFactory: NSObject {
         bridge: SearchResultsBridge,
         tracker: some AnalyticsTracking,
         viewModeStore: some ViewModeStoringObjC,
-        enableItemMultiSelection: Bool
+        enableItemMultiSelection: Bool,
+        sortOptions: [SearchResultsSortOption]
     ) -> UIViewController {
         
         let router = HomeSearchResultRouter(
@@ -203,8 +205,9 @@ final class HomeScreenFactory: NSObject {
             chipTapped: { chip, selected in
                 tracker.trackChip(tapped: chip, selected: selected)
             }, sortingOrder: {
-                .nameAscending
-            }
+                .init(key: .name)
+            },
+            updateSortOrder: { _ in }
         )
         
         bridge.didInputTextTrampoline = { [weak searchBridge] text in
@@ -250,7 +253,11 @@ final class HomeScreenFactory: NSObject {
             viewDisplayMode: .home,
             listHeaderViewModel: nil,
             isSelectionEnabled: false,
-            showChips: true
+            showChips: true,
+            sortOptionsViewModel: .init(
+                title: Strings.Localizable.sortTitle,
+                sortOptions: SearchResultsSortOptionFactory.makeAll()
+            )
         )
         return UIHostingController(
             rootView: SearchResultsView(viewModel: vm)
