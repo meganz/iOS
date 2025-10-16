@@ -87,9 +87,12 @@
     longerRetentionUpgradeToProText = longerRetentionUpgradeToProText.mnz_removeWebclientFormatters;
     NSRange semiboldAndGreenTextRange = [longerRetentionUpgradeToProText rangeOfString:semiboldAndGreenText];
 
+    NSMutableParagraphStyle *paragraphStyle = [NSMutableParagraphStyle.alloc init];
+    paragraphStyle.alignment = NSTextAlignmentNatural;
+
     UIColor *secondaryGrayColor = [UIColor iconSecondaryColor];
-    NSMutableAttributedString *longerRetentionUpgradeToProMAS = [NSMutableAttributedString.alloc initWithString:longerRetentionUpgradeToProText attributes:@{NSForegroundColorAttributeName : secondaryGrayColor}];
-    
+    NSMutableAttributedString *longerRetentionUpgradeToProMAS = [NSMutableAttributedString.alloc initWithString:longerRetentionUpgradeToProText attributes:@{NSForegroundColorAttributeName : secondaryGrayColor, NSParagraphStyleAttributeName : paragraphStyle}];
+
     UIColor *turquoiseColor = [UIColor supportSuccessColor];
     UIFont *semiboldFont = [UIFont mnz_preferredFontWithStyle:UIFontTextStyleFootnote weight:UIFontWeightSemibold];
     [longerRetentionUpgradeToProMAS setAttributes:@{NSFontAttributeName : semiboldFont, NSForegroundColorAttributeName : turquoiseColor} range:semiboldAndGreenTextRange];
