@@ -83,7 +83,8 @@ extension MEGAPhotoBrowserViewController {
                 return
             }
 
-            if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .videoPlayerRevamp) {
+            if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .videoPlayerRevamp) &&
+                DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosVideoPlayerRevamp) {
                 let playerViewModel = MEGAPlayerViewModel(
                     player: MEGAAVPlayer.liveValue(node: node)
                 )
