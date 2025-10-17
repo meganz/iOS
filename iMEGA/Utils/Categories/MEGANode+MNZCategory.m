@@ -152,10 +152,10 @@
         previewDocumentPath = [[Helper pathForOffline] stringByAppendingPathComponent:offlineNodeExist.localPath];
     } else {
         NSString *nodeFolderPath = [NSTemporaryDirectory() stringByAppendingPathComponent:self.base64Handle];
-        NSString *tmpFilePath = [nodeFolderPath stringByAppendingPathComponent:self.name];
-        if ([[NSFileManager defaultManager] fileExistsAtPath:tmpFilePath isDirectory:nil]) {
-            previewDocumentPath = tmpFilePath;
-        }
+        previewDocumentPath = [nodeFolderPath stringByAppendingPathComponent:self.name];
+    }
+    if (![[NSFileManager defaultManager] fileExistsAtPath:previewDocumentPath isDirectory:nil]) {
+        previewDocumentPath = nil;
     }
     
     if (previewDocumentPath) {
