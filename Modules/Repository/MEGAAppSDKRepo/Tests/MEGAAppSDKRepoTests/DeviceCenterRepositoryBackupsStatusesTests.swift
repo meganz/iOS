@@ -166,10 +166,12 @@ final class DeviceCenterRepositoryBackupStatusesTests: XCTestCase {
         activityTimestamp: Date
     ) -> (DeviceCenterRepository) {
         let mockSdk = MockSdk(
+            nodes: [MockNode(handle: 1)],
             backupInfoList: [
                 MockBackupInfo(
                     identifier: 1,
                     deviceIdentifier: deviceId,
+                    rootHandle: 1,
                     backupType: backupType.toMEGABackupType(),
                     syncState: syncState.toBackUpState(),
                     backupSubstate: substate.toBackUpSubState(),

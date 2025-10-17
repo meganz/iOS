@@ -14,14 +14,16 @@ public struct DeviceCenterRepository: DeviceCenterRepositoryProtocol {
     }
     
     public func fetchUserDevices() async -> [DeviceEntity] {
-        let deviceNamesDictionary = await fetchUserDeviceNames()
-        let userBackups = await fetchUserBackups()
-        let userGroupedBackups = Dictionary(grouping: userBackups, by: \.deviceId)
+        async let deviceNamesTask = fetchUserDeviceNames()
+        async let userBackupsTask = fetchUserBackups()
         
-        return userGroupedBackups.keys.compactMap { deviceId in
-            guard let deviceBackups = userGroupedBackups[deviceId],
-                  let deviceName = deviceNamesDictionary[deviceId],
-                    deviceBackups.isNotEmpty else { return nil }
+        let (deviceNamesDictionary, userBackups) = await (deviceNamesTask, userBackupsTask)
+        let validUserBackups = userBackups.filter(isValidBackup)
+        let userGroupedBackups = Dictionary(grouping: validUserBackups, by: \.deviceId)
+        
+        return userGroupedBackups.compactMap { deviceId, deviceBackups in
+            guard let deviceName = deviceNamesDictionary[deviceId],
+                  deviceBackups.isNotEmpty else { return nil }
             
             let backups = updateBackupsWithSyncStatus(deviceBackups)
             
@@ -52,6 +54,10 @@ public struct DeviceCenterRepository: DeviceCenterRepositoryProtocol {
                 }
             }))
         })
+    }
+    
+    private func isValidBackup(_ backup: BackupEntity) -> Bool {
+        sdk.node(forHandle: backup.rootHandle) != nil
     }
     
     private func fetchUserDeviceNames() async -> [String: String] {
