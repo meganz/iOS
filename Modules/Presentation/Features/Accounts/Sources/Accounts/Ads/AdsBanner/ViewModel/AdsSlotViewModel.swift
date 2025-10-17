@@ -40,6 +40,13 @@ final public class AdsSlotViewModel: ObservableObject {
     private(set) var lastCloseAdsDate: Date?
     private let currentDate: @Sendable () -> Date
     
+    @Published var adsLoadingState: AdsLoadingState = .unknown
+    enum AdsLoadingState {
+        case unknown
+        case loaded
+        case failed
+    }
+    
     public init(
         adsSlotUpdatesProvider: some AdsSlotUpdatesProviderProtocol,
         adsUseCase: some AdsUseCaseProtocol,
@@ -253,11 +260,13 @@ final public class AdsSlotViewModel: ObservableObject {
     func bannerViewDidReceiveAdsUpdate(result: Result<Void, any Error>) {
         switch result {
         case .success:
+            adsLoadingState = .loaded
             MEGALogInfo("[AdMob] Ads Banner did received ad")
         
             // Show close button only when a user is logged in, otherwise, hide button
             showCloseButton = accountUseCase.isLoggedIn()
         case .failure(let error):
+            adsLoadingState = .failed
             MEGALogError("[AdMob] Ads Banner failed to receive ad with error \(error.localizedDescription)")
         }
     }

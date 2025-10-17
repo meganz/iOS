@@ -47,9 +47,9 @@ public struct AdsSlotView<T: View>: View {
                 }
                 .padding(.top, 5)
                 .frame(maxWidth: .infinity)
-                .frame(height: shouldHideAds ? 0 : 50)
+                .frame(height: adsContainerHeight)
                 .background(TokenColors.Background.surface1.swiftUI)
-                .opacity(shouldHideAds ? 0 : 1)
+                .opacity(adsContainerOpacity)
             }
         }
         .onFirstAppear(perform: {
@@ -82,5 +82,27 @@ public struct AdsSlotView<T: View>: View {
     
     private var shouldHideAds: Bool {
         verticalSizeClass == .compact || !viewModel.displayAds
+    }
+    
+    private var adsContainerHeight: CGFloat {
+        guard !shouldHideAds else { return 0 }
+        
+        switch viewModel.adsLoadingState {
+        case .loaded:
+            return 50
+        default:
+            return 0
+        }
+    }
+    
+    private var adsContainerOpacity: Double {
+        guard !shouldHideAds else { return 0 }
+        
+        switch viewModel.adsLoadingState {
+        case .loaded:
+            return 1
+        default:
+            return 0
+        }
     }
 }
