@@ -12,10 +12,15 @@ final class DeviceCenterRepositoryTests: XCTestCase {
         let encodedName1 = base64Encode(string: "device1")
         let encodedName2 = base64Encode(string: "device2")
         let mockSdk = MockSdk(
+            nodes: [
+                MockNode(handle: 1),
+                MockNode(handle: 2),
+                MockNode(handle: 3)
+            ],
             backupInfoList: [
-                MockBackupInfo(identifier: 1, deviceIdentifier: id1),
-                MockBackupInfo(identifier: 2, deviceIdentifier: id1),
-                MockBackupInfo(identifier: 3, deviceIdentifier: id2)
+                MockBackupInfo(identifier: 1, deviceIdentifier: id1, rootHandle: 1),
+                MockBackupInfo(identifier: 2, deviceIdentifier: id1, rootHandle: 2),
+                MockBackupInfo(identifier: 3, deviceIdentifier: id2, rootHandle: 3)
             ],
             devices: [
                 id1: encodedName1,
@@ -60,10 +65,12 @@ final class DeviceCenterRepositoryTests: XCTestCase {
         let encodedName1 = base64Encode(string: "device1")
         let twoHoursInterval: TimeInterval = 2 * 60 * 60  // Greater than one hour
         let mockSdk = MockSdk(
+            nodes: [MockNode(handle: 1)],
             backupInfoList: [
                 MockBackupInfo(
                     identifier: 1,
                     deviceIdentifier: id1,
+                    rootHandle: 1,
                     backupType: .cameraUpload, // Mobile devices
                     syncState: .active,
                     backupSubstate: .noSyncError,
@@ -90,10 +97,12 @@ final class DeviceCenterRepositoryTests: XCTestCase {
         let encodedName1 = base64Encode(string: "device1")
         let fortyFiveInterval: TimeInterval = 45 * 60 // Greater than 30 minutes
         let mockSdk = MockSdk(
+            nodes: [MockNode(handle: 1)],
             backupInfoList: [
                 MockBackupInfo(
                     identifier: 1,
                     deviceIdentifier: id1,
+                    rootHandle: 1,
                     backupType: .downSync, // Other devices not mobile devices
                     syncState: .active,
                     backupSubstate: .noSyncError,
