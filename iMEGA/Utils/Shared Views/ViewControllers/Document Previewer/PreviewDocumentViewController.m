@@ -341,6 +341,9 @@
 
 - (void)openZipInQLViewController {
     NSString *filePath = self.nodeFilePath ? self.nodeFilePath : self.filePath;
+    if (![[NSFileManager defaultManager] fileExistsAtPath:filePath isDirectory:nil]) {
+        return;
+    }
     MEGAQLPreviewController *previewController = [MEGAQLPreviewController.alloc initWithArrayOfFiles:@[filePath]];
     [self dismissViewControllerAnimated:YES completion:^{
         [UIApplication.mnz_presentingViewController presentViewController:previewController animated:YES completion:nil];
