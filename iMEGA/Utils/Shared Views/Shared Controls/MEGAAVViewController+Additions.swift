@@ -9,8 +9,21 @@ import MEGADomain
 import MEGAL10n
 import MEGASdk
 import MEGASwift
+import ObjectiveC
+
+private enum PlayerPreparationAssociatedKeys {
+    static var token = "mega.playerPreparationToken"
+}
 
 extension MEGAAVViewController {
+    private var playerPreparationToken: UUID? {
+        get {
+            objc_getAssociatedObject(self, &PlayerPreparationAssociatedKeys.token) as? UUID
+        }
+        set {
+            objc_setAssociatedObject(self, &PlayerPreparationAssociatedKeys.token, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+        }
+    }
     
     @objc func makeViewModel() -> AVViewModel {
         AVViewModel()
@@ -104,6 +117,7 @@ extension MEGAAVViewController {
         player?.pause()
         player?.currentItem?.cancelPendingSeeks()
         player?.currentItem?.asset.cancelLoading()
+        playerPreparationToken = nil
     }
     
     // MARK: - Loading Indicator
@@ -310,17 +324,59 @@ extension MEGAAVViewController {
         guard let fileUrl else { return }
 
         startLoading()
-        let playerItem = AVPlayerItem(url: fileUrl)
-        
-        if let node {
-            setPlayerItemMetadata(playerItem: playerItem, node: node)
+
+        let resumeTime: CMTime? = {
+            guard
+                let destinationValue = mediaDestination?.destination?.int64Value,
+                let timescaleValue = mediaDestination?.timescale?.int32Value,
+                timescaleValue > 0
+            else {
+                return nil
+            }
+
+            let time = CMTimeMake(value: destinationValue, timescale: timescaleValue)
+            return CMTIME_IS_VALID(time) ? time : nil
+        }()
+
+        let preparationToken = UUID()
+        playerPreparationToken = preparationToken
+        let currentNode = node
+        let currentURL = fileUrl
+
+        DispatchQueue.global(qos: .userInitiated).async { [weak self] in
+            let playerItem = AVPlayerItem(url: currentURL)
+
+            if let resumeTime {
+                playerItem.seek(to: resumeTime, completionHandler: nil)
+            } else {
+                playerItem.seek(to: .zero, completionHandler: nil)
+            }
+
+            let preparedPlayer = AVPlayer(playerItem: playerItem)
+
+            DispatchQueue.main.async { [weak self] in
+                guard let self else { return }
+                guard self.playerPreparationToken == preparationToken else { return }
+
+                guard self.fileUrl == currentURL else {
+                    self.stopLoading()
+                    return
+                }
+
+                guard self.viewIfLoaded?.window != nil else {
+                    self.stopLoading()
+                    return
+                }
+
+                if let currentNode {
+                    self.setPlayerItemMetadata(playerItem: playerItem, node: currentNode)
+                }
+
+                self.player = preparedPlayer
+                self.subscriptions.add(self.bindPlayerItemStatus(playerItem: playerItem))
+                preparedPlayer.play()
+                self.subscriptions.add(self.bindPlayerTimeControlStatus())
+            }
         }
-        
-        seekTo(mediaDestination: mediaDestination, playerItem: playerItem)
-        player = AVPlayer(playerItem: playerItem)
-        subscriptions.add(bindPlayerItemStatus(playerItem: playerItem))
-        
-        player?.play()
-        subscriptions.add(bindPlayerTimeControlStatus())
     }
 }
