@@ -85,7 +85,6 @@
                                                     <constraints>
                                                         <constraint firstAttribute="bottom" secondItem="WYd-5e-oZe" secondAttribute="bottom" constant="12.5" id="FRR-Hc-EKy"/>
                                                         <constraint firstItem="e6v-iM-iMp" firstAttribute="centerY" secondItem="VeS-po-Ke3" secondAttribute="centerY" id="U5P-LY-uXx"/>
-                                                        <constraint firstItem="WYd-5e-oZe" firstAttribute="centerX" secondItem="VeS-po-Ke3" secondAttribute="centerX" constant="24" id="ZvP-k5-CXT"/>
                                                         <constraint firstAttribute="trailing" secondItem="WYd-5e-oZe" secondAttribute="trailing" constant="16" id="b4n-5g-3t5"/>
                                                         <constraint firstItem="WYd-5e-oZe" firstAttribute="leading" secondItem="e6v-iM-iMp" secondAttribute="trailing" constant="8" id="fgh-Uc-nHc"/>
                                                         <constraint firstItem="e6v-iM-iMp" firstAttribute="leading" secondItem="VeS-po-Ke3" secondAttribute="leading" constant="16" id="nKG-HX-OR8"/>
