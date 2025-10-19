@@ -1,7 +1,9 @@
 @testable import Accounts
+import MEGAAssets
 import MEGADomain
 import MEGAL10n
 import Testing
+import UIKit
 
 @Suite("Feature List Helper Tests Suite - Verifies the feature list generation for various account types.")
 struct FeatureListHelperTestSuite {
@@ -11,8 +13,8 @@ struct FeatureListHelperTestSuite {
         let title: String
         let freeText: String?
         let proText: String?
-        let freeIconName: String?
-        let proIconName: String?
+        let freeIcon: UIImage?
+        let proIcon: UIImage?
     }
     
     static func featureTestCases() -> [FeatureTestCase] {
@@ -23,60 +25,60 @@ struct FeatureListHelperTestSuite {
                 title: Strings.Localizable.storage,
                 freeText: Strings.Localizable.Storage.Limit.capacity(20),
                 proText: sut.currentPlan.storage,
-                freeIconName: nil,
-                proIconName: nil
+                freeIcon: nil,
+                proIcon: nil
             ),
             FeatureTestCase(
                 type: .transfer,
                 title: Strings.Localizable.transfer,
                 freeText: Strings.Localizable.Account.TransferQuota.FreePlan.limited,
                 proText: sut.currentPlan.transfer,
-                freeIconName: nil,
-                proIconName: nil
+                freeIcon: nil,
+                proIcon: nil
             ),
             FeatureTestCase(
                 type: .passwordProtectedLinks,
                 title: Strings.Localizable.Password.Protected.Links.title,
                 freeText: nil,
                 proText: nil,
-                freeIconName: sut.assets.unavailableImageName,
-                proIconName: sut.assets.availableImageName
+                freeIcon: MEGAAssets.UIImage.image(named: sut.assets.unavailableImageName),
+                proIcon: MEGAAssets.UIImage.image(named: sut.assets.availableImageName)
             ),
             FeatureTestCase(
                 type: .linksWithExpiryDate,
                 title: Strings.Localizable.Links.With.Expiry.Dates.title,
                 freeText: nil,
                 proText: nil,
-                freeIconName: sut.assets.unavailableImageName,
-                proIconName: sut.assets.availableImageName
+                freeIcon: MEGAAssets.UIImage.image(named: sut.assets.unavailableImageName),
+                proIcon: MEGAAssets.UIImage.image(named: sut.assets.availableImageName)
             ),
             FeatureTestCase(
                 type: .callsAndMeetingsDuration,
                 title: Strings.Localizable.CallAndMeeting.Duration.title,
                 freeText: Strings.Localizable.CallAndMeeting.Duration.For.Free.users,
                 proText: Strings.Localizable.CallAndMeeting.Duration.Unlimited.For.Pro.users,
-                freeIconName: nil,
-                proIconName: nil
+                freeIcon: nil,
+                proIcon: nil
             ),
             FeatureTestCase(
                 type: .callsAndMeetingsParticipants,
                 title: Strings.Localizable.CallAndMeeting.Participants.title,
                 freeText: Strings.Localizable.CallAndMeeting.Participants.For.Free.users,
                 proText: Strings.Localizable.CallAndMeeting.Participants.Unlimited.For.Pro.users,
-                freeIconName: nil,
-                proIconName: nil
+                freeIcon: nil,
+                proIcon: nil
             ),
             FeatureTestCase(
                 type: .vpn,
                 title: Strings.Localizable.Mega.Vpn.title,
                 freeText: nil,
                 proText: nil,
-                freeIconName: sut.assets.unavailableImageName,
-                proIconName: sut.assets.availableImageName
+                freeIcon: MEGAAssets.UIImage.image(named: sut.assets.unavailableImageName),
+                proIcon: MEGAAssets.UIImage.image(named: sut.assets.availableImageName)
             )
         ]
     }
-
+    
     // MARK: - Helpers
     private static func randomAccountType() -> AccountTypeEntity {
         AccountTypeEntity.allCases.randomElement() ?? .free
@@ -112,7 +114,7 @@ struct FeatureListHelperTestSuite {
     ) {
         let (_, features) = createSutAndFeatures(accountType: accountType)
         let rewindFeature = features.first { $0.type == .rewind }
-
+        
         #expect(rewindFeature != nil, "Rewind feature should not be nil")
         #expect(rewindFeature?.title == Strings.Localizable.Rewind.Feature.title, "Rewind feature title mismatch")
         #expect(rewindFeature?.freeText == Strings.Localizable.Rewind.For.Free.users, "Rewind feature free text mismatch")
@@ -125,8 +127,8 @@ struct FeatureListHelperTestSuite {
         title: String,
         freeText: String? = nil,
         proText: String? = nil,
-        freeIconName: String? = nil,
-        proIconName: String? = nil
+        freeIcon: UIImage? = nil,
+        proIcon: UIImage? = nil
     ) {
         let feature = features.first { $0.type == featureType }
         #expect(feature != nil, "\(featureType) feature should not be nil")
@@ -140,12 +142,12 @@ struct FeatureListHelperTestSuite {
             #expect(feature?.proText == proText, "\(featureType) pro text mismatch")
         }
         
-        if let freeIconName = freeIconName {
-            #expect(feature?.freeIconName == freeIconName, "\(featureType) free icon name mismatch")
+        if let freeIcon = freeIcon {
+            #expect(feature?.freeIcon == freeIcon, "\(featureType) free icon mismatch")
         }
         
-        if let proIconName = proIconName {
-            #expect(feature?.proIconName == proIconName, "\(featureType) pro icon name mismatch")
+        if let proIcon = proIcon {
+            #expect(feature?.proIcon == proIcon, "\(featureType) pro icon mismatch")
         }
     }
     
@@ -169,8 +171,8 @@ struct FeatureListHelperTestSuite {
                 title: feature.title,
                 freeText: feature.freeText,
                 proText: feature.proText,
-                freeIconName: feature.freeIconName,
-                proIconName: feature.proIconName
+                freeIcon: feature.freeIcon,
+                proIcon: feature.proIcon
             )
         }
         
