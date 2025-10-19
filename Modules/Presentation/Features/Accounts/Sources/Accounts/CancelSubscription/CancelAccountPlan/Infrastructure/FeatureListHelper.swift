@@ -1,3 +1,4 @@
+import MEGAAssets
 import MEGADomain
 import MEGAL10n
 
@@ -39,20 +40,20 @@ struct FeatureListHelper: FeatureListHelperProtocol {
             FeatureDetails(
                 type: .passwordProtectedLinks,
                 title: Strings.Localizable.Password.Protected.Links.title,
-                freeIconName: assets.unavailableImageName,
-                proIconName: assets.availableImageName
+                freeIcon: MEGAAssets.UIImage.image(named: assets.unavailableImageName),
+                proIcon: MEGAAssets.UIImage.image(named: assets.availableImageName)
             ),
             FeatureDetails(
                 type: .linksWithExpiryDate,
                 title: Strings.Localizable.Links.With.Expiry.Dates.title,
-                freeIconName: assets.unavailableImageName,
-                proIconName: assets.availableImageName
+                freeIcon: MEGAAssets.UIImage.image(named: assets.unavailableImageName),
+                proIcon: MEGAAssets.UIImage.image(named: assets.availableImageName)
             ),
             FeatureDetails(
                 type: .transferSharing,
                 title: Strings.Localizable.Transfer.Sharing.title,
-                freeIconName: assets.unavailableImageName,
-                proIconName: assets.availableImageName
+                freeIcon: MEGAAssets.UIImage.image(named: assets.unavailableImageName),
+                proIcon: MEGAAssets.UIImage.image(named: assets.availableImageName)
             ),
             FeatureDetails(
                 type: .rewind,
@@ -63,8 +64,8 @@ struct FeatureListHelper: FeatureListHelperProtocol {
             FeatureDetails(
                 type: .vpn,
                 title: Strings.Localizable.Mega.Vpn.title,
-                freeIconName: assets.unavailableImageName,
-                proIconName: assets.availableImageName
+                freeIcon: MEGAAssets.UIImage.image(named: assets.unavailableImageName),
+                proIcon: MEGAAssets.UIImage.image(named: assets.availableImageName)
             ),
             FeatureDetails(
                 type: .callsAndMeetingsDuration,

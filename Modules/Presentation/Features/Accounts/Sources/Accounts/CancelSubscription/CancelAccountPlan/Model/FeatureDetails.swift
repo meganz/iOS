@@ -1,10 +1,12 @@
+import UIKit
+
 public struct FeatureDetails: Identifiable {
     public let type: FeatureType
     public let title: String
     public let freeText: String?
-    public let freeIconName: String?
+    public let freeIcon: UIImage?
     public let proText: String?
-    public let proIconName: String?
+    public let proIcon: UIImage?
     
     public var id: String {
         title
@@ -14,15 +16,15 @@ public struct FeatureDetails: Identifiable {
         type: FeatureType,
         title: String,
         freeText: String? = nil,
-        freeIconName: String? = nil,
+        freeIcon: UIImage? = nil,
         proText: String? = nil,
-        proIconName: String? = nil
+        proIcon: UIImage? = nil
     ) {
         self.type = type
         self.title = title
         self.freeText = freeText
-        self.freeIconName = freeIconName
+        self.freeIcon = freeIcon
         self.proText = proText
-        self.proIconName = proIconName
+        self.proIcon = proIcon
     }
 }
