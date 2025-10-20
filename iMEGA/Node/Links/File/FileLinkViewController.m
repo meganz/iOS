@@ -191,7 +191,7 @@
 
 - (void)setNavigationBarTitleLabel {
     if (self.node.name != nil) {
-        UILabel *label = [UILabel customNavigationBarLabelWithTitle:self.node.name subtitle:LocalizedString(@"fileLink", @"") traitCollection:self.traitCollection];
+        UILabel *label = [UILabel customNavigationBarLabelWithTitle:self.node.nameAfterDecryptionCheck subtitle:LocalizedString(@"fileLink", @"") traitCollection:self.traitCollection];
         label.frame = CGRectMake(0, 0, self.navigationItem.titleView.bounds.size.width, 44);
         self.navigationBarLabel = label;
         self.navigationItem.titleView = self.navigationBarLabel;

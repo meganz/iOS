@@ -10,7 +10,6 @@ public final class MockNode: MEGANode, @unchecked Sendable {
     private let changeType: MEGANodeChangeType
     private var nodeModificationTime: Date?
     private let _hasThumbnail: Bool
-    private let isNodeDecrypted: Bool
     private let isNodeExported: Bool
     private let videoDuration: Int
     private let _label: MEGANodeLabel
@@ -23,6 +22,7 @@ public final class MockNode: MEGANode, @unchecked Sendable {
     private let _description: String?
     private let _isInShare: Bool
     private let _tags: MockMEGAStringList?
+    private let _isNodeKeyDecrypted: Bool
 
     public init(handle: MEGAHandle,
                 nodeBase64Handle: String? = nil,
@@ -33,7 +33,6 @@ public final class MockNode: MEGANode, @unchecked Sendable {
                 modificationTime: Date? = nil,
                 hasThumbnail: Bool = false,
                 nodePath: String? = nil,
-                isNodeDecrypted: Bool = false,
                 isNodeExported: Bool = false,
                 duration: Int = 0,
                 label: MEGANodeLabel = .unknown,
@@ -44,7 +43,8 @@ public final class MockNode: MEGANode, @unchecked Sendable {
                 isMarkedSensitive: Bool = false,
                 description: String? = nil,
                 tags: MockMEGAStringList? = nil,
-                isInShare: Bool = false
+                isInShare: Bool = false,
+                isNodeKeyDecrypted: Bool = true
     ) {
         nodeHandle = handle
         self.nodeBase64Handle = nodeBase64Handle
@@ -55,7 +55,6 @@ public final class MockNode: MEGANode, @unchecked Sendable {
         nodeModificationTime = modificationTime
         _hasThumbnail = hasThumbnail
         self.nodePath = nodePath
-        self.isNodeDecrypted = isNodeDecrypted
         self.isNodeExported = isNodeExported
         self.videoDuration = duration
         _label = label
@@ -67,6 +66,7 @@ public final class MockNode: MEGANode, @unchecked Sendable {
         _description = description
         _tags = tags
         _isInShare = isInShare
+        _isNodeKeyDecrypted = isNodeKeyDecrypted
         super.init()
     }
     
@@ -115,4 +115,8 @@ public final class MockNode: MEGANode, @unchecked Sendable {
     public override func isInShare() -> Bool { _isInShare }
 
     public override var tags: MEGAStringList? { _tags }
+
+    public override func isNodeKeyDecrypted() -> Bool {
+        return _isNodeKeyDecrypted
+    }
 }

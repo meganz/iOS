@@ -169,7 +169,7 @@ extension FolderLinkViewController {
     
     @objc func setNavigationTitleView(subTitle: String?) {
         navigationItem.titleView = UILabel.customNavigationBarLabel(
-            title: parentNode?.name ?? Strings.Localizable.folderLink,
+            title: parentNode?.nameAfterDecryptionCheck() ?? Strings.Localizable.folderLink,
             subtitle: subTitle,
             traitCollection: traitCollection
         )
