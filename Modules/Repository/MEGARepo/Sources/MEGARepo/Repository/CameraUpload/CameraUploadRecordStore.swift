@@ -29,5 +29,5 @@ public protocol CameraUploadRecordStore: Sendable {
     /// - Throws: An error if the fetch fails.
     func fetchAssetUploadFileNames(
         forLocalIdentifiers identifiers: Set<String>
-    ) async throws -> [AssetUploadFileNameRecordDTO]
+    ) async throws -> Set<AssetUploadFileNameRecordDTO>
 }

@@ -45,7 +45,7 @@ extension CameraUploadRecordManager: CameraUploadRecordStore {
         }
     }
     
-    public func fetchAssetUploadFileNames(forLocalIdentifiers identifiers: Set<String>) async throws -> [AssetUploadFileNameRecordDTO] {
+    public func fetchAssetUploadFileNames(forLocalIdentifiers identifiers: Set<String>) async throws -> Set<AssetUploadFileNameRecordDTO> {
         let context = backgroundContext
         return try await context.perform {
             let request: NSFetchRequest<MOAssetUploadRecord> = MOAssetUploadRecord.fetchRequest()
@@ -55,10 +55,10 @@ extension CameraUploadRecordManager: CameraUploadRecordStore {
             
             let records = try context.fetch(request)
             
-            return records.compactMap {
+            return Set(records.compactMap {
                 guard let localIdentifier = $0.localIdentifier else { return nil }
                 return $0.fileNameRecord?.toAssetUploadFileNameRecordDTO(localIdentifier: localIdentifier)
-            }
+            })
         }
     }
     

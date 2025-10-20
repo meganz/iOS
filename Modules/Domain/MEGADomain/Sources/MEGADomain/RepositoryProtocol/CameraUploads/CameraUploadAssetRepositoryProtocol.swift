@@ -37,5 +37,5 @@ public protocol CameraUploadAssetRepositoryProtocol: Sendable {
     /// - Throws: An error if retrieving file details fails.
     func fileDetails(
         forLocalIdentifiers identifiers: Set<String>
-    ) async throws -> [CameraUploadFileDetailsEntity]
+    ) async throws -> Set<CameraUploadFileDetailsEntity>
 }

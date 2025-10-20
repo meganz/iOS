@@ -34,12 +34,12 @@ struct CameraUploadAssetRepositoryTests {
     }
     
     @Test func fileDetails() async throws {
-        let records = [
+        let records = Set([
             AssetUploadFileNameRecordDTO(
                 localIdentifier: identifier,
                 localUniqueFileName: "Test",
                 fileExtension: "jpg")
-        ]
+        ])
         let sut = Self.makeSUT(
             cameraUploadRecordStore: MockCameraUploadRecordStore(
                 fileNamesResult: .success(records)
