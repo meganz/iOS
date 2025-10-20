@@ -1704,6 +1704,7 @@
 		A85D93BC2045751E0066F45B /* ChatVideoQualityTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A85D93BB2045751E0066F45B /* ChatVideoQualityTableViewController.m */; };
 		A86280BC291E8D510010D6E0 /* MEGADomain in Frameworks */ = {isa = PBXBuildFile; productRef = A86280BB291E8D510010D6E0 /* MEGADomain */; };
 		A86AC4AE26710AA600E8E89A /* ChangeName.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A86AC4AD26710AA600E8E89A /* ChangeName.storyboard */; };
+		A86AE2552E9661C5006AEBBF /* TransferBadgeState.swift in Sources */ = {isa = PBXBuildFile; fileRef = A86AE2542E9661C5006AEBBF /* TransferBadgeState.swift */; };
 		A86B37492B74F36500FE8097 /* EmptyStateView+Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = A86B37482B74F36500FE8097 /* EmptyStateView+Colors.swift */; };
 		A86B374A2B74F36500FE8097 /* EmptyStateView+Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = A86B37482B74F36500FE8097 /* EmptyStateView+Colors.swift */; };
 		A86F10652B5965E4007E24C6 /* CommonParticipantViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = A86F10642B5965E4007E24C6 /* CommonParticipantViewModelProtocol.swift */; };
@@ -1749,6 +1750,8 @@
 		A8A717042639BE7D00DDC8E2 /* TurnOnNotificationsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8A717032639BE7D00DDC8E2 /* TurnOnNotificationsModel.swift */; };
 		A8A923A62861DFAC006F66C3 /* CompressingLogFileManager+additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8A923A52861DFAC006F66C3 /* CompressingLogFileManager+additions.swift */; };
 		A8AA4F7A1ED42B9E00E7BA23 /* MEGALoginRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A8AA4F781ED42B9E00E7BA23 /* MEGALoginRequestDelegate.m */; };
+		A8AACC432E81906A00D463D9 /* ProgressIndicatorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8AACC422E81906A00D463D9 /* ProgressIndicatorViewModel.swift */; };
+		A8AACC4A2E81921E00D463D9 /* ProgressIndicatorViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8AACC482E8191C900D463D9 /* ProgressIndicatorViewModelTests.swift */; };
 		A8ABAD092E21075B00B3B767 /* MEGALocalNotificationManager+.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8ABAD072E21075500B3B767 /* MEGALocalNotificationManager+.swift */; };
 		A8ABAD0A2E21076600B3B767 /* MEGALocalNotificationManager+.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8ABAD072E21075500B3B767 /* MEGALocalNotificationManager+.swift */; };
 		A8B09DE929B0CBD600C922B9 /* PickerConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8B09DE829B0CBD600C922B9 /* PickerConstant.swift */; };
@@ -4472,6 +4475,7 @@
 		A85D93BD20457DAA0066F45B /* ChatVideoUploadQuality.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChatVideoUploadQuality.h; sourceTree = "<group>"; };
 		A85ED1FA2A20B5920036C0E5 /* MEGASDK */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MEGASDK; sourceTree = "<group>"; };
 		A86AC4AD26710AA600E8E89A /* ChangeName.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ChangeName.storyboard; sourceTree = "<group>"; };
+		A86AE2542E9661C5006AEBBF /* TransferBadgeState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferBadgeState.swift; sourceTree = "<group>"; };
 		A86B37482B74F36500FE8097 /* EmptyStateView+Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EmptyStateView+Colors.swift"; sourceTree = "<group>"; };
 		A86C09D72A4B0A78001D0815 /* MEGAChatSDK */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MEGAChatSDK; sourceTree = "<group>"; };
 		A86F10642B5965E4007E24C6 /* CommonParticipantViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonParticipantViewModelProtocol.swift; sourceTree = "<group>"; };
@@ -4532,6 +4536,8 @@
 		A8A923A52861DFAC006F66C3 /* CompressingLogFileManager+additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CompressingLogFileManager+additions.swift"; sourceTree = "<group>"; };
 		A8AA4F771ED42B9E00E7BA23 /* MEGALoginRequestDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MEGALoginRequestDelegate.h; path = API/Requests/MEGALoginRequestDelegate.h; sourceTree = "<group>"; };
 		A8AA4F781ED42B9E00E7BA23 /* MEGALoginRequestDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MEGALoginRequestDelegate.m; path = API/Requests/MEGALoginRequestDelegate.m; sourceTree = "<group>"; };
+		A8AACC422E81906A00D463D9 /* ProgressIndicatorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressIndicatorViewModel.swift; sourceTree = "<group>"; };
+		A8AACC482E8191C900D463D9 /* ProgressIndicatorViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressIndicatorViewModelTests.swift; sourceTree = "<group>"; };
 		A8ABAD072E21075500B3B767 /* MEGALocalNotificationManager+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGALocalNotificationManager+.swift"; sourceTree = "<group>"; };
 		A8B09DE829B0CBD600C922B9 /* PickerConstant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerConstant.swift; sourceTree = "<group>"; };
 		A8B0DD3A2D1D7A14009BC7FD /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Localizable.strings"; sourceTree = "<group>"; };
@@ -9635,6 +9641,7 @@
 			isa = PBXGroup;
 			children = (
 				83B5E87827F6F8F50073C870 /* CancellableTransferViewModelTests.swift */,
+				A8AACC482E8191C900D463D9 /* ProgressIndicatorViewModelTests.swift */,
 				94B1FC4D2DBA3AEC00348D4E /* TransferInventoryUseCaseHelperTests.swift */,
 				94D5DA9C2D15DC6D0031C2CD /* TransfersWidgetViewModelTests.swift */,
 			);
@@ -13320,6 +13327,8 @@
 				94FCE0192D15C302000C63A4 /* ViewModel */,
 				2F6F0887253E387600C5B5D7 /* ProgressIndicatorView.swift */,
 				2F6F088B253E387600C5B5D7 /* ProgressIndicatorView.xib */,
+				A8AACC422E81906A00D463D9 /* ProgressIndicatorViewModel.swift */,
+				A86AE2542E9661C5006AEBBF /* TransferBadgeState.swift */,
 				94614C742910554200503174 /* TransferNodeTableViewCell.xib */,
 				2F6F0881253E387500C5B5D7 /* Transfers.storyboard */,
 				5BAC3B0F277F76BD00E99121 /* TransfersWidgetViewController+Additions.swift */,
@@ -15416,6 +15425,7 @@
 				2562E8C52A37E73E0031D286 /* ProfileViewModel.swift in Sources */,
 				B58050BE2A8237C600D377D1 /* ProfileViewRouter.swift in Sources */,
 				2F6F088F253E387600C5B5D7 /* ProgressIndicatorView.swift in Sources */,
+				A8AACC432E81906A00D463D9 /* ProgressIndicatorViewModel.swift in Sources */,
 				BFCA9A1C25ABA33900D1F4E0 /* PSAView.swift in Sources */,
 				BF46B82725AB991F008641BB /* PSAViewModel.swift in Sources */,
 				BF46B83925AB99DE008641BB /* PSAViewRouter.swift in Sources */,
@@ -15718,6 +15728,7 @@
 				947755BB2A4C714800DAAEE5 /* ToolbarButtonsDisabler.swift in Sources */,
 				94C220412CA2FFB900B16650 /* TrackingEvents.swift in Sources */,
 				2F6F08D5253E42F900C5B5D7 /* TransferActionViewController.swift in Sources */,
+				A86AE2552E9661C5006AEBBF /* TransferBadgeState.swift in Sources */,
 				B582965A27C5DF50004DD7A5 /* TransferInventoryUseCaseHelper.swift in Sources */,
 				BF22BFAD268AC39100460DB3 /* TransferRecordDTO.swift in Sources */,
 				B6B3C366222628C200918D44 /* TransferResponseValidator.m in Sources */,
@@ -16508,6 +16519,7 @@
 				258BA6322CCA36C400349CD2 /* PhotosViewModelTests.swift in Sources */,
 				53A2552D2C36858600E7F10C /* Preview_ThumbnailLoaderTests.swift in Sources */,
 				259FA4032A3A949F00C038B2 /* ProfileViewModelTests.swift in Sources */,
+				A8AACC4A2E81921E00D463D9 /* ProgressIndicatorViewModelTests.swift in Sources */,
 				BF6E8D2D25B636FB003A125A /* PSAViewModelTests.swift in Sources */,
 				247FC1BE2A4F1C3700CC8518 /* QASettingsRouterTests.swift in Sources */,
 				24A619DF2A52735600EBB863 /* QASettingsViewModelTests.swift in Sources */,
@@ -16817,7 +16829,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				GOOGLE_ADS_APPID = "ca-app-pub-2135147798858967~4110410713";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
-				MARKETING_VERSION = 17.4;
+				MARKETING_VERSION = 17.3.201;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = "";
@@ -16881,7 +16893,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				GOOGLE_ADS_APPID = "ca-app-pub-2135147798858967~4110410713";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
-				MARKETING_VERSION = 17.4;
+				MARKETING_VERSION = 17.3.201;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_CFLAGS = "-DNDEBUG";
 				OTHER_LDFLAGS = "-ObjC";
@@ -17831,7 +17843,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				GOOGLE_ADS_APPID = "ca-app-pub-2135147798858967~4110410713";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
-				MARKETING_VERSION = 17.4;
+				MARKETING_VERSION = 17.3.201;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_CFLAGS = "-DNDEBUG";
 				OTHER_LDFLAGS = "-ObjC";

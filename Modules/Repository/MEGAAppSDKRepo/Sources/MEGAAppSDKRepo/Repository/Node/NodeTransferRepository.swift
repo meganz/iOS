@@ -7,8 +7,8 @@ public struct NodeTransferRepository: NodeTransferRepositoryProtocol {
         NodeTransferRepository()
     }
     
-    public var transferStarUpdates: AnyAsyncSequence<TransferEntity> {
-        MEGAUpdateHandlerManager.shared.transferStarUpdates
+    public var transferStartUpdates: AnyAsyncSequence<TransferEntity> {
+        MEGAUpdateHandlerManager.shared.transferStartUpdates
     }
     
     public var transferUpdates: AnyAsyncSequence<TransferEntity> {

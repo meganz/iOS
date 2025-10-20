@@ -1671,6 +1671,7 @@
     if (transfer.type != MEGATransferTypeUpload && transfer.isStreamingTransfer) {
         return;
     }
+    [self addCompletedTransfer:sdk transfer:transfer];
     
     if (transfer.type == MEGATransferTypeUpload) {
         
