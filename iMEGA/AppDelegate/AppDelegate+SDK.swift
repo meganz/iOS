@@ -33,6 +33,14 @@ extension AppDelegate {
         useCase.enableRequestStatusMonitor(true)
     }
     
+    @objc func addCompletedTransfer(_ sdk: MEGASdk, transfer: MEGATransfer) {
+        Task { @MainActor in
+            await sdk.addCompletedTransfer(transfer)
+        }
+    }
+    
+    // MARK: - Private
+    
     private func postFavouriteUpdatesNotification(for nodes: [MEGANode]) {
         let updatedNodes = nodes.modifiedFavourites().toNodeEntities()
         if !updatedNodes.isEmpty {
