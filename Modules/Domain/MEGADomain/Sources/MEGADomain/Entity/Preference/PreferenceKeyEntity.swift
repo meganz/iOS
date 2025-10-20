@@ -43,7 +43,7 @@ public enum PreferenceKeyEntity: String, PreferenceKeyProtocol {
     case lastStorageBannerDismissedDate = "lastStorageBannerDismissedDate"
     case lastCloseAdsButtonTappedDate
     case queuedTransfersPaused
-    case transfersPaused
+    case transfersPaused = "TransfersPaused"
     case useMobileDataForPreviewingOriginalPhoto = "MEGAUseMobileDataForPreviewingOriginalPhoto"
     case richLinksPreviewEnabled = "richLinks"
     case chatImageQuality = "chatImageQuality"

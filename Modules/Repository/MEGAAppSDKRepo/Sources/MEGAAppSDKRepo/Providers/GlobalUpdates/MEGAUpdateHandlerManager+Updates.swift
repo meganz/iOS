@@ -129,7 +129,7 @@ extension MEGAUpdateHandlerManager {
     
     // MARK: - Transfer updates
     
-    var transferStarUpdates: AnyAsyncSequence<TransferEntity> {
+    var transferStartUpdates: AnyAsyncSequence<TransferEntity> {
         AsyncStream { continuation in
             let handler = MEGAUpdateHandler(onTransferStart: { continuation.yield($0) })
             
