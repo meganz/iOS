@@ -15,7 +15,8 @@ class CloudDriveNavigationTitleBuilderTests: XCTestCase {
             displayMode: DisplayMode,
             selectedNodesArrayCount: Int = 0,
             nodes: NodeListEntity? = nil,
-            isBackupsRootNode: Bool = false
+            isBackupsRootNode: Bool = false,
+            sdk: MEGASdk = MockSdk()
         ) -> String {
             CloudDriveNavigationTitleBuilder.build(
                 parentNode: parentNode,
@@ -25,7 +26,8 @@ class CloudDriveNavigationTitleBuilderTests: XCTestCase {
                 nodes: nodes,
                 backupsUseCase: MockBackupsUseCase(
                     isBackupsRootNode: isBackupsRootNode
-                )
+                ),
+                sdk: sdk
             )
         }
     }
@@ -39,13 +41,29 @@ class CloudDriveNavigationTitleBuilderTests: XCTestCase {
         XCTAssertEqual(sut, "Cloud drive")
     }
 
-    func testCloudDriveNavigationTitle_whenInCloudDrive_openedFolderNode_shouldBeNodeTitle() {
+    func testCloudDriveNavigationTitle_whenInCloudDrive_openedDecryptedFolderNode_shouldBeNodeTitle() {
+        let name = "Folder node"
+        let handle: UInt64 = 1
+        let sdk = MockSdk(nodes: [MockNode(handle: handle, name: name, nodeType: .folder, isNodeKeyDecrypted: true)])
         let sut = Harness.makeSUT(
-            parentNode: NodeEntity(nodeType: .folder, name: "Folder node"),
-            displayMode: .cloudDrive
+            parentNode: NodeEntity(nodeType: .folder, name: name, handle: handle),
+            displayMode: .cloudDrive,
+            sdk: sdk
         )
 
         XCTAssertEqual(sut, "Folder node")
+    }
+
+    func testCloudDriveNavigationTitle_whenInCloudDrive_openedUndecryptedFolderNode_shouldBeNodeTitle() {
+        let handle: UInt64 = 1
+        let sdk = MockSdk(nodes: [MockNode(handle: handle, nodeType: .folder, isNodeKeyDecrypted: false)])
+        let sut = Harness.makeSUT(
+            parentNode: NodeEntity(nodeType: .folder, handle: handle),
+            displayMode: .cloudDrive,
+            sdk: sdk
+        )
+
+        XCTAssertEqual(sut, "[Undecrypted folder]")
     }
 
     func testCloudDriveNavigationTitle_whenInRubbishBinRoot_shouldBeCloudDrive() {

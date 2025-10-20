@@ -610,9 +610,6 @@
 }
     
 - (void)didSelectNode:(MEGANode *)node {
-    if (!node.isNodeKeyDecrypted) {
-        return;
-    }
     switch (node.type) {
         case MEGANodeTypeFolder: {
             FolderLinkViewController *folderLinkVC = [self folderLinkViewControllerFromNode:node];
