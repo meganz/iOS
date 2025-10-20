@@ -10,8 +10,8 @@ extension AssetUploadFileNameRecordDTO {
     }
 }
 
-extension [AssetUploadFileNameRecordDTO] {
-    func toCameraUploadFileDetailsEntities() -> [CameraUploadFileDetailsEntity] {
-        compactMap { $0.toCameraUploadFileDetailsEntity() }
+extension Set<AssetUploadFileNameRecordDTO> {
+    func toCameraUploadFileDetailsEntities() -> Set<CameraUploadFileDetailsEntity> {
+        Set<CameraUploadFileDetailsEntity>(compactMap { $0.toCameraUploadFileDetailsEntity() })
     }
 }

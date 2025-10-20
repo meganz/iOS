@@ -1,6 +1,6 @@
 import MEGADomain
 
-public struct CameraUploadAssetRepository {
+public struct CameraUploadAssetRepository: CameraUploadAssetRepositoryProtocol {
     private let cameraUploadRecordStore: any CameraUploadRecordStore
     
     public init(cameraUploadRecordStore: some CameraUploadRecordStore) {
@@ -23,9 +23,9 @@ public struct CameraUploadAssetRepository {
         .toAssetUploadRecordEntities()
     }
     
-    func fileDetails(
+    public func fileDetails(
         forLocalIdentifiers identifiers: Set<String>
-    ) async throws -> [CameraUploadFileDetailsEntity] {
+    ) async throws -> Set<CameraUploadFileDetailsEntity> {
         try await cameraUploadRecordStore.fetchAssetUploadFileNames(
             forLocalIdentifiers: identifiers)
         .toCameraUploadFileDetailsEntities()

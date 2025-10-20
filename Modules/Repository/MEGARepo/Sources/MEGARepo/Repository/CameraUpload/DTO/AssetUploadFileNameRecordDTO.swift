@@ -1,4 +1,4 @@
-public struct AssetUploadFileNameRecordDTO: Sendable {
+public struct AssetUploadFileNameRecordDTO: Sendable, Hashable {
     public let localIdentifier: String
     public let localUniqueFileName: String?
     public let fileExtension: String?

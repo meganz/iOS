@@ -1,4 +1,4 @@
-public struct CameraUploadFileDetailsEntity: Sendable, Equatable {
+public struct CameraUploadFileDetailsEntity: Sendable, Hashable {
     public let localIdentifier: String
     public let fileName: String
     public let fileExtension: String
