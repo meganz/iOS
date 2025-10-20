@@ -9,16 +9,18 @@ class CloudDriveNavigationTitleBuilder {
         displayMode: DisplayMode,
         selectedNodesArrayCount: Int,
         nodes: NodeListEntity?,
-        backupsUseCase: any BackupsUseCaseProtocol
+        backupsUseCase: any BackupsUseCaseProtocol,
+        sdk: MEGASdk = MEGASdk.shared
     ) -> String {
         if isEditModeActive {
-            return editingTitle(selectedNodesArrayCount: selectedNodesArrayCount)
+            editingTitle(selectedNodesArrayCount: selectedNodesArrayCount)
         } else {
-            return regularTitle(
+            regularTitle(
                 parentNode: parentNode,
                 displayMode: displayMode,
                 nodes: nodes,
-                backupsUseCase: backupsUseCase
+                backupsUseCase: backupsUseCase,
+                sdk: sdk
             )
         }
     }
@@ -27,11 +29,12 @@ class CloudDriveNavigationTitleBuilder {
         parentNode: NodeEntity?,
         displayMode: DisplayMode,
         nodes: NodeListEntity?,
-        backupsUseCase: any BackupsUseCaseProtocol
+        backupsUseCase: any BackupsUseCaseProtocol,
+        sdk: MEGASdk
     ) -> String {
         switch displayMode {
         case .cloudDrive:
-            makeCloudDriveTitle(parentNode: parentNode)
+            makeCloudDriveTitle(parentNode: parentNode, sdk: sdk)
         case .rubbishBin:
             makeRubbishBinTitle(parentNode: parentNode)
         case .backup:
@@ -43,8 +46,10 @@ class CloudDriveNavigationTitleBuilder {
         }
     }
 
-    private static func makeCloudDriveTitle(parentNode: NodeEntity?) -> String {
-        parentNode == nil || parentNode?.nodeType == .root ? Strings.Localizable.cloudDrive : parentNode?.name ?? ""
+    private static func makeCloudDriveTitle(parentNode: NodeEntity?, sdk: MEGASdk) -> String {
+        parentNode == nil || parentNode?.nodeType == .root
+        ? Strings.Localizable.cloudDrive
+        : nameAfterDecryptionCheck(for: parentNode, sdk: sdk) ?? ""
     }
 
     private static func makeRubbishBinTitle(parentNode: NodeEntity?) -> String {
@@ -62,5 +67,10 @@ class CloudDriveNavigationTitleBuilder {
 
     private static func editingTitle(selectedNodesArrayCount: Int) -> String {
         selectedNodesArrayCount == 0 ? Strings.Localizable.selectTitle : Strings.Localizable.General.Format.itemsSelected(selectedNodesArrayCount)
+    }
+
+    private static func nameAfterDecryptionCheck(for node: NodeEntity?, sdk: MEGASdk) -> String? {
+        guard let handle = node?.handle else { return nil }
+        return sdk.node(forHandle: handle)?.nameAfterDecryptionCheck()
     }
 }
