@@ -15,7 +15,7 @@ public struct TransferResponseEntity: Sendable {
 }
 
 public protocol NodeTransferRepositoryProtocol: RepositoryProtocol, Sendable {
-    var transferStarUpdates: AnyAsyncSequence<TransferEntity> { get }
+    var transferStartUpdates: AnyAsyncSequence<TransferEntity> { get }
     var transferUpdates: AnyAsyncSequence<TransferEntity> { get }
     var transferTemporaryErrorUpdates: AnyAsyncSequence<TransferResponseEntity> { get }
     var transferFinishUpdates: AnyAsyncSequence<TransferResponseEntity> { get }

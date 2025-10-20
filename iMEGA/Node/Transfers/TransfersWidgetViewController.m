@@ -292,7 +292,7 @@ static TransfersWidgetViewController* instance = nil;
         switch (indexPath.section) {
             case 0: {
                 MEGATransfer *transfer = [self.transfers objectOrNilAtIndex:indexPath.row];
-                [cell configureCellForTransfer:transfer overquota:[TransfersWidgetViewController sharedTransferViewController].progressView.overquota delegate:self];
+                [cell configureCellForTransfer:transfer overquota:([MEGASdk.shared bandwidthOverquotaDelay] > 0) delegate:self];
                 break;
             }
                 

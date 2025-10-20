@@ -1,8 +1,8 @@
+import Combine
 import MEGAAppSDKRepo
 import MEGAAssets
 import MEGADesignToken
 import MEGADomain
-import MEGAFoundation
 import MEGARepo
 import MEGASwift
 import UIKit
@@ -19,55 +19,35 @@ final class ProgressIndicatorView: UIView {
     )
     private var stateBadge: UIImageView = UIImageView()
     
-    private var transfers = [TransferEntity]()
-    private var queuedUploadTransfers = [String]()
-    private var transfersPaused: Bool {
-        UserDefaults.standard.bool(forKey: "TransfersPaused")
-    }
-    private var configureDataTask: Task<Void, any Error>? {
-        willSet {
-            configureDataTask?.cancel()
-        }
-    }
+    private var subscriptions = Set<AnyCancellable>()
     
-    private var isWidgetForbidden = false
-    @objc var overquota = false {
-        didSet {
-            configureData()
-        }
-    }
+    private var isDismissing = false
     
-    @objc var progress: CGFloat = 0 {
-        didSet {
-            guard let progressLayer else {
-                return
-            }
-            
-            if progress > 1.0 {
-                progressLayer.strokeEnd = 1.0
-            } else if progress < 0.0 {
-                progressLayer.strokeEnd = 0.0
-            } else {
-                progressLayer.strokeEnd = progress
-            }
-        }
-    }
+    private var progressIndicatorViewModel = ProgressIndicatorViewModel(
+        transferCounterUseCase: TransferCounterUseCase(
+            repo: NodeTransferRepository.newRepo,
+            transferInventoryRepository: TransferInventoryRepository.newRepo,
+            fileSystemRepository: FileSystemRepository.sharedRepo
+        )
+    )
     
     // MARK: - Init
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         translatesAutoresizingMaskIntoConstraints = false
-        configureData()
         configureLayers()
         configureView()
         configureDelegate()
+        setupBindings()
+        progressIndicatorViewModel.configureData()
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         configureLayers()
         configureView()
+        setupBindings()
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
@@ -79,38 +59,88 @@ final class ProgressIndicatorView: UIView {
     
     // MARK: - Private
     
-    private func updateProgress() {
-        guard transfers.isNotEmpty else { return }
-        let totals = transfers.reduce(into: (transferred: 0, total: 0)) { result, transfer in
-            result.transferred += transfer.transferredBytes
-            result.total += transfer.totalBytes
-        }
-        progress = CGFloat(totals.transferred) / CGFloat(totals.total)
+    private func setupBindings() {
+        progressIndicatorViewModel.$progress
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] progress in
+                self?.progressLayer?.strokeEnd = progress
+            }
+            .store(in: &subscriptions)
+        
+        progressIndicatorViewModel.$isHidden
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] isHidden in
+                self?.isHidden = isHidden
+            }
+            .store(in: &subscriptions)
+        
+        progressIndicatorViewModel.$shouldShowUploadImage
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] shouldShowUpload in
+                self?.arrowImageView.image = shouldShowUpload ? self?.transfersUploadImage : self?.transfersDownloadImage
+            }
+            .store(in: &subscriptions)
+        
+        progressIndicatorViewModel.$badgeState
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] state in
+                self?.updateStateBadge(for: state)
+            }
+            .store(in: &subscriptions)
+        
+        progressIndicatorViewModel.$progressStrokeColor
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] color in
+                self?.progressLayer?.strokeColor = color
+            }
+            .store(in: &subscriptions)
+        
+        progressIndicatorViewModel.$shouldDismissWidget
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] shouldDismiss in
+                if shouldDismiss {
+                    self?.dismissWidget()
+                }
+            }
+            .store(in: &subscriptions)
     }
     
     @objc func showWidgetIfNeeded() {
-        isWidgetForbidden = false
-        configureData()
+        progressIndicatorViewModel.showWidgetIfNeeded()
     }
     
     @objc func hideWidget(widgetFobidden: Bool = false) {
-        isWidgetForbidden = widgetFobidden
-        isHidden = true
-        configureDataTask = nil
+        progressIndicatorViewModel.hideWidget(widgetForbidden: widgetFobidden)
     }
     
     @objc func dismissWidget() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 6) {
-            guard self.transfers.isEmpty else {
-                return
-            }
-            
-            UIView.animate(withDuration: 0.5, animations: {
-                self.alpha = 0
-            }, completion: { _ in
-                self.progress = 0
-                self.hideWidget()
-            })
+        guard !isDismissing else { return }
+        isDismissing = true
+        UIView.animate(withDuration: 0.5, animations: { [weak self] in
+            self?.alpha = 0
+        }, completion: { [weak self] _ in
+            self?.progressIndicatorViewModel.hideWidget()
+            self?.alpha = 1.0
+            self?.isDismissing = false
+        })
+    }
+    
+    @objc func configureData() {
+        progressIndicatorViewModel.configureData()
+    }
+    
+    private func updateStateBadge(for state: TransferBadgeState) {
+        switch state {
+        case .error:
+            stateBadge.image = errorBadge
+        case .overquota:
+            stateBadge.image = overquotaImage
+        case .paused:
+            stateBadge.image = pauseImage
+        case .completed:
+            stateBadge.image = completedBadge
+        case .none:
+            stateBadge.image = nil
         }
     }
 }
@@ -118,18 +148,6 @@ final class ProgressIndicatorView: UIView {
 // MARK: - Design token colors and images
 
 private extension ProgressIndicatorView {
-    var redProgressColor: CGColor {
-        TokenColors.Support.error.cgColor
-    }
-    
-    var greenProgressColor: CGColor {
-        TokenColors.Support.success.cgColor
-    }
-    
-    var yellowProgressColor: CGColor {
-        TokenColors.Support.warning.cgColor
-    }
-    
     var completedBadge: UIImage {
         MEGAAssets.UIImage.completedBadgeDesignToken.withTintColor(TokenColors.Support.success)
     }
@@ -179,14 +197,6 @@ extension ProgressIndicatorView {
             stateBadge.trailingAnchor.constraint(equalTo: arrowImageView.trailingAnchor),
             stateBadge.topAnchor.constraint(equalTo: arrowImageView.topAnchor)
         ])
-        
-        if transfersPaused {
-            stateBadge.image = pauseImage
-        } else {
-            stateBadge.image = nil
-        }
-        
-        updateProgress()
     }
     
     private func configureLayers() {
@@ -197,110 +207,6 @@ extension ProgressIndicatorView {
     
     private func configureDelegate() {
         MEGASdk.shared.add(self as (any MEGARequestDelegate))
-        MEGASdk.shared.add(self as (any MEGATransferDelegate))
-    }
-    
-    @objc func configureData() {
-        configureDataTask = Task {
-            try await configureData()
-        }
-    }
-    
-    private func configureData() async throws {
-        try Task.checkCancellation()
-        
-        guard !isWidgetForbidden else {
-            isHidden = true
-            return
-        }
-        transfers.removeAll()
-        transfers = await transferInventoryUseCaseHelper.transfers()
-        queuedUploadTransfers.removeAll()
-        queuedUploadTransfers = transferInventoryUseCaseHelper.queuedUploadTransfers()
-
-        try Task.checkCancellation()
-        
-        if let failedTransfer = transferInventoryUseCaseHelper.completedTransfers(filteringUserTransfers: true)
-            .first(where: { $0.state != .complete && $0.state != .cancelled }) {
-            updateStateBadge(for: failedTransfer)
-        } else {
-            stateBadge.image = nil
-        }
-        
-        if transfers.isEmpty && queuedUploadTransfers.isEmpty {
-            updateForCompletedTransfers()
-        } else {
-            updateForActiveTransfers()
-        }
-    }
-    
-    private func updateStateBadge(for transfer: TransferEntity) {
-        guard let lastErrorExtended = transfer.lastErrorExtended else {
-            stateBadge.image = nil
-            return
-        }
-        
-        switch lastErrorExtended {
-        case .overquota:
-            stateBadge.image = overquotaImage
-        case .generic:
-            stateBadge.image = nil
-        default:
-            stateBadge.image = errorBadge
-        }
-    }
-    
-    private func updateForActiveTransfers() {
-        isHidden = false
-        alpha = 1
-        progressLayer?.strokeColor = greenProgressColor
-        
-        let hasDownloadTransfer = transfers.contains { $0.type == .download }
-        let hasUploadTransfer = transfers.contains { $0.type == .upload } || queuedUploadTransfers.isNotEmpty
-        arrowImageView.image = hasDownloadTransfer ? transfersDownloadImage : transfersUploadImage
-        
-        if overquota {
-            stateBadge.image = overquotaImage
-            progressLayer?.strokeColor = hasUploadTransfer ? greenProgressColor : yellowProgressColor
-        } else if transfersPaused {
-            stateBadge.image = pauseImage
-        }
-    }
-    
-    private func updateForCompletedTransfers() {
-        let completedTransfers = transferInventoryUseCaseHelper.completedTransfers(filteringUserTransfers: true)
-        guard completedTransfers.isNotEmpty else {
-            isHidden = true
-            return
-        }
-        
-        progress = 1
-        isHidden = false
-        
-        if let failedTransfer = completedTransfers.first(where: { $0.state != .complete && $0.state != .cancelled }) {
-            handleFailedTransfer(failedTransfer)
-        } else {
-            stateBadge.image = completedBadge
-            progressLayer?.strokeColor = greenProgressColor
-            dismissWidget()
-        }
-    }
-    
-    private func handleFailedTransfer(_ transfer: TransferEntity) {
-        guard let lastErrorExtended = transfer.lastErrorExtended else {
-            stateBadge.image = completedBadge
-            progressLayer?.strokeColor = greenProgressColor
-            dismissWidget()
-            return
-        }
-        
-        if lastErrorExtended == .overquota {
-            stateBadge.image = overquotaImage
-            progressLayer?.strokeColor = yellowProgressColor
-        } else if lastErrorExtended != .generic {
-            stateBadge.image = errorBadge
-            progressLayer?.strokeColor = redProgressColor
-        }
     }
 }
 
@@ -340,7 +246,7 @@ private extension ProgressIndicatorView {
         let shapeLayer = circlularLayer(withRect: bounds,
                                         insetSize: CGSize(width: 10, height: 10))
         shapeLayer.fillColor = UIColor.clear.cgColor
-        shapeLayer.strokeColor = greenProgressColor
+        shapeLayer.strokeColor = TokenColors.Support.success.cgColor
         shapeLayer.lineWidth = 2
         shapeLayer.strokeEnd = 0.0
         
@@ -366,67 +272,7 @@ private extension ProgressIndicatorView {
         progressBackgroundLayer?.strokeColor = TokenColors.Background.surface3.cgColor
         // Reset the progress layer's stroke color when the trait collection is changed.
         // This is necessary due to limitations with CAShapeLayer.
-        configureData()
-    }
-}
-
-// MARK: - MEGATransferDelegate
-
-extension ProgressIndicatorView: MEGATransferDelegate {
-    nonisolated func onTransferStart(_ api: MEGASdk, transfer: MEGATransfer) {
-        Task { @MainActor in
-            if transfer.type == .download {
-                if overquota {
-                    overquota = false
-                }
-                configureData()
-            } else {
-                guard !isWidgetForbidden else {
-                    isHidden = true
-                    return
-                }
-                updateForActiveTransfers()
-            }
-        }
-    }
-    
-    nonisolated func onTransferUpdate(_ api: MEGASdk, transfer: MEGATransfer) {
-        var isExportFile = false
-        var isSaveToPhotos = false
-        if let appData = transfer.appData {
-            isExportFile = appData.contains(TransferMetaDataEntity.exportFile.rawValue)
-            isSaveToPhotos = appData.contains(TransferMetaDataEntity.saveInPhotos.rawValue)
-        }
-        
-        guard transfer.path?.hasPrefix(transferInventoryUseCaseHelper.documentsDirectory().path) ?? false ||
-                transfer.type == .upload ||
-                isExportFile || isSaveToPhotos else {
-            return
-        }
-        
-        Task { @MainActor in
-            guard let index = transfers.firstIndex(where: { transfer.nodeHandle == $0.nodeHandle && transfer.parentHandle == $0.parentHandle }) else { return }
-            transfers[index] = transfer.toTransferEntity()
-            
-            updateProgress()
-        }
-    }
-    
-    nonisolated func onTransferFinish(_ api: MEGASdk, transfer: MEGATransfer, error: MEGAError) {
-        Task { @MainActor in
-            if !transfer.isStreamingTransfer {
-                await api.addCompletedTransfer(transfer)
-            }
-            try await configureData()
-        }
-    }
-    
-    nonisolated func onTransferTemporaryError(_ api: MEGASdk, transfer: MEGATransfer, error: MEGAError) {
-        Task { @MainActor in
-            if error.type == .apiEOverQuota || error.type == .apiEgoingOverquota {
-                overquota = true
-            }
-        }
+        progressIndicatorViewModel.configureData()
     }
 }
 
@@ -434,23 +280,12 @@ extension ProgressIndicatorView: MEGATransferDelegate {
 
 extension ProgressIndicatorView: MEGARequestDelegate {
     nonisolated func onRequestFinish(_ api: MEGASdk, request: MEGARequest, error: MEGAError) {
-        Task { @MainActor in
-            if error.type != .apiOk {
-                switch error.type {
-                case .apiEgoingOverquota, .apiEOverQuota:
-                    overquota = true
-                default:
-                    break
-                }
-                
-                return
-            }
-            if request.type == .MEGARequestTypePauseTransfers {
-                if request.flag {
-                    stateBadge.image = pauseImage
-                } else {
-                    configureData()
-                }
+        if error.type != .apiOk {
+            return
+        }
+        if request.type == .MEGARequestTypePauseTransfers {
+            Task {
+                await progressIndicatorViewModel.handleTransferPauseRequest(flag: request.flag)
             }
         }
     }
