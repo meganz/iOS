@@ -81,19 +81,19 @@ final class MEGANode_Additions_Tests: XCTestCase {
     }
     
     func testIsUndecrypted_nodeIsDecryptedTrue_ownerIsVerifiedTrue_shouldBeFalse() {
-        let node = MockNode(handle: 1, isNodeDecrypted: true)
+        let node = MockNode(handle: 1, isNodeKeyDecrypted: true)
         let sdk = MockSdk(isSharedFolderOwnerVerified: true, sharedFolderOwner: MockUser(handle: 1))
         XCTAssertFalse(node.isUndecrypted(ownerEmail: "", in: sdk))
     }
     
     func testIsUndecrypted_nodeIsDecryptedFalse_ownerIsVerifiedFalse_shouldBeTrue() {
-        let node = MockNode(handle: 1, isNodeDecrypted: false)
+        let node = MockNode(handle: 1, isNodeKeyDecrypted: false)
         let sdk = MockSdk(isSharedFolderOwnerVerified: false, sharedFolderOwner: MockUser(handle: 1))
         XCTAssertTrue(node.isUndecrypted(ownerEmail: "", in: sdk))
     }
     
     func testIsUndecrypted_nodeIsDecryptedTrue_ownerIsVerifiedFalse_shouldBeTrue() {
-        let node = MockNode(handle: 1, isNodeDecrypted: true)
+        let node = MockNode(handle: 1, isNodeKeyDecrypted: false)
         let sdk = MockSdk(isSharedFolderOwnerVerified: false, sharedFolderOwner: MockUser(handle: 1))
         XCTAssertTrue(node.isUndecrypted(ownerEmail: "", in: sdk))
     }

@@ -150,7 +150,7 @@
 }
 
 - (void)configureNavigation {
-    [self setTitle:self.node.name];
+    [self setTitle:[self.node nameAfterDecryptionCheck]];
     
     self.navigationItem.rightBarButtonItem = nil;
     
