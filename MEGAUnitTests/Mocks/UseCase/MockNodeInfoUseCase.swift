@@ -13,11 +13,11 @@ final class MockNodeInfoUseCase: NodeInfoUseCaseProtocol, @unchecked Sendable {
         nil
     }
     
-    func fetchAudioTracks(from folder: HandleEntity) -> [AudioPlayerItem]? {
+    func fetchAudioTracks(from folder: HandleEntity) -> [TrackEntity]? {
         nil
     }
     
-    func fetchFolderLinkAudioTracks(from folder: HandleEntity) -> [AudioPlayerItem]? {
+    func fetchFolderLinkAudioTracks(from folder: HandleEntity) -> [TrackEntity]? {
         nil
     }
     

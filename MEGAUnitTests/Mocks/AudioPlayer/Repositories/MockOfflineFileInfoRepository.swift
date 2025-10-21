@@ -11,10 +11,10 @@ class MockOfflineInfoRepository: OfflineInfoRepositoryProtocol, @unchecked Senda
         self.isOffline = isOffline
     }
     
-    func fetchTracks(from files: [String]?) -> [AudioPlayerItem]? {
+    func fetchTracks(from files: [String]?) -> [TrackEntity]? {
         switch result {
         case .failure: return nil
-        case .success: return AudioPlayerItem.mockArray
+        case .success: return TrackEntity.mockArray
         }
     }
     
@@ -22,7 +22,7 @@ class MockOfflineInfoRepository: OfflineInfoRepositoryProtocol, @unchecked Senda
         localPathfromNodeCallCount += 1
         switch result {
         case .failure: return nil
-        case .success: return AudioPlayerItem.mockURL
+        case .success: return TrackEntity.mockURL
         }
     }
     

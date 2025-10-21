@@ -73,6 +73,7 @@ public final class MockSdk: MEGASdk, @unchecked Sendable {
     private var isLocalOnly: Bool
     private var localLink: URL?
     private var updatedAddressURL: URL?
+    private let isNonAuthorized: Bool
     
     public private(set) var sendEvent_Calls = [(
         eventType: Int,
@@ -199,7 +200,8 @@ public final class MockSdk: MEGASdk, @unchecked Sendable {
         localLink: URL? = nil,
         isLocalOnly: Bool = true,
         isRunning: Bool = false,
-        updatedAddressURL: URL? = nil
+        updatedAddressURL: URL? = nil,
+        isNonAuthorized: Bool = false
     ) {
         self.fileLinkNode = fileLinkNode
         self.nodes = nodes
@@ -269,6 +271,7 @@ public final class MockSdk: MEGASdk, @unchecked Sendable {
         self.isLocalOnly = isLocalOnly
         self.isRunning = isRunning
         self.updatedAddressURL = updatedAddressURL
+        self.isNonAuthorized = isNonAuthorized
         super.init()
     }
     
@@ -798,7 +801,7 @@ public final class MockSdk: MEGASdk, @unchecked Sendable {
     
     public override func authorizeNode(_ node: MEGANode) -> MEGANode? {
         authorizeNodeCalled += 1
-        return node
+        return isNonAuthorized ? nil : node
     }
     
     public var stubbedDownloadTransferResult: Result<MockTransfer, MockError>?
