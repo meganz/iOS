@@ -1,4 +1,4 @@
-public enum AudioSessionRouteChangedReason {
+public enum AudioSessionRouteChangedReason: Sendable {
     case unknown
     case newDeviceAvailable
     case oldDeviceUnavailable
