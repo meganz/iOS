@@ -274,7 +274,7 @@ struct CloudDriveViewControllerFactory {
     private func makeNodeBrowserViewModel(
         initialViewMode: ViewModePreferenceEntity,
         nodeSource: NodeSource,
-        searchResultsViewModel: SearchResultsViewModel,
+        searchResultsContainerViewModel: SearchResultsContainerViewModel,
         noInternetViewModel: LegacyNoInternetViewModel,
         nodeSourceUpdatesListener: some CloudDriveNodeSourceUpdatesListening,
         nodeUpdatesProvider: some NodeUpdatesProviderProtocol,
@@ -299,7 +299,7 @@ struct CloudDriveViewControllerFactory {
 
         return .init(
             viewMode: initialViewMode,
-            searchResultsViewModel: searchResultsViewModel,
+            searchResultsContainerViewModel: searchResultsContainerViewModel,
             mediaDiscoveryViewModel: makeOptionalMediaDiscoveryViewModel(
                 nodeSource: nodeSource,
                 mediaContentDelegate: mediaContentDelegate,
@@ -560,19 +560,30 @@ struct CloudDriveViewControllerFactory {
 
         let isCloudDriveRevampEnabled = DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .cloudDriveRevamp)
 
+        let searchBridge = makeSearchBridge(nodeSource: nodeSource, config: overriddenConfig)
+        let searchConfig = makeSearchConfig(nodeSource: nodeSource, config: overriddenConfig)
+
         let searchResultsVM = makeSearchResultsViewModel(
             nodeSource: nodeSource,
             initialViewMode: initialViewMode,
-            config: overriddenConfig,
+            nodeBrowserConfig: overriddenConfig,
+            searchBridge: searchBridge,
+            searchConfig: searchConfig,
             calendar: calendar,
+        )
+
+        let searchResultsContainerViewModel = makeSearchResultsContainerViewModel(
+            bridge: searchBridge,
+            searchConfig: searchConfig,
+            searchResultsViewModel: searchResultsVM,
             showChips: !isCloudDriveRevampEnabled
         )
 
         let searchControllerWrapper = SearchControllerWrapper(
             onSearch: { [weak searchResultsVM] in searchResultsVM?.bridge.queryChanged($0) },
             onCancel: { [weak searchResultsVM] in searchResultsVM?.bridge.queryCleaned() },
-            onSearchActiveChanged: { [weak searchResultsVM] in
-                searchResultsVM?.setSearchChipsVisible($0 || !isCloudDriveRevampEnabled)
+            onSearchActiveChanged: { [weak searchResultsContainerViewModel] in
+                searchResultsContainerViewModel?.setSearchChipsVisible($0 || !isCloudDriveRevampEnabled)
             }
         )
 
@@ -646,7 +657,7 @@ struct CloudDriveViewControllerFactory {
         let nodeBrowserViewModel = makeNodeBrowserViewModel(
             initialViewMode: initialViewMode,
             nodeSource: nodeSource,
-            searchResultsViewModel: searchResultsVM,
+            searchResultsContainerViewModel: searchResultsContainerViewModel,
             noInternetViewModel: noInternetViewModel,
             nodeSourceUpdatesListener: nodeSourceUpdatesListener,
             nodeUpdatesProvider: nodeUpdatesProvider,
@@ -840,28 +851,12 @@ struct CloudDriveViewControllerFactory {
         }
     }
 
-    private func makeSearchResultsViewModel(
+    private func makeSearchBridge(
         nodeSource: NodeSource,
-        initialViewMode: ViewModePreferenceEntity,
         config: NodeBrowserConfig,
-        calendar: Calendar,
-        showChips: Bool
-    ) -> SearchResultsViewModel {
+    ) -> SearchBridge {
         // not all actions are triggered using bridge yet
         let bridge = SearchResultsBridge()
-
-        // display mode is pass down through the folder hierarchy for rubbish bin and backups
-        // this makes sure the actions that can be performed on the nodes
-        // are valid
-        let carriedOverDisplayMode = config.displayMode?.carriedOverDisplayMode
-
-        let layout: PageLayout = {
-            if initialViewMode == .thumbnail {
-                .thumbnail
-            } else {
-                .list
-            }
-        }()
 
         let searchBridge = SearchBridge(
             selection: {
@@ -881,7 +876,7 @@ struct CloudDriveViewControllerFactory {
                 router.didTapMoreAction(
                     on: result.id,
                     button: button,
-                    displayMode: carriedOverDisplayMode,
+                    displayMode: config.displayMode?.carriedOverDisplayMode,
                     isFromSharedItem: config.isFromSharedItem ?? false
                 )
             },
@@ -914,33 +909,67 @@ struct CloudDriveViewControllerFactory {
             searchBridge?.updateBottomInset(inset)
         }
 
-        let shouldEnableSelection = switch nodeSource {
+        return searchBridge
+    }
+
+    private func shouldEnableSelection(for nodeSource: NodeSource) -> Bool {
+        switch nodeSource {
         case .recentActionBucket: false
         default: true
         }
-        return SearchResultsViewModel(
+    }
+
+    private func makeSearchConfig(
+        nodeSource: NodeSource,
+        config: NodeBrowserConfig
+    ) -> SearchConfig {
+        .searchConfig(
+            contextPreviewFactory: homeScreenFactory.contextPreviewFactory(
+                enableItemMultiSelection: shouldEnableSelection(for: nodeSource)
+            ),
+            defaultEmptyViewAsset: { makeDefaultEmptyViewAsset(for: nodeSource, config: config) }
+        )
+    }
+
+    private func makeSearchResultsViewModel(
+        nodeSource: NodeSource,
+        initialViewMode: ViewModePreferenceEntity,
+        nodeBrowserConfig: NodeBrowserConfig,
+        searchBridge: SearchBridge,
+        searchConfig: SearchConfig,
+        calendar: Calendar
+    ) -> SearchResultsViewModel {
+        SearchResultsViewModel(
             resultsProvider: resultProvider(
                 for: nodeSource,
                 searchBridge: searchBridge,
-                isFromSharedItem: config.isFromSharedItem ?? false
+                isFromSharedItem: nodeBrowserConfig.isFromSharedItem ?? false
             ),
             bridge: searchBridge,
-            config: .searchConfig(
-                contextPreviewFactory: homeScreenFactory.contextPreviewFactory(
-                    enableItemMultiSelection: shouldEnableSelection
-                ),
-                defaultEmptyViewAsset: { makeDefaultEmptyViewAsset(for: nodeSource, config: config) }
-            ),
-            layout: layout,
+            config: searchConfig,
+            layout: initialViewMode == .thumbnail ? .thumbnail : .list,
             keyboardVisibilityHandler: KeyboardVisibilityHandler(notificationCenter: .default),
-            viewDisplayMode: config.displayMode?.toViewDisplayMode ?? .unknown,
+            viewDisplayMode: nodeBrowserConfig.displayMode?.toViewDisplayMode ?? .unknown,
             listHeaderViewModel: listHeaderViewModelFactory.buildIfNeeded(for: nodeSource),
-            isSelectionEnabled: shouldEnableSelection,
-            showChips: showChips,
+            isSelectionEnabled: shouldEnableSelection(for: nodeSource)
+        )
+    }
+
+    func makeSearchResultsContainerViewModel(
+        bridge: SearchBridge,
+        searchConfig: SearchConfig,
+        searchResultsViewModel: SearchResultsViewModel,
+        showChips: Bool
+    ) -> SearchResultsContainerViewModel {
+        .init(
+            bridge: bridge,
+            config: searchConfig,
+            searchResultsViewModel: searchResultsViewModel,
             sortOptionsViewModel: .init(
                 title: Strings.Localizable.sortTitle,
                 sortOptions: SearchResultsSortOptionFactory.makeAll()
-            )
+            ),
+            showChips: showChips
         )
     }
 

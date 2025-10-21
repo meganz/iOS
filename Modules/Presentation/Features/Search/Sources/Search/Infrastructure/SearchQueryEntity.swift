@@ -23,8 +23,8 @@ public struct SearchQueryEntity: Equatable, Sendable {
         self.chips = chips
     }
 
-    public mutating func clearChips() {
-        self = .init(query: query, sorting: sorting, mode: mode, isSearchActive: isSearchActive, chips: [])
+    public func clearingChips() -> SearchQueryEntity {
+        .init(query: query, sorting: sorting, mode: mode, isSearchActive: isSearchActive, chips: [])
     }
 }
 

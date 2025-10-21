@@ -42,7 +42,7 @@ struct NodeBrowserView: View {
             if let mediaDiscoveryViewModel = viewModel.viewModeAwareMediaDiscoveryViewModel {
                 MediaDiscoveryContentView(viewModel: mediaDiscoveryViewModel)
             } else {
-                SearchResultsView(viewModel: viewModel.searchResultsViewModel)
+                SearchResultsContainerView(viewModel: viewModel.searchResultsContainerViewModel)
                     .environment(\.editMode, $viewModel.editMode)
             }
         }
