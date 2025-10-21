@@ -2,6 +2,7 @@
 import MEGAAppSDKRepoMock
 import Testing
 
+@Suite("NodeInfoRepository Tests")
 struct NodeInfoRepositoryTests {
     static let defaultNode = MockNode(handle: 1)
     
@@ -120,12 +121,12 @@ struct NodeInfoRepositoryTests {
                 sdk: MockSdk(nodes: nodes),
                 streamingInfoRepository: MockStreamingInfoRepository(result: .success)
             )
-            let items = sut.makeAudioPlayerItems(from: nodes)
+            let items = sut.makeAudioPlayerTracks(from: nodes)
             if names.isEmpty {
                 #expect(items == nil || items?.isEmpty == true)
             } else {
                 let unwrapped = try! #require(items)
-                #expect(unwrapped.map(\.name) == names)
+                #expect(unwrapped.map(\.node?.name) == names)
             }
         }
     }
@@ -139,12 +140,12 @@ struct NodeInfoRepositoryTests {
             (MEGAHandle(42), ["intro.mp3", "song.mp3", "outro.mp3"])
         ])
         func itemsMatchChildrenSequence(_ parent: MEGAHandle, _ children: [String]) throws {
-            let parentNode  = anyNode(handle: parent, name: "parent.mp3", parentHandle: 100)
-            let childNodes  = makeChildren(parent: parent, names: children)
+            let parentNode = anyNode(handle: parent, name: "parent.mp3", parentHandle: 100)
+            let childNodes = makeChildren(parent: parent, names: children)
             let (sut, _, _, _, _) = makeSUT(sdk: MockSdk(nodes: [parentNode] + childNodes))
             let items = try #require(sut.fetchAudioTracks(from: parentNode.handle))
             #expect(items.count == children.count)
-            #expect(items.map(\.name) == children)
+            #expect(items.map(\.node?.name) == children)
             #expect(Set(items.compactMap { $0.node?.parentHandle }) == [parent])
         }
     }
@@ -170,7 +171,7 @@ struct NodeInfoRepositoryTests {
             authorizeAll(nodes, in: folderSdk)
             let items = try #require(sut.fetchFolderLinkAudioTracks(from: parentNode.handle))
             #expect(items.count == children.count)
-            #expect(items.map(\.name) == children)
+            #expect(items.map(\.node?.name) == children)
             #expect(Set(items.compactMap { $0.node?.parentHandle }) == [parent])
         }
     }

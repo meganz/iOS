@@ -496,4 +496,74 @@ final class AudioPlayerManager: AudioPlayerHandlerProtocol {
         player?.isAudioPlayerBeingReset = true
         player?.resettingPlayback = shouldResetPlayback
     }
+    
+    /// Builds an array of `AudioPlayerItem` objects concurrently off-main. Uses bounded concurrency and preserves the input order.
+    /// - Parameters:
+    ///   - tracks: List of `TrackEntity` objects to convert.
+    ///   - concurrencyLimit: Maximum number of concurrent asset creations.
+    /// - Returns: Ordered array of `AudioPlayerItem` objects.
+    static func fetchAudioPlayerItems(
+        from tracks: [TrackEntity],
+        concurrencyLimit: Int = 10
+    ) async -> [AudioPlayerItem] {
+        guard !tracks.isEmpty else { return [] }
+        
+        var ordered = [AudioPlayerItem?](repeating: nil, count: tracks.count)
+        
+        await withTaskGroup(of: (Int, AudioPlayerItem?).self) { group in
+            var inFlight = 0
+            var iterator = tracks.enumerated().makeIterator()
+            
+            func enqueueUpToLimit() {
+                while inFlight < concurrencyLimit, let (index, track) = iterator.next() {
+                    inFlight += 1
+                    group.addTask {
+                        let asset = AVURLAsset(
+                            url: track.url,
+                            options: [AVURLAssetPreferPreciseDurationAndTimingKey: false]
+                        )
+                        
+                        let item = await AudioPlayerItem(
+                            name: track.node?.name ?? track.url.lastPathComponent,
+                            url: track.url,
+                            asset: asset,
+                            node: track.node,
+                            hasThumbnail: track.node?.hasThumbnail() ?? false
+                        )
+                        
+                        return (index, item)
+                    }
+                }
+            }
+            
+            enqueueUpToLimit()
+            
+            for await (index, item) in group {
+                inFlight -= 1
+                ordered[index] = item
+                enqueueUpToLimit()
+            }
+        }
+        
+        return ordered.compactMap { $0 }
+    }
+    
+    /// Finds the current `AudioPlayerItem` in a given list.
+    /// - Parameters:
+    ///   - items: Array of built `AudioPlayerItem` objects.
+    ///   - currentTrack: The track representing the current one.
+    /// - Returns: Matching `AudioPlayerItem` if found, else the first item (if available).
+    static func resolveCurrentItem(
+        in items: [AudioPlayerItem],
+        matching currentTrack: TrackEntity
+    ) -> AudioPlayerItem? {
+        guard !items.isEmpty else { return nil }
+
+        return items.first { item in
+            if let handle = item.node?.handle, let targetHandle = currentTrack.node?.handle {
+                return handle == targetHandle
+            }
+            return item.url == currentTrack.url
+        } ?? items.first
+    }
 }

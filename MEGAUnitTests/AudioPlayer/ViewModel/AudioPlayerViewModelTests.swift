@@ -298,8 +298,9 @@ final class AudioPlayerViewModelTests: XCTestCase {
         let tracker = MockTracker()
         let handler = MockAudioPlayerHandler()
         let mockNode = MockNode(handle: 1)
-        let mockTrack = AudioPlayerItem(name: "", url: mockTrackURL, node: mockNode)
-        handler.mockPlayerCurrentItem = mockTrack
+        let mockTrack = TrackEntity(url: mockTrackURL, node: mockNode)
+        let mockPlayerItem = AudioPlayerItem(name: "", url: mockTrack.url, node: mockTrack.node)
+        handler.mockPlayerCurrentItem = mockPlayerItem
         let config = audioPlayerConfigEntity(node: mockNode, allNodes: [mockNode])
         let streamingInfoUseCase = MockStreamingInfoUseCase()
         streamingInfoUseCase.completeInfoNode(with: mockTrack)
@@ -377,7 +378,7 @@ final class AudioPlayerViewModelTests: XCTestCase {
         let mockNode = MockNode(handle: 1)
         let config = audioPlayerConfigEntity(node: mockNode, allNodes: [mockNode])
         let streamingInfoUseCase = MockStreamingInfoUseCase()
-        streamingInfoUseCase.completeInfoNode(with: AudioPlayerItem.mockItem)
+        streamingInfoUseCase.completeInfoNode(with: TrackEntity.mockItem)
         let (sut, _, _) = makeSUT(
             configEntity: config,
             playerHandler: handler,
@@ -400,8 +401,9 @@ final class AudioPlayerViewModelTests: XCTestCase {
     func testOnViewDidLoad_existingPlayer_withStreamingNodes_addsListenerOnce() async {
         let handler = MockAudioPlayerHandler(isPlayerDefined: true)
         let mockNode = MockNode(handle: 1)
-        let mockTrack = AudioPlayerItem(name: "", url: mockTrackURL, node: mockNode)
-        handler.mockPlayerCurrentItem = mockTrack
+        let mockTrack = TrackEntity(url: mockTrackURL, node: mockNode)
+        let mockPlayerItem = AudioPlayerItem(name: "", url: mockTrack.url, node: mockTrack.node)
+        handler.mockPlayerCurrentItem = mockPlayerItem
         let config = audioPlayerConfigEntity(node: mockNode, allNodes: [mockNode])
         let streamingInfoUseCase = MockStreamingInfoUseCase()
         streamingInfoUseCase.completeInfoNode(with: mockTrack)

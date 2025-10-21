@@ -24,6 +24,10 @@ extension AudioPlayerItem {
     }
     
     convenience init(url: URL, node: MEGANode? = nil) {
-        self.init(name: "", url: url, node: node)
+        self.init(name: "", url: url, asset: AVAsset(url: url), node: node)
+    }
+    
+    convenience init(name: String, url: URL, node: MEGANode?) {
+        self.init(name: name, url: url, asset: AVAsset(url: url), node: node)
     }
 }

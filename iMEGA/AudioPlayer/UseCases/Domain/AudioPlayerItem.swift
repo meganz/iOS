@@ -30,13 +30,13 @@ final class AudioPlayerItem: AVPlayerItem {
         loadedMetadata && name != node?.name
     }
     
-    init(name: String, url: URL, node: MEGANode?, hasThumbnail: Bool = false) {
+    init(name: String, url: URL, asset: AVAsset, node: MEGANode?, hasThumbnail: Bool = false) {
         self.name = node?.name ?? name
         self.url = url
         self.node = node
         self.nodeHasThumbnail = hasThumbnail
         
-        super.init(asset: AVAsset(url: url), automaticallyLoadedAssetKeys: requiredAssetKeys)
+        super.init(asset: asset, automaticallyLoadedAssetKeys: requiredAssetKeys)
     }
     
     nonisolated func loadMetadata() async throws {
