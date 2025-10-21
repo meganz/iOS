@@ -212,7 +212,7 @@ final class MiniPlayerViewModel: ViewModelType {
                 dismiss()
                 return
             }
-            initialize(tracks: [track], currentTrack: track)
+            await initialize(tracks: [track], currentTrack: track)
         } else {
             guard let children = configEntity.isFolderLink ? nodeInfoUseCase.fetchFolderLinkAudioTracks(from: node.parentHandle) :
                                                 nodeInfoUseCase.fetchAudioTracks(from: node.parentHandle),
@@ -222,10 +222,10 @@ final class MiniPlayerViewModel: ViewModelType {
                     dismiss()
                     return
                 }
-                initialize(tracks: [track], currentTrack: track)
+                await initialize(tracks: [track], currentTrack: track)
                 return
             }
-            initialize(tracks: children, currentTrack: currentTrack)
+            await initialize(tracks: children, currentTrack: currentTrack)
         }
     }
     
@@ -240,14 +240,21 @@ final class MiniPlayerViewModel: ViewModelType {
             dismiss()
             return
         }
-        initialize(tracks: files, currentTrack: currentTrack)
+        await initialize(tracks: files, currentTrack: currentTrack)
     }
     
     // MARK: - Private functions
     
-    private func initialize(tracks: [AudioPlayerItem], currentTrack: AudioPlayerItem) {
-        let mutableTracks = shift(tracks: tracks, startItem: currentTrack)
-        resetConfigurationIfNeeded(nextCurrentTrack: currentTrack)
+    private func initialize(tracks: [TrackEntity], currentTrack: TrackEntity) async {
+        let audioPlayerItems = await AudioPlayerManager.fetchAudioPlayerItems(from: tracks)
+        guard let currentItem = AudioPlayerManager.resolveCurrentItem(in: audioPlayerItems, matching: currentTrack) else {
+            dismiss()
+            return
+        }
+        
+        let mutableTracks = shift(tracks: audioPlayerItems, startItem: currentItem)
+        
+        resetConfigurationIfNeeded(nextCurrentTrack: currentItem)
         playerHandler.addPlayer(tracks: mutableTracks)
         configurePlayer()
     }

@@ -31,14 +31,16 @@ struct StreamingInfoRepositoryTests {
         localLink: URL? = nil,
         isLocalOnly: Bool = true,
         isRunning: Bool = false,
-        updatedAddressURL: URL? = nil
+        updatedAddressURL: URL? = nil,
+        isNonAuthorized: Bool = false
     ) -> MockSdk {
         MockSdk(
             nodes: nodes,
             localLink: localLink,
             isLocalOnly: isLocalOnly,
             isRunning: isRunning,
-            updatedAddressURL: updatedAddressURL
+            updatedAddressURL: updatedAddressURL,
+            isNonAuthorized: isNonAuthorized
         )
     }
     
@@ -83,7 +85,7 @@ struct StreamingInfoRepositoryTests {
         @Test(
             "fetchTrack(from:) returns nil when node is unauthorized or link missing",
             arguments: [
-                (node: MEGANode(), sdk: makeSdk(localLink: localURL)),
+                (node: MEGANode(), sdk: makeSdk(localLink: localURL, isNonAuthorized: true)),
                 (node: makeNode(), sdk: makeSdk(localLink: nil))
             ]
         )
@@ -101,16 +103,6 @@ struct StreamingInfoRepositoryTests {
             #expect(sut.fetchTrack(from: node) != nil)
         }
         
-        @Test(arguments: [true, false])
-        func fetchTrack_setsHasThumbnailFromNode(_ hasThumb: Bool) {
-            let node = makeNode(hasThumb ? 1 : 2, hasThumb: hasThumb)
-            let sut = makeSUT(
-                sdk: makeSdk(localLink: localURL)
-            )
-            let item = sut.fetchTrack(from: node)
-            #expect(item?.nodeHasThumbnail == hasThumb)
-        }
-        
         @Test("fetchTrack(from:) populates name, url, and node reference")
         func fetchTrack_populatesFieldsCorrectly() {
             let node = makeNode()
@@ -118,7 +110,6 @@ struct StreamingInfoRepositoryTests {
                 sdk: makeSdk(localLink: localURL)
             )
             let item = sut.fetchTrack(from: node)
-            #expect(item?.name == defaultName)
             #expect(item?.url == localURL)
             #expect(item?.node as AnyObject === node)
         }

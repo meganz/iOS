@@ -2,11 +2,10 @@ import Foundation
 import MEGASwift
 
 protocol OfflineInfoRepositoryProtocol: Sendable {
-    /// Fetches audio tracks from a list of local file paths. Each path is mapped into an `AudioPlayerItem` representing an offline audio track.
+    /// Fetches audio tracks from a list of local file paths. Each path is mapped into an `TrackEntity` representing an offline audio track.
     /// - Parameter files: Absolute file paths to map.
-    /// - Returns: An array of `AudioPlayerItem` for the given files, or `nil` if `files` is `nil`.
-    @MainActor
-    func fetchTracks(from files: [String]?) -> [AudioPlayerItem]?
+    /// - Returns: An array of `TrackEntity` for the given files, or `nil` if `files` is `nil`.
+    func fetchTracks(from files: [String]?) -> [TrackEntity]?
     
     /// Resolves the local offline file URL for a given audio node, if available.
     /// - Parameter node: The audio node to look up.
@@ -28,9 +27,8 @@ final class OfflineInfoRepository: OfflineInfoRepositoryProtocol {
         self.fileManager = fileManager
     }
     
-    @MainActor
-    func fetchTracks(from files: [String]?) -> [AudioPlayerItem]? {
-        files?.compactMap { AudioPlayerItem(name: $0.lastPathComponent, url: URL(fileURLWithPath: $0), node: nil) }
+    func fetchTracks(from files: [String]?) -> [TrackEntity]? {
+        files?.compactMap { TrackEntity(url: URL(fileURLWithPath: $0), node: nil) }
     }
     
     func isNodeAvailableOffline(_ node: MEGANode) -> Bool {

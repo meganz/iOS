@@ -3,10 +3,8 @@ import MEGADomain
 
 protocol NodeInfoUseCaseProtocol: Sendable {
     func node(for handle: HandleEntity) -> MEGANode?
-    @MainActor
-    func fetchAudioTracks(from folder: HandleEntity) -> [AudioPlayerItem]?
-    @MainActor
-    func fetchFolderLinkAudioTracks(from folder: HandleEntity) -> [AudioPlayerItem]?
+    func fetchAudioTracks(from folder: HandleEntity) -> [TrackEntity]?
+    func fetchFolderLinkAudioTracks(from folder: HandleEntity) -> [TrackEntity]?
     func folderLinkLogout()
     func isTakenDown(node: MEGANode, isFolderLink: Bool) async throws -> Bool
 }
@@ -22,13 +20,11 @@ final class NodeInfoUseCase: NodeInfoUseCaseProtocol {
         nodeInfoRepository.node(for: handle)
     }
     
-    @MainActor
-    func fetchAudioTracks(from folder: HandleEntity) -> [AudioPlayerItem]? {
+    func fetchAudioTracks(from folder: HandleEntity) -> [TrackEntity]? {
         nodeInfoRepository.fetchAudioTracks(from: folder)
     }
     
-    @MainActor  
-    func fetchFolderLinkAudioTracks(from folder: HandleEntity) -> [AudioPlayerItem]? {
+    func fetchFolderLinkAudioTracks(from folder: HandleEntity) -> [TrackEntity]? {
         nodeInfoRepository.fetchFolderLinkAudioTracks(from: folder)
     }
     

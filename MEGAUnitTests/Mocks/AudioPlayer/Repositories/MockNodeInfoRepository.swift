@@ -29,22 +29,12 @@ final class MockNodeInfoRepository: NodeInfoRepositoryProtocol, @unchecked Senda
         isSuccess ? URL(string: "www.mega.app") : nil
     }
     
-    @MainActor
-    func info(fromNodes: [MEGANode]?) -> [AudioPlayerItem]? {
-        isSuccess ? AudioPlayerItem.mockArray : nil
+    func fetchAudioTracks(from folder: HandleEntity) -> [TrackEntity]? {
+        isSuccess ? TrackEntity.mockArray : nil
     }
     
-    @MainActor
-    func authInfo(fromNodes: [MEGANode]?) -> [AudioPlayerItem]? {
-        isSuccess ? AudioPlayerItem.mockArray : nil
-    }
-    
-    func fetchAudioTracks(from folder: HandleEntity) -> [AudioPlayerItem]? {
-        isSuccess ? AudioPlayerItem.mockArray : nil
-    }
-    
-    func fetchFolderLinkAudioTracks(from folder: HandleEntity) -> [AudioPlayerItem]? {
-        isSuccess ? AudioPlayerItem.mockArray : nil
+    func fetchFolderLinkAudioTracks(from folder: HandleEntity) -> [TrackEntity]? {
+        isSuccess ? TrackEntity.mockArray : nil
     }
     
     func node(for handle: HandleEntity) -> MEGANode? {
