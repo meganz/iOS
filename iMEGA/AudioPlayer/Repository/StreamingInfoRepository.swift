@@ -8,11 +8,10 @@ protocol StreamingInfoRepositoryProtocol: Sendable {
     /// Stops the local HTTP streaming server.
     func serverStop()
     
-    /// Converts a node into an `AudioPlayerItem` suitable for playback through the streaming server. The node is authorized for the current SDK context before creating the item.
+    /// Converts a node into an `TrackEntity` suitable for playback through the streaming server. The node is authorized for the current SDK context before creating the item.
     /// - Parameter node: The `MEGANode` to map into an audio track.
-    /// - Returns: An `AudioPlayerItem` if the node is valid and streamable; otherwise `nil`.
-    @MainActor
-    func fetchTrack(from node: MEGANode) -> AudioPlayerItem?
+    /// - Returns: An `TrackEntity` if the node is valid and streamable; otherwise `nil`.
+    func fetchTrack(from node: MEGANode) -> TrackEntity?
     
     /// Resolves the streaming URL for a given node.
     /// - Parameter node: The `MEGANode` to resolve.
@@ -39,13 +38,12 @@ final class StreamingInfoRepository: StreamingInfoRepositoryProtocol {
         sdk.httpServerStop()
     }
     
-    @MainActor
-    func fetchTrack(from node: MEGANode) -> AudioPlayerItem? {
+    func fetchTrack(from node: MEGANode) -> TrackEntity? {
         guard let node = sdk.authorizeNode(node),
-              let url = streamingURL(for: node),
-              let name = node.name else { return nil }
+              let url = streamingURL(for: node)
+            else { return nil }
         
-        return AudioPlayerItem(name: name, url: url, node: node, hasThumbnail: node.hasThumbnail())
+        return TrackEntity(url: url, node: node)
     }
     
     func streamingURL(for node: MEGANode) -> URL? {

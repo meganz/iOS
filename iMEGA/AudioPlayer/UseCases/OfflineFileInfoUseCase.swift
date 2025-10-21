@@ -1,8 +1,7 @@
 import Foundation
 
 protocol OfflineFileInfoUseCaseProtocol: Sendable {
-    @MainActor
-    func fetchTracks(from files: [String]?) -> [AudioPlayerItem]?
+    func fetchTracks(from files: [String]?) -> [TrackEntity]?
 }
 
 final class OfflineFileInfoUseCase: OfflineFileInfoUseCaseProtocol {
@@ -12,8 +11,7 @@ final class OfflineFileInfoUseCase: OfflineFileInfoUseCaseProtocol {
         self.offlineInfoRepository = offlineInfoRepository
     }
     
-    @MainActor
-    func fetchTracks(from files: [String]?) -> [AudioPlayerItem]? {
+    func fetchTracks(from files: [String]?) -> [TrackEntity]? {
         offlineInfoRepository.fetchTracks(from: files)
     }
 }

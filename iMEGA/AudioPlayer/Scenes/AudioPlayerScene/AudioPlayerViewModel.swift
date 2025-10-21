@@ -276,8 +276,14 @@ final class AudioPlayerViewModel: ViewModelType {
         playerHandler.addPlayer(tracks: tracks)
     }
     
-    private func initialize(tracks: [AudioPlayerItem], currentTrack: AudioPlayerItem) {
-        let mutableTracks = shift(tracks: tracks, startItem: currentTrack)
+    private func initialize(tracks: [TrackEntity], currentTrack: TrackEntity) async {
+        let audioPlayerItems = await AudioPlayerManager.fetchAudioPlayerItems(from: tracks)
+        guard let currentItem = AudioPlayerManager.resolveCurrentItem(in: audioPlayerItems, matching: currentTrack) else {
+            router?.dismiss()
+            return
+        }
+        
+        let mutableTracks = shift(tracks: audioPlayerItems, startItem: currentItem)
         
         if !(isPlayerDefined()) {
             setCurrentPlayer(with: mutableTracks)
@@ -329,20 +335,20 @@ final class AudioPlayerViewModel: ViewModelType {
                 dismiss()
                 return
             }
-            initialize(tracks: [track], currentTrack: track)
+            await initialize(tracks: [track], currentTrack: track)
         } else {
             if let allNodes = allNodes, allNodes.isNotEmpty, isCurrentUserNode(node) {
-                initializeTracksForAllAudioFilesAsPlaylist(from: node, allNodes)
+                await initializeTracksForAllAudioFilesAsPlaylist(from: node, allNodes)
             } else {
                 guard let (currentTrack, children) = getTracks(from: node) else {
                     guard let track = streamingInfoUseCase?.fetchTrack(from: node) else {
                         dismiss()
                         return
                     }
-                    initialize(tracks: [track], currentTrack: track)
+                    await initialize(tracks: [track], currentTrack: track)
                     return
                 }
-                initialize(tracks: children, currentTrack: currentTrack)
+                await initialize(tracks: children, currentTrack: currentTrack)
             }
         }
     }
@@ -351,7 +357,7 @@ final class AudioPlayerViewModel: ViewModelType {
         accountUseCase.currentUserHandle == node.owner
     }
     
-    private func initializeTracksForAllAudioFilesAsPlaylist(from node: MEGANode, _ allNodes: [MEGANode]) {
+    private func initializeTracksForAllAudioFilesAsPlaylist(from node: MEGANode, _ allNodes: [MEGANode]) async {
         let tracksFromNodes = allNodes.compactMap { streamingInfoUseCase?.fetchTrack(from: $0) }
         guard tracksFromNodes.isNotEmpty,
             let currentTrack = tracksFromNodes.first(where: { $0.node?.handle == node.handle }) else {
@@ -359,13 +365,13 @@ final class AudioPlayerViewModel: ViewModelType {
                 dismiss()
                 return
             }
-            initialize(tracks: [track], currentTrack: track)
+            await initialize(tracks: [track], currentTrack: track)
             return
         }
-        initialize(tracks: tracksFromNodes, currentTrack: currentTrack)
+        await initialize(tracks: tracksFromNodes, currentTrack: currentTrack)
     }
     
-    private func getTracks(from node: MEGANode) -> (currentTrack: AudioPlayerItem, childrenTracks: [AudioPlayerItem])? {
+    private func getTracks(from node: MEGANode) -> (currentTrack: TrackEntity, childrenTracks: [TrackEntity])? {
         guard
             let children = configEntity.isFolderLink
                 ? nodeInfoUseCase?.fetchFolderLinkAudioTracks(from: node.parentHandle)
@@ -389,7 +395,7 @@ final class AudioPlayerViewModel: ViewModelType {
             dismiss()
             return
         }
-        initialize(tracks: files, currentTrack: currentTrack)
+        await initialize(tracks: files, currentTrack: currentTrack)
     }
     
     private func invoke(command: Command) {

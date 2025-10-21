@@ -27,8 +27,7 @@ final class MockStreamingInfoRepository: StreamingInfoRepositoryProtocol, @unche
         isRunning = false
     }
     
-    @MainActor
-    func fetchTrack(from node: MEGANode) -> AudioPlayerItem? {
+    func fetchTrack(from node: MEGANode) -> TrackEntity? {
         guard case .success = result else { return nil }
         return .mockItem
     }
@@ -36,7 +35,7 @@ final class MockStreamingInfoRepository: StreamingInfoRepositoryProtocol, @unche
     func streamingURL(for node: MEGANode) -> URL? {
         pathFromNodeCallCount += 1
         guard case .success = result else { return nil }
-        return AudioPlayerItem.mockURL
+        return TrackEntity.mockURL
     }
     
     func isLocalHTTPServerRunning() -> Bool {

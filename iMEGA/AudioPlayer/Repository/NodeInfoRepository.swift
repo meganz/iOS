@@ -7,15 +7,13 @@ import MEGASwift
 protocol NodeInfoRepositoryProtocol: Sendable {
     /// Fetches audio tracks contained in a folder owned/accessible by the current account. The `folder` handle identifies a MEGA folder. The implementation resolves its contents (files and/or subfolders) and returns only files that are suitable for audio playback.
     /// - Parameter folder: The `HandleEntity` of the target folder in the current account context.
-    /// - Returns: An array of `AudioPlayerItem` representing audio tracks in the folder, or `nil` if the folder does not exist or cannot be read.
-    @MainActor
-    func fetchAudioTracks(from folder: HandleEntity) -> [AudioPlayerItem]?
+    /// - Returns: An array of `TrackEntity` representing audio tracks in the folder, or `nil` if the folder does not exist or cannot be read.
+    func fetchAudioTracks(from folder: HandleEntity) -> [TrackEntity]?
     
-    /// Fetches audio tracks from a folder-link context. The `folder` handle refers to a folder-link. Tracks are resolved and authorized for playback before being returned as `AudioPlayerItem`s.
+    /// Fetches audio tracks from a folder-link context. The `folder` handle refers to a folder-link. Tracks are resolved and authorized for playback before being returned as `TrackEntity`s.
     /// - Parameter folder: The `HandleEntity` of the folder-link.
-    /// - Returns: An array of authorized `AudioPlayerItem` for playback, or `nil` if the folder is unavailable or cannot be read.
-    @MainActor
-    func fetchFolderLinkAudioTracks(from folder: HandleEntity) -> [AudioPlayerItem]?
+    /// - Returns: An array of authorized `TrackEntity` for playback, or `nil` if the folder is unavailable or cannot be read.
+    func fetchFolderLinkAudioTracks(from folder: HandleEntity) -> [TrackEntity]?
     
     /// Resolves a `MEGANode` for the given handle in the current account context.
     /// - Parameter handle: The `HandleEntity` to look up.
@@ -98,23 +96,19 @@ final class NodeInfoRepository: NodeInfoRepositoryProtocol {
     private func folderNode(from handle: HandleEntity) -> MEGANode? { folderSDK.node(forHandle: handle) }
     
     private func folderAuthNode(from node: MEGANode) -> MEGANode? { folderSDK.authorizeNode(node) }
-
-    @MainActor
-    func makeAudioPlayerItems(from nodes: [MEGANode]?) -> [AudioPlayerItem]? {
+    
+    func makeAudioPlayerTracks(from nodes: [MEGANode]?) -> [TrackEntity]? {
         nodes?.compactMap {
-            guard let url = playbackURL(for: $0.handle),
-                  let name = $0.name else { return nil }
-            return AudioPlayerItem(name: name, url: url, node: $0, hasThumbnail: $0.hasThumbnail())
+            guard let url = playbackURL(for: $0.handle) else { return nil }
+            return TrackEntity(url: url, node: $0)
         }
     }
-
-    @MainActor
-    private func makeAuthorizedFolderLinkAudioPlayerItems(from nodes: [MEGANode]?) -> [AudioPlayerItem]? {
+    
+    private func makeAuthorizedFolderLinkAudioPlayerTracks(from nodes: [MEGANode]?) -> [TrackEntity]? {
         nodes?.compactMap {
             guard let node = folderAuthNode(from: $0),
-                  let name = node.name,
                   let url = streamingInfoRepository.streamingURL(for: node) else { return nil }
-            return AudioPlayerItem(name: name, url: url, node: node, hasThumbnail: $0.hasThumbnail())
+            return TrackEntity(url: url, node: node)
         }
     }
 
@@ -131,14 +125,12 @@ final class NodeInfoRepository: NodeInfoRepositoryProtocol {
         }
     }
     
-    @MainActor
-    func fetchAudioTracks(from folder: HandleEntity) -> [AudioPlayerItem]? {
-        fetchAudioNodes(inFolder: folder).flatMap(makeAudioPlayerItems)
+    func fetchAudioTracks(from folder: HandleEntity) -> [TrackEntity]? {
+        fetchAudioNodes(inFolder: folder).flatMap(makeAudioPlayerTracks)
     }
     
-    @MainActor
-    func fetchFolderLinkAudioTracks(from folder: HandleEntity) -> [AudioPlayerItem]? {
-        fetchFolderLinkAudioNodes(inFolder: folder).flatMap(makeAuthorizedFolderLinkAudioPlayerItems)
+    func fetchFolderLinkAudioTracks(from folder: HandleEntity) -> [TrackEntity]? {
+        fetchFolderLinkAudioNodes(inFolder: folder).flatMap(makeAuthorizedFolderLinkAudioPlayerTracks)
     }
      
     func folderLinkLogout() {
