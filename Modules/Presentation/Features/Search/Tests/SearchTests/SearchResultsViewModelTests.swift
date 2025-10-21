@@ -37,12 +37,11 @@ final class SearchResultsViewModelTests: XCTestCase, @unchecked Sendable {
         var chipTaps: [(SearchChipEntity, Bool)] = []
         var emptyContentRequested: [EmptyContent] = []
         weak var testcase: XCTestCase?
-        
+        let interactor = MockSearchResultsInteractor()
+
         init(
             _ testcase: XCTestCase,
             searchResultUpdateSignalSequence: AnyAsyncSequence<SearchResultUpdateSignal> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
-            showChips: Bool = true,
-            sortOptionsViewModel: SearchResultsSortOptionsViewModel = .init(title: "", sortOptions: [])
         ) {
             self.testcase = testcase
             resultsProvider = MockSearchResultsProviding(
@@ -84,10 +83,11 @@ final class SearchResultsViewModelTests: XCTestCase, @unchecked Sendable {
                 keyboardVisibilityHandler: MockKeyboardVisibilityHandler(), 
                 viewDisplayMode: .unknown,
                 listHeaderViewModel: nil,
-                isSelectionEnabled: true,
-                showChips: showChips,
-                sortOptionsViewModel: sortOptionsViewModel
+                isSelectionEnabled: true
             )
+
+            sut.interactor = interactor
+
             selection = {
                 self.selectedResults.append($0)
             }
@@ -204,14 +204,13 @@ final class SearchResultsViewModelTests: XCTestCase, @unchecked Sendable {
     }
     
     @MainActor
-    func testListItems_onStart_hasNoItemsAndSingleChipShown() async {
+    func testListItems_onStart_hasNoItems() async {
         let harness = Harness(self)
         harness.resultsProvider.resultFactory = { _ in
             .resultWithNoItemsAndSingleChip
         }
         await harness.sut.task()
         XCTAssertTrue(harness.sut.listItems.isEmpty)
-        XCTAssertEqual(harness.sut.chipsItems.map(\.id), ["chip_2"])
     }
     
     @MainActor
@@ -222,41 +221,6 @@ final class SearchResultsViewModelTests: XCTestCase, @unchecked Sendable {
         let expectedReceivedQueries: [SearchQuery] = [
             .initial,
             .userSupplied(.query("query", isSearchActive: true))
-        ]
-        XCTAssertEqual(harness.resultsProvider.passedInQueries, expectedReceivedQueries)
-    }
-
-    @MainActor
-    func testQueryChanged_shouldRemoveChips_whenShowChipsIsDisabled() async {
-        let harness = Harness(self, showChips: false).withChipsPrepared(chipTypes: [
-            .nodeFormat(.photo),
-            .nodeFormat(.audio),
-            .nodeFormat(.pdf),
-            .nodeFormat(.presentation)
-        ])
-        await harness.sut.task()
-        await harness.sut.chipsItems.first!.select()
-        await harness.sut.queryChanged(to: "test", isSearchActive: true)
-        let expectedReceivedQueries: [SearchQuery] = [
-            .initial,
-            .userSupplied(
-                .init(
-                    query: "",
-                    sorting: .init(key: .name),
-                    mode: .home,
-                    isSearchActive: false,
-                    chips: [.init(type: .nodeFormat(.photo), title: "chip_0", icon: nil, subchipsPickerTitle: nil, subchips: [])]
-                )
-            ),
-            .userSupplied(
-                .init(
-                    query: "test",
-                    sorting: .init(key: .name),
-                    mode: .home,
-                    isSearchActive: true,
-                    chips: []
-                )
-            )
         ]
         XCTAssertEqual(harness.resultsProvider.passedInQueries, expectedReceivedQueries)
     }
@@ -486,34 +450,6 @@ final class SearchResultsViewModelTests: XCTestCase, @unchecked Sendable {
         let updatedProperties = harness.resultVM(at: 1).result.properties
         XCTAssertNotEqual(initialProperties, updatedProperties)
     }
-
-    @MainActor
-    func testChipItems_byDefault_noChipsSelected() async {
-        let harness = Harness(self).withChipsPrepared(chipTypes: [
-            .nodeFormat(.photo),
-            .nodeFormat(.audio),
-            .nodeFormat(.pdf),
-            .nodeFormat(.presentation)
-        ])
-        await harness.sut.task()
-        let allDeselected = harness.sut.chipsItems.allSatisfy {
-            $0.pill.background == .deselectedColor
-        }
-        XCTAssertTrue(allDeselected)
-    }
-    
-    @MainActor
-    func testChipItems_appliedChips_isSelected() async {
-        let harness = Harness(self)
-        harness.resultsProvider.resultFactory = { _ in .resultsWithSingleChipApplied }
-        
-        await harness.sut.task()
-        let selectedChipItems = harness.sut.chipsItems.filter {
-            $0.pill.background == .selectedColor
-        }
-        let expectedIds = [SearchResultsEntity.resultsWithSingleChipApplied.appliedChips.first!.id]
-        XCTAssertEqual(selectedChipItems.map(\.id), expectedIds)
-    }
     
     @MainActor
     func testEmptyView_isNil_whenItemsNotEmpty() async {
@@ -539,7 +475,15 @@ final class SearchResultsViewModelTests: XCTestCase, @unchecked Sendable {
             .nodeFormat(.audio)
         ])
         await harness.sut.queryChanged(to: "query", isSearchActive: true)
-        await harness.sut.chipsItems.first!.select()
+        await harness.sut.queryChanged(to: .userSupplied(
+            .init(
+                query: "query",
+                sorting: .init(key: .name),
+                mode: .home,
+                isSearchActive: true,
+                chips: [.init(type: .nodeFormat(.photo), title: "photo")]
+            )
+        ))
         _ = try XCTUnwrap(harness.sut.emptyViewModel)
         let content: Harness.EmptyContent = .init(chip: nil, isSearchActive: true)
         XCTAssertEqual(harness.emptyContentRequested, [content, content])
@@ -550,7 +494,15 @@ final class SearchResultsViewModelTests: XCTestCase, @unchecked Sendable {
         let harness = Harness(self)
         await harness.sut.queryChanged(to: "", isSearchActive: false)
         harness.noResultsWithSingleChipApplied()
-        await harness.sut.chipsItems.first!.select()
+        await harness.sut.queryChanged(to: .userSupplied(
+            .init(
+                query: "",
+                sorting: .init(key: .name),
+                mode: .home,
+                isSearchActive: false,
+                chips: [.init(type: .nodeFormat(.photo), title: "photo")]
+            )
+        ))
         _ = try XCTUnwrap(harness.sut.emptyViewModel)
         let content: [Harness.EmptyContent] = [
             .init(chip: nil, isSearchActive: false),
@@ -634,26 +586,6 @@ final class SearchResultsViewModelTests: XCTestCase, @unchecked Sendable {
 
         XCTAssertTrue(harness.sut.selectedResultIds.isEmpty)
         XCTAssertTrue(selectionChangeResult?.isEmpty == true)
-    }
-
-    @MainActor
-    func testChangeSortOrder_forAllCases_shouldMatchTheExpectation() async {
-        let allCases: [(Search.SortOrderEntity, [SearchQuery]?)] = [
-            (.init(key: .name), [.initial]),
-            (.init(key: .name, direction: .descending), nil),
-            (.init(key: .size, direction: .descending), nil),
-            (.init(key: .size), nil),
-            (.init(key: .dateAdded, direction: .descending), nil),
-            (.init(key: .dateAdded), nil),
-            (.init(key: .label), nil),
-            (.init(key: .label, direction: .descending), nil),
-            (.init(key: .favourite), nil),
-            (.init(key: .favourite, direction: .descending), nil)
-        ]
-
-        for (sortOrderEntity, expectedQueries) in allCases {
-            await assertChangeSortOrder(with: sortOrderEntity, expectedReceivedQueries: expectedQueries)
-        }
     }
     
     @MainActor
@@ -876,62 +808,6 @@ final class SearchResultsViewModelTests: XCTestCase, @unchecked Sendable {
     }
 
     @MainActor
-    func testShowChipsInitialValue_whenSet_ShouldMatchResult() {
-        let harness = Harness(self, showChips: false)
-        XCTAssertFalse(harness.sut.showChips)
-    }
-
-    @MainActor
-    func testSetSearchChipsVisible_whenSetWithoutAnimation_shouldShowChips() {
-        let harness = Harness(self, showChips: false)
-        harness.sut.setSearchChipsVisible(true, animated: false)
-        XCTAssertTrue(harness.sut.showChips)
-    }
-
-    @MainActor
-    func testSetSearchChipsVisible_whenSetWithAnimation_shouldShowChips() {
-        let harness = Harness(self, showChips: false)
-        harness.sut.setSearchChipsVisible(true, animated: true)
-        XCTAssertTrue(harness.sut.showChips)
-    }
-
-    @MainActor
-    func testDisplaySortOptionsViewModel_whenDisplayed_shouldOmitSelectedSortOption() throws {
-        let sortOptionsViewModel = SearchResultsSortOptionsViewModel(
-            title: "Sort by",
-            sortOptions: [
-                .init(sortOrder: .init(key: .name), title: "Name", iconsByDirection: [:]),
-                .init(sortOrder: .init(key: .name, direction: .descending), title: "Name", iconsByDirection: [:])
-            ]
-        )
-        let harness = Harness(self, sortOptionsViewModel: sortOptionsViewModel)
-        let displaySortOptionsViewModel = harness.sut.displaySortOptionsViewModel
-        XCTAssertEqual(displaySortOptionsViewModel.title, "Sort by")
-        XCTAssertEqual(displaySortOptionsViewModel.sortOptions.count, 1)
-        let sortOption = try XCTUnwrap(displaySortOptionsViewModel.sortOptions.first)
-        XCTAssertEqual(sortOption.sortOrder, .init(key: .name, direction: .descending))
-    }
-
-    @MainActor
-    func testHeaderViewModel_whenDisplayed_shouldShowSelectedSortOption() throws {
-        let iconByDirection: [SortOrderEntity.Direction: Image] = [
-            .ascending: Image(systemName: "plus"),
-            .descending: Image(systemName: "minus")
-        ]
-        let sortOptionsViewModel = SearchResultsSortOptionsViewModel(
-            title: "Sort by",
-            sortOptions: [
-                .init(sortOrder: .init(key: .name), title: "Name", iconsByDirection: iconByDirection),
-                .init(sortOrder: .init(key: .name, direction: .descending), title: "Name", iconsByDirection: iconByDirection)
-            ]
-        )
-        let harness = Harness(self, sortOptionsViewModel: sortOptionsViewModel)
-        let headerViewModel = try XCTUnwrap(harness.sut.headerViewModel)
-        XCTAssertEqual(headerViewModel.title, "Name")
-        XCTAssertEqual(headerViewModel.icon, Image(systemName: "plus"))
-    }
-
-    @MainActor
     private func makeHarnessWithAllItemsSelected(listItemCount count: Int, toggleSelection: Bool = true) -> Harness {
         let harness = Harness(self)
         let listItems = Array(1...count).map { generateRandomSearchResultRowViewModel(id: $0) }
@@ -973,44 +849,6 @@ final class SearchResultsViewModelTests: XCTestCase, @unchecked Sendable {
             previewContent: .example,
             actions: .init(contextAction: { _ in }, selectionAction: { }, previewTapAction: { }),
             swipeActions: []
-        )
-    }
-
-    @MainActor
-    private func assertChangeSortOrder(
-        with sortOrder: Search.SortOrderEntity,
-        expectedReceivedQueries: [SearchQuery]? = nil,
-        file: StaticString = #filePath,
-        line: UInt = #line
-    ) async {
-        let harness = Harness(self)
-        let changeSortOrderTask = harness.sut.changeSortOrder(sortOrder)
-        await changeSortOrderTask.value
-        let defaultExpectedReceivedQueries: [SearchQuery] = [
-            .userSupplied(
-                .init(
-                    query: "",
-                    sorting: sortOrder,
-                    mode: .home,
-                    isSearchActive: false,
-                    chips: []
-                )
-            )
-        ]
-
-        let expectedSearchQueries = (expectedReceivedQueries != nil
-        ? expectedReceivedQueries
-        : defaultExpectedReceivedQueries) ?? []
-
-        XCTAssertEqual(
-            harness.resultsProvider.passedInQueries,
-            expectedSearchQueries,
-            """
-                Expected search queries \(expectedSearchQueries)
-                but received \(harness.resultsProvider.passedInQueries)
-            """,
-            file: file,
-            line: line
         )
     }
 }

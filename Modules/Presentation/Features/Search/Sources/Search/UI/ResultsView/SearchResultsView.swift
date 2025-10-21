@@ -3,89 +3,26 @@ import MEGASwiftUI
 import MEGAUIKit
 import SwiftUI
 
-public struct SearchResultsView: View {
-    @StateObject var viewModel: SearchResultsViewModel
+struct SearchResultsView: View {
+    @ObservedObject var viewModel: SearchResultsViewModel
     @Environment(\.editMode) private var editMode
     
-    public init(viewModel: @autoclosure @escaping () -> SearchResultsViewModel) {
-        _viewModel = StateObject(wrappedValue: viewModel())
+    init(viewModel: @autoclosure @escaping () -> SearchResultsViewModel) {
+        _viewModel = ObservedObject(wrappedValue: viewModel())
     }
     
     public var body: some View {
-        VStack(spacing: .zero) {
-            header
-                .transition(.opacity)
-
-            PlaceholderContainerView(
-                isLoading: $viewModel.isLoadingPlaceholderShown,
-                content: content,
-                placeholder: PlaceholderContentView(
-                    placeholderRow: placeholderRowView
-                )
+        PlaceholderContainerView(
+            isLoading: $viewModel.isLoadingPlaceholderShown,
+            content: content,
+            placeholder: PlaceholderContentView(
+                placeholderRow: placeholderRowView
             )
-            .frame(
-                maxWidth: .infinity,
-                maxHeight: .infinity,
-                alignment: .top
-            )
-        }
-        .task {
-            await viewModel.task()
-        }
-        .sheet(item: $viewModel.presentedChipsPickerViewModel) { item in
-            chipsPickerView(for: item)
-                .presentationDetents([.medium, .large])
-                .presentationDragIndicator(.visible)
-        }
-        .sheet(isPresented: $viewModel.showSortSheet) {
-            SearchResultsSortOptionsView(viewModel: viewModel.displaySortOptionsViewModel)
-        }
-    }
-
-    @ViewBuilder
-    private var header: some View {
-        if viewModel.showChips {
-            chips
-        } else if viewModel.showSorting, let headerViewModel = viewModel.headerViewModel {
-            SearchResultsHeaderView(leftView: { SearchResultsHeaderSortView(viewModel: headerViewModel) })
-        }
-    }
-
-    @ViewBuilder
-    private var chips: some View {
-        HStack {
-            ForEach(viewModel.chipsItems) { chip in
-                PillView(viewModel: chip.pill)
-                    .onTapGesture {
-                        Task { @MainActor in
-                            await chip.select()
-                        }
-                    }
-            }
-        }
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .padding([.leading, .trailing, .bottom])
-        .padding(.top, 6)
-    }
-    
-    private func chipsPickerView(for item: ChipViewModel) -> some View {
-        ChipsPickerView(
-            viewModel: .init(
-                title: item.subchipsPickerTitle ?? "",
-                chips: item.subchips,
-                closeIcon: viewModel.chipAssets.closeIcon,
-                colorAssets: viewModel.colorAssets,
-                chipSelection: { chip in
-                    Task { @MainActor in
-                        await chip.select()
-                    }
-                },
-                dismiss: {
-                    Task { @MainActor in
-                        await viewModel.dismissChipGroupPicker()
-                    }
-                }
-            )
+        )
+        .frame(
+            maxWidth: .infinity,
+            maxHeight: .infinity,
+            alignment: .top
         )
     }
     
@@ -102,55 +39,9 @@ public struct SearchResultsView: View {
     @ViewBuilder
     private var contentWrapper: some View {
         if viewModel.layout == .list {
-            listContent
+            SearchResultsListView(viewModel: viewModel)
         } else {
-            thumbnailContent
-        }
-    }
-
-    private var listContent: some View {
-        SearchResultsListView(viewModel: viewModel)
-    }
-
-    private var thumbnailContent: some View {
-        GeometryReader { geo in
-            ScrollView {
-                LazyVGrid(
-                    columns: viewModel.columns(geo.size.width)
-                ) {
-                    ForEach(viewModel.folderListItems) { item in
-                        SearchResultThumbnailItemView(
-                            viewModel: item,
-                            selected: $viewModel.selectedResultIds,
-                            selectionEnabled: $viewModel.editing
-                        )
-                        .onAppear {
-                            Task {
-                                await viewModel.onItemAppear(item)
-                            }
-                        }
-                    }
-                }
-                .padding(.horizontal, 8)
-                
-                LazyVGrid(
-                    columns: viewModel.columns(geo.size.width)
-                ) {
-                    ForEach(viewModel.fileListItems) { item in
-                        SearchResultThumbnailItemView(
-                            viewModel: item,
-                            selected: $viewModel.selectedResultIds,
-                            selectionEnabled: $viewModel.editing
-                        )
-                        .onAppear {
-                            Task {
-                                await viewModel.onItemAppear(item)
-                            }
-                        }
-                    }
-                }
-                .padding(.horizontal, 8)
-            }
+            SearchResultsThumbnailView(viewModel: viewModel)
         }
     }
     
@@ -173,40 +64,5 @@ public struct SearchResultsView: View {
         }
         .padding()
         .shimmering()
-    }
-}
-
-#Preview {
-    struct Wrapper: View {
-        @State var text: String = ""
-        @StateObject var viewModel = SearchResultsViewModel(
-            resultsProvider: NonProductionTestResultsProvider(empty: true),
-            bridge: .init(
-                selection: { _ in },
-                context: {_, _ in },
-                chipTapped: { _, _ in },
-                sortingOrder: { .init(key: .name) },
-                updateSortOrder: { _ in }
-            ),
-            config: .example,
-            layout: .list,
-            keyboardVisibilityHandler: MockKeyboardVisibilityHandler(),
-            viewDisplayMode: .unknown,
-            listHeaderViewModel: nil,
-            isSelectionEnabled: false,
-            showChips: true,
-            sortOptionsViewModel: .init(title: "", sortOptions: [])
-        )
-        var body: some View {
-            SearchResultsView(viewModel: viewModel)
-            .onChange(of: text, perform: { newValue in
-                viewModel.bridge.queryChanged(newValue)
-            })
-            .searchable(text: $text)
-        }
-    }
-    
-    return NavigationView {
-        Wrapper()
     }
 }

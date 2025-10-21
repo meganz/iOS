@@ -230,41 +230,50 @@ final class HomeScreenFactory: NSObject {
             searchBridge?.updateBottomInset(inset)
         }
 
-        let vm = SearchResultsViewModel(
+        let config = SearchConfig.searchConfig(
+            contextPreviewFactory: contextPreviewFactory(
+                enableItemMultiSelection: enableItemMultiSelection
+            ),
+            defaultEmptyViewAsset: {
+                .init(
+                    image: MEGAAssets.Image.searchEmptyState,
+                    title: Strings.Localizable.Home.Search.Empty.noChipSelected,
+                    titleTextColor: TokenColors.Icon.secondary.swiftUI
+                )
+            }
+        )
+
+        let searchResultsViewModel = SearchResultsViewModel(
             resultsProvider: makeResultsProvider(
                 parentNodeProvider: {[weak sdk] in sdk?.rootNode?.toNodeEntity() },
                 navigationController: navigationController
             ),
             bridge: searchBridge,
-            config: .searchConfig(
-                contextPreviewFactory: contextPreviewFactory(
-                    enableItemMultiSelection: enableItemMultiSelection
-                ),
-                defaultEmptyViewAsset: {
-                    .init(
-                        image: MEGAAssets.Image.searchEmptyState,
-                        title: Strings.Localizable.Home.Search.Empty.noChipSelected,
-                        titleTextColor: TokenColors.Icon.secondary.swiftUI
-                    )
-                }
-            ),
+            config: config,
             layout: viewModeStore.viewMode(for: .init(customLocation: CustomViewModeLocation.HomeSearch)).pageLayout ?? .list,
             keyboardVisibilityHandler: KeyboardVisibilityHandler(notificationCenter: notificationCenter),
             viewDisplayMode: .home,
             listHeaderViewModel: nil,
-            isSelectionEnabled: false,
-            showChips: true,
+            isSelectionEnabled: false
+        )
+
+        let searchResultsContainerViewModel = SearchResultsContainerViewModel(
+            bridge: searchBridge,
+            config: config,
+            searchResultsViewModel: searchResultsViewModel,
             sortOptionsViewModel: .init(
                 title: Strings.Localizable.sortTitle,
                 sortOptions: SearchResultsSortOptionFactory.makeAll()
-            )
+            ),
+            showChips: true
         )
+
         return UIHostingController(
-            rootView: SearchResultsView(viewModel: vm)
+            rootView: SearchResultsContainerView(viewModel: searchResultsContainerViewModel)
                 .background()
         )
     }
-    
+
     private func nodeActionListener(_ tracker: any AnalyticsTracking) -> (MegaNodeActionType?, [MEGANode]) -> Void {
         { action, _ in
             switch action {

@@ -7,7 +7,7 @@ import MEGAUIKit
 import SwiftUI
 
 @MainActor
-public class SearchResultsViewModel: ObservableObject {
+public final class SearchResultsViewModel: ObservableObject {
     @Published var listItems: [SearchResultRowViewModel]  = []
     @Published var bottomInset: CGFloat = 0.0
     @Published var emptyViewModel: ContentUnavailableViewModel?
@@ -18,12 +18,7 @@ public class SearchResultsViewModel: ObservableObject {
 
     @Published public var layout: PageLayout
 
-    @Published var chipsItems: [ChipViewModel] = []
-    @Published var presentedChipsPickerViewModel: ChipViewModel?
-
     @Published var selectedRowIds = Set<SearchResultRowViewModel.ID>()
-
-    @Published var showSortSheet = false
 
     var fileListItems: [SearchResultRowViewModel] {
         listItems.filter { !$0.result.isFolder }
@@ -37,21 +32,12 @@ public class SearchResultsViewModel: ObservableObject {
         config.colorAssets
     }
 
-    var chipAssets: SearchConfig.ChipAssets {
-        config.chipAssets
-    }
-
     var containsSwipeActions: Bool {
         listItems.first?.swipeActions.isNotEmpty ?? false
     }
 
     // this is needed to be able to construct new query after receiving new query string from SearchBar
-    private var currentQuery: SearchQuery = .initial
-
-    // keep information what were the available chips received with latest
-    // results so that we know how to modify the list of chips after
-    // selection was changed but we don't have new results
-    private var lastAvailableChips: [SearchChipEntity] = []
+    private(set) var currentQuery: SearchQuery = .initial
 
     // do not perform initial load when coming back from the pushed vc
     private var initialLoadDone = false
@@ -95,37 +81,12 @@ public class SearchResultsViewModel: ObservableObject {
 
     private let updatedSearchResultsPublisher: BatchingPublisher<SearchResultUpdateSignal>
 
-    private let sortOptionsViewModel: SearchResultsSortOptionsViewModel
-
-    var displaySortOptionsViewModel: SearchResultsSortOptionsViewModel {
-        let displaySortOptions = sortOptionsViewModel.sortOptions.compactMap { sortOption -> SearchResultsSortOption? in
-            let currentSortOrder = currentQuery.sorting
-            guard currentSortOrder != sortOption.sortOrder else { return nil }
-            guard currentSortOrder.key != sortOption.sortOrder.key else { return sortOption }
-            guard sortOption.sortOrder.direction != .descending else { return nil }
-            return sortOption.removeIcon()
-        }
-        return sortOptionsViewModel.makeNewViewModel(with: displaySortOptions) { [weak self] option in
-            guard let self else { return }
-            selectedSortOption(option)
-        }
-    }
-
     let listHeaderViewModel: ListHeaderViewModel?
 
     // Specifies whether the results are selectable or not.
     let isSelectionEnabled: Bool
 
-    @Published public private(set) var showChips: Bool = false
-    @Published public var showSorting: Bool = false
-
-    var headerViewModel: SearchResultsHeaderSortViewViewModel? {
-        guard let sortOption = sortOptionsViewModel
-            .sortOptions.first(where: { $0.sortOrder == currentQuery.sorting }) else { return nil }
-        return .init(title: sortOption.title, icon: sortOption.currentDirectionIcon) { [weak self] in
-            self?.showSortSheet = true
-        }
-    }
+    weak var interactor: (any SearchResultsInteractor)?
 
     public init(
         resultsProvider: any SearchResultsProviding,
@@ -138,9 +99,7 @@ public class SearchResultsViewModel: ObservableObject {
         viewDisplayMode: ViewDisplayMode,
         updatedSearchResultsPublisher: BatchingPublisher<SearchResultUpdateSignal> = BatchingPublisher(interval: 1), // Emits search result updates as a batch every 1 seconds
         listHeaderViewModel: ListHeaderViewModel?,
-        isSelectionEnabled: Bool,
-        showChips: Bool,
-        sortOptionsViewModel: SearchResultsSortOptionsViewModel
+        isSelectionEnabled: Bool
     ) {
         self.resultsProvider = resultsProvider
         self.bridge = bridge
@@ -153,8 +112,6 @@ public class SearchResultsViewModel: ObservableObject {
         self.updatedSearchResultsPublisher = updatedSearchResultsPublisher
         self.listHeaderViewModel = listHeaderViewModel
         self.isSelectionEnabled = isSelectionEnabled
-        self.showChips = showChips
-        self.sortOptionsViewModel = sortOptionsViewModel
         self.bridge.queryChanged = { [weak self] query  in
             let _self = self
             
@@ -269,7 +226,7 @@ public class SearchResultsViewModel: ObservableObject {
         // This is using a different method in the SDK
         // hence an enum is needed to reliably tell the difference
         await showLoadingPlaceholderIfNeeded()
-        await queryChanged(to: updatedQuery(with: await bridge.sortingOrder()))
+        await queryChanged(with: await bridge.sortingOrder(), shouldForceRefresh: true)
     }
     
     private func cancelSearchTask() {
@@ -294,18 +251,23 @@ public class SearchResultsViewModel: ObservableObject {
         // data when view appears again
         initialLoadDone = false
         handleEditingChanged(false)
-        currentQuery = .initial
+        updateCurrentQuery(to: .initial)
         clearSearchResults()
-        lastAvailableChips = []
+        interactor?.resetLastAvailableChips()
         selectedResultIds = []
         await defaultSearchQuery()
     }
-    
+
+    @discardableResult
+    func updateCurrentQuery(to newQuery: SearchQuery) -> Bool {
+        guard currentQuery != newQuery else { return false }
+        currentQuery = newQuery
+        return true
+    }
+
     func queryChanged(to query: String, isSearchActive: Bool) async {
-        if !showChips {
-            currentQuery.clearChips()
-        }
-        
+        guard let updatedQuery = await interactor?.updateQuery(currentQuery) else { return }
+        updateCurrentQuery(to: updatedQuery)
         await queryChanged(
             to: .userSupplied(
                 Self.makeQueryUsing(
@@ -326,18 +288,19 @@ public class SearchResultsViewModel: ObservableObject {
         }
     }
 
-    private func selectedSortOption(_ sortOption: SearchResultsSortOption) {
-        showSortSheet = false
-        bridge.updateSortOrder(sortOption.sortOrder)
-        Task { await queryChanged(to: updatedQuery(with: sortOption.sortOrder)) }
+    func queryChanged(with updatedSortOrder: SortOrderEntity, shouldForceRefresh: Bool = false) async {
+        let updatedQuery = currentQuery.withUpdatedSortOrder(updatedSortOrder)
+        let updated = updateCurrentQuery(to: updatedQuery)
+        guard updated || shouldForceRefresh else { return }
+        await queryChanged(to: currentQuery)
     }
 
-    private func queryChanged(to query: SearchQuery) async {
+    func queryChanged(to query: SearchQuery) async {
         cancelSearchTask()
         cancelDebounceTask()
 
         // we need to store query to know what chips are selected
-        currentQuery = query
+        updateCurrentQuery(to: query)
 
         clearSearchResults()
 
@@ -549,9 +512,8 @@ public class SearchResultsViewModel: ObservableObject {
         updateSearchResultsLoaded(true)
         updateLoadingPlaceholderVisibility(false)
 
-        lastAvailableChips = results.availableChips
-        await updateChipsFrom(appliedChips: results.appliedChips)
-        
+        interactor?.consume(results: results)
+
         let selectedItems = items
             .filter { selectedResultIds.contains($0.result.id) }
         
@@ -594,108 +556,6 @@ public class SearchResultsViewModel: ObservableObject {
         // we show generic 'no results' empty screen
         return config.emptyViewAssetFactory(nil, query).emptyViewModel
     }
-    
-    private func tapped(_ chip: SearchChipEntity) async {
-        let query = Self.makeQueryAfter(tappedChip: chip, currentQuery: currentQuery)
-        // updating chips here as well to make selection visible before results are returned
-        await updateChipsFrom(appliedChips: query.chips)
-        await showLoadingPlaceholderIfNeeded()
-        await queryChanged(to: query)
-        bridge.chip(tapped: chip, isSelected: query.chips.contains(chip))
-    }
-
-    private func updateChipsFrom(appliedChips: [SearchChipEntity]) async {
-        let updatedChips = lastAvailableChips.map { chip in
-            let subchips = subchipsFrom(appliedChips: appliedChips, allChips: chip.subchips)
-            let selected = selected(for: chip, appliedChips: appliedChips)
-
-            return ChipViewModel(
-                id: chip.title,
-                pill: .init(
-                    title: title(for: chip, appliedChips: appliedChips),
-                    selected: selected,
-                    icon: icon(for: chip, selected: selected),
-                    config: config.chipAssets
-                ),
-                subchips: subchips,
-                subchipsPickerTitle: chip.subchipsPickerTitle,
-                selectionIndicatorImage: selected ? config.chipAssets.selectionIndicatorImage : nil,
-                selected: selected,
-                select: { [weak self] in
-                    if chip.subchips.isEmpty {
-                        await self?.dismissChipGroupPicker()
-                        await self?.tapped(chip)
-                    } else {
-                        await self?.showChipsGroupPicker(with: chip.id)
-                    }
-                }
-            )
-        }
-        
-        updateChipsItems(with: updatedChips)
-    }
-
-    private func subchipsFrom(
-        appliedChips: [SearchChipEntity],
-        allChips: [SearchChipEntity]
-    ) -> [ChipViewModel] {
-        allChips.map { chip in
-            let selected = appliedChips.contains(where: { $0.id == chip.id })
-            return ChipViewModel(
-                id: chip.title,
-                pill: .init(
-                    title: chip.title,
-                    selected: selected,
-                    icon: selected ? .leading(Image(systemName: "checkmark")) : .none,
-                    config: config.chipAssets
-                ),
-                selectionIndicatorImage: selected ? config.chipAssets.selectionIndicatorImage : nil,
-                selected: selected,
-                select: { [weak self] in
-                    await self?.dismissChipGroupPicker()
-                    await self?.tapped(chip)
-                }
-            )
-        }
-    }
-
-    private func title(for chip: SearchChipEntity, appliedChips: [SearchChipEntity]) -> String {
-                if chip.subchips.isNotEmpty,
-           let selectedChip = chip.subchips.first(where: { subchip in
-               appliedChips.contains(where: { subchip.id == $0.id })
-           }) {
-            return selectedChip.title
-        } else {
-            return chip.title
-        }
-    }
-
-    private func selected(for chip: SearchChipEntity, appliedChips: [SearchChipEntity]) -> Bool {
-        if chip.subchips.isNotEmpty {
-            return chip.subchips.filter { subchip in
-                appliedChips.contains(where: { $0.type.isInSameChipGroup(as: subchip.type) })
-            }.isNotEmpty
-        } else {
-            return appliedChips.contains(chip)
-        }
-    }
-
-    private func icon(for chip: SearchChipEntity, selected: Bool) -> PillView.Icon {
-        if chip.subchips.isNotEmpty {
-            return .trailing(Image(systemName: "chevron.down"))
-        } else {
-            return selected ? .leading(Image(systemName: "checkmark")) : .none
-        }
-    }
-
-    func showChipsGroupPicker(with id: String) async {
-        guard let index = chipsItems.firstIndex(where: { $0.id == id }) else { return }
-        presentedChipsPickerViewModel = chipsItems[index]
-    }
-
-    func dismissChipGroupPicker() async {
-        presentedChipsPickerViewModel = nil
-    }
 
     private func updateLoadingPlaceholderVisibility(_ shown: Bool) {
         isLoadingPlaceholderShown = shown
@@ -716,10 +576,6 @@ public class SearchResultsViewModel: ObservableObject {
                 await self.searchResultUpdated(result)
             }
         }
-    }
-
-    private func updateChipsItems(with chipViewModels: [ChipViewModel]) {
-        chipsItems = chipViewModels
     }
 
     private func updateSearchResultsLoaded(_ loaded: Bool) {
@@ -781,66 +637,17 @@ public class SearchResultsViewModel: ObservableObject {
             .store(in: &subscriptions)
     }
 
-    private func updatedQuery(with sortOrder: SortOrderEntity) -> SearchQuery {
-        if currentQuery.sorting == sortOrder {
-            return currentQuery
-        } else {
-            return .userSupplied(
-                .init(
-                    query: currentQuery.query,
-                    sorting: sortOrder,
-                    mode: currentQuery.mode,
-                    isSearchActive: currentQuery.isSearchActive,
-                    chips: currentQuery.chips
-                )
-            )
-        }
-    }
-
     private func observeListItemsUpdate() {
         $listItems
             .sink { [weak self] viewModels in
                 guard let self else { return }
 
-                showSorting = viewModels.isNotEmpty
+                interactor?.listItemsUpdated(viewModels)
                 selectedRowIds = viewModels.isEmpty
                 ? []
                 : Set(viewModels.compactMap { selectedResultIds.contains($0.result.id) ? $0.id : nil })
             }
             .store(in: &subscriptions)
-    }
-
-    // create new query by deselecting previously selected chips
-    // and selected new one
-    static func makeQueryAfter(
-        tappedChip: SearchChipEntity,
-        currentQuery: SearchQuery
-    ) -> SearchQuery {
-        
-        let modifyChips: (SearchChipEntity) -> [SearchChipEntity] = { chip in
-            var chips: [SearchChipEntity] = currentQuery.chips
-
-            if let existingChipIndex = chips.firstIndex(where: { $0.id == chip.id }) {
-                chips.remove(at: existingChipIndex)
-            } else {
-                if let index = chips.firstIndex(where: { $0.type.isInSameChipGroup(as: chip.type) }) {
-                    chips.remove(at: index)
-                }
-                chips.append(chip)
-            }
-
-            return chips
-        }
-        
-        return .userSupplied(
-            .init(
-                query: currentQuery.query,
-                sorting: currentQuery.sorting,
-                mode: currentQuery.mode,
-                isSearchActive: currentQuery.isSearchActive,
-                chips: modifyChips(tappedChip)
-            )
-        )
     }
     
     // create new query using new string while preserving other search params intact
@@ -884,7 +691,7 @@ fileprivate extension SearchConfig.EmptyViewAssets.MenuOption {
     }
 }
 
-public extension SearchResultsViewModel {
+extension SearchResultsViewModel {
     var selectedResultsCount: Int {
         selectedResultIds.count
     }
@@ -897,15 +704,6 @@ public extension SearchResultsViewModel {
         } else {
             selectedResultIds = Set(currentResultsIds)
             selectedRowIds = Set(listItems.map { $0.id })
-        }
-    }
-
-    @discardableResult
-    func changeSortOrder(_ sortOrder: SortOrderEntity) -> Task<Void, Never> {
-        Task { @MainActor in
-            let query = updatedQuery(with: sortOrder)
-            await showLoadingPlaceholderIfNeeded()
-            await queryChanged(to: query)
         }
     }
 
@@ -923,14 +721,6 @@ public extension SearchResultsViewModel {
             if let selectedRow = rowViewModel(for: result) {
                 toggleSelected(selectedRow)
             }
-        }
-    }
-
-    func setSearchChipsVisible(_ visible: Bool, animated: Bool = true) {
-        if animated {
-            withAnimation { showChips = visible }
-        } else {
-            showChips = visible
         }
     }
 }

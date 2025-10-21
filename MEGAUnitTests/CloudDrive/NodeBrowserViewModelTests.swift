@@ -108,27 +108,31 @@ class NodeBrowserViewModelTests: XCTestCase {
                 sensitiveDisplayPreferenceUseCase: MockSensitiveDisplayPreferenceUseCase()
             )
 
+            let bridge = SearchBridge(
+                selection: { _ in },
+                context: { _, _ in },
+                chipTapped: { _, _ in },
+                sortingOrder: { .init(key: .name) },
+                updateSortOrder: { _ in }
+            )
+
             sut = NodeBrowserViewModel(
                 viewMode: defaultViewMode,
-                searchResultsViewModel: .init(
-                    resultsProvider: MockSearchResultsProviding(),
-                    bridge: SearchBridge(
-                        selection: { _ in },
-                        context: { _, _ in },
-                        chipTapped: { _, _ in },
-                        sortingOrder: { .init(key: .name) },
-                        updateSortOrder: { _ in }
-                    ),
+                searchResultsContainerViewModel: .init(
+                    bridge: bridge,
                     config: .testConfig,
-                    layout: defaultLayout,
-                    showLoadingPlaceholderDelay: 0,
-                    searchInputDebounceDelay: 0,
-                    keyboardVisibilityHandler: MockKeyboardVisibilityHandler(),
-                    viewDisplayMode: .unknown,
-                    listHeaderViewModel: nil,
-                    isSelectionEnabled: true,
-                    showChips: false,
-                    sortOptionsViewModel: .init(title: "", sortOptions: [])
+                    searchResultsViewModel: .init(
+                        resultsProvider: MockSearchResultsProviding(),
+                        bridge: bridge,
+                        config: .testConfig,
+                        layout: defaultLayout,
+                        keyboardVisibilityHandler: MockKeyboardVisibilityHandler(),
+                        viewDisplayMode: .unknown,
+                        listHeaderViewModel: nil,
+                        isSelectionEnabled: true
+                    ),
+                    sortOptionsViewModel: .init(title: "", sortOptions: []),
+                    showChips: false
                 ),
                 mediaDiscoveryViewModel: mediaDiscoveryViewModel,
                 warningViewModel: nil,
@@ -192,28 +196,6 @@ class NodeBrowserViewModelTests: XCTestCase {
         let harness = Harness(node: .rootNode)
         harness.sut.refreshTitle()
         XCTAssertEqual(harness.sut.title, Harness.titleBuilderProvidedValue)
-    }
-    
-    @MainActor
-    func testViewMode_changingToList_setsSearchResultsViewModelLayout() {
-        let harness = Harness(
-            defaultViewMode: .thumbnail,
-            defaultLayout: .thumbnail,
-            node: .rootNode
-        )
-        harness.sut.viewMode = .list
-        XCTAssertEqual(harness.sut.searchResultsViewModel.layout, .list)
-    }
-    
-    @MainActor
-    func testViewMode_changingToThumbnail_setsSearchResultsViewModelLayout() {
-        let harness = Harness(
-            defaultViewMode: .list,
-            defaultLayout: .list,
-            node: .rootNode
-        )
-        harness.sut.viewMode = .thumbnail
-        XCTAssertEqual(harness.sut.searchResultsViewModel.layout, .thumbnail)
     }
     
     @MainActor

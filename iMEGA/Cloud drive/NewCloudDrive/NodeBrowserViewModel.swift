@@ -33,7 +33,7 @@ class NodeBrowserViewModel: ObservableObject {
         case regular(leftBarButton: LeftBarButton)
     }
 
-    let searchResultsViewModel: SearchResultsViewModel
+    let searchResultsContainerViewModel: SearchResultsContainerViewModel
     // this is private as view should access only the view when needed, and this depends
     // on the view mode state and the injected instance.
     // Making actual property private removes logic of checking this from the view, allows to cover this by tests with high confidence
@@ -125,7 +125,7 @@ class NodeBrowserViewModel: ObservableObject {
 
     init(
         viewMode: ViewModePreferenceEntity,
-        searchResultsViewModel: SearchResultsViewModel,
+        searchResultsContainerViewModel: SearchResultsContainerViewModel,
         mediaDiscoveryViewModel: MediaDiscoveryContentViewModel?,
         warningViewModel: WarningBannerViewModel?,
         temporaryWarningViewModel: WarningBannerViewModel?,
@@ -161,7 +161,7 @@ class NodeBrowserViewModel: ObservableObject {
         onMoreOptionsButtonTapped: @escaping (UIButton) -> Void
     ) {
         self.viewMode = viewMode
-        self.searchResultsViewModel = searchResultsViewModel
+        self.searchResultsContainerViewModel = searchResultsContainerViewModel
         self.mediaDiscoveryViewModel = mediaDiscoveryViewModel
         self.warningViewModel = warningViewModel
         self.upgradeEncouragementViewModel = upgradeEncouragementViewModel
@@ -192,13 +192,15 @@ class NodeBrowserViewModel: ObservableObject {
         $viewMode
             .removeDuplicates()
             .sink { [weak self] viewMode in
-                if viewMode == .list {
-                    searchResultsViewModel.layout = .list
+                switch viewMode {
+                case .list:
+                    searchResultsContainerViewModel.update(pageLayout: .list)
+                case .thumbnail:
+                    searchResultsContainerViewModel.update(pageLayout: .thumbnail)
+                default:
+                    break
                 }
-                if viewMode == .thumbnail {
-                    searchResultsViewModel.layout = .thumbnail
-                }
-                
+
                 // save to preferences/reconstruct context menu
                 viewModeSaver(viewMode)
                 // hide search bar if we are showing media disovery
@@ -229,10 +231,10 @@ class NodeBrowserViewModel: ObservableObject {
             .dropFirst()
             .sink { [weak self] editing in
                 guard let self else { return }
-                searchResultsViewModel.editing = editing
+                searchResultsContainerViewModel.setEditing(editing)
                 mediaDiscoveryViewModel?.editMode = editing ? .active : .inactive
                 if !editing {
-                    searchResultsViewModel.clearSelection()
+                    searchResultsContainerViewModel.clearSelection()
                     // need to deselect all here to reset selected items
                     // ticket for this is [FM-1464]
                 }
@@ -250,8 +252,8 @@ class NodeBrowserViewModel: ObservableObject {
         // we are retaining and then calling the previously assigned closure here
         // as the toolbar handling code need to also be aware of what is selected and need
         // to be called via selectionChanged (See CloudDriveViewControllerFactory)
-        let previousClosure = searchResultsViewModel.bridge.selectionChanged
-        searchResultsViewModel.bridge.selectionChanged = { [weak self] selected in
+        let previousClosure = searchResultsContainerViewModel.bridge.selectionChanged
+        searchResultsContainerViewModel.bridge.selectionChanged = { [weak self] selected in
             previousClosure(selected)
             guard let self else { return }
             // we not keep the select state in here, keep only one place to store
@@ -259,7 +261,7 @@ class NodeBrowserViewModel: ObservableObject {
             self.refreshTitle()
         }
 
-        searchResultsViewModel.bridge.editingChanged = { [weak self] editing in
+        searchResultsContainerViewModel.bridge.editingChanged = { [weak self] editing in
             guard let self else { return }
             self.editing = editing
             self.refresh()
@@ -286,7 +288,7 @@ class NodeBrowserViewModel: ObservableObject {
         }
 
         nodeActionsBridge.selectedResultsHandler = { [weak self] searchResults in
-            self?.searchResultsViewModel.selectSearchResults(searchResults)
+            self?.searchResultsContainerViewModel.selectSearchResults(searchResults)
         }
     }
     
@@ -468,7 +470,7 @@ class NodeBrowserViewModel: ObservableObject {
         if let mediaDiscoveryViewModel = viewModeAwareMediaDiscoveryViewModel {
             return mediaDiscoveryViewModel.photoLibraryContentViewModel.selection.photos.count
         } else {
-            return searchResultsViewModel.selectedResultsCount
+            return searchResultsContainerViewModel.selectedResultsCount
         }
     }
     
@@ -517,7 +519,7 @@ class NodeBrowserViewModel: ObservableObject {
             }
         } else {
             self.sortOrder = sortOrder.toSortOrderEntity()
-            searchResultsViewModel.changeSortOrder(sortOrder.toSearchSortOrderEntity())
+            searchResultsContainerViewModel.changeSortOrder(sortOrder.toSearchSortOrderEntity())
         }
     }
 
@@ -527,7 +529,7 @@ class NodeBrowserViewModel: ObservableObject {
         if let mediaDiscoveryViewModel = viewModeAwareMediaDiscoveryViewModel {
             mediaDiscoveryViewModel.toggleAllSelected()
         } else {
-            searchResultsViewModel.toggleSelectAll()
+            searchResultsContainerViewModel.toggleSelectAll()
         }
         refreshTitle()
     }
@@ -535,7 +537,7 @@ class NodeBrowserViewModel: ObservableObject {
     func stopEditing() {
         editing = false
         refresh()
-        searchResultsViewModel.bridge.editingCancelled()
+        searchResultsContainerViewModel.bridge.editingCancelled()
     }
 
     func moreOptionsButtonTapped(button: UIButton) {

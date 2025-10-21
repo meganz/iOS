@@ -50,10 +50,21 @@ public enum SearchQuery: Equatable, Sendable {
         .home
     }
 
-    public mutating func clearChips() {
-        guard chips.isNotEmpty, case .userSupplied(var query) = self else { return }
-        query.clearChips()
-        self = .userSupplied(query)
+    public func clearingChips() -> SearchQuery {
+        guard chips.isNotEmpty, case .userSupplied(let query) = self else { return self }
+        return .userSupplied(query.clearingChips())
+    }
+
+    public func withUpdatedSortOrder(_ sortOrder: SortOrderEntity) -> SearchQuery {
+        self.sorting == sortOrder ? self : .userSupplied(
+            .init(
+                query: query,
+                sorting: sortOrder,
+                mode: mode,
+                isSearchActive: isSearchActive,
+                chips: chips
+            )
+        )
     }
 }
 
