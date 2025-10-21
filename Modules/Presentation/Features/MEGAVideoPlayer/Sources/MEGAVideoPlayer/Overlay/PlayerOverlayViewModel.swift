@@ -132,6 +132,10 @@ public final class PlayerOverlayViewModel: ObservableObject {
 
 extension PlayerOverlayViewModel {
     func didTapBack() {
+        cancellables.removeAll()
+        autoHideTimer?.invalidate()
+        doubleTapSeekTimer?.invalidate()
+        lockOverlayTimer?.invalidate()
         didTapBackAction()
     }
 
