@@ -2,7 +2,6 @@ import Combine
 import MEGADomain
 
 final class AudioSessionRepository: AudioSessionRepositoryProtocol {
-    
     static let newRepo = AudioSessionRepository(audioSession: .sharedInstance())
     
     private let audioSession: AVAudioSession
@@ -16,117 +15,83 @@ final class AudioSessionRepository: AudioSessionRepositoryProtocol {
             return .unknown
         }
         
-        switch portType {
-        case .builtInReceiver: return .builtInReceiver
-        case .builtInSpeaker: return .builtInSpeaker
-        case .headphones: return .headphones
-        default: return .other
+        return switch portType {
+        case .builtInReceiver: .builtInReceiver
+        case .builtInSpeaker: .builtInSpeaker
+        case .headphones: .headphones
+        default: .other
         }
-    }
-    
-    // wrapping in async to make sure it's executed in the background thread
-    // and does not cause app hang
-    private func asyncCurrentSelectedAudioPort() async -> AudioPort {
-        currentSelectedAudioPort
     }
     
     public init(audioSession: AVAudioSession) {
         self.audioSession = audioSession
     }
     
-    func configureDefaultAudioSession(completion: ((Result<Void, AudioSessionErrorEntity>) -> Void)?) {
+    private func executeAction(functionName: StaticString = #function, action: () throws -> Void) {
         do {
-            try AVAudioSession.sharedInstance().setCategory(.playAndRecord, mode: .voiceChat, options: [.allowBluetoothHFP, .allowBluetoothA2DP])
-            try AVAudioSession.sharedInstance().setActive(false, options: .notifyOthersOnDeactivation)
-            completion?(.success)
+            try action()
         } catch {
-            MEGALogError("[AudioSession] configureDefaultAudioSession Error: \(error.localizedDescription)")
-            completion?(.failure(.generic))
+            MEGALogError("[AudioSession] \(functionName) error: \(error.localizedDescription)")
         }
     }
     
-    func configureCallAudioSession(completion: ((Result<Void, AudioSessionErrorEntity>) -> Void)?) {
-        do {
+    func configureDefaultAudioSession() {
+        executeAction {
+            try audioSession.setCategory(.playAndRecord, mode: .voiceChat, options: [.allowBluetoothHFP, .allowBluetoothA2DP])
+            try audioSession.setActive(false, options: .notifyOthersOnDeactivation)
+        }
+    }
+    
+    func configureCallAudioSession() {
+        executeAction {
             let isSpeakerEnabled = currentSelectedAudioPort == .builtInSpeaker
             try audioSession.setCategory(.playAndRecord, mode: .voiceChat, options: [.allowBluetoothHFP, .allowBluetoothA2DP, .mixWithOthers])
             if isSpeakerEnabled {
                 try audioSession.overrideOutputAudioPort(.speaker)
             }
             try audioSession.setActive(true)
-            completion?(.success)
-        } catch {
-            MEGALogError("[AudioSession] configureCallAudioSession Error: \(error.localizedDescription)")
-            completion?(.failure(.generic))
         }
     }
     
-    func configureAudioPlayerAudioSession(completion: ((Result<Void, AudioSessionErrorEntity>) -> Void)?) {
-        do {
-            try AVAudioSession.sharedInstance().setCategory(.playback, options: [.allowBluetoothHFP, .allowBluetoothA2DP])
-            completion?(.success)
-        } catch {
-            MEGALogError("[AudioSession] configureAudioPlayerAudioSession Error: \(error.localizedDescription)")
-            completion?(.failure(.generic))
+    func configureAudioPlayerAudioSession() {
+        executeAction {
+            try audioSession.setCategory(.playback, options: [.allowBluetoothHFP, .allowBluetoothA2DP])
         }
     }
     
-    func configureChatDefaultAudioPlayer(completion: ((Result<Void, AudioSessionErrorEntity>) -> Void)?) {
-        do {
-            try AVAudioSession.sharedInstance().setCategory(.playAndRecord, mode: .default, options: [.allowBluetoothHFP, .defaultToSpeaker])
-            completion?(.success)
-        } catch {
-            MEGALogInfo("[AudioSession] configureChatDefaultAudioPlayerAudioSession Error: \(error.localizedDescription)")
-            completion?(.failure(.generic))
+    func configureChatDefaultAudioPlayer() {
+        executeAction {
+            try audioSession.setCategory(.playAndRecord, mode: .default, options: [.allowBluetoothHFP, .defaultToSpeaker])
         }
     }
     
-    func configureAudioRecorderAudioSession(isPlayerAlive: Bool, completion: ((Result<Void, AudioSessionErrorEntity>) -> Void)?) {
-        do {
+    func configureAudioRecorderAudioSession(isPlayerAlive: Bool, ) {
+        executeAction {
             if isPlayerAlive {
-                try AVAudioSession.sharedInstance().setCategory(
-                    .playAndRecord,
-                    mode: .default,
-                    options: [.allowBluetoothHFP, .allowBluetoothA2DP]
-                )
+                try audioSession.setCategory(.playAndRecord, mode: .default, options: [.allowBluetoothHFP, .allowBluetoothA2DP])
             }
-            try AVAudioSession.sharedInstance().setActive(true)
-            completion?(.success)
-        } catch {
-            MEGALogError("[AudioSession] configureAudioRecorderAudioSession Error: \(error.localizedDescription)")
-            completion?(.failure(.generic))
+            try audioSession.setActive(true)
         }
     }
     
-    func configureVideoAudioSession(completion: ((Result<Void, AudioSessionErrorEntity>) -> Void)?) {
-        do {
-            try AVAudioSession.sharedInstance().setCategory(.playback)
-            try AVAudioSession.sharedInstance().setActive(true)
-            completion?(.success)
-        } catch {
-            MEGALogError("[AudioSession] configureVideoAudioSession Error: \(error.localizedDescription)")
-            completion?(.failure(.generic))
+    func configureVideoAudioSession() {
+        executeAction {
+            try audioSession.setCategory(.playback)
+            try audioSession.setActive(true)
         }
     }
     
-    func enableLoudSpeaker(completion: ((Result<Void, AudioSessionErrorEntity>) -> Void)?) {
-        MEGALogDebug("AudioSession: enabling loud speaker")
-        do {
+    func enableLoudSpeaker() {
+        MEGALogDebug("[AudioSession] enabling loud speaker")
+        executeAction {
             try audioSession.overrideOutputAudioPort(.speaker)
-            completion?(.success)
-        } catch {
-            MEGALogError("Error enabling the loudspeaker \(error.localizedDescription)")
-            completion?(.failure(.generic))
         }
     }
     
-    func disableLoudSpeaker(completion: ((Result<Void, AudioSessionErrorEntity>) -> Void)?) {
-        MEGALogDebug("AudioSession: disable loud speaker")
-        do {
+    func disableLoudSpeaker() {
+        MEGALogDebug("[AudioSession] disable loud speaker")
+        executeAction {
             try audioSession.overrideOutputAudioPort(.none)
-            completion?(.success)
-        } catch {
-            MEGALogError("Error disabling the loudspeaker \(error.localizedDescription)")
-            completion?(.failure(.generic))
         }
     }
     
@@ -151,52 +116,42 @@ final class AudioSessionRepository: AudioSessionRepositoryProtocol {
             }
             .eraseToAnyPublisher()
     }
-    
-    // MARK: - Private methods
 }
 
 extension AudioPort {
     var avAudioSessionPort: AVAudioSession.Port? {
-        switch self {
-        case .builtInSpeaker:
-            return .builtInSpeaker
-        case .builtInReceiver:
-            return .builtInReceiver
-        case .headphones:
-            return .headphones
-        default:
-            return nil
+        return switch self {
+        case .builtInSpeaker: .builtInSpeaker
+        case .builtInReceiver: .builtInReceiver
+        case .headphones: .headphones
+        default: nil
         }
     }
 }
 
 extension AVAudioSession.RouteChangeReason {
     func toAudioSessionRouteChangedReason() -> AudioSessionRouteChangedReason? {
-        switch self {
-        case .unknown: return .unknown
-        case .newDeviceAvailable: return .newDeviceAvailable
-        case .oldDeviceUnavailable: return .oldDeviceUnavailable
-        case .categoryChange: return .categoryChange
-        case .override: return .override
-        case .wakeFromSleep: return .wakeFromSleep
-        case .noSuitableRouteForCategory: return .noSuitableRouteForCategory
-        case .routeConfigurationChange: return .routeConfigurationChange
-        @unknown default: return nil
+        return switch self {
+        case .unknown: .unknown
+        case .newDeviceAvailable: .newDeviceAvailable
+        case .oldDeviceUnavailable: .oldDeviceUnavailable
+        case .categoryChange: .categoryChange
+        case .override: .override
+        case .wakeFromSleep: .wakeFromSleep
+        case .noSuitableRouteForCategory: .noSuitableRouteForCategory
+        case .routeConfigurationChange: .routeConfigurationChange
+        @unknown default: nil
         }
     }
 }
 
 extension AVAudioSessionPortDescription {
     func toAudioPort() -> AudioPort {
-        switch self.portType {
-        case .builtInSpeaker:
-            return .builtInSpeaker
-        case .builtInReceiver:
-            return .builtInReceiver
-        case .headphones:
-            return .headphones
-        default:
-            return .other
+        return switch self.portType {
+        case .builtInSpeaker: .builtInSpeaker
+        case .builtInReceiver: .builtInReceiver
+        case .headphones: .headphones
+        default: .other
         }
     }
 }

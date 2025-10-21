@@ -3,50 +3,16 @@ import Combine
 public protocol AudioSessionUseCaseProtocol {
     var isBluetoothAudioRouteAvailable: Bool { get }
     var currentSelectedAudioPort: AudioPort { get }
-    func configureDefaultAudioSession(completion: ((Result<Void, AudioSessionErrorEntity>) -> Void)?)
-    func configureCallAudioSession(completion: ((Result<Void, AudioSessionErrorEntity>) -> Void)?)
-    func configureAudioPlayerAudioSession(completion: ((Result<Void, AudioSessionErrorEntity>) -> Void)?)
-    func configureChatDefaultAudioPlayer(completion: ((Result<Void, AudioSessionErrorEntity>) -> Void)?)
-    func configureAudioRecorderAudioSession(isPlayerAlive: Bool, completion: ((Result<Void, AudioSessionErrorEntity>) -> Void)?)
-    func configureVideoAudioSession(completion: ((Result<Void, AudioSessionErrorEntity>) -> Void)?)
+    func configureDefaultAudioSession()
+    func configureCallAudioSession()
+    func configureAudioPlayerAudioSession()
+    func configureChatDefaultAudioPlayer()
+    func configureAudioRecorderAudioSession(isPlayerAlive: Bool, )
+    func configureVideoAudioSession()
     func isOutputFrom(port: AudioPort) -> Bool
-    func enableLoudSpeaker(completion: ((Result<Void, AudioSessionErrorEntity>) -> Void)?)
-    func disableLoudSpeaker(completion: ((Result<Void, AudioSessionErrorEntity>) -> Void)?)
+    func enableLoudSpeaker()
+    func disableLoudSpeaker()
     func onAudioSessionRouteChange() -> AnyPublisher<AudioSessionRouteChangedReason, Never>
-}
-
-extension AudioSessionUseCaseProtocol {
-    public func configureDefaultAudioSession() {
-        configureDefaultAudioSession(completion: nil)
-    }
-    
-    public func configureCallAudioSession() {
-        configureCallAudioSession(completion: nil)
-    }
-    
-    public func configureAudioPlayerAudioSession() {
-        configureAudioPlayerAudioSession(completion: nil)
-    }
-    
-    public func configureChatDefaultAudioPlayer() {
-        configureChatDefaultAudioPlayer(completion: nil)
-    }
-    
-    public func configureAudioRecorderAudioSession(isPlayerAlive: Bool) {
-        configureAudioRecorderAudioSession(isPlayerAlive: isPlayerAlive, completion: nil)
-    }
-    
-    public func configureVideoAudioSession() {
-        configureVideoAudioSession(completion: nil)
-    }
-    
-    public func enableLoudSpeaker() {
-        enableLoudSpeaker(completion: nil)
-    }
-    
-    public func disableLoudSpeaker() {
-        disableLoudSpeaker(completion: nil)
-    }
 }
 
 public final class AudioSessionUseCase<T: AudioSessionRepositoryProtocol>: AudioSessionUseCaseProtocol {
@@ -64,36 +30,36 @@ public final class AudioSessionUseCase<T: AudioSessionRepositoryProtocol>: Audio
         self.audioSessionRepository = audioSessionRepository
     }
     
-    public func configureDefaultAudioSession(completion: ((Result<Void, AudioSessionErrorEntity>) -> Void)?) {
-        audioSessionRepository.configureDefaultAudioSession(completion: completion)
+    public func configureDefaultAudioSession() {
+        audioSessionRepository.configureDefaultAudioSession()
     }
     
-    public func configureCallAudioSession(completion: ((Result<Void, AudioSessionErrorEntity>) -> Void)?) {
-        audioSessionRepository.configureCallAudioSession(completion: completion)
+    public func configureCallAudioSession() {
+        audioSessionRepository.configureCallAudioSession()
     }
     
-    public func configureAudioPlayerAudioSession(completion: ((Result<Void, AudioSessionErrorEntity>) -> Void)?) {
-        audioSessionRepository.configureAudioPlayerAudioSession(completion: completion)
+    public func configureAudioPlayerAudioSession() {
+        audioSessionRepository.configureAudioPlayerAudioSession()
     }
     
-    public func configureChatDefaultAudioPlayer(completion: ((Result<Void, AudioSessionErrorEntity>) -> Void)?) {
-        audioSessionRepository.configureChatDefaultAudioPlayer(completion: completion)
+    public func configureChatDefaultAudioPlayer() {
+        audioSessionRepository.configureChatDefaultAudioPlayer()
     }
     
-    public func configureAudioRecorderAudioSession(isPlayerAlive: Bool, completion: ((Result<Void, AudioSessionErrorEntity>) -> Void)?) {
-        audioSessionRepository.configureAudioRecorderAudioSession(isPlayerAlive: isPlayerAlive, completion: completion)
+    public func configureAudioRecorderAudioSession(isPlayerAlive: Bool, ) {
+        audioSessionRepository.configureAudioRecorderAudioSession(isPlayerAlive: isPlayerAlive, )
     }
     
-    public func configureVideoAudioSession(completion: ((Result<Void, AudioSessionErrorEntity>) -> Void)?) {
-        audioSessionRepository.configureVideoAudioSession(completion: completion)
+    public func configureVideoAudioSession() {
+        audioSessionRepository.configureVideoAudioSession()
     }
     
-    public func enableLoudSpeaker(completion: ((Result<Void, AudioSessionErrorEntity>) -> Void)?) {
-        audioSessionRepository.enableLoudSpeaker(completion: completion)
+    public func enableLoudSpeaker() {
+        audioSessionRepository.enableLoudSpeaker()
     }
     
-    public func disableLoudSpeaker(completion: ((Result<Void, AudioSessionErrorEntity>) -> Void)?) {
-        audioSessionRepository.disableLoudSpeaker(completion: completion)
+    public func disableLoudSpeaker() {
+        audioSessionRepository.disableLoudSpeaker()
     }
     
     public func isOutputFrom(port: AudioPort) -> Bool {

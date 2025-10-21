@@ -51,41 +51,41 @@ public final class MockAudioSessionUseCase: AudioSessionUseCaseProtocol {
         }
     }
 
-    public func enableLoudSpeaker(completion: ((Result<Void, AudioSessionErrorEntity>) -> Void)?) {
+    public func enableLoudSpeaker() {
         enableLoudSpeaker_calledTimes += 1
     }
     
-    public func disableLoudSpeaker(completion: ((Result<Void, AudioSessionErrorEntity>) -> Void)?) {
+    public func disableLoudSpeaker() {
         disableLoudSpeaker_calledTimes += 1
     }
     
     public func isOutputFrom(port: AudioPort) -> Bool {
-        return port == audioPortOutput
+        port == audioPortOutput
     }
     
     public func routeChanged(handler: ((AudioSessionRouteChangedReason, AudioPort?) -> Void)?) {}
     
-    public func configureDefaultAudioSession(completion: ((Result<Void, AudioSessionErrorEntity>) -> Void)?) {
+    public func configureDefaultAudioSession() {
         configureDefaultAudioSession_calledTimes += 1
     }
     
-    public func configureCallAudioSession(completion: ((Result<Void, AudioSessionErrorEntity>) -> Void)?) {
+    public func configureCallAudioSession() {
         configureCallAudioSession_calledTimes += 1
     }
     
-    public func configureAudioPlayerAudioSession(completion: ((Result<Void, AudioSessionErrorEntity>) -> Void)?) {
+    public func configureAudioPlayerAudioSession() {
         configureAudioPlayerAudioSession_calledTimes += 1
     }
     
-    public func configureChatDefaultAudioPlayer(completion: ((Result<Void, AudioSessionErrorEntity>) -> Void)?) {
+    public func configureChatDefaultAudioPlayer() {
         configureChatDefaultAudioPlayerAudioSession_calledTimes += 1
     }
     
-    public func configureAudioRecorderAudioSession(isPlayerAlive: Bool, completion: ((Result<Void, AudioSessionErrorEntity>) -> Void)?) {
+    public func configureAudioRecorderAudioSession(isPlayerAlive: Bool, ) {
         configureAudioRecorderAudioSession_calledTimes += 1
     }
     
-    public func configureVideoAudioSession(completion: ((Result<Void, AudioSessionErrorEntity>) -> Void)?) {
+    public func configureVideoAudioSession() {
         configureVideoAudioSession_calledTimes += 1
     }
     

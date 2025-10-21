@@ -450,7 +450,7 @@ extension CallsCoordinator: CallsCoordinatorProtocol {
                     timerDuration: 60 * 5, chatId: callActionSync.chatRoom.chatId)
             }
             if callActionSync.speakerEnabled {
-                audioSessionUseCase.enableLoudSpeaker(completion: nil)
+                audioSessionUseCase.enableLoudSpeaker()
             }
             if !isWaitingRoomOpened(inChatRoom: callActionSync.chatRoom) {
                 startCallUI(chatRoom: callActionSync.chatRoom, call: call)
@@ -473,7 +473,7 @@ extension CallsCoordinator: CallsCoordinatorProtocol {
                 localizedCameraName: localizedCameraName
             )
             if callActionSync.speakerEnabled {
-                audioSessionUseCase.enableLoudSpeaker(completion: nil)
+                audioSessionUseCase.enableLoudSpeaker()
             }
             if !isWaitingRoomOpened(inChatRoom: callActionSync.chatRoom) {
                 startCallUI(chatRoom: callActionSync.chatRoom, call: call)
