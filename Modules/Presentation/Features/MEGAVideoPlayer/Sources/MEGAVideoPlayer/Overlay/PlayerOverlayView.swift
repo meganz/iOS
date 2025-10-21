@@ -7,7 +7,10 @@ import MEGAUIComponent
 import SwiftUI
 
 public struct PlayerOverlayView: View {
-    @StateObject var viewModel: PlayerOverlayViewModel
+    // @ObservedObject because the VM is created/owned by the presenter (UIKit).
+    // Using @StateObject here can retain the creation context via an escaping
+    // autoclosure and prevent deallocation in mixed UIKit/SwiftUI flows.
+    @ObservedObject var viewModel: PlayerOverlayViewModel
 
     enum Constants {
         static let bottomSheetRowHeight: CGFloat = 58
