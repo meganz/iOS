@@ -112,7 +112,7 @@ final class ProgressIndicatorViewModel {
             shouldShowPauseBadge = false
         }
         
-        if completedBytes == totalBytes && queuedUploadTransfers.isEmpty {
+        if completedBytes >= totalBytes && queuedUploadTransfers.isEmpty {
             updateForCompletedTransfers()
         } else {
             updateForActiveTransfers()
@@ -271,9 +271,9 @@ final class ProgressIndicatorViewModel {
         }
         if transfer.state == .cancelled {
             cancelTransfer(transferredBytes: transfer.transferredBytes, totalBytes: transfer.totalBytes)
-        } else if transfer.type == .download {
-            completedBytes += transfer.deltaSize ?? 0
         }
+        
+        completedBytes += transfer.deltaSize ?? 0
         
         if transfer.state == .failed {
             lastFailedTransfer = transfer
