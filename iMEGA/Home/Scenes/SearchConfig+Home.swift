@@ -11,7 +11,7 @@ extension SearchConfig {
         contextPreviewFactory: ContextPreviewFactory,
         defaultEmptyViewAsset: @escaping () -> EmptyViewAssets
     ) -> SearchConfig {
-        return .init(
+        .init(
             chipAssets: .init(
                 selectionIndicatorImage: MEGAAssets.UIImage.turquoiseCheckmark,
                 closeIcon: MEGAAssets.UIImage.miniplayerClose,
@@ -34,55 +34,55 @@ extension SearchConfig {
                 switch chip.id {
                 case SearchChipEntity.docs.id:
                     return .init(
-                        image: MEGAAssets.Image.noResultsDocuments,
+                        image: MEGAAssets.Image.glassFile,
                         title: Strings.Localizable.Home.Search.Empty.noDocuments,
                         titleTextColor: titleTextColor
                     )
                 case SearchChipEntity.audio.id:
                     return .init(
-                        image: MEGAAssets.Image.noResultsAudio,
+                        image: MEGAAssets.Image.glassAudio,
                         title: Strings.Localizable.Home.Search.Empty.noAudio,
                         titleTextColor: titleTextColor
                     )
                 case SearchChipEntity.video.id:
                     return .init(
-                        image: MEGAAssets.Image.noResultsVideo,
+                        image: MEGAAssets.Image.glassVideo,
                         title: Strings.Localizable.Home.Search.Empty.noVideos,
                         titleTextColor: titleTextColor
                     )
                 case SearchChipEntity.images.id:
                     return .init(
-                        image: MEGAAssets.Image.noResultsImages,
+                        image: MEGAAssets.Image.glassImage,
                         title: Strings.Localizable.Home.Search.Empty.noImages,
                         titleTextColor: titleTextColor
                     )
                 case SearchChipEntity.folders.id:
                     return .init(
-                        image: MEGAAssets.Image.noResultsFolders,
+                        image: MEGAAssets.Image.glassFolder,
                         title: Strings.Localizable.Home.Search.Empty.noFolders,
                         titleTextColor: titleTextColor
                     )
                 case SearchChipEntity.pdf.id:
                     return .init(
-                        image: MEGAAssets.Image.noResultsDocuments,
+                        image: MEGAAssets.Image.glassFile,
                         title: Strings.Localizable.Home.Search.Empty.noPdfs,
                         titleTextColor: titleTextColor
                     )
                 case SearchChipEntity.presentation.id:
                     return .init(
-                        image: MEGAAssets.Image.noResultsPresentations,
+                        image: MEGAAssets.Image.glassPlaylist,
                         title: Strings.Localizable.Home.Search.Empty.noPresentations,
                         titleTextColor: titleTextColor
                     )
                 case SearchChipEntity.archives.id:
                     return .init(
-                        image: MEGAAssets.Image.noResultsArchives,
+                        image: MEGAAssets.Image.glassObjects,
                         title: Strings.Localizable.Home.Search.Empty.noArchives,
                         titleTextColor: titleTextColor
                     )
                 case SearchChipEntity.spreadsheets.id:
                     return .init(
-                        image: MEGAAssets.Image.noResultsDocuments,
+                        image: MEGAAssets.Image.glassFile,
                         title: Strings.Localizable.Home.Search.Empty.noSpreadsheets,
                         titleTextColor: titleTextColor
                     )
@@ -133,7 +133,7 @@ extension SearchConfig {
         with titleTextColor: Color
     ) -> SearchConfig.EmptyViewAssets {
         .init(
-            image: MEGAAssets.Image.searchEmptyState,
+            image: MEGAAssets.Image.glassSearch02,
             title: Strings.Localizable.Home.Search.Empty.noChipSelected,
             titleTextColor: titleTextColor
         )

@@ -257,4 +257,11 @@ public struct MEGAImageBundle {
     public static var glassTrash: Image { Image(.glassTrash) }
     public static var folderUsersMono: Image { Image(.folderUsersMono) }
     public static var plus: Image { Image(.plus) }
+    public static var glassFile: Image { Image(.glassFile) }
+    public static var glassAudio: Image { Image(.glassAudio) }
+    public static var glassObjects: Image { Image(.glassObjects) }
+    // For some reasons the asset name "glassImage" will yield a
+    // compiler error, we need to use "glassImage00" instead
+    public static var glassImage: Image { Image(.glassImage00) }
+    public static var glassVideo: Image { Image(.glassVideo) }
 }

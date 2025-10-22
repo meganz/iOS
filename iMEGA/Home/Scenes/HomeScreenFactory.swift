@@ -236,7 +236,7 @@ final class HomeScreenFactory: NSObject {
             ),
             defaultEmptyViewAsset: {
                 .init(
-                    image: MEGAAssets.Image.searchEmptyState,
+                    image: MEGAAssets.Image.glassSearch02,
                     title: Strings.Localizable.Home.Search.Empty.noChipSelected,
                     titleTextColor: TokenColors.Icon.secondary.swiftUI
                 )

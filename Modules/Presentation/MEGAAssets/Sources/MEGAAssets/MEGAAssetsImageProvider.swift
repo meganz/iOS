@@ -42,19 +42,19 @@ extension MEGAAssets {
             case .filetypeFolderCamera: MEGAImageBundle.filetypeFolderCamera
             }
         }
-        
+
         public static func image(named: String) -> SwiftUI.Image {
             SwiftUI.Image(named, bundle: Bundle.MEGAAssetsBundle)
         }
-        
+
         public static func image(forFileExtension fileExtension: String) -> SwiftUI.Image {
             MEGAAssets.Image.image(forAssetsFileType: MEGAAssetsFileType(withFileExtension: fileExtension))
         }
-        
+
         public static func image(forFileName fileName: String) -> SwiftUI.Image {
             MEGAAssets.Image.image(forAssetsFileType: MEGAAssetsFileType(withFileName: fileName))
         }
-        
+
         public static var filetypeFolder: SwiftUI.Image { MEGAImageBundle.filetypeFolder }
         public static var megaLogoGrayscale: SwiftUI.Image { MEGAImageBundle.megaLogoGrayscale }
         public static var recentsEmptyState: SwiftUI.Image { MEGAImageBundle.recentsEmptyState }
@@ -277,6 +277,11 @@ extension MEGAAssets {
         public static var glassTrash: SwiftUI.Image { MEGAImageBundle.glassTrash }
         public static var folderUsersMono: SwiftUI.Image { MEGAImageBundle.folderUsersMono }
         public static var plus: SwiftUI.Image { MEGAImageBundle.plus }
+        public static var glassFile: SwiftUI.Image { MEGAImageBundle.glassFile }
+        public static var glassAudio: SwiftUI.Image { MEGAImageBundle.glassAudio }
+        public static var glassObjects: SwiftUI.Image { MEGAImageBundle.glassObjects }
+        public static var glassImage: SwiftUI.Image { MEGAImageBundle.glassImage }
+        public static var glassVideo: SwiftUI.Image { MEGAImageBundle.glassVideo }
     }
 }
 
