@@ -105,6 +105,7 @@ public final class AccountMenuViewModel: ObservableObject {
     private var onContactRequestsUpdatesTask: Task<Void, any Error>?
     private var onUserAlertsUpdatesTask: Task<Void, any Error>?
     private var monitorSubmitReceiptAfterPurchaseTask: Task<Void, Never>?
+    private var monitorSubmitReceiptResultTask: Task<Void, Never>?
     private let notificationsUseCase: any NotificationsUseCaseProtocol
     private var subscriptions: Set<AnyCancellable> = []
 
@@ -254,7 +255,9 @@ public final class AccountMenuViewModel: ObservableObject {
         listenToAccountRequestFinishUpdates()
         listenToContactsRequestsUpdates()
         listenToUserAlertsUpdates()
+        registerPurchaseDelegate()
         listenToSubmitReceiptAfterPurchase()
+        listenToSubmitReceiptResult()
         listenToPrivacySuiteExpanded()
     }
 
@@ -264,6 +267,10 @@ public final class AccountMenuViewModel: ObservableObject {
         onAccountRequestFinishUpdatesTask?.cancel()
         onContactRequestsUpdatesTask?.cancel()
         monitorSubmitReceiptAfterPurchaseTask?.cancel()
+        monitorSubmitReceiptResultTask?.cancel()
+        Task { [purchaseUseCase] in
+            await purchaseUseCase.deRegisterRestoreDelegate()
+        }
     }
 
     func notificationButtonTapped() {
@@ -364,9 +371,13 @@ public final class AccountMenuViewModel: ObservableObject {
         )
     }
 
-    private func fetchUpdatedAccountDetailsAndUpdateUI() async {
+    private func fetchUpdatedAccountDetailsAndUpdateUI(monitorUpdate: Bool = false) async {
         do {
-            let accountDetails = try await accountUseCase.refreshCurrentAccountDetails()
+            let accountDetails = try await (
+                monitorUpdate
+                ? accountUseCase.refreshAccountAndMonitorUpdate()
+                : accountUseCase.refreshCurrentAccountDetails()
+            )
             updateUI(with: accountDetails)
         } catch {
             MEGALogDebug("Error while fetching account details: \(error)")
@@ -607,6 +618,12 @@ public final class AccountMenuViewModel: ObservableObject {
         }
     }
 
+    private func registerPurchaseDelegate() {
+        Task { [purchaseUseCase] in
+            await purchaseUseCase.registerPurchaseDelegate()
+        }
+    }
+
     private func listenToSubmitReceiptAfterPurchase() {
         monitorSubmitReceiptAfterPurchaseTask = Task { @MainActor [weak self, purchaseUseCase] in
             for await _ in purchaseUseCase.monitorSubmitReceiptAfterPurchase.values.removeDuplicates().filter({ $0 }) {
@@ -616,6 +633,19 @@ public final class AccountMenuViewModel: ObservableObject {
                     isAccountUpdating: isAccountUpdating,
                     accountDetails: accountUseCase.currentAccountDetails
                 )
+            }
+        }
+    }
+
+    private func listenToSubmitReceiptResult() {
+        monitorSubmitReceiptResultTask = Task { @MainActor [weak self, purchaseUseCase] in
+            let submitReceiptResultSequence = purchaseUseCase
+                .submitReceiptResultPublisher
+                .debounce(for: .seconds(0.5), scheduler: DispatchQueue.main)
+                .values
+            for await _ in submitReceiptResultSequence {
+                purchaseUseCase.endMonitoringPurchaseReceipt()
+                await self?.fetchUpdatedAccountDetailsAndUpdateUI(monitorUpdate: true)
             }
         }
     }
