@@ -211,23 +211,7 @@
 
 + (void)startPendingUploadTransferIfNeeded {
     if ([Helper areQueuedTransfersPaused]) { return; }
-    
-    BOOL allUploadTransfersPaused = YES;
-    
-    MEGATransferList *transferList = [MEGASdk.shared uploadTransfers];
-    
-    for (int i = 0; i < transferList.size; i++) {
-        MEGATransfer *transfer = [transferList transferAtIndex:i];
-        
-        if (transfer.state == MEGATransferStateActive) {
-            allUploadTransfersPaused = NO;
-            break;
-        }
-    }
-    
-    if (allUploadTransfersPaused) {
-        [self startFirstPendingUploadTransfer];
-    }
+    [self startFirstPendingUploadTransfer];
 }
 
 + (void)startFirstPendingUploadTransfer {
