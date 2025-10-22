@@ -22,6 +22,7 @@ struct SearchResultsSortOptionsView: View {
                     )
                 }
             }
+            .scrollIndicators(.hidden)
         }
         .padding(.horizontal, TokenSpacing._5)
         .presentationDetents([.medium, .large])
@@ -31,7 +32,7 @@ struct SearchResultsSortOptionsView: View {
         Text(viewModel.title)
             .font(.body)
             .bold()
-            .foregroundStyle(.black)
+            .foregroundStyle(TokenColors.Text.primary.swiftUI)
             .frame(height: height)
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(.top, TokenSpacing._6)
@@ -65,7 +66,7 @@ private struct SortOptionView: View {
             HStack {
                 Text(name)
                     .font(.body)
-                    .foregroundStyle(.black)
+                    .foregroundStyle(TokenColors.Text.primary.swiftUI)
 
                 Spacer()
                 if let icon = icon {
