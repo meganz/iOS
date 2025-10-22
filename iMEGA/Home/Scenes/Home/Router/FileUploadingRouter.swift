@@ -65,7 +65,7 @@ final class FileUploadingRouter {
     // MARK: - Display Import Selection View Controller
 
     private func presentImportSelection() {
-        let documentPickerViewController = UIDocumentPickerViewController(forOpeningContentTypes: [UTType.data, UTType.package], asCopy: true)
+        let documentPickerViewController = UIDocumentPickerViewController(forOpeningContentTypes: [UTType.data, UTType.package, UTType.folder], asCopy: true)
         documentPickerViewController.allowsMultipleSelection = true
 
         var documentImportsDelegate: DocumentImportsDelegate? {

@@ -27,7 +27,7 @@ final class DocumentPickerViewRouter {
 
     func start() {
         let documentPicker = UIDocumentPickerViewController(
-            forOpeningContentTypes: [UTType.data, UTType.package],
+            forOpeningContentTypes: [UTType.data, UTType.package, UTType.folder],
             asCopy: true
         )
 
