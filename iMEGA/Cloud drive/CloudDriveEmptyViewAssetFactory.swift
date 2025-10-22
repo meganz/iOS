@@ -80,7 +80,7 @@ struct CloudDriveEmptyViewAssetFactory {
 
     private func defaultAssetForCloudDriveRootFolder(parentNode: NodeEntity) -> SearchConfig.EmptyViewAssets {
         .init(
-            image: MEGAAssets.Image.cloudEmptyState,
+            image: MEGAAssets.Image.glassCloud,
             title: Strings.Localizable.cloudDriveEmptyStateTitle,
             titleTextColor: titleTextColor,
             actions: makeDefaultActions(for: parentNode)
@@ -89,7 +89,7 @@ struct CloudDriveEmptyViewAssetFactory {
 
     private func defaultAssetForRubbishBinRootFolder() -> SearchConfig.EmptyViewAssets {
         .init(
-            image: MEGAAssets.Image.rubbishEmptyState,
+            image: MEGAAssets.Image.glassTrash,
             title: Strings.Localizable.cloudDriveEmptyStateTitleRubbishBin,
             titleTextColor: titleTextColor
         )
@@ -97,7 +97,7 @@ struct CloudDriveEmptyViewAssetFactory {
 
     private func defaultAssetForRecentActionBucket() -> SearchConfig.EmptyViewAssets {
         .init(
-            image: MEGAAssets.Image.searchEmptyState,
+            image: MEGAAssets.Image.glassSearch02,
             title: Strings.Localizable.Home.Search.Empty.noChipSelected,
             titleTextColor: titleTextColor
         )
@@ -105,7 +105,7 @@ struct CloudDriveEmptyViewAssetFactory {
 
     private func defaultAssetForEmptyFolder(for parentNode: NodeEntity? = nil) -> SearchConfig.EmptyViewAssets {
         .init(
-            image: MEGAAssets.Image.folderEmptyState,
+            image: MEGAAssets.Image.glassFolder,
             title: Strings.Localizable.emptyFolder,
             titleTextColor: titleTextColor,
             actions: makeDefaultActions(for: parentNode)

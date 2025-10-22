@@ -790,6 +790,21 @@ public struct MEGAImageBundle {
   public static var plus: SwiftUICore.Image {
     get
   }
+  public static var glassFile: SwiftUICore.Image {
+    get
+  }
+  public static var glassAudio: SwiftUICore.Image {
+    get
+  }
+  public static var glassObjects: SwiftUICore.Image {
+    get
+  }
+  public static var glassImage: SwiftUICore.Image {
+    get
+  }
+  public static var glassVideo: SwiftUICore.Image {
+    get
+  }
 }
 extension Foundation.Bundle {
   public static let MEGAAssetsBundle: Foundation.Bundle

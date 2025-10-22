@@ -6,7 +6,7 @@
 	<dict>
 		<key>Assets.car</key>
 		<data>
-		FlJBbNPPMaIUAXCmFnVLwZBROow=
+		nxSL0hPnjU0EENEbe1pAS31nrkc=
 		</data>
 		<key>Info.plist</key>
 		<data>
@@ -14,11 +14,11 @@
 		</data>
 		<key>Modules/MEGAAssetsBundle.swiftmodule/arm64-apple-ios.abi.json</key>
 		<data>
-		8meVk30F7Bbu05hAyGM5Ehf+qBo=
+		Rv3Da5HZnOigNd3euBJNB9apnVY=
 		</data>
 		<key>Modules/MEGAAssetsBundle.swiftmodule/arm64-apple-ios.private.swiftinterface</key>
 		<data>
-		dCEkEJ97k1A/+3YN9AIubRe1MVs=
+		BgE43ujVN4blY57nYxt7EjT7VAo=
 		</data>
 		<key>Modules/MEGAAssetsBundle.swiftmodule/arm64-apple-ios.swiftdoc</key>
 		<data>
@@ -26,11 +26,11 @@
 		</data>
 		<key>Modules/MEGAAssetsBundle.swiftmodule/arm64-apple-ios.swiftinterface</key>
 		<data>
-		dCEkEJ97k1A/+3YN9AIubRe1MVs=
+		BgE43ujVN4blY57nYxt7EjT7VAo=
 		</data>
 		<key>Modules/MEGAAssetsBundle.swiftmodule/arm64-apple-ios.swiftmodule</key>
 		<data>
-		j+ILNVSaXQLUu4CShhhNjV3ZmIQ=
+		sRLejlogrN0rSWNcz6BF9bHXWcg=
 		</data>
 	</dict>
 	<key>files2</key>
@@ -39,21 +39,21 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			CLmRJy5esHirmNr8Rr4LttPeH2on9ZQzthSSgh0ko/8=
+			gaEgI8Y4RhNvVAzRXAXqXJpgrGDUi0WOddOoMParwr4=
 			</data>
 		</dict>
 		<key>Modules/MEGAAssetsBundle.swiftmodule/arm64-apple-ios.abi.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			gf2iw5UrQbQurezuUQfFO4zyDWANkecGSfpWaF8ePZQ=
+			PMGbrLL7RB3ZX8cvwbnVohijxHcM8X1LZH6B6g2LKb0=
 			</data>
 		</dict>
 		<key>Modules/MEGAAssetsBundle.swiftmodule/arm64-apple-ios.private.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			cErMMpuXz66AzSE4rPUozfmYy7BR8GYWjwH2VcLAmcE=
+			hh6hpYfvcfZTht4xGQ0+K3YddgW+FgyazYfZeYd2EKI=
 			</data>
 		</dict>
 		<key>Modules/MEGAAssetsBundle.swiftmodule/arm64-apple-ios.swiftdoc</key>
@@ -67,14 +67,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			cErMMpuXz66AzSE4rPUozfmYy7BR8GYWjwH2VcLAmcE=
+			hh6hpYfvcfZTht4xGQ0+K3YddgW+FgyazYfZeYd2EKI=
 			</data>
 		</dict>
 		<key>Modules/MEGAAssetsBundle.swiftmodule/arm64-apple-ios.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			6AsFWxgF7ryZNxE/ibhjf2f0SL5DCoHvesuDmtRcJI8=
+			aake9xQi5EecaTyZbcI0QgXGLa+U2pk2q2B21gVclTU=
 			</data>
 		</dict>
 	</dict>
