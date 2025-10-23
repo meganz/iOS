@@ -3,6 +3,7 @@ import Foundation
 import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGADomain
+import MEGARepo
 import Settings
 import SwiftUI
 
@@ -42,6 +43,9 @@ final class SubscriptionPurchaseRouter: UpgradeAccountPlanRouting {
             accountUseCase: accountUseCase,
             purchaseUseCase: AccountPlanPurchaseUseCase(repository: AccountPlanPurchaseRepository.newRepo),
             subscriptionsUseCase: SubscriptionsUseCase(repo: SubscriptionsRepository.newRepo),
+            introductoryOfferUseCase: IntroductoryOfferUseCase(
+                repository: IntroductoryOfferRepository.newRepo
+            ),
             viewType: viewType,
             router: self,
             appVersion: AppMetaDataFactory(bundle: .main).make().currentAppVersion

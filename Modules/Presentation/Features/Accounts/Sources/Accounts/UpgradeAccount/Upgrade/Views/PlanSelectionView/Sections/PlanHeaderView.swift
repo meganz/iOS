@@ -15,10 +15,13 @@ public struct PlanHeaderView: View {
             Text(viewModel.plan.name)
                 .font(.headline)
             
-            PlanHeaderTagView(planTag: viewModel.planTag,
-                              currentPlanTagColor: currentPlanTagColor,
-                              recommendedPlanTagColor: recommendedPlanTagColor)
-            
+            PlanHeaderTagView(
+                plan: viewModel.plan,
+                planTag: viewModel.planTag,
+                currentPlanTagColor: currentPlanTagColor,
+                recommendedPlanTagColor: recommendedPlanTagColor
+            )
+
             Spacer()
             
             if viewModel.isSelectionEnabled {

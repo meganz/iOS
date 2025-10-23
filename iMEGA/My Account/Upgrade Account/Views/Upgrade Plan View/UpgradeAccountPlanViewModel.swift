@@ -8,6 +8,7 @@ import MEGADesignToken
 import MEGADomain
 import MEGAL10n
 import MEGAPreference
+import MEGARepo
 import MEGASdk
 import MEGAStoreKit
 import MEGASwift
@@ -34,6 +35,7 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
     private let subscriptionsUseCase: any SubscriptionsUseCaseProtocol
     private let remoteFeatureFlagUseCase: any RemoteFeatureFlagUseCaseProtocol
     private let externalPurchaseUseCase: any ExternalPurchaseUseCaseProtocol
+    private let introductoryOfferUseCase: any IntroductoryOfferUseCaseProtocol
     private let tracker: any AnalyticsTracking
     private let router: any UpgradeAccountPlanRouting
     private let appVersion: String
@@ -58,6 +60,8 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
     @Published var isLoading = false
     @Published private(set) var currentPlan: PlanEntity?
     @Published var buyButtons: [MEGAButton] = []
+    @Published var hasIntroductoryOffersToShow = false
+    @Published var isLoadingPlans = true
 
     private(set) var recommendedPlanType: AccountTypeEntity?
 
@@ -93,6 +97,7 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
         remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = DIContainer.remoteFeatureFlagUseCase,
         preferenceUseCase: some PreferenceUseCaseProtocol = PreferenceUseCase.default,
         externalPurchaseUseCase: some ExternalPurchaseUseCaseProtocol = DIContainer.externalPurchaseUseCase,
+        introductoryOfferUseCase: some IntroductoryOfferUseCaseProtocol,
         tracker: some AnalyticsTracking = DIContainer.tracker,
         viewType: UpgradeAccountPlanViewType,
         router: some UpgradeAccountPlanRouting,
@@ -106,6 +111,7 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
         self.accountDetails = accountDetails
         self.remoteFeatureFlagUseCase = remoteFeatureFlagUseCase
         self.externalPurchaseUseCase = externalPurchaseUseCase
+        self.introductoryOfferUseCase = introductoryOfferUseCase
         self.tracker = tracker
         self.viewType = viewType
         self.router = router
@@ -221,14 +227,22 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
     }
 
     private func setupPlans() {
-        setUpPlanTask = Task {
+        setUpPlanTask = Task { @MainActor in
+            isLoadingPlans = true
+            defer { isLoadingPlans = false }
             planList = await purchaseUseCase.accountPlanProducts()
+            let introductoryOffersDict = await introductoryOfferUseCase.fetchIntroductoryOffers(for: planList)
+            for (index, plan) in planList.enumerated() {
+                planList[index].introductoryOffer = introductoryOffersDict[plan]
+            }
             maxStorageFromPlans = planList.max(by: { $0.storageLimit < $1.storageLimit })?.storage ?? Constants.fallbackMaxStorageFromPlans
             
             setRecommendedPlan(basedOnPlan: accountDetails.proLevel)
             
             setDefaultPlanCycleTab()
             setCurrentPlan(type: accountDetails.proLevel)
+
+            hasIntroductoryOffersToShow = !introductoryOffersDict.isEmpty && !introductoryOffersDict.keys.contains { $0 == currentPlan }
         }
     }
 
@@ -487,12 +501,19 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
         switch accountDetails.subscriptionCycle {
         case .none:
             if currentPlan.type == plan.type { return .currentPlan }
-            if let recommendedPlanType, plan.type == recommendedPlanType { return .recommended }
+            if plan.introductoryOffer != nil { return .introOffer}
+            if let recommendedPlanType,
+               plan.type == recommendedPlanType,
+               !hasIntroductoryOffersToShow {
+                return .recommended
+            }
         default:
             if plan == currentPlan { return .currentPlan }
+            if plan.introductoryOffer != nil { return .introOffer}
             if let recommendedPlanType,
-                plan.subscriptionCycle == selectedCycleTab,
-                plan.type == recommendedPlanType {
+               plan.subscriptionCycle == selectedCycleTab,
+               plan.type == recommendedPlanType,
+               !hasIntroductoryOffersToShow {
                 return .recommended
             }
         }

@@ -4596,6 +4596,7 @@ public enum Strings {
       }
       public enum Plan {
         public static func billedYearly(_ p1: Any) -> Swift.String
+        public static func firstYearOffer(_ p1: Any) -> Swift.String
         public static func storage(_ p1: Any) -> Swift.String
         public static func transfer(_ p1: Any) -> Swift.String
       }
@@ -4709,6 +4710,7 @@ public enum Strings {
         }
         public enum Title {
           public static let saveYearlyBilling: Swift.String
+          public static func saveYearlyBillingWithIntoOffer(_ p1: Any) -> Swift.String
           public static let subscriptionDetails: Swift.String
         }
       }
@@ -4729,6 +4731,10 @@ public enum Strings {
         public enum Tag {
           public static let currentPlan: Swift.String
           public static let recommended: Swift.String
+          public enum IntroOffer {
+            public static func blackFridayDeal(_ p1: Any) -> Swift.String
+            public static func generalDeal(_ p1: Any) -> Swift.String
+          }
         }
       }
       public enum Selection {

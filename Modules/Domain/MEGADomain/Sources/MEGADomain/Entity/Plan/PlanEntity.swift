@@ -25,6 +25,8 @@ public struct PlanEntity: Sendable {
     public var apiPrice: PlanPriceEntity?
     public var appStorePrice: PlanPriceEntity
 
+    public var introductoryOffer: IntroductoryOfferEntity?
+
     public var price: Decimal { appStorePrice.price }
     public var formattedPrice: String { appStorePrice.formattedPrice }
     public var currency: String { appStorePrice.currency }
@@ -56,6 +58,22 @@ public struct PlanEntity: Sendable {
         return formatter
     }
 
+    /// The discount percentage offered by the introductory offer compared to the full price.
+    /// If there is no introductory offer, or if the full price is zero, this property returns `nil
+    /// /// Example:
+    /// ```swift
+    /// let discount = introDiscountPercentage // 20
+    /// ```
+    public var introDiscountPercentage: Int? {
+        guard let introductoryOffer else { return nil}
+        let fullPrice = price
+        let introPrice = introductoryOffer.price
+        guard fullPrice > 0 else { return nil }
+        let discountPercentage = ((fullPrice - introPrice) / fullPrice) * 100
+        let discountPercentageRounded = NSDecimalNumber(decimal: discountPercentage).rounding(accordingToBehavior: nil).intValue
+        return discountPercentageRounded
+    }
+
     public init(
         productIdentifier: String = "",
         type: AccountTypeEntity = .free,
@@ -66,7 +84,8 @@ public struct PlanEntity: Sendable {
         storage: String = "",
         transfer: String = "",
         price: Decimal = 0,
-        formattedPrice: String = ""
+        formattedPrice: String = "",
+        introductoryOffer: IntroductoryOfferEntity? = nil
     ) {
         self.productIdentifier = productIdentifier
         self.type = type
@@ -80,6 +99,7 @@ public struct PlanEntity: Sendable {
             formattedPrice: formattedPrice,
             currency: currency
         )
+        self.introductoryOffer = introductoryOffer
     }
 
     public init(
@@ -91,7 +111,8 @@ public struct PlanEntity: Sendable {
         storage: String = "",
         transfer: String = "",
         apiPrice: PlanPriceEntity? = nil,
-        appStorePrice: PlanPriceEntity = PlanPriceEntity(price: 0, formattedPrice: "", currency: "")
+        appStorePrice: PlanPriceEntity = PlanPriceEntity(price: 0, formattedPrice: "", currency: ""),
+        introductoryOffer: IntroductoryOfferEntity? = nil
     ) {
         self.productIdentifier = productIdentifier
         self.type = type
@@ -102,6 +123,7 @@ public struct PlanEntity: Sendable {
         self.transfer = transfer
         self.apiPrice = apiPrice
         self.appStorePrice = appStorePrice
+        self.introductoryOffer = introductoryOffer
     }
 }
 

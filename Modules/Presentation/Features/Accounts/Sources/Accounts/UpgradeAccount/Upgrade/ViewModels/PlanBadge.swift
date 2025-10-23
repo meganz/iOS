@@ -25,4 +25,11 @@ public extension PlanBadge {
             text: Strings.Localizable.UpgradeAccountPlan.Plan.Tag.recommended
         )
     }
+
+    static func discount(text: String) -> PlanBadge {
+        PlanBadge(
+            type: .megaPrimary,
+            text: text
+        )
+    }
 }

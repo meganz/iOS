@@ -1,13 +1,13 @@
 import MEGADomain
 
 public final class MockIntroductoryOfferUseCase: IntroductoryOfferUseCaseProtocol {
-    private let introductoryOffer: IntroductoryOfferEntity?
+    private let introductoryOfferDict: [PlanEntity: IntroductoryOfferEntity]
 
-    public init(introductoryOffer: IntroductoryOfferEntity? = nil) {
-        self.introductoryOffer = introductoryOffer
+    public init(introductoryOfferDict: [PlanEntity: IntroductoryOfferEntity] = [PlanEntity: IntroductoryOfferEntity]()) {
+        self.introductoryOfferDict = introductoryOfferDict
     }
 
-    public func fetchIntroductoryOffer(for productID: String) async -> IntroductoryOfferEntity? {
-        introductoryOffer
+    public func fetchIntroductoryOffers(for plans: [PlanEntity]) async -> [PlanEntity: IntroductoryOfferEntity] {
+        introductoryOfferDict
     }
 }

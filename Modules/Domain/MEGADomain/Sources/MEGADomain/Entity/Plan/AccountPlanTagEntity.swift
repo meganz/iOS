@@ -1,3 +1,3 @@
 public enum AccountPlanTagEntity {
-    case currentPlan, recommended, none
+    case currentPlan, recommended, introOffer, none
 }

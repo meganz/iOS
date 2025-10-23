@@ -53,7 +53,13 @@ struct SubscriptionPurchasePageContentView: View {
                     subtitleView
                     SubscriptionPurchaseFeaturesView(
                         maxPlanStorage: viewModel.maxStorageFromPlans)
-                    SubscriptionPurchasePlansView(viewModel: viewModel)
+                    if viewModel.isLoadingPlans {
+                        ProgressView()
+                            .progressViewStyle(.circular)
+                            .padding(.vertical, TokenSpacing._5)
+                    } else {
+                        SubscriptionPurchasePlansView(viewModel: viewModel)
+                    }
                     SubscriptionPurchaseBenefitsView(benefits: viewModel.benefitsOfProPlans)
                     if let freePlanViewModel = viewModel.freePlanViewModel {
                         SubscriptionPurchaseFreePlanView(

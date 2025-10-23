@@ -8,14 +8,38 @@ public struct IntroductoryOfferRepository: IntroductoryOfferRepositoryProtocol {
 
     public init() {}
 
-    public func fetchIntroductoryOffer(for productID: String) async -> IntroductoryOfferEntity? {
-        guard let product = try? await Product.products(for: [productID]).first,
-              let subscription = product.subscription,
-              await subscription.isEligibleForIntroOffer,
-              let offer = subscription.introductoryOffer else {
-            return nil
+    public func fetchIntroductoryOffers(for plans: [PlanEntity]) async -> [PlanEntity: IntroductoryOfferEntity] {
+        let productIDs = plans.map(\.productIdentifier)
+
+        guard let products = try? await Product.products(for: productIDs) else {
+            return [:]
         }
 
-        return IntroductoryOfferEntity.from(storeKitOffer: offer)
+        let productsByID: [String: Product] = Dictionary(uniqueKeysWithValues: products.map { ($0.id, $0) })
+
+        return await withTaskGroup(of: (PlanEntity, IntroductoryOfferEntity)?.self) { group in
+            for plan in plans {
+                group.addTask {
+                    guard let product = productsByID[plan.productIdentifier],
+                          let subscription = product.subscription,
+                          await subscription.isEligibleForIntroOffer,
+                          let offer = subscription.introductoryOffer,
+                          let offerEntity = IntroductoryOfferEntity.from(storeKitOffer: offer) else {
+                        return nil
+                    }
+                    return (plan, offerEntity)
+                }
+            }
+
+            var collected = [PlanEntity: IntroductoryOfferEntity]()
+
+            for await result in group {
+                if let pair = result {
+                    collected[pair.0] = pair.1
+                }
+            }
+
+            return collected
+        }
     }
 }

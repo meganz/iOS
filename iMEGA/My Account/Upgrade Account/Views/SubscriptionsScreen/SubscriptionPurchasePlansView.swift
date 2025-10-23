@@ -14,7 +14,11 @@ struct SubscriptionPurchasePlansView: View {
             SubscriptionPurchaseChipsSelectorView(
                 options: viewModel.subscriptionPurchaseChipOptions,
                 selected: $viewModel.selectedSubscriptionPurchaseChip)
-            savingView
+            if viewModel.hasIntroductoryOffersToShow {
+                savingViewWithIntroOffers
+            } else {
+                savingView
+            }
             SubscriptionPurchasePlanCardsView(viewModel: viewModel)
         }
         .padding(.vertical, TokenSpacing._5)
@@ -29,6 +33,18 @@ struct SubscriptionPurchasePlansView: View {
             .background(
                 RoundedRectangle(cornerRadius: TokenRadius.small)
                     .fill(TokenColors.Button.brand.swiftUI)
+            )
+    }
+
+    private var savingViewWithIntroOffers: some View {
+        Text(Strings.Localizable.UpgradeAccountPlan.Header.Title.saveYearlyBillingWithIntoOffer("16%"))
+            .padding(.vertical, TokenSpacing._1)
+            .padding(.horizontal, TokenSpacing._3)
+            .foregroundStyle(TokenColors.Text.brand.swiftUI)
+            .font(.footnote)
+            .background(
+                RoundedRectangle(cornerRadius: TokenRadius.small)
+                    .stroke(TokenColors.Text.brand.swiftUI, lineWidth: 1)
             )
     }
 }

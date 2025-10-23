@@ -1,5 +1,5 @@
 public protocol IntroductoryOfferUseCaseProtocol: Sendable {
-    func fetchIntroductoryOffer(for productID: String) async -> IntroductoryOfferEntity?
+    func fetchIntroductoryOffers(for plans: [PlanEntity]) async -> [PlanEntity: IntroductoryOfferEntity]
 }
 
 public struct IntroductoryOfferUseCase<T: IntroductoryOfferRepositoryProtocol>: IntroductoryOfferUseCaseProtocol {
@@ -8,7 +8,8 @@ public struct IntroductoryOfferUseCase<T: IntroductoryOfferRepositoryProtocol>: 
     public init(repository: T) {
         self.repository = repository
     }
-    public func fetchIntroductoryOffer(for productID: String) async -> IntroductoryOfferEntity? {
-        await repository.fetchIntroductoryOffer(for: productID)
+
+    public func fetchIntroductoryOffers(for plans: [PlanEntity]) async -> [PlanEntity: IntroductoryOfferEntity] {
+        await repository.fetchIntroductoryOffers(for: plans)
     }
 }
