@@ -152,9 +152,3 @@ extension CameraUploadProgressEntity: Equatable {
         lhs.bytesPerSecond.isApproximatelyEqual(to: rhs.bytesPerSecond, tolerance: 1024.0)
     }
 }
-
-private extension FloatingPoint {
-    func isApproximatelyEqual(to other: Self, tolerance: Self) -> Bool {
-        abs(self - other) <= tolerance
-    }
-}

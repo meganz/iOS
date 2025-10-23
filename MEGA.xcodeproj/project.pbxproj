@@ -34,6 +34,11 @@
 		0E2FD9DD2A258C3B00FB75F1 /* GetCollectionsLinkViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E2FD9DC2A258C3B00FB75F1 /* GetCollectionsLinkViewModelTests.swift */; };
 		0E2FEAA82A7B44AC00D237C6 /* GetLinkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E2FEAA62A7B44AC00D237C6 /* GetLinkView.swift */; };
 		0E2FEAAA2A7B463700D237C6 /* GetLinkRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E2FEAA92A7B463600D237C6 /* GetLinkRouter.swift */; };
+		0E31E97C2EA08E6A002F7EC3 /* CameraUploadInProgressRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E31E96C2EA08E6A002F7EC3 /* CameraUploadInProgressRowView.swift */; };
+		0E31E97D2EA08E6A002F7EC3 /* CameraUploadThumbnailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E31E9762EA08E6A002F7EC3 /* CameraUploadThumbnailView.swift */; };
+		0E31E97E2EA08E6A002F7EC3 /* CameraUploadInProgressRowViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E31E96D2EA08E6A002F7EC3 /* CameraUploadInProgressRowViewModel.swift */; };
+		0E31E9802EA08E6A002F7EC3 /* CameraUploadProgressTableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E31E9752EA08E6A002F7EC3 /* CameraUploadProgressTableViewModel.swift */; };
+		0E31E9822EA08E6A002F7EC3 /* CameraUploadThumbnailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E31E9772EA08E6A002F7EC3 /* CameraUploadThumbnailViewModel.swift */; };
 		0E3229442AF8509800D0EC22 /* CameraUploadStatusImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E3229432AF8509800D0EC22 /* CameraUploadStatusImageView.swift */; };
 		0E3229462AF850F500D0EC22 /* CameraUploadStatusImageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E3229452AF850F500D0EC22 /* CameraUploadStatusImageViewModel.swift */; };
 		0E32294D2AF854C200D0EC22 /* CameraUploadStatusImageViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E32294C2AF854C200D0EC22 /* CameraUploadStatusImageViewModelTests.swift */; };
@@ -95,6 +100,8 @@
 		0E81A8D52BC380C3003F281B /* Preview_MonitorAlbumsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E81A8D42BC380C3003F281B /* Preview_MonitorAlbumsUseCase.swift */; };
 		0E81A9A729B7E69D0004275D /* AlbumToolbarConfiguratorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E81A9A629B7E69D0004275D /* AlbumToolbarConfiguratorTests.swift */; };
 		0E826BDF2AF07FDE00501677 /* CameraUploadStatusButtonViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E826BDE2AF07FDE00501677 /* CameraUploadStatusButtonViewModelTests.swift */; };
+		0E827D062EA587D2002E8667 /* CameraUploadProgressTableViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E827D052EA587D2002E8667 /* CameraUploadProgressTableViewModelTests.swift */; };
+		0E827D2A2EA5CB2D002E8667 /* CameraUploadInProgressRowViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E827D292EA5CB2D002E8667 /* CameraUploadInProgressRowViewModelTests.swift */; };
 		0E847F852A68E27D00AFE051 /* MEGALinkManager+AdditionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E847F842A68E27D00AFE051 /* MEGALinkManager+AdditionsTests.swift */; };
 		0E8A38222A720A3C00F216FA /* AlbumNameUseCase+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E8A38212A720A3C00F216FA /* AlbumNameUseCase+Additions.swift */; };
 		0E8EABAB2C853ABF001722F7 /* AlbumRemoteFeatureFlagProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E8EABAA2C853ABF001722F7 /* AlbumRemoteFeatureFlagProvider.swift */; };
@@ -127,6 +134,13 @@
 		0EBFFE192A29A39300FAB142 /* GetAlbumsLinksViewWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EBFFE182A29A39300FAB142 /* GetAlbumsLinksViewWrapper.swift */; };
 		0EC465162D87E10000EDA214 /* NodeActionResponderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EC465152D87E10000EDA214 /* NodeActionResponderTests.swift */; };
 		0EC5A64F2A3FF775003BE9BE /* MediaDiscoveryFolderLinkToolbarConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EC5A64E2A3FF775003BE9BE /* MediaDiscoveryFolderLinkToolbarConfigurator.swift */; };
+		0EC69BCD2EA6CDF8004E9601 /* CameraUploadProgressRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EC69BCC2EA6CDF6004E9601 /* CameraUploadProgressRouter.swift */; };
+		0EC69BDC2EA6DB43004E9601 /* CameraUploadProgressTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EC69BDB2EA6DB3D004E9601 /* CameraUploadProgressTableViewController.swift */; };
+		0EC69BE12EA6E05C004E9601 /* CameraUploadProgressSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EC69BE02EA6E05C004E9601 /* CameraUploadProgressSectionHeaderView.swift */; };
+		0EC69C112EA710AF004E9601 /* CameraUploadProgressTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EC69C102EA710AD004E9601 /* CameraUploadProgressTableView.swift */; };
+		0EC69C322EA713A5004E9601 /* CameraUploadProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EC69C312EA713A5004E9601 /* CameraUploadProgressView.swift */; };
+		0EC69C452EA71E83004E9601 /* CameraUploadProgressDiffableDatasource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EC69C422EA71E6B004E9601 /* CameraUploadProgressDiffableDatasource.swift */; };
+		0EC69C582EA97B4B004E9601 /* CameraUploadSections.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EC69C552EA97B29004E9601 /* CameraUploadSections.swift */; };
 		0ECABE452E2762F6000A15C1 /* CameraUploadQueueStateTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ECABE442E2762F2000A15C1 /* CameraUploadQueueStateTest.swift */; };
 		0ECB216A2DC2E2C100534925 /* LoginViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ECB21692DC2E2C100534925 /* LoginViewRouter.swift */; };
 		0ECDCD4E2A1DDBA100FBEFE7 /* GetLinkCellViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ECDCD4D2A1DDBA100FBEFE7 /* GetLinkCellViewModelType.swift */; };
@@ -2793,6 +2807,11 @@
 		0E2FD9DC2A258C3B00FB75F1 /* GetCollectionsLinkViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetCollectionsLinkViewModelTests.swift; sourceTree = "<group>"; };
 		0E2FEAA62A7B44AC00D237C6 /* GetLinkView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetLinkView.swift; sourceTree = "<group>"; };
 		0E2FEAA92A7B463600D237C6 /* GetLinkRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetLinkRouter.swift; sourceTree = "<group>"; };
+		0E31E96C2EA08E6A002F7EC3 /* CameraUploadInProgressRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraUploadInProgressRowView.swift; sourceTree = "<group>"; };
+		0E31E96D2EA08E6A002F7EC3 /* CameraUploadInProgressRowViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraUploadInProgressRowViewModel.swift; sourceTree = "<group>"; };
+		0E31E9752EA08E6A002F7EC3 /* CameraUploadProgressTableViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraUploadProgressTableViewModel.swift; sourceTree = "<group>"; };
+		0E31E9762EA08E6A002F7EC3 /* CameraUploadThumbnailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraUploadThumbnailView.swift; sourceTree = "<group>"; };
+		0E31E9772EA08E6A002F7EC3 /* CameraUploadThumbnailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraUploadThumbnailViewModel.swift; sourceTree = "<group>"; };
 		0E3229432AF8509800D0EC22 /* CameraUploadStatusImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraUploadStatusImageView.swift; sourceTree = "<group>"; };
 		0E3229452AF850F500D0EC22 /* CameraUploadStatusImageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraUploadStatusImageViewModel.swift; sourceTree = "<group>"; };
 		0E32294C2AF854C200D0EC22 /* CameraUploadStatusImageViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraUploadStatusImageViewModelTests.swift; sourceTree = "<group>"; };
@@ -2854,6 +2873,8 @@
 		0E81A8D42BC380C3003F281B /* Preview_MonitorAlbumsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preview_MonitorAlbumsUseCase.swift; sourceTree = "<group>"; };
 		0E81A9A629B7E69D0004275D /* AlbumToolbarConfiguratorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumToolbarConfiguratorTests.swift; sourceTree = "<group>"; };
 		0E826BDE2AF07FDE00501677 /* CameraUploadStatusButtonViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraUploadStatusButtonViewModelTests.swift; sourceTree = "<group>"; };
+		0E827D052EA587D2002E8667 /* CameraUploadProgressTableViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraUploadProgressTableViewModelTests.swift; sourceTree = "<group>"; };
+		0E827D292EA5CB2D002E8667 /* CameraUploadInProgressRowViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraUploadInProgressRowViewModelTests.swift; sourceTree = "<group>"; };
 		0E847F842A68E27D00AFE051 /* MEGALinkManager+AdditionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGALinkManager+AdditionsTests.swift"; sourceTree = "<group>"; };
 		0E8A38212A720A3C00F216FA /* AlbumNameUseCase+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AlbumNameUseCase+Additions.swift"; sourceTree = "<group>"; };
 		0E8EABAA2C853ABF001722F7 /* AlbumRemoteFeatureFlagProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumRemoteFeatureFlagProvider.swift; sourceTree = "<group>"; };
@@ -2885,6 +2906,13 @@
 		0EBFFE182A29A39300FAB142 /* GetAlbumsLinksViewWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAlbumsLinksViewWrapper.swift; sourceTree = "<group>"; };
 		0EC465152D87E10000EDA214 /* NodeActionResponderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeActionResponderTests.swift; sourceTree = "<group>"; };
 		0EC5A64E2A3FF775003BE9BE /* MediaDiscoveryFolderLinkToolbarConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaDiscoveryFolderLinkToolbarConfigurator.swift; sourceTree = "<group>"; };
+		0EC69BCC2EA6CDF6004E9601 /* CameraUploadProgressRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraUploadProgressRouter.swift; sourceTree = "<group>"; };
+		0EC69BDB2EA6DB3D004E9601 /* CameraUploadProgressTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraUploadProgressTableViewController.swift; sourceTree = "<group>"; };
+		0EC69BE02EA6E05C004E9601 /* CameraUploadProgressSectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraUploadProgressSectionHeaderView.swift; sourceTree = "<group>"; };
+		0EC69C102EA710AD004E9601 /* CameraUploadProgressTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraUploadProgressTableView.swift; sourceTree = "<group>"; };
+		0EC69C312EA713A5004E9601 /* CameraUploadProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraUploadProgressView.swift; sourceTree = "<group>"; };
+		0EC69C422EA71E6B004E9601 /* CameraUploadProgressDiffableDatasource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraUploadProgressDiffableDatasource.swift; sourceTree = "<group>"; };
+		0EC69C552EA97B29004E9601 /* CameraUploadSections.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraUploadSections.swift; sourceTree = "<group>"; };
 		0ECABE442E2762F2000A15C1 /* CameraUploadQueueStateTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraUploadQueueStateTest.swift; sourceTree = "<group>"; };
 		0ECB21692DC2E2C100534925 /* LoginViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewRouter.swift; sourceTree = "<group>"; };
 		0ECDCD4D2A1DDBA100FBEFE7 /* GetLinkCellViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetLinkCellViewModelType.swift; sourceTree = "<group>"; };
@@ -5713,6 +5741,33 @@
 			path = Reporting;
 			sourceTree = "<group>";
 		};
+		0E31E96E2EA08E6A002F7EC3 /* InProgress */ = {
+			isa = PBXGroup;
+			children = (
+				0E31E96C2EA08E6A002F7EC3 /* CameraUploadInProgressRowView.swift */,
+				0E31E96D2EA08E6A002F7EC3 /* CameraUploadInProgressRowViewModel.swift */,
+			);
+			path = InProgress;
+			sourceTree = "<group>";
+		};
+		0E31E9782EA08E6A002F7EC3 /* Progress */ = {
+			isa = PBXGroup;
+			children = (
+				0E31E96E2EA08E6A002F7EC3 /* InProgress */,
+				0EC69C422EA71E6B004E9601 /* CameraUploadProgressDiffableDatasource.swift */,
+				0EC69BCC2EA6CDF6004E9601 /* CameraUploadProgressRouter.swift */,
+				0EC69BE02EA6E05C004E9601 /* CameraUploadProgressSectionHeaderView.swift */,
+				0EC69C102EA710AD004E9601 /* CameraUploadProgressTableView.swift */,
+				0EC69BDB2EA6DB3D004E9601 /* CameraUploadProgressTableViewController.swift */,
+				0E31E9752EA08E6A002F7EC3 /* CameraUploadProgressTableViewModel.swift */,
+				0EC69C312EA713A5004E9601 /* CameraUploadProgressView.swift */,
+				0EC69C552EA97B29004E9601 /* CameraUploadSections.swift */,
+				0E31E9762EA08E6A002F7EC3 /* CameraUploadThumbnailView.swift */,
+				0E31E9772EA08E6A002F7EC3 /* CameraUploadThumbnailViewModel.swift */,
+			);
+			path = Progress;
+			sourceTree = "<group>";
+		};
 		0E385A782BB3BCD900261892 /* HiddenFilesAndFolders */ = {
 			isa = PBXGroup;
 			children = (
@@ -5830,6 +5885,15 @@
 				0E80B31C2DC4834100582D55 /* LoginRoutingViewModelTests.swift */,
 			);
 			path = Login;
+			sourceTree = "<group>";
+		};
+		0E827D042EA587B5002E8667 /* Progress */ = {
+			isa = PBXGroup;
+			children = (
+				0E827D292EA5CB2D002E8667 /* CameraUploadInProgressRowViewModelTests.swift */,
+				0E827D052EA587D2002E8667 /* CameraUploadProgressTableViewModelTests.swift */,
+			);
+			path = Progress;
 			sourceTree = "<group>";
 		};
 		0E8EABB92C869F19001722F7 /* Mock */ = {
@@ -7260,6 +7324,7 @@
 				B658D3BE218F93D4004C0D64 /* DataModels */,
 				6DB772CC28836A3F00B75A93 /* Extension */,
 				12397E152820C39100A30CCC /* PhotoAlbum */,
+				0E31E9782EA08E6A002F7EC3 /* Progress */,
 				0E5238892AF0497C00AC5727 /* Status */,
 				25A58FA22B0ED02F00050882 /* Timeline */,
 				B658D3BC218F9384004C0D64 /* TransferSession */,
@@ -7578,6 +7643,7 @@
 		5B076EDA22C251BF00D773B9 /* CameraUpload */ = {
 			isa = PBXGroup;
 			children = (
+				0E827D042EA587B5002E8667 /* Progress */,
 				25B774C22B141722001F623A /* Timeline */,
 				25A58F8F2B0C635400050882 /* CameraUploadBannerStatusViewStatesToPreviewEntityTests.swift */,
 				0ECABE442E2762F2000A15C1 /* CameraUploadQueueStateTest.swift */,
@@ -14435,6 +14501,8 @@
 				B6E19B3D2180126500882F74 /* CameraUploadCompletionManager.m in Sources */,
 				0E5A5C9C2E2480DD0090A3CF /* CameraUploadConcurrentCountCalculator.swift in Sources */,
 				B6472DFB25819A6E0040B2DB /* CameraUploadHeartbeat.swift in Sources */,
+				0E31E97C2EA08E6A002F7EC3 /* CameraUploadInProgressRowView.swift in Sources */,
+				0E31E97E2EA08E6A002F7EC3 /* CameraUploadInProgressRowViewModel.swift in Sources */,
 				BF49DF57282333BA00DE3742 /* CameraUploadManager+Additions.swift in Sources */,
 				B6BD011F21B62D8E00E97086 /* CameraUploadManager+Settings.m in Sources */,
 				B658D3CC218FBC24004C0D64 /* CameraUploadManager.m in Sources */,
@@ -14443,10 +14511,18 @@
 				B672EDB3221CD96000DE6684 /* CameraUploadOperation+Utils.m in Sources */,
 				B68C42CB216DAA85003C5A50 /* CameraUploadOperation.m in Sources */,
 				0E0A24DA2E24D17000F687D3 /* CameraUploadPausedReasonEntity+Mapper.swift in Sources */,
+				0EC69C452EA71E83004E9601 /* CameraUploadProgressDiffableDatasource.swift in Sources */,
+				0EC69BCD2EA6CDF8004E9601 /* CameraUploadProgressRouter.swift in Sources */,
+				0EC69BE12EA6E05C004E9601 /* CameraUploadProgressSectionHeaderView.swift in Sources */,
+				0EC69C112EA710AF004E9601 /* CameraUploadProgressTableView.swift in Sources */,
+				0EC69BDC2EA6DB43004E9601 /* CameraUploadProgressTableViewController.swift in Sources */,
+				0E31E9802EA08E6A002F7EC3 /* CameraUploadProgressTableViewModel.swift in Sources */,
+				0EC69C322EA713A5004E9601 /* CameraUploadProgressView.swift in Sources */,
 				0EF7E5D92E95DF2A0098367B /* CameraUploadRecordManager+Additions.swift in Sources */,
 				B6D9D7EF216AE5D000D7B08A /* CameraUploadRecordManager.m in Sources */,
 				B686F45921866BB4009C0DAA /* CameraUploadRequestDelegate.m in Sources */,
 				94F3B75B2DB00C8D00C285A5 /* CameraUploadsAdvancedOptionsViewModel.swift in Sources */,
+				0EC69C582EA97B4B004E9601 /* CameraUploadSections.swift in Sources */,
 				94FABD152ADE95A9003E8894 /* CameraUploadsRepository.swift in Sources */,
 				9422F9752DAFCA2E004EA896 /* CameraUploadsSettingsViewModel.swift in Sources */,
 				9D3563CA28B54C6C00CB3365 /* CameraUploadsSettingsViewRouter.swift in Sources */,
@@ -14460,6 +14536,8 @@
 				0E3229442AF8509800D0EC22 /* CameraUploadStatusImageView.swift in Sources */,
 				0E3229462AF850F500D0EC22 /* CameraUploadStatusImageViewModel.swift in Sources */,
 				0E149CF12E7CB83B00D03C45 /* CameraUploadTaskIdentifierOCWrapper.swift in Sources */,
+				0E31E97D2EA08E6A002F7EC3 /* CameraUploadThumbnailView.swift in Sources */,
+				0E31E9822EA08E6A002F7EC3 /* CameraUploadThumbnailViewModel.swift in Sources */,
 				0EA56BF62E776A8800C68EBA /* CameraUploadTransferProgressOCRepository.swift in Sources */,
 				83A4E47927F4A0FA00A429F4 /* CancellableTransfer+Shared.swift in Sources */,
 				83CBA3E627A81B2F005F0FD5 /* CancellableTransfer.swift in Sources */,
@@ -16271,6 +16349,8 @@
 				8330A99F2888479B003E80DB /* CallsSettingsViewModelTests.swift in Sources */,
 				838116242BA32565001A2937 /* CallWillEndAlertViewModelTests.swift in Sources */,
 				25A58F902B0C635400050882 /* CameraUploadBannerStatusViewStatesToPreviewEntityTests.swift in Sources */,
+				0E827D2A2EA5CB2D002E8667 /* CameraUploadInProgressRowViewModelTests.swift in Sources */,
+				0E827D062EA587D2002E8667 /* CameraUploadProgressTableViewModelTests.swift in Sources */,
 				0ECABE452E2762F6000A15C1 /* CameraUploadQueueStateTest.swift in Sources */,
 				94F3B7612DB0150F00C285A5 /* CameraUploadsAdvancedOptionsViewModelTests.swift in Sources */,
 				94F3B7662DB0151F00C285A5 /* CameraUploadsSettingsViewModelTests.swift in Sources */,
