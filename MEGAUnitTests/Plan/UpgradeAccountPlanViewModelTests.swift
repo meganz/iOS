@@ -1135,12 +1135,77 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
         
         XCTAssertEqual(sut.benefitsOfProPlans, expectedBenefits)
     }
+    
+    // MARK: - Introductory Offers
+    
+    @MainActor
+    func testHasIntroductoryOffersToShow_withIntroOffers_shouldBeTrue() async {
+        let introOffer = IntroductoryOfferEntity(
+            price: 80,
+            period: .init(unit: .year, value: 1),
+            periodCount: 1
+        )
+        var planWithIntroOffer = PlanEntity.proI_yearly
+        planWithIntroOffer.introductoryOffer = introOffer
+        
+        let planList = [PlanEntity.proI_monthly, planWithIntroOffer]
+        let introOfferDict = [planWithIntroOffer: introOffer]
+        
+        let (sut, _) = makeSUT(
+            introductoryOfferUseCase: MockIntroductoryOfferUseCase(introductoryOfferDict: introOfferDict),
+            accountDetails: .build(proLevel: .free),
+            planList: planList
+        )
+        
+        await sut.setUpPlanTask?.value
+        XCTAssertTrue(sut.hasIntroductoryOffersToShow)
+    }
+    
+    @MainActor
+    func testHasIntroductoryOffersToShow_withoutIntroOffers_shouldBeFalse() async {
+        let planList = [PlanEntity.proI_monthly, PlanEntity.proI_yearly]
+        
+        let (sut, _) = makeSUT(
+            introductoryOfferUseCase: MockIntroductoryOfferUseCase(introductoryOfferDict: [:]),
+            accountDetails: .build(proLevel: .free),
+            planList: planList
+        )
+        
+        await sut.setUpPlanTask?.value
+        XCTAssertFalse(sut.hasIntroductoryOffersToShow)
+    }
+    
+    @MainActor
+    func testIsLoadingPlans_duringSetup_shouldBeTrue() {
+        let planList = [PlanEntity.proI_monthly, PlanEntity.proI_yearly]
+        
+        let (sut, _) = makeSUT(
+            accountDetails: .build(proLevel: .free),
+            planList: planList
+        )
+        
+        XCTAssertTrue(sut.isLoadingPlans)
+    }
+    
+    @MainActor
+    func testIsLoadingPlans_afterSetup_shouldBeFalse() async {
+        let planList = [PlanEntity.proI_monthly, PlanEntity.proI_yearly]
+        
+        let (sut, _) = makeSUT(
+            accountDetails: .build(proLevel: .free),
+            planList: planList
+        )
+        
+        await sut.setUpPlanTask?.value
+        XCTAssertFalse(sut.isLoadingPlans)
+    }
 
     // MARK: - Helper
     @MainActor
     func makeSUT(
         subscriptionsUseCase: some SubscriptionsUseCaseProtocol = MockSubscriptionsUseCase(requestResult: .failure(.generic)),
         externalPurchaseUseCase: some ExternalPurchaseUseCaseProtocol = MockExternalPurchaseUseCase(),
+        introductoryOfferUseCase: some IntroductoryOfferUseCaseProtocol = MockIntroductoryOfferUseCase(),
         accountDetails: AccountDetailsEntity,
         accountDetailsResult: Result<AccountDetailsEntity, AccountDetailsErrorEntity> = .failure(.generic),
         planList: [PlanEntity] = [],
@@ -1168,6 +1233,7 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
             remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.externalAds: isExternalAdsFlagEnabled]),
             preferenceUseCase: preferenceUseCase,
             externalPurchaseUseCase: externalPurchaseUseCase,
+            introductoryOfferUseCase: introductoryOfferUseCase,
             tracker: tracker,
             viewType: viewType,
             router: router,

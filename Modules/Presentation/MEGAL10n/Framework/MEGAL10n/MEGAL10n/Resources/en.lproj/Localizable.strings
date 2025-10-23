@@ -4754,6 +4754,14 @@
 "sorting.lastModified.title" = "Last modified";
 /* Sorting option label for sorting items based on their file size (can be applied in ascending or descending order) */
 "sorting.size.title" = "Size";
+/* Black Friday deal plan badge text shown in Upgrade plan screen */
+"upgradeAccountPlan.plan.tag.introOffer.blackFridayDeal" = "Black Friday deal: %@ off";
+/* General deal plan badge text shown in Upgrade plan screen */
+"upgradeAccountPlan.plan.tag.introOffer.generalDeal" = "%@ off";
+/* Subscription plan first year offer text shown in Upgrade plan screen */
+"subscriptionPurchase.plan.firstYearOffer"="%@, for first year";
+/* Header text in Upgrade plan screen to highlight yearly billing savings with intro offer */
+"upgradeAccountPlan.header.title.saveYearlyBillingWithIntoOffer" = "Save at least %@ on a yearly plan";
 /* Camera Uploads Progress navigation title */
 "cameraUploads.progress.navigation.title" = "Progress";
 /* Camera Uploads Progress In Progress section title */

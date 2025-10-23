@@ -80,33 +80,56 @@ struct SubscriptionPurchasePlanCardView: View {
         }
     }
 
-    private var yearlyPrice: String {
+    private var formattedMonthlyPriceForYearlyPlan: String {
         viewModel.plan.formattedMonthlyPriceForYearlyPlan ?? ""
     }
 
     private var yearlyPriceView: some View {
         VStack(alignment: .trailing) {
-            Text(attributedPricePerMonth)
-            Text(Strings.Localizable.SubscriptionPurchase.Plan.billedYearly(viewModel.plan.formattedPrice))
-                .font(.footnote)
+            if let introductoryOfferInfo = viewModel.introductoryOfferInfo() {
+                Text(formattedMonthlyPriceForYearlyPlan)
+                    .font(.caption)
+                    .foregroundStyle(TokenColors.Text.secondary.swiftUI)
+                    .strikethrough()
+                Text(attributedPricePerMonth(for: introductoryOfferInfo.formattedIntroPricePerMonth))
+                HStack(spacing: TokenSpacing._1) {
+                    Text(introductoryOfferInfo.formattedFullPrice)
+                        .strikethrough()
+                    Text(Strings.Localizable.SubscriptionPurchase.Plan.firstYearOffer(introductoryOfferInfo.formattedIntroPrice))
+                }
+                .font(.caption)
                 .foregroundStyle(TokenColors.Text.secondary.swiftUI)
+            } else {
+                Text(attributedPricePerMonth(for: formattedMonthlyPriceForYearlyPlan))
+                Text(Strings.Localizable.SubscriptionPurchase.Plan.billedYearly(viewModel.plan.formattedPrice))
+                    .font(.footnote)
+                    .foregroundStyle(TokenColors.Text.secondary.swiftUI)
+            }
         }
     }
 
     private var monthlyPriceView: some View {
         VStack(alignment: .trailing) {
-            Text(viewModel.plan.formattedPrice)
-                .font(.title2.bold())
-
+            if let introductoryOfferInfo = viewModel.introductoryOfferInfo() {
+                Text(introductoryOfferInfo.formattedFullPrice)
+                    .font(.caption)
+                    .foregroundStyle(TokenColors.Text.secondary.swiftUI)
+                    .strikethrough()
+                Text(introductoryOfferInfo.formattedIntroPrice)
+                    .font(.title2.bold())
+            } else {
+                Text(viewModel.plan.formattedPrice)
+                    .font(.title2.bold())
+            }
             Text(Strings.Localizable.productPricePerMonth(viewModel.plan.currency))
                 .font(.footnote)
                 .foregroundStyle(TokenColors.Text.secondary.swiftUI)
         }
     }
 
-    private var attributedPricePerMonth: AttributedString {
-        let price = yearlyPrice
-        let pricePerMonth = Strings.Localizable.UpgradeAccountPlan.Plan.Details.Pricing.localCurrencyPerMonth(yearlyPrice)
+    private func attributedPricePerMonth(for formattedMonthlyPrice: String) -> AttributedString {
+        let price = formattedMonthlyPrice
+        let pricePerMonth = Strings.Localizable.UpgradeAccountPlan.Plan.Details.Pricing.localCurrencyPerMonth(formattedMonthlyPrice)
 
         guard let priceRange = pricePerMonth.range(of: price) else {
             var fallback = AttributedString(pricePerMonth)

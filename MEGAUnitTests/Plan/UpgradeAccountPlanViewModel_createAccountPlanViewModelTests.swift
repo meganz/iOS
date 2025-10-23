@@ -222,12 +222,103 @@ final class UpgradeAccountPlanViewModel_createAccountPlanViewModelTests: XCTestC
         XCTAssertEqual(yearlyPlanViewModel.planTag, .none)
     }
     
+    @MainActor
+    func testCreateAccountPlanViewModel_withIntroductoryOffer_shouldReturnIntroOfferTag() {
+        let details = AccountDetailsEntity.build(proLevel: .free)
+        let introOffer = IntroductoryOfferEntity(
+            price: 80,
+            period: .init(unit: .year, value: 1),
+            periodCount: 1
+        )
+        var planWithIntroOffer = proI_yearly
+        planWithIntroOffer.introductoryOffer = introOffer
+        
+        let planList = [proI_monthly, planWithIntroOffer]
+        let introOfferDict = [planWithIntroOffer: introOffer]
+        
+        let exp = expectation(description: "Setting Current plan")
+        let sut = makeSUT(
+            accountDetails: details,
+            planList: planList,
+            introductoryOfferUseCase: MockIntroductoryOfferUseCase(introductoryOfferDict: introOfferDict)
+        )
+        sut.$currentPlan
+            .dropFirst()
+            .sink { _ in
+                exp.fulfill()
+            }.store(in: &subscriptions)
+        wait(for: [exp], timeout: 0.5)
+        
+        let yearlyPlanViewModel = sut.createAccountPlanViewModel(planWithIntroOffer)
+        XCTAssertTrue(yearlyPlanViewModel.isSelected)
+        XCTAssertEqual(yearlyPlanViewModel.plan, planWithIntroOffer)
+        XCTAssertTrue(yearlyPlanViewModel.isSelectionEnabled)
+        XCTAssertEqual(yearlyPlanViewModel.planTag, .introOffer)
+    }
+    
+    @MainActor
+    func testCreateAccountPlanViewModel_withoutIntroductoryOffer_shouldReturnRecommendedTag() {
+        let details = AccountDetailsEntity.build(proLevel: .free)
+        let planList = [proI_monthly, proI_yearly]
+        
+        let exp = expectation(description: "Setting Current plan")
+        let sut = makeSUT(accountDetails: details, planList: planList)
+        sut.$currentPlan
+            .dropFirst()
+            .sink { _ in
+                exp.fulfill()
+            }.store(in: &subscriptions)
+        wait(for: [exp], timeout: 0.5)
+        
+        let yearlyPlanViewModel = sut.createAccountPlanViewModel(proI_yearly)
+        XCTAssertTrue(yearlyPlanViewModel.isSelected)
+        XCTAssertEqual(yearlyPlanViewModel.plan, proI_yearly)
+        XCTAssertTrue(yearlyPlanViewModel.isSelectionEnabled)
+        XCTAssertEqual(yearlyPlanViewModel.planTag, .recommended)
+    }
+    
+    @MainActor
+    func testCreateAccountPlanViewModel_introOfferTakesPrecedenceOverRecommended() {
+        let details = AccountDetailsEntity.build(proLevel: .free)
+        let introOffer = IntroductoryOfferEntity(
+            price: 50,
+            period: .init(unit: .year, value: 1),
+            periodCount: 1
+        )
+        
+        var recommendedPlanWithIntroOffer = proI_yearly
+        recommendedPlanWithIntroOffer.introductoryOffer = introOffer
+        
+        let planList = [proI_monthly, recommendedPlanWithIntroOffer, proII_yearly]
+        let introOfferDict = [recommendedPlanWithIntroOffer: introOffer]
+        
+        let exp = expectation(description: "Setting Current plan")
+        let sut = makeSUT(
+            accountDetails: details,
+            planList: planList,
+            introductoryOfferUseCase: MockIntroductoryOfferUseCase(introductoryOfferDict: introOfferDict)
+        )
+        sut.$currentPlan
+            .dropFirst()
+            .sink { _ in
+                exp.fulfill()
+            }.store(in: &subscriptions)
+        wait(for: [exp], timeout: 0.5)
+        
+        let viewModel = sut.createAccountPlanViewModel(recommendedPlanWithIntroOffer)
+        XCTAssertEqual(viewModel.planTag, .introOffer)
+        
+        let regularRecommendedViewModel = sut.createAccountPlanViewModel(proI_monthly)
+        XCTAssertEqual(regularRecommendedViewModel.planTag, .none)
+    }
+    
     // MARK: - Helper
     @MainActor
     private func makeSUT(
         accountDetails: AccountDetailsEntity,
         currentAccountDetails: AccountDetailsEntity? = nil,
         planList: [PlanEntity] = [],
+        introductoryOfferUseCase: some IntroductoryOfferUseCaseProtocol = MockIntroductoryOfferUseCase(),
         viewType: UpgradeAccountPlanViewType = .upgrade,
         appVersion: String = "1.0.0"
     ) -> UpgradeAccountPlanViewModel {
@@ -239,6 +330,7 @@ final class UpgradeAccountPlanViewModel_createAccountPlanViewModelTests: XCTestC
             accountUseCase: mockAccountUseCase,
             purchaseUseCase: mockPurchaseUseCase,
             subscriptionsUseCase: mockSubscriptionsUseCase,
+            introductoryOfferUseCase: introductoryOfferUseCase,
             viewType: viewType,
             router: MockUpgradeAccountPlanRouter(),
             appVersion: appVersion
