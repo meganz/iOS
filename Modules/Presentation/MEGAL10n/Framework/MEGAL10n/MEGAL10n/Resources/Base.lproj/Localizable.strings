@@ -4754,3 +4754,9 @@
 "sorting.lastModified.title" = "Last modified";
 /* Sorting option label for sorting items based on their file size (can be applied in ascending or descending order) */
 "sorting.size.title" = "Size";
+/* Camera Uploads Progress navigation title */
+"cameraUploads.progress.navigation.title" = "Progress";
+/* Camera Uploads Progress In Progress section title */
+"cameraUploads.progress.section.inProgress.title" = "In Progress";
+/* Camera Uploads row progress format */
+"cameraUploads.progress.row.uploadProgressFormat" = "%@ of %@ %@/s";
