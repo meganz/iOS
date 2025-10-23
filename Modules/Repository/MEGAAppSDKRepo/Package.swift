@@ -30,7 +30,7 @@ let package = Package(
         .package(path: "../../MEGASharedRepo/MEGATest"),
         .package(path: "../../MEGASharedRepo/MEGASwift"),
         .package(path: "../MEGARepo"),
-        .package(url: "https://github.com/firebase/firebase-ios-sdk.git", from: "10.0.0")
+        .package(url: "https://github.com/firebase/firebase-ios-sdk.git", from: "12.0.0")
     ],
     targets: [
         .target(
