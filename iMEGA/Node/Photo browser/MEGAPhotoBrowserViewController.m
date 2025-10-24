@@ -1103,6 +1103,12 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
                     [self downloadFileLink];
                     break;
                     
+                case DisplayModeNodeInsideFolderLink:
+                    if (node != nil) {
+                        [self downloadFromFolderLink:@[node]];
+                    }
+                    break;
+                    
                 case DisplayModeChatAttachment:
                     [CancellableTransferRouterOCWrapper.alloc.init downloadChatNodes:@[node] messageId:self.currentMessageId chatId:self.chatId presenter:self];
                     break;

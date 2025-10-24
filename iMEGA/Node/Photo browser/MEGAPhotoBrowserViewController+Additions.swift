@@ -218,6 +218,10 @@ extension MEGAPhotoBrowserViewController {
         guard let linkUrl = URL(string: publicLink) else { return }
         DownloadLinkRouter(link: linkUrl, isFolderLink: false, presenter: self).start()
     }
+    
+    @objc func downloadFromFolderLink(_ nodes: [MEGANode]) {
+        DownloadLinkRouter(nodes: nodes.toNodeEntities(), isFolderLink: true, presenter: self).start()
+    }
 
     @objc func openSlideShow() {
         DIContainer.tracker.trackAnalyticsEvent(with: PlaySlideshowMenuToolbarEvent())
