@@ -712,18 +712,7 @@ struct CloudDriveViewControllerFactory {
         nodeBrowserViewModel.actionHandlers.append(actionHandlers)
         nodeBrowserViewModel.actionHandlers.append(mediaContentDelegate)
 
-        let floatingButtonVisibilityDataSource = FloatingAddButtonVisibilityDataSource(
-            parentNode: nodeSource.parentNode,
-            nodeBrowserConfig: config,
-            nodeUpdatesProvider: nodeUpdatesProvider,
-            nodeUseCase: nodeUseCase
-        )
-
-        let floatingAddButtonViewModel = FloatingAddButtonViewModel(
-            floatingButtonVisibilityDataSource: floatingButtonVisibilityDataSource,
-            featureFlagProvider: DIContainer.featureFlagProvider) {
-            // [IOS-10543]
-        }
+        let floatingAddButtonViewModel = makeFloatingAddButtonViewModel(nodeSource: nodeSource, config: config, nodeUpdatesProvider: nodeUpdatesProvider)
 
         let nodeBrowserView = NodeBrowserView(viewModel: nodeBrowserViewModel, floatingAddButtonViewModel: floatingAddButtonViewModel)
 
@@ -1146,5 +1135,32 @@ struct CloudDriveViewControllerFactory {
         CloudDriveMatchingNodeProvider { [weak viewModel] node in
             viewModel?.parentNodeMatches(node: node) == true
         }
+    }
+
+    private func makeFloatingAddButtonViewModel(
+        nodeSource: NodeSource,
+        config: NodeBrowserConfig,
+        nodeUpdatesProvider: some NodeUpdatesProviderProtocol,
+    ) -> FloatingAddButtonViewModel {
+
+        let uploadAddMenuDelegateHandler = UploadAddMenuDelegateHandler(
+            tracker: tracker,
+            nodeInsertionRouter: makeCloudDriveNodeInsertionRouter(),
+            nodeSource: nodeSource
+        )
+
+        let actionProvider = NodeUploadAddActionsProvider(actionHandler: uploadAddMenuDelegateHandler)
+
+        let floatingButtonVisibilityDataSource = FloatingAddButtonVisibilityDataSource(
+            parentNode: nodeSource.parentNode,
+            nodeBrowserConfig: config,
+            nodeUpdatesProvider: nodeUpdatesProvider,
+            nodeUseCase: nodeUseCase
+        )
+
+        return FloatingAddButtonViewModel(
+            floatingButtonVisibilityDataSource: floatingButtonVisibilityDataSource,
+            uploadActions: actionProvider.actions,
+            featureFlagProvider: DIContainer.featureFlagProvider)
     }
 }

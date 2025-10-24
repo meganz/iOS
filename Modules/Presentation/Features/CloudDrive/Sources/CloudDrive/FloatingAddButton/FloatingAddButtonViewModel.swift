@@ -8,18 +8,26 @@ public final class FloatingAddButtonViewModel: ObservableObject {
 
     private let floatingButtonVisibilityDataSource: any FloatingAddButtonVisibilityDataSourceProtocol
     private let featureFlagProvider: any FeatureFlagProviderProtocol
+    public let uploadActions: [NodeUploadAction]
 
     @Published public private(set) var showsFloatingAddButton = false
-    public let action: @MainActor () -> Void
+    @Published public var showActions = false
+
+    var selectedAction: NodeUploadAction?
+
     public init(
         floatingButtonVisibilityDataSource: some FloatingAddButtonVisibilityDataSourceProtocol,
-        featureFlagProvider: some FeatureFlagProviderProtocol,
-        action: @escaping @MainActor () -> Void
+        uploadActions: [NodeUploadAction],
+        featureFlagProvider: some FeatureFlagProviderProtocol
     ) {
-        self.action = action
         self.floatingButtonVisibilityDataSource = floatingButtonVisibilityDataSource
+        self.uploadActions = uploadActions
         self.featureFlagProvider = featureFlagProvider
         startObservingButtonVisibilityIfNeeded()
+    }
+
+    public func addButtonTapAction() {
+        showActions = true
     }
 
     private func startObservingButtonVisibilityIfNeeded() {
@@ -31,5 +39,16 @@ public final class FloatingAddButtonViewModel: ObservableObject {
                 self?.showsFloatingAddButton = isVisible
             }
         }
+    }
+}
+
+extension FloatingAddButtonViewModel: NodeUploadActionSheetViewModelProtocol {
+    public func saveSelectedAction(_ action: NodeUploadAction) {
+        selectedAction = action
+    }
+
+    public func performSelectedActionAfterDismissal() {
+        selectedAction?.action()
+        selectedAction = nil
     }
 }
