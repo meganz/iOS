@@ -49,10 +49,15 @@ struct NodeBrowserView: View {
         .background()
         .overlay(alignment: .bottomTrailing) {
             if floatingAddButtonViewModel.showsFloatingAddButton {
-                RoundedPrimaryImageButton(image: MEGAAssets.Image.plus, action: floatingAddButtonViewModel.action)
+                RoundedPrimaryImageButton(image: MEGAAssets.Image.plus, action: { floatingAddButtonViewModel.addButtonTapAction() })
                     .padding(TokenSpacing._5)
             }
         }
+        .sheet(
+            isPresented: $floatingAddButtonViewModel.showActions,
+            content: {
+                NodeUploadActionSheetView(viewModel: floatingAddButtonViewModel, isPresented: $floatingAddButtonViewModel.showActions)
+            })
         .navigationBarTitleDisplayMode(.inline)
         .onAppear { viewModel.onViewAppear() }
         .onDisappear { viewModel.onViewDisappear() }
