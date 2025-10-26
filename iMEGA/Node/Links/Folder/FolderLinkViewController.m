@@ -719,12 +719,12 @@
         }
         
          if (self.searchController.isActive) {
-             return [UIImage megaImageWithNamed:@"searchEmptyState"];
+             return [UIImage megaImageWithNamed:@"glassSearch02"];
          }
         
-        return [UIImage megaImageWithNamed:@"folderEmptyState"];
+        return [UIImage megaImageWithNamed:@"glassFolder"];
     } else {
-        return [UIImage megaImageWithNamed:@"noInternetEmptyState"];
+        return [UIImage megaImageWithNamed:@"glassNoCloud"];
     }
 }
 

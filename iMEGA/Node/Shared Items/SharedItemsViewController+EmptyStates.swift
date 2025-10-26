@@ -46,15 +46,15 @@ extension SharedItemsViewController: @preconcurrency DZNEmptyDataSetSource {
                 }
             } else {
                 if incomingButton?.isSelected ?? false {
-                    return MEGAAssets.UIImage.incomingEmptyState
+                    return MEGAAssets.UIImage.glassShareIn
                 } else if outgoingButton?.isSelected ?? false {
-                    return MEGAAssets.UIImage.outgoingEmptyState
+                    return MEGAAssets.UIImage.glassShareOut
                 } else if linksButton?.isSelected ?? false {
-                    return MEGAAssets.UIImage.linksEmptyState
+                    return MEGAAssets.UIImage.glassLink
                 }
             }
         } else {
-            return MEGAAssets.UIImage.noInternetEmptyState
+            return MEGAAssets.UIImage.glassNoCloud
         }
         
         return nil

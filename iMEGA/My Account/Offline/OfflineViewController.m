@@ -953,15 +953,15 @@ static NSString *kisDirectory = @"kisDirectory";
     UIImage *image;
     if (self.searchController.isActive) {
         if (self.searchController.searchBar.text.length > 0) {
-            image = [UIImage megaImageWithNamed:@"searchEmptyState"];
+            image = [UIImage megaImageWithNamed:@"glassSearch02"];
         } else {
             image = nil;
         }
     } else {
         if (self.folderPathFromOffline) {
-            image = [UIImage megaImageWithNamed:@"folderEmptyState"];
+            image = [UIImage megaImageWithNamed:@"glassFolder"];
         } else {
-            image = [UIImage megaImageWithNamed:@"offlineEmptyState"];
+            image = [UIImage megaImageWithNamed:@"glassHardDrive"];
         }
     }
     

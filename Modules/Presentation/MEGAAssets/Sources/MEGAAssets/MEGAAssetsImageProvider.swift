@@ -282,6 +282,8 @@ extension MEGAAssets {
         public static var glassObjects: SwiftUI.Image { MEGAImageBundle.glassObjects }
         public static var glassImage: SwiftUI.Image { MEGAImageBundle.glassImage }
         public static var glassVideo: SwiftUI.Image { MEGAImageBundle.glassVideo }
+        public static var glassNoCloud: SwiftUI.Image { MEGAImageBundle.glassNoCloud }
+        public static var glassClock: SwiftUI.Image { MEGAImageBundle.glassClock }
     }
 }
 
@@ -713,5 +715,10 @@ extension MEGAAssets {
         public static var glassTrash: UIKit.UIImage { MEGAUIImageBundle.glassTrash }
         public static var folderUsersMono: UIKit.UIImage { MEGAUIImageBundle.folderUsersMono }
         public static var invalidLink: UIKit.UIImage { MEGAUIImageBundle.invalidLink }
+        public static var glassNoCloud: UIKit.UIImage { MEGAUIImageBundle.glassNoCloud }
+        public static var glassClock: UIKit.UIImage { MEGAUIImageBundle.glassClock }
+        public static var glassShareIn: UIKit.UIImage { MEGAUIImageBundle.glassShareIn }
+        public static var glassShareOut: UIKit.UIImage { MEGAUIImageBundle.glassShareOut }
+        public static var glassLink: UIKit.UIImage { MEGAUIImageBundle.glassLink }
     }
 }
