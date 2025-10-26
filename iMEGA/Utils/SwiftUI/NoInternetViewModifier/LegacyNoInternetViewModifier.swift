@@ -31,7 +31,10 @@ struct LegacyNoInternetViewModifier: ViewModifier {
         ZStack {
             TokenColors.Background.page.swiftUI
             VStack {
-                MEGAAssets.Image.noInternetEmptyState
+                MEGAAssets.Image.glassNoCloud
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+                    .frame(width: 120, height: 120)
                 Text(Strings.Localizable.noInternetConnection)
                     .font(.headline.weight(.regular))
                     .foregroundStyle(TokenColors.Text.primary.swiftUI)

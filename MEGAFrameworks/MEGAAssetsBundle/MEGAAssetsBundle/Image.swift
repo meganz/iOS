@@ -264,4 +264,6 @@ public struct MEGAImageBundle {
     // compiler error, we need to use "glassImage00" instead
     public static var glassImage: Image { Image(.glassImage00) }
     public static var glassVideo: Image { Image(.glassVideo) }
+    public static var glassNoCloud: Image { Image(.glassNoCloud) }
+    public static var glassClock: Image { Image(.glassClock) }
 }

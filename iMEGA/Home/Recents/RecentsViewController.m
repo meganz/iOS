@@ -280,9 +280,9 @@
 - (UIImage *)imageForEmptyState {
     UIImage *image;
     if (RecentsPreferenceManager.showRecents) {
-        image = (MEGAReachabilityManager.isReachable) ? [UIImage megaImageWithNamed:@"recentsEmptyState"] : [UIImage megaImageWithNamed:@"noInternetEmptyState"];
+        image = (MEGAReachabilityManager.isReachable) ? [UIImage megaImageWithNamed:@"glassClock"] : [UIImage megaImageWithNamed:@"glassNoCloud"];
     } else {
-        image = [UIImage megaImageWithNamed:@"recentsEmptyState"];
+        image = [UIImage megaImageWithNamed:@"glassClock"];
     }
     
     return image;

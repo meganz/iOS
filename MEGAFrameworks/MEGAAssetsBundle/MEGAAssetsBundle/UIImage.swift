@@ -429,4 +429,9 @@ public struct MEGAUIImageBundle {
     public static var glassTrash: UIImage { UIImage.glassTrash }
     public static var folderUsersMono: UIImage { UIImage.folderUsersMono }
     public static var invalidLink: UIImage { UIImage.invalidLink }
+    public static var glassNoCloud: UIImage { UIImage.glassNoCloud }
+    public static var glassClock: UIImage { UIImage.glassClock }
+    public static var glassShareIn: UIImage { UIImage.glassShareIn }
+    public static var glassShareOut: UIImage { UIImage.glassShareOut }
+    public static var glassLink: UIImage { UIImage.glassLink }
 }

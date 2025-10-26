@@ -805,6 +805,12 @@ public struct MEGAImageBundle {
   public static var glassVideo: SwiftUICore.Image {
     get
   }
+  public static var glassNoCloud: SwiftUICore.Image {
+    get
+  }
+  public static var glassClock: SwiftUICore.Image {
+    get
+  }
 }
 extension Foundation.Bundle {
   public static let MEGAAssetsBundle: Foundation.Bundle
@@ -2274,6 +2280,21 @@ public struct MEGAUIImageBundle {
     get
   }
   public static var invalidLink: UIKit.UIImage {
+    get
+  }
+  public static var glassNoCloud: UIKit.UIImage {
+    get
+  }
+  public static var glassClock: UIKit.UIImage {
+    get
+  }
+  public static var glassShareIn: UIKit.UIImage {
+    get
+  }
+  public static var glassShareOut: UIKit.UIImage {
+    get
+  }
+  public static var glassLink: UIKit.UIImage {
     get
   }
 }
