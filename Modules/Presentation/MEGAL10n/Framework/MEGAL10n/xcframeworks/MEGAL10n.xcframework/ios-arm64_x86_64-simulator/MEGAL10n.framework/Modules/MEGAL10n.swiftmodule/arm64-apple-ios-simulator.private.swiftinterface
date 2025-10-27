@@ -4733,7 +4733,9 @@ public enum Strings {
           public static let recommended: Swift.String
           public enum IntroOffer {
             public static func blackFridayDeal(_ p1: Any) -> Swift.String
+            public static func cyberMondayDeal(_ p1: Any) -> Swift.String
             public static func generalDeal(_ p1: Any) -> Swift.String
+            public static func specialOffer(_ p1: Any) -> Swift.String
           }
         }
       }
