@@ -326,8 +326,8 @@ extension AppDelegate {
 
 // MARK: SQLite disk full
 extension AppDelegate {
-    @objc func didReceiveSQLiteDiskFullNotification() {
-        DispatchQueue.main.async {
+    @objc nonisolated  func didReceiveSQLiteDiskFullNotification() {
+        Task { @MainActor in
             guard self.blockingWindow == nil else { return }
             let window = UIWindow(frame: UIScreen.main.bounds)
             window.windowLevel = .alert + 1
