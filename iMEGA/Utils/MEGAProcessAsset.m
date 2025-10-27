@@ -165,12 +165,14 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
                 }
             }];
         });
-        if (self.filePaths && self.filePathsArray.count) {
-            self.filePaths(self.filePathsArray);
-        }
-        if (self.errors && self.errorsArray.count) {
-            self.errors(self.errorsArray);
-        }
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (self.filePaths && self.filePathsArray.count) {
+                self.filePaths(self.filePathsArray);
+            }
+            if (self.errors && self.errorsArray.count) {
+                self.errors(self.errorsArray);
+            }
+        });
     } else {
         switch (self.asset.mediaType) {
             case PHAssetMediaTypeImage:
@@ -248,7 +250,9 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
                 } else {
                     if (self.error) {
                         MEGALogDebug(@"[PA] Max attempts reached");
-                        self.error(error);
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            self.error(error);
+                        });
                     }
                     if (self.errors) {
                         MEGALogDebug(@"[PA] Max attempts reached");
@@ -318,7 +322,9 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
                             
                             if (self.filePath) {
                                 filePath = filePath.mnz_relativeLocalPath;
-                                self.filePath(filePath);
+                                dispatch_async(dispatch_get_main_queue(), ^{
+                                    self.filePath(filePath);
+                                });
                             }
                             if (self.filePaths) {
                                 filePath = filePath.mnz_relativeLocalPath;
@@ -328,7 +334,9 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
                         } else {
                             MEGALogError(@"[PA] Copy item at path failed with error: %@", error);
                             if (self.error) {
-                                self.error(error);
+                                dispatch_async(dispatch_get_main_queue(), ^{
+                                    self.error(error);
+                                });
                             }
                             if (self.errors) {
                                 MEGALogDebug(@"[PA] Max attempts reached");
@@ -358,7 +366,9 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
             } else {
                 if (self.error) {
                     MEGALogDebug(@"[PA] Max attempts reached");
-                    self.error(error);
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        self.error(error);
+                    });
                 }
                 if (self.errors) {
                     MEGALogDebug(@"[PA] Max attempts reached");
@@ -407,12 +417,14 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
                     MEGALogDebug(@"[PA] Export session finished");
                     self.currentProgress += CMTimeGetSeconds(self.avAsset.duration);
                     if (self.filePath) {
-                        if (self.presenter) {
-                            self.filePath(filePath);
-                        } else {
-                            filePath = encoder.outputURL.path.mnz_relativeLocalPath;
-                            self.filePath(filePath);
-                        }
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            if (self.presenter) {
+                                self.filePath(filePath);
+                            } else {
+                                filePath = encoder.outputURL.path.mnz_relativeLocalPath;
+                                self.filePath(filePath);
+                            }
+                        });
                     }
                 }
                 else if (encoder.status == AVAssetExportSessionStatusCancelled) {
@@ -526,7 +538,9 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
                 
                 if (self.filePath) {
                     filePath = filePath.mnz_relativeLocalPath;
-                    self.filePath(filePath);
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        self.filePath(filePath);
+                    });
                 }
                 if (self.filePaths) {
                     filePath = filePath.mnz_relativeLocalPath;
@@ -536,7 +550,9 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
             } else {
                 if (self.error) {
                     MEGALogError(@"[PA] Write to file failed with error %@", error);
-                    self.error(error);
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        self.error(error);
+                    });
                 }
                 if (self.errors) {
                     MEGALogDebug(@"[PA] Max attempts reached");
@@ -661,7 +677,9 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
             }
             if (self.filePath) {
                 NSString *filePath = encoder.outputURL.path.mnz_relativeLocalPath;
-                self.filePath(filePath);
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    self.filePath(filePath);
+                });
             }
             if (self.filePaths) {
                 NSString *filePath = encoder.outputURL.path.mnz_relativeLocalPath;
