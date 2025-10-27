@@ -4768,3 +4768,7 @@
 "cameraUploads.progress.section.inProgress.title" = "In Progress";
 /* Camera Uploads row progress format */
 "cameraUploads.progress.row.uploadProgressFormat" = "%@ of %@ %@/s";
+/* Cyber Monday deal plan badge text shown in Upgrade plan screen */
+"upgradeAccountPlan.plan.tag.introOffer.cyberMondayDeal" = "Cyber Monday deal: %@ off";
+/* Special Offer plan badge text shown in Upgrade plan screen */
+"upgradeAccountPlan.plan.tag.introOffer.specialOffer" = "Special offer: %@ off";

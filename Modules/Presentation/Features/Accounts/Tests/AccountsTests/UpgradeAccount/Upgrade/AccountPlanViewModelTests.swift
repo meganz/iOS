@@ -64,11 +64,30 @@ struct AccountPlanViewModelTests {
 
         @Test
         @MainActor
-        func introOfferWithDiscount_whenNotBlackFridayCampaignRange_shouldShowCorrectText() {
+        func introOfferWithDiscount_whenCyberMondayCampaignRange_shouldShowCorrectText() {
             let year = 2025
-            let fakeNow = nzDate(year, 12, 8, 0, 0, 0)
+            let fakeNow = nzDate(year, 12, 1, 0, 0, 0)
             let plan = discountedPlanUSD()
-            let expected = Strings.Localizable.UpgradeAccountPlan.Plan.Tag.IntroOffer.generalDeal("20%")
+            let expected = Strings.Localizable.UpgradeAccountPlan.Plan.Tag.IntroOffer.cyberMondayDeal("20%")
+
+            let sut = makeSUT(
+                plan: plan,
+                planTag: .introOffer,
+                now: { fakeNow },
+                calendar: nzCalendar,
+                timeZone: nzTimeZone
+            )
+
+            #expect(sut.planBadge?.text == expected)
+        }
+
+        @Test
+        @MainActor
+        func introOfferWithDiscount_whenSpecialOfferCampaignRange_shouldShowCorrectText() {
+            let year = 2025
+            let fakeNow = nzDate(year, 12, 2, 0, 0, 0)
+            let plan = discountedPlanUSD()
+            let expected = Strings.Localizable.UpgradeAccountPlan.Plan.Tag.IntroOffer.specialOffer("20%")
 
             let sut = makeSUT(
                 plan: plan,
