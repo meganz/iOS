@@ -224,46 +224,57 @@
     if (metadataObjects && metadataObjects.count > 0) {
         AVMetadataMachineReadableCodeObject *metadata = metadataObjects.firstObject;
         if ([metadata.type isEqualToString:AVMetadataObjectTypeQRCode]) {
-            if (!self.queryInProgress) {
-                self.queryInProgress = YES;
-                NSString *detectedString = metadata.stringValue;
-                NSString *baseString = [NSString stringWithFormat:@"https://%@/C!", [self domainName]];
-                if ([detectedString containsString:baseString]) {
-                    NSString *base64Handle = [detectedString stringByReplacingOccurrencesOfString:baseString withString:@""];
-                    
-                    MEGAContactLinkQueryRequestDelegate *delegate = [[MEGAContactLinkQueryRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
-                        switch (self.contactLinkQRType) {
-                            case ContactLinkQRTypeContactRequest: {
-                                [self feedbackWithSuccess:YES];
-                                NSString *fullName = [NSString stringWithFormat:@"%@ %@", request.name, request.text];
-                                [self presentInviteModalForEmail:request.email fullName:fullName contactLinkHandle:request.nodeHandle image:request.file];
-                                break;
-                            }
-                                
-                            case ContactLinkQRTypeShareFolder: {
-                                [self dismissViewControllerAnimated:YES completion:^{
-                                    if ([self.contactLinkQRDelegate respondsToSelector:@selector(emailForScannedQR:)]) {
-                                        [self.contactLinkQRDelegate emailForScannedQR:request.email];
-                                    }
-                                }];
-                                break;
-                            }
-                                
-                            default:
-                                break;
-                        }
-                    } onError:^(MEGAError *error) {
-                        if (error.type == MEGAErrorTypeApiENoent) {
-                            [self feedbackWithSuccess:NO];
-                        }
-                    }];
-                    
-                    [MEGASdk.shared contactLinkQueryWithHandle:[MEGASdk handleForBase64Handle:base64Handle] delegate:delegate];
-                } else {
-                    [self feedbackWithSuccess:NO];
-                }
-            }
+            NSString *detectedString = metadata.stringValue;
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self handleCapturingQRCode:detectedString];
+            });
         }
+    }
+}
+
+- (void)handleCapturingQRCode:(NSString *)detectedString {
+    if (!self.queryInProgress) {
+        self.queryInProgress = YES;
+        NSString *baseString = [NSString stringWithFormat:@"https://%@/C!", [self domainName]];
+        if ([detectedString containsString:baseString]) {
+            NSString *base64Handle = [detectedString stringByReplacingOccurrencesOfString:baseString withString:@""];
+            
+            __weak typeof(self) weakSelf = self;
+            MEGAContactLinkQueryRequestDelegate *delegate = [[MEGAContactLinkQueryRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
+                [weakSelf handleContactLinkQueryRequest:request];
+            } onError:^(MEGAError *error) {
+                if (error.type == MEGAErrorTypeApiENoent) {
+                    [weakSelf feedbackWithSuccess:NO];
+                }
+            }];
+            
+            [MEGASdk.shared contactLinkQueryWithHandle:[MEGASdk handleForBase64Handle:base64Handle] delegate:delegate];
+        } else {
+            [self feedbackWithSuccess:NO];
+        }
+    }
+}
+
+- (void)handleContactLinkQueryRequest:(MEGARequest *)request {
+    switch (self.contactLinkQRType) {
+        case ContactLinkQRTypeContactRequest: {
+            [self feedbackWithSuccess:YES];
+            NSString *fullName = [NSString stringWithFormat:@"%@ %@", request.name, request.text];
+            [self presentInviteModalForEmail:request.email fullName:fullName contactLinkHandle:request.nodeHandle image:request.file];
+            break;
+        }
+            
+        case ContactLinkQRTypeShareFolder: {
+            [self dismissViewControllerAnimated:YES completion:^{
+                if ([self.contactLinkQRDelegate respondsToSelector:@selector(emailForScannedQR:)]) {
+                    [self.contactLinkQRDelegate emailForScannedQR:request.email];
+                }
+            }];
+            break;
+        }
+            
+        default:
+            break;
     }
 }
 
