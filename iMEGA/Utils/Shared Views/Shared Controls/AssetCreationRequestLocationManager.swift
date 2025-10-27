@@ -1,6 +1,6 @@
-import CoreLocation
+@preconcurrency import CoreLocation
 
-protocol AssetCreationRequestLocationManagerProtocol {
+protocol AssetCreationRequestLocationManagerProtocol: Sendable {
     func requestWhenInUseAuthorization()
     
     /// This method can only be called from inside of -[PHPhotoLibrary performChanges:completionHandler:] or -[PHPhotoLibrary performChangesAndWait:error:]
