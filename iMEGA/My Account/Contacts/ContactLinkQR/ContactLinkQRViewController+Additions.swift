@@ -4,7 +4,7 @@ import MEGAL10n
 import UIKit
 
 extension ContactLinkQRViewController {
-    @objc var domainName: String {
+    @objc nonisolated var domainName: String {
         DIContainer.domainName
     }
     
