@@ -98,7 +98,8 @@ final class ChatRoomAvatarViewModel: ObservableObject {
         guard userHandles.count > 0 else { return }
         userImageUseCase
             .requestAvatarChangeNotification(forUserHandles: userHandles)
-            .sink { [weak self] _ in
+            .receive(on: DispatchQueue.main)
+            .sink { @Sendable [weak self] _ in
                 guard let self else { return }
                 Task {
                     do {
