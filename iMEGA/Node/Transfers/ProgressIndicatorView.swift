@@ -8,8 +8,6 @@ import MEGASwift
 import UIKit
 
 final class ProgressIndicatorView: UIView {
-    private let transferInventoryUseCaseHelper = TransferInventoryUseCaseHelper()
-    
     private var backgroundLayer: CAShapeLayer?
     private var progressBackgroundLayer: CAShapeLayer?
     private var progressLayer: CAShapeLayer?
