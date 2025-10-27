@@ -7,7 +7,7 @@ import UniformTypeIdentifiers
 
 final class UploadImagePickerViewController: UIImagePickerController {
 
-    private var assetCreationRequestLocationManager: AssetCreationRequestLocationManager?
+    private nonisolated let assetCreationRequestLocationManager: AssetCreationRequestLocationManager = AssetCreationRequestLocationManager()
     var completion: (@Sendable (Result<String, ImagePickingError>) -> Void)?
     
     @PreferenceWrapper(key: PreferenceKeyEntity.isSaveMediaCapturedToGalleryEnabled, defaultValue: false, useCase: PreferenceUseCase.default)
@@ -26,10 +26,7 @@ final class UploadImagePickerViewController: UIImagePickerController {
     }
     
     private func initializeAndRequestCameraLocationPermission() {
-        if assetCreationRequestLocationManager == nil {
-            assetCreationRequestLocationManager = AssetCreationRequestLocationManager()
-        }
-        assetCreationRequestLocationManager?.requestWhenInUseAuthorization()
+        assetCreationRequestLocationManager.requestWhenInUseAuthorization()
     }
 
     // MARK: - Public
@@ -162,12 +159,11 @@ extension UploadImagePickerViewController: UIImagePickerControllerDelegate, UINa
 
         let assetURL = URL(fileURLWithPath: filePath)
 
-        PHPhotoLibrary.shared().performChanges({ [weak self] in
-            guard let self else { return }
+        PHPhotoLibrary.shared().performChanges({ @Sendable [assetCreationRequestLocationManager] in
             let assetCreationRequest = PHAssetCreationRequest.forAsset()
             assetCreationRequest.addResource(with: assetType, fileURL: assetURL, options: nil)
-            assetCreationRequestLocationManager?.registerLocationMetaData(to: assetCreationRequest)
-        }, completionHandler: { [completion] (success, _) in
+            assetCreationRequestLocationManager.registerLocationMetaData(to: assetCreationRequest)
+        }, completionHandler: { @Sendable [completion] (success, _) in
             guard success else {
                 completion?(.success(relativeLocalPath(filePath)))
                 return
