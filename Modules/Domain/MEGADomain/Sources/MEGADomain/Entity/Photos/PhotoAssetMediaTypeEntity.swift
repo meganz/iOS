@@ -1,4 +1,4 @@
-public enum PhotoAssetMediaTypeEntity: Sendable {
+public enum PhotoAssetMediaTypeEntity: Sendable, Equatable {
     case unknown
     case image
     case video

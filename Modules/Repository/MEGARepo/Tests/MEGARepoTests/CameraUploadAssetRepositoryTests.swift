@@ -8,10 +8,11 @@ struct CameraUploadAssetRepositoryTests {
     private let identifier = UUID().uuidString
     
     @Test func uploads() async throws {
+        let creationDate = Date.now
         let records = [
             AssetUploadRecordDTO(
                 localIdentifier: identifier,
-                creationDate: Date.now,
+                creationDate: creationDate,
                 mediaType: .image,
                 mediaSubtypes: nil,
                 additionalMediaSubtypes: nil,
@@ -24,7 +25,7 @@ struct CameraUploadAssetRepositoryTests {
             ))
         
         let result = try await sut.uploads(
-            startingFrom: identifier,
+            startingFrom: .init(localIdentifier: identifier, creationDate: creationDate),
             isForward: true,
             limit: nil,
             statuses: [.notStarted],

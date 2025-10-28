@@ -1,4 +1,4 @@
-public enum CameraAssetUploadStatusEntity: Sendable {
+public enum CameraAssetUploadStatusEntity: Sendable, Equatable {
     case unknown
     case notStarted
     case notReady

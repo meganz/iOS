@@ -8,14 +8,14 @@ public struct CameraUploadAssetRepository: CameraUploadAssetRepositoryProtocol {
     }
     
     public func uploads(
-        startingFrom localIdentifier: String?,
+        startingFrom cursor: QueuedCameraUploadCursorEntity?,
         isForward: Bool,
         limit: Int?,
         statuses: [CameraAssetUploadStatusEntity],
         mediaTypes: [PhotoAssetMediaTypeEntity]
     ) async throws -> [CameraAssetUploadEntity] {
         try await cameraUploadRecordStore.fetchAssetUploads(
-            startingFrom: localIdentifier,
+            startingFrom: cursor?.toQueuedCameraUploadCursorDTO(),
             isForward: isForward,
             limit: limit,
             statuses: statuses.toCameraAssetUploadStatusDTOs(),

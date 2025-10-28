@@ -2,7 +2,7 @@ import MEGARepo
 
 extension CameraUploadRecordManager: CameraUploadRecordStore {
     public func fetchAssetUploads(
-        startingFrom localIdentifier: String?,
+        startingFrom cursor: QueuedCameraUploadCursorDTO?,
         isForward: Bool,
         limit: Int?,
         statuses: [CameraAssetUploadStatusDTO],
@@ -23,14 +23,14 @@ extension CameraUploadRecordManager: CameraUploadRecordStore {
                 let mediaTypePredicate = NSPredicate(format: "mediaType IN %@", mediaTypes.map(\.rawValue))
                 predicates.append(mediaTypePredicate)
             }
-            if let cursorPredicate = try self.makeCursorPredicate(localIdentifier: localIdentifier, isForward: isForward, in: context) {
+            if let cursorPredicate = try self.makeCursorPredicate(cursor: cursor, isForward: isForward, in: context) {
                 predicates.append(cursorPredicate)
             }
             
             request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
             request.sortDescriptors = [
-                NSSortDescriptor(key: "creationDate", ascending: !isForward),
-                NSSortDescriptor(key: "localIdentifier", ascending: !isForward)
+                NSSortDescriptor(key: "creationDate", ascending: isForward),
+                NSSortDescriptor(key: "localIdentifier", ascending: isForward)
             ]
             
             request.relationshipKeyPathsForPrefetching = ["errorPerLaunch", "errorPerLogin"]
@@ -62,22 +62,16 @@ extension CameraUploadRecordManager: CameraUploadRecordStore {
         }
     }
     
-    private func makeCursorPredicate(localIdentifier: String?, isForward: Bool, in context: NSManagedObjectContext) throws -> NSPredicate? {
-        guard let localIdentifier,
-              let record = try uploadRecord(localIdentifier: localIdentifier, in: context),
-              let creationDate = record.creationDate,
-              let localId = record.localIdentifier else { return nil }
+    private func makeCursorPredicate(cursor: QueuedCameraUploadCursorDTO?, isForward: Bool, in context: NSManagedObjectContext) throws -> NSPredicate? {
+        guard let cursor else { return nil }
         
-        let comparison = isForward ? "<" : ">"
-        let datePredicate = NSPredicate(format: "creationDate \(comparison) %@", creationDate as NSDate)
-        let sameDatePredicate = NSPredicate(format: "creationDate == %@ AND localIdentifier \(comparison) %@", creationDate as NSDate, localId)
-        return NSCompoundPredicate(orPredicateWithSubpredicates: [datePredicate, sameDatePredicate])
-    }
-    
-    private func uploadRecord(localIdentifier: String, in context: NSManagedObjectContext) throws -> MOAssetUploadRecord? {
-        let request: NSFetchRequest<MOAssetUploadRecord> = MOAssetUploadRecord.fetchRequest()
-        request.predicate = NSPredicate(format: "localIdentifier == %@", localIdentifier)
-        request.fetchLimit = 1
-        return try context.fetch(request).first
+        let comparison = isForward ? ">" : "<"
+        
+        let datePredicate = NSPredicate(format: "creationDate \(comparison) %@", cursor.creationDate as NSDate)
+        let sameDate = NSPredicate(format: "creationDate == %@", cursor.creationDate as NSDate)
+        let identifierPredicate = NSPredicate(format: "localIdentifier \(comparison) %@", cursor.localIdentifier)
+        let sameDateAndIdentifier = NSCompoundPredicate(andPredicateWithSubpredicates: [sameDate, identifierPredicate])
+        
+        return NSCompoundPredicate(orPredicateWithSubpredicates: [datePredicate, sameDateAndIdentifier])
     }
 }

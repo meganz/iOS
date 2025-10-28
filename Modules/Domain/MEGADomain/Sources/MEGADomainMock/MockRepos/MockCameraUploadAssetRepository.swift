@@ -1,8 +1,14 @@
 import MEGADomain
+import MEGASwift
 
-public struct MockCameraUploadAssetRepository: CameraUploadAssetRepositoryProtocol {
+public final class MockCameraUploadAssetRepository: CameraUploadAssetRepositoryProtocol, @unchecked Sendable {
+    public enum Invocation: Sendable, Equatable {
+        case uploads(startingFrom: QueuedCameraUploadCursorEntity?, isForward: Bool, limit: Int?, statuses: [CameraAssetUploadStatusEntity], mediaTypes: [PhotoAssetMediaTypeEntity])
+        case fileDetails(identifiers: Set<String>)
+    }
     private let uploadsResult: Result<[CameraAssetUploadEntity], any Error>
     private let fileDetailsResult: Result<Set<CameraUploadFileDetailsEntity>, any Error>
+    @Atomic public var invocations: [Invocation] = []
     
     public init(
         uploadsResult: Result<[CameraAssetUploadEntity], any Error> = .failure(GenericErrorEntity()),
@@ -13,15 +19,22 @@ public struct MockCameraUploadAssetRepository: CameraUploadAssetRepositoryProtoc
     }
     
     public func uploads(
-        startingFrom localIdentifier: String?,
+        startingFrom cursor: QueuedCameraUploadCursorEntity?,
         isForward: Bool,
         limit: Int?,
         statuses: [CameraAssetUploadStatusEntity],
-        mediaTypes: [PhotoAssetMediaTypeEntity]) async throws -> [CameraAssetUploadEntity] {
-            try uploadsResult.get()
-        }
+        mediaTypes: [PhotoAssetMediaTypeEntity]
+    ) async throws -> [CameraAssetUploadEntity] {
+        addInvocation(.uploads(startingFrom: cursor, isForward: isForward, limit: limit, statuses: statuses, mediaTypes: mediaTypes))
+        return try uploadsResult.get()
+    }
     
     public func fileDetails(forLocalIdentifiers identifiers: Set<String>) async throws -> Set<CameraUploadFileDetailsEntity> {
-        try fileDetailsResult.get()
+        addInvocation(.fileDetails(identifiers: identifiers))
+        return try fileDetailsResult.get()
+    }
+    
+    private func addInvocation(_ invocation: Invocation) {
+        $invocations.mutate { $0.append(invocation) }
     }
 }
