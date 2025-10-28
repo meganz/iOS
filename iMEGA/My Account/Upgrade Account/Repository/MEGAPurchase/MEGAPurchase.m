@@ -160,7 +160,7 @@
     }
 
     dispatch_async(dispatch_get_main_queue(), ^{
-        for (id<MEGAPurchasePricingDelegate> pricingsDelegate in self.pricingsDelegateMutableArray) {
+        for (id<MEGAPurchasePricingDelegate> pricingsDelegate in self.pricingsDelegateMutableArray.copy) {
             [pricingsDelegate pricingsReady];
         }
     });
