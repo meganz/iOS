@@ -1031,6 +1031,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         
         avatarChangeSubscription = userImageUseCase
             .requestAvatarChangeNotification(forUserHandles: participants.map(\.participantId))
+            .receive(on: DispatchQueue.main)
             .sink { error in
                 MEGALogError("error fetching the changed avatar \(error)")
             } receiveValue: { [weak self] handles in
