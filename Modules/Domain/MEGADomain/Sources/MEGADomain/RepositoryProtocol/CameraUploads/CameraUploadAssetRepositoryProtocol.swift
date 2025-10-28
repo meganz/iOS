@@ -18,7 +18,7 @@ public protocol CameraUploadAssetRepositoryProtocol: Sendable {
     ///
     /// - Throws: An error if fetching uploads fails.
     func uploads(
-        startingFrom localIdentifier: String?,
+        startingFrom cursor: QueuedCameraUploadCursorEntity?,
         isForward: Bool,
         limit: Int?,
         statuses: [CameraAssetUploadStatusEntity],

@@ -15,7 +15,7 @@ public protocol CameraUploadRecordStore: Sendable {
     /// - Returns: An array of `AssetUploadRecordDTO` matching the criteria.
     /// - Throws: An error if the fetch fails.
     func fetchAssetUploads(
-        startingFrom localIdentifier: String?,
+        startingFrom cursor: QueuedCameraUploadCursorDTO?,
         isForward: Bool,
         limit: Int?,
         statuses: [CameraAssetUploadStatusDTO],

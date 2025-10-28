@@ -14,7 +14,7 @@ public struct MockCameraUploadRecordStore: CameraUploadRecordStore {
     }
     
     public func fetchAssetUploads(
-        startingFrom localIdentifier: String?,
+        startingFrom cursor: QueuedCameraUploadCursorDTO?,
         isForward: Bool, limit: Int?,
         statuses: [CameraAssetUploadStatusDTO],
         mediaTypes: [PHAssetMediaType]
