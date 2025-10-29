@@ -628,8 +628,14 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
             
             UIImageView *imageView = [self imageViewWithFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, self.view.frame.size.height)];
             imageView.contentMode = UIViewContentModeScaleAspectFit;
-            
-            UIScrollView *zoomableView = [[UIScrollView alloc] initWithFrame:CGRectMake(self.scrollView.frame.size.width * i, 0.0f, self.view.frame.size.width, self.view.frame.size.height)];
+
+            CGFloat xOrigin = self.scrollView.frame.size.width * i;
+            if (self.view.effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
+                // Adjust xOrigin for RTL layout
+                xOrigin = xOrigin + GapBetweenPages;
+            }
+
+            UIScrollView *zoomableView = [[UIScrollView alloc] initWithFrame:CGRectMake(xOrigin, 0.0f, self.view.frame.size.width, self.view.frame.size.height)];
             zoomableView.minimumZoomScale = 1.0f;
             zoomableView.maximumZoomScale = 1.0f; // Disable zoom until image is set
             zoomableView.contentSize = imageView.bounds.size;
