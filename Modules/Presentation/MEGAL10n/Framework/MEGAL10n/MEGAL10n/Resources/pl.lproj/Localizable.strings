@@ -4743,4 +4743,32 @@
 /* General label for priority customer support */
 "general.prioritySupport"="Wsparcie priorytetowe";
 /* Storage used for Business and Pro Flexi accounts in the account menu. */
-"accountMenu.businessAndProFlexiAccountsStorageUsed.title"="%@ used";
+"accountMenu.businessAndProFlexiAccountsStorageUsed.title"="%@ wykorzystane";
+/* Sorting option label for sorting items alphabetically by their name (can be applied in ascending or descending order) */
+"sorting.name.title"="Nazwa";
+/* Sorting option label for sorting items based on whether they are marked as favourites (can be applied in ascending or descending order) */
+"sorting.favourite.title"="Ulubione";
+/* Sorting option label for sorting items based on the date they were added (can be applied in ascending or descending order) */
+"sorting.dateAdded.title"="Data dodania";
+/* Sorting option label for sorting items based on the last time they were modified (can be applied in ascending or descending order) */
+"sorting.lastModified.title"="Ostatnio używane";
+/* Sorting option label for sorting items based on their file size (can be applied in ascending or descending order) */
+"sorting.size.title"="Rozmiar";
+/* Black Friday deal plan badge text shown in Upgrade plan screen */
+"upgradeAccountPlan.plan.tag.introOffer.blackFridayDeal"="Oferta na Black Friday: %@ zniżki";
+/* General deal plan badge text shown in Upgrade plan screen */
+"upgradeAccountPlan.plan.tag.introOffer.generalDeal"="%@ zniżki";
+/* Subscription plan first year offer text shown in Upgrade plan screen */
+"subscriptionPurchase.plan.firstYearOffer"="%@, for first year";
+/* Header text in Upgrade plan screen to highlight yearly billing savings with intro offer */
+"upgradeAccountPlan.header.title.saveYearlyBillingWithIntoOffer"="Oszczędź co najmniej %@ na rocznym planie";
+/* Camera Uploads Progress navigation title */
+"cameraUploads.progress.navigation.title"="Postęp";
+/* Camera Uploads Progress In Progress section title */
+"cameraUploads.progress.section.inProgress.title"="W trakcie";
+/* Camera Uploads row progress format */
+"cameraUploads.progress.row.uploadProgressFormat"="%@ of %@ %@/s";
+/* Cyber Monday deal plan badge text shown in Upgrade plan screen */
+"upgradeAccountPlan.plan.tag.introOffer.cyberMondayDeal"="Cyber Monday deal: %@ off";
+/* Special Offer plan badge text shown in Upgrade plan screen */
+"upgradeAccountPlan.plan.tag.introOffer.specialOffer"="Special offer: %@ off";

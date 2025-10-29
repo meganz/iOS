@@ -1019,9 +1019,9 @@
 /* Title of the Achievements section */
 "achievementsTitle"="Logros";
 /* Cell title shown on the achievements view for referral achievement */
-"account.achievement.referral.title"="Invite people to MEGA";
+"account.achievement.referral.title"="Invitar a MEGA";
 /* Subtitle of the referral achievement introduction, %1$@ is a placeholder, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
-"account.achievement.referral.subtitle"="%1$@ extra storage for each invitation, \n%2$@";
+"account.achievement.referral.subtitle"="%1$@ de almacenamiento adicional para cada invitación, \n%2$@";
 /* Text shown to explain how and where you can invite friends */
 "Select from phone contacts or enter multiple email addresses"="Seleccionar contactos desde el dispositivo o añadir varios correos electrónicos.";
 /*  */
@@ -1029,7 +1029,7 @@
 /*  */
 "howItWorks"="Cómo funciona";
 /*  */
-"howItWorksMain"="Your friend needs to sign up for a free account on MEGA and [S]install at least one MEGA application[/S] (either our desktop app or one of our mobile apps)";
+"howItWorksMain"="Tu amigo tiene que registrarse para obtener una cuenta gratuita en MEGA e [S]instalar al menos una aplicación de MEGA[/S] (ya sea nuestra aplicación de escritorio o una de nuestras aplicaciones móviles)";
 /*  */
 "howItWorksSecondary"="Puedes avisar a tu amigo de la manera que prefieras. Ganarás el bono si has introducido la dirección de correo electrónico de tu amigo aquí antes de que se registre con esa dirección.";
 /* A message which is shown once someone has invited a friend as part of the achievements program. */
@@ -1053,17 +1053,17 @@
 /* Label shown on the achievements view for complete registration achievement, %@ is a placeholder. */
 "account.achievement.registration.explanation.label"="Has recibido %@ de espacio de almacenamiento como bono de registro gratuito.";
 /* Cell title shown on the achievements view for referral achievement */
-"account.achievement.referralBonus.title"="Invite people to MEGA";
+"account.achievement.referralBonus.title"="Invitar a MEGA";
 /* Cell title shown on the achievements view for install MEGA desktop app achievement */
-"account.achievement.desktopApp.title"="Install our desktop app";
+"account.achievement.desktopApp.title"="Instalar nuestra aplicación de escritorio";
 /* Explanation label shown on the achievements view for complete install MEGA desktop app achievement, %@ is a placeholder. */
-"account.achievement.desktopApp.complete.explaination.label"="You’ve received %@ extra storage space for installing our desktop app";
+"account.achievement.desktopApp.complete.explaination.label"="Has obtenido %@ de espacio de almacenamiento extra por instalar nuestra aplicación de escritorio";
 /* Explanation label shown on the achievements view for incomplete install MEGA desktop app achievement, %1$@ is a placeholder, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
 "account.achievement.desktopApp.incomplete.explaination.label"="Al instalar la aplicación de escritorio de MEGA, obtienes %1$@ de almacenamiento adicional, %2$@. La aplicación de escritorio está disponible para Windows, macOS y la mayoría de las distribuciones de Linux.";
 /* Cell title shown on the achievements view for install MEGA mobile app achievement */
 "account.achievement.mobileApp.title"="Instala nuestra aplicación móvil";
 /* Explanation label shown on the achievements view for complete install MEGA mobile app achievement, %@ is a placeholder. */
-"account.achievement.mobileApp.complete.explaination.label"="You’ve received %@ extra storage space for installing our mobile app";
+"account.achievement.mobileApp.complete.explaination.label"="Has obtenido %@ de espacio de almacenamiento extra por instalar nuestra aplicación móvil";
 /* Explanation label shown on the achievements view for incomplete install MEGA mobile app achievement, %1$@ is a placeholder, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
 "account.achievement.mobileApp.incomplete.explaination.label"="Al instalar la aplicación móvil de MEGA, obtienes %@ de espacio de almacenamiento, %2$@. La aplicación móvil está disponible para iOS y Android.";
 /* Detail label shown on the achievements details view for Start Free Trial when its completed, %1$@ is placeholder for the storage amount, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
@@ -1075,7 +1075,7 @@
 /* Explanation label shown on the achievements view for incomplete start MEGA VPN Free Trial achievement, %@ is a placeholder. */
 "account.achievement.vpnFreeTrial.incomplete.explanation.label"="Instala la app MEGA VPN, inicia sesión con tu cuenta de MEGA y empieza tu prueba gratuita. El almacenamiento adicional se añadirá automáticamente después de iniciar la prueba gratis.";
 /* Explanation label shown on the achievements view for complete start MEGA VPN Free Trial achievement, %@ is a placeholder. */
-"account.achievement.vpnFreeTrial.complete.explanation.label"="You’ve received %@ extra storage space for starting a MEGA VPN free trial";
+"account.achievement.vpnFreeTrial.complete.explanation.label"="Has obtenido %@ de espacio de almacenamiento extra por probar gratis MEGA VPN";
 /* Text for the button to install MEGA VPN in the Start MEGA VPN Free Trial achievement */
 "account.achievement.vpnFreeTrial.buttonText"="Instalar MEGA VPN";
 /* Cell title shown on the achievements view for Start MEGA Pass Free Trial */
@@ -1085,7 +1085,7 @@
 /* Explanation label shown on the achievements view for incomplete start MEGA Pass Free Trial achievement, %@ is a placeholder. */
 "account.achievement.passFreeTrial.incomplete.explanation.label"="Instala la app MEGA Pass, inicia sesión con tu cuenta de MEGA y empieza tu prueba gratuita. El almacenamiento adicional se añadirá automáticamente después de iniciar la prueba gratis.";
 /* Explanation label shown on the achievements view for complete start MEGA Pass Free Trial achievement, %@ is a placeholder. */
-"account.achievement.passFreeTrial.complete.explanation.label"="You’ve received %@ extra storage space for starting a MEGA Pass free trial";
+"account.achievement.passFreeTrial.complete.explanation.label"="Has obtenido %@ de espacio de almacenamiento extra por probar gratis MEGA Pass";
 /* Text for the button to install MEGA Pass in the Start MEGA Pass Free Trial achievement */
 "account.achievement.passFreeTrial.buttonText"="Instalar MEGA Pass";
 /* Subtitle of the incomplete achievement with permanent bonus, %1$@ is a placeholder for amount of storage, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
@@ -4727,13 +4727,13 @@
 /* The screen locked status message in video player */
 "videoPlayer.lock.screenLocked"="La pantalla está bloqueada";
 /* The instruction to unlock the video player */
-"videoPlayer.lock.tapIconToUnlock"="Tap the lock icon to unlock";
+"videoPlayer.lock.tapIconToUnlock"="Toca el candado para desbloquear";
 /* The lock video player option in bottom more menu */
 "videoPlayer.snapshot.bottomSheet.title"="Capturar";
 /* The instruction to unlock the video player */
 "videoPlayer.snapshot.snackBar.title"="Imagen guardada en tu dispositivo";
 /* The Picture in picture video player option in bottom more menu */
-"videoPlayer.pip.bottomSheet.title"="Picture in picture";
+"videoPlayer.pip.bottomSheet.title"="Ventana flotante";
 /* Subscription benefit for rewind */
 "subscriptionPurchase.benefits.rewind.title"="Rebobinado hasta 60 días de datos eliminados.";
 /* Subscription benefit for for calls and meetings */
@@ -4741,6 +4741,34 @@
 /* Subscription benefit for rubbish bin clearing */
 "subscriptionPurchase.benefits.rubbishClearing.title"="Limpieza automática de la papelera entre 7 días y 10 años";
 /* General label for priority customer support */
-"general.prioritySupport"="Asistencia prioritaria";
+"general.prioritySupport"="Soporte prioritario";
 /* Storage used for Business and Pro Flexi accounts in the account menu. */
-"accountMenu.businessAndProFlexiAccountsStorageUsed.title"="%@ used";
+"accountMenu.businessAndProFlexiAccountsStorageUsed.title"="%@ usados";
+/* Sorting option label for sorting items alphabetically by their name (can be applied in ascending or descending order) */
+"sorting.name.title"="Nombre";
+/* Sorting option label for sorting items based on whether they are marked as favourites (can be applied in ascending or descending order) */
+"sorting.favourite.title"="Favoritos";
+/* Sorting option label for sorting items based on the date they were added (can be applied in ascending or descending order) */
+"sorting.dateAdded.title"="Fecha de subida";
+/* Sorting option label for sorting items based on the last time they were modified (can be applied in ascending or descending order) */
+"sorting.lastModified.title"="Última modificación";
+/* Sorting option label for sorting items based on their file size (can be applied in ascending or descending order) */
+"sorting.size.title"="Tamaño";
+/* Black Friday deal plan badge text shown in Upgrade plan screen */
+"upgradeAccountPlan.plan.tag.introOffer.blackFridayDeal"="Black Friday deal: %@ off";
+/* General deal plan badge text shown in Upgrade plan screen */
+"upgradeAccountPlan.plan.tag.introOffer.generalDeal"="%@ de descuento";
+/* Subscription plan first year offer text shown in Upgrade plan screen */
+"subscriptionPurchase.plan.firstYearOffer"="%@, for first year";
+/* Header text in Upgrade plan screen to highlight yearly billing savings with intro offer */
+"upgradeAccountPlan.header.title.saveYearlyBillingWithIntoOffer"="Save at least %@ on a yearly plan";
+/* Camera Uploads Progress navigation title */
+"cameraUploads.progress.navigation.title"="Progreso";
+/* Camera Uploads Progress In Progress section title */
+"cameraUploads.progress.section.inProgress.title"="En curso";
+/* Camera Uploads row progress format */
+"cameraUploads.progress.row.uploadProgressFormat"="%@ of %@ %@/s";
+/* Cyber Monday deal plan badge text shown in Upgrade plan screen */
+"upgradeAccountPlan.plan.tag.introOffer.cyberMondayDeal"="Cyber Monday deal: %@ off";
+/* Special Offer plan badge text shown in Upgrade plan screen */
+"upgradeAccountPlan.plan.tag.introOffer.specialOffer"="Special offer: %@ off";

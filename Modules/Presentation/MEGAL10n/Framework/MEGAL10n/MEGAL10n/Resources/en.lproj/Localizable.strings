@@ -4745,30 +4745,30 @@
 /* Storage used for Business and Pro Flexi accounts in the account menu. */
 "accountMenu.businessAndProFlexiAccountsStorageUsed.title"="%@ used";
 /* Sorting option label for sorting items alphabetically by their name (can be applied in ascending or descending order) */
-"sorting.name.title" = "Name";
+"sorting.name.title"="Name";
 /* Sorting option label for sorting items based on whether they are marked as favourites (can be applied in ascending or descending order) */
-"sorting.favourite.title" = "Favourite";
+"sorting.favourite.title"="Favourite";
 /* Sorting option label for sorting items based on the date they were added (can be applied in ascending or descending order) */
-"sorting.dateAdded.title" = "Date added";
+"sorting.dateAdded.title"="Date added";
 /* Sorting option label for sorting items based on the last time they were modified (can be applied in ascending or descending order) */
-"sorting.lastModified.title" = "Last modified";
+"sorting.lastModified.title"="Last modified";
 /* Sorting option label for sorting items based on their file size (can be applied in ascending or descending order) */
-"sorting.size.title" = "Size";
+"sorting.size.title"="Size";
 /* Black Friday deal plan badge text shown in Upgrade plan screen */
-"upgradeAccountPlan.plan.tag.introOffer.blackFridayDeal" = "Black Friday deal: %@ off";
+"upgradeAccountPlan.plan.tag.introOffer.blackFridayDeal"="Black Friday deal: %@ off";
 /* General deal plan badge text shown in Upgrade plan screen */
-"upgradeAccountPlan.plan.tag.introOffer.generalDeal" = "%@ off";
+"upgradeAccountPlan.plan.tag.introOffer.generalDeal"="%@ off";
 /* Subscription plan first year offer text shown in Upgrade plan screen */
 "subscriptionPurchase.plan.firstYearOffer"="%@, for first year";
 /* Header text in Upgrade plan screen to highlight yearly billing savings with intro offer */
-"upgradeAccountPlan.header.title.saveYearlyBillingWithIntoOffer" = "Save at least %@ on a yearly plan";
+"upgradeAccountPlan.header.title.saveYearlyBillingWithIntoOffer"="Save at least %@ on a yearly plan";
 /* Camera Uploads Progress navigation title */
-"cameraUploads.progress.navigation.title" = "Progress";
+"cameraUploads.progress.navigation.title"="Progress";
 /* Camera Uploads Progress In Progress section title */
-"cameraUploads.progress.section.inProgress.title" = "In Progress";
+"cameraUploads.progress.section.inProgress.title"="In progress";
 /* Camera Uploads row progress format */
-"cameraUploads.progress.row.uploadProgressFormat" = "%@ of %@ %@/s";
+"cameraUploads.progress.row.uploadProgressFormat"="%@ of %@ %@/s";
 /* Cyber Monday deal plan badge text shown in Upgrade plan screen */
-"upgradeAccountPlan.plan.tag.introOffer.cyberMondayDeal" = "Cyber Monday deal: %@ off";
+"upgradeAccountPlan.plan.tag.introOffer.cyberMondayDeal"="Cyber Monday deal: %@ off";
 /* Special Offer plan badge text shown in Upgrade plan screen */
-"upgradeAccountPlan.plan.tag.introOffer.specialOffer" = "Special offer: %@ off";
+"upgradeAccountPlan.plan.tag.introOffer.specialOffer"="Special offer: %@ off";
