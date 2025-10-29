@@ -4743,4 +4743,32 @@
 /* General label for priority customer support */
 "general.prioritySupport"="优先支持服务";
 /* Storage used for Business and Pro Flexi accounts in the account menu. */
-"accountMenu.businessAndProFlexiAccountsStorageUsed.title"="%@ used";
+"accountMenu.businessAndProFlexiAccountsStorageUsed.title"="%@已使用";
+/* Sorting option label for sorting items alphabetically by their name (can be applied in ascending or descending order) */
+"sorting.name.title"="名称";
+/* Sorting option label for sorting items based on whether they are marked as favourites (can be applied in ascending or descending order) */
+"sorting.favourite.title"="收藏";
+/* Sorting option label for sorting items based on the date they were added (can be applied in ascending or descending order) */
+"sorting.dateAdded.title"="添加日期";
+/* Sorting option label for sorting items based on the last time they were modified (can be applied in ascending or descending order) */
+"sorting.lastModified.title"="上次修改";
+/* Sorting option label for sorting items based on their file size (can be applied in ascending or descending order) */
+"sorting.size.title"="大小";
+/* Black Friday deal plan badge text shown in Upgrade plan screen */
+"upgradeAccountPlan.plan.tag.introOffer.blackFridayDeal"="Black Friday deal: %@ off";
+/* General deal plan badge text shown in Upgrade plan screen */
+"upgradeAccountPlan.plan.tag.introOffer.generalDeal"="优惠%@";
+/* Subscription plan first year offer text shown in Upgrade plan screen */
+"subscriptionPurchase.plan.firstYearOffer"="%@, for first year";
+/* Header text in Upgrade plan screen to highlight yearly billing savings with intro offer */
+"upgradeAccountPlan.header.title.saveYearlyBillingWithIntoOffer"="Save at least %@ on a yearly plan";
+/* Camera Uploads Progress navigation title */
+"cameraUploads.progress.navigation.title"="进行状况";
+/* Camera Uploads Progress In Progress section title */
+"cameraUploads.progress.section.inProgress.title"="进行中的传输";
+/* Camera Uploads row progress format */
+"cameraUploads.progress.row.uploadProgressFormat"="%@ of %@ %@/s";
+/* Cyber Monday deal plan badge text shown in Upgrade plan screen */
+"upgradeAccountPlan.plan.tag.introOffer.cyberMondayDeal"="Cyber Monday deal: %@ off";
+/* Special Offer plan badge text shown in Upgrade plan screen */
+"upgradeAccountPlan.plan.tag.introOffer.specialOffer"="Special offer: %@ off";

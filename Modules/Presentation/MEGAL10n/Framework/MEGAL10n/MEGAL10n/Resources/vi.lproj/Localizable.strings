@@ -4743,4 +4743,32 @@
 /* General label for priority customer support */
 "general.prioritySupport"="Hỗ trợ ưu tiên";
 /* Storage used for Business and Pro Flexi accounts in the account menu. */
-"accountMenu.businessAndProFlexiAccountsStorageUsed.title"="%@ used";
+"accountMenu.businessAndProFlexiAccountsStorageUsed.title"="đang dùng %@";
+/* Sorting option label for sorting items alphabetically by their name (can be applied in ascending or descending order) */
+"sorting.name.title"="Tên";
+/* Sorting option label for sorting items based on whether they are marked as favourites (can be applied in ascending or descending order) */
+"sorting.favourite.title"="Đánh dấu ưa thích";
+/* Sorting option label for sorting items based on the date they were added (can be applied in ascending or descending order) */
+"sorting.dateAdded.title"="Ngày thêm vào";
+/* Sorting option label for sorting items based on the last time they were modified (can be applied in ascending or descending order) */
+"sorting.lastModified.title"="Lần sửa cuối";
+/* Sorting option label for sorting items based on their file size (can be applied in ascending or descending order) */
+"sorting.size.title"="Kích cỡ";
+/* Black Friday deal plan badge text shown in Upgrade plan screen */
+"upgradeAccountPlan.plan.tag.introOffer.blackFridayDeal"="Black Friday deal: %@ off";
+/* General deal plan badge text shown in Upgrade plan screen */
+"upgradeAccountPlan.plan.tag.introOffer.generalDeal"="giảm %@";
+/* Subscription plan first year offer text shown in Upgrade plan screen */
+"subscriptionPurchase.plan.firstYearOffer"="%@, for first year";
+/* Header text in Upgrade plan screen to highlight yearly billing savings with intro offer */
+"upgradeAccountPlan.header.title.saveYearlyBillingWithIntoOffer"="Save at least %@ on a yearly plan";
+/* Camera Uploads Progress navigation title */
+"cameraUploads.progress.navigation.title"="Tiến trình";
+/* Camera Uploads Progress In Progress section title */
+"cameraUploads.progress.section.inProgress.title"="Đang Truyền";
+/* Camera Uploads row progress format */
+"cameraUploads.progress.row.uploadProgressFormat"="%@ of %@ %@/s";
+/* Cyber Monday deal plan badge text shown in Upgrade plan screen */
+"upgradeAccountPlan.plan.tag.introOffer.cyberMondayDeal"="Cyber Monday deal: %@ off";
+/* Special Offer plan badge text shown in Upgrade plan screen */
+"upgradeAccountPlan.plan.tag.introOffer.specialOffer"="Special offer: %@ off";

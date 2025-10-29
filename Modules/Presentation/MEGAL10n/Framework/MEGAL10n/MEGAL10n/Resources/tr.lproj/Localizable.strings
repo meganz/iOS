@@ -3655,7 +3655,7 @@
 /* On Upgrade Account Plan screen. Footer message with pricing page link. */
 "upgradeAccountPlan.footer.message.pricingPage"="Mevcut aboneliğinizi [A]fiyatlandırma sayfamızdan[/A] yükseltebilirsiniz.";
 /* On Upgrade Account Plan screen. Snackbar message when selecting current recurring plan on account plan options */
-"upgradeAccountPlan.selection.message.alreadyHaveRecurringSubscriptionOfPlan"="Bu plan için zaten yinelenen bir aboneliğiniz var";
+"upgradeAccountPlan.selection.message.alreadyHaveRecurringSubscriptionOfPlan"="Bu plan için zaten yenilenen bir aboneliğiniz var";
 /* Button title to cancel an scheduled meeting from context menu */
 "meetings.scheduled.contextMenu.cancel"="İptal";
 /* Title for alert cancelling an scheduled meeting */
@@ -3777,17 +3777,17 @@
 /* Message text of the dialog for transfer quota error with limited available trasfer quota for free accounts */
 "transferQuotaError.downloadLimitedQuota.freeAccount.message"="Bu IP adresi için aktarım kotanızın çoğunu kullandığınız için indirme kesintiye uğrayabilir. Daha fazla kota almak için bir Pro planına yükseltin veya IP adresinizde daha fazla ücretsiz kota kullanılabilir olana kadar %@ bekleyin. [A]Aktarım kotası hakkında daha fazlasını öğrenin[/A].";
 /* Message text of the dialog for transfer quota error with limited available trasfer quota for pro accounts */
-"transferQuotaError.downloadLimitedQuota.proAccount.message"="Bu hesapta aktarım kotanızın çoğunu kullandığınız için indirme kesintiye uğrayabilir. Daha fazla kota almak için yeni bir plan satın alın veya MEGA ile yinelenen bir aboneliğiniz varsa planınızın yenilenmesini bekleyebilirsiniz.";
+"transferQuotaError.downloadLimitedQuota.proAccount.message"="Bu hesapta aktarım kotanızın çoğunu kullandığınız için indirme kesintiye uğrayabilir. Daha fazla kota almak için yeni bir plan satın alın veya MEGA ile tekrarlanan bir aboneliğiniz varsa planınızın yenilenmesini bekleyebilirsiniz.";
 /* Title of the dialog for transfer quota error with exceeded quota */
 "transferQuotaError.downloadExceededQuota.title"="Aktarım kotası aşıldı";
 /* Message text of the dialog for transfer quota error with exceeded download trasfer quota for free accounts */
 "transferQuotaError.downloadExceededQuota.freeAccount.message"="Bu IP adresi için aktarım kotanız kalmadığından indirmeye devam edemezsiniz. Daha fazla kota almak için bir Pro planına yükseltin veya IP adresinizde daha fazla ücretsiz kota kullanılabilir olana kadar %@ bekleyin. [A]Aktarım kotası hakkında daha fazlasını öğrenin[/A].";
 /* Message text of the dialog for transfer quota error with exceeded download trasfer quota for pro accounts */
-"transferQuotaError.downloadExceededQuota.proAccount.message"="Bu hesapta aktarım kotanız kalmadığından indirmeye devam edemezsiniz. Daha fazla kota almak için yeni bir plan satın alın veya MEGA ile yinelenen bir aboneliğiniz varsa planınızın yenilenmesini bekleyebilirsiniz.";
+"transferQuotaError.downloadExceededQuota.proAccount.message"="Bu hesapta aktarım kotanız kalmadığından indirmeye devam edemezsiniz. Daha fazla kota almak için yeni bir plan satın alın veya MEGA ile tekrarlanan bir aboneliğiniz varsa planınızın yenilenmesini bekleyebilirsiniz.";
 /* Message text of the dialog for transfer quota error with exceeded streaming trasfer quota for free accounts */
 "transferQuotaError.streamingExceededQuota.freeAccount.message"="Bu IP adresi için aktarım kotanız kalmadığından medyanızın oynatımı durdu. Daha fazla kota almak için bir Pro planına yükseltin veya IP adresinizde daha fazla ücretsiz kota kullanılabilir olana kadar %@ bekleyin. [A]Aktarım kotası hakkında daha fazlasını öğrenin[/A].";
 /* Message text of the dialog for transfer quota error with exceeded download trasfer quota for pro accounts */
-"transferQuotaError.streamingExceededQuota.proAccount.message"="Bu hesapta aktarım kotanız kalmadığından medyanızın oynatımı durdu. Daha fazla kota almak için yeni bir plan satın alın veya MEGA ile yinelenen bir aboneliğiniz varsa planınızın yenilenmesini bekleyebilirsiniz.";
+"transferQuotaError.streamingExceededQuota.proAccount.message"="Bu hesapta aktarım kotanız kalmadığından medyanızın oynatımı durdu. Daha fazla kota almak için yeni bir plan satın alın veya MEGA ile tekrarlanan bir aboneliğiniz varsa planınızın yenilenmesini bekleyebilirsiniz.";
 /* Meeting waiting room leave button */
 "meetings.waitingRoom.leave"="Ayrıl";
 /* Meeting waiting room leave alert message */
@@ -4105,7 +4105,7 @@
 /* Notifications: text for notification type display name */
 "notifications.notificationType.promo.title"="Sınırlı süreli teklif";
 /* Notifications: tag to show the user that there are promotions available in the notifications page and section. */
-"notifications.tag.promo.title"="Promosyon";
+"notifications.tag.promo.title"="İndirim";
 /* Notifications: message showing the date and time at which a certain offer expires. [date] will be replaced by date. [time] will be replaced by time. */
 "notifications.expiration.message"="[date] tarihinde, [time] saatinde sona eriyor";
 /* Title for action that allows user to hide files or folders */
@@ -4743,4 +4743,32 @@
 /* General label for priority customer support */
 "general.prioritySupport"="Öncelikli destek";
 /* Storage used for Business and Pro Flexi accounts in the account menu. */
-"accountMenu.businessAndProFlexiAccountsStorageUsed.title"="%@ used";
+"accountMenu.businessAndProFlexiAccountsStorageUsed.title"="%@ kullanıldı";
+/* Sorting option label for sorting items alphabetically by their name (can be applied in ascending or descending order) */
+"sorting.name.title"="Ad";
+/* Sorting option label for sorting items based on whether they are marked as favourites (can be applied in ascending or descending order) */
+"sorting.favourite.title"="Favori";
+/* Sorting option label for sorting items based on the date they were added (can be applied in ascending or descending order) */
+"sorting.dateAdded.title"="Eklenme zamanı";
+/* Sorting option label for sorting items based on the last time they were modified (can be applied in ascending or descending order) */
+"sorting.lastModified.title"="Son değiştirilme";
+/* Sorting option label for sorting items based on their file size (can be applied in ascending or descending order) */
+"sorting.size.title"="Boyut";
+/* Black Friday deal plan badge text shown in Upgrade plan screen */
+"upgradeAccountPlan.plan.tag.introOffer.blackFridayDeal"="Black Friday fırsatı: %@ indirim";
+/* General deal plan badge text shown in Upgrade plan screen */
+"upgradeAccountPlan.plan.tag.introOffer.generalDeal"="%@ indirim";
+/* Subscription plan first year offer text shown in Upgrade plan screen */
+"subscriptionPurchase.plan.firstYearOffer"="%@, for first year";
+/* Header text in Upgrade plan screen to highlight yearly billing savings with intro offer */
+"upgradeAccountPlan.header.title.saveYearlyBillingWithIntoOffer"="Yıllık planda en az %@ tasarruf edin";
+/* Camera Uploads Progress navigation title */
+"cameraUploads.progress.navigation.title"="İlerleme";
+/* Camera Uploads Progress In Progress section title */
+"cameraUploads.progress.section.inProgress.title"="Devam ediyor";
+/* Camera Uploads row progress format */
+"cameraUploads.progress.row.uploadProgressFormat"="%@ of %@ %@/s";
+/* Cyber Monday deal plan badge text shown in Upgrade plan screen */
+"upgradeAccountPlan.plan.tag.introOffer.cyberMondayDeal"="Cyber Monday deal: %@ off";
+/* Special Offer plan badge text shown in Upgrade plan screen */
+"upgradeAccountPlan.plan.tag.introOffer.specialOffer"="Special offer: %@ off";

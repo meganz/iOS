@@ -1021,7 +1021,7 @@
 /* Cell title shown on the achievements view for referral achievement */
 "account.achievement.referral.title"="邀請朋友加入MEGA";
 /* Subtitle of the referral achievement introduction, %1$@ is a placeholder, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
-"account.achievement.referral.subtitle"="%1$@ extra storage for each invitation, \n%2$@";
+"account.achievement.referral.subtitle"="每個邀請可獲得%1$@額外儲存空間，有效期為\n%2$@";
 /* Text shown to explain how and where you can invite friends */
 "Select from phone contacts or enter multiple email addresses"="從裝置上的聯絡人來選擇或輸入多個電子郵件地址。";
 /*  */
@@ -1075,7 +1075,7 @@
 /* Explanation label shown on the achievements view for incomplete start MEGA VPN Free Trial achievement, %@ is a placeholder. */
 "account.achievement.vpnFreeTrial.incomplete.explanation.label"="安裝MEGA VPN應用程式，使用您的MEGA帳戶登入，然後開始免費試用。開始免費試用後，您將獲得儲存空間自動增加的獎勵。";
 /* Explanation label shown on the achievements view for complete start MEGA VPN Free Trial achievement, %@ is a placeholder. */
-"account.achievement.vpnFreeTrial.complete.explanation.label"="You’ve received %@ extra storage space for starting a MEGA VPN free trial";
+"account.achievement.vpnFreeTrial.complete.explanation.label"="您已經開始免費試用MEGA VPN而獲得%@額外儲存空間";
 /* Text for the button to install MEGA VPN in the Start MEGA VPN Free Trial achievement */
 "account.achievement.vpnFreeTrial.buttonText"="安裝MEGA VPN";
 /* Cell title shown on the achievements view for Start MEGA Pass Free Trial */
@@ -1085,7 +1085,7 @@
 /* Explanation label shown on the achievements view for incomplete start MEGA Pass Free Trial achievement, %@ is a placeholder. */
 "account.achievement.passFreeTrial.incomplete.explanation.label"="安裝MEGA Pass應用程式，使用您的MEGA帳戶登入，然後開始免費試用。開始免費試用後，您將獲得儲存空間自動增加的獎勵。";
 /* Explanation label shown on the achievements view for complete start MEGA Pass Free Trial achievement, %@ is a placeholder. */
-"account.achievement.passFreeTrial.complete.explanation.label"="You’ve received %@ extra storage space for starting a MEGA Pass free trial";
+"account.achievement.passFreeTrial.complete.explanation.label"="您已經開始免費試用MEGA Pass而獲得%@額外儲存空間";
 /* Text for the button to install MEGA Pass in the Start MEGA Pass Free Trial achievement */
 "account.achievement.passFreeTrial.buttonText"="安裝MEGA Pass";
 /* Subtitle of the incomplete achievement with permanent bonus, %1$@ is a placeholder for amount of storage, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
@@ -2715,7 +2715,7 @@
 /* Footer explaning how Use Mobile Data setting to load preview of images in hight resolution works */
 "settings.fileManagement.useMobileData.footer"="預覽時使用行動數據網路載入高解析度圖片。如果停用，則只會在放大檢視時載入高解析度影像。";
 /* Dialog title shown when a user tries to purchase a subscription while having a subscription activated from another platform. */
-"account.upgrade.alreadyHaveASubscription.title"="您目前已經有一個訂閱";
+"account.upgrade.alreadyHaveASubscription.title"="您已有一個有效的訂閱";
 /* Dialog message shown when a user tries to purchase a subscriptions while having a subscription activated from another platform. */
 "account.upgrade.alreadyHaveASubscription.message"="您之前已透過Google Play或華為的應用程式商店訂閱Pro方案。請在您裝置上的Google Play或華為應用程式商店中手動取消您的訂閱，然後重試一遍。";
 /* Dialog message shown to allow the user to cancel their current subscription activated from another platform and continue with the purchase. */
@@ -4743,4 +4743,32 @@
 /* General label for priority customer support */
 "general.prioritySupport"="優先的支援";
 /* Storage used for Business and Pro Flexi accounts in the account menu. */
-"accountMenu.businessAndProFlexiAccountsStorageUsed.title"="%@ used";
+"accountMenu.businessAndProFlexiAccountsStorageUsed.title"="已使用%@";
+/* Sorting option label for sorting items alphabetically by their name (can be applied in ascending or descending order) */
+"sorting.name.title"="名稱";
+/* Sorting option label for sorting items based on whether they are marked as favourites (can be applied in ascending or descending order) */
+"sorting.favourite.title"="收藏";
+/* Sorting option label for sorting items based on the date they were added (can be applied in ascending or descending order) */
+"sorting.dateAdded.title"="新增日期";
+/* Sorting option label for sorting items based on the last time they were modified (can be applied in ascending or descending order) */
+"sorting.lastModified.title"="上次修改";
+/* Sorting option label for sorting items based on their file size (can be applied in ascending or descending order) */
+"sorting.size.title"="大小";
+/* Black Friday deal plan badge text shown in Upgrade plan screen */
+"upgradeAccountPlan.plan.tag.introOffer.blackFridayDeal"="黑色星期五優惠：%@折扣";
+/* General deal plan badge text shown in Upgrade plan screen */
+"upgradeAccountPlan.plan.tag.introOffer.generalDeal"="%@折扣";
+/* Subscription plan first year offer text shown in Upgrade plan screen */
+"subscriptionPurchase.plan.firstYearOffer"="%@, for first year";
+/* Header text in Upgrade plan screen to highlight yearly billing savings with intro offer */
+"upgradeAccountPlan.header.title.saveYearlyBillingWithIntoOffer"="年度方案節省至少%@";
+/* Camera Uploads Progress navigation title */
+"cameraUploads.progress.navigation.title"="進行";
+/* Camera Uploads Progress In Progress section title */
+"cameraUploads.progress.section.inProgress.title"="進行中";
+/* Camera Uploads row progress format */
+"cameraUploads.progress.row.uploadProgressFormat"="%@ of %@ %@/s";
+/* Cyber Monday deal plan badge text shown in Upgrade plan screen */
+"upgradeAccountPlan.plan.tag.introOffer.cyberMondayDeal"="Cyber Monday deal: %@ off";
+/* Special Offer plan badge text shown in Upgrade plan screen */
+"upgradeAccountPlan.plan.tag.introOffer.specialOffer"="Special offer: %@ off";
