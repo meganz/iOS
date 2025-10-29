@@ -10,22 +10,43 @@ import Testing
 @MainActor
 struct MEGAPlaybackReportingManagerTests {
     @Test
-    func trackVideoPlaybackRecordEvent_whenHasStarted_shouldTrack() {
+    func trackVideoPlaybackRecordEvent_whenItemIsReadyToPlay_shouldTrack() async {
+        let player = MockVideoPlayer()
         let analyticsTracker = MockTracker()
         let sut = makeSUT(
+            player: player,
             analyticsTracker: analyticsTracker
         )
+        sut.observePlayback()
         sut.recordOpenTimeStamp()
+        player.itemStatus = .readyToPlay
+
+        // Wait for itemStatus to be readyToPlay
+        for await _ in player.itemStatusPublisher.values {
+            break
+        }
+
         sut.trackVideoPlaybackFinalEvents()
 
         Test.assertTrackAnalyticsEventCalled(
             trackedEventIdentifiers: analyticsTracker.trackedEventIdentifiers,
-            with: [VideoPlaybackRecordNewVPEvent(duration: .anyTestValue)]
+            with: [
+                VideoPlaybackFirstFrameNewVPEvent(
+                    time: .anyTestValue,
+                    scenario: VideoPlaybackFirstFrameNewVP.VideoPlaybackScenario.manualclick,
+                    commonMap: ""),
+                VideoPlaybackRecordNewVPEvent(duration: .anyTestValue),
+                VideoPlaybackStallNewVPEvent(
+                    time: .anyTestValue,
+                    scenario: VideoPlaybackStallNewVP.VideoPlaybackScenario.manualclick,
+                    commonMap: ""
+                )
+            ]
         )
     }
 
     @Test
-    func trackVideoPlaybackRecordEvent_whenNotStarted_shouldNotTrack() {
+    func trackVideoPlaybackRecordEvent_whenNotStarted_shouldTrackFailureEvent() {
         let analyticsTracker = MockTracker()
         let sut = makeSUT(
             analyticsTracker: analyticsTracker
@@ -34,12 +55,14 @@ struct MEGAPlaybackReportingManagerTests {
 
         Test.assertTrackAnalyticsEventCalled(
             trackedEventIdentifiers: analyticsTracker.trackedEventIdentifiers,
-            with: []
+            with: [VideoPlaybackStartupFailureNewVPEvent(
+                scenario: VideoPlaybackStartupFailureNewVP.VideoPlaybackScenario.manualclick,
+                commonMap: "")]
         )
     }
 
     @Test
-    func trackVideoPlaybackFirstFrameEvent_whenHasStartedAndIsPlaying_shouldTrack() async {
+    func trackVideoPlaybackFirstFrameEvent_whenItemIsReadyToPlay_shouldTrack() async {
         let analyticsTracker = MockTracker()
         let player = MockVideoPlayer()
         let sut = makeSUT(
@@ -48,7 +71,12 @@ struct MEGAPlaybackReportingManagerTests {
         )
         sut.observePlayback()
         sut.recordOpenTimeStamp()
-        player.state = .playing
+        player.itemStatus = .readyToPlay
+
+        // Wait for itemStatus to be readyToPlay
+        for await _ in player.itemStatusPublisher.values {
+            break
+        }
 
         Test.assertTrackAnalyticsEventCalled(
             trackedEventIdentifiers: analyticsTracker.trackedEventIdentifiers,

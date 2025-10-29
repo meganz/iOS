@@ -18,6 +18,7 @@ final class MEGAPlaybackReportingManager {
     private var totalPauseTime: CFTimeInterval = 0
     private var stallStartTime: CFTimeInterval?
     private var totalStallTime: CFTimeInterval = 0
+    private var hasStartupFailure = false
 
     private var cancellables = Set<AnyCancellable>()
 
@@ -60,6 +61,7 @@ final class MEGAPlaybackReportingManager {
         observeDebugMessage()
         observeState()
         observeCurrentTime()
+        observeItemStatus()
     }
 
     func recordOpenTimeStamp() {
@@ -67,8 +69,12 @@ final class MEGAPlaybackReportingManager {
     }
 
     func trackVideoPlaybackFinalEvents() {
-        trackVideoPlaybackRecordEvent()
-        trackVideoPlaybackStallEvent()
+        if firstFrameTimeStamp != nil {
+            trackVideoPlaybackRecordEvent()
+            trackVideoPlaybackStallEvent()
+        } else {
+            trackVideoPlaybackStartupFailureEvent()
+        }
     }
 
     private func observeDebugMessage() {
@@ -87,6 +93,31 @@ final class MEGAPlaybackReportingManager {
         playbackState.currentTimePublisher
             .sink { [weak self] in self?.currentTimeDidChange(to: $0) }
             .store(in: &cancellables)
+    }
+
+    private func observeItemStatus() {
+        playbackState.itemStatusPublisher
+            .sink { [weak self] status in
+                self?.handlePlayerItemStatusChange(status)
+            }
+            .store(in: &cancellables)
+    }
+
+    private func handlePlayerItemStatusChange(_ status: AVPlayerItem.Status) {
+        switch status {
+        case .failed:
+            guard !hasStartupFailure, firstFrameTimeStamp == nil else { return }
+            hasStartupFailure = true
+            trackVideoPlaybackStartupFailureEvent()
+        case .readyToPlay:
+            guard firstFrameTimeStamp == nil else { return }
+            firstFrameTimeStamp = CACurrentMediaTime()
+            trackVideoPlaybackFirstFrameEvent()
+        case .unknown:
+            break
+        @unknown default:
+            break
+        }
     }
 
     private func newDebugMessage(_ message: String) {
@@ -165,13 +196,9 @@ final class MEGAPlaybackReportingManager {
     private func handleVideoPlaybackStateChangeForEventsTracking(_ state: PlaybackState) {
         switch state {
         case .playing:
-            if firstFrameTimeStamp == nil {
-                firstFrameTimeStamp = CACurrentMediaTime()
-                trackVideoPlaybackFirstFrameEvent()
-            } else {
-                recordPauseTime()
-                recordStallTime()
-            }
+            guard firstFrameTimeStamp != nil else { return }
+            recordPauseTime()
+            recordStallTime()
         case .buffering:
             guard firstFrameTimeStamp != nil else { return }
             stallStartTime = CACurrentMediaTime()
@@ -181,6 +208,8 @@ final class MEGAPlaybackReportingManager {
             pauseStartTime = CACurrentMediaTime()
             recordStallTime()
         case .error:
+            guard !hasStartupFailure, firstFrameTimeStamp == nil else { return }
+            hasStartupFailure = true
             trackVideoPlaybackStartupFailureEvent()
         default:
             guard firstFrameTimeStamp != nil else { return }
