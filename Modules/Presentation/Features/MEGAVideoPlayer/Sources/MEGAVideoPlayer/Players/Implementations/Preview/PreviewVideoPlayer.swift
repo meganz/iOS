@@ -7,7 +7,6 @@ import UIKit
 
 @MainActor
 final class PreviewVideoPlayer: VideoPlayerProtocol {
-
     @Published var state: PlaybackState
     @Published var currentTime: Duration
     @Published var duration: Duration
@@ -45,6 +44,10 @@ final class PreviewVideoPlayer: VideoPlayerProtocol {
 
     var scalingModePublisher: AnyPublisher<VideoScalingMode, Never> {
         $scalingMode.eraseToAnyPublisher()
+    }
+
+    var itemStatusPublisher: AnyPublisher<AVPlayerItem.Status, Never> {
+        Just(.unknown).eraseToAnyPublisher()
     }
 
     nonisolated var debugMessagePublisher: AnyPublisher<String, Never> {

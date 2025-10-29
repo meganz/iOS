@@ -21,6 +21,7 @@ public final class MEGAAVPlayer {
     private let canPlayNextSubject: CurrentValueSubject<Bool, Never> = .init(false)
     private let nodeNameSubject: CurrentValueSubject<String, Never> = .init("")
     private let bufferRangeSubject: CurrentValueSubject<(start: Duration, end: Duration)?, Never> = .init(nil)
+    private let itemStatusSubject: CurrentValueSubject<AVPlayerItem.Status, Never> = .init(.unknown)
 
     public let statePublisher: AnyPublisher<PlaybackState, Never>
     public let currentTimePublisher: AnyPublisher<Duration, Never>
@@ -28,6 +29,7 @@ public final class MEGAAVPlayer {
     public let canPlayNextPublisher: AnyPublisher<Bool, Never>
     public let nodeNamePublisher: AnyPublisher<String, Never>
     public let bufferRangePublisher: AnyPublisher<(start: Duration, end: Duration)?, Never>
+    public let itemStatusPublisher: AnyPublisher<AVPlayerItem.Status, Never>
 
     public var onNodeDeleted: (() -> Void)?
 
@@ -60,6 +62,7 @@ public final class MEGAAVPlayer {
         self.canPlayNextPublisher = canPlayNextSubject.eraseToAnyPublisher()
         self.nodeNamePublisher = nodeNameSubject.eraseToAnyPublisher()
         self.bufferRangePublisher = bufferRangeSubject.eraseToAnyPublisher()
+        self.itemStatusPublisher = itemStatusSubject.eraseToAnyPublisher()
 
         observePlayerTimeControlStatus()
         observePlayerPeriodicTime()
@@ -396,7 +399,7 @@ extension MEGAAVPlayer: NodeLoadable {
                     self?.state = .error(errorMessage)
                     self?.playbackDebugMessage(errorMessage)
                 }
-
+                self?.itemStatusSubject.send(status)
                 self?.playbackDebugMessage("Player item status changed to \(status.rawValue)")
             }
             .store(in: &cancellables)
