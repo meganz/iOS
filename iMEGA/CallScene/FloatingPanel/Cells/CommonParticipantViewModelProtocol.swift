@@ -39,7 +39,7 @@ extension CommonParticipantViewModel {
             return nil
         }
     }
-
+    
     func fetchUserAvatar(name: String) async -> UIImage? {
         guard let base64Handle = megaHandleUseCase.base64Handle(forUserHandle: participant.participantId),
               let avatarBackgroundHexColor = userImageUseCase.avatarColorHex(forBase64UserHandle: base64Handle) else {
@@ -59,14 +59,17 @@ extension CommonParticipantViewModel {
     func requestAvatarChange() {
         userImageUseCase
             .requestAvatarChangeNotification(forUserHandles: [participant.participantId])
+            .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { error in
                 MEGALogDebug("error fetching the changed avatar \(error)")
             }, receiveValue: { [weak self] _ in
                 guard let self else { return }
+                
                 if let base64Handle = megaHandleUseCase.base64Handle(forUserHandle: participant.participantId) {
                     userImageUseCase.clearAvatarCache(base64Handle: base64Handle)
                 }
                 
+                avatarRefetchTask?.cancel()
                 avatarRefetchTask = createRefetchAvatarTask()
             })
             .store(in: &subscriptions)
@@ -74,11 +77,10 @@ extension CommonParticipantViewModel {
     
     func createRefetchAvatarTask() -> Task<Void, Never> {
         Task { [weak self] in
-            guard let self else { return }
             do {
-                try await updateAvatarUsingName()
+                try await self?.updateAvatarUsingName()
                 try Task.checkCancellation()
-                try await downloadAndUpdateAvatar()
+                try await self?.downloadAndUpdateAvatar()
             } catch {
                 MEGALogDebug("Failed to fetch avatar with error: \(error)")
             }
