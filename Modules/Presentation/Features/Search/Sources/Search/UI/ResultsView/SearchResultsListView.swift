@@ -53,8 +53,8 @@ struct SearchResultsListView: View {
     private var listSectionContent: some View {
         Section(header: listHeaderView) {
             ForEach(viewModel.listItems) { item in
-                SearchResultRowView(viewModel: item)
-                    .listRowSeparatorTint(viewModel.colorAssets.listRowSeparator)
+                rowContent(rowViewModel: item)
+                    .listRowSeparatorTint(viewModel.colorAssets.listRowSeparator.opacity(viewModel.usesRevampedLayout ? 0 : 1))
                     .listRowBackground(Color.clear)
                     .onAppear {
                         Task {
@@ -62,6 +62,15 @@ struct SearchResultsListView: View {
                         }
                     }
             }
+        }
+    }
+
+    @ViewBuilder
+    private func rowContent(rowViewModel: SearchResultRowViewModel) -> some View {
+        if viewModel.usesRevampedLayout {
+            RevampedSearchResultRowView(viewModel: rowViewModel)
+        } else {
+            SearchResultRowView(viewModel: rowViewModel)
         }
     }
 }

@@ -514,7 +514,8 @@ struct SearchResultsContainerViewModelTests {
                 keyboardVisibilityHandler: MockKeyboardVisibilityHandler(),
                 viewDisplayMode: .unknown,
                 listHeaderViewModel: nil,
-                isSelectionEnabled: true
+                isSelectionEnabled: true,
+                usesRevampedLayout: false
             ),
             sortOptionsViewModel: sortOptionsViewModel,
             showChips: showChips,

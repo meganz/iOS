@@ -1,3 +1,4 @@
+import SwiftUI
 import UIKit
 
 /// represents a decoration element that can be placed in the view representing a node
@@ -35,7 +36,20 @@ public struct ResultProperty: Identifiable, Equatable, Comparable, Sendable {
     public typealias Id = String
     
     public enum Content: Hashable, Sendable {
-        case icon(image: UIImage, scalable: Bool)
+        public struct LayoutConfiguration: Sendable, Hashable {
+            let scalable: Bool
+            let size: CGFloat
+            let horizontalPadding: CGFloat
+            let renderingMode: Image.TemplateRenderingMode
+
+            public init(scalable: Bool, size: CGFloat, horizontalPadding: CGFloat = 0, renderingMode: Image.TemplateRenderingMode = .template) {
+                self.scalable = scalable
+                self.size = size
+                self.horizontalPadding = horizontalPadding
+                self.renderingMode = renderingMode
+            }
+        }
+        case icon(image: UIImage, layoutConfig: LayoutConfiguration)
         case text(String)
         case spacer
     }

@@ -2,20 +2,7 @@ import MEGADesignToken
 import MEGASwiftUI
 import SwiftUI
 
-// MAKE SCREEN WIDE TO SEE DOCUMENTATION
-// ┌────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
-// │┌──────────────────────┐ ╔══════════════════════╗┌──────────────────────┐                       ┌ ─ ─ ─ ─ ─ ─ ─ ─ ─ │
-// ││ .prominent(.leading) │ ║       [TITLE]        ║│ .prominent(.trailing │                       │                  ││
-// │└──────────────────────┘ ╚══════════════════════╝└──────────────────────┘                                           |
-// │┌ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ┐                                                               │       Menu       ││
-// │      [AuxTITLE] (optional)                                                                     │(optional, hidden  │
-// │└ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ┘                                                                in selection mode)││
-// │┌──────────────────────┐╔═══════════════╗┌────────────────────────┐┌───────────────────────────┐│                   │
-// │└──────────────────────┘╚═══════════════╝└────────────────────────┘└───────────────────────────┘└ ─ ─ ─ ─ ─ ─ ─ ─ ─ │
-// └────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
-// The Menu (More button or select button) is not affected by the sensitive property (.sensitive modifier)
-
-struct SearchResultRowView: View {
+struct RevampedSearchResultRowView: View {
     @ObservedObject var viewModel: SearchResultRowViewModel
     private let layout = ResultCellLayout.list
     @Environment(\.editMode) private var editMode
@@ -43,7 +30,7 @@ struct SearchResultRowView: View {
                 await viewModel.loadThumbnail()
             }
     }
-    
+
     private var contentWithInsetsAndSwipeActions: some View {
         content
             .swipeActions {
@@ -66,7 +53,7 @@ struct SearchResultRowView: View {
                 )
             )
     }
-    
+
     private var content: some View {
         HStack {
             HStack {
@@ -81,18 +68,21 @@ struct SearchResultRowView: View {
             moreButton
         }
         .contentShape(Rectangle())
-        .frame(minHeight: 60)
+        .frame(minHeight: 58)
     }
-    
+
     // optional overlay property in placement .previewOverlay
     private var thumbnail: some View {
         Image(uiImage: viewModel.thumbnailImage)
             .resizable()
             .scaledToFit()
-            .frame(width: 40, height: 40)
+            .frame(width: 32, height: 32)
+            .background(
+                TokenColors.Background.surface1.swiftUI.cornerRadius(TokenRadius.small).opacity(viewModel.hasThumbnail ? 1 : 0)
+            )
+            .padding(.horizontal, TokenSpacing._2)
             .animatedAppearance(isContentLoaded: viewModel.isThumbnailLoadedOnce)
             .sensitive(viewModel.isSensitive && viewModel.hasThumbnail ? .blur : .none)
-            .clipShape(RoundedRectangle(cornerRadius: 4))
             .overlay(propertyViewsFor(placement: .previewOverlay))
     }
 
@@ -106,41 +96,43 @@ struct SearchResultRowView: View {
             tagsView
         }
     }
-    
+
     private var titleLine: some View {
-        HStack(spacing: 4) {
+        HStack(alignment: .center, spacing: 5) {
             propertyViewsFor(placement: .prominent(.leading))
             Text(viewModel.attributedTitle)
-                .font(.subheadline)
-                .fontWeight(.medium)
+                .font(.body)
+                .fontWeight(.regular)
                 .lineLimit(1)
                 .foregroundStyle(viewModel.titleTextColor)
                 .accessibilityLabel(viewModel.accessibilityLabel)
             propertyViewsFor(placement: .prominent(.trailing))
         }
     }
-    
+
     // optional, middle line of content
     @ViewBuilder var auxTitleLine: some View {
-        HStack(spacing: 4) {
+        HStack(spacing: TokenSpacing._2) {
             propertyViewsFor(placement: .auxLine)
         }
-        .font(.subheadline)
+        .font(.footnote)
+        .fontWeight(.regular)
         .lineLimit(1)
         .foregroundStyle(viewModel.colorAssets.subtitleTextColor)
     }
-    
+
     @ViewBuilder func propertyViewsFor(placement: PropertyPlacement) -> some View {
         viewModel.result.properties.propertyViewsFor(layout: layout, placement: placement, colorAssets: viewModel.colorAssets)
     }
-    
+
     private var subtitleLine: some View {
-        HStack(spacing: 4) {
+        HStack(spacing: TokenSpacing._2) {
             propertyViewsFor(placement: .secondary(.leading))
             Text(viewModel.result.description(layout))
-                .font(.caption)
+                .font(.footnote)
+                .fontWeight(.regular)
                 .lineLimit(1)
-                .foregroundColor(viewModel.colorAssets.subtitleTextColor)
+                .foregroundStyle(viewModel.colorAssets.subtitleTextColor)
             propertyViewsFor(placement: .secondary(.trailing))
             Spacer()
             propertyViewsFor(placement: .secondary(.trailingEdge))
@@ -186,74 +178,5 @@ struct SearchResultRowView: View {
             }
             .frame(width: 40, height: 60)
         }
-    }
-}
-
-#Preview {
-    var items: [SearchResultRowViewModel] {
-        Array(0...9).map {
-            .init(
-                result: result(for: $0),
-                query: { nil },
-                rowAssets: .example,
-                colorAssets: .example,
-                previewContent: .example,
-                actions: actions,
-                swipeActions: []
-            )
-        }
-    }
-    
-    var actions: SearchResultRowViewModel.UserActions {
-        .init(
-            contextAction: { _ in },
-            selectionAction: {},
-            previewTapAction: {},
-            revampLongPress: {}
-        )
-    }
-    
-    func result(for index: Int) -> SearchResult {
-        .previewResult(
-            idx: UInt64(index),
-            backgroundDisplayMode: .icon,
-            properties: [
-                .previewSamples[index % 3 + 1],
-                .previewSamples[index]
-            ]
-        )
-    }
-    
-    return List {
-        ForEach(items) {
-            SearchResultRowView(
-                viewModel: $0
-            )
-        }
-    }
-    .listStyle(.plain)
-}
-
-extension SearchResult {
-    static func previewResult(
-        idx: UInt64,
-        backgroundDisplayMode: VerticalBackgroundViewMode = .icon,
-        properties: [ResultProperty] = []
-    ) -> Self {
-        .init(
-            id: idx,
-            isFolder: false,
-            backgroundDisplayMode: backgroundDisplayMode,
-            title: "title\(idx)",
-            note: nil,
-            tags: [],
-            isSensitive: false,
-            hasThumbnail: false,
-            description: { _ in "desc\(idx)" },
-            type: .node,
-            properties: properties,
-            thumbnailImageData: { UIImage(systemName: "rectangle")!.pngData()! },
-            swipeActions: { _ in [] }
-        )
     }
 }

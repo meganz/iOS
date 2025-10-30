@@ -256,7 +256,8 @@ final class HomeScreenFactory: NSObject {
             keyboardVisibilityHandler: KeyboardVisibilityHandler(notificationCenter: notificationCenter),
             viewDisplayMode: .home,
             listHeaderViewModel: nil,
-            isSelectionEnabled: false
+            isSelectionEnabled: false,
+            usesRevampedLayout: DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .cloudDriveRevamp)
         )
 
         let searchResultsContainerViewModel = SearchResultsContainerViewModel(

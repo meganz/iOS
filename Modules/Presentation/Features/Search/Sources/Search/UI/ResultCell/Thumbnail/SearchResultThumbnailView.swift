@@ -115,8 +115,8 @@ struct SearchResultThumbnailView: View {
             let placement = PropertyPlacement.secondary(.leading)
             ForEach(viewModel.result.properties.propertiesFor(mode: layout, placement: placement) ) { property in
                 switch property.content {
-                case .icon(image: let image, scalable: let scalable):
-                    property.resultPropertyImage(image: image, scalable: scalable, colorAssets: viewModel.colorAssets, placement: placement)
+                case .icon(image: let image, layoutConfig: let layoutConfig):
+                    property.resultPropertyImage(image: image, layoutConfig: layoutConfig, colorAssets: viewModel.colorAssets, placement: placement)
                         .frame(width: 16, height: 16)
                         .padding(2)
                 case .text(let text):
@@ -189,7 +189,7 @@ struct SearchResultThumbnailView: View {
                 .foregroundStyle(viewModel.titleTextColor)
                 .font(.system(.caption).weight(.medium))
                 .lineLimit(1)
-                .accessibilityLabel(viewModel.accessibilityIdentifier)
+                .accessibilityLabel(viewModel.accessibilityLabel)
 
             viewModel
                 .result
@@ -266,9 +266,10 @@ struct SearchResultThumbnailView: View {
             actions: .init(
                 contextAction: { _ in },
                 selectionAction: {},
-                previewTapAction: {}
+                previewTapAction: {},
+                revampLongPress: {}
             ),
-            swipeActions: []
+            swipeActions: [],
         ),
         selected: .constant([]),
         selectionEnabled: .constant(false)
@@ -291,7 +292,8 @@ struct SearchResultThumbnailView: View {
             actions: .init(
                 contextAction: { _ in },
                 selectionAction: {},
-                previewTapAction: {}
+                previewTapAction: {},
+                revampLongPress: {}
             ),
             swipeActions: []
         ),
@@ -316,7 +318,8 @@ struct SearchResultThumbnailView: View {
             actions: .init(
                 contextAction: { _ in },
                 selectionAction: {},
-                previewTapAction: {}
+                previewTapAction: {},
+                revampLongPress: {}
             ),
             swipeActions: []
         ),

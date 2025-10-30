@@ -83,7 +83,8 @@ final class SearchResultsViewModelTests: XCTestCase, @unchecked Sendable {
                 keyboardVisibilityHandler: MockKeyboardVisibilityHandler(), 
                 viewDisplayMode: .unknown,
                 listHeaderViewModel: nil,
-                isSelectionEnabled: true
+                isSelectionEnabled: true,
+                usesRevampedLayout: false
             )
 
             sut.interactor = interactor
@@ -292,7 +293,8 @@ final class SearchResultsViewModelTests: XCTestCase, @unchecked Sendable {
                 actions: .init(
                     contextAction: { _ in},
                     selectionAction: {},
-                    previewTapAction: {}
+                    previewTapAction: {},
+                    revampLongPress: {}
                 ),
                 swipeActions: []
             )
@@ -437,7 +439,7 @@ final class SearchResultsViewModelTests: XCTestCase, @unchecked Sendable {
             id: "1",
             content: .icon(
                 image: UIImage(systemName: "ellipsis")!,
-                scalable: false
+                layoutConfig: .init(scalable: false, size: 12)
             ),
             vibrancyEnabled: false,
             placement: { _  in return .prominent(.trailing) }
@@ -873,7 +875,7 @@ final class SearchResultsViewModelTests: XCTestCase, @unchecked Sendable {
             rowAssets: .example,
             colorAssets: .example,
             previewContent: .example,
-            actions: .init(contextAction: { _ in }, selectionAction: { }, previewTapAction: { }),
+            actions: .init(contextAction: { _ in }, selectionAction: {}, previewTapAction: {}, revampLongPress: {}),
             swipeActions: []
         )
     }

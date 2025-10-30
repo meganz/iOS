@@ -66,7 +66,8 @@ extension PreviewContent {
             actions: .init(
                 contextAction: { _ in },
                 selectionAction: {},
-                previewTapAction: {}
+                previewTapAction: {},
+                revampLongPress: {}
             ),
             swipeActions: []
         ),
@@ -90,7 +91,8 @@ extension PreviewContent {
             actions: .init(
                 contextAction: { _ in },
                 selectionAction: {},
-                previewTapAction: {}
+                previewTapAction: {},
+                revampLongPress: {}
             ),
             swipeActions: []
         ),

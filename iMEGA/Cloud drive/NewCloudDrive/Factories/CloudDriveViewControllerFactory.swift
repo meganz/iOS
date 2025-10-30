@@ -563,6 +563,7 @@ struct CloudDriveViewControllerFactory {
             searchBridge: searchBridge,
             searchConfig: searchConfig,
             calendar: calendar,
+            usesRevampedLayout: isCloudDriveRevampEnabled,
             shouldForceListLayoutDuringSearch: isCloudDriveRevampEnabled
         )
 
@@ -932,6 +933,7 @@ struct CloudDriveViewControllerFactory {
         searchBridge: SearchBridge,
         searchConfig: SearchConfig,
         calendar: Calendar,
+        usesRevampedLayout: Bool,
         shouldForceListLayoutDuringSearch: Bool
     ) -> SearchResultsViewModel {
         SearchResultsViewModel(
@@ -946,7 +948,8 @@ struct CloudDriveViewControllerFactory {
             keyboardVisibilityHandler: KeyboardVisibilityHandler(notificationCenter: .default),
             viewDisplayMode: nodeBrowserConfig.displayMode?.toViewDisplayMode ?? .unknown,
             listHeaderViewModel: listHeaderViewModelFactory.buildIfNeeded(for: nodeSource),
-            isSelectionEnabled: shouldEnableSelection(for: nodeSource)
+            isSelectionEnabled: shouldEnableSelection(for: nodeSource),
+            usesRevampedLayout: usesRevampedLayout
         )
     }
 

@@ -129,7 +129,8 @@ class NodeBrowserViewModelTests: XCTestCase {
                         keyboardVisibilityHandler: MockKeyboardVisibilityHandler(),
                         viewDisplayMode: .unknown,
                         listHeaderViewModel: nil,
-                        isSelectionEnabled: true
+                        isSelectionEnabled: true,
+                        usesRevampedLayout: false,
                     ),
                     sortOptionsViewModel: .init(title: "", sortOptions: []),
                     showChips: false,

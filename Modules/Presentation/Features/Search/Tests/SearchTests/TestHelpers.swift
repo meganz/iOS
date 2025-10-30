@@ -15,7 +15,7 @@ enum TestAsset {
 func propertyIcon(placement: PropertyPlacement) -> ResultProperty {
     .init(
         id: "id",
-        content: .icon(image: UIImage(systemName: "wifi")!, scalable: true),
+        content: .icon(image: UIImage(systemName: "wifi")!, layoutConfig: .init(scalable: true, size: 12)),
         vibrancyEnabled: false,
         placement: { _ in placement }
     )
@@ -39,7 +39,8 @@ func testableSearchResultsViewModel(
         actions: .init(
             contextAction: {_ in },
             selectionAction: {},
-            previewTapAction: {}
+            previewTapAction: {},
+            revampLongPress: {}
         ),
         swipeActions: []
     )

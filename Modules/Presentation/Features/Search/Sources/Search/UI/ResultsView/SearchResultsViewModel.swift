@@ -1,5 +1,4 @@
 import Combine
-import MEGAAssets
 import MEGAFoundation
 import MEGASwift
 import MEGASwiftUI
@@ -86,6 +85,8 @@ public final class SearchResultsViewModel: ObservableObject {
     // Specifies whether the results are selectable or not.
     let isSelectionEnabled: Bool
 
+    let usesRevampedLayout: Bool
+
     weak var interactor: (any SearchResultsInteractor)?
 
     public init(
@@ -99,7 +100,8 @@ public final class SearchResultsViewModel: ObservableObject {
         viewDisplayMode: ViewDisplayMode,
         updatedSearchResultsPublisher: BatchingPublisher<SearchResultUpdateSignal> = BatchingPublisher(interval: 1), // Emits search result updates as a batch every 1 seconds
         listHeaderViewModel: ListHeaderViewModel?,
-        isSelectionEnabled: Bool
+        isSelectionEnabled: Bool,
+        usesRevampedLayout: Bool
     ) {
         self.resultsProvider = resultsProvider
         self.bridge = bridge
@@ -112,6 +114,7 @@ public final class SearchResultsViewModel: ObservableObject {
         self.updatedSearchResultsPublisher = updatedSearchResultsPublisher
         self.listHeaderViewModel = listHeaderViewModel
         self.isSelectionEnabled = isSelectionEnabled
+        self.usesRevampedLayout = usesRevampedLayout
         self.bridge.queryChanged = { [weak self] query  in
             let _self = self
             
@@ -440,8 +443,10 @@ public final class SearchResultsViewModel: ObservableObject {
     }
 
     func handleEditingChanged(_ isEditing: Bool) {
-        editing = isEditing
-        bridge.editingChanged(isEditing)
+        withAnimation(.easeInOut(duration: 0.3)) { [self] in
+            editing = isEditing
+            bridge.editingChanged(isEditing)
+        }
     }
 
     // The total number of columns we should display is calculated based on how many columns
@@ -520,6 +525,8 @@ public final class SearchResultsViewModel: ObservableObject {
             },
             previewTapAction: { [weak self] in
                 self?.bridge.selection(selection)
+            }, revampLongPress: { [weak self] in
+                self?.actionPressedOn(result)
             }
         )
     }

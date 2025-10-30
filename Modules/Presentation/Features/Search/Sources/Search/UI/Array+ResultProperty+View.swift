@@ -30,10 +30,10 @@ extension Array where Element == ResultProperty {
     
     @MainActor @ViewBuilder func propertyView(for property: ResultProperty, colorAssets: SearchConfig.ColorAssets, placement: PropertyPlacement) -> some View {
         switch property.content {
-        case let .icon(image: image, scalable: scalable):
-            property.resultPropertyImage(image: image, scalable: scalable, colorAssets: colorAssets, placement: placement)
-                .frame(width: 12, height: 12)
-
+        case let .icon(image: image, layoutConfig: layoutConfig):
+            property.resultPropertyImage(image: image, layoutConfig: layoutConfig, colorAssets: colorAssets, placement: placement)
+                .frame(width: layoutConfig.size, height: layoutConfig.size)
+                .padding(.horizontal, layoutConfig.horizontalPadding)
         case .text(let text):
             Text(text)
         case .spacer:
@@ -45,15 +45,16 @@ extension Array where Element == ResultProperty {
 
 extension ResultProperty {
     @ViewBuilder
-    func resultPropertyImage(image: UIImage, scalable: Bool, colorAssets: SearchConfig.ColorAssets, placement: PropertyPlacement) -> some View {
-        if scalable {
+    func resultPropertyImage(image: UIImage, layoutConfig: ResultProperty.Content.LayoutConfiguration, colorAssets: SearchConfig.ColorAssets, placement: PropertyPlacement) -> some View {
+        if layoutConfig.scalable {
             Image(uiImage: image)
-                .renderingMode(.template)
                 .resizable()
+                .renderingMode(layoutConfig.renderingMode)
+                .aspectRatio(contentMode: .fit)
                 .foregroundStyle(vibrancyEnabled ? colorAssets.vibrantColor : colorAssets.resultPropertyColor)
-                .scaledToFit()
         } else {
             Image(uiImage: image)
         }
+
     }
 }

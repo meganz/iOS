@@ -12,6 +12,9 @@ extension SearchResultRowViewModel {
         let selectionAction: () -> Void
         /// result was previewed with long pressed and then tapped
         let previewTapAction: () -> Void
+
+        /// Handles the long press in revamped UX
+        let revampLongPress: () -> Void
     }
 }
 
@@ -84,7 +87,7 @@ class SearchResultRowViewModel: Identifiable, ObservableObject {
         return tags.isNotEmpty ? HorizontalTagListViewModel(tags: tags) : nil
     }
 
-    var accessibilityIdentifier: String {
+    var accessibilityLabel: String {
         result.title
     }
 
