@@ -13,6 +13,8 @@ final class FileUploadingRouter {
     
     private lazy var vNDocumentCameraVCDelegate: VNDocumentCameraVCDelegate? = nil
     
+    private var documentImportsDelegate: DocumentImportsDelegate?
+    
     private weak var navigationController: UINavigationController?
 
     private weak var baseViewController: UIViewController?
@@ -68,18 +70,16 @@ final class FileUploadingRouter {
         let documentPickerViewController = UIDocumentPickerViewController(forOpeningContentTypes: [UTType.data, UTType.package, UTType.folder], asCopy: true)
         documentPickerViewController.allowsMultipleSelection = true
 
-        var documentImportsDelegate: DocumentImportsDelegate? {
-            let documentImportsDelegate = DocumentImportsDelegate()
-            documentImportsDelegate.navigationController = navigationController
-            documentImportsDelegate.importsURLsCompletion = { [weak self] urls in
-                self?.presentDestinationFolderBrowser { [weak self] parentNode in
-                    guard let presenter = self?.navigationController else {
-                        return
-                    }
-                    self?.uploadImportedDocuments(at: urls, to: parentNode, presenter: presenter)
+        documentImportsDelegate = DocumentImportsDelegate()
+        documentImportsDelegate?.navigationController = navigationController
+        documentImportsDelegate?.importsURLsCompletion = { [weak self] urls in
+            self?.presentDestinationFolderBrowser { [weak self] parentNode in
+                guard let presenter = self?.navigationController else {
+                    return
                 }
+                self?.uploadImportedDocuments(at: urls, to: parentNode, presenter: presenter)
+                self?.documentImportsDelegate = nil
             }
-            return documentImportsDelegate
         }
 
         if let popover = documentPickerViewController.popoverPresentationController {
