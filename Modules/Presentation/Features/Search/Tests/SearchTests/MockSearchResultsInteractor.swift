@@ -1,6 +1,12 @@
 @testable import Search
 
 final class MockSearchResultsInteractor: SearchResultsInteractor {
+    var viewMode: SearchResultsViewMode = .list
+
+    var currentViewMode: SearchResultsViewMode {
+        viewMode
+    }
+
     func resetLastAvailableChips() {}
 
     func updateQuery(_ currentQuery: SearchQuery) async -> SearchQuery {

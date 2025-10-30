@@ -243,6 +243,8 @@ final class HomeScreenFactory: NSObject {
             }
         )
 
+        let viewMode = viewModeStore.viewMode(for: .init(customLocation: CustomViewModeLocation.HomeSearch))
+
         let searchResultsViewModel = SearchResultsViewModel(
             resultsProvider: makeResultsProvider(
                 parentNodeProvider: {[weak sdk] in sdk?.rootNode?.toNodeEntity() },
@@ -250,7 +252,7 @@ final class HomeScreenFactory: NSObject {
             ),
             bridge: searchBridge,
             config: config,
-            layout: viewModeStore.viewMode(for: .init(customLocation: CustomViewModeLocation.HomeSearch)).pageLayout ?? .list,
+            layout: viewMode.pageLayout ?? .list,
             keyboardVisibilityHandler: KeyboardVisibilityHandler(notificationCenter: notificationCenter),
             viewDisplayMode: .home,
             listHeaderViewModel: nil,
@@ -265,7 +267,9 @@ final class HomeScreenFactory: NSObject {
                 title: Strings.Localizable.sortTitle,
                 sortOptions: SearchResultsSortOptionFactory.makeAll()
             ),
-            showChips: true
+            showChips: true,
+            initialViewMode: viewMode.toSearchResultsViewMode(),
+            shouldShowMediaDiscoveryModeHandler: { false }
         )
 
         return UIHostingController(

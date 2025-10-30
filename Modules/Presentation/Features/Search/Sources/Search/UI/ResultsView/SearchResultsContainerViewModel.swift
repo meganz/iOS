@@ -1,4 +1,4 @@
-import Foundation
+import Combine
 import MEGASwiftUI
 import MEGAUIKit
 import SwiftUI
@@ -36,7 +36,7 @@ public class SearchResultsContainerViewModel: ObservableObject {
         }
     }
 
-    var headerViewModel: SearchResultsHeaderSortViewViewModel? {
+    var sortHeaderViewModel: SearchResultsHeaderSortViewViewModel? {
         guard let sortOption = sortOptionsViewModel
             .sortOptions.first(where: { $0.sortOrder == searchResultsViewModel.currentQuery.sorting }) else { return nil }
         return .init(title: sortOption.title, icon: sortOption.currentDirectionIcon) { [weak self] in
@@ -44,16 +44,20 @@ public class SearchResultsContainerViewModel: ObservableObject {
         }
     }
 
+    let viewModeHeaderViewModel: SearchResultsHeaderViewModeViewModel
     @Published public private(set) var showChips: Bool = false
     @Published public var showSorting: Bool = false
     @Published var showSortSheet = false
+    private var subscriptions: Set<AnyCancellable> = []
 
     public init(
         bridge: SearchBridge,
         config: SearchConfig,
         searchResultsViewModel: SearchResultsViewModel,
         sortOptionsViewModel: SearchResultsSortOptionsViewModel,
-        showChips: Bool
+        showChips: Bool,
+        initialViewMode: SearchResultsViewMode,
+        shouldShowMediaDiscoveryModeHandler: @escaping () -> Bool
     ) {
         self.bridge = bridge
         self.config = config
@@ -61,6 +65,17 @@ public class SearchResultsContainerViewModel: ObservableObject {
         self.sortOptionsViewModel = sortOptionsViewModel
         self.showChips = showChips
 
+        let availableViewModes: [SearchResultsViewMode] = shouldShowMediaDiscoveryModeHandler()
+        ? [.list, .grid, .mediaDiscovery]
+        : [.list, .grid]
+        self.viewModeHeaderViewModel = .init(selectedViewMode: initialViewMode, availableViewModes: availableViewModes)
+
+        viewModeHeaderViewModel
+            .$selectedViewMode
+            .sink {
+                bridge.viewModeChanged($0)
+            }
+            .store(in: &subscriptions)
         self.searchResultsViewModel.interactor = self
     }
 
@@ -235,6 +250,10 @@ extension SearchResultsContainerViewModel: SearchResultsInteractor {
     func listItemsUpdated(_ items: [SearchResultRowViewModel]) {
         showSorting = items.isNotEmpty
     }
+
+    var currentViewMode: SearchResultsViewMode {
+        viewModeHeaderViewModel.selectedViewMode
+    }
 }
 
 public extension SearchResultsContainerViewModel {
@@ -250,6 +269,15 @@ public extension SearchResultsContainerViewModel {
         }
     }
 
+    func searchActiveDidChange(_ isActive: Bool) {
+        setSearchChipsVisible(isActive)
+        if isActive {
+            searchResultsViewModel.forceListLayout()
+        } else {
+            searchResultsViewModel.resetForcedListLayout()
+        }
+    }
+
     @discardableResult
     func changeSortOrder(_ sortOrder: SortOrderEntity) -> Task<Void, Never> {
         Task { @MainActor in
@@ -260,6 +288,7 @@ public extension SearchResultsContainerViewModel {
 
     func update(pageLayout: PageLayout) {
         searchResultsViewModel.layout = pageLayout
+        viewModeHeaderViewModel.selectedViewMode = pageLayout.toSearchResultsViewMode()
     }
 
     func setEditing(_ editing: Bool) {

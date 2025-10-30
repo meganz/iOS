@@ -38,4 +38,5 @@ public class SearchBridge {
     public var selectionChanged: (Set<ResultId>) -> Void = { _ in }
     public var editingChanged: (Bool) -> Void = { _ in }
     public var editingCancelled: () -> Void = { }
+    public var viewModeChanged: @MainActor (SearchResultsViewMode) -> Void = { _ in }
 }

@@ -59,7 +59,7 @@ struct SearchResultsContainerViewModelTests {
                 .init(sortOrder: .init(key: .name, direction: .descending), title: "Name", iconsByDirection: [:])
             ]
         ))
-        sut.headerViewModel?.handler()
+        sut.sortHeaderViewModel?.handler()
         #expect(sut.showSortSheet == true)
     }
 
@@ -308,7 +308,7 @@ struct SearchResultsContainerViewModelTests {
             ]
         )
         let sut = makeSUT(sortOptionsViewModel: sortOptionsViewModel)
-        let headerViewModel = try #require(sut.headerViewModel)
+        let headerViewModel = try #require(sut.sortHeaderViewModel)
         #expect(headerViewModel.title == "Name")
         #expect(headerViewModel.icon == Image(systemName: "plus"))
     }
@@ -372,6 +372,7 @@ struct SearchResultsContainerViewModelTests {
         let sut = makeSUT()
         sut.update(pageLayout: .thumbnail)
         #expect(sut.searchResultsViewModel.layout == .thumbnail)
+        #expect(sut.viewModeHeaderViewModel.selectedViewMode == .grid)
     }
 
     @Test func testEditing_whenSetToTrue_shouldReturnEditingToTrue() {
@@ -405,13 +406,33 @@ struct SearchResultsContainerViewModelTests {
         #expect(sut.searchResultsViewModel.selectedRowIds == [])
     }
 
+    @Test(arguments: [SearchResultsViewMode.list, SearchResultsViewMode.grid])
+    func testCurrentViewMode_shouldMatchInitialViewMode(initialViewMode: SearchResultsViewMode) {
+        let sut = makeSUT(initialViewMode: initialViewMode)
+        #expect(sut.currentViewMode == initialViewMode)
+    }
+
+    @Test(arguments: [
+        (true, SearchResultsViewMode.list, PageLayout.list),
+        (false, SearchResultsViewMode.list, PageLayout.list),
+        (true, SearchResultsViewMode.grid, PageLayout.list),
+        (false, SearchResultsViewMode.grid, PageLayout.thumbnail)
+    ])
+    func testSearchActiveDidChange(isActive: Bool, initialViewMode: SearchResultsViewMode, resultLayout: PageLayout) {
+        let sut = makeSUT(initialViewMode: initialViewMode)
+        sut.searchActiveDidChange(isActive)
+        #expect(sut.showChips == isActive)
+        #expect(sut.searchResultsViewModel.layout == resultLayout)
+    }
+
     typealias SUT = SearchResultsContainerViewModel
     private func makeSUT(
         sortOptionsViewModel: SearchResultsSortOptionsViewModel = .init(title: "", sortOptions: []),
         resultsProvider: some SearchResultsProviding = MockSearchResultsProviding(
             searchResultUpdateSignalSequence: EmptyAsyncSequence().eraseToAnyAsyncSequence()
         ),
-        showChips: Bool = false
+        showChips: Bool = false,
+        initialViewMode: SearchResultsViewMode = .list
     ) -> SUT {
         let selection: (SearchResultSelection) -> Void = { _ in }
         let context: (SearchResult, UIButton) -> Void = { _, _ in }
@@ -455,7 +476,9 @@ struct SearchResultsContainerViewModelTests {
                 isSelectionEnabled: true
             ),
             sortOptionsViewModel: sortOptionsViewModel,
-            showChips: showChips
+            showChips: showChips,
+            initialViewMode: initialViewMode,
+            shouldShowMediaDiscoveryModeHandler: { false }
         )
     }
 

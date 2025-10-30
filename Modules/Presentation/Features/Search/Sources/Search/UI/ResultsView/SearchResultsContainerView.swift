@@ -32,8 +32,12 @@ public struct SearchResultsContainerView: View {
     private var header: some View {
         if viewModel.showChips {
             chips
-        } else if viewModel.showSorting, let headerViewModel = viewModel.headerViewModel {
-            SearchResultsHeaderView(leftView: { SearchResultsHeaderSortView(viewModel: headerViewModel) })
+        } else if viewModel.showSorting, let sortHeaderViewModel = viewModel.sortHeaderViewModel {
+            SearchResultsHeaderView {
+                SearchResultsHeaderSortView(viewModel: sortHeaderViewModel)
+            } rightView: {
+                SearchResultsHeaderViewModeView(viewModel: viewModel.viewModeHeaderViewModel)
+            }
         }
     }
 

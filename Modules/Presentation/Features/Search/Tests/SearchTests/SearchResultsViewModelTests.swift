@@ -808,6 +808,32 @@ final class SearchResultsViewModelTests: XCTestCase, @unchecked Sendable {
     }
 
     @MainActor
+    func testForceListLayout_whenInvoked_shouldMatchListLayout() {
+        let harness = Harness(self)
+        harness.sut.layout = .thumbnail
+        harness.sut.forceListLayout()
+        XCTAssertEqual(harness.sut.layout, .list)
+    }
+
+    @MainActor
+    func testRestForceListLayout_whenOriginalLayoutIsList_shouldNotChangeLayout() {
+        let harness = Harness(self)
+        harness.interactor.viewMode = .list
+        harness.sut.layout = .list
+        harness.sut.resetForcedListLayout()
+        XCTAssertEqual(harness.sut.layout, .list)
+    }
+
+    @MainActor
+    func testRestForceListLayout_whenOriginalLayoutIsThumbnail_shouldRevertBackToThumbanilLayout() {
+        let harness = Harness(self)
+        harness.interactor.viewMode = .grid
+        harness.sut.layout = .list
+        harness.sut.resetForcedListLayout()
+        XCTAssertEqual(harness.sut.layout, .thumbnail)
+    }
+
+    @MainActor
     private func makeHarnessWithAllItemsSelected(listItemCount count: Int, toggleSelection: Bool = true) -> Harness {
         let harness = Harness(self)
         let listItems = Array(1...count).map { generateRandomSearchResultRowViewModel(id: $0) }

@@ -4772,3 +4772,5 @@
 "upgradeAccountPlan.plan.tag.introOffer.cyberMondayDeal"="Cyber Monday deal: %@ off";
 /* Special Offer plan badge text shown in Upgrade plan screen */
 "upgradeAccountPlan.plan.tag.introOffer.specialOffer"="Special offer: %@ off";
+/* View mode title for grid view in the cloud drive. */
+"cloudDrive.viewMode.grid.title"="Grid view";

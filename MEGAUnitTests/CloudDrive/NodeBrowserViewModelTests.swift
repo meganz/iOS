@@ -132,7 +132,9 @@ class NodeBrowserViewModelTests: XCTestCase {
                         isSelectionEnabled: true
                     ),
                     sortOptionsViewModel: .init(title: "", sortOptions: []),
-                    showChips: false
+                    showChips: false,
+                    initialViewMode: .list,
+                    shouldShowMediaDiscoveryModeHandler: { false }
                 ),
                 mediaDiscoveryViewModel: mediaDiscoveryViewModel,
                 warningViewModel: nil,
@@ -655,7 +657,10 @@ class NodeBrowserViewModelTests: XCTestCase {
         harness.sut.viewMode = .list
 
         // Making sure that the async sequence is created
-        while harness.cloudDriveViewModeMonitoringService.count != 7 {
+        // The value is 13 here because the init will change the count to 1 + every view mode change will trigger the count twice.
+        // This is because we are changing the value of viewMode directly in the test case.
+        // We cannot have remove duplicates at the calling site `$nodeSource.combineLatest($viewMode)` as nodeSource is not confirming to Equatable as of now.
+        while harness.cloudDriveViewModeMonitoringService.count != 13 {
             try? await Task.sleep(nanoseconds: 10_000_000)
         }
 
@@ -664,10 +669,10 @@ class NodeBrowserViewModelTests: XCTestCase {
             .sut
             .$viewMode
             .dropFirst()
-            .sink { viewMode in
-                if viewMode == .thumbnail {
-                    expectation.fulfill()
-                }
+            .filter { $0 == .thumbnail }
+            .prefix(1)
+            .sink { _ in
+                expectation.fulfill()
             }
 
         harness.cloudDriveViewModeMonitoringService.send(event: .thumbnail)
@@ -752,10 +757,10 @@ class NodeBrowserViewModelTests: XCTestCase {
             .sut
             .$viewMode
             .dropFirst()
-            .sink { viewMode in
-                if viewMode == updatedViewMode {
-                    expectation.fulfill()
-                }
+            .filter { $0 == updatedViewMode }
+            .prefix(1)
+            .sink { _ in
+                expectation.fulfill()
             }
 
         Task.detached {

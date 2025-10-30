@@ -2363,6 +2363,7 @@
 		BF99A41F24B2AD040035A183 /* ChatUploadTransfer+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF99A41D24B2AD030035A183 /* ChatUploadTransfer+CoreDataClass.swift */; };
 		BF99A42024B2AD040035A183 /* ChatUploadTransfer+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF99A41E24B2AD030035A183 /* ChatUploadTransfer+CoreDataProperties.swift */; };
 		BF99A42224B2AFC40035A183 /* MEGAStore+ChatUploadTransfer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF99A42124B2AFC40035A183 /* MEGAStore+ChatUploadTransfer.swift */; };
+		BF9BBB692EAA14C600A0852C /* ViewModePreferenceEntity+SearchResultsViewMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF9BBB662EAA14B500A0852C /* ViewModePreferenceEntity+SearchResultsViewMode.swift */; };
 		BF9D491C2459047800D7B7DC /* AddToChatAllowAccessCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF9D491A2459047800D7B7DC /* AddToChatAllowAccessCollectionCell.swift */; };
 		BF9D491D2459047800D7B7DC /* AddToChatAllowAccessCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF9D491B2459047800D7B7DC /* AddToChatAllowAccessCollectionCell.xib */; };
 		BF9DBB652A398A1200C5821F /* ScheduleMeetingCreationFrequencyOptionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF9DBB642A398A1200C5821F /* ScheduleMeetingCreationFrequencyOptionTests.swift */; };
@@ -5183,6 +5184,7 @@
 		BF99A41D24B2AD030035A183 /* ChatUploadTransfer+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ChatUploadTransfer+CoreDataClass.swift"; sourceTree = "<group>"; };
 		BF99A41E24B2AD030035A183 /* ChatUploadTransfer+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ChatUploadTransfer+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		BF99A42124B2AFC40035A183 /* MEGAStore+ChatUploadTransfer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAStore+ChatUploadTransfer.swift"; sourceTree = "<group>"; };
+		BF9BBB662EAA14B500A0852C /* ViewModePreferenceEntity+SearchResultsViewMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewModePreferenceEntity+SearchResultsViewMode.swift"; sourceTree = "<group>"; };
 		BF9D491A2459047800D7B7DC /* AddToChatAllowAccessCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToChatAllowAccessCollectionCell.swift; sourceTree = "<group>"; };
 		BF9D491B2459047800D7B7DC /* AddToChatAllowAccessCollectionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddToChatAllowAccessCollectionCell.xib; sourceTree = "<group>"; };
 		BF9DBB642A398A1200C5821F /* ScheduleMeetingCreationFrequencyOptionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingCreationFrequencyOptionTests.swift; sourceTree = "<group>"; };
@@ -10555,6 +10557,7 @@
 				BF825F522B872696007B0B53 /* ScanDocumentViewRouter.swift */,
 				94B09E452B84CC86007D6B84 /* SearchResultSelection+NonEmptySiblings.swift */,
 				94B09E482B84CC86007D6B84 /* UploadAddMenuDelegateHandler.swift */,
+				BF9BBB662EAA14B500A0852C /* ViewModePreferenceEntity+SearchResultsViewMode.swift */,
 			);
 			path = NewCloudDrive;
 			sourceTree = "<group>";
@@ -15913,6 +15916,7 @@
 				B6CCC36621E6F67B00B68E2C /* VideoUploadsTableViewController.m in Sources */,
 				94F3B7572DB00B4D00C285A5 /* VideoUploadsViewModel.swift in Sources */,
 				94B09E622B84CC87007D6B84 /* ViewModeFactory.swift in Sources */,
+				BF9BBB692EAA14C600A0852C /* ViewModePreferenceEntity+SearchResultsViewMode.swift in Sources */,
 				94BEAFA52B0CB0EF008E7352 /* ViewModeStore.swift in Sources */,
 				BF006CEB24613BC500C9CADE /* VoiceClipInputBar.swift in Sources */,
 				83E3443C2BCE9F45006A2E3D /* VoIPPushDelegate.swift in Sources */,

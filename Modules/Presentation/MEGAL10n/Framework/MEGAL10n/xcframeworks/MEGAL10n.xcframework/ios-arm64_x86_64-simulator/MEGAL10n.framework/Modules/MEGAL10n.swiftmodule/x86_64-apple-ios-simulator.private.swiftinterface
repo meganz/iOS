@@ -2292,6 +2292,11 @@ public enum Strings {
       public enum Upload {
         public static let importFromFiles: Swift.String
       }
+      public enum ViewMode {
+        public enum Grid {
+          public static let title: Swift.String
+        }
+      }
     }
     public enum Contact {
       public enum Invite {

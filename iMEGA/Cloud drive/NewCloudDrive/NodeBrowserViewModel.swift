@@ -267,6 +267,11 @@ class NodeBrowserViewModel: ObservableObject {
             self.refresh()
         }
 
+        searchResultsContainerViewModel.bridge.viewModeChanged = { [weak self] updatedViewMode in
+            guard let self else { return }
+            changeViewMode(updatedViewMode.toViewModePreferenceEntity())
+        }
+
         refresh()
 
         noInternetViewModel.networkConnectionStateChanged = { [weak self] isConnectedToNetwork in

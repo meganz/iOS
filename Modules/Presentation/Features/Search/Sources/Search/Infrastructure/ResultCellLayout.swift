@@ -31,3 +31,12 @@ public enum PageLayout: Equatable, Sendable {
         }
     }
 }
+
+extension PageLayout {
+    func toSearchResultsViewMode() -> SearchResultsViewMode {
+        switch self {
+        case .list: .list
+        case .thumbnail: .grid
+        }
+    }
+}

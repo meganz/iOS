@@ -219,7 +219,28 @@ public final class SearchResultsViewModel: ObservableObject {
             updatedSearchResultsPublisher.append(updateSignal)
         }
     }
-    
+
+    /// Forces the layout to **list** specifically for the active search session.
+    /// While search is active, results are shown in a list regardless of the prior layout choice.
+    /// Call `resetForcedListLayout()` when search is dismissed.
+    func forceListLayout() {
+        updateLayout(.list)
+    }
+
+
+    /// Restores the layout to the mode that was active before the search began.
+    ///
+    /// Call this when the search is dismissed to return the interface to the user’s
+    /// previously selected layout (i.e. `.list` or `.thumbnail`).
+    func resetForcedListLayout() {
+        updateLayout(interactor?.currentViewMode == .list ? .list : .thumbnail)
+    }
+
+    private func updateLayout(_ layout: PageLayout) {
+        guard self.layout != layout else { return }
+        self.layout = layout
+    }
+
     private func defaultSearchQuery() async {
         // when screen is presented first time,
         // do an initial search that lists contents of the directory

@@ -535,28 +535,21 @@ struct CloudDriveViewControllerFactory {
             )
         }
 
-        let viewModeAsyncProvider: @Sendable (NodeSource) async -> ViewModePreferenceEntity = { nodeSource in
-            let hasOnlyMediaNodes = CloudDriveViewControllerMediaCheckerMode
-                .containsExclusivelyMedia
+        let mediaNodesHandler: @Sendable (CloudDriveViewControllerMediaCheckerMode, NodeSource) -> Bool = { mode, nodeSource in
+            mode
                 .makeVisualMediaPresenceChecker(
                     nodeSource: nodeSource,
                     nodeUseCase: nodeUseCase
                 )()
+        }
 
-            return await Task { @MainActor in
-                viewModeProvider(nodeSource, hasOnlyMediaNodes)
+        let viewModeAsyncProvider: @Sendable (NodeSource) async -> ViewModePreferenceEntity = { nodeSource in
+            await Task { @MainActor in
+                viewModeProvider(nodeSource, mediaNodesHandler(.containsExclusivelyMedia, nodeSource))
             }.value
         }
 
-        let initialViewMode = viewModeProvider(
-            nodeSource,
-            CloudDriveViewControllerMediaCheckerMode
-                .containsExclusivelyMedia
-                .makeVisualMediaPresenceChecker(
-                    nodeSource: nodeSource,
-                    nodeUseCase: nodeUseCase
-                )()
-        )
+        let initialViewMode = viewModeProvider(nodeSource, mediaNodesHandler(.containsExclusivelyMedia, nodeSource))
 
         let isCloudDriveRevampEnabled = DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .cloudDriveRevamp)
 
@@ -570,20 +563,32 @@ struct CloudDriveViewControllerFactory {
             searchBridge: searchBridge,
             searchConfig: searchConfig,
             calendar: calendar,
+            shouldForceListLayoutDuringSearch: isCloudDriveRevampEnabled
         )
+
+        let shouldShowMediaDiscoveryModeHandler: () -> Bool = {
+            (!nodeSource.isRoot
+             && mediaNodesHandler(.containsSomeMedia, nodeSource)
+             && !(config.isFromSharedItem == true))
+            || initialViewMode == .mediaDiscovery
+        }
 
         let searchResultsContainerViewModel = makeSearchResultsContainerViewModel(
             bridge: searchBridge,
             searchConfig: searchConfig,
             searchResultsViewModel: searchResultsVM,
-            showChips: !isCloudDriveRevampEnabled
+            showChips: !isCloudDriveRevampEnabled,
+            initialViewMode: initialViewMode.toSearchResultsViewMode(),
+            shouldShowMediaDiscoveryModeHandler: shouldShowMediaDiscoveryModeHandler
         )
 
         let searchControllerWrapper = SearchControllerWrapper(
             onSearch: { [weak searchResultsVM] in searchResultsVM?.bridge.queryChanged($0) },
             onCancel: { [weak searchResultsVM] in searchResultsVM?.bridge.queryCleaned() },
             onSearchActiveChanged: { [weak searchResultsContainerViewModel] in
-                searchResultsContainerViewModel?.setSearchChipsVisible($0 || !isCloudDriveRevampEnabled)
+                if isCloudDriveRevampEnabled {
+                    searchResultsContainerViewModel?.searchActiveDidChange($0)
+                }
             }
         )
 
@@ -926,7 +931,8 @@ struct CloudDriveViewControllerFactory {
         nodeBrowserConfig: NodeBrowserConfig,
         searchBridge: SearchBridge,
         searchConfig: SearchConfig,
-        calendar: Calendar
+        calendar: Calendar,
+        shouldForceListLayoutDuringSearch: Bool
     ) -> SearchResultsViewModel {
         SearchResultsViewModel(
             resultsProvider: resultProvider(
@@ -948,7 +954,9 @@ struct CloudDriveViewControllerFactory {
         bridge: SearchBridge,
         searchConfig: SearchConfig,
         searchResultsViewModel: SearchResultsViewModel,
-        showChips: Bool
+        showChips: Bool,
+        initialViewMode: SearchResultsViewMode,
+        shouldShowMediaDiscoveryModeHandler: @escaping () -> Bool
     ) -> SearchResultsContainerViewModel {
         .init(
             bridge: bridge,
@@ -958,7 +966,9 @@ struct CloudDriveViewControllerFactory {
                 title: Strings.Localizable.sortTitle,
                 sortOptions: SearchResultsSortOptionFactory.makeAll()
             ),
-            showChips: showChips
+            showChips: showChips,
+            initialViewMode: initialViewMode,
+            shouldShowMediaDiscoveryModeHandler: shouldShowMediaDiscoveryModeHandler
         )
     }
 
