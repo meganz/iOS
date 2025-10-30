@@ -15,10 +15,6 @@ struct NotificationsViewRouter: NotificationsViewRouting {
     private let imageLoader: any ImageLoadingProtocol
     private let hidesBottomBarWhenPushed: Bool
 
-    private var isNavigationRevampEnabled: Bool {
-        DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .navigationRevamp)
-    }
-
     init(
         navigationController: UINavigationController?,
         notificationsUseCase: some NotificationsUseCaseProtocol,
@@ -84,13 +80,8 @@ struct NotificationsViewRouter: NotificationsViewRouting {
         if isOwnNode {
             mainTBC.selectedIndex = TabManager.driveTabIndex()
         } else {
-            if isNavigationRevampEnabled {
-                mainTBC.selectedIndex = TabManager.menuTabIndex()
-                openSharedItemsFromMenu(in: mainTBC)
-            } else {
-                mainTBC.selectedIndex = TabManager.sharedItemsTabIndex()
-                selectSharedSegmentIfNeeded(in: mainTBC)
-            }
+            mainTBC.selectedIndex = TabManager.menuTabIndex()
+            openSharedItemsFromMenu(in: mainTBC)
         }
     }
 
@@ -99,13 +90,6 @@ struct NotificationsViewRouter: NotificationsViewRouting {
             return assertionFailure("Trying to navigate to SharedItems screen but selected view controller is not of type AccountMenuItemsNavigating")
         }
         presenter.showSharedItems()
-    }
-
-    private func selectSharedSegmentIfNeeded(in mainTBC: MainTabBarController) {
-        if let sharedNav = mainTBC.selectedViewController as? UINavigationController,
-           let sharedItemsVC = sharedNav.children.first as? SharedItemsViewController {
-            sharedItemsVC.selectSegment(0)
-        }
     }
     
     private func pushNodeHierarchy(
@@ -180,6 +164,6 @@ struct NotificationsViewRouter: NotificationsViewRouting {
     }
     
     func navigateThroughNodeHierarchyAndPresent(_ node: NodeEntity) {
-        node.toMEGANode(in: MEGASdk.shared)?.newNavigateToParentAndPresent()
+        node.toMEGANode(in: MEGASdk.shared)?.navigateToParentAndPresent()
     }
 }

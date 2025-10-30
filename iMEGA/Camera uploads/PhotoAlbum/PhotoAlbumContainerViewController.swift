@@ -55,14 +55,6 @@ final class PhotoAlbumContainerViewController: UIViewController {
     private var albumHostingController: UIViewController?
     private var visualMediaSearchResultsViewController: UIViewController?
     private var visualMediaSearchResultsViewModel: VisualMediaSearchResultsViewModel?
-
-    lazy var leftBarButton: UIBarButtonItem? = {
-        if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .navigationRevamp) {
-            nil
-        } else {
-            createAvatarBarButtonItem()
-        }
-    }()
     
     lazy var shareLinkBarButton = UIBarButtonItem(image: MEGAAssets.UIImage.link,
                                                   style: .plain,
@@ -212,7 +204,6 @@ final class PhotoAlbumContainerViewController: UIViewController {
         albumHostingController = AlbumListViewRouter(photoAlbumContainerViewModel: viewModel).build()
         
         photoViewController?.parentPhotoAlbumsController = self
-        photoViewController?.avatarBarButtonItem = leftBarButton
     }
     
     private func configureSearchBar() {

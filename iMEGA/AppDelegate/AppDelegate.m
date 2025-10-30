@@ -161,7 +161,6 @@
     
     [Helper restoreAPISetting];
     [self chatUploaderSetup];
-    [self setupTabManager];
     [MEGASdk.shared addMEGARequestDelegate:self];
     [MEGASdk.shared addMEGATransferDelegate:self];
     [MEGASdk.sharedFolderLink addMEGATransferDelegate:self];
@@ -719,8 +718,6 @@
         }
     }
     
-    [self openTabBasedOnNotificationMegatype];
-    
     if (self.presentInviteContactVCLater) {
         [self presentInviteContactCustomAlertViewController];
     }
@@ -785,57 +782,6 @@
     
     [MEGAChatSdk.shared removeChatDelegate:self.mainTBC];
     self.mainTBC = nil;
-}
-
-- (void)openTabBasedOnNotificationMegatype {
-    NSUInteger tabTag = 0;
-    switch (self.megatype) {
-        case MEGANotificationTypeShareFolder:
-            tabTag = [TabManager sharedItemsTabIndex];
-            break;
-            
-        case MEGANotificationTypeChatMessage:
-            tabTag = [TabManager chatTabIndex];
-            break;
-            
-        case MEGANotificationTypeContactRequest:
-            tabTag = [TabManager homeTabIndex];
-            break;
-            
-        default:
-            return;
-    }
-    [self setTabIndexForNotification:tabTag];
-}
-
-- (void)setTabIndexForNotification:(NSUInteger)selectedIndex {
-    void (^manageNotificationBlock)(void) = ^{
-        if (self.megatype == MEGANotificationTypeChatMessage) {
-            if ([UIApplication.mnz_visibleViewController isKindOfClass: [ChatViewController class]]) {
-                MEGANavigationController *navigationController = [self.mainTBC.childViewControllers objectAtIndex:[TabManager chatTabIndex]];
-                [navigationController popToRootViewControllerAnimated:NO];
-            }
-        }
-        
-        self.mainTBC.selectedIndex = selectedIndex;
-        if (self.megatype == MEGANotificationTypeContactRequest) {
-            if ([UIApplication.mnz_visibleViewController isKindOfClass: [ContactRequestsViewController class]]) {
-                return;
-            }
-            MEGANavigationController *navigationController = [[self.mainTBC viewControllers] objectAtIndex:selectedIndex];
-            ContactRequestsViewController *contactRequestsVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsRequestsViewControllerID"];
-            [navigationController pushViewController:contactRequestsVC animated:NO];
-        }
-    };
-    
-    UIViewController *rootViewController = UIApplication.sharedApplication.delegate.window.rootViewController;
-    if (rootViewController.presentedViewController) {
-        [rootViewController dismissViewControllerAnimated:YES completion:^{
-            manageNotificationBlock();
-        }];
-    } else {
-        manageNotificationBlock();
-    }
 }
 
 - (void)migrateLocalCachesLocation {
@@ -1097,7 +1043,7 @@
                 self.megaGenericRemoteNotif = response.notification.request.content.userInfo;
             }
         } else {
-            [self revampedOpenTabBasedOnNotificationMegatype];
+            [self openTabBasedOnNotificationMegatype];
         }
     } else {
         if (self.mainTBC) {

@@ -166,7 +166,6 @@ class NodeBrowserViewModelTests: XCTestCase {
                 storageFullModalAlertViewRouter: MockStorageFullModalAlertViewRouter(),
                 warningBannerViewRouter: MockWarningViewRouter(),
                 titleBuilder: { _, _ in Self.titleBuilderProvidedValue },
-                onOpenUserProfile: {},
                 onUpdateSearchBarVisibility: { _ in },
                 onBack: {},
                 onCancel: {},

@@ -1269,11 +1269,11 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
     
     if (presentingViewController != nil) {
         [presentingViewController dismissViewControllerAnimated:YES completion:^{
-            [node newNavigateToParentAndPresent];
+            [node navigateToParentAndPresent];
         }];
     } else {
         [self dismissViewControllerAnimated:YES completion:^{
-            [node newNavigateToParentAndPresent];
+            [node navigateToParentAndPresent];
         }];
     }
 }

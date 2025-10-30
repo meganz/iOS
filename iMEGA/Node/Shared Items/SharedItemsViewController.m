@@ -102,13 +102,6 @@
     [self configureButtons];
 }
 
-- (UIBarButtonItem *)avatarBarButtonItem {
-    if (!_avatarBarButtonItem) {
-        _avatarBarButtonItem = [self createAvatarBarButtonItem];
-    }
-    return _avatarBarButtonItem;
-}
-
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
@@ -145,14 +138,8 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    [self configureAds];
     
     [[TransfersWidgetViewController sharedTransferViewController].progressView showWidgetIfNeeded];
-}
-
-- (void)viewDidDisappear:(BOOL)animated {
-    [super viewDidDisappear:animated];
-    [self configureAds];
 }
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
@@ -665,7 +652,6 @@
         allNodesSelected = NO;
         [_selectedNodesMutableArray removeAllObjects];
         [_selectedSharesMutableArray removeAllObjects];
-        [self updateAvatarButtonItem];
 
         [UIView animateWithDuration:0.33f animations:^ {
             [self.toolbar setAlpha:0.0];
@@ -1304,7 +1290,7 @@
 #pragma mark - NodeInfoViewControllerDelegate
 
 - (void)nodeInfoViewController:(NodeInfoViewController *)nodeInfoViewController presentParentNode:(MEGANode *)node {
-    [node newNavigateToParentAndPresent];
+    [node navigateToParentAndPresent];
 }
 
 #pragma mark - BrowserViewControllerDelegate, ContactsViewControllerDelegate

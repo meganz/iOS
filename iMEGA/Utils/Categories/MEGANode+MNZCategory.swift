@@ -18,19 +18,9 @@ extension MEGANode {
         vc.navigationItem.backButtonTitle = ""
         navigationController.pushViewController(vc, animated: false)
     }
-    // the prefix `new` is for distinguishing with the old navigateToParentAndPresent()
-    // After Navigation Revamp is fully rolled out we'll remove the old method and rename the new one
+    
     @MainActor
-    @objc func newNavigateToParentAndPresent() {
-        if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .navigationRevamp) {
-            revampedNavigateToParentAndPresent()
-        } else {
-            navigateToParentAndPresent()
-        }
-    }
-
-    @MainActor
-    private func revampedNavigateToParentAndPresent() {
+    @objc func navigateToParentAndPresent() {
         guard let mainTBC = UIApplication.mainTabBarRootViewController() as? MainTabBarController else { return }
 
         if MEGASdk.shared.accessLevel(for: self) != .accessOwner {

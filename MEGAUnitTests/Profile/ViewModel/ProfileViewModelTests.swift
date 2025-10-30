@@ -45,16 +45,15 @@ final class ProfileViewModelTests: XCTestCase {
         let isSubscriptionHidden = !(isStandardProAccount && isBilledProPlan)
         let (sut, _) = makeSUT(
             isStandardProAccount: isStandardProAccount,
-            isBilledProPlan: isBilledProPlan,
-            featureFlagProvider: MockFeatureFlagProvider(list: [.navigationRevamp: true])
+            isBilledProPlan: isBilledProPlan
         )
         let result = receivedSectionDataSource(
             from: sut,
             after: .onViewDidLoad
         )
         let expectedSections = ProfileViewModel.SectionCellDataSource(
-            sectionOrder: sectionsOrder(isSubscriptionHidden: isSubscriptionHidden, isNavigationRevampEnabled: true),
-            sectionRows: sectionRows(isSubscriptionHidden: isSubscriptionHidden, isNavigationRevampEnabled: true)
+            sectionOrder: sectionsOrder(isSubscriptionHidden: isSubscriptionHidden),
+            sectionRows: sectionRows(isSubscriptionHidden: isSubscriptionHidden)
         )
 
         XCTAssertEqual(result, expectedSections)
@@ -555,14 +554,9 @@ final class ProfileViewModelTests: XCTestCase {
     
     private func sectionsOrder(
         isPlanHidden: Bool = true,
-        isSubscriptionHidden: Bool = true,
-        isNavigationRevampEnabled: Bool = false
+        isSubscriptionHidden: Bool = true
     ) -> [ProfileSection] {
-        var sections: [ProfileSection] = isPlanHidden ? [.profile, .security, .session]: [.profile, .security, .plan, .session]
-
-        if isNavigationRevampEnabled {
-            sections.removeLast()
-        }
+        var sections: [ProfileSection] = isPlanHidden ? [.profile, .security]: [.profile, .security, .plan]
 
         if !isSubscriptionHidden {
             sections.append(.subscription)
@@ -576,8 +570,7 @@ final class ProfileViewModelTests: XCTestCase {
         isSubscriptionHidden: Bool = true,
         isSmsAllowed: Bool = false,
         isBusiness: Bool = false,
-        isMasterBusinessAccount: Bool = false,
-        isNavigationRevampEnabled: Bool = false,
+        isMasterBusinessAccount: Bool = false
     ) -> [ProfileSection: [ProfileSectionRow]] {
         let profileRows: [ProfileSectionRow] = isBusiness && !isMasterBusinessAccount ?
             [.changePhoto, .changePassword(isLoading: false)] :
@@ -588,20 +581,14 @@ final class ProfileViewModelTests: XCTestCase {
         if isPlanHidden {
             sections = [
                 .profile: isSmsAllowed ? profileRows + [.phoneNumber] : profileRows,
-                .security: [.recoveryKey],
-                .session: [.logout]
+                .security: [.recoveryKey]
             ]
         } else {
             sections = [
                 .profile: isSmsAllowed ? profileRows + [.phoneNumber] : profileRows,
                 .security: [.recoveryKey],
-                .plan: isBusiness ? [.upgrade, .role] : [.upgrade],
-                .session: [.logout]
+                .plan: isBusiness ? [.upgrade, .role] : [.upgrade]
             ]
-        }
-
-        if isNavigationRevampEnabled {
-            sections[.session] = nil
         }
 
         if !isSubscriptionHidden {

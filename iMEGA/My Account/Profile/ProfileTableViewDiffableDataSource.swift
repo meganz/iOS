@@ -12,7 +12,7 @@ final class ProfileTableViewDiffableDataSource: UITableViewDiffableDataSource<Pr
         return switch snapshot().sectionIdentifiers[section] {
         case .security: Strings.Localizable.recoveryKey
         case .plan: Strings.Localizable.plan
-        case .session, .profile, .subscription: nil
+        case .profile, .subscription: nil
         }
     }
     
@@ -20,7 +20,6 @@ final class ProfileTableViewDiffableDataSource: UITableViewDiffableDataSource<Pr
         return switch snapshot().sectionIdentifiers[section] {
         case .security: Strings.Localizable.ifYouLoseThisRecoveryKeyAndForgetYourPasswordBAllYourFilesFoldersAndMessagesWillBeInaccessibleEvenByMEGAB.replacingOccurrences(of: "[B]", with: "").replacingOccurrences(of: "[/B]", with: "")
         case .plan: planFooterTitle()
-        case .session: sessionFooterTitle()
         case .profile, .subscription: nil
         }
     }
@@ -55,17 +54,5 @@ final class ProfileTableViewDiffableDataSource: UITableViewDiffableDataSource<Pr
             let formattedDate = dateFormatterForDate(renewDate).localisedString(from: renewDate)
             return Strings.Localizable.Account.Profile.Renewal.future(formattedDate)
         }
-    }
-    
-    private func sessionFooterTitle() -> String? {
-        if FileManager.default.mnz_existsOfflineFiles() && MEGASdk.shared.transfers.size != 0 {
-            return Strings.Localizable.whenYouLogoutFilesFromYourOfflineSectionWillBeDeletedFromYourDeviceAndOngoingTransfersWillBeCancelled
-        } else if FileManager.default.mnz_existsOfflineFiles() {
-            return Strings.Localizable.whenYouLogoutFilesFromYourOfflineSectionWillBeDeletedFromYourDevice
-        } else if MEGASdk.shared.transfers.size != 0 {
-            return Strings.Localizable.whenYouLogoutOngoingTransfersWillBeCancelled
-        }
-        
-        return nil
     }
 }

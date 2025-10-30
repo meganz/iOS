@@ -311,7 +311,7 @@ extension MEGALinkManager: MEGALinkManagerProtocol {
         let accountUseCase = AccountUseCase(repository: AccountRepository.newRepo)
         
         if accountUseCase.isAccountType(.proFlexi) || accountUseCase.isAccountType(.business) {
-            delegate.showMyAccountHall()
+            delegate.mainTBC?.selectedIndex = TabManager.menuTabIndex()
         } else {
             delegate.showUpgradeAccount()
         }

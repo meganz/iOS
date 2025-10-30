@@ -104,14 +104,10 @@ class AppearanceManager: NSObject {
     }
     
     @objc class func setupTabbar(_ tabBar: UITabBar) {
-        if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .navigationRevamp) {
-            setupTabbarForRevampedAppearance(tabBar)
-        } else {
-            setupTabbarForLegacyAppearance(tabBar)
-        }
+        setupTabbarAppearance(tabBar)
     }
 
-    private class func setupTabbarForRevampedAppearance(_ tabBar: UITabBar) {
+    private class func setupTabbarAppearance(_ tabBar: UITabBar) {
         let appearance = UITabBarAppearance()
         appearance.backgroundColor = .pageBackgroundColor()
 

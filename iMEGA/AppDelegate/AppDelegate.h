@@ -32,8 +32,6 @@ typedef NS_ENUM(NSInteger, MEGANotificationType) {
 - (void)manageLink:(NSURL *)url;
 - (void)showLink:(NSURL *)url;
 - (void)setAccountFirstLogin:(BOOL)isFirstLogin;
-- (void)openTabBasedOnNotificationMegatype;
-- (void)setTabIndexForNotification:(NSUInteger)selectedIndex;
 
 @end
 

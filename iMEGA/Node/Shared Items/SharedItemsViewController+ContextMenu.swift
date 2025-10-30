@@ -49,7 +49,6 @@ extension SharedItemsViewController: DisplayMenuDelegate {
             navigationItem.leftBarButtonItem = selectAllBarButtonItem
             navigationItem.rightBarButtonItem = editBarButtonItem
         } else {
-            updateAvatarButtonItem()
 
             guard !isCloudDriveRevampEnabled else {
                 navigationItem.rightBarButtonItem = nil
@@ -114,9 +113,5 @@ extension SharedItemsViewController: DisplayMenuDelegate {
         let navigationController = MEGANavigationController(rootViewController: verifyCredentialsVC)
         navigationController.addRightCancelButton()
         self.present(navigationController, animated: true)
-    }
-
-    @objc func updateAvatarButtonItem() {
-        navigationItem.leftBarButtonItem = DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .navigationRevamp) ? nil : avatarBarButtonItem
     }
 }

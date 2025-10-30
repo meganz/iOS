@@ -320,24 +320,4 @@ final class ChatRoomsListRouter: ChatRoomsListRouting {
     func hideAds() {
         tabBarController?.hideAds()
     }
-    
-    func openUserProfile() {
-        guard let navigationController else { return }
-        MyAccountHallRouter(
-            myAccountHallUseCase: MyAccountHallUseCase(repository: AccountRepository.newRepo),
-            purchaseUseCase: AccountPlanPurchaseUseCase(repository: AccountPlanPurchaseRepository.newRepo),
-            accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
-            accountStorageUseCase: AccountStorageUseCase(
-                accountRepository: AccountRepository.newRepo,
-                preferenceUseCase: PreferenceUseCase.default
-            ),
-            shareUseCase: ShareUseCase(
-                shareRepository: ShareRepository.newRepo,
-                filesSearchRepository: FilesSearchRepository.newRepo,
-                nodeRepository: NodeRepository.newRepo),
-            networkMonitorUseCase: NetworkMonitorUseCase(repo: NetworkMonitorRepository.newRepo),
-            notificationsUseCase: NotificationsUseCase(repository: NotificationsRepository.newRepo),
-            navigationController: navigationController
-        ).start()
-    }
 }

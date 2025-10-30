@@ -366,7 +366,6 @@ struct CloudDriveViewControllerFactory {
                     selectedNodesArrayCount: selectedNodesCount
                 ) ?? ""
             },
-            onOpenUserProfile: { router.openUserProfile() },
             onUpdateSearchBarVisibility: { searchControllerWrapper.onUpdateSearchBarVisibility?($0) },
             onBack: { self.navigationController.popViewController(animated: true) },
             onCancel: { self.navigationController.dismiss(animated: true) },

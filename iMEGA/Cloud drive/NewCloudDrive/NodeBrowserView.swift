@@ -92,10 +92,6 @@ struct NodeBrowserView: View {
             )
         case .regular(let leftBarButton):
             switch leftBarButton {
-            case .avatar:
-                MyAvatarIconView {
-                    viewModel.openUserProfile()
-                }
             case .back:
                 EmptyView()
             case .close:

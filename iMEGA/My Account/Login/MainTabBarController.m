@@ -36,7 +36,6 @@
     [self refreshBottomConstraint];
     [self.tabBar setNeedsLayout];
     [self.tabBar layoutIfNeeded];
-    [self updateBadgeLayoutAt:[TabManager chatTabIndex]];
 }
 
 - (void)viewWillAppear:(BOOL)animated {

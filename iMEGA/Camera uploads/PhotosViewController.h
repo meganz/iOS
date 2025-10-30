@@ -14,7 +14,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) UIBarButtonItem *editBarButtonItem;
 @property (nonatomic, strong) UIBarButtonItem *cancelBarButtonItem;
 @property (nonatomic, strong) UIBarButtonItem *filterBarButtonItem;
-@property (nonatomic, strong, nullable) UIBarButtonItem *avatarBarButtonItem;
 @property (nonatomic, strong, nullable) UIBarButtonItem *cameraUploadStatusBarButtonItem;
 @property (nonatomic, strong) PhotosViewModel *viewModel;
 @property (strong, nonatomic) PhotoUpdatePublisher *photoUpdatePublisher;

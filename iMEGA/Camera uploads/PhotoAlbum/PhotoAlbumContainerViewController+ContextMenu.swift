@@ -16,7 +16,6 @@ extension PhotoAlbumContainerViewController {
             navigationItem.setLeftBarButton(nil, animated: true)
         } else {
             navigationItem.setRightBarButton(selectBarButton, animated: false)
-            navigationItem.setLeftBarButton(leftBarButton, animated: true)
         }
     }
     

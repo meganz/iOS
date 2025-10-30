@@ -29,14 +29,6 @@ struct ChatRoomsListView: View {
             }
         }
         .toolbar {
-            if viewModel.shouldShowAvatar {
-                ToolbarItem(placement: .topBarLeading) {
-                    MyAvatarIconView {
-                        viewModel.openUserProfile()
-                    }
-                }
-            }
-            
             ToolbarItem(placement: .principal) {
                 VStack {
                     Text(viewModel.title)

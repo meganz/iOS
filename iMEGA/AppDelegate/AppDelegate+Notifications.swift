@@ -6,11 +6,7 @@ import MEGARepo
 import UserNotifications
 
 extension AppDelegate {
-    @objc func revampedOpenTabBasedOnNotificationMegatype() {
-        guard DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .navigationRevamp) else {
-            openTabBasedOnNotificationMegatype()
-            return
-        }
+    @objc func openTabBasedOnNotificationMegatype() {
 
         guard [MEGANotificationType.shareFolder, .chatMessage, .contactRequest].contains(megatype) else { return }
 
@@ -102,20 +98,16 @@ extension AppDelegate {
     }
     
     private func navigateToPhotoTab() {
-        if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .navigationRevamp) {
-            let navigateToPhotosTab = { [weak self] in
-                guard let self, let mainTBC else { return }
-                mainTBC.selectedIndex = TabManager.photosTabIndex()
-            }
-            
-            guard let rootViewController = window.rootViewController, rootViewController.presentedViewController != nil else {
-                navigateToPhotosTab()
-                return
-            }
-            
-            rootViewController.dismiss(animated: true, completion: navigateToPhotosTab)
-        } else {
-            setTabIndexForNotification(UInt(TabType.cameraUploads.rawValue))
+        let navigateToPhotosTab = { [weak self] in
+            guard let self, let mainTBC else { return }
+            mainTBC.selectedIndex = TabManager.photosTabIndex()
         }
+        
+        guard let rootViewController = window.rootViewController, rootViewController.presentedViewController != nil else {
+            navigateToPhotosTab()
+            return
+        }
+        
+        rootViewController.dismiss(animated: true, completion: navigateToPhotosTab)
     }
 }

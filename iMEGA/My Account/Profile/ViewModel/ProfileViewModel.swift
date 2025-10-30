@@ -100,12 +100,7 @@ final class ProfileViewModel: ViewModelType {
     
     private func bindToSubscriptions() {
         
-        var sections: [ProfileSection] = shouldShowPlanSection ? [.profile, .security, .plan, .session] : [.profile, .security, .session]
-
-        // Remove the logout out option if the revamp feature flag is enabled.
-        if featureFlagProvider.isFeatureFlagEnabled(for: .navigationRevamp) {
-            sections.removeLast()
-        }
+        var sections: [ProfileSection] = shouldShowPlanSection ? [.profile, .security, .plan] : [.profile, .security]
 
         if shouldShowCancelSubscriptionSection {
             sections.append(.subscription)
@@ -308,8 +303,6 @@ extension ProfileViewModel {
                     mutableResult[sectionKey] = makeRowsForSecuritySection()
                 case .plan:
                     mutableResult[sectionKey] = makeRowsForPlanSection()
-                case .session:
-                    mutableResult[sectionKey] = makeRowsForSessionSection()
                 case .subscription:
                     mutableResult[sectionKey] = makeRowsForSubscriptionSection()
                 }
@@ -350,10 +343,6 @@ extension ProfileViewModel {
     
     private func makeRowsForPlanSection() -> [ProfileSectionRow] {
         accountUseCase.isAccountType(.business) ? [.upgrade, .role] : [.upgrade]
-    }
-    
-    private func makeRowsForSessionSection() -> [ProfileSectionRow] {
-        [.logout]
     }
     
     private func makeRowsForSubscriptionSection() -> [ProfileSectionRow] {

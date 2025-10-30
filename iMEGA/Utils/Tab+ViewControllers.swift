@@ -5,11 +5,6 @@ import MEGAPreference
 
 @MainActor
 extension Tab {
-
-    private var displayTitle: String? {
-        DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .navigationRevamp) ? title : nil
-    }
-
     func viewController(from mainTabBarController: MainTabBarController) -> UIViewController? {
         let viewController: UIViewController? = {
             switch self {
@@ -21,8 +16,6 @@ extension Tab {
                 return mainTabBarController.photoAlbumViewController()
             case .chat:
                 return mainTabBarController.chatViewController()
-            case .sharedItems:
-                return mainTabBarController.sharedItemsViewController()
             case .menu:
                 return AccountMenuViewRouter().build()
             default:
@@ -31,7 +24,7 @@ extension Tab {
             }
         }()
 
-        viewController?.tabBarItem.title = displayTitle
+        viewController?.tabBarItem.title = title
         viewController?.tabBarItem.image = icon
         viewController?.tabBarItem.selectedImage = selectedIcon
         return viewController

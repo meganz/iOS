@@ -514,7 +514,7 @@
 
 - (void)nodeInfoViewController:(NodeInfoViewController *)nodeInfoViewController presentParentNode:(MEGANode *)node {
     [self dismissViewControllerAnimated:YES completion:^{
-        [node newNavigateToParentAndPresent];
+        [node navigateToParentAndPresent];
     }];
 }
 

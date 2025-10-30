@@ -12,10 +12,6 @@ import MEGAUIKit
 
 extension MainTabBarController {
 
-    var isNavigationRevampEnabled: Bool {
-        DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .navigationRevamp)
-    }
-
     func makeHomeViewController() -> UIViewController {
         HomeScreenFactory().createHomeScreen(
             from: self,
@@ -54,17 +50,6 @@ extension MainTabBarController {
             )
     }
 
-    func sharedItemsViewController() -> UIViewController? {
-        guard let sharedItemsNavigationController = UIStoryboard(name: "SharedItems", bundle: nil).instantiateInitialViewController() as? MEGANavigationController else { return nil }
-        sharedItemsNavigationController.navigationDelegate = self
-        sharedItemsNavigationController.tabBarItem = UITabBarItem(
-            title: nil,
-            image: MEGAAssets.UIImage.sharedItemsIcon,
-            selectedImage: nil
-        )
-        return sharedItemsNavigationController
-    }
-
     private func updateUI(with defaultViewControllers: [UIViewController]) {
 
         for i in 0..<defaultViewControllers.count {
@@ -79,7 +64,6 @@ extension MainTabBarController {
 
         viewControllers = defaultViewControllers
 
-        setBadgeValueForSharedItemsIfNeeded()
         updateBadgeValueForChats()
         configurePhoneImageBadge()
 
@@ -176,16 +160,8 @@ extension MainTabBarController {
     }
 
     private func setBadgeValueForChats(_ badgeValue: String?) {
-        if isNavigationRevampEnabled {
-            let tabbarItem = tabBar.items?[TabManager.chatTabIndex()]
-            tabbarItem?.badgeValue = badgeValue
-        } else {
-            tabBar.setBadge(
-                value: badgeValue,
-                color: TokenColors.Components.interactive,
-                at: TabManager.chatTabIndex()
-            )
-        }
+        let tabbarItem = tabBar.items?[TabManager.chatTabIndex()]
+        tabbarItem?.badgeValue = badgeValue
     }
 
     @objc func updatePhoneImageBadgeFrame() {
@@ -201,21 +177,15 @@ extension MainTabBarController {
         }
     }
 
-    @objc func updateBadgeLayout(at index: Int) {
-        guard !isNavigationRevampEnabled else { return }
-        tabBar.updateBadgeLayout(at: index)
-    }
-
     private func frameForPhoneImageBadge(in button: UIView) -> CGRect {
         let isRightToLeft = UIApplication.shared.userInterfaceLayoutDirection == .rightToLeft
         guard let iconView = button.subviews.first(where: { $0 is UIImageView }) else { return .null }
         let iconWidth = iconView.frame.size.width
         let iconViewframe = button.convert(iconView.frame, to: tabBar)
         let revampedBadgeSizeScale = 0.75
-        let legacyBadgeSizeScale = 0.5
 
-        let badgeSize = isNavigationRevampEnabled ? iconWidth * revampedBadgeSizeScale : iconWidth * legacyBadgeSizeScale
-        let xOffset = (isNavigationRevampEnabled ? iconWidth * revampedBadgeSizeScale : iconWidth * 0.6) * (isRightToLeft ? -1 : 1)
+        let badgeSize = iconWidth * revampedBadgeSizeScale
+        let xOffset = badgeSize * (isRightToLeft ? -1 : 1)
         let yOffset = iconWidth * 0.25
         return .init(x: iconViewframe.origin.x + xOffset, y: iconViewframe.origin.y - yOffset, width: badgeSize, height: badgeSize)
     }
@@ -299,13 +269,6 @@ extension MainTabBarController: MEGAGlobalDelegate {
                     requestStatusProgressWindowManager.hideProgressView()
                 }
             }
-        }
-    }
-    
-    nonisolated public func onNodesUpdate(_ api: MEGASdk, nodeList: MEGANodeList?) {
-        Task { @MainActor in
-            guard !isNavigationRevampEnabled, let nodeList else { return }
-            updateSharedItemsTabBadgeIfNeeded(nodeList)
         }
     }
 }

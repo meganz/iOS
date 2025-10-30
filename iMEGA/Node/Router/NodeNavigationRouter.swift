@@ -7,9 +7,6 @@ protocol NodeNavigationRouting: Sendable {
 }
 
 struct NodeNavigationRouter: NodeNavigationRouting {
-    private var isNavigationRevampEnabled: Bool {
-        DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .navigationRevamp)
-    }
 
     func navigateThroughNodeHierarchy(
         _ nodeHierarchy: [NodeEntity],
@@ -44,13 +41,8 @@ struct NodeNavigationRouter: NodeNavigationRouting {
         if isOwnNode {
             mainTBC.selectedIndex = TabManager.driveTabIndex()
         } else {
-            if isNavigationRevampEnabled {
-                mainTBC.selectedIndex = TabManager.menuTabIndex()
-                openSharedItemsFromMenu(in: mainTBC)
-            } else {
-                mainTBC.selectedIndex = TabManager.sharedItemsTabIndex()
-                selectSharedSegmentIfNeeded(in: mainTBC)
-            }
+            mainTBC.selectedIndex = TabManager.menuTabIndex()
+            openSharedItemsFromMenu(in: mainTBC)
         }
     }
 

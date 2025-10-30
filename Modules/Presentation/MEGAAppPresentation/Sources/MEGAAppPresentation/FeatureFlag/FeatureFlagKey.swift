@@ -9,7 +9,6 @@ public enum FeatureFlagKey: FeatureFlagName, CaseIterable, Sendable {
     case webclientSubscribersCancelSubscription = "Webclient subscribers cancel subscription flow"
     case multipleOptionsForCancellationSurvey = "Multiple Options for Cancellation Survey"
     case newSetting = "New Setting"
-    case navigationRevamp = "Navigation Revamp"
     case cameraUploadsRevamp = "Camera Uploads Revamp"
     case dotAppDomain = ".app Domain"
     case videoPlayerRevamp = "Video Player Revamp"
@@ -21,7 +20,6 @@ public enum FeatureFlagKey: FeatureFlagName, CaseIterable, Sendable {
     /// - For some features, we want to release them without having to remove their flags from code as a risk management measure.
     /// Instead we'll enable them first and then proceed to remove the flags after the features are stable.
     public static let rolledOutKeys: Set<FeatureFlagKey> = [
-        .navigationRevamp,
         .cameraUploadsRevamp,
         .dotAppDomain
     ]

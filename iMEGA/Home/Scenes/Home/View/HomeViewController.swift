@@ -12,8 +12,6 @@ import UIKit
 @objc(HomeRouting)
 protocol HomeRouting: NSObjectProtocol {
 
-    func showAchievements()
-
     func showOfflines()
     func showOfflineFile(_ handle: String)
 
@@ -26,10 +24,6 @@ protocol HomeRouting: NSObjectProtocol {
 final class HomeViewController: UIViewController, DisplayMenuDelegate {
 
     @objc var homeQuickActionSearch: Bool = false
-
-    private var isNavigationRevampEnabled: Bool {
-        DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .navigationRevamp)
-    }
 
     // MARK: - View Model
 
@@ -316,7 +310,6 @@ final class HomeViewController: UIViewController, DisplayMenuDelegate {
     private func setupView() {
         setTitle(with: "MEGA")
 
-        setupLeftItems()
         setupRightItems()
         setupSearchBarView(searchBarView)
         setupSearchResultExtendedLayout()
@@ -338,14 +331,6 @@ final class HomeViewController: UIViewController, DisplayMenuDelegate {
     private func setupSearchResultExtendedLayout() {
         edgesForExtendedLayout = .top
         extendedLayoutIncludesOpaqueBars = true
-    }
-
-    private func setupLeftItems() {
-        guard !isNavigationRevampEnabled else {
-            return
-        }
-        
-        self.navigationItem.leftBarButtonItems = [createAvatarBarButtonItem()]
     }
 
     private func setupRightItems() {
@@ -426,10 +411,6 @@ final class HomeViewController: UIViewController, DisplayMenuDelegate {
     }
 
     // MARK: - Tap Actions
-
-    fileprivate func didTapAvatarItem() {
-        router.didTap(on: .avatar)
-    }
 
     @objc fileprivate func didTapNewChat() {
         // Track tap on new chat button
@@ -581,10 +562,6 @@ extension HomeViewController: ExploreViewStackDelegate {
 // MARK: - HomeRouting
 
 extension HomeViewController: HomeRouting {
-    func showAchievements() {
-        router.didTap(on: .showAchievement)
-    }
-
     func showOfflines() {
         quickAccessWidgetViewModel?.dispatch(.showOffline)
     }

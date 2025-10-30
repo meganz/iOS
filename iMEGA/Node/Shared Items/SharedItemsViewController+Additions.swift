@@ -591,16 +591,6 @@ extension SharedItemsViewController {
     }
 }
 
-// MARK: - Ads
-extension SharedItemsViewController: AdsSlotDisplayable {
-    @objc func configureAds() {
-        guard !DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .navigationRevamp) else {
-            return
-        }
-        configureAdsVisibility()
-    }
-}
-
 extension SharedItemsViewController: AudioPlayerPresenterProtocol {
     public func updateContentView(_ height: CGFloat) {
         additionalSafeAreaInsets = .init(top: 0, left: 0, bottom: height, right: 0)

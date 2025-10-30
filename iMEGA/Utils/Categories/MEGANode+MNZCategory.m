@@ -2,7 +2,6 @@
 
 #import <Photos/Photos.h>
 
-#import "SAMKeychain.h"
 #import "SVProgressHUD.h"
 
 
@@ -35,85 +34,6 @@
 @import MEGAAppSDKRepo;
 
 @implementation MEGANode (MNZCategory)
-
-- (void)navigateToParentAndPresent {
-    if (!UIApplication.mainTabBarRootViewController) {
-        return;
-    }
-    MainTabBarController *mainTBC = (MainTabBarController *)UIApplication.mainTabBarRootViewController;
-    
-    if ([MEGASdk.shared accessLevelForNode:self] != MEGAShareTypeAccessOwner) { // Node from inshare
-        mainTBC.selectedIndex = [TabManager sharedItemsTabIndex];
-        SharedItemsViewController *sharedItemsVC = mainTBC.childViewControllers[[TabManager sharedItemsTabIndex]].childViewControllers.firstObject;
-        [sharedItemsVC selectSegment:0]; // Incoming
-    } else {
-        mainTBC.selectedIndex = [TabManager driveTabIndex];
-    }
-    
-    UINavigationController *navigationController = [mainTBC.childViewControllers objectAtIndex:mainTBC.selectedIndex];
-    [navigationController popToRootViewControllerAnimated:NO];
-    
-    NSArray *parentTreeArray = self.mnz_parentTreeArray;
-    
-    __block MEGANode *backupsRootNode = [BackupRootNodeAccess.shared isTargetNodeFor:self] ? self : nil;
-    if (backupsRootNode == nil) {
-        [self.mnz_parentTreeArray enumerateObjectsUsingBlock:^(MEGANode * _Nonnull node, NSUInteger idx, BOOL * _Nonnull stop) {
-            if ([BackupRootNodeAccess.shared isTargetNodeFor:node]) {
-                backupsRootNode = node;
-                *stop = YES;
-            };
-        }];
-    }
-    
-    BOOL isBackupNode = backupsRootNode != nil;
-    for (MEGANode *node in parentTreeArray) {
-        if (node.handle != backupsRootNode.parentHandle) {
-            [self pushCloudDriveForNode:node
-                            displayMode:isBackupNode ? DisplayModeBackup : DisplayModeCloudDrive
-                   navigationController:navigationController];
-        }
-    }
-    
-    switch (self.type) {
-        case MEGANodeTypeFolder:
-        case MEGANodeTypeRubbish: {
-            DisplayMode displayMode;
-            if (isBackupNode) {
-                displayMode = DisplayModeBackup;
-            } else {
-                displayMode = self.type == MEGANodeTypeRubbish ? DisplayModeRubbishBin : DisplayModeCloudDrive;
-            }
-            [self pushCloudDriveForNode:self displayMode:displayMode navigationController:navigationController];
-            [UIApplication.mnz_presentingViewController dismissView];
-            break;
-        }
-            
-        case MEGANodeTypeFile: {
-            if ([FileExtensionGroupOCWrapper verifyIsVisualMedia:self.name]) {
-                MEGANode *parentNode = [MEGASdk.shared nodeForHandle:self.parentHandle];
-                MEGANodeList *nodeList = [MEGASdk.shared childrenForParent:parentNode];
-                NSMutableArray<MEGANode *> *mediaNodesArray = [nodeList mnz_mediaNodesMutableArrayFromNodeList];
-                
-                DisplayMode displayMode;
-                if (isBackupNode) {
-                    displayMode = DisplayModeBackup;
-                } else {
-                    displayMode = [MEGASdk.shared accessLevelForNode:self] == MEGAShareTypeAccessOwner ? DisplayModeCloudDrive : DisplayModeSharedItem;
-                }
-                MEGAPhotoBrowserViewController *photoBrowserVC = [MEGAPhotoBrowserViewController photoBrowserWithMediaNodes:mediaNodesArray api:MEGASdk.shared displayMode:displayMode isFromSharedItem:NO presentingNode:self];
-                
-                [navigationController presentViewController:photoBrowserVC animated:YES completion:nil];
-            } else {
-                [self mnz_openNodeInNavigationController:navigationController folderLink:NO fileLink:nil messageId:nil chatId:nil isFromSharedItem:NO allNodes: nil];
-            }
-            break;
-        }
-            
-        default:
-            [UIApplication.mnz_presentingViewController dismissView];
-            break;
-    }
-}
 
 - (void)mnz_openNodeInNavigationController:(UINavigationController *)navigationController folderLink:(BOOL)isFolderLink fileLink:(NSString *)fileLink messageId:(nullable NSNumber * )messageId chatId:(nullable NSNumber *)chatId isFromSharedItem:(BOOL)isFromSharedItem allNodes: (NSArray *_Nullable)allNodes {
     if ([FileExtensionGroupOCWrapper verifyIsMultiMedia:self.name] && MEGAChatSdk.shared.mnz_existsActiveCall) {

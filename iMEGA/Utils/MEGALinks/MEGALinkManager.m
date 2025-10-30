@@ -248,7 +248,7 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
     MEGANode *node = [MEGASdk.shared nodeForHandle:handle];
     if (node) {
         if (UIApplication.mainTabBarRootViewController) {
-            [node newNavigateToParentAndPresent];
+            [node navigateToParentAndPresent];
         }
     } else {
         if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {

@@ -4,7 +4,6 @@ enum ProfileSection: Int {
     case profile
     case security
     case plan
-    case session
     case subscription
 }
 

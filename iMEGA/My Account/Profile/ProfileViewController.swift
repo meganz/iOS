@@ -344,9 +344,7 @@ import UIKit
     }
 
     private func hideSeparatorsIfNeeded() {
-        if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .navigationRevamp) {
-            tableView?.separatorStyle = .none
-        }
+        tableView?.separatorStyle = .none
     }
 
     // MARK: - IBActions
@@ -423,7 +421,7 @@ extension ProfileViewController: UITableViewDelegate {
             return Strings.Localizable.recoveryKey
         case .plan:
             return Strings.Localizable.plan
-        case .profile, .session, .subscription:
+        case .profile, .subscription:
             return nil
         }
     }

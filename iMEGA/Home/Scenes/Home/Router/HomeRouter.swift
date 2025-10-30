@@ -18,13 +18,8 @@ enum HomeRoutingSource {
 
     // MARK: - Navigation Bar Button
 
-    case avatar
     case uploadButton
     case newChat
-
-    // MARK: - Application Root Launcher
-
-    case showAchievement
 
     // MARK: - Recents
 
@@ -88,20 +83,12 @@ final class HomeRouter: HomeRouterProtocol {
 
     func didTap(on source: HomeRoutingSource, with object: Any? = nil) {
         switch source {
-
-        case .avatar:
-            routeToAccount(with: navigationController)
         case .uploadButton:
             presentUploadOptionActionSheet(from: navigationController, withActionItems: object as! [ActionSheetAction])
         // MARK: - New Chat
 
         case .newChat:
             newChatRouter.presentNewChat(from: navigationController)
-
-        // MARK: - Application
-
-        case .showAchievement:
-            presentAchievement()
 
         // MARK: - Recents
 
@@ -200,28 +187,6 @@ final class HomeRouter: HomeRouterProtocol {
     func videoExplorerSelected() {
         FilesExplorerRouter(navigationController: navigationController, explorerType: .video).start()
     }
-    
-    // MARK: - Show Account View Controller
-
-    private func routeToAccount(with navigationController: UINavigationController?) {
-        guard let navigationController else {
-            return
-        }
-        
-        MyAccountHallRouter(
-            myAccountHallUseCase: MyAccountHallUseCase(repository: AccountRepository.newRepo),
-            purchaseUseCase: AccountPlanPurchaseUseCase(repository: AccountPlanPurchaseRepository.newRepo),
-            accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
-            accountStorageUseCase: AccountStorageUseCase(
-                accountRepository: AccountRepository.newRepo,
-                preferenceUseCase: PreferenceUseCase.default
-            ),
-            shareUseCase: makeShareUseCase(),
-            networkMonitorUseCase: NetworkMonitorUseCase(repo: NetworkMonitorRepository.newRepo),
-            notificationsUseCase: NotificationsUseCase(repository: NotificationsRepository.newRepo),
-            navigationController: navigationController
-        ).start()
-    }
 
     // MARK: - Display Upload Source Selection Action Sheet
 
@@ -237,27 +202,6 @@ final class HomeRouter: HomeRouterProtocol {
     }
 
     // MARK: - Display Application Event
-
-    private func presentAchievement() {
-        guard let navigationController else {
-            return
-        }
-        
-        MyAccountHallRouter(
-            myAccountHallUseCase: MyAccountHallUseCase(repository: AccountRepository.newRepo),
-            purchaseUseCase: AccountPlanPurchaseUseCase(repository: AccountPlanPurchaseRepository.newRepo),
-            accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
-            accountStorageUseCase: AccountStorageUseCase(
-                accountRepository: AccountRepository.newRepo,
-                preferenceUseCase: PreferenceUseCase.default
-            ),
-            shareUseCase: makeShareUseCase(),
-            networkMonitorUseCase: NetworkMonitorUseCase(repo: NetworkMonitorRepository.newRepo),
-            notificationsUseCase: NotificationsUseCase(repository: NotificationsRepository.newRepo),
-            shouldOpenAchievements: true,
-            navigationController: navigationController
-        ).start()
-    }
     
     private func makeShareUseCase() -> some ShareUseCaseProtocol {
         ShareUseCase(

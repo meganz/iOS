@@ -25,7 +25,6 @@ class NodeBrowserViewModel: ObservableObject {
     enum ViewState: Equatable {
         enum LeftBarButton: Equatable {
             case back
-            case avatar
             case close
         }
         
@@ -92,7 +91,6 @@ class NodeBrowserViewModel: ObservableObject {
     private let warningBannerViewRouter: any WarningBannerViewRouting
 
     private let titleBuilder: (_ isEditing: Bool, _ selectedNodeCount: Int) -> String
-    private let onOpenUserProfile: () -> Void
     private let onUpdateSearchBarVisibility: (Bool) -> Void
     private let onBack: () -> Void
     private let onCancel: () -> Void
@@ -149,7 +147,6 @@ class NodeBrowserViewModel: ObservableObject {
         storageFullModalAlertViewRouter: some StorageFullModalAlertViewRouting,
         warningBannerViewRouter: any WarningBannerViewRouting,
         titleBuilder: @escaping (Bool, Int) -> String,
-        onOpenUserProfile: @escaping () -> Void,
         onUpdateSearchBarVisibility: @escaping (Bool) -> Void,
         onBack: @escaping () -> Void,
         // triggered in Recents configs by the left nav bar button
@@ -174,7 +171,6 @@ class NodeBrowserViewModel: ObservableObject {
         self.storageFullModalAlertViewRouter = storageFullModalAlertViewRouter
         self.warningBannerViewRouter = warningBannerViewRouter
         self.titleBuilder = titleBuilder
-        self.onOpenUserProfile = onOpenUserProfile
         self.onUpdateSearchBarVisibility = onUpdateSearchBarVisibility
         self.onEditingChanged = onEditingChanged
         self.onBack = onBack
@@ -406,7 +402,7 @@ class NodeBrowserViewModel: ObservableObject {
             if config.displayMode == .recents {
                 return .close
             }
-            return isBackButtonShown || DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .navigationRevamp) ? .back : .avatar
+            return .back
         }()
 
         viewState = editing ? .editing : .regular(leftBarButton: leftBarButton)
@@ -481,15 +477,6 @@ class NodeBrowserViewModel: ObservableObject {
     
     private func refreshTitle(isEditing: Bool) {
         title = titleBuilder(isEditing, selectedCount)
-    }
-
-    private var isBackButtonShown: Bool {
-        guard let parentNode = nodeSource.parentNode else { return false }
-        return parentNode.nodeType != .root
-    }
-
-    func openUserProfile() {
-        onOpenUserProfile()
     }
     
     func closeNavBarButtonTapped() {
