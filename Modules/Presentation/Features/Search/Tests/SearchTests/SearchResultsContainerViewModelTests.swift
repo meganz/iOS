@@ -425,6 +425,46 @@ struct SearchResultsContainerViewModelTests {
         #expect(sut.searchResultsViewModel.layout == resultLayout)
     }
 
+    @Test
+    func testViewModeChanges_removingMediaDiscoveryMode_whenSearchResultsUpdated() {
+        assertViewModesChange(
+            initialShouldShowMediaDiscovery: true,
+            toggledShouldShowMediaDiscovery: false,
+            expectedBefore: [.list, .grid, .mediaDiscovery],
+            expectedAfter: [.list, .grid]
+        )
+    }
+
+    @Test
+    func testViewModeChanges_addingMediaDiscoveryMode_whenSearchResultsUpdated() {
+        assertViewModesChange(
+            initialShouldShowMediaDiscovery: false,
+            toggledShouldShowMediaDiscovery: true,
+            expectedBefore: [.list, .grid],
+            expectedAfter: [.list, .grid, .mediaDiscovery]
+        )
+    }
+
+    @Test
+    func testViewModeChanges_retainingMediaDiscoveryMode_whenSearchResultsUpdated() {
+        assertViewModesChange(
+            initialShouldShowMediaDiscovery: true,
+            toggledShouldShowMediaDiscovery: nil,
+            expectedBefore: [.list, .grid, .mediaDiscovery],
+            expectedAfter: [.list, .grid, .mediaDiscovery]
+        )
+    }
+
+    @Test
+    func testViewModeChanges_withoutMediaDiscoveryMode_whenSearchResultsUpdated() {
+        assertViewModesChange(
+            initialShouldShowMediaDiscovery: false,
+            toggledShouldShowMediaDiscovery: nil,
+            expectedBefore: [.list, .grid],
+            expectedAfter: [.list, .grid]
+        )
+    }
+
     typealias SUT = SearchResultsContainerViewModel
     private func makeSUT(
         sortOptionsViewModel: SearchResultsSortOptionsViewModel = .init(title: "", sortOptions: []),
@@ -432,7 +472,8 @@ struct SearchResultsContainerViewModelTests {
             searchResultUpdateSignalSequence: EmptyAsyncSequence().eraseToAnyAsyncSequence()
         ),
         showChips: Bool = false,
-        initialViewMode: SearchResultsViewMode = .list
+        initialViewMode: SearchResultsViewMode = .list,
+        shouldShowMediaDiscoveryModeHandler: @escaping () -> Bool =  { false }
     ) -> SUT {
         let selection: (SearchResultSelection) -> Void = { _ in }
         let context: (SearchResult, UIButton) -> Void = { _, _ in }
@@ -478,11 +519,11 @@ struct SearchResultsContainerViewModelTests {
             sortOptionsViewModel: sortOptionsViewModel,
             showChips: showChips,
             initialViewMode: initialViewMode,
-            shouldShowMediaDiscoveryModeHandler: { false }
+            shouldShowMediaDiscoveryModeHandler: shouldShowMediaDiscoveryModeHandler
         )
     }
 
-    func makeSUTWithChipsPrepared(
+    private func makeSUTWithChipsPrepared(
         chipTypes: [SearchChipEntity.ChipType] = [.nodeFormat(.photo)]
     ) -> (SUT, MockSearchResultsProviding) {
         let resultsProvider = MockSearchResultsProviding(
@@ -500,5 +541,29 @@ struct SearchResultsContainerViewModelTests {
         }
 
         return (makeSUT(resultsProvider: resultsProvider), resultsProvider)
+    }
+
+    private func assertViewModesChange(
+        initialShouldShowMediaDiscovery: Bool,
+        toggledShouldShowMediaDiscovery: Bool?,
+        expectedBefore: [SearchResultsViewMode],
+        expectedAfter: [SearchResultsViewMode],
+        initialViewMode: SearchResultsViewMode = .list
+    ) {
+        var shouldShowMediaDiscoveryMode = initialShouldShowMediaDiscovery
+        let sut = makeSUT(
+            initialViewMode: initialViewMode,
+            shouldShowMediaDiscoveryModeHandler: { shouldShowMediaDiscoveryMode }
+        )
+
+        #expect(sut.viewModeHeaderViewModel.availableViewModes == expectedBefore)
+
+        if let toggled = toggledShouldShowMediaDiscovery {
+            shouldShowMediaDiscoveryMode = toggled
+        }
+        sut.listItemsUpdated([])
+
+        #expect(sut.viewModeHeaderViewModel.availableViewModes == expectedAfter)
+        #expect(sut.viewModeHeaderViewModel.selectedViewMode == initialViewMode)
     }
 }

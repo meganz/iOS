@@ -49,6 +49,7 @@ public class SearchResultsContainerViewModel: ObservableObject {
     @Published public var showSorting: Bool = false
     @Published var showSortSheet = false
     private var subscriptions: Set<AnyCancellable> = []
+    private let shouldShowMediaDiscoveryModeHandler: () -> Bool
 
     public init(
         bridge: SearchBridge,
@@ -64,11 +65,17 @@ public class SearchResultsContainerViewModel: ObservableObject {
         self.searchResultsViewModel = searchResultsViewModel
         self.sortOptionsViewModel = sortOptionsViewModel
         self.showChips = showChips
+        self.shouldShowMediaDiscoveryModeHandler = shouldShowMediaDiscoveryModeHandler
 
-        let availableViewModes: [SearchResultsViewMode] = shouldShowMediaDiscoveryModeHandler()
-        ? [.list, .grid, .mediaDiscovery]
-        : [.list, .grid]
-        self.viewModeHeaderViewModel = .init(selectedViewMode: initialViewMode, availableViewModes: availableViewModes)
+        let availableViewModes: [SearchResultsViewMode] = Self.modes(using: shouldShowMediaDiscoveryModeHandler)
+        assert(
+            availableViewModes.contains(initialViewMode),
+            "Initial view mode \(initialViewMode) is not in available modes \(availableViewModes)"
+        )
+        self.viewModeHeaderViewModel = .init(
+            selectedViewMode: Self.validated(initialViewMode, in: availableViewModes),
+            availableViewModes: availableViewModes
+        )
 
         viewModeHeaderViewModel
             .$selectedViewMode
@@ -196,6 +203,25 @@ public class SearchResultsContainerViewModel: ObservableObject {
         }
     }
 
+    private func refreshViewModeOptions() {
+        let availableViewModes: [SearchResultsViewMode] = Self.modes(using: shouldShowMediaDiscoveryModeHandler)
+        guard viewModeHeaderViewModel.availableViewModes != availableViewModes else { return }
+        viewModeHeaderViewModel.availableViewModes = availableViewModes
+
+        if availableViewModes.notContains(viewModeHeaderViewModel.selectedViewMode) {
+            assertionFailure("The selected view mode is not present in the list of available view modes")
+            viewModeHeaderViewModel.selectedViewMode = Self.validated(.list, in: availableViewModes)
+        }
+    }
+
+    private static func modes(using handler: () -> Bool) -> [SearchResultsViewMode] {
+        handler() ? [.list, .grid, .mediaDiscovery] : [.list, .grid]
+    }
+
+    private static func validated(_ preferred: SearchResultsViewMode, in modes: [SearchResultsViewMode]) -> SearchResultsViewMode {
+        modes.contains(preferred) ? preferred : (modes.contains(.list) ? .list : modes.first ?? preferred)
+    }
+
     // create new query by deselecting previously selected chips
     // and selected new one
     static func makeQueryAfter(
@@ -249,6 +275,7 @@ extension SearchResultsContainerViewModel: SearchResultsInteractor {
 
     func listItemsUpdated(_ items: [SearchResultRowViewModel]) {
         showSorting = items.isNotEmpty
+        refreshViewModeOptions()
     }
 
     var currentViewMode: SearchResultsViewMode {
