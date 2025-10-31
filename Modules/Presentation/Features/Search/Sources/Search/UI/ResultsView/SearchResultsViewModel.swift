@@ -230,7 +230,6 @@ public final class SearchResultsViewModel: ObservableObject {
         updateLayout(.list)
     }
 
-
     /// Restores the layout to the mode that was active before the search began.
     ///
     /// Call this when the search is dismissed to return the interface to the user’s
@@ -619,8 +618,12 @@ public final class SearchResultsViewModel: ObservableObject {
             config: config
         )
 
-        withAnimation {
+        if #available(iOS 26.0, *) {
             emptyViewModel = newEmptyViewModel
+        } else {
+            withAnimation {
+                emptyViewModel = newEmptyViewModel
+            }
         }
     }
 
