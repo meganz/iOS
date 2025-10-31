@@ -22,7 +22,7 @@ final class DocScannerSaveSettingsViewModel: ViewModelType {
             let currentFileName: String?
             let originalFileName: String
             let chats: [ChatListItemEntity]
-            let users: [UserEntity]
+            let users: [MEGADomain.UserEntity]
             let completion: @Sendable (String) -> Void
         }
         
