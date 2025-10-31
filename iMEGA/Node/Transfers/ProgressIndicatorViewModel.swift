@@ -269,20 +269,20 @@ final class ProgressIndicatorViewModel {
            uploadTransfers > 0 {
             uploadTransfers -= 1
         }
-        if transfer.state == .cancelled {
-            cancelTransfer(transferredBytes: transfer.transferredBytes, totalBytes: transfer.totalBytes)
+        if transfer.state == .cancelled || transfer.state == .failed {
+            adjustCountersForFailedOrCancelledTransfer(transferredBytes: transfer.transferredBytes, totalBytes: transfer.totalBytes)
+            if transfer.state == .failed {
+                lastFailedTransfer = transfer
+            }
         }
         
         completedBytes += transfer.deltaSize ?? 0
-        
-        if transfer.state == .failed {
-            lastFailedTransfer = transfer
-        }
+            
         updateProgress()
         configureData()
     }
     
-    private func cancelTransfer(transferredBytes: Int, totalBytes: Int) {
+    private func adjustCountersForFailedOrCancelledTransfer(transferredBytes: Int, totalBytes: Int) {
         completedBytes = max(0, completedBytes - transferredBytes)
         self.totalBytes -= totalBytes
     }
