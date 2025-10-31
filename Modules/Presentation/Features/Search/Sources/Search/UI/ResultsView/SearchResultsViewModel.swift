@@ -591,8 +591,12 @@ public final class SearchResultsViewModel: ObservableObject {
             config: config
         )
 
-        withAnimation {
+        if #available(iOS 26.0, *) {
             emptyViewModel = newEmptyViewModel
+        } else {
+            withAnimation {
+                emptyViewModel = newEmptyViewModel
+            }
         }
     }
 
