@@ -153,7 +153,8 @@ public final class AccountMenuViewModel: ObservableObject {
             )
         )
         accountSection[Constants.AccountSectionIndex.currentPlan.rawValue] = currentPlanMenuOption(
-            accountDetails: accountUseCase.currentAccountDetails
+            accountDetails: accountUseCase.currentAccountDetails,
+            isAccountUpdating: isAccountUpdating
         )
         accountSection[Constants.AccountSectionIndex.storageUsed.rawValue] = storageUsedMenuOption(
             isAccountUpdating: isAccountUpdating,
@@ -394,7 +395,8 @@ public final class AccountMenuViewModel: ObservableObject {
         }
 
         updatedSections[.account]?[Constants.AccountSectionIndex.currentPlan.rawValue] = currentPlanMenuOption(
-            accountDetails: accountDetails
+            accountDetails: accountDetails,
+            isAccountUpdating: isAccountUpdating
         )
 
         updatedSections[.account]?[Constants.AccountSectionIndex.storageUsed.rawValue] = storageUsedMenuOption(
@@ -439,7 +441,10 @@ public final class AccountMenuViewModel: ObservableObject {
         return Color(hex: backgroundColor)
     }
 
-    private func currentPlanMenuOption(accountDetails: AccountDetailsEntity?) -> AccountMenuOption? {
+    private func currentPlanMenuOption(
+        accountDetails: AccountDetailsEntity?,
+        isAccountUpdating: Bool
+    ) -> AccountMenuOption? {
         guard shouldShowPlan else { return nil }
         let icon = if let accountDetails { currentPlanIcon(accountDetails: accountDetails) } else { MEGAAssets.Image.otherPlansInMenu }
         let rowType  = AccountMenuOption
@@ -448,8 +453,10 @@ public final class AccountMenuViewModel: ObservableObject {
                 self?.upgradeAccount()
             }
 
-        let subtitleState: AccountMenuOption.TextLoadState = if let proLevel = accountDetails?.proLevel.toAccountTypeDisplayName() {
-            .value(proLevel)
+        let subtitleState: AccountMenuOption.TextLoadState = if isAccountUpdating {
+            .loading
+        } else if let name = accountDetails?.proLevel.toAccountTypeDisplayName() {
+            .value(name)
         } else {
             .loading
         }
@@ -629,6 +636,10 @@ public final class AccountMenuViewModel: ObservableObject {
             for await _ in purchaseUseCase.monitorSubmitReceiptAfterPurchase.values.removeDuplicates().filter({ $0 }) {
                 guard let self else { break }
                 isAccountUpdating = true
+                sections[.account]?[Constants.AccountSectionIndex.currentPlan.rawValue] = currentPlanMenuOption(
+                    accountDetails: accountUseCase.currentAccountDetails,
+                    isAccountUpdating: isAccountUpdating,
+                )
                 sections[.account]?[Constants.AccountSectionIndex.storageUsed.rawValue] = storageUsedMenuOption(
                     isAccountUpdating: isAccountUpdating,
                     accountDetails: accountUseCase.currentAccountDetails

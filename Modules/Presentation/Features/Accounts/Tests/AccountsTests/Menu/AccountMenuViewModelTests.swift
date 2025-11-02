@@ -994,6 +994,38 @@ struct AccountMenuViewModelTests {
         )
     }
 
+    @Test
+    func submitReceiptAfterPurchase_whenTrue_shouldUpdateCurrentPlanToUpdating() async throws {
+        let monitorSubmitReceiptSubject = PassthroughSubject<Bool, Never>()
+        let purchaseUseCase = MockAccountPlanPurchaseUseCase(
+            monitorSubmitReceiptPublisher: monitorSubmitReceiptSubject.eraseToAnyPublisher()
+        )
+        let sut = makeSUT(purchaseUseCase: purchaseUseCase)
+        #expect(
+            sut
+                .sections[.account]?[SUT.Constants.AccountSectionIndex.currentPlan.rawValue]?
+                .subtitleState == .value("Free")
+        )
+        try await waitUntil(
+            await MainActor.run {
+                purchaseUseCase.monitorSubmitReceiptPublisherCalled == 0
+            }
+        )
+        monitorSubmitReceiptSubject.send(true)
+        try await waitUntil(
+            await MainActor.run {
+                sut
+                    .sections[.account]?[SUT.Constants.AccountSectionIndex.currentPlan.rawValue]?
+                    .subtitleState != .loading
+            }
+        )
+        #expect(
+            sut
+                .sections[.account]?[SUT.Constants.AccountSectionIndex.currentPlan.rawValue]?
+                .subtitleState == .loading
+        )
+    }
+
     private typealias SUT = AccountMenuViewModel
 
     private func makeSUT(
