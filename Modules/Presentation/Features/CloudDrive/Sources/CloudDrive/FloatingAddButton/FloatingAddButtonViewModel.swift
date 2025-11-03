@@ -13,6 +13,8 @@ public final class FloatingAddButtonViewModel: ObservableObject {
     @Published public private(set) var showsFloatingAddButton = false
     @Published public var showActions = false
 
+    private var observingTask: Task<Void, Never>?
+
     var selectedAction: NodeUploadAction?
 
     public init(
@@ -34,11 +36,17 @@ public final class FloatingAddButtonViewModel: ObservableObject {
         guard featureFlagProvider.isFeatureFlagEnabled(for: .cloudDriveRevamp) else {
             return
         }
-        Task { [weak self, floatingButtonVisibilityDataSource] in
+        observingTask = Task { [weak self, floatingButtonVisibilityDataSource] in
             for await isVisible in floatingButtonVisibilityDataSource.floatingButtonVisibility {
+                guard !Task.isCancelled else { break }
                 self?.showsFloatingAddButton = isVisible
             }
         }
+    }
+
+    deinit {
+        observingTask?.cancel()
+        observingTask = nil
     }
 }
 
