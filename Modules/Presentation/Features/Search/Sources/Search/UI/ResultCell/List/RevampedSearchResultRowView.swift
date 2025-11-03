@@ -2,30 +2,26 @@ import MEGADesignToken
 import MEGASwiftUI
 import SwiftUI
 
+// MAKE SCREEN WIDE TO SEE DOCUMENTATION
+// ┌────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+// │┌──────────────────────┐ ╔══════════════════════╗┌──────────────────────┐                       ┌ ─ ─ ─ ─ ─ ─ ─ ─ ─ │
+// ││ .prominent(.leading) │ ║       [TITLE]        ║│ .prominent(.trailing │                       │                  ││
+// │└──────────────────────┘ ╚══════════════════════╝└──────────────────────┘                                           |
+// │┌ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ┐                                                               │       Menu       ││
+// │      [AuxTITLE] (optional)                                                                     │(optional, hidden  │
+// │└ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ┘                                                                in selection mode)││
+// │┌──────────────────────┐╔═══════════════╗┌────────────────────────┐┌───────────────────────────┐│                   │
+// │└──────────────────────┘╚═══════════════╝└────────────────────────┘└───────────────────────────┘└ ─ ─ ─ ─ ─ ─ ─ ─ ─ │
+// └────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+// The Menu (More button or select button) is not affected by the sensitive property (.sensitive modifier)
 struct RevampedSearchResultRowView: View {
     @ObservedObject var viewModel: SearchResultRowViewModel
     private let layout = ResultCellLayout.list
     @Environment(\.editMode) private var editMode
     @Environment(\.dynamicTypeSize) var dynamicTypeSize
-
+    @State private var highlighted = false
     var body: some View {
         contentWithInsetsAndSwipeActions
-            .replacedByContextMenuWithPreview(
-                actions: viewModel.previewContent.actions.toUIActions,
-                sourcePreview: {
-                    content
-                },
-                contentPreviewProvider: {
-                    switch viewModel.previewContent.previewMode {
-                    case let .preview(contentPreviewProvider):
-                        return contentPreviewProvider()
-                    case .noPreview:
-                        return nil
-                    }
-                },
-                didTapPreview: viewModel.actions.previewTapAction,
-                didSelect: viewModel.actions.selectionAction
-            )
             .task {
                 await viewModel.loadThumbnail()
             }
@@ -65,8 +61,32 @@ struct RevampedSearchResultRowView: View {
                 Spacer()
             }
             .sensitive(viewModel.isSensitive ? .opacity : .none)
+            .contentShape(Rectangle())
+            .onTapGesture {
+                withAnimation(.easeInOut(duration: 0.05)) {
+                    highlighted = true
+                }
+
+                Task {
+                    try await Task.sleep(nanoseconds: 100_000_000)
+                    withAnimation(.easeInOut(duration: 0.05)) {
+                        highlighted = false
+                    }
+                }
+
+                viewModel.actions.selectionAction()
+            }
+            .onLongPressGesture(minimumDuration: 0.5) {
+                viewModel.actions.revampLongPress()
+                highlighted = false
+            } onPressingChanged: { pressing in
+                withAnimation(.easeInOut(duration: 0.05)) {
+                    highlighted = pressing
+                }
+            }
             moreButton
         }
+        .background(Color.gray.opacity(highlighted ? 0.5 : 0))
         .contentShape(Rectangle())
         .frame(minHeight: 58)
     }
@@ -78,7 +98,8 @@ struct RevampedSearchResultRowView: View {
             .scaledToFit()
             .frame(width: 32, height: 32)
             .background(
-                TokenColors.Background.surface1.swiftUI.cornerRadius(TokenRadius.small).opacity(viewModel.hasThumbnail ? 1 : 0)
+                TokenColors.Background.surface1.swiftUI.cornerRadius(TokenRadius.small)
+                    .opacity(viewModel.hasThumbnail ? 1 : 0)
             )
             .padding(.horizontal, TokenSpacing._2)
             .animatedAppearance(isContentLoaded: viewModel.isThumbnailLoadedOnce)
@@ -176,7 +197,7 @@ struct RevampedSearchResultRowView: View {
             ) { button in
                 viewModel.actions.contextAction(button)
             }
-            .frame(width: 40, height: 60)
+            .frame(width: 40)
         }
     }
 }

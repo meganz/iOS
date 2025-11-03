@@ -525,7 +525,8 @@ public final class SearchResultsViewModel: ObservableObject {
             previewTapAction: { [weak self] in
                 self?.bridge.selection(selection)
             }, revampLongPress: { [weak self] in
-                self?.actionPressedOn(result)
+                guard let self, isSelectionEnabled else { return }
+                actionPressedOn(result)
             }
         )
     }
