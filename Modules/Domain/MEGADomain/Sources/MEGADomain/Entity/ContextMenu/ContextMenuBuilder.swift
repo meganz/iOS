@@ -44,6 +44,7 @@ public final class ContextMenuBuilder {
     private var isCameraUploadsEnabled: Bool = false
     private var isVideoPlaylistSharingFeatureFlagEnabled: Bool = false
     private var isTakenDown: Bool = false
+    private var isDecrypted: Bool = true
 
     public init() {}
     
@@ -269,6 +270,11 @@ public final class ContextMenuBuilder {
     
     public func setIsTakenDown(_ isTakenDown: Bool) -> ContextMenuBuilder {
         self.isTakenDown = isTakenDown
+        return self
+    }
+    
+    public func setIsDecrypted(_ isDecrypted: Bool) -> ContextMenuBuilder {
+        self.isDecrypted = isDecrypted
         return self
     }
     
@@ -525,6 +531,15 @@ public final class ContextMenuBuilder {
         )
     }
     
+    private func makeFolderLinkUndecryptedQuickActions() -> CMEntity {
+        return CMEntity(
+            displayInline: true,
+            children: [
+                selectMenu()
+            ]
+        )
+    }
+    
     // MARK: - Rubbish Bin Children Context Actions grouping functions
     private func rubbishBinChildFolderMenu() -> CMEntity {
         CMEntity(displayInline: true, children: [selectMenu(), viewTypeMenu(), sortMenu(), rubbishBinChildQuickActionsMenu()])
@@ -750,7 +765,7 @@ public final class ContextMenuBuilder {
         }
 
         folderLinkActions.append(
-            makeFolderLinkQuickActions()
+            isDecrypted ? makeFolderLinkQuickActions() : makeFolderLinkUndecryptedQuickActions()
         )
 
         if showMediaDiscovery {

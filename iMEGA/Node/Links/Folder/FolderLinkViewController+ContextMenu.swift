@@ -10,7 +10,8 @@ extension FolderLinkViewController: FolderLinkContextMenuDelegate {
             menuType: .menu(type: .folderLink),
             viewMode: isListViewModeSelected() ? .list : .thumbnail,
             sortType: SortOrderType(megaSortOrderType: Helper.sortType(for: parentNode)).megaSortOrderType.toSortOrderEntity(),
-            showMediaDiscovery: containsMediaFiles()
+            showMediaDiscovery: containsMediaFiles(),
+            isDecrypted: isDecryptedFolder()
         )
     }
 

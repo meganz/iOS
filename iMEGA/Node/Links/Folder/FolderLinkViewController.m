@@ -296,7 +296,7 @@
 
 - (void)setActionButtonsEnabled:(BOOL)boolValue {
     [_moreBarButtonItem setEnabled:boolValue];
-    [self updateToolbarItemsEnabled:boolValue];
+    [self updateToolbarItemsEnabled:boolValue && self.isDecryptedFolder];
 }
 
 - (void)internetConnectionChanged {
@@ -527,13 +527,13 @@
     BOOL enableEditing = self.viewModePreference == ViewModePreferenceEntityList ? !self.flTableView.tableView.isEditing : !self.flCollectionView.collectionView.allowsMultipleSelection;
     [self setEditMode:enableEditing];
     
-    [self refreshToolbarButtonsStatus:!(enableEditing && _selectedNodesArray.count == 0)];
+    [self refreshToolbarButtonsStatus:!(enableEditing && _selectedNodesArray.count == 0) && self.isDecryptedFolderAndNoUndecryptedNodeSelected];
 }
 
 - (void)setViewEditing:(BOOL)editing {    
     [self setNavigationBarTitleLabel];
     
-    [self refreshToolbarButtonsStatus:!(editing && _selectedNodesArray.count == 0)];
+    [self refreshToolbarButtonsStatus:!(editing && _selectedNodesArray.count == 0) && self.isDecryptedFolderAndNoUndecryptedNodeSelected];
     
     if (editing) {
         self.moreBarButtonItem.title = LocalizedString(@"cancel", @"Button title to cancel something");
@@ -573,7 +573,7 @@
     [_selectedNodesArray removeAllObjects];
     
     BOOL areAllNodesSelected = [self areAllNodesSelected];
-    [self refreshToolbarButtonsStatus:!areAllNodesSelected];
+    [self refreshToolbarButtonsStatus:!areAllNodesSelected && !self.containsUndecryptedNode && self.isDecryptedFolder];
     
     if (!areAllNodesSelected) {
         BOOL isSearchActive = self.searchController.isActive && !self.searchController.searchBar.text.mnz_isEmpty;

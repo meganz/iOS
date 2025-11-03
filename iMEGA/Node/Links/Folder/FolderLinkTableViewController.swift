@@ -177,7 +177,8 @@ extension FolderLinkTableViewController: UITableViewDelegate {
             folderLink.selectedNodesArray?.add(node)
             folderLink.setNavigationBarTitleLabel()
             folderLink.areAllNodesSelected = folderLink.selectedNodesArray?.count == folderLink.nodesArray.count
-            folderLink.refreshToolbarButtonsStatus((folderLink.selectedNodesArray?.count ?? 0) > 0)
+            let selectedNodesNotEmpty = (folderLink.selectedNodesArray?.count ?? 0) > 0
+            folderLink.refreshToolbarButtonsStatus(selectedNodesNotEmpty && folderLink.isDecryptedFolderAndNoUndecryptedNodeSelected())
             return
         }
         
@@ -199,7 +200,8 @@ extension FolderLinkTableViewController: UITableViewDelegate {
             }
             
             folderLink.setNavigationBarTitleLabel()
-            folderLink.refreshToolbarButtonsStatus(folderLink.selectedNodesArray?.count != 0)
+            let selectedNodesNotEmpty = folderLink.selectedNodesArray?.count != 0
+            folderLink.refreshToolbarButtonsStatus(selectedNodesNotEmpty && folderLink.isDecryptedFolderAndNoUndecryptedNodeSelected())
             folderLink.areAllNodesSelected = false
         }
     }
