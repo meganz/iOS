@@ -552,15 +552,15 @@ static TransfersWidgetViewController* instance = nil;
 }
 
 - (void)removeFromCompletedTransfers:(MEGATransfer *)transfer {
-    [[MEGASdk.shared completedTransfers] removeObject:transfer];
+    [MEGASdk.shared removeCompletedTransfer:transfer];
 }
 
 - (void)removeSelectedTransfers {
-    [[MEGASdk.shared completedTransfers] removeObjectsInArray:self.selectedTransfers];
+    [MEGASdk.shared removeCompletedTransfers:self.selectedTransfers];
 }
 
 - (void)removeAllCompletedTransfers {
-    [[MEGASdk.shared completedTransfers] removeAllObjects];
+    [MEGASdk.shared removeAllCompletedTransfers];
 }
 
 - (NSIndexPath *)indexPathForPendingTransfer:(MEGATransfer *)transfer {
