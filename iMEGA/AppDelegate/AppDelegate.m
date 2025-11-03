@@ -1528,7 +1528,7 @@
                 
                 [api setAccountAuth:nil];
             }
-            [[MEGASdk.shared completedTransfers] removeAllObjects];
+            [MEGASdk.shared removeAllCompletedTransfers];
             break;
         }
             

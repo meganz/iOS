@@ -8,9 +8,9 @@ public extension MEGASdk {
     /// Associates a `NSMutableArray` of completed transfers with every **instance** of `MEGASdk`
     private static let completedTransfers: Atomic<[ObjectIdentifier: NSMutableArray]> = .init(wrappedValue: [:])
     
-    @objc var completedTransfers: NSMutableArray {
+    @objc var completedTransfers: NSArray {
         sdkCompletedTransfersProcessingQueue.sync {
-            privateCompletedTransfers
+            privateCompletedTransfers.copy() as? NSArray ?? []
         }
     }
     
@@ -21,6 +21,24 @@ public extension MEGASdk {
                 transfers.add(transfer)
                 continuation.resume()
             }
+        }
+    }
+    
+    @objc func removeCompletedTransfer(_ transfer: MEGATransfer) {
+        sdkCompletedTransfersProcessingQueue.async {
+            self.privateCompletedTransfers.remove(transfer)
+        }
+    }
+    
+    @objc func removeCompletedTransfers(_ transfers: [MEGATransfer]) {
+        sdkCompletedTransfersProcessingQueue.async {
+            self.privateCompletedTransfers.removeObjects(in: transfers)
+        }
+    }
+    
+    @objc func removeAllCompletedTransfers() {
+        sdkCompletedTransfersProcessingQueue.async {
+            self.privateCompletedTransfers.removeAllObjects()
         }
     }
     
