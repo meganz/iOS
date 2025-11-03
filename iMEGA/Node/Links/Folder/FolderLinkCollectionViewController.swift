@@ -144,7 +144,7 @@ extension FolderLinkCollectionViewController: UICollectionViewDelegate {
         if collectionView.allowsMultipleSelection {
             folderLink.selectedNodesArray?.add(node)
             folderLink.setNavigationBarTitleLabel()
-            folderLink.refreshToolbarButtonsStatus(true)
+            folderLink.refreshToolbarButtonsStatus(folderLink.isDecryptedFolderAndNoUndecryptedNodeSelected())
             folderLink.areAllNodesSelected = folderLink.selectedNodesArray?.count == folderLink.nodesArray.count
             return
         }
@@ -166,7 +166,8 @@ extension FolderLinkCollectionViewController: UICollectionViewDelegate {
             }
             
             folderLink.setNavigationBarTitleLabel()
-            folderLink.refreshToolbarButtonsStatus(folderLink.selectedNodesArray?.count != 0)
+            let selectedNodesNotEmpty = folderLink.selectedNodesArray?.count != 0
+            folderLink.refreshToolbarButtonsStatus(selectedNodesNotEmpty && folderLink.isDecryptedFolderAndNoUndecryptedNodeSelected())
             folderLink.areAllNodesSelected = false
         }
     }
