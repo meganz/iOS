@@ -48,7 +48,7 @@ struct NodeBrowserView: View {
         }
         .background()
         .overlay(alignment: .bottomTrailing) {
-            if floatingAddButtonViewModel.showsFloatingAddButton {
+            if floatingAddButtonViewModel.showsFloatingAddButton, viewModel.viewModeAwareMediaDiscoveryViewModel == nil {
                 RoundedPrimaryImageButton(image: MEGAAssets.Image.plus, action: { floatingAddButtonViewModel.addButtonTapAction() })
                     .padding(TokenSpacing._5)
             }
@@ -111,7 +111,7 @@ struct NodeBrowserView: View {
             Button(Strings.Localizable.cancel) { viewModel.stopEditing() }
                 .foregroundStyle(TokenColors.Icon.primary.swiftUI)
         case .regular:
-            if !isCloudDriveRevampEnabled {
+            if !isCloudDriveRevampEnabled || viewModel.viewModeAwareMediaDiscoveryViewModel != nil {
                 viewModel.contextMenuViewFactory?.makeAddMenuWithButtonView()
             }
 

@@ -2,6 +2,9 @@ import MEGASwiftUI
 import SwiftUI
 
 public struct SearchResultsContainerView: View {
+    enum Constants {
+        static let floatingAddButtonBottomInset = 70.0
+    }
     @StateObject var viewModel: SearchResultsContainerViewModel
 
     public init(viewModel: @autoclosure @escaping () -> SearchResultsContainerViewModel) {
@@ -12,8 +15,11 @@ public struct SearchResultsContainerView: View {
         VStack(spacing: .zero) {
             header
                 .transition(.opacity)
-
             SearchResultsView(viewModel: viewModel.searchResultsViewModel)
+                .safeAreaInset(edge: .bottom, spacing: 0) {
+                    Spacer()
+                        .frame(height: viewModel.searchResultsViewModel.usesRevampedLayout ? Constants.floatingAddButtonBottomInset : 0)
+                }
         }
         .task {
             await viewModel.task()
