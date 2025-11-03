@@ -11,6 +11,23 @@ import MEGAPermissions
 import MEGASwift
 
 extension FolderLinkViewController {
+    @objc func isDecryptedFolder() -> Bool {
+        parentNode?.isNodeKeyDecrypted() ?? false
+    }
+    
+    private func isUndecryptedNodeSelected() -> Bool {
+        let selectedNodes = selectedNodesArray as? [MEGANode] ?? []
+        return selectedNodes.first(where: { !$0.isNodeKeyDecrypted() }) != nil
+    }
+    
+    @objc func containsUndecryptedNode() -> Bool {
+        nodesArray.first(where: { !$0.isNodeKeyDecrypted() }) != nil
+    }
+    
+    @objc func isDecryptedFolderAndNoUndecryptedNodeSelected() -> Bool {
+        isDecryptedFolder() && !isUndecryptedNodeSelected()
+    }
+    
     @objc func makeFolderLinkViewModel() -> FolderLinkViewModel {
         let downloadFileRepository = DownloadFileRepository(
             sdk: MEGASdk.shared,
@@ -194,7 +211,7 @@ extension FolderLinkViewController {
             }
         )
         
-        refreshToolbarButtonsStatus(true)
+        refreshToolbarButtonsStatus(isDecryptedFolder())
     }
     
     @objc func refreshToolbarButtonsStatus(_ enabled: Bool) {
@@ -349,7 +366,7 @@ extension FolderLinkViewController: ViewType {
             startLoading()
         case .endEditingMode:
             setEditMode(false)
-            refreshToolbarButtonsStatus(true)
+            refreshToolbarButtonsStatus(isDecryptedFolder())
         case .showSaveToPhotosError(let error):
             SVProgressHUD.show(
                 MEGAAssets.UIImage.saveToPhotos,
