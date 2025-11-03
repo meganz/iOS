@@ -702,6 +702,9 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
     
     dispatch_async(dispatch_get_main_queue(), ^(void) {
         if (UIApplication.mnz_presentingViewController != self.alertController) {
+            if (self.alertController.isBeingPresented || self.alertController.presentingViewController != nil) {
+                return;
+            }
             [UIApplication.mnz_presentingViewController presentViewController:self.alertController animated:YES completion:^{
                 [self addProgressViewToAlertController];
                 dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
