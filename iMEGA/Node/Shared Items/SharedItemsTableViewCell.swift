@@ -30,7 +30,7 @@ final class SharedItemsTableViewCell: UITableViewCell {
     @IBOutlet weak var tagsContainerView: UIView!
 
     private let tagListViewModel: HorizontalTagListViewModel = .init(tags: [])
-    @objc var delegate: (any SharedItemsTableViewCellDelegate)?
+    @objc weak var delegate: (any SharedItemsTableViewCellDelegate)?
     
     @objc var nodeHandle: UInt64 = 0
     
