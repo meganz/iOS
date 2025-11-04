@@ -405,6 +405,9 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
 - (NSArray *)keyCommands {
     UIKeyCommand *leftArrow = [UIKeyCommand keyCommandWithInput:UIKeyInputLeftArrow modifierFlags:0 action:@selector(didInvokeLeftArrowCommand:)];
     UIKeyCommand *rightArrow = [UIKeyCommand keyCommandWithInput:UIKeyInputRightArrow modifierFlags:0 action:@selector(didInvokeRightArrowCommand:)];
+    // Ensure the custom key command takes precedence over iPadOS's default linear scrolling.
+    leftArrow.wantsPriorityOverSystemBehavior = YES;
+    rightArrow.wantsPriorityOverSystemBehavior = YES;
     return @[leftArrow, rightArrow];
 }
 
