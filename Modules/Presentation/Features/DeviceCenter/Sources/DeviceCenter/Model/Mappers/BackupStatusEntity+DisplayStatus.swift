@@ -18,7 +18,7 @@ extension BackupEntity {
 extension Array where Element == BackupEntity {
     func toDeviceDisplayStatus() -> DeviceDisplayStatusEntity {
         guard let backupStatus = compactMap({$0.toDisplayStatus()})
-            .max(by: { $0.priority < $1.priority }) else {
+            .min(by: { $0.priority < $1.priority }) else {
             return .attentionNeeded
         }
         
@@ -33,6 +33,7 @@ extension Array where Element == BackupEntity {
 }
 
 extension BackupDisplayStatusEntity {
+    /// Lower value means higher display priority (Inactive > Error > Disabled > Paused > Updating > Up to date > NoCameraUploads)
     public var priority: Int {
         switch self {
         case .inactive: 0
