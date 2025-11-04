@@ -65,19 +65,18 @@ public protocol PictureInPictureLoadable {
 /// various sources that conform to the `PlayableNode` protocol.
 @MainActor
 public protocol NodeLoadable {
-    /// Loads a playable node into the video player.
+    /// Loads the specified playable node into the video player. Monitors an array of nodes for updates.
     ///
     /// This method prepares the video player to play content from the specified node.
     /// The implementation should handle the necessary setup for streaming and playback.
     ///
     /// - Parameter node: A playable node containing the video content to be loaded.
-    func loadNode(_ node: some PlayableNode)
+    /// - Parameter nodes: An array of playable nodes to monitor for updates.
+    func loadNodeAndMonitorUpdate(for node: some PlayableNode, monitor nodes: [some PlayableNode])
 
     var currentNode: (any PlayableNode)? { get set }
 
     var nodeNamePublisher: AnyPublisher<String, Never> { get }
-
-    func streamVideoNodes(for node: some PlayableNode)
 
     var onNodeDeleted: (() -> Void)? { get set }
 }

@@ -11,9 +11,7 @@ public final class MEGAAVPlayer {
     public var currentNode: (any PlayableNode)?
     private var nodes: [any PlayableNode]?
 
-    private nonisolated(unsafe) var timeObserverToken: Any? {
-        willSet { timeObserverToken.map(player.removeTimeObserver) }
-    }
+    private var timeObserverToken: Any?
 
     private let stateSubject: CurrentValueSubject<PlaybackState, Never> = .init(.opening)
     private let currentTimeSubject: CurrentValueSubject<Duration, Never> = .init(.seconds(-1))
@@ -39,7 +37,7 @@ public final class MEGAAVPlayer {
     private var playerRate: Float = 1.0
 
     private var cancellables = Set<AnyCancellable>()
-    public var streamVideoNodesTask: Task<Void, Never>?
+    public var monitorVideoNodesUpdateTask: Task<Void, Never>?
 
     private let streamingUseCase: any StreamingUseCaseProtocol
     private let notificationCenter: NotificationCenter
@@ -70,7 +68,7 @@ public final class MEGAAVPlayer {
     }
 
     deinit {
-        streamVideoNodesTask?.cancel()
+        monitorVideoNodesUpdateTask?.cancel()
     }
 }
 
@@ -128,10 +126,13 @@ extension MEGAAVPlayer: PlaybackControllable {
     public func stop() {
         saveOrDeleteCurrentPosition()
         player.replaceCurrentItem(with: nil)
-        timeObserverToken.map(player.removeTimeObserver)
+        if let timeObserverToken {
+            player.removeTimeObserver(timeObserverToken)
+            self.timeObserverToken = nil
+        }
         streamingUseCase.stopStreaming()
-        streamVideoNodesTask?.cancel()
-        streamVideoNodesTask = nil
+        monitorVideoNodesUpdateTask?.cancel()
+        monitorVideoNodesUpdateTask = nil
     }
 
     public func jumpForward(by seconds: TimeInterval) {
@@ -185,8 +186,7 @@ extension MEGAAVPlayer: PlaybackControllable {
 
         saveOrDeleteCurrentPosition()
         let nextNode = nodes[nextIndex]
-        loadNode(nextNode)
-        play()
+        playNode(nextNode)
         updateCanPlayNext()
     }
 
@@ -203,8 +203,7 @@ extension MEGAAVPlayer: PlaybackControllable {
 
         saveOrDeleteCurrentPosition()
         let previousNode = nodes[previousIndex]
-        loadNode(previousNode)
-        play()
+        playNode(previousNode)
         updateCanPlayNext()
     }
 }
@@ -265,7 +264,19 @@ extension MEGAAVPlayer: VideoRenderable {
 // MARK: - NodeLoadable
 
 extension MEGAAVPlayer: NodeLoadable {
-    public func loadNode(_ node: some PlayableNode) {
+    public func loadNodeAndMonitorUpdate(for node: some PlayableNode, monitor nodes: [some PlayableNode]) {
+        self.nodes = nodes
+        monitorVideoNodesUpdate(for: nodes)
+        playNode(node)
+        updateCanPlayNext()
+    }
+
+    public var nodeName: String {
+        get { nodeNameSubject.value }
+        set { nodeNameSubject.send(newValue) }
+    }
+
+    private func playNode(_ node: some PlayableNode) {
         if !streamingUseCase.isStreaming {
             streamingUseCase.startStreaming()
         }
@@ -288,28 +299,35 @@ extension MEGAAVPlayer: NodeLoadable {
         nodeName = currentNode?.name ?? ""
 
         attemptResumeFromSavedPosition()
+
+        play()
     }
 
-    public var nodeName: String {
-        get { nodeNameSubject.value }
-        set { nodeNameSubject.send(newValue) }
-    }
-
-    public func streamVideoNodes(for node: some PlayableNode) {
-        streamVideoNodesTask?.cancel()
-        streamVideoNodesTask = Task { [weak self, videoNodesUseCase] in
-            for await videoNodes in await videoNodesUseCase.streamVideoNodes(for: node) {
+    private func monitorVideoNodesUpdate(for nodes: [some PlayableNode]) {
+        monitorVideoNodesUpdateTask?.cancel()
+        monitorVideoNodesUpdateTask = Task { [weak self, videoNodesUseCase] in
+            for await videoNodes in await videoNodesUseCase.monitorVideoNodesUpdates(for: nodes) {
                 guard !Task.isCancelled else { return }
 
-                if let currentNode = self?.currentNode,
-                   let updatedCurrentNode = videoNodes.first(where: { $0.handle == currentNode.handle }) {
-                    self?.nodes = videoNodes
-                    self?.currentNode = updatedCurrentNode
-                    self?.nodeName = self?.currentNode?.name ?? ""
-                    self?.updateCanPlayNext()
-                } else {
-                    self?.onNodeDeleted?()
-                    return
+                for videoNode in videoNodes {
+                    guard let index = nodes.firstIndex(where: { $0.handle == videoNode.handle }) else {
+                        continue
+                    }
+                    self?.nodes?[index] = videoNode
+                    guard let currentNode = self?.currentNode else {
+                        self?.onNodeDeleted?()
+                        return
+                    }
+                    if currentNode.handle == self?.nodes?[index].handle {
+                        self?.currentNode = videoNode
+                        if videoNodesUseCase.isInRubbishBin(node: currentNode) {
+                            self?.onNodeDeleted?()
+                            return
+                        } else {
+                            self?.nodeName = self?.currentNode?.name ?? ""
+                            self?.updateCanPlayNext()
+                        }
+                    }
                 }
             }
         }
@@ -550,11 +568,11 @@ extension MEGAAVPlayer {
 
 public extension MEGAAVPlayer {
     static func liveValue(
-        node: any PlayableNode
+        for node: some PlayableNode,
+        within videoNodes: [some PlayableNode]
     ) -> MEGAAVPlayer {
         let player = MEGAAVPlayer.liveValue
-        player.loadNode(node)
-        player.streamVideoNodes(for: node)
+        player.loadNodeAndMonitorUpdate(for: node, monitor: videoNodes)
         return player
     }
 

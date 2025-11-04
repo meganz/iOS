@@ -22,10 +22,6 @@ public final class MEGAPlayerViewModel {
         player.resizePlayer(to: playerView.bounds)
     }
 
-    func viewWillAppear() {
-        player.play()
-    }
-
     func viewDidLoad(playerView: any PlayerViewProtocol) {
         reportingManager.observePlayback()
         player.setupPlayer(in: playerView)
@@ -39,11 +35,8 @@ public final class MEGAPlayerViewModel {
         }
     }
 
-    func viewDidDisappear() {
-        player.stop()
-    }
-
     func viewWillDismiss() {
         reportingManager.trackVideoPlaybackFinalEvents()
+        player.stop()
     }
 }

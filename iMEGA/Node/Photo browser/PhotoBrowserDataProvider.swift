@@ -7,7 +7,8 @@ import MEGASwift
 protocol PhotoBrowserDataProviderProtocol: Sendable {
     init(currentPhoto: NodeEntity, allPhotos: [NodeEntity], sdk: MEGASdk, nodeProvider: any MEGANodeProviderProtocol)
     var allPhotoEntities: [NodeEntity] { get }
-    
+    var allPhotos: [MEGANode] { get }
+
     /// Deprecate usage of currentPhoto, in favour of using currentPhoto() async. Currently using this computed var will not work for scenario that are public albums, as the node need to be fetched before hand.
     var currentPhoto: MEGANode? { get }
     
@@ -102,7 +103,7 @@ final class PhotoBrowserDataProvider: NSObject, @unchecked Sendable, PhotoBrowse
             return megaNodes?.toNodeEntities() ?? []
         }
     }
-    
+
     func fetchOnlyPhotoEntities(mediaUseCase: MediaUseCase) -> [NodeEntity] {
         allPhotoEntities.filter { mediaUseCase.isImage($0.name) }
     }

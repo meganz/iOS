@@ -159,12 +159,12 @@ public final class MockVideoPlayer: VideoPlayerProtocol {
         isLoopEnabled = enabled
     }
 
-    public func loadNode(_ node: some PlayableNode) {
+    public func loadNodeAndMonitorUpdate(for node: some PlayableNode, monitor nodes: [some PlayableNode]) {
         loadNodeCallCount += 1
         loadedNode = node
         nodeName = node.name ?? ""
     }
-    
+
     public func setupPlayer(in layer: any PlayerViewProtocol) {
         setupPlayerCallCount += 1
     }

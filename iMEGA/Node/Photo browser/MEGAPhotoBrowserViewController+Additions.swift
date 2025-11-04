@@ -85,20 +85,44 @@ extension MEGAPhotoBrowserViewController {
 
             if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .videoPlayerRevamp) &&
                 DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosVideoPlayerRevamp) {
+                let allVideoNodes = dataProvider.allPhotos.filter { node in
+                    let fileName = node.name ?? ""
+                    return fileName.fileExtensionGroup.isVideo
+                }
                 let playerViewModel = MEGAPlayerViewModel(
-                    player: MEGAAVPlayer.liveValue(node: node)
+                    player: MEGAAVPlayer.liveValue(
+                        for: node,
+                        within: allVideoNodes.isEmpty ? [node] : allVideoNodes,
+                    )
                 )
                 let playerVC = MEGAPlayerViewController(
                     viewModel: playerViewModel
                 )
-                playerViewModel.moreAction = { [weak playerVC] playableNode in
-                    guard let playerVC, let playableNode else { return }
-                    NodeOpener(navigationController: nil)
-                        .openNodeActions(
-                            playableNode.handle,
-                            presentingController: playerVC,
-                            sender: playerVC
-                        )
+                playerViewModel.moreAction = { [weak self, weak playerVC] playableNode in
+                    guard let self,
+                          let playerVC,
+                          let node = playableNode as? MEGANode else {
+                        return
+                    }
+
+                    let delegate = NodeActionViewControllerGenericDelegate(
+                        viewController: playerVC,
+                        moveToRubbishBinViewModel: MoveToRubbishBinViewModel(presenter: playerVC)
+                    )
+
+                    let isBackUpNode = BackupsOCWrapper().isBackupNode(node)
+                    let controller = NodeActionViewController(
+                        node: node,
+                        delegate: delegate,
+                        displayMode: displayMode,
+                        isInVersionsView: isPreviewingVersion(),
+                        isBackupNode: isBackUpNode,
+                        isFromSharedItem: isFromSharedItem,
+                        sender: playerVC
+                    )
+                    controller.accessoryActionDelegate = defaultNodeAccessoryActionDelegate
+                    playerVC.present(controller, animated: true)
+
                 }
                 playerVC.modalPresentationStyle = .overFullScreen
                 present(playerVC, animated: true)

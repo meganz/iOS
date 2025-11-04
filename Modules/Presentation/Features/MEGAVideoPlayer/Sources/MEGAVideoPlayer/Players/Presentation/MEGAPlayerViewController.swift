@@ -40,16 +40,6 @@ public final class MEGAPlayerViewController: UIViewController {
         viewModel.viewDidLayoutSubviews(playerView: videoView)
     }
 
-    public override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        viewModel.viewWillAppear()
-    }
-
-    public override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        viewModel.viewDidDisappear()
-    }
-
     private func setupDismissAction() {
         viewModel.dismissAction = { [weak self] in
             self?.dismiss(animated: true)
@@ -195,15 +185,3 @@ public struct MEGAPlayerView: UIViewControllerRepresentable {
 }
 
 extension UIView: PlayerViewProtocol {}
-
-#Preview {
-    NavigationStack {
-        MEGAPlayerView(
-            viewModel: MEGAPlayerViewModel(
-                player: PreviewVideoPlayer(
-                    state: .playing, currentTime: .seconds(12), duration: .seconds(5_678)
-                )
-            )
-        )
-    }
-}

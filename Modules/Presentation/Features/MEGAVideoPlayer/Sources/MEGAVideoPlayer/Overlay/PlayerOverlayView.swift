@@ -634,30 +634,3 @@ extension PlayerOverlayView {
         .animation(.easeInOut(duration: 0.3), value: viewModel.isLockOverlayVisible)
     }
 }
-
-// MARK: - Preview
-
-#Preview {
-    ZStack {
-        Image("sampleVideoFeed", bundle: .module)
-            .resizable()
-            .aspectRatio(contentMode: .fit)
-        PlayerOverlayView(
-            viewModel: PlayerOverlayViewModel(
-                player: PreviewVideoPlayer(
-                    state: .playing,
-                    currentTime: .seconds(345),
-                    duration: .seconds(1_234)
-                ),
-                devicePermissionsHandler: DevicePermissionsHandler.makeHandler(),
-                saveSnapshotUseCase: SaveSnapshotUseCase(),
-                hapticFeedbackUseCase: HapticFeedbackUseCase(),
-                didTapBackAction: {},
-                didTapMoreAction: { _ in },
-                didTapRotateAction: {},
-                didTapPictureInPictureAction: {}
-            )
-        )
-    }
-    .background(.black)
-}

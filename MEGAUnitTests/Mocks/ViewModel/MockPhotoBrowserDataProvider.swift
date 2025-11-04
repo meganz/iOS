@@ -5,8 +5,8 @@ import MEGAAppSDKRepoMock
 import MEGADomain
 
 final class MockPhotoBrowserDataProvider: PhotoBrowserDataProviderProtocol, @unchecked Sendable {
-    
     private var nodeEntities: [NodeEntity]?
+    var megaNodes: [MEGANode]?
     private var currentPhotoEntity: NodeEntity
     private var sdk: MEGASdk
     
@@ -19,7 +19,11 @@ final class MockPhotoBrowserDataProvider: PhotoBrowserDataProviderProtocol, @unc
     var allPhotoEntities: [NodeEntity] {
         nodeEntities ?? [NodeEntity]()
     }
-    
+
+    var allPhotos: [MEGANode] {
+        megaNodes ?? []
+    }
+
     var currentPhoto: MEGANode? {
         currentPhotoEntity.toMEGANode(in: sdk)
     }

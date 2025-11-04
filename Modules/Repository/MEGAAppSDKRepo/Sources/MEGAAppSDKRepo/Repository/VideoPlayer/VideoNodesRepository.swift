@@ -22,41 +22,27 @@ public struct VideoNodesRepository: VideoNodesRepositoryProtocol, Sendable {
         self.nodeUpdatesProvider = nodeUpdatesProvider
     }
 
-    public func fetchVideoNodes(for node: some PlayableNode) async -> [any PlayableNode] {
-        guard let parentNode = await sdk.node(for: node.parentHandle) else {
-            return []
-        }
-
-        let childrenNodeList = sdk.children(forParent: parentNode)
-
-        return filterForVideos(nodeList: childrenNodeList).toNodeArray()
-    }
-
-    public func streamVideoNodes(for node: some PlayableNode) async -> AnyAsyncSequence<[any PlayableNode]> {
-        nodeUpdatesProvider
+    public func monitorVideoNodesUpdates(for nodes: [some PlayableNode]) async -> AnyAsyncSequence<[any PlayableNode]> {
+        return nodeUpdatesProvider
             .nodeUpdates
             .filter { $0.isNotEmpty }
-            .map { _ in await fetchVideoNodes(for: node) }
-            .prepend( await fetchVideoNodes(for: node))
+            .map { allNodes in
+                let allVideoNodes = allNodes.filter {
+                    $0.fileExtensionGroup.isVideo
+                }
+                let updatedPlayableNodes = allVideoNodes.filter { videoNode in
+                    nodes.contains(where: { $0.handle == videoNode.handle })
+                }
+                return updatedPlayableNodes.toMEGANodes(in: sdk)
+            }
             .eraseToAnyAsyncSequence()
     }
 
-    private func filterForVideos(nodeList: MEGANodeList) -> MEGANodeList {
-        let newNodeList = MEGANodeList()
-        for index in 0..<nodeList.size {
-            guard let node = nodeList.node(at: index) else { continue }
-            guard isVideoType(node) else { continue }
-
-            newNodeList.add(node)
-        }
-        return newNodeList
-    }
-
-    private func isVideoType(_ node: MEGANode) -> Bool {
-        guard let fileExtension = node.name?.pathExtension else {
+    public func isInRubbishBin(node: some PlayableNode) -> Bool {
+        guard let node = sdk.node(forHandle: node.handle) else {
             return false
         }
 
-        return fileExtension.fileExtensionGroup.isVideo
+        return sdk.isNode(inRubbish: node)
     }
 }
