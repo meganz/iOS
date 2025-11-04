@@ -230,9 +230,10 @@
         
         [renameAlertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
         
+        __weak typeof(renameAlertController) weakRenameAlertController = renameAlertController;
         UIAlertAction *renameAlertAction = [UIAlertAction actionWithTitle:LocalizedString(@"rename", @"Title for the action that allows you to rename a file or folder") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-                NSString *alertViewTextFieldText = renameAlertController.textFields.firstObject.text;
+                NSString *alertViewTextFieldText = weakRenameAlertController.textFields.firstObject.text;
                 MEGANode *parentNode = [MEGASdk.shared nodeForHandle:self.parentHandle];
                 
                 MEGANodeType nodeType = MEGANodeTypeFile;
