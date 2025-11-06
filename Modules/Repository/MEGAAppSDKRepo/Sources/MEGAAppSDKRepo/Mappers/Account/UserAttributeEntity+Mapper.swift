@@ -76,6 +76,8 @@ extension UserAttributeEntity {
         case .appsPreferences: .appsPreferences
         case .contentConsumptionPreferences: .contentConsumptionPreferences
         case .lastReadNotification: .lastReadNotification
+        case .s4: .S4
+        case .s4Container: .s4Container
         }
     }
 }
@@ -114,6 +116,8 @@ extension MEGAUserAttribute {
         case .appsPreferences: .appsPreferences
         case .contentConsumptionPreferences: .contentConsumptionPreferences
         case .lastReadNotification: .lastReadNotification
+        case .S4: .s4
+        case .s4Container: .s4Container
         @unknown default: nil
         }
     }
