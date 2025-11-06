@@ -22,7 +22,10 @@ struct SearchResultMapper: Sendable {
     private let nodeActions: NodeActions
     private let hiddenNodesFeatureEnabled: Bool
     private let showHiddenNodeBlur: Bool
-    
+    private var isCloudDriveRevampEnabled: Bool {
+        DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .cloudDriveRevamp)
+    }
+
     init(
         sdk: MEGASdk,
         nodeIconUsecase: some NodeIconUsecaseProtocol,
@@ -197,10 +200,12 @@ struct SearchResultMapper: Sendable {
         if nodeUseCase.isInRubbishBin(nodeHandle: node.handle) {
             if nodeUseCase.isRestorable(node: node),
                !nodeUseCase.isInRubbishBin(nodeHandle: node.restoreParentHandle) {
+                let restoreImage = isCloudDriveRevampEnabled ? MEGAAssets.Image.cornerUpLeft : MEGAAssets.Image.restore
+                let restoreBackgroundColor = isCloudDriveRevampEnabled ? TokenColors.Indicator.green.swiftUI : turquoiseBackgroundColor
                 return [
                     SearchResultSwipeAction(
-                        image: MEGAAssets.Image.restore,
-                        backgroundColor: turquoiseBackgroundColor,
+                        image: restoreImage,
+                        backgroundColor: restoreBackgroundColor,
                         action: {
                             nodeActions.restoreFromRubbishBin([node])
                         }
@@ -208,26 +213,33 @@ struct SearchResultMapper: Sendable {
                 ]
             }
         } else {
+
+            let linkImage = isCloudDriveRevampEnabled ? MEGAAssets.Image.link01 : MEGAAssets.Image.link
+            let linkBackgroundColor = isCloudDriveRevampEnabled ? TokenColors.Indicator.yellow.swiftUI : TokenColors.Support.warning.swiftUI
             let shareLinkSwipeAction = SearchResultSwipeAction(
-                image: MEGAAssets.Image.link,
-                backgroundColor: TokenColors.Support.warning.swiftUI,
+                image: linkImage,
+                backgroundColor: linkBackgroundColor,
                 action: {
                     nodeActions.shareOrManageLink([node])
                 }
             )
 
+            let downloadImage = isCloudDriveRevampEnabled ? MEGAAssets.Image.arrowDownCircle : MEGAAssets.Image.offline
+            let downloadBackgroundColor = isCloudDriveRevampEnabled ? TokenColors.Indicator.green.swiftUI : turquoiseBackgroundColor
             let downloadSwipeAction = SearchResultSwipeAction(
-                image: MEGAAssets.Image.offline,
-                backgroundColor: turquoiseBackgroundColor,
+                image: downloadImage,
+                backgroundColor: downloadBackgroundColor,
                 action: {
                     nodeActions.nodeDownloader([node])
                 }
             )
 
+            let rubbishBinImage = isCloudDriveRevampEnabled ? MEGAAssets.Image.trash : MEGAAssets.Image.rubbishBin
+            let rubbishBinBackgroundColor = isCloudDriveRevampEnabled ? TokenColors.Indicator.pink.swiftUI : TokenColors.Support.error.swiftUI
             if viewDisplayMode != .backup {
                 let moveToRubbishBinSwipeAction = SearchResultSwipeAction(
-                    image: MEGAAssets.Image.rubbishBin,
-                    backgroundColor: TokenColors.Support.error.swiftUI,
+                    image: rubbishBinImage,
+                    backgroundColor: rubbishBinBackgroundColor,
                     action: {
                         nodeActions.moveToRubbishBin([node])
                     }

@@ -6,7 +6,7 @@
 	<dict>
 		<key>Assets.car</key>
 		<data>
-		4RslZFsN/10+Gmm6FQgLOXDvGVw=
+		TRIFJ58+BR1BCPrvNtFKD0qMJeE=
 		</data>
 		<key>Info.plist</key>
 		<data>
@@ -14,7 +14,7 @@
 		</data>
 		<key>Modules/MEGAAssetsBundle.swiftmodule/arm64-apple-ios.abi.json</key>
 		<data>
-		jaFBBJvaDYsgxCUJ0ryoxO9dn8A=
+		FGHvN506N2Hqvx9Mhr4h7NNU4r4=
 		</data>
 		<key>Modules/MEGAAssetsBundle.swiftmodule/arm64-apple-ios.private.swiftinterface</key>
 		<data>
@@ -30,7 +30,7 @@
 		</data>
 		<key>Modules/MEGAAssetsBundle.swiftmodule/arm64-apple-ios.swiftmodule</key>
 		<data>
-		mFkuNMvMZmF4ie8XbLcf8w4CaEA=
+		KNNFtjOOo8N8ovaAeP6Uum9Ie/g=
 		</data>
 	</dict>
 	<key>files2</key>
@@ -39,14 +39,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			Oe5wxAM5Vba9uJLKRfzzdl7eiRDUFtrvXva8JafJZCI=
+			GbUz89mtByIXAnDdnn1IMOr3VLAfi9NSS8mwmS1Xo7c=
 			</data>
 		</dict>
 		<key>Modules/MEGAAssetsBundle.swiftmodule/arm64-apple-ios.abi.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			hKzTVNb6CYuJUxXde8dqprd0xVpraPNNAAmNvLMkhM8=
+			yZda9O83SD6t/qgwjihEw/T6zo4qelEKTJH2qJ5/QV4=
 			</data>
 		</dict>
 		<key>Modules/MEGAAssetsBundle.swiftmodule/arm64-apple-ios.private.swiftinterface</key>
@@ -74,7 +74,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			2/Dz0+/HJ7/XfE98CEHr0DGTGm69xYm4ZXywIKBtnbw=
+			b705FARp46sCXUHbe7JpuCA2SxIZheo6hbKR6Cgw1KA=
 			</data>
 		</dict>
 	</dict>
