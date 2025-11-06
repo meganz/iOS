@@ -1577,7 +1577,6 @@
 		99C0CE6D2C7BFEC100778F53 /* LaunchViewController+Addition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C0CE6C2C7BFEC100778F53 /* LaunchViewController+Addition.swift */; };
 		99D65D732A8BB5AE005D5877 /* WaitingRoomControlsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D65D722A8BB5AE005D5877 /* WaitingRoomControlsView.swift */; };
 		99D65D772A8C699A005D5877 /* WaitingRoomUserAvatarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D65D762A8C699A005D5877 /* WaitingRoomUserAvatarView.swift */; };
-		99DB1D5A2AC64B34004A9CC3 /* ChatRepoMock in Frameworks */ = {isa = PBXBuildFile; productRef = 99DB1D592AC64B34004A9CC3 /* ChatRepoMock */; };
 		99F9ABC02A7B428A0050B5E4 /* BannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F9ABBF2A7B428A0050B5E4 /* BannerView.swift */; };
 		9D3563C428B54AF100CB3365 /* DeleteAccountRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3563C328B54AF100CB3365 /* DeleteAccountRouter.swift */; };
 		9D3563C628B54BB300CB3365 /* AdvancedViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3563C528B54BB300CB3365 /* AdvancedViewRouter.swift */; };
@@ -1732,7 +1731,6 @@
 		A874D308263FF6C6000861DB /* TurnOnNotificationsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A874D307263FF6C6000861DB /* TurnOnNotificationsViewModelTests.swift */; };
 		A8754A292A331B39007475C2 /* FileAttributeGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8754A282A331B39007475C2 /* FileAttributeGenerator.swift */; };
 		A87BDB352B8CD3BC0074EE4C /* UserAvatarHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A87BDB342B8CD3BC0074EE4C /* UserAvatarHandler.swift */; };
-		A87F09192CCFE65100A1B03C /* MEGAUIMock in Frameworks */ = {isa = PBXBuildFile; productRef = A87F09182CCFE65100A1B03C /* MEGAUIMock */; };
 		A87FF3C122F8111D00EFD95C /* PasscodeTimeDurationTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A87FF3C022F8111D00EFD95C /* PasscodeTimeDurationTableViewController.swift */; };
 		A87FF3C522F8244300EFD95C /* PasscodeDurationInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = A87FF3C422F8244300EFD95C /* PasscodeDurationInfo.swift */; };
 		A8812BAB27957BBC00F0D2DB /* LogFileCompressor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8812BAA27957BBC00F0D2DB /* LogFileCompressor.swift */; };
@@ -1860,7 +1858,6 @@
 		B547C0E629FB716C0008BEF2 /* SortOrderType+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B547C0E529FB716C0008BEF2 /* SortOrderType+Mapper.swift */; };
 		B5488B732A8DBB8600A069DF /* CustomModalAlertViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5488B722A8DBB8600A069DF /* CustomModalAlertViewController+Additions.swift */; };
 		B5488B7A2A8DBFAD00A069DF /* CountdownTimerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5488B792A8DBFAD00A069DF /* CountdownTimerTests.swift */; };
-		B54B9BFE2D6426850025A25F /* AccountsMock in Frameworks */ = {isa = PBXBuildFile; productRef = B54B9BFD2D6426850025A25F /* AccountsMock */; };
 		B55C1A8829825E4B006A0205 /* NodeTableViewCell+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55C1A8729825E4B006A0205 /* NodeTableViewCell+Additions.swift */; };
 		B55C1A8A298260DB006A0205 /* NodeTableViewCell+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55C1A8729825E4B006A0205 /* NodeTableViewCell+Additions.swift */; };
 		B55E756F2CFD5DA80011FE14 /* OverDiskQuotaViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55E756E2CFD5DA70011FE14 /* OverDiskQuotaViewRouter.swift */; };
@@ -1896,7 +1893,6 @@
 		B5960EFA2D2D261B0060F623 /* AdsSlotDisplayable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5960EF92D2D261B0060F623 /* AdsSlotDisplayable.swift */; };
 		B5967A0829403AE500AD4E61 /* VerifyCredentialsViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5967A0729403AE500AD4E61 /* VerifyCredentialsViewController+Additions.swift */; };
 		B596D12B2977DC34002C5094 /* NodeInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B596D1292977DC33002C5094 /* NodeInfoViewModel.swift */; };
-		B598F73B2D01E0B600B2B6EB /* MEGASwiftUIMock in Frameworks */ = {isa = PBXBuildFile; productRef = B598F73A2D01E0B600B2B6EB /* MEGASwiftUIMock */; };
 		B59CD7412C3D41A000BCC2F3 /* EncourageGuestUserToJoinMegaViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59CD7402C3D41A000BCC2F3 /* EncourageGuestUserToJoinMegaViewModelTests.swift */; };
 		B59FC7712CF97B1700D88580 /* OverDiskQuotaViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59FC7702CF97B1700D88580 /* OverDiskQuotaViewModel.swift */; };
 		B59FC7752CF98E7400D88580 /* OverDiskQuotaViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59FC7742CF98E7400D88580 /* OverDiskQuotaViewModelTests.swift */; };
@@ -2019,7 +2015,6 @@
 		B678D6D82714266300BBA4E1 /* NodeThumbnailHomeUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = B678D6D72714266300BBA4E1 /* NodeThumbnailHomeUseCase.swift */; };
 		B6790E06256B81C600154F6D /* MEGANode+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6790E05256B81C600154F6D /* MEGANode+Additions.swift */; };
 		B67B18C625CAB7B60022D6C0 /* FileSystemImageCacheClient+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B67B18C525CAB7B60022D6C0 /* FileSystemImageCacheClient+Additions.swift */; };
-		B67D44E12B605F7600738E04 /* SearchMock in Frameworks */ = {isa = PBXBuildFile; productRef = B67D44E02B605F7600738E04 /* SearchMock */; };
 		B67DA38A2330AF9900E62067 /* AddPhoneNumberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B67DA3892330AF9900E62067 /* AddPhoneNumberViewController.swift */; };
 		B6826B682898F4E900B2B8D0 /* MEGAUI in Frameworks */ = {isa = PBXBuildFile; productRef = B6826B672898F4E900B2B8D0 /* MEGAUI */; };
 		B6831C1525B65C7E0072827F /* CustomModalAlertViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A819B3411EAFA844004592F9 /* CustomModalAlertViewController.xib */; };
@@ -2224,7 +2219,6 @@
 		BF29179D2A9D8DD800A59D12 /* ChatRepo in Frameworks */ = {isa = PBXBuildFile; productRef = BF29179C2A9D8DD800A59D12 /* ChatRepo */; };
 		BF2A7FFA29DE454300AAC203 /* CallInProgressTimeReporting.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2A7FF929DE454300AAC203 /* CallInProgressTimeReporting.swift */; };
 		BF2AFDA82D9F85C40075248C /* MEGAAppSDKRepo in Frameworks */ = {isa = PBXBuildFile; productRef = BF2AFDA72D9F85C40075248C /* MEGAAppSDKRepo */; };
-		BF2AFDAA2D9F85C40075248C /* MEGAAppSDKRepoMock in Frameworks */ = {isa = PBXBuildFile; productRef = BF2AFDA92D9F85C40075248C /* MEGAAppSDKRepoMock */; };
 		BF2AFDAE2D9F85E60075248C /* MEGAAppSDKRepo in Frameworks */ = {isa = PBXBuildFile; productRef = BF2AFDAD2D9F85E60075248C /* MEGAAppSDKRepo */; };
 		BF30471F2892048700A6988F /* MeetingFloatingPanelViewModel+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF30471E2892048700A6988F /* MeetingFloatingPanelViewModel+Additions.swift */; };
 		BF30AB9B24A05B7A00862853 /* MEGAChatMessage+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF30AB9A24A05B7A00862853 /* MEGAChatMessage+Additions.swift */; };
@@ -2480,7 +2474,6 @@
 		BFE6DBFE2431489C00E2E5B4 /* ChatViewController+NavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE6DBFD2431489C00E2E5B4 /* ChatViewController+NavigationBar.swift */; };
 		BFE6E554255259FE00050DCA /* SortOrderType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE6E553255259FE00050DCA /* SortOrderType.swift */; };
 		BFE7728E2D9B637A005B114E /* MEGAAppPresentation in Frameworks */ = {isa = PBXBuildFile; productRef = BFE7728D2D9B637A005B114E /* MEGAAppPresentation */; };
-		BFE772902D9B637A005B114E /* MEGAAppPresentationMock in Frameworks */ = {isa = PBXBuildFile; productRef = BFE7728F2D9B637A005B114E /* MEGAAppPresentationMock */; };
 		BFE7729F2D9B8A17005B114E /* MEGAAppPresentation in Frameworks */ = {isa = PBXBuildFile; productRef = BFE7729E2D9B8A17005B114E /* MEGAAppPresentation */; };
 		BFE772A12D9B8A23005B114E /* MEGAAppPresentation in Frameworks */ = {isa = PBXBuildFile; productRef = BFE772A02D9B8A23005B114E /* MEGAAppPresentation */; };
 		BFE772A32D9B8A32005B114E /* MEGAAppPresentation in Frameworks */ = {isa = PBXBuildFile; productRef = BFE772A22D9B8A32005B114E /* MEGAAppPresentation */; };
@@ -5499,12 +5492,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				B5D58D552AC67C89004ECD36 /* Accounts in Frameworks */,
-				B54B9BFE2D6426850025A25F /* AccountsMock in Frameworks */,
 				B5053BC52D111BE4003718E0 /* AppTrackingTransparency.framework in Frameworks */,
 				0E12F2112BBFA8950087D853 /* AsyncAlgorithms in Frameworks */,
 				9444FA8C2C94672B005C240B /* Chat in Frameworks */,
 				A85CF69D2A7180A90018FEF1 /* ChatRepo in Frameworks */,
-				99DB1D5A2AC64B34004A9CC3 /* ChatRepoMock in Frameworks */,
 				BF11643127F6612A00E5C5A4 /* CHTCollectionViewWaterfallLayoutObjC in Frameworks */,
 				BF27E3F42CF3FDD5002C892B /* CloudDrive in Frameworks */,
 				256428552CC7927D005DA9B1 /* ContentLibraries in Frameworks */,
@@ -5525,9 +5516,7 @@
 				BF67F7F82AB4171A00AC127E /* LogRepo in Frameworks */,
 				94A220182A696502004130C4 /* MEGAAnalyticsiOS in Frameworks */,
 				BFE7728E2D9B637A005B114E /* MEGAAppPresentation in Frameworks */,
-				BFE772902D9B637A005B114E /* MEGAAppPresentationMock in Frameworks */,
 				BF2AFDA82D9F85C40075248C /* MEGAAppSDKRepo in Frameworks */,
-				BF2AFDAA2D9F85C40075248C /* MEGAAppSDKRepoMock in Frameworks */,
 				0E261EAD2DA5EA1300858151 /* MEGAAuthentication in Frameworks */,
 				0ED6BEF42DA8A5570084FD30 /* MEGAAuthenticationOrchestration in Frameworks */,
 				A5E136892EB4FFB3004BDD4F /* MEGAChatSdk in Frameworks */,
@@ -5547,12 +5536,10 @@
 				1654C7F02DC47F1D00DDB846 /* MEGAStoreKit in Frameworks */,
 				B63D34142898A9AB0059DE66 /* MEGASwift in Frameworks */,
 				B63995412898CF1000EA88F1 /* MEGASwiftUI in Frameworks */,
-				B598F73B2D01E0B600B2B6EB /* MEGASwiftUIMock in Frameworks */,
 				B6826B682898F4E900B2B8D0 /* MEGAUI in Frameworks */,
 				A5DF52D92EB1BAB9003E890F /* MEGAUIComponent in Frameworks */,
 				6DFE02982CB7338400703844 /* MEGAUIComponent in Frameworks */,
 				B65D17CF2899E16400D5AD33 /* MEGAUIKit in Frameworks */,
-				A87F09192CCFE65100A1B03C /* MEGAUIMock in Frameworks */,
 				994890EB2E4D70B100CBDC33 /* MEGAVideoPlayer in Frameworks */,
 				BF1163BB27F12ED000E5C5A4 /* MessageKit in Frameworks */,
 				B51616492B83361900C6E842 /* Notifications in Frameworks */,
@@ -5563,7 +5550,6 @@
 				BF0CB9362803AEAE00C21F11 /* SAMKeychain in Frameworks */,
 				BF1164B027F68EC500E5C5A4 /* SDWebImageWebPCoder in Frameworks */,
 				945928F52AA23C1B0037694C /* Search in Frameworks */,
-				B67D44E12B605F7600738E04 /* SearchMock in Frameworks */,
 				940931FE2A56ED680093C169 /* Settings in Frameworks */,
 				2446DEE92B0F099D00FA3FB8 /* Video in Frameworks */,
 				A8B51AE927F3565E0030F1EA /* WSTagsField in Frameworks */,
