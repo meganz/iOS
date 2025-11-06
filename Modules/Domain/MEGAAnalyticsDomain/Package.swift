@@ -3,7 +3,6 @@
 import PackageDescription
 
 let settings: [SwiftSetting] = [
-    .unsafeFlags(["-warnings-as-errors"]),
     .enableExperimentalFeature("ExistentialAny")
 ]
 
@@ -23,7 +22,7 @@ let package = Package(
     ],
     dependencies: [
         .package(path: "../MEGADomain"),
-        .package(path: "../../Infrastracture/MEGATest")
+        .package(path: "../../MEGASharedRepo/MEGATest")
     ],
     targets: [
         .target(

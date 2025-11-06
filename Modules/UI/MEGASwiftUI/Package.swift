@@ -24,10 +24,10 @@ let package = Package(
     dependencies: [
         .package(url: "https://github.com/meganz/MEGADesignToken.git", branch: "main"),
         .package(path: "../MEGAUI"),
-        .package(path: "../../../Presentation/MEGAL10n"),
+        .package(path: "../../Presentation/MEGAL10n"),
         .package(path: "../../Presentation/MEGAAppPresentation"),
         .package(path: "../../Infrastracture/MEGAFoundation"),
-        .package(path: "../../Infrastracture/MEGATest")
+        .package(path: "../../MEGASharedRepo/MEGATest")
     ],
     targets: [
         .target(

@@ -2,9 +2,10 @@
 
 import PackageDescription
 
-let settings: [SwiftSetting] = [.unsafeFlags(["-warnings-as-errors"]),
-                                .enableExperimentalFeature("ExistentialAny"),
-                                .enableExperimentalFeature("StrictConcurrency=targeted")]
+let settings: [SwiftSetting] = [
+    .unsafeFlags(["-warnings-as-errors"]),
+    .enableExperimentalFeature("ExistentialAny")
+]
 
 let package = Package(
     name: "ChatRepo",
@@ -25,7 +26,7 @@ let package = Package(
         .package(path: "../../DataSource/MEGAChatSdk"),
         .package(path: "../../Domain/MEGADomain"),
         .package(path: "../../Repository/MEGAAppSDKRepo"),
-        .package(path: "../../Infrastracture/MEGATest")
+        .package(path: "../../MEGASharedRepo/MEGATest")
     ],
     targets: [
         .target(

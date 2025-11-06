@@ -1,0 +1,92 @@
+// swift-tools-version: 6.0
+// The swift-tools-version declares the minimum version of Swift required to build this package.
+
+import PackageDescription
+
+let settings: [SwiftSetting] = [
+    .unsafeFlags(["-warnings-as-errors"]),
+    .enableExperimentalFeature("ExistentialAny")
+]
+
+let package = Package(
+    name: "MEGAVideoPlayer",
+    platforms: [
+        .iOS(.v16)
+    ],
+    products: [
+        .library(
+            name: "MEGAVideoPlayer",
+            targets: ["MEGAVideoPlayer"]
+        ),
+        .library(
+            name: "MEGAVideoPlayerMock",
+            targets: ["MEGAVideoPlayerMock"]
+        )
+    ],
+    dependencies: [
+        .package(path: "../../Domain/MEGADomain"),
+        .package(path: "../../Presentation/MEGAL10n"),
+        .package(path: "../../MEGASharedRepo/MEGAInfrastructure"),
+        .package(path: "../../MEGASharedRepo/MEGALogger"),
+        .package(path: "../../MEGASharedRepo/MEGAUIComponent"),
+        .package(path: "../../Infrastracture/MEGAPermissions"),
+        .package(path: "../../MEGASharedRepo/MEGATest"),
+        .package(path: "../../MEGASharedRepo/MEGAPreference"),
+        .package(path: "../../MEGASharedRepo/MEGASwift"),
+        .package(path: "../../Repository/MEGAAppSDKRepo"),
+        .package(path: "../../Presentation/MEGAAppPresentation"),
+        .package(url: "https://github.com/meganz/MEGADesignToken.git", branch: "main"),
+        .package(url: "https://code.developers.mega.co.nz/mobile/kmm/mobile-analytics-ios.git", branch: "main"),
+        .package(url: "https://github.com/CocoaLumberjack/CocoaLumberjack.git", from: "3.0.0")
+    ],
+    targets: [
+        // Targets are the basic building blocks of a package, defining a module or a test suite.
+        // Targets can depend on other targets in this package and products from dependencies.
+        .target(
+            name: "MEGAVideoPlayer",
+            dependencies: [
+                "MEGAL10n",
+                "MEGALogger",
+                "MEGADesignToken",
+                "MEGAUIComponent",
+                "MEGAPermissions",
+                "MEGAPreference",
+                "MEGASwift",
+                .product(name: "MEGAInfrastructure", package: "MEGAInfrastructure"),
+                .product(name: "MEGAAppPresentation", package: "MEGAAppPresentation"),
+                .product(name: "MEGAAppSDKRepo", package: "MEGAAppSDKRepo"),
+                .product(name: "MEGAAnalyticsiOS", package: "mobile-analytics-ios"),
+                .product(name: "CocoaLumberjackSwift", package: "CocoaLumberjack")
+            ],
+            resources: [
+                .process("Resources")
+            ],
+            swiftSettings: settings
+        ),
+        .target(
+            name: "MEGAVideoPlayerMock",
+            dependencies: [
+                "MEGAVideoPlayer",
+                "MEGASwift"
+            ],
+            swiftSettings: settings
+        ),
+        .testTarget(
+            name: "MEGAVideoPlayerTests",
+            dependencies: [
+                "MEGATest",
+                "MEGAVideoPlayer",
+                "MEGAVideoPlayerMock",
+                .product(name: "MEGADomainMock", package: "MEGADomain"),
+                .product(name: "MEGAInfrastructure", package: "MEGAInfrastructure"),
+                .product(name: "MEGAInfrastructureMocks", package: "MEGAInfrastructure"),
+                .product(name: "MEGAPermissions", package: "MEGAPermissions"),
+                .product(name: "MEGAPermissionsMock", package: "MEGAPermissions"),
+                .product(name: "MEGAAppPresentation", package: "MEGAAppPresentation"),
+                .product(name: "MEGAAppPresentationMock", package: "MEGAAppPresentation")
+            ],
+            swiftSettings: settings
+        )
+    ],
+    swiftLanguageModes: [.v6]
+)

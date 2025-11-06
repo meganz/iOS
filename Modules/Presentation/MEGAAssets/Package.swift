@@ -19,7 +19,7 @@ let package = Package(
             targets: ["MEGAAssets"])
     ],
     dependencies: [
-        .package(path: "../../../Infrastructure/MEGASwift")
+        .package(path: "../../MEGASharedRepo/MEGASwift")
     ],
     targets: [
         .binaryTarget(

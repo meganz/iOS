@@ -3,7 +3,6 @@
 import PackageDescription
 
 let settings: [SwiftSetting] = [
-    .unsafeFlags(["-warnings-as-errors"]),
     .enableExperimentalFeature("ExistentialAny")
 ]
 

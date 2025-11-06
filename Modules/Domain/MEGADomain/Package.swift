@@ -3,7 +3,6 @@
 import PackageDescription
 
 let settings: [SwiftSetting] = [
-    .unsafeFlags(["-warnings-as-errors"]),
     .enableExperimentalFeature("ExistentialAny")
 ]
 
@@ -26,7 +25,7 @@ let package = Package(
         .package(path: "../../MEGASharedRepo/MEGAPreference"),
         .package(path: "../../MEGASharedRepo/MEGAInfrastructure"),
         .package(path: "../../Infrastracture/MEGAFoundation"),
-        .package(path: "../../Infrastracture/MEGATest"),
+        .package(path: "../../MEGASharedRepo/MEGATest"),
         .package(url: "https://github.com/apple/swift-async-algorithms", from: "1.0.0")
     ],
     targets: [
