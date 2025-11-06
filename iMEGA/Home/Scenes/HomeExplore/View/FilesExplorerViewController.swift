@@ -2,6 +2,8 @@ import MEGAAnalyticsiOS
 import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGADomain
+import Search
+import SwiftUI
 
 @MainActor
 protocol FilesExplorerViewControllerDelegate: AnyObject {
@@ -111,6 +113,31 @@ class FilesExplorerViewController: ExplorerBaseViewController {
     
     func updateUploadAddMenu(menu: UIMenu) {
         delegate?.updateUploadAddMenu(menu: menu)
+    }
+
+    func headerView() -> UIView {
+        guard let child = children.compactMap({
+            $0 as? UIHostingController<SearchResultsHeaderView<SearchResultsHeaderSortView, SearchResultsHeaderViewModeView>>
+        }).first, let headerView = child.view.superview else {
+            return makeHeaderView()
+        }
+
+        return headerView
+    }
+
+    private func makeHeaderView() -> UIView {
+        let headerView = UIView()
+        headerView.bounds = CGRect(x: 0, y: 0, width: 0, height: 40)
+        let headerContentView = SearchResultsHeaderView {
+            SearchResultsHeaderSortView(viewModel: viewModel.sortHeaderViewModel)
+        } rightView: {
+            let viewModel = viewModel.viewModeHeaderViewModel
+            SearchResultsHeaderViewModeView(viewModel: viewModel)
+        }
+        let hostingViewController = UIHostingController(rootView: headerContentView)
+        headerView.wrap(hostingViewController.view)
+        addChild(hostingViewController)
+        return headerView
     }
 }
 

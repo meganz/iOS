@@ -2299,6 +2299,7 @@
 		BF6DF36B2457A06300D612D0 /* AddToChatImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6DF3692457A06300D612D0 /* AddToChatImageCell.swift */; };
 		BF6DF36C2457A06300D612D0 /* AddToChatImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF6DF36A2457A06300D612D0 /* AddToChatImageCell.xib */; };
 		BF6DF8582B9191160043A589 /* DocumentPickerViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6DF8572B9191160043A589 /* DocumentPickerViewRouter.swift */; };
+		BF6E080B2EB462B1006402E5 /* FilesExplorerGridHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6E080A2EB462B1006402E5 /* FilesExplorerGridHeaderView.swift */; };
 		BF6E8D2D25B636FB003A125A /* PSAViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6E8D2C25B636FB003A125A /* PSAViewModelTests.swift */; };
 		BF6E8F6D25C0C76A003A125A /* MEGANode+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6790E05256B81C600154F6D /* MEGANode+Additions.swift */; };
 		BF74E1E3253668E1001F663C /* HomeRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF74E1E2253668E1001F663C /* HomeRouter.swift */; };
@@ -5109,6 +5110,7 @@
 		BF6DF3692457A06300D612D0 /* AddToChatImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToChatImageCell.swift; sourceTree = "<group>"; };
 		BF6DF36A2457A06300D612D0 /* AddToChatImageCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddToChatImageCell.xib; sourceTree = "<group>"; };
 		BF6DF8572B9191160043A589 /* DocumentPickerViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentPickerViewRouter.swift; sourceTree = "<group>"; };
+		BF6E080A2EB462B1006402E5 /* FilesExplorerGridHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilesExplorerGridHeaderView.swift; sourceTree = "<group>"; };
 		BF6E8D2C25B636FB003A125A /* PSAViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PSAViewModelTests.swift; sourceTree = "<group>"; };
 		BF74E1E2253668E1001F663C /* HomeRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeRouter.swift; sourceTree = "<group>"; };
 		BF7A73852C5846F400EB40F3 /* NodeDescriptionCellControllerModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeDescriptionCellControllerModelTests.swift; sourceTree = "<group>"; };
@@ -8187,6 +8189,7 @@
 				B5FE693A286B090900A1725C /* FavouriteExplorerToolbarConfigurator.swift */,
 				B5FE690E286984AC00A1725C /* FavouritesExplorerGridViewController.swift */,
 				BF5E33BD2558D99C0055395E /* FilesExplorerContainerViewController.swift */,
+				BF6E080A2EB462B1006402E5 /* FilesExplorerGridHeaderView.swift */,
 				BF5E33AD2558D8330055395E /* FilesExplorerGridViewController.swift */,
 				BFCB810F2505A8D90096BD57 /* FilesExplorerListViewController.swift */,
 				BF5E3494255C8FD10055395E /* FilesExplorerViewController.swift */,
@@ -14786,6 +14789,7 @@
 				BF5E34062559E2C10055395E /* FilesExplorerContainerListViewState.swift in Sources */,
 				BF5E33BE2558D99C0055395E /* FilesExplorerContainerViewController.swift in Sources */,
 				BF5E33FC2559E29B0055395E /* FilesExplorerContainerViewState.swift in Sources */,
+				BF6E080B2EB462B1006402E5 /* FilesExplorerGridHeaderView.swift in Sources */,
 				BF5E345F255A2E1A0055395E /* FilesExplorerGridSource.swift in Sources */,
 				BF5E33AF2558D8330055395E /* FilesExplorerGridViewController.swift in Sources */,
 				BFAAF71F252E9E960053A9BF /* FilesExplorerListSourceProtocol.swift in Sources */,

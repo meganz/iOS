@@ -35,6 +35,19 @@ final class FilesExplorerViewModelTests: XCTestCase {
             }
         }
     }
+
+    func testViewModeHeaderViewModel_byDefault_shouldReturnListView() {
+        let sut = sut()
+        XCTAssertEqual(sut.viewModeHeaderViewModel.selectedViewMode, .list)
+        XCTAssertEqual(sut.viewModeHeaderViewModel.availableViewModes, [.list, .grid])
+    }
+
+    func testViewModeHeaderViewModel_whenViewChangedToGrid_shouldReturnGridView() {
+        let sut = sut()
+        sut.dispatch(.didChangeViewMode(2))
+        XCTAssertEqual(sut.viewModeHeaderViewModel.selectedViewMode, .grid)
+        XCTAssertEqual(sut.viewModeHeaderViewModel.availableViewModes, [.list, .grid])
+    }
 }
 
 private extension FilesExplorerViewModelTests {

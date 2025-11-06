@@ -1,3 +1,4 @@
+import Combine
 import MEGADomain
 import MEGAL10n
 
@@ -9,7 +10,8 @@ class FilesExplorerContainerViewState: FilesExplorerViewControllerDelegate {
     
     unowned let containerViewController: FilesExplorerContainerViewController
     let viewModel: FilesExplorerViewModel
-    
+    private var subscriptions: Set<AnyCancellable> = []
+
     var title: String? {
         return filesExplorerViewController?.title()
     }
@@ -28,6 +30,18 @@ class FilesExplorerContainerViewState: FilesExplorerViewControllerDelegate {
          viewModel: FilesExplorerViewModel) {
         self.containerViewController = containerViewController
         self.viewModel = viewModel
+
+        viewModel
+            .viewModeHeaderViewModel
+            .$selectedViewMode
+            .dropFirst()
+            .map { $0 == .grid ? .thumbnail : .list }
+            .debounce(for: .seconds(0.4), scheduler: DispatchQueue.main) // This is needed to prevent a crash because the header is removed.
+            // Debounce is needed because the Picker triggers the selection change while the user is still interacting.
+            .sink { [weak self] mode in
+                self?.handle(viewMode: mode)
+            }
+            .store(in: &subscriptions)
     }
 
     func add(content: UIViewController) {
@@ -79,7 +93,11 @@ class FilesExplorerContainerViewState: FilesExplorerViewControllerDelegate {
     func toggleState() {
         fatalError("toogleCurrentState() needs to be implemented by the subclass")
     }
-    
+
+    func handle(viewMode: ViewModePreferenceEntity) {
+        fatalError("handle(vieMode:) needs to be implemented by the subclass")
+    }
+
     func toggleSelectAllNodes() {
         filesExplorerViewController?.toggleSelectAllNodes()
     }

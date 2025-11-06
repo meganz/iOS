@@ -1,3 +1,5 @@
+import MEGADomain
+
 @MainActor
 class FilesExplorerContainerGridViewState: FilesExplorerContainerViewState {
     override func showContent() {
@@ -29,5 +31,10 @@ class FilesExplorerContainerGridViewState: FilesExplorerContainerViewState {
     
     override func didScroll(scrollView: UIScrollView) {
         containerViewController.hideKeyboardIfRequired()
+    }
+
+    override func handle(viewMode: ViewModePreferenceEntity) {
+        guard viewMode != .thumbnail else { return }
+        toggleState()
     }
 }

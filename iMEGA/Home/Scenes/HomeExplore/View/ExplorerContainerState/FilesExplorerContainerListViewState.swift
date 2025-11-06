@@ -1,3 +1,5 @@
+import MEGADomain
+
 class FilesExplorerContainerListViewState: FilesExplorerContainerViewState {
     override func showContent() {
         super.showContent()
@@ -13,5 +15,10 @@ class FilesExplorerContainerListViewState: FilesExplorerContainerViewState {
     override func toggleState() {
         let nextState = self.transitionToState(matching: FilesExplorerContainerGridViewState.identifier)
         nextState.showContent()
+    }
+
+    override func handle(viewMode: ViewModePreferenceEntity) {
+        guard viewMode != .list else { return }
+        toggleState()
     }
 }

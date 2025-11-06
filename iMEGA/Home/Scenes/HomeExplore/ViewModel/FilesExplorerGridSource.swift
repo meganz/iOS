@@ -1,5 +1,8 @@
+import MEGAAppPresentation
+
 protocol FilesExplorerGridSourceDelegate: UIViewController {
     func showMoreNodeOptions(for node: MEGANode, sender: UIView)
+    func headerView() -> UIView
 }
 
 @MainActor
@@ -130,6 +133,34 @@ extension FilesExplorerGridSource: UICollectionViewDataSource {
                            sdk: MEGASdk.shared,
                            delegate: self)
         return cell
+    }
+
+    func collectionView(
+        _ collectionView: UICollectionView,
+        viewForSupplementaryElementOfKind kind: String,
+        at indexPath: IndexPath
+    ) -> UICollectionReusableView {
+        guard DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .cloudDriveRevamp) else {
+            assertionFailure("Case not handled: \(kind) - at \(indexPath)")
+            return UICollectionReusableView()
+        }
+
+        guard let headerView = collectionView.dequeueReusableSupplementaryView(
+            ofKind: CHTCollectionElementKindSectionHeader,
+            withReuseIdentifier: FilesExplorerGridHeaderView.reuseIdentifier,
+            for: indexPath
+        ) as? FilesExplorerGridHeaderView else {
+            assertionFailure("Unable to dequeue the correct type of supplementary view")
+            return UICollectionReusableView()
+        }
+        
+        headerView.frame.size.height = 40
+
+        if let headerContentView = delegate?.headerView() {
+            headerView.addContentView(headerContentView)
+        }
+
+        return headerView
     }
 }
 

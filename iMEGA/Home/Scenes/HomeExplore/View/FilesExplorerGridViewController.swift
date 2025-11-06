@@ -1,3 +1,4 @@
+import MEGAAppPresentation
 import UIKit
 
 class FilesExplorerGridViewController: FilesExplorerViewController {
@@ -34,7 +35,13 @@ class FilesExplorerGridViewController: FilesExplorerViewController {
             NodeCollectionViewCell.cellNib,
             forCellWithReuseIdentifier: NodeCollectionViewCell.reusableIdentifier
         )
-        
+
+        collectionView.register(
+            FilesExplorerGridHeaderView.self,
+            forSupplementaryViewOfKind: CHTCollectionElementKindSectionHeader,
+            withReuseIdentifier: FilesExplorerGridHeaderView.reusableIdentifier
+        )
+
         viewModel.invokeCommand = { [weak self] command in
             self?.executeCommand(command)
         }
@@ -211,6 +218,16 @@ extension FilesExplorerGridViewController: UICollectionViewDelegate {
     func collectionViewDidEndMultipleSelectionInteraction(_ collectionView: UICollectionView) {
         collectionView.alwaysBounceVertical = true
     }
+
+    func collectionView(
+        _ collectionView: UICollectionView!,
+        layout collectionViewLayout: UICollectionViewLayout!,
+        heightForHeaderInSection section: Int
+    ) -> CGFloat {
+        guard DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .cloudDriveRevamp), section == 0 else { return 0 }
+        return 40
+    }
+
 }
 
 // MARK: - Scrollview delegate

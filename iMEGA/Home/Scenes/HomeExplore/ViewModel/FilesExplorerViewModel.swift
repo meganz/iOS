@@ -3,6 +3,7 @@ import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGADomain
 import MEGAFoundation
+import Search
 
 enum FilesExplorerAction: ActionType {
     case onViewReady
@@ -81,7 +82,21 @@ final class FilesExplorerViewModel: ViewModelType {
     private var searchTask: Task<Void, Never>? {
         didSet { oldValue?.cancel() }
     }
+
+    var sortHeaderViewModel: SearchResultsHeaderSortViewViewModel {
+        // IOS-10755: TO BE IMPLEMENTED
+        SearchResultsHeaderSortViewViewModel(title: "", icon: nil) {
+
+        }
+    }
     
+    lazy var viewModeHeaderViewModel: SearchResultsHeaderViewModeViewModel = {
+        SearchResultsHeaderViewModeViewModel(
+            selectedViewMode: viewTypePreference == .list ? .list : .grid,
+            availableViewModes: [.list, .grid]
+        )
+    }()
+
     // MARK: - Initializer
     required init(explorerType: ExplorerTypeEntity,
                   router: FilesExplorerRouter,

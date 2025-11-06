@@ -1,3 +1,4 @@
+import MEGAAppPresentation
 import UIKit
 
 final class FavouritesExplorerGridViewController: FilesExplorerViewController {
@@ -30,6 +31,12 @@ final class FavouritesExplorerGridViewController: FilesExplorerViewController {
         collectionView.register(
             NodeCollectionViewCell.cellNib,
             forCellWithReuseIdentifier: NodeCollectionViewCell.reusableIdentifier
+        )
+
+        collectionView.register(
+            FilesExplorerGridHeaderView.self,
+            forSupplementaryViewOfKind: CHTCollectionElementKindSectionHeader,
+            withReuseIdentifier: FilesExplorerGridHeaderView.reusableIdentifier
         )
 
         viewModel.invokeCommand = { [weak self] command in
@@ -207,6 +214,15 @@ extension FavouritesExplorerGridViewController: UICollectionViewDelegate {
     
     func collectionViewDidEndMultipleSelectionInteraction(_ collectionView: UICollectionView) {
         collectionView.alwaysBounceVertical = true
+    }
+
+    func collectionView(
+        _ collectionView: UICollectionView!,
+        layout collectionViewLayout: UICollectionViewLayout!,
+        heightForHeaderInSection section: Int
+    ) -> CGFloat {
+        guard DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .cloudDriveRevamp), section == 0 else { return 0 }
+        return 40
     }
 }
 

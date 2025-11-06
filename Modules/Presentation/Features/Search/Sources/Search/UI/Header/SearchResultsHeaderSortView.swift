@@ -1,10 +1,14 @@
 import MEGADesignToken
 import SwiftUI
 
-struct SearchResultsHeaderSortView: View {
-    let viewModel: SearchResultsHeaderSortViewViewModel
+public struct SearchResultsHeaderSortView: View {
+    private let viewModel: SearchResultsHeaderSortViewViewModel
 
-    var body: some View {
+    public init(viewModel: SearchResultsHeaderSortViewViewModel) {
+        self.viewModel = viewModel
+    }
+
+    public var body: some View {
         Button {
             viewModel.handler()
         } label: {

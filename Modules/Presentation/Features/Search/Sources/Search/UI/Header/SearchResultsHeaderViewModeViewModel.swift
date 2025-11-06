@@ -1,14 +1,14 @@
 import SwiftUI
 
 @MainActor
-final class SearchResultsHeaderViewModeViewModel: ObservableObject {
-    @Published var selectedViewMode: SearchResultsViewMode
-    @Published var availableViewModes: [SearchResultsViewMode]
+public final class SearchResultsHeaderViewModeViewModel: ObservableObject {
+    @Published public var selectedViewMode: SearchResultsViewMode
+    @Published public var availableViewModes: [SearchResultsViewMode]
 
     var image: Image { selectedViewMode.icon }
     var title: String { selectedViewMode.title }
 
-    init(selectedViewMode: SearchResultsViewMode, availableViewModes: [SearchResultsViewMode]) {
+    public init(selectedViewMode: SearchResultsViewMode, availableViewModes: [SearchResultsViewMode]) {
         self.selectedViewMode = selectedViewMode
         self.availableViewModes = availableViewModes
     }

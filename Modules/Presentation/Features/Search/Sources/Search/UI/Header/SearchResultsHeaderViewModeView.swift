@@ -1,10 +1,14 @@
 import MEGADesignToken
 import SwiftUI
 
-struct SearchResultsHeaderViewModeView: View {
-    @StateObject var viewModel: SearchResultsHeaderViewModeViewModel
+public struct SearchResultsHeaderViewModeView: View {
+    @StateObject private var viewModel: SearchResultsHeaderViewModeViewModel
 
-    var body: some View {
+    public init(viewModel: @autoclosure @escaping () -> SearchResultsHeaderViewModeViewModel) {
+        _viewModel = StateObject(wrappedValue: viewModel())
+    }
+
+    public var body: some View {
         Menu {
             Picker("View Mode Selection", selection: $viewModel.selectedViewMode) {
                 ForEach(viewModel.availableViewModes, id: \.self) { viewMode in

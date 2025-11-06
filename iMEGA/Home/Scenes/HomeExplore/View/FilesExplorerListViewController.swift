@@ -1,3 +1,4 @@
+import MEGAAppPresentation
 import MEGADesignToken
 import UIKit
 
@@ -140,6 +141,10 @@ class FilesExplorerListViewController: FilesExplorerViewController {
     
     private func addAndConfigureTableView() {
         view.wrap(tableView)
+
+        if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .cloudDriveRevamp) {
+            tableView.tableHeaderView = headerView()
+        }
     }
 }
 

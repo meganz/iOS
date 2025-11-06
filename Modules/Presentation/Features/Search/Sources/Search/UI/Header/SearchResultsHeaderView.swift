@@ -1,12 +1,12 @@
 import MEGADesignToken
 import SwiftUI
 
-struct SearchResultsHeaderView<LeftView: View, RightView: View>: View {
-    private enum SearchResultsHeaderViewConstants {
-        static var height: CGFloat { 36 }
-        static var horizontalPadding: CGFloat { 0 }
-        static var spacing: CGFloat { TokenSpacing._3 }
-        static var alignment: VerticalAlignment { .center }
+public struct SearchResultsHeaderView<LeftView: View, RightView: View>: View {
+    public enum SearchResultsHeaderViewConstants {
+        public static var height: CGFloat { 36 }
+        public static var horizontalPadding: CGFloat { 0 }
+        public static var spacing: CGFloat { TokenSpacing._3 }
+        public static var alignment: VerticalAlignment { .center }
     }
 
     private let height: CGFloat
@@ -32,7 +32,7 @@ struct SearchResultsHeaderView<LeftView: View, RightView: View>: View {
         self.rightView = rightView()
     }
 
-    var body: some View {
+    public var body: some View {
         HStack(alignment: alignment, spacing: spacing) {
             leftView
             Spacer()
@@ -44,7 +44,7 @@ struct SearchResultsHeaderView<LeftView: View, RightView: View>: View {
 }
 
 // Full initializer
-extension SearchResultsHeaderView {
+public extension SearchResultsHeaderView {
     init(
         height: CGFloat = SearchResultsHeaderViewConstants.height,
         horizontalPadding: CGFloat = SearchResultsHeaderViewConstants.horizontalPadding,
@@ -65,7 +65,7 @@ extension SearchResultsHeaderView {
 }
 
 // Left-only convenience
-extension SearchResultsHeaderView where RightView == EmptyView {
+public extension SearchResultsHeaderView where RightView == EmptyView {
     init(
         height: CGFloat = SearchResultsHeaderViewConstants.height,
         horizontalPadding: CGFloat = SearchResultsHeaderViewConstants.horizontalPadding,
@@ -85,7 +85,7 @@ extension SearchResultsHeaderView where RightView == EmptyView {
 }
 
 // Right-only convenience
-extension SearchResultsHeaderView where LeftView == EmptyView {
+public extension SearchResultsHeaderView where LeftView == EmptyView {
     init(
         height: CGFloat = SearchResultsHeaderViewConstants.height,
         horizontalPadding: CGFloat = SearchResultsHeaderViewConstants.horizontalPadding,
