@@ -23,6 +23,7 @@ extension Array where Element == ResultProperty {
         Group {
             ForEach(propertiesFor(mode: layout, placement: placement)) { resultProperty in
                 propertyView(for: resultProperty, colorAssets: colorAssets, placement: placement)
+                    .padding(.horizontal, layout == .thumbnail ? TokenSpacing._2 : 0)
                     .accessibilityLabel(resultProperty.accessibilityLabel)
             }
         }
@@ -40,7 +41,6 @@ extension Array where Element == ResultProperty {
             Spacer()
         }
     }
-    
 }
 
 extension ResultProperty {
@@ -55,6 +55,5 @@ extension ResultProperty {
         } else {
             Image(uiImage: image)
         }
-
     }
 }

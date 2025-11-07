@@ -7,6 +7,9 @@ import Search
 import SwiftUI
 
 extension SearchConfig {
+    static var isCloudDriveRevampEnabled: Bool {
+        DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .cloudDriveRevamp)
+    }
     static func searchConfig(
         contextPreviewFactory: ContextPreviewFactory,
         defaultEmptyViewAsset: @escaping () -> EmptyViewAssets
@@ -104,7 +107,9 @@ extension SearchConfig {
                 playImage: MEGAAssets.UIImage.videoList,
                 downloadedImage: MEGAAssets.UIImage.downloaded,
                 moreList: MEGAAssets.UIImage.moreList.withTintColorAsOriginal(TokenColors.Icon.secondary),
-                moreGrid: MEGAAssets.UIImage.moreGrid.withTintColorAsOriginal(TokenColors.Icon.secondary)
+                moreGrid: isCloudDriveRevampEnabled
+                ? MEGAAssets.UIImage.moreHorizontal
+                : MEGAAssets.UIImage.moreGrid.withTintColorAsOriginal(TokenColors.Icon.secondary)
             ),
             colorAssets: .init(
                 unselectedBorderColor: TokenColors.Border.strong.swiftUI,
@@ -115,9 +120,9 @@ extension SearchConfig {
                 tagsTextColor: UIColor.primaryTextColor().swiftUI,
                 textHighlightColor: TokenColors.Notifications.notificationSuccess.swiftUI,
                 vibrantColor: TokenColors.Text.error.swiftUI,
-                resultPropertyColor: TokenColors.Icon.secondary.swiftUI,
-                verticalThumbnailFooterText: TokenColors.Text.primary.swiftUI,
-                verticalThumbnailFooterBackground: TokenColors.Background.surface1.swiftUI,
+                resultPropertyColor: isCloudDriveRevampEnabled ? TokenColors.Icon.onColor.swiftUI : TokenColors.Icon.secondary.swiftUI,
+                verticalThumbnailFooterText: isCloudDriveRevampEnabled ? TokenColors.Icon.onColor.swiftUI: TokenColors.Text.primary.swiftUI,
+                verticalThumbnailFooterBackground: isCloudDriveRevampEnabled ? TokenColors.Background.surfaceTransparent.swiftUI :  TokenColors.Background.surface1.swiftUI,
                 verticalThumbnailPreviewBackground: TokenColors.Background.surface1.swiftUI,
                 verticalThumbnailTopIconsBackground: TokenColors.Background.surface2.swiftUI,
                 listRowSeparator: TokenColors.Border.strong.swiftUI,

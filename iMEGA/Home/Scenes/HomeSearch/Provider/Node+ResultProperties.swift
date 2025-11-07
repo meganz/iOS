@@ -80,7 +80,7 @@ extension ResultProperty {
             placement: { mode in
                 switch mode {
                 case .list: .secondary(.trailing)
-                case .thumbnail: .secondary(.trailing)
+                case .thumbnail: isCloudDriveRevampEnabled ? .none : .secondary(.trailing)
                 }
             }
         )
@@ -101,7 +101,7 @@ extension ResultProperty {
             placement: { mode in
                 switch mode {
                 case .list: .secondary(.leading)
-                case .thumbnail: .secondary(.trailingEdge)
+                case .thumbnail: isCloudDriveRevampEnabled ? .none : .secondary(.trailingEdge)
                 }
             }
         )

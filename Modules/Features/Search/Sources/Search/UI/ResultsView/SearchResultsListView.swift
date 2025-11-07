@@ -57,6 +57,8 @@ struct SearchResultsListView: View {
                     .listRowSeparatorTint(viewModel.colorAssets.listRowSeparator.opacity(viewModel.usesRevampedLayout ? 0 : 1))
                     .listRowBackground(Color.clear)
                     .onAppear {
+                        // `viewModel.onItemAppear(item)` is meant to trigger `loadMore` logic.
+                        // We need to use `.onAppear` instead of `.task` so `loadMore` cannot be cancelled and cause a bug.
                         Task {
                             await viewModel.onItemAppear(item)
                         }
