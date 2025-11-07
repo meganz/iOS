@@ -31,7 +31,7 @@ struct CameraUploadInProgressRowViewModelTests {
         
         #expect(sut.fileName == expectedFileName)
         #expect(sut.percentage == uploadProgress.percentage)
-        #expect(sut.fileProgressInformation == makeProgressString(progress: uploadProgress))
+        #expect(sut.fileProgress == makeProgressString(progress: uploadProgress))
     }
     
     @MainActor
@@ -43,8 +43,8 @@ struct CameraUploadInProgressRowViewModelTests {
             percentage: 0.90,
             totalBytes: 23456,
             bytesPerSecond: 67890)
-        let expectedPercentages = [uploadProgress.percentage,
-                                   updatedProgress.percentage]
+        let expectedPercentages = [uploadProgress,
+                                   updatedProgress]
         let expectedInfo = [makeProgressString(progress: uploadProgress),
                             makeProgressString(progress: updatedProgress)]
         let expectations = Array(zip(expectedPercentages, expectedInfo))
@@ -55,23 +55,29 @@ struct CameraUploadInProgressRowViewModelTests {
             ))
         
         try await confirmation(expectedCount: expectations.count) { confirmation in
+            var expectations = expectations
+            
+            let cancellable = Publishers.Zip3(
+                sut.$percentage,
+                sut.$fileProgress,
+                sut.$uploadSpeed)
+                .dropFirst()
+                .sink { (percentage, fileProgress, uploadSpeed) in
+                    let (expectedProgress, expectedProgressInfo) = expectations.removeFirst()
+                    #expect(percentage.isApproximatelyEqual(to: expectedProgress.percentage, tolerance: 0.01))
+                    #expect(fileProgress == expectedProgressInfo)
+                    #expect(uploadSpeed == Strings.Localizable.CameraUploads.Progress.Row.uploadSpeed(String.memoryStyleString(fromByteCount: Int64(expectedProgress.bytesPerSecond))))
+                    confirmation()
+                }
+            
             let monitor = Task {
                 try await withTimeout(seconds: 5) { // Cancel task if stream don't finish
                     await sut.monitorUploadProgress()
                 }
             }
             
-            var expectations = expectations
-            
-            let cancellable = sut.$percentage.dropFirst()
-                .zip(sut.$fileProgressInformation.dropFirst())
-                .sink { (percentage, progressInfo) in
-                    let (expectedPercentage, expectedProgressInfo) = expectations.removeFirst()
-                    #expect(percentage.isApproximatelyEqual(to: expectedPercentage, tolerance: 0.01))
-                    #expect(progressInfo == expectedProgressInfo)
-                    confirmation()
-                }
-               
+            // Sleep to wait for monitor to setup
+            try await Task.sleep(nanoseconds: 50_000_000)
             continuation.yield(uploadProgress)
             // Sleep to get past the debounce
             try await Task.sleep(nanoseconds: 100_000_000)
@@ -103,9 +109,8 @@ struct CameraUploadInProgressRowViewModelTests {
     }
     
     private func makeProgressString(progress: CameraUploadProgressEntity) -> String {
-        Strings.Localizable.CameraUploads.Progress.Row.uploadProgressFormat(
+        Strings.Localizable.CameraUploads.Progress.Row.fileProgress(
             String(format: "%.0f%%", progress.percentage * 100),
-            String.memoryStyleString(fromByteCount: progress.totalBytes),
-            String.memoryStyleString(fromByteCount: Int64(progress.bytesPerSecond)))
+            String.memoryStyleString(fromByteCount: progress.totalBytes))
     }
 }

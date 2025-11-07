@@ -4774,3 +4774,9 @@
 "upgradeAccountPlan.plan.tag.introOffer.specialOffer"="Special offer: %@ off";
 /* View mode title for grid view in the cloud drive. */
 "cloudDrive.viewMode.grid.title"="Grid view";
+/* Camera Uploads Progress In Queue section title */
+"cameraUploads.progress.section.inQueue.title"="In Queue";
+/* Camera Uploads row file progress */
+"cameraUploads.progress.row.fileProgress"="%1$@ of %2$@";
+/* Camera Uploads row file upload speed */
+"cameraUploads.progress.row.uploadSpeed"="%@/s";

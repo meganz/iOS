@@ -16,9 +16,7 @@ struct CameraUploadInProgressRowView: View {
                         .font(.body)
                         .foregroundStyle(TokenColors.Text.primary.swiftUI)
                     
-                    Text(viewModel.fileProgressInformation)
-                        .font(.footnote)
-                        .foregroundStyle(TokenColors.Text.secondary.swiftUI)
+                    fileProgressInformation
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
             }
@@ -41,5 +39,14 @@ struct CameraUploadInProgressRowView: View {
         .task {
             await viewModel.monitorUploadProgress()
         }
+    }
+    
+    private var fileProgressInformation: some View {
+        HStack(spacing: TokenSpacing._3) {
+            Text(viewModel.fileProgress)
+            Text(viewModel.uploadSpeed)
+        }
+        .font(.footnote)
+        .foregroundStyle(TokenColors.Text.secondary.swiftUI)
     }
 }

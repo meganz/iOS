@@ -1903,10 +1903,15 @@ public enum Strings {
           public static let title: Swift.String
         }
         public enum Row {
+          public static func fileProgress(_ p1: Any, _ p2: Any) -> Swift.String
           public static func uploadProgressFormat(_ p1: Any, _ p2: Any, _ p3: Any) -> Swift.String
+          public static func uploadSpeed(_ p1: Any) -> Swift.String
         }
         public enum Section {
           public enum InProgress {
+            public static let title: Swift.String
+          }
+          public enum InQueue {
             public static let title: Swift.String
           }
         }

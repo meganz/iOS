@@ -6,7 +6,8 @@ import MEGASwift
 final class CameraUploadInProgressRowViewModel: ObservableObject {
     // MARK: - Published Properties
     @Published private(set) var fileName = ""
-    @Published private(set) var fileProgressInformation = ""
+    @Published private(set) var fileProgress = ""
+    @Published private(set) var uploadSpeed = ""
     @Published private(set) var percentage: Double = 0.0
     
     // MARK: - Private Properties
@@ -39,8 +40,7 @@ final class CameraUploadInProgressRowViewModel: ObservableObject {
     func load() async {
         let uploadProgress = await cameraUploadProgressUseCase.uploadProgress(
             for: fileEntity.localIdentifier)
-        percentage = uploadProgress.percentage
-        fileProgressInformation = uploadProgress.progressInfo
+        updateFileInfo(uploadProgress)
     }
     
     func monitorUploadProgress() async {
@@ -48,10 +48,14 @@ final class CameraUploadInProgressRowViewModel: ObservableObject {
             for: fileEntity.localIdentifier).debounce(for: progressUpdateDebounceDuration)
             .removeDuplicates(by: { !$0.isMeaningfullyDifferent(from: $1) }) {
             guard !Task.isCancelled else { break }
-            
-            percentage = progress.percentage
-            fileProgressInformation = progress.progressInfo
+            updateFileInfo(progress)
         }
+    }
+    
+    private func updateFileInfo(_ progress: CameraUploadProgressEntity) {
+        percentage = progress.percentage
+        fileProgress = progress.fileProgress
+        uploadSpeed = progress.uploadSpeed
     }
 }
 
@@ -72,11 +76,14 @@ extension CameraUploadInProgressRowViewModel: Hashable {
 }
 
 extension CameraUploadProgressEntity {
-    fileprivate var progressInfo: String {
-        Strings.Localizable.CameraUploads.Progress.Row.uploadProgressFormat(
+    fileprivate var fileProgress: String {
+        Strings.Localizable.CameraUploads.Progress.Row.fileProgress(
             String(format: "%.0f%%", percentage * 100),
-            String.memoryStyleString(fromByteCount: totalBytes),
-            String.memoryStyleString(fromByteCount: Int64(bytesPerSecond)))
+            String.memoryStyleString(fromByteCount: totalBytes))
+    }
+    
+    fileprivate var uploadSpeed: String {
+        Strings.Localizable.CameraUploads.Progress.Row.uploadSpeed(String.memoryStyleString(fromByteCount: Int64(bytesPerSecond)))
     }
     
     fileprivate func isMeaningfullyDifferent(from other: CameraUploadProgressEntity) -> Bool {

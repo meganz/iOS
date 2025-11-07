@@ -11,6 +11,9 @@ final class CameraUploadProgressTableViewController: UITableViewController {
     private(set) var monitorCameraUploadsTask: Task<Void, Never>? {
         didSet { oldValue?.cancel() }
     }
+    private var scrollDebounceTask: Task<Void, Never>? {
+        didSet { oldValue?.cancel() }
+    }
     
     init(viewModel: CameraUploadProgressTableViewModel) {
         self.viewModel = viewModel
@@ -51,13 +54,23 @@ final class CameraUploadProgressTableViewController: UITableViewController {
                 dataSource?.handleInProgressSnapshotUpdate($0)
             }
             .store(in: &cancellables)
+        
+        viewModel.$inQueueSnapshotUpdate
+            .compactMap { $0 }
+            .receive(on: DispatchQueue.main)
+            .sink { [weak dataSource] in
+                dataSource?.handleInQueueSnapshotUpdate($0)
+            }
+            .store(in: &cancellables)
     }
     
     private func setupTableView() {
         tableView.sectionHeaderTopPadding = 0
         tableView.backgroundColor = TokenColors.Background.page
+        tableView.showsVerticalScrollIndicator = false
         
         tableView.register(HostingTableViewCell<CameraUploadInProgressRowView>.self, forCellReuseIdentifier: "CameraUploadInProgressRowView")
+        tableView.register(HostingTableViewCell<CameraUploadInQueueRowView>.self, forCellReuseIdentifier: "CameraUploadInQueueRowView")
         
         tableView.rowHeight = viewModel.rowHeight
         tableView.estimatedRowHeight = viewModel.rowHeight
@@ -80,11 +93,20 @@ final class CameraUploadProgressTableViewController: UITableViewController {
                     .margins(.all, 0)
                     
                     return cell
+                case .inQueue(let cameraUploadInQueueRowViewModel):
+                    let cell = tableView.dequeueReusableCell(withIdentifier: "CameraUploadInQueueRowView", for: indexPath)
+                    
+                    cell.contentConfiguration = UIHostingConfiguration {
+                        CameraUploadInQueueRowView(viewModel: cameraUploadInQueueRowViewModel)
+                    }
+                    .margins(.all, 0)
+                    
+                    return cell
                 }
             }
         )
         
-        dataSource?.defaultRowAnimation = .fade
+        dataSource?.defaultRowAnimation = .none
     }
     
     // MARK: - UITableViewDelegate
@@ -101,5 +123,37 @@ final class CameraUploadProgressTableViewController: UITableViewController {
         .margins(.all, 0)
         
         return headerView
+    }
+    
+    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let isUserInitiated = scrollView.isTracking || scrollView.isDragging || scrollView.isDecelerating
+        guard !viewModel.isPaginationInProgress else { return }
+        
+        guard let visibleIndexPaths = tableView.indexPathsForVisibleRows,
+              !visibleIndexPaths.isEmpty,
+              let items = dataSource?.snapshot().itemIdentifiers(inSection: .inQueue),
+              !items.isEmpty else { return }
+        
+        let queueIndexPaths = visibleIndexPaths.filter { $0.section == CameraUploadProgressSections.inQueue.rawValue }
+        guard !queueIndexPaths.isEmpty else { return }
+        
+        let middleQueueIndexPath = queueIndexPaths[queueIndexPaths.count / 2]
+        let middleIndex = middleQueueIndexPath.row
+        let totalItems = items.count
+        
+        scrollDebounceTask = Task { @MainActor [weak viewModel] in
+            guard let viewModel else { return }
+            
+            if !viewModel.isNearEdge(visibleIndex: middleIndex, totalItems: totalItems) {
+                try? await Task.sleep(nanoseconds: 150_000_000) // 150ms debounce
+                guard !Task.isCancelled else { return }
+            }
+            
+            await viewModel.handleQueueSectionScroll(
+                visibleIndex: middleIndex,
+                totalVisibleItems: totalItems,
+                isUserInitiated: isUserInitiated
+            )
+        }
     }
 }

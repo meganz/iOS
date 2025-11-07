@@ -1,6 +1,7 @@
 import MEGAAppPresentation
 import MEGADesignToken
 import MEGADomain
+import MEGAPreference
 import MEGARepo
 import SwiftUI
 
@@ -21,7 +22,14 @@ struct CameraUploadProgressRouter: Routing {
             cameraUploadFileDetailsUseCase: CameraUploadFileDetailsUseCase(
                 cameraUploadAssetRepository: assetRepository),
             photoLibraryThumbnailUseCase: PhotoLibraryThumbnailUseCase(
-                photoLibraryThumbnailRepository: PhotoLibraryThumbnailRepository()))
+                photoLibraryThumbnailRepository: PhotoLibraryThumbnailRepository()),
+            paginationManager: CameraUploadPaginationManager(
+                pageSize: 30,
+                lookAhead: 4,
+                lookBehind: 4,
+                queuedCameraUploadsUseCase: QueuedCameraUploadsUseCase(
+                    cameraUploadAssetRepository: assetRepository,
+                    preferenceRepository: PreferenceRepository.newRepo)))
         
         let hostingController = UIHostingController(
             rootView: CameraUploadProgressView(viewModel: viewModel))
