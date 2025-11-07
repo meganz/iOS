@@ -604,18 +604,24 @@
                 [self dismissViewControllerAnimated:YES completion:nil];
             }
         }];
-        for (id userToShare in self.selectedUsersArray) {
-            if ([userToShare isKindOfClass:MEGAUser.class]) {
-                MEGAUser *user = (MEGAUser *)userToShare;
-                for (MEGANode *node in nodes) {
-                    [MEGASdk.shared shareNode:node withUser:user level:shareType delegate:shareRequestDelegate];
-                }
-            } else if ([userToShare isKindOfClass:NSString.class]) {
-                for (MEGANode *node in nodes) {
-                    [MEGASdk.shared shareNode:node withEmail:userToShare level:shareType delegate:shareRequestDelegate];
+        [self createShareKeysForNodes:nodes completionHandler:^(NSError * _Nullable error) {
+            if (error) {
+                [SVProgressHUD showErrorWithStatus:error.localizedDescription];
+                return;
+            }
+            for (id userToShare in self.selectedUsersArray) {
+                if ([userToShare isKindOfClass:MEGAUser.class]) {
+                    MEGAUser *user = (MEGAUser *)userToShare;
+                    for (MEGANode *node in nodes) {
+                        [MEGASdk.shared shareNode:node withUser:user level:shareType delegate:shareRequestDelegate];
+                    }
+                } else if ([userToShare isKindOfClass:NSString.class]) {
+                    for (MEGANode *node in nodes) {
+                        [MEGASdk.shared shareNode:node withEmail:userToShare level:shareType delegate:shareRequestDelegate];
+                    }
                 }
             }
-        }
+        }];
     } else if (self.contactsMode == ContactsModeFolderSharedWith) {
         void (^completion)(void);
         if (shareType == MEGAShareTypeAccessUnknown) {

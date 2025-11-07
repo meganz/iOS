@@ -5,6 +5,7 @@ import MEGADesignToken
 import MEGADomain
 import MEGAFoundation
 import MEGAL10n
+import MEGASdk
 import SwiftUI
 
 extension ContactsViewController {
@@ -264,6 +265,15 @@ extension ContactsViewController {
                 .receive(on: DispatchQueue.main)
                 .sink { [weak self] in self?.dismiss(animated: true) }
         ]
+    }
+    
+    @objc @MainActor
+    func createShareKeys(forNodes nodes: [MEGANode]) async throws {
+        let shareUseCase = ShareUseCase(
+            shareRepository: ShareRepository.newRepo,
+            filesSearchRepository: FilesSearchRepository.newRepo,
+            nodeRepository: NodeRepository.newRepo)
+        _ = try await shareUseCase.createShareKeys(forNodes: nodes.toNodeEntities())
     }
     
     private func showAlert(alertModel: AlertModel) {
