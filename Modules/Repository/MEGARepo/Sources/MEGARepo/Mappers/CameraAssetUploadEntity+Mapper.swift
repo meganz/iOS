@@ -7,6 +7,7 @@ extension AssetUploadRecordDTO {
             localIdentifier: localIdentifier,
             creationDate: creationDate,
             mediaType: mediaType?.toPhotoAssetMediaTypeEntity() ?? .unknown,
+            mediaSubType: PhotoAssetMediaSubtypeEntity(rawValue: mediaSubtypes ?? 0),
             status: status?.toCameraAssetUploadStatusEntity() ?? .unknown)
     }
 }

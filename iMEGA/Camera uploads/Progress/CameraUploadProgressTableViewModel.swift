@@ -179,6 +179,7 @@ final class CameraUploadProgressTableViewModel: ObservableObject {
         let viewModels = update.items.map {
             CameraUploadInQueueRowViewModel(
                 assetUploadEntity: $0,
+                cameraUploadFileDetailsUseCase: cameraUploadFileDetailsUseCase,
                 photoLibraryThumbnailUseCase: photoLibraryThumbnailUseCase,
                 thumbnailSize: thumbnailSize)
         }

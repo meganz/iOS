@@ -15,12 +15,15 @@ struct CameraUploadProgressRouter: Routing {
     func build() -> UIViewController {
         let assetRepository = CameraUploadAssetRepository(
             cameraUploadRecordStore: CameraUploadRecordManager.shared())
+        let preferenceRepository = PreferenceRepository.newRepo
         let viewModel = CameraUploadProgressTableViewModel(
             cameraUploadProgressUseCase: CameraUploadProgressUseCase(
                 cameraUploadAssetRepository: assetRepository,
                 transferProgressRepository: CameraUploadTransferProgressRepository.shared),
             cameraUploadFileDetailsUseCase: CameraUploadFileDetailsUseCase(
-                cameraUploadAssetRepository: assetRepository),
+                cameraUploadAssetRepository: assetRepository,
+                cameraAssetTypeRepository: CameraAssetTypeRepository(),
+                preferenceRepository: preferenceRepository),
             photoLibraryThumbnailUseCase: PhotoLibraryThumbnailUseCase(
                 photoLibraryThumbnailRepository: PhotoLibraryThumbnailRepository()),
             paginationManager: CameraUploadPaginationManager(
@@ -29,7 +32,7 @@ struct CameraUploadProgressRouter: Routing {
                 lookBehind: 4,
                 queuedCameraUploadsUseCase: QueuedCameraUploadsUseCase(
                     cameraUploadAssetRepository: assetRepository,
-                    preferenceRepository: PreferenceRepository.newRepo)))
+                    preferenceRepository: preferenceRepository)))
         
         let hostingController = UIHostingController(
             rootView: CameraUploadProgressView(viewModel: viewModel))

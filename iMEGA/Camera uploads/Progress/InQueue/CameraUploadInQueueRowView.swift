@@ -9,9 +9,12 @@ struct CameraUploadInQueueRowView: View {
             CameraUploadThumbnailView(
                 viewModel: viewModel.thumbnailViewModel)
             
-            Text(viewModel.id)
+            Text(viewModel.fileName)
                 .font(.body)
                 .foregroundStyle(TokenColors.Text.primary.swiftUI)
+                .onAppear {
+                    viewModel.loadName()
+                }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(.horizontal, TokenSpacing._5)

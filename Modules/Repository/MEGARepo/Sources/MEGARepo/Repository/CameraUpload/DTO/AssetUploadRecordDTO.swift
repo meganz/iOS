@@ -5,7 +5,7 @@ public struct AssetUploadRecordDTO: Sendable {
     public let localIdentifier: String
     public let creationDate: Date?
     public let mediaType: PHAssetMediaType?
-    public let mediaSubtypes: Int?
+    public let mediaSubtypes: UInt?
     public let additionalMediaSubtypes: Int?
     public let status: CameraAssetUploadStatusDTO?
     
@@ -13,7 +13,7 @@ public struct AssetUploadRecordDTO: Sendable {
         localIdentifier: String,
         creationDate: Date?,
         mediaType: PHAssetMediaType?,
-        mediaSubtypes: Int?,
+        mediaSubtypes: UInt?,
         additionalMediaSubtypes: Int?,
         status: CameraAssetUploadStatusDTO?
     ) {

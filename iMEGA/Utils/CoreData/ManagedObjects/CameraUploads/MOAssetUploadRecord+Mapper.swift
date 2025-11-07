@@ -13,7 +13,7 @@ extension MOAssetUploadRecord {
             localIdentifier: localIdentifier,
             creationDate: creationDate,
             mediaType: PHAssetMediaType(rawValue: mediaType?.intValue ?? 0),
-            mediaSubtypes: mediaSubtypes?.intValue,
+            mediaSubtypes: mediaSubtypes?.uintValue,
             additionalMediaSubtypes: additionalMediaSubtypes?.intValue,
             status: uploadStatus)
     }

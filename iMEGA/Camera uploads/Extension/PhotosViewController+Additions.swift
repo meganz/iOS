@@ -72,8 +72,7 @@ extension PhotosViewController {
     }
     
     private func handleExportFile(for nodes: [MEGANode], sender: Any) {
-        let entityNodes = nodes.toNodeEntities()
-        ExportFileRouter(presenter: self, sender: sender).export(nodes: entityNodes)
+        CameraUploadProgressRouter(presenter: self).start()
         toggleEditing()
     }
     

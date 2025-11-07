@@ -13,6 +13,7 @@ struct CameraUploadProgressTableViewModelTests {
         let cameraUploadProgressUseCase = MockCameraUploadProgressUseCase(
             inProgressFilesResult: .success([fileEntity])
         )
+        let cameraUploadFileDetailsUseCase = MockCameraUploadFileDetailsUseCase()
         let photoLibraryThumbnailUseCase = MockPhotoLibraryThumbnailUseCase()
         let assetUploadEntity = CameraAssetUploadEntity(localIdentifier: inQueueAssetIdentifier)
         let paginationManager = MockPaginationManager(
@@ -24,6 +25,7 @@ struct CameraUploadProgressTableViewModelTests {
         let thumbnailSize = CGSize(width: 32, height: 32)
         let sut = Self.makeSUT(
             cameraUploadProgressUseCase: cameraUploadProgressUseCase,
+            cameraUploadFileDetailsUseCase: cameraUploadFileDetailsUseCase,
             photoLibraryThumbnailUseCase: photoLibraryThumbnailUseCase,
             paginationManager: paginationManager
         )
@@ -37,6 +39,7 @@ struct CameraUploadProgressTableViewModelTests {
             thumbnailSize: thumbnailSize)]))
         #expect(sut.inQueueSnapshotUpdate == .initial([.init(
             assetUploadEntity: assetUploadEntity,
+            cameraUploadFileDetailsUseCase: cameraUploadFileDetailsUseCase,
             photoLibraryThumbnailUseCase: photoLibraryThumbnailUseCase,
             thumbnailSize: thumbnailSize)]))
         #expect(photoLibraryThumbnailUseCase.invocations == [.startCaching(identifiers: [assetIdentifier, inQueueAssetIdentifier], targetSize: thumbnailSize)])

@@ -51,4 +51,5 @@ public enum PreferenceKeyEntity: String, PreferenceKeyProtocol {
     case shouldShowCameraUploadsEnabledSnackbar
     case isDomainNameMEGADotApp
     case isVideoUploadEnabled = "IsUploadVideosEnabled"
+    case shouldConvertHEICPhoto = "ShouldConvertHEICPhoto"
 }
