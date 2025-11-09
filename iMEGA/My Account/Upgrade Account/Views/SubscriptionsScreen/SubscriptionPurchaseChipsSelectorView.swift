@@ -1,3 +1,4 @@
+import MEGAAssets
 import MEGADesignToken
 import SwiftUI
 
@@ -38,15 +39,24 @@ private struct SubscriptionPurchaseChipView: View {
 
     var body: some View {
         Button(action: onSelect) {
-            Text(option.title)
-                .font(.subheadline)
-                .foregroundStyle(isSelected ? TokenColors.Brand.onContainer.swiftUI : TokenColors.Text.primary.swiftUI)
-                .padding(.horizontal, TokenSpacing._5)
-                .padding(.vertical, TokenSpacing._3)
-                .background(
-                    isSelected ? TokenColors.Brand.containerDefault.swiftUI : TokenColors.Button.secondary.swiftUI
-                )
-                .clipShape(Capsule())
+            HStack(spacing: TokenSpacing._3) {
+                if isSelected {
+                    MEGAAssets.Image.check
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 16, height: 16, alignment: .center)
+                        .foregroundStyle(TokenColors.Brand.onContainer.swiftUI)
+                }
+                Text(option.title)
+                    .font(.subheadline)
+                    .foregroundStyle(isSelected ? TokenColors.Brand.onContainer.swiftUI : TokenColors.Text.primary.swiftUI)
+            }
+            .padding(.horizontal, TokenSpacing._5)
+            .padding(.vertical, TokenSpacing._3)
+            .background(
+                isSelected ? TokenColors.Brand.containerDefault.swiftUI : TokenColors.Button.secondary.swiftUI
+            )
+            .clipShape(Capsule())
         }
         .buttonStyle(.plain)
     }
