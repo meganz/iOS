@@ -314,6 +314,28 @@ struct NodeActionViewModelTests {
         }
     }
 
+    @Suite("Call isS4ContainerNode")
+    struct IsS4Container {
+        @Test(
+            arguments: [true, false]
+        )
+        func isS4Container(
+            expectedValue: Bool
+        ) {
+            let node = NodeEntity(handle: 1)
+            let nodeUseCase = MockNodeUseCase(isS4ContainerNode: expectedValue)
+            let sut = makeSUT(
+                nodeUseCase: nodeUseCase
+            )
+
+            let result = sut.isS4Container(node: node)
+
+            #expect(result == expectedValue)
+        }
+    }
+
+    // MARK: - Helpers
+
     private static func makeSUT(
         systemGeneratedNodeUseCase: some SystemGeneratedNodeUseCaseProtocol = MockSystemGeneratedNodeUseCase(nodesForLocation: [:]),
         sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol = MockSensitiveNodeUseCase(),

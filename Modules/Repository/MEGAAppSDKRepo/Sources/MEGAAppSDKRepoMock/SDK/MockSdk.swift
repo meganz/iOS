@@ -74,7 +74,9 @@ public final class MockSdk: MEGASdk, @unchecked Sendable {
     private var localLink: URL?
     private var updatedAddressURL: URL?
     private let isNonAuthorized: Bool
-    
+    private let _isS4Enabled: Bool
+    private let s4ContainerHandle: MEGAHandle
+
     public private(set) var sendEvent_Calls = [(
         eventType: Int,
         message: String,
@@ -201,7 +203,9 @@ public final class MockSdk: MEGASdk, @unchecked Sendable {
         isLocalOnly: Bool = true,
         isRunning: Bool = false,
         updatedAddressURL: URL? = nil,
-        isNonAuthorized: Bool = false
+        isNonAuthorized: Bool = false,
+        isS4Enabled: Bool = false,
+        s4ContainerHandle: MEGAHandle = 0
     ) {
         self.fileLinkNode = fileLinkNode
         self.nodes = nodes
@@ -272,6 +276,8 @@ public final class MockSdk: MEGASdk, @unchecked Sendable {
         self.isRunning = isRunning
         self.updatedAddressURL = updatedAddressURL
         self.isNonAuthorized = isNonAuthorized
+        self._isS4Enabled = isS4Enabled
+        self.s4ContainerHandle = s4ContainerHandle
         super.init()
     }
     
@@ -315,7 +321,15 @@ public final class MockSdk: MEGASdk, @unchecked Sendable {
     public override func isNode(inRubbish node: MEGANode) -> Bool {
         rubbishNodes.contains(node)
     }
-    
+
+    public override func isS4Enabled() -> Bool {
+        _isS4Enabled
+    }
+
+    public override func getS4ContainerHandle() -> MEGAHandle {
+        s4ContainerHandle
+    }
+
     public override func children(forParent parent: MEGANode) -> MEGANodeList {
         let children = nodes.filter { $0.parentHandle == parent.handle }
         return MockNodeList(nodes: children)

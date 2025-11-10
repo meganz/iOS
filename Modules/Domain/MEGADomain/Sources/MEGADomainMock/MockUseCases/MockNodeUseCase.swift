@@ -17,7 +17,8 @@ public final class MockNodeUseCase: NodeUseCaseProtocol, @unchecked Sendable {
     private let folderLinkInfo: FolderLinkInfoEntity?
     private let nodeForFileLink: NodeEntity?
     private let nodeInRubbishBin: NodeEntity?
-    
+    private let isS4ContainerNode: Bool
+
     public init(
         isDownloaded: Bool = false,
         isNodeInRubbishBin: Bool = false,
@@ -26,7 +27,8 @@ public final class MockNodeUseCase: NodeUseCaseProtocol, @unchecked Sendable {
         folderLinkInfo: FolderLinkInfoEntity? = nil,
         nodeForFileLink: NodeEntity? = nil,
         nodeInRubbishBin: NodeEntity? = nil,
-        nodeUpdates: AnyAsyncSequence<[NodeEntity]> = EmptyAsyncSequence<[NodeEntity]>().eraseToAnyAsyncSequence()
+        nodeUpdates: AnyAsyncSequence<[NodeEntity]> = EmptyAsyncSequence<[NodeEntity]>().eraseToAnyAsyncSequence(),
+        isS4ContainerNode: Bool = false
     ) {
         self.isDownloaded = isDownloaded
         self.isNodeInRubbishBin = isNodeInRubbishBin
@@ -36,6 +38,7 @@ public final class MockNodeUseCase: NodeUseCaseProtocol, @unchecked Sendable {
         self.nodeForFileLink = nodeForFileLink
         self.nodeInRubbishBin = nodeInRubbishBin
         self.nodeUpdates = nodeUpdates
+        self.isS4ContainerNode = isS4ContainerNode
     }
     
     public func rootNode() -> NodeEntity? {
@@ -139,4 +142,8 @@ public final class MockNodeUseCase: NodeUseCaseProtocol, @unchecked Sendable {
     }
 
     public func isNodeDecrypted(node: NodeEntity, fromFolderLink: Bool) throws -> Bool { true }
+
+    public func isS4Container(node: NodeEntity) -> Bool {
+        isS4ContainerNode
+    }
 }

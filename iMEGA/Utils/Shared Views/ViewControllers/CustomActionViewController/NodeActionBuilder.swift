@@ -24,6 +24,7 @@ final class NodeActionBuilder {
     private var viewMode: ViewModePreferenceEntity = .list
     private var nodeSelectionType: NodeSelectionType = .single
     private var isBackupNode: Bool = false
+    private var isS4ContainerNode: Bool = false
     private var isTakedown = false
     private var isVerifyContact = false
     private var areMediaFiles = false
@@ -145,7 +146,12 @@ final class NodeActionBuilder {
         self.isBackupNode = isBackupNode
         return self
     }
-    
+
+    func setIsS4ContainerNode(_ isS4ContainerNode: Bool) -> NodeActionBuilder {
+        self.isS4ContainerNode = isS4ContainerNode
+        return self
+    }
+
     func setIsTakedown(_ isTakedown: Bool) -> NodeActionBuilder {
         self.isTakedown = isTakedown
         return self
@@ -596,7 +602,8 @@ final class NodeActionBuilder {
             }
         }
     }
-    
+
+    // swiftlint:disable cyclomatic_complexity
     private func cloudLikeViewsNodeActions() -> [NodeAction] {
         var nodeActions: [NodeAction] = []
         
@@ -623,15 +630,16 @@ final class NodeActionBuilder {
         if isMediaFile {
             nodeActions.append(.saveToPhotosAction())
         }
-        
-        nodeActions.append(.downloadAction())
-        
-        nodeActions.append(contentsOf: exportedNodeActions())
-        
+
+        if !isS4ContainerNode {
+            nodeActions.append(.downloadAction())
+            nodeActions.append(contentsOf: exportedNodeActions())
+        }
+
         if !isFile {
             if isOutShare {
                 nodeActions.append(.manageFolderAction())
-            } else {
+            } else if !isS4ContainerNode {
                 nodeActions.append(.shareFolderAction())
             }
         } else {
@@ -642,7 +650,7 @@ final class NodeActionBuilder {
             nodeActions.append(.sendToChatAction())
         }
         
-        if !isBackupNode {
+        if !isBackupNode && !isS4ContainerNode {
             nodeActions.append(.renameAction())
         }
         
@@ -650,15 +658,17 @@ final class NodeActionBuilder {
             nodeActions.append(hiddenStateAction)
         }
         
-        if displayMode != .sharedItem && !isBackupNode {
+        if displayMode != .sharedItem && !isBackupNode && !isS4ContainerNode {
             nodeActions.append(.moveAction())
         }
         
         addToDestinationAction(actions: &nodeActions)
-        
-        nodeActions.append(.copyAction())
-        
-        if !isBackupNode {
+
+        if !isS4ContainerNode {
+            nodeActions.append(.copyAction())
+        }
+
+        if !isBackupNode && !isS4ContainerNode {
             if displayMode == .cloudDrive || displayMode == .nodeInfo || displayMode == .recents || displayMode == .photosTimeline || displayMode == .photosAlbum {
                 nodeActions.append(.moveToRubbishBinAction())
             }
@@ -670,7 +680,8 @@ final class NodeActionBuilder {
         
         return nodeActions
     }
-    
+    // swiftlint:enable cyclomatic_complexity
+
     private func nodeActionsForRubbishBin() -> [NodeAction] {
         var nodeActions: [NodeAction] = []
 

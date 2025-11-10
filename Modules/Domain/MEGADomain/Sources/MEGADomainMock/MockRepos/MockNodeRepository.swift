@@ -21,6 +21,7 @@ public final class MockNodeRepository: NodeRepositoryProtocol, @unchecked Sendab
     private let isInheritingSensitivityResults: [NodeEntity: Result<Bool, any Error>]
     private let isInRubbishBinNodes: [NodeEntity]
     private let isNodeDecryptedValue: Bool?
+    private let isS4ContainerNode: Bool
 
     public init(
         node: NodeEntity? = nil,
@@ -38,7 +39,8 @@ public final class MockNodeRepository: NodeRepositoryProtocol, @unchecked Sendab
         nodeUpdates: AnyAsyncSequence<[NodeEntity]> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
         folderLinkNodeUpdates: AnyAsyncSequence<[NodeEntity]> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
         isInRubbishBinNodes: [NodeEntity] = [],
-        isNodeDecryptedValue: Bool? = false
+        isNodeDecryptedValue: Bool? = false,
+        isS4ContainerNode: Bool = false
     ) {
         self.node = node
         self.rubbishBinNode = rubbishBinNode
@@ -55,6 +57,7 @@ public final class MockNodeRepository: NodeRepositoryProtocol, @unchecked Sendab
         self.folderLinkNodeUpdates = folderLinkNodeUpdates
         self.isInRubbishBinNodes = isInRubbishBinNodes
         self.isNodeDecryptedValue = isNodeDecryptedValue
+        self.isS4ContainerNode = isS4ContainerNode
         $childrenNodes.mutate { $0 = childrenNodes }
 
     }
@@ -143,5 +146,9 @@ public final class MockNodeRepository: NodeRepositoryProtocol, @unchecked Sendab
             throw NodeErrorEntity.nodeNotFound
         }
         return isNodeDecryptedValue
+    }
+
+    public func isS4Container(node: NodeEntity) -> Bool {
+        isS4ContainerNode
     }
 }

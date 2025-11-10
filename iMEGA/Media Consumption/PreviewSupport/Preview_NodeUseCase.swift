@@ -112,7 +112,11 @@ struct Preview_NodeUseCase: NodeUseCaseProtocol {
         false
     }
 
-    func isNodeDecrypted(node: MEGADomain.NodeEntity, fromFolderLink: Bool) throws -> Bool {
+    func isNodeDecrypted(node: NodeEntity, fromFolderLink: Bool) throws -> Bool {
+        false
+    }
+
+    func isS4Container(node: NodeEntity) -> Bool {
         false
     }
 }

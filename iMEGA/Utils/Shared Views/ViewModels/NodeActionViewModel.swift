@@ -132,6 +132,10 @@ struct NodeActionViewModel {
         node.modificationTime.timeIntervalSince1970 == 0
     }
 
+    func isS4Container(node: NodeEntity) -> Bool {
+        nodeUseCase.isS4Container(node: node)
+    }
+
     // MARK: - Private methods
 
     /// Determine if nodes contains only sensitive nodes

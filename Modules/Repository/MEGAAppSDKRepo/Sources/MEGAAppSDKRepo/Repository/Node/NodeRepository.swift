@@ -198,4 +198,10 @@ public struct NodeRepository: NodeRepositoryProtocol {
         }
         return result
     }
+
+    public func isS4Container(node: NodeEntity) -> Bool {
+        guard sdk.isS4Enabled() else { return false}
+        let s4ContainerHandle = sdk.getS4ContainerHandle()
+        return node.handle == s4ContainerHandle
+    }
 }

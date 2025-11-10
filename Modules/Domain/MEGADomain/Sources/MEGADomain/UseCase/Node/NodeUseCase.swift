@@ -31,6 +31,7 @@ public protocol NodeUseCaseProtocol: Sendable {
     func createFolder(with name: String, in parent: NodeEntity) async throws -> NodeEntity
     func isFileTakenDown(_ nodeHandle: HandleEntity) async -> Bool
     func isNodeDecrypted(node: NodeEntity, fromFolderLink: Bool) throws -> Bool
+    func isS4Container(node: NodeEntity) -> Bool
 }
 
 // MARK: - Use case implementation -
@@ -149,5 +150,9 @@ public struct NodeUseCase<T: NodeDataRepositoryProtocol, U: NodeValidationReposi
 
     public func isNodeDecrypted(node: NodeEntity, fromFolderLink: Bool) throws -> Bool {
         try nodeRepository.isNodeDecrypted(node: node, fromFolderLink: fromFolderLink)
+    }
+
+    public func isS4Container(node: NodeEntity) -> Bool {
+        nodeRepository.isS4Container(node: node)
     }
 }

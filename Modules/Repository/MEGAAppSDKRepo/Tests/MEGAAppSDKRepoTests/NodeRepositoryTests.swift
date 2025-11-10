@@ -79,6 +79,8 @@ final class NodeRepositoryTests: XCTestCase {
         createdFolderHandle: MEGAHandle? = nil,
         isNodeInheritingSensitivity: Bool = false,
         accessLevel: MEGAShareType = .accessOwner,
+        isS4Enabled: Bool = false,
+        s4ContainerHandle: MEGAHandle = .invalid,
         nodeUpdatesProvider: some NodeUpdatesProviderProtocol = MockNodeUpdatesProvider()
     ) -> NodeRepository {
         
@@ -91,7 +93,9 @@ final class NodeRepositoryTests: XCTestCase {
             megaSetError: error,
             isNodeInheritingSensitivity: isNodeInheritingSensitivity,
             createdFolderHandle: createdFolderHandle,
-            shareAccessLevel: accessLevel
+            shareAccessLevel: accessLevel,
+            isS4Enabled: isS4Enabled,
+            s4ContainerHandle: s4ContainerHandle
         )
         let mockSharedFolderSdk = MockSdk(nodes: sharedFolderNodes)
         
@@ -838,6 +842,42 @@ final class NodeRepositoryTests: XCTestCase {
         let result = await iterator.next()
         
         XCTAssertEqual(result, updates)
+    }
+
+    // MARK: - S4 Container Node
+
+    func testIsS4ContainerNode_whenS4IsNotEnabled_returnsFalse() {
+        let node = NodeEntity(handle: 1)
+        let sut = makeSUT(isS4Enabled: false)
+
+        let isS4Container = sut.isS4Container(node: node)
+
+        XCTAssertFalse(isS4Container, "The node should not be identified as an S4 container when S4 is disabled.")
+    }
+
+    func testIsS4ContainerNode_whenNodeHandleIsS4ContainerHandle_returnsTrue() {
+        let s4ContainerHandle: MEGAHandle = 9999
+        let node = NodeEntity(handle: s4ContainerHandle)
+        let sut = makeSUT(
+            isS4Enabled: true,
+            s4ContainerHandle: s4ContainerHandle
+        )
+
+        let isS4Container = sut.isS4Container(node: node)
+
+        XCTAssertTrue(isS4Container, "The node should be identified as an S4 container when its handle matches the S4 container handle.")
+    }
+
+    func testIsS4ContainerNode_whenNodeHandleIsNotS4ContainerHandle_returnsFalse() {
+        let node = NodeEntity(handle: 0)
+        let sut = makeSUT(
+            isS4Enabled: true,
+            s4ContainerHandle: 9999
+        )
+
+        let isS4Container = sut.isS4Container(node: node)
+
+        XCTAssertFalse(isS4Container, "The node should be identified as an S4 container when its handle matches the S4 container handle.")
     }
 }
 

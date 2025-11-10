@@ -20,6 +20,7 @@ public final class MockNodeDataUseCase: NodeUseCaseProtocol, @unchecked Sendable
     private let _rootNode: NodeEntity?
     private let nodeUpdateAsyncSequence: AnyAsyncSequence<[NodeEntity]>
     private let isFileTakenDown: Bool
+    private let isS4ContainerNode: Bool
 
     public var labelStringToReturn: Atomic<String>
     public var isMultimediaFileNode_CalledTimes = 0
@@ -42,6 +43,7 @@ public final class MockNodeDataUseCase: NodeUseCaseProtocol, @unchecked Sendable
                 rootNode: NodeEntity? = nil,
                 nodeUpdateAsyncSequence: AnyAsyncSequence<[NodeEntity]> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
                 isFileTakenDown: Bool = false,
+                isS4ContainerNode: Bool = false
     ) {
         self.nodeAccessLevelVariable = nodeAccessLevelVariable
         labelStringToReturn = Atomic(wrappedValue: labelString)
@@ -61,6 +63,7 @@ public final class MockNodeDataUseCase: NodeUseCaseProtocol, @unchecked Sendable
         self._rootNode = rootNode
         self.nodeUpdateAsyncSequence = nodeUpdateAsyncSequence
         self.isFileTakenDown = isFileTakenDown
+        self.isS4ContainerNode = isS4ContainerNode
     }
     
     public var nodeUpdates: AnyAsyncSequence<[NodeEntity]> {
@@ -165,5 +168,9 @@ public final class MockNodeDataUseCase: NodeUseCaseProtocol, @unchecked Sendable
 
     public func isNodeDecrypted(node: NodeEntity, fromFolderLink: Bool) throws -> Bool {
         false
+    }
+
+    public func isS4Container(node: NodeEntity) -> Bool {
+        isS4ContainerNode
     }
 }

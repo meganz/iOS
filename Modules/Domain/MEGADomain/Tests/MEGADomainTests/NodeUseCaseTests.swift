@@ -243,6 +243,24 @@ final class NodeUseCaseTests: XCTestCase {
         }
     }
 
+    func testIsS4ContainerNode_whenNodeIsS4ContainerNode_shouldReturnTrue() {
+        let expectedValue = true
+        let sut = makeSUT(
+            isS4ContainerNode: expectedValue
+        )
+
+        XCTAssertEqual(sut.isS4Container(node: NodeEntity()), expectedValue)
+    }
+
+    func testIsS4ContainerNode_whenNodeIsNotS4ContainerNode_shouldReturnFalse() {
+        let expectedValue = false
+        let sut = makeSUT(
+            isS4ContainerNode: expectedValue
+        )
+
+        XCTAssertEqual(sut.isS4Container(node: NodeEntity()), expectedValue)
+    }
+
     // MARK: - Helpers
     private func makeSUT(
         accessLevel: NodeAccessTypeEntity = .unknown,
@@ -262,7 +280,8 @@ final class NodeUseCaseTests: XCTestCase {
         nodeUpdates: AnyAsyncSequence<[NodeEntity]> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
         folderLinkInfoRequestResult: Result<FolderLinkInfoEntity?, FolderInfoErrorEntity> = .failure(.notFound),
         fileLinkNode: NodeEntity? = nil,
-        isNodeDecryptedValue: Bool? = false
+        isNodeDecryptedValue: Bool? = false,
+        isS4ContainerNode: Bool = false
     ) -> NodeUseCase<MockNodeDataRepository, MockNodeValidationRepository, MockNodeRepository> {
         let mockNodeDataRepository = MockNodeDataRepository(
             nodeAccessLevel: accessLevel,
@@ -288,7 +307,8 @@ final class NodeUseCaseTests: XCTestCase {
             isInheritingSensitivityResult: isInheritingSensitivityResult,
             isInheritingSensitivityResults: isInheritingSensitivityResults,
             nodeUpdates: nodeUpdates,
-            isNodeDecryptedValue: isNodeDecryptedValue
+            isNodeDecryptedValue: isNodeDecryptedValue,
+            isS4ContainerNode: isS4ContainerNode
         )
         return NodeUseCase(
             nodeDataRepository: mockNodeDataRepository,

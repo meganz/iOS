@@ -2,7 +2,7 @@ import MEGADomain
 import MEGASwift
 
 struct Preview_NodeUseCase: NodeUseCaseProtocol {
-    func isNodeDecrypted(node: MEGADomain.NodeEntity, fromFolderLink: Bool) -> Bool { false }
+    func isNodeDecrypted(node: NodeEntity, fromFolderLink: Bool) -> Bool { false }
     
     var nodeUpdates: AnyAsyncSequence<[NodeEntity]> {
         EmptyAsyncSequence().eraseToAnyAsyncSequence()
@@ -110,7 +110,11 @@ struct Preview_NodeUseCase: NodeUseCaseProtocol {
         EmptyAsyncSequence().eraseToAnyAsyncSequence()
     }
     
-    func isFileTakenDown(_ nodeHandle: MEGADomain.HandleEntity) async -> Bool {
+    func isFileTakenDown(_ nodeHandle: HandleEntity) async -> Bool {
+        false
+    }
+
+    func isS4Container(node: NodeEntity) -> Bool {
         false
     }
 }

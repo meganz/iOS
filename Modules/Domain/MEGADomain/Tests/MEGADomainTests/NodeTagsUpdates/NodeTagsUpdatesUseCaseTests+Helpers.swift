@@ -95,6 +95,10 @@ extension NodeTagsUpdatesUseCaseTests {
         }
 
         func isNodeDecrypted(node: NodeEntity, fromFolderLink: Bool) throws -> Bool { false }
+
+        func isS4Container(node: NodeEntity) -> Bool {
+            false
+        }
     }
 }
 

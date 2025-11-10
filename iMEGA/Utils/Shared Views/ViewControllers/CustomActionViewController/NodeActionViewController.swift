@@ -576,6 +576,7 @@ class NodeActionViewController: ActionSheetViewController {
         isSelectionEnabled: Bool = false
     ) {
         loadActions = { [self] in
+            let nodeEntity = node.toNodeEntity()
             let isImageOrVideoFile = node.name?.fileExtensionGroup.isVisualMedia == true
             let isMediaFile = node.isFile() && isImageOrVideoFile && node.mnz_isPlayable()
             let isEditableTextFile = node.isFile() && node.name?.fileExtensionGroup.isEditableText == true
@@ -583,6 +584,7 @@ class NodeActionViewController: ActionSheetViewController {
             let isVerifyContact = displayMode == .sharedItem &&
             shouldShowVerifyContact &&
             !sharedFolder.isVerified
+            let isS4ContainerNode = viewModel.isS4Container(node: nodeEntity)
             let sharedFolderContact = MEGASdk.shared.contact(forEmail: sharedFolder.user)
             
             let actions = NodeActionBuilder()
@@ -595,7 +597,8 @@ class NodeActionViewController: ActionSheetViewController {
                 .setIsFavourite(node.isFavourite)
                 .setLabel(node.label)
                 .setIsBackupNode(isBackupNode)
-                .setIsRestorable(viewModel.isRestorable(node: node.toNodeEntity(), isBackupNode: isBackupNode))
+                .setIsS4ContainerNode(isS4ContainerNode)
+                .setIsRestorable(viewModel.isRestorable(node: nodeEntity, isBackupNode: isBackupNode))
                 .setIsPdf(node.name?.pathExtension == "pdf")
                 .setisIncomingShareChildView(isIncoming)
                 .setIsExported(node.isExported())

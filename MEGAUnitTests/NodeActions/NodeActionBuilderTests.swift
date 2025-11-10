@@ -271,7 +271,19 @@ class NodeActionBuilderTests {
         
         #expect(isEqual(nodeActionTypes: [.moveToRubbishBin]) == true)
     }
-    
+
+    @Test
+    func testCloudDriveS4ContainerNode() {
+        actions = NodeActionBuilder()
+            .setDisplayMode(.cloudDrive)
+            .setAccessLevel(.accessOwner)
+            .setIsS4ContainerNode(true)
+            .setIsFile(false)
+            .build()
+
+        #expect(isEqual(nodeActionTypes: [.info, .favourite, .label]) == true)
+    }
+
     // MARK: - Backup
     @Test
     func testBackupNodeWithNoVersion() {

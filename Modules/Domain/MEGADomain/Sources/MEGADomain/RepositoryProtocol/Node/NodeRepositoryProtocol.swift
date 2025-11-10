@@ -49,4 +49,5 @@ public protocol NodeRepositoryProtocol: RepositoryProtocol, Sendable {
     /// - Important: This could possibly block the calling thread, make sure not to call it on main thread.
     func isInheritingSensitivity(node: NodeEntity) throws -> Bool
     func isNodeDecrypted(node: NodeEntity, fromFolderLink: Bool) throws -> Bool
+    func isS4Container(node: NodeEntity) -> Bool
 }
