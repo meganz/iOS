@@ -119,6 +119,7 @@
 		0E9FE35C2E0B6DAC0003AC0F /* ConfigureAuthEnvironmentUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E9FE35B2E0B6DA80003AC0F /* ConfigureAuthEnvironmentUseCase.swift */; };
 		0E9FE3642E0B71580003AC0F /* ConfigureAuthEnvironmentUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E9FE3632E0B71580003AC0F /* ConfigureAuthEnvironmentUseCaseTests.swift */; };
 		0EA150D729B810D2005C6486 /* AlbumType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EA150D629B810D2005C6486 /* AlbumType.swift */; };
+		0EA34F3A2EBA96340051DFD2 /* CameraUploadProgressViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EA34F392EBA96300051DFD2 /* CameraUploadProgressViewModel.swift */; };
 		0EA56BF62E776A8800C68EBA /* CameraUploadTransferProgressOCRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EA56BF52E776A8500C68EBA /* CameraUploadTransferProgressOCRepository.swift */; };
 		0EAAA3182E6E3FFF00902B53 /* PhotoBrowserPickerCollectionViewCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EAAA3172E6E3FE000902B53 /* PhotoBrowserPickerCollectionViewCellViewModel.swift */; };
 		0EAAA31C2E6E4FEC00902B53 /* MEGAPhotoBrowserPickerCollectionViewCell+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EAAA31B2E6E4FE300902B53 /* MEGAPhotoBrowserPickerCollectionViewCell+Additions.swift */; };
@@ -2881,6 +2882,7 @@
 		0E9FE35B2E0B6DA80003AC0F /* ConfigureAuthEnvironmentUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigureAuthEnvironmentUseCase.swift; sourceTree = "<group>"; };
 		0E9FE3632E0B71580003AC0F /* ConfigureAuthEnvironmentUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigureAuthEnvironmentUseCaseTests.swift; sourceTree = "<group>"; };
 		0EA150D629B810D2005C6486 /* AlbumType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumType.swift; sourceTree = "<group>"; };
+		0EA34F392EBA96300051DFD2 /* CameraUploadProgressViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraUploadProgressViewModel.swift; sourceTree = "<group>"; };
 		0EA56BF52E776A8500C68EBA /* CameraUploadTransferProgressOCRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraUploadTransferProgressOCRepository.swift; sourceTree = "<group>"; };
 		0EAAA3172E6E3FE000902B53 /* PhotoBrowserPickerCollectionViewCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoBrowserPickerCollectionViewCellViewModel.swift; sourceTree = "<group>"; };
 		0EAAA31B2E6E4FE300902B53 /* MEGAPhotoBrowserPickerCollectionViewCell+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAPhotoBrowserPickerCollectionViewCell+Additions.swift"; sourceTree = "<group>"; };
@@ -5735,6 +5737,7 @@
 				0EC69BDB2EA6DB3D004E9601 /* CameraUploadProgressTableViewController.swift */,
 				0E31E9752EA08E6A002F7EC3 /* CameraUploadProgressTableViewModel.swift */,
 				0EC69C312EA713A5004E9601 /* CameraUploadProgressView.swift */,
+				0EA34F392EBA96300051DFD2 /* CameraUploadProgressViewModel.swift */,
 				0EC69C552EA97B29004E9601 /* CameraUploadSections.swift */,
 				0E31E9762EA08E6A002F7EC3 /* CameraUploadThumbnailView.swift */,
 				0E31E9772EA08E6A002F7EC3 /* CameraUploadThumbnailViewModel.swift */,
@@ -14487,6 +14490,7 @@
 				0EC69BDC2EA6DB43004E9601 /* CameraUploadProgressTableViewController.swift in Sources */,
 				0E31E9802EA08E6A002F7EC3 /* CameraUploadProgressTableViewModel.swift in Sources */,
 				0EC69C322EA713A5004E9601 /* CameraUploadProgressView.swift in Sources */,
+				0EA34F3A2EBA96340051DFD2 /* CameraUploadProgressViewModel.swift in Sources */,
 				0EF7E5D92E95DF2A0098367B /* CameraUploadRecordManager+Additions.swift in Sources */,
 				B6D9D7EF216AE5D000D7B08A /* CameraUploadRecordManager.m in Sources */,
 				B686F45921866BB4009C0DAA /* CameraUploadRequestDelegate.m in Sources */,

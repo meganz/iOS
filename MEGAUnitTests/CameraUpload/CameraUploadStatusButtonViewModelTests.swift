@@ -93,7 +93,7 @@ final class CameraUploadStatusButtonViewModelTests: XCTestCase {
         let progress: Float = 0.55
         let stats = CameraUploadStatsEntity(progress: progress, pendingFilesCount: 5, pendingVideosCount: 0)
         let uploadStateAsyncSequence = SingleItemAsyncSequence(
-            item: CameraUploadStateEntity.uploadStats(stats))
+            item: CameraUploadStateEntity(stats: stats))
             .eraseToAnyAsyncSequence()
         let sut = makeSUT(
             monitorCameraUploadUseCase: MockMonitorCameraUploadUseCase(

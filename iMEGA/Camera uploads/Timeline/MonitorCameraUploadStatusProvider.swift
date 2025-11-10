@@ -75,11 +75,10 @@ struct MonitorCameraUploadStatusProvider {
     private func cameraUploadBannerStatus() -> AnyAsyncSequence<CameraUploadBannerStatusViewStates> {
         monitorCameraUploadUseCase.cameraUploadState
             .map {
-                switch $0 {
-                case .uploadStats(let stats):
-                    cameraUploadBannerStatus(uploadStats: stats)
-                case .paused(reason: let reason):
-                    .uploadPaused(reason: reason.toCameraUploadBannerStatusUploadPausedReason())
+                if let pausedReason = $0.pausedReason {
+                    .uploadPaused(reason: pausedReason.toCameraUploadBannerStatusUploadPausedReason())
+                } else {
+                    cameraUploadBannerStatus(uploadStats: $0.stats)
                 }
             }
             .eraseToAnyAsyncSequence()
@@ -105,11 +104,10 @@ struct MonitorCameraUploadStatusProvider {
     private func imageStatusSequence() -> AnyAsyncSequence<CameraUploadStatus> {
         monitorCameraUploadUseCase.cameraUploadState
             .map {
-                switch $0 {
-                case .uploadStats(let stats):
-                    imageStatus(uploadStats: stats)
-                case .paused:
+                if $0.pausedReason != nil {
                     .warning
+                } else {
+                    imageStatus(uploadStats: $0.stats)
                 }
             }
             .eraseToAnyAsyncSequence()

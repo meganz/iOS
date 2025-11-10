@@ -192,7 +192,7 @@ struct CameraUploadStatusBannerViewModelTests {
     func uploadStateStats() async throws {
         let stats =  CameraUploadStatsEntity(progress: 0.3, pendingFilesCount: 3, pendingVideosCount: 0)
         let statesAsyncSequence = SingleItemAsyncSequence(
-            item: CameraUploadStateEntity.uploadStats(stats))
+            item: CameraUploadStateEntity(stats: stats))
             .eraseToAnyAsyncSequence()
         
         let sut = makeSUT(
@@ -211,7 +211,9 @@ struct CameraUploadStatusBannerViewModelTests {
     @MainActor
     func uploadStatePausedReason() async throws {
         let statesAsyncSequence = SingleItemAsyncSequence(
-            item: CameraUploadStateEntity.paused(reason: .lowBattery))
+            item: CameraUploadStateEntity(
+                stats: .init(progress: 0, pendingFilesCount: 0, pendingVideosCount: 0),
+                pausedReason: .lowBattery))
             .eraseToAnyAsyncSequence()
         
         let sut = makeSUT(

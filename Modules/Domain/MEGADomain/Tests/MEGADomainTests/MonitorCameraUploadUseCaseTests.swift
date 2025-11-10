@@ -139,13 +139,15 @@ final class MonitorCameraUploadUseCaseTests: XCTestCase {
 
 @Suite("MonitorCameraUploadUseCase Tests")
 struct MonitorCameraUploadUseCaseTestSuite {
+    let stats = CameraUploadStatsEntity(
+        progress: 0.8,
+        pendingFilesCount: 1,
+        pendingVideosCount: 0)
     
     @Test
     func cameraUploadStats() async {
-        let expected = CameraUploadStatsEntity(
-            progress: 0.8, pendingFilesCount: 1, pendingVideosCount: 0)
         let cameraUploadRepository = MockCameraUploadsStatsRepository(
-            currentStats: expected)
+            currentStats: stats)
         let networkMonitorUseCase = MockNetworkMonitorUseCase(
             connected: true,
             connectedViaWiFi: true)
@@ -155,7 +157,7 @@ struct MonitorCameraUploadUseCaseTestSuite {
         
         var sequence = sut.cameraUploadState.makeAsyncIterator()
         
-        #expect(await sequence.next() == .uploadStats(expected))
+        #expect(await sequence.next() == .init(stats: stats, pausedReason: nil))
     }
     
     @Test(arguments: [
@@ -169,8 +171,7 @@ struct MonitorCameraUploadUseCaseTestSuite {
         expectedNetworkIssue: CameraUploadStateEntity.PausedReason.NetworkIssue
     ) async {
         let cameraUploadRepository = MockCameraUploadsStatsRepository(
-            currentStats: .init(
-                progress: 0.8, pendingFilesCount: 1, pendingVideosCount: 0))
+            currentStats: stats)
         let networkMonitorUseCase = MockNetworkMonitorUseCase(
             connected: isConnected,
             connectedViaWiFi: isConnectedToWiFi)
@@ -183,7 +184,7 @@ struct MonitorCameraUploadUseCaseTestSuite {
         
         var sequence = sut.cameraUploadState.makeAsyncIterator()
         
-        #expect(await sequence.next() == .paused(reason: .networkIssue(expectedNetworkIssue)))
+        #expect(await sequence.next() ==  .init(stats: stats, pausedReason: .networkIssue(expectedNetworkIssue)))
     }
     
     @Test
@@ -205,7 +206,7 @@ struct MonitorCameraUploadUseCaseTestSuite {
         
         var sequence = sut.cameraUploadState.makeAsyncIterator()
         
-        #expect(await sequence.next() == .paused(reason: .highThermalState))
+        #expect(await sequence.next() == .init(stats: stats, pausedReason: .highThermalState))
     }
     
     private static func makeSUT(

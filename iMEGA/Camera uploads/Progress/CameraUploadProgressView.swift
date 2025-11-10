@@ -5,21 +5,32 @@ import SwiftUI
 
 struct CameraUploadProgressView: View {
     @Environment(\.dismiss) private var dismiss
-    @ObservedObject var viewModel: CameraUploadProgressTableViewModel
+    @ObservedObject var viewModel: CameraUploadProgressViewModel
     
     var body: some View {
         NavigationStack {
-            CameraUploadProgressTableView(viewModel: viewModel)
-                .edgesIgnoringSafeArea(.all)
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .navigationTitle(Strings.Localizable.CameraUploads.Progress.Navigation.title)
-                .navigationBarTitleDisplayMode(.inline)
-                .toolbar {
-                    ToolbarItem(placement: .cancellationAction) {
-                        Button { dismiss() } label: { XmarkCloseButton() }
+            VStack(alignment: .leading, spacing: .zero) {
+                Text(viewModel.uploadStatus)
+                    .font(.subheadline)
+                    .foregroundStyle(TokenColors.Text.primary.swiftUI)
+                    .padding(TokenSpacing._5)
+                    .task {
+                        await viewModel.monitorUploadStats()
                     }
+                
+                CameraUploadProgressTableView(viewModel: viewModel.cameraUploadProgressTableViewModel)
+            }
+            .edgesIgnoringSafeArea(.all)
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .pageBackground()
+            .navigationTitle(Strings.Localizable.CameraUploads.Progress.Navigation.title)
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button { dismiss() } label: { XmarkCloseButton() }
                 }
-                .hideNavigationToolbarBackground()
+            }
+            .hideNavigationToolbarBackground()
         }
         .pageBackground()
     }

@@ -33,14 +33,12 @@ public struct MonitorCameraUploadUseCase<S: CameraUploadsStatsRepositoryProtocol
     
     public var cameraUploadState: AnyAsyncSequence<CameraUploadStateEntity> {
         combineLatest(
-            uploadStats(),
-            pausedUploadState())
+            cameraUploadRepository.monitorChangedUploadStats(),
+            pausedReason())
         .map { uploadStats, pausedReason -> CameraUploadStateEntity in
-            if let pausedReason {
-                pausedReason
-            } else {
-                uploadStats
-            }
+            CameraUploadStateEntity(
+                stats: uploadStats,
+                pausedReason: pausedReason)
         }
         .removeDuplicates()
         .eraseToAnyAsyncSequence()
@@ -84,24 +82,16 @@ public struct MonitorCameraUploadUseCase<S: CameraUploadsStatsRepositoryProtocol
             return .notPaused
         }
     }
-    
-    private func uploadStats() -> AnyAsyncSequence<CameraUploadStateEntity> {
-        cameraUploadRepository.monitorChangedUploadStats()
-            .map {
-                .uploadStats($0)
-            }
-            .eraseToAnyAsyncSequence()
-    }
         
-    private func pausedUploadState() -> AnyAsyncSequence<CameraUploadStateEntity?> {
+    private func pausedReason() -> AnyAsyncSequence<CameraUploadStateEntity.PausedReason?> {
         combineLatest(
             networkPausedReason(),
             mediaTypePausedReason())
-        .map { networkIssue, mediaTypePausedReason -> CameraUploadStateEntity? in
+        .map { networkIssue, mediaTypePausedReason -> CameraUploadStateEntity.PausedReason? in
             if let networkIssue = networkIssue {
-                .paused(reason: .networkIssue(networkIssue))
+                .networkIssue(networkIssue)
             } else if let mediaTypePausedReason {
-                .paused(reason: mediaTypePausedReason)
+                mediaTypePausedReason
             } else {
                 nil
             }

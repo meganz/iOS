@@ -1,4 +1,5 @@
 import MEGAAppPresentation
+import MEGAAppSDKRepo
 import MEGADesignToken
 import MEGADomain
 import MEGAPreference
@@ -16,7 +17,12 @@ struct CameraUploadProgressRouter: Routing {
         let assetRepository = CameraUploadAssetRepository(
             cameraUploadRecordStore: CameraUploadRecordManager.shared())
         let preferenceRepository = PreferenceRepository.newRepo
-        let viewModel = CameraUploadProgressTableViewModel(
+        let viewModel = CameraUploadProgressViewModel(
+            monitorCameraUploadUseCase: MonitorCameraUploadUseCase(
+                cameraUploadRepository: CameraUploadsStatsRepository.newRepo,
+                networkMonitorUseCase: NetworkMonitorUseCase(repo: NetworkMonitorRepository.newRepo),
+                preferenceUseCase: PreferenceUseCase(
+                    repository: preferenceRepository)),
             cameraUploadProgressUseCase: CameraUploadProgressUseCase(
                 cameraUploadAssetRepository: assetRepository,
                 transferProgressRepository: CameraUploadTransferProgressRepository.shared),
@@ -26,13 +32,9 @@ struct CameraUploadProgressRouter: Routing {
                 preferenceRepository: preferenceRepository),
             photoLibraryThumbnailUseCase: PhotoLibraryThumbnailUseCase(
                 photoLibraryThumbnailRepository: PhotoLibraryThumbnailRepository()),
-            paginationManager: CameraUploadPaginationManager(
-                pageSize: 30,
-                lookAhead: 4,
-                lookBehind: 4,
-                queuedCameraUploadsUseCase: QueuedCameraUploadsUseCase(
-                    cameraUploadAssetRepository: assetRepository,
-                    preferenceRepository: preferenceRepository)))
+            queuedCameraUploadsUseCase: QueuedCameraUploadsUseCase(
+                cameraUploadAssetRepository: assetRepository,
+                preferenceRepository: preferenceRepository))
         
         let hostingController = UIHostingController(
             rootView: CameraUploadProgressView(viewModel: viewModel))
