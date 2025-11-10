@@ -47,7 +47,8 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
     private var accountDetails: AccountDetailsEntity
     private(set) var viewType: UpgradeAccountPlanViewType
     let isExternalAdsActive: Bool
-    
+    let isNewYearlyPlanStyleEnabled: Bool
+
     private(set) var alertType: UpgradeAccountPlanAlertType?
     @Published var isAlertPresented = false {
         didSet {
@@ -119,6 +120,7 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
         self.canOpenURL = canOpenURL
         self.openURL = openURL
         isExternalAdsActive = remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .externalAds)
+        isNewYearlyPlanStyleEnabled = remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosNewYearlyPlanCard)
         $lastCloseAdsDate.useCase = preferenceUseCase
         registerDelegates()
         setupSubscriptionChips()
@@ -410,6 +412,7 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
             planTag: planTag(plan),
             isSelected: isPlanSelected(plan),
             isSelectionEnabled: isSelectionEnabled(forPlan: plan),
+            isNewYearlyPlanStyleEnabled: isNewYearlyPlanStyleEnabled,
             didTapPlan: {
                 self.setSelectedPlan(plan)
             })

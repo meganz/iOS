@@ -1200,6 +1200,24 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
         XCTAssertFalse(sut.isLoadingPlans)
     }
 
+    @MainActor func testSetupNewYearlyPlanStyle_remoteFeatureFlagEnabled_shouldBeTrue() {
+        let (sut, _) = makeSUT(
+            accountDetails: .build(proLevel: .free),
+            isIOSNewYearlyPlanCardFeatureFlagEnabled: true,
+        )
+
+        XCTAssertEqual(sut.isNewYearlyPlanStyleEnabled, true)
+    }
+
+    @MainActor func testSetupNewYearlyPlanStyle_remoteFeatureFlagDisabled_shouldBeFalse() {
+        let (sut, _) = makeSUT(
+            accountDetails: .build(proLevel: .free),
+            isIOSNewYearlyPlanCardFeatureFlagEnabled: false
+        )
+
+        XCTAssertEqual(sut.isNewYearlyPlanStyleEnabled, false)
+    }
+
     // MARK: - Helper
     @MainActor
     func makeSUT(
@@ -1210,6 +1228,7 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
         accountDetailsResult: Result<AccountDetailsEntity, AccountDetailsErrorEntity> = .failure(.generic),
         planList: [PlanEntity] = [],
         isExternalAdsFlagEnabled: Bool = true,
+        isIOSNewYearlyPlanCardFeatureFlagEnabled: Bool = true,
         tracker: MockTracker = MockTracker(),
         viewType: UpgradeAccountPlanViewType = .upgrade,
         isFromAds: Bool = false,
@@ -1230,7 +1249,12 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
             accountUseCase: mockAccountUseCase,
             purchaseUseCase: mockPurchaseUseCase,
             subscriptionsUseCase: subscriptionsUseCase,
-            remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.externalAds: isExternalAdsFlagEnabled]),
+            remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(
+                list: [
+                    .externalAds: isExternalAdsFlagEnabled,
+                    .iosNewYearlyPlanCard: isIOSNewYearlyPlanCardFeatureFlagEnabled
+                ]
+            ),
             preferenceUseCase: preferenceUseCase,
             externalPurchaseUseCase: externalPurchaseUseCase,
             introductoryOfferUseCase: introductoryOfferUseCase,

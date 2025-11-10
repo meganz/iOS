@@ -76,12 +76,21 @@ struct SubscriptionPurchasePlanCardView: View {
         case .monthly:
             monthlyPriceView
         case .yearly:
-            yearlyPriceView
+            if viewModel.isNewYearlyPlanStyleEnabled {
+                // The new yearly price view takes yearly price as dominant text.
+                newYearlyPriceView
+            } else {
+                yearlyPriceView
+            }
         }
     }
 
     private var formattedMonthlyPriceForYearlyPlan: String {
         viewModel.plan.formattedMonthlyPriceForYearlyPlan ?? ""
+    }
+
+    private var formattedPriceForYearlyPlan: String {
+        viewModel.plan.formattedPriceForYearlyPlan ?? ""
     }
 
     private var yearlyPriceView: some View {
@@ -104,6 +113,32 @@ struct SubscriptionPurchasePlanCardView: View {
                 Text(Strings.Localizable.SubscriptionPurchase.Plan.billedYearly(viewModel.plan.formattedPrice))
                     .font(.footnote)
                     .foregroundStyle(TokenColors.Text.secondary.swiftUI)
+            }
+        }
+    }
+
+    private var newYearlyPriceView: some View {
+        VStack(alignment: .trailing, spacing: TokenSpacing._1) {
+            if let introductoryOfferInfo = viewModel.introductoryOfferInfo() {
+                Text(formattedMonthlyPriceForYearlyPlan)
+                    .font(.caption)
+                    .foregroundStyle(TokenColors.Text.secondary.swiftUI)
+                    .strikethrough()
+                newPricePerMonthText(for: introductoryOfferInfo.formattedIntroPricePerMonth)
+                HStack(alignment: .bottom, spacing: TokenSpacing._2) {
+                    Text(formattedPriceForYearlyPlan)
+                        .foregroundStyle(TokenColors.Text.secondary.swiftUI)
+                        .font(.footnote)
+                        .strikethrough()
+                    Text(introductoryOfferInfo.formattedIntroPrice)
+                        .font(.title3.bold())
+                }
+                chargedYearlyText
+            } else {
+                newPricePerMonthText(for: formattedMonthlyPriceForYearlyPlan)
+                Text(formattedPriceForYearlyPlan)
+                    .font(.title3.bold())
+                chargedYearlyText
             }
         }
     }
@@ -148,6 +183,19 @@ struct SubscriptionPurchasePlanCardView: View {
 
         pricePart.append(suffixPart)
         return pricePart
+    }
+
+    private func newPricePerMonthText(for formattedMonthlyPrice: String) -> some View {
+        Text(Strings.Localizable.UpgradeAccountPlan.Plan.Yearly.pricePerMonth(formattedMonthlyPrice))
+            .foregroundColor(TokenColors.Text.brand.swiftUI)
+            .font(.subheadline)
+            .padding(.bottom, 6)
+    }
+
+    private var chargedYearlyText: Text {
+        Text(Strings.Localizable.UpgradeAccountPlan.Plan.Yearly.footer)
+            .font(.footnote)
+            .foregroundColor(TokenColors.Text.secondary.swiftUI)
     }
 
     private func setFootNoteAndSecondaryColor(for attributedString: inout AttributedString) {

@@ -7,4 +7,5 @@ public enum RemoteFeatureFlag: String, Sendable {
     case appleExternalPurchase = "aep"
     case dotAppDomainExtension = "site"
     case iosVideoPlayerRevamp = "ivpr"
+    case iosNewYearlyPlanCard = "inypc"
 }

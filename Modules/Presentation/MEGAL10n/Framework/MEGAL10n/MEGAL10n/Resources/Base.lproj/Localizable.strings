@@ -4780,3 +4780,7 @@
 "cameraUploads.progress.row.fileProgress"="%1$@ of %2$@";
 /* Camera Uploads row file upload speed */
 "cameraUploads.progress.row.uploadSpeed"="%@/s";
+/* Footer for the yearly billing option in the upgrade account plan screen */
+"upgradeAccountPlan.plan.yearly.footer"="Charged Yearly";
+/* Price per month display for yearly billing option in the upgrade account plan screen */
+"upgradeAccountPlan.plan.yearly.pricePerMonth"="Only %@/month";

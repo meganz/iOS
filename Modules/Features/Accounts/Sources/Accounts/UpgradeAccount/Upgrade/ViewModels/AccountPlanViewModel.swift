@@ -10,6 +10,7 @@ public final class AccountPlanViewModel {
     public let planTag: AccountPlanTagEntity
     public let isSelected: Bool
     public let isSelectionEnabled: Bool
+    public let isNewYearlyPlanStyleEnabled: Bool
     public let didTapPlan: () -> Void
 
     private let now: () -> Date
@@ -33,6 +34,7 @@ public final class AccountPlanViewModel {
         planTag: AccountPlanTagEntity = AccountPlanTagEntity.none,
         isSelected: Bool,
         isSelectionEnabled: Bool,
+        isNewYearlyPlanStyleEnabled: Bool,
         now: @escaping () -> Date = Date.init,
         calendar: Calendar = Calendar.current,
         timeZone: TimeZone = TimeZone.current,
@@ -42,6 +44,7 @@ public final class AccountPlanViewModel {
         self.planTag = planTag
         self.isSelected = isSelected
         self.isSelectionEnabled = isSelectionEnabled
+        self.isNewYearlyPlanStyleEnabled = isNewYearlyPlanStyleEnabled
         self.now = now
         self.calendar = calendar
         self.timeZone = timeZone

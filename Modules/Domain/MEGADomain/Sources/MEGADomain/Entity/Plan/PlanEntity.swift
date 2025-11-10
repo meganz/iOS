@@ -51,6 +51,12 @@ public struct PlanEntity: Sendable {
             : nil
     }
 
+    public var formattedPriceForYearlyPlan: String? {
+        subscriptionCycle == .yearly
+            ? numberFormatter.string(for: price)
+            : nil
+    }
+
     private var numberFormatter: NumberFormatter {
         let formatter = NumberFormatter()
         formatter.numberStyle = .currency
