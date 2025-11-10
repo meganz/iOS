@@ -28,7 +28,11 @@ extension FolderLinkViewController: FolderLinkContextMenuDelegate {
 
     @objc func setNavigationBarButton(_ editing: Bool) {
         navigationItem.rightBarButtonItem = editing ? editBarButtonItem : moreBarButtonItem
-        navigationItem.leftBarButtonItem = editing ? selectAllBarButtonItem : closeBarButtonItem
+        if editing {
+            navigationItem.leftBarButtonItem = selectAllBarButtonItem
+        } else {
+            navigationItem.leftBarButtonItem = isFolderRootNode ? closeBarButtonItem : nil
+        }
     }
 
     @objc func setMoreButton() {
