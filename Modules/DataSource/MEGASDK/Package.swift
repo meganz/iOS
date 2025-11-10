@@ -5,7 +5,7 @@ import PackageDescription
 let package = Package(
     name: "MEGASDK",
     platforms: [
-        .iOS(.v15)
+        .iOS(.v16)
     ],
     products: [
         .library(
