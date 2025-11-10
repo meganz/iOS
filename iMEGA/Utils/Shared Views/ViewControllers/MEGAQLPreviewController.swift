@@ -3,7 +3,7 @@ import MEGASwift
 import QuickLook
 import UIKit
 
-final class MEGAQLPreviewController: QLPreviewController, @preconcurrency QLPreviewControllerDelegate, QLPreviewControllerDataSource {
+final class MEGAQLPreviewController: QLPreviewController, QLPreviewControllerDelegate, QLPreviewControllerDataSource {
 
     private var files: [String] = []
 
@@ -39,8 +39,8 @@ final class MEGAQLPreviewController: QLPreviewController, @preconcurrency QLPrev
 
     // MARK: - QLPreviewControllerDelegate
 
-    func previewController(_ controller: QLPreviewController, shouldOpen url: URL, for item: any QLPreviewItem) -> Bool {
-        DispatchQueue.main.async {
+    nonisolated func previewController(_ controller: QLPreviewController, shouldOpen url: URL, for item: any QLPreviewItem) -> Bool {
+        Task { @MainActor in
             MEGALinkManager.linkURL = url
             MEGALinkManager.processLinkURL(url)
         }
