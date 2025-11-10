@@ -1,8 +1,8 @@
 import Foundation
 
 public struct SearchResultsSortOptionsViewModel {
-    let title: String
-    let sortOptions: [SearchResultsSortOption]
+    public let title: String
+    public let sortOptions: [SearchResultsSortOption]
     public typealias TapHandler = (SearchResultsSortOption) -> Void
     let tapHandler: TapHandler?
 
@@ -16,7 +16,7 @@ public struct SearchResultsSortOptionsViewModel {
         self.tapHandler = tapHandler
     }
 
-    func makeNewViewModel(
+    public func makeNewViewModel(
         with sortOptions: [SearchResultsSortOption],
         tapHandler: TapHandler?
     ) -> Self {

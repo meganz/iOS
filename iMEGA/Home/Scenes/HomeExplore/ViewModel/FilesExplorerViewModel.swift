@@ -83,13 +83,34 @@ final class FilesExplorerViewModel: ViewModelType {
         didSet { oldValue?.cancel() }
     }
 
-    var sortHeaderViewModel: SearchResultsHeaderSortViewViewModel {
-        // IOS-10755: TO BE IMPLEMENTED
-        SearchResultsHeaderSortViewViewModel(title: "", icon: nil) {
+    private let sortOptionsViewModel: SearchResultsSortOptionsViewModel
 
+    private var currentSortOrder: MEGADomain.SortOrderEntity {
+        Helper.sortType(for: nil).toSortOrderEntity()
+    }
+
+    var displaySortOptionsViewModel: SearchResultsSortOptionsViewModel {
+        let displaySortOptions = sortOptionsViewModel.sortOptions.compactMap { sortOption -> SearchResultsSortOption? in
+            let currentSearchSortOrder = currentSortOrder.toSearchSortOrderEntity()
+            guard currentSearchSortOrder != sortOption.sortOrder else { return nil }
+            guard currentSearchSortOrder.key != sortOption.sortOrder.key else { return sortOption }
+            guard sortOption.sortOrder.direction != .descending else { return nil }
+            return sortOption.removeIcon()
+        }
+        return sortOptionsViewModel.makeNewViewModel(with: displaySortOptions) { [weak self] in
+            self?.handleSelectedSortOption($0)
         }
     }
-    
+
+    lazy var sortHeaderViewModel: SearchResultsHeaderSortViewViewModel = {
+        let sortOptions = sortOptionsViewModel.sortOptions
+        assert(sortOptions.isNotEmpty, "Sort options should not be empty")
+        let sortOption = sortOptions
+            .first(where: { $0.sortOrder == currentSortOrder.toSearchSortOrderEntity() }) ?? sortOptions[0]
+
+        return .init(selectedOption: sortOption, displaySortOptionsViewModel: displaySortOptionsViewModel)
+    }()
+
     lazy var viewModeHeaderViewModel: SearchResultsHeaderViewModeViewModel = {
         SearchResultsHeaderViewModeViewModel(
             selectedViewMode: viewTypePreference == .list ? .list : .grid,
@@ -98,15 +119,18 @@ final class FilesExplorerViewModel: ViewModelType {
     }()
 
     // MARK: - Initializer
-    required init(explorerType: ExplorerTypeEntity,
-                  router: FilesExplorerRouter,
-                  useCase: some FilesSearchUseCaseProtocol,
-                  nodeDownloadUpdatesUseCase: some NodeDownloadUpdatesUseCaseProtocol,
-                  sensitiveDisplayPreferenceUseCase: some SensitiveDisplayPreferenceUseCaseProtocol,
-                  createContextMenuUseCase: some CreateContextMenuUseCaseProtocol,
-                  nodeProvider: some MEGANodeProviderProtocol,
-                  featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider,
-                  notificationCenter: NotificationCenter = .default) {
+    required init(
+        explorerType: ExplorerTypeEntity,
+        router: FilesExplorerRouter,
+        useCase: some FilesSearchUseCaseProtocol,
+        nodeDownloadUpdatesUseCase: some NodeDownloadUpdatesUseCaseProtocol,
+        sensitiveDisplayPreferenceUseCase: some SensitiveDisplayPreferenceUseCaseProtocol,
+        createContextMenuUseCase: some CreateContextMenuUseCaseProtocol,
+        nodeProvider: some MEGANodeProviderProtocol,
+        sortOptionsViewModel: SearchResultsSortOptionsViewModel,
+        featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider,
+        notificationCenter: NotificationCenter = .default
+    ) {
         self.explorerType = explorerType
         self.router = router
         self.useCase = useCase
@@ -114,6 +138,7 @@ final class FilesExplorerViewModel: ViewModelType {
         self.nodeDownloadUpdatesUseCase = nodeDownloadUpdatesUseCase
         self.sensitiveDisplayPreferenceUseCase = sensitiveDisplayPreferenceUseCase
         self.nodeProvider = nodeProvider
+        self.sortOptionsViewModel = sortOptionsViewModel
         self.featureFlagProvider = featureFlagProvider
         self.notificationCenter = notificationCenter
     }
@@ -247,7 +272,14 @@ final class FilesExplorerViewModel: ViewModelType {
             }
         }
     }
-    
+
+    private func handleSelectedSortOption(_ sortOption: SearchResultsSortOption) {
+        Helper.save(sortOption.sortOrder.toMEGASortOrderType(), for: nil)
+        sortHeaderViewModel.selectionChanged(to: sortOption)
+        sortHeaderViewModel.displaySortOptionsViewModel = displaySortOptionsViewModel
+        invokeCommand?(.sortTypeHasChanged)
+    }
+
     func getExplorerType() -> ExplorerTypeEntity {
         self.explorerType
     }

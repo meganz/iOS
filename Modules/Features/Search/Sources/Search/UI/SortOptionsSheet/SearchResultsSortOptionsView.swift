@@ -1,16 +1,16 @@
 import MEGADesignToken
 import SwiftUI
 
-struct SearchResultsSortOptionsView: View {
+public struct SearchResultsSortOptionsView: View {
     let viewModel: SearchResultsSortOptionsViewModel
     let height: CGFloat
 
-    init(viewModel: SearchResultsSortOptionsViewModel, height: CGFloat = 58) {
+    public init(viewModel: SearchResultsSortOptionsViewModel, height: CGFloat = 58) {
         self.viewModel = viewModel
         self.height = height
     }
 
-    var body: some View {
+    public var body: some View {
         VStack {
             titleView
             ScrollView {

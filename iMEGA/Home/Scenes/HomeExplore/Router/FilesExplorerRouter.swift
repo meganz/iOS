@@ -1,6 +1,7 @@
 import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGADomain
+import MEGAL10n
 import SwiftUI
 import Video
 
@@ -48,7 +49,12 @@ struct FilesExplorerRouter {
                     repo: UserAttributeRepository.newRepo),
                 hiddenNodesFeatureFlagEnabled: { DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes) }),
             createContextMenuUseCase: createContextMenuUseCase,
-            nodeProvider: DefaultMEGANodeProvider(sdk: .sharedSdk))
+            nodeProvider: DefaultMEGANodeProvider(sdk: .sharedSdk),
+            sortOptionsViewModel: .init(
+                title: Strings.Localizable.sortTitle,
+                sortOptions: SearchResultsSortOptionFactory.makeAll()
+            )
+        )
         let preference: FilesExplorerContainerViewController.ViewPreference = explorerType == .video ? .list : .both
         let vc = FilesExplorerContainerViewController(viewModel: viewModel,
                                                       viewPreference: preference)

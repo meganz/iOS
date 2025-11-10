@@ -15,7 +15,6 @@ struct SearchResultsContainerViewModelTests {
         #expect(sut.presentedChipsPickerViewModel == nil)
         #expect(sut.showChips == false)
         #expect(sut.showSorting == false)
-        #expect(sut.showSortSheet == false)
     }
 
     @Test func testColorAssets_whenInvoked_shouldMatchTheTestConfigAssets() {
@@ -48,18 +47,6 @@ struct SearchResultsContainerViewModelTests {
         #expect(sut.chipAssets.selectedBackground == expectedChipAssets.selectedBackground)
         #expect(sut.chipAssets.normalForeground == expectedChipAssets.normalForeground)
         #expect(sut.chipAssets.normalBackground == expectedChipAssets.normalBackground)
-    }
-
-    @Test func testHeaderViewModel_whenButtonPressed_shouldShowSortSheet() {
-        let sut = makeSUT(sortOptionsViewModel: .init(
-            title: "Sort by",
-            sortOptions: [
-                .init(sortOrder: .init(key: .name), title: "Name", iconsByDirection: [:]),
-                .init(sortOrder: .init(key: .name, direction: .descending), title: "Name", iconsByDirection: [:])
-            ]
-        ))
-        sut.sortHeaderViewModel?.handler()
-        #expect(sut.showSortSheet == true)
     }
 
     @Test func testTask_whenInvoked_shouldMatchThePassedInQueries() async {
@@ -120,22 +107,6 @@ struct SearchResultsContainerViewModelTests {
         sut.showChipsGroupPicker(with: "type")
         await sut.dismissChipGroupPicker()
         #expect(sut.presentedChipsPickerViewModel == nil)
-    }
-
-    @Test func testSelectSortOption_whenInvoked_ShouldHideSortSheet() throws {
-        let sut = makeSUT(
-            sortOptionsViewModel: .init(
-                title: "Sort by",
-                sortOptions: [
-                    .init(sortOrder: .init(key: .name), title: "Name", iconsByDirection: [:]),
-                    .init(sortOrder: .init(key: .name, direction: .descending), title: "Name", iconsByDirection: [:])
-                ]
-            )
-        )
-        sut.showSortSheet = true
-        let selectedSortOption = try #require(sut.displaySortOptionsViewModel.sortOptions.last)
-        sut.displaySortOptionsViewModel.tapHandler?(selectedSortOption)
-        #expect(sut.showSortSheet == false)
     }
 
     @Test func testSelectSearchResults_whenInvoked_shouldSwitchToEditingMode() {
@@ -307,9 +278,8 @@ struct SearchResultsContainerViewModelTests {
             ]
         )
         let sut = makeSUT(sortOptionsViewModel: sortOptionsViewModel)
-        let headerViewModel = try #require(sut.sortHeaderViewModel)
-        #expect(headerViewModel.title == "Name")
-        #expect(headerViewModel.icon == Image(systemName: "plus"))
+        #expect(sut.sortHeaderViewModel.selectedOption.title == "Name")
+        #expect(sut.sortHeaderViewModel.selectedOption.currentDirectionIcon == Image(systemName: "plus"))
     }
 
     @Test func testUpdateQuery_whenChipsAreDisabled_shouldClearChips() async {
@@ -464,6 +434,35 @@ struct SearchResultsContainerViewModelTests {
         )
     }
 
+    @Test
+    func testSelectedSortOption_whenInvoked_shouldUpdateSortHeaderViewModel() async throws {
+        let sut = makeSUT(
+            sortOptionsViewModel: .init(
+                title: "Sort by",
+                sortOptions: [
+                    .init(sortOrder: .init(key: .name), title: "Name", iconsByDirection: [:]),
+                    .init(sortOrder: .init(key: .name, direction: .descending), title: "Name", iconsByDirection: [:])
+                ]
+            )
+        )
+        sut.sortHeaderViewModel.showSortSheet = true
+
+        let selectedSortOption = try #require(sut.displaySortOptionsViewModel.sortOptions.last)
+        sut.displaySortOptionsViewModel.tapHandler?(selectedSortOption)
+
+        let expectedSortOrder = selectedSortOption.sortOrder
+        try await waitUntil(
+            await MainActor.run {
+                sut.displaySortOptionsViewModel.sortOptions.map(\.sortOrder).notContains(expectedSortOrder)
+            }
+        )
+
+        #expect(sut.sortHeaderViewModel.showSortSheet == false)
+        #expect(sut.sortHeaderViewModel.selectedOption.title == selectedSortOption.title)
+        #expect(sut.sortHeaderViewModel.selectedOption.sortOrder == selectedSortOption.sortOrder)
+        #expect(sut.displaySortOptionsViewModel.sortOptions.map(\.sortOrder).notContains(expectedSortOrder))
+    }
+
     typealias SUT = SearchResultsContainerViewModel
     private func makeSUT(
         sortOptionsViewModel: SearchResultsSortOptionsViewModel = .init(title: "", sortOptions: []),
@@ -565,5 +564,16 @@ struct SearchResultsContainerViewModelTests {
 
         #expect(sut.viewModeHeaderViewModel.availableViewModes == expectedAfter)
         #expect(sut.viewModeHeaderViewModel.selectedViewMode == initialViewMode)
+    }
+
+    private func waitUntil(
+        timeout: TimeInterval = 2.0,
+        _ condition: @Sendable @autoclosure @escaping () async -> Bool
+    ) async throws {
+        try await withTimeout(seconds: timeout) {
+            while await !condition() {
+                try await Task.sleep(nanoseconds: 10_000_000) // 10ms
+            }
+        }
     }
 }

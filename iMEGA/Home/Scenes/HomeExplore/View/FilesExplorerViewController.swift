@@ -128,12 +128,15 @@ class FilesExplorerViewController: ExplorerBaseViewController {
     private func makeHeaderView() -> UIView {
         let headerView = UIView()
         headerView.bounds = CGRect(x: 0, y: 0, width: 0, height: 40)
+
         let headerContentView = SearchResultsHeaderView {
-            SearchResultsHeaderSortView(viewModel: viewModel.sortHeaderViewModel)
+            let sortHeaderViewModel = viewModel.sortHeaderViewModel
+            SearchResultsHeaderSortView(viewModel: sortHeaderViewModel)
         } rightView: {
-            let viewModel = viewModel.viewModeHeaderViewModel
-            SearchResultsHeaderViewModeView(viewModel: viewModel)
+            let viewModeHeaderViewModel = viewModel.viewModeHeaderViewModel
+            SearchResultsHeaderViewModeView(viewModel: viewModeHeaderViewModel)
         }
+
         let hostingViewController = UIHostingController(rootView: headerContentView)
         headerView.wrap(hostingViewController.view)
         addChild(hostingViewController)

@@ -29,18 +29,15 @@ public struct SearchResultsContainerView: View {
                 .presentationDetents([.medium, .large])
                 .presentationDragIndicator(.visible)
         }
-        .sheet(isPresented: $viewModel.showSortSheet) {
-            SearchResultsSortOptionsView(viewModel: viewModel.displaySortOptionsViewModel)
-        }
     }
 
     @ViewBuilder
     private var header: some View {
         if viewModel.showChips {
             chips
-        } else if viewModel.showSorting, let sortHeaderViewModel = viewModel.sortHeaderViewModel {
+        } else if viewModel.showSorting {
             SearchResultsHeaderView {
-                SearchResultsHeaderSortView(viewModel: sortHeaderViewModel)
+                SearchResultsHeaderSortView(viewModel: viewModel.sortHeaderViewModel)
             } rightView: {
                 SearchResultsHeaderViewModeView(viewModel: viewModel.viewModeHeaderViewModel)
             }

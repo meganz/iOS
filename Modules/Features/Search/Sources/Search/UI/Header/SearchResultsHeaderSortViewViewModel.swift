@@ -1,13 +1,21 @@
 import SwiftUI
 
-public struct SearchResultsHeaderSortViewViewModel {
-    let title: String
-    let icon: Image?
-    let handler: () -> Void
+@MainActor
+public final class SearchResultsHeaderSortViewViewModel: ObservableObject {
+    @Published var selectedOption: SearchResultsSortOption
+    @Published var showSortSheet: Bool = false
+    public var displaySortOptionsViewModel: SearchResultsSortOptionsViewModel
 
-    public init(title: String, icon: Image?, handler: @escaping () -> Void) {
-        self.title = title
-        self.icon = icon
-        self.handler = handler
+    public init(
+        selectedOption: SearchResultsSortOption,
+        displaySortOptionsViewModel: SearchResultsSortOptionsViewModel
+    ) {
+        self.selectedOption = selectedOption
+        self.displaySortOptionsViewModel = displaySortOptionsViewModel
+    }
+
+    public func selectionChanged(to option: SearchResultsSortOption) {
+        showSortSheet = false
+        selectedOption = option
     }
 }

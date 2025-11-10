@@ -36,18 +36,17 @@ public class SearchResultsContainerViewModel: ObservableObject {
         }
     }
 
-    var sortHeaderViewModel: SearchResultsHeaderSortViewViewModel? {
-        guard let sortOption = sortOptionsViewModel
-            .sortOptions.first(where: { $0.sortOrder == searchResultsViewModel.currentQuery.sorting }) else { return nil }
-        return .init(title: sortOption.title, icon: sortOption.currentDirectionIcon) { [weak self] in
-            self?.showSortSheet = true
-        }
-    }
+    lazy var sortHeaderViewModel: SearchResultsHeaderSortViewViewModel = {
+        let sortOptions = sortOptionsViewModel.sortOptions
+        assert(sortOptions.isNotEmpty, "Sort options should not be empty")
+        let sortOption = sortOptions
+            .first(where: { $0.sortOrder == searchResultsViewModel.currentQuery.sorting }) ?? sortOptions[0]
+        return .init(selectedOption: sortOption, displaySortOptionsViewModel: displaySortOptionsViewModel)
+    }()
 
     let viewModeHeaderViewModel: SearchResultsHeaderViewModeViewModel
     @Published public private(set) var showChips: Bool = false
     @Published public var showSorting: Bool = false
-    @Published var showSortSheet = false
     private var subscriptions: Set<AnyCancellable> = []
     private let shouldShowMediaDiscoveryModeHandler: () -> Bool
 
@@ -100,9 +99,17 @@ public class SearchResultsContainerViewModel: ObservableObject {
     }
 
     private func selectedSortOption(_ sortOption: SearchResultsSortOption) {
-        showSortSheet = false
+        sortHeaderViewModel.selectionChanged(to: sortOption)
         bridge.updateSortOrder(sortOption.sortOrder)
-        Task { await searchResultsViewModel.queryChanged(with: sortOption.sortOrder) }
+
+        Task {
+            await searchResultsViewModel.queryChanged(with: sortOption.sortOrder)
+            updateDisplaySortOptions()
+        }
+    }
+
+    private func updateDisplaySortOptions() {
+        sortHeaderViewModel.displaySortOptionsViewModel = displaySortOptionsViewModel
     }
 
     private func title(for chip: SearchChipEntity, appliedChips: [SearchChipEntity]) -> String {
