@@ -15,6 +15,11 @@ import SwiftUI
 // └────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
 // The Menu (More button or select button) is not affected by the sensitive property (.sensitive modifier)
 struct RevampedSearchResultRowView: View {
+    private enum Constants {
+        static let easeInOutDuration = 0.05
+        static let longPressMininumDuration = 0.5
+        static let tapHighlightDurationNs: UInt64 = 100_000_000
+    }
     @ObservedObject var viewModel: SearchResultRowViewModel
     private let layout = ResultCellLayout.list
     @Environment(\.editMode) private var editMode
@@ -63,30 +68,28 @@ struct RevampedSearchResultRowView: View {
             .sensitive(viewModel.isSensitive ? .opacity : .none)
             .contentShape(Rectangle())
             .onTapGesture {
-                withAnimation(.easeInOut(duration: 0.05)) {
-                    highlighted = true
-                }
+                // Here we only highlight for tap selection in non-Edit mode
+                // For long press and selection edit mode, we rely on List's built-in behavior for highlight cells
+                if editMode?.wrappedValue.isEditing != true {
+                    withAnimation(.easeInOut(duration: Constants.easeInOutDuration)) {
+                        highlighted = true
+                    }
 
-                Task {
-                    try await Task.sleep(nanoseconds: 100_000_000)
-                    withAnimation(.easeInOut(duration: 0.05)) {
-                        highlighted = false
+                    Task {
+                        try await Task.sleep(nanoseconds: Constants.tapHighlightDurationNs)
+                        withAnimation(.easeInOut(duration: 0.05)) {
+                            highlighted = false
+                        }
                     }
                 }
-
                 viewModel.actions.selectionAction()
             }
-            .onLongPressGesture(minimumDuration: 0.5) {
+            .onLongPressGesture(minimumDuration: Constants.longPressMininumDuration) {
                 viewModel.actions.revampLongPress()
-                highlighted = false
-            } onPressingChanged: { pressing in
-                withAnimation(.easeInOut(duration: 0.05)) {
-                    highlighted = pressing
-                }
             }
             moreButton
         }
-        .background(Color.gray.opacity(highlighted ? 0.5 : 0))
+        .background(TokenColors.Background.surface1.swiftUI.opacity(highlighted ? 1 : 0))
         .contentShape(Rectangle())
         .frame(minHeight: 58)
     }

@@ -38,7 +38,6 @@ struct RevampedSearchResultThumbnailView: View {
     private enum Constants {
         static let cellHeight = 184.0
         static let topViewHeight = 148.0
-        static let bottomViewHeight = 155.0
         static let standardIconSize = 24.0
         static let bottomTrailingPropertyImageSize = 16.0
     }
@@ -46,6 +45,7 @@ struct RevampedSearchResultThumbnailView: View {
     @ObservedObject var viewModel: SearchResultRowViewModel
     @Binding var selected: Set<ResultId>
     @Binding var selectionEnabled: Bool
+    @State private var highlighted = false // [IOS-10443]: Ensure highlight is retained when cell is selected in Edit mode
 
     private let layout: ResultCellLayout = .thumbnail
 
@@ -54,11 +54,8 @@ struct RevampedSearchResultThumbnailView: View {
             topInfoView
             bottomInfoView
         }
-        .onTapGesture {
-            // [IOS-10758]
-        }
         .frame(height: Constants.cellHeight)
-        .clipShape(RoundedRectangle(cornerRadius: TokenRadius.small))
+        .background(TokenColors.Background.surface1.swiftUI.opacity(highlighted ? 1 : 0))
         .clipped()
         .task {
             await viewModel.loadThumbnail()
@@ -79,13 +76,14 @@ struct RevampedSearchResultThumbnailView: View {
         )
         .frame(height: Constants.topViewHeight)
         .sensitive(viewModel.isSensitive ? .opacity : .none)
-        .clipped()
+        .clipShape(RoundedRectangle(cornerRadius: TokenRadius.small))
         .overlay(alignment: .topTrailing) {
             backgroundHeader
         }
         .overlay(alignment: .bottomTrailing) {
             backgroundFooter
         }
+        .applyTapAndLongPressFromRowViewModel(viewModel, isHighlighted: $highlighted)
     }
 
     // hosts .secondary(.trailingEdge) properties
@@ -145,15 +143,19 @@ struct RevampedSearchResultThumbnailView: View {
 
     private var bottomInfoView: some View {
         HStack(spacing: .zero) {
-            VStack(alignment: .leading, spacing: .zero) {
-                topLine
-            }.sensitive(viewModel.isSensitive ? .opacity : .none)
-
-            Spacer()
+            HStack {
+                bottomInfoLine
+                    .sensitive(viewModel.isSensitive ? .opacity : .none)
+                Spacer()
+            }
+            .frame(maxHeight: .infinity)
+            .clipShape(Rectangle())
+            .applyTapAndLongPressFromRowViewModel(viewModel, isHighlighted: $highlighted)
             trailingView
                 .frame(width: Constants.standardIconSize)
         }
         .padding(.horizontal, TokenSpacing._2)
+        .frame(height: Constants.cellHeight - Constants.topViewHeight) // Needs to set the height of the bottom view in order for the 2-liner text to work
     }
 
     @ViewBuilder private var trailingView: some View {
@@ -172,11 +174,10 @@ struct RevampedSearchResultThumbnailView: View {
         )
         .resizable()
         .scaledToFit()
-        .frame(width: Constants.standardIconSize, height: Constants.standardIconSize)
     }
 
     // hosts title and .prominent properties
-    private var topLine: some View {
+    private var bottomInfoLine: some View {
         HStack(spacing: TokenSpacing._2) {
             viewModel
                 .result

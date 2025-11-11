@@ -54,8 +54,7 @@ struct SearchResultsListView: View {
         Section(header: listHeaderView) {
             ForEach(viewModel.listItems) { item in
                 rowContent(rowViewModel: item)
-                    .listRowSeparatorTint(viewModel.colorAssets.listRowSeparator.opacity(viewModel.usesRevampedLayout ? 0 : 1))
-                    .listRowBackground(Color.clear)
+                    .listRowSeparator(.hidden)
                     .onAppear {
                         // `viewModel.onItemAppear(item)` is meant to trigger `loadMore` logic.
                         // We need to use `.onAppear` instead of `.task` so `loadMore` cannot be cancelled and cause a bug.
@@ -73,6 +72,8 @@ struct SearchResultsListView: View {
             RevampedSearchResultRowView(viewModel: rowViewModel)
         } else {
             SearchResultRowView(viewModel: rowViewModel)
+                .listRowSeparatorTint(viewModel.colorAssets.listRowSeparator)
+                .listRowBackground(Color.clear)
         }
     }
 }
