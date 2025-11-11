@@ -33,7 +33,6 @@ extension SearchConfig {
                 tagsTextColor: Color.primary,
                 textHighlightColor: .gray,
                 vibrantColor: Color.red,
-                resultPropertyColor: Color.gray, 
                 verticalThumbnailFooterText: .white,
                 verticalThumbnailFooterBackground: .black,
                 verticalThumbnailPreviewBackground: .gray,

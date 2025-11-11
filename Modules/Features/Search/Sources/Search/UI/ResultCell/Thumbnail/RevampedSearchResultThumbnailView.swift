@@ -102,7 +102,8 @@ struct RevampedSearchResultThumbnailView: View {
                     TokenColors.Background.surfaceTransparent.swiftUI
                         .frame(width: Constants.standardIconSize, height: Constants.standardIconSize)
                         .clipShape(RoundedRectangle(cornerRadius: TokenRadius.small))
-                    propertyView(for: property, colorAssets: viewModel.colorAssets, placement: .secondary(.trailingEdge))
+                    headerPropertyView(for: property, colorAssets: viewModel.colorAssets, placement: .secondary(.trailingEdge))
+                        .accessibilityLabel(property.accessibilityLabel)
                 }
             }
         }
@@ -115,24 +116,31 @@ struct RevampedSearchResultThumbnailView: View {
         HStack(spacing: 1) {
             let placement = PropertyPlacement.secondary(.leading)
             ForEach(viewModel.result.properties.propertiesFor(mode: layout, placement: placement) ) { property in
-                switch property.content {
-                case .icon(image: let image, layoutConfig: let layoutConfig):
-                    property.resultPropertyImage(image: image, layoutConfig: layoutConfig, colorAssets: viewModel.colorAssets, placement: placement)
-                        .frame(width: Constants.bottomTrailingPropertyImageSize, height: Constants.bottomTrailingPropertyImageSize)
-                        .padding(TokenSpacing._1)
-                case .text(let text):
-                    Text(text)
-                        .padding(TokenSpacing._1)
-                        .font(.caption2)
-                        .foregroundColor(viewModel.colorAssets.verticalThumbnailFooterText)
-                        .background(viewModel.colorAssets.verticalThumbnailFooterBackground)
-                        .clipShape(RoundedRectangle(cornerRadius: TokenRadius.small))
-                case .spacer:
-                    Spacer()
-                }
+                footerPropertyView(property: property, placement: placement)
+                    .accessibilityLabel(property.accessibilityLabel)
             }
         }
         .padding([.trailing, .bottom], TokenSpacing._2)
+    }
+
+    @ViewBuilder
+    private func footerPropertyView(property: ResultProperty, placement: PropertyPlacement) -> some View {
+        switch property.content {
+        case .icon(image: let image, layoutConfig: let layoutConfig):
+            property.resultPropertyImage(image: image, layoutConfig: layoutConfig, colorAssets: viewModel.colorAssets, placement: placement)
+                .frame(width: Constants.bottomTrailingPropertyImageSize, height: Constants.bottomTrailingPropertyImageSize)
+                .padding(TokenSpacing._1)
+
+        case .text(let text):
+            Text(text)
+                .padding(TokenSpacing._1)
+                .font(.caption2)
+                .foregroundColor(viewModel.colorAssets.verticalThumbnailFooterText)
+                .background(viewModel.colorAssets.verticalThumbnailFooterBackground)
+                .clipShape(RoundedRectangle(cornerRadius: TokenRadius.small))
+        case .spacer:
+            Spacer()
+        }
     }
 
     private var bottomInfoView: some View {
@@ -205,10 +213,14 @@ struct RevampedSearchResultThumbnailView: View {
         }
     }
 
-    @ViewBuilder private func propertyView(for property: ResultProperty, colorAssets: SearchConfig.ColorAssets, placement: PropertyPlacement) -> some View {
+    @ViewBuilder private func headerPropertyView(for property: ResultProperty, colorAssets: SearchConfig.ColorAssets, placement: PropertyPlacement) -> some View {
         switch property.content {
         case let .icon(image: image, layoutConfig: layoutConfig):
-            property.resultPropertyImage(image: image, layoutConfig: layoutConfig, colorAssets: colorAssets, placement: placement)
+            Image(uiImage: image)
+                .resizable()
+                .renderingMode(layoutConfig.renderingMode)
+                .aspectRatio(contentMode: .fit)
+                .foregroundStyle(property.vibrancyEnabled ? colorAssets.vibrantColor : TokenColors.Icon.onColor.swiftUI)
                 .frame(width: layoutConfig.size, height: layoutConfig.size)
         case .text(let text):
             Text(text)

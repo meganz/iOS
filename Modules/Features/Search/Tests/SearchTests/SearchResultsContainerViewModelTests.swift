@@ -29,7 +29,6 @@ struct SearchResultsContainerViewModelTests {
         #expect(sut.colorAssets.tagsTextColor == expectedColorAssets.tagsTextColor)
         #expect(sut.colorAssets.textHighlightColor == expectedColorAssets.textHighlightColor)
         #expect(sut.colorAssets.vibrantColor == expectedColorAssets.vibrantColor)
-        #expect(sut.colorAssets.resultPropertyColor == expectedColorAssets.resultPropertyColor)
         #expect(sut.colorAssets.verticalThumbnailFooterText == expectedColorAssets.verticalThumbnailFooterText)
         #expect(sut.colorAssets.verticalThumbnailFooterBackground == expectedColorAssets.verticalThumbnailFooterBackground)
         #expect(sut.colorAssets.verticalThumbnailPreviewBackground == expectedColorAssets.verticalThumbnailPreviewBackground)

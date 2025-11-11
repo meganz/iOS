@@ -270,7 +270,6 @@ final class SearchResultsViewModelTests: XCTestCase, @unchecked Sendable {
                     tagsTextColor: .secondary,
                     textHighlightColor: .gray,
                     vibrantColor: .red,
-                    resultPropertyColor: .gray,
                     verticalThumbnailFooterText: .white,
                     verticalThumbnailFooterBackground: .black,
                     verticalThumbnailPreviewBackground: .gray,

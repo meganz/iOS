@@ -9,6 +9,7 @@ public struct SearchConfig {
     public let chipAssets: ChipAssets
     public let emptyViewAssetFactory: (SearchChipEntity?, SearchQuery) -> EmptyViewAssets
     public let rowAssets: RowAssets
+    // [SAO-3133]: Refactor ColorAssets to remove unnecessary color properties
     public let colorAssets: ColorAssets
     public let contextPreviewFactory: ContextPreviewFactory
     
@@ -188,7 +189,6 @@ public struct SearchConfig {
         public let tagsTextColor: Color
         public let textHighlightColor: Color
         public let vibrantColor: Color
-        public let resultPropertyColor: Color
         
         // Color for the text of the footer of vertical thumbnail mode
         public let verticalThumbnailFooterText: Color
@@ -219,7 +219,6 @@ public struct SearchConfig {
             tagsTextColor: Color,
             textHighlightColor: Color,
             vibrantColor: Color,
-            resultPropertyColor: Color,
             verticalThumbnailFooterText: Color,
             verticalThumbnailFooterBackground: Color,
             verticalThumbnailPreviewBackground: Color,
@@ -237,7 +236,6 @@ public struct SearchConfig {
             self.tagsTextColor = tagsTextColor
             self.textHighlightColor = textHighlightColor
             self.vibrantColor = vibrantColor
-            self.resultPropertyColor = resultPropertyColor
             
             self.verticalThumbnailFooterText = verticalThumbnailFooterText
             self.verticalThumbnailFooterBackground = verticalThumbnailFooterBackground

@@ -51,7 +51,7 @@ extension ResultProperty {
                 .resizable()
                 .renderingMode(layoutConfig.renderingMode)
                 .aspectRatio(contentMode: .fit)
-                .foregroundStyle(vibrancyEnabled ? colorAssets.vibrantColor : colorAssets.resultPropertyColor)
+                .foregroundStyle(vibrancyEnabled ? colorAssets.vibrantColor : TokenColors.Icon.secondary.swiftUI)
         } else {
             Image(uiImage: image)
         }

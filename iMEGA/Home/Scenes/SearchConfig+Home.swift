@@ -120,7 +120,6 @@ extension SearchConfig {
                 tagsTextColor: UIColor.primaryTextColor().swiftUI,
                 textHighlightColor: TokenColors.Notifications.notificationSuccess.swiftUI,
                 vibrantColor: TokenColors.Text.error.swiftUI,
-                resultPropertyColor: isCloudDriveRevampEnabled ? TokenColors.Icon.onColor.swiftUI : TokenColors.Icon.secondary.swiftUI,
                 verticalThumbnailFooterText: isCloudDriveRevampEnabled ? TokenColors.Icon.onColor.swiftUI: TokenColors.Text.primary.swiftUI,
                 verticalThumbnailFooterBackground: isCloudDriveRevampEnabled ? TokenColors.Background.surfaceTransparent.swiftUI :  TokenColors.Background.surface1.swiftUI,
                 verticalThumbnailPreviewBackground: TokenColors.Background.surface1.swiftUI,
