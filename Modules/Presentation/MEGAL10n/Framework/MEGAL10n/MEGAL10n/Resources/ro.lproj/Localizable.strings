@@ -4145,15 +4145,15 @@
 /* Hidden files and folders onboarding content hide important title */
 "onboarding.hiddenFilesAndFolders.hideImportant.content.title"="Ascundeți fișierele și folderele importante";
 /* Hidden files and folders onboarding content hide important message */
-"onboarding.hiddenFilesAndFolders.hideImportant.content.message"="Puteți ascunde fișierele și folderele sensibile pentru confidențialitate. Numai dvs. le puteți dezvălui, fie individual, fie prin afișarea temporară a elementelor ascunse din setări.";
+"onboarding.hiddenFilesAndFolders.hideImportant.content.message"="Puteți ascunde fișierele și folderele sensibile pentru confidențialitate într-un singur pas ușor.";
 /* Hidden files and folders onboarding content exclude from timeline title */
-"onboarding.hiddenFilesAndFolders.excludeTimeline.content.title"="Excludeți din vizualizarea cronologică";
+"onboarding.hiddenFilesAndFolders.excludeTimeline.content.title"="Invizibile";
 /* Hidden files and folders onboarding content exclude from timeline section message */
-"onboarding.hiddenFilesAndFolders.excludeTimeline.content.message"="Elementele ascunse sunt accesibile numai prin Unitatea cloud și nu vor apărea în Fotografii, Albume sau Recente.";
+"onboarding.hiddenFilesAndFolders.excludeTimeline.content.message"="Numai tu poți dezvălui fișiere ascunse, fie individual, fie prin afișarea temporară a elementelor ascunse din setări.";
 /* Hidden files and folders onboarding content out of sight title */
-"onboarding.hiddenFilesAndFolders.outOfSight.content.title"="Invizibile";
+"onboarding.hiddenFilesAndFolders.outOfSight.content.title"="Blur pentru confidențialitate";
 /* Hidden files and folders onboarding content out of sight message */
-"onboarding.hiddenFilesAndFolders.outOfSight.content.message"="Dvs. decideți când sunt vizibile fișierele ascunse. Există o nouă setare pentru a afișa temporar elementele ascunse.";
+"onboarding.hiddenFilesAndFolders.outOfSight.content.message"="Afișează elementele ascunse cu miniaturile încețoșate, pentru a le putea identifica fără a le expune conținutul";
 /* My Account page: Menu Title of user account page */
 "account.myAccount.title"="Contul meu";
 /* Storage limit capacity, where %d is the number of gigabytes that marks the storage limit */
@@ -4413,7 +4413,7 @@
 /* Banner description shown when storage is full, prompting the user to upgrade */
 "account.storage.banner.fullStorageOverQuotaBanner.description"="Pentru a continua să încărcați date, upgradați acum pentru a obține mai mult spațiu de stocare.";
 /* Banner title shown when storage is almost full */
-"account.storage.banner.almostFullStorageOverQuotaBanner.title"="Spațiul dvs. de stocare este plin";
+"account.storage.banner.almostFullStorageOverQuotaBanner.title"="Spațiul dvs. de stocare este aproape plin";
 /* Button title to upgrade when storage is almost full */
 "account.storage.banner.almostFullStorageOverQuotaBanner.button"="Upgradați acum";
 /* Banner description shown when storage is almost full, prompting the user to upgrade */
@@ -4630,8 +4630,6 @@
 "subscriptionPurchase.freePlanCard.title"="Începe cu abonamentul nostru gratuit";
 /* Description shown for the free plan card */
 "subscriptionPurchase.freePlanCard.description"="Oferim o cantitate generoasă de spațiu de stocare și cotă de transfer fără taxare, astfel încât să puteți încerca MEGA fără riscuri";
-/* First benefit shown for the free plan card */
-"subscriptionPurchase.freePlanCard.feature.one"="20 GB de spațiu de stocare gratuit";
 /* Second benefit shown for the free plan card */
 "subscriptionPurchase.freePlanCard.feature.two"="Transferuri limitate";
 /* Button title for the free plan card */
@@ -4641,7 +4639,7 @@
 /* Displays the amount of data transfer included in the subscription plan */
 "subscriptionPurchase.plan.transfer"="%@ transferuri";
 /* Displays the total amount when billed yearly */
-"subscriptionPurchase.plan.billedYearly"="%@ facturat anual";
+"subscriptionPurchase.plan.billedYearly"="%@ plată anuală";
 /* Button title to cancel the subscription purchase. */
 "subscriptionPurchase.maybeLater"="Poate mai târziu";
 /* Title for the features of pro plan in the subscription purchase screen. */
@@ -4755,13 +4753,13 @@
 /* Sorting option label for sorting items based on their file size (can be applied in ascending or descending order) */
 "sorting.size.title"="Dimensiune";
 /* Black Friday deal plan badge text shown in Upgrade plan screen */
-"upgradeAccountPlan.plan.tag.introOffer.blackFridayDeal"="Black Friday deal: %@ off";
+"upgradeAccountPlan.plan.tag.introOffer.blackFridayDeal"="Ofertă de Black Friday: reducere de %@";
 /* General deal plan badge text shown in Upgrade plan screen */
 "upgradeAccountPlan.plan.tag.introOffer.generalDeal"="Reducere %@";
 /* Subscription plan first year offer text shown in Upgrade plan screen */
-"subscriptionPurchase.plan.firstYearOffer"="%@, for first year";
+"subscriptionPurchase.plan.firstYearOffer"="%@ pentru primul an";
 /* Header text in Upgrade plan screen to highlight yearly billing savings with intro offer */
-"upgradeAccountPlan.header.title.saveYearlyBillingWithIntoOffer"="Save at least %@ on a yearly plan";
+"upgradeAccountPlan.header.title.saveYearlyBillingWithIntoOffer"="Economisiți cel puțin %@ la un abonament anual";
 /* Camera Uploads Progress navigation title */
 "cameraUploads.progress.navigation.title"="Progres";
 /* Camera Uploads Progress In Progress section title */
@@ -4769,6 +4767,18 @@
 /* Camera Uploads row progress format */
 "cameraUploads.progress.row.uploadProgressFormat"="%@ of %@ %@/s";
 /* Cyber Monday deal plan badge text shown in Upgrade plan screen */
-"upgradeAccountPlan.plan.tag.introOffer.cyberMondayDeal"="Cyber Monday deal: %@ off";
+"upgradeAccountPlan.plan.tag.introOffer.cyberMondayDeal"="Ofertă Cyber Monday: reducere de %@";
 /* Special Offer plan badge text shown in Upgrade plan screen */
-"upgradeAccountPlan.plan.tag.introOffer.specialOffer"="Special offer: %@ off";
+"upgradeAccountPlan.plan.tag.introOffer.specialOffer"="Oferta speciala: reducere de %@";
+/* View mode title for grid view in the cloud drive. */
+"cloudDrive.viewMode.grid.title"="Vizualizare tip grilă";
+/* Camera Uploads Progress In Queue section title */
+"cameraUploads.progress.section.inQueue.title"="În coada de așteptare";
+/* Camera Uploads row file progress */
+"cameraUploads.progress.row.fileProgress"="%1$@ de %2$@";
+/* Camera Uploads row file upload speed */
+"cameraUploads.progress.row.uploadSpeed"="%@ / s";
+/* Footer for the yearly billing option in the upgrade account plan screen */
+"upgradeAccountPlan.plan.yearly.footer"="Charged Yearly";
+/* Price per month display for yearly billing option in the upgrade account plan screen */
+"upgradeAccountPlan.plan.yearly.pricePerMonth"="Only %@/month";

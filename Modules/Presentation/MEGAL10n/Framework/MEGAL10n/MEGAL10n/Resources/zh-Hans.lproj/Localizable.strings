@@ -4145,15 +4145,15 @@
 /* Hidden files and folders onboarding content hide important title */
 "onboarding.hiddenFilesAndFolders.hideImportant.content.title"="隐藏重要的文件和文件夹";
 /* Hidden files and folders onboarding content hide important message */
-"onboarding.hiddenFilesAndFolders.hideImportant.content.message"="您可以隐藏敏感的文件和文件夹以保护隐私。只有您可以单独或通过设置中的暂时显示隐藏项目来显示它们。";
+"onboarding.hiddenFilesAndFolders.hideImportant.content.message"="您只需一个简单的步骤即可隐藏敏感文件和文件夹以保护隐私。";
 /* Hidden files and folders onboarding content exclude from timeline title */
-"onboarding.hiddenFilesAndFolders.excludeTimeline.content.title"="从时间线中排除";
+"onboarding.hiddenFilesAndFolders.excludeTimeline.content.title"="隐藏";
 /* Hidden files and folders onboarding content exclude from timeline section message */
-"onboarding.hiddenFilesAndFolders.excludeTimeline.content.message"="隐藏的项目只能通过云盘访问，不会出现在您的照片、相册或近期记录中。";
+"onboarding.hiddenFilesAndFolders.excludeTimeline.content.message"="只有您可以显示隐藏的文件，您可以单个操作或者在帐户设置中选择暂时显示所有隐藏项目。";
 /* Hidden files and folders onboarding content out of sight title */
-"onboarding.hiddenFilesAndFolders.outOfSight.content.title"="隐藏";
+"onboarding.hiddenFilesAndFolders.outOfSight.content.title"="隐藏以保护隐私";
 /* Hidden files and folders onboarding content out of sight message */
-"onboarding.hiddenFilesAndFolders.outOfSight.content.message"="您可以决定何时显示隐藏的文件。有一个新的设置可以暂时显示隐藏的项目。";
+"onboarding.hiddenFilesAndFolders.outOfSight.content.message"="显示模糊缩略图的隐藏项目，这样您就可以在不暴露其内容的情况下识别它们。";
 /* My Account page: Menu Title of user account page */
 "account.myAccount.title"="我的帐户";
 /* Storage limit capacity, where %d is the number of gigabytes that marks the storage limit */
@@ -4630,8 +4630,6 @@
 "subscriptionPurchase.freePlanCard.title"="开始使用我们的免费方案";
 /* Description shown for the free plan card */
 "subscriptionPurchase.freePlanCard.description"="我们免费提供大量存储空间和传输配额，让您可以毫无风险地体验MEGA";
-/* First benefit shown for the free plan card */
-"subscriptionPurchase.freePlanCard.feature.one"="20GB的免费存储空间";
 /* Second benefit shown for the free plan card */
 "subscriptionPurchase.freePlanCard.feature.two"="有限的传输";
 /* Button title for the free plan card */
@@ -4641,7 +4639,7 @@
 /* Displays the amount of data transfer included in the subscription plan */
 "subscriptionPurchase.plan.transfer"="%@传输流量";
 /* Displays the total amount when billed yearly */
-"subscriptionPurchase.plan.billedYearly"="%@ 按年计费";
+"subscriptionPurchase.plan.billedYearly"="%@按年收费";
 /* Button title to cancel the subscription purchase. */
 "subscriptionPurchase.maybeLater"="稍后";
 /* Title for the features of pro plan in the subscription purchase screen. */
@@ -4755,13 +4753,13 @@
 /* Sorting option label for sorting items based on their file size (can be applied in ascending or descending order) */
 "sorting.size.title"="大小";
 /* Black Friday deal plan badge text shown in Upgrade plan screen */
-"upgradeAccountPlan.plan.tag.introOffer.blackFridayDeal"="Black Friday deal: %@ off";
+"upgradeAccountPlan.plan.tag.introOffer.blackFridayDeal"="黑色星期五特惠： %@折扣";
 /* General deal plan badge text shown in Upgrade plan screen */
 "upgradeAccountPlan.plan.tag.introOffer.generalDeal"="优惠%@";
 /* Subscription plan first year offer text shown in Upgrade plan screen */
-"subscriptionPurchase.plan.firstYearOffer"="%@, for first year";
+"subscriptionPurchase.plan.firstYearOffer"="第一年仅需%@";
 /* Header text in Upgrade plan screen to highlight yearly billing savings with intro offer */
-"upgradeAccountPlan.header.title.saveYearlyBillingWithIntoOffer"="Save at least %@ on a yearly plan";
+"upgradeAccountPlan.header.title.saveYearlyBillingWithIntoOffer"="年度方案至少可节省%@";
 /* Camera Uploads Progress navigation title */
 "cameraUploads.progress.navigation.title"="进行状况";
 /* Camera Uploads Progress In Progress section title */
@@ -4769,6 +4767,18 @@
 /* Camera Uploads row progress format */
 "cameraUploads.progress.row.uploadProgressFormat"="%@ of %@ %@/s";
 /* Cyber Monday deal plan badge text shown in Upgrade plan screen */
-"upgradeAccountPlan.plan.tag.introOffer.cyberMondayDeal"="Cyber Monday deal: %@ off";
+"upgradeAccountPlan.plan.tag.introOffer.cyberMondayDeal"="网络星期一特惠：%@折扣";
 /* Special Offer plan badge text shown in Upgrade plan screen */
-"upgradeAccountPlan.plan.tag.introOffer.specialOffer"="Special offer: %@ off";
+"upgradeAccountPlan.plan.tag.introOffer.specialOffer"="特别优惠：%@折扣";
+/* View mode title for grid view in the cloud drive. */
+"cloudDrive.viewMode.grid.title"="网格视图";
+/* Camera Uploads Progress In Queue section title */
+"cameraUploads.progress.section.inQueue.title"="已在队列中";
+/* Camera Uploads row file progress */
+"cameraUploads.progress.row.fileProgress"="%2$@中的%1$@";
+/* Camera Uploads row file upload speed */
+"cameraUploads.progress.row.uploadSpeed"="%@/秒";
+/* Footer for the yearly billing option in the upgrade account plan screen */
+"upgradeAccountPlan.plan.yearly.footer"="Charged Yearly";
+/* Price per month display for yearly billing option in the upgrade account plan screen */
+"upgradeAccountPlan.plan.yearly.pricePerMonth"="Only %@/month";

@@ -4145,15 +4145,15 @@
 /* Hidden files and folders onboarding content hide important title */
 "onboarding.hiddenFilesAndFolders.hideImportant.content.title"="Belangrijke bestanden en mappen verbergen";
 /* Hidden files and folders onboarding content hide important message */
-"onboarding.hiddenFilesAndFolders.hideImportant.content.message"="U kunt gevoelige bestanden en mappen verbergen voor privacy. Alleen u kunt ze afzonderlijk of door tijdelijk verborgen items in de instellingen weer te geven.";
+"onboarding.hiddenFilesAndFolders.hideImportant.content.message"="U kunt gevoelige bestanden en mappen verbergen voor privacy in één eenvoudige stap.";
 /* Hidden files and folders onboarding content exclude from timeline title */
-"onboarding.hiddenFilesAndFolders.excludeTimeline.content.title"="Uitsluiten van de tijdlijn";
+"onboarding.hiddenFilesAndFolders.excludeTimeline.content.title"="Uit het zicht";
 /* Hidden files and folders onboarding content exclude from timeline section message */
-"onboarding.hiddenFilesAndFolders.excludeTimeline.content.message"="Verborgen items zijn alleen toegankelijk via de Cloud-schijf en verschijnen niet in uw Foto's, Albums of Recent.";
+"onboarding.hiddenFilesAndFolders.excludeTimeline.content.message"="Alleen u kunt verborgen bestanden onthullen, afzonderlijk of door tijdelijk verborgen items in de instellingen weer te geven.";
 /* Hidden files and folders onboarding content out of sight title */
-"onboarding.hiddenFilesAndFolders.outOfSight.content.title"="Uit het zicht";
+"onboarding.hiddenFilesAndFolders.outOfSight.content.title"="Vervaging voor privacy";
 /* Hidden files and folders onboarding content out of sight message */
-"onboarding.hiddenFilesAndFolders.outOfSight.content.message"="U bepaalt zelf wanneer verborgen bestanden zichtbaar zijn. Er is een nieuwe instelling om verborgen items tijdelijk weer te geven.";
+"onboarding.hiddenFilesAndFolders.outOfSight.content.message"="Verborgen items met wazige miniaturen weergeven, zodat u ze kunt identificeren zonder dat de inhoud zichtbaar wordt.";
 /* My Account page: Menu Title of user account page */
 "account.myAccount.title"="Mijn Account";
 /* Storage limit capacity, where %d is the number of gigabytes that marks the storage limit */
@@ -4630,8 +4630,6 @@
 "subscriptionPurchase.freePlanCard.title"="Ga aan de slag met ons gratis abonnement";
 /* Description shown for the free plan card */
 "subscriptionPurchase.freePlanCard.description"="We bieden een ruime hoeveelheid opslag en gratis overdrachtstegoed, zodat u MEGA zonder risico kunt proberen";
-/* First benefit shown for the free plan card */
-"subscriptionPurchase.freePlanCard.feature.one"="Gratis 20 GB aan opslagruimte";
 /* Second benefit shown for the free plan card */
 "subscriptionPurchase.freePlanCard.feature.two"="Beperkte overdrachten";
 /* Button title for the free plan card */
@@ -4641,7 +4639,7 @@
 /* Displays the amount of data transfer included in the subscription plan */
 "subscriptionPurchase.plan.transfer"="%@ Overdracht";
 /* Displays the total amount when billed yearly */
-"subscriptionPurchase.plan.billedYearly"="%@ jaarlijks gefactureerd";
+"subscriptionPurchase.plan.billedYearly"="%@ jaarlijks in rekening gebracht";
 /* Button title to cancel the subscription purchase. */
 "subscriptionPurchase.maybeLater"="Misschien later";
 /* Title for the features of pro plan in the subscription purchase screen. */
@@ -4759,7 +4757,7 @@
 /* General deal plan badge text shown in Upgrade plan screen */
 "upgradeAccountPlan.plan.tag.introOffer.generalDeal"="%@ korting";
 /* Subscription plan first year offer text shown in Upgrade plan screen */
-"subscriptionPurchase.plan.firstYearOffer"="%@, for first year";
+"subscriptionPurchase.plan.firstYearOffer"="%@ voor het eerste jaar";
 /* Header text in Upgrade plan screen to highlight yearly billing savings with intro offer */
 "upgradeAccountPlan.header.title.saveYearlyBillingWithIntoOffer"="Bespaar minstens %@ met een jaarabonnement";
 /* Camera Uploads Progress navigation title */
@@ -4769,6 +4767,18 @@
 /* Camera Uploads row progress format */
 "cameraUploads.progress.row.uploadProgressFormat"="%@ of %@ %@/s";
 /* Cyber Monday deal plan badge text shown in Upgrade plan screen */
-"upgradeAccountPlan.plan.tag.introOffer.cyberMondayDeal"="Cyber Monday deal: %@ off";
+"upgradeAccountPlan.plan.tag.introOffer.cyberMondayDeal"="Cyber Monday-deal: %@ korting";
 /* Special Offer plan badge text shown in Upgrade plan screen */
-"upgradeAccountPlan.plan.tag.introOffer.specialOffer"="Special offer: %@ off";
+"upgradeAccountPlan.plan.tag.introOffer.specialOffer"="Speciale aanbieding: %@ korting";
+/* View mode title for grid view in the cloud drive. */
+"cloudDrive.viewMode.grid.title"="Lijstweergave";
+/* Camera Uploads Progress In Queue section title */
+"cameraUploads.progress.section.inQueue.title"="In de wachtrij";
+/* Camera Uploads row file progress */
+"cameraUploads.progress.row.fileProgress"="%1$@ van %2$@";
+/* Camera Uploads row file upload speed */
+"cameraUploads.progress.row.uploadSpeed"="%@/s";
+/* Footer for the yearly billing option in the upgrade account plan screen */
+"upgradeAccountPlan.plan.yearly.footer"="Charged Yearly";
+/* Price per month display for yearly billing option in the upgrade account plan screen */
+"upgradeAccountPlan.plan.yearly.pricePerMonth"="Only %@/month";

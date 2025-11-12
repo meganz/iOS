@@ -4145,15 +4145,15 @@
 /* Hidden files and folders onboarding content hide important title */
 "onboarding.hiddenFilesAndFolders.hideImportant.content.title"="Hide important files and folders";
 /* Hidden files and folders onboarding content hide important message */
-"onboarding.hiddenFilesAndFolders.hideImportant.content.message"="You can conceal sensitive files and folders for privacy. Only you can reveal them, either individually or by temporarily displaying hidden items from the settings.";
+"onboarding.hiddenFilesAndFolders.hideImportant.content.message"="You can conceal sensitive files and folders for privacy in one easy step.";
 /* Hidden files and folders onboarding content exclude from timeline title */
-"onboarding.hiddenFilesAndFolders.excludeTimeline.content.title"="Exclude from Timeline";
+"onboarding.hiddenFilesAndFolders.excludeTimeline.content.title"="Out of sight";
 /* Hidden files and folders onboarding content exclude from timeline section message */
-"onboarding.hiddenFilesAndFolders.excludeTimeline.content.message"="Hidden items are only accessible through the Cloud drive and will not appear in your Photos, Albums or Recents.";
+"onboarding.hiddenFilesAndFolders.excludeTimeline.content.message"="Only you can reveal hidden files, either individually or by temporarily displaying hidden items from the settings.";
 /* Hidden files and folders onboarding content out of sight title */
-"onboarding.hiddenFilesAndFolders.outOfSight.content.title"="Out of sight";
+"onboarding.hiddenFilesAndFolders.outOfSight.content.title"="Blur for privacy";
 /* Hidden files and folders onboarding content out of sight message */
-"onboarding.hiddenFilesAndFolders.outOfSight.content.message"="You decide when hidden files are visible. There is a new setting to show hidden items temporarily.";
+"onboarding.hiddenFilesAndFolders.outOfSight.content.message"="Show hidden items with their thumbnails blurred, so you can identify them without exposing their contents.";
 /* My Account page: Menu Title of user account page */
 "account.myAccount.title"="My account";
 /* Storage limit capacity, where %d is the number of gigabytes that marks the storage limit */
@@ -4630,8 +4630,6 @@
 "subscriptionPurchase.freePlanCard.title"="Get started with our free plan";
 /* Description shown for the free plan card */
 "subscriptionPurchase.freePlanCard.description"="We offer generous amount of storage and transfer quota at no charge, so you can try MEGA with no risk";
-/* First benefit shown for the free plan card */
-"subscriptionPurchase.freePlanCard.feature.one"="Free 20 GB of storage";
 /* Second benefit shown for the free plan card */
 "subscriptionPurchase.freePlanCard.feature.two"="Limited transfers";
 /* Button title for the free plan card */
@@ -4641,7 +4639,7 @@
 /* Displays the amount of data transfer included in the subscription plan */
 "subscriptionPurchase.plan.transfer"="%@ transfer";
 /* Displays the total amount when billed yearly */
-"subscriptionPurchase.plan.billedYearly"="%@ billed yearly";
+"subscriptionPurchase.plan.billedYearly"="%@ charged yearly";
 /* Button title to cancel the subscription purchase. */
 "subscriptionPurchase.maybeLater"="Maybe later";
 /* Title for the features of pro plan in the subscription purchase screen. */
@@ -4759,7 +4757,7 @@
 /* General deal plan badge text shown in Upgrade plan screen */
 "upgradeAccountPlan.plan.tag.introOffer.generalDeal"="%@ off";
 /* Subscription plan first year offer text shown in Upgrade plan screen */
-"subscriptionPurchase.plan.firstYearOffer"="%@, for first year";
+"subscriptionPurchase.plan.firstYearOffer"="%@ for the first year";
 /* Header text in Upgrade plan screen to highlight yearly billing savings with intro offer */
 "upgradeAccountPlan.header.title.saveYearlyBillingWithIntoOffer"="Save at least %@ on a yearly plan";
 /* Camera Uploads Progress navigation title */
@@ -4775,7 +4773,7 @@
 /* View mode title for grid view in the cloud drive. */
 "cloudDrive.viewMode.grid.title"="Grid view";
 /* Camera Uploads Progress In Queue section title */
-"cameraUploads.progress.section.inQueue.title"="In Queue";
+"cameraUploads.progress.section.inQueue.title"="Queued";
 /* Camera Uploads row file progress */
 "cameraUploads.progress.row.fileProgress"="%1$@ of %2$@";
 /* Camera Uploads row file upload speed */

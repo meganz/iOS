@@ -4145,15 +4145,15 @@
 /* Hidden files and folders onboarding content hide important title */
 "onboarding.hiddenFilesAndFolders.hideImportant.content.title"="隱藏重要的檔案和資料夾";
 /* Hidden files and folders onboarding content hide important message */
-"onboarding.hiddenFilesAndFolders.hideImportant.content.message"="為保護隱私，您可以隱藏敏感的檔案和資料夾。只有您可以個別，或透過在設定中的暫時顯示隱藏項目來顯示它們。";
+"onboarding.hiddenFilesAndFolders.hideImportant.content.message"="只需一個簡單步驟，即可隱藏敏感檔案和資料夾來保護隱私。";
 /* Hidden files and folders onboarding content exclude from timeline title */
-"onboarding.hiddenFilesAndFolders.excludeTimeline.content.title"="從時間軸中排除";
+"onboarding.hiddenFilesAndFolders.excludeTimeline.content.title"="隱藏";
 /* Hidden files and folders onboarding content exclude from timeline section message */
-"onboarding.hiddenFilesAndFolders.excludeTimeline.content.message"="隱藏的項目只能透過雲端硬碟存取，不會出現在您的照片、相簿或最近的動態記錄。";
+"onboarding.hiddenFilesAndFolders.excludeTimeline.content.message"="只有您可以顯示隱藏檔案，既可以個別顯示，也可以透過設定來暫時顯示隱藏的項目。";
 /* Hidden files and folders onboarding content out of sight title */
-"onboarding.hiddenFilesAndFolders.outOfSight.content.title"="隱藏";
+"onboarding.hiddenFilesAndFolders.outOfSight.content.title"="模糊處理保護隱私";
 /* Hidden files and folders onboarding content out of sight message */
-"onboarding.hiddenFilesAndFolders.outOfSight.content.message"="您可以決定何時要讓隱藏的檔案顯示。有一個新的設定可以暫時顯示隱藏的項目。";
+"onboarding.hiddenFilesAndFolders.outOfSight.content.message"="以模糊縮圖的方式顯示隱藏項目，以便您可以在不顯示其內容的情況下識別它們。";
 /* My Account page: Menu Title of user account page */
 "account.myAccount.title"="我的帳戶";
 /* Storage limit capacity, where %d is the number of gigabytes that marks the storage limit */
@@ -4630,8 +4630,6 @@
 "subscriptionPurchase.freePlanCard.title"="從我們的免費方案開始吧";
 /* Description shown for the free plan card */
 "subscriptionPurchase.freePlanCard.description"="我們免費提供大量的儲存空間和傳輸配額，您可以放心地試用MEGA";
-/* First benefit shown for the free plan card */
-"subscriptionPurchase.freePlanCard.feature.one"="免費20 GB的儲存空間";
 /* Second benefit shown for the free plan card */
 "subscriptionPurchase.freePlanCard.feature.two"="有限的傳輸";
 /* Button title for the free plan card */
@@ -4641,7 +4639,7 @@
 /* Displays the amount of data transfer included in the subscription plan */
 "subscriptionPurchase.plan.transfer"="%@傳輸配額";
 /* Displays the total amount when billed yearly */
-"subscriptionPurchase.plan.billedYearly"="年繳%@";
+"subscriptionPurchase.plan.billedYearly"="每年收費%@";
 /* Button title to cancel the subscription purchase. */
 "subscriptionPurchase.maybeLater"="稍後";
 /* Title for the features of pro plan in the subscription purchase screen. */
@@ -4759,7 +4757,7 @@
 /* General deal plan badge text shown in Upgrade plan screen */
 "upgradeAccountPlan.plan.tag.introOffer.generalDeal"="%@折扣";
 /* Subscription plan first year offer text shown in Upgrade plan screen */
-"subscriptionPurchase.plan.firstYearOffer"="%@, for first year";
+"subscriptionPurchase.plan.firstYearOffer"="%@首年";
 /* Header text in Upgrade plan screen to highlight yearly billing savings with intro offer */
 "upgradeAccountPlan.header.title.saveYearlyBillingWithIntoOffer"="年度方案節省至少%@";
 /* Camera Uploads Progress navigation title */
@@ -4769,6 +4767,18 @@
 /* Camera Uploads row progress format */
 "cameraUploads.progress.row.uploadProgressFormat"="%@ of %@ %@/s";
 /* Cyber Monday deal plan badge text shown in Upgrade plan screen */
-"upgradeAccountPlan.plan.tag.introOffer.cyberMondayDeal"="Cyber Monday deal: %@ off";
+"upgradeAccountPlan.plan.tag.introOffer.cyberMondayDeal"="網路星期一優惠：%@折扣";
 /* Special Offer plan badge text shown in Upgrade plan screen */
-"upgradeAccountPlan.plan.tag.introOffer.specialOffer"="Special offer: %@ off";
+"upgradeAccountPlan.plan.tag.introOffer.specialOffer"="特價優惠：%@折扣";
+/* View mode title for grid view in the cloud drive. */
+"cloudDrive.viewMode.grid.title"="格狀檢視";
+/* Camera Uploads Progress In Queue section title */
+"cameraUploads.progress.section.inQueue.title"="已入佇列";
+/* Camera Uploads row file progress */
+"cameraUploads.progress.row.fileProgress"="%2$@中的%1$@";
+/* Camera Uploads row file upload speed */
+"cameraUploads.progress.row.uploadSpeed"="%@/秒";
+/* Footer for the yearly billing option in the upgrade account plan screen */
+"upgradeAccountPlan.plan.yearly.footer"="Charged Yearly";
+/* Price per month display for yearly billing option in the upgrade account plan screen */
+"upgradeAccountPlan.plan.yearly.pricePerMonth"="Only %@/month";

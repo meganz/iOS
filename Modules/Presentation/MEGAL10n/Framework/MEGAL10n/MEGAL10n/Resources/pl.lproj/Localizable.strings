@@ -4145,15 +4145,15 @@
 /* Hidden files and folders onboarding content hide important title */
 "onboarding.hiddenFilesAndFolders.hideImportant.content.title"="Ukryj ważne pliki i katalogi";
 /* Hidden files and folders onboarding content hide important message */
-"onboarding.hiddenFilesAndFolders.hideImportant.content.message"="Możesz ukryć poufne pliki i katalogi dla prywatności. Tylko Ty możesz je ujawnić, pojedynczo lub tymczasowo wyświetlając ukryte elementy z ustawień.";
+"onboarding.hiddenFilesAndFolders.hideImportant.content.message"="Możesz ukryć wrażliwe pliki i katalogi dla zachowania prywatności w jednym prostym kroku.";
 /* Hidden files and folders onboarding content exclude from timeline title */
-"onboarding.hiddenFilesAndFolders.excludeTimeline.content.title"="Wyklucz z osi czasu";
+"onboarding.hiddenFilesAndFolders.excludeTimeline.content.title"="Poza zasięgiem wzroku";
 /* Hidden files and folders onboarding content exclude from timeline section message */
-"onboarding.hiddenFilesAndFolders.excludeTimeline.content.message"="Ukryte elementy są dostępne tylko za pośrednictwem Dysk w chmurze i nie będą wyświetlane w Twoich Zdjęciach, Albumach Ostatnie.";
+"onboarding.hiddenFilesAndFolders.excludeTimeline.content.message"="Tylko Ty możesz ujawnić ukryte pliki, albo indywidualnie, albo tymczasowo wyświetlając ukryte elementy w ustawieniach.";
 /* Hidden files and folders onboarding content out of sight title */
-"onboarding.hiddenFilesAndFolders.outOfSight.content.title"="Poza zasięgiem wzroku";
+"onboarding.hiddenFilesAndFolders.outOfSight.content.title"="Zamazywanie dla prywatności";
 /* Hidden files and folders onboarding content out of sight message */
-"onboarding.hiddenFilesAndFolders.outOfSight.content.message"="Ty decydujesz, kiedy ukryte pliki są widoczne. Istnieje nowe ustawienie tymczasowego wyświetlania ukrytych elementów.";
+"onboarding.hiddenFilesAndFolders.outOfSight.content.message"="Pokaż ukryte elementy z rozmytymi miniaturami, aby można je było zidentyfikować bez ujawniania ich zawartości.";
 /* My Account page: Menu Title of user account page */
 "account.myAccount.title"="Moje konto";
 /* Storage limit capacity, where %d is the number of gigabytes that marks the storage limit */
@@ -4630,8 +4630,6 @@
 "subscriptionPurchase.freePlanCard.title"="Zacznij od naszego darmowego planu";
 /* Description shown for the free plan card */
 "subscriptionPurchase.freePlanCard.description"="Oferujemy dużą pojemność i limit transferu bez opłat, abyś mógł wypróbować MEGA bez ryzyka";
-/* First benefit shown for the free plan card */
-"subscriptionPurchase.freePlanCard.feature.one"="Bezpłatne 20 GB pojemność";
 /* Second benefit shown for the free plan card */
 "subscriptionPurchase.freePlanCard.feature.two"="Ograniczone transfery";
 /* Button title for the free plan card */
@@ -4641,7 +4639,7 @@
 /* Displays the amount of data transfer included in the subscription plan */
 "subscriptionPurchase.plan.transfer"="%@ transfer";
 /* Displays the total amount when billed yearly */
-"subscriptionPurchase.plan.billedYearly"="%@ rozliczane rocznie";
+"subscriptionPurchase.plan.billedYearly"="%@ naliczane rocznie";
 /* Button title to cancel the subscription purchase. */
 "subscriptionPurchase.maybeLater"="Może później";
 /* Title for the features of pro plan in the subscription purchase screen. */
@@ -4759,7 +4757,7 @@
 /* General deal plan badge text shown in Upgrade plan screen */
 "upgradeAccountPlan.plan.tag.introOffer.generalDeal"="%@ zniżki";
 /* Subscription plan first year offer text shown in Upgrade plan screen */
-"subscriptionPurchase.plan.firstYearOffer"="%@, for first year";
+"subscriptionPurchase.plan.firstYearOffer"="%@ za pierwszy rok";
 /* Header text in Upgrade plan screen to highlight yearly billing savings with intro offer */
 "upgradeAccountPlan.header.title.saveYearlyBillingWithIntoOffer"="Oszczędź co najmniej %@ na rocznym planie";
 /* Camera Uploads Progress navigation title */
@@ -4769,6 +4767,18 @@
 /* Camera Uploads row progress format */
 "cameraUploads.progress.row.uploadProgressFormat"="%@ of %@ %@/s";
 /* Cyber Monday deal plan badge text shown in Upgrade plan screen */
-"upgradeAccountPlan.plan.tag.introOffer.cyberMondayDeal"="Cyber Monday deal: %@ off";
+"upgradeAccountPlan.plan.tag.introOffer.cyberMondayDeal"="Oferta na Cyber Monday: %@ zniżki";
 /* Special Offer plan badge text shown in Upgrade plan screen */
-"upgradeAccountPlan.plan.tag.introOffer.specialOffer"="Special offer: %@ off";
+"upgradeAccountPlan.plan.tag.introOffer.specialOffer"="Specjalna oferta: %@ zniżki";
+/* View mode title for grid view in the cloud drive. */
+"cloudDrive.viewMode.grid.title"="Widok siatki";
+/* Camera Uploads Progress In Queue section title */
+"cameraUploads.progress.section.inQueue.title"="Zakolejkowane";
+/* Camera Uploads row file progress */
+"cameraUploads.progress.row.fileProgress"="%1$@ z %2$@";
+/* Camera Uploads row file upload speed */
+"cameraUploads.progress.row.uploadSpeed"="%@/s";
+/* Footer for the yearly billing option in the upgrade account plan screen */
+"upgradeAccountPlan.plan.yearly.footer"="Charged Yearly";
+/* Price per month display for yearly billing option in the upgrade account plan screen */
+"upgradeAccountPlan.plan.yearly.pricePerMonth"="Only %@/month";

@@ -4145,15 +4145,15 @@
 /* Hidden files and folders onboarding content hide important title */
 "onboarding.hiddenFilesAndFolders.hideImportant.content.title"="중요한 파일과 폴더 숨기기";
 /* Hidden files and folders onboarding content hide important message */
-"onboarding.hiddenFilesAndFolders.hideImportant.content.message"="개인 정보 보호를 위해 민감한 파일 및 폴더를 숨길 수 있습니다. 당신만 그것들을개별적으로 또는 일시적으로 숨겨진 항목들을 설정에서 나타나게 할 수 있습니다.";
+"onboarding.hiddenFilesAndFolders.hideImportant.content.message"="프라이버시를 위해 쉬운 한 단계로 민감한 파일과 폴더를 감출 수 있습니다.";
 /* Hidden files and folders onboarding content exclude from timeline title */
-"onboarding.hiddenFilesAndFolders.excludeTimeline.content.title"="연표에서 제외";
+"onboarding.hiddenFilesAndFolders.excludeTimeline.content.title"="시야에서 벗어남";
 /* Hidden files and folders onboarding content exclude from timeline section message */
-"onboarding.hiddenFilesAndFolders.excludeTimeline.content.message"="숨겨진 항목은 클라우드 드라이브를 통해서만 접근 가능하며 사진, 사진첩 또는 최근 항목에 나타나지 않습니다.";
+"onboarding.hiddenFilesAndFolders.excludeTimeline.content.message"="당신만 숨긴 파일을 설정에서 개별적으로 또는 일시적으로 숨겨진 항목들을 나타나게 할 수 있습니다.";
 /* Hidden files and folders onboarding content out of sight title */
-"onboarding.hiddenFilesAndFolders.outOfSight.content.title"="시야 범위 밖";
+"onboarding.hiddenFilesAndFolders.outOfSight.content.title"="프라이버시를 위한 흐리게 하기";
 /* Hidden files and folders onboarding content out of sight message */
-"onboarding.hiddenFilesAndFolders.outOfSight.content.message"="숨겨진 파일이 보일 때를 정할 수 있습니다. 숨겨진 항목을 일시적으로 보이게 하는 새로운 설정이 있습니다.";
+"onboarding.hiddenFilesAndFolders.outOfSight.content.message"="숨긴 항목을 썸네일을 흐리게 하여, 내용물을 노출하지 않고 식별할 수 있도록 할 수 있습니다.";
 /* My Account page: Menu Title of user account page */
 "account.myAccount.title"="내 계정";
 /* Storage limit capacity, where %d is the number of gigabytes that marks the storage limit */
@@ -4630,8 +4630,6 @@
 "subscriptionPurchase.freePlanCard.title"="무료 요금제로 시작하세요";
 /* Description shown for the free plan card */
 "subscriptionPurchase.freePlanCard.description"="우리는 요금 없이 넉넉한 양의 저장소와 전송 할당량을 제공하여, 위험 부담 없이 MEGA를 써볼 수 있습니다";
-/* First benefit shown for the free plan card */
-"subscriptionPurchase.freePlanCard.feature.one"="무료 20GB 저장소";
 /* Second benefit shown for the free plan card */
 "subscriptionPurchase.freePlanCard.feature.two"="제한된 전송";
 /* Button title for the free plan card */
@@ -4641,7 +4639,7 @@
 /* Displays the amount of data transfer included in the subscription plan */
 "subscriptionPurchase.plan.transfer"="%@ 전송";
 /* Displays the total amount when billed yearly */
-"subscriptionPurchase.plan.billedYearly"="연간 %@ 결제";
+"subscriptionPurchase.plan.billedYearly"="매년 %@ 청구";
 /* Button title to cancel the subscription purchase. */
 "subscriptionPurchase.maybeLater"="나중에";
 /* Title for the features of pro plan in the subscription purchase screen. */
@@ -4759,7 +4757,7 @@
 /* General deal plan badge text shown in Upgrade plan screen */
 "upgradeAccountPlan.plan.tag.introOffer.generalDeal"="%@ off";
 /* Subscription plan first year offer text shown in Upgrade plan screen */
-"subscriptionPurchase.plan.firstYearOffer"="%@, for first year";
+"subscriptionPurchase.plan.firstYearOffer"="첫 1년만 %@";
 /* Header text in Upgrade plan screen to highlight yearly billing savings with intro offer */
 "upgradeAccountPlan.header.title.saveYearlyBillingWithIntoOffer"="연간 요금제에서 최소 %@ 할인을 받으세요";
 /* Camera Uploads Progress navigation title */
@@ -4769,6 +4767,18 @@
 /* Camera Uploads row progress format */
 "cameraUploads.progress.row.uploadProgressFormat"="%@ of %@ %@/s";
 /* Cyber Monday deal plan badge text shown in Upgrade plan screen */
-"upgradeAccountPlan.plan.tag.introOffer.cyberMondayDeal"="Cyber Monday deal: %@ off";
+"upgradeAccountPlan.plan.tag.introOffer.cyberMondayDeal"="사이버 먼데이 할인: %@ 할인";
 /* Special Offer plan badge text shown in Upgrade plan screen */
-"upgradeAccountPlan.plan.tag.introOffer.specialOffer"="Special offer: %@ off";
+"upgradeAccountPlan.plan.tag.introOffer.specialOffer"="특별 할인: %@ 할인";
+/* View mode title for grid view in the cloud drive. */
+"cloudDrive.viewMode.grid.title"="격자식 보기";
+/* Camera Uploads Progress In Queue section title */
+"cameraUploads.progress.section.inQueue.title"="대기 중";
+/* Camera Uploads row file progress */
+"cameraUploads.progress.row.fileProgress"="%2$@의 %1$@";
+/* Camera Uploads row file upload speed */
+"cameraUploads.progress.row.uploadSpeed"="%@/초";
+/* Footer for the yearly billing option in the upgrade account plan screen */
+"upgradeAccountPlan.plan.yearly.footer"="Charged Yearly";
+/* Price per month display for yearly billing option in the upgrade account plan screen */
+"upgradeAccountPlan.plan.yearly.pricePerMonth"="Only %@/month";

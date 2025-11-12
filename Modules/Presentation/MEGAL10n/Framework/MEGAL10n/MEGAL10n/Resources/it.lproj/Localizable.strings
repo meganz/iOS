@@ -1019,9 +1019,9 @@
 /* Title of the Achievements section */
 "achievementsTitle"="Obiettivi";
 /* Cell title shown on the achievements view for referral achievement */
-"account.achievement.referral.title"="Invita persone a MEGA";
+"account.achievement.referral.title"="Invita persone su MEGA";
 /* Subtitle of the referral achievement introduction, %1$@ is a placeholder, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
-"account.achievement.referral.subtitle"="%1$@ spazio di archiviazione aggiuntivo per ogni invito, \n%2$@";
+"account.achievement.referral.subtitle"="%1$@ di spazio di archiviazione aggiuntivo per ogni invito, \n%2$@";
 /* Text shown to explain how and where you can invite friends */
 "Select from phone contacts or enter multiple email addresses"="Seleziona contatti dal dispositivo o inserisci più indirizzi email.";
 /*  */
@@ -1053,17 +1053,17 @@
 /* Label shown on the achievements view for complete registration achievement, %@ is a placeholder. */
 "account.achievement.registration.explanation.label"="Hai ricevuto %@ di spazio di archiviazione come bonus di iscrizione gratuito.";
 /* Cell title shown on the achievements view for referral achievement */
-"account.achievement.referralBonus.title"="Invita persone a MEGA";
+"account.achievement.referralBonus.title"="Invita persone su MEGA";
 /* Cell title shown on the achievements view for install MEGA desktop app achievement */
-"account.achievement.desktopApp.title"="Installa la nostra app desktop";
+"account.achievement.desktopApp.title"="Installa la nostra app per desktop";
 /* Explanation label shown on the achievements view for complete install MEGA desktop app achievement, %@ is a placeholder. */
-"account.achievement.desktopApp.complete.explaination.label"="Hai ricevuto %@ spazio di archiviazione aggiuntivo per l'installazione della nostra app desktop";
+"account.achievement.desktopApp.complete.explaination.label"="Hai ricevuto %@ di spazio di archiviazione aggiuntivo per l'installazione della nostra app per desktop";
 /* Explanation label shown on the achievements view for incomplete install MEGA desktop app achievement, %1$@ is a placeholder, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
 "account.achievement.desktopApp.incomplete.explaination.label"="Quando installi l'app per desktop di MEGA ottieni %1$@ di spazio di archiviazione gratuito, %2$@. L'app per desktop di MEGA è disponibile per Windows, macOS e la maggior parte delle distribuzioni Linux.";
 /* Cell title shown on the achievements view for install MEGA mobile app achievement */
 "account.achievement.mobileApp.title"="Installa la nostra app";
 /* Explanation label shown on the achievements view for complete install MEGA mobile app achievement, %@ is a placeholder. */
-"account.achievement.mobileApp.complete.explaination.label"="Hai ricevuto %@ spazio di archiviazione aggiuntivo per l'installazione della nostra app mobile";
+"account.achievement.mobileApp.complete.explaination.label"="Hai ricevuto %@ di spazio di archiviazione aggiuntivo per l'installazione della nostra app per mobile";
 /* Explanation label shown on the achievements view for incomplete install MEGA mobile app achievement, %1$@ is a placeholder, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
 "account.achievement.mobileApp.incomplete.explaination.label"="Quando installi l'app per mobile di MEGA ottieni %@ di spazio di archiviazione gratuito, %2$@. L'app per mobile di MEGA è disponibile per iOS e per Android.";
 /* Detail label shown on the achievements details view for Start Free Trial when its completed, %1$@ is placeholder for the storage amount, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
@@ -4145,15 +4145,15 @@
 /* Hidden files and folders onboarding content hide important title */
 "onboarding.hiddenFilesAndFolders.hideImportant.content.title"="Nascondi file e cartelle importanti";
 /* Hidden files and folders onboarding content hide important message */
-"onboarding.hiddenFilesAndFolders.hideImportant.content.message"="Puoi nascondere file e cartelle sensibili per motivi di privacy. Solo tu puoi rivelarli, singolarmente o visualizzando temporaneamente gli oggetti nascosti dalle impostazioni.";
+"onboarding.hiddenFilesAndFolders.hideImportant.content.message"="You can conceal sensitive files and folders for privacy in one easy step.";
 /* Hidden files and folders onboarding content exclude from timeline title */
-"onboarding.hiddenFilesAndFolders.excludeTimeline.content.title"="Escludi dalla Cronologia";
+"onboarding.hiddenFilesAndFolders.excludeTimeline.content.title"="Fuori dalla vista";
 /* Hidden files and folders onboarding content exclude from timeline section message */
-"onboarding.hiddenFilesAndFolders.excludeTimeline.content.message"="Gli oggetti nascosti sono accessibili solo tramite il Cloud drive e non verranno visualizzati nelle tue Foto, nei tuoi Album o in Recenti.";
+"onboarding.hiddenFilesAndFolders.excludeTimeline.content.message"="Only you can reveal hidden files, either individually or by temporarily displaying hidden items from the settings.";
 /* Hidden files and folders onboarding content out of sight title */
-"onboarding.hiddenFilesAndFolders.outOfSight.content.title"="Fuori dalla vista";
+"onboarding.hiddenFilesAndFolders.outOfSight.content.title"="Blur for privacy";
 /* Hidden files and folders onboarding content out of sight message */
-"onboarding.hiddenFilesAndFolders.outOfSight.content.message"="Sei tu a decidere quando i file nascosti sono visibili. C'è una nuova impostazione per mostrare temporaneamente gli oggetti nascosti.";
+"onboarding.hiddenFilesAndFolders.outOfSight.content.message"="Show hidden items with their thumbnails blurred, so you can identify them without exposing their contents.";
 /* My Account page: Menu Title of user account page */
 "account.myAccount.title"="Account";
 /* Storage limit capacity, where %d is the number of gigabytes that marks the storage limit */
@@ -4630,8 +4630,6 @@
 "subscriptionPurchase.freePlanCard.title"="Inizia con il nostro piano gratuito";
 /* Description shown for the free plan card */
 "subscriptionPurchase.freePlanCard.description"="Offriamo una grande quantità di spazio di archiviazione e banda di trasferimento senza alcun costo, quindi puoi provare MEGA senza rischi";
-/* First benefit shown for the free plan card */
-"subscriptionPurchase.freePlanCard.feature.one"="20 GB di spazio di archiviazione gratuiti";
 /* Second benefit shown for the free plan card */
 "subscriptionPurchase.freePlanCard.feature.two"="Trasferimenti limitati";
 /* Button title for the free plan card */
@@ -4641,7 +4639,7 @@
 /* Displays the amount of data transfer included in the subscription plan */
 "subscriptionPurchase.plan.transfer"="Banda di %@";
 /* Displays the total amount when billed yearly */
-"subscriptionPurchase.plan.billedYearly"="%@ fatturato annualmente";
+"subscriptionPurchase.plan.billedYearly"="%@ charged yearly";
 /* Button title to cancel the subscription purchase. */
 "subscriptionPurchase.maybeLater"="Forse più tardi";
 /* Title for the features of pro plan in the subscription purchase screen. */
@@ -4743,7 +4741,7 @@
 /* General label for priority customer support */
 "general.prioritySupport"="Supporto prioritario";
 /* Storage used for Business and Pro Flexi accounts in the account menu. */
-"accountMenu.businessAndProFlexiAccountsStorageUsed.title"="%@ usati";
+"accountMenu.businessAndProFlexiAccountsStorageUsed.title"="%@ utilizzati";
 /* Sorting option label for sorting items alphabetically by their name (can be applied in ascending or descending order) */
 "sorting.name.title"="Nome";
 /* Sorting option label for sorting items based on whether they are marked as favourites (can be applied in ascending or descending order) */
@@ -4755,13 +4753,13 @@
 /* Sorting option label for sorting items based on their file size (can be applied in ascending or descending order) */
 "sorting.size.title"="Dimensione";
 /* Black Friday deal plan badge text shown in Upgrade plan screen */
-"upgradeAccountPlan.plan.tag.introOffer.blackFridayDeal"="Black Friday deal: %@ off";
+"upgradeAccountPlan.plan.tag.introOffer.blackFridayDeal"="Offerta del Black Friday: %@di sconto ";
 /* General deal plan badge text shown in Upgrade plan screen */
 "upgradeAccountPlan.plan.tag.introOffer.generalDeal"="Sconto del %@";
 /* Subscription plan first year offer text shown in Upgrade plan screen */
-"subscriptionPurchase.plan.firstYearOffer"="%@, for first year";
+"subscriptionPurchase.plan.firstYearOffer"="%@ for the first year";
 /* Header text in Upgrade plan screen to highlight yearly billing savings with intro offer */
-"upgradeAccountPlan.header.title.saveYearlyBillingWithIntoOffer"="Save at least %@ on a yearly plan";
+"upgradeAccountPlan.header.title.saveYearlyBillingWithIntoOffer"="Risparmia almeno il %@ su un piano annuale";
 /* Camera Uploads Progress navigation title */
 "cameraUploads.progress.navigation.title"="In corso";
 /* Camera Uploads Progress In Progress section title */
@@ -4772,3 +4770,15 @@
 "upgradeAccountPlan.plan.tag.introOffer.cyberMondayDeal"="Cyber Monday deal: %@ off";
 /* Special Offer plan badge text shown in Upgrade plan screen */
 "upgradeAccountPlan.plan.tag.introOffer.specialOffer"="Special offer: %@ off";
+/* View mode title for grid view in the cloud drive. */
+"cloudDrive.viewMode.grid.title"="Vista griglia";
+/* Camera Uploads Progress In Queue section title */
+"cameraUploads.progress.section.inQueue.title"="In coda";
+/* Camera Uploads row file progress */
+"cameraUploads.progress.row.fileProgress"="%1$@ su %2$@";
+/* Camera Uploads row file upload speed */
+"cameraUploads.progress.row.uploadSpeed"="%@/s";
+/* Footer for the yearly billing option in the upgrade account plan screen */
+"upgradeAccountPlan.plan.yearly.footer"="Charged Yearly";
+/* Price per month display for yearly billing option in the upgrade account plan screen */
+"upgradeAccountPlan.plan.yearly.pricePerMonth"="Only %@/month";

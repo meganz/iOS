@@ -3252,35 +3252,35 @@
     </dict>
     <key>cameraUploads.progress.uploading.items</key>
     <dict>
-        <key>NSStringLocalizedFormatKey</key>
-        <string>%#@count@</string>
-        <key>count</key>
-        <dict>
-            <key>NSStringFormatSpecTypeKey</key>
-            <string>NSStringPluralRuleType</string>
-            <key>NSStringFormatValueTypeKey</key>
-            <string>u</string>
-            <key>one</key>
-            <string>Uploading: %u item left</string>
-            <key>other</key>
-            <string>Uploading: %u items left</string>
-        </dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>u</string>
+        <key>one</key>
+        <string>Uploading: %u item left</string>
+        <key>other</key>
+        <string>Uploading: %u items left</string>
+      </dict>
     </dict>
     <key>cameraUploads.progress.paused.items</key>
     <dict>
-        <key>NSStringLocalizedFormatKey</key>
-        <string>%#@count@</string>
-        <key>count</key>
-        <dict>
-            <key>NSStringFormatSpecTypeKey</key>
-            <string>NSStringPluralRuleType</string>
-            <key>NSStringFormatValueTypeKey</key>
-            <string>u</string>
-            <key>one</key>
-            <string>Paused: %u item left</string>
-            <key>other</key>
-            <string>Paused: %u items left</string>
-        </dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>u</string>
+        <key>one</key>
+        <string>Paused: %u item left</string>
+        <key>other</key>
+        <string>Paused: %u items left</string>
+      </dict>
     </dict>
   </dict>
 </plist>

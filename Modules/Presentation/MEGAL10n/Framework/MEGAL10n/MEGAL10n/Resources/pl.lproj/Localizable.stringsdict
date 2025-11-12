@@ -633,13 +633,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>&quot;[A]&quot; i %d więcej</string>
+        <string>"[A]" i %d więcej</string>
         <key>few</key>
-        <string>&quot;[A]&quot; i %d więcej</string>
+        <string>"[A]" i %d więcej</string>
         <key>many</key>
-        <string>&quot;[A]&quot; i %d więcej</string>
+        <string>"[A]" i %d więcej</string>
         <key>other</key>
-        <string>&quot;[A]&quot; i %d więcej</string>
+        <string>"[A]" i %d więcej</string>
       </dict>
     </dict>
     <key>media.photo.browser.indexOfTotalFiles</key>
@@ -1293,13 +1293,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Usunięto %d element z &quot;[A]&quot;</string>
+        <string>Usunięto %d element z "[A]"</string>
         <key>few</key>
-        <string>Usunięto %d elementów z &quot;[A]&quot;</string>
+        <string>Usunięto %d elementów z "[A]"</string>
         <key>many</key>
-        <string>Usunięto %d elementów z &quot;[A]&quot;</string>
+        <string>Usunięto %d elementów z "[A]"</string>
         <key>other</key>
-        <string>Usunięto %d elementów z &quot;[A]&quot;</string>
+        <string>Usunięto %d elementów z "[A]"</string>
       </dict>
     </dict>
     <key>cameraUploads.albums.removeShareLinkAlertTitle</key>
@@ -3113,13 +3113,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Wysyłanie &quot;[A]&quot; do czatu</string>
+        <string>Wysyłanie "[A]" do czatu</string>
         <key>few</key>
-        <string>Wysyłanie &quot;[A]&quot; do wszystkich czatów</string>
+        <string>Wysyłanie "[A]" do wszystkich czatów</string>
         <key>many</key>
-        <string>Wysyłanie &quot;[A]&quot; do wszystkich czatów</string>
+        <string>Wysyłanie "[A]" do wszystkich czatów</string>
         <key>other</key>
-        <string>Wysyłanie &quot;[A]&quot; do wszystkich czatów</string>
+        <string>Wysyłanie "[A]" do wszystkich czatów</string>
       </dict>
     </dict>
     <key>share.message.sendToChat.withMultipleFiles</key>
@@ -3473,13 +3473,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>[UserName] oczekuje na dołączenie do &quot;[MeetingName]&quot;.</string>
+        <string>[UserName] oczekuje na dołączenie do "[MeetingName]".</string>
         <key>few</key>
-        <string>%d uczestników oczekuje na dołączenie do &quot;[MeetingName]&quot;.</string>
+        <string>%d uczestników oczekuje na dołączenie do "[MeetingName]".</string>
         <key>many</key>
-        <string>%d uczestników oczekuje na dołączenie do &quot;[MeetingName]&quot;.</string>
+        <string>%d uczestników oczekuje na dołączenie do "[MeetingName]".</string>
         <key>other</key>
-        <string>%d uczestników oczekuje na dołączenie do &quot;[MeetingName]&quot;.</string>
+        <string>%d uczestników oczekuje na dołączenie do "[MeetingName]".</string>
       </dict>
     </dict>
     <key>chat.call.waitingRoom.alert.message</key>
@@ -4060,6 +4060,46 @@
         <string>Usunięto %d elementów z kolejki</string>
         <key>other</key>
         <string>Usunięto %d elementów z kolejki</string>
+      </dict>
+    </dict>
+    <key>cameraUploads.progress.uploading.items</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>u</string>
+        <key>one</key>
+        <string></string>
+        <key>few</key>
+        <string></string>
+        <key>many</key>
+        <string></string>
+        <key>other</key>
+        <string></string>
+      </dict>
+    </dict>
+    <key>cameraUploads.progress.paused.items</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>u</string>
+        <key>one</key>
+        <string></string>
+        <key>few</key>
+        <string></string>
+        <key>many</key>
+        <string></string>
+        <key>other</key>
+        <string></string>
       </dict>
     </dict>
   </dict>

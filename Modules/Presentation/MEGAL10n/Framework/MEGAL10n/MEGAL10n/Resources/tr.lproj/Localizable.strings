@@ -3379,7 +3379,7 @@
 /* Schedule meeting description field placeholder */
 "meetings.scheduleMeeting.description"="Açıklama ekle";
 /* Schedule meeting title unencrypted disclaimer message */
-"meetings.scheduleMeeting.meetingName.titleUnencrypted"="MEGA, toplantı adınızı ve açıklamanızı görebilir ancak bunları gizli tutarız";
+"meetings.scheduleMeeting.meetingName.titleUnencrypted"="MEGA toplantı adınızı ve açıklamanızı görebilir ancak bunları gizli tutarız";
 /* Schedule meeting name error */
 "meetings.scheduleMeeting.meetingName.lenghtError"="En fazla 30 karakter girin";
 /* Schedule meeting description error */
@@ -4145,15 +4145,15 @@
 /* Hidden files and folders onboarding content hide important title */
 "onboarding.hiddenFilesAndFolders.hideImportant.content.title"="Önemli dosya ve klasörleri gizle";
 /* Hidden files and folders onboarding content hide important message */
-"onboarding.hiddenFilesAndFolders.hideImportant.content.message"="Gizlilik için hassas dosyaları ve klasörleri gizleyebilirsiniz. Bunları tek tek veya ayarlardan gizli öğeleri geçici olarak görüntüleyerek yalnızca siz ortaya çıkarabilirsiniz.";
+"onboarding.hiddenFilesAndFolders.hideImportant.content.message"="Tek bir kolay adımla hassas dosyaları ve klasörleri gizlilik için saklayabilirsiniz.";
 /* Hidden files and folders onboarding content exclude from timeline title */
-"onboarding.hiddenFilesAndFolders.excludeTimeline.content.title"="Zaman akışından hariç tut";
+"onboarding.hiddenFilesAndFolders.excludeTimeline.content.title"="Gözden uzak";
 /* Hidden files and folders onboarding content exclude from timeline section message */
-"onboarding.hiddenFilesAndFolders.excludeTimeline.content.message"="Gizli öğelere yalnızca Bulut depolama üzerinden erişilebilir ve Fotoğraflarınızda, Albümlerinizde veya Son etkinlikler bölümünde görünmez.";
+"onboarding.hiddenFilesAndFolders.excludeTimeline.content.message"="Gizli dosyaları yalnızca siz; ister tek tek, ister Ayarlar’dan gizli öğeleri geçici olarak göstererek ortaya çıkarabilirsiniz.";
 /* Hidden files and folders onboarding content out of sight title */
-"onboarding.hiddenFilesAndFolders.outOfSight.content.title"="Gözden uzak";
+"onboarding.hiddenFilesAndFolders.outOfSight.content.title"="Gizlilik için bulanıklaştırma";
 /* Hidden files and folders onboarding content out of sight message */
-"onboarding.hiddenFilesAndFolders.outOfSight.content.message"="Gizli dosyaların ne zaman görünür olacağına siz karar verirsiniz. Gizli öğeleri geçici olarak göstermek için yeni bir ayar var.";
+"onboarding.hiddenFilesAndFolders.outOfSight.content.message"="Gizli öğeleri, içeriklerini açığa çıkarmadan tanımlayabilmeniz için küçük resimleri bulanıklaştırılmış şekilde gösterin.";
 /* My Account page: Menu Title of user account page */
 "account.myAccount.title"="Hesabım";
 /* Storage limit capacity, where %d is the number of gigabytes that marks the storage limit */
@@ -4630,8 +4630,6 @@
 "subscriptionPurchase.freePlanCard.title"="Ücretsiz planımızla başlayın";
 /* Description shown for the free plan card */
 "subscriptionPurchase.freePlanCard.description"="Ücretsiz olarak cömert miktarda depolama ve aktarım kotası sunuyoruz, böylece MEGA’yı risksiz deneyebilirsiniz";
-/* First benefit shown for the free plan card */
-"subscriptionPurchase.freePlanCard.feature.one"="Ücretsiz 20 GB depolama alanı";
 /* Second benefit shown for the free plan card */
 "subscriptionPurchase.freePlanCard.feature.two"="Sınırlı aktarımlar";
 /* Button title for the free plan card */
@@ -4759,7 +4757,7 @@
 /* General deal plan badge text shown in Upgrade plan screen */
 "upgradeAccountPlan.plan.tag.introOffer.generalDeal"="%@ indirim";
 /* Subscription plan first year offer text shown in Upgrade plan screen */
-"subscriptionPurchase.plan.firstYearOffer"="%@, for first year";
+"subscriptionPurchase.plan.firstYearOffer"="İlk yıl için %@";
 /* Header text in Upgrade plan screen to highlight yearly billing savings with intro offer */
 "upgradeAccountPlan.header.title.saveYearlyBillingWithIntoOffer"="Yıllık planda en az %@ tasarruf edin";
 /* Camera Uploads Progress navigation title */
@@ -4769,6 +4767,18 @@
 /* Camera Uploads row progress format */
 "cameraUploads.progress.row.uploadProgressFormat"="%@ of %@ %@/s";
 /* Cyber Monday deal plan badge text shown in Upgrade plan screen */
-"upgradeAccountPlan.plan.tag.introOffer.cyberMondayDeal"="Cyber Monday deal: %@ off";
+"upgradeAccountPlan.plan.tag.introOffer.cyberMondayDeal"="Siber Pazartesi fırsatı: %@ indirim";
 /* Special Offer plan badge text shown in Upgrade plan screen */
-"upgradeAccountPlan.plan.tag.introOffer.specialOffer"="Special offer: %@ off";
+"upgradeAccountPlan.plan.tag.introOffer.specialOffer"="Özel teklif: %@ indirim";
+/* View mode title for grid view in the cloud drive. */
+"cloudDrive.viewMode.grid.title"="Izgara görünümü";
+/* Camera Uploads Progress In Queue section title */
+"cameraUploads.progress.section.inQueue.title"="Sırada";
+/* Camera Uploads row file progress */
+"cameraUploads.progress.row.fileProgress"="%1$@ / %2$@";
+/* Camera Uploads row file upload speed */
+"cameraUploads.progress.row.uploadSpeed"="%@/s";
+/* Footer for the yearly billing option in the upgrade account plan screen */
+"upgradeAccountPlan.plan.yearly.footer"="Charged Yearly";
+/* Price per month display for yearly billing option in the upgrade account plan screen */
+"upgradeAccountPlan.plan.yearly.pricePerMonth"="Only %@/month";

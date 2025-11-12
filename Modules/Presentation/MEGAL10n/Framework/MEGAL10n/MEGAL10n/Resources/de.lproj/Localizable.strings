@@ -4145,15 +4145,15 @@
 /* Hidden files and folders onboarding content hide important title */
 "onboarding.hiddenFilesAndFolders.hideImportant.content.title"="Verbergen Sie wichtige Dateien und Ordner";
 /* Hidden files and folders onboarding content hide important message */
-"onboarding.hiddenFilesAndFolders.hideImportant.content.message"="Sie können sensible Dateien und Ordner zum Schutz Ihrer Privatsphäre verbergen. Nur Sie haben die Möglichkeit, diese Elemente sichtbar zu machen, entweder einzeln oder indem Sie über die Einstellungen verborgene Elemente vorübergehend einblenden.";
+"onboarding.hiddenFilesAndFolders.hideImportant.content.message"="Zum Schutz Ihrer Privatsphäre können Sie sensible Dateien und Ordner mit einem einfachen Schritt verbergen.";
 /* Hidden files and folders onboarding content exclude from timeline title */
-"onboarding.hiddenFilesAndFolders.excludeTimeline.content.title"="Von der Zeitleiste ausschließen";
+"onboarding.hiddenFilesAndFolders.excludeTimeline.content.title"="Unsichtbar";
 /* Hidden files and folders onboarding content exclude from timeline section message */
-"onboarding.hiddenFilesAndFolders.excludeTimeline.content.message"="Verborgene Elemente sind nur im Cloud Drive zugänglich und erscheinen nicht in Ihren Fotos, Alben oder kürzlich verwendeten Dateien.";
+"onboarding.hiddenFilesAndFolders.excludeTimeline.content.message"="Nur Sie haben die Möglichkeit, verborgene Dateien sichtbar zu machen, entweder einzeln oder indem Sie über die Einstellungen verborgene Elemente vorübergehend einblenden.";
 /* Hidden files and folders onboarding content out of sight title */
-"onboarding.hiddenFilesAndFolders.outOfSight.content.title"="Unsichtbar";
+"onboarding.hiddenFilesAndFolders.outOfSight.content.title"="Datenschutz durch Weichzeichnung";
 /* Hidden files and folders onboarding content out of sight message */
-"onboarding.hiddenFilesAndFolders.outOfSight.content.message"="Sie entscheiden, wann verborgene Dateien sichtbar sein sollen. Mit einer neuen Einstellung können Sie verborgene Elemente vorübergehend sichtbar machen.";
+"onboarding.hiddenFilesAndFolders.outOfSight.content.message"="Die Miniaturbilder von verborgenen Elementen werden unscharf dargestellt, sodass Sie sie identifizieren können, ohne ihren Inhalt preiszugeben.";
 /* My Account page: Menu Title of user account page */
 "account.myAccount.title"="Mein Account";
 /* Storage limit capacity, where %d is the number of gigabytes that marks the storage limit */
@@ -4630,8 +4630,6 @@
 "subscriptionPurchase.freePlanCard.title"="Starten Sie mit unserem kostenlosen Paket";
 /* Description shown for the free plan card */
 "subscriptionPurchase.freePlanCard.description"="Wir bieten Ihnen kostenlos ein großzügiges Speicher- und Transfervolumen, sodass Sie MEGA ohne Risiko testen können";
-/* First benefit shown for the free plan card */
-"subscriptionPurchase.freePlanCard.feature.one"="20 GB Speicher kostenlos";
 /* Second benefit shown for the free plan card */
 "subscriptionPurchase.freePlanCard.feature.two"="Begrenzte Transfers";
 /* Button title for the free plan card */
@@ -4641,7 +4639,7 @@
 /* Displays the amount of data transfer included in the subscription plan */
 "subscriptionPurchase.plan.transfer"="%@ Transfervolumen";
 /* Displays the total amount when billed yearly */
-"subscriptionPurchase.plan.billedYearly"="%@ jährlich";
+"subscriptionPurchase.plan.billedYearly"="%@ charged yearly";
 /* Button title to cancel the subscription purchase. */
 "subscriptionPurchase.maybeLater"="Vielleicht später";
 /* Title for the features of pro plan in the subscription purchase screen. */
@@ -4759,7 +4757,7 @@
 /* General deal plan badge text shown in Upgrade plan screen */
 "upgradeAccountPlan.plan.tag.introOffer.generalDeal"="%@ gespart";
 /* Subscription plan first year offer text shown in Upgrade plan screen */
-"subscriptionPurchase.plan.firstYearOffer"="%@, for first year";
+"subscriptionPurchase.plan.firstYearOffer"="%@ im ersten Jahr";
 /* Header text in Upgrade plan screen to highlight yearly billing savings with intro offer */
 "upgradeAccountPlan.header.title.saveYearlyBillingWithIntoOffer"="Sparen Sie mindestens %@ bei einem Jahresabonnement";
 /* Camera Uploads Progress navigation title */
@@ -4769,6 +4767,18 @@
 /* Camera Uploads row progress format */
 "cameraUploads.progress.row.uploadProgressFormat"="%@ of %@ %@/s";
 /* Cyber Monday deal plan badge text shown in Upgrade plan screen */
-"upgradeAccountPlan.plan.tag.introOffer.cyberMondayDeal"="Cyber Monday deal: %@ off";
+"upgradeAccountPlan.plan.tag.introOffer.cyberMondayDeal"="Cyber-Monday-Deal: %@ gespart";
 /* Special Offer plan badge text shown in Upgrade plan screen */
-"upgradeAccountPlan.plan.tag.introOffer.specialOffer"="Special offer: %@ off";
+"upgradeAccountPlan.plan.tag.introOffer.specialOffer"="Sonderaktion: %@ gespart";
+/* View mode title for grid view in the cloud drive. */
+"cloudDrive.viewMode.grid.title"="Rasteransicht";
+/* Camera Uploads Progress In Queue section title */
+"cameraUploads.progress.section.inQueue.title"="In Warteschlange";
+/* Camera Uploads row file progress */
+"cameraUploads.progress.row.fileProgress"="%1$@ von %2$@";
+/* Camera Uploads row file upload speed */
+"cameraUploads.progress.row.uploadSpeed"="%@/s";
+/* Footer for the yearly billing option in the upgrade account plan screen */
+"upgradeAccountPlan.plan.yearly.footer"="Charged Yearly";
+/* Price per month display for yearly billing option in the upgrade account plan screen */
+"upgradeAccountPlan.plan.yearly.pricePerMonth"="Only %@/month";
