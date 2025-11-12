@@ -834,9 +834,13 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
         MEGALogDebug(@"[Photo browser] Calculated scrollview origin y is Nan");
         zoomableViewOriginY = 0;
     }
-    
-    frame.origin.x = MAX(frame.origin.x + zoomableViewOriginX, 0);
-    frame.origin.y = MAX(frame.origin.y + zoomableViewOriginY, 0);
+    if (fabs(scale - 1.0f) < 1e-5) {
+        frame.origin.x = MAX(zoomableViewOriginX, 0);
+        frame.origin.y = MAX(zoomableViewOriginY, 0);
+    } else {
+        frame.origin.x = MAX(frame.origin.x + zoomableViewOriginX, 0);
+        frame.origin.y = MAX(frame.origin.y + zoomableViewOriginY, 0);
+    }
     view.frame = frame;
 }
 
