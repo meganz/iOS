@@ -271,7 +271,7 @@ final class AlbumContentViewController: UIViewController, ViewType {
         
         endEditingMode()
         
-        let transfers = selectedNodes.map { CancellableTransfer(handle: $0.handle, name: nil, priority: false, isFile: $0.isFile(), type: .download) }
+        let transfers = selectedNodes.map { CancellableTransfer(handle: $0.handle, name: $0.name, priority: false, isFile: $0.isFile(), type: .download) }
         CancellableTransferRouter(presenter: self, transfers: transfers, transferType: .download).start()
     }
     

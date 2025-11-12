@@ -16,7 +16,7 @@ final class CancellableTransferFactoryTests: XCTestCase {
         let transfer = sut.make()
         
         XCTAssertEqual(transfer.handle, node.handle)
-        XCTAssertEqual(transfer.name, nil)
+        XCTAssertEqual(transfer.name, node.name)
         XCTAssertEqual(transfer.appData, nil)
         XCTAssertEqual(transfer.priority, false)
         XCTAssertEqual(transfer.isFile, node.isFile())
@@ -35,7 +35,7 @@ final class CancellableTransferFactoryTests: XCTestCase {
         let transfer = sut.make()
         
         XCTAssertEqual(transfer.handle, node.handle)
-        XCTAssertEqual(transfer.name, nil)
+        XCTAssertEqual(transfer.name, node.name)
         XCTAssertEqual(transfer.appData, nil)
         XCTAssertEqual(transfer.priority, false)
         XCTAssertEqual(transfer.isFile, node.isFile())
@@ -64,7 +64,7 @@ final class CancellableTransferFactoryTests: XCTestCase {
             let transfer = sut.make()
             
             XCTAssertEqual(transfer.handle, node.handle, "failed at index: \(index) on value: \(combination)")
-            XCTAssertEqual(transfer.name, nil, "failed at index: \(index) on value: \(combination)")
+            XCTAssertEqual(transfer.name, node.name, "failed at index: \(index) on value: \(combination)")
             XCTAssertEqual(transfer.appData, nil, "failed at index: \(index) on value: \(combination)")
             XCTAssertEqual(transfer.priority, false, "failed at index: \(index) on value: \(combination)")
             XCTAssertEqual(transfer.isFile, node.isFile(), "failed at index: \(index) on value: \(combination)")

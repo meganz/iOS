@@ -91,7 +91,7 @@ import MEGASwift
                 handle: node.handle,
                 messageId: messageIdIfValid(messageId),
                 chatId: chatIdIfValid(chatId),
-                name: nil,
+                name: node.name,
                 appData: nil,
                 priority: false,
                 isFile: node.isFile(),

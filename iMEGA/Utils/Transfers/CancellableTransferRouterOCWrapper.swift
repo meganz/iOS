@@ -16,10 +16,10 @@ import MEGADomain
     }
     
     private func transferViewEntities(fromNodes nodes: [MEGANode]) -> [CancellableTransfer] {
-        nodes.map { CancellableTransfer(handle: $0.handle, name: nil, appData: nil, priority: false, isFile: $0.isFile(), type: .download) }
+        nodes.map { CancellableTransfer(handle: $0.handle, name: $0.name, appData: nil, priority: false, isFile: $0.isFile(), type: .download) }
     }
     
     private func chatTransferViewEntities(fromNodes nodes: [MEGANode], messageId: HandleEntity, chatId: HandleEntity) -> [CancellableTransfer] {
-        nodes.map { CancellableTransfer(handle: $0.handle, messageId: messageId, chatId: chatId, name: nil, appData: nil, priority: false, isFile: $0.isFile(), type: .downloadChat) }
+        nodes.map { CancellableTransfer(handle: $0.handle, messageId: messageId, chatId: chatId, name: $0.name, appData: nil, priority: false, isFile: $0.isFile(), type: .downloadChat) }
     }
 }

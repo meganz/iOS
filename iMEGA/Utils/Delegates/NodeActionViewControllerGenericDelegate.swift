@@ -294,7 +294,7 @@ class NodeActionViewControllerGenericDelegate: NodeActionViewControllerDelegate 
             return
         }
         
-        let transfers = nodes.map { CancellableTransfer(handle: $0.handle, name: nil, appData: nil, priority: false, isFile: $0.isFile, type: .download) }
+        let transfers = nodes.map { CancellableTransfer(handle: $0.handle, name: $0.name, appData: nil, priority: false, isFile: $0.isFile, type: .download) }
         CancellableTransferRouter(
             presenter: viewController,
             transfers: transfers,

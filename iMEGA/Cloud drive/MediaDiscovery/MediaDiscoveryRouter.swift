@@ -88,7 +88,7 @@ protocol MediaDiscoveryRouting: Routing {
     func showDownload(photos: [NodeEntity]) {
         guard let mediaDiscoveryViewController else { return }
         let transfers = photos.map {
-            CancellableTransfer(handle: $0.handle, name: nil, isFile: $0.isFile, type: .download)
+            CancellableTransfer(handle: $0.handle, name: $0.name, isFile: $0.isFile, type: .download)
         }
         CancellableTransferRouter(presenter: mediaDiscoveryViewController, transfers: transfers,
                                   transferType: .download, isFolderLink: isFolderLink).start()

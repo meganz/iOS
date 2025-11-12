@@ -77,7 +77,7 @@ extension NodeActions {
                 let transfers = nodes.map {
                     CancellableTransfer(
                         handle: $0.handle,
-                        name: nil,
+                        name: $0.name,
                         appData: nil,
                         priority: false,
                         isFile: $0.isFile,
