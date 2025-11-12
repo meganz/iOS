@@ -6,8 +6,14 @@ import MEGAPreference
 import MEGARepo
 import SwiftUI
 
-struct CameraUploadProgressRouter: Routing {
+@MainActor
+protocol CameraUploadProgressRouting: Routing {
+    func showUpgradeAccount()
+}
+
+final class CameraUploadProgressRouter: CameraUploadProgressRouting {
     private weak var presenter: UIViewController?
+    private weak var baseViewController: UIViewController?
     
     init(presenter: UIViewController?) {
         self.presenter = presenter
@@ -17,6 +23,7 @@ struct CameraUploadProgressRouter: Routing {
         let assetRepository = CameraUploadAssetRepository(
             cameraUploadRecordStore: CameraUploadRecordManager.shared())
         let preferenceRepository = PreferenceRepository.newRepo
+        let preferenceUseCase = PreferenceUseCase(repository: preferenceRepository)
         let viewModel = CameraUploadProgressViewModel(
             monitorCameraUploadUseCase: MonitorCameraUploadUseCase(
                 cameraUploadRepository: CameraUploadsStatsRepository.newRepo,
@@ -34,16 +41,38 @@ struct CameraUploadProgressRouter: Routing {
                 photoLibraryThumbnailRepository: PhotoLibraryThumbnailRepository()),
             queuedCameraUploadsUseCase: QueuedCameraUploadsUseCase(
                 cameraUploadAssetRepository: assetRepository,
-                preferenceRepository: preferenceRepository))
+                preferenceRepository: preferenceRepository),
+            preferenceUseCase: preferenceUseCase,
+            accountStorageUseCase: AccountStorageUseCase(
+                accountRepository: AccountRepository.newRepo,
+                preferenceUseCase: preferenceUseCase),
+            cameraUploadProgressRouter: self)
         
         let hostingController = UIHostingController(
             rootView: CameraUploadProgressView(viewModel: viewModel))
         hostingController.modalPresentationStyle = .pageSheet
         hostingController.view.backgroundColor = TokenColors.Background.page
+        
+        baseViewController = hostingController
+        
         return hostingController
     }
     
     func start() {
         presenter?.present(build(), animated: true, completion: nil)
+    }
+    
+    func showUpgradeAccount() {
+        let accountUseCase = AccountUseCase(
+            repository: AccountRepository.newRepo)
+        guard let currentAccountDetails = accountUseCase.currentAccountDetails else {
+            return
+        }
+        SubscriptionPurchaseRouter(
+            presenter: baseViewController,
+            currentAccountDetails: currentAccountDetails,
+            viewType: .upgrade,
+            accountUseCase: accountUseCase)
+        .start()
     }
 }

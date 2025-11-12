@@ -10,13 +10,12 @@ struct CameraUploadProgressView: View {
     var body: some View {
         NavigationStack {
             VStack(alignment: .leading, spacing: .zero) {
+                bannerView
+                
                 Text(viewModel.uploadStatus)
                     .font(.subheadline)
                     .foregroundStyle(TokenColors.Text.primary.swiftUI)
                     .padding(TokenSpacing._5)
-                    .task {
-                        await viewModel.monitorUploadStats()
-                    }
                 
                 CameraUploadProgressTableView(viewModel: viewModel.cameraUploadProgressTableViewModel)
             }
@@ -33,5 +32,20 @@ struct CameraUploadProgressView: View {
             .hideNavigationToolbarBackground()
         }
         .pageBackground()
+        .task {
+            await viewModel.monitorStates()
+        }
+    }
+    
+    @ViewBuilder
+    private var bannerView: some View {
+        if let bannerViewModel = viewModel.bannerViewModel {
+            MEGABanner(
+                title: bannerViewModel.title,
+                subtitle: bannerViewModel.subtitle,
+                buttonText: bannerViewModel.buttonViewModel?.text,
+                state: bannerViewModel.state,
+                buttonAction: bannerViewModel.buttonViewModel?.action)
+        }
     }
 }

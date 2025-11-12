@@ -1899,6 +1899,31 @@ public enum Strings {
         }
       }
       public enum Progress {
+        public enum Banner {
+          public enum Paused {
+            public enum AllowMobileData {
+              public enum Button {
+                public static let title: Swift.String
+              }
+            }
+            public enum HighThermalState {
+              public static let subtitle: Swift.String
+            }
+            public enum LowBattery {
+              public static let subtitle: Swift.String
+            }
+            public enum NetworkIssue {
+              public static let subtitle: Swift.String
+            }
+          }
+          public enum StorageFull {
+            public static let subtitle: Swift.String
+            public static let title: Swift.String
+            public enum Button {
+              public static let title: Swift.String
+            }
+          }
+        }
         public enum Navigation {
           public static let title: Swift.String
         }
