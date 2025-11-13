@@ -518,18 +518,6 @@ static TransfersWidgetViewController* instance = nil;
     self.queuedUploadTransfers = [NSMutableArray arrayWithArray:[self fetchQueuedUploadTransfers]];
 }
 
-- (void)sortTransfers {
-    [self.transfers sortUsingComparator:^NSComparisonResult(MEGATransfer *transfer1, MEGATransfer *transfer2) {
-        NSNumber *state1 = @([transfer1 mnz_orderByState]);
-        NSNumber *state2 = @([transfer2 mnz_orderByState]);
-        if ([state1 compare:state2] == NSOrderedSame) {
-            return [@(transfer1.tag) compare:@(transfer2.tag)];
-        } else {
-            return [state1 compare:state2];
-        }
-    }];
-}
-
 - (void)cleanTransfersList {
     [self.transfers removeAllObjects];
     [self.queuedUploadTransfers removeAllObjects];

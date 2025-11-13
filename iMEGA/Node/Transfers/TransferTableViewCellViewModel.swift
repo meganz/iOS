@@ -49,7 +49,7 @@ import UIKit
         }
         invokeCommand?(.updateThumbnail(defaultThumbnail))
         loadDownloadTransferThumbnailTask = Task { [weak self, thumbnailUseCase] in
-            let thumbnailEntity = try await thumbnailUseCase.loadThumbnail(for: transferEntity.nodeHandle, type: .preview)
+            let thumbnailEntity = try await thumbnailUseCase.loadThumbnail(for: transferEntity.nodeHandle, type: .thumbnail)
             try Task.checkCancellation()
             guard let thumbnail = try UIImage(data: Data(contentsOf: thumbnailEntity.url)) else { return }
             self?.invokeCommand?(.updateThumbnail(thumbnail))
