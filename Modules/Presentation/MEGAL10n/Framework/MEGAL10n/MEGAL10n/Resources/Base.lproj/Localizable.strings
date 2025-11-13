@@ -4796,3 +4796,7 @@
 "cameraUploads.progress.banner.storageFull.subtitle"="To keep uploading, upgrade now to get more storage";
 /* Camera Uploads Banner Storage Full Button Title */
 "cameraUploads.progress.banner.storageFull.button.title"="Upgrade now";
+/* Camera Uploads Banner Limited Access Subtitle */
+"cameraUploads.progress.banner.limitedAccess.subtitle"="To ensure we don’t miss all your memories, MEGA needs full access to your photo library.";
+/* Camera Uploads Banner Limited Access Button Title */
+"cameraUploads.progress.banner.limitedAccess.button.title"="Update permissions";

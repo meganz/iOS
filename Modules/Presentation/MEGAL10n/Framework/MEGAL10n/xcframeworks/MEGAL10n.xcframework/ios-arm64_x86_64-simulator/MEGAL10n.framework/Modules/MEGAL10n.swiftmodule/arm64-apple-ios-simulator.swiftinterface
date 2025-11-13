@@ -1900,6 +1900,12 @@ public enum Strings {
       }
       public enum Progress {
         public enum Banner {
+          public enum LimitedAccess {
+            public static let subtitle: Swift.String
+            public enum Button {
+              public static let title: Swift.String
+            }
+          }
           public enum Paused {
             public enum AllowMobileData {
               public enum Button {

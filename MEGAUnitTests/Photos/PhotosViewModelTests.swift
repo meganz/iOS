@@ -32,7 +32,8 @@ final class PhotosViewModelTests: XCTestCase {
             monitorCameraUploadUseCase: MockMonitorCameraUploadUseCase(), 
             devicePermissionHandler: MockDevicePermissionHandler(),
             cameraUploadsSettingsViewRouter: MockCameraUploadsSettingsViewRouter(),
-            nodeUseCase: MockNodeUseCase())
+            nodeUseCase: MockNodeUseCase(),
+            cameraUploadProgressRouter: MockRouter())
     }
     
     @MainActor
@@ -125,7 +126,8 @@ final class PhotosViewModelTests: XCTestCase {
             monitorCameraUploadUseCase: MockMonitorCameraUploadUseCase(),
             devicePermissionHandler: MockDevicePermissionHandler(),
             cameraUploadsSettingsViewRouter: MockCameraUploadsSettingsViewRouter(),
-            nodeUseCase: MockNodeUseCase())
+            nodeUseCase: MockNodeUseCase(),
+            cameraUploadProgressRouter: MockRouter())
         
         sut.filterType = .allMedia
         sut.filterLocation = . allLocations
@@ -369,6 +371,7 @@ final class PhotosViewModelTests: XCTestCase {
                                devicePermissionHandler: MockDevicePermissionHandler(),
                                cameraUploadsSettingsViewRouter: cameraUploadsSettingsViewRouter,
                                nodeUseCase: nodeUseCase,
+                               cameraUploadProgressRouter: MockRouter(),
                                tracker: tracker
         )
     }
@@ -445,6 +448,25 @@ struct PhotosViewModelTestSuite {
     }
     
     @MainActor
+    @Test
+    func cameraUploadStatusButtonTapped() async throws {
+        let preferenceUseCase = MockPreferenceUseCase(dict: [PreferenceKeyEntity.isCameraUploadsEnabled.rawValue: true])
+        let cameraUploadProgressRouter = MockRouter()
+        let featureFlagProvider = MockFeatureFlagProvider(
+            list: [.cameraUploadProgress: true])
+        
+        let sut = Self.makeSUT(
+            preferenceUseCase: preferenceUseCase,
+            cameraUploadProgressRouter: cameraUploadProgressRouter,
+            featureFlagProvider: featureFlagProvider
+        )
+        
+        sut.cameraUploadStatusButtonViewModel.onTappedHandler?()
+        
+        #expect(cameraUploadProgressRouter.startCalled == 1)
+    }
+    
+    @MainActor
     private static func makeSUT(
         photoUpdatePublisher: some PhotoUpdatePublisherProtocol = MockPhotoUpdatePublisher(),
         photoLibraryUseCase: some PhotoLibraryUseCaseProtocol = MockPhotoLibraryUseCase(),
@@ -455,17 +477,22 @@ struct PhotosViewModelTestSuite {
         devicePermissionHandler: some DevicePermissionsHandling = MockDevicePermissionHandler(),
         cameraUploadsSettingsViewRouter: some Routing = MockCameraUploadsSettingsViewRouter(),
         nodeUseCase: some NodeUseCaseProtocol = MockNodeUseCase(),
-        tracker: some AnalyticsTracking = MockTracker()
+        tracker: some AnalyticsTracking = MockTracker(),
+        cameraUploadProgressRouter: some Routing = MockRouter(),
+        featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:])
     ) -> PhotosViewModel {
         .init(
             photoUpdatePublisher: photoUpdatePublisher,
             photoLibraryUseCase: photoLibraryUseCase,
             contentConsumptionUserAttributeUseCase: contentConsumptionUserAttributeUseCase,
             sortOrderPreferenceUseCase: sortOrderPreferenceUseCase,
+            preferenceUseCase: preferenceUseCase,
             monitorCameraUploadUseCase: monitorCameraUploadUseCase,
             devicePermissionHandler: devicePermissionHandler,
             cameraUploadsSettingsViewRouter: cameraUploadsSettingsViewRouter,
-            nodeUseCase: nodeUseCase)
+            nodeUseCase: nodeUseCase,
+            cameraUploadProgressRouter: cameraUploadProgressRouter,
+            featureFlagProvider: featureFlagProvider)
     }
 }
 

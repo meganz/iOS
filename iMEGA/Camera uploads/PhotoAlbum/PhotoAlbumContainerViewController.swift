@@ -195,7 +195,8 @@ final class PhotoAlbumContainerViewController: UIViewController {
                     nodeDataRepository: NodeDataRepository.newRepo,
                     nodeValidationRepository: NodeValidationRepository.newRepo,
                     nodeRepository: NodeRepository.newRepo
-                )
+                ),
+                cameraUploadProgressRouter: CameraUploadProgressRouter(presenter: photoViewController)
             )
             photoViewController.viewModel = viewModel
             photoViewController.photoUpdatePublisher = photoUpdatePublisher

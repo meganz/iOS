@@ -19,6 +19,7 @@ struct CameraUploadProgressView: View {
                 
                 CameraUploadProgressTableView(viewModel: viewModel.cameraUploadProgressTableViewModel)
             }
+            .alertPhotosPermission(isPresented: $viewModel.showPhotoPermissionAlert)
             .edgesIgnoringSafeArea(.all)
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .pageBackground()

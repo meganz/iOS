@@ -2,6 +2,8 @@
 import MEGADomain
 import MEGADomainMock
 import MEGAL10n
+import MEGAPermissions
+import MEGAPermissionsMock
 import MEGAPreference
 import MEGASwift
 import MEGAUIComponent
@@ -135,6 +137,37 @@ struct CameraUploadProgressViewModelTests {
             }
         }
         
+        @Test
+        func uploadCompleteLimitedAccessBanner() async {
+            let item = CameraUploadStateEntity(
+                stats: .init(progress: 100, pendingFilesCount: 0, pendingVideosCount: 0))
+            let cameraUploadStateAsyncSequence = SingleItemAsyncSequence(
+                item: item)
+                .eraseToAnyAsyncSequence()
+            let monitorCameraUploadUseCase = MockMonitorCameraUploadUseCase(
+                cameraUploadState: cameraUploadStateAsyncSequence
+            )
+            let devicePermissionHandler = MockDevicePermissionHandler(
+                photoAuthorization: .limited
+            )
+            
+            let sut = makeSUT(
+                monitorCameraUploadUseCase: monitorCameraUploadUseCase,
+                devicePermissionHandler: devicePermissionHandler)
+            
+            await performAsyncTestOnMonitorStates(sut: sut, publisher: sut.$bannerViewModel) { bannerViewModel in
+                expectBannerViewModel(
+                    bannerViewModel,
+                    title: nil,
+                    subtitle: Strings.Localizable.CameraUploads.Progress.Banner.LimitedAccess.subtitle,
+                    state: .warning,
+                    buttonText: Strings.Localizable.CameraUploads.Progress.Banner.LimitedAccess.Button.title
+                )
+                bannerViewModel?.buttonViewModel?.action()
+                #expect(sut.showPhotoPermissionAlert)
+            }
+        }
+        
         private func performAsyncTestOnMonitorStates<T>(
             sut: CameraUploadProgressViewModel,
             publisher: Published<T>.Publisher,
@@ -181,7 +214,8 @@ struct CameraUploadProgressViewModelTests {
         queuedCameraUploadsUseCase: any QueuedCameraUploadsUseCaseProtocol = MockQueuedCameraUploadsUseCase(),
         preferenceUseCase: some PreferenceUseCaseProtocol = MockPreferenceUseCase(),
         accountStorageUseCase: some AccountStorageUseCaseProtocol = MockAccountStorageUseCase(),
-        cameraUploadProgressRouter: some CameraUploadProgressRouting = MockCameraUploadProgressRouter()
+        cameraUploadProgressRouter: some CameraUploadProgressRouting = MockCameraUploadProgressRouter(),
+        devicePermissionHandler: some DevicePermissionsHandling = MockDevicePermissionHandler()
     ) -> CameraUploadProgressViewModel {
         .init(
             monitorCameraUploadUseCase: monitorCameraUploadUseCase,
@@ -191,7 +225,8 @@ struct CameraUploadProgressViewModelTests {
             queuedCameraUploadsUseCase: queuedCameraUploadsUseCase,
             preferenceUseCase: preferenceUseCase,
             accountStorageUseCase: accountStorageUseCase,
-            cameraUploadProgressRouter: cameraUploadProgressRouter)
+            cameraUploadProgressRouter: cameraUploadProgressRouter,
+            devicePermissionHandler: devicePermissionHandler)
     }
     
     private static func uploadStatus(pendingFilesCount: UInt, isPaused: Bool = false) -> String {

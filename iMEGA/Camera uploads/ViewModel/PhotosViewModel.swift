@@ -64,6 +64,8 @@ final class PhotosViewModel: NSObject {
     private let nodeUseCase: any NodeUseCaseProtocol
     private let cameraUploadsSettingsViewRouter: any Routing
     private let tracker: any AnalyticsTracking
+    private let featureFlagProvider: any FeatureFlagProviderProtocol
+    private let cameraUploadProgressRouter: any Routing
     private var subscriptions = Set<AnyCancellable>()
     private var pendingNodeUpdates: [NodeEntity] = []
     
@@ -76,8 +78,10 @@ final class PhotosViewModel: NSObject {
          devicePermissionHandler: some DevicePermissionsHandling,
          cameraUploadsSettingsViewRouter: some Routing,
          nodeUseCase: some NodeUseCaseProtocol,
-         tracker: some AnalyticsTracking = DIContainer.tracker) {
-        
+         cameraUploadProgressRouter: any Routing,
+         tracker: some AnalyticsTracking = DIContainer.tracker,
+         featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider
+    ) {
         self.photoUpdatePublisher = photoUpdatePublisher
         self.photoLibraryUseCase = photoLibraryUseCase
         self.contentConsumptionUserAttributeUseCase = contentConsumptionUserAttributeUseCase
@@ -95,7 +99,9 @@ final class PhotosViewModel: NSObject {
             monitorCameraUploadUseCase: monitorCameraUploadUseCase,
             devicePermissionHandler: devicePermissionHandler,
             preferenceUseCase: preferenceUseCase)
+        self.cameraUploadProgressRouter = cameraUploadProgressRouter
         self.tracker = tracker
+        self.featureFlagProvider = featureFlagProvider
         super.init()
         $isCameraUploadsEnabled.useCase = preferenceUseCase
         
@@ -227,7 +233,11 @@ final class PhotosViewModel: NSObject {
         guard isCameraUploadsEnabled else {
             return navigateToCameraUploadSettings()
         }
-        showCameraUploadStatusBanner()
+        if featureFlagProvider.isFeatureFlagEnabled(for: .cameraUploadProgress) {
+            cameraUploadProgressRouter.start()
+        } else {
+            showCameraUploadStatusBanner()
+        }
     }
     
     private func showCameraUploadStatusBanner() {

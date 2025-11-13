@@ -2,6 +2,7 @@ import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGADesignToken
 import MEGADomain
+import MEGAPermissions
 import MEGAPreference
 import MEGARepo
 import SwiftUI
@@ -46,7 +47,8 @@ final class CameraUploadProgressRouter: CameraUploadProgressRouting {
             accountStorageUseCase: AccountStorageUseCase(
                 accountRepository: AccountRepository.newRepo,
                 preferenceUseCase: preferenceUseCase),
-            cameraUploadProgressRouter: self)
+            cameraUploadProgressRouter: self,
+            devicePermissionHandler: DevicePermissionsHandler.makeHandler())
         
         let hostingController = UIHostingController(
             rootView: CameraUploadProgressView(viewModel: viewModel))
