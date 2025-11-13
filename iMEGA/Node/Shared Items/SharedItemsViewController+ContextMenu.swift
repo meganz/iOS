@@ -49,6 +49,7 @@ extension SharedItemsViewController: DisplayMenuDelegate {
             navigationItem.leftBarButtonItem = selectAllBarButtonItem
             navigationItem.rightBarButtonItem = editBarButtonItem
         } else {
+            navigationItem.leftBarButtonItem = nil
 
             guard !isCloudDriveRevampEnabled else {
                 navigationItem.rightBarButtonItem = nil
