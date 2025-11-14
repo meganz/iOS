@@ -503,27 +503,40 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
         
         switch accountDetails.subscriptionCycle {
         case .none:
-            if currentPlan.type == plan.type { return .currentPlan }
-            if plan.introductoryOffer != nil { return .introOffer}
-            if let recommendedPlanType,
-               plan.type == recommendedPlanType,
-               !hasIntroductoryOffersToShow {
+            if currentPlan.type == plan.type {
+                return .currentPlan
+            } else if plan.introductoryOffer != nil {
+                return .introOffer
+            } else if shouldShowRecommendedTag(for: plan) {
                 return .recommended
             }
         default:
-            if plan == currentPlan { return .currentPlan }
-            if plan.introductoryOffer != nil { return .introOffer}
-            if let recommendedPlanType,
-               plan.subscriptionCycle == selectedCycleTab,
-               plan.type == recommendedPlanType,
-               !hasIntroductoryOffersToShow {
+            if plan == currentPlan {
+                return .currentPlan
+            } else if plan.introductoryOffer != nil {
+                return .introOffer
+            } else if plan.subscriptionCycle == selectedCycleTab &&
+                        shouldShowRecommendedTag(for: plan) {
                 return .recommended
             }
         }
         
         return .none
     }
-    
+
+    private func shouldShowRecommendedTag(for plan: PlanEntity) -> Bool {
+        guard let recommendedPlanType,
+              plan.type == recommendedPlanType,
+              !hasIntroductoryOffer(for: plan.type) else {
+            return false
+        }
+        return true
+    }
+
+    private func hasIntroductoryOffer(for accountType: AccountTypeEntity) -> Bool {
+        planList.contains(where: { $0.type == accountType && $0.introductoryOffer != nil })
+    }
+
     private func isPlanSelected(_ plan: PlanEntity) -> Bool {
         guard let selectedPlanType else { return false }
         return selectedPlanType == plan.type && isSelectionEnabled(forPlan: plan)

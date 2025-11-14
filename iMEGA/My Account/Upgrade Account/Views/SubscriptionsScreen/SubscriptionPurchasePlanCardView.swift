@@ -101,13 +101,7 @@ struct SubscriptionPurchasePlanCardView: View {
                     .foregroundStyle(TokenColors.Text.secondary.swiftUI)
                     .strikethrough()
                 Text(attributedPricePerMonth(for: introductoryOfferInfo.formattedIntroPricePerMonth))
-                HStack(spacing: TokenSpacing._1) {
-                    Text(introductoryOfferInfo.formattedFullPrice)
-                        .strikethrough()
-                    Text(Strings.Localizable.SubscriptionPurchase.Plan.firstYearOffer(introductoryOfferInfo.formattedIntroPrice))
-                }
-                .font(.caption)
-                .foregroundStyle(TokenColors.Text.secondary.swiftUI)
+                IntroductoryOfferYearlyPriceBottomView(introductoryOfferInfo: introductoryOfferInfo)
             } else {
                 Text(attributedPricePerMonth(for: formattedMonthlyPriceForYearlyPlan))
                 Text(Strings.Localizable.SubscriptionPurchase.Plan.billedYearly(viewModel.plan.formattedPrice))
@@ -201,5 +195,31 @@ struct SubscriptionPurchasePlanCardView: View {
     private func setFootNoteAndSecondaryColor(for attributedString: inout AttributedString) {
         attributedString.font = .preferredFont(style: .footnote, weight: .bold)
         attributedString.foregroundColor = TokenColors.Text.secondary.swiftUI
+    }
+
+    struct IntroductoryOfferYearlyPriceBottomView: View {
+        let introductoryOfferInfo: IntroductoryOfferInfo
+
+        var body: some View {
+            Text(priceText)
+                .font(.caption)
+                .foregroundStyle(TokenColors.Text.secondary.swiftUI)
+        }
+
+        private var priceText: AttributedString {
+            var full = AttributedString(introductoryOfferInfo.formattedFullPrice)
+            full.strikethroughStyle = .single
+
+            full.append(AttributedString(" "))
+
+            full.append(
+                AttributedString(
+                    Strings.Localizable.SubscriptionPurchase.Plan.firstYearOffer(
+                        introductoryOfferInfo.formattedIntroPrice
+                    )
+                )
+            )
+            return full
+        }
     }
 }
