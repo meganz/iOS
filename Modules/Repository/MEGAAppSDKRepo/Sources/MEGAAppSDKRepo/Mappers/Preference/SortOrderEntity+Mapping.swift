@@ -34,6 +34,10 @@ extension SortOrderEntity {
             return .favouriteAsc
         case .favouriteDesc:
             return .favouriteDesc
+        case .shareCreationAsc:
+            return .shareCreationAsc
+        case .shareCreationDesc:
+            return .shareCreationDesc
         }
     }
     
@@ -78,7 +82,11 @@ extension MEGASortOrderType {
             return .favouriteAsc
         case .favouriteDesc:
             return .favouriteDesc
-        default:
+        case .shareCreationAsc:
+            return .shareCreationAsc
+        case .shareCreationDesc:
+            return .shareCreationDesc
+        @unknown default:
             return .none
         }
     }

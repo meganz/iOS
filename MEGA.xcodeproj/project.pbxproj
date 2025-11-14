@@ -2143,6 +2143,7 @@
 		BF0730D32C98023000DC5D11 /* StorageFullModalAlertViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0730D12C98023000DC5D11 /* StorageFullModalAlertViewRouter.swift */; };
 		BF0730D92C98088700DC5D11 /* MockStorageFullModalAlertViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0730D82C98088700DC5D11 /* MockStorageFullModalAlertViewRouter.swift */; };
 		BF0730DC2C98099C00DC5D11 /* StorageFullModalAlertViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0730DB2C98099C00DC5D11 /* StorageFullModalAlertViewModelTests.swift */; };
+		BF07B8052EC6E7DC0010641A /* SharedItemsViewController+Sorting.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF07B7E72EC6DCBF0010641A /* SharedItemsViewController+Sorting.swift */; };
 		BF07C4D32C6D8666001A620B /* NodeDescriptionCellViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF07C4D22C6D8666001A620B /* NodeDescriptionCellViewModelTests.swift */; };
 		BF085C9929E669FB001E6AB7 /* ScheduleMeetingCreationPropertiesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF085C9829E669FB001E6AB7 /* ScheduleMeetingCreationPropertiesView.swift */; };
 		BF085C9B29E66A45001E6AB7 /* ScheduleMeetingCreationFootnoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF085C9A29E66A45001E6AB7 /* ScheduleMeetingCreationFootnoteView.swift */; };
@@ -4988,6 +4989,7 @@
 		BF0730D12C98023000DC5D11 /* StorageFullModalAlertViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageFullModalAlertViewRouter.swift; sourceTree = "<group>"; };
 		BF0730D82C98088700DC5D11 /* MockStorageFullModalAlertViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockStorageFullModalAlertViewRouter.swift; sourceTree = "<group>"; };
 		BF0730DB2C98099C00DC5D11 /* StorageFullModalAlertViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageFullModalAlertViewModelTests.swift; sourceTree = "<group>"; };
+		BF07B7E72EC6DCBF0010641A /* SharedItemsViewController+Sorting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SharedItemsViewController+Sorting.swift"; sourceTree = "<group>"; };
 		BF07C4D22C6D8666001A620B /* NodeDescriptionCellViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeDescriptionCellViewModelTests.swift; sourceTree = "<group>"; };
 		BF085C9829E669FB001E6AB7 /* ScheduleMeetingCreationPropertiesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingCreationPropertiesView.swift; sourceTree = "<group>"; };
 		BF085C9A29E66A45001E6AB7 /* ScheduleMeetingCreationFootnoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingCreationFootnoteView.swift; sourceTree = "<group>"; };
@@ -13386,6 +13388,7 @@
 				A8C1B7BC27748A84007095F4 /* SharedItemsViewController+ContextMenu.swift */,
 				942578052824312800D1E17D /* SharedItemsViewController+EmptyStates.swift */,
 				94485B5D29BA0E17006B919E /* SharedItemsViewController+Search.swift */,
+				BF07B7E72EC6DCBF0010641A /* SharedItemsViewController+Sorting.swift */,
 				BF14A143289B3DA900BC6DCF /* SharedItemsViewController+TabSelection.swift */,
 				E8D5BF671BF35DC400955550 /* SharedItemsViewController.h */,
 				E8D5BF681BF35DC400955550 /* SharedItemsViewController.m */,
@@ -15674,6 +15677,7 @@
 				A8C1B7BD27748A84007095F4 /* SharedItemsViewController+ContextMenu.swift in Sources */,
 				942578062824312800D1E17D /* SharedItemsViewController+EmptyStates.swift in Sources */,
 				94485B5E29BA0E17006B919E /* SharedItemsViewController+Search.swift in Sources */,
+				BF07B8052EC6E7DC0010641A /* SharedItemsViewController+Sorting.swift in Sources */,
 				BF14A144289B3DA900BC6DCF /* SharedItemsViewController+TabSelection.swift in Sources */,
 				E8D5BF691BF35DC400955550 /* SharedItemsViewController.m in Sources */,
 				B5CC2AA32995EF8A00A966A0 /* SharedItemsViewModel.swift in Sources */,

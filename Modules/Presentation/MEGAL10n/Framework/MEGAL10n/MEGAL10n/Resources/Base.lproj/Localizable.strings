@@ -4808,3 +4808,8 @@
 "cameraUploads.progress.row.emptyInProgress.title"="Items in progress will appear here";
 /* Camera Uploads Empty In Queue Row title */
 "cameraUploads.progress.row.emptyInQueue.title"="Items in the queue will appear here";
+/* Sorting option label for sorting items based on the share creation date (can be applied in ascending or descending order) */
+"sorting.shareCreated.title"="Share created";
+/* Sorting option label for sorting items based on the link creation date (can be applied in ascending or descending order) */
+"sorting.linkCreated.title"="Link created";
+

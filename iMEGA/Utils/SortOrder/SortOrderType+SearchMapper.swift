@@ -31,6 +31,10 @@ extension Search.SortOrderEntity {
         case (.lastModified, .descending): .modificationDesc
         case (.size, .ascending): .sizeAsc
         case (.size, .descending): .sizeDesc
+        case (.shareCreated, .ascending): .shareCreationAsc
+        case (.shareCreated, .descending): .shareCreationDesc
+        case (.linkCreated, .ascending): .linkCreationAsc
+        case(.linkCreated, .descending): .linkCreationDesc
         }
     }
 
@@ -48,18 +52,22 @@ extension Search.SortOrderEntity {
         case (.lastModified, .descending): .modificationDesc
         case (.size, .ascending): .sizeAsc
         case (.size, .descending): .sizeDesc
+        case (.shareCreated, .ascending): .shareCreationAsc
+        case (.shareCreated, .descending): .shareCreationDesc
+        case (.linkCreated, .ascending): .linkCreationAsc
+        case (.linkCreated, .descending): .linkCreationDesc
         }
     }
 }
 
 extension MEGADomain.SortOrderEntity {
     func toSearchSortOrderEntity() -> Search.SortOrderEntity {
-        if self == .linkCreationAsc || self == .linkCreationDesc || self == .none {
-            assertionFailure("Invalid case found \(self)")
+        if self == .none {
+            MEGALogDebug("Invalid case found \(self)")
         }
 
         return switch self {
-        case .none, .defaultAsc, .linkCreationAsc, .linkCreationDesc: .init(key: .name)
+        case .none, .defaultAsc: .init(key: .name)
         case .defaultDesc: .init(key: .name, direction: .descending)
         case .sizeAsc: .init(key: .size)
         case .sizeDesc: .init(key: .size, direction: .descending)
@@ -71,6 +79,10 @@ extension MEGADomain.SortOrderEntity {
         case .labelDesc: .init(key: .label, direction: .descending)
         case .favouriteAsc: .init(key: .favourite)
         case .favouriteDesc: .init(key: .favourite, direction: .descending)
+        case .shareCreationAsc: .init(key: .shareCreated)
+        case .shareCreationDesc: .init(key: .shareCreated, direction: .descending)
+        case .linkCreationAsc: .init(key: .linkCreated)
+        case .linkCreationDesc: .init(key: .linkCreated, direction: .descending)
         }
     }
 }

@@ -2,6 +2,25 @@
 
 @class ContextMenuManager, MEGAVerticalButton, SharedItemsViewModel, SharedItemsTableViewCell, SharedItemsNodeSearcher, TaskOCWrapper;
 
+typedef NS_ENUM(NSInteger, SharedItemsViewControllerSection) {
+    /// Static sort/header row at the top (height = 50)
+    SharedItemsViewControllerSectionSortHeader = 0,
+
+    /// Rows that need attention / “unverified” (incoming & outgoing tabs only)
+    SharedItemsViewControllerSectionUnverified,
+
+    /// Main content list:
+    /// - incoming/outgoing: verified shares
+    /// - links: all public links
+    SharedItemsViewControllerSectionContent
+};
+
+typedef NS_ENUM(NSInteger, SharedItemsTabSelection) {
+    SharedItemsTabSelectionIncoming = 0,
+    SharedItemsTabSelectionOutgoing,
+    SharedItemsTabSelectionLinks
+};
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SharedItemsViewController : UIViewController
@@ -24,6 +43,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSMutableArray *selectedNodesMutableArray;
 
 @property (nonatomic) UISearchController *searchController;
+@property (nonatomic, strong, nullable) UIView *headerContainerView;
+@property (nonatomic) SharedItemsTabSelection selectedTab;
 
 @property (weak, nonatomic) IBOutlet UIView *selectorView;
 

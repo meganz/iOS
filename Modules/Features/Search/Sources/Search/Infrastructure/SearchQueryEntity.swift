@@ -37,6 +37,8 @@ public struct SortOrderEntity: Hashable, Sendable {
         case dateAdded
         case lastModified
         case size
+        case shareCreated
+        case linkCreated
     }
 
     public enum Direction: Hashable, Sendable {

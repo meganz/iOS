@@ -6,6 +6,7 @@ import MEGADesignToken
 import MEGADomain
 import MEGADomainMock
 import MEGASwift
+import Search
 import XCTest
 
 @MainActor
@@ -238,12 +239,123 @@ final class SharedItemsViewModelTests: XCTestCase {
         XCTAssertTrue(result, "files not taken down should return false")
     }
 
+    @MainActor
+    func testSortHeaderViewModel_valuePassedDuringInit_shouldMatchValues() {
+        let sortOptionsViewModel = SearchResultsSortOptionsViewModel(
+            title: "Sort by",
+            sortOptions: [
+                .init(sortOrder: .init(key: .name), title: "Name", iconsByDirection: [:]),
+                .init(sortOrder: .init(key: .name, direction: .descending), title: "Name", iconsByDirection: [:]),
+                .init(sortOrder: .init(key: .size), title: "Size", iconsByDirection: [:])
+            ]
+        )
+        let sut = makeSUT(
+            sortOptionsViewModel: sortOptionsViewModel,
+            sharedItemsView: MockSharedItemsView(currentSortOrder: .defaultAsc)
+        )
+
+        let displaySortOptionsViewModel = sut.sortHeaderViewModel.displaySortOptionsViewModel
+        XCTAssertEqual(displaySortOptionsViewModel.title, sortOptionsViewModel.title)
+        XCTAssertEqual(
+            displaySortOptionsViewModel.sortOptions.map(\.sortOrder),
+            [.init(key: .name, direction: .descending), .init(key: .size)]
+        )
+    }
+
+    @MainActor
+    func testKeysToHide_forIncomingTab_shouldHideExpectedSortOptions() {
+        let sharedItemsView = MockSharedItemsView(selectedTab: .incoming)
+        let sut = makeSUT(sharedItemsView: sharedItemsView)
+        XCTAssertEqual(sut.keysToHide, [ .linkCreated, .shareCreated])
+    }
+
+    @MainActor
+    func testKeysToHide_forOutgoingTab_shouldHideExpectedSortOptions() {
+        let sharedItemsView = MockSharedItemsView(selectedTab: .outgoing)
+        let sut = makeSUT(sharedItemsView: sharedItemsView)
+        XCTAssertEqual(sut.keysToHide, [.linkCreated])
+    }
+
+    @MainActor
+    func testKeysToHide_forLinksTab_shouldHideExpectedSortOptions() {
+        let sharedItemsView = MockSharedItemsView(selectedTab: .links)
+        let sut = makeSUT(sharedItemsView: sharedItemsView)
+        XCTAssertEqual(sut.keysToHide, [.shareCreated])
+    }
+
+    @MainActor
+    func testSetSortOrder_whenSortOrderChanged_shouldMatchTheResult() {
+        let sortOptionsViewModel = SearchResultsSortOptionsViewModel(
+            title: "Sort by",
+            sortOptions: [
+                .init(sortOrder: .init(key: .name), title: "Name", iconsByDirection: [:]),
+                .init(sortOrder: .init(key: .name, direction: .descending), title: "Name", iconsByDirection: [:]),
+                .init(sortOrder: .init(key: .size), title: "Size", iconsByDirection: [:])
+            ]
+        )
+        let sharedItemsView = MockSharedItemsView(currentSortOrder: .defaultAsc)
+        let sut = makeSUT(
+            sortOptionsViewModel: sortOptionsViewModel,
+            sharedItemsView: sharedItemsView
+        )
+        sut.setSortOrderType(.sizeAsc)
+        XCTAssertEqual(sharedItemsView.currentSortOrder, .sizeAsc)
+    }
+
+    @MainActor
+    func testUpdateSortUI_shouldHideKeys_basedOnTabs() {
+        let sortOptionsViewModel = SearchResultsSortOptionsViewModel(
+            title: "Sort by",
+            sortOptions: [
+                .init(sortOrder: .init(key: .name), title: "Name", iconsByDirection: [:]),
+                .init(sortOrder: .init(key: .name, direction: .descending), title: "Name", iconsByDirection: [:]),
+                .init(sortOrder: .init(key: .size), title: "Size", iconsByDirection: [:]),
+                .init(sortOrder: .init(key: .linkCreated), title: "Link created", iconsByDirection: [:]),
+                .init(sortOrder: .init(key: .shareCreated), title: "Share created", iconsByDirection: [:])
+            ]
+        )
+        let sharedItemsView = MockSharedItemsView(selectedTab: .incoming)
+        let sut = makeSUT(
+            sortOptionsViewModel: sortOptionsViewModel,
+            sharedItemsView: sharedItemsView
+        )
+
+        XCTAssertTrue(
+            sut.displaySortOptionsViewModel.sortOptions.map(\.sortOrder).notContains(.init(key: .linkCreated))
+        )
+        XCTAssertTrue(
+            sut.displaySortOptionsViewModel.sortOptions.map(\.sortOrder).notContains(.init(key: .shareCreated))
+        )
+
+        sharedItemsView.selectedTab = .outgoing
+        sut.updateSortUI()
+
+        XCTAssertTrue(
+            sut.displaySortOptionsViewModel.sortOptions.map(\.sortOrder).notContains(.init(key: .linkCreated))
+        )
+        XCTAssertTrue(
+            sut.displaySortOptionsViewModel.sortOptions.map(\.sortOrder).contains(.init(key: .shareCreated))
+        )
+
+        sharedItemsView.selectedTab = .links
+        sut.updateSortUI()
+
+        XCTAssertTrue(
+            sut.displaySortOptionsViewModel.sortOptions.map(\.sortOrder).contains(.init(key: .linkCreated))
+        )
+        XCTAssertTrue(
+            sut.displaySortOptionsViewModel.sortOptions.map(\.sortOrder).notContains(.init(key: .shareCreated))
+        )
+    }
+
     @MainActor private func makeSUT(
         shareUseCase: some ShareUseCaseProtocol = MockShareUseCase(),
         mediaUseCase: some MediaUseCaseProtocol = MockMediaUseCase(),
         saveMediaToPhotosUseCase: some SaveMediaToPhotosUseCaseProtocol = MockSaveMediaToPhotosUseCase(),
         nodeUseCase: some NodeUseCaseProtocol = MockNodeUseCase(),
         moveToRubbishBinViewModel: some MoveToRubbishBinViewModelProtocol = MockMoveToRubbishBinViewModel(),
+        sortOptionsViewModel: SearchResultsSortOptionsViewModel = .init(title: "", sortOptions: []),
+        sharedItemsView: some SharedItemsViewing = MockSharedItemsView(),
         file: StaticString = #filePath,
         line: UInt = #line
     ) -> SharedItemsViewModel {
@@ -252,10 +364,25 @@ final class SharedItemsViewModelTests: XCTestCase {
             mediaUseCase: mediaUseCase,
             nodeUseCase: nodeUseCase,
             saveMediaToPhotosUseCase: saveMediaToPhotosUseCase,
-            moveToRubbishBinViewModel: moveToRubbishBinViewModel
+            moveToRubbishBinViewModel: moveToRubbishBinViewModel,
+            sortOptionsViewModel: sortOptionsViewModel,
+            sharedItemsView: sharedItemsView
         )
         trackForMemoryLeaks(on: sut, file: file, line: line)
         return sut
     }
 
+}
+
+final class MockSharedItemsView: SharedItemsViewing {
+    var currentSortOrder: MEGADomain.SortOrderEntity
+    var selectedTab: SharedItemsTabSelection
+
+    init(
+        currentSortOrder: MEGADomain.SortOrderEntity = .none,
+        selectedTab: SharedItemsTabSelection = .incoming
+    ) {
+        self.currentSortOrder = currentSortOrder
+        self.selectedTab = selectedTab
+    }
 }

@@ -14,7 +14,9 @@ public enum SortOrderEntity: CaseIterable, Sendable {
     case labelDesc
     case favouriteAsc
     case favouriteDesc
-    
+    case shareCreationAsc
+    case shareCreationDesc
+
     public static let allValid: [SortOrderEntity] = [
         .defaultAsc,
         .defaultDesc,

@@ -8,8 +8,11 @@ enum SearchResultsSortOptionFactory {
         [.ascending: MEGAAssets.Image.arrowUp, .descending: MEGAAssets.Image.arrowDown]
     }
     
-    static func makeAll() -> [SearchResultsSortOption] {
-        [
+    static func makeAll(
+        includeSortByShareCreated: Bool = false,
+        includeSortByLinkCreated: Bool = false
+    ) -> [SearchResultsSortOption] {
+        var options: [SearchResultsSortOption] = [
             .init(
                 sortOrder: .init(key: .name),
                 title: Strings.Localizable.Sorting.Name.title,
@@ -71,5 +74,44 @@ enum SearchResultsSortOptionFactory {
                 iconsByDirection: iconsByDirection
             )
         ]
+
+        let insertionIndex = 6
+        if includeSortByShareCreated {
+            options.insert(
+                contentsOf: [
+                    .init(
+                        sortOrder: .init(key: .shareCreated),
+                        title: Strings.Localizable.Sorting.ShareCreated.title,
+                        iconsByDirection: iconsByDirection
+                    ),
+                    .init(
+                        sortOrder: .init(key: .shareCreated, direction: .descending),
+                        title: Strings.Localizable.Sorting.ShareCreated.title,
+                        iconsByDirection: iconsByDirection
+                    )
+                ],
+                at: insertionIndex
+            )
+        }
+
+        if includeSortByLinkCreated {
+            options.insert(
+                contentsOf: [
+                    .init(
+                        sortOrder: .init(key: .linkCreated),
+                        title: Strings.Localizable.Sorting.LinkCreated.title,
+                        iconsByDirection: iconsByDirection
+                    ),
+                    .init(
+                        sortOrder: .init(key: .linkCreated, direction: .descending),
+                        title: Strings.Localizable.Sorting.LinkCreated.title,
+                        iconsByDirection: iconsByDirection
+                    )
+                ],
+                at: insertionIndex
+            )
+        }
+
+        return options
     }
 }

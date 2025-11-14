@@ -6,6 +6,7 @@ import MEGAAssets
 import MEGADesignToken
 import MEGADomain
 import MEGAL10n
+import Search
 
 extension SharedItemsViewController: ContactsViewControllerDelegate {
     @objc func shareFolder() {
@@ -18,6 +19,11 @@ extension SharedItemsViewController: ContactsViewControllerDelegate {
 
 // MARK: - Unverified outgoing and incoming nodes
 extension SharedItemsViewController {
+    @objc func shouldShowSortingHeader(for section: Int) -> Bool {
+        section == SharedItemsViewControllerSection.sortHeader.rawValue
+        && DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .cloudDriveRevamp)
+    }
+
     @objc func createSharedItemsViewModel() -> SharedItemsViewModel {
         SharedItemsViewModel(
             shareUseCase: ShareUseCase(
@@ -38,10 +44,21 @@ extension SharedItemsViewController {
                 nodeRepository: NodeRepository.newRepo,
                 chatNodeRepository: ChatNodeRepository.newRepo,
                 downloadChatRepository: DownloadChatRepository.newRepo),
-            moveToRubbishBinViewModel: MoveToRubbishBinViewModel(presenter: self)
+            moveToRubbishBinViewModel: MoveToRubbishBinViewModel(presenter: self),
+            sortOptionsViewModel: sortOptionsViewModel,
+            sharedItemsView: self
         )
     }
-    
+
+    private var sortOptionsViewModel: SearchResultsSortOptionsViewModel {
+        .init(title: Strings.Localizable.sortTitle, sortOptions: sortOptions)
+    }
+
+    private var sortOptions: [SearchResultsSortOption] {
+        SearchResultsSortOptionFactory
+            .makeAll(includeSortByShareCreated: true, includeSortByLinkCreated: true)
+    }
+
     @objc func createNodeInfoViewModel(withNode node: MEGANode,
                                        isNodeUndecryptedFolder: Bool) -> NodeInfoViewModel {
         return NodeInfoViewModel(
@@ -246,8 +263,8 @@ extension SharedItemsViewController {
     }
     
     @objc func shareAtIndexPath(_ indexPath: IndexPath) -> MEGAShare? {
-        guard indexPath.section == 0, linksButton?.isSelected == false else { return nil }
-        
+        guard indexPath.section == SharedItemsViewControllerSection.unverified.rawValue, linksButton?.isSelected == false else { return nil }
+
         if searchController.isActive, searchUnverifiedSharesArray.count > indexPath.row {
             // Add logs to trace the cause of crash in [SAO-2729]
             return searchUnverifiedSharesArray[indexPath.row] as? MEGAShare
@@ -276,15 +293,17 @@ extension SharedItemsViewController {
             return false
         }
         
-        guard indexPath.section == 0, let share = shareAtIndexPath(indexPath) else { return false }
+        guard indexPath.section == SharedItemsViewControllerSection.unverified.rawValue, let share = shareAtIndexPath(indexPath) else {
+            return false
+        }
         return !share.isVerified
     }
     
     @objc func numberOfSections() -> Int {
         guard linksButton?.isSelected == true else {
-            return 2
+            return 3
         }
-        return 1
+        return 2
     }
     
     @objc func configNavigationBarButtonItems() {
