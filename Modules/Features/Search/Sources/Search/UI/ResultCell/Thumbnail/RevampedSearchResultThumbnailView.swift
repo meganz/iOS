@@ -1,3 +1,4 @@
+import MEGAAssets
 import MEGADesignToken
 import MEGASwiftUI
 import SwiftUI
@@ -40,6 +41,8 @@ struct RevampedSearchResultThumbnailView: View {
         static let topViewHeight = 148.0
         static let standardIconSize = 24.0
         static let bottomTrailingPropertyImageSize = 16.0
+
+        static let backgroundSurface1 = TokenColors.Background.surface1.swiftUI
     }
 
     @ObservedObject var viewModel: SearchResultRowViewModel
@@ -55,7 +58,7 @@ struct RevampedSearchResultThumbnailView: View {
             bottomInfoView
         }
         .frame(height: Constants.cellHeight)
-        .background(TokenColors.Background.surface1.swiftUI.opacity(highlighted ? 1 : 0))
+        .background(Constants.backgroundSurface1.opacity(highlighted ? 1 : 0))
         .clipped()
         .task {
             await viewModel.loadThumbnail()
@@ -71,7 +74,7 @@ struct RevampedSearchResultThumbnailView: View {
             image: viewModel.thumbnailImage,
             isThumbnailLoaded: viewModel.isThumbnailLoadedOnce,
             mode: viewModel.result.backgroundDisplayMode,
-            backgroundColor: viewModel.colorAssets.verticalThumbnailPreviewBackground,
+            backgroundColor: isSelected ? TokenColors.Background.surface2.swiftUI : viewModel.colorAssets.verticalThumbnailPreviewBackground,
             isSensitive: viewModel.isSensitive
         )
         .frame(height: Constants.topViewHeight)
@@ -149,13 +152,14 @@ struct RevampedSearchResultThumbnailView: View {
                 Spacer()
             }
             .frame(maxHeight: .infinity)
-            .clipShape(Rectangle())
+            .contentShape(Rectangle())
             .applyTapAndLongPressFromRowViewModel(viewModel, isHighlighted: $highlighted)
             trailingView
                 .frame(width: Constants.standardIconSize)
         }
         .padding(.horizontal, TokenSpacing._2)
         .frame(height: Constants.cellHeight - Constants.topViewHeight) // Needs to set the height of the bottom view in order for the 2-liner text to work
+        .background(isSelected ? Constants.backgroundSurface1 : .clear)
     }
 
     @ViewBuilder private var trailingView: some View {
@@ -166,14 +170,17 @@ struct RevampedSearchResultThumbnailView: View {
         }
     }
 
+    @ViewBuilder
     private var selectionIcon: some View {
-        Image(
-            uiImage: isSelected ?
-            viewModel.selectedCheckmarkImage :
-                viewModel.unselectedCheckmarkImage
-        )
-        .resizable()
-        .scaledToFit()
+        Image(systemName: isSelected ? "checkmark.circle.fill" : "circle")
+            .resizable()
+            .scaledToFit()
+            .foregroundStyle(
+                isSelected
+                ? TokenColors.Components.selectionControlAlt.swiftUI
+                : TokenColors.Border.strong.swiftUI
+            )
+            .background(isSelected ? Constants.backgroundSurface1 : Color.clear)
     }
 
     // hosts title and .prominent properties

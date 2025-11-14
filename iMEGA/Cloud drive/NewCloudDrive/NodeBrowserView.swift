@@ -64,31 +64,19 @@ struct NodeBrowserView: View {
         .onLoad { await viewModel.onLoadTask() }
     }
 
-    @ToolbarContentBuilder
-    private var toolbarContentEditing: some ToolbarContent {
-        ToolbarItem(placement: .topBarLeading) {
-            Button(
-                action: { viewModel.selectAll() },
-                label: { MEGAAssets.Image.selectAllItems }
-            )
-        }
-
-        ToolbarItem(placement: .topBarTrailing) {
-            Button(Strings.Localizable.cancel) { viewModel.stopEditing() }
-        }
-
-        ToolbarItem(placement: .principal) {
-            Text(viewModel.title).font(.headline)
-        }
-    }
-
     @ViewBuilder
     private var leftToolbarContent: some View {
         switch viewModel.viewState {
         case .editing:
             Button(
                 action: { viewModel.selectAll() },
-                label: { MEGAAssets.Image.selectAllItems }
+                label: {
+                    if isCloudDriveRevampEnabled {
+                        MEGAAssets.Image.checkStack.foregroundStyle(TokenColors.Icon.primary.swiftUI)
+                    } else {
+                        MEGAAssets.Image.selectAllItems
+                    }
+                }
             )
         case .regular(let leftBarButton):
             switch leftBarButton {

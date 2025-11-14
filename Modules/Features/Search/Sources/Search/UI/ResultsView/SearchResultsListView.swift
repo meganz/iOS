@@ -1,3 +1,4 @@
+import MEGADesignToken
 import SwiftUI
 struct SearchResultsListView: View {
     @ObservedObject var viewModel: SearchResultsViewModel
@@ -16,7 +17,9 @@ struct SearchResultsListView: View {
             }
         }
         .listStyle(.plain)
-        .tint(viewModel.colorAssets.checkmarkBackgroundTintColor)
+        .tint(
+            viewModel.usesRevampedLayout ? TokenColors.Components.selectionControlAlt.swiftUI : viewModel.colorAssets.checkmarkBackgroundTintColor
+        )
     }
 
     private var selectableListContent: some View {
