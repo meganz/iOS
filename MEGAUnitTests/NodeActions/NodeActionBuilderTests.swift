@@ -281,7 +281,7 @@ class NodeActionBuilderTests {
             .setIsFile(false)
             .build()
 
-        #expect(isEqual(nodeActionTypes: [.info, .favourite, .label]) == true)
+        #expect(isEqual(nodeActionTypes: [.favourite, .label]) == true)
     }
 
     // MARK: - Backup

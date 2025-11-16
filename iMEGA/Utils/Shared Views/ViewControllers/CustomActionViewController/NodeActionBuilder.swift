@@ -616,8 +616,10 @@ final class NodeActionBuilder {
         }
         
         if displayMode != .nodeInfo {
-            nodeActions.append(contentsOf: isSelectionEnabled ? [.infoAction(), .selectAction()] : [.infoAction()])
-            
+            if !isS4ContainerNode {
+                nodeActions.append(contentsOf: isSelectionEnabled ? [.infoAction(), .selectAction()] : [.infoAction()])
+            }
+
             if versionCount > 0 {
                 nodeActions.append(.viewVersionsAction(versionCount: versionCount))
             }
