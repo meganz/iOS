@@ -25,6 +25,10 @@ extension PreviewDocumentViewController {
         DownloadLinkRouter(link: linkUrl, isFolderLink: false, presenter: self).start()
     }
     
+    @objc func downloadFromFolderLink(_ nodes: [MEGANode]) {
+        DownloadLinkRouter(nodes: nodes.toNodeEntities(), isFolderLink: true, presenter: self).start()
+    }
+    
     @objc func showRemoveLinkWarning(_ node: MEGANode) {
         let router = ActionWarningViewRouter(presenter: self, nodes: [node.toNodeEntity()], actionType: .removeLink, onActionStart: {
             SVProgressHUD.show()

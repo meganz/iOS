@@ -257,6 +257,8 @@
 - (void)download {
     if (self.isLink && self.fileLink) {
         [self downloadFileLink];
+    } else if (self.isLink && self.node) {
+        [self downloadFromFolderLink:@[self.node]];
     } else if (self.chatId && self.messageId) {
         [CancellableTransferRouterOCWrapper.alloc.init downloadChatNodes:@[self.node] messageId:self.messageId chatId:self.chatId presenter:self];
     } else if (self.node != nil) {
