@@ -41,6 +41,14 @@ struct CloudDriveViewControllerNavItemsFactory {
             return node.isFolder && node.isTakenDown
         }
 
+        let isS4ContainerNode: () -> Bool = {
+            guard
+                case let .node(nodeProvider) = nodeSource,
+                let node = nodeProvider()
+            else { return false }
+            return nodeUseCase.isS4Container(node: node)
+        }
+
         let menuConfig = contextMenuConfigFactory.contextMenuConfiguration(
             parentNode: parentNode,
             nodeAccessType: accessType,
@@ -56,7 +64,8 @@ struct CloudDriveViewControllerNavItemsFactory {
             displayMode: config.displayMode?.carriedOverDisplayMode ?? .cloudDrive,
             isFromViewInFolder: config.isFromViewInFolder == true,
             isHidden: isHidden,
-            isTakenDownFolder: isTakenDownFolderNode()
+            isTakenDownFolder: isTakenDownFolderNode(),
+            isS4Container: isS4ContainerNode()
         )
 
         guard let menuConfig else { return nil }
