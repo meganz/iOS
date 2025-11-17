@@ -16,6 +16,7 @@ final class CameraUploadProgressTableViewModel: ObservableObject {
     // MARK: - Published Properties
     @Published private(set) var inProgressSnapshotUpdate: InProgressSnapshotUpdate?
     @Published private(set) var inQueueSnapshotUpdate: InQueueSnapshotUpdate?
+    @Published private(set) var isInitialLoad = true
     
     // MARK: - Private Properties
     private let cameraUploadProgressUseCase: any CameraUploadProgressUseCaseProtocol
@@ -27,7 +28,6 @@ final class CameraUploadProgressTableViewModel: ObservableObject {
     
     private var firstPageIndex: Int = 0
     private var lastPageIndex: Int = 0
-    private var isInitialLoad = true
     private var lastProcessedPageIndex: Int?
     private(set) var isPaginationInProgress = false
     private var hasHandledProgrammaticScrollNearEdge = false
@@ -56,6 +56,8 @@ final class CameraUploadProgressTableViewModel: ObservableObject {
     }
     
     func loadInitial() async {
+        defer { isInitialLoad = false }
+        
         do {
             async let inProgressFiles = cameraUploadProgressUseCase.inProgressFiles()
             async let update =  paginationManager.loadInitialPage()
@@ -80,7 +82,6 @@ final class CameraUploadProgressTableViewModel: ObservableObject {
             
             inProgressSnapshotUpdate = .initialLoad(inProgressVMs)
             applyInQueueUpdate(inQueueUpdate)
-            isInitialLoad = false
         } catch {
             MEGALogError("[\(type(of: self))] initial load failed error: \(error)")
         }

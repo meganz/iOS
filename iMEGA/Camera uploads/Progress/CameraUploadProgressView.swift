@@ -1,3 +1,4 @@
+import MEGAAssets
 import MEGADesignToken
 import MEGAL10n
 import MEGAUIComponent
@@ -9,33 +10,85 @@ struct CameraUploadProgressView: View {
     
     var body: some View {
         NavigationStack {
-            VStack(alignment: .leading, spacing: .zero) {
-                bannerView
-                
-                Text(viewModel.uploadStatus)
-                    .font(.subheadline)
-                    .foregroundStyle(TokenColors.Text.primary.swiftUI)
-                    .padding(TokenSpacing._5)
-                
-                CameraUploadProgressTableView(viewModel: viewModel.cameraUploadProgressTableViewModel)
-            }
-            .alertPhotosPermission(isPresented: $viewModel.showPhotoPermissionAlert)
-            .edgesIgnoringSafeArea(.all)
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .pageBackground()
-            .navigationTitle(Strings.Localizable.CameraUploads.Progress.Navigation.title)
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .cancellationAction) {
-                    Button { dismiss() } label: { XmarkCloseButton() }
+            contentView
+                .alertPhotosPermission(isPresented: $viewModel.showPhotoPermissionAlert)
+                .edgesIgnoringSafeArea(.all)
+                .pageBackground()
+                .navigationTitle(Strings.Localizable.CameraUploads.Progress.Navigation.title)
+                .navigationBarTitleDisplayMode(.inline)
+                .toolbar {
+                    ToolbarItem(placement: .cancellationAction) {
+                        Button { dismiss() } label: { XmarkCloseButton() }
+                    }
                 }
-            }
-            .hideNavigationToolbarBackground()
+                .hideNavigationToolbarBackground()
         }
         .pageBackground()
         .task {
             await viewModel.monitorStates()
         }
+    }
+    
+    @ViewBuilder
+    private var contentView: some View {
+        ZStack {
+            uploadingView(isLoading: viewModel.viewState == .loading)
+                .opacity(viewModel.viewState == .completed ? 0 : 1)
+                .animation(.easeInOut(duration: 0.3), value: viewModel.viewState)
+            
+            if viewModel.viewState == .completed {
+                completedView
+                    .transition(.opacity.combined(with: .scale))
+            }
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+    }
+    
+    private func uploadingView(isLoading: Bool) -> some View {
+        VStack(alignment: .leading, spacing: .zero) {
+            bannerView
+            
+            uploadStatusView(isLoading: isLoading)
+            
+            CameraUploadProgressTableView(viewModel: viewModel.cameraUploadProgressTableViewModel)
+                .overlay {
+                    if viewModel.cameraUploadProgressTableViewModel.isInitialLoad {
+                        CameraUploadProgressSkeletonView()
+                    }
+                }
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+    }
+    
+    private var completedView: some View {
+        ZStack(alignment: .top) {
+            VStack {
+                VStack(alignment: .center, spacing: TokenSpacing._7) {
+                    MEGAAssets.Image.glassCheckCircle
+                        .resizable()
+                        .frame(width: 120, height: 120)
+                    
+                    VStack(alignment: .center, spacing: TokenSpacing._5) {
+                        Text(Strings.Localizable.CameraUploads.Progress.UploadsComplete.title)
+                            .font(.title3)
+                            .fontWeight(.bold)
+                            .foregroundStyle(TokenColors.Text.primary.swiftUI)
+                        
+                        Text(Strings.Localizable.CameraUploads.Progress.UploadsComplete.subtitle)
+                            .font(.callout)
+                            .foregroundStyle(TokenColors.Text.secondary.swiftUI)
+                            .multilineTextAlignment(.center)
+                    }
+                }
+                .frame(maxWidth: 370)
+                .padding(TokenSpacing._5)
+                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+            }
+            
+            bannerView
+                .frame(maxWidth: .infinity)
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
     
     @ViewBuilder
@@ -48,5 +101,20 @@ struct CameraUploadProgressView: View {
                 state: bannerViewModel.state,
                 buttonAction: bannerViewModel.buttonViewModel?.action)
         }
+    }
+    
+    private func uploadStatusView(isLoading: Bool) -> some View {
+        Text(viewModel.uploadStatus)
+            .font(.subheadline)
+            .foregroundStyle(TokenColors.Text.primary.swiftUI)
+            .padding(TokenSpacing._5)
+            .overlay(alignment: .leading) {
+                if isLoading {
+                    RoundedRectangle(cornerRadius: TokenRadius.medium, style: .continuous)
+                        .frame(width: 120, height: 20)
+                        .shimmering()
+                        .padding(TokenSpacing._5)
+                }
+            }
     }
 }

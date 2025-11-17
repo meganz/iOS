@@ -56,6 +56,7 @@
 		0E3B1A4E2A1DBFC400EC5859 /* GetLinkStringCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E3B1A4D2A1DBFC400EC5859 /* GetLinkStringCellViewModel.swift */; };
 		0E3B1A502A1DC0EF00EC5859 /* GetLinkStringTableViewCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E3B1A4F2A1DC0EF00EC5859 /* GetLinkStringTableViewCellTests.swift */; };
 		0E3B1A542A1DCDF100EC5859 /* GetLinkSectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E3B1A532A1DCDF100EC5859 /* GetLinkSectionViewModel.swift */; };
+		0E3DE2AB2EC668FB00821E05 /* CameraUploadProgressSkeletonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E3DE2AA2EC668FB00821E05 /* CameraUploadProgressSkeletonView.swift */; };
 		0E3E07A12A1EA5D200A2A71B /* GetCollectionLinkViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E3E07A02A1EA5D200A2A71B /* GetCollectionLinkViewModel.swift */; };
 		0E3E07A32A1EA6C700A2A71B /* GetCollectionLinkViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E3E07A22A1EA6C600A2A71B /* GetCollectionLinkViewModelTests.swift */; };
 		0E3E07A92A1EB67B00A2A71B /* ShareAlbumLinkInitialSections.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E3E07A82A1EB67B00A2A71B /* ShareAlbumLinkInitialSections.swift */; };
@@ -85,6 +86,7 @@
 		0E5F5EAD2C6EAFC40037A99C /* HiddenFilesFoldersOnboardingViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E5F5EAC2C6EAFC40037A99C /* HiddenFilesFoldersOnboardingViewModelTests.swift */; };
 		0E5F5EB02C6EB9050037A99C /* Preview_AnalyticsTracking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E5F5EAF2C6EB9050037A99C /* Preview_AnalyticsTracking.swift */; };
 		0E5F863D2E38859D000BE8CA /* LocalNotificationId.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E5F863B2E38859D000BE8CA /* LocalNotificationId.swift */; };
+		0E60B8C62EC54E3B00F16EAB /* CameraUploadProgressEmptyRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E60B8C52EC54E3B00F16EAB /* CameraUploadProgressEmptyRowView.swift */; };
 		0E639DA72CB7278A0069BFA2 /* Preview_SensitiveDisplayPreferenceUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E639DA62CB727880069BFA2 /* Preview_SensitiveDisplayPreferenceUseCase.swift */; };
 		0E6607C22C74231D00958FA6 /* DefaultNodeActionAccessoryDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E6607C12C74231D00958FA6 /* DefaultNodeActionAccessoryDelegate.swift */; };
 		0E69C0E92DC8313E00E473B7 /* CreateAccountRoutingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E69C0E82DC8313E00E473B7 /* CreateAccountRoutingViewModel.swift */; };
@@ -2820,6 +2822,7 @@
 		0E3B1A4D2A1DBFC400EC5859 /* GetLinkStringCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetLinkStringCellViewModel.swift; sourceTree = "<group>"; };
 		0E3B1A4F2A1DC0EF00EC5859 /* GetLinkStringTableViewCellTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetLinkStringTableViewCellTests.swift; sourceTree = "<group>"; };
 		0E3B1A532A1DCDF100EC5859 /* GetLinkSectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetLinkSectionViewModel.swift; sourceTree = "<group>"; };
+		0E3DE2AA2EC668FB00821E05 /* CameraUploadProgressSkeletonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraUploadProgressSkeletonView.swift; sourceTree = "<group>"; };
 		0E3E07A02A1EA5D200A2A71B /* GetCollectionLinkViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetCollectionLinkViewModel.swift; sourceTree = "<group>"; };
 		0E3E07A22A1EA6C600A2A71B /* GetCollectionLinkViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetCollectionLinkViewModelTests.swift; sourceTree = "<group>"; };
 		0E3E07A82A1EB67B00A2A71B /* ShareAlbumLinkInitialSections.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareAlbumLinkInitialSections.swift; sourceTree = "<group>"; };
@@ -2849,6 +2852,7 @@
 		0E5F5EAC2C6EAFC40037A99C /* HiddenFilesFoldersOnboardingViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HiddenFilesFoldersOnboardingViewModelTests.swift; sourceTree = "<group>"; };
 		0E5F5EAF2C6EB9050037A99C /* Preview_AnalyticsTracking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preview_AnalyticsTracking.swift; sourceTree = "<group>"; };
 		0E5F863B2E38859D000BE8CA /* LocalNotificationId.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNotificationId.swift; sourceTree = "<group>"; };
+		0E60B8C52EC54E3B00F16EAB /* CameraUploadProgressEmptyRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraUploadProgressEmptyRowView.swift; sourceTree = "<group>"; };
 		0E639DA62CB727880069BFA2 /* Preview_SensitiveDisplayPreferenceUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preview_SensitiveDisplayPreferenceUseCase.swift; sourceTree = "<group>"; };
 		0E6607C12C74231D00958FA6 /* DefaultNodeActionAccessoryDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultNodeActionAccessoryDelegate.swift; sourceTree = "<group>"; };
 		0E69C0E82DC8313E00E473B7 /* CreateAccountRoutingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAccountRoutingViewModel.swift; sourceTree = "<group>"; };
@@ -5733,8 +5737,10 @@
 				0EB608BF2EA9D7F500FDC5DB /* InQueue */,
 				0EE6B44C2EAAF2C4000958DB /* CameraUploadPaginationManager.swift */,
 				0EC69C422EA71E6B004E9601 /* CameraUploadProgressDiffableDatasource.swift */,
+				0E60B8C52EC54E3B00F16EAB /* CameraUploadProgressEmptyRowView.swift */,
 				0EC69BCC2EA6CDF6004E9601 /* CameraUploadProgressRouter.swift */,
 				0EC69BE02EA6E05C004E9601 /* CameraUploadProgressSectionHeaderView.swift */,
+				0E3DE2AA2EC668FB00821E05 /* CameraUploadProgressSkeletonView.swift */,
 				0EC69C102EA710AD004E9601 /* CameraUploadProgressTableView.swift */,
 				0EC69BDB2EA6DB3D004E9601 /* CameraUploadProgressTableViewController.swift */,
 				0E31E9752EA08E6A002F7EC3 /* CameraUploadProgressTableViewModel.swift */,
@@ -14487,8 +14493,10 @@
 				0EE6B44D2EAAF2C7000958DB /* CameraUploadPaginationManager.swift in Sources */,
 				0E0A24DA2E24D17000F687D3 /* CameraUploadPausedReasonEntity+Mapper.swift in Sources */,
 				0EC69C452EA71E83004E9601 /* CameraUploadProgressDiffableDatasource.swift in Sources */,
+				0E60B8C62EC54E3B00F16EAB /* CameraUploadProgressEmptyRowView.swift in Sources */,
 				0EC69BCD2EA6CDF8004E9601 /* CameraUploadProgressRouter.swift in Sources */,
 				0EC69BE12EA6E05C004E9601 /* CameraUploadProgressSectionHeaderView.swift in Sources */,
+				0E3DE2AB2EC668FB00821E05 /* CameraUploadProgressSkeletonView.swift in Sources */,
 				0EC69C112EA710AF004E9601 /* CameraUploadProgressTableView.swift in Sources */,
 				0EC69BDC2EA6DB43004E9601 /* CameraUploadProgressTableViewController.swift in Sources */,
 				0E31E9802EA08E6A002F7EC3 /* CameraUploadProgressTableViewModel.swift in Sources */,

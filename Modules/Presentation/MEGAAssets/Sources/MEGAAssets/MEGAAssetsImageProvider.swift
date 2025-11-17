@@ -284,6 +284,7 @@ extension MEGAAssets {
         public static var glassVideo: SwiftUI.Image { MEGAImageBundle.glassVideo }
         public static var glassNoCloud: SwiftUI.Image { MEGAImageBundle.glassNoCloud }
         public static var glassClock: SwiftUI.Image { MEGAImageBundle.glassClock }
+        public static var glassCheckCircle: SwiftUI.Image { MEGAImageBundle.glassCheckCircle }
     }
 }
 
@@ -720,5 +721,6 @@ extension MEGAAssets {
         public static var glassShareIn: UIKit.UIImage { MEGAUIImageBundle.glassShareIn }
         public static var glassShareOut: UIKit.UIImage { MEGAUIImageBundle.glassShareOut }
         public static var glassLink: UIKit.UIImage { MEGAUIImageBundle.glassLink }
+        public static var glassCheckCircle: UIKit.UIImage { MEGAUIImageBundle.glassCheckCircle }
     }
 }

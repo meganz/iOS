@@ -266,4 +266,5 @@ public struct MEGAImageBundle {
     public static var glassVideo: Image { Image(.glassVideo) }
     public static var glassNoCloud: Image { Image(.glassNoCloud) }
     public static var glassClock: Image { Image(.glassClock) }
+    public static var glassCheckCircle: Image { Image(.glassCheckCircle) }
 }

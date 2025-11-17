@@ -434,4 +434,5 @@ public struct MEGAUIImageBundle {
     public static var glassShareIn: UIImage { UIImage.glassShareIn }
     public static var glassShareOut: UIImage { UIImage.glassShareOut }
     public static var glassLink: UIImage { UIImage.glassLink }
+    public static var glassCheckCircle: UIImage { UIImage.glassCheckCircle }
 }

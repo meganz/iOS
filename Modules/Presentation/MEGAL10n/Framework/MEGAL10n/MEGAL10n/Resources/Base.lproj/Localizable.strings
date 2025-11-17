@@ -4800,3 +4800,11 @@
 "cameraUploads.progress.banner.limitedAccess.subtitle"="To ensure we don’t miss all your memories, MEGA needs full access to your photo library.";
 /* Camera Uploads Banner Limited Access Button Title */
 "cameraUploads.progress.banner.limitedAccess.button.title"="Update permissions";
+/* Camera Uploads Progress Uploads Complete Title */
+"cameraUploads.progress.uploadsComplete.title"="All caught up";
+/* Camera Uploads Progress Uploads Complete Subtitle */
+"cameraUploads.progress.uploadsComplete.subtitle"="New photos and videos will show here after you take them.";
+/* Camera Uploads Empty In Progress Row title */
+"cameraUploads.progress.row.emptyInProgress.title"="Items in progress will appear here";
+/* Camera Uploads Empty In Queue Row title */
+"cameraUploads.progress.row.emptyInQueue.title"="Items in the queue will appear here";

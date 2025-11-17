@@ -1940,6 +1940,12 @@ public enum Strings {
           public static func fileProgress(_ p1: Any, _ p2: Any) -> Swift.String
           public static func uploadProgressFormat(_ p1: Any, _ p2: Any, _ p3: Any) -> Swift.String
           public static func uploadSpeed(_ p1: Any) -> Swift.String
+          public enum EmptyInProgress {
+            public static let title: Swift.String
+          }
+          public enum EmptyInQueue {
+            public static let title: Swift.String
+          }
         }
         public enum Section {
           public enum InProgress {
@@ -1951,6 +1957,10 @@ public enum Strings {
         }
         public enum Uploading {
           public static func items(_ p1: Swift.Int) -> Swift.String
+        }
+        public enum UploadsComplete {
+          public static let subtitle: Swift.String
+          public static let title: Swift.String
         }
       }
       public enum Timeline {

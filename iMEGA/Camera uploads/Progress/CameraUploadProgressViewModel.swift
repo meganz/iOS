@@ -8,6 +8,11 @@ import MEGAUIComponent
 
 @MainActor
 final class CameraUploadProgressViewModel: ObservableObject {
+    enum ViewState: Equatable {
+        case loading
+        case loaded
+        case completed
+    }
     struct BannerViewModel {
         let title: String?
         let subtitle: String
@@ -19,6 +24,7 @@ final class CameraUploadProgressViewModel: ObservableObject {
             let action: () -> Void
         }
     }
+    @Published private(set) var viewState: ViewState = .loading
     @Published private(set) var bannerViewModel: BannerViewModel?
     @Published private(set) var uploadStatus = ""
     @Published private(set) var cameraUploadProgressTableViewModel: CameraUploadProgressTableViewModel
@@ -62,6 +68,9 @@ final class CameraUploadProgressViewModel: ObservableObject {
     func monitorStates() async {
         for await (cameraUploadState, storageState) in combineLatest(monitorCameraUploadUseCase.cameraUploadState, storageState()) {
             let pendingFilesCount = cameraUploadState.stats.pendingFilesCount
+            
+            updateViewState(pendingFilesCount: pendingFilesCount)
+            
             let pausedReason = cameraUploadState.pausedReason
             let format = if pausedReason != nil {
                 Strings.localized("cameraUploads.progress.paused.items", comment: "")
@@ -105,6 +114,12 @@ final class CameraUploadProgressViewModel: ObservableObject {
     
     private func hasLimitedLibraryAccess() -> Bool {
         devicePermissionHandler.photoLibraryAuthorizationStatus == .limited
+    }
+    
+    private func updateViewState(pendingFilesCount: UInt) {
+        let newState: ViewState = pendingFilesCount == 0 ? .completed : .loaded
+        guard newState != viewState else { return }
+        viewState = newState
     }
 }
 

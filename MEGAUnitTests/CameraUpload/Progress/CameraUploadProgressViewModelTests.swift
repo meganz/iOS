@@ -36,10 +36,13 @@ struct CameraUploadProgressViewModelTests {
                 monitorCameraUploadUseCase: monitorCameraUploadUseCase,
                 accountStorageUseCase: accountStorageUseCase)
             
+            #expect(sut.viewState == .loading)
+            
             await performAsyncTestOnMonitorStates(sut: sut, publisher: sut.$uploadStatus) {
                 #expect($0 == CameraUploadProgressViewModelTests.uploadStatus(
                     pendingFilesCount: uploadStats.pendingFilesCount,
                     isPaused: pausedReason != nil))
+                #expect(sut.viewState == .loaded)
             }
         }
         
@@ -165,6 +168,7 @@ struct CameraUploadProgressViewModelTests {
                 )
                 bannerViewModel?.buttonViewModel?.action()
                 #expect(sut.showPhotoPermissionAlert)
+                #expect(sut.viewState == .completed)
             }
         }
         

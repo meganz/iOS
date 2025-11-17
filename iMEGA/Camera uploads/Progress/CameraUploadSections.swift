@@ -15,4 +15,6 @@ enum CameraUploadProgressSections: Int, Sendable, Hashable {
 enum CameraUploadProgressSectionRow: Hashable, Equatable {
     case inProgress(CameraUploadInProgressRowViewModel)
     case inQueue(CameraUploadInQueueRowViewModel)
+    case emptyInProgress
+    case emptyInQueue
 }

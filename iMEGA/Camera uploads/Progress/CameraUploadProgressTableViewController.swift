@@ -1,10 +1,17 @@
 import Combine
 import MEGADesignToken
+import MEGAL10n
 import MEGASwiftUI
 import SwiftUI
 import UIKit
 
 final class CameraUploadProgressTableViewController: UITableViewController {
+    private enum ReuseIdentifiers {
+        static let inProgressRow = "CameraUploadInProgressRowView"
+        static let inQueueRow = "CameraUploadInQueueRowView"
+        static let emptyInProgressRow = "EmptyInProgressRowView"
+        static let emptyInQueueRow = "EmptyInQueueRowView"
+    }
     private var dataSource: CameraUploadProgressDiffableDatasource?
     private let viewModel: CameraUploadProgressTableViewModel
     private var cancellables = Set<AnyCancellable>()
@@ -68,9 +75,12 @@ final class CameraUploadProgressTableViewController: UITableViewController {
         tableView.sectionHeaderTopPadding = 0
         tableView.backgroundColor = TokenColors.Background.page
         tableView.showsVerticalScrollIndicator = false
+        tableView.allowsSelection = false
         
-        tableView.register(HostingTableViewCell<CameraUploadInProgressRowView>.self, forCellReuseIdentifier: "CameraUploadInProgressRowView")
-        tableView.register(HostingTableViewCell<CameraUploadInQueueRowView>.self, forCellReuseIdentifier: "CameraUploadInQueueRowView")
+        tableView.register(HostingTableViewCell<CameraUploadInProgressRowView>.self, forCellReuseIdentifier: ReuseIdentifiers.inProgressRow)
+        tableView.register(HostingTableViewCell<CameraUploadInQueueRowView>.self, forCellReuseIdentifier: ReuseIdentifiers.inQueueRow)
+        tableView.register(HostingTableViewCell<CameraUploadProgressEmptyRowView>.self, forCellReuseIdentifier: ReuseIdentifiers.emptyInProgressRow)
+        tableView.register(HostingTableViewCell<CameraUploadProgressEmptyRowView>.self, forCellReuseIdentifier: ReuseIdentifiers.emptyInQueueRow)
         
         tableView.rowHeight = viewModel.rowHeight
         tableView.estimatedRowHeight = viewModel.rowHeight
@@ -85,7 +95,7 @@ final class CameraUploadProgressTableViewController: UITableViewController {
             cellProvider: { (tableView: UITableView, indexPath: IndexPath, row: CameraUploadProgressSectionRow) -> UITableViewCell in
                 switch row {
                 case .inProgress(let cameraUploadInProgressRowViewModel):
-                    let cell = tableView.dequeueReusableCell(withIdentifier: "CameraUploadInProgressRowView", for: indexPath)
+                    let cell = tableView.dequeueReusableCell(withIdentifier: ReuseIdentifiers.inProgressRow, for: indexPath)
                     
                     cell.contentConfiguration = UIHostingConfiguration {
                         CameraUploadInProgressRowView(viewModel: cameraUploadInProgressRowViewModel)
@@ -94,10 +104,30 @@ final class CameraUploadProgressTableViewController: UITableViewController {
                     
                     return cell
                 case .inQueue(let cameraUploadInQueueRowViewModel):
-                    let cell = tableView.dequeueReusableCell(withIdentifier: "CameraUploadInQueueRowView", for: indexPath)
+                    let cell = tableView.dequeueReusableCell(withIdentifier: ReuseIdentifiers.inQueueRow, for: indexPath)
                     
                     cell.contentConfiguration = UIHostingConfiguration {
                         CameraUploadInQueueRowView(viewModel: cameraUploadInQueueRowViewModel)
+                    }
+                    .margins(.all, 0)
+                    
+                    return cell
+                case .emptyInProgress:
+                    let cell = tableView.dequeueReusableCell(withIdentifier: ReuseIdentifiers.emptyInProgressRow, for: indexPath)
+                    
+                    cell.contentConfiguration = UIHostingConfiguration {
+                        CameraUploadProgressEmptyRowView(
+                            title: Strings.Localizable.CameraUploads.Progress.Row.EmptyInProgress.title)
+                    }
+                    .margins(.all, 0)
+                    
+                    return cell
+                case .emptyInQueue:
+                    let cell = tableView.dequeueReusableCell(withIdentifier: ReuseIdentifiers.emptyInQueueRow, for: indexPath)
+                    
+                    cell.contentConfiguration = UIHostingConfiguration {
+                        CameraUploadProgressEmptyRowView(
+                            title: Strings.Localizable.CameraUploads.Progress.Row.EmptyInQueue.title)
                     }
                     .margins(.all, 0)
                     

@@ -29,6 +29,7 @@ struct CameraUploadProgressTableViewModelTests {
             photoLibraryThumbnailUseCase: photoLibraryThumbnailUseCase,
             paginationManager: paginationManager
         )
+        #expect(sut.isInitialLoad)
         
         await sut.loadInitial()
         
@@ -43,6 +44,8 @@ struct CameraUploadProgressTableViewModelTests {
             photoLibraryThumbnailUseCase: photoLibraryThumbnailUseCase,
             thumbnailSize: thumbnailSize)]))
         #expect(photoLibraryThumbnailUseCase.invocations == [.startCaching(identifiers: [assetIdentifier, inQueueAssetIdentifier], targetSize: thumbnailSize)])
+        
+        #expect(sut.isInitialLoad == false)
     }
     
     @MainActor
