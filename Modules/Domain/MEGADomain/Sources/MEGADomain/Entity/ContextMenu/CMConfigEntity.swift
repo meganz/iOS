@@ -92,6 +92,7 @@ public struct CMConfigEntity: Sendable {
     public var isPlaylistSharingFeatureFlagEnabled: Bool
     public var isTakenDown: Bool
     public var isDecrypted: Bool = true
+    public var isS4Container: Bool = false
 
     public init(
         menuType: CMElementTypeEntity,
@@ -141,7 +142,8 @@ public struct CMConfigEntity: Sendable {
         isCameraUploadsEnabled: Bool = false,
         isPlaylistSharingFeatureFlagEnabled: Bool = false,
         isTakenDown: Bool = false,
-        isDecrypted: Bool = true
+        isDecrypted: Bool = true,
+        isS4Container: Bool = false
     ) {
         self.menuType = menuType
         self.viewMode = viewMode
@@ -191,5 +193,6 @@ public struct CMConfigEntity: Sendable {
         self.isPlaylistSharingFeatureFlagEnabled = isPlaylistSharingFeatureFlagEnabled
         self.isTakenDown = isTakenDown
         self.isDecrypted = isDecrypted
+        self.isS4Container = isS4Container
     }
 }

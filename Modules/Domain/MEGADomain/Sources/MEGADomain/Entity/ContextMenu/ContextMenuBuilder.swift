@@ -45,6 +45,7 @@ public final class ContextMenuBuilder {
     private var isVideoPlaylistSharingFeatureFlagEnabled: Bool = false
     private var isTakenDown: Bool = false
     private var isDecrypted: Bool = true
+    private var isS4Container: Bool = false
 
     public init() {}
     
@@ -277,7 +278,12 @@ public final class ContextMenuBuilder {
         self.isDecrypted = isDecrypted
         return self
     }
-    
+
+    public func setIsS4Container(_ isS4Container: Bool) -> ContextMenuBuilder {
+        self.isS4Container = isS4Container
+        return self
+    }
+
     public func build() -> CMEntity? {
         /// It is only allowed to build menu type elements. The other elements refer to the actions that a menu contains, and that cannot be constructed if not inside a menu.
         if case let .menu(type) = menuType {
@@ -445,6 +451,8 @@ public final class ContextMenuBuilder {
         if isAFolder && !isRubbishBinFolder && !isBackupsRootNode {
             if isTakenDown {
                 displayActionsMenuChildren.append(makeTakenDownFolderQuickActions())
+            } else if isS4Container {
+                displayActionsMenuChildren.append(makeS4ContainerQuickActions())
             } else {
                 displayActionsMenuChildren.append(makeQuickActions())
             }
@@ -512,7 +520,13 @@ public final class ContextMenuBuilder {
         return CMEntity(displayInline: true,
                         children: quickActions)
     }
-    
+
+    private func makeS4ContainerQuickActions() -> CMEntity {
+        let quickActions: [CMElement] = isHidden == true ? [unhide] : [hide]
+        return CMEntity(displayInline: true,
+                        children: quickActions)
+    }
+
     private func makeTakenDownFolderQuickActions() -> CMEntity {
         CMEntity(displayInline: true,
                  children: [info, dispute, rename])

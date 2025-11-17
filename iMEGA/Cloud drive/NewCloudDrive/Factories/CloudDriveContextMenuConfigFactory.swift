@@ -19,7 +19,8 @@ struct CloudDriveContextMenuConfigFactory {
         displayMode: DisplayMode,
         isFromViewInFolder: Bool,
         isHidden: Bool?,
-        isTakenDownFolder: Bool
+        isTakenDownFolder: Bool,
+        isS4Container: Bool = false
     ) -> CMConfigEntity? {
         
         guard
@@ -57,7 +58,8 @@ struct CloudDriveContextMenuConfigFactory {
             displayMode: displayMode,
             isFromViewInFolder: isFromViewInFolder,
             isHidden: isHidden,
-            isTakenDownFolder: isTakenDownFolder
+            isTakenDownFolder: isTakenDownFolder,
+            isS4Container: isS4Container
         )
     }
     
@@ -92,7 +94,8 @@ struct CloudDriveContextMenuConfigFactory {
         displayMode: DisplayMode,
         isFromViewInFolder: Bool,
         isHidden: Bool?,
-        isTakenDownFolder: Bool
+        isTakenDownFolder: Bool,
+        isS4Container: Bool
     ) -> CMConfigEntity {
         .init(
             menuType: .menu(type: .display),
@@ -108,7 +111,8 @@ struct CloudDriveContextMenuConfigFactory {
             isExported: parentNode.isExported,
             showMediaDiscovery: showMediaDiscovery,
             isHidden: isHidden,
-            isTakenDown: isTakenDownFolder
+            isTakenDown: isTakenDownFolder,
+            isS4Container: isS4Container
         )
     }
     

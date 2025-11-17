@@ -35,6 +35,11 @@ final class CloudDriveContextMenuConfigFactoryTests: XCTestCase {
         assertContextMenuConfiguration(withHideOption: false)
     }
 
+    func testContextMenuConfiguration_withIsS4ContainerOptions_shouldMatchResults() {
+        assertContextMenuConfiguration(withIsS4ContainerOption: true)
+        assertContextMenuConfiguration(withIsS4ContainerOption: false)
+    }
+
     // MARK: - Private methods.
 
     private typealias SUT = CloudDriveContextMenuConfigFactory
@@ -97,4 +102,26 @@ final class CloudDriveContextMenuConfigFactoryTests: XCTestCase {
         XCTAssertEqual(result?.isHidden, hidden, file: file, line: line)
     }
 
+    private func assertContextMenuConfiguration(
+        withIsS4ContainerOption isS4Container: Bool,
+        file: StaticString = #filePath,
+        line: UInt = #line
+    ) {
+        let sut = makeSUT()
+        let result = sut.contextMenuConfiguration(
+            parentNode: NodeEntity(),
+            nodeAccessType: .readWrite,
+            currentViewMode: .list,
+            isSelectionHidden: false,
+            showMediaDiscovery: false,
+            sortOrder: .none,
+            displayMode: .cloudDrive,
+            isFromViewInFolder: false,
+            isHidden: false,
+            isTakenDownFolder: false,
+            isS4Container: isS4Container
+        )
+
+        XCTAssertEqual(result?.isS4Container, isS4Container, file: file, line: line)
+    }
 }
