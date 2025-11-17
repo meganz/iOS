@@ -436,12 +436,16 @@ struct SearchResultsContainerViewModelTests {
 
     @Test
     func testSelectedSortOption_whenInvoked_shouldUpdateSortHeaderViewModel() async throws {
+        let iconsByDirection: [SortOrderEntity.Direction: Image] =  [
+            .ascending: Image(systemName: "plus"),
+            .descending: Image(systemName: "minus")
+        ]
         let sut = makeSUT(
             sortOptionsViewModel: .init(
                 title: "Sort by",
                 sortOptions: [
-                    .init(sortOrder: .init(key: .name), title: "Name", iconsByDirection: [:]),
-                    .init(sortOrder: .init(key: .name, direction: .descending), title: "Name", iconsByDirection: [:])
+                    .init(sortOrder: .init(key: .name), title: "Name", iconsByDirection: iconsByDirection),
+                    .init(sortOrder: .init(key: .name, direction: .descending), title: "Name", iconsByDirection: iconsByDirection)
                 ]
             )
         )
@@ -460,6 +464,7 @@ struct SearchResultsContainerViewModelTests {
         #expect(sut.sortHeaderViewModel.showSortSheet == false)
         #expect(sut.sortHeaderViewModel.selectedOption.title == selectedSortOption.title)
         #expect(sut.sortHeaderViewModel.selectedOption.sortOrder == selectedSortOption.sortOrder)
+        #expect(sut.sortHeaderViewModel.selectedOption.currentDirectionIcon == Image(systemName: "minus"))
         #expect(sut.displaySortOptionsViewModel.sortOptions.map(\.sortOrder).notContains(expectedSortOrder))
     }
 

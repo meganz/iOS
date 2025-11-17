@@ -30,8 +30,14 @@ public class SearchResultsContainerViewModel: ObservableObject {
             guard sortOption.sortOrder.direction != .descending else { return nil }
             return sortOption.removeIcon()
         }
-        return sortOptionsViewModel.makeNewViewModel(with: displaySortOptions) { [weak self] option in
-            guard let self else { return }
+        return sortOptionsViewModel.makeNewViewModel(with: displaySortOptions) { [weak self] in
+            // Selection is sort option already but it might not contain the icon.
+            // So need to get the original sort option which contains the icon.
+            guard let self,
+                  let option = $0.currentDirectionIcon == nil ? sortOption(for: $0.sortOrder) : $0 else {
+                return
+            }
+
             selectedSortOption(option)
         }
     }
@@ -227,6 +233,12 @@ public class SearchResultsContainerViewModel: ObservableObject {
 
     private static func validated(_ preferred: SearchResultsViewMode, in modes: [SearchResultsViewMode]) -> SearchResultsViewMode {
         modes.contains(preferred) ? preferred : (modes.contains(.list) ? .list : modes.first ?? preferred)
+    }
+
+    private func sortOption(for sortOrder: Search.SortOrderEntity) -> SearchResultsSortOption? {
+        sortOptionsViewModel
+            .sortOptions
+            .first(where: { $0.sortOrder == sortOrder })
     }
 
     // create new query by deselecting previously selected chips

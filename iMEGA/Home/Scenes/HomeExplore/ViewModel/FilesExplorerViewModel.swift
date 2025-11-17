@@ -98,7 +98,14 @@ final class FilesExplorerViewModel: ViewModelType {
             return sortOption.removeIcon()
         }
         return sortOptionsViewModel.makeNewViewModel(with: displaySortOptions) { [weak self] in
-            self?.handleSelectedSortOption($0)
+            // Selection is sort option already but it might not contain the icon.
+            // So need to get the original sort option which contains the icon.
+            guard let self,
+                  let option = $0.currentDirectionIcon == nil ? sortOption(for: $0.sortOrder) : $0 else {
+                return
+            }
+
+            handleSelectedSortOption(option)
         }
     }
 
@@ -278,6 +285,12 @@ final class FilesExplorerViewModel: ViewModelType {
         sortHeaderViewModel.selectionChanged(to: sortOption)
         sortHeaderViewModel.displaySortOptionsViewModel = displaySortOptionsViewModel
         invokeCommand?(.sortTypeHasChanged)
+    }
+
+    private func sortOption(for sortOrder: Search.SortOrderEntity) -> SearchResultsSortOption? {
+        sortOptionsViewModel
+            .sortOptions
+            .first(where: { $0.sortOrder == sortOrder })
     }
 
     func getExplorerType() -> ExplorerTypeEntity {
