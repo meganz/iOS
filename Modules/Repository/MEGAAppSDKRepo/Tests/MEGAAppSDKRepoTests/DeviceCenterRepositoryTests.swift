@@ -5,6 +5,9 @@ import MEGASdk
 import XCTest
 
 final class DeviceCenterRepositoryTests: XCTestCase {
+    let defaultDeviceId = "1234"
+    let defaultBackupId = 1
+    let defaultRootHandle: HandleEntity = 1
     
     func testFetchDevices_successfullyRetrievedDevices_shouldReturnArrayOfDevices() async {
         let id1 = "1234"
@@ -37,7 +40,7 @@ final class DeviceCenterRepositoryTests: XCTestCase {
     func testRetrieveDevices_emptyDeviceList_shouldReturnEmptyArray() async {
         let mockSdk = MockSdk()
         let repository = DeviceCenterRepository(sdk: mockSdk)
-
+        
         let devices = await repository.fetchUserDevices()
         XCTAssertTrue(devices.isEmpty)
     }
@@ -139,6 +142,102 @@ final class DeviceCenterRepositoryTests: XCTestCase {
         XCTAssertNil(repository.loadCurrentDeviceId())
     }
     
+    func testFetchDevices_duplicateBackupsWithSameIdentity_shouldKeepNewestTimestampBackup() async throws {
+        let earlierTimestamp = Date(timeIntervalSinceNow: -60)
+        let latestTimestamp = Date()
+        
+        let backups = [
+            makeBackupInfo(
+                identifier: defaultBackupId,
+                deviceId: defaultDeviceId,
+                rootHandle: defaultRootHandle,
+                timestamp: earlierTimestamp
+            ),
+            makeBackupInfo(
+                identifier: defaultBackupId,
+                deviceId: defaultDeviceId,
+                rootHandle: defaultRootHandle,
+                timestamp: latestTimestamp
+            )
+        ]
+        
+        let repository = makeSUT(
+            deviceId: defaultDeviceId,
+            deviceName: "device1",
+            nodes: [MockNode(handle: 1)],
+            backupInfoList: backups
+        )
+        
+        let devices = await repository.fetchUserDevices()
+        
+        XCTAssertEqual(devices.count, 1)
+        
+        let device = try XCTUnwrap(devices.first)
+        let deduplicatedBackups = try XCTUnwrap(device.backups, "Expected device to contain backups")
+        
+        XCTAssertEqual(deduplicatedBackups.count, 1, "Expected only one backup after deduplication")
+        XCTAssertEqual(deduplicatedBackups.first?.timestamp, latestTimestamp)
+    }
+    
+    func testFetchDevices_duplicateBackupsWithNewestTimestampFirst_shouldKeepNewestTimestampBackup() async throws {
+        let earlierTimestamp = Date(timeIntervalSinceNow: -120)
+        let latestTimestamp = Date(timeIntervalSinceNow: -60)
+        
+        let backups = [
+            makeBackupInfo(
+                identifier: defaultBackupId,
+                deviceId: defaultDeviceId,
+                rootHandle: defaultRootHandle,
+                timestamp: latestTimestamp
+            ),
+            makeBackupInfo(
+                identifier: defaultBackupId,
+                deviceId: defaultDeviceId,
+                rootHandle: defaultRootHandle,
+                timestamp: earlierTimestamp
+            )
+        ]
+        
+        let repository = makeSUT(
+            deviceId: defaultDeviceId,
+            deviceName: "device1",
+            nodes: [MockNode(handle: 1)],
+            backupInfoList: backups
+        )
+        
+        let devices = await repository.fetchUserDevices()
+        
+        XCTAssertEqual(devices.count, 1)
+        
+        let device = try XCTUnwrap(devices.first)
+        let deduplicatedBackups = try XCTUnwrap(device.backups, "Expected device to contain backups")
+        
+        XCTAssertEqual(deduplicatedBackups.count, 1, "Expected only one backup after deduplication")
+        XCTAssertEqual(deduplicatedBackups.first?.timestamp, latestTimestamp)
+    }
+    
+    func testFetchDevices_backupWithoutAssociatedNode_shouldNotBeReturned() async {
+        let backups = [
+            makeBackupInfo(
+                identifier: defaultBackupId,
+                deviceId: defaultDeviceId,
+                rootHandle: defaultRootHandle,
+                timestamp: Date()
+            )
+        ]
+        
+        let repository = makeSUT(
+            deviceId: defaultDeviceId,
+            deviceName: "device1",
+            nodes: [],
+            backupInfoList: backups
+        )
+        
+        let devices = await repository.fetchUserDevices()
+        
+        XCTAssertTrue(devices.isEmpty, "Expected no devices when all backups are invalid")
+    }
+    
     private func base64Encode(string: String) -> String {
         string.data(using: .utf8)?.base64EncodedString(options: []) ?? ""
     }
@@ -178,9 +277,48 @@ final class DeviceCenterRepositoryTests: XCTestCase {
             if deviceExpectedStatus == nil {
                 deviceExpectedStatus = try? XCTUnwrap(userDevice.status, "failed to get device status at: \(index)", file: file, line: line)
             }
-                
+            
             XCTAssertEqual(deviceBackupStatus, deviceExpectedStatus, "expect to have equal device status, but failed at index: \(index)", file: file, line: line)
         }
+    }
+    
+    private func makeSUT(
+        deviceId: String,
+        deviceName: String,
+        nodes: [MockNode] = [],
+        backupInfoList: [MockBackupInfo] = []
+    ) -> DeviceCenterRepository {
+        let encodedName = base64Encode(string: deviceName)
+        let devices = [deviceId: encodedName]
+        let mockSdk = MockSdk(
+            nodes: nodes,
+            backupInfoList: backupInfoList,
+            devices: devices
+        )
+        return DeviceCenterRepository(sdk: mockSdk)
+    }
+    
+    private func makeBackupInfo(
+        identifier: Int,
+        deviceId: String,
+        rootHandle: HandleEntity,
+        timestamp: Date,
+        backupType: MEGABackupType = .downSync,
+        syncState: BackUpState = .active,
+        backupSubstate: BackUpSubState = .noSyncError,
+        heartbeatStatus: MEGABackupHeartbeatStatus = .upToDate
+    ) -> MockBackupInfo {
+        MockBackupInfo(
+            identifier: identifier,
+            deviceIdentifier: deviceId,
+            rootHandle: rootHandle,
+            backupType: backupType,
+            syncState: syncState,
+            backupSubstate: backupSubstate,
+            heartbeatStatus: heartbeatStatus,
+            timestamp: timestamp,
+            activityTimestamp: timestamp
+        )
     }
 }
 

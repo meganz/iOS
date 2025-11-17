@@ -18,7 +18,7 @@ public struct DeviceCenterRepository: DeviceCenterRepositoryProtocol {
         async let userBackupsTask = fetchUserBackups()
         
         let (deviceNamesDictionary, userBackups) = await (deviceNamesTask, userBackupsTask)
-        let validUserBackups = userBackups.filter(isValidBackup)
+        let validUserBackups = filterValidUniqueBackups(userBackups)
         let userGroupedBackups = Dictionary(grouping: validUserBackups, by: \.deviceId)
         
         return userGroupedBackups.compactMap { deviceId, deviceBackups in
@@ -42,6 +42,45 @@ public struct DeviceCenterRepository: DeviceCenterRepositoryProtocol {
     
     public func loadCurrentDeviceId() -> String? {
         sdk.deviceId()
+    }
+    
+    /// Filters backups by removing invalid entries and deduplicating them.
+    /// - The function performs **both validation and deduplication** in a single pass.
+    /// - Two backups are considered duplicates when they share:
+    ///   - `deviceId`
+    ///   - `rootHandle`
+    /// - When duplicates are found, the backup with the **newest `timestamp`** is retained.
+    ///   - If `timestamp` is `nil`, its value is treated as `0`.
+    /// - Parameter backups: The list of backups retrieved from the SDK.
+    /// - Returns: A list of valid, deduplicated backups.
+    private func filterValidUniqueBackups(_ backups: [BackupEntity]) -> [BackupEntity] {
+        struct BackupIdentity: Hashable {
+            let deviceId: String
+            let rootHandle: HandleEntity
+        }
+        
+        var latestBackupsByIdentity = [BackupIdentity: BackupEntity]()
+        
+        for backup in backups where isValidBackup(backup) {
+            let identity = BackupIdentity(
+                deviceId: backup.deviceId,
+                rootHandle: backup.rootHandle
+            )
+            
+            let candidateTime = backup.timestamp?.timeIntervalSince1970 ?? 0
+            
+            if let existingBackup = latestBackupsByIdentity[identity] {
+                let existingTime = existingBackup.timestamp?.timeIntervalSince1970 ?? 0
+                
+                if candidateTime >= existingTime {
+                    latestBackupsByIdentity[identity] = backup
+                }
+            } else {
+                latestBackupsByIdentity[identity] = backup
+            }
+        }
+        
+        return Array(latestBackupsByIdentity.values)
     }
     
     private func fetchUserBackups() async -> [BackupEntity] {
