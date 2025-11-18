@@ -1,6 +1,8 @@
 import AVKit
 import Combine
 import Foundation
+import MEGAAnalyticsiOS
+import MEGAAppPresentation
 
 @MainActor
 @objc protocol AVPlayerManagerProtocol {
@@ -86,6 +88,7 @@ extension AVPlayerManager: @MainActor AVPlayerViewControllerDelegate {
     func playerViewControllerShouldAutomaticallyDismissAtPictureInPictureStart(_ playerViewController: AVPlayerViewController) -> Bool { false }
     
     func playerViewControllerWillStartPictureInPicture(_ playerViewController: AVPlayerViewController) {
+        DIContainer.tracker.trackAnalyticsEvent(with: VideoPlayerPictureInPicturePressedEvent())
         activeVideoViewController = playerViewController as? MEGAAVViewController
     }
     
