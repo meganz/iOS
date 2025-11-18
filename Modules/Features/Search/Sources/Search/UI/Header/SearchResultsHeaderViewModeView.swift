@@ -3,9 +3,14 @@ import SwiftUI
 
 public struct SearchResultsHeaderViewModeView: View {
     @StateObject private var viewModel: SearchResultsHeaderViewModeViewModel
+    private let horizontalPadding: CGFloat
 
-    public init(viewModel: @autoclosure @escaping () -> SearchResultsHeaderViewModeViewModel) {
+    public init(
+        viewModel: @autoclosure @escaping () -> SearchResultsHeaderViewModeViewModel,
+        horizontalPadding: CGFloat = TokenSpacing._7
+    ) {
         _viewModel = StateObject(wrappedValue: viewModel())
+        self.horizontalPadding = horizontalPadding
     }
 
     public var body: some View {
@@ -31,7 +36,7 @@ public struct SearchResultsHeaderViewModeView: View {
                     .scaledToFit()
                     .frame(width: 16, height: 16)
                     .foregroundStyle(TokenColors.Icon.secondary.swiftUI)
-                    .padding(.horizontal, TokenSpacing._7)
+                    .padding(.horizontal, horizontalPadding)
                     .frame(height: 36)
             }
             .labelStyle(.iconOnly)

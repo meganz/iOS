@@ -1,11 +1,16 @@
 import MEGADesignToken
 import SwiftUI
-struct SearchResultsListView: View {
+struct SearchResultsListView<Header: View>: View {
     @ObservedObject var viewModel: SearchResultsViewModel
     @Environment(\.editMode) private var editMode
+    @ViewBuilder private let header: () -> Header
 
-    public init(viewModel: @autoclosure @escaping () -> SearchResultsViewModel) {
+    public init(
+        viewModel: @autoclosure @escaping () -> SearchResultsViewModel,
+        @ViewBuilder header: @escaping () -> Header
+    ) {
         _viewModel = ObservedObject(wrappedValue: viewModel())
+        self.header = header
     }
 
     public var body: some View {
@@ -22,14 +27,22 @@ struct SearchResultsListView: View {
         )
     }
 
+    @ViewBuilder
     private var selectableListContent: some View {
-        List(selection: $viewModel.selectedRowIds) {
+        let list = List(selection: $viewModel.selectedRowIds) {
             listSectionContent
         }
         .onChange(of: editMode?.wrappedValue) { newMode in
             if newMode == .active {
                 viewModel.handleEditingChanged(true)
             }
+        }
+
+        if #available(iOS 17.0, *) {
+            list
+                .contentMargins(.top, 0, for: .scrollContent)
+        } else {
+            list
         }
     }
 
@@ -47,13 +60,25 @@ struct SearchResultsListView: View {
         }
     }
 
+    @ViewBuilder
     private var nonselectableListContent: some View {
-        List {
+        let list = List {
             listSectionContent
+        }
+
+        if #available(iOS 17.0, *) {
+            list
+                .contentMargins(.top, 0, for: .scrollContent)
+        } else {
+            list
         }
     }
 
+    @ViewBuilder
     private var listSectionContent: some View {
+        Section(header: header()) {
+            EmptyView()
+        }
         Section(header: listHeaderView) {
             ForEach(viewModel.listItems) { item in
                 rowContent(rowViewModel: item)

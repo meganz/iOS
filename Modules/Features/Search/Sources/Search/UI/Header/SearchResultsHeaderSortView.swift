@@ -3,9 +3,14 @@ import SwiftUI
 
 public struct SearchResultsHeaderSortView: View {
     @StateObject private var viewModel: SearchResultsHeaderSortViewViewModel
+    private let horizontalPadding: CGFloat
 
-    public init(viewModel: @autoclosure @escaping () -> SearchResultsHeaderSortViewViewModel) {
+    public init(
+        viewModel: @autoclosure @escaping () -> SearchResultsHeaderSortViewViewModel,
+        horizontalPadding: CGFloat = TokenSpacing._5
+    ) {
         _viewModel = StateObject(wrappedValue: viewModel())
+        self.horizontalPadding = horizontalPadding
     }
 
     public var body: some View {
@@ -27,7 +32,7 @@ public struct SearchResultsHeaderSortView: View {
             .frame(maxWidth: .infinity, alignment: .leading)
         }
         .frame(height: 36)
-        .padding(.horizontal, TokenSpacing._5)
+        .padding(.horizontal, horizontalPadding)
         .sheet(isPresented: $viewModel.showSortSheet) {
             SearchResultsSortOptionsView(viewModel: viewModel.displaySortOptionsViewModel)
         }

@@ -14,7 +14,7 @@ struct SearchResultsContainerViewModelTests {
         #expect(sut.chipsItems.isEmpty)
         #expect(sut.presentedChipsPickerViewModel == nil)
         #expect(sut.showChips == false)
-        #expect(sut.showSorting == false)
+        #expect(sut.shouldDisplayHeaderView == false)
     }
 
     @Test func testColorAssets_whenInvoked_shouldMatchTheTestConfigAssets() {
@@ -235,18 +235,21 @@ struct SearchResultsContainerViewModelTests {
     @Test func testShowChipsInitialValue_whenSet_ShouldMatchResult() {
         let sut = makeSUT(showChips: true)
         #expect(sut.showChips)
+        #expect(sut.shouldDisplayHeaderView == false)
     }
 
     @Test func testSetSearchChipsVisible_whenSetWithoutAnimation_shouldShowChips() {
         let sut = makeSUT(showChips: false)
         sut.setSearchChipsVisible(true, animated: false)
         #expect(sut.showChips)
+        #expect(sut.shouldDisplayHeaderView == false)
     }
 
     @Test func testSetSearchChipsVisible_whenSetWithAnimation_shouldShowChips() {
         let sut = makeSUT(showChips: false)
         sut.setSearchChipsVisible(true, animated: true)
         #expect(sut.showChips)
+        #expect(sut.shouldDisplayHeaderView == false)
     }
 
     @Test func testDisplaySortOptionsViewModel_whenDisplayed_shouldOmitSelectedSortOption() throws {
@@ -387,10 +390,32 @@ struct SearchResultsContainerViewModelTests {
         (true, SearchResultsViewMode.grid, PageLayout.list),
         (false, SearchResultsViewMode.grid, PageLayout.thumbnail)
     ])
-    func testSearchActiveDidChange(isActive: Bool, initialViewMode: SearchResultsViewMode, resultLayout: PageLayout) {
-        let sut = makeSUT(initialViewMode: initialViewMode)
+    func testSearchActiveDidChange(
+        isActive: Bool,
+        initialViewMode: SearchResultsViewMode,
+        resultLayout: PageLayout
+    ) async {
+        let results = SearchResultsEntity(
+            results: [
+                .resultWith(id: 1, title: "title")
+            ],
+            availableChips: [],
+            appliedChips: []
+        )
+
+        let resultsProvider = MockSearchResultsProviding(
+            searchResultUpdateSignalSequence: EmptyAsyncSequence().eraseToAnyAsyncSequence()
+        )
+        resultsProvider.currentResultIdsToReturn = [1]
+        resultsProvider.resultFactory = { _ in
+            results
+        }
+
+        let sut = makeSUT(resultsProvider: resultsProvider, initialViewMode: initialViewMode)
+        await sut.task()
         sut.searchActiveDidChange(isActive)
         #expect(sut.showChips == isActive)
+        #expect(sut.shouldDisplayHeaderView == !isActive)
         #expect(sut.searchResultsViewModel.layout == resultLayout)
     }
 

@@ -1,4 +1,5 @@
 import Combine
+import MEGADesignToken
 import MEGASwiftUI
 import MEGAUIKit
 import SwiftUI
@@ -21,6 +22,18 @@ public class SearchResultsContainerViewModel: ObservableObject {
     private var lastAvailableChips: [SearchChipEntity] = []
 
     private let sortOptionsViewModel: SearchResultsSortOptionsViewModel
+
+    var sortingHeaderViewHorizontalPadding: CGFloat {
+        searchResultsViewModel.layout == .list ? 0 : TokenSpacing._5
+    }
+
+    var viewModeViewHorizontalPadding: CGFloat {
+        searchResultsViewModel.layout == .list ? TokenSpacing._4 : TokenSpacing._7
+    }
+
+    var shouldDisplayHeaderView: Bool {
+        showSorting && !showChips
+    }
 
     var displaySortOptionsViewModel: SearchResultsSortOptionsViewModel {
         let displaySortOptions = sortOptionsViewModel.sortOptions.compactMap { sortOption -> SearchResultsSortOption? in
@@ -52,7 +65,7 @@ public class SearchResultsContainerViewModel: ObservableObject {
 
     let viewModeHeaderViewModel: SearchResultsHeaderViewModeViewModel
     @Published public private(set) var showChips: Bool = false
-    @Published public var showSorting: Bool = false
+    private var showSorting: Bool = false
     private var subscriptions: Set<AnyCancellable> = []
     private let shouldShowMediaDiscoveryModeHandler: () -> Bool
 

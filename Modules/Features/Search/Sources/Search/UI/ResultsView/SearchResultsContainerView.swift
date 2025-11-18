@@ -1,3 +1,4 @@
+import MEGADesignToken
 import MEGASwiftUI
 import SwiftUI
 
@@ -15,11 +16,28 @@ public struct SearchResultsContainerView: View {
         VStack(spacing: .zero) {
             header
                 .transition(.opacity)
-            SearchResultsView(viewModel: viewModel.searchResultsViewModel)
-                .safeAreaInset(edge: .bottom, spacing: 0) {
-                    Spacer()
-                        .frame(height: viewModel.searchResultsViewModel.usesRevampedLayout ? Constants.floatingAddButtonBottomInset : 0)
+
+            SearchResultsView(viewModel: viewModel.searchResultsViewModel) {
+                if viewModel.shouldDisplayHeaderView {
+                    SearchResultsHeaderView {
+                        SearchResultsHeaderSortView(
+                            viewModel: viewModel.sortHeaderViewModel,
+                            horizontalPadding: viewModel.sortingHeaderViewHorizontalPadding
+                        )
+                    } rightView: {
+                        SearchResultsHeaderViewModeView(
+                            viewModel: viewModel.viewModeHeaderViewModel,
+                            horizontalPadding: viewModel.viewModeViewHorizontalPadding
+                        )
+                    }
+                } else {
+                    EmptyView()
                 }
+            }
+            .safeAreaInset(edge: .bottom, spacing: 0) {
+                Spacer()
+                    .frame(height: viewModel.searchResultsViewModel.usesRevampedLayout ? Constants.floatingAddButtonBottomInset : 0)
+            }
         }
         .task {
             await viewModel.task()
@@ -35,12 +53,8 @@ public struct SearchResultsContainerView: View {
     private var header: some View {
         if viewModel.showChips {
             chips
-        } else if viewModel.showSorting {
-            SearchResultsHeaderView {
-                SearchResultsHeaderSortView(viewModel: viewModel.sortHeaderViewModel)
-            } rightView: {
-                SearchResultsHeaderViewModeView(viewModel: viewModel.viewModeHeaderViewModel)
-            }
+        } else {
+            EmptyView()
         }
     }
 

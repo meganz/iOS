@@ -1,8 +1,17 @@
 import MEGADesignToken
 import SwiftUI
 
-struct SearchResultsThumbnailView: View {
+struct SearchResultsThumbnailView<Header: View>: View {
     @ObservedObject var viewModel: SearchResultsViewModel
+    @ViewBuilder private let header: () -> Header
+
+    public init(
+        viewModel: @autoclosure @escaping () -> SearchResultsViewModel,
+        @ViewBuilder header: @escaping () -> Header
+    ) {
+        _viewModel = ObservedObject(wrappedValue: viewModel())
+        self.header = header
+    }
 
     var body: some View {
         GeometryReader { proxy in
@@ -17,6 +26,7 @@ struct SearchResultsThumbnailView: View {
     @ViewBuilder
     private func scrollViewContent(proxy: GeometryProxy) -> some View {
         ScrollView {
+            header()
             view(items: viewModel.folderListItems, proxy: proxy)
             view(items: viewModel.fileListItems, proxy: proxy)
         }
@@ -47,6 +57,7 @@ struct SearchResultsThumbnailView: View {
     @ViewBuilder
     private func revampedScrollViewContent(proxy: GeometryProxy) -> some View {
         ScrollView {
+            header()
             revampedGridView(items: viewModel.listItems, proxy: proxy)
         }
     }

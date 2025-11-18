@@ -3,12 +3,14 @@ import MEGASwiftUI
 import MEGAUIKit
 import SwiftUI
 
-struct SearchResultsView: View {
+struct SearchResultsView<Header: View>: View {
     @ObservedObject var viewModel: SearchResultsViewModel
     @Environment(\.editMode) private var editMode
-    
-    init(viewModel: @autoclosure @escaping () -> SearchResultsViewModel) {
+    private let header: () -> Header
+
+    init(viewModel: @autoclosure @escaping () -> SearchResultsViewModel, @ViewBuilder header: @escaping () -> Header) {
         _viewModel = ObservedObject(wrappedValue: viewModel())
+        self.header = header
     }
     
     public var body: some View {
@@ -39,9 +41,9 @@ struct SearchResultsView: View {
     @ViewBuilder
     private var contentWrapper: some View {
         if viewModel.layout == .list {
-            SearchResultsListView(viewModel: viewModel)
+            SearchResultsListView(viewModel: viewModel, header: header)
         } else {
-            SearchResultsThumbnailView(viewModel: viewModel)
+            SearchResultsThumbnailView(viewModel: viewModel, header: header)
         }
     }
     
