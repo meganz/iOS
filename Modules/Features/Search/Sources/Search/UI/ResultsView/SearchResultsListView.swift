@@ -97,7 +97,7 @@ struct SearchResultsListView<Header: View>: View {
     @ViewBuilder
     private func rowContent(rowViewModel: SearchResultRowViewModel) -> some View {
         if viewModel.usesRevampedLayout {
-            RevampedSearchResultRowView(viewModel: rowViewModel)
+            RevampedSearchResultRowView(viewModel: rowViewModel, selected: $viewModel.selectedResultIds)
         } else {
             SearchResultRowView(viewModel: rowViewModel)
                 .listRowSeparatorTint(viewModel.colorAssets.listRowSeparator)

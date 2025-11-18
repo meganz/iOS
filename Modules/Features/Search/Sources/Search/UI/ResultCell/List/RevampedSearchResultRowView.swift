@@ -24,6 +24,13 @@ struct RevampedSearchResultRowView: View {
     private let layout = ResultCellLayout.list
     @Environment(\.editMode) private var editMode
     @Environment(\.dynamicTypeSize) var dynamicTypeSize
+
+    @Binding var selected: Set<ResultId>
+
+    private var isSelected: Bool {
+        selected.contains(viewModel.result.id)
+    }
+
     @State private var highlighted = false
     var body: some View {
         contentWithInsetsAndSwipeActions
@@ -89,7 +96,7 @@ struct RevampedSearchResultRowView: View {
             }
             moreButton
         }
-        .background(TokenColors.Background.surface1.swiftUI.opacity(highlighted ? 1 : 0))
+        .listRowBackground(TokenColors.Background.surface1.swiftUI.opacity( isSelected || highlighted ? 1 : 0))
         .contentShape(Rectangle())
         .frame(minHeight: 58)
     }
