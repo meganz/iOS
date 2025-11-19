@@ -4,6 +4,7 @@ import MEGAAnalyticsiOS
 import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGADomain
+import MEGAL10n
 import MEGAPermissions
 import MEGAPreference
 import MEGASwiftUI
@@ -39,8 +40,16 @@ final class PhotosViewModel: NSObject {
     private(set) var currentNodeUpdateTask: Task<Void, any Error>? {
         didSet { oldValue?.cancel() }
     }
+    private(set) var monitorCameraUploadStateTask: Task<Void, Never>? {
+        didSet { oldValue?.cancel() }
+    }
+    private(set) var delayedUploadUpToDateTask: Task<Void, any Error>? {
+        didSet { oldValue?.cancel() }
+    }
     
     @Published private(set) var cameraUploadExplorerSortOrderType: SortOrderType = .newest
+    @Published private(set) var navigationTitle: String = Strings.Localizable.Photo.Navigation.title
+    @Published private(set) var navigationSubtitle: String?
     
     @PreferenceWrapper(key: PreferenceKeyEntity.isCameraUploadsEnabled, defaultValue: false)
     private(set) var isCameraUploadsEnabled: Bool
@@ -56,18 +65,23 @@ final class PhotosViewModel: NSObject {
     var isSelectHidden: Bool = false
     
     let timelineViewModel: TimeLineViewModel
-        
+    
     private let photoUpdatePublisher: any PhotoUpdatePublisherProtocol
     private let photoLibraryUseCase: any PhotoLibraryUseCaseProtocol
     private let contentConsumptionUserAttributeUseCase: any ContentConsumptionUserAttributeUseCaseProtocol
     private let sortOrderPreferenceUseCase: any SortOrderPreferenceUseCaseProtocol
+    private let monitorCameraUploadUseCase: any MonitorCameraUploadUseCaseProtocol
     private let nodeUseCase: any NodeUseCaseProtocol
     private let cameraUploadsSettingsViewRouter: any Routing
     private let tracker: any AnalyticsTracking
     private let featureFlagProvider: any FeatureFlagProviderProtocol
     private let cameraUploadProgressRouter: any Routing
+    private let idleWaitTimeNanoSeconds: UInt64
+    private let uploadStateDebounceDuration: Duration
+    
     private var subscriptions = Set<AnyCancellable>()
     private var pendingNodeUpdates: [NodeEntity] = []
+    private var uploadStateSubTitle: String?
     
     init(photoUpdatePublisher: some PhotoUpdatePublisherProtocol,
          photoLibraryUseCase: some PhotoLibraryUseCaseProtocol,
@@ -80,12 +94,15 @@ final class PhotosViewModel: NSObject {
          nodeUseCase: some NodeUseCaseProtocol,
          cameraUploadProgressRouter: any Routing,
          tracker: some AnalyticsTracking = DIContainer.tracker,
-         featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider
+         featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider,
+         idleWaitTimeNanoSeconds: UInt64 = 3 * 1_000_000_000,
+         uploadStateDebounceDuration: Duration = .milliseconds(300)
     ) {
         self.photoUpdatePublisher = photoUpdatePublisher
         self.photoLibraryUseCase = photoLibraryUseCase
         self.contentConsumptionUserAttributeUseCase = contentConsumptionUserAttributeUseCase
         self.sortOrderPreferenceUseCase = sortOrderPreferenceUseCase
+        self.monitorCameraUploadUseCase = monitorCameraUploadUseCase
         self.nodeUseCase = nodeUseCase
         self.cameraUploadsSettingsViewRouter = cameraUploadsSettingsViewRouter
         self.timelineViewModel = TimeLineViewModel(
@@ -96,12 +113,15 @@ final class PhotosViewModel: NSObject {
             cameraUploadsSettingsViewRouter: cameraUploadsSettingsViewRouter
         )
         self.cameraUploadStatusButtonViewModel = CameraUploadStatusButtonViewModel(
+            idleWaitTimeNanoSeconds: idleWaitTimeNanoSeconds,
             monitorCameraUploadUseCase: monitorCameraUploadUseCase,
             devicePermissionHandler: devicePermissionHandler,
             preferenceUseCase: preferenceUseCase)
         self.cameraUploadProgressRouter = cameraUploadProgressRouter
         self.tracker = tracker
         self.featureFlagProvider = featureFlagProvider
+        self.idleWaitTimeNanoSeconds = idleWaitTimeNanoSeconds
+        self.uploadStateDebounceDuration = uploadStateDebounceDuration
         super.init()
         $isCameraUploadsEnabled.useCase = preferenceUseCase
         
@@ -113,6 +133,14 @@ final class PhotosViewModel: NSObject {
         monitorNodeUpdatesTask = Task { [weak self, nodeUseCase] in
             for await nodeEntities in nodeUseCase.nodeUpdates {
                 self?.handleNodeUpdates(with: nodeEntities)
+            }
+        }
+        guard isCameraUploadProgressFeatureEnabled() else {
+            return
+        }
+        monitorCameraUploadStateTask = Task { [weak self, monitorCameraUploadUseCase, uploadStateDebounceDuration] in
+            for await state in monitorCameraUploadUseCase.cameraUploadState.debounce(for: uploadStateDebounceDuration) {
+                self?.handleCameraUploadState(state: state)
             }
         }
     }
@@ -196,6 +224,35 @@ final class PhotosViewModel: NSObject {
         contentConsumptionAttributeLoadingTask = nil
         loadPhotosTask = nil
         currentNodeUpdateTask = nil
+        monitorCameraUploadStateTask = nil
+    }
+    
+    @objc func updateNavigationTitleViewToCheckForUploads() {
+        navigationTitle = Strings.Localizable.Photo.Navigation.title
+        uploadStateSubTitle = if isCameraUploadProgressFeatureEnabled(), isCameraUploadsEnabled {
+            Strings.Localizable.CameraUploads.checkingForUploads
+        } else {
+            nil
+        }
+        navigationSubtitle = uploadStateSubTitle
+    }
+    
+    @objc func resetNavigationTitleView() {
+        navigationTitle = Strings.Localizable.Photo.Navigation.title
+        navigationSubtitle = if isCameraUploadProgressFeatureEnabled(), isCameraUploadsEnabled {
+            uploadStateSubTitle
+        } else {
+            nil
+        }
+    }
+    
+    func updateNavigationTitleView(selectedPhotoCount: Int) {
+        navigationTitle = if selectedPhotoCount == 0 {
+            Strings.Localizable.selectTitle
+        } else {
+            Strings.Localizable.General.Format.itemsSelected(selectedPhotoCount)
+        }
+        navigationSubtitle = nil
     }
         
     // MARK: - Private
@@ -233,11 +290,15 @@ final class PhotosViewModel: NSObject {
         guard isCameraUploadsEnabled else {
             return navigateToCameraUploadSettings()
         }
-        if featureFlagProvider.isFeatureFlagEnabled(for: .cameraUploadProgress) {
+        if isCameraUploadProgressFeatureEnabled() {
             cameraUploadProgressRouter.start()
         } else {
             showCameraUploadStatusBanner()
         }
+    }
+    
+    private func isCameraUploadProgressFeatureEnabled() -> Bool {
+        featureFlagProvider.isFeatureFlagEnabled(for: .cameraUploadProgress)
     }
     
     private func showCameraUploadStatusBanner() {
@@ -319,6 +380,44 @@ final class PhotosViewModel: NSObject {
         let nodesToProcess = pendingNodeUpdates
         pendingNodeUpdates.removeAll()
         processNodeUpdates(nodesToProcess)
+    }
+    
+    private func handleCameraUploadState(state: CameraUploadStateEntity) {
+        guard isCameraUploadsEnabled else {
+            uploadStateSubTitle = nil
+            navigationSubtitle = nil
+            return
+        }
+        
+        let pendingFilesCount = state.stats.pendingFilesCount
+        let isPaused = state.pausedReason != nil
+        
+        let subtitle: String
+        if pendingFilesCount == 0 {
+            subtitle = Strings.Localizable.CameraUploads.complete
+            delayedUploadCompleteSubTitle()
+        } else {
+            let key = isPaused ? "cameraUploads.progress.paused.items" : "cameraUploads.progress.uploading.items"
+            
+            subtitle = String(
+                format: Strings.localized(key, comment: ""),
+                locale: .current,
+                pendingFilesCount
+            )
+        }
+        
+        uploadStateSubTitle = subtitle
+        navigationSubtitle = subtitle
+    }
+    
+    private func delayedUploadCompleteSubTitle() {
+        delayedUploadUpToDateTask = Task { [weak self] in
+            guard let self else { return }
+            try await Task.sleep(nanoseconds: idleWaitTimeNanoSeconds)
+            
+            uploadStateSubTitle = Strings.Localizable.CameraUploads.upToDate
+            navigationSubtitle = uploadStateSubTitle
+        }
     }
 }
 

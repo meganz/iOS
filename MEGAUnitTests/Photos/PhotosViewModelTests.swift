@@ -6,6 +6,7 @@ import MEGAAppPresentation
 import MEGAAppPresentationMock
 @testable import MEGADomain
 import MEGADomainMock
+import MEGAL10n
 import MEGAPermissions
 import MEGAPermissionsMock
 import MEGAPreference
@@ -356,23 +357,26 @@ final class PhotosViewModelTests: XCTestCase {
         cameraUploadsSettingsViewRouter: some Routing = MockCameraUploadsSettingsViewRouter(),
         monitorCameraUploadUseCase: MockMonitorCameraUploadUseCase = MockMonitorCameraUploadUseCase(),
         nodeUseCase: some NodeUseCaseProtocol = MockNodeUseCase(),
-        tracker: MockTracker = MockTracker()
+        tracker: MockTracker = MockTracker(),
+        featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:])
     ) -> PhotosViewModel {
         let publisher = PhotoUpdatePublisher(photosViewController: PhotosViewController())
         let usecase = MockPhotoLibraryUseCase(allPhotos: [],
                                               allPhotosFromCloudDriveOnly: [],
                                               allPhotosFromCameraUpload: [])
-        return PhotosViewModel(photoUpdatePublisher: publisher,
-                               photoLibraryUseCase: usecase,
-                               contentConsumptionUserAttributeUseCase: contentConsumptionUserAttributeUseCase,
-                               sortOrderPreferenceUseCase: sortOrderPreferenceUseCase,
-                               preferenceUseCase: preferenceUseCase,
-                               monitorCameraUploadUseCase: monitorCameraUploadUseCase,
-                               devicePermissionHandler: MockDevicePermissionHandler(),
-                               cameraUploadsSettingsViewRouter: cameraUploadsSettingsViewRouter,
-                               nodeUseCase: nodeUseCase,
-                               cameraUploadProgressRouter: MockRouter(),
-                               tracker: tracker
+        return PhotosViewModel(
+            photoUpdatePublisher: publisher,
+            photoLibraryUseCase: usecase,
+            contentConsumptionUserAttributeUseCase: contentConsumptionUserAttributeUseCase,
+            sortOrderPreferenceUseCase: sortOrderPreferenceUseCase,
+            preferenceUseCase: preferenceUseCase,
+            monitorCameraUploadUseCase: monitorCameraUploadUseCase,
+            devicePermissionHandler: MockDevicePermissionHandler(),
+            cameraUploadsSettingsViewRouter: cameraUploadsSettingsViewRouter,
+            nodeUseCase: nodeUseCase,
+            cameraUploadProgressRouter: MockRouter(),
+            tracker: tracker,
+            featureFlagProvider: featureFlagProvider
         )
     }
 }
@@ -467,6 +471,144 @@ struct PhotosViewModelTestSuite {
     }
     
     @MainActor
+    struct NavigationTitleView {
+        let state = CameraUploadStateEntity(
+            stats: .init(progress: 50, pendingFilesCount: 80, pendingVideosCount: 0),
+            pausedReason: nil)
+        
+        @Test(arguments: [
+            (false, false, Optional<String>.none),
+            (true, true, Strings.Localizable.CameraUploads.checkingForUploads),
+            (true, false, nil)
+        ]) func updateNavigationTitleViewToCheckForUploads(
+            isCameraUploadProgress: Bool,
+            isCameraUploadsEnabled: Bool,
+            expectedSubtitle: String?
+        ) async throws {
+            let sut = await makeAndStartSUT(
+                state: state,
+                isCameraUploadProgress: isCameraUploadProgress,
+                isCameraUploadsEnabled: isCameraUploadsEnabled
+            )
+            
+            sut.updateNavigationTitleViewToCheckForUploads()
+            
+            #expect(sut.navigationTitle == Strings.Localizable.Photo.Navigation.title)
+            #expect(sut.navigationSubtitle == expectedSubtitle)
+        }
+        
+        @Test(arguments: [
+            (false, false, Optional<String>.none),
+            (true, true, String(format: Strings.localized("cameraUploads.progress.uploading.items", comment: ""), locale: .current, 80)),
+            (true, false, nil)
+        ]) func reset(
+            isCameraUploadProgress: Bool,
+            isCameraUploadsEnabled: Bool,
+            expectedSubtitle: String?
+        ) async {
+            let sut = await makeAndStartSUT(
+                state: state,
+                isCameraUploadProgress: isCameraUploadProgress,
+                isCameraUploadsEnabled: isCameraUploadsEnabled
+            )
+            
+            #expect(sut.navigationTitle == Strings.Localizable.Photo.Navigation.title)
+            #expect(sut.navigationSubtitle == expectedSubtitle)
+        }
+        
+        @Test(arguments: [
+            (0, Strings.Localizable.selectTitle),
+            (20, Strings.Localizable.General.Format.itemsSelected(20))
+        ])
+        func selectedPhotos(count: Int, expectedTitle: String) async throws {
+            let sut = await makeAndStartSUT(state: state)
+            
+            sut.updateNavigationTitleView(selectedPhotoCount: count)
+            
+            #expect(sut.navigationTitle == expectedTitle)
+            #expect(sut.navigationSubtitle == nil)
+        }
+        
+        @Test(arguments: [
+            (
+                CameraUploadStateEntity(
+                    stats: .init(progress: 1.0, pendingFilesCount: 0, pendingVideosCount: 0),
+                    pausedReason: nil
+                ),
+                Strings.Localizable.CameraUploads.complete
+            ),
+            (
+                CameraUploadStateEntity(
+                    stats: .init(progress: 0.8, pendingFilesCount: 5, pendingVideosCount: 0),
+                    pausedReason: nil
+                ),
+                String(
+                    format: Strings.localized("cameraUploads.progress.uploading.items", comment: ""),
+                    locale: .current, 5
+                )
+            ),
+            (
+                CameraUploadStateEntity(
+                    stats: .init(progress: 0.8, pendingFilesCount: 5, pendingVideosCount: 0),
+                    pausedReason: .networkIssue(.noConnection)
+                ),
+                String(
+                    format: Strings.localized("cameraUploads.progress.paused.items", comment: ""),
+                    locale: .current, 5
+                )
+            )
+        ])
+        func uploadState(
+            state: CameraUploadStateEntity,
+            expectedSubtitle: String
+        ) async {
+            let sut = await makeAndStartSUT(state: state)
+            #expect(sut.navigationSubtitle == expectedSubtitle)
+        }
+        
+        @Test
+        func completeToUpToDate() async throws {
+            let completeState = CameraUploadStateEntity(
+                stats: .init(progress: 1.0, pendingFilesCount: 0, pendingVideosCount: 0),
+                pausedReason: nil
+            )
+
+            let sut = await makeAndStartSUT(state: completeState)
+            try await sut.delayedUploadUpToDateTask?.value
+
+            #expect(sut.navigationSubtitle == Strings.Localizable.CameraUploads.upToDate)
+        }
+        
+        private func makeAndStartSUT(
+            state: CameraUploadStateEntity,
+            isCameraUploadProgress: Bool = true,
+            isCameraUploadsEnabled: Bool = true
+        ) async -> PhotosViewModel {
+            let featureFlagProvider = MockFeatureFlagProvider(
+                list: [.cameraUploadProgress: isCameraUploadProgress]
+            )
+            let preferenceUseCase = MockPreferenceUseCase(
+                dict: [PreferenceKeyEntity.isCameraUploadsEnabled.rawValue: isCameraUploadsEnabled]
+            )
+            let sequence = SingleItemAsyncSequence(item: state)
+                .eraseToAnyAsyncSequence()
+            let monitorCameraUploadUseCase = MockMonitorCameraUploadUseCase(
+                cameraUploadState: sequence
+            )
+
+            let sut = makeSUT(
+                preferenceUseCase: preferenceUseCase,
+                monitorCameraUploadUseCase: monitorCameraUploadUseCase,
+                featureFlagProvider: featureFlagProvider
+            )
+
+            sut.startMonitoringUpdates()
+            await sut.monitorCameraUploadStateTask?.value
+            return sut
+        }
+    }
+    
+    @MainActor
     private static func makeSUT(
         photoUpdatePublisher: some PhotoUpdatePublisherProtocol = MockPhotoUpdatePublisher(),
         photoLibraryUseCase: some PhotoLibraryUseCaseProtocol = MockPhotoLibraryUseCase(),
@@ -479,7 +621,9 @@ struct PhotosViewModelTestSuite {
         nodeUseCase: some NodeUseCaseProtocol = MockNodeUseCase(),
         tracker: some AnalyticsTracking = MockTracker(),
         cameraUploadProgressRouter: some Routing = MockRouter(),
-        featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:])
+        featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:]),
+        idleWaitTimeNanoSeconds: UInt64 = 100_000_000,
+        uploadStateDebounceDuration: Duration = .milliseconds(10)
     ) -> PhotosViewModel {
         .init(
             photoUpdatePublisher: photoUpdatePublisher,
@@ -492,7 +636,9 @@ struct PhotosViewModelTestSuite {
             cameraUploadsSettingsViewRouter: cameraUploadsSettingsViewRouter,
             nodeUseCase: nodeUseCase,
             cameraUploadProgressRouter: cameraUploadProgressRouter,
-            featureFlagProvider: featureFlagProvider)
+            featureFlagProvider: featureFlagProvider,
+            idleWaitTimeNanoSeconds: idleWaitTimeNanoSeconds,
+            uploadStateDebounceDuration: uploadStateDebounceDuration)
     }
 }
 

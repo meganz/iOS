@@ -1,4 +1,5 @@
 import ChatRepo
+import Combine
 import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGAAssets
@@ -7,7 +8,6 @@ import MEGADomain
 import MEGAPermissions
 
 extension PhotosViewController {
-    
     var permissionHandler: any DevicePermissionsHandling {
         DevicePermissionsHandler.makeHandler()
     }
@@ -123,6 +123,21 @@ extension PhotosViewController {
             selectedPhotos: nodes).start()
         
         toggleEditing()
+    }
+    
+    @objc func setupBindings() {
+        let cancellable = viewModel.$navigationTitle
+            .combineLatest(viewModel.$navigationSubtitle)
+            .sink { [weak self] title, subtitle in
+                guard let self else { return }
+                objcWrapper_parent.navigationItem.titleView = UILabel.customNavigationBarLabel(
+                    title: title,
+                    subtitle: subtitle,
+                    traitCollection: traitCollection
+                )
+                objcWrapper_parent.navigationItem.titleView?.sizeToFit()
+            }
+        subscriptions.add(cancellable)
     }
 }
 

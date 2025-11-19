@@ -35,11 +35,11 @@
 #pragma mark - Lifecycle
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self setupBindings];
     [self configureContextMenuManager];
     [self configPhotoContainerView];
     [self updateAppearance];
     [self setupBarButtons];
-    [self updateNavigationTitleBar];
     [self configureImages];
 }
 
@@ -53,6 +53,7 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
+    [self.viewModel updateNavigationTitleViewToCheckForUploads];
     [self.viewModel startMonitoringUpdates];
     
     [self.photoUpdatePublisher setupSubscriptions];
@@ -99,6 +100,13 @@
     return _defaultNodeAccessoryActionDelegate;
 }
 
+- (NSMutableSet *)subscriptions {
+    if (_subscriptions == nil) {
+        _subscriptions = [NSMutableSet set];
+    }
+    return _subscriptions;
+}
+
 #pragma mark - Private
 
 - (void)updateAppearance {
@@ -106,16 +114,12 @@
 }
 
 - (void)reloadPhotos {
-    [self updateNavigationTitleBar];
+    [self.viewModel resetNavigationTitleView];
     [self setupNavigationBarButtons];
     dispatch_async(dispatch_get_main_queue(), ^{
         [self objcWrapper_updatePhotoLibrary];
         [self setupNavigationBarButtons];
     });
-}
-
-- (void)updateNavigationTitleBar {
-    self.objcWrapper_parent.navigationItem.title = LocalizedString(@"photo.navigation.title", @"Title of one of the Settings sections where you can set up the 'Camera Uploads' options");
 }
 
 #pragma mark - IBAction
@@ -156,7 +160,7 @@
             }];
         }
     } else {
-        [self updateNavigationTitleBar];
+        [self.viewModel resetNavigationTitleView];
         [UIView animateWithDuration:0.33f animations:^ {
             [self.toolbar setAlpha:0.0];
         } completion:^(BOOL finished) {

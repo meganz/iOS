@@ -77,13 +77,15 @@ struct CameraUploadInProgressRowViewModelTests {
             }
             
             // Sleep to wait for monitor to setup
-            try await Task.sleep(nanoseconds: 50_000_000)
+            try await Task.sleep(nanoseconds: 200_000_000)
             continuation.yield(uploadProgress)
             // Sleep to get past the debounce
-            try await Task.sleep(nanoseconds: 100_000_000)
+            try await Task.sleep(nanoseconds: 200_000_000)
             continuation.yield(uploadProgress)
-            try await Task.sleep(nanoseconds: 100_000_000)
+            try await Task.sleep(nanoseconds: 200_000_000)
             continuation.yield(updatedProgress)
+            // Final sleep to ensure all async operations complete
+            try await Task.sleep(nanoseconds: 100_000_000)
             continuation.finish()
             
             try await monitor.value

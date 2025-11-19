@@ -4812,3 +4812,9 @@
 "sorting.shareCreated.title"="Share created";
 /* Sorting option label for sorting items based on the link creation date (can be applied in ascending or descending order) */
 "sorting.linkCreated.title"="Link created";
+/* Camera Uploads Checking For Uploads */
+"cameraUploads.checkingForUploads"="Checking for uploads...";
+/* Camera Uploads Complete */
+"cameraUploads.complete"="Camera uploads complete";
+/* Camera Uploads Up To Date */
+"cameraUploads.upToDate"="Camera uploads up to date";

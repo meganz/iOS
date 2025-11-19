@@ -70,14 +70,6 @@ extension PhotosViewController: PhotoLibraryProvider {
     // MARK: - override
     
     public func updateNavigationTitle(withSelectedPhotoCount count: Int) {
-        var message = ""
-        
-        if count == 0 {
-            message = Strings.Localizable.selectTitle
-        } else {
-            message = Strings.Localizable.General.Format.itemsSelected(count)
-        }
-        
-        objcWrapper_parent.navigationItem.title = message
+        viewModel.updateNavigationTitleView(selectedPhotoCount: count)
     }
 }

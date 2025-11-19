@@ -20,6 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong, nullable) ContextMenuManager * contextMenuManager;
 @property (nonatomic, strong, nullable) UIView *emptyStateView;
 @property (strong, nonatomic) DefaultNodeAccessoryActionDelegate *defaultNodeAccessoryActionDelegate;
+@property (nonatomic, strong, nonnull) NSMutableSet *subscriptions;
 
 - (void)reloadPhotos;
 - (void)didSelectedPhotoCountChange:(NSInteger)count;
