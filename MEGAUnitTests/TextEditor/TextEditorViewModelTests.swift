@@ -718,7 +718,7 @@ final class TextEditorViewModelTests: XCTestCase {
              expectedCommands: [.showError(message: Strings.Localizable.General.TextEditor.Hud.uneditableLargeFile)]
         )
         
-        assertTrackAnalyticsEventCalled(trackedEventIdentifiers: tracker.trackedEventIdentifiers, with: [TextEditorEditMenuToolbarEvent()])
+        assertTrackAnalyticsEventCalled(trackedEventIdentifiers: tracker.trackedEventIdentifiers, with: [TextEditorEditMenuToolbarEvent(), EditTextFileActionEvent()])
     }
     
     @MainActor func testAction_editAfterOpen_view_editableSize() {
@@ -1092,7 +1092,7 @@ final class TextEditorViewModelTests: XCTestCase {
             for: MockNode(handle: 1),
             from: "any-sender")
         
-        assertTrackAnalyticsEventCalled(trackedEventIdentifiers: tracker.trackedEventIdentifiers, with: [TextEditorEditMenuItemEvent(), TextEditorScreenEvent()])
+        assertTrackAnalyticsEventCalled(trackedEventIdentifiers: tracker.trackedEventIdentifiers, with: [TextEditorEditMenuItemEvent(), EditTextFileActionEvent(), TextEditorScreenEvent()])
     }
     
     @MainActor

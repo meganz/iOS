@@ -232,6 +232,7 @@ final class TextEditorViewModel: ViewModelType {
     }
     
     private func editFile(shallUpdateContent: Bool) {
+        tracker.trackAnalyticsEvent(with: EditTextFileActionEvent())
         if textFile.size < TextFile.maxEditableFileSize {
             textEditorMode = .edit
             setupView(shallUpdateContent: shallUpdateContent)
