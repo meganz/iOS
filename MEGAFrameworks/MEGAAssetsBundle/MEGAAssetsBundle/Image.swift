@@ -271,4 +271,5 @@ public struct MEGAImageBundle {
     public static var x: Image { Image(.x) }
     public static var alertTriangle: Image { Image(.alertTriangle) }
     public static var glassCheckCircle: Image { Image(.glassCheckCircle) }
+    public static var gearSixMediumThin: Image { Image(.gearSixMediumThin) }
 }

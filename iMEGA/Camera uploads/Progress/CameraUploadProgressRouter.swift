@@ -10,6 +10,7 @@ import SwiftUI
 @MainActor
 protocol CameraUploadProgressRouting: Routing {
     func showUpgradeAccount()
+    func showCameraUploadSettings()
 }
 
 final class CameraUploadProgressRouter: CameraUploadProgressRouting {
@@ -76,5 +77,18 @@ final class CameraUploadProgressRouter: CameraUploadProgressRouting {
             viewType: .upgrade,
             accountUseCase: accountUseCase)
         .start()
+    }
+    
+    func showCameraUploadSettings() {
+        let storyboard = UIStoryboard(name: "CameraUploadSettings", bundle: nil)
+        guard let cameraUploadSettingsVC = storyboard.instantiateViewController(
+            withIdentifier: "CameraUploadsSettingsID") as? CameraUploadsTableViewController else { return }
+        cameraUploadSettingsVC.cameraUploadSettingChanged = { [weak self] in
+            self?.baseViewController?.presentingViewController?.dismiss(animated: true)
+        }
+        cameraUploadSettingsVC.isPresentedModally = true
+        let navigationController = MEGANavigationController(rootViewController: cameraUploadSettingsVC)
+        navigationController.modalPresentationStyle = .fullScreen
+        baseViewController?.present(navigationController, animated: true)
     }
 }

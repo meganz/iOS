@@ -32,11 +32,16 @@ final class CameraUploadProgressViewModel: ObservableObject {
     
     @PreferenceWrapper(key: PreferenceKeyEntity.cameraUploadsCellularDataUsageAllowed, defaultValue: false)
     private var isCellularUploadAllowed: Bool
+    @PreferenceWrapper(key: PreferenceKeyEntity.isVideoUploadEnabled, defaultValue: false)
+    private var isVideoUploadEnabled: Bool
     
     private let monitorCameraUploadUseCase: any MonitorCameraUploadUseCaseProtocol
     private let accountStorageUseCase: any AccountStorageUseCaseProtocol
     private let cameraUploadProgressRouter: any CameraUploadProgressRouting
     private let devicePermissionHandler: any DevicePermissionsHandling
+    private let notificationCenter: NotificationCenter
+    
+    private var monitorVideoSettingsTask: Task<Void, Never>?
     
     init(
         monitorCameraUploadUseCase: some MonitorCameraUploadUseCaseProtocol,
@@ -47,7 +52,8 @@ final class CameraUploadProgressViewModel: ObservableObject {
         preferenceUseCase: some PreferenceUseCaseProtocol = PreferenceUseCase.default,
         accountStorageUseCase: some AccountStorageUseCaseProtocol,
         cameraUploadProgressRouter: some CameraUploadProgressRouting,
-        devicePermissionHandler: some DevicePermissionsHandling
+        devicePermissionHandler: some DevicePermissionsHandling,
+        notificationCenter: NotificationCenter = .default
     ) {
         self.monitorCameraUploadUseCase = monitorCameraUploadUseCase
         cameraUploadProgressTableViewModel = .init(
@@ -62,7 +68,15 @@ final class CameraUploadProgressViewModel: ObservableObject {
         self.accountStorageUseCase = accountStorageUseCase
         self.cameraUploadProgressRouter = cameraUploadProgressRouter
         self.devicePermissionHandler = devicePermissionHandler
+        self.notificationCenter = notificationCenter
         $isCellularUploadAllowed.useCase = preferenceUseCase
+        $isVideoUploadEnabled.useCase = preferenceUseCase
+        
+        monitorVideoSettingChanges()
+    }
+    
+    deinit {
+        monitorVideoSettingsTask?.cancel()
     }
     
     func monitorStates() async {
@@ -84,6 +98,10 @@ final class CameraUploadProgressViewModel: ObservableObject {
                 uploadState: cameraUploadState
             )
         }
+    }
+      
+    func showCameraUploadSettings() {
+        cameraUploadProgressRouter.showCameraUploadSettings()
     }
     
     private func makeBannerViewModel(
@@ -120,6 +138,17 @@ final class CameraUploadProgressViewModel: ObservableObject {
         let newState: ViewState = pendingFilesCount == 0 ? .completed : .loaded
         guard newState != viewState else { return }
         viewState = newState
+    }
+    
+    private func monitorVideoSettingChanges() {
+        monitorVideoSettingsTask = Task { [weak notificationCenter, weak cameraUploadProgressTableViewModel] in
+            guard let notificationCenter,
+                  let cameraUploadProgressTableViewModel else { return }
+            
+            for await _ in notificationCenter.publisher(for: .cameraUploadVideoUploadSettingChanged).values {
+                await cameraUploadProgressTableViewModel.reset()
+            }
+        }
     }
 }
 

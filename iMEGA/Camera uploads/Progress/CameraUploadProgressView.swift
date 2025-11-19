@@ -20,6 +20,12 @@ struct CameraUploadProgressView: View {
                     ToolbarItem(placement: .cancellationAction) {
                         Button { dismiss() } label: { XmarkCloseButton() }
                     }
+                    
+                    ToolbarItem(placement: .topBarTrailing) {
+                        Button(action: viewModel.showCameraUploadSettings) {
+                            MEGAAssets.Image.gearSixMediumThin
+                        }
+                    }
                 }
                 .hideNavigationToolbarBackground()
         }

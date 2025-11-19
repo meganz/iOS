@@ -286,6 +286,7 @@ extension MEGAAssets {
         public static var glassClock: SwiftUI.Image { MEGAImageBundle.glassClock }
         public static var rotateCcw: SwiftUI.Image { MEGAImageBundle.rotateCcw }
         public static var glassCheckCircle: SwiftUI.Image { MEGAImageBundle.glassCheckCircle }
+        public static var gearSixMediumThin: SwiftUI.Image { MEGAImageBundle.gearSixMediumThin }
     }
 }
 
@@ -730,5 +731,6 @@ extension MEGAAssets {
         public static var alertTriangle: UIKit.UIImage { MEGAUIImageBundle.alertTriangle }
         public static var minusCircle: UIKit.UIImage { MEGAUIImageBundle.minusCircle }
         public static var glassCheckCircle: UIKit.UIImage { MEGAUIImageBundle.glassCheckCircle }
+        public static var gearSixMediumThin: UIKit.UIImage { MEGAUIImageBundle.gearSixMediumThin }
     }
 }

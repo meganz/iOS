@@ -5,6 +5,7 @@
 
 #import "NSFileManager+MNZCategory.h"
 #import "MEGAReachabilityManager.h"
+#import "MEGA-Swift.h"
 
 static NSString * const HasMigratedToCameraUploadsV2Key = @"HasMigratedToCameraUploadsV2";
 static NSString * const BoardingScreenLastShowedDateKey = @"CameraUploadBoardingScreenLastShowedDate";
@@ -119,6 +120,7 @@ static const NSTimeInterval BoardingScreenShowUpMinimumInterval = 30 * 24 * 3600
 + (void)setVideoUploadEnabled:(BOOL)videoUploadEnabled {
     [NSUserDefaults.standardUserDefaults setBool:videoUploadEnabled forKey:IsVideoUploadsEnabledKey];
     [self configDefaultSettingsIfNeededForVideoUpload];
+    [CameraUploadNotifier postVideoUploadSettingChanged];
 }
 
 + (void)configDefaultSettingsIfNeededForVideoUpload {

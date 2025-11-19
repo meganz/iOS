@@ -13,6 +13,7 @@ public extension Notification.Name {
     static let dismissOnboardingProPlanDialog = Notification.Name("nz.mega.dismissOnboardingProPlanDialog")
     static let storageEventDidChange = Notification.Name("nz.mega.event.storage")
     static let startAds = Notification.Name("nz.mega.startAds")
+    static let cameraUploadVideoUploadSettingChanged = Notification.Name("mega.cameraUpload.videoUploadSettingChanged")
 }
 
 public enum NotificationUserInfoKey {

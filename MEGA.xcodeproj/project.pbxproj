@@ -32,6 +32,7 @@
 		0E2586F52C4DBF220076A4E4 /* Preview_SensitiveNodeUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E2586F42C4DBF220076A4E4 /* Preview_SensitiveNodeUseCase.swift */; };
 		0E261EAD2DA5EA1300858151 /* MEGAAuthentication in Frameworks */ = {isa = PBXBuildFile; productRef = 0E261EAC2DA5EA1300858151 /* MEGAAuthentication */; };
 		0E261EB42DA5FE1600858151 /* AppDelegate+Authentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E261EB22DA5FE0400858151 /* AppDelegate+Authentication.swift */; };
+		0E2D99FB2ECBCB4200C97AD4 /* CameraUploadNotifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E2D99FA2ECBCB4200C97AD4 /* CameraUploadNotifier.swift */; };
 		0E2FD9DD2A258C3B00FB75F1 /* GetCollectionsLinkViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E2FD9DC2A258C3B00FB75F1 /* GetCollectionsLinkViewModelTests.swift */; };
 		0E2FEAA82A7B44AC00D237C6 /* GetLinkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E2FEAA62A7B44AC00D237C6 /* GetLinkView.swift */; };
 		0E2FEAAA2A7B463700D237C6 /* GetLinkRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E2FEAA92A7B463600D237C6 /* GetLinkRouter.swift */; };
@@ -2799,6 +2800,7 @@
 		0E2085732C7577880018CA18 /* HiddenFilesCloseOnboardingPrimaryButtonViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HiddenFilesCloseOnboardingPrimaryButtonViewModelTests.swift; sourceTree = "<group>"; };
 		0E2586F42C4DBF220076A4E4 /* Preview_SensitiveNodeUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preview_SensitiveNodeUseCase.swift; sourceTree = "<group>"; };
 		0E261EB22DA5FE0400858151 /* AppDelegate+Authentication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppDelegate+Authentication.swift"; sourceTree = "<group>"; };
+		0E2D99FA2ECBCB4200C97AD4 /* CameraUploadNotifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraUploadNotifier.swift; sourceTree = "<group>"; };
 		0E2FD9DC2A258C3B00FB75F1 /* GetCollectionsLinkViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetCollectionsLinkViewModelTests.swift; sourceTree = "<group>"; };
 		0E2FEAA62A7B44AC00D237C6 /* GetLinkView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetLinkView.swift; sourceTree = "<group>"; };
 		0E2FEAA92A7B463600D237C6 /* GetLinkRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetLinkRouter.swift; sourceTree = "<group>"; };
@@ -11644,6 +11646,7 @@
 				B6BD011E21B62D8E00E97086 /* CameraUploadManager+Settings.m */,
 				B658D3CA218FBC24004C0D64 /* CameraUploadManager.h */,
 				B658D3C9218FBC24004C0D64 /* CameraUploadManager.m */,
+				0E2D99FA2ECBCB4200C97AD4 /* CameraUploadNotifier.swift */,
 				0EF7E5D82E95DF2A0098367B /* CameraUploadRecordManager+Additions.swift */,
 				B6D9D7ED216AE5D000D7B08A /* CameraUploadRecordManager.h */,
 				B6D9D7EE216AE5D000D7B08A /* CameraUploadRecordManager.m */,
@@ -14490,6 +14493,7 @@
 				B6BD011F21B62D8E00E97086 /* CameraUploadManager+Settings.m in Sources */,
 				B658D3CC218FBC24004C0D64 /* CameraUploadManager.m in Sources */,
 				A5EFB0532B9AE0DA0055E5FC /* CameraUploadNodeAccess+Additions.swift in Sources */,
+				0E2D99FB2ECBCB4200C97AD4 /* CameraUploadNotifier.swift in Sources */,
 				A8C6494B2A39B8B0009F59ED /* CameraUploadOperation+Additions.swift in Sources */,
 				B672EDB3221CD96000DE6684 /* CameraUploadOperation+Utils.m in Sources */,
 				B68C42CB216DAA85003C5A50 /* CameraUploadOperation.m in Sources */,

@@ -208,6 +208,41 @@ struct CameraUploadProgressViewModelTests {
             #expect(banner?.buttonViewModel?.text == buttonText)
         }
     }
+    
+    @MainActor
+    @Test
+    func showCameraUploadSettings() async throws {
+        let cameraUploadProgressRouter = MockCameraUploadProgressRouter()
+        let sut = Self.makeSUT(cameraUploadProgressRouter: cameraUploadProgressRouter)
+        
+        sut.showCameraUploadSettings()
+        
+        #expect(cameraUploadProgressRouter.showCameraUploadSettingsCalledCount == 1)
+    }
+    
+    @MainActor
+    @Test
+    func monitorVideoSettings() async throws {
+        let notificationCenter = NotificationCenter()
+        let sut = Self.makeSUT(notificationCenter: notificationCenter)
+        // Wait for monitoring to start
+        try await Task.sleep(nanoseconds: 150_000_000)
+        
+        await sut.cameraUploadProgressTableViewModel.loadInitial()
+        let initialValue = sut.cameraUploadProgressTableViewModel.isInitialLoad
+        #expect(initialValue == false)
+        
+        notificationCenter.post(name: .cameraUploadVideoUploadSettingChanged, object: nil)
+        
+        let finalValue = try await withTimeout(seconds: 1) {
+            while await sut.cameraUploadProgressTableViewModel.isInitialLoad == initialValue {
+                try await Task.sleep(nanoseconds: 10_000_000) // 10ms
+            }
+            return await sut.cameraUploadProgressTableViewModel.isInitialLoad
+        }
+        
+        #expect(finalValue == true)
+    }
 
     @MainActor
     private static func makeSUT(
@@ -219,7 +254,8 @@ struct CameraUploadProgressViewModelTests {
         preferenceUseCase: some PreferenceUseCaseProtocol = MockPreferenceUseCase(),
         accountStorageUseCase: some AccountStorageUseCaseProtocol = MockAccountStorageUseCase(),
         cameraUploadProgressRouter: some CameraUploadProgressRouting = MockCameraUploadProgressRouter(),
-        devicePermissionHandler: some DevicePermissionsHandling = MockDevicePermissionHandler()
+        devicePermissionHandler: some DevicePermissionsHandling = MockDevicePermissionHandler(),
+        notificationCenter: NotificationCenter = .default
     ) -> CameraUploadProgressViewModel {
         .init(
             monitorCameraUploadUseCase: monitorCameraUploadUseCase,
@@ -230,7 +266,8 @@ struct CameraUploadProgressViewModelTests {
             preferenceUseCase: preferenceUseCase,
             accountStorageUseCase: accountStorageUseCase,
             cameraUploadProgressRouter: cameraUploadProgressRouter,
-            devicePermissionHandler: devicePermissionHandler)
+            devicePermissionHandler: devicePermissionHandler,
+            notificationCenter: notificationCenter)
     }
     
     private static func uploadStatus(pendingFilesCount: UInt, isPaused: Bool = false) -> String {
@@ -245,10 +282,15 @@ struct CameraUploadProgressViewModelTests {
 
 final class MockCameraUploadProgressRouter: CameraUploadProgressRouting {
     private(set) var showUpgradeAccountCalledCount = 0
+    private(set) var showCameraUploadSettingsCalledCount = 0
     
     nonisolated init() {}
     
     func showUpgradeAccount() {
         showUpgradeAccountCalledCount += 1
+    }
+    
+    func showCameraUploadSettings() {
+        showCameraUploadSettingsCalledCount += 1
     }
 }

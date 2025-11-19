@@ -173,6 +173,13 @@ final class CameraUploadProgressTableViewModel: ObservableObject {
         visibleIndex < pageSize || visibleIndex >= (totalItems - pageSize)
     }
     
+    func reset() async {
+        await paginationManager.reset()
+        inProgressSnapshotUpdate = nil
+        inQueueSnapshotUpdate = nil
+        isInitialLoad = true
+    }
+    
     private func applyInQueueUpdate(_ update: PaginationUpdate) {
         firstPageIndex = update.firstPageIndex
         lastPageIndex = update.lastPageIndex
