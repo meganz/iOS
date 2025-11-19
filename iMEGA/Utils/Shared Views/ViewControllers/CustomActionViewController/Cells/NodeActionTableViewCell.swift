@@ -1,16 +1,42 @@
+import MEGAAppPresentation
 import MEGAAssets
 import MEGADesignToken
 
 final class NodeActionTableViewCell: ActionSheetCell {
     func configureCell(action: NodeAction) {
         super.configureCell(action: action)
-        
+
         guard let title = action.title,
               action.showProTag else { return }
         textLabel?.attributedText = makeProTagAttributedString(title: title,
                                                                style: action.style)
     }
+
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        configureForRevampUIIfNeeded()
+    }
     
+    @MainActor required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    private func configureForRevampUIIfNeeded() {
+        if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .cloudDriveRevamp) {
+            guard let imgView = imageView else { return }
+
+            imgView.translatesAutoresizingMaskIntoConstraints = false
+
+            NSLayoutConstraint.activate([
+                imgView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
+                imgView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+                imgView.widthAnchor.constraint(equalToConstant: 24),
+                imgView.heightAnchor.constraint(equalToConstant: 24)
+            ])
+            imgView.contentMode = .scaleAspectFit
+        }
+    }
+
     private func makeProTagAttributedString(title: String,
                                             style: UIAlertAction.Style) -> NSAttributedString {
         let titleAttributes: [NSAttributedString.Key: Any] = [NSAttributedString.Key.foregroundColor: textColour(style: style)]

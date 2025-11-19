@@ -47,7 +47,7 @@ class NodeActionViewController: ActionSheetViewController {
     lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = .preferredFont(style: .subheadline, weight: .medium)
+        label.font = isCloudDriveRevampEnabled ? .preferredFont(style: .body, weight: .semibold) : .preferredFont(style: .subheadline, weight: .medium)
         label.adjustsFontForContentSizeCategory = true
         return label
     }()
@@ -55,7 +55,7 @@ class NodeActionViewController: ActionSheetViewController {
     lazy var subtitleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = .preferredFont(forTextStyle: .caption1)
+        label.font = isCloudDriveRevampEnabled ? .preferredFont(forTextStyle: .footnote) : .preferredFont(forTextStyle: .caption1)
         label.adjustsFontForContentSizeCategory = true
         return label
     }()
@@ -74,6 +74,7 @@ class NodeActionViewController: ActionSheetViewController {
     }()
     
     private var isUndecryptedFolder = false
+    private var isCloudDriveRevampEnabled: Bool { DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .cloudDriveRevamp) }
     @MainActor private var loadActions: (() async -> Void)?
     
     // MARK: - NodeActionViewController initializers
@@ -484,11 +485,14 @@ class NodeActionViewController: ActionSheetViewController {
         
         headerView?.addSubview(nodeImageView)
         nodeImageView.translatesAutoresizingMaskIntoConstraints = false
+        let iconSize = isCloudDriveRevampEnabled ? 32.0 : 40.0
+        let iconLeading = isCloudDriveRevampEnabled ? 16.0 : 8.0
+        let iconCenterYOffset = isCloudDriveRevampEnabled ? 12.0 : 0.0
         NSLayoutConstraint.activate([
-            nodeImageView.widthAnchor.constraint(equalToConstant: 40),
-            nodeImageView.heightAnchor.constraint(equalToConstant: 40),
-            nodeImageView.leadingAnchor.constraint(equalTo: headerView!.safeAreaLayoutGuide.leadingAnchor, constant: 8),
-            nodeImageView.centerYAnchor.constraint(equalTo: headerView!.centerYAnchor)
+            nodeImageView.widthAnchor.constraint(equalToConstant: iconSize),
+            nodeImageView.heightAnchor.constraint(equalToConstant: iconSize),
+            nodeImageView.leadingAnchor.constraint(equalTo: headerView!.safeAreaLayoutGuide.leadingAnchor, constant: iconLeading),
+            nodeImageView.centerYAnchor.constraint(equalTo: headerView!.centerYAnchor, constant: iconCenterYOffset)
         ])
         nodeImageView.mnz_setThumbnail(by: node)
         Task { await configureSensitivity(for: node.toNodeEntity()) }
@@ -497,7 +501,7 @@ class NodeActionViewController: ActionSheetViewController {
         NSLayoutConstraint.activate([
             titleLabel.leadingAnchor.constraint(equalTo: nodeImageView.trailingAnchor, constant: 8),
             titleLabel.trailingAnchor.constraint(equalTo: headerView!.trailingAnchor, constant: -8),
-            titleLabel.centerYAnchor.constraint(equalTo: headerView!.centerYAnchor, constant: -10)
+            titleLabel.centerYAnchor.constraint(equalTo: nodeImageView.centerYAnchor, constant: -10)
         ])
 
         let title = isUndecryptedFolder ? Strings.Localizable.SharedItems.Tab.Incoming.undecryptedFolderName
@@ -522,23 +526,25 @@ class NodeActionViewController: ActionSheetViewController {
             subtitleLabel.trailingAnchor.constraint(equalTo: headerView!.trailingAnchor, constant: -8).isActive = true
         }
         
-        subtitleLabel.centerYAnchor.constraint(equalTo: headerView!.centerYAnchor, constant: 10).isActive = true
-                
+        subtitleLabel.centerYAnchor.constraint(equalTo: nodeImageView.centerYAnchor, constant: 10).isActive = true
+
         if node.isFile() {
             subtitleLabel.text = sizeAndModicationDate(node.toNodeEntity())
         } else {
             subtitleLabel.text = getFilesAndFolders(node.toNodeEntity())
         }
-        
-        headerView?.addSubview(separatorLineView)
-        NSLayoutConstraint.activate([
-            separatorLineView.leadingAnchor.constraint(equalTo: headerView!.leadingAnchor),
-            separatorLineView.trailingAnchor.constraint(equalTo: headerView!.trailingAnchor),
-            separatorLineView.bottomAnchor.constraint(equalTo: headerView!.bottomAnchor),
-            separatorLineView.heightAnchor.constraint(equalToConstant: 1 / UIScreen.main.scale)
-        ])
+
+        if !isCloudDriveRevampEnabled {
+            headerView?.addSubview(separatorLineView)
+            NSLayoutConstraint.activate([
+                separatorLineView.leadingAnchor.constraint(equalTo: headerView!.leadingAnchor),
+                separatorLineView.trailingAnchor.constraint(equalTo: headerView!.trailingAnchor),
+                separatorLineView.bottomAnchor.constraint(equalTo: headerView!.bottomAnchor),
+                separatorLineView.heightAnchor.constraint(equalToConstant: 1 / UIScreen.main.scale)
+            ])
+        }
     }
-    
+
     private func sizeAndModicationDate(_ nodeModel: NodeEntity) -> String {
         if viewModel.isModificationTimeUndefined(for: nodeModel) {
             return sizeForFile(nodeModel)

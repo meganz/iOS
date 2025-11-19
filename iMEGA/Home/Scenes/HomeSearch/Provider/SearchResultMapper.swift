@@ -200,7 +200,7 @@ struct SearchResultMapper: Sendable {
         if nodeUseCase.isInRubbishBin(nodeHandle: node.handle) {
             if nodeUseCase.isRestorable(node: node),
                !nodeUseCase.isInRubbishBin(nodeHandle: node.restoreParentHandle) {
-                let restoreImage = isCloudDriveRevampEnabled ? MEGAAssets.Image.cornerUpLeft : MEGAAssets.Image.restore
+                let restoreImage = isCloudDriveRevampEnabled ? MEGAAssets.Image.rotateCcw : MEGAAssets.Image.restore
                 let restoreBackgroundColor = isCloudDriveRevampEnabled ? TokenColors.Indicator.green.swiftUI : turquoiseBackgroundColor
                 return [
                     SearchResultSwipeAction(

@@ -273,24 +273,13 @@ final class NodeActionBuilder {
     }
     
     private func folderLinkNodeActions() -> [NodeAction] {
-        var nodeActions: [NodeAction] = [
+        [
             .importAction(),
             .downloadAction(),
             .selectAction(),
             .shareLinkAction(),
-            .sendToChatAction(),
-            .sortAction()
+            .sendToChatAction()
         ]
-        if containsMediaFiles {
-            nodeActions.append(.mediaDiscoveryAction())
-        }
-        if viewMode == .list {
-            nodeActions.append(.thumbnailAction())
-        } else {
-            nodeActions.append(.listAction())
-        }
-        
-        return nodeActions
     }
     
     private func fileLinkNodeActions() -> [NodeAction] {

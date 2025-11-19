@@ -1,8 +1,12 @@
+import MEGAAppPresentation
 import MEGADesignToken
 import MEGASwiftUI
 import SwiftUI
 
 class ActionSheetCell: UITableViewCell {
+    private var isCloudDriveRevampEnabled: Bool {
+        DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .cloudDriveRevamp)
+    }
 
     var accessoryTappedHandler: (() -> Void)?
     
@@ -22,6 +26,9 @@ class ActionSheetCell: UITableViewCell {
             imageView?.tintColor = textLabel?.textColor
         } else {
             imageView?.image = action.image
+            if isCloudDriveRevampEnabled {
+                imageView?.tintColor = TokenColors.Icon.primary
+            }
         }
         // [MEET-3972] action item to toggle call layout is disabled
         // when user is sharing his/her screen

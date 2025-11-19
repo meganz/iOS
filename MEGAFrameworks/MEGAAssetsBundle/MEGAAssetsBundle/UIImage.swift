@@ -434,5 +434,13 @@ public struct MEGAUIImageBundle {
     public static var glassShareIn: UIImage { UIImage.glassShareIn }
     public static var glassShareOut: UIImage { UIImage.glassShareOut }
     public static var glassLink: UIImage { UIImage.glassLink }
+    public static var heartOutline: UIImage { UIImage.heartOutline }
+    public static var linkOff02: UIImage { UIImage.linkOff02 }
+    public static var removeShareMono: UIImage { UIImage.removeShareMono }
+    public static var minusCircle: UIImage { UIImage.minusCircle }
+    public static var rotateCcw: UIImage { UIImage.rotateCcw }
+    public static var searchSmall: UIImage { UIImage.searchSmall }
+    public static var x: UIImage { UIImage.x }
+    public static var alertTriangle: UIImage { UIImage.alertTriangle }
     public static var glassCheckCircle: UIImage { UIImage.glassCheckCircle }
 }

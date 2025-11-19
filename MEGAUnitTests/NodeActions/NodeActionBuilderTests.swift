@@ -731,8 +731,8 @@ class NodeActionBuilderTests {
             .setDisplayMode(.folderLink)
             .setIsFile(false)
             .build()
-        
-        #expect(isEqual(nodeActionTypes: [.import, .download, .select, .shareLink, .sendToChat, .sort, .thumbnail]) == true)
+
+        #expect(isEqual(nodeActionTypes: [.import, .download, .select, .shareLink, .sendToChat]) == true)
     }
     
     @Test
@@ -741,8 +741,9 @@ class NodeActionBuilderTests {
             .setDisplayMode(.folderLink)
             .setIsFile(false)
             .build()
-        
-        #expect(isEqual(nodeActionTypes: [.import, .download, .select, .shareLink, .sendToChat, .sort, .thumbnail]) == true)
+        let types = actions.map { $0.type }
+        print(types)
+        #expect(isEqual(nodeActionTypes: [.import, .download, .select, .shareLink, .sendToChat]) == true)
     }
     
     @Test
@@ -751,8 +752,9 @@ class NodeActionBuilderTests {
             .setDisplayMode(.folderLink)
             .setContainsMediaFiles(true)
             .build()
-        
-        #expect(isEqual(nodeActionTypes: [.import, .download, .select, .shareLink, .sendToChat, .sort, .mediaDiscovery, .thumbnail]) == true)
+        let types = actions.map { $0.type }
+        print(types)
+        #expect(isEqual(nodeActionTypes: [.import, .download, .select, .shareLink, .sendToChat]) == true)
     }
     
     @Test

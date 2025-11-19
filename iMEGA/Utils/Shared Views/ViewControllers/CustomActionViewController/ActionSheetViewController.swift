@@ -1,6 +1,10 @@
+import MEGAAppPresentation
 import MEGADesignToken
 
 class ActionSheetViewController: UIViewController {
+    private var isCloudDriveRevampEnabled: Bool {
+        DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .cloudDriveRevamp)
+    }
 
     lazy var tableView: UITableView = {
         let tableView = UITableView()
@@ -10,6 +14,9 @@ class ActionSheetViewController: UIViewController {
         tableView.bounces = true
         tableView.layer.cornerRadius = 16
         tableView.tableFooterView = UIView()
+        if isCloudDriveRevampEnabled {
+            tableView.separatorColor = .clear
+        }
         return tableView
     }()
     
