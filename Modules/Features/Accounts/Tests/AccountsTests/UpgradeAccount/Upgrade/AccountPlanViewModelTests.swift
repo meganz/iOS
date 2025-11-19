@@ -183,6 +183,7 @@ struct AccountPlanViewModelTests {
             planTag: planTag,
             isSelected: isSelected,
             isSelectionEnabled: isSelectionEnabled,
+            isNewYearlyPlanStyleEnabled: true,
             now: now,
             calendar: calendar,
             timeZone: timeZone,

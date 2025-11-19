@@ -1,6 +1,5 @@
 import Contacts
 import Intents
-import MEGADomain
 import MEGAIntentDomain
 import XCTest
 
@@ -72,11 +71,6 @@ class IntentPersonUseCaseTests: XCTestCase {
 
 private extension IntentPersonUseCaseTests {
     struct MockContactsRepository: DeviceContactsRepositoryProtocol {
-        static var newRepo: MockContactsRepository {
-            MockContactsRepository(contacts: [])
-        }
-
-        var isAuthorizedToAccessPhoneContacts: Bool = true
         let contactsToReturn: [CNContact]
 
         init(contacts: [CNContact]) {

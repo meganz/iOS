@@ -19,7 +19,8 @@ let package = Package(
         )
     ],
     dependencies: [
-        .package(path: "../MEGADomain")
+        .package(path: "../MEGADomain"),
+        .package(path: "../../MEGASharedRepo/MEGATest")
     ],
     targets: [
         .target(
@@ -29,7 +30,11 @@ let package = Package(
         ),
         .testTarget(
             name: "MEGAPickerFileProviderDomainTests",
-            dependencies: ["MEGAPickerFileProviderDomain"],
+            dependencies: [
+                "MEGAPickerFileProviderDomain",
+                "MEGATest",
+                .product(name: "MEGADomainMock", package: "MEGADomain")
+            ],
             swiftSettings: settings
         )
     ],

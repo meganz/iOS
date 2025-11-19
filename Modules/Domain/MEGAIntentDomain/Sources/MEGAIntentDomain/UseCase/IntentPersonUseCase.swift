@@ -7,9 +7,17 @@ protocol IntentPersonUseCaseProtocol {
 }
 
 public struct IntentPersonUseCase: IntentPersonUseCaseProtocol {
-    private let store = CNContactStore()
+    private let repository: any DeviceContactsRepositoryProtocol
     
-    public init() { }
+    public init(
+        repository: some DeviceContactsRepositoryProtocol
+    ) {
+        self.repository = repository
+    }
+    
+    public init() {
+        self.init(repository: DeviceContactsRepository())
+    }
 
     public func personsInContacts(matching person: INPerson) -> [INPerson] {
         let contacts = fetchContacts()
@@ -35,25 +43,7 @@ public struct IntentPersonUseCase: IntentPersonUseCaseProtocol {
     // MARK: - Private
     
     private func fetchContacts() -> [CNContact] {
-        var contacts: [CNContact] = []
-        
-        let keys: [any CNKeyDescriptor] = [
-            CNContactGivenNameKey as (any CNKeyDescriptor),
-            CNContactFamilyNameKey as (any CNKeyDescriptor),
-            CNContactEmailAddressesKey as (any CNKeyDescriptor)
-        ]
-        
-        let fetchRequest = CNContactFetchRequest(keysToFetch: keys)
-        
-        do {
-            try store.enumerateContacts(with: fetchRequest) { contact, _ in
-                contacts.append(contact)
-            }
-        } catch {
-            assertionFailure("[IntentPersonUseCase] Unable to fetch contacts")
-        }
-        
-        return contacts
+        repository.fetchContacts()
     }
 }
 

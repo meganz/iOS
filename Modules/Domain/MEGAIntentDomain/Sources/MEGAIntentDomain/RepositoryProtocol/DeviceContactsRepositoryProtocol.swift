@@ -1,38 +1,30 @@
 import Contacts
-import MEGADomain
 
-public struct DeviceContactsRepository: DeviceContactsRepositoryProtocol {
-    public static var newRepo: DeviceContactsRepository {
-        DeviceContactsRepository()
-    }
+public protocol DeviceContactsRepositoryProtocol {
+    func fetchContacts() -> [CNContact]
+}
 
-    public var isAuthorizedToAccessPhoneContacts: Bool {
-        CNContactStore.authorizationStatus(for: .contacts) == .authorized
-    }
-
-    private let store = CNContactStore()
-    
-    public init() {}
-
-    public func fetchContacts() -> [CNContact] {
+struct DeviceContactsRepository: DeviceContactsRepositoryProtocol {
+    func fetchContacts() -> [CNContact] {
+        let store = CNContactStore()
         var contacts: [CNContact] = []
-
+        
         let keys: [any CNKeyDescriptor] = [
             CNContactGivenNameKey as (any CNKeyDescriptor),
             CNContactFamilyNameKey as (any CNKeyDescriptor),
             CNContactEmailAddressesKey as (any CNKeyDescriptor)
         ]
-
+        
         let fetchRequest = CNContactFetchRequest(keysToFetch: keys)
-
+        
         do {
             try store.enumerateContacts(with: fetchRequest) { contact, _ in
                 contacts.append(contact)
             }
         } catch {
-            assertionFailure("[ContactsRepository] Unable to fetch contacts")
+            assertionFailure("[DeviceContactsRepository] Unable to fetch contacts")
         }
-
+        
         return contacts
     }
 }
