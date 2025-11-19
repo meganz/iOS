@@ -20,7 +20,7 @@ struct FeatureFlagProvider: FeatureFlagProviderProtocol {
 #endif
     
     private let useCase: any FeatureFlagUseCaseProtocol
-
+    
     init(
         useCase: some FeatureFlagUseCaseProtocol = FeatureFlagUseCase(repository: FeatureFlagRepository.newRepo)
     ) {
@@ -30,7 +30,11 @@ struct FeatureFlagProvider: FeatureFlagProviderProtocol {
     public func isFeatureFlagEnabled(for key: FeatureFlagKey) -> Bool {
         if FeatureFlagKey.rolledOutKeys.contains(key) { return true }
         guard !Self.disableFeatureFlags else { return false }
-
+        
         return useCase.isFeatureFlagEnabled(for: key.rawValue)
+    }
+    
+    public func isLiquidGlassEnabled() -> Bool {
+        !(Bundle.main.object(forInfoDictionaryKey: "UIDesignRequiresCompatibility") as? Bool ?? false)
     }
 }
