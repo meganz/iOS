@@ -12,7 +12,9 @@ extension TransfersWidgetViewController: TransferWidgetResponderProtocol {
     private enum Constants {
         static let defaultBottomAnchor: CGFloat = -60
     }
-    
+
+    private var isCloudDriveRevampEnabled: Bool { DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .cloudDriveRevamp) }
+
     @objc
     func createTransfersWidgetViewModel() -> TransfersWidgetViewModel {
         TransfersWidgetViewModel(
@@ -35,12 +37,13 @@ extension TransfersWidgetViewController: TransferWidgetResponderProtocol {
     
     @objc
     func configProgressIndicator() {
-        let progressIndicatorView = ProgressIndicatorView.init(frame: CGRect(x: 0, y: 0, width: 70, height: 70))
+        let progressIndicatorView = ProgressIndicatorView(frame: CGRect(x: 0, y: 0, width: 70, height: 70))
         progressIndicatorView.isUserInteractionEnabled = true
         progressIndicatorView.isHidden = true
-        
+        showProgressIndicatorViewFromLeft = true
+
         self.progressView = progressIndicatorView
-        
+
         progressIndicatorView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tapProgressView)))
         
         progressIndicatorView.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(dragTransferWidget(_ :))))
@@ -78,8 +81,8 @@ extension TransfersWidgetViewController: TransferWidgetResponderProtocol {
         progressViewBottomConstraint = progressIndicatorView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: bottomAnchor)
         progressViewLeadingConstraint = progressIndicatorView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 4.0)
         progressViewTraillingConstraint = progressIndicatorView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -4.0)
-        
-        let transferWidgetLeft = UserDefaults.standard.bool(forKey: "TransferWidgetViewLocationLeft")
+
+        let transferWidgetLeft = isCloudDriveRevampEnabled ? showProgressIndicatorViewFromLeft : UserDefaults.standard.bool(forKey: "TransferWidgetViewLocationLeft")
         let transferWidgetSideConstraint: NSLayoutConstraint
         if transferWidgetLeft {
             transferWidgetSideConstraint = progressViewLeadingConstraint
@@ -179,17 +182,29 @@ extension TransfersWidgetViewController: TransferWidgetResponderProtocol {
         case .ended, .cancelled:
             let location = panView?.center
             guard let x = location?.x else { return }
-            
-            if x > UIScreen.main.bounds.width / 2 {
-                progressViewLeadingConstraint.isActive = false
-                progressViewTraillingConstraint.isActive = true
-                UserDefaults.standard.set(false, forKey: "TransferWidgetViewLocationLeft")
+
+            if isCloudDriveRevampEnabled {
+                if x > UIScreen.main.bounds.width / 2 {
+                    progressViewLeadingConstraint.isActive = false
+                    progressViewTraillingConstraint.isActive = true
+                    showProgressIndicatorViewFromLeft = false
+                } else {
+                    progressViewLeadingConstraint.isActive = true
+                    progressViewTraillingConstraint.isActive = false
+                    showProgressIndicatorViewFromLeft = true
+                }
             } else {
-                progressViewLeadingConstraint.isActive = true
-                progressViewTraillingConstraint.isActive = false
-                UserDefaults.standard.set(true, forKey: "TransferWidgetViewLocationLeft")
+                if x > UIScreen.main.bounds.width / 2 {
+                    progressViewLeadingConstraint.isActive = false
+                    progressViewTraillingConstraint.isActive = true
+                    UserDefaults.standard.set(false, forKey: "TransferWidgetViewLocationLeft")
+                } else {
+                    progressViewLeadingConstraint.isActive = true
+                    progressViewTraillingConstraint.isActive = false
+                    UserDefaults.standard.set(true, forKey: "TransferWidgetViewLocationLeft")
+                }
             }
-            
+
             view.setNeedsLayout()
             UIView.animate(withDuration: 0.3) {
                 self.view.layoutIfNeeded()

@@ -12,6 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) NSMutableArray<NSString *> *queuedUploadTransfers;
 @property (strong, nonatomic) NSMutableArray<MEGATransfer *> *transfers;
 @property (strong, nonatomic) NSMutableArray<MEGATransfer *> *completedTransfers;
+@property (assign, nonatomic) BOOL showProgressIndicatorViewFromLeft;
 
 @property (nonatomic, nonnull) NSLayoutConstraint *progressViewWidthConstraint;
 @property (nonatomic, nonnull) NSLayoutConstraint *progressViewHeightConstraint;
