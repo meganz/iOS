@@ -21,6 +21,7 @@ final class CameraUploadProgressTableViewController: UITableViewController {
     private var scrollDebounceTask: Task<Void, Never>? {
         didSet { oldValue?.cancel() }
     }
+    private var lastScrollOffset: CGFloat = 0
     
     init(viewModel: CameraUploadProgressTableViewModel) {
         self.viewModel = viewModel
@@ -51,6 +52,8 @@ final class CameraUploadProgressTableViewController: UITableViewController {
         super.viewDidDisappear(animated)
         
         monitorCameraUploadsTask = nil
+        scrollDebounceTask = nil
+        lastScrollOffset = 0
     }
     
     private func setupBindings() {
@@ -156,6 +159,12 @@ final class CameraUploadProgressTableViewController: UITableViewController {
     }
     
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let currentOffset = scrollView.contentOffset.y
+        let offsetDelta = abs(currentOffset - lastScrollOffset)
+        
+        let scrollThreshold = viewModel.rowHeight * 0.5
+        guard offsetDelta > scrollThreshold else { return }
+        
         let isUserInitiated = scrollView.isTracking || scrollView.isDragging || scrollView.isDecelerating
         guard !viewModel.isPaginationInProgress else { return }
         
@@ -170,6 +179,8 @@ final class CameraUploadProgressTableViewController: UITableViewController {
         let middleQueueIndexPath = queueIndexPaths[queueIndexPaths.count / 2]
         let middleIndex = middleQueueIndexPath.row
         let totalItems = items.count
+        
+        lastScrollOffset = currentOffset
         
         scrollDebounceTask = Task { @MainActor [weak viewModel] in
             guard let viewModel else { return }

@@ -30,7 +30,7 @@ final class CameraUploadProgressTableViewModel: ObservableObject {
     private var lastPageIndex: Int = 0
     private var lastProcessedPageIndex: Int?
     private(set) var isPaginationInProgress = false
-    private var hasHandledProgrammaticScrollNearEdge = false
+    private var lastScrollPosition: Int?
     
     // MARK: - Internal Properties
     let rowHeight: CGFloat = 60
@@ -126,34 +126,29 @@ final class CameraUploadProgressTableViewModel: ObservableObject {
             MEGALogDebug("[\(type(of: self))] Pagination already in progress, skipping")
             return
         }
-        
-        let edgeThreshold = pageSize
-        let isNearEdge = visibleIndex < edgeThreshold || visibleIndex >= (totalVisibleItems - edgeThreshold)
-        
-        if !isNearEdge && isUserInitiated {
-            hasHandledProgrammaticScrollNearEdge = false
+        guard lastScrollPosition != visibleIndex else {
+            return
         }
         
-        if !isUserInitiated {
-            let isNearBottomEdge = visibleIndex >= (totalVisibleItems - edgeThreshold)
-            guard isNearBottomEdge && !hasHandledProgrammaticScrollNearEdge else {
-                MEGALogDebug("[\(type(of: self))] Ignoring programmatic scroll - nearBottom: \(isNearBottomEdge), handled: \(hasHandledProgrammaticScrollNearEdge)")
-                return
-            }
-            hasHandledProgrammaticScrollNearEdge = true
-            MEGALogDebug("[\(type(of: self))] Handling programmatic scroll near bottom edge")
+        lastScrollPosition = visibleIndex
+        
+        guard totalVisibleItems > pageSize else { return }
+        
+        let shouldPaginate = if isUserInitiated {
+            shouldLoadMore(for: visibleIndex, totalItems: totalVisibleItems)
+        } else {
+            isNearEdge(visibleIndex: visibleIndex, totalItems: totalVisibleItems)
         }
-        
-        isPaginationInProgress = true
-        defer { isPaginationInProgress = false }
-        
-        guard totalVisibleItems > pageSize,
-              shouldLoadMore(for: visibleIndex, totalItems: totalVisibleItems) else { return }
+        guard shouldPaginate else { return }
         
         let itemIndex = (firstPageIndex * pageSize) + visibleIndex
         let currentPageIndex = itemIndex / pageSize
         
         guard lastProcessedPageIndex != currentPageIndex else { return }
+        
+        isPaginationInProgress = true
+        defer { isPaginationInProgress = false }
+        
         lastProcessedPageIndex = currentPageIndex
         
         MEGALogDebug("[\(type(of: self))] Loading page \(currentPageIndex) (itemIndex: \(itemIndex))")
@@ -166,7 +161,6 @@ final class CameraUploadProgressTableViewModel: ObservableObject {
         }
         
         applyInQueueUpdate(update)
-        hasHandledProgrammaticScrollNearEdge = false
     }
     
     func isNearEdge(visibleIndex: Int, totalItems: Int) -> Bool {
@@ -178,6 +172,10 @@ final class CameraUploadProgressTableViewModel: ObservableObject {
         inProgressSnapshotUpdate = nil
         inQueueSnapshotUpdate = nil
         isInitialLoad = true
+        
+        lastProcessedPageIndex = nil
+        lastScrollPosition = nil
+        isPaginationInProgress = false
     }
     
     private func applyInQueueUpdate(_ update: PaginationUpdate) {
@@ -200,7 +198,9 @@ final class CameraUploadProgressTableViewModel: ObservableObject {
     }
     
     private func shouldLoadMore(for visibleIndex: Int, totalItems: Int) -> Bool {
-        let threshold = Int(Double(pageSize) * 2.5)
-        return visibleIndex < threshold || visibleIndex >= (totalItems - threshold)
+        let edgeThreshold = max(pageSize / 2, 10)
+        let isNearTopEdge = visibleIndex < edgeThreshold
+        let isNearBottomEdge = visibleIndex >= (totalItems - edgeThreshold)
+        return (isNearTopEdge || isNearBottomEdge) && totalItems >= pageSize
     }
 }

@@ -5,14 +5,17 @@ import UIKit
 @MainActor
 final class CameraUploadProgressDiffableDatasource: UITableViewDiffableDataSource<CameraUploadProgressSections, CameraUploadProgressSectionRow> {
     private typealias Snapshot = NSDiffableDataSourceSnapshot<CameraUploadProgressSections, CameraUploadProgressSectionRow>
-
+    
     private weak var tableView: UITableView?
-
+    private var pendingQueueUpdate: Task<Void, any Error>?
+    private var lastQueueUpdateTime: Date = .distantPast
+    private let minUpdateInterval: TimeInterval = 0.1 // 100ms minimum between queue updates
+    
     override init(tableView: UITableView, cellProvider: @escaping UITableViewDiffableDataSource<CameraUploadProgressSections, CameraUploadProgressSectionRow>.CellProvider) {
         self.tableView = tableView
         super.init(tableView: tableView, cellProvider: cellProvider)
     }
-
+    
     func handleInProgressSnapshotUpdate(_ update: CameraUploadProgressTableViewModel.InProgressSnapshotUpdate) {
         switch update {
         case .initialLoad(let viewModels):
@@ -38,7 +41,7 @@ final class CameraUploadProgressDiffableDatasource: UITableViewDiffableDataSourc
     private func updateDataSourceForInitialLoad(viewModels: [CameraUploadInProgressRowViewModel]) {
         let currentSnapshot = snapshot()
         var snapshot = rebuildSnapshotWithSections(currentSnapshot: currentSnapshot)
-
+        
         if snapshot.itemIdentifiers(inSection: .inProgress).contains(.emptyInProgress) {
             snapshot.deleteItems([.emptyInProgress])
         }
@@ -54,12 +57,12 @@ final class CameraUploadProgressDiffableDatasource: UITableViewDiffableDataSourc
     
     private func addItemToDataSource(viewModel: CameraUploadInProgressRowViewModel) {
         var snapshot = snapshot()
-
+        
         let existingItems = snapshot.itemIdentifiers(inSection: .inProgress)
         if existingItems.contains(.emptyInProgress) {
             snapshot.deleteItems([.emptyInProgress])
         }
-
+        
         let newItem = CameraUploadProgressSectionRow.inProgress(viewModel)
         snapshot.appendItems([newItem], toSection: .inProgress)
         apply(snapshot, animatingDifferences: true)
@@ -104,7 +107,7 @@ final class CameraUploadProgressDiffableDatasource: UITableViewDiffableDataSourc
     private func updateDataSourceForInitialQueueLoad(viewModels: [CameraUploadInQueueRowViewModel]) {
         let currentSnapshot = snapshot()
         var snapshot = rebuildSnapshotWithSections(currentSnapshot: currentSnapshot)
-
+        
         let existingItems = snapshot.itemIdentifiers(inSection: .inQueue)
         if existingItems.contains(.emptyInQueue) {
             snapshot.deleteItems([.emptyInQueue])
@@ -119,49 +122,95 @@ final class CameraUploadProgressDiffableDatasource: UITableViewDiffableDataSourc
     }
     
     private func updateDataSourceForQueueUpdate(viewModels: [CameraUploadInQueueRowViewModel]) {
+        pendingQueueUpdate?.cancel()
+        
+        let now = Date()
+        let timeSinceLastUpdate = now.timeIntervalSince(lastQueueUpdateTime)
+        let shouldDebounce = timeSinceLastUpdate < minUpdateInterval
+        
+        if shouldDebounce {
+            pendingQueueUpdate = Task { @MainActor [weak self] in
+                guard let self else { return }
+                try await Task.sleep(nanoseconds: UInt64(minUpdateInterval * 1_000_000_000))
+                try await performQueueUpdate(viewModels: viewModels)
+            }
+        } else {
+            Task { @MainActor in
+                try await performQueueUpdate(viewModels: viewModels)
+            }
+        }
+    }
+    
+    private func performQueueUpdate(viewModels: [CameraUploadInQueueRowViewModel]) async throws {
+        lastQueueUpdateTime = Date()
+        
         var snapshot = snapshot()
-
+        
         var anchorItemId: String?
         var anchorOffset: CGFloat = 0
-
+        
         if let tableView = self.tableView,
            let visibleIndexPaths = tableView.indexPathsForVisibleRows {
+            
+            try Task.checkCancellation()
+            
             let queueIndexPaths = visibleIndexPaths.filter { $0.section == CameraUploadProgressSections.inQueue.rawValue }
+            
             if let firstVisibleQueueIndexPath = queueIndexPaths.first,
                let item = itemIdentifier(for: firstVisibleQueueIndexPath),
                case .inQueue = item,
                let cell = tableView.cellForRow(at: firstVisibleQueueIndexPath) {
+                
+                try Task.checkCancellation()
+                
                 anchorItemId = item.identifier
                 let cellFrameInTableView = tableView.convert(cell.frame, to: tableView)
                 anchorOffset = tableView.contentOffset.y - cellFrameInTableView.minY
             }
         }
-
+        
+        try Task.checkCancellation()
+        
         let existingQueueItems = snapshot.itemIdentifiers(inSection: .inQueue)
+        
+        try Task.checkCancellation()
+        
         let existingItemsById = Dictionary(uniqueKeysWithValues: existingQueueItems.compactMap { item -> (String, CameraUploadProgressSectionRow)? in
             guard case .inQueue(let vm) = item else { return nil }
             return (vm.id, item)
         })
-
+        
+        try Task.checkCancellation()
+        
         if existingQueueItems.contains(.emptyInQueue) {
             snapshot.deleteItems([.emptyInQueue])
         }
-
+        
+        try Task.checkCancellation()
+        
         let realQueueItems = existingQueueItems.filter {
             if case .inQueue = $0 { return true }
             return false
         }
+        
         snapshot.deleteItems(realQueueItems)
-
+        
+        try Task.checkCancellation()
+        
         if viewModels.isEmpty {
             snapshot.appendItems([.emptyInQueue], toSection: .inQueue)
         } else {
             let queueItems = viewModels.map { viewModel in
                 existingItemsById[viewModel.id] ?? CameraUploadProgressSectionRow.inQueue(viewModel)
             }
+            
+            try Task.checkCancellation()
+            
             snapshot.appendItems(queueItems, toSection: .inQueue)
         }
-
+        
+        try Task.checkCancellation()
+        
         apply(snapshot, animatingDifferences: false) { [weak self] in
             guard let self = self,
                   let tableView = self.tableView,
@@ -169,13 +218,14 @@ final class CameraUploadProgressDiffableDatasource: UITableViewDiffableDataSourc
                   !viewModels.isEmpty else {
                 return
             }
-
+            
             let newSnapshot = self.snapshot()
+            
             guard let anchorItem = newSnapshot.itemIdentifiers.first(where: { $0.identifier == anchorId }),
                   let anchorIndex = newSnapshot.indexOfItem(anchorItem) else {
                 return
             }
-
+            
             var sectionOffset = 0
             for section in newSnapshot.sectionIdentifiers {
                 if section == .inQueue {
@@ -183,21 +233,26 @@ final class CameraUploadProgressDiffableDatasource: UITableViewDiffableDataSourc
                 }
                 sectionOffset += newSnapshot.itemIdentifiers(inSection: section).count
             }
-
-            let newIndexPath = IndexPath(row: anchorIndex - sectionOffset, section: CameraUploadProgressSections.inQueue.rawValue)
-
+            
+            let newIndexPath = IndexPath(
+                row: anchorIndex - sectionOffset,
+                section: CameraUploadProgressSections.inQueue.rawValue
+            )
+            
             guard let cell = tableView.cellForRow(at: newIndexPath) else { return }
+            
             let cellFrameInTableView = tableView.convert(cell.frame, to: tableView)
             let targetOffset = cellFrameInTableView.minY + anchorOffset
             tableView.setContentOffset(CGPoint(x: 0, y: targetOffset), animated: false)
         }
     }
     
+    
     private func removeItemFromQueue(assetIdentifier: CameraUploadLocalIdentifierEntity) {
         var snapshot = snapshot()
-
+        
         guard snapshot.sectionIdentifiers.contains(.inQueue) else { return }
-
+        
         let queueItems = snapshot.itemIdentifiers(inSection: .inQueue)
         let itemsToRemove = queueItems.filter {
             if case .inQueue(let vm) = $0 {
@@ -205,11 +260,11 @@ final class CameraUploadProgressDiffableDatasource: UITableViewDiffableDataSourc
             }
             return false
         }
-
+        
         guard !itemsToRemove.isEmpty else {
             return
         }
-
+        
         snapshot.deleteItems(itemsToRemove)
         
         let remainingQueueItems = snapshot.itemIdentifiers(inSection: .inQueue).filter {
@@ -222,11 +277,11 @@ final class CameraUploadProgressDiffableDatasource: UITableViewDiffableDataSourc
         
         apply(snapshot, animatingDifferences: true)
     }
-
+    
     private func rebuildSnapshotWithSections(currentSnapshot: Snapshot) -> Snapshot {
         var snapshot = NSDiffableDataSourceSnapshot<CameraUploadProgressSections, CameraUploadProgressSectionRow>()
         snapshot.appendSections([.inProgress, .inQueue])
-
+        
         if currentSnapshot.sectionIdentifiers.contains(.inProgress) {
             let realInProgressItems = currentSnapshot.itemIdentifiers(inSection: .inProgress).filter {
                 if case .inProgress = $0 { return true }
@@ -240,7 +295,7 @@ final class CameraUploadProgressDiffableDatasource: UITableViewDiffableDataSourc
         } else {
             snapshot.appendItems([.emptyInProgress], toSection: .inProgress)
         }
-
+        
         if currentSnapshot.sectionIdentifiers.contains(.inQueue) {
             let realInQueueItems = currentSnapshot.itemIdentifiers(inSection: .inQueue).filter {
                 if case .inQueue = $0 { return true }
@@ -254,7 +309,7 @@ final class CameraUploadProgressDiffableDatasource: UITableViewDiffableDataSourc
         } else {
             snapshot.appendItems([.emptyInQueue], toSection: .inQueue)
         }
-
+        
         return snapshot
     }
 }

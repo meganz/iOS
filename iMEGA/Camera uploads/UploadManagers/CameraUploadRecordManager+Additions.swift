@@ -29,8 +29,8 @@ extension CameraUploadRecordManager: CameraUploadRecordStore {
             
             request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
             request.sortDescriptors = [
-                NSSortDescriptor(key: "creationDate", ascending: isForward),
-                NSSortDescriptor(key: "localIdentifier", ascending: isForward)
+                NSSortDescriptor(key: "creationDate", ascending: !isForward),
+                NSSortDescriptor(key: "localIdentifier", ascending: !isForward)
             ]
             
             request.relationshipKeyPathsForPrefetching = ["errorPerLaunch", "errorPerLogin"]
@@ -65,7 +65,7 @@ extension CameraUploadRecordManager: CameraUploadRecordStore {
     private func makeCursorPredicate(cursor: QueuedCameraUploadCursorDTO?, isForward: Bool, in context: NSManagedObjectContext) throws -> NSPredicate? {
         guard let cursor else { return nil }
         
-        let comparison = isForward ? ">" : "<"
+        let comparison = isForward ? "<" : ">"
         
         let datePredicate = NSPredicate(format: "creationDate \(comparison) %@", cursor.creationDate as NSDate)
         let sameDate = NSPredicate(format: "creationDate == %@", cursor.creationDate as NSDate)
