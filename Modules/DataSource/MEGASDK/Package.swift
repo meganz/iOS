@@ -21,7 +21,7 @@ let package = Package(
         .target(
             name: "MEGASdkCpp",
             dependencies: [
-                "libmegasdk"
+                "libmega"
             ],
             path: "Sources/MEGASDK",
             exclude: [
@@ -80,9 +80,9 @@ let package = Package(
             ]
         ),
         .binaryTarget(
-            name: "libmegasdk",
-            url: "https://s3.g.s4.mega.io/dmlaaezwz52y37atz56mfvmrvltfagrltbgpr/ios-xcframeworks/libmegasdk_25_09_11.xcframework.zip",
-            checksum: "596cbb34cdde786a1df2c1898454cd7c69917f7b6e21d6eb1efbe40db20bad88"
+            name: "libmega",
+            url: "https://s3.g.s4.mega.io/dmlaaezwz52y37atz56mfvmrvltfagrltbgpr/ios-xcframeworks/libmega_25_11_13.xcframework.zip",
+            checksum: "484d6a889753d333402e74a082a35f5cc55600a4bee59d244d40315feb98da5c"
         )
     ],
     cxxLanguageStandard: .cxx17

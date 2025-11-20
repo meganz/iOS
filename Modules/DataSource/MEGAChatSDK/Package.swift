@@ -21,13 +21,9 @@ let package = Package(
     targets: [
         .target(
             name: "MEGAChatSdkCpp",
-            dependencies: ["libnative_api",
-                           "libnative_video",
-                           "libvideocapture_objc",
-                           "libvideoframebuffer_objc",
-                           "libwebsockets",
-                           "libwebrtc",
-                           .product(name: "MEGASdkCpp", package: "MEGASdk")],
+            dependencies: [
+                .product(name: "MEGASdkCpp", package: "MEGASdk")
+            ],
             path: "Sources/MEGAChatSDK",
             exclude: ["bindings",
                       "contrib",
@@ -77,36 +73,6 @@ let package = Package(
                 .headerSearchPath("Private"),
                 .define("ENABLE_CHAT")
             ]
-        ),
-        .binaryTarget(
-            name: "libnative_api",
-            url: "https://s3.g.s4.mega.io/dmlaaezwz52y37atz56mfvmrvltfagrltbgpr/ios-xcframeworks/libnative_api_update_202501.xcframework.zip",
-            checksum: "13bd83d6c0ccbaf050861befaffe6bbf4d5f2ca810d49f38c9ec8005f1881a2b"
-        ),
-        .binaryTarget(
-            name: "libnative_video",
-            url: "https://s3.g.s4.mega.io/dmlaaezwz52y37atz56mfvmrvltfagrltbgpr/ios-xcframeworks/libnative_video_update_202501.xcframework.zip",
-            checksum: "65c2631eaae4ce39cafa8f26c84a4698d61e7cde9d74200741ec563e19469d13"
-        ),
-        .binaryTarget(
-            name: "libvideocapture_objc",
-            url: "https://s3.g.s4.mega.io/dmlaaezwz52y37atz56mfvmrvltfagrltbgpr/ios-xcframeworks/libvideocapture_objc_update_202501.xcframework.zip",
-            checksum: "14a78174fa78b35c2eac1eb6b2977592c3c64a4079bb64ea4be0c0c53fdd4366"
-        ),
-        .binaryTarget(
-            name: "libvideoframebuffer_objc",
-            url: "https://s3.g.s4.mega.io/dmlaaezwz52y37atz56mfvmrvltfagrltbgpr/ios-xcframeworks/libvideoframebuffer_objc_update_202501.xcframework.zip",
-            checksum: "12284c57ba0b3594759cfc995a86c24e1f48e5ee9b86d88736bfce8b8876bf19"
-        ),
-        .binaryTarget(
-            name: "libwebsockets",
-            url: "https://s3.g.s4.mega.io/dmlaaezwz52y37atz56mfvmrvltfagrltbgpr/ios-xcframeworks/libwebsockets_xcframework.zip",
-            checksum: "d544160a2a4d50dbe3003abc1b4d443b12f536310ab810ae466f6c3fc4b19018"
-        ),
-        .binaryTarget(
-            name: "libwebrtc",
-            url: "https://s3.g.s4.mega.io/dmlaaezwz52y37atz56mfvmrvltfagrltbgpr/ios-xcframeworks/libwebrtc_update_202501.xcframework.zip",
-            checksum: "7cfa00ac8b743641d3ed642bf5a185c26ddde1948a7eee650d05a5ffc83ce2d4"
         )
     ],
     cxxLanguageStandard: .cxx17

@@ -21,11 +21,11 @@ configure_vcpgk() {
 build_libs() {
   echo "${bold}Building libraries for device${normal}"
   cmake --preset mega-ios -DCMAKE_BUILD_TYPE=RelWithDebInfo -DVCPKG_ROOT=vcpkg -DCMAKE_VERBOSE_MAKEFILE=ON \
-  -S ../Modules/DataSource/MEGASDK/Sources/MEGASDK -B BUILD_ARM64_iOS
+  -S ../Modules/DataSource/MEGAChatSDK/Sources/MEGAChatSDK -DSDK_DIR=../Modules/DataSource/MEGASDK/Sources/MEGASDK -B BUILD_ARM64_iOS
   
   echo "${bold}Building libraries for simulator${normal}"
   cmake --preset mega-ios -DCMAKE_BUILD_TYPE=RelWithDebInfo -DVCPKG_ROOT=vcpkg -DCMAKE_VERBOSE_MAKEFILE=ON -DCMAKE_OSX_SYSROOT=iphonesimulator \
-  -S ../Modules/DataSource/MEGASDK/Sources/MEGASDK  -B BUILD_ARM64_simulator
+  -S ../Modules/DataSource/MEGAChatSDK/Sources/MEGAChatSDK -DSDK_DIR=../Modules/DataSource/MEGASDK/Sources/MEGASDK -B BUILD_ARM64_simulator
 }
 
 merge_libraries() {
@@ -33,27 +33,33 @@ merge_libraries() {
 
   mkdir -p arm64-ios-simulator-mega || true
   
-  libtool -static -o arm64-ios-simulator-mega/libmegasdk.a \
+  # Remove symbolic links to webrtc to avoid libtool warning duplicated symbols
+  rm -f BUILD_ARM64_simulator/vcpkg_installed/arm64-ios-simulator-mega/lib/libssl.a BUILD_ARM64_simulator/vcpkg_installed/arm64-ios-simulator-mega/lib/libcrypto.a
+  
+  libtool -static -o arm64-ios-simulator-mega/libmega.a \
     BUILD_ARM64_simulator/vcpkg_installed/arm64-ios-simulator-mega/lib/*.a
   
   mkdir -p arm64-ios-mega || true
   
-  libtool -static -o arm64-ios-mega/libmegasdk.a \
+  # Remove symbolic links to webrtc to avoid libtool warning duplicated symbols
+  rm -f BUILD_ARM64_iOS/vcpkg_installed/arm64-ios-mega/lib/libssl.a BUILD_ARM64_iOS/vcpkg_installed/arm64-ios-mega/lib/libcrypto.a
+    
+  libtool -static -o arm64-ios-mega/libmega.a \
     BUILD_ARM64_iOS/vcpkg_installed/arm64-ios-mega/lib/*.a
 }
 
 create_XCFramework() {
-  rm -rf xcframework/libmegasdk.xcframework
+  rm -rf xcframework/libmega.xcframework
   mkdir -p xcframework || true
   
   echo "${bold}Creating xcframework ${normal}"
   
   xcodebuild -create-xcframework \
-    -library "arm64-ios-simulator-mega/libmegasdk.a" \
+    -library "arm64-ios-simulator-mega/libmega.a" \
     -headers "BUILD_ARM64_simulator/vcpkg_installed/arm64-ios-simulator-mega/include" \
-    -library "arm64-ios-mega/libmegasdk.a" \
+    -library "arm64-ios-mega/libmega.a" \
     -headers "BUILD_ARM64_iOS/vcpkg_installed/arm64-ios-mega/include" \
-    -output "xcframework/libmegasdk.xcframework"
+    -output "xcframework/libmega.xcframework"
 }
 
 main() {
