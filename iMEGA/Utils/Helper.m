@@ -407,10 +407,6 @@
     }
 }
 
-+ (NSString *)sizeAndCreationHourAndMininuteForNode:(MEGANode *)node api:(MEGASdk *)api {
-    return [NSString stringWithFormat:@"%@ • %@", [self sizeForNode:node api:api], node.creationTime.mnz_formattedHourAndMinutes];
-}
-
 + (NSString *)sizeAndCreationDateForNode:(MEGANode *)node api:(MEGASdk *)api {
     return [NSString stringWithFormat:@"%@ • %@", [self sizeForNode:node api:api], node.creationTime.mnz_formattedDateMediumTimeShortStyle];
 }

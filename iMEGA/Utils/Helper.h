@@ -53,7 +53,6 @@ typedef NS_ENUM(NSUInteger, MEGAAPIEnv) {
 + (void)thumbnailForNode:(MEGANode *)node api:(MEGASdk *)api cell:(id)cell;
 + (void)setThumbnailForNode:(MEGANode *)node api:(MEGASdk *)api cell:(id)cell;
 
-+ (NSString *)sizeAndCreationHourAndMininuteForNode:(MEGANode *)node api:(MEGASdk *)api;
 + (NSString *)sizeAndCreationDateForNode:(MEGANode *)node api:(MEGASdk *)api;
 + (NSString *)sizeAndModificationDateForNode:(MEGANode *)node api:(MEGASdk *)api;
 + (NSString *)sizeAndShareLinkCreateDateForSharedLinkNode:(MEGANode *)node api:(MEGASdk *)api;
