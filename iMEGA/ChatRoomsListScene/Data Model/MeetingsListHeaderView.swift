@@ -14,6 +14,6 @@ struct MeetingsListHeaderView: View {
                 .offset(CGSize(width: 16, height: -6))
         }
         .frame(maxWidth: .infinity)
-        .frame(height: 38)
+        .environment(\.defaultMinListRowHeight, 38)
     }
 }
