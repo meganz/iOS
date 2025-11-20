@@ -109,20 +109,21 @@ extension ChatStatusTableViewController: UIPickerViewDataSource {
 extension ChatStatusTableViewController: UIPickerViewDelegate {
     public func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
         let label = (view as? UILabel) ?? UILabel()
+        let isRightToLeft = UIApplication.shared.userInterfaceLayoutDirection == .rightToLeft
         switch component {
         case PickerComponent.hours.rawValue, PickerComponent.minutes.rawValue:
             label.text = "\(row)"
-            label.textAlignment = .right
+            label.textAlignment = isRightToLeft ? .left : .right
             label.font = .preferredFont(forTextStyle: .title2)
         case PickerComponent.hoursLabel.rawValue:
             let hour = pickerView.selectedRow(inComponent: PickerComponent.hours.rawValue)
             label.text = Strings.Localizable.Chat.AutoAway.Label.hour(hour)
-            label.textAlignment = .left
+            label.textAlignment = isRightToLeft ? .right : .left
             label.font = .preferredFont(forTextStyle: .body)
         case PickerComponent.minutesLabel.rawValue:
             let minutes = pickerView.selectedRow(inComponent: PickerComponent.minutes.rawValue)
             label.text = Strings.Localizable.Chat.AutoAway.Label.minute(minutes)
-            label.textAlignment = .left
+            label.textAlignment = isRightToLeft ? .right : .left
             label.font = .preferredFont(forTextStyle: .body)
         default:
             label.text = ""
