@@ -21,7 +21,11 @@ public class SearchResultsContainerViewModel: ObservableObject {
     // selection was changed but we don't have new results
     private var lastAvailableChips: [SearchChipEntity] = []
 
-    private let sortOptionsViewModel: SearchResultsSortOptionsViewModel
+    private let sortHeaderCoordinator: SearchResultsSortHeaderCoordinator
+
+    var sortHeaderViewModel: SearchResultsHeaderSortViewViewModel {
+        sortHeaderCoordinator.headerViewModel
+    }
 
     var sortingHeaderViewHorizontalPadding: CGFloat {
         searchResultsViewModel.layout == .list ? 0 : TokenSpacing._5
@@ -34,34 +38,6 @@ public class SearchResultsContainerViewModel: ObservableObject {
     var shouldDisplayHeaderView: Bool {
         showSorting && !showChips
     }
-
-    var displaySortOptionsViewModel: SearchResultsSortOptionsViewModel {
-        let displaySortOptions = sortOptionsViewModel.sortOptions.compactMap { sortOption -> SearchResultsSortOption? in
-            let currentSortOrder = searchResultsViewModel.currentQuery.sorting
-            guard currentSortOrder != sortOption.sortOrder else { return nil }
-            guard currentSortOrder.key != sortOption.sortOrder.key else { return sortOption }
-            guard sortOption.sortOrder.direction != .descending else { return nil }
-            return sortOption.removeIcon()
-        }
-        return sortOptionsViewModel.makeNewViewModel(with: displaySortOptions) { [weak self] in
-            // Selection is sort option already but it might not contain the icon.
-            // So need to get the original sort option which contains the icon.
-            guard let self,
-                  let option = $0.currentDirectionIcon == nil ? sortOption(for: $0.sortOrder) : $0 else {
-                return
-            }
-
-            selectedSortOption(option)
-        }
-    }
-
-    lazy var sortHeaderViewModel: SearchResultsHeaderSortViewViewModel = {
-        let sortOptions = sortOptionsViewModel.sortOptions
-        assert(sortOptions.isNotEmpty, "Sort options should not be empty")
-        let sortOption = sortOptions
-            .first(where: { $0.sortOrder == searchResultsViewModel.currentQuery.sorting }) ?? sortOptions[0]
-        return .init(selectedOption: sortOption, displaySortOptionsViewModel: displaySortOptionsViewModel)
-    }()
 
     let viewModeHeaderViewModel: SearchResultsHeaderViewModeViewModel
     @Published public private(set) var showChips: Bool = false
@@ -81,9 +57,20 @@ public class SearchResultsContainerViewModel: ObservableObject {
         self.bridge = bridge
         self.config = config
         self.searchResultsViewModel = searchResultsViewModel
-        self.sortOptionsViewModel = sortOptionsViewModel
         self.showChips = showChips
         self.shouldShowMediaDiscoveryModeHandler = shouldShowMediaDiscoveryModeHandler
+        self.sortHeaderCoordinator = .init(
+            sortOptionsViewModel: sortOptionsViewModel,
+            currentSortOrderProvider: { [weak searchResultsViewModel] in
+                guard let searchResultsViewModel else { return .init(key: .name) }
+                return searchResultsViewModel.currentQuery.sorting
+            },
+            sortOptionSelectionHandler: { @MainActor [weak searchResultsViewModel, weak bridge] sortOption in
+                guard let searchResultsViewModel, let bridge else { return }
+                bridge.updateSortOrder(sortOption.sortOrder)
+                await searchResultsViewModel.queryChanged(with: sortOption.sortOrder)
+            }
+        )
 
         let availableViewModes: [SearchResultsViewMode] = Self.modes(using: shouldShowMediaDiscoveryModeHandler)
         assert(
@@ -115,20 +102,6 @@ public class SearchResultsContainerViewModel: ObservableObject {
 
     func dismissChipGroupPicker() async {
         presentedChipsPickerViewModel = nil
-    }
-
-    private func selectedSortOption(_ sortOption: SearchResultsSortOption) {
-        sortHeaderViewModel.selectionChanged(to: sortOption)
-        bridge.updateSortOrder(sortOption.sortOrder)
-
-        Task {
-            await searchResultsViewModel.queryChanged(with: sortOption.sortOrder)
-            updateDisplaySortOptions()
-        }
-    }
-
-    private func updateDisplaySortOptions() {
-        sortHeaderViewModel.displaySortOptionsViewModel = displaySortOptionsViewModel
     }
 
     private func title(for chip: SearchChipEntity, appliedChips: [SearchChipEntity]) -> String {
@@ -246,12 +219,6 @@ public class SearchResultsContainerViewModel: ObservableObject {
 
     private static func validated(_ preferred: SearchResultsViewMode, in modes: [SearchResultsViewMode]) -> SearchResultsViewMode {
         modes.contains(preferred) ? preferred : (modes.contains(.list) ? .list : modes.first ?? preferred)
-    }
-
-    private func sortOption(for sortOrder: Search.SortOrderEntity) -> SearchResultsSortOption? {
-        sortOptionsViewModel
-            .sortOptions
-            .first(where: { $0.sortOrder == sortOrder })
     }
 
     // create new query by deselecting previously selected chips

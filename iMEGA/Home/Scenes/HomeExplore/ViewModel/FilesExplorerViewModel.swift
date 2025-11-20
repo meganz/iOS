@@ -86,37 +86,29 @@ final class FilesExplorerViewModel: ViewModelType {
     private let sortOptionsViewModel: SearchResultsSortOptionsViewModel
 
     private var currentSortOrder: MEGADomain.SortOrderEntity {
-        Helper.sortType(for: nil).toSortOrderEntity()
+        get {
+            Helper.sortType(for: nil).toSortOrderEntity()
+        }
+        set {
+            Helper.save(newValue.toMEGASortOrderType(), for: nil)
+        }
     }
 
-    var displaySortOptionsViewModel: SearchResultsSortOptionsViewModel {
-        let displaySortOptions = sortOptionsViewModel.sortOptions.compactMap { sortOption -> SearchResultsSortOption? in
-            let currentSearchSortOrder = currentSortOrder.toSearchSortOrderEntity()
-            guard currentSearchSortOrder != sortOption.sortOrder else { return nil }
-            guard currentSearchSortOrder.key != sortOption.sortOrder.key else { return sortOption }
-            guard sortOption.sortOrder.direction != .descending else { return nil }
-            return sortOption.removeIcon()
-        }
-        return sortOptionsViewModel.makeNewViewModel(with: displaySortOptions) { [weak self] in
-            // Selection is sort option already but it might not contain the icon.
-            // So need to get the original sort option which contains the icon.
-            guard let self,
-                  let option = $0.currentDirectionIcon == nil ? sortOption(for: $0.sortOrder) : $0 else {
-                return
+    private lazy var sortHeaderCoordinator: SearchResultsSortHeaderCoordinator = {
+        .init(
+            sortOptionsViewModel: sortOptionsViewModel,
+            currentSortOrderProvider: { Helper.sortType(for: nil).toSortOrderEntity().toSearchSortOrderEntity() },
+            sortOptionSelectionHandler: { @MainActor [weak self] sortOption in
+                guard let self else { return }
+                currentSortOrder = sortOption.sortOrder.toDomainSortOrderEntity()
+                invokeCommand?(.sortTypeHasChanged)
             }
-
-            handleSelectedSortOption(option)
-        }
-    }
-
-    lazy var sortHeaderViewModel: SearchResultsHeaderSortViewViewModel = {
-        let sortOptions = sortOptionsViewModel.sortOptions
-        assert(sortOptions.isNotEmpty, "Sort options should not be empty")
-        let sortOption = sortOptions
-            .first(where: { $0.sortOrder == currentSortOrder.toSearchSortOrderEntity() }) ?? sortOptions[0]
-
-        return .init(selectedOption: sortOption, displaySortOptionsViewModel: displaySortOptionsViewModel)
+        )
     }()
+
+    var sortHeaderViewModel: SearchResultsHeaderSortViewViewModel {
+        sortHeaderCoordinator.headerViewModel
+    }
 
     lazy var viewModeHeaderViewModel: SearchResultsHeaderViewModeViewModel = {
         SearchResultsHeaderViewModeViewModel(
@@ -278,19 +270,6 @@ final class FilesExplorerViewModel: ViewModelType {
                 self?.configureContextMenus()
             }
         }
-    }
-
-    private func handleSelectedSortOption(_ sortOption: SearchResultsSortOption) {
-        Helper.save(sortOption.sortOrder.toMEGASortOrderType(), for: nil)
-        sortHeaderViewModel.selectionChanged(to: sortOption)
-        sortHeaderViewModel.displaySortOptionsViewModel = displaySortOptionsViewModel
-        invokeCommand?(.sortTypeHasChanged)
-    }
-
-    private func sortOption(for sortOrder: Search.SortOrderEntity) -> SearchResultsSortOption? {
-        sortOptionsViewModel
-            .sortOptions
-            .first(where: { $0.sortOrder == sortOrder })
     }
 
     func getExplorerType() -> ExplorerTypeEntity {

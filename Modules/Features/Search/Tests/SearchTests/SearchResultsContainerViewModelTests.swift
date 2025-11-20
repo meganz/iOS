@@ -261,7 +261,7 @@ struct SearchResultsContainerViewModelTests {
             ]
         )
         let sut = makeSUT(sortOptionsViewModel: sortOptionsViewModel)
-        let displaySortOptionsViewModel = sut.displaySortOptionsViewModel
+        let displaySortOptionsViewModel = sut.sortHeaderViewModel.displaySortOptionsViewModel
         #expect(displaySortOptionsViewModel.title == "Sort by")
         #expect(displaySortOptionsViewModel.sortOptions.count == 1)
         let sortOption = try #require(displaySortOptionsViewModel.sortOptions.first)
@@ -476,13 +476,13 @@ struct SearchResultsContainerViewModelTests {
         )
         sut.sortHeaderViewModel.showSortSheet = true
 
-        let selectedSortOption = try #require(sut.displaySortOptionsViewModel.sortOptions.last)
-        sut.displaySortOptionsViewModel.tapHandler?(selectedSortOption)
+        let selectedSortOption = try #require(sut.sortHeaderViewModel.displaySortOptionsViewModel.sortOptions.last)
+        sut.sortHeaderViewModel.displaySortOptionsViewModel.tapHandler?(selectedSortOption)
 
         let expectedSortOrder = selectedSortOption.sortOrder
         try await waitUntil(
             await MainActor.run {
-                sut.displaySortOptionsViewModel.sortOptions.map(\.sortOrder).notContains(expectedSortOrder)
+                sut.sortHeaderViewModel.displaySortOptionsViewModel.sortOptions.map(\.sortOrder).notContains(expectedSortOrder)
             }
         )
 
@@ -490,7 +490,7 @@ struct SearchResultsContainerViewModelTests {
         #expect(sut.sortHeaderViewModel.selectedOption.title == selectedSortOption.title)
         #expect(sut.sortHeaderViewModel.selectedOption.sortOrder == selectedSortOption.sortOrder)
         #expect(sut.sortHeaderViewModel.selectedOption.currentDirectionIcon == Image(systemName: "minus"))
-        #expect(sut.displaySortOptionsViewModel.sortOptions.map(\.sortOrder).notContains(expectedSortOrder))
+        #expect(sut.sortHeaderViewModel.displaySortOptionsViewModel.sortOptions.map(\.sortOrder).notContains(expectedSortOrder))
     }
 
     typealias SUT = SearchResultsContainerViewModel

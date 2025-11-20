@@ -25,64 +25,16 @@ protocol SharedItemsViewing: AnyObject {
     private let moveToRubbishBinViewModel: any MoveToRubbishBinViewModelProtocol
 
     let searchDebouncer = Debouncer(delay: 0.5)
-    private let sortOptionsViewModel: SearchResultsSortOptionsViewModel
     private weak var sharedItemsView: (any SharedItemsViewing)?
 
-    private var currentSortOrder: Search.SortOrderEntity {
-        sharedItemsView?.currentSortOrder.toSearchSortOrderEntity() ?? .init(key: .name)
+    private let sortHeaderCoordinator: SearchResultsSortHeaderCoordinator
+
+    var sortHeaderViewModel: SearchResultsHeaderSortViewViewModel {
+        sortHeaderCoordinator.headerViewModel
     }
-
-    lazy var sortHeaderViewModel: SearchResultsHeaderSortViewViewModel = {
-        let sortOptions = sortOptionsViewModel.sortOptions
-        assert(sortOptions.isNotEmpty, "Sort options should not be empty")
-        let sortOption = sortOptions
-            .first(where: { $0.sortOrder == currentSortOrder }) ?? sortOptions[0]
-
-        return .init(selectedOption: sortOption, displaySortOptionsViewModel: displaySortOptionsViewModel)
-    }()
 
     private var selectedTab: SharedItemsTabSelection {
         sharedItemsView?.selectedTab ?? .incoming
-    }
-
-    /// The sort option keys that should be hidden for the current shared items tab.
-    ///
-    /// This is used to filter out sort options that are not relevant to the
-    /// selected tab when building `displaySortOptionsViewModel`.
-    ///
-    /// - For the `.outgoing` tab, the `.linkCreated` sort option is hidden.
-    /// - For the `.links` tab, the `.shareCreated` sort option is hidden.
-    /// - For the `.incoming`, both `.linkCreated` and .shareCreated` are hidden.
-    var keysToHide: [Search.SortOrderEntity.Key] {
-        switch selectedTab {
-        case .outgoing: [.linkCreated]
-        case .links: [.shareCreated]
-        default: [.linkCreated, .shareCreated]
-        }
-    }
-
-    var displaySortOptionsViewModel: SearchResultsSortOptionsViewModel {
-        let currentSearchSortOrder = currentSortOrder
-        let keysToHide = self.keysToHide
-
-        let displaySortOptions = sortOptionsViewModel.sortOptions.compactMap { sortOption -> SearchResultsSortOption? in
-            guard keysToHide.notContains(sortOption.sortOrder.key) else { return nil }
-            guard currentSearchSortOrder != sortOption.sortOrder else { return nil }
-            guard currentSearchSortOrder.key != sortOption.sortOrder.key else { return sortOption }
-            guard sortOption.sortOrder.direction != .descending else { return nil }
-            return sortOption.removeIcon()
-        }
-
-        return sortOptionsViewModel.makeNewViewModel(with: displaySortOptions) { [weak self] in
-            // Selection is sort option already but it might not contain the icon.
-            // So need to get the original sort option which contains the icon.
-            guard let self,
-                  let selectedSortOption = $0.currentDirectionIcon == nil ? sortOption(for: $0.sortOrder) : $0 else {
-                return
-            }
-
-            handleSelectedSortOption(selectedSortOption)
-        }
     }
 
     init(shareUseCase: some ShareUseCaseProtocol,
@@ -98,8 +50,19 @@ protocol SharedItemsViewing: AnyObject {
         self.nodeUseCase = nodeUseCase
         self.saveMediaToPhotosUseCase = saveMediaToPhotosUseCase
         self.moveToRubbishBinViewModel = moveToRubbishBinViewModel
-        self.sortOptionsViewModel = sortOptionsViewModel
         self.sharedItemsView = sharedItemsView
+        self.sortHeaderCoordinator = .init(
+            sortOptionsViewModel: sortOptionsViewModel,
+            currentSortOrderProvider: { [weak sharedItemsView] in
+                sharedItemsView?.currentSortOrder.toSearchSortOrderEntity() ?? .init(key: .name)
+            },
+            sortOptionSelectionHandler: { @MainActor [weak sharedItemsView] sortOption in
+                sharedItemsView?.currentSortOrder = sortOption.sortOrder.toDomainSortOrderEntity()
+            },
+            hiddenSortOptionKeysProvider: { [weak sharedItemsView] in
+                Self.keysToHide(for: sharedItemsView?.selectedTab ?? .incoming)
+            }
+        )
     }
 
     func openShareFolderDialog(forNodes nodes: [MEGANode]) {
@@ -169,34 +132,23 @@ protocol SharedItemsViewing: AnyObject {
         await nodeUseCase.isFileTakenDown(nodeHandle)
     }
 
-    func setSortOrderType(_ sortOrderType: MEGASortOrderType) {
-        guard let sortOrderOption = sortOptionsViewModel
-            .sortOptions
-            .first(where: { $0.sortOrder.toMEGASortOrderType() == sortOrderType }) else {
-            return
-        }
-
-        handleSelectedSortOption(sortOrderOption)
-    }
-
     func updateSortUI() {
-        guard let currentSortOrder = sharedItemsView?.currentSortOrder,
-              let sortOption = sortOption(for: currentSortOrder.toSearchSortOrderEntity()) else {
-            return
+        sortHeaderCoordinator.updateSortUI()
+    }
+
+    /// The sort option keys that should be hidden for the current shared items tab.
+    ///
+    /// This is used to filter out sort options that are not relevant to the
+    /// selected tab when building `displaySortOptionsViewModel`.
+    ///
+    /// - For the `.outgoing` tab, the `.linkCreated` sort option is hidden.
+    /// - For the `.links` tab, the `.shareCreated` sort option is hidden.
+    /// - For the `.incoming`, both `.linkCreated` and .shareCreated` are hidden.
+    static func keysToHide(for tab: SharedItemsTabSelection) -> Set<Search.SortOrderEntity.Key> {
+        switch tab {
+        case .outgoing: [.linkCreated]
+        case .links: [.shareCreated]
+        default: [.linkCreated, .shareCreated]
         }
-        sortHeaderViewModel.selectionChanged(to: sortOption)
-        sortHeaderViewModel.displaySortOptionsViewModel = displaySortOptionsViewModel
-    }
-
-    private func sortOption(for sortOrder: Search.SortOrderEntity) -> SearchResultsSortOption? {
-        sortOptionsViewModel
-            .sortOptions
-            .first(where: { $0.sortOrder == sortOrder })
-    }
-
-    private func handleSelectedSortOption(_ sortOption: SearchResultsSortOption) {
-        sortHeaderViewModel.selectionChanged(to: sortOption)
-        sharedItemsView?.currentSortOrder = sortOption.sortOrder.toDomainSortOrderEntity()
-        sortHeaderViewModel.displaySortOptionsViewModel = displaySortOptionsViewModel
     }
 }

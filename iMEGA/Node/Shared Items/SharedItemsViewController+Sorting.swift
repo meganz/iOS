@@ -28,11 +28,15 @@ extension SharedItemsViewController {
     }
 
     @objc func resetSortIfNeeded() {
-        viewModel.updateSortUI()
-        guard viewModel.keysToHide.contains(currentSortOrder.toSearchSortOrderEntity().key) else { return }
+        guard SharedItemsViewModel
+            .keysToHide(for: selectedTab)
+            .contains(currentSortOrder.toSearchSortOrderEntity().key) else {
+            viewModel.updateSortUI()
+            return
+        }
 
         sortOrderType = .defaultAsc
-        viewModel.setSortOrderType(sortOrderType)
+        viewModel.updateSortUI()
     }
 }
 

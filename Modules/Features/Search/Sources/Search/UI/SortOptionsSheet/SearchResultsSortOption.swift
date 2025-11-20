@@ -1,6 +1,6 @@
 import SwiftUI
 
-public struct SearchResultsSortOption: Identifiable {
+public struct SearchResultsSortOption: Sendable, Identifiable {
     public var id: SortOrderEntity { sortOrder }
 
     public let sortOrder: SortOrderEntity

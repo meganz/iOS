@@ -264,42 +264,17 @@ final class SharedItemsViewModelTests: XCTestCase {
 
     @MainActor
     func testKeysToHide_forIncomingTab_shouldHideExpectedSortOptions() {
-        let sharedItemsView = MockSharedItemsView(selectedTab: .incoming)
-        let sut = makeSUT(sharedItemsView: sharedItemsView)
-        XCTAssertEqual(sut.keysToHide, [ .linkCreated, .shareCreated])
+        XCTAssertEqual(SUT.keysToHide(for: .incoming), [ .linkCreated, .shareCreated])
     }
 
     @MainActor
     func testKeysToHide_forOutgoingTab_shouldHideExpectedSortOptions() {
-        let sharedItemsView = MockSharedItemsView(selectedTab: .outgoing)
-        let sut = makeSUT(sharedItemsView: sharedItemsView)
-        XCTAssertEqual(sut.keysToHide, [.linkCreated])
+        XCTAssertEqual(SUT.keysToHide(for: .outgoing), [.linkCreated])
     }
 
     @MainActor
     func testKeysToHide_forLinksTab_shouldHideExpectedSortOptions() {
-        let sharedItemsView = MockSharedItemsView(selectedTab: .links)
-        let sut = makeSUT(sharedItemsView: sharedItemsView)
-        XCTAssertEqual(sut.keysToHide, [.shareCreated])
-    }
-
-    @MainActor
-    func testSetSortOrder_whenSortOrderChanged_shouldMatchTheResult() {
-        let sortOptionsViewModel = SearchResultsSortOptionsViewModel(
-            title: "Sort by",
-            sortOptions: [
-                .init(sortOrder: .init(key: .name), title: "Name", iconsByDirection: [:]),
-                .init(sortOrder: .init(key: .name, direction: .descending), title: "Name", iconsByDirection: [:]),
-                .init(sortOrder: .init(key: .size), title: "Size", iconsByDirection: [:])
-            ]
-        )
-        let sharedItemsView = MockSharedItemsView(currentSortOrder: .defaultAsc)
-        let sut = makeSUT(
-            sortOptionsViewModel: sortOptionsViewModel,
-            sharedItemsView: sharedItemsView
-        )
-        sut.setSortOrderType(.sizeAsc)
-        XCTAssertEqual(sharedItemsView.currentSortOrder, .sizeAsc)
+        XCTAssertEqual(SUT.keysToHide(for: .links), [.shareCreated])
     }
 
     @MainActor
@@ -320,33 +295,38 @@ final class SharedItemsViewModelTests: XCTestCase {
             sharedItemsView: sharedItemsView
         )
 
+        var displaySortOptionsViewModel = sut.sortHeaderViewModel.displaySortOptionsViewModel
         XCTAssertTrue(
-            sut.displaySortOptionsViewModel.sortOptions.map(\.sortOrder).notContains(.init(key: .linkCreated))
+            displaySortOptionsViewModel.sortOptions.map(\.sortOrder).notContains(.init(key: .linkCreated))
         )
         XCTAssertTrue(
-            sut.displaySortOptionsViewModel.sortOptions.map(\.sortOrder).notContains(.init(key: .shareCreated))
+            displaySortOptionsViewModel.sortOptions.map(\.sortOrder).notContains(.init(key: .shareCreated))
         )
 
         sharedItemsView.selectedTab = .outgoing
         sut.updateSortUI()
 
+        displaySortOptionsViewModel = sut.sortHeaderViewModel.displaySortOptionsViewModel
         XCTAssertTrue(
-            sut.displaySortOptionsViewModel.sortOptions.map(\.sortOrder).notContains(.init(key: .linkCreated))
+            displaySortOptionsViewModel.sortOptions.map(\.sortOrder).notContains(.init(key: .linkCreated))
         )
         XCTAssertTrue(
-            sut.displaySortOptionsViewModel.sortOptions.map(\.sortOrder).contains(.init(key: .shareCreated))
+            displaySortOptionsViewModel.sortOptions.map(\.sortOrder).contains(.init(key: .shareCreated))
         )
 
         sharedItemsView.selectedTab = .links
         sut.updateSortUI()
 
+        displaySortOptionsViewModel = sut.sortHeaderViewModel.displaySortOptionsViewModel
         XCTAssertTrue(
-            sut.displaySortOptionsViewModel.sortOptions.map(\.sortOrder).contains(.init(key: .linkCreated))
+            displaySortOptionsViewModel.sortOptions.map(\.sortOrder).contains(.init(key: .linkCreated))
         )
         XCTAssertTrue(
-            sut.displaySortOptionsViewModel.sortOptions.map(\.sortOrder).notContains(.init(key: .shareCreated))
+            displaySortOptionsViewModel.sortOptions.map(\.sortOrder).notContains(.init(key: .shareCreated))
         )
     }
+
+    typealias SUT = SharedItemsViewModel
 
     @MainActor private func makeSUT(
         shareUseCase: some ShareUseCaseProtocol = MockShareUseCase(),
@@ -358,7 +338,7 @@ final class SharedItemsViewModelTests: XCTestCase {
         sharedItemsView: some SharedItemsViewing = MockSharedItemsView(),
         file: StaticString = #filePath,
         line: UInt = #line
-    ) -> SharedItemsViewModel {
+    ) -> SUT {
         let sut = SharedItemsViewModel(
             shareUseCase: shareUseCase,
             mediaUseCase: mediaUseCase,
