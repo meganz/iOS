@@ -997,7 +997,6 @@
 		835223B42059588300A47438 /* ItemListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 835223B32059588300A47438 /* ItemListViewController.m */; };
 		83522FC72A4AE0BE00266D1F /* OccurrenceContextMenuOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83522FC62A4AE0BE00266D1F /* OccurrenceContextMenuOption.swift */; };
 		83522FCA2A4B0A2600266D1F /* ScheduledMeetingOccurrencesViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83522FC92A4B0A2600266D1F /* ScheduledMeetingOccurrencesViewModelTests.swift */; };
-		8354DF58288FF4880027011A /* FileSystemHelperOCWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8354DF57288FF4880027011A /* FileSystemHelperOCWrapper.swift */; };
 		8357ADE6246AED2700045137 /* MEGAPresentationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8357ADE5246AED2700045137 /* MEGAPresentationManager.swift */; };
 		8358332C29487F2900394F1A /* ChatRoomParticipantPrivilege.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8358332B29487F2900394F1A /* ChatRoomParticipantPrivilege.swift */; };
 		8358332E29487F3D00394F1A /* ChatRoomParticipantPrivilegeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8358332D29487F3D00394F1A /* ChatRoomParticipantPrivilegeView.swift */; };
@@ -3803,7 +3802,6 @@
 		835223B32059588300A47438 /* ItemListViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ItemListViewController.m; sourceTree = "<group>"; };
 		83522FC62A4AE0BE00266D1F /* OccurrenceContextMenuOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OccurrenceContextMenuOption.swift; sourceTree = "<group>"; };
 		83522FC92A4B0A2600266D1F /* ScheduledMeetingOccurrencesViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduledMeetingOccurrencesViewModelTests.swift; sourceTree = "<group>"; };
-		8354DF57288FF4880027011A /* FileSystemHelperOCWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileSystemHelperOCWrapper.swift; sourceTree = "<group>"; };
 		8357ADE5246AED2700045137 /* MEGAPresentationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGAPresentationManager.swift; sourceTree = "<group>"; };
 		8358332B29487F2900394F1A /* ChatRoomParticipantPrivilege.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomParticipantPrivilege.swift; sourceTree = "<group>"; };
 		8358332D29487F3D00394F1A /* ChatRoomParticipantPrivilegeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomParticipantPrivilegeView.swift; sourceTree = "<group>"; };
@@ -11280,7 +11278,6 @@
 			isa = PBXGroup;
 			children = (
 				83C8372727D788B600AACDE1 /* CancellableTransferRouterOCWrapper.swift */,
-				8354DF57288FF4880027011A /* FileSystemHelperOCWrapper.swift */,
 				B582965927C5DF50004DD7A5 /* TransferInventoryUseCaseHelper.swift */,
 			);
 			path = Transfers;
@@ -14856,7 +14853,6 @@
 				BFAFB143252AC6ED003ADFE3 /* FilesExplorerRouter.swift in Sources */,
 				BF5E3495255C8FD10055395E /* FilesExplorerViewController.swift in Sources */,
 				BFAFB154252AC715003ADFE3 /* FilesExplorerViewModel.swift in Sources */,
-				8354DF58288FF4880027011A /* FileSystemHelperOCWrapper.swift in Sources */,
 				B6FEDC5B260D9CF400801A7F /* FileSystemImageCacheClient.swift in Sources */,
 				5DF249DD24F37589003FED76 /* FileUploadingRouter.swift in Sources */,
 				5D8C5AB524EF974800EDD7A9 /* FileUploadingViewModel.swift in Sources */,
