@@ -34,7 +34,7 @@ final class CameraUploadProgressDiffableDatasource: UITableViewDiffableDataSourc
         case .updated(let viewModels):
             updateDataSourceForQueueUpdate(viewModels: viewModels)
         case .itemRemoved(let assetIdentifier):
-            removeItemFromQueue(assetIdentifier: assetIdentifier)
+            removeItemFromDataSource(assetIdentifier: assetIdentifier)
         }
     }
     
@@ -52,7 +52,7 @@ final class CameraUploadProgressDiffableDatasource: UITableViewDiffableDataSourc
             let rowItems = viewModels.map { CameraUploadProgressSectionRow.inProgress($0) }
             snapshot.appendItems(rowItems, toSection: .inProgress)
         }
-        apply(snapshot, animatingDifferences: false)
+        applySnapshotWithScrollPreservation(snapshot, animatingDifferences: false, targetSection: .inProgress)
     }
     
     private func addItemToDataSource(viewModel: CameraUploadInProgressRowViewModel) {
@@ -65,7 +65,7 @@ final class CameraUploadProgressDiffableDatasource: UITableViewDiffableDataSourc
         
         let newItem = CameraUploadProgressSectionRow.inProgress(viewModel)
         snapshot.appendItems([newItem], toSection: .inProgress)
-        apply(snapshot, animatingDifferences: true)
+        apply(snapshot, animatingDifferences: false)
     }
     
     private func removeItemFromDataSource(assetIdentifier: CameraUploadLocalIdentifierEntity) {
@@ -101,7 +101,7 @@ final class CameraUploadProgressDiffableDatasource: UITableViewDiffableDataSourc
             snapshot.appendItems([.emptyInQueue], toSection: .inQueue)
         }
         
-        apply(snapshot, animatingDifferences: true)
+        apply(snapshot, animatingDifferences: false)
     }
     
     private func updateDataSourceForInitialQueueLoad(viewModels: [CameraUploadInQueueRowViewModel]) {
@@ -118,7 +118,7 @@ final class CameraUploadProgressDiffableDatasource: UITableViewDiffableDataSourc
             let rowItems = viewModels.map { CameraUploadProgressSectionRow.inQueue($0) }
             snapshot.appendItems(rowItems, toSection: .inQueue)
         }
-        apply(snapshot, animatingDifferences: false)
+        applySnapshotWithScrollPreservation(snapshot, animatingDifferences: false, targetSection: .inQueue)
     }
     
     private func updateDataSourceForQueueUpdate(viewModels: [CameraUploadInQueueRowViewModel]) {
@@ -145,29 +145,6 @@ final class CameraUploadProgressDiffableDatasource: UITableViewDiffableDataSourc
         lastQueueUpdateTime = Date()
         
         var snapshot = snapshot()
-        
-        var anchorItemId: String?
-        var anchorOffset: CGFloat = 0
-        
-        if let tableView = self.tableView,
-           let visibleIndexPaths = tableView.indexPathsForVisibleRows {
-            
-            try Task.checkCancellation()
-            
-            let queueIndexPaths = visibleIndexPaths.filter { $0.section == CameraUploadProgressSections.inQueue.rawValue }
-            
-            if let firstVisibleQueueIndexPath = queueIndexPaths.first,
-               let item = itemIdentifier(for: firstVisibleQueueIndexPath),
-               case .inQueue = item,
-               let cell = tableView.cellForRow(at: firstVisibleQueueIndexPath) {
-                
-                try Task.checkCancellation()
-                
-                anchorItemId = item.identifier
-                let cellFrameInTableView = tableView.convert(cell.frame, to: tableView)
-                anchorOffset = tableView.contentOffset.y - cellFrameInTableView.minY
-            }
-        }
         
         try Task.checkCancellation()
         
@@ -211,71 +188,7 @@ final class CameraUploadProgressDiffableDatasource: UITableViewDiffableDataSourc
         
         try Task.checkCancellation()
         
-        apply(snapshot, animatingDifferences: false) { [weak self] in
-            guard let self = self,
-                  let tableView = self.tableView,
-                  let anchorId = anchorItemId,
-                  !viewModels.isEmpty else {
-                return
-            }
-            
-            let newSnapshot = self.snapshot()
-            
-            guard let anchorItem = newSnapshot.itemIdentifiers.first(where: { $0.identifier == anchorId }),
-                  let anchorIndex = newSnapshot.indexOfItem(anchorItem) else {
-                return
-            }
-            
-            var sectionOffset = 0
-            for section in newSnapshot.sectionIdentifiers {
-                if section == .inQueue {
-                    break
-                }
-                sectionOffset += newSnapshot.itemIdentifiers(inSection: section).count
-            }
-            
-            let newIndexPath = IndexPath(
-                row: anchorIndex - sectionOffset,
-                section: CameraUploadProgressSections.inQueue.rawValue
-            )
-            
-            guard let cell = tableView.cellForRow(at: newIndexPath) else { return }
-            
-            let cellFrameInTableView = tableView.convert(cell.frame, to: tableView)
-            let targetOffset = cellFrameInTableView.minY + anchorOffset
-            tableView.setContentOffset(CGPoint(x: 0, y: targetOffset), animated: false)
-        }
-    }
-    
-    
-    private func removeItemFromQueue(assetIdentifier: CameraUploadLocalIdentifierEntity) {
-        var snapshot = snapshot()
-        
-        guard snapshot.sectionIdentifiers.contains(.inQueue) else { return }
-        
-        let queueItems = snapshot.itemIdentifiers(inSection: .inQueue)
-        let itemsToRemove = queueItems.filter {
-            if case .inQueue(let vm) = $0 {
-                return vm.id == assetIdentifier
-            }
-            return false
-        }
-        
-        guard !itemsToRemove.isEmpty else {
-            return
-        }
-        
-        snapshot.deleteItems(itemsToRemove)
-        
-        let remainingQueueItems = snapshot.itemIdentifiers(inSection: .inQueue).filter {
-            if case .inQueue = $0 { return true }
-            return false
-        }
-        if remainingQueueItems.isEmpty && !snapshot.itemIdentifiers(inSection: .inQueue).contains(.emptyInQueue) {
-            snapshot.appendItems([.emptyInQueue], toSection: .inQueue)
-        }
-        
-        apply(snapshot, animatingDifferences: true)
+        applySnapshotWithScrollPreservation(snapshot, animatingDifferences: false, targetSection: .inQueue)
     }
     
     private func rebuildSnapshotWithSections(currentSnapshot: Snapshot) -> Snapshot {
@@ -311,6 +224,48 @@ final class CameraUploadProgressDiffableDatasource: UITableViewDiffableDataSourc
         }
         
         return snapshot
+    }
+    
+    // MARK: - Scroll Preservation Helper
+    
+    private func applySnapshotWithScrollPreservation(
+        _ snapshot: Snapshot,
+        animatingDifferences: Bool,
+        targetSection: CameraUploadProgressSections? = nil
+    ) {
+        var anchorItem: CameraUploadProgressSectionRow?
+        var anchorOffset: CGFloat = 0
+        
+        if let tableView,
+           let visible = tableView.indexPathsForVisibleRows?.sorted() {
+            
+            let targetSectionIndex = targetSection?.rawValue
+            let filtered = targetSectionIndex != nil
+            ? visible.filter { $0.section == targetSectionIndex }
+            : visible
+            
+            let usedIndexPaths = filtered.isEmpty ? visible : filtered
+            
+            if let middle = usedIndexPaths[safe: usedIndexPaths.count / 2],
+               let item = itemIdentifier(for: middle) {
+                anchorItem = item
+                let frame = tableView.rectForRow(at: middle)
+                anchorOffset = frame.minY - tableView.contentOffset.y
+            }
+        }
+        
+        apply(snapshot, animatingDifferences: animatingDifferences) { [weak self] in
+            guard let self,
+                  let tableView = tableView,
+                  let anchorItem else { return }
+            
+            guard let newIndexPath = indexPath(for: anchorItem) else { return }
+            
+            let newFrame = tableView.rectForRow(at: newIndexPath)
+            let newOffset = CGPoint(x: 0, y: newFrame.minY - anchorOffset)
+            
+            tableView.setContentOffset(newOffset, animated: false)
+        }
     }
 }
 
