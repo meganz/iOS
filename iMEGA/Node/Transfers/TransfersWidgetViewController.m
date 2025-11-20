@@ -3,7 +3,6 @@
 #import <Photos/Photos.h>
 
 #import "SVProgressHUD.h"
-#import "UIScrollView+EmptyDataSet.h"
 #import "UIApplication+MNZCategory.h"
 
 #import "NSString+MNZCategory.h"
@@ -27,7 +26,7 @@
 #import "LocalizationHelper.h"
 @import MEGAAppSDKRepo;
 
-@interface TransfersWidgetViewController () <UITableViewDelegate, UITableViewDataSource, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGARequestDelegate, MEGATransferDelegate, TransferTableViewCellDelegate, TransferActionViewControllerDelegate>
+@interface TransfersWidgetViewController () <UITableViewDelegate, UITableViewDataSource, MEGARequestDelegate, MEGATransferDelegate, TransferTableViewCellDelegate, TransferActionViewControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UIView *selectorView;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *pauseBarButtonItem;
@@ -79,9 +78,6 @@ static TransfersWidgetViewController* instance = nil;
     self.queuedUploadTransfers = NSMutableArray.new;
     self.selectedTransfers = NSMutableArray.new;
     self.transferInventoryUseCaseHelper = [self makeTransferInventoryUseCaseHelper];
-    
-    self.tableView.emptyDataSetSource = self;
-    self.tableView.emptyDataSetDelegate = self;
     
     [self registerNibWithName:@"TransferTableViewCell" identifier:@"transferCell"];
     [self registerNibWithName:@"TransferNodeTableViewCell" identifier:@"transferNodeCell"];
@@ -233,7 +229,7 @@ static TransfersWidgetViewController* instance = nil;
     [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
     
     [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
-        [self.tableView reloadEmptyDataSet];
+        [self.tableView reloadData];
     } completion:nil];
 }
 
@@ -510,12 +506,14 @@ static TransfersWidgetViewController* instance = nil;
     [self updateNavBarButtonAppearance];
     [self updateViewAppearance];
     [self.tableView reloadData];
+    [self updateEmptyStateIfNeeded];
 }
 
 - (void)getAllTransfers {
     self.transfers = [[NSMutableArray alloc] initWithArray:[self fetchTransfers]];
     
     self.queuedUploadTransfers = [NSMutableArray arrayWithArray:[self fetchQueuedUploadTransfers]];
+    self.completedTransfers = [[NSMutableArray alloc] initWithArray:[self fetchCompletedTransfers]];
 }
 
 - (void)cleanTransfersList {
@@ -540,6 +538,7 @@ static TransfersWidgetViewController* instance = nil;
 }
 
 - (void)removeFromCompletedTransfers:(MEGATransfer *)transfer {
+    [self.completedTransfers removeObject:transfer];
     [MEGASdk.shared removeCompletedTransfer:transfer];
 }
 
@@ -548,7 +547,9 @@ static TransfersWidgetViewController* instance = nil;
 }
 
 - (void)removeAllCompletedTransfers {
+    [self.completedTransfers removeAllObjects];
     [MEGASdk.shared removeAllCompletedTransfers];
+    [self.tableView reloadData];
 }
 
 - (NSIndexPath *)indexPathForPendingTransfer:(MEGATransfer *)transfer {
@@ -640,19 +641,21 @@ static TransfersWidgetViewController* instance = nil;
 }
 
 - (void)deleteUploadingTransfer:(MEGATransfer *)transfer {
-    NSIndexPath *indexPath = [self indexPathForPendingTransfer:transfer];
-    
     if (self.inProgressButton.selected) {
+        NSIndexPath *indexPath = [self indexPathForPendingTransfer:transfer];
         if (indexPath) {
             [self.transfers removeObjectAtIndex:indexPath.row];
             [self.tableView reloadData];
+            [self updateEmptyStateIfNeeded];
             if (![self hasActiveTransfers]) {
                 [[TransfersWidgetViewController sharedTransferViewController].progressView configureData];
                 self.toolbar.hidden = YES;
             }
         }
     } else {
-        [self.tableView debounce:@selector(reloadData) delay:0.1];
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:self.completedTransfers.count - 1 inSection:0];
+        [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+        [self updateEmptyStateIfNeeded];
         self.toolbar.hidden = NO;
     }
 }
@@ -801,14 +804,32 @@ static TransfersWidgetViewController* instance = nil;
     [self presentViewController:cancelTransfersAlert animated:YES completion:nil];
 }
 
-#pragma mark - DZNEmptyDataSetSource
-
-- (nullable UIView *)customViewForEmptyDataSet:(UIScrollView *)scrollView {
-    EmptyStateView *emptyStateView = [EmptyStateView.alloc initWithImage:[self imageForEmptyState] title:[self titleForEmptyState] description:@"" buttonTitle:@""];
-    return emptyStateView;
+- (void)updateEmptyStateIfNeeded {
+    BOOL hasData = NO;
+    
+    switch (self.transfersSelected) {
+        case TransfersWidgetSelectedAll:
+            hasData = (self.transfers.count > 0 || self.queuedUploadTransfers.count > 0);
+            break;
+            
+        case TransfersWidgetSelectedCompleted:
+            hasData = (self.completedTransfers.count > 0);
+            break;
+    }
+    
+    if (hasData) {
+        self.tableView.backgroundView = nil;
+    } else {
+        self.tableView.backgroundView = [self emptyStateView];
+    }
 }
 
 #pragma mark - Empty State
+
+- (nullable UIView *)emptyStateView {
+    EmptyStateView *emptyStateView = [EmptyStateView.alloc initWithImage:[self imageForEmptyState] title:[self titleForEmptyState] description:@"" buttonTitle:@""];
+    return emptyStateView;
+}
 
 - (NSString *)titleForEmptyState {
     NSString *text;
@@ -882,10 +903,6 @@ static TransfersWidgetViewController* instance = nil;
     return _transfers;
 }
 
-- (NSMutableArray *)completedTransfers {
-    return [[NSMutableArray alloc] initWithArray:[self fetchCompletedTransfers]];
-}
-
 #pragma mark - MEGATransferDelegate
 
 - (void)onTransferStart:(MEGASdk *)api transfer:(MEGATransfer *)transfer {
@@ -933,7 +950,7 @@ static TransfersWidgetViewController* instance = nil;
     if (error.type == MEGAErrorTypeApiEIncomplete && [self shouldShowTransferCancelledMessageFor:transfer]) {
         [SVProgressHUD showImage:[UIImage megaImageWithNamed:@"hudMinus"] status:LocalizedString(@"transferCancelled", @"")];
     }
-    
+    [self.completedTransfers addObject:transfer];
     [self deleteUploadingTransfer:transfer];
 }
 
