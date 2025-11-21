@@ -1685,6 +1685,14 @@
 		A83428B32B7D2CF1002393FA /* SelectableTableViewCell+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A83428B22B7D2CF1002393FA /* SelectableTableViewCell+Additions.swift */; };
 		A83465262BAAF4F3009A4E40 /* MEGAPermissionsMock in Frameworks */ = {isa = PBXBuildFile; productRef = A83465252BAAF4F3009A4E40 /* MEGAPermissionsMock */; };
 		A834DD0C2BC0293B00A57058 /* View+WidgetBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = A834DD0B2BC0293B00A57058 /* View+WidgetBackground.swift */; };
+		A835E49B2ED0636B004CE294 /* ChatRepoMock in Frameworks */ = {isa = PBXBuildFile; productRef = 99DB1D592AC64B34004A9CC3 /* ChatRepoMock */; };
+		A835E49C2ED0636B004CE294 /* SearchMock in Frameworks */ = {isa = PBXBuildFile; productRef = B67D44E02B605F7600738E04 /* SearchMock */; };
+		A835E49D2ED0636B004CE294 /* MEGAUIMock in Frameworks */ = {isa = PBXBuildFile; productRef = A87F09182CCFE65100A1B03C /* MEGAUIMock */; };
+		A835E49E2ED0636B004CE294 /* MEGASwiftUIMock in Frameworks */ = {isa = PBXBuildFile; productRef = B598F73A2D01E0B600B2B6EB /* MEGASwiftUIMock */; };
+		A835E49F2ED0636B004CE294 /* AccountsMock in Frameworks */ = {isa = PBXBuildFile; productRef = B54B9BFD2D6426850025A25F /* AccountsMock */; };
+		A835E4A02ED0636B004CE294 /* MEGAAppPresentationMock in Frameworks */ = {isa = PBXBuildFile; productRef = BFE7728F2D9B637A005B114E /* MEGAAppPresentationMock */; };
+		A835E4A12ED0636B004CE294 /* MEGAAppSDKRepoMock in Frameworks */ = {isa = PBXBuildFile; productRef = BF2AFDA92D9F85C40075248C /* MEGAAppSDKRepoMock */; };
+		A835E4A32ED06529004CE294 /* f.swift in Sources */ = {isa = PBXBuildFile; fileRef = A835E4A22ED06528004CE294 /* f.swift */; };
 		A836581C2102101C005E616F /* Contacts.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 415226731A692ECC00EC7BB6 /* Contacts.storyboard */; };
 		A837FDF82D42969D00795223 /* BrowserViewController+Search.swift in Sources */ = {isa = PBXBuildFile; fileRef = A837FDF72D42969D00795223 /* BrowserViewController+Search.swift */; };
 		A837FDF92D42969D00795223 /* BrowserViewController+Search.swift in Sources */ = {isa = PBXBuildFile; fileRef = A837FDF72D42969D00795223 /* BrowserViewController+Search.swift */; };
@@ -5492,10 +5500,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				B5D58D552AC67C89004ECD36 /* Accounts in Frameworks */,
+				A835E49F2ED0636B004CE294 /* AccountsMock in Frameworks */,
 				B5053BC52D111BE4003718E0 /* AppTrackingTransparency.framework in Frameworks */,
 				0E12F2112BBFA8950087D853 /* AsyncAlgorithms in Frameworks */,
 				9444FA8C2C94672B005C240B /* Chat in Frameworks */,
 				A85CF69D2A7180A90018FEF1 /* ChatRepo in Frameworks */,
+				A835E49B2ED0636B004CE294 /* ChatRepoMock in Frameworks */,
 				BF11643127F6612A00E5C5A4 /* CHTCollectionViewWaterfallLayoutObjC in Frameworks */,
 				BF27E3F42CF3FDD5002C892B /* CloudDrive in Frameworks */,
 				256428552CC7927D005DA9B1 /* ContentLibraries in Frameworks */,
@@ -5516,7 +5526,9 @@
 				BF67F7F82AB4171A00AC127E /* LogRepo in Frameworks */,
 				94A220182A696502004130C4 /* MEGAAnalyticsiOS in Frameworks */,
 				BFE7728E2D9B637A005B114E /* MEGAAppPresentation in Frameworks */,
+				A835E4A02ED0636B004CE294 /* MEGAAppPresentationMock in Frameworks */,
 				BF2AFDA82D9F85C40075248C /* MEGAAppSDKRepo in Frameworks */,
+				A835E4A12ED0636B004CE294 /* MEGAAppSDKRepoMock in Frameworks */,
 				0E261EAD2DA5EA1300858151 /* MEGAAuthentication in Frameworks */,
 				0ED6BEF42DA8A5570084FD30 /* MEGAAuthenticationOrchestration in Frameworks */,
 				A5E136892EB4FFB3004BDD4F /* MEGAChatSdk in Frameworks */,
@@ -5536,10 +5548,12 @@
 				1654C7F02DC47F1D00DDB846 /* MEGAStoreKit in Frameworks */,
 				B63D34142898A9AB0059DE66 /* MEGASwift in Frameworks */,
 				B63995412898CF1000EA88F1 /* MEGASwiftUI in Frameworks */,
+				A835E49E2ED0636B004CE294 /* MEGASwiftUIMock in Frameworks */,
 				B6826B682898F4E900B2B8D0 /* MEGAUI in Frameworks */,
 				A5DF52D92EB1BAB9003E890F /* MEGAUIComponent in Frameworks */,
 				6DFE02982CB7338400703844 /* MEGAUIComponent in Frameworks */,
 				B65D17CF2899E16400D5AD33 /* MEGAUIKit in Frameworks */,
+				A835E49D2ED0636B004CE294 /* MEGAUIMock in Frameworks */,
 				994890EB2E4D70B100CBDC33 /* MEGAVideoPlayer in Frameworks */,
 				BF1163BB27F12ED000E5C5A4 /* MessageKit in Frameworks */,
 				B51616492B83361900C6E842 /* Notifications in Frameworks */,
@@ -5550,6 +5564,7 @@
 				BF0CB9362803AEAE00C21F11 /* SAMKeychain in Frameworks */,
 				BF1164B027F68EC500E5C5A4 /* SDWebImageWebPCoder in Frameworks */,
 				945928F52AA23C1B0037694C /* Search in Frameworks */,
+				A835E49C2ED0636B004CE294 /* SearchMock in Frameworks */,
 				940931FE2A56ED680093C169 /* Settings in Frameworks */,
 				2446DEE92B0F099D00FA3FB8 /* Video in Frameworks */,
 				A8B51AE927F3565E0030F1EA /* WSTagsField in Frameworks */,
