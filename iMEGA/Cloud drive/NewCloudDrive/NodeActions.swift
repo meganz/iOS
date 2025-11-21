@@ -386,6 +386,12 @@ extension NodeActions {
         sdk: MEGASdk,
         completion: @Sendable @escaping (Bool) -> Void
     ) {
+        let isCameraUploadEnabled = CameraUploadManager.isCameraUploadEnabled
+        if !isCameraUploadEnabled {
+            completion(false)
+            return
+        }
+        
         let mageNodes = megaNodes(from: selectedNodes, using: sdk)
         
         CameraUploadNodeAccess.shared.loadNode { node, _ in
