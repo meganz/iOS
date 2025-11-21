@@ -827,7 +827,6 @@
 		6DF356B62BAD36350099FCF1 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 6DC1FCA12BAD11B40013E9BD /* PrivacyInfo.xcprivacy */; };
 		6DF356B82BAD36370099FCF1 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 6DC1FCA12BAD11B40013E9BD /* PrivacyInfo.xcprivacy */; };
 		6DFC67842CC87957000EA8BC /* MEGASwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 6DFC67832CC87957000EA8BC /* MEGASwiftUI */; };
-		6DFE02982CB7338400703844 /* MEGAUIComponent in Frameworks */ = {isa = PBXBuildFile; productRef = 6DFE02972CB7338400703844 /* MEGAUIComponent */; };
 		6DFF9C0D29E4BC2D005C9C21 /* ChatRoomsListRouting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DFF9C0C29E4BC2D005C9C21 /* ChatRoomsListRouting.swift */; };
 		7271896027FF128B00B2DB08 /* MEGAReachabilityManager+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7271895F27FF128B00B2DB08 /* MEGAReachabilityManager+Additions.swift */; };
 		7288C2C927F5BFBF0010DC19 /* HelpTableViewController+Feedback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7288C2C827F5BFBF0010DC19 /* HelpTableViewController+Feedback.swift */; };
@@ -1655,7 +1654,6 @@
 		A8077BB72E42270F009954FD /* LocalizationHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = A8077BB62E42270F009954FD /* LocalizationHelper.m */; };
 		A8077BB82E42270F009954FD /* LocalizationHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = A8077BB62E42270F009954FD /* LocalizationHelper.m */; };
 		A808F1832795D286004E4D31 /* ReportIssueViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A808F1822795D286004E4D31 /* ReportIssueViewRouter.swift */; };
-		A812CB392A4B0FAD00F99382 /* MEGAChatSdk in Frameworks */ = {isa = PBXBuildFile; productRef = A812CB382A4B0FAD00F99382 /* MEGAChatSdk */; };
 		A812CB3B2A4B0FB400F99382 /* MEGAChatSdk in Frameworks */ = {isa = PBXBuildFile; productRef = A812CB3A2A4B0FB400F99382 /* MEGAChatSdk */; };
 		A812CB3D2A4B0FBE00F99382 /* MEGAChatSdk in Frameworks */ = {isa = PBXBuildFile; productRef = A812CB3C2A4B0FBE00F99382 /* MEGAChatSdk */; };
 		A81488B12B88E18800B3B744 /* ChatRoomAvatarInitialsGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9949C3612A72421F000C299B /* ChatRoomAvatarInitialsGenerator.swift */; };
@@ -1692,7 +1690,6 @@
 		A835E49F2ED0636B004CE294 /* AccountsMock in Frameworks */ = {isa = PBXBuildFile; productRef = B54B9BFD2D6426850025A25F /* AccountsMock */; };
 		A835E4A02ED0636B004CE294 /* MEGAAppPresentationMock in Frameworks */ = {isa = PBXBuildFile; productRef = BFE7728F2D9B637A005B114E /* MEGAAppPresentationMock */; };
 		A835E4A12ED0636B004CE294 /* MEGAAppSDKRepoMock in Frameworks */ = {isa = PBXBuildFile; productRef = BF2AFDA92D9F85C40075248C /* MEGAAppSDKRepoMock */; };
-		A835E4A32ED06529004CE294 /* f.swift in Sources */ = {isa = PBXBuildFile; fileRef = A835E4A22ED06528004CE294 /* f.swift */; };
 		A836581C2102101C005E616F /* Contacts.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 415226731A692ECC00EC7BB6 /* Contacts.storyboard */; };
 		A837FDF82D42969D00795223 /* BrowserViewController+Search.swift in Sources */ = {isa = PBXBuildFile; fileRef = A837FDF72D42969D00795223 /* BrowserViewController+Search.swift */; };
 		A837FDF92D42969D00795223 /* BrowserViewController+Search.swift in Sources */ = {isa = PBXBuildFile; fileRef = A837FDF72D42969D00795223 /* BrowserViewController+Search.swift */; };
@@ -1754,7 +1751,6 @@
 		A88E7FEC2549FD8A001B0A66 /* RecentsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A88E7FE72549FD8A001B0A66 /* RecentsViewController.m */; };
 		A88E7FED2549FD8A001B0A66 /* Recents.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A88E7FE82549FD8A001B0A66 /* Recents.storyboard */; };
 		A88E7FEE2549FD8A001B0A66 /* RecentsTableViewHeaderFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = A88E7FE92549FD8A001B0A66 /* RecentsTableViewHeaderFooterView.m */; };
-		A891E8A529C1E09D0020072A /* MEGASdk in Frameworks */ = {isa = PBXBuildFile; productRef = A891E8A429C1E09D0020072A /* MEGASdk */; };
 		A891E8A729C1E0A70020072A /* MEGASdk in Frameworks */ = {isa = PBXBuildFile; productRef = A891E8A629C1E0A70020072A /* MEGASdk */; };
 		A891E8A929C1E0B00020072A /* MEGASdk in Frameworks */ = {isa = PBXBuildFile; productRef = A891E8A829C1E0B00020072A /* MEGASdk */; };
 		A891E8AB29C1E0C40020072A /* MEGASdk in Frameworks */ = {isa = PBXBuildFile; productRef = A891E8AA29C1E0C40020072A /* MEGASdk */; };
@@ -1945,7 +1941,6 @@
 		B6031EE52202A6BF00F7EAA1 /* NodesFetchListenerOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = B6031EE42202A6BF00F7EAA1 /* NodesFetchListenerOperation.m */; };
 		B6048910223C4F7B00BA91F9 /* MEGACoreDataStack.m in Sources */ = {isa = PBXBuildFile; fileRef = B63F319F223BA8FA00B0C6A6 /* MEGACoreDataStack.m */; };
 		B6048913223CDA8400BA91F9 /* AssetFetchResult.m in Sources */ = {isa = PBXBuildFile; fileRef = B6048912223CDA8400BA91F9 /* AssetFetchResult.m */; };
-		B6061FEC2897928D0094087E /* MEGADomain in Frameworks */ = {isa = PBXBuildFile; productRef = B6061FEB2897928D0094087E /* MEGADomain */; };
 		B60C7B2D2A29CCDB00AAA21F /* AppEnvironmentConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60C7B2C2A29CCDB00AAA21F /* AppEnvironmentConfigurator.swift */; };
 		B60C7B2E2A29CCDB00AAA21F /* AppEnvironmentConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60C7B2C2A29CCDB00AAA21F /* AppEnvironmentConfigurator.swift */; };
 		B60C7B2F2A29CD5500AAA21F /* AppEnvironmentConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60C7B2C2A29CCDB00AAA21F /* AppEnvironmentConfigurator.swift */; };
@@ -5532,11 +5527,9 @@
 				0E261EAD2DA5EA1300858151 /* MEGAAuthentication in Frameworks */,
 				0ED6BEF42DA8A5570084FD30 /* MEGAAuthenticationOrchestration in Frameworks */,
 				A5E136892EB4FFB3004BDD4F /* MEGAChatSdk in Frameworks */,
-				A812CB392A4B0FAD00F99382 /* MEGAChatSdk in Frameworks */,
 				6D004FE92D0A46360039ADF9 /* MEGAConnectivity in Frameworks */,
 				9418A7A22ACF84210014C01C /* MEGADesignToken in Frameworks */,
 				A5E1368C2EB50586004BDD4F /* MEGADomain in Frameworks */,
-				B6061FEC2897928D0094087E /* MEGADomain in Frameworks */,
 				B6A01BAC289A61CA00B503FD /* MEGAFoundation in Frameworks */,
 				169ADFCE2DD5BAA500AB80F1 /* MEGAInfrastructure in Frameworks */,
 				BF6149522A9FF33300AB051A /* MEGAL10n in Frameworks */,
@@ -5544,14 +5537,12 @@
 				0E119ACC2C7C3CBC0091BF06 /* MEGAPhotos in Frameworks */,
 				6D8A01162DBEFCA100EA77ED /* MEGAPreference in Frameworks */,
 				A5E136862EB4FF9A004BDD4F /* MEGASdk in Frameworks */,
-				A891E8A529C1E09D0020072A /* MEGASdk in Frameworks */,
 				1654C7F02DC47F1D00DDB846 /* MEGAStoreKit in Frameworks */,
 				B63D34142898A9AB0059DE66 /* MEGASwift in Frameworks */,
 				B63995412898CF1000EA88F1 /* MEGASwiftUI in Frameworks */,
 				A835E49E2ED0636B004CE294 /* MEGASwiftUIMock in Frameworks */,
 				B6826B682898F4E900B2B8D0 /* MEGAUI in Frameworks */,
 				A5DF52D92EB1BAB9003E890F /* MEGAUIComponent in Frameworks */,
-				6DFE02982CB7338400703844 /* MEGAUIComponent in Frameworks */,
 				B65D17CF2899E16400D5AD33 /* MEGAUIKit in Frameworks */,
 				A835E49D2ED0636B004CE294 /* MEGAUIMock in Frameworks */,
 				994890EB2E4D70B100CBDC33 /* MEGAVideoPlayer in Frameworks */,
@@ -13427,9 +13418,7 @@
 				A8B51ADB27F3534F0030F1EA /* Haptica */,
 				A8F5155727F6F24F00AEE4D6 /* ISEmojiView */,
 				BF1164BA27F692DB00E5C5A4 /* KeyboardLayoutGuide */,
-				B6061FEB2897928D0094087E /* MEGADomain */,
 				B6A01BAB289A61CA00B503FD /* MEGAFoundation */,
-				A891E8A429C1E09D0020072A /* MEGASdk */,
 				B63D34132898A9AB0059DE66 /* MEGASwift */,
 				B63995402898CF1000EA88F1 /* MEGASwiftUI */,
 				B6826B672898F4E900B2B8D0 /* MEGAUI */,
@@ -13441,7 +13430,6 @@
 				BF0CB9352803AEAE00C21F11 /* SAMKeychain */,
 				BF1164AF27F68EC500E5C5A4 /* SDWebImageWebPCoder */,
 				A8B51AE827F3565E0030F1EA /* WSTagsField */,
-				A812CB382A4B0FAD00F99382 /* MEGAChatSdk */,
 				9418DB282A4EE5FB002B0077 /* MEGAPermissions */,
 				940931FB2A56ED5F0093C169 /* DeviceCenter */,
 				940931FD2A56ED680093C169 /* Settings */,
@@ -13460,7 +13448,6 @@
 				0E119ACB2C7C3CBC0091BF06 /* MEGAPhotos */,
 				9444FA8B2C94672B005C240B /* Chat */,
 				B5866BB42CA539E4009E0A1E /* GoogleMobileAds */,
-				6DFE02972CB7338400703844 /* MEGAUIComponent */,
 				256428542CC7927D005DA9B1 /* ContentLibraries */,
 				A87F09182CCFE65100A1B03C /* MEGAUIMock */,
 				BF27E3F32CF3FDD5002C892B /* CloudDrive */,
@@ -18664,10 +18651,6 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = MEGASwiftUI;
 		};
-		6DFE02972CB7338400703844 /* MEGAUIComponent */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = MEGAUIComponent;
-		};
 		940931FB2A56ED5F0093C169 /* DeviceCenter */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = DeviceCenter;
@@ -18776,10 +18759,6 @@
 			package = BF0CB9342803AEAE00C21F11 /* XCRemoteSwiftPackageReference "SAMKeychain" */;
 			productName = SAMKeychain;
 		};
-		A812CB382A4B0FAD00F99382 /* MEGAChatSdk */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = MEGAChatSdk;
-		};
 		A812CB3A2A4B0FB400F99382 /* MEGAChatSdk */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = MEGAChatSdk;
@@ -18840,10 +18819,6 @@
 		A88813472E1BD7BB0009917F /* MEGASwift */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = MEGASwift;
-		};
-		A891E8A429C1E09D0020072A /* MEGASdk */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = MEGASdk;
 		};
 		A891E8A629C1E0A70020072A /* MEGASdk */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -18943,10 +18918,6 @@
 		B5D58D572AC67D0D004ECD36 /* Accounts */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Accounts;
-		};
-		B6061FEB2897928D0094087E /* MEGADomain */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = MEGADomain;
 		};
 		B610447128979E9B00AAECF4 /* MEGADomain */ = {
 			isa = XCSwiftPackageProductDependency;
