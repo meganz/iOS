@@ -13,14 +13,6 @@ import SearchMock
 import SwiftUI
 import XCTest
 
-struct MockMEGANotificationUseCaseProtocol: MEGANotificationUseCaseProtocol {
-    var userAlertsUpdates: AnyAsyncSequence<Void> { EmptyAsyncSequence().eraseToAnyAsyncSequence() }
-    var userContactRequestsUpdates: AnyAsyncSequence<Void> { EmptyAsyncSequence().eraseToAnyAsyncSequence() }
-    func relevantAndNotSeenAlerts() -> [UserAlertEntity]? { nil }
-    func incomingContactRequest() -> [ContactRequestEntity] { [] }
-    func unreadNotificationsCount() async -> Int { 0 }
-}
-
 final class MockCloudDriveViewModeMonitoringService: @unchecked Sendable, CloudDriveViewModeMonitoring {
     private var continuations: [AsyncStream<ViewModePreferenceEntity>.Continuation] = []
     private(set) var count = 0
