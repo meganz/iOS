@@ -357,6 +357,7 @@ extension FolderLinkViewController: ViewType {
         case .fetchNodesDone(let validKey):
             handleFetchNodesDone(validKey)
         case .fetchNodesFailed:
+            guard isLoginDone else { return }
             handleFetchNodesFailed()
         case .logoutDone:
             handleLogout()
