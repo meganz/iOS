@@ -6,7 +6,7 @@ NS_ASSUME_NONNULL_BEGIN
 @class OfflineViewController;
 @interface OfflineCollectionViewController : UIViewController
 
-@property (nonatomic, strong) OfflineViewController *offline;
+@property (nonatomic, weak) OfflineViewController *offline;
 
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 

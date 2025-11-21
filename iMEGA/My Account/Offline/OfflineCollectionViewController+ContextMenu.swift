@@ -12,7 +12,7 @@ extension OfflineCollectionViewController {
         return UIContextMenuConfiguration(identifier: nil) {
             if isDirectory.boolValue {
                 let offlineVC = self.storyboard?.instantiateViewController(withIdentifier: "OfflineViewControllerID") as? OfflineViewController
-                offlineVC?.folderPathFromOffline = self.offline.folderPath(fromOffline: itemPath, folder: itemPath.lastPathComponent)
+                offlineVC?.folderPathFromOffline = self.offline?.folderPath(fromOffline: itemPath, folder: itemPath.lastPathComponent)
                 return offlineVC
             } else {
                 return nil
