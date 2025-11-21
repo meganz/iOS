@@ -47,6 +47,7 @@ protocol TextEditorViewRouting: Routing {
     func removeLink(from nodeHandle: HandleEntity)
     func hide(node: NodeEntity)
     func unhide(node: NodeEntity)
+    func moveToRubbishBin(node: MEGANode)
 }
 
 final class TextEditorViewModel: ViewModelType {
@@ -443,6 +444,8 @@ extension TextEditorViewModel: NodeActionViewControllerDelegate {
             router.hide(node: node.toNodeEntity())
         case .unhide:
             router.unhide(node: node.toNodeEntity())
+        case .moveToRubbishBin:
+            router.moveToRubbishBin(node: node)
         default:
             break
         }

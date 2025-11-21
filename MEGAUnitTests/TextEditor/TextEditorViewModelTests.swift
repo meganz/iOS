@@ -1164,7 +1164,24 @@ final class TextEditorViewModelTests: XCTestCase {
         
         XCTAssertEqual(mockRouter.unhideNode_calledTimes, 1)
     }
-    
+
+    @MainActor
+    func testAction_moveToRubbishBin() {
+        let router = MockTextEditorViewRouter()
+        let sut = sut(
+            router: router
+        )
+
+        sut.nodeAction(
+            mockNodeActionViewController(),
+            didSelect: .moveToRubbishBin,
+            for: MockNode(handle: 1),
+            from: "any-sender"
+        )
+
+        XCTAssertEqual(router.moveToRubbishBin_calledTimes, 1)
+    }
+
     @MainActor
     private func sut(
         nodeEntity: NodeEntity = NodeEntity(handle: 123, isFile: true),
@@ -1273,7 +1290,8 @@ final class MockTextEditorViewRouter: TextEditorViewRouting {
     var removeLink_calledTimes = 0
     var hideNode_calledTimes = 0
     var unhideNode_calledTimes = 0
-    
+    var moveToRubbishBin_calledTimes = 0
+
     func chooseParentNode(completion: @escaping (HandleEntity) -> Void) {
         chooseDestination_calledTimes += 1
         completion(123)
@@ -1341,5 +1359,9 @@ final class MockTextEditorViewRouter: TextEditorViewRouting {
     
     func unhide(node: NodeEntity) {
         unhideNode_calledTimes += 1
+    }
+
+    func moveToRubbishBin(node: MEGANode) {
+        moveToRubbishBin_calledTimes += 1
     }
 }

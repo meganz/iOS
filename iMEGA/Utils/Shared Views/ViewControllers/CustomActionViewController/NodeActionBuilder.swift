@@ -324,6 +324,10 @@ final class NodeActionBuilder {
             nodeActions.append(hiddenStateAction)
         }
 
+        if accessLevel == .accessOwner && !isLink {
+            nodeActions.append(.moveToRubbishBinAction())
+        }
+
         return nodeActions
     }
     
@@ -356,6 +360,10 @@ final class NodeActionBuilder {
         if accessLevel == .accessOwner,
            let hiddenStateAction = hiddenStateAction() {
             nodeActions.append(hiddenStateAction)
+        }
+
+        if accessLevel == .accessOwner && !isLink {
+            nodeActions.append(.moveToRubbishBinAction())
         }
 
         return nodeActions

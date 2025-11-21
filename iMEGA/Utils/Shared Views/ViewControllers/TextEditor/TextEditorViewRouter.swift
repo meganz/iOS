@@ -247,6 +247,11 @@ extension TextEditorViewRouter: TextEditorViewRouting {
         node.mnz_remove(in: controller, completion: nil)
     }
     
+    func moveToRubbishBin(node: MEGANode) {
+        guard let controller = baseViewController else { return }
+        node.mnz_askToMoveToTheRubbishBin(in: controller)
+    }
+
     func shareLink(from nodeHandle: HandleEntity) {
         guard let baseViewController,
               let node = MEGASdk.shared.node(forHandle: nodeHandle) else {

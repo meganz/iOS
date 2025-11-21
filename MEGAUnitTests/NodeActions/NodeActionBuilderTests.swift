@@ -881,13 +881,13 @@ class NodeActionBuilderTests {
     }
     
     @Test
-    func testTextEditorAcessOwner() {
+    func testTextEditorAccessOwner() {
         actions = NodeActionBuilder()
             .setDisplayMode(.textEditor)
             .setAccessLevel(.accessOwner)
             .build()
         
-        #expect(isEqual(nodeActionTypes: [.editTextFile, .download, .shareLink, .exportFile, .sendToChat]) == true)
+        #expect(isEqual(nodeActionTypes: [.editTextFile, .download, .shareLink, .exportFile, .sendToChat, .moveToRubbishBin]) == true)
     }
     
     @Test
@@ -900,7 +900,7 @@ class NodeActionBuilderTests {
             .setIsHidden(true)
             .build()
         
-        #expect(isEqual(nodeActionTypes: [.editTextFile, .download, .shareLink, .exportFile, .sendToChat, .unhide]) == true)
+        #expect(isEqual(nodeActionTypes: [.editTextFile, .download, .shareLink, .exportFile, .sendToChat, .unhide, .moveToRubbishBin]) == true)
     }
     
     @Test
@@ -913,7 +913,7 @@ class NodeActionBuilderTests {
             .setIsHidden(false)
             .build()
         
-        #expect(isEqual(nodeActionTypes: [.editTextFile, .download, .shareLink, .exportFile, .sendToChat, .hide]) == true)
+        #expect(isEqual(nodeActionTypes: [.editTextFile, .download, .shareLink, .exportFile, .sendToChat, .hide, .moveToRubbishBin]) == true)
     }
     
     // MARK: - Preview Documents
@@ -1046,7 +1046,7 @@ class NodeActionBuilderTests {
             .setAccessLevel(.accessOwner)
             .build()
         
-        #expect(isEqual(nodeActionTypes: [.download, .shareLink, .exportFile, .sendToChat]) == true)
+        #expect(isEqual(nodeActionTypes: [.download, .shareLink, .exportFile, .sendToChat, .moveToRubbishBin]) == true)
     }
     
     @Test
@@ -1078,7 +1078,7 @@ class NodeActionBuilderTests {
             .setAccessLevel(.accessOwner)
             .build()
         
-        #expect(isEqual(nodeActionTypes: [.download, .shareLink, .exportFile, .sendToChat, .search, .pdfThumbnailView]) == true)
+        #expect(isEqual(nodeActionTypes: [.download, .shareLink, .exportFile, .sendToChat, .search, .pdfThumbnailView, .moveToRubbishBin]) == true)
     }
     
     @Test
@@ -1089,7 +1089,7 @@ class NodeActionBuilderTests {
             .setAccessLevel(.accessOwner)
             .setIsExported(true)
             .build()
-        #expect(isEqual(nodeActionTypes: [.download, .manageLink, .removeLink, .exportFile, .sendToChat, .search, .pdfThumbnailView]) == true)
+        #expect(isEqual(nodeActionTypes: [.download, .manageLink, .removeLink, .exportFile, .sendToChat, .search, .pdfThumbnailView, .moveToRubbishBin]) == true)
     }
     
     @Test
@@ -1121,7 +1121,7 @@ class NodeActionBuilderTests {
             .setAccessLevel(.accessOwner)
             .build()
         
-        #expect(isEqual(nodeActionTypes: [.download, .shareLink, .exportFile, .sendToChat, .search, .pdfPageView]) == true)
+        #expect(isEqual(nodeActionTypes: [.download, .shareLink, .exportFile, .sendToChat, .search, .pdfPageView, .moveToRubbishBin]) == true)
     }
     
     @Test
@@ -1132,7 +1132,7 @@ class NodeActionBuilderTests {
             .setAccessLevel(.accessOwner)
             .setIsExported(true)
             .build()
-        #expect(isEqual(nodeActionTypes: [.download, .manageLink, .removeLink, .exportFile, .sendToChat, .search, .pdfPageView]) == true)
+        #expect(isEqual(nodeActionTypes: [.download, .manageLink, .removeLink, .exportFile, .sendToChat, .search, .pdfPageView, .moveToRubbishBin]) == true)
     }
     
     @Test
@@ -1145,7 +1145,7 @@ class NodeActionBuilderTests {
             .setIsHidden(false)
             .build()
         
-        #expect(isEqual(nodeActionTypes: [.download, .shareLink, .exportFile, .sendToChat, .search, .pdfPageView, .hide]) == true)
+        #expect(isEqual(nodeActionTypes: [.download, .shareLink, .exportFile, .sendToChat, .search, .pdfPageView, .hide, .moveToRubbishBin]) == true)
     }
     
     @Test
@@ -1159,7 +1159,7 @@ class NodeActionBuilderTests {
             .setIsHidden(true)
             .build()
         
-        #expect(isEqual(nodeActionTypes: [.download, .shareLink, .exportFile, .sendToChat, .search, .pdfPageView, .unhide]) == true)
+        #expect(isEqual(nodeActionTypes: [.download, .shareLink, .exportFile, .sendToChat, .search, .pdfPageView, .unhide, .moveToRubbishBin]) == true)
     }
     
     @Test
