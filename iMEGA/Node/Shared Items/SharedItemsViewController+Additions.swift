@@ -551,6 +551,7 @@ extension SharedItemsViewController {
             tableView?.reloadData()
             tableView?.layoutIfNeeded()
             tableView?.setContentOffset(.zero, animated: false)
+            updateEmptyStateIfNeeded()
         }
     }
     

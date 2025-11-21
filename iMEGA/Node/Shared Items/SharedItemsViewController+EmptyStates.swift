@@ -1,9 +1,48 @@
 import MEGAAssets
 import MEGAL10n
 
-extension SharedItemsViewController: @preconcurrency DZNEmptyDataSetSource {
-    public func customView(forEmptyDataSet scrollView: UIScrollView) -> UIView? {
-        let emptyStateView = EmptyStateView(image: imageForEmptyState(), title: titleForEmptyState(), description: descriptionForEmptyState(), buttonTitle: buttonTitleForEmptyState())
+extension SharedItemsViewController {
+    private func hasContentToDisplay() -> Bool {
+        guard MEGAReachabilityManager.isReachable() else {
+            return false
+        }
+
+        if searchController.isActive {
+            let hasSearchNodes = searchNodesArray.count > 0
+            let hasSearchUnverifiedNodes = searchUnverifiedNodesArray.count > 0
+            return hasSearchNodes || hasSearchUnverifiedNodes
+        }
+
+        if incomingButton?.isSelected == true {
+            let incomingCount = incomingNodesMutableArray.count
+            let unverifiedCount = incomingUnverifiedNodesMutableArray?.count ?? 0
+            return incomingCount > 0 || unverifiedCount > 0
+        }
+
+        if outgoingButton?.isSelected == true {
+            return outgoingNodesMutableArray.count > 0
+        }
+
+        if linksButton?.isSelected == true {
+            return publicLinksArray.isNotEmpty
+        }
+
+        return false
+    }
+    
+    @objc public func updateEmptyStateIfNeeded() {
+        let hasData = hasContentToDisplay()
+
+        tableView?.backgroundView = hasData ? nil : emptyStateView()
+    }
+    
+    public func emptyStateView() -> UIView? {
+        let emptyStateView = EmptyStateView(
+            image: imageForEmptyState(),
+            title: titleForEmptyState(),
+            description: descriptionForEmptyState(),
+            buttonTitle: buttonTitleForEmptyState()
+        )
         
         emptyStateView.button?.addTarget(self, action: #selector(emptyStateButtonAction(sender:)), for: .touchUpInside)
         

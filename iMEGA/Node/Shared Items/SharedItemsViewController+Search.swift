@@ -43,6 +43,7 @@ extension SharedItemsViewController: UISearchBarDelegate {
             }
         }
         tableView?.reloadData()
+        updateEmptyStateIfNeeded()
     }
     
     func evaluateSearchResult(searchText: String, sortType: MEGASortOrderType, showsHUD: Bool, asyncSearchClosure: @escaping (String, MEGASortOrderType) async throws -> [MEGANode]?) async {
@@ -68,7 +69,8 @@ extension SharedItemsViewController: UISearchBarDelegate {
                 SVProgressHUD.showError(withStatus: error.localizedDescription)
             }
         }
-        self.tableView?.reloadData()
+        tableView?.reloadData()
+        updateEmptyStateIfNeeded()
     }
 
     @objc func search(by searchText: String, showsHUD: Bool) {

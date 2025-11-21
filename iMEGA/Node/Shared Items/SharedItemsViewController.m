@@ -2,7 +2,6 @@
 
 #import "SVProgressHUD.h"
 #import "UIApplication+MNZCategory.h"
-#import "UIScrollView+EmptyDataSet.h"
 
 #import "Helper.h"
 #import "MEGA-Swift.h"
@@ -27,7 +26,7 @@
 #import "LocalizationHelper.h"
 @import MEGAUIKit;
 
-@interface SharedItemsViewController () <UITableViewDataSource, UITableViewDelegate, UISearchControllerDelegate, UISearchResultsUpdating, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, MEGARequestDelegate, NodeInfoViewControllerDelegate, NodeActionViewControllerDelegate, BrowserViewControllerDelegate, TextFileEditable> {
+@interface SharedItemsViewController () <UITableViewDataSource, UITableViewDelegate, UISearchControllerDelegate, UISearchResultsUpdating, MEGAGlobalDelegate, MEGARequestDelegate, NodeInfoViewControllerDelegate, NodeActionViewControllerDelegate, BrowserViewControllerDelegate, TextFileEditable> {
     BOOL allNodesSelected;
 }
 
@@ -57,8 +56,6 @@
     //White background for the view behind the table view
     self.tableView.backgroundView = UIView.alloc.init;
     
-    self.tableView.emptyDataSetSource = self;
-    self.tableView.emptyDataSetDelegate = self;
     self.tableView.sectionHeaderTopPadding = 0;
 
     self.tableView.allowsMultipleSelectionDuringEditing = YES;
@@ -147,7 +144,7 @@
     [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
     
     [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
-        [self.tableView reloadEmptyDataSet];
+        [self.tableView reloadData];
         [self updateSearchBar];
     } completion:nil];
 }
@@ -212,6 +209,7 @@
     [self configNavigationBarButtonItems];
     
     [self.tableView reloadData];
+    [self updateEmptyStateIfNeeded];
 }
 
 - (void)internetConnectionChanged {
@@ -222,6 +220,7 @@
     boolValue ? [self addSearchBar] : [self hideSearchBarIfNotActive];
     
     [self.tableView reloadData];
+    [self updateEmptyStateIfNeeded];
 }
 
 - (void)toolbarItemsSetEnabled:(BOOL)boolValue {
@@ -732,6 +731,7 @@
     [self updateToolbarItemsIfNeeded];
     
     [self.tableView reloadData];
+    [self updateEmptyStateIfNeeded];
 }
 
 - (IBAction)downloadAction:(UIBarButtonItem *)sender {
