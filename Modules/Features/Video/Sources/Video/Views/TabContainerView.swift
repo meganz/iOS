@@ -5,6 +5,8 @@ import SwiftUI
 
 struct TabContainerView: View {
     @State private var currentTab: VideosTab = .all
+    @State private var orientation = UIDeviceOrientation.unknown
+    @State private var layoutID = UUID()
     
     @StateObject private var videoListViewModel: VideoListViewModel
     @StateObject private var videoPlaylistViewModel: VideoPlaylistsViewModel
@@ -30,34 +32,71 @@ struct TabContainerView: View {
     }
     
     var body: some View {
-        VStack(spacing: 0) {
-            TabBarView(currentTab: self.$currentTab, videoConfig: videoConfig)
-                .frame(height: syncModel.showsTabView ? TabBarView.defaultHeight : 0)
-                .opacity(syncModel.showsTabView ? 1 : 0)
-                .animation(.easeInOut(duration: 0.1), value: syncModel.showsTabView)
+        GeometryReader { geometry in
+            let tabBarHeight = currentTabBarHeight
             
-            TabView(selection: self.$currentTab) {
-                VideoListView(
-                    viewModel: videoListViewModel,
-                    videoConfig: videoConfig,
-                    router: router
-                )
-                .tag(VideosTab.all)
-                .gesture(syncModel.showsTabView ? nil : DragGesture())
+            VStack(spacing: 0) {
+                TabBarView(currentTab: self.$currentTab, videoConfig: videoConfig)
+                    .frame(height: syncModel.showsTabView ? tabBarHeight : 0)
+                    .frame(maxWidth: .infinity)
+                    .opacity(syncModel.showsTabView ? 1 : 0)
+                    .allowsHitTesting(syncModel.showsTabView)
+                    .animation(.easeInOut(duration: 0.1), value: syncModel.showsTabView)
                 
-                PlaylistView(
-                    viewModel: videoPlaylistViewModel,
-                    videoConfig: videoConfig,
-                    router: router
-                )
-                .tag(VideosTab.playlist)
-                .gesture(syncModel.showsTabView ? nil : DragGesture())
+                TabView(selection: self.$currentTab) {
+                    VideoListView(
+                        viewModel: videoListViewModel,
+                        videoConfig: videoConfig,
+                        router: router
+                    )
+                    .tag(VideosTab.all)
+                    .gesture(syncModel.showsTabView ? nil : DragGesture())
+                    .ignoresSafeArea(edges: .bottom)
+                    
+                    PlaylistView(
+                        viewModel: videoPlaylistViewModel,
+                        videoConfig: videoConfig,
+                        router: router
+                    )
+                    .ignoresSafeArea(edges: .bottom)
+                    .tag(VideosTab.playlist)
+                    .gesture(syncModel.showsTabView ? nil : DragGesture())
+                }
+                .frame(width: geometry.size.width, height: geometry.size.height - (syncModel.showsTabView ? tabBarHeight : 0))
+                .animation(.easeInOut(duration: 0.1), value: syncModel.showsTabView)
+                .tabViewStyle(.page(indexDisplayMode: .never))
+                .background(videoListViewModel.featureFlagProvider.isLiquidGlassEnabled() ? .clear : videoConfig.colorAssets.pageBackgroundColor)
             }
-            .tabViewStyle(.page(indexDisplayMode: .never))
-            .background(videoConfig.colorAssets.pageBackgroundColor)
+            .frame(width: geometry.size.width, height: geometry.size.height, alignment: .top)
+            .id(layoutID)
+        }
+        .ignoresSafeArea(edges: .bottom)
+        .onRotate { newOrientation in
+            let isOrientationChanged = orientation.isLandscape != newOrientation.isLandscape
+            orientation = newOrientation
+            
+            if isOrientationChanged {
+                refreshLayoutID()
+            }
+        }
+        .onChange(of: syncModel.showsTabView) { showsTabView in
+            if showsTabView {
+                refreshLayoutID()
+            }
         }
         .onChange(of: currentTab) {
             didChangeCurrentTab($0)
+        }
+    }
+    
+    private var currentTabBarHeight: CGFloat {
+        orientation.isLandscape ? 60 : TabBarView.defaultHeight
+    }
+    
+    private func refreshLayoutID() {
+        Task { @MainActor in
+            try? await Task.sleep(for: .milliseconds(50))
+            layoutID = UUID()
         }
     }
 }

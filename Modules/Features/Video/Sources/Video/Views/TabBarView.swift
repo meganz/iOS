@@ -10,7 +10,7 @@ struct TabBarView: View {
     @State private var orientation = UIDeviceOrientation.unknown
     
     var body: some View {
-        HStack {
+        HStack(spacing: 0) {
             if interfaceOrientation.isLandscape {
                 Spacer()
             }
@@ -28,8 +28,7 @@ struct TabBarView: View {
                 Spacer()
             }
         }
-        .frame(maxWidth: interfaceOrientation.isPortrait ? .infinity : nil)
-        .edgesIgnoringSafeArea(.all)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(videoConfig.colorAssets.navigationBgColor)
         .onRotate { newOrientation in
             orientation = newOrientation
@@ -84,7 +83,7 @@ struct TabBarItem: View {
             }
         }
         .animation(.spring(), value: self.currentTab)
-        .frame(height: TabBarView.defaultHeight)
+        .frame(maxHeight: .infinity)
     }
     
     private var isTabActive: Bool {
