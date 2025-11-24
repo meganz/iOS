@@ -52,11 +52,13 @@ struct RevampedSearchResultRowView: View {
                     .tint(swipeAction.backgroundColor)
                 }
             }
+            // By default, SwiftUI List has a gap (aka inset) wrapping around the content of the cell, reducing this inset
+            // will help the row to vertically fit the actual content and make the content to match with the Figma design
             .listRowInsets(
                 EdgeInsets(
-                    top: -2,
+                    top: -4,
                     leading: 12,
-                    bottom: -2,
+                    bottom: -4,
                     trailing: 16
                 )
             )
@@ -98,6 +100,7 @@ struct RevampedSearchResultRowView: View {
         }
         .listRowBackground(TokenColors.Background.surface1.swiftUI.opacity( isSelected || highlighted ? 1 : 0))
         .contentShape(Rectangle())
+        .padding(.vertical, 10)
         .frame(minHeight: 58)
     }
 
@@ -161,21 +164,22 @@ struct RevampedSearchResultRowView: View {
             propertyViewsFor(placement: .secondary(.leading))
             Text(viewModel.result.description(layout))
                 .font(.footnote)
-                .fontWeight(.regular)
                 .lineLimit(1)
                 .foregroundStyle(viewModel.colorAssets.subtitleTextColor)
             propertyViewsFor(placement: .secondary(.trailing))
             Spacer()
             propertyViewsFor(placement: .secondary(.trailingEdge))
         }
+        .padding(.vertical, TokenSpacing._1)
     }
 
     @ViewBuilder
     private var noteView: some View {
-        if let note = viewModel.note {
+        if let note = viewModel.revampedNote {
             Text(note)
                 .lineLimit(1)
                 .dynamicTypeSize(.xSmall ... .accessibility5)
+                .padding(.vertical, TokenSpacing._1)
         } else {
             EmptyView()
         }
@@ -183,8 +187,8 @@ struct RevampedSearchResultRowView: View {
 
     @ViewBuilder
     private var tagsView: some View {
-        if let tagListViewModel = viewModel.tagListViewModel {
-            HorizontalTagListView(viewModel: tagListViewModel)
+        if let tagListViewModel = viewModel.revampedTagListViewModel {
+            RevampedHorizontalTagListView(viewModel: tagListViewModel)
                 .padding(
                     EdgeInsets(
                         top: TokenSpacing._1,

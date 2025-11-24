@@ -62,6 +62,24 @@ class SearchResultRowViewModel: Identifiable, ObservableObject {
         }
     }
 
+    var revampedNote: AttributedString? {
+        if let nodeDescription = result.note,
+            let query = query(),
+           nodeDescription.containsIgnoringCaseAndDiacritics(searchText: query) {
+            AttributedString(
+                nodeDescription.highlightedStringWithKeyword(
+                    query,
+                    primaryTextColor: UIColor(colorAssets.nodeDescriptionTextNormalColor),
+                    highlightedTextColor: UIColor(colorAssets.textHighlightColor),
+                    normalFont: .preferredFont(forTextStyle: .footnote),
+                    highlightedFont: nil
+                )
+            )
+        } else {
+            nil
+        }
+    }
+
     var tagListViewModel: HorizontalTagListViewModel? {
         let tags: [AttributedString] = result.tags.compactMap { inputTag in
             guard let query = query()?.removingFirstLeadingHash(),
@@ -81,6 +99,31 @@ class SearchResultRowViewModel: Identifiable, ObservableObject {
             )
 
             attributedString.font = .subheadline.weight(.medium)
+            return attributedString
+        }
+
+        return tags.isNotEmpty ? HorizontalTagListViewModel(tags: tags) : nil
+    }
+
+    var revampedTagListViewModel: HorizontalTagListViewModel? {
+        let tags: [AttributedString] = result.tags.compactMap { inputTag in
+            guard let query = query()?.removingFirstLeadingHash(),
+                  case let tag = "#" + inputTag,
+                  tag.containsIgnoringCaseAndDiacritics(searchText: query) else {
+                return nil
+            }
+
+            var attributedString = AttributedString(
+                tag
+                    .forceLeftToRight()
+                    .highlightedStringWithKeyword(
+                        query,
+                        primaryTextColor: UIColor(colorAssets.tagsTextColor),
+                        highlightedTextColor: UIColor(colorAssets.textHighlightColor)
+                    )
+            )
+
+            attributedString.font = .subheadline.weight(.regular)
             return attributedString
         }
 
