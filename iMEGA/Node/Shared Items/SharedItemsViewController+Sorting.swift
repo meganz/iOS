@@ -15,8 +15,8 @@ extension SharedItemsViewController {
         let headerView = UIView()
         headerView.bounds = CGRect(x: 0, y: 0, width: 0, height: 40)
 
+        let sortHeaderViewModel = viewModel.sortHeaderViewModel
         let headerContentView = SearchResultsHeaderView(leftView: {
-            let sortHeaderViewModel = viewModel.sortHeaderViewModel
             SearchResultsHeaderSortView(viewModel: sortHeaderViewModel)
         })
 

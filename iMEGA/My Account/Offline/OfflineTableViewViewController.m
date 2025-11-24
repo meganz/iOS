@@ -25,7 +25,11 @@ static NSString *kPath = @"kPath";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+
+    if (self.offline.shouldShowHeaderView) {
+        self.tableView.tableHeaderView = [self.offline headerViewFor:self];
+    }
+
     //White background for the view behind the table view
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
 }

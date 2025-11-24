@@ -66,6 +66,7 @@ static NSString *kPath = @"kPath";
     self.collectionView.collectionViewLayout = self.layout;
     
     self.dtCollectionManager = [DynamicTypeCollectionManager.alloc initWithDelegate:self];
+    [self registerSupplementaryViewCellIn:self.collectionView];
 }
 
 #pragma mark - Public
@@ -185,6 +186,18 @@ static NSString *kPath = @"kPath";
 willPerformPreviewActionForMenuWithConfiguration:(UIContextMenuConfiguration *)configuration
               animator:(id<UIContextMenuInteractionCommitAnimating>)animator {
     [self willPerformPreviewActionForMenuWithAnimator:animator];
+}
+
+- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView
+           viewForSupplementaryElementOfKind:(NSString *)kind
+                                 atIndexPath:(NSIndexPath *)indexPath {
+    return [self headerSupplementaryView:collectionView viewForSupplementaryElementOfKind:kind at:indexPath];
+}
+
+- (CGFloat)collectionView:(UICollectionView *)collectionView
+                   layout:(UICollectionViewLayout *)collectionViewLayout
+ heightForHeaderInSection:(NSInteger)section {
+    return [self headerViewHeightFor:section];
 }
 
 #pragma mark - CHTCollectionViewDelegateWaterfallLayout

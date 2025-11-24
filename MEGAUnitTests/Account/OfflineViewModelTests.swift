@@ -6,6 +6,7 @@ import MEGADomainMock
 import MEGAFoundation
 import MEGASwift
 import MEGATest
+import Search
 import XCTest
 
 final class OfflineViewModelTests: XCTestCase {
@@ -39,6 +40,8 @@ final class OfflineViewModelTests: XCTestCase {
         megaStore: MEGAStore = MockMEGAStore(),
         fileManager: MockFileManager = MockFileManager(),
         documentDirectoryPath: String? = nil,
+        sortOptions: [SearchResultsSortOption] = [],
+        selectedSortOrder: Search.SortOrderEntity = .init(key: .name),
         file: StaticString = #file,
         line: UInt = #line
     ) -> OfflineViewModel {
@@ -46,6 +49,14 @@ final class OfflineViewModelTests: XCTestCase {
         let sut = OfflineViewModel(
             offlineUseCase: offlineUseCase,
             megaStore: megaStore,
+            sortHeaderCoordinator: .init(
+                sortOptionsViewModel: .init(
+                    title: "",
+                    sortOptions: sortOptions
+                ),
+                currentSortOrderProvider: { selectedSortOrder },
+                sortOptionSelectionHandler: { _ in }
+            ),
             fileManager: fileManager,
             documentsDirectoryPath: documentDirectoryPath,
             throttler: MockThrottler()
@@ -239,7 +250,29 @@ final class OfflineViewModelTests: XCTestCase {
         
         XCTAssertEqual(mockFileManager.lastRemovedPath, logsFilePath, "Expected to attempt removing the log file even with error")
     }
-    
+
+    @MainActor
+    func testHeaderViewModel_shouldMatchResults() {
+        let sut = makeOfflineViewModelVMSut(
+            sortOptions: [
+                .init(sortOrder: .init(key: .name), title: "Name", iconsByDirection: [:]),
+                .init(sortOrder: .init(key: .name, direction: .descending), title: "Name", iconsByDirection: [:]),
+                .init(sortOrder: .init(key: .favourite), title: "Favourite", iconsByDirection: [:]),
+                .init(sortOrder: .init(key: .dateAdded), title: "Date added", iconsByDirection: [:])
+            ],
+            selectedSortOrder: .init(key: .name)
+        )
+        let headerViewModel = sut.sortHeaderViewModel
+        XCTAssertEqual(
+            headerViewModel.displaySortOptionsViewModel.sortOptions.map(\.sortOrder),
+            [
+                .init(key: .name, direction: .descending),
+                .init(key: .favourite),
+                .init(key: .dateAdded)
+            ]
+        )
+    }
+
     private var makeOfflineNode: MOOfflineNode {
         let testStack = CoreDataTestStack()
         let context = testStack.managedObjectContext

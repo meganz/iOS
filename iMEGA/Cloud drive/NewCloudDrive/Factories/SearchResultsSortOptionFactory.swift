@@ -9,109 +9,92 @@ enum SearchResultsSortOptionFactory {
     }
     
     static func makeAll(
-        includeSortByShareCreated: Bool = false,
-        includeSortByLinkCreated: Bool = false
-    ) -> [SearchResultsSortOption] {
-        var options: [SearchResultsSortOption] = [
-            .init(
-                sortOrder: .init(key: .name),
-                title: Strings.Localizable.Sorting.Name.title,
-                iconsByDirection: iconsByDirection
-            ),
-            .init(
-                sortOrder: .init(key: .name, direction: .descending),
-                title: Strings.Localizable.Sorting.Name.title,
-                iconsByDirection: iconsByDirection
-            ),
-            .init(
-                sortOrder: .init(key: .favourite),
-                title: Strings.Localizable.Sorting.Favourite.title,
-                iconsByDirection: iconsByDirection
-            ),
-            .init(
-                sortOrder: .init(key: .favourite, direction: .descending),
-                title: Strings.Localizable.Sorting.Favourite.title,
-                iconsByDirection: iconsByDirection
-            ),
-            .init(
-                sortOrder: .init(key: .label),
-                title: Strings.Localizable.CloudDrive.Sort.label,
-                iconsByDirection: iconsByDirection
-            ),
-            .init(
-                sortOrder: .init(key: .label, direction: .descending),
-                title: Strings.Localizable.CloudDrive.Sort.label,
-                iconsByDirection: iconsByDirection
-            ),
-            .init(
-                sortOrder: .init(key: .dateAdded),
-                title: Strings.Localizable.Sorting.DateAdded.title,
-                iconsByDirection: iconsByDirection
-            ),
-            .init(
-                sortOrder: .init(key: .dateAdded, direction: .descending),
-                title: Strings.Localizable.Sorting.DateAdded.title,
-                iconsByDirection: iconsByDirection
-            ),
-            .init(
-                sortOrder: .init(key: .lastModified),
-                title: Strings.Localizable.Sorting.LastModified.title,
-                iconsByDirection: iconsByDirection
-            ),
-            .init(
-                sortOrder: .init(key: .lastModified, direction: .descending),
-                title: Strings.Localizable.Sorting.LastModified.title,
-                iconsByDirection: iconsByDirection
-            ),
-            .init(
-                sortOrder: .init(key: .size),
-                title: Strings.Localizable.Sorting.Size.title,
-                iconsByDirection: iconsByDirection
-            ),
-            .init(
-                sortOrder: .init(key: .size, direction: .descending),
-                title: Strings.Localizable.Sorting.Size.title,
-                iconsByDirection: iconsByDirection
-            )
+        excludedKeys: Set<SortOrderEntity.Key> = [
+            .shareCreated,
+            .linkCreated
         ]
-
-        let insertionIndex = 6
-        if includeSortByShareCreated {
-            options.insert(
-                contentsOf: [
-                    .init(
-                        sortOrder: .init(key: .shareCreated),
-                        title: Strings.Localizable.Sorting.ShareCreated.title,
-                        iconsByDirection: iconsByDirection
-                    ),
-                    .init(
-                        sortOrder: .init(key: .shareCreated, direction: .descending),
-                        title: Strings.Localizable.Sorting.ShareCreated.title,
-                        iconsByDirection: iconsByDirection
-                    )
-                ],
-                at: insertionIndex
-            )
-        }
-
-        if includeSortByLinkCreated {
-            options.insert(
-                contentsOf: [
-                    .init(
-                        sortOrder: .init(key: .linkCreated),
-                        title: Strings.Localizable.Sorting.LinkCreated.title,
-                        iconsByDirection: iconsByDirection
-                    ),
-                    .init(
-                        sortOrder: .init(key: .linkCreated, direction: .descending),
-                        title: Strings.Localizable.Sorting.LinkCreated.title,
-                        iconsByDirection: iconsByDirection
-                    )
-                ],
-                at: insertionIndex
-            )
-        }
-
+    ) -> [SearchResultsSortOption] {
+        var options: [SearchResultsSortOption] = []
+        
+        appendSortOptions(
+            for: .name,
+            title: Strings.Localizable.Sorting.Name.title,
+            include: excludedKeys.notContains(.name),
+            to: &options
+        )
+        
+        appendSortOptions(
+            for: .favourite,
+            title: Strings.Localizable.Sorting.Favourite.title,
+            include: excludedKeys.notContains(.favourite),
+            to: &options
+        )
+        
+        appendSortOptions(
+            for: .label,
+            title: Strings.Localizable.CloudDrive.Sort.label,
+            include: excludedKeys.notContains(.label),
+            to: &options
+        )
+        
+        appendSortOptions(
+            for: .shareCreated,
+            title: Strings.Localizable.Sorting.ShareCreated.title,
+            include: excludedKeys.notContains(.shareCreated),
+            to: &options
+        )
+        
+        appendSortOptions(
+            for: .linkCreated,
+            title: Strings.Localizable.Sorting.LinkCreated.title,
+            include: excludedKeys.notContains(.linkCreated),
+            to: &options
+        )
+        
+        appendSortOptions(
+            for: .dateAdded,
+            title: Strings.Localizable.Sorting.DateAdded.title,
+            include: excludedKeys.notContains(.dateAdded),
+            to: &options
+        )
+        
+        appendSortOptions(
+            for: .lastModified,
+            title: Strings.Localizable.Sorting.LastModified.title,
+            include: excludedKeys.notContains(.lastModified),
+            to: &options
+        )
+        
+        appendSortOptions(
+            for: .size,
+            title: Strings.Localizable.Sorting.Size.title,
+            include: excludedKeys.notContains(.size),
+            to: &options
+        )
+        
         return options
+    }
+    
+    private static func appendSortOptions(
+        for key: SortOrderEntity.Key,
+        title: String,
+        include: Bool = true,
+        to options: inout [SearchResultsSortOption]
+    ) {
+        guard include else { return }
+        options.append(
+            .init(
+                sortOrder: .init(key: key),
+                title: title,
+                iconsByDirection: iconsByDirection
+            )
+        )
+        options.append(
+            .init(
+                sortOrder: .init(key: key, direction: .descending),
+                title: title,
+                iconsByDirection: iconsByDirection
+            )
+        )
     }
 }

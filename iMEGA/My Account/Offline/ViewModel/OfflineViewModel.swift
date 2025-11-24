@@ -3,6 +3,7 @@ import MEGAAppPresentation
 import MEGADomain
 import MEGAFoundation
 import MEGASwift
+import Search
 
 enum OfflineViewAction: ActionType {
     case onViewAppear
@@ -27,17 +28,25 @@ final class OfflineViewModel: NSObject, ViewModelType {
             oldValue?.cancel()
         }
     }
-    
+
+    private let sortHeaderCoordinator: SearchResultsSortHeaderCoordinator
+
+    var sortHeaderViewModel: SearchResultsHeaderSortViewViewModel {
+        sortHeaderCoordinator.headerViewModel
+    }
+
     // MARK: - Init
     init(
         offlineUseCase: some OfflineUseCaseProtocol,
         megaStore: MEGAStore,
+        sortHeaderCoordinator: SearchResultsSortHeaderCoordinator,
         fileManager: FileManager = FileManager.default,
         documentsDirectoryPath: String? = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first,
         throttler: some Throttleable = Throttler(timeInterval: 1.0)
     ) {
         self.offlineUseCase = offlineUseCase
         self.megaStore = megaStore
+        self.sortHeaderCoordinator = sortHeaderCoordinator
         self.fileManager = fileManager
         self.documentsDirectoryPath = documentsDirectoryPath
         self.throttler = throttler

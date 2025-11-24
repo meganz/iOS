@@ -2411,6 +2411,8 @@
 		BFB464162435825A00FB90B9 /* ChatViewController+MessagesDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB464152435825A00FB90B9 /* ChatViewController+MessagesDataSource.swift */; };
 		BFB529742C4A2100003034EF /* CloudDriveContextMenuFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB529732C4A2100003034EF /* CloudDriveContextMenuFactory.swift */; };
 		BFB529782C4A2CE5003034EF /* CloudDriveContextMenuFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB529772C4A2CE5003034EF /* CloudDriveContextMenuFactoryTests.swift */; };
+		BFB6B3CB2ECECEAC00D7026D /* OfflineCollectionViewController+Header.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB6B3CA2ECECEA100D7026D /* OfflineCollectionViewController+Header.swift */; };
+		BFB6B4052ECF07FF00D7026D /* OfflineCollectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB6B4042ECF07FF00D7026D /* OfflineCollectionHeaderView.swift */; };
 		BFB889792A13598800FC456A /* ScheduledMeetingRulesEntity+UIHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB889782A13598800FC456A /* ScheduledMeetingRulesEntity+UIHelper.swift */; };
 		BFB8897B2A13600400FC456A /* ScheduledMeetingRulesEntityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB8897A2A13600400FC456A /* ScheduledMeetingRulesEntityTests.swift */; };
 		BFB889932A1598DB00FC456A /* WaitingRoomViewModel+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB889922A1598DB00FC456A /* WaitingRoomViewModel+Additions.swift */; };
@@ -2485,6 +2487,7 @@
 		BFEF8CB12887A10B00F8F9F1 /* QASettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFEF8CB02887A10B00F8F9F1 /* QASettingsView.swift */; };
 		BFF0EE0A2630E2D300FAEFF9 /* MeetingParticipantViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFF0EE092630E2D300FAEFF9 /* MeetingParticipantViewModelTests.swift */; };
 		BFFB134F2908EF3100A6B2CA /* ActiveCallViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFFB134E2908EF3100A6B2CA /* ActiveCallViewModelTests.swift */; };
+		BFFC82412ECE9B9A003E00DF /* OfflineViewController+Header.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFFC82402ECE9B88003E00DF /* OfflineViewController+Header.swift */; };
 		BFFD20DE2BC68D41009885F0 /* DisplayMode+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFFD20DD2BC68D41009885F0 /* DisplayMode+Additions.swift */; };
 		BFFD20E72BC784AD009885F0 /* SearchResultMapperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFFD20E62BC784AD009885F0 /* SearchResultMapperTests.swift */; };
 		BFFE078E2DC03C2000DFBC69 /* SubscriptionPurchasePlansView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFFE078D2DC03C2000DFBC69 /* SubscriptionPurchasePlansView.swift */; };
@@ -5212,6 +5215,8 @@
 		BFB464152435825A00FB90B9 /* ChatViewController+MessagesDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatViewController+MessagesDataSource.swift"; sourceTree = "<group>"; };
 		BFB529732C4A2100003034EF /* CloudDriveContextMenuFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudDriveContextMenuFactory.swift; sourceTree = "<group>"; };
 		BFB529772C4A2CE5003034EF /* CloudDriveContextMenuFactoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudDriveContextMenuFactoryTests.swift; sourceTree = "<group>"; };
+		BFB6B3CA2ECECEA100D7026D /* OfflineCollectionViewController+Header.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OfflineCollectionViewController+Header.swift"; sourceTree = "<group>"; };
+		BFB6B4042ECF07FF00D7026D /* OfflineCollectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineCollectionHeaderView.swift; sourceTree = "<group>"; };
 		BFB889782A13598800FC456A /* ScheduledMeetingRulesEntity+UIHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ScheduledMeetingRulesEntity+UIHelper.swift"; sourceTree = "<group>"; };
 		BFB8897A2A13600400FC456A /* ScheduledMeetingRulesEntityTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduledMeetingRulesEntityTests.swift; sourceTree = "<group>"; };
 		BFB889922A1598DB00FC456A /* WaitingRoomViewModel+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WaitingRoomViewModel+Additions.swift"; sourceTree = "<group>"; };
@@ -5277,6 +5282,7 @@
 		BFEF8CB02887A10B00F8F9F1 /* QASettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QASettingsView.swift; sourceTree = "<group>"; };
 		BFF0EE092630E2D300FAEFF9 /* MeetingParticipantViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingParticipantViewModelTests.swift; sourceTree = "<group>"; };
 		BFFB134E2908EF3100A6B2CA /* ActiveCallViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActiveCallViewModelTests.swift; sourceTree = "<group>"; };
+		BFFC82402ECE9B88003E00DF /* OfflineViewController+Header.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OfflineViewController+Header.swift"; sourceTree = "<group>"; };
 		BFFD20DD2BC68D41009885F0 /* DisplayMode+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DisplayMode+Additions.swift"; sourceTree = "<group>"; };
 		BFFD20E62BC784AD009885F0 /* SearchResultMapperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultMapperTests.swift; sourceTree = "<group>"; };
 		BFFE078D2DC03C2000DFBC69 /* SubscriptionPurchasePlansView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionPurchasePlansView.swift; sourceTree = "<group>"; };
@@ -7110,8 +7116,10 @@
 			children = (
 				B52CB2322A7FA77500F9C56C /* ViewModel */,
 				4152267F1A692ECC00EC7BB6 /* Offline.storyboard */,
+				BFB6B4042ECF07FF00D7026D /* OfflineCollectionHeaderView.swift */,
 				A8C1B7B2277384BC007095F4 /* OfflineCollectionViewController+ContextMenu.swift */,
 				C4789ED2270E098500DFADF1 /* OfflineCollectionViewController+DynamicType.swift */,
+				BFB6B3CA2ECECEA100D7026D /* OfflineCollectionViewController+Header.swift */,
 				83FB1432219AC7DD00418BE6 /* OfflineCollectionViewController.h */,
 				83FB1433219AC7DD00418BE6 /* OfflineCollectionViewController.m */,
 				A8B315672ACAB49500173F3A /* OfflineTableViewCell+Additions.swift */,
@@ -7123,6 +7131,7 @@
 				83FB1430219AC7CD00418BE6 /* OfflineTableViewViewController.m */,
 				243F74902A42D8380050D5E4 /* OfflineViewController+Additions.swift */,
 				9451F90928229A11000ACE3B /* OfflineViewController+ContextMenu.swift */,
+				BFFC82402ECE9B88003E00DF /* OfflineViewController+Header.swift */,
 				837A88C020B44AA8007B55D1 /* OfflineViewController.h */,
 				837A88C120B44AA8007B55D1 /* OfflineViewController.m */,
 			);
@@ -15323,8 +15332,10 @@
 				83DE6D1C298940CF000503CC /* OccurrenceView.swift in Sources */,
 				5BE689AB2419135400462134 /* OfflineAppearancePreference+CoreDataClass.swift in Sources */,
 				5BE689AD2419135400462134 /* OfflineAppearancePreference+CoreDataProperties.swift in Sources */,
+				BFB6B4052ECF07FF00D7026D /* OfflineCollectionHeaderView.swift in Sources */,
 				A8C1B7B3277384BC007095F4 /* OfflineCollectionViewController+ContextMenu.swift in Sources */,
 				C4789ED3270E098500DFADF1 /* OfflineCollectionViewController+DynamicType.swift in Sources */,
+				BFB6B3CB2ECECEAC00D7026D /* OfflineCollectionViewController+Header.swift in Sources */,
 				83FB1434219AC7DD00418BE6 /* OfflineCollectionViewController.m in Sources */,
 				A8BAFCAB28B6380E00ED4259 /* OfflineFileEntity+Mapper.swift in Sources */,
 				A882983C29F1854B00DEDE98 /* OfflineFileFetcherRepository.swift in Sources */,
@@ -15338,6 +15349,7 @@
 				83FB1431219AC7CD00418BE6 /* OfflineTableViewViewController.m in Sources */,
 				243F74912A42D8380050D5E4 /* OfflineViewController+Additions.swift in Sources */,
 				9451F90A28229A11000ACE3B /* OfflineViewController+ContextMenu.swift in Sources */,
+				BFFC82412ECE9B9A003E00DF /* OfflineViewController+Header.swift in Sources */,
 				837A88C220B44AA8007B55D1 /* OfflineViewController.m in Sources */,
 				B52CB2342A7FA78A00F9C56C /* OfflineViewModel.swift in Sources */,
 				C4510E642DD2F54D00B04F87 /* OnboardingPermissionHandler.swift in Sources */,

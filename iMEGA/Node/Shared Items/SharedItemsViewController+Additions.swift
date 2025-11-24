@@ -56,7 +56,7 @@ extension SharedItemsViewController {
 
     private var sortOptions: [SearchResultsSortOption] {
         SearchResultsSortOptionFactory
-            .makeAll(includeSortByShareCreated: true, includeSortByLinkCreated: true)
+            .makeAll(excludedKeys: [])
     }
 
     @objc func createNodeInfoViewModel(withNode node: MEGANode,

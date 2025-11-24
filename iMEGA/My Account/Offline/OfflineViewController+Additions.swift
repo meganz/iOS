@@ -38,7 +38,8 @@ extension OfflineViewController {
                 offlineFilesRepository: OfflineFilesRepository.newRepo,
                 nodeTransferRepository: NodeTransferRepository.newRepo
             ),
-            megaStore: MEGAStore.shareInstance()
+            megaStore: MEGAStore.shareInstance(),
+            sortHeaderCoordinator: sortHeaderCoordinator
         )
     }
     
