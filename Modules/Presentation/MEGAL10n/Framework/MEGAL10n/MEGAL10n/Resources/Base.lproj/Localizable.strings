@@ -4818,3 +4818,5 @@
 "cameraUploads.complete"="Camera uploads complete";
 /* Camera Uploads Up To Date */
 "cameraUploads.upToDate"="Camera uploads up to date";
+/* Hidden files and folders onboarding content control visibility message */
+"onboarding.hiddenFilesAndFolders.content.item.controlVisibility.message"="Only you can reveal hidden files, either individually or by temporarily displaying hidden items from the [A]Settings[/A].";

@@ -2,6 +2,7 @@ import MEGAAssets
 import MEGADesignToken
 import MEGAL10n
 import MEGASwiftUI
+import MEGAUIComponent
 import SwiftUI
 
 struct HiddenFilesFoldersOnboardingView<PrimaryButtonView: View>: View {
@@ -63,20 +64,9 @@ struct HiddenFilesFoldersOnboardingView<PrimaryButtonView: View>: View {
     
     private func descriptionItemViews() -> some View {
         VStack(alignment: .leading, spacing: TokenSpacing._5) {
-            OnboardingItemView(
-                image: MEGAAssets.Image.eyeOffRegular,
-                title: Strings.Localizable.Onboarding.HiddenFilesAndFolders.Content.Item.One.title,
-                description: Strings.Localizable.Onboarding.HiddenFilesAndFolders.Content.Item.One.message)
-            
-            OnboardingItemView(
-                image: MEGAAssets.Image.imagesRegular,
-                title: Strings.Localizable.Onboarding.HiddenFilesAndFolders.Content.Item.Two.title,
-                description: Strings.Localizable.Onboarding.HiddenFilesAndFolders.Content.Item.Two.message)
-            
-            OnboardingItemView(
-                image: MEGAAssets.Image.eyeRegular,
-                title: Strings.Localizable.Onboarding.HiddenFilesAndFolders.Content.Item.Three.title,
-                description: Strings.Localizable.Onboarding.HiddenFilesAndFolders.Content.Item.Three.message)
+            ForEach(viewModel.descriptionItems) {
+                OnboardingItemView(viewModel: $0)
+            }
         }
     }
     
@@ -158,13 +148,11 @@ private struct OnboardingNavigationBar<Content: View>: View {
 }
 
 private struct OnboardingItemView: View {
-    let image: Image
-    let title: String
-    let description: String
+    let viewModel: HiddenFilesFoldersOnboardingViewModel.DescriptionItemViewModel
     
     var body: some View {
         HStack(spacing: 0) {
-            image
+            viewModel.icon
                 .resizable()
                 .renderingMode(.template)
                 .foregroundStyle(TokenColors.Icon.accent.swiftUI)
@@ -174,53 +162,34 @@ private struct OnboardingItemView: View {
                 .padding(.trailing, TokenSpacing._5)
             
             VStack(alignment: .leading, spacing: TokenSpacing._1) {
-                Text(title)
+                Text(viewModel.title)
                     .font(.subheadline.bold())
                     .foregroundStyle(TokenColors.Text.primary.swiftUI)
                 
-                Text(description)
-                    .fixedSize(horizontal: false, vertical: true)
-                    .font(.caption)
-                    .foregroundStyle(TokenColors.Text.primary.swiftUI)
+                descriptionText
             }
             .padding(.vertical, TokenSpacing._3)
             .padding(.trailing, TokenSpacing._3)
         }
     }
-}
-
-#Preview {
-    HiddenFilesFoldersOnboardingView(
-        primaryButton: Button("See Plans", action: {}),
-        viewModel: HiddenFilesFoldersOnboardingViewModel(
-            showPrimaryButtonOnly: true,
-            tracker: Preview_AnalyticsTracking(),
-            screenEvent: Preview_ScreenEvent(),
-            dismissEvent: Preview_ButtonPressedEvent()
-        ))
-}
-
-#Preview {
-    HiddenFilesFoldersOnboardingView(
-        primaryButton: Button("Continue", action: {}),
-        viewModel: HiddenFilesFoldersOnboardingViewModel(
-            showPrimaryButtonOnly: false,
-            tracker: Preview_AnalyticsTracking(),
-            screenEvent: Preview_ScreenEvent(),
-            dismissEvent: Preview_ButtonPressedEvent()
-        ))
-    .preferredColorScheme(.dark)
-}
-
-#Preview {
-    OnboardingItemView(image: MEGAAssets.Image.eyeOff,
-                       title: "Hide important files and folders",
-                       description: "You can now hide individual files and folders. Hidden files or folders can only be found browsing you Cloud drive.")
-}
-
-#Preview {
-    OnboardingItemView(image: MEGAAssets.Image.eyeOff,
-                       title: "Hide important files and folders",
-                       description: "You can now hide individual files and folders. Hidden files or folders can only be found browsing you Cloud drive.")
-    .preferredColorScheme(.dark)
+    
+    private var descriptionText: some View {
+        AttributedTextView(
+            stringAttribute: .init(
+                text: viewModel.description,
+                font: .caption,
+                foregroundColor: TokenColors.Text.primary.swiftUI),
+            substringAttributeList: viewModel.descriptionHighlightedText.map { highlight in
+                [
+                    .init(
+                        text: highlight.text,
+                        attributes: AttributeContainer()
+                            .font(.caption.weight(.semibold))
+                            .foregroundColor(TokenColors.Link.primary.swiftUI),
+                        action: highlight.action
+                    )
+                ]
+            } ?? []
+        )
+    }
 }

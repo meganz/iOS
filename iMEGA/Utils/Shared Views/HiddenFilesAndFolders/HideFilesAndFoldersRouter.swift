@@ -3,6 +3,7 @@ import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGADomain
 import MEGAL10n
+import MEGAPreference
 import MEGASwiftUI
 import SwiftUI
 
@@ -14,6 +15,7 @@ protocol HideFilesAndFoldersRouting {
     func showOnboardingInfo()
     func showSnackBar(message: String)
     func dismissOnboarding(animated: Bool, completion: (() -> Void)?)
+    func showUserInterfaceSettings()
 }
 
 @MainActor
@@ -40,9 +42,8 @@ final class HideFilesAndFoldersRouter: HideFilesAndFoldersRouting {
     }
     
     func showSeeUpgradePlansOnboarding() {
-        let viewModel = HiddenFilesFoldersOnboardingViewModel(
+        let viewModel = makeHiddenFilesFoldersOnboardingViewModel(
             showPrimaryButtonOnly: false,
-            tracker: DIContainer.tracker,
             screenEvent: HideNodeUpgradeScreenEvent(),
             dismissEvent: HiddenNodeUpgradeCloseButtonPressedEvent())
         
@@ -57,9 +58,8 @@ final class HideFilesAndFoldersRouter: HideFilesAndFoldersRouting {
     }
     
     func showFirstTimeOnboarding(nodes: [NodeEntity]) {
-        let viewModel = HiddenFilesFoldersOnboardingViewModel(
+        let viewModel = makeHiddenFilesFoldersOnboardingViewModel(
             showPrimaryButtonOnly: false,
-            tracker: DIContainer.tracker,
             screenEvent: HideNodeOnboardingScreenEvent(),
             dismissEvent: HiddenNodeOnboardingCloseButtonPressedEvent())
         
@@ -75,7 +75,7 @@ final class HideFilesAndFoldersRouter: HideFilesAndFoldersRouting {
     }
     
     func showOnboardingInfo() {
-        let viewModel = HiddenFilesFoldersOnboardingViewModel(
+        let viewModel = makeHiddenFilesFoldersOnboardingViewModel(
             showPrimaryButtonOnly: true,
             showNavigationBar: false)
         
@@ -94,6 +94,26 @@ final class HideFilesAndFoldersRouter: HideFilesAndFoldersRouting {
     
     func dismissOnboarding(animated: Bool, completion: (() -> Void)?) {
         onboardingViewController?.dismiss(animated: true, completion: completion)
+    }
+    
+    func showUserInterfaceSettings() {
+        let viewController = UIStoryboard(name: "Appearance", bundle: nil)
+            .instantiateViewController(identifier: "AppearanceTableViewControllerID") { coder in
+                let viewModel = AppearanceViewModel(
+                    preferenceUseCase: PreferenceUseCase(
+                        repository: PreferenceRepository.newRepo),
+                    sensitiveNodeUseCase: SensitiveNodeUseCase(
+                        nodeRepository: NodeRepository.newRepo,
+                        accountUseCase: AccountUseCase(repository: AccountRepository.newRepo)),
+                    contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(
+                        repo: UserAttributeRepository.newRepo))
+                return AppearanceTableViewController(coder: coder, viewModel: viewModel)
+            }
+        
+        let navigationController = MEGANavigationController(rootViewController: viewController)
+        navigationController.addLeftDismissButton(withText: Strings.Localizable.cancel)
+        navigationController.modalPresentationStyle = .fullScreen
+        onboardingViewController?.present(navigationController, animated: true)
     }
     
     private func showHiddenFilesAndFoldersOnboarding(
@@ -121,5 +141,24 @@ final class HideFilesAndFoldersRouter: HideFilesAndFoldersRouting {
                 repo: NodeActionRepository.newRepo),
             contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(
                 repo: UserAttributeRepository.newRepo))
+    }
+    
+    private func makeHiddenFilesFoldersOnboardingViewModel(
+        showPrimaryButtonOnly: Bool,
+        screenEvent: (any ScreenViewEventIdentifier)? = nil,
+        dismissEvent: (any ButtonPressedEventIdentifier)? = nil,
+        showNavigationBar: Bool = true,
+    ) -> HiddenFilesFoldersOnboardingViewModel {
+        HiddenFilesFoldersOnboardingViewModel(
+            showPrimaryButtonOnly: showPrimaryButtonOnly,
+            sensitiveNodeUseCase: SensitiveNodeUseCase(
+                nodeRepository: NodeRepository.newRepo,
+                accountUseCase: AccountUseCase(
+                    repository: AccountRepository.newRepo)),
+            hideFilesAndFoldersRouter: self,
+            showNavigationBar: showNavigationBar,
+            screenEvent: screenEvent,
+            dismissEvent: dismissEvent
+        )
     }
 }

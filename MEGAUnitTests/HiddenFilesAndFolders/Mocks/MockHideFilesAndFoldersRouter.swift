@@ -8,6 +8,7 @@ class MockHideFilesAndFoldersRouter: HideFilesAndFoldersRouting {
     private(set) var dismissCalled = 0
     private(set) var showSnackBarMessages = [String]()
     private(set) var dismissCompletion: (() -> Void)?
+    private(set) var showUserInterfaceSettingsCalled = 0
     
     nonisolated init() {}
     
@@ -34,5 +35,9 @@ class MockHideFilesAndFoldersRouter: HideFilesAndFoldersRouting {
     
     func showSnackBar(message: String) {
         showSnackBarMessages.append(message)
+    }
+    
+    func showUserInterfaceSettings() {
+        showUserInterfaceSettingsCalled += 1
     }
 }
