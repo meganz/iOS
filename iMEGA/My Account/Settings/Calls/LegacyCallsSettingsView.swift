@@ -11,12 +11,22 @@ struct LegacyCallsSettingsView: View {
     
     var body: some View {
         GeometryReader { geometry in
-            ScrollView {
-                CallsSettingsSoundNotificationsView(isOn: $viewModel.callsSoundNotificationPreference, parentGeometry: geometry)
+            Group {
+                if #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() {
+                    contentView(geometry: geometry)
+                } else {
+                    contentView(geometry: geometry)
+                        .padding(.top)
+                }
             }
-            .edgesIgnoringSafeArea(.horizontal)
-            .padding(.top)
             .background(backgroundView)
         }
+    }
+
+    private func contentView(geometry: GeometryProxy) -> some View {
+        ScrollView {
+            CallsSettingsSoundNotificationsView(isOn: $viewModel.callsSoundNotificationPreference, parentGeometry: geometry)
+        }
+        .edgesIgnoringSafeArea(.horizontal)
     }
 }

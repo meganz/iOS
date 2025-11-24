@@ -23,6 +23,14 @@
     NSString *title = LocalizedString(@"settingsTitle", @"");
     self.navigationItem.title = title;
     [self setMenuCapableBackButtonWithMenuTitle:title];
+    [self setupLiquidGlassNavigationBar];
+}
+
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
+    if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+        [self setupLiquidGlassNavigationBar];
+    }
 }
 
 #pragma mark - Private

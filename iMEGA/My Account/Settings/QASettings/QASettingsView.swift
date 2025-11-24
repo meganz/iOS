@@ -62,7 +62,6 @@ struct QASettingsView: View {
                     }
         }
         .listStyle(.grouped)
-        .padding(.top)
         .background()
     }
 }

@@ -1,3 +1,4 @@
+import MEGAAppPresentation
 import MEGAUIKit
 import UIKit
 
@@ -14,5 +15,11 @@ extension UIViewController {
         } else {
             MEGALogError("unexpected type of navigation controller \(String(describing: navigationController)) for vc:\(self)")
         }
+    }
+
+    @objc func setupLiquidGlassNavigationBar() {
+        guard #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled(),
+              let navBar = navigationController?.navigationBar else { return }
+        AppearanceManager.setupLiquidGlassNavigationBar(navBar)
     }
 }

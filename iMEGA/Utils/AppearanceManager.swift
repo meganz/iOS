@@ -197,7 +197,24 @@ final class AppearanceManager: NSObject {
     class func forceResetNavigationBar() {
         AppearanceManager.setupNavigationBarAppearance()
     }
-    
+
+    @available(iOS 26.0, *)
+    class func setupLiquidGlassNavigationBar(
+        _ navigationBar: UINavigationBar
+    ) {
+        navigationBar.isTranslucent = true
+
+        let appearance = makeNavigationBarAppearance()
+        appearance.configureWithTransparentBackground()
+        appearance.backgroundColor = .clear
+        appearance.shadowColor = nil
+        appearance.shadowImage = nil
+
+        navigationBar.standardAppearance = appearance
+        navigationBar.scrollEdgeAppearance = appearance
+        navigationBar.compactAppearance = appearance
+    }
+
     // MARK: - Private
     
     private class func setupNavigationBarAppearance() {

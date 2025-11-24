@@ -39,7 +39,15 @@ class CookieSettingsTableViewController: UITableViewController {
         
         configView()
     }
-    
+
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+
+        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+            setupLiquidGlassNavigationBar()
+        }
+    }
+
     // MARK: - Execute command
     func executeCommand(_ command: CookieSettingsViewModel.Command) {
         switch command {
@@ -120,13 +128,19 @@ class CookieSettingsTableViewController: UITableViewController {
         
         saveBarButtonItem.title = Strings.Localizable.close
         self.navigationItem.rightBarButtonItem = saveBarButtonItem
-        
+
+        if #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() {
+            navigationItem.leftBarButtonItem = nil
+        }
+
         adPersonalisationLabel.text = Strings.Localizable.Settings.Ad.AdPersonalisation.title
         acceptCookiesLabel.text = Strings.Localizable.Dialog.Cookies.accept
         essentialCookiesLabel.text = Strings.Localizable.Settings.Cookies.essential
         essentialCookiesDetailLabel.text = Strings.Localizable.Settings.Cookies.Essential.alwaysOn
         performanceAndAnalyticsCookiesLabel.text = Strings.Localizable.Settings.Cookies.performanceAndAnalytics
-                
+        
+        setupLiquidGlassNavigationBar()
+        
         configToolbar()
         
         viewModel.dispatch(.configView)
@@ -142,7 +156,7 @@ class CookieSettingsTableViewController: UITableViewController {
         navigationController?.isToolbarHidden = false
         navigationController?.toolbar.isTranslucent = true
     }
-    
+
     private func setupColors() {
         tableView.backgroundColor = TokenColors.Background.page
         tableView.separatorColor = TokenColors.Border.strong
