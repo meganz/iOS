@@ -42,6 +42,7 @@ import Foundation
 ///     - isArchivedChatsVisible: Show archived chats action if exists some chat archived
 ///     - isHidden: Indicates if the current node is hidden
 ///     - isTakenDown: Indicates if the current node is taken down
+///     - showSortingOptionsAndViewModes: Indicates if the sorting options and view modes needs to be shown.
 ///
 public struct CMConfigEntity: Sendable {
     public let menuType: CMElementTypeEntity
@@ -93,6 +94,7 @@ public struct CMConfigEntity: Sendable {
     public var isTakenDown: Bool
     public var isDecrypted: Bool = true
     public var isS4Container: Bool = false
+    public var showSortingOptionsAndViewModes: Bool = true
 
     public init(
         menuType: CMElementTypeEntity,
@@ -143,7 +145,8 @@ public struct CMConfigEntity: Sendable {
         isPlaylistSharingFeatureFlagEnabled: Bool = false,
         isTakenDown: Bool = false,
         isDecrypted: Bool = true,
-        isS4Container: Bool = false
+        isS4Container: Bool = false,
+        showSortingOptionsAndViewModes: Bool = true
     ) {
         self.menuType = menuType
         self.viewMode = viewMode
@@ -194,5 +197,6 @@ public struct CMConfigEntity: Sendable {
         self.isTakenDown = isTakenDown
         self.isDecrypted = isDecrypted
         self.isS4Container = isS4Container
+        self.showSortingOptionsAndViewModes = showSortingOptionsAndViewModes
     }
 }

@@ -54,6 +54,7 @@ public struct CreateContextMenuRepository: CreateContextMenuRepositoryProtocol {
             .setIsTakenDown(config.isTakenDown)
             .setIsDecrypted(config.isDecrypted)
             .setIsS4Container(config.isS4Container)
+            .setShowSortingOptionsAndViewModes(config.showSortingOptionsAndViewModes)
             .build()
     }
 }

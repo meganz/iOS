@@ -1,3 +1,4 @@
+import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGAAssets
 import MEGADomain
@@ -11,7 +12,8 @@ extension FolderLinkViewController: FolderLinkContextMenuDelegate {
             viewMode: isListViewModeSelected() ? .list : .thumbnail,
             sortType: SortOrderType(megaSortOrderType: Helper.sortType(for: parentNode)).megaSortOrderType.toSortOrderEntity(),
             showMediaDiscovery: containsMediaFiles(),
-            isDecrypted: isDecryptedFolder()
+            isDecrypted: isDecryptedFolder(),
+            showSortingOptionsAndViewModes: !DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .cloudDriveRevamp)
         )
     }
 

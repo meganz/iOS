@@ -46,6 +46,7 @@ public final class ContextMenuBuilder {
     private var isTakenDown: Bool = false
     private var isDecrypted: Bool = true
     private var isS4Container: Bool = false
+    private var showSortingOptionsAndViewModes: Bool = true
 
     public init() {}
     
@@ -281,6 +282,11 @@ public final class ContextMenuBuilder {
 
     public func setIsS4Container(_ isS4Container: Bool) -> ContextMenuBuilder {
         self.isS4Container = isS4Container
+        return self
+    }
+
+    public func setShowSortingOptionsAndViewModes(_ showSortingOptionsAndViewModes: Bool) -> ContextMenuBuilder {
+        self.showSortingOptionsAndViewModes = showSortingOptionsAndViewModes
         return self
     }
 
@@ -782,16 +788,18 @@ public final class ContextMenuBuilder {
             isDecrypted ? makeFolderLinkQuickActions() : makeFolderLinkUndecryptedQuickActions()
         )
 
-        if showMediaDiscovery {
-            folderLinkActions.append(mediaDiscovery)
-        }
+        if showSortingOptionsAndViewModes {
+            if showMediaDiscovery {
+                folderLinkActions.append(mediaDiscovery)
+            }
 
-        folderLinkActions.append(
-            contentsOf: [
-                sortMenu(),
-                viewTypeMenu()
-            ]
-        )
+            folderLinkActions.append(
+                contentsOf: [
+                    sortMenu(),
+                    viewTypeMenu()
+                ]
+            )
+        }
 
         return CMEntity(
             displayInline: true,
