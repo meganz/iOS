@@ -24,6 +24,8 @@ struct CameraUploadProgressView: View {
                     ToolbarItem(placement: .topBarTrailing) {
                         Button(action: viewModel.showCameraUploadSettings) {
                             MEGAAssets.Image.gearSixMediumThin
+                                .renderingMode(.template)
+                                .foregroundStyle(TokenColors.Icon.primary.swiftUI)
                         }
                     }
                 }
@@ -39,12 +41,9 @@ struct CameraUploadProgressView: View {
     private var contentView: some View {
         ZStack {
             uploadingView(isLoading: viewModel.viewState == .loading)
-                .opacity(viewModel.viewState == .completed ? 0 : 1)
-                .animation(.easeInOut(duration: 0.3), value: viewModel.viewState)
             
             if viewModel.viewState == .completed {
                 completedView
-                    .transition(.opacity.combined(with: .scale))
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -57,11 +56,6 @@ struct CameraUploadProgressView: View {
             uploadStatusView(isLoading: isLoading)
             
             CameraUploadProgressTableView(viewModel: viewModel.cameraUploadProgressTableViewModel)
-                .overlay {
-                    if viewModel.cameraUploadProgressTableViewModel.isInitialLoad {
-                        CameraUploadProgressSkeletonView()
-                    }
-                }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
@@ -72,6 +66,7 @@ struct CameraUploadProgressView: View {
                 VStack(alignment: .center, spacing: TokenSpacing._7) {
                     MEGAAssets.Image.glassCheckCircle
                         .resizable()
+                        .aspectRatio(contentMode: .fill)
                         .frame(width: 120, height: 120)
                     
                     VStack(alignment: .center, spacing: TokenSpacing._5) {
@@ -95,6 +90,7 @@ struct CameraUploadProgressView: View {
                 .frame(maxWidth: .infinity)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .pageBackground()
     }
     
     @ViewBuilder

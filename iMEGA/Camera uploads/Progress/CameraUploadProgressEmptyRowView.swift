@@ -8,9 +8,9 @@ struct CameraUploadProgressEmptyRowView: View {
         Text(title)
             .font(.callout)
             .foregroundStyle(TokenColors.Text.secondary.swiftUI)
-            .background(TokenColors.Background.page.swiftUI)
             .padding(TokenSpacing._5)
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+            .background(TokenColors.Background.page.swiftUI)
     }
 }
 

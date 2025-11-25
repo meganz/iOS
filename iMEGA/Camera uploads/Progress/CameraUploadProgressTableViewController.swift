@@ -2,6 +2,7 @@ import Combine
 import MEGADesignToken
 import MEGAL10n
 import MEGASwiftUI
+import MEGAUIComponent
 import SwiftUI
 import UIKit
 
@@ -11,6 +12,7 @@ final class CameraUploadProgressTableViewController: UITableViewController {
         static let inQueueRow = "CameraUploadInQueueRowView"
         static let emptyInProgressRow = "EmptyInProgressRowView"
         static let emptyInQueueRow = "EmptyInQueueRowView"
+        static let skeletonRow = "SkeletonRowView"
     }
     private var dataSource: CameraUploadProgressDiffableDatasource?
     private let viewModel: CameraUploadProgressTableViewModel
@@ -57,19 +59,11 @@ final class CameraUploadProgressTableViewController: UITableViewController {
     }
     
     private func setupBindings() {
-        viewModel.$inProgressSnapshotUpdate
+        viewModel.$snapshotUpdate
             .compactMap { $0 }
             .receive(on: DispatchQueue.main)
             .sink { [weak dataSource] in
-                dataSource?.handleInProgressSnapshotUpdate($0)
-            }
-            .store(in: &cancellables)
-        
-        viewModel.$inQueueSnapshotUpdate
-            .compactMap { $0 }
-            .receive(on: DispatchQueue.main)
-            .sink { [weak dataSource] in
-                dataSource?.handleInQueueSnapshotUpdate($0)
+                dataSource?.handleSnapshotUpdate($0)
             }
             .store(in: &cancellables)
     }
@@ -84,6 +78,7 @@ final class CameraUploadProgressTableViewController: UITableViewController {
         tableView.register(HostingTableViewCell<CameraUploadInQueueRowView>.self, forCellReuseIdentifier: ReuseIdentifiers.inQueueRow)
         tableView.register(HostingTableViewCell<CameraUploadProgressEmptyRowView>.self, forCellReuseIdentifier: ReuseIdentifiers.emptyInProgressRow)
         tableView.register(HostingTableViewCell<CameraUploadProgressEmptyRowView>.self, forCellReuseIdentifier: ReuseIdentifiers.emptyInQueueRow)
+        tableView.register(HostingTableViewCell<CameraUploadProgressSkeletonRowView>.self, forCellReuseIdentifier: ReuseIdentifiers.skeletonRow)
         
         tableView.rowHeight = viewModel.rowHeight
         tableView.estimatedRowHeight = viewModel.rowHeight
@@ -97,6 +92,15 @@ final class CameraUploadProgressTableViewController: UITableViewController {
             tableView: tableView,
             cellProvider: { (tableView: UITableView, indexPath: IndexPath, row: CameraUploadProgressSectionRow) -> UITableViewCell in
                 switch row {
+                case .loading:
+                    let cell = tableView.dequeueReusableCell(withIdentifier: ReuseIdentifiers.inProgressRow, for: indexPath)
+                    
+                    cell.contentConfiguration = UIHostingConfiguration {
+                        CameraUploadProgressSkeletonRowView()
+                    }
+                    .margins(.all, 0)
+                    
+                    return cell
                 case .inProgress(let cameraUploadInProgressRowViewModel):
                     let cell = tableView.dequeueReusableCell(withIdentifier: ReuseIdentifiers.inProgressRow, for: indexPath)
                     
@@ -145,13 +149,19 @@ final class CameraUploadProgressTableViewController: UITableViewController {
     // MARK: - UITableViewDelegate
     
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        guard let sectionType = CameraUploadProgressSections(rawValue: section) else {
+        guard let dataSource = dataSource,
+              let sectionType = dataSource.snapshot().sectionIdentifiers[safe: section] else {
             return nil
         }
         
         let headerView = UITableViewHeaderFooterView()
         headerView.contentConfiguration = UIHostingConfiguration {
-            CameraUploadProgressSectionHeaderView(title: sectionType.title)
+            switch sectionType {
+            case .loadingInProgress, .loadingInQueue:
+                CameraUploadProgressSkeletonHeaderView()
+            case .inProgress, .inQueue:
+                CameraUploadProgressSectionHeaderView(title: sectionType.title)
+            }
         }
         .margins(.all, 0)
         

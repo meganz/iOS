@@ -5,6 +5,14 @@ import MEGASwift
 import Testing
 
 struct CameraUploadProgressTableViewModelTests {
+    
+    @MainActor
+    @Test func initialSnapshotValue() async throws {
+        let sut = Self.makeSUT()
+        
+        #expect(sut.snapshotUpdate == .loading(numberOfRowsPerSection: 4))
+    }
+    
     @MainActor
     @Test func initialInProgressViewModels() async {
         let assetIdentifier = "localIdentifier"
@@ -29,23 +37,23 @@ struct CameraUploadProgressTableViewModelTests {
             photoLibraryThumbnailUseCase: photoLibraryThumbnailUseCase,
             paginationManager: paginationManager
         )
-        #expect(sut.isInitialLoad)
         
         await sut.loadInitial()
         
-        #expect(sut.inProgressSnapshotUpdate == .initialLoad([.init(
+        let expectedInProgress = [CameraUploadInProgressRowViewModel(
             fileEntity: fileEntity,
             cameraUploadProgressUseCase: cameraUploadProgressUseCase,
             photoLibraryThumbnailUseCase: photoLibraryThumbnailUseCase,
-            thumbnailSize: thumbnailSize)]))
-        #expect(sut.inQueueSnapshotUpdate == .initial([.init(
+            thumbnailSize: thumbnailSize)]
+        let expectedInQueue = [CameraUploadInQueueRowViewModel(
             assetUploadEntity: assetUploadEntity,
             cameraUploadFileDetailsUseCase: cameraUploadFileDetailsUseCase,
             photoLibraryThumbnailUseCase: photoLibraryThumbnailUseCase,
-            thumbnailSize: thumbnailSize)]))
+            thumbnailSize: thumbnailSize)]
+        #expect(sut.snapshotUpdate == .initialLoad(
+            inProgress: expectedInProgress,
+            inQueue: expectedInQueue))
         #expect(photoLibraryThumbnailUseCase.invocations == [.startCaching(identifiers: [assetIdentifier, inQueueAssetIdentifier], targetSize: thumbnailSize)])
-        
-        #expect(sut.isInitialLoad == false)
     }
     
     @MainActor
@@ -75,7 +83,7 @@ struct CameraUploadProgressTableViewModelTests {
             await sut.loadInitial()
             await sut.monitorActiveUploads()
             
-            #expect(sut.inProgressSnapshotUpdate == .itemAdded(.init(
+            #expect(sut.snapshotUpdate == .inProgressItemAdded(.init(
                 fileEntity: fileEntity,
                 cameraUploadProgressUseCase: cameraUploadProgressUseCase,
                 photoLibraryThumbnailUseCase: photoLibraryThumbnailUseCase,
@@ -102,7 +110,7 @@ struct CameraUploadProgressTableViewModelTests {
             
             await sut.monitorActiveUploads()
             
-            #expect(sut.inProgressSnapshotUpdate == .itemRemoved(assetIdentifier))
+            #expect(sut.snapshotUpdate == .itemRemoved(assetIdentifier))
             
             #expect(photoLibraryThumbnailUseCase.invocations == [
                 .startCaching(identifiers: [assetIdentifier], targetSize: thumbnailSize),
@@ -143,7 +151,7 @@ struct CameraUploadProgressTableViewModelTests {
             
             #expect(await paginationManager.loadPageIfNeededCallCount == 1)
             
-            guard case .updated(let updatedVMs) = sut.inQueueSnapshotUpdate else {
+            guard case .inQueueUpdated(let updatedVMs) = sut.snapshotUpdate else {
                 Issue.record("Expected updated queue snapshot")
                 return
             }

@@ -11,55 +11,95 @@ final class CameraUploadProgressDiffableDatasource: UITableViewDiffableDataSourc
     private var lastQueueUpdateTime: Date = .distantPast
     private let minUpdateInterval: TimeInterval = 0.1 // 100ms minimum between queue updates
     
+    var onInitialSnapShotApplied: (() -> Void)?
+    
     override init(tableView: UITableView, cellProvider: @escaping UITableViewDiffableDataSource<CameraUploadProgressSections, CameraUploadProgressSectionRow>.CellProvider) {
         self.tableView = tableView
         super.init(tableView: tableView, cellProvider: cellProvider)
     }
     
-    func handleInProgressSnapshotUpdate(_ update: CameraUploadProgressTableViewModel.InProgressSnapshotUpdate) {
+    func handleSnapshotUpdate(_ update: CameraUploadProgressTableViewModel.SnapshotUpdate) {
         switch update {
-        case .initialLoad(let viewModels):
-            updateDataSourceForInitialLoad(viewModels: viewModels)
-        case .itemAdded(let viewModel):
-            addItemToDataSource(viewModel: viewModel)
-        case .itemRemoved(let assetIdentifier):
-            removeItemFromDataSource(assetIdentifier: assetIdentifier)
-        }
-    }
-    
-    func handleInQueueSnapshotUpdate(_ update: CameraUploadProgressTableViewModel.InQueueSnapshotUpdate) {
-        switch update {
-        case .initial(let viewModels):
-            updateDataSourceForInitialQueueLoad(viewModels: viewModels)
-        case .updated(let viewModels):
+        case .loading(let numberOfRowsPerSection):
+            setupLoading(numberOfRowsPerSection: numberOfRowsPerSection)
+        case .initialLoad(let inProgressViewModels, let inQueueViewModels):
+            updateDataSourceForInitialLoad(inProgressViewModels: inProgressViewModels, inQueueViewModels: inQueueViewModels)
+        case .inProgressItemAdded(let viewModel):
+            addInProgressItemToDataSource(viewModel: viewModel)
+        case .inQueueUpdated(let viewModels):
             updateDataSourceForQueueUpdate(viewModels: viewModels)
         case .itemRemoved(let assetIdentifier):
             removeItemFromDataSource(assetIdentifier: assetIdentifier)
         }
     }
     
-    private func updateDataSourceForInitialLoad(viewModels: [CameraUploadInProgressRowViewModel]) {
-        let currentSnapshot = snapshot()
-        var snapshot = rebuildSnapshotWithSections(currentSnapshot: currentSnapshot)
+    private func setupLoading(numberOfRowsPerSection: Int) {
+        var snapshot = Snapshot()
+        snapshot.appendSections([.loadingInProgress, .loadingInQueue])
         
-        if snapshot.itemIdentifiers(inSection: .inProgress).contains(.emptyInProgress) {
-            snapshot.deleteItems([.emptyInProgress])
+        let inProgressItems = (0..<numberOfRowsPerSection).map { _ in
+            CameraUploadProgressSectionRow.loading(id: UUID())
+        }
+        let inQueueItems = (0..<numberOfRowsPerSection).map { _ in
+            CameraUploadProgressSectionRow.loading(id: UUID())
         }
         
-        if viewModels.isEmpty {
-            snapshot.appendItems([.emptyInProgress], toSection: .inProgress)
-        } else {
-            let rowItems = viewModels.map { CameraUploadProgressSectionRow.inProgress($0) }
-            snapshot.appendItems(rowItems, toSection: .inProgress)
-        }
-        applySnapshotWithScrollPreservation(snapshot, animatingDifferences: false, targetSection: .inProgress)
+        snapshot.appendItems(inProgressItems, toSection: .loadingInProgress)
+        snapshot.appendItems(inQueueItems, toSection: .loadingInQueue)
+        
+        apply(snapshot, animatingDifferences: false)
     }
     
-    private func addItemToDataSource(viewModel: CameraUploadInProgressRowViewModel) {
+    private func updateDataSourceForInitialLoad(
+        inProgressViewModels: [CameraUploadInProgressRowViewModel],
+        inQueueViewModels: [CameraUploadInQueueRowViewModel]
+    ) {
+        var snapshot = Snapshot()
+        snapshot.appendSections([.inProgress, .inQueue])
+        
+        if inProgressViewModels.isEmpty {
+            snapshot.appendItems([.emptyInProgress], toSection: .inProgress)
+        } else {
+            let inProgressItems = inProgressViewModels.map { CameraUploadProgressSectionRow.inProgress($0) }
+            snapshot.appendItems(inProgressItems, toSection: .inProgress)
+        }
+        if inQueueViewModels.isEmpty {
+            snapshot.appendItems([.emptyInQueue], toSection: .inQueue)
+        } else {
+            let inQueueItems = inQueueViewModels.map { CameraUploadProgressSectionRow.inQueue($0) }
+            snapshot.appendItems(inQueueItems, toSection: .inQueue)
+        }
+        
+        apply(snapshot, animatingDifferences: false) { [weak self] in
+            self?.onInitialSnapShotApplied?()
+        }
+    }
+    
+    private func addInProgressItemToDataSource(viewModel: CameraUploadInProgressRowViewModel) {
         var snapshot = snapshot()
         
-        let existingItems = snapshot.itemIdentifiers(inSection: .inProgress)
-        if existingItems.contains(.emptyInProgress) {
+        let queueItemsToRemove = snapshot.itemIdentifiers(inSection: .inQueue)
+            .filter { item in
+                if case .inQueue(let queueViewModel) = item {
+                    return queueViewModel.id == viewModel.id
+                }
+                return false
+            }
+        
+        if !queueItemsToRemove.isEmpty {
+            snapshot.deleteItems(queueItemsToRemove)
+        
+            let remainingQueueItems = snapshot.itemIdentifiers(inSection: .inQueue).filter {
+                if case .inQueue = $0 { return true }
+                return false
+            }
+            if remainingQueueItems.isEmpty && !snapshot.itemIdentifiers(inSection: .inQueue).contains(.emptyInQueue) {
+                snapshot.appendItems([.emptyInQueue], toSection: .inQueue)
+            }
+        }
+        
+        let existingInProgressItems = snapshot.itemIdentifiers(inSection: .inProgress)
+        if existingInProgressItems.contains(.emptyInProgress) {
             snapshot.deleteItems([.emptyInProgress])
         }
         
@@ -78,8 +118,7 @@ final class CameraUploadProgressDiffableDatasource: UITableViewDiffableDataSourc
                     viewModel.id == assetIdentifier
                 case .inQueue(let viewModel):
                     viewModel.id == assetIdentifier
-                case .emptyInProgress, .emptyInQueue:
-                    false
+                default: false
                 }
             }
         
@@ -102,23 +141,6 @@ final class CameraUploadProgressDiffableDatasource: UITableViewDiffableDataSourc
         }
         
         apply(snapshot, animatingDifferences: false)
-    }
-    
-    private func updateDataSourceForInitialQueueLoad(viewModels: [CameraUploadInQueueRowViewModel]) {
-        let currentSnapshot = snapshot()
-        var snapshot = rebuildSnapshotWithSections(currentSnapshot: currentSnapshot)
-        
-        let existingItems = snapshot.itemIdentifiers(inSection: .inQueue)
-        if existingItems.contains(.emptyInQueue) {
-            snapshot.deleteItems([.emptyInQueue])
-        }
-        if viewModels.isEmpty {
-            snapshot.appendItems([.emptyInQueue], toSection: .inQueue)
-        } else {
-            let rowItems = viewModels.map { CameraUploadProgressSectionRow.inQueue($0) }
-            snapshot.appendItems(rowItems, toSection: .inQueue)
-        }
-        applySnapshotWithScrollPreservation(snapshot, animatingDifferences: false, targetSection: .inQueue)
     }
     
     private func updateDataSourceForQueueUpdate(viewModels: [CameraUploadInQueueRowViewModel]) {
@@ -272,6 +294,7 @@ final class CameraUploadProgressDiffableDatasource: UITableViewDiffableDataSourc
 extension CameraUploadProgressSectionRow {
     var identifier: String {
         switch self {
+        case .loading(let id): id.uuidString
         case .inProgress(let viewModel): viewModel.id
         case .inQueue(let viewModel): viewModel.id
         case .emptyInProgress: "empty-in-progress"

@@ -3,22 +3,15 @@ import MEGARepo
 
 @MainActor
 final class CameraUploadProgressTableViewModel: ObservableObject {
-    enum InProgressSnapshotUpdate: Equatable {
-        case initialLoad([CameraUploadInProgressRowViewModel])
-        case itemAdded(CameraUploadInProgressRowViewModel)
+    enum SnapshotUpdate: Equatable {
+        case loading(numberOfRowsPerSection: Int)
+        case initialLoad(inProgress: [CameraUploadInProgressRowViewModel], inQueue: [CameraUploadInQueueRowViewModel])
+        case inProgressItemAdded(CameraUploadInProgressRowViewModel)
+        case inQueueUpdated([CameraUploadInQueueRowViewModel])
         case itemRemoved(CameraUploadLocalIdentifierEntity)
     }
-    enum InQueueSnapshotUpdate: Equatable {
-        case initial([CameraUploadInQueueRowViewModel])
-        case updated([CameraUploadInQueueRowViewModel])
-        case itemRemoved(CameraUploadLocalIdentifierEntity)
-    }
-    // MARK: - Published Properties
-    @Published private(set) var inProgressSnapshotUpdate: InProgressSnapshotUpdate?
-    @Published private(set) var inQueueSnapshotUpdate: InQueueSnapshotUpdate?
-    @Published private(set) var isInitialLoad = true
+    @Published private(set) var snapshotUpdate: SnapshotUpdate = .loading(numberOfRowsPerSection: 4)
     
-    // MARK: - Private Properties
     private let cameraUploadProgressUseCase: any CameraUploadProgressUseCaseProtocol
     private let cameraUploadFileDetailsUseCase: any CameraUploadFileDetailsUseCaseProtocol
     private let photoLibraryThumbnailUseCase: any PhotoLibraryThumbnailUseCaseProtocol
@@ -32,7 +25,6 @@ final class CameraUploadProgressTableViewModel: ObservableObject {
     private(set) var isPaginationInProgress = false
     private var lastScrollPosition: Int?
     
-    // MARK: - Internal Properties
     let rowHeight: CGFloat = 60
     
     init(
@@ -56,8 +48,6 @@ final class CameraUploadProgressTableViewModel: ObservableObject {
     }
     
     func loadInitial() async {
-        defer { isInitialLoad = false }
-        
         do {
             async let inProgressFiles = cameraUploadProgressUseCase.inProgressFiles()
             async let update =  paginationManager.loadInitialPage()
@@ -80,8 +70,16 @@ final class CameraUploadProgressTableViewModel: ObservableObject {
             
             try Task.checkCancellation()
             
-            inProgressSnapshotUpdate = .initialLoad(inProgressVMs)
-            applyInQueueUpdate(inQueueUpdate)
+            let inQueueVMs = inQueueUpdate.items.map {
+                CameraUploadInQueueRowViewModel(
+                    assetUploadEntity: $0,
+                    cameraUploadFileDetailsUseCase: cameraUploadFileDetailsUseCase,
+                    photoLibraryThumbnailUseCase: photoLibraryThumbnailUseCase,
+                    thumbnailSize: thumbnailSize)
+            }
+            try Task.checkCancellation()
+            
+            snapshotUpdate = .initialLoad(inProgress: inProgressVMs, inQueue: inQueueVMs)
         } catch {
             MEGALogError("[\(type(of: self))] initial load failed error: \(error)")
         }
@@ -98,17 +96,15 @@ final class CameraUploadProgressTableViewModel: ObservableObject {
                     continue
                 }
                 
-                inProgressSnapshotUpdate = .itemAdded(.init(
+                snapshotUpdate = .inProgressItemAdded(.init(
                     fileEntity: fileEntity,
                     cameraUploadProgressUseCase: cameraUploadProgressUseCase,
                     photoLibraryThumbnailUseCase: photoLibraryThumbnailUseCase,
                     thumbnailSize: thumbnailSize))
                 
                 await paginationManager.removeItemFromPages(localIdentifier: phaseEvent.assetIdentifier)
-                inQueueSnapshotUpdate = .itemRemoved(phaseEvent.assetIdentifier)
-                
             case .completed:
-                inProgressSnapshotUpdate = .itemRemoved(phaseEvent.assetIdentifier)
+                snapshotUpdate = .itemRemoved(phaseEvent.assetIdentifier)
                 
                 photoLibraryThumbnailUseCase.stopCaching(
                     for: [phaseEvent.assetIdentifier], targetSize: thumbnailSize)
@@ -169,9 +165,7 @@ final class CameraUploadProgressTableViewModel: ObservableObject {
     
     func reset() async {
         await paginationManager.reset()
-        inProgressSnapshotUpdate = nil
-        inQueueSnapshotUpdate = nil
-        isInitialLoad = true
+        snapshotUpdate = .loading(numberOfRowsPerSection: 4)
         
         lastProcessedPageIndex = nil
         lastScrollPosition = nil
@@ -190,11 +184,7 @@ final class CameraUploadProgressTableViewModel: ObservableObject {
                 thumbnailSize: thumbnailSize)
         }
         
-        if isInitialLoad {
-            inQueueSnapshotUpdate = .initial(viewModels)
-        } else {
-            inQueueSnapshotUpdate = .updated(viewModels)
-        }
+        snapshotUpdate = .inQueueUpdated(viewModels)
     }
     
     private func shouldLoadMore(for visibleIndex: Int, totalItems: Int) -> Bool {

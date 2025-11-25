@@ -219,30 +219,6 @@ struct CameraUploadProgressViewModelTests {
         
         #expect(cameraUploadProgressRouter.showCameraUploadSettingsCalledCount == 1)
     }
-    
-    @MainActor
-    @Test
-    func monitorVideoSettings() async throws {
-        let notificationCenter = NotificationCenter()
-        let sut = Self.makeSUT(notificationCenter: notificationCenter)
-        // Wait for monitoring to start
-        try await Task.sleep(nanoseconds: 150_000_000)
-        
-        await sut.cameraUploadProgressTableViewModel.loadInitial()
-        let initialValue = sut.cameraUploadProgressTableViewModel.isInitialLoad
-        #expect(initialValue == false)
-        
-        notificationCenter.post(name: .cameraUploadVideoUploadSettingChanged, object: nil)
-        
-        let finalValue = try await withTimeout(seconds: 1) {
-            while await sut.cameraUploadProgressTableViewModel.isInitialLoad == initialValue {
-                try await Task.sleep(nanoseconds: 10_000_000) // 10ms
-            }
-            return await sut.cameraUploadProgressTableViewModel.isInitialLoad
-        }
-        
-        #expect(finalValue == true)
-    }
 
     @MainActor
     private static func makeSUT(
