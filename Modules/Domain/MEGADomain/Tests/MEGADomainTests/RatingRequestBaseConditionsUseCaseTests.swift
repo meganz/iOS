@@ -1,6 +1,7 @@
 import MEGADomain
 import MEGADomainMock
 import MEGAPreference
+import MEGAPreferenceMocks
 import XCTest
 
 class RatingRequestBaseConditionsUseCaseTests: XCTestCase {

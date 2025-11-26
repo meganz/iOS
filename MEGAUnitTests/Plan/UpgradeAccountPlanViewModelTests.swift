@@ -9,6 +9,7 @@ import MEGADomain
 import MEGADomainMock
 import MEGAL10n
 import MEGAPreference
+import MEGAPreferenceMocks
 import MEGAStoreKit
 import MEGAUIComponent
 import XCTest

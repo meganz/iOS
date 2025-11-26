@@ -6,6 +6,7 @@ import MEGADomain
 import MEGADomainMock
 import MEGAL10n
 import MEGAPreference
+import MEGAPreferenceMocks
 @testable import MEGATest
 import XCTest
 

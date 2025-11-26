@@ -5,6 +5,7 @@ import MEGAAppPresentationMock
 import MEGADomain
 import MEGADomainMock
 import MEGAPreference
+import MEGAPreferenceMocks
 import MEGATest
 import XCTest
 

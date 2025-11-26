@@ -1,7 +1,8 @@
 import MEGADomain
 import MEGADomainMock
-import MEGASwift
 import MEGAPreference
+import MEGAPreferenceMocks
+import MEGASwift
 import Testing
 
 @Suite("TransfersListenerUseCase Tests - Handling completed transfers and controlling queued transfers.")

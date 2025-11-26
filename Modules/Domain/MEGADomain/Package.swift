@@ -47,7 +47,8 @@ let package = Package(
             swiftSettings: settings),
         .testTarget(
             name: "MEGADomainTests",
-            dependencies: ["MEGADomain", "MEGADomainMock", "MEGATest"],
+            dependencies: ["MEGADomain", "MEGADomainMock", "MEGATest",
+                           .product(name: "MEGAPreferenceMocks", package: "MEGAPreference")],
             swiftSettings: settings)
     ],
     swiftLanguageModes: [.v6]

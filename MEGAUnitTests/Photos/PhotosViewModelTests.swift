@@ -10,6 +10,7 @@ import MEGAL10n
 import MEGAPermissions
 import MEGAPermissionsMock
 import MEGAPreference
+import MEGAPreferenceMocks
 import MEGASwift
 import Testing
 import XCTest

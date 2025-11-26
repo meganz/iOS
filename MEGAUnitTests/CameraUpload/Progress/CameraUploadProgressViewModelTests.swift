@@ -5,6 +5,7 @@ import MEGAL10n
 import MEGAPermissions
 import MEGAPermissionsMock
 import MEGAPreference
+import MEGAPreferenceMocks
 import MEGASwift
 import MEGAUIComponent
 import Testing

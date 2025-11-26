@@ -7,6 +7,7 @@ import MEGADomainMock
 import MEGAPermissions
 import MEGAPermissionsMock
 import MEGAPreference
+import MEGAPreferenceMocks
 import MEGASwift
 import SwiftUI
 import XCTest

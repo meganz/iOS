@@ -5,6 +5,7 @@ import MEGAAppSDKRepoMock
 import MEGADomain
 import MEGADomainMock
 import MEGAPreference
+import MEGAPreferenceMocks
 import XCTest
 
 final class UpgradeEncouragementViewModelTests: XCTestCase {

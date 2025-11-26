@@ -4,6 +4,7 @@ import MEGAAppPresentationMock
 import MEGADomain
 import MEGADomainMock
 import MEGAPreference
+import MEGAPreferenceMocks
 import MEGASwift
 import SwiftUI
 import XCTest

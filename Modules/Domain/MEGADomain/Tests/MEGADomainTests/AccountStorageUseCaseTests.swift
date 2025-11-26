@@ -1,7 +1,8 @@
 import MEGADomain
 import MEGADomainMock
-import MEGASwift
 import MEGAPreference
+import MEGAPreferenceMocks
+import MEGASwift
 import MEGATest
 import Testing
 import XCTest

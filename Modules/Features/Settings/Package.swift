@@ -28,7 +28,8 @@ let package = Package(
         .package(path: "../../Repository/LogRepo"),
         .package(path: "../../MEGASharedRepo/MEGAUIComponent"),
         .package(path: "../../MEGASharedRepo/MEGAConnectivity"),
-        .package(path: "../../Presentation/MEGAAssets")
+        .package(path: "../../Presentation/MEGAAssets"),
+        .package(path: "../../MEGASharedRepo/MEGAPreference")
     ],
     targets: [
         .target(
@@ -51,7 +52,8 @@ let package = Package(
             dependencies: ["Settings",
                            "MEGATest",
                            .product(name: "MEGAAppPresentationMock", package: "MEGAAppPresentation"),
-                           .product(name: "MEGADomainMock", package: "MEGADomain")])
+                           .product(name: "MEGADomainMock", package: "MEGADomain"),
+                           .product(name: "MEGAPreferenceMocks", package: "MEGAPreference")])
     ],
     swiftLanguageModes: [.v6]
 )

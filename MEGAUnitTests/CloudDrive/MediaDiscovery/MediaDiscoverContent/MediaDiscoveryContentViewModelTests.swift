@@ -6,6 +6,7 @@ import MEGAAppSDKRepoMock
 import MEGADomain
 import MEGADomainMock
 import MEGAPreference
+import MEGAPreferenceMocks
 import XCTest
 
 class MediaDiscoveryContentViewModelTests: XCTestCase {

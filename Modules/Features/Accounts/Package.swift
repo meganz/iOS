@@ -34,7 +34,8 @@ let package = Package(
         .package(path: "../../MEGASharedRepo/MEGAUIComponent"),
         .package(url: "https://github.com/googleads/swift-package-manager-google-mobile-ads.git", from: "12.6.0"),
         .package(url: "https://code.developers.mega.co.nz/mobile/kmm/mobile-analytics-ios.git", branch: "main"),
-        .package(path: "../../MEGASharedRepo/MEGASwift")
+        .package(path: "../../MEGASharedRepo/MEGASwift"),
+        .package(path: "../../MEGASharedRepo/MEGAPreference")
     ],
     targets: [
         .target(
@@ -52,7 +53,8 @@ let package = Package(
         ),
         .target(
             name: "AccountsMock",
-            dependencies: ["Accounts"],
+            dependencies: ["Accounts",
+                           .product(name: "MEGAPreferenceMocks", package: "MEGAPreference")],
             swiftSettings: settings
         ),
         .testTarget(

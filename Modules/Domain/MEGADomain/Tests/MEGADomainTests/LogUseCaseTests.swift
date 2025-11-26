@@ -1,7 +1,8 @@
 import MEGADomain
 import MEGADomainMock
-import XCTest
 import MEGAPreference
+import MEGAPreferenceMocks
+import XCTest
 
 final class LogUseCaseTests: XCTestCase {
     func testShouldEnableLogs_debuggingEnabledByTheUser_shouldReturnTrue() {

@@ -6,6 +6,7 @@ import MEGADomain
 import MEGADomainMock
 import MEGAPermissionsMock
 import MEGAPreference
+import MEGAPreferenceMocks
 import Testing
 
 struct TimeLineViewModelTests {

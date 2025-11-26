@@ -5,6 +5,7 @@ import MEGADomain
 import MEGADomainMock
 import MEGAL10n
 import MEGAPreference
+import MEGAPreferenceMocks
 import XCTest
 
 final class TurnOnNotificationsViewModelTests: XCTestCase {
