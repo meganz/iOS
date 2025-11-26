@@ -51,7 +51,7 @@
 /* Hint text to suggest that the user has to write the decryption key */
 "decryptionKey"="復号化キー";
 /* Button title to try to decrypt the link */
-"decrypt"="復号化";
+"decrypt"="続行";
 /* Alert title shown when you have written a decryption key not valid */
 "decryptionKeyNotValid"="復号化キーが無効です";
 /* This dialog message is used on the Password Decrypt dialog. The link is a password protected link so the user needs to enter the password to decrypt the link. */
@@ -59,7 +59,7 @@
 /* This dialog message is used on the Password Decrypt dialog as an instruction for the user. */
 "If you do not have the password, contact the creator of the link."="そのパスワードをお持ちではない場合、リンクの作成者に尋ねてください。";
 /* This placeholder text is used on the Password Decrypt dialog as an instruction for the user. */
-"Enter the password"="パスワードを入力してください";
+"Enter the password"="リンクパスワードを入力してください";
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOut_alertTitle"="ログアウト済み";
 /* Alert message shown when your account has been closed through another client or the web by killing all your sessions */
@@ -4573,17 +4573,17 @@
 /* Hidden files and folders onboarding header title */
 "onboarding.hiddenFilesAndFolders.header.title"="新機能：非表示ファイルと非表示フォルダ";
 /* Hidden files and folders onboarding content item one title */
-"onboarding.hiddenFilesAndFolders.content.item.one.title"="ファイルとフォルダを隠す";
+"onboarding.hiddenFilesAndFolders.content.item.one.title"="重要なファイルやフォルダを隠す";
 /* Hidden files and folders onboarding content item one message */
-"onboarding.hiddenFilesAndFolders.content.item.one.message"="クラウドドライブ内の機密ファイルを、簡単に非公開にできます。デフォルトでは、隠しファイルはクラウドドライブ、写真、および「最近使用」セクションに表示されません。";
+"onboarding.hiddenFilesAndFolders.content.item.one.message"="簡単な1つの手順で、機密ファイルやフォルダを非表示にしてプライバシーを保護することができます。";
 /* Hidden files and folders onboarding content item two title */
-"onboarding.hiddenFilesAndFolders.content.item.two.title"="表示/非表示を簡単に制御";
+"onboarding.hiddenFilesAndFolders.content.item.two.title"="非表示の解除";
 /* Hidden files and folders onboarding content item two message */
 "onboarding.hiddenFilesAndFolders.content.item.two.message"="非表示ファイルを表示するには、アプリの設定で「ファイル管理（File Management） -> ユーザーインターフェース（User interface）」の「非表示項目を表示（Show hidden items）」をオンにします。";
 /* Hidden files and folders onboarding content item three title */
-"onboarding.hiddenFilesAndFolders.content.item.three.title"="共有ファイルは表示されたまま";
+"onboarding.hiddenFilesAndFolders.content.item.three.title"="プライバシーのためにぼかす";
 /* Hidden files and folders onboarding content item three message */
-"onboarding.hiddenFilesAndFolders.content.item.three.message"="連絡先や公開リンクで共有されたファイルやフォルダは、たとえ非表示であってもアクセス可能で、表示されます。";
+"onboarding.hiddenFilesAndFolders.content.item.three.message"="非表示の項目をサムネイルでぼかして表示するため、内容を公開せずに識別できます。";
 /* Title for note to self chat, used in the messages view but also in lists where note to self is diplayed */
 "chat.messages.noteToSelf.title"="自分へのメモ";
 /* Title for note to self chat messages view header, at the top the chat room */
@@ -4779,6 +4779,44 @@
 /* Camera Uploads row file upload speed */
 "cameraUploads.progress.row.uploadSpeed"="%@/秒";
 /* Footer for the yearly billing option in the upgrade account plan screen */
-"upgradeAccountPlan.plan.yearly.footer"="Charged Yearly";
+"upgradeAccountPlan.plan.yearly.footer"="年払い";
 /* Price per month display for yearly billing option in the upgrade account plan screen */
-"upgradeAccountPlan.plan.yearly.pricePerMonth"="Only %@/month";
+"upgradeAccountPlan.plan.yearly.pricePerMonth"="月額わずか%@";
+/* Camera Uploads Banner Paused Low Battery Subtitle */
+"cameraUploads.progress.banner.paused.lowBattery.subtitle"="カメラアップロードが一時停止されました。バッテリー残量が低すぎます。カメラアップロードを再開するには、バッテリーを充電してください。";
+/* Camera Uploads Banner Paused High Thermal State Subtitle */
+"cameraUploads.progress.banner.paused.highThermalState.subtitle"="デバイスの温度が高すぎるため、カメラアップロードが一時停止されています。デバイスの温度が下がり次第、アップロードが再開されます。";
+/* Camera Uploads Banner Paused Network Issue Subtitle */
+"cameraUploads.progress.banner.paused.networkIssue.subtitle"="カメラアップロードが一時停止されました。インターネットに接続できません";
+/* Camera Uploads Banner Paused network no wifi cellular upload not allowed allow mobile data */
+"cameraUploads.progress.banner.paused.allowMobileData.button.title"="モバイルデータを許可";
+/* Camera Uploads Banner Storage Full Title */
+"cameraUploads.progress.banner.storageFull.title"="ストレージがいっぱいです";
+/* Camera Uploads Banner Storage Full Subtitle */
+"cameraUploads.progress.banner.storageFull.subtitle"="アップロードを続けるには、今すぐアップグレードしてストレージ容量を増やしてください";
+/* Camera Uploads Banner Storage Full Button Title */
+"cameraUploads.progress.banner.storageFull.button.title"="今すぐアップグレード";
+/* Camera Uploads Banner Limited Access Subtitle */
+"cameraUploads.progress.banner.limitedAccess.subtitle"="思い出をすべて見逃さないようにするには、MEGAに写真ライブラリへのフルアクセスを許可してください。";
+/* Camera Uploads Banner Limited Access Button Title */
+"cameraUploads.progress.banner.limitedAccess.button.title"="権限の更新";
+/* Camera Uploads Progress Uploads Complete Title */
+"cameraUploads.progress.uploadsComplete.title"="すべてアップロード完了";
+/* Camera Uploads Progress Uploads Complete Subtitle */
+"cameraUploads.progress.uploadsComplete.subtitle"="新しい写真や動画を撮影するとここに表示されます";
+/* Camera Uploads Empty In Progress Row title */
+"cameraUploads.progress.row.emptyInProgress.title"="進行中の転送がここに表示されます";
+/* Camera Uploads Empty In Queue Row title */
+"cameraUploads.progress.row.emptyInQueue.title"="キュー内の転送がここに表示されます";
+/* Sorting option label for sorting items based on the share creation date (can be applied in ascending or descending order) */
+"sorting.shareCreated.title"="共有が作成されました";
+/* Sorting option label for sorting items based on the link creation date (can be applied in ascending or descending order) */
+"sorting.linkCreated.title"="リンクが作成されました";
+/* Camera Uploads Checking For Uploads */
+"cameraUploads.checkingForUploads"="アップロードを確認中…";
+/* Camera Uploads Complete */
+"cameraUploads.complete"="カメラアップロードが完了しました";
+/* Camera Uploads Up To Date */
+"cameraUploads.upToDate"="カメラアップロードは最新です";
+/* Hidden files and folders onboarding content control visibility message */
+"onboarding.hiddenFilesAndFolders.content.item.controlVisibility.message"="隠しファイルを表示するのは、個別に、または[A]設定[/A]から​​隠し項目を一時的に表示することによってのみ可能です。";

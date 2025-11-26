@@ -51,7 +51,7 @@
 /* Hint text to suggest that the user has to write the decryption key */
 "decryptionKey"="복호화 키";
 /* Button title to try to decrypt the link */
-"decrypt"="복호화";
+"decrypt"="계속";
 /* Alert title shown when you have written a decryption key not valid */
 "decryptionKeyNotValid"="잘못된 복호화 키";
 /* This dialog message is used on the Password Decrypt dialog. The link is a password protected link so the user needs to enter the password to decrypt the link. */
@@ -59,7 +59,7 @@
 /* This dialog message is used on the Password Decrypt dialog as an instruction for the user. */
 "If you do not have the password, contact the creator of the link."="암호가 없다면, 링크를 만든 사람에게 연락하세요.";
 /* This placeholder text is used on the Password Decrypt dialog as an instruction for the user. */
-"Enter the password"="암호를 입력하세요";
+"Enter the password"="링크 암호를 입력하세요";
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOut_alertTitle"="로그아웃됨";
 /* Alert message shown when your account has been closed through another client or the web by killing all your sessions */
@@ -4573,17 +4573,17 @@
 /* Hidden files and folders onboarding header title */
 "onboarding.hiddenFilesAndFolders.header.title"="새 기능: 숨겨진 파일과 폴더";
 /* Hidden files and folders onboarding content item one title */
-"onboarding.hiddenFilesAndFolders.content.item.one.title"="숨겨진 파일과 폴더";
+"onboarding.hiddenFilesAndFolders.content.item.one.title"="중요한 파일과 폴더 숨기기";
 /* Hidden files and folders onboarding content item one message */
-"onboarding.hiddenFilesAndFolders.content.item.one.message"="클라우드 드라이브의 민감한 파일을 쉽게 비공개이면서 보이지 않게 보관하세요. 기본적으로, 숨겨진 파일은 클라우드 드라이브, 사진, 최근 섹션에 나타나지 않습니다.";
+"onboarding.hiddenFilesAndFolders.content.item.one.message"="프라이버시를 위해 쉬운 한 단계로 민감한 파일과 폴더를 감출 수 있습니다.";
 /* Hidden files and folders onboarding content item two title */
-"onboarding.hiddenFilesAndFolders.content.item.two.title"="가시성을 쉽게 제어";
+"onboarding.hiddenFilesAndFolders.content.item.two.title"="시야에서 벗어남";
 /* Hidden files and folders onboarding content item two message */
 "onboarding.hiddenFilesAndFolders.content.item.two.message"="숨겨진 파일을 나타내려면, 앱 설정의 “파일 관리” -> “이용자 인터페이스”에서 “숨겨진 항목 보기”를 켜세요.";
 /* Hidden files and folders onboarding content item three title */
-"onboarding.hiddenFilesAndFolders.content.item.three.title"="공유된 파일은 보이는 상태로 유지됩니다";
+"onboarding.hiddenFilesAndFolders.content.item.three.title"="프라이버시를 위한 흐리게 하기";
 /* Hidden files and folders onboarding content item three message */
-"onboarding.hiddenFilesAndFolders.content.item.three.message"="연락처 또는 공개 링크로 공유한 파일과 폴더는 숨김 처리를 해도 접근 가능하고 보이게 됩니다.";
+"onboarding.hiddenFilesAndFolders.content.item.three.message"="숨긴 항목을 썸네일을 흐리게 하여, 내용물을 노출하지 않고 식별할 수 있도록 할 수 있습니다.";
 /* Title for note to self chat, used in the messages view but also in lists where note to self is diplayed */
 "chat.messages.noteToSelf.title"="나에게 쓴 노트";
 /* Title for note to self chat messages view header, at the top the chat room */
@@ -4779,6 +4779,44 @@
 /* Camera Uploads row file upload speed */
 "cameraUploads.progress.row.uploadSpeed"="%@/초";
 /* Footer for the yearly billing option in the upgrade account plan screen */
-"upgradeAccountPlan.plan.yearly.footer"="Charged Yearly";
+"upgradeAccountPlan.plan.yearly.footer"="매년 결제";
 /* Price per month display for yearly billing option in the upgrade account plan screen */
-"upgradeAccountPlan.plan.yearly.pricePerMonth"="Only %@/month";
+"upgradeAccountPlan.plan.yearly.pricePerMonth"="단돈 월 %@";
+/* Camera Uploads Banner Paused Low Battery Subtitle */
+"cameraUploads.progress.banner.paused.lowBattery.subtitle"="배터리 잔량이 너무 낮아서, 카메라 업로드가 일시정지 되었습니다. 카메라 업로드를 재개하려면 배터리를 충전하세요.";
+/* Camera Uploads Banner Paused High Thermal State Subtitle */
+"cameraUploads.progress.banner.paused.highThermalState.subtitle"="장치 온도가 너무 높아서 카메라 업로드가 일시정지 되었습니다. 장치가 식으면 업로드가 재개됩니다.";
+/* Camera Uploads Banner Paused Network Issue Subtitle */
+"cameraUploads.progress.banner.paused.networkIssue.subtitle"="인터넷 연결이 없어서 카메라 업로드가 일시정지 되었습니다";
+/* Camera Uploads Banner Paused network no wifi cellular upload not allowed allow mobile data */
+"cameraUploads.progress.banner.paused.allowMobileData.button.title"="모바일 데이터 허용";
+/* Camera Uploads Banner Storage Full Title */
+"cameraUploads.progress.banner.storageFull.title"="저장소가 가득 찼습니다";
+/* Camera Uploads Banner Storage Full Subtitle */
+"cameraUploads.progress.banner.storageFull.subtitle"="업로드를 계속하려면, 더 많은 저장소를 위해 지금 업그레이드 하세요";
+/* Camera Uploads Banner Storage Full Button Title */
+"cameraUploads.progress.banner.storageFull.button.title"="지금 업그레이드";
+/* Camera Uploads Banner Limited Access Subtitle */
+"cameraUploads.progress.banner.limitedAccess.subtitle"="당신의 추억을 잃지 않게 하기 위해, MEGA는 당신의 사진 라이브러리에 대한 전체 접근 권한이 필요합니다";
+/* Camera Uploads Banner Limited Access Button Title */
+"cameraUploads.progress.banner.limitedAccess.button.title"="권한 변경";
+/* Camera Uploads Progress Uploads Complete Title */
+"cameraUploads.progress.uploadsComplete.title"="모두 완료";
+/* Camera Uploads Progress Uploads Complete Subtitle */
+"cameraUploads.progress.uploadsComplete.subtitle"="새 사진과 동영상이 촬영되면 여기에 나타납니다";
+/* Camera Uploads Empty In Progress Row title */
+"cameraUploads.progress.row.emptyInProgress.title"="진행 중인 전송이 여기 나타납니다";
+/* Camera Uploads Empty In Queue Row title */
+"cameraUploads.progress.row.emptyInQueue.title"="대기 중인 전송이 여기 나타납니다";
+/* Sorting option label for sorting items based on the share creation date (can be applied in ascending or descending order) */
+"sorting.shareCreated.title"="공유 생성일";
+/* Sorting option label for sorting items based on the link creation date (can be applied in ascending or descending order) */
+"sorting.linkCreated.title"="링크 생성일";
+/* Camera Uploads Checking For Uploads */
+"cameraUploads.checkingForUploads"="업로드 확인 중…";
+/* Camera Uploads Complete */
+"cameraUploads.complete"="카메라 업로드 완료";
+/* Camera Uploads Up To Date */
+"cameraUploads.upToDate"="카메라 업로드가 최신 상태입니다";
+/* Hidden files and folders onboarding content control visibility message */
+"onboarding.hiddenFilesAndFolders.content.item.controlVisibility.message"="숨겨진 파일은 개별적으로 또는 [A]설정[/A]에서 숨겨진 항목을 일시적으로 표시하여 공개할 수 있습니다.";

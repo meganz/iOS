@@ -51,7 +51,7 @@
 /* Hint text to suggest that the user has to write the decryption key */
 "decryptionKey"="解密金鑰";
 /* Button title to try to decrypt the link */
-"decrypt"="解密";
+"decrypt"="繼續";
 /* Alert title shown when you have written a decryption key not valid */
 "decryptionKeyNotValid"="無效的金鑰";
 /* This dialog message is used on the Password Decrypt dialog. The link is a password protected link so the user needs to enter the password to decrypt the link. */
@@ -59,7 +59,7 @@
 /* This dialog message is used on the Password Decrypt dialog as an instruction for the user. */
 "If you do not have the password, contact the creator of the link."="若您沒有密碼，請聯絡該連結的建立者。";
 /* This placeholder text is used on the Password Decrypt dialog as an instruction for the user. */
-"Enter the password"="請輸入密碼";
+"Enter the password"="輸入連結密碼";
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOut_alertTitle"="已登出";
 /* Alert message shown when your account has been closed through another client or the web by killing all your sessions */
@@ -3625,7 +3625,7 @@
 /* On Upgrade Account Plan screen. Button title to buy account plan via web. %@ will be total savings for the users in percent */
 "upgradeAccountPlan.button.buyViaWeb.save"="在我們的網站上購買（便宜%@）";
 /* On Upgrade Account Plan screen. Button title to buy account plan via web. %@ will be potential total savings for the users in percent */
-"upgradeAccountPlan.button.buyViaWeb.saveUpTo"="在我們的網站上購買（省下高達%@）";
+"upgradeAccountPlan.button.buyViaWeb.saveUpTo"="在我們的網站上購買（最多可省%@）";
 /* On Upgrade Account Plan screen. Button title to continue to buy account plan in-app when user could buy externally. %@ will be the higher price of the plan */
 "upgradeAccountPlan.button.buyInApp.title"="在應用程式中繼續（%@）";
 /* On Upgrade Account Plan screen. Button footer text to continue to buy account plan in-app when user could buy externally. %@ will be the higher price of the plan */
@@ -4573,17 +4573,17 @@
 /* Hidden files and folders onboarding header title */
 "onboarding.hiddenFilesAndFolders.header.title"="新功能：隱藏檔案和資料夾";
 /* Hidden files and folders onboarding content item one title */
-"onboarding.hiddenFilesAndFolders.content.item.one.title"="隱藏檔案和資料夾";
+"onboarding.hiddenFilesAndFolders.content.item.one.title"="隱藏重要的檔案和資料夾";
 /* Hidden files and folders onboarding content item one message */
-"onboarding.hiddenFilesAndFolders.content.item.one.message"="輕鬆將雲端硬碟中的敏感檔案設成私密，不讓任何人看到。預設情況下，隱藏的檔案不會在您的雲端硬碟、照片和近期活動顯示。";
+"onboarding.hiddenFilesAndFolders.content.item.one.message"="只需一個簡單步驟即可隱藏敏感檔案和資料夾以保護隱私。";
 /* Hidden files and folders onboarding content item two title */
-"onboarding.hiddenFilesAndFolders.content.item.two.title"="輕鬆控制可見性";
+"onboarding.hiddenFilesAndFolders.content.item.two.title"="隱藏";
 /* Hidden files and folders onboarding content item two message */
 "onboarding.hiddenFilesAndFolders.content.item.two.message"="若要顯示隱藏檔案，請在應用程式設定中的「檔案管理」->「使用者介面」下開啟「顯示隱藏項目」設定。";
 /* Hidden files and folders onboarding content item three title */
-"onboarding.hiddenFilesAndFolders.content.item.three.title"="共享檔案保持可見狀態";
+"onboarding.hiddenFilesAndFolders.content.item.three.title"="模糊處理保護隱私";
 /* Hidden files and folders onboarding content item three message */
-"onboarding.hiddenFilesAndFolders.content.item.three.message"="與聯絡人共享的資料及資料夾，或透過公開連結共享的檔案及資料夾，即使設定隱藏，仍然可以存取和被看到。";
+"onboarding.hiddenFilesAndFolders.content.item.three.message"="以模糊縮圖來顯示隱藏的項目，以便您可以在不暴露內容的情況下識別它們。";
 /* Title for note to self chat, used in the messages view but also in lists where note to self is diplayed */
 "chat.messages.noteToSelf.title"="隱私記事";
 /* Title for note to self chat messages view header, at the top the chat room */
@@ -4779,6 +4779,44 @@
 /* Camera Uploads row file upload speed */
 "cameraUploads.progress.row.uploadSpeed"="%@/秒";
 /* Footer for the yearly billing option in the upgrade account plan screen */
-"upgradeAccountPlan.plan.yearly.footer"="Charged Yearly";
+"upgradeAccountPlan.plan.yearly.footer"="每年計費";
 /* Price per month display for yearly billing option in the upgrade account plan screen */
-"upgradeAccountPlan.plan.yearly.pricePerMonth"="Only %@/month";
+"upgradeAccountPlan.plan.yearly.pricePerMonth"="只要%@/月";
+/* Camera Uploads Banner Paused Low Battery Subtitle */
+"cameraUploads.progress.banner.paused.lowBattery.subtitle"="相機上傳已暫停，電池電量過低。請為電池充電以恢復相機上傳。";
+/* Camera Uploads Banner Paused High Thermal State Subtitle */
+"cameraUploads.progress.banner.paused.highThermalState.subtitle"="相機上傳已暫停，裝置溫度過高。一旦您的裝置冷卻，上傳將恢復。";
+/* Camera Uploads Banner Paused Network Issue Subtitle */
+"cameraUploads.progress.banner.paused.networkIssue.subtitle"="相機上傳已暫停，無網路連線";
+/* Camera Uploads Banner Paused network no wifi cellular upload not allowed allow mobile data */
+"cameraUploads.progress.banner.paused.allowMobileData.button.title"="使用行動數據網路";
+/* Camera Uploads Banner Storage Full Title */
+"cameraUploads.progress.banner.storageFull.title"="您的儲存空間已滿";
+/* Camera Uploads Banner Storage Full Subtitle */
+"cameraUploads.progress.banner.storageFull.subtitle"="要繼續上傳，請立即升級以獲得更多儲存空間";
+/* Camera Uploads Banner Storage Full Button Title */
+"cameraUploads.progress.banner.storageFull.button.title"="立即升級";
+/* Camera Uploads Banner Limited Access Subtitle */
+"cameraUploads.progress.banner.limitedAccess.subtitle"="為了確保我們不會遺失您的所有回憶，MEGA需要您相簿的完全存取權限";
+/* Camera Uploads Banner Limited Access Button Title */
+"cameraUploads.progress.banner.limitedAccess.button.title"="更新權限";
+/* Camera Uploads Progress Uploads Complete Title */
+"cameraUploads.progress.uploadsComplete.title"="上傳完畢";
+/* Camera Uploads Progress Uploads Complete Subtitle */
+"cameraUploads.progress.uploadsComplete.subtitle"="您拍攝的新照片和影片將顯示在此";
+/* Camera Uploads Empty In Progress Row title */
+"cameraUploads.progress.row.emptyInProgress.title"="傳輸進度將顯示在此";
+/* Camera Uploads Empty In Queue Row title */
+"cameraUploads.progress.row.emptyInQueue.title"="佇列中的傳輸將顯示在此";
+/* Sorting option label for sorting items based on the share creation date (can be applied in ascending or descending order) */
+"sorting.shareCreated.title"="共享已建立";
+/* Sorting option label for sorting items based on the link creation date (can be applied in ascending or descending order) */
+"sorting.linkCreated.title"="連結已建立";
+/* Camera Uploads Checking For Uploads */
+"cameraUploads.checkingForUploads"="正在檢查上傳⋯";
+/* Camera Uploads Complete */
+"cameraUploads.complete"="相機上傳完成";
+/* Camera Uploads Up To Date */
+"cameraUploads.upToDate"="相機上傳已更新";
+/* Hidden files and folders onboarding content control visibility message */
+"onboarding.hiddenFilesAndFolders.content.item.controlVisibility.message"="只有您可以顯示隱藏的檔案，既可以個別顯示，也可以透過[A]設定[/A]暫時顯示隱藏的項目";

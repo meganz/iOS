@@ -633,13 +633,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>"[A]" i %d więcej</string>
+        <string>&quot;[A]&quot; i %d więcej</string>
         <key>few</key>
-        <string>"[A]" i %d więcej</string>
+        <string>&quot;[A]&quot; i %d więcej</string>
         <key>many</key>
-        <string>"[A]" i %d więcej</string>
+        <string>&quot;[A]&quot; i %d więcej</string>
         <key>other</key>
-        <string>"[A]" i %d więcej</string>
+        <string>&quot;[A]&quot; i %d więcej</string>
       </dict>
     </dict>
     <key>media.photo.browser.indexOfTotalFiles</key>
@@ -1293,13 +1293,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Usunięto %d element z "[A]"</string>
+        <string>Usunięto %d element z &quot;[A]&quot;</string>
         <key>few</key>
-        <string>Usunięto %d elementów z "[A]"</string>
+        <string>Usunięto %d elementów z &quot;[A]&quot;</string>
         <key>many</key>
-        <string>Usunięto %d elementów z "[A]"</string>
+        <string>Usunięto %d elementów z &quot;[A]&quot;</string>
         <key>other</key>
-        <string>Usunięto %d elementów z "[A]"</string>
+        <string>Usunięto %d elementów z &quot;[A]&quot;</string>
       </dict>
     </dict>
     <key>cameraUploads.albums.removeShareLinkAlertTitle</key>
@@ -3113,13 +3113,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Wysyłanie "[A]" do czatu</string>
+        <string>Wysyłanie &quot;[A]&quot; do czatu</string>
         <key>few</key>
-        <string>Wysyłanie "[A]" do wszystkich czatów</string>
+        <string>Wysyłanie &quot;[A]&quot; do wszystkich czatów</string>
         <key>many</key>
-        <string>Wysyłanie "[A]" do wszystkich czatów</string>
+        <string>Wysyłanie &quot;[A]&quot; do wszystkich czatów</string>
         <key>other</key>
-        <string>Wysyłanie "[A]" do wszystkich czatów</string>
+        <string>Wysyłanie &quot;[A]&quot; do wszystkich czatów</string>
       </dict>
     </dict>
     <key>share.message.sendToChat.withMultipleFiles</key>
@@ -3473,13 +3473,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>[UserName] oczekuje na dołączenie do "[MeetingName]".</string>
+        <string>[UserName] oczekuje na dołączenie do &quot;[MeetingName]&quot;.</string>
         <key>few</key>
-        <string>%d uczestników oczekuje na dołączenie do "[MeetingName]".</string>
+        <string>%d uczestników oczekuje na dołączenie do &quot;[MeetingName]&quot;.</string>
         <key>many</key>
-        <string>%d uczestników oczekuje na dołączenie do "[MeetingName]".</string>
+        <string>%d uczestników oczekuje na dołączenie do &quot;[MeetingName]&quot;.</string>
         <key>other</key>
-        <string>%d uczestników oczekuje na dołączenie do "[MeetingName]".</string>
+        <string>%d uczestników oczekuje na dołączenie do &quot;[MeetingName]&quot;.</string>
       </dict>
     </dict>
     <key>chat.call.waitingRoom.alert.message</key>
@@ -4073,13 +4073,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>u</string>
         <key>one</key>
-        <string></string>
+        <string>Wgraj: pozostało %u element</string>
         <key>few</key>
-        <string></string>
+        <string>Wgraj: pozostało %u elementów</string>
         <key>many</key>
-        <string></string>
+        <string>Wgraj: pozostało %u elementów</string>
         <key>other</key>
-        <string></string>
+        <string>Wgraj: pozostało %u elementów</string>
       </dict>
     </dict>
     <key>cameraUploads.progress.paused.items</key>
@@ -4093,13 +4093,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>u</string>
         <key>one</key>
-        <string></string>
+        <string>Wstrzymano: pozostał %u element</string>
         <key>few</key>
-        <string></string>
+        <string>Wstrzymano: pozostało %u elementów</string>
         <key>many</key>
-        <string></string>
+        <string>Wstrzymano: pozostało %u elementów</string>
         <key>other</key>
-        <string></string>
+        <string>Wstrzymano: pozostało %u elementów</string>
       </dict>
     </dict>
   </dict>

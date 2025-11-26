@@ -51,7 +51,7 @@
 /* Hint text to suggest that the user has to write the decryption key */
 "decryptionKey"="Clé de déchiffrement";
 /* Button title to try to decrypt the link */
-"decrypt"="Déchiffrer";
+"decrypt"="Poursuivre";
 /* Alert title shown when you have written a decryption key not valid */
 "decryptionKeyNotValid"="La clé de déchiffrement est invalide";
 /* This dialog message is used on the Password Decrypt dialog. The link is a password protected link so the user needs to enter the password to decrypt the link. */
@@ -59,7 +59,7 @@
 /* This dialog message is used on the Password Decrypt dialog as an instruction for the user. */
 "If you do not have the password, contact the creator of the link."="Si vous ne connaissez pas le mot de passe, contactez le créateur du lien.";
 /* This placeholder text is used on the Password Decrypt dialog as an instruction for the user. */
-"Enter the password"="Saisissez le mot de passe";
+"Enter the password"="Enter the link password";
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOut_alertTitle"="Déconnexion";
 /* Alert message shown when your account has been closed through another client or the web by killing all your sessions */
@@ -4573,17 +4573,17 @@
 /* Hidden files and folders onboarding header title */
 "onboarding.hiddenFilesAndFolders.header.title"="Nouvelle fonction : fichiers et dossiers cachés";
 /* Hidden files and folders onboarding content item one title */
-"onboarding.hiddenFilesAndFolders.content.item.one.title"="Masquer les fichiers et les dossiers";
+"onboarding.hiddenFilesAndFolders.content.item.one.title"="Cacher les fichiers et dossiers importants";
 /* Hidden files and folders onboarding content item one message */
-"onboarding.hiddenFilesAndFolders.content.item.one.message"="Conservez facilement les fichiers sensibles de votre Disque nuagique en toute confidentialité et hors de vue. Par défaut, les fichiers cachés n'apparaissent pas dans la section Disque nuagique, Photos et Récents.";
+"onboarding.hiddenFilesAndFolders.content.item.one.message"="Vous pouvez masquer les fichiers et dossiers sensibles pour préserver votre confidentialité en une seule étape simple.";
 /* Hidden files and folders onboarding content item two title */
-"onboarding.hiddenFilesAndFolders.content.item.two.title"="Contrôler facilement la visibilité";
+"onboarding.hiddenFilesAndFolders.content.item.two.title"="À l’abri des regards";
 /* Hidden files and folders onboarding content item two message */
 "onboarding.hiddenFilesAndFolders.content.item.two.message"="Pour afficher les fichiers cachés, activez le paramètre « Afficher les éléments cachés » sous « Gestion des fichiers » -> « Interface utilisateur » dans les paramètres de votre application.";
 /* Hidden files and folders onboarding content item three title */
-"onboarding.hiddenFilesAndFolders.content.item.three.title"="Les fichiers partagés restent visibles";
+"onboarding.hiddenFilesAndFolders.content.item.three.title"="Floutage pour la confidentialité";
 /* Hidden files and folders onboarding content item three message */
-"onboarding.hiddenFilesAndFolders.content.item.three.message"="Les fichiers et dossiers partagés avec des contacts ou via des liens publics restent accessibles et visibles, même s'ils sont cachés.";
+"onboarding.hiddenFilesAndFolders.content.item.three.message"="Affiche les éléments masqués avec leurs vignettes floues, afin que vous puissiez les identifier sans exposer leur contenu.";
 /* Title for note to self chat, used in the messages view but also in lists where note to self is diplayed */
 "chat.messages.noteToSelf.title"="Note pour moi-même";
 /* Title for note to self chat messages view header, at the top the chat room */
@@ -4779,6 +4779,44 @@
 /* Camera Uploads row file upload speed */
 "cameraUploads.progress.row.uploadSpeed"="%@/s";
 /* Footer for the yearly billing option in the upgrade account plan screen */
-"upgradeAccountPlan.plan.yearly.footer"="Charged Yearly";
+"upgradeAccountPlan.plan.yearly.footer"="Facturation annuelle";
 /* Price per month display for yearly billing option in the upgrade account plan screen */
 "upgradeAccountPlan.plan.yearly.pricePerMonth"="Only %@/month";
+/* Camera Uploads Banner Paused Low Battery Subtitle */
+"cameraUploads.progress.banner.paused.lowBattery.subtitle"="Camera uploads paused, battery level too low. Charge battery to resume camera uploads.";
+/* Camera Uploads Banner Paused High Thermal State Subtitle */
+"cameraUploads.progress.banner.paused.highThermalState.subtitle"="Camera uploads paused, device temperature too high. Uploads will resume once your device cools down.";
+/* Camera Uploads Banner Paused Network Issue Subtitle */
+"cameraUploads.progress.banner.paused.networkIssue.subtitle"="Camera uploads paused, no internet connection";
+/* Camera Uploads Banner Paused network no wifi cellular upload not allowed allow mobile data */
+"cameraUploads.progress.banner.paused.allowMobileData.button.title"="Autoriser l'utilisation des données mobiles";
+/* Camera Uploads Banner Storage Full Title */
+"cameraUploads.progress.banner.storageFull.title"="Votre espace de stockage est saturé";
+/* Camera Uploads Banner Storage Full Subtitle */
+"cameraUploads.progress.banner.storageFull.subtitle"="To keep uploading, upgrade now to get more storage";
+/* Camera Uploads Banner Storage Full Button Title */
+"cameraUploads.progress.banner.storageFull.button.title"="Surclasser le compte maintenant";
+/* Camera Uploads Banner Limited Access Subtitle */
+"cameraUploads.progress.banner.limitedAccess.subtitle"="To ensure we don’t miss all your memories, MEGA needs full access to your photo library";
+/* Camera Uploads Banner Limited Access Button Title */
+"cameraUploads.progress.banner.limitedAccess.button.title"="Update permissions";
+/* Camera Uploads Progress Uploads Complete Title */
+"cameraUploads.progress.uploadsComplete.title"="Tout est bon";
+/* Camera Uploads Progress Uploads Complete Subtitle */
+"cameraUploads.progress.uploadsComplete.subtitle"="New photos and videos will show here after you take them";
+/* Camera Uploads Empty In Progress Row title */
+"cameraUploads.progress.row.emptyInProgress.title"="Transfers in progress will appear here";
+/* Camera Uploads Empty In Queue Row title */
+"cameraUploads.progress.row.emptyInQueue.title"="Transfers in the queue will appear here";
+/* Sorting option label for sorting items based on the share creation date (can be applied in ascending or descending order) */
+"sorting.shareCreated.title"="Partage créé";
+/* Sorting option label for sorting items based on the link creation date (can be applied in ascending or descending order) */
+"sorting.linkCreated.title"="Lien créé";
+/* Camera Uploads Checking For Uploads */
+"cameraUploads.checkingForUploads"="Vérification pour des téléversements…";
+/* Camera Uploads Complete */
+"cameraUploads.complete"="Les téléversements de l’appareil photo sont terminés";
+/* Camera Uploads Up To Date */
+"cameraUploads.upToDate"="Camera uploads up to date";
+/* Hidden files and folders onboarding content control visibility message */
+"onboarding.hiddenFilesAndFolders.content.item.controlVisibility.message"="Vous seul pouvez afficher les fichiers cachés, soit individuellement, soit en affichant temporairement les éléments cachés depuis les [A]paramètres[/A].";

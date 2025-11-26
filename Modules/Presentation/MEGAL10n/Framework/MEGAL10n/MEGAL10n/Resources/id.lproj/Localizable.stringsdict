@@ -2854,8 +2854,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>u</string>
+        <key>one</key>
+        <string>Uploading: %u item left</string>
         <key>other</key>
-        <string></string>
+        <string>Uploading: %u items left</string>
       </dict>
     </dict>
     <key>cameraUploads.progress.paused.items</key>
@@ -2868,8 +2870,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>u</string>
+        <key>one</key>
+        <string>Paused: %u item left</string>
         <key>other</key>
-        <string></string>
+        <string>Paused: %u items left</string>
       </dict>
     </dict>
   </dict>

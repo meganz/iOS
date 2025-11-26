@@ -51,7 +51,7 @@
 /* Hint text to suggest that the user has to write the decryption key */
 "decryptionKey"="Cheie de decriptare";
 /* Button title to try to decrypt the link */
-"decrypt"="Decriptează";
+"decrypt"="Continuați";
 /* Alert title shown when you have written a decryption key not valid */
 "decryptionKeyNotValid"="Cheie de decriptare nevalidă";
 /* This dialog message is used on the Password Decrypt dialog. The link is a password protected link so the user needs to enter the password to decrypt the link. */
@@ -59,7 +59,7 @@
 /* This dialog message is used on the Password Decrypt dialog as an instruction for the user. */
 "If you do not have the password, contact the creator of the link."="Dacă nu ai parola, contactează creatorul linkului.";
 /* This placeholder text is used on the Password Decrypt dialog as an instruction for the user. */
-"Enter the password"="Introdu parola";
+"Enter the password"="Introduceți parola linkului";
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOut_alertTitle"="Deconectat";
 /* Alert message shown when your account has been closed through another client or the web by killing all your sessions */
@@ -4573,17 +4573,17 @@
 /* Hidden files and folders onboarding header title */
 "onboarding.hiddenFilesAndFolders.header.title"="Noua funcție: Fișiere și foldere ascunse";
 /* Hidden files and folders onboarding content item one title */
-"onboarding.hiddenFilesAndFolders.content.item.one.title"="Ascundeți fișierele și folderele";
+"onboarding.hiddenFilesAndFolders.content.item.one.title"="Ascundeți fișierele și folderele importante";
 /* Hidden files and folders onboarding content item one message */
-"onboarding.hiddenFilesAndFolders.content.item.one.message"="Păstrați cu ușurință fișierele sensibile din Unitatea cloud private și departe de vedere. În mod implicit, fișierele ascunse nu apar în Unitatea cloud, în secțiunea Fotografii și Recente.";
+"onboarding.hiddenFilesAndFolders.content.item.one.message"="Puteți ascunde fișierele și folderele sensibile pentru confidențialitate într-un singur pas ușor";
 /* Hidden files and folders onboarding content item two title */
-"onboarding.hiddenFilesAndFolders.content.item.two.title"="Controlați vizibilitatea cu ușurință";
+"onboarding.hiddenFilesAndFolders.content.item.two.title"="Invizibile";
 /* Hidden files and folders onboarding content item two message */
 "onboarding.hiddenFilesAndFolders.content.item.two.message"="Pentru a afișa fișiere ascunse, activați setarea „Afișați elemente ascunse” sub „Gestionare fișiere” -> „Interfață utilizator” din setările aplicației.";
 /* Hidden files and folders onboarding content item three title */
-"onboarding.hiddenFilesAndFolders.content.item.three.title"="Fișierele partajate rămân vizibile";
+"onboarding.hiddenFilesAndFolders.content.item.three.title"="Blur pentru confidențialitate";
 /* Hidden files and folders onboarding content item three message */
-"onboarding.hiddenFilesAndFolders.content.item.three.message"="Fișierele și folderele partajate cu contacte sau cu link-uri publice sunt în continuare accesibile și vizibile, chiar dacă sunt ascunse.";
+"onboarding.hiddenFilesAndFolders.content.item.three.message"="Afișați elemente ascunse cu miniaturile lor estompat, astfel încât să le puteți identifica fără a le expune conținutul";
 /* Title for note to self chat, used in the messages view but also in lists where note to self is diplayed */
 "chat.messages.noteToSelf.title"="Notă pentru sine";
 /* Title for note to self chat messages view header, at the top the chat room */
@@ -4779,6 +4779,44 @@
 /* Camera Uploads row file upload speed */
 "cameraUploads.progress.row.uploadSpeed"="%@ / s";
 /* Footer for the yearly billing option in the upgrade account plan screen */
-"upgradeAccountPlan.plan.yearly.footer"="Charged Yearly";
+"upgradeAccountPlan.plan.yearly.footer"="Plată anuală";
 /* Price per month display for yearly billing option in the upgrade account plan screen */
-"upgradeAccountPlan.plan.yearly.pricePerMonth"="Only %@/month";
+"upgradeAccountPlan.plan.yearly.pricePerMonth"="Numai %@/lună";
+/* Camera Uploads Banner Paused Low Battery Subtitle */
+"cameraUploads.progress.banner.paused.lowBattery.subtitle"="Încărcările camerei au fost întrerupte, nivelul bateriei prea scăzut. Încărcați bateria pentru a relua încărcările camerei.";
+/* Camera Uploads Banner Paused High Thermal State Subtitle */
+"cameraUploads.progress.banner.paused.highThermalState.subtitle"="Încărcările camerei au fost întrerupte, temperatura dispozitivului prea mare. Încărcările vor fi reluate odată ce dispozitivul se răcește.";
+/* Camera Uploads Banner Paused Network Issue Subtitle */
+"cameraUploads.progress.banner.paused.networkIssue.subtitle"="Încărcările camerei au fost întrerupte, fără conexiune la internet";
+/* Camera Uploads Banner Paused network no wifi cellular upload not allowed allow mobile data */
+"cameraUploads.progress.banner.paused.allowMobileData.button.title"="Permiteți datele mobile";
+/* Camera Uploads Banner Storage Full Title */
+"cameraUploads.progress.banner.storageFull.title"="Spațiul dvs. de stocare este plin";
+/* Camera Uploads Banner Storage Full Subtitle */
+"cameraUploads.progress.banner.storageFull.subtitle"="Pentru a continua încărcarea, actualizează acum pentru a obține mai mult spațiu de stocare";
+/* Camera Uploads Banner Storage Full Button Title */
+"cameraUploads.progress.banner.storageFull.button.title"="Upgradați acum";
+/* Camera Uploads Banner Limited Access Subtitle */
+"cameraUploads.progress.banner.limitedAccess.subtitle"="Pentru a ne asigura că nu pierdem toate amintirile dvs., MEGA are nevoie de acces complet la biblioteca dvs. foto";
+/* Camera Uploads Banner Limited Access Button Title */
+"cameraUploads.progress.banner.limitedAccess.button.title"="Actualizați permisiunile";
+/* Camera Uploads Progress Uploads Complete Title */
+"cameraUploads.progress.uploadsComplete.title"="Toate la zi";
+/* Camera Uploads Progress Uploads Complete Subtitle */
+"cameraUploads.progress.uploadsComplete.subtitle"="Fotografii și videoclipuri noi vor apărea aici după ce le faci";
+/* Camera Uploads Empty In Progress Row title */
+"cameraUploads.progress.row.emptyInProgress.title"="Transferurile în curs vor apărea aici";
+/* Camera Uploads Empty In Queue Row title */
+"cameraUploads.progress.row.emptyInQueue.title"="Transferurile din coadă vor apărea aici";
+/* Sorting option label for sorting items based on the share creation date (can be applied in ascending or descending order) */
+"sorting.shareCreated.title"="Data creării partajării";
+/* Sorting option label for sorting items based on the link creation date (can be applied in ascending or descending order) */
+"sorting.linkCreated.title"="Data creării linkului";
+/* Camera Uploads Checking For Uploads */
+"cameraUploads.checkingForUploads"="Se verifică încărcările…";
+/* Camera Uploads Complete */
+"cameraUploads.complete"="Încărcări cameră încheiate";
+/* Camera Uploads Up To Date */
+"cameraUploads.upToDate"="Încărcări cameră sunt actualizate";
+/* Hidden files and folders onboarding content control visibility message */
+"onboarding.hiddenFilesAndFolders.content.item.controlVisibility.message"="Numai tu poți dezvălui fișiere ascunse, fie individual, fie activând temporar opțiunea de afișare a fișierelor și folderelor ascunse din [A]Setări[/A].";

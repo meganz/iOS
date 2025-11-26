@@ -51,7 +51,7 @@
 /* Hint text to suggest that the user has to write the decryption key */
 "decryptionKey"="Schlüssel";
 /* Button title to try to decrypt the link */
-"decrypt"="Entschlüsseln";
+"decrypt"="Fortfahren";
 /* Alert title shown when you have written a decryption key not valid */
 "decryptionKeyNotValid"="Ungültiger Schlüssel";
 /* This dialog message is used on the Password Decrypt dialog. The link is a password protected link so the user needs to enter the password to decrypt the link. */
@@ -59,7 +59,7 @@
 /* This dialog message is used on the Password Decrypt dialog as an instruction for the user. */
 "If you do not have the password, contact the creator of the link."="Bitte kontaktieren Sie den Link-Ersteller, sollten Sie das Passwort nicht kennen.";
 /* This placeholder text is used on the Password Decrypt dialog as an instruction for the user. */
-"Enter the password"="Passwort eingeben";
+"Enter the password"="Linkpasswort eingeben";
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOut_alertTitle"="Ausgeloggt";
 /* Alert message shown when your account has been closed through another client or the web by killing all your sessions */
@@ -4573,17 +4573,17 @@
 /* Hidden files and folders onboarding header title */
 "onboarding.hiddenFilesAndFolders.header.title"="Neue Funktion: Verborgene Dateien und Ordner";
 /* Hidden files and folders onboarding content item one title */
-"onboarding.hiddenFilesAndFolders.content.item.one.title"="Verbergen Sie Dateien und Ordner";
+"onboarding.hiddenFilesAndFolders.content.item.one.title"="Verbergen Sie wichtige Dateien und Ordner";
 /* Hidden files and folders onboarding content item one message */
-"onboarding.hiddenFilesAndFolders.content.item.one.message"="Schützen Sie vertrauliche Dateien in Ihrem Cloud Drive ganz einfach vor fremden Augen. Standardmäßig werden verborgene Dateien nicht in den Bereichen Cloud Drive, Fotos und Neue/Geänderte Dateien angezeigt.";
+"onboarding.hiddenFilesAndFolders.content.item.one.message"="Zum Schutz Ihrer Privatsphäre können Sie sensible Dateien und Ordner mit einem einfachen Schritt verbergen.";
 /* Hidden files and folders onboarding content item two title */
-"onboarding.hiddenFilesAndFolders.content.item.two.title"="Einfache Steuerung der Sichtbarkeit";
+"onboarding.hiddenFilesAndFolders.content.item.two.title"="Unsichtbar";
 /* Hidden files and folders onboarding content item two message */
 "onboarding.hiddenFilesAndFolders.content.item.two.message"="Um verborgene Dateien anzuzeigen, aktivieren Sie in Ihren App-Einstellungen unter „Dateiverwaltung –> Bedienoberfläche“ den Eintrag „Verborgene Elemente anzeigen“.";
 /* Hidden files and folders onboarding content item three title */
-"onboarding.hiddenFilesAndFolders.content.item.three.title"="Freigegebene Dateien bleiben sichtbar";
+"onboarding.hiddenFilesAndFolders.content.item.three.title"="Datenschutz durch Weichzeichnung";
 /* Hidden files and folders onboarding content item three message */
-"onboarding.hiddenFilesAndFolders.content.item.three.message"="Dateien und Ordner, die für Kontakte oder über öffentliche Links freigegeben wurden, sind auch dann zugänglich und sichtbar, wenn sie verborgen sind.";
+"onboarding.hiddenFilesAndFolders.content.item.three.message"="Die Miniaturbilder von verborgenen Elementen werden unscharf dargestellt, sodass Sie sie identifizieren können, ohne ihren Inhalt preiszugeben.";
 /* Title for note to self chat, used in the messages view but also in lists where note to self is diplayed */
 "chat.messages.noteToSelf.title"="Notiz an mich";
 /* Title for note to self chat messages view header, at the top the chat room */
@@ -4639,7 +4639,7 @@
 /* Displays the amount of data transfer included in the subscription plan */
 "subscriptionPurchase.plan.transfer"="%@ Transfervolumen";
 /* Displays the total amount when billed yearly */
-"subscriptionPurchase.plan.billedYearly"="%@ charged yearly";
+"subscriptionPurchase.plan.billedYearly"="%@ jährliche Abbuchung";
 /* Button title to cancel the subscription purchase. */
 "subscriptionPurchase.maybeLater"="Vielleicht später";
 /* Title for the features of pro plan in the subscription purchase screen. */
@@ -4779,6 +4779,44 @@
 /* Camera Uploads row file upload speed */
 "cameraUploads.progress.row.uploadSpeed"="%@/s";
 /* Footer for the yearly billing option in the upgrade account plan screen */
-"upgradeAccountPlan.plan.yearly.footer"="Charged Yearly";
+"upgradeAccountPlan.plan.yearly.footer"="Jahresabo";
 /* Price per month display for yearly billing option in the upgrade account plan screen */
-"upgradeAccountPlan.plan.yearly.pricePerMonth"="Only %@/month";
+"upgradeAccountPlan.plan.yearly.pricePerMonth"="Nur %@/Monat";
+/* Camera Uploads Banner Paused Low Battery Subtitle */
+"cameraUploads.progress.banner.paused.lowBattery.subtitle"="Kamera-Uploads pausiert – Akkustand zu niedrig. Laden Sie den Akku auf, um die Kamera-Uploads fortzusetzen.";
+/* Camera Uploads Banner Paused High Thermal State Subtitle */
+"cameraUploads.progress.banner.paused.highThermalState.subtitle"="Kamera-Uploads pausiert – Gerätetemperatur zu hoch. Die Uploads werden fortgesetzt, wenn sich Ihr Gerät abgekühlt hat.";
+/* Camera Uploads Banner Paused Network Issue Subtitle */
+"cameraUploads.progress.banner.paused.networkIssue.subtitle"="Kamera-Uploads pausiert – keine Internetverbindung";
+/* Camera Uploads Banner Paused network no wifi cellular upload not allowed allow mobile data */
+"cameraUploads.progress.banner.paused.allowMobileData.button.title"="Mobile Daten verwenden";
+/* Camera Uploads Banner Storage Full Title */
+"cameraUploads.progress.banner.storageFull.title"="Ihr Speicher ist voll";
+/* Camera Uploads Banner Storage Full Subtitle */
+"cameraUploads.progress.banner.storageFull.subtitle"="Um weiter Daten hochladen zu können, upgraden Sie Ihren Account jetzt, um mehr Speicherplatz zu erhalten";
+/* Camera Uploads Banner Storage Full Button Title */
+"cameraUploads.progress.banner.storageFull.button.title"="Jetzt upgraden";
+/* Camera Uploads Banner Limited Access Subtitle */
+"cameraUploads.progress.banner.limitedAccess.subtitle"="Damit wir alle Ihre Erinnerungen sichern können, benötigt MEGA vollständigen Zugriff auf Ihre Fotobibliothek";
+/* Camera Uploads Banner Limited Access Button Title */
+"cameraUploads.progress.banner.limitedAccess.button.title"="Berechtigungen aktualisieren";
+/* Camera Uploads Progress Uploads Complete Title */
+"cameraUploads.progress.uploadsComplete.title"="Alles auf dem neuesten Stand";
+/* Camera Uploads Progress Uploads Complete Subtitle */
+"cameraUploads.progress.uploadsComplete.subtitle"="Neu aufgenommene Fotos und Videos werden hier angezeigt";
+/* Camera Uploads Empty In Progress Row title */
+"cameraUploads.progress.row.emptyInProgress.title"="Laufende Transfers werden hier angezeigt";
+/* Camera Uploads Empty In Queue Row title */
+"cameraUploads.progress.row.emptyInQueue.title"="Transfers in der Warteschlange werden hier angezeigt";
+/* Sorting option label for sorting items based on the share creation date (can be applied in ascending or descending order) */
+"sorting.shareCreated.title"="Erstellt";
+/* Sorting option label for sorting items based on the link creation date (can be applied in ascending or descending order) */
+"sorting.linkCreated.title"="Erstellt";
+/* Camera Uploads Checking For Uploads */
+"cameraUploads.checkingForUploads"="Prüfe auf Uploads…";
+/* Camera Uploads Complete */
+"cameraUploads.complete"="Kamera-Uploads beendet";
+/* Camera Uploads Up To Date */
+"cameraUploads.upToDate"="Kamera-Uploads auf dem neuesten Stand";
+/* Hidden files and folders onboarding content control visibility message */
+"onboarding.hiddenFilesAndFolders.content.item.controlVisibility.message"="Nur Sie haben die Möglichkeit, verborgene Dateien sichtbar zu machen, entweder einzeln oder indem Sie über die [A]Einstellungen[/A] verborgene Elemente vorübergehend einblenden.";

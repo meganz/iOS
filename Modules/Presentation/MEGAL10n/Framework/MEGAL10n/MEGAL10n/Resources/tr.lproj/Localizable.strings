@@ -51,7 +51,7 @@
 /* Hint text to suggest that the user has to write the decryption key */
 "decryptionKey"="Şifre çözme anahtarı";
 /* Button title to try to decrypt the link */
-"decrypt"="Şifreyi çöz";
+"decrypt"="Devam et";
 /* Alert title shown when you have written a decryption key not valid */
 "decryptionKeyNotValid"="Geçersiz şifre çözme anahtarı";
 /* This dialog message is used on the Password Decrypt dialog. The link is a password protected link so the user needs to enter the password to decrypt the link. */
@@ -59,7 +59,7 @@
 /* This dialog message is used on the Password Decrypt dialog as an instruction for the user. */
 "If you do not have the password, contact the creator of the link."="Şifreniz yoksa bağlantıyı oluşturan kişiyle iletişime geçin.";
 /* This placeholder text is used on the Password Decrypt dialog as an instruction for the user. */
-"Enter the password"="Şifreyi girin";
+"Enter the password"="Bağlantı şifresini girin";
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOut_alertTitle"="Çıkış yapıldı";
 /* Alert message shown when your account has been closed through another client or the web by killing all your sessions */
@@ -4573,17 +4573,17 @@
 /* Hidden files and folders onboarding header title */
 "onboarding.hiddenFilesAndFolders.header.title"="Yeni özellik: Gizli dosyalar ve klasörler";
 /* Hidden files and folders onboarding content item one title */
-"onboarding.hiddenFilesAndFolders.content.item.one.title"="Dosyaları ve klasörleri gizle";
+"onboarding.hiddenFilesAndFolders.content.item.one.title"="Önemli dosya ve klasörleri gizle";
 /* Hidden files and folders onboarding content item one message */
-"onboarding.hiddenFilesAndFolders.content.item.one.message"="Bulut depolamanızdaki hassas dosyaları kolayca gizli ve gözden uzak tutun. Varsayılan olarak, gizli dosyalar Bulut depolamanızda, Fotoğraflar ve Son etkinlikler bölümünde görünmez.";
+"onboarding.hiddenFilesAndFolders.content.item.one.message"="Tek bir kolay adımda gizlilik için hassas dosyaları ve klasörleri gizleyebilirsiniz";
 /* Hidden files and folders onboarding content item two title */
-"onboarding.hiddenFilesAndFolders.content.item.two.title"="Görünürlüğü kolayca kontrol edin";
+"onboarding.hiddenFilesAndFolders.content.item.two.title"="Gözden uzak";
 /* Hidden files and folders onboarding content item two message */
 "onboarding.hiddenFilesAndFolders.content.item.two.message"="Gizli dosyaları göstermek için uygulama ayarlarınızda \"Dosya Yönetimi\" -> \"Kullanıcı arayüzü\" altındaki \"Gizli öğeleri göster\" ayarını açın.";
 /* Hidden files and folders onboarding content item three title */
-"onboarding.hiddenFilesAndFolders.content.item.three.title"="Paylaşılan dosyalar görünür kalır";
+"onboarding.hiddenFilesAndFolders.content.item.three.title"="Gizlilik için bulanıklaştırma";
 /* Hidden files and folders onboarding content item three message */
-"onboarding.hiddenFilesAndFolders.content.item.three.message"="Kişilerle veya herkese açık bağlantılarla paylaşılan dosya ve klasörler gizli olsalar bile erişilebilir ve görünür durumdadır.";
+"onboarding.hiddenFilesAndFolders.content.item.three.message"="Gizli öğeleri, içeriklerini açığa çıkarmadan tanımlayabilmeniz için küçük resimleri bulanıklaştırılmış şekilde gösterin";
 /* Title for note to self chat, used in the messages view but also in lists where note to self is diplayed */
 "chat.messages.noteToSelf.title"="Kendime not";
 /* Title for note to self chat messages view header, at the top the chat room */
@@ -4779,6 +4779,44 @@
 /* Camera Uploads row file upload speed */
 "cameraUploads.progress.row.uploadSpeed"="%@/s";
 /* Footer for the yearly billing option in the upgrade account plan screen */
-"upgradeAccountPlan.plan.yearly.footer"="Charged Yearly";
+"upgradeAccountPlan.plan.yearly.footer"="Yıllık faturalandırılır";
 /* Price per month display for yearly billing option in the upgrade account plan screen */
-"upgradeAccountPlan.plan.yearly.pricePerMonth"="Only %@/month";
+"upgradeAccountPlan.plan.yearly.pricePerMonth"="Ayda sadece %@";
+/* Camera Uploads Banner Paused Low Battery Subtitle */
+"cameraUploads.progress.banner.paused.lowBattery.subtitle"="Kamera yüklemeleri duraklatıldı, şarj seviyesi çok düşük. Kamera yüklemelerine devam etmek için cihazınızı şarj edin.";
+/* Camera Uploads Banner Paused High Thermal State Subtitle */
+"cameraUploads.progress.banner.paused.highThermalState.subtitle"="Kamera yüklemeleri duraklatıldı, cihaz sıcaklığı çok yüksek. Cihazınız soğuduktan sonra yüklemelere devam edilecektir.";
+/* Camera Uploads Banner Paused Network Issue Subtitle */
+"cameraUploads.progress.banner.paused.networkIssue.subtitle"="Kamera yüklemeleri duraklatıldı, internet bağlantısı yok";
+/* Camera Uploads Banner Paused network no wifi cellular upload not allowed allow mobile data */
+"cameraUploads.progress.banner.paused.allowMobileData.button.title"="Mobil veriye izin ver";
+/* Camera Uploads Banner Storage Full Title */
+"cameraUploads.progress.banner.storageFull.title"="Depolama alanınız dolu";
+/* Camera Uploads Banner Storage Full Subtitle */
+"cameraUploads.progress.banner.storageFull.subtitle"="Yüklemeye devam etmek için şimdi yükseltme yapın ve daha fazla depolama alanı edinin";
+/* Camera Uploads Banner Storage Full Button Title */
+"cameraUploads.progress.banner.storageFull.button.title"="Hemen yükselt";
+/* Camera Uploads Banner Limited Access Subtitle */
+"cameraUploads.progress.banner.limitedAccess.subtitle"="Tüm anılarınızı yüklediğimizden emin olmak için, MEGA’nın fotoğraf arşivinize tam erişime ihtiyacı var";
+/* Camera Uploads Banner Limited Access Button Title */
+"cameraUploads.progress.banner.limitedAccess.button.title"="İzinleri güncelle";
+/* Camera Uploads Progress Uploads Complete Title */
+"cameraUploads.progress.uploadsComplete.title"="Tümü tamamlandı";
+/* Camera Uploads Progress Uploads Complete Subtitle */
+"cameraUploads.progress.uploadsComplete.subtitle"="Yeni fotoğraf ve videolar, çektikten sonra burada görünecektir";
+/* Camera Uploads Empty In Progress Row title */
+"cameraUploads.progress.row.emptyInProgress.title"="Devam eden aktarımlar burada görünecektir";
+/* Camera Uploads Empty In Queue Row title */
+"cameraUploads.progress.row.emptyInQueue.title"="Sıradaki aktarımlar burada görünecektir";
+/* Sorting option label for sorting items based on the share creation date (can be applied in ascending or descending order) */
+"sorting.shareCreated.title"="Paylaşım oluşturuldu";
+/* Sorting option label for sorting items based on the link creation date (can be applied in ascending or descending order) */
+"sorting.linkCreated.title"="Bağlantı oluşturuldu";
+/* Camera Uploads Checking For Uploads */
+"cameraUploads.checkingForUploads"="Yüklemeler kontrol ediliyor…";
+/* Camera Uploads Complete */
+"cameraUploads.complete"="Kamera yüklemeleri tamamlandı";
+/* Camera Uploads Up To Date */
+"cameraUploads.upToDate"="Kamera yüklemeleri güncel";
+/* Hidden files and folders onboarding content control visibility message */
+"onboarding.hiddenFilesAndFolders.content.item.controlVisibility.message"="Gizli dosyaları yalnızca siz; ister tek tek, ister [A]Ayarlar[/A]’dan gizli öğeleri geçici olarak göstererek ortaya çıkarabilirsiniz.";

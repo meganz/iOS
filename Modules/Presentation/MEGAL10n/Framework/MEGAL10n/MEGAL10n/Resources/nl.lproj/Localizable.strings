@@ -51,7 +51,7 @@
 /* Hint text to suggest that the user has to write the decryption key */
 "decryptionKey"="Decoderingssleutel";
 /* Button title to try to decrypt the link */
-"decrypt"="Decoderen";
+"decrypt"="Doorgaan";
 /* Alert title shown when you have written a decryption key not valid */
 "decryptionKeyNotValid"="Ongeldige decoderingssleutel";
 /* This dialog message is used on the Password Decrypt dialog. The link is a password protected link so the user needs to enter the password to decrypt the link. */
@@ -59,7 +59,7 @@
 /* This dialog message is used on the Password Decrypt dialog as an instruction for the user. */
 "If you do not have the password, contact the creator of the link."="Als u het wachtwoord niet heeft, neem dan contact op met de maker van de link.";
 /* This placeholder text is used on the Password Decrypt dialog as an instruction for the user. */
-"Enter the password"="Voer het wachtwoord in";
+"Enter the password"="Het wachtwoord voor de link invoeren";
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOut_alertTitle"="Afgemeld";
 /* Alert message shown when your account has been closed through another client or the web by killing all your sessions */
@@ -4573,17 +4573,17 @@
 /* Hidden files and folders onboarding header title */
 "onboarding.hiddenFilesAndFolders.header.title"="Nieuw kenmerk: Verborgen bestanden en mappen";
 /* Hidden files and folders onboarding content item one title */
-"onboarding.hiddenFilesAndFolders.content.item.one.title"="Verberg bestanden en mappen";
+"onboarding.hiddenFilesAndFolders.content.item.one.title"="Belangrijke bestanden en mappen verbergen";
 /* Hidden files and folders onboarding content item one message */
-"onboarding.hiddenFilesAndFolders.content.item.one.message"="Gevoelige bestanden op uw Cloud-schijf eenvoudig privé en uit het zicht houden. Verborgen bestanden worden standaard niet weergegeven in de sectie Cloudschijf, Foto's en Recente bestanden.";
+"onboarding.hiddenFilesAndFolders.content.item.one.message"="U kunt gevoelige bestanden en mappen verbergen voor privacy in één eenvoudige stap.";
 /* Hidden files and folders onboarding content item two title */
-"onboarding.hiddenFilesAndFolders.content.item.two.title"="Controleer de zichtbaarheid eenvoudig";
+"onboarding.hiddenFilesAndFolders.content.item.two.title"="Uit het zicht";
 /* Hidden files and folders onboarding content item two message */
 "onboarding.hiddenFilesAndFolders.content.item.two.message"="Om verborgen bestanden weer te geven, zet u de instelling “Verborgen items weergeven” aan onder “Bestandsbeheer” -> „\" Gebruikersinterface \"” in uw applicatie-instellingen.”";
 /* Hidden files and folders onboarding content item three title */
-"onboarding.hiddenFilesAndFolders.content.item.three.title"="Gedeelde bestanden blijven zichtbaar";
+"onboarding.hiddenFilesAndFolders.content.item.three.title"="Vervaging voor privacy";
 /* Hidden files and folders onboarding content item three message */
-"onboarding.hiddenFilesAndFolders.content.item.three.message"="Bestanden en mappen die worden gedeeld met contactpersonen of met openbare links zijn nog steeds toegankelijk en zichtbaar, zelfs als ze verborgen zijn.";
+"onboarding.hiddenFilesAndFolders.content.item.three.message"="Verborgen items met wazige miniaturen weergeven, zodat u ze kunt identificeren zonder dat de inhoud zichtbaar wordt.";
 /* Title for note to self chat, used in the messages view but also in lists where note to self is diplayed */
 "chat.messages.noteToSelf.title"="Hou er rekening mee dat ik mezelf";
 /* Title for note to self chat messages view header, at the top the chat room */
@@ -4779,6 +4779,44 @@
 /* Camera Uploads row file upload speed */
 "cameraUploads.progress.row.uploadSpeed"="%@/s";
 /* Footer for the yearly billing option in the upgrade account plan screen */
-"upgradeAccountPlan.plan.yearly.footer"="Charged Yearly";
+"upgradeAccountPlan.plan.yearly.footer"="Jaarlijks gefactureerd";
 /* Price per month display for yearly billing option in the upgrade account plan screen */
-"upgradeAccountPlan.plan.yearly.pricePerMonth"="Only %@/month";
+"upgradeAccountPlan.plan.yearly.pricePerMonth"="Alleen %@/maand";
+/* Camera Uploads Banner Paused Low Battery Subtitle */
+"cameraUploads.progress.banner.paused.lowBattery.subtitle"="Het uploaden van de camera is gepauzeerd, het batterijniveau is te laag. Laad de batterij op om het uploaden van de camera te hervatten.";
+/* Camera Uploads Banner Paused High Thermal State Subtitle */
+"cameraUploads.progress.banner.paused.highThermalState.subtitle"="Het uploaden van de camera is gepauzeerd, de temperatuur van het apparaat is te hoog. Het uploaden wordt hervat zodra uw apparaat is afgekoeld.";
+/* Camera Uploads Banner Paused Network Issue Subtitle */
+"cameraUploads.progress.banner.paused.networkIssue.subtitle"="Camera-uploads zijn gepauzeerd, geen internetverbinding";
+/* Camera Uploads Banner Paused network no wifi cellular upload not allowed allow mobile data */
+"cameraUploads.progress.banner.paused.allowMobileData.button.title"="Mobiele gegevens toestaan";
+/* Camera Uploads Banner Storage Full Title */
+"cameraUploads.progress.banner.storageFull.title"="Uw opslag is vol";
+/* Camera Uploads Banner Storage Full Subtitle */
+"cameraUploads.progress.banner.storageFull.subtitle"="Als u wilt blijven uploaden, moet u nu upgraden om meer opslagruimte te krijgen";
+/* Camera Uploads Banner Storage Full Button Title */
+"cameraUploads.progress.banner.storageFull.button.title"="Nu upgraden";
+/* Camera Uploads Banner Limited Access Subtitle */
+"cameraUploads.progress.banner.limitedAccess.subtitle"="Om ervoor te zorgen dat we niet al uw herinneringen missen, heeft MEGA volledige toegang tot uw fotobibliotheek nodig";
+/* Camera Uploads Banner Limited Access Button Title */
+"cameraUploads.progress.banner.limitedAccess.button.title"="Machtigingen bijwerken";
+/* Camera Uploads Progress Uploads Complete Title */
+"cameraUploads.progress.uploadsComplete.title"="Allemaal bijgewerkt";
+/* Camera Uploads Progress Uploads Complete Subtitle */
+"cameraUploads.progress.uploadsComplete.subtitle"="Nieuwe foto's en video's worden hier weergegeven nadat u ze heeft gemaakt";
+/* Camera Uploads Empty In Progress Row title */
+"cameraUploads.progress.row.emptyInProgress.title"="Overdrachten die in behandeling zijn, worden hier weergegeven";
+/* Camera Uploads Empty In Queue Row title */
+"cameraUploads.progress.row.emptyInQueue.title"="Overdrachten in de wachtrij verschijnen hier";
+/* Sorting option label for sorting items based on the share creation date (can be applied in ascending or descending order) */
+"sorting.shareCreated.title"="Deling gecreëerd";
+/* Sorting option label for sorting items based on the link creation date (can be applied in ascending or descending order) */
+"sorting.linkCreated.title"="Link gecreëerd";
+/* Camera Uploads Checking For Uploads */
+"cameraUploads.checkingForUploads"="Controleren op uploads…";
+/* Camera Uploads Complete */
+"cameraUploads.complete"="Camera uploads voltooid";
+/* Camera Uploads Up To Date */
+"cameraUploads.upToDate"="Camera-uploads zijn bijgewerkt";
+/* Hidden files and folders onboarding content control visibility message */
+"onboarding.hiddenFilesAndFolders.content.item.controlVisibility.message"="Alleen u kunt verborgen bestanden onthullen, afzonderlijk of door tijdelijk verborgen items weer te geven uit de [A]instellingen[/A].";

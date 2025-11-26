@@ -51,7 +51,7 @@
 /* Hint text to suggest that the user has to write the decryption key */
 "decryptionKey"="คีย์ถอดรหัสลับ";
 /* Button title to try to decrypt the link */
-"decrypt"="ถอดรหัสลับ";
+"decrypt"="ดำเนินการต่อ";
 /* Alert title shown when you have written a decryption key not valid */
 "decryptionKeyNotValid"="คีย์ถอดรหัสลับไม่ถูกต้อง";
 /* This dialog message is used on the Password Decrypt dialog. The link is a password protected link so the user needs to enter the password to decrypt the link. */
@@ -59,7 +59,7 @@
 /* This dialog message is used on the Password Decrypt dialog as an instruction for the user. */
 "If you do not have the password, contact the creator of the link."="หากคุณไม่มีรหัสผ่าน กรุณาติดต่อผู้สร้างลิงก์";
 /* This placeholder text is used on the Password Decrypt dialog as an instruction for the user. */
-"Enter the password"="กรอกรหัสผ่าน";
+"Enter the password"="Enter the link password";
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOut_alertTitle"="ออกจากระบบ";
 /* Alert message shown when your account has been closed through another client or the web by killing all your sessions */
@@ -4151,7 +4151,7 @@
 /* Hidden files and folders onboarding content exclude from timeline section message */
 "onboarding.hiddenFilesAndFolders.excludeTimeline.content.message"="Only you can reveal hidden files, either individually or by temporarily displaying hidden items from the settings.";
 /* Hidden files and folders onboarding content out of sight title */
-"onboarding.hiddenFilesAndFolders.outOfSight.content.title"="Blur for privacy";
+"onboarding.hiddenFilesAndFolders.outOfSight.content.title"="เบลอเพื่อความเป็นส่วนตัว";
 /* Hidden files and folders onboarding content out of sight message */
 "onboarding.hiddenFilesAndFolders.outOfSight.content.message"="Show hidden items with their thumbnails blurred, so you can identify them without exposing their contents.";
 /* My Account page: Menu Title of user account page */
@@ -4573,17 +4573,17 @@
 /* Hidden files and folders onboarding header title */
 "onboarding.hiddenFilesAndFolders.header.title"="ฟีเจอร์ใหม่: ซ่อนไฟล์และโฟลเดอร์";
 /* Hidden files and folders onboarding content item one title */
-"onboarding.hiddenFilesAndFolders.content.item.one.title"="ซ่อนไฟล์และโฟลเดอร์";
+"onboarding.hiddenFilesAndFolders.content.item.one.title"="ซ่อนไฟล์และโฟลเดอร์สำคัญ";
 /* Hidden files and folders onboarding content item one message */
-"onboarding.hiddenFilesAndFolders.content.item.one.message"="เก็บไฟล์สำคัญในคลาวด์ไดร์ฟให้เป็นส่วนตัวและลับสายตาได้อย่างง่ายดาย โดยค่าเริ่มต้น ไฟล์ที่ซ่อนอยู่จะไม่ปรากฏในคลาวด์ไดร์ฟ รูปภาพ และส่วนล่าสุดของคุณ";
+"onboarding.hiddenFilesAndFolders.content.item.one.message"="คุณสามารถซ่อนไฟล์และโฟลเดอร์ที่ละเอียดอ่อนเพื่อความเป็นส่วนตัวได้ในขั้นตอนง่ายๆ เพียงขั้นตอนเดียว";
 /* Hidden files and folders onboarding content item two title */
-"onboarding.hiddenFilesAndFolders.content.item.two.title"="ควบคุมการมองเห็นได้ง่าย";
+"onboarding.hiddenFilesAndFolders.content.item.two.title"="แสดงไฟล์ที่ซ่อนอยู่";
 /* Hidden files and folders onboarding content item two message */
 "onboarding.hiddenFilesAndFolders.content.item.two.message"="หากต้องการแสดงไฟล์ที่ซ่อนอยู่ ให้เปิดการตั้งค่า “แสดงรายการที่ซ่อนอยู่” ใน “การจัดการไฟล์ -> หน้าจอผู้ใช้” ในการตั้งค่าแอปของคุณ";
 /* Hidden files and folders onboarding content item three title */
-"onboarding.hiddenFilesAndFolders.content.item.three.title"="ไฟล์ที่แชร์ยังคงมองเห็นได้";
+"onboarding.hiddenFilesAndFolders.content.item.three.title"="เบลอเพื่อความเป็นส่วนตัว";
 /* Hidden files and folders onboarding content item three message */
-"onboarding.hiddenFilesAndFolders.content.item.three.message"="ไฟล์และโฟลเดอร์ที่แชร์กับผู้ติดต่อหรือลิงก์สาธารณะยังคงเข้าถึงและมองเห็นได้ แม้ว่าจะซ่อนอยู่ก็ตาม";
+"onboarding.hiddenFilesAndFolders.content.item.three.message"="แสดงรายการที่ซ่อนอยู่โดยรูปขนาดย่อ เบลอ เพื่อให้คุณสามารถระบุได้โดยไม่ต้องเปิดเผยเนื้อหา";
 /* Title for note to self chat, used in the messages view but also in lists where note to self is diplayed */
 "chat.messages.noteToSelf.title"="โน้ตถึงตัวเอง";
 /* Title for note to self chat messages view header, at the top the chat room */
@@ -4779,6 +4779,44 @@
 /* Camera Uploads row file upload speed */
 "cameraUploads.progress.row.uploadSpeed"="%@/s";
 /* Footer for the yearly billing option in the upgrade account plan screen */
-"upgradeAccountPlan.plan.yearly.footer"="Charged Yearly";
+"upgradeAccountPlan.plan.yearly.footer"="ชำระรายปี";
 /* Price per month display for yearly billing option in the upgrade account plan screen */
 "upgradeAccountPlan.plan.yearly.pricePerMonth"="Only %@/month";
+/* Camera Uploads Banner Paused Low Battery Subtitle */
+"cameraUploads.progress.banner.paused.lowBattery.subtitle"="Camera uploads paused, battery level too low. Charge battery to resume camera uploads.";
+/* Camera Uploads Banner Paused High Thermal State Subtitle */
+"cameraUploads.progress.banner.paused.highThermalState.subtitle"="Camera uploads paused, device temperature too high. Uploads will resume once your device cools down.";
+/* Camera Uploads Banner Paused Network Issue Subtitle */
+"cameraUploads.progress.banner.paused.networkIssue.subtitle"="Camera uploads paused, no internet connection";
+/* Camera Uploads Banner Paused network no wifi cellular upload not allowed allow mobile data */
+"cameraUploads.progress.banner.paused.allowMobileData.button.title"="อนุญาตให้ใช้ข้อมูลมือถือ";
+/* Camera Uploads Banner Storage Full Title */
+"cameraUploads.progress.banner.storageFull.title"="พื้นที่เก็บข้อมูลของคุณเต็มแล้ว";
+/* Camera Uploads Banner Storage Full Subtitle */
+"cameraUploads.progress.banner.storageFull.subtitle"="To keep uploading, upgrade now to get more storage";
+/* Camera Uploads Banner Storage Full Button Title */
+"cameraUploads.progress.banner.storageFull.button.title"="อัปเกรดตอนนี้";
+/* Camera Uploads Banner Limited Access Subtitle */
+"cameraUploads.progress.banner.limitedAccess.subtitle"="To ensure we don’t miss all your memories, MEGA needs full access to your photo library";
+/* Camera Uploads Banner Limited Access Button Title */
+"cameraUploads.progress.banner.limitedAccess.button.title"="Update permissions";
+/* Camera Uploads Progress Uploads Complete Title */
+"cameraUploads.progress.uploadsComplete.title"="ทุกอย่างเป็นปัจจุบันแล้ว";
+/* Camera Uploads Progress Uploads Complete Subtitle */
+"cameraUploads.progress.uploadsComplete.subtitle"="New photos and videos will show here after you take them";
+/* Camera Uploads Empty In Progress Row title */
+"cameraUploads.progress.row.emptyInProgress.title"="Transfers in progress will appear here";
+/* Camera Uploads Empty In Queue Row title */
+"cameraUploads.progress.row.emptyInQueue.title"="Transfers in the queue will appear here";
+/* Sorting option label for sorting items based on the share creation date (can be applied in ascending or descending order) */
+"sorting.shareCreated.title"="วันที่สร้างแชร์";
+/* Sorting option label for sorting items based on the link creation date (can be applied in ascending or descending order) */
+"sorting.linkCreated.title"="สร้างลิงก์แล้ว";
+/* Camera Uploads Checking For Uploads */
+"cameraUploads.checkingForUploads"="กำลังตรวจสอบการอัปโหลด…";
+/* Camera Uploads Complete */
+"cameraUploads.complete"="การอัปโหลดกล้องเสร็จสมบูรณ์";
+/* Camera Uploads Up To Date */
+"cameraUploads.upToDate"="Camera uploads up to date";
+/* Hidden files and folders onboarding content control visibility message */
+"onboarding.hiddenFilesAndFolders.content.item.controlVisibility.message"="มีเพียงคุณเท่านั้นที่สามารถเปิดเผยไฟล์ที่ซ่อนอยู่ไม่ว่าจะเป็นรายบุคคลหรือโดยการแสดงรายการที่ซ่อนอยู่ชั่วคราวจาก [A]การตั้งค่า[/A].";

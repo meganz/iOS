@@ -51,7 +51,7 @@
 /* Hint text to suggest that the user has to write the decryption key */
 "decryptionKey"="Chiave di decrittazione";
 /* Button title to try to decrypt the link */
-"decrypt"="Decripta";
+"decrypt"="Continua";
 /* Alert title shown when you have written a decryption key not valid */
 "decryptionKeyNotValid"="Chiave di decriptazione non valida";
 /* This dialog message is used on the Password Decrypt dialog. The link is a password protected link so the user needs to enter the password to decrypt the link. */
@@ -59,7 +59,7 @@
 /* This dialog message is used on the Password Decrypt dialog as an instruction for the user. */
 "If you do not have the password, contact the creator of the link."="Se non hai la password, contatta il creatore del link.";
 /* This placeholder text is used on the Password Decrypt dialog as an instruction for the user. */
-"Enter the password"="Inserisci la password";
+"Enter the password"="Enter the link password";
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOut_alertTitle"="Disconnesso";
 /* Alert message shown when your account has been closed through another client or the web by killing all your sessions */
@@ -1081,7 +1081,7 @@
 /* Cell title shown on the achievements view for Start MEGA Pass Free Trial */
 "account.achievement.passFreeTrial.title"="Avvia una prova gratuita di MEGA Pass";
 /* Detail label shown on the achievements details view for Start MEGA Pass Free Trial when its incomplete, %1$@ is placeholder for the storage amount, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
-"account.achievement.passFreeTrial.detail.incomplete.label"="Ottieni %1$@ di spazio di archiviazione gratuito all'avvio di un MEGA Pass la prova gratuita. %2$@";
+"account.achievement.passFreeTrial.detail.incomplete.label"="Ottieni %1$@ di spazio di archiviazione gratuito all'avvio di una prova gratuita di MEGA Pass. %2$@";
 /* Explanation label shown on the achievements view for incomplete start MEGA Pass Free Trial achievement, %@ is a placeholder. */
 "account.achievement.passFreeTrial.incomplete.explanation.label"="Installa l'app di MEGA Pass, accedi con il tuo account MEGA e inizia la tua prova gratuita. Lo spazio di archiviazione bonus verrà aggiunto automaticamente all'inizio della prova gratuita.";
 /* Explanation label shown on the achievements view for complete start MEGA Pass Free Trial achievement, %@ is a placeholder. */
@@ -1101,7 +1101,7 @@
 /* Explanation Label shown on the achievements view for complete add phone number achievement, %@ is a placeholder. */
 "account.achievement.phoneNumber.complete.explaination.label"="Hai ricevuto %@ di spazio di archiviazione per aver aggiunto il tuo numero di telefono.";
 /* Explanation Label shown on the achievements view for incomplete add phone number achievement, %1$@ is a placeholder, %2$@ is placeholder for the validity status, e.g. Valid permanently or Valid for 7 days. */
-"account.achievement.phoneNumber.incomplete.explaination.label"="Quando aggiungi il tuo numero di telefono, ottieni %@ di spazio di archiviazione complementare, %2$@";
+"account.achievement.phoneNumber.incomplete.explaination.label"="Quando aggiungi il tuo numero di telefono, ottieni %@ di spazio di archiviazione aggiuntivo, %2$@.";
 /* Free storage description to encourage users to add phone number to their accounts */
 "Get free %@ when you add your phone number. This makes it easier for your contacts to find you on MEGA."="Ottieni %@ gratuitamente quando aggiungi il tuo numero di telefono. Questo rende più facile per i tuoi contatti trovarti su MEGA.";
 /* Description to encourage users to add phone number to their accounts when there are not achievements */
@@ -4145,15 +4145,15 @@
 /* Hidden files and folders onboarding content hide important title */
 "onboarding.hiddenFilesAndFolders.hideImportant.content.title"="Nascondi file e cartelle importanti";
 /* Hidden files and folders onboarding content hide important message */
-"onboarding.hiddenFilesAndFolders.hideImportant.content.message"="You can conceal sensitive files and folders for privacy in one easy step.";
+"onboarding.hiddenFilesAndFolders.hideImportant.content.message"="Puoi nascondere file e cartelle sensibili per la privacy in un semplice passaggio.";
 /* Hidden files and folders onboarding content exclude from timeline title */
 "onboarding.hiddenFilesAndFolders.excludeTimeline.content.title"="Fuori dalla vista";
 /* Hidden files and folders onboarding content exclude from timeline section message */
-"onboarding.hiddenFilesAndFolders.excludeTimeline.content.message"="Only you can reveal hidden files, either individually or by temporarily displaying hidden items from the settings.";
+"onboarding.hiddenFilesAndFolders.excludeTimeline.content.message"="Solo tu puoi rivelare i file nascosti, singolarmente o visualizzando temporaneamente tutti gli oggetti nascosti dalle impostazioni.";
 /* Hidden files and folders onboarding content out of sight title */
-"onboarding.hiddenFilesAndFolders.outOfSight.content.title"="Blur for privacy";
+"onboarding.hiddenFilesAndFolders.outOfSight.content.title"="Sfoca per la privacy";
 /* Hidden files and folders onboarding content out of sight message */
-"onboarding.hiddenFilesAndFolders.outOfSight.content.message"="Show hidden items with their thumbnails blurred, so you can identify them without exposing their contents.";
+"onboarding.hiddenFilesAndFolders.outOfSight.content.message"="Mostra gli oggetti nascosti con le miniature sfocate, in modo da poterli identificare senza esporne il contenuto.";
 /* My Account page: Menu Title of user account page */
 "account.myAccount.title"="Account";
 /* Storage limit capacity, where %d is the number of gigabytes that marks the storage limit */
@@ -4573,17 +4573,17 @@
 /* Hidden files and folders onboarding header title */
 "onboarding.hiddenFilesAndFolders.header.title"="Nuova funzionalità: file e cartelle nascosti";
 /* Hidden files and folders onboarding content item one title */
-"onboarding.hiddenFilesAndFolders.content.item.one.title"="Nascondi file e cartelle";
+"onboarding.hiddenFilesAndFolders.content.item.one.title"="Nascondi file e cartelle importanti";
 /* Hidden files and folders onboarding content item one message */
-"onboarding.hiddenFilesAndFolders.content.item.one.message"="Mantieni facilmente privati e nascosti i file sensibili nel tuo Cloud Drive. Per impostazione predefinita, i file nascosti non vengono visualizzati nella sezione Cloud Drive, Foto e Recenti.";
+"onboarding.hiddenFilesAndFolders.content.item.one.message"="You can conceal sensitive files and folders for privacy in one easy step";
 /* Hidden files and folders onboarding content item two title */
-"onboarding.hiddenFilesAndFolders.content.item.two.title"="Controlla facilmente la visibilità";
+"onboarding.hiddenFilesAndFolders.content.item.two.title"="Fuori dalla vista";
 /* Hidden files and folders onboarding content item two message */
 "onboarding.hiddenFilesAndFolders.content.item.two.message"="Per mostrare i file nascosti, attiva l'impostazione “Mostra oggetti nascosti” in “Gestione file” -> “Interfaccia utente” nelle impostazioni dell'app.";
 /* Hidden files and folders onboarding content item three title */
-"onboarding.hiddenFilesAndFolders.content.item.three.title"="I file condivisi rimangono visibili";
+"onboarding.hiddenFilesAndFolders.content.item.three.title"="Sfoca per la privacy";
 /* Hidden files and folders onboarding content item three message */
-"onboarding.hiddenFilesAndFolders.content.item.three.message"="I file e le cartelle condivisi con i contatti o con link pubblici sono ancora accessibili e visibili, anche se nascosti.";
+"onboarding.hiddenFilesAndFolders.content.item.three.message"="Show hidden items with their thumbnails blurred, so you can identify them without exposing their contents";
 /* Title for note to self chat, used in the messages view but also in lists where note to self is diplayed */
 "chat.messages.noteToSelf.title"="Nota per me";
 /* Title for note to self chat messages view header, at the top the chat room */
@@ -4639,7 +4639,7 @@
 /* Displays the amount of data transfer included in the subscription plan */
 "subscriptionPurchase.plan.transfer"="Banda di %@";
 /* Displays the total amount when billed yearly */
-"subscriptionPurchase.plan.billedYearly"="%@ charged yearly";
+"subscriptionPurchase.plan.billedYearly"="%@ fatturato annualmente";
 /* Button title to cancel the subscription purchase. */
 "subscriptionPurchase.maybeLater"="Forse più tardi";
 /* Title for the features of pro plan in the subscription purchase screen. */
@@ -4753,11 +4753,11 @@
 /* Sorting option label for sorting items based on their file size (can be applied in ascending or descending order) */
 "sorting.size.title"="Dimensione";
 /* Black Friday deal plan badge text shown in Upgrade plan screen */
-"upgradeAccountPlan.plan.tag.introOffer.blackFridayDeal"="Offerta del Black Friday: %@di sconto ";
+"upgradeAccountPlan.plan.tag.introOffer.blackFridayDeal"="Offerta del Black Friday: %@ di sconto ";
 /* General deal plan badge text shown in Upgrade plan screen */
 "upgradeAccountPlan.plan.tag.introOffer.generalDeal"="Sconto del %@";
 /* Subscription plan first year offer text shown in Upgrade plan screen */
-"subscriptionPurchase.plan.firstYearOffer"="%@ for the first year";
+"subscriptionPurchase.plan.firstYearOffer"="%@ per il primo anno";
 /* Header text in Upgrade plan screen to highlight yearly billing savings with intro offer */
 "upgradeAccountPlan.header.title.saveYearlyBillingWithIntoOffer"="Risparmia almeno il %@ su un piano annuale";
 /* Camera Uploads Progress navigation title */
@@ -4767,9 +4767,9 @@
 /* Camera Uploads row progress format */
 "cameraUploads.progress.row.uploadProgressFormat"="%@ of %@ %@/s";
 /* Cyber Monday deal plan badge text shown in Upgrade plan screen */
-"upgradeAccountPlan.plan.tag.introOffer.cyberMondayDeal"="Cyber Monday deal: %@ off";
+"upgradeAccountPlan.plan.tag.introOffer.cyberMondayDeal"="Offerta del Cyber Monday: %@ di sconto";
 /* Special Offer plan badge text shown in Upgrade plan screen */
-"upgradeAccountPlan.plan.tag.introOffer.specialOffer"="Special offer: %@ off";
+"upgradeAccountPlan.plan.tag.introOffer.specialOffer"="Offerta speciale: %@ di sconto";
 /* View mode title for grid view in the cloud drive. */
 "cloudDrive.viewMode.grid.title"="Vista griglia";
 /* Camera Uploads Progress In Queue section title */
@@ -4779,6 +4779,44 @@
 /* Camera Uploads row file upload speed */
 "cameraUploads.progress.row.uploadSpeed"="%@/s";
 /* Footer for the yearly billing option in the upgrade account plan screen */
-"upgradeAccountPlan.plan.yearly.footer"="Charged Yearly";
+"upgradeAccountPlan.plan.yearly.footer"="Fatturato annualmente";
 /* Price per month display for yearly billing option in the upgrade account plan screen */
 "upgradeAccountPlan.plan.yearly.pricePerMonth"="Only %@/month";
+/* Camera Uploads Banner Paused Low Battery Subtitle */
+"cameraUploads.progress.banner.paused.lowBattery.subtitle"="Camera uploads paused, battery level too low. Charge battery to resume camera uploads.";
+/* Camera Uploads Banner Paused High Thermal State Subtitle */
+"cameraUploads.progress.banner.paused.highThermalState.subtitle"="Camera uploads paused, device temperature too high. Uploads will resume once your device cools down.";
+/* Camera Uploads Banner Paused Network Issue Subtitle */
+"cameraUploads.progress.banner.paused.networkIssue.subtitle"="Camera uploads paused, no internet connection";
+/* Camera Uploads Banner Paused network no wifi cellular upload not allowed allow mobile data */
+"cameraUploads.progress.banner.paused.allowMobileData.button.title"="Attiva connessione dati";
+/* Camera Uploads Banner Storage Full Title */
+"cameraUploads.progress.banner.storageFull.title"="Il tuo spazio di archiviazione è pieno";
+/* Camera Uploads Banner Storage Full Subtitle */
+"cameraUploads.progress.banner.storageFull.subtitle"="To keep uploading, upgrade now to get more storage";
+/* Camera Uploads Banner Storage Full Button Title */
+"cameraUploads.progress.banner.storageFull.button.title"="Effettua l'upgrade ora";
+/* Camera Uploads Banner Limited Access Subtitle */
+"cameraUploads.progress.banner.limitedAccess.subtitle"="To ensure we don’t miss all your memories, MEGA needs full access to your photo library";
+/* Camera Uploads Banner Limited Access Button Title */
+"cameraUploads.progress.banner.limitedAccess.button.title"="Update permissions";
+/* Camera Uploads Progress Uploads Complete Title */
+"cameraUploads.progress.uploadsComplete.title"="Tutto aggiornato";
+/* Camera Uploads Progress Uploads Complete Subtitle */
+"cameraUploads.progress.uploadsComplete.subtitle"="New photos and videos will show here after you take them";
+/* Camera Uploads Empty In Progress Row title */
+"cameraUploads.progress.row.emptyInProgress.title"="Transfers in progress will appear here";
+/* Camera Uploads Empty In Queue Row title */
+"cameraUploads.progress.row.emptyInQueue.title"="Transfers in the queue will appear here";
+/* Sorting option label for sorting items based on the share creation date (can be applied in ascending or descending order) */
+"sorting.shareCreated.title"="Condivisione creata il";
+/* Sorting option label for sorting items based on the link creation date (can be applied in ascending or descending order) */
+"sorting.linkCreated.title"="Link creato il";
+/* Camera Uploads Checking For Uploads */
+"cameraUploads.checkingForUploads"="Controllando aggiornamenti…";
+/* Camera Uploads Complete */
+"cameraUploads.complete"="Caricamenti da fotocamera completi";
+/* Camera Uploads Up To Date */
+"cameraUploads.upToDate"="Camera uploads up to date";
+/* Hidden files and folders onboarding content control visibility message */
+"onboarding.hiddenFilesAndFolders.content.item.controlVisibility.message"="Only you can reveal hidden files, either individually or by temporarily displaying hidden items from [A]Settings[/A].";

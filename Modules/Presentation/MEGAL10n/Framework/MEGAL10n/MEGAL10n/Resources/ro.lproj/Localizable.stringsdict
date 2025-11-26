@@ -3667,11 +3667,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>u</string>
         <key>one</key>
-        <string></string>
+        <string>Se încarcă: %u element rămas</string>
         <key>few</key>
-        <string></string>
+        <string>Se încarcă: %u elemente rămase</string>
         <key>other</key>
-        <string></string>
+        <string>Se încarcă: %u de elemente rămase</string>
       </dict>
     </dict>
     <key>cameraUploads.progress.paused.items</key>
@@ -3685,11 +3685,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>u</string>
         <key>one</key>
-        <string></string>
+        <string>Întreruperea: %u element rămas</string>
         <key>few</key>
-        <string></string>
+        <string>Întreruperea: %u elemente rămase</string>
         <key>other</key>
-        <string></string>
+        <string>Întreruperea: %u de elemente rămase</string>
       </dict>
     </dict>
   </dict>

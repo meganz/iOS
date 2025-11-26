@@ -51,7 +51,7 @@
 /* Hint text to suggest that the user has to write the decryption key */
 "decryptionKey"="Kunci dekripsi";
 /* Button title to try to decrypt the link */
-"decrypt"="Dekripsikan";
+"decrypt"="Lanjutkan";
 /* Alert title shown when you have written a decryption key not valid */
 "decryptionKeyNotValid"="Kunci dekripsi salah";
 /* This dialog message is used on the Password Decrypt dialog. The link is a password protected link so the user needs to enter the password to decrypt the link. */
@@ -59,7 +59,7 @@
 /* This dialog message is used on the Password Decrypt dialog as an instruction for the user. */
 "If you do not have the password, contact the creator of the link."="Jika anda tidak memiliki password, hubungi orang yang membuat link.";
 /* This placeholder text is used on the Password Decrypt dialog as an instruction for the user. */
-"Enter the password"="Masukkan password";
+"Enter the password"="Enter the link password";
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOut_alertTitle"="Keluar";
 /* Alert message shown when your account has been closed through another client or the web by killing all your sessions */
@@ -4151,7 +4151,7 @@
 /* Hidden files and folders onboarding content exclude from timeline section message */
 "onboarding.hiddenFilesAndFolders.excludeTimeline.content.message"="Only you can reveal hidden files, either individually or by temporarily displaying hidden items from the settings.";
 /* Hidden files and folders onboarding content out of sight title */
-"onboarding.hiddenFilesAndFolders.outOfSight.content.title"="Blur for privacy";
+"onboarding.hiddenFilesAndFolders.outOfSight.content.title"="Blur untuk privasi";
 /* Hidden files and folders onboarding content out of sight message */
 "onboarding.hiddenFilesAndFolders.outOfSight.content.message"="Show hidden items with their thumbnails blurred, so you can identify them without exposing their contents.";
 /* My Account page: Menu Title of user account page */
@@ -4573,17 +4573,17 @@
 /* Hidden files and folders onboarding header title */
 "onboarding.hiddenFilesAndFolders.header.title"="Fitur baru: File dan folder tersembunyi";
 /* Hidden files and folders onboarding content item one title */
-"onboarding.hiddenFilesAndFolders.content.item.one.title"="Sembunyikan file dan folder";
+"onboarding.hiddenFilesAndFolders.content.item.one.title"="Sembunyikan file dan folder penting";
 /* Hidden files and folders onboarding content item one message */
-"onboarding.hiddenFilesAndFolders.content.item.one.message"="Simpan file sensitif di drive Cloud anda secara pribadi dan tidak terlihat dengan mudah. Secara default, file tersembunyi tidak muncul di bagian Cloud drive, Foto, dan Terbaru.";
+"onboarding.hiddenFilesAndFolders.content.item.one.message"="Anda dapat menyembunyikan file dan folder sensitif untuk privasi dalam satu langkah mudah";
 /* Hidden files and folders onboarding content item two title */
-"onboarding.hiddenFilesAndFolders.content.item.two.title"="Kontrol visibilitas dengan mudah";
+"onboarding.hiddenFilesAndFolders.content.item.two.title"="Tidak terlihat";
 /* Hidden files and folders onboarding content item two message */
 "onboarding.hiddenFilesAndFolders.content.item.two.message"="Untuk menampilkan file tersembunyi, aktifkan pengaturan “Tampilkan item tersembunyi” di bawah “Manajemen File” -> “Antarmuka pengguna” di pengaturan aplikasi anda.";
 /* Hidden files and folders onboarding content item three title */
-"onboarding.hiddenFilesAndFolders.content.item.three.title"="File yang dibagikan tetap terlihat";
+"onboarding.hiddenFilesAndFolders.content.item.three.title"="Blur untuk privasi";
 /* Hidden files and folders onboarding content item three message */
-"onboarding.hiddenFilesAndFolders.content.item.three.message"="File dan folder yang dibagikan dengan kontak atau dengan tautan publik masih dapat diakses dan terlihat, meskipun disembunyikan.";
+"onboarding.hiddenFilesAndFolders.content.item.three.message"="Tampilkan item tersembunyi dengan thumbnail mereka buram, sehingga Anda dapat mengidentifikasinya tanpa mengekspos isinya";
 /* Title for note to self chat, used in the messages view but also in lists where note to self is diplayed */
 "chat.messages.noteToSelf.title"="Catatan untuk diri sendiri";
 /* Title for note to self chat messages view header, at the top the chat room */
@@ -4779,6 +4779,44 @@
 /* Camera Uploads row file upload speed */
 "cameraUploads.progress.row.uploadSpeed"="%@/s";
 /* Footer for the yearly billing option in the upgrade account plan screen */
-"upgradeAccountPlan.plan.yearly.footer"="Charged Yearly";
+"upgradeAccountPlan.plan.yearly.footer"="Ditagih setiap tahun";
 /* Price per month display for yearly billing option in the upgrade account plan screen */
 "upgradeAccountPlan.plan.yearly.pricePerMonth"="Only %@/month";
+/* Camera Uploads Banner Paused Low Battery Subtitle */
+"cameraUploads.progress.banner.paused.lowBattery.subtitle"="Camera uploads paused, battery level too low. Charge battery to resume camera uploads.";
+/* Camera Uploads Banner Paused High Thermal State Subtitle */
+"cameraUploads.progress.banner.paused.highThermalState.subtitle"="Camera uploads paused, device temperature too high. Uploads will resume once your device cools down.";
+/* Camera Uploads Banner Paused Network Issue Subtitle */
+"cameraUploads.progress.banner.paused.networkIssue.subtitle"="Camera uploads paused, no internet connection";
+/* Camera Uploads Banner Paused network no wifi cellular upload not allowed allow mobile data */
+"cameraUploads.progress.banner.paused.allowMobileData.button.title"="Izinkan data seluler";
+/* Camera Uploads Banner Storage Full Title */
+"cameraUploads.progress.banner.storageFull.title"="Penyimpanan anda penuh";
+/* Camera Uploads Banner Storage Full Subtitle */
+"cameraUploads.progress.banner.storageFull.subtitle"="To keep uploading, upgrade now to get more storage";
+/* Camera Uploads Banner Storage Full Button Title */
+"cameraUploads.progress.banner.storageFull.button.title"="Tingkatkan sekarang";
+/* Camera Uploads Banner Limited Access Subtitle */
+"cameraUploads.progress.banner.limitedAccess.subtitle"="To ensure we don’t miss all your memories, MEGA needs full access to your photo library";
+/* Camera Uploads Banner Limited Access Button Title */
+"cameraUploads.progress.banner.limitedAccess.button.title"="Update permissions";
+/* Camera Uploads Progress Uploads Complete Title */
+"cameraUploads.progress.uploadsComplete.title"="Semua selesai";
+/* Camera Uploads Progress Uploads Complete Subtitle */
+"cameraUploads.progress.uploadsComplete.subtitle"="New photos and videos will show here after you take them";
+/* Camera Uploads Empty In Progress Row title */
+"cameraUploads.progress.row.emptyInProgress.title"="Transfers in progress will appear here";
+/* Camera Uploads Empty In Queue Row title */
+"cameraUploads.progress.row.emptyInQueue.title"="Transfers in the queue will appear here";
+/* Sorting option label for sorting items based on the share creation date (can be applied in ascending or descending order) */
+"sorting.shareCreated.title"="Bagikan Dibuat";
+/* Sorting option label for sorting items based on the link creation date (can be applied in ascending or descending order) */
+"sorting.linkCreated.title"="Tautan dibuat";
+/* Camera Uploads Checking For Uploads */
+"cameraUploads.checkingForUploads"="Memeriksa unggahan…";
+/* Camera Uploads Complete */
+"cameraUploads.complete"="Unggahan kamera selesai";
+/* Camera Uploads Up To Date */
+"cameraUploads.upToDate"="Camera uploads up to date";
+/* Hidden files and folders onboarding content control visibility message */
+"onboarding.hiddenFilesAndFolders.content.item.controlVisibility.message"="Hanya Anda yang dapat mengungkapkan file tersembunyi, baik secara individual atau dengan menampilkan sementara item tersembunyi dari [A]Pengaturan[/A].";

@@ -3261,9 +3261,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>u</string>
         <key>one</key>
-        <string></string>
+        <string>Yükleniyor: %u öğe kaldı</string>
         <key>other</key>
-        <string></string>
+        <string>Yükleniyor: %u öğe kaldı</string>
       </dict>
     </dict>
     <key>cameraUploads.progress.paused.items</key>
@@ -3277,9 +3277,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>u</string>
         <key>one</key>
-        <string></string>
+        <string>Duraklatıldı: %u öğe kaldı</string>
         <key>other</key>
-        <string></string>
+        <string>Duraklatıldı: %u öğe kaldı</string>
       </dict>
     </dict>
   </dict>

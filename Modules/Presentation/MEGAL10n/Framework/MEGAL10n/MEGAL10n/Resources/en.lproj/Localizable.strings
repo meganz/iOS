@@ -51,7 +51,7 @@
 /* Hint text to suggest that the user has to write the decryption key */
 "decryptionKey"="Decryption key";
 /* Button title to try to decrypt the link */
-"decrypt"="Decrypt";
+"decrypt"="Continue";
 /* Alert title shown when you have written a decryption key not valid */
 "decryptionKeyNotValid"="Invalid decryption key";
 /* This dialog message is used on the Password Decrypt dialog. The link is a password protected link so the user needs to enter the password to decrypt the link. */
@@ -59,7 +59,7 @@
 /* This dialog message is used on the Password Decrypt dialog as an instruction for the user. */
 "If you do not have the password, contact the creator of the link."="If you do not have the password, contact the creator of the link.";
 /* This placeholder text is used on the Password Decrypt dialog as an instruction for the user. */
-"Enter the password"="Enter the password";
+"Enter the password"="Enter the link password";
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOut_alertTitle"="Logged out";
 /* Alert message shown when your account has been closed through another client or the web by killing all your sessions */
@@ -4573,17 +4573,17 @@
 /* Hidden files and folders onboarding header title */
 "onboarding.hiddenFilesAndFolders.header.title"="New feature: Hidden files and folders";
 /* Hidden files and folders onboarding content item one title */
-"onboarding.hiddenFilesAndFolders.content.item.one.title"="Hide files and folders";
+"onboarding.hiddenFilesAndFolders.content.item.one.title"="Hide important files and folders";
 /* Hidden files and folders onboarding content item one message */
-"onboarding.hiddenFilesAndFolders.content.item.one.message"="Easily keep sensitive files in your Cloud drive private and out of sight. By default, hidden files do not appear in your Cloud drive, Photos, and Recents section.";
+"onboarding.hiddenFilesAndFolders.content.item.one.message"="You can conceal sensitive files and folders for privacy in one easy step";
 /* Hidden files and folders onboarding content item two title */
-"onboarding.hiddenFilesAndFolders.content.item.two.title"="Control visibility easily";
+"onboarding.hiddenFilesAndFolders.content.item.two.title"="Out of sight";
 /* Hidden files and folders onboarding content item two message */
 "onboarding.hiddenFilesAndFolders.content.item.two.message"="To show hidden files, turn on the “Show hidden items” setting under “File Management” -> “User interface” in your app settings.";
 /* Hidden files and folders onboarding content item three title */
-"onboarding.hiddenFilesAndFolders.content.item.three.title"="Shared files stay visible";
+"onboarding.hiddenFilesAndFolders.content.item.three.title"="Blur for privacy";
 /* Hidden files and folders onboarding content item three message */
-"onboarding.hiddenFilesAndFolders.content.item.three.message"="Files and folders shared with contacts or with public links are still accessible and visible, even if hidden.";
+"onboarding.hiddenFilesAndFolders.content.item.three.message"="Show hidden items with their thumbnails blurred, so you can identify them without exposing their contents";
 /* Title for note to self chat, used in the messages view but also in lists where note to self is diplayed */
 "chat.messages.noteToSelf.title"="Note to self";
 /* Title for note to self chat messages view header, at the top the chat room */
@@ -4779,15 +4779,15 @@
 /* Camera Uploads row file upload speed */
 "cameraUploads.progress.row.uploadSpeed"="%@/s";
 /* Footer for the yearly billing option in the upgrade account plan screen */
-"upgradeAccountPlan.plan.yearly.footer"="Charged Yearly";
+"upgradeAccountPlan.plan.yearly.footer"="Charged yearly";
 /* Price per month display for yearly billing option in the upgrade account plan screen */
 "upgradeAccountPlan.plan.yearly.pricePerMonth"="Only %@/month";
 /* Camera Uploads Banner Paused Low Battery Subtitle */
 "cameraUploads.progress.banner.paused.lowBattery.subtitle"="Camera uploads paused, battery level too low. Charge battery to resume camera uploads.";
 /* Camera Uploads Banner Paused High Thermal State Subtitle */
-"cameraUploads.progress.banner.paused.highThermalState.subtitle"="Camera uploads paused, uploads will resume once your device cools down.";
+"cameraUploads.progress.banner.paused.highThermalState.subtitle"="Camera uploads paused, device temperature too high. Uploads will resume once your device cools down.";
 /* Camera Uploads Banner Paused Network Issue Subtitle */
-"cameraUploads.progress.banner.paused.networkIssue.subtitle"="Camera uploads paused, wait for WIFI or mobile data.";
+"cameraUploads.progress.banner.paused.networkIssue.subtitle"="Camera uploads paused, no internet connection";
 /* Camera Uploads Banner Paused network no wifi cellular upload not allowed allow mobile data */
 "cameraUploads.progress.banner.paused.allowMobileData.button.title"="Allow mobile data";
 /* Camera Uploads Banner Storage Full Title */
@@ -4797,34 +4797,26 @@
 /* Camera Uploads Banner Storage Full Button Title */
 "cameraUploads.progress.banner.storageFull.button.title"="Upgrade now";
 /* Camera Uploads Banner Limited Access Subtitle */
-"cameraUploads.progress.banner.limitedAccess.subtitle"="To ensure we don’t miss all your memories, MEGA needs full access to your photo library.";
+"cameraUploads.progress.banner.limitedAccess.subtitle"="To ensure we don’t miss all your memories, MEGA needs full access to your photo library";
 /* Camera Uploads Banner Limited Access Button Title */
 "cameraUploads.progress.banner.limitedAccess.button.title"="Update permissions";
 /* Camera Uploads Progress Uploads Complete Title */
 "cameraUploads.progress.uploadsComplete.title"="All caught up";
 /* Camera Uploads Progress Uploads Complete Subtitle */
-"cameraUploads.progress.uploadsComplete.subtitle"="New photos and videos will show here after you take them.";
+"cameraUploads.progress.uploadsComplete.subtitle"="New photos and videos will show here after you take them";
 /* Camera Uploads Empty In Progress Row title */
-"cameraUploads.progress.row.emptyInProgress.title"="Items in progress will appear here";
+"cameraUploads.progress.row.emptyInProgress.title"="Transfers in progress will appear here";
 /* Camera Uploads Empty In Queue Row title */
-"cameraUploads.progress.row.emptyInQueue.title"="Items in the queue will appear here";
+"cameraUploads.progress.row.emptyInQueue.title"="Transfers in the queue will appear here";
 /* Sorting option label for sorting items based on the share creation date (can be applied in ascending or descending order) */
 "sorting.shareCreated.title"="Share created";
 /* Sorting option label for sorting items based on the link creation date (can be applied in ascending or descending order) */
 "sorting.linkCreated.title"="Link created";
 /* Camera Uploads Checking For Uploads */
-"cameraUploads.checkingForUploads"="Checking for uploads...";
+"cameraUploads.checkingForUploads"="Checking for uploads…";
 /* Camera Uploads Complete */
 "cameraUploads.complete"="Camera uploads complete";
 /* Camera Uploads Up To Date */
 "cameraUploads.upToDate"="Camera uploads up to date";
 /* Hidden files and folders onboarding content control visibility message */
-"onboarding.hiddenFilesAndFolders.content.item.controlVisibility.message"="Only you can reveal hidden files, either individually or by temporarily displaying hidden items from the [A]Settings[/A].";
-/* The title of the empty state in Cloud Drive root */
-"cloudDrive.emptyState.title.root"="Nothing in your private vault yet";
-/* The title of the empty state in a non-root Cloud Drive folder */
-"cloudDrive.emptyState.title.nonRoot"="This folder is empty";
-/* The explanation of the empty state in Cloud Drive screen */
-"cloudDrive.emptyState.root.explanation"="Keep something safe with zero-knowledge encryption.";
-/* The title of the call-to-action button on an empty Cloud Drive screen */
-"cloudDrive.emptyState.ctaButtonTitle"="Add item";
+"onboarding.hiddenFilesAndFolders.content.item.controlVisibility.message"="Only you can reveal hidden files, either individually or by temporarily displaying hidden items from [A]Settings[/A].";

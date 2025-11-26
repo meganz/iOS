@@ -51,7 +51,7 @@
 /* Hint text to suggest that the user has to write the decryption key */
 "decryptionKey"="مفتاح فك التشفير";
 /* Button title to try to decrypt the link */
-"decrypt"="فك التشفير";
+"decrypt"="تابع";
 /* Alert title shown when you have written a decryption key not valid */
 "decryptionKeyNotValid"="مفتاح فك التشفير غير صالح";
 /* This dialog message is used on the Password Decrypt dialog. The link is a password protected link so the user needs to enter the password to decrypt the link. */
@@ -59,7 +59,7 @@
 /* This dialog message is used on the Password Decrypt dialog as an instruction for the user. */
 "If you do not have the password, contact the creator of the link."="إذا كنت لاتمتلك كلمة المرور، تواصل مع منشئ الرابط.";
 /* This placeholder text is used on the Password Decrypt dialog as an instruction for the user. */
-"Enter the password"="أدخل كلمة المرور";
+"Enter the password"="Enter the link password";
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOut_alertTitle"="تم تسجيل الخروج";
 /* Alert message shown when your account has been closed through another client or the web by killing all your sessions */
@@ -4145,15 +4145,15 @@
 /* Hidden files and folders onboarding content hide important title */
 "onboarding.hiddenFilesAndFolders.hideImportant.content.title"="إخفاء الملفات والمجلدات المهمة";
 /* Hidden files and folders onboarding content hide important message */
-"onboarding.hiddenFilesAndFolders.hideImportant.content.message"="You can conceal sensitive files and folders for privacy in one easy step.";
+"onboarding.hiddenFilesAndFolders.hideImportant.content.message"="يمكنك إخفاء الملفات والمجلدات الحساسة للخصوصية في خطوة واحدة سهلة.";
 /* Hidden files and folders onboarding content exclude from timeline title */
 "onboarding.hiddenFilesAndFolders.excludeTimeline.content.title"="بعيدًا عن الأنظار";
 /* Hidden files and folders onboarding content exclude from timeline section message */
-"onboarding.hiddenFilesAndFolders.excludeTimeline.content.message"="Only you can reveal hidden files, either individually or by temporarily displaying hidden items from the settings.";
+"onboarding.hiddenFilesAndFolders.excludeTimeline.content.message"="يمكنك فقط الكشف عن الملفات المخفية إما بشكل فردي أو عن طريق عرض العناصر المخفية مؤقتًا من الإعدادات.";
 /* Hidden files and folders onboarding content out of sight title */
-"onboarding.hiddenFilesAndFolders.outOfSight.content.title"="Blur for privacy";
+"onboarding.hiddenFilesAndFolders.outOfSight.content.title"="طمس للخصوصية";
 /* Hidden files and folders onboarding content out of sight message */
-"onboarding.hiddenFilesAndFolders.outOfSight.content.message"="Show hidden items with their thumbnails blurred, so you can identify them without exposing their contents.";
+"onboarding.hiddenFilesAndFolders.outOfSight.content.message"="اعرض العناصر المخفية مع عدم وضوح الصور المصغرة الخاصة بها حتى تتمكن من التعرف عليها دون الكشف عن محتوياتها.";
 /* My Account page: Menu Title of user account page */
 "account.myAccount.title"="حسابي";
 /* Storage limit capacity, where %d is the number of gigabytes that marks the storage limit */
@@ -4573,17 +4573,17 @@
 /* Hidden files and folders onboarding header title */
 "onboarding.hiddenFilesAndFolders.header.title"="ميزة جديدة: ملفات ومجلدات مخفية";
 /* Hidden files and folders onboarding content item one title */
-"onboarding.hiddenFilesAndFolders.content.item.one.title"="إخفاء ملفات و مجلدات";
+"onboarding.hiddenFilesAndFolders.content.item.one.title"="إخفاء الملفات والمجلدات المهمة";
 /* Hidden files and folders onboarding content item one message */
-"onboarding.hiddenFilesAndFolders.content.item.one.message"="يمكنك بسهولة الاحتفاظ بالملفات الحساسة في السواقة السحابية الخاصة بك وبعيدًا عن الأنظار. افتراضيًا، لا تظهر الملفات المخفية في السواقة السحابية والصور وقسم «مؤخراً».";
+"onboarding.hiddenFilesAndFolders.content.item.one.message"="يمكنك إخفاء الملفات والمجلدات الحساسة للخصوصية في خطوة واحدة سهلة.";
 /* Hidden files and folders onboarding content item two title */
-"onboarding.hiddenFilesAndFolders.content.item.two.title"="التحكم في الرؤية بسهولة";
+"onboarding.hiddenFilesAndFolders.content.item.two.title"="بعيدًا عن الأنظار";
 /* Hidden files and folders onboarding content item two message */
 "onboarding.hiddenFilesAndFolders.content.item.two.message"="لإظهار الملفات المخفية، قم بتشغيل إعداد «إظهار العناصر المخفية» ضمن «إدارة الملفات» -> «واجهة المستخدم» في إعدادات التطبيق.";
 /* Hidden files and folders onboarding content item three title */
-"onboarding.hiddenFilesAndFolders.content.item.three.title"="تظل الملفات المشاركة مرئية";
+"onboarding.hiddenFilesAndFolders.content.item.three.title"="طمس للخصوصية";
 /* Hidden files and folders onboarding content item three message */
-"onboarding.hiddenFilesAndFolders.content.item.three.message"="لا تزال الملفات والمجلدات التي تمت مشاركتها مع جهات الاتصال أو مع الروابط العامة قابلة للوصول ومرئية حتى لو كانت مخفية.";
+"onboarding.hiddenFilesAndFolders.content.item.three.message"="اعرض العناصر المخفية مع عدم وضوح الصور المصغرة الخاصة بها حتى تتمكن من التعرف عليها دون الكشف عن محتوياتها.";
 /* Title for note to self chat, used in the messages view but also in lists where note to self is diplayed */
 "chat.messages.noteToSelf.title"="ملاحظة لنفسي";
 /* Title for note to self chat messages view header, at the top the chat room */
@@ -4639,7 +4639,7 @@
 /* Displays the amount of data transfer included in the subscription plan */
 "subscriptionPurchase.plan.transfer"="%@ تراسل المعطيات";
 /* Displays the total amount when billed yearly */
-"subscriptionPurchase.plan.billedYearly"="%@ charged yearly";
+"subscriptionPurchase.plan.billedYearly"="%@ يتم تحصيلهم سنويًا";
 /* Button title to cancel the subscription purchase. */
 "subscriptionPurchase.maybeLater"="ربما في وقت لاحق";
 /* Title for the features of pro plan in the subscription purchase screen. */
@@ -4757,7 +4757,7 @@
 /* General deal plan badge text shown in Upgrade plan screen */
 "upgradeAccountPlan.plan.tag.introOffer.generalDeal"="%@ خصم";
 /* Subscription plan first year offer text shown in Upgrade plan screen */
-"subscriptionPurchase.plan.firstYearOffer"="%@ for the first year";
+"subscriptionPurchase.plan.firstYearOffer"="%@ للسنة الأولى";
 /* Header text in Upgrade plan screen to highlight yearly billing savings with intro offer */
 "upgradeAccountPlan.header.title.saveYearlyBillingWithIntoOffer"="وفر على الأقل %@ بباقة سنوية";
 /* Camera Uploads Progress navigation title */
@@ -4767,9 +4767,9 @@
 /* Camera Uploads row progress format */
 "cameraUploads.progress.row.uploadProgressFormat"="%@ of %@ %@/s";
 /* Cyber Monday deal plan badge text shown in Upgrade plan screen */
-"upgradeAccountPlan.plan.tag.introOffer.cyberMondayDeal"="Cyber Monday deal: %@ off";
+"upgradeAccountPlan.plan.tag.introOffer.cyberMondayDeal"="صفقة الاثنين الالكتروني: خصم %@ ";
 /* Special Offer plan badge text shown in Upgrade plan screen */
-"upgradeAccountPlan.plan.tag.introOffer.specialOffer"="Special offer: %@ off";
+"upgradeAccountPlan.plan.tag.introOffer.specialOffer"="عرض خاص: خصم %@";
 /* View mode title for grid view in the cloud drive. */
 "cloudDrive.viewMode.grid.title"="عرض شبكي";
 /* Camera Uploads Progress In Queue section title */
@@ -4777,8 +4777,46 @@
 /* Camera Uploads row file progress */
 "cameraUploads.progress.row.fileProgress"="%1$@ من %2$@";
 /* Camera Uploads row file upload speed */
-"cameraUploads.progress.row.uploadSpeed"="%@/s";
+"cameraUploads.progress.row.uploadSpeed"="%@/ثانية";
 /* Footer for the yearly billing option in the upgrade account plan screen */
-"upgradeAccountPlan.plan.yearly.footer"="Charged Yearly";
+"upgradeAccountPlan.plan.yearly.footer"="الدفعة سنوياً";
 /* Price per month display for yearly billing option in the upgrade account plan screen */
 "upgradeAccountPlan.plan.yearly.pricePerMonth"="Only %@/month";
+/* Camera Uploads Banner Paused Low Battery Subtitle */
+"cameraUploads.progress.banner.paused.lowBattery.subtitle"="Camera uploads paused, battery level too low. Charge battery to resume camera uploads.";
+/* Camera Uploads Banner Paused High Thermal State Subtitle */
+"cameraUploads.progress.banner.paused.highThermalState.subtitle"="Camera uploads paused, device temperature too high. Uploads will resume once your device cools down.";
+/* Camera Uploads Banner Paused Network Issue Subtitle */
+"cameraUploads.progress.banner.paused.networkIssue.subtitle"="Camera uploads paused, no internet connection";
+/* Camera Uploads Banner Paused network no wifi cellular upload not allowed allow mobile data */
+"cameraUploads.progress.banner.paused.allowMobileData.button.title"="السماح ببيانات الهاتف المحمول";
+/* Camera Uploads Banner Storage Full Title */
+"cameraUploads.progress.banner.storageFull.title"="مساحة التخزين الخاصة بك ممتلئة";
+/* Camera Uploads Banner Storage Full Subtitle */
+"cameraUploads.progress.banner.storageFull.subtitle"="To keep uploading, upgrade now to get more storage";
+/* Camera Uploads Banner Storage Full Button Title */
+"cameraUploads.progress.banner.storageFull.button.title"="رق حسابك الآن";
+/* Camera Uploads Banner Limited Access Subtitle */
+"cameraUploads.progress.banner.limitedAccess.subtitle"="To ensure we don’t miss all your memories, MEGA needs full access to your photo library";
+/* Camera Uploads Banner Limited Access Button Title */
+"cameraUploads.progress.banner.limitedAccess.button.title"="Update permissions";
+/* Camera Uploads Progress Uploads Complete Title */
+"cameraUploads.progress.uploadsComplete.title"="لقد اطلعت على كل شيء";
+/* Camera Uploads Progress Uploads Complete Subtitle */
+"cameraUploads.progress.uploadsComplete.subtitle"="New photos and videos will show here after you take them";
+/* Camera Uploads Empty In Progress Row title */
+"cameraUploads.progress.row.emptyInProgress.title"="Transfers in progress will appear here";
+/* Camera Uploads Empty In Queue Row title */
+"cameraUploads.progress.row.emptyInQueue.title"="Transfers in the queue will appear here";
+/* Sorting option label for sorting items based on the share creation date (can be applied in ascending or descending order) */
+"sorting.shareCreated.title"="تم انشاء المشاركة";
+/* Sorting option label for sorting items based on the link creation date (can be applied in ascending or descending order) */
+"sorting.linkCreated.title"="تم إنشاء الرابط";
+/* Camera Uploads Checking For Uploads */
+"cameraUploads.checkingForUploads"="جاري التحقق من الترفيعات…";
+/* Camera Uploads Complete */
+"cameraUploads.complete"="اكتملت ترفيعات الكاميرا";
+/* Camera Uploads Up To Date */
+"cameraUploads.upToDate"="Camera uploads up to date";
+/* Hidden files and folders onboarding content control visibility message */
+"onboarding.hiddenFilesAndFolders.content.item.controlVisibility.message"="يمكنك فقط الكشف عن الملفات المخفية إما بشكل فردي أو عن طريق عرض العناصر المخفية مؤقتًا من [A]إعدادات[/A].";

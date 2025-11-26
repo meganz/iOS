@@ -2855,7 +2855,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>u</string>
         <key>other</key>
-        <string></string>
+        <string>アップロード中：残り%u件</string>
       </dict>
     </dict>
     <key>cameraUploads.progress.paused.items</key>
@@ -2869,7 +2869,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>u</string>
         <key>other</key>
-        <string></string>
+        <string>一時停止中：残り%u件</string>
       </dict>
     </dict>
   </dict>

@@ -51,7 +51,7 @@
 /* Hint text to suggest that the user has to write the decryption key */
 "decryptionKey"="Chìa khóa giải mã";
 /* Button title to try to decrypt the link */
-"decrypt"="Giải mã";
+"decrypt"="Tiếp tục";
 /* Alert title shown when you have written a decryption key not valid */
 "decryptionKeyNotValid"="Chìa khóa giải mã không hợp lệ";
 /* This dialog message is used on the Password Decrypt dialog. The link is a password protected link so the user needs to enter the password to decrypt the link. */
@@ -59,7 +59,7 @@
 /* This dialog message is used on the Password Decrypt dialog as an instruction for the user. */
 "If you do not have the password, contact the creator of the link."="Nếu bạn không biết mật khẩu giải mã. Liên hệ với chủ sở hữu đường liên kết này.";
 /* This placeholder text is used on the Password Decrypt dialog as an instruction for the user. */
-"Enter the password"="Nhập mật khẩu giải mã";
+"Enter the password"="Enter the link password";
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOut_alertTitle"="Đã đăng xuất";
 /* Alert message shown when your account has been closed through another client or the web by killing all your sessions */
@@ -4573,17 +4573,17 @@
 /* Hidden files and folders onboarding header title */
 "onboarding.hiddenFilesAndFolders.header.title"="Tính năng mới: Tệp tin và thư mục ẩn";
 /* Hidden files and folders onboarding content item one title */
-"onboarding.hiddenFilesAndFolders.content.item.one.title"="Ẩn đi tệp tin và thư mục";
+"onboarding.hiddenFilesAndFolders.content.item.one.title"="Ẩn đi các tệp tin và thư mục quan trọng";
 /* Hidden files and folders onboarding content item one message */
-"onboarding.hiddenFilesAndFolders.content.item.one.message"="Dễ dàng giữ các tệp tin nhạy cảm trong Ổ Mây của bạn ở chế độ riêng tư và ngoài tầm nhìn. Theo mặc định, các tệp tin ẩn đi không có xuất hiện trong phần Ổ Mây, Ảnh và hoạt động Gần Đây của bạn.";
+"onboarding.hiddenFilesAndFolders.content.item.one.message"="Bạn có thể che giấu các tệp và thư mục nhạy cảm để có quyền riêng tư trong một bước dễ dàng";
 /* Hidden files and folders onboarding content item two title */
-"onboarding.hiddenFilesAndFolders.content.item.two.title"="Kiểm soát chế độ hiển thị dễ dàng";
+"onboarding.hiddenFilesAndFolders.content.item.two.title"="Ra khỏi tầm nhìn";
 /* Hidden files and folders onboarding content item two message */
 "onboarding.hiddenFilesAndFolders.content.item.two.message"="Để hiển thị các tệp tin bị ẩn, hãy bật “Hiển thị các mục ẩn” trong “Quản lý tệp tin” → “Giao diện người dùng” trong phần thiết đặt của ứng dụng.";
 /* Hidden files and folders onboarding content item three title */
-"onboarding.hiddenFilesAndFolders.content.item.three.title"="Các tệp tin đã chia sẻ vẫn được hiển thị";
+"onboarding.hiddenFilesAndFolders.content.item.three.title"="Làm mờ để giữ riêng tư";
 /* Hidden files and folders onboarding content item three message */
-"onboarding.hiddenFilesAndFolders.content.item.three.message"="Các tệp tin và thư mục đã được chia sẻ với các tên liên lạc hoặc bằng đường liên kết công khai vẫn có thể truy cập được và có hiển thị, ngay cả khi bị ẩn.";
+"onboarding.hiddenFilesAndFolders.content.item.three.message"="Hiển thị các mục đã ẩn với hình thu nhỏ bị mờ, vì vậy bạn có thể xác định chúng mà không để lộ nội dung của chúng";
 /* Title for note to self chat, used in the messages view but also in lists where note to self is diplayed */
 "chat.messages.noteToSelf.title"="Lời nhắn cho bản thân";
 /* Title for note to self chat messages view header, at the top the chat room */
@@ -4779,6 +4779,44 @@
 /* Camera Uploads row file upload speed */
 "cameraUploads.progress.row.uploadSpeed"="%@/s";
 /* Footer for the yearly billing option in the upgrade account plan screen */
-"upgradeAccountPlan.plan.yearly.footer"="Charged Yearly";
+"upgradeAccountPlan.plan.yearly.footer"="Mua hằng năm";
 /* Price per month display for yearly billing option in the upgrade account plan screen */
 "upgradeAccountPlan.plan.yearly.pricePerMonth"="Only %@/month";
+/* Camera Uploads Banner Paused Low Battery Subtitle */
+"cameraUploads.progress.banner.paused.lowBattery.subtitle"="Camera uploads paused, battery level too low. Charge battery to resume camera uploads.";
+/* Camera Uploads Banner Paused High Thermal State Subtitle */
+"cameraUploads.progress.banner.paused.highThermalState.subtitle"="Camera uploads paused, device temperature too high. Uploads will resume once your device cools down.";
+/* Camera Uploads Banner Paused Network Issue Subtitle */
+"cameraUploads.progress.banner.paused.networkIssue.subtitle"="Camera uploads paused, no internet connection";
+/* Camera Uploads Banner Paused network no wifi cellular upload not allowed allow mobile data */
+"cameraUploads.progress.banner.paused.allowMobileData.button.title"="Cho phép dùng mạng di dộng";
+/* Camera Uploads Banner Storage Full Title */
+"cameraUploads.progress.banner.storageFull.title"="Không gian lưu trữ đã đầy";
+/* Camera Uploads Banner Storage Full Subtitle */
+"cameraUploads.progress.banner.storageFull.subtitle"="To keep uploading, upgrade now to get more storage";
+/* Camera Uploads Banner Storage Full Button Title */
+"cameraUploads.progress.banner.storageFull.button.title"="Nâng cấp ngay";
+/* Camera Uploads Banner Limited Access Subtitle */
+"cameraUploads.progress.banner.limitedAccess.subtitle"="To ensure we don’t miss all your memories, MEGA needs full access to your photo library";
+/* Camera Uploads Banner Limited Access Button Title */
+"cameraUploads.progress.banner.limitedAccess.button.title"="Update permissions";
+/* Camera Uploads Progress Uploads Complete Title */
+"cameraUploads.progress.uploadsComplete.title"="Đã xong hết";
+/* Camera Uploads Progress Uploads Complete Subtitle */
+"cameraUploads.progress.uploadsComplete.subtitle"="New photos and videos will show here after you take them";
+/* Camera Uploads Empty In Progress Row title */
+"cameraUploads.progress.row.emptyInProgress.title"="Transfers in progress will appear here";
+/* Camera Uploads Empty In Queue Row title */
+"cameraUploads.progress.row.emptyInQueue.title"="Transfers in the queue will appear here";
+/* Sorting option label for sorting items based on the share creation date (can be applied in ascending or descending order) */
+"sorting.shareCreated.title"="Thời điểm chia sẻ";
+/* Sorting option label for sorting items based on the link creation date (can be applied in ascending or descending order) */
+"sorting.linkCreated.title"="Liên kết đã tạo";
+/* Camera Uploads Checking For Uploads */
+"cameraUploads.checkingForUploads"="Đang kiểm tra các phiên tải lên…";
+/* Camera Uploads Complete */
+"cameraUploads.complete"="Đăng tải camêra đã hoàn tất";
+/* Camera Uploads Up To Date */
+"cameraUploads.upToDate"="Camera uploads up to date";
+/* Hidden files and folders onboarding content control visibility message */
+"onboarding.hiddenFilesAndFolders.content.item.controlVisibility.message"="Chỉ bạn mới có thể tiết lộ các tệp tin ẩn, riêng lẻ hoặc bằng cách tạm thời hiển thị các mục ẩn từ [A]Thiết đặt[/A].";
