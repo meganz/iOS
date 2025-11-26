@@ -12,8 +12,27 @@ import UIKit
 import Video
 
 final class VideoRevampTabContainerViewController: UIViewController {
+    let router: any VideoRevampRouting
+    let tracker: any AnalyticsTracking
+    
+    private lazy var nodeAccessoryActionDelegate = DefaultNodeAccessoryActionDelegate()
     
     private var cancellables = Set<AnyCancellable>()
+    private let viewModel: VideoRevampTabContainerViewModel
+    private let fileSearchUseCase: any FilesSearchUseCaseProtocol
+    private let photoLibraryUseCase: any PhotoLibraryUseCaseProtocol
+    private let videoPlaylistUseCase: any VideoPlaylistUseCaseProtocol
+    private let videoPlaylistContentUseCase: any VideoPlaylistContentsUseCaseProtocol
+    private let videoPlaylistModificationUseCase: any VideoPlaylistModificationUseCaseProtocol
+    private let sortOrderPreferenceUseCase: any SortOrderPreferenceUseCaseProtocol
+    private let nodeIconUseCase: any NodeIconUsecaseProtocol
+    private let nodeUseCase: any NodeUseCaseProtocol
+    private let sensitiveNodeUseCase: any SensitiveNodeUseCaseProtocol
+    
+    private let videoConfig: VideoConfig
+    private let featureFlagProvider: any FeatureFlagProviderProtocol
+    private let videoToolbarViewModel: VideoToolbarViewModel
+    private var showSnackBarSubscription: AnyCancellable?
     
     private lazy var recentlyWatchedVideosBarButtonItem = {
         UIBarButtonItem(image: MEGAAssets.UIImage.clockPlay, style: .plain, target: self, action: #selector(recentlyWatchedVideosButtonItemTapped))
@@ -43,28 +62,6 @@ final class VideoRevampTabContainerViewController: UIViewController {
         controller.hidesNavigationBarDuringPresentation = false
         return controller
     }()
-    
-    private lazy var nodeAccessoryActionDelegate = DefaultNodeAccessoryActionDelegate()
-    
-    private let viewModel: VideoRevampTabContainerViewModel
-    private let fileSearchUseCase: any FilesSearchUseCaseProtocol
-    private let photoLibraryUseCase: any PhotoLibraryUseCaseProtocol
-    private let videoPlaylistUseCase: any VideoPlaylistUseCaseProtocol
-    private let videoPlaylistContentUseCase: any VideoPlaylistContentsUseCaseProtocol
-    private let videoPlaylistModificationUseCase: any VideoPlaylistModificationUseCaseProtocol
-    private let sortOrderPreferenceUseCase: any SortOrderPreferenceUseCaseProtocol
-    private let nodeIconUseCase: any NodeIconUsecaseProtocol
-    private let nodeUseCase: any NodeUseCaseProtocol
-    private let sensitiveNodeUseCase: any SensitiveNodeUseCaseProtocol
-
-    private let videoConfig: VideoConfig
-    let router: any VideoRevampRouting
-    let tracker: any AnalyticsTracking
-    private let featureFlagProvider: any FeatureFlagProviderProtocol
-    
-    private let videoToolbarViewModel: VideoToolbarViewModel
-    
-    private var showSnackBarSubscription: AnyCancellable?
     
     init(
         viewModel: VideoRevampTabContainerViewModel,
@@ -138,7 +135,7 @@ final class VideoRevampTabContainerViewController: UIViewController {
             navigationItem.rightBarButtonItems = defaultRightBarButtonItems()
             setupContextMenuBarButton(currentTab: viewModel.syncModel.currentTab)
         }
-
+        
         if let navigationBar = navigationController?.navigationBar {
             AppearanceManager.forceNavigationBarUpdate(navigationBar)
         }
@@ -178,8 +175,22 @@ final class VideoRevampTabContainerViewController: UIViewController {
     private func setupToolbar(editing: Bool) {
         if editing {
             showToolbar()
+            hideMainTabBar()
         } else {
             hideToolbar()
+            showMainTabBar()
+        }
+    }
+    
+    private func showMainTabBar() {
+        UIView.animate(withDuration: 0.1) {
+            self.tabBarController?.tabBar.alpha = 1
+        }
+    }
+    
+    private func hideMainTabBar() {
+        UIView.animate(withDuration: 0.1) {
+            self.tabBarController?.tabBar.alpha = 0
         }
     }
     
@@ -208,17 +219,101 @@ final class VideoRevampTabContainerViewController: UIViewController {
     }
     
     private func configureToolbar() {
+        if #available(iOS 26.0, *), featureFlagProvider.isLiquidGlassEnabled() {
+            configureToolbarWithGroups()
+        } else {
+            configureToolbarLegacy()
+        }
+    }
+    
+    @available(iOS 26.0, *)
+    private func configureToolbarWithGroups() {
+        let leftGroup = UIBarButtonItemGroup(
+            barButtonItems: [
+                UIBarButtonItem(image: videoConfig.toolbarAssets.offlineImage, style: .plain, target: self, action: #selector(downloadAction(_:)))
+            ],
+            representativeItem: nil
+        )
+        
+        let centerGroup = UIBarButtonItemGroup(
+            barButtonItems: [
+                UIBarButtonItem(image: videoConfig.toolbarAssets.linkImage, style: .plain, target: self, action: #selector(linkAction(_:))),
+                UIBarButtonItem(image: videoConfig.toolbarAssets.saveToPhotosImage, style: .plain, target: self, action: #selector(saveToPhotosAction(_:))),
+                UIBarButtonItem(image: videoConfig.toolbarAssets.sendToChatImage, style: .plain, target: self, action: #selector(sendToChatAction(_:)))
+            ],
+            representativeItem: nil
+        )
+        
+        let rightGroup = UIBarButtonItemGroup(
+            barButtonItems: [
+                UIBarButtonItem(image: videoConfig.toolbarAssets.moreListImage, style: .plain, target: self, action: #selector(moreAction(_:)))
+            ],
+            representativeItem: nil
+        )
+        
         toolbar.items = [
-            UIBarButtonItem(image: videoConfig.toolbarAssets.offlineImage, style: .plain, target: self, action: #selector(downloadAction(_:))),
-            UIBarButtonItem.flexibleSpace(),
-            UIBarButtonItem(image: videoConfig.toolbarAssets.linkImage, style: .plain, target: self, action: #selector(linkAction(_:))),
-            UIBarButtonItem.flexibleSpace(),
-            UIBarButtonItem(image: videoConfig.toolbarAssets.saveToPhotosImage, style: .plain, target: self, action: #selector(saveToPhotosAction(_:))),
-            UIBarButtonItem.flexibleSpace(),
-            UIBarButtonItem(image: videoConfig.toolbarAssets.sendToChatImage, style: .plain, target: self, action: #selector(sendToChatAction(_:))),
-            UIBarButtonItem.flexibleSpace(),
-            UIBarButtonItem(image: videoConfig.toolbarAssets.moreListImage, style: .plain, target: self, action: #selector(moreAction(_:)))
+            UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil),
+            UIBarButtonItem(customView: createGroupView(leftGroup)),
+            UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil),
+            UIBarButtonItem(customView: createGroupView(centerGroup)),
+            UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil),
+            UIBarButtonItem(customView: createGroupView(rightGroup)),
+            UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         ]
+    }
+    
+    private func configureToolbarLegacy() {
+        let downloadItem = UIBarButtonItem(image: videoConfig.toolbarAssets.offlineImage, style: .plain, target: self, action: #selector(downloadAction(_:)))
+        let linkItem = UIBarButtonItem(image: videoConfig.toolbarAssets.linkImage, style: .plain, target: self, action: #selector(linkAction(_:)))
+        let saveToPhotosItem = UIBarButtonItem(image: videoConfig.toolbarAssets.saveToPhotosImage, style: .plain, target: self, action: #selector(saveToPhotosAction(_:)))
+        let sendToChatItem = UIBarButtonItem(image: videoConfig.toolbarAssets.sendToChatImage, style: .plain, target: self, action: #selector(sendToChatAction(_:)))
+        let moreItem = UIBarButtonItem(image: videoConfig.toolbarAssets.moreListImage, style: .plain, target: self, action: #selector(moreAction(_:)))
+        
+        let flexibleSpace = UIBarButtonItem.flexibleSpace()
+        
+        toolbar.items = [
+            downloadItem,
+            flexibleSpace,
+            linkItem,
+            flexibleSpace,
+            saveToPhotosItem,
+            flexibleSpace,
+            sendToChatItem,
+            flexibleSpace,
+            moreItem
+        ]
+    }
+    
+    private func createGroupView(_ group: UIBarButtonItemGroup) -> UIView {
+        let stackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.spacing = 8
+        stackView.distribution = .fillEqually
+        
+        for item in group.barButtonItems {
+            if let button = item.customView as? UIButton ?? createButton(from: item) {
+                stackView.addArrangedSubview(button)
+            }
+        }
+        
+        return stackView
+    }
+    
+    private func createButton(from barButtonItem: UIBarButtonItem) -> UIButton? {
+        guard let image = barButtonItem.image,
+              let action = barButtonItem.action,
+              let target = barButtonItem.target else {
+            return nil
+        }
+        
+        let button = UIButton(type: .system)
+        button.setImage(image, for: .normal)
+        button.addTarget(target, action: action, for: .touchUpInside)
+        button.tintColor = UIColor(videoConfig.colorAssets.primaryIconColor)
+        button.widthAnchor.constraint(equalToConstant: 44).isActive = true
+        button.heightAnchor.constraint(equalToConstant: 44).isActive = true
+        
+        return button
     }
     
     private func configureToolbarAppearance() {
@@ -229,8 +324,22 @@ final class VideoRevampTabContainerViewController: UIViewController {
             }
             .store(in: &cancellables)
         
+        if #available(iOS 26.0, *), featureFlagProvider.isLiquidGlassEnabled() {
+            let appearance = UIToolbarAppearance()
+            appearance.configureWithDefaultBackground()
+            appearance.backgroundEffect = UIBlurEffect(style: .systemMaterial)
+            appearance.backgroundColor = UIColor(videoConfig.colorAssets.toolbarBackgroundColor).withAlphaComponent(0.8)
+            
+            toolbar.isTranslucent = true
+            toolbar.standardAppearance = appearance
+            toolbar.compactAppearance = appearance
+            toolbar.scrollEdgeAppearance = appearance
+        } else {
+            toolbar.isTranslucent = false
+            toolbar.backgroundColor = UIColor(videoConfig.colorAssets.toolbarBackgroundColor)
+        }
+        
         toolbar.items?.forEach { $0.tintColor = UIColor(videoConfig.colorAssets.primaryIconColor) }
-        toolbar.backgroundColor = UIColor(videoConfig.colorAssets.toolbarBackgroundColor)
     }
     
     private func hideToolbar() {
@@ -324,7 +433,7 @@ final class VideoRevampTabContainerViewController: UIViewController {
             .sink { [weak self] in self?.refreshContextMenuBarButton(currentTab: $0) }
             .store(in: &cancellables)
     }
-
+    
     private func subscribeToEditMode() {
         viewModel.syncModel.$editMode
             .sink { [weak self] editMode in
@@ -333,18 +442,18 @@ final class VideoRevampTabContainerViewController: UIViewController {
             }
             .store(in: &cancellables)
     }
-
+    
     private func enterEditingMode() {
         guard !isEditing else { return }
-
+        
         executeCommand(.navigationBarCommand(.toggleEditing))
         executeCommand(.searchBarCommand(.hideSearchBar))
-
+        
         setupNavigationBarButtons()
-
+        
         viewModel.syncModel.searchText.removeAll()
     }
-
+    
     private func subscribeToVideoSelection() {
         Publishers.CombineLatest(
             viewModel.videoSelection.$editMode.map(\.isEditing),
@@ -380,7 +489,7 @@ final class VideoRevampTabContainerViewController: UIViewController {
             break
         }
     }
-
+    
     @objc private func saveToPhotosAction(_ sender: UIBarButtonItem) {
         switch viewModel.syncModel.currentTab {
         case .all:
@@ -523,7 +632,7 @@ extension VideoRevampTabContainerViewController: TraitEnvironmentAware {
 // MARK: - BrowserViewControllerDelegate
 
 extension VideoRevampTabContainerViewController: BrowserViewControllerDelegate {
- 
+    
     public func nodeEditCompleted(_ complete: Bool) {
         resetNavigationBar()
     }
