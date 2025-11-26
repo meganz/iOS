@@ -829,6 +829,12 @@ public struct MEGAImageBundle {
   public static var gearSixMediumThin: SwiftUICore.Image {
     get
   }
+  public static var cloudDriveEmptyStateRoot: SwiftUICore.Image {
+    get
+  }
+  public static var cloudDriveEmptyStateNonRoot: SwiftUICore.Image {
+    get
+  }
 }
 extension Foundation.Bundle {
   public static let MEGAAssetsBundle: Foundation.Bundle
@@ -2343,6 +2349,12 @@ public struct MEGAUIImageBundle {
     get
   }
   public static var gearSixMediumThin: UIKit.UIImage {
+    get
+  }
+  public static var cloudDriveEmptyStateRoot: UIKit.UIImage {
+    get
+  }
+  public static var cloudDriveEmptyStateNonRoot: UIKit.UIImage {
     get
   }
 }

@@ -444,4 +444,6 @@ public struct MEGAUIImageBundle {
     public static var alertTriangle: UIImage { UIImage.alertTriangle }
     public static var glassCheckCircle: UIImage { UIImage.glassCheckCircle }
     public static var gearSixMediumThin: UIImage { UIImage.gearSixMediumThin }
+    public static var cloudDriveEmptyStateRoot: UIImage { UIImage.cloudDriveEmptyStateRoot }
+    public static var cloudDriveEmptyStateNonRoot: UIImage { UIImage.cloudDriveEmptyStateNonRoot }
 }

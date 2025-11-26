@@ -4820,3 +4820,11 @@
 "cameraUploads.upToDate"="Camera uploads up to date";
 /* Hidden files and folders onboarding content control visibility message */
 "onboarding.hiddenFilesAndFolders.content.item.controlVisibility.message"="Only you can reveal hidden files, either individually or by temporarily displaying hidden items from the [A]Settings[/A].";
+/* The title of the empty state in Cloud Drive root */
+"cloudDrive.emptyState.title.root"="Nothing in your private vault yet";
+/* The title of the empty state in a non-root Cloud Drive folder */
+"cloudDrive.emptyState.title.nonRoot"="This folder is empty";
+/* The explanation of the empty state in Cloud Drive screen */
+"cloudDrive.emptyState.root.explanation"="Keep something safe with zero-knowledge encryption.";
+/* The title of the call-to-action button on an empty Cloud Drive screen */
+"cloudDrive.emptyState.ctaButtonTitle"="Add item";

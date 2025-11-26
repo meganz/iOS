@@ -1,7 +1,7 @@
 // swift-interface-format-version: 1.0
-// swift-compiler-version: Apple Swift version 6.2.1 effective-5.10 (swiftlang-6.2.1.4.8 clang-1700.4.4.1)
+// swift-compiler-version: Apple Swift version 6.2 effective-5.10 (swiftlang-6.2.0.19.9 clang-1700.3.19.1)
 // swift-module-flags: -target arm64-apple-ios16.0 -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -enable-experimental-feature DebugDescriptionMacro -enable-bare-slash-regex -module-name MEGAL10n
-// swift-module-flags-ignorable:  -formal-cxx-interoperability-mode=off -interface-compiler-version 6.2.1
+// swift-module-flags-ignorable:  -formal-cxx-interoperability-mode=off -interface-compiler-version 6.2
 import Foundation
 import Swift
 import _Concurrency
@@ -2249,6 +2249,16 @@ public enum Strings {
         public static let paste: Swift.String
         public enum SaveToCloudDrive {
           public static let title: Swift.String
+        }
+      }
+      public enum EmptyState {
+        public static let ctaButtonTitle: Swift.String
+        public enum Root {
+          public static let explanation: Swift.String
+        }
+        public enum Title {
+          public static let nonRoot: Swift.String
+          public static let root: Swift.String
         }
       }
       public enum FileLink {
