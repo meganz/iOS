@@ -877,7 +877,7 @@ class NodeActionBuilderTests {
             .setAccessLevel(.accessFull)
             .build()
         
-        #expect(isEqual(nodeActionTypes: [.editTextFile, .download, .import, .exportFile, .sendToChat]) == true)
+        #expect(isEqual(nodeActionTypes: [.editTextFile, .download, .import, .exportFile, .sendToChat, .moveToRubbishBin]) == true)
     }
     
     @Test

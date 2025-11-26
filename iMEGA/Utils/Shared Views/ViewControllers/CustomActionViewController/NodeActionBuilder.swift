@@ -324,7 +324,7 @@ final class NodeActionBuilder {
             nodeActions.append(hiddenStateAction)
         }
 
-        if accessLevel == .accessOwner && !isLink {
+        if (accessLevel == .accessOwner || accessLevel == .accessFull) && !isLink {
             nodeActions.append(.moveToRubbishBinAction())
         }
 
@@ -362,7 +362,7 @@ final class NodeActionBuilder {
             nodeActions.append(hiddenStateAction)
         }
 
-        if accessLevel == .accessOwner && !isLink {
+        if (accessLevel == .accessOwner || accessLevel == .accessFull) && !isLink {
             nodeActions.append(.moveToRubbishBinAction())
         }
 
