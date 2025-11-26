@@ -208,7 +208,12 @@ final class PhotoAlbumContainerViewController: UIViewController {
     }
     
     private func configureSearchBar() {
-        edgesForExtendedLayout = []
+        if #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() {
+            edgesForExtendedLayout = .bottom
+        } else {
+            edgesForExtendedLayout = []
+        }
+        
         navigationItem.searchController = searchController
         navigationItem.hidesSearchBarWhenScrolling = false
         extendedLayoutIncludesOpaqueBars = true
@@ -377,7 +382,7 @@ final class PhotoAlbumContainerViewController: UIViewController {
             self.pageController.view.topAnchor.constraint(equalTo: hostingController.view.bottomAnchor, constant: 2),
             self.pageController.view.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
             self.pageController.view.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
-            self.pageController.view.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor)
+            self.pageController.view.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
         ])
     }
     
