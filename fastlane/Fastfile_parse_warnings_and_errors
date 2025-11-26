@@ -24,9 +24,12 @@
       merge_request_url: merge_request_url,
       token: options[:token]
     )
+  end
 
-    # Zip the xcresult file so that it could be uploaded to slack
-    sh "ditto -c -k --sequesterRsrc --keepParent #{get_latest_xcresult_file} ./../xcresult.zip"
+  # Zip the xcresult file so that it could be uploaded to slack
+  lane :zip_xcresult_file do | options |
+    xcresult_file = options[:file]
+    sh "ditto -c -k --sequesterRsrc --keepParent #{get_latest_xcresult_file} ./../#{xcresult_file}"
   end
 
   lane :get_latest_xcresult_file do

@@ -43,6 +43,35 @@ def executeFastlaneTask(taskCommand) {
     }
 }
 
+def uploadXCResultToArtifactory() {
+    if (!runUnitTestsStepReached) {
+        return
+    }  
+    
+    withCredentials([usernamePassword(credentialsId: 'Gitlab-Access-Token', usernameVariable: 'USERNAME', passwordVariable: 'TOKEN')]) {
+        withCredentials([string(credentialsId: 'ios-mega-artifactory-upload', variable: 'ARTIFACTORY_TOKEN')]) {
+            script {
+                envInjector.injectEnvs {
+                    def mr_number = commonUtils.getMRNumber()
+                    if (mr_number != null && !mr_number.isEmpty()) {
+                        try {
+                            def fileName = "${env.BUILD_NUMBER}_xcresult.zip"
+                            sh "bundle exec fastlane zip_xcresult_file file:${fileName}"
+                            env.zipPath = "${WORKSPACE}/${fileName}"
+                            env.targetPath = "https://artifactory.developers.mega.co.nz/artifactory/ios-mega/xcresult/${mr_number}/${fileName}"
+                            sh 'curl -H\"Authorization: Bearer $ARTIFACTORY_TOKEN\" -T ${zipPath} \"${targetPath}\"'
+                            def message = ":information_source: XCResult file has been uploaded to Artifactory: ${env.targetPath}"
+                            statusNotifier.postMessage(message, env.MEGA_IOS_PROJECT_ID, "warning")
+                        } catch (Exception e) {
+                            error("Fastlane task zip_xcresult_file failed: ${e.message}")
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
 def postBuildWarningsAndError() {
     executeFastlaneTask("parse_and_upload_build_warnings_and_errors")
 }
@@ -71,7 +100,7 @@ pipeline {
             script {
                 statusNotifier.postFailure(":x: Build failed", env.MEGA_IOS_PROJECT_ID)
                 postBuildWarningsAndError()
-                slackUploadFile filePath:"xcresult.zip", initialComment: "xcresult file: ${env.BRANCH_NAME}"
+                uploadXCResultToArtifactory()
             }
             
             updateGitlabCommitStatus name: 'Jenkins', state: 'failed'
