@@ -149,6 +149,16 @@ final class CameraUploadStatusButtonViewModelTests: XCTestCase {
     }
     
     @MainActor
+    func testMonitorCameraUpload_resetMonitor_shouldChangeId() async {
+        let sut = makeSUT()
+        let initialTaskId = sut.monitorTaskId
+        
+        sut.restartMonitoring()
+        
+        XCTAssertTrue(initialTaskId != sut.monitorTaskId)
+    }
+    
+    @MainActor
     private func makeSUT(
         idleWaitTimeNanoSeconds: UInt64 = 1_000_000_000,
         monitorCameraUploadUseCase: some MonitorCameraUploadUseCaseProtocol = MockMonitorCameraUploadUseCase(),

@@ -256,18 +256,3 @@ struct CameraUploadProgressViewModelTests {
         return String(format: format, locale: .current, pendingFilesCount)
     }
 }
-
-final class MockCameraUploadProgressRouter: CameraUploadProgressRouting {
-    private(set) var showUpgradeAccountCalledCount = 0
-    private(set) var showCameraUploadSettingsCalledCount = 0
-    
-    nonisolated init() {}
-    
-    func showUpgradeAccount() {
-        showUpgradeAccountCalledCount += 1
-    }
-    
-    func showCameraUploadSettings() {
-        showCameraUploadSettingsCalledCount += 1
-    }
-}

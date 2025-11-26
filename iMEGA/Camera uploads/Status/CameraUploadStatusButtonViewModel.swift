@@ -6,6 +6,8 @@ import SwiftUI
 
 @MainActor
 final class CameraUploadStatusButtonViewModel: NSObject, ObservableObject {
+    @Published private(set) var monitorTaskId = UUID()
+    
     let imageViewModel: CameraUploadStatusImageViewModel
     
     private let idleWaitTimeNanoSeconds: UInt64
@@ -65,6 +67,10 @@ final class CameraUploadStatusButtonViewModel: NSObject, ObservableObject {
     }
     
     func onTapped() { onTappedHandler?() }
+    
+    func restartMonitoring() {
+        monitorTaskId = UUID()
+    }
     
     // MARK: - Private Functions
     

@@ -75,7 +75,7 @@ final class PhotosViewModel: NSObject {
     private let cameraUploadsSettingsViewRouter: any Routing
     private let tracker: any AnalyticsTracking
     private let featureFlagProvider: any FeatureFlagProviderProtocol
-    private let cameraUploadProgressRouter: any Routing
+    private let cameraUploadProgressRouter: any CameraUploadProgressRouting
     private let idleWaitTimeNanoSeconds: UInt64
     private let uploadStateDebounceDuration: Duration
     
@@ -92,7 +92,7 @@ final class PhotosViewModel: NSObject {
          devicePermissionHandler: some DevicePermissionsHandling,
          cameraUploadsSettingsViewRouter: some Routing,
          nodeUseCase: some NodeUseCaseProtocol,
-         cameraUploadProgressRouter: any Routing,
+         cameraUploadProgressRouter: any CameraUploadProgressRouting,
          tracker: some AnalyticsTracking = DIContainer.tracker,
          featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider,
          idleWaitTimeNanoSeconds: UInt64 = 3 * 1_000_000_000,
@@ -291,7 +291,9 @@ final class PhotosViewModel: NSObject {
             return navigateToCameraUploadSettings()
         }
         if isCameraUploadProgressFeatureEnabled() {
-            cameraUploadProgressRouter.start()
+            cameraUploadProgressRouter.start { [weak self] in
+                self?.cameraUploadStatusButtonViewModel.restartMonitoring()
+            }
         } else {
             showCameraUploadStatusBanner()
         }

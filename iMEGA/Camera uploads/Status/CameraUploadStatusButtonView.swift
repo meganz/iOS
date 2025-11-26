@@ -8,7 +8,7 @@ struct CameraUploadStatusButtonView: View {
     var body: some View {
         Button(action: viewModel.onTapped) {
             CameraUploadStatusImageView(viewModel: viewModel.imageViewModel)
-                .task {
+                .task(id: viewModel.monitorTaskId) {
                     await viewModel.monitorCameraUpload()
                 }
                 .onDisappear {

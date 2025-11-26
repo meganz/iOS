@@ -8,7 +8,8 @@ import MEGARepo
 import SwiftUI
 
 @MainActor
-protocol CameraUploadProgressRouting: Routing {
+protocol CameraUploadProgressRouting {
+    func start(onCameraUploadSettingsChanged: (() -> Void)?)
     func showUpgradeAccount()
     func showCameraUploadSettings()
 }
@@ -16,6 +17,8 @@ protocol CameraUploadProgressRouting: Routing {
 final class CameraUploadProgressRouter: CameraUploadProgressRouting {
     private weak var presenter: UIViewController?
     private weak var baseViewController: UIViewController?
+    
+    private var cameraUploadSettingsChanged: (() -> Void)?
     
     init(presenter: UIViewController?) {
         self.presenter = presenter
@@ -61,7 +64,8 @@ final class CameraUploadProgressRouter: CameraUploadProgressRouting {
         return hostingController
     }
     
-    func start() {
+    func start(onCameraUploadSettingsChanged: (() -> Void)?) {
+        cameraUploadSettingsChanged = onCameraUploadSettingsChanged
         presenter?.present(build(), animated: true, completion: nil)
     }
     
@@ -84,6 +88,7 @@ final class CameraUploadProgressRouter: CameraUploadProgressRouting {
         guard let cameraUploadSettingsVC = storyboard.instantiateViewController(
             withIdentifier: "CameraUploadsSettingsID") as? CameraUploadsTableViewController else { return }
         cameraUploadSettingsVC.cameraUploadSettingChanged = { [weak self] in
+            self?.cameraUploadSettingsChanged?()
             self?.baseViewController?.presentingViewController?.dismiss(animated: true)
         }
         cameraUploadSettingsVC.isPresentedModally = true

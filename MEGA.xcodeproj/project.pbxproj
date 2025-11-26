@@ -108,6 +108,7 @@
 		0E827D2A2EA5CB2D002E8667 /* CameraUploadInProgressRowViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E827D292EA5CB2D002E8667 /* CameraUploadInProgressRowViewModelTests.swift */; };
 		0E847F852A68E27D00AFE051 /* MEGALinkManager+AdditionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E847F842A68E27D00AFE051 /* MEGALinkManager+AdditionsTests.swift */; };
 		0E8A38222A720A3C00F216FA /* AlbumNameUseCase+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E8A38212A720A3C00F216FA /* AlbumNameUseCase+Additions.swift */; };
+		0E8C8EA22ED7B03D0083918C /* MockCameraUploadProgressRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E8C8EA12ED7B03A0083918C /* MockCameraUploadProgressRouter.swift */; };
 		0E8EABAB2C853ABF001722F7 /* AlbumRemoteFeatureFlagProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E8EABAA2C853ABF001722F7 /* AlbumRemoteFeatureFlagProvider.swift */; };
 		0E8EABBB2C869F66001722F7 /* MockAlbumRemoteFeatureFlagProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E8EABBA2C869F66001722F7 /* MockAlbumRemoteFeatureFlagProvider.swift */; };
 		0E8EABC92C891E3A001722F7 /* AlbumRemoteFeatureFlagProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E8EABC82C891E3A001722F7 /* AlbumRemoteFeatureFlagProviderTests.swift */; };
@@ -2878,6 +2879,7 @@
 		0E827D292EA5CB2D002E8667 /* CameraUploadInProgressRowViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraUploadInProgressRowViewModelTests.swift; sourceTree = "<group>"; };
 		0E847F842A68E27D00AFE051 /* MEGALinkManager+AdditionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGALinkManager+AdditionsTests.swift"; sourceTree = "<group>"; };
 		0E8A38212A720A3C00F216FA /* AlbumNameUseCase+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AlbumNameUseCase+Additions.swift"; sourceTree = "<group>"; };
+		0E8C8EA12ED7B03A0083918C /* MockCameraUploadProgressRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockCameraUploadProgressRouter.swift; sourceTree = "<group>"; };
 		0E8EABAA2C853ABF001722F7 /* AlbumRemoteFeatureFlagProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumRemoteFeatureFlagProvider.swift; sourceTree = "<group>"; };
 		0E8EABBA2C869F66001722F7 /* MockAlbumRemoteFeatureFlagProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockAlbumRemoteFeatureFlagProvider.swift; sourceTree = "<group>"; };
 		0E8EABC82C891E3A001722F7 /* AlbumRemoteFeatureFlagProviderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumRemoteFeatureFlagProviderTests.swift; sourceTree = "<group>"; };
@@ -10440,6 +10442,7 @@
 		949704B52AB427A700B2CA3A /* Router */ = {
 			isa = PBXGroup;
 			children = (
+				0E8C8EA12ED7B03A0083918C /* MockCameraUploadProgressRouter.swift */,
 				94E33C992C2EDB9A00754DCB /* MockCreateTextFileAlertViewRouter.swift */,
 				943DBBC82CB94C5400B8B14C /* MockExportFileViewRouter.swift */,
 				94BF69122CAFFA460052F1D5 /* MockHomeBannerRouter.swift */,
@@ -16453,6 +16456,7 @@
 				830F60F12BD16BE600A1DA60 /* MockCallsCoordinator.swift in Sources */,
 				830FD86E2D3EBA0500CC05DB /* MockCallsManager.swift in Sources */,
 				948BCE032C206ECE00B719B2 /* MockCameraSwitcher.swift in Sources */,
+				0E8C8EA22ED7B03D0083918C /* MockCameraUploadProgressRouter.swift in Sources */,
 				94A144622C9DE59100C34A98 /* MockChatUploader.swift in Sources */,
 				94E33C9A2C2EDB9A00754DCB /* MockCreateTextFileAlertViewRouter.swift in Sources */,
 				94D4E9EB2C359F7100B07C3B /* MockCXProvider.swift in Sources */,

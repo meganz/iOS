@@ -35,7 +35,7 @@ final class PhotosViewModelTests: XCTestCase {
             devicePermissionHandler: MockDevicePermissionHandler(),
             cameraUploadsSettingsViewRouter: MockCameraUploadsSettingsViewRouter(),
             nodeUseCase: MockNodeUseCase(),
-            cameraUploadProgressRouter: MockRouter())
+            cameraUploadProgressRouter: MockCameraUploadProgressRouter())
     }
     
     @MainActor
@@ -129,7 +129,7 @@ final class PhotosViewModelTests: XCTestCase {
             devicePermissionHandler: MockDevicePermissionHandler(),
             cameraUploadsSettingsViewRouter: MockCameraUploadsSettingsViewRouter(),
             nodeUseCase: MockNodeUseCase(),
-            cameraUploadProgressRouter: MockRouter())
+            cameraUploadProgressRouter: MockCameraUploadProgressRouter())
         
         sut.filterType = .allMedia
         sut.filterLocation = . allLocations
@@ -375,7 +375,7 @@ final class PhotosViewModelTests: XCTestCase {
             devicePermissionHandler: MockDevicePermissionHandler(),
             cameraUploadsSettingsViewRouter: cameraUploadsSettingsViewRouter,
             nodeUseCase: nodeUseCase,
-            cameraUploadProgressRouter: MockRouter(),
+            cameraUploadProgressRouter: MockCameraUploadProgressRouter(),
             tracker: tracker,
             featureFlagProvider: featureFlagProvider
         )
@@ -456,7 +456,7 @@ struct PhotosViewModelTestSuite {
     @Test
     func cameraUploadStatusButtonTapped() async throws {
         let preferenceUseCase = MockPreferenceUseCase(dict: [PreferenceKeyEntity.isCameraUploadsEnabled.rawValue: true])
-        let cameraUploadProgressRouter = MockRouter()
+        let cameraUploadProgressRouter = MockCameraUploadProgressRouter()
         let featureFlagProvider = MockFeatureFlagProvider(
             list: [.cameraUploadProgress: true])
         
@@ -465,10 +465,12 @@ struct PhotosViewModelTestSuite {
             cameraUploadProgressRouter: cameraUploadProgressRouter,
             featureFlagProvider: featureFlagProvider
         )
+        let initialTaskId = sut.cameraUploadStatusButtonViewModel.monitorTaskId
         
         sut.cameraUploadStatusButtonViewModel.onTappedHandler?()
         
-        #expect(cameraUploadProgressRouter.startCalled == 1)
+        #expect(cameraUploadProgressRouter.startCalledCount == 1)
+        #expect(sut.cameraUploadStatusButtonViewModel.monitorTaskId != initialTaskId)
     }
     
     @MainActor
@@ -621,7 +623,7 @@ struct PhotosViewModelTestSuite {
         cameraUploadsSettingsViewRouter: some Routing = MockCameraUploadsSettingsViewRouter(),
         nodeUseCase: some NodeUseCaseProtocol = MockNodeUseCase(),
         tracker: some AnalyticsTracking = MockTracker(),
-        cameraUploadProgressRouter: some Routing = MockRouter(),
+        cameraUploadProgressRouter: some CameraUploadProgressRouting = MockCameraUploadProgressRouter(),
         featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:]),
         idleWaitTimeNanoSeconds: UInt64 = 100_000_000,
         uploadStateDebounceDuration: Duration = .milliseconds(10)
