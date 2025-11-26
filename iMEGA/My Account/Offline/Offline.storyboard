@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="faa-Ut-As6">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24412" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="faa-Ut-As6">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24405"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -14,11 +14,11 @@
             <objects>
                 <viewController storyboardIdentifier="OfflineViewControllerID" id="cPA-hf-QcT" customClass="OfflineViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="FGg-Hd-b4x">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="593"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XWz-nR-M7D">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="593"/>
                             </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="kdw-oU-J8k"/>
@@ -37,7 +37,6 @@
                         <outlet property="deleteBarButtonItem" destination="fzs-mP-547" id="An8-as-KmH"/>
                         <outlet property="editBarButtonItem" destination="n7R-gV-EFI" id="vp5-SC-z9w"/>
                         <outlet property="selectAllBarButtonItem" destination="Rfg-dz-CVh" id="7Ma-KV-IK3"/>
-                        <outlet property="toolbar" destination="e3i-Bd-kAN" id="E6b-k9-wcd"/>
                     </connections>
                 </viewController>
                 <barButtonItem title="Edit" width="22" style="plain" id="n7R-gV-EFI" userLabel="Edit Bar Button Item">
@@ -84,14 +83,14 @@
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="offlineTableViewCell" id="eCG-Xa-Dhr" customClass="OfflineTableViewCell">
-                                        <rect key="frame" x="0.0" y="50" width="375" height="61.5"/>
+                                        <rect key="frame" x="0.0" y="50" width="375" height="62"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" tableViewCell="eCG-Xa-Dhr" id="FIo-6z-HWv">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="61.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="62"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pB8-Mb-MD2">
-                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="61.5"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="62"/>
                                                     <subviews>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" translatesAutoresizingMaskIntoConstraints="NO" id="bTx-lv-N9A">
                                                             <rect key="frame" x="24" y="11" width="40" height="40"/>
@@ -114,7 +113,7 @@
                                                             </constraints>
                                                         </imageView>
                                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="moU-Sb-Msa">
-                                                            <rect key="frame" x="74" y="12" width="38.5" height="36"/>
+                                                            <rect key="frame" x="74" y="12" width="38.5" height="36.5"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hoe-2e-rJm" userLabel="Title" customClass="MEGALabel" customModule="MEGA" customModuleProvider="target">
                                                                     <rect key="frame" x="0.0" y="0.0" width="38.5" height="18"/>
@@ -127,7 +126,7 @@
                                                                     </userDefinedRuntimeAttributes>
                                                                 </label>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ifE-XK-OLs" userLabel="Subtitle">
-                                                                    <rect key="frame" x="0.0" y="21" width="38.5" height="15"/>
+                                                                    <rect key="frame" x="0.0" y="21" width="38.5" height="15.5"/>
                                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
@@ -258,7 +257,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="faa-Ut-As6" customClass="MEGANavigationController" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="nZ8-2M-caH">
-                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <rect key="frame" x="0.0" y="20" width="375" height="54"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -271,11 +270,6 @@
             <point key="canvasLocation" x="1635" y="-2039"/>
         </scene>
     </scenes>
-    <designables>
-        <designable name="hoe-2e-rJm">
-            <size key="intrinsicContentSize" width="38.5" height="18"/>
-        </designable>
-    </designables>
     <resources>
         <image name="moreList" width="28" height="28"/>
         <image name="rubbishBin" width="28" height="28"/>

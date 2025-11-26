@@ -18,6 +18,10 @@ static NSString *notificationServiceExtensionLog = @"MEGAiOS.NSE.log";
 
 @interface OfflineViewController : UIViewController
 
+@property (nonatomic, strong, nullable) UIToolbar *editingToolbar;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *activityBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *deleteBarButtonItem;
+
 @property (nonatomic, strong, nullable) NSIndexPath *peekIndexPath;
 
 @property (nonatomic, assign) BOOL allItemsSelected;

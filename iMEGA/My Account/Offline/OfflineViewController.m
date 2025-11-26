@@ -37,9 +37,6 @@ static NSString *kisDirectory = @"kisDirectory";
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *selectAllBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *editBarButtonItem;
 
-@property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *activityBarButtonItem;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *deleteBarButtonItem;
 @property (nonatomic, strong) dispatch_queue_t serialQueue;
 @property (nonatomic, strong) NSMutableArray *offlineMultimediaFiles;
 @property (nonatomic, strong) NSMutableArray *offlineItems;
@@ -83,6 +80,8 @@ static NSString *kisDirectory = @"kisDirectory";
     self.navigationItem.searchController = self.searchController;
     self.navigationItem.hidesSearchBarWhenScrolling = NO;
     self.serialQueue = dispatch_queue_create("nz.mega.offlineviewcontroller.reloadui", DISPATCH_QUEUE_SERIAL);
+    
+    [self setupEditingToolbar];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -729,49 +728,19 @@ static NSString *kisDirectory = @"kisDirectory";
     [self updateNavigationBarTitle];
     
     if (editing) {
+        [self configureEditingToolbarItems];
+        [self showEditingToolbar];
         
         self.navigationItem.rightBarButtonItem = self.editBarButtonItem;
         self.editBarButtonItem.title = LocalizedString(@"cancel", @"Button title to cancel something");
         self.navigationItem.leftBarButtonItems = @[self.selectAllBarButtonItem];
-        
-        UITabBar *tabBar = self.tabBarController.tabBar;
-        if (tabBar == nil) {
-            return;
-        }
-        
-        if (![self.tabBarController.view.subviews containsObject:self.toolbar]) {
-            UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
-            self.toolbar.items = @[self.activityBarButtonItem, flexibleItem, self.deleteBarButtonItem];
-            
-            [self.toolbar setAlpha:0.0];
-            [self.tabBarController.view addSubview:self.toolbar];
-            self.toolbar.translatesAutoresizingMaskIntoConstraints = NO;
-            [self.toolbar setBackgroundColor:[UIColor surface1Background]];
-            
-            NSLayoutAnchor *bottomAnchor = tabBar.safeAreaLayoutGuide.bottomAnchor;
-            
-            [NSLayoutConstraint activateConstraints:@[[self.toolbar.topAnchor constraintEqualToAnchor:tabBar.topAnchor constant:0],
-                                                      [self.toolbar.leadingAnchor constraintEqualToAnchor:tabBar.leadingAnchor constant:0],
-                                                      [self.toolbar.trailingAnchor constraintEqualToAnchor:tabBar.trailingAnchor constant:0],
-                                                      [self.toolbar.bottomAnchor constraintEqualToAnchor:bottomAnchor constant:0]]];
-            
-            [UIView animateWithDuration:0.33f animations:^ {
-                [self.toolbar setAlpha:1.0];
-            }];
-        }
     } else {
         [self configureNavigationBarButtons];
         self.allItemsSelected = NO;
         self.selectedItems = nil;
         self.navigationItem.leftBarButtonItems = @[];
         
-        [UIView animateWithDuration:0.33f animations:^ {
-            [self.toolbar setAlpha:0.0];
-        } completion:^(BOOL finished) {
-            if (finished) {
-                [self.toolbar removeFromSuperview];
-            }
-        }];
+        [self hideEditingToolbar];
     }
     
     if (!self.selectedItems) {
@@ -783,7 +752,7 @@ static NSString *kisDirectory = @"kisDirectory";
     
     [self updateAudioPlayerVisibility:editing];
     
-    [self adjustSafeAreaBottomInset: editing ? self.toolbar.frame.size.height : self.currentContentInsetHeight];
+    [self updateBottomInset:editing];
 }
 
 - (void)updateNavigationBarTitle {

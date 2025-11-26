@@ -181,3 +181,74 @@ extension OfflineViewController: AudioPlayerPresenterProtocol, BottomSafeAreaOve
         currentContentInsetHeight != 0
     }
 }
+
+extension OfflineViewController {
+    @objc func setupEditingToolbar() {
+        guard editingToolbar == nil else { return }
+        
+        let toolbar = UIToolbar()
+        toolbar.translatesAutoresizingMaskIntoConstraints = false
+        toolbar.isHidden = true
+        toolbar.alpha = 0
+        editingToolbar = toolbar
+        
+        view.addSubview(toolbar)
+        
+        NSLayoutConstraint.activate([
+            toolbar.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            toolbar.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            toolbar.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            toolbar.heightAnchor.constraint(equalToConstant: 50)
+        ])
+    }
+    
+    @objc func configureEditingToolbarItems() {
+        guard let editingToolbar, let activityBarButtonItem, let deleteBarButtonItem else { return }
+        
+        let flexible = UIBarButtonItem(
+            barButtonSystemItem: .flexibleSpace,
+            target: nil,
+            action: nil
+        )
+        
+        editingToolbar.items = [activityBarButtonItem, flexible, deleteBarButtonItem]
+    }
+    
+    @objc func showEditingToolbar() {
+        setEditingToolbarVisible(true)
+    }
+
+    @objc func hideEditingToolbar() {
+        setEditingToolbarVisible(false)
+    }
+    
+    private func setEditingToolbarVisible(_ visible: Bool) {
+        guard let editingToolbar else { return }
+
+        if visible {
+            editingToolbar.isHidden = false
+        }
+
+        UIView.animate(withDuration: 0.25, animations: {
+            editingToolbar.alpha = visible ? 1 : 0
+        }, completion: { _ in
+            editingToolbar.isHidden = !visible
+        })
+    }
+    
+    @objc func updateBottomInset(_ editing: Bool) {
+        let toolbarHeight: CGFloat = editing ? 50 : 0
+        
+        adjustSafeAreaBottomInset(currentContentInsetHeight)
+        
+        if let table = offlineTableView?.tableView {
+            table.contentInset.bottom = toolbarHeight
+            table.verticalScrollIndicatorInsets.bottom = toolbarHeight
+        }
+        
+        if let collection = offlineCollectionView?.collectionView {
+            collection.contentInset.bottom = toolbarHeight
+            collection.verticalScrollIndicatorInsets.bottom = toolbarHeight
+        }
+    }
+}
