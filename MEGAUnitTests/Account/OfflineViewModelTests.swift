@@ -39,9 +39,11 @@ final class OfflineViewModelTests: XCTestCase {
         offlineUseCase: some OfflineUseCaseProtocol = MockOfflineUseCase(),
         megaStore: MEGAStore = MockMEGAStore(),
         fileManager: MockFileManager = MockFileManager(),
+        userDefaults: MockUserDefaults! = MockUserDefaults(),
         documentDirectoryPath: String? = nil,
         sortOptions: [SearchResultsSortOption] = [],
         selectedSortOrder: Search.SortOrderEntity = .init(key: .name),
+        toggleViewModePreferenceHandler: @escaping (ViewModePreferenceEntity) -> Void = { _ in },
         file: StaticString = #file,
         line: UInt = #line
     ) -> OfflineViewModel {
@@ -58,8 +60,10 @@ final class OfflineViewModelTests: XCTestCase {
                 sortOptionSelectionHandler: { _ in }
             ),
             fileManager: fileManager,
+            userDefaults: userDefaults,
             documentsDirectoryPath: documentDirectoryPath,
-            throttler: MockThrottler()
+            throttler: MockThrottler(),
+            toggleViewModePreferenceHandler: toggleViewModePreferenceHandler
         )
         trackForMemoryLeaks(on: sut, timeoutNanoseconds: 1_000_000_000)
         return sut
@@ -273,6 +277,38 @@ final class OfflineViewModelTests: XCTestCase {
         )
     }
 
+    @MainActor
+    func testViewModeHeaderViewModel_whenListMode_shouldMatchResults() {
+        let userDefaults = MockUserDefaults(integerValue: 1)
+        let sut = makeOfflineViewModelVMSut(userDefaults: userDefaults)
+        let viewModeHeaderViewModel = sut.viewModeHeaderViewModel
+        XCTAssertEqual(viewModeHeaderViewModel.selectedViewMode, .list)
+        XCTAssertEqual(viewModeHeaderViewModel.availableViewModes, [.list, .grid])
+    }
+
+    @MainActor
+    func testViewModeHeaderViewModel_whenGridMode_shouldMatchResults() {
+        let userDefaults = MockUserDefaults(integerValue: 2)
+        let sut = makeOfflineViewModelVMSut(userDefaults: userDefaults)
+        let viewModeHeaderViewModel = sut.viewModeHeaderViewModel
+        XCTAssertEqual(viewModeHeaderViewModel.selectedViewMode, .grid)
+        XCTAssertEqual(viewModeHeaderViewModel.availableViewModes, [.list, .grid])
+    }
+
+    @MainActor
+    func testToggleViewModePreferenceHandler_whenPreferenceChanged_shouldUpdateViewMode() async {
+        let userDefaults = MockUserDefaults(integerValue: 1)
+        let exp = expectation(description: "Wait for view mode to update")
+        var updatedViewMode: ViewModePreferenceEntity = .list
+        let sut = makeOfflineViewModelVMSut(userDefaults: userDefaults) { viewMode in
+            updatedViewMode = viewMode
+            exp.fulfill()
+        }
+        sut.viewModeHeaderViewModel.selectedViewMode = .grid
+        await fulfillment(of: [exp], timeout: 1)
+        XCTAssertEqual(updatedViewMode, .thumbnail)
+    }
+
     private var makeOfflineNode: MOOfflineNode {
         let testStack = CoreDataTestStack()
         let context = testStack.managedObjectContext
@@ -314,5 +350,23 @@ private class CoreDataTestStack {
 private class MockThrottler: Throttleable {
     func start(action: @escaping () -> Void) {
         action()
+    }
+}
+
+private final class MockUserDefaults: UserDefaults, @unchecked Sendable {
+    var integerValue: Int
+
+    init?(integerValue: Int = 0) {
+        self.integerValue = integerValue
+
+        super.init(suiteName: nil)
+    }
+
+    override func integer(forKey defaultName: String) -> Int {
+        integerValue
+    }
+
+    override func set(_ value: Int, forKey defaultName: String) {
+        integerValue = value
     }
 }

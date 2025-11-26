@@ -2413,6 +2413,7 @@
 		BFB529782C4A2CE5003034EF /* CloudDriveContextMenuFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB529772C4A2CE5003034EF /* CloudDriveContextMenuFactoryTests.swift */; };
 		BFB6B3CB2ECECEAC00D7026D /* OfflineCollectionViewController+Header.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB6B3CA2ECECEA100D7026D /* OfflineCollectionViewController+Header.swift */; };
 		BFB6B4052ECF07FF00D7026D /* OfflineCollectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB6B4042ECF07FF00D7026D /* OfflineCollectionHeaderView.swift */; };
+		BFB6B4972ED4443700D7026D /* OfflineHeaderViewHosting.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB6B4962ED4443700D7026D /* OfflineHeaderViewHosting.swift */; };
 		BFB889792A13598800FC456A /* ScheduledMeetingRulesEntity+UIHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB889782A13598800FC456A /* ScheduledMeetingRulesEntity+UIHelper.swift */; };
 		BFB8897B2A13600400FC456A /* ScheduledMeetingRulesEntityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB8897A2A13600400FC456A /* ScheduledMeetingRulesEntityTests.swift */; };
 		BFB889932A1598DB00FC456A /* WaitingRoomViewModel+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB889922A1598DB00FC456A /* WaitingRoomViewModel+Additions.swift */; };
@@ -5217,6 +5218,7 @@
 		BFB529772C4A2CE5003034EF /* CloudDriveContextMenuFactoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudDriveContextMenuFactoryTests.swift; sourceTree = "<group>"; };
 		BFB6B3CA2ECECEA100D7026D /* OfflineCollectionViewController+Header.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OfflineCollectionViewController+Header.swift"; sourceTree = "<group>"; };
 		BFB6B4042ECF07FF00D7026D /* OfflineCollectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineCollectionHeaderView.swift; sourceTree = "<group>"; };
+		BFB6B4962ED4443700D7026D /* OfflineHeaderViewHosting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineHeaderViewHosting.swift; sourceTree = "<group>"; };
 		BFB889782A13598800FC456A /* ScheduledMeetingRulesEntity+UIHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ScheduledMeetingRulesEntity+UIHelper.swift"; sourceTree = "<group>"; };
 		BFB8897A2A13600400FC456A /* ScheduledMeetingRulesEntityTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduledMeetingRulesEntityTests.swift; sourceTree = "<group>"; };
 		BFB889922A1598DB00FC456A /* WaitingRoomViewModel+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WaitingRoomViewModel+Additions.swift"; sourceTree = "<group>"; };
@@ -7122,6 +7124,7 @@
 				BFB6B3CA2ECECEA100D7026D /* OfflineCollectionViewController+Header.swift */,
 				83FB1432219AC7DD00418BE6 /* OfflineCollectionViewController.h */,
 				83FB1433219AC7DD00418BE6 /* OfflineCollectionViewController.m */,
+				BFB6B4962ED4443700D7026D /* OfflineHeaderViewHosting.swift */,
 				A8B315672ACAB49500173F3A /* OfflineTableViewCell+Additions.swift */,
 				E8E6CADC1A9C8C23008A0CD2 /* OfflineTableViewCell.h */,
 				E8E6CADD1A9C8C23008A0CD2 /* OfflineTableViewCell.m */,
@@ -15342,6 +15345,7 @@
 				C4D665C425B1F84E002196E9 /* OfflineFileInfoRepository.swift in Sources */,
 				C4D665B825B1F835002196E9 /* OfflineFileInfoUseCase.swift in Sources */,
 				83E3463D25B6DE67006F2AD6 /* OfflineFilesRepository.swift in Sources */,
+				BFB6B4972ED4443700D7026D /* OfflineHeaderViewHosting.swift in Sources */,
 				A8B315682ACAB49500173F3A /* OfflineTableViewCell+Additions.swift in Sources */,
 				E8E6CADE1A9C8C23008A0CD2 /* OfflineTableViewCell.m in Sources */,
 				A8C1B73E27734A22007095F4 /* OfflineTableViewController+Additions.swift in Sources */,

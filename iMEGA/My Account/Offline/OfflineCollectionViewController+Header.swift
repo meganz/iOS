@@ -38,3 +38,5 @@ extension OfflineCollectionViewController {
         return headerView
     }
 }
+
+extension OfflineCollectionViewController: OfflineHeaderViewHosting {}

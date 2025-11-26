@@ -36,7 +36,6 @@ static NSString *notificationServiceExtensionLog = @"MEGAiOS.NSE.log";
 @property (nonatomic, strong) UIBarButtonItem *contextBarButtonItem;
 @property (nonatomic, strong) NSString *logsPath;
 @property (nonatomic, strong) OfflineViewModel *viewModel;
-@property (nonatomic, strong, nullable) UIView *headerContainerView;
 
 @property (nonatomic, assign) CGFloat currentContentInsetHeight;
 

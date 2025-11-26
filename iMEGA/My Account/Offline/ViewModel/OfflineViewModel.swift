@@ -30,10 +30,24 @@ final class OfflineViewModel: NSObject, ViewModelType {
     }
 
     private let sortHeaderCoordinator: SearchResultsSortHeaderCoordinator
+    private let userDefaults: UserDefaults
+    private let toggleViewModePreferenceHandler: (ViewModePreferenceEntity) -> Void
+    private var subscriptions: Set<AnyCancellable> = []
 
     var sortHeaderViewModel: SearchResultsHeaderSortViewViewModel {
         sortHeaderCoordinator.headerViewModel
     }
+
+    private var viewMode: ViewModePreferenceEntity {
+        ViewModePreferenceEntity(rawValue: userDefaults.integer(forKey: MEGAViewModePreference)) ?? .list
+    }
+
+    lazy var viewModeHeaderViewModel: SearchResultsHeaderViewModeViewModel = {
+        SearchResultsHeaderViewModeViewModel(
+            selectedViewMode: viewMode == .list ? .list : .grid,
+            availableViewModes: [.list, .grid]
+        )
+    }()
 
     // MARK: - Init
     init(
@@ -41,15 +55,23 @@ final class OfflineViewModel: NSObject, ViewModelType {
         megaStore: MEGAStore,
         sortHeaderCoordinator: SearchResultsSortHeaderCoordinator,
         fileManager: FileManager = FileManager.default,
+        userDefaults: UserDefaults = .standard,
         documentsDirectoryPath: String? = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first,
-        throttler: some Throttleable = Throttler(timeInterval: 1.0)
+        throttler: some Throttleable = Throttler(timeInterval: 1.0),
+        toggleViewModePreferenceHandler: @escaping (ViewModePreferenceEntity) -> Void
     ) {
         self.offlineUseCase = offlineUseCase
         self.megaStore = megaStore
         self.sortHeaderCoordinator = sortHeaderCoordinator
         self.fileManager = fileManager
+        self.userDefaults = userDefaults
         self.documentsDirectoryPath = documentsDirectoryPath
         self.throttler = throttler
+        self.toggleViewModePreferenceHandler = toggleViewModePreferenceHandler
+
+        super.init()
+
+        listenToViewModesUpdates()
     }
     
     // MARK: - Dispatch actions
@@ -131,5 +153,17 @@ final class OfflineViewModel: NSObject, ViewModelType {
                 MEGALogError("[File manager] remove item at path failed with error \(error)")
             }
         }
+    }
+
+    private func listenToViewModesUpdates() {
+        viewModeHeaderViewModel
+            .$selectedViewMode
+            .dropFirst()
+            .removeDuplicates()
+            .debounce(for: .seconds(0.4), scheduler: DispatchQueue.main) // This is needed to prevent a crash because the header is removed.
+            .sink { [weak self] in
+                self?.toggleViewModePreferenceHandler($0 == .list ? .list : .thumbnail)
+            }
+            .store(in: &subscriptions)
     }
 }

@@ -244,6 +244,7 @@ static NSString *kisDirectory = @"kisDirectory";
 
 
 - (void)initTable {
+    [self removeBannerContainer];
     [self.offlineCollectionView willMoveToParentViewController:nil];
     [self.offlineCollectionView.view removeFromSuperview];
     [self.offlineCollectionView removeFromParentViewController];
@@ -266,6 +267,7 @@ static NSString *kisDirectory = @"kisDirectory";
 }
 
 - (void)initCollection {
+    [self removeBannerContainer];
     [self.offlineTableView willMoveToParentViewController:nil];
     [self.offlineTableView.view removeFromSuperview];
     [self.offlineTableView removeFromParentViewController];

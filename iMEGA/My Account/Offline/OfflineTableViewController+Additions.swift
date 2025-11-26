@@ -63,3 +63,5 @@ extension OfflineTableViewViewController {
         self.tableView?.separatorColor = TokenColors.Border.strong
     }
 }
+
+extension OfflineTableViewViewController: OfflineHeaderViewHosting {}

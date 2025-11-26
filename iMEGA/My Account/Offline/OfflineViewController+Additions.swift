@@ -40,9 +40,24 @@ extension OfflineViewController {
             ),
             megaStore: MEGAStore.shareInstance(),
             sortHeaderCoordinator: sortHeaderCoordinator
-        )
+        ) { [weak self] updatedViewMode in
+            guard let self,
+                  (updatedViewMode == .list && !isListViewModeSelected())
+                   || (updatedViewMode == .thumbnail && isListViewModeSelected()) else {
+                return
+            }
+            changeViewModePreference()
+        }
     }
-    
+
+    @objc func removeBannerContainer() {
+        for viewController in children where viewController is BannerContainerViewController {
+            viewController.willMove(toParent: nil)
+            viewController.view.removeFromSuperview()
+            viewController.removeFromParent()
+        }
+    }
+
     @objc func setUpInvokeCommands() {
         viewModel.invokeCommand = { [weak self] command in
             guard let self else { return }

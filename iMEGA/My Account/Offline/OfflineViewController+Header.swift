@@ -39,26 +39,36 @@ extension OfflineViewController {
     }
 
     @objc func headerView(for controller: UIViewController) -> UIView {
-        guard let headerContainerView else {
-            return makeHeaderView(controller: controller)
+        guard let viewController = controller as? (any OfflineHeaderViewHosting) else {
+            assertionFailure("\(controller) should implement the OfflineHeaderViewProtocol protocol")
+            return UIView()
+        }
+
+        guard let headerContainerView = viewController.headerContainerView else {
+            return makeHeaderView(controller: viewController)
         }
 
         return headerContainerView
     }
 
-    private func makeHeaderView(controller: UIViewController) -> UIView {
+    private func makeHeaderView(controller: some OfflineHeaderViewHosting) -> UIView {
         let headerView = UIView()
         headerView.bounds = CGRect(x: 0, y: 0, width: 0, height: 40)
 
         let sortHeaderViewModel = viewModel.sortHeaderViewModel
-        let headerContentView = SearchResultsHeaderView(leftView: {
-            SearchResultsHeaderSortView(viewModel: sortHeaderViewModel)
-        })
+        let viewModeHeaderViewModel = viewModel.viewModeHeaderViewModel
 
-        let hostingViewController = UIHostingController(rootView: headerContentView)
-        headerView.wrap(hostingViewController.view)
-        controller.addChild(hostingViewController)
-        self.headerContainerView = headerView
+        let headerContentView = SearchResultsHeaderView {
+            SearchResultsHeaderSortView(viewModel: sortHeaderViewModel)
+        } rightView: {
+            SearchResultsHeaderViewModeView(viewModel: viewModeHeaderViewModel)
+        }
+
+        let hostingController = UIHostingController(rootView: headerContentView)
+        headerView.wrap(hostingController.view)
+        controller.addChild(hostingController)
+        controller.headerContainerView = headerView
+        
         return headerView
     }
 }

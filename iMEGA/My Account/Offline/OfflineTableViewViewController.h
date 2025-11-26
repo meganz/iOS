@@ -8,6 +8,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, weak) OfflineViewController *offline;
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (nonatomic, strong, nullable) UIView *headerContainerView;
 
 - (void)setTableViewEditing:(BOOL)editing animated:(BOOL)animated;
 - (void)tableViewSelectIndexPath:(NSIndexPath *)indexPath;
