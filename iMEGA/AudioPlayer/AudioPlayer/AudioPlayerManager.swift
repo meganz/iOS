@@ -381,12 +381,8 @@ final class AudioPlayerManager: AudioPlayerHandlerProtocol {
         }
     }
     
-    func playerHidden(_ hidden: Bool, presenter: UIViewController) {
-        guard let presenter = presenter as? (any AudioPlayerPresenterProtocol) else { return }
-        
+    func playerHidden(_ hidden: Bool) {
         notifyDelegatesToShowHideMiniPlayer(hidden)
-        
-        refreshContentOffset(presenter: presenter, isHidden: hidden)
     }
     
     func refreshContentOffset(presenter: any AudioPlayerPresenterProtocol, isHidden: Bool) {

@@ -565,7 +565,7 @@ extension SharedItemsViewController {
     
     @objc func updateAudioPlayerVisibility(_ isHidden: Bool) {
         guard AudioPlayerManager.shared.isPlayerAlive() else { return }
-        AudioPlayerManager.shared.playerHidden(isHidden, presenter: self)
+        AudioPlayerManager.shared.playerHidden(isHidden)
     }
     
     @objc func userDisplayName(for email: String?) -> String? {

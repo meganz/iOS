@@ -77,7 +77,7 @@ class SearchBarUIHostingController<Content>: UIHostingController<Content>, Audio
                 removeToolbar(animated: true)
             }
             if let audioPlayerManager, audioPlayerManager.isPlayerAlive() {
-                audioPlayerManager.playerHidden(enabled, presenter: self)
+                audioPlayerManager.playerHidden(enabled)
             }
             if self.hidesBottomBarWhenPushed {
                 self.updateContentView(enabled ? self.tabBarController?.tabBar.frame.height ?? 0 : 0)

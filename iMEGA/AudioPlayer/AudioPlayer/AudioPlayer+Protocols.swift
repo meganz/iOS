@@ -117,7 +117,7 @@ extension AudioPlayerObserversProtocol {
     func removeMiniPlayerHandler(_ handler: any AudioMiniPlayerHandlerProtocol)
     func initFullScreenPlayer(node: MEGANode?, fileLink: String?, filePaths: [String]?, isFolderLink: Bool, presenter: UIViewController, messageId: HandleEntity, chatId: HandleEntity, isFromSharedItem: Bool, allNodes: [MEGANode]?)
     func initMiniPlayer(node: MEGANode?, fileLink: String?, filePaths: [String]?, isFolderLink: Bool, presenter: UIViewController, shouldReloadPlayerInfo: Bool, shouldResetPlayer: Bool, isFromSharedItem: Bool)
-    func playerHidden(_ hidden: Bool, presenter: UIViewController)
+    func playerHidden(_ hidden: Bool)
     func closePlayer()
     func dismissFullScreenPlayer() async
     func presentMiniPlayer(_ viewController: UIViewController)

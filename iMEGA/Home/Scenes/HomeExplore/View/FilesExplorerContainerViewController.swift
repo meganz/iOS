@@ -146,7 +146,7 @@ class FilesExplorerContainerViewController: UIViewController, TextFileEditable {
     
     func audioPlayer(hidden: Bool) {
         if AudioPlayerManager.shared.isPlayerAlive() {
-            AudioPlayerManager.shared.playerHidden(hidden, presenter: self)
+            AudioPlayerManager.shared.playerHidden(hidden)
         }
     }
     
