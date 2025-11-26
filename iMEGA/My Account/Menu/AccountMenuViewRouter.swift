@@ -54,6 +54,22 @@ final class AccountMenuViewNavigationController: MEGANavigationController, Accou
         }
     }
 
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        if #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() {
+            AppearanceManager.setupLiquidGlassNavigationBar(navigationBar)
+        }
+    }
+
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection),
+           #available(iOS 26.0, *),
+           DIContainer.featureFlagProvider.isLiquidGlassEnabled() {
+            AppearanceManager.setupLiquidGlassNavigationBar(navigationBar)
+        }
+    }
+
     deinit {
         // Here we cancel notificationObservingTask in deinit instead of will/didDisappear because
         // Account Menu is one of the app's tab bar view controller, the task should always be active
