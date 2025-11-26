@@ -1,5 +1,6 @@
 import Combine
 import MEGAFoundation
+import MEGAInfrastructure
 import MEGASwift
 import MEGASwiftUI
 import MEGAUIKit
@@ -80,6 +81,8 @@ public final class SearchResultsViewModel: ObservableObject {
 
     private let updatedSearchResultsPublisher: BatchingPublisher<SearchResultUpdateSignal>
 
+    private let hapticFeedbackUseCase: any HapticFeedbackUseCaseProtocol
+
     let listHeaderViewModel: ListHeaderViewModel?
 
     // Specifies whether the results are selectable or not.
@@ -90,18 +93,20 @@ public final class SearchResultsViewModel: ObservableObject {
     weak var interactor: (any SearchResultsInteractor)?
 
     public init(
-        resultsProvider: any SearchResultsProviding,
+        resultsProvider: some SearchResultsProviding,
         bridge: SearchBridge,
         config: SearchConfig,
         layout: PageLayout,
         showLoadingPlaceholderDelay: Double = 1,
         searchInputDebounceDelay: Double = 0.5,
-        keyboardVisibilityHandler: any KeyboardVisibilityHandling,
+        keyboardVisibilityHandler: some KeyboardVisibilityHandling,
         viewDisplayMode: ViewDisplayMode,
         updatedSearchResultsPublisher: BatchingPublisher<SearchResultUpdateSignal> = BatchingPublisher(interval: 1), // Emits search result updates as a batch every 1 seconds
+        hapticFeedbackUseCase: some HapticFeedbackUseCaseProtocol = HapticFeedbackUseCase(),
         listHeaderViewModel: ListHeaderViewModel?,
         isSelectionEnabled: Bool,
-        usesRevampedLayout: Bool
+        usesRevampedLayout: Bool,
+
     ) {
         self.resultsProvider = resultsProvider
         self.bridge = bridge
@@ -115,6 +120,7 @@ public final class SearchResultsViewModel: ObservableObject {
         self.listHeaderViewModel = listHeaderViewModel
         self.isSelectionEnabled = isSelectionEnabled
         self.usesRevampedLayout = usesRevampedLayout
+        self.hapticFeedbackUseCase = hapticFeedbackUseCase
         self.bridge.queryChanged = { [weak self] query  in
             let _self = self
             
@@ -433,6 +439,9 @@ public final class SearchResultsViewModel: ObservableObject {
 
     private func actionPressedOn(_ result: SearchResult) {
         if !editing {
+            if usesRevampedLayout {
+                hapticFeedbackUseCase.generateHapticFeedback(.light)
+            }
             handleEditingChanged(true)
         }
 

@@ -1,5 +1,6 @@
 @preconcurrency import Combine
 import MEGAFoundation
+import MEGAInfrastructureMocks
 import MEGASwift
 import MEGATest
 @testable import MEGAUIKit
@@ -31,6 +32,7 @@ final class SearchResultsViewModelTests: XCTestCase, @unchecked Sendable {
         static let emptyImageToReturn = Image("sun.min")
         let sut: SearchResultsViewModel
         let resultsProvider: MockSearchResultsProviding
+        let hapticFeedbackUseCase: MockHapticFeedbackUseCase
         let bridge: SearchBridge
         var selectedResults: [SearchResultSelection] = []
         var contextTriggeredResults: [SearchResult] = []
@@ -42,11 +44,12 @@ final class SearchResultsViewModelTests: XCTestCase, @unchecked Sendable {
         init(
             _ testcase: XCTestCase,
             searchResultUpdateSignalSequence: AnyAsyncSequence<SearchResultUpdateSignal> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
+            usesRevampedLayout: Bool = false
         ) {
             self.testcase = testcase
             resultsProvider = MockSearchResultsProviding(
                 searchResultUpdateSignalSequence: searchResultUpdateSignalSequence)
-            
+
             var selection: (SearchResultSelection) -> Void = { _ in }
             var context: (SearchResult, UIButton) -> Void = { _, _ in }
             var chipTapped: (SearchChipEntity, Bool) -> Void = { _, _ in }
@@ -73,7 +76,9 @@ final class SearchResultsViewModelTests: XCTestCase, @unchecked Sendable {
                 colorAssets: base.colorAssets,
                 contextPreviewFactory: base.contextPreviewFactory
             )
-            
+
+            hapticFeedbackUseCase = .init()
+
             sut = SearchResultsViewModel(
                 resultsProvider: resultsProvider,
                 bridge: bridge,
@@ -82,9 +87,10 @@ final class SearchResultsViewModelTests: XCTestCase, @unchecked Sendable {
                 showLoadingPlaceholderDelay: 0.1,
                 keyboardVisibilityHandler: MockKeyboardVisibilityHandler(), 
                 viewDisplayMode: .unknown,
+                hapticFeedbackUseCase: hapticFeedbackUseCase,
                 listHeaderViewModel: nil,
                 isSelectionEnabled: true,
-                usesRevampedLayout: false
+                usesRevampedLayout: usesRevampedLayout
             )
 
             sut.interactor = interactor
@@ -832,6 +838,14 @@ final class SearchResultsViewModelTests: XCTestCase, @unchecked Sendable {
         harness.sut.layout = .list
         harness.sut.resetForcedListLayout()
         XCTAssertEqual(harness.sut.layout, .thumbnail)
+    }
+
+    @MainActor
+    func testHapticFeedback_whenRevampLongPressIsInvoked_shouldPerformHapticFeedback() async {
+        let harness = Harness(self, usesRevampedLayout: true).withSingleResultPrepared()
+        await harness.sut.task()
+        harness.sut.listItems.first?.actions.revampLongPress()
+        XCTAssertEqual(harness.hapticFeedbackUseCase.feedbacks, [.light])
     }
 
     @MainActor

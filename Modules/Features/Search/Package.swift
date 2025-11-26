@@ -26,6 +26,7 @@ let package = Package(
     dependencies: [
         .package(path: "../../MEGASharedRepo/MEGASwift"),
         .package(path: "../../Infrastracture/MEGAFoundation"),
+        .package(path: "../../MEGASharedRepo/MEGAInfrastructure"),
         .package(path: "../../Presentation/MEGAL10n"),
         .package(path: "../../UI/MEGASwiftUI"),
         .package(path: "../../UI/MEGAUIKit"),
@@ -42,6 +43,7 @@ let package = Package(
                 "MEGASwift",
                 "MEGADesignToken",
                 "MEGAFoundation",
+                "MEGAInfrastructure",
                 "MEGAUIKit",
                 "MEGAAssets"
             ],
@@ -58,7 +60,8 @@ let package = Package(
                 "Search", 
                 "SearchMock",
                 "MEGAUIKit",
-                "MEGATest"
+                "MEGATest",
+                .product(name: "MEGAInfrastructureMocks", package: "MEGAInfrastructure"),
             ],
             resources: [
                 .process("folder.png"),
