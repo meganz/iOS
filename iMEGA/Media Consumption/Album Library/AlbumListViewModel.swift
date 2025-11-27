@@ -25,6 +25,7 @@ final class AlbumListViewModel: NSObject, ObservableObject {
     }
     @Published var showShareAlbumLinks = false
     
+    let isMediaRevampEnabled: Bool
     lazy var selection = AlbumSelection()
     
     var createAlbumTask: Task<Void, Never>?
@@ -55,16 +56,19 @@ final class AlbumListViewModel: NSObject, ObservableObject {
     
     private weak var photoAlbumContainerViewModel: PhotoAlbumContainerViewModel?
     
-    init(usecase: some AlbumListUseCaseProtocol,
-         albumModificationUseCase: some AlbumModificationUseCaseProtocol,
-         shareCollectionUseCase: some ShareCollectionUseCaseProtocol,
-         tracker: some AnalyticsTracking,
-         monitorAlbumsUseCase: some MonitorAlbumsUseCaseProtocol,
-         sensitiveDisplayPreferenceUseCase: some SensitiveDisplayPreferenceUseCaseProtocol,
-         overDiskQuotaChecker: some OverDiskQuotaChecking,
-         alertViewModel: TextFieldAlertViewModel,
-         photoAlbumContainerViewModel: PhotoAlbumContainerViewModel? = nil,
-         albumRemoteFeatureFlagProvider: some AlbumRemoteFeatureFlagProviderProtocol = AlbumRemoteFeatureFlagProvider()) {
+    init(
+        usecase: some AlbumListUseCaseProtocol,
+        albumModificationUseCase: some AlbumModificationUseCaseProtocol,
+        shareCollectionUseCase: some ShareCollectionUseCaseProtocol,
+        tracker: some AnalyticsTracking,
+        monitorAlbumsUseCase: some MonitorAlbumsUseCaseProtocol,
+        sensitiveDisplayPreferenceUseCase: some SensitiveDisplayPreferenceUseCaseProtocol,
+        overDiskQuotaChecker: some OverDiskQuotaChecking,
+        alertViewModel: TextFieldAlertViewModel,
+        photoAlbumContainerViewModel: PhotoAlbumContainerViewModel? = nil,
+        albumRemoteFeatureFlagProvider: some AlbumRemoteFeatureFlagProviderProtocol = AlbumRemoteFeatureFlagProvider(),
+        featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider
+    ) {
         self.usecase = usecase
         self.albumModificationUseCase = albumModificationUseCase
         self.shareCollectionUseCase = shareCollectionUseCase
@@ -75,6 +79,7 @@ final class AlbumListViewModel: NSObject, ObservableObject {
         self.alertViewModel = alertViewModel
         self.photoAlbumContainerViewModel = photoAlbumContainerViewModel
         self.albumRemoteFeatureFlagProvider = albumRemoteFeatureFlagProvider
+        isMediaRevampEnabled = featureFlagProvider.isFeatureFlagEnabled(for: .mediaRevamp)
         super.init()
         setupSubscription()
         self.alertViewModel.action = { [weak self] newAlbumName in
