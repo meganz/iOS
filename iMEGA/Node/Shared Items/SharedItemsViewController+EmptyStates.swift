@@ -34,6 +34,7 @@ extension SharedItemsViewController {
         let hasData = hasContentToDisplay()
 
         tableView?.backgroundView = hasData ? nil : emptyStateView()
+        tableView?.isScrollEnabled = hasData
     }
     
     public func emptyStateView() -> UIView? {
