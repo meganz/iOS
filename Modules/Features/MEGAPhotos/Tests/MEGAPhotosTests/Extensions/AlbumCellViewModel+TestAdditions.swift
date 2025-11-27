@@ -24,6 +24,7 @@ extension AlbumCellViewModel {
             remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(),
             configuration: .init(
                 sensitiveNodeUseCase: MockSensitiveNodeUseCase(),
+                featureFlagProvider: MockFeatureFlagProvider(list: [:]),
                 nodeUseCase: MockNodeUseCase(),
                 isAlbumPerformanceImprovementsEnabled: { false })
         )

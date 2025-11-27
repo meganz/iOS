@@ -420,7 +420,7 @@ final class PhotoAlbumContainerViewController: UIViewController {
             visualMediaSearchResultsViewController.view.trailingAnchor
                 .constraint(equalTo: self.view.trailingAnchor),
             visualMediaSearchResultsViewController.view.bottomAnchor
-                .constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor)
+                .constraint(equalTo: self.view.bottomAnchor)
         ])
     }
     

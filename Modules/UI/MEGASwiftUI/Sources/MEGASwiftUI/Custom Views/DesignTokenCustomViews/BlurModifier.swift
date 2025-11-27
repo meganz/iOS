@@ -8,7 +8,7 @@ public struct BlurModifier: ViewModifier {
     
     @ViewBuilder
     func background(content: Content) -> some View {
-        content.background(Blur(style: .systemUltraThinMaterial).cornerRadius(7, corners: .allCorners))
+        content.background(Blur(style: .systemThinMaterial).cornerRadius(7, corners: .allCorners))
     }
 }
 

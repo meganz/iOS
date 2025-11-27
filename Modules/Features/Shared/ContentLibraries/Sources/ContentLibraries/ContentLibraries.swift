@@ -1,4 +1,5 @@
 import Foundation
+import MEGAAppPresentation
 import MEGADomain
 import MEGASwift
 
@@ -18,17 +19,20 @@ public struct ContentLibraries: Sendable {
     
     public struct Configuration: Sendable {
         let sensitiveNodeUseCase: any SensitiveNodeUseCaseProtocol
+        let featureFlagProvider: any FeatureFlagProviderProtocol
         let nodeUseCase: any NodeUseCaseProtocol
         let isAlbumPerformanceImprovementsEnabled: @Sendable () -> Bool
         
         public init(
             sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol,
+            featureFlagProvider: some FeatureFlagProviderProtocol,
             nodeUseCase: some NodeUseCaseProtocol,
             isAlbumPerformanceImprovementsEnabled: @escaping @Sendable () -> Bool
         ) {
             self.sensitiveNodeUseCase = sensitiveNodeUseCase
             self.nodeUseCase = nodeUseCase
             self.isAlbumPerformanceImprovementsEnabled = isAlbumPerformanceImprovementsEnabled
+            self.featureFlagProvider = featureFlagProvider
         }
     }
 }

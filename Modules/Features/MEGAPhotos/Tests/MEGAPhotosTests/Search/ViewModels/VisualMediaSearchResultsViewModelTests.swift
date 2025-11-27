@@ -264,6 +264,7 @@ final class VisualMediaSearchResultsViewModelTests: XCTestCase {
         photoSearchResultRouter: some PhotoSearchResultRouterProtocol = MockPhotoSearchResultRouter(),
         contentLibrariesConfiguration: ContentLibraries.Configuration = .init(
             sensitiveNodeUseCase: MockSensitiveNodeUseCase(),
+            featureFlagProvider: MockFeatureFlagProvider(list: [:]),
             nodeUseCase: MockNodeUseCase(),
             isAlbumPerformanceImprovementsEnabled: { true }),
         searchDebounceTime: DispatchQueue.SchedulerTimeType.Stride = .milliseconds(150),
@@ -388,6 +389,7 @@ struct VisualMediaSearchResultsViewModelTestsSuite {
         photoSearchResultRouter: some PhotoSearchResultRouterProtocol = MockPhotoSearchResultRouter(),
         contentLibrariesConfiguration: ContentLibraries.Configuration = .init(
             sensitiveNodeUseCase: MockSensitiveNodeUseCase(),
+            featureFlagProvider: MockFeatureFlagProvider(list: [:]),
             nodeUseCase: MockNodeUseCase(),
             isAlbumPerformanceImprovementsEnabled: { true }),
         searchDebounceTime: DispatchQueue.SchedulerTimeType.Stride = .milliseconds(150)

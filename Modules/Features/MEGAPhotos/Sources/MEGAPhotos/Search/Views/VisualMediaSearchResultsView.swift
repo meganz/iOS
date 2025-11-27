@@ -18,6 +18,7 @@ public struct VisualMediaSearchResultsView: View {
                 maxHeight: .infinity,
                 alignment: .top
             )
+            .ignoresSafeArea(edges: .bottom)
             .background(TokenColors.Background.page.swiftUI)
             .task {
                 await viewModel.monitorSearchResults()

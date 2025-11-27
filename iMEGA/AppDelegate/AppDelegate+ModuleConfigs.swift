@@ -1,4 +1,5 @@
 import ContentLibraries
+import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGADomain
 
@@ -7,6 +8,7 @@ extension AppDelegate {
     @objc func initialiseModules() {
         ContentLibraries.configuration = .init(
             sensitiveNodeUseCase: makeSensitiveNodeUseCase(),
+            featureFlagProvider: DIContainer.featureFlagProvider,
             nodeUseCase: makeNodeUseCase(),
             isAlbumPerformanceImprovementsEnabled: {
                 AlbumRemoteFeatureFlagProvider().isPerformanceImprovementsEnabled()
