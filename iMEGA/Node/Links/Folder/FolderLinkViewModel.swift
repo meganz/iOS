@@ -1,6 +1,7 @@
 import MEGAAnalyticsiOS
 import MEGAAppPresentation
 import MEGADomain
+import Search
 
 @MainActor
 @objc public final class FolderLinkViewModel: NSObject, ViewModelType {
@@ -44,7 +45,12 @@ import MEGADomain
     private let folderLinkUseCase: any FolderLinkUseCaseProtocol
     private let saveMediaUseCase: any SaveMediaToPhotosUseCaseProtocol
     private let tracker: any AnalyticsTracking
+    private let sortHeaderCoordinator: SearchResultsSortHeaderCoordinator
 
+    var sortHeaderViewModel: SearchResultsHeaderSortViewViewModel {
+        sortHeaderCoordinator.headerViewModel
+    }
+    
     private var monitorCompletedDownloadTransferTask: Task<Void, Never>? {
         didSet {
             oldValue?.cancel()
@@ -72,10 +78,12 @@ import MEGADomain
     init(
         folderLinkUseCase: some FolderLinkUseCaseProtocol,
         saveMediaUseCase: some SaveMediaToPhotosUseCaseProtocol,
+        sortHeaderCoordinator: SearchResultsSortHeaderCoordinator,
         tracker: some AnalyticsTracking = DIContainer.tracker
     ) {
         self.folderLinkUseCase = folderLinkUseCase
         self.saveMediaUseCase = saveMediaUseCase
+        self.sortHeaderCoordinator = sortHeaderCoordinator
         self.tracker = tracker
         super.init()
     }

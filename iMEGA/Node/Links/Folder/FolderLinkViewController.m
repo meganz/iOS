@@ -219,7 +219,7 @@
     [self reloadData];
 
     if (self.nodeList.size == 0) {
-        [self.flTableView.tableView setTableHeaderView:nil];
+        [self.flTableView hidesBottomBarWhenPushed];
     } else {
         [self addSearchBar];
     }
@@ -467,10 +467,10 @@
     self.flTableView.view.frame = self.containerView.bounds;
     [self.containerView addSubview:self.flTableView.view];
     [self.flTableView didMoveToParentViewController:self];
-    
-    self.flTableView.tableView.emptyDataSetSource = self;
+
     self.flTableView.tableView.emptyDataSetDelegate = self;
-    
+    self.flTableView.tableView.emptyDataSetSource = self;
+
     [self refreshContentInset];
 }
     
@@ -656,7 +656,7 @@
     self.searchNodesArray = nil;
     
     if (!MEGAReachabilityManager.isReachable) {
-        self.flTableView.tableView.tableHeaderView = nil;
+        [self.flTableView hideTableHeaderView];
     }
 }
 
@@ -680,6 +680,20 @@
     [emptyStateView.button addTarget:self action:@selector(buttonTouchUpInsideEmptyState) forControlEvents:UIControlEventTouchUpInside];
     
     return emptyStateView;
+}
+
+#pragma mark - DZNEmptyDataSetDelegate
+
+- (void)emptyDataSetWillAppear:(UIScrollView *)scrollView {
+    if ([scrollView isEqual:self.flTableView.tableView]) {
+        [self.flTableView hideTableHeaderView];
+    }
+}
+
+- (void)emptyDataSetWillDisappear:(UIScrollView *)scrollView {
+    if ([scrollView isEqual:self.flTableView.tableView]) {
+        [self.flTableView showTableHeaderIfRequired];
+    }
 }
 
 #pragma mark - Empty State

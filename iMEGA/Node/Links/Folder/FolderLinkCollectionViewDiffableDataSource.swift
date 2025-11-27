@@ -9,6 +9,8 @@ final class FolderLinkCollectionViewDiffableDataSource {
     init(collectionView: UICollectionView, controller: FolderLinkCollectionViewController?) {
         self.collectionView = collectionView
         self.controller = controller
+
+        registerSupplementaryViewCell(in: collectionView)
     }
 
     func load(data: [ThumbnailSection: [MEGANode]], keys: [ThumbnailSection]) {
@@ -45,5 +47,39 @@ final class FolderLinkCollectionViewDiffableDataSource {
             
             return cell
         }
+
+        dataSource?.supplementaryViewProvider = { [weak self] (collectionView, kind, indexPath) in
+            self?.headerSupplementaryView(collectionView, viewForSupplementaryElementOfKind: kind, at: indexPath)
+        }
+    }
+
+    private func registerSupplementaryViewCell(in collectionView: UICollectionView) {
+        collectionView.register(
+            FolderLinkCollectionHeaderView.self,
+            forSupplementaryViewOfKind: CHTCollectionElementKindSectionHeader,
+            withReuseIdentifier: FolderLinkCollectionHeaderView.reusableIdentifier
+        )
+    }
+
+    private func headerSupplementaryView(
+        _ collectionView: UICollectionView,
+        viewForSupplementaryElementOfKind kind: String,
+        at indexPath: IndexPath
+    ) -> UICollectionReusableView? {
+        guard kind == CHTCollectionElementKindSectionHeader,
+              indexPath.section == 0,
+              controller?.folderLink.shouldShowHeaderView == true,
+              let controller,
+              let headerView = collectionView.dequeueReusableSupplementaryView(
+                ofKind: CHTCollectionElementKindSectionHeader,
+                withReuseIdentifier: FolderLinkCollectionHeaderView.reuseIdentifier,
+                for: indexPath
+              ) as? FolderLinkCollectionHeaderView else {
+            return UICollectionReusableView()
+        }
+
+        headerView.frame.size.height = 40
+        headerView.addContentView(controller.folderLink.headerView(for: controller))
+        return headerView
     }
 }

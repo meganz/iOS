@@ -46,7 +46,8 @@ extension FolderLinkViewController {
                 nodeRepository: NodeRepository.newRepo,
                 requestStatesRepository: RequestStatesRepository.newRepo
             ),
-            saveMediaUseCase: saveMediaUseCase
+            saveMediaUseCase: saveMediaUseCase,
+            sortHeaderCoordinator: sortHeaderCoordinator
         )
         
         viewModel.invokeCommand = { [weak self] in self?.executeCommand($0) }

@@ -7,6 +7,7 @@ class FolderLinkCollectionViewController: UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
 
     unowned var folderLink: FolderLinkViewController!
+    var headerContainerView: UIView?
 
     let layout = CHTCollectionViewWaterfallLayout()
     
@@ -233,6 +234,11 @@ extension FolderLinkCollectionViewController: CHTCollectionViewDelegateWaterfall
             .zero
         }
     }
+
+    func collectionView(_ collectionView: UICollectionView!, layout collectionViewLayout: UICollectionViewLayout!, heightForHeaderInSection section: Int) -> CGFloat {
+        guard section == 0, folderLink.shouldShowHeaderView else { return 0 }
+        return 40
+    }
 }
 
 extension FolderLinkCollectionViewController: NodeCollectionViewCellDelegate {
@@ -241,3 +247,5 @@ extension FolderLinkCollectionViewController: NodeCollectionViewCellDelegate {
         folderLink.showActions(for: node, from: sender)
     }
 }
+
+extension FolderLinkCollectionViewController: FolderLinkViewHosting {}

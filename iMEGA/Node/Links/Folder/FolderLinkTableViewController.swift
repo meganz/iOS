@@ -9,7 +9,8 @@ class FolderLinkTableViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     
     unowned var folderLink: FolderLinkViewController!
-    
+    var headerContainerView: UIView?
+
     @objc class func instantiate(withFolderLink folderLink: FolderLinkViewController) -> FolderLinkTableViewController {
         guard let folderLinkTableVC = UIStoryboard(name: "Links", bundle: nil).instantiateViewController(withIdentifier: "FolderLinkTableViewControllerID") as? FolderLinkTableViewController else {
             fatalError("Could not instantiate FolderLinkTableViewController")
@@ -21,9 +22,19 @@ class FolderLinkTableViewController: UIViewController {
     }
     
     override func viewDidLoad() {
+        super.viewDidLoad()
         tableView.backgroundView = UIView()
     }
-    
+
+    @objc func showTableHeaderIfRequired() {
+        guard folderLink.shouldShowHeaderView else { return }
+        tableView.tableHeaderView = folderLink.headerView(for: self)
+    }
+
+    @objc func hideTableHeaderView() {
+        tableView.tableHeaderView = nil
+    }
+
     @IBAction func nodeActionsTapped(_ sender: UIButton) {
         guard !tableView.isEditing,
                 let indexPath = tableView.indexPathForRow(at: sender.convert(CGPoint.zero, to: tableView)),
@@ -247,3 +258,5 @@ extension FolderLinkTableViewController: UITableViewDelegate {
         }
     }
 }
+
+extension FolderLinkTableViewController: FolderLinkViewHosting {}

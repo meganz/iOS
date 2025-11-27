@@ -2283,6 +2283,7 @@
 		BF61496A2A9FF39500AB051A /* MEGAL10n in Frameworks */ = {isa = PBXBuildFile; productRef = BF6149692A9FF39500AB051A /* MEGAL10n */; };
 		BF62C76F2E1259560008B62D /* AccountMenuViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF62C76E2E1259560008B62D /* AccountMenuViewRouter.swift */; };
 		BF62C7B32E14AEDA0008B62D /* AccountMenuViewRouter+DeviceCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF62C7B22E14AECE0008B62D /* AccountMenuViewRouter+DeviceCenter.swift */; };
+		BF6507502ED6CDE200B37250 /* FolderLinkCollectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF65074F2ED6CDE200B37250 /* FolderLinkCollectionHeaderView.swift */; };
 		BF65423C2C1BA932006C252C /* CloudDriveViewModeMonitoringService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF65423B2C1BA932006C252C /* CloudDriveViewModeMonitoringService.swift */; };
 		BF6542432C1BBEFF006C252C /* CloudDriveViewModeMonitoringServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6542422C1BBEFF006C252C /* CloudDriveViewModeMonitoringServiceTests.swift */; };
 		BF66DFC82613E6AC00066F35 /* MeetingFloatingPanelRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF66DFC72613E6AC00066F35 /* MeetingFloatingPanelRouter.swift */; };
@@ -2489,6 +2490,8 @@
 		BFEF8CAF2887A10100F8F9F1 /* QASetttingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFEF8CAE2887A10100F8F9F1 /* QASetttingsViewModel.swift */; };
 		BFEF8CB12887A10B00F8F9F1 /* QASettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFEF8CB02887A10B00F8F9F1 /* QASettingsView.swift */; };
 		BFF0EE0A2630E2D300FAEFF9 /* MeetingParticipantViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFF0EE092630E2D300FAEFF9 /* MeetingParticipantViewModelTests.swift */; };
+		BFF8B7952ED56B2C00D8501C /* FolderLinkViewController+Header.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFF8B7942ED56B2C00D8501C /* FolderLinkViewController+Header.swift */; };
+		BFF8B7A82ED5996000D8501C /* FolderLinkViewHosting.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFF8B7A72ED5996000D8501C /* FolderLinkViewHosting.swift */; };
 		BFFB134F2908EF3100A6B2CA /* ActiveCallViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFFB134E2908EF3100A6B2CA /* ActiveCallViewModelTests.swift */; };
 		BFFC82412ECE9B9A003E00DF /* OfflineViewController+Header.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFFC82402ECE9B88003E00DF /* OfflineViewController+Header.swift */; };
 		BFFD20DE2BC68D41009885F0 /* DisplayMode+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFFD20DD2BC68D41009885F0 /* DisplayMode+Additions.swift */; };
@@ -5097,6 +5100,7 @@
 		BF6029B62C5AEBD900AD1961 /* NodeDescriptionSeparatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeDescriptionSeparatorView.swift; sourceTree = "<group>"; };
 		BF62C76E2E1259560008B62D /* AccountMenuViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountMenuViewRouter.swift; sourceTree = "<group>"; };
 		BF62C7B22E14AECE0008B62D /* AccountMenuViewRouter+DeviceCenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AccountMenuViewRouter+DeviceCenter.swift"; sourceTree = "<group>"; };
+		BF65074F2ED6CDE200B37250 /* FolderLinkCollectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderLinkCollectionHeaderView.swift; sourceTree = "<group>"; };
 		BF65423B2C1BA932006C252C /* CloudDriveViewModeMonitoringService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudDriveViewModeMonitoringService.swift; sourceTree = "<group>"; };
 		BF6542422C1BBEFF006C252C /* CloudDriveViewModeMonitoringServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudDriveViewModeMonitoringServiceTests.swift; sourceTree = "<group>"; };
 		BF66DFC72613E6AC00066F35 /* MeetingFloatingPanelRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingFloatingPanelRouter.swift; sourceTree = "<group>"; };
@@ -5286,6 +5290,8 @@
 		BFEF8CAE2887A10100F8F9F1 /* QASetttingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QASetttingsViewModel.swift; sourceTree = "<group>"; };
 		BFEF8CB02887A10B00F8F9F1 /* QASettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QASettingsView.swift; sourceTree = "<group>"; };
 		BFF0EE092630E2D300FAEFF9 /* MeetingParticipantViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingParticipantViewModelTests.swift; sourceTree = "<group>"; };
+		BFF8B7942ED56B2C00D8501C /* FolderLinkViewController+Header.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FolderLinkViewController+Header.swift"; sourceTree = "<group>"; };
+		BFF8B7A72ED5996000D8501C /* FolderLinkViewHosting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderLinkViewHosting.swift; sourceTree = "<group>"; };
 		BFFB134E2908EF3100A6B2CA /* ActiveCallViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActiveCallViewModelTests.swift; sourceTree = "<group>"; };
 		BFFC82402ECE9B88003E00DF /* OfflineViewController+Header.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OfflineViewController+Header.swift"; sourceTree = "<group>"; };
 		BFFD20DD2BC68D41009885F0 /* DisplayMode+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DisplayMode+Additions.swift"; sourceTree = "<group>"; };
@@ -10267,6 +10273,7 @@
 		945339CF2A60150500363DAD /* Folder */ = {
 			isa = PBXGroup;
 			children = (
+				BF65074F2ED6CDE200B37250 /* FolderLinkCollectionHeaderView.swift */,
 				C46D2A7B270F0EC100DA26D0 /* FolderLinkCollectionViewController+DynamicType.swift */,
 				83FEA8B125C1B3970063A560 /* FolderLinkCollectionViewController.swift */,
 				BFFED4B226FB094F00B9EBEC /* FolderLinkCollectionViewDiffableDataSource.swift */,
@@ -10275,11 +10282,13 @@
 				0E75681B2A37E7B9006A92B8 /* FolderLinkViewController+Additions.swift */,
 				C4C5C83225DC26100063D7B4 /* FolderLinkViewController+AudioPlayer.swift */,
 				94389C672A3B491600CB156E /* FolderLinkViewController+ContextMenu.swift */,
+				BFF8B7942ED56B2C00D8501C /* FolderLinkViewController+Header.swift */,
 				943270602A66CEB60080D687 /* FolderLinkViewController+NodeActionViewControllerDelegate.swift */,
 				6D60255E28F8934100FF9767 /* FolderLinkViewController+NodesUpdate.swift */,
 				C472964326C41B7C00F2CFE3 /* FolderLinkViewController+Transfers.swift */,
 				E81616711A8397B5002EFDD7 /* FolderLinkViewController.h */,
 				E81616721A8397B5002EFDD7 /* FolderLinkViewController.m */,
+				BFF8B7A72ED5996000D8501C /* FolderLinkViewHosting.swift */,
 				A5B5073B2D9AC8F700447859 /* FolderLinkViewModel.swift */,
 			);
 			path = Folder;
@@ -14853,6 +14862,7 @@
 				BF7EBD20244E50270015255F /* FingerLiftupGestureRecognizer.swift in Sources */,
 				C4B0F7A62E8E3BFD007C4E0B /* FloatingAddButtonVisibilityDataSource.swift in Sources */,
 				B6A01BA8289A5E9200B503FD /* FolderContentStat.swift in Sources */,
+				BF6507502ED6CDE200B37250 /* FolderLinkCollectionHeaderView.swift in Sources */,
 				C46D2A7C270F0EC100DA26D0 /* FolderLinkCollectionViewController+DynamicType.swift in Sources */,
 				83FEA8B525C1B3990063A560 /* FolderLinkCollectionViewController.swift in Sources */,
 				BFFED4B326FB094F00B9EBEC /* FolderLinkCollectionViewDiffableDataSource.swift in Sources */,
@@ -14861,10 +14871,12 @@
 				0E75681C2A37E7B9006A92B8 /* FolderLinkViewController+Additions.swift in Sources */,
 				C4C5C83325DC26100063D7B4 /* FolderLinkViewController+AudioPlayer.swift in Sources */,
 				94389C682A3B491600CB156E /* FolderLinkViewController+ContextMenu.swift in Sources */,
+				BFF8B7952ED56B2C00D8501C /* FolderLinkViewController+Header.swift in Sources */,
 				943270612A66CEB60080D687 /* FolderLinkViewController+NodeActionViewControllerDelegate.swift in Sources */,
 				6D60255F28F8934100FF9767 /* FolderLinkViewController+NodesUpdate.swift in Sources */,
 				C472964426C41B7C00F2CFE3 /* FolderLinkViewController+Transfers.swift in Sources */,
 				E81616731A8397B5002EFDD7 /* FolderLinkViewController.m in Sources */,
+				BFF8B7A82ED5996000D8501C /* FolderLinkViewHosting.swift in Sources */,
 				A5B5073C2D9AC8FC00447859 /* FolderLinkViewModel.swift in Sources */,
 				5D646602248909F8006030A5 /* FontStyle.swift in Sources */,
 				BFFE22952934A7D10063CFF2 /* FutureMeetingRoomView.swift in Sources */,
