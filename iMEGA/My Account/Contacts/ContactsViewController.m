@@ -146,6 +146,7 @@
     }
     
     [AppearanceManager forceSearchBarUpdate:self.searchController.searchBar];
+    [self clearBackBarButton];
 }
 
 - (void)viewWillAppear:(BOOL)animated {

@@ -8,6 +8,10 @@ extension UIViewController {
         navigationItem.backBarButtonItem = BackBarButtonItem(menuTitle: menuTitle)
     }
     
+    @objc func clearBackBarButton() {
+        navigationItem.backBarButtonItem = nil
+    }
+    
     @objc
     func assignAsMEGANavigationDelegate(delegate: any MEGANavigationControllerDelegate) {
         if let nc = navigationController as? MEGANavigationController {
