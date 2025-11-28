@@ -481,12 +481,16 @@ extension MEGAPhotoBrowserViewController {
             navigationItem.titleView = nil
             return
         }
-        
-        let hostController = UIHostingController(rootView: rootView)
-        let titleView = hostController.view
-        titleView?.backgroundColor = .clear
-        navigationItem.titleView = titleView
-        navigationItem.titleView?.sizeToFit()
+
+        if #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() {
+            navigationItem.titleView = rootView.toWrappedUIView()
+        } else {
+            let hostController = UIHostingController(rootView: rootView)
+            let titleView = hostController.view
+            titleView?.backgroundColor = .clear
+            navigationItem.titleView = titleView
+            navigationItem.titleView?.sizeToFit()
+        }
     }
 }
 
