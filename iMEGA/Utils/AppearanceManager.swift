@@ -92,13 +92,22 @@ final class AppearanceManager: NSObject {
     }
     
     @objc class func forceToolbarUpdate(_ toolbar: UIToolbar) {
-        let appearance = makeUIToolbarAppearance()
-        toolbar.standardAppearance = appearance
-        toolbar.scrollEdgeAppearance = appearance
-        let numberOfBarButtonItems: Int = toolbar.items?.count ?? 0
-        for i in 0..<numberOfBarButtonItems {
-            let barButtonItem = toolbar.items?[i]
-            barButtonItem?.tintColor = TokenColors.Icon.primary
+        let toolbarAppearance: UIToolbarAppearance
+        
+        if #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() {
+            toolbarAppearance = makeLiquidGlassToolbarAppearance()
+            toolbar.isTranslucent = true
+        } else {
+            toolbarAppearance = makeLegacyToolbarAppearance()
+            toolbar.isTranslucent = false
+        }
+        
+        toolbar.standardAppearance = toolbarAppearance
+        toolbar.scrollEdgeAppearance = toolbarAppearance
+        toolbar.compactAppearance = toolbarAppearance
+        
+        toolbar.items?.forEach { barButtonItem in
+            barButtonItem.tintColor = TokenColors.Icon.primary
         }
     }
     
@@ -255,25 +264,46 @@ final class AppearanceManager: NSObject {
     }
     
     private class func setupToolbar() {
-        let toolbarAppearance = makeUIToolbarAppearance()
+        let toolbarAppearance: UIToolbarAppearance
+        
+        if #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() {
+            toolbarAppearance = makeLiquidGlassToolbarAppearance()
+        } else {
+            toolbarAppearance = makeLegacyToolbarAppearance()
+        }
         
         UIToolbar.appearance().standardAppearance = toolbarAppearance
         UIToolbar.appearance().scrollEdgeAppearance = toolbarAppearance
+        UIToolbar.appearance().compactAppearance = toolbarAppearance
         UIToolbar.appearance().tintColor = TokenColors.Icon.primary
     }
     
-    private class func makeUIToolbarAppearance() -> UIToolbarAppearance {
-        let toolbarAppearance = UIToolbarAppearance()
+    private class func makeBaseToolbarAppearance() -> UIToolbarAppearance {
+        let appearance = UIToolbarAppearance()
         
-        toolbarAppearance.configureWithDefaultBackground()
-        toolbarAppearance.backgroundColor = .surface1Background()
+        appearance.configureWithDefaultBackground()
+        appearance.buttonAppearance.normal.titleTextAttributes = [.foregroundColor: TokenColors.Text.primary]
+        appearance.buttonAppearance.disabled.titleTextAttributes = [.foregroundColor: TokenColors.Text.disabled]
         
-        toolbarAppearance.buttonAppearance.normal.titleTextAttributes = [.foregroundColor: TokenColors.Text.primary]
-        toolbarAppearance.buttonAppearance.disabled.titleTextAttributes = [.foregroundColor: TokenColors.Text.disabled]
+        return appearance
+    }
+
+    private class func makeLiquidGlassToolbarAppearance() -> UIToolbarAppearance {
+        let appearance = makeBaseToolbarAppearance()
         
-        toolbarAppearance.shadowImage = nil
-        toolbarAppearance.shadowColor = TokenColors.Border.strong
+        appearance.shadowColor = nil
+        appearance.shadowImage = nil
         
-        return toolbarAppearance
+        return appearance
+    }
+
+    private class func makeLegacyToolbarAppearance() -> UIToolbarAppearance {
+        let appearance = makeBaseToolbarAppearance()
+        
+        appearance.backgroundColor = TokenColors.Background.surface1
+        appearance.shadowImage = nil
+        appearance.shadowColor = TokenColors.Border.strong
+        
+        return appearance
     }
 }

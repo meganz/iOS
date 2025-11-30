@@ -166,8 +166,6 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
             break;
     }
     
-    [self.toolbar setBackgroundColor:[UIColor surface1Background]];
-    
     self.closeBarButtonItem.title = LocalizedString(@"close", @"A button label.");
     
     [self updateAppearance];

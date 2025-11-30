@@ -266,9 +266,17 @@ extension MEGAPhotoBrowserViewController {
             if await isSlideShowEnabled() {
                 barButtonItem?.image = UIImage(systemName: "play.rectangle")
                 barButtonItem?.isEnabled = true
+                
+                if #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() {
+                    barButtonItem?.hidesSharedBackground = false
+                }
             } else {
                 barButtonItem?.image = nil
                 barButtonItem?.isEnabled = false
+                
+                if #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() {
+                    barButtonItem?.hidesSharedBackground = true
+                }
             }
         }
     }
