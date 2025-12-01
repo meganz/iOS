@@ -33,7 +33,6 @@
     
     [self configureTokenColors];
     
-    self.tableView.tableFooterView = [UIView.alloc initWithFrame:CGRectZero];
     self.tableView.bounces = false;
     
     self.tableView.emptyDataSetDelegate = self;
@@ -53,6 +52,7 @@
     RecentsPreferenceManager.delegate = self;
     
     self.tableView.sectionHeaderTopPadding = 0.0f;
+    self.tableView.tableFooterView = [self makeFooterView];
     
     [self onViewDidLoad];
 }

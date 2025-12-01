@@ -30,8 +30,7 @@ static NSString *kPath = @"kPath";
         self.tableView.tableHeaderView = [self.offline headerViewFor:self];
     }
 
-    //White background for the view behind the table view
-    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    self.tableView.tableFooterView = [self makeFooterView];
 }
 
 #pragma mark - Public

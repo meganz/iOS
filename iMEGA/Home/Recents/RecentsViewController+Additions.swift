@@ -56,6 +56,14 @@ extension RecentsViewController {
         }
     }
     
+    @objc func makeFooterView() -> UIView {
+        if #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() {
+            return .init(frame: CGRect(x: 0, y: 0, width: tableView?.bounds.size.width ?? 0.0, height: 100))
+        } else {
+            return .init(frame: .zero)
+        }
+    }
+    
     private func initMiniPlayer(node: MEGANode?) {
         AudioPlayerManager.shared.initMiniPlayer(
             node: node,

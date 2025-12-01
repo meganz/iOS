@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="24412" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24405"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -27,14 +27,14 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fa5-vU-Bwx" customClass="MEGASearchBarView" customModule="MEGA" customModuleProvider="target">
-                    <rect key="frame" x="0.0" y="44" width="414" height="52"/>
+                    <rect key="frame" x="0.0" y="96" width="414" height="52"/>
                     <color key="backgroundColor" systemColor="labelColor"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="52" id="gMg-07-xE2"/>
                     </constraints>
                 </view>
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="cVL-hh-qGu">
-                    <rect key="frame" x="20" y="96" width="374" height="229"/>
+                    <rect key="frame" x="20" y="148" width="374" height="229"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sbc-ZS-z6O" customClass="ExploreViewStack" customModule="MEGA" customModuleProvider="target">
                             <rect key="frame" x="0.0" y="0.0" width="374" height="93"/>
@@ -51,7 +51,7 @@
                     <variation key="heightClass=compact-widthClass=regular" spacing="1"/>
                 </stackView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gIf-cd-oR6" customClass="SlidePanelView" customModule="MEGA" customModuleProvider="target">
-                    <rect key="frame" x="0.0" y="325" width="414" height="838"/>
+                    <rect key="frame" x="0.0" y="377" width="414" height="896"/>
                     <color key="backgroundColor" systemColor="systemPurpleColor"/>
                 </view>
             </subviews>
@@ -62,10 +62,10 @@
                 <constraint firstItem="cVL-hh-qGu" firstAttribute="trailing" relation="lessThanOrEqual" secondItem="fnl-2z-Ty3" secondAttribute="trailing" constant="-20" id="A5I-xD-k4c"/>
                 <constraint firstItem="fa5-vU-Bwx" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="D4t-4k-30e"/>
                 <constraint firstItem="fa5-vU-Bwx" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="D9T-3H-xry"/>
-                <constraint firstItem="gIf-cd-oR6" firstAttribute="width" secondItem="fnl-2z-Ty3" secondAttribute="width" id="EI4-kJ-td5"/>
+                <constraint firstItem="gIf-cd-oR6" firstAttribute="width" secondItem="i5M-Pr-FkT" secondAttribute="width" id="EI4-kJ-td5"/>
                 <constraint firstItem="gIf-cd-oR6" firstAttribute="top" secondItem="cVL-hh-qGu" secondAttribute="bottom" id="S8d-kE-twZ"/>
                 <constraint firstItem="fa5-vU-Bwx" firstAttribute="bottom" secondItem="cVL-hh-qGu" secondAttribute="top" id="Sos-ri-hcX"/>
-                <constraint firstItem="gIf-cd-oR6" firstAttribute="height" secondItem="fnl-2z-Ty3" secondAttribute="height" constant="20" id="Tcn-pj-Nn8"/>
+                <constraint firstItem="gIf-cd-oR6" firstAttribute="height" secondItem="i5M-Pr-FkT" secondAttribute="height" id="Tcn-pj-Nn8"/>
                 <constraint firstItem="gIf-cd-oR6" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" priority="250" constant="-20" id="ZV9-O6-e98"/>
                 <constraint firstItem="cVL-hh-qGu" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="c4d-HV-7uj"/>
                 <constraint firstItem="fa5-vU-Bwx" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="on7-ev-xt5"/>
@@ -82,7 +82,7 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemPurpleColor">
-            <color red="0.68627450980392157" green="0.32156862745098042" blue="0.87058823529411766" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.68627450980000004" green="0.32156862749999998" blue="0.87058823529999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemYellowColor">
             <color red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

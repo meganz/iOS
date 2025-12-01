@@ -1,3 +1,4 @@
+import MEGAAppPresentation
 import MEGAAssets
 import MEGADesignToken
 import MEGADomain
@@ -9,6 +10,13 @@ extension OfflineTableViewViewController {
     public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         updateAppearanceForTraitCollection()
+    }
+    
+    @objc func configureDeleteContextMenu(_ contextMenu: UIContextualAction) -> UIContextualAction {
+        let tintColor = TokenColors.Text.onColor
+        contextMenu.image = MEGAAssets.UIImage.delete.withTintColor(tintColor)
+        contextMenu.backgroundColor = TokenColors.Support.error
+        return contextMenu
     }
     
     @objc func tableView(_ tableView: UITableView,
@@ -33,7 +41,7 @@ extension OfflineTableViewViewController {
             }
             return UIMenu(title: "", children: [selectAction])
         }
-
+        
         return contextMenuConfiguration
     }
     
@@ -61,6 +69,14 @@ extension OfflineTableViewViewController {
     func updateAppearanceForTraitCollection() {
         self.tableView?.backgroundColor = TokenColors.Background.page
         self.tableView?.separatorColor = TokenColors.Border.strong
+    }
+    
+    @objc func makeFooterView() -> UIView {
+        if #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() {
+            return .init(frame: CGRect(x: 0, y: 0, width: tableView?.bounds.size.width ?? 0.0, height: 100))
+        } else {
+            return .init(frame: .zero)
+        }
     }
 }
 
