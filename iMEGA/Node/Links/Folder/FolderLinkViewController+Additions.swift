@@ -47,7 +47,8 @@ extension FolderLinkViewController {
                 requestStatesRepository: RequestStatesRepository.newRepo
             ),
             saveMediaUseCase: saveMediaUseCase,
-            sortHeaderCoordinator: sortHeaderCoordinator
+            sortHeaderCoordinator: sortHeaderCoordinator,
+            viewMode: isListViewModeSelected() ? .list : .thumbnail
         )
         
         viewModel.invokeCommand = { [weak self] in self?.executeCommand($0) }
@@ -374,6 +375,10 @@ extension FolderLinkViewController: ViewType {
                 MEGAAssets.UIImage.saveToPhotos,
                 status: error
             )
+        case .setViewMode(let viewMode):
+            if isListViewModeSelected() && viewMode == .thumbnail || !isListViewModeSelected() && viewMode == .list {
+                changeViewModePreference()
+            }
         }
     }
 }

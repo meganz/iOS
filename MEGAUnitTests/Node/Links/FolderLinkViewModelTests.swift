@@ -2,6 +2,7 @@
 import MEGAAnalyticsiOS
 import MEGAAppPresentation
 import MEGAAppPresentationMock
+import MEGADomain
 import MEGADomainMock
 import MEGATest
 import Search
@@ -47,11 +48,62 @@ struct FolderLinkViewModelTests {
         ])
     }
 
+    @Test(arguments: [
+        (ViewModePreferenceEntity.list, SearchResultsViewMode.list),
+        (ViewModePreferenceEntity.thumbnail, SearchResultsViewMode.grid)
+    ])
+    func testViewModeHeaderViewModel(inputViewMode: ViewModePreferenceEntity, expectedViewMode: SearchResultsViewMode) {
+        let sut = makeSUT(viewMode: inputViewMode)
+        #expect(sut.viewModeHeaderViewModel.selectedViewMode == expectedViewMode)
+    }
+
+    @Test func testListenToViewModeUpdates() async {
+        enum TimeoutError: Error {
+            case viewModeNotSet
+        }
+
+        let sut = makeSUT(viewMode: .list)
+
+        let result: Result<ViewModePreferenceEntity, any Error> = await withCheckedContinuation { continuation in
+            var hasResumed = false
+
+            func resume(_ result: Result<ViewModePreferenceEntity, any Error>) {
+                guard !hasResumed else { return }
+                hasResumed = true
+                continuation.resume(returning: result)
+            }
+
+            sut.invokeCommand = { command in
+                switch command {
+                case .setViewMode(let viewMode):
+                    resume(.success(viewMode))
+                default:
+                    break
+                }
+            }
+
+            sut.viewModeHeaderViewModel.selectedViewMode = .grid
+
+            Task {
+                try? await Task.sleep(nanoseconds: 2_000_000_000)
+                resume(.failure(TimeoutError.viewModeNotSet))
+            }
+        }
+
+        switch result {
+        case .success(let viewMode):
+            #expect(viewMode == .thumbnail)
+        case .failure:
+            Issue.record("Timed out waiting for .setViewMode(.thumbnail)")
+        }
+    }
+
     typealias SUT = FolderLinkViewModel
     func makeSUT(
         tracker: MockTracker = MockTracker(),
         sortOptions: [SearchResultsSortOption] = [],
-        selectedSortOrder: Search.SortOrderEntity = .init(key: .name)
+        selectedSortOrder: Search.SortOrderEntity = .init(key: .name),
+        viewMode: ViewModePreferenceEntity = .list
     ) -> SUT {
         .init(
             folderLinkUseCase: MockFolderLinkUseCase(),
@@ -61,6 +113,7 @@ struct FolderLinkViewModelTests {
                 currentSortOrderProvider: { selectedSortOrder },
                 sortOptionSelectionHandler: { _ in }
             ),
+            viewMode: viewMode,
             tracker: tracker
         )
     }

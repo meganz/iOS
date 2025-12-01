@@ -788,11 +788,11 @@ public final class ContextMenuBuilder {
             isDecrypted ? makeFolderLinkQuickActions() : makeFolderLinkUndecryptedQuickActions()
         )
 
-        if showSortingOptionsAndViewModes {
-            if showMediaDiscovery {
-                folderLinkActions.append(mediaDiscovery)
-            }
+        if showMediaDiscovery {
+            folderLinkActions.append(mediaDiscovery)
+        }
 
+        if showSortingOptionsAndViewModes {
             folderLinkActions.append(
                 contentsOf: [
                     sortMenu(),

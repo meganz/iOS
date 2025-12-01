@@ -52,14 +52,25 @@ extension FolderLinkViewController {
         headerView.bounds = CGRect(x: 0, y: 0, width: 0, height: 40)
 
         let sortHeaderViewModel = viewModel.sortHeaderViewModel
-        let headerContentView = SearchResultsHeaderView(leftView: {
+        let viewModeHeaderViewModel = viewModel.viewModeHeaderViewModel
+        let headerContentView = SearchResultsHeaderView {
             SearchResultsHeaderSortView(viewModel: sortHeaderViewModel)
-        })
+        } rightView: {
+            SearchResultsHeaderViewModeView(viewModel: viewModeHeaderViewModel)
+        }
 
         let hostingViewController = UIHostingController(rootView: headerContentView)
         headerView.wrap(hostingViewController.view)
         controller.addChild(hostingViewController)
         controller.headerContainerView = hostingViewController.view
         return headerView
+    }
+
+    @objc func updateViewModelViewModeToList() {
+        viewModel.dispatch(.updateViewMode(.list))
+    }
+
+    @objc func updateViewModelViewModeToThumbnail() {
+        viewModel.dispatch(.updateViewMode(.thumbnail))
     }
 }

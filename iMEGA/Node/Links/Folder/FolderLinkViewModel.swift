@@ -1,3 +1,4 @@
+import Combine
 import MEGAAnalyticsiOS
 import MEGAAppPresentation
 import MEGADomain
@@ -10,6 +11,7 @@ import Search
         case trackSendToChatFolderLinkNoAccountLogged
         case trackSendToChatFolderLink
         case saveToPhotos([NodeEntity])
+        case updateViewMode(ViewModePreferenceEntity)
     }
     
     public enum Command: CommandType {
@@ -26,6 +28,7 @@ import Search
         case fileAttributeUpdate(HandleEntity)
         case endEditingMode
         case showSaveToPhotosError(String)
+        case setViewMode(ViewModePreferenceEntity)
     }
     
     public var invokeCommand: ((Command) -> Void)?
@@ -39,6 +42,8 @@ import Search
             trackSendToChatFolderLinkNoAccountLoggedEvent()
         case .saveToPhotos(let nodes):
             saveToPhotos(nodes)
+        case .updateViewMode(let viewMode):
+            updateViewMode(viewMode)
         }
     }
     
@@ -50,7 +55,22 @@ import Search
     var sortHeaderViewModel: SearchResultsHeaderSortViewViewModel {
         sortHeaderCoordinator.headerViewModel
     }
-    
+
+    private var subscriptions: Set<AnyCancellable> = []
+
+    private var viewMode: ViewModePreferenceEntity {
+        didSet {
+            viewModeHeaderViewModel.selectedViewMode = viewMode == .list ? .list : .grid
+        }
+    }
+
+    lazy var viewModeHeaderViewModel: SearchResultsHeaderViewModeViewModel = {
+        SearchResultsHeaderViewModeViewModel(
+            selectedViewMode: viewMode == .list ? .list : .grid,
+            availableViewModes: [.list, .grid]
+        )
+    }()
+
     private var monitorCompletedDownloadTransferTask: Task<Void, Never>? {
         didSet {
             oldValue?.cancel()
@@ -79,13 +99,16 @@ import Search
         folderLinkUseCase: some FolderLinkUseCaseProtocol,
         saveMediaUseCase: some SaveMediaToPhotosUseCaseProtocol,
         sortHeaderCoordinator: SearchResultsSortHeaderCoordinator,
+        viewMode: ViewModePreferenceEntity,
         tracker: some AnalyticsTracking = DIContainer.tracker
     ) {
         self.folderLinkUseCase = folderLinkUseCase
         self.saveMediaUseCase = saveMediaUseCase
         self.sortHeaderCoordinator = sortHeaderCoordinator
         self.tracker = tracker
+        self.viewMode = viewMode
         super.init()
+        listenToViewModesUpdates()
     }
     
     deinit {
@@ -175,5 +198,22 @@ import Search
                 MEGALogError("Error saving photos: \(error.localizedDescription)")
             }
         }
+    }
+
+    private func updateViewMode(_ viewMode: ViewModePreferenceEntity) {
+        self.viewMode = viewMode
+    }
+
+    private func listenToViewModesUpdates() {
+        viewModeHeaderViewModel
+            .$selectedViewMode
+            .dropFirst()
+            .removeDuplicates()
+            .debounce(for: .seconds(0.4), scheduler: DispatchQueue.main) // This is needed to prevent a crash because the header is removed.
+            .map { $0 == .list ? .list : .thumbnail }
+            .sink { [weak self] in
+                self?.invokeCommand?(.setViewMode($0))
+            }
+            .store(in: &subscriptions)
     }
 }

@@ -472,6 +472,7 @@
     self.flTableView.tableView.emptyDataSetSource = self;
 
     [self refreshContentInset];
+    [self updateViewModelViewModeToList];
 }
     
 - (void)initCollection {
@@ -492,6 +493,7 @@
     self.flCollectionView.collectionView.emptyDataSetSource = self;
     
     [self refreshContentInset];
+    [self updateViewModelViewModeToThumbnail];
 }
     
 - (void)changeViewModePreference {
