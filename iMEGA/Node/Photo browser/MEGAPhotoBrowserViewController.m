@@ -255,7 +255,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
     [super traitCollectionDidChange:previousTraitCollection];
     
     if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-        [AppearanceManager forceNavigationBarUpdate:self.navigationBar];
+        [self updateNavigationBar:self.navigationBar];
         [AppearanceManager forceToolbarUpdate:self.toolbar];
         
         [self updateAppearance];
@@ -389,7 +389,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
 }
 
 - (void)updateAppearance {
-    self.statusBarBackground.backgroundColor = self.navigationBar.backgroundColor = [UIColor surface1Background];
+    [self updateNavigationAndStatusBarBackground:self.navigationBar statusBar:self.statusBarBackground];
     
     [self reloadTitleWithCompletionHandler:^{}];
     

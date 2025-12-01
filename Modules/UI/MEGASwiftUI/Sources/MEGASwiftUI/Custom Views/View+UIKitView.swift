@@ -9,8 +9,13 @@ public extension View {
     }
 
     /// Wraps the SwiftUI View into a UIView that automatically sizes itself to fit the SwiftUI content.
-    func toWrappedUIView() -> UIView {
-        WrappedUIView(rootView: self)
+    func toWrappedUIView(shouldEnableGlassEffect: Bool = false, padding edges: Edge.Set = .horizontal) -> UIView {
+        if #available(iOS 26.0, *), shouldEnableGlassEffect {
+            let glassEffectView = self.padding(edges).glassEffect(.regular.interactive())
+            return WrappedUIView(rootView: glassEffectView)
+        } else {
+            return WrappedUIView(rootView: self)
+        }
     }
 }
 

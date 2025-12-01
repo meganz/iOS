@@ -389,6 +389,24 @@ extension MEGAPhotoBrowserViewController {
             nodes: [node],
             presenter: self).start()
     }
+
+    @objc func updateNavigationBar(_ navigationBar: UINavigationBar) {
+        if #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() {
+            AppearanceManager.setupLiquidGlassNavigationBar(navigationBar)
+        } else {
+            AppearanceManager.forceNavigationBarUpdate(navigationBar)
+        }
+    }
+
+    @objc func updateNavigationAndStatusBarBackground(_ navigationBar: UINavigationBar, statusBar: UIView) {
+        if #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() {
+            statusBar.backgroundColor = .clear
+            AppearanceManager.setupLiquidGlassNavigationBar(navigationBar)
+        } else {
+            statusBar.backgroundColor = UIColor.surface1Background()
+            navigationBar.backgroundColor = UIColor.surface1Background()
+        }
+    }
 }
 
 extension MEGAPhotoBrowserViewController: MEGAPhotoBrowserPickerDelegate {
@@ -475,12 +493,18 @@ extension MEGAPhotoBrowserViewController {
                 of: "[A]",
                 with: String(format: "%lu", dataProvider.currentIndex + 1))
         }
-        
+
+        let isLiquidGlassEnabled = if #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() {
+            true
+        } else {
+            false
+        }
+
         let rootView: NavigationTitleView?
         if let name = node.name {
-            rootView = .init(title: name, subtitle: subtitle)
+            rootView = .init(title: name, subtitle: subtitle, isLiquidGlassEnabled: isLiquidGlassEnabled)
         } else if let subtitle {
-            rootView = .init(title: subtitle)
+            rootView = .init(title: subtitle, isLiquidGlassEnabled: isLiquidGlassEnabled)
         } else {
             rootView = nil
         }
@@ -490,8 +514,8 @@ extension MEGAPhotoBrowserViewController {
             return
         }
 
-        if #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() {
-            navigationItem.titleView = rootView.toWrappedUIView()
+        if isLiquidGlassEnabled {
+            navigationItem.titleView = rootView.toWrappedUIView(shouldEnableGlassEffect: true)
         } else {
             let hostController = UIHostingController(rootView: rootView)
             let titleView = hostController.view
