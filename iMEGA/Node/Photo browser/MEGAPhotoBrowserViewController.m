@@ -379,7 +379,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
     [self presentActivityVC:@[link] excludedActivityTypes:excludedActivityTypes sender:self.rightToolbarItem];
 }
 
-- (void)sendLinkToChat {
+- (void)sendLinkToChatWhenLogin {
     MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"SendToNavigationControllerID"];
     SendToViewController *sendToViewController = navigationController.viewControllers.firstObject;
     sendToViewController.sendMode = SendModeFileAndFolderLink;

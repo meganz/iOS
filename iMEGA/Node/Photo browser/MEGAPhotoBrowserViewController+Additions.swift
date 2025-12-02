@@ -9,6 +9,7 @@ import MEGADomain
 import MEGAL10n
 import MEGAPermissions
 import MEGAPhotos
+import MEGARepo
 import MEGASwift
 import MEGASwiftUI
 import MEGAVideoPlayer
@@ -405,6 +406,25 @@ extension MEGAPhotoBrowserViewController {
         } else {
             statusBar.backgroundColor = UIColor.surface1Background()
             navigationBar.backgroundColor = UIColor.surface1Background()
+        }
+    }
+    
+    @objc func sendLinkToChat() {
+        let credentialUseCase = CredentialUseCase(repo: CredentialRepository.newRepo)
+        if credentialUseCase.hasSession() {
+            sendLinkToChatWhenLogin()
+        } else {
+            MEGALinkManager.linkSavedString = !encryptedLink.isEmpty ? encryptedLink : publicLink
+            MEGALinkManager.selectedOption = .sendNodeLinkToChat
+
+            let onboardingVC = OnboardingUSPViewController()
+            if let navigation = navigationController {
+                navigation.pushViewController(onboardingVC, animated: true)
+            } else {
+                let navigation = MEGANavigationController(rootViewController: onboardingVC)
+                navigation.addRightCancelButton()
+                present(navigation, animated: true)
+            }
         }
     }
 }

@@ -42,6 +42,7 @@ typedef NS_ENUM(NSUInteger, MEGAPhotoMode) {
 - (BOOL)isPreviewingVersion;
 - (IBAction)didPressAllMediasButton:(UIBarButtonItem *)sender;
 - (void)shareFileLink;
+- (void)sendLinkToChatWhenLogin;
 @end
 
 NS_ASSUME_NONNULL_END
