@@ -765,3 +765,13 @@ extension SearchResultsViewModel {
         }
     }
 }
+
+public extension SearchResultsViewModel {
+    /// Async sequence to expose the count of list items to comsumers from outside
+    var itemCountSequence: AnyAsyncSequence<Int> {
+        $listItems
+            .values
+            .map { $0.count }
+            .eraseToAnyAsyncSequence()
+    }
+}

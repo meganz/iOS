@@ -717,7 +717,7 @@ struct CloudDriveViewControllerFactory {
         nodeBrowserViewModel.actionHandlers.append(actionHandlers)
         nodeBrowserViewModel.actionHandlers.append(mediaContentDelegate)
 
-        let floatingAddButtonViewModel = makeFloatingAddButtonViewModel(nodeSource: nodeSource, config: config, nodeUpdatesProvider: nodeUpdatesProvider)
+        let floatingAddButtonViewModel = makeFloatingAddButtonViewModel(nodeSource: nodeSource, config: config, nodeUpdatesProvider: nodeUpdatesProvider, searchResultsViewModel: searchResultsVM)
 
         let nodeBrowserView = NodeBrowserView(viewModel: nodeBrowserViewModel, floatingAddButtonViewModel: floatingAddButtonViewModel)
 
@@ -1153,6 +1153,7 @@ struct CloudDriveViewControllerFactory {
         nodeSource: NodeSource,
         config: NodeBrowserConfig,
         nodeUpdatesProvider: some NodeUpdatesProviderProtocol,
+        searchResultsViewModel: SearchResultsViewModel
     ) -> FloatingAddButtonViewModel {
 
         let uploadAddMenuDelegateHandler = UploadAddMenuDelegateHandler(
@@ -1163,11 +1164,14 @@ struct CloudDriveViewControllerFactory {
 
         let actionProvider = NodeUploadAddActionsProvider(actionHandler: uploadAddMenuDelegateHandler)
 
+        let emptyStateProvider = SearchResultsEmptyStateProvider(viewModel: searchResultsViewModel)
+
         let floatingButtonVisibilityDataSource = FloatingAddButtonVisibilityDataSource(
             parentNode: nodeSource.parentNode,
             nodeBrowserConfig: config,
             nodeUpdatesProvider: nodeUpdatesProvider,
-            nodeUseCase: nodeUseCase
+            nodeUseCase: nodeUseCase,
+            searchResultsEmptyStateProvider: emptyStateProvider
         )
 
         return FloatingAddButtonViewModel(

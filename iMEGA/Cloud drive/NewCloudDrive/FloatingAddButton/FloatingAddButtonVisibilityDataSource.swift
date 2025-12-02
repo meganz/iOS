@@ -4,23 +4,27 @@ import Combine
 import MEGAAppSDKRepo
 import MEGADomain
 import MEGASwift
+import Search
 
 struct FloatingAddButtonVisibilityDataSource {
     private let parentNode: NodeEntity?
     private let nodeBrowserConfig: NodeBrowserConfig
     private let nodeUpdatesProvider: any NodeUpdatesProviderProtocol
     private let nodeUseCase: any NodeUseCaseProtocol
+    private let searchResultsEmptyStateProvider: any SearchResultsEmptyStateProviding
 
     init(
         parentNode: NodeEntity?,
         nodeBrowserConfig: NodeBrowserConfig,
         nodeUpdatesProvider: some NodeUpdatesProviderProtocol,
-        nodeUseCase: some NodeUseCaseProtocol
+        nodeUseCase: some NodeUseCaseProtocol,
+        searchResultsEmptyStateProvider: some SearchResultsEmptyStateProviding
     ) {
         self.nodeUpdatesProvider = nodeUpdatesProvider
         self.nodeBrowserConfig = nodeBrowserConfig
         self.parentNode = parentNode
         self.nodeUseCase = nodeUseCase
+        self.searchResultsEmptyStateProvider = searchResultsEmptyStateProvider
     }
 
     private func visibilityValue(for node: NodeEntity) -> Bool {
@@ -45,11 +49,21 @@ extension FloatingAddButtonVisibilityDataSource: FloatingAddButtonVisibilityData
         guard let parentNode else {
             return [false].async.eraseToAnyAsyncSequence()
         }
-        return nodeUpdatesProvider
+
+        let processedNodeUpdatesSequence = nodeUpdatesProvider
             .nodeUpdates
             .map { await self.processNodeUpdates($0) }
             .compacted()
             .prepend(visibilityValue(for: parentNode))
+            .eraseToAnyAsyncSequence()
+
+        let emptyResultsSequence = searchResultsEmptyStateProvider.emptyStateSequence
+            .map { !$0 }
+            .eraseToAnyAsyncSequence()
+
+        return combineLatest(processedNodeUpdatesSequence, emptyResultsSequence)
+            .map { $0 && $1 }
+            .removeDuplicates()
             .eraseToAnyAsyncSequence()
     }
 }
