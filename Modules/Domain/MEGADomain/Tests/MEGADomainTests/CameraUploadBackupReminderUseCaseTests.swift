@@ -44,7 +44,7 @@ struct CameraUploadBackupReminderUseCaseTests {
         #expect(localNotificationRepository.actions == [
             .cancelNotification(id: setupNotification.notificationId),
             .scheduleNotification(.init(
-                date: try #require(calendar.date(from: dateComponents)),
+                date: calendar.date(from: dateComponents),
                 id: setupNotification.notificationId,
                 title: setupNotification.title,
                 body: setupNotification.body))

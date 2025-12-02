@@ -19,14 +19,17 @@ public struct LocalNotificationRepository: LocalNotificationRepositoryProtocol {
         content.userInfo = notification.userInfo
         content.sound = .default
         
-        let triggerDate = Calendar.current
-            .dateComponents(
-                [.year, .month, .day, .hour, .minute, .second],
-                from: notification.date)
-        
-        let trigger = UNCalendarNotificationTrigger(
-            dateMatching: triggerDate,
-            repeats: notification.repeats)
+        var trigger: UNNotificationTrigger?
+        if let date = notification.date {
+            let triggerDate = Calendar.current
+                .dateComponents(
+                    [.year, .month, .day, .hour, .minute, .second],
+                    from: date)
+            
+            trigger = UNCalendarNotificationTrigger(
+                dateMatching: triggerDate,
+                repeats: notification.repeats)
+        }
         
         let request = UNNotificationRequest(
             identifier: notification.id,
