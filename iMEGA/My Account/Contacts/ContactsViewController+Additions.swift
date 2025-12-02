@@ -276,6 +276,13 @@ extension ContactsViewController {
         _ = try await shareUseCase.createShareKeys(forNodes: nodes.toNodeEntities())
     }
     
+    @objc @MainActor
+    func clearBackButtonForLiquidGlass() {
+        if #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() {
+            clearBackBarButton()
+        }
+    }
+    
     private func showAlert(alertModel: AlertModel) {
         present(UIAlertController(model: alertModel), animated: true)
     }

@@ -146,7 +146,8 @@
     }
     
     [AppearanceManager forceSearchBarUpdate:self.searchController.searchBar];
-    [self clearBackBarButton];
+    
+    [self clearBackButtonForLiquidGlass];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
