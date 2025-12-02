@@ -22,12 +22,12 @@ public struct SearchResultsContainerView: View {
                     SearchResultsHeaderView {
                         SearchResultsHeaderSortView(
                             viewModel: viewModel.sortHeaderViewModel,
-                            horizontalPadding: viewModel.sortingHeaderViewHorizontalPadding
+                            horizontalPadding: TokenSpacing._5
                         )
                     } rightView: {
                         SearchResultsHeaderViewModeView(
                             viewModel: viewModel.viewModeHeaderViewModel,
-                            horizontalPadding: viewModel.viewModeViewHorizontalPadding
+                            horizontalPadding: TokenSpacing._7
                         )
                     }
                 } else {

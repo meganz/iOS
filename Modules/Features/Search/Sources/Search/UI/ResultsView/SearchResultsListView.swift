@@ -76,10 +76,16 @@ struct SearchResultsListView<Header: View>: View {
 
     @ViewBuilder
     private var listSectionContent: some View {
-        Section(header: header()) {
+        Section {
             EmptyView()
+        } header: {
+            header()
+                .listRowInsets(
+                    EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0)
+                )
         }
-        Section(header: listHeaderView) {
+
+        Section {
             ForEach(viewModel.listItems) { item in
                 rowContent(rowViewModel: item)
                     .onAppear {
@@ -90,6 +96,8 @@ struct SearchResultsListView<Header: View>: View {
                         }
                     }
             }
+        } header: {
+            listHeaderView
         }
     }
 

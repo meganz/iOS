@@ -1,5 +1,4 @@
 import Combine
-import MEGADesignToken
 import MEGASwiftUI
 import MEGAUIKit
 import SwiftUI
@@ -25,14 +24,6 @@ public class SearchResultsContainerViewModel: ObservableObject {
 
     var sortHeaderViewModel: SearchResultsHeaderSortViewViewModel {
         sortHeaderCoordinator.headerViewModel
-    }
-
-    var sortingHeaderViewHorizontalPadding: CGFloat {
-        searchResultsViewModel.layout == .list ? 0 : TokenSpacing._5
-    }
-
-    var viewModeViewHorizontalPadding: CGFloat {
-        searchResultsViewModel.layout == .list ? TokenSpacing._4 : TokenSpacing._7
     }
 
     var shouldDisplayHeaderView: Bool {
