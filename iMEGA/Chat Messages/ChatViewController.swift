@@ -119,28 +119,36 @@ class ChatViewController: MessagesViewController {
     }
     
     var myUser = User(senderId: String(format: "%llu", MEGAChatSdk.shared.myUserHandle), displayName: "")
-    
+
+    private var isLiquidGlassEnabled: Bool {
+        if #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() {
+            true
+        } else {
+            false
+        }
+    }
+
     lazy var chatRoomDelegate: ChatRoomDelegate = {
         return ChatRoomDelegate(chatRoom: chatRoom)
     }()
-    
+
     lazy var audioCallBarButtonItem: UIBarButtonItem = {
         return UIBarButtonItem(image: MEGAAssets.UIImage.audioCall,
-                               style: .done,
+                               style: isLiquidGlassEnabled ? . plain : .done,
                                target: self,
                                action: #selector(startAudioCall))
     }()
     
     lazy var videoCallBarButtonItem = {
         return UIBarButtonItem(image: MEGAAssets.UIImage.videoCall,
-                               style: .done,
+                               style: isLiquidGlassEnabled ? . plain : .done,
                                target: self,
                                action: #selector(startVideoCall))
     }()
     
     lazy var addParticipantBarButtonItem = {
         return UIBarButtonItem(image: MEGAAssets.UIImage.addContact,
-                               style: .done,
+                               style: isLiquidGlassEnabled ? . plain : .done,
                                target: self,
                                action: #selector(addParticipant))
     }()
@@ -418,7 +426,8 @@ class ChatViewController: MessagesViewController {
                 traitCollection.preferredContentSizeCategory != previousTraitCollection?.preferredContentSizeCategory else {
             return
         }
-        
+
+        setupLiquidGlassNavigationBar()
         messagesCollectionView.reloadData()
         startOrJoinCallButton.backgroundColor = TokenColors.Background.inverse
         startOrJoinCallButton.setTitleColor(TokenColors.Text.inverseAccent, for: .normal)

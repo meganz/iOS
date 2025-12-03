@@ -9,6 +9,7 @@ extension ChatViewController {
     func configureNavigationBar() {
         addRightBarButtons()
         setTitleView()
+        setupLiquidGlassNavigationBar()
     }
     
     func updateRightBarButtons() {
