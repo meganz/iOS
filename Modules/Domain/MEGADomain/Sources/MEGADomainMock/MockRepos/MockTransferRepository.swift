@@ -76,4 +76,8 @@ public final class MockTransferRepository: TransferRepositoryProtocol, @unchecke
     public func cancelUploadTransfers() async throws {
         cancelUploadTransfers_calledTimes += 1
     }
+    
+    public func download(node: NodeEntity, to localUrl: URL, collisionResolution: CollisionResolutionEntity) throws -> AnyAsyncSequence<TransferEventEntity> {
+        EmptyAsyncSequence().eraseToAnyAsyncSequence()
+    }
 }

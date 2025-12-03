@@ -50,6 +50,44 @@ public struct TransferRepository: TransferRepositoryProtocol {
         }
     }
     
+    public func download(node: NodeEntity, to localUrl: URL, collisionResolution: CollisionResolutionEntity) throws -> AnyAsyncSequence<TransferEventEntity> {
+        guard let megaNode = sdk.node(forHandle: node.handle) else {
+            throw TransferErrorEntity.couldNotFindNodeByHandle
+        }
+        let sequence: AnyAsyncSequence<TransferEventEntity> = AsyncThrowingStream(TransferEventEntity.self) { continuation in
+            let transferDelegate = TransferDelegate { result in
+                switch result {
+                case .success(let transferEntity):
+                    continuation.yield(.finish(transferEntity))
+                    continuation.finish()
+                case .failure(let error):
+                    continuation.finish(throwing: error)
+                }
+            }
+            
+            transferDelegate.start = { transferEntity in
+                continuation.yield(.start(transferEntity))
+            }
+            
+            transferDelegate.progress = { transferEntity in
+                continuation.yield(.update(transferEntity))
+            }
+            
+            sdk.startDownloadNode(
+                megaNode,
+                localPath: localUrl.path,
+                fileName: nil,
+                appData: nil,
+                startFirst: true,
+                cancelToken: nil,
+                collisionCheck: CollisionCheck.fingerprint,
+                collisionResolution: collisionResolution.toCollisionResolution(),
+                delegate: transferDelegate
+            )
+        }.eraseToAnyAsyncSequence()
+        return sequence
+    }
+    
     public func uploadFile(at fileUrl: URL,
                            to parent: NodeEntity,
                            startHandler: ((TransferEntity) -> Void)?,

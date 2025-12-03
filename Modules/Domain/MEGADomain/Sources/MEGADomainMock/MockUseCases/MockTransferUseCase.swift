@@ -1,5 +1,6 @@
 import Foundation
 import MEGADomain
+import MEGASwift
 
 public final class MockTransferUseCase: TransferUseCaseProtocol, @unchecked Sendable {
     public var cancelDownloadTransfers_calledTimes = 0
@@ -84,5 +85,9 @@ public final class MockTransferUseCase: TransferUseCaseProtocol, @unchecked Send
     public func cancelUploadTransfers() async throws {
         cancelUploadTransfers_calledTimes += 1
         if let cancelUploadError { throw cancelUploadError }
+    }
+    
+    public func download(node: NodeEntity, to localUrl: URL, collisionResolution: CollisionResolutionEntity) throws -> AnyAsyncSequence<TransferEventEntity> {
+        EmptyAsyncSequence().eraseToAnyAsyncSequence()
     }
 }
