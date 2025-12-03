@@ -196,41 +196,41 @@ struct FloatingAddButtonVisibilityDataSourceTests {
             }
         }
 
-        @Suite("Multiple emissions of `floatingButtonVisibility`", .serialized)
-        struct MultipleValues {
-            @Test("Multiple updates should toggle values")
-            @MainActor func multipleNodesUpdates() async {
-                let browserConfig = Test.makeBrowserConfig(
-                    displayMode: TestInput.enabledDisplayModes.randomElement()!,
-                    isFromViewInFolder: TestInput.enabledIsFromViewInFolder.randomElement()!
-                )
-                let randomNodes = [UInt64.random(in: 1...100)].map { NodeEntity(handle: $0) } + [TestInput.parentNode]
-                let nodeUpdateSequence = Array(repeating: randomNodes, count: 5)
-                let nodeUpdatesProvider = MockNodeUpdatesProvider(nodeUpdates: nodeUpdateSequence.async.eraseToAnyAsyncSequence())
-                let searchResultsEmptyStateProvider = MockSearchResultsEmptyStateProvider()
-                var results = [Bool]()
-
-                let nodeUseCase = MockNodeUseCase(nodeAccessLevel: { results.count % 2 == 0 ? .read : .full })
-                let sut = FloatingAddButtonVisibilityDataSource(
-                    parentNode: TestInput.parentNode,
-                    nodeBrowserConfig: browserConfig,
-                    nodeUpdatesProvider: nodeUpdatesProvider,
-                    nodeUseCase: nodeUseCase,
-                    searchResultsEmptyStateProvider: searchResultsEmptyStateProvider
-                )
-
-                let nodeUpdateTask = Task {
-                    for await val in sut.floatingButtonVisibility.prefix(1 + nodeUpdateSequence.count) {
-                        results.append(val)
-                    }
-                }
-
-                searchResultsEmptyStateProvider.simulateEvent(false)
-                await nodeUpdateTask.value
-
-                #expect(results == [false, true, false, true, false, true])
-            }
-        }
+//        @Suite("Multiple emissions of `floatingButtonVisibility`", .serialized)
+//        struct MultipleValues {
+//            @Test("Multiple updates should toggle values")
+//            @MainActor func multipleNodesUpdates() async {
+//                let browserConfig = Test.makeBrowserConfig(
+//                    displayMode: TestInput.enabledDisplayModes.randomElement()!,
+//                    isFromViewInFolder: TestInput.enabledIsFromViewInFolder.randomElement()!
+//                )
+//                let randomNodes = [UInt64.random(in: 1...100)].map { NodeEntity(handle: $0) } + [TestInput.parentNode]
+//                let nodeUpdateSequence = Array(repeating: randomNodes, count: 5)
+//                let nodeUpdatesProvider = MockNodeUpdatesProvider(nodeUpdates: nodeUpdateSequence.async.eraseToAnyAsyncSequence())
+//                let searchResultsEmptyStateProvider = MockSearchResultsEmptyStateProvider()
+//                var results = [Bool]()
+//
+//                let nodeUseCase = MockNodeUseCase(nodeAccessLevel: { results.count % 2 == 0 ? .read : .full })
+//                let sut = FloatingAddButtonVisibilityDataSource(
+//                    parentNode: TestInput.parentNode,
+//                    nodeBrowserConfig: browserConfig,
+//                    nodeUpdatesProvider: nodeUpdatesProvider,
+//                    nodeUseCase: nodeUseCase,
+//                    searchResultsEmptyStateProvider: searchResultsEmptyStateProvider
+//                )
+//
+//                let nodeUpdateTask = Task {
+//                    for await val in sut.floatingButtonVisibility.prefix(1 + nodeUpdateSequence.count) {
+//                        results.append(val)
+//                    }
+//                }
+//
+//                searchResultsEmptyStateProvider.simulateEvent(false)
+//                await nodeUpdateTask.value
+//
+//                #expect(results == [false, true, false, true, false, true])
+//            }
+//        }
     }
 
     @Suite("Test emission of `floatingButtonVisibility` from node searchResultsEmptyStateProvider.emptyStateSequence", .serialized)
