@@ -444,6 +444,13 @@ class NodeBrowserViewModel: ObservableObject {
                     if let updatedNode = await nodeUseCase.nodeForHandle(parentNode.handle) {
                         await refreshMenuWithUpdatedNodeSource(.node({ updatedNode }))
                         refresh()
+
+                        // Reload is applicable only for media discovery as the
+                        // `searchResultUpdateSignalSequence()` in `SearchResultsProviding` - (check `SearchResultsViewModel` class)
+                        // will take care for list and thumbnail reloading
+                        if viewMode == .mediaDiscovery {
+                            await mediaDiscoveryViewModel?.loadPhotos()
+                        }
                     }
                 }
             } catch {
