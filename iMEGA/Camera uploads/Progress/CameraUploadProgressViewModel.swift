@@ -1,4 +1,6 @@
 import AsyncAlgorithms
+import MEGAAnalyticsiOS
+import MEGAAppPresentation
 import MEGADomain
 import MEGAL10n
 import MEGAPermissions
@@ -39,6 +41,7 @@ final class CameraUploadProgressViewModel: ObservableObject {
     private let accountStorageUseCase: any AccountStorageUseCaseProtocol
     private let cameraUploadProgressRouter: any CameraUploadProgressRouting
     private let devicePermissionHandler: any DevicePermissionsHandling
+    private let tracker: any AnalyticsTracking
     private let notificationCenter: NotificationCenter
     
     private var monitorVideoSettingsTask: Task<Void, Never>?
@@ -53,6 +56,7 @@ final class CameraUploadProgressViewModel: ObservableObject {
         accountStorageUseCase: some AccountStorageUseCaseProtocol,
         cameraUploadProgressRouter: some CameraUploadProgressRouting,
         devicePermissionHandler: some DevicePermissionsHandling,
+        tracker: some AnalyticsTracking = DIContainer.tracker,
         notificationCenter: NotificationCenter = .default
     ) {
         self.monitorCameraUploadUseCase = monitorCameraUploadUseCase
@@ -68,6 +72,7 @@ final class CameraUploadProgressViewModel: ObservableObject {
         self.accountStorageUseCase = accountStorageUseCase
         self.cameraUploadProgressRouter = cameraUploadProgressRouter
         self.devicePermissionHandler = devicePermissionHandler
+        self.tracker = tracker
         self.notificationCenter = notificationCenter
         $isCellularUploadAllowed.useCase = preferenceUseCase
         $isVideoUploadEnabled.useCase = preferenceUseCase
@@ -99,8 +104,13 @@ final class CameraUploadProgressViewModel: ObservableObject {
             )
         }
     }
-      
+    
+    func onAppear() {
+        tracker.trackAnalyticsEvent(with: CameraUploadProgressScreenEvent())
+    }
+    
     func showCameraUploadSettings() {
+        tracker.trackAnalyticsEvent(with: CameraUploadsSettingsMenuItemEvent())
         cameraUploadProgressRouter.showCameraUploadSettings()
     }
     

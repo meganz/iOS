@@ -35,6 +35,9 @@ struct CameraUploadProgressView: View {
         .task {
             await viewModel.monitorStates()
         }
+        .onAppear {
+            viewModel.onAppear()
+        }
     }
     
     @ViewBuilder

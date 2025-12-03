@@ -296,8 +296,10 @@ extension CameraUploadPaginationManager {
     private func disableLoad(for direction: FetchDirection) {
         switch direction {
         case .forward:
+            MEGALogDebug("[\(type(of: self))] Disabling forward loading - reached end of data")
             canLoadForward = false
         case .backward:
+            MEGALogDebug("[\(type(of: self))] Disabling backward loading - reached beginning of data")
             canLoadBackward = false
         }
     }

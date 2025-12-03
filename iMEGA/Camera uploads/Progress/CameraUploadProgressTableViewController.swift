@@ -178,12 +178,17 @@ final class CameraUploadProgressTableViewController: UITableViewController {
         let isUserInitiated = scrollView.isTracking || scrollView.isDragging || scrollView.isDecelerating
         guard !viewModel.isPaginationInProgress else { return }
         
-        guard let visibleIndexPaths = tableView.indexPathsForVisibleRows,
-              !visibleIndexPaths.isEmpty,
-              let items = dataSource?.snapshot().itemIdentifiers(inSection: .inQueue),
-              !items.isEmpty else { return }
+        guard let dataSource,
+              let visibleIndexPaths = tableView.indexPathsForVisibleRows,
+              !visibleIndexPaths.isEmpty else { return }
         
-        let queueIndexPaths = visibleIndexPaths.filter { $0.section == CameraUploadProgressSections.inQueue.rawValue }
+        let snapshot = dataSource.snapshot()
+        guard let inQueueSectionIndex = snapshot.sectionIdentifiers.firstIndex(of: .inQueue) else { return }
+        
+        let items = snapshot.itemIdentifiers(inSection: .inQueue)
+        guard !items.isEmpty else { return }
+        
+        let queueIndexPaths = visibleIndexPaths.filter { $0.section == inQueueSectionIndex }
         guard !queueIndexPaths.isEmpty else { return }
         
         let middleQueueIndexPath = queueIndexPaths[queueIndexPaths.count / 2]

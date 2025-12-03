@@ -1,4 +1,7 @@
 @testable import MEGA
+import MEGAAnalyticsiOS
+import MEGAAppPresentation
+import MEGAAppPresentationMock
 import MEGADomain
 import MEGADomainMock
 import MEGAL10n
@@ -212,13 +215,35 @@ struct CameraUploadProgressViewModelTests {
     
     @MainActor
     @Test
+    func onAppear() {
+        let tracker = MockTracker()
+        let sut = Self.makeSUT(
+            tracker: tracker)
+        
+        sut.onAppear()
+        
+        Test.assertTrackAnalyticsEventCalled(
+            trackedEventIdentifiers: tracker.trackedEventIdentifiers,
+            with: [CameraUploadProgressScreenEvent()]
+        )
+    }
+    
+    @MainActor
+    @Test
     func showCameraUploadSettings() async throws {
         let cameraUploadProgressRouter = MockCameraUploadProgressRouter()
-        let sut = Self.makeSUT(cameraUploadProgressRouter: cameraUploadProgressRouter)
+        let tracker = MockTracker()
+        let sut = Self.makeSUT(
+            cameraUploadProgressRouter: cameraUploadProgressRouter,
+            tracker: tracker)
         
         sut.showCameraUploadSettings()
         
         #expect(cameraUploadProgressRouter.showCameraUploadSettingsCalledCount == 1)
+        Test.assertTrackAnalyticsEventCalled(
+            trackedEventIdentifiers: tracker.trackedEventIdentifiers,
+            with: [CameraUploadsSettingsMenuItemEvent()]
+        )
     }
 
     @MainActor
@@ -232,6 +257,7 @@ struct CameraUploadProgressViewModelTests {
         accountStorageUseCase: some AccountStorageUseCaseProtocol = MockAccountStorageUseCase(),
         cameraUploadProgressRouter: some CameraUploadProgressRouting = MockCameraUploadProgressRouter(),
         devicePermissionHandler: some DevicePermissionsHandling = MockDevicePermissionHandler(),
+        tracker: some AnalyticsTracking = MockTracker(),
         notificationCenter: NotificationCenter = .default
     ) -> CameraUploadProgressViewModel {
         .init(
@@ -244,6 +270,7 @@ struct CameraUploadProgressViewModelTests {
             accountStorageUseCase: accountStorageUseCase,
             cameraUploadProgressRouter: cameraUploadProgressRouter,
             devicePermissionHandler: devicePermissionHandler,
+            tracker: tracker,
             notificationCenter: notificationCenter)
     }
     
