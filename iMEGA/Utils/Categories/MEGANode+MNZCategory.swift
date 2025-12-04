@@ -58,10 +58,11 @@ extension MEGANode {
         switch type {
         case .folder, .rubbish:
             let displayMode: DisplayMode
+            let isInRubbish = MEGASdk.shared.isNode(inRubbish: self)
             if isBackupNode {
                 displayMode = .backup
             } else {
-                displayMode = type == .rubbish ? .rubbishBin : .cloudDrive
+                displayMode = (type == .rubbish || isInRubbish) ? .rubbishBin : .cloudDrive
             }
             pushCloudDriveForNode(self, displayMode: displayMode, navigationController: navigationController)
             UIApplication.mnz_presentingViewController().dismiss(animated: true)
