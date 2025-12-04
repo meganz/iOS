@@ -23,15 +23,20 @@ final class NodeActionTableViewCell: ActionSheetCell {
 
     private func configureForRevampUIIfNeeded() {
         if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .cloudDriveRevamp) {
-            guard let imgView = imageView else { return }
+            guard let imgView = imageView, let label = self.textLabel else { return }
 
             imgView.translatesAutoresizingMaskIntoConstraints = false
+            label.translatesAutoresizingMaskIntoConstraints = false
 
             NSLayoutConstraint.activate([
                 imgView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
                 imgView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-                imgView.widthAnchor.constraint(equalToConstant: 24),
-                imgView.heightAnchor.constraint(equalToConstant: 24)
+                imgView.widthAnchor.constraint(equalToConstant: TokenSpacing._7),
+                imgView.heightAnchor.constraint(equalToConstant: TokenSpacing._7),
+                label.leadingAnchor.constraint(equalTo: imgView.trailingAnchor, constant: TokenSpacing._4),
+                imgView.centerYAnchor.constraint(equalTo: label.centerYAnchor),
+                label.topAnchor.constraint(equalTo: contentView.topAnchor),
+                label.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
             ])
             imgView.contentMode = .scaleAspectFit
         }
