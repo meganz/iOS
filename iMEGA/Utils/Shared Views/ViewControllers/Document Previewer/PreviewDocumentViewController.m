@@ -241,7 +241,7 @@
     }
 }
 
-- (void)sendToChat {
+- (void)sendToChatWhenLogin {
     if (self.isLink && self.fileLink) {
         MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"SendToNavigationControllerID"];
         SendToViewController *sendToViewController = navigationController.viewControllers.firstObject;

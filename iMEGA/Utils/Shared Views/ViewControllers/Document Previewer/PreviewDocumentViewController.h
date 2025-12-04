@@ -13,4 +13,6 @@
 @property (nonatomic) MEGAHandle chatId;
 @property (nonatomic) MEGAHandle messageId;
 
+- (void)sendToChatWhenLogin;
+
 @end

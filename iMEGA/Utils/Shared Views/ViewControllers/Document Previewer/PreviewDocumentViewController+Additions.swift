@@ -4,6 +4,7 @@ import MEGAAppSDKRepo
 import MEGADesignToken
 import MEGADomain
 import MEGAL10n
+import MEGARepo
 
 extension PreviewDocumentViewController {
     @objc func createNodeInfoViewModel(withNode node: MEGANode) -> NodeInfoViewModel {
@@ -101,6 +102,25 @@ extension PreviewDocumentViewController {
     @objc func unhideNode(_ node: MEGANode) {
         HideFilesAndFoldersRouter(presenter: self)
             .unhideNodes([node.toNodeEntity()])
+    }
+    
+    @objc func sendToChat() {
+        let credentialUseCase = CredentialUseCase(repo: CredentialRepository.newRepo)
+        if credentialUseCase.hasSession() {
+            sendToChatWhenLogin()
+        } else {
+            MEGALinkManager.linkSavedString = isLink && fileLink != nil ? fileLink : ""
+            MEGALinkManager.selectedOption = .sendNodeLinkToChat
+
+            let onboardingVC = OnboardingUSPViewController()
+            if let navigation = navigationController {
+                navigation.pushViewController(onboardingVC, animated: true)
+            } else {
+                let navigation = MEGANavigationController(rootViewController: onboardingVC)
+                navigation.addRightCancelButton()
+                present(navigation, animated: true)
+            }
+        }
     }
 }
 
