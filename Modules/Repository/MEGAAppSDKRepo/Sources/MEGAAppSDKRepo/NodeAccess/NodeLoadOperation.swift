@@ -74,7 +74,7 @@ final class NodeLoadOperation: AsyncOperation, NodeLoadOperationProtocol, @unche
             return
         }
         
-        guard let parent = sdk.rootNode, let newNodeName = newNodeName else {
+        guard let parent = sdk.rootNode, let newNodeName else {
             finishOperation(node: nil, error: NodeLoadError.noRootNode)
             return
         }
@@ -83,6 +83,13 @@ final class NodeLoadOperation: AsyncOperation, NodeLoadOperationProtocol, @unche
             switch result {
             case .success(let request):
                 self?.setTargetFolder(forHandle: request.nodeHandle)
+            case .failure(let error) where error.type == .apiEExist:
+                /// We assume the default lookup path is the root directory ("/") when resolving an existing folder with the same name.
+                guard let existingNodeHandle = self?.retrieveExistingFolderHandle(named: newNodeName, atPath: "/") else {
+                    self?.finishOperation(node: nil, error: error)
+                    return
+                }
+                self?.setTargetFolder(forHandle: existingNodeHandle)
             case .failure(let error):
                 self?.finishOperation(node: nil, error: error)
             }
@@ -91,6 +98,17 @@ final class NodeLoadOperation: AsyncOperation, NodeLoadOperationProtocol, @unche
     
     func setTargetFolder(forHandle handle: HandleEntity) {
         setFolderHandleRequest?(handle, RequestDelegate(completion: validate))
+    }
+    
+    private func retrieveExistingFolderHandle(
+        named name: String,
+        atPath basePath: String
+    ) -> HandleEntity? {
+        guard let escapedName = sdk.escapeFsIncompatible(name, destinationPath: basePath) else {
+            return nil
+        }
+        
+        return sdk.node(forPath: basePath + escapedName)?.handle
     }
     
     private func validate(result: Result<MEGARequest, MEGAError>) {
