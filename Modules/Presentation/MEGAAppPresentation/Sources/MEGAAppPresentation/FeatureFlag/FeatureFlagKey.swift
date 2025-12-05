@@ -15,6 +15,7 @@ public enum FeatureFlagKey: FeatureFlagName, CaseIterable, Sendable {
     case cloudDriveRevamp = "Cloud Drive Revamp"
     case cameraUploadProgress = "Show Camera Upload Progress"
     case mediaRevamp = "Media Revamp"
+    case appPerfomanceMonitoring = "App Perfomance Monitoring"
 
     /// The keys that are ready for production release, but not yet removed from code.
     /// Discussion:

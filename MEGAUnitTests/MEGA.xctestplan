@@ -273,6 +273,13 @@
         "identifier" : "MEGASwiftUITests",
         "name" : "MEGASwiftUITests"
       }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:Modules\/Infrastracture\/APMKit",
+        "identifier" : "APMKitTests",
+        "name" : "APMKitTests"
+      }
     }
   ],
   "version" : 1

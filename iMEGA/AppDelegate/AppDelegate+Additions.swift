@@ -1,4 +1,5 @@
 import Accounts
+import APMKit
 import Chat
 import ChatRepo
 import Combine
@@ -781,5 +782,20 @@ extension AppDelegate {
 extension AppDelegate {
     @objc func openAppFromSpotlight() {
         DIContainer.tracker.trackAnalyticsEvent(with: SpotlightNodeButtonPressedEvent())
+    }
+}
+
+// MARK: - start APM
+
+extension AppDelegate {
+    @objc func startAPMIfNeeded() {
+        Task {
+            let accountUseCase = AccountUseCase(repository: AccountRepository.newRepo)
+            // loadUserData will refresh the remote flags, remote flags will be ready after it finishes
+            try? await accountUseCase.loadUserData()
+            if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .appPerfomanceMonitoring) || DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosAppPerformanceMonitoring) {
+                APMKit.start(with: APMCrashlyticsReporter())
+            }
+        }
     }
 }
