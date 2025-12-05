@@ -7,13 +7,14 @@ protocol SearchResultsEmptyStateProviding: Sendable {
 
 /// Wrapper around SearchResultsViewModel to tunnel its `itemCountSequence` from main actor to background actor
 struct SearchResultsEmptyStateProvider: SearchResultsEmptyStateProviding {
-    private let viewModel: SearchResultsViewModel
+    private weak var viewModel: SearchResultsViewModel?
 
     init(viewModel: SearchResultsViewModel) {
         self.viewModel = viewModel
     }
 
     var emptyStateSequence: AnyAsyncSequence<Bool> {
+        guard let viewModel else { return EmptyAsyncSequence<Bool>().eraseToAnyAsyncSequence() }
         let (stream, continuation) = AsyncStream
             .makeStream(of: Bool.self, bufferingPolicy: .bufferingNewest(1))
 

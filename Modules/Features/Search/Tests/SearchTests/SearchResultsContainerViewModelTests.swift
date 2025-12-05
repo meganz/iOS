@@ -543,7 +543,8 @@ struct SearchResultsContainerViewModelTests {
                 viewDisplayMode: .unknown,
                 listHeaderViewModel: nil,
                 isSelectionEnabled: true,
-                usesRevampedLayout: false
+                usesRevampedLayout: false,
+                contentUnavailableViewModelProvider: MockContentUnavailableViewModelProvider()
             ),
             sortOptionsViewModel: sortOptionsViewModel,
             showChips: showChips,

@@ -5,7 +5,6 @@ import MEGASwift
 
 @MainActor
 public final class FloatingAddButtonViewModel: ObservableObject {
-
     private let floatingButtonVisibilityDataSource: any FloatingAddButtonVisibilityDataSourceProtocol
     private let featureFlagProvider: any FeatureFlagProviderProtocol
     public let uploadActions: [NodeUploadAction]

@@ -549,11 +549,19 @@ struct CloudDriveViewControllerFactory {
         }
 
         let initialViewMode = viewModeProvider(nodeSource, mediaNodesHandler(.containsExclusivelyMedia, nodeSource))
-
         let isCloudDriveRevampEnabled = DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .cloudDriveRevamp)
-
         let searchBridge = makeSearchBridge(nodeSource: nodeSource, config: overriddenConfig)
         let searchConfig = makeSearchConfig(nodeSource: nodeSource, config: overriddenConfig)
+
+        let contentUnavailableViewModelProvider = CloudDriveContentUnavailableViewModelProvider(
+            defaultEmptyViewAssets: makeDefaultEmptyViewAsset(for: nodeSource, config: config),
+            nodeSource: nodeSource,
+            displayMode: config.displayMode,
+            nodeUseCase: nodeUseCase,
+            usesRevampedUI: isCloudDriveRevampEnabled
+        )
+
+        let nodeUpdatesProvider = NodeUpdatesProvider()
 
         let searchResultsVM = makeSearchResultsViewModel(
             nodeSource: nodeSource,
@@ -563,8 +571,17 @@ struct CloudDriveViewControllerFactory {
             searchConfig: searchConfig,
             calendar: calendar,
             usesRevampedLayout: isCloudDriveRevampEnabled,
-            shouldForceListLayoutDuringSearch: isCloudDriveRevampEnabled
+            shouldForceListLayoutDuringSearch: isCloudDriveRevampEnabled,
+            contentUnavailableViewModelProvider: contentUnavailableViewModelProvider
         )
+
+        let floatingAddButtonViewModel = makeFloatingAddButtonViewModel(
+            nodeSource: nodeSource, config: config,
+            nodeUpdatesProvider: nodeUpdatesProvider,
+            searchResultsViewModel: searchResultsVM
+        )
+
+        contentUnavailableViewModelProvider.delegate = floatingAddButtonViewModel
 
         let shouldShowMediaDiscoveryModeHandler: () -> Bool = {
             (!nodeSource.isRoot
@@ -636,8 +653,6 @@ struct CloudDriveViewControllerFactory {
         let noInternetViewModel = LegacyNoInternetViewModel(
             networkMonitorUseCase: NetworkMonitorUseCase(repo: NetworkMonitorRepository.newRepo)
         )
-
-        let nodeUpdatesProvider = NodeUpdatesProvider()
 
         let nodeSourceUpdatesListener = NewCloudDriveNodeSourceUpdatesListener(
             originalNodeSource: nodeSource,
@@ -716,8 +731,6 @@ struct CloudDriveViewControllerFactory {
 
         nodeBrowserViewModel.actionHandlers.append(actionHandlers)
         nodeBrowserViewModel.actionHandlers.append(mediaContentDelegate)
-
-        let floatingAddButtonViewModel = makeFloatingAddButtonViewModel(nodeSource: nodeSource, config: config, nodeUpdatesProvider: nodeUpdatesProvider, searchResultsViewModel: searchResultsVM)
 
         let nodeBrowserView = NodeBrowserView(viewModel: nodeBrowserViewModel, floatingAddButtonViewModel: floatingAddButtonViewModel)
 
@@ -933,7 +946,8 @@ struct CloudDriveViewControllerFactory {
         searchConfig: SearchConfig,
         calendar: Calendar,
         usesRevampedLayout: Bool,
-        shouldForceListLayoutDuringSearch: Bool
+        shouldForceListLayoutDuringSearch: Bool,
+        contentUnavailableViewModelProvider: some ContentUnavailableViewModelProviding
     ) -> SearchResultsViewModel {
         SearchResultsViewModel(
             resultsProvider: resultProvider(
@@ -948,7 +962,8 @@ struct CloudDriveViewControllerFactory {
             viewDisplayMode: nodeBrowserConfig.displayMode?.toViewDisplayMode ?? .unknown,
             listHeaderViewModel: listHeaderViewModelFactory.buildIfNeeded(for: nodeSource),
             isSelectionEnabled: shouldEnableSelection(for: nodeSource),
-            usesRevampedLayout: usesRevampedLayout
+            usesRevampedLayout: usesRevampedLayout,
+            contentUnavailableViewModelProvider: contentUnavailableViewModelProvider
         )
     }
 
@@ -1178,5 +1193,11 @@ struct CloudDriveViewControllerFactory {
             floatingButtonVisibilityDataSource: floatingButtonVisibilityDataSource,
             uploadActions: actionProvider.actions,
             featureFlagProvider: DIContainer.featureFlagProvider)
+    }
+}
+
+extension FloatingAddButtonViewModel: @MainActor CloudDriveContentUnavailableViewModelProviderDelegate {
+    func emptyStateAddButtonTapped() {
+        addButtonTapAction()
     }
 }

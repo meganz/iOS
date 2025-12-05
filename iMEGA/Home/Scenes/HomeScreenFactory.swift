@@ -257,7 +257,8 @@ final class HomeScreenFactory: NSObject {
             viewDisplayMode: .home,
             listHeaderViewModel: nil,
             isSelectionEnabled: false,
-            usesRevampedLayout: DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .cloudDriveRevamp)
+            usesRevampedLayout: DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .cloudDriveRevamp),
+            contentUnavailableViewModelProvider: HomeScreenContentUnavailableViewModelProvider()
         )
 
         let searchResultsContainerViewModel = SearchResultsContainerViewModel(
@@ -456,5 +457,20 @@ final class HomeScreenFactory: NSObject {
             contentConsumptionUserAttributeUseCase: ContentConsumptionUserAttributeUseCase(
                 repo: UserAttributeRepository.newRepo),
             hiddenNodesFeatureFlagEnabled: { DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes) })
+    }
+}
+
+private struct HomeScreenContentUnavailableViewModelProvider: ContentUnavailableViewModelProviding {
+    func emptyViewModel(
+        query: SearchQuery,
+        appliedChips: [SearchChipEntity],
+        config: SearchConfig
+    ) -> ContentUnavailableViewModel {
+        ContentUnavailableViewModel(
+            image: MEGAAssets.Image.glassSearch02,
+            title: Strings.Localizable.Home.Search.Empty.noChipSelected,
+            font: .body,
+            titleTextColor: TokenColors.Icon.secondary.swiftUI
+        )
     }
 }

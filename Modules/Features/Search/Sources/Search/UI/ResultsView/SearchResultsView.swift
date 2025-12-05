@@ -35,7 +35,7 @@ struct SearchResultsView<Header: View>: View {
                 .scrollDismissesKeyboard(.immediately)
         }
         .padding(.bottom, viewModel.bottomInset)
-        .emptyState(viewModel.emptyViewModel)
+        .emptyState(viewModel.emptyViewModel, usesRevampLayout: viewModel.usesRevampedLayout)
     }
     
     @ViewBuilder

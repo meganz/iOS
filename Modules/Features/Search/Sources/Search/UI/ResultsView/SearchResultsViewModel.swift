@@ -83,6 +83,8 @@ public final class SearchResultsViewModel: ObservableObject {
 
     private let hapticFeedbackUseCase: any HapticFeedbackUseCaseProtocol
 
+    private let contentUnavailableViewModelProvider: any ContentUnavailableViewModelProviding
+
     let listHeaderViewModel: ListHeaderViewModel?
 
     // Specifies whether the results are selectable or not.
@@ -106,7 +108,7 @@ public final class SearchResultsViewModel: ObservableObject {
         listHeaderViewModel: ListHeaderViewModel?,
         isSelectionEnabled: Bool,
         usesRevampedLayout: Bool,
-
+        contentUnavailableViewModelProvider: some ContentUnavailableViewModelProviding
     ) {
         self.resultsProvider = resultsProvider
         self.bridge = bridge
@@ -121,6 +123,7 @@ public final class SearchResultsViewModel: ObservableObject {
         self.isSelectionEnabled = isSelectionEnabled
         self.usesRevampedLayout = usesRevampedLayout
         self.hapticFeedbackUseCase = hapticFeedbackUseCase
+        self.contentUnavailableViewModelProvider = contentUnavailableViewModelProvider
         self.bridge.queryChanged = { [weak self] query  in
             let _self = self
             
@@ -560,7 +563,7 @@ public final class SearchResultsViewModel: ObservableObject {
             selectedRowIds.formUnion(selectedItems.map { $0.id })
             
             withAnimation {
-                emptyViewModel = Self.makeEmptyView(
+                emptyViewModel = makeEmptyViewModel(
                     whenListItems: listItems.isEmpty,
                     query: query,
                     appliedChips: results.appliedChips,
@@ -570,28 +573,13 @@ public final class SearchResultsViewModel: ObservableObject {
         }
     }
     
-    private static func makeEmptyView(
+    private func makeEmptyViewModel(
         whenListItems empty: Bool,
         query: SearchQuery,
         appliedChips: [SearchChipEntity],
         config: SearchConfig
     ) -> ContentUnavailableViewModel? {
-        guard empty else { return nil }
-
-        // we show contextual, chip-related empty screen only when there
-        // is not text query
-        if query.query.isEmpty {
-            // node format takes priority when showing empty assets.
-            let chip = appliedChips.first { $0.type.isNodeFormatChip || $0.type.isNodeTypeChip } ?? appliedChips.first
-
-            // this assumes only one chip at most can be applied at any given time
-            return config.emptyViewAssetFactory(chip, query).emptyViewModel
-        }
-        
-        // when there is non-empty text query (and no results of course) ,
-        // [independently if there is any chip selected
-        // we show generic 'no results' empty screen
-        return config.emptyViewAssetFactory(nil, query).emptyViewModel
+        empty ? contentUnavailableViewModelProvider.emptyViewModel(query: query, appliedChips: appliedChips, config: config) : nil
     }
 
     private func updateLoadingPlaceholderVisibility(_ shown: Bool) {
@@ -621,7 +609,7 @@ public final class SearchResultsViewModel: ObservableObject {
 
     private func updateListItem(with newItems: [SearchResultRowViewModel]) {
         listItems = newItems
-        let newEmptyViewModel = Self.makeEmptyView(
+        let newEmptyViewModel = makeEmptyViewModel(
             whenListItems: listItems.isEmpty,
             query: currentQuery,
             appliedChips: currentQuery.chips,

@@ -34,10 +34,10 @@ final class SearchResultsViewModelTests: XCTestCase, @unchecked Sendable {
         let resultsProvider: MockSearchResultsProviding
         let hapticFeedbackUseCase: MockHapticFeedbackUseCase
         let bridge: SearchBridge
+        let contentUnavailableViewModelProvider: MockContentUnavailableViewModelProvider
         var selectedResults: [SearchResultSelection] = []
         var contextTriggeredResults: [SearchResult] = []
         var chipTaps: [(SearchChipEntity, Bool)] = []
-        var emptyContentRequested: [EmptyContent] = []
         weak var testcase: XCTestCase?
         let interactor = MockSearchResultsInteractor()
 
@@ -62,22 +62,18 @@ final class SearchResultsViewModelTests: XCTestCase, @unchecked Sendable {
                 updateSortOrder: { _ in }
             )
 
-            var askedForEmptyContent: (SearchChipEntity?, SearchQuery) -> SearchConfig.EmptyViewAssets = {
-                SearchConfig.testConfig.emptyViewAssetFactory($0, $1)
-            }
-
             let base = SearchConfig.testConfig
             let config = SearchConfig(
                 chipAssets: base.chipAssets,
-                emptyViewAssetFactory: { chip, query in
-                    askedForEmptyContent(chip, query)
-                },
+                emptyViewAssetFactory: { _, _ in SearchConfig.EmptyViewAssets.testAssets },
                 rowAssets: base.rowAssets,
                 colorAssets: base.colorAssets,
                 contextPreviewFactory: base.contextPreviewFactory
             )
 
             hapticFeedbackUseCase = .init()
+
+            contentUnavailableViewModelProvider = .init()
 
             sut = SearchResultsViewModel(
                 resultsProvider: resultsProvider,
@@ -90,7 +86,8 @@ final class SearchResultsViewModelTests: XCTestCase, @unchecked Sendable {
                 hapticFeedbackUseCase: hapticFeedbackUseCase,
                 listHeaderViewModel: nil,
                 isSelectionEnabled: true,
-                usesRevampedLayout: usesRevampedLayout
+                usesRevampedLayout: usesRevampedLayout,
+                contentUnavailableViewModelProvider: contentUnavailableViewModelProvider
             )
 
             sut.interactor = interactor
@@ -104,11 +101,6 @@ final class SearchResultsViewModelTests: XCTestCase, @unchecked Sendable {
 
             chipTapped = { chip, isSelected in
                 self.chipTaps.append((chip, isSelected))
-            }
-            
-            askedForEmptyContent = {
-                self.emptyContentRequested.append(.init(chip: $0, isSearchActive: $1.isSearchActive))
-                return SearchConfig.testConfig.emptyViewAssetFactory($0, $1)
             }
         }
         
@@ -493,7 +485,11 @@ final class SearchResultsViewModelTests: XCTestCase, @unchecked Sendable {
         ))
         _ = try XCTUnwrap(harness.sut.emptyViewModel)
         let content: Harness.EmptyContent = .init(chip: nil, isSearchActive: true)
-        XCTAssertEqual(harness.emptyContentRequested, [content, content])
+        let emptyViewModelFuncCallsContent = harness.contentUnavailableViewModelProvider.emptyViewModelFuncCalls.map {
+            Harness.EmptyContent(chip: $0.appliedChips.first, isSearchActive: $0.query.isSearchActive)
+        }
+
+        XCTAssertEqual(emptyViewModelFuncCallsContent, [content, content])
     }
 
     @MainActor
@@ -518,7 +514,11 @@ final class SearchResultsViewModelTests: XCTestCase, @unchecked Sendable {
                 isSearchActive: false
             )
         ]
-        XCTAssertEqual(harness.emptyContentRequested, content)
+
+        let emptyViewModelFuncCallsContent = harness.contentUnavailableViewModelProvider.emptyViewModelFuncCalls.map {
+            Harness.EmptyContent(chip: $0.appliedChips.first, isSearchActive: $0.query.isSearchActive)
+        }
+        XCTAssertEqual(emptyViewModelFuncCallsContent, content)
     }
 
     @MainActor

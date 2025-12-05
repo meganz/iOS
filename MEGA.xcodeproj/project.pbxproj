@@ -2529,6 +2529,7 @@
 		C403FA4D2BAD8DCB007642AD /* CloudDriveQuickUploadActionRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C403FA4C2BAD8DCB007642AD /* CloudDriveQuickUploadActionRouter.swift */; };
 		C41047CD2566FCB500531936 /* AudioPlayer+Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41047CC2566FCB500531936 /* AudioPlayer+Protocols.swift */; };
 		C42B8C7C2E29EB4D00DB1ED5 /* AccountMenuNotificationsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42B8C7B2E29EB4A00DB1ED5 /* AccountMenuNotificationsViewModelTests.swift */; };
+		C435BE4E2EDE9295001B6766 /* CloudDriveContentUnavailableViewModelProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C435BE4C2EDE9292001B6766 /* CloudDriveContentUnavailableViewModelProvider.swift */; };
 		C43817B52746924300EA82A8 /* MEGALabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4A5F0E7266E31DD001D783B /* MEGALabel.swift */; };
 		C43817B82746924F00EA82A8 /* DynamicTypeComponentProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = C467AD4F26A8656000AFE4D2 /* DynamicTypeComponentProtocol.swift */; };
 		C43817B92746925E00EA82A8 /* FontStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D646601248909F7006030A5 /* FontStyle.swift */; };
@@ -2660,6 +2661,7 @@
 		C4DAFB962BBE8C530028FC90 /* NewCloudDriveNodeSourceUpdatesListenerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4DAFB952BBE8C530028FC90 /* NewCloudDriveNodeSourceUpdatesListenerTests.swift */; };
 		C4DCB5CD2DBA06EE002D6FEF /* PermissionOnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4DCB5CC2DBA06C9002D6FEF /* PermissionOnboardingView.swift */; };
 		C4E0B1712DC087A800B45998 /* PermissionOnboardingRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E0B1702DC087A300B45998 /* PermissionOnboardingRouter.swift */; };
+		C4E1F0E22EE0282F0052C9BF /* CloudDriveContentUnavailableViewModelProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E1F0E12EE0282D0052C9BF /* CloudDriveContentUnavailableViewModelProviderTests.swift */; };
 		C4E2A83C2E0104C600893A1A /* Tab+ViewControllers.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E2A83B2E0104BF00893A1A /* Tab+ViewControllers.swift */; };
 		C4EB6DBB2B4BF68B007A94E3 /* AppExitHandlerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C4EB6DBA2B4BF68B007A94E3 /* AppExitHandlerManager.m */; };
 		C4EDB73826655229006A114F /* RoundedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EDB73726655229006A114F /* RoundedView.swift */; };
@@ -5359,6 +5361,7 @@
 		C403FA4C2BAD8DCB007642AD /* CloudDriveQuickUploadActionRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudDriveQuickUploadActionRouter.swift; sourceTree = "<group>"; };
 		C41047CC2566FCB500531936 /* AudioPlayer+Protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AudioPlayer+Protocols.swift"; sourceTree = "<group>"; };
 		C42B8C7B2E29EB4A00DB1ED5 /* AccountMenuNotificationsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountMenuNotificationsViewModelTests.swift; sourceTree = "<group>"; };
+		C435BE4C2EDE9292001B6766 /* CloudDriveContentUnavailableViewModelProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudDriveContentUnavailableViewModelProvider.swift; sourceTree = "<group>"; };
 		C43EC4A22CDB01BC00556C4C /* Task+Yield.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Task+Yield.swift"; sourceTree = "<group>"; };
 		C4463BAE2B632EAC007A6756 /* ThumbnailViewerTableViewCell+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ThumbnailViewerTableViewCell+Additions.swift"; sourceTree = "<group>"; };
 		C44947752652A466004B4C8E /* BannerType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerType.swift; sourceTree = "<group>"; };
@@ -5480,6 +5483,7 @@
 		C4DAFB952BBE8C530028FC90 /* NewCloudDriveNodeSourceUpdatesListenerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewCloudDriveNodeSourceUpdatesListenerTests.swift; sourceTree = "<group>"; };
 		C4DCB5CC2DBA06C9002D6FEF /* PermissionOnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionOnboardingView.swift; sourceTree = "<group>"; };
 		C4E0B1702DC087A300B45998 /* PermissionOnboardingRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionOnboardingRouter.swift; sourceTree = "<group>"; };
+		C4E1F0E12EE0282D0052C9BF /* CloudDriveContentUnavailableViewModelProviderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudDriveContentUnavailableViewModelProviderTests.swift; sourceTree = "<group>"; };
 		C4E2A83B2E0104BF00893A1A /* Tab+ViewControllers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Tab+ViewControllers.swift"; sourceTree = "<group>"; };
 		C4EB6DBA2B4BF68B007A94E3 /* AppExitHandlerManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppExitHandlerManager.m; sourceTree = "<group>"; };
 		C4EB6DBC2B4BF6B7007A94E3 /* AppExitHandlerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppExitHandlerManager.h; sourceTree = "<group>"; };
@@ -6128,6 +6132,7 @@
 				0E72E1222A27ECED00C900F9 /* CopyrightWarning */,
 				C48CADA92BB521130005519B /* DisplayModeProvider */,
 				C44BE4C62CAF627A00F18033 /* DownloadedNodesListener */,
+				C4E1F0E02EE0281D0052C9BF /* EmptyState */,
 				BFB529762C4A2CD1003034EF /* Factories */,
 				C4B0F7E72E8F42BD007C4E0B /* FloatingAddButton */,
 				0E3B1A362A1D917900EC5859 /* GetLink */,
@@ -10607,6 +10612,7 @@
 			isa = PBXGroup;
 			children = (
 				C4F6385E2BA97F6200D0B6B7 /* AdsDisplayViewModel */,
+				C435BE482EDE9277001B6766 /* ContentUnavailableViewModelProvider */,
 				C4C0A0062C32B57700B9ECCB /* DownloadedNodeListener */,
 				C48CADAD2BB549880005519B /* Factories */,
 				C4B0F7A32E8E3BEE007C4E0B /* FloatingAddButton */,
@@ -12859,6 +12865,14 @@
 			path = AccountMenu;
 			sourceTree = "<group>";
 		};
+		C435BE482EDE9277001B6766 /* ContentUnavailableViewModelProvider */ = {
+			isa = PBXGroup;
+			children = (
+				C435BE4C2EDE9292001B6766 /* CloudDriveContentUnavailableViewModelProvider.swift */,
+			);
+			path = ContentUnavailableViewModelProvider;
+			sourceTree = "<group>";
+		};
 		C44BE4C62CAF627A00F18033 /* DownloadedNodesListener */ = {
 			isa = PBXGroup;
 			children = (
@@ -13315,6 +13329,14 @@
 				C4CBF0002DBB835400834EF9 /* PermissionOnboardingViewModel.swift */,
 			);
 			path = Onboarding;
+			sourceTree = "<group>";
+		};
+		C4E1F0E02EE0281D0052C9BF /* EmptyState */ = {
+			isa = PBXGroup;
+			children = (
+				C4E1F0E12EE0282D0052C9BF /* CloudDriveContentUnavailableViewModelProviderTests.swift */,
+			);
+			path = EmptyState;
 			sourceTree = "<group>";
 		};
 		C4EB6DB72B4BF5FD007A94E3 /* AppExitHandler */ = {
@@ -14743,6 +14765,7 @@
 				C4F638722BAA81AE00D0B6B7 /* CloudDriveAdsSlotDisplayable.swift in Sources */,
 				BF5C96612BA92C9B00B71CB2 /* CloudDriveAssetUploader.swift in Sources */,
 				94B09E5B2B84CC87007D6B84 /* CloudDriveBottomToolbarFactory.swift in Sources */,
+				C435BE4E2EDE9295001B6766 /* CloudDriveContentUnavailableViewModelProvider.swift in Sources */,
 				94B09E612B84CC87007D6B84 /* CloudDriveContextMenuConfigFactory.swift in Sources */,
 				BFB529742C4A2100003034EF /* CloudDriveContextMenuFactory.swift in Sources */,
 				C46978572CAE8D0F007AF546 /* CloudDriveDownloadTransfersListener.swift in Sources */,
@@ -16477,6 +16500,7 @@
 				BF89C8A22947254B00710FD1 /* ChatRoomViewModelTests.swift in Sources */,
 				94A518EF2A6ED0E700728730 /* ChatViewControllerTests.swift in Sources */,
 				9402EF4E2B70DBC5002F7714 /* CloudDriveBottomToolbarFactoryTests.swift in Sources */,
+				C4E1F0E22EE0282F0052C9BF /* CloudDriveContentUnavailableViewModelProviderTests.swift in Sources */,
 				BF4296642BBC0CC300C1BD66 /* CloudDriveContextMenuConfigFactoryTests.swift in Sources */,
 				BFB529782C4A2CE5003034EF /* CloudDriveContextMenuFactoryTests.swift in Sources */,
 				C48CADAB2BB521250005519B /* CloudDriveDisplayModeProviderTests.swift in Sources */,

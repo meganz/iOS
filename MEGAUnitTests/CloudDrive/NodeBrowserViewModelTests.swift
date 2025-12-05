@@ -123,6 +123,7 @@ class NodeBrowserViewModelTests: XCTestCase {
                         listHeaderViewModel: nil,
                         isSelectionEnabled: true,
                         usesRevampedLayout: false,
+                        contentUnavailableViewModelProvider: MockContentUnavailableViewModelProvider()
                     ),
                     sortOptionsViewModel: .init(title: "", sortOptions: []),
                     showChips: false,
