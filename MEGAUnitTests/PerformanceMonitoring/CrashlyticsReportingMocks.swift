@@ -20,4 +20,12 @@ final class CrashlyticsReportingMocks: CrashlyticsReporting, @unchecked Sendable
         reportedException = exceptionModel
         reportedCount += 1
     }
+    
+    func getIntValue(for key: String) -> Int? {
+        return customValues[key] as? Int
+    }
+    
+    func getStringValue(for key: String) -> String? {
+        return customValues[key] as? String
+    }
 }

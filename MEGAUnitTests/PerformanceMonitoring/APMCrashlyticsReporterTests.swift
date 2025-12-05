@@ -29,11 +29,11 @@ struct APMCrashlyticsReporterTests {
         
         reporter.report(hangMetrics: hangMetrics)
         
-        #expect(mockCrashlytics.customValues[CrashlyticsKeys.hangDuration] as? Int == 2500)
-        #expect(mockCrashlytics.customValues[CrashlyticsKeys.runloopActivity] as? String == CFRunLoopActivity.beforeTimers.asString)
-        #expect(mockCrashlytics.customValues[CrashlyticsKeys.threshold] as? Int == 250)
-        #expect(mockCrashlytics.customValues[CrashlyticsKeys.deviceLocale] as? String == "en-NZ")
-        #expect(mockCrashlytics.customValues[CrashlyticsKeys.reachability] as? String == "offline")
+        #expect(mockCrashlytics.getIntValue(for: CrashlyticsKeys.hangDuration) == 2500)
+        #expect(mockCrashlytics.getStringValue(for: CrashlyticsKeys.runloopActivity) == CFRunLoopActivity.beforeTimers.asString)
+        #expect(mockCrashlytics.getIntValue(for: CrashlyticsKeys.threshold) == 250)
+        #expect(mockCrashlytics.getStringValue(for: CrashlyticsKeys.deviceLocale) == "en-NZ")
+        #expect(mockCrashlytics.getStringValue(for: CrashlyticsKeys.reachability) == "offline")
         
         #expect(mockCrashlytics.reportedException != nil)
         #expect(mockCrashlytics.reportedException?.stackTrace.count == 3)
@@ -59,11 +59,11 @@ struct APMCrashlyticsReporterTests {
         
         reporter.report(hangMetrics: hangMetrics)
         
-        #expect(mockCrashlytics.customValues[CrashlyticsKeys.hangDuration] as? Int == 1500)
-        #expect(mockCrashlytics.customValues[CrashlyticsKeys.runloopActivity] as? String == CFRunLoopActivity.beforeSources.asString)
-        #expect(mockCrashlytics.customValues[CrashlyticsKeys.threshold] as? Int == 1000)
-        #expect(mockCrashlytics.customValues[CrashlyticsKeys.deviceLocale] as? String == "en-NZ")
-        #expect(mockCrashlytics.customValues[CrashlyticsKeys.reachability] as? String == "Wi-Fi")
+        #expect(mockCrashlytics.getIntValue(for: CrashlyticsKeys.hangDuration) == 1500)
+        #expect(mockCrashlytics.getStringValue(for: CrashlyticsKeys.runloopActivity) == CFRunLoopActivity.beforeSources.asString)
+        #expect(mockCrashlytics.getIntValue(for: CrashlyticsKeys.threshold) == 1000)
+        #expect(mockCrashlytics.getStringValue(for: CrashlyticsKeys.deviceLocale) == "en-NZ")
+        #expect(mockCrashlytics.getStringValue(for: CrashlyticsKeys.reachability) == "Wi-Fi")
         
         #expect(mockCrashlytics.reportedException == nil)
         let error = mockCrashlytics.reportedError as? NSError
