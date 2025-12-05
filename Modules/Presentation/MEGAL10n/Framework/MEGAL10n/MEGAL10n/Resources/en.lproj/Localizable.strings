@@ -4826,5 +4826,5 @@
 "cloudDrive.emptyStateTitle.nonRoot"="This folder is empty";
 /* The subtitle displayed in the empty view in Cloud Drive */
 "cloudDrive.emptyStateSubtitle"="Keep something safe with zero-knowledge encryption.";
-
-
+/* Undecrypted file open error snackBar message*/
+"cloudDrive.folderLink.snackBar.undecryptedFileOpenError" = "Preview not available for undecrypted files";

@@ -193,6 +193,12 @@ extension FolderLinkTableViewController: UITableViewDelegate {
             return
         }
         
+        guard node.isFolder() || node.isNodeKeyDecrypted() else {
+            showSnackBar(message: Strings.Localizable.CloudDrive.FolderLink.SnackBar.undecryptedFileOpenError)
+            tableView.deselectRow(at: indexPath, animated: true)
+            return
+        }
+        
         folderLink.didSelect(node)
         
         tableView.deselectRow(at: indexPath, animated: true)

@@ -150,6 +150,12 @@ extension FolderLinkCollectionViewController: UICollectionViewDelegate {
             return
         }
         
+        guard node.isFolder() || node.isNodeKeyDecrypted() else {
+            showSnackBar(message: Strings.Localizable.CloudDrive.FolderLink.SnackBar.undecryptedFileOpenError)
+            collectionView.deselectItem(at: indexPath, animated: true)
+            return
+        }
+        
         folderLink.didSelect(node)
         collectionView.deselectItem(at: indexPath, animated: true)
     }
