@@ -1,6 +1,8 @@
 import Combine
 import Foundation
 @testable import MEGA
+import MEGAAppPresentation
+import MEGAAppPresentationMock
 import MEGADomain
 import MEGADomainMock
 import MEGAL10n
@@ -98,14 +100,14 @@ struct CameraUploadInProgressRowViewModelTests {
     private static func makeSUT(
         fileEntity: CameraUploadFileDetailsEntity = .init(localIdentifier: "localId"),
         cameraUploadProgressUseCase: some CameraUploadProgressUseCaseProtocol = MockCameraUploadProgressUseCase(),
-        photoLibraryThumbnailUseCase: some PhotoLibraryThumbnailUseCaseProtocol = MockPhotoLibraryThumbnailUseCase(),
+        photoLibraryThumbnailProvider: some PhotoLibraryThumbnailProviderProtocol = MockPhotoLibraryThumbnailProvider(),
         thumbnailSize: CGSize = .init(width: 32, height: 32),
         progressUpdateDebounceDuration: Duration = .milliseconds(50)
     ) -> CameraUploadInProgressRowViewModel {
         .init(
             fileEntity: fileEntity,
             cameraUploadProgressUseCase: cameraUploadProgressUseCase,
-            photoLibraryThumbnailUseCase: photoLibraryThumbnailUseCase,
+            photoLibraryThumbnailProvider: photoLibraryThumbnailProvider,
             thumbnailSize: thumbnailSize,
             progressUpdateDebounceDuration: progressUpdateDebounceDuration)
     }

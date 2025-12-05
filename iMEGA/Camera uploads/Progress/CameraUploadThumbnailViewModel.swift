@@ -1,3 +1,4 @@
+import MEGAAppPresentation
 import MEGAAssets
 import MEGADomain
 import MEGASwift
@@ -9,9 +10,8 @@ final class CameraUploadThumbnailViewModel: ObservableObject {
     
     // MARK: - Private Properties
     private let assetIdentifier: String
-    private let photoLibraryThumbnailUseCase: any PhotoLibraryThumbnailUseCaseProtocol
+    private let photoLibraryThumbnailProvider: any PhotoLibraryThumbnailProviderProtocol
     private let placeholderFileExtension: String?
-    private let compressionQuality: CGFloat
     
     // MARK: - Internal Properties
     let thumbnailSize: CGSize
@@ -19,26 +19,24 @@ final class CameraUploadThumbnailViewModel: ObservableObject {
     nonisolated init(
         assetIdentifier: String,
         thumbnailSize: CGSize,
-        photoLibraryThumbnailUseCase: any PhotoLibraryThumbnailUseCaseProtocol,
-        placeholderFileExtension: String? = nil,
-        compressionQuality: CGFloat = 1.0
+        photoLibraryThumbnailProvider: some PhotoLibraryThumbnailProviderProtocol,
+        placeholderFileExtension: String? = nil
     ) {
         self.assetIdentifier = assetIdentifier
-        self.photoLibraryThumbnailUseCase = photoLibraryThumbnailUseCase
+        self.photoLibraryThumbnailProvider = photoLibraryThumbnailProvider
         self.thumbnailSize = thumbnailSize
         self.placeholderFileExtension = placeholderFileExtension
-        self.compressionQuality = compressionQuality
     }
     
     func loadThumbnail() async {
-        guard let thumbnailDataAsyncSequence = photoLibraryThumbnailUseCase.thumbnailData(
-            for: assetIdentifier, targetSize: thumbnailSize, compressionQuality: compressionQuality) else {
+        guard let thumbnailDataAsyncSequence = photoLibraryThumbnailProvider.thumbnail(
+            for: assetIdentifier, targetSize: thumbnailSize) else {
             loadDefaultThumbnail()
             return
         }
         
         do {
-            for try await photoThumbnailImage in makeImageSequence(thumbnailDataAsyncSequence: thumbnailDataAsyncSequence) {
+            for try await photoThumbnailImage in thumbnailDataAsyncSequence {
                 try Task.checkCancellation()
                 self.thumbnailImage = photoThumbnailImage.image
                 if !photoThumbnailImage.isDegraded {
@@ -57,29 +55,4 @@ final class CameraUploadThumbnailViewModel: ObservableObject {
         guard let placeholderFileExtension else { return }
         thumbnailImage = MEGAAssets.UIImage.image(forFileExtension: placeholderFileExtension)
     }
-    
-    private func makeImageSequence(
-        thumbnailDataAsyncSequence: AnyAsyncThrowingSequence<PhotoLibraryThumbnailResultEntity, any Error>
-    ) -> AnyAsyncThrowingSequence<PhotoThumbnailImage, any Error> {
-        thumbnailDataAsyncSequence
-            .compactMap { thumbnailDataResult async -> PhotoThumbnailImage? in
-                guard !Task.isCancelled else { return nil }
-                
-                let image = await Task.detached(priority: .utility) {
-                    UIImage(data: thumbnailDataResult.data)
-                }.value
-                
-                guard !Task.isCancelled, let image else { return nil }
-                
-                return .init(
-                    image: image,
-                    isDegraded: thumbnailDataResult.isDegraded)
-            }
-            .eraseToAnyAsyncThrowingSequence()
-    }
-}
-
-private struct PhotoThumbnailImage {
-    let image: UIImage
-    let isDegraded: Bool
 }

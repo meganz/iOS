@@ -42,8 +42,7 @@ final class CameraUploadProgressRouter: CameraUploadProgressRouting {
                 cameraUploadAssetRepository: assetRepository,
                 cameraAssetTypeRepository: CameraAssetTypeRepository(),
                 preferenceRepository: preferenceRepository),
-            photoLibraryThumbnailUseCase: PhotoLibraryThumbnailUseCase(
-                photoLibraryThumbnailRepository: PhotoLibraryThumbnailRepository()),
+            photoLibraryThumbnailProvider: PhotoLibraryThumbnailProvider(),
             queuedCameraUploadsUseCase: QueuedCameraUploadsUseCase(
                 cameraUploadAssetRepository: assetRepository,
                 preferenceRepository: preferenceRepository),

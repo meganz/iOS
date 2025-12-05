@@ -1,3 +1,4 @@
+import MEGAAppPresentation
 import MEGADomain
 
 @MainActor
@@ -5,7 +6,6 @@ final class CameraUploadInQueueRowViewModel: ObservableObject {
     @Published private(set) var fileName = ""
     
     private let assetUploadEntity: CameraAssetUploadEntity
-    private let photoLibraryThumbnailUseCase: any PhotoLibraryThumbnailUseCaseProtocol
     private let cameraUploadFileDetailsUseCase: any CameraUploadFileDetailsUseCaseProtocol
     
     let thumbnailViewModel: CameraUploadThumbnailViewModel
@@ -13,16 +13,15 @@ final class CameraUploadInQueueRowViewModel: ObservableObject {
     nonisolated init(
         assetUploadEntity: CameraAssetUploadEntity,
         cameraUploadFileDetailsUseCase: some CameraUploadFileDetailsUseCaseProtocol,
-        photoLibraryThumbnailUseCase: some PhotoLibraryThumbnailUseCaseProtocol,
+        photoLibraryThumbnailProvider: some PhotoLibraryThumbnailProviderProtocol,
         thumbnailSize: CGSize,
     ) {
         self.assetUploadEntity = assetUploadEntity
         self.cameraUploadFileDetailsUseCase = cameraUploadFileDetailsUseCase
-        self.photoLibraryThumbnailUseCase = photoLibraryThumbnailUseCase
         thumbnailViewModel = CameraUploadThumbnailViewModel(
             assetIdentifier: assetUploadEntity.localIdentifier,
             thumbnailSize: thumbnailSize,
-            photoLibraryThumbnailUseCase: photoLibraryThumbnailUseCase)
+            photoLibraryThumbnailProvider: photoLibraryThumbnailProvider)
     }
     
     func loadName() {

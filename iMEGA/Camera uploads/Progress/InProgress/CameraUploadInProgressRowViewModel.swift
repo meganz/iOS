@@ -1,3 +1,4 @@
+import MEGAAppPresentation
 import MEGADomain
 import MEGAL10n
 import MEGASwift
@@ -21,7 +22,7 @@ final class CameraUploadInProgressRowViewModel: ObservableObject {
     init(
         fileEntity: CameraUploadFileDetailsEntity,
         cameraUploadProgressUseCase: some CameraUploadProgressUseCaseProtocol,
-        photoLibraryThumbnailUseCase: some PhotoLibraryThumbnailUseCaseProtocol,
+        photoLibraryThumbnailProvider: some PhotoLibraryThumbnailProviderProtocol,
         thumbnailSize: CGSize,
         progressUpdateDebounceDuration: Duration = .milliseconds(300)
     ) {
@@ -33,7 +34,7 @@ final class CameraUploadInProgressRowViewModel: ObservableObject {
         thumbnailViewModel = CameraUploadThumbnailViewModel(
             assetIdentifier: fileEntity.localIdentifier,
             thumbnailSize: thumbnailSize,
-            photoLibraryThumbnailUseCase: photoLibraryThumbnailUseCase,
+            photoLibraryThumbnailProvider: photoLibraryThumbnailProvider,
             placeholderFileExtension: fileEntity.fileExtension)
     }
     

@@ -1,25 +1,24 @@
 import Foundation
-import MEGADomain
+import MEGAAppPresentation
 import MEGASwift
-import MEGATest
 
-public final class MockPhotoLibraryThumbnailRepository: PhotoLibraryThumbnailRepositoryProtocol, @unchecked Sendable {
+public final class MockPhotoLibraryThumbnailProvider: PhotoLibraryThumbnailProviderProtocol, @unchecked Sendable {
     public enum Invocation: Equatable {
-        case thumbnailData(for: String, targetSize: CGSize, compressionQuality: CGFloat)
+        case thumbnail(for: String, targetSize: CGSize)
         case startCaching(for: [String], targetSize: CGSize)
         case stopCaching(for: [String], targetSize: CGSize)
         case clearCache
     }
     
-    private let thumbnailResultAsyncSequence: AnyAsyncThrowingSequence<PhotoLibraryThumbnailResultEntity, any Error>?
+    private let thumbnailResultAsyncSequence: AnyAsyncThrowingSequence<PhotoLibraryThumbnailResult, any Error>?
     @Atomic public var invocations: [Invocation] = []
     
-    public init(thumbnailResultAsyncSequence: AnyAsyncThrowingSequence<PhotoLibraryThumbnailResultEntity, any Error>? = nil) {
+    public init(thumbnailResultAsyncSequence: AnyAsyncThrowingSequence<PhotoLibraryThumbnailResult, any Error>? = nil) {
         self.thumbnailResultAsyncSequence = thumbnailResultAsyncSequence
     }
     
-    public func thumbnailData(for identifier: String, targetSize: CGSize, compressionQuality: CGFloat) -> AnyAsyncThrowingSequence<PhotoLibraryThumbnailResultEntity, any Error>? {
-        addInvocation(.thumbnailData(for: identifier, targetSize: targetSize, compressionQuality: compressionQuality))
+    public func thumbnail(for identifier: String, targetSize: CGSize) -> AnyAsyncThrowingSequence<PhotoLibraryThumbnailResult, any Error>? {
+        addInvocation(.thumbnail(for: identifier, targetSize: targetSize))
         return thumbnailResultAsyncSequence
     }
     
@@ -39,3 +38,4 @@ public final class MockPhotoLibraryThumbnailRepository: PhotoLibraryThumbnailRep
         $invocations.mutate { $0.append(invocation) }
     }
 }
+

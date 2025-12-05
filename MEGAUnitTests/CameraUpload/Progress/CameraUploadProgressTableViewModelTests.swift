@@ -1,4 +1,6 @@
 @testable import MEGA
+import MEGAAppPresentation
+import MEGAAppPresentationMock
 import MEGADomain
 import MEGADomainMock
 import MEGASwift
@@ -22,7 +24,7 @@ struct CameraUploadProgressTableViewModelTests {
             inProgressFilesResult: .success([fileEntity])
         )
         let cameraUploadFileDetailsUseCase = MockCameraUploadFileDetailsUseCase()
-        let photoLibraryThumbnailUseCase = MockPhotoLibraryThumbnailUseCase()
+        let photoLibraryThumbnailProvider = MockPhotoLibraryThumbnailProvider()
         let assetUploadEntity = CameraAssetUploadEntity(localIdentifier: inQueueAssetIdentifier)
         let paginationManager = MockPaginationManager(
             loadInitialPageResult: .init(
@@ -34,7 +36,7 @@ struct CameraUploadProgressTableViewModelTests {
         let sut = Self.makeSUT(
             cameraUploadProgressUseCase: cameraUploadProgressUseCase,
             cameraUploadFileDetailsUseCase: cameraUploadFileDetailsUseCase,
-            photoLibraryThumbnailUseCase: photoLibraryThumbnailUseCase,
+            photoLibraryThumbnailProvider: photoLibraryThumbnailProvider,
             paginationManager: paginationManager
         )
         
@@ -43,17 +45,17 @@ struct CameraUploadProgressTableViewModelTests {
         let expectedInProgress = [CameraUploadInProgressRowViewModel(
             fileEntity: fileEntity,
             cameraUploadProgressUseCase: cameraUploadProgressUseCase,
-            photoLibraryThumbnailUseCase: photoLibraryThumbnailUseCase,
+            photoLibraryThumbnailProvider: photoLibraryThumbnailProvider,
             thumbnailSize: thumbnailSize)]
         let expectedInQueue = [CameraUploadInQueueRowViewModel(
             assetUploadEntity: assetUploadEntity,
             cameraUploadFileDetailsUseCase: cameraUploadFileDetailsUseCase,
-            photoLibraryThumbnailUseCase: photoLibraryThumbnailUseCase,
+            photoLibraryThumbnailProvider: photoLibraryThumbnailProvider,
             thumbnailSize: thumbnailSize)]
         #expect(sut.snapshotUpdate == .initialLoad(
             inProgress: expectedInProgress,
             inQueue: expectedInQueue))
-        #expect(photoLibraryThumbnailUseCase.invocations == [.startCaching(identifiers: [assetIdentifier, inQueueAssetIdentifier], targetSize: thumbnailSize)])
+        #expect(photoLibraryThumbnailProvider.invocations == [.startCaching(for: [assetIdentifier, inQueueAssetIdentifier], targetSize: thumbnailSize)])
     }
     
     @MainActor
@@ -73,11 +75,11 @@ struct CameraUploadProgressTableViewModelTests {
             let cameraUploadFileDetailsUseCase = MockCameraUploadFileDetailsUseCase(
                 fileDetails: [fileEntity]
             )
-            let photoLibraryThumbnailUseCase = MockPhotoLibraryThumbnailUseCase()
+            let photoLibraryThumbnailProvider = MockPhotoLibraryThumbnailProvider()
             let sut = makeSUT(
                 cameraUploadProgressUseCase: cameraUploadProgressUseCase,
                 cameraUploadFileDetailsUseCase: cameraUploadFileDetailsUseCase,
-                photoLibraryThumbnailUseCase: photoLibraryThumbnailUseCase,
+                photoLibraryThumbnailProvider: photoLibraryThumbnailProvider,
             )
             
             await sut.loadInitial()
@@ -86,7 +88,7 @@ struct CameraUploadProgressTableViewModelTests {
             #expect(sut.snapshotUpdate == .inProgressItemAdded(.init(
                 fileEntity: fileEntity,
                 cameraUploadProgressUseCase: cameraUploadProgressUseCase,
-                photoLibraryThumbnailUseCase: photoLibraryThumbnailUseCase,
+                photoLibraryThumbnailProvider: photoLibraryThumbnailProvider,
                 thumbnailSize: thumbnailSize)))
         }
         
@@ -100,10 +102,10 @@ struct CameraUploadProgressTableViewModelTests {
                 cameraUploadPhaseEventUpdates: SingleItemAsyncSequence(
                     item: phaseEvent).eraseToAnyAsyncSequence(),
                 inProgressFilesResult: .success([.init(localIdentifier: assetIdentifier)]))
-            let photoLibraryThumbnailUseCase = MockPhotoLibraryThumbnailUseCase()
+            let photoLibraryThumbnailProvider = MockPhotoLibraryThumbnailProvider()
             let sut = makeSUT(
                 cameraUploadProgressUseCase: cameraUploadProgressUseCase,
-                photoLibraryThumbnailUseCase: photoLibraryThumbnailUseCase
+                photoLibraryThumbnailProvider: photoLibraryThumbnailProvider
             )
             
             await sut.loadInitial()
@@ -112,9 +114,9 @@ struct CameraUploadProgressTableViewModelTests {
             
             #expect(sut.snapshotUpdate == .itemRemoved(assetIdentifier))
             
-            #expect(photoLibraryThumbnailUseCase.invocations == [
-                .startCaching(identifiers: [assetIdentifier], targetSize: thumbnailSize),
-                .stopCaching(identifiers: [assetIdentifier], targetSize: thumbnailSize)])
+            #expect(photoLibraryThumbnailProvider.invocations == [
+                .startCaching(for: [assetIdentifier], targetSize: thumbnailSize),
+                .stopCaching(for: [assetIdentifier], targetSize: thumbnailSize)])
         }
     }
     
@@ -321,13 +323,13 @@ struct CameraUploadProgressTableViewModelTests {
     private static func makeSUT(
         cameraUploadProgressUseCase: some CameraUploadProgressUseCaseProtocol = MockCameraUploadProgressUseCase(),
         cameraUploadFileDetailsUseCase: some CameraUploadFileDetailsUseCaseProtocol = MockCameraUploadFileDetailsUseCase(),
-        photoLibraryThumbnailUseCase: some PhotoLibraryThumbnailUseCaseProtocol = MockPhotoLibraryThumbnailUseCase(),
+        photoLibraryThumbnailProvider: some PhotoLibraryThumbnailProviderProtocol = MockPhotoLibraryThumbnailProvider(),
         paginationManager: some CameraUploadPaginationManagerProtocol = MockPaginationManager()
     ) -> CameraUploadProgressTableViewModel {
         .init(
             cameraUploadProgressUseCase: cameraUploadProgressUseCase,
             cameraUploadFileDetailsUseCase: cameraUploadFileDetailsUseCase,
-            photoLibraryThumbnailUseCase: photoLibraryThumbnailUseCase,
+            photoLibraryThumbnailProvider: photoLibraryThumbnailProvider,
             paginationManager: paginationManager)
     }
 }

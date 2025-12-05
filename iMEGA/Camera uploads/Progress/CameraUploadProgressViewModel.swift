@@ -5,6 +5,7 @@ import MEGADomain
 import MEGAL10n
 import MEGAPermissions
 import MEGAPreference
+import MEGAPresentation
 import MEGASwift
 import MEGAUIComponent
 
@@ -50,7 +51,7 @@ final class CameraUploadProgressViewModel: ObservableObject {
         monitorCameraUploadUseCase: some MonitorCameraUploadUseCaseProtocol,
         cameraUploadProgressUseCase: some CameraUploadProgressUseCaseProtocol,
         cameraUploadFileDetailsUseCase: some CameraUploadFileDetailsUseCaseProtocol,
-        photoLibraryThumbnailUseCase: some PhotoLibraryThumbnailUseCaseProtocol,
+        photoLibraryThumbnailProvider: some PhotoLibraryThumbnailProviderProtocol,
         queuedCameraUploadsUseCase: any QueuedCameraUploadsUseCaseProtocol,
         preferenceUseCase: some PreferenceUseCaseProtocol = PreferenceUseCase.default,
         accountStorageUseCase: some AccountStorageUseCaseProtocol,
@@ -63,7 +64,7 @@ final class CameraUploadProgressViewModel: ObservableObject {
         cameraUploadProgressTableViewModel = .init(
             cameraUploadProgressUseCase: cameraUploadProgressUseCase,
             cameraUploadFileDetailsUseCase: cameraUploadFileDetailsUseCase,
-            photoLibraryThumbnailUseCase: photoLibraryThumbnailUseCase,
+            photoLibraryThumbnailProvider: photoLibraryThumbnailProvider,
             paginationManager: CameraUploadPaginationManager(
                 pageSize: 30,
                 lookAhead: 4,

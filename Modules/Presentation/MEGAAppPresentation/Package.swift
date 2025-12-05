@@ -27,6 +27,7 @@ let package = Package(
         .package(path: "../../Domain/MEGADomain"),
         .package(path: "../../Domain/MEGAAnalyticsDomain"),
         .package(path: "../../Repository/MEGAAppSDKRepo"),
+        .package(path: "../../MEGASharedRepo/MEGASwift"),
         .package(path: "../../MEGASharedRepo/MEGATest"),
         .package(url: "https://code.developers.mega.co.nz/mobile/kmm/mobile-analytics-ios.git", branch: "main")
     ],
@@ -37,6 +38,7 @@ let package = Package(
                 "MEGAAnalyticsDomain",
                 "MEGADomain",
                 "MEGAAppSDKRepo",
+                "MEGASwift",
                 .product(name: "MEGAAnalyticsiOS", package: "mobile-analytics-ios")
             ],
             swiftSettings: settings),

@@ -1,3 +1,4 @@
+import MEGAAppPresentation
 import MEGADomain
 import MEGARepo
 
@@ -14,7 +15,7 @@ final class CameraUploadProgressTableViewModel: ObservableObject {
     
     private let cameraUploadProgressUseCase: any CameraUploadProgressUseCaseProtocol
     private let cameraUploadFileDetailsUseCase: any CameraUploadFileDetailsUseCaseProtocol
-    private let photoLibraryThumbnailUseCase: any PhotoLibraryThumbnailUseCaseProtocol
+    private let photoLibraryThumbnailProvider: any PhotoLibraryThumbnailProviderProtocol
     private let thumbnailSize: CGSize = .init(width: 32, height: 32)
     private let paginationManager: any CameraUploadPaginationManagerProtocol
     private let pageSize: Int
@@ -30,18 +31,18 @@ final class CameraUploadProgressTableViewModel: ObservableObject {
     init(
         cameraUploadProgressUseCase: some CameraUploadProgressUseCaseProtocol,
         cameraUploadFileDetailsUseCase: some CameraUploadFileDetailsUseCaseProtocol,
-        photoLibraryThumbnailUseCase: some PhotoLibraryThumbnailUseCaseProtocol,
+        photoLibraryThumbnailProvider: some PhotoLibraryThumbnailProviderProtocol,
         paginationManager: some CameraUploadPaginationManagerProtocol
     ) {
         self.cameraUploadProgressUseCase = cameraUploadProgressUseCase
         self.cameraUploadFileDetailsUseCase = cameraUploadFileDetailsUseCase
-        self.photoLibraryThumbnailUseCase = photoLibraryThumbnailUseCase
+        self.photoLibraryThumbnailProvider = photoLibraryThumbnailProvider
         self.paginationManager = paginationManager
         self.pageSize = paginationManager.pageSize
     }
     
     deinit {
-        photoLibraryThumbnailUseCase.clearCache()
+        photoLibraryThumbnailProvider.clearCache()
         Task { [weak paginationManager] in
             await paginationManager?.cancelAll()
         }
@@ -56,7 +57,7 @@ final class CameraUploadProgressTableViewModel: ObservableObject {
             try Task.checkCancellation()
             let allLocalIdentifiers = inProgress.map(\.localIdentifier) + inQueueUpdate.items.map(\.localIdentifier)
             if allLocalIdentifiers.isNotEmpty {
-                photoLibraryThumbnailUseCase.startCaching(
+                photoLibraryThumbnailProvider.startCaching(
                     for: allLocalIdentifiers, targetSize: thumbnailSize)
             }
             
@@ -64,7 +65,7 @@ final class CameraUploadProgressTableViewModel: ObservableObject {
                 CameraUploadInProgressRowViewModel(
                     fileEntity: $0,
                     cameraUploadProgressUseCase: cameraUploadProgressUseCase,
-                    photoLibraryThumbnailUseCase: photoLibraryThumbnailUseCase,
+                    photoLibraryThumbnailProvider: photoLibraryThumbnailProvider,
                     thumbnailSize: thumbnailSize)
             }
             
@@ -74,7 +75,7 @@ final class CameraUploadProgressTableViewModel: ObservableObject {
                 CameraUploadInQueueRowViewModel(
                     assetUploadEntity: $0,
                     cameraUploadFileDetailsUseCase: cameraUploadFileDetailsUseCase,
-                    photoLibraryThumbnailUseCase: photoLibraryThumbnailUseCase,
+                    photoLibraryThumbnailProvider: photoLibraryThumbnailProvider,
                     thumbnailSize: thumbnailSize)
             }
             try Task.checkCancellation()
@@ -99,14 +100,14 @@ final class CameraUploadProgressTableViewModel: ObservableObject {
                 snapshotUpdate = .inProgressItemAdded(.init(
                     fileEntity: fileEntity,
                     cameraUploadProgressUseCase: cameraUploadProgressUseCase,
-                    photoLibraryThumbnailUseCase: photoLibraryThumbnailUseCase,
+                    photoLibraryThumbnailProvider: photoLibraryThumbnailProvider,
                     thumbnailSize: thumbnailSize))
                 
                 await paginationManager.removeItemFromPages(localIdentifier: phaseEvent.assetIdentifier)
             case .completed:
                 snapshotUpdate = .itemRemoved(phaseEvent.assetIdentifier)
                 
-                photoLibraryThumbnailUseCase.stopCaching(
+                photoLibraryThumbnailProvider.stopCaching(
                     for: [phaseEvent.assetIdentifier], targetSize: thumbnailSize)
             default: continue
             }
@@ -180,7 +181,7 @@ final class CameraUploadProgressTableViewModel: ObservableObject {
             CameraUploadInQueueRowViewModel(
                 assetUploadEntity: $0,
                 cameraUploadFileDetailsUseCase: cameraUploadFileDetailsUseCase,
-                photoLibraryThumbnailUseCase: photoLibraryThumbnailUseCase,
+                photoLibraryThumbnailProvider: photoLibraryThumbnailProvider,
                 thumbnailSize: thumbnailSize)
         }
         
