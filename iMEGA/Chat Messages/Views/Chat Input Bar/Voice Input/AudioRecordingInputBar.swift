@@ -1,3 +1,4 @@
+import MEGAAppPresentation
 import MEGAAssets
 import MEGADesignToken
 import MEGAL10n
@@ -61,7 +62,12 @@ class AudioRecordingInputBar: UIView {
                 self.recordTimeLabel.text = timeString
                 self.audioWavesView.updateAudioView(withLevel: level)
             }
-            backgroundColor = TokenColors.Background.page
+            
+            guard #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() else {
+                backgroundColor = TokenColors.Background.page
+                return
+            }
+            backgroundColor = nil
         }
     }
     
@@ -204,6 +210,10 @@ class AudioRecordingInputBar: UIView {
             recordTimeLabel.text = timeString
             audioWavesView.updateAudioView(withLevel: level)
         }
-        backgroundColor = TokenColors.Background.page
+        
+        guard #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() else {
+            backgroundColor = TokenColors.Background.page
+            return
+        }
     }
 }

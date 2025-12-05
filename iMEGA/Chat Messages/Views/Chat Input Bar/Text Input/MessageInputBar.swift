@@ -1,3 +1,4 @@
+import MEGAAppPresentation
 import MEGAAssets
 import MEGADesignToken
 import MEGAL10n
@@ -279,7 +280,10 @@ class MessageInputBar: UIView {
         updateAppearance()
         setSendButtonColor()
         
-        backgroundColor = TokenColors.Background.page
+        guard #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() else {
+            backgroundColor = TokenColors.Background.page
+            return
+        }
     }
     
     private func configureImages() {
