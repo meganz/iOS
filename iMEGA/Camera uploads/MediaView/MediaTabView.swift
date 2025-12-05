@@ -1,0 +1,85 @@
+import MEGAAppSDKRepo
+import MEGAAssets
+import MEGADesignToken
+import MEGADomain
+import MEGAPermissions
+import MEGAPreference
+import MEGASwiftUI
+import SwiftUI
+
+struct MediaTabView: View {
+    @ObservedObject var viewModel: MediaTabViewModel
+
+    var body: some View {
+        MEGASwiftUI.PageTabView(
+            tabs: MediaTab.allCases.map { tab in
+                MEGASwiftUI.PageTabView.TabItem(id: tab, title: tab.title) {
+                    contentView(for: tab)
+                }
+            },
+            selectedTab: $viewModel.selectedTab,
+            selectedTextForegroundColor: TokenColors.Button.brand.swiftUI,
+            textForegroundColor: TokenColors.Text.secondary.swiftUI,
+            tabSelectionIndicatorColor: TokenColors.Button.brand.swiftUI,
+            backgroundColor: TokenColors.Background.surface1.swiftUI
+        )
+        .allowsHitTesting(viewModel.editMode != .active)
+        .navigationTitle(viewModel.navigationTitle)
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItemGroup(placement: .navigationBarLeading) {
+                ForEach(viewModel.leadingNavigationBarViewModels) { viewModel in
+                    NavigationBarItemViewBuilder.makeView(for: viewModel)
+                }
+            }
+
+            ToolbarItemGroup(placement: .navigationBarTrailing) {
+                ForEach(viewModel.trailingNavigationBarViewModels) { viewModel in
+                    NavigationBarItemViewBuilder.makeView(for: viewModel)
+                }
+            }
+        }
+        .environment(\.editMode, $viewModel.editMode)
+    }
+
+    // MARK: - Tab Content
+
+    @ViewBuilder
+    private func contentView(for tab: MediaTab) -> some View {
+        // For now, show placeholder for all tabs
+        placeholderView(for: tab)
+    }
+
+    // MARK: - Placeholder Views (WIP)
+
+    @ViewBuilder
+    private func placeholderView(for tab: MediaTab) -> some View {
+        VStack {
+            Spacer()
+            Text(tab.title)
+                .font(.title)
+                .foregroundStyle(TokenColors.Text.primary.swiftUI)
+            Text("WIP - Tab content will be integrated later")
+                .font(.subheadline)
+                .foregroundStyle(TokenColors.Text.secondary.swiftUI)
+                .padding(.top, 8)
+            Spacer()
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(TokenColors.Background.page.swiftUI)
+    }
+}
+
+#Preview {
+    let tabViewModels: [MediaTab: any MediaTabInteractiveProvider] = [:]
+    let monitorCameraUploadUseCase = MonitorCameraUploadUseCase(
+        cameraUploadRepository: CameraUploadsStatsRepository.newRepo,
+        networkMonitorUseCase: NetworkMonitorUseCase(repo: NetworkMonitorRepository.newRepo), preferenceUseCase: PreferenceUseCase.default)
+    let devicePermissionHandler = DevicePermissionsHandler.makeHandler()
+
+    MediaTabView(viewModel: MediaTabViewModel(
+        tabViewModels: tabViewModels,
+        monitorCameraUploadUseCase: monitorCameraUploadUseCase,
+        devicePermissionHandler: devicePermissionHandler
+    ))
+}
