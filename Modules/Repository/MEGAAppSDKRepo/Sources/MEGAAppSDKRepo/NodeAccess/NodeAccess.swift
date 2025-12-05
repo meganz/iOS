@@ -109,6 +109,29 @@ public class NodeAccess: NSObject, NodeAccessProtocol, @unchecked Sendable {
         }
     }
     
+    public func resetTargetNode() {
+        nodeAccessSemaphore.wait()
+        
+        invalidateRemoteNode { [weak self] in
+            self?.nodeAccessSemaphore.signal()
+        }
+    }
+    
+    private func invalidateRemoteNode(completion: @Sendable @escaping () -> Void) {
+        guard let setNodeRequest = nodeAccessConfiguration.setNodeRequest else {
+            MEGALogWarning("[NodeAccess] Remote reset skipped: no setNodeRequest configured")
+            completion()
+            return
+        }
+        
+        setNodeRequest(.invalid, RequestDelegate { result in
+            if case let .failure(error) = result {
+                MEGALogWarning("[NodeAccess] Remote reset failed: \(error.localizedDescription)")
+            }
+            completion()
+        })
+    }
+    
     private func loadNodeWithSynchronisation(completion: NodeLoadCompletion? = nil) {
         nodeAccessSemaphore.wait()
         
@@ -144,8 +167,7 @@ public class NodeAccess: NSObject, NodeAccessProtocol, @unchecked Sendable {
     
     private func loadNodeToMemory() {
         loadNode { _, error in
-            let message = "NodeAccess. could not load node to memory \(String(describing: error))"
-            MEGASdk.log(with: .warning, message: "[iOS] \(message)", filename: #file, line: #line)
+            MEGALogWarning("[NodeAccess] could not load node to memory \(String(describing: error))")
         }
     }
     
@@ -160,7 +182,7 @@ public class NodeAccess: NSObject, NodeAccessProtocol, @unchecked Sendable {
             completion?(node, nil)
             return
         }
-    
+        
         nodeAccessSemaphore.wait()
         
         setNodeRequest(node.handle, RequestDelegate { [weak self] result in

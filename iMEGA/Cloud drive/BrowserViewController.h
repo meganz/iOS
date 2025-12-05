@@ -40,6 +40,7 @@ NS_SWIFT_UI_ACTOR
 @property (nonatomic) BrowserAction browserAction;
 @property (nonatomic, getter=isChildBrowser) BOOL childBrowser;
 @property (nonatomic, getter=isChildBrowserFromIncoming) BOOL childBrowserFromIncoming;
+@property (nonatomic, getter=isCameraUploadsFolderSelection) BOOL cameraUploadsFolderSelection;
 
 @property (nonatomic, strong) NSString *localpath;
 

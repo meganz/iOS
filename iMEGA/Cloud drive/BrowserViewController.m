@@ -214,7 +214,13 @@
             
         case BrowserActionSelectFolder:
             [self setupDefaultElements];
-            self.toolBarSelectBarButtonItem.enabled = self.isChildBrowser && self.parentNode.handle != MEGASdk.shared.rootNode.handle;
+            
+            if (self.isCameraUploadsFolderSelection) {
+                self.toolBarSelectBarButtonItem.enabled = (self.isChildBrowser && self.parentNode.handle != MEGASdk.shared.rootNode.handle) && self.parentShareType > MEGAShareTypeAccessRead;
+            } else {
+                self.toolBarSelectBarButtonItem.enabled = self.isChildBrowser && self.parentNode.handle != MEGASdk.shared.rootNode.handle;
+            }
+            
             self.toolBarSelectBarButtonItem.title = LocalizedString(@"Select Folder", @"");
             [self setToolbarItems:@[self.toolBarNewFolderBarButtonItem, flexibleItem, self.toolBarSelectBarButtonItem]];
 
@@ -311,7 +317,7 @@
 }
 
 - (void)setNodesWithCompletion:(void (^)(void))completion {
-    if (self.incomingButton.selected && self.isParentBrowser) {
+    if (self.incomingButton.selected && (self.isParentBrowser || self.isCameraUploadsFolderSelection)) {
         self.nodes = MEGASdk.shared.inShares;
         self.shares = [MEGASdk.shared inSharesList:MEGASortOrderTypeNone];
         completion();
@@ -366,6 +372,10 @@
     self.toolBarSaveInMegaBarButtonItem.enabled = boolValue;
     self.toolbarSendBarButtonItem.enabled = boolValue;
     self.toolBarAddBarButtonItem.enabled = boolValue;
+    
+    if (self.isCameraUploadsFolderSelection && self.isChildBrowser) {
+        self.toolBarSelectBarButtonItem.enabled = boolValue;
+    }
 }
 
 - (void)setNodeTableViewCell:(NodeTableViewCell *)cell enabled:(BOOL)boolValue {
@@ -814,7 +824,7 @@
                 text = LocalizedString(@"noResults", @"Title shown when you make a search and there is 'No Results'");
             }
         } else {
-            if (self.incomingButton.selected && self.isParentBrowser) {
+            if (self.incomingButton.selected && (self.isParentBrowser || self.isCameraUploadsFolderSelection)) {
                 text = LocalizedString(@"noIncomingSharedItemsEmptyState_text", @"Title shown when there's no incoming Shared Items");
             } else {
                 text = LocalizedString(@"emptyFolder", @"Title shown when a folder doesn't have any files");
@@ -846,7 +856,7 @@
                 return nil;
             }
         } else {
-            if (self.incomingButton.selected && self.isParentBrowser) {
+            if (self.incomingButton.selected && (self.isParentBrowser || self.isCameraUploadsFolderSelection)) {
                 image = [UIImage megaImageWithNamed:@"incomingEmptyState"];
             } else {
                 image = [UIImage megaImageWithNamed:@"folderEmptyState"];

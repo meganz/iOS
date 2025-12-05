@@ -28,4 +28,15 @@ public protocol NodeAccessProtocol: Sendable {
     /// - Parameter node: The given node to be checked
     /// - Returns: if the node is the target folder return true, otherwise return false
     func isTargetNode(for node: NodeEntity) -> Bool
+    
+    /// Resets the current target node both in memory and remotely.
+    ///
+    /// - Attention:
+    /// Calling this method clears the stored target node and triggers an update in the SDK. As a result, the SDK will emit a remote node-update event.
+    /// When that event is received by the app, the in-memory target node is indirectly reset and recreated the next time it is requested (for example,
+    /// when adding a new photo or performing a validation check).
+    ///
+    /// Use this method when the current destination is no longer valid (e.g., the node has been deleted, permissions have changed, or the share has ended, as applicable in each case),
+    /// so the next request for the target node will initialise a new valid one.
+    func resetTargetNode()
 }

@@ -29,4 +29,6 @@ public struct MockNodeAccess: NodeAccessProtocol {
             false
         }
     }
+    
+    public func resetTargetNode() {}
 }

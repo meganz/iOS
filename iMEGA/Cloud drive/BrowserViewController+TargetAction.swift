@@ -43,6 +43,7 @@ extension BrowserViewController {
         browserVC.selectedNodesArray = selectedNodesArray
         browserVC.browserViewControllerDelegate = browserViewControllerDelegate
         browserVC.onCopyNodesCompletion = onCopyNodesCompletion
+        browserVC.isCameraUploadsFolderSelection = isCameraUploadsFolderSelection
         return browserVC
     }
     

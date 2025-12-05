@@ -1193,6 +1193,7 @@
         [self.quickAccessWidgetManager updateWidgetContentWith:nodeList];
         [self postNodeUpdatesNotificationsFor:nodeList];
         [self removeCachedFilesIfNeededFor:nodeList];
+        [self validateCameraUploadsRootFolderIfNeeded:nodeList];
     } else {
         [Helper startPendingUploadTransferIfNeeded];
     }

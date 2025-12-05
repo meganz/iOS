@@ -316,9 +316,9 @@
     MEGANavigationController *navigationController = [storyboard instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
     BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
     browserVC.browserAction = BrowserActionSelectFolder;
-    browserVC.childBrowser = YES;
     browserVC.parentNode = MEGASdk.shared.rootNode;
     browserVC.browserViewControllerDelegate = self;
+    browserVC.cameraUploadsFolderSelection = YES;
     [self presentViewController:navigationController animated:YES completion:nil];
 }
 
