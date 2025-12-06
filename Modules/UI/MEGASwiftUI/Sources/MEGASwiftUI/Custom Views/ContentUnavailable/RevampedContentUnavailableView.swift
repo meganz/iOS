@@ -29,6 +29,7 @@ public struct RevampedContentUnavailableView: View {
                     actionsView
                     Spacer()
                 }
+                .frame(maxWidth: 380)
                 .padding(.horizontal, TokenSpacing._7)
                 Spacer()
             }
