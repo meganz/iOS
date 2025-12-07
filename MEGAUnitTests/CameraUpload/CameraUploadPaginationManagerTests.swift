@@ -87,7 +87,7 @@ struct CameraUploadPaginationManagerTests {
     
     @Test("Load previous page backward")
     func loadPreviousPageBackward() async throws {
-        let expectedItems = makeCameraAssetUploadEntities(count: 240)
+        let expectedItems = makeCameraAssetUploadEntities(count: 300)
         let useCase = MockQueuedCameraUploadsUseCase(items: expectedItems)
         
         let sut = Self.makeSUT(
@@ -97,9 +97,20 @@ struct CameraUploadPaginationManagerTests {
             queuedCameraUploadsUseCase: useCase
         )
         
-        await testInitialLoadForBackwardPagination(sut: sut)
-        try await testForwardPaginationPages(sut: sut)
-        try await testBackwardPaginationPages(sut: sut)
+        let initial = await sut.loadInitialPage()
+        #expect(initial.firstPageIndex == 0)
+        #expect(initial.lastPageIndex == 1)
+        
+        _ = await sut.loadPageIfNeeded(itemIndex: 30)
+        _ = await sut.loadPageIfNeeded(itemIndex: 60)
+        _ = await sut.loadPageIfNeeded(itemIndex: 90)
+        _ = await sut.loadPageIfNeeded(itemIndex: 120)
+        _ = await sut.loadPageIfNeeded(itemIndex: 150)
+        
+        _ = await sut.loadPageIfNeeded(itemIndex: 120)
+        _ = await sut.loadPageIfNeeded(itemIndex: 90)
+        _ = await sut.loadPageIfNeeded(itemIndex: 60)
+        try await assertPageLoad(sut: sut, itemIndex: 30, expectedFirst: 0, expectedLast: 3)
     }
     
     @Test("Skip load when all pages present")
@@ -124,7 +135,7 @@ struct CameraUploadPaginationManagerTests {
     
     @Test("Return nil when user scrolled past loaded pages")
     func returnNilWhenScrolledPast() async {
-        let expectedItems = makeCameraAssetUploadEntities(count: 200)
+        let expectedItems = makeCameraAssetUploadEntities(count: 300)
         let useCase = MockQueuedCameraUploadsUseCase(items: expectedItems)
         
         let sut = Self.makeSUT(
@@ -136,7 +147,9 @@ struct CameraUploadPaginationManagerTests {
         
         _ = await sut.loadInitialPage()
         
-        let farUpdate = await sut.loadPageIfNeeded(itemIndex: 150)
+        // With jumpThreshold = max(2,2) + 1 = 3, need to jump >3 pages from loaded range
+        // Initial loads pages 0-2, so jumping to page 7+ (itemIndex 210+) should return nil
+        let farUpdate = await sut.loadPageIfNeeded(itemIndex: 240)
         
         #expect(farUpdate == nil)
     }
@@ -159,21 +172,23 @@ struct CameraUploadPaginationManagerTests {
         #expect(initial.firstPageIndex == 0)
         #expect(initial.lastPageIndex == 2)
         
+        // With new buffer-based eviction (2x buffer = ±4 pages), pages are kept longer
         try await assertPageLoad(sut: sut, itemIndex: 35, expectedFirst: 0, expectedLast: 3)
-        try await assertPageLoad(sut: sut, itemIndex: 60, expectedFirst: 1, expectedLast: 4)
-        try await assertPageLoad(sut: sut, itemIndex: 90, expectedFirst: 1, expectedLast: 5)
-        try await assertPageLoad(sut: sut, itemIndex: 120, expectedFirst: 3, expectedLast: 6)
-        try await assertPageLoad(sut: sut, itemIndex: 150, expectedFirst: 3, expectedLast: 7)
+        try await assertPageLoad(sut: sut, itemIndex: 60, expectedFirst: 0, expectedLast: 4) // Pages 0-1 still kept
+        try await assertPageLoad(sut: sut, itemIndex: 90, expectedFirst: 0, expectedLast: 5) // Pages 0-2 still kept
+        try await assertPageLoad(sut: sut, itemIndex: 120, expectedFirst: 0, expectedLast: 6) // Pages 0-3 still kept
+        try await assertPageLoad(sut: sut, itemIndex: 150, expectedFirst: 1, expectedLast: 7) // Page 0 finally evicted
         
-        let allExpectedItems = makeCameraAssetUploadEntities(count: 270)
-        let expectedItemsPage6 = Array(allExpectedItems.dropFirst(150))
+        // At this point, scrolling to 180 (page 6) with buffer=4 keeps pages 2-10
+        let allExpectedItems = makeCameraAssetUploadEntities(count: 300)
+        let expectedItemsPage6 = Array(allExpectedItems.dropFirst(60).prefix(210)) // Pages 2-8 (items 60-269)
         try await assertPageLoadWithItems(
             sut: sut,
             itemIndex: 180,
-            expectedFirst: 5,
+            expectedFirst: 2,
             expectedLast: 8,
             expectedItems: expectedItemsPage6)
-        #expect(expectedItemsPage6.count == 120)
+        #expect(expectedItemsPage6.count == 210)
     }
     
     // MARK: - Snapshot Comparison Tests
@@ -277,9 +292,12 @@ struct CameraUploadPaginationManagerTests {
         )
         
         _ = await sut.loadInitialPage()
-        _ = await sut.loadPageIfNeeded(itemIndex: 60)
         
-        let backwardUpdate = await sut.loadPageIfNeeded(itemIndex: 40)
+        // First load forward to enable backward loading
+        _ = await sut.loadPageIfNeeded(itemIndex: 90) // Load up to page 3
+        
+        // Now test backward loading
+        let backwardUpdate = await sut.loadPageIfNeeded(itemIndex: 35)
         
         #expect(backwardUpdate != nil)
     }
@@ -308,23 +326,6 @@ struct CameraUploadPaginationManagerTests {
         }
     }
     
-    private func testForwardPaginationPages(sut: CameraUploadPaginationManager) async throws {
-        try await assertPageLoad(sut: sut, itemIndex: 35, expectedFirst: 0, expectedLast: 2)
-        try await assertPageLoad(sut: sut, itemIndex: 60, expectedFirst: 1, expectedLast: 3)
-        try await assertPageLoad(sut: sut, itemIndex: 90, expectedFirst: 1, expectedLast: 4)
-        try await assertPageLoad(sut: sut, itemIndex: 120, expectedFirst: 3, expectedLast: 5)
-    }
-    
-    private func testBackwardPaginationPages(sut: CameraUploadPaginationManager) async throws {
-        try await assertPageLoad(sut: sut, itemIndex: 90, expectedFirst: 2, expectedLast: 5)
-        
-        let expectedBackwardItems: [CameraAssetUploadEntity] = Array(makeCameraAssetUploadEntities(count: 120).dropFirst(30))
-        try await assertPageLoadWithItems(sut: sut, itemIndex: 60, expectedFirst: 1, expectedLast: 3, expectedItems: expectedBackwardItems)
-        
-        let expectedPage1Items: [CameraAssetUploadEntity] = makeCameraAssetUploadEntities(count: 120)
-        try await assertPageLoadWithItems(sut: sut, itemIndex: 35, expectedFirst: 0, expectedLast: 3, expectedItems: expectedPage1Items)
-    }
-    
     private func assertPageLoad(
         sut: CameraUploadPaginationManager,
         itemIndex: Int,
@@ -349,9 +350,17 @@ struct CameraUploadPaginationManagerTests {
         #expect(update.items == expectedItems)
     }
     
-    private func testInitialLoadForBackwardPagination(sut: CameraUploadPaginationManager) async {
-        let initial = await sut.loadInitialPage()
-        #expect(initial.firstPageIndex == 0)
-        #expect(initial.lastPageIndex == 1)
+    private func assertPageLoadWithItems(
+        sut: CameraUploadPaginationManager,
+        itemIndex: Int,
+        expectedFirst: Int,
+        expectedLast: Int,
+        expectedPages: Int
+    ) async throws {
+        let update = try #require(await sut.loadPageIfNeeded(itemIndex: itemIndex))
+        #expect(update.firstPageIndex == expectedFirst)
+        #expect(update.lastPageIndex == expectedLast)
+        let expectedItemCount = expectedPages * 30
+        #expect(update.items.count == expectedItemCount)
     }
 }

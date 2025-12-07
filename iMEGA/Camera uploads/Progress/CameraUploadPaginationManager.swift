@@ -53,7 +53,6 @@ actor CameraUploadPaginationManager: CameraUploadPaginationManagerProtocol {
     private let queuedCameraUploadsUseCase: any QueuedCameraUploadsUseCaseProtocol
     
     private var pages: [Page] = []
-    private var lastEvictionPageIndex: Int?
     
     private var pageTasks: [Int: Task<Void, Never>] = [:]
     private var hasInitialLoad = false
@@ -130,13 +129,11 @@ extension CameraUploadPaginationManager {
         let minPageToKeep = requestedPageIndex - lookBehind
         let maxPageToKeep = requestedPageIndex + lookAhead
         
-        let shouldEvict = if let lastEvictionPageIndex {
-            abs(requestedPageIndex - lastEvictionPageIndex) >= 2
-        } else {
-            true
-        }
+        let evictionBuffer = max(lookAhead, lookBehind) * 2 // 2x the normal range
+        let minEvictionPage = requestedPageIndex - evictionBuffer
+        let maxEvictionPage = requestedPageIndex + evictionBuffer
         
-        let needsEviction = shouldEvict && pages.contains { $0.index < minPageToKeep || $0.index > maxPageToKeep }
+        let needsEviction = pages.contains { $0.index < minEvictionPage || $0.index > maxEvictionPage }
         let needsLookAhead = canLoadForward && !hasAllPages(in: (requestedPageIndex + 1)...maxPageToKeep)
         let needsLookBehind = canLoadBackward && requestedPageIndex > 0 && lookBehind > 0 && !hasAllPages(in: max(0, minPageToKeep)...(requestedPageIndex - 1))
         
@@ -145,13 +142,12 @@ extension CameraUploadPaginationManager {
             return nil
         }
         
-        await cancelTasksOutsideRange(minPageToKeep...maxPageToKeep)
-        
         if needsEviction {
-            await evictDistantPages(currentPageIndex: requestedPageIndex)
-            lastEvictionPageIndex = requestedPageIndex
+            MEGALogDebug("[\(type(of: self))] Evicting distant pages outside buffer range")
+            await evictDistantPages(currentPageIndex: requestedPageIndex, evictionBuffer: evictionBuffer)
         }
         
+        MEGALogDebug("[\(type(of: self))] Triggering look-ahead/look-behind loading")
         await triggerLookAheadLoading(currentPageIndex: requestedPageIndex)
         await triggerLookBehindLoading(currentPageIndex: requestedPageIndex)
         
@@ -181,13 +177,6 @@ extension CameraUploadPaginationManager {
             return false
         }
         return true
-    }
-    
-    private func cancelTasksOutsideRange(_ range: ClosedRange<Int>) async {
-        for (pageIndex, task) in pageTasks where !range.contains(pageIndex) {
-            task.cancel()
-            pageTasks.removeValue(forKey: pageIndex)
-        }
     }
     
     private func triggerLookAheadLoading(currentPageIndex: Int) async {
@@ -338,19 +327,19 @@ extension CameraUploadPaginationManager {
 // MARK: - Page Eviction
 extension CameraUploadPaginationManager {
     
-    private func evictDistantPages(currentPageIndex: Int) async {
-        let minPageToKeep = currentPageIndex - lookBehind
-        let maxPageToKeep = currentPageIndex + lookAhead
+    private func evictDistantPages(currentPageIndex: Int, evictionBuffer: Int) async {
+        let minEvictionPage = currentPageIndex - evictionBuffer
+        let maxEvictionPage = currentPageIndex + evictionBuffer
         
-        for (pageIndex, task) in pageTasks where pageIndex < minPageToKeep || pageIndex > maxPageToKeep {
+        for (pageIndex, task) in pageTasks where pageIndex < minEvictionPage || pageIndex > maxEvictionPage {
             task.cancel()
             pageTasks.removeValue(forKey: pageIndex)
         }
         
         pages.removeAll { page in
-            let shouldEvict = page.index < minPageToKeep || page.index > maxPageToKeep
+            let shouldEvict = page.index < minEvictionPage || page.index > maxEvictionPage
             if shouldEvict {
-                MEGALogDebug("[\(type(of: self))] Evicting page data with index: \(page.index)")
+                MEGALogDebug("[\(type(of: self))] Evicting distant page data with index: \(page.index) (current: \(currentPageIndex), buffer: \(evictionBuffer))")
             }
             return shouldEvict
         }
@@ -399,7 +388,6 @@ extension CameraUploadPaginationManager {
     func reset() {
         cancelAll()
         pages.removeAll()
-        lastEvictionPageIndex = nil
         currentPageIndex = 0
         hasInitialLoad = false
         canLoadForward = true
