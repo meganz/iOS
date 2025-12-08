@@ -74,7 +74,7 @@ final class PhotosViewModel: NSObject {
     private let nodeUseCase: any NodeUseCaseProtocol
     private let cameraUploadsSettingsViewRouter: any Routing
     private let tracker: any AnalyticsTracking
-    private let featureFlagProvider: any FeatureFlagProviderProtocol
+    private let remoteFeatureFlagUseCase: any RemoteFeatureFlagUseCaseProtocol
     private let cameraUploadProgressRouter: any CameraUploadProgressRouting
     private let idleWaitTimeNanoSeconds: UInt64
     private let uploadStateDebounceDuration: Duration
@@ -94,7 +94,7 @@ final class PhotosViewModel: NSObject {
          nodeUseCase: some NodeUseCaseProtocol,
          cameraUploadProgressRouter: any CameraUploadProgressRouting,
          tracker: some AnalyticsTracking = DIContainer.tracker,
-         featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider,
+         remoteFeatureFlagUseCase: any RemoteFeatureFlagUseCaseProtocol = DIContainer.remoteFeatureFlagUseCase,
          idleWaitTimeNanoSeconds: UInt64 = 3 * 1_000_000_000,
          uploadStateDebounceDuration: Duration = .milliseconds(300)
     ) {
@@ -119,7 +119,7 @@ final class PhotosViewModel: NSObject {
             preferenceUseCase: preferenceUseCase)
         self.cameraUploadProgressRouter = cameraUploadProgressRouter
         self.tracker = tracker
-        self.featureFlagProvider = featureFlagProvider
+        self.remoteFeatureFlagUseCase = remoteFeatureFlagUseCase
         self.idleWaitTimeNanoSeconds = idleWaitTimeNanoSeconds
         self.uploadStateDebounceDuration = uploadStateDebounceDuration
         super.init()
@@ -300,7 +300,7 @@ final class PhotosViewModel: NSObject {
     }
     
     private func isCameraUploadProgressFeatureEnabled() -> Bool {
-        featureFlagProvider.isFeatureFlagEnabled(for: .cameraUploadProgress)
+        remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosCameraUploadBreakdown)
     }
     
     private func showCameraUploadStatusBanner() {

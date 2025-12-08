@@ -13,7 +13,6 @@ public enum FeatureFlagKey: FeatureFlagName, CaseIterable, Sendable {
     case dotAppDomain = ".app Domain"
     case videoPlayerRevamp = "Video Player Revamp"
     case cloudDriveRevamp = "Cloud Drive Revamp"
-    case cameraUploadProgress = "Show Camera Upload Progress"
     case mediaRevamp = "Media Revamp"
     case appPerfomanceMonitoring = "App Perfomance Monitoring"
 

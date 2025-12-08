@@ -359,7 +359,7 @@ final class PhotosViewModelTests: XCTestCase {
         monitorCameraUploadUseCase: MockMonitorCameraUploadUseCase = MockMonitorCameraUploadUseCase(),
         nodeUseCase: some NodeUseCaseProtocol = MockNodeUseCase(),
         tracker: MockTracker = MockTracker(),
-        featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:])
+        remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = MockRemoteFeatureFlagUseCase()
     ) -> PhotosViewModel {
         let publisher = PhotoUpdatePublisher(photosViewController: PhotosViewController())
         let usecase = MockPhotoLibraryUseCase(allPhotos: [],
@@ -377,7 +377,7 @@ final class PhotosViewModelTests: XCTestCase {
             nodeUseCase: nodeUseCase,
             cameraUploadProgressRouter: MockCameraUploadProgressRouter(),
             tracker: tracker,
-            featureFlagProvider: featureFlagProvider
+            remoteFeatureFlagUseCase: remoteFeatureFlagUseCase
         )
     }
 }
@@ -457,13 +457,14 @@ struct PhotosViewModelTestSuite {
     func cameraUploadStatusButtonTapped() async throws {
         let preferenceUseCase = MockPreferenceUseCase(dict: [PreferenceKeyEntity.isCameraUploadsEnabled.rawValue: true])
         let cameraUploadProgressRouter = MockCameraUploadProgressRouter()
-        let featureFlagProvider = MockFeatureFlagProvider(
-            list: [.cameraUploadProgress: true])
+        let remoteFeatureFlagUseCase = MockRemoteFeatureFlagUseCase(
+            list: [.iosCameraUploadBreakdown: true]
+        )
         
         let sut = Self.makeSUT(
             preferenceUseCase: preferenceUseCase,
             cameraUploadProgressRouter: cameraUploadProgressRouter,
-            featureFlagProvider: featureFlagProvider
+            remoteFeatureFlagUseCase: remoteFeatureFlagUseCase
         )
         let initialTaskId = sut.cameraUploadStatusButtonViewModel.monitorTaskId
         
@@ -587,8 +588,8 @@ struct PhotosViewModelTestSuite {
             isCameraUploadProgress: Bool = true,
             isCameraUploadsEnabled: Bool = true
         ) async -> PhotosViewModel {
-            let featureFlagProvider = MockFeatureFlagProvider(
-                list: [.cameraUploadProgress: isCameraUploadProgress]
+            let remoteFeatureFlagUseCase = MockRemoteFeatureFlagUseCase(
+                list: [.iosCameraUploadBreakdown: isCameraUploadProgress]
             )
             let preferenceUseCase = MockPreferenceUseCase(
                 dict: [PreferenceKeyEntity.isCameraUploadsEnabled.rawValue: isCameraUploadsEnabled]
@@ -602,7 +603,7 @@ struct PhotosViewModelTestSuite {
             let sut = makeSUT(
                 preferenceUseCase: preferenceUseCase,
                 monitorCameraUploadUseCase: monitorCameraUploadUseCase,
-                featureFlagProvider: featureFlagProvider
+                remoteFeatureFlagUseCase: remoteFeatureFlagUseCase
             )
 
             sut.startMonitoringUpdates()
@@ -624,7 +625,7 @@ struct PhotosViewModelTestSuite {
         nodeUseCase: some NodeUseCaseProtocol = MockNodeUseCase(),
         tracker: some AnalyticsTracking = MockTracker(),
         cameraUploadProgressRouter: some CameraUploadProgressRouting = MockCameraUploadProgressRouter(),
-        featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:]),
+        remoteFeatureFlagUseCase: any RemoteFeatureFlagUseCaseProtocol = MockRemoteFeatureFlagUseCase(),
         idleWaitTimeNanoSeconds: UInt64 = 100_000_000,
         uploadStateDebounceDuration: Duration = .milliseconds(10)
     ) -> PhotosViewModel {
@@ -639,7 +640,7 @@ struct PhotosViewModelTestSuite {
             cameraUploadsSettingsViewRouter: cameraUploadsSettingsViewRouter,
             nodeUseCase: nodeUseCase,
             cameraUploadProgressRouter: cameraUploadProgressRouter,
-            featureFlagProvider: featureFlagProvider,
+            remoteFeatureFlagUseCase: remoteFeatureFlagUseCase,
             idleWaitTimeNanoSeconds: idleWaitTimeNanoSeconds,
             uploadStateDebounceDuration: uploadStateDebounceDuration)
     }
