@@ -274,4 +274,5 @@ public struct MEGAImageBundle {
     public static var gearSixMediumThin: Image { Image(.gearSixMediumThin) }
     public static var cloudDriveEmptyStateRoot: Image { Image(.cloudDriveEmptyStateRoot) }
     public static var cloudDriveEmptyStateNonRoot: Image { Image(.cloudDriveEmptyStateNonRoot) }
+    public static var linkGear: Image { Image(.linkGear) }
 }

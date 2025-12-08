@@ -289,6 +289,7 @@ extension MEGAAssets {
         public static var gearSixMediumThin: SwiftUI.Image { MEGAImageBundle.gearSixMediumThin }
         public static var cloudDriveEmptyStateRoot: SwiftUI.Image { MEGAImageBundle.cloudDriveEmptyStateRoot }
         public static var cloudDriveEmptyStateNonRoot: SwiftUI.Image { MEGAImageBundle.cloudDriveEmptyStateNonRoot }
+        public static var linkGear: SwiftUI.Image { MEGAImageBundle.linkGear }
     }
 }
 
@@ -736,5 +737,6 @@ extension MEGAAssets {
         public static var gearSixMediumThin: UIKit.UIImage { MEGAUIImageBundle.gearSixMediumThin }
         public static var cloudDriveEmptyStateRoot: UIKit.UIImage { MEGAUIImageBundle.cloudDriveEmptyStateRoot }
         public static var cloudDriveEmptyStateNonRoot: UIKit.UIImage { MEGAUIImageBundle.cloudDriveEmptyStateNonRoot }
+        public static var linkGear: UIKit.UIImage { MEGAUIImageBundle.linkGear }
     }
 }

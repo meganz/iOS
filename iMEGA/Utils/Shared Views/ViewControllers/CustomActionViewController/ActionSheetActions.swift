@@ -416,7 +416,7 @@ private extension UIImage {
     }
 
     static var download: UIImage { isCloudDriveRevampEnabled ? MEGAAssets.UIImage.arrowDownCircle : MEGAAssets.UIImage.offline }
-    static var shareLink: UIImage { isCloudDriveRevampEnabled ? MEGAAssets.UIImage.link01 : MEGAAssets.UIImage.link }
+    static var shareLink: UIImage { isCloudDriveRevampEnabled ? MEGAAssets.UIImage.linkGear : MEGAAssets.UIImage.link }
     static var removelink: UIImage { isCloudDriveRevampEnabled ? MEGAAssets.UIImage.linkOff02 : MEGAAssets.UIImage.removeLink }
     static var shareFolder: UIImage { isCloudDriveRevampEnabled ? MEGAAssets.UIImage.folderUsersMono : MEGAAssets.UIImage.shareFolder }
 
