@@ -121,6 +121,20 @@ class NodeBrowserViewModel: ObservableObject {
         && parentNode.nodeType != .rubbish
     }
 
+    private let sortHeaderCoordinatorForMD: SearchResultsSortHeaderCoordinator
+
+    var sortHeaderViewModelForMD: SearchResultsHeaderSortViewViewModel {
+        sortHeaderCoordinatorForMD.headerViewModel
+    }
+
+    var shouldDisplayHeaderViewInMDView: Bool {
+        DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .cloudDriveRevamp)
+    }
+
+    lazy var viewModeHeaderViewModelForMD: SearchResultsHeaderViewModeViewModel = {
+        .init(selectedViewMode: .mediaDiscovery, availableViewModes: [.list, .grid, .mediaDiscovery])
+    }()
+
     init(
         viewMode: ViewModePreferenceEntity,
         searchResultsContainerViewModel: SearchResultsContainerViewModel,
@@ -138,6 +152,7 @@ class NodeBrowserViewModel: ObservableObject {
         nodeUseCase: some NodeUseCaseProtocol,
         sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol,
         accountStorageUseCase: some AccountStorageUseCaseProtocol,
+        sortHeaderCoordinatorForMD: SearchResultsSortHeaderCoordinator,
         nodeActionsBridge: NodeActionsBridge,
         tracker: some AnalyticsTracking = DIContainer.tracker,
         // we call this whenever view sate is changed so that:
@@ -181,6 +196,7 @@ class NodeBrowserViewModel: ObservableObject {
         self.nodeUseCase = nodeUseCase
         self.sensitiveNodeUseCase = sensitiveNodeUseCase
         self.accountStorageUseCase = accountStorageUseCase
+        self.sortHeaderCoordinatorForMD = sortHeaderCoordinatorForMD
         self.tracker = tracker
         self.onNodeStructureChanged = onNodeStructureChanged
         self.onMoreOptionsButtonTapped = onMoreOptionsButtonTapped
@@ -291,6 +307,8 @@ class NodeBrowserViewModel: ObservableObject {
         nodeActionsBridge.selectedResultsHandler = { [weak self] searchResults in
             self?.searchResultsContainerViewModel.selectSearchResults(searchResults)
         }
+
+        listenToViewModeHeaderChangesInMD()
     }
     
     deinit {
@@ -676,6 +694,35 @@ class NodeBrowserViewModel: ObservableObject {
             shouldShowCloseButton: shouldShowCloseButton,
             closeButtonAction: closeButtonAction
         )
+    }
+
+    private func listenToViewModeHeaderChangesInMD() {
+        viewModeHeaderViewModelForMD
+            .$selectedViewMode
+            .dropFirst()
+            .removeDuplicates()
+            .sink { [weak self] in
+                guard let self else { return }
+                switch $0 {
+                case .list:
+                    viewMode = .list
+                    resetViewModeHeaderSelectionInMD()
+                case .grid:
+                    viewMode = .thumbnail
+                    resetViewModeHeaderSelectionInMD()
+                case .mediaDiscovery:
+                    break
+                }
+            }
+            .store(in: &subscriptions)
+    }
+
+    // Reset the header selection on the next run loop tick.
+    // Otherwise, the reset may race with the view mode change and be ignored.
+    private func resetViewModeHeaderSelectionInMD() {
+        DispatchQueue.main.async { [weak self] in
+            self?.viewModeHeaderViewModelForMD.selectedViewMode = .mediaDiscovery
+        }
     }
 }
 

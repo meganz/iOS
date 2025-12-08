@@ -68,7 +68,9 @@ class NodeBrowserViewModelTests: XCTestCase {
             monitorInheritedSensitivityForNode: AnyAsyncThrowingSequence<Bool, any Error> = EmptyAsyncSequence()
                 .eraseToAnyAsyncThrowingSequence(),
             sensitivityChangesForNode: AnyAsyncSequence<Bool> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
-            tempWarningBannerViewModel: WarningBannerViewModel? = nil
+            tempWarningBannerViewModel: WarningBannerViewModel? = nil,
+            sortOptionsForMD: [SearchResultsSortOption] = [],
+            selectedSortOrderForMD: Search.SortOrderEntity = .init(key: .lastModified)
         ) {
             let config: NodeBrowserConfig = config ?? NodeBrowserConfig.default
             let nodeSource = NodeSource.node { node }
@@ -153,6 +155,14 @@ class NodeBrowserViewModelTests: XCTestCase {
                     sensitivityChangesForNode: sensitivityChangesForNode
                 ),
                 accountStorageUseCase: mockAccountStorageUseCase, // Inject the mock here
+                sortHeaderCoordinatorForMD: .init(
+                    sortOptionsViewModel: .init(
+                        title: "",
+                        sortOptions: sortOptionsForMD
+                    ),
+                    currentSortOrderProvider: { selectedSortOrderForMD },
+                    sortOptionSelectionHandler: { _ in }
+                ),
                 nodeActionsBridge: NodeActionsBridge(),
                 tracker: tracker,
                 viewModeSaver: { saver($0) },
@@ -537,7 +547,9 @@ class NodeBrowserViewModelTests: XCTestCase {
         shouldShowStorageBanner: Bool = true,
         isFromSharedItem: Bool = false,
         currentStatus: StorageStatusEntity = .noStorageProblems,
-        displayMode: DisplayMode? = nil
+        displayMode: DisplayMode? = nil,
+        sortOptionsForMD: [SearchResultsSortOption] = [],
+        selectedSortOrderForMD: Search.SortOrderEntity = .init(key: .lastModified)
     ) -> (Harness, MockAccountStorageUseCase) {
         let mockAccountStorageUseCase = MockAccountStorageUseCase(shouldShowStorageBanner: shouldShowStorageBanner)
         var config = NodeBrowserConfig.default
@@ -547,7 +559,9 @@ class NodeBrowserViewModelTests: XCTestCase {
             Harness(
                 node: .init(),
                 config: config,
-                mockAccountStorageUseCase: mockAccountStorageUseCase
+                mockAccountStorageUseCase: mockAccountStorageUseCase,
+                sortOptionsForMD: sortOptionsForMD,
+                selectedSortOrderForMD: selectedSortOrderForMD
             ), mockAccountStorageUseCase
         )
     }
@@ -627,7 +641,87 @@ class NodeBrowserViewModelTests: XCTestCase {
             assertNoBannerIsDisplayed(for: displayMode)
         }
     }
-    
+
+    @MainActor
+    func testSortHeaderViewModelForMD_whenSetUsingInit_shouldMatchResults() {
+        let sortOptions: [SearchResultsSortOption] = [
+            .init(sortOrder: .init(key: .lastModified), title: "", iconsByDirection: [:]),
+            .init(sortOrder: .init(key: .lastModified, direction: .descending), title: "", iconsByDirection: [:])
+        ]
+
+        let (harness, _) = makeHarness(
+            sortOptionsForMD: sortOptions,
+            selectedSortOrderForMD: sortOptions[0].sortOrder
+        )
+        XCTAssertEqual(
+            harness.sut.sortHeaderViewModelForMD.displaySortOptionsViewModel.sortOptions.map(\.sortOrder),
+            [.init(key: .lastModified, direction: .descending)]
+        )
+    }
+
+    @MainActor
+    func testShouldDisplayHeaderViewInMDView_isAlwaysFalse_shouldMatchResults() {
+        let (harness, _) = makeHarness()
+        XCTAssertFalse(harness.sut.shouldDisplayHeaderViewInMDView)
+    }
+
+    @MainActor
+    func testViewModeHeaderViewModelForMD_whenInvoked_shouldMatchResults() {
+        let (harness, _) = makeHarness()
+        XCTAssertEqual(harness.sut.viewModeHeaderViewModelForMD.selectedViewMode, .mediaDiscovery)
+        XCTAssertEqual(harness.sut.viewModeHeaderViewModelForMD.availableViewModes, [.list, .grid, .mediaDiscovery])
+    }
+
+    @MainActor
+    func testListenToViewModeHeaderChangesInMD_whenViewModeChanged_shouldMatchResults() async {
+        enum TimeoutError: Error {
+            case viewModeNotSet
+        }
+
+        let sortOptions: [SearchResultsSortOption] = [
+            .init(sortOrder: .init(key: .lastModified), title: "", iconsByDirection: [:]),
+            .init(sortOrder: .init(key: .lastModified, direction: .descending), title: "", iconsByDirection: [:])
+        ]
+
+        let (harness, _) = makeHarness(
+            sortOptionsForMD: sortOptions,
+            selectedSortOrderForMD: sortOptions[0].sortOrder
+        )
+
+        XCTAssertEqual(harness.sut.viewModeHeaderViewModelForMD.selectedViewMode, .mediaDiscovery)
+
+        let result: Result<ViewModePreferenceEntity, any Error> = await withCheckedContinuation { continuation in
+            var hasResumed = false
+
+            func resume(_ result: Result<ViewModePreferenceEntity, any Error>) {
+                guard !hasResumed else { return }
+                hasResumed = true
+                continuation.resume(returning: result)
+            }
+
+            let cancellable = harness.sut.$viewMode.sink { updatedValue in
+                if updatedValue == .thumbnail {
+                    resume(.success(updatedValue))
+                }
+            }
+
+            harness.sut.viewModeHeaderViewModelForMD.selectedViewMode = .grid
+
+            Task {
+                try? await Task.sleep(nanoseconds: 2_000_000_000)
+                resume(.failure(TimeoutError.viewModeNotSet))
+                cancellable.cancel()
+            }
+        }
+
+        switch result {
+        case .success(let viewMode):
+            XCTAssertEqual(viewMode, .thumbnail)
+        case .failure:
+            XCTFail("Timed out waiting for setViewMode(.thumbnail)")
+        }
+    }
+
     @MainActor
     private func assertNoBannerIsDisplayed(for displayMode: DisplayMode) {
         let (harness, _) = makeHarness(

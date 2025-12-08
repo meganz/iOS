@@ -40,7 +40,24 @@ struct NodeBrowserView: View {
                 WarningBannerView(viewModel: warningViewModel)
             }
             if let mediaDiscoveryViewModel = viewModel.viewModeAwareMediaDiscoveryViewModel {
-                MediaDiscoveryContentView(viewModel: mediaDiscoveryViewModel)
+                VStack(spacing: 0) {
+                    if viewModel.shouldDisplayHeaderViewInMDView {
+                        SearchResultsHeaderView(height: 44) {
+                            SearchResultsHeaderSortView(
+                                viewModel: viewModel.sortHeaderViewModelForMD,
+                                horizontalPadding: TokenSpacing._5
+                            )
+                        } rightView: {
+                            SearchResultsHeaderViewModeView(
+                                viewModel: viewModel.viewModeHeaderViewModelForMD,
+                                horizontalPadding: TokenSpacing._7
+                            )
+                        }
+                    } else {
+                        EmptyView()
+                    }
+                    MediaDiscoveryContentView(viewModel: mediaDiscoveryViewModel)
+                }
             } else {
                 SearchResultsContainerView(viewModel: viewModel.searchResultsContainerViewModel)
                     .environment(\.editMode, $viewModel.editMode)

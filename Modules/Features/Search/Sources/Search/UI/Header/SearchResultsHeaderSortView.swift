@@ -15,7 +15,7 @@ public struct SearchResultsHeaderSortView: View {
 
     public var body: some View {
         Button {
-            viewModel.showSortSheet = true
+            viewModel.changeSelection()
         } label: {
             HStack(spacing: TokenSpacing._3) {
                 Text(viewModel.selectedOption.title)

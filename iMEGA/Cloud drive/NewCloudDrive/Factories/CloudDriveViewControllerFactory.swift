@@ -296,16 +296,17 @@ struct CloudDriveViewControllerFactory {
             accountRepository: AccountRepository.newRepo,
             preferenceUseCase: PreferenceUseCase.default
         )
+        let mediaDiscoveryContentViewModel = makeOptionalMediaDiscoveryViewModel(
+            nodeSource: nodeSource,
+            mediaContentDelegate: mediaContentDelegate,
+            isShowingAutomatically: initialViewMode == .mediaDiscovery,
+            isFromSharedItem: config.isFromSharedItem ?? false
+        )
 
         return .init(
             viewMode: initialViewMode,
             searchResultsContainerViewModel: searchResultsContainerViewModel,
-            mediaDiscoveryViewModel: makeOptionalMediaDiscoveryViewModel(
-                nodeSource: nodeSource,
-                mediaContentDelegate: mediaContentDelegate,
-                isShowingAutomatically: initialViewMode == .mediaDiscovery,
-                isFromSharedItem: config.isFromSharedItem ?? false
-            ),
+            mediaDiscoveryViewModel: mediaDiscoveryContentViewModel,
             warningViewModel: makeOptionalWarningViewModel(
                 nodeSource,
                 config: config
@@ -332,6 +333,24 @@ struct CloudDriveViewControllerFactory {
                 accountUseCase: AccountUseCase(
                     repository: AccountRepository.newRepo)),
             accountStorageUseCase: accountStorageUseCase,
+            sortHeaderCoordinatorForMD: .init(
+                sortOptionsViewModel: .init(
+                    title: Strings.Localizable.sortTitle,
+                    sortOptions: SearchResultsSortOptionFactory.makeAll(
+                        excludedKeys: [.name, .favourite, .label, .dateAdded, .size, .shareCreated, .linkCreated]
+                    )
+                ),
+                currentSortOrderProvider: { [weak mediaDiscoveryContentViewModel] in
+                    guard let mediaDiscoveryContentViewModel else { return .init(key: .lastModified) }
+                    return mediaDiscoveryContentViewModel.sortOrder == .oldest
+                    ? .init(key: .lastModified)
+                    : .init(key: .lastModified, direction: .descending)
+                },
+                sortOptionSelectionHandler: { [weak mediaDiscoveryContentViewModel] in
+                    let sortOrder = SortOrderType(megaSortOrderType: $0.sortOrder.toMEGASortOrderType())
+                    await mediaDiscoveryContentViewModel?.update(sortOrder: sortOrder)
+                }
+            ),
             nodeActionsBridge: nodeActionsBridge,
             viewModeSaver: {
                 guard let node = nodeSource.parentNode else { return }
