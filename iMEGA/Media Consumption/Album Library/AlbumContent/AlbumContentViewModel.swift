@@ -29,6 +29,7 @@ enum AlbumContentAction: ActionType {
     case removeLinkActionTap
     case hideNodes
     case renameAlbum
+    case onEditModeChange(Bool)
 }
 
 @MainActor
@@ -49,6 +50,7 @@ final class AlbumContentViewModel: ViewModelType {
         case showRenameAlbumAlert(viewModel: TextFieldAlertViewModel)
         case showRemoveLinkAlert
         case showSharePhotoLinks
+        case updateAddToAlbumButton(Bool)
         enum MessageType: Equatable {
             case success(String)
             case custom(UIImage, String)
@@ -67,6 +69,7 @@ final class AlbumContentViewModel: ViewModelType {
     private let albumContentDataProvider: any AlbumContentPhotoLibraryDataProviderProtocol
     private let albumNameUseCase: any AlbumNameUseCaseProtocol
     private let overDiskQuotaChecker: any OverDiskQuotaChecking
+    private let featureFlagProvider: any FeatureFlagProviderProtocol
     
     private var loadingTask: Task<Void, Never>?
     private var subscriptions = Set<AnyCancellable>()
@@ -121,7 +124,8 @@ final class AlbumContentViewModel: ViewModelType {
         newAlbumPhotosToAdd: [NodeEntity]?,
         tracker: some AnalyticsTracking = DIContainer.tracker,
         albumContentDataProvider: some AlbumContentPhotoLibraryDataProviderProtocol = AlbumContentPhotoLibraryDataProvider(),
-        albumRemoteFeatureFlagProvider: some AlbumRemoteFeatureFlagProviderProtocol = AlbumRemoteFeatureFlagProvider()
+        albumRemoteFeatureFlagProvider: some AlbumRemoteFeatureFlagProviderProtocol = AlbumRemoteFeatureFlagProvider(),
+        featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider
     ) {
         self.album = album
         self.newAlbumPhotosToAdd = newAlbumPhotosToAdd
@@ -136,6 +140,7 @@ final class AlbumContentViewModel: ViewModelType {
         self.tracker = tracker
         self.albumContentDataProvider = albumContentDataProvider
         self.albumRemoteFeatureFlagProvider = albumRemoteFeatureFlagProvider
+        self.featureFlagProvider = featureFlagProvider
     }
     
     // MARK: - Dispatch action
@@ -188,6 +193,8 @@ final class AlbumContentViewModel: ViewModelType {
         case .renameAlbum:
             guard !overDiskQuotaChecker.showOverDiskQuotaIfNeeded() else { return }
             showRenameAlbumAlert()
+        case .onEditModeChange(let isEditing):
+            updateAddToAlbumFloatingActionButton(isEditing: isEditing)
         default:
             break
         }
@@ -211,16 +218,25 @@ final class AlbumContentViewModel: ViewModelType {
         }
     }
     
+    var isMediaRevampEnabled: Bool {
+        featureFlagProvider.isFeatureFlagEnabled(for: .mediaRevamp)
+    }
+    
     // MARK: Private
     
     private var canAddPhotosToAlbum: Bool {
         album.type == .user && photoLibraryContainsPhotos
     }
     
+    private var shouldAddContextMenuAddButton: Bool {
+        guard !isMediaRevampEnabled else { return false }
+        return canAddPhotosToAlbum
+    }
+    
     private func onViewReady() {
         tracker.trackAnalyticsEvent(with: AlbumContentScreenEvent())
         invokeCommand?(.configureRightBarButtons(
-            contextMenuConfiguration: nil, canAddPhotosToAlbum: canAddPhotosToAlbum))
+            contextMenuConfiguration: nil, canAddPhotosToAlbum: shouldAddContextMenuAddButton))
         loadingTask = Task {
             await addNewAlbumPhotosIfNeeded()
             guard !Task.isCancelled else { return }
@@ -316,6 +332,7 @@ final class AlbumContentViewModel: ViewModelType {
         await invokeCommand?(.showAlbumPhotos(photos: albumContentDataProvider.photos(for: selectedFilter), sortOrder: selectedSortOrder))
         guard !Task.isCancelled else { return }
         await updateRightBarButtons()
+        updateAddToAlbumFloatingActionButton()
     }
     
     private func reloadAlbum() {
@@ -494,7 +511,9 @@ final class AlbumContentViewModel: ViewModelType {
         let config = await makeConfigEntity()
         guard !Task.isCancelled else { return }
         
-        invokeCommand?(.configureRightBarButtons(contextMenuConfiguration: config, canAddPhotosToAlbum: canAddPhotosToAlbum))
+        invokeCommand?(.configureRightBarButtons(
+            contextMenuConfiguration: config,
+            canAddPhotosToAlbum: shouldAddContextMenuAddButton))
     }
     
     private func makeConfigEntity() async -> CMConfigEntity? {
@@ -570,5 +589,16 @@ final class AlbumContentViewModel: ViewModelType {
     private func checkOverQuota(invokeOnAvailable command: Command) {
         guard !overDiskQuotaChecker.showOverDiskQuotaIfNeeded() else { return }
         invokeCommand?(command)
+    }
+    
+    private func updateAddToAlbumFloatingActionButton(isEditing: Bool = false) {
+        guard isMediaRevampEnabled else { return }
+        
+        let isButtonVisible = if isEditing {
+            false
+        } else {
+            canAddPhotosToAlbum
+        }
+        invokeCommand?(.updateAddToAlbumButton(isButtonVisible))
     }
 }

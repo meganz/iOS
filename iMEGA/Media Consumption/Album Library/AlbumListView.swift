@@ -76,6 +76,7 @@ struct AlbumListView: View {
                     image: MEGAAssets.Image.plus,
                     action: viewModel.onCreateAlbum)
                 .padding(TokenSpacing._5)
+                .opacity($editMode.wrappedValue.isEditing ? 0 : 1)
             }
         }
     }

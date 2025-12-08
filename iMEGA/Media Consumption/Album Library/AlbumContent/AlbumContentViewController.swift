@@ -4,6 +4,7 @@ import MEGAAssets
 import MEGADesignToken
 import MEGADomain
 import MEGAL10n
+import MEGASwiftUI
 import MEGAUIKit
 import SwiftUI
 import UIKit
@@ -40,6 +41,7 @@ final class AlbumContentViewController: UIViewController, ViewType {
     var albumToolbarConfigurator: AlbumToolbarConfigurator?
     
     private lazy var emptyView = EmptyStateView.create(for: viewModel.isFavouriteAlbum ? .favourites: .album)
+    private var floatingActionButtonController: UIHostingController<RoundedPrimaryImageButton>?
     
     var contextMenuManager: ContextMenuManager?
     
@@ -98,6 +100,7 @@ final class AlbumContentViewController: UIViewController, ViewType {
     
     func endEditingMode() {
         setEditing(false, animated: true)
+        viewModel.dispatch(.onEditModeChange(false))
         
         enablePhotoLibraryEditMode(isEditing)
         configureBarButtons()
@@ -114,6 +117,7 @@ final class AlbumContentViewController: UIViewController, ViewType {
     
     func startEditingMode() {
         setEditing(true, animated: true)
+        viewModel.dispatch(.onEditModeChange(true))
         enablePhotoLibraryEditMode(isEditing)
         updateNavigationTitle(withSelectedPhotoCount: 0)
         
@@ -170,6 +174,8 @@ final class AlbumContentViewController: UIViewController, ViewType {
             showRemoveLinkConfirmation()
         case .showSharePhotoLinks:
             showSharePhotoLinks()
+        case .updateAddToAlbumButton(let isVisible):
+            isVisible ? addFloatingAddButton() : removeAddToAlbumFloatingActionButton()
         }
     }
     
@@ -321,5 +327,39 @@ final class AlbumContentViewController: UIViewController, ViewType {
         ExportFileRouter(presenter: self, sender: sender)
             .export(nodes: selectedNodes.toNodeEntities())
         endEditingMode()
+    }
+    
+    private func addFloatingAddButton() {
+        guard floatingActionButtonController == nil else { return }
+        
+        let button = RoundedPrimaryImageButton(
+            image: MEGAAssets.Image.plus) { [weak viewModel] in
+                viewModel?.dispatch(.addToAlbumTap)
+            }
+        
+        let hostingController = UIHostingController(rootView: button)
+        hostingController.view.backgroundColor = .clear
+        floatingActionButtonController = hostingController
+        
+        addChild(hostingController)
+        view.addSubview(hostingController.view)
+        hostingController.didMove(toParent: self)
+        
+        hostingController.view.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            hostingController.view.widthAnchor.constraint(equalToConstant: 54),
+            hostingController.view.heightAnchor.constraint(equalToConstant: 54),
+            hostingController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            hostingController.view.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -40)
+        ])
+    }
+    
+    private func removeAddToAlbumFloatingActionButton() {
+        guard let controller = floatingActionButtonController else { return }
+        
+        controller.willMove(toParent: nil)
+        controller.view.removeFromSuperview()
+        controller.removeFromParent()
+        floatingActionButtonController = nil
     }
 }

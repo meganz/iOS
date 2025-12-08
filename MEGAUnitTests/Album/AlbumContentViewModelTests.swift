@@ -992,7 +992,8 @@ final class AlbumContentViewModelTests: XCTestCase {
         overDiskQuotaChecker: some OverDiskQuotaChecking = MockOverDiskQuotaChecker(),
         newAlbumPhotosToAdd: [NodeEntity]? = nil,
         tracker: some AnalyticsTracking = MockTracker(),
-        albumRemoteFeatureFlagProvider: some AlbumRemoteFeatureFlagProviderProtocol = MockAlbumRemoteFeatureFlagProvider()
+        albumRemoteFeatureFlagProvider: some AlbumRemoteFeatureFlagProviderProtocol = MockAlbumRemoteFeatureFlagProvider(),
+        featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:])
     ) -> AlbumContentViewModel {
         AlbumContentViewModel(
             album: album,
@@ -1006,7 +1007,8 @@ final class AlbumContentViewModelTests: XCTestCase {
             overDiskQuotaChecker: overDiskQuotaChecker,
             newAlbumPhotosToAdd: newAlbumPhotosToAdd,
             tracker: tracker,
-            albumRemoteFeatureFlagProvider: albumRemoteFeatureFlagProvider)
+            albumRemoteFeatureFlagProvider: albumRemoteFeatureFlagProvider,
+            featureFlagProvider: featureFlagProvider)
     }
     
     @MainActor
@@ -1211,6 +1213,123 @@ struct AlbumContentViewModelTestSuite {
     }
     
     @MainActor
+    struct FloatingAddButton {
+        @Test(arguments: [
+            (AlbumEntityType.favourite, false, false),
+            (.favourite, true, false),
+            (.user, false, true),
+            (.user, true, false)
+        ])
+        func onViewReady(
+            type: AlbumEntityType,
+            isMediaRevampEnabled: Bool,
+            addBarButton: Bool
+        ) async throws {
+            let featureFlagProvider = MockFeatureFlagProvider(list: [.mediaRevamp: isMediaRevampEnabled])
+            let sut = makeSUT(
+                album: .init(id: 8, type: type),
+                albumRemoteFeatureFlagProvider: MockAlbumRemoteFeatureFlagProvider(isEnabled: true),
+                featureFlagProvider: featureFlagProvider)
+            
+            try await confirmation { confirmation in
+                sut.invokeCommand = { command in
+                    switch command {
+                    case .configureRightBarButtons(_, let canAdd):
+                        #expect(canAdd == addBarButton)
+                        confirmation()
+                    default: break
+                    }
+                }
+                
+                sut.dispatch(.onViewReady)
+                
+                try await waitForCommand()
+            }
+        }
+        
+        @Test(arguments: [
+            (AlbumEntityType.favourite, false),
+            (.user, true)
+        ])
+        func onViewWillAppear(
+            type: AlbumEntityType,
+            isAddFloatingActionBarButtonVisible: Bool
+        ) async throws {
+            let photoNodes = [
+                NodeEntity(handle: 65),
+                NodeEntity(handle: 89)
+            ]
+            let albumPhotos = photoNodes.toAlbumPhotoEntities()
+            let monitorPhotosAsyncSequence = SingleItemAsyncSequence(
+                item: Result<[AlbumPhotoEntity], any Error>.success(albumPhotos))
+            let photoLibraryUseCase = MockPhotoLibraryUseCase(
+                allPhotos: [NodeEntity(name: "photo 1.jpg", handle: 1)])
+            let monitorAlbumPhotosUseCase = MockMonitorAlbumPhotosUseCase(
+                monitorPhotosAsyncSequence: monitorPhotosAsyncSequence.eraseToAnyAsyncSequence())
+            let featureFlagProvider = MockFeatureFlagProvider(list: [.mediaRevamp: true])
+            let sut = makeSUT(
+                album: .init(id: 8, type: type),
+                photoLibraryUseCase: photoLibraryUseCase,
+                monitorAlbumPhotosUseCase: monitorAlbumPhotosUseCase,
+                albumRemoteFeatureFlagProvider: MockAlbumRemoteFeatureFlagProvider(isEnabled: true),
+                featureFlagProvider: featureFlagProvider)
+            
+            try await confirmation(expectedCount: 2) { confirmation in
+                sut.invokeCommand = { command in
+                    switch command {
+                    case .configureRightBarButtons(_, let canAdd):
+                        #expect(canAdd == false)
+                        confirmation()
+                        
+                    case .updateAddToAlbumButton(let isVisible):
+                        #expect(isVisible == isAddFloatingActionBarButtonVisible)
+                        confirmation()
+                    default: break
+                    }
+                }
+                
+                sut.dispatch(.onViewWillAppear)
+                await sut.setupSubscriptionTask?.value
+                
+                try await waitForCommand()
+            }
+        }
+        
+        @Test(arguments: [
+            (AlbumEntityType.favourite, false, false),
+            (AlbumEntityType.favourite, true, false),
+            (AlbumEntityType.user, false, true),
+            (AlbumEntityType.user, true, false)
+        ])
+        func onEditModeChange(
+            type: AlbumEntityType,
+            isEditing: Bool,
+            isAddFloatingActionBarButtonVisible: Bool
+        ) async throws {
+            let featureFlagProvider = MockFeatureFlagProvider(list: [.mediaRevamp: true])
+            let sut = makeSUT(
+                album: .init(id: 8, type: type),
+                albumRemoteFeatureFlagProvider: MockAlbumRemoteFeatureFlagProvider(isEnabled: true),
+                featureFlagProvider: featureFlagProvider)
+            
+            try await confirmation { confirmation in
+                sut.invokeCommand = { command in
+                    switch command {
+                    case .updateAddToAlbumButton(let isVisible):
+                        #expect(isVisible == isAddFloatingActionBarButtonVisible)
+                        confirmation()
+                    default: break
+                    }
+                }
+                
+                sut.dispatch(.onEditModeChange(isEditing))
+                
+                try await waitForCommand()
+            }
+        }
+    }
+    
+    @MainActor
     private static func makeSUT(
         album: AlbumEntity = .init(id: 1, type: .user),
         albumContentsUseCase: some AlbumContentsUseCaseProtocol = MockAlbumContentUseCase(),
@@ -1223,7 +1342,8 @@ struct AlbumContentViewModelTestSuite {
         overDiskQuotaChecker: some OverDiskQuotaChecking = MockOverDiskQuotaChecker(),
         newAlbumPhotosToAdd: [NodeEntity]? = nil,
         tracker: some AnalyticsTracking = MockTracker(),
-        albumRemoteFeatureFlagProvider: some AlbumRemoteFeatureFlagProviderProtocol = MockAlbumRemoteFeatureFlagProvider()
+        albumRemoteFeatureFlagProvider: some AlbumRemoteFeatureFlagProviderProtocol = MockAlbumRemoteFeatureFlagProvider(),
+        featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:])
     ) -> AlbumContentViewModel {
         AlbumContentViewModel(
             album: album,
@@ -1237,7 +1357,8 @@ struct AlbumContentViewModelTestSuite {
             overDiskQuotaChecker: overDiskQuotaChecker,
             newAlbumPhotosToAdd: newAlbumPhotosToAdd,
             tracker: tracker,
-            albumRemoteFeatureFlagProvider: albumRemoteFeatureFlagProvider)
+            albumRemoteFeatureFlagProvider: albumRemoteFeatureFlagProvider,
+            featureFlagProvider: featureFlagProvider)
     }
     
     private static func waitForCommand() async throws {
