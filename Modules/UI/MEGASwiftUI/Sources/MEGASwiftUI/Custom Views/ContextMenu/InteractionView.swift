@@ -111,5 +111,12 @@ struct InteractionView<Content: View>: UIViewRepresentable {
         ) {
             animator.addCompletion(self.didTapPreview)
         }
+        
+        func contextMenuInteraction(
+            _ interaction: UIContextMenuInteraction,
+            previewForDismissingMenuWithConfiguration configuration: UIContextMenuConfiguration
+        ) -> UITargetedPreview? {
+            nil
+        }
     }
 }
