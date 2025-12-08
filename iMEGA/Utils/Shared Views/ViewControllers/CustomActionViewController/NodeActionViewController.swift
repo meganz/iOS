@@ -516,12 +516,13 @@ class NodeActionViewController: ActionSheetViewController {
             NSLayoutConstraint.activate([
                 downloadImageView.widthAnchor.constraint(equalToConstant: 12),
                 downloadImageView.heightAnchor.constraint(equalToConstant: 12),
-                downloadImageView.centerYAnchor.constraint(equalTo: headerView!.centerYAnchor, constant: 10),
+                downloadImageView.centerYAnchor.constraint(equalTo: subtitleLabel.centerYAnchor, constant: 0),
                 downloadImageView.leadingAnchor.constraint(equalTo: subtitleLabel.trailingAnchor, constant: 4),
                 downloadImageView.trailingAnchor.constraint(lessThanOrEqualTo: headerView!.safeAreaLayoutGuide.trailingAnchor, constant: -10)
             ])
 
-            downloadImageView.image = MEGAAssets.UIImage.downloaded
+            downloadImageView.image = isCloudDriveRevampEnabled ? MEGAAssets.UIImage.arrowDownCircle : MEGAAssets.UIImage.downloaded
+            downloadImageView.tintColor = TokenColors.Icon.primary
         } else {
             subtitleLabel.trailingAnchor.constraint(equalTo: headerView!.trailingAnchor, constant: -8).isActive = true
         }
