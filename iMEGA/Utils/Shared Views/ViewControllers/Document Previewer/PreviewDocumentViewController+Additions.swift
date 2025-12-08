@@ -122,6 +122,14 @@ extension PreviewDocumentViewController {
             }
         }
     }
+
+    @objc func importFile() {
+        guard let node else { return }
+        ImportLinkRouter(
+            isFolderLink: false,
+            nodes: [node],
+            presenter: self).start()
+    }
 }
 
 extension PreviewDocumentViewController: MEGAGlobalDelegate {

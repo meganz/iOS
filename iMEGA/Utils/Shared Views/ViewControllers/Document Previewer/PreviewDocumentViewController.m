@@ -226,21 +226,6 @@
     textView.text = self.textContent;
 }
 
-- (void)import {
-    if (self.node == nil) {
-        return;
-    }
-    
-    if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-        MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
-        [self presentViewController:navigationController animated:YES completion:nil];
-        
-        BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
-        browserVC.selectedNodesArray = @[self.node];
-        browserVC.browserAction = BrowserActionImport;
-    }
-}
-
 - (void)sendToChatWhenLogin {
     if (self.isLink && self.fileLink) {
         MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"SendToNavigationControllerID"];
@@ -334,7 +319,7 @@
 }
 
 - (IBAction)importAction:(id)sender {
-    [self import];
+    [self importFile];
 }
 
 - (IBAction)downloadAction:(id)sender {
@@ -446,7 +431,7 @@
             break;
             
         case MegaNodeActionTypeImport:
-            [self import];
+            [self importFile];
             break;
             
         case MegaNodeActionTypeRename: {
