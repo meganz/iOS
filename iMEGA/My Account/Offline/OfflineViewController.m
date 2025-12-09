@@ -901,6 +901,20 @@ static NSString *kisDirectory = @"kisDirectory";
     return emptyStateView;
 }
 
+#pragma mark - DZNEmptyDataSetDelegate
+
+- (void)emptyDataSetWillAppear:(UIScrollView *)scrollView {
+    if ([scrollView isEqual:self.offlineTableView.tableView]) {
+        [self.offlineTableView hideTableHeaderView];
+    }
+}
+
+- (void)emptyDataSetWillDisappear:(UIScrollView *)scrollView {
+    if ([scrollView isEqual:self.offlineTableView.tableView]) {
+        [self.offlineTableView showTableHeaderIfRequired];
+    }
+}
+
 #pragma mark - Empty State
 
 - (NSString *)titleForEmptyState {

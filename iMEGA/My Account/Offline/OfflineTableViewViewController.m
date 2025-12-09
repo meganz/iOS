@@ -26,10 +26,6 @@ static NSString *kPath = @"kPath";
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    if (self.offline.shouldShowHeaderView) {
-        self.tableView.tableHeaderView = [self.offline headerViewFor:self];
-    }
-
     self.tableView.tableFooterView = [self makeFooterView];
 }
 

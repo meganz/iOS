@@ -6,7 +6,16 @@ import MEGAL10n
 import MEGASwift
 
 extension OfflineTableViewViewController {
-    
+
+    @objc func showTableHeaderIfRequired() {
+        guard let offline, offline.shouldShowHeaderView else { return }
+        tableView?.tableHeaderView = offline.headerView(for: self)
+    }
+
+    @objc func hideTableHeaderView() {
+        tableView?.tableHeaderView = nil
+    }
+
     public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         updateAppearanceForTraitCollection()
