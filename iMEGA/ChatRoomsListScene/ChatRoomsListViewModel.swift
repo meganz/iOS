@@ -297,6 +297,11 @@ final class ChatRoomsListViewModel: ObservableObject {
         
         updateActiveCall(chatUseCase.activeCall())
         
+        let onlineStatus = chatPresenceUseCase.onlineStatus()
+        if onlineStatus != chatStatus {
+            chatStatus = onlineStatus
+        }
+        
         listenToChatListUpdate()
         monitorChatConnectionStatusUpdate()
         listenToChatStatusUpdate()
