@@ -1,3 +1,4 @@
+import MEGADesignToken
 import MEGADomain
 import Search
 import SwiftUI
@@ -24,6 +25,7 @@ extension SharedItemsViewController {
         headerView.wrap(hostingViewController.view)
         addChild(hostingViewController)
         self.headerContainerView = headerView
+        hostingViewController.view.backgroundColor = TokenColors.Background.page
         return headerView
     }
 

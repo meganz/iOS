@@ -1,4 +1,5 @@
 import MEGAAppPresentation
+import MEGADesignToken
 import MEGADomain
 import MEGAL10n
 import Search
@@ -68,7 +69,8 @@ extension OfflineViewController {
         headerView.wrap(hostingController.view)
         controller.addChild(hostingController)
         controller.headerContainerView = headerView
-        
+        hostingController.view.backgroundColor = TokenColors.Background.page
+
         return headerView
     }
 }

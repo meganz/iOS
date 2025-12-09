@@ -1,5 +1,6 @@
 import MEGAAppPresentation
 import MEGAAppSDKRepo
+import MEGADesignToken
 import MEGADomain
 import MEGAL10n
 import Search
@@ -63,6 +64,7 @@ extension FolderLinkViewController {
         headerView.wrap(hostingViewController.view)
         controller.addChild(hostingViewController)
         controller.headerContainerView = hostingViewController.view
+        hostingViewController.view.backgroundColor = TokenColors.Background.page
         return headerView
     }
 
