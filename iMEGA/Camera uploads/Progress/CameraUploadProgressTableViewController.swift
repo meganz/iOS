@@ -90,55 +90,45 @@ final class CameraUploadProgressTableViewController: UITableViewController {
     private func configureDataSource() {
         dataSource = CameraUploadProgressDiffableDatasource(
             tableView: tableView,
-            cellProvider: { (tableView: UITableView, indexPath: IndexPath, row: CameraUploadProgressSectionRow) -> UITableViewCell in
-                switch row {
+            cellProvider: { [weak self] (_, indexPath: IndexPath, row: CameraUploadProgressSectionRow) -> UITableViewCell in
+                guard let self else {
+                    return UITableViewCell()
+                }
+                return switch row {
                 case .loading:
-                    let cell = tableView.dequeueReusableCell(withIdentifier: ReuseIdentifiers.inProgressRow, for: indexPath)
-                    
-                    cell.contentConfiguration = UIHostingConfiguration {
-                        CameraUploadProgressSkeletonRowView()
-                    }
-                    .margins(.all, 0)
-                    
-                    return cell
-                case .inProgress(let cameraUploadInProgressRowViewModel):
-                    let cell = tableView.dequeueReusableCell(withIdentifier: ReuseIdentifiers.inProgressRow, for: indexPath)
-                    
-                    cell.contentConfiguration = UIHostingConfiguration {
-                        CameraUploadInProgressRowView(viewModel: cameraUploadInProgressRowViewModel)
-                    }
-                    .margins(.all, 0)
-                    
-                    return cell
-                case .inQueue(let cameraUploadInQueueRowViewModel):
-                    let cell = tableView.dequeueReusableCell(withIdentifier: ReuseIdentifiers.inQueueRow, for: indexPath)
-                    
-                    cell.contentConfiguration = UIHostingConfiguration {
-                        CameraUploadInQueueRowView(viewModel: cameraUploadInQueueRowViewModel)
-                    }
-                    .margins(.all, 0)
-                    
-                    return cell
+                    configureCell(
+                        withIdentifier: ReuseIdentifiers.skeletonRow,
+                        for: indexPath,
+                        content: CameraUploadProgressSkeletonRowView()
+                    )
+                case .inProgress(let viewModel):
+                    configureCell(
+                        withIdentifier: ReuseIdentifiers.inProgressRow,
+                        for: indexPath,
+                        content: CameraUploadInProgressRowView(viewModel: viewModel)
+                    )
+                case .inQueue(let viewModel):
+                    configureCell(
+                        withIdentifier: ReuseIdentifiers.inQueueRow,
+                        for: indexPath,
+                        content: CameraUploadInQueueRowView(viewModel: viewModel)
+                    )
                 case .emptyInProgress:
-                    let cell = tableView.dequeueReusableCell(withIdentifier: ReuseIdentifiers.emptyInProgressRow, for: indexPath)
-                    
-                    cell.contentConfiguration = UIHostingConfiguration {
-                        CameraUploadProgressEmptyRowView(
-                            title: Strings.Localizable.CameraUploads.Progress.Row.EmptyInProgress.title)
-                    }
-                    .margins(.all, 0)
-                    
-                    return cell
+                    configureCell(
+                        withIdentifier: ReuseIdentifiers.emptyInProgressRow,
+                        for: indexPath,
+                        content: CameraUploadProgressEmptyRowView(
+                            title: Strings.Localizable.CameraUploads.Progress.Row.EmptyInProgress.title
+                        )
+                    )
                 case .emptyInQueue:
-                    let cell = tableView.dequeueReusableCell(withIdentifier: ReuseIdentifiers.emptyInQueueRow, for: indexPath)
-                    
-                    cell.contentConfiguration = UIHostingConfiguration {
-                        CameraUploadProgressEmptyRowView(
-                            title: Strings.Localizable.CameraUploads.Progress.Row.EmptyInQueue.title)
-                    }
-                    .margins(.all, 0)
-                    
-                    return cell
+                    configureCell(
+                        withIdentifier: ReuseIdentifiers.emptyInQueueRow,
+                        for: indexPath,
+                        content: CameraUploadProgressEmptyRowView(
+                            title: Strings.Localizable.CameraUploads.Progress.Row.EmptyInQueue.title
+                        )
+                    )
                 }
             }
         )
@@ -164,6 +154,11 @@ final class CameraUploadProgressTableViewController: UITableViewController {
             }
         }
         .margins(.all, 0)
+        .background(.clear)
+        
+        var backgroundConfig = UIBackgroundConfiguration.clear()
+        backgroundConfig.backgroundColor = TokenColors.Background.page
+        headerView.backgroundConfiguration = backgroundConfig
         
         return headerView
     }
@@ -211,5 +206,17 @@ final class CameraUploadProgressTableViewController: UITableViewController {
                 isUserInitiated: isUserInitiated
             )
         }
+    }
+    
+    private func configureCell<Content: View>(
+        withIdentifier identifier: String,
+        for indexPath: IndexPath,
+        content: @autoclosure () -> Content
+    ) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath)
+        cell.contentConfiguration = UIHostingConfiguration { content() }
+            .margins(.all, 0)
+        cell.backgroundColor = TokenColors.Background.page
+        return cell
     }
 }
