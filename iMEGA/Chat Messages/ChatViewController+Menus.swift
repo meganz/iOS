@@ -92,6 +92,9 @@ extension ChatViewController {
     }
     
     func downloadMessage(_ messages: [ChatMessage]) {
+        guard MEGAReachabilityManager.isReachableHUDIfNot() else {
+            return
+        }
         var transfers = [CancellableTransfer]()
         for message in messages {
             guard let nodelist = message.message.nodeList else { return }
