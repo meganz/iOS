@@ -25,16 +25,23 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface SharedItemsViewController : UIViewController
 
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *saveToPhotosBarButtonItem;
-
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *selectAllBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *editBarButtonItem;
 
 @property (weak, nonatomic) IBOutlet MEGAVerticalButton *incomingButton;
 @property (weak, nonatomic) IBOutlet MEGAVerticalButton *outgoingButton;
 @property (weak, nonatomic) IBOutlet MEGAVerticalButton *linksButton;
+
+@property (strong, nonatomic) UIToolbar *toolbar;
+@property (strong, nonatomic) UIBarButtonItem *downloadBarButtonItem;
+@property (strong, nonatomic) UIBarButtonItem *carbonCopyBarButtonItem;
+@property (strong, nonatomic) UIBarButtonItem *leaveShareBarButtonItem;
+@property (strong, nonatomic) UIBarButtonItem *shareLinkBarButtonItem;
+@property (strong, nonatomic) UIBarButtonItem *removeLinkBarButtonItem;
+@property (strong, nonatomic) UIBarButtonItem *shareFolderBarButtonItem;
+@property (strong, nonatomic) UIBarButtonItem *removeShareBarButtonItem;
+@property (strong, nonatomic) UIBarButtonItem *saveToPhotosBarButtonItem;
 
 @property (nonatomic) MEGASortOrderType sortOrderType;
 
@@ -51,15 +58,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UIView *incomingLineView;
 @property (weak, nonatomic) IBOutlet UIView *outgoingLineView;
 @property (weak, nonatomic) IBOutlet UIView *linksLineView;
-
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *downloadBarButtonItem;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *carbonCopyBarButtonItem;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *leaveShareBarButtonItem;
-
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *shareLinkBarButtonItem;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *shareFolderBarButtonItem;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *removeShareBarButtonItem;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *removeLinkBarButtonItem;
 
 @property (nonatomic, strong, nullable) MEGAShareList *outgoingShareList;
 @property (nonatomic, strong, nullable) MEGAShareList *outgoingUnverifiedShareList;

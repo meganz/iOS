@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22155" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Nfe-XI-un1">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24412" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Nfe-XI-un1">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22131"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24405"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -16,7 +16,7 @@
                     <tabBarItem key="tabBarItem" tag="3" title="" image="sharedItemsIcon" id="oTr-yE-1nT"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="dof-ct-lhZ">
-                        <rect key="frame" x="0.0" y="48" width="414" height="44"/>
+                        <rect key="frame" x="0.0" y="96" width="414" height="54"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <textAttributes key="titleTextAttributes">
                             <fontDescription key="fontDescription" type="system" pointSize="0.0"/>
@@ -41,7 +41,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OQ5-04-k4z">
-                                <rect key="frame" x="0.0" y="92" width="414" height="57.5"/>
+                                <rect key="frame" x="0.0" y="150" width="414" height="57.5"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="aED-R9-RNX">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="57.5"/>
@@ -171,21 +171,21 @@
                                 </constraints>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="onDrag" dataMode="prototypes" style="plain" allowsSelectionDuringEditing="YES" allowsMultipleSelectionDuringEditing="YES" rowHeight="-1" estimatedRowHeight="60" sectionHeaderHeight="-1" sectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="bc0-wE-0j5">
-                                <rect key="frame" x="0.0" y="149.5" width="414" height="712.5"/>
+                                <rect key="frame" x="0.0" y="207.5" width="414" height="620.5"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" layoutMarginsFollowReadableWidth="YES" selectionStyle="default" indentationLevel="1" indentationWidth="60" shouldIndentWhileEditing="NO" reuseIdentifier="nodeCell" id="kaG-HS-c3J" customClass="NodeTableViewCell">
-                                        <rect key="frame" x="0.0" y="50" width="414" height="92"/>
+                                        <rect key="frame" x="0.0" y="50" width="414" height="92.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="kaG-HS-c3J" id="Rsx-Ay-bqc">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="92"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="92.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" translatesAutoresizingMaskIntoConstraints="NO" id="awD-CO-svf">
-                                                    <rect key="frame" x="0.0" y="0.0" width="414" height="92"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="414" height="92.5"/>
                                                     <subviews>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="K2b-Xc-xcs" userLabel="Info Button">
-                                                            <rect key="frame" x="362" y="24" width="46" height="44"/>
+                                                            <rect key="frame" x="362" y="24.5" width="46" height="44"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="44" id="H1E-rH-uAf"/>
                                                                 <constraint firstAttribute="width" constant="46" id="J6U-Al-2mi"/>
@@ -198,7 +198,7 @@
                                                             </connections>
                                                         </button>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DlJ-Wk-HPX">
-                                                            <rect key="frame" x="12" y="10" width="40" height="72.5"/>
+                                                            <rect key="frame" x="12" y="10" width="40" height="73"/>
                                                             <subviews>
                                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Ide-ok-nvu">
                                                                     <rect key="frame" x="0.0" y="16.5" width="40" height="40"/>
@@ -230,7 +230,7 @@
                                                             </constraints>
                                                         </view>
                                                         <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="center" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="qsb-DD-nDj">
-                                                            <rect key="frame" x="62" y="65.5" width="44" height="14.5"/>
+                                                            <rect key="frame" x="62" y="66" width="44" height="14.5"/>
                                                             <subviews>
                                                                 <imageView hidden="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="versioned" translatesAutoresizingMaskIntoConstraints="NO" id="bvN-FR-hh9">
                                                                     <rect key="frame" x="0.0" y="1.5" width="12" height="12"/>
@@ -359,25 +359,16 @@
                         <barButtonItem key="backBarButtonItem" title=" " id="0b1-fX-6Hc"/>
                     </navigationItem>
                     <connections>
-                        <outlet property="carbonCopyBarButtonItem" destination="CT0-ge-Xob" id="Coz-u9-sGC"/>
-                        <outlet property="downloadBarButtonItem" destination="eTZ-Oi-bPQ" id="7Px-DG-2eW"/>
                         <outlet property="editBarButtonItem" destination="5z2-p0-4RD" id="x3Z-W6-efG"/>
                         <outlet property="incomingButton" destination="B7H-d7-rZL" id="acn-aq-gyj"/>
                         <outlet property="incomingLineView" destination="sda-hY-kL3" id="uVc-SK-0Nn"/>
-                        <outlet property="leaveShareBarButtonItem" destination="F0i-bv-gDg" id="RUs-TL-o7P"/>
                         <outlet property="linksButton" destination="sHD-aL-jy5" id="ulf-O0-maV"/>
                         <outlet property="linksLineView" destination="9uF-Cm-O0m" id="3ax-Ua-oae"/>
                         <outlet property="outgoingButton" destination="IrF-Sh-NQN" id="Qal-Xy-3DS"/>
                         <outlet property="outgoingLineView" destination="7So-eg-Rwh" id="2Ga-2N-WZw"/>
-                        <outlet property="removeLinkBarButtonItem" destination="fvU-9F-w1i" id="dk7-4W-bpu"/>
-                        <outlet property="removeShareBarButtonItem" destination="YAg-iE-4eX" id="xCW-eS-M5D"/>
-                        <outlet property="saveToPhotosBarButtonItem" destination="9vG-4i-cKY" id="Eor-tF-hhd"/>
                         <outlet property="selectAllBarButtonItem" destination="CK5-xo-5rw" id="6hz-Sh-JEa"/>
                         <outlet property="selectorView" destination="OQ5-04-k4z" id="Usf-L2-7id"/>
-                        <outlet property="shareFolderBarButtonItem" destination="5Mi-qb-CMK" id="iRx-tQ-3A0"/>
-                        <outlet property="shareLinkBarButtonItem" destination="BO7-Au-PHR" id="Mk0-ZH-HQo"/>
                         <outlet property="tableView" destination="bc0-wE-0j5" id="hW1-dE-Ti0"/>
-                        <outlet property="toolbar" destination="D1l-ec-jJZ" id="fHc-Cf-lSi"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0c6-5i-11D" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -391,77 +382,17 @@
                         <action selector="editTapped:" destination="2AR-na-hSZ" id="un2-ST-0gb"/>
                     </connections>
                 </barButtonItem>
-                <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translucent="NO" id="D1l-ec-jJZ">
-                    <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <viewLayoutGuide key="safeArea" id="WiI-cT-f3O"/>
-                    <items/>
-                </toolbar>
-                <barButtonItem style="plain" systemItem="flexibleSpace" id="YkL-Id-Ryo"/>
-                <barButtonItem enabled="NO" image="offline" width="32" style="plain" id="eTZ-Oi-bPQ" userLabel="Download Bar Button Item">
-                    <connections>
-                        <action selector="downloadAction:" destination="2AR-na-hSZ" id="HhA-im-6OR"/>
-                    </connections>
-                </barButtonItem>
-                <barButtonItem enabled="NO" image="copy" width="32" style="plain" id="CT0-ge-Xob" userLabel="Copy Bar Button Item">
-                    <connections>
-                        <action selector="copyAction:" destination="2AR-na-hSZ" id="kF3-WT-xny"/>
-                    </connections>
-                </barButtonItem>
-                <barButtonItem enabled="NO" image="leaveShare" width="32" style="plain" id="F0i-bv-gDg" userLabel="Leave share Bar Button Item">
-                    <connections>
-                        <action selector="leaveShareAction:" destination="2AR-na-hSZ" id="ZTA-Cz-x2Y"/>
-                    </connections>
-                </barButtonItem>
-                <barButtonItem enabled="NO" image="link" width="32" style="plain" id="BO7-Au-PHR" userLabel="Share Link Bar Button Item">
-                    <connections>
-                        <action selector="shareLinkAction:" destination="2AR-na-hSZ" id="KXZ-td-sf7"/>
-                    </connections>
-                </barButtonItem>
-                <barButtonItem enabled="NO" image="removeLink" width="32" style="plain" id="fvU-9F-w1i" userLabel="Remove link Bar Button Item">
-                    <connections>
-                        <action selector="removeLinkAction:" destination="2AR-na-hSZ" id="vfH-WA-BaV"/>
-                    </connections>
-                </barButtonItem>
-                <barButtonItem enabled="NO" image="shareFolder" width="32" style="plain" id="5Mi-qb-CMK" userLabel="Share Folder Bar Button Item">
-                    <connections>
-                        <action selector="shareFolderAction:" destination="2AR-na-hSZ" id="hfi-Fw-SBE"/>
-                    </connections>
-                </barButtonItem>
-                <barButtonItem enabled="NO" image="removeShare" width="32" style="plain" id="YAg-iE-4eX" userLabel="Remove share Bar Button Item">
-                    <connections>
-                        <action selector="removeShareAction:" destination="2AR-na-hSZ" id="WTp-Az-PUR"/>
-                    </connections>
-                </barButtonItem>
-                <barButtonItem image="saveToPhotos" id="9vG-4i-cKY" userLabel="Save to Photos Bar Button Item">
-                    <connections>
-                        <action selector="saveToPhotosAction:" destination="2AR-na-hSZ" id="aIO-05-Fpg"/>
-                    </connections>
-                </barButtonItem>
             </objects>
             <point key="canvasLocation" x="981.15942028985512" y="-3932.8125"/>
         </scene>
     </scenes>
-    <designables>
-        <designable name="ggt-c4-txk">
-            <size key="intrinsicContentSize" width="31" height="18"/>
-        </designable>
-    </designables>
     <resources>
-        <image name="copy" width="28" height="28"/>
         <image name="favouriteSmall" width="12.5" height="12"/>
         <image name="incomingSegmentControler" width="24" height="24"/>
-        <image name="leaveShare" width="28" height="28"/>
-        <image name="link" width="28" height="28"/>
         <image name="linksSegmentControler" width="24" height="24"/>
         <image name="moreList" width="28" height="28"/>
-        <image name="offline" width="28" height="28"/>
         <image name="outgoingSegmentControler" width="24" height="24"/>
-        <image name="removeLink" width="28" height="28"/>
-        <image name="removeShare" width="28" height="28"/>
-        <image name="saveToPhotos" width="28" height="28"/>
         <image name="selectAllItems" width="28" height="28"/>
-        <image name="shareFolder" width="28" height="28"/>
         <image name="sharedItemsIcon" width="31" height="28"/>
         <image name="versioned" width="12" height="12"/>
         <image name="video_list" width="22" height="22"/>

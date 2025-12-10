@@ -53,6 +53,8 @@
     
     [self updateAppearance];
     
+    [self setupToolbar];
+    
     //White background for the view behind the table view
     self.tableView.backgroundView = UIView.alloc.init;
     
@@ -632,59 +634,33 @@
     [super setEditing:editing animated:animated];
     
     [self.tableView setEditing:editing animated:animated];
-    
     [self updateNavigationBarTitle];
-    
     [self setNavigationBarButtons];
     
+    [self setToolbarVisible:editing animated:animated];
+    
     if (editing) {
-        if (![self.tabBarController.view.subviews containsObject:self.toolbar]) {
-            [self.toolbar setAlpha:0.0];
-            [self.tabBarController.view addSubview:self.toolbar];
-            self.toolbar.translatesAutoresizingMaskIntoConstraints = NO;
-            [self.toolbar setBackgroundColor:[UIColor surface1Background]];
-            
-            NSLayoutAnchor *bottomAnchor  = self.tabBarController.tabBar.safeAreaLayoutGuide.bottomAnchor;
-            
-            [NSLayoutConstraint activateConstraints:@[[self.toolbar.topAnchor constraintEqualToAnchor:self.tabBarController.tabBar.topAnchor constant:0],
-                                                      [self.toolbar.leadingAnchor constraintEqualToAnchor:self.tabBarController.tabBar.leadingAnchor constant:0],
-                                                      [self.toolbar.trailingAnchor constraintEqualToAnchor:self.tabBarController.tabBar.trailingAnchor constant:0],
-                                                      [self.toolbar.bottomAnchor constraintEqualToAnchor:bottomAnchor constant:0]]];
-
-            [UIView animateWithDuration:0.33f animations:^ {
-                [self.toolbar setAlpha:1.0];
-            }];
-        }
-        
         for (SharedItemsTableViewCell *cell in self.tableView.visibleCells) {
             UIView *view = UIView.alloc.init;
             view.backgroundColor = UIColor.clearColor;
             cell.selectedBackgroundView = view;
+        }
+        
+        if (!self.selectedNodesMutableArray) {
+            self.selectedNodesMutableArray = [[NSMutableArray alloc] init];
+            self.selectedSharesMutableArray = [[NSMutableArray alloc] init];
+            
+            [self toolbarItemsSetEnabled:NO];
         }
     } else {
         allNodesSelected = NO;
         [_selectedNodesMutableArray removeAllObjects];
         [_selectedSharesMutableArray removeAllObjects];
         self.navigationItem.leftBarButtonItem = nil;
-
-        [UIView animateWithDuration:0.33f animations:^ {
-            [self.toolbar setAlpha:0.0];
-        } completion:^(BOOL finished) {
-            if (finished) {
-                [self.toolbar removeFromSuperview];
-            }
-        }];
         
         for (SharedItemsTableViewCell *cell in self.tableView.visibleCells) {
             cell.selectedBackgroundView = nil;
         }
-    }
-    
-    if (!self.selectedNodesMutableArray) {
-        self.selectedNodesMutableArray = NSMutableArray.alloc.init;
-        self.selectedSharesMutableArray = NSMutableArray.alloc.init;
-        
-        [self toolbarItemsSetEnabled:NO];
     }
 }
 

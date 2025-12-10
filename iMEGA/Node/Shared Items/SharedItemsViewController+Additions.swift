@@ -389,7 +389,7 @@ extension SharedItemsViewController {
     }
     
     @objc func updateToolbarItemsIfNeeded() {
-        guard let toolbarItems = toolbar?.items, let saveToPhotosBarButtonItem, let nodes = selectedNodesMutableArray as? [MEGANode], nodes.isNotEmpty else { return }
+        guard let toolbarItems = toolbar.items, let nodes = selectedNodesMutableArray as? [MEGANode], nodes.isNotEmpty else { return }
         let areSelectedNodesMediaNodes = viewModel.areMediaNodes(nodes)
         let shouldUpdateToolbarItems = !areSelectedNodesMediaNodes && toolbarItems.contains(saveToPhotosBarButtonItem) ||
         areSelectedNodesMediaNodes && !toolbarItems.contains(saveToPhotosBarButtonItem)
