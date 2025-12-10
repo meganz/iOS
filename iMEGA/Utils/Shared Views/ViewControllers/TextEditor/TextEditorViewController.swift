@@ -67,6 +67,14 @@ final class TextEditorViewController: UIViewController {
         if traitCollection.preferredContentSizeCategory != previousTraitCollection?.preferredContentSizeCategory {
             viewModel.dispatch(.setUpView)
         }
+
+        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+            if #available(iOS 26.0, *),
+               DIContainer.featureFlagProvider.isLiquidGlassEnabled(),
+               let navigationBar = navigationController?.navigationBar {
+                AppearanceManager.setupLiquidGlassNavigationBar(navigationBar)
+            }
+        }
     }
 }
 
@@ -104,8 +112,19 @@ extension TextEditorViewController: ViewType {
     }
     
     private func configView(_ textEditorModel: TextEditorModel, shallUpdateContent: Bool, isInRubbishBin: Bool, isBackupNode: Bool) {
-        navigationItem.title = textEditorModel.textFile.fileName
-        
+        if #available(iOS 26.0, *),
+           DIContainer.featureFlagProvider.isLiquidGlassEnabled() {
+            navigationItem.titleView = NavigationTitleView(
+                title: textEditorModel.textFile.fileName
+            )
+            .toWrappedUIView(
+                shouldEnableGlassEffect: true,
+                padding: .init(top: TokenSpacing._3, leading: TokenSpacing._3, bottom: TokenSpacing._3, trailing: TokenSpacing._3)
+            )
+        } else {
+            navigationItem.title = textEditorModel.textFile.fileName
+        }
+
         let contentOffset = textView.contentOffset
         if shallUpdateContent {
             textView.text = textEditorModel.textFile.content
@@ -138,6 +157,12 @@ extension TextEditorViewController: ViewType {
         }
         
         configureMarkdownSupportText(textEditorModel)
+
+        if #available(iOS 26.0, *),
+           DIContainer.featureFlagProvider.isLiquidGlassEnabled(),
+           let navigationBar = navigationController?.navigationBar {
+            AppearanceManager.setupLiquidGlassNavigationBar(navigationBar)
+        }
     }
     
     private func setupNavbarItems(_ navbarItemsModel: TextEditorNavbarItemsModel) {
@@ -288,7 +313,18 @@ extension TextEditorViewController: ViewType {
                 guard let newInputName = renameAC.textFields?.first?.text else { return }
                 if MEGAReachabilityManager.isReachableHUDIfNot() {
                     self.viewModel.dispatch(.renameFileTo(newInputName: newInputName))
-                    self.navigationItem.title = newInputName
+                    if #available(iOS 26.0, *),
+                       DIContainer.featureFlagProvider.isLiquidGlassEnabled() {
+                        self.navigationItem.titleView = NavigationTitleView(
+                            title: newInputName
+                        )
+                        .toWrappedUIView(
+                            shouldEnableGlassEffect: true,
+                            padding: .init(top: TokenSpacing._3, leading: TokenSpacing._3, bottom: TokenSpacing._3, trailing: TokenSpacing._3)
+                        )
+                    } else {
+                        self.navigationItem.title = newInputName
+                    }
                 }
             })
         renameAction.isEnabled = false
