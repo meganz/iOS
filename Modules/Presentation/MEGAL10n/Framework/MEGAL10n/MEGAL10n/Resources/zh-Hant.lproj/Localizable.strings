@@ -4820,3 +4820,11 @@
 "cameraUploads.upToDate"="相機上傳已更新";
 /* Hidden files and folders onboarding content control visibility message */
 "onboarding.hiddenFilesAndFolders.content.item.controlVisibility.message"="只有您可以顯示隱藏的檔案，既可以個別顯示，也可以透過[A]設定[/A]暫時顯示隱藏的項目";
+/* The title displayed in the empty view when Cloud Drive root is empty */
+"cloudDrive.emptyStateTitle.root"="您的私人保管庫尚無任何內容";
+/* The title displayed in the empty view when Cloud Drive non-root folder is empty */
+"cloudDrive.emptyStateTitle.nonRoot"="此資料夾是空的";
+/* The subtitle title displayed in the empty view in Cloud Drive */
+"cloudDrive.emptyStateSubtitle"="使用零知識加密技術保護資料安全";
+/* Undecrypted file open error snackBar message */
+"cloudDrive.folderLink.snackBar.undecryptedFileOpenError"="無法預覽未解密的檔案";

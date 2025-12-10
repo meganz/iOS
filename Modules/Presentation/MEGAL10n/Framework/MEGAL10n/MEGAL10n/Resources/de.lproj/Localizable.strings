@@ -4820,3 +4820,11 @@
 "cameraUploads.upToDate"="Kamera-Uploads auf dem neuesten Stand";
 /* Hidden files and folders onboarding content control visibility message */
 "onboarding.hiddenFilesAndFolders.content.item.controlVisibility.message"="Nur Sie haben die Möglichkeit, verborgene Dateien sichtbar zu machen, entweder einzeln oder indem Sie über die [A]Einstellungen[/A] verborgene Elemente vorübergehend einblenden.";
+/* The title displayed in the empty view when Cloud Drive root is empty */
+"cloudDrive.emptyStateTitle.root"="Noch keine Inhalte in Ihrem privaten Datentresor";
+/* The title displayed in the empty view when Cloud Drive non-root folder is empty */
+"cloudDrive.emptyStateTitle.nonRoot"="This folder is empty";
+/* The subtitle title displayed in the empty view in Cloud Drive */
+"cloudDrive.emptyStateSubtitle"="Keep something safe with zero-knowledge encryption";
+/* Undecrypted file open error snackBar message */
+"cloudDrive.folderLink.snackBar.undecryptedFileOpenError"="Previews not available for undecrypted files";

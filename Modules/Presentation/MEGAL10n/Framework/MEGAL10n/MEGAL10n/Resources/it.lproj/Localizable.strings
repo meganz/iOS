@@ -59,7 +59,7 @@
 /* This dialog message is used on the Password Decrypt dialog as an instruction for the user. */
 "If you do not have the password, contact the creator of the link."="Se non hai la password, contatta il creatore del link.";
 /* This placeholder text is used on the Password Decrypt dialog as an instruction for the user. */
-"Enter the password"="Enter the link password";
+"Enter the password"="Inserisci la password del link";
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOut_alertTitle"="Disconnesso";
 /* Alert message shown when your account has been closed through another client or the web by killing all your sessions */
@@ -4575,7 +4575,7 @@
 /* Hidden files and folders onboarding content item one title */
 "onboarding.hiddenFilesAndFolders.content.item.one.title"="Nascondi file e cartelle importanti";
 /* Hidden files and folders onboarding content item one message */
-"onboarding.hiddenFilesAndFolders.content.item.one.message"="You can conceal sensitive files and folders for privacy in one easy step";
+"onboarding.hiddenFilesAndFolders.content.item.one.message"="Puoi nascondere file e cartelle sensibili per la privacy in un semplice passaggio";
 /* Hidden files and folders onboarding content item two title */
 "onboarding.hiddenFilesAndFolders.content.item.two.title"="Fuori dalla vista";
 /* Hidden files and folders onboarding content item two message */
@@ -4583,7 +4583,7 @@
 /* Hidden files and folders onboarding content item three title */
 "onboarding.hiddenFilesAndFolders.content.item.three.title"="Sfoca per la privacy";
 /* Hidden files and folders onboarding content item three message */
-"onboarding.hiddenFilesAndFolders.content.item.three.message"="Show hidden items with their thumbnails blurred, so you can identify them without exposing their contents";
+"onboarding.hiddenFilesAndFolders.content.item.three.message"="Mostra gli oggetti nascosti con le miniature sfocate, in modo da poterli identificare senza esporne il contenuto";
 /* Title for note to self chat, used in the messages view but also in lists where note to self is diplayed */
 "chat.messages.noteToSelf.title"="Nota per me";
 /* Title for note to self chat messages view header, at the top the chat room */
@@ -4701,17 +4701,17 @@
 /* subscription purchase description for the storage capacity */
 "subscriptionPurchase.feature.storage.description"="Archivia fino a %@ di dati";
 /* Camera uploads status banner title paused due to network connection */
-"cameraUploads.banner.status.paused.noNetworkConnection.title"="I caricamenti da fotocamera sono stati sospesi";
+"cameraUploads.banner.status.paused.noNetworkConnection.title"="I Caricamenti da fotocamera sono stati sospesi";
 /* Camera uploads status banner sub title paused due to no network connection */
 "cameraUploads.banner.status.paused.noNetworkConnection.subheading"="Connettiti al WiFi o usa la connessione dati";
 /* Camera uploads status banner sub title paused due to no Wi-Fi connection. Please leave [S], [/S] as it is which is used to bolden the text. */
 "cameraUploads.banner.status.paused.noWiFiConnection.subheading"="Connettiti al WiFi o usa la connessione dati [S]Tocca per consentire la connessione dati[/S]";
 /* Camera uploads status banner title paused due to low battery */
-"cameraUploads.banner.status.paused.lowBattery.title"="I caricamenti della fotocamera sono stati sospesi a causa della batteria scarica";
+"cameraUploads.banner.status.paused.lowBattery.title"="I Caricamenti della fotocamera sono stati sospesi a causa della batteria scarica";
 /* Camera uploads status banner sub title paused due to low battery */
 "cameraUploads.banner.status.paused.lowBattery.subheading"="Ricarica il dispositivo per avviare il caricamento della fotocamera";
 /* Camera uploads status banner title paused due to device heat */
-"cameraUploads.banner.status.paused.highThermalState.title"="I caricamenti da fotocamera sono stati sospesi a causa dell'elevata temperatura del dispositivo";
+"cameraUploads.banner.status.paused.highThermalState.title"="I Caricamenti da fotocamera sono stati sospesi a causa dell'elevata temperatura del dispositivo";
 /* Camera uploads status banner sub title paused due to device heat */
 "cameraUploads.banner.status.paused.highThermalState.subheading"="I caricamenti riprenderanno automaticamente quando il dispositivo si raffredda";
 /* Local Notification Title for Camera uploads backup reminder */
@@ -4781,33 +4781,33 @@
 /* Footer for the yearly billing option in the upgrade account plan screen */
 "upgradeAccountPlan.plan.yearly.footer"="Fatturato annualmente";
 /* Price per month display for yearly billing option in the upgrade account plan screen */
-"upgradeAccountPlan.plan.yearly.pricePerMonth"="Only %@/month";
+"upgradeAccountPlan.plan.yearly.pricePerMonth"="A soli %@/mese";
 /* Camera Uploads Banner Paused Low Battery Subtitle */
-"cameraUploads.progress.banner.paused.lowBattery.subtitle"="Camera uploads paused, battery level too low. Charge battery to resume camera uploads.";
+"cameraUploads.progress.banner.paused.lowBattery.subtitle"="I Caricamenti da fotocamera sono in pausa, il livello della batteria è troppo basso. Carica la batteria per riprendere i Caricamenti da fotocamera.";
 /* Camera Uploads Banner Paused High Thermal State Subtitle */
-"cameraUploads.progress.banner.paused.highThermalState.subtitle"="Camera uploads paused, device temperature too high. Uploads will resume once your device cools down.";
+"cameraUploads.progress.banner.paused.highThermalState.subtitle"="I Caricamenti da fotocamera sono in pausa, la temperatura del dispositivo è troppo alta. I caricamenti riprenderanno una volta che il dispositivo si sarà raffreddato.";
 /* Camera Uploads Banner Paused Network Issue Subtitle */
-"cameraUploads.progress.banner.paused.networkIssue.subtitle"="Camera uploads paused, no internet connection";
+"cameraUploads.progress.banner.paused.networkIssue.subtitle"="Caricamenti da fotocamera sospesi, nessuna connessione a Internet";
 /* Camera Uploads Banner Paused network no wifi cellular upload not allowed allow mobile data */
 "cameraUploads.progress.banner.paused.allowMobileData.button.title"="Attiva connessione dati";
 /* Camera Uploads Banner Storage Full Title */
 "cameraUploads.progress.banner.storageFull.title"="Il tuo spazio di archiviazione è pieno";
 /* Camera Uploads Banner Storage Full Subtitle */
-"cameraUploads.progress.banner.storageFull.subtitle"="To keep uploading, upgrade now to get more storage";
+"cameraUploads.progress.banner.storageFull.subtitle"="Per continuare a caricare, effettua l'upgrade ora per ottenere più spazio di archiviazione";
 /* Camera Uploads Banner Storage Full Button Title */
 "cameraUploads.progress.banner.storageFull.button.title"="Effettua l'upgrade ora";
 /* Camera Uploads Banner Limited Access Subtitle */
-"cameraUploads.progress.banner.limitedAccess.subtitle"="To ensure we don’t miss all your memories, MEGA needs full access to your photo library";
+"cameraUploads.progress.banner.limitedAccess.subtitle"="Per non perdere tutti i tuoi ricordi, MEGA ha bisogno dell'accesso completo alla tua galleria";
 /* Camera Uploads Banner Limited Access Button Title */
-"cameraUploads.progress.banner.limitedAccess.button.title"="Update permissions";
+"cameraUploads.progress.banner.limitedAccess.button.title"="Aggiorna le autorizzazioni";
 /* Camera Uploads Progress Uploads Complete Title */
 "cameraUploads.progress.uploadsComplete.title"="Tutto aggiornato";
 /* Camera Uploads Progress Uploads Complete Subtitle */
-"cameraUploads.progress.uploadsComplete.subtitle"="New photos and videos will show here after you take them";
+"cameraUploads.progress.uploadsComplete.subtitle"="Le nuove foto e i nuovi video saranno mostrati qui dopo averli scattati";
 /* Camera Uploads Empty In Progress Row title */
-"cameraUploads.progress.row.emptyInProgress.title"="Transfers in progress will appear here";
+"cameraUploads.progress.row.emptyInProgress.title"="I trasferimenti in corso verranno visualizzati qui";
 /* Camera Uploads Empty In Queue Row title */
-"cameraUploads.progress.row.emptyInQueue.title"="Transfers in the queue will appear here";
+"cameraUploads.progress.row.emptyInQueue.title"="I trasferimenti in coda verranno visualizzati qui";
 /* Sorting option label for sorting items based on the share creation date (can be applied in ascending or descending order) */
 "sorting.shareCreated.title"="Condivisione creata il";
 /* Sorting option label for sorting items based on the link creation date (can be applied in ascending or descending order) */
@@ -4817,6 +4817,14 @@
 /* Camera Uploads Complete */
 "cameraUploads.complete"="Caricamenti da fotocamera completi";
 /* Camera Uploads Up To Date */
-"cameraUploads.upToDate"="Camera uploads up to date";
+"cameraUploads.upToDate"="Caricamenti da fotocamera aggiornati";
 /* Hidden files and folders onboarding content control visibility message */
-"onboarding.hiddenFilesAndFolders.content.item.controlVisibility.message"="Only you can reveal hidden files, either individually or by temporarily displaying hidden items from [A]Settings[/A].";
+"onboarding.hiddenFilesAndFolders.content.item.controlVisibility.message"="Solo tu puoi rivelare i file nascosti, singolarmente o visualizzando temporaneamente gli oggetti nascosti dalle [A]Impostazioni[/A].";
+/* The title displayed in the empty view when Cloud Drive root is empty */
+"cloudDrive.emptyStateTitle.root"="Non c'è ancora niente nel tuo archivio privato";
+/* The title displayed in the empty view when Cloud Drive non-root folder is empty */
+"cloudDrive.emptyStateTitle.nonRoot"="Questa cartella è vuota";
+/* The subtitle title displayed in the empty view in Cloud Drive */
+"cloudDrive.emptyStateSubtitle"="Mantieni quello che vuoi al sicuro con la criptazione a conoscenza zero";
+/* Undecrypted file open error snackBar message */
+"cloudDrive.folderLink.snackBar.undecryptedFileOpenError"="Previews not available for undecrypted files";

@@ -59,7 +59,7 @@
 /* This dialog message is used on the Password Decrypt dialog as an instruction for the user. */
 "If you do not have the password, contact the creator of the link."="หากคุณไม่มีรหัสผ่าน กรุณาติดต่อผู้สร้างลิงก์";
 /* This placeholder text is used on the Password Decrypt dialog as an instruction for the user. */
-"Enter the password"="Enter the link password";
+"Enter the password"="กรุณากรอกรหัสผ่านของลิงก์";
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOut_alertTitle"="ออกจากระบบ";
 /* Alert message shown when your account has been closed through another client or the web by killing all your sessions */
@@ -4145,15 +4145,15 @@
 /* Hidden files and folders onboarding content hide important title */
 "onboarding.hiddenFilesAndFolders.hideImportant.content.title"="ซ่อนไฟล์และโฟลเดอร์สำคัญ";
 /* Hidden files and folders onboarding content hide important message */
-"onboarding.hiddenFilesAndFolders.hideImportant.content.message"="You can conceal sensitive files and folders for privacy in one easy step.";
+"onboarding.hiddenFilesAndFolders.hideImportant.content.message"="คุณสามารถซ่อนไฟล์และโฟลเดอร์ส่วนตัวเพื่อความเป็นส่วนตัวได้ง่าย ๆ ในขั้นตอนเดียว";
 /* Hidden files and folders onboarding content exclude from timeline title */
 "onboarding.hiddenFilesAndFolders.excludeTimeline.content.title"="แสดงไฟล์ที่ซ่อนอยู่";
 /* Hidden files and folders onboarding content exclude from timeline section message */
-"onboarding.hiddenFilesAndFolders.excludeTimeline.content.message"="Only you can reveal hidden files, either individually or by temporarily displaying hidden items from the settings.";
+"onboarding.hiddenFilesAndFolders.excludeTimeline.content.message"="มีเพียงคุณเท่านั้นที่เปิดดูไฟล์ที่ซ่อนไว้ได้ โดยเลือกเปิดทีละไฟล์หรือแสดงรายการที่ซ่อนไว้ชั่วคราวผ่านการตั้งค่า";
 /* Hidden files and folders onboarding content out of sight title */
 "onboarding.hiddenFilesAndFolders.outOfSight.content.title"="เบลอเพื่อความเป็นส่วนตัว";
 /* Hidden files and folders onboarding content out of sight message */
-"onboarding.hiddenFilesAndFolders.outOfSight.content.message"="Show hidden items with their thumbnails blurred, so you can identify them without exposing their contents.";
+"onboarding.hiddenFilesAndFolders.outOfSight.content.message"="แสดงรายการที่ซ่อนอยู่โดยเบลอรูปขนาดย่อเพื่อให้คุณระบุไฟล์ได้โดยไม่ต้องเปิดเผยเนื้อหาภายใน";
 /* My Account page: Menu Title of user account page */
 "account.myAccount.title"="บัญชีของฉัน";
 /* Storage limit capacity, where %d is the number of gigabytes that marks the storage limit */
@@ -4639,7 +4639,7 @@
 /* Displays the amount of data transfer included in the subscription plan */
 "subscriptionPurchase.plan.transfer"="ถ่ายโอนข้อมูล %@";
 /* Displays the total amount when billed yearly */
-"subscriptionPurchase.plan.billedYearly"="%@ charged yearly";
+"subscriptionPurchase.plan.billedYearly"="%@ (ชำระเป็นรายปี)";
 /* Button title to cancel the subscription purchase. */
 "subscriptionPurchase.maybeLater"="ไว้ทีหลัง";
 /* Title for the features of pro plan in the subscription purchase screen. */
@@ -4757,7 +4757,7 @@
 /* General deal plan badge text shown in Upgrade plan screen */
 "upgradeAccountPlan.plan.tag.introOffer.generalDeal"="ลด %@";
 /* Subscription plan first year offer text shown in Upgrade plan screen */
-"subscriptionPurchase.plan.firstYearOffer"="%@ for the first year";
+"subscriptionPurchase.plan.firstYearOffer"="%@ ในปีแรก";
 /* Header text in Upgrade plan screen to highlight yearly billing savings with intro offer */
 "upgradeAccountPlan.header.title.saveYearlyBillingWithIntoOffer"="ประหยัดขั้นต่ำ %@ เมื่อสมัครแผนรายปี";
 /* Camera Uploads Progress navigation title */
@@ -4767,9 +4767,9 @@
 /* Camera Uploads row progress format */
 "cameraUploads.progress.row.uploadProgressFormat"="%@ of %@ %@/s";
 /* Cyber Monday deal plan badge text shown in Upgrade plan screen */
-"upgradeAccountPlan.plan.tag.introOffer.cyberMondayDeal"="Cyber Monday deal: %@ off";
+"upgradeAccountPlan.plan.tag.introOffer.cyberMondayDeal"="ดีล Cyber Monday ลด %@";
 /* Special Offer plan badge text shown in Upgrade plan screen */
-"upgradeAccountPlan.plan.tag.introOffer.specialOffer"="Special offer: %@ off";
+"upgradeAccountPlan.plan.tag.introOffer.specialOffer"="ข้อเสนอพิเศษ ลด %@";
 /* View mode title for grid view in the cloud drive. */
 "cloudDrive.viewMode.grid.title"="มุมมองตาราง";
 /* Camera Uploads Progress In Queue section title */
@@ -4777,37 +4777,37 @@
 /* Camera Uploads row file progress */
 "cameraUploads.progress.row.fileProgress"="%1$@ จาก %2$@";
 /* Camera Uploads row file upload speed */
-"cameraUploads.progress.row.uploadSpeed"="%@/s";
+"cameraUploads.progress.row.uploadSpeed"="%@/วินาที";
 /* Footer for the yearly billing option in the upgrade account plan screen */
 "upgradeAccountPlan.plan.yearly.footer"="ชำระรายปี";
 /* Price per month display for yearly billing option in the upgrade account plan screen */
-"upgradeAccountPlan.plan.yearly.pricePerMonth"="Only %@/month";
+"upgradeAccountPlan.plan.yearly.pricePerMonth"="เพียง %@ ต่อเดือน";
 /* Camera Uploads Banner Paused Low Battery Subtitle */
-"cameraUploads.progress.banner.paused.lowBattery.subtitle"="Camera uploads paused, battery level too low. Charge battery to resume camera uploads.";
+"cameraUploads.progress.banner.paused.lowBattery.subtitle"="การอัปโหลดจากกล้องหยุดชั่วคราวเนื่องจากแบตเตอรี่ต่ำ กรุณาชาร์จแบตเตอรี่เพื่อดำเนินการต่อ";
 /* Camera Uploads Banner Paused High Thermal State Subtitle */
-"cameraUploads.progress.banner.paused.highThermalState.subtitle"="Camera uploads paused, device temperature too high. Uploads will resume once your device cools down.";
+"cameraUploads.progress.banner.paused.highThermalState.subtitle"="การอัปโหลดจากกล้องหยุดชั่วคราวเนื่องจากอุณหภูมิเครื่องสูงเกินไป ระบบจะดำเนินการต่อเมื่อเครื่องเย็นลง";
 /* Camera Uploads Banner Paused Network Issue Subtitle */
-"cameraUploads.progress.banner.paused.networkIssue.subtitle"="Camera uploads paused, no internet connection";
+"cameraUploads.progress.banner.paused.networkIssue.subtitle"="การอัปโหลดจากกล้องหยุดชั่วคราวเนื่องจากไม่มีการเชื่อมต่ออินเทอร์เน็ต";
 /* Camera Uploads Banner Paused network no wifi cellular upload not allowed allow mobile data */
 "cameraUploads.progress.banner.paused.allowMobileData.button.title"="อนุญาตให้ใช้ข้อมูลมือถือ";
 /* Camera Uploads Banner Storage Full Title */
 "cameraUploads.progress.banner.storageFull.title"="พื้นที่เก็บข้อมูลของคุณเต็มแล้ว";
 /* Camera Uploads Banner Storage Full Subtitle */
-"cameraUploads.progress.banner.storageFull.subtitle"="To keep uploading, upgrade now to get more storage";
+"cameraUploads.progress.banner.storageFull.subtitle"="หากต้องการอัปโหลดต่อ กรุณาอัปเกรดแผนเพื่อเพิ่มพื้นที่จัดเก็บข้อมูล";
 /* Camera Uploads Banner Storage Full Button Title */
 "cameraUploads.progress.banner.storageFull.button.title"="อัปเกรดตอนนี้";
 /* Camera Uploads Banner Limited Access Subtitle */
-"cameraUploads.progress.banner.limitedAccess.subtitle"="To ensure we don’t miss all your memories, MEGA needs full access to your photo library";
+"cameraUploads.progress.banner.limitedAccess.subtitle"="เพื่อให้แน่ใจว่าเราจะเก็บทุกความทรงจำของคุณไว้ครบถ้วน MEGA จำเป็นต้องใช้สิทธิ์เข้าถึงคลังรูปภาพของคุณแบบเต็มที่";
 /* Camera Uploads Banner Limited Access Button Title */
-"cameraUploads.progress.banner.limitedAccess.button.title"="Update permissions";
+"cameraUploads.progress.banner.limitedAccess.button.title"="อัปเดตสิทธิ์การอนุญาต";
 /* Camera Uploads Progress Uploads Complete Title */
 "cameraUploads.progress.uploadsComplete.title"="ทุกอย่างเป็นปัจจุบันแล้ว";
 /* Camera Uploads Progress Uploads Complete Subtitle */
-"cameraUploads.progress.uploadsComplete.subtitle"="New photos and videos will show here after you take them";
+"cameraUploads.progress.uploadsComplete.subtitle"="รูปถ่ายและวิดีโอใหม่จะปรากฏที่นี่หลังจากที่คุณถ่ายเสร็จ";
 /* Camera Uploads Empty In Progress Row title */
-"cameraUploads.progress.row.emptyInProgress.title"="Transfers in progress will appear here";
+"cameraUploads.progress.row.emptyInProgress.title"="รายการที่กำลังถ่ายโอนจะแสดงที่นี่";
 /* Camera Uploads Empty In Queue Row title */
-"cameraUploads.progress.row.emptyInQueue.title"="Transfers in the queue will appear here";
+"cameraUploads.progress.row.emptyInQueue.title"="รายการถ่ายโอนที่อยู่ในคิวจะแสดงที่นี่";
 /* Sorting option label for sorting items based on the share creation date (can be applied in ascending or descending order) */
 "sorting.shareCreated.title"="วันที่สร้างแชร์";
 /* Sorting option label for sorting items based on the link creation date (can be applied in ascending or descending order) */
@@ -4817,6 +4817,14 @@
 /* Camera Uploads Complete */
 "cameraUploads.complete"="การอัปโหลดกล้องเสร็จสมบูรณ์";
 /* Camera Uploads Up To Date */
-"cameraUploads.upToDate"="Camera uploads up to date";
+"cameraUploads.upToDate"="การอัปโหลดจากกล้องเป็นปัจจุบันแล้ว";
 /* Hidden files and folders onboarding content control visibility message */
 "onboarding.hiddenFilesAndFolders.content.item.controlVisibility.message"="มีเพียงคุณเท่านั้นที่สามารถเปิดเผยไฟล์ที่ซ่อนอยู่ไม่ว่าจะเป็นรายบุคคลหรือโดยการแสดงรายการที่ซ่อนอยู่ชั่วคราวจาก [A]การตั้งค่า[/A].";
+/* The title displayed in the empty view when Cloud Drive root is empty */
+"cloudDrive.emptyStateTitle.root"="ห้องนิรภัยส่วนตัวของคุณยังว่างอยู่";
+/* The title displayed in the empty view when Cloud Drive non-root folder is empty */
+"cloudDrive.emptyStateTitle.nonRoot"="โฟลเดอร์นี้ว่างเปล่า";
+/* The subtitle title displayed in the empty view in Cloud Drive */
+"cloudDrive.emptyStateSubtitle"="เก็บรักษาข้อมูลให้ปลอดภัยด้วยการเข้ารหัสวิธีซีโร่-นอว์เลจ";
+/* Undecrypted file open error snackBar message */
+"cloudDrive.folderLink.snackBar.undecryptedFileOpenError"="Previews not available for undecrypted files";

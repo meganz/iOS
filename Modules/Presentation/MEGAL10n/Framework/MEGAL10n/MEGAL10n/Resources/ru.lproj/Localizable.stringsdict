@@ -4073,9 +4073,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>u</string>
         <key>one</key>
-        <string>Uploading: %u item left</string>
+        <string>Загрузка: остался %u элемент</string>
+        <key>few</key>
+        <string>Загрузка: осталось %u элемента</string>
+        <key>many</key>
+        <string>Загрузка: осталось %u элементов</string>
         <key>other</key>
-        <string>Uploading: %u items left</string>
+        <string>Загрузка: осталось %u элемента</string>
       </dict>
     </dict>
     <key>cameraUploads.progress.paused.items</key>
@@ -4089,9 +4093,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>u</string>
         <key>one</key>
-        <string>Paused: %u item left</string>
+        <string>Приостановлено: остался %u элемент</string>
+        <key>few</key>
+        <string>Приостановлено: осталось %u элемента</string>
+        <key>many</key>
+        <string>Приостановлено: осталось %u элементов</string>
         <key>other</key>
-        <string>Paused: %u items left</string>
+        <string>Приостановлено: осталось %u элемента</string>
       </dict>
     </dict>
   </dict>

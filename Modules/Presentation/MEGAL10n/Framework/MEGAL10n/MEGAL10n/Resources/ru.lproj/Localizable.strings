@@ -59,7 +59,7 @@
 /* This dialog message is used on the Password Decrypt dialog as an instruction for the user. */
 "If you do not have the password, contact the creator of the link."="Если у вас нет пароля, свяжитесь с создателем этой ссылки.";
 /* This placeholder text is used on the Password Decrypt dialog as an instruction for the user. */
-"Enter the password"="Enter the link password";
+"Enter the password"="Введите пароль ссылки";
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOut_alertTitle"="Вышел из системы";
 /* Alert message shown when your account has been closed through another client or the web by killing all your sessions */
@@ -4411,7 +4411,7 @@
 /* Button title to upgrade when storage is full */
 "account.storage.banner.fullStorageOverQuotaBanner.button"="Улучшить";
 /* Banner description shown when storage is full, prompting the user to upgrade */
-"account.storage.banner.fullStorageOverQuotaBanner.description"="Чтобы продолжить загрузку данных, улучшите аккаунт сейчас и получите больше места на диске.";
+"account.storage.banner.fullStorageOverQuotaBanner.description"="Чтобы продолжить загрузку данных, улучшите аккаунт и получите больше места на диске.";
 /* Banner title shown when storage is almost full */
 "account.storage.banner.almostFullStorageOverQuotaBanner.title"="Хранилище заполнено";
 /* Button title to upgrade when storage is almost full */
@@ -4783,31 +4783,31 @@
 /* Price per month display for yearly billing option in the upgrade account plan screen */
 "upgradeAccountPlan.plan.yearly.pricePerMonth"="Всего %@/месяц";
 /* Camera Uploads Banner Paused Low Battery Subtitle */
-"cameraUploads.progress.banner.paused.lowBattery.subtitle"="Camera uploads paused, battery level too low. Charge battery to resume camera uploads.";
+"cameraUploads.progress.banner.paused.lowBattery.subtitle"="Загрузки из камеры приостановлены: уровень заряда устройства слишком мал. Зарядите устройство, чтобы возобновить загрузки из камеры.";
 /* Camera Uploads Banner Paused High Thermal State Subtitle */
-"cameraUploads.progress.banner.paused.highThermalState.subtitle"="Camera uploads paused, device temperature too high. Uploads will resume once your device cools down.";
+"cameraUploads.progress.banner.paused.highThermalState.subtitle"="Загрузки из камеры приостановлены: температура устройства слишком высокая. Загрузки возобновятся, как только устройство остынет.";
 /* Camera Uploads Banner Paused Network Issue Subtitle */
-"cameraUploads.progress.banner.paused.networkIssue.subtitle"="Camera uploads paused, no internet connection";
+"cameraUploads.progress.banner.paused.networkIssue.subtitle"="Загрузки из камеры приостановлены: нет подключения к Интернету";
 /* Camera Uploads Banner Paused network no wifi cellular upload not allowed allow mobile data */
 "cameraUploads.progress.banner.paused.allowMobileData.button.title"="Разрешить передачу мобильных данных";
 /* Camera Uploads Banner Storage Full Title */
 "cameraUploads.progress.banner.storageFull.title"="Хранилище заполнено";
 /* Camera Uploads Banner Storage Full Subtitle */
-"cameraUploads.progress.banner.storageFull.subtitle"="To keep uploading, upgrade now to get more storage";
+"cameraUploads.progress.banner.storageFull.subtitle"="Чтобы продолжить загрузку, улучшите аккаунт и получите больше места на диске";
 /* Camera Uploads Banner Storage Full Button Title */
 "cameraUploads.progress.banner.storageFull.button.title"="Улучшить";
 /* Camera Uploads Banner Limited Access Subtitle */
-"cameraUploads.progress.banner.limitedAccess.subtitle"="To ensure we don’t miss all your memories, MEGA needs full access to your photo library";
+"cameraUploads.progress.banner.limitedAccess.subtitle"="Чтобы мы не пропустили все ваши воспоминания, MEGA нужен полный доступ к галерее";
 /* Camera Uploads Banner Limited Access Button Title */
-"cameraUploads.progress.banner.limitedAccess.button.title"="Update permissions";
+"cameraUploads.progress.banner.limitedAccess.button.title"="Обновить разрешения";
 /* Camera Uploads Progress Uploads Complete Title */
 "cameraUploads.progress.uploadsComplete.title"="Всё синхронизировано";
 /* Camera Uploads Progress Uploads Complete Subtitle */
-"cameraUploads.progress.uploadsComplete.subtitle"="New photos and videos will show here after you take them";
+"cameraUploads.progress.uploadsComplete.subtitle"="Новые фото и видео будут появляться здесь после съёмки";
 /* Camera Uploads Empty In Progress Row title */
-"cameraUploads.progress.row.emptyInProgress.title"="Transfers in progress will appear here";
+"cameraUploads.progress.row.emptyInProgress.title"="Активные передачи появятся здесь";
 /* Camera Uploads Empty In Queue Row title */
-"cameraUploads.progress.row.emptyInQueue.title"="Transfers in the queue will appear here";
+"cameraUploads.progress.row.emptyInQueue.title"="Передачи в очереди появятся здесь";
 /* Sorting option label for sorting items based on the share creation date (can be applied in ascending or descending order) */
 "sorting.shareCreated.title"="Обмен создан";
 /* Sorting option label for sorting items based on the link creation date (can be applied in ascending or descending order) */
@@ -4817,6 +4817,14 @@
 /* Camera Uploads Complete */
 "cameraUploads.complete"="Загрузки из камеры завершены";
 /* Camera Uploads Up To Date */
-"cameraUploads.upToDate"="Camera uploads up to date";
+"cameraUploads.upToDate"="Данные синхронизированы";
 /* Hidden files and folders onboarding content control visibility message */
 "onboarding.hiddenFilesAndFolders.content.item.controlVisibility.message"="Отобразить скрытые файлы можете только вы: либо по отдельности, либо временно временно включить отображение скрытых элементов в [A]настройках[/A].";
+/* The title displayed in the empty view when Cloud Drive root is empty */
+"cloudDrive.emptyStateTitle.root"="В вашем личном хранилище пока ничего нет";
+/* The title displayed in the empty view when Cloud Drive non-root folder is empty */
+"cloudDrive.emptyStateTitle.nonRoot"="Папка пуста";
+/* The subtitle title displayed in the empty view in Cloud Drive */
+"cloudDrive.emptyStateSubtitle"="Добавьте файлы — они будут защищены сквозным шифрованием.";
+/* Undecrypted file open error snackBar message */
+"cloudDrive.folderLink.snackBar.undecryptedFileOpenError"="Предпросмотр недоступен для нерасшифрованных файлов";

@@ -59,7 +59,7 @@
 /* This dialog message is used on the Password Decrypt dialog as an instruction for the user. */
 "If you do not have the password, contact the creator of the link."="Nếu bạn không biết mật khẩu giải mã. Liên hệ với chủ sở hữu đường liên kết này.";
 /* This placeholder text is used on the Password Decrypt dialog as an instruction for the user. */
-"Enter the password"="Enter the link password";
+"Enter the password"="Nhập mật khẩu của đường liên kết";
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOut_alertTitle"="Đã đăng xuất";
 /* Alert message shown when your account has been closed through another client or the web by killing all your sessions */
@@ -4145,15 +4145,15 @@
 /* Hidden files and folders onboarding content hide important title */
 "onboarding.hiddenFilesAndFolders.hideImportant.content.title"="Ẩn đi các tệp tin và thư mục quan trọng";
 /* Hidden files and folders onboarding content hide important message */
-"onboarding.hiddenFilesAndFolders.hideImportant.content.message"="You can conceal sensitive files and folders for privacy in one easy step.";
+"onboarding.hiddenFilesAndFolders.hideImportant.content.message"="Bạn có thể che giấu những tệp tin và thư mục nhạy cảm cho nhu cầu riêng tư với một bước đơn giản.";
 /* Hidden files and folders onboarding content exclude from timeline title */
 "onboarding.hiddenFilesAndFolders.excludeTimeline.content.title"="Ra khỏi tầm nhìn";
 /* Hidden files and folders onboarding content exclude from timeline section message */
-"onboarding.hiddenFilesAndFolders.excludeTimeline.content.message"="Only you can reveal hidden files, either individually or by temporarily displaying hidden items from the settings.";
+"onboarding.hiddenFilesAndFolders.excludeTimeline.content.message"="Chỉ có bạn mới có thể hiện lại những tệp tin đã ẩn, bằng cách thực hiện từng cái riêng lẻ hoặc tạm thời bật hiển thị các mục đã ẩn đi trong phần thiết đặt.";
 /* Hidden files and folders onboarding content out of sight title */
 "onboarding.hiddenFilesAndFolders.outOfSight.content.title"="Làm mờ để giữ riêng tư";
 /* Hidden files and folders onboarding content out of sight message */
-"onboarding.hiddenFilesAndFolders.outOfSight.content.message"="Show hidden items with their thumbnails blurred, so you can identify them without exposing their contents.";
+"onboarding.hiddenFilesAndFolders.outOfSight.content.message"="Hiển thị các mục ẩn với ảnh thu nhỏ được làm mờ, để bạn có thể xác định từng cái mà không để lộ nội dung bên trong.";
 /* My Account page: Menu Title of user account page */
 "account.myAccount.title"="Tài khoản của tôi";
 /* Storage limit capacity, where %d is the number of gigabytes that marks the storage limit */
@@ -4639,7 +4639,7 @@
 /* Displays the amount of data transfer included in the subscription plan */
 "subscriptionPurchase.plan.transfer"="%@ mức truyền tải";
 /* Displays the total amount when billed yearly */
-"subscriptionPurchase.plan.billedYearly"="%@ charged yearly";
+"subscriptionPurchase.plan.billedYearly"="thu phí %@ hàng năm";
 /* Button title to cancel the subscription purchase. */
 "subscriptionPurchase.maybeLater"="Có lẽ để sau";
 /* Title for the features of pro plan in the subscription purchase screen. */
@@ -4753,13 +4753,13 @@
 /* Sorting option label for sorting items based on their file size (can be applied in ascending or descending order) */
 "sorting.size.title"="Kích cỡ";
 /* Black Friday deal plan badge text shown in Upgrade plan screen */
-"upgradeAccountPlan.plan.tag.introOffer.blackFridayDeal"="Black Friday deal: %@ off";
+"upgradeAccountPlan.plan.tag.introOffer.blackFridayDeal"="Khuyến mại ngày Thứ Sáu Đen: giảm giá %@";
 /* General deal plan badge text shown in Upgrade plan screen */
 "upgradeAccountPlan.plan.tag.introOffer.generalDeal"="giảm %@";
 /* Subscription plan first year offer text shown in Upgrade plan screen */
-"subscriptionPurchase.plan.firstYearOffer"="%@ for the first year";
+"subscriptionPurchase.plan.firstYearOffer"="%@ cho năm đầu tiên";
 /* Header text in Upgrade plan screen to highlight yearly billing savings with intro offer */
-"upgradeAccountPlan.header.title.saveYearlyBillingWithIntoOffer"="Save at least %@ on a yearly plan";
+"upgradeAccountPlan.header.title.saveYearlyBillingWithIntoOffer"="Tiết kiệm được %@ hoặc hơn nữa với gói mua hằng năm";
 /* Camera Uploads Progress navigation title */
 "cameraUploads.progress.navigation.title"="Tiến trình";
 /* Camera Uploads Progress In Progress section title */
@@ -4767,9 +4767,9 @@
 /* Camera Uploads row progress format */
 "cameraUploads.progress.row.uploadProgressFormat"="%@ of %@ %@/s";
 /* Cyber Monday deal plan badge text shown in Upgrade plan screen */
-"upgradeAccountPlan.plan.tag.introOffer.cyberMondayDeal"="Cyber Monday deal: %@ off";
+"upgradeAccountPlan.plan.tag.introOffer.cyberMondayDeal"="Khuyến mại ngày Thứ Hai Điện Tử: giảm giá %@";
 /* Special Offer plan badge text shown in Upgrade plan screen */
-"upgradeAccountPlan.plan.tag.introOffer.specialOffer"="Special offer: %@ off";
+"upgradeAccountPlan.plan.tag.introOffer.specialOffer"="Ưu đãi đặc biệt: giảm giá %@";
 /* View mode title for grid view in the cloud drive. */
 "cloudDrive.viewMode.grid.title"="Xem kiểu khuôn khổ";
 /* Camera Uploads Progress In Queue section title */
@@ -4777,11 +4777,11 @@
 /* Camera Uploads row file progress */
 "cameraUploads.progress.row.fileProgress"="%1$@ / %2$@";
 /* Camera Uploads row file upload speed */
-"cameraUploads.progress.row.uploadSpeed"="%@/s";
+"cameraUploads.progress.row.uploadSpeed"="%@/giây";
 /* Footer for the yearly billing option in the upgrade account plan screen */
 "upgradeAccountPlan.plan.yearly.footer"="Mua hằng năm";
 /* Price per month display for yearly billing option in the upgrade account plan screen */
-"upgradeAccountPlan.plan.yearly.pricePerMonth"="Only %@/month";
+"upgradeAccountPlan.plan.yearly.pricePerMonth"="Giá chỉ %@/tháng";
 /* Camera Uploads Banner Paused Low Battery Subtitle */
 "cameraUploads.progress.banner.paused.lowBattery.subtitle"="Camera uploads paused, battery level too low. Charge battery to resume camera uploads.";
 /* Camera Uploads Banner Paused High Thermal State Subtitle */
@@ -4817,6 +4817,14 @@
 /* Camera Uploads Complete */
 "cameraUploads.complete"="Đăng tải camêra đã hoàn tất";
 /* Camera Uploads Up To Date */
-"cameraUploads.upToDate"="Camera uploads up to date";
+"cameraUploads.upToDate"="Đăng tải camêra đã cập nhật mới nhất";
 /* Hidden files and folders onboarding content control visibility message */
 "onboarding.hiddenFilesAndFolders.content.item.controlVisibility.message"="Chỉ bạn mới có thể tiết lộ các tệp tin ẩn, riêng lẻ hoặc bằng cách tạm thời hiển thị các mục ẩn từ [A]Thiết đặt[/A].";
+/* The title displayed in the empty view when Cloud Drive root is empty */
+"cloudDrive.emptyStateTitle.root"="Chưa có gì ở trong két sắt riêng của bạn";
+/* The title displayed in the empty view when Cloud Drive non-root folder is empty */
+"cloudDrive.emptyStateTitle.nonRoot"="This folder is empty";
+/* The subtitle title displayed in the empty view in Cloud Drive */
+"cloudDrive.emptyStateSubtitle"="Keep something safe with zero-knowledge encryption";
+/* Undecrypted file open error snackBar message */
+"cloudDrive.folderLink.snackBar.undecryptedFileOpenError"="Previews not available for undecrypted files";

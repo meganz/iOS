@@ -4820,3 +4820,11 @@
 "cameraUploads.upToDate"="카메라 업로드가 최신 상태입니다";
 /* Hidden files and folders onboarding content control visibility message */
 "onboarding.hiddenFilesAndFolders.content.item.controlVisibility.message"="숨겨진 파일은 개별적으로 또는 [A]설정[/A]에서 숨겨진 항목을 일시적으로 표시하여 공개할 수 있습니다.";
+/* The title displayed in the empty view when Cloud Drive root is empty */
+"cloudDrive.emptyStateTitle.root"="개인 금고에는 아직 아무것도 없습니다";
+/* The title displayed in the empty view when Cloud Drive non-root folder is empty */
+"cloudDrive.emptyStateTitle.nonRoot"="이 폴더는 비어있습니다";
+/* The subtitle title displayed in the empty view in Cloud Drive */
+"cloudDrive.emptyStateSubtitle"="영지식 암호화로 안전하게 보관하세요";
+/* Undecrypted file open error snackBar message */
+"cloudDrive.folderLink.snackBar.undecryptedFileOpenError"="복호화되지 않은 파일은 미리 보기할 수 없습니다";

@@ -59,7 +59,7 @@
 /* This dialog message is used on the Password Decrypt dialog as an instruction for the user. */
 "If you do not have the password, contact the creator of the link."="Se você não tiver a senha, entre em contato com o criador do link.";
 /* This placeholder text is used on the Password Decrypt dialog as an instruction for the user. */
-"Enter the password"="Enter the link password";
+"Enter the password"="Digite a senha do link";
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOut_alertTitle"="Desconectado";
 /* Alert message shown when your account has been closed through another client or the web by killing all your sessions */
@@ -2335,7 +2335,7 @@
 /* Context menu item. Allows user to add file/folder to favourites */
 "Favourite"="Favorito";
 /* Context menu item. Allows user to delete file/folder from favourites */
-"Remove Favourite"="Remover dos favorito";
+"Remove Favourite"="Remover dos favoritos";
 /* A menu item in the left panel drop down menu to allow sorting by label. */
 "cloudDrive.sort.label"="Etiqueta";
 /* Context menu item which allows to mark folders with own color label */
@@ -4703,7 +4703,7 @@
 /* Camera uploads status banner title paused due to network connection */
 "cameraUploads.banner.status.paused.noNetworkConnection.title"="Uploads da câmera pausados";
 /* Camera uploads status banner sub title paused due to no network connection */
-"cameraUploads.banner.status.paused.noNetworkConnection.subheading"="Conecte-se ao WIFI ou use dados móveis";
+"cameraUploads.banner.status.paused.noNetworkConnection.subheading"="Conecte-se ao Wi-Fi ou use dados móveis";
 /* Camera uploads status banner sub title paused due to no Wi-Fi connection. Please leave [S], [/S] as it is which is used to bolden the text. */
 "cameraUploads.banner.status.paused.noWiFiConnection.subheading"="Conecte-se ao WIFI ou use dados móveis [S]Pressione para permitir o uso de dados móveis[/S]";
 /* Camera uploads status banner title paused due to low battery */
@@ -4781,33 +4781,33 @@
 /* Footer for the yearly billing option in the upgrade account plan screen */
 "upgradeAccountPlan.plan.yearly.footer"="Pagamento anual";
 /* Price per month display for yearly billing option in the upgrade account plan screen */
-"upgradeAccountPlan.plan.yearly.pricePerMonth"="Only %@/month";
+"upgradeAccountPlan.plan.yearly.pricePerMonth"="Somente %@/mês";
 /* Camera Uploads Banner Paused Low Battery Subtitle */
-"cameraUploads.progress.banner.paused.lowBattery.subtitle"="Camera uploads paused, battery level too low. Charge battery to resume camera uploads.";
+"cameraUploads.progress.banner.paused.lowBattery.subtitle"="Os uploads da câmera foram pausados porque o nível da bateria está muito baixo. Carregue a bateria para retomar os uploads da câmera.";
 /* Camera Uploads Banner Paused High Thermal State Subtitle */
-"cameraUploads.progress.banner.paused.highThermalState.subtitle"="Camera uploads paused, device temperature too high. Uploads will resume once your device cools down.";
+"cameraUploads.progress.banner.paused.highThermalState.subtitle"="Os uploads da câmera foram pausados porque a temperatura do dispositivo está muito alta. Os uploads serão retomados quando o dispositivo esfriar.";
 /* Camera Uploads Banner Paused Network Issue Subtitle */
-"cameraUploads.progress.banner.paused.networkIssue.subtitle"="Camera uploads paused, no internet connection";
+"cameraUploads.progress.banner.paused.networkIssue.subtitle"="Os uploads da câmera foram pausados por falta de conexão à Internet";
 /* Camera Uploads Banner Paused network no wifi cellular upload not allowed allow mobile data */
 "cameraUploads.progress.banner.paused.allowMobileData.button.title"="Permitir dados móveis";
 /* Camera Uploads Banner Storage Full Title */
 "cameraUploads.progress.banner.storageFull.title"="O armazenamento da sua conta está cheio";
 /* Camera Uploads Banner Storage Full Subtitle */
-"cameraUploads.progress.banner.storageFull.subtitle"="To keep uploading, upgrade now to get more storage";
+"cameraUploads.progress.banner.storageFull.subtitle"="Para continuar fazendo o upload de dados, faça um upgrade para obter mais espaço de armazenamento.";
 /* Camera Uploads Banner Storage Full Button Title */
 "cameraUploads.progress.banner.storageFull.button.title"="Upgrade";
 /* Camera Uploads Banner Limited Access Subtitle */
-"cameraUploads.progress.banner.limitedAccess.subtitle"="To ensure we don’t miss all your memories, MEGA needs full access to your photo library";
+"cameraUploads.progress.banner.limitedAccess.subtitle"="Para garantir que não percamos as suas memórias, o MEGA precisa de acesso total à sua biblioteca de fotos";
 /* Camera Uploads Banner Limited Access Button Title */
-"cameraUploads.progress.banner.limitedAccess.button.title"="Update permissions";
+"cameraUploads.progress.banner.limitedAccess.button.title"="Atualizar permissões";
 /* Camera Uploads Progress Uploads Complete Title */
 "cameraUploads.progress.uploadsComplete.title"="Tudo atualizado";
 /* Camera Uploads Progress Uploads Complete Subtitle */
-"cameraUploads.progress.uploadsComplete.subtitle"="New photos and videos will show here after you take them";
+"cameraUploads.progress.uploadsComplete.subtitle"="As novas fotos que você tirar e os vídeos que você gravar vão aparecer aqui";
 /* Camera Uploads Empty In Progress Row title */
-"cameraUploads.progress.row.emptyInProgress.title"="Transfers in progress will appear here";
+"cameraUploads.progress.row.emptyInProgress.title"="As transferências em andamento aparecerão aqui";
 /* Camera Uploads Empty In Queue Row title */
-"cameraUploads.progress.row.emptyInQueue.title"="Transfers in the queue will appear here";
+"cameraUploads.progress.row.emptyInQueue.title"="As transferências em andamento aparecerão aqui";
 /* Sorting option label for sorting items based on the share creation date (can be applied in ascending or descending order) */
 "sorting.shareCreated.title"="Compartilhado em";
 /* Sorting option label for sorting items based on the link creation date (can be applied in ascending or descending order) */
@@ -4817,6 +4817,14 @@
 /* Camera Uploads Complete */
 "cameraUploads.complete"="Uploads da câmera concluídos";
 /* Camera Uploads Up To Date */
-"cameraUploads.upToDate"="Camera uploads up to date";
+"cameraUploads.upToDate"="Uploads da câmera atualizados";
 /* Hidden files and folders onboarding content control visibility message */
 "onboarding.hiddenFilesAndFolders.content.item.controlVisibility.message"="Somente você pode mostrar arquivos ocultos, seja individualmente ou exibindo temporariamente itens ocultos nas [A]configurações[/A].";
+/* The title displayed in the empty view when Cloud Drive root is empty */
+"cloudDrive.emptyStateTitle.root"="Ainda não há nada no seu cofre privado";
+/* The title displayed in the empty view when Cloud Drive non-root folder is empty */
+"cloudDrive.emptyStateTitle.nonRoot"="Esta pasta está vazia";
+/* The subtitle title displayed in the empty view in Cloud Drive */
+"cloudDrive.emptyStateSubtitle"="Mantenha algo seguro com criptografia de conhecimento zero.";
+/* Undecrypted file open error snackBar message */
+"cloudDrive.folderLink.snackBar.undecryptedFileOpenError"="Previews not available for undecrypted files";

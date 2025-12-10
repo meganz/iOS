@@ -4820,3 +4820,11 @@
 "cameraUploads.upToDate"="Camera-uploads zijn bijgewerkt";
 /* Hidden files and folders onboarding content control visibility message */
 "onboarding.hiddenFilesAndFolders.content.item.controlVisibility.message"="Alleen u kunt verborgen bestanden onthullen, afzonderlijk of door tijdelijk verborgen items weer te geven uit de [A]instellingen[/A].";
+/* The title displayed in the empty view when Cloud Drive root is empty */
+"cloudDrive.emptyStateTitle.root"="Nog niets in uw privékluis";
+/* The title displayed in the empty view when Cloud Drive non-root folder is empty */
+"cloudDrive.emptyStateTitle.nonRoot"="Deze map is leeg";
+/* The subtitle title displayed in the empty view in Cloud Drive */
+"cloudDrive.emptyStateSubtitle"="Bewaar iets veilig met zero-knowledge codering";
+/* Undecrypted file open error snackBar message */
+"cloudDrive.folderLink.snackBar.undecryptedFileOpenError"="Voorvertoningen zijn niet beschikbaar voor niet-gedecodeerde bestanden";

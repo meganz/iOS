@@ -4820,3 +4820,11 @@
 "cameraUploads.upToDate"="Încărcări cameră sunt actualizate";
 /* Hidden files and folders onboarding content control visibility message */
 "onboarding.hiddenFilesAndFolders.content.item.controlVisibility.message"="Numai tu poți dezvălui fișiere ascunse, fie individual, fie activând temporar opțiunea de afișare a fișierelor și folderelor ascunse din [A]Setări[/A].";
+/* The title displayed in the empty view when Cloud Drive root is empty */
+"cloudDrive.emptyStateTitle.root"="Nimic în seiful tău privat încă";
+/* The title displayed in the empty view when Cloud Drive non-root folder is empty */
+"cloudDrive.emptyStateTitle.nonRoot"="Acest folder este gol";
+/* The subtitle title displayed in the empty view in Cloud Drive */
+"cloudDrive.emptyStateSubtitle"="Păstrați ceva în siguranță cu criptare cu cunoștință zero";
+/* Undecrypted file open error snackBar message */
+"cloudDrive.folderLink.snackBar.undecryptedFileOpenError"="Previews not available for undecrypted files";

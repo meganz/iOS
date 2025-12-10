@@ -4820,3 +4820,11 @@
 "cameraUploads.upToDate"="Kamera yüklemeleri güncel";
 /* Hidden files and folders onboarding content control visibility message */
 "onboarding.hiddenFilesAndFolders.content.item.controlVisibility.message"="Gizli dosyaları yalnızca siz; ister tek tek, ister [A]Ayarlar[/A]’dan gizli öğeleri geçici olarak göstererek ortaya çıkarabilirsiniz.";
+/* The title displayed in the empty view when Cloud Drive root is empty */
+"cloudDrive.emptyStateTitle.root"="Özel kasanızda henüz bir şey yok";
+/* The title displayed in the empty view when Cloud Drive non-root folder is empty */
+"cloudDrive.emptyStateTitle.nonRoot"="Bu klasör boş";
+/* The subtitle title displayed in the empty view in Cloud Drive */
+"cloudDrive.emptyStateSubtitle"="Sıfır bilgi şifrelemesi ile bir şeyleri güvende tutun";
+/* Undecrypted file open error snackBar message */
+"cloudDrive.folderLink.snackBar.undecryptedFileOpenError"="Şifresi çözülmemiş dosyalar için ön izlemeler kullanılamıyor";
