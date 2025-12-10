@@ -29,6 +29,14 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 
 
+### zip_xcresult_file
+
+```sh
+[bundle exec] fastlane zip_xcresult_file
+```
+
+
+
 ### get_latest_xcresult_file
 
 ```sh
