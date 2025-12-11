@@ -15,11 +15,14 @@ public struct AlbumCell: View {
     
     public var body: some View {
         VStack(alignment: .leading, spacing: 10) {
-            ZStack(alignment: viewModel.isLoading ? .center : .bottomTrailing) {
+            ZStack(alignment: viewModel.isLoading ? .center : viewModel.isMediaRevampEnabled ? .topLeading : .bottomTrailing) {
                 AlbumCellImage(
-                    container: viewModel.thumbnailContainer
+                    container: viewModel.thumbnailContainer,
+                    isMediaRevampEnabled: viewModel.isMediaRevampEnabled
                 )
-                .overlay(viewModel.photoOverlay())
+                .overlay(
+                    viewModel.isMediaRevampEnabled ? AnyView(albumCoverOverlay) : AnyView(viewModel.photoOverlay())
+                )
                 
                 LinearGradient(gradient: Gradient(stops: [
                     .init(color: Color.black.opacity(0.7), location: 0),
@@ -30,20 +33,13 @@ public struct AlbumCell: View {
                 ProgressView()
                     .opacity(viewModel.isLoading ? 1.0 : 0.0)
                 
-                VStack {
-                    SharedLinkView(
-                        foregroundColor: viewModel.isPlaceholder ? TokenColors.Icon.secondary.swiftUI : TokenColors.Icon.onColor.swiftUI)
-                        .offset(x: 2, y: 0)
-                        .opacity(viewModel.isLinkShared ? 1.0 : 0.0)
-                    
-                    Spacer()
-                    
-                    checkMarkView
-                        .offset(x: -5, y: -5)
-                        .opacity(viewModel.shouldShowEditStateOpacity)
+                if viewModel.isMediaRevampEnabled {
+                    coverAttributes
+                } else {
+                    legacyCoverAttributes
                 }
             }
-            .clipShape(RoundedRectangle(cornerRadius: 6))
+            .clipShape(RoundedRectangle(cornerRadius: viewModel.isMediaRevampEnabled ? TokenRadius.small : 6))
             
             VStack(alignment: .leading, spacing: 6) {
                 Text(viewModel.title)
@@ -79,6 +75,57 @@ public struct AlbumCell: View {
             markedSelected: viewModel.isSelected,
             foregroundColor: viewModel.isSelected ? TokenColors.Support.success.swiftUI : TokenColors.Icon.onColor.swiftUI
         )
+    }
+    
+    @ViewBuilder
+    private var albumCoverOverlay: some View {
+        if viewModel.selection.mode == .multiple, viewModel.isSelected {
+            RoundedRectangle(cornerRadius: TokenRadius.small)
+                .strokeBorder(
+                    TokenColors.Border.strongSelected.swiftUI,
+                    lineWidth: 2
+                )
+        } else if viewModel.isDisabled {
+            TokenColors.Background.page.swiftUI.opacity(0.8)
+        }
+    }
+    
+    private var coverAttributes: some View {
+        HStack(spacing: .zero) {
+            CheckMarkView(
+                markedSelected: viewModel.isSelected,
+                foregroundColor:
+                    TokenColors.Components.selectionControlAlt.swiftUI,
+                showBorder: false
+            )
+            .opacity(viewModel.isSelected ? 1.0 : 0.0)
+            .padding(.top, 6)
+            .padding(.leading, 6)
+            
+            Spacer()
+            
+            SharedLinkView(
+                foregroundColor: viewModel.isPlaceholder ? TokenColors.Icon.secondary.swiftUI : TokenColors.Icon.onColor.swiftUI,
+                isMediaRevampEnabled: viewModel.isMediaRevampEnabled)
+            .opacity(viewModel.isLinkShared ? 1.0 : 0.0)
+            .padding(.top, 4)
+            .padding(.trailing, 4)
+        }
+    }
+    
+    private var legacyCoverAttributes: some View {
+        VStack {
+            SharedLinkView(
+                foregroundColor: viewModel.isPlaceholder ? TokenColors.Icon.secondary.swiftUI : TokenColors.Icon.onColor.swiftUI)
+                .offset(x: 2, y: 0)
+                .opacity(viewModel.isLinkShared ? 1.0 : 0.0)
+            
+            Spacer()
+            
+            checkMarkView
+                .offset(x: -5, y: -5)
+                .opacity(viewModel.shouldShowEditStateOpacity)
+        }
     }
 }
 

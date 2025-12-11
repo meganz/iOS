@@ -1,7 +1,7 @@
 // swift-interface-format-version: 1.0
-// swift-compiler-version: Apple Swift version 6.2 effective-5.10 (swiftlang-6.2.0.19.9 clang-1700.3.19.1)
+// swift-compiler-version: Apple Swift version 6.2.1 effective-5.10 (swiftlang-6.2.1.4.8 clang-1700.4.4.1)
 // swift-module-flags: -target arm64-apple-ios15.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -enable-experimental-feature DebugDescriptionMacro -enable-bare-slash-regex -module-name MEGAAssetsBundle
-// swift-module-flags-ignorable:  -formal-cxx-interoperability-mode=off -interface-compiler-version 6.2
+// swift-module-flags-ignorable:  -formal-cxx-interoperability-mode=off -interface-compiler-version 6.2.1
 import DeveloperToolsSupport
 import Foundation
 import Swift
@@ -836,6 +836,12 @@ public struct MEGAImageBundle {
     get
   }
   public static var linkGear: SwiftUICore.Image {
+    get
+  }
+  public static var link02SmallThin: SwiftUICore.Image {
+    get
+  }
+  public static var image04Solid: SwiftUICore.Image {
     get
   }
 }
@@ -2361,6 +2367,12 @@ public struct MEGAUIImageBundle {
     get
   }
   public static var linkGear: UIKit.UIImage {
+    get
+  }
+  public static var link02SmallThin: UIKit.UIImage {
+    get
+  }
+  public static var image04Solid: UIKit.UIImage {
     get
   }
 }

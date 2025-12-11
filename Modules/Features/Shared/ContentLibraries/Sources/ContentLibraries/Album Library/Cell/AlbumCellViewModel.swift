@@ -19,6 +19,7 @@ public final class AlbumCellViewModel: ObservableObject, Identifiable {
     let selection: AlbumSelection
     let isLinkShared: Bool
     let searchText: String?
+    let isMediaRevampEnabled: Bool
     
     @Published var numberOfNodes: Int = 0
     @Published var thumbnailContainer: any ImageContaining
@@ -52,7 +53,8 @@ public final class AlbumCellViewModel: ObservableObject, Identifiable {
     }
     
     var shouldShowGradient: Bool {
-        album.isLinkShared && !isPlaceholder
+        guard !isMediaRevampEnabled else { return false }
+        return album.isLinkShared && !isPlaceholder
     }
     
     private let thumbnailLoader: any ThumbnailLoaderProtocol
@@ -102,6 +104,7 @@ public final class AlbumCellViewModel: ObservableObject, Identifiable {
         self.remoteFeatureFlagUseCase = remoteFeatureFlagUseCase
         self.configuration = configuration
         
+        isMediaRevampEnabled = configuration.featureFlagProvider.isFeatureFlagEnabled(for: .mediaRevamp)
         title = if let searchText {
             AttributedString(album.name
                 .forceLeftToRight()
@@ -120,10 +123,10 @@ public final class AlbumCellViewModel: ObservableObject, Identifiable {
             thumbnailContainer = thumbnailLoader.initialImage(
                 for: coverNode,
                 type: .thumbnail,
-                placeholder: { MEGAAssets.Image.timeline })
+                placeholder: { [isMediaRevampEnabled] in isMediaRevampEnabled ? MEGAAssets.Image.image04Solid : MEGAAssets.Image.timeline })
         } else {
             thumbnailContainer = ImageContainer(
-                image: MEGAAssets.Image.timeline,
+                image: isMediaRevampEnabled ? MEGAAssets.Image.image04Solid : MEGAAssets.Image.timeline,
                 type: .placeholder)
         }
         
@@ -233,7 +236,7 @@ public final class AlbumCellViewModel: ObservableObject, Identifiable {
             try? await thumbnailLoader.loadImage(for: albumCover, type: .thumbnail)
         } else {
             ImageContainer(
-                image: MEGAAssets.Image.timeline,
+                image: isMediaRevampEnabled ? MEGAAssets.Image.image04Solid : MEGAAssets.Image.timeline,
                 type: .placeholder)
         }
         guard let imageContainer,

@@ -817,12 +817,20 @@ struct AlbumCellViewModelTestSuite {
     @Suite("Thumbnail")
     @MainActor
     struct Thumbnail {
-        @Test("when album has no cover it should set correct placeholder")
-        func noCoverPlaceholder() {
+        @Test("when album has no cover it should set correct placeholder",
+              arguments: [
+                (false, MEGAAssets.Image.timeline),
+                (true, MEGAAssets.Image.image04Solid)
+              ])
+        func noCoverPlaceholder(
+            isMediaRevampEnabled: Bool,
+            expectedImage: Image
+        ) {
             let sut = makeSUT(
-                album: .init(id: 8, type: .user))
+                album: .init(id: 8, type: .user),
+                configuration: .mockConfiguration(featureFlags: [FeatureFlagKey.mediaRevamp: isMediaRevampEnabled]))
             
-            #expect(sut.thumbnailContainer.isEqual(ImageContainer(image: MEGAAssets.Image.timeline, type: .placeholder)))
+            #expect(sut.thumbnailContainer.isEqual(ImageContainer(image: expectedImage, type: .placeholder)))
         }
         
         @Test("when image container is placeholder it should return true",

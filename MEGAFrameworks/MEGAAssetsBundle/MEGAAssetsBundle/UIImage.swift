@@ -447,4 +447,6 @@ public struct MEGAUIImageBundle {
     public static var cloudDriveEmptyStateRoot: UIImage { UIImage.cloudDriveEmptyStateRoot }
     public static var cloudDriveEmptyStateNonRoot: UIImage { UIImage.cloudDriveEmptyStateNonRoot }
     public static var linkGear: UIImage { UIImage.linkGear }
+    public static var link02SmallThin: UIImage { UIImage.link02SmallThin }
+    public static var image04Solid: UIImage { UIImage.image04Solid }
 }
