@@ -47,6 +47,8 @@ public final class ContextMenuBuilder {
     private var isDecrypted: Bool = true
     private var isS4Container: Bool = false
     private var showSortingOptionsAndViewModes: Bool = true
+    private var selectedVideoLocationFilter: VideoLocationFilterEntity = .allLocation
+    private var selectedVideoDurationFilter: VideoDurationFilterEntity = .allDurations
 
     public init() {}
     
@@ -290,6 +292,16 @@ public final class ContextMenuBuilder {
         return self
     }
 
+    public func setSelectedVideoLocationFilter(_ filter: VideoLocationFilterEntity?) -> ContextMenuBuilder {
+        self.selectedVideoLocationFilter = filter ?? .allLocation
+        return self
+    }
+
+    public func setSelectedVideoDurationFilter(_ filter: VideoDurationFilterEntity?) -> ContextMenuBuilder {
+        self.selectedVideoDurationFilter = filter ?? .allDurations
+        return self
+    }
+
     public func build() -> CMEntity? {
         /// It is only allowed to build menu type elements. The other elements refer to the actions that a menu contains, and that cannot be constructed if not inside a menu.
         if case let .menu(type) = menuType {
@@ -322,6 +334,8 @@ public final class ContextMenuBuilder {
                 return homeVideoPlaylistsMenu()
             case .videoPlaylistContent:
                 return videoPlaylistContentMenu()
+            case .mediaTabVideos:
+                return mediaTabVideosMenu()
             default:
                 return nil
             }
@@ -773,6 +787,59 @@ public final class ContextMenuBuilder {
         return CMEntity(
             displayInline: true,
             children: displayActionsMenuChildren.compactMap { $0 }
+        )
+    }
+
+    // MARK: - Media Tab Videos
+
+    private func mediaTabVideosMenu() -> CMEntity {
+        var displayActionsMenuChildren: [CMElement] = []
+
+        if !isSelectHidden {
+            displayActionsMenuChildren.append(selectMenu())
+        }
+
+        displayActionsMenuChildren.append(videoLocationFilterMenu())
+        displayActionsMenuChildren.append(videoDurationFilterMenu())
+        displayActionsMenuChildren.append(sortMenu())
+
+        return CMEntity(
+            displayInline: true,
+            children: displayActionsMenuChildren
+        )
+    }
+
+    private func videoLocationFilterMenu() -> CMEntity {
+        let locationOptions: [CMElement] = VideoLocationFilterEntity.allCases.map { location in
+            CMActionEntity(
+                type: .videoLocationFilter(actionType: location),
+                isEnabled: true,
+                state: location == selectedVideoLocationFilter ? .on : .off
+            )
+        }
+
+        return CMEntity(
+            type: .display(actionType: .locationFilter),
+            displayInline: false,
+            currentVideoLocationFilter: selectedVideoLocationFilter,
+            children: locationOptions
+        )
+    }
+
+    private func videoDurationFilterMenu() -> CMEntity {
+        let durationOptions: [CMElement] = VideoDurationFilterEntity.allCases.map { duration in
+            CMActionEntity(
+                type: .videoDurationFilter(actionType: duration),
+                isEnabled: true,
+                state: duration == selectedVideoDurationFilter ? .on : .off
+            )
+        }
+
+        return CMEntity(
+            type: .display(actionType: .durationFilter),
+            displayInline: false,
+            currentVideoDurationFilter: selectedVideoDurationFilter,
+            children: durationOptions
         )
     }
 

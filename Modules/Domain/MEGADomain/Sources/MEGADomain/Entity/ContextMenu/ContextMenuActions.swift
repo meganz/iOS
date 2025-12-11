@@ -12,7 +12,7 @@
 public enum CMElementTypeEntity: Equatable, Sendable {
     /// Menus
     case menu(type: ContextMenuTypeEntity)
-    
+
     // Actions
     case uploadAdd(actionType: UploadAddActionEntity)
     case display(actionType: DisplayActionEntity)
@@ -28,12 +28,14 @@ public enum CMElementTypeEntity: Equatable, Sendable {
     case meeting(actionType: MeetingActionEntity)
     case album(actionType: AlbumActionEntity)
     case videoPlaylist(actionType: VideoPlaylistActionEntity)
+    case videoLocationFilter(actionType: VideoLocationFilterEntity)
+    case videoDurationFilter(actionType: VideoDurationFilterEntity)
     case unknown
 }
 
 // MARK: - Context Menu types
 public enum ContextMenuTypeEntity: Sendable {
-    case uploadAdd, display, quickActions, sort, rubbishBin, chat, chatStatus, chatDoNotDisturb, qr, meeting, unknown, album, timeline, folderLink, fileLink, home, homeVideos, homeVideoPlaylists, videoPlaylistContent
+    case uploadAdd, display, quickActions, sort, rubbishBin, chat, chatStatus, chatDoNotDisturb, qr, meeting, unknown, album, timeline, folderLink, fileLink, home, homeVideos, homeVideoPlaylists, videoPlaylistContent, mediaTabVideos
 }
 
 // MARK: - Context Menu grouped actions
@@ -42,7 +44,7 @@ public enum UploadAddActionEntity: CaseIterable, Sendable {
 }
 
 public enum DisplayActionEntity: CaseIterable, Sendable {
-    case select, mediaDiscovery, thumbnailView, listView, sort, clearRubbishBin, filter, filterActive, newPlaylist
+    case select, mediaDiscovery, thumbnailView, listView, sort, clearRubbishBin, filter, filterActive, newPlaylist, locationFilter, durationFilter
 }
 
 public enum QuickActionEntity: CaseIterable, Sendable {
@@ -76,4 +78,20 @@ public enum AlbumActionEntity: CaseIterable, Sendable {
 public enum VideoPlaylistActionEntity: CaseIterable, Sendable {
     case addVideosToVideoPlaylistContent
     case delete
+}
+
+public enum VideoLocationFilterEntity: String, CaseIterable, Sendable {
+    case allLocation
+    case cloudDrive
+    case cameraUploads
+    case sharedItems
+}
+
+public enum VideoDurationFilterEntity: String, CaseIterable, Sendable {
+    case allDurations
+    case lessThan10Seconds
+    case between10And60Seconds
+    case between1And4Minutes
+    case between4And20Minutes
+    case moreThan20Minutes
 }

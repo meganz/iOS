@@ -95,6 +95,8 @@ public struct CMConfigEntity: Sendable {
     public var isDecrypted: Bool = true
     public var isS4Container: Bool = false
     public var showSortingOptionsAndViewModes: Bool = true
+    public var selectedVideoLocationFilter: VideoLocationFilterEntity?
+    public var selectedVideoDurationFilter: VideoDurationFilterEntity?
 
     public init(
         menuType: CMElementTypeEntity,
@@ -146,7 +148,9 @@ public struct CMConfigEntity: Sendable {
         isTakenDown: Bool = false,
         isDecrypted: Bool = true,
         isS4Container: Bool = false,
-        showSortingOptionsAndViewModes: Bool = true
+        showSortingOptionsAndViewModes: Bool = true,
+        selectedVideoLocationFilter: VideoLocationFilterEntity? = nil,
+        selectedVideoDurationFilter: VideoDurationFilterEntity? = nil
     ) {
         self.menuType = menuType
         self.viewMode = viewMode
@@ -198,5 +202,7 @@ public struct CMConfigEntity: Sendable {
         self.isDecrypted = isDecrypted
         self.isS4Container = isS4Container
         self.showSortingOptionsAndViewModes = showSortingOptionsAndViewModes
+        self.selectedVideoLocationFilter = selectedVideoLocationFilter
+        self.selectedVideoDurationFilter = selectedVideoDurationFilter
     }
 }

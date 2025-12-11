@@ -55,6 +55,8 @@ public struct CreateContextMenuRepository: CreateContextMenuRepositoryProtocol {
             .setIsDecrypted(config.isDecrypted)
             .setIsS4Container(config.isS4Container)
             .setShowSortingOptionsAndViewModes(config.showSortingOptionsAndViewModes)
+            .setSelectedVideoLocationFilter(config.selectedVideoLocationFilter)
+            .setSelectedVideoDurationFilter(config.selectedVideoDurationFilter)
             .build()
     }
 }

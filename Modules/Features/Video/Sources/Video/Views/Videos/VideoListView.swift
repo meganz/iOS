@@ -6,13 +6,13 @@ import MEGAL10n
 import MEGASwiftUI
 import SwiftUI
 
-struct VideoListView: View {
+public struct VideoListView: View {
     @StateObject private var viewModel: VideoListViewModel
-    
+
     private let videoConfig: VideoConfig
     private let router: any VideoRevampRouting
-    
-    init(
+
+    public init(
         viewModel: @autoclosure @escaping () -> VideoListViewModel,
         videoConfig: VideoConfig,
         router: any VideoRevampRouting
@@ -21,8 +21,30 @@ struct VideoListView: View {
         self.videoConfig = videoConfig
         self.router = router
     }
+
+    private var selectedLocationFilterOptionString: Binding<String> {
+        Binding(
+            get: { viewModel.selectedLocationFilterOption.stringValue },
+            set: { newValue in
+                if let filterOption = LocationChipFilterOptionType(rawValue: newValue) {
+                    viewModel.selectedLocationFilterOption = filterOption
+                }
+            }
+        )
+    }
+
+    private var selectedDurationFilterOptionString: Binding<String> {
+        Binding(
+            get: { viewModel.selectedDurationFilterOption.stringValue },
+            set: { newValue in
+                if let filterOption = DurationChipFilterOptionType(rawValue: newValue) {
+                    viewModel.selectedDurationFilterOption = filterOption
+                }
+            }
+        )
+    }
     
-    var body: some View {
+    public var body: some View {
         VStack(spacing: 0) {
             chipsView()
                 .frame(height: viewModel.shouldShowFilterChip ? 60 : 0)
@@ -79,8 +101,8 @@ struct VideoListView: View {
                 title: viewModel.actionSheetTitle,
                 options: viewModel.filterOptions,
                 selectedOption: newlySelectedChip.type == .location
-                ? $viewModel.selectedLocationFilterOption
-                : $viewModel.selectedDurationFilterOption
+                ? selectedLocationFilterOptionString
+                : selectedDurationFilterOptionString
             )
         } else {
             EmptyView()

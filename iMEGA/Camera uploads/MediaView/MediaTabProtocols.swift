@@ -23,6 +23,8 @@ protocol MediaTabContextMenuActionHandler: AnyObject {
     func handleDisplayAction(_ action: DisplayActionEntity)
     func handleSortAction(_ sortType: SortOrderType)
     func handleQuickAction(_ action: QuickActionEntity)
+    func handleVideoLocationFilter(_ filter: VideoLocationFilterEntity)
+    func handleVideoDurationFilter(_ filter: VideoDurationFilterEntity)
 }
 
 // MARK: - Toolbar Actions Provider
@@ -59,6 +61,14 @@ extension MediaTabContextMenuActionHandler {
     func handleQuickAction(_ action: QuickActionEntity) {
         // Default: do nothing
     }
+
+    func handleVideoLocationFilter(_ filter: VideoLocationFilterEntity) {
+        // Default: do nothing
+    }
+
+    func handleVideoDurationFilter(_ filter: VideoDurationFilterEntity) {
+        // Default: do nothing
+    }
 }
 
 // MARK: - Shared Resource Provider
@@ -68,6 +78,8 @@ protocol MediaTabSharedResourceProvider: AnyObject {
     var cameraUploadStatusButtonViewModel: CameraUploadStatusButtonViewModel { get }
     var contextMenuConfig: CMConfigEntity? { get }
     var contextMenuManager: ContextMenuManager? { get }
+    var editMode: EditMode { get }
+    var editModePublisher: Published<EditMode>.Publisher { get }
 }
 
 // MARK: - Shared Resource Consumer

@@ -146,16 +146,16 @@ final class ContextMenuActionsTests: XCTestCase {
                                                 .setViewMode(.list)
                                                 .setSortType(.defaultAsc)
                                                 .build())
-        
-        let excludedActions: [DisplayActionEntity] = [.clearRubbishBin, .mediaDiscovery, .filter, .sort, .filterActive, .newPlaylist]
-        
+
+        let excludedActions: [DisplayActionEntity] = [.clearRubbishBin, .mediaDiscovery, .filter, .sort, .filterActive, .newPlaylist, .locationFilter, .durationFilter]
+
         XCTAssertTrue(filterDisplayActions(from: decomposeMenuIntoActions(menu: menuEntity)) == DisplayActionEntity
                                                                                                                 .allCases
                                                                                                                 .filter { !excludedActions.contains($0) })
-        
+
         XCTAssertTrue(filterSortActions(from: decomposeMenuIntoActions(menu: menuEntity)) == SortOrderEntity
                                                                                                         .allValid)
-            
+
     }
     
     func testDisplayMenu_isViewInFolder() throws {
@@ -165,16 +165,16 @@ final class ContextMenuActionsTests: XCTestCase {
                                                 .setSortType(.defaultAsc)
                                                 .setIsViewInFolder(true)
                                                 .build())
-        
-        let excludedActions: [DisplayActionEntity] = [.select, .clearRubbishBin, .mediaDiscovery, .filter, .sort, .filterActive, .newPlaylist]
-        
+
+        let excludedActions: [DisplayActionEntity] = [.select, .clearRubbishBin, .mediaDiscovery, .filter, .sort, .filterActive, .newPlaylist, .locationFilter, .durationFilter]
+
         XCTAssertTrue(filterDisplayActions(from: decomposeMenuIntoActions(menu: menuEntity)) == DisplayActionEntity
                                                                                                                 .allCases
                                                                                                                 .filter { !excludedActions.contains($0) })
-        
+
         XCTAssertTrue(filterSortActions(from: decomposeMenuIntoActions(menu: menuEntity)) == SortOrderEntity
                                                                                                         .allValid)
-            
+
     }
 
     func testDisplayMenuRubbishBin_isViewInFolder() throws {
@@ -185,13 +185,13 @@ final class ContextMenuActionsTests: XCTestCase {
                                                 .setIsRubbishBinFolder(true)
                                                 .setIsViewInFolder(true)
                                                 .build())
-        
-        let excludedActions: [DisplayActionEntity] = [.select, .mediaDiscovery, .filter, .sort, .clearRubbishBin, .filterActive, .newPlaylist]
-    
+
+        let excludedActions: [DisplayActionEntity] = [.select, .mediaDiscovery, .filter, .sort, .clearRubbishBin, .filterActive, .newPlaylist, .locationFilter, .durationFilter]
+
         XCTAssertTrue(filterDisplayActions(from: decomposeMenuIntoActions(menu: menuEntity)) == DisplayActionEntity
                                                                                                                 .allCases
                                                                                                                 .filter { !excludedActions.contains($0) })
-                                                            
+
         XCTAssertTrue(filterSortActions(from: decomposeMenuIntoActions(menu: menuEntity)) == SortOrderEntity
                                                                                                         .allValid)
     }
@@ -203,13 +203,13 @@ final class ContextMenuActionsTests: XCTestCase {
                                                 .setSortType(.defaultAsc)
                                                 .setIsRubbishBinFolder(true)
                                                 .build())
-        
-        let excludedActions: [DisplayActionEntity] = [.mediaDiscovery, .filter, .sort, .filterActive, .newPlaylist]
-    
+
+        let excludedActions: [DisplayActionEntity] = [.mediaDiscovery, .filter, .sort, .filterActive, .newPlaylist, .locationFilter, .durationFilter]
+
         XCTAssertTrue(filterDisplayActions(from: decomposeMenuIntoActions(menu: menuEntity)) == DisplayActionEntity
                                                                                                                 .allCases
                                                                                                                 .filter { !excludedActions.contains($0) })
-                                                            
+
         XCTAssertTrue(filterSortActions(from: decomposeMenuIntoActions(menu: menuEntity)) == SortOrderEntity
                                                                                                         .allValid)
     }
@@ -221,14 +221,14 @@ final class ContextMenuActionsTests: XCTestCase {
                                                 .setSortType(.defaultAsc)
                                                 .setIsOfflineFolder(true)
                                                 .build())
-        
-        let excludedDisplayActions: [DisplayActionEntity] = [.mediaDiscovery, .clearRubbishBin, .filter, .sort, .filterActive, .newPlaylist]
+
+        let excludedDisplayActions: [DisplayActionEntity] = [.mediaDiscovery, .clearRubbishBin, .filter, .sort, .filterActive, .newPlaylist, .locationFilter, .durationFilter]
         let excludedSortOptions: [SortOrderEntity] = [.labelAsc, .favouriteAsc]
-        
+
         XCTAssertTrue(filterDisplayActions(from: decomposeMenuIntoActions(menu: menuEntity)) == DisplayActionEntity
                                                                                                                 .allCases
                                                                                                                 .filter { !excludedDisplayActions.contains($0) })
-                                                            
+
         XCTAssertTrue(filterSortActions(from: decomposeMenuIntoActions(menu: menuEntity)) == SortOrderEntity
                                                                                                         .allValid
                                                                                                         .filter { !excludedSortOptions.contains($0) })
@@ -242,12 +242,12 @@ final class ContextMenuActionsTests: XCTestCase {
                                                 .setBackupsRootNode(true)
                                                 .build())
 
-        let excludedDisplayActions: [DisplayActionEntity] = [.mediaDiscovery, .clearRubbishBin, .filter, .sort, .filterActive, .newPlaylist]
-        
+        let excludedDisplayActions: [DisplayActionEntity] = [.mediaDiscovery, .clearRubbishBin, .filter, .sort, .filterActive, .newPlaylist, .locationFilter, .durationFilter]
+
         XCTAssertTrue(filterDisplayActions(from: decomposeMenuIntoActions(menu: menuEntity)) == DisplayActionEntity
                                                                                                                 .allCases
                                                                                                                 .filter { !excludedDisplayActions.contains($0) })
-                                                            
+
         XCTAssertTrue(filterSortActions(from: decomposeMenuIntoActions(menu: menuEntity)) == SortOrderEntity
                                                                                                         .allValid)
     }
@@ -261,16 +261,16 @@ final class ContextMenuActionsTests: XCTestCase {
                                                 .build())
 
         let excludedQuickActions: [QuickActionEntity] = [.manageLink, .removeLink, .manageFolder, .rename, .removeSharing, .leaveSharing, .sendToChat, .saveToPhotos, .hide, .unhide, .settings, .dispute]
-        let excludedDisplayActions: [DisplayActionEntity] = [.mediaDiscovery, .clearRubbishBin, .filter, .sort, .filterActive, .newPlaylist]
-        
+        let excludedDisplayActions: [DisplayActionEntity] = [.mediaDiscovery, .clearRubbishBin, .filter, .sort, .filterActive, .newPlaylist, .locationFilter, .durationFilter]
+
         XCTAssertTrue(filterQuickActions(from: decomposeMenuIntoActions(menu: menuEntity)) == QuickActionEntity
                                                                                                             .allCases
                                                                                                             .filter { !excludedQuickActions.contains($0) })
-        
+
         XCTAssertTrue(filterDisplayActions(from: decomposeMenuIntoActions(menu: menuEntity)) == DisplayActionEntity
                                                                                                                 .allCases
                                                                                                                 .filter { !excludedDisplayActions.contains($0) })
-                                                            
+
         XCTAssertTrue(filterSortActions(from: decomposeMenuIntoActions(menu: menuEntity)) == SortOrderEntity
                                                                                                         .allValid)
     }
@@ -297,16 +297,16 @@ final class ContextMenuActionsTests: XCTestCase {
                                                 .build())
 
         let excludedQuickActions: [QuickActionEntity] = [.shareLink, .manageLink, .removeLink, .manageFolder, .removeSharing, .shareFolder, .rename, .leaveSharing, .sendToChat, .saveToPhotos, .hide, .unhide, .settings, .dispute]
-        let excludedDisplayActions: [DisplayActionEntity] = [.clearRubbishBin, .filter, .sort, .filterActive, .newPlaylist]
-        
+        let excludedDisplayActions: [DisplayActionEntity] = [.clearRubbishBin, .filter, .sort, .filterActive, .newPlaylist, .locationFilter, .durationFilter]
+
         XCTAssertTrue(filterQuickActions(from: decomposeMenuIntoActions(menu: menuEntity)) == QuickActionEntity
                                                                                                             .allCases
                                                                                                             .filter { !excludedQuickActions.contains($0) })
-        
+
         XCTAssertTrue(filterDisplayActions(from: decomposeMenuIntoActions(menu: menuEntity)) == DisplayActionEntity
                                                                                                                 .allCases
                                                                                                                 .filter { !excludedDisplayActions.contains($0) })
-                                                            
+
         XCTAssertTrue(filterSortActions(from: decomposeMenuIntoActions(menu: menuEntity)) == SortOrderEntity
                                                                                                         .allValid)
     }
@@ -320,16 +320,16 @@ final class ContextMenuActionsTests: XCTestCase {
                                                 .build())
 
         let excludedQuickActions: [QuickActionEntity] = [.shareLink, .manageLink, .removeLink, .manageFolder, .removeSharing, .shareFolder, .rename, .sendToChat, .saveToPhotos, .hide, .unhide, .settings, .dispute]
-        let excludedDisplayActions: [DisplayActionEntity] = [.clearRubbishBin, .filter, .sort, .filterActive, .newPlaylist]
-        
+        let excludedDisplayActions: [DisplayActionEntity] = [.clearRubbishBin, .filter, .sort, .filterActive, .newPlaylist, .locationFilter, .durationFilter]
+
         XCTAssertTrue(filterQuickActions(from: decomposeMenuIntoActions(menu: menuEntity)) == QuickActionEntity
                                                                                                             .allCases
                                                                                                             .filter { !excludedQuickActions.contains($0) })
-        
+
         XCTAssertTrue(filterDisplayActions(from: decomposeMenuIntoActions(menu: menuEntity)) == DisplayActionEntity
                                                                                                                 .allCases
                                                                                                                 .filter { !excludedDisplayActions.contains($0) })
-                                                            
+
         XCTAssertTrue(filterSortActions(from: decomposeMenuIntoActions(menu: menuEntity)) == SortOrderEntity
                                                                                                         .allValid)
     }
@@ -345,16 +345,16 @@ final class ContextMenuActionsTests: XCTestCase {
                                                 .build())
 
         let excludedQuickActions: [QuickActionEntity] = [.manageLink, .removeLink, .leaveSharing, .shareFolder, .sendToChat, .saveToPhotos, .hide, .unhide, .settings, .dispute]
-        let excludedDisplayActions: [DisplayActionEntity] = [.clearRubbishBin, .filter, .sort, .filterActive, .newPlaylist]
+        let excludedDisplayActions: [DisplayActionEntity] = [.clearRubbishBin, .filter, .sort, .filterActive, .newPlaylist, .locationFilter, .durationFilter]
 
         XCTAssertTrue(filterQuickActions(from: decomposeMenuIntoActions(menu: menuEntity)) == QuickActionEntity
                                                                                                             .allCases
                                                                                                             .filter { !excludedQuickActions.contains($0) })
-        
+
         XCTAssertTrue(filterDisplayActions(from: decomposeMenuIntoActions(menu: menuEntity)) == DisplayActionEntity
                                                                                                                 .allCases
                                                                                                                 .filter { !excludedDisplayActions.contains($0) })
-                                                            
+
         XCTAssertTrue(filterSortActions(from: decomposeMenuIntoActions(menu: menuEntity)) == SortOrderEntity
                                                                                                         .allValid)
     }
@@ -371,16 +371,16 @@ final class ContextMenuActionsTests: XCTestCase {
                                                 .build())
 
         let excludedQuickActions: [QuickActionEntity] = [.shareLink, .leaveSharing, .shareFolder, .sendToChat, .saveToPhotos, .hide, .unhide, .settings, .dispute]
-        let excludedDisplayActions: [DisplayActionEntity] = [.clearRubbishBin, .filter, .sort, .filterActive, .newPlaylist]
-        
+        let excludedDisplayActions: [DisplayActionEntity] = [.clearRubbishBin, .filter, .sort, .filterActive, .newPlaylist, .locationFilter, .durationFilter]
+
         XCTAssertTrue(filterQuickActions(from: decomposeMenuIntoActions(menu: menuEntity)) == QuickActionEntity
                                                                                                             .allCases
                                                                                                             .filter { !excludedQuickActions.contains($0) })
-        
+
         XCTAssertTrue(filterDisplayActions(from: decomposeMenuIntoActions(menu: menuEntity)) == DisplayActionEntity
                                                                                                                 .allCases
                                                                                                                 .filter { !excludedDisplayActions.contains($0) })
-                                                            
+
         XCTAssertTrue(filterSortActions(from: decomposeMenuIntoActions(menu: menuEntity)) == SortOrderEntity
                                                                                                         .allValid)
     }
@@ -394,16 +394,16 @@ final class ContextMenuActionsTests: XCTestCase {
                                                 .build())
 
         let excludedQuickActions: [QuickActionEntity] = [.download, .shareLink, .manageLink, .removeLink, .shareFolder, .manageFolder, .copy, .removeSharing, .leaveSharing, .sendToChat, .saveToPhotos, .hide, .unhide, .settings]
-        let excludedDisplayActions: [DisplayActionEntity] = [.clearRubbishBin, .filter, .sort, .filterActive, .newPlaylist, .mediaDiscovery]
-        
+        let excludedDisplayActions: [DisplayActionEntity] = [.clearRubbishBin, .filter, .sort, .filterActive, .newPlaylist, .mediaDiscovery, .locationFilter, .durationFilter]
+
         XCTAssertTrue(filterQuickActions(from: decomposeMenuIntoActions(menu: menuEntity)) == QuickActionEntity
                                                                                                             .allCases
                                                                                                             .filter { !excludedQuickActions.contains($0) })
-        
+
         XCTAssertTrue(filterDisplayActions(from: decomposeMenuIntoActions(menu: menuEntity)) == DisplayActionEntity
                                                                                                                 .allCases
                                                                                                                 .filter { !excludedDisplayActions.contains($0) })
-                                                            
+
         XCTAssertTrue(filterSortActions(from: decomposeMenuIntoActions(menu: menuEntity)) == SortOrderEntity
                                                                                                         .allValid)
     }
@@ -416,7 +416,7 @@ final class ContextMenuActionsTests: XCTestCase {
                                                 .setIsCameraUploadExplorer(true)
                                                 .build())
 
-        let excludedDisplayActions: [DisplayActionEntity] = [.mediaDiscovery, .thumbnailView, .listView, .clearRubbishBin, .filter, .sort, .filterActive, .newPlaylist]
+        let excludedDisplayActions: [DisplayActionEntity] = [.mediaDiscovery, .thumbnailView, .listView, .clearRubbishBin, .filter, .sort, .filterActive, .newPlaylist, .locationFilter, .durationFilter]
         let excludedSortOptions: [SortOrderEntity] = [.defaultAsc, .defaultDesc, .sizeDesc, .sizeAsc, .labelAsc, .favouriteAsc]
         
         XCTAssertTrue(filterDisplayActions(from: decomposeMenuIntoActions(menu: menuEntity)) == DisplayActionEntity

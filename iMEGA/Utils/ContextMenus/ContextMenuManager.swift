@@ -63,6 +63,12 @@ protocol VideoPlaylistMenuDelegate: AnyObject {
 }
 
 @MainActor
+protocol VideoFilterMenuDelegate: AnyObject {
+    func videoLocationFilterMenu(didSelect filter: VideoLocationFilterEntity)
+    func videoDurationFilterMenu(didSelect filter: VideoDurationFilterEntity)
+}
+
+@MainActor
 final class ContextMenuManager: NSObject {
     weak var displayMenuDelegate: (any DisplayMenuDelegate)?
     weak var quickActionsMenuDelegate: (any QuickActionsMenuDelegate)?
@@ -74,7 +80,8 @@ final class ContextMenuManager: NSObject {
     weak var filterMenuDelegate: (any FilterMenuDelegate)?
     weak var albumMenuDelegate: (any AlbumMenuDelegate)?
     weak var videoPlaylistMenuDelegate: (any VideoPlaylistMenuDelegate)?
-    
+    weak var videoFilterMenuDelegate: (any VideoFilterMenuDelegate)?
+
     private let createContextMenuUC: any CreateContextMenuUseCaseProtocol
     
     init(displayMenuDelegate: (any DisplayMenuDelegate)? = nil,
@@ -87,7 +94,8 @@ final class ContextMenuManager: NSObject {
          filterMenuDelegate: (any FilterMenuDelegate)? = nil,
          createContextMenuUseCase: any CreateContextMenuUseCaseProtocol,
          albumMenuDelegate: (any AlbumMenuDelegate)? = nil,
-         videoPlaylistMenuDelegate: (any VideoPlaylistMenuDelegate)? = nil
+         videoPlaylistMenuDelegate: (any VideoPlaylistMenuDelegate)? = nil,
+         videoFilterMenuDelegate: (any VideoFilterMenuDelegate)? = nil
     ) {
         self.displayMenuDelegate = displayMenuDelegate
         self.quickActionsMenuDelegate = quickActionsMenuDelegate
@@ -100,6 +108,7 @@ final class ContextMenuManager: NSObject {
         self.createContextMenuUC = createContextMenuUseCase
         self.albumMenuDelegate = albumMenuDelegate
         self.videoPlaylistMenuDelegate = videoPlaylistMenuDelegate
+        self.videoFilterMenuDelegate = videoFilterMenuDelegate
     }
     
     // MARK: - Configure functions
@@ -161,7 +170,13 @@ final class ContextMenuManager: NSObject {
             }
         case .videoPlaylist(let action):
             videoPlaylistMenuDelegate?.videoPlaylistMenu(didSelect: action)
-            
+
+        case .videoLocationFilter(let filter):
+            videoFilterMenuDelegate?.videoLocationFilterMenu(didSelect: filter)
+
+        case .videoDurationFilter(let filter):
+            videoFilterMenuDelegate?.videoDurationFilterMenu(didSelect: filter)
+
         default:
             break
         }

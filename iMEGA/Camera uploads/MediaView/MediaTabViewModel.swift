@@ -76,6 +76,7 @@ final class MediaTabViewModel: ObservableObject, @MainActor MediaTabSharedResour
     let cameraUploadStatusButtonViewModel: CameraUploadStatusButtonViewModel
 
     var contextMenuManager: ContextMenuManager?
+    var editModePublisher: Published<EditMode>.Publisher { $editMode }
     private var subscriptions = Set<AnyCancellable>()
 
     let tabViewModels: [MediaTab: any MediaTabInteractiveProvider]
@@ -135,7 +136,8 @@ final class MediaTabViewModel: ObservableObject, @MainActor MediaTabSharedResour
         contextMenuManager = ContextMenuManager(
             displayMenuDelegate: self,
             quickActionsMenuDelegate: self,
-            createContextMenuUseCase: CreateContextMenuUseCase(repo: CreateContextMenuRepository.newRepo)
+            createContextMenuUseCase: CreateContextMenuUseCase(repo: CreateContextMenuRepository.newRepo),
+            videoFilterMenuDelegate: self
         )
     }
 
@@ -165,8 +167,6 @@ final class MediaTabViewModel: ObservableObject, @MainActor MediaTabSharedResour
         // Update navigation bar items only if they've changed
         if let itemProvider = tabViewModels[selectedTab] {
             let newItems = itemProvider.navigationBarItems(for: editMode)
-
-            // Only update if items have actually changed (avoid unnecessary redraws)
             if navigationBarItemViewModels != newItems {
                 navigationBarItemViewModels = newItems
             }
@@ -219,6 +219,26 @@ extension MediaTabViewModel: DisplayMenuDelegate {
     func sortMenu(didSelect sortType: SortOrderType) {
         if let tabViewModel = tabViewModels[selectedTab] {
             tabViewModel.handleSortAction(sortType)
+        }
+
+        updateNavigationBarForCurrentTab()
+    }
+}
+
+// MARK: - VideoFilterMenuDelegate
+
+extension MediaTabViewModel: VideoFilterMenuDelegate {
+    func videoLocationFilterMenu(didSelect filter: VideoLocationFilterEntity) {
+        if let tabViewModel = tabViewModels[selectedTab] {
+            tabViewModel.handleVideoLocationFilter(filter)
+        }
+
+        updateNavigationBarForCurrentTab()
+    }
+
+    func videoDurationFilterMenu(didSelect filter: VideoDurationFilterEntity) {
+        if let tabViewModel = tabViewModels[selectedTab] {
+            tabViewModel.handleVideoDurationFilter(filter)
         }
 
         updateNavigationBarForCurrentTab()

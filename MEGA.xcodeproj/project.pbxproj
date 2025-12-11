@@ -588,6 +588,8 @@
 		4C0A556C2ED6F61900A58D8B /* MediaTabViewControllerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C0A55682ED6F61900A58D8B /* MediaTabViewControllerFactory.swift */; };
 		4C0A557E2ED8319400A58D8B /* MediaTabProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C0A557D2ED8319400A58D8B /* MediaTabProtocols.swift */; };
 		4C0A55892ED9488F00A58D8B /* MockMediaTabViewModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C0A55882ED9488F00A58D8B /* MockMediaTabViewModels.swift */; };
+		4C1A20692EE2C01E00E41A44 /* VideoTabViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C1A20682EE2C01E00E41A44 /* VideoTabViewModel.swift */; };
+		4C1A206B2EE2C4FF00E41A44 /* MediaTabVideoFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C1A206A2EE2C4FF00E41A44 /* MediaTabVideoFactory.swift */; };
 		4C6C8FFB2ED991F600095F34 /* MediaBottomToolbarAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6C8FF92ED991F600095F34 /* MediaBottomToolbarAction.swift */; };
 		4C6C90002ED9951400095F34 /* MediaBottomToolbarItemsFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6C8FFE2ED9951400095F34 /* MediaBottomToolbarItemsFactory.swift */; };
 		4C6C90012ED9951400095F34 /* MediaToolbarProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6C8FFF2ED9951400095F34 /* MediaToolbarProvider.swift */; };
@@ -595,6 +597,8 @@
 		4C6C901F2EDE8BEC00095F34 /* NavigationBarItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6C901E2EDE8BEC00095F34 /* NavigationBarItemViewModel.swift */; };
 		4C6C90202EDE8BEC00095F34 /* MediaNavigationBarItemFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6C901D2EDE8BEC00095F34 /* MediaNavigationBarItemFactory.swift */; };
 		4C6C903C2EDFE3A300095F34 /* NavigationBarItemViewBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6C903B2EDFE3A300095F34 /* NavigationBarItemViewBuilder.swift */; };
+		4CEA86702EE9C42B00BF2A6A /* VideoFilterEntity+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CEA866F2EE9C42B00BF2A6A /* VideoFilterEntity+Additions.swift */; };
+		4CEA86762EEA568200BF2A6A /* VideoTabViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CEA86752EEA568200BF2A6A /* VideoTabViewModelTests.swift */; };
 		530C524C2C1C2A4100DFF3FE /* SlideShowOptionBuilderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 530C524B2C1C2A4100DFF3FE /* SlideShowOptionBuilderTests.swift */; };
 		530C52522C216B6E00DFF3FE /* OfflineViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 530C52512C216B6E00DFF3FE /* OfflineViewModelTests.swift */; };
 		534FFC752C1AA65E00A49D1F /* FilterTypeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 534FFC742C1AA65E00A49D1F /* FilterTypeTests.swift */; };
@@ -3413,6 +3417,8 @@
 		4C0A55692ED6F61900A58D8B /* MediaTabViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaTabViewModel.swift; sourceTree = "<group>"; };
 		4C0A557D2ED8319400A58D8B /* MediaTabProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaTabProtocols.swift; sourceTree = "<group>"; };
 		4C0A55882ED9488F00A58D8B /* MockMediaTabViewModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockMediaTabViewModels.swift; sourceTree = "<group>"; };
+		4C1A20682EE2C01E00E41A44 /* VideoTabViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoTabViewModel.swift; sourceTree = "<group>"; };
+		4C1A206A2EE2C4FF00E41A44 /* MediaTabVideoFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaTabVideoFactory.swift; sourceTree = "<group>"; };
 		4C6C8FF92ED991F600095F34 /* MediaBottomToolbarAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaBottomToolbarAction.swift; sourceTree = "<group>"; };
 		4C6C8FFE2ED9951400095F34 /* MediaBottomToolbarItemsFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaBottomToolbarItemsFactory.swift; sourceTree = "<group>"; };
 		4C6C8FFF2ED9951400095F34 /* MediaToolbarProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaToolbarProvider.swift; sourceTree = "<group>"; };
@@ -3420,6 +3426,8 @@
 		4C6C901D2EDE8BEC00095F34 /* MediaNavigationBarItemFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaNavigationBarItemFactory.swift; sourceTree = "<group>"; };
 		4C6C901E2EDE8BEC00095F34 /* NavigationBarItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBarItemViewModel.swift; sourceTree = "<group>"; };
 		4C6C903B2EDFE3A300095F34 /* NavigationBarItemViewBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBarItemViewBuilder.swift; sourceTree = "<group>"; };
+		4CEA866F2EE9C42B00BF2A6A /* VideoFilterEntity+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VideoFilterEntity+Additions.swift"; sourceTree = "<group>"; };
+		4CEA86752EEA568200BF2A6A /* VideoTabViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoTabViewModelTests.swift; sourceTree = "<group>"; };
 		530C524B2C1C2A4100DFF3FE /* SlideShowOptionBuilderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideShowOptionBuilderTests.swift; sourceTree = "<group>"; };
 		530C52512C216B6E00DFF3FE /* OfflineViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineViewModelTests.swift; sourceTree = "<group>"; };
 		534FFC742C1AA65E00A49D1F /* FilterTypeTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterTypeTests.swift; sourceTree = "<group>"; };
@@ -7705,6 +7713,7 @@
 			isa = PBXGroup;
 			children = (
 				4C6C8FFA2ED991F600095F34 /* Toolbar */,
+				4C1A206F2EE2CF6C00E41A44 /* Videos */,
 				4C6C901D2EDE8BEC00095F34 /* MediaNavigationBarItemFactory.swift */,
 				4C0A55672ED6F61900A58D8B /* MediaTab.swift */,
 				4C6C90042ED99ADE00095F34 /* MediaTabHostingController.swift */,
@@ -7719,6 +7728,15 @@
 			path = MediaView;
 			sourceTree = "<group>";
 		};
+		4C1A206F2EE2CF6C00E41A44 /* Videos */ = {
+			isa = PBXGroup;
+			children = (
+				4C1A206A2EE2C4FF00E41A44 /* MediaTabVideoFactory.swift */,
+				4C1A20682EE2C01E00E41A44 /* VideoTabViewModel.swift */,
+			);
+			path = Videos;
+			sourceTree = "<group>";
+		};
 		4C6C8FFA2ED991F600095F34 /* Toolbar */ = {
 			isa = PBXGroup;
 			children = (
@@ -7727,6 +7745,14 @@
 				4C6C8FFF2ED9951400095F34 /* MediaToolbarProvider.swift */,
 			);
 			path = Toolbar;
+			sourceTree = "<group>";
+		};
+		4CEA86742EEA53C900BF2A6A /* Media */ = {
+			isa = PBXGroup;
+			children = (
+				4CEA86752EEA568200BF2A6A /* VideoTabViewModelTests.swift */,
+			);
+			path = Media;
 			sourceTree = "<group>";
 		};
 		53A2552B2C36853500E7F10C /* PreviewSupport */ = {
@@ -11905,6 +11931,7 @@
 				B6A0CF1928A08D1B00D7F52E /* PreferenceUseCase+Additions.swift */,
 				94BEC88529DC154A00075AE9 /* SaveMediaToPhotosErrorEntity+Additions.swift */,
 				32A2AA052A283BB3007FC630 /* UserAttributeUseCaseAdditions+Additions.swift */,
+				4CEA866F2EE9C42B00BF2A6A /* VideoFilterEntity+Additions.swift */,
 			);
 			path = DomainExtensions;
 			sourceTree = "<group>";
@@ -12096,6 +12123,7 @@
 				837B17A128819CB900A4D01B /* Links */,
 				0E80B31A2DC4832600582D55 /* Login */,
 				835CE84C2AA88E7E00861544 /* MainTabBar */,
+				4CEA86742EEA53C900BF2A6A /* Media */,
 				BFF0EE2E2630E34300FAEFF9 /* Meeting */,
 				5D52C744250C4EED00286A43 /* Mocks */,
 				8361D9EE283E7B2B0001FAC1 /* NameCollision */,
@@ -15185,6 +15213,7 @@
 				4C0A556A2ED6F61900A58D8B /* MediaTab.swift in Sources */,
 				4C6C90052ED99ADE00095F34 /* MediaTabHostingController.swift in Sources */,
 				4C0A557E2ED8319400A58D8B /* MediaTabProtocols.swift in Sources */,
+				4C1A206B2EE2C4FF00E41A44 /* MediaTabVideoFactory.swift in Sources */,
 				4C0A55632ED6EFBC00A58D8B /* MediaTabView.swift in Sources */,
 				4C0A556C2ED6F61900A58D8B /* MediaTabViewControllerFactory.swift in Sources */,
 				4C0A556B2ED6F61900A58D8B /* MediaTabViewModel.swift in Sources */,
@@ -16024,6 +16053,7 @@
 				E85EB30D1DF58EBA0066AC68 /* VerifyCredentialsViewController.m in Sources */,
 				837C4F8A235DFFBA00FFE177 /* VerifyEmailViewController.swift in Sources */,
 				244CEFCF2B257AD000147302 /* VideoConfig+Live.swift in Sources */,
+				4CEA86702EE9C42B00BF2A6A /* VideoFilterEntity+Additions.swift in Sources */,
 				147ED4842E73E82B005F7981 /* VideoMetricsTracker.swift in Sources */,
 				245603672CBCD93700400529 /* VideoPlaylistContentContainerViewModel.swift in Sources */,
 				2484574F2C32A7310042AFA1 /* VideoPlaylistContentViewController+NodeActionViewControllerDelegate.swift in Sources */,
@@ -16032,6 +16062,7 @@
 				240C98A92BD04738008C9F98 /* VideoRevampTabContainerViewController+NodeActionViewControllerDelegate.swift in Sources */,
 				2486F1A92B0EEE4E00003D20 /* VideoRevampTabContainerViewController.swift in Sources */,
 				2486F1AE2B0EF12600003D20 /* VideoRevampTabContainerViewModel.swift in Sources */,
+				4C1A20692EE2C01E00E41A44 /* VideoTabViewModel.swift in Sources */,
 				B658D3BB218F936B004C0D64 /* VideoUploadOperation.m in Sources */,
 				94F3B75E2DB00ED300C285A5 /* VideoUploadsQualityTableViewController+Additions.swift in Sources */,
 				B6CCC36921E800E400B68E2C /* VideoUploadsQualityTableViewController.m in Sources */,
@@ -16816,6 +16847,7 @@
 				245603692CBCD97D00400529 /* VideoPlaylistContentContainerViewModelTests.swift in Sources */,
 				24EDF71D2C1BEC240065A26D /* VideoPlaylistContentViewControllerTests.swift in Sources */,
 				244CEFC12B2319F400147302 /* VideoRevampTabContainerViewModelTests.swift in Sources */,
+				4CEA86762EEA568200BF2A6A /* VideoTabViewModelTests.swift in Sources */,
 				94F3B76A2DB0153200C285A5 /* VideoUploadsViewModelTests.swift in Sources */,
 				9439F1252B838F6F00B3633D /* ViewModeFactoryTests.swift in Sources */,
 				9474F23F2B0F8F4700C5F63B /* ViewModeStoreTests.swift in Sources */,

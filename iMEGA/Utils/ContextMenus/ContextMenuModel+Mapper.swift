@@ -18,8 +18,9 @@ extension CMEntity {
                          currentChatStatus: currentChatStatus?.localizedIdentifier,
                          currentSortType: currentSortType?.toSortOrderType().localizedString,
                          dndRemainingTime: dndRemainingTime,
-                         currentFilterType: currentFilterType?.toFilterType().localizedString)
-                         
+                         currentFilterType: currentFilterType?.toFilterType().localizedString,
+                         currentVideoLocationFilter: currentVideoLocationFilter?.localizedTitle,
+                         currentVideoDurationFilter: currentVideoDurationFilter?.localizedTitle)
     }
     
     func toContextMenuModels(_ array: [CMElement]?) -> [ContextMenuModel]? {
@@ -67,6 +68,10 @@ extension ContextMenuModel {
             return dataForAlbumAction(action: action)
         case .videoPlaylist(let action):
             return dataForVideoPlaylistAction(action: action)
+        case .videoLocationFilter(let filter):
+            return dataForVideoLocationFilter(filter: filter)
+        case .videoDurationFilter(let filter):
+            return dataForVideoDurationFilter(filter: filter)
         default:
             return nil
         }
@@ -154,6 +159,10 @@ extension ContextMenuModel {
             return ContextMenuDataModel(identifier: "filterActive", title: Strings.Localizable.filter, subtitle: currentFilterType, image: MEGAAssets.UIImage.filterActive)
         case .newPlaylist:
             return ContextMenuDataModel(identifier: "newPlaylist", title: Strings.Localizable.Videos.Tab.Playlist.Content.newPlaylist, image: MEGAAssets.UIImage.navigationbarAdd)
+        case .locationFilter:
+            return ContextMenuDataModel(identifier: "locationFilter", title: Strings.Localizable.Videos.Tab.All.Filter.Location.Title.location, subtitle: currentVideoLocationFilter)
+        case .durationFilter:
+            return ContextMenuDataModel(identifier: "durationFilter", title: Strings.Localizable.Videos.Tab.All.Filter.Duration.Title.duration, subtitle: currentVideoDurationFilter)
         }
     }
 
@@ -282,5 +291,13 @@ extension ContextMenuModel {
                 image: MEGAAssets.UIImage.deleteVideoPlaylist
             )
         }
+    }
+
+    private func dataForVideoLocationFilter(filter: VideoLocationFilterEntity) -> ContextMenuDataModel {
+        ContextMenuDataModel(identifier: filter.rawValue, title: filter.localizedTitle)
+    }
+
+    private func dataForVideoDurationFilter(filter: VideoDurationFilterEntity) -> ContextMenuDataModel {
+        ContextMenuDataModel(identifier: filter.rawValue, title: filter.localizedTitle)
     }
 }

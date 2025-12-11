@@ -1,12 +1,13 @@
+import MEGADomain
 import MEGAL10n
 
-enum LocationChipFilterOptionType: CaseIterable, Sendable {
+public enum LocationChipFilterOptionType: CaseIterable, Sendable {
     case allLocation
     case cloudDrive
     case cameraUploads
     case sharedItems
     
-    init?(rawValue: String) {
+    public init?(rawValue: String) {
         switch rawValue {
         case Strings.Localizable.Videos.Tab.All.Filter.Location.Option.allLocations:
             self = .allLocation
@@ -21,7 +22,7 @@ enum LocationChipFilterOptionType: CaseIterable, Sendable {
         }
     }
     
-    var stringValue: String {
+    public var stringValue: String {
         switch self {
         case .allLocation:
             Strings.Localizable.Videos.Tab.All.Filter.Location.Option.allLocations
@@ -31,6 +32,36 @@ enum LocationChipFilterOptionType: CaseIterable, Sendable {
             Strings.Localizable.Videos.Tab.All.Filter.Location.Option.cameraUploads
         case .sharedItems:
             Strings.Localizable.Videos.Tab.All.Filter.Location.Option.sharedItems
+        }
+    }
+}
+
+// MARK: - Domain Entity Conversion
+
+public extension LocationChipFilterOptionType {
+    init(from entity: VideoLocationFilterEntity) {
+        switch entity {
+        case .allLocation:
+            self = .allLocation
+        case .cloudDrive:
+            self = .cloudDrive
+        case .cameraUploads:
+            self = .cameraUploads
+        case .sharedItems:
+            self = .sharedItems
+        }
+    }
+
+    var toVideoLocationFilterEntity: VideoLocationFilterEntity {
+        switch self {
+        case .allLocation:
+            .allLocation
+        case .cloudDrive:
+            .cloudDrive
+        case .cameraUploads:
+            .cameraUploads
+        case .sharedItems:
+            .sharedItems
         }
     }
 }

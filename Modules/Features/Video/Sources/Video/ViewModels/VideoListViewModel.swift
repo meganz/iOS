@@ -6,7 +6,7 @@ import MEGADomain
 import MEGASwift
 
 @MainActor
-final class VideoListViewModel: ObservableObject {
+public final class VideoListViewModel: ObservableObject {
     
     enum ViewState: Equatable {
         case partial
@@ -43,12 +43,10 @@ final class VideoListViewModel: ObservableObject {
     }
     
     @Published var isSheetPresented = false
-    @Published var selectedLocationFilterOption: String = LocationChipFilterOptionType.allLocation.stringValue
-    @Published var selectedDurationFilterOption: String = DurationChipFilterOptionType.allDurations.stringValue
+    @Published public var selectedLocationFilterOption: LocationChipFilterOptionType = .allLocation
+    @Published public var selectedDurationFilterOption: DurationChipFilterOptionType = .allDurations
     var newlySelectedChip: ChipContainerViewModel?
 
-    private var selectedLocationFilterOptionType: LocationChipFilterOptionType { .init(rawValue: selectedLocationFilterOption) ?? .allLocation }
-    private var selectedDurationFilterOptionType: DurationChipFilterOptionType { .init(rawValue: selectedDurationFilterOption) ?? .allDurations }
     private let contentProvider: any VideoListViewModelContentProviderProtocol
     private let monitorSearchRequestsSubject = CurrentValueSubject<MonitorSearchRequest, Never>(.invalidate)
     private let fileSearchUseCase: any FilesSearchUseCaseProtocol
@@ -68,7 +66,7 @@ final class VideoListViewModel: ObservableObject {
         monitorNodeUpdatesTask = nil
     }
     
-    init(
+    public init(
         syncModel: VideoRevampSyncModel,
         contentProvider: some VideoListViewModelContentProviderProtocol,
         selection: VideoSelection,
@@ -76,7 +74,8 @@ final class VideoListViewModel: ObservableObject {
         thumbnailLoader: some ThumbnailLoaderProtocol,
         sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol,
         nodeUseCase: some NodeUseCaseProtocol,
-        featureFlagProvider: some FeatureFlagProviderProtocol
+        featureFlagProvider: some FeatureFlagProviderProtocol,
+        shouldShowFilterChip: Bool = true
     ) {
         self.fileSearchUseCase = fileSearchUseCase
         self.thumbnailLoader = thumbnailLoader
@@ -85,6 +84,7 @@ final class VideoListViewModel: ObservableObject {
         self.featureFlagProvider = featureFlagProvider
         self.syncModel = syncModel
         self.selection = selection
+        self.shouldShowFilterChip = shouldShowFilterChip
         
         self.contentProvider = contentProvider
         
@@ -120,12 +120,10 @@ final class VideoListViewModel: ObservableObject {
         
         // Observe Location Filter Changes
         let locationFilter = $selectedLocationFilterOption
-            .map { LocationChipFilterOptionType(rawValue: $0) ?? .allLocation }
             .removeDuplicates()
 
         // Observe Duration Filter Changes
         let durationFilter = $selectedDurationFilterOption
-            .map { DurationChipFilterOptionType(rawValue: $0) ?? .allDurations }
             .removeDuplicates()
         
         let queryParamSequence = searchText.combineLatest(sortOrder, locationFilter, durationFilter)
@@ -249,37 +247,36 @@ final class VideoListViewModel: ObservableObject {
     private func shouldActivate(chip: ChipContainerViewModel) -> Bool {
         switch chip.type {
         case .location:
-            selectedLocationFilterOptionType != .allLocation
+            selectedLocationFilterOption != .allLocation
         case .duration:
-            selectedDurationFilterOptionType != .allDurations
+            selectedDurationFilterOption != .allDurations
         }
     }
-    
+
     private func title(for chip: ChipContainerViewModel) -> String {
         switch chip.type {
         case .location:
-            if selectedLocationFilterOptionType == .allLocation {
+            if selectedLocationFilterOption == .allLocation {
                 return chip.type.description
             } else {
-                return selectedLocationFilterOption
+                return selectedLocationFilterOption.stringValue
             }
         case .duration:
-            if selectedDurationFilterOptionType == .allDurations {
+            if selectedDurationFilterOption == .allDurations {
                 return chip.type.description
             } else {
-                return selectedDurationFilterOption
+                return selectedDurationFilterOption.stringValue
             }
         }
     }
     
     private func subscribeToChipFilterOptions() {
-        
-        let selectedDurationFilterOptionChangePublisher = $selectedDurationFilterOption.dropFirst()
-        let selectedLocationFilterOptionChangePublisher = $selectedLocationFilterOption.dropFirst()
-        
+
+        let selectedDurationFilterOptionChangePublisher = $selectedDurationFilterOption.dropFirst().map { _ in () }
+        let selectedLocationFilterOptionChangePublisher = $selectedLocationFilterOption.dropFirst().map { _ in () }
+
         selectedDurationFilterOptionChangePublisher
             .merge(with: selectedLocationFilterOptionChangePublisher)
-            .removeDuplicates()
             .map { _ in false } // Trigger auto dismissal of sheet, on filter change
             .receive(on: DispatchQueue.main)
             .assign(to: &$isSheetPresented)

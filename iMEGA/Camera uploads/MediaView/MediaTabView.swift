@@ -6,6 +6,7 @@ import MEGAPermissions
 import MEGAPreference
 import MEGASwiftUI
 import SwiftUI
+import Video
 
 struct MediaTabView: View {
     @ObservedObject var viewModel: MediaTabViewModel
@@ -46,8 +47,21 @@ struct MediaTabView: View {
 
     @ViewBuilder
     private func contentView(for tab: MediaTab) -> some View {
-        // For now, show placeholder for all tabs
-        placeholderView(for: tab)
+        switch viewModel.tabViewModels[tab] {
+        case let videoTabViewModel as VideoTabViewModel:
+            videoListView(videoTabViewModel: videoTabViewModel)
+        default:
+            placeholderView(for: tab)
+        }
+    }
+
+    @ViewBuilder
+    private func videoListView(videoTabViewModel: VideoTabViewModel) -> some View {
+        VideoListView(
+            viewModel: videoTabViewModel.videoListViewModel,
+            videoConfig: videoTabViewModel.videoConfig,
+            router: videoTabViewModel.router
+        )
     }
 
     // MARK: - Placeholder Views (WIP)

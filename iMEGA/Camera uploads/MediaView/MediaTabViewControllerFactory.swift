@@ -5,6 +5,7 @@ import MEGAPermissions
 import MEGAPreference
 import SwiftUI
 import UIKit
+import Video
 
 @MainActor
 struct MediaTabViewControllerFactory {
@@ -30,7 +31,7 @@ struct MediaTabViewControllerFactory {
 
         return MediaTabViewControllerFactory(
             navigationController: navigationController,
-            tabViewModels: makeDefaultTabViewModels(),
+            tabViewModels: makeDefaultTabViewModels(navigationController: navigationController),
             monitorCameraUploadUseCase: makeDefaultMonitorCameraUploadUseCase(),
             devicePermissionHandler: makeDefaultDevicePermissionHandler()
         )
@@ -70,7 +71,7 @@ struct MediaTabViewControllerFactory {
     // MARK: - Private Methods
 
     private func makeMediaTabViewModel() -> MediaTabViewModel {
-        let tabViewModels = self.tabViewModels ?? Self.makeDefaultTabViewModels()
+        let tabViewModels = self.tabViewModels ?? Self.makeDefaultTabViewModels(navigationController: navigationController)
         let monitorCameraUploadUseCase = self.monitorCameraUploadUseCase ?? Self.makeDefaultMonitorCameraUploadUseCase()
         let devicePermissionHandler = self.devicePermissionHandler ?? Self.makeDefaultDevicePermissionHandler()
 
@@ -81,12 +82,21 @@ struct MediaTabViewControllerFactory {
         )
     }
 
-    private static func makeDefaultTabViewModels() -> [MediaTab: any MediaTabInteractiveProvider] {
-        // WIP: Replace with real ViewModels when ready
-        [
+    private static func makeDefaultTabViewModels(navigationController: UINavigationController) -> [MediaTab: any MediaTabInteractiveProvider] {
+        let syncModel = VideoRevampSyncModel()
+        let videoSelection = VideoSelection()
+
+        let videoTabViewModel = MediaTabVideoFactory.makeVideoTabViewModel(
+            syncModel: syncModel,
+            videoSelection: videoSelection,
+            navigationController: navigationController
+        )
+
+        // WIP: Replace other mock ViewModels when ready
+        return [
             .timeline: MockTimelineViewModel(),
             .album: MockAlbumViewModel(),
-            .video: MockVideoViewModel(),
+            .video: videoTabViewModel,
             .playlist: MockPlaylistViewModel()
         ]
     }

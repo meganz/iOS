@@ -21,19 +21,25 @@ public final class CMEntity: CMElement {
     public var currentSortType: SortOrderEntity?
     public var currentFilterType: FilterEntity?
     public var dndRemainingTime: String?
-    
+    public var currentVideoLocationFilter: VideoLocationFilterEntity?
+    public var currentVideoDurationFilter: VideoDurationFilterEntity?
+
     public init(type: CMElementTypeEntity = .unknown,
                 displayInline: Bool = false,
                 currentChatStatus: ChatStatusEntity? = nil,
                 currentSortType: SortOrderEntity? = nil,
                 currentFilterType: FilterEntity? = nil,
                 dndRemainingTime: String? = nil,
+                currentVideoLocationFilter: VideoLocationFilterEntity? = nil,
+                currentVideoDurationFilter: VideoDurationFilterEntity? = nil,
                 children: [CMElement]) {
         self.displayInline = displayInline
         self.currentChatStatus = currentChatStatus
         self.currentSortType = currentSortType
         self.currentFilterType = currentFilterType
         self.dndRemainingTime = dndRemainingTime
+        self.currentVideoLocationFilter = currentVideoLocationFilter
+        self.currentVideoDurationFilter = currentVideoDurationFilter
         self.children = children
         super.init(type: type)
     }

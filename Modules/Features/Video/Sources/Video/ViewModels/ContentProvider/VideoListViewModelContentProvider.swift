@@ -1,14 +1,14 @@
 import MEGADomain
 
-struct VideoListViewModelContentProvider: VideoListViewModelContentProviderProtocol {
+public struct VideoListViewModelContentProvider: VideoListViewModelContentProviderProtocol {
     
     private let photoLibraryUseCase: any PhotoLibraryUseCaseProtocol
     
-    init(photoLibraryUseCase: any PhotoLibraryUseCaseProtocol) {
+    public init(photoLibraryUseCase: any PhotoLibraryUseCaseProtocol) {
         self.photoLibraryUseCase = photoLibraryUseCase
     }
     
-    func search(by searchText: String = "", sortOrderType: SortOrderEntity, durationFilterOptionType: DurationChipFilterOptionType, locationFilterOptionType: LocationChipFilterOptionType) async throws -> [NodeEntity] {
+    public func search(by searchText: String = "", sortOrderType: SortOrderEntity, durationFilterOptionType: DurationChipFilterOptionType, locationFilterOptionType: LocationChipFilterOptionType) async throws -> [NodeEntity] {
         let filteredLocationVideos = try await videos(by: searchText, sortOrderType: sortOrderType, locationFilterOptionType: locationFilterOptionType)
         try Task.checkCancellation()
         return videosFiltered(by: durationFilterOptionType, videos: filteredLocationVideos)

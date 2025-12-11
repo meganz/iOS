@@ -524,13 +524,13 @@ final class VideoListViewModelTests: XCTestCase {
             sut.chips.first(where: { $0.type == .location }),
             "Expect to have Location chip"
         )
-        sut.selectedLocationFilterOption = selectedFilterOptionType.stringValue
+        sut.selectedLocationFilterOption = selectedFilterOptionType
         
         let exp = expectation(description: "selected location filter option triggered")
         let cancellation = sut.$selectedLocationFilterOption
             .receive(on: DispatchQueue.main)
             .sink { selectedLocationFilterOption in
-                XCTAssertEqual(selectedLocationFilterOption, selectedFilterOptionType.stringValue)
+                XCTAssertEqual(selectedLocationFilterOption, selectedFilterOptionType)
                 XCTAssertFalse(sut.isSheetPresented)
                 exp.fulfill()
             }
@@ -560,13 +560,13 @@ final class VideoListViewModelTests: XCTestCase {
             sut.chips.first(where: { $0.type == .duration }),
             "Expect to have Duration chip"
         )
-        sut.selectedDurationFilterOption = selectedFilterOptionType.stringValue
+        sut.selectedDurationFilterOption = selectedFilterOptionType
         
         let exp = expectation(description: "selected location filter option triggered")
         let cancellation = sut.$selectedDurationFilterOption
             .receive(on: DispatchQueue.main)
             .sink { selectedDurationFilterOption in
-                XCTAssertEqual(selectedDurationFilterOption, selectedFilterOptionType.stringValue)
+                XCTAssertEqual(selectedDurationFilterOption, selectedFilterOptionType)
                 XCTAssertFalse(sut.isSheetPresented)
                 exp.fulfill()
             }
@@ -596,13 +596,13 @@ final class VideoListViewModelTests: XCTestCase {
             sut.chips.first(where: { $0.type == .location }),
             "Expect to have Location chip"
         )
-        sut.selectedLocationFilterOption = previousFilterOptionType.stringValue
+        sut.selectedLocationFilterOption = previousFilterOptionType
         
         let exp1 = expectation(description: "selected location filter option triggered")
         let cancellation1 = sut.$selectedLocationFilterOption
             .receive(on: DispatchQueue.main)
             .sink { selectedLocationFilterOption in
-                XCTAssertEqual(selectedLocationFilterOption, previousFilterOptionType.stringValue)
+                XCTAssertEqual(selectedLocationFilterOption, previousFilterOptionType)
                 XCTAssertFalse(sut.isSheetPresented)
                 exp1.fulfill()
             }
@@ -620,13 +620,13 @@ final class VideoListViewModelTests: XCTestCase {
         
         // Arrange 2 - select default option
         let selectedFilterOptionType: LocationChipFilterOptionType = .allLocation
-        sut.selectedLocationFilterOption = selectedFilterOptionType.stringValue
+        sut.selectedLocationFilterOption = selectedFilterOptionType
         
         let exp2 = expectation(description: "selected location filter option triggered")
         let cancellation2 = sut.$selectedLocationFilterOption
             .receive(on: DispatchQueue.main)
             .sink { selectedLocationFilterOption in
-                XCTAssertEqual(selectedLocationFilterOption, selectedFilterOptionType.stringValue)
+                XCTAssertEqual(selectedLocationFilterOption, selectedFilterOptionType)
                 XCTAssertFalse(sut.isSheetPresented)
                 exp2.fulfill()
             }
@@ -660,13 +660,13 @@ final class VideoListViewModelTests: XCTestCase {
             sut.chips.first(where: { $0.type == .duration }),
             "Expect to have Location chip"
         )
-        sut.selectedDurationFilterOption = previousFilterOptionType.stringValue
+        sut.selectedDurationFilterOption = previousFilterOptionType
         
         let exp1 = expectation(description: "selected duration filter option triggered")
         let cancellation1 = sut.$selectedDurationFilterOption
             .receive(on: DispatchQueue.main)
             .sink { selectedDurationFilterOption in
-                XCTAssertEqual(selectedDurationFilterOption, previousFilterOptionType.stringValue)
+                XCTAssertEqual(selectedDurationFilterOption, previousFilterOptionType)
                 XCTAssertFalse(sut.isSheetPresented)
                 exp1.fulfill()
             }
@@ -684,13 +684,13 @@ final class VideoListViewModelTests: XCTestCase {
         
         // Arrange 2 - select default option
         let selectedFilterOptionType: DurationChipFilterOptionType = .allDurations
-        sut.selectedDurationFilterOption = selectedFilterOptionType.stringValue
+        sut.selectedDurationFilterOption = selectedFilterOptionType
         
         let exp2 = expectation(description: "selected location filter option triggered")
         let cancellation2 = sut.$selectedDurationFilterOption
             .receive(on: DispatchQueue.main)
             .sink { selectedDurationFilterOption in
-                XCTAssertEqual(selectedDurationFilterOption, selectedFilterOptionType.stringValue)
+                XCTAssertEqual(selectedDurationFilterOption, selectedFilterOptionType)
                 XCTAssertFalse(sut.isSheetPresented)
                 exp2.fulfill()
             }
@@ -762,7 +762,7 @@ final class VideoListViewModelTests: XCTestCase {
         let (sut, _, _, _) = makeSUT(
             photoLibraryUseCase: MockPhotoLibraryUseCase(allVideos: videoNodes)
         )
-        sut.selectedDurationFilterOption = DurationChipFilterOptionType.allDurations.stringValue
+        sut.selectedDurationFilterOption = DurationChipFilterOptionType.allDurations
         trackTaskCancellation { await sut.onViewAppear() }
         
         let videosExp = expectation(description: "wait for videos")
@@ -804,7 +804,7 @@ final class VideoListViewModelTests: XCTestCase {
         let messages = await photoLibraryUseCase.messages
         XCTAssertEqual(messages, [ .media ])
         
-        sut.selectedDurationFilterOption = DurationChipFilterOptionType.lessThan10Seconds.stringValue
+        sut.selectedDurationFilterOption = DurationChipFilterOptionType.lessThan10Seconds
         
         await expectedVideos(videoNodes.filter { $0.duration < 10 })
 
@@ -839,7 +839,7 @@ final class VideoListViewModelTests: XCTestCase {
         let messages = await photoLibraryUseCase.messages
         XCTAssertEqual(messages, [ .media ])
         
-        sut.selectedDurationFilterOption = DurationChipFilterOptionType.between10And60Seconds.stringValue
+        sut.selectedDurationFilterOption = DurationChipFilterOptionType.between10And60Seconds
         
         await expectedVideos(videoNodes.filter { $0.duration >= 10 && $0.duration < 60 })
         let messages2 = await photoLibraryUseCase.messages
@@ -871,7 +871,7 @@ final class VideoListViewModelTests: XCTestCase {
         let messages = await photoLibraryUseCase.messages
         XCTAssertEqual(messages, [ .media ])
         
-        sut.selectedDurationFilterOption = DurationChipFilterOptionType.between1And4Minutes.stringValue
+        sut.selectedDurationFilterOption = DurationChipFilterOptionType.between1And4Minutes
 
         await expectedVideos(videoNodes.filter { $0.duration >= 60 && $0.duration < 240 })
         let messages2 = await photoLibraryUseCase.messages
@@ -903,7 +903,7 @@ final class VideoListViewModelTests: XCTestCase {
         let messages = await photoLibraryUseCase.messages
         XCTAssertEqual(messages, [ .media ])
         
-        sut.selectedDurationFilterOption = DurationChipFilterOptionType.between4And20Minutes.stringValue
+        sut.selectedDurationFilterOption = DurationChipFilterOptionType.between4And20Minutes
         await expectedVideos(videoNodes.filter { $0.duration >= 240 && $0.duration < 1200 })
 
         let messages2 = await photoLibraryUseCase.messages
@@ -937,7 +937,7 @@ final class VideoListViewModelTests: XCTestCase {
         XCTAssertEqual(messages, [ .media ])
         XCTAssertEqual(sut.videos, videoNodes)
         
-        sut.selectedDurationFilterOption = DurationChipFilterOptionType.moreThan20Minutes.stringValue
+        sut.selectedDurationFilterOption = DurationChipFilterOptionType.moreThan20Minutes
         
         await expectedVideos(videoNodes.filter { $0.duration >= 1200 })
         let messages2 = await photoLibraryUseCase.messages
@@ -974,7 +974,7 @@ final class VideoListViewModelTests: XCTestCase {
         let messages = await photoLibraryUseCase.messages
         XCTAssertEqual(messages, [ .media ])
         
-        sut.selectedLocationFilterOption = LocationChipFilterOptionType.cloudDrive.stringValue
+        sut.selectedLocationFilterOption = LocationChipFilterOptionType.cloudDrive
         await expectedVideos(cloudDriveNodes)
         let messages2 = await photoLibraryUseCase.messages
         XCTAssertEqual(messages2, [ .media, .media ]) // load media again after the filter
@@ -1005,7 +1005,7 @@ final class VideoListViewModelTests: XCTestCase {
         let messages = await photoLibraryUseCase.messages
         XCTAssertEqual(messages, [ .media ])
         
-        sut.selectedLocationFilterOption = LocationChipFilterOptionType.sharedItems.stringValue
+        sut.selectedLocationFilterOption = LocationChipFilterOptionType.sharedItems
         
         await expectedVideos([])
         let messages2 = await photoLibraryUseCase.messages

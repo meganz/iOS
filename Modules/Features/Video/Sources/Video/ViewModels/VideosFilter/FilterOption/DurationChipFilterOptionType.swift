@@ -1,6 +1,7 @@
+import MEGADomain
 import MEGAL10n
 
-enum DurationChipFilterOptionType: CaseIterable, Sendable {
+public enum DurationChipFilterOptionType: CaseIterable, Sendable {
     case allDurations
     case lessThan10Seconds
     case between10And60Seconds
@@ -8,7 +9,7 @@ enum DurationChipFilterOptionType: CaseIterable, Sendable {
     case between4And20Minutes
     case moreThan20Minutes
     
-    init?(rawValue: String) {
+    public init?(rawValue: String) {
         switch rawValue {
         case Strings.Localizable.Videos.Tab.All.Filter.Duration.Option.allDurations:
             self = .allDurations
@@ -27,7 +28,7 @@ enum DurationChipFilterOptionType: CaseIterable, Sendable {
         }
     }
     
-    var stringValue: String {
+    public var stringValue: String {
         switch self {
         case .allDurations:
             Strings.Localizable.Videos.Tab.All.Filter.Duration.Option.allDurations
@@ -41,6 +42,44 @@ enum DurationChipFilterOptionType: CaseIterable, Sendable {
             Strings.Localizable.Videos.Tab.All.Filter.Duration.Option.between4And20Minutes
         case .moreThan20Minutes:
             Strings.Localizable.Videos.Tab.All.Filter.Duration.Option.moreThan20Minutes
+        }
+    }
+}
+
+// MARK: - Domain Entity Conversion
+
+public extension DurationChipFilterOptionType {
+    init(from entity: VideoDurationFilterEntity) {
+        switch entity {
+        case .allDurations:
+            self = .allDurations
+        case .lessThan10Seconds:
+            self = .lessThan10Seconds
+        case .between10And60Seconds:
+            self = .between10And60Seconds
+        case .between1And4Minutes:
+            self = .between1And4Minutes
+        case .between4And20Minutes:
+            self = .between4And20Minutes
+        case .moreThan20Minutes:
+            self = .moreThan20Minutes
+        }
+    }
+
+    var toVideoDurationFilterEntity: VideoDurationFilterEntity {
+        switch self {
+        case .allDurations:
+            .allDurations
+        case .lessThan10Seconds:
+            .lessThan10Seconds
+        case .between10And60Seconds:
+            .between10And60Seconds
+        case .between1And4Minutes:
+            .between1And4Minutes
+        case .between4And20Minutes:
+            .between4And20Minutes
+        case .moreThan20Minutes:
+            .moreThan20Minutes
         }
     }
 }

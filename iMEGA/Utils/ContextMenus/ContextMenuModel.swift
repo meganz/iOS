@@ -16,7 +16,9 @@ struct ContextMenuModel {
     var currentSortType: String?
     var dndRemainingTime: String?
     var currentFilterType: String?
-    
+    var currentVideoLocationFilter: String?
+    var currentVideoDurationFilter: String?
+
     lazy var data: ContextMenuDataModel? = {
         guard let cmData = dataFor(type: type) else { return nil }
         return cmData
