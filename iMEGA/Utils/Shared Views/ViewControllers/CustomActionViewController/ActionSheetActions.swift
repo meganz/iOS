@@ -259,7 +259,7 @@ extension NodeAction {
     }
     
     class func manageLinkAction(nodeCount: Int = 1) -> NodeAction {
-        NodeAction(title: Strings.Localizable.General.MenuAction.ManageLink.title(nodeCount), image: .shareLink, type: .manageLink)
+        NodeAction(title: Strings.Localizable.General.MenuAction.ManageLink.title(nodeCount), image: .manageLink, type: .manageLink)
     }
     
     class func removeLinkAction(nodeCount: Int = 1) -> NodeAction {
@@ -416,7 +416,8 @@ private extension UIImage {
     }
 
     static var download: UIImage { isCloudDriveRevampEnabled ? MEGAAssets.UIImage.arrowDownCircle : MEGAAssets.UIImage.offline }
-    static var shareLink: UIImage { isCloudDriveRevampEnabled ? MEGAAssets.UIImage.linkGear : MEGAAssets.UIImage.link }
+    static var shareLink: UIImage { isCloudDriveRevampEnabled ? MEGAAssets.UIImage.link01 : MEGAAssets.UIImage.link }
+    static var manageLink: UIImage { isCloudDriveRevampEnabled ? MEGAAssets.UIImage.linkGear : MEGAAssets.UIImage.link }
     static var removelink: UIImage { isCloudDriveRevampEnabled ? MEGAAssets.UIImage.linkOff02 : MEGAAssets.UIImage.removeLink }
     static var shareFolder: UIImage { isCloudDriveRevampEnabled ? MEGAAssets.UIImage.folderUsersMono : MEGAAssets.UIImage.shareFolder }
 
