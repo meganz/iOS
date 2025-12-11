@@ -1,6 +1,7 @@
 import MEGAAnalyticsiOS
 import MEGAAppPresentation
 import MEGAAppSDKRepo
+import MEGADesignToken
 import MEGADomain
 import Search
 import SwiftUI
@@ -141,6 +142,7 @@ class FilesExplorerViewController: ExplorerBaseViewController {
         let hostingViewController = UIHostingController(rootView: headerContentView)
         headerView.wrap(hostingViewController.view)
         addChild(hostingViewController)
+        hostingViewController.view.backgroundColor = TokenColors.Background.page
         return headerView
     }
 }
