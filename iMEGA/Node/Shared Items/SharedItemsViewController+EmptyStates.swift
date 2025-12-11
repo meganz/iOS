@@ -2,7 +2,7 @@ import MEGAAssets
 import MEGAL10n
 
 extension SharedItemsViewController {
-    private func hasContentToDisplay() -> Bool {
+    @objc func hasContentToDisplay() -> Bool {
         guard MEGAReachabilityManager.isReachable() else {
             return false
         }

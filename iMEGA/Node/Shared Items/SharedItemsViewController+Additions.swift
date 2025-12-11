@@ -22,6 +22,7 @@ extension SharedItemsViewController {
     @objc func shouldShowSortingHeader(for section: Int) -> Bool {
         section == SharedItemsViewControllerSection.sortHeader.rawValue
         && DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .cloudDriveRevamp)
+        && hasContentToDisplay()
     }
 
     @objc func createSharedItemsViewModel() -> SharedItemsViewModel {
