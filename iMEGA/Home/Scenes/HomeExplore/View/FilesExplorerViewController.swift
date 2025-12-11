@@ -87,14 +87,6 @@ class FilesExplorerViewController: ExplorerBaseViewController {
     func setEditingMode() {
         fatalError("setEditingMode() needs to be implemented by the subclass")
     }
-    
-    func configureSearchController(_ searchController: UISearchController) {
-        fatalError("configureSearchController(searchController:) needs to be implemented by the subclass")
-    }
-    
-    func removeSearchController(_ searchController: UISearchController) {
-        fatalError("removeSearchController(searchController:) needs to be implemented by the subclass")
-    }
 
     func selectNodes(_ nodes: [MEGANode]) {
         fatalError("selectNodes(_:) needs to be implemented by the subclass")

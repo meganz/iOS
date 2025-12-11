@@ -74,17 +74,6 @@ class FilesExplorerGridViewController: FilesExplorerViewController {
         configureToolbarButtons()
         delegate?.didSelectNodes(withCount: gridSource?.selectedNodes?.count ?? 0)
     }
-
-    override func removeSearchController(_ searchController: UISearchController) {
-        guard let searchBar = searchBarView.subviews.first,
-              searchBar == searchController.searchBar else {
-            return
-        }
-        
-        searchController.searchBar.removeFromSuperview()
-        searchBarView.removeFromSuperview()
-        collectionView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-    }
     
     override func setEditingMode() {
         setEditing(true, animated: true)
@@ -224,7 +213,12 @@ extension FilesExplorerGridViewController: UICollectionViewDelegate {
         layout collectionViewLayout: UICollectionViewLayout!,
         heightForHeaderInSection section: Int
     ) -> CGFloat {
-        guard DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .cloudDriveRevamp), section == 0 else { return 0 }
+        guard DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .cloudDriveRevamp),
+              section == 0,
+              gridSource?.nodes?.isNotEmpty == true else {
+            return 0
+        }
+
         return 40
     }
 

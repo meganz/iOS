@@ -17,11 +17,16 @@ class FilesExplorerListViewController: FilesExplorerViewController {
             tableView.dataSource = listSource
             tableView.delegate = listSource
             tableView.emptyDataSetSource = self
+            tableView.emptyDataSetDelegate = self
             tableView.reloadData()
             tableView.reloadEmptyDataSet()
         }
     }
-    
+
+    private var isCloudDriveRevampEnabled: Bool {
+        DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .cloudDriveRevamp)
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -55,19 +60,6 @@ class FilesExplorerListViewController: FilesExplorerViewController {
         delegate?.didSelectNodes(withCount: listSource?.selectedNodes?.count ?? 0)
     }
 
-    override func configureSearchController(_ searchController: UISearchController) {
-        tableView.tableHeaderView = searchController.searchBar
-        searchController.searchBar.barTintColor = TokenColors.Background.page
-    }
-    
-    override func removeSearchController(_ searchController: UISearchController) {
-        guard tableView.tableHeaderView == searchController.searchBar else {
-            return
-        }
-        
-        tableView.tableHeaderView = nil
-    }
-    
     override func setEditingMode() {
         tableView.setEditing(true, animated: true)
         tableView.allowsMultipleSelectionDuringEditing = true
@@ -141,10 +133,16 @@ class FilesExplorerListViewController: FilesExplorerViewController {
     
     private func addAndConfigureTableView() {
         view.wrap(tableView)
+        setHeaderIfNeeded()
+    }
 
-        if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .cloudDriveRevamp) {
-            tableView.tableHeaderView = headerView()
-        }
+    private func setHeaderIfNeeded() {
+        guard isCloudDriveRevampEnabled else { return }
+        tableView.tableHeaderView = headerView()
+    }
+
+    private func removeHeader() {
+        tableView.tableHeaderView = nil
     }
 }
 
@@ -183,5 +181,15 @@ extension FilesExplorerListViewController: FilesExplorerListSourceDelegate {
     
     func download(node: MEGANode) {
         viewModel.dispatch(.downloadNode(node))
+    }
+}
+
+extension FilesExplorerListViewController: @MainActor DZNEmptyDataSetDelegate {
+    func emptyDataSetWillAppear(_ scrollView: UIScrollView) {
+        removeHeader()
+    }
+
+    func emptyDataSetWillDisappear(_ scrollView: UIScrollView) {
+        setHeaderIfNeeded()
     }
 }
