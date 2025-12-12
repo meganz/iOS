@@ -641,22 +641,32 @@ static TransfersWidgetViewController* instance = nil;
 }
 
 - (void)deleteUploadingTransfer:(MEGATransfer *)transfer {
-    if (self.inProgressButton.selected) {
-        NSIndexPath *indexPath = [self indexPathForPendingTransfer:transfer];
-        if (indexPath) {
-            [self.transfers removeObjectAtIndex:indexPath.row];
-            [self.tableView reloadData];
-            [self updateEmptyStateIfNeeded];
-            if (![self hasActiveTransfers]) {
-                [[TransfersWidgetViewController sharedTransferViewController].progressView configureData];
-                self.toolbar.hidden = YES;
+    if (MEGAReachabilityManager.isReachable) {
+        if (self.inProgressButton.selected) {
+            NSIndexPath *indexPath = [self indexPathForPendingTransfer:transfer];
+            if (indexPath) {
+                [self.transfers removeObjectAtIndex:indexPath.row];
+                [self.tableView reloadData];
+                [self updateEmptyStateIfNeeded];
+                if (![self hasActiveTransfers]) {
+                    [[TransfersWidgetViewController sharedTransferViewController].progressView configureData];
+                    self.toolbar.hidden = YES;
+                }
             }
+        } else {
+            NSInteger expectedRowCount = self.completedTransfers.count - 1;
+            NSInteger currentRowCount = [self.tableView numberOfRowsInSection:0];
+            
+            if (expectedRowCount >= 0 && expectedRowCount == currentRowCount) {
+                NSIndexPath *indexPath = [NSIndexPath indexPathForRow:expectedRowCount inSection:0];
+                [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+            } else {
+                [self.tableView reloadData];
+            }
+            
+            [self updateEmptyStateIfNeeded];
+            self.toolbar.hidden = NO;
         }
-    } else {
-        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:self.completedTransfers.count - 1 inSection:0];
-        [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-        [self updateEmptyStateIfNeeded];
-        self.toolbar.hidden = NO;
     }
 }
 
