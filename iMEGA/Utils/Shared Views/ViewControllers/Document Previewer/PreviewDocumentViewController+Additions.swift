@@ -128,7 +128,9 @@ extension PreviewDocumentViewController {
         ImportLinkRouter(
             isFolderLink: false,
             nodes: [node],
-            presenter: self).start()
+            presenter: self,
+            dismissBeforePresent: false
+        ).start()
     }
 }
 
