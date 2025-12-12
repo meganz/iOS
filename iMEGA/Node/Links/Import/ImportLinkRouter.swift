@@ -11,16 +11,23 @@ final class ImportLinkRouter: ImportLinkRouting {
     private var importCompletion: (() -> Void)?
     private weak var presenter: UIViewController?
     
+    /// Determines whether the router should dismiss the current presenter before presenting the browser.
+    /// When `dismissBeforePresent` is `false`, the presenter is not dismissed. This is used in scenarios where the user initiates an import, for example, from a file preview,
+    /// meaning the file is currently open and we want to avoid dismissing its container view controller to preserve the preview state.
+    private let dismissBeforePresent: Bool
+    
     init(
         isFolderLink: Bool,
         nodes: [MEGANode],
         presenter: UIViewController,
+        dismissBeforePresent: Bool = true,
         importCompletion: (() -> Void)? = nil
     ) {
         self.isFolderLink = isFolderLink
         self.nodes = nodes
         self.presenter = presenter
         self.importCompletion = importCompletion
+        self.dismissBeforePresent = dismissBeforePresent
     }
     
     func start() {
@@ -41,16 +48,20 @@ final class ImportLinkRouter: ImportLinkRouting {
         browserVC.selectedNodesArray = nodes
         browserVC.browserAction = isFolderLink ? .importFromFolderLink : .import
         browserVC.onCopyNodesCompletion = importCompletion
-
+        
         if isFolderLink {
             presenter?.present(navigationController, animated: true)
         } else {
-            guard let presentingVC = presenter?.presentingViewController else {
+            if dismissBeforePresent {
+                guard let presentingVC = presenter?.presentingViewController else {
+                    presenter?.present(navigationController, animated: true)
+                    return
+                }
+                presenter?.dismiss(animated: true) { [weak presentingVC] in
+                    presentingVC?.present(navigationController, animated: true)
+                }
+            } else {
                 presenter?.present(navigationController, animated: true)
-                return
-            }
-            presenter?.dismiss(animated: true) { [weak presentingVC] in
-                presentingVC?.present(navigationController, animated: true)
             }
         }
     }
