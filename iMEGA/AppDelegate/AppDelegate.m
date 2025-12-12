@@ -133,7 +133,9 @@
     
     UIDevice.currentDevice.batteryMonitoringEnabled = YES;
     UNUserNotificationCenter.currentNotificationCenter.delegate = self;
+#if !defined(DEBUG)
     [self startAPMIfNeeded];
+#endif
     return YES;
 }
 
