@@ -81,8 +81,8 @@ let package = Package(
         ),
         .binaryTarget(
             name: "libmega",
-            url: "https://s3.g.s4.mega.io/dmlaaezwz52y37atz56mfvmrvltfagrltbgpr/ios-xcframeworks/libmega_25_11_13.xcframework.zip",
-            checksum: "484d6a889753d333402e74a082a35f5cc55600a4bee59d244d40315feb98da5c"
+            url: "https://s3.g.s4.mega.io/dmlaaezwz52y37atz56mfvmrvltfagrltbgpr/ios-xcframeworks/libmega_25_12_12.xcframework.zip",
+            checksum: "f1e94204bf47c79f65733bc5e9b9606857448a1645c88a59d106c643fac38b92"
         )
     ],
     cxxLanguageStandard: .cxx17
