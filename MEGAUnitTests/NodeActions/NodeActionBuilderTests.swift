@@ -1497,7 +1497,19 @@ class NodeActionBuilderTests {
         
         #expect(isEqual(nodeActionTypes: [.favourite, .download, .shareLink, .exportFile, .sendToChat]) == true)
     }
-    
+
+    @Test
+    func testMultiselectMediaFiles_photosAlbum_shouldReturnCorrrectActions() {
+        actions = NodeActionBuilder()
+            .setNodeSelectionType(.files, selectedNodeCount: 4)
+            .setIsFavourite(true)
+            .setAreMediaFiles(true)
+            .setDisplayMode(.photosAlbum)
+            .multiselectBuild()
+
+        #expect(isEqual(nodeActionTypes: [.download, .shareLink, .exportFile, .sendToChat, .remove]) == true)
+    }
+
     @Test
     func testMultiselectMediaFiles_hiddenForPhotosFavouriteAlbum_shouldReturnCorrrectActions() {
         let expectations: [(isHidden: Bool?, nodeAction: MegaNodeActionType?)] = [

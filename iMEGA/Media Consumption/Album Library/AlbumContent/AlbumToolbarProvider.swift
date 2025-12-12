@@ -232,7 +232,7 @@ extension AlbumContentViewController: NodeActionViewControllerDelegate {
             moveBarButtonPressed(sender)
         case .shareLink:
             shareLinkButtonPressed(sender)
-        case .moveToRubbishBin:
+        case .remove:
             deleteButtonPressed(sender)
         case .exportFile:
             didPressedExportFile(sender)

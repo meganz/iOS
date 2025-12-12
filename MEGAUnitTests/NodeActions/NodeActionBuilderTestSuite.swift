@@ -189,7 +189,7 @@ struct NodeActionBuilderTestSuite {
                 .setAreMediaFiles(true)
                 .setDisplayMode(displayMode)
                 .multiselectBuild()
-            #expect(actions.types == [.download, .shareLink, .exportFile, .sendToChat, .moveToRubbishBin])
+            #expect(actions.types == [.download, .shareLink, .exportFile, .sendToChat, .remove])
         }
 
         @Test("when one node inherits sensitivity on a active account paying account.")
@@ -203,7 +203,7 @@ struct NodeActionBuilderTestSuite {
                 .setIsHidden(true)
                 .multiselectBuild()
 
-            #expect(actions.types == [.download, .shareLink, .exportFile, .sendToChat, .unhide, .moveToRubbishBin])
+            #expect(actions.types == [.download, .shareLink, .exportFile, .sendToChat, .unhide, .remove])
         }
 
         @Test("when no nodes inherit sensitivity")
@@ -216,7 +216,7 @@ struct NodeActionBuilderTestSuite {
                 .setIsHidden(false)
                 .multiselectBuild()
 
-            #expect(actions.types == [.download, .shareLink, .exportFile, .sendToChat, .hide, .moveToRubbishBin])
+            #expect(actions.types == [.download, .shareLink, .exportFile, .sendToChat, .hide, .remove])
         }
 
         @Test("when isHidden equals nil, on a active account paying account", arguments: [
@@ -247,7 +247,7 @@ struct NodeActionBuilderTestSuite {
                 .setAddToDestination(destination)
                 .multiselectBuild()
 
-            #expect(actions.types == [.download, .shareLink, .exportFile, .sendToChat, .moveToRubbishBin])
+            #expect(actions.types == [.download, .shareLink, .exportFile, .sendToChat, .remove])
         }
     }
     

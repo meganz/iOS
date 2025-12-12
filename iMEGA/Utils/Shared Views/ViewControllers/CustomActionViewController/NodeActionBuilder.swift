@@ -874,7 +874,7 @@ final class NodeActionBuilder {
         if let hiddenStateAction = hiddenStateAction() {
             actions.append(hiddenStateAction)
         }
-        actions.append(.moveToRubbishBinAction())
+        actions.append(.removeFromAlbumAction())
         return actions
     }
     

@@ -245,7 +245,11 @@ extension NodeAction {
     class func removeAction() -> NodeAction {
         NodeAction(title: Strings.Localizable.General.MenuAction.deletePermanently, image: .rubbishBin, type: .remove)
     }
-    
+
+    class func removeFromAlbumAction() -> NodeAction {
+        NodeAction(title: Strings.Localizable.remove, image: .rubbishBin, type: .remove)
+    }
+
     class func leaveSharingAction() -> NodeAction {
         NodeAction(title: Strings.Localizable.leaveFolder, image: MEGAAssets.UIImage.leaveShare, type: .leaveSharing)
     }
