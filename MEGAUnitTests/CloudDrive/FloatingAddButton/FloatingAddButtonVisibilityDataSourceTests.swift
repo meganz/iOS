@@ -10,6 +10,14 @@ import Testing
 @Suite("FloatingAddButtonVisibilityDataSourceTests")
 @MainActor
 struct FloatingAddButtonVisibilityDataSourceTests {
+
+    actor ResultCollector {
+        var results = [Bool]()
+        func collecValue(_ value: Bool) {
+            results.append(value)
+        }
+    }
+
     typealias Test = FloatingAddButtonVisibilityDataSourceTests
     enum TestInput {
         static let parentNode = NodeEntity(handle: 0)
@@ -43,7 +51,7 @@ struct FloatingAddButtonVisibilityDataSourceTests {
         displayMode: DisplayMode,
         isFromViewInFolder: Bool,
         nodeAccessLevel: NodeAccessTypeEntity,
-        nodeUpdatesProvider: MockNodeUpdatesProvider = MockNodeUpdatesProvider(),
+        nodeUpdatesProvider: some NodeUpdatesProviderProtocol = MockNodeUpdatesProvider(),
         searchResultsEmptyStateProvider: MockSearchResultsEmptyStateProvider = MockSearchResultsEmptyStateProvider()
     ) async -> FloatingAddButtonVisibilityDataSource {
         FloatingAddButtonVisibilityDataSource(
@@ -55,21 +63,13 @@ struct FloatingAddButtonVisibilityDataSourceTests {
         )
     }
 
-    private static func collectOutputs(_ sut: FloatingAddButtonVisibilityDataSource) async -> [Bool] {
-        var results = [Bool]()
-        for await val in sut.floatingButtonVisibility {
-            results.append(val)
-        }
-        return results
-    }
-
     @Suite("Test emission of `floatingButtonVisibility` from node NodeUpdateProvider.nodeUpdates")
     struct NodeUpdatesTests {
         @Suite("Single emission of `floatingButtonVisibility`", .serialized)
         struct SingleValue {
             @Test("Nil parentNode always yields `[false]`",
                   arguments: TestInput.allNodeAccessLevels, TestInput.allDisplayModes)
-            @MainActor func nilParentNode(nodeAccessLevel: NodeAccessTypeEntity, displayMode: DisplayMode) async {
+            func nilParentNode(nodeAccessLevel: NodeAccessTypeEntity, displayMode: DisplayMode) async {
                 for isFromViewInFolder in TestInput.allIsFromViewInFolder {
                     let sut = await Test.makeSUT(
                         parentNode: nil,
@@ -78,17 +78,17 @@ struct FloatingAddButtonVisibilityDataSourceTests {
                         nodeAccessLevel: nodeAccessLevel
                     )
 
-                    var results = [Bool]()
+                    let collector = ResultCollector()
                     for await val in sut.floatingButtonVisibility {
-                        results.append(val)
+                       await collector.collecValue(val)
                     }
-                    #expect(results == [false])
+                    #expect(await collector.results == [false])
                 }
             }
 
             @Test("Non-nil parentNode with enabled inputs yields `[true]`",
                   arguments: TestInput.enabledNodeAccessLevels, TestInput.enabledDisplayModes)
-            @MainActor func nonNilParentNodeEnabled(nodeAccessLevel: NodeAccessTypeEntity, displayMode: DisplayMode) async {
+            func nonNilParentNodeEnabled(nodeAccessLevel: NodeAccessTypeEntity, displayMode: DisplayMode) async {
 
                 for isFromViewInFolder in TestInput.enabledIsFromViewInFolder {
                     let searchResultsEmptyStateProvider = MockSearchResultsEmptyStateProvider()
@@ -100,10 +100,10 @@ struct FloatingAddButtonVisibilityDataSourceTests {
                         searchResultsEmptyStateProvider: searchResultsEmptyStateProvider
                     )
 
-                    var results = [Bool]()
+                    let collector = ResultCollector()
                     let task = Task {
                         for await val in sut.floatingButtonVisibility.prefix(1) {
-                            results.append(val)
+                           await collector.collecValue(val)
                         }
 
                     }
@@ -112,13 +112,13 @@ struct FloatingAddButtonVisibilityDataSourceTests {
 
                     await task.value
 
-                    #expect(results == [true])
+                    #expect(await collector.results == [true])
                 }
             }
 
             @Test("Non-nil parentNode with disabled access levels yields `[false]`",
                   arguments: TestInput.disabledNodeAccesslevels, TestInput.allDisplayModes)
-            @MainActor func nonNilParentNodeWithDisabledNodeAccessLevels(nodeAccessLevel: NodeAccessTypeEntity, displayMode: DisplayMode) async {
+            func nonNilParentNodeWithDisabledNodeAccessLevels(nodeAccessLevel: NodeAccessTypeEntity, displayMode: DisplayMode) async {
                 for isFromViewInFolder in TestInput.allIsFromViewInFolder {
                     let searchResultsEmptyStateProvider = MockSearchResultsEmptyStateProvider()
                     let sut = await Test.makeSUT(
@@ -129,23 +129,23 @@ struct FloatingAddButtonVisibilityDataSourceTests {
                         searchResultsEmptyStateProvider: searchResultsEmptyStateProvider
                     )
 
-                    var results = [Bool]()
+                    let collector = ResultCollector()
                     let task = Task {
                         for await val in sut.floatingButtonVisibility.prefix(1) {
-                            results.append(val)
+                           await collector.collecValue(val)
                         }
                     }
 
                     searchResultsEmptyStateProvider.simulateEvent(false)
                     await task.value
 
-                    #expect(results == [false])
+                    #expect(await collector.results == [false])
                 }
             }
 
             @Test("Non-nil parentNode with disabled access display modes yields `[false]`",
                   arguments: TestInput.allNodeAccessLevels, TestInput.disabledDisplayModes)
-            @MainActor func nonNilParentNodeWithDisabledDisplayMode(nodeAccessLevel: NodeAccessTypeEntity, displayMode: DisplayMode) async {
+            func nonNilParentNodeWithDisabledDisplayMode(nodeAccessLevel: NodeAccessTypeEntity, displayMode: DisplayMode) async {
                 for isFromViewInFolder in TestInput.allIsFromViewInFolder {
                     let searchResultsEmptyStateProvider = MockSearchResultsEmptyStateProvider()
                     let sut = await Test.makeSUT(
@@ -155,23 +155,23 @@ struct FloatingAddButtonVisibilityDataSourceTests {
                         nodeAccessLevel: nodeAccessLevel,
                         searchResultsEmptyStateProvider: searchResultsEmptyStateProvider
                     )
-                    var results = [Bool]()
+                    let collector = ResultCollector()
                     let task = Task {
                         for await val in sut.floatingButtonVisibility.prefix(1) {
-                            results.append(val)
+                           await collector.collecValue(val)
                         }
                     }
 
                     searchResultsEmptyStateProvider.simulateEvent(false)
                     await task.value
 
-                    #expect(results == [false])
+                    #expect(await collector.results == [false])
                 }
             }
 
             @Test("Non-nil parentNode with disabled isFromViewInFolder yields `[false]`",
                   arguments: TestInput.allNodeAccessLevels, TestInput.allDisplayModes)
-            @MainActor func nonNilParentNodeWithDisabledIsFromViewInFolder(nodeAccessLevel: NodeAccessTypeEntity, displayMode: DisplayMode) async {
+            func nonNilParentNodeWithDisabledIsFromViewInFolder(nodeAccessLevel: NodeAccessTypeEntity, displayMode: DisplayMode) async {
                 for isFromViewInFolder in TestInput.disabledIsFromViewInFolder {
                     let searchResultsEmptyStateProvider = MockSearchResultsEmptyStateProvider()
                     let sut = await Test.makeSUT(
@@ -181,62 +181,77 @@ struct FloatingAddButtonVisibilityDataSourceTests {
                         nodeAccessLevel: nodeAccessLevel,
                         searchResultsEmptyStateProvider: searchResultsEmptyStateProvider
                     )
-                    var results = [Bool]()
+                    let collector = ResultCollector()
                     let task = Task {
                         for await val in sut.floatingButtonVisibility.prefix(1) {
-                            results.append(val)
+                           await collector.collecValue(val)
                         }
                     }
 
                     searchResultsEmptyStateProvider.simulateEvent(false)
                     await task.value
 
-                    #expect(results == [false])
+                    #expect(await collector.results == [false])
                 }
             }
         }
 
-//        @Suite("Multiple emissions of `floatingButtonVisibility`", .serialized)
-//        struct MultipleValues {
-//            @Test("Multiple updates should toggle values")
-//            @MainActor func multipleNodesUpdates() async {
-//                let browserConfig = Test.makeBrowserConfig(
-//                    displayMode: TestInput.enabledDisplayModes.randomElement()!,
-//                    isFromViewInFolder: TestInput.enabledIsFromViewInFolder.randomElement()!
-//                )
-//                let randomNodes = [UInt64.random(in: 1...100)].map { NodeEntity(handle: $0) } + [TestInput.parentNode]
-//                let nodeUpdateSequence = Array(repeating: randomNodes, count: 5)
-//                let nodeUpdatesProvider = MockNodeUpdatesProvider(nodeUpdates: nodeUpdateSequence.async.eraseToAnyAsyncSequence())
-//                let searchResultsEmptyStateProvider = MockSearchResultsEmptyStateProvider()
-//                var results = [Bool]()
-//
-//                let nodeUseCase = MockNodeUseCase(nodeAccessLevel: { results.count % 2 == 0 ? .read : .full })
-//                let sut = FloatingAddButtonVisibilityDataSource(
-//                    parentNode: TestInput.parentNode,
-//                    nodeBrowserConfig: browserConfig,
-//                    nodeUpdatesProvider: nodeUpdatesProvider,
-//                    nodeUseCase: nodeUseCase,
-//                    searchResultsEmptyStateProvider: searchResultsEmptyStateProvider
-//                )
-//
-//                let nodeUpdateTask = Task {
-//                    for await val in sut.floatingButtonVisibility.prefix(1 + nodeUpdateSequence.count) {
-//                        results.append(val)
-//                    }
-//                }
-//
-//                searchResultsEmptyStateProvider.simulateEvent(false)
-//                await nodeUpdateTask.value
-//
-//                #expect(results == [false, true, false, true, false, true])
-//            }
-//        }
+        @Suite("Multiple emissions of `floatingButtonVisibility`", .serialized)
+        struct MultipleValues {
+            @Test("Multiple updates should toggle values")
+            func multipleNodesUpdates() async throws {
+                let browserConfig = await Test.makeBrowserConfig(
+                    displayMode: TestInput.enabledDisplayModes.randomElement()!,
+                    isFromViewInFolder: TestInput.enabledIsFromViewInFolder.randomElement()!
+                )
+                let randomNodes = [UInt64.random(in: 1...100)].map { NodeEntity(handle: $0) } + [TestInput.parentNode]
+                let nodeUpdateSequence = Array(repeating: randomNodes, count: 5)
+                let nodeUpdatesProvider = ControllableMockNodeUpdatesProvider()
+                let searchResultsEmptyStateProvider = MockSearchResultsEmptyStateProvider()
+
+                let collector = ResultCollector()
+
+                var nodeAccessLevelCalls = 0
+                let nodeUseCase = MockNodeUseCase(nodeAccessLevel: {
+                    defer {
+                        nodeAccessLevelCalls += 1
+                    }
+                    return nodeAccessLevelCalls % 2 == 0 ? .read : .full
+                })
+                let sut = FloatingAddButtonVisibilityDataSource(
+                    parentNode: TestInput.parentNode,
+                    nodeBrowserConfig: browserConfig,
+                    nodeUpdatesProvider: nodeUpdatesProvider,
+                    nodeUseCase: nodeUseCase,
+                    searchResultsEmptyStateProvider: searchResultsEmptyStateProvider
+                )
+
+                let nodeUpdateTask = Task(priority: .high) { @Sendable in
+                    for await val in sut.floatingButtonVisibility.prefix(1 + nodeUpdateSequence.count) {
+                        await collector.collecValue(val)
+                    }
+                }
+
+                searchResultsEmptyStateProvider.simulateEvent(false)
+
+                let simulateEventTask = Task(priority: .low) {
+                    for nodeUpdate in nodeUpdateSequence {
+                        nodeUpdatesProvider.simulateEvent(nodeUpdate)
+                        try await Task.sleep(nanoseconds: 100_000_000)
+                    }
+                }
+
+                _ = await (nodeUpdateTask.value, try simulateEventTask.value)
+
+                #expect(await collector.results == [false, true, false, true, false, true])
+            }
+        }
     }
 
     @Suite("Test emission of `floatingButtonVisibility` from node searchResultsEmptyStateProvider.emptyStateSequence", .serialized)
     struct EmptyStatesTests {
         @Test("Changes of empty states should lead to new values of floatingButtonVisibility")
-        @MainActor func multipleNodesUpdates() async {
+        func emptyStateNodeUpdates() async {
             let searchResultsEmptyStateProvider = MockSearchResultsEmptyStateProvider()
             let sut = await Test.makeSUT(
                 parentNode: TestInput.parentNode,
@@ -247,10 +262,10 @@ struct FloatingAddButtonVisibilityDataSourceTests {
             )
 
             let emptyStateValues = [false, true, false, true, false]
-            var results = [Bool]()
+            let collector = ResultCollector()
             let nodeUpdateTask = Task {
                 for await val in sut.floatingButtonVisibility.prefix(emptyStateValues.count) {
-                    results.append(val)
+                   await collector.collecValue(val)
                 }
             }
 
@@ -263,7 +278,7 @@ struct FloatingAddButtonVisibilityDataSourceTests {
 
             await nodeUpdateTask.value
 
-            #expect(results == emptyStateValues.map { !$0 })
+            #expect(await collector.results == emptyStateValues.map { !$0 })
         }
     }
 }
@@ -281,6 +296,23 @@ private class MockSearchResultsEmptyStateProvider: @unchecked Sendable, SearchRe
     }
 
     func simulateEvent(_ event: Bool) {
+        continuation.yield(event)
+    }
+}
+
+private struct ControllableMockNodeUpdatesProvider: NodeUpdatesProviderProtocol {
+    private let stream: AsyncStream<[NodeEntity]>
+    private let continuation: AsyncStream<[NodeEntity]>.Continuation
+
+    init() {
+        (stream, continuation) = AsyncStream.makeStream(of: [NodeEntity].self, bufferingPolicy: .bufferingNewest(1))
+    }
+
+    var nodeUpdates: AnyAsyncSequence<[NodeEntity]> {
+        stream.eraseToAnyAsyncSequence()
+    }
+
+    func simulateEvent(_ event: [NodeEntity]) {
         continuation.yield(event)
     }
 }
