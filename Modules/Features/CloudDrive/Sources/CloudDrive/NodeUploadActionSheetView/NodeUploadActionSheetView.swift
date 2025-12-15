@@ -23,33 +23,48 @@ public struct NodeUploadActionSheetView: View {
 
     public init(
         viewModel: some NodeUploadActionSheetViewModelProtocol,
-        isPresented: Binding<Bool>
+        isPresented: Binding<Bool>,
     ) {
         self.viewModel = viewModel
         self._isPresented = isPresented
     }
     public var body: some View {
-        LazyVStack(spacing: .zero) {
-            ForEach(viewModel.uploadActions) { action in
-                UploadActionItemView(
-                    image: action.image,
-                    title: action.title,
-                    actionHandler: {
-                        isPresented = false
-                        viewModel.saveSelectedAction(action)
-                    })
+        GeometryReader { proxy in
+            ScrollView {
+                LazyVStack(spacing: .zero) {
+                    ForEach(viewModel.uploadActions) { action in
+                        UploadActionItemView(
+                            image: action.image,
+                            title: action.title,
+                            actionHandler: {
+                                isPresented = false
+                                viewModel.saveSelectedAction(action)
+                            })
+                    }
+                }
+
+                .padding(.top, TokenSpacing._6)
             }
+            .scrollDisabled(!scrollingEnabled(in: proxy))
+            .presentationDetents([.height(allActionsHeight)])
         }
         .onDisappear {
             viewModel.performSelectedActionAfterDismissal()
         }
-        .presentationDetents([.medium, .large])
         .presentationDragIndicator(.visible)
+    }
+
+    private func scrollingEnabled(in proxy: GeometryProxy) -> Bool {
+        allActionsHeight > proxy.size.height
+    }
+
+    private var allActionsHeight: CGFloat {
+        CGFloat(viewModel.uploadActions.count) * UploadActionItemView.Constants.itemHeight
     }
 }
 
 private struct UploadActionItemView: View {
-    private enum Constants {
+    enum Constants {
         static let imageSize: CGFloat = 24
         static let itemHeight: CGFloat = 58
 
