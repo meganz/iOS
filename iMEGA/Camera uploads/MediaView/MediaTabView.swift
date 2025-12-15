@@ -1,3 +1,4 @@
+import ContentLibraries
 import MEGAAppSDKRepo
 import MEGAAssets
 import MEGADesignToken
@@ -24,7 +25,6 @@ struct MediaTabView: View {
             tabSelectionIndicatorColor: TokenColors.Button.brand.swiftUI,
             backgroundColor: TokenColors.Background.surface1.swiftUI
         )
-        .allowsHitTesting(viewModel.editMode != .active)
         .navigationTitle(viewModel.navigationTitle)
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
@@ -50,6 +50,10 @@ struct MediaTabView: View {
         switch viewModel.tabViewModels[tab] {
         case let videoTabViewModel as VideoTabViewModel:
             videoListView(videoTabViewModel: videoTabViewModel)
+        case let albumTabViewModel as MediaAlbumTabContentViewModel:
+            AlbumListView(
+                viewModel: albumTabViewModel.albumListViewModel,
+                router: albumTabViewModel.albumListViewRouter)
         default:
             placeholderView(for: tab)
         }
@@ -82,18 +86,4 @@ struct MediaTabView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(TokenColors.Background.page.swiftUI)
     }
-}
-
-#Preview {
-    let tabViewModels: [MediaTab: any MediaTabInteractiveProvider] = [:]
-    let monitorCameraUploadUseCase = MonitorCameraUploadUseCase(
-        cameraUploadRepository: CameraUploadsStatsRepository.newRepo,
-        networkMonitorUseCase: NetworkMonitorUseCase(repo: NetworkMonitorRepository.newRepo), preferenceUseCase: PreferenceUseCase.default)
-    let devicePermissionHandler = DevicePermissionsHandler.makeHandler()
-
-    MediaTabView(viewModel: MediaTabViewModel(
-        tabViewModels: tabViewModels,
-        monitorCameraUploadUseCase: monitorCameraUploadUseCase,
-        devicePermissionHandler: devicePermissionHandler
-    ))
 }

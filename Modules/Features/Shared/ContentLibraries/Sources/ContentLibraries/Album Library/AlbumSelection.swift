@@ -45,6 +45,10 @@ public final class AlbumSelection: ObservableObject {
         }
     }
     
+    public func toggleEditMode() {
+        editMode = editMode.isEditing ? .inactive : .active
+    }
+    
     func isAlbumSelected(_ album: AlbumEntity) -> Bool {
         albums[album.id] != nil
     }
@@ -95,6 +99,13 @@ public extension AlbumSelection {
         }
         .removeDuplicates()
         .eraseToAnyPublisher()
+    }
+    
+    var selectionCount: AnyPublisher<Int, Never> {
+        $albums
+            .map(\.values.count)
+            .removeDuplicates()
+            .eraseToAnyPublisher()
     }
     
     func isAlbumSelectedPublisher(album: AlbumEntity) -> AnyPublisher<Bool, Never> {

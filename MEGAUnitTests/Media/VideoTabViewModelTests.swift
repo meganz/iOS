@@ -1,5 +1,5 @@
-@testable import MEGA
 import Combine
+@testable import MEGA
 import MEGAAppPresentationMock
 import MEGADomain
 import MEGADomainMock
@@ -448,23 +448,6 @@ final class VideoTabViewModelTests: XCTestCase {
 }
 
 // MARK: - Mock Objects
-
-@MainActor
-private final class MockMediaTabSharedResourceProvider: @MainActor MediaTabSharedResourceProvider {
-    lazy var cameraUploadStatusButtonViewModel: CameraUploadStatusButtonViewModel = {
-        CameraUploadStatusButtonViewModel(
-            monitorCameraUploadUseCase: MockMonitorCameraUploadUseCase(),
-            devicePermissionHandler: MockDevicePermissionHandler(),
-            preferenceUseCase: MockPreferenceUseCase()
-        )
-    }()
-
-    var contextMenuConfig: CMConfigEntity?
-    var contextMenuManager: ContextMenuManager?
-    @Published var editMode: SwiftUI.EditMode = .inactive
-    var editModePublisher: Published<SwiftUI.EditMode>.Publisher { $editMode }
-}
-
 
 private final class MockVideoListViewModelContentProvider: VideoListViewModelContentProviderProtocol {
     func search(

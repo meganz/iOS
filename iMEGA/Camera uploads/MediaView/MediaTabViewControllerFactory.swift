@@ -1,3 +1,4 @@
+import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGAAssets
 import MEGADomain
@@ -10,20 +11,26 @@ import Video
 @MainActor
 struct MediaTabViewControllerFactory {
     private let navigationController: UINavigationController
-    private let tabViewModels: [MediaTab: any MediaTabInteractiveProvider]?
+    private let tabViewModels: [MediaTab: any MediaTabContentViewModel]?
     private let monitorCameraUploadUseCase: (any MonitorCameraUploadUseCaseProtocol)?
     private let devicePermissionHandler: (any DevicePermissionsHandling)?
+    private let cameraUploadsSettingsViewRouter: (any Routing)?
+    private let cameraUploadProgressRouter: (any CameraUploadProgressRouting)?
 
     init(
         navigationController: UINavigationController,
-        tabViewModels: [MediaTab: any MediaTabInteractiveProvider]? = nil,
+        tabViewModels: [MediaTab: any MediaTabContentViewModel]? = nil,
         monitorCameraUploadUseCase: (any MonitorCameraUploadUseCaseProtocol)? = nil,
-        devicePermissionHandler: (any DevicePermissionsHandling)? = nil
+        devicePermissionHandler: (any DevicePermissionsHandling)? = nil,
+        cameraUploadsSettingsViewRouter: (any Routing)? = nil,
+        cameraUploadProgressRouter: (any CameraUploadProgressRouting)? = nil
     ) {
         self.navigationController = navigationController
         self.tabViewModels = tabViewModels
         self.monitorCameraUploadUseCase = monitorCameraUploadUseCase
         self.devicePermissionHandler = devicePermissionHandler
+        self.cameraUploadsSettingsViewRouter = cameraUploadsSettingsViewRouter
+        self.cameraUploadProgressRouter = cameraUploadProgressRouter
     }
 
     static func make(nc: UINavigationController? = nil) -> MediaTabViewControllerFactory {
@@ -74,15 +81,19 @@ struct MediaTabViewControllerFactory {
         let tabViewModels = self.tabViewModels ?? Self.makeDefaultTabViewModels(navigationController: navigationController)
         let monitorCameraUploadUseCase = self.monitorCameraUploadUseCase ?? Self.makeDefaultMonitorCameraUploadUseCase()
         let devicePermissionHandler = self.devicePermissionHandler ?? Self.makeDefaultDevicePermissionHandler()
+        let cameraUploadsSettingsViewRouter = self.cameraUploadsSettingsViewRouter ?? CameraUploadsSettingsViewRouter(presenter: navigationController) {}
+        let cameraUploadProgressRouter = self.cameraUploadProgressRouter ?? CameraUploadProgressRouter(presenter: navigationController)
 
         return MediaTabViewModel(
             tabViewModels: tabViewModels,
             monitorCameraUploadUseCase: monitorCameraUploadUseCase,
-            devicePermissionHandler: devicePermissionHandler
+            devicePermissionHandler: devicePermissionHandler,
+            cameraUploadsSettingsViewRouter: cameraUploadsSettingsViewRouter,
+            cameraUploadProgressRouter: cameraUploadProgressRouter
         )
     }
 
-    private static func makeDefaultTabViewModels(navigationController: UINavigationController) -> [MediaTab: any MediaTabInteractiveProvider] {
+    private static func makeDefaultTabViewModels(navigationController: UINavigationController) -> [MediaTab: any MediaTabContentViewModel] {
         let syncModel = VideoRevampSyncModel()
         let videoSelection = VideoSelection()
 
@@ -95,7 +106,7 @@ struct MediaTabViewControllerFactory {
         // WIP: Replace other mock ViewModels when ready
         return [
             .timeline: MockTimelineViewModel(),
-            .album: MockAlbumViewModel(),
+            .album: MediaTabAlbumFactory.makeMediaAlbumTabContentViewModel(navigationController: navigationController),
             .video: videoTabViewModel,
             .playlist: MockPlaylistViewModel()
         ]

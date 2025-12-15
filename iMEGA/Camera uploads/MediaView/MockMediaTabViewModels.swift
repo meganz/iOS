@@ -4,7 +4,8 @@ import SwiftUI
 
 // MARK: - Mock ViewModels for Debugging
 
-final class MockTimelineViewModel: MediaTabContextMenuProvider, MediaTabContextMenuActionHandler, MediaTabToolbarActionsProvider, MediaTabToolbarActionHandler, MediaTabNavigationBarItemProvider, MediaTabSharedResourceConsumer {
+@MainActor
+final class MockTimelineViewModel: MediaTabContentViewModel, MediaTabContextMenuProvider, MediaTabContextMenuActionHandler, MediaTabToolbarActionsProvider, MediaTabToolbarActionHandler, MediaTabNavigationBarItemProvider, MediaTabSharedResourceConsumer {
 
     let editModeToggleRequested = PassthroughSubject<Void, Never>()
 
@@ -64,10 +65,7 @@ final class MockTimelineViewModel: MediaTabContextMenuProvider, MediaTabContextM
             if let provider = sharedResourceProvider {
                 // Camera upload status button (shared resource)
                 items.append(MediaNavigationBarItemFactory.cameraUploadStatusButton(
-                    viewModel: provider.cameraUploadStatusButtonViewModel,
-                    action: {
-                        print("MockTimelineViewModel: Camera Upload Status tapped")
-                    }
+                    viewModel: provider.cameraUploadStatusButtonViewModel
                 ))
             }
 
@@ -232,7 +230,7 @@ final class MockVideoViewModel: MediaTabContextMenuProvider, MediaTabContextMenu
     }
 }
 
-final class MockPlaylistViewModel: MediaTabContextMenuProvider, MediaTabContextMenuActionHandler, MediaTabToolbarActionsProvider, MediaTabToolbarActionHandler, MediaTabNavigationBarItemProvider, MediaTabSharedResourceConsumer {
+final class MockPlaylistViewModel: MediaTabContentViewModel, MediaTabContextMenuProvider, MediaTabContextMenuActionHandler, MediaTabToolbarActionsProvider, MediaTabToolbarActionHandler, MediaTabNavigationBarItemProvider, MediaTabSharedResourceConsumer {
 
     let editModeToggleRequested = PassthroughSubject<Void, Never>()
 

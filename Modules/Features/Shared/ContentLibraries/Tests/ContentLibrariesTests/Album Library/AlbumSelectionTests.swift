@@ -163,6 +163,26 @@ final class AlbumSelectionTests: XCTestCase {
         subscription.cancel()
     }
     
+    func testSelectionCount_onSelection_shouldReturnCount() async throws {
+        let sut = AlbumSelection(mode: .multiple)
+        
+        var results = [0, 1, 0]
+        let exp = expectation(description: "Should update with correct count")
+        exp.expectedFulfillmentCount = results.count
+        let subscription = sut.selectionCount
+            .sink {
+                XCTAssertEqual($0, results.removeFirst())
+                exp.fulfill()
+            }
+        
+        sut.setSelectedAlbums([.init(id: 1, type: .user)])
+        try await Task.sleep(nanoseconds: 150_000_000)
+        sut.setSelectedAlbums([])
+        
+        await fulfillment(of: [exp], timeout: 1.0)
+        subscription.cancel()
+    }
+    
     private func userAlbums() -> [AlbumEntity] {
         [
             AlbumEntity(id: 1, name: "Album 1", coverNode: NodeEntity(handle: 1), count: 1, type: .user, modificationTime: nil),

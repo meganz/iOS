@@ -20,7 +20,7 @@ enum NavigationBarItemPlacement {
 // MARK: - Navigation Bar Item Type
 
 enum NavigationBarItemType {
-    case cameraUploadStatus(viewModel: CameraUploadStatusButtonViewModel, action: () -> Void)
+    case cameraUploadStatus(viewModel: CameraUploadStatusButtonViewModel)
     case imageButton(image: UIImage, action: () -> Void)
     case textButton(text: String, action: () -> Void)
     case contextMenu(config: CMConfigEntity, manager: ContextMenuManager)

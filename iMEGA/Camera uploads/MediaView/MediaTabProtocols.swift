@@ -2,20 +2,31 @@ import Combine
 import MEGADomain
 import SwiftUI
 
+@MainActor
+protocol MediaTabContentViewModel: AnyObject { }
+
 // MARK: - Navigation Bar Item Provider
 
+@MainActor
 protocol MediaTabNavigationBarItemProvider {
+    var navigationBarUpdatePublisher: AnyPublisher<Void, Never>? { get }
+        
     func navigationBarItems(for editMode: EditMode) -> [NavigationBarItemViewModel]
+}
+
+extension MediaTabNavigationBarItemProvider {
+    var navigationBarUpdatePublisher: AnyPublisher<Void, Never>? { nil }
 }
 
 // MARK: - Context Menu Provider
 
+@MainActor
 protocol MediaTabContextMenuProvider {
     func contextMenuConfiguration() -> CMConfigEntity?
 }
 
 // MARK: - Menu Action Handler
-
+@MainActor
 protocol MediaTabContextMenuActionHandler: AnyObject {
     /// Publisher that emits when edit mode should be toggled
     var editModeToggleRequested: PassthroughSubject<Void, Never> { get }
@@ -29,6 +40,7 @@ protocol MediaTabContextMenuActionHandler: AnyObject {
 
 // MARK: - Toolbar Actions Provider
 
+@MainActor
 protocol MediaTabToolbarActionsProvider: AnyObject {
     func toolbarActions(
         selectedItemsCount: Int,
@@ -39,6 +51,7 @@ protocol MediaTabToolbarActionsProvider: AnyObject {
 
 // MARK: - Toolbar Action Handler
 
+@MainActor
 protocol MediaTabToolbarActionHandler: AnyObject {
     /// Handle toolbar action for this tab
     /// - Parameter action: The toolbar action to handle
@@ -74,6 +87,7 @@ extension MediaTabContextMenuActionHandler {
 // MARK: - Shared Resource Provider
 
 /// Protocol for providing shared resources that are used across multiple tabs
+@MainActor
 protocol MediaTabSharedResourceProvider: AnyObject {
     var cameraUploadStatusButtonViewModel: CameraUploadStatusButtonViewModel { get }
     var contextMenuConfig: CMConfigEntity? { get }
@@ -84,6 +98,14 @@ protocol MediaTabSharedResourceProvider: AnyObject {
 
 // MARK: - Shared Resource Consumer
 
+@MainActor
 protocol MediaTabSharedResourceConsumer: AnyObject {
     var sharedResourceProvider: (any MediaTabSharedResourceProvider)? { get set }
+}
+
+// MARK: - Navigation Title Updates
+
+@MainActor
+protocol MediaTabNavigationTitleProvider {
+    var titleUpdatePublisher: AnyPublisher<String, Never> { get }
 }

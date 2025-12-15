@@ -1,4 +1,5 @@
 import Combine
+import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGAAssets
 import MEGADomain
@@ -6,12 +7,8 @@ import MEGAPermissions
 import MEGAPreference
 import SwiftUI
 
-typealias MediaTabInteractiveProvider = MediaTabNavigationBarItemProvider & MediaTabContextMenuProvider & MediaTabContextMenuActionHandler & MediaTabToolbarActionsProvider & MediaTabToolbarActionHandler & MediaTabSharedResourceConsumer
-
-// MARK: - MediaTabViewModel
-
 @MainActor
-final class MediaTabViewModel: ObservableObject, @MainActor MediaTabSharedResourceProvider {
+final class MediaTabViewModel: ObservableObject, MediaTabSharedResourceProvider {
     @Published var selectedTab: MediaTab = .timeline {
         didSet {
             guard selectedTab != oldValue else { return }
@@ -79,27 +76,26 @@ final class MediaTabViewModel: ObservableObject, @MainActor MediaTabSharedResour
     var editModePublisher: Published<EditMode>.Publisher { $editMode }
     private var subscriptions = Set<AnyCancellable>()
 
-    let tabViewModels: [MediaTab: any MediaTabInteractiveProvider]
+    let tabViewModels: [MediaTab: any MediaTabContentViewModel]
 
     // MARK: - Initialization
 
     init(
-        tabViewModels: [MediaTab: any MediaTabInteractiveProvider],
+        tabViewModels: [MediaTab: any MediaTabContentViewModel],
         monitorCameraUploadUseCase: some MonitorCameraUploadUseCaseProtocol,
         devicePermissionHandler: some DevicePermissionsHandling,
-        preferenceUseCase: some PreferenceUseCaseProtocol = PreferenceUseCase.default
+        preferenceUseCase: some PreferenceUseCaseProtocol = PreferenceUseCase.default,
+        cameraUploadsSettingsViewRouter: some Routing,
+        cameraUploadProgressRouter: some CameraUploadProgressRouting
     ) {
         self.tabViewModels = tabViewModels
         self.cameraUploadStatusButtonViewModel = CameraUploadStatusButtonViewModel(
             monitorCameraUploadUseCase: monitorCameraUploadUseCase,
             devicePermissionHandler: devicePermissionHandler,
-            preferenceUseCase: preferenceUseCase
+            preferenceUseCase: preferenceUseCase,
+            cameraUploadsSettingsViewRouter: cameraUploadsSettingsViewRouter,
+            cameraUploadProgressRouter: cameraUploadProgressRouter
         )
-
-        cameraUploadStatusButtonViewModel.onTappedHandler = { [weak self] in
-            guard let self else { return }
-            self.handleCameraUploadStatusButtonTap()
-        }
 
         configureContextMenuManager()
         subscribeToTabViewModelEvents()
@@ -110,24 +106,17 @@ final class MediaTabViewModel: ObservableObject, @MainActor MediaTabSharedResour
     // MARK: - Shared Resource Injection
 
     private func injectSharedResources() {
-        for (_, viewModel) in tabViewModels {
-            viewModel.sharedResourceProvider = self
-        }
-    }
-
-    // MARK: - Public Button Action Handlers
-
-    func handleCameraUploadStatusButtonTap() {
-
+        tabViewModels.values
+            .compactMap { $0 as? any MediaTabSharedResourceConsumer }
+            .forEach { $0.sharedResourceProvider = self }
     }
 
     // MARK: - Toolbar Action Handler
 
     func handleToolbarItemAction(_ action: MediaBottomToolbarAction) {
+        guard let tabViewModel = tabViewModels[selectedTab] as? any MediaTabToolbarActionHandler else { return }
         // Delegate toolbar action to the current tab's view model
-        if let tabViewModel = tabViewModels[selectedTab] {
-            tabViewModel.handleToolbarAction(action)
-        }
+        tabViewModel.handleToolbarAction(action)
     }
 
     // MARK: - Private Methods
@@ -143,14 +132,40 @@ final class MediaTabViewModel: ObservableObject, @MainActor MediaTabSharedResour
 
     private func subscribeToTabViewModelEvents() {
         // Subscribe to edit mode toggle requests from all tab view models
-        for (_, tabViewModel) in tabViewModels {
-            tabViewModel.editModeToggleRequested
-                .receive(on: DispatchQueue.main)
-                .sink { [weak self] in
-                    self?.toggleEditMode()
-                }
-                .store(in: &subscriptions)
-        }
+        tabViewModels.values
+            .compactMap { $0 as? any MediaTabContextMenuActionHandler }
+            .forEach { tabViewModel in
+                tabViewModel.editModeToggleRequested
+                    .receive(on: DispatchQueue.main)
+                    .sink { [weak self] in
+                        self?.toggleEditMode()
+                    }
+                    .store(in: &subscriptions)
+            }
+        
+        // Respond to navigation bar update requests from current tab
+        $selectedTab
+            .compactMap { [weak self] selectedTab in
+                (self?.tabViewModels[selectedTab] as? any MediaTabNavigationBarItemProvider)?.navigationBarUpdatePublisher
+            }
+            .switchToLatest()
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in
+                self?.updateNavigationBarForCurrentTab()
+            }
+            .store(in: &subscriptions)
+        
+        // Subscribe to title updates from selected tab
+        $selectedTab
+            .compactMap { [weak self] selectedTab in
+                (self?.tabViewModels[selectedTab] as? any MediaTabNavigationTitleProvider)?.titleUpdatePublisher
+            }
+            .switchToLatest()
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] update in
+                self?.handleTitleUpdate(update)
+            }
+            .store(in: &subscriptions)
     }
 
     private func toggleEditMode() {
@@ -158,18 +173,16 @@ final class MediaTabViewModel: ObservableObject, @MainActor MediaTabSharedResour
     }
 
     private func updateNavigationBarForCurrentTab() {
-        if let tabViewModel = tabViewModels[selectedTab] {
-            contextMenuConfig = tabViewModel.contextMenuConfiguration()
-        } else {
+        guard let tabViewModel = tabViewModels[selectedTab] else {
             contextMenuConfig = nil
+            return
         }
-
+        contextMenuConfig = (tabViewModel as? any MediaTabContextMenuProvider)?.contextMenuConfiguration()
+        
         // Update navigation bar items only if they've changed
-        if let itemProvider = tabViewModels[selectedTab] {
-            let newItems = itemProvider.navigationBarItems(for: editMode)
-            if navigationBarItemViewModels != newItems {
-                navigationBarItemViewModels = newItems
-            }
+        let newItems = (tabViewModel as? any MediaTabNavigationBarItemProvider)?.navigationBarItems(for: editMode) ?? []
+        if navigationBarItemViewModels != newItems {
+            navigationBarItemViewModels = newItems
         }
     }
 
@@ -182,7 +195,7 @@ final class MediaTabViewModel: ObservableObject, @MainActor MediaTabSharedResour
         }
 
         // Get toolbar actions from the current tab's view model
-        guard let tabViewModel = tabViewModels[selectedTab],
+        guard let tabViewModel = tabViewModels[selectedTab] as? (any MediaTabToolbarActionsProvider),
               let actions = tabViewModel.toolbarActions(
                   selectedItemsCount: selectedItemsCount,
                   hasExportedItems: hasExportedItems,
@@ -201,13 +214,18 @@ final class MediaTabViewModel: ObservableObject, @MainActor MediaTabSharedResour
             isAllExported: isAllExported
         )
     }
+    
+    private func handleTitleUpdate(_ newTitle: String) {
+        guard newTitle != navigationTitle else { return }
+        navigationTitle = newTitle
+    }
 }
 
 // MARK: - DisplayMenuDelegate
 
 extension MediaTabViewModel: DisplayMenuDelegate {
     func displayMenu(didSelect action: DisplayActionEntity, needToRefreshMenu: Bool) {
-        if let tabViewModel = tabViewModels[selectedTab] {
+        if let tabViewModel = tabViewModels[selectedTab] as? (any MediaTabContextMenuActionHandler) {
             tabViewModel.handleDisplayAction(action)
         }
 
@@ -217,7 +235,7 @@ extension MediaTabViewModel: DisplayMenuDelegate {
     }
 
     func sortMenu(didSelect sortType: SortOrderType) {
-        if let tabViewModel = tabViewModels[selectedTab] {
+        if let tabViewModel = tabViewModels[selectedTab] as? (any MediaTabContextMenuActionHandler) {
             tabViewModel.handleSortAction(sortType)
         }
 
@@ -229,7 +247,7 @@ extension MediaTabViewModel: DisplayMenuDelegate {
 
 extension MediaTabViewModel: VideoFilterMenuDelegate {
     func videoLocationFilterMenu(didSelect filter: VideoLocationFilterEntity) {
-        if let tabViewModel = tabViewModels[selectedTab] {
+        if let tabViewModel = tabViewModels[selectedTab] as? (any MediaTabContextMenuActionHandler) {
             tabViewModel.handleVideoLocationFilter(filter)
         }
 
@@ -237,7 +255,7 @@ extension MediaTabViewModel: VideoFilterMenuDelegate {
     }
 
     func videoDurationFilterMenu(didSelect filter: VideoDurationFilterEntity) {
-        if let tabViewModel = tabViewModels[selectedTab] {
+        if let tabViewModel = tabViewModels[selectedTab] as? (any MediaTabContextMenuActionHandler) {
             tabViewModel.handleVideoDurationFilter(filter)
         }
 
@@ -249,7 +267,7 @@ extension MediaTabViewModel: VideoFilterMenuDelegate {
 
 extension MediaTabViewModel: QuickActionsMenuDelegate {
     func quickActionsMenu(didSelect action: QuickActionEntity, needToRefreshMenu: Bool) {
-        if let tabViewModel = tabViewModels[selectedTab] {
+        if let tabViewModel = tabViewModels[selectedTab] as? (any MediaTabContextMenuActionHandler) {
             tabViewModel.handleQuickAction(action)
         }
 

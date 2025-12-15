@@ -16,6 +16,9 @@ final class CameraUploadStatusButtonViewModel: NSObject, ObservableObject {
     private var delayedStatusChangeTask: Task<Void, any Error>?
     
     private let monitorCameraUploadStatusProvider: MonitorCameraUploadStatusProvider
+    private let cameraUploadsSettingsViewRouter: any Routing
+    private let cameraUploadProgressRouter: any CameraUploadProgressRouting
+    private let featureFlagProvider: any FeatureFlagProviderProtocol
 
     var onTappedHandler: (() -> Void)?
     
@@ -24,6 +27,8 @@ final class CameraUploadStatusButtonViewModel: NSObject, ObservableObject {
         monitorCameraUploadUseCase: some MonitorCameraUploadUseCaseProtocol,
         devicePermissionHandler: some DevicePermissionsHandling,
         preferenceUseCase: some PreferenceUseCaseProtocol = PreferenceUseCase.default,
+        cameraUploadsSettingsViewRouter: some Routing,
+        cameraUploadProgressRouter: some CameraUploadProgressRouting,
         featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider
     ) {
         self.idleWaitTimeNanoSeconds = idleWaitTimeNanoSeconds
@@ -31,7 +36,9 @@ final class CameraUploadStatusButtonViewModel: NSObject, ObservableObject {
             monitorCameraUploadUseCase: monitorCameraUploadUseCase,
             devicePermissionHandler: devicePermissionHandler,
             featureFlagProvider: featureFlagProvider)
-        
+        self.cameraUploadsSettingsViewRouter = cameraUploadsSettingsViewRouter
+        self.cameraUploadProgressRouter = cameraUploadProgressRouter
+        self.featureFlagProvider = featureFlagProvider
         imageViewModel = CameraUploadStatusImageViewModel(
             status: preferenceUseCase[PreferenceKeyEntity.isCameraUploadsEnabled.rawValue] ?? false ? .checkPendingItemsToUpload : .turnedOff)
         super.init()
@@ -66,7 +73,19 @@ final class CameraUploadStatusButtonViewModel: NSObject, ObservableObject {
         cancelDelayedStatusChangeTask()
     }
     
-    func onTapped() { onTappedHandler?() }
+    func onTapped() {
+        if featureFlagProvider.isFeatureFlagEnabled(for: .mediaRevamp) {
+            guard isCameraUploadsEnabled else {
+                cameraUploadsSettingsViewRouter.start()
+                return
+            }
+            cameraUploadProgressRouter.start { [weak self] in
+                self?.restartMonitoring()
+            }
+        } else {
+            onTappedHandler?()
+        }
+    }
     
     func restartMonitoring() {
         monitorTaskId = UUID()

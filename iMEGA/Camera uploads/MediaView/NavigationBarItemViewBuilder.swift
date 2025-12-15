@@ -9,10 +9,10 @@ struct NavigationBarItemViewBuilder {
     @MainActor @ViewBuilder
     static func makeView(for viewModel: NavigationBarItemViewModel) -> some View {
         switch viewModel.viewType {
-        case .cameraUploadStatus(let statusViewModel, let action):
-            CameraUploadStatusButtonView(viewModel: statusViewModel)
-                .onTapGesture(perform: action)
-
+        case .cameraUploadStatus(let statusViewModel):
+            CameraUploadStatusButtonView(
+                viewModel: statusViewModel)
+            
         case .imageButton(let image, let action):
             Button(action: action) {
                 Image(uiImage: image)

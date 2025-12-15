@@ -8,7 +8,7 @@ import SwiftUI
 import Video
 
 @MainActor
-final class VideoTabViewModel: ObservableObject, @MainActor MediaTabInteractiveProvider {
+final class VideoTabViewModel: ObservableObject, MediaTabContentViewModel, MediaTabSharedResourceConsumer {
     let videoListViewModel: VideoListViewModel
     let videoSelection: VideoSelection
     let videoConfig: VideoConfig
@@ -65,7 +65,7 @@ final class VideoTabViewModel: ObservableObject, @MainActor MediaTabInteractiveP
 
 // MARK: - MediaTabNavigationBarItemProvider
 
-extension VideoTabViewModel {
+extension VideoTabViewModel: MediaTabNavigationBarItemProvider {
     func navigationBarItems(for editMode: SwiftUI.EditMode) -> [NavigationBarItemViewModel] {
         guard let sharedResourceProvider else { return [] }
 
@@ -138,7 +138,7 @@ extension VideoTabViewModel {
 
 // MARK: - MediaTabContextMenuProvider
 
-extension VideoTabViewModel {
+extension VideoTabViewModel: MediaTabContextMenuProvider {
     func contextMenuConfiguration() -> CMConfigEntity? {
         let selectedLocationFilter = videoListViewModel.selectedLocationFilterOption.toVideoLocationFilterEntity
         let selectedDurationFilter = videoListViewModel.selectedDurationFilterOption.toVideoDurationFilterEntity
@@ -157,7 +157,7 @@ extension VideoTabViewModel {
 
 // MARK: - MediaTabContextMenuActionHandler
 
-extension VideoTabViewModel {
+extension VideoTabViewModel: MediaTabContextMenuActionHandler {
     func handleDisplayAction(_ action: DisplayActionEntity) {
         switch action {
         case .select:
@@ -182,7 +182,7 @@ extension VideoTabViewModel {
 
 // MARK: - MediaTabToolbarActionsProvider
 
-extension VideoTabViewModel {
+extension VideoTabViewModel: MediaTabToolbarActionsProvider {
     func toolbarActions(
         selectedItemsCount: Int,
         hasExportedItems: Bool,
@@ -198,7 +198,7 @@ extension VideoTabViewModel {
 
 // MARK: - MediaTabToolbarActionHandler
 
-extension VideoTabViewModel {
+extension VideoTabViewModel: MediaTabToolbarActionHandler {
     func handleToolbarAction(_ action: MediaBottomToolbarAction) {
         // This will be implemented when we migrate from the UIKit toolbar
     }

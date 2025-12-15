@@ -159,11 +159,43 @@ final class CameraUploadStatusButtonViewModelTests: XCTestCase {
     }
     
     @MainActor
+    func testOnTapped_cameraUploadsDisabled_shouldRouteToSettings() {
+        let preferenceUseCase = MockPreferenceUseCase(dict: [PreferenceKeyEntity.isCameraUploadsEnabled.rawValue: false])
+        let cameraUploadsSettingsViewRouter = MockRouter()
+        let sut = makeSUT(
+            preferenceUseCase: preferenceUseCase,
+            cameraUploadsSettingsViewRouter: cameraUploadsSettingsViewRouter,
+            featureFlagProvider: MockFeatureFlagProvider(list: [.mediaRevamp: true])
+        )
+        
+        sut.onTapped()
+        
+        XCTAssertEqual(cameraUploadsSettingsViewRouter.startCalled, 1)
+    }
+    
+    @MainActor
+    func testOnTapped_cameraUploadsEnabled_shouldRouteToCameraUploadProgress() {
+        let preferenceUseCase = MockPreferenceUseCase(dict: [PreferenceKeyEntity.isCameraUploadsEnabled.rawValue: true])
+        let cameraUploadProgressRouter = MockCameraUploadProgressRouter()
+        let sut = makeSUT(
+            preferenceUseCase: preferenceUseCase,
+            cameraUploadProgressRouter: cameraUploadProgressRouter,
+            featureFlagProvider: MockFeatureFlagProvider(list: [.mediaRevamp: true])
+        )
+        
+        sut.onTapped()
+        
+        XCTAssertEqual(cameraUploadProgressRouter.startCalledCount, 1)
+    }
+    
+    @MainActor
     private func makeSUT(
         idleWaitTimeNanoSeconds: UInt64 = 1_000_000_000,
         monitorCameraUploadUseCase: some MonitorCameraUploadUseCaseProtocol = MockMonitorCameraUploadUseCase(),
         preferenceUseCase: some PreferenceUseCaseProtocol = MockPreferenceUseCase(),
         devicePermissionHandler: some DevicePermissionsHandling = MockDevicePermissionHandler(),
+        cameraUploadsSettingsViewRouter: some Routing = MockRouter(),
+        cameraUploadProgressRouter: some CameraUploadProgressRouting = MockCameraUploadProgressRouter(),
         featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:])
     ) -> CameraUploadStatusButtonViewModel {
         CameraUploadStatusButtonViewModel(
@@ -171,6 +203,8 @@ final class CameraUploadStatusButtonViewModelTests: XCTestCase {
             monitorCameraUploadUseCase: monitorCameraUploadUseCase,
             devicePermissionHandler: devicePermissionHandler,
             preferenceUseCase: preferenceUseCase,
+            cameraUploadsSettingsViewRouter: cameraUploadsSettingsViewRouter,
+            cameraUploadProgressRouter: cameraUploadProgressRouter,
             featureFlagProvider: featureFlagProvider)
     }
 }

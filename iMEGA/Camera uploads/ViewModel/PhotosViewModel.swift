@@ -116,7 +116,9 @@ final class PhotosViewModel: NSObject {
             idleWaitTimeNanoSeconds: idleWaitTimeNanoSeconds,
             monitorCameraUploadUseCase: monitorCameraUploadUseCase,
             devicePermissionHandler: devicePermissionHandler,
-            preferenceUseCase: preferenceUseCase)
+            preferenceUseCase: preferenceUseCase,
+            cameraUploadsSettingsViewRouter: cameraUploadsSettingsViewRouter,
+            cameraUploadProgressRouter: cameraUploadProgressRouter)
         self.cameraUploadProgressRouter = cameraUploadProgressRouter
         self.tracker = tracker
         self.remoteFeatureFlagUseCase = remoteFeatureFlagUseCase

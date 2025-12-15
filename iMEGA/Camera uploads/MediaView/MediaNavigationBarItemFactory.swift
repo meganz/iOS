@@ -15,13 +15,12 @@ struct MediaNavigationBarItemFactory {
     /// - Returns: A navigation bar item view model for the camera upload status button
     static func cameraUploadStatusButton(
         id: String = "cameraUploadStatus",
-        viewModel: CameraUploadStatusButtonViewModel,
-        action: @escaping () -> Void
+        viewModel: CameraUploadStatusButtonViewModel
     ) -> NavigationBarItemViewModel {
         NavigationBarItemViewModel(
             id: id,
             placement: .leading,
-            type: .cameraUploadStatus(viewModel: viewModel, action: action)
+            type: .cameraUploadStatus(viewModel: viewModel)
         )
     }
 
