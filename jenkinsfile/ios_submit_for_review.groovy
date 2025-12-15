@@ -62,7 +62,8 @@ pipeline {
                     envInjector.injectEnvs {
                         dir("scripts/AppMetadataUpdater/") {
                             env.VERSION_NUMBER = params.VERSION_NUMBER
-                            sh 'swift run AppMetadataUpdater --update-description --update-release-notes -v $VERSION_NUMBER \"$TRANSIFIX_AUTHORIZATION_TOKEN\"'
+                            // Add this back when the Weblet implementation is complete
+                            // sh 'swift run AppMetadataUpdater --update-description --update-release-notes -v $VERSION_NUMBER \"$TRANSIFIX_AUTHORIZATION_TOKEN\"'
                         }
 
                         sh "bundle exec fastlane submit_review phased_release:${params.PHASED_RELEASE} version_number:${params.VERSION_NUMBER} build_number:${params.BUILD_NUMBER}"
