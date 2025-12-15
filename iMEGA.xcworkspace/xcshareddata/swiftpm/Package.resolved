@@ -1,4 +1,5 @@
 {
+  "originHash" : "b74189a59cc7fb7e63b9a0bc3960744b6626de7aa1e0e321b62cd2e9b569761a",
   "pins" : [
     {
       "identity" : "abseil-cpp-binary",
@@ -230,7 +231,7 @@
       "location" : "https://code.developers.mega.co.nz/mobile/kmm/mobile-analytics-ios",
       "state" : {
         "branch" : "main",
-        "revision" : "8dbe767298e45f2250f39a3212312b4ad632d8c3"
+        "revision" : "1b6e63fcbf928fd94a36a6fbc3792cee63f159a6"
       }
     },
     {
@@ -423,5 +424,5 @@
       }
     }
   ],
-  "version" : 2
+  "version" : 3
 }

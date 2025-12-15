@@ -70,7 +70,8 @@ class NodeBrowserViewModelTests: XCTestCase {
             sensitivityChangesForNode: AnyAsyncSequence<Bool> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
             tempWarningBannerViewModel: WarningBannerViewModel? = nil,
             sortOptionsForMD: [SearchResultsSortOption] = [],
-            selectedSortOrderForMD: Search.SortOrderEntity = .init(key: .lastModified)
+            selectedSortOrderForMD: Search.SortOrderEntity = .init(key: .lastModified),
+            featureFlagList: [FeatureFlagKey: Bool] = [:],
         ) {
             let config: NodeBrowserConfig = config ?? NodeBrowserConfig.default
             let nodeSource = NodeSource.node { node }
@@ -107,7 +108,8 @@ class NodeBrowserViewModelTests: XCTestCase {
                 context: { _, _ in },
                 chipTapped: { _, _ in },
                 sortingOrder: { .init(key: .name) },
-                updateSortOrder: { _ in }
+                updateSortOrder: { _ in },
+                chipPickerShowedHandler: { _ in }
             )
 
             sut = NodeBrowserViewModel(
@@ -176,7 +178,8 @@ class NodeBrowserViewModelTests: XCTestCase {
                 updateTransferWidgetHandler: updateTransferWidgetHandler,
                 sortOrderProvider: sortOrderProvider,
                 onNodeStructureChanged: onNodeStructureChanged,
-                onMoreOptionsButtonTapped: { _ in }
+                onMoreOptionsButtonTapped: { _ in },
+                featureFlagProvider: MockFeatureFlagProvider(list: featureFlagList)
             )
             
             saver = { self.savedViewModes.append($0) }
@@ -719,6 +722,18 @@ class NodeBrowserViewModelTests: XCTestCase {
             XCTAssertEqual(viewMode, .thumbnail)
         case .failure:
             XCTFail("Timed out waiting for setViewMode(.thumbnail)")
+        }
+    }
+
+    @MainActor
+    func testMoreOptionsButtonTapped_trackerShouldRecordCorrectEvent() {
+        let enabled = [false, true]
+        enabled.forEach {
+            let harness = Harness(node: .init(), featureFlagList: [.cloudDriveRevamp: $0])
+            harness.sut.moreOptionsButtonTapped(button: UIButton())
+            XCTAssertEqual(
+                harness.tracker.trackedEventIdentifiers.contains(where: { $0.eventName == CloudDriveParentNodeMoreButtonPressedEvent().eventName }), $0
+            )
         }
     }
 

@@ -1,5 +1,6 @@
 import ChatRepo
 import Foundation
+import MEGAAnalyticsiOS
 import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGADomain
@@ -12,6 +13,13 @@ class NodeActionViewControllerGenericDelegate: NodeActionViewControllerDelegate 
     private(set) var chatId: HandleEntity?
     private let moveToRubbishBinViewModel: any MoveToRubbishBinViewModelProtocol
     private let nodeActionListener: (MegaNodeActionType?, [MEGANode]) -> Void
+    private var isCloudDriveRevampEnabled: Bool {
+        DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .cloudDriveRevamp)
+    }
+
+    private var tracker: some AnalyticsTracking {
+        DIContainer.tracker
+    }
 
     private let saveMediaToPhotosUseCase = SaveMediaToPhotosUseCase(
         downloadFileRepository: DownloadFileRepository(
@@ -45,18 +53,22 @@ class NodeActionViewControllerGenericDelegate: NodeActionViewControllerDelegate 
         
         switch action {
         case .copy, .move:
+            trackAnalyticsEvent((action == .copy) ? CloudDriveCopyMenuItemEvent() : CloudDriveMoveMenuItemEvent())
             showBrowserViewController(nodes: nodes, action: (action == .copy) ? .copy : .move)
         case .exportFile:
             exportFile(nodes: nodes, sender: sender)
         case .shareLink, .manageLink:
+            trackAnalyticsEvent(CloudDriveShareLinkMenuItemEvent())
             showLink(for: nodes)
         case .removeLink:
             removeLink(for: nodes, in: viewController)
         case .sendToChat:
             handleSendToChat(for: nodes, from: viewController)
         case .moveToRubbishBin:
+            trackAnalyticsEvent(CloudDriveMoveToRubbishBinMenuItemEvent())
             moveToRubbishBinViewModel.moveToRubbishBin(nodes: nodes.toNodeEntities())
         case .download:
+            trackAnalyticsEvent(CloudDriveDownloadMenuItemEvent())
             handleDownloadAction(for: nodes.toNodeEntities())
         case .saveToPhotos:
             saveToPhotos(nodes)
@@ -98,78 +110,64 @@ class NodeActionViewControllerGenericDelegate: NodeActionViewControllerDelegate 
         switch action {
         case .editTextFile:
             showEditTextFile(for: node)
-            
         case .download:
+            trackAnalyticsEvent(CloudDriveDownloadMenuItemEvent())
             download(node, isNodeFromFolderLink: isNodeFromFolderLink, messageId: messageId, chatId: chatId)
-        
         case .copy, .move:
+            trackAnalyticsEvent((action == .copy) ? CloudDriveCopyMenuItemEvent() : CloudDriveMoveMenuItemEvent())
             showBrowserViewController(nodes: [node], action: (action == .copy) ? .copy : .move)
-
         case .rename:
+            trackAnalyticsEvent(CloudDriveRenameMenuItemEvent())
             node.mnz_renameNode(in: viewController)
-            
         case .exportFile:
             exportFile(nodes: [node], sender: sender)
-
         case .shareFolder:
+            trackAnalyticsEvent(CloudDriveShareFolderMenuItemEvent())
             openShareFolderDialog(node, viewController: viewController)
-            
         case .manageShare:
+            trackAnalyticsEvent(CloudDriveShareFolderMenuItemEvent())
             BackupNodesValidator(presenter: viewController, nodes: [node.toNodeEntity()]).showWarningAlertIfNeeded { [weak self] in
                 self?.manageShare(node)
             }
-            
         case .info:
+            trackAnalyticsEvent(CloudDriveInfoMenuItemEvent())
             showNodeInfo(node)
-            
         case .viewVersions:
             node.mnz_showVersions(in: viewController)
-
         case .leaveSharing:
             node.mnz_leaveSharing(in: viewController)
-
         case .shareLink, .manageLink:
+            trackAnalyticsEvent(CloudDriveShareLinkMenuItemEvent())
             showLink(for: [node])
-            
         case .removeLink:
             removeLink(for: [node], in: viewController)
-            
         case .moveToRubbishBin:
+            trackAnalyticsEvent(CloudDriveMoveToRubbishBinMenuItemEvent())
             moveToRubbishBinViewModel.moveToRubbishBin(nodes: [node].toNodeEntities())
-            
         case .remove:
             remove(node, in: viewController)
-            
         case .removeSharing:
             node.mnz_removeSharing()
-            
         case .sendToChat:
             node.mnz_sendToChat(in: viewController)
-            
         case .saveToPhotos:
             saveToPhotos([node])
-            
         case .favourite:
+            trackAnalyticsEvent(CloudDriveFavouriteMenuItemEvent())
             favourite(node)
-            
         case .label:
+            trackAnalyticsEvent(CloudDriveLabelMenuItemEvent())
             node.mnz_labelActionSheet(in: viewController)
-        
         case .restore:
             node.mnz_restore()
-            
         case .import:
             node.openBrowserToImport(in: viewController)
-        
         case .hide:
             hide(nodes: [node.toNodeEntity()])
-            
         case .unhide:
             unhide(nodes: [node.toNodeEntity()])
-        
         case .addToAlbum:
             addTo(mode: .album, nodes: [node.toNodeEntity()])
-        
         case .addTo:
             addTo(mode: .collection, nodes: [node.toNodeEntity()])
         case .disputeTakedown:
@@ -373,6 +371,11 @@ class NodeActionViewControllerGenericDelegate: NodeActionViewControllerDelegate 
             presenter: viewController,
             mode: mode,
             selectedPhotos: nodes).start()
+    }
+
+    private func trackAnalyticsEvent(_ event: any EventIdentifier) {
+        guard isCloudDriveRevampEnabled else { return }
+        trackAnalyticsEvent(event)
     }
 }
 

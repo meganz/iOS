@@ -59,7 +59,8 @@ final class SearchResultsViewModelTests: XCTestCase, @unchecked Sendable {
                 context: { context($0, $1) },
                 chipTapped: { chipTapped($0, $1) },
                 sortingOrder: { .init(key: .name) },
-                updateSortOrder: { _ in }
+                updateSortOrder: { _ in },
+                chipPickerShowedHandler: { _ in }
             )
 
             let base = SearchConfig.testConfig

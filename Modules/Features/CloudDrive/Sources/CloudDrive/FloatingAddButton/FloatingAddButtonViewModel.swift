@@ -1,4 +1,5 @@
 import Foundation
+import MEGAAnalyticsiOS
 import MEGAAppPresentation
 import MEGADomain
 import MEGASwift
@@ -16,19 +17,28 @@ public final class FloatingAddButtonViewModel: ObservableObject {
 
     var selectedAction: NodeUploadAction?
 
+    let analyticsTracker: any AnalyticsTracking
+
     public init(
         floatingButtonVisibilityDataSource: some FloatingAddButtonVisibilityDataSourceProtocol,
         uploadActions: [NodeUploadAction],
-        featureFlagProvider: some FeatureFlagProviderProtocol
+        featureFlagProvider: some FeatureFlagProviderProtocol,
+        analyticsTracker: some AnalyticsTracking
     ) {
         self.floatingButtonVisibilityDataSource = floatingButtonVisibilityDataSource
         self.uploadActions = uploadActions
         self.featureFlagProvider = featureFlagProvider
+        self.analyticsTracker = analyticsTracker
         startObservingButtonVisibilityIfNeeded()
     }
 
     public func addButtonTapAction() {
-        showActions = true
+        toggleShowActions(true)
+        analyticsTracker.trackAnalyticsEvent(with: CloudDriveFABPressedEvent())
+    }
+
+    public func toggleShowActions(_ shows: Bool) {
+        showActions = shows
     }
 
     private func startObservingButtonVisibilityIfNeeded() {

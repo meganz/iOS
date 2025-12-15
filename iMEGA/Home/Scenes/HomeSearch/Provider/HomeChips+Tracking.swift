@@ -13,12 +13,14 @@ extension AnalyticsTracking {
 }
 
 extension SearchChipEntity {
-    var analyticsEvent: (any ItemSelectedEventIdentifier)? {
+    var analyticsEvent: (any EventIdentifier)? {
         switch id {
         case SearchChipEntity.images.id: SearchImageFilterPressedEvent()
-        case SearchChipEntity.docs.id:   SearchDocsFilterPressedEvent()
-        case SearchChipEntity.audio.id:  SearchAudioFilterPressedEvent()
-        case SearchChipEntity.video.id:  SearchVideosFilterPressedEvent()
+        case SearchChipEntity.docs.id: SearchDocsFilterPressedEvent()
+        case SearchChipEntity.audio.id: SearchAudioFilterPressedEvent()
+        case SearchChipEntity.video.id: SearchVideosFilterPressedEvent()
+        case SearchChipEntity.nodeFormatsGroupChipId: SearchFileTypeDropdownChipPressedEvent()
+        case SearchChipEntity.timeFilterGroupChipId: SearchLastModifiedDropdownChipPressedEvent()
         default: nil
         }
     }

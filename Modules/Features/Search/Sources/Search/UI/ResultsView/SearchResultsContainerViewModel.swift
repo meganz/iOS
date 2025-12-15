@@ -106,7 +106,7 @@ public class SearchResultsContainerViewModel: ObservableObject {
         }
     }
 
-    private func tapped(_ chip: SearchChipEntity) async {
+    private func chipTapped(_ chip: SearchChipEntity) async {
         let query = Self.makeQueryAfter(tappedChip: chip, currentQuery: searchResultsViewModel.currentQuery)
         // updating chips here as well to make selection visible before results are returned
         updateChipsFrom(appliedChips: query.chips)
@@ -154,9 +154,10 @@ public class SearchResultsContainerViewModel: ObservableObject {
                     guard let self else { return }
                     if chip.subchips.isEmpty {
                         await dismissChipGroupPicker()
-                        await tapped(chip)
+                        await chipTapped(chip)
                     } else {
                         showChipsGroupPicker(with: chip.id)
+                        bridge.chipPickerShowed(from: chip)
                     }
                 }
             )
@@ -187,7 +188,7 @@ public class SearchResultsContainerViewModel: ObservableObject {
                 selected: selected,
                 select: { [weak self] in
                     await self?.dismissChipGroupPicker()
-                    await self?.tapped(chip)
+                    await self?.chipTapped(chip)
                 }
             )
         }

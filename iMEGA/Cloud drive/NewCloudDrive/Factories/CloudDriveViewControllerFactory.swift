@@ -47,6 +47,9 @@ struct CloudDriveViewControllerFactory {
     private let sensitiveDisplayPreferenceUseCase: any SensitiveDisplayPreferenceUseCaseProtocol
     private let nodeActionsBridge: NodeActionsBridge
 
+    private var isCloudDriveRevampEnabled: Bool { DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .cloudDriveRevamp) }
+    private static var isCloudDriveRevampEnabled: Bool { DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .cloudDriveRevamp) }
+
     init(
         navigationController: UINavigationController,
         viewModeStore: some ViewModeStoring,
@@ -154,6 +157,9 @@ struct CloudDriveViewControllerFactory {
                         resultsMapper.map(node: node.toNodeEntity())
                     }
                     nodeActionBridge.selectedResultsHandler(results)
+                    if isCloudDriveRevampEnabled {
+                        tracker.trackAnalyticsEvent(with: CloudDriveSelectMenuItemEvent())
+                    }
                 default:
                     break
                 }
@@ -302,7 +308,6 @@ struct CloudDriveViewControllerFactory {
             isShowingAutomatically: initialViewMode == .mediaDiscovery,
             isFromSharedItem: config.isFromSharedItem ?? false
         )
-
         return .init(
             viewMode: initialViewMode,
             searchResultsContainerViewModel: searchResultsContainerViewModel,
@@ -389,6 +394,9 @@ struct CloudDriveViewControllerFactory {
             onBack: { self.navigationController.popViewController(animated: true) },
             onCancel: { self.navigationController.dismiss(animated: true) },
             onEditingChanged: { enabled in
+                if isCloudDriveRevampEnabled && enabled {
+                    tracker.trackAnalyticsEvent(with: CloudDriveMultiSelectModeEnteredEvent())
+                }
                 onSelectionModeChange(enabled)
             },
             updateTransferWidgetHandler: {
@@ -568,7 +576,6 @@ struct CloudDriveViewControllerFactory {
         }
 
         let initialViewMode = viewModeProvider(nodeSource, mediaNodesHandler(.containsExclusivelyMedia, nodeSource))
-        let isCloudDriveRevampEnabled = DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .cloudDriveRevamp)
         let searchBridge = makeSearchBridge(nodeSource: nodeSource, config: overriddenConfig)
         let searchConfig = makeSearchConfig(nodeSource: nodeSource, config: overriddenConfig)
 
@@ -620,10 +627,17 @@ struct CloudDriveViewControllerFactory {
 
         let searchControllerWrapper = SearchControllerWrapper(
             onSearch: { [weak searchResultsVM] in searchResultsVM?.bridge.queryChanged($0) },
-            onCancel: { [weak searchResultsVM] in searchResultsVM?.bridge.queryCleaned() },
-            onSearchActiveChanged: { [weak searchResultsContainerViewModel] in
+            onCancel: { [weak searchResultsVM] in
+                searchResultsVM?.bridge.queryCleaned()
+                if isCloudDriveRevampEnabled {
+                    tracker.trackAnalyticsEvent(with: CloudDriveSearchBarCancelPressedEvent())
+                }
+            }, onSearchActiveChanged: { [weak searchResultsContainerViewModel] in
                 if isCloudDriveRevampEnabled {
                     searchResultsContainerViewModel?.searchActiveDidChange($0)
+                    if isCloudDriveRevampEnabled && $0 {
+                        tracker.trackAnalyticsEvent(with: CloudDriveSearchBarPressedEvent())
+                    }
                 }
             }
         )
@@ -883,7 +897,7 @@ struct CloudDriveViewControllerFactory {
     ) -> SearchBridge {
         // not all actions are triggered using bridge yet
         let bridge = SearchResultsBridge()
-
+        let isCloudDriveRevampEnabled = DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .cloudDriveRevamp)
         let searchBridge = SearchBridge(
             selection: {
                 router.didTapNode(
@@ -905,8 +919,15 @@ struct CloudDriveViewControllerFactory {
                     displayMode: config.displayMode?.carriedOverDisplayMode,
                     isFromSharedItem: config.isFromSharedItem ?? false
                 )
+                if isCloudDriveRevampEnabled {
+                    tracker.trackAnalyticsEvent(with: CloudDriveChildNodeMoreButtonPressedEvent())
+                }
             },
-            chipTapped: { _, _ in },
+            chipTapped: { chip, selected in
+                if isCloudDriveRevampEnabled {
+                    tracker.trackChip(tapped: chip, selected: selected)
+                }
+            },
             sortingOrder: { @MainActor in
                 sortOrderPreferenceUseCase.sortOrder(for: nodeSource.parentNode).toSearchSortOrderEntity()
             },
@@ -916,6 +937,12 @@ struct CloudDriveViewControllerFactory {
                     sortOrder: sortOrder.toDomainSortOrderEntity(),
                     for: node
                 )
+            },
+            chipPickerShowedHandler: {
+                guard let event = $0.analyticsEvent else { return }
+                if isCloudDriveRevampEnabled {
+                    tracker.trackAnalyticsEvent(with: event)
+                }
             }
         )
 
@@ -1211,12 +1238,14 @@ struct CloudDriveViewControllerFactory {
         return FloatingAddButtonViewModel(
             floatingButtonVisibilityDataSource: floatingButtonVisibilityDataSource,
             uploadActions: actionProvider.actions,
-            featureFlagProvider: DIContainer.featureFlagProvider)
+            featureFlagProvider: DIContainer.featureFlagProvider,
+            analyticsTracker: tracker
+        )
     }
 }
 
 extension FloatingAddButtonViewModel: @MainActor CloudDriveContentUnavailableViewModelProviderDelegate {
     func emptyStateAddButtonTapped() {
-        addButtonTapAction()
+        toggleShowActions(true)
     }
 }

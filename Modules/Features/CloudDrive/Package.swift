@@ -27,7 +27,8 @@ let package = Package(
         .package(path: "../../UI/MEGASwiftUI"),
         .package(url: "https://github.com/meganz/MEGADesignToken.git", branch: "main"),
         .package(url: "https://code.developers.mega.co.nz/mobile/kmm/mobile-analytics-ios.git", branch: "main"),
-        .package(url: "https://github.com/apple/swift-async-algorithms", from: "1.0.0")
+        .package(url: "https://github.com/apple/swift-async-algorithms", from: "1.0.0"),
+        .package(path: "../../MEGASharedRepo/MEGATest")
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
@@ -54,6 +55,7 @@ let package = Package(
                 "CloudDrive",
                 "MEGAL10n",
                 "MEGASwiftUI",
+                "MEGATest",
                 .product(
                     name: "MEGADomainMock",
                     package: "MEGADomain"

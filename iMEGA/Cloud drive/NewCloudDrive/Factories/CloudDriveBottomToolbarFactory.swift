@@ -1,5 +1,7 @@
 import ChatRepo
 import Foundation
+import MEGAAnalyticsiOS
+import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGADomain
 import MEGAL10n
@@ -28,7 +30,14 @@ struct CloudDriveBottomToolbarItemsFactory {
     let actionFactory: any ToolbarActionFactoryProtocol
     let nodeUseCase: any NodeUseCaseProtocol
     let nodeAccessoryActionDelegate: any NodeAccessoryActionDelegate
-    
+    private var tracker: some AnalyticsTracking {
+        DIContainer.tracker
+    }
+
+    private var isCloudDriveRevampEnabled: Bool {
+        DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .cloudDriveRevamp)
+    }
+
     private func megaNodes(from nodeEntities: [NodeEntity]) -> [MEGANode] {
         nodeEntities.compactMap {
             sdk.node(forHandle: $0.handle)
@@ -100,15 +109,19 @@ struct CloudDriveBottomToolbarItemsFactory {
     ) {
         switch type {
         case .download:
+            trackAnalyticsEvent(CloudDriveDownloadMenuItemEvent())
             nodeActionHandler.download(selectedNodes)
             nodeActionHandler.toggleEditMode(false)
         case .shareLink:
+            trackAnalyticsEvent(CloudDriveShareLinkMenuItemEvent())
             nodeActionHandler.shareOrManageLink(selectedNodes)
             nodeActionHandler.toggleEditMode(false)
         case .move:
+            trackAnalyticsEvent(CloudDriveMoveMenuItemEvent())
             nodeActionHandler.browserAction(.move, selectedNodes)
             nodeActionHandler.toggleEditMode(false)
         case .copy:
+            trackAnalyticsEvent(CloudDriveCopyMenuItemEvent())
             nodeActionHandler.browserAction(.copy, selectedNodes)
             nodeActionHandler.toggleEditMode(false)
         case .delete:
@@ -160,10 +173,16 @@ struct CloudDriveBottomToolbarItemsFactory {
     ) {
         switch displayMode {
         case .cloudDrive:
+            trackAnalyticsEvent(CloudDriveMoveToRubbishBinMenuItemEvent())
             nodeActionHandler.moveToRubbishBin(nodes)
         case .rubbishBin:
             nodeActionHandler.removeFromRubbishBin(nodes)
         default: break
         }
+    }
+
+    private func trackAnalyticsEvent(_ event: some EventIdentifier) {
+        guard isCloudDriveRevampEnabled else { return }
+        tracker.trackAnalyticsEvent(with: event)
     }
 }

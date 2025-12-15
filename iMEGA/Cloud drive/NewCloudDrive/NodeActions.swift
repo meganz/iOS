@@ -1,4 +1,6 @@
 import ChatRepo
+import MEGAAnalyticsiOS
+import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGAAssets
 import MEGADomain
@@ -57,7 +59,15 @@ struct NodeActions {
 
 // swiftlint:disable cyclomatic_complexity
 extension NodeActions {
-    
+
+    private static var isCloudDriveRevampEnabled: Bool {
+        DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .cloudDriveRevamp)
+    }
+
+    private static var tracker: some AnalyticsTracking {
+        DIContainer.tracker
+    }
+
     private static func megaNodes(
         from nodeEntities: [NodeEntity],
         using sdk: MEGASdk
@@ -66,14 +76,14 @@ extension NodeActions {
             sdk.node(forHandle: $0.handle)
         }
     }
-    
+
     static func makeActions(
         sdk: MEGASdk,
         navigationController: UINavigationController
     ) -> NodeActions {
         .init(
             nodeDownloader: { nodes in
-                
+                trackAnalyticsEvent(CloudDriveDownloadMenuItemEvent())
                 let transfers = nodes.map {
                     CancellableTransfer(
                         handle: $0.handle,
@@ -102,12 +112,14 @@ extension NodeActions {
                     MEGALogError("Passed empty array of nodes to GetLinkRouter")
                     return
                 }
+                trackAnalyticsEvent(CloudDriveShareLinkMenuItemEvent())
                 GetLinkRouter(
                     presenter: navigationController,
                     nodes: nodes.compactMap { sdk.node(forHandle: $0.handle) }
                 ).start()
             },
             showNodeInfo: { node in
+                trackAnalyticsEvent(CloudDriveInfoMenuItemEvent())
                 Task { @MainActor in
                     let nodeInfoRouter = NodeInfoRouter(navigationController: navigationController, contacstUseCase: ContactsUseCase(repository: ContactsRepository.newRepo))
                     nodeInfoRouter.showInformation(for: node)
@@ -115,10 +127,12 @@ extension NodeActions {
             },
             assignLabel: { node in
                 guard let megaNode = sdk.node(forHandle: node.handle) else { return }
+                trackAnalyticsEvent(CloudDriveLabelMenuItemEvent())
                 megaNode.mnz_labelActionSheet(in: navigationController)
             },
             toggleNodeFavourite: { node in
                 guard let megaNode = sdk.node(forHandle: node.handle) else { return }
+                trackAnalyticsEvent(CloudDriveFavouriteMenuItemEvent())
                 sdk.setNodeFavourite(megaNode, favourite: !megaNode.isFavourite)
             },
             sendToChat: { nodes in
@@ -197,6 +211,7 @@ extension NodeActions {
                 guard
                     let megaNode = sdk.node(forHandle: node.handle)
                 else { return }
+                trackAnalyticsEvent(CloudDriveRenameMenuItemEvent())
                 megaNode.mnz_renameNode(in: navigationController) { request in
                     if request.name != nil {
                         triggerNameChanged()
@@ -204,6 +219,7 @@ extension NodeActions {
                 }
             },
             shareFolders: { nodes in
+                trackAnalyticsEvent(CloudDriveRenameMenuItemEvent())
                 Task { @MainActor in
                     let sharedItemsRouter = SharedItemsViewRouter()
                     let shareUseCase = ShareUseCase(
@@ -232,6 +248,7 @@ extension NodeActions {
                 }
             },
             manageShare: { nodes in
+                trackAnalyticsEvent(CloudDriveShareFolderMenuItemEvent())
                 Task { @MainActor in
                     // check multi node
                     guard let node = nodes.first else { return }
@@ -250,6 +267,7 @@ extension NodeActions {
                 NSURL(string: Constants.Link.dispute)?.mnz_presentSafariViewController()
             },
             moveToRubbishBin: { nodes in
+                trackAnalyticsEvent(CloudDriveMoveToRubbishBinMenuItemEvent())
                 moveNodesToRubbishBin(nodes, presenter: navigationController)
             },
             restoreFromRubbishBin: { nodes in
@@ -266,6 +284,7 @@ extension NodeActions {
                 )
             },
             hide: { nodes in
+                trackAnalyticsEvent(CloudDriveHideNodeMenuItemEvent())
                 Task { @MainActor in
                     HideFilesAndFoldersRouter(presenter: navigationController).hideNodes(nodes)
                 }
@@ -451,6 +470,11 @@ extension NodeActions {
             sdk.move(node, newParent: rubbish, delegate: delegate)
         }
         
+    }
+
+    private static func trackAnalyticsEvent(_ event: some EventIdentifier) {
+        guard isCloudDriveRevampEnabled else { return }
+        tracker.trackAnalyticsEvent(with: event)
     }
 }
 // swiftlint:enable cyclomatic_complexity

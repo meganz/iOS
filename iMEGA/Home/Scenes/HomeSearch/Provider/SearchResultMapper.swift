@@ -1,3 +1,4 @@
+import MEGAAnalyticsiOS
 import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGAAssets
@@ -24,6 +25,10 @@ struct SearchResultMapper: Sendable {
     private let showHiddenNodeBlur: Bool
     private var isCloudDriveRevampEnabled: Bool {
         DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .cloudDriveRevamp)
+    }
+
+    private var tracker: some AnalyticsTracking {
+        DIContainer.tracker
     }
 
     init(
@@ -220,6 +225,9 @@ struct SearchResultMapper: Sendable {
                 image: linkImage,
                 backgroundColor: linkBackgroundColor,
                 action: {
+                    if isCloudDriveRevampEnabled {
+                        tracker.trackAnalyticsEvent(with: CloudDriveSwipeGestureLinkButtonPressedEvent())
+                    }
                     nodeActions.shareOrManageLink([node])
                 }
             )
@@ -230,6 +238,9 @@ struct SearchResultMapper: Sendable {
                 image: downloadImage,
                 backgroundColor: downloadBackgroundColor,
                 action: {
+                    if isCloudDriveRevampEnabled {
+                        tracker.trackAnalyticsEvent(with: CloudDriveSwipeGestureDownloadButtonPressedEvent())
+                    }
                     nodeActions.nodeDownloader([node])
                 }
             )
@@ -241,6 +252,9 @@ struct SearchResultMapper: Sendable {
                     image: rubbishBinImage,
                     backgroundColor: rubbishBinBackgroundColor,
                     action: {
+                        if isCloudDriveRevampEnabled {
+                            tracker.trackAnalyticsEvent(with: CloudDriveSwipeGestureRemoveButtonPressedEvent())
+                        }
                         nodeActions.moveToRubbishBin([node])
                     }
                 )

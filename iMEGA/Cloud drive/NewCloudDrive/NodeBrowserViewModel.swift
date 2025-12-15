@@ -89,6 +89,7 @@ class NodeBrowserViewModel: ObservableObject {
     private let sensitiveNodeUseCase: any SensitiveNodeUseCaseProtocol
     private let tracker: any AnalyticsTracking
     private let warningBannerViewRouter: any WarningBannerViewRouting
+    private let featureFlagProvider: any FeatureFlagProviderProtocol
 
     private let titleBuilder: (_ isEditing: Bool, _ selectedNodeCount: Int) -> String
     private let onUpdateSearchBarVisibility: (Bool) -> Void
@@ -128,12 +129,16 @@ class NodeBrowserViewModel: ObservableObject {
     }
 
     var shouldDisplayHeaderViewInMDView: Bool {
-        DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .cloudDriveRevamp)
+        isCloudDriveRevampEnabled
     }
 
     lazy var viewModeHeaderViewModelForMD: SearchResultsHeaderViewModeViewModel = {
         .init(selectedViewMode: .mediaDiscovery, availableViewModes: [.list, .grid, .mediaDiscovery])
     }()
+
+    private var isCloudDriveRevampEnabled: Bool {
+        featureFlagProvider.isFeatureFlagEnabled(for: .cloudDriveRevamp)
+    }
 
     init(
         viewMode: ViewModePreferenceEntity,
@@ -170,7 +175,8 @@ class NodeBrowserViewModel: ObservableObject {
         updateTransferWidgetHandler: @escaping () -> Void,
         sortOrderProvider: @escaping () -> MEGADomain.SortOrderEntity,
         onNodeStructureChanged: @escaping () -> Void,
-        onMoreOptionsButtonTapped: @escaping (UIButton) -> Void
+        onMoreOptionsButtonTapped: @escaping (UIButton) -> Void,
+        featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider
     ) {
         self.viewMode = viewMode
         self.searchResultsContainerViewModel = searchResultsContainerViewModel
@@ -200,6 +206,7 @@ class NodeBrowserViewModel: ObservableObject {
         self.tracker = tracker
         self.onNodeStructureChanged = onNodeStructureChanged
         self.onMoreOptionsButtonTapped = onMoreOptionsButtonTapped
+        self.featureFlagProvider = featureFlagProvider
 
         $viewMode
             .removeDuplicates()
@@ -559,6 +566,9 @@ class NodeBrowserViewModel: ObservableObject {
 
     func moreOptionsButtonTapped(button: UIButton) {
         onMoreOptionsButtonTapped(button)
+        if isCloudDriveRevampEnabled {
+            tracker.trackAnalyticsEvent(with: CloudDriveParentNodeMoreButtonPressedEvent())
+        }
     }
 
     /// Waits for the node to be loaded from the `NodeSource`.

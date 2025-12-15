@@ -1,9 +1,11 @@
 @testable import CloudDrive
 import Foundation
+import MEGAAnalyticsiOS
 import MEGAAppPresentation
 import MEGAAppPresentationMock
 import MEGADomain
 import MEGASwift
+import MEGATest
 import Testing
 
 @Suite("FloatingAddButtonViewModel Tests")
@@ -57,7 +59,7 @@ struct FloatingAddButtonViewModelTests {
     @Suite("Test for saveSelectedAction() and performSelectedActionAfterDismissal()")
     struct ActionInvocation {
         @Test
-        func test() {
+        func actionInvocations() {
             var calledActionIndex = -1
 
             let action0 = NodeUploadAction(actionEntity: .chooseFromPhotos, image: .init(systemName: "star"), title: "title1") {
@@ -84,16 +86,34 @@ struct FloatingAddButtonViewModelTests {
         }
     }
 
+    @MainActor
+    @Suite("Test for action button tapped")
+    struct AddButtonTap {
+        @Test
+        func addButtonTapped() async {
+            let tracker = MockTracker()
+            let sut = FloatingAddButtonViewModelTests.makeSut(analyticsTracker: tracker)
+
+            sut.addButtonTapAction()
+            #expect(sut.showsFloatingAddButton == false)
+            Test.assertTrackAnalyticsEventCalled(
+                trackedEventIdentifiers: tracker.trackedEventIdentifiers,
+                with: [CloudDriveFABPressedEvent()]
+            )
+        }
+    }
 
     private static func makeSut(
         floatingButtonVisibilityDataSource: MockFloatingAddButtonVisibilityDataSource = .init(),
         uploadActions: [NodeUploadAction] = [],
-        featureEnabled: Bool = true
+        featureEnabled: Bool = true,
+        analyticsTracker: some MockTracker = .init()
     ) -> FloatingAddButtonViewModel {
         FloatingAddButtonViewModel(
             floatingButtonVisibilityDataSource: floatingButtonVisibilityDataSource,
             uploadActions: uploadActions,
-            featureFlagProvider: MockFeatureFlagProvider(list: [.cloudDriveRevamp: featureEnabled])
+            featureFlagProvider: MockFeatureFlagProvider(list: [.cloudDriveRevamp: featureEnabled]),
+            analyticsTracker: analyticsTracker
         )
     }
 }

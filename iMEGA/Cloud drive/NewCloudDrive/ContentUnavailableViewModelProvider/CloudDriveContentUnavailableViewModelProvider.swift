@@ -1,3 +1,4 @@
+import MEGAAnalyticsiOS
 import MEGAAppPresentation
 import MEGAAssets
 import MEGADomain
@@ -90,6 +91,8 @@ final class CloudDriveContentUnavailableViewModelProvider: ContentUnavailableVie
 
     private var addFilesButton: ContentUnavailableViewModel.ButtonAction {
         ContentUnavailableViewModel.ButtonAction(title: Strings.Localizable.addFiles, image: MEGAAssets.Image.plus, handler: { [weak self] in
+
+            DIContainer.tracker.trackAnalyticsEvent(with: CloudDriveEmptyStateAddFilesPressedEvent())
             self?.delegate?.emptyStateAddButtonTapped()
         })
     }

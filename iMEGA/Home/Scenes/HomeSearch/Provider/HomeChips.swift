@@ -1,8 +1,13 @@
+import MEGAAnalyticsiOS
 import MEGAFoundation
 import MEGAL10n
 import Search
 
 extension SearchChipEntity {
+
+    static let nodeFormatsGroupChipId = Strings.Localizable.Home.Search.ChipsGroup.NodeType.pillTitle
+    static let timeFilterGroupChipId = Strings.Localizable.Home.Search.ChipsGroup.ModificationDate.pillTitle
+
     // MARK: - Node format chips
     public static let images = SearchChipEntity(
         type: .nodeFormat(.photo),
@@ -143,7 +148,7 @@ extension SearchChipEntity {
     // MARK: - Grouped chips which have subchips which are displayed in the chips picker
     public static let nodeFormatsGroupedChip = SearchChipEntity(
         type: .Grouped,
-        title: Strings.Localizable.Home.Search.ChipsGroup.NodeType.pillTitle,
+        title: nodeFormatsGroupChipId,
         subchipsPickerTitle: Strings.Localizable.Home.Search.ChipsGroup.NodeType.pickerTitle,
         subchips: allNodeFormatChips
     )
@@ -168,7 +173,7 @@ extension SearchChipEntity {
     ) -> SearchChipEntity {
         SearchChipEntity(
             type: .Grouped,
-            title: Strings.Localizable.Home.Search.ChipsGroup.ModificationDate.pillTitle,
+            title: timeFilterGroupChipId,
             subchipsPickerTitle: Strings.Localizable.Home.Search.ChipsGroup.ModificationDate.pickerTitle,
             subchips: allTimeFilterChips(
                 currentDate: currentDate,

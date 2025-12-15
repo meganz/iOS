@@ -207,7 +207,11 @@ final class HomeScreenFactory: NSObject {
             }, sortingOrder: {
                 .init(key: .name)
             },
-            updateSortOrder: { _ in }
+            updateSortOrder: { _ in },
+            chipPickerShowedHandler: {
+                guard let event = $0.analyticsEvent else { return }
+                tracker.trackAnalyticsEvent(with: event)
+            }
         )
         
         bridge.didInputTextTrampoline = { [weak searchBridge] text in
