@@ -21,6 +21,7 @@ struct SearchResultsListView<Header: View>: View {
                 nonselectableListContent
             }
         }
+        .environment(\.defaultMinListRowHeight, 0)
         .listStyle(.plain)
         .tint(
             viewModel.usesRevampedLayout ? TokenColors.Components.selectionControlAlt.swiftUI : viewModel.colorAssets.checkmarkBackgroundTintColor
@@ -29,20 +30,13 @@ struct SearchResultsListView<Header: View>: View {
 
     @ViewBuilder
     private var selectableListContent: some View {
-        let list = List(selection: $viewModel.selectedRowIds) {
+        List(selection: $viewModel.selectedRowIds) {
             listSectionContent
         }
         .onChange(of: editMode?.wrappedValue) { newMode in
             if newMode == .active {
                 viewModel.handleEditingChanged(true)
             }
-        }
-
-        if #available(iOS 17.0, *) {
-            list
-                .contentMargins(.top, 0, for: .scrollContent)
-        } else {
-            list
         }
     }
 
@@ -62,28 +56,16 @@ struct SearchResultsListView<Header: View>: View {
 
     @ViewBuilder
     private var nonselectableListContent: some View {
-        let list = List {
+        List {
             listSectionContent
-        }
-
-        if #available(iOS 17.0, *) {
-            list
-                .contentMargins(.top, 0, for: .scrollContent)
-        } else {
-            list
         }
     }
 
     @ViewBuilder
     private var listSectionContent: some View {
-        Section {
-            EmptyView()
-        } header: {
-            header()
-                .listRowInsets(
-                    EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0)
-                )
-        }
+        header()
+            .listRowInsets(.init())
+            .listRowSeparator(.hidden)
 
         Section {
             ForEach(viewModel.listItems) { item in
