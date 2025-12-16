@@ -2,6 +2,7 @@ import Combine
 @testable import MEGA
 import MEGAAppPresentation
 import MEGAAppPresentationMock
+import MEGAAppSDKRepoMock
 import MEGADomain
 import MEGADomainMock
 import MEGAPermissions
@@ -74,12 +75,42 @@ struct MediaTabViewModelTests {
         let sut = Self.makeSUT(
             tabViewModels: [.timeline: contentViewModel]
         )
-        
+
         sut.handleToolbarItemAction(expectedAction)
-        
+
         #expect(contentViewModel.handledAction == expectedAction)
     }
     
+    @MainActor
+    @Test
+    func toolbarUpdatePublisherUpdatesToolbarConfig() async throws {
+        let contentViewModel = MockMediaTabContentViewModel(
+            toolBarActions: [.shareLink, .delete]
+        )
+        let sut = Self.makeSUT(
+            tabViewModels: [.timeline: contentViewModel]
+        )
+
+        // Enable edit mode to show toolbar
+        sut.editMode = .active
+
+        // Toolbar should show even with no selection (count = 0)
+        #expect(sut.toolbarConfig?.selectedItemsCount == 0)
+
+        let mockNodes = [
+            NodeEntity(),
+            NodeEntity(),
+            NodeEntity()
+        ]
+        contentViewModel.selectedNodesForToolbarValue = mockNodes
+        contentViewModel.toolbarUpdateSubject.send()
+
+        try await Task.sleep(nanoseconds: 100_000_000)
+
+        #expect(sut.toolbarConfig?.selectedItemsCount == 3)
+        #expect(sut.toolbarConfig?.actions == [.shareLink, .delete])
+    }
+
     @MainActor
     private static func makeSUT(
         tabViewModels: [MediaTab: any MediaTabContentViewModel] = [:],
@@ -102,13 +133,18 @@ private final class MockMediaTabContentViewModel: MediaTabContentViewModel {
     let editModeToggleRequested = PassthroughSubject<Void, Never>()
     let navigationBarUpdateSubject = PassthroughSubject<Void, Never>()
     let titleUpdateSubject = PassthroughSubject<String, Never>()
-    
+    let toolbarUpdateSubject = PassthroughSubject<Void, Never>()
+
     var toolBarActions: [MediaBottomToolbarAction]?
     var itemViewModels: [NavigationBarItemViewModel]
-    
+
+    weak var toolbarCoordinator: (any MediaTabToolbarCoordinatorProtocol)?
+
+    var selectedNodesForToolbarValue: [NodeEntity] = []
+
     private let _contextMenuConfiguration: CMConfigEntity?
     private(set) var handledAction: MediaBottomToolbarAction?
-    
+
     init(
         itemViewModels: [NavigationBarItemViewModel] = [],
         contextMenuConfiguration: CMConfigEntity? = nil,
@@ -140,12 +176,20 @@ extension MockMediaTabContentViewModel: MediaTabContextMenuProvider {
 }
 
 extension MockMediaTabContentViewModel: MediaTabToolbarActionsProvider {
-    func toolbarActions(
-        selectedItemsCount: Int,
-        hasExportedItems: Bool,
-        isAllExported: Bool
-    ) -> [MediaBottomToolbarAction]? {
-        toolBarActions
+    var toolbarUpdatePublisher: AnyPublisher<Void, Never>? {
+        toolbarUpdateSubject.eraseToAnyPublisher()
+    }
+
+    func toolbarConfig() -> MediaBottomToolbarConfig? {
+        let count = selectedNodesForToolbarValue.count
+        guard let actions = toolBarActions else { return nil }
+
+        return MediaBottomToolbarConfig(
+            actions: actions,
+            selectedItemsCount: count,
+            hasExportedItems: false,
+            isAllExported: false
+        )
     }
 }
 

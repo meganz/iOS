@@ -2,6 +2,7 @@ import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGAAssets
 import MEGADomain
+import MEGAL10n
 import MEGAPermissions
 import MEGAPreference
 import SwiftUI
@@ -54,7 +55,7 @@ struct MediaTabViewControllerFactory {
         )
 
         hostingController.tabBarItem = UITabBarItem(
-            title: "Media", // WIP: Replace with localized string
+            title: Strings.Localizable.Photos.SearchResults.Media.Section.title,
             image: MEGAAssets.UIImage.cameraUploadsIcon,
             selectedImage: nil
         )

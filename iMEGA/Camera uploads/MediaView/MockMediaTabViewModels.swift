@@ -6,6 +6,9 @@ import SwiftUI
 
 @MainActor
 final class MockTimelineViewModel: MediaTabContentViewModel, MediaTabContextMenuProvider, MediaTabContextMenuActionHandler, MediaTabToolbarActionsProvider, MediaTabToolbarActionHandler, MediaTabNavigationBarItemProvider, MediaTabSharedResourceConsumer {
+    private var selectedNodesForToolbar: [NodeEntity] = []
+
+    var toolbarCoordinator: (any MediaTabToolbarCoordinatorProtocol)?
 
     let editModeToggleRequested = PassthroughSubject<Void, Never>()
 
@@ -27,12 +30,15 @@ final class MockTimelineViewModel: MediaTabContentViewModel, MediaTabContextMenu
 
     // MARK: - MediaTabToolbarActionsProvider
 
-    func toolbarActions(
-        selectedItemsCount: Int,
-        hasExportedItems: Bool,
-        isAllExported: Bool
-    ) -> [MediaBottomToolbarAction]? {
-        return [.shareLink, .delete]
+    func toolbarConfig() -> MediaBottomToolbarConfig? {
+        let count = selectedNodesForToolbar.count
+
+        return MediaBottomToolbarConfig(
+            actions: [.shareLink, .delete],
+            selectedItemsCount: count,
+            hasExportedItems: false,
+            isAllExported: false
+        )
     }
 
     // MARK: - MediaTabToolbarActionHandler
@@ -45,6 +51,8 @@ final class MockTimelineViewModel: MediaTabContentViewModel, MediaTabContextMenu
             print("MockTimelineViewModel: Remove link action")
         case .delete:
             print("MockTimelineViewModel: Delete action")
+        default:
+            print("MockTimelineViewModel: Other action")
         }
     }
 
@@ -89,6 +97,9 @@ final class MockTimelineViewModel: MediaTabContentViewModel, MediaTabContextMenu
 }
 
 final class MockAlbumViewModel: MediaTabContextMenuProvider, MediaTabContextMenuActionHandler, MediaTabToolbarActionsProvider, MediaTabToolbarActionHandler, MediaTabNavigationBarItemProvider, MediaTabSharedResourceConsumer {
+    private var selectedNodesForToolbar: [NodeEntity] = []
+
+    var toolbarCoordinator: (any MediaTabToolbarCoordinatorProtocol)?
 
     let editModeToggleRequested = PassthroughSubject<Void, Never>()
 
@@ -110,16 +121,24 @@ final class MockAlbumViewModel: MediaTabContextMenuProvider, MediaTabContextMenu
 
     // MARK: - MediaTabToolbarActionsProvider
 
-    func toolbarActions(
-        selectedItemsCount: Int,
-        hasExportedItems: Bool,
-        isAllExported: Bool
-    ) -> [MediaBottomToolbarAction]? {
-        if isAllExported {
-            return [.shareLink, .removeLink, .delete]
-        } else {
-            return [.shareLink, .delete]
-        }
+    func toolbarConfig() -> MediaBottomToolbarConfig? {
+        let nodes = selectedNodesForToolbar
+        let count = nodes.count
+
+        let exportedNodes = nodes.filter { $0.isExported }
+        let hasExportedItems = !exportedNodes.isEmpty
+        let isAllExported = count > 0 && exportedNodes.count == count
+
+        let actions: [MediaBottomToolbarAction] = isAllExported
+            ? [.shareLink, .removeLink, .delete]
+            : [.shareLink, .delete]
+
+        return MediaBottomToolbarConfig(
+            actions: actions,
+            selectedItemsCount: count,
+            hasExportedItems: hasExportedItems,
+            isAllExported: isAllExported
+        )
     }
 
     // MARK: - MediaTabToolbarActionHandler
@@ -132,6 +151,8 @@ final class MockAlbumViewModel: MediaTabContextMenuProvider, MediaTabContextMenu
             print("MockAlbumViewModel: Remove link action")
         case .delete:
             print("MockAlbumViewModel: Delete action")
+        default:
+            print("MockAlbumViewModel: Other action")
         }
     }
 
@@ -160,6 +181,9 @@ final class MockAlbumViewModel: MediaTabContextMenuProvider, MediaTabContextMenu
 }
 
 final class MockVideoViewModel: MediaTabContextMenuProvider, MediaTabContextMenuActionHandler, MediaTabToolbarActionsProvider, MediaTabToolbarActionHandler, MediaTabNavigationBarItemProvider, MediaTabSharedResourceConsumer {
+    private var selectedNodesForToolbar: [NodeEntity] = []
+
+    var toolbarCoordinator: (any MediaTabToolbarCoordinatorProtocol)?
 
     let editModeToggleRequested = PassthroughSubject<Void, Never>()
 
@@ -181,16 +205,25 @@ final class MockVideoViewModel: MediaTabContextMenuProvider, MediaTabContextMenu
 
     // MARK: - MediaTabToolbarActionsProvider
 
-    func toolbarActions(
-        selectedItemsCount: Int,
-        hasExportedItems: Bool,
-        isAllExported: Bool
-    ) -> [MediaBottomToolbarAction]? {
-        if isAllExported {
-            return [.shareLink, .removeLink, .delete]
-        } else {
-            return [.shareLink, .delete]
-        }
+    func toolbarConfig() -> MediaBottomToolbarConfig? {
+        let nodes = selectedNodesForToolbar
+        let count = nodes.count
+        guard count > 0 else { return nil }
+
+        let exportedNodes = nodes.filter { $0.isExported }
+        let hasExportedItems = !exportedNodes.isEmpty
+        let isAllExported = exportedNodes.count == count
+
+        let actions: [MediaBottomToolbarAction] = isAllExported
+            ? [.shareLink, .removeLink, .delete]
+            : [.shareLink, .delete]
+
+        return MediaBottomToolbarConfig(
+            actions: actions,
+            selectedItemsCount: count,
+            hasExportedItems: hasExportedItems,
+            isAllExported: isAllExported
+        )
     }
 
     // MARK: - MediaTabToolbarActionHandler
@@ -203,6 +236,8 @@ final class MockVideoViewModel: MediaTabContextMenuProvider, MediaTabContextMenu
             print("MockVideoViewModel: Remove link action")
         case .delete:
             print("MockVideoViewModel: Delete action")
+        default:
+            print("MockVideoViewModel: Other action")
         }
     }
 
@@ -231,6 +266,9 @@ final class MockVideoViewModel: MediaTabContextMenuProvider, MediaTabContextMenu
 }
 
 final class MockPlaylistViewModel: MediaTabContentViewModel, MediaTabContextMenuProvider, MediaTabContextMenuActionHandler, MediaTabToolbarActionsProvider, MediaTabToolbarActionHandler, MediaTabNavigationBarItemProvider, MediaTabSharedResourceConsumer {
+    private var selectedNodesForToolbar: [NodeEntity] = []
+
+    var toolbarCoordinator: (any MediaTabToolbarCoordinatorProtocol)?
 
     let editModeToggleRequested = PassthroughSubject<Void, Never>()
 
@@ -252,16 +290,25 @@ final class MockPlaylistViewModel: MediaTabContentViewModel, MediaTabContextMenu
 
     // MARK: - MediaTabToolbarActionsProvider
 
-    func toolbarActions(
-        selectedItemsCount: Int,
-        hasExportedItems: Bool,
-        isAllExported: Bool
-    ) -> [MediaBottomToolbarAction]? {
-        if isAllExported {
-            return [.shareLink, .removeLink, .delete]
-        } else {
-            return [.shareLink, .delete]
-        }
+    func toolbarConfig() -> MediaBottomToolbarConfig? {
+        let nodes = selectedNodesForToolbar
+        let count = nodes.count
+        guard count > 0 else { return nil }
+
+        let exportedNodes = nodes.filter { $0.isExported }
+        let hasExportedItems = !exportedNodes.isEmpty
+        let isAllExported = exportedNodes.count == count
+
+        let actions: [MediaBottomToolbarAction] = isAllExported
+            ? [.shareLink, .removeLink, .delete]
+            : [.shareLink, .delete]
+
+        return MediaBottomToolbarConfig(
+            actions: actions,
+            selectedItemsCount: count,
+            hasExportedItems: hasExportedItems,
+            isAllExported: isAllExported
+        )
     }
 
     // MARK: - MediaTabToolbarActionHandler
@@ -274,6 +321,8 @@ final class MockPlaylistViewModel: MediaTabContentViewModel, MediaTabContextMenu
             print("MockPlaylistViewModel: Remove link action")
         case .delete:
             print("MockPlaylistViewModel: Delete action")
+        default:
+            print("MockVideoViewModel: Other action")
         }
     }
 

@@ -3,6 +3,7 @@ import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGAAssets
 import MEGADomain
+import MEGAL10n
 import MEGAPermissions
 import MEGAPreference
 import SwiftUI
@@ -24,7 +25,7 @@ final class MediaTabViewModel: ObservableObject, MediaTabSharedResourceProvider 
         }
     }
 
-    @Published var navigationTitle: String = "Media" // WIP: Replace with localized string
+    @Published var navigationTitle: String = Strings.Localizable.Photos.SearchResults.Media.Section.title
 
     @Published var contextMenuConfig: CMConfigEntity?
 
@@ -48,27 +49,6 @@ final class MediaTabViewModel: ObservableObject, MediaTabSharedResourceProvider 
     }
 
     @Published private(set) var toolbarConfig: MediaBottomToolbarConfig?
-
-    @Published var selectedItemsCount: Int = 0 {
-        didSet {
-            guard selectedItemsCount != oldValue else { return }
-            updateToolbarConfig()
-        }
-    }
-
-    @Published var hasExportedItems: Bool = false {
-        didSet {
-            guard hasExportedItems != oldValue else { return }
-            updateToolbarConfig()
-        }
-    }
-
-    @Published var isAllExported: Bool = false {
-        didSet {
-            guard isAllExported != oldValue else { return }
-            updateToolbarConfig()
-        }
-    }
 
     let cameraUploadStatusButtonViewModel: CameraUploadStatusButtonViewModel
 
@@ -115,7 +95,6 @@ final class MediaTabViewModel: ObservableObject, MediaTabSharedResourceProvider 
 
     func handleToolbarItemAction(_ action: MediaBottomToolbarAction) {
         guard let tabViewModel = tabViewModels[selectedTab] as? any MediaTabToolbarActionHandler else { return }
-        // Delegate toolbar action to the current tab's view model
         tabViewModel.handleToolbarAction(action)
     }
 
@@ -154,7 +133,19 @@ final class MediaTabViewModel: ObservableObject, MediaTabSharedResourceProvider 
                 self?.updateNavigationBarForCurrentTab()
             }
             .store(in: &subscriptions)
-        
+
+        // Subscribe to toolbar update requests from current tab
+        $selectedTab
+            .compactMap { [weak self] selectedTab in
+                (self?.tabViewModels[selectedTab] as? any MediaTabToolbarActionsProvider)?.toolbarUpdatePublisher
+            }
+            .switchToLatest()
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in
+                self?.updateToolbarConfig()
+            }
+            .store(in: &subscriptions)
+
         // Subscribe to title updates from selected tab
         $selectedTab
             .compactMap { [weak self] selectedTab in
@@ -194,25 +185,13 @@ final class MediaTabViewModel: ObservableObject, MediaTabSharedResourceProvider 
             return
         }
 
-        // Get toolbar actions from the current tab's view model
-        guard let tabViewModel = tabViewModels[selectedTab] as? (any MediaTabToolbarActionsProvider),
-              let actions = tabViewModel.toolbarActions(
-                  selectedItemsCount: selectedItemsCount,
-                  hasExportedItems: hasExportedItems,
-                  isAllExported: isAllExported
-              ),
-              !actions.isEmpty else {
-            // No actions available, hide toolbar
+        // Get toolbar configuration from the current tab's view model
+        guard let tabViewModel = tabViewModels[selectedTab] as? (any MediaTabToolbarActionsProvider) else {
             toolbarConfig = nil
             return
         }
 
-        toolbarConfig = MediaBottomToolbarConfig(
-            actions: actions,
-            selectedItemsCount: selectedItemsCount,
-            hasExportedItems: hasExportedItems,
-            isAllExported: isAllExported
-        )
+        toolbarConfig = tabViewModel.toolbarConfig()
     }
     
     private func handleTitleUpdate(_ newTitle: String) {

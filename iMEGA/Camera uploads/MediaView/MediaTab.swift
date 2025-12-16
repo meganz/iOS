@@ -12,13 +12,13 @@ enum MediaTab: Int, CaseIterable, Identifiable, Hashable {
     var title: String {
         switch self {
         case .timeline:
-            return Strings.Localizable.CameraUploads.Timeline.title
+            Strings.Localizable.CameraUploads.Timeline.title
         case .album:
-            return Strings.Localizable.CameraUploads.Albums.title
+            Strings.Localizable.CameraUploads.Albums.title
         case .video:
-            return "Videos"  // WIP: Replace with localized string
+            Strings.Localizable.Videos.Navigationbar.title
         case .playlist:
-            return "Playlists"  // WIP: Replace with localized string
+            Strings.Localizable.Videos.Tab.Title.playlist
         }
     }
 }

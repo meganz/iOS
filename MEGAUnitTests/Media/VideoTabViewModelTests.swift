@@ -333,6 +333,71 @@ final class VideoTabViewModelTests: XCTestCase {
         XCTAssertEqual(videoListViewModel.selectedDurationFilterOption, .lessThan10Seconds)
     }
 
+    // MARK: - Toolbar Config Tests
+
+    func testToolbarConfig_withNoSelection_shouldReturnConfigWithZeroCount() {
+        let (sut, _, _, _) = makeSUT()
+
+        let config = sut.toolbarConfig()
+
+        XCTAssertNotNil(config)
+        XCTAssertEqual(config?.selectedItemsCount, 0)
+        XCTAssertEqual(config?.actions.count, 5)
+        XCTAssertFalse(config?.hasExportedItems ?? true)
+        XCTAssertFalse(config?.isAllExported ?? true)
+    }
+
+    // MARK: - Handle Toolbar Action Tests
+
+    func testHandleToolbarAction_withNoCoordinator_shouldNotCrash() {
+        let (sut, _, _, _) = makeSUT()
+
+        XCTAssertNil(sut.toolbarCoordinator)
+        XCTAssertNoThrow(sut.handleToolbarAction(.download))
+    }
+
+    func testHandleToolbarAction_withNoSelection_shouldNotCallCoordinator() {
+        let (sut, _, _, _) = makeSUT()
+        let mockCoordinator = MockMediaTabToolbarCoordinator()
+        sut.toolbarCoordinator = mockCoordinator
+
+        sut.handleToolbarAction(.download)
+
+        // When there are no valid MEGANodes, the coordinator should not be called
+        XCTAssertNil(mockCoordinator.lastAction)
+        XCTAssertNil(mockCoordinator.lastNodes)
+    }
+
+    func testHandleToolbarAction_withEmptyNodes_shouldNotCallCoordinator() {
+        let (sut, _, _, videoSelection) = makeSUT()
+        let mockCoordinator = MockMediaTabToolbarCoordinator()
+        sut.toolbarCoordinator = mockCoordinator
+
+        videoSelection.videos = [:]
+
+        sut.handleToolbarAction(.download)
+
+        XCTAssertNil(mockCoordinator.lastAction)
+        XCTAssertNil(mockCoordinator.lastNodes)
+    }
+
+    // MARK: - Toolbar Coordinator Tests
+
+    func testToolbarCoordinator_shouldBeWeakReference() {
+        let (sut, _, _, _) = makeSUT()
+        var coordinator: MockMediaTabToolbarCoordinator? = MockMediaTabToolbarCoordinator()
+
+        sut.toolbarCoordinator = coordinator
+
+        XCTAssertNotNil(sut.toolbarCoordinator)
+
+        // Release the coordinator
+        coordinator = nil
+
+        // Weak reference should be nil now
+        XCTAssertNil(sut.toolbarCoordinator)
+    }
+
     // MARK: - Integration Tests
 
     func testFilterChange_shouldUpdateContextMenuId() {
@@ -413,7 +478,7 @@ final class VideoTabViewModelTests: XCTestCase {
         sut: VideoTabViewModel,
         videoListViewModel: VideoListViewModel,
         syncModel: VideoRevampSyncModel,
-        featureFlagProvider: MockFeatureFlagProvider
+        videoSelection: VideoSelection
     ) {
         let syncModel = VideoRevampSyncModel()
         let videoSelection = VideoSelection()
@@ -443,7 +508,24 @@ final class VideoTabViewModelTests: XCTestCase {
 
         trackForMemoryLeaks(on: sut, file: file, line: line)
 
-        return (sut, videoListViewModel, syncModel, featureFlagProvider)
+        return (sut, videoListViewModel, syncModel, videoSelection)
+    }
+
+    private func anyVideo(id: HandleEntity, name: String = "video.mp4") -> NodeEntity {
+        NodeEntity(
+            changeTypes: .fileAttributes,
+            nodeType: .file,
+            name: name,
+            handle: id,
+            isFile: true,
+            hasThumbnail: true,
+            hasPreview: true,
+            label: .unknown,
+            publicHandle: id,
+            size: 1024,
+            duration: 120,
+            mediaType: .video
+        )
     }
 }
 
@@ -467,5 +549,16 @@ private final class MockVideoListViewModelContentProvider: VideoListViewModelCon
 private final class MockCreateContextMenuUseCase: CreateContextMenuUseCaseProtocol {
     func createContextMenu(config: CMConfigEntity) -> CMEntity? {
         nil
+    }
+}
+
+@MainActor
+private final class MockMediaTabToolbarCoordinator: MediaTabToolbarCoordinatorProtocol {
+    var lastAction: MediaBottomToolbarAction?
+    var lastNodes: [NodeEntity]?
+
+    func handleToolbarAction(_ action: MediaBottomToolbarAction, with nodes: [NodeEntity]) {
+        lastAction = action
+        lastNodes = nodes
     }
 }

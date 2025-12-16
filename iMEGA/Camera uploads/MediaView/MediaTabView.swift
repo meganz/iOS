@@ -23,7 +23,12 @@ struct MediaTabView: View {
             selectedTextForegroundColor: TokenColors.Button.brand.swiftUI,
             textForegroundColor: TokenColors.Text.secondary.swiftUI,
             tabSelectionIndicatorColor: TokenColors.Button.brand.swiftUI,
-            backgroundColor: TokenColors.Background.surface1.swiftUI
+            backgroundColor: TokenColors.Background.surface1.swiftUI,
+            // Disable tab switching in edit mode, but keep content interactive
+            isTabSwitchingDisabled: Binding(
+                get: { viewModel.editMode == .active },
+                set: { _ in }
+            )
         )
         .navigationTitle(viewModel.navigationTitle)
         .navigationBarTitleDisplayMode(.inline)

@@ -49,6 +49,9 @@ struct MediaBottomToolbarItemsFactory {
             return config.isAllExported
         case .delete:
             return true
+        case .download, .manageLink, .saveToPhotos, .sendToChat, .more:
+            // Video actions - always enabled when items are selected
+            return true
         }
     }
 }

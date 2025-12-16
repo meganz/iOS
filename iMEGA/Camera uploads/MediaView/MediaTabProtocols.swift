@@ -42,18 +42,28 @@ protocol MediaTabContextMenuActionHandler: AnyObject {
 
 @MainActor
 protocol MediaTabToolbarActionsProvider: AnyObject {
-    func toolbarActions(
-        selectedItemsCount: Int,
-        hasExportedItems: Bool,
-        isAllExported: Bool
-    ) -> [MediaBottomToolbarAction]?
+    /// Publisher that emits when toolbar configuration should be updated
+    /// Child view models should emit on this publisher whenever their selection state changes
+    var toolbarUpdatePublisher: AnyPublisher<Void, Never>? { get }
+
+    /// Provides the toolbar configuration to display
+    /// The view model calculates this based on its own internal state
+    func toolbarConfig() -> MediaBottomToolbarConfig?
+}
+
+extension MediaTabToolbarActionsProvider {
+    /// Default implementation that returns nil
+    var toolbarUpdatePublisher: AnyPublisher<Void, Never>? { nil }
 }
 
 // MARK: - Toolbar Action Handler
 
 @MainActor
 protocol MediaTabToolbarActionHandler: AnyObject {
-    /// Handle toolbar action for this tab
+    /// Coordinator that handles the UI operations for toolbar actions
+    var toolbarCoordinator: (any MediaTabToolbarCoordinatorProtocol)? { get set }
+
+    /// Handle toolbar action by delegating to the coordinator
     /// - Parameter action: The toolbar action to handle
     func handleToolbarAction(_ action: MediaBottomToolbarAction)
 }
@@ -61,6 +71,7 @@ protocol MediaTabToolbarActionHandler: AnyObject {
 // MARK: - Default Implementations
 
 extension MediaTabContextMenuActionHandler {
+    
     func handleDisplayAction(_ action: DisplayActionEntity) {
         if action == .select {
             editModeToggleRequested.send()

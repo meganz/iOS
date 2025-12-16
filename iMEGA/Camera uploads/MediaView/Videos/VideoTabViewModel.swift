@@ -25,6 +25,10 @@ final class VideoTabViewModel: ObservableObject, MediaTabContentViewModel, Media
         }
     }
 
+    // MARK: - MediaTabToolbarActionHandler
+
+    weak var toolbarCoordinator: (any MediaTabToolbarCoordinatorProtocol)?
+
     // MARK: - MediaTabContextMenuActionHandler
 
     let editModeToggleRequested = PassthroughSubject<Void, Never>()
@@ -58,6 +62,7 @@ final class VideoTabViewModel: ObservableObject, MediaTabContentViewModel, Media
                 guard let self else { return }
                 let convertedEditMode: Video.EditMode = newEditMode == .active ? .active : .inactive
                 self.syncModel.editMode = convertedEditMode
+                self.videoSelection.editMode = convertedEditMode
              }
             .store(in: &subscriptions)
     }
@@ -183,16 +188,39 @@ extension VideoTabViewModel: MediaTabContextMenuActionHandler {
 // MARK: - MediaTabToolbarActionsProvider
 
 extension VideoTabViewModel: MediaTabToolbarActionsProvider {
-    func toolbarActions(
-        selectedItemsCount: Int,
-        hasExportedItems: Bool,
-        isAllExported: Bool
-    ) -> [MediaBottomToolbarAction]? {
-        guard selectedItemsCount > 0 else { return nil }
+    var toolbarUpdatePublisher: AnyPublisher<Void, Never>? {
+        videoSelection.$videos
+            .map { $0.isEmpty }
+            .removeDuplicates()
+            .map { _ in () }
+            .eraseToAnyPublisher()
+    }
 
-        // For now, return nil as we'll implement video-specific toolbar actions later
-        // The original implementation uses a custom toolbar in UIKit
-        return nil
+    func toolbarConfig() -> MediaBottomToolbarConfig? {
+        let selectedNodes = selectedNodesForToolbar
+        let selectedCount = selectedNodes.count
+
+        // Calculate export state
+        let exportedNodes = selectedNodes.filter { $0.isExported }
+        let hasExportedItems = !exportedNodes.isEmpty
+        let isAllExported = selectedCount > 0 && exportedNodes.count == selectedCount
+
+        // Define toolbar actions - always return actions even when no selection
+        // The UI will handle button enabled/disabled state based on selectedItemsCount
+        let actions: [MediaBottomToolbarAction] = [.download, .manageLink, .saveToPhotos, .sendToChat, .more]
+
+        return MediaBottomToolbarConfig(
+            actions: actions,
+            selectedItemsCount: selectedCount,
+            hasExportedItems: hasExportedItems,
+            isAllExported: isAllExported
+        )
+    }
+
+    /// Private helper to get selected nodes for internal use
+    private var selectedNodesForToolbar: [NodeEntity] {
+        videoSelection.videos.values
+            .compactMap { $0 }
     }
 }
 
@@ -200,6 +228,29 @@ extension VideoTabViewModel: MediaTabToolbarActionsProvider {
 
 extension VideoTabViewModel: MediaTabToolbarActionHandler {
     func handleToolbarAction(_ action: MediaBottomToolbarAction) {
-        // This will be implemented when we migrate from the UIKit toolbar
+        // Get selected nodes and delegate to coordinator for UI operations
+        let nodes = selectedNodesForToolbar
+        guard !nodes.isEmpty else { return }
+
+        toolbarCoordinator?.handleToolbarAction(action, with: nodes)
+    }
+}
+
+// MARK: - MediaTabNavigationTitleProvider
+
+extension VideoTabViewModel: MediaTabNavigationTitleProvider {
+    var titleUpdatePublisher: AnyPublisher<String, Never> {
+        let inactiveEditModeTitle = Strings.Localizable.Photos.SearchResults.Media.Section.title
+        guard let sharedResourceProvider else {
+            return Just(inactiveEditModeTitle).eraseToAnyPublisher()
+        }
+
+        let selectionCountPublisher = videoSelection.$videos
+            .map { $0.count }
+            .eraseToAnyPublisher()
+
+        return sharedResourceProvider.selectionTitlePublisher(
+            selectionCountPublisher: selectionCountPublisher,
+            inactiveEditModeTitle: inactiveEditModeTitle)
     }
 }

@@ -1,4 +1,6 @@
 import Combine
+import MEGAAnalyticsiOS
+import MEGAAppPresentation
 import SwiftUI
 import UIKit
 
@@ -8,9 +10,12 @@ final class MediaTabHostingController: UIHostingController<MediaTabView> {
 
     // MARK: - Properties
 
-    private let viewModel: MediaTabViewModel
+    let viewModel: MediaTabViewModel
+    let tracker: any AnalyticsTracking
     private var toolbarItemsFactory: MediaBottomToolbarItemsFactory
     private var subscriptions = Set<AnyCancellable>()
+
+    private lazy var toolbarCoordinator = MediaTabToolbarCoordinator(viewController: self)
 
     lazy var toolbar = UIToolbar()
 
@@ -18,10 +23,12 @@ final class MediaTabHostingController: UIHostingController<MediaTabView> {
 
     init(
         viewModel: MediaTabViewModel,
-        toolbarItemsFactory: MediaBottomToolbarItemsFactory
+        toolbarItemsFactory: MediaBottomToolbarItemsFactory,
+        tracker: any AnalyticsTracking = DIContainer.tracker
     ) {
         self.viewModel = viewModel
         self.toolbarItemsFactory = toolbarItemsFactory
+        self.tracker = tracker
 
         let rootView = MediaTabView(viewModel: viewModel)
         super.init(rootView: rootView)
@@ -38,6 +45,18 @@ final class MediaTabHostingController: UIHostingController<MediaTabView> {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupToolbarObservers()
+        injectToolbarCoordinator()
+    }
+
+    // MARK: - Coordinator Injection
+
+    private func injectToolbarCoordinator() {
+        // Inject coordinator into all tab view models
+        for (_, tabViewModel) in viewModel.tabViewModels {
+            if let toolbarActionViewModel = tabViewModel as? any MediaTabToolbarActionHandler {
+                toolbarActionViewModel.toolbarCoordinator = toolbarCoordinator
+            }
+        }
     }
 
     override func viewDidDisappear(_ animated: Bool) {

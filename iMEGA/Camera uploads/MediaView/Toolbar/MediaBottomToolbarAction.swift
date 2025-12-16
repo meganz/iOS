@@ -7,6 +7,12 @@ enum MediaBottomToolbarAction {
     case shareLink
     case removeLink
     case delete
+    // Video-specific actions
+    case download
+    case manageLink
+    case saveToPhotos
+    case sendToChat
+    case more
 
     var image: UIImage {
         switch self {
@@ -16,6 +22,16 @@ enum MediaBottomToolbarAction {
             MEGAAssets.UIImage.removeLink
         case .delete:
             MEGAAssets.UIImage.rubbishBin
+        case .download:
+            MEGAAssets.UIImage.offline
+        case .manageLink:
+            MEGAAssets.UIImage.link
+        case .saveToPhotos:
+            MEGAAssets.UIImage.saveToPhotos
+        case .sendToChat:
+            MEGAAssets.UIImage.sendToChat
+        case .more:
+            MEGAAssets.UIImage.moreList
         }
     }
 }

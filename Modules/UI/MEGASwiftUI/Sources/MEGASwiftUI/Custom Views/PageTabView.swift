@@ -19,14 +19,16 @@ public struct PageTabView<ID: Hashable & Identifiable>: View {
     private let textForegroundColor: Color
     private let tabSelectionIndicatorColor: Color
     private let backgroundColor: Color
-    
+    @Binding private var isTabSwitchingDisabled: Bool
+
     public init(
         tabs: [TabItem],
         selectedTab: Binding<ID>,
         selectedTextForegroundColor: Color,
         textForegroundColor: Color,
         tabSelectionIndicatorColor: Color,
-        backgroundColor: Color
+        backgroundColor: Color,
+        isTabSwitchingDisabled: Binding<Bool>
     ) {
         self.tabs = tabs
         self._selectedTab = selectedTab
@@ -34,6 +36,27 @@ public struct PageTabView<ID: Hashable & Identifiable>: View {
         self.textForegroundColor = textForegroundColor
         self.tabSelectionIndicatorColor = tabSelectionIndicatorColor
         self.backgroundColor = backgroundColor
+        self._isTabSwitchingDisabled = isTabSwitchingDisabled
+    }
+    
+    public init(
+        tabs: [TabItem],
+        selectedTab: Binding<ID>,
+        selectedTextForegroundColor: Color,
+        textForegroundColor: Color,
+        tabSelectionIndicatorColor: Color,
+        backgroundColor: Color,
+        isTabSwitchingDisabled: Bool = false
+    ) {
+        self.init(
+            tabs: tabs,
+            selectedTab: selectedTab,
+            selectedTextForegroundColor: selectedTextForegroundColor,
+            textForegroundColor: textForegroundColor,
+            tabSelectionIndicatorColor: tabSelectionIndicatorColor,
+            backgroundColor: backgroundColor,
+            isTabSwitchingDisabled: .constant(isTabSwitchingDisabled)
+        )
     }
     
     public var body: some View {
@@ -54,6 +77,7 @@ public struct PageTabView<ID: Hashable & Identifiable>: View {
         HStack(spacing: 0) {
             ForEach(tabs) { tab in
                 Button {
+                    guard !isTabSwitchingDisabled else { return }
                     withAnimation {
                         selectedTab = tab.id
                     }
@@ -62,6 +86,7 @@ public struct PageTabView<ID: Hashable & Identifiable>: View {
                         .foregroundStyle(selectedTab == tab.id ? selectedTextForegroundColor : textForegroundColor)
                         .frame(maxWidth: .infinity)
                 }
+                .disabled(isTabSwitchingDisabled)
             }
         }
         .frame(height: 44)
@@ -100,6 +125,7 @@ public struct PageTabView<ID: Hashable & Identifiable>: View {
             case two
         }
         @State var selectedTab = Tab.two
+        @State var isTabSwitchingDisabled = false
         
         var body: some View {
             PageTabView(
@@ -117,7 +143,8 @@ public struct PageTabView<ID: Hashable & Identifiable>: View {
                 selectedTextForegroundColor: .red,
                 textForegroundColor: .black,
                 tabSelectionIndicatorColor: .red,
-                backgroundColor: .white
+                backgroundColor: .white,
+                isTabSwitchingDisabled: $isTabSwitchingDisabled
             )
         }
     }
