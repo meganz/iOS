@@ -511,7 +511,7 @@ class NodeActionViewController: ActionSheetViewController {
         headerView?.addSubview(subtitleLabel)
         subtitleLabel.leadingAnchor.constraint(equalTo: nodeImageView.trailingAnchor, constant: 8).isActive = true
         
-        if node.isFile() && MEGAStore.shareInstance().offlineNode(with: node) != nil {
+        if (node.isFile() || isCloudDriveRevampEnabled) && MEGAStore.shareInstance().offlineNode(with: node) != nil {
             headerView?.addSubview(downloadImageView)
             NSLayoutConstraint.activate([
                 downloadImageView.widthAnchor.constraint(equalToConstant: 12),
