@@ -375,7 +375,7 @@ class NodeActionViewControllerGenericDelegate: NodeActionViewControllerDelegate 
 
     private func trackAnalyticsEvent(_ event: any EventIdentifier) {
         guard isCloudDriveRevampEnabled else { return }
-        trackAnalyticsEvent(event)
+        tracker.trackAnalyticsEvent(with: event)
     }
 }
 
