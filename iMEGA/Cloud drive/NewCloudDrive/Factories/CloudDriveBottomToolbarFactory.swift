@@ -134,6 +134,7 @@ struct CloudDriveBottomToolbarItemsFactory {
             nodeActionHandler.restore(selectedNodes)
             nodeActionHandler.toggleEditMode(false)
         case .actions:
+            trackAnalyticsEvent(CloudDriveBottomToolBarMoreMenuItemEvent())
             presentMoreActions(
                 displayMode: displayMode,
                 for: selectedNodes,
