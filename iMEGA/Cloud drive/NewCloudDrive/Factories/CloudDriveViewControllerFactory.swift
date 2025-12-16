@@ -351,15 +351,17 @@ struct CloudDriveViewControllerFactory {
                     ? .init(key: .lastModified)
                     : .init(key: .lastModified, direction: .descending)
                 },
-                sortOptionSelectionHandler: { [weak mediaDiscoveryContentViewModel] in
+                sortOptionSelectionHandler: { [weak mediaDiscoveryContentViewModel, tracker] in
                     let sortOrder = SortOrderType(megaSortOrderType: $0.sortOrder.toMEGASortOrderType())
+                    tracker.trackAnalyticsEvent(with: SortByDateModifiedMenuItemEvent())
                     await mediaDiscoveryContentViewModel?.update(sortOrder: sortOrder)
                 }
             ),
             nodeActionsBridge: nodeActionsBridge,
-            viewModeSaver: {
+            viewModeSaver: { viewMode in
                 guard let node = nodeSource.parentNode else { return }
-                viewModeStore.save(viewMode: $0, for: .node(node))
+                triggerEvent(for: viewMode)
+                viewModeStore.save(viewMode: viewMode, for: .node(node))
             },
             storageFullModalAlertViewRouter: StorageFullModalAlertViewRouter(),
             warningBannerViewRouter: WarningBannerViewRouter(
@@ -490,6 +492,21 @@ struct CloudDriveViewControllerFactory {
         )
 
         return (contextMenuManager, contextMenuManager.allNonNilActionHandlers())
+    }
+
+    private func triggerEvent(for viewMode: ViewModePreferenceEntity) {
+        let eventIdentifier: (any EventIdentifier)? =  switch viewMode {
+        case .list:
+            ViewModeListMenuItemEvent()
+        case .thumbnail:
+            ViewModeGridMenuItemEvent()
+        case .mediaDiscovery:
+            ViewModeGalleryMenuItemEvent()
+        default:
+            nil
+        }
+        guard let eventIdentifier else { return }
+        tracker.trackAnalyticsEvent(with: eventIdentifier)
     }
 
     private func open(node: NodeEntity) {
@@ -933,8 +950,10 @@ struct CloudDriveViewControllerFactory {
             },
             updateSortOrder: { @MainActor sortOrder in
                 guard let node = nodeSource.parentNode else { return }
+                let sortOrder = sortOrder.toDomainSortOrderEntity()
+                triggerEvent(for: sortOrder)
                 sortOrderPreferenceUseCase.save(
-                    sortOrder: sortOrder.toDomainSortOrderEntity(),
+                    sortOrder: sortOrder,
                     for: node
                 )
             },
@@ -963,6 +982,20 @@ struct CloudDriveViewControllerFactory {
         }
 
         return searchBridge
+    }
+
+    private func triggerEvent(for sortOrder: MEGADomain.SortOrderEntity) {
+        let eventIdentifier: (any EventIdentifier)? =  switch sortOrder {
+        case .defaultAsc, .defaultDesc: SortByNameMenuItemEvent()
+        case .sizeAsc, .sizeDesc: SortBySizeMenuItemEvent()
+        case .creationAsc, .creationDesc: SortByDateAddedMenuItemEvent()
+        case .modificationAsc, .modificationDesc: SortByDateModifiedMenuItemEvent()
+        case .labelAsc, .labelDesc: SortByLabelMenuItemEvent()
+        case .favouriteAsc, .favouriteDesc: SortByFavouriteMenuItemEvent()
+        default: nil
+        }
+        guard let eventIdentifier else { return }
+        tracker.trackAnalyticsEvent(with: eventIdentifier)
     }
 
     private func shouldEnableSelection(for nodeSource: NodeSource) -> Bool {

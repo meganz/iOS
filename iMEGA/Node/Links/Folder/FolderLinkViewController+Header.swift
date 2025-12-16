@@ -1,3 +1,4 @@
+import MEGAAnalyticsiOS
 import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGADesignToken
@@ -13,6 +14,7 @@ extension FolderLinkViewController {
         }
         set {
             Helper.save(newValue.toMEGASortOrderType(), for: parentNode)
+            triggerEvent(for: newValue)
             reloadUI()
         }
     }
@@ -74,5 +76,18 @@ extension FolderLinkViewController {
 
     @objc func updateViewModelViewModeToThumbnail() {
         viewModel.dispatch(.updateViewMode(.thumbnail))
+    }
+
+    private func triggerEvent(for sortOrder: MEGADomain.SortOrderEntity) {
+        let eventIdentifier: (any EventIdentifier)? =  switch sortOrder {
+        case .defaultAsc, .defaultDesc: SortByNameMenuItemEvent()
+        case .sizeAsc, .sizeDesc: SortBySizeMenuItemEvent()
+        case .modificationAsc, .modificationDesc: SortByDateModifiedMenuItemEvent()
+        case .labelAsc, .labelDesc: SortByLabelMenuItemEvent()
+        case .favouriteAsc, .favouriteDesc: SortByFavouriteMenuItemEvent()
+        default: nil
+        }
+        guard let eventIdentifier else { return }
+        DIContainer.tracker.trackAnalyticsEvent(with: eventIdentifier)
     }
 }

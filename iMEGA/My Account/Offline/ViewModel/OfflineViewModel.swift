@@ -1,4 +1,5 @@
 import Combine
+import MEGAAnalyticsiOS
 import MEGAAppPresentation
 import MEGADomain
 import MEGAFoundation
@@ -33,6 +34,7 @@ final class OfflineViewModel: NSObject, ViewModelType {
     private let userDefaults: UserDefaults
     private let toggleViewModePreferenceHandler: (ViewModePreferenceEntity) -> Void
     private var subscriptions: Set<AnyCancellable> = []
+    private let tracker: any AnalyticsTracking
 
     var sortHeaderViewModel: SearchResultsHeaderSortViewViewModel {
         sortHeaderCoordinator.headerViewModel
@@ -58,6 +60,7 @@ final class OfflineViewModel: NSObject, ViewModelType {
         userDefaults: UserDefaults = .standard,
         documentsDirectoryPath: String? = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first,
         throttler: some Throttleable = Throttler(timeInterval: 1.0),
+        tracker: any AnalyticsTracking = DIContainer.tracker,
         toggleViewModePreferenceHandler: @escaping (ViewModePreferenceEntity) -> Void
     ) {
         self.offlineUseCase = offlineUseCase
@@ -67,6 +70,7 @@ final class OfflineViewModel: NSObject, ViewModelType {
         self.userDefaults = userDefaults
         self.documentsDirectoryPath = documentsDirectoryPath
         self.throttler = throttler
+        self.tracker = tracker
         self.toggleViewModePreferenceHandler = toggleViewModePreferenceHandler
 
         super.init()
@@ -162,8 +166,22 @@ final class OfflineViewModel: NSObject, ViewModelType {
             .removeDuplicates()
             .debounce(for: .seconds(0.4), scheduler: DispatchQueue.main) // This is needed to prevent a crash because the header is removed.
             .sink { [weak self] in
-                self?.toggleViewModePreferenceHandler($0 == .list ? .list : .thumbnail)
+                guard let self else { return }
+                let viewMode: ViewModePreferenceEntity = $0 == .list ? .list : .thumbnail
+                toggleViewModePreferenceHandler(viewMode)
+                triggerEvent(for: viewMode)
             }
             .store(in: &subscriptions)
+    }
+
+    private func triggerEvent(for viewMode: ViewModePreferenceEntity) {
+        switch viewMode {
+        case .list:
+            tracker.trackAnalyticsEvent(with: ViewModeListMenuItemEvent())
+        case .thumbnail:
+            tracker.trackAnalyticsEvent(with: ViewModeGridMenuItemEvent())
+        default:
+            break
+        }
     }
 }

@@ -1,4 +1,6 @@
 import AsyncAlgorithms
+import Combine
+import MEGAAnalyticsiOS
 import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGADomain
@@ -83,6 +85,8 @@ final class FilesExplorerViewModel: ViewModelType {
         didSet { oldValue?.cancel() }
     }
 
+    private var subscriptions = Set<AnyCancellable>()
+    private let tracker: any AnalyticsTracking
     private let sortOptionsViewModel: SearchResultsSortOptionsViewModel
 
     private var currentSortOrder: MEGADomain.SortOrderEntity {
@@ -90,6 +94,7 @@ final class FilesExplorerViewModel: ViewModelType {
             Helper.sortType(for: nil).toSortOrderEntity()
         }
         set {
+            triggerEvent(for: newValue)
             Helper.save(newValue.toMEGASortOrderType(), for: nil)
         }
     }
@@ -128,7 +133,8 @@ final class FilesExplorerViewModel: ViewModelType {
         nodeProvider: some MEGANodeProviderProtocol,
         sortOptionsViewModel: SearchResultsSortOptionsViewModel,
         featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider,
-        notificationCenter: NotificationCenter = .default
+        notificationCenter: NotificationCenter = .default,
+        tracker: some AnalyticsTracking = DIContainer.tracker
     ) {
         self.explorerType = explorerType
         self.router = router
@@ -140,6 +146,9 @@ final class FilesExplorerViewModel: ViewModelType {
         self.sortOptionsViewModel = sortOptionsViewModel
         self.featureFlagProvider = featureFlagProvider
         self.notificationCenter = notificationCenter
+        self.tracker = tracker
+
+        listenToViewModeChanges()
     }
     
     deinit {
@@ -274,6 +283,36 @@ final class FilesExplorerViewModel: ViewModelType {
 
     func getExplorerType() -> ExplorerTypeEntity {
         self.explorerType
+    }
+
+    private func triggerEvent(for sortOrder: MEGADomain.SortOrderEntity) {
+        let eventIdentifier: (any EventIdentifier)? =  switch sortOrder {
+        case .defaultAsc, .defaultDesc: SortByNameMenuItemEvent()
+        case .sizeAsc, .sizeDesc: SortBySizeMenuItemEvent()
+        case .creationAsc, .creationDesc: SortByDateAddedMenuItemEvent()
+        case .modificationAsc, .modificationDesc: SortByDateModifiedMenuItemEvent()
+        case .labelAsc, .labelDesc: SortByLabelMenuItemEvent()
+        case .favouriteAsc, .favouriteDesc: SortByFavouriteMenuItemEvent()
+        default: nil
+        }
+        guard let eventIdentifier else { return }
+        tracker.trackAnalyticsEvent(with: eventIdentifier)
+    }
+
+    private func triggerEvent(for preference: ViewTypePreference) {
+        tracker.trackAnalyticsEvent(with: preference == .list ? ViewModeListMenuItemEvent() : ViewModeGridMenuItemEvent())
+    }
+
+    private func listenToViewModeChanges() {
+        viewModeHeaderViewModel
+            .$selectedViewMode
+            .dropFirst()
+            .removeDuplicates()
+            .sink { [weak self] in
+                guard let self else { return }
+                triggerEvent(for: $0 == .list ? .list : .grid)
+            }
+            .store(in: &subscriptions)
     }
 }
 

@@ -1,3 +1,4 @@
+import MEGAAnalyticsiOS
 import MEGAAppPresentation
 import MEGADesignToken
 import MEGADomain
@@ -12,6 +13,7 @@ extension OfflineViewController {
         }
         set {
             Helper.save(newValue.toMEGASortOrderType(), for: currentOfflinePath)
+            triggerEvent(for: newValue)
             nodesSortTypeHasChanged()
         }
     }
@@ -72,5 +74,16 @@ extension OfflineViewController {
         hostingController.view.backgroundColor = TokenColors.Background.page
 
         return headerView
+    }
+
+    private func triggerEvent(for sortOrder: MEGADomain.SortOrderEntity) {
+        let eventIdentifier: (any EventIdentifier)? =  switch sortOrder {
+        case .defaultAsc, .defaultDesc: SortByNameMenuItemEvent()
+        case .sizeAsc, .sizeDesc: SortBySizeMenuItemEvent()
+        case .modificationAsc, .modificationDesc: SortByDateModifiedMenuItemEvent()
+        default: nil
+        }
+        guard let eventIdentifier else { return }
+        DIContainer.tracker.trackAnalyticsEvent(with: eventIdentifier)
     }
 }

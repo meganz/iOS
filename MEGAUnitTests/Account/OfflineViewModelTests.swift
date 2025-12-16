@@ -1,6 +1,8 @@
 import Combine
 import CoreData
 @testable import MEGA
+import MEGAAnalyticsiOS
+import MEGAAppPresentationMock
 import MEGADomain
 import MEGADomainMock
 import MEGAFoundation
@@ -43,6 +45,7 @@ final class OfflineViewModelTests: XCTestCase {
         documentDirectoryPath: String? = nil,
         sortOptions: [SearchResultsSortOption] = [],
         selectedSortOrder: Search.SortOrderEntity = .init(key: .name),
+        tracker: MockTracker = MockTracker(),
         toggleViewModePreferenceHandler: @escaping (ViewModePreferenceEntity) -> Void = { _ in },
         file: StaticString = #file,
         line: UInt = #line
@@ -63,6 +66,7 @@ final class OfflineViewModelTests: XCTestCase {
             userDefaults: userDefaults,
             documentsDirectoryPath: documentDirectoryPath,
             throttler: MockThrottler(),
+            tracker: tracker,
             toggleViewModePreferenceHandler: toggleViewModePreferenceHandler
         )
         trackForMemoryLeaks(on: sut, timeoutNanoseconds: 1_000_000_000)
@@ -300,13 +304,18 @@ final class OfflineViewModelTests: XCTestCase {
         let userDefaults = MockUserDefaults(integerValue: 1)
         let exp = expectation(description: "Wait for view mode to update")
         var updatedViewMode: ViewModePreferenceEntity = .list
-        let sut = makeOfflineViewModelVMSut(userDefaults: userDefaults) { viewMode in
+        let tracker = MockTracker()
+        let sut = makeOfflineViewModelVMSut(userDefaults: userDefaults, tracker: tracker) { viewMode in
             updatedViewMode = viewMode
             exp.fulfill()
         }
         sut.viewModeHeaderViewModel.selectedViewMode = .grid
         await fulfillment(of: [exp], timeout: 1)
         XCTAssertEqual(updatedViewMode, .thumbnail)
+        assertTrackAnalyticsEventCalled(
+            trackedEventIdentifiers: tracker.trackedEventIdentifiers,
+            with: [ViewModeGridMenuItemEvent()]
+        )
     }
 
     private var makeOfflineNode: MOOfflineNode {

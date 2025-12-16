@@ -62,7 +62,8 @@ struct FolderLinkViewModelTests {
             case viewModeNotSet
         }
 
-        let sut = makeSUT(viewMode: .list)
+        let tracker = MockTracker()
+        let sut = makeSUT(tracker: tracker, viewMode: .list)
 
         let result: Result<ViewModePreferenceEntity, any Error> = await withCheckedContinuation { continuation in
             var hasResumed = false
@@ -93,6 +94,10 @@ struct FolderLinkViewModelTests {
         switch result {
         case .success(let viewMode):
             #expect(viewMode == .thumbnail)
+            Test.assertTrackAnalyticsEventCalled(
+                trackedEventIdentifiers: tracker.trackedEventIdentifiers,
+                with: [ViewModeGridMenuItemEvent()]
+            )
         case .failure:
             Issue.record("Timed out waiting for .setViewMode(.thumbnail)")
         }

@@ -213,7 +213,19 @@ import Search
             .map { $0 == .list ? .list : .thumbnail }
             .sink { [weak self] in
                 self?.invokeCommand?(.setViewMode($0))
+                self?.triggerEvent(for: $0)
             }
             .store(in: &subscriptions)
+    }
+
+    private func triggerEvent(for viewMode: ViewModePreferenceEntity) {
+        switch viewMode {
+        case .list:
+            tracker.trackAnalyticsEvent(with: ViewModeListMenuItemEvent())
+        case .thumbnail:
+            tracker.trackAnalyticsEvent(with: ViewModeGridMenuItemEvent())
+        default:
+            break
+        }
     }
 }

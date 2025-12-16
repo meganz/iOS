@@ -1,3 +1,5 @@
+import MEGAAnalyticsiOS
+import MEGAAppPresentation
 import MEGADesignToken
 import MEGADomain
 import Search
@@ -50,7 +52,24 @@ extension SharedItemsViewController: SharedItemsViewing {
         set {
             sortOrderType = newValue.toMEGASortOrderType()
             UserDefaults.standard.set(sortOrderType.rawValue, forKey: "SharedItemsSortOrderType")
+            triggerEvent(for: newValue)
             nodesSortTypeHasChanged()
         }
+    }
+
+    private func triggerEvent(for sortOrder: MEGADomain.SortOrderEntity) {
+        let eventIdentifier: (any EventIdentifier)? =  switch sortOrder {
+        case .defaultAsc, .defaultDesc: SortByNameMenuItemEvent()
+        case .sizeAsc, .sizeDesc: SortBySizeMenuItemEvent()
+        case .creationAsc, .creationDesc: SortByDateAddedMenuItemEvent()
+        case .modificationAsc, .modificationDesc: SortByDateModifiedMenuItemEvent()
+        case .labelAsc, .labelDesc: SortByLabelMenuItemEvent()
+        case .favouriteAsc, .favouriteDesc: SortByFavouriteMenuItemEvent()
+        case .linkCreationAsc, .linkCreationDesc: SortByLinkCreationMenuItemEvent()
+        case .shareCreationAsc, .shareCreationDesc: SortByShareCreationMenuItemEvent()
+        default: nil
+        }
+        guard let eventIdentifier else { return }
+        DIContainer.tracker.trackAnalyticsEvent(with: eventIdentifier)
     }
 }
