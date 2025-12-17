@@ -74,7 +74,7 @@ final class PermissionOnboardingRouter {
                 description: Strings.Localizable.Onboarding.Cta.Notifications.explanation,
                 note: nil,
                 primaryButtonTitle: Strings.Localizable.Onboarding.Cta.Notifications.Buttons.enable,
-                secondaryButtonTitle: Strings.Localizable.Onboarding.Cta.Notifications.Buttons.skip,
+                secondaryButtonTitle: Strings.Localizable.continue,
                 permissionHandler: OnboardingPermissionHandler(permissionType: .notifications)
             )
         case .cameraBackups:
@@ -83,7 +83,7 @@ final class PermissionOnboardingRouter {
                 title: Strings.Localizable.Onboarding.Cta.CameraBackups.title,
                 description: Strings.Localizable.Onboarding.Cta.CameraBackups.explanation,
                 note: Strings.Localizable.Onboarding.Cta.CameraBackups.note,
-                primaryButtonTitle: Strings.Localizable.Onboarding.Cta.CameraBackups.Buttons.enable,
+                primaryButtonTitle: Strings.Localizable.continue,
                 secondaryButtonTitle: Strings.Localizable.Onboarding.Cta.CameraBackups.Buttons.skip,
                 permissionHandler: OnboardingPermissionHandler(permissionType: .photos)
             )
