@@ -106,7 +106,7 @@ struct MediaTabViewControllerFactory {
 
         // WIP: Replace other mock ViewModels when ready
         return [
-            .timeline: MockTimelineViewModel(),
+            .timeline: MediaTabTimelineFactory.makeMediaTimelineTabContentViewModel(navigationController: navigationController),
             .album: MediaTabAlbumFactory.makeMediaAlbumTabContentViewModel(navigationController: navigationController),
             .video: videoTabViewModel,
             .playlist: MockPlaylistViewModel()

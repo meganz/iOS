@@ -59,6 +59,8 @@ struct MediaTabView: View {
             AlbumListView(
                 viewModel: albumTabViewModel.albumListViewModel,
                 router: albumTabViewModel.albumListViewRouter)
+        case let timelineTabViewModel as MediaTimelineTabContentViewModel:
+            NewTimelineView(viewModel: timelineTabViewModel.timelineViewModel)
         default:
             placeholderView(for: tab)
         }
