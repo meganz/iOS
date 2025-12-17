@@ -19,7 +19,10 @@ struct SearchResultsSortOptionsViewModelTests {
 
     @Test func testMakeNewViewModel() {
         let title = "Sort by"
-        let sut = SearchResultsSortOptionsViewModel(title: title, sortOptions: [])
+        let sut = SearchResultsSortOptionsViewModel(
+            title: title,
+            sortOptions: [.init(sortOrder: .init(key: .name), title: "", iconsByDirection: [:])]
+        )
         let sortOption = SearchResultsSortOption(
             sortOrder: .init(key: .name),
             title: "Name",

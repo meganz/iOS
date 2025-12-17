@@ -334,7 +334,9 @@ final class SharedItemsViewModelTests: XCTestCase {
         saveMediaToPhotosUseCase: some SaveMediaToPhotosUseCaseProtocol = MockSaveMediaToPhotosUseCase(),
         nodeUseCase: some NodeUseCaseProtocol = MockNodeUseCase(),
         moveToRubbishBinViewModel: some MoveToRubbishBinViewModelProtocol = MockMoveToRubbishBinViewModel(),
-        sortOptionsViewModel: SearchResultsSortOptionsViewModel = .init(title: "", sortOptions: []),
+        sortOptionsViewModel: SearchResultsSortOptionsViewModel = .init(title: "", sortOptions: [
+            .init(sortOrder: .init(key: .name), title: "", iconsByDirection: [:])
+        ]),
         sharedItemsView: some SharedItemsViewing = MockSharedItemsView(),
         file: StaticString = #filePath,
         line: UInt = #line

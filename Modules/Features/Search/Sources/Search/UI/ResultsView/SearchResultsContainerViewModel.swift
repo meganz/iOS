@@ -22,7 +22,7 @@ public class SearchResultsContainerViewModel: ObservableObject {
 
     private let sortHeaderCoordinator: SearchResultsSortHeaderCoordinator
 
-    var sortHeaderViewModel: SearchResultsHeaderSortViewViewModel {
+    public var sortHeaderViewModel: SearchResultsHeaderSortViewViewModel {
         sortHeaderCoordinator.headerViewModel
     }
 

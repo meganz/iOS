@@ -69,7 +69,7 @@ class NodeBrowserViewModelTests: XCTestCase {
                 .eraseToAnyAsyncThrowingSequence(),
             sensitivityChangesForNode: AnyAsyncSequence<Bool> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
             tempWarningBannerViewModel: WarningBannerViewModel? = nil,
-            sortOptionsForMD: [SearchResultsSortOption] = [],
+            sortOptionsForMD: [SearchResultsSortOption] = [.init(sortOrder: .init(key: .name), title: "", iconsByDirection: [:])],
             selectedSortOrderForMD: Search.SortOrderEntity = .init(key: .lastModified),
             featureFlagList: [FeatureFlagKey: Bool] = [:],
         ) {
@@ -129,17 +129,22 @@ class NodeBrowserViewModelTests: XCTestCase {
                         usesRevampedLayout: false,
                         contentUnavailableViewModelProvider: MockContentUnavailableViewModelProvider()
                     ),
-                    sortOptionsViewModel: .init(title: "", sortOptions: []),
+                    sortOptionsViewModel: .init(
+                        title: "",
+                        sortOptions: [.init(sortOrder: .init(key: .name), title: "", iconsByDirection: [:])]
+                    ),
                     showChips: false,
                     initialViewMode: .list,
-                    shouldShowMediaDiscoveryModeHandler: { false }
+                    shouldShowMediaDiscoveryModeHandler: { false
+ }
                 ),
                 mediaDiscoveryViewModel: mediaDiscoveryViewModel,
                 warningViewModel: nil,
                 temporaryWarningViewModel: tempWarningBannerViewModel,
                 upgradeEncouragementViewModel: nil,
                 adsVisibilityViewModel: nil,
-                config: config, // Pass the modified config here
+                config: config,
+ // Pass the modified config here
                 nodeSource: nodeSource,
                 noInternetViewModel: LegacyNoInternetViewModel(
                     networkMonitorUseCase: MockNetworkMonitorUseCase(),
@@ -156,7 +161,8 @@ class NodeBrowserViewModelTests: XCTestCase {
                     monitorInheritedSensitivityForNode: monitorInheritedSensitivityForNode,
                     sensitivityChangesForNode: sensitivityChangesForNode
                 ),
-                accountStorageUseCase: mockAccountStorageUseCase, // Inject the mock here
+                accountStorageUseCase: mockAccountStorageUseCase,
+ // Inject the mock here
                 sortHeaderCoordinatorForMD: .init(
                     sortOptionsViewModel: .init(
                         title: "",
@@ -167,7 +173,8 @@ class NodeBrowserViewModelTests: XCTestCase {
                 ),
                 nodeActionsBridge: NodeActionsBridge(),
                 tracker: tracker,
-                viewModeSaver: { saver($0) },
+                viewModeSaver: { saver($0)
+ },
                 storageFullModalAlertViewRouter: MockStorageFullModalAlertViewRouter(),
                 warningBannerViewRouter: MockWarningViewRouter(),
                 titleBuilder: { _, _ in Self.titleBuilderProvidedValue },
@@ -551,7 +558,7 @@ class NodeBrowserViewModelTests: XCTestCase {
         isFromSharedItem: Bool = false,
         currentStatus: StorageStatusEntity = .noStorageProblems,
         displayMode: DisplayMode? = nil,
-        sortOptionsForMD: [SearchResultsSortOption] = [],
+        sortOptionsForMD: [SearchResultsSortOption] = [.init(sortOrder: .init(key: .name), title: "", iconsByDirection: [:])],
         selectedSortOrderForMD: Search.SortOrderEntity = .init(key: .lastModified)
     ) -> (Harness, MockAccountStorageUseCase) {
         let mockAccountStorageUseCase = MockAccountStorageUseCase(shouldShowStorageBanner: shouldShowStorageBanner)

@@ -35,6 +35,7 @@ final class OfflineViewModel: NSObject, ViewModelType {
     private let toggleViewModePreferenceHandler: (ViewModePreferenceEntity) -> Void
     private var subscriptions: Set<AnyCancellable> = []
     private let tracker: any AnalyticsTracking
+    private var sortHeaderViewTapEventsTask: Task<Void, Never>?
 
     var sortHeaderViewModel: SearchResultsHeaderSortViewViewModel {
         sortHeaderCoordinator.headerViewModel
@@ -76,8 +77,13 @@ final class OfflineViewModel: NSObject, ViewModelType {
         super.init()
 
         listenToViewModesUpdates()
+        listenToSortButtonPressedEvents()
     }
-    
+
+    deinit {
+        sortHeaderViewTapEventsTask?.cancel()
+    }
+
     // MARK: - Dispatch actions
     
     func dispatch(_ action: OfflineViewAction) {
@@ -182,6 +188,14 @@ final class OfflineViewModel: NSObject, ViewModelType {
             tracker.trackAnalyticsEvent(with: ViewModeGridMenuItemEvent())
         default:
             break
+        }
+    }
+
+    private func listenToSortButtonPressedEvents() {
+        sortHeaderViewTapEventsTask = Task { [weak self, sortHeaderViewModel] in
+            for await _ in sortHeaderViewModel.tapEvents {
+                self?.tracker.trackAnalyticsEvent(with: SortButtonPressedEvent())
+            }
         }
     }
 }

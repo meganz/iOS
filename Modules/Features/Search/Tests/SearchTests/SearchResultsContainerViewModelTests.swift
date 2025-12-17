@@ -495,7 +495,9 @@ struct SearchResultsContainerViewModelTests {
 
     typealias SUT = SearchResultsContainerViewModel
     private func makeSUT(
-        sortOptionsViewModel: SearchResultsSortOptionsViewModel = .init(title: "", sortOptions: []),
+        sortOptionsViewModel: SearchResultsSortOptionsViewModel = .init(title: "", sortOptions: [
+            .init(sortOrder: .init(key: .name), title: "", iconsByDirection: [:])
+        ]),
         resultsProvider: some SearchResultsProviding = MockSearchResultsProviding(
             searchResultUpdateSignalSequence: EmptyAsyncSequence().eraseToAnyAsyncSequence()
         ),

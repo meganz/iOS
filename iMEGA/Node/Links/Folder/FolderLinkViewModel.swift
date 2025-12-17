@@ -51,6 +51,7 @@ import Search
     private let saveMediaUseCase: any SaveMediaToPhotosUseCaseProtocol
     private let tracker: any AnalyticsTracking
     private let sortHeaderCoordinator: SearchResultsSortHeaderCoordinator
+    private var sortHeaderViewTapEventsTask: Task<Void, Never>?
 
     var sortHeaderViewModel: SearchResultsHeaderSortViewViewModel {
         sortHeaderCoordinator.headerViewModel
@@ -109,6 +110,7 @@ import Search
         self.viewMode = viewMode
         super.init()
         listenToViewModesUpdates()
+        listenToSortButtonPressedEvents()
     }
     
     deinit {
@@ -116,6 +118,7 @@ import Search
         monitorNodeUpdatesTask?.cancel()
         monitorFetchNodesRequestStartUpdatesTask?.cancel()
         monitorRequestFinishUpdatesTask?.cancel()
+        sortHeaderViewTapEventsTask?.cancel()
     }
     
     private func startMonitoringUpdates() {
@@ -226,6 +229,14 @@ import Search
             tracker.trackAnalyticsEvent(with: ViewModeGridMenuItemEvent())
         default:
             break
+        }
+    }
+
+    private func listenToSortButtonPressedEvents() {
+        sortHeaderViewTapEventsTask = Task { [weak self, sortHeaderViewModel] in
+            for await _ in sortHeaderViewModel.tapEvents {
+                self?.tracker.trackAnalyticsEvent(with: SortButtonPressedEvent())
+            }
         }
     }
 }

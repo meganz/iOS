@@ -88,6 +88,7 @@ final class FilesExplorerViewModel: ViewModelType {
     private var subscriptions = Set<AnyCancellable>()
     private let tracker: any AnalyticsTracking
     private let sortOptionsViewModel: SearchResultsSortOptionsViewModel
+    private var sortHeaderViewTapEventsTask: Task<Void, Never>?
 
     private var currentSortOrder: MEGADomain.SortOrderEntity {
         get {
@@ -149,6 +150,7 @@ final class FilesExplorerViewModel: ViewModelType {
         self.tracker = tracker
 
         listenToViewModeChanges()
+        listenToSortButtonPressedEvents()
     }
     
     deinit {
@@ -156,6 +158,7 @@ final class FilesExplorerViewModel: ViewModelType {
         searchTask?.cancel()
         nodeDownloadCompletionMonitoringTask?.cancel()
         sortingPreferenceNotificationTask?.cancel()
+        sortHeaderViewTapEventsTask?.cancel()
     }
     
     private func configureContextMenus() {
@@ -313,6 +316,14 @@ final class FilesExplorerViewModel: ViewModelType {
                 triggerEvent(for: $0 == .list ? .list : .grid)
             }
             .store(in: &subscriptions)
+    }
+
+    private func listenToSortButtonPressedEvents() {
+        sortHeaderViewTapEventsTask = Task { [weak self, sortHeaderViewModel] in
+            for await _ in sortHeaderViewModel.tapEvents {
+                self?.tracker.trackAnalyticsEvent(with: SortButtonPressedEvent())
+            }
+        }
     }
 }
 

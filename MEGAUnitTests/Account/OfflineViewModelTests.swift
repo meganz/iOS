@@ -43,7 +43,7 @@ final class OfflineViewModelTests: XCTestCase {
         fileManager: MockFileManager = MockFileManager(),
         userDefaults: MockUserDefaults! = MockUserDefaults(),
         documentDirectoryPath: String? = nil,
-        sortOptions: [SearchResultsSortOption] = [],
+        sortOptions: [SearchResultsSortOption] = [.init(sortOrder: .init(key: .name), title: "", iconsByDirection: [:])],
         selectedSortOrder: Search.SortOrderEntity = .init(key: .name),
         tracker: MockTracker = MockTracker(),
         toggleViewModePreferenceHandler: @escaping (ViewModePreferenceEntity) -> Void = { _ in },

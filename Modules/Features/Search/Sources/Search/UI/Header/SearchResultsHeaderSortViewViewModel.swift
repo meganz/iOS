@@ -1,10 +1,20 @@
+import MEGASwift
 import SwiftUI
 
 @MainActor
 public final class SearchResultsHeaderSortViewViewModel: ObservableObject {
-    @Published var selectedOption: SearchResultsSortOption
+    @Published private(set) var selectedOption: SearchResultsSortOption
     @Published var showSortSheet: Bool = false
-    public var displaySortOptionsViewModel: SearchResultsSortOptionsViewModel
+    public internal(set) var displaySortOptionsViewModel: SearchResultsSortOptionsViewModel
+
+    private var continuation: AsyncStream<Void>.Continuation?
+
+    public var tapEvents: AnyAsyncSequence<Void> {
+        AsyncStream { continuation in
+            self.continuation = continuation
+        }
+        .eraseToAnyAsyncSequence()
+    }
 
     public init(
         selectedOption: SearchResultsSortOption,
@@ -20,6 +30,7 @@ public final class SearchResultsHeaderSortViewViewModel: ObservableObject {
     }
 
     func changeSelection() {
+        continuation?.yield(())
         switch displaySortOptionsViewModel.sortOptions.count {
         case 1:
             let newSelection = displaySortOptionsViewModel.sortOptions[0]

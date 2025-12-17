@@ -1,3 +1,4 @@
+import MEGAAnalyticsiOS
 import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGAAssets
@@ -28,6 +29,8 @@ protocol SharedItemsViewing: AnyObject {
     private weak var sharedItemsView: (any SharedItemsViewing)?
 
     private let sortHeaderCoordinator: SearchResultsSortHeaderCoordinator
+    private let tracker: any AnalyticsTracking
+    private var sortHeaderViewTapEventsTask: Task<Void, Never>?
 
     var sortHeaderViewModel: SearchResultsHeaderSortViewViewModel {
         sortHeaderCoordinator.headerViewModel
@@ -43,7 +46,8 @@ protocol SharedItemsViewing: AnyObject {
          saveMediaToPhotosUseCase: some SaveMediaToPhotosUseCaseProtocol,
          moveToRubbishBinViewModel: some MoveToRubbishBinViewModelProtocol,
          sortOptionsViewModel: SearchResultsSortOptionsViewModel,
-         sharedItemsView: some SharedItemsViewing
+         sharedItemsView: some SharedItemsViewing,
+         tracker: some AnalyticsTracking = DIContainer.tracker
     ) {
         self.shareUseCase = shareUseCase
         self.mediaUseCase = mediaUseCase
@@ -51,6 +55,7 @@ protocol SharedItemsViewing: AnyObject {
         self.saveMediaToPhotosUseCase = saveMediaToPhotosUseCase
         self.moveToRubbishBinViewModel = moveToRubbishBinViewModel
         self.sharedItemsView = sharedItemsView
+        self.tracker = tracker
         self.sortHeaderCoordinator = .init(
             sortOptionsViewModel: sortOptionsViewModel,
             currentSortOrderProvider: { [weak sharedItemsView] in
@@ -63,6 +68,14 @@ protocol SharedItemsViewing: AnyObject {
                 Self.keysToHide(for: sharedItemsView?.selectedTab ?? .incoming)
             }
         )
+
+        super.init()
+
+        listenToSortButtonPressedEvents()
+    }
+
+    deinit {
+        sortHeaderViewTapEventsTask?.cancel()
     }
 
     func openShareFolderDialog(forNodes nodes: [MEGANode]) {
@@ -134,6 +147,14 @@ protocol SharedItemsViewing: AnyObject {
 
     func updateSortUI() {
         sortHeaderCoordinator.updateSortUI()
+    }
+
+    private func listenToSortButtonPressedEvents() {
+        sortHeaderViewTapEventsTask = Task { [weak self, sortHeaderViewModel] in
+            for await _ in sortHeaderViewModel.tapEvents {
+                self?.tracker.trackAnalyticsEvent(with: SortButtonPressedEvent())
+            }
+        }
     }
 
     /// The sort option keys that should be hidden for the current shared items tab.

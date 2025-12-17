@@ -106,7 +106,7 @@ struct FolderLinkViewModelTests {
     typealias SUT = FolderLinkViewModel
     func makeSUT(
         tracker: MockTracker = MockTracker(),
-        sortOptions: [SearchResultsSortOption] = [],
+        sortOptions: [SearchResultsSortOption] = [.init(sortOrder: .init(key: .name), title: "", iconsByDirection: [:])],
         selectedSortOrder: Search.SortOrderEntity = .init(key: .name),
         viewMode: ViewModePreferenceEntity = .list
     ) -> SUT {
