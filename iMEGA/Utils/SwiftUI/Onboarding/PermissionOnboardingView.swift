@@ -45,7 +45,6 @@ struct PermissionOnboardingView: View {
             }
             VStack(spacing: TokenSpacing._5) {
                 primaryButton
-                secondaryButton
             }
             .padding(.horizontal, TokenSpacing._5)
         }
@@ -65,7 +64,6 @@ struct PermissionOnboardingView: View {
             .padding(.top)
             Divider()
             HStack(spacing: TokenSpacing._3) {
-                secondaryButton
                 primaryButton
             }
             .frame(maxWidth: .infinity)
@@ -137,18 +135,6 @@ struct PermissionOnboardingView: View {
             action: {
                 Task {
                     await viewModel.onPrimaryButtonTap()
-                }
-            }
-        )
-    }
-
-    private var secondaryButton: MEGAButton {
-        MEGAButton(
-            viewModel.secondaryButtonTitle,
-            type: .textOnly,
-            action: {
-                Task {
-                    await viewModel.onSecondaryButtonTap()
                 }
             }
         )
