@@ -243,6 +243,7 @@ public struct MEGAImageBundle {
     public static var image04: Image { Image(.image04) }
     public static var messagePlus: Image { Image(.messagePlus) }
     public static var moreHorizontal: Image { Image(.moreHorizontal) }
+    public static var moreVertical: Image { Image(.moreVertical) }
     public static var moveMono: Image { Image(.moveMono) }
     public static var pen2: Image { Image(.pen2) }
     public static var photosApp: Image { Image(.photosApp) }

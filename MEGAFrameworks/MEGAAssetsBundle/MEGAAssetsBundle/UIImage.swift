@@ -415,6 +415,7 @@ public struct MEGAUIImageBundle {
     public static var image04: UIImage { UIImage.image04 }
     public static var messagePlus: UIImage { UIImage.messagePlus }
     public static var moreHorizontal: UIImage { UIImage.moreHorizontal }
+    public static var moreVertical: UIImage { UIImage.moreVertical }
     public static var moveMono: UIImage { UIImage.moveMono }
     public static var pen2: UIImage { UIImage.pen2 }
     public static var photosApp: UIImage { UIImage.photosApp }

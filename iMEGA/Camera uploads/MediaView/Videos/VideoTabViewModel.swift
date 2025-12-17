@@ -86,6 +86,16 @@ extension VideoTabViewModel: MediaTabNavigationBarItemProvider {
     ) -> [NavigationBarItemViewModel] {
         var items: [NavigationBarItemViewModel] = []
 
+        // Camera upload status button
+        items.append(MediaNavigationBarItemFactory.cameraUploadStatusButton(
+            viewModel: sharedResourceProvider.cameraUploadStatusButtonViewModel
+        ))
+
+        // Search button
+        items.append(MediaNavigationBarItemFactory.searchButton {
+
+        })
+
         // Context menu button (trailing)
         if let config = sharedResourceProvider.contextMenuConfig,
            let manager = sharedResourceProvider.contextMenuManager {

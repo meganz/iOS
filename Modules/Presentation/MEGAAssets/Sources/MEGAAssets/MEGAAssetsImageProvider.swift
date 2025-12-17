@@ -263,6 +263,7 @@ extension MEGAAssets {
         public static var photoPlaceholder: SwiftUI.Image { MEGAImageBundle.image04 }
         public static var messagePlus: SwiftUI.Image { MEGAImageBundle.messagePlus }
         public static var moreHorizontal: SwiftUI.Image { MEGAImageBundle.moreHorizontal }
+        public static var moreVertical: SwiftUI.Image {MEGAImageBundle.moreVertical}
         public static var moveMono: SwiftUI.Image { MEGAImageBundle.moveMono }
         public static var pen2: SwiftUI.Image { MEGAImageBundle.pen2 }
         public static var photosApp: SwiftUI.Image { MEGAImageBundle.photosApp }
@@ -709,6 +710,7 @@ extension MEGAAssets {
         public static var photoPlaceholder: UIKit.UIImage { MEGAUIImageBundle.image04 }
         public static var messagePlus: UIKit.UIImage { MEGAUIImageBundle.messagePlus }
         public static var moreHorizontal: UIKit.UIImage { MEGAUIImageBundle.moreHorizontal }
+        public static var moreVertical: UIKit.UIImage {MEGAUIImageBundle.moreVertical}
         public static var moveMono: UIKit.UIImage { MEGAUIImageBundle.moveMono }
         public static var pen2: UIKit.UIImage { MEGAUIImageBundle.pen2 }
         public static var photosApp: UIKit.UIImage { MEGAUIImageBundle.photosApp }

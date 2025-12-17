@@ -1,4 +1,5 @@
 import MEGAAppPresentation
+import MEGAAssets
 import MEGADesignToken
 import MEGADomain
 import MEGASwiftUI
@@ -28,6 +29,7 @@ struct VideoCellView: View {
             previewEntity: viewModel.previewEntity,
             videoConfig: videoConfig,
             reorderVideosInVideoPlaylistContentEnabled: viewModel.reorderVideosInVideoPlaylistContentEnabled,
+            isMediaRevampEnabled: viewModel.isMediaRevampEnabled,
             isSelected: $viewModel.isSelected,
             onTappedCheckMark: onTappedCheckMark,
             onTappedCell: onTappedCell,
@@ -52,11 +54,34 @@ struct VideoCellViewContent: View {
     let previewEntity: VideoCellPreviewEntity
     let videoConfig: VideoConfig
     let reorderVideosInVideoPlaylistContentEnabled: Bool
+    let isMediaRevampEnabled: Bool
     let isSelected: Binding<Bool>
     let onTappedCheckMark: () -> Void
     let onTappedCell: () -> Void
     let onTappedMoreOptions: () -> Void
-    
+
+    init(
+        mode: VideoCellViewModel.Mode,
+        previewEntity: VideoCellPreviewEntity,
+        videoConfig: VideoConfig,
+        reorderVideosInVideoPlaylistContentEnabled: Bool,
+        isMediaRevampEnabled: Bool = false,
+        isSelected: Binding<Bool>,
+        onTappedCheckMark: @escaping () -> Void,
+        onTappedCell: @escaping () -> Void,
+        onTappedMoreOptions: @escaping () -> Void
+    ) {
+        self.mode = mode
+        self.previewEntity = previewEntity
+        self.videoConfig = videoConfig
+        self.reorderVideosInVideoPlaylistContentEnabled = reorderVideosInVideoPlaylistContentEnabled
+        self.isMediaRevampEnabled = isMediaRevampEnabled
+        self.isSelected = isSelected
+        self.onTappedCheckMark = onTappedCheckMark
+        self.onTappedCell = onTappedCell
+        self.onTappedMoreOptions = onTappedMoreOptions
+    }
+
     var body: some View {
         HStack(alignment: .center, spacing: 8) {
             
@@ -88,7 +113,11 @@ struct VideoCellViewContent: View {
     }
     
     private var leadingContent: some View {
-        VideoThumbnailView(previewEntity: previewEntity, videoConfig: videoConfig)
+        VideoThumbnailView(
+            previewEntity: previewEntity,
+            videoConfig: videoConfig,
+            isMediaRevampEnabled: isMediaRevampEnabled
+        )
     }
     
     private var centerContent: some View {
@@ -141,7 +170,7 @@ struct VideoCellViewContent: View {
     
     @ViewBuilder
     private var trailingContent: some View {
-        Image(uiImage: videoConfig.rowAssets.moreImage)
+        Image(uiImage: isMediaRevampEnabled ? MEGAAssets.UIImage.moreVertical : videoConfig.rowAssets.moreImage)
             .foregroundStyle(videoConfig.colorAssets.secondaryIconColor)
             .onTapGesture { onTappedMoreOptions() }
     }
@@ -152,7 +181,7 @@ struct VideoCellViewContent: View {
         } label: {
             CheckMarkView(
                 markedSelected: isSelected.wrappedValue,
-                foregroundColor: isSelected.wrappedValue ? TokenColors.Support.success.swiftUI : TokenColors.Border.strong.swiftUI
+                foregroundColor: isMediaRevampEnabled ? (isSelected.wrappedValue ? TokenColors.Icon.accent.swiftUI : TokenColors.Border.strong.swiftUI) : (isSelected.wrappedValue ? TokenColors.Support.success.swiftUI : TokenColors.Border.strong.swiftUI)
             )
         }
     }

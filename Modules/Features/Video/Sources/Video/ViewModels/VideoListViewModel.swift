@@ -35,7 +35,8 @@ public final class VideoListViewModel: ObservableObject {
     @Published private(set) var chips: [ChipContainerViewModel] = [ FilterChipType.location, .duration ]
         .map { ChipContainerViewModel(title: $0.description, type: $0, isActive: false) }
     
-    @Published private(set) var shouldShowFilterChip = true
+    private var mediaRevampEnabled = true
+    @Published private(set) var showFilterChips = true
     @Published private(set) var viewState: ViewState = .partial
 
     var actionSheetTitle: String {
@@ -75,7 +76,6 @@ public final class VideoListViewModel: ObservableObject {
         sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol,
         nodeUseCase: some NodeUseCaseProtocol,
         featureFlagProvider: some FeatureFlagProviderProtocol,
-        shouldShowFilterChip: Bool = true
     ) {
         self.fileSearchUseCase = fileSearchUseCase
         self.thumbnailLoader = thumbnailLoader
@@ -84,7 +84,9 @@ public final class VideoListViewModel: ObservableObject {
         self.featureFlagProvider = featureFlagProvider
         self.syncModel = syncModel
         self.selection = selection
-        self.shouldShowFilterChip = shouldShowFilterChip
+
+        self.mediaRevampEnabled = featureFlagProvider.isFeatureFlagEnabled(for: .mediaRevamp)
+        self.showFilterChips = !mediaRevampEnabled
         
         self.contentProvider = contentProvider
         
@@ -206,10 +208,14 @@ public final class VideoListViewModel: ObservableObject {
             .receive(on: DispatchQueue.main)
             .assign(to: &selection.$editMode)
         
-        selection.$editMode
-            .map { !$0.isEditing }
-            .receive(on: DispatchQueue.main)
-            .assign(to: &$shouldShowFilterChip)
+        if !mediaRevampEnabled {
+            selection.$editMode
+                .map { editMode in
+                    return !editMode.isEditing
+                }
+                .receive(on: DispatchQueue.main)
+                .assign(to: &$showFilterChips)
+        }
     }
     
     private func subscribeToAllSelected() {

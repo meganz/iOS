@@ -44,6 +44,10 @@ final class VideoCellViewModel: ObservableObject {
     var reorderVideosInVideoPlaylistContentEnabled: Bool {
         featureFlagProvider.isFeatureFlagEnabled(for: .reorderVideosInVideoPlaylistContent)
     }
+
+    var isMediaRevampEnabled: Bool {
+        featureFlagProvider.isFeatureFlagEnabled(for: .mediaRevamp)
+    }
     
     init(
         mode: VideoCellViewModel.Mode,

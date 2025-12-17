@@ -117,9 +117,9 @@ final class VideoListViewModelTests: XCTestCase {
         let exp = expectation(description: "show filter chip")
         exp.assertForOverFulfill = false
         var receivedValue = true
-        let cancellable = sut.$shouldShowFilterChip
-            .sink { shouldShowFilterChip in
-                receivedValue = shouldShowFilterChip
+        let cancellable = sut.$showFilterChips
+            .sink { showFilterChips in
+                receivedValue = showFilterChips
                 exp.fulfill()
             }
         
@@ -135,10 +135,10 @@ final class VideoListViewModelTests: XCTestCase {
         let exp = expectation(description: "show filter chip")
         exp.assertForOverFulfill = false
         var receivedValue = true
-        let cancellable = sut.$shouldShowFilterChip
+        let cancellable = sut.$showFilterChips
             .dropFirst()
-            .sink { shouldShowFilterChip in
-                receivedValue = shouldShowFilterChip
+            .sink { showFilterChips in
+                receivedValue = showFilterChips
                 exp.fulfill()
             }
         
@@ -155,10 +155,10 @@ final class VideoListViewModelTests: XCTestCase {
         let exp = expectation(description: "should not show filter chip")
         exp.assertForOverFulfill = false
         var receivedValue = true
-        let cancellable = sut.$shouldShowFilterChip
+        let cancellable = sut.$showFilterChips
             .dropFirst()
-            .sink { shouldShowFilterChip in
-                receivedValue = shouldShowFilterChip
+            .sink { showFilterChips in
+                receivedValue = showFilterChips
                 exp.fulfill()
             }
         

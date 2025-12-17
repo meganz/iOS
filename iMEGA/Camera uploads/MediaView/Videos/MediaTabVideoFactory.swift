@@ -71,7 +71,6 @@ struct MediaTabVideoFactory {
             sensitiveNodeUseCase: sensitiveNodeUseCase,
             nodeUseCase: nodeUseCase,
             featureFlagProvider: DIContainer.featureFlagProvider,
-            shouldShowFilterChip: false
         )
 
         let router = VideoRevampRouter(

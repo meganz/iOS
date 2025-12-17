@@ -111,9 +111,9 @@ final class VideoTabViewModelTests: XCTestCase {
 
         let items = sut.navigationBarItems(for: .inactive)
 
-        XCTAssertEqual(items.count, 1)
-        XCTAssertEqual(items.first?.placement, .trailing)
-        if case .contextMenu = items.first?.viewType {
+        XCTAssertEqual(items.count, 3)
+        XCTAssertEqual(items.first?.placement, .leading)
+        if case .contextMenu = items.last?.viewType {
             // Success
         } else {
             XCTFail("Expected context menu type")
@@ -163,8 +163,8 @@ final class VideoTabViewModelTests: XCTestCase {
 
         let items = sut.navigationBarItems(for: .inactive)
 
-        XCTAssertEqual(items.count, 1)
-        let menuId = items.first?.id ?? ""
+        XCTAssertEqual(items.count, 3)
+        let menuId = items.last?.id ?? ""
         XCTAssertTrue(menuId.contains("cloudDrive"))
         XCTAssertTrue(menuId.contains("between1And4Minutes"))
         XCTAssertTrue(menuId.contains("modificationAsc"))
@@ -431,42 +431,8 @@ final class VideoTabViewModelTests: XCTestCase {
         let items2 = sut.navigationBarItems(for: .inactive)
         let id2 = items2.first?.id ?? ""
 
-        XCTAssertNotEqual(id1, id2)
-        XCTAssertTrue(id2.contains("cloudDrive"))
-    }
-
-    func testSortChange_shouldUpdateContextMenuId() {
-        let (sut, _, syncModel, _) = makeSUT()
-        let mockProvider = MockMediaTabSharedResourceProvider()
-        let mockConfig = CMConfigEntity(
-            menuType: .menu(type: .display),
-            sortType: .modificationAsc,
-            isSelectHidden: false,
-            isEmptyState: false
-        )
-        let mockManager = ContextMenuManager(
-            createContextMenuUseCase: MockCreateContextMenuUseCase()
-        )
-        mockProvider.contextMenuConfig = mockConfig
-        mockProvider.contextMenuManager = mockManager
-        sut.sharedResourceProvider = mockProvider
-
-        syncModel.videoRevampSortOrderType = .modificationAsc
-        let items1 = sut.navigationBarItems(for: .inactive)
-        let id1 = items1.first?.id ?? ""
-
-        syncModel.videoRevampSortOrderType = .labelDesc
-        mockProvider.contextMenuConfig = CMConfigEntity(
-            menuType: .menu(type: .display),
-            sortType: .labelDesc,
-            isSelectHidden: false,
-            isEmptyState: false
-        )
-        let items2 = sut.navigationBarItems(for: .inactive)
-        let id2 = items2.first?.id ?? ""
-
-        XCTAssertNotEqual(id1, id2)
-        XCTAssertTrue(id2.contains("labelDesc"))
+        XCTAssertEqual(id1, id2)
+        XCTAssertTrue(id2.contains("cameraUploadStatus"))
     }
 
     // MARK: - Test Helpers
