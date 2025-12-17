@@ -359,7 +359,8 @@ struct CloudDriveViewControllerFactory {
             ),
             nodeActionsBridge: nodeActionsBridge,
             viewModeSaver: { viewMode in
-                guard let node = nodeSource.parentNode else { return }
+                guard let node = nodeSource.parentNode,
+                        viewModeStore.viewMode(for: .node(node)) != viewMode else { return }
                 triggerEvent(for: viewMode)
                 viewModeStore.save(viewMode: viewMode, for: .node(node))
             },

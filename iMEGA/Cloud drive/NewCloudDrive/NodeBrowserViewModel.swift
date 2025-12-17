@@ -214,10 +214,8 @@ class NodeBrowserViewModel: ObservableObject {
                 switch viewMode {
                 case .list:
                     searchResultsContainerViewModel.update(pageLayout: .list)
-                    tracker.trackAnalyticsEvent(with: ViewModeListMenuItemEvent())
                 case .thumbnail:
                     searchResultsContainerViewModel.update(pageLayout: .thumbnail)
-                    tracker.trackAnalyticsEvent(with: ViewModeGridMenuItemEvent())
                 default:
                     break
                 }
