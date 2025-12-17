@@ -253,6 +253,8 @@
 
 - (void)updateAppearance {
     self.view.backgroundColor = UIColor.pageBackgroundColor;
+    
+    [self setupLiquidGlassNavigationBar];
 }
 
 - (void)createOpenZipButton {
