@@ -194,11 +194,13 @@ class EnterEmailViewController: UIViewController {
             return
         }
         
-        weak var weakSelf = self
-        let inviteContactRequestDelegate = MEGAInviteContactRequestDelegate.init(numberOfRequests: UInt(tagsField.tags.count), presentSuccessOver: UIApplication.mnz_presentingViewController()) {
-            weakSelf?.tagsField.removeTags()
-            weakSelf?.disableInviteContactsButton()
-            weakSelf?.navigationController?.popViewController(animated: true)
+        let inviteContactRequestDelegate = MEGAInviteContactRequestDelegate(numberOfRequests: UInt(tagsField.tags.count), presentSuccessOver: UIApplication.mnz_presentingViewController()) { [weak self] in
+            guard let self else { return }
+            
+            tagsField.removeTags()
+            disableInviteContactsButton()
+            
+            navigationController?.popViewController(animated: true)
         }
         tagsField.tags.forEach { (tag) in
             MEGASdk.shared.inviteContact(withEmail: tag.text, message: "", action: MEGAInviteAction.add, delegate: inviteContactRequestDelegate)

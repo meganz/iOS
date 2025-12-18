@@ -208,9 +208,8 @@ final class VideoListViewModelTests: XCTestCase {
                 messagesExp.fulfill()
             }
 
-        weak var _sut = sut
-        trackTaskCancellation { @MainActor in
-            await _sut?.onViewAppear()
+        trackTaskCancellation { @MainActor [weak sut] in
+            await sut?.onViewAppear()
         }
         
         await fulfillment(of: [messagesExp], timeout: 1)
