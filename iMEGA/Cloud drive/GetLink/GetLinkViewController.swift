@@ -48,6 +48,7 @@ class GetLinkViewController: UIViewController {
     @IBOutlet private var shareBarButton: UIBarButtonItem!
     @IBOutlet private var copyLinkBarButton: UIBarButtonItem!
     @IBOutlet private var copyKeyBarButton: UIBarButtonItem!
+    @IBOutlet weak var tableViewBottomConstraint: NSLayoutConstraint!
     
     let flexibleBarButton = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
     
@@ -89,8 +90,14 @@ class GetLinkViewController: UIViewController {
         copyKeyBarButton.title = Strings.Localizable.copyKey
         
         if var getLinkViewModel {
-            let doneBarButtonItem = UIBarButtonItem(title: Strings.Localizable.done, style: .done, target: self, action: #selector(doneBarButtonTapped))
-            navigationItem.rightBarButtonItem = doneBarButtonItem
+            var shouldSetDoneButton = true
+            if #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() {
+                shouldSetDoneButton = false
+            }
+            if shouldSetDoneButton {
+                let doneBarButtonItem = UIBarButtonItem(title: Strings.Localizable.done, style: .done, target: self, action: #selector(doneBarButtonTapped))
+                navigationItem.rightBarButtonItem = doneBarButtonItem
+            }
             
             getLinkViewModel.invokeCommand = { [weak self] command in
                 self?.executeCommand(command)
@@ -104,6 +111,11 @@ class GetLinkViewController: UIViewController {
         configureNavigation()
         setupColors()
         tableView.sectionHeaderTopPadding = 0
+        
+        if #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() {
+            tableViewBottomConstraint.isActive = false
+            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -112,6 +124,11 @@ class GetLinkViewController: UIViewController {
             getLinkViewModel.dispatch(.onViewDidAppear)
         } else {
             getLinkVM.dispatch(.onViewDidAppear)
+        }
+        if #available(iOS 26.0, *),
+           DIContainer.featureFlagProvider.isLiquidGlassEnabled(),
+           let navigationBar = navigationController?.navigationBar {
+            AppearanceManager.setupLiquidGlassNavigationBar(navigationBar)
         }
     }
     
@@ -148,6 +165,11 @@ class GetLinkViewController: UIViewController {
     private func configureNavigation() {
         let doneBarButtonItem = UIBarButtonItem(title: Strings.Localizable.done, style: .done, target: self, action: #selector(doneBarButtonTapped))
         navigationItem.rightBarButtonItem = doneBarButtonItem
+        if #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() {
+            doneBarButtonItem.setTitleTextAttributes([
+                .foregroundColor: UIColor.white
+            ], for: .normal)
+        }
     }
     
     private func setupColors() {
