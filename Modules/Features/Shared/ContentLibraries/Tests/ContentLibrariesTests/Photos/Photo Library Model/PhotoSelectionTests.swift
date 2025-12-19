@@ -86,4 +86,12 @@ class PhotoSelectionTests: XCTestCase {
         
         wait(for: [exp], timeout: 1.0)
     }
+    
+    func testToggleEditMode_shouldSwitchBetweenActiveAndInactive() {
+        XCTAssertFalse(sut.editMode.isEditing)
+        sut.toggleEditMode()
+        XCTAssertTrue(sut.editMode.isEditing)
+        sut.toggleEditMode()
+        XCTAssertFalse(sut.editMode.isEditing)
+    }
 }

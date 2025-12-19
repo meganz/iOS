@@ -105,7 +105,8 @@ final class MediaTabViewModel: ObservableObject, MediaTabSharedResourceProvider 
             displayMenuDelegate: self,
             quickActionsMenuDelegate: self,
             createContextMenuUseCase: CreateContextMenuUseCase(repo: CreateContextMenuRepository.newRepo),
-            videoFilterMenuDelegate: self
+            videoFilterMenuDelegate: self,
+            photoFilterOptionDelegate: self
         )
     }
 
@@ -253,5 +254,17 @@ extension MediaTabViewModel: QuickActionsMenuDelegate {
         if needToRefreshMenu {
             updateNavigationBarForCurrentTab()
         }
+    }
+}
+
+// MARK: - PhotoFilterOptionDelegate
+
+extension MediaTabViewModel: PhotoFilterOptionDelegate {
+    func photoFilter(option: PhotosFilterOptionsEntity) {
+        if let tabViewModel = tabViewModels[selectedTab] as? (any MediaTabContextMenuActionHandler) {
+            tabViewModel.handlePhotoFilter(option: option)
+        }
+
+        updateNavigationBarForCurrentTab()
     }
 }

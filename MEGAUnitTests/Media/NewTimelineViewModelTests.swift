@@ -94,16 +94,18 @@ struct NewTimelineViewModelTests {
         func emptyViewCameraUploadEnabled() {
             let sut = makeSUT(preferenceUseCase: MockPreferenceUseCase(
                 dict: [PreferenceKeyEntity.isCameraUploadsEnabled.rawValue: true]))
+            sut.updatePhotoFilter(option: .allMedia)
+            sut.updatePhotoFilter(option: .allLocations)
             
-            let emptyScreenType = sut.emptyScreenTypeToShow(
-                filterType: .allMedia, filterLocation: .allLocations)
+            let emptyScreenType = sut.emptyScreenTypeToShow()
+            
             #expect(emptyScreenType == .noMediaFound)
         }
         
         @Test("Ensure the correct empty view type is shown for filter when camera upload is not enabled",
               arguments: [
-                (filterType: PhotosFilterOptions.allMedia,
-                 filterLocation: PhotosFilterOptions.allLocations, expectedViewType: PhotosEmptyScreenViewType.enableCameraUploads),
+                (filterType: PhotosFilterOptionsEntity.allMedia,
+                 filterLocation: PhotosFilterOptionsEntity.allLocations, expectedViewType: PhotosEmptyScreenViewType.enableCameraUploads),
                 (filterType: .allMedia, filterLocation: .cloudDrive, expectedViewType: .noMediaFound),
                 (filterType: .allMedia, filterLocation: .cameraUploads, expectedViewType: .enableCameraUploads),
                 (filterType: .images, filterLocation: .allLocations, expectedViewType: .enableCameraUploads),
@@ -114,16 +116,60 @@ struct NewTimelineViewModelTests {
                 (filterType: .videos, filterLocation: .cameraUploads, expectedViewType: .enableCameraUploads)
               ])
         func emptyViewType(
-            filterType: PhotosFilterOptions,
-            filterLocation: PhotosFilterOptions,
+            filterType: PhotosFilterOptionsEntity,
+            filterLocation: PhotosFilterOptionsEntity,
             expectedViewType: PhotosEmptyScreenViewType
         ) async throws {
             let sut = makeSUT(preferenceUseCase: MockPreferenceUseCase(
                 dict: [PreferenceKeyEntity.isCameraUploadsEnabled.rawValue: false]))
-            let emptyScreenType = sut.emptyScreenTypeToShow(
-                filterType: filterType, filterLocation: filterLocation)
+            sut.updatePhotoFilter(option: filterType)
+            sut.updatePhotoFilter(option: filterLocation)
+            
+            let emptyScreenType = sut.emptyScreenTypeToShow()
+            
             #expect(emptyScreenType == expectedViewType)
         }
+    }
+    
+    @MainActor
+    @Test
+    func updateSortOrder() async throws {
+        let photos = [
+            NodeEntity(name: "test.jpg", handle: 1, hasThumbnail: true)
+        ]
+        let photoLibraryContentViewModel = PhotoLibraryContentViewModel(
+            library: photos.toPhotoLibrary(withSortType: .modificationDesc))
+        
+        let sut = Self.makeSUT(
+            photoLibraryContentViewModel: photoLibraryContentViewModel
+        )
+        
+        try await confirmation { confirmation in
+            let cancellable = photoLibraryContentViewModel
+                .$library
+                .sink { _ in
+                    confirmation()
+                }
+            
+            sut.updateSortOrder(.modificationDesc)
+            
+            try await sut.sortPhotoLibraryTask?.value
+            cancellable.cancel()
+        }
+    }
+    
+    @MainActor
+    @Test
+    func updatePhotoFilter() {
+        let sut = Self.makeSUT()
+        let taskId = sut.loadPhotosTaskId
+        #expect(sut.photoFilterOptions == [.allMedia, .allLocations])
+        
+        let newFilter: PhotosFilterOptionsEntity = [.images, .allLocations]
+        sut.updatePhotoFilter(option: newFilter)
+        
+        #expect(sut.photoFilterOptions == newFilter)
+        #expect(sut.loadPhotosTaskId != taskId)
     }
     
     @MainActor

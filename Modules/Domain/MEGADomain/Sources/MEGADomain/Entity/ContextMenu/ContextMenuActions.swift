@@ -30,12 +30,13 @@ public enum CMElementTypeEntity: Equatable, Sendable {
     case videoPlaylist(actionType: VideoPlaylistActionEntity)
     case videoLocationFilter(actionType: VideoLocationFilterEntity)
     case videoDurationFilter(actionType: VideoDurationFilterEntity)
+    case photoFilter(option: PhotosFilterOptionsEntity)
     case unknown
 }
 
 // MARK: - Context Menu types
 public enum ContextMenuTypeEntity: Sendable {
-    case uploadAdd, display, quickActions, sort, rubbishBin, chat, chatStatus, chatDoNotDisturb, qr, meeting, unknown, album, timeline, folderLink, fileLink, home, homeVideos, homeVideoPlaylists, videoPlaylistContent, mediaTabVideos
+    case uploadAdd, display, quickActions, sort, rubbishBin, chat, chatStatus, chatDoNotDisturb, qr, meeting, unknown, album, timeline, folderLink, fileLink, home, homeVideos, homeVideoPlaylists, videoPlaylistContent, mediaTabVideos, mediaTabTimeline
 }
 
 // MARK: - Context Menu grouped actions
@@ -44,7 +45,7 @@ public enum UploadAddActionEntity: CaseIterable, Sendable {
 }
 
 public enum DisplayActionEntity: CaseIterable, Sendable {
-    case select, mediaDiscovery, thumbnailView, listView, sort, clearRubbishBin, filter, filterActive, newPlaylist, locationFilter, durationFilter
+    case select, mediaDiscovery, thumbnailView, listView, sort, clearRubbishBin, filter, filterActive, newPlaylist, locationFilter, durationFilter, mediaTypeFilter, mediaLocationFilter
 }
 
 public enum QuickActionEntity: CaseIterable, Sendable {

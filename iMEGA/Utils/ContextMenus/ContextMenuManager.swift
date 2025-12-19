@@ -69,6 +69,11 @@ protocol VideoFilterMenuDelegate: AnyObject {
 }
 
 @MainActor
+protocol PhotoFilterOptionDelegate: AnyObject {
+    func photoFilter(option: PhotosFilterOptionsEntity)
+}
+
+@MainActor
 final class ContextMenuManager: NSObject {
     weak var displayMenuDelegate: (any DisplayMenuDelegate)?
     weak var quickActionsMenuDelegate: (any QuickActionsMenuDelegate)?
@@ -81,6 +86,7 @@ final class ContextMenuManager: NSObject {
     weak var albumMenuDelegate: (any AlbumMenuDelegate)?
     weak var videoPlaylistMenuDelegate: (any VideoPlaylistMenuDelegate)?
     weak var videoFilterMenuDelegate: (any VideoFilterMenuDelegate)?
+    weak var photoFilterOptionDelegate: (any PhotoFilterOptionDelegate)?
 
     private let createContextMenuUC: any CreateContextMenuUseCaseProtocol
     
@@ -95,7 +101,8 @@ final class ContextMenuManager: NSObject {
          createContextMenuUseCase: any CreateContextMenuUseCaseProtocol,
          albumMenuDelegate: (any AlbumMenuDelegate)? = nil,
          videoPlaylistMenuDelegate: (any VideoPlaylistMenuDelegate)? = nil,
-         videoFilterMenuDelegate: (any VideoFilterMenuDelegate)? = nil
+         videoFilterMenuDelegate: (any VideoFilterMenuDelegate)? = nil,
+         photoFilterOptionDelegate: (any PhotoFilterOptionDelegate)? = nil
     ) {
         self.displayMenuDelegate = displayMenuDelegate
         self.quickActionsMenuDelegate = quickActionsMenuDelegate
@@ -109,6 +116,7 @@ final class ContextMenuManager: NSObject {
         self.albumMenuDelegate = albumMenuDelegate
         self.videoPlaylistMenuDelegate = videoPlaylistMenuDelegate
         self.videoFilterMenuDelegate = videoFilterMenuDelegate
+        self.photoFilterOptionDelegate = photoFilterOptionDelegate
     }
     
     // MARK: - Configure functions
@@ -177,6 +185,8 @@ final class ContextMenuManager: NSObject {
         case .videoDurationFilter(let filter):
             videoFilterMenuDelegate?.videoDurationFilterMenu(didSelect: filter)
 
+        case .photoFilter(let option):
+            photoFilterOptionDelegate?.photoFilter(option: option)
         default:
             break
         }

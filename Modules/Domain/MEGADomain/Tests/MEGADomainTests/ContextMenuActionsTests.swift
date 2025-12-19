@@ -131,6 +131,15 @@ final class ContextMenuActionsTests: XCTestCase {
         }
     }
     
+    private func filterPhotoFilterOptions(from menuActions: [CMElementTypeEntity]) -> [PhotosFilterOptionsEntity] {
+        menuActions.compactMap {
+            if case let .photoFilter(option) = $0 {
+                return option
+            }
+            return nil
+        }
+    }
+    
     func testUploadAddMenu() throws {
         let menuEntity = try XCTUnwrap(ContextMenuBuilder()
                                                 .setType(.menu(type: .uploadAdd))
@@ -147,7 +156,8 @@ final class ContextMenuActionsTests: XCTestCase {
                                                 .setSortType(.defaultAsc)
                                                 .build())
 
-        let excludedActions: [DisplayActionEntity] = [.clearRubbishBin, .mediaDiscovery, .filter, .sort, .filterActive, .newPlaylist, .locationFilter, .durationFilter]
+        let excludedActions: [DisplayActionEntity] = [.clearRubbishBin, .mediaDiscovery, .filter, .sort, .filterActive, .newPlaylist,
+                                                      .locationFilter, .durationFilter, .mediaTypeFilter, .mediaLocationFilter]
 
         XCTAssertTrue(filterDisplayActions(from: decomposeMenuIntoActions(menu: menuEntity)) == DisplayActionEntity
                                                                                                                 .allCases
@@ -166,7 +176,8 @@ final class ContextMenuActionsTests: XCTestCase {
                                                 .setIsViewInFolder(true)
                                                 .build())
 
-        let excludedActions: [DisplayActionEntity] = [.select, .clearRubbishBin, .mediaDiscovery, .filter, .sort, .filterActive, .newPlaylist, .locationFilter, .durationFilter]
+        let excludedActions: [DisplayActionEntity] = [.select, .clearRubbishBin, .mediaDiscovery, .filter, .sort, .filterActive, .newPlaylist,
+                                                      .locationFilter, .durationFilter, .mediaTypeFilter, .mediaLocationFilter]
 
         XCTAssertTrue(filterDisplayActions(from: decomposeMenuIntoActions(menu: menuEntity)) == DisplayActionEntity
                                                                                                                 .allCases
@@ -186,7 +197,8 @@ final class ContextMenuActionsTests: XCTestCase {
                                                 .setIsViewInFolder(true)
                                                 .build())
 
-        let excludedActions: [DisplayActionEntity] = [.select, .mediaDiscovery, .filter, .sort, .clearRubbishBin, .filterActive, .newPlaylist, .locationFilter, .durationFilter]
+        let excludedActions: [DisplayActionEntity] = [.select, .mediaDiscovery, .filter, .sort, .clearRubbishBin, .filterActive, .newPlaylist,
+                                                      .locationFilter, .durationFilter, .mediaTypeFilter, .mediaLocationFilter]
 
         XCTAssertTrue(filterDisplayActions(from: decomposeMenuIntoActions(menu: menuEntity)) == DisplayActionEntity
                                                                                                                 .allCases
@@ -204,7 +216,8 @@ final class ContextMenuActionsTests: XCTestCase {
                                                 .setIsRubbishBinFolder(true)
                                                 .build())
 
-        let excludedActions: [DisplayActionEntity] = [.mediaDiscovery, .filter, .sort, .filterActive, .newPlaylist, .locationFilter, .durationFilter]
+        let excludedActions: [DisplayActionEntity] = [.mediaDiscovery, .filter, .sort, .filterActive, .newPlaylist, .locationFilter,
+                                                      .durationFilter, .mediaTypeFilter, .mediaLocationFilter]
 
         XCTAssertTrue(filterDisplayActions(from: decomposeMenuIntoActions(menu: menuEntity)) == DisplayActionEntity
                                                                                                                 .allCases
@@ -222,7 +235,8 @@ final class ContextMenuActionsTests: XCTestCase {
                                                 .setIsOfflineFolder(true)
                                                 .build())
 
-        let excludedDisplayActions: [DisplayActionEntity] = [.mediaDiscovery, .clearRubbishBin, .filter, .sort, .filterActive, .newPlaylist, .locationFilter, .durationFilter]
+        let excludedDisplayActions: [DisplayActionEntity] = [.mediaDiscovery, .clearRubbishBin, .filter, .sort, .filterActive, .newPlaylist,
+                                                             .locationFilter, .durationFilter, .mediaTypeFilter, .mediaLocationFilter]
         let excludedSortOptions: [SortOrderEntity] = [.labelAsc, .favouriteAsc]
 
         XCTAssertTrue(filterDisplayActions(from: decomposeMenuIntoActions(menu: menuEntity)) == DisplayActionEntity
@@ -242,7 +256,8 @@ final class ContextMenuActionsTests: XCTestCase {
                                                 .setBackupsRootNode(true)
                                                 .build())
 
-        let excludedDisplayActions: [DisplayActionEntity] = [.mediaDiscovery, .clearRubbishBin, .filter, .sort, .filterActive, .newPlaylist, .locationFilter, .durationFilter]
+        let excludedDisplayActions: [DisplayActionEntity] = [.mediaDiscovery, .clearRubbishBin, .filter, .sort, .filterActive, .newPlaylist,
+                                                             .locationFilter, .durationFilter, .mediaTypeFilter, .mediaLocationFilter]
 
         XCTAssertTrue(filterDisplayActions(from: decomposeMenuIntoActions(menu: menuEntity)) == DisplayActionEntity
                                                                                                                 .allCases
@@ -261,7 +276,8 @@ final class ContextMenuActionsTests: XCTestCase {
                                                 .build())
 
         let excludedQuickActions: [QuickActionEntity] = [.manageLink, .removeLink, .manageFolder, .rename, .removeSharing, .leaveSharing, .sendToChat, .saveToPhotos, .hide, .unhide, .settings, .dispute]
-        let excludedDisplayActions: [DisplayActionEntity] = [.mediaDiscovery, .clearRubbishBin, .filter, .sort, .filterActive, .newPlaylist, .locationFilter, .durationFilter]
+        let excludedDisplayActions: [DisplayActionEntity] = [.mediaDiscovery, .clearRubbishBin, .filter, .sort, .filterActive, .newPlaylist,
+                                                             .locationFilter, .durationFilter, .mediaTypeFilter, .mediaLocationFilter]
 
         XCTAssertTrue(filterQuickActions(from: decomposeMenuIntoActions(menu: menuEntity)) == QuickActionEntity
                                                                                                             .allCases
@@ -297,7 +313,8 @@ final class ContextMenuActionsTests: XCTestCase {
                                                 .build())
 
         let excludedQuickActions: [QuickActionEntity] = [.shareLink, .manageLink, .removeLink, .manageFolder, .removeSharing, .shareFolder, .rename, .leaveSharing, .sendToChat, .saveToPhotos, .hide, .unhide, .settings, .dispute]
-        let excludedDisplayActions: [DisplayActionEntity] = [.clearRubbishBin, .filter, .sort, .filterActive, .newPlaylist, .locationFilter, .durationFilter]
+        let excludedDisplayActions: [DisplayActionEntity] = [.clearRubbishBin, .filter, .sort, .filterActive, .newPlaylist,
+                                                             .locationFilter, .durationFilter, .mediaTypeFilter, .mediaLocationFilter]
 
         XCTAssertTrue(filterQuickActions(from: decomposeMenuIntoActions(menu: menuEntity)) == QuickActionEntity
                                                                                                             .allCases
@@ -320,7 +337,8 @@ final class ContextMenuActionsTests: XCTestCase {
                                                 .build())
 
         let excludedQuickActions: [QuickActionEntity] = [.shareLink, .manageLink, .removeLink, .manageFolder, .removeSharing, .shareFolder, .rename, .sendToChat, .saveToPhotos, .hide, .unhide, .settings, .dispute]
-        let excludedDisplayActions: [DisplayActionEntity] = [.clearRubbishBin, .filter, .sort, .filterActive, .newPlaylist, .locationFilter, .durationFilter]
+        let excludedDisplayActions: [DisplayActionEntity] = [.clearRubbishBin, .filter, .sort, .filterActive, .newPlaylist,
+                                                             .locationFilter, .durationFilter, .mediaTypeFilter, .mediaLocationFilter]
 
         XCTAssertTrue(filterQuickActions(from: decomposeMenuIntoActions(menu: menuEntity)) == QuickActionEntity
                                                                                                             .allCases
@@ -345,7 +363,8 @@ final class ContextMenuActionsTests: XCTestCase {
                                                 .build())
 
         let excludedQuickActions: [QuickActionEntity] = [.manageLink, .removeLink, .leaveSharing, .shareFolder, .sendToChat, .saveToPhotos, .hide, .unhide, .settings, .dispute]
-        let excludedDisplayActions: [DisplayActionEntity] = [.clearRubbishBin, .filter, .sort, .filterActive, .newPlaylist, .locationFilter, .durationFilter]
+        let excludedDisplayActions: [DisplayActionEntity] = [.clearRubbishBin, .filter, .sort, .filterActive, .newPlaylist,
+                                                             .locationFilter, .durationFilter, .mediaTypeFilter, .mediaLocationFilter]
 
         XCTAssertTrue(filterQuickActions(from: decomposeMenuIntoActions(menu: menuEntity)) == QuickActionEntity
                                                                                                             .allCases
@@ -371,7 +390,8 @@ final class ContextMenuActionsTests: XCTestCase {
                                                 .build())
 
         let excludedQuickActions: [QuickActionEntity] = [.shareLink, .leaveSharing, .shareFolder, .sendToChat, .saveToPhotos, .hide, .unhide, .settings, .dispute]
-        let excludedDisplayActions: [DisplayActionEntity] = [.clearRubbishBin, .filter, .sort, .filterActive, .newPlaylist, .locationFilter, .durationFilter]
+        let excludedDisplayActions: [DisplayActionEntity] = [.clearRubbishBin, .filter, .sort, .filterActive, .newPlaylist,
+                                                             .locationFilter, .durationFilter, .mediaTypeFilter, .mediaLocationFilter]
 
         XCTAssertTrue(filterQuickActions(from: decomposeMenuIntoActions(menu: menuEntity)) == QuickActionEntity
                                                                                                             .allCases
@@ -394,7 +414,8 @@ final class ContextMenuActionsTests: XCTestCase {
                                                 .build())
 
         let excludedQuickActions: [QuickActionEntity] = [.download, .shareLink, .manageLink, .removeLink, .shareFolder, .manageFolder, .copy, .removeSharing, .leaveSharing, .sendToChat, .saveToPhotos, .hide, .unhide, .settings]
-        let excludedDisplayActions: [DisplayActionEntity] = [.clearRubbishBin, .filter, .sort, .filterActive, .newPlaylist, .mediaDiscovery, .locationFilter, .durationFilter]
+        let excludedDisplayActions: [DisplayActionEntity] = [.clearRubbishBin, .filter, .sort, .filterActive, .newPlaylist, .mediaDiscovery,
+                                                             .locationFilter, .durationFilter, .mediaTypeFilter, .mediaLocationFilter]
 
         XCTAssertTrue(filterQuickActions(from: decomposeMenuIntoActions(menu: menuEntity)) == QuickActionEntity
                                                                                                             .allCases
@@ -416,7 +437,8 @@ final class ContextMenuActionsTests: XCTestCase {
                                                 .setIsCameraUploadExplorer(true)
                                                 .build())
 
-        let excludedDisplayActions: [DisplayActionEntity] = [.mediaDiscovery, .thumbnailView, .listView, .clearRubbishBin, .filter, .sort, .filterActive, .newPlaylist, .locationFilter, .durationFilter]
+        let excludedDisplayActions: [DisplayActionEntity] = [.mediaDiscovery, .thumbnailView, .listView, .clearRubbishBin, .filter, .sort, .filterActive,
+                                                             .newPlaylist, .locationFilter, .durationFilter, .mediaTypeFilter, .mediaLocationFilter]
         let excludedSortOptions: [SortOrderEntity] = [.defaultAsc, .defaultDesc, .sizeDesc, .sizeAsc, .labelAsc, .favouriteAsc]
         
         XCTAssertTrue(filterDisplayActions(from: decomposeMenuIntoActions(menu: menuEntity)) == DisplayActionEntity
@@ -768,5 +790,36 @@ final class ContextMenuActionsTests: XCTestCase {
         XCTAssertEqual(filterQuickActions(from: actions), [ .rename ])
         XCTAssertEqual(filterVideoPlaylistActions(from: actions), [ .addVideosToVideoPlaylistContent, .delete ] )
         XCTAssertTrue(filterSortActions(from: actions).isEmpty, "Expect not to have sort on empty user video playlist content")
+    }
+    
+    // MARK: - Timeline Tab Content
+    
+    func testMediaTabTimeline__shouldShowCorrectOptions() throws {
+        let menuEntity = try XCTUnwrap(
+            ContextMenuBuilder()
+                .setType(.menu(type: .mediaTabTimeline))
+                .setSortType(.modificationDesc)
+                .setIsCameraUploadExplorer(true)
+                .setSelectedPhotosFilterOptionsEntity([.allLocations, .allMedia])
+                .build()
+        )
+        
+        let actions = decomposeMenuIntoActions(menu: menuEntity)
+        
+        XCTAssertEqual(filterDisplayActions(from: actions), [.select])
+        
+        XCTAssertEqual(filterSortActions(from: actions), [
+            .modificationDesc,
+            .modificationAsc
+        ])
+        
+        XCTAssertEqual(filterPhotoFilterOptions(from: actions), [
+            .allMedia,
+            .images,
+            .videos,
+            .allLocations,
+            .cloudDrive,
+            .cameraUploads
+        ])
     }
 }

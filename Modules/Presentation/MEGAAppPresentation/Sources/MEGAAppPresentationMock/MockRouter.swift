@@ -4,6 +4,7 @@ import UIKit
 public final class MockRouter: Routing {
     private let viewController: UIViewController?
     public private(set) var startCalled = 0
+    public var onStart: (() -> Void)?
     
     nonisolated public init(viewController: UIViewController? = nil) {
         self.viewController = viewController
@@ -15,5 +16,6 @@ public final class MockRouter: Routing {
     
     public func start() {
         startCalled += 1
+        onStart?()
     }
 }

@@ -83,6 +83,20 @@ struct MediaTabViewModelTests {
     
     @MainActor
     @Test
+    func handlePhotoFilter() async throws {
+        let expectedOption: PhotosFilterOptionsEntity = [.allMedia, .allLocations]
+        let contentViewModel = MockMediaTabContentViewModel()
+        let sut = Self.makeSUT(
+            tabViewModels: [.timeline: contentViewModel]
+        )
+        
+        sut.photoFilter(option: expectedOption)
+        
+        #expect(contentViewModel.handledPhotosFilterOptions == expectedOption)
+    }
+    
+    @MainActor
+    @Test
     func toolbarUpdatePublisherUpdatesToolbarConfig() async throws {
         let contentViewModel = MockMediaTabContentViewModel(
             toolBarActions: [.shareLink, .delete]
@@ -144,6 +158,7 @@ private final class MockMediaTabContentViewModel: MediaTabContentViewModel {
 
     private let _contextMenuConfiguration: CMConfigEntity?
     private(set) var handledAction: MediaBottomToolbarAction?
+    private(set) var handledPhotosFilterOptions: PhotosFilterOptionsEntity?
 
     init(
         itemViewModels: [NavigationBarItemViewModel] = [],
@@ -196,6 +211,10 @@ extension MockMediaTabContentViewModel: MediaTabToolbarActionsProvider {
 extension MockMediaTabContentViewModel: MediaTabToolbarActionHandler {
     func handleToolbarAction(_ action: MediaBottomToolbarAction) {
         handledAction = action
+    }
+    
+    func handlePhotoFilter(option: PhotosFilterOptionsEntity) {
+        handledPhotosFilterOptions = option
     }
 }
 

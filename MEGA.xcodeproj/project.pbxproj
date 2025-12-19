@@ -95,6 +95,7 @@
 		0E60B8C62EC54E3B00F16EAB /* CameraUploadProgressEmptyRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E60B8C52EC54E3B00F16EAB /* CameraUploadProgressEmptyRowView.swift */; };
 		0E639DA72CB7278A0069BFA2 /* Preview_SensitiveDisplayPreferenceUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E639DA62CB727880069BFA2 /* Preview_SensitiveDisplayPreferenceUseCase.swift */; };
 		0E6607C22C74231D00958FA6 /* DefaultNodeActionAccessoryDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E6607C12C74231D00958FA6 /* DefaultNodeActionAccessoryDelegate.swift */; };
+		0E68DBC22EF2176E001C2CF8 /* PhotosFilterOptionsEntity+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E68DBC12EF2176A001C2CF8 /* PhotosFilterOptionsEntity+Additions.swift */; };
 		0E69C0E92DC8313E00E473B7 /* CreateAccountRoutingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E69C0E82DC8313E00E473B7 /* CreateAccountRoutingViewModel.swift */; };
 		0E69C0F52DC8352400E473B7 /* CreateAccountRoutingViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E69C0F42DC8352400E473B7 /* CreateAccountRoutingViewModelTests.swift */; };
 		0E69C0FA2DC8441100E473B7 /* OnboardingRoutingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E69C0F92DC843FF00E473B7 /* OnboardingRoutingViewModel.swift */; };
@@ -148,6 +149,7 @@
 		0EB584852C3CC5B900EEBD99 /* BrowserViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EB584842C3CC5B900EEBD99 /* BrowserViewModelTests.swift */; };
 		0EB608C12EA9DAF900FDC5DB /* CameraUploadInQueueRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EB608C02EA9DAF600FDC5DB /* CameraUploadInQueueRowView.swift */; };
 		0EB608C62EA9DB4500FDC5DB /* CameraUploadInQueueRowViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EB608C52EA9DB4200FDC5DB /* CameraUploadInQueueRowViewModel.swift */; };
+		0EB6CDF52EF264CB009D2F05 /* MediaTimelineTabContentViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EB6CDF42EF264CB009D2F05 /* MediaTimelineTabContentViewModelTests.swift */; };
 		0EBF70712BAB877C009AAFB0 /* HiddenFilesFoldersOnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EBF70702BAB877C009AAFB0 /* HiddenFilesFoldersOnboardingView.swift */; };
 		0EBFFE192A29A39300FAB142 /* GetAlbumsLinksViewWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EBFFE182A29A39300FAB142 /* GetAlbumsLinksViewWrapper.swift */; };
 		0EC465162D87E10000EDA214 /* NodeActionResponderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EC465152D87E10000EDA214 /* NodeActionResponderTests.swift */; };
@@ -2922,6 +2924,7 @@
 		0E60B8C52EC54E3B00F16EAB /* CameraUploadProgressEmptyRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraUploadProgressEmptyRowView.swift; sourceTree = "<group>"; };
 		0E639DA62CB727880069BFA2 /* Preview_SensitiveDisplayPreferenceUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preview_SensitiveDisplayPreferenceUseCase.swift; sourceTree = "<group>"; };
 		0E6607C12C74231D00958FA6 /* DefaultNodeActionAccessoryDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultNodeActionAccessoryDelegate.swift; sourceTree = "<group>"; };
+		0E68DBC12EF2176A001C2CF8 /* PhotosFilterOptionsEntity+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PhotosFilterOptionsEntity+Additions.swift"; sourceTree = "<group>"; };
 		0E69C0E82DC8313E00E473B7 /* CreateAccountRoutingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAccountRoutingViewModel.swift; sourceTree = "<group>"; };
 		0E69C0F42DC8352400E473B7 /* CreateAccountRoutingViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAccountRoutingViewModelTests.swift; sourceTree = "<group>"; };
 		0E69C0F92DC843FF00E473B7 /* OnboardingRoutingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingRoutingViewModel.swift; sourceTree = "<group>"; };
@@ -2974,6 +2977,7 @@
 		0EB584842C3CC5B900EEBD99 /* BrowserViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserViewModelTests.swift; sourceTree = "<group>"; };
 		0EB608C02EA9DAF600FDC5DB /* CameraUploadInQueueRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraUploadInQueueRowView.swift; sourceTree = "<group>"; };
 		0EB608C52EA9DB4200FDC5DB /* CameraUploadInQueueRowViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraUploadInQueueRowViewModel.swift; sourceTree = "<group>"; };
+		0EB6CDF42EF264CB009D2F05 /* MediaTimelineTabContentViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaTimelineTabContentViewModelTests.swift; sourceTree = "<group>"; };
 		0EBF70702BAB877C009AAFB0 /* HiddenFilesFoldersOnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HiddenFilesFoldersOnboardingView.swift; sourceTree = "<group>"; };
 		0EBFFE182A29A39300FAB142 /* GetAlbumsLinksViewWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAlbumsLinksViewWrapper.swift; sourceTree = "<group>"; };
 		0EC465152D87E10000EDA214 /* NodeActionResponderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeActionResponderTests.swift; sourceTree = "<group>"; };
@@ -7766,9 +7770,9 @@
 		4C0A55612ED6EFAB00A58D8B /* MediaView */ = {
 			isa = PBXGroup;
 			children = (
-				0E7533A52EF1ECDC002BEE1E /* Timeline */,
 				0E2658082EE9019F00AC3EF0 /* Albums */,
 				0E42E3332EEF4DDC00C3E524 /* Extensions */,
+				0E7533A52EF1ECDC002BEE1E /* Timeline */,
 				4C6C8FFA2ED991F600095F34 /* Toolbar */,
 				4C1A206F2EE2CF6C00E41A44 /* Videos */,
 				4C6C901D2EDE8BEC00095F34 /* MediaNavigationBarItemFactory.swift */,
@@ -7811,6 +7815,7 @@
 			children = (
 				0E380B292EEB7942000991B9 /* MediaAlbumTabContentViewModelTests.swift */,
 				0E380B442EEB9946000991B9 /* MediaTabViewModelTests.swift */,
+				0EB6CDF42EF264CB009D2F05 /* MediaTimelineTabContentViewModelTests.swift */,
 				0E380B2B2EEB7DF9000991B9 /* MockMediaTabSharedResourceProvider.swift */,
 				0EE989372EEFBA6E00367F26 /* NewTimelineViewModelTests.swift */,
 				4CEA86752EEA568200BF2A6A /* VideoTabViewModelTests.swift */,
@@ -11991,6 +11996,7 @@
 				9956B7662B4BA16500A3B8EB /* ChatStatusEntity+Additions.swift */,
 				256890982BC2AC3E00778548 /* ContentConsumptionUserAttributeUseCase+Additions.swift */,
 				B52E231C28A0D66F0018C3C3 /* FeatureFlagUseCase+Additions.swift */,
+				0E68DBC12EF2176A001C2CF8 /* PhotosFilterOptionsEntity+Additions.swift */,
 				B6A0CF1928A08D1B00D7F52E /* PreferenceUseCase+Additions.swift */,
 				94BEC88529DC154A00075AE9 /* SaveMediaToPhotosErrorEntity+Additions.swift */,
 				32A2AA052A283BB3007FC630 /* UserAttributeUseCaseAdditions+Additions.swift */,
@@ -14977,10 +14983,6 @@
 				998CDC9B2E3AC39800BC9CA1 /* DIContainer+KMTransferUtils.swift in Sources */,
 				6D00BD282B1E5D9600370AC7 /* DIContainer+Photos.swift in Sources */,
 				B6AF22C226097C310008FF72 /* DiskFullBlockingModel.swift in Sources */,
-				0E7533A62EF1ECDC002BEE1E /* NewTimelineViewModel.swift in Sources */,
-				0E7533A72EF1ECDC002BEE1E /* MediaTimelineTabContentViewModel.swift in Sources */,
-				0E7533A82EF1ECDC002BEE1E /* NewTimelineView.swift in Sources */,
-				0E7533A92EF1ECDC002BEE1E /* MediaTabTimelineFactory.swift in Sources */,
 				B60D531B25FA940A003E9829 /* DiskFullBlockingViewController.swift in Sources */,
 				B6DFECCF2607D96D00B0829B /* DiskFullBlockingViewModel.swift in Sources */,
 				B6DFECDC2607D9B100B0829B /* DiskFullBlockingViewRouter.swift in Sources */,
@@ -15284,11 +15286,13 @@
 				4C6C90052ED99ADE00095F34 /* MediaTabHostingController.swift in Sources */,
 				4C0A557E2ED8319400A58D8B /* MediaTabProtocols.swift in Sources */,
 				0E42E3352EEF4E0200C3E524 /* MediaTabSharedResourceProvider+Additions.swift in Sources */,
+				0E7533A92EF1ECDC002BEE1E /* MediaTabTimelineFactory.swift in Sources */,
 				4CEA86512EE9565300BF2A6A /* MediaTabToolbarCoordinator.swift in Sources */,
 				4C1A206B2EE2C4FF00E41A44 /* MediaTabVideoFactory.swift in Sources */,
 				4C0A55632ED6EFBC00A58D8B /* MediaTabView.swift in Sources */,
 				4C0A556C2ED6F61900A58D8B /* MediaTabViewControllerFactory.swift in Sources */,
 				4C0A556B2ED6F61900A58D8B /* MediaTabViewModel.swift in Sources */,
+				0E7533A72EF1ECDC002BEE1E /* MediaTimelineTabContentViewModel.swift in Sources */,
 				4C6C90012ED9951400095F34 /* MediaToolbarProvider.swift in Sources */,
 				BF53B77C274351F700B47CA0 /* MeetingAlreadyExistsAlert.swift in Sources */,
 				BFD6534B25EDBF8A00052DE8 /* MeetingContactInfoHeaderView.swift in Sources */,
@@ -15513,6 +15517,8 @@
 				5D48593E2526CD5F007BF705 /* NewChatRouter.swift in Sources */,
 				C48CADB92BBAB1C00005519B /* NewCloudDriveNodeSourceUpdatesListener.swift in Sources */,
 				C48DD7052BE5E3530017B107 /* NewCloudDriveViewController.swift in Sources */,
+				0E7533A82EF1ECDC002BEE1E /* NewTimelineView.swift in Sources */,
+				0E7533A62EF1ECDC002BEE1E /* NewTimelineViewModel.swift in Sources */,
 				5DE448EB248D15F300EE00CB /* NibOwnerLoadable.swift in Sources */,
 				BFD23CCE236255A5005D4A1E /* NicknameViewController.swift in Sources */,
 				94FAFF1B2AFA6CA50056A177 /* Node+ResultProperties.swift in Sources */,
@@ -15692,6 +15698,7 @@
 				258BA6012CC8953B00349CD2 /* PhotoLibraryContentViewRouter.swift in Sources */,
 				0EAC3A7D2CE3023600E2CF17 /* PhotoSearchResultRouter.swift in Sources */,
 				258BA5FD2CC8846300349CD2 /* PhotoSelectionAdapter.swift in Sources */,
+				0E68DBC22EF2176E001C2CF8 /* PhotosFilterOptionsEntity+Additions.swift in Sources */,
 				12397E2C2820C75900A30CCC /* PhotosPageViewController.swift in Sources */,
 				25D360B92BB5257200ACFDA4 /* PhotosRepository+Additions.swift in Sources */,
 				B5CD176427F58236000CF282 /* PhotosViewController+Additions.swift in Sources */,
@@ -16687,6 +16694,7 @@
 				25C2F8EF2AB126E100F8930A /* MediaDiscoveryContentViewModelTests.swift in Sources */,
 				1240A4A327DD548600627262 /* MediaDiscoveryViewModelTests.swift in Sources */,
 				0E380B452EEB9946000991B9 /* MediaTabViewModelTests.swift in Sources */,
+				0EB6CDF52EF264CB009D2F05 /* MediaTimelineTabContentViewModelTests.swift in Sources */,
 				BFE3B9F2285838A7003949FF /* MeetingContainerViewModel+Additions.swift in Sources */,
 				BF8895DE26311821002A18CA /* MeetingContainerViewModelTests.swift in Sources */,
 				2FE54377264DECBB00FF4955 /* MeetingCreatingViewModelTests.swift in Sources */,

@@ -26,6 +26,19 @@ enum NavigationBarItemType {
     case contextMenu(config: CMConfigEntity, manager: ContextMenuManager)
 }
 
+extension NavigationBarItemType: Equatable {
+    static func == (lhs: NavigationBarItemType, rhs: NavigationBarItemType) -> Bool {
+        switch (lhs, rhs) {
+        case (.contextMenu, .contextMenu):
+            false
+        case (.cameraUploadStatus, .cameraUploadStatus), (.imageButton, .imageButton), (.textButton, .textButton):
+            true
+        default:
+            false
+        }
+    }
+}
+
 // MARK: - Navigation Bar Item ViewModel
 
 struct NavigationBarItemViewModel: Identifiable, Equatable {
@@ -49,6 +62,6 @@ struct NavigationBarItemViewModel: Identifiable, Equatable {
     // MARK: - Equatable
 
     static func == (lhs: NavigationBarItemViewModel, rhs: NavigationBarItemViewModel) -> Bool {
-        lhs.id == rhs.id && lhs.placement == rhs.placement
+        lhs.id == rhs.id && lhs.placement == rhs.placement && lhs.viewType == rhs.viewType
     }
 }

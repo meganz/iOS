@@ -23,6 +23,7 @@ public final class CMEntity: CMElement {
     public var dndRemainingTime: String?
     public var currentVideoLocationFilter: VideoLocationFilterEntity?
     public var currentVideoDurationFilter: VideoDurationFilterEntity?
+    public var currentPhotoFilter: PhotosFilterOptionsEntity?
 
     public init(type: CMElementTypeEntity = .unknown,
                 displayInline: Bool = false,
@@ -32,6 +33,7 @@ public final class CMEntity: CMElement {
                 dndRemainingTime: String? = nil,
                 currentVideoLocationFilter: VideoLocationFilterEntity? = nil,
                 currentVideoDurationFilter: VideoDurationFilterEntity? = nil,
+                currentPhotoFilter: PhotosFilterOptionsEntity? = nil,
                 children: [CMElement]) {
         self.displayInline = displayInline
         self.currentChatStatus = currentChatStatus
@@ -40,6 +42,7 @@ public final class CMEntity: CMElement {
         self.dndRemainingTime = dndRemainingTime
         self.currentVideoLocationFilter = currentVideoLocationFilter
         self.currentVideoDurationFilter = currentVideoDurationFilter
+        self.currentPhotoFilter = currentPhotoFilter
         self.children = children
         super.init(type: type)
     }

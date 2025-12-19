@@ -49,6 +49,7 @@ public final class ContextMenuBuilder {
     private var showSortingOptionsAndViewModes: Bool = true
     private var selectedVideoLocationFilter: VideoLocationFilterEntity = .allLocation
     private var selectedVideoDurationFilter: VideoDurationFilterEntity = .allDurations
+    private var selectedPhotosFilterOptionsEntity: PhotosFilterOptionsEntity = [.allMedia, .allLocations]
 
     public init() {}
     
@@ -301,6 +302,11 @@ public final class ContextMenuBuilder {
         self.selectedVideoDurationFilter = filter ?? .allDurations
         return self
     }
+    
+    public func setSelectedPhotosFilterOptionsEntity(_ filter: PhotosFilterOptionsEntity?) -> ContextMenuBuilder {
+        self.selectedPhotosFilterOptionsEntity = filter ?? [.allMedia, .allLocations]
+        return self
+    }
 
     public func build() -> CMEntity? {
         /// It is only allowed to build menu type elements. The other elements refer to the actions that a menu contains, and that cannot be constructed if not inside a menu.
@@ -336,6 +342,8 @@ public final class ContextMenuBuilder {
                 return videoPlaylistContentMenu()
             case .mediaTabVideos:
                 return mediaTabVideosMenu()
+            case .mediaTabTimeline:
+                return mediaTabTimelineMenu()
             default:
                 return nil
             }
@@ -898,6 +906,55 @@ public final class ContextMenuBuilder {
     private func homeMenu() -> CMEntity {
         CMEntity(
             children: [thumbnailView, listView]
+        )
+    }
+    
+    private func mediaTabTimelineMenu() -> CMEntity {
+        let displayActionsMenuChildren: [CMElement] = [
+            selectMenu(),
+            sortMenu(),
+            mediaFiltersMenu(),
+            settings
+        ]
+        return CMEntity(
+            displayInline: true,
+            children: displayActionsMenuChildren)
+    }
+    
+    private func mediaFiltersMenu() -> CMElement {
+        CMEntity(
+            children: [mediaOptionsFilter(), mediaLocationFilter()])
+    }
+    
+    private func mediaOptionsFilter() -> CMEntity {
+        let children = PhotosFilterOptionsEntity.mediaOptions.map { option in
+            CMActionEntity(
+                type: .photoFilter(option: option),
+                isEnabled: true,
+                state: selectedPhotosFilterOptionsEntity.mediaSelection == option ? .on : .off
+            )
+        }
+        
+        return CMEntity(
+            type: .display(actionType: .mediaTypeFilter),
+            currentPhotoFilter: selectedPhotosFilterOptionsEntity,
+            children: children
+        )
+    }
+    
+    private func mediaLocationFilter() -> CMEntity {
+        let children = PhotosFilterOptionsEntity.locationOptions.map { option in
+            CMActionEntity(
+                type: .photoFilter(option: option),
+                isEnabled: true,
+                state: selectedPhotosFilterOptionsEntity.locationSelection == option ? .on : .off
+            )
+        }
+        
+        return CMEntity(
+            type: .display(actionType: .mediaLocationFilter),
+            currentPhotoFilter: selectedPhotosFilterOptionsEntity,
+            children: children
         )
     }
 }

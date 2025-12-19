@@ -15,4 +15,22 @@ public struct PhotosFilterOptionsEntity: OptionSet, Sendable {
     
     public static let allMedia: PhotosFilterOptionsEntity = [.images, .videos]
     public static let allLocations: PhotosFilterOptionsEntity = [.cloudDrive, .cameraUploads]
+    
+    public static let mediaOptions: [PhotosFilterOptionsEntity] = [
+        .allMedia, .images, .videos
+    ]
+    
+    public static let locationOptions: [PhotosFilterOptionsEntity] = [
+        .allLocations, .cloudDrive, .cameraUploads
+    ]
+}
+
+extension PhotosFilterOptionsEntity {
+    public var mediaSelection: PhotosFilterOptionsEntity {
+        intersection(.allMedia)
+    }
+    
+    public var locationSelection: PhotosFilterOptionsEntity {
+        intersection(.allLocations)
+    }
 }

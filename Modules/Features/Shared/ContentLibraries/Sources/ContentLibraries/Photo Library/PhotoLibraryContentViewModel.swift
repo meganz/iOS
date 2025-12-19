@@ -39,6 +39,10 @@ extension PhotoLibraryContentViewModel {
         ![.album, .albumLink].contains(contentMode)
     }
     
+    public var isPhotoLibraryEmpty: Bool {
+        library.isEmpty
+    }
+    
     public var appliedMediaTypeFilterOption: PhotosFilterOptions {
         filterViewModel.appliedMediaTypeFilter.toPhotosFilterOptions()
     }
@@ -54,5 +58,9 @@ extension PhotoLibraryContentViewModel {
         if selection.allSelected {
             selection.setSelectedPhotos(library.allPhotos)
         }
+    }
+    
+    public func toggleEditMode() {
+        selection.toggleEditMode()
     }
 }

@@ -11,11 +11,14 @@ struct NewTimelineView: View {
             router: viewModel.photoLibraryContentViewRouter,
             onFilterUpdate: nil)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .task {
+        .task(id: viewModel.loadPhotosTaskId) {
             await viewModel.loadPhotos()
         }
         .task {
             await viewModel.monitorUpdates()
+        }
+        .onDisappear {
+            viewModel.onViewDisappear()
         }
         .if(viewModel.showEmptyStateView) {
             $0.overlay(emptyView)
@@ -24,9 +27,7 @@ struct NewTimelineView: View {
     
     @ViewBuilder
     private var emptyView: some View {
-        let emptyScreenType = viewModel.emptyScreenTypeToShow(
-            filterType: viewModel.photoLibraryContentViewModel.appliedMediaTypeFilterOption,
-            filterLocation: viewModel.photoLibraryContentViewModel.appliedLocationFilterOption)
+        let emptyScreenType = viewModel.emptyScreenTypeToShow()
         
         if emptyScreenType == .enableCameraUploads {
             EnableCameraUploadsEmptyView(action: viewModel.navigateToCameraUploadSettings)

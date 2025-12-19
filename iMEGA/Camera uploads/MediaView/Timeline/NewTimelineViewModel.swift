@@ -5,8 +5,8 @@ import MEGAPreference
 
 @MainActor
 final class NewTimelineViewModel: ObservableObject {
+    @Published private(set) var loadPhotosTaskId = UUID()
     @Published private(set) var showEmptyStateView = false
-    @Published private(set) var sortOrder: SortOrderEntity = .modificationDesc
     
     @PreferenceWrapper(key: PreferenceKeyEntity.isCameraUploadsEnabled, defaultValue: false)
     private(set) var isCameraUploadsEnabled: Bool
@@ -19,11 +19,14 @@ final class NewTimelineViewModel: ObservableObject {
     private let nodeUseCase: any NodeUseCaseProtocol
     
     private var isInitialLoadComplete = false
-    private var filterType: PhotosFilterOptionsEntity = .allMedia
-    private var filterLocation: PhotosFilterOptionsEntity = .allLocations
     private var pendingNodeUpdates: [NodeEntity] = []
     
+    private(set) var photoFilterOptions: PhotosFilterOptionsEntity = [.allMedia, .allLocations]
+    private(set) var sortOrder: SortOrderEntity = .modificationDesc
     private(set) var currentNodeUpdateTask: Task<Void, any Error>? {
+        didSet { oldValue?.cancel() }
+    }
+    private(set) var sortPhotoLibraryTask: Task<Void, any Error>? {
         didSet { oldValue?.cancel() }
     }
     
@@ -43,6 +46,11 @@ final class NewTimelineViewModel: ObservableObject {
         $isCameraUploadsEnabled.useCase = preferenceUseCase
     }
     
+    func onViewDisappear() {
+        currentNodeUpdateTask = nil
+        sortPhotoLibraryTask = nil
+    }
+    
     func loadPhotos() async {
         defer { isInitialLoadComplete = true }
         do {
@@ -60,14 +68,11 @@ final class NewTimelineViewModel: ObservableObject {
         }
     }
     
-    func emptyScreenTypeToShow(
-        filterType: PhotosFilterOptions,
-        filterLocation: PhotosFilterOptions
-    ) -> PhotosEmptyScreenViewType {
+    func emptyScreenTypeToShow() -> PhotosEmptyScreenViewType {
         guard !isCameraUploadsEnabled else {
             return .noMediaFound
         }
-        return switch [filterType, filterLocation] {
+        return switch photoFilterOptions {
         case [.images, .cloudDrive]:
                 .noImagesFound
         case [.videos, .cloudDrive]:
@@ -91,6 +96,35 @@ final class NewTimelineViewModel: ObservableObject {
         cameraUploadsSettingsViewRouter.start()
     }
     
+    func updateSortOrder(_ newSortOrder: SortOrderEntity) {
+        guard sortOrder != newSortOrder else { return }
+        sortOrder = newSortOrder
+        let photos = photoLibraryContentViewModel.library.allPhotos
+        
+        sortPhotoLibraryTask = Task { @MainActor in
+            let updatedPhotoLibrary = await buildPhotoLibrary(
+                nodes: photos, sortOrder: newSortOrder)
+            
+            try Task.checkCancellation()
+            
+            photoLibraryContentViewModel.library = updatedPhotoLibrary
+        }
+    }
+    
+    func updatePhotoFilter(option: PhotosFilterOptionsEntity) {
+        let newFilterOptions = if PhotosFilterOptionsEntity.mediaOptions.contains(option) {
+            option.union(photoFilterOptions.locationSelection)
+        } else if PhotosFilterOptionsEntity.locationOptions.contains(option) {
+            option.union(photoFilterOptions.mediaSelection)
+        } else {
+            option
+        }
+        
+        guard photoFilterOptions != newFilterOptions else { return }
+        photoFilterOptions = newFilterOptions
+        loadPhotosTaskId = UUID()
+    }
+    
     private func shouldShowEnableCameraUploadsBanner(filterLocation: PhotosFilterOptions) -> Bool {
         guard !isCameraUploadsEnabled else {
             return false
@@ -100,9 +134,8 @@ final class NewTimelineViewModel: ObservableObject {
     }
     
     private func timelinePhotoLibrary() async throws -> PhotoLibrary {
-        let filterOptions: PhotosFilterOptionsEntity = [filterType, filterLocation]
         let photos = try await photoLibraryUseCase.media(
-            for: filterOptions,
+            for: photoFilterOptions,
             excludeSensitive: nil)
             .lazy
             .filter(\.hasThumbnail)
@@ -111,7 +144,16 @@ final class NewTimelineViewModel: ObservableObject {
         
         try Task.checkCancellation()
         
-        return Array(photos).toPhotoLibrary(withSortType: sortOrder)
+        return await buildPhotoLibrary(nodes: Array(photos), sortOrder: sortOrder)
+    }
+    
+    private func buildPhotoLibrary(
+        nodes: [NodeEntity],
+        sortOrder: SortOrderEntity
+    ) async -> PhotoLibrary {
+        await Task.detached(priority: .userInitiated) {
+            nodes.toPhotoLibrary(withSortType: sortOrder)
+        }.value
     }
     
     private func handleNodeUpdates(with updatedNodes: [NodeEntity]) {
@@ -154,11 +196,12 @@ final class NewTimelineViewModel: ObservableObject {
         nodes: [NodeEntity],
         container: PhotoLibraryContainerEntity
     ) -> Bool {
-        return if filterLocation == .allLocations || filterLocation == .cloudDrive {
+        let locationSelection = photoFilterOptions.locationSelection
+        return if locationSelection.contains(.cloudDrive) {
             nodes.contains {
                 $0.fileExtensionGroup.isVisualMedia && $0.hasThumbnail
             }
-        } else if filterLocation == .cameraUploads {
+        } else if locationSelection.contains(.cameraUploads) {
             container.cameraUploadNode?.shouldProcessOnNodeEntitiesUpdate(
                 withChildNodes: photoLibraryContentViewModel.library.allPhotos,
                 updatedNodes: nodes) ?? false

@@ -43,4 +43,27 @@ final class PhotoLibraryContentViewModelTests: XCTestCase {
         XCTAssertTrue(sut.selection.photos.isEmpty)
         XCTAssertTrue(library.allPhotos.isNotEmpty)
     }
+    
+    @MainActor
+    func testIsPhotoLibraryEmpty_onPhotoLibraryContentChange_shouldReturnPhotoLibraryEmptyState() throws {
+        for photos in [
+            [NodeEntity(name: "a.png", handle: HandleEntity(1), modificationTime: try "2023-08-18T22:01:04Z".date)],
+            []
+        ] {
+            let sut = PhotoLibraryContentViewModel(library: photos.toPhotoLibrary(withSortType: .modificationDesc))
+            
+            XCTAssertEqual(sut.isPhotoLibraryEmpty, photos.isEmpty)
+        }
+    }
+    
+    @MainActor
+    func testToggleEditMode_onToggle_shouldToggleEditMode() {
+        let sut = PhotoLibraryContentViewModel(library: PhotoLibrary())
+        
+        XCTAssertFalse(sut.selection.editMode.isEditing)
+        sut.toggleEditMode()
+        XCTAssertTrue(sut.selection.editMode.isEditing)
+        sut.toggleEditMode()
+        XCTAssertFalse(sut.selection.editMode.isEditing)
+    }
 }

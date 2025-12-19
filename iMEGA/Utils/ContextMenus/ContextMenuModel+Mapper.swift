@@ -20,7 +20,9 @@ extension CMEntity {
                          dndRemainingTime: dndRemainingTime,
                          currentFilterType: currentFilterType?.toFilterType().localizedString,
                          currentVideoLocationFilter: currentVideoLocationFilter?.localizedTitle,
-                         currentVideoDurationFilter: currentVideoDurationFilter?.localizedTitle)
+                         currentVideoDurationFilter: currentVideoDurationFilter?.localizedTitle,
+                         currentMediaLocationFilter: currentPhotoFilter?.locationSelection.localizedTitle,
+                         currentMediaTypeFilter: currentPhotoFilter?.mediaSelection.localizedTitle)
     }
     
     func toContextMenuModels(_ array: [CMElement]?) -> [ContextMenuModel]? {
@@ -72,6 +74,8 @@ extension ContextMenuModel {
             return dataForVideoLocationFilter(filter: filter)
         case .videoDurationFilter(let filter):
             return dataForVideoDurationFilter(filter: filter)
+        case .photoFilter(let option):
+            return dataForMediaOption(option: option)
         default:
             return nil
         }
@@ -163,6 +167,10 @@ extension ContextMenuModel {
             return ContextMenuDataModel(identifier: "locationFilter", title: Strings.Localizable.Videos.Tab.All.Filter.Location.Title.location, subtitle: currentVideoLocationFilter)
         case .durationFilter:
             return ContextMenuDataModel(identifier: "durationFilter", title: Strings.Localizable.Videos.Tab.All.Filter.Duration.Title.duration, subtitle: currentVideoDurationFilter)
+        case .mediaLocationFilter:
+            return ContextMenuDataModel(identifier: "mediaLocationFilter", title: Strings.Localizable.CameraUploads.Timeline.Filter.showItemsFrom, subtitle: currentMediaLocationFilter)
+        case .mediaTypeFilter:
+            return ContextMenuDataModel(identifier: "mediaTypeFilter", title: Strings.Localizable.type, subtitle: currentMediaTypeFilter)
         }
     }
 
@@ -299,5 +307,9 @@ extension ContextMenuModel {
 
     private func dataForVideoDurationFilter(filter: VideoDurationFilterEntity) -> ContextMenuDataModel {
         ContextMenuDataModel(identifier: filter.rawValue, title: filter.localizedTitle)
+    }
+    
+    private func dataForMediaOption(option: PhotosFilterOptionsEntity) -> ContextMenuDataModel {
+        ContextMenuDataModel(identifier: option.identifier, title: option.localizedTitle)
     }
 }

@@ -36,6 +36,7 @@ protocol MediaTabContextMenuActionHandler: AnyObject {
     func handleQuickAction(_ action: QuickActionEntity)
     func handleVideoLocationFilter(_ filter: VideoLocationFilterEntity)
     func handleVideoDurationFilter(_ filter: VideoDurationFilterEntity)
+    func handlePhotoFilter(option: PhotosFilterOptionsEntity)
 }
 
 // MARK: - Toolbar Actions Provider
@@ -91,6 +92,10 @@ extension MediaTabContextMenuActionHandler {
     }
 
     func handleVideoDurationFilter(_ filter: VideoDurationFilterEntity) {
+        // Default: do nothing
+    }
+    
+    func handlePhotoFilter(option: PhotosFilterOptionsEntity) {
         // Default: do nothing
     }
 }

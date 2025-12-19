@@ -48,6 +48,10 @@ public final class PhotoSelection: ObservableObject {
         self.photos = Dictionary(uniqueKeysWithValues: photos.map { ($0.handle, $0) })
     }
     
+    public func toggleEditMode() {
+        editMode = editMode.isEditing ? .inactive : .active
+    }
+    
     func isPhotoSelected(_ photo: NodeEntity) -> Bool {
         photos[photo.handle] != nil
     }
