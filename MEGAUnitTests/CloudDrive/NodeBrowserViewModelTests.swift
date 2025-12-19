@@ -133,7 +133,7 @@ class NodeBrowserViewModelTests: XCTestCase {
                         title: "",
                         sortOptions: [.init(sortOrder: .init(key: .name), title: "", iconsByDirection: [:])]
                     ),
-                    showChips: false,
+                    headerType: .dynamic,
                     initialViewMode: .list,
                     shouldShowMediaDiscoveryModeHandler: { false
  }

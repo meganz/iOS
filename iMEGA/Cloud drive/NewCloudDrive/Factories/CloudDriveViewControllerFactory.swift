@@ -634,11 +634,19 @@ struct CloudDriveViewControllerFactory {
             || initialViewMode == .mediaDiscovery
         }
 
+        let headerType: SearchResultsContainerViewModel.HeaderType = if config.displayMode == .recents {
+            .none
+        } else if isCloudDriveRevampEnabled {
+            .dynamic
+        } else {
+            .chips
+        }
+
         let searchResultsContainerViewModel = makeSearchResultsContainerViewModel(
             bridge: searchBridge,
             searchConfig: searchConfig,
             searchResultsViewModel: searchResultsVM,
-            showChips: !isCloudDriveRevampEnabled,
+            headerType: headerType,
             initialViewMode: initialViewMode.toSearchResultsViewMode(),
             shouldShowMediaDiscoveryModeHandler: shouldShowMediaDiscoveryModeHandler
         )
@@ -1051,7 +1059,7 @@ struct CloudDriveViewControllerFactory {
         bridge: SearchBridge,
         searchConfig: SearchConfig,
         searchResultsViewModel: SearchResultsViewModel,
-        showChips: Bool,
+        headerType: SearchResultsContainerViewModel.HeaderType,
         initialViewMode: SearchResultsViewMode,
         shouldShowMediaDiscoveryModeHandler: @escaping () -> Bool
     ) -> SearchResultsContainerViewModel {
@@ -1063,7 +1071,7 @@ struct CloudDriveViewControllerFactory {
                 title: Strings.Localizable.sortTitle,
                 sortOptions: SearchResultsSortOptionFactory.makeAll()
             ),
-            showChips: showChips,
+            headerType: headerType,
             initialViewMode: initialViewMode,
             shouldShowMediaDiscoveryModeHandler: shouldShowMediaDiscoveryModeHandler
         )

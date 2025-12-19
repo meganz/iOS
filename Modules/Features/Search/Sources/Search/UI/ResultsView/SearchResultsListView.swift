@@ -30,13 +30,20 @@ struct SearchResultsListView<Header: View>: View {
 
     @ViewBuilder
     private var selectableListContent: some View {
-        List(selection: $viewModel.selectedRowIds) {
+        let list = List(selection: $viewModel.selectedRowIds) {
             listSectionContent
         }
         .onChange(of: editMode?.wrappedValue) { newMode in
             if newMode == .active {
                 viewModel.handleEditingChanged(true)
             }
+        }
+
+        if #available(iOS 17.0, *) {
+            list
+                .contentMargins(.top, 0, for: .scrollContent)
+        } else {
+            list
         }
     }
 
@@ -56,8 +63,15 @@ struct SearchResultsListView<Header: View>: View {
 
     @ViewBuilder
     private var nonselectableListContent: some View {
-        List {
+        let list = List {
             listSectionContent
+        }
+
+        if #available(iOS 17.0, *) {
+            list
+                .contentMargins(.top, 0, for: .scrollContent)
+        } else {
+            list
         }
     }
 

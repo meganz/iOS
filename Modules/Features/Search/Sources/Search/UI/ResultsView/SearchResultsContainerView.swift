@@ -18,7 +18,7 @@ public struct SearchResultsContainerView: View {
                 .transition(.opacity)
 
             SearchResultsView(viewModel: viewModel.searchResultsViewModel) {
-                if viewModel.shouldDisplayHeaderView {
+                if viewModel.displayedHeaderSection == .sortingAndViewMode {
                     SearchResultsHeaderView {
                         SearchResultsHeaderSortView(
                             viewModel: viewModel.sortHeaderViewModel,
@@ -51,7 +51,7 @@ public struct SearchResultsContainerView: View {
 
     @ViewBuilder
     private var header: some View {
-        if viewModel.showChips {
+        if viewModel.displayedHeaderSection == .chips {
             chips
         } else {
             EmptyView()

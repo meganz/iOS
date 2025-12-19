@@ -13,8 +13,22 @@ struct SearchResultsContainerViewModelTests {
         let sut = makeSUT()
         #expect(sut.chipsItems.isEmpty)
         #expect(sut.presentedChipsPickerViewModel == nil)
-        #expect(sut.showChips == false)
-        #expect(sut.shouldDisplayHeaderView == false)
+        #expect(sut.displayedHeaderSection == .none)
+    }
+
+    @Test func testDisplayedHeaderSection_whenHeaderTypeIsNone_shouldMatchResults() {
+        let sut = makeSUT(headerType: .none)
+        #expect(sut.displayedHeaderSection == .none)
+    }
+
+    @Test func testDisplayedHeaderSection_whenHeaderTypeIsChips_shouldMatchResults() {
+        let sut = makeSUT(headerType: .chips)
+        #expect(sut.displayedHeaderSection == .chips)
+    }
+
+    @Test func testDisplayedHeaderSection_whenHeaderTypeIsDynamic_shouldMatchResults() {
+        let sut = makeSUT(headerType: .dynamic)
+        #expect(sut.displayedHeaderSection == .sortingAndViewMode)
     }
 
     @Test func testColorAssets_whenInvoked_shouldMatchTheTestConfigAssets() {
@@ -233,23 +247,8 @@ struct SearchResultsContainerViewModelTests {
     }
 
     @Test func testShowChipsInitialValue_whenSet_ShouldMatchResult() {
-        let sut = makeSUT(showChips: true)
-        #expect(sut.showChips)
-        #expect(sut.shouldDisplayHeaderView == false)
-    }
-
-    @Test func testSetSearchChipsVisible_whenSetWithoutAnimation_shouldShowChips() {
-        let sut = makeSUT(showChips: false)
-        sut.setSearchChipsVisible(true, animated: false)
-        #expect(sut.showChips)
-        #expect(sut.shouldDisplayHeaderView == false)
-    }
-
-    @Test func testSetSearchChipsVisible_whenSetWithAnimation_shouldShowChips() {
-        let sut = makeSUT(showChips: false)
-        sut.setSearchChipsVisible(true, animated: true)
-        #expect(sut.showChips)
-        #expect(sut.shouldDisplayHeaderView == false)
+        let sut = makeSUT(headerType: .chips)
+        #expect(sut.displayedHeaderSection == .chips)
     }
 
     @Test func testDisplaySortOptionsViewModel_whenDisplayed_shouldOmitSelectedSortOption() throws {
@@ -286,7 +285,7 @@ struct SearchResultsContainerViewModelTests {
     }
 
     @Test func testUpdateQuery_whenChipsAreDisabled_shouldClearChips() async {
-        let sut = makeSUT(showChips: false)
+        let sut = makeSUT(headerType: .dynamic)
         let updatedQuery = await sut.updateQuery(
             .userSupplied(
                 .init(
@@ -302,7 +301,7 @@ struct SearchResultsContainerViewModelTests {
     }
 
     @Test func testUpdateQuery_whenChipsAreEnabled_shouldUpdateSortingOrder() async {
-        let sut = makeSUT(showChips: true)
+        let sut = makeSUT(headerType: .chips)
         let updatedQuery = await sut.updateQuery(
             .userSupplied(
                 .init(
@@ -385,15 +384,16 @@ struct SearchResultsContainerViewModelTests {
     }
 
     @Test(arguments: [
-        (true, SearchResultsViewMode.list, PageLayout.list),
-        (false, SearchResultsViewMode.list, PageLayout.list),
-        (true, SearchResultsViewMode.grid, PageLayout.list),
-        (false, SearchResultsViewMode.grid, PageLayout.thumbnail)
+        (true, SearchResultsViewMode.list, PageLayout.list, SearchResultsContainerViewModel.DisplayedHeaderSection.chips),
+        (false, SearchResultsViewMode.list, PageLayout.list, SearchResultsContainerViewModel.DisplayedHeaderSection.sortingAndViewMode),
+        (true, SearchResultsViewMode.grid, PageLayout.list, SearchResultsContainerViewModel.DisplayedHeaderSection.chips),
+        (false, SearchResultsViewMode.grid, PageLayout.thumbnail, SearchResultsContainerViewModel.DisplayedHeaderSection.sortingAndViewMode)
     ])
     func testSearchActiveDidChange(
         isActive: Bool,
         initialViewMode: SearchResultsViewMode,
-        resultLayout: PageLayout
+        resultLayout: PageLayout,
+        displayedHeaderSection: SearchResultsContainerViewModel.DisplayedHeaderSection
     ) async {
         let results = SearchResultsEntity(
             results: [
@@ -411,11 +411,14 @@ struct SearchResultsContainerViewModelTests {
             results
         }
 
-        let sut = makeSUT(resultsProvider: resultsProvider, initialViewMode: initialViewMode)
+        let sut = makeSUT(
+            resultsProvider: resultsProvider,
+            headerType: .dynamic,
+            initialViewMode: initialViewMode
+        )
         await sut.task()
         sut.searchActiveDidChange(isActive)
-        #expect(sut.showChips == isActive)
-        #expect(sut.shouldDisplayHeaderView == !isActive)
+        #expect(sut.displayedHeaderSection == displayedHeaderSection)
         #expect(sut.searchResultsViewModel.layout == resultLayout)
     }
 
@@ -501,7 +504,7 @@ struct SearchResultsContainerViewModelTests {
         resultsProvider: some SearchResultsProviding = MockSearchResultsProviding(
             searchResultUpdateSignalSequence: EmptyAsyncSequence().eraseToAnyAsyncSequence()
         ),
-        showChips: Bool = false,
+        headerType: SearchResultsContainerViewModel.HeaderType = .none,
         initialViewMode: SearchResultsViewMode = .list,
         shouldShowMediaDiscoveryModeHandler: @escaping () -> Bool =  { false }
     ) -> SUT {
@@ -550,7 +553,7 @@ struct SearchResultsContainerViewModelTests {
                 contentUnavailableViewModelProvider: MockContentUnavailableViewModelProvider()
             ),
             sortOptionsViewModel: sortOptionsViewModel,
-            showChips: showChips,
+            headerType: headerType,
             initialViewMode: initialViewMode,
             shouldShowMediaDiscoveryModeHandler: shouldShowMediaDiscoveryModeHandler
         )
@@ -573,7 +576,7 @@ struct SearchResultsContainerViewModelTests {
             return results
         }
 
-        return (makeSUT(resultsProvider: resultsProvider), resultsProvider)
+        return (makeSUT(resultsProvider: resultsProvider, headerType: .dynamic), resultsProvider)
     }
 
     private func assertViewModesChange(

@@ -273,7 +273,7 @@ final class HomeScreenFactory: NSObject {
                 title: Strings.Localizable.sortTitle,
                 sortOptions: SearchResultsSortOptionFactory.makeAll()
             ),
-            showChips: true,
+            headerType: .chips,
             initialViewMode: viewMode.toSearchResultsViewMode(),
             shouldShowMediaDiscoveryModeHandler: { false }
         )

@@ -5,6 +5,18 @@ import SwiftUI
 
 @MainActor
 public class SearchResultsContainerViewModel: ObservableObject {
+    public enum HeaderType {
+        case none
+        case chips
+        case dynamic // Chips when search is active. Sorting and view mode otherwise
+    }
+
+    public enum DisplayedHeaderSection: Sendable {
+        case none
+        case chips
+        case sortingAndViewMode
+    }
+
     @Published var chipsItems: [ChipViewModel] = []
     @Published var presentedChipsPickerViewModel: ChipViewModel?
 
@@ -26,29 +38,26 @@ public class SearchResultsContainerViewModel: ObservableObject {
         sortHeaderCoordinator.headerViewModel
     }
 
-    var shouldDisplayHeaderView: Bool {
-        showSorting && !showChips
-    }
-
     let viewModeHeaderViewModel: SearchResultsHeaderViewModeViewModel
-    @Published public private(set) var showChips: Bool = false
+    @Published public private(set) var displayedHeaderSection: DisplayedHeaderSection = .none
     private var showSorting: Bool = false
     private var subscriptions: Set<AnyCancellable> = []
     private let shouldShowMediaDiscoveryModeHandler: () -> Bool
+    private let headerType: HeaderType
 
     public init(
         bridge: SearchBridge,
         config: SearchConfig,
         searchResultsViewModel: SearchResultsViewModel,
         sortOptionsViewModel: SearchResultsSortOptionsViewModel,
-        showChips: Bool,
+        headerType: HeaderType,
         initialViewMode: SearchResultsViewMode,
         shouldShowMediaDiscoveryModeHandler: @escaping () -> Bool
     ) {
         self.bridge = bridge
         self.config = config
         self.searchResultsViewModel = searchResultsViewModel
-        self.showChips = showChips
+        self.headerType = headerType
         self.shouldShowMediaDiscoveryModeHandler = shouldShowMediaDiscoveryModeHandler
         self.sortHeaderCoordinator = .init(
             sortOptionsViewModel: sortOptionsViewModel,
@@ -63,12 +72,18 @@ public class SearchResultsContainerViewModel: ObservableObject {
             }
         )
 
+        displayedHeaderSection = switch headerType {
+        case .none: .none
+        case .chips: .chips
+        case .dynamic: .sortingAndViewMode
+        }
+
         let availableViewModes: [SearchResultsViewMode] = Self.modes(using: shouldShowMediaDiscoveryModeHandler)
         assert(
             availableViewModes.contains(initialViewMode),
             "Initial view mode \(initialViewMode) is not in available modes \(availableViewModes)"
         )
-        self.viewModeHeaderViewModel = .init(
+        viewModeHeaderViewModel = .init(
             selectedViewMode: Self.validated(initialViewMode, in: availableViewModes),
             availableViewModes: availableViewModes
         )
@@ -252,7 +267,7 @@ extension SearchResultsContainerViewModel: SearchResultsInteractor {
     }
 
     func updateQuery(_ currentQuery: SearchQuery) async -> SearchQuery {
-        if !showChips {
+        if displayedHeaderSection == .sortingAndViewMode {
             currentQuery.clearingChips()
         } else {
             await currentQuery.withUpdatedSortOrder(bridge.sortingOrder())
@@ -279,11 +294,14 @@ public extension SearchResultsContainerViewModel {
         searchResultsViewModel.selectedResultIds.count
     }
 
-    func setSearchChipsVisible(_ visible: Bool, animated: Bool = true) {
+    private func setSearchChipsVisible(_ visible: Bool, animated: Bool = true) {
+        guard headerType == .dynamic else { return }
         if animated {
-            withAnimation { showChips = visible }
+            withAnimation {
+                displayedHeaderSection = visible ? .chips : .sortingAndViewMode
+            }
         } else {
-            showChips = visible
+            displayedHeaderSection = visible ? .chips : .sortingAndViewMode
         }
     }
 
