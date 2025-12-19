@@ -908,6 +908,45 @@ struct AlbumListViewModelTestsSuite {
             #expect(sut.showCreateAlbumAlert == false)
         }
     }
+
+    @MainActor
+    struct ToolbarButtonTapped {
+        
+        @Test
+        func shareLinks() {
+            let tracker = MockTracker()
+            let sut = makeSUT(tracker: tracker)
+            #expect(sut.showShareAlbumLinks == false)
+            
+            sut.shareLinksTapped()
+            
+            #expect(sut.showShareAlbumLinks)
+            
+            Test.assertTrackAnalyticsEventCalled(
+                trackedEventIdentifiers: tracker.trackedEventIdentifiers,
+                with: [DIContainer.albumListShareLinkMenuItemEvent])
+        }
+        
+        @Test
+        func removeLinks() {
+            let sut = makeSUT()
+            #expect(sut.albumAlertType == nil)
+            
+            sut.removeLinksTapped()
+            
+            #expect(sut.albumAlertType == .removeAlbumShareLink)
+        }
+        
+        @Test
+        func deleteAlbums() {
+            let sut = makeSUT()
+            #expect(sut.albumAlertType == nil)
+            
+            sut.deleteAlbumsTapped()
+            
+            #expect(sut.albumAlertType == .deleteAlbum)
+        }
+    }
     
     @MainActor
     private static func makeSUT(

@@ -7,6 +7,11 @@ public final class AlbumSelection: ObservableObject {
         case single
         case multiple
     }
+    public enum AlbumSelectionTransition: Equatable {
+        case empty
+        case notEmpty
+        case allExported
+    }
     
     @Published public var editMode: EditMode = .inactive {
         willSet {
@@ -104,6 +109,28 @@ public extension AlbumSelection {
     var selectionCount: AnyPublisher<Int, Never> {
         $albums
             .map(\.values.count)
+            .removeDuplicates()
+            .eraseToAnyPublisher()
+    }
+    
+    var selectionTransition: AnyPublisher<AlbumSelectionTransition, Never> {
+        $albums
+            .map { albums -> AlbumSelectionTransition in
+                let values = albums.values
+                
+                if values.isEmpty {
+                    return .empty
+                }
+                
+                let allExported = values.allSatisfy {
+                    if case .exported(let isExported) = $0.sharedLinkStatus {
+                        return isExported
+                    }
+                    return false
+                }
+                
+                return allExported ? .allExported : .notEmpty
+            }
             .removeDuplicates()
             .eraseToAnyPublisher()
     }

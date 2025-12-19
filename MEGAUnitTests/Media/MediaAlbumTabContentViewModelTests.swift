@@ -106,6 +106,44 @@ struct MediaAlbumTabContentViewModelTests {
     }
     
     @MainActor
+    struct MediaTabToolbarActionsProvider {
+        @Test
+        func toolbarUpdatePublisher() async throws {
+            let sut = makeSUT()
+            
+            try await confirmation { confirmation in
+                let subscription = try #require(sut.toolbarUpdatePublisher)
+                    .sink {
+                        confirmation()
+                    }
+                
+                sut.albumListViewModel.selection.setSelectedAlbums([.init(id: 1, type: .user)])
+                
+                try await Task.sleep(nanoseconds: 100_000_000)
+                subscription.cancel()
+            }
+        }
+        
+        @Test(arguments: [
+            ([AlbumEntity](), MediaBottomToolbarConfig(actions: [.manageLink, .delete], selectedItemsCount: 0, hasExportedItems: false, isAllExported: false)),
+            ([AlbumEntity(id: 1, type: .user, sharedLinkStatus: .exported(true))]
+             , MediaBottomToolbarConfig(actions: [.manageLink, .removeLink, .delete], selectedItemsCount: 1, hasExportedItems: true, isAllExported: true))
+            
+        ])
+        func toolbarConfig(
+            albums: [AlbumEntity],
+            expected: MediaBottomToolbarConfig
+        ) {
+            let sut = makeSUT()
+            sut.albumListViewModel.selection.setSelectedAlbums(albums)
+            
+            let config = sut.toolbarConfig()
+            
+            #expect(config == expected)
+        }
+    }
+    
+    @MainActor
     private static func makeSUT(
         albumListViewModel: AlbumListViewModel = makeAlbumListViewModel(),
         albumListViewRouter: some AlbumListViewRouting = AlbumListViewRouter()

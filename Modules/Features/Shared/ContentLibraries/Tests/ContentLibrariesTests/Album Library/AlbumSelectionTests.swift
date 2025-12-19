@@ -183,6 +183,26 @@ final class AlbumSelectionTests: XCTestCase {
         subscription.cancel()
     }
     
+    func testSelectionTransition_onSelectionChange_shouldSetCorrectState() async throws {
+        let sut = AlbumSelection(mode: .multiple)
+        
+        var results = [AlbumSelection.AlbumSelectionTransition.empty, .allExported, .notEmpty]
+        let exp = expectation(description: "Should update with correct state")
+        exp.expectedFulfillmentCount = results.count
+        let subscription = sut.selectionTransition
+            .sink {
+                XCTAssertEqual($0, results.removeFirst())
+                exp.fulfill()
+            }
+        
+        sut.setSelectedAlbums([.init(id: 1, type: .user, sharedLinkStatus: .exported(true))])
+        try await Task.sleep(nanoseconds: 150_000_000)
+        sut.setSelectedAlbums([.init(id: 2, type: .user)])
+        
+        await fulfillment(of: [exp], timeout: 1.0)
+        subscription.cancel()
+    }
+    
     private func userAlbums() -> [AlbumEntity] {
         [
             AlbumEntity(id: 1, name: "Album 1", coverNode: NodeEntity(handle: 1), count: 1, type: .user, modificationTime: nil),

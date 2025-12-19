@@ -1,5 +1,6 @@
 import Combine
 import ContentLibraries
+import MEGAAppPresentation
 import MEGAAssets
 import MEGADomain
 import MEGAL10n
@@ -12,12 +13,25 @@ final class MediaAlbumTabContentViewModel: ObservableObject, MediaTabContentView
     let albumListViewModel: AlbumListViewModel
     let albumListViewRouter: any AlbumListViewRouting
     
+    private var subscriptions = Set<AnyCancellable>()
+    var toolbarCoordinator: (any MediaTabToolbarCoordinatorProtocol)?
+    
     init(
         albumListViewModel: AlbumListViewModel,
         albumListViewRouter: some AlbumListViewRouting
     ) {
         self.albumListViewModel = albumListViewModel
         self.albumListViewRouter = albumListViewRouter
+        subscribeToAlbumSelectionEditMode()
+    }
+    
+    private func subscribeToAlbumSelectionEditMode() {
+        albumListViewModel.selection.$editMode
+            .dropFirst()
+            .sink { [weak self] _ in
+                self?.editModeToggleRequested.send()
+            }
+            .store(in: &subscriptions)
     }
 }
 
@@ -59,7 +73,6 @@ extension MediaAlbumTabContentViewModel: MediaTabNavigationBarItemProvider {
     
     private func toggleEditMode() {
         albumListViewModel.selection.toggleEditMode()
-        editModeToggleRequested.send()
     }
 }
 
@@ -73,5 +86,51 @@ extension MediaAlbumTabContentViewModel: MediaTabNavigationTitleProvider {
         return sharedResourceProvider.selectionTitlePublisher(
             selectionCountPublisher: albumListViewModel.selection.selectionCount,
             inactiveEditModeTitle: inactiveEditModeTitle)
+    }
+}
+
+extension MediaAlbumTabContentViewModel: MediaTabToolbarActionsProvider {
+    var toolbarUpdatePublisher: AnyPublisher<Void, Never>? {
+        albumListViewModel.selection.selectionTransition
+            .dropFirst()
+            .map { _ in () }
+            .eraseToAnyPublisher()
+    }
+    
+    func toolbarConfig() -> MediaBottomToolbarConfig? {
+        let selectedAlbums = albumListViewModel.selection.albums.values
+        let selectedCount = selectedAlbums.count
+        
+        let exportedAlbums = selectedAlbums.filter {
+            if case .exported(let isExported) = $0.sharedLinkStatus {
+                return isExported
+            }
+            return false
+        }
+        let hasExportedItems = !exportedAlbums.isEmpty
+        let isAllExported = selectedCount > 0 && exportedAlbums.count == selectedCount
+        
+        var actions: [MediaBottomToolbarAction] = [.manageLink, .delete]
+        if isAllExported {
+            actions.insert(.removeLink, at: 1)
+        }
+        
+        return MediaBottomToolbarConfig(
+            actions: actions,
+            selectedItemsCount: selectedCount,
+            hasExportedItems: hasExportedItems,
+            isAllExported: isAllExported
+        )
+    }
+}
+
+extension MediaAlbumTabContentViewModel: MediaTabToolbarActionHandler {
+    func handleToolbarAction(_ action: MediaBottomToolbarAction) {
+        switch action {
+        case .manageLink: albumListViewModel.shareLinksTapped()
+        case .removeLink: albumListViewModel.removeLinksTapped()
+        case .delete: albumListViewModel.deleteAlbumsTapped()
+        default: break
+        }
     }
 }

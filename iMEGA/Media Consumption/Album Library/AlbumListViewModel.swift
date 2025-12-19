@@ -177,7 +177,24 @@ final class AlbumListViewModel: NSObject, ObservableObject {
     }
     
     func setEditModeToInactive() {
+        selection.editMode = .inactive
         photoAlbumContainerViewModel?.editMode = .inactive
+    }
+    
+    func shareLinksTapped() {
+        tracker.trackAnalyticsEvent(with: DIContainer.albumListShareLinkMenuItemEvent)
+        guard !overDiskQuotaChecker.showOverDiskQuotaIfNeeded() else { return }
+        showShareAlbumLinks = true
+    }
+    
+    func removeLinksTapped() {
+        guard !overDiskQuotaChecker.showOverDiskQuotaIfNeeded() else { return }
+        albumAlertType = .removeAlbumShareLink
+    }
+    
+    func deleteAlbumsTapped() {
+        guard !overDiskQuotaChecker.showOverDiskQuotaIfNeeded() else { return }
+        albumAlertType = .deleteAlbum
     }
     
     // MARK: - Private
@@ -222,7 +239,7 @@ final class AlbumListViewModel: NSObject, ObservableObject {
     
     private func onAlbumDeleteSuccess(_ albumIds: [HandleEntity]) {
         guard albumIds.count > 0 else {
-            photoAlbumContainerViewModel?.editMode = .inactive
+            setEditModeToInactive()
             return
         }
         
@@ -234,20 +251,20 @@ final class AlbumListViewModel: NSObject, ObservableObject {
         } else {
             hudMessage = Strings.Localizable.CameraUploads.Albums.deleteAlbumSuccess(albumIds.count)
         }
-        photoAlbumContainerViewModel?.editMode = .inactive
+        setEditModeToInactive()
         albumHudMessage = AlbumHudMessage(message: hudMessage, icon: MEGAAssets.UIImage.hudMinus)
     }
     
     private func onRemoveAlbumShareLinkSuccess(_ albumIds: [HandleEntity]) {
         guard albumIds.count > 0 else {
-            photoAlbumContainerViewModel?.editMode = .inactive
+            setEditModeToInactive()
             return
         }
         
         let hudMessage = albumIds.count == 1 ? Strings.Localizable.CameraUploads.Albums.removeShareLinkSuccessMessage(1) : Strings.Localizable.CameraUploads.Albums.removeShareLinkSuccessMessage(albums.count)
         albumHudMessage = AlbumHudMessage(message: hudMessage, icon: MEGAAssets.UIImage.hudSuccess)
         
-        photoAlbumContainerViewModel?.editMode = .inactive
+        setEditModeToInactive()
     }
     
     private func deleteAlbumAlertView() -> Alert {
