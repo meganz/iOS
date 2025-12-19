@@ -20,8 +20,15 @@ extension PhotosViewController {
         selectAllBarButtonItem?.image = MEGAAssets.UIImage.image(named: "selectAllItems")
     }
     
+    @objc func isLiquidGlassEnabled() -> Bool {
+        if #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() {
+            true
+        } else {
+            false
+        }
+    }
+    
     func handleDownloadAction(for nodes: [MEGANode]) {
-
         let transfers = nodes.map {
             CancellableTransfer(handle: $0.handle, name: $0.name, appData: nil, priority: false, isFile: $0.isFile(), type: .download)
         }
@@ -150,7 +157,7 @@ extension PhotosViewController: NodeActionViewControllerDelegate {
     func nodeAction(_ nodeAction: NodeActionViewController, didSelect action: MegaNodeActionType, for node: MEGANode, from sender: Any) {
         handleNodesAction(action: action, nodes: [node], sender: sender)
     }
-
+    
     private func handleNodesAction(action: MegaNodeActionType, nodes: [MEGANode], sender: Any) {
         switch action {
         case .download:
@@ -192,12 +199,12 @@ extension PhotosViewController: BrowserViewControllerDelegate, ContactsViewContr
 
 extension PhotosViewController {
     @objc func configureStackViewHeight(view: UIView, perviousConstraint: NSLayoutConstraint?) -> NSLayoutConstraint? {
-
+        
         var newConstraint: NSLayoutConstraint?
         let verticalPadding = 24.0
-
+        
         let maxHeight = view.subviews.flatMap({ $0.subviews }).map({ $0.intrinsicContentSize.height }).max() ?? 0
-
+        
         if perviousConstraint == nil {
             newConstraint = view.heightAnchor.constraint(equalToConstant: maxHeight > 0 ? maxHeight + verticalPadding : 0)
         } else {

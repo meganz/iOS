@@ -1,3 +1,4 @@
+import MEGAAppPresentation
 import MEGADesignToken
 import MEGADomain
 import UIKit
@@ -20,7 +21,10 @@ extension PhotoAlbumContainerViewController: PhotoAlbumContainerToolbarProvider 
         toolbar.alpha = 0.0
         tabBarController.view.addSubview(toolbar)
         
-        toolbar.backgroundColor = TokenColors.Background.surface1
+        if !isLiquidGlassEnabled() {
+            toolbar.backgroundColor = TokenColors.Background.surface1
+        }
+        
         toolbar.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
@@ -32,13 +36,16 @@ extension PhotoAlbumContainerViewController: PhotoAlbumContainerToolbarProvider 
         
         UIView.animate(withDuration: 0.3) {
             self.toolbar.alpha = 1.0
+            self.updateMainTabbarAlpha(with: 0.0)
         }
     }
     
     func hideToolbar() {
         guard toolbar.superview != nil else { return }
+        
         UIView.animate(withDuration: 0.3) {
             self.toolbar.alpha = 0.0
+            self.updateMainTabbarAlpha(with: 1.0)
         } completion: { _ in
             self.toolbar.removeFromSuperview()
         }
@@ -66,6 +73,22 @@ extension PhotoAlbumContainerViewController: PhotoAlbumContainerToolbarProvider 
             AppearanceManager.forceToolbarUpdate(toolbar)
         } else {
             toolbar.items = [shareLinkBarButton, flexibleItem, deleteBarButton]
+        }
+    }
+    
+    // MARK: - Private
+    
+    private func updateMainTabbarAlpha(with value: CGFloat) {
+        if isLiquidGlassEnabled() {
+            tabBarController?.tabBar.alpha = value
+        }
+    }
+    
+    private func isLiquidGlassEnabled() -> Bool {
+        if #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() {
+            true
+        } else {
+            false
         }
     }
 }

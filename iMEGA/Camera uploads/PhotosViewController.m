@@ -25,8 +25,6 @@
 
 @property (weak, nonatomic) IBOutlet UIView *photoContainerView;
 
-@property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
-
 @property (nonatomic) NSLayoutConstraint *stateViewHeightConstraint;
 @end
 
@@ -35,6 +33,7 @@
 #pragma mark - Lifecycle
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     [self setupBindings];
     [self configureContextMenuManager];
     [self configPhotoContainerView];
@@ -69,6 +68,7 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
+    
     [[TransfersWidgetViewController sharedTransferViewController].progressView showWidgetIfNeeded];
 }
 
@@ -140,29 +140,25 @@
         }
         
         if (![self.tabBarController.view.subviews containsObject:self.toolbar]) {
-            [self objcWrapper_updateNavigationTitleWithSelectedPhotoCount:0];
-            [self.toolbar setAlpha:0.0];
-            
-            [self updateBarButtonItemsIn:self.toolbar];
-            [self.tabBarController.view addSubview:self.toolbar];
-            self.toolbar.translatesAutoresizingMaskIntoConstraints = NO;
-            [self.toolbar setBackgroundColor:[UIColor surface1Background]];
-            
-            NSLayoutAnchor *bottomAnchor = self.tabBarController.tabBar.safeAreaLayoutGuide.bottomAnchor;
-            
-            [NSLayoutConstraint activateConstraints:@[[self.toolbar.topAnchor constraintEqualToAnchor:self.tabBarController.tabBar.topAnchor constant:0],
-                                                      [self.toolbar.leadingAnchor constraintEqualToAnchor:self.tabBarController.tabBar.leadingAnchor constant:0],
-                                                      [self.toolbar.trailingAnchor constraintEqualToAnchor:self.tabBarController.tabBar.trailingAnchor constant:0],
-                                                      [self.toolbar.bottomAnchor constraintEqualToAnchor:bottomAnchor constant:0]]];
+            [self setUpToolbar];
             
             [UIView animateWithDuration:0.33f animations:^ {
                 [self.toolbar setAlpha:1.0];
+                
+                if ([self isLiquidGlassEnabled]) {
+                    self.tabBarController.tabBar.alpha = 0.0;
+                }
             }];
         }
     } else {
         [self.viewModel resetNavigationTitleView];
+        
         [UIView animateWithDuration:0.33f animations:^ {
             [self.toolbar setAlpha:0.0];
+            
+            if ([self isLiquidGlassEnabled]) {
+                self.tabBarController.tabBar.alpha = 1.0;
+            }
         } completion:^(BOOL finished) {
             if (finished) {
                 [self.toolbar removeFromSuperview];
