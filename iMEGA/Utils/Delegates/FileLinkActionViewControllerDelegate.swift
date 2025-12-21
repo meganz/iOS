@@ -2,6 +2,7 @@ import Foundation
 import MEGAAppSDKRepo
 import MEGADomain
 import MEGAL10n
+import MEGARepo
 
 final class FileLinkActionViewControllerDelegate: NSObject, NodeActionViewControllerDelegate {
     
@@ -28,13 +29,28 @@ final class FileLinkActionViewControllerDelegate: NSObject, NodeActionViewContro
     }
     
     func sendToChat() {
-        let storyboard = UIStoryboard(name: "Chat", bundle: Bundle(for: SendToViewController.self))
-        if let navController = storyboard.instantiateViewController(withIdentifier: "SendToNavigationControllerID") as? MEGANavigationController,
-           let sendToViewController = navController.viewControllers.first as? SendToViewController {
-            sendToViewController.sendMode = .fileAndFolderLink
-            sendToViewController.sendToViewControllerDelegate = self
-            
-            viewController?.present(navController, animated: true)
+        let credentialUseCase = CredentialUseCase(repo: CredentialRepository.newRepo)
+        if credentialUseCase.hasSession() {
+            let storyboard = UIStoryboard(name: "Chat", bundle: Bundle(for: SendToViewController.self))
+            if let navController = storyboard.instantiateViewController(withIdentifier: "SendToNavigationControllerID") as? MEGANavigationController,
+               let sendToViewController = navController.viewControllers.first as? SendToViewController {
+                sendToViewController.sendMode = .fileAndFolderLink
+                sendToViewController.sendToViewControllerDelegate = self
+                
+                viewController?.present(navController, animated: true)
+            }
+        } else {
+            MEGALinkManager.linkSavedString = link
+            MEGALinkManager.selectedOption = .sendNodeLinkToChat
+
+            let onboardingVC = OnboardingUSPViewController()
+            if let navigation = viewController?.navigationController {
+                navigation.pushViewController(onboardingVC, animated: true)
+            } else {
+                let navigation = MEGANavigationController(rootViewController: onboardingVC)
+                navigation.addRightCancelButton()
+                viewController?.present(navigation, animated: true)
+            }
         }
     }
     
