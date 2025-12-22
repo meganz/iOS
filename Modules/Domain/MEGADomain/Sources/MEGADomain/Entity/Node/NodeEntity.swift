@@ -60,6 +60,9 @@ public struct NodeEntity: Sendable {
     // MARK: - Backup
     public let deviceId: String?
     
+    // MARK: - NodeDecryption
+    public let isNodeKeyDecrypted: Bool
+    
     public init(
         changeTypes: ChangeTypeEntity,
         nodeType: NodeTypeEntity?,
@@ -101,7 +104,8 @@ public struct NodeEntity: Sendable {
         mediaType: MediaTypeEntity?,
         latitude: Double?,
         longitude: Double?,
-        deviceId: String?
+        deviceId: String?,
+        isNodeKeyDecrypted: Bool = true
     ) {
         self.changeTypes = changeTypes
         self.nodeType = nodeType
@@ -144,6 +148,7 @@ public struct NodeEntity: Sendable {
         self.latitude = latitude
         self.longitude = longitude
         self.deviceId = deviceId
+        self.isNodeKeyDecrypted = isNodeKeyDecrypted
     }
 }
 

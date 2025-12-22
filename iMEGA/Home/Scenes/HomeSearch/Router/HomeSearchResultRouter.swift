@@ -4,6 +4,7 @@ import MEGAAppSDKRepo
 import MEGADomain
 import MEGAL10n
 import MEGAPreference
+import MEGASwiftUI
 
 // This protocol was added to enable both new and legacy Cloud Drive screen use the same navigation mechanism
 // using NodeOpener to drill deeper into folders or files, and also use the same for context menu presentation
@@ -88,6 +89,9 @@ final class HomeSearchResultRouter: NodeRouting {
             guard let node = await nodeUseCase.nodeForHandle(nodeHandle) else { return }
             if node.isFile, node.isTakenDown {
                 showTakenDownAlert()
+            } else if node.isFile, !node.isNodeKeyDecrypted {
+                UIApplication.mnz_visibleViewController()
+                    .showSnackBar(snackBar: SnackBar(message: Strings.Localizable.CloudDrive.FolderLink.SnackBar.undecryptedFileOpenError))
             } else {
                 nodeOpener.openNode(
                     nodeHandle: nodeHandle,

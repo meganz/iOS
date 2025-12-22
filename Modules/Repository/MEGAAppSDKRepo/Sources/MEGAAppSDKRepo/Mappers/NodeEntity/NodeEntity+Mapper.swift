@@ -88,7 +88,9 @@ fileprivate extension NodeEntity {
             longitude                          : node.longitude?.doubleValue,
             
             // MARK: - Backup
-            deviceId                           : node.deviceId
+            deviceId                           : node.deviceId,
+        
+            isNodeKeyDecrypted                 : node.isNodeKeyDecrypted()
             // swiftlint:enable colon
         )
     }
