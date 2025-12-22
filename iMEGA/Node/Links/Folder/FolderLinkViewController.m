@@ -41,8 +41,6 @@
 
 @property (nonatomic, strong) NSMutableArray *cloudImages;
 
-@property (weak, nonatomic) IBOutlet UIView *containerView;
-
 @property (nonatomic, assign) ViewModePreferenceEntity viewModePreference;
 
 @property (nonatomic, strong) UIActivityIndicatorView *activityIndicator;
@@ -133,6 +131,7 @@
     [self updateAppearance];
     
     [AppearanceManager forceSearchBarUpdate:self.searchController.searchBar];
+    [self resetLayoutConstraintForLiquidGlass];
 }
 
 - (void)viewWillAppear:(BOOL)animated {

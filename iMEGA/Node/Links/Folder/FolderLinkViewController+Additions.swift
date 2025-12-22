@@ -382,3 +382,19 @@ extension FolderLinkViewController: ViewType {
         }
     }
 }
+
+extension FolderLinkViewController {
+    @objc func resetLayoutConstraintForLiquidGlass() {
+        guard #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() else {
+            return
+        }
+        
+        edgesForExtendedLayout = [.bottom]
+        extendedLayoutIncludesOpaqueBars = true
+        
+        if let containerViewBottomLayoutConstraint, containerViewBottomLayoutConstraint.isActive {
+            containerViewBottomLayoutConstraint.isActive = false
+            containerView?.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        }
+    }
+}

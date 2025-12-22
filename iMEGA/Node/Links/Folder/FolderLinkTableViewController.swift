@@ -1,4 +1,5 @@
 import Foundation
+import MEGAAppPresentation
 import MEGAAssets
 import MEGADesignToken
 import MEGADomain
@@ -7,6 +8,7 @@ import MEGAL10n
 class FolderLinkTableViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var tableViewBottomConstraint: NSLayoutConstraint!
     
     unowned var folderLink: FolderLinkViewController!
     var headerContainerView: UIView?
@@ -24,6 +26,10 @@ class FolderLinkTableViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.backgroundView = UIView()
+        if #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() {
+            tableViewBottomConstraint.isActive = false
+            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        }
     }
 
     @objc func showTableHeaderIfRequired() {
