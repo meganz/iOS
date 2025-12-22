@@ -65,7 +65,7 @@ public struct AdsSlotView<T: View>: View {
             viewModel.stopMonitoringOnAccountUpdates()
         }
         .ignoresSafeArea(.keyboard)
-        .ignoresSafeArea(edges: shouldHideAds || !(viewModel.isExternalAdsEnabled ?? false) ? .all : [.top])
+        .ignoresSafeArea(edges: shouldHideAds || !(viewModel.isExternalAdsEnabled ?? false) || adsContainerHeight == 0 ? .all : [.top])
     }
     
     private var closeButton: some View {
