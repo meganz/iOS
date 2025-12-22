@@ -75,9 +75,9 @@ struct MediaTabViewModelTests {
         let sut = Self.makeSUT(
             tabViewModels: [.timeline: contentViewModel]
         )
-
+        
         sut.handleToolbarItemAction(expectedAction)
-
+        
         #expect(contentViewModel.handledAction == expectedAction)
     }
     
@@ -104,13 +104,13 @@ struct MediaTabViewModelTests {
         let sut = Self.makeSUT(
             tabViewModels: [.timeline: contentViewModel]
         )
-
+        
         // Enable edit mode to show toolbar
         sut.editMode = .active
-
+        
         // Toolbar should show even with no selection (count = 0)
         #expect(sut.toolbarConfig?.selectedItemsCount == 0)
-
+        
         let mockNodes = [
             NodeEntity(),
             NodeEntity(),
@@ -118,13 +118,38 @@ struct MediaTabViewModelTests {
         ]
         contentViewModel.selectedNodesForToolbarValue = mockNodes
         contentViewModel.toolbarUpdateSubject.send()
-
+        
         try await Task.sleep(nanoseconds: 100_000_000)
-
+        
         #expect(sut.toolbarConfig?.selectedItemsCount == 3)
         #expect(sut.toolbarConfig?.actions == [.shareLink, .delete])
     }
-
+    
+    @MainActor
+    struct NodeActionDisplayMode {
+        @Test
+        func protocolConformance() {
+            let displayMode = DisplayMode.photosTimeline
+            let contentViewModel = MockMediaTabContentViewModel(
+                nodeActionDisplayMode: displayMode)
+            let sut = makeSUT(
+                tabViewModels: [.timeline: contentViewModel]
+            )
+            
+            #expect(sut.nodeActionDisplayMode == displayMode)
+        }
+        
+        @Test
+        func nodeActionDisplayMode_cloudDrive() {
+            let contentViewModel = MockMediaTabEmptyContentViewModel()
+            let sut = makeSUT(
+                tabViewModels: [.timeline: contentViewModel]
+            )
+            
+            #expect(sut.nodeActionDisplayMode == .cloudDrive)
+        }
+    }
+    
     @MainActor
     private static func makeSUT(
         tabViewModels: [MediaTab: any MediaTabContentViewModel] = [:],
@@ -148,26 +173,29 @@ private final class MockMediaTabContentViewModel: MediaTabContentViewModel {
     let navigationBarUpdateSubject = PassthroughSubject<Void, Never>()
     let titleUpdateSubject = PassthroughSubject<String, Never>()
     let toolbarUpdateSubject = PassthroughSubject<Void, Never>()
-
+    
     var toolBarActions: [MediaBottomToolbarAction]?
     var itemViewModels: [NavigationBarItemViewModel]
-
+    
     weak var toolbarCoordinator: (any MediaTabToolbarCoordinatorProtocol)?
-
+    
     var selectedNodesForToolbarValue: [NodeEntity] = []
-
+    
     private let _contextMenuConfiguration: CMConfigEntity?
+    private let nodeActionDisplayMode: DisplayMode
     private(set) var handledAction: MediaBottomToolbarAction?
     private(set) var handledPhotosFilterOptions: PhotosFilterOptionsEntity?
-
+    
     init(
         itemViewModels: [NavigationBarItemViewModel] = [],
         contextMenuConfiguration: CMConfigEntity? = nil,
-        toolBarActions: [MediaBottomToolbarAction]? = nil
+        toolBarActions: [MediaBottomToolbarAction]? = nil,
+        nodeActionDisplayMode: DisplayMode = .cloudDrive
     ) {
         self.itemViewModels = itemViewModels
         _contextMenuConfiguration = contextMenuConfiguration
         self.toolBarActions = toolBarActions
+        self.nodeActionDisplayMode = nodeActionDisplayMode
     }
 }
 
@@ -184,6 +212,12 @@ extension MockMediaTabContentViewModel: MediaTabNavigationBarItemProvider {
     }
 }
 
+extension MockMediaTabContentViewModel: NodeActionDisplayModeProvider {
+    var displayMode: DisplayMode {
+        nodeActionDisplayMode
+    }
+}
+
 extension MockMediaTabContentViewModel: MediaTabContextMenuProvider {
     func contextMenuConfiguration() -> CMConfigEntity? {
         _contextMenuConfiguration
@@ -194,15 +228,14 @@ extension MockMediaTabContentViewModel: MediaTabToolbarActionsProvider {
     var toolbarUpdatePublisher: AnyPublisher<Void, Never>? {
         toolbarUpdateSubject.eraseToAnyPublisher()
     }
-
+    
     func toolbarConfig() -> MediaBottomToolbarConfig? {
         let count = selectedNodesForToolbarValue.count
         guard let actions = toolBarActions else { return nil }
-
+        
         return MediaBottomToolbarConfig(
             actions: actions,
             selectedItemsCount: count,
-            hasExportedItems: false,
             isAllExported: false
         )
     }
@@ -222,4 +255,8 @@ extension MockMediaTabContentViewModel: MediaTabNavigationTitleProvider {
     var titleUpdatePublisher: AnyPublisher<String, Never> {
         titleUpdateSubject.eraseToAnyPublisher()
     }
+}
+
+final class MockMediaTabEmptyContentViewModel: MediaTabContentViewModel {
+    
 }

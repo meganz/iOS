@@ -28,7 +28,7 @@ final class MediaTabToolbarCoordinator: MediaTabToolbarCoordinatorProtocol {
     }
 
     func handleToolbarAction(_ action: MediaBottomToolbarAction, with nodes: [NodeEntity]) {
-        guard let viewController = viewController, !nodes.isEmpty else { return }
+        guard let viewController, !nodes.isEmpty else { return }
 
         switch action {
         case .more:
@@ -41,6 +41,10 @@ final class MediaTabToolbarCoordinator: MediaTabToolbarCoordinatorProtocol {
             executeNodeAction(.saveToPhotos, for: nodes, from: viewController)
         case .sendToChat:
             executeNodeAction(.sendToChat, for: nodes, from: viewController)
+        case .addToAlbum:
+            executeNodeAction(.addToAlbum, for: nodes, from: viewController)
+        case .moveToRubbishBin:
+            executeNodeAction(.moveToRubbishBin, for: nodes, from: viewController)
         default:
             break
         }
@@ -50,6 +54,7 @@ final class MediaTabToolbarCoordinator: MediaTabToolbarCoordinatorProtocol {
 
     private func presentMoreActions(for nodes: [NodeEntity], from viewController: MediaTabHostingController) {
         let nodeActionViewController = createNodeActionViewController(
+            displayMode: viewController.nodeActionDisplayMode,
             with: nodes,
             from: viewController
         )
@@ -62,6 +67,7 @@ final class MediaTabToolbarCoordinator: MediaTabToolbarCoordinatorProtocol {
         from viewController: MediaTabHostingController
     ) {
         let nodeActionViewController = createNodeActionViewController(
+            displayMode: viewController.nodeActionDisplayMode,
             with: nodes,
             from: viewController
         )
@@ -75,13 +81,14 @@ final class MediaTabToolbarCoordinator: MediaTabToolbarCoordinatorProtocol {
     }
 
     private func createNodeActionViewController(
+        displayMode: DisplayMode,
         with nodes: [NodeEntity],
         from viewController: MediaTabHostingController
     ) -> NodeActionViewController {
         let nodeActionVC = NodeActionViewController(
             nodes: nodes.compactMap { $0.toMEGANode(in: .sharedSdk) },
             delegate: viewController,
-            displayMode: .cloudDrive,
+            displayMode: displayMode,
             sender: viewController.toolbar
         )
         nodeActionVC.accessoryActionDelegate = nodeAccessoryActionDelegate

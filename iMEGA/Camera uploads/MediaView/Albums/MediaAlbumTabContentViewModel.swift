@@ -107,7 +107,6 @@ extension MediaAlbumTabContentViewModel: MediaTabToolbarActionsProvider {
             }
             return false
         }
-        let hasExportedItems = !exportedAlbums.isEmpty
         let isAllExported = selectedCount > 0 && exportedAlbums.count == selectedCount
         
         var actions: [MediaBottomToolbarAction] = [.manageLink, .delete]
@@ -118,7 +117,6 @@ extension MediaAlbumTabContentViewModel: MediaTabToolbarActionsProvider {
         return MediaBottomToolbarConfig(
             actions: actions,
             selectedItemsCount: selectedCount,
-            hasExportedItems: hasExportedItems,
             isAllExported: isAllExported
         )
     }

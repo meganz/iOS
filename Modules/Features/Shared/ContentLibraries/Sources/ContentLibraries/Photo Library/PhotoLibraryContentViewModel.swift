@@ -51,6 +51,10 @@ extension PhotoLibraryContentViewModel {
         filterViewModel.appliedFilterLocation.toPhotosFilterOptions()
     }
     
+    public var selectedPhotos: [NodeEntity] {
+        Array(selection.photos.values)
+    }
+    
     public func toggleSelectAllPhotos() {
         let allSelectedCurrently = selection.photos.count == library.allPhotos.count
         selection.allSelected = !allSelectedCurrently
@@ -58,9 +62,5 @@ extension PhotoLibraryContentViewModel {
         if selection.allSelected {
             selection.setSelectedPhotos(library.allPhotos)
         }
-    }
-    
-    public func toggleEditMode() {
-        selection.toggleEditMode()
     }
 }

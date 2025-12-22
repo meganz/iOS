@@ -41,17 +41,11 @@ struct MediaBottomToolbarItemsFactory {
             return false
         }
 
-        switch action {
-        case .shareLink:
-            return true
+        return switch action {
         case .removeLink:
-            // Only enable remove link if all selected items are exported
-            return config.isAllExported
-        case .delete:
-            return true
-        case .download, .manageLink, .saveToPhotos, .sendToChat, .more:
-            // Video actions - always enabled when items are selected
-            return true
+            config.isAllExported
+        default:
+            true
         }
     }
 }

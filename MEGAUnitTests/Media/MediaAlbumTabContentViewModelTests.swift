@@ -125,9 +125,9 @@ struct MediaAlbumTabContentViewModelTests {
         }
         
         @Test(arguments: [
-            ([AlbumEntity](), MediaBottomToolbarConfig(actions: [.manageLink, .delete], selectedItemsCount: 0, hasExportedItems: false, isAllExported: false)),
+            ([AlbumEntity](), MediaBottomToolbarConfig(actions: [.manageLink, .delete], selectedItemsCount: 0, isAllExported: false)),
             ([AlbumEntity(id: 1, type: .user, sharedLinkStatus: .exported(true))]
-             , MediaBottomToolbarConfig(actions: [.manageLink, .removeLink, .delete], selectedItemsCount: 1, hasExportedItems: true, isAllExported: true))
+             , MediaBottomToolbarConfig(actions: [.manageLink, .removeLink, .delete], selectedItemsCount: 1, isAllExported: true))
             
         ])
         func toolbarConfig(

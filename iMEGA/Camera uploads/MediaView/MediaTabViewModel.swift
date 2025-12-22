@@ -38,6 +38,13 @@ final class MediaTabViewModel: ObservableObject, MediaTabSharedResourceProvider 
     var trailingNavigationBarViewModels: [NavigationBarItemViewModel] {
         navigationBarItemViewModels.filter { $0.placement == .trailing }
     }
+    
+    var nodeActionDisplayMode: DisplayMode {
+        guard let tabViewModel = tabViewModels[selectedTab] as? any NodeActionDisplayModeProvider else {
+            return .cloudDrive
+        }
+        return tabViewModel.displayMode
+    }
 
     // MARK: - Toolbar State
 

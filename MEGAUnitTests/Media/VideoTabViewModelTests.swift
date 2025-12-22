@@ -343,7 +343,6 @@ final class VideoTabViewModelTests: XCTestCase {
         XCTAssertNotNil(config)
         XCTAssertEqual(config?.selectedItemsCount, 0)
         XCTAssertEqual(config?.actions.count, 5)
-        XCTAssertFalse(config?.hasExportedItems ?? true)
         XCTAssertFalse(config?.isAllExported ?? true)
     }
 

@@ -55,15 +55,4 @@ final class PhotoLibraryContentViewModelTests: XCTestCase {
             XCTAssertEqual(sut.isPhotoLibraryEmpty, photos.isEmpty)
         }
     }
-    
-    @MainActor
-    func testToggleEditMode_onToggle_shouldToggleEditMode() {
-        let sut = PhotoLibraryContentViewModel(library: PhotoLibrary())
-        
-        XCTAssertFalse(sut.selection.editMode.isEditing)
-        sut.toggleEditMode()
-        XCTAssertTrue(sut.selection.editMode.isEditing)
-        sut.toggleEditMode()
-        XCTAssertFalse(sut.selection.editMode.isEditing)
-    }
 }

@@ -4,13 +4,32 @@ import SwiftUI
 
 @MainActor
 final class MediaTimelineTabContentViewModel: ObservableObject, MediaTabContentViewModel, MediaTabSharedResourceConsumer {
-    weak var sharedResourceProvider: (any MediaTabSharedResourceProvider)?
+    weak var sharedResourceProvider: (any MediaTabSharedResourceProvider)? {
+        didSet {
+            setupEditModeSubscription()
+        }
+    }
     let editModeToggleRequested = PassthroughSubject<Void, Never>()
+    weak var toolbarCoordinator: (any MediaTabToolbarCoordinatorProtocol)?
    
     let timelineViewModel: NewTimelineViewModel
+
+    private var subscriptions = Set<AnyCancellable>()
     
     init(timelineViewModel: NewTimelineViewModel) {
         self.timelineViewModel = timelineViewModel
+        setupEditModeSubscription()
+    }
+    
+    private func setupEditModeSubscription() {
+        guard let sharedResourceProvider else { return }
+
+        sharedResourceProvider.editModePublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in
+                self?.timelineViewModel.updateEditMode($0)
+            }
+            .store(in: &subscriptions)
     }
 }
 
@@ -28,7 +47,8 @@ extension MediaTimelineTabContentViewModel: MediaTabNavigationBarItemProvider {
         var items: [NavigationBarItemViewModel] = []
         
         if editMode == .active {
-            items.append(MediaNavigationBarItemFactory.cancelButton(action: toggleEditMode))
+            items.append(MediaNavigationBarItemFactory.cancelButton(
+                action: editModeToggleRequested.send))
         } else {
             if let cameraUploadStatusButtonViewModel = sharedResourceProvider?.cameraUploadStatusButtonViewModel {
                 items.append(MediaNavigationBarItemFactory.cameraUploadStatusButton(
@@ -47,11 +67,6 @@ extension MediaTimelineTabContentViewModel: MediaTabNavigationBarItemProvider {
         
         return items
     }
-    
-    private func toggleEditMode() {
-        timelineViewModel.photoLibraryContentViewModel.toggleEditMode()
-        editModeToggleRequested.send()
-    }
 }
 
 // MARK: - MediaTabContextMenuProvider
@@ -69,13 +84,13 @@ extension MediaTimelineTabContentViewModel: MediaTabContextMenuProvider {
     }
 }
 
-extension MediaTimelineTabContentViewModel: MediaTabContextMenuActionHandler {
-    func handleDisplayAction(_ action: DisplayActionEntity) {
-        if action == .select {
-            toggleEditMode()
-        }
+extension MediaTimelineTabContentViewModel: NodeActionDisplayModeProvider {
+    var displayMode: DisplayMode {
+        .photosTimeline
     }
-    
+}
+
+extension MediaTimelineTabContentViewModel: MediaTabContextMenuActionHandler {
     func handleQuickAction(_ action: QuickActionEntity) {
         if action == .settings {
             Task { @MainActor [weak timelineViewModel] in
@@ -92,5 +107,45 @@ extension MediaTimelineTabContentViewModel: MediaTabContextMenuActionHandler {
     
     func handlePhotoFilter(option: PhotosFilterOptionsEntity) {
         timelineViewModel.updatePhotoFilter(option: option)
+    }
+}
+
+extension MediaTimelineTabContentViewModel: MediaTabToolbarActionsProvider {
+    var toolbarUpdatePublisher: AnyPublisher<Void, Never>? {
+        timelineViewModel.photoLibraryContentViewModel.selection.$photos
+            .dropFirst()
+            .map { $0.isEmpty }
+            .removeDuplicates()
+            .map { _ in () }
+            .eraseToAnyPublisher()
+    }
+
+    func toolbarConfig() -> MediaBottomToolbarConfig? {
+        let selectedNodes = selectedNodesForToolbar
+        let selectedCount = selectedNodes.count
+
+        let actions: [MediaBottomToolbarAction] = [
+            .download, .manageLink, .addToAlbum, .moveToRubbishBin, .more]
+
+        return MediaBottomToolbarConfig(
+            actions: actions,
+            selectedItemsCount: selectedCount
+        )
+    }
+
+    /// Private helper to get selected nodes for internal use
+    private var selectedNodesForToolbar: [NodeEntity] {
+        Array(timelineViewModel.photoLibraryContentViewModel.selectedPhotos)
+    }
+}
+
+// MARK: - MediaTabToolbarActionHandler
+
+extension MediaTimelineTabContentViewModel: MediaTabToolbarActionHandler {
+    func handleToolbarAction(_ action: MediaBottomToolbarAction) {
+        let nodes = selectedNodesForToolbar
+        guard !nodes.isEmpty else { return }
+
+        toolbarCoordinator?.handleToolbarAction(action, with: nodes)
     }
 }

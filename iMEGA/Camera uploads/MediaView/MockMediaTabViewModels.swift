@@ -35,7 +35,6 @@ final class MockVideoViewModel: MediaTabContextMenuProvider, MediaTabContextMenu
         guard count > 0 else { return nil }
 
         let exportedNodes = nodes.filter { $0.isExported }
-        let hasExportedItems = !exportedNodes.isEmpty
         let isAllExported = exportedNodes.count == count
 
         let actions: [MediaBottomToolbarAction] = isAllExported
@@ -45,7 +44,6 @@ final class MockVideoViewModel: MediaTabContextMenuProvider, MediaTabContextMenu
         return MediaBottomToolbarConfig(
             actions: actions,
             selectedItemsCount: count,
-            hasExportedItems: hasExportedItems,
             isAllExported: isAllExported
         )
     }
@@ -120,7 +118,6 @@ final class MockPlaylistViewModel: MediaTabContentViewModel, MediaTabContextMenu
         guard count > 0 else { return nil }
 
         let exportedNodes = nodes.filter { $0.isExported }
-        let hasExportedItems = !exportedNodes.isEmpty
         let isAllExported = exportedNodes.count == count
 
         let actions: [MediaBottomToolbarAction] = isAllExported
@@ -130,7 +127,6 @@ final class MockPlaylistViewModel: MediaTabContentViewModel, MediaTabContextMenu
         return MediaBottomToolbarConfig(
             actions: actions,
             selectedItemsCount: count,
-            hasExportedItems: hasExportedItems,
             isAllExported: isAllExported
         )
     }

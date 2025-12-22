@@ -3,16 +3,17 @@ import UIKit
 
 // MARK: - Toolbar Actions
 
-enum MediaBottomToolbarAction {
+enum MediaBottomToolbarAction: Equatable {
     case shareLink
     case removeLink
     case delete
-    // Video-specific actions
     case download
     case manageLink
     case saveToPhotos
     case sendToChat
     case more
+    case moveToRubbishBin
+    case addToAlbum
 
     var image: UIImage {
         switch self {
@@ -20,7 +21,7 @@ enum MediaBottomToolbarAction {
             MEGAAssets.UIImage.link
         case .removeLink:
             MEGAAssets.UIImage.removeLink
-        case .delete:
+        case .delete, .moveToRubbishBin:
             MEGAAssets.UIImage.rubbishBin
         case .download:
             MEGAAssets.UIImage.offline
@@ -32,6 +33,8 @@ enum MediaBottomToolbarAction {
             MEGAAssets.UIImage.sendToChat
         case .more:
             MEGAAssets.UIImage.moreList
+        case .addToAlbum:
+            MEGAAssets.UIImage.addTo
         }
     }
 }
@@ -41,10 +44,19 @@ enum MediaBottomToolbarAction {
 struct MediaBottomToolbarConfig: Equatable {
     let actions: [MediaBottomToolbarAction]
     let selectedItemsCount: Int
-    let hasExportedItems: Bool
     let isAllExported: Bool
 
     var hasSelection: Bool {
         selectedItemsCount > 0
+    }
+    
+    init(
+        actions: [MediaBottomToolbarAction],
+        selectedItemsCount: Int,
+        isAllExported: Bool = false
+    ) {
+        self.actions = actions
+        self.selectedItemsCount = selectedItemsCount
+        self.isAllExported = isAllExported
     }
 }

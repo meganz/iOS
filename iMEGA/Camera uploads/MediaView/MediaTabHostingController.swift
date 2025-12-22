@@ -18,6 +18,10 @@ final class MediaTabHostingController: UIHostingController<MediaTabView> {
     private lazy var toolbarCoordinator = MediaTabToolbarCoordinator(viewController: self)
 
     lazy var toolbar = UIToolbar()
+    
+    var nodeActionDisplayMode: DisplayMode {
+        viewModel.nodeActionDisplayMode
+    }
 
     // MARK: - Initialization
 

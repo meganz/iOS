@@ -2,6 +2,7 @@ import ContentLibraries
 import MEGAAppPresentation
 import MEGADomain
 import MEGAPreference
+import SwiftUI
 
 @MainActor
 final class NewTimelineViewModel: ObservableObject {
@@ -123,6 +124,10 @@ final class NewTimelineViewModel: ObservableObject {
         guard photoFilterOptions != newFilterOptions else { return }
         photoFilterOptions = newFilterOptions
         loadPhotosTaskId = UUID()
+    }
+    
+    func updateEditMode(_ mode: EditMode) {
+        photoLibraryContentViewModel.selection.editMode = mode
     }
     
     private func shouldShowEnableCameraUploadsBanner(filterLocation: PhotosFilterOptions) -> Bool {

@@ -66,17 +66,6 @@ struct MediaTimelineTabContentViewModelTests {
     
     @MainActor
     struct ContextMenuActionHandler {
-        @Test
-        func selectToggleEditMode() {
-            let sut = makeSUT()
-            let selection = sut.timelineViewModel.photoLibraryContentViewModel.selection
-            
-            #expect(selection.editMode.isEditing == false)
-            
-            sut.handleDisplayAction(.select)
-            
-            #expect(selection.editMode.isEditing)
-        }
         
         @Test
         func sortAction() {
@@ -118,6 +107,73 @@ struct MediaTimelineTabContentViewModelTests {
             
             #expect(cameraUploadsSettingsViewRouter.startCalled == 1)
         }
+    }
+    
+    @MainActor
+    struct MediaTabToolbarActionsProvider {
+        @Test
+        func toolbarUpdatePublisher() async throws {
+            let sut = makeSUT()
+            
+            try await confirmation { confirmation in
+                let subscription = try #require(sut.toolbarUpdatePublisher)
+                    .sink {
+                        confirmation()
+                    }
+                
+                sut.timelineViewModel.photoLibraryContentViewModel
+                    .selection.setSelectedPhotos([NodeEntity(handle: 1)])
+                
+                try await Task.sleep(nanoseconds: 100_000_000)
+                subscription.cancel()
+            }
+        }
+        
+        @Test(arguments: [
+            [NodeEntity](),
+            [.init(handle: 1)]
+        ])
+        func toolbarConfig(
+            selectedPhotos: [NodeEntity]
+        ) {
+            let expectedConfig = MediaBottomToolbarConfig(
+                actions: [.download, .manageLink, .addToAlbum, .moveToRubbishBin, .more],
+                selectedItemsCount: selectedPhotos.count)
+            let sut = makeSUT()
+            sut.timelineViewModel.photoLibraryContentViewModel
+                .selection.setSelectedPhotos(selectedPhotos)
+            
+            let config = sut.toolbarConfig()
+            
+            #expect(config == expectedConfig)
+        }
+    }
+    
+    @MainActor
+    @Test
+    func nodeActionDisplayMode() async throws {
+        let sut = Self.makeSUT()
+        
+        #expect(sut.displayMode == .photosTimeline)
+    }
+    
+    @MainActor
+    @Test
+    func editModeSubscription() async throws {
+        let sharedResourceProvider = MockMediaTabSharedResourceProvider()
+        let sut = Self.makeSUT()
+        sut.sharedResourceProvider = sharedResourceProvider
+        
+        try await Task.sleep(nanoseconds: 100_000_000)
+        
+        let selection = sut.timelineViewModel.photoLibraryContentViewModel.selection
+        #expect(selection.editMode == .inactive)
+        
+        sharedResourceProvider.editMode = .active
+        
+        try await Task.sleep(nanoseconds: 100_000_000)
+        
+        #expect(selection.editMode == .active)
     }
     
     @MainActor

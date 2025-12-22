@@ -212,7 +212,6 @@ extension VideoTabViewModel: MediaTabToolbarActionsProvider {
 
         // Calculate export state
         let exportedNodes = selectedNodes.filter { $0.isExported }
-        let hasExportedItems = !exportedNodes.isEmpty
         let isAllExported = selectedCount > 0 && exportedNodes.count == selectedCount
 
         // Define toolbar actions - always return actions even when no selection
@@ -222,7 +221,6 @@ extension VideoTabViewModel: MediaTabToolbarActionsProvider {
         return MediaBottomToolbarConfig(
             actions: actions,
             selectedItemsCount: selectedCount,
-            hasExportedItems: hasExportedItems,
             isAllExported: isAllExported
         )
     }

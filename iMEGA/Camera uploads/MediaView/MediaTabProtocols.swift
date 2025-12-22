@@ -25,6 +25,13 @@ protocol MediaTabContextMenuProvider {
     func contextMenuConfiguration() -> CMConfigEntity?
 }
 
+// MARK: - Node Action Display Mode Provider
+
+@MainActor
+protocol NodeActionDisplayModeProvider: AnyObject {
+    var displayMode: DisplayMode { get }
+}
+
 // MARK: - Menu Action Handler
 @MainActor
 protocol MediaTabContextMenuActionHandler: AnyObject {
