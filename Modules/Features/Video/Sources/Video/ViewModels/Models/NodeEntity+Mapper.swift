@@ -29,7 +29,7 @@ extension NodeEntity {
         return VideoCellPreviewEntity(
             isFavorite: isFavourite,
             imageContainer: thumbnailContainer,
-            duration: TimeInterval(duration).timeString,
+            duration: duration > 0 ? TimeInterval(duration).timeString : "",
             title: name,
             description: description,
             tags: filteredTags,

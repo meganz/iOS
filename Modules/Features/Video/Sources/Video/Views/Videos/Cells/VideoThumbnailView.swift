@@ -64,11 +64,13 @@ struct VideoThumbnailView: View {
 
             Spacer()
 
-            VideoDurationView(
-                duration: previewEntity.duration,
-                videoConfig: videoConfig,
-                isMediaRevampEnabled: isMediaRevampEnabled
-            )
+            if !previewEntity.duration.isEmpty {
+                VideoDurationView(
+                    duration: previewEntity.duration,
+                    videoConfig: videoConfig,
+                    isMediaRevampEnabled: isMediaRevampEnabled
+                )
+            }
         }
         .padding(isMediaRevampEnabled ? EdgeInsets(top: TokenSpacing._3, leading: TokenSpacing._3, bottom: TokenSpacing._1, trailing: TokenSpacing._1) : EdgeInsets(top: TokenSpacing._3, leading: TokenSpacing._3, bottom: TokenSpacing._3, trailing: TokenSpacing._3))
     }
