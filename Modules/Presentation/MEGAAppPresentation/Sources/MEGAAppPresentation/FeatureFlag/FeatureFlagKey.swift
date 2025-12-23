@@ -22,6 +22,7 @@ public enum FeatureFlagKey: FeatureFlagName, CaseIterable, Sendable {
     /// Instead we'll enable them first and then proceed to remove the flags after the features are stable.
     public static let rolledOutKeys: Set<FeatureFlagKey> = [
         .cameraUploadsRevamp,
-        .dotAppDomain
+        .dotAppDomain,
+        .cloudDriveRevamp
     ]
 }

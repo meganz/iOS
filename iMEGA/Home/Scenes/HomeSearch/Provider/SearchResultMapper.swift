@@ -23,9 +23,7 @@ struct SearchResultMapper: Sendable {
     private let nodeActions: NodeActions
     private let hiddenNodesFeatureEnabled: Bool
     private let showHiddenNodeBlur: Bool
-    private var isCloudDriveRevampEnabled: Bool {
-        DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .cloudDriveRevamp)
-    }
+    private var isCloudDriveRevampEnabled: Bool
 
     private var tracker: some AnalyticsTracking {
         DIContainer.tracker
@@ -40,7 +38,9 @@ struct SearchResultMapper: Sendable {
         mediaUseCase: some MediaUseCaseProtocol,
         nodeActions: NodeActions,
         hiddenNodesFeatureEnabled: Bool,
-        showHiddenNodeBlur: Bool = true) {
+        showHiddenNodeBlur: Bool = true,
+        isCloudDriveRevampEnabled: Bool =  DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .cloudDriveRevamp)
+    ) {
         self.sdk = sdk
         self.nodeIconUsecase = nodeIconUsecase
         self.nodeDetailUseCase = nodeDetailUseCase
@@ -50,6 +50,7 @@ struct SearchResultMapper: Sendable {
         self.nodeActions = nodeActions
         self.hiddenNodesFeatureEnabled = hiddenNodesFeatureEnabled
         self.showHiddenNodeBlur = showHiddenNodeBlur
+        self.isCloudDriveRevampEnabled = isCloudDriveRevampEnabled
     }
     
     func map(node: NodeEntity) -> SearchResult {

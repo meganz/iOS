@@ -176,7 +176,8 @@ final class SearchResultMapperTests: XCTestCase {
         mediaUseCase: some MediaUseCaseProtocol = MockMediaUseCase(),
         nodeActions: NodeActions = .makeActions(sdk: MockSdk(), navigationController: .init()),
         hiddenNodesFeatureEnabled: Bool = true,
-        showHiddenNodeBlur: Bool = true
+        showHiddenNodeBlur: Bool = true,
+        isCloudDriveRevampEnabled: Bool = false
     ) -> SUT {
         .init(
             sdk: sdk,
@@ -187,7 +188,8 @@ final class SearchResultMapperTests: XCTestCase {
             mediaUseCase: mediaUseCase,
             nodeActions: nodeActions,
             hiddenNodesFeatureEnabled: hiddenNodesFeatureEnabled,
-            showHiddenNodeBlur: showHiddenNodeBlur
+            showHiddenNodeBlur: showHiddenNodeBlur,
+            isCloudDriveRevampEnabled: isCloudDriveRevampEnabled
         )
     }
 
