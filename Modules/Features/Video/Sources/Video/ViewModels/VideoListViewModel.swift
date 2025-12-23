@@ -3,7 +3,9 @@ import Combine
 import Foundation
 import MEGAAppPresentation
 import MEGADomain
+import MEGAL10n
 import MEGASwift
+import MEGAUIComponent
 
 @MainActor
 public final class VideoListViewModel: ObservableObject {
@@ -35,8 +37,9 @@ public final class VideoListViewModel: ObservableObject {
     @Published private(set) var chips: [ChipContainerViewModel] = [ FilterChipType.location, .duration ]
         .map { ChipContainerViewModel(title: $0.description, type: $0, isActive: false) }
     
-    private var mediaRevampEnabled = true
+    var mediaRevampEnabled = true
     @Published private(set) var showFilterChips = true
+    @Published private(set) var showSortHeader = true
     @Published private(set) var viewState: ViewState = .partial
 
     var actionSheetTitle: String {
@@ -51,8 +54,13 @@ public final class VideoListViewModel: ObservableObject {
     private let contentProvider: any VideoListViewModelContentProviderProtocol
     private let monitorSearchRequestsSubject = CurrentValueSubject<MonitorSearchRequest, Never>(.invalidate)
     private let fileSearchUseCase: any FilesSearchUseCaseProtocol
-    
+    private let sortHeaderCoordinator: SortHeaderCoordinator
+
     private var subscriptions = Set<AnyCancellable>()
+
+    var sortHeaderViewModel: SortHeaderViewModel {
+        sortHeaderCoordinator.headerViewModel
+    }
 
     private var searchTask: Task<Void, Never>? {
         didSet { oldValue?.cancel() }
@@ -75,7 +83,7 @@ public final class VideoListViewModel: ObservableObject {
         thumbnailLoader: some ThumbnailLoaderProtocol,
         sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol,
         nodeUseCase: some NodeUseCaseProtocol,
-        featureFlagProvider: some FeatureFlagProviderProtocol,
+        featureFlagProvider: some FeatureFlagProviderProtocol
     ) {
         self.fileSearchUseCase = fileSearchUseCase
         self.thumbnailLoader = thumbnailLoader
@@ -87,14 +95,28 @@ public final class VideoListViewModel: ObservableObject {
 
         self.mediaRevampEnabled = featureFlagProvider.isFeatureFlagEnabled(for: .mediaRevamp)
         self.showFilterChips = !mediaRevampEnabled
-        
+        self.showSortHeader = mediaRevampEnabled
+
         self.contentProvider = contentProvider
-        
+
+        self.sortHeaderCoordinator = .init(
+            sortOptionsViewModel: .init(
+                title: Strings.Localizable.sortTitle,
+                sortOptions: VideoSortOptionsFactory.makeAll()
+            ),
+            currentSortOrderProvider: { [weak syncModel] in
+                (syncModel?.videoRevampSortOrderType ?? .defaultAsc).toUIComponentSortOrderEntity()
+            },
+            sortOptionSelectionHandler: { @MainActor [weak syncModel] sortOption in
+                syncModel?.videoRevampSortOrderType = sortOption.sortOrder.toDomainSortOrderEntity()
+            }
+        )
+
         subscribeToEditingMode()
         subscribeToAllSelected()
         subscribeToSelectedVideos()
         subscribeToChipFilterOptions()
-        
+
         monitorNodeUpdatesTask = Task { @MainActor in await monitorNodeUpdates() }
     }
     
@@ -160,7 +182,7 @@ public final class VideoListViewModel: ObservableObject {
     }
     
     @MainActor
-    private func performSearch(searchText: String = "", sortOrderType: SortOrderEntity, selectedLocationFilterOptionType: LocationChipFilterOptionType, selectedDurationFilterOptionType: DurationChipFilterOptionType) {
+    private func performSearch(searchText: String = "", sortOrderType: MEGADomain.SortOrderEntity, selectedLocationFilterOptionType: LocationChipFilterOptionType, selectedDurationFilterOptionType: DurationChipFilterOptionType) {
         if viewState == .partial {
             viewState = .loading
         }
@@ -197,7 +219,7 @@ public final class VideoListViewModel: ObservableObject {
     }
     
     @MainActor
-    private func loadVideos(searchText: String = "", sortOrderType: SortOrderEntity = .defaultAsc, selectedLocationFilterOptionType: LocationChipFilterOptionType, selectedDurationFilterOptionType: DurationChipFilterOptionType) async throws {
+    private func loadVideos(searchText: String = "", sortOrderType: MEGADomain.SortOrderEntity = .defaultAsc, selectedLocationFilterOptionType: LocationChipFilterOptionType, selectedDurationFilterOptionType: DurationChipFilterOptionType) async throws {
         try Task.checkCancellation()
         self.videos = try await contentProvider
             .search(by: searchText, sortOrderType: sortOrderType, durationFilterOptionType: selectedDurationFilterOptionType, locationFilterOptionType: selectedLocationFilterOptionType)
@@ -207,7 +229,7 @@ public final class VideoListViewModel: ObservableObject {
         syncModel.$editMode
             .receive(on: DispatchQueue.main)
             .assign(to: &selection.$editMode)
-        
+
         if !mediaRevampEnabled {
             selection.$editMode
                 .map { editMode in
@@ -215,6 +237,13 @@ public final class VideoListViewModel: ObservableObject {
                 }
                 .receive(on: DispatchQueue.main)
                 .assign(to: &$showFilterChips)
+        } else {
+            selection.$editMode
+                .map { editMode in
+                    return !editMode.isEditing
+                }
+                .receive(on: DispatchQueue.main)
+                .assign(to: &$showSortHeader)
         }
     }
     

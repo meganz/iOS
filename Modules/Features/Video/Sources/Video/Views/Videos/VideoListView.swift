@@ -4,6 +4,7 @@ import MEGADesignToken
 import MEGADomain
 import MEGAL10n
 import MEGASwiftUI
+import MEGAUIComponent
 import SwiftUI
 
 public struct VideoListView: View {
@@ -46,13 +47,20 @@ public struct VideoListView: View {
     
     public var body: some View {
         VStack(spacing: 0) {
-            chipsView()
-                .frame(height: viewModel.showFilterChips ? 60 : 0)
-                .opacity(viewModel.showFilterChips ? 1 : 0)
-                .animation(.easeInOut(duration: 0.05), value: viewModel.showFilterChips)
+            if viewModel.mediaRevampEnabled {
+                sortHeaderView()
+                    .frame(height: viewModel.showSortHeader ? 36 : 0)
+                    .clipped()
+            } else {
+                chipsView()
+                    .frame(height: viewModel.showFilterChips ? 60 : 0)
+                    .clipped()
+            }
             content
                 .overlay(placeholder)
         }
+        .animation(.easeInOut(duration: 0.25), value: viewModel.showSortHeader)
+        .animation(.easeInOut(duration: 0.25), value: viewModel.showFilterChips)
         .task { await viewModel.onViewAppear() }
         .onDisappear { viewModel.onViewDisappear() }
         .sheet(isPresented: $viewModel.isSheetPresented) {
@@ -125,6 +133,7 @@ public struct VideoListView: View {
             selection: viewModel.selection,
             router: router,
             viewType: .allVideos,
+            sectionTopInset: (viewModel.mediaRevampEnabled && viewModel.showSortHeader) ? 0 : TokenSpacing._5,
             thumbnailLoader: viewModel.thumbnailLoader,
             sensitiveNodeUseCase: viewModel.sensitiveNodeUseCase,
             nodeUseCase: viewModel.nodeUseCase,
@@ -153,7 +162,17 @@ public struct VideoListView: View {
             .padding([.top, .bottom], 12)
         }
     }
-    
+
+    @ViewBuilder
+    private func sortHeaderView() -> some View {
+        ResultsHeaderView(height: 44, leftView: {
+            SortHeaderView(
+                viewModel: viewModel.sortHeaderViewModel,
+                horizontalPadding: TokenSpacing._5
+            )
+        })
+    }
+
     private var presentationDetentsHeight: CGFloat {
         let estimatedHeaderHeight: () -> CGFloat = {
             let titleHeight: CGFloat = UIFont.preferredFont(forTextStyle: .body).lineHeight

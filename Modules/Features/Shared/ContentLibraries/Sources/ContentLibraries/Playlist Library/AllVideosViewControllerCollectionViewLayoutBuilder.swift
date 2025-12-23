@@ -9,11 +9,13 @@ public struct AllVideosViewControllerCollectionViewLayoutBuilder {
         case playlistContent(type: VideoPlaylistEntityType)
         case recentlyWatchedVideos
     }
-    
+
     private let viewType: ViewType
-    
-    public init(viewType: ViewType) {
+    private let sectionTopInset: CGFloat
+
+    public init(viewType: ViewType, sectionTopInset: CGFloat = 16) {
         self.viewType = viewType
+        self.sectionTopInset = sectionTopInset
     }
     
     public func build() -> UICollectionViewLayout {
@@ -76,7 +78,7 @@ public struct AllVideosViewControllerCollectionViewLayoutBuilder {
         case .allVideos, .playlistContent, .recentlyWatchedVideos: 12
         case .playlists: 2
         }
-        section.contentInsets = NSDirectionalEdgeInsets(top: 16, leading: 8, bottom: 16, trailing: trailing)
+        section.contentInsets = NSDirectionalEdgeInsets(top: sectionTopInset, leading: 8, bottom: 16, trailing: trailing)
         
         if viewType == .recentlyWatchedVideos {
             section.boundarySupplementaryItems = [ recentlyWatchedVideosSectionHeader() ]
@@ -111,7 +113,7 @@ public struct AllVideosViewControllerCollectionViewLayoutBuilder {
         
         let section = NSCollectionLayoutSection(group: group)
         section.interGroupSpacing = 24
-        section.contentInsets = NSDirectionalEdgeInsets(top: 16, leading: 24, bottom: 16, trailing: 24)
+        section.contentInsets = NSDirectionalEdgeInsets(top: sectionTopInset, leading: 24, bottom: 16, trailing: 24)
         
         if viewType == .recentlyWatchedVideos {
             section.boundarySupplementaryItems = [ recentlyWatchedVideosSectionHeader() ]

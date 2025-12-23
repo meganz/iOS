@@ -9,8 +9,8 @@ import MEGASwiftUI
 import SwiftUI
 
 public final class VideoRevampSyncModel: ObservableObject {
-    @Published public var videoRevampSortOrderType: SortOrderEntity?
-    @Published public var videoRevampVideoPlaylistsSortOrderType: SortOrderEntity = .modificationAsc
+    @Published public var videoRevampSortOrderType: MEGADomain.SortOrderEntity?
+    @Published public var videoRevampVideoPlaylistsSortOrderType: MEGADomain.SortOrderEntity = .modificationAsc
     @Published public var editMode: EditMode = .inactive {
         didSet {
             showsTabView = editMode.isEditing ? false : true
