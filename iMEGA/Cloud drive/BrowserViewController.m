@@ -68,6 +68,7 @@
     self.incomingButton.titleLabel.adjustsFontForContentSizeCategory = YES;
     
     [self navigateToCurrentTargetActionBrowser];
+    [self setupLayoutForLiquidGlass];
 }
 
 - (void)viewWillAppear:(BOOL)animated {

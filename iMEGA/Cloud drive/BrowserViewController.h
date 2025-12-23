@@ -63,6 +63,7 @@ NS_SWIFT_UI_ACTOR
 @property (weak, nonatomic) IBOutlet UIView *cloudDriveLineView;
 @property (weak, nonatomic) IBOutlet UIView *incomingLineView;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *tableViewBottomLayoutConstraint;
 
 @property (nonatomic, strong, nullable) UIViewController *shimmerViewController;
 

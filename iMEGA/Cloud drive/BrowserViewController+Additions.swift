@@ -286,3 +286,19 @@ extension BrowserViewController: ViewType {
         }
     }
 }
+
+extension BrowserViewController {
+    @objc func setupLayoutForLiquidGlass() {
+        guard #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() else {
+            return
+        }
+        
+        if let tableViewBottomLayoutConstraint, let tableView {
+            tableViewBottomLayoutConstraint.priority = .defaultLow
+            tableViewBottomLayoutConstraint.isActive = false
+            let constraint = tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            constraint.priority = .required
+            constraint.isActive = true
+        }
+    }
+}
