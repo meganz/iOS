@@ -397,4 +397,11 @@ extension FolderLinkViewController {
             containerView?.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         }
     }
+    
+    @objc func clearBackBarButtonForLiquidGlass() {
+        guard #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() else {
+            return
+        }
+        clearBackBarButton()
+    }
 }

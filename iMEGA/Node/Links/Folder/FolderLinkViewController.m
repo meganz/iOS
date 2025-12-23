@@ -132,6 +132,7 @@
     
     [AppearanceManager forceSearchBarUpdate:self.searchController.searchBar];
     [self resetLayoutConstraintForLiquidGlass];
+    [self clearBackBarButtonForLiquidGlass];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
