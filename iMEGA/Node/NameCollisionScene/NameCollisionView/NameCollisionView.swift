@@ -1,3 +1,4 @@
+import MEGAAppPresentation
 import MEGADesignToken
 import MEGAL10n
 import SwiftUI
@@ -16,11 +17,20 @@ struct NameCollisionView: View {
                 Text(viewModel.duplicatedItem.isFile ? Strings.Localizable.NameCollision.Title.file : Strings.Localizable.NameCollision.Title.folder)
                     .font(.headline)
                 Spacer()
-                Button(Strings.Localizable.cancel) {
-                    viewModel.cancelResolveNameCollisions()
+                if #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() {
+                    Button(Strings.Localizable.cancel) {
+                        viewModel.cancelResolveNameCollisions()
+                    }
+                    .foregroundStyle(TokenColors.Text.primary.swiftUI)
+                    .accentColor(Color.primary)
+                    .buttonStyle(.glass)
+                } else {
+                    Button(Strings.Localizable.cancel) {
+                        viewModel.cancelResolveNameCollisions()
+                    }
+                    .foregroundStyle(TokenColors.Text.primary.swiftUI)
+                    .accentColor(Color.primary)
                 }
-                .foregroundStyle(TokenColors.Text.primary.swiftUI)
-                .accentColor(Color.primary)
             }
             .padding()
             
