@@ -25,6 +25,12 @@ protocol MediaTabContextMenuProvider {
     func contextMenuConfiguration() -> CMConfigEntity?
 }
 
+extension MediaTabContextMenuProvider {
+    func contextMenuConfiguration() -> CMConfigEntity? {
+        return nil
+    }
+}
+
 // MARK: - Node Action Display Mode Provider
 
 @MainActor

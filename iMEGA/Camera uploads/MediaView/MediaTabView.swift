@@ -61,6 +61,8 @@ struct MediaTabView: View {
                 router: albumTabViewModel.albumListViewRouter)
         case let timelineTabViewModel as MediaTimelineTabContentViewModel:
             NewTimelineView(viewModel: timelineTabViewModel.timelineViewModel)
+        case let playlistTabViewModel as PlaylistTabViewModel:
+            playlistView(playlistTabViewModel: playlistTabViewModel)
         default:
             placeholderView(for: tab)
         }
@@ -72,6 +74,15 @@ struct MediaTabView: View {
             viewModel: videoTabViewModel.videoListViewModel,
             videoConfig: videoTabViewModel.videoConfig,
             router: videoTabViewModel.router
+        )
+    }
+
+    @ViewBuilder
+    private func playlistView(playlistTabViewModel: PlaylistTabViewModel) -> some View {
+        PlaylistView(
+            viewModel: playlistTabViewModel.videoPlaylistsViewModel,
+            videoConfig: playlistTabViewModel.videoConfig,
+            router: playlistTabViewModel.router
         )
     }
 

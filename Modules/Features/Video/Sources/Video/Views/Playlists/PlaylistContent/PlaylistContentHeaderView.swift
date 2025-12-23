@@ -10,6 +10,7 @@ import SwiftUI
 struct PlaylistContentHeaderView: View {
     let viewState: VideoPlaylistContentViewModel.ViewState
     let previewEntity: VideoPlaylistCellPreviewEntity
+    let isMediaRevampEnabled: Bool
     let onTapAddButton: () -> Void
     
     var body: some View {
@@ -37,11 +38,11 @@ struct PlaylistContentHeaderView: View {
                         .font(.headline)
                         .lineLimit(2)
                         .foregroundStyle(TokenColors.Text.primary.swiftUI)
-                    
+
                     secondaryInformationView
                 }
-                
-                if previewEntity.shouldShowAddButton {
+
+                if previewEntity.shouldShowAddButton && !isMediaRevampEnabled {
                     addButton
                 }
             }
@@ -242,6 +243,7 @@ private func view(
             isExported: isExported,
             type: playlistType
         ),
+        isMediaRevampEnabled: false,
         onTapAddButton: {}
     )
 }

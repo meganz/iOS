@@ -1,8 +1,10 @@
 import ContentLibraries
 import MEGAAppPresentation
 import MEGAAssets
+import MEGADesignToken
 import MEGADomain
 import MEGAL10n
+import MEGASwiftUI
 import SwiftUI
 
 struct PlaylistContentScreen: View {
@@ -149,19 +151,30 @@ struct PlaylistContentView: View {
         _videoSelection = StateObject(wrappedValue: videoSelection())
         self.onTapAddButton = onTapAddButton
     }
+
+    private var isMediaRevampEnabled: Bool {
+        featureFlagProvider.isFeatureFlagEnabled(for: .mediaRevamp)
+    }
     
     var body: some View {
         VStack(spacing: 0) {
-            
             if !videoSelection.editMode.isEditing {
                 PlaylistContentHeaderView(
                     viewState: viewState,
                     previewEntity: previewEntity,
+                    isMediaRevampEnabled: isMediaRevampEnabled,
                     onTapAddButton: onTapAddButton
                 )
             }
-            
             content()
+        }
+        .overlay(alignment: .bottomTrailing) {
+            RoundedPrimaryImageButton(
+                image: MEGAAssets.Image.plus,
+                action: { onTapAddButton() }
+            )
+            .padding(TokenSpacing._5)
+            .opacity(isMediaRevampEnabled && !videoSelection.editMode.isEditing && previewEntity.shouldShowAddButton ? 1 : 0)
         }
         .background(videoConfig.colorAssets.pageBackgroundColor)
     }

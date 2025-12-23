@@ -600,9 +600,11 @@
 		4C0A556B2ED6F61900A58D8B /* MediaTabViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C0A55692ED6F61900A58D8B /* MediaTabViewModel.swift */; };
 		4C0A556C2ED6F61900A58D8B /* MediaTabViewControllerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C0A55682ED6F61900A58D8B /* MediaTabViewControllerFactory.swift */; };
 		4C0A557E2ED8319400A58D8B /* MediaTabProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C0A557D2ED8319400A58D8B /* MediaTabProtocols.swift */; };
-		4C0A55892ED9488F00A58D8B /* MockMediaTabViewModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C0A55882ED9488F00A58D8B /* MockMediaTabViewModels.swift */; };
 		4C1A20692EE2C01E00E41A44 /* VideoTabViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C1A20682EE2C01E00E41A44 /* VideoTabViewModel.swift */; };
 		4C1A206B2EE2C4FF00E41A44 /* MediaTabVideoFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C1A206A2EE2C4FF00E41A44 /* MediaTabVideoFactory.swift */; };
+		4C3ECC4C2EF39688005830F9 /* PlaylistTabViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3ECC4B2EF39688005830F9 /* PlaylistTabViewModel.swift */; };
+		4C3ECC4E2EF39B5C005830F9 /* MediaTabPlaylistFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3ECC4D2EF39B5C005830F9 /* MediaTabPlaylistFactory.swift */; };
+		4C3ECC662EF54822005830F9 /* PlaylistTabViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3ECC652EF54822005830F9 /* PlaylistTabViewModelTests.swift */; };
 		4C44DDB32EEAAD6500A408BB /* SharedItemsViewController+Toolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C44DDB22EEAAD6500A408BB /* SharedItemsViewController+Toolbar.swift */; };
 		4C6C8FFB2ED991F600095F34 /* MediaBottomToolbarAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6C8FF92ED991F600095F34 /* MediaBottomToolbarAction.swift */; };
 		4C6C90002ED9951400095F34 /* MediaBottomToolbarItemsFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6C8FFE2ED9951400095F34 /* MediaBottomToolbarItemsFactory.swift */; };
@@ -3444,9 +3446,11 @@
 		4C0A55682ED6F61900A58D8B /* MediaTabViewControllerFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaTabViewControllerFactory.swift; sourceTree = "<group>"; };
 		4C0A55692ED6F61900A58D8B /* MediaTabViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaTabViewModel.swift; sourceTree = "<group>"; };
 		4C0A557D2ED8319400A58D8B /* MediaTabProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaTabProtocols.swift; sourceTree = "<group>"; };
-		4C0A55882ED9488F00A58D8B /* MockMediaTabViewModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockMediaTabViewModels.swift; sourceTree = "<group>"; };
 		4C1A20682EE2C01E00E41A44 /* VideoTabViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoTabViewModel.swift; sourceTree = "<group>"; };
 		4C1A206A2EE2C4FF00E41A44 /* MediaTabVideoFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaTabVideoFactory.swift; sourceTree = "<group>"; };
+		4C3ECC4B2EF39688005830F9 /* PlaylistTabViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistTabViewModel.swift; sourceTree = "<group>"; };
+		4C3ECC4D2EF39B5C005830F9 /* MediaTabPlaylistFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaTabPlaylistFactory.swift; sourceTree = "<group>"; };
+		4C3ECC652EF54822005830F9 /* PlaylistTabViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistTabViewModelTests.swift; sourceTree = "<group>"; };
 		4C44DDB22EEAAD6500A408BB /* SharedItemsViewController+Toolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SharedItemsViewController+Toolbar.swift"; sourceTree = "<group>"; };
 		4C6C8FF92ED991F600095F34 /* MediaBottomToolbarAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaBottomToolbarAction.swift; sourceTree = "<group>"; };
 		4C6C8FFE2ED9951400095F34 /* MediaBottomToolbarItemsFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaBottomToolbarItemsFactory.swift; sourceTree = "<group>"; };
@@ -7772,6 +7776,7 @@
 			children = (
 				0E2658082EE9019F00AC3EF0 /* Albums */,
 				0E42E3332EEF4DDC00C3E524 /* Extensions */,
+				4C3ECC4A2EF39590005830F9 /* Playlists */,
 				0E7533A52EF1ECDC002BEE1E /* Timeline */,
 				4C6C8FFA2ED991F600095F34 /* Toolbar */,
 				4C1A206F2EE2CF6C00E41A44 /* Videos */,
@@ -7783,7 +7788,6 @@
 				4C0A55622ED6EFB500A58D8B /* MediaTabView.swift */,
 				4C0A55682ED6F61900A58D8B /* MediaTabViewControllerFactory.swift */,
 				4C0A55692ED6F61900A58D8B /* MediaTabViewModel.swift */,
-				4C0A55882ED9488F00A58D8B /* MockMediaTabViewModels.swift */,
 				4C6C903B2EDFE3A300095F34 /* NavigationBarItemViewBuilder.swift */,
 				4C6C901E2EDE8BEC00095F34 /* NavigationBarItemViewModel.swift */,
 			);
@@ -7797,6 +7801,15 @@
 				4C1A20682EE2C01E00E41A44 /* VideoTabViewModel.swift */,
 			);
 			path = Videos;
+			sourceTree = "<group>";
+		};
+		4C3ECC4A2EF39590005830F9 /* Playlists */ = {
+			isa = PBXGroup;
+			children = (
+				4C3ECC4D2EF39B5C005830F9 /* MediaTabPlaylistFactory.swift */,
+				4C3ECC4B2EF39688005830F9 /* PlaylistTabViewModel.swift */,
+			);
+			path = Playlists;
 			sourceTree = "<group>";
 		};
 		4C6C8FFA2ED991F600095F34 /* Toolbar */ = {
@@ -7818,6 +7831,7 @@
 				0EB6CDF42EF264CB009D2F05 /* MediaTimelineTabContentViewModelTests.swift */,
 				0E380B2B2EEB7DF9000991B9 /* MockMediaTabSharedResourceProvider.swift */,
 				0EE989372EEFBA6E00367F26 /* NewTimelineViewModelTests.swift */,
+				4C3ECC652EF54822005830F9 /* PlaylistTabViewModelTests.swift */,
 				4CEA86752EEA568200BF2A6A /* VideoTabViewModelTests.swift */,
 			);
 			path = Media;
@@ -15284,6 +15298,7 @@
 				4C0A556A2ED6F61900A58D8B /* MediaTab.swift in Sources */,
 				4CEA864B2EE82E0D00BF2A6A /* MediaTabHostingController+NodeAction.swift in Sources */,
 				4C6C90052ED99ADE00095F34 /* MediaTabHostingController.swift in Sources */,
+				4C3ECC4E2EF39B5C005830F9 /* MediaTabPlaylistFactory.swift in Sources */,
 				4C0A557E2ED8319400A58D8B /* MediaTabProtocols.swift in Sources */,
 				0E42E3352EEF4E0200C3E524 /* MediaTabSharedResourceProvider+Additions.swift in Sources */,
 				0E7533A92EF1ECDC002BEE1E /* MediaTabTimelineFactory.swift in Sources */,
@@ -15482,7 +15497,6 @@
 				A85740C52032F6B80033034C /* MOChatDraft+CoreDataClass.m in Sources */,
 				A85740C42032F6B80033034C /* MOChatDraft+CoreDataProperties.m in Sources */,
 				8387FC062C108363008EDDC4 /* MockCallControlsViewModel.swift in Sources */,
-				4C0A55892ED9488F00A58D8B /* MockMediaTabViewModels.swift in Sources */,
 				831D61A5218738D20038F5B8 /* MOFolderLayout+CoreDataClass.m in Sources */,
 				831D61A6218738D20038F5B8 /* MOFolderLayout+CoreDataProperties.m in Sources */,
 				24B022D72C75C429008D262D /* MOMediaDestination+CoreDataClass.m in Sources */,
@@ -15717,6 +15731,7 @@
 				C4CBDD82256EDD1200835CF5 /* PlayerCurrentStateEntity.swift in Sources */,
 				C450470125794A2800EE510E /* PlaylistHeaderFooterView.swift in Sources */,
 				C480AF422570F0F400898D48 /* PlaylistItemTableViewCell.swift in Sources */,
+				4C3ECC4C2EF39688005830F9 /* PlaylistTabViewModel.swift in Sources */,
 				5DD6B17224D6D54E00F14515 /* PrecedenceGroup.swift in Sources */,
 				B6A0CF1A28A08D1B00D7F52E /* PreferenceUseCase+Additions.swift in Sources */,
 				0E3A30A72C659B9400C91BD0 /* Preview_AlbumCoverUseCase.swift in Sources */,
@@ -16850,6 +16865,7 @@
 				258BA6302CCA363000349CD2 /* PhotoLibraryContentViewRouterTests.swift in Sources */,
 				6D98B0992C6318A600CF1558 /* PhotosBrowserViewModelTests.swift in Sources */,
 				258BA6322CCA36C400349CD2 /* PhotosViewModelTests.swift in Sources */,
+				4C3ECC662EF54822005830F9 /* PlaylistTabViewModelTests.swift in Sources */,
 				53A2552D2C36858600E7F10C /* Preview_ThumbnailLoaderTests.swift in Sources */,
 				259FA4032A3A949F00C038B2 /* ProfileViewModelTests.swift in Sources */,
 				A8AACC4A2E81921E00D463D9 /* ProgressIndicatorViewModelTests.swift in Sources */,

@@ -6,13 +6,13 @@ import MEGAL10n
 import MEGASwiftUI
 import SwiftUI
 
-struct PlaylistView: View {
+public struct PlaylistView: View {
     
     @StateObject private var viewModel: VideoPlaylistsViewModel
     private let videoConfig: VideoConfig
     private let router: any VideoRevampRouting
     
-    init(
+    public init(
         viewModel: @autoclosure @escaping () -> VideoPlaylistsViewModel,
         videoConfig: VideoConfig,
         router: some VideoRevampRouting
@@ -22,11 +22,21 @@ struct PlaylistView: View {
         self.router = router
     }
     
-    var body: some View {
-        VStack {
-            newPlaylistView
+    public var body: some View {
+        VStack(spacing: 0) {
+            if !viewModel.isMediaRevampEnabled {
+                newPlaylistView
+            }
             contentView
                 .overlay(placeholder)
+        }
+        .overlay(alignment: .bottomTrailing) {
+            if viewModel.isMediaRevampEnabled {
+                RoundedPrimaryImageButton(
+                    image: MEGAAssets.Image.plus,
+                    action: { viewModel.addPlaylistButtonTap() })
+                .padding(TokenSpacing._5)
+            }
         }
         .background(videoConfig.colorAssets.pageBackgroundColor)
         .alert(isPresented: $viewModel.shouldShowAddNewPlaylistAlert, viewModel.alertViewModel)

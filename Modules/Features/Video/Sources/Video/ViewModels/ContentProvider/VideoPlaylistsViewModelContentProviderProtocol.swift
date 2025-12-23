@@ -3,11 +3,11 @@ import MEGAL10n
 
 /// Handles the fetching/mapping/filtering of content to be consumed in VideoPlaylistsViewModel.
 /// This is used to separate concerns of breaching actor boundaries, when calling internal functions from different actors.
-protocol VideoPlaylistsViewModelContentProviderProtocol: Sendable {
-    
+public protocol VideoPlaylistsViewModelContentProviderProtocol: Sendable {
+
     /// Clear and invalidate any content and state, so that the next request for content will reload from source.
     func invalidateContent() async
-    
+
     /// Fetch all available playlists for this account, this includes System and User Playlists. And sort it according to the sort order
     /// - Parameter searchText: Search text to filter the loaded playlists by there name.
     /// - Parameter sortOrder: SortOrderEntity describing the order in which the playlists should be sorted
@@ -15,24 +15,24 @@ protocol VideoPlaylistsViewModelContentProviderProtocol: Sendable {
     func loadVideoPlaylists(searchText: String, sortOrder: SortOrderEntity) async throws -> [VideoPlaylistEntity]
 }
 
-actor VideoPlaylistsViewModelContentProvider: VideoPlaylistsViewModelContentProviderProtocol {
-    
+public actor VideoPlaylistsViewModelContentProvider: VideoPlaylistsViewModelContentProviderProtocol {
+
     private var playlistsContainer: LoadedVideoPlaylistsContainer = .empty
     private var latestRequest: VideoPlaylistLoadingRequest? {
         willSet { latestRequest?.cancel() }
     }
     private let videoPlaylistsUseCase: any VideoPlaylistUseCaseProtocol
-    
-    init(videoPlaylistsUseCase: some VideoPlaylistUseCaseProtocol) {
+
+    public init(videoPlaylistsUseCase: some VideoPlaylistUseCaseProtocol) {
         self.videoPlaylistsUseCase = videoPlaylistsUseCase
     }
     
-    func invalidateContent() async {
+    public func invalidateContent() async {
         latestRequest = nil
         playlistsContainer = .empty
     }
-    
-    func loadVideoPlaylists(searchText: String, sortOrder: SortOrderEntity) async throws -> [VideoPlaylistEntity] {
+
+    public func loadVideoPlaylists(searchText: String, sortOrder: SortOrderEntity) async throws -> [VideoPlaylistEntity] {
         
         // If there is an existing request, with same criteria return the task
         if let latestRequest,

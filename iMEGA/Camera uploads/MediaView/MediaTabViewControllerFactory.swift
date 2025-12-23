@@ -5,6 +5,7 @@ import MEGADomain
 import MEGAL10n
 import MEGAPermissions
 import MEGAPreference
+import MEGASwift
 import SwiftUI
 import UIKit
 import Video
@@ -104,12 +105,17 @@ struct MediaTabViewControllerFactory {
             navigationController: navigationController
         )
 
-        // WIP: Replace other mock ViewModels when ready
+        let playlistTabViewModel = MediaTabPlaylistFactory.makePlaylistTabViewModel(
+            syncModel: syncModel,
+            navigationController: navigationController,
+            hiddenNodesFeatureFlagEnabled: DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .hiddenNodes)
+        )
+
         return [
             .timeline: MediaTabTimelineFactory.makeMediaTimelineTabContentViewModel(navigationController: navigationController),
             .album: MediaTabAlbumFactory.makeMediaAlbumTabContentViewModel(navigationController: navigationController),
             .video: videoTabViewModel,
-            .playlist: MockPlaylistViewModel()
+            .playlist: playlistTabViewModel
         ]
     }
 

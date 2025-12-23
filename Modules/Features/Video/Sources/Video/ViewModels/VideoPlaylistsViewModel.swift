@@ -12,7 +12,7 @@ enum ShareLinkActionMenuMode: Equatable {
     case manageAndRemoveLink
 }
 
-final class VideoPlaylistsViewModel: VideoPlaylistsContentViewModelProtocol {
+public final class VideoPlaylistsViewModel: VideoPlaylistsContentViewModelProtocol {
     
     enum ViewState: Equatable {
         case partial
@@ -29,11 +29,11 @@ final class VideoPlaylistsViewModel: VideoPlaylistsContentViewModelProtocol {
         case reinitialise
     }
     
-    let thumbnailLoader: any ThumbnailLoaderProtocol
+    public let thumbnailLoader: any ThumbnailLoaderProtocol
     private let videoPlaylistsUseCase: any VideoPlaylistUseCaseProtocol
-    private(set) var videoPlaylistContentUseCase: any VideoPlaylistContentsUseCaseProtocol
+    public private(set) var videoPlaylistContentUseCase: any VideoPlaylistContentsUseCaseProtocol
     private let videoPlaylistModificationUseCase: any VideoPlaylistModificationUseCaseProtocol
-    let sortOrderPreferenceUseCase: any SortOrderPreferenceUseCaseProtocol
+    public let sortOrderPreferenceUseCase: any SortOrderPreferenceUseCaseProtocol
     private let accountStorageUseCase: any AccountStorageUseCaseProtocol
 
     private let syncModel: VideoRevampSyncModel
@@ -41,8 +41,8 @@ final class VideoPlaylistsViewModel: VideoPlaylistsContentViewModelProtocol {
     private let featureFlagProvider: any FeatureFlagProviderProtocol
     private let videoRevampRouter: any VideoRevampRouting
     
-    let setSelection = SetSelection()
-    @Published var videoPlaylists = [VideoPlaylistEntity]()
+    public let setSelection = SetSelection()
+    @Published public var videoPlaylists = [VideoPlaylistEntity]()
     @Published var shouldShowAddNewPlaylistAlert = false
     @Published var playlistName = ""
     @Published var shouldShowVideoPlaylistPicker = false
@@ -64,7 +64,11 @@ final class VideoPlaylistsViewModel: VideoPlaylistsContentViewModelProtocol {
     }
     
     @Published var shareLinkContextActionForSelectedVideoPlaylistMode: ShareLinkActionMenuMode = .hidden
-    
+
+    public var isMediaRevampEnabled: Bool {
+        featureFlagProvider.isFeatureFlagEnabled(for: .mediaRevamp)
+    }
+
     private(set) var alertViewModel: TextFieldAlertViewModel
     private(set) var renameVideoPlaylistAlertViewModel: TextFieldAlertViewModel
     
@@ -78,7 +82,7 @@ final class VideoPlaylistsViewModel: VideoPlaylistsContentViewModelProtocol {
     private var monitorVideoPlaylistsUpdatesTask: Task<Void, Never>? {
         didSet { oldValue?.cancel() }
     }
-    init(
+    public init(
         videoPlaylistsUseCase: some VideoPlaylistUseCaseProtocol,
         videoPlaylistContentUseCase: some VideoPlaylistContentsUseCaseProtocol,
         videoPlaylistModificationUseCase: some VideoPlaylistModificationUseCaseProtocol,
