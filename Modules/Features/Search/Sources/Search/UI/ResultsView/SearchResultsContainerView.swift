@@ -18,7 +18,7 @@ public struct SearchResultsContainerView: View {
                 .transition(.opacity)
 
             SearchResultsView(viewModel: viewModel.searchResultsViewModel) {
-                if viewModel.displayedHeaderSection == .sortingAndViewMode {
+                if viewModel.shouldShowSortingAndViewModeHeader {
                     SearchResultsHeaderView {
                         SearchResultsHeaderSortView(
                             viewModel: viewModel.sortHeaderViewModel,

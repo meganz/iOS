@@ -1,3 +1,4 @@
+import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGADomain
 import MEGAL10n
@@ -46,8 +47,12 @@ struct CloudDriveContextMenuConfigFactory {
                 currentViewMode: currentViewMode,
                 sortOrder: sortOrder
             )
+        } else if displayMode == .rubbishBin
+                    && isRubbishRoot(node: parentNode)
+                    && DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .cloudDriveRevamp) {
+            return .init(menuType: .menu(type: .rubbishBin), isRubbishBinFolder: true, isRubbishBinRootFolder: true)
         }
-        
+
         return defaultConfig(
             parentNode: parentNode,
             nodeAccessType: nodeAccessType,

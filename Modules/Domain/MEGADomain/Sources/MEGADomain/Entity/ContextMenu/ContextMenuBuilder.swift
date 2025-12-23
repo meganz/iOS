@@ -6,6 +6,7 @@ public final class ContextMenuBuilder {
     private var filterType: FilterEntity = .allMedia
     private var isAFolder: Bool = false
     private var isRubbishBinFolder: Bool = false
+    private var isRubbishBinRootFolder: Bool = false
     private var isOfflineFolder: Bool = false
     private var isViewInFolder = false
     private var isRestorable: Bool = false
@@ -87,7 +88,12 @@ public final class ContextMenuBuilder {
         self.isRubbishBinFolder = isRubbishBinFolder
         return self
     }
-    
+
+    public func setIsRubbishBinRootFolder(_ isRubbishBinRootFolder: Bool) -> ContextMenuBuilder {
+        self.isRubbishBinRootFolder = isRubbishBinRootFolder
+        return self
+    }
+
     public func setIsOfflineFolder(_ isOfflineFolder: Bool) -> ContextMenuBuilder {
         self.isOfflineFolder = isOfflineFolder
         return self
@@ -317,7 +323,7 @@ public final class ContextMenuBuilder {
             case .display:
                 return displayMenu()
             case .rubbishBin:
-                return rubbishBinChildFolderMenu()
+                return rubbishBinFolderMenu()
             case .chat:
                 return chatMenu()
             case .qr:
@@ -583,8 +589,12 @@ public final class ContextMenuBuilder {
     }
     
     // MARK: - Rubbish Bin Children Context Actions grouping functions
-    private func rubbishBinChildFolderMenu() -> CMEntity {
-        CMEntity(displayInline: true, children: [selectMenu(), viewTypeMenu(), sortMenu(), rubbishBinChildQuickActionsMenu()])
+    private func rubbishBinFolderMenu() -> CMEntity {
+        if isRubbishBinRootFolder {
+            CMEntity(displayInline: true, children: [rubbishBinMenu()])
+        } else {
+            CMEntity(displayInline: true, children: [selectMenu(), viewTypeMenu(), sortMenu(), rubbishBinChildQuickActionsMenu()])
+        }
     }
     
     private func rubbishBinChildQuickActionsMenu() -> CMEntity {

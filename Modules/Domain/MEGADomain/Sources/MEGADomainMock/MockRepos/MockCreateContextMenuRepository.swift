@@ -13,6 +13,7 @@ public final class MockCreateContextMenuRepository: CreateContextMenuRepositoryP
             .setFilterType(config.filterType)
             .setIsAFolder(config.isAFolder)
             .setIsRubbishBinFolder(config.isRubbishBinFolder)
+            .setIsRubbishBinRootFolder(config.isRubbishBinRootFolder)
             .setIsOfflineFolder(config.isOfflineFolder)
             .setIsRestorable(config.isRestorable)
             .setIsInVersionsView(config.isInVersionsView)

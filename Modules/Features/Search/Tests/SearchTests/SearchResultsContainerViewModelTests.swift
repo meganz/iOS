@@ -496,6 +496,20 @@ struct SearchResultsContainerViewModelTests {
         #expect(sut.sortHeaderViewModel.displaySortOptionsViewModel.sortOptions.map(\.sortOrder).notContains(expectedSortOrder))
     }
 
+    @Test
+    func testShouldShowSortingAndViewModeHeader_whenEmptyViewModelIsNotNil_shouldReturnTrue() async throws {
+        let sut = makeSUT(headerType: .dynamic)
+        #expect(sut.shouldShowSortingAndViewModeHeader)
+        sut.searchResultsViewModel.emptyViewModel = .init(
+            image: Image(systemName: "plus"),
+            title: "",
+            font: .body,
+            titleTextColor: nil
+        )
+
+        #expect(sut.shouldShowSortingAndViewModeHeader == false)
+    }
+
     typealias SUT = SearchResultsContainerViewModel
     private func makeSUT(
         sortOptionsViewModel: SearchResultsSortOptionsViewModel = .init(title: "", sortOptions: [

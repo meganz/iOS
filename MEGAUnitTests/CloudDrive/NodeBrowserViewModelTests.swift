@@ -745,6 +745,18 @@ class NodeBrowserViewModelTests: XCTestCase {
     }
 
     @MainActor
+    func testShouldShowContextMenu_ForRubbishBin_shouldReturnTrue() {
+        let harness = Harness(node: .init(), config: .init(displayMode: .rubbishBin))
+        XCTAssertTrue(harness.sut.shouldShowContextMenu)
+    }
+
+    @MainActor
+    func testShouldShowContextMenu_ForCloudDrive_shouldReturnFalse() {
+        let harness = Harness(node: .init(), config: .init(displayMode: .cloudDrive))
+        XCTAssertFalse(harness.sut.shouldShowContextMenu)
+    }
+
+    @MainActor
     private func assertNoBannerIsDisplayed(for displayMode: DisplayMode) {
         let (harness, _) = makeHarness(
             shouldShowStorageBanner: true,

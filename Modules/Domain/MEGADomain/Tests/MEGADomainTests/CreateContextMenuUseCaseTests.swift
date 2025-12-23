@@ -515,7 +515,22 @@ final class CreateContextMenuUseCaseTests: XCTestCase {
         
         XCTAssertTrue(menuActions == menuActionsArray)
     }
-    
+
+    func testCreateContextMenu_RubbishBinRoot() throws {
+        let cmRubbishBinRootEntity = try contextMenuActionEntity(
+            with: CMConfigEntity(
+                menuType: .menu(type: .rubbishBin),
+                isRubbishBinFolder: true,
+                isRubbishBinRootFolder: true
+            )
+        )
+
+        let menuActions = decomposeMenuIntoActions(menu: cmRubbishBinRootEntity)
+        menuActionsArray = [.display(actionType: .clearRubbishBin)]
+
+        XCTAssertTrue(menuActions == menuActionsArray)
+    }
+
     func testCreateContextMenu_whenUsedOnAlbum_shouldReturnRightAlbumMenu() throws {
         let cmEntity1 = try contextMenuActionEntity(with: CMConfigEntity(menuType: .menu(type: .album)))
         let menuActions1 = decomposeMenuIntoActions(menu: cmEntity1)

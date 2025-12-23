@@ -14,6 +14,7 @@ public struct CreateContextMenuRepository: CreateContextMenuRepositoryProtocol {
             .setFilterType(config.filterType)
             .setIsAFolder(config.isAFolder)
             .setIsRubbishBinFolder(config.isRubbishBinFolder)
+            .setIsRubbishBinRootFolder(config.isRubbishBinRootFolder)
             .setIsViewInFolder(config.isViewInFolder)
             .setIsOfflineFolder(config.isOfflineFolder)
             .setIsRestorable(config.isRestorable)

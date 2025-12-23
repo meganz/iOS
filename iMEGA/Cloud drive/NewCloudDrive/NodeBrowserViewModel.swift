@@ -124,6 +124,16 @@ class NodeBrowserViewModel: ObservableObject {
         && parentNode.nodeType != .rubbish
     }
 
+    /// Determines whether the context menu should be displayed.
+    ///
+    /// The context menu is shown when in rubbish bin display mode currently and the option like
+    /// empty rubbish bin, restore and info option needs to be shown.
+    ///
+    /// - Returns: `true` if the display mode is rubbish bin, `false` otherwise.
+    var shouldShowContextMenu: Bool {
+        config.displayMode == .rubbishBin
+    }
+
     private let sortHeaderCoordinatorForMD: SearchResultsSortHeaderCoordinator
 
     var sortHeaderViewModelForMD: SearchResultsHeaderSortViewViewModel {

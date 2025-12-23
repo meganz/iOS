@@ -38,6 +38,8 @@ public class SearchResultsContainerViewModel: ObservableObject {
         sortHeaderCoordinator.headerViewModel
     }
 
+    @Published private(set) var shouldShowSortingAndViewModeHeader: Bool = false
+
     let viewModeHeaderViewModel: SearchResultsHeaderViewModeViewModel
     @Published public private(set) var displayedHeaderSection: DisplayedHeaderSection = .none
     private var showSorting: Bool = false
@@ -95,6 +97,8 @@ public class SearchResultsContainerViewModel: ObservableObject {
             }
             .store(in: &subscriptions)
         self.searchResultsViewModel.interactor = self
+
+        observeSortingAnViewHeaderVisibility()
     }
 
     func task() async {
@@ -341,5 +345,16 @@ public extension SearchResultsContainerViewModel {
 
     func toggleSelectAll() {
         searchResultsViewModel.toggleSelectAll()
+    }
+
+    private func observeSortingAnViewHeaderVisibility() {
+        $displayedHeaderSection
+            .combineLatest(searchResultsViewModel.$emptyViewModel)
+            .map { $0 == .sortingAndViewMode && $1 == nil }
+            .removeDuplicates()
+            .sink { [weak self] in
+                self?.shouldShowSortingAndViewModeHeader = $0
+            }
+            .store(in: &subscriptions)
     }
 }

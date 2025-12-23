@@ -126,17 +126,18 @@ struct NodeBrowserView: View {
 
     @ViewBuilder
     private var moreOptionsView: some View {
-        if isCloudDriveRevampEnabled {
-            if viewModel.hasParentNode {
-                ImageButtonWrapper(
-                    image: Image(uiImage: MEGAAssets.UIImage.moreNavigationBar),
-                    imageColor: TokenColors.Icon.primary.swiftUI,
-                    action: viewModel.moreOptionsButtonTapped
-                )
-                .frame(width: 38, height: 38)
-            }
-        } else {
+        switch (isCloudDriveRevampEnabled, viewModel.hasParentNode, viewModel.shouldShowContextMenu) {
+        case (true, true, _):
+            ImageButtonWrapper(
+                image: Image(uiImage: MEGAAssets.UIImage.moreNavigationBar),
+                imageColor: TokenColors.Icon.primary.swiftUI,
+                action: viewModel.moreOptionsButtonTapped
+            )
+            .frame(width: 38, height: 38)
+        case (true, false, true), (false, _, _):
             viewModel.contextMenuViewFactory?.makeContextMenuWithButtonView()
+        default:
+            EmptyView()
         }
     }
 

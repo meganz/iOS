@@ -9,6 +9,7 @@ import Foundation
 ///     - sortType: The selected sort type for this folder
 ///     - filterType: The selected filter type for this album
 ///     - isRubbishBinFolder: Indicates whether or not it is the RubbishBin folder
+///     - isRubbishBinRootFolder: Indicates whether or not it is the RubbishBin Root folder
 ///     - isRestorable: Indicates if the current node is restorable
 ///     - isOfflineFolder: Indicates whether or not it is the Offline folder
 ///     - isInVersionsView: Indicates whether or not it is versions view
@@ -52,6 +53,7 @@ public struct CMConfigEntity: Sendable {
     public var filterType: FilterEntity?
     public var isAFolder: Bool
     public var isRubbishBinFolder: Bool
+    public var isRubbishBinRootFolder: Bool
     public var isViewInFolder: Bool
     public var isRestorable: Bool
     public var isInVersionsView: Bool
@@ -107,6 +109,7 @@ public struct CMConfigEntity: Sendable {
         filterType: FilterEntity? = nil,
         isAFolder: Bool = false,
         isRubbishBinFolder: Bool = false,
+        isRubbishBinRootFolder: Bool = false,
         isViewInFolder: Bool = false,
         isRestorable: Bool = false,
         isInVersionsView: Bool = false,
@@ -161,6 +164,7 @@ public struct CMConfigEntity: Sendable {
         self.filterType = filterType
         self.isAFolder = isAFolder
         self.isRubbishBinFolder = isRubbishBinFolder
+        self.isRubbishBinRootFolder = isRubbishBinRootFolder
         self.isViewInFolder = isViewInFolder
         self.isRestorable = isRestorable
         self.isInVersionsView = isInVersionsView
