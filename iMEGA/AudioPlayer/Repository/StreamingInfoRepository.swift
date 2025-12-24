@@ -47,9 +47,7 @@ final class StreamingInfoRepository: StreamingInfoRepositoryProtocol {
     }
     
     func streamingURL(for node: MEGANode) -> URL? {
-        sdk.httpServerIsLocalOnly() ?
-                                sdk.httpServerGetLocalLink(node) :
-                                sdk.httpServerGetLocalLink(node)?.updatedURLWithCurrentAddress()
+        sdk.httpServerGetLocalLink(node)
     }
     
     func isLocalHTTPServerRunning() -> Bool {

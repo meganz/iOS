@@ -50,6 +50,17 @@ extension MEGAAVViewController {
         return NSMutableSet(set: subscriptions)
     }
     
+    func replaceURLForAirPlay(activated: Bool) {
+        guard player != nil, let fileUrl, let node else { return }
+        
+        if activated {
+            let airPlayURL = fileUrl.updatedURLWithCurrentAddress()
+            replacePlayerItemURL(to: airPlayURL, for: node)
+        } else {
+            replacePlayerItemURL(to: fileUrl, for: node)
+        }
+    }
+    
     @objc func movieStalledCallback() {
         playerDidStall()
     }
@@ -80,6 +91,23 @@ extension MEGAAVViewController {
             .store(in: &subscriptions)
         
         return NSMutableSet(set: subscriptions)
+    }
+    
+    private func bindPlayerExternalPlayback() -> NSSet {
+        var subscriptions = Set<AnyCancellable>()
+        player?.publisher(for: \.isExternalPlaybackActive)
+            .removeDuplicates()
+            .scan((old: false, new: false)) { state, value in
+                (old: state.new, new: value)
+            }
+            .dropFirst()
+            .sink { [weak self] state in
+                guard state.old != state.new else { return }
+                MEGALogInfo("Airplay active: \(state.new),\(self?.player?.isExternalPlaybackActive ?? false)")
+                self?.replaceURLForAirPlay(activated: state.new)
+            }
+            .store(in: &subscriptions)
+        return NSSet(set: subscriptions)
     }
     
     private func seekTo(mediaDestination: MOMediaDestination?, playerItem: AVPlayerItem) {
@@ -237,27 +265,26 @@ extension MEGAAVViewController {
         
         if oldFileURL != fileUrl {
             MEGALogDebug("[MEGAAVViewController] fileUrl changed from \(oldFileURL) to \(fileUrl)")
-            let currentTime = self.player?.currentTime()
-            let newPlayerItem = AVPlayerItem(url: fileUrl)
-            setPlayerItemMetadata(playerItem: newPlayerItem, node: node)
-            self.player?.replaceCurrentItem(with: newPlayerItem)
-            
-            guard let currentTime, currentTime.isValid else { return }
-            self.player?.seek(to: currentTime)
+            replacePlayerItemURL(to: fileUrl, for: node)
         }
+    }
+    
+    private func replacePlayerItemURL(to fileUrl: URL, for node: MEGANode) {
+        MEGALogDebug("[MEGAAVViewController]: playeritem url replaced to: \(fileUrl)")
+        let currentTime = self.player?.currentTime()
+        let newPlayerItem = AVPlayerItem(url: fileUrl)
+        setPlayerItemMetadata(playerItem: newPlayerItem, node: node)
+        self.player?.replaceCurrentItem(with: newPlayerItem)
+        
+        guard let currentTime, currentTime.isValid else { return }
+        self.player?.seek(to: currentTime)
     }
     
     private func setFileUrl(apiForStreaming: MEGASdk, node: MEGANode) {
         MEGALogDebug("[MEGAAVViewController]: setFileUrl with node: \(node)")
-        if apiForStreaming.httpServerIsLocalOnly() {
-            guard let url = apiForStreaming.httpServerGetLocalLink(node) else { return }
-            MEGALogDebug("[MEGAAVViewController]: setFileUrl with apiForStreaming.httpServerIsLocalOnly result: \(url)")
-            fileUrl = url
-        } else {
-            guard let url = apiForStreaming.httpServerGetLocalLink(node)?.updatedURLWithCurrentAddress() else { return }
-            MEGALogDebug("[MEGAAVViewController]: setFileUrl updatedURLWithCurrentAddress result: \(url)")
-            fileUrl = url
-        }
+        guard let url = apiForStreaming.httpServerGetLocalLink(node) else { return }
+        MEGALogDebug("[MEGAAVViewController]: setFileUrl with apiForStreaming.httpServerIsLocalOnly: \(apiForStreaming.httpServerIsLocalOnly()) result: \(url)")
+        fileUrl = url
     }
     
     private func logError(for playerItem: AVPlayerItem) {
@@ -332,6 +359,7 @@ extension MEGAAVViewController {
         setupVideoMetricsTracking()
         player?.play()
         subscriptions.add(bindPlayerTimeControlStatus())
+        subscriptions.add(bindPlayerExternalPlayback())
     }
     
     @objc func beginAudioPlayerInterruptionIfNeeded() {
