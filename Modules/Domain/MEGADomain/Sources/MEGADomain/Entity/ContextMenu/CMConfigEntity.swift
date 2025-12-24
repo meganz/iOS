@@ -93,6 +93,7 @@ public struct CMConfigEntity: Sendable {
     public var isHidden: Bool?
     public var isCameraUploadsEnabled: Bool
     public var isPlaylistSharingFeatureFlagEnabled: Bool
+    public var isMediaRevampEnabled: Bool
     public var isTakenDown: Bool
     public var isDecrypted: Bool = true
     public var isS4Container: Bool = false
@@ -149,6 +150,7 @@ public struct CMConfigEntity: Sendable {
         isHidden: Bool? = nil,
         isCameraUploadsEnabled: Bool = false,
         isPlaylistSharingFeatureFlagEnabled: Bool = false,
+        isMediaRevampEnabled: Bool = false,
         isTakenDown: Bool = false,
         isDecrypted: Bool = true,
         isS4Container: Bool = false,
@@ -204,6 +206,7 @@ public struct CMConfigEntity: Sendable {
         self.isHidden = isHidden
         self.isCameraUploadsEnabled = isCameraUploadsEnabled
         self.isPlaylistSharingFeatureFlagEnabled = isPlaylistSharingFeatureFlagEnabled
+        self.isMediaRevampEnabled = isMediaRevampEnabled
         self.isTakenDown = isTakenDown
         self.isDecrypted = isDecrypted
         self.isS4Container = isS4Container

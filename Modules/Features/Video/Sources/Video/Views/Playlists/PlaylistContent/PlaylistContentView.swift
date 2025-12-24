@@ -5,6 +5,7 @@ import MEGADesignToken
 import MEGADomain
 import MEGAL10n
 import MEGASwiftUI
+import MEGAUIComponent
 import SwiftUI
 
 struct PlaylistContentScreen: View {
@@ -41,6 +42,7 @@ struct PlaylistContentScreen: View {
             nodeUseCase: viewModel.nodeUseCase,
             featureFlagProvider: viewModel.featureFlagProvider,
             videoSelection: videoSelection,
+            sortHeaderViewModel: viewModel.sortHeaderViewModel,
             onTapAddButton: { viewModel.shouldShowVideoPlaylistPicker = true }
         )
         .task {
@@ -120,6 +122,7 @@ struct PlaylistContentView: View {
     private let playlistType: VideoPlaylistEntityType
     let router: any VideoRevampRouting
     @StateObject private var videoSelection: VideoSelection
+    @StateObject private var sortHeaderViewModel: SortHeaderViewModel
     private let onTapAddButton: () -> Void
     
     init(
@@ -135,6 +138,7 @@ struct PlaylistContentView: View {
         nodeUseCase: some NodeUseCaseProtocol,
         featureFlagProvider: some FeatureFlagProviderProtocol,
         videoSelection: @autoclosure @escaping () -> VideoSelection,
+        sortHeaderViewModel: @autoclosure @escaping () -> SortHeaderViewModel,
         onTapAddButton: @escaping () -> Void
     ) {
         self.videoConfig = videoConfig
@@ -149,6 +153,7 @@ struct PlaylistContentView: View {
         self.playlistType = playlistType
         self.router = router
         _videoSelection = StateObject(wrappedValue: videoSelection())
+        _sortHeaderViewModel = StateObject(wrappedValue: sortHeaderViewModel())
         self.onTapAddButton = onTapAddButton
     }
 
@@ -166,6 +171,10 @@ struct PlaylistContentView: View {
                     onTapAddButton: onTapAddButton
                 )
             }
+            if isMediaRevampEnabled && !videoSelection.editMode.isEditing {
+                sortHeaderView()
+                    .frame(height: 36)
+            }
             content()
         }
         .overlay(alignment: .bottomTrailing) {
@@ -177,6 +186,16 @@ struct PlaylistContentView: View {
             .opacity(isMediaRevampEnabled && !videoSelection.editMode.isEditing && previewEntity.shouldShowAddButton ? 1 : 0)
         }
         .background(videoConfig.colorAssets.pageBackgroundColor)
+    }
+    
+    @ViewBuilder
+    private func sortHeaderView() -> some View {
+        ResultsHeaderView(height: 44, leftView: {
+            SortHeaderView(
+                viewModel: sortHeaderViewModel,
+                horizontalPadding: TokenSpacing._5
+            )
+        })
     }
     
     @ViewBuilder
@@ -229,6 +248,7 @@ struct PlaylistContentView: View {
             selection: videoSelection,
             router: router,
             viewType: .playlistContent(type: playlistType),
+            sectionTopInset: (isMediaRevampEnabled && !videoSelection.editMode.isEditing) ? 0 : TokenSpacing._5,
             thumbnailLoader: thumbnailLoader,
             sensitiveNodeUseCase: sensitiveNodeUseCase,
             nodeUseCase: nodeUseCase,
@@ -259,6 +279,14 @@ struct PlaylistContentView: View {
         nodeUseCase: Preview_NodeUseCase(),
         featureFlagProvider: Preview_FeatureFlagProvider(isFeatureFlagEnabled: false),
         videoSelection: VideoSelection(),
+        sortHeaderViewModel: SortHeaderViewModel(
+            selectedOption: SortOption(
+                sortOrder: SortOrder(key: .lastModified),
+                title: "Last Modified",
+                iconsByDirection: VideoSortOptionsFactory.iconsByDirection
+            ),
+            displaySortOptionsViewModel: SortOptionsViewModel(title: "Sort", sortOptions: [], tapHandler: nil)
+        ),
         onTapAddButton: {}
     )
 }
@@ -286,6 +314,14 @@ struct PlaylistContentView: View {
         nodeUseCase: Preview_NodeUseCase(),
         featureFlagProvider: Preview_FeatureFlagProvider(isFeatureFlagEnabled: false),
         videoSelection: VideoSelection(),
+        sortHeaderViewModel: SortHeaderViewModel(
+            selectedOption: SortOption(
+                sortOrder: SortOrder(key: .lastModified),
+                title: "Last Modified",
+                iconsByDirection: VideoSortOptionsFactory.iconsByDirection
+            ),
+            displaySortOptionsViewModel: SortOptionsViewModel(title: "Sort", sortOptions: [], tapHandler: nil)
+        ),
         onTapAddButton: {}
     )
     .preferredColorScheme(.dark)
@@ -316,6 +352,14 @@ struct PlaylistContentView: View {
         nodeUseCase: Preview_NodeUseCase(),
         featureFlagProvider: Preview_FeatureFlagProvider(isFeatureFlagEnabled: false),
         videoSelection: VideoSelection(),
+        sortHeaderViewModel: SortHeaderViewModel(
+            selectedOption: SortOption(
+                sortOrder: SortOrder(key: .lastModified),
+                title: "Last Modified",
+                iconsByDirection: VideoSortOptionsFactory.iconsByDirection
+            ),
+            displaySortOptionsViewModel: SortOptionsViewModel(title: "Sort", sortOptions: [], tapHandler: nil)
+        ),
         onTapAddButton: {}
     )
     .preferredColorScheme(.dark)
@@ -344,6 +388,14 @@ struct PlaylistContentView: View {
         nodeUseCase: Preview_NodeUseCase(),
         featureFlagProvider: Preview_FeatureFlagProvider(isFeatureFlagEnabled: false),
         videoSelection: VideoSelection(),
+        sortHeaderViewModel: SortHeaderViewModel(
+            selectedOption: SortOption(
+                sortOrder: SortOrder(key: .lastModified),
+                title: "Last Modified",
+                iconsByDirection: VideoSortOptionsFactory.iconsByDirection
+            ),
+            displaySortOptionsViewModel: SortOptionsViewModel(title: "Sort", sortOptions: [], tapHandler: nil)
+        ),
         onTapAddButton: {}
     )
 }
@@ -371,6 +423,14 @@ struct PlaylistContentView: View {
         nodeUseCase: Preview_NodeUseCase(),
         featureFlagProvider: Preview_FeatureFlagProvider(isFeatureFlagEnabled: false),
         videoSelection: VideoSelection(),
+        sortHeaderViewModel: SortHeaderViewModel(
+            selectedOption: SortOption(
+                sortOrder: SortOrder(key: .lastModified),
+                title: "Last Modified",
+                iconsByDirection: VideoSortOptionsFactory.iconsByDirection
+            ),
+            displaySortOptionsViewModel: SortOptionsViewModel(title: "Sort", sortOptions: [], tapHandler: nil)
+        ),
         onTapAddButton: {}
     )
     .preferredColorScheme(.dark)

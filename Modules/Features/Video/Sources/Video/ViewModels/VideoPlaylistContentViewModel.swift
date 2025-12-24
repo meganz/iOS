@@ -6,6 +6,7 @@ import MEGAAppPresentation
 import MEGADomain
 import MEGAL10n
 import MEGASwiftUI
+import MEGAUIComponent
 
 @MainActor
 public protocol VideoPlaylistContentViewModelSelectionDelegate: AnyObject {
@@ -35,6 +36,7 @@ final class VideoPlaylistContentViewModel: ObservableObject {
     private let accountStorageUseCase: any AccountStorageUseCaseProtocol
     private let videoRevampRouter: any VideoRevampRouting
     private let syncModel: VideoRevampSyncModel
+    private let sortHeaderCoordinator: SortHeaderCoordinator
     
     @Published public private(set) var videos: [NodeEntity] = []
     @Published var headerPreviewEntity: VideoPlaylistCellPreviewEntity = .placeholder
@@ -72,7 +74,11 @@ final class VideoPlaylistContentViewModel: ObservableObject {
     private(set) var moveVideoInVideoPlaylistContentToRubbishBinTask: Task<Void, Never>?
     
     private var subscriptions = Set<AnyCancellable>()
-    
+
+    var sortHeaderViewModel: SortHeaderViewModel {
+        sortHeaderCoordinator.headerViewModel
+    }
+
     init(
         videoPlaylistEntity: VideoPlaylistEntity,
         videoPlaylistContentsUseCase: some VideoPlaylistContentsUseCaseProtocol,
@@ -109,7 +115,20 @@ final class VideoPlaylistContentViewModel: ObservableObject {
         self.videoRevampRouter = videoRevampRouter
         self.featureFlagProvider = featureFlagProvider
         self.syncModel = syncModel
-        
+
+        self.sortHeaderCoordinator = .init(
+            sortOptionsViewModel: .init(
+                title: Strings.Localizable.sortTitle,
+                sortOptions: VideoSortOptionsFactory.makeAll()
+            ),
+            currentSortOrderProvider: {
+                sortOrderPreferenceUseCase.sortOrder(for: .videoPlaylistContent).toUIComponentSortOrderEntity()
+            },
+            sortOptionSelectionHandler: { @MainActor sortOption in
+                sortOrderPreferenceUseCase.save(sortOrder: sortOption.sortOrder.toDomainSortOrderEntity(), for: .videoPlaylistContent)
+            }
+        )
+
         assignVideoPlaylistRenameValidator()
         
         self.renameVideoPlaylistAlertViewModel.action = { [weak self] newVideoPlaylistName in

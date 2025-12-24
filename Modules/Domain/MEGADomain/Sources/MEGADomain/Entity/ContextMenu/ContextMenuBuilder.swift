@@ -44,6 +44,7 @@ public final class ContextMenuBuilder {
     private var isHidden: Bool?
     private var isCameraUploadsEnabled: Bool = false
     private var isVideoPlaylistSharingFeatureFlagEnabled: Bool = false
+    private var isMediaRevampEnabled: Bool = false
     private var isTakenDown: Bool = false
     private var isDecrypted: Bool = true
     private var isS4Container: Bool = false
@@ -278,7 +279,12 @@ public final class ContextMenuBuilder {
         self.isVideoPlaylistSharingFeatureFlagEnabled = isEnabled
         return self
     }
-    
+
+    public func setIsMediaRevampEnabled(_ isEnabled: Bool) -> ContextMenuBuilder {
+        self.isMediaRevampEnabled = isEnabled
+        return self
+    }
+
     public func setIsTakenDown(_ isTakenDown: Bool) -> ContextMenuBuilder {
         self.isTakenDown = isTakenDown
         return self
@@ -795,10 +801,10 @@ public final class ContextMenuBuilder {
                     isVideoPlaylistSharingFeatureFlagEnabled ? shareLink : nil,
                     rename,
                     isEmptyState ? nil : select,
-                    addVideosToVideoPlaylistContent
+                    isMediaRevampEnabled ? nil : addVideosToVideoPlaylistContent
                 ].compactMap { $0 }
             ))
-            displayActionsMenuChildren.append(isEmptyState ? nil : sortMenu())
+            displayActionsMenuChildren.append(isEmptyState || isMediaRevampEnabled ? nil : sortMenu())
             displayActionsMenuChildren.append(deleteMenu)
         }
         
