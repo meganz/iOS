@@ -180,6 +180,10 @@ final class FileUploadingRouter {
                 self.navigationController?.present(documentScanViewController, animated: true, completion: nil)
             }
         }
+        
+        if #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() {
+            AppearanceManager.setDefaultNavigationBar(for: [VNDocumentCameraViewController.self])
+        }
         scanViewController.delegate = vNDocumentCameraVCDelegate
         self.vNDocumentCameraVCDelegate = vNDocumentCameraVCDelegate
         self.navigationController?.present(scanViewController, animated: true, completion: nil)

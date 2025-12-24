@@ -206,6 +206,14 @@ final class AppearanceManager: NSObject {
     class func forceResetNavigationBar() {
         AppearanceManager.setupNavigationBarAppearance()
     }
+    
+    /// set default navigation bar for instances of specific UIAppearanceContainer
+    class func setDefaultNavigationBar(for appearanceContainers: [any UIAppearanceContainer.Type]) {
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithDefaultBackground()
+        UINavigationBar.appearance(whenContainedInInstancesOf: appearanceContainers).standardAppearance = appearance
+        UINavigationBar.appearance(whenContainedInInstancesOf: appearanceContainers).scrollEdgeAppearance = appearance
+    }
 
     @available(iOS 26.0, *)
     class func setupLiquidGlassNavigationBar(

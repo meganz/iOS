@@ -1,3 +1,4 @@
+import MEGAAppPresentation
 import MEGADomain
 import MEGAL10n
 import MEGASwift
@@ -45,6 +46,9 @@ struct ScanDocumentViewRouter: Sendable {
         scanVC.delegate = scanDocumentViewControllerDelegate
         scanVC.onDeinit { [weak scanDocumentViewControllerDelegate] in
             scanDocumentViewControllerDelegate?.cancelContinuation()
+        }
+        if #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() {
+            AppearanceManager.setDefaultNavigationBar(for: [VNDocumentCameraViewController.self])
         }
         presenter.present(scanVC, animated: true)
         return scanDocumentViewControllerDelegate
