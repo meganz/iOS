@@ -38,6 +38,7 @@ class FilesExplorerListViewController: FilesExplorerViewController {
 
         viewModel.dispatch(.onViewReady)
         delegate?.updateSearchResults()
+        addLongPressGesture()
     }
     
     override func selectedNodes() -> [MEGANode]? {
@@ -191,5 +192,31 @@ extension FilesExplorerListViewController: @MainActor DZNEmptyDataSetDelegate {
 
     func emptyDataSetWillDisappear(_ scrollView: UIScrollView) {
         setHeaderIfNeeded()
+    }
+}
+
+extension FilesExplorerListViewController {
+    private func addLongPressGesture() {
+        guard isCloudDriveRevampEnabled else { return }
+        let longPressGesture = UILongPressGestureRecognizer(
+            target: self,
+            action: #selector(longPressGestureRecognized(sender:))
+        )
+        tableView.addGestureRecognizer(longPressGesture)
+    }
+
+    @objc private func longPressGestureRecognized(sender: UITapGestureRecognizer) {
+        guard case let location = sender.location(in: tableView),
+              let indexPath = tableView.indexPathForRow(at: location),
+              let nodes = listSource?.nodes,
+              let node = nodes[safe: indexPath.row] else {
+            return
+        }
+
+        let feedbackGenerator = UIImpactFeedbackGenerator(style: .medium)
+        feedbackGenerator.prepare()
+        feedbackGenerator.impactOccurred()
+
+        selectNodes([node])
     }
 }
