@@ -60,7 +60,8 @@ final class AlbumContentViewController: UIViewController, ViewType {
         super.viewDidLoad()
         
         buildNavigationBar()
-        
+        setupLiquidGlassNavigationBar()
+
         configPhotoLibraryView(
             in: view,
             router: PhotoLibraryContentViewRouter(contentMode: photoLibraryContentViewModel.contentMode))
@@ -91,7 +92,15 @@ final class AlbumContentViewController: UIViewController, ViewType {
         
         viewModel.dispatch(.onViewWillDisappear)
     }
-    
+
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+
+        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+            setupLiquidGlassNavigationBar()
+        }
+    }
+
     // MARK: - Internal
     
     func selectedNodes() -> [MEGANode]? {
@@ -105,9 +114,13 @@ final class AlbumContentViewController: UIViewController, ViewType {
         enablePhotoLibraryEditMode(isEditing)
         configureBarButtons()
         hideNavigationEditBarButton(photoLibraryContentViewModel.library.isEmpty)
-        
-        navigationItem.title = viewModel.albumName
-        
+
+        if #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() {
+            navigationItem.titleView = NavigationTitleView(title: viewModel.albumName).toWrappedUIView(shouldEnableGlassEffect: true)
+        } else {
+            navigationItem.title = viewModel.albumName
+        }
+
         hideToolbar()
     }
     
@@ -182,7 +195,11 @@ final class AlbumContentViewController: UIViewController, ViewType {
     // MARK: - Private
     
     private func buildNavigationBar() {
-        self.title = viewModel.albumName
+        if #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() {
+            navigationItem.titleView = NavigationTitleView(title: viewModel.albumName).toWrappedUIView(shouldEnableGlassEffect: true)
+        } else {
+            self.title = viewModel.albumName
+        }
         configureBarButtons()
     }
     
