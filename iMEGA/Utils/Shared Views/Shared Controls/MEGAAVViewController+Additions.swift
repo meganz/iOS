@@ -104,7 +104,12 @@ extension MEGAAVViewController {
             .sink { [weak self] state in
                 guard state.old != state.new else { return }
                 MEGALogInfo("Airplay active: \(state.new),\(self?.player?.isExternalPlaybackActive ?? false)")
-                self?.replaceURLForAirPlay(activated: state.new)
+                guard let self else { return }
+                player?.pause()
+                player?.replaceCurrentItem(with: nil)
+                DispatchQueue.main.async { [weak self] in
+                    self?.replaceURLForAirPlay(activated: state.new)
+                }
             }
             .store(in: &subscriptions)
         return NSSet(set: subscriptions)
@@ -132,6 +137,7 @@ extension MEGAAVViewController {
         player?.pause()
         player?.currentItem?.cancelPendingSeeks()
         player?.currentItem?.asset.cancelLoading()
+        player?.replaceCurrentItem(with: nil)
     }
     
     // MARK: - Loading Indicator
