@@ -923,6 +923,9 @@
         default: {
             self.navigationItem.searchController = self.searchController;
             self.navigationItem.hidesSearchBarWhenScrolling = YES;
+            // iOS 26 + Liquid Glass: UINavigationBar computes its structural height before viewWillAppear.
+            // When attaching a UISearchController afterwards, we need to defer a layout invalidation to the next run loop so the search bar is included correctly.
+            [self markNavigationBarNeedsLayoutForLiquidGlass];
             break;
         }
     }

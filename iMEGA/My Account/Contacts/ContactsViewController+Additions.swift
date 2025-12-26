@@ -329,3 +329,17 @@ extension ContactsViewController: BottomOverlayPresenterProtocol {
         additionalSafeAreaInsets.bottom != 0
     }
 }
+
+// MARK: Liquid Glass
+
+extension ContactsViewController {
+    @objc func markNavigationBarNeedsLayoutForLiquidGlass() {
+        guard #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() else {
+            return
+        }
+        
+        DispatchQueue.main.async { [weak self] in
+            self?.navigationController?.navigationBar.setNeedsLayout()
+        }
+    }
+}
