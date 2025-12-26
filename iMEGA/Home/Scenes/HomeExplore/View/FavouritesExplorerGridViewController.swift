@@ -47,6 +47,7 @@ final class FavouritesExplorerGridViewController: FilesExplorerViewController {
         delegate?.updateSearchResults()
         collectionView.allowsSelection = true
         collectionView.allowsMultipleSelection = false
+        addLongPressGesture(to: collectionView)
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
@@ -115,6 +116,11 @@ final class FavouritesExplorerGridViewController: FilesExplorerViewController {
         coordinator.animate { (_) in
             self.layout.configThumbnailListColumnCount()
         }
+    }
+
+    override func node(at location: CGPoint) -> MEGANode? {
+        guard let indexPath = collectionView.indexPathForItem(at: location) else { return nil }
+        return gridSource?.getNode(at: indexPath)
     }
 
     private func configureLayout() {

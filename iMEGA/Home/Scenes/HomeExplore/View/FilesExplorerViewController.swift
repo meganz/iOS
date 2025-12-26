@@ -27,7 +27,11 @@ class FilesExplorerViewController: ExplorerBaseViewController {
     weak var delegate: (any FilesExplorerViewControllerDelegate)?
     
     override var displayMode: DisplayMode { .cloudDrive }
-    
+
+    private var isCloudDriveRevampEnabled: Bool {
+        DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .cloudDriveRevamp)
+    }
+
     init(viewModel: FilesExplorerViewModel,
          delegate: some FilesExplorerViewControllerDelegate) {
         self.viewModel = viewModel
@@ -68,7 +72,7 @@ class FilesExplorerViewController: ExplorerBaseViewController {
                                           displayMode: .cloudDrive,
                                           isIncoming: false,
                                           isBackupNode: isBackupNode,
-                                          isSelectionEnabled: DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .cloudDriveRevamp),
+                                          isSelectionEnabled: isCloudDriveRevampEnabled,
                                           sender: sender)
         vc.accessoryActionDelegate = nodeAccessoryActionDelegate
         navigationController.present(vc, animated: true, completion: nil)
@@ -90,6 +94,10 @@ class FilesExplorerViewController: ExplorerBaseViewController {
 
     func selectNodes(_ nodes: [MEGANode]) {
         fatalError("selectNodes(_:) needs to be implemented by the subclass")
+    }
+
+    func node(at location: CGPoint) -> MEGANode? {
+        fatalError("node(at:) needs to be implemented by the subclass")
     }
 
     override func endEditingMode() {
@@ -143,5 +151,29 @@ extension FilesExplorerViewController: @MainActor DZNEmptyDataSetSource {
     func customView(forEmptyDataSet scrollView: UIScrollView) -> UIView? {
         guard let emptyStateType = configuration?.emptyStateType else { return nil }
         return EmptyStateView.create(for: emptyStateType)
+    }
+}
+
+extension FilesExplorerViewController {
+    func addLongPressGesture(to scrollView: UIScrollView) {
+        guard isCloudDriveRevampEnabled else { return }
+        
+        let longPressGesture = UILongPressGestureRecognizer(
+            target: self,
+            action: #selector(longPressGestureRecognized(sender:))
+        )
+        scrollView.addGestureRecognizer(longPressGesture)
+    }
+
+    @objc private func longPressGestureRecognized(sender: UITapGestureRecognizer) {
+        guard case let location = sender.location(in: sender.view), let node = node(at: location) else {
+            return
+        }
+
+        let feedbackGenerator = UIImpactFeedbackGenerator(style: .medium)
+        feedbackGenerator.prepare()
+        feedbackGenerator.impactOccurred()
+
+        selectNodes([node])
     }
 }
