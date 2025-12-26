@@ -99,11 +99,7 @@ final class CancellableTransferRouter: NSObject, CancellableTransferRouting, Tra
     
     func transferSuccess(with message: String, dismiss: Bool) {
         if dismiss {
-            presenter?.dismiss(animated: true, completion: {
-                SVProgressHUD.showSuccess(withStatus: message)
-            })
-        } else {
-            SVProgressHUD.showSuccess(withStatus: message)
+            presenter?.dismiss(animated: true)
         }
     }
     
