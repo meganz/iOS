@@ -12,6 +12,7 @@ class FolderLinkTableViewController: UIViewController {
     
     unowned var folderLink: FolderLinkViewController!
     var headerContainerView: UIView?
+    private var isCloudDriveRevampEnabled: Bool { DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .cloudDriveRevamp) }
 
     @objc class func instantiate(withFolderLink folderLink: FolderLinkViewController) -> FolderLinkTableViewController {
         guard let folderLinkTableVC = UIStoryboard(name: "Links", bundle: nil).instantiateViewController(withIdentifier: "FolderLinkTableViewControllerID") as? FolderLinkTableViewController else {
@@ -22,7 +23,7 @@ class FolderLinkTableViewController: UIViewController {
         
         return folderLinkTableVC
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.backgroundView = UIView()
@@ -111,8 +112,9 @@ extension FolderLinkTableViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cellIdentifier = isCloudDriveRevampEnabled ? "RevampedNodeCell" : "nodeCell"
         guard
-            let cell = tableView.dequeueReusableCell(withIdentifier: "nodeCell", for: indexPath) as? NodeTableViewCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? NodeTableViewCell
         else {
             fatalError("Could not instantiate NodeCollectionViewCell")
         }
@@ -160,10 +162,14 @@ extension FolderLinkTableViewController: UITableViewDataSource {
         } else {
             cell.selectedBackgroundView = nil
         }
-        
-        cell.separatorView.layer.borderColor = TokenColors.Border.strong.cgColor
-        cell.separatorView.layer.borderWidth = 0.5
-        
+
+        if !isCloudDriveRevampEnabled {
+            cell.separatorView.layer.borderColor = TokenColors.Border.strong.cgColor
+            cell.separatorView.layer.borderWidth = 0.5
+        }
+
+        cell.downloadedImageView.image = isCloudDriveRevampEnabled ? MEGAAssets.UIImage.arrowDownCircle : MEGAAssets.UIImage.downloaded
+
         cell.thumbnailImageView.accessibilityIgnoresInvertColors = true
         cell.thumbnailPlayImageView.accessibilityIgnoresInvertColors = true
         let isDownloaded = node.isFile() && MEGAStore.shareInstance().offlineNode(with: node) != nil
