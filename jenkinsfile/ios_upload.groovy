@@ -13,6 +13,7 @@ pipeline {
         timeout(time: 3, unit: 'HOURS') 
         gitLabConnection('GitLabConnection')
         ansiColor('xterm')
+        skipDefaultCheckout()
     }
     environment {
         APP_STORE_CONNECT_KEY_ID = credentials('APP_STORE_CONNECT_KEY_ID')
@@ -78,6 +79,14 @@ pipeline {
         }
     }
     stages {
+        stage('Custom Checkout') {
+            steps {
+                gitlabCommitStatus(name: 'Custom Checkout') {
+                    customCheckout(env.gitlabBranch)
+                }
+            }
+        }
+
         stage('Bundle install') {
             steps {
                 gitlabCommitStatus(name: 'Bundle install') {

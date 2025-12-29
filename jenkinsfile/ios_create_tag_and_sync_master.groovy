@@ -6,6 +6,7 @@ pipeline {
         timeout(time: 3, unit: 'HOURS') 
         gitLabConnection('GitLabConnection')
         ansiColor('xterm')
+        skipDefaultCheckout()
     }
     environment {
         TRANSIFIX_AUTHORIZATION_TOKEN = credentials('TRANSIFIX_AUTHORIZATION_TOKEN')
@@ -34,6 +35,14 @@ pipeline {
         }
     }
     stages {
+        stage('Custom Checkout') {
+            steps {
+                gitlabCommitStatus(name: 'Custom Checkout') {
+                    customCheckout(env.gitlabBranch)
+                }
+            }
+        }
+
         stage('Bundle install') {
             steps {
                 script {
