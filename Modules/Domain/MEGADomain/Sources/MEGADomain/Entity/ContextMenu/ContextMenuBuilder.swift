@@ -356,6 +356,8 @@ public final class ContextMenuBuilder {
                 return mediaTabVideosMenu()
             case .mediaTabTimeline:
                 return mediaTabTimelineMenu()
+            case .homeCards:
+                return CMEntity(displayInline: true, children: [select])
             default:
                 return nil
             }

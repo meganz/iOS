@@ -589,4 +589,11 @@ final class CreateContextMenuUseCaseTests: XCTestCase {
             ].compactMap { $0 })
         }
     }
+
+    func testCreateContextMenu_homeCards() throws {
+        let cmEntity = try contextMenuActionEntity(with: CMConfigEntity(menuType: .menu(type: .homeCards)))
+        let menuActions = decomposeMenuIntoActions(menu: cmEntity)
+        menuActionsArray = [.display(actionType: .select)]
+        XCTAssertTrue(menuActions == menuActionsArray)
+    }
 }

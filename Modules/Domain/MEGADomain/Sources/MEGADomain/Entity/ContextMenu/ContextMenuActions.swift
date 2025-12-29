@@ -36,7 +36,7 @@ public enum CMElementTypeEntity: Equatable, Sendable {
 
 // MARK: - Context Menu types
 public enum ContextMenuTypeEntity: Sendable {
-    case uploadAdd, display, quickActions, sort, rubbishBin, chat, chatStatus, chatDoNotDisturb, qr, meeting, unknown, album, timeline, folderLink, fileLink, home, homeVideos, homeVideoPlaylists, videoPlaylistContent, mediaTabVideos, mediaTabTimeline
+    case uploadAdd, display, quickActions, sort, rubbishBin, chat, chatStatus, chatDoNotDisturb, qr, meeting, unknown, album, timeline, folderLink, fileLink, home, homeVideos, homeVideoPlaylists, videoPlaylistContent, mediaTabVideos, mediaTabTimeline, homeCards
 }
 
 // MARK: - Context Menu grouped actions

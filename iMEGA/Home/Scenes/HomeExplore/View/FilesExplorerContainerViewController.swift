@@ -133,14 +133,10 @@ class FilesExplorerContainerViewController: UIViewController, TextFileEditable {
         uploadAddBarButtonItem.image = MEGAAssets.UIImage.navigationbarAdd
         contextBarButtonItem.image = MEGAAssets.UIImage.moreList
 
-        let isRevampEnabled = DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .cloudDriveRevamp)
-        let isAllDocs = viewModel.getExplorerType() == .allDocs
-
-        navigationItem.rightBarButtonItems = switch (isRevampEnabled, isAllDocs) {
-        case (true, true): [uploadAddBarButtonItem]
-        case (true, false): nil
-        case (false, true): [contextBarButtonItem, uploadAddBarButtonItem]
-        case (false, false): [contextBarButtonItem]
+        navigationItem.rightBarButtonItems = if viewModel.getExplorerType() == .allDocs {
+            [contextBarButtonItem, uploadAddBarButtonItem]
+        } else {
+            [contextBarButtonItem]
         }
     }
     
