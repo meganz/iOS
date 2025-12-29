@@ -583,6 +583,9 @@
                                                                     <state key="normal" image="moreList"/>
                                                                     <state key="selected" image="moreList"/>
                                                                     <state key="highlighted" image="moreList"/>
+                                                                    <connections>
+                                                                        <action selector="nodeActionsTapped:" destination="JHt-Kc-I1Z" eventType="touchUpInside" id="0SQ-l1-IO3"/>
+                                                                    </connections>
                                                                 </button>
                                                             </subviews>
                                                         </stackView>
