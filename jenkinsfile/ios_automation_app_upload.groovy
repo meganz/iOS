@@ -16,7 +16,6 @@ pipeline {
         gitLabConnection('GitLabConnection')
         gitlabCommitStatus(name: 'Jenkins')
         ansiColor('xterm')
-        skipDefaultCheckout()
     }
     post { 
         cleanup {
@@ -24,14 +23,6 @@ pipeline {
         }
     }
     stages {
-        stage('Custom Checkout') {
-            steps {
-                gitlabCommitStatus(name: 'Custom Checkout') {
-                    customCheckout(env.gitlabBranch)
-                }
-            }
-        }
-
         stage('Bundle install') {
             steps {
                 gitlabCommitStatus(name: 'Bundle install') {

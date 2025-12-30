@@ -91,7 +91,6 @@ pipeline {
         gitLabConnection('GitLabConnection')
         gitlabCommitStatus(name: 'Jenkins')
         ansiColor('xterm')
-        skipDefaultCheckout()
     }
     environment {
         MEGA_IOS_PROJECT_ID = credentials('MEGA_IOS_PROJECT_ID')
@@ -135,13 +134,6 @@ pipeline {
         }
     }
     stages {
-        stage('Custom Checkout') {
-            steps {
-                gitlabCommitStatus(name: 'Custom Checkout') {
-                    customCheckout(env.CHANGE_BRANCH)
-                }
-            }
-        }
         stage('Bundle install') {
             steps {
                 gitlabCommitStatus(name: 'Bundle install') {
