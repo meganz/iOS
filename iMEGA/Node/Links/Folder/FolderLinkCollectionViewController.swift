@@ -1,4 +1,5 @@
 import Foundation
+import MEGAAppPresentation
 import MEGAAssets
 import MEGAL10n
 
@@ -17,7 +18,15 @@ class FolderLinkCollectionViewController: UIViewController {
     var dtCollectionManager: DynamicTypeCollectionManager?
     
     lazy var diffableDataSource = FolderLinkCollectionViewDiffableDataSource(collectionView: collectionView, controller: self)
-    
+
+    private var isCloudDriveRevampEnabled: Bool {
+        DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .cloudDriveRevamp)
+    }
+
+    private var displayNodes: [MEGANode]? {
+        folderLink.searchController.isActive ? folderLink.searchNodesArray : folderLink.nodesArray
+    }
+
     @objc class func instantiate(withFolderLink folderLink: FolderLinkViewController) -> FolderLinkCollectionViewController {
         guard let folderLinkCollectionVC = UIStoryboard(name: "Links", bundle: nil).instantiateViewController(withIdentifier: "FolderLinkCollectionViewControllerID") as? FolderLinkCollectionViewController else {
             fatalError("Could not instantiate FolderLinkCollectionViewController")
@@ -32,7 +41,7 @@ class FolderLinkCollectionViewController: UIViewController {
         super.viewDidLoad()
         
         setupCollectionView()
-        diffableDataSource.configureDataSource()
+        setupDataSource()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -57,7 +66,11 @@ class FolderLinkCollectionViewController: UIViewController {
             collectionView.collectionViewLayout.invalidateLayout()
         }
     }
-    
+
+    private func setupDataSource() {
+        diffableDataSource.configureDataSource(usesRevampedUI: isCloudDriveRevampEnabled)
+    }
+
     private func setupCollectionView() {
         layout.sectionInset = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
         layout.minimumColumnSpacing = 8
@@ -70,20 +83,28 @@ class FolderLinkCollectionViewController: UIViewController {
                 forCellWithReuseIdentifier: NodeCollectionViewCell.reusableIdentifier
             )
 
+        collectionView
+            .register(
+                NodeCollectionViewCell.folderLinkCellNib,
+                forCellWithReuseIdentifier: NodeCollectionViewCell.folderLinkReusableIdentifier
+            )
+
         collectionView.collectionViewLayout = layout
         
         dtCollectionManager = DynamicTypeCollectionManager(delegate: self)
     }
     
     private func buildNodeListFor(fileType: FileType) -> [MEGANode] {
-        guard let listOfNodes = folderLink.searchController.isActive ? folderLink.searchNodesArray : folderLink.nodesArray else {
-            return []
-        }
-        return listOfNodes.filter { ($0.isFile() && fileType == .file) || ($0.isFolder() && fileType == .folder) }
+        displayNodes?.filter { ($0.isFile() && fileType == .file) || ($0.isFolder() && fileType == .folder) } ?? []
     }
     
     func getNode(at indexPath: IndexPath) -> MEGANode? {
-        return indexPath.section == ThumbnailSection.file.rawValue ? fileList[safe: indexPath.row] : folderList[safe: indexPath.row]
+        if isCloudDriveRevampEnabled {
+            let listOfNodes = folderLink.searchController.isActive ? folderLink.searchNodesArray : folderLink.nodesArray
+            return listOfNodes?[safe: indexPath.row]
+        } else {
+            return indexPath.section == ThumbnailSection.file.rawValue ? fileList[safe: indexPath.row] : folderList[safe: indexPath.row]
+        }
     }
     
     @objc func setCollectionViewEditing(_ editing: Bool, animated: Bool) {
@@ -92,11 +113,31 @@ class FolderLinkCollectionViewController: UIViewController {
         collectionView.allowsMultipleSelectionDuringEditing = editing
         
         folderLink.setViewEditing(editing)
-        
+
         diffableDataSource.reload(nodes: folderList + fileList)
     }
     
     @objc func reloadData() {
+        if isCloudDriveRevampEnabled {
+            reloadDataForRevampUI()
+        } else {
+            reloadDataForLegacyUI()
+        }
+    }
+
+    private func reloadDataForRevampUI() {
+        if MEGAReachabilityManager.isReachable(), let listOfNodes = folderLink.searchController.isActive ? folderLink.searchNodesArray : folderLink.nodesArray,
+           !listOfNodes.isEmpty {
+            // For revamp UI, we display one single section for listOfNodes instead of 2 sections for folders and files.
+            // [SAO-3147] Refactor the data source to fully remove .folder and .file separation.
+            diffableDataSource.load(data: [.folder: listOfNodes], keys: [.folder])
+        } else {
+            diffableDataSource.load(data: [:], keys: [])
+            showErrorViewIfRequired()
+        }
+    }
+
+    private func reloadDataForLegacyUI() {
         fileList = buildNodeListFor(fileType: .file)
         folderList = buildNodeListFor(fileType: .folder)
         let isEmpty = fileList.isEmpty && folderList.isEmpty
@@ -109,7 +150,7 @@ class FolderLinkCollectionViewController: UIViewController {
             showErrorViewIfRequired()
         }
     }
-    
+
     @objc func collectionViewSelectIndexPath(_ indexPath: IndexPath) {
         collectionView(collectionView, didSelectItemAt: indexPath)
     }
@@ -234,10 +275,15 @@ extension FolderLinkCollectionViewController: UICollectionViewDelegate {
 
 extension FolderLinkCollectionViewController: CHTCollectionViewDelegateWaterfallLayout {
     func collectionView(_ collectionView: UICollectionView!, layout collectionViewLayout: UICollectionViewLayout!, sizeForItemAt indexPath: IndexPath!) -> CGSize {
+
+        if isCloudDriveRevampEnabled {
+            return CGSize(width: 184, height: 180) // (184, 180) is the size needed for the cells to match with that of revamped CD.
+        }
+
         if indexPath.section == ThumbnailSection.file.rawValue || indexPath.section == ThumbnailSection.folder.rawValue {
-            CGSize(width: Int(ThumbnailSize.width.rawValue), height: Int(ThumbnailSize.height.rawValue))
+            return CGSize(width: Int(ThumbnailSize.width.rawValue), height: Int(ThumbnailSize.height.rawValue))
         } else {
-            .zero
+            return .zero
         }
     }
 

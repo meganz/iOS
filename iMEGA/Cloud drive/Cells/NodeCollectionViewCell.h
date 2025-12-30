@@ -17,6 +17,8 @@ NS_SWIFT_UI_ACTOR
 @property (weak, nonatomic) IBOutlet UILabel *durationLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *thumbnailImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *thumbnailIconView;
+@property (weak, nonatomic) IBOutlet UIView *favouriteView;
+@property (weak, nonatomic) IBOutlet UIImageView *labelImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *favouriteImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *linkImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *versionedImageView;

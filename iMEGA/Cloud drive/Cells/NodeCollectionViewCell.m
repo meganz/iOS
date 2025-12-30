@@ -17,8 +17,7 @@ static NSString *kFileSize = @"kFileSize";
 @interface NodeCollectionViewCell ()
 
 @property (weak, nonatomic) IBOutlet UIView *labelView;
-@property (weak, nonatomic) IBOutlet UIImageView *labelImageView;
-@property (weak, nonatomic) IBOutlet UIView *favouriteView;
+
 @property (weak, nonatomic) IBOutlet UIView *versionedView;
 @property (weak, nonatomic) IBOutlet UIView *linkView;
 @property (weak, nonatomic) IBOutlet UIView *downloadedView;

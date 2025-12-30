@@ -2670,6 +2670,7 @@
 		C4BD450E2E5EC362009A558E /* NodeUseCaseProtocol+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4BD450D2E5EC358009A558E /* NodeUseCaseProtocol+Additions.swift */; };
 		C4BD450F2E5EC362009A558E /* NodeUseCaseProtocol+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4BD450D2E5EC358009A558E /* NodeUseCaseProtocol+Additions.swift */; };
 		C4C0A0082C32B5AE00B9ECCB /* DownloadedNodesListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C0A0072C32B5AE00B9ECCB /* DownloadedNodesListener.swift */; };
+		C4C446FA2EFA672E00481AB8 /* FolderLinkNodeCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4C446F92EFA672E00481AB8 /* FolderLinkNodeCollectionViewCell.xib */; };
 		C4C5C83325DC26100063D7B4 /* FolderLinkViewController+AudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C5C83225DC26100063D7B4 /* FolderLinkViewController+AudioPlayer.swift */; };
 		C4C6A49827A4632600873165 /* MegaNode+Display.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C6A49527A4632600873165 /* MegaNode+Display.swift */; };
 		C4C6A49A27A4632600873165 /* MegaNode+Display.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C6A49527A4632600873165 /* MegaNode+Display.swift */; };
@@ -2692,6 +2693,7 @@
 		C4F06F792B691941005C1A3D /* UpgradeEncouragementShowTimeTrackerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F06F782B691941005C1A3D /* UpgradeEncouragementShowTimeTrackerTests.swift */; };
 		C4F31EF925C1C50B00E15146 /* CustomTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F31EF825C1C50B00E15146 /* CustomTitleView.swift */; };
 		C4F31F0325C1C51A00E15146 /* CustomTitleView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4F31F0225C1C51A00E15146 /* CustomTitleView.xib */; };
+		C4F5BFC02EFBA281004892B0 /* NodeCollectionViewCell+FolderLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F5BFBE2EFBA277004892B0 /* NodeCollectionViewCell+FolderLink.swift */; };
 		C4F638602BA97F7400D0B6B7 /* AdsDisplayViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F6385F2BA97F7400D0B6B7 /* AdsDisplayViewModelProtocol.swift */; };
 		C4F638722BAA81AE00D0B6B7 /* CloudDriveAdsSlotDisplayable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F638712BAA81AE00D0B6B7 /* CloudDriveAdsSlotDisplayable.swift */; };
 		C4F6387A2BAAA01A00D0B6B7 /* AdsVisibilityViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F638792BAAA01A00D0B6B7 /* AdsVisibilityViewModelTests.swift */; };
@@ -5515,6 +5517,7 @@
 		C4B97D8C2B77916500EBA9E5 /* RandomNumberGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RandomNumberGenerator.swift; sourceTree = "<group>"; };
 		C4BD450D2E5EC358009A558E /* NodeUseCaseProtocol+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NodeUseCaseProtocol+Additions.swift"; sourceTree = "<group>"; };
 		C4C0A0072C32B5AE00B9ECCB /* DownloadedNodesListener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadedNodesListener.swift; sourceTree = "<group>"; };
+		C4C446F92EFA672E00481AB8 /* FolderLinkNodeCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FolderLinkNodeCollectionViewCell.xib; sourceTree = "<group>"; };
 		C4C5C83225DC26100063D7B4 /* FolderLinkViewController+AudioPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FolderLinkViewController+AudioPlayer.swift"; sourceTree = "<group>"; };
 		C4C6A49527A4632600873165 /* MegaNode+Display.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MegaNode+Display.swift"; sourceTree = "<group>"; };
 		C4CBDD3E256EC00900835CF5 /* AudioPlayerItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerItem.swift; sourceTree = "<group>"; };
@@ -5537,6 +5540,7 @@
 		C4F06F782B691941005C1A3D /* UpgradeEncouragementShowTimeTrackerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpgradeEncouragementShowTimeTrackerTests.swift; sourceTree = "<group>"; };
 		C4F31EF825C1C50B00E15146 /* CustomTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTitleView.swift; sourceTree = "<group>"; };
 		C4F31F0225C1C51A00E15146 /* CustomTitleView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomTitleView.xib; sourceTree = "<group>"; };
+		C4F5BFBE2EFBA277004892B0 /* NodeCollectionViewCell+FolderLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NodeCollectionViewCell+FolderLink.swift"; sourceTree = "<group>"; };
 		C4F6385F2BA97F7400D0B6B7 /* AdsDisplayViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdsDisplayViewModelProtocol.swift; sourceTree = "<group>"; };
 		C4F638712BAA81AE00D0B6B7 /* CloudDriveAdsSlotDisplayable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudDriveAdsSlotDisplayable.swift; sourceTree = "<group>"; };
 		C4F638792BAAA01A00D0B6B7 /* AdsVisibilityViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdsVisibilityViewModelTests.swift; sourceTree = "<group>"; };
@@ -13398,6 +13402,15 @@
 			path = DownloadedNodeListener;
 			sourceTree = "<group>";
 		};
+		C4C446F82EFA670500481AB8 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				C4C446F92EFA672E00481AB8 /* FolderLinkNodeCollectionViewCell.xib */,
+				C4F5BFBE2EFBA277004892B0 /* NodeCollectionViewCell+FolderLink.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
 		C4CBDD4E256EC8F800835CF5 /* Domain */ = {
 			isa = PBXGroup;
 			children = (
@@ -13514,6 +13527,7 @@
 		E84CDAFE1A7292AA003F4C77 /* Links */ = {
 			isa = PBXGroup;
 			children = (
+				C4C446F82EFA670500481AB8 /* Cells */,
 				837B179A2881811600A4D01B /* DownloadLinkOrOnboarding */,
 				945339D02A60150D00363DAD /* File */,
 				945339CF2A60150500363DAD /* Folder */,
@@ -14203,6 +14217,7 @@
 				BFAD882926911E7200CA592F /* EncourageGuestUserToJoinMegaViewController.xib in Resources */,
 				5DC4DE0F24DBC29600D9AD16 /* ExploreViewStack.xib in Resources */,
 				A81971D126FB81C6007DC7B1 /* FileVersioning.storyboard in Resources */,
+				C4C446FA2EFA672E00481AB8 /* FolderLinkNodeCollectionViewCell.xib in Resources */,
 				83D7265B23169067007B2E58 /* GenericHeaderFooterView.xib in Resources */,
 				2F147788244D2DF30069B264 /* GeoLocationView.xib in Resources */,
 				837EE205253DB8540083D927 /* GetLink.storyboard in Resources */,
@@ -15551,6 +15566,7 @@
 				94B09E592B84CC87007D6B84 /* NodeBrowserView.swift in Sources */,
 				94B09E6B2B84CC87007D6B84 /* NodeBrowserViewModel.swift in Sources */,
 				B5FC636429E9283C00EE4C8E /* NodeCollectionViewCell+Additions.swift in Sources */,
+				C4F5BFC02EFBA281004892B0 /* NodeCollectionViewCell+FolderLink.swift in Sources */,
 				C48AED412710922D00DD9F85 /* NodeCollectionViewCell+Nib.swift in Sources */,
 				83E076F52179D7BC00058409 /* NodeCollectionViewCell.m in Sources */,
 				B5FC636229E8F53400EE4C8E /* NodeCollectionViewCellViewModel.swift in Sources */,
