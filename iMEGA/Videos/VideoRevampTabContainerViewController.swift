@@ -403,6 +403,7 @@ final class VideoRevampTabContainerViewController: UIViewController {
     }
     
     @objc private func cancelBarButtonItemTapped() {
+        viewModel.syncModel.searchText.removeAll()
         resetNavigationBar()
     }
     
@@ -448,8 +449,6 @@ final class VideoRevampTabContainerViewController: UIViewController {
         executeCommand(.searchBarCommand(.hideSearchBar))
         
         setupNavigationBarButtons()
-        
-        viewModel.syncModel.searchText.removeAll()
     }
     
     private func subscribeToVideoSelection() {
@@ -589,6 +588,7 @@ extension VideoRevampTabContainerViewController: DisplayMenuDelegate {
 extension VideoRevampTabContainerViewController: UISearchResultsUpdating {
     
     func updateSearchResults(for searchController: UISearchController) {
+        guard searchController === self.navigationItem.searchController else { return }
         let searchText = searchController.searchBar.text ?? ""
         viewModel.dispatch(.searchBarAction(.updateSearchResults(searchText: searchText)))
     }

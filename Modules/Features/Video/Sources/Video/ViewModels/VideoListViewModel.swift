@@ -141,6 +141,12 @@ public final class VideoListViewModel: ObservableObject {
         let searchText = syncModel.$searchText
             .removeDuplicates()
             .debounceImmediate(for: .milliseconds(500), scheduler: scheduler)
+
+        let emptySearchText = syncModel.$searchText
+            .removeDuplicates()
+            .filter { $0.isEmpty }
+        // combine emptySearchText to send empty searchText immediately in case it's dropped by monitorSearchRequest.reinitialise
+        let combinedSearchText = searchText.merge(with: emptySearchText).removeDuplicates()
         
         // Observe Location Filter Changes
         let locationFilter = $selectedLocationFilterOption
@@ -150,7 +156,7 @@ public final class VideoListViewModel: ObservableObject {
         let durationFilter = $selectedDurationFilterOption
             .removeDuplicates()
         
-        let queryParamSequence = searchText.combineLatest(sortOrder, locationFilter, durationFilter)
+        let queryParamSequence = combinedSearchText.combineLatest(sortOrder, locationFilter, durationFilter)
             
         let asyncSequence = monitorSearchRequestsSubject
             .compactMap { monitorSearchRequest in
