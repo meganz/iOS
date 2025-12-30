@@ -377,9 +377,15 @@ extension FolderLinkViewController: ViewType {
             )
         case .setViewMode(let viewMode):
             if isListViewModeSelected() && viewMode == .thumbnail || !isListViewModeSelected() && viewMode == .list {
-                changeViewModePreference()
+                switchViewMode()
             }
         }
+    }
+
+    private func switchViewMode() {
+        let isCurrentlyEditing = isListViewModeSelected() ? (self.flTableView?.tableView.isEditing ?? false) : (self.flCollectionView?.collectionView.allowsMultipleSelection ?? false)
+        changeViewModePreference()
+        setEditMode(isCurrentlyEditing)
     }
 }
 
