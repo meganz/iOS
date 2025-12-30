@@ -131,11 +131,9 @@ final class VideoRevampTabContainerViewController: UIViewController {
     }
     
     private func setupNavigationBar() {
-        if !DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .cloudDriveRevamp) {
-            navigationItem.rightBarButtonItems = defaultRightBarButtonItems()
-            setupContextMenuBarButton(currentTab: viewModel.syncModel.currentTab)
-        }
-        
+        navigationItem.rightBarButtonItems = defaultRightBarButtonItems()
+        setupContextMenuBarButton(currentTab: viewModel.syncModel.currentTab)
+
         if let navigationBar = navigationController?.navigationBar {
             AppearanceManager.forceNavigationBarUpdate(navigationBar)
         }
