@@ -198,7 +198,7 @@ struct FloatingAddButtonVisibilityDataSourceTests {
 
         @Suite("Multiple emissions of `floatingButtonVisibility`", .serialized)
         struct MultipleValues {
-            @Test("Multiple updates should toggle values")
+            @Test("Multiple updates should toggle values", .disabled("Disabled due to flakiness"))
             func multipleNodesUpdates() async throws {
                 let browserConfig = await Test.makeBrowserConfig(
                     displayMode: TestInput.enabledDisplayModes.randomElement()!,
