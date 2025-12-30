@@ -1,3 +1,4 @@
+import MEGAAppPresentation
 import MEGADesignToken
 import MEGADomain
 import MEGAL10n
@@ -18,15 +19,18 @@ public final class NodeTagsCellController: NSObject {
     private weak var controller: UIViewController?
     private let viewModel: NodeTagsCellControllerModel
     private let expiredAccountAlertPresenter: (any ExpiredAccountAlertPresenting)?
+    private let featureFlagProvider: any FeatureFlagProviderProtocol
 
     public init(
         controller: UIViewController,
         viewModel: NodeTagsCellControllerModel,
-        expiredAccountAlertPresenter: (some ExpiredAccountAlertPresenting)?
+        expiredAccountAlertPresenter: (some ExpiredAccountAlertPresenting)?,
+        featureFlagProvider: some FeatureFlagProviderProtocol
     ) {
         self.controller = controller
         self.viewModel = viewModel
         self.expiredAccountAlertPresenter = expiredAccountAlertPresenter
+        self.featureFlagProvider = featureFlagProvider
         super.init()
     }
 
@@ -67,7 +71,7 @@ extension NodeTagsCellController: UITableViewDelegate {
         if viewModel.isExpiredBusinessOrProFlexiAccount {
             showFeatureUnavailabilityAlert()
         } else {
-            let addTagsRouter = AddTagsViewRouter(nodeEntity: viewModel.node, presenter: controller)
+            let addTagsRouter = AddTagsViewRouter(nodeEntity: viewModel.node, presenter: controller, featureFlagProvider: featureFlagProvider)
             addTagsRouter.start()
         }
     }

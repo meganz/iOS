@@ -1,3 +1,4 @@
+import MEGAAppPresentation
 import MEGADesignToken
 import MEGAL10n
 import MEGASwiftUI
@@ -12,8 +13,21 @@ struct ManageTagsViewNavigationBar: View {
 
     var body: some View {
         NavigationBarView(
-            leading: { cancelButton },
-            trailing: { doneButton },
+            leading: {
+                if #available(iOS 26.0, *), viewModel.isLiquidGlassEnabled {
+                    cancelButton.buttonStyle(.glass)
+                } else {
+                    cancelButton
+                }
+            },
+            trailing: {
+                if #available(iOS 26.0, *), viewModel.isLiquidGlassEnabled {
+                    doneButton
+                        .buttonStyle(.glass)
+                } else {
+                    doneButton
+                }
+            },
             center: { title },
             backgroundColor: TokenColors.Background.surface1.swiftUI
         )

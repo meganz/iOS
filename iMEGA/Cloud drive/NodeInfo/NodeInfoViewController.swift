@@ -1,4 +1,5 @@
 import CloudDrive
+import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGAAssets
 import MEGADesignToken
@@ -462,7 +463,8 @@ final class NodeInfoViewController: UITableViewController {
                                 nodeValidationRepository: NodeValidationRepository.newRepo,
                                 nodeRepository: NodeRepository.newRepo
                             )
-                        ), expiredAccountAlertPresenter: UIApplication.shared.delegate as? AppDelegate
+                        ), expiredAccountAlertPresenter: UIApplication.shared.delegate as? AppDelegate,
+                        featureFlagProvider: DIContainer.featureFlagProvider
                     )
                 )
             )
