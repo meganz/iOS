@@ -236,30 +236,32 @@ final class NodeActionBuilder {
     }
     
     func multiselectBuild() -> [NodeAction] {
+        let actions: [NodeAction]
         guard !isTakedown else {
-            return selectedNodeCount == 1 ? takedownNodeActions() : [.moveToRubbishBinAction()]
+            actions = selectedNodeCount == 1 ? takedownNodeActions() : [.moveToRubbishBinAction()]
+            return filterForUndecrypted(actions)
         }
 
         switch displayMode {
         case .photosAlbum:
-            return normalAlbumActions()
+            actions = normalAlbumActions()
         case .photosFavouriteAlbum:
-            return favouriteAlbumActions()
+            actions = favouriteAlbumActions()
         case .videoPlaylistContent:
-            return videoPlaylistContentActions()
-        default: break
+            actions = videoPlaylistContentActions()
+        default:
+            switch nodeSelectionType {
+            case .single:
+                actions = []
+            case .files:
+                actions = multiselectFilesActions()
+            case .folders:
+                actions = multiselectFoldersActions()
+            case .filesAndFolders:
+                actions = multiselectFoldersAndFilesActions()
+            }
         }
-        
-        switch nodeSelectionType {
-        case .single:
-            return []
-        case .files:
-            return multiselectFilesActions()
-        case .folders:
-            return multiselectFoldersActions()
-        case .filesAndFolders:
-            return multiselectFoldersAndFilesActions()
-        }
+        return filterForUndecrypted(actions)
     }
     
     // MARK: - Private methods

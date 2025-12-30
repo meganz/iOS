@@ -83,15 +83,18 @@ struct CloudDriveBottomToolbarItemsFactory {
     }
     
     private func barButtonEnabled(for action: BottomToolbarAction, config: BottomToolbarConfig) -> Bool {
+        let isNodeKeyDecrypted = config.selectedNodes.first(where: { !$0.isNodeKeyDecrypted }) == nil
         let enabled = !config.selectedNodes.isEmpty
         let enabledIfNotDisputed = !config.selectedNodes.contains { $0.isTakenDown } && enabled
         
         switch action {
         case .download, .shareLink, .move, .copy:
+            guard isNodeKeyDecrypted else { return false }
             return enabledIfNotDisputed
         case .delete, .actions:
             return enabled
         case .restore:
+            guard isNodeKeyDecrypted else { return false }
             guard config.displayMode == .rubbishBin && enabled else { return enabledIfNotDisputed }
             let containsNotRestorableNode = config.selectedNodes.contains { !nodeUseCase.isRestorable(node: $0) }
             return if containsNotRestorableNode { false } else { enabledIfNotDisputed }

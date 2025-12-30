@@ -233,6 +233,17 @@ class NodeActionBuilderTests {
     }
     
     @Test
+    func testTakeDownNode_onSingleUndecryptedFileSelection_shouldHaveOnlyInfoAction() {
+        actions = NodeActionBuilder()
+            .setNodeSelectionType(.files, selectedNodeCount: 1)
+            .setIsTakedown(true)
+            .setIsNodeKeyDecrypted(false)
+            .multiselectBuild()
+        
+        #expect(isEqual(nodeActionTypes: [.info]) == true)
+    }
+    
+    @Test
     func testTakeDownNode_onMultipleFilesSelection_shouldHaveOnlyMoveToBinAction() {
         actions = NodeActionBuilder()
             .setNodeSelectionType(.files, selectedNodeCount: 2)
@@ -240,6 +251,17 @@ class NodeActionBuilderTests {
             .multiselectBuild()
         
         #expect(isEqual(nodeActionTypes: [.moveToRubbishBin]) == true)
+    }
+    
+    @Test
+    func testTakeDownNode_onMultipleFilesSelectionWithAtLeastOneUndecrypted_shouldHaveEmptyAction() {
+        actions = NodeActionBuilder()
+            .setNodeSelectionType(.files, selectedNodeCount: 2)
+            .setIsTakedown(true)
+            .setIsNodeKeyDecrypted(false)
+            .multiselectBuild()
+        
+        #expect(isEqual(nodeActionTypes: []) == true)
     }
     
     @Test
@@ -253,6 +275,17 @@ class NodeActionBuilderTests {
     }
     
     @Test
+    func testTakeDownNode_onSingleFolderSelection_shouldHaveOnlyInfoAction() {
+        actions = NodeActionBuilder()
+            .setNodeSelectionType(.folders, selectedNodeCount: 1)
+            .setIsTakedown(true)
+            .setIsNodeKeyDecrypted(false)
+            .multiselectBuild()
+        
+        #expect(isEqual(nodeActionTypes: [.info]) == true)
+    }
+    
+    @Test
     func testTakeDownNode_onMultipleFoldersSelection_shouldHaveOnlyMoveToBinAction() {
         actions = NodeActionBuilder()
             .setNodeSelectionType(.folders, selectedNodeCount: 2)
@@ -263,6 +296,17 @@ class NodeActionBuilderTests {
     }
     
     @Test
+    func testTakeDownNode_onMultipleFoldersSelectionWithAtLeastOneUndecrypted_shouldHaveEmptyAction() {
+        actions = NodeActionBuilder()
+            .setNodeSelectionType(.folders, selectedNodeCount: 2)
+            .setIsTakedown(true)
+            .setIsNodeKeyDecrypted(false)
+            .multiselectBuild()
+        
+        #expect(isEqual(nodeActionTypes: []) == true)
+    }
+    
+    @Test
     func testTakeDownNode_onMultipleFilesAndFoldersSelection_shouldHaveOnlyMoveToBinAction() {
         actions = NodeActionBuilder()
             .setNodeSelectionType(.filesAndFolders, selectedNodeCount: 2)
@@ -270,6 +314,17 @@ class NodeActionBuilderTests {
             .multiselectBuild()
         
         #expect(isEqual(nodeActionTypes: [.moveToRubbishBin]) == true)
+    }
+    
+    @Test
+    func testTakeDownNode_onMultipleFilesAndFoldersSelectionWithAtLeastOneUndecrypted_shouldHaveEmptyAction() {
+        actions = NodeActionBuilder()
+            .setNodeSelectionType(.filesAndFolders, selectedNodeCount: 2)
+            .setIsTakedown(true)
+            .setIsNodeKeyDecrypted(false)
+            .multiselectBuild()
+        
+        #expect(isEqual(nodeActionTypes: []) == true)
     }
 
     @Test
@@ -806,6 +861,17 @@ class NodeActionBuilderTests {
             .multiselectBuild()
         
         #expect(isEqual(nodeActionTypes: [.download, .shareLink, .removeLink, .move, .copy, .moveToRubbishBin]) == true)
+    }
+    
+    @Test
+    func testFileAndFolderLinkArrayWithPublicLink_withUndecryptedNodes() {
+        actions = NodeActionBuilder()
+            .setNodeSelectionType(.filesAndFolders, selectedNodeCount: 2)
+            .setLinkedNodeCount(2)
+            .setIsNodeKeyDecrypted(false)
+            .multiselectBuild()
+        
+        #expect(isEqual(nodeActionTypes: []) == true)
     }
     
     @Test

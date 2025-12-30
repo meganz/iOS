@@ -393,6 +393,36 @@ final class CloudDriveBottomToolbarItemsFactoryTests: XCTestCase {
     }
     
     @MainActor
+    func testBarButton_whenSelectedNodesAreNotDecrypted_itShouldNotBeEnabled() {
+        // given
+        let harness = Harness()
+        harness.actionFactory.actionsToReturn = [
+            .download, .shareLink, .move, .copy, .delete, .restore, .actions
+        ]
+        let selectedNodes: [NodeEntity] = [
+            NodeEntity(isTakenDown: false, isNodeKeyDecrypted: false),
+            NodeEntity(isTakenDown: false, isNodeKeyDecrypted: false)
+        ]
+        
+        // when
+        let items = harness.buildAny(with: selectedNodes)
+        
+        // then
+        XCTAssertEqual(
+            items.map { $0.isEnabled },
+            [
+                false, // download
+                false, // shareLink
+                false, // move
+                false, // copy
+                true, // delete
+                false, // restore
+                true // actions
+            ]
+        )
+    }
+    
+    @MainActor
     func testBarButton_whenDisplayModeIsRubbishBin_andNodeIsNotDisputedButNotRestorable_itShouldBeDisable() throws {
         // given
         let harness = Harness(

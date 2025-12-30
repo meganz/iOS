@@ -181,6 +181,7 @@ class NodeActionViewController: ActionSheetViewController {
                     nodes: nodeEntities,
                     from: displayMode,
                     isFromSharedItem: isFromSharedItem))
+                .setIsNodeKeyDecrypted(nodes.first(where: { !$0.isNodeKeyDecrypted() }) == nil)
                 .multiselectBuild()
             
             update(actions: actions, sender: sender)
