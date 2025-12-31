@@ -391,8 +391,8 @@ final class VideoRevampTabContainerViewController: UIViewController {
     private func setupRightNavigationBarButtons() {
         if !DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .cloudDriveRevamp) {
             navigationItem.setRightBarButtonItems(isEditing ? [cancelBarButtonItem] : defaultRightBarButtonItems(), animated: true)
-        } else if isEditing {
-            navigationItem.setRightBarButtonItems([cancelBarButtonItem], animated: true)
+        } else {
+            navigationItem.setRightBarButtonItems(isEditing ? [cancelBarButtonItem] : defaultRightBarButtonItems(), animated: true)
         }
     }
     
@@ -437,7 +437,11 @@ final class VideoRevampTabContainerViewController: UIViewController {
         viewModel.syncModel.$editMode
             .sink { [weak self] editMode in
                 guard let self, isEditing != editMode.isEditing else { return }
-                enterEditingMode()
+                if editMode.isEditing {
+                    enterEditingMode()
+                } else {
+                    resetNavigationBar()
+                }
             }
             .store(in: &cancellables)
     }
