@@ -356,3 +356,14 @@ extension MEGALinkManager {
         }
     }
 }
+
+// MARK: - FolderLink
+extension MEGALinkManager {
+    @objc static func newFolderLinkViewController(link: String) -> UIViewController {
+        NewFolderLinkViewController(link: link)
+    }
+    
+    @objc static func shouldUseNewFolderLink() -> Bool {
+        DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .newFolderLink)
+    }
+}

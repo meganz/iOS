@@ -667,19 +667,31 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
 }
 
 + (void)showFolderLinkView {
-    MEGANavigationController *folderNavigationController = [[UIStoryboard storyboardWithName:@"Links" bundle:nil] instantiateViewControllerWithIdentifier:@"FolderLinkNavigationControllerID"];
-    FolderLinkViewController *folderlinkVC = folderNavigationController.viewControllers.firstObject;
-    
-    NSString *link = MEGALinkManager.linkURL.mnz_MEGAURL;
-    folderlinkVC.isFolderRootNode = YES;
-    folderlinkVC.publicLinkString = link;
-    folderlinkVC.linkEncryptedString = MEGALinkManager.secondaryLinkURL.absoluteString;
-    
-    [self presentViewControllerWithAds:folderNavigationController
-                            publicLink:link
-                          isFolderLink:true
-                 adsSlotViewController:folderlinkVC
-                     presentationStyle:UIModalPresentationFullScreen];
+    if ([self shouldUseNewFolderLink]) {
+        NSString *link = MEGALinkManager.linkURL.mnz_MEGAURL;
+        UIViewController *folderlinkViewController = [self newFolderLinkViewControllerWithLink:link];
+        MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:folderlinkViewController];
+        
+        [self presentViewControllerWithAds:navigationController
+                                publicLink:link
+                              isFolderLink:true
+                     adsSlotViewController:folderlinkViewController
+                         presentationStyle:UIModalPresentationFullScreen];
+    } else {
+        MEGANavigationController *folderNavigationController = [[UIStoryboard storyboardWithName:@"Links" bundle:nil] instantiateViewControllerWithIdentifier:@"FolderLinkNavigationControllerID"];
+        FolderLinkViewController *folderlinkVC = folderNavigationController.viewControllers.firstObject;
+        
+        NSString *link = MEGALinkManager.linkURL.mnz_MEGAURL;
+        folderlinkVC.isFolderRootNode = YES;
+        folderlinkVC.publicLinkString = link;
+        folderlinkVC.linkEncryptedString = MEGALinkManager.secondaryLinkURL.absoluteString;
+        
+        [self presentViewControllerWithAds:folderNavigationController
+                                publicLink:link
+                              isFolderLink:true
+                     adsSlotViewController:folderlinkVC
+                         presentationStyle:UIModalPresentationFullScreen];
+    }
 }
 
 + (void)showContactRequestsView {
