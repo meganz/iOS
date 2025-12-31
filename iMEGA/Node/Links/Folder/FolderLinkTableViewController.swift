@@ -6,7 +6,6 @@ import MEGADomain
 import MEGAL10n
 
 class FolderLinkTableViewController: UIViewController {
-    
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var tableViewBottomConstraint: NSLayoutConstraint!
     
@@ -31,6 +30,13 @@ class FolderLinkTableViewController: UIViewController {
             tableViewBottomConstraint.isActive = false
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         }
+        addLongPressGestureIfNeeded()
+    }
+
+    func addLongPressGestureIfNeeded() {
+        guard isCloudDriveRevampEnabled else { return }
+        let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
+        tableView.addGestureRecognizer(longPressGesture)
     }
 
     @objc func showTableHeaderIfRequired() {
@@ -79,6 +85,19 @@ class FolderLinkTableViewController: UIViewController {
         UIView.performWithoutAnimation {
             tableView.reloadRows(at: [IndexPath(row: rowIndex, section: 0)], with: .none)
         }
+    }
+
+    @objc private func handleLongPress(_ gesture: UILongPressGestureRecognizer) {
+        guard gesture.state == .began else { return }
+
+        let point = gesture.location(in: tableView)
+
+        guard !tableView.isEditing,
+              let indexPath = tableView.indexPathForRow(at: point),
+              getNode(at: indexPath) != nil else { return }
+        folderLink.setEditMode(true)
+        tableView.selectRow(at: indexPath, animated: false, scrollPosition: .none)
+        tableView(tableView, didSelectRowAt: indexPath)
     }
 }
 
@@ -248,6 +267,7 @@ extension FolderLinkTableViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, contextMenuConfigurationForRowAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+        if isCloudDriveRevampEnabled { return nil }
         let contextMenuConfiguration = UIContextMenuConfiguration(identifier: nil) {
             guard let node = self.getNode(at: indexPath) else { return nil }
             if node.isFolder() {

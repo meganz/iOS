@@ -34,37 +34,37 @@ extension NodeCollectionViewCell {
             sdk: sdk,
             delegate: delegate
         )
-        
+
         downloadedImageView?.isHidden = !hasDownloaded(node: node)
-        
+
         guard usesRevampedUI else { return }
         nameLabel?.font = UIFont.preferredFont(forTextStyle: .caption1)
-        
+
         let labelPath = node.toNodeEntity().label.labelString
         labelImageView?.image = MEGAAssets.UIImage.image(named: "\(labelPath)Small")
-        
+
         topNodeIconsView?.backgroundColor = .clear
-        
+
         downloadedImageView?.image = MEGAAssets.UIImage.arrowDownCircle
-        
+
         favouriteView?.backgroundColor = TokenColors.Background.surfaceTransparent
         favouriteView?.layer.cornerRadius = TokenRadius.small
         favouriteImageView?.image = MEGAAssets.UIImage.heart
         favouriteImageView?.tintColor = TokenColors.Icon.onColor
         favouriteImageView?.contentMode = .scaleAspectFit
-        
+
         durationLabel?.textColor = TokenColors.Text.onColor
         durationLabel?.backgroundColor = .clear
         let durationParentView = durationLabel?.superview
         durationParentView?.isHidden = durationLabel?.isHidden == true
         durationParentView?.backgroundColor = TokenColors.Background.surfaceTransparent
         durationParentView?.layer.cornerRadius = TokenRadius.small
-        
+
         // Note: The sizing logic for the image of `moreButton` is done in the xib using `Image insets`.
         moreButton?.setImage(MEGAAssets.UIImage.moreHorizontal, for: .normal)
         moreButton?.imageView?.contentMode = .scaleAspectFit
         moreButton?.imageView?.tintColor = TokenColors.Icon.primary
-        
+
         contentView.layer.borderColor = UIColor.clear.cgColor
     }
 }

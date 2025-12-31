@@ -148,7 +148,7 @@
                         </connections>
                     </button>
                     <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="checkBoxUnselected" translatesAutoresizingMaskIntoConstraints="NO" id="8co-zD-JSo">
-                        <rect key="frame" x="160" y="152.5" width="24" height="24"/>
+                        <rect key="frame" x="156" y="152.5" width="24" height="24"/>
                         <color key="tintColor" red="0.0" green="0.74901960779999999" blue="0.64705882349999999" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="24" id="3vP-lg-ZK6"/>
@@ -166,7 +166,6 @@
                     <constraint firstItem="UkI-84-Qe9" firstAttribute="leading" secondItem="xGO-hx-rX5" secondAttribute="leading" id="9f0-50-IOm"/>
                     <constraint firstItem="hzd-VT-k6M" firstAttribute="centerY" secondItem="UhZ-2d-SmK" secondAttribute="centerY" id="ARu-bo-PTu"/>
                     <constraint firstItem="UhZ-2d-SmK" firstAttribute="top" secondItem="xGO-hx-rX5" secondAttribute="top" id="AZQ-iz-Inh"/>
-                    <constraint firstAttribute="trailing" secondItem="8co-zD-JSo" secondAttribute="trailing" constant="8" id="C8l-Bf-3e0"/>
                     <constraint firstItem="8co-zD-JSo" firstAttribute="centerY" secondItem="imJ-KD-GDx" secondAttribute="centerY" id="CcR-LO-dbx"/>
                     <constraint firstAttribute="trailing" secondItem="UkI-84-Qe9" secondAttribute="trailing" id="Cdt-lD-MTj"/>
                     <constraint firstItem="imJ-KD-GDx" firstAttribute="centerY" secondItem="7lm-pB-6G2" secondAttribute="centerY" id="DaJ-mG-WAI"/>
@@ -174,7 +173,7 @@
                     <constraint firstItem="fkb-nZ-O3q" firstAttribute="top" secondItem="UhZ-2d-SmK" secondAttribute="bottom" constant="8" id="EcS-Rs-1dE"/>
                     <constraint firstItem="UhZ-2d-SmK" firstAttribute="leading" secondItem="xGO-hx-rX5" secondAttribute="leading" id="QRN-du-XFb"/>
                     <constraint firstItem="UkI-84-Qe9" firstAttribute="top" secondItem="xGO-hx-rX5" secondAttribute="top" constant="4" id="TbG-mZ-EWE"/>
-                    <constraint firstItem="8co-zD-JSo" firstAttribute="centerX" secondItem="imJ-KD-GDx" secondAttribute="centerX" id="UFH-ay-w24"/>
+                    <constraint firstItem="8co-zD-JSo" firstAttribute="centerX" secondItem="imJ-KD-GDx" secondAttribute="centerX" constant="-4" id="UFH-ay-w24"/>
                     <constraint firstAttribute="trailing" secondItem="imJ-KD-GDx" secondAttribute="trailing" id="aUe-Z6-gU0"/>
                     <constraint firstAttribute="bottom" secondItem="fkb-nZ-O3q" secondAttribute="bottom" id="fvs-ua-nP1"/>
                     <constraint firstItem="hzd-VT-k6M" firstAttribute="centerX" secondItem="UhZ-2d-SmK" secondAttribute="centerX" id="odx-S9-hgT"/>

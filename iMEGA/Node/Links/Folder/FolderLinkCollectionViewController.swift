@@ -4,7 +4,6 @@ import MEGAAssets
 import MEGAL10n
 
 class FolderLinkCollectionViewController: UIViewController {
-   
     @IBOutlet weak var collectionView: UICollectionView!
 
     unowned var folderLink: FolderLinkViewController!
@@ -39,22 +38,22 @@ class FolderLinkCollectionViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         setupCollectionView()
         setupDataSource()
+        addLongPressGestureIfNeeded()
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
         reloadData()
     }
-    
+
     override func viewWillTransition(to size: CGSize, with coordinator: any UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
         coordinator.animate(alongsideTransition: { (_) in
             self.layout.configThumbnailListColumnCount()
-
         }, completion: nil)
     }
     
@@ -69,6 +68,12 @@ class FolderLinkCollectionViewController: UIViewController {
 
     private func setupDataSource() {
         diffableDataSource.configureDataSource(usesRevampedUI: isCloudDriveRevampEnabled)
+    }
+
+    private func addLongPressGestureIfNeeded() {
+        guard isCloudDriveRevampEnabled else { return }
+        let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
+        collectionView.addGestureRecognizer(longPressGesture)
     }
 
     private func setupCollectionView() {
@@ -244,6 +249,7 @@ extension FolderLinkCollectionViewController: UICollectionViewDelegate {
     }
     
     func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+        if isCloudDriveRevampEnabled { return nil }
         let contextMenuConfiguration = UIContextMenuConfiguration(identifier: nil) {
             guard let node = self.getNode(at: indexPath) else { return nil }
             if node.isFolder() {
@@ -290,6 +296,19 @@ extension FolderLinkCollectionViewController: CHTCollectionViewDelegateWaterfall
     func collectionView(_ collectionView: UICollectionView!, layout collectionViewLayout: UICollectionViewLayout!, heightForHeaderInSection section: Int) -> CGFloat {
         guard section == 0, folderLink.shouldShowHeaderView else { return 0 }
         return 40
+    }
+
+    @objc private func handleLongPress(_ gesture: UILongPressGestureRecognizer) {
+        guard gesture.state == .began else { return }
+
+        let point = gesture.location(in: collectionView)
+
+        guard !collectionView.isEditing,
+              let indexPath = collectionView.indexPathForItem(at: point),
+              getNode(at: indexPath) != nil else { return }
+        folderLink.setEditMode(true)
+        collectionView.selectItem(at: indexPath, animated: false, scrollPosition: [])
+        collectionView(collectionView, didSelectItemAt: indexPath)
     }
 }
 
