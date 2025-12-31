@@ -629,6 +629,7 @@ struct CloudDriveViewControllerFactory {
 
         let shouldShowMediaDiscoveryModeHandler: () -> Bool = {
             (!nodeSource.isRoot
+             && config.displayMode != .rubbishBin
              && mediaNodesHandler(.containsSomeMedia, nodeSource)
              && !(config.isFromSharedItem == true))
             || initialViewMode == .mediaDiscovery
