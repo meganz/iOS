@@ -275,6 +275,7 @@
             break;
     }
     if (self.viewModePreference == ViewModePreferenceEntityList && self.flTableView.tableView != nil) {
+        [self.flTableView hideTableHeaderView];
         [self.flTableView.tableView setBackgroundView:unavailableLinkView];
     } else if (self.flCollectionView.collectionView != nil){
         [self.flCollectionView.collectionView setBackgroundView:unavailableLinkView];
