@@ -40,6 +40,7 @@ public struct SearchResultsHeaderView<LeftView: View, RightView: View>: View {
         }
         .padding(.horizontal, horizontalPadding)
         .frame(minHeight: height)
+        .background(TokenColors.Background.page.swiftUI)
     }
 }
 
