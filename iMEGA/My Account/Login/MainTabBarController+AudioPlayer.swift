@@ -23,7 +23,11 @@ extension MainTabBarController: AudioMiniPlayerHandlerProtocol {
     private func adjustMiniPlayerDisplay() {
         let shouldShowMiniPlayer = currentPresenter != nil
         
-        let shouldAddSafeAreaCoverView = (currentPresenter as? (any BottomSafeAreaOverlayCoverStatusProviderProtocol))?.shouldShowSafeAreaOverlayCover ?? tabBar.isHidden
+        let safeAreaOverlayCoverAllowedForCurrentPresenter = if #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled(), let presenter = currentPresenter, isTabRoot(presenter) {
+            false
+        } else { true }
+        let safeAreaOverlayCoverAllowed = tabBar.isHidden && safeAreaOverlayCoverAllowedForCurrentPresenter
+        let shouldAddSafeAreaCoverView = (currentPresenter as? (any BottomSafeAreaOverlayCoverStatusProviderProtocol))?.shouldShowSafeAreaOverlayCover ?? safeAreaOverlayCoverAllowed
         
         if shouldShowMiniPlayer {
             shouldAddSafeAreaCoverView ? addSafeAreaCoverView() : removeSafeAreaCoverView()
@@ -145,5 +149,12 @@ extension MainTabBarController: AudioMiniPlayerHandlerProtocol {
     
     @objc func updateTransferWidgetBottomConstraint() -> Float {
         AudioPlayerManager.shared.isPlayerAlive() ? -120.0 : -60.0
+    }
+    
+    private func isTabRoot(_ viewController: UIViewController) -> Bool {
+        guard let viewControllers else { return false }
+        if viewControllers.contains(viewController) { return true }
+        guard let navigationVC = viewController.navigationController else { return false }
+        return navigationVC.viewControllers.first === viewController && viewControllers.contains(navigationVC)
     }
 }
