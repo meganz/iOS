@@ -286,7 +286,7 @@ extension NodeAction {
     }
     
     class func importAction() -> NodeAction {
-        NodeAction(title: Strings.Localizable.importToCloudDrive, image: MEGAAssets.UIImage.import, type: .import)
+        NodeAction(title: Strings.Localizable.importToCloudDrive, image: .import, type: .import)
     }
     
     class func viewVersionsAction(versionCount: Int) -> NodeAction {
@@ -445,4 +445,6 @@ private extension UIImage {
 
     static var disputeTakedown: UIImage { isCloudDriveRevampEnabled ? MEGAAssets.UIImage.alertTriangle : MEGAAssets.UIImage.disputeTakedown }
     static var removeVideoFromVideoPlaylist: UIImage { isCloudDriveRevampEnabled ? MEGAAssets.UIImage.minusCircle : MEGAAssets.UIImage.hudMinus }
+
+    static var `import`: UIImage { isCloudDriveRevampEnabled ? MEGAAssets.UIImage.folderArrow : MEGAAssets.UIImage.import }
 }
