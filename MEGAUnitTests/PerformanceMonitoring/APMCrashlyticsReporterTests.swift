@@ -1,6 +1,15 @@
 @testable import APMKit
+import FirebaseCrashlytics
 @testable import MEGA
 import Testing
+
+struct ExpectedHangValues {
+    let hangDuration: Int
+    let runloopActivity: CFRunLoopActivity
+    let threshold: Int
+    let deviceLocale: String
+    let reachability: String
+}
 
 @Suite("APMCrashlyticsReporter Test Suite")
 struct APMCrashlyticsReporterTests {
@@ -9,6 +18,23 @@ struct APMCrashlyticsReporterTests {
         reachability: String = "offline"
         ) -> APMCrashlyticsReporter {
         return APMCrashlyticsReporter(crashlytics: crashlytics, reachabilityProvider: { reachability })
+    }
+    
+    func assertHangMetricsLogged(
+        _ mock: CrashlyticsReportingMocks,
+        expected: ExpectedHangValues
+    ) {
+        let hangDuration: Int? = mock.getIntValue(for: CrashlyticsKeys.hangDuration)
+        let runloopActivity: String? = mock.getStringValue(for: CrashlyticsKeys.runloopActivity)
+        let expectedRunloopActivity: String? =  expected.runloopActivity.asString
+        let threshold: Int? = mock.getIntValue(for: CrashlyticsKeys.threshold)
+        let deviceLocale: String? = mock.getStringValue(for: CrashlyticsKeys.deviceLocale)
+        let reachability: String? = mock.getStringValue(for: CrashlyticsKeys.reachability)
+        #expect(hangDuration == expected.hangDuration)
+        #expect(runloopActivity == expectedRunloopActivity)
+        #expect(threshold == expected.threshold)
+        #expect(deviceLocale == expected.deviceLocale)
+        #expect(reachability == expected.reachability)
     }
 
     @Test("report a hang with valid stacktrace")
@@ -24,21 +50,31 @@ struct APMCrashlyticsReporterTests {
             deviceLocale: "en-NZ"
         )
         
-        #expect(mockCrashlytics.reportedCount == 0)
-        #expect(mockCrashlytics.reportedException == nil)
+        let reportedCount: Int = mockCrashlytics.reportedCount
+        let reportedException: ExceptionModel? = mockCrashlytics.reportedException
+        #expect(reportedCount == 0)
+        #expect(reportedException == nil)
         
         reporter.report(hangMetrics: hangMetrics)
         
-        #expect(mockCrashlytics.getIntValue(for: CrashlyticsKeys.hangDuration) == 2500)
-        #expect(mockCrashlytics.getStringValue(for: CrashlyticsKeys.runloopActivity) == CFRunLoopActivity.beforeTimers.asString)
-        #expect(mockCrashlytics.getIntValue(for: CrashlyticsKeys.threshold) == 250)
-        #expect(mockCrashlytics.getStringValue(for: CrashlyticsKeys.deviceLocale) == "en-NZ")
-        #expect(mockCrashlytics.getStringValue(for: CrashlyticsKeys.reachability) == "offline")
+        let expectedValue: ExpectedHangValues = .init(
+            hangDuration: 2500,
+            runloopActivity: CFRunLoopActivity.beforeTimers,
+            threshold: 250,
+            deviceLocale: "en-NZ",
+            reachability: "offline"
+        )
+        assertHangMetricsLogged(mockCrashlytics, expected: expectedValue)
         
-        #expect(mockCrashlytics.reportedException != nil)
-        #expect(mockCrashlytics.reportedException?.stackTrace.count == 3)
-        #expect(mockCrashlytics.reportedError == nil)
-        #expect(mockCrashlytics.reportedCount == 1)
+        let theReportedException: ExceptionModel? = mockCrashlytics.reportedException
+        let stackTrace: [StackFrame]? = theReportedException?.stackTrace
+        let stackTraceCount: Int? = stackTrace?.count
+        let reportedError: (any Error)? = mockCrashlytics.reportedError
+        let theReportedCount: Int = mockCrashlytics.reportedCount
+        #expect(theReportedException != nil)
+        #expect(stackTraceCount == 3)
+        #expect(reportedError == nil)
+        #expect(theReportedCount == 1)
     }
     
     @Test("report a hang with empty stacktrace")
@@ -54,23 +90,33 @@ struct APMCrashlyticsReporterTests {
             deviceLocale: "en-NZ"
         )
         
-        #expect(mockCrashlytics.reportedCount == 0)
-        #expect(mockCrashlytics.reportedError == nil)
+        let reportedCount: Int = mockCrashlytics.reportedCount
+        let reportedError: (any Error)? = mockCrashlytics.reportedError
+        #expect(reportedCount == 0)
+        #expect(reportedError == nil)
         
         reporter.report(hangMetrics: hangMetrics)
         
-        #expect(mockCrashlytics.getIntValue(for: CrashlyticsKeys.hangDuration) == 1500)
-        #expect(mockCrashlytics.getStringValue(for: CrashlyticsKeys.runloopActivity) == CFRunLoopActivity.beforeSources.asString)
-        #expect(mockCrashlytics.getIntValue(for: CrashlyticsKeys.threshold) == 1000)
-        #expect(mockCrashlytics.getStringValue(for: CrashlyticsKeys.deviceLocale) == "en-NZ")
-        #expect(mockCrashlytics.getStringValue(for: CrashlyticsKeys.reachability) == "Wi-Fi")
+        let expectedValue: ExpectedHangValues = .init(
+            hangDuration: 1500,
+            runloopActivity: CFRunLoopActivity.beforeSources,
+            threshold: 1000,
+            deviceLocale: "en-NZ",
+            reachability: "Wi-Fi"
+        )
+        assertHangMetricsLogged(mockCrashlytics, expected: expectedValue)
         
-        #expect(mockCrashlytics.reportedException == nil)
-        let error = mockCrashlytics.reportedError as? NSError
-        #expect(error?.domain == "mega.ios.hang")
-        #expect(error?.code == 1001)
-        #expect(error?.localizedDescription == "Hang detected with empty stack captured")
-        #expect(mockCrashlytics.reportedCount == 1)
+        let theReportedException: ExceptionModel? = mockCrashlytics.reportedException
+        #expect(theReportedException == nil)
+        let error: NSError? = mockCrashlytics.reportedError as? NSError
+        let domain: String? = error?.domain
+        let code: Int? = error?.code
+        let localizedDescription: String? = error?.localizedDescription
+        let theReportedCount: Int = mockCrashlytics.reportedCount
+        #expect(domain == "mega.ios.hang")
+        #expect(code == 1001)
+        #expect(localizedDescription == "Hang detected with empty stack captured")
+        #expect(theReportedCount == 1)
     }
     
     @Test("test report multiple hang events")
