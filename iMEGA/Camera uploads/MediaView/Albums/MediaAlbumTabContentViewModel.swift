@@ -8,28 +8,52 @@ import SwiftUI
 
 @MainActor
 final class MediaAlbumTabContentViewModel: ObservableObject, MediaTabContentViewModel, MediaTabSharedResourceConsumer, MediaTabContextMenuActionHandler {
-    weak var sharedResourceProvider: (any MediaTabSharedResourceProvider)?
+    weak var sharedResourceProvider: (any MediaTabSharedResourceProvider)? {
+        didSet {
+            setupParentEditModeSubscription()
+        }
+    }
     let editModeToggleRequested = PassthroughSubject<Void, Never>()
     let albumListViewModel: AlbumListViewModel
     let albumListViewRouter: any AlbumListViewRouting
     
     private var subscriptions = Set<AnyCancellable>()
     var toolbarCoordinator: (any MediaTabToolbarCoordinatorProtocol)?
-    
+    private var lastKnownEditMode: EditMode
+
     init(
         albumListViewModel: AlbumListViewModel,
         albumListViewRouter: some AlbumListViewRouting
     ) {
         self.albumListViewModel = albumListViewModel
         self.albumListViewRouter = albumListViewRouter
+        self.lastKnownEditMode = albumListViewModel.selection.editMode
         subscribeToAlbumSelectionEditMode()
     }
     
     private func subscribeToAlbumSelectionEditMode() {
         albumListViewModel.selection.$editMode
             .dropFirst()
-            .sink { [weak self] _ in
-                self?.editModeToggleRequested.send()
+            .sink { [weak self] newMode in
+                guard let self else { return }
+                // Only notify parent if the mode actually changed from what we last knew
+                guard newMode != self.lastKnownEditMode else { return }
+                self.lastKnownEditMode = newMode
+                self.editModeToggleRequested.send()
+            }
+            .store(in: &subscriptions)
+    }
+
+    private func setupParentEditModeSubscription() {
+        guard let sharedResourceProvider else { return }
+
+        sharedResourceProvider.editModePublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] mode in
+                guard let self else { return }
+                // Update our tracking variable before setting the value
+                self.lastKnownEditMode = mode
+                self.albumListViewModel.selection.editMode = mode
             }
             .store(in: &subscriptions)
     }
