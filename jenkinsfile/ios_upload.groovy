@@ -78,6 +78,21 @@ pipeline {
         }
     }
     stages {
+        stage('git lfs check') {
+            steps {
+                gitlabCommitStatus(name: 'git lfs check') {
+                    sh "git lfs ls-files"
+                    sh '''
+                        if git lfs ls-files | awk '{print $2}' | grep -q "-"; then
+                            echo "ERROR: Found LFS pointer files (not downloaded)"
+                            exit 1
+                        fi
+                        echo "✓ All LFS files downloaded successfully"
+                    '''
+                }
+            }
+        }
+
         stage('Bundle install') {
             steps {
                 gitlabCommitStatus(name: 'Bundle install') {
