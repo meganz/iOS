@@ -190,11 +190,6 @@
 
 #pragma mark - Private
 
-- (void)configureImages {
-    self.selectAllBarButtonItem.image = [UIImage megaImageWithNamed:@"selectAllItems"];
-    self.moreBarButtonItem.image = [UIImage megaImageWithNamed:@"moreNavigationBar"];
-}
-
 - (void)reloadUI {
     if (!self.parentNode) {
         self.parentNode = [MEGASdk.sharedFolderLink rootNode];

@@ -1,3 +1,4 @@
+import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGAAssets
 import MEGADesignToken
@@ -8,7 +9,11 @@ import UIKit
 @MainActor private var AssociatedLoadThumbnailTaskHandle: UInt8 = 0
 
 extension NodeCollectionViewCell {
-    
+
+    private var isCloudDriveRevampEnabled: Bool {
+        DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .cloudDriveRevamp)
+    }
+
     private var loadThumbnailTask: Task<Void, any Error>? {
         get {
             objc_getAssociatedObject(self, &AssociatedLoadThumbnailTaskHandle) as? Task<Void, any Error>
@@ -149,6 +154,23 @@ extension NodeCollectionViewCell {
     }
     
     @objc func updateSelection() {
+        if isCloudDriveRevampEnabled {
+            updateSelectionForRevampedUI()
+        } else {
+            updateSelectionForLegacyUI()
+        }
+    }
+
+    private func updateSelectionForRevampedUI() {
+        selectImageView?.image = UIImage(systemName: isSelected ? "checkmark.circle.fill" : "circle")
+        selectImageView?.tintColor = isSelected
+        ? TokenColors.Components.selectionControlAlt
+        : TokenColors.Border.strong
+        contentView.backgroundColor = isSelected ? TokenColors.Background.surface1 : .clear
+        thumbnailImageView?.backgroundColor = isSelected ? TokenColors.Background.surface2 : TokenColors.Background.surface1
+    }
+
+    private func updateSelectionForLegacyUI() {
         if moreButton?.isHidden ?? false && self.isSelected {
             selectImageView?.image = MEGAAssets.UIImage.checkBoxSelectedSemantic
             self.contentView.layer.borderColor = TokenColors.Support.success.cgColor

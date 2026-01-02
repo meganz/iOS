@@ -11,6 +11,11 @@ import MEGAPermissions
 import MEGASwift
 
 extension FolderLinkViewController {
+
+    private var isCloudDriveRevampEnabled: Bool {
+        DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .cloudDriveRevamp)
+    }
+
     @objc func isDecryptedFolder() -> Bool {
         parentNode?.isNodeKeyDecrypted() ?? false
     }
@@ -66,6 +71,11 @@ extension FolderLinkViewController {
         }
     }
 
+    @objc func configureImages() {
+        selectAllBarButtonItem?.image = isCloudDriveRevampEnabled ? MEGAAssets.UIImage.checkStack : MEGAAssets.UIImage.selectAllItems
+        moreBarButtonItem.image = MEGAAssets.UIImage.moreNavigationBar
+    }
+    
     func resetNodeActionSelectionAndImportFilesFromFolderLink() {
         let isEditing = navigationItem.rightBarButtonItem == editBarButtonItem
         if !isEditing {

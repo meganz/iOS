@@ -1,4 +1,5 @@
 import Foundation
+import MEGAAppPresentation
 import MEGAAssets
 
 @MainActor
@@ -11,7 +12,11 @@ final class FolderLinkToolbarConfigurator {
     let shareLinkAction: FolderLinkToolbarButtonAction
     
     private(set) var activeBarButtons: [UIBarButtonItem] = []
-    
+
+    private var isCloudDriveRevampEnabled: Bool {
+        DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .cloudDriveRevamp)
+    }
+
     lazy var flexibleItem = UIBarButtonItem(
         barButtonSystemItem: .flexibleSpace,
         target: nil,
@@ -19,28 +24,28 @@ final class FolderLinkToolbarConfigurator {
     )
     
     lazy var importItem = UIBarButtonItem(
-        image: MEGAAssets.UIImage.import,
+        image: isCloudDriveRevampEnabled ? MEGAAssets.UIImage.folderArrow : MEGAAssets.UIImage.import,
         style: .plain,
         target: self,
         action: #selector(buttonPressed(_:))
     )
     
     lazy var downloadItem = UIBarButtonItem(
-        image: MEGAAssets.UIImage.offline,
+        image: isCloudDriveRevampEnabled ? MEGAAssets.UIImage.cloudDownload : MEGAAssets.UIImage.offline,
         style: .plain,
         target: self,
         action: #selector(buttonPressed(_:))
     )
     
     lazy var saveToPhotosItem = UIBarButtonItem(
-        image: MEGAAssets.UIImage.saveToPhotos,
+        image: isCloudDriveRevampEnabled ? MEGAAssets.UIImage.photosApp : MEGAAssets.UIImage.saveToPhotos,
         style: .plain,
         target: self,
         action: #selector(buttonPressed(_:))
     )
     
     lazy var shareLinkItem = UIBarButtonItem(
-        image: MEGAAssets.UIImage.link,
+        image: isCloudDriveRevampEnabled ? MEGAAssets.UIImage.link01 : MEGAAssets.UIImage.link,
         style: .plain,
         target: self,
         action: #selector(buttonPressed(_:))

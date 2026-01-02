@@ -8,7 +8,7 @@ import MEGAL10n
 class FolderLinkTableViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var tableViewBottomConstraint: NSLayoutConstraint!
-    
+
     unowned var folderLink: FolderLinkViewController!
     var headerContainerView: UIView?
     private var isCloudDriveRevampEnabled: Bool { DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .cloudDriveRevamp) }
@@ -65,9 +65,7 @@ class FolderLinkTableViewController: UIViewController {
         folderLink.setNavigationBarButton(editing)
         
         tableView.visibleCells.forEach { (cell) in
-            let view = UIView()
-            view.backgroundColor = .clear
-            cell.selectedBackgroundView = editing ? view : nil
+            cell.setSelectedBackgroundView(withColor: isCloudDriveRevampEnabled ? TokenColors.Background.surface1 : .clear)
         }
     }
     
@@ -146,7 +144,7 @@ extension FolderLinkTableViewController: UITableViewDataSource {
         } else {
             CrashlyticsLogger.log("Node at \(indexPath) not found, nodes \(nodes.map { $0.handle }), is online \(isOnline), isSearching: \(isSearching)")
         }
-        
+
         return cell
     }
     
@@ -167,17 +165,15 @@ extension FolderLinkTableViewController: UITableViewDataSource {
         cell.nameLabel.text = node.nameAfterDecryptionCheck()
         cell.nameLabel.textColor = TokenColors.Text.primary
         cell.node = node
-        
+
         if tableView.isEditing {
             folderLink.selectedNodesArray?.forEach {
                 if let tempNode = $0 as? MEGANode, tempNode.handle == node.handle {
                     tableView.selectRow(at: indexPath, animated: false, scrollPosition: .none)
                 }
             }
-            
-            let view = UIView()
-            view.backgroundColor = .clear
-            cell.selectedBackgroundView = view
+
+            cell.setSelectedBackgroundView(withColor: isCloudDriveRevampEnabled ? TokenColors.Background.surface1 : .clear)
         } else {
             cell.selectedBackgroundView = nil
         }
@@ -185,6 +181,8 @@ extension FolderLinkTableViewController: UITableViewDataSource {
         if !isCloudDriveRevampEnabled {
             cell.separatorView.layer.borderColor = TokenColors.Border.strong.cgColor
             cell.separatorView.layer.borderWidth = 0.5
+        } else {
+            cell.tintColor = TokenColors.Components.selectionControlAlt
         }
 
         cell.downloadedImageView.image = isCloudDriveRevampEnabled ? MEGAAssets.UIImage.arrowDownCircle : MEGAAssets.UIImage.downloaded
@@ -221,6 +219,11 @@ extension FolderLinkTableViewController: UITableViewDelegate {
             folderLink.areAllNodesSelected = folderLink.selectedNodesArray?.count == folderLink.nodesArray.count
             let selectedNodesNotEmpty = (folderLink.selectedNodesArray?.count ?? 0) > 0
             folderLink.refreshToolbarButtonsStatus(selectedNodesNotEmpty && folderLink.isDecryptedFolderAndNoUndecryptedNodeSelected())
+            if isCloudDriveRevampEnabled {
+                // In revamp UI, we need to reload the cell to make the background color to update
+                tableView.reloadRows(at: [indexPath], with: .none)
+            }
+
             return
         }
         

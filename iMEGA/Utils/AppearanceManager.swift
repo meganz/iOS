@@ -4,6 +4,7 @@ import MEGADesignToken
 
 @MainActor
 final class AppearanceManager: NSObject {
+    static let tableViewCellTintColor = TokenColors.Support.success
     @objc class func setupAppearance(_ traitCollection: UITraitCollection) {
         setupNavigationBarAppearance()
         
@@ -26,8 +27,8 @@ final class AppearanceManager: NSObject {
         UITableView.appearance().backgroundColor = TokenColors.Background.page
         UITableView.appearance().separatorColor = TokenColors.Border.strong
         UIButton.appearance(whenContainedInInstancesOf: [UITableViewCell.self]).tintColor = UIColor.mnz_tertiaryGray(for: traitCollection)
-        UITableViewCell.appearance().tintColor = TokenColors.Support.success
-        
+        UITableViewCell.appearance().tintColor = Self.tableViewCellTintColor
+
         UICollectionView.appearance().backgroundColor = TokenColors.Background.page
         UIButton.appearance(whenContainedInInstancesOf: [UICollectionViewCell.self]).tintColor = UIColor.mnz_tertiaryGray(for: traitCollection)
         
