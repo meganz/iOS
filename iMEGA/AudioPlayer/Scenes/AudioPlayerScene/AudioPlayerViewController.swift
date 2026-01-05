@@ -1,4 +1,5 @@
 import Accounts
+import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGAAssets
 import MEGADesignToken
@@ -120,6 +121,13 @@ class AudioPlayerViewController: UIViewController, AudioPlayerViewControllerNode
     
     private func configureActivityIndicatorViewColor() {
         activityIndicatorView.color = TokenColors.Icon.secondary
+    }
+    
+    private func configureLiquidGlassStyle() {
+        if #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() {
+            closeButton.configuration = .glass()
+            moreButton.configuration = .glass()
+        }
     }
     
     private func removeDelegates() {
@@ -295,6 +303,7 @@ class AudioPlayerViewController: UIViewController, AudioPlayerViewControllerNode
         
         closeButton.titleLabel?.adjustsFontForContentSizeCategory = true
         configureViewsColor()
+        configureLiquidGlassStyle()
     }
     
     // MARK: - UI actions

@@ -1,3 +1,4 @@
+import MEGAAppPresentation
 import MEGADesignToken
 import MEGAL10n
 import UIKit
@@ -19,6 +20,8 @@ final class AudioPlaylistViewController: UIViewController {
     @IBOutlet weak var toolbarView: UIView!
     @IBOutlet weak var toolbarBlurView: UIVisualEffectView!
     @IBOutlet weak var removeButton: UIButton!
+    @IBOutlet weak var tableViewTopToTitleBottomConstraint: NSLayoutConstraint!
+    @IBOutlet weak var closeTopToTopLayoutGuideBottomConstraint: NSLayoutConstraint!
     
     // MARK: - Private properties
     private var playlistSource: (any AudioPlaylistSource)? {
@@ -49,6 +52,8 @@ final class AudioPlaylistViewController: UIViewController {
         
         viewModel.dispatch(.onViewDidLoad)
         playlistDelegate = AudioPlaylistIndexedDelegate(delegate: self, traitCollection: traitCollection)
+        
+        configureLiquidGlassStyle()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -57,6 +62,22 @@ final class AudioPlaylistViewController: UIViewController {
     }
     
     // MARK: - Private functions
+    private func configureLiquidGlassStyle() {
+        guard #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() else { return }
+        
+        closeButton.configuration = .glass()
+        toolbarBlurView.isHidden = true
+        toolbarView.backgroundColor = .clear
+        tableViewTopToTitleBottomConstraint.constant = 12.5
+        closeTopToTopLayoutGuideBottomConstraint.constant = 10
+        removeButton.configuration = .glass()
+        
+        toolbarBottomConstraint.priority = .defaultLow
+        let constraint = tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        constraint.priority = .required
+        constraint.isActive = true
+    }
+    
     private func showToolbar() {
         if toolbarView.isHidden {
             toolbarView.isHidden = false
@@ -153,11 +174,18 @@ final class AudioPlaylistViewController: UIViewController {
         
         removeButton.setTitle(Strings.Localizable.remove, for: .normal)
         
-        toolbarView.addBorder(
-            edge: .top,
-            color: TokenColors.Border.strong,
-            thickness: 0.5
-        )
+        let isLiquidGlassEnabled = if #available(iOS 26.0, *), DIContainer.featureFlagProvider.isLiquidGlassEnabled() {
+            true
+        } else {
+            false
+        }
+        if !isLiquidGlassEnabled {
+            toolbarView.addBorder(
+                edge: .top,
+                color: TokenColors.Border.strong,
+                thickness: 0.5
+            )
+        }
         
         style()
     }
