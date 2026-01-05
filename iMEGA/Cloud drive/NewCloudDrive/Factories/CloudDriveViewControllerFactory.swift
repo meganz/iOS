@@ -956,7 +956,7 @@ struct CloudDriveViewControllerFactory {
                 }
             },
             sortingOrder: { @MainActor in
-                sortOrderPreferenceUseCase.sortOrder(for: nodeSource.parentNode).toSearchSortOrderEntity()
+                sortOrderPreferenceUseCase.sortOrder(for: nodeSource.parentNode).toUIComponentSortOrderEntity()
             },
             updateSortOrder: { @MainActor sortOrder in
                 guard let node = nodeSource.parentNode else { return }

@@ -4,6 +4,7 @@ import MEGAAppPresentation
 import MEGADomain
 import MEGAFoundation
 import MEGASwift
+import MEGAUIComponent
 import Search
 
 enum OfflineViewAction: ActionType {
@@ -30,14 +31,14 @@ final class OfflineViewModel: NSObject, ViewModelType {
         }
     }
 
-    private let sortHeaderCoordinator: SearchResultsSortHeaderCoordinator
+    private let sortHeaderCoordinator: SortHeaderCoordinator
     private let userDefaults: UserDefaults
     private let toggleViewModePreferenceHandler: (ViewModePreferenceEntity) -> Void
     private var subscriptions: Set<AnyCancellable> = []
     private let tracker: any AnalyticsTracking
     private var sortHeaderViewTapEventsTask: Task<Void, Never>?
 
-    var sortHeaderViewModel: SearchResultsHeaderSortViewViewModel {
+    var sortHeaderViewModel: SortHeaderViewModel {
         sortHeaderCoordinator.headerViewModel
     }
 
@@ -56,7 +57,7 @@ final class OfflineViewModel: NSObject, ViewModelType {
     init(
         offlineUseCase: some OfflineUseCaseProtocol,
         megaStore: MEGAStore,
-        sortHeaderCoordinator: SearchResultsSortHeaderCoordinator,
+        sortHeaderCoordinator: SortHeaderCoordinator,
         fileManager: FileManager = FileManager.default,
         userDefaults: UserDefaults = .standard,
         documentsDirectoryPath: String? = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first,

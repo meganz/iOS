@@ -1,4 +1,5 @@
 import MEGADesignToken
+import MEGAUIComponent
 import SwiftUI
 
 public struct SearchResultsSortOptionsView: View {
@@ -40,7 +41,7 @@ public struct SearchResultsSortOptionsView: View {
 }
 
 private struct SortOptionsView: View {
-    let sortOptions: [SearchResultsSortOption]
+    let sortOptions: [SortOption]
     let height: CGFloat
     let tapHandler: SearchResultsSortOptionsViewModel.TapHandler?
 

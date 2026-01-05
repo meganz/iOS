@@ -1,14 +1,15 @@
 import Foundation
+import MEGAUIComponent
 
 public struct SearchResultsSortOptionsViewModel {
     public let title: String
-    public let sortOptions: [SearchResultsSortOption]
-    public typealias TapHandler = (SearchResultsSortOption) -> Void
+    public let sortOptions: [SortOption]
+    public typealias TapHandler = (SortOption) -> Void
     let tapHandler: TapHandler?
 
     public init(
         title: String,
-        sortOptions: [SearchResultsSortOption],
+        sortOptions: [SortOption],
         tapHandler: TapHandler? = nil
     ) {
         self.title = title
@@ -17,7 +18,7 @@ public struct SearchResultsSortOptionsViewModel {
     }
 
     public func makeNewViewModel(
-        with sortOptions: [SearchResultsSortOption],
+        with sortOptions: [SortOption],
         tapHandler: TapHandler?
     ) -> Self {
         .init(title: title, sortOptions: sortOptions, tapHandler: tapHandler)

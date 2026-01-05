@@ -1,3 +1,5 @@
+import MEGAUIComponent
+
 /// Represents a type of query sent to the result provider
 /// there are some special types including initial searchQuery
 /// which is triggered when the results screen appears
@@ -37,7 +39,7 @@ public enum SearchQuery: Equatable, Sendable {
         }
     }
 
-    public var sorting: SortOrderEntity {
+    public var sorting: SortOrder {
         switch self {
         case .initial:
             return .init(key: .name)
@@ -55,7 +57,7 @@ public enum SearchQuery: Equatable, Sendable {
         return .userSupplied(query.clearingChips())
     }
 
-    public func withUpdatedSortOrder(_ sortOrder: SortOrderEntity) -> SearchQuery {
+    public func withUpdatedSortOrder(_ sortOrder: SortOrder) -> SearchQuery {
         self.sorting == sortOrder ? self : .userSupplied(
             .init(
                 query: query,

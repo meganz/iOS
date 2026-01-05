@@ -3,6 +3,7 @@ import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGADesignToken
 import MEGADomain
+import MEGAUIComponent
 import Search
 import SwiftUI
 
@@ -118,7 +119,7 @@ class FilesExplorerViewController: ExplorerBaseViewController {
 
     func headerView() -> UIView {
         guard let child = children.compactMap({
-            $0 as? UIHostingController<SearchResultsHeaderView<SearchResultsHeaderSortView, SearchResultsHeaderViewModeView>>
+            $0 as? UIHostingController<ResultsHeaderView<SortHeaderView, SearchResultsHeaderViewModeView>>
         }).first, let headerView = child.view.superview else {
             return makeHeaderView()
         }
@@ -133,8 +134,8 @@ class FilesExplorerViewController: ExplorerBaseViewController {
         let sortHeaderViewModel = viewModel.sortHeaderViewModel
         let viewModeHeaderViewModel = viewModel.viewModeHeaderViewModel
 
-        let headerContentView = SearchResultsHeaderView {
-            SearchResultsHeaderSortView(viewModel: sortHeaderViewModel)
+        let headerContentView = ResultsHeaderView {
+            SortHeaderView(viewModel: sortHeaderViewModel)
         } rightView: {
             SearchResultsHeaderViewModeView(viewModel: viewModeHeaderViewModel)
         }

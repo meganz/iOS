@@ -7,6 +7,7 @@ import MEGAAppSDKRepoMock
 import MEGADomain
 import MEGADomainMock
 import MEGASwift
+import MEGAUIComponent
 import MEGAUIKit
 import Search
 import SearchMock
@@ -69,8 +70,8 @@ class NodeBrowserViewModelTests: XCTestCase {
                 .eraseToAnyAsyncThrowingSequence(),
             sensitivityChangesForNode: AnyAsyncSequence<Bool> = EmptyAsyncSequence().eraseToAnyAsyncSequence(),
             tempWarningBannerViewModel: WarningBannerViewModel? = nil,
-            sortOptionsForMD: [SearchResultsSortOption] = [.init(sortOrder: .init(key: .name), title: "", iconsByDirection: [:])],
-            selectedSortOrderForMD: Search.SortOrderEntity = .init(key: .lastModified),
+            sortOptionsForMD: [SortOption] = [.init(sortOrder: .init(key: .name), title: "", iconsByDirection: [:])],
+            selectedSortOrderForMD: MEGAUIComponent.SortOrder = .init(key: .lastModified),
             featureFlagList: [FeatureFlagKey: Bool] = [:],
         ) {
             let config: NodeBrowserConfig = config ?? NodeBrowserConfig.default
@@ -558,8 +559,8 @@ class NodeBrowserViewModelTests: XCTestCase {
         isFromSharedItem: Bool = false,
         currentStatus: StorageStatusEntity = .noStorageProblems,
         displayMode: DisplayMode? = nil,
-        sortOptionsForMD: [SearchResultsSortOption] = [.init(sortOrder: .init(key: .name), title: "", iconsByDirection: [:])],
-        selectedSortOrderForMD: Search.SortOrderEntity = .init(key: .lastModified)
+        sortOptionsForMD: [SortOption] = [.init(sortOrder: .init(key: .name), title: "", iconsByDirection: [:])],
+        selectedSortOrderForMD: MEGAUIComponent.SortOrder = .init(key: .lastModified)
     ) -> (Harness, MockAccountStorageUseCase) {
         let mockAccountStorageUseCase = MockAccountStorageUseCase(shouldShowStorageBanner: shouldShowStorageBanner)
         var config = NodeBrowserConfig.default
@@ -654,7 +655,7 @@ class NodeBrowserViewModelTests: XCTestCase {
 
     @MainActor
     func testSortHeaderViewModelForMD_whenSetUsingInit_shouldMatchResults() {
-        let sortOptions: [SearchResultsSortOption] = [
+        let sortOptions: [SortOption] = [
             .init(sortOrder: .init(key: .lastModified), title: "", iconsByDirection: [:]),
             .init(sortOrder: .init(key: .lastModified, direction: .descending), title: "", iconsByDirection: [:])
         ]
@@ -688,7 +689,7 @@ class NodeBrowserViewModelTests: XCTestCase {
             case viewModeNotSet
         }
 
-        let sortOptions: [SearchResultsSortOption] = [
+        let sortOptions: [SortOption] = [
             .init(sortOrder: .init(key: .lastModified), title: "", iconsByDirection: [:]),
             .init(sortOrder: .init(key: .lastModified, direction: .descending), title: "", iconsByDirection: [:])
         ]

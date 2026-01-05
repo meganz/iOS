@@ -2,6 +2,7 @@ import MEGAAnalyticsiOS
 import MEGAAppPresentation
 import MEGADesignToken
 import MEGADomain
+import MEGAUIComponent
 import Search
 import SwiftUI
 
@@ -19,8 +20,8 @@ extension SharedItemsViewController {
         headerView.bounds = CGRect(x: 0, y: 0, width: 0, height: 40)
 
         let sortHeaderViewModel = viewModel.sortHeaderViewModel
-        let headerContentView = SearchResultsHeaderView(leftView: {
-            SearchResultsHeaderSortView(viewModel: sortHeaderViewModel)
+        let headerContentView = ResultsHeaderView(leftView: {
+            SortHeaderView(viewModel: sortHeaderViewModel)
         })
 
         let hostingViewController = UIHostingController(rootView: headerContentView)
@@ -34,7 +35,7 @@ extension SharedItemsViewController {
     @objc func resetSortIfNeeded() {
         guard SharedItemsViewModel
             .keysToHide(for: selectedTab)
-            .contains(currentSortOrder.toSearchSortOrderEntity().key) else {
+            .contains(currentSortOrder.toUIComponentSortOrderEntity().key) else {
             viewModel.updateSortUI()
             return
         }

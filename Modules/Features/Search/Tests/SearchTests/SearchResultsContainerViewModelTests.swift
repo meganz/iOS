@@ -1,4 +1,5 @@
 import MEGASwift
+import MEGAUIComponent
 import MEGAUIKit
 @testable import Search
 import SearchMock
@@ -207,19 +208,19 @@ struct SearchResultsContainerViewModelTests {
     }
 
     @Test(arguments: [
-        (SortOrderEntity(key: .name), [SearchQuery.initial]),
-        (SortOrderEntity(key: .name, direction: .descending), nil),
-        (SortOrderEntity(key: .size, direction: .descending), nil),
-        (SortOrderEntity(key: .size), nil),
-        (SortOrderEntity(key: .dateAdded, direction: .descending), nil),
-        (SortOrderEntity(key: .dateAdded), nil),
-        (SortOrderEntity(key: .label), nil),
-        (SortOrderEntity(key: .label, direction: .descending), nil),
-        (SortOrderEntity(key: .favourite), nil),
-        (SortOrderEntity(key: .favourite, direction: .descending), nil)
+        (SortOrder(key: .name), [SearchQuery.initial]),
+        (SortOrder(key: .name, direction: .descending), nil),
+        (SortOrder(key: .size, direction: .descending), nil),
+        (SortOrder(key: .size), nil),
+        (SortOrder(key: .dateAdded, direction: .descending), nil),
+        (SortOrder(key: .dateAdded), nil),
+        (SortOrder(key: .label), nil),
+        (SortOrder(key: .label, direction: .descending), nil),
+        (SortOrder(key: .favourite), nil),
+        (SortOrder(key: .favourite, direction: .descending), nil)
     ])
     func testChangeSortOrder_forAllCases_shouldMatchTheExpectation(
-        sortOrder: Search.SortOrderEntity,
+        sortOrder: MEGAUIComponent.SortOrder,
         expectedReceivedQueries: [SearchQuery]?
     ) async {
         let (sut, resultsProvider) = makeSUTWithChipsPrepared()
@@ -252,7 +253,7 @@ struct SearchResultsContainerViewModelTests {
     }
 
     @Test func testDisplaySortOptionsViewModel_whenDisplayed_shouldOmitSelectedSortOption() throws {
-        let sortOptionsViewModel = SearchResultsSortOptionsViewModel(
+        let sortOptionsViewModel = SortOptionsViewModel(
             title: "Sort by",
             sortOptions: [
                 .init(sortOrder: .init(key: .name), title: "Name", iconsByDirection: [:]),
@@ -265,23 +266,6 @@ struct SearchResultsContainerViewModelTests {
         #expect(displaySortOptionsViewModel.sortOptions.count == 1)
         let sortOption = try #require(displaySortOptionsViewModel.sortOptions.first)
         #expect(sortOption.sortOrder == .init(key: .name, direction: .descending))
-    }
-
-    @Test func testHeaderViewModel_whenDisplayed_shouldShowSelectedSortOption() throws {
-        let iconByDirection: [SortOrderEntity.Direction: Image] = [
-            .ascending: Image(systemName: "plus"),
-            .descending: Image(systemName: "minus")
-        ]
-        let sortOptionsViewModel = SearchResultsSortOptionsViewModel(
-            title: "Sort by",
-            sortOptions: [
-                .init(sortOrder: .init(key: .name), title: "Name", iconsByDirection: iconByDirection),
-                .init(sortOrder: .init(key: .name, direction: .descending), title: "Name", iconsByDirection: iconByDirection)
-            ]
-        )
-        let sut = makeSUT(sortOptionsViewModel: sortOptionsViewModel)
-        #expect(sut.sortHeaderViewModel.selectedOption.title == "Name")
-        #expect(sut.sortHeaderViewModel.selectedOption.currentDirectionIcon == Image(systemName: "plus"))
     }
 
     @Test func testUpdateQuery_whenChipsAreDisabled_shouldClearChips() async {
@@ -463,40 +447,6 @@ struct SearchResultsContainerViewModelTests {
     }
 
     @Test
-    func testSelectedSortOption_whenInvoked_shouldUpdateSortHeaderViewModel() async throws {
-        let iconsByDirection: [SortOrderEntity.Direction: Image] =  [
-            .ascending: Image(systemName: "plus"),
-            .descending: Image(systemName: "minus")
-        ]
-        let sut = makeSUT(
-            sortOptionsViewModel: .init(
-                title: "Sort by",
-                sortOptions: [
-                    .init(sortOrder: .init(key: .name), title: "Name", iconsByDirection: iconsByDirection),
-                    .init(sortOrder: .init(key: .name, direction: .descending), title: "Name", iconsByDirection: iconsByDirection)
-                ]
-            )
-        )
-        sut.sortHeaderViewModel.showSortSheet = true
-
-        let selectedSortOption = try #require(sut.sortHeaderViewModel.displaySortOptionsViewModel.sortOptions.last)
-        sut.sortHeaderViewModel.displaySortOptionsViewModel.tapHandler?(selectedSortOption)
-
-        let expectedSortOrder = selectedSortOption.sortOrder
-        try await waitUntil(
-            await MainActor.run {
-                sut.sortHeaderViewModel.displaySortOptionsViewModel.sortOptions.map(\.sortOrder).notContains(expectedSortOrder)
-            }
-        )
-
-        #expect(sut.sortHeaderViewModel.showSortSheet == false)
-        #expect(sut.sortHeaderViewModel.selectedOption.title == selectedSortOption.title)
-        #expect(sut.sortHeaderViewModel.selectedOption.sortOrder == selectedSortOption.sortOrder)
-        #expect(sut.sortHeaderViewModel.selectedOption.currentDirectionIcon == Image(systemName: "minus"))
-        #expect(sut.sortHeaderViewModel.displaySortOptionsViewModel.sortOptions.map(\.sortOrder).notContains(expectedSortOrder))
-    }
-
-    @Test
     func testShouldShowSortingAndViewModeHeader_whenEmptyViewModelIsNotNil_shouldReturnTrue() async throws {
         let sut = makeSUT(headerType: .dynamic)
         #expect(sut.shouldShowSortingAndViewModeHeader)
@@ -512,7 +462,7 @@ struct SearchResultsContainerViewModelTests {
 
     typealias SUT = SearchResultsContainerViewModel
     private func makeSUT(
-        sortOptionsViewModel: SearchResultsSortOptionsViewModel = .init(title: "", sortOptions: [
+        sortOptionsViewModel: SortOptionsViewModel = .init(title: "", sortOptions: [
             .init(sortOrder: .init(key: .name), title: "", iconsByDirection: [:])
         ]),
         resultsProvider: some SearchResultsProviding = MockSearchResultsProviding(

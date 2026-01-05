@@ -3,6 +3,7 @@ import MEGAFoundation
 import MEGAInfrastructure
 import MEGASwift
 import MEGASwiftUI
+import MEGAUIComponent
 import MEGAUIKit
 import SwiftUI
 
@@ -320,7 +321,7 @@ public final class SearchResultsViewModel: ObservableObject {
         }
     }
 
-    func queryChanged(with updatedSortOrder: SortOrderEntity, shouldForceRefresh: Bool = false) async {
+    func queryChanged(with updatedSortOrder: MEGAUIComponent.SortOrder, shouldForceRefresh: Bool = false) async {
         let updatedQuery = currentQuery.withUpdatedSortOrder(updatedSortOrder)
         let updated = updateCurrentQuery(to: updatedQuery)
         guard updated || shouldForceRefresh else { return }

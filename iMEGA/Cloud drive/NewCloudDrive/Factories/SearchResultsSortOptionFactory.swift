@@ -1,21 +1,22 @@
 import MEGAAssets
 import MEGAL10n
+import MEGAUIComponent
 import Search
 import SwiftUI
 
 enum SearchResultsSortOptionFactory {
-    static var iconsByDirection: [SortOrderEntity.Direction: Image] {
+    static var iconsByDirection: [MEGAUIComponent.SortOrder.SortDirection: Image] {
         [.ascending: MEGAAssets.Image.arrowUp, .descending: MEGAAssets.Image.arrowDown]
     }
     
     static func makeAll(
-        excludedKeys: Set<SortOrderEntity.Key> = [
+        excludedKeys: Set<MEGAUIComponent.SortOrder.Key> = [
             .shareCreated,
             .linkCreated
         ]
-    ) -> [SearchResultsSortOption] {
-        var options: [SearchResultsSortOption] = []
-        
+    ) -> [SortOption] {
+        var options: [SortOption] = []
+
         appendSortOptions(
             for: .name,
             title: Strings.Localizable.Sorting.Name.title,
@@ -76,10 +77,10 @@ enum SearchResultsSortOptionFactory {
     }
     
     private static func appendSortOptions(
-        for key: SortOrderEntity.Key,
+        for key: MEGAUIComponent.SortOrder.Key,
         title: String,
         include: Bool = true,
-        to options: inout [SearchResultsSortOption]
+        to options: inout [SortOption]
     ) {
         guard include else { return }
         options.append(

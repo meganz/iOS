@@ -1,5 +1,7 @@
 import Combine
+import MEGAAppPresentation
 import MEGASwiftUI
+import MEGAUIComponent
 import MEGAUIKit
 import SwiftUI
 
@@ -32,9 +34,9 @@ public class SearchResultsContainerViewModel: ObservableObject {
     // selection was changed but we don't have new results
     private var lastAvailableChips: [SearchChipEntity] = []
 
-    private let sortHeaderCoordinator: SearchResultsSortHeaderCoordinator
+    private let sortHeaderCoordinator: SortHeaderCoordinator
 
-    public var sortHeaderViewModel: SearchResultsHeaderSortViewViewModel {
+    public var sortHeaderViewModel: SortHeaderViewModel {
         sortHeaderCoordinator.headerViewModel
     }
 
@@ -51,7 +53,7 @@ public class SearchResultsContainerViewModel: ObservableObject {
         bridge: SearchBridge,
         config: SearchConfig,
         searchResultsViewModel: SearchResultsViewModel,
-        sortOptionsViewModel: SearchResultsSortOptionsViewModel,
+        sortOptionsViewModel: SortOptionsViewModel,
         headerType: HeaderType,
         initialViewMode: SearchResultsViewMode,
         shouldShowMediaDiscoveryModeHandler: @escaping () -> Bool
@@ -319,7 +321,7 @@ public extension SearchResultsContainerViewModel {
     }
 
     @discardableResult
-    func changeSortOrder(_ sortOrder: SortOrderEntity) -> Task<Void, Never> {
+    func changeSortOrder(_ sortOrder: MEGAUIComponent.SortOrder) -> Task<Void, Never> {
         Task { @MainActor in
             await searchResultsViewModel.showLoadingPlaceholderIfNeeded()
             await searchResultsViewModel.queryChanged(with: sortOrder)

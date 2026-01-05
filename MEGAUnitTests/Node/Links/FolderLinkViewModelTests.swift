@@ -5,6 +5,7 @@ import MEGAAppPresentationMock
 import MEGADomain
 import MEGADomainMock
 import MEGATest
+import MEGAUIComponent
 import Search
 import Testing
 
@@ -106,8 +107,8 @@ struct FolderLinkViewModelTests {
     typealias SUT = FolderLinkViewModel
     func makeSUT(
         tracker: MockTracker = MockTracker(),
-        sortOptions: [SearchResultsSortOption] = [.init(sortOrder: .init(key: .name), title: "", iconsByDirection: [:])],
-        selectedSortOrder: Search.SortOrderEntity = .init(key: .name),
+        sortOptions: [SortOption] = [.init(sortOrder: .init(key: .name), title: "", iconsByDirection: [:])],
+        selectedSortOrder: MEGAUIComponent.SortOrder = .init(key: .name),
         viewMode: ViewModePreferenceEntity = .list
     ) -> SUT {
         .init(

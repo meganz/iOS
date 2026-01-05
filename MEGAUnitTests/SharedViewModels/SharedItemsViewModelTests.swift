@@ -6,6 +6,7 @@ import MEGADesignToken
 import MEGADomain
 import MEGADomainMock
 import MEGASwift
+import MEGAUIComponent
 import Search
 import XCTest
 
@@ -241,7 +242,7 @@ final class SharedItemsViewModelTests: XCTestCase {
 
     @MainActor
     func testSortHeaderViewModel_valuePassedDuringInit_shouldMatchValues() {
-        let sortOptionsViewModel = SearchResultsSortOptionsViewModel(
+        let sortOptionsViewModel = SortOptionsViewModel(
             title: "Sort by",
             sortOptions: [
                 .init(sortOrder: .init(key: .name), title: "Name", iconsByDirection: [:]),
@@ -279,7 +280,7 @@ final class SharedItemsViewModelTests: XCTestCase {
 
     @MainActor
     func testUpdateSortUI_shouldHideKeys_basedOnTabs() {
-        let sortOptionsViewModel = SearchResultsSortOptionsViewModel(
+        let sortOptionsViewModel = SortOptionsViewModel(
             title: "Sort by",
             sortOptions: [
                 .init(sortOrder: .init(key: .name), title: "Name", iconsByDirection: [:]),
@@ -334,7 +335,7 @@ final class SharedItemsViewModelTests: XCTestCase {
         saveMediaToPhotosUseCase: some SaveMediaToPhotosUseCaseProtocol = MockSaveMediaToPhotosUseCase(),
         nodeUseCase: some NodeUseCaseProtocol = MockNodeUseCase(),
         moveToRubbishBinViewModel: some MoveToRubbishBinViewModelProtocol = MockMoveToRubbishBinViewModel(),
-        sortOptionsViewModel: SearchResultsSortOptionsViewModel = .init(title: "", sortOptions: [
+        sortOptionsViewModel: SortOptionsViewModel = .init(title: "", sortOptions: [
             .init(sortOrder: .init(key: .name), title: "", iconsByDirection: [:])
         ]),
         sharedItemsView: some SharedItemsViewing = MockSharedItemsView(),

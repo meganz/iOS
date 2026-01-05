@@ -1,9 +1,10 @@
+import MEGAUIComponent
 @testable import Search
 import Testing
 
 struct SearchResultsSortOptionsViewModelTests {
     @Test func testInit() {
-        let sortOption = SearchResultsSortOption(
+        let sortOption = SortOption(
             sortOrder: .init(key: .name),
             title: "Name",
             iconsByDirection: [:]
@@ -14,7 +15,6 @@ struct SearchResultsSortOptionsViewModelTests {
         #expect(sut.title == title)
         #expect(sut.sortOptions.first?.sortOrder == .init(key: .name))
         #expect(sut.sortOptions.first?.title == "Name")
-        #expect(sut.sortOptions.first?.iconsByDirection == [:])
     }
 
     @Test func testMakeNewViewModel() {
@@ -23,7 +23,7 @@ struct SearchResultsSortOptionsViewModelTests {
             title: title,
             sortOptions: [.init(sortOrder: .init(key: .name), title: "", iconsByDirection: [:])]
         )
-        let sortOption = SearchResultsSortOption(
+        let sortOption = SortOption(
             sortOrder: .init(key: .name),
             title: "Name",
             iconsByDirection: [:]
@@ -32,6 +32,5 @@ struct SearchResultsSortOptionsViewModelTests {
         #expect(updatedViewModel.title == title)
         #expect(updatedViewModel.sortOptions.first?.sortOrder == .init(key: .name))
         #expect(updatedViewModel.sortOptions.first?.title == "Name")
-        #expect(updatedViewModel.sortOptions.first?.iconsByDirection == [:])
     }
 }

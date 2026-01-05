@@ -4,6 +4,7 @@ import MEGAAppSDKRepo
 import MEGADesignToken
 import MEGADomain
 import MEGAL10n
+import MEGAUIComponent
 import Search
 import SwiftUI
 
@@ -19,7 +20,7 @@ extension FolderLinkViewController {
         }
     }
 
-    var sortHeaderCoordinator: SearchResultsSortHeaderCoordinator {
+    var sortHeaderCoordinator: SortHeaderCoordinator {
         .init(
             sortOptionsViewModel: .init(
                 title: Strings.Localizable.sortTitle,
@@ -29,7 +30,7 @@ extension FolderLinkViewController {
             ),
             currentSortOrderProvider: { [weak self] in
                 guard let self else { return .init(key: .name) }
-                return currentSortOrder.toSearchSortOrderEntity()
+                return currentSortOrder.toUIComponentSortOrderEntity()
             },
             sortOptionSelectionHandler: { [weak self] in
                 guard let self else { return }
@@ -56,8 +57,8 @@ extension FolderLinkViewController {
 
         let sortHeaderViewModel = viewModel.sortHeaderViewModel
         let viewModeHeaderViewModel = viewModel.viewModeHeaderViewModel
-        let headerContentView = SearchResultsHeaderView {
-            SearchResultsHeaderSortView(viewModel: sortHeaderViewModel)
+        let headerContentView = ResultsHeaderView {
+            SortHeaderView(viewModel: sortHeaderViewModel)
         } rightView: {
             SearchResultsHeaderViewModeView(viewModel: viewModeHeaderViewModel)
         }

@@ -4,6 +4,7 @@ import MEGAAssets
 import MEGADesignToken
 import MEGAL10n
 import MEGASwiftUI
+import MEGAUIComponent
 import Search
 import SwiftUI
 import UIKit
@@ -42,8 +43,8 @@ struct NodeBrowserView: View {
             if let mediaDiscoveryViewModel = viewModel.viewModeAwareMediaDiscoveryViewModel {
                 VStack(spacing: 0) {
                     if viewModel.shouldDisplayHeaderViewInMDView {
-                        SearchResultsHeaderView(height: 44) {
-                            SearchResultsHeaderSortView(
+                        ResultsHeaderView(height: 44) {
+                            SortHeaderView(
                                 viewModel: viewModel.sortHeaderViewModelForMD,
                                 horizontalPadding: TokenSpacing._5
                             )

@@ -2,7 +2,7 @@ import MEGADomain
 import MEGAUIComponent
 
 extension MEGADomain.SortOrderEntity {
-    func toUIComponentSortOrderEntity() -> MEGAUIComponent.SortOrder {
+    public func toUIComponentSortOrderEntity() -> MEGAUIComponent.SortOrder {
         return switch self {
         case .none, .defaultAsc: .init(key: .name)
         case .defaultDesc: .init(key: .name, direction: .descending)
@@ -25,7 +25,7 @@ extension MEGADomain.SortOrderEntity {
 }
 
 extension MEGAUIComponent.SortOrder {
-    func toDomainSortOrderEntity() -> MEGADomain.SortOrderEntity {
+    public func toDomainSortOrderEntity() -> MEGADomain.SortOrderEntity {
         switch (key, direction) {
         case (.name, .ascending): .defaultAsc
         case (.name, .descending): .defaultDesc

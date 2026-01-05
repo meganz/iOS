@@ -8,6 +8,7 @@ import MEGADomainMock
 import MEGAFoundation
 import MEGASwift
 import MEGATest
+import MEGAUIComponent
 import Search
 import XCTest
 
@@ -43,8 +44,8 @@ final class OfflineViewModelTests: XCTestCase {
         fileManager: MockFileManager = MockFileManager(),
         userDefaults: MockUserDefaults! = MockUserDefaults(),
         documentDirectoryPath: String? = nil,
-        sortOptions: [SearchResultsSortOption] = [.init(sortOrder: .init(key: .name), title: "", iconsByDirection: [:])],
-        selectedSortOrder: Search.SortOrderEntity = .init(key: .name),
+        sortOptions: [SortOption] = [.init(sortOrder: .init(key: .name), title: "", iconsByDirection: [:])],
+        selectedSortOrder: MEGAUIComponent.SortOrder = .init(key: .name),
         tracker: MockTracker = MockTracker(),
         toggleViewModePreferenceHandler: @escaping (ViewModePreferenceEntity) -> Void = { _ in },
         file: StaticString = #file,

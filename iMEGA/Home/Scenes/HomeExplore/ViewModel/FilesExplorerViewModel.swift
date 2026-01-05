@@ -5,6 +5,7 @@ import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGADomain
 import MEGAFoundation
+import MEGAUIComponent
 import Search
 
 enum FilesExplorerAction: ActionType {
@@ -87,7 +88,7 @@ final class FilesExplorerViewModel: ViewModelType {
 
     private var subscriptions = Set<AnyCancellable>()
     private let tracker: any AnalyticsTracking
-    private let sortOptionsViewModel: SearchResultsSortOptionsViewModel
+    private let sortOptionsViewModel: SortOptionsViewModel
     private var sortHeaderViewTapEventsTask: Task<Void, Never>?
 
     private var currentSortOrder: MEGADomain.SortOrderEntity {
@@ -100,10 +101,12 @@ final class FilesExplorerViewModel: ViewModelType {
         }
     }
 
-    private lazy var sortHeaderCoordinator: SearchResultsSortHeaderCoordinator = {
+    private lazy var sortHeaderCoordinator: SortHeaderCoordinator = {
         .init(
             sortOptionsViewModel: sortOptionsViewModel,
-            currentSortOrderProvider: { Helper.sortType(for: nil).toSortOrderEntity().toSearchSortOrderEntity() },
+            currentSortOrderProvider: {
+                Helper.sortType(for: nil).toUIComponentSortOrderEntity()
+            },
             sortOptionSelectionHandler: { @MainActor [weak self] sortOption in
                 guard let self else { return }
                 currentSortOrder = sortOption.sortOrder.toDomainSortOrderEntity()
@@ -112,7 +115,7 @@ final class FilesExplorerViewModel: ViewModelType {
         )
     }()
 
-    var sortHeaderViewModel: SearchResultsHeaderSortViewViewModel {
+    var sortHeaderViewModel: SortHeaderViewModel {
         sortHeaderCoordinator.headerViewModel
     }
 
@@ -132,7 +135,7 @@ final class FilesExplorerViewModel: ViewModelType {
         sensitiveDisplayPreferenceUseCase: some SensitiveDisplayPreferenceUseCaseProtocol,
         createContextMenuUseCase: some CreateContextMenuUseCaseProtocol,
         nodeProvider: some MEGANodeProviderProtocol,
-        sortOptionsViewModel: SearchResultsSortOptionsViewModel,
+        sortOptionsViewModel: SortOptionsViewModel,
         featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider,
         notificationCenter: NotificationCenter = .default,
         tracker: some AnalyticsTracking = DIContainer.tracker

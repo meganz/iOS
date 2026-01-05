@@ -5,6 +5,7 @@ import MEGAAppPresentation
 import MEGAAppSDKRepo
 import MEGADomain
 import MEGAL10n
+import MEGAUIComponent
 import Search
 import SwiftUI
 
@@ -134,9 +135,9 @@ class NodeBrowserViewModel: ObservableObject {
         config.displayMode == .rubbishBin
     }
 
-    private let sortHeaderCoordinatorForMD: SearchResultsSortHeaderCoordinator
+    private let sortHeaderCoordinatorForMD: SortHeaderCoordinator
 
-    var sortHeaderViewModelForMD: SearchResultsHeaderSortViewViewModel {
+    var sortHeaderViewModelForMD: SortHeaderViewModel {
         sortHeaderCoordinatorForMD.headerViewModel
     }
 
@@ -169,7 +170,7 @@ class NodeBrowserViewModel: ObservableObject {
         nodeUseCase: some NodeUseCaseProtocol,
         sensitiveNodeUseCase: some SensitiveNodeUseCaseProtocol,
         accountStorageUseCase: some AccountStorageUseCaseProtocol,
-        sortHeaderCoordinatorForMD: SearchResultsSortHeaderCoordinator,
+        sortHeaderCoordinatorForMD: SortHeaderCoordinator,
         nodeActionsBridge: NodeActionsBridge,
         tracker: some AnalyticsTracking = DIContainer.tracker,
         // we call this whenever view sate is changed so that:
@@ -558,7 +559,7 @@ class NodeBrowserViewModel: ObservableObject {
             }
         } else {
             self.sortOrder = sortOrder.toSortOrderEntity()
-            searchResultsContainerViewModel.changeSortOrder(sortOrder.toSearchSortOrderEntity())
+            searchResultsContainerViewModel.changeSortOrder(sortOrder.toUIComponentSortOrderEntity())
         }
     }
 

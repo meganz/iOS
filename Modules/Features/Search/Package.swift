@@ -27,6 +27,8 @@ let package = Package(
         .package(path: "../../MEGASharedRepo/MEGASwift"),
         .package(path: "../../Infrastracture/MEGAFoundation"),
         .package(path: "../../MEGASharedRepo/MEGAInfrastructure"),
+        .package(path: "../../MEGASharedRepo/MEGAUIComponent"),
+        .package(path: "../../Presentation/MEGAAppPresentation"),
         .package(path: "../../Presentation/MEGAL10n"),
         .package(path: "../../UI/MEGASwiftUI"),
         .package(path: "../../UI/MEGAUIKit"),
@@ -45,7 +47,9 @@ let package = Package(
                 "MEGAFoundation",
                 "MEGAInfrastructure",
                 "MEGAUIKit",
-                "MEGAAssets"
+                "MEGAAssets",
+                "MEGAUIComponent",
+                "MEGAAppPresentation"
             ],
             swiftSettings: settings
         ),
@@ -61,7 +65,8 @@ let package = Package(
                 "SearchMock",
                 "MEGAUIKit",
                 "MEGATest",
-                .product(name: "MEGAInfrastructureMocks", package: "MEGAInfrastructure"),
+                "MEGAUIComponent",
+                .product(name: "MEGAInfrastructureMocks", package: "MEGAInfrastructure")
             ],
             resources: [
                 .process("folder.png"),

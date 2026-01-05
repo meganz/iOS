@@ -1,5 +1,6 @@
 import MEGADesignToken
 import MEGASwiftUI
+import MEGAUIComponent
 import SwiftUI
 
 public struct SearchResultsContainerView: View {
@@ -19,8 +20,8 @@ public struct SearchResultsContainerView: View {
 
             SearchResultsView(viewModel: viewModel.searchResultsViewModel) {
                 if viewModel.shouldShowSortingAndViewModeHeader {
-                    SearchResultsHeaderView {
-                        SearchResultsHeaderSortView(
+                    ResultsHeaderView {
+                        SortHeaderView(
                             viewModel: viewModel.sortHeaderViewModel,
                             horizontalPadding: TokenSpacing._5
                         )

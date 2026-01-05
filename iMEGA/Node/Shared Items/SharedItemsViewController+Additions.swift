@@ -6,6 +6,7 @@ import MEGAAssets
 import MEGADesignToken
 import MEGADomain
 import MEGAL10n
+import MEGAUIComponent
 import Search
 
 extension SharedItemsViewController: ContactsViewControllerDelegate {
@@ -51,11 +52,11 @@ extension SharedItemsViewController {
         )
     }
 
-    private var sortOptionsViewModel: SearchResultsSortOptionsViewModel {
+    private var sortOptionsViewModel: SortOptionsViewModel {
         .init(title: Strings.Localizable.sortTitle, sortOptions: sortOptions)
     }
 
-    private var sortOptions: [SearchResultsSortOption] {
+    private var sortOptions: [SortOption] {
         SearchResultsSortOptionFactory
             .makeAll(excludedKeys: [])
     }

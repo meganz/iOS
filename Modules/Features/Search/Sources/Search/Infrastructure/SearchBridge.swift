@@ -2,13 +2,14 @@
 ///  the search view model.
 ///  Acts as an abstraction to not pollute view model interface with many closures and makes testing easier
 import Foundation
+import MEGAUIComponent
 import UIKit
 
 public class SearchBridge {
     let selection: (SearchResultSelection) -> Void
     let context: (SearchResult, UIButton) -> Void
-    let sortingOrder: () async -> SortOrderEntity
-    let updateSortOrder: (SortOrderEntity) -> Void
+    let sortingOrder: () async -> MEGAUIComponent.SortOrder
+    let updateSortOrder: (MEGAUIComponent.SortOrder) -> Void
     private let chipTapped: (SearchChipEntity, Bool) -> Void
     private let chipPickerShowedHandler: @Sendable (SearchChipEntity) -> Void
 
@@ -16,8 +17,8 @@ public class SearchBridge {
         selection: @escaping (SearchResultSelection) -> Void,
         context: @escaping (SearchResult, UIButton) -> Void,
         chipTapped: @escaping (SearchChipEntity, Bool) -> Void,
-        sortingOrder: @escaping () async -> SortOrderEntity,
-        updateSortOrder: @escaping (SortOrderEntity) -> Void,
+        sortingOrder: @escaping () async -> MEGAUIComponent.SortOrder,
+        updateSortOrder: @escaping (MEGAUIComponent.SortOrder) -> Void,
         chipPickerShowedHandler: @Sendable @escaping (SearchChipEntity) -> Void
     ) {
         self.selection = selection

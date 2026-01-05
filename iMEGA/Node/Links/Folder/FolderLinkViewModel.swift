@@ -1,6 +1,7 @@
 import Combine
 import MEGAAnalyticsiOS
 import MEGAAppPresentation
+import MEGAUIComponent
 import MEGADomain
 import Search
 
@@ -50,10 +51,10 @@ import Search
     private let folderLinkUseCase: any FolderLinkUseCaseProtocol
     private let saveMediaUseCase: any SaveMediaToPhotosUseCaseProtocol
     private let tracker: any AnalyticsTracking
-    private let sortHeaderCoordinator: SearchResultsSortHeaderCoordinator
+    private let sortHeaderCoordinator: SortHeaderCoordinator
     private var sortHeaderViewTapEventsTask: Task<Void, Never>?
 
-    var sortHeaderViewModel: SearchResultsHeaderSortViewViewModel {
+    var sortHeaderViewModel: SortHeaderViewModel {
         sortHeaderCoordinator.headerViewModel
     }
 
@@ -99,7 +100,7 @@ import Search
     init(
         folderLinkUseCase: some FolderLinkUseCaseProtocol,
         saveMediaUseCase: some SaveMediaToPhotosUseCaseProtocol,
-        sortHeaderCoordinator: SearchResultsSortHeaderCoordinator,
+        sortHeaderCoordinator: SortHeaderCoordinator,
         viewMode: ViewModePreferenceEntity,
         tracker: some AnalyticsTracking = DIContainer.tracker
     ) {

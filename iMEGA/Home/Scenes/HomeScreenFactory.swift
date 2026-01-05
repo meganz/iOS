@@ -13,6 +13,7 @@ import MEGARepo
 import MEGASwift
 import MEGASwiftUI
 import MEGAUI
+import MEGAUIComponent
 import MEGAUIKit
 import Search
 import SwiftUI
@@ -164,7 +165,7 @@ final class HomeScreenFactory: NSObject {
         tracker: some AnalyticsTracking,
         viewModeStore: some ViewModeStoringObjC,
         enableItemMultiSelection: Bool,
-        sortOptions: [SearchResultsSortOption]
+        sortOptions: [SortOption]
     ) -> UIViewController {
         
         let router = HomeSearchResultRouter(
