@@ -112,19 +112,15 @@ struct CloudDriveBottomToolbarItemsFactory {
     ) {
         switch type {
         case .download:
-            trackAnalyticsEvent(CloudDriveDownloadMenuItemEvent())
             nodeActionHandler.download(selectedNodes)
             nodeActionHandler.toggleEditMode(false)
         case .shareLink:
-            trackAnalyticsEvent(CloudDriveShareLinkMenuItemEvent())
             nodeActionHandler.shareOrManageLink(selectedNodes)
             nodeActionHandler.toggleEditMode(false)
         case .move:
-            trackAnalyticsEvent(CloudDriveMoveMenuItemEvent())
             nodeActionHandler.browserAction(.move, selectedNodes)
             nodeActionHandler.toggleEditMode(false)
         case .copy:
-            trackAnalyticsEvent(CloudDriveCopyMenuItemEvent())
             nodeActionHandler.browserAction(.copy, selectedNodes)
             nodeActionHandler.toggleEditMode(false)
         case .delete:
@@ -177,7 +173,6 @@ struct CloudDriveBottomToolbarItemsFactory {
     ) {
         switch displayMode {
         case .cloudDrive:
-            trackAnalyticsEvent(CloudDriveMoveToRubbishBinMenuItemEvent())
             nodeActionHandler.moveToRubbishBin(nodes)
         case .rubbishBin:
             nodeActionHandler.removeFromRubbishBin(nodes)

@@ -170,8 +170,10 @@ extension NodeActions {
                 // browserVC.browserViewControllerDelegate = browseDelegate
                 browserVC.selectedNodesArray = megaNodes(from: nodes, using: sdk)
                 if action == .move {
+                    trackAnalyticsEvent(CloudDriveMoveMenuItemEvent())
                     browserVC.browserAction = .move
                 } else if action == .copy {
+                    trackAnalyticsEvent(CloudDriveCopyMenuItemEvent())
                     browserVC.browserAction = .copy
                 } else {
                     assertionFailure("here only copy and move is supported")
