@@ -5,6 +5,7 @@ public enum APMKit: @unchecked Sendable {
     /// This queue is used for monitoring reporting logic
     static let queue = DispatchQueue(label: "performance_monitoring_queue", qos: .default)
     nonisolated(unsafe) private(set) static var metricMonitors = [APMMetricMonitor]()
+    static let appStateHolder: any APMAppStateHolding = APMAppStateHolder()
     
     // MARK: - public
     public static func start(with reporter: some APMMetricsReporter) {
@@ -20,6 +21,7 @@ public enum APMKit: @unchecked Sendable {
 #if arch(arm64)
         APMThreadCallStack.storeMainThreadHandle()
 #endif
+        _ = appStateHolder.isInForeground
         metricMonitors = makeMonitors(config: .defaultConfig, monitorFactory: APMMonitorFactory(), reporter: reporter)
         metricMonitors.forEach { $0.start() }
     }

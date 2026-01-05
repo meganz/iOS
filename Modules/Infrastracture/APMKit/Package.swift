@@ -17,9 +17,13 @@ let package = Package(
             ]
         )
     ],
+    dependencies: [
+        .package(path: "../../MEGASharedRepo/MEGASwift")
+    ],
     targets: [
         .target(
-            name: "APMKit"
+            name: "APMKit",
+            dependencies: ["MEGASwift"]
         ),
         .target(
             name: "APMKitMocks",

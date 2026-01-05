@@ -9,15 +9,18 @@ final class APMHangMonitor: APMMetricMonitor, @unchecked Sendable {
     let threshold: TimeInterval // the minimal mainthread unresponsiveness interval which is deemed as a real hang
     
     private(set) var isMonitoring = false
+    
     private var consecutiveTimeoutCount: UInt = 0
     private var isHangFiredForCurConsecutiveTimeout: Bool = false
     private var hangMetrics: APMHangMetrics?
-    private var observer: CFRunLoopObserver?
-    private var monitorThread: Thread?
-    private var currentActivity: CFRunLoopActivity = []
     private var consecutiveHangTime: TimeInterval {
         Double(consecutiveTimeoutCount) * detectInterval
     }
+    private var isHangStartedInForeground: Bool = true
+    
+    private var observer: CFRunLoopObserver?
+    private var monitorThread: Thread?
+    private var currentActivity: CFRunLoopActivity = []
     
     init(config: APMHangConfiguration,
          metricsReporter: some APMMetricsReporter,
@@ -96,6 +99,9 @@ final class APMHangMonitor: APMMetricMonitor, @unchecked Sendable {
                     // If timeout, main thread might be stalled
                     if result == .timedOut {
                         if [.beforeSources, .afterWaiting, .beforeTimers].contains(currentActivity) {
+                            if consecutiveTimeoutCount == 0 {
+                                isHangStartedInForeground = APMKit.appStateHolder.isInForeground
+                            }
                             consecutiveTimeoutCount += 1
                             if !isHangFiredForCurConsecutiveTimeout {
                                 createHangMetricsIfNeeded()
@@ -162,6 +168,9 @@ final class APMHangMonitor: APMMetricMonitor, @unchecked Sendable {
         hangMetrics.deviceLocale = Locale.preferredLanguages.first
         let reporterMetrics = hangMetrics
         self.hangMetrics = nil
+        
+        guard isHangStartedInForeground else { return }
+        
         reportQueue.async {
             self.metricsReporter.report(hangMetrics: reporterMetrics)
         }
