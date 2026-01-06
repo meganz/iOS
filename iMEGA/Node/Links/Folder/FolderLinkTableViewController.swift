@@ -219,10 +219,6 @@ extension FolderLinkTableViewController: UITableViewDelegate {
             folderLink.areAllNodesSelected = folderLink.selectedNodesArray?.count == folderLink.nodesArray.count
             let selectedNodesNotEmpty = (folderLink.selectedNodesArray?.count ?? 0) > 0
             folderLink.refreshToolbarButtonsStatus(selectedNodesNotEmpty && folderLink.isDecryptedFolderAndNoUndecryptedNodeSelected())
-            if isCloudDriveRevampEnabled {
-                // In revamp UI, we need to reload the cell to make the background color to update
-                tableView.reloadRows(at: [indexPath], with: .none)
-            }
 
             return
         }
