@@ -12,7 +12,6 @@ enum PhotoLibrarySupplementaryElementKind: String {
     var elementKind: String { rawValue }
 }
 
-@available(iOS 16.0, *)
 @MainActor
 final class PhotoLibraryCollectionViewCoordinator: NSObject {
     private var subscriptions = Set<AnyCancellable>()
@@ -110,7 +109,7 @@ final class PhotoLibraryCollectionViewCoordinator: NSObject {
 }
 
 // MARK: - UICollectionViewDataSource
-@available(iOS 16.0, *)
+
 extension PhotoLibraryCollectionViewCoordinator: UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         photoLibraryDataSource.count
@@ -142,7 +141,7 @@ extension PhotoLibraryCollectionViewCoordinator: UICollectionViewDataSource {
 }
 
 // MARK: - UICollectionViewDelegate
-@available(iOS 16.0, *)
+
 extension PhotoLibraryCollectionViewCoordinator: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let photo = photoLibraryDataSource.photo(at: indexPath) else { return }
@@ -156,7 +155,7 @@ extension PhotoLibraryCollectionViewCoordinator: UICollectionViewDelegate {
 }
 
 // MARK: - PhotoLibraryCollectionViewScrolling
-@available(iOS 16.0, *)
+
 extension PhotoLibraryCollectionViewCoordinator: PhotoLibraryCollectionViewScrolling {
     func scrollTo(_ position: PhotoScrollPosition) {
         guard position != .top else {

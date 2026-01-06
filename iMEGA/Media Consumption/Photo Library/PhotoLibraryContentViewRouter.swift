@@ -50,18 +50,6 @@ struct PhotoLibraryContentViewRouter: PhotoLibraryContentViewRouting {
         )
     }
     
-    func card(for photo: NodeEntity, viewModel: PhotoLibraryModeAllGridViewModel) -> PhotoCell {
-        PhotoCell(
-            viewModel: PhotoCellViewModel(
-                photo: photo,
-                viewModel: viewModel,
-                thumbnailLoader: makeThumbnailLoader(),
-                nodeUseCase: NodeUseCaseFactory.makeNodeUseCase(for: contentMode),
-                sensitiveNodeUseCase: SensitiveNodeUseCaseFactory.makeSensitiveNodeUseCase(for: contentMode)
-            )
-        )
-    }
-    
     func openPhotoBrowser(for photo: NodeEntity, allPhotos: [NodeEntity]) {
         tracker.trackAnalyticsEvent(with: DIContainer.singlePhotoSelectedEvent)
         

@@ -15,11 +15,11 @@ final class PhotoCellViewModelTests: XCTestCase {
     private var subscriptions = Set<AnyCancellable>()
     
     @MainActor
-    private lazy var allViewModel: PhotoLibraryModeAllGridViewModel = {
+    private lazy var allViewModel: PhotoLibraryModeAllViewModel = {
         let library = try! testNodes.toPhotoLibrary(withSortType: .modificationDesc, in: .GMT)
         let libraryViewModel = PhotoLibraryContentViewModel(library: library)
         libraryViewModel.selectedMode = .all
-        return PhotoLibraryModeAllGridViewModel(libraryViewModel: libraryViewModel)
+        return PhotoLibraryModeAllViewModel(libraryViewModel: libraryViewModel)
     }()
     
     private var testNodes: [NodeEntity] {
@@ -681,7 +681,7 @@ final class PhotoCellViewModelTests: XCTestCase {
         let photo = NodeEntity(name: "0.jpg", handle: 0)
         let sut = makeSUT(
             photo: photo,
-            viewModel: PhotoLibraryModeAllGridViewModel(libraryViewModel: libraryViewModel)
+            viewModel: PhotoLibraryModeAllViewModel(libraryViewModel: libraryViewModel)
         )
         libraryViewModel.selection.editMode = .active
         XCTAssertFalse(sut.isSelected)
@@ -699,7 +699,7 @@ final class PhotoCellViewModelTests: XCTestCase {
         let photo = NodeEntity(name: "0.jpg", handle: 0)
         let sut = makeSUT(
             photo: photo,
-            viewModel: PhotoLibraryModeAllGridViewModel(libraryViewModel: libraryViewModel)
+            viewModel: PhotoLibraryModeAllViewModel(libraryViewModel: libraryViewModel)
         )
         libraryViewModel.selection.editMode = .active
         XCTAssertFalse(sut.isSelected)
@@ -720,7 +720,7 @@ final class PhotoCellViewModelTests: XCTestCase {
         let photo = NodeEntity(name: "0.jpg", handle: 0)
         let sut = makeSUT(
             photo: photo,
-            viewModel: PhotoLibraryModeAllGridViewModel(libraryViewModel: libraryViewModel)
+            viewModel: PhotoLibraryModeAllViewModel(libraryViewModel: libraryViewModel)
         )
         XCTAssertFalse(sut.isSelected)
         sut.select()
@@ -737,7 +737,7 @@ final class PhotoCellViewModelTests: XCTestCase {
         let photo = NodeEntity(name: "0.jpg", handle: 0)
         let sut = makeSUT(
             photo: photo,
-            viewModel: PhotoLibraryModeAllGridViewModel(libraryViewModel: libraryViewModel)
+            viewModel: PhotoLibraryModeAllViewModel(libraryViewModel: libraryViewModel)
         )
         XCTAssertFalse(sut.shouldApplyContentOpacity)
         sut.editMode = .active

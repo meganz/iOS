@@ -1,7 +1,6 @@
 import Foundation
 import SwiftUI
 
-@available(iOS 16.0, *)
 struct PhotoLibraryCollectionViewRepresenter: UIViewRepresentable {
     let viewModel: PhotoLibraryModeAllCollectionViewModel
     let router: any PhotoLibraryContentViewRouting
@@ -27,7 +26,6 @@ struct PhotoLibraryCollectionViewRepresenter: UIViewRepresentable {
     }
 }
 
-@available(iOS 16.0, *)
 extension PhotoLibraryCollectionViewRepresenter {
     var contentMode: PhotoLibraryContentMode {
         viewModel.libraryViewModel.contentMode

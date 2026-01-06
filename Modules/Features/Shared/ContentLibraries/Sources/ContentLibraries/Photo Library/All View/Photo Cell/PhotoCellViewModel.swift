@@ -186,30 +186,15 @@ open class PhotoCellViewModel: ObservableObject {
     }
     
     private func subscribeToPhotoFavouritesChange(with zoomStatePublisher: some Publisher<PhotoLibraryZoomState, Never>) {
-    
-        if #available(iOS 16.0, *) {
-            zoomStatePublisher
-                .map(\.scaleFactor)
-                .compactMap { [weak self] currentZoomScale -> Bool? in
-                    guard let self else { return nil }
-                    return canShowFavorite(photo: photo, atCurrentZoom: currentZoomScale)
-                }
-                .removeDuplicates()
-                .receive(on: DispatchQueue.main)
-                .assign(to: &$shouldShowFavorite)
-        } else {
-            zoomStatePublisher
-                .map(\.scaleFactor)
-                .combineLatest(NotificationCenter.default.publisher(for: .didPhotoFavouritesChange).compactMap { $0.object as? [NodeEntity] })
-                .sink { [weak self] zoomFactor, updatedNodes in
-                    guard let self,
-                          let updateNode = updatedNodes.first(where: { $0 == self.photo }) else {
-                        return
-                    }
-                    shouldShowFavorite = updateNode.isFavourite && zoomFactor.rawValue < PhotoLibraryZoomState.ScaleFactor.thirteen.rawValue
-                }
-                .store(in: &subscriptions)
-        }
+        zoomStatePublisher
+            .map(\.scaleFactor)
+            .compactMap { [weak self] currentZoomScale -> Bool? in
+                guard let self else { return nil }
+                return canShowFavorite(photo: photo, atCurrentZoom: currentZoomScale)
+            }
+            .removeDuplicates()
+            .receive(on: DispatchQueue.main)
+            .assign(to: &$shouldShowFavorite)
     }
     
     /// Returns whether or not the given NodeEntity should indicate if it has been favourited.

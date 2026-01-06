@@ -1,7 +1,6 @@
 import Combine
 import UIKit
 
-@available(iOS 16.0, *)
 @MainActor
 final class PhotoLibraryCollectionViewLayoutChangesMonitor {
     

@@ -12,7 +12,7 @@ final class AlbumCoverPickerPhotoCellViewModelTests: XCTestCase {
         let library = try testNodes.toPhotoLibrary(withSortType: .modificationDesc, in: .GMT)
         let libraryViewModel = PhotoLibraryContentViewModel(library: library)
         libraryViewModel.selectedMode = .all
-        let viewModel = PhotoLibraryModeAllGridViewModel(libraryViewModel: libraryViewModel)
+        let viewModel = PhotoLibraryModeAllViewModel(libraryViewModel: libraryViewModel)
         
         let sut = AlbumCoverPickerPhotoCellViewModel(
             albumPhoto: AlbumPhotoEntity(photo: NodeEntity(handle: 1)),

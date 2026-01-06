@@ -1,6 +1,5 @@
 import SwiftUI
 
-@available(iOS 16.0, *)
 struct PhotoLibraryModeAllCollectionView: View {
     
     @StateObject var viewModel: PhotoLibraryModeAllCollectionViewModel
