@@ -24,6 +24,7 @@ final class NewFolderLinkViewController: UIViewController {
         
         let dependency = FolderLinkView.Dependency(
             link: link,
+            folderLinkBuilder: MEGAFolderLinkBuilder(),
             onClose: { [weak self] in
                 self?.dismiss(animated: true)
             }

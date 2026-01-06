@@ -1662,6 +1662,7 @@
 		A5472CBF2F04EE2000A49688 /* NewFolderLinkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5472CBD2F04EE1700A49688 /* NewFolderLinkViewController.swift */; };
 		A5472CC72F04EF0900A49688 /* FolderLink in Frameworks */ = {isa = PBXBuildFile; productRef = A5472CC62F04EF0900A49688 /* FolderLink */; };
 		A5472CCE2F05010E00A49688 /* NewFolderLinkViewController+Ads.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5472CCD2F05010D00A49688 /* NewFolderLinkViewController+Ads.swift */; };
+		A5472D082F06494300A49688 /* MEGAFolderLinkBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5472D072F06493B00A49688 /* MEGAFolderLinkBuilder.swift */; };
 		A54C87312DC34C69002B3581 /* MEGATransfer+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 7720C5B4206A931E00F995D1 /* MEGATransfer+MNZCategory.m */; };
 		A559E16A2BE8C7C700374073 /* NSNotification+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A559E1692BE8C7C700374073 /* NSNotification+Additions.swift */; };
 		A55CDB452DCF2D9D00D14103 /* MEGAAssets in Frameworks */ = {isa = PBXBuildFile; productRef = A55CDB442DCF2D9D00D14103 /* MEGAAssets */; };
@@ -4526,6 +4527,7 @@
 		A534E15C2B725E300067A0E1 /* MEGASdkCleanUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGASdkCleanUp.swift; sourceTree = "<group>"; };
 		A5472CBD2F04EE1700A49688 /* NewFolderLinkViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewFolderLinkViewController.swift; sourceTree = "<group>"; };
 		A5472CCD2F05010D00A49688 /* NewFolderLinkViewController+Ads.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewFolderLinkViewController+Ads.swift"; sourceTree = "<group>"; };
+		A5472D072F06493B00A49688 /* MEGAFolderLinkBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGAFolderLinkBuilder.swift; sourceTree = "<group>"; };
 		A559E1692BE8C7C700374073 /* NSNotification+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSNotification+Additions.swift"; sourceTree = "<group>"; };
 		A56274DF2C8A9D29004C1546 /* MockCallInProgressTimeReporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockCallInProgressTimeReporter.swift; sourceTree = "<group>"; };
 		A5629FDD2DCC8F9B002C3A06 /* PrivacyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyViewController.swift; sourceTree = "<group>"; };
@@ -11059,6 +11061,7 @@
 		A5472CBC2F04EE0E00A49688 /* NewFolderLink */ = {
 			isa = PBXGroup;
 			children = (
+				A5472D072F06493B00A49688 /* MEGAFolderLinkBuilder.swift */,
 				A5472CCD2F05010D00A49688 /* NewFolderLinkViewController+Ads.swift */,
 				A5472CBD2F04EE1700A49688 /* NewFolderLinkViewController.swift */,
 			);
@@ -15409,6 +15412,7 @@
 				B6A4A11121A2544C007E7EEC /* MEGAError+MNZCategory.m in Sources */,
 				B644B6C121AE19BC00A3B8E7 /* MEGAExpirableOperation.m in Sources */,
 				94624CFB1F50484200D52504 /* MEGAExportRequestDelegate.m in Sources */,
+				A5472D082F06494300A49688 /* MEGAFolderLinkBuilder.swift in Sources */,
 				B695E58023275A4E00D12B9E /* MEGAFunctions.swift in Sources */,
 				77F1DBE22056B752005D5F0E /* MEGAGetAttrUserRequestDelegate.m in Sources */,
 				A8EC55B41F02AD1D00426DCC /* MEGAGetPreviewRequestDelegate.m in Sources */,

@@ -366,4 +366,8 @@ extension MEGALinkManager {
     @objc static func shouldUseNewFolderLink() -> Bool {
         DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .newFolderLink)
     }
+    
+    static func buildFolderLink(_ link: String, with key: String) -> String {
+        MEGALinkManager.buildPublicLink(link, withKey: key, isFolder: true)
+    }
 }
