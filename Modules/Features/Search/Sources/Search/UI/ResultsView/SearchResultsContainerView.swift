@@ -25,6 +25,9 @@ public struct SearchResultsContainerView: View {
                             viewModel: viewModel.sortHeaderViewModel,
                             horizontalPadding: TokenSpacing._5
                         )
+                        .simultaneousGesture(TapGesture().onEnded { _ in
+                            viewModel.sortHeaderViewPressedEvent()
+                        })
                     } rightView: {
                         SearchResultsHeaderViewModeView(
                             viewModel: viewModel.viewModeHeaderViewModel,

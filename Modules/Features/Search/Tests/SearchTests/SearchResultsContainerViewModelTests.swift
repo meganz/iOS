@@ -470,7 +470,8 @@ struct SearchResultsContainerViewModelTests {
         ),
         headerType: SearchResultsContainerViewModel.HeaderType = .none,
         initialViewMode: SearchResultsViewMode = .list,
-        shouldShowMediaDiscoveryModeHandler: @escaping () -> Bool =  { false }
+        shouldShowMediaDiscoveryModeHandler: @escaping () -> Bool =  { false },
+        sortHeaderViewPressedEvent: @escaping () -> Void = {}
     ) -> SUT {
         let selection: (SearchResultSelection) -> Void = { _ in }
         let context: (SearchResult, UIButton) -> Void = { _, _ in }
@@ -519,7 +520,8 @@ struct SearchResultsContainerViewModelTests {
             sortOptionsViewModel: sortOptionsViewModel,
             headerType: headerType,
             initialViewMode: initialViewMode,
-            shouldShowMediaDiscoveryModeHandler: shouldShowMediaDiscoveryModeHandler
+            shouldShowMediaDiscoveryModeHandler: shouldShowMediaDiscoveryModeHandler,
+            sortHeaderViewPressedEvent: sortHeaderViewPressedEvent
         )
     }
 

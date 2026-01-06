@@ -48,6 +48,15 @@ final class FilesExplorerViewModelTests: XCTestCase {
         XCTAssertEqual(sut.viewModeHeaderViewModel.selectedViewMode, .grid)
         XCTAssertEqual(sut.viewModeHeaderViewModel.availableViewModes, [.list, .grid])
     }
+
+    func testSortButtonPressedEvent() {
+        let tracker = MockTracker()
+        let sut = sut(tracker: tracker)
+        sut.dispatch(.onSortHeaderViewPressed)
+        XCTAssertTrue(
+            tracker.trackedEventIdentifiers.contains(where: { $0.eventName == SortButtonPressedEvent().eventName })
+        )
+    }
 }
 
 private extension FilesExplorerViewModelTests {
@@ -80,7 +89,9 @@ private extension FilesExplorerViewModelTests {
         filesSearchUseCase: some FilesSearchUseCaseProtocol = MockFilesSearchUseCase(searchResult: .success([])),
         contentConsumptionUserAttributeUseCase: some ContentConsumptionUserAttributeUseCaseProtocol = MockContentConsumptionUserAttributeUseCase(),
         nodeProvider: some MEGANodeProviderProtocol = MockMEGANodeProvider(),
-        featureFlagHiddenNodes: Bool = false) -> FilesExplorerViewModel {
+        featureFlagHiddenNodes: Bool = false,
+        tracker: some AnalyticsTracking = MockTracker()
+    ) -> FilesExplorerViewModel {
             let sdk = MockSdk()
             let featureFlagProvider = MockFeatureFlagProvider(list: [.hiddenNodes: featureFlagHiddenNodes])
             return .init(
@@ -91,7 +102,9 @@ private extension FilesExplorerViewModelTests {
                 contentConsumptionUserAttributeUseCase: contentConsumptionUserAttributeUseCase,
                 createContextMenuUseCase: MockCreateContextMenuUseCase(),
                 nodeProvider: nodeProvider,
-                featureFlagProvider: featureFlagProvider)
+                featureFlagProvider: featureFlagProvider
+                tracker: tracker
+            )
         }
     
     func isEquals(lhs: FilesExplorerViewModel.Command, rhs: FilesExplorerViewModel.Command) -> Bool {

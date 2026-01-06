@@ -22,6 +22,10 @@ extension SharedItemsViewController {
         let sortHeaderViewModel = viewModel.sortHeaderViewModel
         let headerContentView = ResultsHeaderView(leftView: {
             SortHeaderView(viewModel: sortHeaderViewModel)
+                .simultaneousGesture(TapGesture().onEnded { [weak self] _ in
+                    guard let self else { return }
+                    viewModel.sortHeaderViewPressed()
+                })
         })
 
         let hostingViewController = UIHostingController(rootView: headerContentView)

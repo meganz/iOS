@@ -11,6 +11,7 @@ enum OfflineViewAction: ActionType {
     case onViewAppear
     case onViewWillDisappear
     case removeOfflineItems(_ items: [URL])
+    case onSortHeaderViewPressed
 }
 
 @MainActor
@@ -36,7 +37,6 @@ final class OfflineViewModel: NSObject, ViewModelType {
     private let toggleViewModePreferenceHandler: (ViewModePreferenceEntity) -> Void
     private var subscriptions: Set<AnyCancellable> = []
     private let tracker: any AnalyticsTracking
-    private var sortHeaderViewTapEventsTask: Task<Void, Never>?
 
     var sortHeaderViewModel: SortHeaderViewModel {
         sortHeaderCoordinator.headerViewModel
@@ -78,11 +78,6 @@ final class OfflineViewModel: NSObject, ViewModelType {
         super.init()
 
         listenToViewModesUpdates()
-        listenToSortButtonPressedEvents()
-    }
-
-    deinit {
-        sortHeaderViewTapEventsTask?.cancel()
     }
 
     // MARK: - Dispatch actions
@@ -95,9 +90,11 @@ final class OfflineViewModel: NSObject, ViewModelType {
             stopMonitoringNodeDownloadCompletionUpdates()
         case .removeOfflineItems(let items):
             removeOfflineItems(items)
+        case .onSortHeaderViewPressed:
+            tracker.trackAnalyticsEvent(with: SortButtonPressedEvent())
         }
     }
-    
+
     // MARK: - Subscriptions
     
     private func startMonitoringNodeDownloadCompletionUpdates() {
@@ -189,14 +186,6 @@ final class OfflineViewModel: NSObject, ViewModelType {
             tracker.trackAnalyticsEvent(with: ViewModeGridMenuItemEvent())
         default:
             break
-        }
-    }
-
-    private func listenToSortButtonPressedEvents() {
-        sortHeaderViewTapEventsTask = Task { [weak self, sortHeaderViewModel] in
-            for await _ in sortHeaderViewModel.tapEvents {
-                self?.tracker.trackAnalyticsEvent(with: SortButtonPressedEvent())
-            }
         }
     }
 }

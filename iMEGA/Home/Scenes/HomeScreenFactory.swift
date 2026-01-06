@@ -276,7 +276,10 @@ final class HomeScreenFactory: NSObject {
             ),
             headerType: .chips,
             initialViewMode: viewMode.toSearchResultsViewMode(),
-            shouldShowMediaDiscoveryModeHandler: { false }
+            shouldShowMediaDiscoveryModeHandler: { false },
+            sortHeaderViewPressedEvent: {
+                tracker.trackAnalyticsEvent(with: SortButtonPressedEvent())
+            }
         )
 
         return UIHostingController(

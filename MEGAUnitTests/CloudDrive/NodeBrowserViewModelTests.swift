@@ -136,8 +136,8 @@ class NodeBrowserViewModelTests: XCTestCase {
                     ),
                     headerType: .dynamic,
                     initialViewMode: .list,
-                    shouldShowMediaDiscoveryModeHandler: { false
- }
+                    shouldShowMediaDiscoveryModeHandler: { false },
+                    sortHeaderViewPressedEvent: {}
                 ),
                 mediaDiscoveryViewModel: mediaDiscoveryViewModel,
                 warningViewModel: nil,
@@ -800,6 +800,15 @@ class NodeBrowserViewModelTests: XCTestCase {
         harness.cloudDriveViewModeMonitoringService.send(event: .thumbnail)
         await fulfillment(of: [expectation], timeout: 2.0)
         cancellable.cancel()
+    }
+
+    @MainActor
+    func testSortButtonPressedEvent() {
+        let (harness, _) = makeHarness()
+        harness.sut.sortHeaderViewPressedForMediaDiscovery()
+        XCTAssertTrue(
+            harness.tracker.trackedEventIdentifiers.contains(where: { $0.eventName == SortButtonPressedEvent().eventName })
+        )
     }
 
     private func makeAsyncStream(for updates: [StorageStatusEntity]) -> AnyAsyncSequence<StorageStatusEntity> {

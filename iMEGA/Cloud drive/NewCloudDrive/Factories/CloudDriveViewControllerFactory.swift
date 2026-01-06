@@ -649,7 +649,8 @@ struct CloudDriveViewControllerFactory {
             searchResultsViewModel: searchResultsVM,
             headerType: headerType,
             initialViewMode: initialViewMode.toSearchResultsViewMode(),
-            shouldShowMediaDiscoveryModeHandler: shouldShowMediaDiscoveryModeHandler
+            shouldShowMediaDiscoveryModeHandler: shouldShowMediaDiscoveryModeHandler,
+            sortHeaderViewPressedEvent: { tracker.trackAnalyticsEvent(with: SortButtonPressedEvent()) }
         )
 
         let searchControllerWrapper = SearchControllerWrapper(
@@ -1062,7 +1063,8 @@ struct CloudDriveViewControllerFactory {
         searchResultsViewModel: SearchResultsViewModel,
         headerType: SearchResultsContainerViewModel.HeaderType,
         initialViewMode: SearchResultsViewMode,
-        shouldShowMediaDiscoveryModeHandler: @escaping () -> Bool
+        shouldShowMediaDiscoveryModeHandler: @escaping () -> Bool,
+        sortHeaderViewPressedEvent: @escaping () -> Void
     ) -> SearchResultsContainerViewModel {
         .init(
             bridge: bridge,
@@ -1074,7 +1076,8 @@ struct CloudDriveViewControllerFactory {
             ),
             headerType: headerType,
             initialViewMode: initialViewMode,
-            shouldShowMediaDiscoveryModeHandler: shouldShowMediaDiscoveryModeHandler
+            shouldShowMediaDiscoveryModeHandler: shouldShowMediaDiscoveryModeHandler,
+            sortHeaderViewPressedEvent: sortHeaderViewPressedEvent
         )
     }
 

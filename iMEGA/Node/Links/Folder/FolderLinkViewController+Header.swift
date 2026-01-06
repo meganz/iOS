@@ -59,6 +59,10 @@ extension FolderLinkViewController {
         let viewModeHeaderViewModel = viewModel.viewModeHeaderViewModel
         let headerContentView = ResultsHeaderView {
             SortHeaderView(viewModel: sortHeaderViewModel)
+                .simultaneousGesture(TapGesture().onEnded { [weak self] _ in
+                    guard let self else { return }
+                    viewModel.dispatch(.onSortHeaderViewPressed)
+                })
         } rightView: {
             SearchResultsHeaderViewModeView(viewModel: viewModeHeaderViewModel)
         }

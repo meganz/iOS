@@ -1,4 +1,5 @@
 @testable import MEGA
+import MEGAAnalyticsiOS
 import MEGAAppPresentation
 import MEGAAppPresentationMock
 import MEGAAppSDKRepoMock
@@ -327,6 +328,16 @@ final class SharedItemsViewModelTests: XCTestCase {
         )
     }
 
+    @MainActor
+    func testSortButtonPressedEvent() {
+        let tracker = MockTracker()
+        let sut = makeSUT(tracker: tracker)
+        sut.sortHeaderViewPressed()
+        XCTAssertTrue(
+            tracker.trackedEventIdentifiers.contains(where: { $0.eventName == SortButtonPressedEvent().eventName })
+        )
+    }
+
     typealias SUT = SharedItemsViewModel
 
     @MainActor private func makeSUT(
@@ -339,6 +350,7 @@ final class SharedItemsViewModelTests: XCTestCase {
             .init(sortOrder: .init(key: .name), title: "", iconsByDirection: [:])
         ]),
         sharedItemsView: some SharedItemsViewing = MockSharedItemsView(),
+        tracker: some AnalyticsTracking = MockTracker(),
         file: StaticString = #filePath,
         line: UInt = #line
     ) -> SUT {
@@ -349,7 +361,8 @@ final class SharedItemsViewModelTests: XCTestCase {
             saveMediaToPhotosUseCase: saveMediaToPhotosUseCase,
             moveToRubbishBinViewModel: moveToRubbishBinViewModel,
             sortOptionsViewModel: sortOptionsViewModel,
-            sharedItemsView: sharedItemsView
+            sharedItemsView: sharedItemsView,
+            tracker: tracker
         )
         trackForMemoryLeaks(on: sut, file: file, line: line)
         return sut

@@ -319,6 +319,16 @@ final class OfflineViewModelTests: XCTestCase {
         )
     }
 
+    @MainActor
+    func testSortButtonPressedEvent() {
+        let tracker = MockTracker()
+        let sut = makeOfflineViewModelVMSut(tracker: tracker)
+        sut.dispatch(.onSortHeaderViewPressed)
+        XCTAssertTrue(
+            tracker.trackedEventIdentifiers.contains(where: { $0.eventName == SortButtonPressedEvent().eventName })
+        )
+    }
+
     private var makeOfflineNode: MOOfflineNode {
         let testStack = CoreDataTestStack()
         let context = testStack.managedObjectContext

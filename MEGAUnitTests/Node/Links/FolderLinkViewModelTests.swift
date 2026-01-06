@@ -104,6 +104,16 @@ struct FolderLinkViewModelTests {
         }
     }
 
+    @Test
+    func testSortButtonPressedEvent() {
+        let tracker = MockTracker()
+        let sut = makeSUT(tracker: tracker)
+        sut.dispatch(.onSortHeaderViewPressed)
+        #expect(
+            tracker.trackedEventIdentifiers.contains(where: { $0.eventName == SortButtonPressedEvent().eventName })
+        )
+    }
+
     typealias SUT = FolderLinkViewModel
     func makeSUT(
         tracker: MockTracker = MockTracker(),

@@ -48,6 +48,9 @@ struct NodeBrowserView: View {
                                 viewModel: viewModel.sortHeaderViewModelForMD,
                                 horizontalPadding: TokenSpacing._5
                             )
+                            .simultaneousGesture(TapGesture().onEnded { _ in
+                                viewModel.sortHeaderViewPressedForMediaDiscovery()
+                            })
                         } rightView: {
                             SearchResultsHeaderViewModeView(
                                 viewModel: viewModel.viewModeHeaderViewModelForMD,

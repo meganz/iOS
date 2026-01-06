@@ -48,6 +48,7 @@ public class SearchResultsContainerViewModel: ObservableObject {
     private var subscriptions: Set<AnyCancellable> = []
     private let shouldShowMediaDiscoveryModeHandler: () -> Bool
     private let headerType: HeaderType
+    let sortHeaderViewPressedEvent: () -> Void
 
     public init(
         bridge: SearchBridge,
@@ -56,13 +57,15 @@ public class SearchResultsContainerViewModel: ObservableObject {
         sortOptionsViewModel: SortOptionsViewModel,
         headerType: HeaderType,
         initialViewMode: SearchResultsViewMode,
-        shouldShowMediaDiscoveryModeHandler: @escaping () -> Bool
+        shouldShowMediaDiscoveryModeHandler: @escaping () -> Bool,
+        sortHeaderViewPressedEvent: @escaping () -> Void
     ) {
         self.bridge = bridge
         self.config = config
         self.searchResultsViewModel = searchResultsViewModel
         self.headerType = headerType
         self.shouldShowMediaDiscoveryModeHandler = shouldShowMediaDiscoveryModeHandler
+        self.sortHeaderViewPressedEvent = sortHeaderViewPressedEvent
         self.sortHeaderCoordinator = .init(
             sortOptionsViewModel: sortOptionsViewModel,
             currentSortOrderProvider: { [weak searchResultsViewModel] in

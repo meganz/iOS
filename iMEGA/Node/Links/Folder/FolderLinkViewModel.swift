@@ -1,8 +1,8 @@
 import Combine
 import MEGAAnalyticsiOS
 import MEGAAppPresentation
-import MEGAUIComponent
 import MEGADomain
+import MEGAUIComponent
 import Search
 
 @MainActor
@@ -13,6 +13,7 @@ import Search
         case trackSendToChatFolderLink
         case saveToPhotos([NodeEntity])
         case updateViewMode(ViewModePreferenceEntity)
+        case onSortHeaderViewPressed
     }
     
     public enum Command: CommandType {
@@ -45,6 +46,8 @@ import Search
             saveToPhotos(nodes)
         case .updateViewMode(let viewMode):
             updateViewMode(viewMode)
+        case .onSortHeaderViewPressed:
+            tracker.trackAnalyticsEvent(with: SortButtonPressedEvent())
         }
     }
     
@@ -52,7 +55,6 @@ import Search
     private let saveMediaUseCase: any SaveMediaToPhotosUseCaseProtocol
     private let tracker: any AnalyticsTracking
     private let sortHeaderCoordinator: SortHeaderCoordinator
-    private var sortHeaderViewTapEventsTask: Task<Void, Never>?
 
     var sortHeaderViewModel: SortHeaderViewModel {
         sortHeaderCoordinator.headerViewModel
@@ -111,7 +113,6 @@ import Search
         self.viewMode = viewMode
         super.init()
         listenToViewModesUpdates()
-        listenToSortButtonPressedEvents()
     }
     
     deinit {
@@ -119,7 +120,6 @@ import Search
         monitorNodeUpdatesTask?.cancel()
         monitorFetchNodesRequestStartUpdatesTask?.cancel()
         monitorRequestFinishUpdatesTask?.cancel()
-        sortHeaderViewTapEventsTask?.cancel()
     }
     
     private func startMonitoringUpdates() {
@@ -230,14 +230,6 @@ import Search
             tracker.trackAnalyticsEvent(with: ViewModeGridMenuItemEvent())
         default:
             break
-        }
-    }
-
-    private func listenToSortButtonPressedEvents() {
-        sortHeaderViewTapEventsTask = Task { [weak self, sortHeaderViewModel] in
-            for await _ in sortHeaderViewModel.tapEvents {
-                self?.tracker.trackAnalyticsEvent(with: SortButtonPressedEvent())
-            }
         }
     }
 }

@@ -106,8 +106,6 @@ class NodeBrowserViewModel: ObservableObject {
     private var refreshStorageStatusTask: Task<Void, Never>?
     private var updatedViewModesTask: Task<Void, Never>?
     private var monitorNodeUpdatesTask: Task<Void, Never>?
-    private var sortHeaderViewTapEventsTaskForListAndGrid: Task<Void, Never>?
-    private var sortHeaderViewTapEventsTaskForMD: Task<Void, Never>?
 
     var cloudDriveContextMenuFactory: CloudDriveContextMenuFactory? {
         didSet {
@@ -329,7 +327,6 @@ class NodeBrowserViewModel: ObservableObject {
         }
 
         listenToViewModeHeaderChangesInMD()
-        listenToSortButtonPressedEvents()
     }
     
     deinit {
@@ -337,8 +334,6 @@ class NodeBrowserViewModel: ObservableObject {
         refreshStorageStatusTask?.cancel()
         updatedViewModesTask?.cancel()
         monitorNodeUpdatesTask?.cancel()
-        sortHeaderViewTapEventsTaskForListAndGrid?.cancel()
-        sortHeaderViewTapEventsTaskForMD?.cancel()
 
         accountStorageMonitoringTask = nil
         refreshStorageStatusTask = nil
@@ -398,6 +393,10 @@ class NodeBrowserViewModel: ObservableObject {
         ) {
             contextMenuViewFactory = updatedContextMenuViewFactory
         }
+    }
+
+    func sortHeaderViewPressedForMediaDiscovery() {
+        tracker.trackAnalyticsEvent(with: SortButtonPressedEvent())
     }
 
     private func trackScreenViewEvent() {
@@ -748,21 +747,6 @@ class NodeBrowserViewModel: ObservableObject {
     private func resetViewModeHeaderSelectionInMD() {
         DispatchQueue.main.async { [weak self] in
             self?.viewModeHeaderViewModelForMD.selectedViewMode = .mediaDiscovery
-        }
-    }
-
-    private func listenToSortButtonPressedEvents() {
-        let sortHeaderViewModel = searchResultsContainerViewModel.sortHeaderViewModel
-        sortHeaderViewTapEventsTaskForListAndGrid = Task { [weak self, sortHeaderViewModel] in
-            for await _ in sortHeaderViewModel.tapEvents {
-                self?.tracker.trackAnalyticsEvent(with: SortButtonPressedEvent())
-            }
-        }
-
-        sortHeaderViewTapEventsTaskForMD = Task { [weak self, sortHeaderViewModelForMD] in
-            for await _ in sortHeaderViewModelForMD.tapEvents {
-                self?.tracker.trackAnalyticsEvent(with: SortButtonPressedEvent())
-            }
         }
     }
 }

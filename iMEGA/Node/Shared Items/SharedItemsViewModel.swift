@@ -31,7 +31,6 @@ protocol SharedItemsViewing: AnyObject {
 
     private let sortHeaderCoordinator: SortHeaderCoordinator
     private let tracker: any AnalyticsTracking
-    private var sortHeaderViewTapEventsTask: Task<Void, Never>?
 
     var sortHeaderViewModel: SortHeaderViewModel {
         sortHeaderCoordinator.headerViewModel
@@ -71,12 +70,6 @@ protocol SharedItemsViewing: AnyObject {
         )
 
         super.init()
-
-        listenToSortButtonPressedEvents()
-    }
-
-    deinit {
-        sortHeaderViewTapEventsTask?.cancel()
     }
 
     func openShareFolderDialog(forNodes nodes: [MEGANode]) {
@@ -150,12 +143,8 @@ protocol SharedItemsViewing: AnyObject {
         sortHeaderCoordinator.updateSortUI()
     }
 
-    private func listenToSortButtonPressedEvents() {
-        sortHeaderViewTapEventsTask = Task { [weak self, sortHeaderViewModel] in
-            for await _ in sortHeaderViewModel.tapEvents {
-                self?.tracker.trackAnalyticsEvent(with: SortButtonPressedEvent())
-            }
-        }
+    func sortHeaderViewPressed() {
+        tracker.trackAnalyticsEvent(with: SortButtonPressedEvent())
     }
 
     /// The sort option keys that should be hidden for the current shared items tab.
