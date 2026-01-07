@@ -55,7 +55,7 @@ extension MainTabBarController {
     func updatePSABannerVisibility(for viewController: UIViewController) -> Bool {
         let psaHidden = isPSABannerHidden()
 
-        if let presenter = viewController as? (any BottomOverlayPresenterProtocol) {
+        if let presenter = viewController as? (any BottomOverlayPresenterProtocol), currentPSAView() != nil {
             let shouldAddSafeAreaCoverView = (presenter as? (any BottomSafeAreaOverlayCoverStatusProviderProtocol))?.shouldShowSafeAreaOverlayCover
             ?? tabBar.isHidden
 
