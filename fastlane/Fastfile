@@ -305,6 +305,24 @@ platform :ios do
     )
   end
 
+  desc "Run unit tests for local packages"
+  lane :run_tests_against_local_packages do |options|
+    scan(
+      workspace: WORKSPACE,
+      scheme: "MEGAModulesTests",
+      cloned_source_packages_path: ENV['SWIFT_PACKAGES_PATH'],
+      disable_package_automatic_updates: true,
+      derived_data_path: "derivedData",
+      code_coverage: true,
+      xcodebuild_formatter: "xcbeautify",
+      xcargs: '-skipPackagePluginValidation',
+      parallel_testing: true,
+      concurrent_workers: 2,
+      skip_build: true,
+      number_of_retries: 20
+    )
+  end
+
   desc "Download metadata"
   lane :download_metadata do
     api_key_value = ENV['APP_STORE_CONNECT_API_KEY_VALUE']

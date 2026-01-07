@@ -21,18 +21,10 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 
 
-### parse_and_upload_build_warnings_and_errors
+### parse_and_upload_build_warnings
 
 ```sh
-[bundle exec] fastlane parse_and_upload_build_warnings_and_errors
-```
-
-
-
-### zip_xcresult_file
-
-```sh
-[bundle exec] fastlane zip_xcresult_file
+[bundle exec] fastlane parse_and_upload_build_warnings
 ```
 
 
@@ -45,18 +37,18 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 
 
-### get_coverage
+### post_errors
 
 ```sh
-[bundle exec] fastlane get_coverage
+[bundle exec] fastlane post_errors
 ```
 
 
 
-### parse_and_upload_code_coverage
+### post_coverage_report_to_mr
 
 ```sh
-[bundle exec] fastlane parse_and_upload_code_coverage
+[bundle exec] fastlane post_coverage_report_to_mr
 ```
 
 
@@ -233,6 +225,14 @@ Sync appstore signing certificates
 ```
 
 Run unit tests for main app
+
+### ios run_tests_against_local_packages
+
+```sh
+[bundle exec] fastlane ios run_tests_against_local_packages
+```
+
+Run unit tests for local packages
 
 ### ios download_metadata
 

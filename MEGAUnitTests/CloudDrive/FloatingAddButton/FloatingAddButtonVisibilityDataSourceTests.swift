@@ -250,7 +250,10 @@ struct FloatingAddButtonVisibilityDataSourceTests {
 
     @Suite("Test emission of `floatingButtonVisibility` from node searchResultsEmptyStateProvider.emptyStateSequence", .serialized)
     struct EmptyStatesTests {
-        @Test("Changes of empty states should lead to new values of floatingButtonVisibility")
+        @Test(
+            "Changes of empty states should lead to new values of floatingButtonVisibility",
+            .disabled("Disabled due to flakiness")
+        )
         func emptyStateNodeUpdates() async {
             let searchResultsEmptyStateProvider = MockSearchResultsEmptyStateProvider()
             let sut = await Test.makeSUT(

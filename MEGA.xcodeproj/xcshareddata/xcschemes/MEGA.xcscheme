@@ -58,6 +58,17 @@
                ReferencedContainer = "container:MEGA.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO"
+            parallelizable = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "BFB014E62EDABA8F00F600E7"
+               BuildableName = "MEGAModulesTests.xctest"
+               BlueprintName = "MEGAModulesTests"
+               ReferencedContainer = "container:MEGA.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction

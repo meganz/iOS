@@ -1,63 +1,5 @@
 import("Fastfile_parse_warnings_and_errors")
 
-  # Custom Lane to parse the code coverage and post it in the MR as markdown.
-  # Parameters:
-  #   - mr: MR number that can be found in the url.
-  #         Example: If the link for the MR is https://url/-/merge_requests/4447 - The MR number is 4447
-  #   - token: Token required to post the message to the MR
-
-  lane :get_coverage do 
-    output_path = ENV["CODE_COVERAGE_OUTPUT"]
-
-    run_xcov(output_directory: output_path)
-  end
-
-  lane :parse_and_upload_code_coverage do | options |
-    output_path = ENV["CODE_COVERAGE_OUTPUT"]
-    
-    json_path = "#{output_path}/report.json"
-
-    code_coverage_markdown = generate_markdown_for_code_coverage(json_path: json_path)
-   
-    markdown_path = ENV["CODE_COVERAGE_MARKDOWN_PATH"]
-
-    FileUtils.touch(markdown_path)
-    File.open(markdown_path, "w+") { |file| file.write(code_coverage_markdown) }
-
-    post_code_coverage_markdown_to_mr(mr: options[:mr], token: options[:token], markdown_path: markdown_path)
-  end
-
-  desc "Run xcov"
-  private_lane :run_xcov do |options|
-    xcov(
-      workspace: WORKSPACE,
-      scheme: SCHEME,
-      output_directory: options[:output_directory],
-      ignore_file_path: ".xcovignore",
-      derived_data_path: "derivedData",
-      json_report: true,
-      include_targets: "MEGA.app,MEGAAppPresentation,MEGAAppSDKRepo,MEGAAuthentication,Chat,ChatRepo,Accounts,CloudDrive,ContentLibraries,DeviceCenter,MEGASwift,Notifications,Settings,MEGAAnalytics,MEGAAnalyticsDomain,MEGAConnectivity,MEGADeepLinkHandling,MEGADomain,MEGAFoundation,MEGAInfrastructure,MEGAIntentDomain,MEGAL10n,MEGALogger,MEGAPermissions,MEGAPhotos,MEGAPickerFileProviderDomain,MEGASwiftUI,MEGAUI,MEGAUIComponent,MEGAUIKit,Notifications,PhotoBrowser,Search,Settings,Video"
-    )
-  end
-
-  private_lane :generate_markdown_for_code_coverage do |options|
-    json_path = options[:json_path]
-    code_coverage_json = read_json(json_path: "xcov_output/report.json")
-    coverage_text = <<~TEXT
-      ## Unit test coverage result excluding View & ViewController files
-      Target | Percentage
-      ---    | ---
-    TEXT
-  
-    code_coverage_json[:targets].each do |target|
-      target_name = target[:name]
-      target_coverage = (target[:coverage] * 100).round(2)
-      coverage_text << "#{target_name} | #{target_coverage}%\n"
-    end
-    coverage_text << "Average | #{(code_coverage_json[:coverage] * 100).round(2)}%\n"
-    coverage_text
-  end
-
   private_lane :post_code_coverage_markdown_to_mr do |options|
     mr_number = options[:mr]
     merge_request_url = ENV["PROJECT_URL"] + "/merge_requests/#{mr_number}/notes"
@@ -66,5 +8,9 @@ import("Fastfile_parse_warnings_and_errors")
       token: options[:token],
       markdown_path: "fastlane/#{options[:markdown_path]}"
     )
+  end
+
+  lane :post_coverage_report_to_mr do |options|
+    post_code_coverage_markdown_to_mr(mr: options[:mr], token: options[:token], markdown_path: ENV["CODE_COVERAGE_MARKDOWN_PATH"])
   end
 

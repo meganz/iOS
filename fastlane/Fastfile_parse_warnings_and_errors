@@ -5,7 +5,7 @@
   #   - mr: MR number that can be found in the url.
   #         Example: If the link for the MR is https://url/-/merge_requests/4447 - The MR number is 4447
   #   - token: Token required to post the message to the MR
-  lane :parse_and_upload_build_warnings_and_errors do | options |
+  lane :parse_and_upload_build_warnings do | options |
     mr_number = options[:mr]
     merge_request_url = ENV["PROJECT_URL"] + "/merge_requests/#{mr_number}/notes"
     errors_and_warnings_json_path = ENV["ERRORS_AND_WARNINGS_JSON_PATH"]
@@ -19,17 +19,6 @@
       merge_request_url: merge_request_url,
       token: options[:token]
     )
-
-    parse_errors_and_post_to_mr(
-      merge_request_url: merge_request_url,
-      token: options[:token]
-    )
-  end
-
-  # Zip the xcresult file so that it could be uploaded to slack
-  lane :zip_xcresult_file do | options |
-    xcresult_file = options[:file]
-    sh "ditto -c -k --sequesterRsrc --keepParent #{get_latest_xcresult_file} ./../#{xcresult_file}"
   end
 
   lane :get_latest_xcresult_file do
@@ -39,7 +28,7 @@
     most_recent_xcresult
   end
 
-  private_lane :parse_warnings_and_post_to_mr do |options|
+  private_lane :parse_warnings_and_post_to_mr do | options |
     markdown_file_available = generate_warnings_markdown_from_json(
       warnings_json_path: ENV["ERRORS_AND_WARNINGS_JSON_PATH"],
       output_file_path: ENV["WARNINGS_MARKDOWN_PATH"],
@@ -54,17 +43,19 @@
     end
   end
 
-  private_lane :parse_errors_and_post_to_mr do |options|
-    markdown_file_available = generate_errors_markdown_from_json(
-      errors_json_path: ENV["ERRORS_AND_WARNINGS_JSON_PATH"],
-      output_file_path: ENV["ERRORS_MARKDOWN_PATH"],
-    )
-
-    if markdown_file_available
+  lane :post_errors do | options |
+    mr_number = options[:mr]
+    merge_request_url = ENV["PROJECT_URL"] + "/merge_requests/#{mr_number}/notes"
+    project_root = File.expand_path('..', __dir__)
+    errors_file_path = File.join(project_root, ENV["ERRORS_MARKDOWN_PATH"])
+    
+    if File.exist?(errors_file_path)
       post_markdown_to_mr(
-        merge_request_url: options[:merge_request_url],
+        merge_request_url: merge_request_url,
         token: options[:token],
-        markdown_path: ENV["ERRORS_MARKDOWN_PATH"]
+        markdown_path: errors_file_path
       )
+    else
+      UI.message("No errors markdown file found at: #{errors_file_path}")
     end
   end

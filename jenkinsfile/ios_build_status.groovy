@@ -4,6 +4,8 @@ import groovy.transform.Field
 // This is global variable is required to check if the unit test step was reached or not. This is required to avoid running the parse_and_upload_build_warnings_and_errors lane if the unit test step was not reached.
 @Field boolean runUnitTestsStepReached = false
 
+NODE_LABELS = 'mac-jenkins-slave-ios-xcode-26'
+
 def postWarningAboutFilesChanged(int maxNumberOfFilesAllowed) {
     if (!runUnitTestsStepReached) {
         return
@@ -22,8 +24,8 @@ def postWarningAboutFilesChanged(int maxNumberOfFilesAllowed) {
     }
 }
 
-def executeFastlaneTask(taskCommand) {
-    if (!runUnitTestsStepReached) {
+def executeFastlaneTask(taskCommand, checkRunUnitTestsStep = true) {
+    if (checkRunUnitTestsStep && !runUnitTestsStepReached) {
         return
     }
 
@@ -43,54 +45,47 @@ def executeFastlaneTask(taskCommand) {
     }
 }
 
-def uploadXCResultToArtifactory() {
-    if (!runUnitTestsStepReached) {
-        return
-    }  
-    
-    withCredentials([usernamePassword(credentialsId: 'Gitlab-Access-Token', usernameVariable: 'USERNAME', passwordVariable: 'TOKEN')]) {
-        withCredentials([string(credentialsId: 'ios-mega-artifactory-upload', variable: 'ARTIFACTORY_TOKEN')]) {
-            script {
-                envInjector.injectEnvs {
-                    def mr_number = commonUtils.getMRNumber()
-                    if (mr_number != null && !mr_number.isEmpty()) {
-                        try {
-                            def fileName = "${env.BUILD_NUMBER}_xcresult.zip"
-                            sh "bundle exec fastlane zip_xcresult_file file:${fileName}"
-                            env.zipPath = "${WORKSPACE}/${fileName}"
-                            env.targetPath = "https://artifactory.developers.mega.co.nz/artifactory/ios-mega/xcresult/${mr_number}/${fileName}"
-                            sh 'curl -H\"Authorization: Bearer $ARTIFACTORY_TOKEN\" -T ${zipPath} \"${targetPath}\"'
-                            def message = ":information_source: XCResult file has been uploaded to Artifactory: ${env.targetPath}"
-                            statusNotifier.postMessage(message, env.MEGA_IOS_PROJECT_ID, "warning")
-                        } catch (Exception e) {
-                            error("Fastlane task zip_xcresult_file failed: ${e.message}")
-                        }
-                    }
-                }
-            }
-        }
-    }
+def postBuildWarnings() {
+    executeFastlaneTask("parse_and_upload_build_warnings")
 }
 
-def postBuildWarningsAndError() {
-    executeFastlaneTask("parse_and_upload_build_warnings_and_errors")
+def postCoverageReportToMR() {
+    executeFastlaneTask("post_coverage_report_to_mr")
 }
 
-def parseAndUploadCodeCoverage() {
-    executeFastlaneTask("parse_and_upload_code_coverage")
+def postErrors() {
+    executeFastlaneTask("post_errors", false)
 }
 
 def postAppSizeToMR() {
     executeFastlaneTask("post_app_size_to_mr")
 }
 
+def setupProjectDependencies() {
+    sh "bundle install"
+    sh "git submodule foreach --recursive git clean -xfd"
+    sh "git submodule sync --recursive"
+    sh "git submodule update --init --recursive"
+    dir("Modules/DataSource/MEGAChatSDK/Sources/MEGAChatSDK/src/") {
+        sh "cmake -P genDbSchema.cmake"
+    }
+    sh "bundle exec fastlane configure_sdk_and_chat_library use_cache:true"
+}
+
 pipeline {
-    agent { label 'mac-jenkins-slave-ios-xcode-26' }
+    agent { label NODE_LABELS }
     options {
         timeout(time: 45, unit: 'MINUTES') 
         gitLabConnection('GitLabConnection')
         gitlabCommitStatus(name: 'Jenkins')
         ansiColor('xterm')
+        throttleJobProperty(
+            categories: ['ios-builds'],  
+            throttleEnabled: true,
+            throttleOption: 'category',  
+            maxConcurrentPerNode: 0,
+            maxConcurrentTotal: 3
+        )
     }
     environment {
         MEGA_IOS_PROJECT_ID = credentials('MEGA_IOS_PROJECT_ID')
@@ -99,8 +94,23 @@ pipeline {
         failure {
             script {
                 statusNotifier.postFailure(":x: Build failed", env.MEGA_IOS_PROJECT_ID)
-                postBuildWarningsAndError()
-                uploadXCResultToArtifactory()
+                postBuildWarnings()
+                dir("scripts/ErrorParsingKit/") {
+                    sh 'swift run ErrorParsingKit --is-main-app-target true'
+                }
+
+                artifactStasher.unstashArtifact('swift-packages-errors')
+
+                def packagesErrors = fileExists('outputs/errors_packages.md') ? 
+                                        readFile('outputs/errors_packages.md') : ''
+                def mainAppErrors = fileExists('outputs/errors.md') ? 
+                                        readFile('outputs/errors.md') : ''
+                def separator = (packagesErrors && mainAppErrors) ? '\n\n' : ''
+                    
+                writeFile file: 'outputs/errors.md', 
+                         text: "${mainAppErrors}${separator}${packagesErrors}"
+                         
+                postErrors()
             }
             
             updateGitlabCommitStatus name: 'Jenkins', state: 'failed'
@@ -109,8 +119,22 @@ pipeline {
             script {
                 envInjector.injectEnvs {
                     statusNotifier.postSuccess(":white_check_mark: Build status check succeeded", env.MEGA_IOS_PROJECT_ID)
-                    parseAndUploadCodeCoverage()
-                    postBuildWarningsAndError()
+                    postBuildWarnings()
+                    dir("scripts/CodeCoverageParserKit/") {
+                        sh 'swift run CodeCoverageParserKit --should-include-header true --targets \"MEGA.app,MEGAIntent.appex,MEGANotifications.appex,MEGAPicker.appex,MEGAPickerFileProvider.appex,MEGAWidgetExtension.appex\"'
+                    }
+
+                    artifactStasher.unstashArtifact('swift-packages-coverage')
+                    if (fileExists('fastlane/code_coverage_packages.md')) {
+                        def packagesCoverage = readFile('fastlane/code_coverage_packages.md')
+                        def mainCoverage = fileExists('fastlane/code_coverage.md') ? 
+                                           readFile('fastlane/code_coverage.md') : ''
+                        
+                        writeFile file: 'fastlane/code_coverage.md', 
+                                 text: "${mainCoverage}${packagesCoverage}"
+                    }
+
+                    postCoverageReportToMR()
                     postAppSizeToMR()
                 }
             }
@@ -130,69 +154,94 @@ pipeline {
             }
         }
         cleanup {
-            deleteDir() /* clean up our workspace */
+            cleanWs(
+                cleanWhenFailure: true,
+                cleanWhenAborted: true,
+                cleanWhenNotBuilt: true,
+                cleanWhenUnstable: true,
+                cleanWhenSuccess: true,
+                disableDeferredWipeout: true,
+                deleteDirs: true
+            )
         }
     }
     stages {
-        stage('Bundle install') {
-            steps {
-                gitlabCommitStatus(name: 'Bundle install') {
-                    script {
-                        envInjector.injectEnvs {
-                            sh "bundle install"
-                        }
-                    }
-                }
-            }
-        }
-
-        stage('Installing dependencies') {
+        stage('Run Unit tests') {
+            failFast false
             parallel {
-                stage('Submodule update and run cmake') {
+                stage('Main app - Run Unit test and generate code coverage') {
                     steps {
-                        gitlabCommitStatus(name: 'Submodule update and run cmake') {
+                        gitlabCommitStatus(name: 'Main app - Run Unit test and generate code coverage') {
                             withCredentials([gitUsernamePassword(credentialsId: 'Gitlab-Access-Token', gitToolName: 'Default')]) {
                                 script {
                                     envInjector.injectEnvs {
-                                        sh "git submodule foreach --recursive git clean -xfd"
-                                        sh "git submodule sync --recursive"
-                                        sh "git submodule update --init --recursive"
-                                        dir("Modules/DataSource/MEGAChatSDK/Sources/MEGAChatSDK/src/") {
-                                            sh "cmake -P genDbSchema.cmake"
-                                        }
+                                        customCheckout(env.CHANGE_BRANCH)
+                                        setupProjectDependencies()
+                                        runUnitTestsStepReached = true
+                                        sh "bundle exec fastlane run_tests_app"
                                     }
                                 }
                             }
                         }
                     }
                 }
-
-                stage('Downloading third party libraries') {
+                stage('Swift Packages - Run Unit test and generate code coverage') {
+                    agent { label NODE_LABELS }
                     steps {
-                        gitlabCommitStatus(name: 'Downloading third party libraries') {
-                            script {
-                                envInjector.injectEnvs {
-                                    sh "bundle exec fastlane configure_sdk_and_chat_library use_cache:true"
-                                }
-                            } 
-                        }
-                    }
-                }
-            }
-        }
-
-        stage('main app - Run Unit test and generate code coverage') {
-            steps {
-                lock(resource: "${env.NODE_NAME}", quantity: 1) {
-                    gitlabCommitStatus(name: 'main app - Run unit test and generate code coverage') {
-                        withCredentials([gitUsernamePassword(credentialsId: 'Gitlab-Access-Token', gitToolName: 'Default')]) {
-                            script {
-                                envInjector.injectEnvs {
-                                    runUnitTestsStepReached = true
-                                    sh "bundle exec fastlane run_tests_app"
-                                    sh "bundle exec fastlane get_coverage"
+                        gitlabCommitStatus(name: 'Swift Packages - Run Unit test and generate code coverage') {
+                            withCredentials([gitUsernamePassword(credentialsId: 'Gitlab-Access-Token', gitToolName: 'Default')]) {
+                                script {
+                                    envInjector.injectEnvs {
+                                        customCheckout(env.CHANGE_BRANCH)
+                                        setupProjectDependencies()
+                                        sh "bundle exec fastlane run_tests_against_local_packages"
+                                    }
                                 }
                             }
+                        }
+                    }
+                    post {
+                        failure {
+                            script {
+                                envInjector.injectEnvs {
+                                    dir("scripts/ErrorParsingKit/") {
+                                        sh 'swift run'
+                                    }
+                                    if (fileExists('outputs/errors.md')) {
+                                        sh 'cp outputs/errors.md outputs/errors_packages.md'
+                                        artifactStasher.stashArtifact('swift-packages-errors', 'outputs/errors_packages.md')
+                                    } else {
+                                        echo "Warning: outputs/errors.md not found in Swift Packages run unit tests stage"
+                                    } 
+                                }
+                            }
+                        }
+                        success {
+                            script {
+                                envInjector.injectEnvs {
+                                    dir("scripts/CodeCoverageParserKit/") {
+                                        sh 'swift run CodeCoverageParserKit --targets \"MEGAAppPresentation,MEGAAppSDKRepo,MEGAAuthentication,Chat,ChatRepo,Accounts,CloudDrive,ContentLibraries,DeviceCenter,MEGASwift,Notifications,Settings,MEGAAnalytics,MEGAAnalyticsDomain,MEGAConnectivity,MEGADeepLinkHandling,MEGADomain,MEGAFoundation,MEGAInfrastructure,MEGAIntentDomain,MEGAL10n,MEGALogger,MEGAPermissions,MEGAPhotos,MEGAPickerFileProviderDomain,MEGASwiftUI,MEGAUI,MEGAUIComponent,MEGAUIKit,PhotoBrowser,Search,Video\"'
+                                    }
+
+                                    if (fileExists('fastlane/code_coverage.md')) {
+                                        sh 'cp fastlane/code_coverage.md fastlane/code_coverage_packages.md'
+                                        artifactStasher.stashArtifact('swift-packages-coverage', 'fastlane/code_coverage_packages.md')
+                                    } else {
+                                        echo "Warning: fastlane/code_coverage.md not found in Swift Packages run unit tests stage"
+                                    }                                
+                                }
+                            }
+                        }
+                        cleanup {
+                            cleanWs(
+                                cleanWhenFailure: true,
+                                cleanWhenAborted: true,
+                                cleanWhenNotBuilt: true,
+                                cleanWhenUnstable: true,
+                                cleanWhenSuccess: true,
+                                disableDeferredWipeout: true,
+                                deleteDirs: true
+                            )
                         }
                     }
                 }
