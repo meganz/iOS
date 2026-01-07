@@ -5,7 +5,7 @@ import MEGADomain
 // Those are actions with bar button items present in the toolbar
 enum BottomToolbarAction {
     var isCloudDriveRevampEnabled: Bool {
-        DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .cloudDriveRevamp)
+        DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosCloudDriveRevamp)
     }
     case download
     case shareLink

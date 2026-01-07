@@ -14,7 +14,7 @@ extension OfflineViewController: DisplayMenuDelegate {
     }
     
     @objc func configureNavigationBarButtons() {
-        guard !DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .cloudDriveRevamp) else {
+        guard !DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosCloudDriveRevamp) else {
             navigationItem.rightBarButtonItems = nil
             return
         }

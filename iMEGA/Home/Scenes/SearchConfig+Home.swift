@@ -8,7 +8,7 @@ import SwiftUI
 
 extension SearchConfig {
     static var isCloudDriveRevampEnabled: Bool {
-        DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .cloudDriveRevamp)
+        DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosCloudDriveRevamp)
     }
     static func searchConfig(
         contextPreviewFactory: ContextPreviewFactory,

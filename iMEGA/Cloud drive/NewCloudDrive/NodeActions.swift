@@ -61,7 +61,7 @@ struct NodeActions {
 extension NodeActions {
 
     private static var isCloudDriveRevampEnabled: Bool {
-        DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .cloudDriveRevamp)
+        DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosCloudDriveRevamp)
     }
 
     private static var tracker: some AnalyticsTracking {

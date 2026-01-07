@@ -177,7 +177,7 @@ final class FilesExplorerViewModel: ViewModelType {
             contextMenuManager = ContextMenuManager(displayMenuDelegate: self, createContextMenuUseCase: createContextMenuUseCase)
         }
 
-        if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .cloudDriveRevamp) {
+        if DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosCloudDriveRevamp) {
             configForDisplayMenu = CMConfigEntity(menuType: .menu(type: .homeCards))
         } else {
             configForDisplayMenu = CMConfigEntity(menuType: .menu(type: .display),

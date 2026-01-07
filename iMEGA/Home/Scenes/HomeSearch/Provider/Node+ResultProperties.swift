@@ -25,7 +25,7 @@ extension ResultProperty {
     private typealias LayoutConfiguration = ResultProperty.Content.LayoutConfiguration
     private typealias Content = ResultProperty.Content
     private static var isCloudDriveRevampEnabled: Bool {
-        DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .cloudDriveRevamp)
+        DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosCloudDriveRevamp)
     }
 
     private enum Constants {

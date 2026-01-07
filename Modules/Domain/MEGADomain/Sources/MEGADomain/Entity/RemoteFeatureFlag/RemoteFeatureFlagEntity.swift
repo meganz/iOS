@@ -10,4 +10,5 @@ public enum RemoteFeatureFlag: String, Sendable {
     case iosAppPerformanceMonitoring = "iapm"
     case iosNewYearlyPlanCard = "inypc"
     case iosCameraUploadBreakdown = "icub"
+    case iosCloudDriveRevamp = "icdr"
 }

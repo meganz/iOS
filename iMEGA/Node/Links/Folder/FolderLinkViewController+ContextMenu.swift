@@ -13,7 +13,7 @@ extension FolderLinkViewController: FolderLinkContextMenuDelegate {
             sortType: SortOrderType(megaSortOrderType: Helper.sortType(for: parentNode)).megaSortOrderType.toSortOrderEntity(),
             showMediaDiscovery: containsMediaFiles(),
             isDecrypted: isDecryptedFolder(),
-            showSortingOptionsAndViewModes: !DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .cloudDriveRevamp)
+            showSortingOptionsAndViewModes: !DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosCloudDriveRevamp)
         )
     }
 

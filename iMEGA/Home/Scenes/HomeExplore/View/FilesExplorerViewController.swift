@@ -30,7 +30,7 @@ class FilesExplorerViewController: ExplorerBaseViewController {
     override var displayMode: DisplayMode { .cloudDrive }
 
     private var isCloudDriveRevampEnabled: Bool {
-        DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .cloudDriveRevamp)
+        DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosCloudDriveRevamp)
     }
 
     init(viewModel: FilesExplorerViewModel,

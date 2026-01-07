@@ -19,7 +19,7 @@ class FolderLinkCollectionViewController: UIViewController {
     lazy var diffableDataSource = FolderLinkCollectionViewDiffableDataSource(collectionView: collectionView, controller: self)
 
     private var isCloudDriveRevampEnabled: Bool {
-        DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .cloudDriveRevamp)
+        DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosCloudDriveRevamp)
     }
 
     private var displayNodes: [MEGANode]? {

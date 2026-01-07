@@ -35,7 +35,7 @@ struct CloudDriveBottomToolbarItemsFactory {
     }
 
     private var isCloudDriveRevampEnabled: Bool {
-        DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .cloudDriveRevamp)
+        DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosCloudDriveRevamp)
     }
 
     private func megaNodes(from nodeEntities: [NodeEntity]) -> [MEGANode] {

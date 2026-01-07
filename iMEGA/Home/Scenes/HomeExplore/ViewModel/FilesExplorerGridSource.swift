@@ -140,7 +140,7 @@ extension FilesExplorerGridSource: UICollectionViewDataSource {
         viewForSupplementaryElementOfKind kind: String,
         at indexPath: IndexPath
     ) -> UICollectionReusableView {
-        guard DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .cloudDriveRevamp) else {
+        guard DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosCloudDriveRevamp) else {
             assertionFailure("Case not handled: \(kind) - at \(indexPath)")
             return UICollectionReusableView()
         }

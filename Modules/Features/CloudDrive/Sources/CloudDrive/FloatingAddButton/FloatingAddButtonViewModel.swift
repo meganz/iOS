@@ -7,7 +7,7 @@ import MEGASwift
 @MainActor
 public final class FloatingAddButtonViewModel: ObservableObject {
     private let floatingButtonVisibilityDataSource: any FloatingAddButtonVisibilityDataSourceProtocol
-    private let featureFlagProvider: any FeatureFlagProviderProtocol
+    private let remoteFeatureFlagUseCase: any RemoteFeatureFlagUseCaseProtocol
     public let uploadActions: [NodeUploadAction]
 
     @Published public private(set) var showsFloatingAddButton = false
@@ -22,12 +22,12 @@ public final class FloatingAddButtonViewModel: ObservableObject {
     public init(
         floatingButtonVisibilityDataSource: some FloatingAddButtonVisibilityDataSourceProtocol,
         uploadActions: [NodeUploadAction],
-        featureFlagProvider: some FeatureFlagProviderProtocol,
+        remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol,
         analyticsTracker: some AnalyticsTracking
     ) {
         self.floatingButtonVisibilityDataSource = floatingButtonVisibilityDataSource
         self.uploadActions = uploadActions
-        self.featureFlagProvider = featureFlagProvider
+        self.remoteFeatureFlagUseCase = remoteFeatureFlagUseCase
         self.analyticsTracker = analyticsTracker
         startObservingButtonVisibilityIfNeeded()
     }
@@ -42,7 +42,7 @@ public final class FloatingAddButtonViewModel: ObservableObject {
     }
 
     private func startObservingButtonVisibilityIfNeeded() {
-        guard featureFlagProvider.isFeatureFlagEnabled(for: .cloudDriveRevamp) else {
+        guard remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosCloudDriveRevamp) else {
             return
         }
         observingTask = Task { [weak self, floatingButtonVisibilityDataSource] in

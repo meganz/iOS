@@ -11,7 +11,7 @@ import UIKit
 extension NodeCollectionViewCell {
 
     private var isCloudDriveRevampEnabled: Bool {
-        DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .cloudDriveRevamp)
+        DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosCloudDriveRevamp)
     }
 
     private var loadThumbnailTask: Task<Void, any Error>? {

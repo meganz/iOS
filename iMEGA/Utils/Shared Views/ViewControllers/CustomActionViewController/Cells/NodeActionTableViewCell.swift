@@ -22,7 +22,7 @@ final class NodeActionTableViewCell: ActionSheetCell {
     }
 
     private func configureForRevampUIIfNeeded() {
-        if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .cloudDriveRevamp) {
+        if DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosCloudDriveRevamp) {
             guard let imgView = imageView, let label = self.textLabel else { return }
 
             imgView.translatesAutoresizingMaskIntoConstraints = false

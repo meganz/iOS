@@ -4,6 +4,7 @@ import MEGAAnalyticsiOS
 import MEGAAppPresentation
 import MEGAAppPresentationMock
 import MEGADomain
+import MEGADomainMock
 import MEGASwift
 import MEGATest
 import Testing
@@ -112,7 +113,7 @@ struct FloatingAddButtonViewModelTests {
         FloatingAddButtonViewModel(
             floatingButtonVisibilityDataSource: floatingButtonVisibilityDataSource,
             uploadActions: uploadActions,
-            featureFlagProvider: MockFeatureFlagProvider(list: [.cloudDriveRevamp: featureEnabled]),
+            remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: [.iosCloudDriveRevamp: featureEnabled]),
             analyticsTracker: analyticsTracker
         )
     }

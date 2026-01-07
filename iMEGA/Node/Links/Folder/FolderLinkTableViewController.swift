@@ -11,7 +11,7 @@ class FolderLinkTableViewController: UIViewController {
 
     unowned var folderLink: FolderLinkViewController!
     var headerContainerView: UIView?
-    private var isCloudDriveRevampEnabled: Bool { DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .cloudDriveRevamp) }
+    private var isCloudDriveRevampEnabled: Bool { DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosCloudDriveRevamp) }
 
     @objc class func instantiate(withFolderLink folderLink: FolderLinkViewController) -> FolderLinkTableViewController {
         guard let folderLinkTableVC = UIStoryboard(name: "Links", bundle: nil).instantiateViewController(withIdentifier: "FolderLinkTableViewControllerID") as? FolderLinkTableViewController else {

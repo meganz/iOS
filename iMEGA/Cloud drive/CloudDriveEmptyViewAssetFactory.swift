@@ -19,7 +19,7 @@ struct CloudDriveEmptyViewAssetFactory {
         tracker: some AnalyticsTracking,
         nodeInsertionRouter: some NodeInsertionRouting,
         nodeUseCase: some NodeUseCaseProtocol,
-        isCloudDriveRevampEnabled: Bool = DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .cloudDriveRevamp)
+        isCloudDriveRevampEnabled: Bool = DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosCloudDriveRevamp)
     ) {
         self.tracker = tracker
         self.nodeUseCase = nodeUseCase

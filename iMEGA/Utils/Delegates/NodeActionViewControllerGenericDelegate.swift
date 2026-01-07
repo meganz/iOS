@@ -14,7 +14,7 @@ class NodeActionViewControllerGenericDelegate: NodeActionViewControllerDelegate 
     private let moveToRubbishBinViewModel: any MoveToRubbishBinViewModelProtocol
     private let nodeActionListener: (MegaNodeActionType?, [MEGANode]) -> Void
     private var isCloudDriveRevampEnabled: Bool {
-        DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .cloudDriveRevamp)
+        DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosCloudDriveRevamp)
     }
 
     private var tracker: some AnalyticsTracking {

@@ -262,7 +262,7 @@ final class HomeScreenFactory: NSObject {
             viewDisplayMode: .home,
             listHeaderViewModel: nil,
             isSelectionEnabled: false,
-            usesRevampedLayout: DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .cloudDriveRevamp),
+            usesRevampedLayout: DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosCloudDriveRevamp),
             contentUnavailableViewModelProvider: HomeScreenContentUnavailableViewModelProvider()
         )
 

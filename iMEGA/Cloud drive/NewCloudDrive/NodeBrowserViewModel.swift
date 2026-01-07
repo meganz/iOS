@@ -90,7 +90,7 @@ class NodeBrowserViewModel: ObservableObject {
     private let sensitiveNodeUseCase: any SensitiveNodeUseCaseProtocol
     private let tracker: any AnalyticsTracking
     private let warningBannerViewRouter: any WarningBannerViewRouting
-    private let featureFlagProvider: any FeatureFlagProviderProtocol
+    private let remoteFeatureFlagUseCase: any RemoteFeatureFlagUseCaseProtocol
 
     private let titleBuilder: (_ isEditing: Bool, _ selectedNodeCount: Int) -> String
     private let onUpdateSearchBarVisibility: (Bool) -> Void
@@ -148,7 +148,7 @@ class NodeBrowserViewModel: ObservableObject {
     }()
 
     private var isCloudDriveRevampEnabled: Bool {
-        featureFlagProvider.isFeatureFlagEnabled(for: .cloudDriveRevamp)
+        remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosCloudDriveRevamp)
     }
 
     init(
@@ -187,7 +187,7 @@ class NodeBrowserViewModel: ObservableObject {
         sortOrderProvider: @escaping () -> MEGADomain.SortOrderEntity,
         onNodeStructureChanged: @escaping () -> Void,
         onMoreOptionsButtonTapped: @escaping (UIButton) -> Void,
-        featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider
+        remoteFeatureFlagUseCase: some RemoteFeatureFlagUseCaseProtocol = DIContainer.remoteFeatureFlagUseCase
     ) {
         self.viewMode = viewMode
         self.searchResultsContainerViewModel = searchResultsContainerViewModel
@@ -217,7 +217,7 @@ class NodeBrowserViewModel: ObservableObject {
         self.tracker = tracker
         self.onNodeStructureChanged = onNodeStructureChanged
         self.onMoreOptionsButtonTapped = onMoreOptionsButtonTapped
-        self.featureFlagProvider = featureFlagProvider
+        self.remoteFeatureFlagUseCase = remoteFeatureFlagUseCase
 
         $viewMode
             .removeDuplicates()

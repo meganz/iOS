@@ -144,7 +144,7 @@ struct VideoRevampRouter: VideoRevampRouting {
             displayMode: .cloudDrive,
             isIncoming: false,
             isBackupNode: isBackupNode,
-            isSelectionEnabled: DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .cloudDriveRevamp) && shouldShowSelection,
+            isSelectionEnabled: DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosCloudDriveRevamp) && shouldShowSelection,
             sender: sender
         )
         viewController.accessoryActionDelegate = nodeAccessoryActionDelegate

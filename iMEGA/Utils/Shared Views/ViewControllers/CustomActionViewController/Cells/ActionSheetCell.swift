@@ -5,7 +5,7 @@ import SwiftUI
 
 class ActionSheetCell: UITableViewCell {
     private var isCloudDriveRevampEnabled: Bool {
-        DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .cloudDriveRevamp)
+        DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosCloudDriveRevamp)
     }
 
     var accessoryTappedHandler: (() -> Void)?

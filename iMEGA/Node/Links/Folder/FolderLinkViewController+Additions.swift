@@ -13,7 +13,7 @@ import MEGASwift
 extension FolderLinkViewController {
 
     private var isCloudDriveRevampEnabled: Bool {
-        DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .cloudDriveRevamp)
+        DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosCloudDriveRevamp)
     }
 
     @objc func isDecryptedFolder() -> Bool {

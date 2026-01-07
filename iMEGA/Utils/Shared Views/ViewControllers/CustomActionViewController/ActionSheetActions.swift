@@ -407,7 +407,7 @@ extension NodeAction {
 
 // MARK: Action images
 private extension UIImage {
-    private static var isCloudDriveRevampEnabled: Bool { DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .cloudDriveRevamp) }
+    private static var isCloudDriveRevampEnabled: Bool { DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosCloudDriveRevamp) }
     static var info: UIImage { isCloudDriveRevampEnabled ? MEGAAssets.UIImage.infoMono : MEGAAssets.UIImage.info }
     static var select: UIImage { isCloudDriveRevampEnabled ? MEGAAssets.UIImage.checkCircle : MEGAAssets.UIImage.selectItem }
     static var label: UIImage { isCloudDriveRevampEnabled ? MEGAAssets.UIImage.tagSimple : MEGAAssets.UIImage.label }

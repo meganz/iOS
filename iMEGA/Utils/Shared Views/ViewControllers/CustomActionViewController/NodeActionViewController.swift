@@ -74,7 +74,7 @@ class NodeActionViewController: ActionSheetViewController {
     }()
     
     private var isUndecryptedFolder = false
-    private var isCloudDriveRevampEnabled: Bool { DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .cloudDriveRevamp) }
+    private var isCloudDriveRevampEnabled: Bool { DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosCloudDriveRevamp) }
     @MainActor private var loadActions: (() async -> Void)?
     
     // MARK: - NodeActionViewController initializers

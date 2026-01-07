@@ -49,7 +49,7 @@ struct CloudDriveContextMenuConfigFactory {
             )
         } else if displayMode == .rubbishBin
                     && isRubbishRoot(node: parentNode)
-                    && DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .cloudDriveRevamp) {
+                    && DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosCloudDriveRevamp) {
             return .init(menuType: .menu(type: .rubbishBin), isRubbishBinFolder: true, isRubbishBinRootFolder: true)
         }
 

@@ -47,8 +47,9 @@ struct CloudDriveViewControllerFactory {
     private let sensitiveDisplayPreferenceUseCase: any SensitiveDisplayPreferenceUseCaseProtocol
     private let nodeActionsBridge: NodeActionsBridge
 
-    private var isCloudDriveRevampEnabled: Bool { DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .cloudDriveRevamp) }
-    private static var isCloudDriveRevampEnabled: Bool { DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .cloudDriveRevamp) }
+    private static var isCloudDriveRevampEnabled: Bool {
+        DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosCloudDriveRevamp)
+    }
 
     init(
         navigationController: UINavigationController,
@@ -397,7 +398,7 @@ struct CloudDriveViewControllerFactory {
             onBack: { self.navigationController.popViewController(animated: true) },
             onCancel: { self.navigationController.dismiss(animated: true) },
             onEditingChanged: { enabled in
-                if isCloudDriveRevampEnabled && enabled {
+                if Self.isCloudDriveRevampEnabled && enabled {
                     tracker.trackAnalyticsEvent(with: CloudDriveMultiSelectModeEnteredEvent())
                 }
                 onSelectionModeChange(enabled)
@@ -602,7 +603,7 @@ struct CloudDriveViewControllerFactory {
             nodeSource: nodeSource,
             displayMode: config.displayMode,
             nodeUseCase: nodeUseCase,
-            usesRevampedUI: isCloudDriveRevampEnabled
+            usesRevampedUI: Self.isCloudDriveRevampEnabled
         )
 
         let nodeUpdatesProvider = NodeUpdatesProvider()
@@ -614,8 +615,8 @@ struct CloudDriveViewControllerFactory {
             searchBridge: searchBridge,
             searchConfig: searchConfig,
             calendar: calendar,
-            usesRevampedLayout: isCloudDriveRevampEnabled,
-            shouldForceListLayoutDuringSearch: isCloudDriveRevampEnabled,
+            usesRevampedLayout: Self.isCloudDriveRevampEnabled,
+            shouldForceListLayoutDuringSearch: Self.isCloudDriveRevampEnabled,
             contentUnavailableViewModelProvider: contentUnavailableViewModelProvider
         )
 
@@ -637,7 +638,7 @@ struct CloudDriveViewControllerFactory {
 
         let headerType: SearchResultsContainerViewModel.HeaderType = if config.displayMode == .recents {
             .none
-        } else if isCloudDriveRevampEnabled {
+        } else if Self.isCloudDriveRevampEnabled {
             .dynamic
         } else {
             .chips
@@ -657,13 +658,13 @@ struct CloudDriveViewControllerFactory {
             onSearch: { [weak searchResultsVM] in searchResultsVM?.bridge.queryChanged($0) },
             onCancel: { [weak searchResultsVM] in
                 searchResultsVM?.bridge.queryCleaned()
-                if isCloudDriveRevampEnabled {
+                if Self.isCloudDriveRevampEnabled {
                     tracker.trackAnalyticsEvent(with: CloudDriveSearchBarCancelPressedEvent())
                 }
             }, onSearchActiveChanged: { [weak searchResultsContainerViewModel] in
-                if isCloudDriveRevampEnabled {
+                if Self.isCloudDriveRevampEnabled {
                     searchResultsContainerViewModel?.searchActiveDidChange($0)
-                    if isCloudDriveRevampEnabled && $0 {
+                    if $0 {
                         tracker.trackAnalyticsEvent(with: CloudDriveSearchBarPressedEvent())
                     }
                 }
@@ -925,7 +926,7 @@ struct CloudDriveViewControllerFactory {
     ) -> SearchBridge {
         // not all actions are triggered using bridge yet
         let bridge = SearchResultsBridge()
-        let isCloudDriveRevampEnabled = DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .cloudDriveRevamp)
+        let isCloudDriveRevampEnabled = DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosCloudDriveRevamp)
         let searchBridge = SearchBridge(
             selection: {
                 router.didTapNode(
@@ -1284,7 +1285,7 @@ struct CloudDriveViewControllerFactory {
         return FloatingAddButtonViewModel(
             floatingButtonVisibilityDataSource: floatingButtonVisibilityDataSource,
             uploadActions: actionProvider.actions,
-            featureFlagProvider: DIContainer.featureFlagProvider,
+            remoteFeatureFlagUseCase: DIContainer.remoteFeatureFlagUseCase,
             analyticsTracker: tracker
         )
     }

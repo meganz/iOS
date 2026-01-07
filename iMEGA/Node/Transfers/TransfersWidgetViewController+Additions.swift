@@ -13,7 +13,7 @@ extension TransfersWidgetViewController: TransferWidgetResponderProtocol {
         static let defaultBottomAnchor: CGFloat = -60
     }
 
-    private var isCloudDriveRevampEnabled: Bool { DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .cloudDriveRevamp) }
+    private var isCloudDriveRevampEnabled: Bool { DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosCloudDriveRevamp) }
 
     @objc
     func createTransfersWidgetViewModel() -> TransfersWidgetViewModel {

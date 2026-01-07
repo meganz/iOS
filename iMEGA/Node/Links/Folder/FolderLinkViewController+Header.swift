@@ -40,7 +40,7 @@ extension FolderLinkViewController {
     }
 
     var shouldShowHeaderView: Bool {
-        DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .cloudDriveRevamp)
+        DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosCloudDriveRevamp)
     }
 
     func headerView(for controller: some FolderLinkViewHosting) -> UIView {

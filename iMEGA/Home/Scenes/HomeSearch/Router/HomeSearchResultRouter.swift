@@ -77,7 +77,7 @@ final class HomeSearchResultRouter: NodeRouting {
             isIncoming: false,
             isBackupNode: isBackupNode,
             isFromSharedItem: isFromSharedItem,
-            isSelectionEnabled: DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .cloudDriveRevamp),
+            isSelectionEnabled: DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosCloudDriveRevamp),
             sender: button
         ) else { return }
         nodeActionViewController.accessoryActionDelegate = nodeAccessoryActionDelegate

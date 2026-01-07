@@ -39,7 +39,7 @@ struct SearchResultMapper: Sendable {
         nodeActions: NodeActions,
         hiddenNodesFeatureEnabled: Bool,
         showHiddenNodeBlur: Bool = true,
-        isCloudDriveRevampEnabled: Bool =  DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .cloudDriveRevamp)
+        isCloudDriveRevampEnabled: Bool =  DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosCloudDriveRevamp)
     ) {
         self.sdk = sdk
         self.nodeIconUsecase = nodeIconUsecase

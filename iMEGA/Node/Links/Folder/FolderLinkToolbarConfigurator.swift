@@ -14,7 +14,7 @@ final class FolderLinkToolbarConfigurator {
     private(set) var activeBarButtons: [UIBarButtonItem] = []
 
     private var isCloudDriveRevampEnabled: Bool {
-        DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .cloudDriveRevamp)
+        DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosCloudDriveRevamp)
     }
 
     lazy var flexibleItem = UIBarButtonItem(

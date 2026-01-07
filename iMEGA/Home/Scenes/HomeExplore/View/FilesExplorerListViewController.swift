@@ -24,7 +24,7 @@ class FilesExplorerListViewController: FilesExplorerViewController {
     }
 
     private var isCloudDriveRevampEnabled: Bool {
-        DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .cloudDriveRevamp)
+        DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosCloudDriveRevamp)
     }
 
     override func viewDidLoad() {

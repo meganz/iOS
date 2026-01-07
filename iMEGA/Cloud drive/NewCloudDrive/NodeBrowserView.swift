@@ -12,7 +12,7 @@ import UIKit
 struct NodeBrowserView: View {
 
     var isCloudDriveRevampEnabled: Bool {
-        DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .cloudDriveRevamp)
+        DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosCloudDriveRevamp)
     }
 
     @StateObject var viewModel: NodeBrowserViewModel

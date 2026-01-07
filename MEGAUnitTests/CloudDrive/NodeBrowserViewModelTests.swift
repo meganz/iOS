@@ -72,7 +72,7 @@ class NodeBrowserViewModelTests: XCTestCase {
             tempWarningBannerViewModel: WarningBannerViewModel? = nil,
             sortOptionsForMD: [SortOption] = [.init(sortOrder: .init(key: .name), title: "", iconsByDirection: [:])],
             selectedSortOrderForMD: MEGAUIComponent.SortOrder = .init(key: .lastModified),
-            featureFlagList: [FeatureFlagKey: Bool] = [:],
+            featureFlagList: [RemoteFeatureFlag: Bool] = [:],
         ) {
             let config: NodeBrowserConfig = config ?? NodeBrowserConfig.default
             let nodeSource = NodeSource.node { node }
@@ -187,7 +187,7 @@ class NodeBrowserViewModelTests: XCTestCase {
                 sortOrderProvider: sortOrderProvider,
                 onNodeStructureChanged: onNodeStructureChanged,
                 onMoreOptionsButtonTapped: { _ in },
-                featureFlagProvider: MockFeatureFlagProvider(list: featureFlagList)
+                remoteFeatureFlagUseCase: MockRemoteFeatureFlagUseCase(list: featureFlagList)
             )
             
             saver = { self.savedViewModes.append($0) }
@@ -737,7 +737,7 @@ class NodeBrowserViewModelTests: XCTestCase {
     func testMoreOptionsButtonTapped_trackerShouldRecordCorrectEvent() {
         let enabled = [false, true]
         enabled.forEach {
-            let harness = Harness(node: .init(), featureFlagList: [.cloudDriveRevamp: $0])
+            let harness = Harness(node: .init(), featureFlagList: [.iosCloudDriveRevamp: $0])
             harness.sut.moreOptionsButtonTapped(button: UIButton())
             XCTAssertEqual(
                 harness.tracker.trackedEventIdentifiers.contains(where: { $0.eventName == CloudDriveParentNodeMoreButtonPressedEvent().eventName }), $0

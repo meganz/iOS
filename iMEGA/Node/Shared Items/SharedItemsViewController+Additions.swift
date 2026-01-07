@@ -22,7 +22,7 @@ extension SharedItemsViewController: ContactsViewControllerDelegate {
 extension SharedItemsViewController {
     @objc func shouldShowSortingHeader(for section: Int) -> Bool {
         section == SharedItemsViewControllerSection.sortHeader.rawValue
-        && DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .cloudDriveRevamp)
+        && DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosCloudDriveRevamp)
         && hasContentToDisplay()
     }
 
@@ -642,6 +642,6 @@ extension SharedItemsViewController {
     }
 
     @objc var isCloudDriveRevampEnabled: Bool {
-        DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .cloudDriveRevamp)
+        DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosCloudDriveRevamp)
     }
 }

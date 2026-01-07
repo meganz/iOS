@@ -216,7 +216,7 @@ extension FavouritesExplorerGridViewController: UICollectionViewDelegate {
         layout collectionViewLayout: UICollectionViewLayout!,
         heightForHeaderInSection section: Int
     ) -> CGFloat {
-        guard DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .cloudDriveRevamp),
+        guard DIContainer.remoteFeatureFlagUseCase.isFeatureFlagEnabled(for: .iosCloudDriveRevamp),
               section == 0,
               gridSource?.allNodes?.isNotEmpty == true else {
             return 0
