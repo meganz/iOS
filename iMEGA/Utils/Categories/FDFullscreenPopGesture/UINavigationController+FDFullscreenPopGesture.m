@@ -99,6 +99,7 @@ typedef void (^_FDViewControllerWillAppearInjectBlock)(UIViewController *viewCon
             [NSStringFromClass(self.class) isEqualToString: @"MFMessageComposeViewController"] ||
             [NSStringFromClass(self.class) isEqualToString: @"CKSMSComposeRemoteViewController"] ||
             [NSStringFromClass(self.class) isEqualToString: @"CKSMSComposeController"] ||
+            [NSStringFromClass(self.class) hasPrefix: @"DCCapture"] || // DCCaptureControlsOverlayViewController
             [NSStringFromClass(self.class) hasPrefix:@"ICDocCam"]
             );
 }
