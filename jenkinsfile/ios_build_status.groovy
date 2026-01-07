@@ -175,7 +175,6 @@ pipeline {
                             withCredentials([gitUsernamePassword(credentialsId: 'Gitlab-Access-Token', gitToolName: 'Default')]) {
                                 script {
                                     envInjector.injectEnvs {
-                                        customCheckout(env.CHANGE_BRANCH)
                                         setupProjectDependencies()
                                         runUnitTestsStepReached = true
                                         sh "bundle exec fastlane run_tests_app"
@@ -192,7 +191,6 @@ pipeline {
                             withCredentials([gitUsernamePassword(credentialsId: 'Gitlab-Access-Token', gitToolName: 'Default')]) {
                                 script {
                                     envInjector.injectEnvs {
-                                        customCheckout(env.CHANGE_BRANCH)
                                         setupProjectDependencies()
                                         sh "bundle exec fastlane run_tests_against_local_packages"
                                     }
