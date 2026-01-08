@@ -1,8 +1,8 @@
 import Foundation
 
-struct Metadata: Codable {
+struct Project: Codable {
     let name: String
-    let id: String
+    let component: String
     let filename: String
     let maxAllowedLength: Int?
     let maxAllowedOverflowError: String?

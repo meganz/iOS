@@ -20,7 +20,7 @@ pipeline {
         APP_STORE_CONNECT_API_KEY_B64 = credentials('APP_STORE_CONNECT_API_KEY_B64')
         MATCH_PASSWORD = credentials('MATCH_PASSWORD')
         APP_STORE_CONNECT_API_KEY_VALUE = credentials('APP_STORE_CONNECT_API_KEY_VALUE')
-        TRANSIFIX_AUTHORIZATION_TOKEN = credentials('TRANSIFIX_AUTHORIZATION_TOKEN')
+        WEBLATE_AUTHORIZATION_TOKEN = credentials('WEBLATE_AUTHORIZATION_TOKEN')
         MEGA_IOS_PROJECT_ID = credentials('MEGA_IOS_PROJECT_ID')
     }
     post {
@@ -398,7 +398,7 @@ pipeline {
                             script {
                                 envInjector.injectEnvs {
                                     dir("scripts/AppMetadataUpdater/") {
-                                        sh 'swift run AppMetadataUpdater --update-release-notes -v $MEGA_VERSION_NUMBER \"$TRANSIFIX_AUTHORIZATION_TOKEN\"'
+                                        sh 'swift run AppMetadataUpdater --update-release-notes -v $MEGA_VERSION_NUMBER \"$WEBLATE_AUTHORIZATION_TOKEN\"'
                                     }
                                     sh 'bundle exec fastlane upload_metadata_to_appstore_connect'
                                 }
@@ -418,7 +418,7 @@ pipeline {
                             script {
                                 envInjector.injectEnvs {
                                     dir("scripts/AppMetadataUpdater/") {
-                                        sh 'swift run AppMetadataUpdater --update-description \"$TRANSIFIX_AUTHORIZATION_TOKEN\"'
+                                        sh 'swift run AppMetadataUpdater --update-description \"$WEBLATE_AUTHORIZATION_TOKEN\"'
                                     }
                                     sh 'bundle exec fastlane upload_metadata_to_appstore_connect'
                                 }

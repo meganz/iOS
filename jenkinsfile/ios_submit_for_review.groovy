@@ -12,7 +12,7 @@ pipeline {
         APP_STORE_CONNECT_ISSUER_ID = credentials('APP_STORE_CONNECT_ISSUER_ID')
         APP_STORE_CONNECT_API_KEY_B64 = credentials('APP_STORE_CONNECT_API_KEY_B64')
         APP_STORE_CONNECT_API_KEY_VALUE = credentials('APP_STORE_CONNECT_API_KEY_VALUE')
-        TRANSIFIX_AUTHORIZATION_TOKEN = credentials('TRANSIFIX_AUTHORIZATION_TOKEN')
+        WEBLATE_AUTHORIZATION_TOKEN = credentials('WEBLATE_AUTHORIZATION_TOKEN')
         MEGA_IOS_PROJECT_ID = credentials('MEGA_IOS_PROJECT_ID')
     }
     post { 
@@ -62,8 +62,7 @@ pipeline {
                     envInjector.injectEnvs {
                         dir("scripts/AppMetadataUpdater/") {
                             env.VERSION_NUMBER = params.VERSION_NUMBER
-                            // Add this back when the Weblet implementation is complete
-                            // sh 'swift run AppMetadataUpdater --update-description --update-release-notes -v $VERSION_NUMBER \"$TRANSIFIX_AUTHORIZATION_TOKEN\"'
+                            sh 'swift run AppMetadataUpdater --update-description --update-release-notes -v $VERSION_NUMBER \"$WEBLATE_AUTHORIZATION_TOKEN\"'
                         }
 
                         sh "bundle exec fastlane submit_review phased_release:${params.PHASED_RELEASE} version_number:${params.VERSION_NUMBER} build_number:${params.BUILD_NUMBER}"

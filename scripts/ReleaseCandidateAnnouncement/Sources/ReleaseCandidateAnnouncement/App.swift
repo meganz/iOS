@@ -4,8 +4,8 @@ import SharedReleaseScript
 
 @main
 struct App: AsyncParsableCommand {
-    @Option(help: "Authorization token for the Transifex. Example: 'Bearer 1/0ab1234567a91c2f341d5c678e9012c3b4567ed8'")
-    var transifexAuthorization: String
+    @Option(help: "Authorization token for the Weblate. Example: 'Token 1/0ab1234567a91c2f341d5c678e9012c3b4567ed8'")
+    var weblateAuthorization: String
 
     @Option(help: "Authorization token for the Slack. Example: '0ab1234567a91c2f341d5c678e9012c3b4567ed8'")
     var slackAuthorization: String
@@ -81,8 +81,7 @@ struct App: AsyncParsableCommand {
         print("Fetching release notes for \(currentReleaseVersion)")
         let releaseNotes = try await fetchReleaseNotes(
             for: currentReleaseVersion,
-            resourceID: releaseNotesResourceID,
-            token: transifexAuthorization
+            token: weblateAuthorization
         )
         print("release notes: \(releaseNotes)")
 

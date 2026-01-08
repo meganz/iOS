@@ -2,10 +2,11 @@ import Foundation
 
 struct EnvironmentDetails: Codable {
     let fastlaneBasePath: String
-    let projects: [Metadata]
+    let baseURL: String
+    let projects: [Project]
 
-    subscript(resourceId: MetadataResourceId) -> Metadata? {
-        projects.first(where: { $0.name == resourceId.rawValue })
+    subscript(type: ComponentType) -> Project? {
+        projects.first(where: { $0.component == type.rawValue })
     }
 
     static func load() throws -> EnvironmentDetails {
@@ -21,5 +22,3 @@ struct EnvironmentDetails: Codable {
         }
     }
 }
-
-

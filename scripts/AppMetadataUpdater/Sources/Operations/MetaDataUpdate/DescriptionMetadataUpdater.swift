@@ -2,7 +2,8 @@ import Foundation
 
 struct DescriptionMetadataUpdater: MetadataUpdating {
     let authorization: String
-    let metadata: Metadata
+    let baseURL: String
+    let project: Project
 
     func convert(_ data: Data) throws -> String {
         try DescriptionConverter(data: data).toString()

@@ -10,15 +10,6 @@ struct ReleaseNotesConverter: Converting {
             throw "Data is not encoded in utf16 format"
         }
 
-        print("""
-        -----------Change Logs Start:-----------
-        \(changeLogs)
-        -----------Change Logs End:-----------
-        -----------Version Start:-----------
-        \(version ?? "No version found")
-        -----------Version End:-----------
-        """)
-
         var changeLog: String?
         if let version {
             changeLog = specificChangeLog(for: version, in: changeLogs)
@@ -28,44 +19,59 @@ struct ReleaseNotesConverter: Converting {
             changeLog = basicChangeLog(in: changeLogs)
         }
 
-        print("""
-        -----------Change Log Start:-----------
-        \(changeLog ?? "No changeLog Found")
-        -----------Change Log End:-----------
-        """)
-
-        guard let changeLog else { throw "No change log found" }
+        guard let changeLog else {
+            throw """
+                ----------START-------------
+                No change log found in 
+                
+                \(changeLogs)
+                
+                for version 
+                
+                \(version ?? "no version passed")
+                ----------END-------------
+                """
+        }
         return changeLog
     }
 
     private func specificChangeLog(for version: String, in changeLogs: String) -> String? {
         let regex = Regex {
             "\""
-            Capture {
-                OneOrMore(.any, .reluctant)
-            }
-            " "
+            OneOrMore(.any, .reluctant)
             formattedVersion(version)
-            "\"=\""
+            "\""
+            ZeroOrMore(.whitespace)
+            "="
+            ZeroOrMore(.whitespace)
+            "\""
             Capture {
                 OneOrMore(.any, .reluctant)
             }
             "\";"
         }
 
-        return changeLogs.firstMatch(of: regex)?.output.2.replacingOccurrences(of: "[Br]", with: "\n")
+        return changeLogs.firstMatch(of: regex).map {
+            String($0.output.1).replacingOccurrences(of: "[Br]", with: "\n")
+        }
     }
 
     private func basicChangeLog(in changeLogs: String) -> String? {
         let regex = Regex {
-            "\"Changelog basic\"=\""
+            "\"Changelog basic\""
+            ZeroOrMore(.whitespace)
+            "="
+            ZeroOrMore(.whitespace)
+            "\""
             Capture {
                 OneOrMore(.any, .reluctant)
             }
             "\";"
         }
 
-        return changeLogs.firstMatch(of: regex)?.output.1.replacingOccurrences(of: "[Br]", with: "\n")
+        return changeLogs.firstMatch(of: regex).map {
+            String($0.output.1).replacingOccurrences(of: "[Br]", with: "\n")
+        }
     }
 
     private func formattedVersion(_ version: String) -> String {

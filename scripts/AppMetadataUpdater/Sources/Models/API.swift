@@ -3,28 +3,27 @@ import SharedReleaseScript
 
 struct API {
     let url: URL
-    let body: HttpBody
     let headers: [HTTPHeader]
 
-    init(authorization: String, languageInfo: LanguageInfo, resourceDataId: String) throws {
-        let languageDetails = LanguageDetails(languageInfo: languageInfo)
-        url = languageDetails.url
+    init(baseURL: String, authorization: String, languageCode: String, project: Project) throws {
+        guard let url = URL(
+            string: "\(baseURL)/\(project.name)/\(project.component)/\(languageCode)/file/"
+        ) else {
+            throw "Invalid API URL"
+        }
 
-        var body = try languageDetails.httpBody()
-        body.data.relationships.resource.data.id = resourceDataId
-        body.data.relationships.language?.data.id = languageInfo.transifexCode
-        self.body = body
+        self.url = url
 
         var headers: [HTTPHeader] = []
-        if authorization.contains("Bearer ") {
+        if authorization.contains("Token ") {
             headers.append(HTTPHeader(field: "Authorization", value: authorization))
         } else {
-            headers.append(HTTPHeader(field: "Authorization", value: "Bearer \(authorization)"))
+            headers.append(HTTPHeader(field: "Authorization", value: "Token \(authorization)"))
         }
 
         headers += [
             HTTPHeader(field: "accept", value: "*/*"),
-            HTTPHeader(field: "content-type", value: "application/vnd.api+json")
+            HTTPHeader(field: "content-type", value: "application/json")
         ]
 
         self.headers = headers

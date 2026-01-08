@@ -1,0 +1,21 @@
+[
+    {"name": "English", "code": "en", "fastlaneMetadataFolders": ["en-US", "en-GB"]},
+    {"name": "Spanish", "code": "es", "fastlaneMetadataFolders": ["es-ES", "es-MX"]},
+    {"name": "Arabic", "code": "ar", "fastlaneMetadataFolders": ["ar-SA"]},
+    {"name": "French", "code": "fr", "fastlaneMetadataFolders": ["fr-CA", "fr-FR"]},
+    {"name": "Indonesian", "code": "id", "fastlaneMetadataFolders": ["id"]},
+    {"name": "Italian", "code": "it", "fastlaneMetadataFolders": ["it"]},
+    {"name": "Japanese", "code": "ja", "fastlaneMetadataFolders": ["ja"]},
+    {"name": "Korean", "code": "ko", "fastlaneMetadataFolders": ["ko"]},
+    {"name": "Dutch", "code": "nl", "fastlaneMetadataFolders": ["nl-NL"]},
+    {"name": "Polish", "code": "pl", "fastlaneMetadataFolders": ["pl"]},
+    {"name": "Portuguese", "code": "pt", "fastlaneMetadataFolders": ["pt-BR", "pt-PT"]},
+    {"name": "Romanian", "code": "ro", "fastlaneMetadataFolders": ["ro"]},
+    {"name": "Thai", "code": "th", "fastlaneMetadataFolders": ["th"]},
+    {"name": "Vietnamese", "code": "vi", "fastlaneMetadataFolders": ["vi"]},
+    {"name": "Chinese Simplified", "code": "zh_Hans", "fastlaneMetadataFolders": ["zh-Hans"]},
+    {"name": "Chinese Traditional", "code": "zh_Hant", "fastlaneMetadataFolders": ["zh-Hant"]},
+    {"name": "German", "code": "de", "fastlaneMetadataFolders": ["de-DE"]},
+    {"name": "Turkish", "code": "tr", "fastlaneMetadataFolders": ["tr"]},
+    {"name": "Russian", "code": "ru", "fastlaneMetadataFolders": ["ru"]}
+]

@@ -14,23 +14,23 @@ import Foundation
 ///
 /// - **To update the app description:**
 /// ```bash
-/// $ swift run AppMetadataUpdater --update-description "Bearer 1/0ab1234567a91c2f341d5c678e9012c3b4567ed8"
+/// $ swift run AppMetadataUpdater --update-description "Token 1/0ab1234567a91c2f341d5c678e9012c3b4567ed8"
 /// ```
 ///
 /// - **To update the release notes:**
 /// ```bash
-/// $ swift run AppMetadataUpdater --update-release-notes --version 16.1 "Bearer 1/0ab1234567a91c2f341d5c678e9012c3b4567ed8"
+/// $ swift run AppMetadataUpdater --update-release-notes --version 16.1 "Token 1/0ab1234567a91c2f341d5c678e9012c3b4567ed8"
 /// ```
 ///
 /// - **To update both description and release notes:**
 /// ```bash
-/// $ swift run AppMetadataUpdater --update-description --update-release-notes --version 16.1 "Bearer 1/0ab1234567a91c2f341d5c678e9012c3b4567ed8"
+/// $ swift run AppMetadataUpdater --update-description --update-release-notes --version 16.1 "Token 1/0ab1234567a91c2f341d5c678e9012c3b4567ed8"
 /// ```
 ///
 /// In these examples, the app will use the provided authorization token and update the relevant metadata on Transifex.
 @main
 struct App: AsyncParsableCommand {
-    @Argument(help: "Authorization token for the Transifex. Example: 'Bearer 1/0ab1234567a91c2f341d5c678e9012c3b4567ed8'")
+    @Argument(help: "Authorization token for the Transifex. Example: 'Token 1/0ab1234567a91c2f341d5c678e9012c3b4567ed8'")
     var authorization: String
 
     @Flag(help: "Update the description metadata.")
@@ -51,7 +51,8 @@ struct App: AsyncParsableCommand {
                 ReleaseNotesMetadataUpdater(
                     authorization: authorization,
                     version: version,
-                    metadata: try metadata(for: .changelogs, from: environmentDetails)
+                    baseURL: environmentDetails.baseURL,
+                    project: try project(for: .changelogs, from: environmentDetails)
                 )
             )
         }
@@ -60,7 +61,8 @@ struct App: AsyncParsableCommand {
             metaDataUpdaters.append(
                 DescriptionMetadataUpdater(
                     authorization: authorization,
-                    metadata: try metadata(for: .stores, from: environmentDetails)
+                    baseURL: environmentDetails.baseURL,
+                    project: try project(for: .stores, from: environmentDetails)
                 )
             )
         }
@@ -69,15 +71,15 @@ struct App: AsyncParsableCommand {
         try await updateMetadata(with: metaDataUpdaters)
     }
 
-    private func metadata(
-        for resourceId: MetadataResourceId,
+    private func project(
+        for type: ComponentType,
         from environmentDetails: EnvironmentDetails
-    ) throws -> Metadata {
-        guard let metadata = environmentDetails[resourceId] else {
-            throw "metadata for \(resourceId.rawValue) is not found"
+    ) throws -> Project {
+        guard let project = environmentDetails[type] else {
+            throw "project for \(type.rawValue) is not found"
         }
 
-        return metadata
+        return project
     }
 
     private func updateMetadata(with metaDataUpdaters: [any MetadataUpdating]) async throws {
